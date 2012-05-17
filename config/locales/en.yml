@@ -1,4 +1,10 @@
 en:
+  date:
+    formats:
+      custom: '%e, %B, %Y'
+  time:
+    formats:
+      custom: '%R %Z'
   layouts:
     application:
       header:
@@ -30,3 +36,14 @@ en:
           title: 'Keep updated'
           text: "Subscribe to forest clearing alerts and receive weekly updates on your selected countries"
           link: 'Subscribe to a new alert'
+  countries:
+    show:
+      detail:
+        alerts:
+          title: 'Last forest clearing alerts'
+          subscribe: 'Subscribe to this country'
+        description:
+          read_more: 'Read more at Wikipedia'
+      blog_posts:
+        title: 'Central African Republic Blog Stories'
+        more: 'more'
