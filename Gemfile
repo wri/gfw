@@ -10,11 +10,13 @@ end
 
 gem 'jquery-rails'
 
+group :development do
+  gem 'debugger'
+end
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'launchy'
-
-  gem 'debugger'
 end
