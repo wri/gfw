@@ -10,7 +10,9 @@ end
 
 gem 'jquery-rails'
 
+
 group :development do
+  gem 'heroku'
   gem 'debugger'
 end
 
