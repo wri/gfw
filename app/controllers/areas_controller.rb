@@ -1,0 +1,2 @@
+class AreasController < ApplicationController
+end

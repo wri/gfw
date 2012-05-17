@@ -1,5 +1,32 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  hello: "Hello world"
+  layouts:
+    application:
+      header:
+        other_wri_sites: 'Other WRI sites'
+        nav:
+          home: 'Home'
+          countries: 'Countries'
+          map: 'Map'
+          blog: 'Blog'
+          data_sources: 'Data Sources'
+          about: 'About'
+      footer:
+        download:
+          interested_html: "I'm interested in forest clearing data for <a href='#'>write here</a>."
+          data_html: 'You can also <a href="#">download all our data</a> in a .zip file.'
+  home:
+    index:
+      title: "Find where forest cleaning is happening right now"
+      icons:
+        crowdsourcing:
+          title: 'Crowdsourcing'
+          text: "Do you have any comment or photo to be shared with the community? Just do it."
+          link: 'Contribute Now'
+        analysis:
+          title: 'Analysis tool'
+          text: "Perform forest clearing analysis on the fly and get your answers in real time using our latest data"
+          link: 'Contribute Now'
+        keep_updated:
+          title: 'Keep updated'
+          text: "Subscribe to forest clearing alerts and receive weekly updates on your selected countries"
+          link: 'Subscribe to a new alert'

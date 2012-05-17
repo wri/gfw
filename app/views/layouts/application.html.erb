@@ -7,8 +7,70 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <header>
 
-<%= yield %>
+    <a id="logo" href=""><img src="" alt="" /></a>
+
+    <a href=""><%= t('layouts.application.header.other_wri_sites') %></a>
+
+    <nav>
+      <a href="">Global Forest Watch 2.0</a>
+      <ul>
+      	<li>
+      		<a href=""><%= t('layouts.application.header.nav.home') %></a>
+      	</li>
+      	<li>
+      		<a href=""><%= t('layouts.application.header.nav.countries') %></a>
+      	</li>
+      	<li>
+      		<a href=""><%= t('layouts.application.header.nav.map') %></a>
+      	</li>
+      	<li>
+      		<a href=""><%= t('layouts.application.header.nav.blog') %></a>
+      	</li>
+      	<li>
+      		<a href=""><%= t('layouts.application.header.nav.data_sources') %></a>
+      	</li>
+      	<li>
+      		<a href=""><%= t('layouts.application.header.nav.about') %></a>
+      	</li>
+      </ul>
+    </nav>
+
+    <h1><%= yield :title %></h1>
+
+  </header>
+
+  <div id="content">
+    <%= yield %>
+  </div>
+
+  <footer>
+
+    <div class="download">
+      <p>
+        <%= t('layouts.application.footer.download.interested_html') %>
+      </p>
+      <p>
+        <%= t('layouts.application.footer.download.data_html') %>
+      </p>
+    </div>
+
+    <div class="links">
+      <a id="google" href="#"><img src="" alt="" /></a>
+      <a id="cfgd" href="#"><img src="" alt="" /></a>
+      <a id="university_maryland" href="#"><img src="" alt="" /></a>
+      <a id="imazon" href="#"><img src="" alt="" /></a>
+       <div class="wri">
+          <a id="wri" href="#"><img src="" alt="" /></a>
+          <div class="address">
+            <p>10 G Street NE Suite 800, Washington, DC 20002,</p>
+            <p>USA / Phone +1 (202) 729-7600 / Fax +1 (202) 729-7610</p>
+          </div>
+      </div>
+    </div>
+
+  </footer>
 
 </body>
 </html>
