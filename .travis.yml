@@ -6,9 +6,10 @@ rvm:
   - 1.9.3
 gemfile:
   - Gemfile
-#notifications:
-  #recipients:
-    #- ferdev@vizzuality.com
+notifications:
+  recipients:
+    - ferdev+travis@vizzuality.com
+    - javierarce+travis@vizzuality.com
 branches:
   only:
     - master
