@@ -1,6 +1,6 @@
 language: ruby
 bundler_args: --without development
-script: "rspec --format=documentation spec/acceptance"
+script: "DISPLAY=:0.0 rspec --format=documentation spec/acceptance"
 rvm:
   - 1.9.2
   - 1.9.3
