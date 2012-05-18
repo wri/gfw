@@ -23,16 +23,18 @@ feature 'GFW explore map page' do
 
     scenario 'properly loaded' do
       within '#map_container #map' do
+        sleep 2
         page.evaluate_script('mapLoaded').should be_true
       end
     end
 
     scenario 'with zoom controls' do
       within '#map_container #map' do
-        page.should have_css 'div', :title => 'Acerca la imagen'
-        page.should have_css 'div', :title => 'Haz clic aquí para acercar o alejar la imagen'
-        page.should have_css 'div', :title => 'Arrastra para acercar o alejar la imagen'
-        page.should have_css 'div', :title => 'Aleja la imagen'
+        peich
+        page.should have_css 'div', :title => 'Zoom in'
+        page.should have_css 'div', :title => 'Click to zoom'
+        page.should have_css 'div', :title => 'Drag to zoom'
+        page.should have_css 'div', :title => 'Zoom out'
       end
     end
 
@@ -40,9 +42,9 @@ feature 'GFW explore map page' do
 
     scenario 'with a map type selector' do
       within '#map_container #map' do
-        page.should have_content 'Mapa'
-        page.should have_content 'Satélite'
-        page.should have_content 'Relieve'
+        page.should have_content 'Map'
+        page.should have_content 'Satellite'
+        page.should have_content 'Terrain'
       end
     end
 
