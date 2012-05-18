@@ -1,6 +1,7 @@
 language: ruby
 bundler_args: --without development
-script: "export DISPLAY=:0.0; xhost +local:vagrant; rspec --format=documentation spec/acceptance"
+script: "rspec --format=documentation spec/acceptance"
+
 rvm:
   - 1.9.2
   - 1.9.3

@@ -24,6 +24,6 @@ group :development, :test do
   gem 'rake'
   gem 'rspec-rails'
   gem 'capybara'
-  gem 'capybara-webkit'
+  gem 'poltergeist'
   gem 'launchy'
 end

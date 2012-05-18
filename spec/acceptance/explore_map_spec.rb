@@ -46,6 +46,9 @@ feature 'GFW explore map page' do
       end
     end
 
+    scenario '' do
+    end
+
   end
 
   include_examples 'download section'
