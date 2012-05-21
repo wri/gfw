@@ -6,7 +6,10 @@
   </div>
 </div>
 <div class="inner">
+  <hgroup>
+    <%= content_tag :h2, (link_to 'Global Forest Watch 2.0') %>
+    <h1><%= yield :title %></h1>
+  </hgroup>
   <%= render "common/nav" %>
-  <h1><%= yield :title %></h1>
 </div>
 </header>

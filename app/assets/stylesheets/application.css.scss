@@ -16,14 +16,36 @@ header {
   background:url(backgrounds/bkg_header.png);
   height:247px;
 
-  .inner { width: 912px; margin: auto; }
+  hgroup {
+    position:relative;
+    top: 55px;
+    width:450px;
+
+    h1 {
+      font: normal 33px "Georgia", serif;
+      color:$cGray;
+    }
+
+    h2 a {
+      color: $cLinkColor;
+      text-decoration: none;
+      text-transform:uppercase;
+    }
+  }
+
+  .inner { position:relative; width: 912px; margin: auto; }
+
   & > .top {
     background: rgba(117,173,181, 0.8);
     height: 52px;
   }
 }
 
-nav {
+header .inner nav {
+  position:absolute;
+  top: 47px;
+  right: 10px;
+
   ul {
     li {
 
@@ -31,12 +53,7 @@ nav {
 
       a {
 
-        $height:26px;
-        $mL: 5px;
-        $pT: 6px;
-        $pR: 10px;
-        $pB: 5px;
-        $pL: 5px;
+        $height:26px; $mL: 5px; $pT: 6px; $pR: 10px; $pB: 5px; $pL: 5px;
 
         @include button('buttons/bkg_nav_button.png', $height, $mL, $pT, $pR, $pB, $pL);
         background:none;
