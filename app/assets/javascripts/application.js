@@ -4,7 +4,11 @@
 
 $(function(){
 
-  var map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
+  var map = new google.maps.Map(document.getElementById("map"), config.mapOptions)
+    , renderPolygonListener = null
+    , polygonPath = []
+    , polygon = null
+    ;
 
   map.mapTypes.set('GfwStyle', config.gfwStyle);
   map.setMapTypeId('GfwStyle');
@@ -52,4 +56,50 @@ $(function(){
   var zoomOutControl = new ZoomOut(zoomOutControlDiv, map);
   zoomOutControlDiv.index = 2;
 
+  // Enables map editing mode. When activated, each click in the map draws a polyline
+  $('#map-container').find('.draw-area').click(function(){
+    $(this).closest('#map-container').toggleClass('editing-mode');
+
+    if (renderPolygonListener) return;
+
+    polygonPath = [];
+
+    polygon = new google.maps.Polygon({
+      paths: [],
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 3,
+      fillColor: "#FF0000",
+      fillOpacity: 0.35
+    });
+
+    polygon.setMap(map);
+
+    renderPolygonListener = google.maps.event.addListener(map, 'click', function(e){
+      polygonPath.push(e.latLng);
+      polygon.setPath(polygonPath);
+    });
+  });
+
+  // Disables editing mode. Sends the created polygon to cartodb.
+  $('#map-container').find('.save-area')
+  .submit(function(e){
+    e.preventDefault();
+    $(this).closest('#map-container').toggleClass('editing-mode');
+    $(this).find('#area_the_geom').val("ST_GeomFromGeoJSON('" + JSON.stringify({
+        "type": "Polygon",
+        "coordinates": [
+            [
+                $.map(polygonPath, function(latlong, index){
+                  return [latlong.lng(), latlong.lat()]
+                })
+            ]
+        ]
+    }) + "')");
+
+    $.post($(this).attr('action'), $(this).serialize(), function(response){
+      google.maps.event.removeListener(renderPolygonListener);
+      renderPolygonListener = null;
+    });
+  });
 });

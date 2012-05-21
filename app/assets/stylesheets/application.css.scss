@@ -288,3 +288,15 @@ nav {
   }
 
 }
+
+#map-container .save-area {
+  display: none;
+}
+
+#map-container.editing-mode .draw-area {
+  display: none;
+}
+
+#map-container.editing-mode .save-area {
+  display: inline;
+}

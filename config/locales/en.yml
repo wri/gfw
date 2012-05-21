@@ -47,6 +47,8 @@ en:
           fire: 'fire'
           carbon: 'carbon'
           biodiversity: 'biodiversity'
+        draw_area: 'Draw Area'
+        save_area: 'Save Area'
   countries:
     show:
       detail:
