@@ -1,0 +1,46 @@
+/* Colors */
+$cBackground: #75ADB5;
+$cDarkGreen:  #264C59;
+$cLinkColor:  #F7BD63; // pastel yellow
+
+.shadow-transition {
+  -webkit-transition: -webkit-box-shadow 0.5s ease-out;
+  -moz-transition: -moz-box-shadow 0.5s ease-out;
+  -o-transition: box-shadow 0.5s ease-out;
+}
+
+.no-glow {
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.glow {
+  /* Firefox v3.5+ */
+  -moz-box-shadow:0px 0px 6px 1px rgba(255,255,255,0.5);
+  /* Safari v3.0+ and by Chrome v0.2+ */
+  -webkit-box-shadow:0px 0px 6px 1px rgba(255,255,255,0.5);
+  /* Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+  and by Opera v10.5+ */
+  box-shadow:0px 0px 6px 1px rgba(255,255,255,0.5);
+  -ms-filter:"progid:DXImageTransform.Microsoft.Glow(Color = #33ffffff ,Strength = 5)";
+  filter:progid:DXImageTransform.Microsoft.Glow(Color = #33ffffff ,Strength = 5);
+}
+
+@mixin button($url, $height, $mL, $pT, $pR, $pB, $pL) {
+  @include inline-block();
+  height:$height;
+  background: url($url) no-repeat left bottom;
+  color:#fff;
+  text-decoration:none;
+  text-transform: uppercase;
+
+  @extend .shadow-transition;
+
+  & > span {
+    @include inline-block();
+    height: $height - $pT - $pB;
+    margin-left: $mL;
+    padding: $pT $pR $pB $pL;
+    background: url($url) repeat-x right top;
+  }
+}

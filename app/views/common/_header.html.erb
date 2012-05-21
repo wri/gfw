@@ -1,0 +1,12 @@
+<header>
+<div class="top">
+  <div class="inner">
+    <%= link_to image_tag(''), '', :id => 'logo' %>
+    <%= link_to t('layouts.application.header.other_wri_sites') %>
+  </div>
+</div>
+<div class="inner">
+  <%= render "common/nav" %>
+  <h1><%= yield :title %></h1>
+</div>
+</header>
