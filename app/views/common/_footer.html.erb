@@ -1,13 +1,9 @@
 <footer>
 
-    <div class="download">
-      <p>
-        <%= t('layouts.application.footer.download.interested_html') %>
-      </p>
-      <p>
-        <%= t('layouts.application.footer.download.data_html') %>
-      </p>
-    </div>
+<div class="download">
+  <%= content_tag :h1, t('layouts.application.footer.download.interested_html') %>
+  <%= content_tag :p, t('layouts.application.footer.download.data_html') %>
+</div>
 
 <div class="links">
   <%= link_to image_tag(''), '', :id => 'google' %>

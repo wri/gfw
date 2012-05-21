@@ -14,28 +14,30 @@ end %>
     <li><%= link_to t('.map.filters.carbon') %></li>
     <li><%= link_to t('.map.filters.biodiversity') %></li>
   </ul>
-  <div id="map"></div>
+  <div id="map" class="map"></div>
 </div>
 
-<div id="icons">
-
-  <div class="crowdsourcing">
+<div class="actions">
+  <ul>
+    <li class="crowdsourcing">
+    <div class="icon"></div>
     <h2><%= t('.icons.crowdsourcing.title') %></h2>
     <p><%= t('.icons.crowdsourcing.text') %></p>
-    <%= link_to t('.icons.crowdsourcing.link') %>>
-  </div>
+    <%= link_to (content_tag :span, t('.icons.crowdsourcing.link')), {}, :class => :btn %>
+    </li>
 
-  <div class="analysis">
+    <li class="analysis">
+    <div class="icon"></div>
     <h2><%= t('.icons.analysis.title') %></h2>
     <p><%= t('.icons.analysis.text') %></p>
-    <%= link_to t('.icons.analysis.link') %>>
-  </div>
+    <%= link_to (content_tag :span, t('.icons.analysis.link')), {}, :class => "btn disabled" %>
+    </li>
 
-  <div class="keep_updated">
+    <li class="keep_updated">
+    <div class="icon"></div>
     <h2><%= t('.icons.keep_updated.title') %></h2>
     <p><%= t('.icons.keep_updated.text') %></p>
-    <%= link_to t('.icons.keep_updated.link') %>>
-  </div>
-
+    <%= link_to (content_tag :span, t('.icons.keep_updated.link')), {}, :class => :btn %>
+    </li>
+  </ul>
 </div>
-

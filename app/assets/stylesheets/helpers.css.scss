@@ -3,6 +3,18 @@ $cBackground: #75ADB5;
 $cDarkGreen:  #264C59;
 $cLinkColor:  #F7BD63; // pastel yellow
 $cGray:       #333333;
+$cWhite:      #ffffff;
+$cBlack:      #000000;
+
+.font-big {
+  font: 200 33px "Georgia", serif;
+  color: $cWhite;
+}
+
+.font-regular {
+  font: 200 15px "Helvetica Neue", serif;
+  color: $cWhite;
+}
 
 .shadow-transition {
   -webkit-transition: -webkit-box-shadow 0.5s ease-out;
@@ -43,5 +55,6 @@ $cGray:       #333333;
     margin-left: $mL;
     padding: $pT $pR $pB $pL;
     background: url($url) repeat-x right top;
+    white-space:nowrap;
   }
 }

@@ -10,8 +10,8 @@ feature 'GFW Home' do
   include_examples 'title', 'Find where forest clearing is happening right now'
   include_examples 'menu'
   scenario 'has a big map'
-  scenario 'has a section with some big icons' do
-    within '#content #icons' do
+  scenario 'has a section with an action list' do
+    within '#content .actions' do
 
       within '.crowdsourcing' do
         page.should have_css 'h2', :text => 'Crowdsourcing'

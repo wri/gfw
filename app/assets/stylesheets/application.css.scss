@@ -22,7 +22,7 @@ header {
     width:450px;
 
     h1 {
-      font: normal 33px "Georgia", serif;
+      @extend .font-big;
       color:$cGray;
     }
 
@@ -79,22 +79,104 @@ header .inner nav {
   } // ul
 } // nav
 
-footer {
-  background:url(backgrounds/bkg_footer.png);
-}
-
-#map {
+.map {
   width:100%;
   height:400px;
   margin:auto;
+  border-bottom: 1px solid #717D80;
 }
 
-.download {
+footer {
+  .links {
+    height:216px;
+    background:url(backgrounds/bkg_footer.png) ;
+  }
+}
+
+footer .download {
   padding: 50px 0;
   text-align:center;
   background: $cDarkGreen;
-  color:#fff;
+
+  h1 {
+    @extend .font-big;
+    margin: 0 0 4px 0;
+  }
+
+  p {
+    @extend .font-regular;
+
+    a { text-decoration: none; }
+  }
+
+  a { color: $cLinkColor; }
 }
+
+.actions {
+  padding: 51px 0 59px 0;
+
+  ul {
+    width:890px;
+    margin:auto;
+
+    li {
+      @include inline-block();
+      text-align:center;
+      margin: 0 50px 0 0;
+
+      h2 {
+        margin: 0 0 12px 0;
+        font:29px "Georgia", serif;
+        color: $cWhite;
+      }
+
+      p {
+        height:50px;
+        margin: 24px;
+        font: normal 15px "Helvetica Neue", serif;
+        color: $cBlack;
+        opacity:0.5;
+      }
+
+      .icon {
+        margin:auto;
+        height:92px;
+      }
+
+      &.crowdsourcing {
+        width:246px;
+
+      }
+      &.analysis {
+        width:261px;
+      }
+      &.keep_updated {
+        width:274px;
+        margin: 0;
+      }
+
+
+      &.crowdsourcing .icon {
+        top: -10px;
+        position:relative;
+        width:134px;
+        @include icons-sprite(crowdsourcing);
+      }
+
+      &.analysis .icon {
+        width:150px;
+        @include icons-sprite(analysis);
+      }
+
+      &.keep_updated .icon {
+        width:122px;
+        @include icons-sprite(updates);
+      }
+    }
+  }
+}
+
+
 
 .btn {
   @include button('buttons/bkg_button.png', 42px, 5px, 13px, 27px, 5px, 27px);
@@ -112,3 +194,4 @@ footer {
     }
   }
 }
+
