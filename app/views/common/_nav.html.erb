@@ -1,8 +1,8 @@
 <nav>
 <ul>
-  <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.home'))), "#", :class => :selected %></li>
-  <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.countries'))) %></li>
-  <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.map'))) %></li>
+  <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.home'))), root_path, :class => :selected %></li>
+  <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.countries'))), countries_path %></li>
+  <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.map'))), map_path %></li>
   <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.blog'))) %></li>
   <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.data_sources'))) %></li>
   <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.about'))) %></li>

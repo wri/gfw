@@ -9,7 +9,7 @@ feature 'GFW country detail page' do
 
   include_examples 'common header'
   include_examples 'title', 'Central African Republic'
-  include_examples 'menu'
+  include_examples 'menu', 'Countries'
 
   scenario 'shows a graph' do
     within '#content #country .graph' do

@@ -2,9 +2,11 @@
 $cBackground:       #75ADB5;
 $cDarkGreen:        #264C59;
 $cLinkColor:        #F7BD63; // pastel yellow
-$cGray:             #333333;
-$cLightGray:        #666666;
 $cWhite:            #ffffff;
+$cLightGray:        #cccccc;
+$cGray:             #333333;
+$cNormalGray:       #666666;
+$cDarkGray:         #999999;
 $cBlack:            #000000;
 
 $cConcessions:      #FF6699; // pink
@@ -14,6 +16,7 @@ $cMining:           #F2B257; // brown
 $cForest:           #B2D26E; // green
 $cFire:             #E95850; // red
 
+strong { font-weight: bold; } // This is sad, I know.
 
 .hidden { display:none; }
 

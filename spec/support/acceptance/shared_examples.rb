@@ -24,7 +24,7 @@ shared_examples 'title' do |title|
 
 end
 
-shared_examples 'menu' do
+shared_examples 'menu' do |option|
 
   scenario 'has a navigation menu' do
 
@@ -42,6 +42,13 @@ shared_examples 'menu' do
     end
 
   end
+
+  #scenario "has an option selected" do
+    #within 'header nav ul' do
+      #puts option
+      #page.should have_css 'li a.selected', :text => option
+    #end
+  #end
 
 end
 

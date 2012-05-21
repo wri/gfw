@@ -8,7 +8,7 @@ feature 'GFW Home' do
 
   include_examples 'common header'
   include_examples 'title', 'Find where forest clearing is happening right now'
-  include_examples 'menu'
+  include_examples 'menu', 'Home'
   include_examples 'filters'
 
   scenario 'has an hidden list of filters' do
