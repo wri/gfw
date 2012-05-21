@@ -28,8 +28,11 @@ shared_examples 'menu' do
 
   scenario 'has a navigation menu' do
 
-    within 'header nav' do
+    within 'header' do
       page.should have_link 'Global Forest Watch 2.0'
+    end
+
+    within 'header nav' do
       page.should have_css 'ul li a', :text => 'Home'
       page.should have_css 'ul li a', :text => 'Countries'
       page.should have_css 'ul li a', :text => 'Map'
