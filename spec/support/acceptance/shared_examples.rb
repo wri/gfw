@@ -45,6 +45,16 @@ shared_examples 'menu' do
 
 end
 
+shared_examples 'filters' do 
+  scenario 'shows a menu with filters for the map' do
+    within '#map_container .filters' do
+      ['concessions', 'protected areas', 'intact forest', 'mining', 'forest cover', 'forest', 'fire', 'carbon', 'biodiversity'].each do |filter_name|
+        page.should have_css 'li a', :text => filter_name
+      end
+    end
+  end
+end
+
 shared_examples 'download section' do
 
   scenario 'has a download section' do
@@ -87,3 +97,5 @@ shared_examples 'common footer' do
   end
 
 end
+
+

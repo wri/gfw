@@ -10,14 +10,7 @@ feature 'GFW explore map page' do
   include_examples 'common header'
   include_examples 'title'
   include_examples 'menu'
-
-  scenario 'shows a menu with filters for the map' do
-    within '#map_container .filters' do
-      ['concessions', 'protected areas', 'intact forest', 'mining', 'forest cover', 'forest', 'fire', 'carbon', 'biodiversity'].each do |filter_name|
-        page.should have_css 'li a', :text => filter_name
-      end
-    end
-  end
+  include_examples 'filters'
 
   context 'has a big map', :js => true do
 

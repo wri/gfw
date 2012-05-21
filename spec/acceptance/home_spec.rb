@@ -9,6 +9,12 @@ feature 'GFW Home' do
   include_examples 'common header'
   include_examples 'title', 'Find where forest clearing is happening right now'
   include_examples 'menu'
+  include_examples 'filters'
+
+  scenario 'has an hidden list of filters' do
+    page.should have_css '.filters', :class => 'hidden'
+  end
+
   scenario 'has a big map'
   scenario 'has a section with an action list' do
     within '#content .actions' do
