@@ -10,7 +10,88 @@
  *
  *= require_self
  *= require_tree .
-*/
+ */
 
 @import "compass";
 @import "compass/reset";
+@import "sprites";
+@import "helpers";
+
+body {
+  background: $cBackground;
+}
+
+header {
+  background:url(backgrounds/bkg_header.png);
+  height:247px;
+
+  .inner { width: 912px; margin: auto; }
+  & > .top {
+    background: rgba(117,173,181, 0.8);
+    height: 52px;
+  }
+}
+
+nav {
+  ul {
+    li {
+
+      @include inline-block();
+
+      a {
+
+        $height:26px;
+        $mL: 5px;
+        $pT: 6px;
+        $pR: 10px;
+        $pB: 5px;
+        $pL: 5px;
+
+        @include button('buttons/bkg_nav_button.png', $height, $mL, $pT, $pR, $pB, $pL);
+        background:none;
+        span { background:none; }
+        font: bold 12px sans-serif;
+        color: #75ADB5;
+
+        &.selected {
+          @include button('buttons/bkg_nav_button.png', $height, $mL, $pT, $pR, $pB, $pL);
+        }
+
+        &:hover {
+          @include button('buttons/bkg_nav_button_hover.png', $height, $mL, $pT, $pR, $pB, $pL);
+          color: #75ADB5;
+        }
+      } // a
+    } // li
+  } // ul
+} // nav
+
+footer {
+  background:url(backgrounds/bkg_footer.png);
+}
+
+#map { height:400px; }
+
+.download {
+  padding: 50px 0;
+  text-align:center;
+  background: $cDarkGreen;
+  color:#fff;
+}
+
+.btn {
+  @include button('buttons/bkg_button.png', 42px, 5px, 13px, 27px, 5px, 27px);
+
+  &:hover {
+    @extend .glow;
+  }
+
+  &.disabled {
+    @include button('buttons/bkg_button_disabled.png', 40px, 5px, 12px, 27px, 5px, 27px);
+    color:rgba(255, 255, 255, .3);
+
+    &:hover {
+      @extend .no-glow;
+    }
+  }
+}
