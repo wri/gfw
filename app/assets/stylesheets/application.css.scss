@@ -19,7 +19,7 @@ header {
   hgroup {
     position:relative;
     top: 55px;
-    width:450px;
+    width:400px;
 
     h1 {
       @extend .font-big;
@@ -52,13 +52,14 @@ header .inner nav {
   right: 10px;
 
   ul {
+
     li {
 
       @include inline-block();
 
       a {
 
-        $height:26px; $mL: 5px; $pT: 6px; $pR: 10px; $pB: 5px; $pL: 5px;
+        $height:26px; $mL: 5px; $pT: 7px; $pR: 10px; $pB: 5px; $pL: 5px;
 
         @include button('buttons/bkg_nav_button.png', $height, $mL, $pT, $pR, $pB, $pL);
         background:none;
@@ -148,13 +149,12 @@ footer .download {
 
       }
       &.analysis {
-        width:261px;
+        width:262px;
       }
       &.keep_updated {
         width:274px;
         margin: 0;
       }
-
 
       &.crowdsourcing .icon {
         top: -10px;
@@ -179,14 +179,14 @@ footer .download {
 
 
 .btn {
-  @include button('buttons/bkg_button.png', 42px, 5px, 13px, 27px, 5px, 27px);
+  @include button('buttons/bkg_button.png', 42px, 5px, 14px, 27px, 5px, 27px);
 
   &:hover {
     @extend .glow;
   }
 
   &.disabled {
-    @include button('buttons/bkg_button_disabled.png', 40px, 5px, 12px, 27px, 5px, 27px);
+    @include button('buttons/bkg_button_disabled.png', 40px, 5px, 13px, 27px, 5px, 27px);
     color:rgba(255, 255, 255, .3);
 
     &:hover {
