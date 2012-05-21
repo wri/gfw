@@ -4,6 +4,9 @@
     <title>Gfw</title>
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?sensor=false&language=<%= I18n.locale %>">
+    </script>
     <%= csrf_meta_tags %>
   </head>
   <body>
@@ -11,18 +14,6 @@
     <div id="content">
       <%= yield %>
     </div>
-
-    <div class="download">
-      <p>
-      <%= t('layouts.application.footer.download.interested_html') %>
-      </p>
-      <p>
-      <%= t('layouts.application.footer.download.data_html') %>
-      </p>
-    </div>
-
-
-
     <%= render "common/footer" %>
   </body>
 </html>
