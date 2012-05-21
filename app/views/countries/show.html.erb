@@ -6,18 +6,18 @@
 
 <div id="country">
 
-	<div class="graph">
-		<img src="" alt="" />
-	</div>
+  <div class="graph">
+    <img src="" alt="" />
+  </div>
 
-	<div class="count">
+  <div class="count">
     <h1><%= number_with_delimiter @country.alerts_count %></h1>
     <p>Forest clearing alerts in the last 15 days</p>
-	</div>
+  </div>
 
   <div class="map">
     <img src="" alt="" />
-  	<a id="explore" href=""></a>
+    <a id="explore" href=""></a>
   </div>
 
   <div id="details">
@@ -27,8 +27,8 @@
       <ul>
         <% @country.last_alerts.each do |alert| %>
           <li>
-            <span class="date"><%= l alert.to_date, :format => :custom %></span>
-            <span class="time"><%= l alert.to_time, :format => :custom %></span>
+          <span class="date"><%= l alert.to_date, :format => :custom %></span>
+          <span class="time"><%= l alert.to_time, :format => :custom %></span>
           </li>
         <% end %>
       </ul>
@@ -47,8 +47,8 @@
     <ul>
       <% @blog_posts.each do |post| %>
         <li>
-          <h5><%= post.title %></h5>
-          <%= simple_format truncate(post.body.strip, :length => 255, :omission => "... #{link_to t('.blog_posts.more')}") %>
+        <h5><%= post.title %></h5>
+        <%= simple_format truncate(post.body.strip, :length => 255, :omission => "... #{link_to t('.blog_posts.more')}") %>
         </li>
       <% end %>
     </ul>
