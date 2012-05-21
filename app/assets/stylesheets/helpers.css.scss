@@ -1,10 +1,21 @@
 /* Colors */
-$cBackground: #75ADB5;
-$cDarkGreen:  #264C59;
-$cLinkColor:  #F7BD63; // pastel yellow
-$cGray:       #333333;
-$cWhite:      #ffffff;
-$cBlack:      #000000;
+$cBackground:       #75ADB5;
+$cDarkGreen:        #264C59;
+$cLinkColor:        #F7BD63; // pastel yellow
+$cGray:             #333333;
+$cLightGray:        #666666;
+$cWhite:            #ffffff;
+$cBlack:            #000000;
+
+$cConcessions:      #FF6699; // pink
+$cConcessionsHover: #C04B73; // dark pink
+$cProtectedAreas:   #00CED0; // blue
+$cMining:           #F2B257; // brown
+$cForest:           #B2D26E; // green
+$cFire:             #E95850; // red
+
+
+.hidden { display:none; }
 
 .font-big {
   font: 200 33px "Georgia", serif;

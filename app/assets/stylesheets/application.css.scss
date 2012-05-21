@@ -41,8 +41,19 @@ header {
   .inner { position:relative; width: 912px; margin: auto; }
 
   & > .top {
+    position:relative;
     background: rgba(117,173,181, 0.8);
     height: 52px;
+
+    .selector {
+      position:absolute;
+      top: 15px;
+      right:0;
+      font: bold 11px "Helvetica Neue", sans-serif;
+      text-transform: uppercase;
+      text-decoration:none;
+      color: $cWhite;
+    }
   }
 }
 
@@ -88,9 +99,18 @@ header .inner nav {
 }
 
 footer {
+  .inner { position:relative; width: 912px; margin: auto; }
+
   .links {
     height:216px;
     background:url(backgrounds/bkg_footer.png) ;
+    font: 11px "Helvetica Neue";
+    color: $cLightGray;
+
+    .wri {
+      position:absolute;
+      right: 0;
+    }
   }
 }
 

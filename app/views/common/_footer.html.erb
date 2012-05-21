@@ -1,21 +1,26 @@
 <footer>
+  <div class="download">
+    <div class="inner">
+    <%= content_tag :h1, t('layouts.application.footer.download.interested_html') %>
+    <%= content_tag :p, t('layouts.application.footer.download.data_html') %>
+  </div>
+  </div>
 
-<div class="download">
-  <%= content_tag :h1, t('layouts.application.footer.download.interested_html') %>
-  <%= content_tag :p, t('layouts.application.footer.download.data_html') %>
-</div>
+  <div class="links">
+    <div class="inner">
+      <%= link_to image_tag(''), '', :class => 'google' %>
+      <%= link_to image_tag(''), '', :class => 'cfgd' %>
+      <%= link_to image_tag(''), '', :class => 'university_maryland' %>
+      <%= link_to image_tag(''), '', :class => 'imazon' %>
 
-<div class="links">
-  <%= link_to image_tag(''), '', :id => 'google' %>
-  <%= link_to image_tag(''), '', :id => 'cfgd' %>
-  <%= link_to image_tag(''), '', :id => 'university_maryland' %>
-  <%= link_to image_tag(''), '', :id => 'imazon' %>
-  <div class="wri">
-    <%= link_to image_tag(''), '', :id => 'wri' %>
-    <div class="address">
-      <p>10 G Street NE Suite 800, Washington, DC 20002,</p>
-      <p>USA / Phone +1 (202) 729-7600 / Fax +1 (202) 729-7610</p>
+      <div class="wri">
+        <%= link_to image_tag(''), '', :id => 'wri' %>
+        <div class="address">
+          <p>10 G Street NE Suite 800, Washington, DC 20002,</p>
+          <p>USA / Phone +1 (202) 729-7600 / Fax +1 (202) 729-7610</p>
+        </div>
+      </div>
+
     </div>
   </div>
-</div>
-</footer>
+  </footer>

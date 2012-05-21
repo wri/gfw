@@ -66,10 +66,10 @@ shared_examples 'common footer' do
 
     within 'footer .links' do
 
-      page.should have_css 'a#google img'
-      page.should have_css 'a#cfgd img'
-      page.should have_css 'a#university_maryland img'
-      page.should have_css 'a#imazon img'
+      page.should have_css 'a.google img'
+      page.should have_css 'a.cfgd img'
+      page.should have_css 'a.university_maryland img'
+      page.should have_css 'a.imazon img'
 
       within '.wri' do
 
