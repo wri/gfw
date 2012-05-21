@@ -7,7 +7,7 @@ feature 'GFW Home' do
   end
 
   include_examples 'common header'
-  include_examples 'title', 'Find where forest cleaning is happening right now'
+  include_examples 'title', 'Find where forest clearing is happening right now'
   include_examples 'menu'
   scenario 'has a big map'
   scenario 'has a section with some big icons' do

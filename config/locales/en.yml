@@ -22,7 +22,7 @@ en:
           data_html: 'You can also <a href="#">download all our data</a> in a .zip file.'
   home:
     index:
-      title: "Find where forest cleaning is happening right now"
+      title: "Find where forest clearing is happening right now"
       icons:
         crowdsourcing:
           title: 'Crowdsourcing'
