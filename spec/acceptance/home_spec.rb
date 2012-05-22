@@ -3,7 +3,9 @@ require_relative 'acceptance_helper'
 feature 'GFW Home' do
 
   background do
-    visit root_path
+    VCR.use_cassette('init_app') do
+      visit root_path
+    end
   end
 
   include_examples 'common header'

@@ -3,6 +3,12 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
+require 'vcr'
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/cassettes'
+  #c.hook_into :typhoeus
+end
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 

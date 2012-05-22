@@ -4,7 +4,9 @@ require_relative 'acceptance_helper'
 feature 'GFW country detail page' do
 
   background do
-    visit country_path
+    VCR.use_cassette('init_app') do
+      visit country_path
+    end
   end
 
   include_examples 'common header'

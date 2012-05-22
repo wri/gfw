@@ -4,7 +4,9 @@ require_relative 'acceptance_helper'
 feature 'GFW explore map page' do
 
   background do
-    visit map_path
+    VCR.use_cassette('init_app') do
+      visit map_path
+    end
   end
 
   include_examples 'common header'
@@ -43,26 +45,26 @@ feature 'GFW explore map page' do
   end
 
   scenario 'allows to define an area and to upload it to cartodb', :js => true do
+    VCR.use_cassette('upload_polygon') do
+      within '#map-container' do
 
-    within '#map-container' do
+        click_link 'Draw Area'
 
-      click_link 'Draw Area'
+        page.should have_link 'Draw Area', :visible => false
 
-      page.should have_link 'Draw Area', :visible => false
+        draw_polygon
 
-      5.times { map_click }
+        within 'form' do
+          fill_in 'area_email', :with => 'ferdev@vizzuality.com'
 
-      within 'form' do
-        fill_in 'area_email', :with => 'ferdev@vizzuality.com'
+          expect do
+            click_button 'Save Area'
+            sleep 2
+          end.to change{ Area.all.length }.by(1)
+        end
 
-        expect do
-          click_button 'Save Area'
-          sleep 2
-        end.to change{ Area.all.length }.by(1)
       end
-
     end
-
   end
 
   include_examples 'download section'
