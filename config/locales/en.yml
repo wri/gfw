@@ -36,17 +36,20 @@ en:
           title: 'Keep updated'
           text: "Subscribe to forest clearing alerts and receive weekly updates on your selected countries"
           link: 'Subscribe to a new alert'
-      map:
-        filters:
-          concessions: 'concessions'
-          protected_areas: 'protected areas'
-          intact_forest: 'intact forest'
-          mining: 'mining'
-          forest_cover: 'forest cover'
-          forest: 'forest'
-          fire: 'fire'
-          carbon: 'carbon'
-          biodiversity: 'biodiversity'
+  common:
+    filters:
+      concessions: 'Concessions'
+      protected_areas: 'Protected Areas'
+      intact_forest: 'Intact Forest'
+      mining: 'Mining'
+      forest_cover: 'Forest Cover'
+      forest: 'Forest'
+      fire: 'Fire'
+      carbon: 'Carbon'
+      biodiversity: 'Biodiversity'
+    map:
+      draw_area: 'Draw Area'
+      save_area: 'Save Area'
   countries:
     show:
       detail:

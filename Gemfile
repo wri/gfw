@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 3.2.3'
 
+gem 'cartodb-rb-client'
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
@@ -24,6 +26,7 @@ group :development, :test do
   gem 'rake'
   gem 'rspec-rails'
   gem 'capybara'
+  gem 'vcr'
   gem 'poltergeist'
   gem 'launchy'
 end
