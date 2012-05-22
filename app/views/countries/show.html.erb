@@ -23,8 +23,9 @@
         <ul>
           <% @country.last_alerts.each do |alert| %>
             <li>
-            <span class="date"><%= l alert.to_date, :format => :custom %></span>
-            <span class="time"><%= l alert.to_time, :format => :custom %></span>
+            <span class="date"><%= l alert[:date].to_date, :format => :custom %></span>
+            <span class="time"><%= l alert[:date].to_time, :format => :custom %></span>
+            <span class="count"><%= alert[:count] %> Alerts</span>
             </li>
           <% end %>
         </ul>

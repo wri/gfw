@@ -1,5 +1,6 @@
 //= require jquery
 //= require jquery_ujs
+//= require jquery.easing.1.3
 //= require_tree .
 
 $(function(){
@@ -11,8 +12,21 @@ $(function(){
 
   google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
     config.mapLoaded = true;
+    addCircle();
   });
 
+  function addCircle() {
+    var $circle = $('<div class="circle"><div class="inner"><div class="counter"></div><div class="title"></div></div></div>');
+
+    $circle.find(".counter").html(summary.count);
+    $circle.find(".title").html(summary.title);
+
+    $("#map").append($circle);
+    $circle.delay(250).animate({ top:'50%', marginTop:-1*($circle.height() / 2), opacity: 1 }, 250, "easeOutExpo", function() {
+      $circle.find(".inner .title").animate({ opacity: 0.75 }, 250, "easeOutExpo");
+      $circle.find(".inner .counter").animate({ opacity: 1 }, 250, "easeOutExpo");
+    });
+  }
 
   function ZoomIn(controlDiv, map) {
     controlDiv.setAttribute('class', 'zoom_in');

@@ -31,7 +31,7 @@ header {
 
       a {
         font: bold 12px "Helvetica Neue", sans-serif;
-        color: $cLinkColor;
+        color: $cLink;
         text-decoration: none;
         text-transform:uppercase;
       }
@@ -233,6 +233,14 @@ nav {
         border-bottom: 1px solid #f1f1f1;
         font: normal 15px "Helvetica Neue", sans-serif;
         color: $cNormalGray;
+
+        .count {
+          float:right;
+          color: #858585;
+          font: normal 13px "Helvetica Neue", sans-serif;
+          @include icons-sprite(bars, $offset-y: 4px);
+          padding-left: 15px;
+        }
       }
     }
 
@@ -241,6 +249,11 @@ nav {
 
   .description {
     width:285px;
+
+    p {
+      font: normal 15px "Helvetica Neue", sans-serif;
+      color: #666666;
+    }
 
     h4 {
       font-size:12px;
@@ -268,7 +281,7 @@ nav {
   @include button('buttons/bkg_button_hollow.png', 38px, 5px, 11px, 27px, 5px, 27px);
   font: bold 12px "Helvetica Neue", serif;
   text-transform: uppercase;
-  color: $cLinkColor;
+  color: $cLink;
 
   &:hover {
     @extend .no-glow;

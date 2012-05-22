@@ -14,15 +14,57 @@
     border-bottom: 1px solid #717D80;
   }
 
-  .inner { position:relative; width: 924px; margin: auto; }
+  & > .inner { position:relative; width: 924px; margin: auto; }
+
+  .circle {
+    $width: 318px;
+
+    top: -100px;
+    left: 50%;
+
+    position:absolute;
+    margin-left: -1*$width/2;
+    margin-top: -1*$width/2;
+
+    opacity:0;
+
+    width: $width;
+    height: $width;
+    @include icons-sprite(circle);
+
+    text-align:center;
+
+    .inner {
+      position:relative;
+      top:100px;
+    }
+
+    .inner > .title {
+      margin:auto;
+      width:175px;
+      font: normal 15px "Helvetica Neue", sans-serif;
+      color:$cWhite;
+      /*opacity:0.75;*/
+      opacity: 0;
+    }
+
+    .inner > .counter {
+      text-align:center;
+      font: normal 67px "Georgia", serif;
+      color: $cLink;
+      opacity: 0;
+    }
+  }
 
   .filters {
     position:absolute;
-    top: -38px - 40;
-    z-index:100;
+    top: -21px - 40;
+    z-index:0;
 
     padding: 40px 0 0 0;
     border-top: 1px solid $cLightGray;
+
+    &.active li .icon { display: block; }
 
     li {
       position:relative;
@@ -55,7 +97,7 @@
       &.carbon .line { background-color: $cLightGray;}
       &.biodiversity .line { background-color: $cLightGray; }
 
-      .icon  { position:absolute; top: -20px; left:50%; margin: -8px; width:16px; height:16px; }
+      .icon  { display:none; position:absolute; top: -20px; left:50%; margin: -8px; width:16px; height:16px; }
 
       &.concessions     .icon  { @include icons-sprite(concessions); }
       &.protected-areas .icon  { @include icons-sprite(protected_areas); }
@@ -76,7 +118,9 @@
       }
 
       a {
-        display:block;
+        display:none;
+        position:relative;
+        top: 25px;
         padding: 0 14px;
         margin: 0 0 18px 0;
 
@@ -123,7 +167,7 @@ footer .download {
     a { text-decoration: none; }
   }
 
-  a { color: $cLinkColor; }
+  a { color: $cLink; }
 }
 
 .actions {
@@ -248,13 +292,10 @@ footer .download {
 }
 
 .timeline  {
-
   position:absolute;
-
   bottom: 20px;
   left: 50%;
   margin-left: -1*924px / 2;
-
   width:924px;
   height:52px;
   z-index: 1000;
