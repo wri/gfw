@@ -55,7 +55,7 @@ end
 shared_examples 'filters' do 
   scenario 'shows a menu with filters for the map' do
     within '#map_container .filters' do
-      ['concessions', 'protected areas', 'intact forest', 'mining', 'forest cover', 'forest', 'fire', 'carbon', 'biodiversity'].each do |filter_name|
+      ['Concessions', 'Protected Areas', 'Intact Forest', 'Mining', 'Forest Cover', 'Forest', 'Fire', 'Carbon', 'Biodiversity'].each do |filter_name|
         page.should have_css 'li a', :text => filter_name
       end
     end

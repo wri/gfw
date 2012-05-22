@@ -1,0 +1,302 @@
+@import "compass";
+@import "compass/reset";
+@import "sprites";
+@import "helpers";
+
+#map_container {
+  position:relative;
+
+  .map {
+    width:100%;
+    height:400px;
+    margin:auto;
+    border-top: 1px solid #717D80;
+    border-bottom: 1px solid #717D80;
+  }
+
+  .inner { position:relative; width: 924px; margin: auto; }
+
+  .filters {
+    position:absolute;
+    top: -38px - 40;
+    z-index:100;
+
+    padding: 40px 0 0 0;
+    border-top: 1px solid $cLightGray;
+
+    li {
+      position:relative;
+      @include inline-block();
+      text-align: center;
+      margin: 0 1px 0 0;
+
+      transition: width 2s;
+      -moz-transition: width 2s; /* Firefox 4 */
+      -webkit-transition: width 2s; /* Safari and Chrome */
+      -o-transition: width 2s; /* Opera */
+
+      &.concessions a { color: $cConcessions; }
+      &.protected-areas a { color: $cProtectedAreas; }
+      &.intact-forest a { color: $cForest; }
+      &.mining a { color: $cMining; }
+      &.forest-cover a { color: $cForest; }
+      &.forest a { color: $cLightGray; }
+      &.fire a { color: $cFire; }
+      &.carbon a { color: $cLightGray;}
+      &.biodiversity a { color: $cLightGray; }
+
+      &.concessions .line  { background-color: $cConcessions; }
+      &.protected-areas .line { background-color: $cProtectedAreas; }
+      &.intact-forest .line { background-color: $cForest; }
+      &.mining .line { background-color: $cMining; }
+      &.forest-cover .line { background-color: $cForest; }
+      &.forest .line { background-color: $cForest; }
+      &.fire .line { background-color: $cFire; }
+      &.carbon .line { background-color: $cLightGray;}
+      &.biodiversity .line { background-color: $cLightGray; }
+
+      .icon  { position:absolute; top: -20px; left:50%; margin: -8px; width:16px; height:16px; }
+
+      &.concessions     .icon  { @include icons-sprite(concessions); }
+      &.protected-areas .icon  { @include icons-sprite(protected_areas); }
+      &.intact-forest   .icon  { @include icons-sprite(concessions); }
+      &.mining          .icon  { @include icons-sprite(mining); }
+      &.forest-cover    .icon  { @include icons-sprite(forest_cover); }
+      &.forest          .icon  { @include icons-sprite(forest_cover); }
+      &.fire            .icon  { @include icons-sprite(fire); }
+      &.carbon          .icon  { @include icons-sprite(concessions); }
+      &.biodiversity    .icon  { @include icons-sprite(concessions); }
+
+      .line {
+        position:relative;
+        bottom:0px;
+        left:0;
+        height: 4px;
+        width:auto;
+      }
+
+      a {
+        display:block;
+        padding: 0 14px;
+        margin: 0 0 18px 0;
+
+        color: #f1f1f1;
+        font: bold 12px "Helvetica Neue", sans-serif;
+        text-transform: uppercase;
+        text-decoration: none;
+      }
+    }
+
+  }
+
+}
+
+footer {
+  .inner { position:relative; width: 912px; margin: auto; }
+
+  .links {
+    height:216px;
+    background:url(backgrounds/bkg_footer.png) ;
+    font: 11px "Helvetica Neue";
+    color: $cNormalGray;
+
+    .wri {
+      position:absolute;
+      right: 0;
+    }
+  }
+}
+
+footer .download {
+  padding: 50px 0;
+  text-align:center;
+  background: $cDarkGreen;
+
+  h1 {
+    @extend .font-big;
+    margin: 0 0 4px 0;
+  }
+
+  p {
+    @extend .font-regular;
+
+    a { text-decoration: none; }
+  }
+
+  a { color: $cLinkColor; }
+}
+
+.actions {
+  padding: 51px 0 59px 0;
+
+  ul {
+    width:890px;
+    margin:auto;
+
+    li {
+      @include inline-block();
+      text-align:center;
+      margin: 0 50px 0 0;
+
+      h2 {
+        margin: 0 0 12px 0;
+        font:29px "Georgia", serif;
+        color: $cWhite;
+      }
+
+      p {
+        height:50px;
+        margin: 24px;
+        font: normal 15px "Helvetica Neue", serif;
+        color: $cBlack;
+        opacity:0.5;
+      }
+
+      .icon {
+        margin:auto;
+        height:92px;
+      }
+
+      &.crowdsourcing {
+        width:246px;
+
+      }
+      &.analysis {
+        width:262px;
+      }
+      &.keep_updated {
+        width:274px;
+        margin: 0;
+      }
+
+      &.crowdsourcing .icon {
+        top: -10px;
+        position:relative;
+        width:134px;
+        @include icons-sprite(crowdsourcing);
+      }
+
+      &.analysis .icon {
+        width:150px;
+        @include icons-sprite(analysis);
+      }
+
+      &.keep_updated .icon {
+        width:122px;
+        @include icons-sprite(updates);
+      }
+    }
+  }
+}
+
+.infowindow {
+  position:absolute;
+
+  top: 400px;
+  left: 100px;
+  width:211px;
+
+  font: 11px "Helvetica Neue", sans-serif;
+  color: $cDarkGray;
+
+  z-index:100;
+
+  & > .header {
+    position:relative;
+
+    height:45px - 34;
+    background:url(backgrounds/bkg_infowindow.png) no-repeat 0 0;
+    padding: 17px 23px;
+    text-transform:uppercase;
+
+    .close   { position:absolute; right: 15px; top: 22px; width: 6px; height:6px; @include icons-sprite(close_infowindow); }
+    .handler { position:absolute; left: 15px;  top: 22px; width: 3px; height:5px; @include icons-sprite(handler_infowindow); }
+  }
+
+  & > .content {
+    background:url(backgrounds/bkg_infowindow.png) repeat-y right 0;
+    padding: 15px 20px;
+
+    ul {
+      li {
+        @include inline-block();
+        width:82px;
+        color: $cDarkGray;
+        font-size:12px;
+      }
+    }
+  } // content
+
+  & > .b {
+    height:14px;
+    background:url(backgrounds/bkg_infowindow.png) no-repeat left -45px;
+  }
+}
+
+.tooltip {
+  position:absolute;
+  top: -20px; left: 0;
+  width:86px;
+  height:48px;
+  @include icons-sprite(timeline_tooltip);
+
+  span {
+    font: normal 13px "Helvetica Neue", sans-serif;
+    color: $cGray;
+    text-transform: uppercase;
+  }
+}
+
+.timeline  {
+
+  position:absolute;
+
+  bottom: 20px;
+  left: 50%;
+  margin-left: -1*924px / 2;
+
+  width:924px;
+  height:52px;
+  z-index: 1000;
+
+  background-color: $cWhite;
+  border-color:rgb(102,102,102);
+  border-width:1px;
+  -moz-border-radius:5px; // Firefox v1.0+
+  -webkit-border-radius:5px; // Safari v3.0+ and by Chrome v0.2+
+  border-radius:5px; // Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+
+  border-style:solid;
+  -moz-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);    // Firefox v3.5+
+  -webkit-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15); // Safari v3.0+ and by Chrome v0.2+
+  box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);         // Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+
+  -ms-filter:"progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=7)";
+  filter:progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=7);
+}
+
+
+#zoom_controls {
+
+  $zoomWidth: 36px;
+  $zoomHeight: 29px; // height of the top button + border line
+
+  position:absolute;
+
+  top:  15px;
+  left: 15px;
+
+  z-index: 1000;
+
+  .zoom_in, .zoom_out { position:relative; width: $zoomWidth; height: $zoomHeight; cursor: pointer; }
+
+  .zoom_in {
+    background: transparent url(icons/map_zoom.png) no-repeat 0 0;
+    &:hover { background: transparent url(icons/map_zoom.png) no-repeat -1*$zoomWidth 0; }
+    &:active { background: transparent url(icons/map_zoom.png) no-repeat -2*$zoomWidth 0; }
+  }
+
+  .zoom_out {
+    background: transparent url(icons/map_zoom.png) no-repeat 0 -1*$zoomHeight;
+    &:hover { background: transparent url(icons/map_zoom.png) no-repeat -1*$zoomWidth -1*$zoomHeight; }
+    &:active { background: transparent url(icons/map_zoom.png) no-repeat -2*$zoomWidth -1*$zoomHeight; }
+  }
+}

@@ -19,13 +19,7 @@ end %>
   <div class="t"></div><div class="b"></div>
 </div>
 
-<div id="map_container">
-  <div class="inner">
-    <ul class="filters hidden">
-      <li class="concessions"><%= link_to t('.map.filters.concessions') %><div class="line"></div></li><li class="protected-areas"><%= link_to t('.map.filters.protected_areas') %><div class="line"></div></li><li class="intact-forest"><%= link_to t('.map.filters.intact_forest') %><div class="line"></div></li><li class="mining"><%= link_to t('.map.filters.mining') %><div class="line"></div></li><li class="forest-cover"><%= link_to t('.map.filters.forest_cover') %><div class="line"></div></li><li class="forest"><%= link_to t('.map.filters.forest') %><div class="line"></div></li><li class="fire"><%= link_to t('.map.filters.fire') %><div class="line"></div></li><li class="carbon"><%= link_to t('.map.filters.carbon') %><div class="line"></div></li><li class="biodiversity"><%= link_to t('.map.filters.biodiversity') %><div class="line"></div></li></ul>
-  </div>
-  <div id="map" class="map"></div>
-</div>
+<%= render "common/map" %>
 
 <div class="actions">
   <ul>
@@ -51,3 +45,4 @@ end %>
     </li>
   </ul>
 </div>
+

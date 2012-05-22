@@ -15,45 +15,43 @@
     <p>Forest clearing alerts in the last 15 days</p>
   </div>
 
-  <div id="map_container">
-    <div id="map" class="map">
-      <img src="" alt="" />
-      <a id="explore" href=""></a>
+  <div class="details">
+    <div class="inner">
+
+      <div class="alerts">
+        <h4><%= t('.detail.alerts.title') %></h4>
+        <ul>
+          <% @country.last_alerts.each do |alert| %>
+            <li>
+            <span class="date"><%= l alert.to_date, :format => :custom %></span>
+            <span class="time"><%= l alert.to_time, :format => :custom %></span>
+            </li>
+          <% end %>
+        </ul>
+        <%= link_to (content_tag :span, t('.detail.alerts.subscribe')), {}, :class => "btn hollow" %>
+      </div>
+
+      <div class="description">
+        <h4><%= t('.detail.description.title') %></h4>
+        <%= simple_format truncate(@country.description, :length => 255) %>
+        <%= link_to t('.detail.description.read_more') %>
+      </div>
     </div>
   </div>
 
-  <div id="details">
+  <div class="blog-links">
+    <div class="inner">
+      <h3><%= t('.blog_posts.title') %></h3>
 
-    <div class="alerts">
-      <h4><%= t('.detail.alerts.title') %></h4>
       <ul>
-        <% @country.last_alerts.each do |alert| %>
+        <% @blog_posts.each do |post| %>
           <li>
-          <span class="date"><%= l alert.to_date, :format => :custom %></span>
-          <span class="time"><%= l alert.to_time, :format => :custom %></span>
+          <h2><%= post.title %></h2>
+          <%= simple_format truncate(post.body.strip, :length => 255, :omission => "... #{link_to t('.blog_posts.more')}") %>
           </li>
         <% end %>
       </ul>
-      <%= link_to t('.detail.alerts.subscribe') %>
-    </div>)
-
-    <div class="description">
-      <%= simple_format truncate(@country.description, :length => 255) %>
-      <%= link_to t('.detail.description.read_more') %>
     </div>
-
-  </div>
-
-  <div class="blog_posts">
-    <h3><%= t('.blog_posts.title') %></h3>
-    <ul>
-      <% @blog_posts.each do |post| %>
-        <li>
-        <h5><%= post.title %></h5>
-        <%= simple_format truncate(post.body.strip, :length => 255, :omission => "... #{link_to t('.blog_posts.more')}") %>
-        </li>
-      <% end %>
-    </ul>
   </div>
 
 </div>

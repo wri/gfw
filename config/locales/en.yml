@@ -54,6 +54,7 @@ en:
           title: 'Last forest clearing alerts'
           subscribe: 'Subscribe to this country'
         description:
+          title: 'About the country'
           read_more: 'Read more at Wikipedia'
       blog_posts:
         title: 'Central African Republic Blog Stories'

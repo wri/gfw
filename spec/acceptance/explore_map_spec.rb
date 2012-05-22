@@ -17,7 +17,7 @@ feature 'GFW explore map page' do
     scenario 'properly loaded' do
       within '#map_container #map' do
         sleep 2
-        page.evaluate_script('mapLoaded').should be_true
+        page.evaluate_script('config.mapLoaded').should be_true
       end
     end
 

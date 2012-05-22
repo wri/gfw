@@ -2,6 +2,7 @@
 $cBackground:       #75ADB5;
 $cDarkGreen:        #264C59;
 $cLinkColor:        #F7BD63; // pastel yellow
+$cGreen:            #74ACB4;
 $cWhite:            #ffffff;
 $cLightGray:        #cccccc;
 $cGray:             #333333;
@@ -20,6 +21,14 @@ strong { font-weight: bold; } // This is sad, I know.
 
 .hidden { display:none; }
 
+.classic-hover {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 .font-big {
   font: 200 33px "Georgia", serif;
   color: $cWhite;
@@ -31,9 +40,9 @@ strong { font-weight: bold; } // This is sad, I know.
 }
 
 .shadow-transition {
-  -webkit-transition: -webkit-box-shadow 0.5s ease-out;
-  -moz-transition: -moz-box-shadow 0.5s ease-out;
-  -o-transition: box-shadow 0.5s ease-out;
+  -webkit-transition: -webkit-box-shadow 0.3s ease-out;
+  -moz-transition: -moz-box-shadow 0.3s ease-out;
+  -o-transition: box-shadow 0.3s ease-out;
 }
 
 .no-glow {
@@ -55,6 +64,7 @@ strong { font-weight: bold; } // This is sad, I know.
 
 @mixin button($url, $height, $mL, $pT, $pR, $pB, $pL) {
   @include inline-block();
+
   height:$height;
   background: url($url) no-repeat left bottom;
   color:#fff;
