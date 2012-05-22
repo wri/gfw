@@ -2,14 +2,17 @@
 //= require jquery_ujs
 //= require_tree .
 
-$(function(){
+// Map needs to be a global var or
+// CapybaraHelpers#draw_polygon won't work
+var map = null;
 
-  var map = new google.maps.Map(document.getElementById("map"), config.mapOptions)
-    , renderPolygonListener = null
+$(function(){
+  var renderPolygonListener = null
     , polygonPath = []
     , polygon = null
     ;
 
+  map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
   map.mapTypes.set('GfwStyle', config.gfwStyle);
   map.setMapTypeId('GfwStyle');
 
