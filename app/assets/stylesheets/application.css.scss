@@ -1,7 +1,6 @@
-/*
- *= require_self
- *= require_tree .
- */
+//= require_self
+//= require fonts
+//= require_tree .
 
 @import "compass";
 @import "compass/reset";
@@ -279,7 +278,7 @@ nav {
 .btn.hollow {
 
   @include button('buttons/bkg_button_hollow.png', 38px, 5px, 11px, 27px, 5px, 27px);
-  font: bold 12px "Helvetica Neue", serif;
+  font: normal 12px "Futura", serif;
   text-transform: uppercase;
   color: $cLink;
 

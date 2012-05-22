@@ -8,10 +8,10 @@
 var map = null;
 
 $(function(){
-  var renderPolygonListener = null
-    , polygonPath = []
-    , polygon = null
-    ;
+  var
+  renderPolygonListener = null,
+  polygonPath           = [],
+  polygon               = null;
 
   map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
   map.mapTypes.set('GfwStyle', config.gfwStyle);
@@ -99,19 +99,17 @@ $(function(){
   });
 
   // Disables editing mode. Sends the created polygon to cartodb.
-  $('#map-container').find('.save-area')
-  .submit(function(e){
+  $('#map-container').find('.save-area').submit(function(e){
     e.preventDefault();
     $(this).closest('#map-container').toggleClass('editing-mode');
+
     $(this).find('#area_the_geom').val("ST_GeomFromGeoJSON('" + JSON.stringify({
-        "type": "Polygon",
-        "coordinates": [
-            [
-                $.map(polygonPath, function(latlong, index){
-                  return [latlong.lng(), latlong.lat()]
-                })
-            ]
-        ]
+      "type": "Polygon",
+      "coordinates": [
+        [
+          $.map(polygonPath, function(latlong, index){
+        return [latlong.lng(), latlong.lat()];
+      })]]
     }) + "')");
 
     $.post($(this).attr('action'), $(this).serialize(), function(response){

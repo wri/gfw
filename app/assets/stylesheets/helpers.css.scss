@@ -80,5 +80,7 @@ strong { font-weight: bold; } // This is sad, I know.
     padding: $pT $pR $pB $pL;
     background: url($url) repeat-x right top;
     white-space:nowrap;
+
+    font: normal 12px "Futura", serif;
   }
 }
