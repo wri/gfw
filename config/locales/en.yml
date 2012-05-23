@@ -34,8 +34,8 @@ en:
           link: 'Contribute Now'
         keep_updated:
           title: 'Keep updated'
-          text: "Subscribe to forest clearing alerts and receive weekly updates on your selected countries"
-          link: 'Subscribe to a new alert'
+          text: "Subscribe to forest clearing alerts and receive frequent updates on your selected countries"
+          link: 'Subscribe to alerts'
   common:
     filters:
       concessions: 'Concessions'

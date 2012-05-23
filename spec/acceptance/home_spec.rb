@@ -35,8 +35,8 @@ feature 'GFW Home' do
 
       within '.keep_updated' do
         page.should have_css 'h2', :text => 'Keep updated'
-        page.should have_content 'Subscribe to forest clearing alerts and receive weekly updates on your selected countries'
-        page.should have_link 'Subscribe to a new alert'
+        page.should have_content 'Subscribe to forest clearing alerts and receive frequent updates on your selected countries'
+        page.should have_link 'Subscribe to alerts'
       end
 
     end

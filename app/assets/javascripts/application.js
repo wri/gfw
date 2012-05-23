@@ -13,6 +13,20 @@ $(function(){
   polygonPath           = [],
   polygon               = null;
 
+
+  var p = 0;
+  $(".advance").on("click", function() {
+    var
+    $inner = $(".filters .inner"),
+    $el    = $inner.find("li:nth(" + p +")"),
+    width  = $el.width() + 1;
+
+    $(".filters .inner").animate({ left:"-=" + width }, 250, "easeInExpo", function() {
+      $(this).find('li:last').after($el);
+      $(this).css("left", 0);
+    });
+  });
+
   map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
   map.mapTypes.set('GfwStyle', config.gfwStyle);
   map.setMapTypeId('GfwStyle');

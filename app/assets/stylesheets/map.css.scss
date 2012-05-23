@@ -14,7 +14,6 @@
     border-bottom: 1px solid #717D80;
   }
 
-  & > .inner { position:relative; width: 924px; margin: auto; }
 
   .circle {
     $width: 318px;
@@ -56,26 +55,67 @@
     }
   }
 
+  .draw { position:absolute; top: 20px; left: 70px; z-index:100; }
+
   .filters {
+    $width: 924px;
+
     position:absolute;
-    top: -21px - 40;
-    z-index:0;
+    width: $width;
+    top: -61px;
+
+    @include absolute-center($width);
+    @include clearfix-micro();
+    overflow:hidden;
 
     padding: 40px 0 0 0;
+
     border-top: 1px solid $cLightGray;
+    z-index:0;
+  }
+
+  .filters .advance {
+    display:block;
+    position:absolute;
+    right: 10px;
+    top: 20px;
+    width:20px;
+    height:20px;
+    @include icons-sprite(arrow_right);
+    z-index:20;
+
+    &:hover {
+      @include icons-sprite(arrow_right_hover);
+    }
+
+    &:active {
+      @include icons-sprite(arrow_right_active);
+    }
+
+  }
+
+  .filters .white-shadow {
+    width:117px;
+    height:51px;
+    top: 10px;
+    right: -30px;
+    position:absolute;
+    background:url(backgrounds/bkg_filter_gradient.png) no-repeat;
+    z-index:10;
+  }
+
+  .filters .inner { position:relative; }
+  .filters ul {
+    width:3000px;
 
     &.active li .icon { display: block; }
 
     li {
       position:relative;
-      @include inline-block();
-      text-align: center;
+      float:left;
       margin: 0 1px 0 0;
 
-      transition: width 2s;
-      -moz-transition: width 2s; /* Firefox 4 */
-      -webkit-transition: width 2s; /* Safari and Chrome */
-      -o-transition: width 2s; /* Opera */
+      text-align: center;
 
       &.concessions a { color: $cConcessions; }
       &.protected-areas a { color: $cProtectedAreas; }
@@ -118,9 +158,8 @@
       }
 
       a {
-        display:none;
         position:relative;
-        top: 25px;
+        top: -15px;
         padding: 0 14px;
         margin: 0 0 18px 0;
 

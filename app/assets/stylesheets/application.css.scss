@@ -12,7 +12,7 @@ body {
 }
 
 header {
-  background:url(backgrounds/bkg_header.png);
+  background:url(backgrounds/bkg_header.png) repeat-x top center;
   height:247px;
 
   hgroup {
@@ -268,6 +268,7 @@ nav {
 .btn {
 
   @include button('buttons/bkg_button.png', 42px, 5px, 14px, 27px, 5px, 27px);
+  font: normal 12px "Futura", serif;
 
   &:hover {
     @extend .glow;
