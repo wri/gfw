@@ -55,5 +55,6 @@ config.mapOptions = {
   mapTypeControl: true,
   scaleControl: false,
   streetViewControl: false,
-  overviewMapControl: false
+  overviewMapControl: false,
+  scrollwheel: false
 };

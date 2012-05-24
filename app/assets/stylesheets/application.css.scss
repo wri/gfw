@@ -15,6 +15,15 @@ header {
   background:url(backgrounds/bkg_header.png) repeat-x top center;
   height:247px;
 
+  .logo {
+    position:relative;
+    top: 10px;
+    display: block;
+    width:92px;
+    height: 31px;
+    @include icons-sprite(logo_wri);
+  }
+
   hgroup {
     position:relative;
     top: 52px;
