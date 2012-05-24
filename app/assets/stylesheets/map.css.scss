@@ -314,6 +314,11 @@ footer .download {
   height: 12px;
   @include icons-sprite(timeline_handle);
   @extend .disable-selection;
+
+  &.hidden {
+    display:block;
+    @include icons-sprite(timeline_handle_hidden);
+  }
 }
 
 .timeline .years {
@@ -344,6 +349,7 @@ $timelineWidth: 953px;
   width:$timelineWidth - 8px;
   height:52px;
   background:url(backgrounds/bkg_timeline_dots_full.png) no-repeat 45px 24px;
+  @extend .disable-selection;
 }
 
 

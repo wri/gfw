@@ -38,101 +38,16 @@ var map = null;
 })(window);
 
 $(function(){
+
   var
   renderPolygonListener = null,
-  polygonPath           = [],
-  polygon               = null;
-
-  var dates = [
-    [0,   30,  null],
-    [40,  150, 2006],
-    [160, 180, null],
-    [190, 300, 2007],
-    [310, 330, null],
-    [340, 450, 2008],
-    [460, 480, null],
-    [490, 600, 2009],
-    [500, 630, null],
-    [640, 750, 2010],
-    [760, 780, null],
-    [790, 900, 2011],
-    [910, 930, null]
-  ];
-
-  function setDate(pos) {
-    var
-    match    = false,
-    $tooltip = $(".tooltip");
-
-    _.each(dates, function(i, j) {
-      if (pos >= i[0] && pos <= i[1]) {
-
-        if (i[2]) {
-          var
-          monthPos = ( -1*i[0] + pos) / 10,
-          month    = config.MONTHNAMES_SHORT[monthPos];
-
-          $tooltip.find("div").html("<strong>" + month + "</strong> " + i[2]);
-
-          match = true;
-        } else {
-
-          if (dates[ j + 1 ]) {
-            $(".timeline").find(".handle").css("left", dates[ j + 1 ][0]);
-          } else {
-            $(".timeline").find(".handle").css("left", dates[ j - 1 ][1]);
-          }
-        }
-
-        return;
-      }
-    });
-
-    if (!match) {
-
-      $tooltip.fadeOut(150, function() {
-        $(this).addClass("hidden");
-      });
-
-    } else {
-
-        if ($tooltip.hasClass("hidden")) {
-          $tooltip.fadeIn(150, function() {
-            $(this).removeClass("hidden");
-          });
-
-        }
-    }
-  }
+  polygon               = null,
+  polygonPath           = [];
 
   $(".infowindow").draggable({ containment: "#map-container .map", handle: ".header" });
-  $(".timeline .handle").draggable({
-    containment: "parent",
-    grid: [10, 0],
-    axis: "x",
-    drag: function() {
-      var left = $(this).position().left;
-      var pos = left + 8 - ($(".tooltip").width() / 2);
-      $(".tooltip").css({left: pos});
-
-      setDate(left);
-
-    },
-    stop: function() {
-      var left = $(this).position().left;
-      console.log(left);
-
-      var pos = left + 8 - ($(".tooltip").width() / 2);
-      $(".tooltip").css({left: pos});
-
-      setDate(left);
-
-    }
-  });
-
 
   $(".filters").on("mouseenter", function() {
-    $(".layers").animate({opacity:1}, 150);
+    $(".layers").animate({ opacity: 1 }, 150);
   });
 
   function calcFiltersPosition() {
@@ -141,9 +56,9 @@ $(function(){
     });
   }
 
-  calcFiltersPosition();
+  function advanceFilter(e) {
+    e.preventDefault();
 
-  $(".advance").on("click", function() {
     var
     $inner = $(".filters .inner"),
     $el    = $inner.find("li:first"),
@@ -155,7 +70,11 @@ $(function(){
 
       calcFiltersPosition();
     });
-  });
+  }
+
+  calcFiltersPosition();
+
+  $(".advance").on("click", advanceFilter);
 
   var pids = [];
 
