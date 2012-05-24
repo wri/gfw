@@ -24,24 +24,23 @@ var Timeline = (function() {
     $(".tooltip").css({ left: pos });
   }
 
-  function _changeDate(pos, i) {
+  function _changeDate(pos, date) {
     var
-    monthPos = ( -1*i[0] + pos) / 10,
+    monthPos = ( -1 * date[0] + pos) / 10,
     month    = config.MONTHNAMES_SHORT[monthPos];
 
-    $tooltip.find("div").html("<strong>" + month + "</strong> " + i[2]);
+    $tooltip.find("div").html("<strong>" + month + "</strong> " + date[2]);
   }
 
   function _setDate(pos, stop) {
-    var
-    match      = false;
+    _.each(dates, function(date, j) {
 
-    _.each(dates, function(i, j) {
-      if (pos >= i[0] && pos <= i[1]) {
+      if (pos >= date[0] && pos <= date[1]) {
 
-        if (i[2]) {
-          _changeDate(pos, i);
-          match = true;
+        if ( date[2] ) {
+
+          _changeDate(pos, date);
+
         } else {
 
           var
@@ -51,32 +50,15 @@ var Timeline = (function() {
           $handle.css("left", newPosition);
 
           if (stop) {
-            match = true;
             _centerTooltip(newPosition);
-            _changeDate(newPosition, newDate);
           }
+
+          _changeDate(newPosition, newDate);
         }
 
         return;
       }
     });
-
-
-    if (!match) {
-
-      $tooltip.fadeOut(150, function() {
-        $(this).addClass("hidden");
-      });
-
-    } else {
-      if ($tooltip.hasClass("hidden")) {
-
-        $tooltip.fadeIn(150, function() {
-          $(this).removeClass("hidden");
-        });
-
-      }
-    }
   }
 
   $(function() { // init function

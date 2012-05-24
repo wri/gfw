@@ -45,6 +45,12 @@ $(function(){
   polygonPath           = [];
 
   $(".infowindow").draggable({ containment: "#map-container .map", handle: ".header" });
+  $(".infowindow .close").on("click", function(e) {
+    e.preventDefault();
+    $(".infowindow").animate({ marginTop: 50, opacity: 0}, 250, "easeOutExpo", function() {
+      $(this).hide();
+    });
+  });
 
   $(".filters").on("mouseenter", function() {
     $(".layers").animate({ opacity: 1 }, 150);

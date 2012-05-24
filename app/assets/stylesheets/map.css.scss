@@ -152,64 +152,64 @@
   .filters .inner { position:relative; }
   .filters .inner > ul { width:3000px; }
   .filters .inner > ul  > li {
+    position:relative;
+    float:left;
+    margin: 0 1px 0 0;
+    top: -30px;
+    padding:30px 0 0 0;
+
+    text-align: center;
+
+    &.concessions a     { color: $cConcessions; }
+    &.protected-areas a { color: $cProtectedAreas; }
+    &.intact-forest a   { color: $cForest; }
+    &.mining a          { color: $cMining; }
+    &.forest-cover a    { color: $cForest; }
+    &.forest a          { color: $cLightGray; }
+    &.fire a            { color: $cFire; }
+    &.carbon a          { color: $cLightGray;}
+    &.biodiversity a    { color: $cLightGray; }
+
+    &.concessions .line     { background-color: $cConcessions; }
+    &.protected-areas .line { background-color: $cProtectedAreas; }
+    &.intact-forest .line   { background-color: $cForest; }
+    &.mining .line          { background-color: $cMining; }
+    &.forest-cover .line    { background-color: $cForest; }
+    &.forest .line          { background-color: $cForest; }
+    &.fire .line            { background-color: $cFire; }
+    &.carbon .line          { background-color: $cLightGray;}
+    &.biodiversity .line    { background-color: $cLightGray; }
+
+    .icon  { position:absolute; top: -20px; left:50%; margin: -8px; width:16px; height:16px; }
+
+    &.concessions     .icon  { @include icons-sprite(concessions); }
+    &.protected-areas .icon  { @include icons-sprite(protected_areas); }
+    &.intact-forest   .icon  { @include icons-sprite(concessions); }
+    &.mining          .icon  { @include icons-sprite(mining); }
+    &.forest-cover    .icon  { @include icons-sprite(forest_cover); }
+    &.forest          .icon  { @include icons-sprite(forest_cover); }
+    &.fire            .icon  { @include icons-sprite(fire); }
+    &.carbon          .icon  { @include icons-sprite(concessions); }
+    &.biodiversity    .icon  { @include icons-sprite(concessions); }
+
+    .line {
       position:relative;
-      float:left;
-      margin: 0 1px 0 0;
-      top: -30px;
-      padding:30px 0 0 0;
+      bottom:0px;
+      left:0;
+      height: 4px;
+      width:auto;
+    }
 
-      text-align: center;
+    & > a {
+      position:relative;
+      top: -15px;
+      padding: 0 14px;
+      margin: 0 0 18px 0;
 
-      &.concessions a     { color: $cConcessions; }
-      &.protected-areas a { color: $cProtectedAreas; }
-      &.intact-forest a   { color: $cForest; }
-      &.mining a          { color: $cMining; }
-      &.forest-cover a    { color: $cForest; }
-      &.forest a          { color: $cLightGray; }
-      &.fire a            { color: $cFire; }
-      &.carbon a          { color: $cLightGray;}
-      &.biodiversity a    { color: $cLightGray; }
-
-      &.concessions .line     { background-color: $cConcessions; }
-      &.protected-areas .line { background-color: $cProtectedAreas; }
-      &.intact-forest .line   { background-color: $cForest; }
-      &.mining .line          { background-color: $cMining; }
-      &.forest-cover .line    { background-color: $cForest; }
-      &.forest .line          { background-color: $cForest; }
-      &.fire .line            { background-color: $cFire; }
-      &.carbon .line          { background-color: $cLightGray;}
-      &.biodiversity .line    { background-color: $cLightGray; }
-
-      .icon  { position:absolute; top: -20px; left:50%; margin: -8px; width:16px; height:16px; }
-
-      &.concessions     .icon  { @include icons-sprite(concessions); }
-      &.protected-areas .icon  { @include icons-sprite(protected_areas); }
-      &.intact-forest   .icon  { @include icons-sprite(concessions); }
-      &.mining          .icon  { @include icons-sprite(mining); }
-      &.forest-cover    .icon  { @include icons-sprite(forest_cover); }
-      &.forest          .icon  { @include icons-sprite(forest_cover); }
-      &.fire            .icon  { @include icons-sprite(fire); }
-      &.carbon          .icon  { @include icons-sprite(concessions); }
-      &.biodiversity    .icon  { @include icons-sprite(concessions); }
-
-      .line {
-        position:relative;
-        bottom:0px;
-        left:0;
-        height: 4px;
-        width:auto;
-      }
-
-      & > a {
-        position:relative;
-        top: -15px;
-        padding: 0 14px;
-        margin: 0 0 18px 0;
-
-        color: #f1f1f1;
-        font: bold 12px "Helvetica Neue", sans-serif;
-        text-transform: uppercase;
-        text-decoration: none;
+      color: #f1f1f1;
+      font: bold 12px "Helvetica Neue", sans-serif;
+      text-transform: uppercase;
+      text-decoration: none;
     }
   }
 }
@@ -326,6 +326,7 @@ footer .download {
   top: 20px;
 
   li {
+
     &:nth-child(1) { margin-left: 15px; margin-right: 122px; }
     &:nth-child(2) { margin-right: 122px; }
     &:nth-child(3) { margin-right: 121px; }
@@ -382,6 +383,7 @@ $timelineWidth: 953px;
   width:$timelineWidth;
   height:52px;
   z-index: 1000;
+  cursor: default;
 
   background-color: $cWhite;
   border-color:rgb(102,102,102);
