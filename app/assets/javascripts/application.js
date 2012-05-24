@@ -43,22 +43,47 @@ $(function(){
   polygonPath           = [],
   polygon               = null;
 
-  var dates = [ [40, 150,  2006], [190, 300, 2007], [340, 450, 2008], [490, 600, 2009], [640, 750, 2010], [790, 900, 2011] ];
+  var dates = [
+    [0,   30,  null],
+    [40,  150, 2006],
+    [160, 180, null],
+    [190, 300, 2007],
+    [310, 330, null],
+    [340, 450, 2008],
+    [460, 480, null],
+    [490, 600, 2009],
+    [500, 630, null],
+    [640, 750, 2010],
+    [760, 780, null],
+    [790, 900, 2011],
+    [910, 930, null]
+  ];
 
   function setDate(pos) {
     var
     match    = false,
     $tooltip = $(".tooltip");
 
-    _.each(dates, function(i) {
+    _.each(dates, function(i, j) {
       if (pos >= i[0] && pos <= i[1]) {
-        var
-        monthPos = ( -1*i[0] + pos) / 10,
-        month    = config.MONTHNAMES_SHORT[monthPos];
 
-        $tooltip.find("div").html("<strong>" + month + "</strong> " + i[2]);
+        if (i[2]) {
+          var
+          monthPos = ( -1*i[0] + pos) / 10,
+          month    = config.MONTHNAMES_SHORT[monthPos];
 
-        match = true;
+          $tooltip.find("div").html("<strong>" + month + "</strong> " + i[2]);
+
+          match = true;
+        } else {
+
+          if (dates[ j + 1 ]) {
+            $(".timeline").find(".handle").css("left", dates[ j + 1 ][0]);
+          } else {
+            $(".timeline").find(".handle").css("left", dates[ j - 1 ][1]);
+          }
+        }
+
         return;
       }
     });

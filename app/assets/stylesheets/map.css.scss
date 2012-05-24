@@ -237,7 +237,7 @@ footer {
 
       & > .wri { width:92px; height: 31px; margin: 10px 0 20px 0; @include icons-sprite(logo_wri); }
 
-      address { width:266px; }
+      address { width:266px; color: $cNormalGray; font-size:11px; line-height:120%; }
     }
   }
 }

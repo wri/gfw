@@ -65,6 +65,8 @@ strong { font-weight: bold; } // This is sad, I know.
 @mixin button($url, $height, $mL, $pT, $pR, $pB, $pL) {
   @include inline-block();
 
+  position:relative;
+
   height:$height;
   background: url($url) no-repeat left bottom;
   color:#fff;

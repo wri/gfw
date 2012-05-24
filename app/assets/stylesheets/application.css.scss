@@ -262,7 +262,7 @@ nav {
     width:285px;
 
     p {
-      height: 278px;
+      height: 285px;
       margin: 0 0 20px 0;
       font: 15px "Helvetica Neue", sans-serif;
       font-weight:300;
@@ -316,6 +316,33 @@ nav {
     @extend .no-glow;
   }
 
+}
+
+.btn.with-icon {
+  span {
+    padding-right: 45px;
+    padding-left: 10px;
+  }
+
+  &:hover {
+    @include button('buttons/bkg_button_hollow.png', 38px, 5px, 11px, 27px, 5px, 27px);
+    color: $cLink;
+
+    span {
+      padding-right: 45px;
+      padding-left: 10px;
+    }
+  }
+
+  .icon {
+    &.wikipedia {
+      position:absolute;
+      top: 1px; right: 1px;
+      @include icons-sprite(wikipedia);
+      width: 40px;
+      height:36px;
+    }
+  }
 }
 
 #map-container .save-area {
