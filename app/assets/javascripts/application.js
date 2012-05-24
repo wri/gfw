@@ -17,7 +17,7 @@ $(function(){
 
 
 
-  $(".infowindow").draggable({ handle: ".header" });
+  $(".infowindow").draggable({ containment: ".map", handle: ".header" });
   $(".timeline .handler").draggable({
     containment: "parent",
     grid: [10, 0],
