@@ -109,15 +109,15 @@ strong { font-weight: bold; } // This is sad, I know.
 
 // Different filter elements
 .filter-links {
-  &.concessions a     { color: $cConcessions; }
+  &.concessions     a { color: $cConcessions; }
   &.protected-areas a { color: $cProtectedAreas; }
-  &.intact-forest a   { color: $cForest; }
-  &.mining a          { color: $cMining; }
-  &.forest-cover a    { color: $cForest; }
-  &.forest a          { color: $cLightGray; }
-  &.fire a            { color: $cFire; }
-  &.carbon a          { color: $cLightGray;}
-  &.biodiversity a    { color: $cLightGray; }
+  &.intact-forest   a { color: $cForest; }
+  &.mining          a { color: $cMining; }
+  &.forest-cover    a { color: $cForest; }
+  &.forest          a { color: $cLightGray; }
+  &.fire            a { color: $cFire; }
+  &.carbon          a { color: $cLightGray;}
+  &.biodiversity    a { color: $cLightGray; }
 }
 
 .filter-icons {
@@ -133,14 +133,14 @@ strong { font-weight: bold; } // This is sad, I know.
 }
 
 .filter-lines {
-  &.concessions .line     { background-color: $cConcessions; }
-  &.protected-areas .line { background-color: $cProtectedAreas; }
-  &.intact-forest .line   { background-color: $cForest; }
-  &.mining .line          { background-color: $cMining; }
-  &.forest-cover .line    { background-color: $cForest; }
-  &.forest .line          { background-color: $cForest; }
-  &.fire .line            { background-color: $cFire; }
-  &.carbon .line          { background-color: $cLightGray;}
-  &.biodiversity .line    { background-color: $cLightGray; }
+  &.concessions      .line { background-color: $cConcessions; }
+  &.protected-areas  .line { background-color: $cProtectedAreas; }
+  &.intact-forest    .line { background-color: $cForest; }
+  &.mining           .line { background-color: $cMining; }
+  &.forest-cover     .line { background-color: $cForest; }
+  &.forest           .line { background-color: $cForest; }
+  &.fire             .line { background-color: $cFire; }
+  &.carbon           .line { background-color: $cLightGray;}
+  &.biodiversity     .line { background-color: $cLightGray; }
 }
 

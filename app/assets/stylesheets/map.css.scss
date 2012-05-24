@@ -309,12 +309,25 @@ footer .download {
 
 .timeline .handle {
   position:absolute;
-  top: 20px;
+  top: -26px;
   left: 40px;
-  width: 14px;
-  height: 12px;
-  @include icons-sprite(timeline_handle);
+  width: 86px;
+  height: 58px;
+  @include icons-sprite(timeline_handle_2);
   @extend .disable-selection;
+  cursor:col-resize;
+
+  & > div {
+    position:absolute;
+    top: 10px;
+    left: 5px;
+    width: 86px - 10 ;
+    padding: 5;
+    text-align:center;
+    font: normal 13px "Futura", sans-serif;
+    color: $cGray;
+    text-transform: uppercase;
+  }
 
   &.hidden {
     display:block;
@@ -328,12 +341,12 @@ footer .download {
 
   li {
 
-    &:nth-child(1) { margin-left: 15px; margin-right: 122px; }
+    &:nth-child(1) { margin-left: 10px; margin-right: 122px; }
     &:nth-child(2) { margin-right: 122px; }
     &:nth-child(3) { margin-right: 121px; }
     &:nth-child(4) { margin-right: 123px; }
     &:nth-child(5) { margin-right: 122px; }
-    &:nth-child(6) { margin-right: 121px; }
+    &:nth-child(6) { margin-left: 3px; margin-right: 121px; }
 
     @include inline-block();
     height: 20px;
@@ -344,36 +357,14 @@ footer .download {
   }
 }
 
-$timelineWidth: 953px;
+$timelineWidth: 947px;
 
 .timeline .inner {
   position:absolute;
-  width:$timelineWidth - 8px;
+  width:$timelineWidth + 2px;
   height:52px;
-  background:url(backgrounds/bkg_timeline_dots_full.png) no-repeat 45px 24px;
+  background:url(backgrounds/bkg_timeline_dots_full.png) no-repeat 41px 24px;
   @extend .disable-selection;
-}
-
-
-.timeline .tooltip {
-  position:absolute;
-
-  top: -30px; left: 5px;
-  width:86px;
-  height:48px;
-  @include icons-sprite(timeline_tooltip);
-
-  & > div {
-    position:absolute;
-    top: 12px;
-    left: 5px;
-    width: 86px - 10 ;
-    padding: 5;
-    text-align:center;
-    font: normal 13px "Futura", sans-serif;
-    color: $cGray;
-    text-transform: uppercase;
-  }
 }
 
 .timeline  {
@@ -381,10 +372,9 @@ $timelineWidth: 953px;
   bottom: 20px;
   left: 50%;
   margin-left: -1*$timelineWidth / 2;
-  width:$timelineWidth;
+  width: $timelineWidth;
   height:52px;
   z-index: 1000;
-  cursor: default;
 
   background-color: $cWhite;
   border-color:rgb(102,102,102);
@@ -399,7 +389,6 @@ $timelineWidth: 953px;
   -ms-filter:"progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=7)";
   filter:progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=7);
 }
-
 
 #zoom_controls {
 

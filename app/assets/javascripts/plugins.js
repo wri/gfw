@@ -4,32 +4,25 @@ var Timeline = (function() {
   $tooltip = $(".tooltip"),
   $handle  = $(".timeline .handle"),
   dates    = [
-    [0,   30,  null],
-    [40,  150, 2006],
-    [160, 180, null],
-    [190, 300, 2007],
-    [310, 330, null],
-    [340, 450, 2008],
-    [460, 480, null],
-    [490, 600, 2009],
-    [610, 630, null],
-    [640, 750, 2010],
-    [760, 780, null],
-    [790, 900, 2011],
-    [910, 930, null]
+    [0,  110, 2006],
+    [120, 140, null],
+    [150, 260, 2007],
+    [270, 290, null],
+    [300, 410, 2008],
+    [420, 440, null],
+    [450, 560, 2009],
+    [570, 590, null],
+    [600, 710, 2010],
+    [720, 740, null],
+    [750, 860, 2011]
   ];
-
-  function _centerTooltip(handlePos) {
-    var pos = handlePos + 8 - ($(".tooltip").width() / 2);
-    $(".tooltip").css({ left: pos });
-  }
 
   function _changeDate(pos, date) {
     var
     monthPos = ( -1 * date[0] + pos) / 10,
     month    = config.MONTHNAMES_SHORT[monthPos];
 
-    $tooltip.find("div").html("<strong>" + month + "</strong> " + date[2]);
+    $handle.find("div").html("<strong>" + month + "</strong> " + date[2]);
   }
 
   function _setDate(pos, stop) {
@@ -48,11 +41,6 @@ var Timeline = (function() {
           newPosition = (dates[ j + 1 ]) ? newDate[0] : newDate[1];
 
           $handle.css("left", newPosition);
-
-          if (stop) {
-            _centerTooltip(newPosition);
-          }
-
           _changeDate(newPosition, newDate);
         }
 
@@ -61,7 +49,10 @@ var Timeline = (function() {
     });
   }
 
-  $(function() { // init function
+  /*
+   * Init function
+   */
+  $(function() {
 
     $handle.draggable({
       containment: "parent",
@@ -69,18 +60,13 @@ var Timeline = (function() {
       axis: "x",
       drag: function() {
         var left = $(this).position().left;
-        _centerTooltip(left);
         _setDate(left);
       },
       stop: function() {
         var left = $(this).position().left;
-        _centerTooltip(left);
         _setDate(left, true);
       }
     });
   }());
-
-  //return {
-  //};
 
 })();
