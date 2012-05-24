@@ -282,8 +282,8 @@ footer .download {
     padding: 17px 23px;
     text-transform:uppercase;
 
-    .close   { position:absolute; right: 15px; top: 22px; width: 6px; height:6px; @include icons-sprite(close_infowindow); }
-    .handler { position:absolute; left: 15px;  top: 22px; width: 3px; height:5px; @include icons-sprite(handler_infowindow); }
+    .close  { position:absolute; right: 15px; top: 22px; width: 6px; height:6px; @include icons-sprite(infowindow_close); }
+    .handle { position:absolute; left: 15px;  top: 22px; width: 3px; height:5px; @include icons-sprite(infowindow_handle); }
   }
 
   & > .content {
@@ -306,13 +306,14 @@ footer .download {
   }
 }
 
-.timeline .handler {
+.timeline .handle {
   position:absolute;
   top: 20px;
-  left: 0px;
+  left: 40px;
   width: 14px;
   height: 12px;
-  @include icons-sprite(timeline_handler);
+  @include icons-sprite(timeline_handle);
+  @extend .disable-selection;
 }
 
 .timeline .years {
@@ -320,30 +321,36 @@ footer .download {
   top: 20px;
 
   li {
+    &:nth-child(1) { margin-left: 15px; margin-right: 122px; }
+    &:nth-child(2) { margin-right: 122px; }
+    &:nth-child(3) { margin-right: 121px; }
+    &:nth-child(4) { margin-right: 123px; }
+    &:nth-child(5) { margin-right: 122px; }
+    &:nth-child(6) { margin-right: 121px; }
+
     @include inline-block();
-    width:44px;
     height: 20px;
     font: normal 10px "Futura", sans-serif;
     color: #000;
     margin: 0 120px 0 0;
-    text-align:center;
-    &:last-child { background:red; margin: 0; }
+    &:last-child { width:auto; margin: 0; }
   }
 }
 
-$timelineWidth: 934px;
+$timelineWidth: 953px;
 
 .timeline .inner {
   position:absolute;
-  width:$timelineWidth - 10;
+  width:$timelineWidth - 8px;
   height:52px;
-  background:url(backgrounds/bkg_timeline_dots_full.png) no-repeat 0 25px;
+  background:url(backgrounds/bkg_timeline_dots_full.png) no-repeat 45px 24px;
 }
 
 
 .timeline .tooltip {
   position:absolute;
-  top: -30px; left: -35px;
+
+  top: -30px; left: 5px;
   width:86px;
   height:48px;
   @include icons-sprite(timeline_tooltip);

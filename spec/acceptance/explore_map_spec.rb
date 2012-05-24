@@ -71,4 +71,3 @@ feature 'GFW explore map page' do
   include_examples 'common footer'
 
 end
-

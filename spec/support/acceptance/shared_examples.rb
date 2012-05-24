@@ -4,7 +4,7 @@ shared_examples 'common header' do
   scenario 'has a common header for all sections' do
 
     within 'header' do
-      page.should have_css 'a#logo img'
+      page.should have_css 'a.logo'
       page.should have_link 'Other WRI sites'
     end
 
@@ -88,9 +88,9 @@ shared_examples 'common footer' do
       page.should have_css 'a.university_maryland'
       page.should have_css 'a.imazon'
 
-      within '.wri' do
+      within 'div.wri' do
 
-        page.should have_link 'wri'
+      page.should have_css 'a.wri'
 
         within 'address' do
           page.should have_content '10 G Street NE Suite 800, Washington, DC 20002,'

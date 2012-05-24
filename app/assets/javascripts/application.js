@@ -2,6 +2,8 @@
 //= require jquery_ujs
 //= require jquery.easing.1.3
 //= require jquery-ui-1.8.20.custom.min
+//= require jquery.history
+//= require lodash.min
 //= require_tree .
 
 // Map needs to be a global var or
@@ -9,31 +11,97 @@
 
 var map = null;
 
+
+(function(window,undefined){
+
+    // Prepare
+    var History = window.History; // Note: We are using a capital H instead of a lower h
+    if ( !History.enabled ) {
+         // History.js is disabled for this browser.
+         // This is because we can optionally choose to support HTML4 browsers or not.
+        return false;
+    }
+
+    // Bind to StateChange Event
+    History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
+        var State = History.getState(); // Note: We are using History.getState() instead of event.state
+        History.log(State.data, State.title, State.url);
+    });
+
+    $("nav .map").on("click", function(e) {
+      e.preventDefault();
+      History.pushState({state:1}, "State 1", "?state=1");
+    });
+
+    return false;
+
+})(window);
+
 $(function(){
   var
   renderPolygonListener = null,
   polygonPath           = [],
   polygon               = null;
 
+  var dates = [ [40, 150,  2006], [190, 300, 2007], [340, 450, 2008], [490, 600, 2009], [640, 750, 2010], [790, 900, 2011] ];
 
+  function setDate(pos) {
+    var
+    match    = false,
+    $tooltip = $(".tooltip");
 
-  $(".infowindow").draggable({ containment: ".map", handle: ".header" });
-  $(".timeline .handler").draggable({
+    _.each(dates, function(i) {
+      if (pos >= i[0] && pos <= i[1]) {
+        var
+        monthPos = ( -1*i[0] + pos) / 10,
+        month    = config.MONTHNAMES_SHORT[monthPos];
+
+        $tooltip.find("div").html("<strong>" + month + "</strong> " + i[2]);
+
+        match = true;
+        return;
+      }
+    });
+
+    if (!match) {
+
+      $tooltip.fadeOut(150, function() {
+        $(this).addClass("hidden");
+      });
+
+    } else {
+
+        if ($tooltip.hasClass("hidden")) {
+          $tooltip.fadeIn(150, function() {
+            $(this).removeClass("hidden");
+          });
+
+        }
+    }
+  }
+
+  $(".infowindow").draggable({ containment: "#map-container .map", handle: ".header" });
+  $(".timeline .handle").draggable({
     containment: "parent",
     grid: [10, 0],
     axis: "x",
     drag: function() {
-      var pos = $(this).position().left + 8 - ($(".tooltip").width() / 2);
+      var left = $(this).position().left;
+      var pos = left + 8 - ($(".tooltip").width() / 2);
       $(".tooltip").css({left: pos});
+
+      setDate(left);
+
     },
     stop: function() {
+      var left = $(this).position().left;
+      console.log(left);
 
-      var pos = $(this).position().left + 8 - ($(".tooltip").width() / 2);
+      var pos = left + 8 - ($(".tooltip").width() / 2);
       $(".tooltip").css({left: pos});
 
-      //if ($(".handler").position().left >= 60 && $(".handler").position().left <= 80) {
-        //$(".handler").css("left", 100);
-      //}
+      setDate(left);
+
     }
   });
 
