@@ -360,7 +360,7 @@ $(function(){
   $('#map-container').find('.save-area').submit(function(e){
     e.preventDefault();
     $(this).closest('#map-container').toggleClass('editing-mode');
-    $(this).find('#area_the_geom').val("ST_SetSRID(ST_GeomFromGeoJSON('" + JSON.stringify({
+    $(this).find('#area_the_geom').val(JSON.stringify({
         "type": "MultiPolygon",
         "coordinates": [
             [
@@ -369,7 +369,7 @@ $(function(){
                 })
             ]
         ]
-    }) + "'), 4326)");
+    }));
 
     $.post($(this).attr('action'), $(this).serialize(), function(response){
       google.maps.event.removeListener(renderPolygonListener);
