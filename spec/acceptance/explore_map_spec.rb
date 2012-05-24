@@ -46,6 +46,8 @@ feature 'GFW explore map page' do
 
   scenario 'allows to define an area and to upload it to cartodb', :js => true do
     VCR.use_cassette('upload_polygon') do
+      Area.all.each {|area| area.destroy }
+
       within '#map-container' do
 
         click_link 'Draw Area'

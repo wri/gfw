@@ -357,15 +357,16 @@ $(function(){
   $('#map-container').find('.save-area').submit(function(e){
     e.preventDefault();
     $(this).closest('#map-container').toggleClass('editing-mode');
-
-    $(this).find('#area_the_geom').val("ST_GeomFromGeoJSON('" + JSON.stringify({
-      "type": "Polygon",
-      "coordinates": [
-        [
-          $.map(polygonPath, function(latlong, index){
-        return [latlong.lng(), latlong.lat()];
-      })]]
-    }) + "')");
+    $(this).find('#area_the_geom').val("ST_SetSRID(ST_GeomFromGeoJSON('" + JSON.stringify({
+        "type": "MultiPolygon",
+        "coordinates": [
+            [
+                $.map(polygonPath, function(latlong, index){
+                  return [[latlong.lng(), latlong.lat()]];
+                })
+            ]
+        ]
+    }) + "'), 4326)");
 
     $.post($(this).attr('action'), $(this).serialize(), function(response){
       google.maps.event.removeListener(renderPolygonListener);
