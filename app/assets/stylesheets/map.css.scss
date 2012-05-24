@@ -41,7 +41,8 @@
     .inner > .title {
       margin:auto;
       width:175px;
-      font: normal 15px "Helvetica Neue", sans-serif;
+      font: 15px "Helvetica Neue", sans-serif;
+      font-weight:200;
       color:$cWhite;
       /*opacity:0.75;*/
       opacity: 0;
@@ -49,7 +50,8 @@
 
     .inner > .counter {
       text-align:center;
-      font: normal 67px "Georgia", serif;
+      font: 67px "Georgia", serif;
+      font-weight:200;
       color: $cLink;
       opacity: 0;
     }
@@ -93,7 +95,8 @@
     li a {
       color:$cConcessions;
       text-decoration:none;
-      font: normal 13px "Helvetica Neue", sans-serif;
+      font: 13px "Helvetica Neue", sans-serif;
+      font-weight:200;
       &:hover { color:$cConcessionsHover; }
     }
   }
@@ -256,69 +259,6 @@ footer .download {
   }
 
   a { color: $cLink; }
-}
-
-.actions {
-  padding: 51px 0 59px 0;
-
-  ul {
-    width:890px;
-    margin:auto;
-
-    li {
-      @include inline-block();
-      text-align:center;
-      margin: 0 50px 0 0;
-
-      h2 {
-        margin: 0 0 12px 0;
-        font:29px "Georgia", serif;
-        color: $cWhite;
-      }
-
-      p {
-        height:50px;
-        margin: 24px;
-        font: normal 15px "Helvetica Neue", serif;
-        color: $cBlack;
-        opacity:0.5;
-      }
-
-      .icon {
-        margin:auto;
-        height:92px;
-      }
-
-      &.crowdsourcing {
-        width:246px;
-
-      }
-      &.analysis {
-        width:262px;
-      }
-      &.keep_updated {
-        width:274px;
-        margin: 0;
-      }
-
-      &.crowdsourcing .icon {
-        top: -10px;
-        position:relative;
-        width:134px;
-        @include icons-sprite(crowdsourcing);
-      }
-
-      &.analysis .icon {
-        width:150px;
-        @include icons-sprite(analysis);
-      }
-
-      &.keep_updated .icon {
-        width:122px;
-        @include icons-sprite(updates);
-      }
-    }
-  }
 }
 
 .infowindow {

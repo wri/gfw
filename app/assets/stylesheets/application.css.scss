@@ -114,6 +114,7 @@ nav {
     li {
       @include inline-block();
       width:280px;
+      font-weight:400;
 
       margin: 0 50px 0 0;
       text-align:center;
@@ -127,7 +128,10 @@ nav {
       p {
         height:50px;
         margin: 24px;
-        font: normal 15px "Helvetica Neue", serif;
+
+        font: 15px "Helvetica Neue", serif;
+        font-weight:400;
+
         color: $cBlack;
         opacity:0.5;
       }
@@ -137,17 +141,9 @@ nav {
         height:92px;
       }
 
-      &.crowdsourcing {
-        width:246px;
-
-      }
-      &.analysis {
-        width:262px;
-      }
-      &.keep_updated {
-        width:274px;
-        margin: 0;
-      }
+      &.crowdsourcing { width:246px; }
+      &.analysis { width:262px; }
+      &.keep_updated { width:274px; margin: 0; }
 
       &.crowdsourcing .icon {
         top: -10px;
@@ -199,7 +195,9 @@ nav {
         margin: 0;
         padding: 0;
 
-        font: normal 15px "Helvetica Neue", serif;
+        font: 15px "Helvetica Neue", serif;
+        font-weight:400;
+
         color: #264C59;
         opacity: 0.85;
 
@@ -242,13 +240,15 @@ nav {
       li {
         padding:19px 0;
         border-bottom: 1px solid #f1f1f1;
-        font: normal 15px "Helvetica Neue", sans-serif;
+        font: 15px "Helvetica Neue", sans-serif;
+        font-weight:200;
         color: $cNormalGray;
 
         .count {
           float:right;
           color: #858585;
-          font: normal 13px "Helvetica Neue", sans-serif;
+          font: 13px "Helvetica Neue", sans-serif;
+          font-weight:200;
           @include icons-sprite(bars, $offset-y: 4px);
           padding-left: 15px;
         }
