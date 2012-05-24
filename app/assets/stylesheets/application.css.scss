@@ -218,7 +218,7 @@ nav {
 
 .details {
 
-  .inner { position:relative; width: 917px; margin: auto; }
+  .inner { position:relative; width: 917px; margin: 0 auto 49px auto; }
   .inner > div { @include inline-block(); vertical-align: top; }
 
   h4 {
@@ -227,6 +227,9 @@ nav {
     font: bold 13px "Helvetica Neue", sans-serif;
     color:$cGray;
     text-transform: uppercase;
+
+    height: 30px;
+    border-bottom: 1px solid #f1f1f1;
   }
 
   .alerts {
@@ -234,7 +237,7 @@ nav {
     margin: 0 26px 0 0;
 
     ul {
-      border-top: 1px solid #f1f1f1;
+      margin: 0 0 20px 0;
 
       li {
         padding:19px 0;
@@ -259,13 +262,17 @@ nav {
     width:285px;
 
     p {
-      font: normal 15px "Helvetica Neue", sans-serif;
-      color: #666666;
+      height: 278px;
+      margin: 0 0 20px 0;
+      font: 15px "Helvetica Neue", sans-serif;
+      font-weight:300;
+      line-height:120%;
+      color: $cNormalGray;
+
     }
 
     h4 {
       font-size:12px;
-      color: $cGreen;
     }
   }
 }

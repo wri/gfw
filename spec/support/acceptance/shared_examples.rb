@@ -83,16 +83,16 @@ shared_examples 'common footer' do
 
     within 'footer .links' do
 
-      page.should have_css 'a.google img'
-      page.should have_css 'a.cfgd img'
-      page.should have_css 'a.university_maryland img'
-      page.should have_css 'a.imazon img'
+      page.should have_css 'a.google'
+      page.should have_css 'a.cfgd'
+      page.should have_css 'a.university_maryland'
+      page.should have_css 'a.imazon'
 
       within '.wri' do
 
         page.should have_link 'wri'
 
-        within '.address' do
+        within 'address' do
           page.should have_content '10 G Street NE Suite 800, Washington, DC 20002,'
           page.should have_content 'USA / Phone +1 (202) 729-7600 / Fax +1 (202) 729-7610'
         end
