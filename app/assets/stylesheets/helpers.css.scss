@@ -1,3 +1,5 @@
+@import "sprites";
+
 /* Colors */
 $cBackground:       #75ADB5;
 $cDarkGreen:        #264C59;
@@ -104,3 +106,41 @@ strong { font-weight: bold; } // This is sad, I know.
   -ms-user-select: none;
   user-select: none;
 }
+
+// Different filter elements
+.filter-links {
+  &.concessions a     { color: $cConcessions; }
+  &.protected-areas a { color: $cProtectedAreas; }
+  &.intact-forest a   { color: $cForest; }
+  &.mining a          { color: $cMining; }
+  &.forest-cover a    { color: $cForest; }
+  &.forest a          { color: $cLightGray; }
+  &.fire a            { color: $cFire; }
+  &.carbon a          { color: $cLightGray;}
+  &.biodiversity a    { color: $cLightGray; }
+}
+
+.filter-icons {
+  &.concessions     .icon  { @include icons-sprite(concessions); }
+  &.protected-areas .icon  { @include icons-sprite(protected_areas); }
+  &.intact-forest   .icon  { @include icons-sprite(concessions); }
+  &.mining          .icon  { @include icons-sprite(mining); }
+  &.forest-cover    .icon  { @include icons-sprite(forest_cover); }
+  &.forest          .icon  { @include icons-sprite(forest_cover); }
+  &.fire            .icon  { @include icons-sprite(fire); }
+  &.carbon          .icon  { @include icons-sprite(concessions); }
+  &.biodiversity    .icon  { @include icons-sprite(concessions); }
+}
+
+.filter-lines {
+  &.concessions .line     { background-color: $cConcessions; }
+  &.protected-areas .line { background-color: $cProtectedAreas; }
+  &.intact-forest .line   { background-color: $cForest; }
+  &.mining .line          { background-color: $cMining; }
+  &.forest-cover .line    { background-color: $cForest; }
+  &.forest .line          { background-color: $cForest; }
+  &.fire .line            { background-color: $cFire; }
+  &.carbon .line          { background-color: $cLightGray;}
+  &.biodiversity .line    { background-color: $cLightGray; }
+}
+

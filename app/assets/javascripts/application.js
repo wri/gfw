@@ -53,7 +53,7 @@ $(function(){
   });
 
   $(".filters").on("mouseenter", function() {
-    $(".layers").animate({ opacity: 1 }, 150);
+    $("#layers").animate({ opacity: 1 }, 150);
   });
 
   function calcFiltersPosition() {
@@ -79,15 +79,68 @@ $(function(){
   }
 
   calcFiltersPosition();
-
   $(".advance").on("click", advanceFilter);
 
-  var pids = [];
+
 
   $(".filters li").on("mouseenter", openFilter);
-  $(".layer").on("mouseleave", closeFilter);
-  $(".layers ul").on("mouseenter", protectFilter);
-  $(".layers ul").on("mouseleave", closeFilter);
+  $("#layer").on("mouseleave", closeFilter);
+
+  var pids ;
+
+
+  function closeFilter() {
+    var c = $(this).attr("class");
+    console.log("closing", c);
+
+    pids = setTimeout(function() {
+      close(c);
+    }, 100);
+  }
+
+  function close(c) {
+    $("#layer").animate({opacity:0}, 150, function() {
+      $("#layer").css("left", -10000);
+      $(this).removeClass(c);
+    });
+  }
+
+  var lastClass = null;
+
+  function openFilter() {
+
+    var
+    $filter      = $(this),
+    filterClass  = $filter.attr("class"),
+    l            = $filter.data("left-pos"),
+    $layer       = $("#layer"),
+    lw           = $layer.width(),
+    left         = (l + $filter.width() / 2) - (lw / 2),
+    $line        = $filter.find(".line"),
+    lineWidth    = $line.width();
+
+    cancelClose();
+
+    $layer.removeClass(lastClass);
+    $layer.find("a").text($filter.find("a").text());
+    $layer.addClass(filterClass);
+    lastClass = filterClass;
+
+    $layer.css({ left: left, top: -80});
+    $layer.animate({ opacity: 1}, 250);
+  }
+
+  function cancelClose() {
+    clearTimeout(pids);
+  }
+
+
+  /*var pids = [];
+
+  $(".filters li").on("mouseenter", openFilter);
+  $("#layer").on("mouseleave", closeFilter);
+  $("#layers ul").on("mouseenter", protectFilter);
+  $("#layers ul").on("mouseleave", closeFilter);
 
   function protectFilter() {
     var c   = $(this).attr("class");
@@ -109,13 +162,13 @@ $(function(){
   function close(filterClass) {
     var
     $filter     = $(".filters li." + filterClass),
-    $content    = $(".layers ul." + filterClass);
+    $content    = $("#layers ul." + filterClass);
 
     $content.animate({ opacity: 0 }, 150, function() {
       $(this).css("left", -100);
     });
 
-    $(".layer").animate({opacity:0}, 150, function() {
+    $("#layer").animate({opacity:0}, 150, function() {
       $(this).css("left", 0);
     });
   }
@@ -125,7 +178,7 @@ $(function(){
     var
     $filter      = $(this),
     filterClass  = $filter.attr("class"),
-    $content     = $(".layers ul." + filterClass),
+    $content     = $("#layers ul." + filterClass),
     contentWidth = $content.width(),
     $line        = $filter.find(".line"),
     lineWidth    = $line.width();
@@ -134,20 +187,20 @@ $(function(){
 
     var
     l      = $filter.data("left-pos"),
-    $layer = $(".layer"),
+    $layer = $("#layer"),
     lw     = $layer.width();
 
     $layer.css({ opacity: 0, left: (l + $filter.width() / 2) - ($layer.width() / 2), top: -100});
     $layer.animate({opacity:1}, 150);
-  }
+  }*/
 
   /*var pids = [];
   $(".filters").on("mouseenter", showIcons);
   $(".filters").on("mouseleave", hideIcons);
   $(".filters li").on("mouseenter", openFilter);
   $(".filters li").on("mouseleave", closeFilter);
-  $(".layers ul").on("mouseenter", protectFilter);
-  $(".layers ul").on("mouseleave", closeFilter);
+  $("#layers ul").on("mouseenter", protectFilter);
+  $("#layers ul").on("mouseleave", closeFilter);
 
   function hideIcons() {
     $(".filters li").each(function(i, el) {
@@ -181,7 +234,7 @@ $(function(){
   function close(filterClass) {
     var
     $filter     = $(".filters li." + filterClass),
-    $content    = $(".layers ul." + filterClass);
+    $content    = $("#layers ul." + filterClass);
 
     $content.animate({ opacity: 0 }, 150, function() {
       $(this).css("left", -100);
@@ -196,7 +249,7 @@ $(function(){
     var
     $filter      = $(this),
     filterClass  = $filter.attr("class"),
-    $content     = $(".layers ul." + filterClass),
+    $content     = $("#layers ul." + filterClass),
     contentWidth = $content.width(),
     $line        = $filter.find(".line"),
     lineWidth    = $line.width();

@@ -60,7 +60,7 @@
   .draw { position:absolute; top: 20px; left: 70px; z-index:100; }
 
 
-  .layer {
+  #layer {
     position:absolute;
     top: 0;
     left:0;
@@ -68,6 +68,34 @@
     height:250px;
     z-index:1000;
     opacity:0;
+
+    & > a {
+      display:block;
+      text-align:center;
+      position:absolute;
+      top: 46px;
+      position:relative;
+
+      color:$cConcessions;
+      font: bold 12px "Helvetica Neue", sans-serif;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .line {
+      position:relative;
+      background-color: $cConcessions;
+      top:61px;
+      left:0;
+      height: 4px;
+      width:auto;
+    }
+
+    .icon  { position:absolute; top: 30px; left:50%; margin: -8px; width:16px; height:16px; }
+
+    @extend .filter-links;
+    @extend .filter-lines;
+    @extend .filter-icons;
 
     background-color:rgb(255,255,255);
     -moz-box-shadow:0px 0px 5px 1px rgba(0,0,0,0.15);
@@ -136,7 +164,6 @@
     &:active {
       @include icons-sprite(arrow_right_active);
     }
-
   }
 
   .filters .white-shadow {
@@ -160,37 +187,11 @@
 
     text-align: center;
 
-    &.concessions a     { color: $cConcessions; }
-    &.protected-areas a { color: $cProtectedAreas; }
-    &.intact-forest a   { color: $cForest; }
-    &.mining a          { color: $cMining; }
-    &.forest-cover a    { color: $cForest; }
-    &.forest a          { color: $cLightGray; }
-    &.fire a            { color: $cFire; }
-    &.carbon a          { color: $cLightGray;}
-    &.biodiversity a    { color: $cLightGray; }
-
-    &.concessions .line     { background-color: $cConcessions; }
-    &.protected-areas .line { background-color: $cProtectedAreas; }
-    &.intact-forest .line   { background-color: $cForest; }
-    &.mining .line          { background-color: $cMining; }
-    &.forest-cover .line    { background-color: $cForest; }
-    &.forest .line          { background-color: $cForest; }
-    &.fire .line            { background-color: $cFire; }
-    &.carbon .line          { background-color: $cLightGray;}
-    &.biodiversity .line    { background-color: $cLightGray; }
+    @extend .filter-links;
+    @extend .filter-lines;
+    @extend .filter-icons;
 
     .icon  { position:absolute; top: -20px; left:50%; margin: -8px; width:16px; height:16px; }
-
-    &.concessions     .icon  { @include icons-sprite(concessions); }
-    &.protected-areas .icon  { @include icons-sprite(protected_areas); }
-    &.intact-forest   .icon  { @include icons-sprite(concessions); }
-    &.mining          .icon  { @include icons-sprite(mining); }
-    &.forest-cover    .icon  { @include icons-sprite(forest_cover); }
-    &.forest          .icon  { @include icons-sprite(forest_cover); }
-    &.fire            .icon  { @include icons-sprite(fire); }
-    &.carbon          .icon  { @include icons-sprite(concessions); }
-    &.biodiversity    .icon  { @include icons-sprite(concessions); }
 
     .line {
       position:relative;
@@ -426,3 +427,4 @@ $timelineWidth: 953px;
     &:active { background: transparent url(icons/map_zoom.png) no-repeat -2*$zoomWidth -1*$zoomHeight; }
   }
 }
+
