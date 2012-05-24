@@ -1,8 +1,9 @@
 var Timeline = (function() {
 
   var
+  $timeline = $(".timeline"),
   $tooltip = $(".tooltip"),
-  $handle  = $(".timeline .handle"),
+  $handle  = $timeline.find(".handle"),
   dates    = [
     [0,  110, 2006],
     [120, 140, null],
@@ -16,6 +17,20 @@ var Timeline = (function() {
     [720, 740, null],
     [750, 860, 2011]
   ];
+
+  function _gotoDate(e) {
+    e.preventDefault();
+
+    var year = parseInt($(this).text(), 10);
+
+    _.each(dates, function(date, j) {
+      if (date[2] === year) {
+        $handle.animate({left: date[0]}, 150, "easeOutExpo");
+        _changeDate(date[0], date);
+        return;
+      }
+    });
+  }
 
   function _changeDate(pos, date) {
     var
@@ -53,6 +68,8 @@ var Timeline = (function() {
    * Init function
    */
   $(function() {
+
+    $timeline.find("a").on("click", _gotoDate);
 
     $handle.draggable({
       containment: "parent",

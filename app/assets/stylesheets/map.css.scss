@@ -307,6 +307,35 @@ footer .download {
   }
 }
 
+/*
+* TIMELINE
+*/
+
+$timelineWidth: 947px;
+
+.timeline  {
+  position:absolute;
+  bottom: 20px;
+  left: 50%;
+  margin-left: -1*$timelineWidth / 2;
+  width: $timelineWidth;
+  height:52px;
+  z-index: 1000;
+
+  background-color: $cWhite;
+  border-color:rgb(102,102,102);
+  border-width:1px;
+  -moz-border-radius:5px; // Firefox v1.0+
+  -webkit-border-radius:5px; // Safari v3.0+ and by Chrome v0.2+
+  border-radius:5px; // Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+
+  border-style:solid;
+  -moz-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);    // Firefox v3.5+
+  -webkit-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15); // Safari v3.0+ and by Chrome v0.2+
+  box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);         // Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+
+  -ms-filter:"progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=7)";
+  filter:progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=7);
+}
+
 .timeline .handle {
   position:absolute;
   top: -26px;
@@ -337,27 +366,30 @@ footer .download {
 
 .timeline .years {
   position:absolute;
-  top: 20px;
+  top: 17px;
 
   li {
 
-    &:nth-child(1) { margin-left: 10px; margin-right: 122px; }
-    &:nth-child(2) { margin-right: 122px; }
-    &:nth-child(3) { margin-right: 121px; }
-    &:nth-child(4) { margin-right: 123px; }
-    &:nth-child(5) { margin-right: 122px; }
-    &:nth-child(6) { margin-left: 3px; margin-right: 121px; }
-
     @include inline-block();
     height: 20px;
-    font: normal 10px "Futura", sans-serif;
-    color: #000;
     margin: 0 120px 0 0;
+
+    &:nth-child(1) { margin-left: 10px; margin-right: 122px; }
+    &:nth-child(2) { margin-right: 122px; }
+    &:nth-child(3) { margin-right: 122px; }
+    &:nth-child(4) { margin-right: 123px; }
+    &:nth-child(5) { margin-right: 120px; }
+    &:nth-child(6) { margin-left: 3px; margin-right: 121px; }
+
+    a {
+      font: normal 10px "Futura", sans-serif;
+      color: #000;
+      text-decoration:none;
+    }
+
     &:last-child { width:auto; margin: 0; }
   }
 }
-
-$timelineWidth: 947px;
 
 .timeline .inner {
   position:absolute;
@@ -365,29 +397,6 @@ $timelineWidth: 947px;
   height:52px;
   background:url(backgrounds/bkg_timeline_dots_full.png) no-repeat 41px 24px;
   @extend .disable-selection;
-}
-
-.timeline  {
-  position:absolute;
-  bottom: 20px;
-  left: 50%;
-  margin-left: -1*$timelineWidth / 2;
-  width: $timelineWidth;
-  height:52px;
-  z-index: 1000;
-
-  background-color: $cWhite;
-  border-color:rgb(102,102,102);
-  border-width:1px;
-  -moz-border-radius:5px; // Firefox v1.0+
-  -webkit-border-radius:5px; // Safari v3.0+ and by Chrome v0.2+
-  border-radius:5px; // Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+
-  border-style:solid;
-  -moz-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);    // Firefox v3.5+
-  -webkit-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15); // Safari v3.0+ and by Chrome v0.2+
-  box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);         // Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+
-  -ms-filter:"progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=7)";
-  filter:progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=7);
 }
 
 #zoom_controls {
@@ -416,4 +425,3 @@ $timelineWidth: 947px;
     &:active { background: transparent url(icons/map_zoom.png) no-repeat -2*$zoomWidth -1*$zoomHeight; }
   }
 }
-
