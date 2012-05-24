@@ -63,7 +63,7 @@
   #layer {
     position:absolute;
     top: 0;
-    left:0;
+    left:-9999px;
     width:159px;
     height:250px;
     z-index:1000;
@@ -313,7 +313,7 @@ footer .download {
   left: 0px;
   width: 86px;
   height: 58px;
-  @include icons-sprite(timeline_handle_2);
+  @include icons-sprite(timeline_handle);
   @extend .disable-selection;
   cursor:col-resize;
 
