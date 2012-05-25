@@ -46,6 +46,7 @@ end %>
   </ul>
 </div>
 
+
 <% content_for :js do %>
   <script type="text/javascript">
     var summary = {
@@ -53,4 +54,13 @@ end %>
         title: "Forest clearing alerts in the last 15 days"
       }
   </script>
+
+<script id="circle-template" type="text/x-underscore-template">
+  <div class="circle">
+    <div class="inner">
+      <div class="counter">{{count}}</div>
+      <div class="title">{{title}}</div>
+    </div>
+  </div>
+</script>
 <% end %>

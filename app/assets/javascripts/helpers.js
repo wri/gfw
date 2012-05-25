@@ -1,3 +1,7 @@
+_.templateSettings = {
+  interpolate: /\{\{(.+?)\}\}/g
+};
+
 var config = {
   ZOOM:               3,
   MINZOOM:            3,

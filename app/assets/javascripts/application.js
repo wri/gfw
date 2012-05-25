@@ -44,14 +44,6 @@ $(function(){
   polygon               = null,
   polygonPath           = [];
 
-  $(".infowindow").draggable({ containment: "#map-container .map", handle: ".header" });
-  $(".infowindow .close").on("click", function(e) {
-    e.preventDefault();
-    $(".infowindow").animate({ marginTop: 50, opacity: 0}, 250, "easeOutExpo", function() {
-      $(this).hide();
-    });
-  });
-
   $(".filters").on("mouseenter", function() {
     $("#layers").animate({ opacity: 1 }, 150);
   });
@@ -270,28 +262,15 @@ $(function(){
     $filter.find("a").animate({top: "-25px"}, 100);
   }*/
 
+  if ($("#map").length > 0) {
+    map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
+    map.mapTypes.set('GfwStyle', config.gfwStyle);
+    map.setMapTypeId('GfwStyle');
 
-  map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
-  map.mapTypes.set('GfwStyle', config.gfwStyle);
-  map.setMapTypeId('GfwStyle');
-
-  google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
-    config.mapLoaded = true;
-    addCircle();
-  });
-
-  function addCircle() {
-    var $circle = $('<div class="circle"><div class="inner"><div class="counter"></div><div class="title"></div></div></div>');
-
-    $circle.find(".counter").html(summary.count);
-    $circle.find(".title").html(summary.title);
-
-    $("#map").append($circle);
-    $circle.delay(250).animate({ top:'50%', marginTop:-1*($circle.height() / 2), opacity: 1 }, 250, "easeOutExpo", function() {
-      $circle.find(".inner .title").animate({ opacity: 0.75 }, 250, "easeOutExpo");
-      $circle.find(".inner .counter").animate({ opacity: 1 }, 250, "easeOutExpo");
+    google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
+      config.mapLoaded = true;
+      Circle.show();
     });
-  }
 
   function ZoomIn(controlDiv, map) {
     controlDiv.setAttribute('class', 'zoom_in');
@@ -330,6 +309,9 @@ $(function(){
 
   var zoomOutControl = new ZoomOut(zoomOutControlDiv, map);
   zoomOutControlDiv.index = 2;
+
+
+  }
 
   // Enables map editing mode. When activated, each click in the map draws a polyline
   $('#map-container').find('.draw-area').click(function(){
