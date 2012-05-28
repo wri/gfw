@@ -354,6 +354,10 @@ $timelineWidth: 947px;
     top: 13px;
     left:11px;
     @include icons-sprite(timeline_handle_play);
+
+    &.playing {
+      @include icons-sprite(timeline_handle_stop);
+    }
   }
 
   & > div {

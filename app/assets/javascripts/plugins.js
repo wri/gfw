@@ -81,9 +81,15 @@ var Circle = (function() {
 var Timeline = (function() {
 
   var
-  $timeline = $(".timeline"),
-  $handle  = $timeline.find(".handle"),
-  dates    = [
+  $timeline      = $(".timeline"),
+  $handle        = $timeline.find(".handle"),
+  $play          = $timeline.find(".handle .play"),
+  animationPid   = null,
+  animationDelay = 1000,
+  animationSpeed = 250,
+  advance        = "10px",
+  playing        = false,
+  dates = [
     [0,  110, 2006],
     [120, 140, null],
     [150, 260, 2007],
@@ -96,6 +102,43 @@ var Timeline = (function() {
     [720, 740, null],
     [750, 860, 2011]
   ];
+
+  function _play(e) {
+    if (e) {
+      e.preventDefault();
+    }
+
+    playing = !playing;
+
+    $play.fadeOut(100, "easeOutExpo", function() {
+      $(this).toggleClass("playing");
+      $(this).fadeIn(100, "easeInExpo");
+    });
+
+    if (playing) {
+      advance = "10px";
+      _animate();
+    } else {
+      advance = "0";
+      clearTimeout(animationPid);
+    }
+  }
+
+  function _animate() {
+
+    if (!playing) return;
+
+    animationPid = setTimeout(function() {
+      $handle.animate({ left: "+=" + advance }, animationSpeed, "easeInExpo", function() {
+
+        if (!playing) return;
+
+        var left = $handle.position().left;
+        _setDate(left);
+        _animate();
+      });
+    }, animationDelay);
+  }
 
   function _gotoDate(e) {
     e.preventDefault();
@@ -177,7 +220,9 @@ var Timeline = (function() {
    */
   $(function() {
 
-    $timeline.find("a").on("click", _gotoDate);
+    // Bindings
+    $timeline.find(".years a").on("click", _gotoDate);
+    $timeline.find(".play").on("click", _play);
 
     $handle.draggable({
       containment: "parent",
