@@ -29,10 +29,12 @@ var Infowindow = (function() {
 var Circle = (function() {
 
   var
-  template = _.template($("#circle-template").html()),
-  $circle  = $(template({count: summary.count, title: summary.title})),
-  $title   = $circle.find(".inner .title"),
-  $counter = $circle.find(".inner .counter");
+  template    = _.template($("#circle-template").html()),
+  $circle     = $(template({count: summary.count, title: summary.title})),
+  $title      = $circle.find(".title"),
+  $counter    = $circle.find(".counter"),
+  $background = $circle.find(".background"),
+  $explore    = $circle.find(".explore");
 
   function _show() {
     $("#map").append($circle);
@@ -48,12 +50,16 @@ var Circle = (function() {
 
   function _onMouseEnter() {
     $title.animate({ opacity: 0 }, 150, "easeInExpo");
-    $counter.animate({ opacity: 0 }, 150, "easeInExpo");
+    $counter.animate({ opacity: 0 }, 150, "easeInExpo", function() {
+      $background.animate({ opacity: 1 }, 150, "easeOutExpo");
+    });
   }
 
   function _onMouseLeave() {
-    $title.animate({ opacity: 1 }, 150, "easeOutExpo");
-    $counter.animate({ opacity: 1 }, 150, "easeOutExpo");
+    $background.animate({ opacity: 0 }, 150, "easeOutExpo", function(){
+      $title.animate({ opacity: 0.75 }, 150, "easeOutExpo");
+      $counter.animate({ opacity: 1 }, 150, "easeOutExpo");
+    });
   }
 
   function _hide() {
