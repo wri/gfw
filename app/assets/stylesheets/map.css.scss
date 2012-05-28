@@ -44,6 +44,7 @@
       font: 15px "Helvetica Neue", sans-serif;
       font-weight:200;
       color:$cWhite;
+      /*opacity:0.75;*/
       opacity: 0;
     }
 
@@ -53,24 +54,6 @@
       font-weight:200;
       color: $cLink;
       opacity: 0;
-    }
-
-    .inner > .explore {
-      text-transform: uppercase;
-      font: bold 13px "Helvetica Neue", sans-serif;
-      color: #fff;
-    }
-
-    .inner > .background {
-      position:absolute;
-      @include icons-sprite(four_arrows);
-      width:250px;
-      height:250px;
-      top: 50%;
-      left: 50%;
-      margin-left:-1*250px/2;
-      margin-top: -1*250px/2;
-      opacity:0;
     }
   }
 
@@ -336,7 +319,7 @@ $timelineWidth: 947px;
   left: 50%;
   margin-left: -1*$timelineWidth / 2;
   width: $timelineWidth;
-  height:52px;
+  height: 52px;
   z-index: 1000;
 
   background-color: $cWhite;
@@ -355,18 +338,28 @@ $timelineWidth: 947px;
 
 .timeline .handle {
   position:absolute;
-  top: -26px;
+  top: -29px;
   left: 0px;
-  width: 86px;
-  height: 58px;
-  @include icons-sprite(timeline_handle);
+  width: 112px;
+  height: 61px;
+  @include icons-sprite(timeline_handle_with_play);
   @extend .disable-selection;
   cursor:col-resize;
 
+  & > .play {
+    display:block;
+    width:19px;
+    height:17px;
+    position:absolute;
+    top: 13px;
+    left:11px;
+    @include icons-sprite(timeline_handle_play);
+  }
+
   & > div {
     position:absolute;
-    top: 10px;
-    left: 5px;
+    top: 13px;
+    left: 32px;
     width: 86px - 10 ;
     padding: 5;
     text-align:center;
@@ -384,6 +377,8 @@ $timelineWidth: 947px;
 .timeline .years {
   position:absolute;
   top: 17px;
+
+  z-index:100;
 
   li {
 
@@ -406,6 +401,14 @@ $timelineWidth: 947px;
 
     &:last-child { width:auto; margin: 0; }
   }
+}
+
+.timeline .constraint_handler {
+  position:absolute;
+  height:52px;
+  top: 0;
+  left:-13px;
+  width: $timelineWidth + 30;
 }
 
 .timeline .inner {
