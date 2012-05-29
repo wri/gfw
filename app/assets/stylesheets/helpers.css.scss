@@ -5,13 +5,14 @@ $cBackground:       #75ADB5;
 $cDarkGreen:        #264C59;
 $cLink:             #F7BD63; // pastel yellow
 $cGreen:            #74ACB4;
+$cGold:             #F2B257; // gold
+
 $cWhite:            #FFFFFF;
 $cLightGray:        #CCCCCC;
 $cGray:             #333333;
 $cNormalGray:       #666666;
 $cDarkGray:         #999999;
 $cBlack:            #000000;
-$cGold:             #F2B257; // gold
 
 $cConcessions:      #FF6699; // pink
 $cConcessionsHover: #C04B73; // dark pink
@@ -23,6 +24,31 @@ $cFire:             #E95850; // red
 $cTop:              rgba(117, 173, 181, 0.8);
 $cPostTitle:        #73ACB3; // green
 $cPostBody:         #444444;
+
+// This is only used in the demo page
+.cforest { background-color: $cForest; }
+.cBackground { background-color: $cBackground; }
+.cDarkGreen { background-color: $cDarkGreen; }
+.cLink { background-color: $cLink; }
+.cGreen { background-color: $cGreen; }
+.cWhite { background-color: $cWhite; }
+.cLightGray { background-color: $cLightGray; }
+.cGray { background-color: $cGray; }
+.cNormalGray { background-color: $cNormalGray; }
+.cDarkGray { background-color: $cDarkGray; }
+.cBlack { background-color: $cBlack; }
+.cGold { background-color: $cGold; }
+
+.cConcessions { background-color: $cConcessions; }
+.cConcessionsHover { background-color: $cConcessionsHover; }
+.cProtectedAreas { background-color: $cProtectedAreas; }
+.cMining { background-color: $cMining; }
+.cForest { background-color: $cForest; }
+.cFire { background-color: $cFire; }
+
+.cTop { background-color: $cTop; }
+.cPostTitle { background-color: $cPostTitle; }
+.cPostBody { background-color: $cPostBody; }
 
 strong { font-weight: bold; } // This is sad, I know.
 

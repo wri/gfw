@@ -117,6 +117,13 @@ var Timeline = (function() {
     [750, 860, 2011]
   ];
 
+  function _togglePlayState() {
+    $play.fadeOut(100, "easeOutExpo", function() {
+      $(this).toggleClass("playing");
+      $(this).fadeIn(100, "easeInExpo");
+    });
+  }
+
   function _play(e) {
     if (e) {
       e.preventDefault();
@@ -124,12 +131,13 @@ var Timeline = (function() {
 
     playing = !playing;
 
-    $play.fadeOut(100, "easeOutExpo", function() {
-      $(this).toggleClass("playing");
-      $(this).fadeIn(100, "easeInExpo");
-    });
+    if ($handle.position().left >= dates[dates.length - 1][1]) {
+      playing = false;
+    } else {
+      _togglePlayState();
+    }
 
-    if (playing) {
+    if (playing ) {
       advance = "10px";
       _animate();
     } else {
@@ -145,12 +153,18 @@ var Timeline = (function() {
     animationPid = setTimeout(function() {
       $handle.animate({ left: "+=" + advance }, animationSpeed, "easeInExpo", function() {
 
+        if ($handle.position().left >= dates[dates.length - 1][1]) {
+          playing = false;
+          _togglePlayState();
+          _setDate($handle.position().left);
+        }
+
         if (!playing) return;
 
-        var left = $handle.position().left;
-        _setDate(left);
+        _setDate($handle.position().left);
         _animate();
       });
+
     }, animationDelay);
   }
 

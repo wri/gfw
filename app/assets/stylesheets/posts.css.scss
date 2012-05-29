@@ -7,7 +7,16 @@
 
 body.posts {
 
-  #content { background: $cWhite; }
+  header {
+    border-bottom: 1px solid #ccc;
+    height: 235px;
+
+    hgroup h1 {
+      margin: 29px 0 0 0;
+    }
+  }
+
+  #content { padding: 40px 0 0 0; background: $cWhite; }
   #content .inner { position:relative; width: 927px; margin: auto; }
 
   div.posts, aside { @include inline-block(); }
@@ -21,11 +30,31 @@ body.posts {
       margin: 0 0 20px 0;
       padding: 0 0 20px 0;
 
-      border-bottom: 1px solid #f1f1f1;
+      border-bottom: 1px solid #E5E5E5;
 
       font: bold 13px "Helvetica Neue", sans-serif;
       text-transform: uppercase;
       color: $cGray;
+    }
+
+    &.posts > ul {
+      li {
+        .date {
+          margin: 0 0 5px 0;
+
+          color: $cDarkGray;
+          font: 13px "Helvetica Neue", sans-serif;
+        }
+
+        a {
+          display:block;
+
+          text-transform: none;
+          font:normal 18px "Georgia", serif;
+          color: $cGreen;
+          &:hover { color: $cDarkGreen; }
+        }
+      }
     }
 
     & > ul {
@@ -37,7 +66,7 @@ body.posts {
         margin: 0 0 20px 0;
         padding: 0 0 20px 0;
 
-        border-bottom: 1px solid #f1f1f1;
+        border-bottom: 1px solid #E5E5E5;
 
         a { @extend .golden; }
         .count {
@@ -68,6 +97,7 @@ body.posts {
           color: $cPostTitle;
           text-decoration:none;
           font:29px "Georgia", serif;
+          &:hover { color: $cDarkGreen; }
         }
       } // h1
 
