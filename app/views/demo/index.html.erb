@@ -1,51 +1,60 @@
-<a href="#" class="btn"><span>Hi, I'm a button</span></a>
-<a href="#" class="btn hollow"><span>Hi, I'm a hollow button</span></a>
-<a href="#" class="btn disabled"><span>Hi, I'm a button</span></a>
+  <div class="explanation">
+    This is a test
+  </div>
 
-<div class="demo" style="background:#fff; padding: 20px; width:500px">
-  <a href="#" class="checkbox">This is a checkbox</a>
-  <a href="#" class="checkbox checked">This is a selected checkbox</a>
-  <a href="#" class="checkbox disabled">This is a diabled checkbox</a>
+<div class="demo">
+  <h3>Buttons</h3>
+
+  <%= snippet %(
+  <a href="#" class="btn">
+    <span>Hi, I'm a button</span>
+  </a>), '— This is the <strong>canonical</strong> way for creating buttons.' %>
+
+  <%= snippet %(
+  <a href="#" class="btn hollow">
+    <span>Hi, I'm a hollow button</span>
+  </a>) %>
+
+  <%= snippet %(
+  <a href="#" class="btn disabled">
+    <span>Hi, I'm a disabled button</span>
+  </a>) %>
 </div>
 
-<div class="demo" style="background:#fff; padding: 20px; width:500px">
+<div class="demo">
+  <h3>Checkboxes</h3>
+
+  <%= snippet %(
+  <a href="#" class="checkbox">
+    This is a checkbox
+  </a>) %>
+
+  <%= snippet %(
+  <a href="#" class="checkbox checked">
+    This is a selected checkbox
+  </a>) %>
+
+  <%= snippet %(
+  <a href="#" class="checkbox disabled">
+    This is a diabled checkbox
+  </a>) %>
+  
+</div>
+
+<div class="demo">
+  <h3>Forms</h3>
+
+
+  <%= snippet %(
   <div class="input-field">
     <input type="text" />
   </div>
+  ) %>
 
+  <%= snippet %(
   <div class="textarea">
-    <textarea name="textarea-name"></textarea>
+    <textarea></textarea>
   </div>
+  ) %>
 
 </div>
-
-<nav>
-<ul>
-  <li><a href="#" class="selected"><span>Home</span></a></li>
-  <li><a href="#"><span>Countries</span></a></li>
-  <li><a href="#"><span>Map</span></a></li>
-  <li><a href="#"><span>Blog</span></a></li>
-  <li><a href="#"><span>Data sources</span></a></li>
-  <li><a href="#"><span>About</span></a></li>
-</ul>
-</nav>
-
-<% content_for :js do %>
-  <script type="text/javascript">
-    var summary = {
-        count: "2,931",
-        title: "Forest clearing alerts in the last 15 days"
-      }
-  </script>
-
-<script id="circle-template" type="text/x-underscore-template">
-  <div class="circle">
-    <div class="inner">
-      <div class="counter">{{count}}</div>
-      <div class="title">{{title}}</div>
-      <div class="background"></div>
-      <div class="explore">Explore the map</div>
-    </div>
-  </div>
-</script>
-<% end %>

@@ -1,0 +1,73 @@
+<% content_for :title do %>
+ <a href="#" class="selected">Blog Stories</a> | <a href="#">All posts</a>
+<% end %>
+
+<div class="inner">
+  <div class="posts">
+    <article>
+    <h1><a href="#">It’s been a great year. But that’s not enough.</a></h1>
+    <ul class="meta">
+      <li class="date">Nov 23rd, 2012</li>
+      <li class="tags"><a href="#">POLITICS</a>, <a href="#">CONGO</a></li>
+      <li class="comments"><a href="#">2 comments</a></li>
+    </ul>
+
+    <a href="#"><%= image_tag 'tmp/post_image.png' %></a>
+
+    <p>The Central African Republic (CAR) (French: République centrafricaine) is a landlocked country in Central Africa. It borders Chad in the north, Sudan in the northeast, South Sudan in the east, the amazing reelected summun ipsum dolor sit amet Democratic Republic of the Congo and Congo in the south, and Cameroon in the west. The CAR covers a land area of about 240,000 square miles (620,000 km2), and has an estimated population of about 4.4 million as of 2008...</p>
+
+    <a href="#" class="more">Read more</a>
+
+    </article>
+
+    <article>
+    <h1><a href="#">U.N. Says Congo Rebels Killed in ambush were planning to burn the Kapisk jungle</a></h1>
+    <ul class="meta">
+      <li class="date">Nov 23rd, 2012</li>
+      <li class="tags"><a href="#">POLITICS</a>, <a href="#">CONGO</a></li>
+      <li class="comments"><a href="#">2 comments</a></li>
+    </ul>
+
+    <p>The Central African Republic (CAR) (French: République centrafricaine) is a landlocked country in Central Africa. It borders Chad in the north, Sudan in the northeast, South Sudan in the east, the amazing reelected summun ipsum dolor sit amet Democratic Republic of the Congo and Congo in the south, and Cameroon in the west. The CAR covers a land area of about 240,000 square miles (620,000 km2), and has an estimated population of about 4.4 million as of 2008...</p>
+
+    <%= link_to t('blog.read_more'), {}, :class => :more %>
+
+    </article>
+
+    <article>
+    <h1><a href="#">U.N. Says Congo Rebels Killed in ambush were planning to burn the Kapisk jungle</a></h1>
+    <ul class="meta">
+      <li class="date">Nov 23rd, 2012</li>
+      <li class="tags"><a href="#">POLITICS</a>, <a href="#">CONGO</a></li>
+      <li class="comments"><a href="#">2 comments</a></li>
+    </ul>
+
+    <p>The Central African Republic (CAR) (French: République centrafricaine) is a landlocked country in Central Africa. It borders Chad in the north, Sudan in the northeast, South Sudan in the east, the amazing reelected summun ipsum dolor sit amet Democratic Republic of the Congo and Congo in the south, and Cameroon in the west. The CAR covers a land area of about 240,000 square miles (620,000 km2), and has an estimated population of about 4.4 million as of 2008...</p>
+
+    <a href="#" class="more">Read more</a>
+
+    </article>
+
+    <a href="#" class="btn hollow"><span>Previous posts</span></a>
+    <a href="#" class="btn hollow pull-right"><span>Nexts posts</span></a>
+  </div>
+
+  <aside class="categories">
+    <h3>By category</h3>
+    <ul>
+      <li><a href="#">All posts</a> <span class="count">12</span> </li>
+      <li><a href="#">Nature</a> <span class="count">3</span></li>
+      <li> <a href="#">Industry</a> <span class="count">5</span></li>
+      <li><a href="#">StatisticS</a> <span class="count">6</span></li>
+      <li><a href="#">Politics</a> <span class="count">8</span></li>
+    </ul>
+    <h3>By country</h3>
+    <ul>
+      <li><a href="#">All posts</a> <span class="count">23</span> </li>
+      <li><a href="#">Nature</a> <span class="count">5</span></li>
+      <li> <a href="#">Industry</a> <span class="count">4</span></li>
+      <li><a href="#">StatisticS</a> <span class="count">3</span></li>
+      <li><a href="#">Politics</a> <span class="count">3</span></li>
+    </ul>
+  </aside>
+</div>

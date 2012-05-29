@@ -1,7 +1,12 @@
 Gfw::Application.routes.draw do
   resources :countries
-  resources :demo
   resources :areas
-  match 'map' => 'home#index'
+  resources :posts
+
+  match 'blog' => 'posts#index'
+  match 'map'  => 'home#index'
+
+  resources :demo
+
   root :to => 'home#index'
 end

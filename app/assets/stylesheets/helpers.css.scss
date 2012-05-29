@@ -11,15 +11,18 @@ $cGray:             #333333;
 $cNormalGray:       #666666;
 $cDarkGray:         #999999;
 $cBlack:            #000000;
+$cGold:             #F2B257; // gold
 
 $cConcessions:      #FF6699; // pink
 $cConcessionsHover: #C04B73; // dark pink
 $cProtectedAreas:   #00CED0; // blue
-$cMining:           #F2B257; // brown
+$cMining:           $cGold;
 $cForest:           #B2D26E; // green
 $cFire:             #E95850; // red
 
 $cTop:              rgba(117, 173, 181, 0.8);
+$cPostTitle:        #73ACB3; // green
+$cPostBody:         #444444;
 
 strong { font-weight: bold; } // This is sad, I know.
 
@@ -31,6 +34,10 @@ strong { font-weight: bold; } // This is sad, I know.
   &:hover {
     text-decoration: underline;
   }
+}
+
+.pull-right {
+  float:right;
 }
 
 .font-big {
@@ -119,6 +126,14 @@ strong { font-weight: bold; } // This is sad, I know.
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+
+.golden {
+  font: bold 12px "Helvetica Neue", sans-serif;
+  color: $cGold;
+  text-transform: uppercase;
+  text-decoration: none;
 }
 
 // Different filter elements

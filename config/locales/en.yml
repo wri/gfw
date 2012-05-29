@@ -8,6 +8,7 @@ en:
   layouts:
     application:
       header:
+        share_this: 'Share this'
         other_wri_sites: 'Other WRI sites'
         nav:
           home: 'Home'
@@ -20,6 +21,8 @@ en:
         download:
           interested_html: "I'm interested in forest clearing data for <a href='#'>write here</a>."
           data_html: 'You can also <a href="#">download all our data</a> in a .zip file.'
+  blog:
+    read_more: "Read more"
   home:
     index:
       title: "Find where forest clearing is happening right now"

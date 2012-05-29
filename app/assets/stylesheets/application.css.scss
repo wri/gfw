@@ -38,10 +38,8 @@ header {
       margin: 0 0 2px 0;
 
       a {
-        font: bold 12px "Helvetica Neue", sans-serif;
+        @extend .golden;
         color: $cLink;
-        text-decoration: none;
-        text-transform:uppercase;
       }
     }
   }
@@ -94,7 +92,7 @@ nav {
         background:none;
         span { background:none; }
         font: bold 12px sans-serif;
-        color: #75ADB5;
+        color: $cBackground;
 
         &.selected {
           @include button('buttons/bkg_nav_button.png', $height, $mL, $pT, $pR, $pB, $pL);
@@ -102,7 +100,7 @@ nav {
 
         &:hover {
           @include button('buttons/bkg_nav_button_hover.png', $height, $mL, $pT, $pR, $pB, $pL);
-          color: #75ADB5;
+          color: $cBackground;
         }
       } // a
     } // li
@@ -293,7 +291,8 @@ nav {
 
 .btn {
 
-  @include button('buttons/bkg_button.png', 42px, 5px, 14px, 27px, 5px, 27px);
+  /* button ($url, $height, $mL, $pT, $pR, $pB, $pL) */
+  @include button('buttons/bkg_button.png', 42px, 5px, 14px, 27px, 5px, 22px);
   font: normal 12px "Futura", serif;
 
   &:hover {
@@ -304,14 +303,14 @@ nav {
 
 .btn.hollow {
 
-  @include button('buttons/bkg_button_hollow.png', 38px, 5px, 11px, 27px, 5px, 27px);
+  @include button('buttons/bkg_button_hollow.png', 38px, 5px, 11px, 27px, 5px, 22px);
   font: normal 12px "Futura", serif;
   text-transform: uppercase;
   color: $cLink;
 
   &:hover {
     @extend .no-glow;
-    @include button('buttons/bkg_button_hollow_hover.png', 38px, 5px, 11px, 27px, 5px, 27px);
+    @include button('buttons/bkg_button_hollow_hover.png', 38px, 5px, 11px, 27px, 5px, 22px);
     color: $cWhite;
   }
 
@@ -319,7 +318,7 @@ nav {
 
 .btn.disabled {
 
-  @include button('buttons/bkg_button_disabled.png', 40px, 5px, 13px, 27px, 5px, 27px);
+  @include button('buttons/bkg_button_disabled.png', 40px, 5px, 13px, 27px, 5px, 22px);
   color:rgba(255, 255, 255, .3);
 
   &:hover {
@@ -335,7 +334,7 @@ nav {
   }
 
   &:hover {
-    @include button('buttons/bkg_button_hollow.png', 38px, 5px, 11px, 27px, 5px, 27px);
+    @include button('buttons/bkg_button_hollow.png', 38px, 5px, 11px, 27px, 5px, 22px);
     color: $cLink;
 
     span {
@@ -373,7 +372,7 @@ nav {
 
   @include inline-block();
   height:136px;
-  width: 500px;
+  width: 580px;
 
   background:url(backgrounds/bkg_form_textarea.png) no-repeat left 0;
 
@@ -391,6 +390,7 @@ nav {
     resize: none;
   }
 }
+
 .input-field {
 
   @include inline-block();
@@ -402,8 +402,8 @@ nav {
   input[type="text"] {
     width:100%;
     height:36px;
-    margin: 0 0 0 5px;
-    padding: 0 5px 0 0;
+    margin: 0 0 0 7px;
+    padding: 0 7px 0 0;
 
     font-size: 14px;
 
@@ -483,3 +483,91 @@ footer .download {
   a { color: $cLink; }
 }
 
+
+body.demo {
+
+  background:#f1f1f1;
+
+  code, pre, tt {
+    font-family: Monaco, Consolas, "Lucida Console", monospace;
+    font-size: 12px;
+    line-height: 18px;
+    font-style: normal;
+    color: #333;
+  }
+
+  #content {
+
+    width:900px;
+    margin:40px auto;
+    padding-bottom: 30px;
+
+    -webkit-border-bottom-left-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -moz-border-radius-bottom: 4px;
+    -moz-border-radius-bottom: 4px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+
+    background:$cWhite;
+
+    h3 {
+      @extend .golden;
+      margin: 0 0 0 20px;
+    }
+
+    .explanation {
+      padding: 40px 20px;
+
+      background: #DEE;
+      font: 14px "Helvetica Neue", sans-serif;
+      color:#333;
+
+      -webkit-border-top-left-radius: 4px;
+      -webkit-border-top-right-radius: 4px;
+      -moz-border-radius-topleft: 4px;
+      -moz-border-radius-topright: 4px;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    .demo {
+      padding-top: 20px;
+
+      &.dark, &.dark .snippet { background: #DEE; }
+      &.dark .snippet { border-bottom: 1px solid #fff; }
+      &:last-child > .snippet:last-child { border:none; }
+
+      .btn { margin: 0 0 20px 0; }
+      .checkbox { display: block; margin: 0 0 20px 0; }
+
+      .snippet {
+        padding: 30px 20px 15px 20px;
+        border-bottom: 1px solid #ddd;
+
+        .comment {
+          width:270px;
+          margin: 10px 0 0 10px;
+          font-family: Monaco, Consolas, "Lucida Console", monospace;
+          font-size: 12px;
+          line-height: 18px;
+          font-style: normal;
+          color: #ccc;
+          strong { border-bottom: 1px solid #ccc;  }
+
+        }
+        .example {
+          @include inline-block();
+          vertical-align: top;
+          width:500px;
+          margin: 0 50px 0 0;
+        }
+
+        .code {
+          @include inline-block();
+          vertical-align: top;
+        }
+      }
+    }
+  }
+}

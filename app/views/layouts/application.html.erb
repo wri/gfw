@@ -8,7 +8,7 @@
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= csrf_meta_tags %>
   </head>
-  <body>
+  <body class="<%= controller.controller_name %>">
     <%= render "common/header" %>
     <div id="content">
       <%= yield %>

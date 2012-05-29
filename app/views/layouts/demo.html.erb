@@ -5,16 +5,16 @@
     <script type="text/javascript"
       src="http://maps.googleapis.com/maps/api/js?sensor=false&language=<%= I18n.locale %>">
     </script>
-    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= stylesheet_link_tag "prettify", :media => "all" %>
     <%= csrf_meta_tags %>
   </head>
-  <body>
+  <body onload="prettyPrint()"; class="<%= controller.controller_name %>">
     <div id="content">
       <%= yield %>
     </div>
     <%= yield :js %>
     <%= javascript_include_tag "application" %>
-
-
+    <%= javascript_include_tag "prettify" %>
   </body>
 </html>
