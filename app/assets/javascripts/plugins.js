@@ -133,17 +133,38 @@ var Timeline = (function() {
 
     if ($handle.position().left >= dates[dates.length - 1][1]) {
       playing = false;
+
+      // Fake toggle
+      $play.fadeOut(100, "easeOutExpo", function() {
+        $(this).fadeIn(100, "easeInExpo");
+      });
+
     } else {
       _togglePlayState();
     }
 
-    if (playing ) {
+    if (playing) {
       advance = "10px";
       _animate();
     } else {
-      advance = "0";
-      clearTimeout(animationPid);
+      _stopAnimation(true);
     }
+  }
+
+  function _stopAnimation(animated) {
+    advance = "0";
+    playing = false;
+    clearTimeout(animationPid);
+
+    if (animated) {
+      $play.fadeOut(100, "easeOutExpo", function() {
+        $(this).removeClass("playing");
+        $(this).fadeIn(100, "easeInExpo");
+      });
+    } else {
+      $play.removeClass("playing");
+    }
+
   }
 
   function _animate() {
@@ -151,11 +172,11 @@ var Timeline = (function() {
     if (!playing) return;
 
     animationPid = setTimeout(function() {
+
       $handle.animate({ left: "+=" + advance }, animationSpeed, "easeInExpo", function() {
 
         if ($handle.position().left >= dates[dates.length - 1][1]) {
-          playing = false;
-          _togglePlayState();
+          _stopAnimation(true);
           _setDate($handle.position().left);
         }
 
@@ -259,6 +280,10 @@ var Timeline = (function() {
       drag: function() {
         var left = $(this).position().left;
         _setDate(left);
+
+        if (playing) {
+          _stopAnimation(false);
+        }
       },
       stop: function() {
         var left = $(this).position().left;
