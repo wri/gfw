@@ -5,8 +5,8 @@ $cBackground:       #75ADB5;
 $cDarkGreen:        #264C59;
 $cLink:             #F7BD63; // pastel yellow
 $cGreen:            #74ACB4;
-$cWhite:            #ffffff;
-$cLightGray:        #cccccc;
+$cWhite:            #FFFFFF;
+$cLightGray:        #CCCCCC;
 $cGray:             #333333;
 $cNormalGray:       #666666;
 $cDarkGray:         #999999;
@@ -18,6 +18,8 @@ $cProtectedAreas:   #00CED0; // blue
 $cMining:           #F2B257; // brown
 $cForest:           #B2D26E; // green
 $cFire:             #E95850; // red
+
+$cTop:              rgba(117, 173, 181, 0.8);
 
 strong { font-weight: bold; } // This is sad, I know.
 
@@ -32,7 +34,7 @@ strong { font-weight: bold; } // This is sad, I know.
 }
 
 .font-big {
-  font: 33px "Georgia", serif;
+  font: 37px "Georgia", serif;
   color: $cWhite;
 }
 
@@ -87,9 +89,21 @@ strong { font-weight: bold; } // This is sad, I know.
   }
 }
 
-@mixin absolute-center($width) {
+@mixin absolute-left-center($width) {
+  position:absolute;
   left:50%;
+  width: $width;
   margin-left: -1*$width / 2;
+}
+
+@mixin absolute-center($width, $height) {
+  position:absolute;
+  left:50%;
+  top: 50%;
+  margin-left: -1*$width / 2;
+  margin-top:  -1*$height / 2;
+  width: $width;
+  height: $height;
 }
 
 @mixin clearfix() {

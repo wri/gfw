@@ -2,6 +2,23 @@
 <a href="#" class="btn hollow"><span>Hi, I'm a hollow button</span></a>
 <a href="#" class="btn disabled"><span>Hi, I'm a button</span></a>
 
+<div class="demo" style="background:#fff; padding: 20px; width:500px">
+  <a href="#" class="checkbox">This is a checkbox</a>
+  <a href="#" class="checkbox checked">This is a selected checkbox</a>
+  <a href="#" class="checkbox disabled">This is a diabled checkbox</a>
+</div>
+
+<div class="demo" style="background:#fff; padding: 20px; width:500px">
+  <div class="input-field">
+    <input type="text" />
+  </div>
+
+  <div class="textarea">
+    <textarea name="textarea-name"></textarea>
+  </div>
+
+</div>
+
 <nav>
 <ul>
   <li><a href="#" class="selected"><span>Home</span></a></li>
@@ -12,3 +29,23 @@
   <li><a href="#"><span>About</span></a></li>
 </ul>
 </nav>
+
+<% content_for :js do %>
+  <script type="text/javascript">
+    var summary = {
+        count: "2,931",
+        title: "Forest clearing alerts in the last 15 days"
+      }
+  </script>
+
+<script id="circle-template" type="text/x-underscore-template">
+  <div class="circle">
+    <div class="inner">
+      <div class="counter">{{count}}</div>
+      <div class="title">{{title}}</div>
+      <div class="background"></div>
+      <div class="explore">Explore the map</div>
+    </div>
+  </div>
+</script>
+<% end %>

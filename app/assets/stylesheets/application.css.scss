@@ -27,7 +27,7 @@ header {
   hgroup {
     position:relative;
     top: 52px;
-    width:400px;
+    width:440px;
 
     h1 {
       @extend .font-big;
@@ -50,17 +50,27 @@ header {
 
   & > .top {
     position:relative;
-    background: rgba(117,173,181, 0.8);
     height: 52px;
 
-    .selector {
+    background: $cTop;
+
+    ul {
+
       position:absolute;
       top: 15px;
       right:0;
-      font: bold 11px "Helvetica Neue", sans-serif;
-      text-transform: uppercase;
-      text-decoration:none;
-      color: $cWhite;
+
+      li {
+        margin: 0 0 0 30px;
+        @include inline-block();
+
+        a {
+          font: bold 11px "Helvetica Neue", sans-serif;
+          text-transform: uppercase;
+          text-decoration:none;
+          color: $cWhite;
+        }
+      }
     }
   }
 }
@@ -356,3 +366,120 @@ nav {
 #map-container.editing-mode .save-area {
   display: inline;
 }
+
+// Forms
+
+.textarea {
+
+  @include inline-block();
+  height:136px;
+  width: 500px;
+
+  background:url(backgrounds/bkg_form_textarea.png) no-repeat left 0;
+
+  textarea {
+    width: 100%;
+    height: 136px - 7*2;
+    margin: 0 0 0 5px;
+    padding: 7px 5px;
+
+    font-size: 14px;
+    background:url(backgrounds/bkg_form_textarea.png) repeat-x right -136px;
+
+    border:none;
+    outline:none;
+    resize: none;
+  }
+}
+.input-field {
+
+  @include inline-block();
+  height:36px;
+  width: 416px;
+
+  background:url(backgrounds/bkg_form_input.png) no-repeat left 0;
+
+  input[type="text"] {
+    width:100%;
+    height:36px;
+    margin: 0 0 0 5px;
+    padding: 0 5px 0 0;
+
+    font-size: 14px;
+
+    background:url(backgrounds/bkg_form_input.png) repeat-x right -36px;
+    border:none;
+    outline:none;
+  }
+}
+
+.checkbox {
+  padding-left: 12px;
+
+  @include inline-block();
+  @include icons-sprite(checkboxes, $offset-y:-65px);
+
+  color:#333;
+  text-decoration:none;
+
+  &:hover          { @include icons-sprite(checkboxes, $offset-y:-205px); }
+
+  &:active         { @include icons-sprite(checkboxes, $offset-y:-205px); }
+  &:active:hover   { @include icons-sprite(checkboxes, $offset-y:-275px); }
+
+  &.checked        { @include icons-sprite(checkboxes, $offset-y:-135px); }
+  &.checked:hover  { @include icons-sprite(checkboxes, $offset-y:-275px); }
+
+  &.disabled       { color: $cLightGray; @include icons-sprite(checkboxes, $offset-y:4px); }
+  &.disabled:hover { @include icons-sprite(checkboxes, $offset-y:4px); }
+}
+
+
+footer {
+  .inner { position:relative; width: 871px; margin: auto; }
+
+  .links {
+    height:216px;
+    background:url(backgrounds/bkg_footer.png) ;
+    font: 11px "Helvetica Neue";
+    color: $cNormalGray;
+
+    .logos { position:relative; top: 50px; }
+
+    a { display: block; margin: 0 20px 0 0; @include inline-block(); }
+
+    a.wri { width: 92px; height: 31px; @include icons-sprite(logo_wri); }
+    .google { width: 90px; height: 52px; @include icons-sprite(logo_google); }
+    .cfgd { width: 72px; height: 52px; @include icons-sprite(logo_cgd); }
+    .university_maryland { width: 77px; height: 52px; @include icons-sprite(logo_maryland); }
+    .imazon { width: 74px; height: 52px; @include icons-sprite(logo_imazon); }
+
+    div.wri {
+      float: right;
+
+      & > .wri { width:92px; height: 31px; margin: 10px 0 20px 0; @include icons-sprite(logo_wri); }
+
+      address { width:266px; color: $cNormalGray; font-size:11px; line-height:120%; }
+    }
+  }
+}
+
+footer .download {
+  padding: 50px 0;
+  text-align:center;
+  background: $cDarkGreen;
+
+  h1 {
+    @extend .font-big;
+    margin: 0 0 4px 0;
+  }
+
+  p {
+    @extend .font-regular;
+
+    a { text-decoration: none; }
+  }
+
+  a { color: $cLink; }
+}
+

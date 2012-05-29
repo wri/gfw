@@ -51,25 +51,39 @@ var Circle = (function() {
   function _onMouseEnter() {
     $title.animate({ opacity: 0 }, 150, "easeInExpo");
     $counter.animate({ opacity: 0 }, 150, "easeInExpo", function() {
+      $explore.animate({ opacity: 1 }, 150, "easeOutExpo");
       $background.animate({ opacity: 1 }, 150, "easeOutExpo");
     });
   }
 
   function _onMouseLeave() {
+    $explore.animate({ opacity: 0 }, 150, "easeOutExpo");
+
     $background.animate({ opacity: 0 }, 150, "easeOutExpo", function(){
       $title.animate({ opacity: 0.75 }, 150, "easeOutExpo");
       $counter.animate({ opacity: 1 }, 150, "easeOutExpo");
     });
   }
 
-  function _hide() {
+  function _hide(e) {
+    if (e) {
+      e.preventDefault();
+    }
+
+    var _afterHide = function() {
+      $circle.animate({ marginTop: 100, opacity: 0 }, 250, "easeOutExpo");
+    };
+
     $title.animate({ opacity: 0 }, 150, "easeOutExpo");
     $counter.animate({ opacity: 0 }, 150, "easeOutExpo", _afterHide);
   }
 
-  function _afterHide() {
-    $circle.animate({ marginTop: 100, opacity: 0 }, 250, "easeOutExpo");
-  }
+
+  $(function() {
+
+    // Bindings
+    $circle.on("click", _hide);
+  });
 
   return {
     show: _show,

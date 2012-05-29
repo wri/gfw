@@ -6,6 +6,7 @@ shared_examples 'common header' do
     within 'header' do
       page.should have_css 'a.logo'
       page.should have_link 'Other WRI sites'
+      page.should have_link 'Share this'
     end
 
   end
@@ -83,6 +84,7 @@ shared_examples 'common footer' do
 
     within 'footer .links' do
 
+      page.should have_css 'a.wri'
       page.should have_css 'a.google'
       page.should have_css 'a.cfgd'
       page.should have_css 'a.university_maryland'
