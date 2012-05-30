@@ -1,10 +1,12 @@
 <nav>
 <ul>
-  <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.home'))), root_path, :class => :selected %></li>
-  <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.countries'))), countries_path %></li>
-  <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.map'))), map_path, :class => :map %></li>
-  <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.blog'))) %></li>
-  <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.data_sources'))) %></li>
-  <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.about'))) %></li>
+  <% %w(home countries map blog data_sources about).each do |option| %>
+    <% 
+      paths    = { "home" => root_path, "countries" => countries_path, "blog" => blog_path, "map" => map_path }
+      path     = paths[option]
+      selected = request.path == path ? :selected : "" 
+    %>
+    <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.' + option))), path, :class => selected %></li>
+  <% end %>
 </ul>
 </nav>
