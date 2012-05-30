@@ -132,7 +132,6 @@ body.posts {
             font-weight:200;
             color: $cDarkGray;
           }
-
         }
       } // meta
 
@@ -142,7 +141,7 @@ body.posts {
     }
   } // .posts
 
-  .comments {
+  & > .comments {
     background:$cBackground;
     border: 1px solid #46686D;
     padding: 49px 0 0 0;
