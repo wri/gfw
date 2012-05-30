@@ -123,6 +123,11 @@ body.posts {
           font-weight:200;
           color: $cDarkGray;
 
+          padding-right: 7px;
+          background:url(icons/square.png) no-repeat right 7px;
+
+          &:last-child { background:none; padding: 0; }
+
           &.tags a {
             @extend .golden;
           }
@@ -141,7 +146,7 @@ body.posts {
     }
   } // .posts
 
-  & > .comments {
+  div.comments {
     background:$cBackground;
     border: 1px solid #46686D;
     padding: 49px 0 0 0;

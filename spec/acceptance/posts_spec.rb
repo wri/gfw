@@ -4,13 +4,13 @@ feature 'GFW Blog' do
 
   background do
     VCR.use_cassette('init_app') do
-      visit root_path
+      visit blog_path
     end
   end
 
   include_examples 'common header'
   #include_examples 'title', 'Blog Stories | All posts'
-  include_examples 'menu', 'Home'
+  include_examples 'menu', 'Blog'
 
   #scenario 'has some posts' do
     #within '#content' do

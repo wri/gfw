@@ -1,11 +1,17 @@
 <nav>
 <ul>
   <% %w(home countries map blog data_sources about).each do |option| %>
-    <% 
-      paths    = { "home" => root_path, "countries" => countries_path, "blog" => blog_path, "map" => map_path }
+    <%
+      paths    = { "home" => root_path, "countries" => countries_path, "blog" => blog_path, "map" => map_path, "data_sources" => nil, "about" => nil }
       path     = paths[option]
-      selected = request.path == path ? :selected : "" 
+      selected = request.path == path ? :selected : nil
+
+      # require "debugger"; debugger
+      # Exceptions
+      selected = :selected if controller_name == 'countries' && option == 'countries'
+      selected = :selected if controller_name == 'posts'     && option == 'blog'
     %>
+
     <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.' + option))), path, :class => selected %></li>
   <% end %>
 </ul>

@@ -40,16 +40,17 @@ shared_examples 'menu' do |option|
       page.should have_css 'ul li a', :text => 'Blog'
       page.should have_css 'ul li a', :text => 'Data Sources'
       page.should have_css 'ul li a', :text => 'About'
+
     end
 
   end
 
-  #scenario "has an option selected" do
-    #within 'header nav ul' do
-      #puts option
-      #page.should have_css 'li a.selected', :text => option
-    #end
-  #end
+  scenario "has an option selected" do
+    within 'header nav' do
+      #require "debugger"; debugger
+      page.should have_css 'li a.selected span', :text => option
+    end
+  end
 
 end
 
