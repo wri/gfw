@@ -11,7 +11,6 @@
 
 var map = null;
 
-
 (function(window,undefined){
 
     // Prepare
@@ -44,8 +43,18 @@ $(function(){
   polygon               = null,
   polygonPath           = [];
 
+
+  $(document).on("click", function(e) {
+    closeFilter();
+  });
+
   $(".filters").on("mouseenter", function() {
     $("#layers").animate({ opacity: 1 }, 150);
+  });
+
+  $("#layer").on("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
   });
 
   function calcFiltersPosition() {
@@ -73,17 +82,15 @@ $(function(){
   calcFiltersPosition();
   $(".advance").on("click", advanceFilter);
 
-
-
   $(".filters li").on("mouseenter", openFilter);
   $("#layer").on("mouseleave", closeFilter);
 
   var pids ;
 
-
   function closeFilter() {
     var c = $(this).attr("class");
-    console.log("closing", c);
+
+    if (c === undefined) return;
 
     pids = setTimeout(function() {
       close(c);

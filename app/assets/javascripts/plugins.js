@@ -191,15 +191,34 @@ var Timeline = (function() {
 
   function _gotoDate(e) {
     e.preventDefault();
+    e.stopPropagation();
 
-    var year = parseInt($(this).text(), 10);
+    var
+    year     = parseInt($(this).text(), 10),
+    lastYear = parseInt($timeline.find(".years li:last-child a").text(), 10);
 
+    // if the user clicked on the last year of the timeline
+    if (year === lastYear) {
+      var pos = dates[ dates.length - 1 ][1];
+
+      $handle.animate({ left: pos }, 150, "easeOutExpo");
+      _changeDate(pos, dates[ dates.length - 1 ]);
+
+      return;
+    }
+
+    // if the user clicked on another year
     _.each(dates, function(date, j) {
+
       if (date[2] === year) {
-        $handle.animate({left: date[0]}, 150, "easeOutExpo");
-        _changeDate(date[0], date);
+        var pos = date[0];
+
+        $handle.animate({ left: pos }, 150, "easeOutExpo");
+        _changeDate(pos, date);
         return;
+
       }
+
     });
   }
 
