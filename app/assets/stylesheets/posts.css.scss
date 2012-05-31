@@ -32,9 +32,11 @@ body.posts {
 
       border-bottom: 1px solid #E5E5E5;
 
-      font: bold 13px "Helvetica Neue", sans-serif;
+      @extend .sans-serif;
+      font-size:13px;
+      font-weight:bold;
       text-transform: uppercase;
-      color: $cGray;
+      color: $cGray1;
     }
 
     &.posts > ul {
@@ -42,16 +44,21 @@ body.posts {
         .date {
           margin: 0 0 5px 0;
 
-          color: $cDarkGray;
-          font: 13px "Helvetica Neue", sans-serif;
+          color: $cGray3;
+          @extend .sans-serif;
+          font-size:13px;
         }
 
         a {
           display:block;
 
           text-transform: none;
-          font:normal 18px "Georgia", serif;
+
+          @extend .serif;
+          font-size:18px;
+          font-weight:normal;
           color: $cGreen;
+
           &:hover { color: $cDarkGreen; }
         }
       }
@@ -68,11 +75,13 @@ body.posts {
 
         border-bottom: 1px solid #E5E5E5;
 
-        a { @extend .golden; }
+        a { @extend .font-golden; }
+
         .count {
           float:right;
           color: #858585;
-          font: 13px "Helvetica Neue", sans-serif;
+          @extend .sans-serif;
+          font-size:13px;
         }
       }
     }
@@ -94,9 +103,10 @@ body.posts {
         margin: 0 0 10px 0;
 
         a {
+          @extend .serif;
+          font-size:29px;
           color: $cPostTitle;
           text-decoration:none;
-          font:29px "Georgia", serif;
           &:hover { color: $cDarkGreen; }
         }
       } // h1
@@ -109,7 +119,9 @@ body.posts {
         margin: 0 0 20px 0;
 
         color: $cPostBody;
-        font: 17px "Helvetica Neue", sans-serif;
+
+        @extend .sans-serif;
+        font-size:17px;
         font-weight:200;
         line-height:21px;
       }
@@ -119,9 +131,11 @@ body.posts {
 
         li {
           @include inline-block();
-          font: 13px "Helvetica Neue", sans-serif;
+          @extend .sans-serif;
+          font-size:13px;
+
           font-weight:200;
-          color: $cDarkGray;
+          color: $cGray3;
 
           padding-right: 7px;
           background:url(icons/square.png) no-repeat right 7px;
@@ -129,19 +143,20 @@ body.posts {
           &:last-child { background:none; padding: 0; }
 
           &.tags a {
-            @extend .golden;
+            @extend .font-golden;
           }
 
           &.comments a {
-            font: 13px "Helvetica Neue", sans-serif;
+            @extend .sans-serif;
+            font-size:13px;
             font-weight:200;
-            color: $cDarkGray;
+            color: $cGray3;
           }
         }
       } // meta
 
       .more {
-        @extend .golden;
+        @extend .font-golden;
       }
     }
   } // .posts
@@ -158,7 +173,9 @@ body.posts {
 
       border-bottom: 1px solid #60939C;
 
-      font: bold 13px "Helvetica Neue", sans-serif;
+      @extend .sans-serif;
+      font-weight:bold;
+      font-size:13px;
       text-transform: uppercase;
       color:#3A6470;
     }
@@ -168,11 +185,14 @@ body.posts {
       margin: 0 0 60px 0;
 
       li {
-        color:$cDarkGreen;
-        font: 15px "Helvetica Neue", serif;
-        border-bottom: 1px solid #60939C;
         padding: 0 0 10px 0;
         margin: 0 0 20px 0;
+
+        @extend .sans-serif;
+        color:$cDarkGreen;
+        font-size:15px;
+
+        border-bottom: 1px solid #60939C;
 
         .info {
           margin: 0 0 14px 0;
@@ -198,16 +218,19 @@ body.posts {
         display:block;
         margin: 0 0 6px 0;
 
-        font: bold 13px "Helvetica Neue", sans-serif;
+        @extend .sans-serif;
+        font-size:13px;
+        font-weight:bold;
         text-transform: uppercase;
         color:#3A6470;
 
         .mandatory {
           margin: 0 0 0 5px;
 
+          color: $cDarkGreen;
           font-size:15px;
-          color: #264C59;
           font-weight:normal;
+
           text-transform: none;
 
           opacity:0.4;

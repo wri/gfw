@@ -10,13 +10,17 @@
     <img src="" alt="" />
   </div>
 
-  <div class="count">
+  <!--<div class="count">
     <h1><%= number_with_delimiter @country.alerts_count %></h1>
     <p>Forest clearing alerts in the last 15 days</p>
-  </div>
+  </div>-->
 
   <div class="details">
     <div class="inner">
+
+      <div class="circles" style="margin-left:-50px">
+        <%= image_tag 'tmp/circles.png' %>
+      </div>
 
       <div class="alerts">
         <h4><%= t('.detail.alerts.title') %></h4>

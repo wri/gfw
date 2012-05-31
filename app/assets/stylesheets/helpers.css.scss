@@ -6,13 +6,14 @@ $cDarkGreen:        #264C59;
 $cLink:             #F7BD63; // pastel yellow
 $cGreen:            #74ACB4;
 $cGold:             #F2B257; // gold
+$cDarkGold:         #D69E4D;
 
 $cWhite:            #FFFFFF;
-$cLightGray:        #CCCCCC;
-$cGray:             #333333;
-$cNormalGray:       #666666;
-$cDarkGray:         #999999;
-$cBlack:            #000000;
+$cGray4:            #CCCCCC;
+$cGray3:            #999999;
+$cGray2:            #666666;
+$cGray1:            #333333;
+$cGray0:            #000000;
 
 $cConcessions:      #FF6699; // pink
 $cConcessionsHover: #C04B73; // dark pink
@@ -32,11 +33,11 @@ $cPostBody:         #444444;
 .cLink { background-color: $cLink; }
 .cGreen { background-color: $cGreen; }
 .cWhite { background-color: $cWhite; }
-.cLightGray { background-color: $cLightGray; }
-.cGray { background-color: $cGray; }
-.cNormalGray { background-color: $cNormalGray; }
-.cDarkGray { background-color: $cDarkGray; }
-.cBlack { background-color: $cBlack; }
+.cGray4 { background-color: $cGray4; }
+.cGray3 { background-color: $cGray3; }
+.cGray2 { background-color: $cGray2; }
+.cGray1 { background-color: $cGray1; }
+.cGray0 { background-color: $cGray0; }
 .cGold { background-color: $cGold; }
 
 .cConcessions { background-color: $cConcessions; }
@@ -66,16 +67,6 @@ strong { font-weight: bold; } // This is sad, I know.
   float:right;
 }
 
-.font-big {
-  font: 37px "Georgia", serif;
-  color: $cWhite;
-}
-
-.font-regular {
-  font: 15px "Helvetica Neue", serif;
-  color: $cWhite;
-}
-
 .shadow-transition {
   -webkit-transition: -webkit-box-shadow 0.3s ease-out;
   -moz-transition: -moz-box-shadow 0.3s ease-out;
@@ -99,13 +90,13 @@ strong { font-weight: bold; } // This is sad, I know.
   filter:progid:DXImageTransform.Microsoft.Glow(Color = #33ffffff ,Strength = 5);
 }
 
-@mixin button($url, $height, $mL, $pT, $pR, $pB, $pL) {
+@mixin button($url, $height, $mL, $pT, $pR, $pB, $pL, $offset-y) {
   @include inline-block();
 
   position:relative;
 
   height:$height;
-  background: url($url) no-repeat left bottom;
+  background: url($url) no-repeat left -1*($offset-y + $height);
   color:#fff;
   text-decoration:none;
   text-transform: uppercase;
@@ -117,7 +108,7 @@ strong { font-weight: bold; } // This is sad, I know.
     height: $height - $pT - $pB;
     margin-left: $mL;
     padding: $pT $pR $pB $pL;
-    background: url($url) repeat-x right top;
+    background: url($url) repeat-x right -1*$offset-y;
     white-space:nowrap;
   }
 }
@@ -155,13 +146,6 @@ strong { font-weight: bold; } // This is sad, I know.
 }
 
 
-.golden {
-  font: bold 12px "Helvetica Neue", sans-serif;
-  color: $cGold;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
 // Different filter elements
 .filter-links {
   &.concessions     a { color: $cConcessions; }
@@ -169,10 +153,10 @@ strong { font-weight: bold; } // This is sad, I know.
   &.intact-forest   a { color: $cForest; }
   &.mining          a { color: $cMining; }
   &.forest-cover    a { color: $cForest; }
-  &.forest          a { color: $cLightGray; }
+  &.forest          a { color: $cGray4; }
   &.fire            a { color: $cFire; }
-  &.carbon          a { color: $cLightGray;}
-  &.biodiversity    a { color: $cLightGray; }
+  &.carbon          a { color: $cGray4;}
+  &.biodiversity    a { color: $cGray4; }
 }
 
 .filter-icons {
@@ -195,7 +179,40 @@ strong { font-weight: bold; } // This is sad, I know.
   &.forest-cover     .line { background-color: $cForest; }
   &.forest           .line { background-color: $cForest; }
   &.fire             .line { background-color: $cFire; }
-  &.carbon           .line { background-color: $cLightGray;}
-  &.biodiversity     .line { background-color: $cLightGray; }
+  &.carbon           .line { background-color: $cGray4;}
+  &.biodiversity     .line { background-color: $cGray4; }
 }
 
+
+// Fonts
+.serif {
+  font-family: "Georgia", serif;
+}
+.sans-serif {
+  font-family: "Helvetica Neue", sans-serif;
+}
+
+.font-big {
+  @extend .serif;
+  font-size: 37px;
+  color: $cWhite;
+}
+
+.font-regular {
+  @extend .sans-serif;
+  font-size: 15px;
+  color: $cWhite;
+}
+
+.font-golden {
+  @extend .sans-serif;
+  font-size: 12px;
+  font-weight:bold;
+  color: $cGold;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  &:hover {
+    color: $cGray2;
+  }
+}

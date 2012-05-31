@@ -31,14 +31,14 @@ header {
 
     h1 {
       @extend .font-big;
-      color:$cGray;
+      color:$cGray1;
 
-      a { 
+      a {
         text-decoration:none;
-        color: $cDarkGray;
+        color: $cGray3;
 
         &.selected {
-          color: $cGray;
+          color: $cGray1;
         }
       }
     }
@@ -47,7 +47,7 @@ header {
       margin: 0 0 2px 0;
 
       a {
-        @extend .golden;
+        @extend .font-golden;
         color: $cLink;
       }
     }
@@ -73,7 +73,9 @@ header {
         @include inline-block();
 
         a {
-          font: bold 11px "Helvetica Neue", sans-serif;
+          @extend .sans-serif;
+          font-size: 11px;
+          font-weight:bold;
           text-transform: uppercase;
           text-decoration:none;
           color: $cWhite;
@@ -99,18 +101,21 @@ nav {
 
         $height:26px; $mL: 5px; $pT: 7px; $pR: 10px; $pB: 5px; $pL: 5px;
 
-        @include button('buttons/bkg_nav_button.png', $height, $mL, $pT, $pR, $pB, $pL);
+        @include button('buttons/bkg_nav_button.png', $height, $mL, $pT, $pR, $pB, $pL, 0);
         background:none;
         span { background:none; }
-        font: bold 12px sans-serif;
+
+        @extend .sans-serif;
+        font-size:12px;
+        font-weight:bold;
         color: $cBackground;
 
         &.selected {
-          @include button('buttons/bkg_nav_button.png', $height, $mL, $pT, $pR, $pB, $pL);
+          @include button('buttons/bkg_nav_button.png', $height, $mL, $pT, $pR, $pB, $pL, 0);
         }
 
         &:hover {
-          @include button('buttons/bkg_nav_button_hover.png', $height, $mL, $pT, $pR, $pB, $pL);
+          @include button('buttons/bkg_nav_button_hover.png', $height, $mL, $pT, $pR, $pB, $pL, 0);
           color: $cBackground;
         }
       } // a
@@ -140,7 +145,8 @@ nav {
 
       h2 {
         margin: 0 0 12px 0;
-        font:29px "Georgia", serif;
+        @extend .serif;
+        font-size:29px;
         color: $cWhite;
       }
 
@@ -148,10 +154,11 @@ nav {
         height:50px;
         margin: 24px;
 
-        font: 15px "Helvetica Neue", serif;
+        @extend .sans-serif;
+        font-size: 15px;
         font-weight:400;
 
-        color: $cBlack;
+        color: $cGray1;
         opacity:0.5;
       }
 
@@ -190,7 +197,10 @@ nav {
   h3 {
     margin: 0 0 20px 0;
 
-    font: bold 13px "Helvetica Neue", serif;
+    @extend .sans-serif;
+    font-weight:bold;
+    font-size: 13px;
+
     color: #264C59;
     text-transform: uppercase;
     opacity: 0.75;
@@ -214,7 +224,8 @@ nav {
         margin: 0;
         padding: 0;
 
-        font: 15px "Helvetica Neue", serif;
+        @extend .sans-serif;
+        font-size:15px;
         font-weight:400;
 
         color: #264C59;
@@ -241,9 +252,11 @@ nav {
   h4 {
     margin: 0 0 15px 0;
 
-    font: bold 13px "Helvetica Neue", sans-serif;
-    color:$cGray;
+    @extend .sans-serif;
+    font-size:13px;
+    font-weight:bold;
     text-transform: uppercase;
+    color:$cGray1;
 
     height: 30px;
     border-bottom: 1px solid #f1f1f1;
@@ -259,17 +272,21 @@ nav {
       li {
         padding:19px 0;
         border-bottom: 1px solid #f1f1f1;
-        font: 15px "Helvetica Neue", sans-serif;
+        @extend .sans-serif;
+        font-size:15px;
         font-weight:200;
-        color: $cNormalGray;
+        color: $cGray2;
 
         .count {
           float:right;
-          color: #858585;
-          font: 13px "Helvetica Neue", sans-serif;
-          font-weight:200;
-          @include icons-sprite(bars, $offset-y: 4px);
           padding-left: 15px;
+
+          @extend .sans-serif;
+          font-size:13px;
+          font-weight:200;
+          color: #858585;
+
+          @include icons-sprite(bars, $offset-y: 4px);
         }
       }
     }
@@ -283,11 +300,12 @@ nav {
     p {
       height: 285px;
       margin: 0 0 20px 0;
-      font: 15px "Helvetica Neue", sans-serif;
-      font-weight:300;
-      line-height:120%;
-      color: $cNormalGray;
 
+      @extend .sans-serif;
+      font-size:15px;
+      font-weight:300;
+      color: $cGray2;
+      line-height:120%;
     }
 
     h4 {
@@ -303,7 +321,7 @@ nav {
 .btn {
 
   /* button ($url, $height, $mL, $pT, $pR, $pB, $pL) */
-  @include button('buttons/bkg_button.png', 42px, 5px, 14px, 27px, 5px, 22px);
+  @include button('buttons/bkg_button.png', 42px, 5px, 14px, 27px, 5px, 22px, 0);
   font: normal 12px "Futura", serif;
 
   &:hover {
@@ -314,14 +332,14 @@ nav {
 
 .btn.hollow {
 
-  @include button('buttons/bkg_button_hollow.png', 38px, 5px, 11px, 27px, 5px, 22px);
+  @include button('buttons/bkg_button_hollow.png', 38px, 5px, 11px, 27px, 5px, 22px, 0);
   font: normal 12px "Futura", serif;
   text-transform: uppercase;
   color: $cLink;
 
   &:hover {
     @extend .no-glow;
-    @include button('buttons/bkg_button_hollow_hover.png', 38px, 5px, 11px, 27px, 5px, 22px);
+    @include button('buttons/bkg_button_hollow.png', 38px, 4px, 11px, 27px, 5px, 22px, 76px);
     color: $cWhite;
   }
 
@@ -329,7 +347,7 @@ nav {
 
 .btn.disabled {
 
-  @include button('buttons/bkg_button_disabled.png', 40px, 5px, 13px, 27px, 5px, 22px);
+  @include button('buttons/bkg_button_disabled.png', 40px, 5px, 13px, 27px, 5px, 22px, 0);
   color:rgba(255, 255, 255, .3);
 
   &:hover {
@@ -345,7 +363,7 @@ nav {
   }
 
   &:hover {
-    @include button('buttons/bkg_button_hollow.png', 38px, 5px, 11px, 27px, 5px, 22px);
+    @include button('buttons/bkg_button_hollow.png', 38px, 5px, 11px, 27px, 5px, 22px, 0);
     color: $cLink;
 
     span {
@@ -441,10 +459,9 @@ nav {
   &.checked        { @include icons-sprite(checkboxes, $offset-y:-135px); }
   &.checked:hover  { @include icons-sprite(checkboxes, $offset-y:-275px); }
 
-  &.disabled       { color: $cLightGray; @include icons-sprite(checkboxes, $offset-y:4px); }
+  &.disabled       { color: $cGray4; @include icons-sprite(checkboxes, $offset-y:4px); }
   &.disabled:hover { @include icons-sprite(checkboxes, $offset-y:4px); }
 }
-
 
 footer {
   .inner { position:relative; width: 871px; margin: auto; }
@@ -452,8 +469,11 @@ footer {
   .links {
     height:216px;
     background:url(backgrounds/bkg_footer.png) ;
-    font: 11px "Helvetica Neue";
-    color: $cNormalGray;
+
+    @extend .sans-serif;
+    font-size:11px;
+
+    color: $cGray2;
 
     .logos { position:relative; top: 50px; }
 
@@ -470,7 +490,7 @@ footer {
 
       & > .wri { width:92px; height: 31px; margin: 10px 0 20px 0; @include icons-sprite(logo_wri); }
 
-      address { width:266px; color: $cNormalGray; font-size:11px; line-height:120%; }
+      address { width:266px; color: $cGray2; font-size:11px; line-height:120%; }
     }
   }
 }
@@ -481,7 +501,9 @@ footer .download {
   background: $cDarkGreen;
 
   h1 {
-    @extend .font-big;
+    @extend .serif;
+    font-size: 33px;
+    color: $cWhite;
     margin: 0 0 4px 0;
   }
 
@@ -495,116 +517,3 @@ footer .download {
 }
 
 
-body.demo {
-
-  background:#f1f1f1;
-
-  .square {
-    width: 20px;
-    height:20px;
-    @include inline-block();
-  }
-
-  ul.colors { margin: 0 0 20px 0; }
-  ul.colors li {
-    margin: 0 0 1px 0;
-  }
-
-  ul.colors li, code, pre, tt {
-    font-family: Monaco, Consolas, "Lucida Console", monospace;
-    font-size: 12px;
-    line-height: 18px;
-    font-style: normal;
-    color: #333;
-  }
-
-  #content {
-
-    width:900px;
-    margin:40px auto;
-    padding-bottom: 30px;
-
-    -webkit-border-bottom-left-radius: 4px;
-    -webkit-border-bottom-right-radius: 4px;
-    -moz-border-radius-bottom: 4px;
-    -moz-border-radius-bottom: 4px;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-
-    background:$cWhite;
-
-    h3 {
-      @extend .golden;
-      margin: 0 0 10px 20px;
-    }
-
-    h4 {
-      @extend .golden;
-      color:#333;
-      text-transform: none;
-      margin: 0 0 5px 0;
-    }
-
-    .explanation {
-      padding: 40px 20px;
-
-      background: #DEE;
-      font: 14px "Helvetica Neue", sans-serif;
-      color:#333;
-
-      -webkit-border-top-left-radius: 4px;
-      -webkit-border-top-right-radius: 4px;
-      -moz-border-radius-topleft: 4px;
-      -moz-border-radius-topright: 4px;
-      border-top-left-radius: 4px;
-      border-top-right-radius: 4px;
-    }
-
-    .demo {
-      padding-top: 20px;
-
-      p { 
-        padding: 0 0 10px 20px;
-        font: normal 12px "Helvetica Neue", sans-serif;
-        color:#333;
-      }
-
-      &.dark, &.dark .snippet { background: #DEE; }
-      &.dark .snippet { border-bottom: 1px solid #fff; }
-      &:last-child > .snippet:last-child { border:none; }
-
-      .btn { margin: 0 0 20px 0; }
-      .checkbox { display: block; margin: 0 0 20px 0; }
-
-      .snippet {
-        padding: 30px 20px 15px 20px;
-        border-bottom: 1px solid #ddd;
-
-        .comment {
-          width:270px;
-          margin: 10px 0 0 10px;
-          font-family: Monaco, Consolas, "Lucida Console", monospace;
-          font-size: 12px;
-          line-height: 18px;
-          font-style: normal;
-          color: #ccc;
-          strong { border-bottom: 1px solid #ccc;  }
-
-        }
-        .example {
-          @include inline-block();
-          vertical-align: top;
-          width:500px;
-          margin: 0 50px 0 0;
-
-          textarea { width: 500px; }
-        }
-
-        .code {
-          @include inline-block();
-          vertical-align: top;
-        }
-      }
-    }
-  }
-}

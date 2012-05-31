@@ -22,14 +22,26 @@ var map = null;
     }
 
     // Bind to StateChange Event
-    History.Adapter.bind(window,'statechange',function(){ // Note: We are using statechange instead of popstate
-        var State = History.getState(); // Note: We are using History.getState() instead of event.state
-        History.log(State.data, State.title, State.url);
+    History.Adapter.bind(window,'statechange', function(){ // Note: We are using statechange instead of popstate
+      var State = History.getState(); // Note: We are using History.getState() instead of event.state
+      History.log(State.data, State.title, State.url);
+
+      if (State.title === 'Home') {
+        Navigation.showState("home");
+      } else if (State.title === 'Map') {
+        Navigation.showState("map");
+      }
+
     });
 
-    $("nav .map").on("click", function(e) {
+    $("nav .home.ajax").on("click", function(e) {
       e.preventDefault();
-      History.pushState({state:1}, "State 1", "?state=1");
+      History.pushState({ state: 2 }, "Home", "/");
+    });
+
+    $("nav .map.ajax").on("click", function(e) {
+      e.preventDefault();
+      History.pushState({ state: 1 }, "Map", "/map");
     });
 
     return false;
@@ -43,101 +55,13 @@ $(function(){
   polygon               = null,
   polygonPath           = [];
 
-
   $(document).on("click", function(e) {
-    closeFilter();
+    Filter.closeOpenFilter();
   });
-
-  $(".filters").on("mouseenter", function() {
-    $("#layers").animate({ opacity: 1 }, 150);
-  });
-
-  $("#layer").on("click", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-  });
-
-  function calcFiltersPosition() {
-    $(".filters li").each(function(i, el) {
-      $(el).data("left-pos", $(el).offset().left);
-    });
-  }
-
-  function advanceFilter(e) {
-    e.preventDefault();
-
-    var
-    $inner = $(".filters .inner"),
-    $el    = $inner.find("li:first"),
-    width  = $el.width() + 1;
-
-    $(".filters .inner").animate({ left:"-=" + width }, 250, "easeInExpo", function() {
-      $(this).find('li:last').after($el);
-      $(this).css("left", 0);
-
-      calcFiltersPosition();
-    });
-  }
-
-  calcFiltersPosition();
-  $(".advance").on("click", advanceFilter);
-
-  $(".filters li").on("mouseenter", openFilter);
-  $("#layer").on("mouseleave", closeFilter);
-
-  var pids ;
-
-  function closeFilter() {
-    var c = $(this).attr("class");
-
-    if (c === undefined) return;
-
-    pids = setTimeout(function() {
-      close(c);
-    }, 100);
-  }
-
-  function close(c) {
-    $("#layer").animate({opacity:0}, 150, function() {
-      $("#layer").css("left", -10000);
-      $(this).removeClass(c);
-    });
-  }
-
-  var lastClass = null;
-
-  function openFilter() {
-
-    var
-    $filter      = $(this),
-    filterClass  = $filter.attr("class"),
-    l            = $filter.data("left-pos"),
-    $layer       = $("#layer"),
-    lw           = $layer.width(),
-    left         = (l + $filter.width() / 2) - (lw / 2),
-    $line        = $filter.find(".line"),
-    lineWidth    = $line.width();
-
-    cancelClose();
-
-    $layer.removeClass(lastClass);
-    $layer.find("a").text($filter.find("a").text());
-    $layer.addClass(filterClass);
-    lastClass = filterClass;
-
-    $layer.css({ left: left, top: -80});
-    $layer.animate({ opacity: 1}, 250);
-  }
-
-  function cancelClose() {
-    clearTimeout(pids);
-  }
-
 
   $(".checkbox").on("click", function(e) {
     e.preventDefault();
     $(this).toggleClass("checked");
-
   });
 
   if ($("#map").length > 0) {
@@ -147,49 +71,56 @@ $(function(){
 
     google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
       config.mapLoaded = true;
-      Circle.show();
-    });
 
-  function ZoomIn(controlDiv, map) {
-    controlDiv.setAttribute('class', 'zoom_in');
+      Circle.init();
+      Timeline.init();
+      Filter.init();
 
-    google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
-      var zoom = map.getZoom() + 1;
-      if (zoom<20) {
-        map.setZoom(zoom);
+      if (showMap) {
+        Navigation.showState("map");
+      } else {
+        Navigation.showState("home");
       }
+
     });
-  }
 
-  function ZoomOut(controlDiv, map) {
-    controlDiv.setAttribute('class', 'zoom_out');
+    function ZoomIn(controlDiv, map) {
+      controlDiv.setAttribute('class', 'zoom_in');
 
-    google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
-      var zoom = map.getZoom() - 1;
-      if (zoom>2) {
-        map.setZoom(zoom);
-      }
-    });
-  }
+      google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
+        var zoom = map.getZoom() + 1;
+        if (zoom<20) {
+          map.setZoom(zoom);
+        }
+      });
+    }
 
-  var overlayID =  document.getElementById("zoom_controls");
+    function ZoomOut(controlDiv, map) {
+      controlDiv.setAttribute('class', 'zoom_out');
 
-  // zoomIn
-  var zoomInControlDiv = document.createElement('DIV');
-  overlayID.appendChild(zoomInControlDiv);
+      google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
+        var zoom = map.getZoom() - 1;
+        if (zoom>2) {
+          map.setZoom(zoom);
+        }
+      });
+    }
 
-  var zoomInControl = new ZoomIn(zoomInControlDiv, map);
-  zoomInControlDiv.index = 1;
+    var overlayID =  document.getElementById("zoom_controls");
 
-  // zoomOut
-  var zoomOutControlDiv = document.createElement('DIV');
-  overlayID.appendChild(zoomOutControlDiv);
+    // zoomIn
+    var zoomInControlDiv = document.createElement('DIV');
+    overlayID.appendChild(zoomInControlDiv);
 
-  var zoomOutControl = new ZoomOut(zoomOutControlDiv, map);
-  zoomOutControlDiv.index = 2;
+    var zoomInControl = new ZoomIn(zoomInControlDiv, map);
+    zoomInControlDiv.index = 1;
 
+    // zoomOut
+    var zoomOutControlDiv = document.createElement('DIV');
+    overlayID.appendChild(zoomOutControlDiv);
 
-  }
+    var zoomOutControl = new ZoomOut(zoomOutControlDiv, map);
+    zoomOutControlDiv.index = 2;
 
   // Enables map editing mode. When activated, each click in the map draws a polyline
   $('#map-container').find('.draw-area').click(function(){
@@ -221,14 +152,14 @@ $(function(){
     e.preventDefault();
     $(this).closest('#map-container').toggleClass('editing-mode');
     $(this).find('#area_the_geom').val(JSON.stringify({
-        "type": "MultiPolygon",
-        "coordinates": [
-            [
-                $.map(polygonPath, function(latlong, index){
-                  return [[latlong.lng(), latlong.lat()]];
-                })
-            ]
-        ]
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          $.map(polygonPath, function(latlong, index){
+        return [[latlong.lng(), latlong.lat()]];
+      })
+      ]
+      ]
     }));
 
     $.post($(this).attr('action'), $(this).serialize(), function(response){
@@ -236,4 +167,8 @@ $(function(){
       renderPolygonListener = null;
     });
   });
+
+
+  }
+
 });

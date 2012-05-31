@@ -3,12 +3,37 @@
 </div>
 
 <div class="demo">
+  <h3>Infowindow</h3>
+
+  <%= snippet %(
+<div class="infowindow">
+  <div class="header">
+    <strong>Title</strong>
+    <a href="#" class="handle"></a>
+    <a href="#" class="close"></a>
+  </div>
+  <div class="content">
+    <ul>
+      <li>Concession 1</li>
+      <li>Concession 2</li>
+      <li>Concession 3</li>
+      <li>Concession 3</li>
+      <li>Concession 3</li>
+      <li>Concession 3</li>
+      <li>Concession 3</li>
+    </ul>
+  </div>
+  <div class="t"></div><div class="b"></div>
+</div>) %>
+</div>
+
+<div class="demo">
   <h3>Buttons</h3>
 
   <%= snippet %(
   <a href="#" class="btn">
     <span>Hi, I'm a button</span>
-  </a>), '— This is the <strong>canonical</strong> way for creating buttons.' %>
+  </a>), { :comment => '— This is the <strong>canonical</strong> way for creating buttons.', :snippet_class => :dark } %>
 
   <%= snippet %(
   <a href="#" class="btn hollow">
@@ -78,11 +103,11 @@
     <h4>Grays</h4>
     <ul class="colors">
       <li><%= color '#FFFFFF', "cWhite" %></li>
-      <li><%= color '#CCCCCC', "cLightGray" %></li>
-      <li><%= color '#999999', "cDarkGray" %></li>
-      <li><%= color '#666666', "cNormalGray" %></li>
-      <li><%= color '#333333', "cGray" %></li>
-      <li><%= color '#000000', "cBlack" %></li>
+      <li><%= color '#CCCCCC', "cGray4" %></li>
+      <li><%= color '#999999', "cGray3" %></li>
+      <li><%= color '#666666', "cGray2" %></li>
+      <li><%= color '#333333', "cGray1" %></li>
+      <li><%= color '#000000', "cGray0" %></li>
     </ul>
 
     <h4>Filters</h4>

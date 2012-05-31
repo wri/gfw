@@ -2,23 +2,6 @@
   t('.title')
 end %>
 
-<div class="infowindow">
-  <div class="header">
-    <a href="#" class="handle"></a>
-    <strong>CGO. CONCE. 2011</strong>
-    <a href="#" class="close"></a>
-  </div>
-  <div class="content">
-    <ul>
-      <li>Concession 1</li>
-      <li>Concession 2</li>
-      <li>Concession 3</li>
-    </ul>
-  </div>
-
-  <div class="t"></div><div class="b"></div>
-</div>
-
 <%= render "common/map" %>
 
 <div class="actions">
@@ -54,6 +37,24 @@ end %>
         title: "Forest clearing alerts in the last 15 days"
       }
   </script>
+
+<script id="infowindow-template" type="text/x-underscore-template">
+<div class="infowindow">
+  <div class="header">
+    <strong>{{title}}</strong>
+    <a href="#" class="handle"></a>
+    <a href="#" class="close"></a>
+  </div>
+  <div class="content">
+    <ul>
+    {{ layers }}
+    </ul>
+  </div>
+
+  <div class="t"></div><div class="b"></div>
+</div>
+
+</script>
 
 <script id="circle-template" type="text/x-underscore-template">
   <div class="circle">

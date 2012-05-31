@@ -1,4 +1,4 @@
-<div class="snippet">
+<div class="snippet<%= " #{snippet_class}" if defined? snippet_class %>">
 <div class="example">
 <%= raw(code) %> 
 </div>
@@ -6,7 +6,7 @@
 <pre class="prettyprint"><%= code %>
 </pre>
 <% if defined? comment %>
-<div class="comment"><%= raw(comment) %></div>
+  <div class="comment"><%= raw(comment) %></div>
 <% end %>
 </div>
 </div>

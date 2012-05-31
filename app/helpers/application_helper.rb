@@ -1,10 +1,15 @@
 module ApplicationHelper
 
-def snippet(code, comment = nil) 
-render :partial => "demo/snippet", :locals => { :code => code, :comment => comment } 
-  end
-end
+  def snippet(code, options = nil) 
 
-def color(code, name) 
-  render :partial => "demo/color", :locals => { :code => code, :name => name } 
+    comment       = options && options[:comment] 
+    snippet_class = options && options[:snippet_class] 
+
+    render :partial => "demo/snippet", :locals => { :code => code, :comment => comment, :snippet_class => snippet_class } 
+  end
+
+  def color(code, name) 
+    render :partial => "demo/color", :locals => { :code => code, :name => name } 
+  end
+
 end
