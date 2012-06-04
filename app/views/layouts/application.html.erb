@@ -6,7 +6,7 @@
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= csrf_meta_tags %>
   </head>
-  <body class="<%= controller.controller_name %>">
+  <body class="<%= controller.controller_name %>"<%= raw ' onload="initialize()"' if controller_name == 'maps' or controller_name == 'home' %>>
     <%= render "common/header" %>
     <div id="content">
       <%= yield %>
@@ -15,7 +15,7 @@
     <%= yield :js %>
     <%= javascript_include_tag "application" %>
     <script type="text/javascript">
-      <% if request.path == "/map" %>
+      <% if request.path.split("/")[1] == "map" %>
          var showMap = true;
       <% else %>
          var showMap = false; 

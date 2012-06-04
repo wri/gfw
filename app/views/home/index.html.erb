@@ -33,37 +33,37 @@ end %>
 <% content_for :js do %>
   <script type="text/javascript">
     var summary = {
-        count: "2,931",
-        title: "Forest clearing alerts in the last 15 days"
-      }
+count: "2,931",
+title: "Forest clearing alerts in the last 15 days"
+}
   </script>
 
-<script id="infowindow-template" type="text/x-underscore-template">
-<div class="infowindow">
-  <div class="header">
-    <strong>{{title}}</strong>
-    <a href="#" class="handle"></a>
-    <a href="#" class="close"></a>
-  </div>
-  <div class="content">
-    <ul>
-    {{ layers }}
-    </ul>
-  </div>
+  <script id="infowindow-template" type="text/x-underscore-template">
+    <div class="infowindow">
+      <div class="header">
+        <strong>{{title}}</strong>
+        <a href="#" class="handle"></a>
+        <a href="#" class="close"></a>
+      </div>
+      <div class="content">
+        <ul>
+          {{ layers }}
+        </ul>
+      </div>
 
-  <div class="t"></div><div class="b"></div>
-</div>
-
-</script>
-
-<script id="circle-template" type="text/x-underscore-template">
-  <div class="circle">
-    <div class="inner">
-      <div class="counter">{{count}}</div>
-      <div class="title">{{title}}</div>
-      <div class="background"></div>
-      <div class="explore">Explore the map</div>
+      <div class="t"></div><div class="b"></div>
     </div>
-  </div>
-</script>
+
+  </script>
+
+  <script id="circle-template" type="text/x-underscore-template">
+    <div class="circle">
+      <div class="inner">
+        <div class="counter">{{count}}</div>
+        <div class="title">{{title}}</div>
+        <div class="background"></div>
+        <div class="explore">Explore the map</div>
+      </div>
+    </div>
+  </script>
 <% end %>

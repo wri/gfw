@@ -1,6 +1,7 @@
 var Navigation = (function() {
 
   function _select(name) {
+    console.log(name);
     $("nav li a").removeClass("selected");
     $("nav ." + name).addClass("selected");
   }
@@ -29,7 +30,7 @@ var Navigation = (function() {
     Circle.hide();
     Timeline.show();
 
-    $("hgroup h1").animate({ top: "50px", opacity: 0}, 250, function() {
+    $("hgroup h1").animate({ top: "50px", opacity: 0 }, 250, function() {
       Filter.show();
     });
   }
