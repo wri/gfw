@@ -14,6 +14,7 @@
 // Map needs to be a global var or
 // CapybaraHelpers#draw_polygon won't work
 var map = null;
+var previousState = null;
 
 function initialize() {
   // initialise the google map
@@ -115,12 +116,15 @@ function initialize() {
     var State = History.getState(); // Note: We are using History.getState() instead of event.state
     History.log(State.data, State.title, State.url);
 
-    if (State.title === 'Home') {
-      Navigation.showState("home");
-    } else if (State.title === 'Map') {
-      Navigation.showState("map");
-    }
+    if (previousState != State.title) {
+      if (State.title === 'Home') {
+        Navigation.showState("home");
+      } else if (State.title === 'Map') {
+        Navigation.showState("map");
+      }
 
+      previousState = State.title;
+    }
   });
 
   $("nav .home.ajax").on("click", function(e) {

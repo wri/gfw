@@ -1,7 +1,6 @@
 var Navigation = (function() {
 
   function _select(name) {
-    console.log(name);
     $("nav li a").removeClass("selected");
     $("nav ." + name).addClass("selected");
   }
@@ -294,7 +293,7 @@ var Circle = (function() {
     if ( $("#circle-template").length > 0 ) {
 
       template    = _.template($("#circle-template").html());
-      $circle     = $(template({count: summary.count, title: summary.title}));
+      $circle     = $(template({ count: summary.count, title: summary.title}));
 
       $title      = $circle.find(".title");
       $counter    = $circle.find(".counter");
@@ -310,9 +309,7 @@ var Circle = (function() {
   }
 
   function _show() {
-
-    $circle.on("mouseenter", _onMouseEnter);
-    $circle.on("mouseleave", _onMouseLeave);
+    console.log('showing');
 
     $circle.animate({ top:'50%', marginTop:-1*($circle.height() / 2), opacity: 1 }, 250, function() {
       $title.animate({ opacity: 0.75 }, 150, "easeInExpo");
@@ -350,7 +347,7 @@ var Circle = (function() {
     animating = true;
 
     var _afterHide = function() {
-      $circle.animate({ marginTop: 100, opacity: 0 }, 250);
+      $circle.animate({ top:0, opacity: 0 }, 250);
     };
 
     $circle.find(".title, .counter").animate({ opacity: 0 }, 150, "easeOutExpo", _afterHide);
@@ -368,7 +365,14 @@ var Circle = (function() {
     if (_build()) {
 
       // Bindings
+      $circle.die("click");
+      $circle.die("mouseenter");
+      $circle.die("mouseleave");
+
       $circle.on("click", _onClick);
+      $circle.on("mouseenter", _onMouseEnter);
+      $circle.on("mouseleave", _onMouseLeave);
+
     }
   }
 
