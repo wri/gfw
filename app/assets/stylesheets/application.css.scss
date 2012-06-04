@@ -214,6 +214,11 @@ nav {
       text-align: left;
       &:last-child { margin: 0; }
 
+      h2 {
+        color: $cWhite;
+        line-height:30px;
+      }
+
       h2 a {
         color: $cWhite;
         @extend .classic-hover;
@@ -227,8 +232,10 @@ nav {
         @extend .sans-serif;
         font-size:15px;
         font-weight:400;
+        line-height:20px;
 
         color: #264C59;
+
         opacity: 0.85;
 
         a {
