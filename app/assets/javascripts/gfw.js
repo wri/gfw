@@ -53,6 +53,27 @@ GFW.modules.app = function(gfw) {
       this._cartodb = Backbone.CartoDB({user: this.options.user});
 
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
+
+
+      var overlayID =  document.getElementById("zoom_controls");
+
+      // zoomIn
+      var zoomInControlDiv = document.createElement('DIV');
+      overlayID.appendChild(zoomInControlDiv);
+
+      var zoomInControl = new this._zoomIn(zoomInControlDiv, map);
+      zoomInControlDiv.index = 1;
+
+      // zoomOut
+      var zoomOutControlDiv = document.createElement('DIV');
+      overlayID.appendChild(zoomOutControlDiv);
+
+      var zoomOutControl = new this._zoomOut(zoomOutControlDiv, map);
+      zoomOutControlDiv.index = 2;
+
+
+
+
     },
     run: function() {
       this._setupListeners();
@@ -70,6 +91,28 @@ GFW.modules.app = function(gfw) {
 
     close: function() {
       $("#map").animate({height: 400 }, 250);
+    },
+
+    _zoomIn: function(controlDiv, map) {
+      controlDiv.setAttribute('class', 'zoom_in');
+
+      google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
+        var zoom = map.getZoom() + 1;
+        if (zoom < 20) {
+          map.setZoom(zoom);
+        }
+      });
+    },
+
+    _zoomOut: function(controlDiv, map) {
+      controlDiv.setAttribute('class', 'zoom_out');
+
+      google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
+        var zoom = map.getZoom() - 1;
+        if (zoom > 2) {
+          map.setZoom(zoom);
+        }
+      });
     },
 
     _setupListeners: function(){
@@ -164,10 +207,11 @@ GFW.modules.maplayer = function(gfw) {
         this.layer.attributes['visible'] = false;
         //this._toggleLayer();
       }
+
       this._addControll();
       this._handleLayer();
-
     },
+
     _setupListeners: function(){
       var that = this;
       //setup zoom listener

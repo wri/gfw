@@ -17,12 +17,7 @@ var map = null;
 
 function initialize() {
   // initialise the google map
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: new google.maps.LatLng(0,110),
-    zoom: 5,
-    mapTypeId: google.maps.MapTypeId.SATELLITE,
-    mapTypeControl: false
-  });
+  map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 
   var forestHeight = new google.maps.ImageMapType({
     getTileUrl: function(ll, z) {
