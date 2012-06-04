@@ -22,6 +22,8 @@ var Navigation = (function() {
     Filter.hide(function() {
       $("hgroup h1").animate({ top: 0, opacity: 1 }, 250);
     });
+
+    GFW.app.close();
   }
 
   function _showMapState() {
@@ -29,6 +31,7 @@ var Navigation = (function() {
 
     Circle.hide();
     Timeline.show();
+    GFW.app.open();
 
     $("hgroup h1").animate({ top: "50px", opacity: 0 }, 250, function() {
       Filter.show();
@@ -298,7 +301,7 @@ var Circle = (function() {
     $circle.on("mouseenter", _onMouseEnter);
     $circle.on("mouseleave", _onMouseLeave);
 
-    $circle.delay(250).animate({ top:'50%', marginTop:-1*($circle.height() / 2), opacity: 1 }, 250, function() {
+    $circle.animate({ top:'50%', marginTop:-1*($circle.height() / 2), opacity: 1 }, 250, function() {
       $title.animate({ opacity: 0.75 }, 150, "easeInExpo");
       $counter.animate({ opacity: 1 }, 150, "easeInExpo");
       animating = false;

@@ -63,6 +63,19 @@ GFW.modules.app = function(gfw) {
       this.update();
       gfw.log.info('App is now running!');
     },
+
+    open: function() {
+      this._map = map;
+      var dh = $(window).height();
+      var hh = $("header").height();
+      $("#map").animate({height: dh - hh}, 250);
+      google.maps.event.trigger(this._map, 'resize');
+    },
+
+    close: function() {
+      $("#map").animate({height: 400 }, 250);
+    },
+
     _setHash: function(){
 
     var State = History.getState(); // Note: We are using History.getState() instead of event.state
