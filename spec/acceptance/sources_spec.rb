@@ -1,6 +1,6 @@
 require_relative 'acceptance_helper'
 
-feature 'GFW Blog' do
+feature 'GFW Sources' do
 
   background do
     VCR.use_cassette('init_app') do
@@ -10,7 +10,7 @@ feature 'GFW Blog' do
 
   include_examples 'common header'
   #include_examples 'title', 'Data sources | All countries'
-  include_examples 'menu', 'Data sources'
+  include_examples 'menu', 'Data Sources'
 
   #scenario 'has some posts' do
     #within '#content' do

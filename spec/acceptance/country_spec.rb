@@ -19,12 +19,12 @@ feature 'GFW country detail page' do
     end
   end
 
-  scenario 'shows forest clearing alerts counter' do
-    within '#content #country .count' do
-      page.should have_css 'h1', :text => '2,931'
-      page.should have_content '2,931 Forest clearing alerts in the last 15 days'
-    end
-  end
+  #scenario 'shows forest clearing alerts counter' do
+    #within '#content #country .count' do
+      #page.should have_css 'h1', :text => '2,931'
+      #page.should have_content '2,931 Forest clearing alerts in the last 15 days'
+    #end
+  #end
 
   #scenario 'shows a map of the country' do
     #within '#content #country .map' do
@@ -45,7 +45,7 @@ feature 'GFW country detail page' do
 
   scenario 'shows a description of the country' do
     within '#content #country .details .description' do
-      page.should have_content %q{The Central African Republic (CAR) (French: République centrafricaine, pronounced: [ʁepyblik sɑ̃tʁafʁikɛn], or Centrafrique [sɑ̃tʀafʀik]; Sango Ködörösêse tî Bêafrîka), is a landlocked country in Central Africa. It borders Chad in the north, Su...}
+      page.should have_content %q{The Central African Republic (CAR) (French: République centrafricaine, pronounced: [ʁepyblik sɑ̃tʁafʁikɛn], or Centrafrique [sɑ̃tʀafʀik]; Sango Ködörösêse tî Bêafrîka), is a landlocked country in Central Africa. It borders Chad in the north, Sudan in the northeast, South Sudan in the east, the Democratic Republic of the Congo and Congo in the south, and Cameroon in the west. The CAR cov...}
       page.should have_link 'Read more at Wikipedia'
     end
   end

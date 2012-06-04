@@ -68,10 +68,9 @@ shared_examples 'download section' do |text|
 
   scenario 'has a download section' do |text|
 
-    within 'footer .download' do
-      page.should have_content text
-      page.should have_content 'You can also download all our data in a .zip file.'
-      page.should have_link 'write here'
+    within '.download' do
+      #page.should have_content text
+      page.should have_css 'p', :text => 'You can also download all our data in a .zip file.'
       page.should have_link 'download all our data'
     end
 
