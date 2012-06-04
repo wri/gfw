@@ -158,7 +158,6 @@ $(function(){
     $(this).toggleClass("checked");
   });
 
-
   //if ($("#map").length > 0) {
   //  map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
   //  map.mapTypes.set('GfwStyle', config.gfwStyle);

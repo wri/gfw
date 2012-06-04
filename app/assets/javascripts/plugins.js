@@ -50,29 +50,29 @@ var Filter = (function() {
   var
   lastClass = null,
   pids,
-  $filter   = $(".filters"),
-  $advance  = $filter.find(".advance"),
+  $filters   = $(".filters"),
+  $advance  = $filters.find(".advance"),
   $layer    = $("#layer");
 
   function _show(callback) {
 
-    if (!$filter.hasClass("hide")) return;
+    if (!$filters.hasClass("hide")) return;
 
     var count = 10;
 
-    $filter.fadeIn(150, function() {
+    $filters.fadeIn(150, function() {
 
-      $filter.find("li").slice(0, count).each(function(i, el) {
+      $filters.find("li").slice(0, count).each(function(i, el) {
         $(el).delay(i * 50).animate({ opacity: 1 }, 150, "easeInExpo", function() {
           $(this).find("a").animate({ top: "-15px"}, 150);
           count--;
 
           if (count <= 0) {
             $advance.delay(200).animate({ top: "20px", opacity: 1 }, 200);
-            $filter.removeClass("hide");
+            $filters.removeClass("hide");
 
-            $filter.find("li").css({opacity:1});
-            $filter.find("li a").css({top:"-15px"});
+            $filters.find("li").css({opacity:1});
+            $filters.find("li a").css({top:"-15px"});
 
             if (callback) callback();
             _calcFiltersPosition();
@@ -88,13 +88,13 @@ var Filter = (function() {
 
   function _hide(callback) {
 
-    if ($filter.hasClass("hide")) return;
+    if ($filters.hasClass("hide")) return;
 
     var count = 10;
 
     $advance.animate({ top: "40px", opacity: 0 }, 200, function() {
 
-      $($filter.find("li a").slice(0, count).get().reverse()).each(function(i, el) {
+      $($filters.find("li a").slice(0, count).get().reverse()).each(function(i, el) {
 
         $(el).delay(i * 50).animate({ top: "15px" }, 150, function() {
           $(this).parent().animate({ opacity: "0"}, 150, function() {
@@ -102,11 +102,11 @@ var Filter = (function() {
             --count;
 
             if (count <= 0) {
-              $filter.fadeOut(150, function() {
-                $filter.addClass("hide");
+              $filters.fadeOut(150, function() {
+                $filters.addClass("hide");
 
-                $filter.find("li a").css({top:"15px"});
-                $filter.find("li").css({opacity:0});
+                $filters.find("li a").css({top:"15px"});
+                $filters.find("li").css({opacity:0});
 
                 if (callback) callback();
               });
@@ -121,7 +121,7 @@ var Filter = (function() {
   }
 
   function _calcFiltersPosition() {
-    $filter.find("li").each(function(i, el) {
+    $filters.find("li").each(function(i, el) {
       $(el).data("left-pos", $(el).offset().left);
     });
   }
@@ -132,11 +132,11 @@ var Filter = (function() {
     _closeOpenFilter();
 
     var
-    $inner = $filter.find(".inner"),
+    $inner = $filters.find(".inner"),
     $el    = $inner.find("li:first"),
     width  = $el.width() + 1;
 
-    $filter.find(".inner").animate({ left:"-=" + width }, 250, "easeInExpo", function() {
+    $filters.find(".inner").animate({ left:"-=" + width }, 250, "easeInExpo", function() {
       $(this).find('li:last').after($el);
       $(this).css("left", 0);
 
@@ -195,10 +195,10 @@ var Filter = (function() {
 
     // Bindings
     $advance.on("click", _advanceFilter);
-    $filter.find("li").on("mouseenter", _open);
+    $filters.find("li").on("mouseenter", _open);
     $layer.on("mouseleave", _closeOpenFilter);
 
-    $filter.on("mouseenter", _onMouseEnter);
+    $filters.on("mouseenter", _onMouseEnter);
 
     $layer.on("click", function(e) {
       e.preventDefault();
@@ -207,10 +207,23 @@ var Filter = (function() {
 
   }
 
+  function _addFilter(name) {
+    return false;
+    console.log("Add filter:", name);
+
+    var
+    template = _.template($("#filter-template").html()),
+    $filter  = $(template({ title: name }));
+
+    console.log($filter);
+    $filters.find("ul").append($filter);
+  }
+
   return {
     init: _init,
     show: _show,
     hide: _hide,
+    addFilter: _addFilter,
     closeOpenFilter:_closeOpenFilter
   };
 

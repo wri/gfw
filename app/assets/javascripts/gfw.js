@@ -53,10 +53,6 @@ GFW.modules.app = function(gfw) {
       this._cartodb = Backbone.CartoDB({user: this.options.user});
 
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
-
-      //this._setHash();
-
-
     },
     run: function() {
       this._setupListeners();
@@ -76,16 +72,6 @@ GFW.modules.app = function(gfw) {
       $("#map").animate({height: 400 }, 250);
     },
 
-    _setHash: function(){
-
-    var State = History.getState(); // Note: We are using History.getState() instead of event.state
-    console.log('Setting hash ', State.title, State);
-      if (State.data.state != 3){
-        var hash = "/map/5/0/110";
-        History.pushState({ state: 3 }, "Map", hash);
-      }
-
-    },
     _setupListeners: function(){
       var that = this;
 
@@ -130,7 +116,7 @@ GFW.modules.app = function(gfw) {
           return {
             center: new google.maps.LatLng(lat, lon),
             zoom: zoom
-          }
+          };
         }
       } else {
         return false;
@@ -246,14 +232,14 @@ GFW.modules.maplayer = function(gfw) {
         this._displayed = false;
         this._map.overlayMapTypes.setAt(this._tileindex, null);
         gfw.log.info(this.layer.get('title')+ " removed at "+this._tileindex);
-      };
+      }
     },
     _addControll: function(){
       var that = this;
 
-      console.log(this);
+      this._opacity = { alpha: 100 };
 
-      this._opacity = {alpha: 100};
+      this.toggle = Filter.addFilter(this.layer.get('title'));
 
       // this.toggle = gui.addFolder(this.layer.get('title'));
 
@@ -341,7 +327,19 @@ alt: "MapServer Layer",
             }
 }
 );
-}
+};
+
+  /*GFW.modules.controllers = function(gfw) {
+    gfw.controllers = {};
+    gfw.controllers.Engine = Class.extend({
+      init: function(CartoDB, layerTable, map) {
+        this._map = map;
+        console.log('init controllers');
+
+      },
+      _add:
+    });
+  };*/
 
   GFW.modules.datalayers = function(gfw) {
     gfw.datalayers = {};
@@ -355,7 +353,7 @@ alt: "MapServer Layer",
         this._cartodb = CartoDB;
         var LayersColl = this._cartodb.CartoDBCollection.extend({
           sql: function(){
-            return "SELECT title, zmin, zmax, ST_XMAX(the_geom) as xmax,ST_XMIN(the_geom) as xmin,ST_YMAX(the_geom) as ymax,ST_YMIN(the_geom) as ymin, tileurl, true as visible FROM " + layerTable + " WHERE display = True ORDER BY displaylayer ASC"
+            return "SELECT title, zmin, zmax, ST_XMAX(the_geom) as xmax,ST_XMIN(the_geom) as xmin,ST_YMAX(the_geom) as ymax,ST_YMIN(the_geom) as ymin, tileurl, true as visible FROM " + layerTable + " WHERE display = True ORDER BY displaylayer ASC";
           }
         });
         this.LayersObj = new LayersColl();
@@ -364,17 +362,23 @@ alt: "MapServer Layer",
       },
       _loadLayers: function(){
         var that = this;
+
         this.LayersObj.bind('reset', function() {
-          that.LayersObj.each(function(p){that._addLayer(p)});
+          that.LayersObj.each(function(p) {
+            that._addLayer(p);
+          });
         });
+
       },
       _addLayer: function(p){
         gfw.log.warn('only showing baselayers for now');
-        //if (p.get('category')=='baselayer'){
-        var layer = new gfw.maplayer.Engine(p, this._map);
-        this._dataarray.push(layer);
-        this._bycartodbid[p.get('cartodb_id')] = layer;
-        this._bytitle[p.get('title')] = layer;
+
+        //if (p.get('category') == 'baselayer') {
+          var layer = new gfw.maplayer.Engine(p, this._map);
+
+          this._dataarray.push(layer);
+          this._bycartodbid[p.get('cartodb_id')] = layer;
+          this._bytitle[p.get('title')] = layer;
         //}
       }
     });
