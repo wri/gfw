@@ -4,8 +4,9 @@ Gfw::Application.routes.draw do
   resources :posts
   resources :sources
 
-  match 'blog' => 'posts#index'
-  match 'map'  => 'home#index'
+  match 'blog'  => 'posts#index'
+  match 'about' => 'static#about'
+  match 'map'   => 'home#index'
 
   resources :demo
 

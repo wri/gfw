@@ -328,10 +328,10 @@ $timelineWidth: 947px;
   cursor:col-resize;
 
   & > .play {
+    position:absolute;
     display:block;
     width:19px;
     height:17px;
-    position:absolute;
     top: 13px;
     left:11px;
     @include icons-sprite(timeline_handle_play);
@@ -343,14 +343,15 @@ $timelineWidth: 947px;
 
   & > div {
     position:absolute;
-    top: 13px;
+    top: 15px;
     left: 32px;
-    width: 86px - 10 ;
+    width: 86px - 10;
     padding: 5;
+
+    font: normal 12px "Futura", sans-serif;
     text-align:center;
-    font: normal 13px "Futura", sans-serif;
-    color: $cGray1;
     text-transform: uppercase;
+    color: $cGray1;
   }
 
   &.hidden {

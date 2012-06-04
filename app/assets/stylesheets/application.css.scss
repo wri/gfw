@@ -55,7 +55,7 @@ header {
     }
   }
 
-  .inner { position:relative; width: 912px; margin: auto; }
+  .inner { position:relative; width: 927px; margin: auto; }
 
   & > .top {
 
@@ -124,8 +124,6 @@ nav {
     } // li
   } // ul
 } // nav
-
-
 
 .actions {
   padding: 51px 0 59px 0;
@@ -242,8 +240,14 @@ nav {
   }
 }
 
-#country {
-  background: $cWhite;
+body.countries {
+  header {
+    border-bottom: 1px solid #ccc;
+  }
+
+  #country {
+    background: $cWhite;
+  }
 }
 
 .details {
@@ -252,6 +256,7 @@ nav {
   .inner > div { @include inline-block(); vertical-align: top; }
 
   h4 {
+    height: 30px;
     margin: 0 0 15px 0;
 
     @extend .sans-serif;
@@ -260,7 +265,6 @@ nav {
     text-transform: uppercase;
     color:$cGray1;
 
-    height: 30px;
     border-bottom: 1px solid #f1f1f1;
   }
 
@@ -268,12 +272,17 @@ nav {
     width:597px;
     margin: 0 26px 0 0;
 
+    .btn { float:right; }
+
     ul {
       margin: 0 0 20px 0;
+      height: 220px;
 
       li {
         padding:19px 0;
+
         border-bottom: 1px solid #f1f1f1;
+
         @extend .sans-serif;
         font-size:15px;
         font-weight:200;
@@ -291,23 +300,22 @@ nav {
           @include icons-sprite(bars, $offset-y: 4px);
         }
       }
-    }
-
-    .btn { float:right; }
-  }
+    } // ul
+  } // alerts
 
   .description {
     width:285px;
 
     p {
-      height: 285px;
+      height: 220px;
       margin: 0 0 20px 0;
 
       @extend .sans-serif;
       font-size:15px;
       font-weight:300;
       color: $cGray2;
-      line-height:120%;
+
+      line-height:20px;
     }
 
     h4 {

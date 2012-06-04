@@ -3,8 +3,9 @@
 @import "sprites";
 @import "helpers";
 
-// Blog
-body.posts {
+body.posts,
+body.static,
+body.sources {
 
   header {
     border-bottom: 1px solid #ccc;
@@ -18,7 +19,7 @@ body.posts {
   #content { padding: 40px 0 0 0; background: $cWhite; }
   #content .inner { position:relative; width: 927px; margin: auto; }
 
-  div.posts, aside { @include inline-block(); }
+  section, aside { @include inline-block(); }
 
   aside {
     width:280px;
@@ -40,6 +41,7 @@ body.posts {
     }
 
     &.posts > ul {
+
       li {
         .date {
           margin: 0 0 5px 0;
@@ -76,6 +78,7 @@ body.posts {
         border-bottom: 1px solid #E5E5E5;
 
         a { @extend .font-golden; }
+        a.selected { color: $cGray2; }
 
         .count {
           float:right;
@@ -87,7 +90,7 @@ body.posts {
     }
   }
 
-  div.posts {
+  section {
 
     width: 600px;
     padding: 0 0 50px 0;
@@ -100,7 +103,9 @@ body.posts {
       &:last-child { border: none; }
 
       h1 {
-        margin: 0 0 10px 0;
+        margin: 0 0 15px 0;
+        font-size:29px;
+        color: $cGray1;
 
         a {
           @extend .serif;
@@ -111,9 +116,7 @@ body.posts {
         }
       } // h1
 
-      img {
-        margin: 0 0 27px 0;
-      }
+      img { margin: 0 0 27px 0; }
 
       p {
         margin: 0 0 20px 0;
@@ -123,7 +126,7 @@ body.posts {
         @extend .sans-serif;
         font-size:17px;
         font-weight:200;
-        line-height:21px;
+        line-height:22px;
       }
 
       .meta {
@@ -207,6 +210,7 @@ body.posts {
         p { margin: 0 0 20px 0; }
       }
     } // ul
+
     .inner > form {
       margin: 0 0 40px 0;
 
@@ -240,10 +244,29 @@ body.posts {
   }
 }
 
-body.sources {
-  @extend .posts;
+body.static {
 
-  div.posts {
+  header {
+    hgroup {
+      width: 500px;
+      h1 { font-size:41px; }
+    }
+  }
+
+  section {
+    article {
+      h1 {
+        a {
+          font-size:29px;
+        }
+      }
+    } // article
+  } // section
+} // body.static
+
+body.sources {
+
+  section {
     article {
       h1 {
         a {
@@ -290,6 +313,6 @@ body.sources {
           line-height:16px;
         }
       }
-    }
-  }
-}
+    } // article
+  } // section
+} // body.sources

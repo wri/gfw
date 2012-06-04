@@ -53,6 +53,9 @@ en:
     map:
       draw_area: 'Draw Area'
       save_area: 'Save Area'
+  static:
+    about:
+      title: About Global Forest Watch
   countries:
     show:
       detail:

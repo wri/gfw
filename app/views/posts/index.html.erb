@@ -1,9 +1,9 @@
 <% content_for :title do %>
- <a href="#" class="selected">Blog Stories</a> | <a href="#">All posts</a>
+  <a href="#" class="selected"><%= t('.title') %></a> | <a href="#"><%= t('.all') %></a>
 <% end %>
 
 <div class="inner">
-  <div class="posts">
+  <section>
     <article>
     <h1><a href="/posts/show">It’s been a great year. But that’s not enough.</a></h1>
     <ul class="meta">
@@ -50,7 +50,7 @@
 
     <a href="#" class="btn hollow"><span>Previous posts</span></a>
     <a href="#" class="btn hollow pull-right"><span>Nexts posts</span></a>
-  </div>
+  </section>
 
   <aside class="categories">
     <h3>By category</h3>
