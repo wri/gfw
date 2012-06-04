@@ -19,7 +19,7 @@ var Navigation = (function() {
     Circle.show();
     Timeline.hide();
     Filter.hide(function() {
-      $("hgroup h1").animate({ marginTop: 0, opacity:1}, 250);
+      $("hgroup h1").animate({ top: 0, opacity: 1 }, 250);
     });
   }
 
@@ -29,7 +29,7 @@ var Navigation = (function() {
     Circle.hide();
     Timeline.show();
 
-    $("hgroup h1").animate({ marginTop: 20, opacity:0}, 250, function() {
+    $("hgroup h1").animate({ top: "50px", opacity: 0}, 250, function() {
       Filter.show();
     });
   }
@@ -54,23 +54,29 @@ var Filter = (function() {
 
     if (!$filter.hasClass("hide")) return;
 
-   var count = $filter.find("li a").length;
+    var count = 10;
 
     $filter.fadeIn(150, function() {
-      _calcFiltersPosition();
 
-      $filter.find("li").each(function(i, el) {
+      $filter.find("li").slice(0, count).each(function(i, el) {
         $(el).delay(i * 50).animate({ opacity: 1 }, 150, "easeInExpo", function() {
           $(this).find("a").animate({ top: "-15px"}, 150);
+          count--;
+
+          if (count <= 0) {
+            $advance.delay(200).animate({ top: "20px", opacity: 1 }, 200);
+            $filter.removeClass("hide");
+
+            $filter.find("li").css({opacity:1});
+            $filter.find("li a").css({top:"-15px"});
+
+            if (callback) callback();
+            _calcFiltersPosition();
+          }
         });
 
 
-        count--;
 
-        if (count <= 0) {
-          $filter.removeClass("hide");
-          if (callback) callback();
-        }
       });
 
     });
@@ -80,25 +86,34 @@ var Filter = (function() {
 
     if ($filter.hasClass("hide")) return;
 
-   var count = $filter.find("li a").length;
+    var count = 10;
 
-   $($filter.find("li a").get().reverse()).each(function(i, el) {
+    $advance.animate({ top: "40px", opacity: 0 }, 200, function() {
 
-     $(el).delay(i * 50).animate({ top: "15px" }, 150, function() {
-       $(this).parent().animate({ opacity: "0"}, 150, function() {
-        --count;
+      $($filter.find("li a").slice(0, count).get().reverse()).each(function(i, el) {
 
-        if (count <= 0) {
-          $filter.fadeOut(150, function() {
-            $filter.addClass("hide");
-            if (callback) callback();
+        $(el).delay(i * 50).animate({ top: "15px" }, 150, function() {
+          $(this).parent().animate({ opacity: "0"}, 150, function() {
+
+            --count;
+
+            if (count <= 0) {
+              $filter.fadeOut(150, function() {
+                $filter.addClass("hide");
+
+                $filter.find("li a").css({top:"15px"});
+                $filter.find("li").css({opacity:0});
+
+                if (callback) callback();
+              });
+            }
+
           });
-        }
+        });
 
-       });
-     });
+      });
+    });
 
-   });
   }
 
   function _calcFiltersPosition() {
@@ -282,10 +297,12 @@ var Circle = (function() {
     $circle.on("mouseenter", _onMouseEnter);
     $circle.on("mouseleave", _onMouseLeave);
 
-    $circle.delay(250).animate({ top:'50%', marginTop:-1*($circle.height() / 2), opacity: 1 }, 250, "easeOutExpo", function() {
+    $circle.delay(250).animate({ top:'50%', marginTop:-1*($circle.height() / 2), opacity: 1 }, 250, function() {
       $title.animate({ opacity: 0.75 }, 150, "easeInExpo");
       $counter.animate({ opacity: 1 }, 150, "easeInExpo");
       animating = false;
+
+      _onMouseLeave();
     });
   }
 
@@ -316,7 +333,7 @@ var Circle = (function() {
     animating = true;
 
     var _afterHide = function() {
-      $circle.animate({ marginTop: 100, opacity: 0 }, 250, "easeOutExpo");
+      $circle.animate({ marginTop: 100, opacity: 0 }, 250);
     };
 
     $circle.find(".title, .counter").animate({ opacity: 0 }, 150, "easeOutExpo", _afterHide);

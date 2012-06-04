@@ -1,10 +1,10 @@
 <nav>
 <ul>
-  <% %w(home countries map blog data_sources about).each do |option| %>
+  <% %w(home countries map blog sources about).each do |option| %>
     <%
-      paths    = { "home" => root_path, "countries" => countries_path, "blog" => blog_path, "map" => map_path, "data_sources" => sources_path, "about" => nil }
+      paths    = { "home" => root_path, "countries" => countries_path, "blog" => blog_path, "map" => map_path, "sources" => sources_path, "about" => nil }
       path     = paths[option]
-      option_class = request.path == path ? :option_class : ""
+      option_class = request.path == path ? "selected" : ""
 
       # Exceptions
       option_class = "selected" if controller_name == 'countries' && option == 'countries'

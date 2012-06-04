@@ -1,7 +1,7 @@
 // Icons
-$icons-crowdsourcing-spacing:70px;
-$icons-analysis-spacing:70px;
-$icons-updates-spacing:70px;
+$icons-crowdsourcing-spacing:90px;
+$icons-analysis-spacing:90px;
+$icons-updates-spacing:90px;
 $icons-bars-spacing:20px;
 $icons-concessions-spacing:20px;
 $icons-protected_areas-spacing: 20px;
@@ -11,3 +11,6 @@ $icons-fire-spacing: 20px;
 $icons-checkboxes-spacing: 20px;
 
 @import "icons/*.png";
+
+$flags-spacing: 20px;
+@import "flags/*.png";

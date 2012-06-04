@@ -4,47 +4,51 @@
 //= require jquery-ui-1.8.20.custom.min
 //= require jquery.history
 //= require lodash.min
+//= require backbone-min
+//= require backbone.cartodb
+//= require cartodb-gmapsv3
+//= require wax.g
 //= require_tree .
 
 // Map needs to be a global var or
 // CapybaraHelpers#draw_polygon won't work
-
 var map = null;
 
 (function(window,undefined){
 
-    // Prepare
-    var History = window.History; // Note: We are using a capital H instead of a lower h
-    if ( !History.enabled ) {
-         // History.js is disabled for this browser.
-         // This is because we can optionally choose to support HTML4 browsers or not.
-        return false;
+  // Prepare
+  var History = window.History; // Note: We are using a capital H instead of a lower h
+
+  if ( !History.enabled ) {
+    // History.js is disabled for this browser.
+    // This is because we can optionally choose to support HTML4 browsers or not.
+    return false;
+  }
+
+  // Bind to StateChange Event
+  History.Adapter.bind(window,'statechange', function(){ // Note: We are using statechange instead of popstate
+    var State = History.getState(); // Note: We are using History.getState() instead of event.state
+    History.log(State.data, State.title, State.url);
+
+    if (State.title === 'Home') {
+      Navigation.showState("home");
+    } else if (State.title === 'Map') {
+      Navigation.showState("map");
     }
 
-    // Bind to StateChange Event
-    History.Adapter.bind(window,'statechange', function(){ // Note: We are using statechange instead of popstate
-      var State = History.getState(); // Note: We are using History.getState() instead of event.state
-      History.log(State.data, State.title, State.url);
+  });
 
-      if (State.title === 'Home') {
-        Navigation.showState("home");
-      } else if (State.title === 'Map') {
-        Navigation.showState("map");
-      }
+  $("nav .home.ajax").on("click", function(e) {
+    e.preventDefault();
+    History.pushState({ state: 2 }, "Home", "/");
+  });
 
-    });
+  $("nav .map.ajax").on("click", function(e) {
+    e.preventDefault();
+    History.pushState({ state: 1 }, "Map", "/map");
+  });
 
-    $("nav .home.ajax").on("click", function(e) {
-      e.preventDefault();
-      History.pushState({ state: 2 }, "Home", "/");
-    });
-
-    $("nav .map.ajax").on("click", function(e) {
-      e.preventDefault();
-      History.pushState({ state: 1 }, "Map", "/map");
-    });
-
-    return false;
+  return false;
 
 })(window);
 
@@ -122,53 +126,50 @@ $(function(){
     var zoomOutControl = new ZoomOut(zoomOutControlDiv, map);
     zoomOutControlDiv.index = 2;
 
-  // Enables map editing mode. When activated, each click in the map draws a polyline
-  $('#map-container').find('.draw-area').click(function(){
-    $(this).closest('#map-container').toggleClass('editing-mode');
+    // Enables map editing mode. When activated, each click in the map draws a polyline
+    $('#map-container').find('.draw-area').click(function(){
+      $(this).closest('#map-container').toggleClass('editing-mode');
 
-    if (renderPolygonListener) return;
+      if (renderPolygonListener) return;
 
-    polygonPath = [];
+      polygonPath = [];
 
-    polygon = new google.maps.Polygon({
-      paths: [],
-      strokeColor: "#FF0000",
-      strokeOpacity: 0.8,
-      strokeWeight: 3,
-      fillColor: "#FF0000",
-      fillOpacity: 0.35
+      polygon = new google.maps.Polygon({
+        paths: [],
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 3,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35
+      });
+
+      polygon.setMap(map);
+
+      renderPolygonListener = google.maps.event.addListener(map, 'click', function(e){
+        polygonPath.push(e.latLng);
+        polygon.setPath(polygonPath);
+      });
     });
 
-    polygon.setMap(map);
+    // Disables editing mode. Sends the created polygon to cartodb.
+    $('#map-container').find('.save-area').submit(function(e){
+      e.preventDefault();
+      $(this).closest('#map-container').toggleClass('editing-mode');
+      $(this).find('#area_the_geom').val(JSON.stringify({
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            $.map(polygonPath, function(latlong, index){
+          return [[latlong.lng(), latlong.lat()]];
+        })
+        ]
+        ]
+      }));
 
-    renderPolygonListener = google.maps.event.addListener(map, 'click', function(e){
-      polygonPath.push(e.latLng);
-      polygon.setPath(polygonPath);
+      $.post($(this).attr('action'), $(this).serialize(), function(response){
+        google.maps.event.removeListener(renderPolygonListener);
+        renderPolygonListener = null;
+      });
     });
-  });
-
-  // Disables editing mode. Sends the created polygon to cartodb.
-  $('#map-container').find('.save-area').submit(function(e){
-    e.preventDefault();
-    $(this).closest('#map-container').toggleClass('editing-mode');
-    $(this).find('#area_the_geom').val(JSON.stringify({
-      "type": "MultiPolygon",
-      "coordinates": [
-        [
-          $.map(polygonPath, function(latlong, index){
-        return [[latlong.lng(), latlong.lat()]];
-      })
-      ]
-      ]
-    }));
-
-    $.post($(this).attr('action'), $(this).serialize(), function(response){
-      google.maps.event.removeListener(renderPolygonListener);
-      renderPolygonListener = null;
-    });
-  });
-
-
   }
-
 });

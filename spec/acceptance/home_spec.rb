@@ -41,7 +41,8 @@ feature 'GFW Home' do
 
     end
   end
-  include_examples 'download section'
+
+  include_examples 'download section', "Browse Forest Clearing data by country."
   include_examples 'common footer'
 
 end

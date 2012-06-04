@@ -27,11 +27,13 @@ header {
   hgroup {
     position:relative;
     top: 52px;
-    width:440px;
+    width:465px;
 
     h1 {
       @extend .font-big;
       color:$cGray1;
+      top: 0;
+      position:relative;
 
       a {
         text-decoration:none;

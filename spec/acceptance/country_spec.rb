@@ -62,7 +62,7 @@ feature 'GFW country detail page' do
     end
   end
 
-  include_examples 'download section'
+  include_examples 'download section', "I'm interested in forest clearing data for write here."
   include_examples 'common footer'
 
 end

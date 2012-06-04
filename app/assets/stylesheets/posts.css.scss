@@ -4,7 +4,6 @@
 @import "helpers";
 
 // Blog
-
 body.posts {
 
   header {
@@ -36,6 +35,7 @@ body.posts {
       font-size:13px;
       font-weight:bold;
       text-transform: uppercase;
+
       color: $cGray1;
     }
 
@@ -95,7 +95,7 @@ body.posts {
     article {
       margin: 0 0 44px 0;
       padding: 0 0 40px 0;
-      border-bottom: 1px solid #f1f1f1;
+      border-bottom: 1px solid $cSeparator;
 
       &:last-child { border: none; }
 
@@ -236,8 +236,60 @@ body.posts {
           opacity:0.4;
         }
       }
-
     }
   }
 }
 
+body.sources {
+  @extend .posts;
+
+  div.posts {
+    article {
+      h1 {
+        a {
+          font-size:29px;
+          color:$cGray1;
+        }
+      }
+
+      .footer {
+        font-size:13px;
+        color:$cGray3;
+        @extend .sans-serif;
+      }
+
+      p { color: $cGray2; }
+
+      ul.sources li {
+
+        &.flag {
+          @extend .flag-icon;
+        }
+
+        margin: 0 0 20px 0;
+
+        @extend .sans-serif;
+
+        strong {
+          color: $cGray3;
+          font-size:12px;
+          font-weight:bold;
+          text-transform: uppercase;
+        }
+
+        a {
+          @extend .font-golden;
+          padding-left: 7px;
+          background:url(icons/square.png) no-repeat left 6px;
+        }
+
+        p {
+          margin: 7px 0 0 0;
+          font-size:13px;
+          color:$cGray3;
+          line-height:16px;
+        }
+      }
+    }
+  }
+}

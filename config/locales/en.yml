@@ -15,11 +15,11 @@ en:
           countries: 'Countries'
           map: 'Map'
           blog: 'Blog'
-          data_sources: 'Data Sources'
+          sources: 'Data Sources'
           about: 'About'
       footer:
         download:
-          interested_html: "I'm interested in forest clearing data for <a href='#'>write here</a>."
+          title: "Browse Forest Clearing data by country."
           data_html: 'You can also <a href="#">download all our data</a> in a .zip file.'
   blog:
     read_more: "Read more"
