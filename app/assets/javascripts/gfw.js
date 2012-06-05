@@ -146,6 +146,7 @@ GFW.modules.app = function(gfw) {
       google.maps.event.addListenerOnce(this._map, 'tilesloaded', function(){
         config.mapLoaded = true;
 
+        //Infowindow.init();
         Circle.init();
         Timeline.init();
         Filter.init();
@@ -302,7 +303,7 @@ GFW.modules.maplayer = function(gfw) {
 
       this._opacity = { alpha: 100 };
 
-      this.toggle = Filter.addFilter(this.layer.get('title'), function() {
+      this.toggle = Filter.addFilter(this.layer.get('category_name'), this.layer.get('title'), function() {
         that._toggleLayer();
         that._maptype.setOpacity(100);
 
@@ -326,6 +327,7 @@ GFW.modules.maplayer = function(gfw) {
 
       var c = this.layer.attributes['title'].replace(/ /g, "_").toLowerCase();
 
+      console.log("S", c, this.layer.attributes['visible']);
       $.jStorage.set(c, this.layer.attributes['visible']);
 
       if (this.layer.get('visible') == false) {
@@ -415,7 +417,7 @@ this._dataarray = [];
 this._cartodb = CartoDB;
 var LayersColl = this._cartodb.CartoDBCollection.extend({
 sql: function(){
-return "SELECT title, zmin, zmax, ST_XMAX(the_geom) as xmax,ST_XMIN(the_geom) as xmin,ST_YMAX(the_geom) as ymax,ST_YMIN(the_geom) as ymin, tileurl, true as visible FROM " + layerTable + " WHERE display = True ORDER BY displaylayer ASC";
+return "SELECT title, category_name, zmin, zmax, ST_XMAX(the_geom) as xmax,ST_XMIN(the_geom) as xmin,ST_YMAX(the_geom) as ymax,ST_YMIN(the_geom) as ymin, tileurl, true as visible FROM " + layerTable + " WHERE display = True ORDER BY displaylayer ASC";
 }
 });
 this.LayersObj = new LayersColl();

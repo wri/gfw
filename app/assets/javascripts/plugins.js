@@ -14,6 +14,8 @@ var Navigation = (function() {
   }
 
   function _showHomeState() {
+    showMap = false;
+
     Navigation.select("home");
 
     Filter.hide(function() {
@@ -29,6 +31,8 @@ var Navigation = (function() {
   }
 
   function _showMapState() {
+    showMap = true;
+
     Navigation.select("map");
 
     Circle.hide();
@@ -54,15 +58,16 @@ var Filter = (function() {
   var
   lastClass = null,
   pids,
+  categories = [],
   $filters   = $(".filters"),
-  $advance  = $filters.find(".advance"),
-  $layer    = $("#layer");
+  $advance   = $filters.find(".advance"),
+  $layer     = $("#layer");
 
   function _show(callback) {
 
     if (!$filters.hasClass("hide")) return;
 
-    var count = 10;
+    var count = categories.length;
 
     $filters.fadeIn(150, function() {
 
@@ -92,9 +97,11 @@ var Filter = (function() {
 
   function _hide(callback) {
 
+    _hideLayer();
+
     if ($filters.hasClass("hide")) return;
 
-    var count = 10;
+    var count = categories.length;
 
     $advance.animate({ top: "40px", opacity: 0 }, 200, function() {
 
@@ -148,6 +155,12 @@ var Filter = (function() {
     });
   }
 
+  function _hideLayer() {
+    $layer.animate({ opacity: 0 }, 150, function() {
+      $layer.css("left", -10000);
+    });
+  }
+
   function _closeOpenFilter() {
     var c = $layer.attr("class");
 
@@ -182,18 +195,22 @@ var Filter = (function() {
     var name = $li.find("a").text();
     $layer.find("a.title").text(name);
 
-    $layer.find(".links a").hide();
-    $layer.find(".links a." + liClass).show();
+    $layer.find(".links li.last").removeClass('last');
+    $layer.find(".links li").hide();
+    $layer.find(".links li." + liClass).show();
+    $layer.find(".links li." + liClass).last().addClass("last");
 
     $layer.addClass(liClass);
     lastClass = liClass;
 
     var width = $li.width() < 159 ? 159 : $li.width();
-    var left         = (l + $li.width() / 2) - (width / 2);
+    var left  = (l + $li.width() / 2) - (width / 2);
 
+    console.log($layer.find(".links").height());
 
-    $layer.css({ left: left, width:width, top: -80});
-    $layer.animate({ opacity: 1}, 250);
+    $layer.find("li").css({ width:width - 20});
+    $layer.css({ left: left, width:width, height: $layer.find(".links").height() + 90, top: -80});
+    $layer.animate({ opacity: 1 }, 250);
   }
 
   function cancelClose() {
@@ -201,7 +218,9 @@ var Filter = (function() {
   }
 
   function _onMouseEnter() {
-    $("#layers").animate({ opacity: 1 }, 150);
+    if (showMap) {
+      $("#layers").animate({ opacity: 1 }, 150);
+    }
   }
 
   function _init() {
@@ -213,34 +232,44 @@ var Filter = (function() {
     $filters.on("mouseenter", _onMouseEnter);
   }
 
-  function _addFilter(name, clickEvent, zoomEvent) {
-    console.log("Adding filter:", name);
+  function _addFilter(category, name, clickEvent, zoomEvent) {
 
-    var c = name.replace(/ /g, "_").toLowerCase();
-
-    var
-    template = _.template($("#filter-template").html()),
-    $filter  = $(template({ name: name, c: "concessions", data: c }));
-
-    $filters.find("ul").append($filter);
+    if (category === null) {
+      category = 'Other layers';
+    }
 
     var
-    layerListTemplate   = _.template($("#layerlist-template").html()),
-    $layerList = $(layerListTemplate({ name: name.truncate(30), c: c }));
+    cat = category.replace(/ /g, "_").toLowerCase(),
+    id  = name.replace(/ /g, "_").toLowerCase();
 
-    $layer.find(".links").append($layerList);
+    if (!_.include(categories, cat)) {
+      var
+      template = _.template($("#filter-template").html()),
+      $filter  = $(template({ name: category, c: cat, data: cat }));
 
-    $layerList.on("click", function() {
+      $filters.find("ul").append($filter);
+      categories.push(cat);
+    }
+
+    var
+    layerItemTemplate = _.template($("#layer-item-template").html()),
+    $layerItem = $(layerItemTemplate({ name: name.truncate(15), c: cat }));
+
+    $layer.find(".links").append($layerItem);
+
+    $layerItem.on("click", function() {
       clickEvent();
       zoomEvent();
     });
 
-    if ( $.jStorage.get(c) == true ) {
-      $layerList.addClass('checked');
+    console.log("G", id, $.jStorage.get(id));
+    if ($.jStorage.get(id) == true) {
+      //Infowindow.show();
+      $layerItem.find(".checkbox").addClass('checked');
       clickEvent();
     }
-
   }
+
 
   return {
     init: _init,
@@ -251,7 +280,6 @@ var Filter = (function() {
   };
 
 }());
-
 
 var Infowindow = (function() {
 
@@ -483,7 +511,6 @@ var Timeline = (function() {
     } else {
       $play.removeClass("playing");
     }
-
   }
 
   function _animate() {
@@ -535,7 +562,6 @@ var Timeline = (function() {
         $handle.animate({ left: pos }, 150, "easeOutExpo");
         _changeDate(pos, date);
         return;
-
       }
 
     });

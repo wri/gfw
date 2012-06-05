@@ -86,10 +86,20 @@
     z-index:1000;
     opacity:0;
 
+    @extend .filter-links;
+    @extend .filter-lines;
+    @extend .filter-icons;
+
     .links {
       position:absolute;
-      top: 90px;
-      padding: 0 10px;
+      top: 83px;
+
+      li {
+        list-style: none;
+        border-bottom: 1px solid $cSeparator;
+        padding: 10px 10px;
+        &.last { border:none; }
+      }
 
       a {
           @extend .sans-serif;
@@ -105,7 +115,7 @@
       top: 46px;
       position:relative;
 
-      color:$cConcessions;
+      /*color:$cConcessions;*/
       font: bold 12px "Helvetica Neue", sans-serif;
       text-transform: uppercase;
       text-decoration: none;
@@ -113,7 +123,7 @@
 
     .line {
       position:relative;
-      background-color: $cConcessions;
+      /*background-color: $cConcessions;*/
       top:61px;
       left:0;
       height: 4px;
@@ -235,7 +245,7 @@
       padding: 0 14px;
       margin: 0 0 18px 0;
 
-      color: #f1f1f1;
+      /*color: #f1f1f1;*/
       font: bold 12px "Helvetica Neue", sans-serif;
       text-transform: uppercase;
       text-decoration: none;

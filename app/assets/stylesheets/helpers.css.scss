@@ -150,8 +150,11 @@ strong { font-weight: bold; } // This is sad, I know.
 
 // Different filter elements
 .filter-links {
+
+  a { color: $cGray4; }
+
   &.concessions     a { color: $cConcessions; }
-  &.protected-areas a { color: $cProtectedAreas; }
+  &.protected_areas a { color: $cProtectedAreas; }
   &.intact-forest   a { color: $cForest; }
   &.mining          a { color: $cMining; }
   &.forest-cover    a { color: $cForest; }
@@ -163,7 +166,7 @@ strong { font-weight: bold; } // This is sad, I know.
 
 .filter-icons {
   &.concessions     .icon  { @include icons-sprite(concessions); }
-  &.protected-areas .icon  { @include icons-sprite(protected_areas); }
+  &.protected_areas .icon  { @include icons-sprite(protected_areas); }
   &.intact-forest   .icon  { @include icons-sprite(concessions); }
   &.mining          .icon  { @include icons-sprite(mining); }
   &.forest-cover    .icon  { @include icons-sprite(forest_cover); }
@@ -174,8 +177,11 @@ strong { font-weight: bold; } // This is sad, I know.
 }
 
 .filter-lines {
+
+  .line { background-color: $cGray4; }
+
   &.concessions      .line { background-color: $cConcessions; }
-  &.protected-areas  .line { background-color: $cProtectedAreas; }
+  &.protected_areas  .line { background-color: $cProtectedAreas; }
   &.intact-forest    .line { background-color: $cForest; }
   &.mining           .line { background-color: $cMining; }
   &.forest-cover     .line { background-color: $cForest; }
