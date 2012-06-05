@@ -12,7 +12,7 @@ feature 'GFW explore map page' do
   include_examples 'common header'
   include_examples 'title'
   include_examples 'menu', 'Map'
-  include_examples 'filters'
+  #include_examples 'filters'
 
 #  context 'has a big map', :js => true do
 #

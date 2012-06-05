@@ -156,7 +156,7 @@ var Filter = (function() {
   }
 
   function _close(c) {
-    $layer.animate({ opacity:0 }, 150, function() {
+    $layer.animate({ opacity: 0 }, 150, function() {
       $layer.css("left", -10000);
       $layer.removeClass(c);
     });
@@ -167,20 +167,29 @@ var Filter = (function() {
     var
     $li          = $(this),
     lw           = $layer.width(),
-    liClass      = $li.attr("class"),
+    liClass      = $li.attr("data-id"),
     l            = $li.data("left-pos"),
-    left         = (l + $li.width() / 2) - (lw / 2),
     $line        = $li.find(".line"),
     lineWidth    = $line.width();
 
     cancelClose();
 
     $layer.removeClass(lastClass);
-    $layer.find("a").text($li.find("a").text());
+
+    var name = $li.find("a").text().truncate(30);
+    $layer.find("a.title").text(name);
+
+    $layer.find(".links a").hide();
+    $layer.find(".links a." + liClass).show();
+
     $layer.addClass(liClass);
     lastClass = liClass;
 
-    $layer.css({ left: left, top: -80});
+    var width = $li.width() < 159 ? 159 : $li.width();
+    var left         = (l + $li.width() / 2) - (width / 2);
+
+
+    $layer.css({ left: left, width:width, top: -80});
     $layer.animate({ opacity: 1}, 250);
   }
 
@@ -198,25 +207,26 @@ var Filter = (function() {
     $advance.on("click", _advanceFilter);
     $filters.find("li").on("mouseenter", _open);
     $layer.on("mouseleave", _closeOpenFilter);
-
     $filters.on("mouseenter", _onMouseEnter);
-
-    $layer.on("click", function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-    });
-
   }
 
   function _addFilter(name, onClick) {
-    console.log("Add filter:", name);
+    console.log("Adding filter:", name);
+
+    var c = name.replace(/ /g, "_").toLowerCase();
 
     var
     template = _.template($("#filter-template").html()),
-    $filter  = $(template({ title: name }));
+    $filter  = $(template({ name: name, c: "concessions", data: c }));
 
     $filters.find("ul").append($filter);
-    $filter.on("click", function() { onClick(); });
+
+    var
+    layerListTemplate   = _.template($("#layerlist-template").html()),
+    $layerList = $(layerListTemplate({ name: name.truncate(30), c: c }));
+
+    $layer.find(".links").append($layerList);
+    $layerList.on("click", function() { onClick(); });
   }
 
   return {
@@ -583,7 +593,7 @@ var Timeline = (function() {
 
   /*
    * Init function
-   */
+   **/
   function _init() {
 
     // Bindings

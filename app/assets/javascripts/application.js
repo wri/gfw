@@ -9,6 +9,7 @@
 //= require backbone-min
 //= require class
 //= require backbone.cartodb
+//= jstorage.min
 //= require_tree .
 
 // Map needs to be a global var or
@@ -149,12 +150,14 @@ $(function(){
   polygonPath           = [],
   resizePID;
 
-  $(document).on("click", function(e) {
-    Filter.closeOpenFilter();
-  });
+  //$(document).on("click", function(e) {
+    //Filter.closeOpenFilter();
+  //});
 
-  $(".checkbox").on("click", function(e) {
+  $(document).on("click", ".checkbox", function(e) {
     e.preventDefault();
+    e.stopPropagation();
+
     $(this).toggleClass("checked");
   });
 

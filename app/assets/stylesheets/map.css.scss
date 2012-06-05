@@ -77,7 +77,6 @@
 
   .draw { position:absolute; top: 20px; left: 70px; z-index:100; }
 
-
   #layer {
     position:absolute;
     top: 0;
@@ -86,6 +85,18 @@
     height:250px;
     z-index:1000;
     opacity:0;
+
+    .links {
+      position:absolute;
+      top: 90px;
+      padding: 0 10px;
+
+      a {
+          @extend .sans-serif;
+          font-size:13px;
+          line-height:20px;
+      }
+    }
 
     & > a {
       display:block;
@@ -122,7 +133,6 @@
     -ms-filter:"progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=6)";
     filter:progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=6);
   }
-
 
   .layers > ul {
     position:absolute;

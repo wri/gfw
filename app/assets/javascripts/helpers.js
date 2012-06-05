@@ -2,6 +2,11 @@ _.templateSettings = {
   interpolate: /\{\{(.+?)\}\}/g
 };
 
+String.prototype.truncate =
+  function(n){
+  return this.substr(0, n-1 ) + ( this.length > n ?'...' : '');
+};
+
 var config = {
   ZOOM:               5,
   MINZOOM:            3,

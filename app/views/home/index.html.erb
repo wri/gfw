@@ -55,10 +55,14 @@ title: "Forest clearing alerts in the last 15 days"
     </div>
   </script>
 
+  <script id="layerlist-template" type="text/x-underscore-template">
+    <a href="#" class="checkbox {{ c }}">{{name}}</a>
+  </script>
+
   <script id="filter-template" type="text/x-underscore-template">
-    <li class="concessions">
+    <li class="{{ c }}" data-id="{{ data }}">
     <div class="icon"></div>
-    <a href="#">{{ title }}</a>
+    <a href="#">{{ name }}</a>
     <div class="line"></div>
     <div class="box"></div>
     </li>
