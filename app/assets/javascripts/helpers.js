@@ -58,7 +58,7 @@ config.mapOptions = {
   minZoom:          config.MINZOOM,
   maxZoom:          config.MAXZOOM,
   center:           new google.maps.LatLng(config.LAT, config.LNG),
-  mapTypeId:        google.maps.MapTypeId.SATELLITE,
+  mapTypeId:        google.maps.MapTypeId.TERRAIN,
   disableDefaultUI: true,
   panControl: false,
   zoomControl: false,
