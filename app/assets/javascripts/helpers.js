@@ -21,50 +21,85 @@ var config = {
   MIN_PROJECT_RADIUS: 100
 };
 
-config.mapStyles = [{
-  featureType: "water",
-  stylers: [ { saturation: -34 }, { lightness: 29 } ]
-}, {
-  featureType: "administrative.land_parcel",
-  elementType: "labels",
-  stylers: [ { visibility: "off" } ]
-}, {
-  featureType: "road",
-  stylers: [ { saturation: -99 }, { lightness: 70 } ]
-}, {
-  featureType: "poi", stylers: [
-    { visibility: "off" }
-  ]
-}, {
-  featureType: "poi",
-  elementType: "labels",
-  stylers: [ { visibility: "off" } ]
-}, {
-  featureType: "road",
-  elementType: "labels",
-  stylers: [ { visibility: "off" } ]
-}, {
-  featureType: "road"
-}, {
-  featureType: "administrative",
-  stylers: [ { saturation: -98 }, { lightness: 72 } ]
-}, {}];
-
 config.mapLoaded = false;
 config.gfwStyle = new google.maps.StyledMapType(config.mapStyles, {name: "GFW Style"});
+config.mapStyles = [ { stylers: [ { saturation: -65 }, { gamma: 1.52 } ] }, { featureType: "administrative", stylers: [ { saturation: -95 },{ gamma: 2.26 } ] }, { featureType: "water", elementType: "labels", stylers: [ { visibility: "off" } ] }, { featureType: "administrative.locality", stylers: [ { visibility: 'off' } ] }, { featureType: "road", stylers: [ { visibility: "simplified" }, { saturation: -99 }, { gamma: 2.22 } ] }, { featureType: "poi", elementType: "labels", stylers: [ { visibility: "off" } ] }, { featureType: "road.arterial", stylers: [ { visibility: 'off' } ] }, { featureType: "road.local", elementType: "labels", stylers: [ { visibility: 'off' } ] }, { featureType: "transit", stylers: [ { visibility: 'off' } ] }, { featureType: "road", elementType: "labels", stylers: [ { visibility: 'off' } ] },{ featureType: "poi", stylers: [ { saturation: -55 } ] } ];
 
 config.mapOptions = {
-  zoom:             config.ZOOM,
-  minZoom:          config.MINZOOM,
-  maxZoom:          config.MAXZOOM,
-  center:           new google.maps.LatLng(config.LAT, config.LNG),
-  mapTypeId:        google.maps.MapTypeId.TERRAIN,
-  disableDefaultUI: true,
-  panControl: false,
-  zoomControl: false,
-  mapTypeControl: true,
-  scaleControl: false,
-  streetViewControl: false,
+  zoom:               config.ZOOM,
+  minZoom:            config.MINZOOM,
+  maxZoom:            config.MAXZOOM,
+  center:             new google.maps.LatLng(config.LAT, config.LNG),
+  mapTypeId:          google.maps.MapTypeId.TERRAIN,
+  disableDefaultUI:   true,
+  panControl:         false,
+  zoomControl:        false,
+  mapTypeControl:     true,
+  scaleControl:       false,
+  streetViewControl:  false,
   overviewMapControl: false,
-  scrollwheel: false
+  scrollwheel:        false
 };
+
+
+config.mapStyles = {};
+
+config.mapStyles.forestHeight = new google.maps.ImageMapType({
+  getTileUrl: function(ll, z) {
+    var X = ll.x % (1 << z);  // wrap
+    return "http://api.tiles.mapbox.com/v3/cartodb.Forest-Height-Test/" + z + "/" + X + "/" + ll.y + ".png";
+  },
+  tileSize: new google.maps.Size(256, 256),
+  isPng: true,
+  maxZoom: 7,
+  name: "Forest Height",
+  alt: "Global forest height"
+});
+
+config.mapStyles.forestSoft = new google.maps.ImageMapType({
+  getTileUrl: function(ll, z) {
+    var X = ll.x % (1 << z);  // wrap
+    return "http://api.tiles.mapbox.com/v3/cartodb.global-forest-height/" + z + "/" + X + "/" + ll.y + ".png";
+  },
+  tileSize: new google.maps.Size(256, 256),
+  isPng: true,
+  maxZoom: 7,
+  name: "Forest Height",
+  alt: "Global forest height"
+});
+
+var Road = function(){
+  this.Road = function(){
+    map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+    map.setOptions({styles: null});
+  };
+};
+
+var Satellite = function(){
+  this.Satellite = function(){
+    map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+    map.setOptions({styles: null});
+  };
+};
+
+var Forest = function(){
+  this.Forest = function(){
+    map.setMapTypeId('forests');
+    map.setOptions({styles: null});
+  };
+};
+
+var ForestSoft = function(){
+  this.ForestSoft = function(){
+    map.setMapTypeId('forests_soft');
+    map.setOptions({styles: null});
+  };
+};
+
+var Soft = function(){
+  this.Soft = function(){
+    map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+    map.setOptions({styles: map_style.google_maps_customization_style});
+  };
+};
+

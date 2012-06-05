@@ -235,8 +235,6 @@ var Filter = (function() {
       zoomEvent();
     });
 
-    console.log(c, "------", $.jStorage.get(c));
-
     if ( $.jStorage.get(c) == true ) {
       $layerList.addClass('checked');
       clickEvent();
