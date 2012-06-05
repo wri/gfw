@@ -24,6 +24,7 @@ var Navigation = (function() {
 
     GFW.app.close(function() {
       Circle.show(250);
+    $("footer, .actions").fadeIn(250);
     });
   }
 
@@ -33,6 +34,7 @@ var Navigation = (function() {
     Circle.hide();
     Timeline.show();
     GFW.app.open();
+    $(".actions, footer").fadeOut(250);
 
     $("hgroup h1").animate({ top: "50px", opacity: 0 }, 250, function() {
       Filter.show();
@@ -210,7 +212,7 @@ var Filter = (function() {
     $filters.on("mouseenter", _onMouseEnter);
   }
 
-  function _addFilter(name, onClick, zoomEvent) {
+  function _addFilter(name, clickEvent, zoomEvent) {
     console.log("Adding filter:", name);
 
     var c = name.replace(/ /g, "_").toLowerCase();
@@ -226,14 +228,15 @@ var Filter = (function() {
     $layerList = $(layerListTemplate({ name: name.truncate(30), c: c }));
 
     $layer.find(".links").append($layerList);
+
     $layerList.on("click", function() {
-      onClick();
+      clickEvent();
       zoomEvent();
     });
 
     if ( $.jStorage.get(c) ) {
       $layerList.addClass('checked');
-      onClick();
+      clickEvent();
     }
 
   }
