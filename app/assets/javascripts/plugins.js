@@ -16,13 +16,15 @@ var Navigation = (function() {
   function _showHomeState() {
     Navigation.select("home");
 
-    Circle.show();
-    Timeline.hide();
     Filter.hide(function() {
       $("hgroup h1").animate({ top: 0, opacity: 1 }, 250);
     });
 
-    GFW.app.close();
+    Timeline.hide();
+
+    GFW.app.close(function() {
+      Circle.show(250);
+    });
   }
 
   function _showMapState() {
@@ -308,10 +310,13 @@ var Circle = (function() {
     return false;
   }
 
-  function _show() {
-    console.log('showing');
+  function _show(delay) {
 
-    $circle.animate({ top:'50%', marginTop:-1*($circle.height() / 2), opacity: 1 }, 250, function() {
+    if (!delay) {
+      delay = 0;
+    }
+
+    $circle.delay(delay).animate({ top:'50%', marginTop:-1*($circle.height() / 2), opacity: 1 }, 250, function() {
       $title.animate({ opacity: 0.75 }, 150, "easeInExpo");
       $counter.animate({ opacity: 1 }, 150, "easeInExpo");
       animating = false;
@@ -347,7 +352,7 @@ var Circle = (function() {
     animating = true;
 
     var _afterHide = function() {
-      $circle.animate({ top:0, opacity: 0 }, 250);
+      $circle.animate({ marginTop:0, opacity: 0 }, 250);
     };
 
     $circle.find(".title, .counter").animate({ opacity: 0 }, 150, "easeOutExpo", _afterHide);

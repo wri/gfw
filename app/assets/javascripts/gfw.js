@@ -82,15 +82,30 @@ GFW.modules.app = function(gfw) {
     },
 
     open: function() {
-      this._map = map;
+      var that = this;
+
       var dh = $(window).height();
       var hh = $("header").height();
-      $("#map").animate({height: dh - hh}, 250);
-      google.maps.event.trigger(this._map, 'resize');
+
+      $("#map").animate({ height: dh - hh }, 250, function() {
+        google.maps.event.trigger(that._map, "resize");
+      });
+
     },
 
-    close: function() {
-      $("#map").animate({height: 400 }, 250);
+    close: function(callback) {
+      var that = this;
+
+      $("#map").animate({height: 400 }, 250, function() {
+
+        google.maps.event.trigger(that._map, "resize");
+
+        if (callback) {
+          callback();
+        }
+
+      });
+
     },
 
     _zoomIn: function(controlDiv, map) {
@@ -124,7 +139,7 @@ GFW.modules.app = function(gfw) {
         History.pushState({ state: 3 }, "Map", hash);
       });
 
-      google.maps.event.addListener(this._map, 'center_changed', function() {
+      google.maps.event.addListener(this._map, 'dragend', function() {
         var hash = "/map/" + this.getZoom() + "/" + this.getCenter().lat().toFixed(that._precision) + "/" + this.getCenter().lng().toFixed(that._precision);
         History.pushState({ state: 3 }, "Map", hash);
       });

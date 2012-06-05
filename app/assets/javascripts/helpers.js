@@ -3,11 +3,11 @@ _.templateSettings = {
 };
 
 var config = {
-  ZOOM:               3,
+  ZOOM:               5,
   MINZOOM:            3,
   MAXZOOM:            16,
-  LAT:                30.14512718337613,
-  LNG:                -32.51953125,
+  LAT:                3,
+  LNG:                120,
   MONTHNAMES:         ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
   MONTHNAMES_SHORT:   ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
   YEARS:              [2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014],
