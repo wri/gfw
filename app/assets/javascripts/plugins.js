@@ -208,16 +208,15 @@ var Filter = (function() {
 
   }
 
-  function _addFilter(name) {
-    return false;
+  function _addFilter(name, onClick) {
     console.log("Add filter:", name);
 
     var
     template = _.template($("#filter-template").html()),
     $filter  = $(template({ title: name }));
 
-    console.log($filter);
     $filters.find("ul").append($filter);
+    $filter.on("click", function() { onClick(); });
   }
 
   return {
@@ -555,7 +554,7 @@ var Timeline = (function() {
 
     if (_isHidden()) {
       $timeline.removeClass("hidden");
-      $timeline.animate({ bottom: parseInt($timeline.css("bottom"), 10) + 50, opacity: 1 }, 150, "easeInExpo", _afterShow);
+      $timeline.animate({ bottom: parseInt($timeline.css("bottom"), 10) + 20, opacity: 1 }, 150, "easeInExpo", _afterShow);
     }
 
   }
@@ -564,7 +563,7 @@ var Timeline = (function() {
 
     if (!_isHidden()) {
       $handle.fadeOut(250, function() {
-        $timeline.animate({ bottom: parseInt($timeline.css("bottom"), 10) - 50, opacity: 0 }, 150, "easeOutExpo", _afterHide);
+        $timeline.animate({ bottom: parseInt($timeline.css("bottom"), 10) - 20, opacity: 0 }, 150, "easeOutExpo", _afterHide);
       });
     }
 

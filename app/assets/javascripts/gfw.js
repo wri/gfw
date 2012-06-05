@@ -71,9 +71,6 @@ GFW.modules.app = function(gfw) {
       var zoomOutControl = new this._zoomOut(zoomOutControlDiv, map);
       zoomOutControlDiv.index = 2;
 
-
-
-
     },
     run: function() {
       this._setupListeners();
@@ -163,11 +160,15 @@ GFW.modules.app = function(gfw) {
 
     },
     parseHash: function(hash) {
+
       var args = hash.split("/");
-      if (args.length == 3) {
+
+      if (args.length === 3) {
+
         var zoom = parseInt(args[0], 10),
         lat = parseFloat(args[1]),
         lon = parseFloat(args[2]);
+
         if (isNaN(zoom) || isNaN(lat) || isNaN(lon)) {
           return false;
         } else {
@@ -298,7 +299,11 @@ GFW.modules.maplayer = function(gfw) {
 
       this._opacity = { alpha: 100 };
 
-      this.toggle = Filter.addFilter(this.layer.get('title'));
+      this.toggle = Filter.addFilter(this.layer.get('title'), function() {
+        gfw.log.info('aaaahh');
+        that._toggleLayer();
+        that._maptype.setOpacity(100);
+      });
 
       // this.toggle = gui.addFolder(this.layer.get('title'));
 
@@ -334,12 +339,16 @@ GFW.modules.maplayer = function(gfw) {
     },
     _toggleLayer: function(){
       var that = this;
+
+          this.layer.attributes['visible'] = !this.layer.attributes['visible'];
+
       if (this.layer.get('visible') == false){
         gfw.log.info('LAYER OFF');
         this._map.overlayMapTypes.setAt(this._tileindex, null);
       } else {
         gfw.log.info('LAYER ON');
-        if(this._inView()){
+
+        if (this._inView()){
           this._displayed = true;
           this._map.overlayMapTypes.setAt(this._tileindex, this._maptype);
         }
