@@ -86,6 +86,7 @@ GFW.modules.app = function(gfw) {
 
       $("#map").animate({ height: dh - hh }, 250, function() {
         google.maps.event.trigger(that._map, "resize");
+        that._map.setOptions({ scrollwheel: true });
       });
 
     },
@@ -96,6 +97,7 @@ GFW.modules.app = function(gfw) {
       $("#map").animate({height: 400 }, 250, function() {
 
         google.maps.event.trigger(that._map, "resize");
+        that._map.setOptions({ scrollwheel: false });
 
         if (callback) {
           callback();
