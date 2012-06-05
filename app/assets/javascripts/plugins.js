@@ -210,7 +210,7 @@ var Filter = (function() {
     $filters.on("mouseenter", _onMouseEnter);
   }
 
-  function _addFilter(name, onClick) {
+  function _addFilter(name, onClick, zoomEvent) {
     console.log("Adding filter:", name);
 
     var c = name.replace(/ /g, "_").toLowerCase();
@@ -226,7 +226,10 @@ var Filter = (function() {
     $layerList = $(layerListTemplate({ name: name.truncate(30), c: c }));
 
     $layer.find(".links").append($layerList);
-    $layerList.on("click", function() { onClick(); });
+    $layerList.on("click", function() {
+      onClick();
+      zoomEvent();
+    });
 
     if ( $.jStorage.get(c) ) {
       $layerList.addClass('checked');

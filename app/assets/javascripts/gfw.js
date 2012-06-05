@@ -302,26 +302,13 @@ GFW.modules.maplayer = function(gfw) {
       this._opacity = { alpha: 100 };
 
       this.toggle = Filter.addFilter(this.layer.get('title'), function() {
-        gfw.log.info('aaaahh');
         that._toggleLayer();
         that._maptype.setOpacity(100);
+      }, function() {
+        if (that.layer.attributes['visible']) {
+          that._map.fitBounds(that._bounds);
+        }
       });
-
-      // this.toggle = gui.addFolder(this.layer.get('title'));
-
-      // this.toggle.
-      //   add(this.layer.attributes, 'visible').
-      //   onChange(function(value) {
-      //   gfw.log.info(value);
-      //   that._toggleLayer();
-      // });
-
-      // this.toggle.
-      //   add(this._opacity,'alpha').min(0).max(100).step(5).
-      //   name('transparency').
-      //   onChange(function(value) {
-      //   that._maptype.setOpacity(value/100);
-      // });
 
       // var zoomTo = function(){
       //   var self = that;
