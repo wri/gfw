@@ -221,10 +221,7 @@ GFW.modules.maplayer = function(gfw) {
       this._map.overlayMapTypes.setAt(this._tileindex, null);
       this._setupListeners();
 
-      if (this.layer.get('title') != 'FORMA'){
         this.layer.attributes['visible'] = false;
-        //this._toggleLayer();
-      }
 
       this._addControll();
       this._handleLayer();
@@ -232,18 +229,22 @@ GFW.modules.maplayer = function(gfw) {
 
     _setupListeners: function(){
       var that = this;
+
       //setup zoom listener
       google.maps.event.addListener(this._map, 'zoom_changed', function() {
         that._inZoom(true);
         that._handleLayer();
       });
-      google.maps.event.addListener(this._map, 'center_changed', function() {
+
+      google.maps.event.addListener(this._map, 'dragend', function() {
         that._inBounds(true);
         that._handleLayer();
       });
+
       this._inZoom(true);
       this._inBounds(true);
     },
+
     _inZoom: function(reset){
 
       if (this._inZoomVal == null){
@@ -286,15 +287,19 @@ GFW.modules.maplayer = function(gfw) {
       }
     },
     _handleLayer: function(){
-      if(this.layer.get('visible') && !this._displayed && this._inView()){
+
+      console.log("Handle", this.layer.get('visible'), !this._displayed, this._inView());
+
+      if (this.layer.get('visible') && !this._displayed && this._inView()){
         this._displayed = true;
         this._map.overlayMapTypes.setAt(this._tileindex, this._maptype);
-        gfw.log.info(this.layer.get('title')+ " added at "+this._tileindex);
+        //gfw.log.info(this.layer.get('title')+ " added at "+this._tileindex);
       } else if (this._displayed && !this._inView()){
         this._displayed = false;
         this._map.overlayMapTypes.setAt(this._tileindex, null);
-        gfw.log.info(this.layer.get('title')+ " removed at "+this._tileindex);
+        //gfw.log.info(this.layer.get('title')+ " removed at "+this._tileindex);
       }
+
     },
     _addControll: function(){
       var that = this;
@@ -304,22 +309,14 @@ GFW.modules.maplayer = function(gfw) {
       this.toggle = Filter.addFilter(this.layer.get('title'), function() {
         that._toggleLayer();
         that._maptype.setOpacity(100);
+
       }, function() {
+
         if (that.layer.attributes['visible']) {
           that._map.fitBounds(that._bounds);
         }
+
       });
-
-      // var zoomTo = function(){
-      //   var self = that;
-      //   this.zoomExtents = function(){
-      //     self._map.fitBounds(self._bounds);
-      //   }
-      // }
-      // this.toggle
-      // .add(new zoomTo(), 'zoomExtents')
-
-
     },
     _bindDisplay: function(display) {
       var that = this;
@@ -332,13 +329,22 @@ GFW.modules.maplayer = function(gfw) {
       this.layer.attributes['visible'] = !this.layer.attributes['visible'];
 
       var c = this.layer.attributes['title'].replace(/ /g, "_").toLowerCase();
+
       $.jStorage.set(c, this.layer.attributes['visible']);
 
       if (this.layer.get('visible') == false) {
-        gfw.log.info('LAYER OFF');
+        gfw.log.info('LAYER OFF: '+ c);
         this._map.overlayMapTypes.setAt(this._tileindex, null);
+
+        if (c === 'forma') {
+          Timeline.hide();
+        }
       } else {
-        gfw.log.info('LAYER ON');
+        gfw.log.info('LAYER ON: '+ c);
+
+        if (c === 'forma') {
+          Timeline.show();
+        }
 
         if (this._inView()){
           this._displayed = true;
@@ -454,11 +460,11 @@ alt: "MapServer Layer",
     gfw.log = {};
 
     gfw.log.info = function(msg) {
-      gfw.log._gfwte('INFO: ' + msg);
+      //gfw.log._gfwte('INFO: ' + msg);
     };
 
     gfw.log.warn = function(msg) {
-      gfw.log._gfwte('WARN: ' + msg);
+      //gfw.log._gfwte('WARN: ' + msg);
     };
 
     gfw.log.error = function(msg) {

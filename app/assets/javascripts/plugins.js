@@ -24,7 +24,7 @@ var Navigation = (function() {
 
     GFW.app.close(function() {
       Circle.show(250);
-    $("footer, .actions").fadeIn(250);
+      $("footer, .actions").fadeIn(250);
     });
   }
 
@@ -32,8 +32,9 @@ var Navigation = (function() {
     Navigation.select("map");
 
     Circle.hide();
-    Timeline.show();
+    //Timeline.show();
     GFW.app.open();
+
     $(".actions, footer").fadeOut(250);
 
     $("hgroup h1").animate({ top: "50px", opacity: 0 }, 250, function() {
@@ -234,7 +235,9 @@ var Filter = (function() {
       zoomEvent();
     });
 
-    if ( $.jStorage.get(c) ) {
+    console.log(c, "------", $.jStorage.get(c));
+
+    if ( $.jStorage.get(c) == true ) {
       $layerList.addClass('checked');
       clickEvent();
     }
