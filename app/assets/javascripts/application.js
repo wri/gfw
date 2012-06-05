@@ -3,13 +3,13 @@
 //= require jquery.easing.1.3
 //= require jquery-ui-1.8.20.custom.min
 //= require wax.g
+//= require jstorage.min
 //= require jquery.history
 //= require cartodb-gmapsv3
 //= require lodash.min
 //= require backbone-min
 //= require class
 //= require backbone.cartodb
-//= jstorage.min
 //= require_tree .
 
 // Map needs to be a global var or

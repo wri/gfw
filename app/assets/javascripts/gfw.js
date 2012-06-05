@@ -340,9 +340,12 @@ GFW.modules.maplayer = function(gfw) {
     _toggleLayer: function(){
       var that = this;
 
-          this.layer.attributes['visible'] = !this.layer.attributes['visible'];
+      this.layer.attributes['visible'] = !this.layer.attributes['visible'];
 
-      if (this.layer.get('visible') == false){
+      var c = this.layer.attributes['title'].replace(/ /g, "_").toLowerCase();
+      $.jStorage.set(c, this.layer.attributes['visible']);
+
+      if (this.layer.get('visible') == false) {
         gfw.log.info('LAYER OFF');
         this._map.overlayMapTypes.setAt(this._tileindex, null);
       } else {

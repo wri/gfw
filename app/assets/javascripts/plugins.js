@@ -176,7 +176,7 @@ var Filter = (function() {
 
     $layer.removeClass(lastClass);
 
-    var name = $li.find("a").text().truncate(30);
+    var name = $li.find("a").text();
     $layer.find("a.title").text(name);
 
     $layer.find(".links a").hide();
@@ -227,6 +227,12 @@ var Filter = (function() {
 
     $layer.find(".links").append($layerList);
     $layerList.on("click", function() { onClick(); });
+
+    if ( $.jStorage.get(c) ) {
+      $layerList.addClass('checked');
+      onClick();
+    }
+
   }
 
   return {
