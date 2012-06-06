@@ -37,6 +37,7 @@ var Navigation = (function() {
     Navigation.select("map");
 
     Circle.hide();
+    Infowindow.show();
 
     //if ($.jStorage.get("forma") == true) {
       Timeline.show();
@@ -271,7 +272,6 @@ var Filter = (function() {
     if ( name == "FORMA") {
       $layerItem.find(".checkbox").addClass('checked');
       Infowindow.add(name, category);
-
     }
 
     /*if ($.jStorage.get(id) == true) {
@@ -355,7 +355,7 @@ var Infowindow = (function() {
     $(".infowindow").find("ul").append($item);
     $item.fadeIn(250);
 
-    if ( $(".infowindow").find("li").length >= 1) {
+    if ( $(".infowindow").find("li").length >= 1 && showMap === true) {
       Infowindow.show();
     }
 

@@ -239,6 +239,9 @@
   font: 11px "Helvetica Neue", sans-serif;
   color: $cGray3;
 
+  display:none;
+  opacity: 0;
+
   z-index:100;
 
   & > .header {
