@@ -319,7 +319,9 @@ var Infowindow = (function() {
 
       var position = $.jStorage.get("infowindow");
 
-      $infowindow.css({ top: position[0], left: position[1], opacity:0 });
+      if (position) {
+        $infowindow.css({ top: position[0], left: position[1], opacity:0 });
+      }
 
       $("#content").append($infowindow);
 
