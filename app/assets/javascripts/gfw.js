@@ -81,12 +81,14 @@ GFW.modules.app = function(gfw) {
     open: function() {
       var that = this;
 
-      var dh = $(window).height();
-      var hh = $("header").height();
+      var
+      dh = $(window).height(),
+      hh = $("header").height();
 
       $("#map").animate({ height: dh - hh }, 250, function() {
         google.maps.event.trigger(that._map, "resize");
         that._map.setOptions({ scrollwheel: true });
+        $("body").css({overflow:"hidden"});
       });
 
     },
@@ -98,6 +100,7 @@ GFW.modules.app = function(gfw) {
 
         google.maps.event.trigger(that._map, "resize");
         that._map.setOptions({ scrollwheel: false });
+        $("body").css({ overflow:"auto" });
 
         if (callback) {
           callback();
@@ -339,7 +342,7 @@ GFW.modules.maplayer = function(gfw) {
       } else {
         gfw.log.info('LAYER ON: '+ c);
 
-        if (c === 'forma') {
+        if (c === 'forma' && showMap) {
           Timeline.show();
         }
 

@@ -1,5 +1,3 @@
-@import "sprites";
-
 /* Colors */
 $cBackground:       #75ADB5;
 $cDarkGreen:        #264C59;
@@ -53,6 +51,25 @@ $cPostBody:         #444444;
 .cPostTitle { background-color: $cPostTitle; }
 .cPostBody { background-color: $cPostBody; }
 
+// SPRITES
+
+$icons-crowdsourcing-spacing:90px;
+$icons-download_arrow-spacing:20px;
+$icons-download_arrow_hover-spacing:20px;
+$icons-analysis-spacing:90px;
+$icons-updates-spacing:90px;
+$icons-bars-spacing:20px;
+$icons-concessions-spacing:20px;
+$icons-protected_areas-spacing: 20px;
+$icons-mining-spacing: 20px;
+$icons-forest_cover-spacing: 20px;
+$icons-fire-spacing: 20px;
+$icons-checkboxes-spacing: 20px;
+$icons-checkboxes_concessions-spacing: 20px;
+$icons-checkboxes_protected_areas-spacing: 20px;
+
+@import "icons/*.png"; /**/
+
 strong { font-weight: bold; } // This is sad, I know.
 
 .hidden { display:none; }
@@ -81,15 +98,12 @@ strong { font-weight: bold; } // This is sad, I know.
   box-shadow: none;
 }
 
-.glow {
-  /* Firefox v3.5+ */
-  -moz-box-shadow:0px 0px 6px 1px rgba(255,255,255,0.5);
-  /* Safari v3.0+ and by Chrome v0.2+ */
-  -webkit-box-shadow:0px 0px 6px 1px rgba(255,255,255,0.5);
-  /* Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+  and by Opera v10.5+ */
-  box-shadow:0px 0px 6px 1px rgba(255,255,255,0.5);
-  -ms-filter:"progid:DXImageTransform.Microsoft.Glow(Color = #33ffffff ,Strength = 5)";
-  filter:progid:DXImageTransform.Microsoft.Glow(Color = #33ffffff ,Strength = 5);
+@mixin glow($opacity) {
+  -moz-box-shadow:0px 0px 6px 1px rgba(255,255,255,$opacity); /* Firefox v3.5+ */
+  -webkit-box-shadow:0px 0px 6px 1px rgba(255,255,255,$opacity); /* Safari v3.0+ and by Chrome v0.2+ */
+  box-shadow:0px 0px 6px 1px rgba(255,255,255,$opacity); /* Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+  and by Opera v10.5+ */
+  -ms-filter:"progid:DXImageTransform.Microsoft.Glow(Color = #33ffffff ,Strength = $opacity * 10)";
+  filter:progid:DXImageTransform.Microsoft.Glow(Color = #33ffffff ,Strength = $opacity * 10);
 }
 
 @mixin button($url, $height, $mL, $pT, $pR, $pB, $pL, $offset-y) {

@@ -5,8 +5,8 @@
 <% content_for :download do %>
 <div class="download">
   <div class="inner">
-  <%= content_tag :h1, t('layouts.application.footer.download.title') %>
-  <%= content_tag :p, t('layouts.application.footer.download.data_html') %>
+      <%= content_tag :h1, (raw t('layouts.application.footer.download.title', :url => "#")) %>
+      <%= content_tag :p, (raw t('layouts.application.footer.download.data_html', :url => "#")) %>
 </div>
 </div>
 <% end %>

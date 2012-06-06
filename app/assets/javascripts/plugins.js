@@ -36,10 +36,14 @@ var Navigation = (function() {
     Navigation.select("map");
 
     Circle.hide();
-    //Timeline.show();
+
+    if ($.jStorage.get("forma") == true) {
+      Timeline.show();
+    }
+
     GFW.app.open();
 
-    $(".actions, footer").fadeOut(250);
+    $("footer, .actions").fadeOut(250);
 
     $("hgroup h1").animate({ top: "50px", opacity: 0 }, 250, function() {
       Filter.show();
@@ -91,11 +95,7 @@ var Filter = (function() {
             _calcFiltersPosition();
           }
         });
-
-
-
       });
-
     });
   }
 
@@ -222,9 +222,7 @@ var Filter = (function() {
   }
 
   function _onMouseEnter() {
-    if (showMap) {
-      $("#layers").animate({ opacity: 1 }, 150);
-    }
+    $layer.animate({ opacity: 1 }, 150);
   }
 
   function _init() {

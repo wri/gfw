@@ -70,8 +70,8 @@ shared_examples 'download section' do |text|
 
     within '.download' do
       #page.should have_content text
-      page.should have_css 'p', :text => 'You can also download all our data in a .zip file.'
-      page.should have_link 'download all our data'
+      page.should have_css 'p', :text => 'You can also download all our data in a .zip file.', :url => "#"
+      page.should have_link 'download all our data', :url => "#"
     end
 
   end

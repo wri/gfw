@@ -1,6 +1,5 @@
 @import "compass";
 @import "compass/reset";
-@import "sprites";
 @import "helpers";
 
 #map-container {
@@ -142,29 +141,6 @@
     box-shadow:0px 0px 5px 1px rgba(0,0,0,0.15);
     -ms-filter:"progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=6)";
     filter:progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=6);
-  }
-
-  .layers > ul {
-    position:absolute;
-    left:-100;
-    top: 0;
-    background:white;
-    z-index:1000;
-    opacity:0;
-
-    li {
-      background:$cWhite;
-      padding: 17px 13px;
-      border-top: 1px solid #f1f1f1;
-    }
-
-    li a {
-      color:$cConcessions;
-      text-decoration:none;
-      font: 13px "Helvetica Neue", sans-serif;
-      font-weight:200;
-      &:hover { color:$cConcessionsHover; }
-    }
   }
 
   .filters {
