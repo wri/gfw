@@ -1,14 +1,14 @@
 <%
   content_for :title do
-    "Country"
+    @country.name
   end
 %>
 
 <% content_for :download do %>
   <div class="download">
     <div class="inner">
-    <%= content_tag :h1, (raw t('layouts.application.footer.download.title', :url => "#")) %>
-    <%= content_tag :p, (raw t('layouts.application.footer.download.data_html', :url => "#")) %>
+      <%= content_tag :h1, (raw t('layouts.application.footer.download.title', :url => "#")) %>
+      <%= content_tag :p, (raw t('layouts.application.footer.download.data_html', :url => "#")) %>
     </div>
   </div>
 <% end %>
@@ -18,6 +18,11 @@
   <div class="graph">
     <img src="" alt="" />
   </div>
+
+  <!--<div class="count">
+    <h1><%= number_with_delimiter @country.alerts_count %></h1>
+    <p>Forest clearing alerts in the last 15 days</p>
+  </div>-->
 
   <div class="details">
     <div class="inner">
@@ -55,8 +60,8 @@
       <ul>
         <% @blog_posts.each do |post| %>
           <li>
-          <h2><%= post.title %></h2>
-          <%= simple_format truncate(post.body.strip, :length => 255, :omission => "... #{link_to t('.blog_posts.more')}") %>
+          <h2><%= link_to post.title, post_path(:id => 1) %></h2>
+          <%= simple_format truncate(post.body.strip, :length => 255, :omission => "... #{link_to t('.blog_posts.more'), post_path(:id => 1) }") %>
           </li>
         <% end %>
       </ul>
