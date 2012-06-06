@@ -126,13 +126,10 @@ var Filter = (function() {
                 if (callback) callback();
               });
             }
-
           });
         });
-
       });
     });
-
   }
 
   function _calcFiltersPosition() {
@@ -210,8 +207,6 @@ var Filter = (function() {
     var width = $li.width() < 159 ? 159 : $li.width();
     var left  = (l + $li.width() / 2) - (width / 2);
 
-    console.log($layer.find(".links").height());
-
     $layer.find("li").css({ width:width - 20});
     $layer.css({ left: left, width:width, height: $layer.find(".links").height() + 90, top: -80});
     $layer.animate({ opacity: 1 }, 250);
@@ -228,8 +223,6 @@ var Filter = (function() {
   function _init() {
 
     // Bindings
-    //$advance.on("click", _advanceFilter);
-
     $(document).on("click", ".filters .advance", _advanceFilter);
     $(document).on("mouseenter", ".filters li", _open);
     $layer.on("mouseleave", _closeOpenFilter);
@@ -255,8 +248,16 @@ var Filter = (function() {
     }
 
     var
-    layerItemTemplate = _.template($("#layer-item-template").html()),
-    $layerItem = $(layerItemTemplate({ name: name.truncate(15), c: cat }));
+    layerItemTemplate = null,
+    $layerItem        = null;
+
+    /*if (cat === 'deforestation') {
+      layerItemTemplate = _.template($("#layer-item-radio-template").html());
+      $layerItem = $(layerItemTemplate({ name: name.truncate(15), c: cat }));
+    } else {*/
+      layerItemTemplate = _.template($("#layer-item-checkbox-template").html());
+      $layerItem = $(layerItemTemplate({ name: name.truncate(15), c: cat }));
+    //}
 
     $layer.find(".links").append($layerItem);
     $layerItem.find(".checkbox").addClass(cat);

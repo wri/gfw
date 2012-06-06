@@ -64,7 +64,11 @@ end %>
     </div>
   </script>
 
-  <script id="layer-item-template" type="text/x-underscore-template">
+  <script id="layer-item-radio-template" type="text/x-underscore-template">
+    <li class="{{ c }}"><a href="#" class="radio" data-name={{ c }}>{{name}}</a></li>
+  </script>
+
+  <script id="layer-item-checkbox-template" type="text/x-underscore-template">
     <li class="{{ c }}"><a href="#" class="checkbox">{{name}}</a></li>
   </script>
 

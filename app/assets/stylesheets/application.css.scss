@@ -466,6 +466,10 @@ body.countries {
   }
 }
 
+.radio {
+  @include radio(radio);
+}
+
 .checkbox {
   @include checkboxes(checkboxes);
   &.concessions { @include checkboxes(checkboxes_concessions); }
@@ -473,6 +477,7 @@ body.countries {
 }
 
 footer {
+
   .inner { position:relative; width: 871px; margin: auto; }
 
   .links {

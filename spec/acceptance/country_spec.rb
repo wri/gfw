@@ -56,7 +56,7 @@ feature 'GFW country detail page' do
       page.should have_css 'ul li', :length => 3
       page.should have_css 'ul li h2', :text => 'Kony Tracked by U.S. Forces in Central Africa', :length => 2
       page.should have_css 'ul li h2', :text => 'U.N. Says Congo Rebels Killed Scores...'
-      page.should have_css 'ul li p', :text => 'The Central African Republic (CAR) (French: République centrafricaine) is a landlocked country in Central Africa. Sounding like this It borders Chad in the north, Sudan in the northeast, South Sudan in the east, the Demo... more', :length => 3
+      page.should have_css 'ul li p', :text => 'The Central African Republic (CAR) (French: République centrafricaine) is a landlocked country in Central Africa. Sounding like this It borders Chad in the north, Sudan in the northeast, South Sudan in the east, the Democrat... more', :length => 3
 
       page.should have_link 'more', :length => 3
     end

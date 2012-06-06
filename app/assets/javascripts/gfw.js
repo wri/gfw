@@ -54,7 +54,6 @@ GFW.modules.app = function(gfw) {
 
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
 
-
       var overlayID =  document.getElementById("zoom_controls");
 
       // zoomIn
@@ -215,7 +214,9 @@ GFW.modules.maplayer = function(gfw) {
       var sw = new google.maps.LatLng(this.layer.get('ymin'), this.layer.get('xmin'));
       var ne = new google.maps.LatLng(this.layer.get('ymax'),this.layer.get('xmax'));
       this._bounds = new google.maps.LatLngBounds(sw, ne);
+
       gfw.log.info(this._options.getTileUrl({x: 3, y: 4},3));
+
       this._displayed = false;
       this._maptype = new google.maps.ImageMapType(this._options);
 
@@ -299,24 +300,23 @@ GFW.modules.maplayer = function(gfw) {
         this._map.overlayMapTypes.setAt(this._tileindex, null);
         gfw.log.info(this.layer.get('title')+ " removed at "+this._tileindex);
       }
-
     },
     _addControll: function(){
       var that = this;
 
-      this._opacity = { alpha: 100 };
-
-      this.toggle = Filter.addFilter(this.layer.get('category_name'), this.layer.get('title'), function() {
+      var clickEvent = function() {
         that._toggleLayer();
         that._maptype.setOpacity(100);
+      };
 
-      }, function() {
-
+      var zoomEvent = function() {
         if (that.layer.attributes['visible']) {
           that._map.fitBounds(that._bounds);
         }
+      };
 
-      });
+      Filter.addFilter(this.layer.get('category_name'), this.layer.get('title'), clickEvent, zoomEvent);
+
     },
     _bindDisplay: function(display) {
       var that = this;
@@ -409,44 +409,48 @@ _add:
 
 GFW.modules.datalayers = function(gfw) {
   gfw.datalayers = {};
+
   gfw.datalayers.Engine = Class.extend(
-      {
-init: function(CartoDB, layerTable, map) {
-this._map = map;
-this._bycartodbid = {};
-this._bytitle = {};
-this._dataarray = [];
-this._cartodb = CartoDB;
-var LayersColl = this._cartodb.CartoDBCollection.extend({
-sql: function(){
-return "SELECT title, category_name, zmin, zmax, ST_XMAX(the_geom) as xmax,ST_XMIN(the_geom) as xmin,ST_YMAX(the_geom) as ymax,ST_YMIN(the_geom) as ymin, tileurl, true as visible FROM " + layerTable + " WHERE display = True ORDER BY displaylayer ASC";
-}
-});
-this.LayersObj = new LayersColl();
-this.LayersObj.fetch();
-this._loadLayers();
-},
-_loadLayers: function(){
-var that = this;
+    {
+    init: function(CartoDB, layerTable, map) {
 
-this.LayersObj.bind('reset', function() {
-  that.LayersObj.each(function(p) {
-    that._addLayer(p);
-    });
-  });
+      this._map         = map;
+      this._bycartodbid = {};
+      this._bytitle     = {};
+      this._dataarray   = [];
+      this._cartodb     = CartoDB;
 
-             },
-_addLayer: function(p){
-             gfw.log.warn('only showing baselayers for now');
+      var LayersColl    = this._cartodb.CartoDBCollection.extend({
+        sql: function(){
+          return "SELECT title, category_name, zmin, zmax, ST_XMAX(the_geom) as xmax,ST_XMIN(the_geom) as xmin,ST_YMAX(the_geom) as ymax,ST_YMIN(the_geom) as ymin, tileurl, true as visible FROM " + layerTable + " WHERE display = True ORDER BY displaylayer ASC";
+        }
+      });
 
-    //if (p.get('category') == 'baselayer') {
-    var layer = new gfw.maplayer.Engine(p, this._map);
+      this.LayersObj = new LayersColl();
+      this.LayersObj.fetch();
+      this._loadLayers();
+    },
+    _loadLayers: function(){
+      var that = this;
 
-    this._dataarray.push(layer);
-    this._bycartodbid[p.get('cartodb_id')] = layer;
-    this._bytitle[p.get('title')] = layer;
-    //}
-}
+      this.LayersObj.bind('reset', function() {
+        that.LayersObj.each(function(p) {
+          that._addLayer(p);
+        });
+      });
+
+    },
+    _addLayer: function(p){
+      gfw.log.warn('only showing baselayers for now');
+
+      //if (p.get('category') == 'baselayer') {
+      var layer = new gfw.maplayer.Engine(p, this._map);
+
+      this._dataarray.push(layer);
+      this._bycartodbid[p.get('cartodb_id')] = layer;
+      this._bytitle[p.get('title')] = layer;
+      //}
+    }
   });
 };
 

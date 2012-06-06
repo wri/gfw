@@ -95,6 +95,14 @@ $(function(){
     //Filter.closeOpenFilter();
   //});
 
+  $(document).on("click", ".radio", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    $('.radio[data-name="' + $(this).attr('data-name') + '"]').removeClass("checked");
+    $(this).addClass("checked");
+  });
+
   $(document).on("click", ".checkbox", function(e) {
     e.preventDefault();
     e.stopPropagation();
