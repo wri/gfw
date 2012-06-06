@@ -18,6 +18,7 @@ $cSeparator:        #E5E5E5;
 $cConcessions:      #FF6699; // pink
 $cConcessionsHover: #C04B73; // dark pink
 $cProtectedAreas:   #00CED0; // blue
+
 $cMining:           $cGold;
 $cForest:           #B2D26E; // green
 $cFire:             #E95850; // red
@@ -66,6 +67,7 @@ $icons-fire-spacing: 20px;
 $icons-checkboxes-spacing: 20px;
 $icons-checkboxes_concessions-spacing: 20px;
 $icons-checkboxes_protected_areas-spacing: 20px;
+$icons-checkboxes_forest-spacing: 20px;
 
 @import "icons/*.png"; /**/
 
@@ -167,11 +169,14 @@ strong { font-weight: bold; } // This is sad, I know.
   a { color: $cGray4; }
 
   &.concessions     a { color: $cConcessions; }
+  &.concessions     a:hover { color: $cConcessionsHover; }
+
   &.protected_areas a { color: $cProtectedAreas; }
+
   &.intact-forest   a { color: $cForest; }
   &.mining          a { color: $cMining; }
   &.forest-cover    a { color: $cForest; }
-  &.forest          a { color: $cGray4; }
+  &.forest          a { color: $cForest; }
   &.fire            a { color: $cFire; }
   &.carbon          a { color: $cGray4;}
   &.biodiversity    a { color: $cGray4; }

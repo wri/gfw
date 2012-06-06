@@ -230,7 +230,7 @@ var Filter = (function() {
 
   function _addFilter(category, name, clickEvent, zoomEvent) {
 
-    if (category === null) {
+    if (category === null || !category) {
       category = 'Other layers';
     }
 

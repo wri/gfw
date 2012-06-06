@@ -474,6 +474,7 @@ body.countries {
   @include checkboxes(checkboxes);
   &.concessions { @include checkboxes(checkboxes_concessions); }
   &.protected_areas { @include checkboxes(checkboxes_protected_areas); }
+  &.forest { @include checkboxes(checkboxes_forest); }
 }
 
 footer {
