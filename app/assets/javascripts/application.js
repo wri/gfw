@@ -61,6 +61,8 @@ function initialize() {
     if (previousState != State.title) {
       if (State.title === 'Home') {
         Navigation.showState("home");
+      } else if (State.title === 'Countries') {
+        Navigation.showState("countries");
       } else if (State.title === 'Map') {
         Navigation.showState("map");
       }
@@ -69,14 +71,42 @@ function initialize() {
     }
   });
 
+  /*$(document).keyup(function(e) {
+    if (e.keyCode == 27) {
+
+    $(".backdrop").fadeOut(250, function() {
+      $(this).remove();
+    });
+
+    $("#countries").fadeOut(250);
+
+    }   // esc
+  });*/
+
   $("nav .home.ajax").on("click", function(e) {
     e.preventDefault();
     History.pushState({ state: 2 }, "Home", "/");
+
+    $(".backdrop").fadeOut(250, function() {
+      $(this).remove();
+    });
+
+  });
+
+  $("nav .countries.ajax").on("click", function(e) {
+    e.preventDefault();
+    History.pushState({ state: 4 }, "Countries", "/countries");
+
+
   });
 
   $("nav .map.ajax").on("click", function(e) {
     e.preventDefault();
     History.pushState({ state: 1 }, "Map", "/map");
+
+    $(".backdrop").fadeOut(250, function() {
+      $(this).remove();
+    });
   });
 
   return false;

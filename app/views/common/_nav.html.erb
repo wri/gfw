@@ -13,7 +13,7 @@
 
       option_class = "#{option_class} #{option}"
 
-      option_class = "#{option_class} ajax" if (controller_name == 'home') && (option == "home" || option == "map")
+      option_class = "#{option_class} ajax" if ((controller_name == 'home') && (option == "home" || option == "map")) || (option == 'countries')
     %>
 
     <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.' + option))), path, :class => option_class %></li>

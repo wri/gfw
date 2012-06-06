@@ -8,9 +8,17 @@ var Navigation = (function() {
   function _showState(state) {
     if (state === 'home') {
       _showHomeState();
+    } else if (state === "countries") {
+      _showCountryState();
     } else if (state === "map") {
       _showMapState();
     }
+  }
+
+  function _showCountryState() {
+    Navigation.select("countries");
+    $("#content").append('<div class="backdrop" />');
+    $("#countries").fadeIn(250);
   }
 
   function _showHomeState() {
