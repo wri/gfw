@@ -1,20 +1,16 @@
 <footer>
-  <div class="download">
-    <div class="inner">
-    <%= content_tag :h1, t('layouts.application.footer.download.title') %>
-    <%= content_tag :p, t('layouts.application.footer.download.data_html') %>
-  </div>
-  </div>
 
-  <div class="links">
-    <div class="inner">
+<%= yield :download %>
 
-      <div class="logos">
-        <%= link_to "", '#', :class => 'wri' %>
-        <%= link_to "", '#', :class => 'google' %>
-        <%= link_to "", '#', :class => 'cfgd' %>
-        <%= link_to "", '#', :class => 'university_maryland' %>
-        <%= link_to "", '#', :class => 'imazon' %>
+<div class="links">
+  <div class="inner">
+
+    <div class="logos">
+      <%= link_to "", '#', :class => 'wri' %>
+      <%= link_to "", '#', :class => 'google' %>
+      <%= link_to "", '#', :class => 'cfgd' %>
+      <%= link_to "", '#', :class => 'university_maryland' %>
+      <%= link_to "", '#', :class => 'imazon' %>
 
       <div class="wri">
         <%= link_to "", '#', :class => 'wri' %>
@@ -24,8 +20,8 @@
           USA / Phone +1 (202) 729-7600 / Fax +1 (202) 729-7610
         </address>
       </div>
-      </div>
-
     </div>
+
   </div>
-  </footer>
+</div>
+</footer>

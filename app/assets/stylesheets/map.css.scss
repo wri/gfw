@@ -346,6 +346,7 @@ $timelineWidth: 947px;
   @include icons-sprite(timeline_handle_with_play);
   @extend .disable-selection;
   cursor:col-resize;
+  z-index:1001;
 
   & > .play {
     position:absolute;

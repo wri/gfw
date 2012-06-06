@@ -191,6 +191,26 @@ strong { font-weight: bold; } // This is sad, I know.
   &.biodiversity     .line { background-color: $cGray4; }
 }
 
+@mixin checkboxes($url) {
+  @include inline-block();
+  @include icons-sprite($url, $offset-y: -66px);
+
+  padding-left: 12px;
+
+  color:#333;
+  text-decoration:none;
+
+  &:hover          { @include icons-sprite($url, $offset-y:-206px); }
+
+  &:active         { @include icons-sprite($url, $offset-y:-206px); }
+  &:active:hover   { @include icons-sprite($url, $offset-y:-276px); }
+
+  &.checked        { @include icons-sprite($url, $offset-y:-136px); }
+  &.checked:hover  { @include icons-sprite($url, $offset-y:-276px); }
+
+  &.disabled       { color: $cGray4; @include icons-sprite($url, $offset-y:4px); }
+  &.disabled:hover { @include icons-sprite($url, $offset-y:4px); }
+}
 
 // Fonts
 .serif {
@@ -223,10 +243,6 @@ strong { font-weight: bold; } // This is sad, I know.
   &:hover {
     color: $cGray2;
   }
-}
-
-@mixin flag($url) {
-  background: url(flags/$url);
 }
 
   .flag-icon {

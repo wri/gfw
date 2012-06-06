@@ -77,7 +77,11 @@ var Filter = (function() {
           count--;
 
           if (count <= 0) {
-            $advance.delay(200).animate({ top: "20px", opacity: 1 }, 200);
+
+            if (categories.length > 5) { // TODO: calc this number dynamically
+              $advance.delay(200).animate({ top: "20px", opacity: 1 }, 200);
+            }
+
             $filters.removeClass("hide");
 
             $filters.find("li").css({opacity:1});
@@ -256,13 +260,13 @@ var Filter = (function() {
     $layerItem = $(layerItemTemplate({ name: name.truncate(15), c: cat }));
 
     $layer.find(".links").append($layerItem);
+    $layerItem.find(".checkbox").addClass(cat);
 
     $layerItem.on("click", function() {
       clickEvent();
       zoomEvent();
     });
 
-    console.log("G", id, $.jStorage.get(id));
     if ($.jStorage.get(id) == true) {
       //Infowindow.show();
       $layerItem.find(".checkbox").addClass('checked');

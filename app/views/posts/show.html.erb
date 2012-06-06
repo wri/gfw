@@ -2,10 +2,19 @@
   <a href="#" class="selected">Blog Stories</a> > <a href="#">Post</a>
 <% end %>
 
+<% content_for :download do %>
+<div class="download">
+  <div class="inner">
+  <%= content_tag :h1, t('layouts.application.footer.download.title') %>
+  <%= content_tag :p, t('layouts.application.footer.download.data_html') %>
+</div>
+</div>
+<% end %>
+
 <div class="inner">
   <section>
     <article>
-    <h1><a href="#">It’s been a great year. But that’s not enough.</a></h1>
+    <h1>It’s been a great year. But that’s not enough.</h1>
     <ul class="meta">
       <li class="date">Nov 23rd, 2012</li>
       <li class="tags"><a href="#">POLITICS</a>, <a href="#">CONGO</a></li>

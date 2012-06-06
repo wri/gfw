@@ -2,6 +2,15 @@
   <a href="#" class="selected"><%= t('.title') %></a> | <a href="#"><%= t('.all') %></a>
 <% end %>
 
+<% content_for :download do %>
+<div class="download">
+  <div class="inner">
+  <%= content_tag :h1, t('layouts.application.footer.download.title') %>
+  <%= content_tag :p, t('layouts.application.footer.download.data_html') %>
+</div>
+</div>
+<% end %>
+
 <div class="inner">
   <section>
     <article>

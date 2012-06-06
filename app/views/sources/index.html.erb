@@ -2,10 +2,19 @@
  <a href="#" class="selected">Data sources</a> | <a href="#">All countries</a>
 <% end %>
 
+<% content_for :download do %>
+<div class="download">
+  <div class="inner">
+  <%= content_tag :h1, t('layouts.application.footer.download.title') %>
+  <%= content_tag :p, t('layouts.application.footer.download.data_html', :a => 'test') %>
+</div>
+</div>
+<% end %>
+
 <div class="inner">
   <section>
     <article>
-    <h1><a href="/posts/show">It’s been a great year. But that’s not enough.</a></h1>
+    <h1><a href="/posts/show">Intact forests landscapes</a></h1>
 
     <p>Incatct forest landscapes, is an unbroken expanse of natural ecosystems within the zone of current forest extent, showing no signs of significant human activity, and large enough that all native biodiversity, including viable populations of wide-ranging species, could be maintained.</p>
 

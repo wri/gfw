@@ -2,6 +2,15 @@
   t('.title')
 end %>
 
+<% content_for :download do %>
+<div class="download">
+  <div class="inner">
+  <%= content_tag :h1, t('layouts.application.footer.download.title') %>
+  <%= content_tag :p, t('layouts.application.footer.download.data_html') %>
+</div>
+</div>
+<% end %>
+
 <%= render "common/map" %>
 
 <div class="actions">
@@ -33,9 +42,9 @@ end %>
 <% content_for :js do %>
   <script type="text/javascript">
     var summary = {
-count: "2,931",
-title: "Forest clearing alerts in the last 15 days"
-}
+      count: "2,931",
+      title: "Forest clearing alerts in the last 15 days"
+    }
   </script>
 
   <script id="infowindow-template" type="text/x-underscore-template">

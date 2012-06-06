@@ -327,7 +327,6 @@ GFW.modules.maplayer = function(gfw) {
 
       var c = this.layer.attributes['title'].replace(/ /g, "_").toLowerCase();
 
-      console.log("S", c, this.layer.attributes['visible']);
       $.jStorage.set(c, this.layer.attributes['visible']);
 
       if (this.layer.get('visible') == false) {
