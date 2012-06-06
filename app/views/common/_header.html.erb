@@ -2,7 +2,6 @@
 
 <div class="top">
   <div class="inner">
-    <%= link_to "", '', :class => :logo %>
     <ul>
       <li><%= link_to t('layouts.application.header.share_this'), {} %></li>
       <li><%= link_to t('layouts.application.header.other_wri_sites'), {}, :class => :selector %></li>
@@ -13,7 +12,7 @@
 <div class="inner">
 
   <hgroup>
-  <%= content_tag :h2, (link_to 'Global Forest Watch 2.0') %>
+  <%= content_tag :h2, (link_to t('.title')) %>
   <h1><%= yield :title %></h1>
   </hgroup>
 

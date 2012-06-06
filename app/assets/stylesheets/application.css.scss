@@ -22,15 +22,6 @@ header {
   background:url(backgrounds/bkg_header.png) repeat-x top center;
   height:247px;
 
-  .logo {
-    position:relative;
-    top: 10px;
-    display: block;
-    width:92px;
-    height: 31px;
-    @include icons-sprite(logo_wri);
-  }
-
   hgroup {
     position:relative;
     top: 52px;
@@ -494,7 +485,8 @@ footer {
 
     a { display: block; margin: 0 20px 0 0; @include inline-block(); }
 
-    a.wri { width: 92px; height: 31px; @include icons-sprite(logo_wri); }
+    // Logos
+    a.wri { width: 92px; height: 31px; @include icons-sprite(logo_wri_black); }
     .google { width: 90px; height: 52px; @include icons-sprite(logo_google); }
     .cfgd { width: 72px; height: 52px; @include icons-sprite(logo_cgd); }
     .university_maryland { width: 77px; height: 52px; @include icons-sprite(logo_maryland); }
@@ -503,7 +495,7 @@ footer {
     div.wri {
       float: right;
 
-      & > .wri { width:92px; height: 31px; margin: 10px 0 20px 0; @include icons-sprite(logo_wri); }
+      & > .wri { width:92px; height: 31px; margin: 10px 0 20px 0; @include icons-sprite(logo_wri_black); }
 
       address { width:266px; color: $cGray2; font-size:11px; line-height:120%; }
     }

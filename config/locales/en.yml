@@ -40,6 +40,8 @@ en:
           text: "Subscribe to forest clearing alerts and receive frequent updates on your selected countries"
           link: 'Subscribe to alerts'
   common:
+    header:
+      title: 'Global Forest Watch 2.0'
     filters:
       concessions: 'Concessions'
       protected_areas: 'Protected Areas'

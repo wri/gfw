@@ -167,6 +167,7 @@ strong { font-weight: bold; } // This is sad, I know.
 .filter-links {
 
   a { color: $cGray4; }
+  a:hover { color: $cGray3; }
 
   &.concessions     a { color: $cConcessions; }
   &.concessions     a:hover { color: $cConcessionsHover; }
