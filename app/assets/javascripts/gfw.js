@@ -134,6 +134,8 @@ GFW.modules.app = function(gfw) {
     _setupListeners: function(){
       var that = this;
 
+      Infowindow.init();
+
       //setup zoom listener
       google.maps.event.addListener(this._map, 'zoom_changed', function() {
         var hash = "/map/" + this.getZoom() + "/" + this.getCenter().lat().toFixed(that._precision) + "/" + this.getCenter().lng().toFixed(that._precision);
@@ -148,7 +150,6 @@ GFW.modules.app = function(gfw) {
       google.maps.event.addListenerOnce(this._map, 'tilesloaded', function(){
         config.mapLoaded = true;
 
-        Infowindow.init();
         Circle.init();
         Timeline.init();
         Filter.init();
@@ -308,6 +309,7 @@ GFW.modules.maplayer = function(gfw) {
         that._toggleLayer();
         that._maptype.setOpacity(100);
         Infowindow.show();
+        Infowindow.toggleItem(that.layer.attributes['title'], that.layer.attributes['visible']);
       };
 
       var zoomEvent = function() {

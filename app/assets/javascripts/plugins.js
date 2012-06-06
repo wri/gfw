@@ -314,11 +314,11 @@ var Infowindow = (function() {
     if ( $("#infowindow-template").length > 0 ) {
 
       template    = _.template($("#infowindow-template").html());
-      $infowindow = $(template({ layers: "<li>Test 1</li><li>Test 2</li><li>Test 3</li>" }));
+      $infowindow = $(template({ layers: "" }));
 
       var position = $.jStorage.get("infowindow");
 
-      $infowindow.css({ top: position[0], left: position[1] });
+      $infowindow.css({ top: position[0], left: position[1], opacity:0 });
 
       $("#content").append($infowindow);
 
@@ -326,7 +326,42 @@ var Infowindow = (function() {
     }
 
     return false;
+  }
 
+  function _add(name) {
+
+    var id = name.replace(/ /g, "_").toLowerCase();
+
+    template = _.template($("#infowindow-item-template").html());
+    $item    = $(template({ c: "concession", id: id, name: name }));
+
+    $item.hide();
+
+    $(".infowindow").find("ul").append($item);
+    $item.fadeIn(250);
+  }
+
+  function _remove(name) {
+
+    var id = name.replace(/ /g, "_").toLowerCase();
+
+      if ($(".infowindow").find("li").length == 1) {
+        _hide(null, function() { $(".infowindow").find("ul li#" + id).remove(); });
+      } else {
+
+        $(".infowindow").find("ul li#" + id).fadeOut(250, function() {
+          $item.remove();
+        });
+      }
+  }
+
+  function _toggleItem(name, add) {
+    console.log(name, add, "<-");
+    if (add) {
+      _add(name);
+    } else {
+      _remove(name);
+    }
   }
 
   function _show(e) {
@@ -334,18 +369,25 @@ var Infowindow = (function() {
     $(".infowindow").animate({ opacity: 1 }, 250, "easeInExpo");
   }
 
-  function _hide(e) {
-    if (e) e.preventDefault();
+  function _hide(e, callback) {
 
     $(".infowindow").animate({ marginTop: 50, opacity: 0 }, 250, "easeOutExpo", function() {
       $(this).hide();
+
+      if (callback) {
+        callback();
+      }
+
     });
   }
 
   return {
     init: _init,
     hide: _hide,
-    show: _show
+    show: _show,
+    toggleItem: _toggleItem,
+    add: _add,
+    remove: _remove
   };
 
 }());
