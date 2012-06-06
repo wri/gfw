@@ -225,7 +225,10 @@ GFW.modules.maplayer = function(gfw) {
       this._map.overlayMapTypes.setAt(this._tileindex, null);
       this._setupListeners();
 
-      this.layer.attributes['visible'] = false;
+
+      if (this.layer.get('title') != 'FORMA'){
+        this.layer.attributes['visible'] = false;
+      }
 
       this._addControll();
       this._handleLayer();
@@ -308,8 +311,9 @@ GFW.modules.maplayer = function(gfw) {
       var clickEvent = function() {
         that._toggleLayer();
         that._maptype.setOpacity(100);
-        Infowindow.show();
+
         Infowindow.toggleItem(that.layer.attributes['title'], that.layer.attributes['category_name'], that.layer.attributes['visible']);
+
       };
 
       var zoomEvent = function() {

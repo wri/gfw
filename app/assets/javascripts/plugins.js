@@ -38,9 +38,9 @@ var Navigation = (function() {
 
     Circle.hide();
 
-    if ($.jStorage.get("forma") == true) {
+    //if ($.jStorage.get("forma") == true) {
       Timeline.show();
-    }
+    //}
 
     GFW.app.open();
 
@@ -268,10 +268,14 @@ var Filter = (function() {
       zoomEvent();
     });
 
-    if ($.jStorage.get(id) == true) {
+    if ( name == "FORMA") {
+      $layerItem.find(".checkbox").addClass('checked');
+    }
+
+    /*if ($.jStorage.get(id) == true) {
       $layerItem.find(".checkbox").addClass('checked');
       clickEvent();
-    }
+    }*/
   }
 
 
@@ -348,6 +352,13 @@ var Infowindow = (function() {
 
     $(".infowindow").find("ul").append($item);
     $item.fadeIn(250);
+
+    if ( $(".infowindow").find("li").length >= 1) {
+
+      Infowindow.show();
+
+    }
+
   }
 
   function _remove(name) {
