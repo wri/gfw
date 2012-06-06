@@ -270,6 +270,8 @@ var Filter = (function() {
 
     if ( name == "FORMA") {
       $layerItem.find(".checkbox").addClass('checked');
+      Infowindow.add(name, category);
+
     }
 
     /*if ($.jStorage.get(id) == true) {
@@ -354,9 +356,7 @@ var Infowindow = (function() {
     $item.fadeIn(250);
 
     if ( $(".infowindow").find("li").length >= 1) {
-
       Infowindow.show();
-
     }
 
   }
