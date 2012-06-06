@@ -228,10 +228,11 @@ var Filter = (function() {
   function _init() {
 
     // Bindings
-    $advance.on("click", _advanceFilter);
-    $filters.find("li").on("mouseenter", _open);
+    //$advance.on("click", _advanceFilter);
+
+    $(document).on("click", ".filters .advance", _advanceFilter);
+    $(document).on("mouseenter", ".filters li", _open);
     $layer.on("mouseleave", _closeOpenFilter);
-    $filters.on("mouseenter", _onMouseEnter);
   }
 
   function _addFilter(category, name, clickEvent, zoomEvent) {
