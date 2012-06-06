@@ -561,18 +561,19 @@ footer > .download {
     border: 1px solid $cSeparator;
     line-height: 18px;
 
-
     .icon { position:relative; top: 10px; margin: auto; }
 
     &.india .icon {
       @include icons-sprite(country_india);
       width: 127px; height: 136px;
     }
+
     &.indonesia .icon {
       top: 40px;
       @include icons-sprite(country_indonesia);
       width: 184px; height: 69px;
     }
+
     &.brazil .icon {
       @include icons-sprite(country_brazil);
       width: 126px; height: 131px;
@@ -586,6 +587,18 @@ footer > .download {
     }
 
     a { color: #999999; text-decoration: none;}
+
+    &.india a:hover .icon {
+      @include icons-sprite(country_india_selected);
+    }
+
+    &.indonesia a:hover .icon {
+      @include icons-sprite(country_indonesia_selected);
+    }
+
+    &.brazil a:hover .icon {
+      @include icons-sprite(country_brazil_selected);
+    }
 
     .content {
       position:absolute;

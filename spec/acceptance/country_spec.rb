@@ -13,11 +13,11 @@ feature 'GFW country detail page' do
   include_examples 'title', 'Central African Republic'
   include_examples 'menu', 'Countries'
 
-  scenario 'shows a graph' do
-    within '#content #country .graph' do
-      page.should have_css 'img'
-    end
-  end
+  #scenario 'shows a graph' do
+    #within '#content #country .graph' do
+      #page.should have_css 'img'
+    #end
+  #end
 
   #scenario 'shows forest clearing alerts counter' do
     #within '#content #country .count' do
