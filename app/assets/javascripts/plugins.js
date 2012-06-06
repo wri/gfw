@@ -16,6 +16,7 @@ var Navigation = (function() {
   function _showHomeState() {
     showMap = false;
 
+    Infowindow.hide();
     Navigation.select("home");
 
     Filter.hide(function() {
@@ -329,6 +330,10 @@ var Infowindow = (function() {
   }
 
   function _add(name, category) {
+
+    if (category === null || !category) {
+      category = 'Other layers';
+    }
 
     var
     id = name.replace(/ /g, "_").toLowerCase(),
