@@ -148,7 +148,7 @@ GFW.modules.app = function(gfw) {
       google.maps.event.addListenerOnce(this._map, 'tilesloaded', function(){
         config.mapLoaded = true;
 
-        //Infowindow.init();
+        Infowindow.init();
         Circle.init();
         Timeline.init();
         Filter.init();
@@ -307,6 +307,7 @@ GFW.modules.maplayer = function(gfw) {
       var clickEvent = function() {
         that._toggleLayer();
         that._maptype.setOpacity(100);
+        Infowindow.show();
       };
 
       var zoomEvent = function() {

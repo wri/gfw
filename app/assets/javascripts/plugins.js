@@ -268,7 +268,6 @@ var Filter = (function() {
     });
 
     if ($.jStorage.get(id) == true) {
-      //Infowindow.show();
       $layerItem.find(".checkbox").addClass('checked');
       clickEvent();
     }
@@ -296,7 +295,13 @@ var Infowindow = (function() {
     if (_build()) {
 
       // Makes it draggable
-      $infowindow.draggable({ containment: "#map-container .map", handle: ".header" });
+      $infowindow.draggable({
+        containment: "#map-container .map",
+        handle: ".header",
+        stop: function() {
+          $.jStorage.set("infowindow", [$infowindow.offset().top, $infowindow.offset().left]);
+        }
+      });
 
       // Adds close binding
       $infowindow.find(".close").on("click", _hide);
@@ -309,7 +314,11 @@ var Infowindow = (function() {
     if ( $("#infowindow-template").length > 0 ) {
 
       template    = _.template($("#infowindow-template").html());
-      $infowindow = $(template({title: "Title", layers: "<li>Concession 1</li><li>Concession 2</li><li>Concession 3</li>"}));
+      $infowindow = $(template({ layers: "<li>Test 1</li><li>Test 2</li><li>Test 3</li>" }));
+
+      var position = $.jStorage.get("infowindow");
+
+      $infowindow.css({ top: position[0], left: position[1] });
 
       $("#content").append($infowindow);
 
@@ -321,13 +330,14 @@ var Infowindow = (function() {
   }
 
   function _show(e) {
-    $infowindow.animate({ opacity: 1 }, 250, "easeInExpo");
+    $(".infowindow").show();
+    $(".infowindow").animate({ opacity: 1 }, 250, "easeInExpo");
   }
 
   function _hide(e) {
     if (e) e.preventDefault();
 
-    $infowindow.animate({ marginTop: 50, opacity: 0 }, 250, "easeOutExpo", function() {
+    $(".infowindow").animate({ marginTop: 50, opacity: 0 }, 250, "easeOutExpo", function() {
       $(this).hide();
     });
   }
@@ -607,7 +617,7 @@ var Timeline = (function() {
 
     if (_isHidden()) {
       $timeline.removeClass("hidden");
-      $timeline.animate({ bottom: parseInt($timeline.css("bottom"), 10) + 20, opacity: 1 }, 150, "easeInExpo", _afterShow);
+      $timeline.animate({ bottom: parseInt($timeline.css("bottom"), 10) + 20, opacity: 1 }, 150, _afterShow);
     }
 
   }
@@ -616,7 +626,7 @@ var Timeline = (function() {
 
     if (!_isHidden()) {
       $handle.fadeOut(250, function() {
-        $timeline.animate({ bottom: parseInt($timeline.css("bottom"), 10) - 20, opacity: 0 }, 150, "easeOutExpo", _afterHide);
+        $timeline.animate({ bottom: parseInt($timeline.css("bottom"), 10) - 20, opacity: 0 }, 150, _afterHide);
       });
     }
 

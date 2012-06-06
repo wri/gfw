@@ -20,7 +20,10 @@ $cConcessionsHover: #C04B73; // dark pink
 $cProtectedAreas:   #00CED0; // blue
 
 $cMining:           $cGold;
+
 $cForest:           #B2D26E; // green
+$cForestHover:      #9EBB62; // dark green
+
 $cFire:             #E95850; // red
 
 $cTop:              rgba(117, 173, 181, 0.8);
@@ -43,9 +46,13 @@ $cPostBody:         #444444;
 
 .cConcessions { background-color: $cConcessions; }
 .cConcessionsHover { background-color: $cConcessionsHover; }
+
 .cProtectedAreas { background-color: $cProtectedAreas; }
 .cMining { background-color: $cMining; }
+
 .cForest { background-color: $cForest; }
+.cForestHover { background-color: $cForestHover; }
+
 .cFire { background-color: $cFire; }
 
 .cTop { background-color: $cTop; }
@@ -170,14 +177,19 @@ strong { font-weight: bold; } // This is sad, I know.
   a:hover { color: $cGray3; }
 
   &.concessions     a { color: $cConcessions; }
+  &.concessions     a.title:hover { color: $cConcessions; }
+
   &.concessions     a:hover { color: $cConcessionsHover; }
+
+  &.forest          a { color: $cForest; }
+  &.forest          a.title:hover { color: $cForest; }
+  &.forest          a:hover { color: $cForestHover; }
 
   &.protected_areas a { color: $cProtectedAreas; }
 
   &.intact-forest   a { color: $cForest; }
   &.mining          a { color: $cMining; }
   &.forest-cover    a { color: $cForest; }
-  &.forest          a { color: $cForest; }
   &.fire            a { color: $cFire; }
   &.carbon          a { color: $cGray4;}
   &.biodiversity    a { color: $cGray4; }
