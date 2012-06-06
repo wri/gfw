@@ -18,7 +18,10 @@ var Navigation = (function() {
   function _showCountryState() {
     Navigation.select("countries");
     $("#content").append('<div class="backdrop" />');
-    $("#countries").fadeIn(250);
+
+    $(".backdrop").fadeIn(250, function() {
+      $("#countries").fadeIn(250);
+    });
   }
 
   function _showHomeState() {
