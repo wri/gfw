@@ -261,6 +261,9 @@
 
     ul {
       li {
+
+        a { text-decoration:none; color: $cGray3; }
+
         @include inline-block();
         margin: 0 3px 5px 0;
         width:80px;

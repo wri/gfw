@@ -328,12 +328,14 @@ var Infowindow = (function() {
     return false;
   }
 
-  function _add(name) {
+  function _add(name, category) {
 
-    var id = name.replace(/ /g, "_").toLowerCase();
+    var
+    id = name.replace(/ /g, "_").toLowerCase(),
+    cat = category.replace(/ /g, "_").toLowerCase();
 
     template = _.template($("#infowindow-item-template").html());
-    $item    = $(template({ c: "concession", id: id, name: name }));
+    $item    = $(template({ c: cat, id: id, name: name.truncate(12) }));
 
     $item.hide();
 
@@ -355,10 +357,10 @@ var Infowindow = (function() {
       }
   }
 
-  function _toggleItem(name, add) {
+  function _toggleItem(name, category, add) {
     console.log(name, add, "<-");
     if (add) {
-      _add(name);
+      _add(name, category);
     } else {
       _remove(name);
     }

@@ -309,7 +309,7 @@ GFW.modules.maplayer = function(gfw) {
         that._toggleLayer();
         that._maptype.setOpacity(100);
         Infowindow.show();
-        Infowindow.toggleItem(that.layer.attributes['title'], that.layer.attributes['visible']);
+        Infowindow.toggleItem(that.layer.attributes['title'], that.layer.attributes['category_name'], that.layer.attributes['visible']);
       };
 
       var zoomEvent = function() {
