@@ -51,7 +51,7 @@ var Navigation = (function() {
     Infowindow.show();
 
     //if ($.jStorage.get("forma") == true) {
-    Timeline.show();
+    Timeline.show(); // TODO: don't show the timeline if FORMA is not selected
     //}
 
     GFW.app.open();
@@ -265,32 +265,37 @@ var Filter = (function() {
     $layerItem        = null;
 
     // Select the kind of input: radio or checkbox
-    // if (cat === 'deforestation') {
-    //   layerItemTemplate = _.template($("#layer-item-radio-template").html());
-    //   $layerItem = $(layerItemTemplate({ name: name, category: cat }));
-    // } else {
-    layerItemTemplate = _.template($("#layer-item-checkbox-template").html());
-    $layerItem = $(layerItemTemplate({ name: name, category: cat }));
-    //}
+    if (cat === 'deforestation') {
+      layerItemTemplate = _.template($("#layer-item-radio-template").html());
+      $layerItem = $(layerItemTemplate({ name: name, category: cat }));
+
+      // Click binding
+      $layerItem.on("click", function() {
+        if (!$(this).find(".radio").hasClass("checked")) {
+          clickEvent();
+          zoomEvent();
+        }
+      });
+
+    } else {
+      layerItemTemplate = _.template($("#layer-item-checkbox-template").html());
+      $layerItem = $(layerItemTemplate({ name: name, category: cat }));
+
+      // Click binding
+      $layerItem.on("click", function() {
+        clickEvent();
+        zoomEvent();
+      });
+
+    }
 
     $layer.find(".links").append($layerItem);
     $layerItem.find(".checkbox").addClass(cat);
 
-    // Click binding
-    $layerItem.on("click", function() {
-      clickEvent();
-      zoomEvent();
-      /*var State = History.getState();
-      var args = State.hash.split("/");
-      var h = "/" + args[1] + "/" + parseInt(args[2], 10) + "/" + parseFloat(args[3]) + "/" + parseFloat(args[4]);
-      h += "/1,2,3,4";
-
-      History.pushState({ state: 4 }, "Map", h );*/
-    });
 
     // We select the FORMA layer by default
     if ( name == "FORMA") {
-      $layerItem.find(".checkbox").addClass('checked');
+      $layerItem.find(".radio").addClass('checked');
       Infowindow.add(name, category);
     }
 
@@ -501,7 +506,9 @@ var Circle = (function() {
       $circle.animate({ marginTop:0, opacity: 0 }, 250);
     };
 
-    $circle.find(".title, .counter").animate({ opacity: 0 }, 150, "easeOutExpo", _afterHide);
+    if ($circle) {
+      $circle.find(".title, .counter").animate({ opacity: 0 }, 150, "easeOutExpo", _afterHide);
+    }
   }
 
   function _onClick(e) {
