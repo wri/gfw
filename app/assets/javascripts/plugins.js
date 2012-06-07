@@ -51,7 +51,7 @@ var Navigation = (function() {
     Infowindow.show();
 
     //if ($.jStorage.get("forma") == true) {
-      Timeline.show();
+    Timeline.show();
     //}
 
     GFW.app.open();
@@ -254,7 +254,7 @@ var Filter = (function() {
     if (!_.include(categories, cat)) {
       var
       template = _.template($("#filter-template").html()),
-      $filter  = $(template({ name: category, c: cat, data: cat }));
+      $filter  = $(template({ name: category, category: cat, data: cat }));
 
       $filters.find("ul").append($filter);
       categories.push(cat);
@@ -264,22 +264,25 @@ var Filter = (function() {
     layerItemTemplate = null,
     $layerItem        = null;
 
-    /*if (cat === 'deforestation') {
-      layerItemTemplate = _.template($("#layer-item-radio-template").html());
-      $layerItem = $(layerItemTemplate({ name: name.truncate(15), c: cat }));
-    } else {*/
+    // Select the kind of input: radio or checkbox
+    // if (cat === 'deforestation') {
+    //   layerItemTemplate = _.template($("#layer-item-radio-template").html());
+    //   $layerItem = $(layerItemTemplate({ name: name, category: cat }));
+    // } else {
       layerItemTemplate = _.template($("#layer-item-checkbox-template").html());
-      $layerItem = $(layerItemTemplate({ name: name.truncate(15), c: cat }));
+      $layerItem = $(layerItemTemplate({ name: name, category: cat }));
     //}
 
     $layer.find(".links").append($layerItem);
     $layerItem.find(".checkbox").addClass(cat);
 
+    // Click binding
     $layerItem.on("click", function() {
       clickEvent();
       zoomEvent();
     });
 
+    // We select the FORMA layer by default
     if ( name == "FORMA") {
       $layerItem.find(".checkbox").addClass('checked');
       Infowindow.add(name, category);
@@ -288,7 +291,7 @@ var Filter = (function() {
     /*if ($.jStorage.get(id) == true) {
       $layerItem.find(".checkbox").addClass('checked');
       clickEvent();
-    }*/
+      }*/
   }
 
 
@@ -359,7 +362,7 @@ var Infowindow = (function() {
     cat = category.replace(/ /g, "_").toLowerCase();
 
     template = _.template($("#infowindow-item-template").html());
-    $item    = $(template({ c: cat, id: id, name: name.truncate(12) }));
+    $item    = $(template({ category: cat, id: id, name: name.truncate(12) }));
 
     $item.hide();
 
@@ -376,14 +379,14 @@ var Infowindow = (function() {
 
     var id = name.replace(/ /g, "_").toLowerCase();
 
-      if ($(".infowindow").find("li").length == 1) {
-        _hide(null, function() { $(".infowindow").find("ul li#" + id).remove(); });
-      } else {
+    if ($(".infowindow").find("li").length == 1) {
+      _hide(null, function() { $(".infowindow").find("ul li#" + id).remove(); });
+    } else {
 
-        $(".infowindow").find("ul li#" + id).fadeOut(250, function() {
-          $item.remove();
-        });
-      }
+      $(".infowindow").find("ul li#" + id).fadeOut(250, function() {
+        $item.remove();
+      });
+    }
   }
 
   function _toggleItem(name, category, add) {

@@ -61,20 +61,25 @@ $cPostBody:         #444444;
 
 // SPRITES
 $icons-crowdsourcing-spacing:90px;
-$icons-download_arrow-spacing:20px;
-$icons-download_arrow_hover-spacing:20px;
 $icons-analysis-spacing:90px;
 $icons-updates-spacing:90px;
+
+$icons-download_arrow-spacing:20px;
+$icons-download_arrow_hover-spacing:20px;
 $icons-bars-spacing:20px;
+
 $icons-concessions-spacing:20px;
 $icons-protected_areas-spacing: 20px;
 $icons-mining-spacing: 20px;
 $icons-forest_cover-spacing: 20px;
 $icons-fire-spacing: 20px;
-$icons-checkboxes-spacing: 20px;
-$icons-checkboxes_concessions-spacing: 20px;
-$icons-checkboxes_protected_areas-spacing: 20px;
-$icons-checkboxes_forest-spacing: 20px;
+
+// Radio buttons & checkboxes
+$icons-radio-spacing: 40px;
+$icons-checkboxes-spacing: 40px;
+$icons-checkboxes_concessions-spacing: 40px;
+$icons-checkboxes_protected_areas-spacing: 40px;
+$icons-checkboxes_forest-spacing: 40px;
 
 @import "icons/*.png"; /**/
 
