@@ -263,6 +263,12 @@
     background:url(backgrounds/bkg_legend.png) repeat-y right 0;
 
     ul {
+      border-bottom: 1px solid $cSeparator;
+      padding: 0 0 10px 0;
+      margin: 0 0 10px 0;
+
+      &:last-child { border:none; margin: 0; padding: 0; }
+
       li {
 
         a { text-decoration:none; color: $cGray3; }
@@ -276,8 +282,6 @@
 
         color: $cGray3;
         font-size:12px;
-
-        &:last-child { margin-bottom: 0; }
       }
     }
   } // content

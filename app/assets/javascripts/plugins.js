@@ -315,6 +315,9 @@ var Filter = (function() {
 
 }());
 
+/* Legend
+ * Shows a list of the selected layers
+ */
 var Legend = (function() {
 
   var
@@ -344,13 +347,17 @@ var Legend = (function() {
 
     if ( $("#legend-template").length > 0 ) {
 
-      template    = _.template($("#legend-template").html());
-      $legend = $(template({ layers: "" }));
+      template = _.template($("#legend-template").html());
+      $legend  = $(template({ layers: "" }));
 
       var position = $.jStorage.get("legend");
 
       if (position) {
-        $legend.css({ top: position[0], left: position[1], opacity:0 });
+        var
+        top  = position[0],
+        left = position[1];
+
+        $legend.css({ top: top, left: left, opacity:0 });
       }
 
       $("#content").append($legend);
@@ -368,7 +375,7 @@ var Legend = (function() {
     }
 
     var
-    id = name.replace(/ /g, "_").toLowerCase(),
+    id  = name.replace(/ /g, "_").toLowerCase(),
     cat = category.replace(/ /g, "_").toLowerCase();
 
     template = _.template($("#legend-item-template").html());
@@ -376,8 +383,20 @@ var Legend = (function() {
 
     $item.hide();
 
-    $(".legend").find("ul").append($item);
-    $item.fadeIn(250);
+    console.log($(".legend").find("ul." + cat));
+
+    if ( $(".legend").find("ul." + cat).length > 0 ) {
+      var $ul = $(".legend").find("ul." + cat);
+      $ul.append($item);
+      $item.fadeIn(250);
+      $ul.fadeIn(250);
+    } else {
+      var $ul = $("<ul class='"+cat+"' />");
+      $ul.append($item);
+      $(".legend").find(".content").append($ul);
+      $ul.fadeIn(250);
+      $item.fadeIn(250);
+    }
 
     if ( $(".legend").find("li").length >= 1 && showMap === true) {
       Legend.show();
