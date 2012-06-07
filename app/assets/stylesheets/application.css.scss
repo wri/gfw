@@ -262,7 +262,6 @@ body.countries {
 
   h4 {
     height: 30px;
-    margin: 0 0 15px 0;
 
     @extend .sans-serif;
     font-size:13px;
@@ -324,6 +323,7 @@ body.countries {
     }
 
     h4 {
+      margin: 0 0 15px 0;
       font-size:12px;
     }
   }
