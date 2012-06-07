@@ -379,9 +379,9 @@ GFW.modules.maplayer = function(gfw) {
         }
 
       } else {
-        if ( this._inView() ){
+        //if ( this._inView() ){
           this._map.overlayMapTypes.setAt(this._tileindex, null);
-        }
+        //}
       }
     }
   });
