@@ -155,6 +155,7 @@ GFW.modules.app = function(gfw) {
       }
     },
     _updateHash: function() {
+
       var
       zoom = this.getZoom(),
       lat  = this.getCenter().lat().toFixed(this._precision),
@@ -234,7 +235,7 @@ GFW.modules.maplayer = function(gfw) {
         this.layer.attributes['visible'] = false;
       }
 
-      this._addControll();
+      this._addControl();
       this._handleLayer();
     },
 
@@ -309,14 +310,22 @@ GFW.modules.maplayer = function(gfw) {
         gfw.log.info(this.layer.get('title')+ " removed at "+this._tileindex);
       }
     },
-    _addControll: function(){
+    _addControl: function(){
       var that = this;
 
       var clickEvent = function() {
+
         that._toggleLayer();
         that._maptype.setOpacity(100);
 
-        Infowindow.toggleItem(that.layer.attributes['title'], that.layer.attributes['category_name'], that.layer.attributes['visible']);
+        var
+        title      = that.layer.get('title'),
+        category   = that.layer.get('category_name'),
+        visibility = that.layer.get('visible');
+
+        if (category != 'Deforestation') {
+          Infowindow.toggleItem(title, category, visibility);
+        }
 
       };
 
@@ -339,28 +348,40 @@ GFW.modules.maplayer = function(gfw) {
 
       this.layer.attributes['visible'] = !this.layer.attributes['visible'];
 
-      var c = this.layer.attributes['title'].replace(/ /g, "_").toLowerCase();
+      var
+      id      = this.layer.attributes['title'].replace(/ /g, "_").toLowerCase(),
+      visible = this.layer.get('visible');
 
-      $.jStorage.set(c, this.layer.attributes['visible']);
+      $.jStorage.set(id, visible);
 
-      if (this.layer.get('visible') == false) {
-        gfw.log.info('LAYER OFF: '+ c);
-        this._map.overlayMapTypes.setAt(this._tileindex, null);
+      //gfw.log.info('LAYER ' + visible + ' : ' + id);
 
-        if (c === 'forma') {
+      var forma  = GFW.app.datalayers.LayersObj.get(1);
+      var hansen = GFW.app.datalayers.LayersObj.get(565);
+
+      if (visible) {
+
+        if (id === 'forma' && showMap) {
+          Timeline.show();
+        } else {
           Timeline.hide();
         }
+
+        this._displayed = true;
+        this._map.overlayMapTypes.setAt(this._tileindex, this._maptype);
+
+        if (this._tileindex == 1) {
+          this._map.overlayMapTypes.setAt(2, null);
+          hansen.attributes['visible'] = false;
+        } else if (this._tileindex == 2) {
+          this._map.overlayMapTypes.setAt(1, null);
+          forma.attributes['visible'] = false;
+        }
+
       } else {
-        gfw.log.info('LAYER ON: '+ c);
-
-        if (c === 'forma' && showMap) {
-          Timeline.show();
-        }
-
-        if (this._inView()){
-          this._displayed = true;
-          this._map.overlayMapTypes.setAt(this._tileindex, this._maptype);
-        }
+        //if ( this._inView() ){
+          this._map.overlayMapTypes.setAt(this._tileindex, null);
+        //}
       }
     }
   });
@@ -406,18 +427,6 @@ GFW.modules.maplayer = function(gfw) {
   );
 };
 
-/*GFW.modules.controllers = function(gfw) {
-  gfw.controllers = {};
-  gfw.controllers.Engine = Class.extend({
-init: function(CartoDB, layerTable, map) {
-this._map = map;
-console.log('init controllers');
-
-},
-_add:
-});
-};*/
-
 GFW.modules.datalayers = function(gfw) {
   gfw.datalayers = {};
 
@@ -433,7 +442,10 @@ GFW.modules.datalayers = function(gfw) {
 
       var LayersColl    = this._cartodb.CartoDBCollection.extend({
         sql: function(){
-          return "SELECT title, category_name, zmin, zmax, ST_XMAX(the_geom) as xmax,ST_XMIN(the_geom) as xmin,ST_YMAX(the_geom) as ymax,ST_YMIN(the_geom) as ymin, tileurl, true as visible FROM " + layerTable + " WHERE display = True ORDER BY displaylayer ASC";
+          return "SELECT cartodb_id AS id, title, category_name, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
+          ST_XMIN(the_geom) AS xmin, ST_YMAX(the_geom) AS ymax, ST_YMIN(the_geom) AS ymin, tileurl, true AS visible \
+          FROM " + layerTable + " \
+          WHERE display = TRUE ORDER BY displaylayer ASC";
         }
       });
 
