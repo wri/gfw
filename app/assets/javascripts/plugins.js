@@ -292,11 +292,10 @@ var Filter = (function() {
     $layer.find(".links").append($layerItem);
     $layerItem.find(".checkbox").addClass(cat);
 
-
     // We select the FORMA layer by default
     if ( name == "FORMA") {
       $layerItem.find(".radio").addClass('checked');
-      Infowindow.add(name, category);
+      //Infowindow.add(name, category);
     }
 
     /*if ($.jStorage.get(id) == true) {
@@ -410,8 +409,10 @@ var Infowindow = (function() {
   }
 
   function _show(e) {
-    $(".infowindow").show();
-    $(".infowindow").animate({ opacity: 1 }, 250, "easeInExpo");
+    if ( $(".infowindow").find("li").length >= 1 && showMap === true) {
+      $(".infowindow").show();
+      $(".infowindow").animate({ opacity: 1 }, 250, "easeInExpo");
+    }
   }
 
   function _hide(e, callback) {

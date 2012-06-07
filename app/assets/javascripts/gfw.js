@@ -314,10 +314,18 @@ GFW.modules.maplayer = function(gfw) {
       var that = this;
 
       var clickEvent = function() {
+
         that._toggleLayer();
         that._maptype.setOpacity(100);
 
-        Infowindow.toggleItem(that.layer.attributes['title'], that.layer.attributes['category_name'], that.layer.attributes['visible']);
+        var
+        title      = that.layer.get('title'),
+        category   = that.layer.get('category_name'),
+        visibility = that.layer.get('visible');
+
+        if (category != 'Deforestation') {
+          Infowindow.toggleItem(title, category, visibility);
+        }
 
       };
 
