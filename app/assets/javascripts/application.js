@@ -14,10 +14,22 @@
 
 // Map needs to be a global var or
 // CapybaraHelpers#draw_polygon won't work
-var map = null;
-var previousState = null;
+
+var
+map           = null,
+previousState = null;
 
 function initialize() {
+
+  var
+  State = History.getState(),
+  hash  = parseHash(State.hash);
+
+  if (hash) {
+    config.mapOptions.center = hash.center;
+    config.mapOptions.zoom   = hash.zoom;
+  }
+
   // initialise the google map
   map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 

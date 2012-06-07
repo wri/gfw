@@ -138,12 +138,22 @@ GFW.modules.app = function(gfw) {
 
       //setup zoom listener
       google.maps.event.addListener(this._map, 'zoom_changed', function() {
-        var hash = "/map/" + this.getZoom() + "/" + this.getCenter().lat().toFixed(that._precision) + "/" + this.getCenter().lng().toFixed(that._precision);
+        var
+        zoom = this.getZoom(),
+        lat  = this.getCenter().lat().toFixed(that._precision),
+        lng  = this.getCenter().lng().toFixed(that._precision);
+
+        var hash = "/map/" + zoom + "/" + lat + "/" + lng;
         History.pushState({ state: 3 }, "Map", hash);
       });
 
       google.maps.event.addListener(this._map, 'dragend', function() {
-        var hash = "/map/" + this.getZoom() + "/" + this.getCenter().lat().toFixed(that._precision) + "/" + this.getCenter().lng().toFixed(that._precision);
+        var
+        zoom = this.getZoom(),
+        lat  = this.getCenter().lat().toFixed(that._precision),
+        lng  = this.getCenter().lng().toFixed(that._precision);
+
+        var hash = "/map/" + zoom + "/" + lat + "/" + lng;
         History.pushState({ state: 3 }, "Map", hash);
       });
 
@@ -167,11 +177,11 @@ GFW.modules.app = function(gfw) {
 
       var args = hash.split("/");
 
-      if (args.length === 3) {
+      if (args.length >= 3) {
 
-        var zoom = parseInt(args[0], 10),
-        lat = parseFloat(args[1]),
-        lon = parseFloat(args[2]);
+        var zoom = parseInt(args[2], 10),
+        lat = parseFloat(args[3]),
+        lon = parseFloat(args[4]);
 
         if (isNaN(zoom) || isNaN(lat) || isNaN(lon)) {
           return false;
@@ -187,19 +197,23 @@ GFW.modules.app = function(gfw) {
     },
     update: function() {
       var hash = location.hash;
+
       if (hash === this.lastHash) {
         // console.info("(no change)");
         return;
       }
-      var sansHash = hash.substr(1),
-      parsed = this.parseHash(sansHash);
+
+      var
+      State  = History.getState(),
+      parsed = this.parseHash(State.hash);
+
       if (parsed) {
         this._map.setZoom(parsed.zoom);
         this._map.setCenter(parsed.center);
       }
+
     }
-  }
-                                 );
+  });
 };
 
 GFW.modules.maplayer = function(gfw) {

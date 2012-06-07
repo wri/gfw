@@ -40,7 +40,6 @@ config.mapOptions = {
   scrollwheel:        false
 };
 
-
 config.mapStyles = {};
 
 config.mapStyles.forestHeight = new google.maps.ImageMapType({
@@ -101,4 +100,28 @@ var Soft = function(){
     map.setOptions({styles: map_style.google_maps_customization_style});
   };
 };
+
+
+function parseHash(hash) {
+
+  var args = hash.split("/");
+
+  if (args.length >= 3) {
+
+    var zoom = parseInt(args[2], 10),
+    lat = parseFloat(args[3]),
+    lon = parseFloat(args[4]);
+
+    if (isNaN(zoom) || isNaN(lat) || isNaN(lon)) {
+      return false;
+    } else {
+      return {
+        center: new google.maps.LatLng(lat, lon),
+        zoom: zoom
+      };
+    }
+  } else {
+    return false;
+  }
+}
 
