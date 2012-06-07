@@ -140,6 +140,8 @@ GFW.modules.app = function(gfw) {
       google.maps.event.addListener(this._map, 'zoom_changed', this._updateHash);
       google.maps.event.addListener(this._map, 'dragend', this._updateHash);
       google.maps.event.addListenerOnce(this._map, 'tilesloaded', this._mapLoaded);
+      google.maps.event.addListener(map, 'click', function(event) { console.log(event.latLng); });
+
     },
     _mapLoaded: function(){
       config.mapLoaded = true;
