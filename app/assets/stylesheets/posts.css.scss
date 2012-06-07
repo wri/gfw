@@ -129,7 +129,7 @@ body.sources {
 
         @extend .sans-serif;
         font-size:17px;
-        font-weight:200;
+        font-weight:300;
         line-height:22px;
       }
 
@@ -141,7 +141,7 @@ body.sources {
           @extend .sans-serif;
           font-size:13px;
 
-          font-weight:200;
+          font-weight:300;
           color: $cGray3;
 
           padding-right: 7px;
@@ -156,7 +156,7 @@ body.sources {
           &.comments a {
             @extend .sans-serif;
             font-size:13px;
-            font-weight:200;
+            font-weight:300;
             color: $cGray3;
           }
         }
