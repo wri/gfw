@@ -136,44 +136,34 @@ GFW.modules.app = function(gfw) {
 
       Infowindow.init();
 
-      //setup zoom listener
-      google.maps.event.addListener(this._map, 'zoom_changed', function() {
-        var
-        zoom = this.getZoom(),
-        lat  = this.getCenter().lat().toFixed(that._precision),
-        lng  = this.getCenter().lng().toFixed(that._precision);
-
-        var hash = "/map/" + zoom + "/" + lat + "/" + lng;
-        History.pushState({ state: 3 }, "Map", hash);
-      });
-
-      google.maps.event.addListener(this._map, 'dragend', function() {
-        var
-        zoom = this.getZoom(),
-        lat  = this.getCenter().lat().toFixed(that._precision),
-        lng  = this.getCenter().lng().toFixed(that._precision);
-
-        var hash = "/map/" + zoom + "/" + lat + "/" + lng;
-        History.pushState({ state: 3 }, "Map", hash);
-      });
-
-      google.maps.event.addListenerOnce(this._map, 'tilesloaded', function(){
-        config.mapLoaded = true;
-
-        Circle.init();
-        Timeline.init();
-        Filter.init();
-
-        if (showMap) {
-          Navigation.showState("map");
-        } else {
-          Navigation.showState("home");
-        }
-
-      });
-
+      // Setup listeners
+      google.maps.event.addListener(this._map, 'zoom_changed', this._updateHash);
+      google.maps.event.addListener(this._map, 'dragend', this._updateHash);
+      google.maps.event.addListenerOnce(this._map, 'tilesloaded', this._mapLoaded);
     },
-    parseHash: function(hash) {
+    _mapLoaded: function(){
+      config.mapLoaded = true;
+
+      Circle.init();
+      Timeline.init();
+      Filter.init();
+
+      if (showMap) {
+        Navigation.showState("map");
+      } else {
+        Navigation.showState("home");
+      }
+    },
+    _updateHash: function() {
+      var
+      zoom = this.getZoom(),
+      lat  = this.getCenter().lat().toFixed(this._precision),
+      lng  = this.getCenter().lng().toFixed(this._precision);
+
+      var hash = "/map/" + zoom + "/" + lat + "/" + lng;
+      History.pushState({ state: 3 }, "Map", hash);
+    },
+    _parseHash: function(hash) {
 
       var args = hash.split("/");
 
@@ -205,7 +195,7 @@ GFW.modules.app = function(gfw) {
 
       var
       State  = History.getState(),
-      parsed = this.parseHash(State.hash);
+      parsed = this._parseHash(State.hash);
 
       if (parsed) {
         this._map.setZoom(parsed.zoom);

@@ -269,8 +269,8 @@ var Filter = (function() {
     //   layerItemTemplate = _.template($("#layer-item-radio-template").html());
     //   $layerItem = $(layerItemTemplate({ name: name, category: cat }));
     // } else {
-      layerItemTemplate = _.template($("#layer-item-checkbox-template").html());
-      $layerItem = $(layerItemTemplate({ name: name, category: cat }));
+    layerItemTemplate = _.template($("#layer-item-checkbox-template").html());
+    $layerItem = $(layerItemTemplate({ name: name, category: cat }));
     //}
 
     $layer.find(".links").append($layerItem);
@@ -280,6 +280,12 @@ var Filter = (function() {
     $layerItem.on("click", function() {
       clickEvent();
       zoomEvent();
+      /*var State = History.getState();
+      var args = State.hash.split("/");
+      var h = "/" + args[1] + "/" + parseInt(args[2], 10) + "/" + parseFloat(args[3]) + "/" + parseFloat(args[4]);
+      h += "/1,2,3,4";
+
+      History.pushState({ state: 4 }, "Map", h );*/
     });
 
     // We select the FORMA layer by default
