@@ -5,7 +5,7 @@ shared_examples 'common header' do
 
     within 'header' do
       #page.should have_css 'a.logo'
-      page.should have_link 'Other WRI sites'
+      page.should have_link 'Other WRI sites', :href => "http://wri.org"
       page.should have_link 'Share this'
     end
 
