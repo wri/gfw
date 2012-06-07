@@ -379,7 +379,7 @@ var Legend = (function() {
     cat = category.replace(/ /g, "_").toLowerCase();
 
     template = _.template($("#legend-item-template").html());
-    $item    = $(template({ category: cat, id: id, name: name.truncate(12) }));
+    $item    = $(template({ category: cat, id: id, name: name.truncate(32) }));
 
     $item.hide();
 
