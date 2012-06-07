@@ -3,9 +3,9 @@
 //= require jquery.easing.1.3
 //= require jquery-ui-1.8.20.custom.min
 //= require wax.g.min-6.0.4
+//= require cartodb-gmapsv3-min
 //= require jstorage.min
 //= require jquery.history
-//= require cartodb-gmapsv3-min
 //= require lodash.min
 //= require backbone-min
 //= require class
@@ -33,62 +33,38 @@ function initialize() {
   // initialise the google map
   map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 
-  var style = "#gfw2_layerstyles{ polygon-fill:#FF6600; polygon-opacity: 0.5; line-opacity:0.1; line-color: #FFFFFF; [name='timber_conc_indonesia']{ polygon-fill:#aa7722; } [name='cog_lc_1']{ polygon-fill:#0ff000; } [name='idn_lc_1']{ polygon-fill:#fff; } [name='gab_lc_1']{ polygon-fill:#fff0ff; } [name='gab_lc_2']{ polygon-fill:#ffff0f; } [name='cmr_lc_1']{ polygon-fill:#7711aa; } [name='idn_oc_1']{ polygon-fill:#fa0f99; } [name='idn_tc_1']{ polygon-fill:#000; } [name='cod_mc_1']{ polygon-fill:red; } [name='cod_lc_2']{ polygon-fill:#ffff00; } [name='cod_lc_1']{ polygon-fill:#fff0f0; } [name='caf_lc_1']{ polygon-fill:#0000ff; } [name='cmr_tc_1']{ polygon-fill:#0000ff; } }";
+    var style = "#gfw2_layerstyles{ polygon-fill:#FF6600; polygon-opacity: 0.5; line-opacity:0.1; line-color: #FFFFFF; [name='timber_conc_indonesia']{ polygon-fill:#aa7722; } [name='cog_lc_1']{ polygon-fill:#0ff000; } [name='idn_lc_1']{ polygon-fill:#fff; } [name='gab_lc_1']{ polygon-fill:#fff0ff; } [name='gab_lc_2']{ polygon-fill:#ffff0f; } [name='cmr_lc_1']{ polygon-fill:#7711aa; } [name='idn_oc_1']{ polygon-fill:#fa0f99; } [name='idn_tc_1']{ polygon-fill:#000; } [name='cod_mc_1']{ polygon-fill:red; } [name='cod_lc_2']{ polygon-fill:#ffff00; } [name='cod_lc_1']{ polygon-fill:#fff0f0; } [name='caf_lc_1']{ polygon-fill:#0000ff; } [name='cmr_tc_1']{ polygon-fill:#0000ff; } }";
 
-
-  var cartodb_gmapsv3 = new CartoDBLayer({
-    map: map,
-    user_name:'wri-01',
-    table_name: 'gfw2_layerstyles',
-    query: "SELECT cartodb_id, the_geom_webmercator, 'cod_mc_1' as name FROM gfw2_layerstyles UNION ALL SELECT cartodb_id, the_geom_webmercator, 'caf_lc_1' as name FROM gfw2_layerstyles",
-    layer_order: 10,
-    tile_style: style,
-    opacity:0,
-    interactivity: "cartodb_id, name",
-    featureMouseClick: function(ev, latlng, data) { console.log(data); },
-    featureMouseOut: function(ev) {  },
-    featureMouseOver: function(ev, latlng, data) { console.log(data); },
-    debug:true,
-    auto_bound: false
-  });
-
-  var baseHansen = new CartoDBLayer({
-    map: map,
-    user_name:'wri-01',
-    table_name: 'hansen_data',
-    query: "SELECT * FROM hansen_data WHERE z=CASE WHEN 8<4 THEN 16 ELSE 4+8 END",
-    layer_order: "bottom",
-    auto_bound: false
-  });
-
-  var baseFORMA = new CartoDBLayer({
-    map: map,
-    user_name:'wri-01',
-    table_name: 'forma_zoom_polys',
-    query: "SELECT the_geom_webmercator,alerts,z FROM forma_zoom_polys WHERE z=CASE WHEN 8<3 THEN 16 ELSE 3+8 END",
-    layer_order: "bottom",
-    auto_bound: false
-  });
-
+    /*var cartodb_gmapsv3 = new CartoDBLayer({
+      map: map,
+      user_name:'wri-01',
+      table_name: 'gfw2_layerstyles',
+      query: "SELECT cartodb_id, the_geom_webmercator, 'cod_mc_1' as name FROM gfw2_layerstyles UNION ALL SELECT cartodb_id, the_geom_webmercator, 'caf_lc_1' as name FROM gfw2_layerstyles",
+      layer_order: 10,
+      tile_style: style,
+      interactivity: "cartodb_id, name",
+      featureMouseClick: function(ev, latlng, data) { console.log(data); },
+      featureMouseOut: function(ev) {  },
+      featureMouseOver: function(ev, latlng, data) { console.log(data); },
+      debug:true,
+      auto_bound: false
+    });
+*/
   var map_style = {};
 
-  // Custom styles
-  /*map.mapTypes.set('forests', config.mapStyles.forestHeight);
-  map.mapTypes.set('forests_soft', config.mapStyles.forestSoft);*/
+  GFW(function(env) {
 
-  // Default styles
-  /*map_style.google_maps_customization_style = config.mapStyles;
-  map.setOptions({ styles: map_style.google_maps_customization_style });*/
-
-  /*GFW(function(env) {
     GFW.app = new env.app.Instance(map, {
       user       : 'wri-01',
       layerTable : 'layerinfo',
       logging    : true
     });
+
     GFW.app.run();
     GFW.env = env;
-  });*/
+
+  });
+
 }
 
 (function(window,undefined){
@@ -125,13 +101,13 @@ function initialize() {
     if (e.keyCode == 27) {
 
     $(".backdrop").fadeOut(250, function() {
-      $(this).remove();
+    $(this).remove();
     });
 
     $("#countries").fadeOut(250);
 
     }   // esc
-  });*/
+    });*/
 
   $("nav .home.ajax").on("click", function(e) {
     e.preventDefault();
@@ -172,7 +148,7 @@ $(function(){
   resizePID;
 
   //$(document).on("click", function(e) {
-    //Filter.closeOpenFilter();
+  //Filter.closeOpenFilter();
   //});
 
   $(document).on("click", ".radio", function(e) {

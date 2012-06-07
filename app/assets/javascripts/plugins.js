@@ -456,7 +456,7 @@ var Legend = (function() {
     $li.remove();
     $ul.attr("data-count", c - 1);
 
-    console.log($(".legend").find("ul#" + id + " li").length);
+    //console.log($(".legend").find("ul#" + id + " li").length);
 
   }
 
@@ -529,6 +529,8 @@ var Circle = (function() {
     if (!delay) {
       delay = 0;
     }
+    var $circle = $(".circle");
+    $circle.show();
 
     $circle.delay(delay).animate({ top:'50%', marginTop:-1*($circle.height() / 2), opacity: 1 }, 250, function() {
       $title.animate({ opacity: 0.75 }, 150, "easeInExpo");
@@ -542,6 +544,7 @@ var Circle = (function() {
   function _onMouseEnter() {
     if (animating) return;
 
+    var $circle = $(".circle");
     $circle.find(".title, .counter").stop().animate({ opacity: 0 }, 100, "easeInExpo", function() {
       $circle.find(".explore, .background").stop().animate({ opacity: 1 }, 100, "easeOutExpo");
       $circle.addClass("selected");
@@ -566,7 +569,9 @@ var Circle = (function() {
     animating = true;
 
     var _afterHide = function() {
-      $circle.animate({ marginTop:0, opacity: 0 }, 250);
+      $circle.animate({ marginTop:0, opacity: 0 }, 250, function() {
+        $(this).hide();
+      });
     };
 
     if ($circle) {

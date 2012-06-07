@@ -1,3 +1,4 @@
+
 function GFW() {
   var args = Array.prototype.slice.call(arguments),
   callback = args.pop(),
@@ -46,23 +47,62 @@ GFW.modules.app = function(gfw) {
 
       this._map = map;
 
+      this._map.overlayMapTypes.push(null);
+
       this.lastHash = null;
 
       this._cartodb = Backbone.CartoDB({user: this.options.user});
 
-      this._loadBaseLayers();
-
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
 
+      var overlayID =  document.getElementById("zoom_controls");
 
+      this._loadBaseLayers();
 
-      this._setupZoom();
+      // zoomIn
+      var zoomInControlDiv = document.createElement('DIV');
+      overlayID.appendChild(zoomInControlDiv);
+
+      var zoomInControl = new this._zoomIn(zoomInControlDiv, map);
+      zoomInControlDiv.index = 1;
+
+      // zoomOut
+      var zoomOutControlDiv = document.createElement('DIV');
+      overlayID.appendChild(zoomOutControlDiv);
+
+      var zoomOutControl = new this._zoomOut(zoomOutControlDiv, map);
+      zoomOutControlDiv.index = 2;
 
     },
     run: function() {
       this._setupListeners();
       this.update();
       gfw.log.info('App is now running!');
+    },
+
+    _loadBaseLayers: function() {
+      var baseHansen = new CartoDBLayer({
+        map: map,
+        user_name:'wri-01',
+        table_name: 'hansen_data',
+        query: "SELECT * FROM hansen_data WHERE z=CASE WHEN 8<4 THEN 16 ELSE 4+8 END",
+        layer_order: "bottom",
+        opacity:0,
+        interactive:false,
+        auto_bound: false
+      });
+
+      var baseFORMA = new CartoDBLayer({
+        map: map,
+        user_name:'wri-01',
+        table_name: 'forma_zoom_polys',
+        query: "SELECT * FROM forma_zoom_polys WHERE z=CASE WHEN 8<3 THEN 16 ELSE 3+8 END",
+        layer_order: "bottom",
+        interactive:false,
+        auto_bound: false
+      });
+
+
     },
 
     open: function() {
@@ -97,23 +137,6 @@ GFW.modules.app = function(gfw) {
 
     },
 
-    _setupZoom:function() {
-      var overlayID =  document.getElementById("zoom_controls");
-      // zoomIn
-      var zoomInControlDiv = document.createElement('DIV');
-      overlayID.appendChild(zoomInControlDiv);
-
-      var zoomInControl = new this._zoomIn(zoomInControlDiv, map);
-      zoomInControlDiv.index = 1;
-
-      // zoomOut
-      var zoomOutControlDiv = document.createElement('DIV');
-      overlayID.appendChild(zoomOutControlDiv);
-
-      var zoomOutControl = new this._zoomOut(zoomOutControlDiv, map);
-      zoomOutControlDiv.index = 2;
-    },
-
     _zoomIn: function(controlDiv, map) {
       controlDiv.setAttribute('class', 'zoom_in');
 
@@ -136,6 +159,13 @@ GFW.modules.app = function(gfw) {
       });
     },
 
+    _showHansen: function() {
+
+    },
+    _showForma: function() {
+
+    },
+
     _setupListeners: function(){
       var that = this;
 
@@ -145,30 +175,7 @@ GFW.modules.app = function(gfw) {
       google.maps.event.addListener(this._map, 'zoom_changed', this._updateHash);
       google.maps.event.addListener(this._map, 'dragend', this._updateHash);
       google.maps.event.addListenerOnce(this._map, 'tilesloaded', this._mapLoaded);
-
-    },
-    _loadBaseLayers: function() {
-
-       this.baseHansen = new CartoDBLayer({
-        map: map,
-        user_name:'wri-01',
-        table_name: 'hansen_data',
-        query: "SELECT * FROM hansen_data WHERE z=CASE WHEN 8<4 THEN 16 ELSE 4+8 END",
-        layer_order: "bottom",
-        opacity:0,
-        interactive:false,
-        auto_bound: false
-      });
-
-      this.baseFORMA = new CartoDBLayer({
-        map: map,
-        user_name:'wri-01',
-        table_name: 'forma_zoom_polys',
-        query: "SELECT * FROM forma_zoom_polys WHERE z=CASE WHEN 8<3 THEN 16 ELSE 3+8 END",
-        layer_order: "bottom",
-        interactive:false,
-        auto_bound: false
-      });
+      google.maps.event.addListener(map, 'click', function(event) { console.log(event.latLng); });
 
     },
     _mapLoaded: function(){
@@ -241,14 +248,22 @@ GFW.modules.maplayer = function(gfw) {
     init: function(layer, map) {
       this.layer = layer;
       this._map = map;
-
+      this._bindDisplay(new gfw.maplayer.Display());
+      this._options = this._display.getOptions(this.layer.get('tileurl'), this.layer.get('ispng'));
+      // this._boundingbox = this.layer.get('the_geom');
       var sw = new google.maps.LatLng(this.layer.get('ymin'), this.layer.get('xmin'));
       var ne = new google.maps.LatLng(this.layer.get('ymax'),this.layer.get('xmax'));
       this._bounds = new google.maps.LatLngBounds(sw, ne);
 
-      this._displayed = false;
+      gfw.log.info(this._options.getTileUrl({x: 3, y: 4},3));
 
+      this._displayed = false;
+      this._maptype = new google.maps.ImageMapType(this._options);
+
+      this._tileindex = this._map.overlayMapTypes.length;
+      this._map.overlayMapTypes.setAt(this._tileindex, null);
       this._setupListeners();
+
 
       if (this.layer.get('title') != 'FORMA'){
         this.layer.attributes['visible'] = false;
@@ -292,11 +307,9 @@ GFW.modules.maplayer = function(gfw) {
       return this._inZoomVal;
     },
     _inBounds: function(reset){
-
       if (this._inBoundsVal == null) {
         this._inBoundsVal = true;
       }
-
       if (reset){
         var bounds = this._map.getBounds();
         if (bounds) {
@@ -323,8 +336,12 @@ GFW.modules.maplayer = function(gfw) {
 
       if (this.layer.get('visible') && !this._displayed && this._inView()){
         this._displayed = true;
+        this._map.overlayMapTypes.setAt(this._tileindex, this._maptype);
+        gfw.log.info(this.layer.get('title')+ " added at "+this._tileindex);
       } else if (this._displayed && !this._inView()){
         this._displayed = false;
+        this._map.overlayMapTypes.setAt(this._tileindex, null);
+        gfw.log.info(this.layer.get('title')+ " removed at "+this._tileindex);
       }
     },
     _addControl: function(){
@@ -332,12 +349,17 @@ GFW.modules.maplayer = function(gfw) {
 
       var clickEvent = function() {
 
+        that._toggleLayer();
+        that._maptype.setOpacity(100);
+
         var
         title      = that.layer.get('title'),
         category   = that.layer.get('category_name'),
         visibility = that.layer.get('visible');
 
-        that._toggleLayer();
+        if (category != 'Deforestation') {
+          Legend.toggleItem(title, category, visibility);
+        }
 
       };
 
@@ -364,7 +386,11 @@ GFW.modules.maplayer = function(gfw) {
       id      = this.layer.attributes['title'].replace(/ /g, "_").toLowerCase(),
       visible = this.layer.get('visible');
 
-      console.log(id, visible);
+      $.jStorage.set(id, visible);
+
+      var // special layerse
+      forma  = GFW.app.datalayers.LayersObj.get(1),
+      hansen = GFW.app.datalayers.LayersObj.get(565);
 
       if (id === 'forma' && showMap && visible ) {
         Timeline.show();
@@ -372,30 +398,23 @@ GFW.modules.maplayer = function(gfw) {
         Timeline.hide();
       }
 
-      var // special layerse
-      forma  = GFW.app.datalayers.LayersObj.get(1),
-      hansen = GFW.app.datalayers.LayersObj.get(565);
-
       if (visible) {
 
         this._displayed = true;
+        this._map.overlayMapTypes.setAt(this._tileindex, this._maptype);
 
-        if (id === 'forma') {
-
-          GFW.app.baseFORMA.setOpacity(1);
-          GFW.app.baseHansen.setOpacity(0);
+        // FORMA = 1 / Hansen = 2
+        if (this._tileindex == 1) {
+          this._map.overlayMapTypes.setAt(2, null);
           hansen.attributes['visible'] = false;
-
-        } else if (id === 'hansen') {
-
-          GFW.app.baseFORMA.setOpacity(0);
-          GFW.app.baseHansen.setOpacity(1);
+        } else if (this._tileindex == 2) {
+          this._map.overlayMapTypes.setAt(1, null);
           forma.attributes['visible'] = false;
         }
 
       } else {
         //if ( this._inView() ){
-          //this._map.overlayMapTypes.setAt(this._tileindex, null);
+          this._map.overlayMapTypes.setAt(this._tileindex, null);
         //}
       }
     }
@@ -479,14 +498,14 @@ GFW.modules.datalayers = function(gfw) {
 
     },
     _addLayer: function(p){
-      //gfw.log.warn('only showing baselayers for now');
+      gfw.log.warn('only showing baselayers for now');
 
       //if (p.get('category') == 'baselayer') {
       var layer = new gfw.maplayer.Engine(p, this._map);
 
-      //this._dataarray.push(layer);
-      //this._bycartodbid[p.get('cartodb_id')] = layer;
-      //this._bytitle[p.get('title')] = layer;
+      this._dataarray.push(layer);
+      this._bycartodbid[p.get('cartodb_id')] = layer;
+      this._bytitle[p.get('title')] = layer;
       //}
     }
   });
