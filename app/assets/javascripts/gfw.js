@@ -134,7 +134,7 @@ GFW.modules.app = function(gfw) {
     _setupListeners: function(){
       var that = this;
 
-      Infowindow.init();
+      Legend.init();
 
       // Setup listeners
       google.maps.event.addListener(this._map, 'zoom_changed', this._updateHash);
@@ -324,7 +324,7 @@ GFW.modules.maplayer = function(gfw) {
         visibility = that.layer.get('visible');
 
         if (category != 'Deforestation') {
-          Infowindow.toggleItem(title, category, visibility);
+          Legend.toggleItem(title, category, visibility);
         }
 
       };

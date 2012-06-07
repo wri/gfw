@@ -27,7 +27,7 @@ var Navigation = (function() {
   function _showHomeState() {
     showMap = false;
 
-    Infowindow.hide();
+    Legend.hide();
     Navigation.select("home");
 
     Filter.hide(function() {
@@ -48,7 +48,7 @@ var Navigation = (function() {
     Navigation.select("map");
 
     Circle.hide();
-    Infowindow.show();
+    Legend.show();
 
     //if ($.jStorage.get("forma") == true) {
     Timeline.show(); // TODO: don't show the timeline if FORMA is not selected
@@ -295,7 +295,7 @@ var Filter = (function() {
     // We select the FORMA layer by default
     if ( name == "FORMA") {
       $layerItem.find(".radio").addClass('checked');
-      //Infowindow.add(name, category);
+      //Legend.add(name, category);
     }
 
     /*if ($.jStorage.get(id) == true) {
@@ -315,45 +315,52 @@ var Filter = (function() {
 
 }());
 
-var Infowindow = (function() {
+/* Legend
+ * Shows a list of the selected layers
+ */
+var Legend = (function() {
 
   var
   template,
-  $infowindow;
+  $legend;
 
   function _init() {
 
     if (_build()) {
 
       // Makes it draggable
-      $infowindow.draggable({
+      $legend.draggable({
         containment: "#map-container .map",
         handle: ".header",
         stop: function() {
-          $.jStorage.set("infowindow", [$infowindow.offset().top, $infowindow.offset().left]);
+          $.jStorage.set("legend", [$legend.offset().top, $legend.offset().left]);
         }
       });
 
       // Adds close binding
-      $infowindow.find(".close").on("click", _hide);
+      $legend.find(".close").on("click", _hide);
     }
 
   }
 
   function _build() {
 
-    if ( $("#infowindow-template").length > 0 ) {
+    if ( $("#legend-template").length > 0 ) {
 
-      template    = _.template($("#infowindow-template").html());
-      $infowindow = $(template({ layers: "" }));
+      template = _.template($("#legend-template").html());
+      $legend  = $(template({ layers: "" }));
 
-      var position = $.jStorage.get("infowindow");
+      var position = $.jStorage.get("legend");
 
       if (position) {
-        $infowindow.css({ top: position[0], left: position[1], opacity:0 });
+        var
+        top  = position[0],
+        left = position[1];
+
+        $legend.css({ top: top, left: left, opacity:0 });
       }
 
-      $("#content").append($infowindow);
+      $("#content").append($legend);
 
       return true;
     }
@@ -368,19 +375,31 @@ var Infowindow = (function() {
     }
 
     var
-    id = name.replace(/ /g, "_").toLowerCase(),
+    id  = name.replace(/ /g, "_").toLowerCase(),
     cat = category.replace(/ /g, "_").toLowerCase();
 
-    template = _.template($("#infowindow-item-template").html());
-    $item    = $(template({ category: cat, id: id, name: name.truncate(12) }));
+    template = _.template($("#legend-item-template").html());
+    $item    = $(template({ category: cat, id: id, name: name.truncate(32) }));
 
     $item.hide();
 
-    $(".infowindow").find("ul").append($item);
-    $item.fadeIn(250);
+    console.log($(".legend").find("ul." + cat));
 
-    if ( $(".infowindow").find("li").length >= 1 && showMap === true) {
-      Infowindow.show();
+    if ( $(".legend").find("ul." + cat).length > 0 ) {
+      var $ul = $(".legend").find("ul." + cat);
+      $ul.append($item);
+      $item.fadeIn(250);
+      $ul.fadeIn(250);
+    } else {
+      var $ul = $("<ul class='"+cat+"' />");
+      $ul.append($item);
+      $(".legend").find(".content").append($ul);
+      $ul.fadeIn(250);
+      $item.fadeIn(250);
+    }
+
+    if ( $(".legend").find("li").length >= 1 && showMap === true) {
+      Legend.show();
     }
 
   }
@@ -389,11 +408,11 @@ var Infowindow = (function() {
 
     var id = name.replace(/ /g, "_").toLowerCase();
 
-    if ($(".infowindow").find("li").length == 1) {
-      _hide(null, function() { $(".infowindow").find("ul li#" + id).remove(); });
+    if ($(".legend").find("li").length == 1) {
+      _hide(null, function() { $(".legend").find("ul li#" + id).remove(); });
     } else {
 
-      $(".infowindow").find("ul li#" + id).fadeOut(250, function() {
+      $(".legend").find("ul li#" + id).fadeOut(250, function() {
         $item.remove();
       });
     }
@@ -409,15 +428,15 @@ var Infowindow = (function() {
   }
 
   function _show(e) {
-    if ( $(".infowindow").find("li").length >= 1 && showMap === true) {
-      $(".infowindow").show();
-      $(".infowindow").animate({ opacity: 1 }, 250, "easeInExpo");
+    if ( $(".legend").find("li").length >= 1 && showMap === true) {
+      $(".legend").show();
+      $(".legend").animate({ opacity: 1 }, 250, "easeInExpo");
     }
   }
 
   function _hide(e, callback) {
 
-    $(".infowindow").animate({ marginTop: 50, opacity: 0 }, 250, "easeOutExpo", function() {
+    $(".legend").animate({ marginTop: 50, opacity: 0 }, 250, "easeOutExpo", function() {
       $(this).hide();
 
       if (callback) {

@@ -3,21 +3,19 @@
     var summary = { count: "2,931", title: "Forest clearing alerts in the last 15 days" }
   </script>
 
-  <script id="infowindow-item-template" type="text/x-underscore-template">
+  <script id="legend-item-template" type="text/x-underscore-template">
     <li id="{{ id }}" class="{{ category }}"><a href="#">{{ name }}</a></li>
   </script>
 
-  <script id="infowindow-template" type="text/x-underscore-template">
-    <div class="infowindow">
+  <script id="legend-template" type="text/x-underscore-template">
+    <div class="legend">
       <div class="header">
         <strong>Legend</strong>
         <a href="#" class="handle"></a>
         <a href="#" class="close"></a>
       </div>
       <div class="content">
-        <ul>
-          {{ layers }}
-        </ul>
+        {{ layers }}
       </div>
 
       <div class="t"></div><div class="b"></div>
