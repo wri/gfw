@@ -148,11 +148,7 @@ GFW.modules.app = function(gfw) {
       Timeline.init();
       Filter.init();
 
-      if (showMap) {
-        Navigation.showState("map");
-      } else {
-        Navigation.showState("home");
-      }
+      showMap ? Navigation.showState("map") : Navigation.showState("home");
     },
     _updateHash: function() {
 
@@ -160,8 +156,8 @@ GFW.modules.app = function(gfw) {
       zoom = this.getZoom(),
       lat  = this.getCenter().lat().toFixed(this._precision),
       lng  = this.getCenter().lng().toFixed(this._precision);
+      hash = "/map/" + zoom + "/" + lat + "/" + lng;
 
-      var hash = "/map/" + zoom + "/" + lat + "/" + lng;
       History.pushState({ state: 3 }, "Map", hash);
     },
     _parseHash: function(hash) {
@@ -170,21 +166,22 @@ GFW.modules.app = function(gfw) {
 
       if (args.length >= 3) {
 
-        var zoom = parseInt(args[2], 10),
-        lat = parseFloat(args[3]),
-        lon = parseFloat(args[4]);
+        var
+        zoom = parseInt(args[2], 10),
+        lat  = parseFloat(args[3]),
+        lon  = parseFloat(args[4]);
 
         if (isNaN(zoom) || isNaN(lat) || isNaN(lon)) {
           return false;
-        } else {
-          return {
-            center: new google.maps.LatLng(lat, lon),
-            zoom: zoom
-          };
         }
-      } else {
-        return false;
+
+        return {
+          center: new google.maps.LatLng(lat, lon),
+          zoom: zoom
+        };
       }
+
+      return false;
     },
     update: function() {
       var hash = location.hash;
@@ -354,22 +351,22 @@ GFW.modules.maplayer = function(gfw) {
 
       $.jStorage.set(id, visible);
 
-      //gfw.log.info('LAYER ' + visible + ' : ' + id);
+      var // special layerse
+      forma  = GFW.app.datalayers.LayersObj.get(1),
+      hansen = GFW.app.datalayers.LayersObj.get(565);
 
-      var forma  = GFW.app.datalayers.LayersObj.get(1);
-      var hansen = GFW.app.datalayers.LayersObj.get(565);
+      if (id === 'forma' && showMap && visible ) {
+        Timeline.show();
+      } else if ( (id === 'forma' && showMap) || (id === 'hansen' && showMap && visible) ) {
+        Timeline.hide();
+      }
 
       if (visible) {
-
-        if (id === 'forma' && showMap) {
-          Timeline.show();
-        } else {
-          Timeline.hide();
-        }
 
         this._displayed = true;
         this._map.overlayMapTypes.setAt(this._tileindex, this._maptype);
 
+        // FORMA = 1 / Hansen = 2
         if (this._tileindex == 1) {
           this._map.overlayMapTypes.setAt(2, null);
           hansen.attributes['visible'] = false;

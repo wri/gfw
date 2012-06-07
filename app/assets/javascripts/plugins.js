@@ -390,8 +390,11 @@ var Legend = (function() {
       $ul.append($item);
       $item.fadeIn(250);
       $ul.fadeIn(250);
+      var count = $ul.attr("data-count");
+      $ul.attr("data-count", parseInt(count, 10) + 1);
     } else {
       var $ul = $("<ul class='"+cat+"' />");
+      $ul.attr("data-count", 1);
       $ul.append($item);
       $(".legend").find(".content").append($ul);
       $ul.fadeIn(250);
@@ -406,25 +409,58 @@ var Legend = (function() {
 
   function _remove(name) {
 
-    var id = name.replace(/ /g, "_").toLowerCase();
+    var
+    id      = name.replace(/ /g, "_").toLowerCase(),
+    liCount = $(".legend").find("li").length,
+    $li     = $(".legend").find("ul li#" + id),
+    $ul     = $li.parent(),
+    count   = parseInt($ul.attr('data-count'), 10);
 
-    if ($(".legend").find("li").length == 1) {
-      _hide(null, function() { $(".legend").find("ul li#" + id).remove(); });
-    } else {
+    if (liCount <= 1) {
 
-      $(".legend").find("ul li#" + id).fadeOut(250, function() {
-        $item.remove();
-      });
+      var hide = function() {
+        _hide(null, function() {
+          $(".legend").find("ul").remove();
+        });
+      };
     }
+
+    if (liCount > 1) {
+
+      if (count <= 1) {
+
+        var hide = function() {
+          $ul.fadeOut(50, function() {
+            $li.remove();
+            $ul.remove();
+          });
+        };
+
+      }
+
+      if (count > 1) {
+
+        var hide = function() {
+          $li.fadeOut(150, function() {
+            $ul.attr("data-count", count - 1);
+            $item.remove();
+          });
+        };
+
+      }
+    }
+
+    setTimeout(hide, 150);
   }
 
   function _toggleItem(name, category, add) {
-    console.log(name, add, "<-");
+
     if (add) {
       _add(name, category);
     } else {
       _remove(name);
     }
+
   }
 
   function _show(e) {
