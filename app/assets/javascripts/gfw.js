@@ -201,7 +201,7 @@ GFW.modules.app = function(gfw) {
 
     _loadBaseLayers: function() {
 
-      var hansenQuery = "SELECT * FROM hansen_data WHERE z=CASE WHEN 8< " + this._map.getZoom() + " THEN 16 ELSE " + this._map.getZoom() + " + 8 END";
+      var hansenQuery = "SELECT * FROM hansen_data WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
 
       this.baseHansen = new CartoDBLayer({
         map: map,
@@ -218,14 +218,14 @@ GFW.modules.app = function(gfw) {
         map: map,
         user_name:'wri-01',
         table_name: 'gfw2_imazon',
-        query: "SELECT * FROM gfw2_imazon",
+        query: "SELECT CASE WHEN {Z}<14 THEN st_buffer(the_geom_webmercator,(16-{Z})^4) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012",
         layer_order: "bottom",
         opacity:0,
         interactive:false,
         auto_bound: false
       });
 
-      var formaQuery = "SELECT * FROM forma_zoom_polys WHERE z=CASE WHEN 8 < " + this._map.getZoom() + " THEN 16 ELSE " + this._map.getZoom() + " + 8 END";
+      var formaQuery = "SELECT * FROM forma_zoom_polys WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
 
       console.log(formaQuery);
 
