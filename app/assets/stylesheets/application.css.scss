@@ -22,6 +22,14 @@ header {
   background:url(backgrounds/bkg_header.png) repeat-x top center;
   height:247px;
 
+	a.logo {
+		display: inline-block;
+  	background:url(logos/logo.png) no-repeat center center;		
+		width: 96px;
+		height: 93px;
+		text-indent: -99999px;
+	}
+
   hgroup {
     position:relative;
     top: 52px;
@@ -32,6 +40,7 @@ header {
       color:$cGray1;
       top: 0;
       position:relative;
+      padding: 29px 0 0 0;
 
       a {
         text-decoration:none;

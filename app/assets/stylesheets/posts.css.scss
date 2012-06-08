@@ -4,15 +4,12 @@
 
 body.posts,
 body.static,
-body.sources {
+body.sources,
+ {
 
   header {
     border-bottom: 1px solid #ccc;
     height: 235px;
-
-    hgroup h1 {
-      margin: 29px 0 0 0;
-    }
   }
 
   #content { padding: 40px 0 0 0; background: $cWhite; }
