@@ -30,26 +30,9 @@ function initialize() {
     config.mapOptions.zoom   = hash.zoom;
   }
 
-  // initialise the google map
+  // Initialise the google map
   map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 
-    var style = "#gfw2_layerstyles{ polygon-fill:#FF6600; polygon-opacity: 0.5; line-opacity:0.1; line-color: #FFFFFF; [name='timber_conc_indonesia']{ polygon-fill:#aa7722; } [name='cog_lc_1']{ polygon-fill:#0ff000; } [name='idn_lc_1']{ polygon-fill:#fff; } [name='gab_lc_1']{ polygon-fill:#fff0ff; } [name='gab_lc_2']{ polygon-fill:#ffff0f; } [name='cmr_lc_1']{ polygon-fill:#7711aa; } [name='idn_oc_1']{ polygon-fill:#fa0f99; } [name='idn_tc_1']{ polygon-fill:#000; } [name='cod_mc_1']{ polygon-fill:red; } [name='cod_lc_2']{ polygon-fill:#ffff00; } [name='cod_lc_1']{ polygon-fill:#fff0f0; } [name='caf_lc_1']{ polygon-fill:#0000ff; } [name='cmr_tc_1']{ polygon-fill:#0000ff; } }";
-
-    /*var cartodb_gmapsv3 = new CartoDBLayer({
-      map: map,
-      user_name:'wri-01',
-      table_name: 'gfw2_layerstyles',
-      query: "SELECT cartodb_id, the_geom_webmercator, 'cod_mc_1' as name FROM gfw2_layerstyles UNION ALL SELECT cartodb_id, the_geom_webmercator, 'caf_lc_1' as name FROM gfw2_layerstyles",
-      layer_order: 10,
-      tile_style: style,
-      interactivity: "cartodb_id, name",
-      featureMouseClick: function(ev, latlng, data) { console.log(data); },
-      featureMouseOut: function(ev) {  },
-      featureMouseOver: function(ev, latlng, data) { console.log(data); },
-      debug:true,
-      auto_bound: false
-    });
-*/
   var map_style = {};
 
   GFW(function(env) {

@@ -41,6 +41,7 @@ GFW.modules.app = function(gfw) {
       });
 
       this._precision = 2;
+      this._layers = [];
 
       gfw.log.enabled = options ? options.logging: false;
 
@@ -54,6 +55,7 @@ GFW.modules.app = function(gfw) {
 
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
 
+      this._style = "#gfw2_layerstyles { polygon-fill:#FF6600; polygon-opacity: 0.5; line-opacity:0.1; line-color: #FFFFFF; [name='timber_conc_indonesia']{ polygon-fill:#aa7722; } [name='cog_lc_1']{ polygon-fill:#0ff000; } [name='idn_lc_1']{ polygon-fill:#fff; } [name='gab_lc_1']{ polygon-fill:#fff0ff; } [name='gab_lc_2']{ polygon-fill:#ffff0f; } [name='cmr_lc_1']{ polygon-fill:#7711aa; } [name='idn_oc_1']{ polygon-fill:#fa0f99; } [name='idn_tc_1']{ polygon-fill:#000; } [name='cod_mc_1']{ polygon-fill:red; } [name='cod_lc_2']{ polygon-fill:#ffff00; } [name='cod_lc_1']{ polygon-fill:#fff0f0; } [name='caf_lc_1']{ polygon-fill:#0000ff; } [name='cmr_tc_1']{ polygon-fill:#0000ff; } }";
 
 
       this._setupZoom();
@@ -130,9 +132,11 @@ GFW.modules.app = function(gfw) {
 
       google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
         var zoom = map.getZoom() - 1;
+
         if (zoom > 2) {
           map.setZoom(zoom);
         }
+
       });
     },
 
@@ -147,6 +151,40 @@ GFW.modules.app = function(gfw) {
       google.maps.event.addListenerOnce(this._map, 'tilesloaded', this._mapLoaded);
 
     },
+
+    _removeLayer: function(name) {
+      this._layers = _.without(this._layers, name);
+      this._renderLayers();
+    },
+
+    _addLayer: function(name) {
+      this._layers.push(name);
+      this._renderLayers();
+    },
+
+    _renderLayers: function() {
+
+      if (this._layers.length > 0) {
+
+        var template = "SELECT cartodb_id||':' ||'{{ table_name }}' as cartodb_id, the_geom_webmercator, '{{ table_name }}' AS name FROM {{ table_name }}";
+
+        var queryArray = _.map(this._layers, function(layer) {
+          return _.template(template, { table_name: layer });
+        });
+
+        var query = queryArray.join(" UNION ALL ");
+
+        this.mainLayer.setQuery(query);
+        this.mainLayer.setOpacity(1);
+
+      } else {
+
+        this.mainLayer.setOpacity(0);
+
+      }
+
+    },
+
     _loadBaseLayers: function() {
 
        this.baseHansen = new CartoDBLayer({
@@ -170,6 +208,30 @@ GFW.modules.app = function(gfw) {
         auto_bound: false
       });
 
+      this.mainLayer = new CartoDBLayer({
+        map: map,
+        user_name:'wri-01',
+        table_name: 'gfw2_layerstyles',
+        query: "",
+        layer_order: 10,
+        opacity: 0,
+        tile_style: this._style,
+        interactivity: "cartodb_id, name",
+        featureMouseClick: function(ev, latlng, data) {
+          console.log(data);
+          //alert(data.cartodb_id);
+        },
+        featureMouseOut: function(ev) {
+          //console.log(ev);
+        },
+        featureMouseOver: function(ev, latlng, data) {
+          console.log(data);
+        },
+        debug:true,
+        auto_bound: false
+      });
+
+
     },
     _mapLoaded: function(){
       config.mapLoaded = true;
@@ -180,6 +242,7 @@ GFW.modules.app = function(gfw) {
 
       showMap ? Navigation.showState("map") : Navigation.showState("home");
     },
+
     _updateHash: function() {
 
       var
@@ -190,6 +253,7 @@ GFW.modules.app = function(gfw) {
 
       History.pushState({ state: 3 }, "Map", hash);
     },
+
     _parseHash: function(hash) {
 
       var args = hash.split("/");
@@ -213,6 +277,7 @@ GFW.modules.app = function(gfw) {
 
       return false;
     },
+
     update: function() {
       var hash = location.hash;
 
@@ -337,7 +402,7 @@ GFW.modules.maplayer = function(gfw) {
         category   = that.layer.get('category_name'),
         visibility = that.layer.get('visible');
 
-        that._toggleLayer();
+        that._toggleLayer(GFW.app);
 
       };
 
@@ -355,14 +420,15 @@ GFW.modules.maplayer = function(gfw) {
       this._display = display;
       display.setEngine(this);
     },
-    _toggleLayer: function(){
-      var that = this;
+    _toggleLayer: function(that){
+      console.log(that, this._precision, that._precision, that.baseFORMA);
 
       this.layer.attributes['visible'] = !this.layer.attributes['visible'];
 
       var
-      id      = this.layer.attributes['title'].replace(/ /g, "_").toLowerCase(),
-      visible = this.layer.get('visible');
+      id        = this.layer.attributes['title'].replace(/ /g, "_").toLowerCase(),
+      visible   = this.layer.get('visible'),
+      tableName = this.layer.get('table_name');
 
       console.log(id, visible);
 
@@ -372,7 +438,7 @@ GFW.modules.maplayer = function(gfw) {
         Timeline.hide();
       }
 
-      var // special layerse
+      var // special layers
       forma  = GFW.app.datalayers.LayersObj.get(1),
       hansen = GFW.app.datalayers.LayersObj.get(565);
 
@@ -391,9 +457,16 @@ GFW.modules.maplayer = function(gfw) {
           GFW.app.baseFORMA.setOpacity(0);
           GFW.app.baseHansen.setOpacity(1);
           forma.attributes['visible'] = false;
+        } else {
+          GFW.app._addLayer(tableName);
         }
 
       } else {
+
+        if (id != 'forma' && id != "hansen") {
+          GFW.app._removeLayer(tableName);
+        }
+
         //if ( this._inView() ){
           //this._map.overlayMapTypes.setAt(this._tileindex, null);
         //}
@@ -457,7 +530,7 @@ GFW.modules.datalayers = function(gfw) {
 
       var LayersColl    = this._cartodb.CartoDBCollection.extend({
         sql: function(){
-          return "SELECT cartodb_id AS id, title, category_name, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
+          return "SELECT cartodb_id AS id, title, table_name, category_name, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
           ST_XMIN(the_geom) AS xmin, ST_YMAX(the_geom) AS ymax, ST_YMIN(the_geom) AS ymin, tileurl, true AS visible \
           FROM " + layerTable + " \
           WHERE display = TRUE ORDER BY displaylayer ASC";
