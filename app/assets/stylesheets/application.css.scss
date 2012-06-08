@@ -38,9 +38,8 @@ header {
     h1 {
       @extend .font-big;
       color:$cGray1;
-      top: 0;
+      top: 29px;
       position:relative;
-      padding: 29px 0 0 0;
 
       a {
         text-decoration:none;
