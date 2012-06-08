@@ -198,7 +198,8 @@ GFW.modules.app = function(gfw) {
     _updateSAD: function() {
       var query = "SELECT CASE WHEN {Z}<14 THEN st_buffer(the_geom_webmercator,(16-{Z})^4) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012",
       query = query.replace(/{Z}/, this._map.getZoom());
-      this.baseHansen.setQuery(query);
+      console.log(query);
+      this.baseSAD.setQuery(query);
     },
     _updateHansen: function() {
       var query = "SELECT * FROM hansen_data WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
