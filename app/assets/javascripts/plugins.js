@@ -1,37 +1,3 @@
-// var InfowindowModel = Backbone.Model.extend({
-// });
-//
-// var Infowindow = Backbone.View.extend({
-//
-//   tagName: "div",
-//   className: 'infowindow',
-//
-//   events: {
-//     "click .icon":          "open"
-//   },
-//
-//   initialize: function(){
-//     this.render();
-//   },
-//
-//   open: function() {
-//     alert('open');
-//   },
-//
-//   render: function() {
-//     console.log($(this.el), this.model.toJSON());
-//     console.log(this.template(this.model.toJSON()));
-//     //$(this.el).html(this.template(this.model.toJSON()));
-//     return this;
-//   }
-//
-// });
-//
-// var model = new InfowindowModel({name:'pera'});
-// var infowindow = new Infowindow({ model: model });
-
-
-
 var Navigation = (function() {
 
   function _select(name) {
@@ -49,11 +15,35 @@ var Navigation = (function() {
     }
   }
 
+  var lastCountryClass;
+
+  $("#countries .country").on("mouseenter", function() {
+    var // selection box dimensions
+    h = $("#countries .select").height(),
+    w = $("#countries .select").width();
+
+    var top = $(this).position().top - (h/2 - $(this).height()/2);
+    var left = $(this).position().left - (w/2 - $(this).width()/2);
+
+    $("#countries .select").css({ top: top , left: left });
+    var c = $(this).attr("class").replace(/country/, "");
+
+    if (lastCountryClass) {
+      $("#countries .select").removeClass(lastCountryClass);
+    }
+
+    $("#countries .select").addClass(c);
+    lastCountryClass = c;
+    $("#countries .select").html($(this).html());
+    $("#countries .select").show();
+  });
+
   function _showCountryState() {
     Navigation.select("countries");
     $("#content").append('<div class="backdrop" />');
 
     $(".backdrop").fadeIn(250, function() {
+      var width = $(document).width();
       $("#countries").fadeIn(250);
     });
   }

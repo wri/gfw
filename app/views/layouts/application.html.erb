@@ -8,16 +8,12 @@
   </head>
   <body class="<%= controller.controller_name %>"<%= raw ' onload="initialize()"' if controller_name == 'maps' or controller_name == 'home' %>>
     <%= render "common/header" %>
+
     <div id="content">
       <%= yield %>
-
-      <div id="countries">
-        <div class="country brazil"><a href="/countries/show#"><div class="icon"></div><div class="content"><h4>Brazil</h4> <strong>19,312</strong> Forest Clearing<br />Alerts in the last 6 months</div></a></div>
-        <div class="country india"><a href="/countries/show"><div class="icon"></div><div class="content"><h4>India</h4> <strong>3,412</strong> Forest Clearing Alerts<br />in the last 6 months</div></a></div>
-        <div class="country indonesia"><a href="/countries/show"><div class="icon"></div><div class="content"><h4>Indonesia</h4> <strong>11,091</strong> Forest Clearing<br />Alerts in the last 6 months</div></a></div>
-      </div>
-
+      <%= render "common/countries" %>
     </div>
+
     <%= render "common/footer" %>
     <%= yield :js %>
     <%= javascript_include_tag "application" %>

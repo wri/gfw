@@ -82,13 +82,20 @@ $icons-fire-spacing: 20px;
 
 // Radio buttons & checkboxes
 $icons-radio-spacing: 40px;
+$icons-radio_fire-spacing: 40px;
 $icons-checkboxes-spacing: 40px;
 $icons-checkboxes_concessions-spacing: 40px;
 $icons-checkboxes_protected_areas-spacing: 40px;
 $icons-checkboxes_forest-spacing: 40px;
 $icons-checkboxes_mining-spacing: 40px;
 
+// Country
+$icons-country_bolivia_disabled-spacing: 20px;
+
 @import "icons/*.png"; /**/
+
+$countries-spacing: 20px;
+@import "countries/*.png"; /**/
 
 strong { font-weight: bold; } // This is sad, I know.
 
@@ -270,7 +277,7 @@ strong { font-weight: bold; } // This is sad, I know.
 
 @mixin radio($url) {
   @include inline-block();
-  @include icons-sprite($url, $offset-y: -66px);
+  @include icons-sprite(radio, $offset-y: -66px);
 
   padding-left: 12px;
 

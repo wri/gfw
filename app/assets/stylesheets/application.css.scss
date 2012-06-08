@@ -543,6 +543,8 @@ body.countries {
 
 .radio {
   @include radio(radio);
+
+  &.deforestation     { @include radio(radio_fire); }
 }
 
 .checkbox {
@@ -625,77 +627,181 @@ footer > .download {
 #countries {
   position:absolute;
   display:none;
-
-  $width: 775px;
-  $height: 257px;
-  top: 50%;
+  width:1008px;
+  margin-left:-504px;
+  top: 50px;
   left: 50%;
   z-index: 1050;
-  width: $width;
-  height:$height;
-  margin-left: -1*$width/2;
-  margin-top: -1*$height/2;
 
   @include clearfix();
 
+  $selectHeight: 300px;
+  $countryHeight: 250px;
+
+  .select {
+    display:none;
+    position:absolute;
+    top:0; left:0;
+    width: 270px;
+    height: $selectHeight;
+
+    border: 1px solid #CCCCCC;
+    background:#fff;
+  }
+
   .country {
+    position:relative;
     margin:0;
     float:left;
     width: 250px;
-    height: $height;
+    height: $countryHeight;
+  }
+
+  .select {
+
+    &.malasya a .icon {
+      @include countries-sprite(country_malasya_selected);
+    }
+
+    &.india a .icon {
+      @include countries-sprite(country_india_selected);
+    }
+
+    &.cameroon a .icon {
+      @include countries-sprite(country_cameroon_selected);
+    }
+
+    &.indonesia a .icon {
+      @include countries-sprite(country_indonesia_selected);
+    }
+
+    &.brazil a .icon {
+      @include countries-sprite(country_brazil_selected);
+    }
+
+  }
+
+  .select  {
+    .icon { position:relative; top: 20px; margin: auto; }
+  }
+
+  .country  {
+    .icon { position:relative; top: 10px; margin: auto; }
+  }
+
+  .country, .select {
+
     color: #999999;
     font-size:15px;
     @extend .sans-serif;
     border: 1px solid $cSeparator;
     line-height: 18px;
 
-    .icon { position:relative; top: 10px; margin: auto; }
+    .content {
+      $width: 230px;
+      position:absolute;
+      top: 160px;
+      left: 50%;
+      width: $width;
+      margin-left: -1*$width/2;
+      text-align:center;
+    }
+
+    &.bolivia .icon {
+      @include countries-sprite(country_bolivia_disabled);
+      width: 127px; height: 136px;
+    }
+
+    &.congo .icon {
+      @include countries-sprite(country_congo_disabled);
+      width: 127px; height: 136px;
+    }
+
+    &.guyana .icon {
+      @include countries-sprite(country_guyana_disabled);
+      width: 127px; height: 136px;
+    }
+
+    &.cameroon .icon {
+      @include countries-sprite(country_cameroon);
+      width: 127px; height: 136px;
+    }
+
+    &.angola .icon {
+      @include countries-sprite(country_angola_disabled);
+      width: 127px; height: 136px;
+    }
 
     &.india .icon {
-      @include icons-sprite(country_india);
+      @include countries-sprite(country_india);
       width: 127px; height: 136px;
     }
 
     &.indonesia .icon {
       top: 40px;
-      @include icons-sprite(country_indonesia);
+      @include countries-sprite(country_indonesia);
       width: 184px; height: 69px;
     }
 
     &.brazil .icon {
-      @include icons-sprite(country_brazil);
+      @include countries-sprite(country_brazil);
       width: 126px; height: 131px;
+    }
+
+    &.venezuela .icon {
+      @include countries-sprite(country_venezuela_disabled);
+      width: 127px; height: 136px;
+    }
+
+    &.peru .icon {
+      @include countries-sprite(country_peru_disabled);
+      width: 127px; height: 136px;
+    }
+
+    &.vietnam .icon {
+      @include countries-sprite(country_vietnam_disabled);
+      width: 126px; height: 131px;
+    }
+
+    &.malasya .icon {
+      top: 40px;
+      @include countries-sprite(country_malasya);
+      width: 184px; height: 69px;
+    }
+
+    &.paraguay .icon {
+      @include countries-sprite(country_paraguay_disabled);
+      width: 127px; height: 136px;
+    }
+
+    &.nepal .icon {
+      @include countries-sprite(country_nepal_disabled);
+      width: 127px; height: 136px;
+    }
+
+    &.laos .icon {
+      @include countries-sprite(country_laos_disabled);
+      width: 127px; height: 136px;
+    }
+
+    &.kenya .icon {
+      @include countries-sprite(country_kenya_disabled);
+      width: 127px; height: 136px;
+    }
+
+    &.ivory_coast .icon {
+      @include countries-sprite(country_ivory_coast_disabled);
+      width: 127px; height: 136px;
     }
 
     h4 {
       color: #666666;
-      @extend .serif;
       font-size:29px;
       margin: 0 0 12px 0;
+      @extend .serif;
     }
 
     a { color: #999999; text-decoration: none;}
 
-    &.india a:hover .icon {
-      @include icons-sprite(country_india_selected);
-    }
-
-    &.indonesia a:hover .icon {
-      @include icons-sprite(country_indonesia_selected);
-    }
-
-    &.brazil a:hover .icon {
-      @include icons-sprite(country_brazil_selected);
-    }
-
-    .content {
-      position:absolute;
-      top: 150px;
-      width: 250px;
-      text-align:center;
-    }
-
   }
-
-
 }

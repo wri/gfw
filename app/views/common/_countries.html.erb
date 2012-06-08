@@ -1,0 +1,33 @@
+<% countries = [
+
+  { :title => "Brazil", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "Cameroon", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "Malasya", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "India", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "Indonesia", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "Angola", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "Bolivia", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "Congo", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "Guyana", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "Ivory Coast", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "Kenya", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "Laos", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "Nepal", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "Paraguay", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "Peru", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "Venezuela", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
+  { :title => "Vietnam", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" }
+  
+] %>
+
+<div id="countries">
+  <% countries.each do |country| %>
+    <div class="country <%= country[:title].downcase.gsub(" ", "_") %>">
+      <a href="/countries/show">
+        <div class="icon"></div>
+        <div class="content"><h4><%= country[:title] %></h4> <strong><%= country[:amount] %></strong> <%= country[:caption] %></div>
+      </a>
+    </div>
+  <% end %>
+  <div class="select"></div>
+</div>
