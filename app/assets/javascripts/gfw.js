@@ -249,14 +249,14 @@ GFW.modules.app = function(gfw) {
         tile_style: this._style,
         interactive:"cartodb_id, name",
         featureMouseClick: function(ev, latlng, data) {
-          console.log(data);
-          //alert(data.cartodb_id);
+          console.log(ev, latlng, data);
+          alert(data.cartodb_id);
         },
         featureMouseOut: function(ev) {
-          //console.log(ev);
+          // console.log(ev);
         },
         featureMouseOver: function(ev, latlng, data) {
-          console.log(data);
+          //console.log(data);
         },
         debug:true,
         auto_bound: false
@@ -436,9 +436,9 @@ GFW.modules.maplayer = function(gfw) {
 
         that._toggleLayer(GFW.app);
 
-        if (category != 'Deforestation') {
-          Legend.toggleItem(title, category, visibility);
-        }
+        //if (category != 'Deforestation') {
+          //Legend.toggleItem(title, category, visibility);
+        //}
 
       };
 
