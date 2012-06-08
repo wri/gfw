@@ -144,8 +144,9 @@ GFW.modules.app = function(gfw) {
       // Setup listeners
       google.maps.event.addListener(this._map, 'zoom_changed', function() {
         that._updateHash(that);
-        //that._updateFORMA();
-        //that._updateHansen();
+        that._updateSAD();
+        that._updateFORMA();
+        that._updateHansen();
       });
 
       google.maps.event.addListener(this._map, 'dragend', function() {
@@ -190,12 +191,18 @@ GFW.modules.app = function(gfw) {
     },
 
     _updateFORMA: function() {
-      var query = "SELECT * FROM forma_zoom_polys WHERE z=CASE WHEN 8 < " + this._map.getZoom() + " THEN 16 ELSE " + this._map.getZoom() + " + 8 END";
+      var query = "SELECT * FROM forma_zoom_polys WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
+      query = query.replace(/{Z}/, this._map.getZoom());
       this.baseFORMA.setQuery(query);
     },
-
+    _updateSAD: function() {
+      var query = "SELECT CASE WHEN {Z}<14 THEN st_buffer(the_geom_webmercator,(16-{Z})^4) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012",
+      query = query.replace(/{Z}/, this._map.getZoom());
+      this.baseHansen.setQuery(query);
+    },
     _updateHansen: function() {
-      var query = "SELECT * FROM hansen_data WHERE z=CASE WHEN 8< " + this._map.getZoom() + " THEN 16 ELSE " + this._map.getZoom() + " + 8 END";
+      var query = "SELECT * FROM hansen_data WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
+      query = query.replace(/{Z}/, this._map.getZoom());
       this.baseHansen.setQuery(query);
     },
 
