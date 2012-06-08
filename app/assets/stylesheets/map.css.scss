@@ -93,7 +93,7 @@
       position:absolute;
       top: 83px;
 
-      li {
+      li {				
         list-style: none;
         border-bottom: 1px solid $cSeparator;
         padding: 10px 10px;
@@ -103,7 +103,7 @@
       a {
           @extend .sans-serif;
           font-size:13px;
-          line-height:20px;
+          line-height:17px;
       }
     }
 

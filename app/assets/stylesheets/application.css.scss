@@ -462,13 +462,23 @@ body.countries {
   }
 
   &:hover {
-    @include button('buttons/bkg_button_hollow.png', 38px, 5px, 11px, 27px, 5px, 22px, 0);
-    color: $cLink;
+    @include button('buttons/bkg_button_hollow_hover.png', 38px, 5px, 11px, 27px, 5px, 22px, 0);
+    color: $cWhite;
 
     span {
       padding-right: 45px;
       padding-left: 10px;
     }
+
+  	.icon {
+    	&.wikipedia {
+      	position:absolute;
+      	top: 1px; right: 1px;
+      	@include icons-sprite(wikipedia_hover);
+      	width: 40px;
+      	height:36px;
+    	}
+  	}		
   }
 
   .icon {
@@ -480,6 +490,9 @@ body.countries {
       height:36px;
     }
   }
+	
+	
+
 }
 
 #map-container .save-area {
