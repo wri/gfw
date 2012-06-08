@@ -214,16 +214,16 @@ GFW.modules.app = function(gfw) {
         auto_bound: false
       });
 
-      //this.baseSAD = new CartoDBLayer({
-        //map: map,
-        //user_name:'wri-01',
-        //table_name: 'gfw2_imazon',
-        //query: "SELECT * FROM gfw2_imazon",
-        //layer_order: "bottom",
-        //opacity:0,
-        //interactive:false,
-        //auto_bound: false
-      //});
+      this.baseSAD = new CartoDBLayer({
+        map: map,
+        user_name:'wri-01',
+        table_name: 'gfw2_imazon',
+        query: "SELECT * FROM gfw2_imazon",
+        layer_order: "bottom",
+        opacity:0,
+        interactive:false,
+        auto_bound: false
+      });
 
       var formaQuery = "SELECT * FROM forma_zoom_polys WHERE z=CASE WHEN 8 < " + this._map.getZoom() + " THEN 16 ELSE " + this._map.getZoom() + " + 8 END";
 
@@ -485,33 +485,48 @@ GFW.modules.maplayer = function(gfw) {
         if (id === 'forma') {
 
           GFW.app.baseFORMA.setOpacity(1);
+
           GFW.app.baseHansen.setOpacity(0);
-          //GFW.app.baseSAD.setOpacity(0);
+          GFW.app.baseSAD.setOpacity(0);
 
+          forma.attributes['visible'] = false;
           hansen.attributes['visible'] = false;
-          //sad.attributes['visible']    = false;
+          sad.attributes['visible']    = false;
 
-        } else if (id === 'hansen') {
+          return;
+        }
+
+        if (id === 'hansen') {
+
+          GFW.app.baseHansen.setOpacity(1);
 
           GFW.app.baseFORMA.setOpacity(0);
-          GFW.app.baseHansen.setOpacity(1);
-          //GFW.app.baseSAD.setOpacity(0);
+          GFW.app.baseSAD.setOpacity(0);
+
+          hansen.attributes['visible'] = true;
 
           forma.attributes['visible'] = false;
           sad.attributes['visible']   = false;
 
-        } else if (id === 'imazon_sad') {
+          return;
+        }
+
+        if (id === 'imazon_sad') {
+
+          GFW.app.baseSAD.setOpacity(1);
 
           GFW.app.baseFORMA.setOpacity(0);
           GFW.app.baseHansen.setOpacity(0);
-          //GFW.app.baseSAD.setOpacity(1);
+
+          sad.attributes['visible']  = true;
 
           forma.attributes['visible']  = false;
           hansen.attributes['visible'] = false;
 
-        } else {
-          GFW.app._addLayer(tableName);
+          return;
         }
+
+        GFW.app._addLayer(tableName);
 
       } else {
 
