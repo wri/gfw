@@ -91,7 +91,7 @@ if (typeof(google.maps.CartoDBLayer) === "undefined") {
         this._setMapStyle();
 
       // Add cartodb logo, yes sir!
-      this._addWadus();
+      // this._addWadus();
     }
 
     // Useless
