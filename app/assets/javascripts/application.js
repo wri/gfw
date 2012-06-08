@@ -3,7 +3,7 @@
 //= require jquery.easing.1.3
 //= require jquery-ui-1.8.20.custom.min
 //= require wax.g.min-6.0.4
-//= require cartodb-gmapsv3-min
+//= require cartodb-gmapsv3
 //= require jstorage.min
 //= require jquery.history
 //= require lodash.min
