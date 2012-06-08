@@ -1,34 +1,36 @@
 /* Colors */
-$cBackground:       #75ADB5;
-$cDarkGreen:        #264C59;
-$cLink:             #F7BD63; // pastel yellow
-$cGreen:            #74ACB4;
-$cGold:             #F2B257; // gold
-$cDarkGold:         #D69E4D;
+$cBackground:            #75ADB5;
+$cDarkGreen:             #264C59;
+$cLink:                  #F7BD63; // pastel yellow
+$cGreen:                 #74ACB4;
+$cGold:                  #F2B257; // gold
+$cDarkGold:              #D69E4D;
 
-$cWhite:            #FFFFFF;
-$cGray4:            #CCCCCC;
-$cGray3:            #999999;
-$cGray2:            #666666;
-$cGray1:            #333333;
-$cGray0:            #000000;
+$cWhite:                 #FFFFFF;
+$cGray4:                 #CCCCCC;
+$cGray3:                 #999999;
+$cGray2:                 #666666;
+$cGray1:                 #333333;
+$cGray0:                 #000000;
 
-$cSeparator:        #E5E5E5;
+$cSeparator:             #E5E5E5;
 
-$cConcessions:      #FF6699; // pink
-$cConcessionsHover: #C04B73; // dark pink
-$cProtectedAreas:   #00CED0; // blue
+$cConcessions:           #FF6699; // pink
+$cConcessionsHover:      #C04B73; // dark pink
+$cProtectedAreas:        #00CED0; // blue
+$cProtectedAreasHover:   #00B9B9;
 
-$cMining:           $cGold;
+$cMining:                $cGold;
+$cMiningHover:           #DEB883;
 
-$cForest:           #B2D26E; // green
-$cForestHover:      #9EBB62; // dark green
+$cForest:                #B2D26E; // green
+$cForestHover:           #9EBB62; // dark green
 
-$cFire:             #E95850; // red
+$cFire:                  #E95850; // red
 
-$cTop:              rgba(117, 173, 181, 0.8);
-$cPostTitle:        #73ACB3; // green
-$cPostBody:         #444444;
+$cTop:                   rgba(117, 173, 181, 0.8);
+$cPostTitle:             #73ACB3; // green
+$cPostBody:              #444444;
 
 // This is only used in the demo page
 .cforest { background-color: $cForest; }
@@ -60,7 +62,7 @@ $cPostBody:         #444444;
 .cPostBody { background-color: $cPostBody; }
 
 // SPRITES
-$icons-crowdsourcing-spacing:91px;
+$icons-crowdsourcing-spacing:90px;
 $icons-analysis-spacing:90px;
 $icons-updates-spacing:90px;
 
@@ -80,6 +82,7 @@ $icons-checkboxes-spacing: 40px;
 $icons-checkboxes_concessions-spacing: 40px;
 $icons-checkboxes_protected_areas-spacing: 40px;
 $icons-checkboxes_forest-spacing: 40px;
+$icons-checkboxes_mining-spacing: 40px;
 
 @import "icons/*.png"; /**/
 
@@ -181,19 +184,39 @@ strong { font-weight: bold; } // This is sad, I know.
   a { color: $cGray4; }
   a:hover { color: $cGray3; }
 
-  &.concessions     a { color: $cConcessions; }
-  &.concessions     a.title:hover { color: $cConcessions; }
+  &.concessions {
+    & > a         { color: $cConcessions; }
+    a.checked     { color: $cConcessions; }
+    a.title       { color: $cConcessions; }
+    a.title:hover { color: $cConcessions; }
+    a:hover       { color: $cConcessionsHover; }
+  }
 
-  &.concessions     a:hover { color: $cConcessionsHover; }
+  &.forest {
+    & > a         { color: $cForest; }
+    a.checked     { color: $cForest; }
+    a.title       { color: $cForest; }
+    a.title:hover { color: $cForest; }
+    a:hover       { color: $cForestHover; }
+  }
 
-  &.forest          a { color: $cForest; }
-  &.forest          a.title:hover { color: $cForest; }
-  &.forest          a:hover { color: $cForestHover; }
+  &.mining {
+    & > a         { color: $cMining; }
+    a.checked     { color: $cMining; }
+    a.title       { color: $cMining; }
+    a.title:hover { color: $cMining; }
+    a:hover       { color: $cMiningHover; }
+  }
 
-  &.protected_areas a { color: $cProtectedAreas; }
+  &.protected_areas {
+    & > a         { color: $cProtectedAreas; }
+    a.checked     { color: $cProtectedAreas; }
+    a.title       { color: $cProtectedAreas; }
+    a.title:hover { color: $cProtectedAreas; }
+    a:hover       { color: $cProtectedAreasHover; }
+  }
 
   &.intact-forest   a { color: $cForest; }
-  &.mining          a { color: $cMining; }
   &.forest-cover    a { color: $cForest; }
   &.fire            a { color: $cFire; }
   &.carbon          a { color: $cGray4;}
@@ -250,7 +273,7 @@ strong { font-weight: bold; } // This is sad, I know.
 
 @mixin checkboxes($url) {
   @include inline-block();
-  @include icons-sprite($url, $offset-y: -66px);
+  @include icons-sprite(checkboxes, $offset-y: -66px);
 
   padding-left: 12px;
 

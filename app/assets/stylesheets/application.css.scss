@@ -247,10 +247,10 @@ nav {
 
 ul.logo_list {
 	@include clearfix();
-	
+
 	li {
 		float: left;
-		
+
 		a {
 			display: inline-block;
 			width: 110px;
@@ -260,11 +260,11 @@ ul.logo_list {
   			background-position:left -80px;
 			}
 		}
-		
+
 		a#centerglobaldevelopment {
   		background-image:url(logos/centerglobaldevelopment.png);
 		}
-		
+
 		a#imazon {
   		background-image:url(logos/imazon.png);
 		}
@@ -311,7 +311,7 @@ ul.logo_list {
   		background-image:url(logos/vizzuality.png);
 		}
 	}
-	
+
 }
 
 article.contact {
@@ -324,7 +324,7 @@ article.contact {
 		text-decoration: none;
 		color: #F2B257;
 	}
-	
+
 
 	}
 }
@@ -547,9 +547,11 @@ body.countries {
 
 .checkbox {
   @include checkboxes(checkboxes);
-  &.concessions { @include checkboxes(checkboxes_concessions); }
+
+  &.concessions     { @include checkboxes(checkboxes_concessions); }
   &.protected_areas { @include checkboxes(checkboxes_protected_areas); }
-  &.forest { @include checkboxes(checkboxes_forest); }
+  &.forest          { @include checkboxes(checkboxes_forest); }
+  &.mining          { @include checkboxes(checkboxes_mining); }
 }
 
 footer {
