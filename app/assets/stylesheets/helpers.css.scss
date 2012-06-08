@@ -27,6 +27,10 @@ $cForest:                #B2D26E; // green
 $cForestHover:           #9EBB62; // dark green
 
 $cFire:                  #E95850; // red
+$cFireHover:             #CA4C45;
+
+$cDeforestation:         #E95850; // red
+$cDeforestationHover:    #CA4C45;
 
 $cTop:                   rgba(117, 173, 181, 0.8);
 $cPostTitle:             #73ACB3; // green
@@ -181,8 +185,12 @@ strong { font-weight: bold; } // This is sad, I know.
 // Different filter elements
 .filter-links {
 
-  a { color: $cGray4; }
-  a:hover { color: $cGray3; }
+  & > a         { color: $cGray4; }
+  a             { color: $cGray4; }
+  a.checked     { color: $cGray4; }
+  a.title       { color: $cGray4; }
+  a.title:hover { color: $cGray4; }
+  a:hover       { color: $cGray3; }
 
   &.concessions {
     & > a         { color: $cConcessions; }
@@ -216,6 +224,14 @@ strong { font-weight: bold; } // This is sad, I know.
     a:hover       { color: $cProtectedAreasHover; }
   }
 
+  &.deforestation {
+    & > a         { color: $cDeforestation; }
+    a.checked     { color: $cDeforestation; }
+    a.title       { color: $cDeforestation; }
+    a.title:hover { color: $cDeforestation; }
+    a:hover       { color: $cDeforestationHover; }
+  }
+
   &.intact-forest   a { color: $cForest; }
   &.forest-cover    a { color: $cForest; }
   &.fire            a { color: $cFire; }
@@ -231,6 +247,7 @@ strong { font-weight: bold; } // This is sad, I know.
   &.forest-cover    .icon  { @include icons-sprite(forest_cover); }
   &.forest          .icon  { @include icons-sprite(forest_cover); }
   &.fire            .icon  { @include icons-sprite(fire); }
+  &.deforestation   .icon  { @include icons-sprite(fire); }
   &.carbon          .icon  { @include icons-sprite(concessions); }
   &.biodiversity    .icon  { @include icons-sprite(concessions); }
 }
@@ -246,6 +263,7 @@ strong { font-weight: bold; } // This is sad, I know.
   &.forest-cover     .line { background-color: $cForest; }
   &.forest           .line { background-color: $cForest; }
   &.fire             .line { background-color: $cFire; }
+  &.deforestation    .line { background-color: $cFire; }
   &.carbon           .line { background-color: $cGray4;}
   &.biodiversity     .line { background-color: $cGray4; }
 }
