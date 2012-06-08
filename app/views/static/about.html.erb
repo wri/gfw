@@ -2,6 +2,13 @@
   t('.title')
 end %>
 
+<% content_for :download do %>
+<div class="download">
+  <div class="inner">
+      <%= content_tag :h1, (raw t('layouts.application.footer.download.title2', :url => "/sources")) %></div></div>
+</div>
+<% end %>
+
 <div class="inner">
   <section>
   <article>

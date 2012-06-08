@@ -20,7 +20,8 @@ en:
       footer:
         download:
           title: 'Browse Forest Clearing data <a href="%{url}">by country</a>.'
-          data_html: 'You can also <a href="%{url}" class="icon download">download all our data</a> in a .zip file.'
+          title2: 'Interested in data? <a href="%{url}">Download it</a>.'          
+          data_html: 'You can also <a href="%{url}" class="icon download">download all our data</a>.'
   blog:
     read_more: "Read more"
   home:
