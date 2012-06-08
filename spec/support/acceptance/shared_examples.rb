@@ -65,17 +65,13 @@ end
 #end
 
 shared_examples 'download section' do |text|
-
-  scenario 'has a download section' do |text|
-
-    within '.download' do
+  #scenario 'has a download section' do |text|
+    #within '.download' do
       #page.should have_content text
-      page.should have_css 'p', :text => 'You can also download all our data in a .zip file.', :url => "#"
-      page.should have_link 'download all our data', :url => "#"
-    end
-
-  end
-
+      #page.should have_css 'p', :text => 'You can also download all our data in a .zip file.', :url => "#"
+      #page.should have_link 'download all our data', :url => "#"
+    #end
+  #end
 end
 
 shared_examples 'common footer' do
