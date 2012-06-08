@@ -1,3 +1,37 @@
+// var InfowindowModel = Backbone.Model.extend({
+// });
+//
+// var Infowindow = Backbone.View.extend({
+//
+//   tagName: "div",
+//   className: 'infowindow',
+//
+//   events: {
+//     "click .icon":          "open"
+//   },
+//
+//   initialize: function(){
+//     this.render();
+//   },
+//
+//   open: function() {
+//     alert('open');
+//   },
+//
+//   render: function() {
+//     console.log($(this.el), this.model.toJSON());
+//     console.log(this.template(this.model.toJSON()));
+//     //$(this.el).html(this.template(this.model.toJSON()));
+//     return this;
+//   }
+//
+// });
+//
+// var model = new InfowindowModel({name:'pera'});
+// var infowindow = new Infowindow({ model: model });
+
+
+
 var Navigation = (function() {
 
   function _select(name) {
@@ -266,8 +300,9 @@ var Filter = (function() {
 
     // Select the kind of input: radio or checkbox
     if (cat === 'deforestation') {
+
       layerItemTemplate = _.template($("#layer-item-radio-template").html());
-      $layerItem = $(layerItemTemplate({ name: name, category: cat }));
+      $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat }));
 
       // Click binding
       $layerItem.on("click", function() {
@@ -279,7 +314,7 @@ var Filter = (function() {
 
     } else {
       layerItemTemplate = _.template($("#layer-item-checkbox-template").html());
-      $layerItem = $(layerItemTemplate({ name: name, category: cat }));
+      $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat }));
 
       // Click binding
       $layerItem.on("click", function() {
@@ -383,22 +418,25 @@ var Legend = (function() {
 
     $item.hide();
 
-    console.log($(".legend").find("ul." + cat));
-
     if ( $(".legend").find("ul." + cat).length > 0 ) {
+
       var $ul = $(".legend").find("ul." + cat);
       $ul.append($item);
+
       $item.fadeIn(250);
       $ul.fadeIn(250);
-      var count = $ul.attr("data-count");
-      $ul.attr("data-count", parseInt(count, 10) + 1);
+
+      $ul.attr("data-count", parseInt($ul.attr("data-count"), 10) + 1);
+
     } else {
       var $ul = $("<ul class='"+cat+"' />");
-      $ul.attr("data-count", 1);
       $ul.append($item);
       $(".legend").find(".content").append($ul);
+
       $ul.fadeIn(250);
       $item.fadeIn(250);
+
+      $ul.attr("data-count", 1);
     }
 
     if ( $(".legend").find("li").length >= 1 && showMap === true) {
@@ -409,48 +447,17 @@ var Legend = (function() {
 
   function _remove(name) {
 
-    var
-    id      = name.replace(/ /g, "_").toLowerCase(),
-    liCount = $(".legend").find("li").length,
-    $li     = $(".legend").find("ul li#" + id),
-    $ul     = $li.parent(),
-    count   = parseInt($ul.attr('data-count'), 10);
+    var //
+    id  = name.replace(/ /g, "_").toLowerCase(),
+    $li = $(".legend").find("ul li#" + id),
+    $ul = $li.parent(),
+    c   = parseInt($ul.attr("data-count"), 10);
 
-    if (liCount <= 1) {
+    $li.remove();
+    $ul.attr("data-count", c - 1);
 
-      var hide = function() {
-        _hide(null, function() {
-          $(".legend").find("ul").remove();
-        });
-      };
-    }
+    //console.log($(".legend").find("ul#" + id + " li").length);
 
-    if (liCount > 1) {
-
-      if (count <= 1) {
-
-        var hide = function() {
-          $ul.fadeOut(50, function() {
-            $li.remove();
-            $ul.remove();
-          });
-        };
-
-      }
-
-      if (count > 1) {
-
-        var hide = function() {
-          $li.fadeOut(150, function() {
-            $ul.attr("data-count", count - 1);
-            $item.remove();
-          });
-        };
-
-      }
-    }
-
-    setTimeout(hide, 150);
   }
 
   function _toggleItem(name, category, add) {
@@ -522,6 +529,8 @@ var Circle = (function() {
     if (!delay) {
       delay = 0;
     }
+    var $circle = $(".circle");
+    $circle.show();
 
     $circle.delay(delay).animate({ top:'50%', marginTop:-1*($circle.height() / 2), opacity: 1 }, 250, function() {
       $title.animate({ opacity: 0.75 }, 150, "easeInExpo");
@@ -535,6 +544,7 @@ var Circle = (function() {
   function _onMouseEnter() {
     if (animating) return;
 
+    var $circle = $(".circle");
     $circle.find(".title, .counter").stop().animate({ opacity: 0 }, 100, "easeInExpo", function() {
       $circle.find(".explore, .background").stop().animate({ opacity: 1 }, 100, "easeOutExpo");
       $circle.addClass("selected");
@@ -559,7 +569,9 @@ var Circle = (function() {
     animating = true;
 
     var _afterHide = function() {
-      $circle.animate({ marginTop:0, opacity: 0 }, 250);
+      $circle.animate({ marginTop:0, opacity: 0 }, 250, function() {
+        $(this).hide();
+      });
     };
 
     if ($circle) {

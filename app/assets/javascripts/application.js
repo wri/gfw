@@ -2,10 +2,10 @@
 //= require jquery_ujs
 //= require jquery.easing.1.3
 //= require jquery-ui-1.8.20.custom.min
-//= require wax.g
+//= require wax.g.min-6.0.4
+//= require cartodb-gmapsv3-min
 //= require jstorage.min
 //= require jquery.history
-//= require cartodb-gmapsv3
 //= require lodash.min
 //= require backbone-min
 //= require class
@@ -30,28 +30,24 @@ function initialize() {
     config.mapOptions.zoom   = hash.zoom;
   }
 
-  // initialise the google map
+  // Initialise the google map
   map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 
   var map_style = {};
 
-  // Custom styles
-  map.mapTypes.set('forests', config.mapStyles.forestHeight);
-  map.mapTypes.set('forests_soft', config.mapStyles.forestSoft);
-
-  // Default styles
-  map_style.google_maps_customization_style = config.mapStyles;
-  map.setOptions({ styles: map_style.google_maps_customization_style });
-
   GFW(function(env) {
+
     GFW.app = new env.app.Instance(map, {
       user       : 'wri-01',
       layerTable : 'layerinfo',
       logging    : true
     });
+
     GFW.app.run();
     GFW.env = env;
+
   });
+
 }
 
 (function(window,undefined){
@@ -88,13 +84,13 @@ function initialize() {
     if (e.keyCode == 27) {
 
     $(".backdrop").fadeOut(250, function() {
-      $(this).remove();
+    $(this).remove();
     });
 
     $("#countries").fadeOut(250);
 
     }   // esc
-  });*/
+    });*/
 
   $("nav .home.ajax").on("click", function(e) {
     e.preventDefault();
@@ -135,7 +131,7 @@ $(function(){
   resizePID;
 
   //$(document).on("click", function(e) {
-    //Filter.closeOpenFilter();
+  //Filter.closeOpenFilter();
   //});
 
   $(document).on("click", ".radio", function(e) {

@@ -1,3 +1,4 @@
+
 function GFW() {
   var args = Array.prototype.slice.call(arguments),
   callback = args.pop(),
@@ -41,26 +42,67 @@ GFW.modules.app = function(gfw) {
       });
 
       this._precision = 2;
-      this._layers = [];
 
       gfw.log.enabled = options ? options.logging: false;
 
       this._map = map;
 
+      this._map.overlayMapTypes.push(null);
+
       this.lastHash = null;
 
       this._cartodb = Backbone.CartoDB({user: this.options.user});
+
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
-      this._style = "#gfw2_layerstyles { polygon-fill:#FF6600; polygon-opacity: 0.5; line-opacity:0.1; line-color: #FFFFFF; [name='timber_conc_indonesia']{ polygon-fill:#aa7722; } [name='cog_lc_1']{ polygon-fill:#0ff000; } [name='idn_lc_1']{ polygon-fill:#fff; } [name='gab_lc_1']{ polygon-fill:#fff0ff; } [name='gab_lc_2']{ polygon-fill:#ffff0f; } [name='cmr_lc_1']{ polygon-fill:#7711aa; } [name='idn_oc_1']{ polygon-fill:#fa0f99; } [name='idn_tc_1']{ polygon-fill:#000; } [name='cod_mc_1']{ polygon-fill:red; } [name='cod_lc_2']{ polygon-fill:#ffff00; } [name='cod_lc_1']{ polygon-fill:#fff0f0; } [name='caf_lc_1']{ polygon-fill:#0000ff; } [name='cmr_tc_1']{ polygon-fill:#0000ff; } }";
+
+      var overlayID =  document.getElementById("zoom_controls");
 
       this._loadBaseLayers();
-      this._setupZoom();
+
+      // zoomIn
+      var zoomInControlDiv = document.createElement('DIV');
+      overlayID.appendChild(zoomInControlDiv);
+
+      var zoomInControl = new this._zoomIn(zoomInControlDiv, map);
+      zoomInControlDiv.index = 1;
+
+      // zoomOut
+      var zoomOutControlDiv = document.createElement('DIV');
+      overlayID.appendChild(zoomOutControlDiv);
+
+      var zoomOutControl = new this._zoomOut(zoomOutControlDiv, map);
+      zoomOutControlDiv.index = 2;
 
     },
     run: function() {
       this._setupListeners();
       this.update();
       gfw.log.info('App is now running!');
+    },
+
+    _loadBaseLayers: function() {
+      var baseHansen = new CartoDBLayer({
+        map: map,
+        user_name:'wri-01',
+        table_name: 'hansen_data',
+        query: "SELECT * FROM hansen_data WHERE z=CASE WHEN 8<4 THEN 16 ELSE 4+8 END",
+        layer_order: "bottom",
+        opacity:0,
+        interactive:false,
+        auto_bound: false
+      });
+
+      var baseFORMA = new CartoDBLayer({
+        map: map,
+        user_name:'wri-01',
+        table_name: 'forma_zoom_polys',
+        query: "SELECT * FROM forma_zoom_polys WHERE z=CASE WHEN 8<3 THEN 16 ELSE 3+8 END",
+        layer_order: "bottom",
+        interactive:false,
+        auto_bound: false
+      });
+
+
     },
 
     open: function() {
@@ -95,23 +137,6 @@ GFW.modules.app = function(gfw) {
 
     },
 
-    _setupZoom:function() {
-      var overlayID =  document.getElementById("zoom_controls");
-      // zoomIn
-      var zoomInControlDiv = document.createElement('DIV');
-      overlayID.appendChild(zoomInControlDiv);
-
-      var zoomInControl = new this._zoomIn(zoomInControlDiv, map);
-      zoomInControlDiv.index = 1;
-
-      // zoomOut
-      var zoomOutControlDiv = document.createElement('DIV');
-      overlayID.appendChild(zoomOutControlDiv);
-
-      var zoomOutControl = new this._zoomOut(zoomOutControlDiv, map);
-      zoomOutControlDiv.index = 2;
-    },
-
     _zoomIn: function(controlDiv, map) {
       controlDiv.setAttribute('class', 'zoom_in');
 
@@ -128,12 +153,17 @@ GFW.modules.app = function(gfw) {
 
       google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
         var zoom = map.getZoom() - 1;
-
         if (zoom > 2) {
           map.setZoom(zoom);
         }
-
       });
+    },
+
+    _showHansen: function() {
+
+    },
+    _showForma: function() {
+
     },
 
     _setupListeners: function(){
@@ -142,127 +172,10 @@ GFW.modules.app = function(gfw) {
       Legend.init();
 
       // Setup listeners
-      google.maps.event.addListener(this._map, 'zoom_changed', function() {
-        that._updateHash(that);
-        //that._updateFORMA();
-        //that._updateHansen();
-      });
-
-      google.maps.event.addListener(this._map, 'dragend', function() {
-        that._updateHash(that);
-      });
-
+      google.maps.event.addListener(this._map, 'zoom_changed', this._updateHash);
+      google.maps.event.addListener(this._map, 'dragend', this._updateHash);
       google.maps.event.addListenerOnce(this._map, 'tilesloaded', this._mapLoaded);
-
-    },
-
-    _removeLayer: function(name) {
-      this._layers = _.without(this._layers, name);
-      this._renderLayers();
-    },
-
-    _addLayer: function(name) {
-      this._layers.push(name);
-      this._renderLayers();
-    },
-
-    _renderLayers: function() {
-
-      if (this._layers.length > 0) {
-
-        var template = "SELECT cartodb_id||':' ||'{{ table_name }}' as cartodb_id, the_geom_webmercator, '{{ table_name }}' AS name FROM {{ table_name }}";
-
-        var queryArray = _.map(this._layers, function(layer) {
-          return _.template(template, { table_name: layer });
-        });
-
-        var query = queryArray.join(" UNION ALL ");
-
-        this.mainLayer.setQuery(query);
-        this.mainLayer.setOpacity(1);
-        this.mainLayer.setInteraction(true);
-
-      } else {
-        this.mainLayer.setOpacity(0);
-        this.mainLayer.setInteraction(false);
-      }
-
-    },
-
-    _updateFORMA: function() {
-      var query = "SELECT * FROM forma_zoom_polys WHERE z=CASE WHEN 8 < " + this._map.getZoom() + " THEN 16 ELSE " + this._map.getZoom() + " + 8 END";
-      this.baseFORMA.setQuery(query);
-    },
-
-    _updateHansen: function() {
-      var query = "SELECT * FROM hansen_data WHERE z=CASE WHEN 8< " + this._map.getZoom() + " THEN 16 ELSE " + this._map.getZoom() + " + 8 END";
-      this.baseHansen.setQuery(query);
-    },
-
-    _loadBaseLayers: function() {
-
-      var hansenQuery = "SELECT * FROM hansen_data WHERE z=CASE WHEN 8< " + this._map.getZoom() + " THEN 16 ELSE " + this._map.getZoom() + " + 8 END";
-
-      this.baseHansen = new CartoDBLayer({
-        map: map,
-        user_name:'wri-01',
-        table_name: 'hansen_data',
-        query: hansenQuery,
-        layer_order: "bottom",
-        opacity:0,
-        interactive:false,
-        auto_bound: false
-      });
-
-      //this.baseSAD = new CartoDBLayer({
-        //map: map,
-        //user_name:'wri-01',
-        //table_name: 'gfw2_imazon',
-        //query: "SELECT * FROM gfw2_imazon",
-        //layer_order: "bottom",
-        //opacity:0,
-        //interactive:false,
-        //auto_bound: false
-      //});
-
-      var formaQuery = "SELECT * FROM forma_zoom_polys WHERE z=CASE WHEN 8 < " + this._map.getZoom() + " THEN 16 ELSE " + this._map.getZoom() + " + 8 END";
-
-      console.log(formaQuery);
-
-      this.baseFORMA = new CartoDBLayer({
-        map: map,
-        user_name:'wri-01',
-        table_name: 'forma_zoom_polys',
-        query: formaQuery,
-        layer_order: "bottom",
-        interactive:false,
-        auto_bound: false
-      });
-
-      this.mainLayer = new CartoDBLayer({
-        map: map,
-        user_name:'wri-01',
-        table_name: 'gfw2_layerstyles',
-        query: "",
-        layer_order: 10,
-        opacity: 0,
-        tile_style: this._style,
-        interactive:"cartodb_id, name",
-        featureMouseClick: function(ev, latlng, data) {
-          console.log(ev, latlng, data);
-          alert(data.cartodb_id);
-        },
-        featureMouseOut: function(ev) {
-          // console.log(ev);
-        },
-        featureMouseOver: function(ev, latlng, data) {
-          //console.log(data);
-        },
-        debug:true,
-        auto_bound: false
-      });
-
-      this.mainLayer.setInteraction(false);
+      google.maps.event.addListener(map, 'click', function(event) { console.log(event.latLng); });
 
     },
     _mapLoaded: function(){
@@ -274,18 +187,16 @@ GFW.modules.app = function(gfw) {
 
       showMap ? Navigation.showState("map") : Navigation.showState("home");
     },
-
-    _updateHash: function(self) {
+    _updateHash: function() {
 
       var
-      zoom = self._map.getZoom(),
-      lat  = self._map.getCenter().lat().toFixed(GFW.app._precision),
-      lng  = self._map.getCenter().lng().toFixed(GFW.app._precision);
+      zoom = this.getZoom(),
+      lat  = this.getCenter().lat().toFixed(this._precision),
+      lng  = this.getCenter().lng().toFixed(this._precision);
       hash = "/map/" + zoom + "/" + lat + "/" + lng;
 
       History.pushState({ state: 3 }, "Map", hash);
     },
-
     _parseHash: function(hash) {
 
       var args = hash.split("/");
@@ -309,7 +220,6 @@ GFW.modules.app = function(gfw) {
 
       return false;
     },
-
     update: function() {
       var hash = location.hash;
 
@@ -338,14 +248,22 @@ GFW.modules.maplayer = function(gfw) {
     init: function(layer, map) {
       this.layer = layer;
       this._map = map;
-
+      this._bindDisplay(new gfw.maplayer.Display());
+      this._options = this._display.getOptions(this.layer.get('tileurl'), this.layer.get('ispng'));
+      // this._boundingbox = this.layer.get('the_geom');
       var sw = new google.maps.LatLng(this.layer.get('ymin'), this.layer.get('xmin'));
       var ne = new google.maps.LatLng(this.layer.get('ymax'),this.layer.get('xmax'));
       this._bounds = new google.maps.LatLngBounds(sw, ne);
 
-      this._displayed = false;
+      gfw.log.info(this._options.getTileUrl({x: 3, y: 4},3));
 
+      this._displayed = false;
+      this._maptype = new google.maps.ImageMapType(this._options);
+
+      this._tileindex = this._map.overlayMapTypes.length;
+      this._map.overlayMapTypes.setAt(this._tileindex, null);
       this._setupListeners();
+
 
       if (this.layer.get('title') != 'FORMA'){
         this.layer.attributes['visible'] = false;
@@ -389,11 +307,9 @@ GFW.modules.maplayer = function(gfw) {
       return this._inZoomVal;
     },
     _inBounds: function(reset){
-
       if (this._inBoundsVal == null) {
         this._inBoundsVal = true;
       }
-
       if (reset){
         var bounds = this._map.getBounds();
         if (bounds) {
@@ -420,8 +336,12 @@ GFW.modules.maplayer = function(gfw) {
 
       if (this.layer.get('visible') && !this._displayed && this._inView()){
         this._displayed = true;
+        this._map.overlayMapTypes.setAt(this._tileindex, this._maptype);
+        gfw.log.info(this.layer.get('title')+ " added at "+this._tileindex);
       } else if (this._displayed && !this._inView()){
         this._displayed = false;
+        this._map.overlayMapTypes.setAt(this._tileindex, null);
+        gfw.log.info(this.layer.get('title')+ " removed at "+this._tileindex);
       }
     },
     _addControl: function(){
@@ -429,16 +349,17 @@ GFW.modules.maplayer = function(gfw) {
 
       var clickEvent = function() {
 
+        that._toggleLayer();
+        that._maptype.setOpacity(100);
+
         var
         title      = that.layer.get('title'),
         category   = that.layer.get('category_name'),
         visibility = that.layer.get('visible');
 
-        that._toggleLayer(GFW.app);
-
-        //if (category != 'Deforestation') {
-          //Legend.toggleItem(title, category, visibility);
-        //}
+        if (category != 'Deforestation') {
+          Legend.toggleItem(title, category, visibility);
+        }
 
       };
 
@@ -456,73 +377,48 @@ GFW.modules.maplayer = function(gfw) {
       this._display = display;
       display.setEngine(this);
     },
-    _toggleLayer: function(that){
+    _toggleLayer: function(){
+      var that = this;
 
       this.layer.attributes['visible'] = !this.layer.attributes['visible'];
 
       var
-      id        = this.layer.attributes['title'].replace(/ /g, "_").toLowerCase(),
-      visible   = this.layer.get('visible'),
-      tableName = this.layer.get('table_name');
+      id      = this.layer.attributes['title'].replace(/ /g, "_").toLowerCase(),
+      visible = this.layer.get('visible');
 
-      console.log(id, visible);
+      $.jStorage.set(id, visible);
+
+      var // special layerse
+      forma  = GFW.app.datalayers.LayersObj.get(1),
+      hansen = GFW.app.datalayers.LayersObj.get(565);
 
       if (id === 'forma' && showMap && visible ) {
         Timeline.show();
-      } else if ( (id === 'forma' && showMap && !visible) || (id === 'hansen' && showMap && visible) || (id === 'imazon_sad' && showMap && visible) ) {
+      } else if ( (id === 'forma' && showMap) || (id === 'hansen' && showMap && visible) ) {
         Timeline.hide();
       }
-
-      var // special layers
-      forma  = GFW.app.datalayers.LayersObj.get(1),
-      hansen = GFW.app.datalayers.LayersObj.get(565);
-      sad    = GFW.app.datalayers.LayersObj.get(567);
 
       if (visible) {
 
         this._displayed = true;
+        this._map.overlayMapTypes.setAt(this._tileindex, this._maptype);
 
-        if (id === 'forma') {
-
-          GFW.app.baseFORMA.setOpacity(1);
-          GFW.app.baseHansen.setOpacity(0);
-          //GFW.app.baseSAD.setOpacity(0);
-
+        // FORMA = 1 / Hansen = 2
+        if (this._tileindex == 1) {
+          this._map.overlayMapTypes.setAt(2, null);
           hansen.attributes['visible'] = false;
-          //sad.attributes['visible']    = false;
-
-        } else if (id === 'hansen') {
-
-          GFW.app.baseFORMA.setOpacity(0);
-          GFW.app.baseHansen.setOpacity(1);
-          //GFW.app.baseSAD.setOpacity(0);
-
+        } else if (this._tileindex == 2) {
+          this._map.overlayMapTypes.setAt(1, null);
           forma.attributes['visible'] = false;
-          sad.attributes['visible']   = false;
-
-        } else if (id === 'imazon_sad') {
-
-          GFW.app.baseFORMA.setOpacity(0);
-          GFW.app.baseHansen.setOpacity(0);
-          //GFW.app.baseSAD.setOpacity(1);
-
-          forma.attributes['visible']  = false;
-          hansen.attributes['visible'] = false;
-
-        } else {
-          GFW.app._addLayer(tableName);
         }
 
       } else {
-
-        if (id != 'forma' && id != "hansen" && id != "imazon_sad") {
-          GFW.app._removeLayer(tableName);
-        }
-
+        //if ( this._inView() ){
+          this._map.overlayMapTypes.setAt(this._tileindex, null);
+        //}
       }
     }
   });
-
   gfw.maplayer.Display = Class.extend(
     {
     /**
@@ -580,7 +476,7 @@ GFW.modules.datalayers = function(gfw) {
 
       var LayersColl    = this._cartodb.CartoDBCollection.extend({
         sql: function(){
-          return "SELECT cartodb_id AS id, title, table_name, category_name, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
+          return "SELECT cartodb_id AS id, title, category_name, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
           ST_XMIN(the_geom) AS xmin, ST_YMAX(the_geom) AS ymax, ST_YMIN(the_geom) AS ymin, tileurl, true AS visible \
           FROM " + layerTable + " \
           WHERE display = TRUE ORDER BY displaylayer ASC";
@@ -602,14 +498,14 @@ GFW.modules.datalayers = function(gfw) {
 
     },
     _addLayer: function(p){
-      //gfw.log.warn('only showing baselayers for now');
+      gfw.log.warn('only showing baselayers for now');
 
       //if (p.get('category') == 'baselayer') {
       var layer = new gfw.maplayer.Engine(p, this._map);
 
-      //this._dataarray.push(layer);
-      //this._bycartodbid[p.get('cartodb_id')] = layer;
-      //this._bytitle[p.get('title')] = layer;
+      this._dataarray.push(layer);
+      this._bycartodbid[p.get('cartodb_id')] = layer;
+      this._bytitle[p.get('title')] = layer;
       //}
     }
   });
