@@ -4,7 +4,6 @@
 @import "compass/reset";
 @import "helpers";
 
-
 body.demo {
 
   background:#f1f1f1;
@@ -119,4 +118,10 @@ body.demo {
       }
     }
   }
+}
+
+.charts { padding: 10px; }
+.chart rect {
+  fill: #75ADB5;
+  stroke: white;
 }
