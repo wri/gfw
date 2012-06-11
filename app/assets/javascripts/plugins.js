@@ -362,7 +362,6 @@ var Filter = (function() {
     // We select the FORMA layer by default
     if ( name == "FORMA") {
       $layerItem.find(".radio").addClass('checked');
-      Legend.add(name, category);
     }
 
     /*if ($.jStorage.get(id) == true) {

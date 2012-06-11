@@ -433,16 +433,8 @@ GFW.modules.maplayer = function(gfw) {
 
       var clickEvent = function() {
 
-        var
-        title      = that.layer.get('title'),
-        category   = that.layer.get('category_name'),
-        visibility = that.layer.get('visible');
-
         that._toggleLayer(GFW.app);
 
-        //if (category != 'Deforestation') {
-          //Legend.toggleItem(title, category, visibility);
-        //}
 
       };
 
@@ -465,9 +457,13 @@ GFW.modules.maplayer = function(gfw) {
       this.layer.attributes['visible'] = !this.layer.attributes['visible'];
 
       var
-      id        = this.layer.attributes['title'].replace(/ /g, "_").toLowerCase(),
-      visible   = this.layer.get('visible'),
-      tableName = this.layer.get('table_name');
+      id         = this.layer.attributes['title'].replace(/ /g, "_").toLowerCase(),
+      visible    = this.layer.get('visible'),
+      tableName  = this.layer.get('table_name'),
+      title      = this.layer.get('title'),
+      category   = this.layer.get('category_name'),
+      visibility = this.layer.get('visible');
+
 
       console.log(id, visible);
 
@@ -481,6 +477,11 @@ GFW.modules.maplayer = function(gfw) {
       forma  = GFW.app.datalayers.LayersObj.get(1),
       hansen = GFW.app.datalayers.LayersObj.get(565);
       sad    = GFW.app.datalayers.LayersObj.get(567);
+
+
+        if (category != 'Deforestation') {
+          //Legend.toggleItem(title, category, visible);
+        }
 
       if (visible) {
 
@@ -622,15 +623,7 @@ GFW.modules.datalayers = function(gfw) {
 
     },
     _addLayer: function(p){
-      //gfw.log.warn('only showing baselayers for now');
-
-      //if (p.get('category') == 'baselayer') {
       var layer = new gfw.maplayer.Engine(p, this._map);
-
-      //this._dataarray.push(layer);
-      //this._bycartodbid[p.get('cartodb_id')] = layer;
-      //this._bytitle[p.get('title')] = layer;
-      //}
     }
   });
 };
