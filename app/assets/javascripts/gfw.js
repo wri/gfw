@@ -226,7 +226,6 @@ GFW.modules.app = function(gfw) {
     },
     _updateHansen: function() {
       var query = this.queries.hansen.replace(/{Z}/g, this._map.getZoom());
-      console.log(query);
       this.baseHansen.setQuery(query);
     },
 
@@ -265,9 +264,8 @@ GFW.modules.app = function(gfw) {
       });
 
       this.mainLayer = null;
-
-
     },
+
     _mapLoaded: function(){
       config.mapLoaded = true;
 
@@ -431,16 +429,13 @@ GFW.modules.maplayer = function(gfw) {
       var that = this;
 
       var clickEvent = function() {
-
         that._toggleLayer(GFW.app);
-
-
       };
 
       var zoomEvent = function() {
-        if (that.layer.attributes['visible']) {
-          that._map.fitBounds(that._bounds);
-        }
+        //if (that.layer.attributes['visible']) {
+          //that._map.fitBounds(that._bounds);
+        //}
       };
 
       Filter.addFilter(this.layer.get('category_name'), this.layer.get('title'), clickEvent, zoomEvent);
@@ -485,11 +480,11 @@ GFW.modules.maplayer = function(gfw) {
       if (visible) {
 
         this._displayed = true;
+        console.log("Enabling " + id);
 
         if (id === 'forma') {
 
           GFW.app.baseFORMA.setOpacity(1);
-
           GFW.app.baseHansen.setOpacity(0);
           GFW.app.baseSAD.setOpacity(0);
 
@@ -504,12 +499,10 @@ GFW.modules.maplayer = function(gfw) {
           console.log(id);
 
           GFW.app.baseHansen.setOpacity(1);
-
           GFW.app.baseFORMA.setOpacity(0);
           GFW.app.baseSAD.setOpacity(0);
 
           hansen.attributes['visible'] = true;
-
           forma.attributes['visible'] = false;
           sad.attributes['visible']   = false;
 
@@ -519,12 +512,10 @@ GFW.modules.maplayer = function(gfw) {
         if (id === 'imazon_sad') {
 
           GFW.app.baseSAD.setOpacity(1);
-
           GFW.app.baseFORMA.setOpacity(0);
           GFW.app.baseHansen.setOpacity(0);
 
           sad.attributes['visible']  = true;
-
           forma.attributes['visible']  = false;
           hansen.attributes['visible'] = false;
 
