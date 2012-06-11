@@ -125,3 +125,11 @@ body.demo {
   fill: #75ADB5;
   stroke: white;
 }
+
+#circle {
+  circle {
+    fill: white;
+    stroke: #75ADB5;
+    stroke-width: 5px;
+  }
+}
