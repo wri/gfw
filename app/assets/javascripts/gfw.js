@@ -433,9 +433,9 @@ GFW.modules.maplayer = function(gfw) {
       };
 
       var zoomEvent = function() {
-        //if (that.layer.attributes['visible']) {
-          //that._map.fitBounds(that._bounds);
-        //}
+        if (that.layer.attributes['visible']) {
+          that._map.fitBounds(that._bounds);
+        }
       };
 
       Filter.addFilter(this.layer.get('category_name'), this.layer.get('title'), clickEvent, zoomEvent);
