@@ -128,17 +128,16 @@ body.demo {
 
 #circle {
   circle {
-    fill: white;
-    stroke: #75ADB5;
-    stroke-width: 5px;
+    fill: transparent;
+    fill-opacity:0;
+    stroke: #F2B357;
+    stroke-width: 10px;
   }
-}
-
-#lines {
 
   path {
-    stroke: steelblue;
-    stroke-width: 3;
-    fill: none;
+    stroke: #F2B357;
+    fill-opacity:0;
+    stroke-width: 4px;
+    fill: transparent;
   }
 }
