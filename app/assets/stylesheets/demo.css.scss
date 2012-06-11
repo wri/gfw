@@ -1,6 +1,9 @@
+//= require prettify
+
 @import "compass";
 @import "compass/reset";
 @import "helpers";
+
 
 body.demo {
 
@@ -82,6 +85,7 @@ body.demo {
 
       .btn { margin: 0 0 20px 0; }
       .checkbox { display: block; margin: 0 0 20px 0; }
+      .legend { display: block; opacity: 1; position:relative; top: 0; left: 0; }
 
       .snippet {
         @include clearfix();

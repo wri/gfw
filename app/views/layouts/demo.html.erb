@@ -2,11 +2,9 @@
 <html>
   <head>
     <title>Gfw</title>
-    <script type="text/javascript"
-      src="http://maps.googleapis.com/maps/api/js?sensor=false&language=<%= I18n.locale %>">
-    </script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&language=<%= I18n.locale %>"></script>
+    <script src="http://d3js.org/d3.v2.js"></script>
     <%= stylesheet_link_tag "application", :media => "all" %>
-    <%= stylesheet_link_tag "prettify", :media => "all" %>
     <%= csrf_meta_tags %>
   </head>
   <body onload="prettyPrint()"; class="<%= controller.controller_name %>">

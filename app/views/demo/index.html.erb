@@ -50,13 +50,22 @@
   <h3>Checkboxes and radiobuttons</h3>
 
   <%= snippet %(
-  <a href="#" class="radio checked" data-name="test">
+  <a href="#" class="radio checked"\n data-name="test">
     A radio button
   </a>
 
-  <a href="#" class="radio" data-name="test">
+  <a href="#" class="radio"\n data-name="test">
     Another radio button
   </a>), { :comment => "— Don't forget to add the data-name", :snippet_class => :dark } %>
+
+  <%= snippet %(
+  <a href="#" class="radio checked fire"\n data-name="test-2">
+    A radio button
+  </a>
+
+  <a href="#" class="radio fire"\n data-name="test-2">
+    Another radio button
+  </a>) %>
 
   <%= snippet %(
   <a href="#" class="checkbox">
@@ -142,4 +151,12 @@
     </ul>
   </div>
 
-</div>
+  <div class="demo">
+    <h3>Graphs</h3>
+
+    <div class="snippet">
+
+      <h4>Basics</h4>
+    </div>
+
+  </div>
