@@ -22,6 +22,11 @@ var Navigation = (function() {
   var lastCountryClass;
 
   $("#countries .country").on("mouseenter", function() {
+
+    if ($(this).hasClass("disabled")) {
+      return;
+    }
+
     var // selection box dimensions
     h = $("#countries .select").height(),
     w = $("#countries .select").width();
