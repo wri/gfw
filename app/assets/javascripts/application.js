@@ -105,8 +105,6 @@ function initialize() {
   $("nav .countries.ajax").on("click", function(e) {
     e.preventDefault();
     History.pushState({ state: 4 }, "Countries", "/countries");
-
-
   });
 
   $("nav .map.ajax").on("click", function(e) {
@@ -130,37 +128,18 @@ $(function(){
   polygonPath           = [],
   resizePID;
 
-  //$(document).on("click", function(e) {
-  //Filter.closeOpenFilter();
-  //});
-
-  $(document).on("click", ".radio", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    $('.radio[data-name="' + $(this).attr('data-name') + '"]').removeClass("checked");
-    $(this).addClass("checked");
-  });
-
-  $(document).on("click", ".checkbox", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    $(this).toggleClass("checked");
-  });
-
   $(window).resize(function() {
     clearTimeout(resizePID);
     resizePID = setTimeout(function() { resizeWindow(); }, 100);
   });
 
-  function resizeWindow( e ) {
+  function resizeWindow(e) {
     if (showMap) {
       GFW.app.open();
     }
   }
 
-  //  // Enables map editing mode. When activated, each click in the map draws a polyline
+  //  Enables map editing mode. When activated, each click in the map draws a polyline
   //  $('#map-container').find('.draw-area').click(function(){
   //    $(this).closest('#map-container').toggleClass('editing-mode');
 

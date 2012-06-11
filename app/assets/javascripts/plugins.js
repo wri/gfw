@@ -1,5 +1,9 @@
 var Navigation = (function() {
 
+  var
+  mapAnimationPID      = null,
+  mapAnimationInterval = 50;
+
   function _select(name) {
     $("nav li a").removeClass("selected");
     $("nav ." + name).addClass("selected");
@@ -60,10 +64,22 @@ var Navigation = (function() {
 
     Timeline.hide();
 
+    _animateMap();
+
     GFW.app.close(function() {
       Circle.show(250);
       $("footer, .actions").fadeIn(250);
     });
+  }
+
+  function _animateMap() {
+    mapAnimationPID = setInterval(function() {
+      map.panBy(1, 0);
+    }, mapAnimationInterval);
+  }
+
+  function _stopMapAnimation() {
+    clearInterval(mapAnimationPID);
   }
 
   function _showMapState() {
@@ -73,6 +89,8 @@ var Navigation = (function() {
 
     Circle.hide();
     Legend.show();
+
+    _stopMapAnimation();
 
     //if ($.jStorage.get("forma") == true) {
     Timeline.show(); // TODO: don't show the timeline if FORMA is not selected
@@ -86,6 +104,24 @@ var Navigation = (function() {
       Filter.show();
     });
   }
+
+  // Init method
+  $(function() {
+    $(document).on("click", ".radio", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      $('.radio[data-name="' + $(this).attr('data-name') + '"]').removeClass("checked");
+      $(this).addClass("checked");
+    });
+
+    $(document).on("click", ".checkbox", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      $(this).toggleClass("checked");
+    });
+  }());
 
   return {
     select: _select,
