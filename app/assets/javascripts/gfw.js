@@ -56,7 +56,6 @@ GFW.modules.app = function(gfw) {
 
       this._cartodb = Backbone.CartoDB({user: this.options.user});
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
-      //this._style = "#gfw2_layerstyles { polygon-fill:#FF6600; polygon-opacity: 0.5; line-opacity:0.1; line-color: #FFFFFF; [name='timber_conc_indonesia']{ polygon-fill:#aa7722; } [name='cog_lc_1']{ polygon-fill:#0ff000; } [name='idn_lc_1']{ polygon-fill:#fff; } [name='gab_lc_1']{ polygon-fill:#fff0ff; } [name='gab_lc_2']{ polygon-fill:#ffff0f; } [name='cmr_lc_1']{ polygon-fill:#7711aa; } [name='idn_oc_1']{ polygon-fill:#fa0f99; } [name='idn_tc_1']{ polygon-fill:#000; } [name='cod_mc_1']{ polygon-fill:red; } [name='cod_lc_2']{ polygon-fill:#ffff00; } [name='cod_lc_1']{ polygon-fill:#fff0f0; } [name='caf_lc_1']{ polygon-fill:#0000ff; } [name='cmr_tc_1']{ polygon-fill:#0000ff; } }";
 
       this._loadBaseLayers();
       this._setupZoom();
@@ -174,6 +173,7 @@ GFW.modules.app = function(gfw) {
 
     _renderLayers: function() {
 
+      console.log(this._layers);
       if (this._layers.length > 0) {
 
         var template = "SELECT cartodb_id||':' ||'{{ table_name }}' as cartodb_id, the_geom_webmercator, '{{ table_name }}' AS name FROM {{ table_name }}";
@@ -184,9 +184,30 @@ GFW.modules.app = function(gfw) {
 
         var query = queryArray.join(" UNION ALL ");
 
-        this.mainLayer.setQuery(query);
-        this.mainLayer.setOpacity(1);
-        this.mainLayer.setInteraction(true);
+        if (this.mainLayer) this.mainLayer.setMap(null);
+          this.mainLayer = new CartoDBLayer({
+            map: map,
+            user_name:'wri-01',
+            table_name: this._layers[0],
+            query: query,
+            layer_order: 10,
+            opacity: 1,
+            interactive:"cartodb_id, name",
+            featureMouseClick: function(ev, latlng, data) {
+              console.log(ev, latlng, data);
+              alert(data.cartodb_id);
+            },
+            featureMouseOut: function(ev) {
+              // console.log(ev);
+            },
+            featureMouseOver: function(ev, latlng, data) {
+              //console.log(data);
+            },
+            debug:true,
+            auto_bound: false
+        });
+
+          this.mainLayer.setInteraction(true);
 
       } else {
         this.mainLayer.setOpacity(0);
@@ -243,30 +264,8 @@ GFW.modules.app = function(gfw) {
         auto_bound: false
       });
 
-      this.mainLayer = new CartoDBLayer({
-        map: map,
-        user_name:'wri-01',
-        table_name: 'gfw2_layerstyles',
-        query: "",
-        layer_order: 10,
-        opacity: 0,
-        tile_style: this._style,
-        interactive:"cartodb_id, name",
-        featureMouseClick: function(ev, latlng, data) {
-          console.log(ev, latlng, data);
-          alert(data.cartodb_id);
-        },
-        featureMouseOut: function(ev) {
-          // console.log(ev);
-        },
-        featureMouseOver: function(ev, latlng, data) {
-          //console.log(data);
-        },
-        debug:true,
-        auto_bound: false
-      });
+      this.mainLayer = null;
 
-      this.mainLayer.setInteraction(false);
 
     },
     _mapLoaded: function(){
