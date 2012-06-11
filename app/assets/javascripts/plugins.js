@@ -22,6 +22,11 @@ var Navigation = (function() {
   var lastCountryClass;
 
   $("#countries .country").on("mouseenter", function() {
+
+    if ($(this).hasClass("disabled")) {
+      return;
+    }
+
     var // selection box dimensions
     h = $("#countries .select").height(),
     w = $("#countries .select").width();
@@ -49,6 +54,7 @@ var Navigation = (function() {
     $(".backdrop").fadeIn(250, function() {
       var width = $(document).width();
       $("#countries").fadeIn(250);
+      $("body").css({ overflow:"auto" });
     });
   }
 

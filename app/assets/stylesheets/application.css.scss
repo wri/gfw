@@ -22,13 +22,13 @@ header {
   background:url(backgrounds/bkg_header.png) repeat-x top center;
   height:247px;
 
-	a.logo {
-		display: inline-block;
-  	background:url(logos/logo.png) no-repeat center center;		
-		width: 96px;
-		height: 93px;
-		text-indent: -99999px;
-	}
+  a.logo {
+    display: inline-block;
+    background:url(logos/logo.png) no-repeat center center;
+    width: 96px;
+    height: 93px;
+    text-indent: -99999px;
+  }
 
   hgroup {
     position:relative;
@@ -254,87 +254,87 @@ nav {
 }
 
 ul.logo_list {
-	@include clearfix();
+  @include clearfix();
 
-	li {
-		float: left;
+  li {
+    float: left;
 
-		a {
-			display: inline-block;
-			width: 110px;
-			height: 80px;
-			background-position:left 0;
-			&:hover {
-  			background-position:left -80px;
-			}
-		}
+    a {
+      display: inline-block;
+      width: 110px;
+      height: 80px;
+      background-position:left 0;
+      &:hover {
+        background-position:left -80px;
+      }
+    }
 
-		a#centerglobaldevelopment {
-  		background-image:url(logos/centerglobaldevelopment.png);
-		}
+    a#centerglobaldevelopment {
+      background-image:url(logos/centerglobaldevelopment.png);
+    }
 
-		a#imazon {
-  		background-image:url(logos/imazon.png);
-		}
-		a#universitymaryland {
-  		background-image:url(logos/universitymaryland.png);
-		}
-		a#carpe {
-  		background-image:url(logos/carpe.png);
-		}
-		a#sekala {
-  		background-image:url(logos/sekala.png);
-		}
-		a#google {
-  		background-image:url(logos/google.png);
-		}
-		a#googleearthengine {
-  		background-image:url(logos/googleearthengine.png);
-		}
-		a#esri {
-  		background-image:url(logos/esri.png);
-		}
-		a#nasa {
-  		background-image:url(logos/nasa.png);
-		}
-		a#tilafund {
-  		background-image:url(logos/tilafund.png);
-		}
-		a#dutchforeign {
-  		background-image:url(logos/dutchforeign.png);
-		}
-		a#danida {
-  		background-image:url(logos/danida.png);
-		}
-		a#bobolink {
-  		background-image:url(logos/bobolink.png);
-		}
-		a#usaid {
-  		background-image:url(logos/usaid.png);
-		}
-		a#wri {
-  		background-image:url(logos/wri.png);
-		}
-		a#vizzuality {
-  		background-image:url(logos/vizzuality.png);
-		}
-	}
+    a#imazon {
+      background-image:url(logos/imazon.png);
+    }
+    a#universitymaryland {
+      background-image:url(logos/universitymaryland.png);
+    }
+    a#carpe {
+      background-image:url(logos/carpe.png);
+    }
+    a#sekala {
+      background-image:url(logos/sekala.png);
+    }
+    a#google {
+      background-image:url(logos/google.png);
+    }
+    a#googleearthengine {
+      background-image:url(logos/googleearthengine.png);
+    }
+    a#esri {
+      background-image:url(logos/esri.png);
+    }
+    a#nasa {
+      background-image:url(logos/nasa.png);
+    }
+    a#tilafund {
+      background-image:url(logos/tilafund.png);
+    }
+    a#dutchforeign {
+      background-image:url(logos/dutchforeign.png);
+    }
+    a#danida {
+      background-image:url(logos/danida.png);
+    }
+    a#bobolink {
+      background-image:url(logos/bobolink.png);
+    }
+    a#usaid {
+      background-image:url(logos/usaid.png);
+    }
+    a#wri {
+      background-image:url(logos/wri.png);
+    }
+    a#vizzuality {
+      background-image:url(logos/vizzuality.png);
+    }
+  }
 
 }
 
 article.contact {
-	span.subtitle {
-		font-size: 13px;
-		color: #999;
-		line-height: 16px;
+  span.subtitle {
+    font-size: 13px;
+    color: #999;
+    line-height: 16px;
 
-	a {
-		text-decoration: none;
-		color: #F2B257;
-	}
+    a {
+      text-decoration: none;
+      color: #F2B257;
+    }
 
 
-	}
+  }
 }
 
 body.countries {
@@ -478,15 +478,15 @@ body.countries {
       padding-left: 10px;
     }
 
-  	.icon {
-    	&.wikipedia {
-      	position:absolute;
-      	top: 1px; right: 1px;
-      	@include icons-sprite(wikipedia_hover);
-      	width: 40px;
-      	height:36px;
-    	}
-  	}		
+    .icon {
+      &.wikipedia {
+        position:absolute;
+        top: 1px; right: 1px;
+        @include icons-sprite(wikipedia_hover);
+        width: 40px;
+        height:36px;
+      }
+    }
   }
 
   .icon {
@@ -498,8 +498,8 @@ body.countries {
       height:36px;
     }
   }
-	
-	
+
+
 
 }
 
@@ -676,6 +676,14 @@ footer > .download {
     float:left;
     width: 250px;
     height: $countryHeight;
+
+    &.disabled {
+      .content {
+        color: #DCDCDD;
+        a { color: #DCDCDD; }
+        h4 { color: #DCDCDD; }
+      }
+    }
   }
 
   .select {
