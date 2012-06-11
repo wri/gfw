@@ -126,12 +126,22 @@ body.demo {
   stroke: white;
 }
 
-#circle {
+.circle {
+
+  rect {
+    fill: #75ADB5;
+    stroke: white;
+  }
+
   circle {
     fill: transparent;
     fill-opacity:0;
     stroke: #F2B357;
     stroke-width: 10px;
+  }
+
+  line {
+    shape-rendering: crispEdges;
   }
 
   path {

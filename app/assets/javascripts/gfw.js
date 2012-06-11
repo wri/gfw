@@ -47,6 +47,11 @@ GFW.modules.app = function(gfw) {
 
       this._map = map;
 
+      this.queries = {};
+      this.queries.hansen = "SELECT * FROM hansen_data WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
+      this.queries.sad    = "SELECT CASE WHEN {Z}<14 THEN st_buffer(the_geom_webmercator,(16-{Z})^4) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
+      this.queries.forma  = "SELECT * FROM forma_zoom_polys WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
+
       this.lastHash = null;
 
       this._cartodb = Backbone.CartoDB({user: this.options.user});
@@ -191,31 +196,26 @@ GFW.modules.app = function(gfw) {
     },
 
     _updateFORMA: function() {
-      var query = "SELECT * FROM forma_zoom_polys WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
-      query = query.replace(/{Z}/, this._map.getZoom());
+      var query = this.queries.forma.replace(/{Z}/g, this._map.getZoom());
       this.baseFORMA.setQuery(query);
     },
     _updateSAD: function() {
-      var query = "SELECT CASE WHEN {Z}<14 THEN st_buffer(the_geom_webmercator,(16-{Z})^4) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012",
-      query = query.replace(/{Z}/, this._map.getZoom());
-      console.log(query);
+      var query = this.queries.sad.replace(/{Z}/g, this._map.getZoom());
       this.baseSAD.setQuery(query);
     },
     _updateHansen: function() {
-      var query = "SELECT * FROM hansen_data WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
-      query = query.replace(/{Z}/, this._map.getZoom());
+      var query = this.queries.hansen.replace(/{Z}/g, this._map.getZoom());
+      console.log(query);
       this.baseHansen.setQuery(query);
     },
 
     _loadBaseLayers: function() {
 
-      var hansenQuery = "SELECT * FROM hansen_data WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
-
       this.baseHansen = new CartoDBLayer({
         map: map,
         user_name:'wri-01',
         table_name: 'hansen_data',
-        query: hansenQuery,
+        query: this.queries.hansen.replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
         opacity:0,
         interactive:false,
@@ -226,22 +226,18 @@ GFW.modules.app = function(gfw) {
         map: map,
         user_name:'wri-01',
         table_name: 'gfw2_imazon',
-        query: "SELECT CASE WHEN {Z}<14 THEN st_buffer(the_geom_webmercator,(16-{Z})^4) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012",
+        query: this.queries.sad.replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
         opacity:0,
         interactive:false,
         auto_bound: false
       });
 
-      var formaQuery = "SELECT * FROM forma_zoom_polys WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
-
-      console.log(formaQuery);
-
       this.baseFORMA = new CartoDBLayer({
         map: map,
         user_name:'wri-01',
         table_name: 'forma_zoom_polys',
-        query: formaQuery,
+        query: this.queries.forma.replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
         interactive:false,
         auto_bound: false
