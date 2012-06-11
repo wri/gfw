@@ -589,24 +589,31 @@ footer {
     font-size:11px;
 
     color: $cGray2;
-
-    .logos { position:relative; top: 50px; }
-
+		
+		p {font-size: 15px;}
+		
     a { display: block; margin: 0 20px 0 0; @include inline-block(); }
 
-    // Logos
-    a.wri { width: 92px; height: 31px; @include icons-sprite(logo_wri_black); }
-    .google { width: 90px; height: 52px; @include icons-sprite(logo_google); }
-    .cfgd { width: 72px; height: 52px; @include icons-sprite(logo_cgd); }
-    .university_maryland { width: 77px; height: 52px; @include icons-sprite(logo_maryland); }
-    .imazon { width: 74px; height: 52px; @include icons-sprite(logo_imazon); }
+    div.partners {
+			float: left; 
+			width: 550px; 
+			margin: 50px 0 0 0;
 
-    div.wri {
-      float: right;
+    	a.wri { width: 92px; height: 31px; @include icons-sprite(logo_wri_black); }
+    	.google { width: 90px; height: 52px; @include icons-sprite(logo_google); }
+    	.cfgd { width: 72px; height: 52px; @include icons-sprite(logo_cgd); }
+    	.university_maryland { width: 77px; height: 52px; @include icons-sprite(logo_maryland); }
+    	.imazon { width: 74px; height: 52px; @include icons-sprite(logo_imazon); }
+
+		}
+
+    div.wri {	
+	    float: right;
+			margin: 50px 0 0 0;
 
       & > .wri { width:92px; height: 31px; margin: 10px 0 20px 0; @include icons-sprite(logo_wri_black); }
 
-      address { width:266px; color: $cGray2; font-size:11px; line-height:120%; }
+      address { width:266px; color: $cGray3; font-size:11px; line-height:120%; }
     }
   }
 }
