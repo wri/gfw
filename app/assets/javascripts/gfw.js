@@ -56,7 +56,7 @@ GFW.modules.app = function(gfw) {
 
       this._cartodb = Backbone.CartoDB({user: this.options.user});
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
-      this._style = "#gfw2_layerstyles { polygon-fill:#FF6600; polygon-opacity: 0.5; line-opacity:0.1; line-color: #FFFFFF; [name='timber_conc_indonesia']{ polygon-fill:#aa7722; } [name='cog_lc_1']{ polygon-fill:#0ff000; } [name='idn_lc_1']{ polygon-fill:#fff; } [name='gab_lc_1']{ polygon-fill:#fff0ff; } [name='gab_lc_2']{ polygon-fill:#ffff0f; } [name='cmr_lc_1']{ polygon-fill:#7711aa; } [name='idn_oc_1']{ polygon-fill:#fa0f99; } [name='idn_tc_1']{ polygon-fill:#000; } [name='cod_mc_1']{ polygon-fill:red; } [name='cod_lc_2']{ polygon-fill:#ffff00; } [name='cod_lc_1']{ polygon-fill:#fff0f0; } [name='caf_lc_1']{ polygon-fill:#0000ff; } [name='cmr_tc_1']{ polygon-fill:#0000ff; } }";
+      //this._style = "#gfw2_layerstyles { polygon-fill:#FF6600; polygon-opacity: 0.5; line-opacity:0.1; line-color: #FFFFFF; [name='timber_conc_indonesia']{ polygon-fill:#aa7722; } [name='cog_lc_1']{ polygon-fill:#0ff000; } [name='idn_lc_1']{ polygon-fill:#fff; } [name='gab_lc_1']{ polygon-fill:#fff0ff; } [name='gab_lc_2']{ polygon-fill:#ffff0f; } [name='cmr_lc_1']{ polygon-fill:#7711aa; } [name='idn_oc_1']{ polygon-fill:#fa0f99; } [name='idn_tc_1']{ polygon-fill:#000; } [name='cod_mc_1']{ polygon-fill:red; } [name='cod_lc_2']{ polygon-fill:#ffff00; } [name='cod_lc_1']{ polygon-fill:#fff0f0; } [name='caf_lc_1']{ polygon-fill:#0000ff; } [name='cmr_tc_1']{ polygon-fill:#0000ff; } }";
 
       this._loadBaseLayers();
       this._setupZoom();
@@ -493,7 +493,7 @@ GFW.modules.maplayer = function(gfw) {
           GFW.app.baseHansen.setOpacity(0);
           GFW.app.baseSAD.setOpacity(0);
 
-          forma.attributes['visible'] = false;
+          forma.attributes['visible']  = false;
           hansen.attributes['visible'] = false;
           sad.attributes['visible']    = false;
 
@@ -501,6 +501,7 @@ GFW.modules.maplayer = function(gfw) {
         }
 
         if (id === 'hansen') {
+          console.log(id);
 
           GFW.app.baseHansen.setOpacity(1);
 
