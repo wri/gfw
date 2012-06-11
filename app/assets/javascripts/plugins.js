@@ -54,6 +54,7 @@ var Navigation = (function() {
     $(".backdrop").fadeIn(250, function() {
       var width = $(document).width();
       $("#countries").fadeIn(250);
+      $("body").css({ overflow:"auto" });
     });
   }
 
