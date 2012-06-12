@@ -274,7 +274,7 @@
 
     ul {
       border-bottom: 1px solid $cSeparator;
-      padding: 0 0 13px 0;
+      padding: 0 0 10px 0;
       margin: 0 0 13px 0;
 
       &:last-child { border:none; margin: 0; padding: 0; }
@@ -289,9 +289,9 @@
 
         vertical-align: top;
 
-        background:url(icons/square.png) no-repeat left 7px;
+        @extend .filter-bullets;
 
-        line-height:17px;
+        line-height:16px;
 
         color: $cGray3;
         font-size:12px;

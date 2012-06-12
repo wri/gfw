@@ -188,7 +188,6 @@ strong { font-weight: bold; } // This is sad, I know.
   user-select: none;
 }
 
-
 // Different filter elements
 .filter-links {
 
@@ -273,6 +272,28 @@ strong { font-weight: bold; } // This is sad, I know.
   &.deforestation    .line { background-color: $cFire; }
   &.carbon           .line { background-color: $cGray4;}
   &.biodiversity     .line { background-color: $cGray4; }
+}
+
+.filter-bullets {
+  background:url(icons/square.png) no-repeat left 6px;
+
+  &.protected_areas {
+    background:url(icons/bullet_protected_areas.png) no-repeat left 6px;
+  }
+
+  &.deforestation {
+    background:url(icons/bullet_deforestation.png) no-repeat left 6px;
+  }
+
+  &.concessions {
+    background:url(icons/bullet_concessions.png) no-repeat left 6px;
+  }
+  &.mining {
+    background:url(icons/bullet_mining.png) no-repeat left 6px;
+  }
+  &.forest {
+    background:url(icons/bullet_forest.png) no-repeat left 6px;
+  }
 }
 
 @mixin radio($url) {
