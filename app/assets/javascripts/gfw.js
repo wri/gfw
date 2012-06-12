@@ -197,13 +197,38 @@ GFW.modules.app = function(gfw) {
           query: query,
           layer_order: "top",
           opacity: 1,
-          interactivity:"cartodb_id, name",
+          interactivity:"cartodb_id",
           featureMouseClick: function(ev, latlng, data) {
-            console.log(ev, latlng, data);
-
-            that._infowindow.setContent(data);
-            that._infowindow.setPosition(latlng);
-            that._infowindow.open();
+            //we needed the cartodb_id and table name
+            var pair = data.cartodb_id.split(':');
+            //here i make a crude request for the columns of the table
+            //nulling out the geoms to save payload
+            var request_sql = "SELECT *, null as the_geom, null as the_geom_webmercator FROM " + pair[1] + " WHERE cartodb_id = " + pair[0];
+            $.ajax({
+                async: false,
+                dataType: 'json',
+                url: 'http://wri-01.cartodb.com/api/v2/sql?q=' + encodeURIComponent(request_sql) + '&callback=?',
+                success: function(json) {
+                    delete json.rows[0]['cartodb_id'],
+                    delete json.rows[0]['the_geom'];
+                    delete json.rows[0]['the_geom_webmercator'];
+                    delete json.rows[0]['created_at'];
+                    delete json.rows[0]['updated_at'];
+                    var data = json.rows[0];
+                    for (var key in data) {
+                        var temp; 
+                        if (data.hasOwnProperty(key)) {
+                          temp = data[key];
+                          delete data[key];
+                          key = key.replace('_',' '); //add spaces to key names
+                          data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
+                        }
+                    }
+                    that._infowindow.setContent(data);
+                    that._infowindow.setPosition(latlng);
+                    that._infowindow.open();
+                }
+            });
           },
           featureMouseOver: function(ev, latlng, data) {
             map.setOptions({draggableCursor: 'pointer'});
