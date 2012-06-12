@@ -197,7 +197,7 @@ GFW.modules.app = function(gfw) {
           query: query,
           layer_order: "top",
           opacity: 1,
-          interactivity:"cartodb_id, name",
+          interactivity:"cartodb_id,name",
           featureMouseClick: function(ev, latlng, data) {
             console.log(ev, latlng, data);
 
@@ -233,6 +233,7 @@ GFW.modules.app = function(gfw) {
       this.baseSAD.setQuery(query);
     },
     _updateHansen: function() {
+      var query = this.queries.sad.replace(/{Z}/g, this._map.getZoom());
       var query = this.queries.hansen.replace(/{Z}/g, this._map.getZoom());
       this.baseHansen.setQuery(query);
     },
@@ -245,10 +246,10 @@ GFW.modules.app = function(gfw) {
         table_name: 'gfw2_hansen',
         query: this.queries.hansen.replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
-        opacity:0,
         interactive:false,
         auto_bound: false
       });
+      this.baseHansen.hide();
 
       this.baseSAD = new CartoDBLayer({
         map: map,
@@ -256,10 +257,11 @@ GFW.modules.app = function(gfw) {
         table_name: 'gfw2_imazon',
         query: this.queries.sad.replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
-        opacity:0,
         interactive:false,
         auto_bound: false
       });
+
+      this.baseSAD.hide();
 
       this.baseFORMA = new CartoDBLayer({
         map: map,
@@ -270,7 +272,6 @@ GFW.modules.app = function(gfw) {
         interactive:false,
         auto_bound: false
       });
-
       this.mainLayer = null;
     },
 
@@ -491,13 +492,14 @@ GFW.modules.maplayer = function(gfw) {
 
         if (id === 'forma') {
 
+          GFW.app.baseFORMA.show();
           GFW.app.baseFORMA.setOpacity(1);
           forma.attributes['visible']  = true;
 
-          GFW.app.baseHansen.setOpacity(0);
+          GFW.app.baseHansen.hide();
           hansen.attributes['visible'] = false;
 
-          GFW.app.baseSAD.setOpacity(0);
+          GFW.app.baseSAD.hide();
           sad.attributes['visible']    = false;
 
           Legend.add(title, category);
@@ -509,13 +511,14 @@ GFW.modules.maplayer = function(gfw) {
 
         if (id === 'hansen') {
 
+          GFW.app.baseHansen.show();
           GFW.app.baseHansen.setOpacity(1);
           hansen.attributes['visible'] = true;
 
-          GFW.app.baseSAD.setOpacity(0);
+          GFW.app.baseSAD.hide();
           sad.attributes['visible']   = false;
 
-          GFW.app.baseFORMA.setOpacity(0);
+          GFW.app.baseFORMA.hide();
           forma.attributes['visible'] = false;
 
           Legend.add(title, category);
@@ -527,12 +530,16 @@ GFW.modules.maplayer = function(gfw) {
 
         if (id === 'imazon_sad') {
 
+          GFW.app.baseSAD.show();
           GFW.app.baseSAD.setOpacity(1);
-          GFW.app.baseFORMA.setOpacity(0);
-          GFW.app.baseHansen.setOpacity(0);
+          console.log(GFW.app.baseSAD.options.opacity);
 
           sad.attributes['visible']  = true;
+
+          GFW.app.baseFORMA.hide();
           forma.attributes['visible']  = false;
+
+          GFW.app.baseHansen.hide();
           hansen.attributes['visible'] = false;
 
           Legend.add(title, category);
