@@ -252,7 +252,7 @@ var Filter = (function() {
   }
 
   function _hideLayer() {
-    $layer.animate({ opacity: 0 }, 150, function() {
+    $layer.animate({ opacity: 0 }, 70, function() {
       $layer.css("left", -10000);
     });
   }
@@ -268,7 +268,7 @@ var Filter = (function() {
   }
 
   function _close(c) {
-    $layer.animate({ opacity: 0 }, 150, function() {
+    $layer.animate({ opacity: 0 }, 70, function() {
       $layer.css("left", -10000);
       $layer.removeClass(c);
     });
