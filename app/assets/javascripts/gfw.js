@@ -173,7 +173,6 @@ GFW.modules.app = function(gfw) {
 
     _renderLayers: function() {
 
-      console.log(this._layers);
       if (this._layers.length > 0) {
 
         var template = "SELECT cartodb_id||':' ||'{{ table_name }}' as cartodb_id, the_geom_webmercator, '{{ table_name }}' AS name FROM {{ table_name }}";
@@ -452,10 +451,10 @@ GFW.modules.maplayer = function(gfw) {
       this.layer.attributes['visible'] = !this.layer.attributes['visible'];
 
       var
-      id         = this.layer.attributes['title'].replace(/ /g, "_").toLowerCase(),
+      title      = this.layer.get('title'),
+      id         = title.replace(/ /g, "_").toLowerCase(),
       visible    = this.layer.get('visible'),
       tableName  = this.layer.get('table_name'),
-      title      = this.layer.get('title'),
       category   = this.layer.get('category_name'),
       visibility = this.layer.get('visible');
 
@@ -477,7 +476,6 @@ GFW.modules.maplayer = function(gfw) {
       if (visible) {
 
         this._displayed = true;
-        console.log("Enabling " + id);
 
         if (id === 'forma') {
 
@@ -485,7 +483,11 @@ GFW.modules.maplayer = function(gfw) {
           GFW.app.baseHansen.setOpacity(0);
           GFW.app.baseSAD.setOpacity(0);
 
-          forma.attributes['visible']  = false;
+          Legend.add(title, category);
+          Legend.remove(sad.get("title"), category);
+          Legend.remove(hansen.get("title"), category);
+
+          forma.attributes['visible']  = true;
           hansen.attributes['visible'] = false;
           sad.attributes['visible']    = false;
 
@@ -493,7 +495,6 @@ GFW.modules.maplayer = function(gfw) {
         }
 
         if (id === 'hansen') {
-          console.log(id);
 
           GFW.app.baseHansen.setOpacity(1);
           GFW.app.baseFORMA.setOpacity(0);
@@ -502,6 +503,10 @@ GFW.modules.maplayer = function(gfw) {
           hansen.attributes['visible'] = true;
           forma.attributes['visible'] = false;
           sad.attributes['visible']   = false;
+
+          Legend.add(title, category);
+          Legend.remove(sad.get("title"), category);
+          Legend.remove(forma.get("title"), category);
 
           return;
         }
@@ -515,6 +520,10 @@ GFW.modules.maplayer = function(gfw) {
           sad.attributes['visible']  = true;
           forma.attributes['visible']  = false;
           hansen.attributes['visible'] = false;
+
+          Legend.add(title, category);
+          Legend.remove(hansen.get("title"), category);
+          Legend.remove(forma.get("title"), category);
 
           return;
         }

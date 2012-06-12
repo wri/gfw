@@ -485,17 +485,19 @@ var Legend = (function() {
     if ( $(".legend").find("li").length >= 1 && showMap === true) {
       Legend.show();
     }
-
   }
 
-  function _remove(name) {
+  function _remove(name, category) {
 
     var //
     id  = name.replace(/ /g, "_").toLowerCase(),
+    cat = category.replace(/ /g, "_").toLowerCase(),
     $li = $(".legend").find("ul li#" + id),
     $ul = $li.parent();
 
     $li.remove();
+
+    if (cat === 'deforestation') return;
 
     if ($ul.find("li").length <= 0) {
 
@@ -506,17 +508,15 @@ var Legend = (function() {
         });
 
       } else {
-
         $(".legend").fadeOut(150, function() {
           $ul.remove();
         });
-
       }
     }
   }
 
   function _toggleItem(name, category, add) {
-    add ? _add(name, category) : _remove(name);
+    add ? _add(name, category) : _remove(name, category);
   }
 
   function _show(e) {
