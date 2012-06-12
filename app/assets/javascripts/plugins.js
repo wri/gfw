@@ -173,7 +173,7 @@ var Filter = (function() {
 
           if (count <= 0) {
 
-            if (categories.length > 5) { // TODO: calc this number dynamically
+            if (categories.length > 7) { // TODO: calc this number dynamically
               $advance.delay(200).animate({ top: "20px", opacity: 1 }, 200);
             }
 
@@ -349,7 +349,7 @@ var Filter = (function() {
       $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat }));
 
       // Click binding
-      $layerItem.on("click", function() {
+      $layerItem.find("a").on("click", function() {
         if (!$(this).find(".radio").hasClass("checked")) {
           clickEvent();
           zoomEvent();
@@ -361,7 +361,7 @@ var Filter = (function() {
       $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat }));
 
       // Click binding
-      $layerItem.on("click", function() {
+      $layerItem.find("a").on("click", function() {
         clickEvent();
         zoomEvent();
       });
@@ -460,26 +460,22 @@ var Legend = (function() {
     $item    = $(template({ category: cat, id: id, name: name.truncate(32) }));
 
     $item.hide();
+    var $ul = null;
 
     if ( $(".legend").find("ul." + cat).length > 0 ) {
 
-      var $ul = $(".legend").find("ul." + cat);
+      $ul = $(".legend").find("ul." + cat);
       $ul.append($item);
 
       $item.fadeIn(250);
       $ul.fadeIn(250);
-
-      $ul.attr("data-count", parseInt($ul.attr("data-count"), 10) + 1);
-
     } else {
-      var $ul = $("<ul class='"+cat+"' />");
+      $ul = $("<ul class='"+cat+"' />");
       $ul.append($item);
       $(".legend").find(".content").append($ul);
 
       $ul.fadeIn(250);
       $item.fadeIn(250);
-
-      $ul.attr("data-count", 1);
     }
 
     if ( $(".legend").find("li").length >= 1 && showMap === true) {
@@ -493,24 +489,30 @@ var Legend = (function() {
     var //
     id  = name.replace(/ /g, "_").toLowerCase(),
     $li = $(".legend").find("ul li#" + id),
-    $ul = $li.parent(),
-    c   = parseInt($ul.attr("data-count"), 10);
+    $ul = $li.parent();
 
     $li.remove();
-    $ul.attr("data-count", c - 1);
 
-    //console.log($(".legend").find("ul#" + id + " li").length);
+    if ($ul.find("li").length <= 0) {
 
+      if ($(".legend").find("ul").length > 1) {
+
+        $ul.fadeOut(150, function() {
+          $(this).remove();
+        });
+
+      } else {
+
+        $(".legend").fadeOut(150, function() {
+          $ul.remove();
+        });
+
+      }
+    }
   }
 
   function _toggleItem(name, category, add) {
-
-    if (add) {
-      _add(name, category);
-    } else {
-      _remove(name);
-    }
-
+    add ? _add(name, category) : _remove(name);
   }
 
   function _show(e) {

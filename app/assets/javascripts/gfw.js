@@ -185,29 +185,30 @@ GFW.modules.app = function(gfw) {
         var query = queryArray.join(" UNION ALL ");
 
         if (this.mainLayer) this.mainLayer.setMap(null);
-          this.mainLayer = new CartoDBLayer({
-            map: map,
-            user_name:'wri-01',
-            table_name: this._layers[0],
-            query: query,
-            layer_order: 10,
-            opacity: 1,
-            interactive:"cartodb_id, name",
-            featureMouseClick: function(ev, latlng, data) {
-              console.log(ev, latlng, data);
-              alert(data.cartodb_id);
-            },
-            featureMouseOut: function(ev) {
-              // console.log(ev);
-            },
-            featureMouseOver: function(ev, latlng, data) {
-              //console.log(data);
-            },
-            debug:true,
-            auto_bound: false
+
+        this.mainLayer = new CartoDBLayer({
+          map: map,
+          user_name:'wri-01',
+          table_name: "gfw2_layerstyles",
+          query: query,
+          layer_order: 10,
+          opacity: 1,
+          interactive:"cartodb_id, name",
+          featureMouseClick: function(ev, latlng, data) {
+            console.log(ev, latlng, data);
+            alert(data.cartodb_id);
+          },
+          featureMouseOut: function(ev) {
+            // console.log(ev);
+          },
+          featureMouseOver: function(ev, latlng, data) {
+            //console.log(data);
+          },
+          debug:true,
+          auto_bound: false
         });
 
-          this.mainLayer.setInteraction(true);
+        this.mainLayer.setInteraction(true);
 
       } else {
         this.mainLayer.setOpacity(0);
@@ -458,9 +459,6 @@ GFW.modules.maplayer = function(gfw) {
       category   = this.layer.get('category_name'),
       visibility = this.layer.get('visible');
 
-
-      console.log(id, visible);
-
       if (id === 'forma' && showMap && visible ) {
         Timeline.show();
       } else if ( (id === 'forma' && showMap && !visible) || (id === 'hansen' && showMap && visible) || (id === 'imazon_sad' && showMap && visible) ) {
@@ -472,10 +470,9 @@ GFW.modules.maplayer = function(gfw) {
       hansen = GFW.app.datalayers.LayersObj.get(565);
       sad    = GFW.app.datalayers.LayersObj.get(567);
 
-
-        if (category != 'Deforestation') {
-          //Legend.toggleItem(title, category, visible);
-        }
+      if (category != 'Deforestation') {
+         Legend.toggleItem(title, category, visible);
+      }
 
       if (visible) {
 
