@@ -199,10 +199,10 @@ GFW.modules.app = function(gfw) {
             alert(data.cartodb_id);
           },
           featureMouseOut: function(ev) {
-             console.log(ev);
+             //console.log(ev);
           },
           featureMouseOver: function(ev, latlng, data) {
-            //console.log(data);
+            console.log(data);
           },
           debug:true,
           auto_bound: false
