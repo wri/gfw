@@ -188,10 +188,12 @@ GFW.modules.app = function(gfw) {
 
         if (this.mainLayer) this.mainLayer.setMap(null);
 
+        var layer = (this._layers.length > 1) ? "gfw2_layerstyles" : this._layers[0];
+
         this.mainLayer = new CartoDBLayer({
           map: map,
           user_name:'wri-01',
-          table_name: "gfw2_layerstyles",
+          table_name: layer,
           query: query,
           layer_order: "top",
           opacity: 1,
@@ -480,7 +482,7 @@ GFW.modules.maplayer = function(gfw) {
       sad    = GFW.app.datalayers.LayersObj.get(567);
 
       if (category != 'Deforestation') {
-         Legend.toggleItem(title, category, visible);
+        Legend.toggleItem(title, category, visible);
       }
 
       if (visible) {
