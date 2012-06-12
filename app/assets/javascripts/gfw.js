@@ -203,11 +203,11 @@ GFW.modules.app = function(gfw) {
             that._infowindow.setPosition(latlng);
             that._infowindow.open();
           },
-          featureMouseOut: function(ev) {
-             //console.log(ev);
-          },
           featureMouseOver: function(ev, latlng, data) {
-            console.log(data);
+            map.setOptions({draggableCursor: 'pointer'});
+          },
+          featureMouseOut: function() {
+            map.setOptions({draggableCursor: 'default'});
           },
           debug:true,
           auto_bound: false
