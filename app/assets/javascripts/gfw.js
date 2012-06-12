@@ -246,7 +246,7 @@ GFW.modules.app = function(gfw) {
         query: this.queries.hansen.replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
         opacity:0,
-        interactive:false,
+        interactivity:false,
         auto_bound: false
       });
 
@@ -257,7 +257,7 @@ GFW.modules.app = function(gfw) {
         query: this.queries.sad.replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
         opacity:0,
-        interactive:false,
+        interactivity:false,
         auto_bound: false
       });
 
@@ -267,7 +267,7 @@ GFW.modules.app = function(gfw) {
         table_name: 'forma_zoom_polys',
         query: this.queries.forma.replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
-        interactive:false,
+        interactivity:false,
         auto_bound: false
       });
 
