@@ -77,7 +77,10 @@ var Navigation = (function() {
     Navigation.select("home");
 
     Filter.hide(function() {
-      $("hgroup h1").animate({ top: 0, opacity: 1 }, 250);
+
+      $("header").animate({height: "247px" }, 250, function() {
+        $("hgroup h1").animate({ top: 29, opacity: 1 }, 250);
+      });
     });
 
     Timeline.hide();
@@ -117,6 +120,7 @@ var Navigation = (function() {
     GFW.app.open();
 
     $("footer, .actions").fadeOut(250);
+    $("header").animate({height: "220px"}, 250);
 
     $("hgroup h1").animate({ top: "50px", opacity: 0 }, 250, function() {
       Filter.show();
@@ -299,7 +303,7 @@ var Filter = (function() {
     var left  = (l + $li.width() / 2) - (width / 2);
 
     $layer.find("li").css({ width:width - 20});
-    $layer.css({ left: left, width:width, height: $layer.find(".links").height() + 90, top: -80});
+    $layer.css({ left: left, width:width, height: $layer.find(".links").height() + 80, top: -80});
     $layer.animate({ opacity: 1 }, 250);
   }
 

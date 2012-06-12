@@ -39,7 +39,10 @@
     .inner > .title {
       margin:auto;
       width:175px;
-      font: 15px "Helvetica Neue", sans-serif;
+
+      @extend .sans-serif;
+      font-size:15px;
+
       font-weight:400;
       color:$cWhite;
       opacity: 0;
@@ -47,7 +50,8 @@
 
     .inner > .counter {
       text-align:center;
-      font: 67px "Georgia", serif;
+      @extend .serif;
+      font-size:67px;
       font-weight:200;
       color: $cLink;
       opacity: 0;
@@ -58,7 +62,8 @@
       top: -55px;
 
       text-align:center;
-      font: 13px "Helvetica Neue", sans-serif;
+      @extend .sans-serif;
+      font-size:13px;
       font-weight:bold;
       text-transform: uppercase;
       color: $cWhite;
@@ -91,12 +96,12 @@
 
     .links {
       position:absolute;
-      top: 83px;
+      top: 77px;
 
-      li {				
+      li {
         list-style: none;
         border-bottom: 1px solid $cSeparator;
-        padding: 10px 10px;
+        padding: 9px 10px 10px 10px;
         &.last { border:none; }
       }
 
@@ -114,7 +119,9 @@
       top: 46px;
       position:relative;
 
-      font: bold 12px "Helvetica Neue", sans-serif;
+      @extend .sans-serif;
+      font-size: 12px;
+      font-weight:bold;
       text-transform: uppercase;
       text-decoration: none;
     }
@@ -193,7 +200,7 @@
     float:left;
     margin: 0 1px 0 0;
     top: -30px;
-    padding:30px 0 0 0;
+    padding: 30px 0 0 0;
 
     opacity:0;
 
@@ -219,8 +226,9 @@
       padding: 0 14px;
       margin: 0 0 18px 0;
 
-      /*color: #f1f1f1;*/
-      font: bold 12px "Helvetica Neue", sans-serif;
+      @extend .sans-serif;
+      font-size:12px;
+      font-weight:bold;
       text-transform: uppercase;
       text-decoration: none;
     }
@@ -234,7 +242,8 @@
   left: 100px;
   width:211px;
 
-  font: 11px "Helvetica Neue", sans-serif;
+  @extend .sans-serif;
+  font-size:11px;
   color: $cGray3;
 
   display:none;
