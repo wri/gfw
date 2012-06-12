@@ -458,6 +458,10 @@ GFW.modules.maplayer = function(gfw) {
       category   = this.layer.get('category_name'),
       visibility = this.layer.get('visible');
 
+      if (category === null || !category) {
+        category = 'Other layers';
+      }
+
       if (id === 'forma' && showMap && visible ) {
         Timeline.show();
       } else if ( (id === 'forma' && showMap && !visible) || (id === 'hansen' && showMap && visible) || (id === 'imazon_sad' && showMap && visible) ) {

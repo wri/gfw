@@ -497,7 +497,9 @@ var Legend = (function() {
 
     $li.remove();
 
-    if (cat === 'deforestation') return;
+    if (cat == 'deforestation') {
+      return;
+    }
 
     if ($ul.find("li").length <= 0) {
 
