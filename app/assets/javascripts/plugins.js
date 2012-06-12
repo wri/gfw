@@ -303,7 +303,7 @@ var Filter = (function() {
     var left  = (l + $li.width() / 2) - (width / 2);
 
     $layer.find("li").css({ width:width - 20});
-    $layer.css({ left: left, width:width, height: $layer.find(".links").height() + 80, top: -80});
+    $layer.css({ left: left, width:width, height: $layer.find(".links").height() + 93, top: -80});
     $layer.animate({ opacity: 1 }, 250);
   }
 

@@ -96,7 +96,7 @@
 
     .links {
       position:absolute;
-      top: 77px;
+      top: 90px;
 
       li {
         list-style: none;
@@ -114,10 +114,12 @@
 
     & > a {
       display:block;
-      text-align:center;
       position:absolute;
       top: 46px;
       position:relative;
+      margin: 0 0 10px 0;
+
+      text-align:center;
 
       @extend .sans-serif;
       font-size: 12px;
@@ -191,6 +193,7 @@
     position:absolute;
     background:url(backgrounds/bkg_filter_gradient.png) no-repeat;
     z-index:10;
+    display:none;
   }
 
   .filters .inner { position:relative; }
@@ -271,8 +274,8 @@
 
     ul {
       border-bottom: 1px solid $cSeparator;
-      padding: 0 0 10px 0;
-      margin: 0 0 10px 0;
+      padding: 0 0 13px 0;
+      margin: 0 0 13px 0;
 
       &:last-child { border:none; margin: 0; padding: 0; }
 
@@ -288,6 +291,7 @@
 
         background:url(icons/square.png) no-repeat left 7px;
 
+        line-height:20px;
         color: $cGray3;
         font-size:12px;
 
