@@ -257,7 +257,7 @@
   & > .header {
     position:relative;
     height:45px - 34;
-    padding: 17px 23px;
+    padding: 18px 23px 17px 23px;
 
     cursor: move;
 
@@ -291,7 +291,8 @@
 
         background:url(icons/square.png) no-repeat left 7px;
 
-        line-height:20px;
+        line-height:17px;
+
         color: $cGray3;
         font-size:12px;
 
