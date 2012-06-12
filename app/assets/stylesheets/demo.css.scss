@@ -131,6 +131,7 @@ body.demo {
   rect {
     fill: #75ADB5;
     stroke: white;
+    shape-rendering: crispEdges;
   }
 
   circle {
@@ -150,4 +151,6 @@ body.demo {
     stroke-width: 4px;
     fill: transparent;
   }
+
+  text { font-size:20px; fill:#75ADB5; }
 }

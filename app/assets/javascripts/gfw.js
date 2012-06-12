@@ -191,15 +191,15 @@ GFW.modules.app = function(gfw) {
           user_name:'wri-01',
           table_name: "gfw2_layerstyles",
           query: query,
-          layer_order: 10,
+          layer_order: "top",
           opacity: 1,
-          interactive:"cartodb_id, name",
+          interactivity:"cartodb_id, name",
           featureMouseClick: function(ev, latlng, data) {
             console.log(ev, latlng, data);
             alert(data.cartodb_id);
           },
           featureMouseOut: function(ev) {
-            // console.log(ev);
+             console.log(ev);
           },
           featureMouseOver: function(ev, latlng, data) {
             //console.log(data);
