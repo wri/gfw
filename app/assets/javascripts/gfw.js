@@ -48,10 +48,10 @@ GFW.modules.app = function(gfw) {
       this._map = map;
 
       this.queries = {};
-      //this.queries.hansen = "SELECT * FROM hansen_data WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
-      this.queries.hansen = "SELECT * FROM gfw2_hansen WHERE z=CASE WHEN 9&lt;{Z} THEN 17 ELSE {Z}+8 END";
-      this.queries.sad    = "SELECT CASE WHEN {Z}<14 THEN st_buffer(the_geom_webmercator,(16-{Z})^4) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
       this.queries.forma  = "SELECT * FROM forma_zoom_polys WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
+      //this.queries.hansen = "SELECT * FROM hansen_data WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
+      this.queries.hansen = "SELECT * FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
+      this.queries.sad    = "SELECT CASE WHEN {Z}<14 THEN st_buffer(the_geom_webmercator,(16-{Z})^4) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
 
       this.lastHash = null;
 
@@ -235,7 +235,7 @@ GFW.modules.app = function(gfw) {
       this.baseHansen = new CartoDBLayer({
         map: map,
         user_name:'wri-01',
-        table_name: 'hansen_data',
+        table_name: 'gfw2_hansen',
         query: this.queries.hansen.replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
         opacity:0,
@@ -485,16 +485,17 @@ GFW.modules.maplayer = function(gfw) {
         if (id === 'forma') {
 
           GFW.app.baseFORMA.setOpacity(1);
+          forma.attributes['visible']  = true;
+
           GFW.app.baseHansen.setOpacity(0);
+          hansen.attributes['visible'] = false;
+
           GFW.app.baseSAD.setOpacity(0);
+          sad.attributes['visible']    = false;
 
           Legend.add(title, category);
           Legend.remove(sad.get("title"), category);
           Legend.remove(hansen.get("title"), category);
-
-          forma.attributes['visible']  = true;
-          hansen.attributes['visible'] = false;
-          sad.attributes['visible']    = false;
 
           return;
         }
@@ -502,12 +503,13 @@ GFW.modules.maplayer = function(gfw) {
         if (id === 'hansen') {
 
           GFW.app.baseHansen.setOpacity(1);
-          GFW.app.baseFORMA.setOpacity(0);
-          GFW.app.baseSAD.setOpacity(0);
-
           hansen.attributes['visible'] = true;
-          forma.attributes['visible'] = false;
+
+          GFW.app.baseSAD.setOpacity(0);
           sad.attributes['visible']   = false;
+
+          GFW.app.baseFORMA.setOpacity(0);
+          forma.attributes['visible'] = false;
 
           Legend.add(title, category);
           Legend.remove(sad.get("title"), category);
