@@ -21,6 +21,9 @@
 ] %>
 
 <div id="countries">
+
+  <h1><%= t(".title") %></h1>
+
   <% countries.each do |country| %>
     <div class="country <%= country[:title].downcase.gsub(" ", "_") %> <%= country[:class] %>">
       <% if country[:class] != :disabled %>

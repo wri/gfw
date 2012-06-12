@@ -590,14 +590,14 @@ footer {
     font-size:11px;
 
     color: $cGray2;
-		
+
 		p {font-size: 15px;}
-		
+
     a { display: block; margin: 0 20px 0 0; @include inline-block(); }
 
     div.partners {
-			float: left; 
-			width: 550px; 
+			float: left;
+			width: 550px;
 			margin: 50px 0 0 0;
 
     	a.wri { width: 92px; height: 31px; @include icons-sprite(logo_wri_black); }
@@ -608,7 +608,7 @@ footer {
 
 		}
 
-    div.wri {	
+    div.wri {
 	    float: right;
 			margin: 50px 0 0 0;
 
@@ -678,6 +678,16 @@ footer > .download {
     background:#fff;
   }
 
+  h1 {
+    margin: 0 0 50px 0;
+
+    text-align: center;
+
+    @extend .serif;
+    font-size:35px;
+    color: $cGray2;
+  }
+
   .country {
     position:relative;
     margin:0;
@@ -696,7 +706,11 @@ footer > .download {
 
   .select {
 
+    .icon { position:relative; top: 30px; margin: auto; }
+    .content { top: 180px!important; }
+
     &.malasya a .icon {
+      top: 70px;
       @include countries-sprite(country_malasya_selected);
     }
 
@@ -709,17 +723,13 @@ footer > .download {
     }
 
     &.indonesia a .icon {
+      top: 70px;
       @include countries-sprite(country_indonesia_selected);
     }
 
     &.brazil a .icon {
       @include countries-sprite(country_brazil_selected);
     }
-
-  }
-
-  .select  {
-    .icon { position:relative; top: 20px; margin: auto; }
   }
 
   .country  {
@@ -728,9 +738,9 @@ footer > .download {
 
   .country, .select {
 
+    @extend .sans-serif;
     color: #999999;
     font-size:15px;
-    @extend .sans-serif;
     border: 1px solid $cSeparator;
     line-height: 18px;
 
@@ -775,7 +785,7 @@ footer > .download {
     }
 
     &.indonesia .icon {
-      top: 40px;
+      top: 50px;
       @include countries-sprite(country_indonesia);
       width: 184px; height: 69px;
     }
@@ -801,7 +811,7 @@ footer > .download {
     }
 
     &.malasya .icon {
-      top: 40px;
+      top: 50px; left: 10px;
       @include countries-sprite(country_malasya);
       width: 184px; height: 69px;
     }

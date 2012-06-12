@@ -21,6 +21,18 @@ var Navigation = (function() {
 
   var lastCountryClass;
 
+  $("#countries .disabled").on("mouseenter", function() {
+    $(".select").hide();
+  });
+
+  $("#countries h1").on("mouseenter", function() {
+    $(".select").hide();
+  });
+
+  $("#countries").on("mouseleave", function() {
+    $(".select").hide();
+  });
+
   $("#countries .country").on("mouseenter", function() {
 
     if ($(this).hasClass("disabled")) {
