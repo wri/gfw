@@ -46,6 +46,7 @@ GFW.modules.app = function(gfw) {
       gfw.log.enabled = options ? options.logging: false;
 
       this._map = map;
+      this._infowindow = new CartoDBInfowindow(map);
 
       this.queries = {};
       this.queries.forma  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM forma_zoom_polys WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
@@ -173,6 +174,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _renderLayers: function() {
+      var that = this;
 
       if (this._layers.length > 0) {
 
@@ -196,7 +198,10 @@ GFW.modules.app = function(gfw) {
           interactivity:"cartodb_id, name",
           featureMouseClick: function(ev, latlng, data) {
             console.log(ev, latlng, data);
-            alert(data.cartodb_id);
+
+            that._infowindow.setContent(data);
+            that._infowindow.setPosition(latlng);
+            that._infowindow.open();
           },
           featureMouseOut: function(ev) {
              //console.log(ev);

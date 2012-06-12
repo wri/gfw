@@ -4,6 +4,7 @@
 //= require jquery-ui-1.8.20.custom.min
 //= require wax.g.min-6.0.4
 //= require cartodb-gmapsv3
+//= require cartodb-infowindow-min
 //= require jstorage.min
 //= require jquery.history
 //= require lodash.min
