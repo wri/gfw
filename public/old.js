@@ -1,4 +1,56 @@
 
+
+  //  Enables map editing mode. When activated, each click in the map draws a polyline
+  //  $('#map-container').find('.draw-area').click(function(){
+  //    $(this).closest('#map-container').toggleClass('editing-mode');
+
+  //    if (renderPolygonListener) return;
+
+  //    polygonPath = [];
+
+  //    polygon = new google.maps.Polygon({
+  //      paths: [],
+  //      strokeColor: "#FF0000",
+  //      strokeOpacity: 0.8,
+  //      strokeWeight: 3,
+  //      fillColor: "#FF0000",
+  //      fillOpacity: 0.35
+  //    });
+
+  //    polygon.setMap(map);
+
+  //    renderPolygonListener = google.maps.event.addListener(map, 'click', function(e){
+  //      polygonPath.push(e.latLng);
+  //      polygon.setPath(polygonPath);
+  //    });
+  //  });
+
+  //  // Disables editing mode. Sends the created polygon to cartodb.
+  //  $('#map-container').find('.save-area').submit(function(e){
+  //    e.preventDefault();
+  //    $(this).closest('#map-container').toggleClass('editing-mode');
+  //    $(this).find('#area_the_geom').val(JSON.stringify({
+  //      "type": "MultiPolygon",
+  //      "coordinates": [
+  //        [
+  //          $.map(polygonPath, function(latlong, index){
+  //        return [[latlong.lng(), latlong.lat()]];
+  //      })
+  //      ]
+  //      ]
+  //    }));
+
+  //    $.post($(this).attr('action'), $(this).serialize(), function(response){
+  //      google.maps.event.removeListener(renderPolygonListener);
+  //      renderPolygonListener = null;
+  //    });
+  //  });
+  //}
+
+
+
+
+
 function GFW() {
   var args = Array.prototype.slice.call(arguments),
   callback = args.pop(),

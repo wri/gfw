@@ -41,7 +41,7 @@ class CountriesController < ApplicationController
   def show
     
     @name = params[:id].capitalize
-    
+
     @country = OpenStruct.new({
       name: 'Central African Republic',
       alerts_count: 2931,
