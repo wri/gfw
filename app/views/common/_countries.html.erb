@@ -27,7 +27,7 @@
   <% countries.each do |country| %>
     <div class="country <%= country[:title].downcase.gsub(" ", "_") %> <%= country[:class] %>">
       <% if country[:class] != :disabled %>
-        <a href="/countries/show">
+        <a href="/country/<%= country[:title].downcase.gsub(" ", "_") %>">
         <% end %>
         <div class="icon"></div>
         <div class="content"><h4><%= country[:title] %></h4> <strong><%= country[:amount] %></strong> <%= country[:caption] %></div>
