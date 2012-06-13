@@ -108,6 +108,31 @@ function initialize() {
     History.pushState({ state: 4 }, "Countries", "/countries");
   });
 
+  $(".share_link").on("click", function(e) {
+    e.preventDefault();		
+    $("#content").append('<div class="backdrop" />');		
+    $(".backdrop").fadeIn(250, function() {
+      //$("#share").fadeIn(250);
+    });		
+  });
+
+  $(".subscribe_link").on("click", function(e) {
+    e.preventDefault();		
+    $("#content").append('<div class="backdrop" />');
+    $(".backdrop").fadeIn(250, function() {
+      $("#subscribe").fadeIn(250);
+    });
+  });
+
+  $("#subscribe").on("click", function(e) {
+    e.preventDefault();		
+    $(".backdrop").fadeOut(250, function() {
+      $(this).remove();
+    });
+    $("#subscribe").fadeOut(250);
+  });
+
+
   $("nav .map.ajax").on("click", function(e) {
     e.preventDefault();
     History.pushState({ state: 1 }, "Map", "/map");

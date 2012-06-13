@@ -346,6 +346,21 @@ body.countries {
   }
 }
 
+#share {
+}
+
+#subscribe {
+  position:absolute;
+  display:none;
+	width: 767px;
+	height: 559px;
+  margin-left:-384px;
+  top: 100px;
+  left: 50%;
+  z-index: 1050;	
+	background-image:url(subscribe_alert.png);
+}
+
 .details {
 
   .inner { position:relative; width: 917px; margin: 0 auto 49px auto; }
