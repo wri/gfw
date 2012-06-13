@@ -49,7 +49,7 @@ GFW.modules.app = function(gfw) {
       this._infowindow = new CartoDBInfowindow(map);
 
       this.queries = {};
-      this.queries.forma  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
+      this.queries.bimonthly  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
       this.queries.hansen = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
       this.queries.imazon_sad = "SELECT CASE WHEN {Z}<12 THEN st_buffer(the_geom_webmercator,(16-{Z})^3.8) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
 
@@ -59,7 +59,7 @@ GFW.modules.app = function(gfw) {
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
 
       this.mainLayer = null;
-      this.currentBaseLayer = "forma";
+      this.currentBaseLayer = "bimonthly";
 
       this._loadBaseLayer();
       this._setupZoom();
@@ -259,7 +259,7 @@ GFW.modules.app = function(gfw) {
     _updateBaseLayer: function() {
       var table_name = null;
 
-      if (this.currentBaseLayer === "forma") {
+      if (this.currentBaseLayer === "bimonthly") {
         table_name = 'gfw2_forma';
       } else if (this.currentBaseLayer === "hansen") {
         table_name = 'gfw2_hansen';
@@ -274,7 +274,7 @@ GFW.modules.app = function(gfw) {
     _loadBaseLayer: function() {
       var table_name = null;
 
-      if (this.currentBaseLayer === "forma") {
+      if (this.currentBaseLayer === "bimonthly") {
         table_name = 'gfw2_forma';
       } else if (this.currentBaseLayer === "hansen") {
         table_name = 'gfw2_hansen';
@@ -372,7 +372,7 @@ GFW.modules.maplayer = function(gfw) {
       var ne = new google.maps.LatLng(this.layer.get('ymax'),this.layer.get('xmax'));
       this._bounds = new google.maps.LatLngBounds(sw, ne);
 
-      if (this.layer.get('title') != 'FORMA'){
+      if (this.layer.get('title') != 'Bimonthly'){
         this.layer.attributes['visible'] = false;
       }
 
@@ -422,14 +422,14 @@ GFW.modules.maplayer = function(gfw) {
         category = 'Other layers';
       }
 
-      if (id === 'forma' && showMap && visible ) {
+      if (id === 'bimonthly' && showMap && visible ) {
         Timeline.show();
-      } else if ( (id === 'forma' && showMap && !visible) || (id === 'hansen' && showMap && visible) || (id === 'imazon_sad' && showMap && visible) ) {
+      } else if ( (id === 'bimonthly' && showMap && !visible) || (id === 'hansen' && showMap && visible) || (id === 'imazon_sad' && showMap && visible) ) {
         Timeline.hide();
       }
 
       var // special layers
-      forma  = GFW.app.datalayers.LayersObj.get(569),
+      bimonthly  = GFW.app.datalayers.LayersObj.get(569),
       hansen = GFW.app.datalayers.LayersObj.get(568),
       sad    = GFW.app.datalayers.LayersObj.get(567);
 
@@ -437,21 +437,21 @@ GFW.modules.maplayer = function(gfw) {
         Legend.toggleItem(title, category, visible);
       }
 
-      if (id === 'forma' || id === "hansen" || id === "imazon_sad") {
+      if (id === 'bimonthly' || id === "hansen" || id === "imazon_sad") {
 
         GFW.app.currentBaseLayer = id;
 
         GFW.app._updateBaseLayer();
 
-          if ( id == 'forma') {
-            forma.attributes['visible']  = true;
+          if ( id == 'bimonthly') {
+            bimonthly.attributes['visible']  = true;
           } else if (id == 'hansen') {
             hansen.attributes['visible']  = true;
           } else if (id == 'imazon_sad') {
             sad.attributes['visible']  = true;
           }
 
-        if (id === "forma") {
+        if (id === "bimonthly") {
           Legend.add(title, category);
           Legend.remove(sad.get("title"), category);
           Legend.remove(hansen.get("title"), category);

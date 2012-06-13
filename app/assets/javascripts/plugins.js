@@ -378,7 +378,7 @@ var Filter = (function() {
     $layerItem.find(".checkbox").addClass(cat);
 
     // We select the FORMA layer by default
-    if ( id == "forma" ) {
+    if ( id == "bimonthly" ) {
       $layerItem.find(".radio").addClass('checked');
     }
 
