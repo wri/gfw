@@ -132,6 +132,7 @@ body.demo {
     fill: #75ADB5;
     stroke: white;
     shape-rendering: crispEdges;
+    /*cursor:pointer;*/
   }
 
   circle {
@@ -147,10 +148,19 @@ body.demo {
 
   path {
     stroke: #F2B357;
-    fill-opacity:0;
     stroke-width: 4px;
+    fill-opacity:0;
     fill: transparent;
   }
 
-  text { font-size:20px; fill:#75ADB5; }
+  .amount { font-size:20px; color:#75ADB5; text-align:center; }
+  .amount .text { margin: auto; padding: 0 5px; @include inline-block(); background:#fff; }
+
+  .title { color: #75ADB5; font-size: 18px; text-align:center; @extend .serif; }
+
+  .subtitle { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
+  .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; background:#fff; }
+
+  .legend { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
+  .legend .text { margin: auto; width: 140px; background:#fff; }
 }
