@@ -10,6 +10,9 @@ body {
   background: $cBackground;
 }
 
+small { font-size: 15px!important; }
+sup { font-size:10px!important; vertical-align: top; position: relative; top: -0.5em;  }
+
 a.icon {
   &.download {
     padding: 0 0 0 15px;
@@ -883,6 +886,8 @@ footer > .download {
 
 .graphs {
   margin: 40px 0;
+  height: 300px;
+  width:100%;
 
   .chart {
     @include inline-block();
@@ -930,8 +935,8 @@ footer > .download {
   .subtitle { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
   .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; background:#fff; }
 
-  .legend { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
-  .legend .text { margin: auto; width: 140px; background:#fff; }
+  .graph_legend { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
+  .graph_legend .text { margin: auto; width: 140px; background:#fff; }
 }
 
 .bars {
@@ -969,6 +974,6 @@ footer > .download {
   .subtitle { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
   .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; background:#fff; }
 
-  .legend { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
-  .legend .text { margin: auto; width: 140px; background:#fff; }
+  .graph_legend { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
+  .graph_legend .text { margin: auto; width: 140px; background:#fff; }
 }

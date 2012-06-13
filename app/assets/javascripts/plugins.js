@@ -265,7 +265,7 @@ var Filter = (function() {
     clearTimeout(pids);
 
     pids = setTimeout(function() {
-    _close(c);
+      _close(c);
     }, 100);
   }
 
@@ -901,6 +901,7 @@ function addCircle(id, type, options) {
   subtitle          = options.subtitle   || "",
   legend            = options.legend     || "",
   h                 = 100, // maxHeight
+  legendUnit        = options.legendUnit || "",
   unit              = options.unit       || "",
   color             = options.color      || "#75ADB5",
   hoverColor        = options.hoverColor || "#427C8D",
@@ -1023,9 +1024,14 @@ function addCircle(id, type, options) {
                 )
                 .attr("transform", "translate(" + marginLeft + "," + marginTop + ")")
                 .on("mouseover", function(d) {
-                  var val = Math.floor(d.area_sqkm) + " " + unit;
-                  $(".amount." + id + " .text").text(val);
-                  $
+
+                  var val = Math.floor(d.area_sqkm) + " <small>" + unit + "</small>";
+                  $(".amount." + id + " .text").html(val);
+
+                  var t = _.template(legend);
+                  val = t({ n: Math.floor(d.height_m) + legendUnit });
+                  $(".graph_legend." + id + " .text").html(val);
+
                   d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
                 })
                 .on("mouseout", function() { d3.select(this).transition().duration(mouseOutDuration).style("fill", color); })
@@ -1043,10 +1049,10 @@ function addCircle(id, type, options) {
     addText({ x: 0, y: height/4 - 10, width: width, height: 50, c:"subtitle", html: '<div class="text">' + subtitle + '</div>' });
   }
 
-  addText({ x: 0, y: 3*height/4 - 13, width: width, height: 50, c:"amount " + id, html: '<div class="text">0</div>' });
+  addText({ x: 0, y: 3*height/4 - 13, width: width, height: 50, c:"amount " + id, html: '<div class="text"></div>' });
 
   if (legend) {
-    addText({ x: 0, y: 3*height/4 + 15, width: width, height: 50, c:"legend", html: '<div class="text">' + legend + '</div>' });
+    addText({ x: 0, y: 3*height/4 + 15, width: width, height: 50, c:"graph_legend " + id, html: '<div class="text"></div>' });
   }
 }
 
