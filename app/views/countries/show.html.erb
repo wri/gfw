@@ -12,6 +12,8 @@
   </div>
 <% end %>
 
+<div id="subscribe"></div>
+
 <div id="country">
 
   <div class="details">
@@ -32,7 +34,7 @@
             </li>
           <% end %>
         </ul>
-        <%= link_to (content_tag :span, t('.detail.alerts.subscribe')), {}, :class => "btn hollow" %>
+        <%= link_to (content_tag :span, t('.detail.alerts.subscribe')), "#", :class => "btn hollow subscribe_link"%>
       </div>
 
       <div class="description">
