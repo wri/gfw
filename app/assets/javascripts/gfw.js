@@ -191,7 +191,9 @@ GFW.modules.app = function(gfw) {
 
         this.mainLayer = new CartoDBLayer({
           map: map,
-          user_name:'wri-01',
+          user_name:'',
+          tiler_domain:'dyynnn89u7nkm.cloudfront.net',
+          sql_domain:'dyynnn89u7nkm.cloudfront.net',
           table_name: layer,
           query: query,
           layer_order: "top",
@@ -206,7 +208,9 @@ GFW.modules.app = function(gfw) {
             $.ajax({
                 async: false,
                 dataType: 'json',
-                url: 'http://wri-01.cartodb.com/api/v2/sql?q=' + encodeURIComponent(request_sql) + '&callback=?',
+                jsonp:false,
+                jsonpCallback:'iwcallback',
+                url: 'http://dyynnn89u7nkm.cloudfront.net/api/v2/sql?q=' + encodeURIComponent(request_sql),
                 success: function(json) {
                     delete json.rows[0]['cartodb_id'],
                     delete json.rows[0]['the_geom'];
@@ -281,7 +285,9 @@ GFW.modules.app = function(gfw) {
 
       this.baseLayer = new CartoDBLayer({
         map: map,
-        user_name:'wri-01',
+        user_name:'',
+        tiler_domain:'dyynnn89u7nkm.cloudfront.net',
+        sql_domain:'dyynnn89u7nkm.cloudfront.net',
         table_name: table_name,
         query: this.queries[this.currentBaseLayer].replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
