@@ -890,7 +890,7 @@ var Timeline = (function() {
 })();
 
 
-function addCircle(id, type, data, options) {
+function addCircle(id, type, options) {
 
   var
   width             = options.width      || 300,
@@ -929,11 +929,6 @@ function addCircle(id, type, data, options) {
     .style("stroke-dasharray", "2,2")
     .style("stroke", line.color);
   });
-
-  d3.select("#bars").append("svg")
-  .attr("class", "chart")
-  .attr("width", barWidth * data.length)
-  .attr("height", h);
 
   // Internal circle
   graph.append("circle")
@@ -1029,6 +1024,7 @@ function addCircle(id, type, data, options) {
                 .on("mouseover", function(d) {
                   var val = Math.floor(d.area_sqkm) + " " + unit;
                   $(".amount." + id + " .text").text(val);
+                  $
                   d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
                 })
                 .on("mouseout", function() { d3.select(this).transition().duration(mouseOutDuration).style("fill", color); })
@@ -1052,5 +1048,4 @@ function addCircle(id, type, data, options) {
     addText({ x: 0, y: 3*height/4 + 15, width: width, height: 50, c:"legend", html: '<div class="text">' + legend + '</div>' });
   }
 }
-
 

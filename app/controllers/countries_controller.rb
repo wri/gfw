@@ -33,7 +33,7 @@ class CountriesController < ApplicationController
       last_alerts: [{:date => DateTime.new(2012, 5, 5, 16, 32), :count => 12345}] * 4,
       wikipedia_link: 'http://en.wikipedia.org/wiki/Cameroon'
     }),
-    "malasya" => OpenStruct.new({
+    "malaysia" => OpenStruct.new({
       name: 'Malaysia',
       alerts_count: 2931,
       description: "Malaysia (i/məˈleɪʒə/ mə-lay-zhə or i/məˈleɪsiə/ mə-lay-see-ə) is a federal constitutional monarchy in Southeast Asia. It consists of thirteen states and three federal territories and has a total landmass of 329,847 square kilometres (127,350 sq mi) separated by the South China Sea into two similarly sized regions, Peninsular Malaysia and Malaysian Borneo. Land borders are shared with Thailand, Indonesia, and Brunei, and maritime borders exist with Singapore, Vietnam, and the Philippines. The capital city is Kuala Lumpur, while Putrajaya is the seat of the federal government. In 2010 the population exceeded 27.5 million, with over 20 million living on the Peninsula.",
