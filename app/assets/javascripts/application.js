@@ -112,8 +112,16 @@ function initialize() {
     e.preventDefault();		
     $("#content").append('<div class="backdrop" />');		
     $(".backdrop").fadeIn(250, function() {
-      //$("#share").fadeIn(250);
+      $("#share").fadeIn(250);
     });		
+  });
+
+  $("#share").on("click", function(e) {
+    e.preventDefault();		
+    $(".backdrop").fadeOut(250, function() {
+      $(this).remove();
+    });
+    $("#share").fadeOut(250);
   });
 
   $(".subscribe_link").on("click", function(e) {
