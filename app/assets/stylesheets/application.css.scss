@@ -735,9 +735,9 @@ footer > .download {
     .icon { position:relative; top: 30px; margin: auto; }
     .content { top: 180px!important; }
 
-    &.malasya a .icon {
+    &.malaysia a .icon {
       top: 70px;
-      @include countries-sprite(country_malasya_selected);
+      @include countries-sprite(country_malaysia_selected);
     }
 
     &.india a .icon {
@@ -836,9 +836,9 @@ footer > .download {
       width: 126px; height: 131px;
     }
 
-    &.malasya .icon {
+    &.malaysia .icon {
       top: 50px; left: 10px;
-      @include countries-sprite(country_malasya);
+      @include countries-sprite(country_malaysia);
       width: 184px; height: 69px;
     }
 
