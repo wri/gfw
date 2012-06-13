@@ -26,7 +26,7 @@ en:
     read_more: "Read more"
   home:
     index:
-      title: "Find where forest clearing is happening right now"
+      title: "Find out what is happening in forests right now"
       icons:
         crowdsourcing:
           title: 'Crowdsourcing'
