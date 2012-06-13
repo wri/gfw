@@ -83,6 +83,7 @@ GFW.modules.app = function(gfw) {
         $("body").css({overflow:"hidden"});
       });
 
+      Filter.addFilter('Regrowth', 'coming soon...');
     },
 
     close: function(callback) {
