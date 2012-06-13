@@ -95,7 +95,7 @@ var Navigation = (function() {
 
   function _animateMap() {
     mapAnimationPID = setInterval(function() {
-      map.panBy(1, 0);
+      map.panBy(-1, 0);
     }, mapAnimationInterval);
   }
 
