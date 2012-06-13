@@ -262,8 +262,10 @@ var Filter = (function() {
 
     if (c === undefined) return;
 
+    clearTimeout(pids);
+
     pids = setTimeout(function() {
-      _close(c);
+    _close(c);
     }, 100);
   }
 
@@ -376,14 +378,10 @@ var Filter = (function() {
     $layerItem.find(".checkbox").addClass(cat);
 
     // We select the FORMA layer by default
-    if ( name == "FORMA") {
+    if ( id == "forma" ) {
       $layerItem.find(".radio").addClass('checked');
     }
 
-    /*if ($.jStorage.get(id) == true) {
-      $layerItem.find(".checkbox").addClass('checked');
-      clickEvent();
-      }*/
   }
 
 
@@ -738,6 +736,8 @@ var Timeline = (function() {
   function _animate() {
 
     if (!playing) return;
+
+    clearTimeout(animationPid);
 
     animationPid = setTimeout(function() {
 

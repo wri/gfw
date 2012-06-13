@@ -5,8 +5,8 @@
 //= require wax.g.min-6.0.4
 //= require cartodb-gmapsv3
 //= require cartodb-infowindow-min
+// require jquery.history
 //= require jstorage.min
-//= require jquery.history
 //= require lodash.min
 //= require backbone-min
 //= require class
@@ -22,14 +22,14 @@ previousState = null;
 
 function initialize() {
 
-  var
+  /*var
   State = History.getState(),
   hash  = parseHash(State.hash);
 
   if (hash) {
     config.mapOptions.center = hash.center;
     config.mapOptions.zoom   = hash.zoom;
-  }
+  }*/
 
   // Initialise the google map
   map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
@@ -51,7 +51,7 @@ function initialize() {
 
 }
 
-(function(window,undefined){
+/*(function(window,undefined){
 
   // Prepare
   var History = window.History; // Note: We are using a capital H instead of a lower h
@@ -66,7 +66,7 @@ function initialize() {
   History.Adapter.bind(window,'statechange', function(){ // Note: We are using statechange instead of popstate
     var State = History.getState(); // Note: We are using History.getState() instead of event.state
 
-    History.log(State.data, State.title, State.url);
+    //History.log(State.data, State.title, State.url);
 
     if (previousState != State.title) {
       if (State.title === 'Home') {
@@ -80,18 +80,6 @@ function initialize() {
       previousState = State.title;
     }
   });
-
-  /*$(document).keyup(function(e) {
-    if (e.keyCode == 27) {
-
-    $(".backdrop").fadeOut(250, function() {
-    $(this).remove();
-    });
-
-    $("#countries").fadeOut(250);
-
-    }   // esc
-    });*/
 
   $("nav .home.ajax").on("click", function(e) {
     e.preventDefault();
@@ -119,7 +107,7 @@ function initialize() {
 
   return false;
 
-})(window);
+})(window);*/
 
 $(function(){
 
@@ -139,52 +127,4 @@ $(function(){
       GFW.app.open();
     }
   }
-
-  //  Enables map editing mode. When activated, each click in the map draws a polyline
-  //  $('#map-container').find('.draw-area').click(function(){
-  //    $(this).closest('#map-container').toggleClass('editing-mode');
-
-  //    if (renderPolygonListener) return;
-
-  //    polygonPath = [];
-
-  //    polygon = new google.maps.Polygon({
-  //      paths: [],
-  //      strokeColor: "#FF0000",
-  //      strokeOpacity: 0.8,
-  //      strokeWeight: 3,
-  //      fillColor: "#FF0000",
-  //      fillOpacity: 0.35
-  //    });
-
-  //    polygon.setMap(map);
-
-  //    renderPolygonListener = google.maps.event.addListener(map, 'click', function(e){
-  //      polygonPath.push(e.latLng);
-  //      polygon.setPath(polygonPath);
-  //    });
-  //  });
-
-  //  // Disables editing mode. Sends the created polygon to cartodb.
-  //  $('#map-container').find('.save-area').submit(function(e){
-  //    e.preventDefault();
-  //    $(this).closest('#map-container').toggleClass('editing-mode');
-  //    $(this).find('#area_the_geom').val(JSON.stringify({
-  //      "type": "MultiPolygon",
-  //      "coordinates": [
-  //        [
-  //          $.map(polygonPath, function(latlong, index){
-  //        return [[latlong.lng(), latlong.lat()]];
-  //      })
-  //      ]
-  //      ]
-  //    }));
-
-  //    $.post($(this).attr('action'), $(this).serialize(), function(response){
-  //      google.maps.event.removeListener(renderPolygonListener);
-  //      renderPolygonListener = null;
-  //    });
-  //  });
-  //}
-
 });

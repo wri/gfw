@@ -320,7 +320,7 @@ GFW.modules.app = function(gfw) {
       lng  = self._map.getCenter().lng().toFixed(GFW.app._precision);
       hash = "/map/" + zoom + "/" + lat + "/" + lng;
 
-      History.pushState({ state: 3 }, "Map", hash);
+      //History.pushState({ state: 3 }, "Map", hash);
     },
 
     _parseHash: function(hash) {
@@ -355,14 +355,14 @@ GFW.modules.app = function(gfw) {
         return;
       }
 
-      var
+      /*var
       State  = History.getState(),
       parsed = this._parseHash(State.hash);
 
       if (parsed) {
         this._map.setZoom(parsed.zoom);
         this._map.setCenter(parsed.center);
-      }
+      }*/
 
     }
   });
@@ -382,76 +382,12 @@ GFW.modules.maplayer = function(gfw) {
 
       this._displayed = false;
 
-      this._setupListeners();
-
       if (this.layer.get('title') != 'FORMA'){
         this.layer.attributes['visible'] = false;
       }
 
       this._addControl();
-      this._handleLayer();
-    },
-
-    _setupListeners: function(){
-      var that = this;
-
-      //setup zoom listener
-      google.maps.event.addListener(this._map, 'zoom_changed', function() {
-        that._inZoom(true);
-        that._handleLayer();
-      });
-
-      google.maps.event.addListener(this._map, 'dragend', function() {
-        that._inBounds(true);
-        that._handleLayer();
-      });
-
-      this._inZoom(true);
-      this._inBounds(true);
-    },
-
-    _inZoom: function(reset){
-
-      if (this._inZoomVal == null){
-        this._inZoomVal = true;
-      }
-
-      if (reset){
-        if (this.layer.get('zmin')<=this._map.getZoom() && this._map.getZoom()<=this.layer.get('zmax')) {
-          this._inZoomVal = true;
-        } else {
-          this._inZoomVal = false;
-        }
-      }
-      return this._inZoomVal;
-    },
-    _inBounds: function(reset){
-
-      if (this._inBoundsVal == null) {
-        this._inBoundsVal = true;
-      }
-
-      if (reset){
-        var bounds = this._map.getBounds();
-        if (bounds) {
-          var ne = bounds.getNorthEast();
-          var sw = bounds.getSouthWest();
-          if (this._bounds.intersects(bounds)){
-            this._inBoundsVal = true;
-          } else {
-            this._inBoundsVal = false;
-          }
-        }
-
-      }
-      return this._inBoundsVal;
-    },
-    _inView: function(){
-      if (this._inZoom(false) && this._inBounds(false)) {
-        return true;
-      } else {
-        return false;
-      }
+      //this._handleLayer();
     },
     _handleLayer: function(){
 
@@ -505,7 +441,7 @@ GFW.modules.maplayer = function(gfw) {
       }
 
       var // special layers
-      forma  = GFW.app.datalayers.LayersObj.get(1),
+      forma  = GFW.app.datalayers.LayersObj.get(569),
       hansen = GFW.app.datalayers.LayersObj.get(568);
       sad    = GFW.app.datalayers.LayersObj.get(567);
 
@@ -559,7 +495,6 @@ GFW.modules.maplayer = function(gfw) {
 
           GFW.app.baseSAD.show();
           GFW.app.baseSAD.setOpacity(1);
-          console.log(GFW.app.baseSAD.options.opacity);
 
           sad.attributes['visible']  = true;
 
@@ -588,46 +523,6 @@ GFW.modules.maplayer = function(gfw) {
     }
   });
 
-  gfw.maplayer.Display = Class.extend(
-    {
-    /**
-     * Constructs a new Display with the given DOM element.
-     */
-    init: function() {
-      gfw.log.info('displayed');
-    },
-
-    /**
-     * Sets the engine for this display.
-     *
-     * @param engine a mol.ui.Engine subclass
-     */
-    setEngine: function(engine) {
-      this._engine = engine;
-    },
-    getTileUrl: function(tile, zoom) {
-      var that = this;
-      var url = that.tileurl.replace(RegExp('\\{Z}', 'g'), zoom);
-      url = url.replace(RegExp('\\{X}', 'g'), tile.x);
-      url = url.replace(RegExp('\\{Y}', 'g'), tile.y);
-      return url;
-    },
-    getOptions: function(tileurl, ispng){
-      var that = this;
-      var options = {
-        alt: "MapServer Layer",
-        getTileUrl: this.getTileUrl,
-        tileurl: tileurl,
-        isPng: ispng,
-        maxZoom: 17,
-        minZoom: 1,
-        name: "MapServer Layer",
-        tileSize: new google.maps.Size(256, 256)
-      };
-      return options;
-    }
-  }
-  );
 };
 
 GFW.modules.datalayers = function(gfw) {
@@ -703,7 +598,7 @@ GFW.modules.log = function(gfw) {
       if (logger && logger.markTimeline) {
         logger.markTimeline(msg);
       }
-      console.log(msg);
+      //console.log(msg);
     }
   };
 };
