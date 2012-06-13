@@ -277,8 +277,6 @@ if (typeof(google.maps.CartoDBLayer) === "undefined") {
 
     // // Remove layer
     var self = this;
-    //debugger;
-    //this.options.map.overlayMapTypes.clear();
     this.options.map.overlayMapTypes.forEach(
       function(layer,i) {
       if (layer == self.layer) {
