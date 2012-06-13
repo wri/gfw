@@ -170,6 +170,6 @@ $(function(){
 
   if ($("div[data-load]").length > 0) {
     addCircle("forest", "bars", { legendUnit: "m", countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"with {{n}} tall trees", hoverColor: "#427C8D", color: "#75ADB5", unit: "km<sup>2</sup>" });
-    addCircle("forma", "lines", { countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"total forest area", hoverColor: "#F2B357", color: "#F2B357", unit: "Ha" });
+    addCircle("forma", "lines", { legendUnit: " months", countryCode: countryCode, width: 300, title: "FORMA", subtitle:"Forest clearing alerts", legend:"In the last {{n}}", hoverColor: "#F2B357", color: "#F2B357" });
   }
 });

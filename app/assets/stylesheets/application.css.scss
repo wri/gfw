@@ -882,8 +882,6 @@ footer > .download {
   }
 }
 
-
-
 .graphs {
   margin: 40px 0;
   height: 300px;
@@ -902,18 +900,18 @@ footer > .download {
 
 .lines {
 
-  rect {
-    fill: #75ADB5;
-    stroke: white;
-    shape-rendering: crispEdges;
-    /*cursor:pointer;*/
-  }
-
   circle {
     fill: transparent;
     fill-opacity:0;
     stroke: #F2B357;
     stroke-width: 10px;
+  }
+
+  circle#marker {
+    fill: #F2B357;
+    fill-opacity:1;
+    stroke: white;
+    stroke-width: 1px;
   }
 
   line {
@@ -927,10 +925,10 @@ footer > .download {
     fill: transparent;
   }
 
-  .amount { font-size:20px; color:#75ADB5; text-align:center; }
+  .amount { font-size:24px; color:#F2B357; text-align:center; }
   .amount .text { margin: auto; padding: 0 5px; @include inline-block(); background:#fff; }
 
-  .title { color: #75ADB5; font-size: 18px; text-align:center; @extend .serif; }
+  .title { color: #F2B357; font-size: 18px; text-align:center; @extend .serif; }
 
   .subtitle { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
   .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; background:#fff; }

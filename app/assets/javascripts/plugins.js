@@ -963,6 +963,7 @@ function addCircle(id, type, options) {
   // Content selection: lines or bars
   if (type == 'lines') {
 
+
     d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT date_part('year',gfw2_forma_datecode.date) as y, date_part('month',gfw2_forma_datecode.date) as m,alerts FROM gfw2_forma_graphs,gfw2_forma_datecode WHERE gfw2_forma_datecode.n = gfw2_forma_graphs.date AND iso = '" + countryCode + "' order by gfw2_forma_datecode.date asc", function(json) {
 
       var data = json.rows.slice(1,json.rows.length);
@@ -987,8 +988,37 @@ function addCircle(id, type, options) {
       var p = graph.append("svg:path")
       .attr("transform", "translate(" + marginLeft + "," + marginTop + ")")
       .attr("d", line(data))
+      .on("mousemove", function(d) {
+        var index = Math.round(x.invert(d3.mouse(this)[0]));
+        console.log("Index value: "+index+", date: "+data[index].y+"/"+data[index].m+", alert number: "+data[index].alerts);
+
+
+
+        var val = data[index].alerts + " <small>" + unit + "</small>";
+        $(".amount." + id + " .text").html(val);
+
+        var t = _.template(legend);
+        val = t({ n: data[index].m + legendUnit });
+        $(".graph_legend." + id + " .text").html(val);
+
+        d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
+
+        var cx = d3.mouse(this)[0]+marginLeft;
+        var cy = h-y(data[index].alerts)+marginTop;
+
+        graph.select("#marker")
+        .attr("cx",cx)
+        .attr("cy",cy)
+      })
+
+      graph.append("circle")
+      .attr("id", "marker")
+      .attr("cx", -10000)
+      .attr("cy",100)
+      .attr("r", 5);
 
     });
+
 
   } else if (type == 'bars') {
 
