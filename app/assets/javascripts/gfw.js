@@ -82,8 +82,6 @@ GFW.modules.app = function(gfw) {
         that._map.setOptions({ scrollwheel: true });
         $("body").css({overflow:"hidden"});
       });
-
-      Filter.addFilter('Regrowth', 'coming soon...');
     },
 
     close: function(callback) {
@@ -506,8 +504,12 @@ GFW.modules.datalayers = function(gfw) {
         that.LayersObj.each(function(p) {
           that._addLayer(p);
         });
-      });
 
+      // TODO: remove the below when real layers arrive
+      Filter.addFilter('Regrowth', 'coming soon...');
+      
+	  });
+	  
     },
     _addLayer: function(p){
       var layer = new gfw.maplayer.Engine(p, this._map);
