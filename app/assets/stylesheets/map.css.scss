@@ -37,11 +37,13 @@
     }
 
     .inner > .title {
-      margin:auto;
+      margin: 10px auto 0 auto;
       width:175px;
 
       @extend .sans-serif;
       font-size:15px;
+
+      line-height:18px;
 
       font-weight:400;
       color:$cWhite;
@@ -59,7 +61,7 @@
 
     .inner > .explore {
       position:relative;
-      top: -55px;
+      top: -56px;
 
       text-align:center;
       @extend .sans-serif;

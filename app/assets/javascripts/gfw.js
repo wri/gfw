@@ -49,7 +49,7 @@ GFW.modules.app = function(gfw) {
       this._infowindow = new CartoDBInfowindow(map);
 
       this.queries = {};
-      this.queries.forma  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM forma_zoom_polys WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
+      this.queries.forma  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
       //this.queries.hansen = "SELECT * FROM hansen_data WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
       this.queries.hansen = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
       this.queries.sad    = "SELECT CASE WHEN {Z}<14 THEN st_buffer(the_geom_webmercator,(16-{Z})^4) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
@@ -197,13 +197,38 @@ GFW.modules.app = function(gfw) {
           query: query,
           layer_order: "top",
           opacity: 1,
-          interactivity:"cartodb_id,name",
+          interactivity:"cartodb_id",
           featureMouseClick: function(ev, latlng, data) {
-            console.log(ev, latlng, data);
-
-            that._infowindow.setContent(data);
-            that._infowindow.setPosition(latlng);
-            that._infowindow.open();
+            //we needed the cartodb_id and table name
+            var pair = data.cartodb_id.split(':');
+            //here i make a crude request for the columns of the table
+            //nulling out the geoms to save payload
+            var request_sql = "SELECT *, null as the_geom, null as the_geom_webmercator FROM " + pair[1] + " WHERE cartodb_id = " + pair[0];
+            $.ajax({
+                async: false,
+                dataType: 'json',
+                url: 'http://wri-01.cartodb.com/api/v2/sql?q=' + encodeURIComponent(request_sql) + '&callback=?',
+                success: function(json) {
+                    delete json.rows[0]['cartodb_id'],
+                    delete json.rows[0]['the_geom'];
+                    delete json.rows[0]['the_geom_webmercator'];
+                    delete json.rows[0]['created_at'];
+                    delete json.rows[0]['updated_at'];
+                    var data = json.rows[0];
+                    for (var key in data) {
+                        var temp;
+                        if (data.hasOwnProperty(key)) {
+                          temp = data[key];
+                          delete data[key];
+                          key = key.replace('_',' '); //add spaces to key names
+                          data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
+                        }
+                    }
+                    that._infowindow.setContent(data);
+                    that._infowindow.setPosition(latlng);
+                    that._infowindow.open();
+                }
+            });
           },
           featureMouseOver: function(ev, latlng, data) {
             map.setOptions({draggableCursor: 'pointer'});
@@ -246,7 +271,8 @@ GFW.modules.app = function(gfw) {
         table_name: 'gfw2_hansen',
         query: this.queries.hansen.replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
-        interactive:false,
+        opacity:0,
+        interactivity:false,
         auto_bound: false
       });
       this.baseHansen.hide();
@@ -257,7 +283,8 @@ GFW.modules.app = function(gfw) {
         table_name: 'gfw2_imazon',
         query: this.queries.sad.replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
-        interactive:false,
+        opacity:0,
+        interactivity:false,
         auto_bound: false
       });
 
@@ -266,10 +293,10 @@ GFW.modules.app = function(gfw) {
       this.baseFORMA = new CartoDBLayer({
         map: map,
         user_name:'wri-01',
-        table_name: 'forma_zoom_polys',
+        table_name: 'gfw2_forma',
         query: this.queries.forma.replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
-        interactive:false,
+        interactivity:false,
         auto_bound: false
       });
       this.mainLayer = null;
