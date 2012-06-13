@@ -349,7 +349,7 @@ var Filter = (function() {
     $layerItem        = null;
 
     // Select the kind of input: radio or checkbox
-    if (cat === 'deforestation') {
+    if (cat === 'forest_clearing') {
 
       layerItemTemplate = _.template($("#layer-item-radio-template").html());
       $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat }));

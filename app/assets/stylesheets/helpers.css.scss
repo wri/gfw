@@ -230,7 +230,7 @@ strong { font-weight: bold; } // This is sad, I know.
     a:hover       { color: $cProtectedAreasHover; }
   }
 
-  &.deforestation {
+  &.forest_clearing {
     & > a         { color: $cDeforestation; }
     a.checked     { color: $cDeforestation; }
     a.title       { color: $cDeforestation; }
@@ -253,7 +253,7 @@ strong { font-weight: bold; } // This is sad, I know.
   &.forest-cover    .icon  { @include icons-sprite(forest_cover); }
   &.forest          .icon  { @include icons-sprite(forest_cover); }
   &.fire            .icon  { @include icons-sprite(fire); }
-  &.deforestation   .icon  { @include icons-sprite(fire); }
+  &.forest_clearing   .icon  { @include icons-sprite(fire); }
   &.carbon          .icon  { @include icons-sprite(concessions); }
   &.biodiversity    .icon  { @include icons-sprite(concessions); }
 }
@@ -269,7 +269,7 @@ strong { font-weight: bold; } // This is sad, I know.
   &.forest-cover     .line { background-color: $cForest; }
   &.forest           .line { background-color: $cForest; }
   &.fire             .line { background-color: $cFire; }
-  &.deforestation    .line { background-color: $cFire; }
+  &.forest_clearing    .line { background-color: $cFire; }
   &.carbon           .line { background-color: $cGray4;}
   &.biodiversity     .line { background-color: $cGray4; }
 }
@@ -281,7 +281,7 @@ strong { font-weight: bold; } // This is sad, I know.
     background:url(icons/bullet_protected_areas.png) no-repeat left 6px;
   }
 
-  &.deforestation {
+  &.forest_clearing {
     background:url(icons/bullet_deforestation.png) no-repeat left 6px;
   }
 

@@ -433,7 +433,7 @@ GFW.modules.maplayer = function(gfw) {
       hansen = GFW.app.datalayers.LayersObj.get(568),
       sad    = GFW.app.datalayers.LayersObj.get(567);
 
-      if (category != 'Deforestation') {
+      if (category != 'Forest clearing') {
         Legend.toggleItem(title, category, visible);
       }
 

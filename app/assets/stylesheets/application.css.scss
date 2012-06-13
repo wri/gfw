@@ -594,7 +594,7 @@ body.countries {
 .radio {
   @include radio(radio);
 
-  &.deforestation    { @include radio(radio_fire); }
+  &.forest_clearing    { @include radio(radio_fire); }
   &.fire             { @include radio(radio_fire); }
 }
 
