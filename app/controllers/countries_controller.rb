@@ -39,6 +39,7 @@ class CountriesController < ApplicationController
   end
 
   def show
+    @name = params[:id]
     @country = OpenStruct.new({
       name: 'Central African Republic',
       alerts_count: 2931,

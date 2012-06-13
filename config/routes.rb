@@ -8,6 +8,7 @@ Gfw::Application.routes.draw do
   match 'about' => 'static#about'
   match 'map'   => 'home#index'
   match 'map/:lat/:lng/:zoom'   => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
+  match 'country/:id' => 'countries#show'
 
   resources :demo
 

@@ -1,9 +1,7 @@
 <% countries = [
-
   { :title => "Brazil", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
   { :title => "Cameroon", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
   { :title => "Malasya", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
-  { :title => "India", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
   { :title => "Indonesia", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
   { :title => "Angola", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled },
   { :title => "Bolivia", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled },
@@ -17,7 +15,6 @@
   { :title => "Peru", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled },
   { :title => "Venezuela", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled },
   { :title => "Vietnam", :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled }
-
 ] %>
 
 <div id="countries">
@@ -27,7 +24,7 @@
   <% countries.each do |country| %>
     <div class="country <%= country[:title].downcase.gsub(" ", "_") %> <%= country[:class] %>">
       <% if country[:class] != :disabled %>
-        <a href="/countries/show">
+        <a href="/country/<%= country[:title].downcase.gsub(" ", "_") %>">
         <% end %>
         <div class="icon"></div>
         <div class="content"><h4><%= country[:title] %></h4> <strong><%= country[:amount] %></strong> <%= country[:caption] %></div>
