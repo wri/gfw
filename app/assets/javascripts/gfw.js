@@ -49,7 +49,7 @@ GFW.modules.app = function(gfw) {
       this._infowindow = new CartoDBInfowindow(map);
 
       this.queries = {};
-      this.queries.forma  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
+      this.queries.forma  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
       this.queries.hansen = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
       this.queries.imazon_sad = "SELECT CASE WHEN {Z}<14 THEN st_buffer(the_geom_webmercator,(16-{Z})^4) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
 
