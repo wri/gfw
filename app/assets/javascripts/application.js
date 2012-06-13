@@ -5,7 +5,7 @@
 //= require wax.g.min-6.0.4
 //= require cartodb-gmapsv3
 //= require cartodb-infowindow-min
-// require jquery.history
+//= require jquery.history
 //= require jstorage.min
 //= require lodash.min
 //= require backbone-min
@@ -22,14 +22,14 @@ previousState = null;
 
 function initialize() {
 
-  /*var
+  var
   State = History.getState(),
   hash  = parseHash(State.hash);
 
   if (hash) {
     config.mapOptions.center = hash.center;
     config.mapOptions.zoom   = hash.zoom;
-  }*/
+  }
 
   // Initialise the google map
   map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
@@ -51,7 +51,7 @@ function initialize() {
 
 }
 
-/*(function(window,undefined){
+(function(window,undefined){
 
   // Prepare
   var History = window.History; // Note: We are using a capital H instead of a lower h
@@ -107,7 +107,7 @@ function initialize() {
 
   return false;
 
-})(window);*/
+})(window);
 
 $(function(){
 

@@ -50,16 +50,18 @@ GFW.modules.app = function(gfw) {
 
       this.queries = {};
       this.queries.forma  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
-      //this.queries.hansen = "SELECT * FROM hansen_data WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
       this.queries.hansen = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
-      this.queries.sad    = "SELECT CASE WHEN {Z}<14 THEN st_buffer(the_geom_webmercator,(16-{Z})^4) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
+      this.queries.imazon_sad = "SELECT CASE WHEN {Z}<14 THEN st_buffer(the_geom_webmercator,(16-{Z})^4) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
 
       this.lastHash = null;
 
       this._cartodb = Backbone.CartoDB({user: this.options.user});
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
 
-      this._loadBaseLayers();
+      this.mainLayer = null;
+      this.currentBaseLayer = "forma";
+
+      this._loadBaseLayer();
       this._setupZoom();
 
     },
@@ -150,9 +152,7 @@ GFW.modules.app = function(gfw) {
       // Setup listeners
       google.maps.event.addListener(this._map, 'zoom_changed', function() {
         that._updateHash(that);
-        that._updateSAD();
-        that._updateFORMA();
-        that._updateHansen();
+        that._refreshBaseLayer();
       });
 
       google.maps.event.addListener(this._map, 'dragend', function() {
@@ -216,13 +216,13 @@ GFW.modules.app = function(gfw) {
                     delete json.rows[0]['updated_at'];
                     var data = json.rows[0];
                     for (var key in data) {
-                        var temp;
-                        if (data.hasOwnProperty(key)) {
-                          temp = data[key];
-                          delete data[key];
-                          key = key.replace('_',' '); //add spaces to key names
-                          data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
-                        }
+                      var temp;
+                      if (data.hasOwnProperty(key)) {
+                        temp = data[key];
+                        delete data[key];
+                        key = key.replace(/_/g,' '); //add spaces to key names
+                        data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
+                      }
                     }
                     that._infowindow.setContent(data);
                     that._infowindow.setPosition(latlng);
@@ -249,57 +249,45 @@ GFW.modules.app = function(gfw) {
 
     },
 
-    _updateFORMA: function() {
-      var query = this.queries.forma.replace(/{Z}/g, this._map.getZoom());
-      this.baseFORMA.setQuery(query);
-    },
-    _updateSAD: function() {
-      var query = this.queries.sad.replace(/{Z}/g, this._map.getZoom());
-      this.baseSAD.setQuery(query);
-    },
-    _updateHansen: function() {
-      var query = this.queries.sad.replace(/{Z}/g, this._map.getZoom());
-      var query = this.queries.hansen.replace(/{Z}/g, this._map.getZoom());
-      this.baseHansen.setQuery(query);
+    _refreshBaseLayer: function() {
+      var query = GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom());
+      GFW.app.baseLayer.setQuery(query);
     },
 
-    _loadBaseLayers: function() {
+    _updateBaseLayer: function() {
+      var table_name = null;
 
-      this.baseHansen = new CartoDBLayer({
+      if (this.currentBaseLayer === "forma") {
+        table_name = 'gfw2_forma';
+      } else if (this.currentBaseLayer === "hansen") {
+        table_name = 'gfw2_hansen';
+      } else if (this.currentBaseLayer === "imazon_sad") {
+        table_name = 'gfw2_imazon';
+      }
+
+      GFW.app.baseLayer.options.table_name = table_name;
+      GFW.app.baseLayer.setQuery(GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom()));
+    },
+
+    _loadBaseLayer: function() {
+      var table_name = null;
+
+      if (this.currentBaseLayer === "forma") {
+        table_name = 'gfw2_forma';
+      } else if (this.currentBaseLayer === "hansen") {
+        table_name = 'gfw2_hansen';
+      } else if (this.currentBaseLayer === "imazon_sad") {
+        table_name = 'gfw2_imazon';
+      }
+
+      this.baseLayer = new CartoDBLayer({
         map: map,
         user_name:'wri-01',
-        table_name: 'gfw2_hansen',
-        query: this.queries.hansen.replace(/{Z}/g, this._map.getZoom()),
+        table_name: table_name,
+        query: this.queries[this.currentBaseLayer].replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
-        opacity:0,
-        interactivity:false,
         auto_bound: false
       });
-      this.baseHansen.hide();
-
-      this.baseSAD = new CartoDBLayer({
-        map: map,
-        user_name:'wri-01',
-        table_name: 'gfw2_imazon',
-        query: this.queries.sad.replace(/{Z}/g, this._map.getZoom()),
-        layer_order: "bottom",
-        opacity:0,
-        interactivity:false,
-        auto_bound: false
-      });
-
-      this.baseSAD.hide();
-
-      this.baseFORMA = new CartoDBLayer({
-        map: map,
-        user_name:'wri-01',
-        table_name: 'gfw2_forma',
-        query: this.queries.forma.replace(/{Z}/g, this._map.getZoom()),
-        layer_order: "bottom",
-        interactivity:false,
-        auto_bound: false
-      });
-      this.mainLayer = null;
     },
 
     _mapLoaded: function(){
@@ -320,7 +308,7 @@ GFW.modules.app = function(gfw) {
       lng  = self._map.getCenter().lng().toFixed(GFW.app._precision);
       hash = "/map/" + zoom + "/" + lat + "/" + lng;
 
-      //History.pushState({ state: 3 }, "Map", hash);
+      History.pushState({ state: 3 }, "Map", hash);
     },
 
     _parseHash: function(hash) {
@@ -355,14 +343,14 @@ GFW.modules.app = function(gfw) {
         return;
       }
 
-      /*var
-      State  = History.getState(),
-      parsed = this._parseHash(State.hash);
+      var
+        State  = History.getState(),
+        parsed = this._parseHash(State.hash);
 
-      if (parsed) {
+        if (parsed) {
         this._map.setZoom(parsed.zoom);
         this._map.setCenter(parsed.center);
-      }*/
+        }
 
     }
   });
@@ -380,22 +368,11 @@ GFW.modules.maplayer = function(gfw) {
       var ne = new google.maps.LatLng(this.layer.get('ymax'),this.layer.get('xmax'));
       this._bounds = new google.maps.LatLngBounds(sw, ne);
 
-      this._displayed = false;
-
       if (this.layer.get('title') != 'FORMA'){
         this.layer.attributes['visible'] = false;
       }
 
       this._addControl();
-      //this._handleLayer();
-    },
-    _handleLayer: function(){
-
-      if (this.layer.get('visible') && !this._displayed && this._inView()){
-        this._displayed = true;
-      } else if (this._displayed && !this._inView()){
-        this._displayed = false;
-      }
     },
     _addControl: function(){
       var that = this;
@@ -415,9 +392,16 @@ GFW.modules.maplayer = function(gfw) {
     },
     _bindDisplay: function(display) {
       var that = this;
-      this._display = display;
       display.setEngine(this);
     },
+
+    _hideLayer: function(layer) {
+      if (layer.get('visible') == false){
+        gfw.log.info('LAYER OFF');
+        this._map.overlayMapTypes.setAt(this._tileindex, null);
+      }
+    },
+
     _toggleLayer: function(that){
 
       this.layer.attributes['visible'] = !this.layer.attributes['visible'];
@@ -442,84 +426,42 @@ GFW.modules.maplayer = function(gfw) {
 
       var // special layers
       forma  = GFW.app.datalayers.LayersObj.get(569),
-      hansen = GFW.app.datalayers.LayersObj.get(568);
+      hansen = GFW.app.datalayers.LayersObj.get(568),
       sad    = GFW.app.datalayers.LayersObj.get(567);
 
       if (category != 'Deforestation') {
         Legend.toggleItem(title, category, visible);
       }
 
-      if (visible) {
+      if (id === 'forma' || id === "hansen" || id === "imazon_sad") {
 
-        this._displayed = true;
+        GFW.app.currentBaseLayer = id;
 
-        if (id === 'forma') {
+        GFW.app._updateBaseLayer();
 
-          GFW.app.baseFORMA.show();
-          GFW.app.baseFORMA.setOpacity(1);
-          forma.attributes['visible']  = true;
+          if ( id == 'forma') {
+            forma.attributes['visible']  = true;
+          } else if (id == 'hansen') {
+            hansen.attributes['visible']  = true;
+          } else if (id == 'imazon_sad') {
+            sad.attributes['visible']  = true;
+          }
 
-          GFW.app.baseHansen.hide();
-          hansen.attributes['visible'] = false;
-
-          GFW.app.baseSAD.hide();
-          sad.attributes['visible']    = false;
-
+        if (id === "forma") {
           Legend.add(title, category);
           Legend.remove(sad.get("title"), category);
           Legend.remove(hansen.get("title"), category);
-
-          return;
         }
-
-        if (id === 'hansen') {
-
-          GFW.app.baseHansen.show();
-          GFW.app.baseHansen.setOpacity(1);
-          hansen.attributes['visible'] = true;
-
-          GFW.app.baseSAD.hide();
-          sad.attributes['visible']   = false;
-
-          GFW.app.baseFORMA.hide();
-          forma.attributes['visible'] = false;
-
-          Legend.add(title, category);
-          Legend.remove(sad.get("title"), category);
-          Legend.remove(forma.get("title"), category);
-
-          return;
-        }
-
-        if (id === 'imazon_sad') {
-
-          GFW.app.baseSAD.show();
-          GFW.app.baseSAD.setOpacity(1);
-
-          sad.attributes['visible']  = true;
-
-          GFW.app.baseFORMA.hide();
-          forma.attributes['visible']  = false;
-
-          GFW.app.baseHansen.hide();
-          hansen.attributes['visible'] = false;
-
-          Legend.add(title, category);
-          Legend.remove(hansen.get("title"), category);
-          Legend.remove(forma.get("title"), category);
-
-          return;
-        }
-
-        GFW.app._addLayer(tableName);
 
       } else {
 
-        if (id != 'forma' && id != "hansen" && id != "imazon_sad") {
+        if (visible) {
+          GFW.app._addLayer(tableName);
+        } else {
           GFW.app._removeLayer(tableName);
         }
+    }
 
-      }
     }
   });
 
