@@ -878,3 +878,89 @@ footer > .download {
 
   }
 }
+
+
+
+.charts { padding: 10px; }
+.chart rect {
+  fill: #75ADB5;
+  stroke: white;
+}
+
+.lines {
+
+  rect {
+    fill: #75ADB5;
+    stroke: white;
+    shape-rendering: crispEdges;
+    /*cursor:pointer;*/
+  }
+
+  circle {
+    fill: transparent;
+    fill-opacity:0;
+    stroke: #F2B357;
+    stroke-width: 10px;
+  }
+
+  line {
+    shape-rendering: crispEdges;
+  }
+
+  path {
+    stroke: #F2B357;
+    stroke-width: 4px;
+    fill-opacity:0;
+    fill: transparent;
+  }
+
+  .amount { font-size:20px; color:#75ADB5; text-align:center; }
+  .amount .text { margin: auto; padding: 0 5px; @include inline-block(); background:#fff; }
+
+  .title { color: #75ADB5; font-size: 18px; text-align:center; @extend .serif; }
+
+  .subtitle { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
+  .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; background:#fff; }
+
+  .legend { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
+  .legend .text { margin: auto; width: 140px; background:#fff; }
+}
+
+.bars {
+
+  rect {
+    fill: #75ADB5;
+    stroke: white;
+    shape-rendering: crispEdges;
+    /*cursor:pointer;*/
+  }
+
+  circle {
+    fill: transparent;
+    fill-opacity:0;
+    stroke: #F2B357;
+    stroke-width: 10px;
+  }
+
+  line {
+    shape-rendering: crispEdges;
+  }
+
+  path {
+    stroke: #F2B357;
+    stroke-width: 4px;
+    fill-opacity:0;
+    fill: transparent;
+  }
+
+  .amount { font-size:20px; color:#75ADB5; text-align:center; }
+  .amount .text { margin: auto; padding: 0 5px; @include inline-block(); background:#fff; }
+
+  .title { color: #75ADB5; font-size: 18px; text-align:center; @extend .serif; }
+
+  .subtitle { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
+  .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; background:#fff; }
+
+  .legend { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
+  .legend .text { margin: auto; width: 140px; background:#fff; }
+}
