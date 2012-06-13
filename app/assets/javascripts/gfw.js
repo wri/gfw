@@ -63,11 +63,10 @@ GFW.modules.app = function(gfw) {
 
       this._loadBaseLayer();
       this._setupZoom();
-
     },
     run: function() {
       this._setupListeners();
-      this.update();
+      //this.update();
       gfw.log.info('App is now running!');
     },
 
@@ -343,7 +342,7 @@ GFW.modules.app = function(gfw) {
         return;
       }
 
-      var
+     var
         State  = History.getState(),
         parsed = this._parseHash(State.hash);
 

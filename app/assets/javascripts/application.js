@@ -97,15 +97,15 @@ function initialize() {
   });
 
   $(".share_link").on("click", function(e) {
-    e.preventDefault();		
-    $("#content").append('<div class="backdrop" />');		
+    e.preventDefault();
+    $("#content").append('<div class="backdrop" />');
     $(".backdrop").fadeIn(250, function() {
       $("#share").fadeIn(250);
-    });		
+    });
   });
 
   $("#share").on("click", function(e) {
-    e.preventDefault();		
+    e.preventDefault();
     $(".backdrop").fadeOut(250, function() {
       $(this).remove();
     });
@@ -113,7 +113,7 @@ function initialize() {
   });
 
   $(".subscribe_link").on("click", function(e) {
-    e.preventDefault();		
+    e.preventDefault();
     $("#content").append('<div class="backdrop" />');
     $(".backdrop").fadeIn(250, function() {
       $("#subscribe").fadeIn(250);
@@ -121,7 +121,7 @@ function initialize() {
   });
 
   $("#subscribe").on("click", function(e) {
-    e.preventDefault();		
+    e.preventDefault();
     $(".backdrop").fadeOut(250, function() {
       $(this).remove();
     });
