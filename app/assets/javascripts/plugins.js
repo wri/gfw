@@ -893,6 +893,7 @@ var Timeline = (function() {
 function addCircle(id, type, options) {
 
   var
+  countryCode       = options.countryCode || 'MYS',
   width             = options.width      || 300,
   height            = options.height     || width,
   barWidth          = options.barWidth   || 5,
@@ -961,7 +962,7 @@ function addCircle(id, type, options) {
   // Content selection: lines or bars
   if (type == 'lines') {
 
-    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20date_part('year',gfw2_forma_datecode.date)%20as%20y,%20date_part('month',gfw2_forma_datecode.date)%20as%20m,alerts%20FROM%20gfw2_forma_graphs,gfw2_forma_datecode%20WHERE%20gfw2_forma_datecode.n%20=%20gfw2_forma_graphs.date%20AND%20iso%20=%20'MYS'%20order%20by%20gfw2_forma_datecode.date%20asc", function(json) {
+    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT date_part('year',gfw2_forma_datecode.date) as y, date_part('month',gfw2_forma_datecode.date) as m,alerts FROM gfw2_forma_graphs,gfw2_forma_datecode WHERE gfw2_forma_datecode.n = gfw2_forma_graphs.date AND iso = '" + countryCode + "' order by gfw2_forma_datecode.date asc", function(json) {
 
       var data = json.rows.slice(1,json.rows.length);
 
@@ -990,7 +991,7 @@ function addCircle(id, type, options) {
 
   } else if (type == 'bars') {
 
-    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20area_sqkm,height_m%20FROM%20gfw2_forest_heights%20WHERE%20iso%20=%20'CMR'%20ORDER%20BY%20height_m%20ASC", function(json) {
+    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT area_sqkm,height_m FROM gfw2_forest_heights WHERE iso = '"+ countryCode +"' ORDER BY height_m ASC", function(json) {
 
       var data = json.rows;
 

@@ -4,6 +4,11 @@
   end
 %>
 
+<% content_for :title do %>
+  <script type="text/javascript">
+    countryCode = "<%= @country.country_code %>";
+  </script>
+  <% end %>
 <% content_for :download do %>
   <div class="download">
     <div class="inner">
@@ -19,8 +24,10 @@
   <div class="details">
     <div class="inner">
 
-      <div class="circle lines chart" data-load="graphs" style=""></div>
-      <div class="circle bars chart" data-load="graphs" style=""></div>
+      <div class="graphs" data-load="graphs">
+        <div class="circle lines chart"></div>
+        <div class="circle bars chart"></div>
+      </div>
 
       <div class="alerts">
         <h4><%= t('.detail.alerts.title') %></h4>

@@ -349,13 +349,13 @@ body.countries {
 #share {
   position:absolute;
   display:none;
-	width: 414px;
-	height: 258px;
+  width: 414px;
+  height: 258px;
   margin-left:-207px;
   top: 100px;
   left: 50%;
   z-index: 1050;
-	background-image:url(share.png);
+  background-image:url(share.png);
 }
 
 #subscribe {
@@ -363,14 +363,14 @@ body.countries {
   $width: 767px;
   position:absolute;
   display:none;
-	width: $width;
-	height: $height;
+  width: $width;
+  height: $height;
   margin-left:-1*$width/2;
   margin-top:-1*$height/2;
   left: 50%;
   top: 50%;
   z-index: 1050;
-	background-image:url(subscribe_alert.png);
+  background-image:url(subscribe_alert.png);
 }
 
 .details {
@@ -617,26 +617,26 @@ footer {
 
     color: $cGray2;
 
-		p {font-size: 15px;}
+    p {font-size: 15px;}
 
     a { display: block; margin: 0 20px 0 0; @include inline-block(); }
 
     div.partners {
-			float: left;
-			width: 550px;
-			margin: 50px 0 0 0;
+      float: left;
+      width: 550px;
+      margin: 50px 0 0 0;
 
-    	a.wri { width: 92px; height: 31px; @include icons-sprite(logo_wri_black); }
-    	.google { width: 90px; height: 52px; @include icons-sprite(logo_google); }
-    	.cfgd { width: 72px; height: 52px; @include icons-sprite(logo_cgd); }
-    	.university_maryland { width: 77px; height: 52px; @include icons-sprite(logo_maryland); }
-    	.imazon { width: 74px; height: 52px; @include icons-sprite(logo_imazon); }
+      a.wri { width: 92px; height: 31px; @include icons-sprite(logo_wri_black); }
+      .google { width: 90px; height: 52px; @include icons-sprite(logo_google); }
+      .cfgd { width: 72px; height: 52px; @include icons-sprite(logo_cgd); }
+      .university_maryland { width: 77px; height: 52px; @include icons-sprite(logo_maryland); }
+      .imazon { width: 74px; height: 52px; @include icons-sprite(logo_imazon); }
 
-		}
+    }
 
     div.wri {
-	    float: right;
-			margin: 50px 0 0 0;
+      float: right;
+      margin: 50px 0 0 0;
 
       & > .wri { width:92px; height: 31px; margin: 10px 0 20px 0; @include icons-sprite(logo_wri_black); }
 
@@ -880,6 +880,14 @@ footer > .download {
 }
 
 
+
+.graphs {
+  margin: 40px 0;
+
+  .chart {
+    @include inline-block();
+  }
+}
 
 .charts { padding: 10px; }
 .chart rect {

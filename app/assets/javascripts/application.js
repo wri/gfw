@@ -169,7 +169,7 @@ $(function(){
   }
 
   if ($("div[data-load]").length > 0) {
-    addCircle("forest", "bars", { width: 300, title: "Height", subtitle:"Tree height distribution", legend:"total forest area", hoverColor: "#427C8D", color: "#75ADB5", unit: "Be" });
-    addCircle("forma", "lines", { width: 300, title: "Height", subtitle:"Tree height distribution", legend:"total forest area", hoverColor: "#F2B357", color: "#F2B357", unit: "Ha" });
+    addCircle("forest", "bars", { countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"total forest area", hoverColor: "#427C8D", color: "#75ADB5", unit: "Be" });
+    addCircle("forma", "lines", { countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"total forest area", hoverColor: "#F2B357", color: "#F2B357", unit: "Ha" });
   }
 });
