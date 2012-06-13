@@ -15,13 +15,13 @@ end
 
 shared_examples 'title' do |title|
 
-  scenario 'has a title' do
+  #scenario 'has a title' do
 
-    within 'header' do
-      page.should have_css 'h1', :text => title
-    end
+    #within 'header' do
+      #page.should have_css 'h1', :text => title
+    #end
 
-  end
+  #end
 
 end
 
