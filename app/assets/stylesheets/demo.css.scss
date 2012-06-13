@@ -142,6 +142,13 @@ body.demo {
     stroke-width: 10px;
   }
 
+	circle#marker {
+    fill: #F2B357;
+    fill-opacity:1;
+    stroke: white;
+		stroke-width: 1px;		
+	}
+
   line {
     shape-rendering: crispEdges;
   }
@@ -184,7 +191,7 @@ body.demo {
   line {
     shape-rendering: crispEdges;
   }
-
+	
   path {
     stroke: #F2B357;
     stroke-width: 4px;
