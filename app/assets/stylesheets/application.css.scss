@@ -887,8 +887,18 @@ footer > .download {
   height: 300px;
   width:100%;
 
-  .chart {
+  .country, .chart {
     @include inline-block();
+  }
+  .country {
+    width: 299px;
+    height: 284px;
+
+    &.brazil { background:url(countries/map_brazil.png) no-repeat; }
+    &.cameroon { background:url(countries/map_cameroon.png) no-repeat; }
+    &.malaysia { background:url(countries/map_malaysia.png) no-repeat; }
+    &.indonesia { background:url(countries/map_indonesia.png) no-repeat; }
+
   }
 }
 
