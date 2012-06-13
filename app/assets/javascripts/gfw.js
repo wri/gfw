@@ -50,7 +50,7 @@ GFW.modules.app = function(gfw) {
 
       this.queries = {};
       this.queries.bimonthly  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
-      this.queries.hansen = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
+      this.queries.annual = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
       this.queries.imazon_sad = "SELECT CASE WHEN {Z}<12 THEN st_buffer(the_geom_webmercator,(16-{Z})^3.8) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
 
       this.lastHash = null;
@@ -261,7 +261,7 @@ GFW.modules.app = function(gfw) {
 
       if (this.currentBaseLayer === "bimonthly") {
         table_name = 'gfw2_forma';
-      } else if (this.currentBaseLayer === "hansen") {
+      } else if (this.currentBaseLayer === "annual") {
         table_name = 'gfw2_hansen';
       } else if (this.currentBaseLayer === "imazon_sad") {
         table_name = 'gfw2_imazon';
@@ -276,7 +276,7 @@ GFW.modules.app = function(gfw) {
 
       if (this.currentBaseLayer === "bimonthly") {
         table_name = 'gfw2_forma';
-      } else if (this.currentBaseLayer === "hansen") {
+      } else if (this.currentBaseLayer === "annual") {
         table_name = 'gfw2_hansen';
       } else if (this.currentBaseLayer === "imazon_sad") {
         table_name = 'gfw2_imazon';
@@ -424,20 +424,20 @@ GFW.modules.maplayer = function(gfw) {
 
       if (id === 'bimonthly' && showMap && visible ) {
         Timeline.show();
-      } else if ( (id === 'bimonthly' && showMap && !visible) || (id === 'hansen' && showMap && visible) || (id === 'imazon_sad' && showMap && visible) ) {
+      } else if ( (id === 'bimonthly' && showMap && !visible) || (id === 'annual' && showMap && visible) || (id === 'imazon_sad' && showMap && visible) ) {
         Timeline.hide();
       }
 
       var // special layers
       bimonthly  = GFW.app.datalayers.LayersObj.get(569),
-      hansen = GFW.app.datalayers.LayersObj.get(568),
+      annual = GFW.app.datalayers.LayersObj.get(568),
       sad    = GFW.app.datalayers.LayersObj.get(567);
 
       if (category != 'Forest clearing') {
         Legend.toggleItem(title, category, visible);
       }
 
-      if (id === 'bimonthly' || id === "hansen" || id === "imazon_sad") {
+      if (id === 'bimonthly' || id === "annual" || id === "imazon_sad") {
 
         GFW.app.currentBaseLayer = id;
 
@@ -445,8 +445,8 @@ GFW.modules.maplayer = function(gfw) {
 
           if ( id == 'bimonthly') {
             bimonthly.attributes['visible']  = true;
-          } else if (id == 'hansen') {
-            hansen.attributes['visible']  = true;
+          } else if (id == 'annual') {
+            annual.attributes['visible']  = true;
           } else if (id == 'imazon_sad') {
             sad.attributes['visible']  = true;
           }
@@ -454,7 +454,7 @@ GFW.modules.maplayer = function(gfw) {
         if (id === "bimonthly") {
           Legend.add(title, category);
           Legend.remove(sad.get("title"), category);
-          Legend.remove(hansen.get("title"), category);
+          Legend.remove(annual.get("title"), category);
         }
 
       } else {
