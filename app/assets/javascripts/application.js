@@ -11,6 +11,7 @@
 //= require backbone-min
 //= require class
 //= require backbone.cartodb
+//= require d3.v2.min
 //= require_tree .
 
 // Map needs to be a global var or
@@ -163,6 +164,12 @@ $(function(){
   function resizeWindow(e) {
     if (showMap) {
       GFW.app.open();
+      Filter.calcFiltersPosition();
     }
+  }
+
+  if ($("div[data-load]").length > 0) {
+    addCircle("forest", "bars", { countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"total forest area", hoverColor: "#427C8D", color: "#75ADB5", unit: "Be" });
+    addCircle("forma", "lines", { countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"total forest area", hoverColor: "#F2B357", color: "#F2B357", unit: "Ha" });
   }
 });

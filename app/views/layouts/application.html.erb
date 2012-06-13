@@ -19,6 +19,7 @@
     <%= render "common/footer" %>
     <%= yield :js %>
     <%= javascript_include_tag "application" %>
+
     <script type="text/javascript">
       <% if controller_name == "countries" and action_name == 'index' %>
   Navigation.showState("countries");
