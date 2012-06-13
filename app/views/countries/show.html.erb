@@ -4,6 +4,11 @@
   end
 %>
 
+<% content_for :title do %>
+  <script type="text/javascript">
+    countryCode = "<%= @country.country_code %>";
+  </script>
+  <% end %>
 <% content_for :download do %>
   <div class="download">
     <div class="inner">
@@ -19,8 +24,9 @@
   <div class="details">
     <div class="inner">
 
-      <div class="circles" style="margin-left:-50px">
-        <%= image_tag 'tmp/circles.png', :width => "964px", :height => "365px" %>
+      <div class="graphs" data-load="graphs">
+        <div class="circle lines chart"></div>
+        <div class="circle bars chart"></div>
       </div>
 
       <div class="alerts">
@@ -61,3 +67,5 @@
   </div>
 
 </div>
+
+

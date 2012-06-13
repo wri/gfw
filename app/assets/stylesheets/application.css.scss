@@ -349,13 +349,13 @@ body.countries {
 #share {
   position:absolute;
   display:none;
-	width: 414px;
-	height: 258px;
+  width: 414px;
+  height: 258px;
   margin-left:-207px;
   top: 100px;
   left: 50%;
   z-index: 1050;
-	background-image:url(share.png);
+  background-image:url(share.png);
 }
 
 #subscribe {
@@ -363,14 +363,14 @@ body.countries {
   $width: 767px;
   position:absolute;
   display:none;
-	width: $width;
-	height: $height;
+  width: $width;
+  height: $height;
   margin-left:-1*$width/2;
   margin-top:-1*$height/2;
   left: 50%;
   top: 50%;
   z-index: 1050;
-	background-image:url(subscribe_alert.png);
+  background-image:url(subscribe_alert.png);
 }
 
 .details {
@@ -617,26 +617,26 @@ footer {
 
     color: $cGray2;
 
-		p {font-size: 15px;}
+    p {font-size: 15px;}
 
     a { display: block; margin: 0 20px 0 0; @include inline-block(); }
 
     div.partners {
-			float: left;
-			width: 550px;
-			margin: 50px 0 0 0;
+      float: left;
+      width: 550px;
+      margin: 50px 0 0 0;
 
-    	a.wri { width: 92px; height: 31px; @include icons-sprite(logo_wri_black); }
-    	.google { width: 90px; height: 52px; @include icons-sprite(logo_google); }
-    	.cfgd { width: 72px; height: 52px; @include icons-sprite(logo_cgd); }
-    	.university_maryland { width: 77px; height: 52px; @include icons-sprite(logo_maryland); }
-    	.imazon { width: 74px; height: 52px; @include icons-sprite(logo_imazon); }
+      a.wri { width: 92px; height: 31px; @include icons-sprite(logo_wri_black); }
+      .google { width: 90px; height: 52px; @include icons-sprite(logo_google); }
+      .cfgd { width: 72px; height: 52px; @include icons-sprite(logo_cgd); }
+      .university_maryland { width: 77px; height: 52px; @include icons-sprite(logo_maryland); }
+      .imazon { width: 74px; height: 52px; @include icons-sprite(logo_imazon); }
 
-		}
+    }
 
     div.wri {
-	    float: right;
-			margin: 50px 0 0 0;
+      float: right;
+      margin: 50px 0 0 0;
 
       & > .wri { width:92px; height: 31px; margin: 10px 0 20px 0; @include icons-sprite(logo_wri_black); }
 
@@ -735,9 +735,9 @@ footer > .download {
     .icon { position:relative; top: 30px; margin: auto; }
     .content { top: 180px!important; }
 
-    &.malasya a .icon {
+    &.malaysia a .icon {
       top: 70px;
-      @include countries-sprite(country_malasya_selected);
+      @include countries-sprite(country_malaysia_selected);
     }
 
     &.india a .icon {
@@ -836,9 +836,9 @@ footer > .download {
       width: 126px; height: 131px;
     }
 
-    &.malasya .icon {
+    &.malaysia .icon {
       top: 50px; left: 10px;
-      @include countries-sprite(country_malasya);
+      @include countries-sprite(country_malaysia);
       width: 184px; height: 69px;
     }
 
@@ -877,4 +877,98 @@ footer > .download {
     a { color: #999999; text-decoration: none;}
 
   }
+}
+
+
+
+.graphs {
+  margin: 40px 0;
+
+  .chart {
+    @include inline-block();
+  }
+}
+
+.charts { padding: 10px; }
+.chart rect {
+  fill: #75ADB5;
+  stroke: white;
+}
+
+.lines {
+
+  rect {
+    fill: #75ADB5;
+    stroke: white;
+    shape-rendering: crispEdges;
+    /*cursor:pointer;*/
+  }
+
+  circle {
+    fill: transparent;
+    fill-opacity:0;
+    stroke: #F2B357;
+    stroke-width: 10px;
+  }
+
+  line {
+    shape-rendering: crispEdges;
+  }
+
+  path {
+    stroke: #F2B357;
+    stroke-width: 4px;
+    fill-opacity:0;
+    fill: transparent;
+  }
+
+  .amount { font-size:20px; color:#75ADB5; text-align:center; }
+  .amount .text { margin: auto; padding: 0 5px; @include inline-block(); background:#fff; }
+
+  .title { color: #75ADB5; font-size: 18px; text-align:center; @extend .serif; }
+
+  .subtitle { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
+  .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; background:#fff; }
+
+  .legend { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
+  .legend .text { margin: auto; width: 140px; background:#fff; }
+}
+
+.bars {
+
+  rect {
+    fill: #75ADB5;
+    stroke: white;
+    shape-rendering: crispEdges;
+    /*cursor:pointer;*/
+  }
+
+  circle {
+    fill: transparent;
+    fill-opacity:0;
+    stroke: #F2B357;
+    stroke-width: 10px;
+  }
+
+  line {
+    shape-rendering: crispEdges;
+  }
+
+  path {
+    stroke: #F2B357;
+    stroke-width: 4px;
+    fill-opacity:0;
+    fill: transparent;
+  }
+
+  .amount { font-size:20px; color:#75ADB5; text-align:center; }
+  .amount .text { margin: auto; padding: 0 5px; @include inline-block(); background:#fff; }
+
+  .title { color: #75ADB5; font-size: 18px; text-align:center; @extend .serif; }
+
+  .subtitle { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
+  .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; background:#fff; }
+
+  .legend { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
+  .legend .text { margin: auto; width: 140px; background:#fff; }
 }
