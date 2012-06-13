@@ -66,7 +66,7 @@ function initialize() {
   History.Adapter.bind(window,'statechange', function(){ // Note: We are using statechange instead of popstate
     var State = History.getState(); // Note: We are using History.getState() instead of event.state
 
-    //History.log(State.data, State.title, State.url);
+    History.log(State.data, State.title, State.url);
 
     if (previousState != State.title) {
       if (State.title === 'Home') {
@@ -75,6 +75,11 @@ function initialize() {
         Navigation.showState("countries");
       } else if (State.title === 'Map') {
         Navigation.showState("map");
+      } else {
+        // Default state
+        $("#share").fadeOut(250);
+        $(".backdrop").fadeOut(250);
+        $("#countries").fadeOut(250);
       }
 
       previousState = State.title;

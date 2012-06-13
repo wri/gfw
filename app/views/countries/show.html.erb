@@ -40,7 +40,7 @@
       <div class="description">
         <h4><%= t('.detail.description.title') %></h4>
         <%= simple_format truncate(@country.description, :length => 400) %>
-        <%= link_to (content_tag :span, t('.detail.description.read_more')) + (content_tag :div, "", :class => "icon wikipedia") , "#", :class => "btn with-icon hollow" %>
+        <%= link_to (content_tag :span, t('.detail.description.read_more')) + (content_tag :div, "", :class => "icon wikipedia") , @country.wikipedia_link, :class => "btn with-icon hollow" %>
       </div>
     </div>
   </div>
