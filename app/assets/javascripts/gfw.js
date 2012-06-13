@@ -51,7 +51,7 @@ GFW.modules.app = function(gfw) {
       this.queries = {};
       this.queries.bimonthly  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
       this.queries.annual = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
-      this.queries.imazon_sad = "SELECT CASE WHEN {Z}<12 THEN st_buffer(the_geom_webmercator,(16-{Z})^3.8) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
+      this.queries.brazilian_amazon = "SELECT CASE WHEN {Z}<12 THEN st_buffer(the_geom_webmercator,(16-{Z})^3.8) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
 
       this.lastHash = null;
 
@@ -263,7 +263,7 @@ GFW.modules.app = function(gfw) {
         table_name = 'gfw2_forma';
       } else if (this.currentBaseLayer === "annual") {
         table_name = 'gfw2_hansen';
-      } else if (this.currentBaseLayer === "imazon_sad") {
+      } else if (this.currentBaseLayer === "brazilian_amazon") {
         table_name = 'gfw2_imazon';
       }
 
@@ -278,7 +278,7 @@ GFW.modules.app = function(gfw) {
         table_name = 'gfw2_forma';
       } else if (this.currentBaseLayer === "annual") {
         table_name = 'gfw2_hansen';
-      } else if (this.currentBaseLayer === "imazon_sad") {
+      } else if (this.currentBaseLayer === "brazilian_amazon") {
         table_name = 'gfw2_imazon';
       }
 
@@ -424,7 +424,7 @@ GFW.modules.maplayer = function(gfw) {
 
       if (id === 'bimonthly' && showMap && visible ) {
         Timeline.show();
-      } else if ( (id === 'bimonthly' && showMap && !visible) || (id === 'annual' && showMap && visible) || (id === 'imazon_sad' && showMap && visible) ) {
+      } else if ( (id === 'bimonthly' && showMap && !visible) || (id === 'annual' && showMap && visible) || (id === 'brazilian_amazon' && showMap && visible) ) {
         Timeline.hide();
       }
 
@@ -437,7 +437,7 @@ GFW.modules.maplayer = function(gfw) {
         Legend.toggleItem(title, category, visible);
       }
 
-      if (id === 'bimonthly' || id === "annual" || id === "imazon_sad") {
+      if (id === 'bimonthly' || id === "annual" || id === "brazilian_amazon") {
 
         GFW.app.currentBaseLayer = id;
 
@@ -447,7 +447,7 @@ GFW.modules.maplayer = function(gfw) {
             bimonthly.attributes['visible']  = true;
           } else if (id == 'annual') {
             annual.attributes['visible']  = true;
-          } else if (id == 'imazon_sad') {
+          } else if (id == 'brazilian_amazon') {
             sad.attributes['visible']  = true;
           }
 
