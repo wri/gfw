@@ -100,7 +100,14 @@ function initialize() {
     e.preventDefault();
     $("#content").append('<div class="backdrop" />');
     $(".backdrop").fadeIn(250, function() {
+
+      var top = ( $(window).height() - $("#share").height() ) / 2+$(window).scrollTop() + "px",
+      left = ( $(window).width() - $("#share").width() ) / 2+$(window).scrollLeft() + "px";
+
+      $("#share").css({top: top, left:left});
       $("#share").fadeIn(250);
+
+
     });
   });
 
@@ -157,10 +164,15 @@ $(function(){
 
   $(document).keyup(function(e) {
     if (e.keyCode == 27) {
-      if ($("#subscribe").length > 0) {
+      if ($("#share:visible").length > 0) {
+        $("#share").fadeOut(250);
+        $(".backdrop").fadeOut(250);
+      }
+      if ($("#subscribe:visible").length > 0) {
         $("#subscribe").fadeOut(250);
         $(".backdrop").fadeOut(250);
       }
+
     } // esc
   });
 
