@@ -292,6 +292,10 @@ GFW.modules.app = function(gfw) {
         layer_order: "bottom",
         auto_bound: false
       });
+
+      this.time_layer = new TimePlayer('gfw2_forma');
+      window.time_layer = this.time_layer;
+      map.overlayMapTypes.setAt(0, this.time_layer);
     },
 
     _mapLoaded: function(){
