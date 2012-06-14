@@ -130,6 +130,13 @@ body.sources,
         line-height:22px;
       }
 
+        a {
+          color: $cPostBody;
+          text-decoration:underline;
+          &:hover { color: $cDarkGold; }
+        }
+
+
       .meta {
         margin: 0 0 39px 0;
 
