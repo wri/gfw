@@ -352,7 +352,6 @@ GFW.modules.app = function(gfw) {
       var hash = location.hash;
 
       if (hash === this.lastHash) {
-        // console.info("(no change)");
         return;
       }
 

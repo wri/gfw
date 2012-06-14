@@ -179,8 +179,6 @@ function _updateHash(id, visible) {
 
     hash = "/map/" + zoom + "/" + lat + "/" + lng + "/" + filters.join(",");
 
-    console.log(filters, hash);
-
     History.pushState({ state: 3 }, "Map", hash);
   }
 }
@@ -1028,9 +1026,6 @@ function addCircle(id, type, options) {
       .attr("d", line(data))
       .on("mousemove", function(d) {
         var index = Math.round(x.invert(d3.mouse(this)[0]));
-        console.log("Index value: "+index+", date: "+data[index].y+"/"+data[index].m+", alert number: "+data[index].alerts);
-
-
 
         var val = data[index].alerts + " <small>" + unit + "</small>";
         $(".amount." + id + " .text").html(val);

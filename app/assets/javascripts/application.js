@@ -76,11 +76,8 @@ function initialize() {
         Navigation.showState("countries");
       } else if (State.title === 'Map') {
         Navigation.showState("map");
-      } else {
-        // Default state
-        $("#share").fadeOut(250);
-        $(".backdrop").fadeOut(250);
-        $("#countries").fadeOut(250);
+      } else { // Default state
+        $(".backdrop, #countries, #share").fadeOut(250);
       }
 
       previousState = State.title;
