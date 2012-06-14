@@ -48,6 +48,11 @@ if (typeof(google.maps.CartoDBLayer) === "undefined") {
 
     // Domains params
     this.options.tiler_domain = options.tiler_domain || "cartodb.com";
+
+    this.options.tiler_path = options.tiler_path
+    this.options.tiler_suffix = options.tiler_suffix
+    this.options.tiler_grid = options.tiler_grid
+
     this.options.tiler_port = options.tiler_port || "";
     this.options.tiler_protocol = options.tiler_protocol || "http";
     this.options.sql_domain = options.sql_domain || "cartodb.com";
@@ -371,7 +376,7 @@ CartoDBLayer.prototype._addWadus =  function() {
 CartoDBLayer.prototype._setMapStyle = function () {
   var self = this;
   reqwest({
-url: this._generateUrl("tiler") + '/tiles/' + this.options.table_name + '/map_metadata?callback=?',
+url: this._generateUrl("tiler") + this.options.tiler_path + this.options.table_name + '/map_metadata?callback=?',
 type: 'jsonp',
 jsonpCallback: 'callback',
 success: function(result) {
@@ -481,9 +486,9 @@ CartoDBLayer.prototype._bindWaxEvents = function(map,o) {
      */
     CartoDBLayer.prototype._generateTileJson = function () {
       var core_url = this._generateUrl("tiler")
-      , base_url = core_url + '/tiles/' + this.options.table_name + '/{z}/{x}/{y}'
-      , tile_url = base_url + '.png'
-      , grid_url = base_url + '.grid.json'
+      , base_url = core_url + this.options.tiler_path + this.options.table_name + '/{z}/{x}/{y}'
+      , tile_url = base_url + this.options.tiler_suffix
+      , grid_url = base_url + this.options.tiler_grid
 
       // SQL?
       if (this.options.query) {

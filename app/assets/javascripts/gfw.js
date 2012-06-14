@@ -59,6 +59,7 @@ GFW.modules.app = function(gfw) {
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
 
       this.mainLayer = null;
+      this.specialLayer = null;
       this.currentBaseLayer = "bimonthly";
 
       this._loadBaseLayer();
@@ -161,16 +162,93 @@ GFW.modules.app = function(gfw) {
 
     },
 
-    _removeLayer: function(name) {
-      this._layers = _.without(this._layers, name);
-      this._renderLayers();
+    _removeLayer: function(layer) {
+      if (!layer.get('external')) {
+        this._layers = _.without(this._layers, layer.get("table_name"));
+        this._renderLayers();
+      } else {
+        this._removeExternalLayer();
+      }
     },
 
-    _addLayer: function(name) {
-      this._layers.push(name);
-      this._renderLayers();
+    _addLayer: function(layer) {
+      if (!layer.get('external')) {
+        this._layers.push(layer.get('table_name'));
+        this._renderLayers();
+      } else {
+        this._renderExternalLayer(layer);
+      }
     },
 
+    _removeExternalLayer: function(layer) {
+      if (this.specialLayer) this.specialLayer.setMap(null);
+    },
+
+    _renderExternalLayer: function(layer) {
+      var that = this;
+
+        var query = layer.get('tileurl');
+
+        if (this.specialLayer) this.specialLayer.setMap(null);
+
+        this.specialLayer = new CartoDBLayer({
+          map: map,
+          user_name:'',
+          tiler_domain:'184.73.201.235',
+          sql_domain:'184.73.201.235',
+          tiler_path:'/',
+          tiler_suffix:'',
+          tiler_grid:'',
+          table_name: layer.get("table_name"),
+          query: query,
+          layer_order: "top",
+          opacity: 1,
+          featureMouseClick: function(ev, latlng, data) {
+            //we needed the cartodb_id and table name
+            var pair = data.cartodb_id.split(':');
+            //here i make a crude request for the columns of the table
+            //nulling out the geoms to save payload
+            var request_sql = "SELECT *, null as the_geom, null as the_geom_webmercator FROM " + pair[1] + " WHERE cartodb_id = " + pair[0];
+            $.ajax({
+              async: false,
+              dataType: 'json',
+              jsonp:false,
+              jsonpCallback:'iwcallback',
+              url: 'http://dyynnn89u7nkm.cloudfront.net/api/v2/sql?q=' + encodeURIComponent(request_sql),
+              success: function(json) {
+                delete json.rows[0]['cartodb_id'],
+                delete json.rows[0]['the_geom'];
+                delete json.rows[0]['the_geom_webmercator'];
+                delete json.rows[0]['created_at'];
+                delete json.rows[0]['updated_at'];
+                var data = json.rows[0];
+                for (var key in data) {
+                  var temp;
+                  if (data.hasOwnProperty(key)) {
+                    temp = data[key];
+                    delete data[key];
+                    key = key.replace(/_/g,' '); //add spaces to key names
+                    data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
+                  }
+                }
+                that._infowindow.setContent(data);
+                that._infowindow.setPosition(latlng);
+                that._infowindow.open();
+              }
+            });
+          },
+          featureMouseOver: function(ev, latlng, data) {
+            map.setOptions({draggableCursor: 'pointer'});
+          },
+          featureMouseOut: function() {
+            map.setOptions({draggableCursor: 'default'});
+          },
+          debug:true,
+          auto_bound: false
+        });
+
+
+    },
     _renderLayers: function() {
       var that = this;
 
@@ -193,6 +271,9 @@ GFW.modules.app = function(gfw) {
           user_name:'',
           tiler_domain:'dyynnn89u7nkm.cloudfront.net',
           sql_domain:'dyynnn89u7nkm.cloudfront.net',
+          tiler_path:'/tiles/',
+          tiler_suffix:'.png',
+          tiler_grid: '.grid.json',
           table_name: layer,
           query: query,
           layer_order: "top",
@@ -287,6 +368,8 @@ GFW.modules.app = function(gfw) {
         user_name:'',
         tiler_domain:'dyynnn89u7nkm.cloudfront.net',
         sql_domain:'dyynnn89u7nkm.cloudfront.net',
+        tiler_path:'/tiles/',
+        tiler_suffix:'.png',
         table_name: table_name,
         query: this.queries[this.currentBaseLayer].replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
@@ -413,7 +496,7 @@ GFW.modules.maplayer = function(gfw) {
 
       // Adds the layers from the hash
       if (filters && _.include(filters, this.layer.get('id'))) {
-        GFW.app._addLayer(this.layer.get('table_name'));
+        GFW.app._addLayer(this.layer);
         this.layer.attributes["visible"] = true;
 
         Filter.check(this.layer.get('id'));
@@ -485,9 +568,9 @@ GFW.modules.maplayer = function(gfw) {
       } else {
 
         if (visible) {
-          GFW.app._addLayer(tableName);
+          GFW.app._addLayer(this.layer);
         } else {
-          GFW.app._removeLayer(tableName);
+          GFW.app._removeLayer(this.layer);
         }
         Filter.toggle(id);
       }
@@ -512,7 +595,7 @@ GFW.modules.datalayers = function(gfw) {
 
       var LayersColl    = this._cartodb.CartoDBCollection.extend({
         sql: function(){
-          return "SELECT cartodb_id AS id, title, table_name, category_name, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
+          return "SELECT cartodb_id AS id, title, table_name, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
           ST_XMIN(the_geom) AS xmin, ST_YMAX(the_geom) AS ymax, ST_YMIN(the_geom) AS ymin, tileurl, true AS visible \
           FROM " + layerTable + " \
           WHERE display = TRUE ORDER BY displaylayer ASC";
