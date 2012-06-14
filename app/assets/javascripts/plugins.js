@@ -931,6 +931,31 @@ var Timeline = (function() {
 })();
 
 
+function updateFeed(options) {
+  var
+  countryCode       = options.countryCode || 'MYS',
+  n                 = options.n || 4;
+  var url = "https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20to_char(gfw2_forma_datecode.date,%20'dd,%20FMMonth,%20yyyy')%20as%20date,alerts%20FROM%20gfw2_forma_graphs,gfw2_forma_datecode%20WHERE%20gfw2_forma_datecode.n%20=%20gfw2_forma_graphs.date%20AND%20iso%20=%20'"+countryCode+"'%20order%20by%20gfw2_forma_datecode.date%20desc%20LIMIT%20"+n;
+  $.ajax({
+    dataType: "jsonp",
+    jsonpCallback:'iwcallback',
+    url: url,
+    success: function(json) {
+	  if (0<json.rows.length){
+	  	$('.alerts ul').html("");
+	  }
+	  for (var i=0; i<json.rows.length; i++){
+		$('.alerts ul').append(
+			$('<li></li>')
+				.append(
+					$('<span></span>').addClass('data').html(json.rows[i].date))
+				.append(
+					$('<span></span>').addClass('count').html(json.rows[i].alerts+' Alerts'))
+		);
+	  }
+    }
+  }); 
+}
 function addCircle(id, type, options) {
 
   var
