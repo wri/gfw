@@ -253,9 +253,14 @@ strong { font-weight: bold; } // This is sad, I know.
   &.forest-cover    .icon  { @include icons-sprite(forest_cover); }
   &.forest          .icon  { @include icons-sprite(forest_cover); }
   &.fire            .icon  { @include icons-sprite(fire); }
-  &.forest_clearing   .icon  { @include icons-sprite(fire); }
+  &.forest_clearing .icon  { @include icons-sprite(fire); }
   &.carbon          .icon  { @include icons-sprite(concessions); }
   &.biodiversity    .icon  { @include icons-sprite(concessions); }
+
+
+  &.other_layers    .icon  { @include icons-sprite(circle_other); }
+  &.regrowth        .icon  { @include icons-sprite(circle_other); }
+
 }
 
 .filter-lines {
