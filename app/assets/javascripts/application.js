@@ -68,6 +68,7 @@ function initialize() {
     var State = History.getState(); // Note: We are using History.getState() instead of event.state
 
     History.log(State.data, State.title, State.url);
+    console.log(previousState, State.title);
 
     if (previousState != State.title) {
       if (State.title === 'Home') {
@@ -76,8 +77,11 @@ function initialize() {
         Navigation.showState("countries");
       } else if (State.title === 'Map') {
         Navigation.showState("map");
-      } else { // Default state
-        $(".backdrop, #countries, #share").fadeOut(250);
+      } else {
+        // Default state
+        $("#share").fadeOut(250);
+        $(".backdrop").fadeOut(250);
+        $("#countries").fadeOut(250);
       }
 
       previousState = State.title;

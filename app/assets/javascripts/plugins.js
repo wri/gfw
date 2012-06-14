@@ -114,9 +114,7 @@ var Navigation = (function() {
 
     _stopMapAnimation();
 
-    //if ($.jStorage.get("forma") == true) {
     Timeline.show(); // TODO: don't show the timeline if FORMA is not selected
-    //}
 
     GFW.app.open();
 
@@ -552,6 +550,16 @@ var Legend = (function() {
     }
   }
 
+  function _reset(id, name, category) {
+    var cat = category.replace(/ /g, "_").toLowerCase(),
+    $ul = $(".legend ul." + cat);
+
+    $ul.find("li").remove();
+
+    _add(id, name, category);
+
+  }
+
   function _toggleItem(id, name, category, add) {
     add ? _add(id, name, category) : _remove(id, name, category);
   }
@@ -581,7 +589,8 @@ var Legend = (function() {
     show: _show,
     toggleItem: _toggleItem,
     add: _add,
-    remove: _remove
+    remove: _remove,
+    reset: _reset
   };
 
 }());

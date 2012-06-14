@@ -479,7 +479,7 @@ GFW.modules.maplayer = function(gfw) {
           sad.attributes['visible']  = true;
         }
 
-        //Legend.removeCategory(id, title, category);
+        Legend.reset(id, title, category);
 
       } else {
 
