@@ -164,25 +164,18 @@ var Filter = (function() {
   $layer     = $("#layer");
 
 
-function _updateHash(id, visible) {
-
-  var
-  State = History.getState(),
-  hash  = parseHash(State.hash);
-
-  if (hash) {
+  function _updateHash(id, visible) {
 
     var zoom = map.getZoom();
     var lat  = map.getCenter().lat().toFixed(2);
     var lng  = map.getCenter().lng().toFixed(2);
 
-    hash = "/map/" + zoom + "/" + lat + "/" + lng + "/" + filters.join(",");
+    var hash = "/map/" + zoom + "/" + lat + "/" + lng + "/" + filters.join(",");
 
     History.pushState({ state: 3 }, "Map", hash);
   }
-}
 
-  function _toggle(id, visible) {
+  function _toggle(id) {
     if (_.include(filters, id)) {
       filters = _.without(filters, id);
     } else {
