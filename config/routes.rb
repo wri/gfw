@@ -6,8 +6,10 @@ Gfw::Application.routes.draw do
 
   match 'blog'  => 'posts#index'
   match 'about' => 'static#about'
+
   match 'map'   => 'home#index'
-  match 'map/:lat/:lng/:zoom'   => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
+  match 'map/:zoom/:lat/:lng(/:filters)'   => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
+
   match 'country/:id' => 'countries#show'
 
   match 'country/:id'   => 'countries#show'

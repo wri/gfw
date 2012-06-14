@@ -1,3 +1,4 @@
+
 var Navigation = (function() {
 
   var
@@ -155,12 +156,43 @@ var Navigation = (function() {
 var Filter = (function() {
 
   var
-  lastClass = null,
   pids,
+  filters    = [],
+  lastClass  =  null,
   categories = [],
   $filters   = $(".filters"),
   $advance   = $filters.find(".advance"),
   $layer     = $("#layer");
+
+
+function _updateHash(id, visible) {
+
+  var
+  State = History.getState(),
+  hash  = parseHash(State.hash);
+
+  if (hash) {
+
+    var zoom = map.getZoom();
+    var lat  = map.getCenter().lat().toFixed(2);
+    var lng  = map.getCenter().lng().toFixed(2);
+
+    hash = "/map/" + zoom + "/" + lat + "/" + lng + "/" + filters.join(",");
+
+    console.log(filters, hash);
+
+    History.pushState({ state: 3 }, "Map", hash);
+  }
+}
+
+  function _toggle(id, visible) {
+    if (_.include(filters, id)) {
+      filters = _.without(filters, id);
+    } else {
+      filters.push(id);
+    }
+    _updateHash(id);
+  }
 
   function _show(callback) {
 
@@ -325,15 +357,20 @@ var Filter = (function() {
     $layer.on("mouseleave", _closeOpenFilter);
   }
 
-  function _addFilter(category, name, clickEvent, zoomEvent) {
+  function _check(id) {
+    $("#layer a[data-id=" + id +"]").addClass("checked");
+    filters.push(id);
+  }
+
+  function _addFilter(id, category, name, clickEvent, zoomEvent) {
 
     if (category === null || !category) {
       category = 'Other layers';
     }
 
     var
-    cat = category.replace(/ /g, "_").toLowerCase(),
-    id  = name.replace(/ /g, "_").toLowerCase();
+    cat  = category.replace(/ /g, "_").toLowerCase(),
+    slug = name.replace(/ /g, "_").toLowerCase();
 
     if (!_.include(categories, cat)) {
       var
@@ -348,7 +385,7 @@ var Filter = (function() {
     layerItemTemplate = null,
     $layerItem        = null;
 
-    // Select the kind of input: radio or checkbox
+    // Select the kind of input (radio or checkbox) depending on the category
     if (cat === 'forest_clearing') {
 
       layerItemTemplate = _.template($("#layer-item-radio-template").html());
@@ -378,20 +415,20 @@ var Filter = (function() {
     $layerItem.find(".checkbox").addClass(cat);
 
     // We select the FORMA layer by default
-    if ( id == "bimonthly" ) {
+    if ( slug == "bimonthly" ) {
       $layerItem.find(".radio").addClass('checked');
     }
-
   }
-
 
   return {
     init: _init,
     show: _show,
     hide: _hide,
     addFilter: _addFilter,
+    toggle: _toggle,
     closeOpenFilter:_closeOpenFilter,
-    calcFiltersPosition: _calcFiltersPosition
+    calcFiltersPosition: _calcFiltersPosition,
+    check: _check
   };
 
 }());
@@ -449,20 +486,21 @@ var Legend = (function() {
     return false;
   }
 
-  function _add(name, category) {
+  function _add(id, name, category) {
 
     if (category === null || !category) {
       category = 'Other layers';
     }
 
     var
-    id  = name.replace(/ /g, "_").toLowerCase(),
-    cat = category.replace(/ /g, "_").toLowerCase();
+    slug = name.replace(/ /g, "_").toLowerCase(),
+    cat  = category.replace(/ /g, "_").toLowerCase();
 
     template = _.template($("#legend-item-template").html());
     $item    = $(template({ category: cat, id: id, name: name.truncate(32) }));
 
     $item.hide();
+
     var $ul = null;
 
     if ( $(".legend").find("ul." + cat).length > 0 ) {
@@ -486,10 +524,10 @@ var Legend = (function() {
     }
   }
 
-  function _remove(name, category) {
+  function _remove(id, name, category) {
 
     var //
-    id  = name.replace(/ /g, "_").toLowerCase(),
+    slug  = name.replace(/ /g, "_").toLowerCase(),
     cat = category.replace(/ /g, "_").toLowerCase(),
     $li = $(".legend").find("ul li#" + id),
     $ul = $li.parent();
@@ -516,8 +554,8 @@ var Legend = (function() {
     }
   }
 
-  function _toggleItem(name, category, add) {
-    add ? _add(name, category) : _remove(name, category);
+  function _toggleItem(id, name, category, add) {
+    add ? _add(id, name, category) : _remove(id, name, category);
   }
 
   function _show(e) {

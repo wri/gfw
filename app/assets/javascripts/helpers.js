@@ -110,14 +110,20 @@ function parseHash(hash) {
 
     var zoom = parseInt(args[2], 10),
     lat = parseFloat(args[3]),
-    lon = parseFloat(args[4]);
+    lon = parseFloat(args[4]),
+    filters = args[5];
+
+    if (filters) {
+      filters.substr(0, filters.indexOf("?"));
+    }
 
     if (isNaN(zoom) || isNaN(lat) || isNaN(lon)) {
       return false;
     } else {
       return {
         center: new google.maps.LatLng(lat, lon),
-        zoom: zoom
+        zoom: zoom,
+        filters: filters
       };
     }
   } else {
