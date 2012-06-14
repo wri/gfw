@@ -23,7 +23,7 @@ class CountriesController < ApplicationController
       description: "Overall, Cameroon lost 13.4 percent of its forest cover or 3.3 million hectares between 1990 and 2005 and deforestation rates have increased by 10 percent since the close of the 1990s. In the recovery following economic crisis caused by the devaluation of the CFA Franc, building and public works projects increased domestic demand for timber products. Besides logging for domestic and export markets, deforestation results from fuelwood collection and subsistence farming.",
       last_alerts: [{:date => DateTime.new(2012, 5, 5, 16, 32), :count => 12345}] * 4,
       wikipedia_link: 'http://en.wikipedia.org/wiki/Cameroon',
-      link: "/map/5/-1.90/118.86/570"
+      link: "/map/7/3.87/12.48/570"
     }),
       "malaysia" => OpenStruct.new({
       name: 'Malaysia',

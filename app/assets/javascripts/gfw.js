@@ -382,6 +382,9 @@ GFW.modules.app = function(gfw) {
       lng  = self._map.getCenter().lng().toFixed(GFW.app._precision);
 
       filters = hash.filters || "";
+      if (filters) {
+        var filters = filters.substr(0, filters.indexOf("?"));
+      }
 
       if (filters) {
         hash = "/map/" + zoom + "/" + lat + "/" + lng + "/" + filters;
