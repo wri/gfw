@@ -1,8 +1,5 @@
 #encoding: UTF-8
 class CountriesController < ApplicationController
-  def index
-  end
-
   def show
 
     @name = params[:id].capitalize
@@ -15,7 +12,7 @@ class CountriesController < ApplicationController
       alerts_count: 2931,
       description: "Brazil i/brəˈzɪl/ (Portuguese: Brasil, IPA: [bɾaˈziw][8]), officially the Federative Republic of Brazil[9][10] (Portuguese: República Federativa do Brasil,  listen (help·info)), is the largest country in South America. It is the world's fifth largest country, both by geographical area and by population with over 192 million people.[11][12] It is the only Portuguese-speaking country in the Americas and the largest lusophone country in the world.[11]",
       last_alerts: [{:date => DateTime.new(2012, 5, 5, 16, 32), :count => 12345}] * 4,
-      wikipedia_link: 'http://en.wikipedia.org/wiki/Brazil'      
+      wikipedia_link: 'http://en.wikipedia.org/wiki/Brazil'   
     }),
       "cameroon" => OpenStruct.new({
       name: 'Cameroon',
@@ -24,7 +21,8 @@ class CountriesController < ApplicationController
       sqkm: "465249.792190389",
       description: "Cameroon, officially the Republic of Cameroon (French: République du Cameroun), is a country in west Central Africa. It is bordered by Nigeria to the west; Chad to the northeast; the Central African Republic to the east; and Equatorial Guinea, Gabon, and the Republic of the Congo to the south. Cameroon's coastline lies on the Bight of Bonny, part of the Gulf of Guinea and the Atlantic Ocean. The country is called \"Africa in miniature\" for its geological and cultural diversity. Natural features include beaches, deserts, mountains, rainforests, and savannas. The highest point is Mount Cameroon in the southwest, and the largest cities are Douala, Yaoundé, and Garoua. Cameroon is home to over 200 different linguistic groups. The country is well known for its native styles of music, particularly makossa and bikutsi, and for its successful national football team. French and English are the official languages.",
       last_alerts: [{:date => DateTime.new(2012, 5, 5, 16, 32), :count => 12345}] * 4,
-      wikipedia_link: 'http://en.wikipedia.org/wiki/Cameroon'
+      wikipedia_link: 'http://en.wikipedia.org/wiki/Cameroon',
+      link: "/map/5/-1.90/118.86/570"
     }),
       "malaysia" => OpenStruct.new({
       name: 'Malaysia',

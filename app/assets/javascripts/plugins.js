@@ -74,6 +74,8 @@ var Navigation = (function() {
   function _showHomeState() {
     showMap = false;
 
+    _hideOverlays();
+
     Legend.hide();
     Navigation.select("home");
 
@@ -104,8 +106,18 @@ var Navigation = (function() {
     clearInterval(mapAnimationPID);
   }
 
+  function _hideOverlays() {
+    $("#subscribe").fadeOut(250);
+    $("#share").fadeOut(250);
+    $(".backdrop").fadeOut(250);
+    $("#countries").fadeOut(250);
+  }
+
   function _showMapState() {
     showMap = true;
+
+    _hideOverlays();
+
 
     Navigation.select("map");
 
@@ -147,7 +159,9 @@ var Navigation = (function() {
 
   return {
     select: _select,
-    showState: _showState
+    showState: _showState,
+    animateMap: _animateMap,
+    stopMapAnimation: _stopMapAnimation
   };
 
 }());

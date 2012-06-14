@@ -67,9 +67,10 @@ function initialize() {
   History.Adapter.bind(window,'statechange', function(){ // Note: We are using statechange instead of popstate
     var State = History.getState(); // Note: We are using History.getState() instead of event.state
 
-    //History.log(State.data, State.title, State.url);
+   History.log(State.data, State.title, State.url);
 
     if (previousState != State.title) {
+
       if (State.title === 'Home') {
         Navigation.showState("home");
       } else if (State.title === 'Countries') {
@@ -77,6 +78,7 @@ function initialize() {
       } else if (State.title === 'Map') {
         Navigation.showState("map");
       } else {
+
         // Default state
         $("#subscribe").fadeOut(250);
         $("#share").fadeOut(250);
@@ -158,7 +160,7 @@ $(function(){
   resizePID;
 
   /*$(document).keyup(function(e) {
-    if (e.keyCode == 27) { 
+    if (e.keyCode == 27) {
     }   // esc
   });*/
 
