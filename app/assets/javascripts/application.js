@@ -67,14 +67,12 @@ function initialize() {
   History.Adapter.bind(window,'statechange', function(){ // Note: We are using statechange instead of popstate
     var State = History.getState(); // Note: We are using History.getState() instead of event.state
 
-   History.log(State.data, State.title, State.url);
+   //History.log(State.data, State.title, State.url);
 
     if (previousState != State.title) {
 
       if (State.title === 'Home') {
         Navigation.showState("home");
-      } else if (State.title === 'Countries') {
-        Navigation.showState("countries");
       } else if (State.title === 'Map') {
         Navigation.showState("map");
       }
@@ -102,7 +100,14 @@ function initialize() {
     e.preventDefault();
     $("#content").append('<div class="backdrop" />');
     $(".backdrop").fadeIn(250, function() {
+
+      var top = ( $(window).height() - $("#share").height() ) / 2+$(window).scrollTop() + "px",
+      left = ( $(window).width() - $("#share").width() ) / 2+$(window).scrollLeft() + "px";
+
+      $("#share").css({top: top, left:left});
       $("#share").fadeIn(250);
+
+
     });
   });
 
@@ -118,6 +123,11 @@ function initialize() {
     e.preventDefault();
     $("#content").append('<div class="backdrop" />');
     $(".backdrop").fadeIn(250, function() {
+
+      var top = ( $(window).height() - $("#subscribe").height() ) / 2+$(window).scrollTop() + "px",
+      left = ( $(window).width() - $("#subscribe").width() ) / 2+$(window).scrollLeft() + "px";
+
+      $("#subscribe").css({top: top, left:left});
       $("#subscribe").fadeIn(250);
     });
   });
@@ -152,11 +162,19 @@ $(function(){
   polygonPath           = [],
   resizePID;
 
-  //$(document).keyup(function(e) {
-    //if (e.keyCode == 27) {
-      //Navigation.hideOverlays();
-    //} // esc
-  //});
+  $(document).keyup(function(e) {
+    if (e.keyCode == 27) {
+      if ($("#share:visible").length > 0) {
+        $("#share").fadeOut(250);
+        $(".backdrop").fadeOut(250);
+      }
+      if ($("#subscribe:visible").length > 0) {
+        $("#subscribe").fadeOut(250);
+        $(".backdrop").fadeOut(250);
+      }
+
+    } // esc
+  });
 
   $(window).resize(function() {
     clearTimeout(resizePID);

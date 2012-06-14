@@ -354,9 +354,6 @@ body.countries {
   display:none;
   width: 414px;
   height: 258px;
-  margin-left:-207px;
-  top: 100px;
-  left: 50%;
   z-index: 1050;
   background-image:url(share.png);
 }
@@ -368,10 +365,6 @@ body.countries {
   display:none;
   width: $width;
   height: $height;
-  margin-left:-1*$width/2;
-  margin-top:-1*$height/2;
-  left: 50%;
-  top: 50%;
   z-index: 1050;
   background-image:url(subscribe_alert.png);
 }
