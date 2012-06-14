@@ -309,7 +309,11 @@ ul.logo_list {
     a#danida {
       background-image:url(logos/danida.png);
     }
-    a#bobolink {
+    span#bobolink {
+			text-indent: -99999px;
+			display: inline-block;
+			width: 120px;
+			height: 80px;
       background-image:url(logos/bobolink.png);
     }
     a#usaid {
