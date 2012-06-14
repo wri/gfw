@@ -73,8 +73,6 @@ function initialize() {
 
       if (State.title === 'Home') {
         Navigation.showState("home");
-      } else if (State.title === 'Countries') {
-        Navigation.showState("countries");
       } else if (State.title === 'Map') {
         Navigation.showState("map");
       }
