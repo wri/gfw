@@ -77,13 +77,6 @@ function initialize() {
         Navigation.showState("countries");
       } else if (State.title === 'Map') {
         Navigation.showState("map");
-      } else {
-
-        // Default state
-        $("#subscribe").fadeOut(250);
-        $("#share").fadeOut(250);
-        $(".backdrop").fadeOut(250);
-        $("#countries").fadeOut(250);
       }
 
       previousState = State.title;
@@ -102,7 +95,7 @@ function initialize() {
 
   $("nav .countries.ajax").on("click", function(e) {
     e.preventDefault();
-    History.pushState({ state: 4 }, "Countries", "/countries");
+    Navigation.showState('countries');
   });
 
   $(".share_link").on("click", function(e) {
@@ -158,11 +151,6 @@ $(function(){
   polygon               = null,
   polygonPath           = [],
   resizePID;
-
-  /*$(document).keyup(function(e) {
-    if (e.keyCode == 27) {
-    }   // esc
-  });*/
 
   $(window).resize(function() {
     clearTimeout(resizePID);

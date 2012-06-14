@@ -13,8 +13,6 @@ var Navigation = (function() {
   function _showState(state) {
     if (state === 'home') {
       _showHomeState();
-    } else if (state === "countries") {
-      _showCountryState();
     } else if (state === "map") {
       _showMapState();
     }
@@ -59,17 +57,6 @@ var Navigation = (function() {
     $("#countries .select").html($(this).html());
     $("#countries .select").show();
   });
-
-  function _showCountryState() {
-    Navigation.select("countries");
-    $("#content").append('<div class="backdrop" />');
-
-    $(".backdrop").fadeIn(250, function() {
-      var width = $(document).width();
-      $("#countries").fadeIn(250);
-      $("body").css({ overflow:"auto" });
-    });
-  }
 
   function _showHomeState() {
     showMap = false;
@@ -161,7 +148,8 @@ var Navigation = (function() {
     select: _select,
     showState: _showState,
     animateMap: _animateMap,
-    stopMapAnimation: _stopMapAnimation
+    stopMapAnimation: _stopMapAnimation,
+    hideOverlays: _hideOverlays
   };
 
 }());
