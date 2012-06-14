@@ -250,9 +250,10 @@ GFW.modules.app = function(gfw) {
         var query = queryArray.join(" UNION ALL ");
 
         if (this.mainLayer) this.mainLayer.setMap(null);
-
-        var layer = (this._layers.length > 1) ? "gfw2_layerstyles" : this._layers[0];
-
+        
+        //var layer = (this._layers.length > 1) ? "gfw2_layerstyles_v2" : this._layers[0];
+        //console.log(layer);
+        var layer = "gfw2_layerstyles_v4";
         this.mainLayer = new CartoDBLayer({
           map: map,
           user_name:'',
