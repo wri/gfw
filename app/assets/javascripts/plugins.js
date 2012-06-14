@@ -116,10 +116,11 @@ var Navigation = (function() {
 
     Timeline.show(); // TODO: don't show the timeline if FORMA is not selected
 
-    GFW.app.open();
 
     $("footer, .actions").fadeOut(250);
-    $("header").animate({height: "220px"}, 250);
+    $("header").animate({height: "220px"}, 250, function() {
+      GFW.app.open();
+    });
 
     $("hgroup h1").animate({ top: "50px", opacity: 0 }, 250, function() {
       Filter.show();

@@ -384,7 +384,7 @@ GFW.modules.maplayer = function(gfw) {
         this.layer.attributes['visible'] = false;
       }
 
-      var 
+      var
       State   = History.getState(),
       hash    = parseHash(State.hash),
       filters = [];
@@ -450,11 +450,6 @@ GFW.modules.maplayer = function(gfw) {
         category = 'Other layers';
       }
 
-      if (slug === 'bimonthly' && showMap && visible ) {
-        Timeline.show();
-      } else if ( (slug === 'bimonthly' && showMap && !visible) || (slug === 'annual' && showMap && visible) || (slug === 'brazilian_amazon' && showMap && visible) ) {
-        Timeline.hide();
-      }
 
       var // special layers
       bimonthly  = GFW.app.datalayers.LayersObj.get(569),
@@ -466,6 +461,12 @@ GFW.modules.maplayer = function(gfw) {
       }
 
       if (slug === 'bimonthly' || slug === "annual" || slug === "brazilian_amazon") {
+
+        if (slug === 'bimonthly' && showMap ) {
+          Timeline.show();
+        } else {
+          Timeline.hide();
+        }
 
         GFW.app.currentBaseLayer = slug;
 
