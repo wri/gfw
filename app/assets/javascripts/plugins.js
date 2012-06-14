@@ -987,7 +987,9 @@ function addCircle(id, type, options) {
   .attr("height", height)
   .style("stroke", "white")
   .attr("r", function(d) { return radius - 5.5; })
-  .attr("transform", "translate(" + radius + "," + radius + ")");
+  .attr("transform", "translate(" + radius + "," + radius + ")")
+  .on("mouseout", function(d) {
+  });
 
   function addText(opt) {
     graph.append("foreignObject")
@@ -1011,7 +1013,7 @@ function addCircle(id, type, options) {
 
       var x = d3.scale.linear()
       .domain([0, data.length - 1])
-      .range([0, width - 35]);
+      .range([0, width - 80]);
 
       var y = d3.scale.linear()
       .domain([0, d3.max(data, function(d) {return d.alerts})])
@@ -1023,30 +1025,42 @@ function addCircle(id, type, options) {
       .interpolate("basis");
 
       // Adds the line graph
-      var marginLeft = 20;
+      var marginLeft = 40;
       var marginTop = radius - h/2;
 
       var p = graph.append("svg:path")
       .attr("transform", "translate(" + marginLeft + "," + marginTop + ")")
       .attr("d", line(data))
       .on("mousemove", function(d) {
+
         var index = Math.round(x.invert(d3.mouse(this)[0]));
 
-        var val = data[index].alerts + " <small>" + unit + "</small>";
-        $(".amount." + id + " .text").html(val);
+        if (data[index]) { // if there's data
+          var val = data[index].alerts + " <small>" + unit + "</small>";
+          $(".amount." + id + " .text").html(val);
 
-        var t = _.template(legend);
-        val = t({ n: data[index].m + legendUnit });
-        $(".graph_legend." + id + " .text").html(val);
+          var date = new Date(data[index].y, data[index].m);
+          months = monthDiff(date, new Date());
 
-        d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
+          if (months === 0) {
+            val = "in this month";
+          } else if (months == 1) {
+            val = "in the last month";
+          } else {
+            val = "in the last " + months + " months";
+          }
 
-        var cx = d3.mouse(this)[0]+marginLeft;
-        var cy = h-y(data[index].alerts)+marginTop;
+          $(".graph_legend." + id + " .text").html(val);
 
-        graph.select("#marker")
-        .attr("cx",cx)
-        .attr("cy",cy)
+          d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
+
+          var cx = d3.mouse(this)[0]+marginLeft;
+          var cy = h-y(data[index].alerts)+marginTop;
+
+          graph.select("#marker")
+          .attr("cx",cx)
+          .attr("cy",cy)
+        }
       })
 
       graph.append("circle")

@@ -152,6 +152,12 @@ $(function(){
   polygonPath           = [],
   resizePID;
 
+  //$(document).keyup(function(e) {
+    //if (e.keyCode == 27) {
+      //Navigation.hideOverlays();
+    //} // esc
+  //});
+
   $(window).resize(function() {
     clearTimeout(resizePID);
     resizePID = setTimeout(function() { resizeWindow(); }, 100);
@@ -166,6 +172,6 @@ $(function(){
 
   if ($("div[data-load]").length > 0) {
     addCircle("forest", "bars", { legendUnit: "m", countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"with {{n}} tall trees", hoverColor: "#427C8D", color: "#75ADB5", unit: "km<sup>2</sup>" });
-    addCircle("forma", "lines", { legendUnit: " months", countryCode: countryCode, width: 300, title: "FORMA", subtitle:"Forest clearing alerts", legend:"In the last {{n}}", hoverColor: "#F2B357", color: "#F2B357" });
+    addCircle("forma", "lines", { countryCode: countryCode, width: 300, title: "FORMA", subtitle:"Forest clearing alerts", legend:"In the last month", hoverColor: "#F2B357", color: "#F2B357" });
   }
 });
