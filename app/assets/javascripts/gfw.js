@@ -159,7 +159,9 @@ GFW.modules.app = function(gfw) {
       });
 
       google.maps.event.addListener(this._map, 'click', function(event) {
-        if (!that.specialLayer)  return;
+
+            that._infowindow.close();
+        if (!that.specialLayer) { return; }
 
         var // get click coordinates
         lat = event.latLng.lat(),
@@ -172,7 +174,7 @@ GFW.modules.app = function(gfw) {
           jsonpCallback:'iwcallback',
           url: url,
           success: function(json) {
-              var data = json[0];
+            var data = json[0];
 
             if (data) {
               that._infowindow.setContent(data);
