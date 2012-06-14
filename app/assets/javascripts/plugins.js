@@ -1,3 +1,4 @@
+
 var Navigation = (function() {
 
   var
@@ -12,8 +13,6 @@ var Navigation = (function() {
   function _showState(state) {
     if (state === 'home') {
       _showHomeState();
-    } else if (state === "countries") {
-      _showCountryState();
     } else if (state === "map") {
       _showMapState();
     }
@@ -59,19 +58,10 @@ var Navigation = (function() {
     $("#countries .select").show();
   });
 
-  function _showCountryState() {
-    Navigation.select("countries");
-    $("#content").append('<div class="backdrop" />');
-
-    $(".backdrop").fadeIn(250, function() {
-      var width = $(document).width();
-      $("#countries").fadeIn(250);
-      $("body").css({ overflow:"auto" });
-    });
-  }
-
   function _showHomeState() {
     showMap = false;
+
+    _hideOverlays();
 
     Legend.hide();
     Navigation.select("home");
@@ -103,8 +93,18 @@ var Navigation = (function() {
     clearInterval(mapAnimationPID);
   }
 
+  function _hideOverlays() {
+    $("#subscribe").fadeOut(250);
+    $("#share").fadeOut(250);
+    $(".backdrop").fadeOut(250);
+    $("#countries").fadeOut(250);
+  }
+
   function _showMapState() {
     showMap = true;
+
+    _hideOverlays();
+
 
     Navigation.select("map");
 
@@ -113,14 +113,13 @@ var Navigation = (function() {
 
     _stopMapAnimation();
 
-    //if ($.jStorage.get("forma") == true) {
     Timeline.show(); // TODO: don't show the timeline if FORMA is not selected
-    //}
 
-    GFW.app.open();
 
     $("footer, .actions").fadeOut(250);
-    $("header").animate({height: "220px"}, 250);
+    $("header").animate({height: "220px"}, 250, function() {
+      GFW.app.open();
+    });
 
     $("hgroup h1").animate({ top: "50px", opacity: 0 }, 250, function() {
       Filter.show();
@@ -147,7 +146,10 @@ var Navigation = (function() {
 
   return {
     select: _select,
-    showState: _showState
+    showState: _showState,
+    animateMap: _animateMap,
+    stopMapAnimation: _stopMapAnimation,
+    hideOverlays: _hideOverlays
   };
 
 }());
@@ -155,12 +157,34 @@ var Navigation = (function() {
 var Filter = (function() {
 
   var
-  lastClass = null,
   pids,
+  filters    = [],
+  lastClass  =  null,
   categories = [],
   $filters   = $(".filters"),
   $advance   = $filters.find(".advance"),
   $layer     = $("#layer");
+
+
+  function _updateHash(id, visible) {
+
+    var zoom = map.getZoom();
+    var lat  = map.getCenter().lat().toFixed(2);
+    var lng  = map.getCenter().lng().toFixed(2);
+
+    var hash = "/map/" + zoom + "/" + lat + "/" + lng + "/" + filters.join(",");
+
+    History.pushState({ state: 3 }, "Map", hash);
+  }
+
+  function _toggle(id) {
+    if (_.include(filters, id)) {
+      filters = _.without(filters, id);
+    } else {
+      filters.push(id);
+    }
+    _updateHash(id);
+  }
 
   function _show(callback) {
 
@@ -325,15 +349,20 @@ var Filter = (function() {
     $layer.on("mouseleave", _closeOpenFilter);
   }
 
-  function _addFilter(category, name, clickEvent, zoomEvent) {
+  function _check(id) {
+    $("#layer a[data-id=" + id +"]").addClass("checked");
+    filters.push(id);
+  }
+
+  function _addFilter(id, category, name, clickEvent, zoomEvent) {
 
     if (category === null || !category) {
       category = 'Other layers';
     }
 
     var
-    cat = category.replace(/ /g, "_").toLowerCase(),
-    id  = name.replace(/ /g, "_").toLowerCase();
+    cat  = category.replace(/ /g, "_").toLowerCase(),
+    slug = name.replace(/ /g, "_").toLowerCase();
 
     if (!_.include(categories, cat)) {
       var
@@ -348,7 +377,7 @@ var Filter = (function() {
     layerItemTemplate = null,
     $layerItem        = null;
 
-    // Select the kind of input: radio or checkbox
+    // Select the kind of input (radio or checkbox) depending on the category
     if (cat === 'forest_clearing') {
 
       layerItemTemplate = _.template($("#layer-item-radio-template").html());
@@ -378,20 +407,20 @@ var Filter = (function() {
     $layerItem.find(".checkbox").addClass(cat);
 
     // We select the FORMA layer by default
-    if ( id == "bimonthly" ) {
+    if ( slug == "bimonthly" ) {
       $layerItem.find(".radio").addClass('checked');
     }
-
   }
-
 
   return {
     init: _init,
     show: _show,
     hide: _hide,
     addFilter: _addFilter,
+    toggle: _toggle,
     closeOpenFilter:_closeOpenFilter,
-    calcFiltersPosition: _calcFiltersPosition
+    calcFiltersPosition: _calcFiltersPosition,
+    check: _check
   };
 
 }());
@@ -449,20 +478,21 @@ var Legend = (function() {
     return false;
   }
 
-  function _add(name, category) {
+  function _add(id, name, category) {
 
     if (category === null || !category) {
       category = 'Other layers';
     }
 
     var
-    id  = name.replace(/ /g, "_").toLowerCase(),
-    cat = category.replace(/ /g, "_").toLowerCase();
+    slug = name.replace(/ /g, "_").toLowerCase(),
+    cat  = category.replace(/ /g, "_").toLowerCase();
 
     template = _.template($("#legend-item-template").html());
     $item    = $(template({ category: cat, id: id, name: name.truncate(32) }));
 
     $item.hide();
+
     var $ul = null;
 
     if ( $(".legend").find("ul." + cat).length > 0 ) {
@@ -486,10 +516,10 @@ var Legend = (function() {
     }
   }
 
-  function _remove(name, category) {
+  function _remove(id, name, category) {
 
     var //
-    id  = name.replace(/ /g, "_").toLowerCase(),
+    slug  = name.replace(/ /g, "_").toLowerCase(),
     cat = category.replace(/ /g, "_").toLowerCase(),
     $li = $(".legend").find("ul li#" + id),
     $ul = $li.parent();
@@ -516,8 +546,18 @@ var Legend = (function() {
     }
   }
 
-  function _toggleItem(name, category, add) {
-    add ? _add(name, category) : _remove(name, category);
+  function _reset(id, name, category) {
+    var cat = category.replace(/ /g, "_").toLowerCase(),
+    $ul = $(".legend ul." + cat);
+
+    $ul.find("li").remove();
+
+    _add(id, name, category);
+
+  }
+
+  function _toggleItem(id, name, category, add) {
+    add ? _add(id, name, category) : _remove(id, name, category);
   }
 
   function _show(e) {
@@ -545,7 +585,8 @@ var Legend = (function() {
     show: _show,
     toggleItem: _toggleItem,
     add: _add,
-    remove: _remove
+    remove: _remove,
+    reset: _reset
   };
 
 }());
@@ -946,7 +987,9 @@ function addCircle(id, type, options) {
   .attr("height", height)
   .style("stroke", "white")
   .attr("r", function(d) { return radius - 5.5; })
-  .attr("transform", "translate(" + radius + "," + radius + ")");
+  .attr("transform", "translate(" + radius + "," + radius + ")")
+  .on("mouseout", function(d) {
+  });
 
   function addText(opt) {
     graph.append("foreignObject")
@@ -970,7 +1013,7 @@ function addCircle(id, type, options) {
 
       var x = d3.scale.linear()
       .domain([0, data.length - 1])
-      .range([0, width - 35]);
+      .range([0, width - 80]);
 
       var y = d3.scale.linear()
       .domain([0, d3.max(data, function(d) {return d.alerts})])
@@ -982,33 +1025,42 @@ function addCircle(id, type, options) {
       .interpolate("basis");
 
       // Adds the line graph
-      var marginLeft = 20;
+      var marginLeft = 40;
       var marginTop = radius - h/2;
 
       var p = graph.append("svg:path")
       .attr("transform", "translate(" + marginLeft + "," + marginTop + ")")
       .attr("d", line(data))
       .on("mousemove", function(d) {
+
         var index = Math.round(x.invert(d3.mouse(this)[0]));
-        console.log("Index value: "+index+", date: "+data[index].y+"/"+data[index].m+", alert number: "+data[index].alerts);
 
+        if (data[index]) { // if there's data
+          var val = data[index].alerts + " <small>" + unit + "</small>";
+          $(".amount." + id + " .text").html(val);
 
+          var date = new Date(data[index].y, data[index].m);
+          months = monthDiff(date, new Date());
 
-        var val = data[index].alerts + " <small>" + unit + "</small>";
-        $(".amount." + id + " .text").html(val);
+          if (months === 0) {
+            val = "in this month";
+          } else if (months == 1) {
+            val = "in the last month";
+          } else {
+            val = "in the last " + months + " months";
+          }
 
-        var t = _.template(legend);
-        val = t({ n: data[index].m + legendUnit });
-        $(".graph_legend." + id + " .text").html(val);
+          $(".graph_legend." + id + " .text").html(val);
 
-        d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
+          d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
 
-        var cx = d3.mouse(this)[0]+marginLeft;
-        var cy = h-y(data[index].alerts)+marginTop;
+          var cx = d3.mouse(this)[0]+marginLeft;
+          var cy = h-y(data[index].alerts)+marginTop;
 
-        graph.select("#marker")
-        .attr("cx",cx)
-        .attr("cy",cy)
+          graph.select("#marker")
+          .attr("cx",cx)
+          .attr("cy",cy)
+        }
       })
 
       graph.append("circle")

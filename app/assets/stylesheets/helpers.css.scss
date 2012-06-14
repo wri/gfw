@@ -253,9 +253,14 @@ strong { font-weight: bold; } // This is sad, I know.
   &.forest-cover    .icon  { @include icons-sprite(forest_cover); }
   &.forest          .icon  { @include icons-sprite(forest_cover); }
   &.fire            .icon  { @include icons-sprite(fire); }
-  &.forest_clearing   .icon  { @include icons-sprite(fire); }
+  &.forest_clearing .icon  { @include icons-sprite(fire); }
   &.carbon          .icon  { @include icons-sprite(concessions); }
   &.biodiversity    .icon  { @include icons-sprite(concessions); }
+
+
+  &.other_layers    .icon  { @include icons-sprite(circle_other); }
+  &.regrowth        .icon  { @include icons-sprite(circle_other); }
+
 }
 
 .filter-lines {
@@ -269,30 +274,33 @@ strong { font-weight: bold; } // This is sad, I know.
   &.forest-cover     .line { background-color: $cForest; }
   &.forest           .line { background-color: $cForest; }
   &.fire             .line { background-color: $cFire; }
-  &.forest_clearing    .line { background-color: $cFire; }
+  &.forest_clearing  .line { background-color: $cFire; }
   &.carbon           .line { background-color: $cGray4;}
   &.biodiversity     .line { background-color: $cGray4; }
 }
 
 .filter-bullets {
-  background:url(icons/square.png) no-repeat left 6px;
+  $left: left;
+  $top: 3px;
+  background:url(icons/bullet_other.png) no-repeat;
+  background-position: $left $top;
 
   &.protected_areas {
-    background:url(icons/bullet_protected_areas.png) no-repeat left 6px;
+    background:url(icons/bullet_protected_areas.png) no-repeat $left $top;
   }
 
   &.forest_clearing {
-    background:url(icons/bullet_deforestation.png) no-repeat left 6px;
+    background:url(icons/bullet_deforestation.png) no-repeat $left $top;
   }
 
   &.concessions {
-    background:url(icons/bullet_concessions.png) no-repeat left 6px;
+    background:url(icons/bullet_concessions.png) no-repeat $left $top;
   }
   &.mining {
-    background:url(icons/bullet_mining.png) no-repeat left 6px;
+    background:url(icons/bullet_mining.png) no-repeat $left $top;
   }
   &.forest {
-    background:url(icons/bullet_forest.png) no-repeat left 6px;
+    background:url(icons/bullet_forest.png) no-repeat $left $top;
   }
 }
 

@@ -1,8 +1,5 @@
 #encoding: UTF-8
 class CountriesController < ApplicationController
-  def index
-  end
-
   def show
 
     @name = params[:id].capitalize
@@ -15,7 +12,7 @@ class CountriesController < ApplicationController
       alerts_count: 2931,
       description: "Due to the vastness of the Amazon rainforest, Brazil's average loss of 34,660 square kilometers of primary forest per year between 2000 and 2005 represents only about 0.8 percent of its forest cover. Nevertheless, deforestation in Brazil is one of the most important global environmental issues today. Brazil holds about one-third of the world's remaining rainforests, including a majority of the Amazon rainforest. It is also overwhelmingly the most biodiverse country on Earth, with more than 56,000 described species of plants, 1,700 species of birds, 695 amphibians, 578 mammals, and 651 reptiles. In many tropical countries, the majority of deforestation results from the actions of poor subsistence cultivators. Today deforestation in the Amazon is the result of several activities including clearing for cattle pasture, colonization and subsequent subsistence agriculture, infrastructure improvements, commercial agriculture (e.g. soy) and logging.",
       last_alerts: [{:date => DateTime.new(2012, 5, 5, 16, 32), :count => 12345}] * 4,
-      wikipedia_link: 'http://en.wikipedia.org/wiki/Brazil'      
+      wikipedia_link: 'http://en.wikipedia.org/wiki/Brazil'   
     }),
       "cameroon" => OpenStruct.new({
       name: 'Cameroon',
@@ -24,7 +21,8 @@ class CountriesController < ApplicationController
       sqkm: "465249.792190389",
       description: "Overall, Cameroon lost 13.4 percent of its forest cover or 3.3 million hectares between 1990 and 2005 and deforestation rates have increased by 10 percent since the close of the 1990s. In the recovery following economic crisis caused by the devaluation of the CFA Franc, building and public works projects increased domestic demand for timber products. Besides logging for domestic and export markets, deforestation results from fuelwood collection and subsistence farming.",
       last_alerts: [{:date => DateTime.new(2012, 5, 5, 16, 32), :count => 12345}] * 4,
-      wikipedia_link: 'http://en.wikipedia.org/wiki/Cameroon'
+      wikipedia_link: 'http://en.wikipedia.org/wiki/Cameroon',
+      link: "/map/5/-1.90/118.86/570"
     }),
       "malaysia" => OpenStruct.new({
       name: 'Malaysia',

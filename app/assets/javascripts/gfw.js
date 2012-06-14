@@ -50,7 +50,7 @@ GFW.modules.app = function(gfw) {
 
       this.queries = {};
       this.queries.bimonthly  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
-      this.queries.annual = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
+      this.queries.annual     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
       this.queries.brazilian_amazon = "SELECT CASE WHEN {Z}<12 THEN st_buffer(the_geom_webmercator,(16-{Z})^3.8) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
 
       this.lastHash = null;
@@ -205,31 +205,31 @@ GFW.modules.app = function(gfw) {
             //nulling out the geoms to save payload
             var request_sql = "SELECT *, null as the_geom, null as the_geom_webmercator FROM " + pair[1] + " WHERE cartodb_id = " + pair[0];
             $.ajax({
-                async: false,
-                dataType: 'json',
-                jsonp:false,
-                jsonpCallback:'iwcallback',
-                url: 'http://dyynnn89u7nkm.cloudfront.net/api/v2/sql?q=' + encodeURIComponent(request_sql),
-                success: function(json) {
-                    delete json.rows[0]['cartodb_id'],
-                    delete json.rows[0]['the_geom'];
-                    delete json.rows[0]['the_geom_webmercator'];
-                    delete json.rows[0]['created_at'];
-                    delete json.rows[0]['updated_at'];
-                    var data = json.rows[0];
-                    for (var key in data) {
-                      var temp;
-                      if (data.hasOwnProperty(key)) {
-                        temp = data[key];
-                        delete data[key];
-                        key = key.replace(/_/g,' '); //add spaces to key names
-                        data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
-                      }
-                    }
-                    that._infowindow.setContent(data);
-                    that._infowindow.setPosition(latlng);
-                    that._infowindow.open();
+              async: false,
+              dataType: 'json',
+              jsonp:false,
+              jsonpCallback:'iwcallback',
+              url: 'http://dyynnn89u7nkm.cloudfront.net/api/v2/sql?q=' + encodeURIComponent(request_sql),
+              success: function(json) {
+                delete json.rows[0]['cartodb_id'],
+                delete json.rows[0]['the_geom'];
+                delete json.rows[0]['the_geom_webmercator'];
+                delete json.rows[0]['created_at'];
+                delete json.rows[0]['updated_at'];
+                var data = json.rows[0];
+                for (var key in data) {
+                  var temp;
+                  if (data.hasOwnProperty(key)) {
+                    temp = data[key];
+                    delete data[key];
+                    key = key.replace(/_/g,' '); //add spaces to key names
+                    data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
+                  }
                 }
+                that._infowindow.setContent(data);
+                that._infowindow.setPosition(latlng);
+                that._infowindow.open();
+              }
             });
           },
           featureMouseOver: function(ev, latlng, data) {
@@ -307,10 +307,19 @@ GFW.modules.app = function(gfw) {
     _updateHash: function(self) {
 
       var
+      State = History.getState(),
+      hash  = parseHash(State.hash),
       zoom = self._map.getZoom(),
       lat  = self._map.getCenter().lat().toFixed(GFW.app._precision),
       lng  = self._map.getCenter().lng().toFixed(GFW.app._precision);
-      hash = "/map/" + zoom + "/" + lat + "/" + lng;
+
+      filters = hash.filters || "";
+
+      if (filters) {
+        hash = "/map/" + zoom + "/" + lat + "/" + lng + "/" + filters;
+      } else {
+        hash = "/map/" + zoom + "/" + lat + "/" + lng;
+      }
 
       History.pushState({ state: 3 }, "Map", hash);
     },
@@ -343,18 +352,17 @@ GFW.modules.app = function(gfw) {
       var hash = location.hash;
 
       if (hash === this.lastHash) {
-        // console.info("(no change)");
         return;
       }
 
-     var
-        State  = History.getState(),
-        parsed = this._parseHash(State.hash);
+      var
+      State  = History.getState(),
+      parsed = this._parseHash(State.hash);
 
-        if (parsed) {
+      if (parsed) {
         this._map.setZoom(parsed.zoom);
         this._map.setCenter(parsed.center);
-        }
+      }
 
     }
   });
@@ -376,9 +384,19 @@ GFW.modules.maplayer = function(gfw) {
         this.layer.attributes['visible'] = false;
       }
 
-      this._addControl();
+      var
+      State   = History.getState(),
+      hash    = parseHash(State.hash),
+      filters = [];
+
+      if (hash.filters) {
+        filters = _.map(hash.filters.split(","), function(i) { return parseInt(i, 10); });
+      }
+
+      this._addControl(filters);
+
     },
-    _addControl: function(){
+    _addControl: function(filters){
       var that = this;
 
       var clickEvent = function() {
@@ -391,7 +409,16 @@ GFW.modules.maplayer = function(gfw) {
         }
       };
 
-      Filter.addFilter(this.layer.get('category_name'), this.layer.get('title'), clickEvent, zoomEvent);
+      Filter.addFilter(this.layer.get('id'), this.layer.get('category_name'), this.layer.get('title'), clickEvent, zoomEvent);
+
+      // Adds the layers from the hash
+      if (filters && _.include(filters, this.layer.get('id'))) {
+        GFW.app._addLayer(this.layer.get('table_name'));
+        this.layer.attributes["visible"] = true;
+
+        Filter.check(this.layer.get('id'));
+        Legend.toggleItem(this.layer.get('id'), this.layer.get('title'), this.layer.get('category_name'), true);
+      }
 
     },
     _bindDisplay: function(display) {
@@ -412,50 +439,48 @@ GFW.modules.maplayer = function(gfw) {
 
       var
       title      = this.layer.get('title'),
-      id         = title.replace(/ /g, "_").toLowerCase(),
+      slug       = title.replace(/ /g, "_").toLowerCase(),
       visible    = this.layer.get('visible'),
       tableName  = this.layer.get('table_name'),
       category   = this.layer.get('category_name'),
       visibility = this.layer.get('visible');
+      id         = this.layer.get('id');
 
       if (category === null || !category) {
         category = 'Other layers';
       }
 
-      if (id === 'bimonthly' && showMap && visible ) {
-        Timeline.show();
-      } else if ( (id === 'bimonthly' && showMap && !visible) || (id === 'annual' && showMap && visible) || (id === 'brazilian_amazon' && showMap && visible) ) {
-        Timeline.hide();
-      }
 
       var // special layers
       bimonthly  = GFW.app.datalayers.LayersObj.get(569),
-      annual = GFW.app.datalayers.LayersObj.get(568),
-      sad    = GFW.app.datalayers.LayersObj.get(567);
+      annual     = GFW.app.datalayers.LayersObj.get(568),
+      sad        = GFW.app.datalayers.LayersObj.get(567);
 
       if (category != 'Forest clearing') {
-        Legend.toggleItem(title, category, visible);
+        Legend.toggleItem(id, title, category, visible);
       }
 
-      if (id === 'bimonthly' || id === "annual" || id === "brazilian_amazon") {
+      if (slug === 'bimonthly' || slug === "annual" || slug === "brazilian_amazon") {
 
-        GFW.app.currentBaseLayer = id;
+        if (slug === 'bimonthly' && showMap ) {
+          Timeline.show();
+        } else {
+          Timeline.hide();
+        }
+
+        GFW.app.currentBaseLayer = slug;
 
         GFW.app._updateBaseLayer();
 
-          if ( id == 'bimonthly') {
-            bimonthly.attributes['visible']  = true;
-          } else if (id == 'annual') {
-            annual.attributes['visible']  = true;
-          } else if (id == 'brazilian_amazon') {
-            sad.attributes['visible']  = true;
-          }
-
-        if (id === "bimonthly") {
-          Legend.add(title, category);
-          Legend.remove(sad.get("title"), category);
-          Legend.remove(annual.get("title"), category);
+        if ( slug == 'bimonthly') {
+          bimonthly.attributes['visible']  = true;
+        } else if (slug == 'annual') {
+          annual.attributes['visible']  = true;
+        } else if (slug == 'brazilian_amazon') {
+          sad.attributes['visible']  = true;
         }
+
+        Legend.reset(id, title, category);
 
       } else {
 
@@ -464,7 +489,8 @@ GFW.modules.maplayer = function(gfw) {
         } else {
           GFW.app._removeLayer(tableName);
         }
-    }
+        Filter.toggle(id);
+      }
 
     }
   });
@@ -505,11 +531,11 @@ GFW.modules.datalayers = function(gfw) {
           that._addLayer(p);
         });
 
-      // TODO: remove the below when real layers arrive
-      Filter.addFilter('Regrowth', 'coming soon...');
-      
-	  });
-	  
+        // TODO: remove the below when real layers arrive
+        Filter.addFilter(0, 'Regrowth', 'coming soon...');
+
+      });
+
     },
     _addLayer: function(p){
       var layer = new gfw.maplayer.Engine(p, this._map);

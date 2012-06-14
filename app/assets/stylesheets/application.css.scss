@@ -680,11 +680,11 @@ footer > .download {
   background:rgba(255,255,255, .9);
 
   display:none;
+  &.show { display: block; }
 }
 
 #countries {
   position:absolute;
-  display:none;
   width:1008px;
   margin-left:-504px;
   top: 50px;
