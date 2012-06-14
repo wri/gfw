@@ -46,7 +46,7 @@ class CountriesController < ApplicationController
       "indonesia" => OpenStruct.new({
       name: 'Indonesia',
       sqkm: "1888723.59702349",
-      countryCode: 'IDN',
+      country_code: 'IDN',
       alerts_count: 2931,
       description: "Indonesia houses the most extensive rain forest cover in all of Asia, though it is rapidly developing these lands to accommodate its increasing population and growing economy. Today just under half of Indonesia is forested, representing a significant decline in its original forest cover. Indonesia's forests are being degraded and destroyed by logging, mining operations, large-scale agricultural plantations (e.g. oil palm), colonization, and subsistence activities like shifting agriculture and cutting for fuel wood. The effects from forest loss have been widespread, including irregular river flows, soil erosion, and reduced yield from of forest products. Pollution from chlorine bleach used in pulp bleaching and run-off from mines has damaged river systems and adjacent cropland, while wildlife poaching has reduced populations of several conspicuous species including the orangutan (endangered), Bali and Javan tigers (extinct), and Javan and Sumatran rhinos (on the brink of extinction).",
       last_alerts: [{:date => DateTime.new(2012, 5, 5, 16, 32), :count => 12345}] * 4,
