@@ -588,7 +588,7 @@ GFW.modules.datalayers = function(gfw) {
           return "SELECT cartodb_id AS id, title, table_name, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
           ST_XMIN(the_geom) AS xmin, ST_YMAX(the_geom) AS ymax, ST_YMIN(the_geom) AS ymin, tileurl, true AS visible \
           FROM " + layerTable + " \
-          WHERE display = TRUE ORDER BY displaylayer ASC";
+          WHERE display = TRUE ORDER BY displaylayer,title ASC";
         }
       });
 
