@@ -116,6 +116,11 @@ function initialize() {
     e.preventDefault();
     $("#content").append('<div class="backdrop" />');
     $(".backdrop").fadeIn(250, function() {
+
+      var top = ( $(window).height() - $("#subscribe").height() ) / 2+$(window).scrollTop() + "px",
+      left = ( $(window).width() - $("#subscribe").width() ) / 2+$(window).scrollLeft() + "px";
+
+      $("#subscribe").css({top: top, left:left});
       $("#subscribe").fadeIn(250);
     });
   });
@@ -150,11 +155,14 @@ $(function(){
   polygonPath           = [],
   resizePID;
 
-  //$(document).keyup(function(e) {
-    //if (e.keyCode == 27) {
-      //Navigation.hideOverlays();
-    //} // esc
-  //});
+  $(document).keyup(function(e) {
+    if (e.keyCode == 27) {
+      if ($("#subscribe").length > 0) {
+        $("#subscribe").fadeOut(250);
+        $(".backdrop").fadeOut(250);
+      }
+    } // esc
+  });
 
   $(window).resize(function() {
     clearTimeout(resizePID);

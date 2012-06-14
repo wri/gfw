@@ -368,10 +368,6 @@ body.countries {
   display:none;
   width: $width;
   height: $height;
-  margin-left:-1*$width/2;
-  margin-top:-1*$height/2;
-  left: 50%;
-  top: 50%;
   z-index: 1050;
   background-image:url(subscribe_alert.png);
 }
