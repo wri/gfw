@@ -148,8 +148,6 @@
     -moz-box-shadow:0px 0px 5px 1px rgba(0,0,0,0.15);
     -webkit-box-shadow:0px 0px 5px 1px rgba(0,0,0,0.15);
     box-shadow:0px 0px 5px 1px rgba(0,0,0,0.15);
-    -ms-filter:"progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=6)";
-    filter:progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=6);
   }
 
   .filters {
@@ -336,8 +334,6 @@ $timelineWidth: 947px;
   -moz-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);    // Firefox v3.5+
   -webkit-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15); // Safari v3.0+ and by Chrome v0.2+
   box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);         // Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+
-  -ms-filter:"progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=7)";
-  filter:progid:DXImageTransform.Microsoft.Glow(Color=#ff000000,Strength=7);
 }
 
 .timeline .handle {
