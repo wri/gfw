@@ -283,10 +283,9 @@
 
       li {
 
-        @include inline-block();
+        /*@include inline-block();*/
 
         margin: 0 3px 5px 0;
-        width:80px;
         padding-left: 7px;
 
         vertical-align: top;
