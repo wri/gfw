@@ -343,6 +343,16 @@ GFW.modules.app = function(gfw) {
     },
 
     _loadBaseLayer: function() {
+      var self = this;
+      var table_name = null;
+
+      if (this.currentBaseLayer === "bimonthly") {
+        table_name = 'gfw2_forma';
+      } else if (this.currentBaseLayer === "annual") {
+        table_name = 'gfw2_hansen';
+      } else if (this.currentBaseLayer === "brazilian_amazon") {
+        table_name = 'gfw2_imazon';
+      }
 
       this.baseLayer = new CartoDBLayer({
         map: map,
@@ -355,6 +365,14 @@ GFW.modules.app = function(gfw) {
         query: this.queries[this.currentBaseLayer].replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
         auto_bound: false
+      });
+
+      this.time_layer = new TimePlayer('gfw2_forma');
+      window.time_layer = this.time_layer;
+      map.overlayMapTypes.setAt(0, this.time_layer);
+
+      Timeline.bind('change_date', function(date, month_number) {
+          self.time_layer.set_time(month_number);
       });
     },
 
