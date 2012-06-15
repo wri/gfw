@@ -9,6 +9,7 @@ var BASE_MONTH = 71;
 
 function TimePlayer(table,version,cloudfront_url) {
     this.time = 71;
+    this.stored_time = 71;
     this.canvas_setup = this.get_time_data;
     this.render = this.render_time;
     this.cells = [];
@@ -28,6 +29,13 @@ TimePlayer.prototype.set_time = function(t) {
     if(this.time != (t>>0)) {
         this.time = t;
         this.redraw();
+    }
+};
+TimePlayer.prototype.cache_time = function(t) {
+    if (t) {
+     this.stored_time = this.time;
+    } else {
+        return this.stored_time;
     }
 };
 

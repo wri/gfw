@@ -72,9 +72,11 @@ var Navigation = (function() {
         $("hgroup h1").animate({ top: 29, opacity: 1 }, 250);
       });
     });
-
+    
+    this.time_layer.cache_time(true);
     Timeline.hide();
-
+    self.time_layer.set_time(128);
+    
     _animateMap();
 
     GFW.app.close(function() {
@@ -112,10 +114,13 @@ var Navigation = (function() {
     Legend.show();
 
     _stopMapAnimation();
-
+    
+    console.log(self.time_layer.cache_time());
+    self.time_layer.set_time(self.time_layer.cache_time());
     Timeline.show(); // TODO: don't show the timeline if FORMA is not selected
 
-
+    
+    
     $("footer, .actions").fadeOut(250);
     $("header").animate({height: "220px"}, 250, function() {
       GFW.app.open();
