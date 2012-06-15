@@ -7,14 +7,15 @@
 var MAX_MONTHS = 128;
 var BASE_MONTH = 71;
 
-function TimePlayer(table) {
+function TimePlayer(table,version,cloudfront_url) {
     this.time = 71;
     this.canvas_setup = this.get_time_data;
     this.render = this.render_time;
     this.cells = [];
     this.table = table;
+    this._version = version;
     //this.base_url = 'http://sql.wri-01.cartodb.com/api/v2/sql';
-    this.base_url = 'http://wri-01.cartodb.com/api/v2/sql';
+    this.base_url = 'http://'+cloudfront_url+'/api/v2/sql';
     this.options = {};
 }
 
@@ -61,7 +62,7 @@ TimePlayer.prototype.set_country_iso = function(country) {
 // get data from cartodb
 TimePlayer.prototype.sql = function(sql, callback) {
     var self = this;
-    $.getJSON(this.base_url  + "?q=" + encodeURIComponent(sql) ,function(data){
+    $.getJSON(this.base_url  + "?q=" + encodeURIComponent(sql)+"&v="+this._version ,function(data){
         callback(data);
     });
 };

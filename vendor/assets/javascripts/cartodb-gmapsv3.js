@@ -39,6 +39,8 @@ if (typeof(google.maps.CartoDBLayer) === "undefined") {
    *    sql_domain        -     Use your own sql domain
    *    sql_port          -     Use your current sql port
    *    sql_protocol      -     http or https?
+   *    extra_params      -     In case you want to pass aditional params to cartodb tiler, pass them
+   *                            as an object
    */
 
 
@@ -58,6 +60,8 @@ if (typeof(google.maps.CartoDBLayer) === "undefined") {
     this.options.sql_domain = options.sql_domain || "cartodb.com";
     this.options.sql_port = options.sql_port || "";
     this.options.sql_protocol = options.sql_protocol || "http";
+    this.options.extra_params = options.extra_params;
+    
 
     // Custom params
     this.options.query = options.query || "SELECT * FROM {{table_name}}";
@@ -498,6 +502,14 @@ CartoDBLayer.prototype._bindWaxEvents = function(map,o) {
         tile_url = this._addUrlData(tile_url, query);
         grid_url = this._addUrlData(grid_url, query);
       }
+
+      // extra_params? 
+      if (this.options.extra_params) {
+        for (_param in this.options.extra_params) {
+          tile_url = this._addUrlData(tile_url, _param+"="+this.options.extra_params[_param]);
+          grid_url = this._addUrlData(grid_url, _param+"="+this.options.extra_params[_param]);
+        }
+      }      
 
       // STYLE?
       if (this.options.tile_style) {
