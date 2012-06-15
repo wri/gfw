@@ -46,7 +46,7 @@ GFW.modules.app = function(gfw) {
       gfw.log.enabled = options ? options.logging: false;
 
       this._map = map;
-      this._infowindow = new CartoDBInfowindow(map);
+      this.infowindow = new CartoDBInfowindow(map);
 
       this.queries = {};
       this.queries.bimonthly  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
@@ -160,7 +160,7 @@ GFW.modules.app = function(gfw) {
 
       google.maps.event.addListener(this._map, 'click', function(event) {
 
-            that._infowindow.close();
+            that.infowindow.close();
         if (!that.specialLayer) { return; }
 
         var // get click coordinates
@@ -177,9 +177,9 @@ GFW.modules.app = function(gfw) {
             var data = json[0];
 
             if (data) {
-              that._infowindow.setContent(data);
-              that._infowindow.setPosition(event.latLng);
-              that._infowindow.open();
+              that.infowindow.setContent(data);
+              that.infowindow.setPosition(event.latLng);
+              that.infowindow.open();
             }
 
           }
@@ -250,7 +250,7 @@ GFW.modules.app = function(gfw) {
         var query = queryArray.join(" UNION ALL ");
 
         if (this.mainLayer) this.mainLayer.setMap(null);
-        
+
         //var layer = (this._layers.length > 1) ? "gfw2_layerstyles_v2" : this._layers[0];
         //console.log(layer);
         var layer = "gfw2_layerstyles_v4";
@@ -295,9 +295,9 @@ GFW.modules.app = function(gfw) {
                     data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
                   }
                 }
-                that._infowindow.setContent(data);
-                that._infowindow.setPosition(latlng);
-                that._infowindow.open();
+                that.infowindow.setContent(data);
+                that.infowindow.setPosition(latlng);
+                that.infowindow.open();
               }
             });
           },

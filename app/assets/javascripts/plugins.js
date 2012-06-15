@@ -558,6 +558,9 @@ var Legend = (function() {
 
   function _toggleItem(id, name, category, add) {
     add ? _add(id, name, category) : _remove(id, name, category);
+    if (GFW && GFW.app.infowindow) {
+      GFW.app.infowindow.close();
+    }
   }
 
   function _show(e) {
@@ -954,7 +957,7 @@ function updateFeed(options) {
 		);
 	  }
     }
-  }); 
+  });
 }
 function addCircle(id, type, options) {
 
@@ -1030,7 +1033,7 @@ function addCircle(id, type, options) {
 
   // Content selection: lines or bars
   if (type == 'lines') {
-	
+
     d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT date_part('year',gfw2_forma_datecode.date) as y, date_part('month',gfw2_forma_datecode.date) as m,alerts FROM gfw2_forma_graphs,gfw2_forma_datecode WHERE  71<gfw2_forma_datecode.n AND gfw2_forma_datecode.n = gfw2_forma_graphs.date AND iso = '" + countryCode + "' order by gfw2_forma_datecode.date asc", function(json) {
 
       var data = json.rows.slice(1,json.rows.length);
