@@ -36,7 +36,7 @@ body.sources,
       color: $cGray1;
     }
 
-    &.posts > ul {
+    &.posts ul {
 
       li {
         .date {
@@ -64,7 +64,7 @@ body.sources,
       }
     }
 
-    & > ul {
+    ul {
 
       margin: 0 0 60px 0;
 
@@ -275,7 +275,7 @@ body.static {
 
   aside {
 
-    & > ul {
+    ul {
       padding: 20px 0 0 0;
       border-top: 1px solid $cSeparator;
     }

@@ -5,8 +5,13 @@
 
   <script id="legend-item-template" type="text/x-underscore-template">
     <li id="{{ id }}" class="{{ category }}">
-    {{ icons }}
-      <a href="#">{{ name }}</a></li>
+    [ if (color) {]
+    <div class="icon" style="background-color:{{color}};"></div> <a href="#">{{ name }}</a>
+    [ } else { ]
+    <a href="#">{{ name }}</a>
+    {{ parts }}
+    [ } ]
+    </li>
   </script>
 
   <script id="legend-template" type="text/x-underscore-template">

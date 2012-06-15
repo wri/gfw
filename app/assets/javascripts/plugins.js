@@ -490,17 +490,20 @@ var Legend = (function() {
 
     template = _.template($("#legend-item-template").html());
 
-    var icons = null;
+    var
+    color = null,
+    extra = null;
 
     if (title_color) {
-      icons = '<div class="icon" style="background-color:' + title_color + ';"></div>';
+      color = title_color;
     } else {
-      var subs = eval(title_subs);
-      var parts = _.map(subs, function(e) { return '<div class="part" style="background-color:' + e.color + ';"></div>'; }).join("");
-      icons = "<div class='icons'>" + parts + "</div>";
-    }
+        var subs = eval(title_subs);
+        var icons = _.map(subs, function(e) { return '<div class="layer"><div class="icon" style="background-color:' + e.color + ';"></div> <a href="#">' + e.title + '</a></div>'; }).join("\n");
+        console.log(icons);
+        var parts = "<div class='extra'>" + icons + "</div>";
+      }
 
-    $item    = $(template({ icons:icons, category: cat, id: id, name: name.truncate(32) }));
+    $item = $(template({ color:color, parts: parts, category: cat, id: id, name: name.truncate(32) }));
 
     $item.hide();
 
