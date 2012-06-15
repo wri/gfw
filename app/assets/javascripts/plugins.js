@@ -717,6 +717,7 @@ var Timeline = (function() {
   animationSpeed = 250,
   advance        = "10px",
   playing        = false,
+  instance       = null,
   dates = [
     [0,  110, 2006],
     [120, 140, null],
@@ -840,8 +841,9 @@ var Timeline = (function() {
     var
     monthPos = ( -1 * date[0] + pos) / 10,
     month    = config.MONTHNAMES_SHORT[monthPos];
-
     $handle.find("div").html("<strong>" + month + "</strong> " + date[2]);
+    // year 2000 is base year
+    instance.trigger('change_date', date, monthPos + (date[2] - 2000)*12);
   }
 
   function _setDate(pos, stop) {
@@ -927,12 +929,20 @@ var Timeline = (function() {
     });
   }
 
-  return {
+  // hack, sorry arce
+  // create a temporally object to give Backbone.Events features
+  // see _changeDate
+  function obj() {}
+  _.extend(obj.prototype, Backbone.Events);
+  instance = new obj();
+  _.extend(instance, {
     init: _init,
     hide: _hide,
     show: _show,
     isHidden: _isHidden
-  };
+  });
+  return instance;
+
 })();
 
 
