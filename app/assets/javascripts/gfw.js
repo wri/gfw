@@ -246,7 +246,7 @@ GFW.modules.app = function(gfw) {
         var queryArray = _.map(this._layers, function(layer) {
           return _.template(template, { table_name: layer });
         });
-
+        queryArray.push("(SELECT cartodb_id||':' ||'caf_lc_1' as cartodb_id, the_geom_webmercator, 'caf_lc_1' AS name FROM caf_lc_1 LIMIT 0)") //a hack for the stupid layer show hide discoloration thing I found
         var query = queryArray.join(" UNION ALL ");
 
         if (this.mainLayer) this.mainLayer.setMap(null);
