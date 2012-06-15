@@ -240,10 +240,13 @@ TimePlayer.prototype.render_time = function(tile, coord, zoom) {
     //ctx.fillStyle = '#000';
     // clear canvas
     tile.canvas.width = w;
-    ctx.fillStyle = '#F768A1';
-
+    ctx.fillStyle = '#F13689';
+    
     var xc = cells.xcoords;
     var yc = cells.ycoords;
+    var defor = cells.deforestation;
+    var dz = 256 / Math.pow(2,zoom)
+    
     // render cells
     //var data = ctx.getImageData(0, 0, w, h);
     //var pixels = data.data;
@@ -259,6 +262,7 @@ TimePlayer.prototype.render_time = function(tile, coord, zoom) {
           pixels[idx + 2] = 161;
           pixels[idx + 3] = 255;
           */
+              
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
       }
     }
