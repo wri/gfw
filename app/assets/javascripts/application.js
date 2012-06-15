@@ -6,7 +6,6 @@
 //= require cartodb-gmapsv3
 //= require cartodb-infowindow-min
 //= require jquery.history
-//= require tumblr_tag_cloud.min
 //= require jstorage.min
 //= require lodash.min
 //= require backbone-min
