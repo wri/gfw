@@ -46,7 +46,7 @@ GFW.modules.app = function(gfw) {
       gfw.log.enabled = options ? options.logging: false;
 
       this._map = map;
-      this._infowindow = new CartoDBInfowindow(map);
+      this.infowindow = new CartoDBInfowindow(map);
 
       this.queries = {};
       this.queries.bimonthly  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
@@ -58,8 +58,9 @@ GFW.modules.app = function(gfw) {
       this._cartodb = Backbone.CartoDB({user: this.options.user});
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
 
-      this.mainLayer = null;
-      this.specialLayer = null;
+      // Layers
+      this.mainLayer        = null;
+      this.specialLayer     = null;
       this.currentBaseLayer = "bimonthly";
 
       this._loadBaseLayer();
@@ -67,7 +68,6 @@ GFW.modules.app = function(gfw) {
     },
     run: function() {
       this._setupListeners();
-      //this.update();
       gfw.log.info('App is now running!');
     },
 
@@ -160,7 +160,7 @@ GFW.modules.app = function(gfw) {
 
       google.maps.event.addListener(this._map, 'click', function(event) {
 
-            that._infowindow.close();
+            that.infowindow.close();
         if (!that.specialLayer) { return; }
 
         var // get click coordinates
@@ -177,9 +177,9 @@ GFW.modules.app = function(gfw) {
             var data = json[0];
 
             if (data) {
-              that._infowindow.setContent(data);
-              that._infowindow.setPosition(event.latLng);
-              that._infowindow.open();
+              that.infowindow.setContent(data);
+              that.infowindow.setPosition(event.latLng);
+              that.infowindow.open();
             }
 
           }
@@ -250,7 +250,7 @@ GFW.modules.app = function(gfw) {
         var query = queryArray.join(" UNION ALL ");
 
         if (this.mainLayer) this.mainLayer.setMap(null);
-        
+
         //var layer = (this._layers.length > 1) ? "gfw2_layerstyles_v2" : this._layers[0];
         //console.log(layer);
         var layer = "gfw2_layerstyles_v4";
@@ -295,9 +295,9 @@ GFW.modules.app = function(gfw) {
                     data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
                   }
                 }
-                that._infowindow.setContent(data);
-                that._infowindow.setPosition(latlng);
-                that._infowindow.open();
+                that.infowindow.setContent(data);
+                that.infowindow.setPosition(latlng);
+                that.infowindow.open();
               }
             });
           },
@@ -325,22 +325,25 @@ GFW.modules.app = function(gfw) {
       GFW.app.baseLayer.setQuery(query);
     },
 
-    _updateBaseLayer: function() {
-      var table_name = null;
+    _getTableName: function(layerName) {
 
-      if (this.currentBaseLayer === "bimonthly") {
-        table_name = 'gfw2_forma';
-      } else if (this.currentBaseLayer === "annual") {
-        table_name = 'gfw2_hansen';
-      } else if (this.currentBaseLayer === "brazilian_amazon") {
-        table_name = 'gfw2_imazon';
+      if (layerName === "bimonthly") {
+        return 'gfw2_forma';
+      } else if (layerName === "annual") {
+        return 'gfw2_hansen';
+      } else if (layerName === "brazilian_amazon") {
+        return 'gfw2_imazon';
       }
+      return null;
+    },
 
-      GFW.app.baseLayer.options.table_name = table_name;
+    _updateBaseLayer: function() {
+      GFW.app.baseLayer.options.table_name = this._getTableName(this.currentBaseLayer);
       GFW.app.baseLayer.setQuery(GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom()));
     },
 
     _loadBaseLayer: function() {
+      var self = this;
       var table_name = null;
 
       if (this.currentBaseLayer === "bimonthly") {
@@ -358,10 +361,18 @@ GFW.modules.app = function(gfw) {
         sql_domain:'dyynnn89u7nkm.cloudfront.net',
         tiler_path:'/tiles/',
         tiler_suffix:'.png',
-        table_name: table_name,
+        table_name: this._getTableName(this.currentBaseLayer),
         query: this.queries[this.currentBaseLayer].replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
         auto_bound: false
+      });
+
+      this.time_layer = new TimePlayer('gfw2_forma');
+      window.time_layer = this.time_layer;
+      map.overlayMapTypes.setAt(0, this.time_layer);
+
+      Timeline.bind('change_date', function(date, month_number) {
+          self.time_layer.set_time(month_number);
       });
     },
 

@@ -558,6 +558,11 @@ var Legend = (function() {
 
   function _toggleItem(id, name, category, add) {
     add ? _add(id, name, category) : _remove(id, name, category);
+
+    if (GFW && GFW.app.infowindow) {
+      GFW.app.infowindow.close();
+    }
+
   }
 
   function _show(e) {
@@ -708,10 +713,11 @@ var Timeline = (function() {
   $handle        = $timeline.find(".handle"),
   $play          = $timeline.find(".handle .play"),
   animationPid   = null,
-  animationDelay = 1000,
-  animationSpeed = 250,
+  animationDelay = 500,
+  animationSpeed = 120,
   advance        = "10px",
   playing        = false,
+  instance       = null,
   dates = [
     [0,  110, 2006],
     [120, 140, null],
@@ -835,8 +841,9 @@ var Timeline = (function() {
     var
     monthPos = ( -1 * date[0] + pos) / 10,
     month    = config.MONTHNAMES_SHORT[monthPos];
-
     $handle.find("div").html("<strong>" + month + "</strong> " + date[2]);
+    // year 2000 is base year
+    instance.trigger('change_date', date, monthPos + (date[2] - 2000)*12);
   }
 
   function _setDate(pos, stop) {
@@ -922,12 +929,20 @@ var Timeline = (function() {
     });
   }
 
-  return {
+  // hack, sorry arce
+  // create a temporally object to give Backbone.Events features
+  // see _changeDate
+  function obj() {}
+  _.extend(obj.prototype, Backbone.Events);
+  instance = new obj();
+  _.extend(instance, {
     init: _init,
     hide: _hide,
     show: _show,
     isHidden: _isHidden
-  };
+  });
+  return instance;
+
 })();
 
 
@@ -941,20 +956,20 @@ function updateFeed(options) {
     jsonpCallback:'iwcallback',
     url: url,
     success: function(json) {
-	  if (0<json.rows.length){
-	  	$('.alerts ul').html("");
-	  }
-	  for (var i=0; i<json.rows.length; i++){
-		$('.alerts ul').append(
-			$('<li></li>')
-				.append(
-					$('<span></span>').addClass('data').html(json.rows[i].date))
-				.append(
-					$('<span></span>').addClass('count').html(json.rows[i].alerts+' Alerts'))
-		);
-	  }
+      if (0<json.rows.length){
+        $('.alerts ul').html("");
+      }
+      for (var i=0; i<json.rows.length; i++){
+        $('.alerts ul').append(
+          $('<li></li>')
+          .append(
+            $('<span></span>').addClass('data').html(json.rows[i].date))
+            .append(
+              $('<span></span>').addClass('count').html(json.rows[i].alerts+' Alerts'))
+        );
+      }
     }
-  }); 
+  });
 }
 function addCircle(id, type, options) {
 
@@ -1030,7 +1045,7 @@ function addCircle(id, type, options) {
 
   // Content selection: lines or bars
   if (type == 'lines') {
-	
+
     d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT date_part('year',gfw2_forma_datecode.date) as y, date_part('month',gfw2_forma_datecode.date) as m,alerts FROM gfw2_forma_graphs,gfw2_forma_datecode WHERE  71<gfw2_forma_datecode.n AND gfw2_forma_datecode.n = gfw2_forma_graphs.date AND iso = '" + countryCode + "' order by gfw2_forma_datecode.date asc", function(json) {
 
       var data = json.rows.slice(1,json.rows.length);
