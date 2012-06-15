@@ -478,7 +478,7 @@ var Legend = (function() {
     return false;
   }
 
-  function _add(id, name, category) {
+  function _add(id, name, category, title_color, title_subs) {
 
     if (category === null || !category) {
       category = 'Other layers';
@@ -489,7 +489,7 @@ var Legend = (function() {
     cat  = category.replace(/ /g, "_").toLowerCase();
 
     template = _.template($("#legend-item-template").html());
-    $item    = $(template({ category: cat, id: id, name: name.truncate(32) }));
+    $item    = $(template({ title_color: title_color, title_subs:title_subs, category: cat, id: id, name: name.truncate(32) }));
 
     $item.hide();
 
@@ -518,7 +518,7 @@ var Legend = (function() {
 
   function _remove(id, name, category) {
 
-    var //
+    var
     slug  = name.replace(/ /g, "_").toLowerCase(),
     cat = category.replace(/ /g, "_").toLowerCase(),
     $li = $(".legend").find("ul li#" + id),
@@ -546,18 +546,18 @@ var Legend = (function() {
     }
   }
 
-  function _reset(id, name, category) {
+  function _reset(id, name, category, title_color, title_subs) {
     var cat = category.replace(/ /g, "_").toLowerCase(),
     $ul = $(".legend ul." + cat);
 
     $ul.find("li").remove();
 
-    _add(id, name, category);
+    _add(id, name, category, title_color, title_subs);
 
   }
 
-  function _toggleItem(id, name, category, add) {
-    add ? _add(id, name, category) : _remove(id, name, category);
+  function _toggleItem(id, name, category, title_color, title_subs, add) {
+    add ? _add(id, name, category, title_color, title_subs) : _remove(id, name, category);
 
     if (GFW && GFW.app.infowindow) {
       GFW.app.infowindow.close();
