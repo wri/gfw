@@ -651,7 +651,7 @@ a.close_icon {
   @include checkboxes(checkboxes);
 
   &.concessions     { @include checkboxes(checkboxes_concessions); }
-  &.forest          { @include checkboxes(checkboxes_forest); }
+  &.regrowth          { @include checkboxes(checkboxes_forest); }
   &.mining          { @include checkboxes(checkboxes_mining); }
   &.other_layers    { @include checkboxes(checkboxes_other_layers); }
 }

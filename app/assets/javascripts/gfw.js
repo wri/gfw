@@ -633,7 +633,7 @@ GFW.modules.datalayers = function(gfw) {
         });
 
         // TODO: remove the below when real layers arrive
-        //Filter.addFilter(0, 'Regrowth', 'coming soon...');
+        Filter.addFilter(0, 'Regrowth', 'coming soon...');
 
       });
 
