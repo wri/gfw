@@ -106,12 +106,10 @@ function initialize() {
 
       $("#share").css({top: top, left:left});
       $("#share").fadeIn(250);
-
-
     });
   });
 
-  $("#share").on("click", function(e) {
+  $(".close_icon").on("click", function(e) {
     e.preventDefault();
     $(".backdrop").fadeOut(250, function() {
       $(this).remove();

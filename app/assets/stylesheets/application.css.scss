@@ -355,13 +355,63 @@ body.countries {
   }
 }
 
+a.close_icon {
+	width: 8px;
+	height: 8px;
+	display: inline-block;
+  background-image:url(icons/close_icon.png);	
+}
+
 #share {
   position:absolute;
   display:none;
   width: 414px;
   height: 258px;
   z-index: 1050;
-  background-image:url(share.png);
+  background-image:url(backgrounds/bkg_share.png);
+
+	h2{
+    @extend .serif;
+    font-size: 35px;
+    color: $cGray2;
+		width: 100%;
+		margin: 60px 0 0 0;
+		text-align: center;
+	}
+	
+	p {
+    @extend .sans-serif;
+    font-size:15px;
+    font-weight:300;
+    color: $cGray2;
+    line-height:20px;
+		width: 100%;
+		margin: 5px 0 0 0;
+		text-align: center;		
+	}
+	
+	a.close_icon {
+		position: absolute;
+		top: 25px;
+		right: 25px;		
+	}
+	
+	.share_buttons {
+		border-top: 1px solid $cGray4;
+		width: 386px;
+		margin: 35px 14px 0 14px;
+		padding: 30px 0 0 0;
+		text-align: center;
+		
+	  .share_button {
+			vertical-align:top;
+			width: 85px;
+			text-align: center;
+			display: inline-block;			
+		}
+
+	}
+	
 }
 
 #subscribe {
