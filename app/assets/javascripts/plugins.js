@@ -13,8 +13,6 @@ var Navigation = (function() {
   function _showState(state) {
     if (state === 'home') {
       _showHomeState();
-    } else if (state === "countries") {
-      _showCountryState();
     } else if (state === "map") {
       _showMapState();
     }
@@ -60,19 +58,10 @@ var Navigation = (function() {
     $("#countries .select").show();
   });
 
-  function _showCountryState() {
-    Navigation.select("countries");
-    $("#content").append('<div class="backdrop" />');
-
-    $(".backdrop").fadeIn(250, function() {
-      var width = $(document).width();
-      $("#countries").fadeIn(250);
-      $("body").css({ overflow:"auto" });
-    });
-  }
-
   function _showHomeState() {
     showMap = false;
+
+    _hideOverlays();
 
     Legend.hide();
     Navigation.select("home");
@@ -104,8 +93,18 @@ var Navigation = (function() {
     clearInterval(mapAnimationPID);
   }
 
+  function _hideOverlays() {
+    $("#subscribe").fadeOut(250);
+    $("#share").fadeOut(250);
+    $(".backdrop").fadeOut(250);
+    $("#countries").fadeOut(250);
+  }
+
   function _showMapState() {
     showMap = true;
+
+    _hideOverlays();
+
 
     Navigation.select("map");
 
@@ -147,7 +146,10 @@ var Navigation = (function() {
 
   return {
     select: _select,
-    showState: _showState
+    showState: _showState,
+    animateMap: _animateMap,
+    stopMapAnimation: _stopMapAnimation,
+    hideOverlays: _hideOverlays
   };
 
 }());
@@ -556,6 +558,11 @@ var Legend = (function() {
 
   function _toggleItem(id, name, category, add) {
     add ? _add(id, name, category) : _remove(id, name, category);
+
+    if (GFW && GFW.app.infowindow) {
+      GFW.app.infowindow.close();
+    }
+
   }
 
   function _show(e) {
@@ -939,6 +946,31 @@ var Timeline = (function() {
 })();
 
 
+function updateFeed(options) {
+  var
+  countryCode       = options.countryCode || 'MYS',
+  n                 = options.n || 4;
+  var url = "https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20to_char(gfw2_forma_datecode.date,%20'dd,%20FMMonth,%20yyyy')%20as%20date,alerts%20FROM%20gfw2_forma_graphs,gfw2_forma_datecode%20WHERE%20gfw2_forma_datecode.n%20=%20gfw2_forma_graphs.date%20AND%20iso%20=%20'"+countryCode+"'%20order%20by%20gfw2_forma_datecode.date%20desc%20LIMIT%20"+n;
+  $.ajax({
+    dataType: "jsonp",
+    jsonpCallback:'iwcallback',
+    url: url,
+    success: function(json) {
+      if (0<json.rows.length){
+        $('.alerts ul').html("");
+      }
+      for (var i=0; i<json.rows.length; i++){
+        $('.alerts ul').append(
+          $('<li></li>')
+          .append(
+            $('<span></span>').addClass('data').html(json.rows[i].date))
+            .append(
+              $('<span></span>').addClass('count').html(json.rows[i].alerts+' Alerts'))
+        );
+      }
+    }
+  });
+}
 function addCircle(id, type, options) {
 
   var
@@ -995,7 +1027,9 @@ function addCircle(id, type, options) {
   .attr("height", height)
   .style("stroke", "white")
   .attr("r", function(d) { return radius - 5.5; })
-  .attr("transform", "translate(" + radius + "," + radius + ")");
+  .attr("transform", "translate(" + radius + "," + radius + ")")
+  .on("mouseout", function(d) {
+  });
 
   function addText(opt) {
     graph.append("foreignObject")
@@ -1012,14 +1046,13 @@ function addCircle(id, type, options) {
   // Content selection: lines or bars
   if (type == 'lines') {
 
-
-    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT date_part('year',gfw2_forma_datecode.date) as y, date_part('month',gfw2_forma_datecode.date) as m,alerts FROM gfw2_forma_graphs,gfw2_forma_datecode WHERE gfw2_forma_datecode.n = gfw2_forma_graphs.date AND iso = '" + countryCode + "' order by gfw2_forma_datecode.date asc", function(json) {
+    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT date_part('year',gfw2_forma_datecode.date) as y, date_part('month',gfw2_forma_datecode.date) as m,alerts FROM gfw2_forma_graphs,gfw2_forma_datecode WHERE  71<gfw2_forma_datecode.n AND gfw2_forma_datecode.n = gfw2_forma_graphs.date AND iso = '" + countryCode + "' order by gfw2_forma_datecode.date asc", function(json) {
 
       var data = json.rows.slice(1,json.rows.length);
 
       var x = d3.scale.linear()
       .domain([0, data.length - 1])
-      .range([0, width - 35]);
+      .range([0, width - 80]);
 
       var y = d3.scale.linear()
       .domain([0, d3.max(data, function(d) {return d.alerts})])
@@ -1031,30 +1064,42 @@ function addCircle(id, type, options) {
       .interpolate("basis");
 
       // Adds the line graph
-      var marginLeft = 20;
+      var marginLeft = 40;
       var marginTop = radius - h/2;
 
       var p = graph.append("svg:path")
       .attr("transform", "translate(" + marginLeft + "," + marginTop + ")")
       .attr("d", line(data))
       .on("mousemove", function(d) {
+
         var index = Math.round(x.invert(d3.mouse(this)[0]));
 
-        var val = data[index].alerts + " <small>" + unit + "</small>";
-        $(".amount." + id + " .text").html(val);
+        if (data[index]) { // if there's data
+          var val = data[index].alerts + " <small>" + unit + "</small>";
+          $(".amount." + id + " .text").html(val);
 
-        var t = _.template(legend);
-        val = t({ n: data[index].m + legendUnit });
-        $(".graph_legend." + id + " .text").html(val);
+          var date = new Date(data[index].y, data[index].m);
+          months = monthDiff(date, new Date());
 
-        d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
+          if (months === 0) {
+            val = "in this month";
+          } else if (months == 1) {
+            val = "in the last month";
+          } else {
+            val = "in the last " + months + " months";
+          }
 
-        var cx = d3.mouse(this)[0]+marginLeft;
-        var cy = h-y(data[index].alerts)+marginTop;
+          $(".graph_legend." + id + " .text").html(val);
 
-        graph.select("#marker")
-        .attr("cx",cx)
-        .attr("cy",cy)
+          d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
+
+          var cx = d3.mouse(this)[0]+marginLeft;
+          var cy = h-y(data[index].alerts)+marginTop;
+
+          graph.select("#marker")
+          .attr("cx",cx)
+          .attr("cy",cy)
+        }
       })
 
       graph.append("circle")

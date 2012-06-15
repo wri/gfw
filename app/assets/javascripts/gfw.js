@@ -46,7 +46,7 @@ GFW.modules.app = function(gfw) {
       gfw.log.enabled = options ? options.logging: false;
 
       this._map = map;
-      this._infowindow = new CartoDBInfowindow(map);
+      this.infowindow = new CartoDBInfowindow(map);
 
       this.queries = {};
       this.queries.bimonthly  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
@@ -58,7 +58,9 @@ GFW.modules.app = function(gfw) {
       this._cartodb = Backbone.CartoDB({user: this.options.user});
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
 
-      this.mainLayer = null;
+      // Layers
+      this.mainLayer        = null;
+      this.specialLayer     = null;
       this.currentBaseLayer = "bimonthly";
 
       this._loadBaseLayer();
@@ -66,7 +68,6 @@ GFW.modules.app = function(gfw) {
     },
     run: function() {
       this._setupListeners();
-      //this.update();
       gfw.log.info('App is now running!');
     },
 
@@ -157,20 +158,84 @@ GFW.modules.app = function(gfw) {
         that._updateHash(that);
       });
 
+      google.maps.event.addListener(this._map, 'click', function(event) {
+
+            that.infowindow.close();
+        if (!that.specialLayer) { return; }
+
+        var // get click coordinates
+        lat = event.latLng.lat(),
+        lng = event.latLng.lng(),
+        url = 'http://protectedplanet.net/api/sites_by_point/'+lng+'/'+lat;
+
+        $.ajax({
+          async: false,
+          dataType: "jsonp",
+          jsonpCallback:'iwcallback',
+          url: url,
+          success: function(json) {
+            var data = json[0];
+
+            if (data) {
+              that.infowindow.setContent(data);
+              that.infowindow.setPosition(event.latLng);
+              that.infowindow.open();
+            }
+
+          }
+        });
+      });
+
       google.maps.event.addListenerOnce(this._map, 'tilesloaded', this._mapLoaded);
 
     },
 
-    _removeLayer: function(name) {
-      this._layers = _.without(this._layers, name);
-      this._renderLayers();
+    _removeLayer: function(layer) {
+      if (!layer.get('external')) {
+        this._layers = _.without(this._layers, layer.get("table_name"));
+        this._renderLayers();
+      } else {
+        this._removeExternalLayer();
+      }
     },
 
-    _addLayer: function(name) {
-      this._layers.push(name);
-      this._renderLayers();
+    _addLayer: function(layer) {
+      if (!layer.get('external')) {
+        this._layers.push(layer.get('table_name'));
+        this._renderLayers();
+      } else {
+        this._renderExternalLayer(layer);
+      }
     },
 
+    _removeExternalLayer: function(layer) {
+      if (this.specialLayer) this.specialLayer.setMap(null);
+    },
+
+    _renderExternalLayer: function(layer) {
+      var that = this;
+
+        var query = layer.get('tileurl');
+
+        if (this.specialLayer) this.specialLayer.setMap(null);
+
+        this.specialLayer = new CartoDBLayer({
+          map: map,
+          user_name:'',
+          tiler_domain:'184.73.201.235',
+          sql_domain:'184.73.201.235',
+          tiler_path:'/',
+          tiler_suffix:'',
+          tiler_grid:'',
+          table_name: layer.get("table_name"),
+          query: query,
+          layer_order: "top",
+          opacity: 1,
+          auto_bound: false
+        });
+
+
+    },
     _renderLayers: function() {
       var that = this;
 
@@ -186,13 +251,17 @@ GFW.modules.app = function(gfw) {
 
         if (this.mainLayer) this.mainLayer.setMap(null);
 
-        var layer = (this._layers.length > 1) ? "gfw2_layerstyles" : this._layers[0];
-
+        //var layer = (this._layers.length > 1) ? "gfw2_layerstyles_v2" : this._layers[0];
+        //console.log(layer);
+        var layer = "gfw2_layerstyles_v4";
         this.mainLayer = new CartoDBLayer({
           map: map,
           user_name:'',
           tiler_domain:'dyynnn89u7nkm.cloudfront.net',
           sql_domain:'dyynnn89u7nkm.cloudfront.net',
+          tiler_path:'/tiles/',
+          tiler_suffix:'.png',
+          tiler_grid: '.grid.json',
           table_name: layer,
           query: query,
           layer_order: "top",
@@ -226,9 +295,9 @@ GFW.modules.app = function(gfw) {
                     data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
                   }
                 }
-                that._infowindow.setContent(data);
-                that._infowindow.setPosition(latlng);
-                that._infowindow.open();
+                that.infowindow.setContent(data);
+                that.infowindow.setPosition(latlng);
+                that.infowindow.open();
               }
             });
           },
@@ -238,7 +307,7 @@ GFW.modules.app = function(gfw) {
           featureMouseOut: function() {
             map.setOptions({draggableCursor: 'default'});
           },
-          debug:true,
+          debug:false,
           auto_bound: false
         });
 
@@ -256,18 +325,20 @@ GFW.modules.app = function(gfw) {
       GFW.app.baseLayer.setQuery(query);
     },
 
-    _updateBaseLayer: function() {
-      var table_name = null;
+    _getTableName: function(layerName) {
 
-      if (this.currentBaseLayer === "bimonthly") {
-        table_name = 'gfw2_forma';
-      } else if (this.currentBaseLayer === "annual") {
-        table_name = 'gfw2_hansen';
-      } else if (this.currentBaseLayer === "brazilian_amazon") {
-        table_name = 'gfw2_imazon';
+      if (layerName === "bimonthly") {
+        return 'gfw2_forma';
+      } else if (layerName === "annual") {
+        return 'gfw2_hansen';
+      } else if (layerName === "brazilian_amazon") {
+        return 'gfw2_imazon';
       }
+      return null;
+    },
 
-      GFW.app.baseLayer.options.table_name = table_name;
+    _updateBaseLayer: function() {
+      GFW.app.baseLayer.options.table_name = this._getTableName(this.currentBaseLayer);
       GFW.app.baseLayer.setQuery(GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom()));
     },
 
@@ -288,7 +359,9 @@ GFW.modules.app = function(gfw) {
         user_name:'',
         tiler_domain:'dyynnn89u7nkm.cloudfront.net',
         sql_domain:'dyynnn89u7nkm.cloudfront.net',
-        table_name: table_name,
+        tiler_path:'/tiles/',
+        tiler_suffix:'.png',
+        table_name: this._getTableName(this.currentBaseLayer),
         query: this.queries[this.currentBaseLayer].replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
         auto_bound: false
@@ -323,6 +396,9 @@ GFW.modules.app = function(gfw) {
       lng  = self._map.getCenter().lng().toFixed(GFW.app._precision);
 
       filters = hash.filters || "";
+      if (filters) {
+        var filters = filters.substr(0, filters.indexOf("?"));
+      }
 
       if (filters) {
         hash = "/map/" + zoom + "/" + lat + "/" + lng + "/" + filters;
@@ -422,7 +498,7 @@ GFW.modules.maplayer = function(gfw) {
 
       // Adds the layers from the hash
       if (filters && _.include(filters, this.layer.get('id'))) {
-        GFW.app._addLayer(this.layer.get('table_name'));
+        GFW.app._addLayer(this.layer);
         this.layer.attributes["visible"] = true;
 
         Filter.check(this.layer.get('id'));
@@ -494,9 +570,9 @@ GFW.modules.maplayer = function(gfw) {
       } else {
 
         if (visible) {
-          GFW.app._addLayer(tableName);
+          GFW.app._addLayer(this.layer);
         } else {
-          GFW.app._removeLayer(tableName);
+          GFW.app._removeLayer(this.layer);
         }
         Filter.toggle(id);
       }
@@ -521,10 +597,10 @@ GFW.modules.datalayers = function(gfw) {
 
       var LayersColl    = this._cartodb.CartoDBCollection.extend({
         sql: function(){
-          return "SELECT cartodb_id AS id, title, table_name, category_name, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
+          return "SELECT cartodb_id AS id, title, title_color, title_subs, table_name, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
           ST_XMIN(the_geom) AS xmin, ST_YMAX(the_geom) AS ymax, ST_YMIN(the_geom) AS ymin, tileurl, true AS visible \
           FROM " + layerTable + " \
-          WHERE display = TRUE ORDER BY displaylayer ASC";
+          WHERE display = TRUE ORDER BY displaylayer,title ASC";
         }
       });
 

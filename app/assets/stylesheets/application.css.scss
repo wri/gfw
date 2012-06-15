@@ -309,7 +309,11 @@ ul.logo_list {
     a#danida {
       background-image:url(logos/danida.png);
     }
-    a#bobolink {
+    span#bobolink {
+			text-indent: -99999px;
+			display: inline-block;
+			width: 120px;
+			height: 80px;
       background-image:url(logos/bobolink.png);
     }
     a#usaid {
@@ -354,9 +358,6 @@ body.countries {
   display:none;
   width: 414px;
   height: 258px;
-  margin-left:-207px;
-  top: 100px;
-  left: 50%;
   z-index: 1050;
   background-image:url(share.png);
 }
@@ -368,10 +369,6 @@ body.countries {
   display:none;
   width: $width;
   height: $height;
-  margin-left:-1*$width/2;
-  margin-top:-1*$height/2;
-  left: 50%;
-  top: 50%;
   z-index: 1050;
   background-image:url(subscribe_alert.png);
 }
@@ -680,11 +677,11 @@ footer > .download {
   background:rgba(255,255,255, .9);
 
   display:none;
+  &.show { display: block; }
 }
 
 #countries {
   position:absolute;
-  display:none;
   width:1008px;
   margin-left:-504px;
   top: 50px;

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Global Forest Watch 2.0</title>
+    <title><%= t(".title") %></title>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&language=<%= I18n.locale %>"></script>
 
     <%= stylesheet_link_tag "application", :media => "all" %>
@@ -12,7 +12,6 @@
 
     <div id="content">
       <%= yield %>
-      <%= render "common/countries" %>
       <%= render "common/share" %>
     </div>
 
@@ -21,10 +20,7 @@
     <%= javascript_include_tag "application" %>
 
     <script type="text/javascript">
-      <% if controller_name == "countries" and action_name == 'index' %>
-  Navigation.showState("countries");
-     <% end %>
-<% if request.path.split("/")[1] == "map" %>
+      <% if request.path.split("/")[1] == "map" %>
   var showMap = true;
       <% else %>
   var showMap = false; 

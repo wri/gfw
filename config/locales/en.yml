@@ -7,6 +7,7 @@ en:
       custom: '%R %Z'
   layouts:
     application:
+      title: "Global Forest Watch 2.0"
       header:
         share_this: 'Share this'
         other_wri_sites: 'Other WRI sites'
@@ -24,6 +25,10 @@ en:
           data_html: 'You can also <a href="%{url}" class="icon download">download all our data</a>.'
   blog:
     read_more: "Read more"
+  sources:
+    index:
+      title: Data sources
+      all_countries: All countries
   home:
     index:
       title: "Find out what is happening in forests right now"
@@ -37,7 +42,7 @@ en:
           text: "Perform forest clearing analysis on the fly and get your answers in real time using our latest data"
           link: 'Contribute Now'
         keep_updated:
-          title: 'Keep updated'
+          title: 'Stay updated'
           text: "Subscribe to forest clearing alerts and receive frequent updates on your selected countries"
           link: 'Subscribe to alerts'
   common:
@@ -60,7 +65,14 @@ en:
       save_area: 'Save Area'
   static:
     about:
-      title: About Global Forest Watch
+      title: 'About Global Forest Watch'
+      introduction: '<p>Global Forest Watch 2.0 (GFW 2.0) is an initiative convened by the World Resources Institute that unites technology, transparency, and human networks to mobilize more timely and effective forest conservation and sustainable forest management.  GFW 2.0 combines near-real-time forest monitoring, forest management boundary maps, protected areas, mobile technology, crowd-sourced data, and a networked world to create never-before-possible forest transparency.</p><p>We welcome others to join our growing GFW 2.0 partnership.</p>'
+      partners: 'Project partners'
+      project_funders: 'Project funders'
+      supporters_providers: 'Supporters & data providers'
+      website_team: 'Website team'
+      contact_us: 'Contact us'
+        
   countries:
     show:
       detail:

@@ -70,18 +70,11 @@ function initialize() {
     //History.log(State.data, State.title, State.url);
 
     if (previousState != State.title) {
+
       if (State.title === 'Home') {
         Navigation.showState("home");
-      } else if (State.title === 'Countries') {
-        Navigation.showState("countries");
       } else if (State.title === 'Map') {
         Navigation.showState("map");
-      } else {
-        // Default state
-        $("#subscribe").fadeOut(250);
-        $("#share").fadeOut(250);
-        $(".backdrop").fadeOut(250);
-        $("#countries").fadeOut(250);
       }
 
       previousState = State.title;
@@ -100,14 +93,21 @@ function initialize() {
 
   $("nav .countries.ajax").on("click", function(e) {
     e.preventDefault();
-    History.pushState({ state: 4 }, "Countries", "/countries");
+    Navigation.showState('countries');
   });
 
   $(".share_link").on("click", function(e) {
     e.preventDefault();
     $("#content").append('<div class="backdrop" />');
     $(".backdrop").fadeIn(250, function() {
+
+      var top = ( $(window).height() - $("#share").height() ) / 2+$(window).scrollTop() + "px",
+      left = ( $(window).width() - $("#share").width() ) / 2+$(window).scrollLeft() + "px";
+
+      $("#share").css({top: top, left:left});
       $("#share").fadeIn(250);
+
+
     });
   });
 
@@ -123,6 +123,11 @@ function initialize() {
     e.preventDefault();
     $("#content").append('<div class="backdrop" />');
     $(".backdrop").fadeIn(250, function() {
+
+      var top = ( $(window).height() - $("#subscribe").height() ) / 2+$(window).scrollTop() + "px",
+      left = ( $(window).width() - $("#subscribe").width() ) / 2+$(window).scrollLeft() + "px";
+
+      $("#subscribe").css({top: top, left:left});
       $("#subscribe").fadeIn(250);
     });
   });
@@ -157,10 +162,19 @@ $(function(){
   polygonPath           = [],
   resizePID;
 
-  /*$(document).keyup(function(e) {
-    if (e.keyCode == 27) { 
-    }   // esc
-  });*/
+  $(document).keyup(function(e) {
+    if (e.keyCode == 27) {
+      if ($("#share:visible").length > 0) {
+        $("#share").fadeOut(250);
+        $(".backdrop").fadeOut(250);
+      }
+      if ($("#subscribe:visible").length > 0) {
+        $("#subscribe").fadeOut(250);
+        $(".backdrop").fadeOut(250);
+      }
+
+    } // esc
+  });
 
   $(window).resize(function() {
     clearTimeout(resizePID);
@@ -174,8 +188,9 @@ $(function(){
     }
   }
 
-  if ($("div[data-load]").length > 0) {
+  if ($("div[data-load]:visible").length > 0) {
+    updateFeed({countryCode: countryCode, n: 4});
     addCircle("forest", "bars", { legendUnit: "m", countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"with {{n}} tall trees", hoverColor: "#427C8D", color: "#75ADB5", unit: "km<sup>2</sup>" });
-    addCircle("forma", "lines", { legendUnit: " months", countryCode: countryCode, width: 300, title: "FORMA", subtitle:"Forest clearing alerts", legend:"In the last {{n}}", hoverColor: "#F2B357", color: "#F2B357" });
+    addCircle("forma", "lines", { countryCode: countryCode, width: 300, title: "FORMA", subtitle:"Forest clearing alerts", legend:"In the last month", hoverColor: "#F2B357", color: "#F2B357" });
   }
 });

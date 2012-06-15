@@ -12,14 +12,13 @@ end %>
 <div class="inner">
   <section>
   <article>
-  <h1><a href="#" name="about"></a>About Global Forest Watch 2.0.</h1>
-  <p>Global Forest Watch 2.0 (GFW 2.0) is an initiative convened by the World Resources Institute that unites technology, transparency, and human networks to mobilize more timely and effective forest conservation and sustainable forest management.  GFW 2.0 combines near-real-time forest monitoring, forest management boundary maps, protected areas, mobile technology, crowd-sourced data, and a networked world to create never-before-possible forest transparency.</p>
-  <p>We welcome others to join our growing GFW 2.0 partnership.</p>
+  <h1><a href="#" name="about"></a><%= t('static.about.title')%></h1>
+  <%= raw t('static.about.introduction') %>
 </p>
   </article>
 
   <article>
-  <h1><a href="#" name="partners"></a>Partners</h1>
+  <h1><a href="#" name="partners"></a><%= t('static.about.partners')%></h1>
     <ul class="logo_list">
       <li><a href="http://www.cgdev.org/" id="centerglobaldevelopment"></a></li>
       <li><a href="http://earthengine.google.org/" id="google"></a></li>
@@ -30,16 +29,16 @@ end %>
   </article>
 
   <article>
-  <h1><a href="#" name="funders"></a>Project funders</h1>
+  <h1><a href="#" name="funders"></a><%= t('static.about.funders')%></h1>
     <ul class="logo_list">
       <li><a href="http://tiliafund.org/" id="tilafund"></a></li>
-      <li><a href="#" id="bobolink"></a></li>
+      <li><span id="bobolink">Bobolink</span></li>
       <li><a href="http://www.minbuza.nl/en" id="dutchforeign"></a></li>
     </ul>
   </article>
 
   <article>
-  <h1><a href="#" name="supporters"></a>Supporters & data providers</h1>
+  <h1><a href="#" name="supporters"></a><%= t('static.about.supporters_providers')%></h1>
     <ul class="logo_list">
       <li><a href="http://carpe.umd.edu/" id="carpe"></a></li>
       <li><a href="http://um.dk/en/danida-en/" id="danida"></a></li>
@@ -51,7 +50,7 @@ end %>
   </article>
 
   <article>
-  <h1><a href="#" name="websiteteam"></a>Website team</h1>
+  <h1><a href="#" name="websiteteam"></a><%= t('static.about.website_team')%></h1>
     <ul class="logo_list">
       <li><a href="http://www.vizzuality.com" id="vizzuality"></a></li>
       <li><a href="http://www.wri.org" id="wri"></a></li>
@@ -60,7 +59,7 @@ end %>
   </article>
   
   <article class="contact">
-  <h1><a href="#" name="contactus"></a>Contact us</h1>
+  <h1><a href="#" name="contactus"></a><%= t('static.about.contact_us')%></h1>
   <p>
     Susan Minnemeyer<br/>
     <span class="subtitle">
@@ -75,12 +74,12 @@ end %>
 
   <aside class="categories">
   <ul>
-    <li><a href="#about">About Global Forest Watch 2.0</a></li>
-    <li><a href="#partners">Partners</a> </li>    
-    <li><a href="#funders">Project funders</a> </li>
-    <li><a href="#supporters">Supporters & data providers</a> </li>
-    <li><a href="#websiteteam">Website team</a></li>
-    <li><a href="#contactus">Contact us</a></li>
+    <li><a href="#about"><%= t('static.about.title')%></a></li>
+    <li><a href="#partners"><%= t('static.about.partners')%></a> </li>    
+    <li><a href="#funders"><%= t('static.about.funders')%></a> </li>
+    <li><a href="#supporters"><%= t('static.about.supporters_providers')%></a> </li>
+    <li><a href="#websiteteam"><%= t('static.about.website_team')%></a></li>
+    <li><a href="#contactus"><%= t('static.about.contact_us')%></a></li>
   </ul>
   </aside>
 </div>
