@@ -4,6 +4,9 @@
  ====================
 */
 
+var MAX_MONTHS = 128;
+var BASE_MONTH = 71;
+
 function TimePlayer(table) {
     this.time = 0;
     this.canvas_setup = this.get_time_data;
@@ -67,15 +70,17 @@ TimePlayer.prototype.pre_cache_months = function(rows, coord, zoom) {
     var row;
     var xcoords;
     var ycoords;
-    var deforestation = [];
+    var deforestation;
 
     if(typeof(ArrayBuffer) !== undefined) {
         xcoords = new Uint8Array(new ArrayBuffer(rows.length));
         ycoords = new Uint8Array(new ArrayBuffer(rows.length));
+        deforestation = new Uint8Array(new ArrayBuffer(rows.length*MAX_MONTHS));// 256 months
     } else {
         // fallback
         xcoords = [];
         ycoords = [];
+        deforestation = [];
     }
 
     // base tile x, y
@@ -85,9 +90,13 @@ TimePlayer.prototype.pre_cache_months = function(rows, coord, zoom) {
       row = rows[i];
       xcoords[i] = row.x - tile_base_x;
       ycoords[i] = row.y - tile_base_y;
-      var def = deforestation[i] = {};
-      for(var j in row.sd) {
-        def[row.sd[j]] = row.se[j];
+      var base_idx = i*MAX_MONTHS;
+      //def[row.sd[0]] = row.se[0];
+      for(var j = 0; j < row.sd.length; ++j) {
+          deforestation[base_idx + row.sd[j] - BASE_MONTH] = row.se[j];
+      };
+      for(var j = 1; j < MAX_MONTHS; ++j) {
+        deforestation[base_idx + j] += deforestation[base_idx + j - 1];
       }
     }
     return {
@@ -193,7 +202,7 @@ TimePlayer.prototype.get_time_data = function(tile, coord, zoom) {
 };
 
 TimePlayer.prototype.render_time = function(tile, coord, zoom) {
-    var month = 1 + this.time>>0;
+    var month = -BASE_MONTH + 1 + this.time>>0;
     var w = tile.canvas.width;
     var h = tile.canvas.height;
     var ctx = tile.ctx;
@@ -215,23 +224,28 @@ TimePlayer.prototype.render_time = function(tile, coord, zoom) {
     var fillStyle;
 
 
+    //ctx.fillStyle = '#000';
     // clear canvas
     tile.canvas.width = w;
+    ctx.fillStyle = '#F768A1';
 
     var xc = cells.xcoords;
     var yc = cells.ycoords;
     // render cells
     var data = ctx.getImageData(0, 0, w, h);
     var pixels = data.data;
-    for(i = 0; i < cells.length; ++i) {
-      var idx = 4*(256*yc[i] + xc[i]);
+    var len = cells.length;
+    for(i = 0; i < len; ++i) {
+      var idx = (4*(256*yc[i] + xc[i]))>>0;
       // set pixel by hand
       // faster than doing fill rect (below)
-      pixels[idx + 0] = 0;
-      pixels[idx + 1] = 0;
-      pixels[idx + 2] = 0;
-      pixels[idx + 3] = cells.deforestation[i][month]?255:0;
-      //ctx.fillRect(xc[i], yc[i], 1, 1);
+      if(cells.deforestation[MAX_MONTHS*i + month]) {
+          pixels[idx + 0] = 247;
+          pixels[idx + 1] = 104;
+          pixels[idx + 2] = 161;
+          pixels[idx + 3] = 255;
+          //ctx.fillRect(xc[i], yc[i], 1, 1);
+      }
     }
     ctx.putImageData(data, 0, 0);
 };
