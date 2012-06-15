@@ -503,7 +503,7 @@ GFW.modules.maplayer = function(gfw) {
         this.layer.attributes["visible"] = true;
 
         Filter.check(this.layer.get('id'));
-        Legend.toggleItem(this.layer.get('id'), this.layer.get('title'), this.layer.get('category_name'), true);
+        Legend.toggleItem(this.layer.get('id'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
       }
 
     },
@@ -524,13 +524,15 @@ GFW.modules.maplayer = function(gfw) {
       this.layer.attributes['visible'] = !this.layer.attributes['visible'];
 
       var
-      title      = this.layer.get('title'),
-      slug       = title.replace(/ /g, "_").toLowerCase(),
-      visible    = this.layer.get('visible'),
-      tableName  = this.layer.get('table_name'),
-      category   = this.layer.get('category_name'),
-      visibility = this.layer.get('visible');
-      id         = this.layer.get('id');
+      title       = this.layer.get('title'),
+      title_color = this.layer.get('title_color'),
+      title_subs  = this.layer.get('title_subs'),
+      slug        = title.replace(/ /g, "_").toLowerCase(),
+      visible     = this.layer.get('visible'),
+      tableName   = this.layer.get('table_name'),
+      category    = this.layer.get('category_name'),
+      visibility  = this.layer.get('visible');
+      id          = this.layer.get('id');
 
       if (category === null || !category) {
         category = 'Other layers';
@@ -543,7 +545,7 @@ GFW.modules.maplayer = function(gfw) {
       sad        = GFW.app.datalayers.LayersObj.get(567);
 
       if (category != 'Forest clearing') {
-        Legend.toggleItem(id, title, category, visible);
+        Legend.toggleItem(id, title, category, title_color, title_subs, visible);
       }
 
       if (slug === 'bimonthly' || slug === "annual" || slug === "brazilian_amazon") {
@@ -566,7 +568,7 @@ GFW.modules.maplayer = function(gfw) {
           sad.attributes['visible']  = true;
         }
 
-        Legend.reset(id, title, category);
+        Legend.reset(id, title, category, title_color, title_subs);
 
       } else {
 

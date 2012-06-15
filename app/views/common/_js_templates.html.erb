@@ -4,7 +4,9 @@
   </script>
 
   <script id="legend-item-template" type="text/x-underscore-template">
-    <li id="{{ id }}" class="{{ category }}"><a href="#">{{ name }}</a></li>
+    <li id="{{ id }}" class="{{ category }}">
+      <div class="icon" style="background-color:{{title_color}};"></div>
+      <a href="#">{{ name }}</a></li>
   </script>
 
   <script id="legend-template" type="text/x-underscore-template">
