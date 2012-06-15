@@ -281,14 +281,12 @@
 
       li {
 
-        /*@include inline-block();*/
-
         margin: 0 3px 5px 0;
         padding-left: 13px;
 
         vertical-align: top;
 
-        @extend .filter-bullets;
+        /*@extend .filter-bullets;*/
 
         line-height:16px;
 

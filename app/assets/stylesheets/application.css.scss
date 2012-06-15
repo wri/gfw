@@ -359,7 +359,7 @@ a.close_icon {
 	width: 8px;
 	height: 8px;
 	display: inline-block;
-  background-image:url(icons/close_icon.png);	
+  background-image:url(icons/close_icon.png);
 }
 
 #share {
@@ -378,7 +378,7 @@ a.close_icon {
 		margin: 60px 0 0 0;
 		text-align: center;
 	}
-	
+
 	p {
     @extend .sans-serif;
     font-size:15px;
@@ -387,31 +387,31 @@ a.close_icon {
     line-height:20px;
 		width: 100%;
 		margin: 5px 0 0 0;
-		text-align: center;		
+		text-align: center;
 	}
-	
+
 	a.close_icon {
 		position: absolute;
 		top: 25px;
-		right: 25px;		
+		right: 25px;
 	}
-	
+
 	.share_buttons {
 		border-top: 1px solid $cGray4;
 		width: 386px;
 		margin: 35px 14px 0 14px;
 		padding: 30px 0 0 0;
 		text-align: center;
-		
+
 	  .share_button {
 			vertical-align:top;
 			width: 85px;
 			text-align: center;
-			display: inline-block;			
+			display: inline-block;
 		}
 
 	}
-	
+
 }
 
 #subscribe {
@@ -651,9 +651,9 @@ a.close_icon {
   @include checkboxes(checkboxes);
 
   &.concessions     { @include checkboxes(checkboxes_concessions); }
-  &.protected_areas { @include checkboxes(checkboxes_protected_areas); }
   &.forest          { @include checkboxes(checkboxes_forest); }
   &.mining          { @include checkboxes(checkboxes_mining); }
+  &.other_layers    { @include checkboxes(checkboxes_other_layers); }
 }
 
 footer {

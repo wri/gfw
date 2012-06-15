@@ -15,13 +15,17 @@ $cGray0:                 #000000;
 
 $cSeparator:             #E5E5E5;
 
-$cConcessions:           #FF6699; // pink
-$cConcessionsHover:      #C04B73; // dark pink
+$cConcessions:           $cGold;
+$cConcessionsHover:      $cDarkGold;
+
 $cProtectedAreas:        #00CED0; // blue
 $cProtectedAreasHover:   #00B9B9;
 
-$cMining:                $cGold;
-$cMiningHover:           #DEB883;
+$cOtherLayers:           #00CED0; // blue
+$cOtherLayersHover:      #00B9B9;
+
+$cMining:                $cGray4;
+$cMiningHover:           $cGray3;
 
 $cForest:                #B2D26E; // green
 $cForestHover:           #9EBB62; // dark green
@@ -29,8 +33,11 @@ $cForestHover:           #9EBB62; // dark green
 $cFire:                  #E95850; // red
 $cFireHover:             #CA4C45;
 
-$cDeforestation:         #E95850; // red
-$cDeforestationHover:    #CA4C45;
+$cDeforestation:         #FF6699; // red
+$cDeforestationHover:    #C04B73;
+
+// $cDeforestation:         #E95850; // red
+// $cDeforestationHover:    #CA4C45;
 
 $cTop:                   rgba(117, 173, 181, 0.8);
 $cPostTitle:             #73ACB3; // green
@@ -77,17 +84,17 @@ $icons-bars-spacing:20px;
 $icons-concessions-spacing:20px;
 $icons-protected_areas-spacing: 20px;
 $icons-mining-spacing: 20px;
-$icons-forest_cover-spacing: 20px;
 $icons-fire-spacing: 20px;
 
 // Radio buttons & checkboxes
 $icons-radio-spacing: 40px;
 $icons-radio_fire-spacing: 40px;
 $icons-checkboxes-spacing: 40px;
+$icons-checkboxes_mining-spacing: 40px;
 $icons-checkboxes_concessions-spacing: 40px;
-$icons-checkboxes_protected_areas-spacing: 40px;
 $icons-checkboxes_forest-spacing: 40px;
 $icons-checkboxes_mining-spacing: 40px;
+$icons-checkboxes_other_layers-spacing: 40px;
 
 // Country
 $icons-country_bolivia_disabled-spacing: 20px;
@@ -222,6 +229,13 @@ strong { font-weight: bold; } // This is sad, I know.
     a:hover       { color: $cMiningHover; }
   }
 
+  &.other_layers {
+    & > a         { color: $cOtherLayers; }
+    a.checked     { color: $cOtherLayers; }
+    a.title       { color: $cOtherLayers; }
+    a.title:hover { color: $cOtherLayers; }
+    a:hover       { color: $cOtherLayersHover; }
+  }
   &.protected_areas {
     & > a         { color: $cProtectedAreas; }
     a.checked     { color: $cProtectedAreas; }
@@ -246,26 +260,22 @@ strong { font-weight: bold; } // This is sad, I know.
 }
 
 .filter-icons {
-  &.concessions     .icon  { @include icons-sprite(concessions); }
-  &.protected_areas .icon  { @include icons-sprite(protected_areas); }
-  &.intact-forest   .icon  { @include icons-sprite(concessions); }
-  &.mining          .icon  { @include icons-sprite(mining); }
-  &.forest-cover    .icon  { @include icons-sprite(forest_cover); }
-  &.forest          .icon  { @include icons-sprite(forest_cover); }
-  &.fire            .icon  { @include icons-sprite(fire); }
-  &.forest_clearing .icon  { @include icons-sprite(fire); }
-  &.carbon          .icon  { @include icons-sprite(concessions); }
-  &.biodiversity    .icon  { @include icons-sprite(concessions); }
-
-
-  &.other_layers    .icon  { @include icons-sprite(circle_other); }
-  &.regrowth        .icon  { @include icons-sprite(circle_other); }
+  &.concessions     .icon  { @include icons-sprite(icon_concessions); }
+  &.protected_areas .icon  { @include icons-sprite(icon_protected_areas); }
+  &.intact-forest   .icon  { @include icons-sprite(icon_concessions); }
+  &.mining          .icon  { @include icons-sprite(icon_mining); }
+  &.fire            .icon  { @include icons-sprite(icon_fire); }
+  &.forest_clearing .icon  { @include icons-sprite(icon_forest_clearing); }
+  &.carbon          .icon  { @include icons-sprite(icon_concessions); }
+  &.biodiversity    .icon  { @include icons-sprite(icon_concessions); }
+  &.other_layers    .icon  { @include icons-sprite(icon_other); }
+  &.regrowth        .icon  { @include icons-sprite(icon_other); }
 
 }
 
 .filter-lines {
 
-  .line { background-color: $cGray4; }
+  .line { background-color: $cOtherLayers; }
 
   &.concessions      .line { background-color: $cConcessions; }
   &.protected_areas  .line { background-color: $cProtectedAreas; }
@@ -274,7 +284,7 @@ strong { font-weight: bold; } // This is sad, I know.
   &.forest-cover     .line { background-color: $cForest; }
   &.forest           .line { background-color: $cForest; }
   &.fire             .line { background-color: $cFire; }
-  &.forest_clearing  .line { background-color: $cFire; }
+  &.forest_clearing  .line { background-color: $cDeforestation; }
   &.carbon           .line { background-color: $cGray4;}
   &.biodiversity     .line { background-color: $cGray4; }
 }
@@ -282,6 +292,7 @@ strong { font-weight: bold; } // This is sad, I know.
 .filter-bullets {
   $left: left;
   $top: 3px;
+
   background:url(icons/bullet_other.png) no-repeat;
   background-position: $left $top;
 
