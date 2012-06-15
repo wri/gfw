@@ -501,7 +501,7 @@ GFW.modules.maplayer = function(gfw) {
 
       var zoomEvent = function() {
         if (that.layer.attributes['visible']) {
-          that._map.fitBounds(that._bounds);
+          //that._map.fitBounds(that._bounds);
         }
       };
 
