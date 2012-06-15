@@ -13,6 +13,8 @@ end %>
 
 <%= render "common/map" %>
 
+<div id="subscribe"></div>
+
 <div class="actions">
   <ul>
     <li class="crowdsourcing">
@@ -33,7 +35,7 @@ end %>
     <div class="icon"></div>
     <h2><%= t('.icons.keep_updated.title') %></h2>
     <p><%= t('.icons.keep_updated.text') %></p>
-    <%= link_to (content_tag :span, t('.icons.keep_updated.link')), {}, :class => :btn %>
+    <%= link_to (content_tag :span, t('.icons.keep_updated.link')), {}, :class => "btn subscribe_link"%>
     </li>
   </ul>
 </div>
