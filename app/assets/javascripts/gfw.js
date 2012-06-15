@@ -272,6 +272,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _loadBaseLayer: function() {
+      var self = this;
       var table_name = null;
 
       if (this.currentBaseLayer === "bimonthly") {
@@ -296,6 +297,10 @@ GFW.modules.app = function(gfw) {
       this.time_layer = new TimePlayer('gfw2_forma');
       window.time_layer = this.time_layer;
       map.overlayMapTypes.setAt(0, this.time_layer);
+
+      Timeline.bind('change_date', function(date, month_number) {
+          self.time_layer.set_time(month_number);
+      });
     },
 
     _mapLoaded: function(){
