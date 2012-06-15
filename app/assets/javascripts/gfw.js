@@ -49,7 +49,7 @@ GFW.modules.app = function(gfw) {
       this.infowindow = new CartoDBInfowindow(map);
 
       this.queries = {};
-      this.queries.bimonthly  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END";
+      this.queries.bimonthly  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END limit 0";
       this.queries.annual     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
       this.queries.brazilian_amazon = "SELECT CASE WHEN {Z}<12 THEN st_buffer(the_geom_webmercator,(16-{Z})^3.8) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
 
@@ -339,6 +339,11 @@ GFW.modules.app = function(gfw) {
     },
 
     _updateBaseLayer: function() {
+      if (this.currentBaseLayer != "bimonthly"){
+          map.overlayMapTypes.setAt(0, null);
+      } else {
+          map.overlayMapTypes.setAt(0, this.time_layer);
+      }
       GFW.app.baseLayer.options.table_name = this._getTableName(this.currentBaseLayer);
       GFW.app.baseLayer.setQuery(GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom()));
     },
@@ -349,6 +354,13 @@ GFW.modules.app = function(gfw) {
 
       if (this.currentBaseLayer === "bimonthly") {
         table_name = 'gfw2_forma';
+        this.time_layer = new TimePlayer('gfw2_forma');
+        this.time_layer.options.table_name = table_name;
+        window.time_layer = this.time_layer;
+        map.overlayMapTypes.setAt(0, this.time_layer);
+        Timeline.bind('change_date', function(date, month_number) {
+            self.time_layer.set_time(month_number);
+        });
       } else if (this.currentBaseLayer === "annual") {
         table_name = 'gfw2_hansen';
       } else if (this.currentBaseLayer === "brazilian_amazon") {
@@ -367,14 +379,7 @@ GFW.modules.app = function(gfw) {
         layer_order: "top",
         auto_bound: false
       });
-
-      this.time_layer = new TimePlayer('gfw2_forma');
-      window.time_layer = this.time_layer;
-      map.overlayMapTypes.setAt(0, this.time_layer);
-
-      Timeline.bind('change_date', function(date, month_number) {
-          self.time_layer.set_time(month_number);
-      });
+    
     },
 
     _mapLoaded: function(){

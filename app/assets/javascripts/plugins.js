@@ -499,7 +499,6 @@ var Legend = (function() {
     } else {
         var subs = eval(title_subs);
         var icons = _.map(subs, function(e) { return '<div class="layer"><div class="icon" style="background-color:' + e.color + ';"></div> <a href="#">' + e.title + '</a></div>'; }).join("\n");
-        console.log(icons);
         var parts = "<div class='extra'>" + icons + "</div>";
       }
 

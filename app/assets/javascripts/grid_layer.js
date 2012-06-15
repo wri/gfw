@@ -15,6 +15,7 @@ function TimePlayer(table) {
     this.table = table;
     //this.base_url = 'http://sql.wri-01.cartodb.com/api/v2/sql';
     this.base_url = 'http://wri-01.cartodb.com/api/v2/sql';
+    this.options = {};
 }
 
 TimePlayer.prototype = new CanvasTileLayer();
