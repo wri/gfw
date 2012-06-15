@@ -58,8 +58,9 @@ GFW.modules.app = function(gfw) {
       this._cartodb = Backbone.CartoDB({user: this.options.user});
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
 
-      this.mainLayer = null;
-      this.specialLayer = null;
+      // Layers
+      this.mainLayer        = null;
+      this.specialLayer     = null;
       this.currentBaseLayer = "bimonthly";
 
       this._loadBaseLayer();
@@ -67,7 +68,6 @@ GFW.modules.app = function(gfw) {
     },
     run: function() {
       this._setupListeners();
-      //this.update();
       gfw.log.info('App is now running!');
     },
 
@@ -325,31 +325,24 @@ GFW.modules.app = function(gfw) {
       GFW.app.baseLayer.setQuery(query);
     },
 
-    _updateBaseLayer: function() {
-      var table_name = null;
+    _getTableName: function(layerName) {
 
-      if (this.currentBaseLayer === "bimonthly") {
-        table_name = 'gfw2_forma';
-      } else if (this.currentBaseLayer === "annual") {
-        table_name = 'gfw2_hansen';
-      } else if (this.currentBaseLayer === "brazilian_amazon") {
-        table_name = 'gfw2_imazon';
+      if (layerName === "bimonthly") {
+        return 'gfw2_forma';
+      } else if (layerName === "annual") {
+        return 'gfw2_hansen';
+      } else if (layerName === "brazilian_amazon") {
+        return 'gfw2_imazon';
       }
+      return null;
+    },
 
-      GFW.app.baseLayer.options.table_name = table_name;
+    _updateBaseLayer: function() {
+      GFW.app.baseLayer.options.table_name = this._getTableName(this.currentBaseLayer);
       GFW.app.baseLayer.setQuery(GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom()));
     },
 
     _loadBaseLayer: function() {
-      var table_name = null;
-
-      if (this.currentBaseLayer === "bimonthly") {
-        table_name = 'gfw2_forma';
-      } else if (this.currentBaseLayer === "annual") {
-        table_name = 'gfw2_hansen';
-      } else if (this.currentBaseLayer === "brazilian_amazon") {
-        table_name = 'gfw2_imazon';
-      }
 
       this.baseLayer = new CartoDBLayer({
         map: map,
@@ -358,7 +351,7 @@ GFW.modules.app = function(gfw) {
         sql_domain:'dyynnn89u7nkm.cloudfront.net',
         tiler_path:'/tiles/',
         tiler_suffix:'.png',
-        table_name: table_name,
+        table_name: this._getTableName(this.currentBaseLayer),
         query: this.queries[this.currentBaseLayer].replace(/{Z}/g, this._map.getZoom()),
         layer_order: "bottom",
         auto_bound: false

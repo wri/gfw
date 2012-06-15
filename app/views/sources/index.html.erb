@@ -1,122 +1,122 @@
 <% content_for :title do %>
- <a href="#" class="selected">Data sources</a> | <a href="#">All countries</a>
+  <%= link_to t(".title"), "#", :class => :selected %> | <%= link_to t(".all_countries"), "#" %>
 <% end %>
 
 <% content_for :download do %>
-<div class="download">
-  <div class="inner">
+  <div class="download">
+    <div class="inner">
       <%= content_tag :h1, (raw t('layouts.application.footer.download.title2', :url => "/sources")) %></div>
-</div>
+  </div>
 <% end %>
 
 <div class="inner">
   <section>
-    
-    <article>
-    <h1><a href="#" name="concessions"></a>Concessions</h1>
 
-    <ul class="sources">
-      <li class="flag cm">
-      <strong>Cameroon</strong> <a href="http://wri-01.cartodb.com/tables/gfw2_cam_conc.shp">Download</a>
-      <p>Logging within Cameroon’s forest estate occurs within designated areas called Forest Management Units (FMUs).  There are 114 FMUs in Cameroon which are further divided into logging concessions called annual allowable cuts (AACs), where selective logging is permitted.  There are 2988 concessions within Cameroon’s FMU system.  These logging permits require owners and operators to maintain permanent forest cover.  This data can be downloaded from World Resources Institute.</p>
-      </li>
-      <li class="flag cf">
-      <strong>Central African Republic</strong> <a href="http://wri-01.cartodb.com/tables/caf_lc_1.shp">Download</a>
-      <p>Forest concession data from Central African Republic represent areas permitted for selective logging.  There are 14 separate logging concessions currently in Central African Republic.</p>
-      </li>
-      <li class="flag cd">
-      <strong>Republic of Congo</strong> <a href="http://wri-01.cartodb.com/tables/cog_lc_1.shp">Download</a>
-      <p>Forest concession data for the Republic of Congo represent areas permitted for selective logging.  There are currently 63 separate logging concessions in Congo Brazzaville. This data can be downloaded from World Resources Institute.</p>
-      </li>
-      <li class="flag cd">
-      <strong>Democratic Republic of Congo</strong> <a href="http://wri-01.cartodb.com/tables/gfw2_drc_conc.shp">Download</a>
-      <p>Forest concession data for the Democratic Republic of Congo represent areas permitted for selective logging.  There are 80 active logging concessions in DRC. This data can be downloaded from World Resources Institute.</p>
-      </li>
-      <li class="flag ga">
-      <strong>Gabon</strong> <a href="http://wri-01.cartodb.com/tables/gfw2_gab_conc.shp">Download</a>
-      <p>Forest concession data from Gabon represent areas permitted for selective logging.  There are 627 separate logging concessions currently in Gabon. This data can be downloaded from World Resources Institute.  </p>
-      </li>
-      <li class="flag id">
-      <strong>Indonesia - Oil palm</strong> <a href="http://appgis.dephut.go.id/appgis/" target="_blank">Visit</a>
-      <p>Oil palm concession data represent current or planned oil palm plantation boundaries in Indonesia.  This dataset is provided by the Indonesia Ministry of Forestry.  This data is available for download from Ministry of Forestry website.</p>
-      </li>
-      <li class="flag id">
-      <strong>Indonesia - Timber</strong> <a href="#http://appgis.dephut.go.id/appgis/" target="_blank">Visit</a>
-      <p>Oil palm concession data represent current or planned timber plantation boundaries in Indonesia.  This dataset is provided by the Indonesia Ministry of Forestry. This data is available for download from Ministry of Forestry website.</p>
-      </li>
-      <li class="flag id">
-      <strong>Indonesia - Logging</strong> <a href="http://appgis.dephut.go.id/appgis" target="_blank">Visit</a>
-      <p>Logging concessions data represent permit boundaries for selective logging of natural forests in Indonesia.  This dataset is provided by the Indonesia Ministry of Forestry.  This data is available for download from Ministry of Forestry website</p>
-      </li>
+  <article>
+  <h1><a href="#" name="concessions"></a>Concessions</h1>
 
-    </ul>
+  <ul class="sources">
+    <li class="flag cm">
+    <strong>Cameroon</strong> <a href="http://wri-01.cartodb.com/tables/gfw2_cam_conc.shp">Download</a>
+    <p>Logging within Cameroon’s forest estate occurs within designated areas called Forest Management Units (FMUs).  There are 114 FMUs in Cameroon which are further divided into logging concessions called annual allowable cuts (AACs), where selective logging is permitted.  There are 2988 concessions within Cameroon’s FMU system.  These logging permits require owners and operators to maintain permanent forest cover.  This data can be downloaded from World Resources Institute.</p>
+    </li>
+    <li class="flag cf">
+    <strong>Central African Republic</strong> <a href="http://wri-01.cartodb.com/tables/caf_lc_1.shp">Download</a>
+    <p>Forest concession data from Central African Republic represent areas permitted for selective logging.  There are 14 separate logging concessions currently in Central African Republic.</p>
+    </li>
+    <li class="flag cd">
+    <strong>Republic of Congo</strong> <a href="http://wri-01.cartodb.com/tables/cog_lc_1.shp">Download</a>
+    <p>Forest concession data for the Republic of Congo represent areas permitted for selective logging.  There are currently 63 separate logging concessions in Congo Brazzaville. This data can be downloaded from World Resources Institute.</p>
+    </li>
+    <li class="flag cd">
+    <strong>Democratic Republic of Congo</strong> <a href="http://wri-01.cartodb.com/tables/gfw2_drc_conc.shp">Download</a>
+    <p>Forest concession data for the Democratic Republic of Congo represent areas permitted for selective logging.  There are 80 active logging concessions in DRC. This data can be downloaded from World Resources Institute.</p>
+    </li>
+    <li class="flag ga">
+    <strong>Gabon</strong> <a href="http://wri-01.cartodb.com/tables/gfw2_gab_conc.shp">Download</a>
+    <p>Forest concession data from Gabon represent areas permitted for selective logging.  There are 627 separate logging concessions currently in Gabon. This data can be downloaded from World Resources Institute.  </p>
+    </li>
+    <li class="flag id">
+    <strong>Indonesia - Oil palm</strong> <a href="http://appgis.dephut.go.id/appgis/" target="_blank">Visit</a>
+    <p>Oil palm concession data represent current or planned oil palm plantation boundaries in Indonesia.  This dataset is provided by the Indonesia Ministry of Forestry.  This data is available for download from Ministry of Forestry website.</p>
+    </li>
+    <li class="flag id">
+    <strong>Indonesia - Timber</strong> <a href="#http://appgis.dephut.go.id/appgis/" target="_blank">Visit</a>
+    <p>Oil palm concession data represent current or planned timber plantation boundaries in Indonesia.  This dataset is provided by the Indonesia Ministry of Forestry. This data is available for download from Ministry of Forestry website.</p>
+    </li>
+    <li class="flag id">
+    <strong>Indonesia - Logging</strong> <a href="http://appgis.dephut.go.id/appgis" target="_blank">Visit</a>
+    <p>Logging concessions data represent permit boundaries for selective logging of natural forests in Indonesia.  This dataset is provided by the Indonesia Ministry of Forestry.  This data is available for download from Ministry of Forestry website</p>
+    </li>
 
-    </article>
+  </ul>
 
-    <article>
-    <h1><a href="#" name="protectedareas"></a>Protected areas</h1>
-    <p>All protected areas are from Protectedplanet.net which is the home of the World Database on Protected Areas (WDPA).   The WDPA is a joint initiative between the IUCN and UNEP-WCMC to compile spatially referenced information about parks and protected areas globally. Data can be downloaded from Protected Planet site.</p>
+  </article>
 
-    <ul class="sources">
-      <li>
-      <strong>Global</strong> <a href="http://www.protectedplanet.net" target="_blank">Visit</a>
-      </li>
-    </ul>
-    </article>
+  <article>
+  <h1><a href="#" name="protectedareas"></a>Protected areas</h1>
+  <p>All protected areas are from Protectedplanet.net which is the home of the World Database on Protected Areas (WDPA).   The WDPA is a joint initiative between the IUCN and UNEP-WCMC to compile spatially referenced information about parks and protected areas globally. Data can be downloaded from Protected Planet site.</p>
 
-    <article>
-    <h1><a href="#" name="indonesiatreecoverchange"></a>Indonesia Decadal Tree Cover Change</h1>
-    <p>The Indonesia Decadal Tree Cover Change dataset identifies tree cover change throughout Indonesia for the period between 2000 and 2010.  This data is derived from 60m resolution Landsat composite satellite imagery and produced by Matt Hansen and Peter Potapov at University of Maryland.</p>
-    <ul class="sources">
-      <li>
-      <strong>Global</strong> <a href="#">???</a>
-      </li>
-    </ul>
-    </article>
-    
-    <article>
-    <h1><a href="#" name="forma"></a>FORMA</h1>
-    <p>The Forest Monitoring for Action (FORMA) project provides forest clearing alerts derived from MODIS satellite imagery every 16 days beginning in December 2005. FORMA is a project of World Resources Institute.</p>
-    <ul class="sources">
-      <li>
-      <strong>Global</strong> <a href="#">???</a>
-      </li>
-    </ul>
-    </article>    
+  <ul class="sources">
+    <li>
+    <strong>Global</strong> <a href="http://www.protectedplanet.net" target="_blank">Visit</a>
+    </li>
+  </ul>
+  </article>
 
-    <article>
-    <h1><a href="#" name="imazonsad"></a>Imazon SAD</h1>
-    <p>The Deforestation Alert System (SAD), produced by Imazon in Brazil, provides detects deforestation in the Brazilian Amazon. Data and monthly reports are available for download at Imazon’s website.</p>
+  <article>
+  <h1><a href="#" name="indonesiatreecoverchange"></a>Indonesia Decadal Tree Cover Change</h1>
+  <p>The Indonesia Decadal Tree Cover Change dataset identifies tree cover change throughout Indonesia for the period between 2000 and 2010.  This data is derived from 60m resolution Landsat composite satellite imagery and produced by Matt Hansen and Peter Potapov at University of Maryland.</p>
+  <ul class="sources">
+    <li>
+    <strong>Global</strong> <a href="#">???</a>
+    </li>
+  </ul>
+  </article>
 
-    <ul class="sources">
-      <li>
-      <strong>Global</strong> <a href="http://www.imazon.org.br" target="_blank">Visit</a>
-      </li>
-    </ul>
-    </article>    
+  <article>
+  <h1><a href="#" name="forma"></a>FORMA</h1>
+  <p>The Forest Monitoring for Action (FORMA) project provides forest clearing alerts derived from MODIS satellite imagery every 16 days beginning in December 2005. FORMA is a project of World Resources Institute.</p>
+  <ul class="sources">
+    <li>
+    <strong>Global</strong> <a href="#">???</a>
+    </li>
+  </ul>
+  </article>    
 
-    <article>
-    <h1><a href="#" name="intactforest"></a>Intact Forest Landscapes</h1>
-    <p>The Intact Forest Landscapes dataset, developed by Greenpeace, World Resources Institute, and Transparent World, identifies unbroken expanses of natural ecosystems within the zone of current forest extent.  These landscapes show no signs of significant human activity and are large enough that all native biodiversity, including viable populations of wide ranging species</p>
+  <article>
+  <h1><a href="#" name="imazonsad"></a>Imazon SAD</h1>
+  <p>The Deforestation Alert System (SAD), produced by Imazon in Brazil, provides detects deforestation in the Brazilian Amazon. Data and monthly reports are available for download at Imazon’s website.</p>
 
-    <ul class="sources">
-      <li>
-      <strong>Global</strong> <a href="http://www.intactforests.org/" target="_blank">Visit</a>
-      </li>
-    </ul>
-    </article>    
+  <ul class="sources">
+    <li>
+    <strong>Global</strong> <a href="http://www.imazon.org.br" target="_blank">Visit</a>
+    </li>
+  </ul>
+  </article>    
+
+  <article>
+  <h1><a href="#" name="intactforest"></a>Intact Forest Landscapes</h1>
+  <p>The Intact Forest Landscapes dataset, developed by Greenpeace, World Resources Institute, and Transparent World, identifies unbroken expanses of natural ecosystems within the zone of current forest extent.  These landscapes show no signs of significant human activity and are large enough that all native biodiversity, including viable populations of wide ranging species</p>
+
+  <ul class="sources">
+    <li>
+    <strong>Global</strong> <a href="http://www.intactforests.org/" target="_blank">Visit</a>
+    </li>
+  </ul>
+  </article>    
 
   </section>
 
   <aside class="categories">
-    <h3>By category</h3>
-    <ul>
-      <li><a href="#concessions">Concessions</a>  </li>
-      <li><a href="#protectedareas">Protected areas</a> </li>
-      <li> <a href="#indonesiatreecoverchange">Indonesia decadal tree cover change</a> </li>
-      <li><a href="#forma">FORMA</a> </li>
-      <li><a href="#imazonsad">Imazon SAD</a>  </li>
-      <li><a href="#intactforest">Intact forest landscapes</a> </li>
-    </ul>
+  <h3>By category</h3>
+  <ul>
+    <li><a href="#concessions">Concessions</a>  </li>
+    <li><a href="#protectedareas">Protected areas</a> </li>
+    <li> <a href="#indonesiatreecoverchange">Indonesia decadal tree cover change</a> </li>
+    <li><a href="#forma">FORMA</a> </li>
+    <li><a href="#imazonsad">Imazon SAD</a>  </li>
+    <li><a href="#intactforest">Intact forest landscapes</a> </li>
+  </ul>
   </aside>
 </div>

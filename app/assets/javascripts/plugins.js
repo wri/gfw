@@ -558,9 +558,11 @@ var Legend = (function() {
 
   function _toggleItem(id, name, category, add) {
     add ? _add(id, name, category) : _remove(id, name, category);
+
     if (GFW && GFW.app.infowindow) {
       GFW.app.infowindow.close();
     }
+
   }
 
   function _show(e) {
@@ -944,18 +946,18 @@ function updateFeed(options) {
     jsonpCallback:'iwcallback',
     url: url,
     success: function(json) {
-	  if (0<json.rows.length){
-	  	$('.alerts ul').html("");
-	  }
-	  for (var i=0; i<json.rows.length; i++){
-		$('.alerts ul').append(
-			$('<li></li>')
-				.append(
-					$('<span></span>').addClass('data').html(json.rows[i].date))
-				.append(
-					$('<span></span>').addClass('count').html(json.rows[i].alerts+' Alerts'))
-		);
-	  }
+      if (0<json.rows.length){
+        $('.alerts ul').html("");
+      }
+      for (var i=0; i<json.rows.length; i++){
+        $('.alerts ul').append(
+          $('<li></li>')
+          .append(
+            $('<span></span>').addClass('data').html(json.rows[i].date))
+            .append(
+              $('<span></span>').addClass('count').html(json.rows[i].alerts+' Alerts'))
+        );
+      }
     }
   });
 }

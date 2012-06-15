@@ -67,7 +67,7 @@ function initialize() {
   History.Adapter.bind(window,'statechange', function(){ // Note: We are using statechange instead of popstate
     var State = History.getState(); // Note: We are using History.getState() instead of event.state
 
-   //History.log(State.data, State.title, State.url);
+    //History.log(State.data, State.title, State.url);
 
     if (previousState != State.title) {
 
@@ -187,9 +187,9 @@ $(function(){
       Filter.calcFiltersPosition();
     }
   }
-  
-  if ($("div[data-load]").length > 0) {
-  	updateFeed({countryCode: countryCode,n: 4});
+
+  if ($("div[data-load]:visible").length > 0) {
+    updateFeed({countryCode: countryCode, n: 4});
     addCircle("forest", "bars", { legendUnit: "m", countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"with {{n}} tall trees", hoverColor: "#427C8D", color: "#75ADB5", unit: "km<sup>2</sup>" });
     addCircle("forma", "lines", { countryCode: countryCode, width: 300, title: "FORMA", subtitle:"Forest clearing alerts", legend:"In the last month", hoverColor: "#F2B357", color: "#F2B357" });
   }

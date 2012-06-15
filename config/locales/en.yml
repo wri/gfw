@@ -7,6 +7,7 @@ en:
       custom: '%R %Z'
   layouts:
     application:
+      title: "Global Forest Watch 2.0"
       header:
         share_this: 'Share this'
         other_wri_sites: 'Other WRI sites'
@@ -24,6 +25,10 @@ en:
           data_html: 'You can also <a href="%{url}" class="icon download">download all our data</a>.'
   blog:
     read_more: "Read more"
+  sources:
+    index:
+      title: Data sources
+      all_countries: All countries
   home:
     index:
       title: "Find out what is happening in forests right now"
