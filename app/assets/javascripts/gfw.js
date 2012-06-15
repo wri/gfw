@@ -514,6 +514,9 @@ GFW.modules.maplayer = function(gfw) {
 
         Filter.check(this.layer.get('id'));
         Legend.toggleItem(this.layer.get('id'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
+      } else if (this.layer.get('table_name') == 'gfw2_forma') {
+          //show the legend on map start for forma
+          Legend.toggleItem(this.layer.get('id'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
       }
 
     },
