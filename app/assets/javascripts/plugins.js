@@ -489,7 +489,18 @@ var Legend = (function() {
     cat  = category.replace(/ /g, "_").toLowerCase();
 
     template = _.template($("#legend-item-template").html());
-    $item    = $(template({ title_color: title_color, title_subs:title_subs, category: cat, id: id, name: name.truncate(32) }));
+
+    var icons = null;
+
+    if (title_color) {
+      icons = '<div class="icon" style="background-color:' + title_color + ';"></div>';
+    } else {
+      var subs = eval(title_subs);
+      var parts = _.map(subs, function(e) { return '<div class="part" style="background-color:' + e.color + ';"></div>'; }).join("");
+      icons = "<div class='icons'>" + parts + "</div>";
+    }
+
+    $item    = $(template({ icons:icons, category: cat, id: id, name: name.truncate(32) }));
 
     $item.hide();
 

@@ -295,6 +295,19 @@
           @include inline-block();
         }
 
+        .icons {
+          position:absolute;
+          top: 3px;
+          left: 0px;
+          width: 9px; height: 9px;
+          @include inline-block();
+          .part {
+            float:left;
+            height: 9px; width: 3px;
+
+          }
+        }
+
         line-height:16px;
 
         color: $cGray3;

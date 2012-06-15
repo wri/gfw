@@ -1,5 +1,7 @@
 _.templateSettings = {
-  interpolate: /\{\{(.+?)\}\}/g
+  interpolate: /\{\{(.+?)\}\}/g,
+  evaluate: /\[(.+?)\]/g
+
 };
 
 String.prototype.truncate = function(n) {
