@@ -253,6 +253,7 @@ GFW.modules.app = function(gfw) {
 
         //var layer = (this._layers.length > 1) ? "gfw2_layerstyles_v2" : this._layers[0];
         //console.log(layer);
+
         var layer = "gfw2_layerstyles_v4";
         this.mainLayer = new CartoDBLayer({
           map: map,
