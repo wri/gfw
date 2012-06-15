@@ -229,7 +229,7 @@ GFW.modules.app = function(gfw) {
           tiler_grid:'',
           table_name: layer.get("table_name"),
           query: query,
-          layer_order: "top",
+          layer_order: "bottom",
           opacity: 1,
           auto_bound: false
         });
@@ -264,7 +264,7 @@ GFW.modules.app = function(gfw) {
           tiler_grid: '.grid.json',
           table_name: layer,
           query: query,
-          layer_order: "top",
+          layer_order: "bottom",
           opacity: 1,
           interactivity:"cartodb_id",
           featureMouseClick: function(ev, latlng, data) {
@@ -363,7 +363,7 @@ GFW.modules.app = function(gfw) {
         tiler_suffix:'.png',
         table_name: this._getTableName(this.currentBaseLayer),
         query: this.queries[this.currentBaseLayer].replace(/{Z}/g, this._map.getZoom()),
-        layer_order: "bottom",
+        layer_order: "top",
         auto_bound: false
       });
 
