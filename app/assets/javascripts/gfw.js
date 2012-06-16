@@ -52,7 +52,7 @@ GFW.modules.app = function(gfw) {
 
       this.queries = {};
       // we can stop loading the blank (see limit=0 below) tileset here now that we are loading the animation. see todo on line 347
-      this.queries.bimonthly  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END limit 0";
+      this.queries.semi_monthly  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 16 ELSE {Z}+8 END limit 0";
       this.queries.annual     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
       this.queries.brazilian_amazon = "SELECT CASE WHEN {Z}<12 THEN st_buffer(the_geom_webmercator,(16-{Z})^3.8) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
 
@@ -64,7 +64,7 @@ GFW.modules.app = function(gfw) {
       // Layers
       this.mainLayer        = null;
       this.specialLayer     = null;
-      this.currentBaseLayer = "bimonthly";
+      this.currentBaseLayer = "semi_monthly";
 
       this._loadBaseLayer();
       this._setupZoom();
@@ -332,7 +332,7 @@ GFW.modules.app = function(gfw) {
 
     _getTableName: function(layerName) {
 
-      if (layerName === "bimonthly") {
+      if (layerName === "semi_monthly") {
         return 'gfw2_forma';
       } else if (layerName === "annual") {
         return 'gfw2_hansen';
@@ -343,7 +343,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _updateBaseLayer: function() {
-      if (this.currentBaseLayer != "bimonthly"){
+      if (this.currentBaseLayer != "semi_monthly"){
           map.overlayMapTypes.setAt(0, null);
       } else {
           map.overlayMapTypes.setAt(0, this.time_layer);
@@ -356,7 +356,7 @@ GFW.modules.app = function(gfw) {
       var self = this;
       var table_name = null;
 
-      if (this.currentBaseLayer === "bimonthly") {
+      if (this.currentBaseLayer === "semi_monthly") {
         table_name = 'gfw2_forma';
         this.time_layer = new TimePlayer('gfw2_forma',this._global_version,this._cloudfront_url);
         this.time_layer.options.table_name = table_name;
@@ -476,7 +476,7 @@ GFW.modules.maplayer = function(gfw) {
       var ne = new google.maps.LatLng(this.layer.get('ymax'),this.layer.get('xmax'));
       this._bounds = new google.maps.LatLngBounds(sw, ne);
 
-      if (this.layer.get('title') != 'Bimonthly'){
+      if (this.layer.get('title') != 'Semi-monthly'){
         this.layer.attributes['visible'] = false;
       }
 
@@ -540,30 +540,30 @@ GFW.modules.maplayer = function(gfw) {
       title       = this.layer.get('title'),
       title_color = this.layer.get('title_color'),
       title_subs  = this.layer.get('title_subs'),
-      slug        = title.replace(/ /g, "_").toLowerCase(),
+      slug        = title.replace(/ /g, "_").replace("-", "_").toLowerCase(),
       visible     = this.layer.get('visible'),
       tableName   = this.layer.get('table_name'),
       category    = this.layer.get('category_name'),
       visibility  = this.layer.get('visible');
       id          = this.layer.get('id');
-
+      console.log(slug)
       if (category === null || !category) {
         category = 'Other layers';
       }
 
 
       var // special layers
-      bimonthly  = GFW.app.datalayers.LayersObj.get(569),
-      annual     = GFW.app.datalayers.LayersObj.get(568),
-      sad        = GFW.app.datalayers.LayersObj.get(567);
+      semi_monthly  = GFW.app.datalayers.LayersObj.get(569),
+      annual        = GFW.app.datalayers.LayersObj.get(568),
+      sad           = GFW.app.datalayers.LayersObj.get(567);
 
       if (category != 'Forest clearing') {
         Legend.toggleItem(id, title, category, title_color, title_subs, visible);
       }
 
-      if (slug === 'bimonthly' || slug === "annual" || slug === "brazilian_amazon") {
+      if (slug === 'semi_monthly' || slug === "annual" || slug === "brazilian_amazon") {
 
-        if (slug === 'bimonthly' && showMap ) {
+        if (slug === 'semi_monthly' && showMap ) {
           Timeline.show();
         } else {
           Timeline.hide();
@@ -573,8 +573,8 @@ GFW.modules.maplayer = function(gfw) {
 
         GFW.app._updateBaseLayer();
 
-        if ( slug == 'bimonthly') {
-          bimonthly.attributes['visible']  = true;
+        if ( slug == 'semi_monthly') {
+          semi_monthly.attributes['visible']  = true;
         } else if (slug == 'annual') {
           annual.attributes['visible']  = true;
         } else if (slug == 'brazilian_amazon') {

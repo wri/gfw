@@ -115,7 +115,6 @@ var Navigation = (function() {
 
     _stopMapAnimation();
     
-    console.log(self.time_layer.cache_time());
     self.time_layer.set_time(self.time_layer.cache_time());
     Timeline.show(); // TODO: don't show the timeline if FORMA is not selected
 
@@ -367,7 +366,7 @@ var Filter = (function() {
 
     var
     cat  = category.replace(/ /g, "_").toLowerCase(),
-    slug = name.replace(/ /g, "_").toLowerCase();
+    slug = name.replace(/ /g, "_").replace("-", "_").toLowerCase();
 
     if (!_.include(categories, cat)) {
       var
@@ -412,7 +411,7 @@ var Filter = (function() {
     $layerItem.find(".checkbox").addClass(cat);
 
     // We select the FORMA layer by default
-    if ( slug == "bimonthly" ) {
+    if ( slug == "semi_monthly" ) {
       $layerItem.find(".radio").addClass('checked');
     }
   }
