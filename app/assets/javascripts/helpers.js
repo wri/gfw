@@ -35,7 +35,7 @@ config.mapOptions = {
   disableDefaultUI:   true,
   panControl:         false,
   zoomControl:        false,
-  mapTypeControl:     true,
+  mapTypeControl:     false,
   scaleControl:       false,
   streetViewControl:  false,
   overviewMapControl: false,

@@ -257,6 +257,62 @@
   }
 }
 
+#type_controls {
+  position:absolute;
+
+  top:  15px;
+  right: 15px;
+
+  z-index: 1000;
+
+  a {
+    float:left;
+    display:block;
+    height:36px;
+
+    text-decoration:none;
+
+    &.selected span { color: #73aeb4; }
+
+    span {
+      text-transform: uppercase;
+      @extend .sans-serif;
+      font-weight:bold;
+      font-size:11px;
+      color: $cGray3;
+    }
+  }
+
+  .left {
+
+    background:url(buttons/bkg_map_legend_left.png) no-repeat left bottom;
+
+    & > span {
+      @include inline-block();
+      height: 36px - 12;
+      margin-left: 10px;
+      padding: 12px 5px 0 3px;
+      white-space:nowrap;
+      background:url(buttons/bkg_map_legend_left.png) no-repeat right top;
+    }
+  }
+
+  .right {
+
+    background:url(buttons/bkg_map_legend_right.png) no-repeat right bottom;
+
+    & > span {
+      @include inline-block();
+      height: 36px - 12;
+      margin-right: 10px;
+      padding: 12px 3px 0 5px;
+      white-space:nowrap;
+      background:url(buttons/bkg_map_legend_right.png) no-repeat right top;
+    }
+  }
+
+}
+
 .legend {
   position:absolute;
 

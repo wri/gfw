@@ -68,6 +68,7 @@ GFW.modules.app = function(gfw) {
 
       this._loadBaseLayer();
       this._setupZoom();
+      this._setupTypeControls();
     },
     run: function() {
       this._setupListeners();
@@ -101,6 +102,23 @@ GFW.modules.app = function(gfw) {
           callback();
         }
 
+      });
+
+    },
+
+    _setupTypeControls:function() {
+      var that = this;
+
+      $("#type_controls .satellite").on("click", function() {
+        $("#type_controls").find("a.selected").removeClass("selected");
+        $(this).addClass("selected");
+       that._map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+      });
+
+      $("#type_controls .terrain").on("click", function() {
+        $("#type_controls").find("a.selected").removeClass("selected");
+        $(this).addClass("selected");
+       that._map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
       });
 
     },
