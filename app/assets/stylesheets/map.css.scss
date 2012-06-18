@@ -273,6 +273,7 @@
     text-decoration:none;
 
     &.selected span { color: #73aeb4; }
+    &:hover span { color: #73aeb4; }
 
     span {
       text-transform: uppercase;
