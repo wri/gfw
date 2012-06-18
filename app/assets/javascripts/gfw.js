@@ -43,7 +43,7 @@ GFW.modules.app = function(gfw) {
       this._precision = 2;
       this._layers = [];
       this._cloudfront_url = "dyynnn89u7nkm.cloudfront.net";
-      this._global_version = 2;
+      this._global_version = 3;
 
       gfw.log.enabled = options ? options.logging: false;
 
@@ -369,7 +369,6 @@ GFW.modules.app = function(gfw) {
       GFW.app.baseLayer.options.table_name = this._getTableName(this.currentBaseLayer);
       GFW.app.baseLayer.setQuery(GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom()));
     },
-
     _loadBaseLayer: function() {
       var self = this;
       var table_name = null;

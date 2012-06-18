@@ -224,12 +224,12 @@ TimePlayer.prototype.get_time_data = function(tile, coord, zoom) {
 };
 
 TimePlayer.prototype.render_time = function(tile, coord, zoom) {
+    var self = this;
     var month = -BASE_MONTH + 1 + this.time>>0;
     var w = tile.canvas.width;
     var h = tile.canvas.height;
     var ctx = tile.ctx;
     var i, x, y, cell, cells;
-
     cells = tile.cells;
 
     if(!cells || cells.length === 0) {
