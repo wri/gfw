@@ -87,7 +87,7 @@
     position:absolute;
     top: 0;
     left:-9999px;
-    width:159px;
+    width:170px;
     height:250px;
     z-index:1000;
     opacity:0;
@@ -101,6 +101,7 @@
       top: 90px;
 
       li {
+        position:relative;
         list-style: none;
         border-bottom: 1px solid $cSeparator;
         padding: 9px 10px 10px 10px;
@@ -109,8 +110,25 @@
 
       a {
           @extend .sans-serif;
+          display:block;
+          width: 120px;
           font-size:13px;
           line-height:17px;
+      }
+
+      a.source {
+        position:absolute;
+        top: 13px;
+        right: 10px;
+        background: red;
+        width: 11px;
+        height: 11px;
+        background:url(icons/help.png) no-repeat left top;
+
+        &:hover {
+          background:url(icons/help.png) no-repeat left bottom;
+        }
+
       }
     }
 
@@ -128,6 +146,7 @@
       font-weight:bold;
       text-transform: uppercase;
       text-decoration: none;
+
     }
 
     .line {

@@ -329,7 +329,7 @@ var Filter = (function() {
     $layer.addClass(liClass);
     lastClass = liClass;
 
-    var width = $li.width() < 159 ? 159 : $li.width();
+    var width = $li.width() < 170 ? 170 : $li.width();
     var left  = (l + $li.width() / 2) - (width / 2);
 
     $layer.find("li").css({ width:width - 20});
@@ -364,6 +364,7 @@ var Filter = (function() {
     zoomEvent  = options.zoomEvent  || null,
     clickEvent = options.clickEvent || null,
     disabled   = options.disabled   || false;
+    source     = options.source     || null;
 
     if (category === null || !category) {
       category = 'Other layers';
@@ -390,7 +391,7 @@ var Filter = (function() {
     if (cat === 'forest_clearing') {
 
       layerItemTemplate = _.template($("#layer-item-radio-template").html());
-      $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat, disabled: disabled }));
+      $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat, disabled: disabled, source: source }));
 
       if (!disabled) { // click binding
         $layerItem.find("a").on("click", function() {
@@ -403,7 +404,7 @@ var Filter = (function() {
 
     } else {
       layerItemTemplate = _.template($("#layer-item-checkbox-template").html());
-      $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat, disabled: disabled }));
+      $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat, disabled: disabled, source: source }));
 
       if (!disabled) { // click binding
         $layerItem.find("a").on("click", function() {
