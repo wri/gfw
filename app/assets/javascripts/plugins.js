@@ -394,7 +394,7 @@ var Filter = (function() {
       $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat, disabled: disabled, source: source }));
 
       if (!disabled) { // click binding
-        $layerItem.find("a").on("click", function() {
+        $layerItem.find("a:not(.source)").on("click", function() {
           if (!$(this).find(".radio").hasClass("checked")) {
             clickEvent();
             zoomEvent();
@@ -407,7 +407,8 @@ var Filter = (function() {
       $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat, disabled: disabled, source: source }));
 
       if (!disabled) { // click binding
-        $layerItem.find("a").on("click", function() {
+        $layerItem.find("a:not(.source)").on("click", function() {
+          console.log($(this));
           clickEvent();
           zoomEvent();
         });
