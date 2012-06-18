@@ -272,8 +272,9 @@
 
     text-decoration:none;
 
-    &.selected span { color: #73aeb4; }
-    &:hover span { color: #73aeb4; }
+    &.selected span,
+    &.selected:hover span { color: #73aeb4; }
+    &:hover span { color: $cGray2; }
 
     span {
       text-transform: uppercase;
@@ -292,7 +293,7 @@
       @include inline-block();
       height: 36px - 12;
       margin-left: 10px;
-      padding: 12px 5px 0 3px;
+      padding: 12px 7px 0 5px;
       white-space:nowrap;
       background:url(buttons/bkg_map_legend_left.png) no-repeat right top;
     }
@@ -306,7 +307,7 @@
       @include inline-block();
       height: 36px - 12;
       margin-right: 10px;
-      padding: 12px 3px 0 5px;
+      padding: 12px 5px 0 7px;
       white-space:nowrap;
       background:url(buttons/bkg_map_legend_right.png) no-repeat right top;
     }
