@@ -30,11 +30,11 @@
   </script>
 
   <script id="layer-item-radio-template" type="text/x-underscore-template">
-    <li id="filter_{{ id }}" class="{{ category }}"><a href="#" class="radio {{ category }} {{ disabled ? 'disabled' : '' }}" data-name={{ category }}>{{name}}</a>[ if (source) {]<a href="/sources/#{{source}}" class="source"></a>[}]</li>
+    <li id="filter_{{ id }}" class="{{ category }}"><a href="#" class="radio {{ category }} {{ disabled ? 'disabled' : '' }}" data-name={{ category }}>{{name}}</a>[ if (source) {]<a href="/sources/#{{source}}" target="_blank" class="source"></a>[}]</li>
   </script>
 
   <script id="layer-item-checkbox-template" type="text/x-underscore-template">
-    <li id="filter_{{ id }}" class="{{ category }}"><a href="#" data-id={{ id }} class="checkbox {{ disabled ? 'disabled' : '' }}">{{name}}</a>[ if (source) {]<a href="/sources/#{{source}}" class="source"></a>[}]</li>
+    <li id="filter_{{ id }}" class="{{ category }}"><a href="#" data-id={{ id }} class="checkbox {{ disabled ? 'disabled' : '' }}">{{name}}</a>[ if (source) {]<a href="/sources/#{{source}}" target="_blank" class="source"></a>[}]</li>
   </script>
 
   <script id="filter-template" type="text/x-underscore-template">
