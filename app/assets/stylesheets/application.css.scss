@@ -650,10 +650,19 @@ a.close_icon {
 .checkbox {
   @include checkboxes(checkboxes);
 
+  &.disabled { color: $cGray4!important; @include checkboxes(checkboxes); }
+
   &.concessions     { @include checkboxes(checkboxes_concessions); }
-  &.regrowth          { @include checkboxes(checkboxes_forest); }
+  &.regrowth        { @include checkboxes(checkboxes_forest); }
   &.mining          { @include checkboxes(checkboxes_mining); }
   &.other_layers    { @include checkboxes(checkboxes_other_layers); }
+  &.regrowth        { @include checkboxes(checkboxes_regrowth); }
+
+  &.disabled.concessions,
+  &.disabled.regrowth,
+  &.disabled.mining,
+  &.disabled.other_layers,
+  &.disabled.regrowth { @include checkboxes(checkboxes); }
 }
 
 footer {

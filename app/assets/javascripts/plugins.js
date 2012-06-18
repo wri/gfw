@@ -72,11 +72,11 @@ var Navigation = (function() {
         $("hgroup h1").animate({ top: 29, opacity: 1 }, 250);
       });
     });
-    
+
     this.time_layer.cache_time(true);
     Timeline.hide();
     self.time_layer.set_time(128);
-    
+
     _animateMap();
 
     GFW.app.close(function() {
@@ -114,12 +114,12 @@ var Navigation = (function() {
     Legend.show();
 
     _stopMapAnimation();
-    
+
     self.time_layer.set_time(self.time_layer.cache_time());
     Timeline.show(); // TODO: don't show the timeline if FORMA is not selected
 
-    
-    
+
+
     $("footer, .actions").fadeOut(250);
     $("header").animate({height: "220px"}, 250, function() {
       GFW.app.open();
@@ -358,7 +358,12 @@ var Filter = (function() {
     filters.push(id);
   }
 
-  function _addFilter(id, category, name, clickEvent, zoomEvent) {
+  function _addFilter(id, category, name, options) {
+
+    var
+    zoomEvent  = options.zoomEvent  || null,
+    clickEvent = options.clickEvent || null,
+    disabled   = options.disabled   || false;
 
     if (category === null || !category) {
       category = 'Other layers';
@@ -385,25 +390,27 @@ var Filter = (function() {
     if (cat === 'forest_clearing') {
 
       layerItemTemplate = _.template($("#layer-item-radio-template").html());
-      $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat }));
+      $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat, disabled: disabled }));
 
-      // Click binding
-      $layerItem.find("a").on("click", function() {
-        if (!$(this).find(".radio").hasClass("checked")) {
-          clickEvent();
-          zoomEvent();
-        }
-      });
+      if (!disabled) { // click binding
+        $layerItem.find("a").on("click", function() {
+          if (!$(this).find(".radio").hasClass("checked")) {
+            clickEvent();
+            zoomEvent();
+          }
+        });
+      }
 
     } else {
       layerItemTemplate = _.template($("#layer-item-checkbox-template").html());
-      $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat }));
+      $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat, disabled: disabled }));
 
-      // Click binding
-      $layerItem.find("a").on("click", function() {
-        clickEvent();
-        zoomEvent();
-      });
+      if (!disabled) { // click binding
+        $layerItem.find("a").on("click", function() {
+          clickEvent();
+          zoomEvent();
+        });
+      }
 
     }
 

@@ -30,6 +30,9 @@ $cMiningHover:           $cGray3;
 $cForest:                #B2D26E; // green
 $cForestHover:           #9EBB62; // dark green
 
+$cRegrowth:              #B2D26E; // green
+$cRegrowthHover:         #9EBB62; // dark green
+
 $cFire:                  #E95850; // red
 $cFireHover:             #CA4C45;
 
@@ -73,7 +76,7 @@ $cPostBody:              #444444;
 .cPostBody { background-color: $cPostBody; }
 
 // SPRITES
-$icons-crowdsourcing-spacing:91px;
+$icons-crowdsourcing-spacing:90px;
 $icons-analysis-spacing:90px;
 $icons-updates-spacing:90px;
 
@@ -91,6 +94,7 @@ $icons-radio-spacing: 40px;
 $icons-radio_fire-spacing: 40px;
 $icons-checkboxes-spacing: 40px;
 $icons-checkboxes_mining-spacing: 40px;
+$icons-checkboxes_regrowth-spacing: 40px;
 $icons-checkboxes_concessions-spacing: 40px;
 $icons-checkboxes_forest-spacing: 40px;
 $icons-checkboxes_mining-spacing: 40px;
@@ -214,11 +218,11 @@ strong { font-weight: bold; } // This is sad, I know.
   }
 
   &.regrowth {
-    & > a         { color: $cForest; }
-    a.checked     { color: $cForest; }
-    a.title       { color: $cForest; }
-    a.title:hover { color: $cForest; }
-    a:hover       { color: $cForestHover; }
+    & > a         { color: $cRegrowth; }
+    a.checked     { color: $cRegrowth; }
+    a.title       { color: $cRegrowth; }
+    a.title:hover { color: $cRegrowth; }
+    a:hover       { color: $cRegrowthHover; }
   }
 
   &.mining {
@@ -268,9 +272,8 @@ strong { font-weight: bold; } // This is sad, I know.
   &.forest_clearing .icon  { @include icons-sprite(icon_forest_clearing); }
   &.carbon          .icon  { @include icons-sprite(icon_concessions); }
   &.biodiversity    .icon  { @include icons-sprite(icon_concessions); }
-  &.regrowth        .icon  { @include icons-sprite(icon_concessions); }
   &.other_layers    .icon  { @include icons-sprite(icon_other); }
-  &.regrowth        .icon  { @include icons-sprite(icon_other); }
+  &.regrowth        .icon  { @include icons-sprite(icon_regrowth); }
 
 }
 
@@ -281,7 +284,7 @@ strong { font-weight: bold; } // This is sad, I know.
   &.concessions      .line { background-color: $cConcessions; }
   &.protected_areas  .line { background-color: $cProtectedAreas; }
   &.intact-forest    .line { background-color: $cForest; }
-  &.regrowth         .line { background-color: $cForest; }
+  &.regrowth         .line { background-color: $cRegrowth; }
   &.mining           .line { background-color: $cMining; }
   &.forest-cover     .line { background-color: $cForest; }
   &.forest           .line { background-color: $cForest; }
@@ -313,7 +316,7 @@ strong { font-weight: bold; } // This is sad, I know.
     background:url(icons/bullet_mining.png) no-repeat $left $top;
   }
   &.regrowth {
-    background:url(icons/bullet_forest.png) no-repeat $left $top;
+    background:url(icons/bullet_regrowth.png) no-repeat $left $top;
   }
 }
 
@@ -340,20 +343,20 @@ strong { font-weight: bold; } // This is sad, I know.
 
 @mixin checkboxes($url) {
   @include inline-block();
-  @include icons-sprite(checkboxes, $offset-y: -67px);
+  @include icons-sprite(checkboxes, $offset-y: -66px);
 
   padding-left: 12px;
 
   color:#333;
   text-decoration:none;
 
-  &:hover          { @include icons-sprite($url, $offset-y:-207px); }
+  &:hover          { @include icons-sprite($url, $offset-y:-206px); }
 
-  &:active         { @include icons-sprite($url, $offset-y:-207px); }
-  &:active:hover   { @include icons-sprite($url, $offset-y:-277px); }
+  &:active         { @include icons-sprite($url, $offset-y:-206px); }
+  &:active:hover   { @include icons-sprite($url, $offset-y:-276px); }
 
-  &.checked        { @include icons-sprite($url, $offset-y:-137px); }
-  &.checked:hover  { @include icons-sprite($url, $offset-y:-277px); }
+  &.checked        { @include icons-sprite($url, $offset-y:-136px); }
+  &.checked:hover  { @include icons-sprite($url, $offset-y:-276px); }
 
   &.disabled       { color: $cGray4; @include icons-sprite($url, $offset-y:5px); }
   &.disabled:hover { @include icons-sprite($url, $offset-y:5px); }

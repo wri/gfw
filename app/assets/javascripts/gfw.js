@@ -384,7 +384,7 @@ GFW.modules.app = function(gfw) {
         layer_order: "top",
         auto_bound: false
       });
-    
+
     },
 
     _mapLoaded: function(){
@@ -505,7 +505,7 @@ GFW.modules.maplayer = function(gfw) {
         }
       };
 
-      Filter.addFilter(this.layer.get('id'), this.layer.get('category_name'), this.layer.get('title'), clickEvent, zoomEvent);
+      Filter.addFilter(this.layer.get('id'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, zoomEvent: zoomEvent });
 
       // Adds the layers from the hash
       if (filters && _.include(filters, this.layer.get('id'))) {
@@ -546,7 +546,7 @@ GFW.modules.maplayer = function(gfw) {
       category    = this.layer.get('category_name'),
       visibility  = this.layer.get('visible');
       id          = this.layer.get('id');
-      console.log(slug)
+
       if (category === null || !category) {
         category = 'Other layers';
       }
@@ -633,7 +633,7 @@ GFW.modules.datalayers = function(gfw) {
         });
 
         // TODO: remove the below when real layers arrive
-        Filter.addFilter(0, 'Regrowth', 'coming soon...');
+        Filter.addFilter(0, 'Regrowth', 'Coming soon...', { disabled: true });
 
       });
 
