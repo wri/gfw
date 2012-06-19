@@ -83,5 +83,5 @@ en:
           title: 'About the country'
           read_more: 'Read more at Wikipedia'
       blog_posts:
-        title: 'Central African Republic Blog Stories'
+        title: '%{country} Blog Stories'
         more: 'more'

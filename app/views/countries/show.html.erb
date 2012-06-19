@@ -54,13 +54,13 @@
 
   <div class="blog-links">
     <div class="inner">
-      <h3><%= t('.blog_posts.title') %></h3>
+      <h3><%= t('.blog_posts.title', :country => @country.name ) %></h3>
 
       <ul>
         <% @blog_posts.each do |post| %>
           <li>
-          <h2><%= link_to post.title, post_path(:id => 1) %></h2>
-          <%= simple_format truncate(post.body.strip, :length => 255, :omission => "... #{link_to t('.blog_posts.more'), post_path(:id => 1) }") %>
+          <h2><%= link_to post.title, post.link %></h2>
+          <%= simple_format truncate(post.body.strip, :length => 250, :omission => "... #{link_to t('.blog_posts.more'), post.link }") %>
           </li>
         <% end %>
       </ul>

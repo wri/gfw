@@ -232,6 +232,7 @@ nav {
 
       h2 a {
         color: $cWhite;
+        line-height:30px;
         @extend .classic-hover;
       }
 
@@ -312,10 +313,10 @@ ul.logo_list {
       background-image:url(logos/danida.png);
     }
     span#bobolink {
-			text-indent: -99999px;
-			display: inline-block;
-			width: 120px;
-			height: 80px;
+      text-indent: -99999px;
+      display: inline-block;
+      width: 120px;
+      height: 80px;
       background-image:url(logos/bobolink.png);
     }
     a#usaid {
