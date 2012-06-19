@@ -364,6 +364,10 @@
 
         vertical-align: top;
 
+        color: $cGray3;
+        font-size:12px;
+        line-height:16px;
+
         @include clearfix();
 
         .layer {
@@ -375,15 +379,22 @@
           width: 10px; height: 10px;
           margin: 2px 5px 0 0;
         }
+
+        .icons {
+          float:left;
+          width: 10px; height: 10px;
+          margin: 2px 5px 0 0;
+
+          .half_icon {
+            float:left;
+            width: 5px; height: 10px;
+          }
+        }
+
+        .extra { clear:both; }
+        .extra .icon { margin: 5px; width: 5px; height: 5px; }
+
         a { width: 155px; float:left; text-decoration:none; color: $cGray3; cursor: default; }
-
-        .extra {  clear:both; }
-
-        line-height:16px;
-
-        color: $cGray3;
-        font-size:12px;
-
 
       }
     }

@@ -498,24 +498,40 @@ var Legend = (function() {
     }
 
     var
-    slug = name.replace(/ /g, "_").toLowerCase(),
-    cat  = category.replace(/ /g, "_").toLowerCase();
-
-    template = _.template($("#legend-item-template").html());
+    template = null,
+    slug     = name.replace(/ /g, "_").toLowerCase(),
+    cat      = category.replace(/ /g, "_").toLowerCase();
 
     var
     color = null,
     extra = null;
 
     if (title_color) {
-      color = title_color;
-    } else {
-        var subs = eval(title_subs);
-        var icons = _.map(subs, function(e) { return '<div class="layer"><div class="icon" style="background-color:' + e.color + ';"></div> <a href="#">' + e.title + '</a></div>'; }).join("\n");
-        var parts = "<div class='extra'>" + icons + "</div>";
-      }
 
-    $item = $(template({ color:color, parts: parts, category: cat, id: id, name: name.truncate(32) }));
+      template = _.template($("#legend-item-single-template").html());
+
+      color = title_color;
+      $item = $(template({ color:color, category: cat, id: id, name: name.truncate(32) }));
+
+    } else {
+
+      template = _.template($("#legend-item-double-template").html());
+
+      var subs = eval(title_subs);
+
+      var extraItems = _.map(subs, function(e) {
+        return '<div class="icon" style="background-color:' + e.color + ';"></div> <a href="#">' + e.title + '</a>';
+      }).join("\n");
+
+      var parts = "<div class='extra'>" + extraItems + "</div>";
+
+      var icons = _.map(subs, function(e) {
+        return '<div class="half_icon" style="background-color:' + e.color + ';"></div>';
+      }).join("\n");
+
+      $item = $(template({ color:color, parts: parts, icons:icons, category: cat, id: id, name: name.truncate(32) }));
+
+    }
 
     $item.hide();
 
