@@ -1024,7 +1024,7 @@ function addCircle(id, type, options) {
 
   var dashedLines = [
     { x1:45, y:height/4,   x2:270,   color: "#ccc" },
-    { x1:2,  y:height/2,   x2:width, color: color },
+    { x1:2,  y:height/2,   x2:width, color: "#ccc" },
     { x1:45, y:3*height/4, x2:270,   color: "#ccc" }
   ];
 
