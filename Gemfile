@@ -28,4 +28,6 @@ group :development, :test do
   gem 'vcr'
   gem 'poltergeist'
   gem 'launchy'
+  gem 'guard-livereload'
+  gem 'rack-livereload'
 end

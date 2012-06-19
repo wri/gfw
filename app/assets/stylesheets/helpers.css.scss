@@ -39,35 +39,32 @@ $cFireHover:             #CA4C45;
 $cDeforestation:         #FF6699; // red
 $cDeforestationHover:    #C04B73;
 
-// $cDeforestation:         #E95850; // red
-// $cDeforestationHover:    #CA4C45;
-
 $cTop:                   rgba(117, 173, 181, 0.8);
 $cPostTitle:             #73ACB3; // green
 $cPostBody:              #444444;
 
 // This is only used in the demo page
-.cforest { background-color: $cForest; }
+.cforest     { background-color: $cForest; }
 .cBackground { background-color: $cBackground; }
-.cDarkGreen { background-color: $cDarkGreen; }
-.cLink { background-color: $cLink; }
-.cGreen { background-color: $cGreen; }
-.cWhite { background-color: $cWhite; }
-.cGray4 { background-color: $cGray4; }
-.cGray3 { background-color: $cGray3; }
-.cGray2 { background-color: $cGray2; }
-.cGray1 { background-color: $cGray1; }
-.cGray0 { background-color: $cGray0; }
-.cGold { background-color: $cGold; }
+.cDarkGreen  { background-color: $cDarkGreen; }
+.cLink       { baCkground-color: $cLink; }
+.cGreen      { background-color: $cGreen; }
+.cWhite      { background-color: $cWhite; }
+.cGray4      { background-color: $cGray4; }
+.cGray3      { background-color: $cGray3; }
+.cGray2      { background-color: $cGray2; }
+.cGray1      { background-color: $cGray1; }
+.cGray0      { background-color: $cGray0; }
+.cGold       { background-color: $cGold; }
 
-.cConcessions { background-color: $cConcessions; }
+.cConcessions      { background-color: $cConcessions; }
 .cConcessionsHover { background-color: $cConcessionsHover; }
 
-.cProtectedAreas { background-color: $cProtectedAreas; }
-.cMining { background-color: $cMining; }
+.cProtectedAreas   { background-color: $cProtectedAreas; }
+.cMining           { background-color: $cMining; }
 
-.cForest { background-color: $cForest; }
-.cForestHover { background-color: $cForestHover; }
+.cForest           { background-color: $cForest; }
+.cForestHover      { background-color: $cForestHover; }
 
 .cFire { background-color: $cFire; }
 
@@ -76,7 +73,7 @@ $cPostBody:              #444444;
 .cPostBody { background-color: $cPostBody; }
 
 // SPRITES
-$icons-crowdsourcing-spacing:91px;
+$icons-crowdsourcing-spacing:90px;
 $icons-analysis-spacing:90px;
 $icons-updates-spacing:90px;
 
