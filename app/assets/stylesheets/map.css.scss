@@ -360,30 +360,30 @@
 
         position:relative;
         margin: 0 3px 5px 0;
-        padding-left: 13px;
+        padding-left: 3px;
 
         vertical-align: top;
+
+        @include clearfix();
 
         .layer {
           position: relative;
         }
 
         .icon {
-          position:relative;
-          top: -2px;
-          left: -10px;
-          width: 9px; height: 9px;
-          @include inline-block();
+          float:left;
+          width: 10px; height: 10px;
+          margin: 2px 5px 0 0;
         }
+        a { width: 155px; float:left; text-decoration:none; color: $cGray3; cursor: default; }
 
-        .extra {  position:relative; left: 4px; }
+        .extra {  clear:both; }
 
         line-height:16px;
 
         color: $cGray3;
         font-size:12px;
 
-        a { position:relative; left:-10px; text-decoration:none; color: $cGray3; cursor: default; }
 
       }
     }
