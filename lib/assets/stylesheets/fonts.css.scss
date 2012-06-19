@@ -1,7 +1,7 @@
 @font-face {
   font-family: 'Futura';
   src: asset-path("Futura.eot", font);
-  /*src: local('☺'), url(asset-path("Futura.woff", font)) format('woff'), url(asset-path("Futura.ttf", font)) format('truetype'), url(asset-path("Futura.svg", font)) format('svg');*/
+  src: local('☺'), url(asset-path("Futura.woff", font)) format('woff'), url(asset-path("Futura.ttf", font)) format('truetype'), url(asset-path("Futura.svg", font)) format('svg');
   src: local('☺'), url(asset-path("Futura.ttf", font)) format('truetype'), url(asset-path("Futura.svg", font)) format('svg');
   font-weight: normal;
   font-style: normal;
