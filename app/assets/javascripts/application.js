@@ -68,9 +68,7 @@ function initialize() {
     var State = History.getState(); // Note: We are using History.getState() instead of event.state
 
     //History.log(State.data, State.title, State.url);
-
     if (previousState != State.title) {
-
       if (State.title === 'Home') {
         Navigation.showState("home");
       } else if (State.title === 'Map') {

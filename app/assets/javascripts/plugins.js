@@ -19,7 +19,19 @@ var Navigation = (function() {
   }
 
   var lastCountryClass;
-
+  if ($('body').find("#countries").length>0) {
+    $.ajax({
+      async: true,
+      dataType: "jsonp",
+      jsonpCallback:'iwcallback',
+      url: "http://wri-01.cartodb.com/api/v2/sql?q=SELECT sum(alerts) as alerts, iso FROM gfw2_forma_graphs WHERE date > (SELECT n  FROM gfw2_forma_datecode WHERE now() -INTERVAL '6 months' < date ORDER BY date ASC LIMIT 1) group by iso;",
+      success: function(data) {
+        for (var i = 0; i<data.rows.length; i++){
+            $("#countries ."+data.rows[i].iso+" .content strong").html(data.rows[i].alerts);
+        }
+      }
+    });
+  }
   $("#countries .disabled").on("mouseenter", function() {
     $(".select").hide();
   });
