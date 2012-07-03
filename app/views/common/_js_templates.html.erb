@@ -5,7 +5,7 @@
 
   <script id="legend-item-single-template" type="text/x-underscore-template">
     <li id="{{ id }}" class="{{ category }}">
-    <div class="icon" style="background-color:{{color}};"></div> <a href="#">{{ name }}</a>
+    <div class="icon" style="background-color:{{color}};"></div> <a href="#">{{ name }}[ if (source) {]<a href="/sources/#{{source}}" target="_blank" class="source"></a>[}]</a>
     </li>
   </script>
 

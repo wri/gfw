@@ -120,7 +120,6 @@
         position:absolute;
         top: 13px;
         right: 10px;
-        background: red;
         width: 11px;
         height: 11px;
         background:url(icons/help.png) no-repeat left top;
@@ -128,7 +127,6 @@
         &:hover {
           background:url(icons/help.png) no-repeat left bottom;
         }
-
       }
     }
 
@@ -372,6 +370,19 @@
 
         .layer {
           position: relative;
+        }
+
+        a.source {
+          position:absolute;
+          top: 3px;
+          right: 10px;
+          width: 11px;
+          height: 11px;
+          background:url(icons/help.png) no-repeat left top;
+
+          &:hover {
+            background:url(icons/help.png) no-repeat left bottom;
+          }
         }
 
         .icon {
