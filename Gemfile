@@ -18,7 +18,9 @@ gem 'jquery-rails'
 
 group :development do
   gem 'heroku'
-  gem 'debugger'
+  #gem 'ruby-debug' # for ruby 1.8.7+    
+  #gem 'ruby-debug19' # for ruby 1.9.2+
+  #gem 'debugger'
 end
 
 group :development, :test do
@@ -28,6 +30,4 @@ group :development, :test do
   gem 'vcr'
   gem 'poltergeist'
   gem 'launchy'
-  gem 'guard-livereload'
-  gem 'rack-livereload'
 end
