@@ -379,7 +379,7 @@ var Filter = (function() {
     source     = options.source     || null;
 
     if (category === null || !category) {
-      category = 'Other layers';
+      category = 'Protected Areas';
     }
 
     var
@@ -506,7 +506,7 @@ var Legend = (function() {
   function _add(id, name, category, title_color, title_subs) {
 
     if (category === null || !category) {
-      category = 'Other layers';
+      category = 'Protected Areas';
     }
 
     var

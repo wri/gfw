@@ -566,7 +566,7 @@ GFW.modules.maplayer = function(gfw) {
       id          = this.layer.get('id');
 
       if (category === null || !category) {
-        category = 'Other layers';
+        category = 'Protected Areas';
       }
 
 
