@@ -1098,9 +1098,14 @@ function addCircle(id, type, options) {
   // Content selection: lines or bars
   if (type == 'lines') {
 
-    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT date_part('year',gfw2_forma_datecode.date) as y, date_part('month',gfw2_forma_datecode.date) as m,alerts FROM gfw2_forma_graphs,gfw2_forma_datecode WHERE  71<gfw2_forma_datecode.n AND gfw2_forma_datecode.n = gfw2_forma_graphs.date AND iso = '" + countryCode + "' order by gfw2_forma_datecode.date asc", function(json) {
+    $.ajax({
+      async: true,
+      dataType: "jsonp",
+      url: "https://wri-01.cartodb.com/api/v2/sql?q=SELECT date_part('year',gfw2_forma_datecode.date) as y, date_part('month',gfw2_forma_datecode.date) as m,alerts FROM gfw2_forma_graphs,gfw2_forma_datecode WHERE  71<gfw2_forma_datecode.n AND gfw2_forma_datecode.n = gfw2_forma_graphs.date AND iso = '" + countryCode + "' order by gfw2_forma_datecode.date asc",
+      success: function(json) {
 
-      var data = json.rows.slice(1,json.rows.length);
+
+      var data = json.rows.slice(1, json.rows.length);
 
       var x = d3.scale.linear()
       .domain([0, data.length - 1])
@@ -1159,13 +1164,17 @@ function addCircle(id, type, options) {
       .attr("cx", -10000)
       .attr("cy",100)
       .attr("r", 5);
-
+      }
     });
 
 
   } else if (type == 'bars') {
 
-    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT area_sqkm,height_m FROM gfw2_forest_heights WHERE iso = '"+ countryCode +"' ORDER BY height_m ASC", function(json) {
+    $.ajax({
+      async: true,
+      dataType: "jsonp",
+      url: "https://wri-01.cartodb.com/api/v2/sql?q=SELECT area_sqkm,height_m FROM gfw2_forest_heights WHERE iso = '"+ countryCode +"' ORDER BY height_m ASC",
+      success: function(json) {
 
       var data = json.rows;
 
@@ -1208,6 +1217,7 @@ function addCircle(id, type, options) {
                   d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
                 })
                 .on("mouseout", function() { d3.select(this).transition().duration(mouseOutDuration).style("fill", color); })
+                }
     });
 
   }
