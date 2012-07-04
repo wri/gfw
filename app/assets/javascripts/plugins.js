@@ -80,7 +80,7 @@ var Navigation = (function() {
 
     Filter.hide(function() {
 
-      $("header").animate({height: "247px" }, 250, function() {
+      $("header").animate({ height: "247px" }, 250, function() {
         $("hgroup h1").animate({ top: 29, opacity: 1 }, 250);
       });
     });
@@ -555,6 +555,7 @@ var Legend = (function() {
       $ul.fadeIn(250);
     } else {
       $ul = $("<ul class='"+cat+"' />");
+      $ul.append("<li class='title "+ cat +" '>" + category + "</li>");
       $ul.append($item);
       $(".legend").find(".content").append($ul);
 
