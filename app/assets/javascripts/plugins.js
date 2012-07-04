@@ -370,7 +370,7 @@ var Filter = (function() {
     filters.push(id);
   }
 
-  function _addFilter(id, category, name, options) {
+  function _addFilter(id, slug, category, name, options) {
 
     var
     zoomEvent  = options.zoomEvent  || null,
@@ -382,9 +382,7 @@ var Filter = (function() {
       category = 'Protected Areas';
     }
 
-    var
-    cat  = category.replace(/ /g, "_").toLowerCase(),
-    slug = name.replace(/ /g, "_").replace("-", "_").toLowerCase();
+    var cat  = category.replace(/ /g, "_").toLowerCase();
 
     if (!_.include(categories, cat)) {
       var
@@ -503,7 +501,7 @@ var Legend = (function() {
     return false;
   }
 
-  function _add(id, name, category, title_color, title_subs) {
+  function _add(id, slug, name, category, title_color, title_subs) {
 
     if (category === null || !category) {
       category = 'Protected Areas';
@@ -511,7 +509,6 @@ var Legend = (function() {
 
     var
     template = null,
-    slug     = name.replace(/ /g, "_").toLowerCase(),
     cat      = category.replace(/ /g, "_").toLowerCase();
 
     var
@@ -600,18 +597,18 @@ var Legend = (function() {
     }
   }
 
-  function _reset(id, name, category, title_color, title_subs) {
+  function _reset(id, slug, name, category, title_color, title_subs) {
     var cat = category.replace(/ /g, "_").toLowerCase(),
     $ul = $(".legend ul." + cat);
 
     $ul.find("li").remove();
 
-    _add(id, name, category, title_color, title_subs);
+    _add(id, slug, name, category, title_color, title_subs);
 
   }
 
-  function _toggleItem(id, name, category, title_color, title_subs, add) {
-    add ? _add(id, name, category, title_color, title_subs) : _remove(id, name, category);
+  function _toggleItem(id, slug, name, category, title_color, title_subs, add) {
+    add ? _add(id, slug, name, category, title_color, title_subs) : _remove(id, name, category);
 
     if (GFW && GFW.app.infowindow) {
       GFW.app.infowindow.close();

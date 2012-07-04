@@ -494,7 +494,7 @@ GFW.modules.maplayer = function(gfw) {
       var ne = new google.maps.LatLng(this.layer.get('ymax'),this.layer.get('xmax'));
       this._bounds = new google.maps.LatLngBounds(sw, ne);
 
-      if (this.layer.get('title') != 'Semi-monthly'){
+      if (this.layer.get('slug') != 'semi_monthly'){
         this.layer.attributes['visible'] = false;
       }
 
@@ -523,7 +523,7 @@ GFW.modules.maplayer = function(gfw) {
         }
       };
 
-      Filter.addFilter(this.layer.get('id'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, zoomEvent: zoomEvent, source: this.layer.get('source') });
+      Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, zoomEvent: zoomEvent, source: this.layer.get('source') });
 
       // Adds the layers from the hash
       if (filters && _.include(filters, this.layer.get('id'))) {
@@ -531,10 +531,10 @@ GFW.modules.maplayer = function(gfw) {
         this.layer.attributes["visible"] = true;
 
         Filter.check(this.layer.get('id'));
-        Legend.toggleItem(this.layer.get('id'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
+        Legend.toggleItem(this.layer.get('id'), this.layer.get('slug'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
       } else if (this.layer.get('table_name') == 'gfw2_forma') {
           //show the legend on map start for forma
-          Legend.toggleItem(this.layer.get('id'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
+          Legend.toggleItem(this.layer.get('id'), this.layer.get('slug'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
       }
 
     },
@@ -555,10 +555,10 @@ GFW.modules.maplayer = function(gfw) {
       this.layer.attributes['visible'] = !this.layer.attributes['visible'];
 
       var
+      slug        = this.layer.get('slug'),
       title       = this.layer.get('title'),
       title_color = this.layer.get('title_color'),
       title_subs  = this.layer.get('title_subs'),
-      slug        = title.replace(/ /g, "_").replace("-", "_").toLowerCase(),
       visible     = this.layer.get('visible'),
       tableName   = this.layer.get('table_name'),
       category    = this.layer.get('category_name'),
@@ -569,14 +569,13 @@ GFW.modules.maplayer = function(gfw) {
         category = 'Protected Areas';
       }
 
-
       var // special layers
       semi_monthly  = GFW.app.datalayers.LayersObj.get(569),
       annual        = GFW.app.datalayers.LayersObj.get(568),
       sad           = GFW.app.datalayers.LayersObj.get(567);
 
       if (category != 'Forest clearing') {
-        Legend.toggleItem(id, title, category, title_color, title_subs, visible);
+        Legend.toggleItem(id, slug, title, category, title_color, title_subs, visible);
       }
 
       if (slug === 'semi_monthly' || slug === "annual" || slug === "brazilian_amazon") {
@@ -599,7 +598,7 @@ GFW.modules.maplayer = function(gfw) {
           sad.attributes['visible']  = true;
         }
 
-        Legend.reset(id, title, category, title_color, title_subs);
+        Legend.reset(id, slug, title, category, title_color, title_subs);
 
       } else {
 
@@ -631,7 +630,7 @@ GFW.modules.datalayers = function(gfw) {
 
       var LayersColl    = this._cartodb.CartoDBCollection.extend({
         sql: function(){
-          return "SELECT cartodb_id AS id, title, title_color, title_subs, table_name, source, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
+          return "SELECT cartodb_id AS id, slug, title, title_color, title_subs, table_name, source, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
           ST_XMIN(the_geom) AS xmin, ST_YMAX(the_geom) AS ymax, ST_YMIN(the_geom) AS ymin, tileurl, true AS visible \
           FROM " + layerTable + " \
           WHERE display = TRUE ORDER BY displaylayer,title ASC";
@@ -651,7 +650,7 @@ GFW.modules.datalayers = function(gfw) {
         });
 
         // TODO: remove the below when real layers arrive
-        Filter.addFilter(0, 'Regrowth', 'Coming soon...', { disabled: true });
+        Filter.addFilter(0, 'regrowth', 'Regrowth', 'Coming soon...', { disabled: true });
 
       });
 
