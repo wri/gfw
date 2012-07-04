@@ -189,4 +189,52 @@ $(function(){
     addCircle("forest", "bars", { legendUnit: "m", countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"with {{n}} tall trees", hoverColor: "#427C8D", color: "#75ADB5", unit: "km<sup>2</sup>" });
     addCircle("forma", "lines", { countryCode: countryCode, width: 300, title: "FORMA", subtitle:"Forest clearing alerts", legend:"In the last month", hoverColor: "#F2B357", color: "#F2B357" });
   }
+
+    // Enables map editing mode. When activated, each click in the map draws a polyline
+    $('#map-container').find('.draw-area').click(function(){
+      $(this).closest('#map-container').toggleClass('editing-mode');
+
+      if (renderPolygonListener) return;
+
+      polygonPath = [];
+
+      polygon = new google.maps.Polygon({
+        paths: [],
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 3,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35
+      });
+
+      polygon.setMap(map);
+
+      renderPolygonListener = google.maps.event.addListener(map, 'click', function(e){
+        polygonPath.push(e.latLng);
+        polygon.setPath(polygonPath);
+      });
+    });
+
+    // Disables editing mode. Sends the created polygon to cartodb.
+    $('#map-container').find('.save-area').submit(function(e){
+      e.preventDefault();
+      $(this).closest('#map-container').toggleClass('editing-mode');
+      $(this).find('#area_the_geom').val(JSON.stringify({
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            $.map(polygonPath, function(latlong, index){
+          return [[latlong.lng(), latlong.lat()]];
+        })
+        ]
+        ]
+      }));
+
+      $.post($(this).attr('action'), $(this).serialize(), function(response){
+        google.maps.event.removeListener(renderPolygonListener);
+        renderPolygonListener = null;
+      });
+    });
+
+
 });
