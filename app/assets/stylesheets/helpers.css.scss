@@ -27,8 +27,8 @@ $cOtherLayersHover:      #00B9B9;
 $cMining:                $cGray4;
 $cMiningHover:           $cGray3;
 
-$cForest:                #B2D26E; // green
-$cForestHover:           #9EBB62; // dark green
+$cForest:                #707D92;
+$cForestHover:           #707D92;
 
 $cRegrowth:              #B2D26E; // green
 $cRegrowthHover:         #9EBB62; // dark green
@@ -253,8 +253,14 @@ strong { font-weight: bold; } // This is sad, I know.
     a:hover       { color: $cDeforestationHover; }
   }
 
-  &.intact-forest   a { color: $cForest; }
-  &.forest-cover    a { color: $cForest; }
+  &.forest_cover {
+    & > a         { color: $cForest; }
+    a.checked     { color: $cForest; }
+    a.title       { color: $cForest; }
+    a.title:hover { color: $cForest; }
+    a:hover       { color: $cForestHover; }
+	}
+
   &.fire            a { color: $cFire; }
   &.carbon          a { color: $cGray4;}
   &.biodiversity    a { color: $cGray4; }
@@ -263,10 +269,10 @@ strong { font-weight: bold; } // This is sad, I know.
 .filter-icons {
   &.concessions     .icon  { @include icons-sprite(icon_concessions); }
   &.protected_areas .icon  { @include icons-sprite(icon_protected_areas); }
-  &.intact-forest   .icon  { @include icons-sprite(icon_concessions); }
   &.mining          .icon  { @include icons-sprite(icon_mining); }
   &.fire            .icon  { @include icons-sprite(icon_fire); }
   &.forest_clearing .icon  { @include icons-sprite(icon_forest_clearing); }
+  &.forest_cover 		.icon  { @include icons-sprite(icon_forest_cover); }
   &.carbon          .icon  { @include icons-sprite(icon_concessions); }
   &.biodiversity    .icon  { @include icons-sprite(icon_concessions); }
   &.other_layers    .icon  { @include icons-sprite(icon_other); }
@@ -283,7 +289,7 @@ strong { font-weight: bold; } // This is sad, I know.
   &.intact-forest    .line { background-color: $cForest; }
   &.regrowth         .line { background-color: $cRegrowth; }
   &.mining           .line { background-color: $cMining; }
-  &.forest-cover     .line { background-color: $cForest; }
+  &.forest_cover     .line { background-color: $cForest; }
   &.forest           .line { background-color: $cForest; }
   &.fire             .line { background-color: $cFire; }
   &.forest_clearing  .line { background-color: $cDeforestation; }
