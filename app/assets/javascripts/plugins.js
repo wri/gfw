@@ -1,25 +1,157 @@
 var SubscriptionMap = (function() {
 
 var
+$modal = $("#subscribe"),
+$input = $modal.find(".input-field"),
 subscribeMap,
-renderPolygonListener = null,
-polygon               = null,
-polygonPath           = [],
 zoomInit              = false;
 
-  function initSubscription() {
-    if (polygon) polygon.setMap(null);
-    renderPolygonListener = null,
-    $("#subscribe input").val("");
-  }
+var drawingManager;
+var selectedShape;
+var colors = ['#1E90FF', '#FF1493', '#32CD32', '#FF8C00', '#4B0082'];
+var selectedColor;
+
+      function clearSelection() {
+        clearErrors();
+
+        if (selectedShape) {
+          selectedShape.setEditable(false);
+          selectedShape = null;
+          drawingManager.path = null;
+        }
+
+      }
+
+      function setSelection(shape) {
+        clearSelection();
+        selectedShape = shape;
+        shape.setEditable(true);
+        selectColor(shape.get('fillColor') || shape.get('strokeColor'));
+      }
+
+      function deleteSelectedShape() {
+        if (selectedShape) {
+          selectedShape.setMap(null);
+        }
+      }
+
+      function selectColor(color) {
+        selectedColor = color;
+
+        var polygonOptions = drawingManager.get('polygonOptions');
+        polygonOptions.fillColor = color;
+        drawingManager.set('polygonOptions', polygonOptions);
+      }
+
+      function setSelectedShapeColor(color) {
+        if (selectedShape) {
+          if (selectedShape.type == google.maps.drawing.OverlayType.POLYLINE) {
+            selectedShape.set('strokeColor', color);
+          } else {
+            selectedShape.set('fillColor', color);
+          }
+        }
+      }
+
+      function clearEmailErrors() {
+        $input.find(".icon.error").hide();
+        $input.removeClass("error");
+        $input.find(".error_input_label").hide();
+        $input.find(".error_input_label").html("");
+      }
+
+
+      function clearMapErrors() {
+        $modal.find(".error_box").hide();
+        $modal.find(".error_box").html("");
+      }
+
+      function clearErrors() {
+        clearEmailErrors();
+        clearMapErrors();
+      }
+
+      function initialize() {
+
+        clearErrors();
+
+        var polyOptions = {
+          strokeWeight: 0,
+          fillOpacity: 0.45,
+          editable: true
+        };
+
+        // Creates a drawing manager attached to the map that allows the user to draw
+        // markers, lines, and shapes.
+        drawingManager = new google.maps.drawing.DrawingManager({
+          drawingMode: google.maps.drawing.OverlayType.POLYGON,
+          drawingControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_TOP,
+            drawingModes: [google.maps.drawing.OverlayType.POLYGON]
+          },
+
+          polygonOptions: polyOptions,
+          map: subscribeMap
+        });
+
+        google.maps.event.addListener(drawingManager, 'overlaycomplete', function(e) {
+          if (e.type != google.maps.drawing.OverlayType.MARKER) {
+            // Switch back to non-drawing mode after drawing a shape.
+            drawingManager.setDrawingMode(null);
+            drawingManager.path = e.overlay.getPath().getArray();
+
+            $modal.find(".remove").fadeIn(250);
+            drawingManager.setOptions({drawingControl: false});
+
+            // Add an event listener that selects the newly-drawn shape when the user
+            // mouses down on it.
+            var newShape = e.overlay;
+            newShape.type = e.type;
+            setSelection(newShape);
+          }
+        });
+
+        // Clear the current selection when the drawing mode is changed, or when the
+        // map is clicked.
+        google.maps.event.addListener(drawingManager, 'drawingmode_changed', clearSelection);
+        google.maps.event.addListener(map, 'click', clearSelection);
+
+      }
+
 
   function remove() {
-    var $map = $("#subscribe").find(".map");
-    initSubscription();
-    initDrawingMode(subscribeMap, $map);
+    clearErrors();
+    deleteSelectedShape();
+    drawingManager.setOptions({ drawingControl: true });
+    drawingManager.path = null;
+    $modal.find(".remove").fadeOut(250);
   }
 
   function submit() {
+
+    clearErrors();
+    var error = false;
+
+    if (!validateEmail($input.find("input").val())) {
+      $input.addClass("error");
+      $input.find(".icon.error").fadeIn(250);
+      $input.find(".error_input_label").html("Please enter a valid email");
+      $input.find(".error_input_label").fadeIn(250);
+
+      error = true;
+    }
+
+    console.log(drawingManager.path);
+
+    if (!drawingManager.path) {
+      $modal.find(".error_box").html("Please, draw a polygon around the area you are interested in");
+      $modal.find(".error_box").fadeIn(250);
+
+      error = true;
+    }
+
+    if (error) return;
+
     var
     $map      = $("#subscribe_map"),
     $form     = $("#subscribe form");
@@ -30,7 +162,7 @@ zoomInit              = false;
       "type": "MultiPolygon",
       "coordinates": [
         [
-          $.map(polygonPath, function(latlong, index) {
+          $.map(drawingManager.path, function(latlong, index) {
             return [[latlong.lng(), latlong.lat()]];
           })
         ]
@@ -42,33 +174,6 @@ zoomInit              = false;
       renderPolygonListener = null;
     });
 
-  }
-
-  function initDrawingMode(map, $map) {
-
-    $map.toggleClass('editing-mode');
-
-    map.setOptions({draggableCursor:'crosshair'});
-
-    if (renderPolygonListener) return;
-
-    polygonPath = [];
-
-    polygon = new google.maps.Polygon({
-      paths: [],
-      strokeColor: "#FF0000",
-      strokeOpacity: 0.8,
-      strokeWeight: 3,
-      fillColor: "#FF0000",
-      fillOpacity: 0.35
-    });
-
-    polygon.setMap(map);
-
-    renderPolygonListener = google.maps.event.addListener(map, 'click', function(e){
-      polygonPath.push(e.latLng);
-      polygon.setPath(polygonPath);
-    });
   }
 
   function setupZoom() {
@@ -115,19 +220,62 @@ zoomInit              = false;
     });
   }
 
+  function setupBindings() {
+
+    $modal.find(".map").off("click");
+    $modal.find(".map").on("click", function(e) {
+      clearMapErrors();
+    });
+
+    $modal.find(".input-field").off('click');
+    $modal.find(".input-field").on("click", function(e) {
+      clearEmailErrors();
+    });
+
+    $modal.find('.remove').off('click');
+    $modal.find('.remove').on("click", function(e){
+      e.preventDefault();
+      remove();
+    });
+
+    $modal.find('.btn').off("click");
+    $modal.find('.btn').on("click", function(e){
+      e.preventDefault();
+      submit();
+    });
+
+  }
+
   function show() {
     $("#content").append('<div class="backdrop" />');
     $(".backdrop").fadeIn(250, function() {
 
       var $map = $("#subscribe_map");
 
-      $("#subscribe").center();
-      $("#subscribe").fadeIn(250, function() {
+      $modal.center();
+      $modal.fadeIn(250, function() {
+
+        var mapOptions = {
+          zoom:               1,
+          minZoom:            config.MINZOOM,
+          maxZoom:            config.MAXZOOM,
+          center:             new google.maps.LatLng(32.39851580247402, -35.859375),
+          mapTypeId:          google.maps.MapTypeId.TERRAIN,
+          disableDefaultUI:   true,
+          panControl:         false,
+          zoomControl:        false,
+          mapTypeControl:     false,
+          scaleControl:       false,
+          streetViewControl:  false,
+          overviewMapControl: false,
+          scrollwheel:        false
+        };
 
         // Initialise the google map
-        subscribeMap = new google.maps.Map(document.getElementById("subscribe_map"), config.mapOptions);
-        initSubscription();
-        initDrawingMode(subscribeMap, $map);
+        subscribeMap = new google.maps.Map(document.getElementById("subscribe_map"), mapOptions);
+        initialize();
+
+        setupBindings();
         setupZoom();
 
       });
@@ -137,7 +285,9 @@ zoomInit              = false;
   return {
     show: show,
     remove: remove,
-    submit: submit
+    submit: submit,
+    clearEmailErrors: clearEmailErrors,
+    clearMapErrors: clearMapErrors
   };
 
 }());
@@ -170,7 +320,7 @@ var Navigation = (function() {
       url: "http://wri-01.cartodb.com/api/v2/sql?q=SELECT sum(alerts) as alerts, iso FROM gfw2_forma_graphs WHERE date > (SELECT n  FROM gfw2_forma_datecode WHERE now() -INTERVAL '6 months' < date ORDER BY date ASC LIMIT 1) group by iso;",
       success: function(data) {
         for (var i = 0; i<data.rows.length; i++){
-            $("#countries ."+data.rows[i].iso+" .content strong").html(data.rows[i].alerts);
+          $("#countries ."+data.rows[i].iso+" .content strong").html(data.rows[i].alerts);
         }
       }
     });
@@ -592,8 +742,8 @@ var Filter = (function() {
 }());
 
 /* Legend
- * Shows a list of the selected layers
- */
+* Shows a list of the selected layers
+*/
 var Legend = (function() {
 
   var
@@ -1097,8 +1247,8 @@ var Timeline = (function() {
   }
 
   /*
-   * Init function
-   **/
+  * Init function
+  **/
   function _init() {
 
     // Bindings
@@ -1229,20 +1379,20 @@ function addCircle(id, type, options) {
   function addText(opt) {
 
     //if (typeof SVGForeignObjectElement !== 'undefined')  {
-     graph.append("foreignObject")
-     .attr('x', opt.x)
-     .attr('y', opt.y)
-     .attr('width', opt.width)
-     .attr('height', opt.height)
-     .attr('class', opt.c)
-     .append("xhtml:div")
-     .html(opt.html)
+    graph.append("foreignObject")
+    .attr('x', opt.x)
+    .attr('y', opt.y)
+    .attr('width', opt.width)
+    .attr('height', opt.height)
+    .attr('class', opt.c)
+    .append("xhtml:div")
+    .html(opt.html)
 
-     /*var $div = $('<div class="texto '+opt.c+'">'+opt.html+'</div>');
-     $div.css({position:"absolute", top: opt.x, top:opt.y, "pointer-events":"none", width: width, height: height });
-     console.log(id);
-     $(".circle." + type).append($div);
-*/
+    /*var $div = $('<div class="texto '+opt.c+'">'+opt.html+'</div>');
+    $div.css({position:"absolute", top: opt.x, top:opt.y, "pointer-events":"none", width: width, height: height });
+    console.log(id);
+    $(".circle." + type).append($div);
+    */
   }
 
 
@@ -1256,64 +1406,64 @@ function addCircle(id, type, options) {
       success: function(json) {
 
 
-      var data = json.rows.slice(1, json.rows.length);
-      var x = d3.scale.linear()
-      .domain([0, data.length - 1])
-      .range([0, width - 80]);
+        var data = json.rows.slice(1, json.rows.length);
+        var x = d3.scale.linear()
+        .domain([0, data.length - 1])
+        .range([0, width - 80]);
 
-      var y = d3.scale.linear()
-      .domain([0, d3.max(data, function(d) {return d.alerts})])
-      .range([0, h]);
+        var y = d3.scale.linear()
+        .domain([0, d3.max(data, function(d) {return d.alerts})])
+        .range([0, h]);
 
-      var line = d3.svg.line()
-      .x(function(d,i)  { return x(i); })
-      .y(function(d, i) { return h-y(d.alerts); })
-      .interpolate("basis");
+        var line = d3.svg.line()
+        .x(function(d,i)  { return x(i); })
+        .y(function(d, i) { return h-y(d.alerts); })
+        .interpolate("basis");
 
-      // Adds the line graph
-      var marginLeft = 40;
-      var marginTop = radius - h/2;
+        // Adds the line graph
+        var marginLeft = 40;
+        var marginTop = radius - h/2;
 
-      var p = graph.append("svg:path")
-      .attr("transform", "translate(" + marginLeft + "," + marginTop + ")")
-      .attr("d", line(data))
-      .on("mousemove", function(d) {
+        var p = graph.append("svg:path")
+        .attr("transform", "translate(" + marginLeft + "," + marginTop + ")")
+        .attr("d", line(data))
+        .on("mousemove", function(d) {
 
-        var index = Math.round(x.invert(d3.mouse(this)[0]));
+          var index = Math.round(x.invert(d3.mouse(this)[0]));
 
-        if (data[index]) { // if there's data
-          var val = data[index].alerts + " <small>" + unit + "</small>";
-          $(".amount." + id + " .text").html(val);
+          if (data[index]) { // if there's data
+            var val = data[index].alerts + " <small>" + unit + "</small>";
+            $(".amount." + id + " .text").html(val);
 
-          var date = new Date(data[index].y, data[index].m);
-          months = monthDiff(date, new Date());
+            var date = new Date(data[index].y, data[index].m);
+            months = monthDiff(date, new Date());
 
-          if (months === 0) {
-            val = "in this month";
-          } else if (months == 1) {
-            val = "in the last month";
-          } else {
-            val = "in the last " + months + " months";
+            if (months === 0) {
+              val = "in this month";
+            } else if (months == 1) {
+              val = "in the last month";
+            } else {
+              val = "in the last " + months + " months";
+            }
+
+            $(".graph_legend." + id + " .text").html(val);
+
+            d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
+
+            var cx = d3.mouse(this)[0]+marginLeft;
+            var cy = h-y(data[index].alerts)+marginTop;
+
+            graph.select("#marker")
+            .attr("cx",cx)
+            .attr("cy",cy)
           }
+        })
 
-          $(".graph_legend." + id + " .text").html(val);
-
-          d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
-
-          var cx = d3.mouse(this)[0]+marginLeft;
-          var cy = h-y(data[index].alerts)+marginTop;
-
-          graph.select("#marker")
-          .attr("cx",cx)
-          .attr("cy",cy)
-        }
-      })
-
-      graph.append("circle")
-      .attr("id", "marker")
-      .attr("cx", -10000)
-      .attr("cy",100)
-      .attr("r", 5);
+        graph.append("circle")
+        .attr("id", "marker")
+        .attr("cx", -10000)
+        .attr("cy",100)
+        .attr("r", 5);
       }
     });
 
@@ -1326,48 +1476,48 @@ function addCircle(id, type, options) {
       url: "https://wri-01.cartodb.com/api/v2/sql?q=SELECT area_sqkm,height_m FROM gfw2_forest_heights WHERE iso = '"+ countryCode +"' ORDER BY height_m ASC",
       success: function(json) {
 
-      var data = json.rows;
+        var data = json.rows;
 
-      var x = d3.scale.linear()
-      .domain([0, 1])
-      .range([0, barWidth]);
+        var x = d3.scale.linear()
+        .domain([0, 1])
+        .range([0, barWidth]);
 
-      var y = d3.scale.linear()
-      .domain([0, d3.max(data, function(d) {return d.area_sqkm})])
-      .rangeRound([0, h]); //rangeRound is used for antialiasing
+        var y = d3.scale.linear()
+        .domain([0, d3.max(data, function(d) {return d.area_sqkm})])
+        .rangeRound([0, h]); //rangeRound is used for antialiasing
 
-      var marginLeft = width/2 - data.length * barWidth/2;
-      var marginTop = height/2 - h/2;
+        var marginLeft = width/2 - data.length * barWidth/2;
+        var marginTop = height/2 - h/2;
 
-      graph.selectAll("rect")
-      .data(data).enter()
-      .append("rect")
-      .attr("x", function(d, i) { return x(i) - .5; })
-      .attr("y", function(d) {
-        var l = y(d.area_sqkm);
-        if (l<3) l = 3;
-        return h - l - .3; }
-           )
-           .attr("width", barWidth)
-           .attr("height", function(d) {
-             var l = y(d.area_sqkm);
-             if (l<3) l = 3;
-             return l; }
-                )
-                .attr("transform", "translate(" + marginLeft + "," + marginTop + ")")
-                .on("mouseover", function(d) {
+        graph.selectAll("rect")
+        .data(data).enter()
+        .append("rect")
+        .attr("x", function(d, i) { return x(i) - .5; })
+        .attr("y", function(d) {
+          var l = y(d.area_sqkm);
+          if (l<3) l = 3;
+          return h - l - .3; }
+        )
+        .attr("width", barWidth)
+        .attr("height", function(d) {
+          var l = y(d.area_sqkm);
+          if (l<3) l = 3;
+          return l; }
+        )
+        .attr("transform", "translate(" + marginLeft + "," + marginTop + ")")
+        .on("mouseover", function(d) {
 
-                  var val = Math.floor(d.area_sqkm) + " <small>" + unit + "</small>";
-                  $(".amount." + id + " .text").html(val);
+          var val = Math.floor(d.area_sqkm) + " <small>" + unit + "</small>";
+          $(".amount." + id + " .text").html(val);
 
-                  var t = _.template(legend);
-                  val = t({ n: Math.floor(d.height_m) + legendUnit });
-                  $(".graph_legend." + id + " .text").html(val);
+          var t = _.template(legend);
+          val = t({ n: Math.floor(d.height_m) + legendUnit });
+          $(".graph_legend." + id + " .text").html(val);
 
-                  d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
-                })
-                .on("mouseout", function() { d3.select(this).transition().duration(mouseOutDuration).style("fill", color); })
-                }
+          d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
+        })
+        .on("mouseout", function() { d3.select(this).transition().duration(mouseOutDuration).style("fill", color); })
+      }
     });
 
   }

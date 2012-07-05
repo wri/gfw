@@ -116,6 +116,14 @@ function initialize() {
     $("#share, #subscribe").fadeOut(250);
   });
 
+  $("#subscribe .map").on("click", function(e) {
+    SubscriptionMap.clearMapErrors();
+  });
+
+  $("#subscribe .input-field").on("click", function(e) {
+    SubscriptionMap.clearEmailErrors();
+  });
+
   $(".subscribe").on("click", function(e) {
     e.preventDefault();
     SubscriptionMap.show();

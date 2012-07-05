@@ -437,12 +437,22 @@ a.close_icon {
   .header .inner { padding: 40px 45px; }
 
   .remove {
+    background: #fff;
     position:absolute;
-    top: 150px;
-    right: 25px;
+    top: 146px;
+    right: 15px;
     z-index:1000;
 
-    display:block;
+    display:none;
+
+    border: 1px solid #333;
+    padding: 7px 6px;
+    text-transform: uppercase;
+    color: #999999;
+    font-size: 11px;
+    font-weight:bold;
+    text-decoration: none;
+    @extend .sans-serif;
   }
 
   a.close_icon {
@@ -483,6 +493,33 @@ a.close_icon {
     width: 747px;
     left: 10px;
 
+    .error_box {
+      position:absolute;
+      display:none;
+
+      $width: 242px - 9*2;
+      $height: 66px - 14*2;
+
+      width: $width;
+      height: $height;
+      left: 50%;
+      top: 50%;
+      margin-top: -1*$height/2;
+      margin-left: -1*$width/2;
+
+      padding: 14px 9px;
+
+      @include icons-sprite(error_input_box);
+
+      color: #fff;
+      font-size:15px;
+      @extend .sans-serif;
+      text-align: center;
+
+      z-index:1000;
+    }
+
+
     #subscribe_map {
       height:291px;
       width: 747px;
@@ -495,6 +532,36 @@ a.close_icon {
     height: 120px;
 
     .input-field { position:relative; left: 50px; top: 30px; }
+
+    .error_input_label {
+      position:absolute;
+      display:none;
+      right: -92px;
+      bottom: 40px;
+
+      width: 190px;
+      height: 39px - 9px;
+      padding: 9px 0 0 0;
+
+      @include icons-sprite(error_input_label);
+
+      color: #fff;
+      font-size:15px;
+      @extend .sans-serif;
+      text-align: center;
+    }
+
+    .input-field .icon.error {
+      width: 21px;
+      height: 22px;
+      position:absolute;
+      right: -7px;
+      top: 7px;
+      @include icons-sprite(input_error);
+      display:none;
+    }
+
+    .input-field.error input { color: red;}
     .btn { position:relative; top: 30px; left: 80px; }
   }
 }
