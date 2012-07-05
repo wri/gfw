@@ -5,15 +5,19 @@
 <div class="demo big">
   <h3>Legend</h3>
 
-    <a href="#" class="subscribe">Subscribe</a>
+  <a href="#" class="subscribe">Subscribe</a>
   <div id="subscribe">
-  <div class="header">
-  <div class="inner">
-    <h3>Subscribe to a forest change alert</h3>
-    <p>Click on the map to draw a polygon around the area where you are interested.</p>
-  </div>
-  </div>
-  <div id="map"></div>
+    <div class="header">
+      <a href="#" class="close_icon" class="close"></a>
+      <div class="inner">
+        <h3>Subscribe to a forest change alert</h3>
+        <p>Click on the map to draw a polygon around the area where you are interested.</p>
+      </div>
+    </div>
+
+  <a href="#" class="remove">Remove</a>
+  <div id="subscribe_map" class="map"></div>
+
   <div class="footer">
 
   <div class="inner">
@@ -22,7 +26,7 @@
       <%= f.hidden_field :the_geom %>
 
       <div class="input-field">
-        <input type="text" name="email" placeholder="Insert your email here" />
+        <input type="text" name="area[email]" placeholder="Insert your email here" />
       </div>
 
       <a href="#" class="btn">

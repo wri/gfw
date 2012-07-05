@@ -19,7 +19,12 @@
 
 var
 map           = null,
-previousState = null;
+previousState = null,
+subscribeMap;
+
+renderPolygonListener = null,
+polygon               = null,
+polygonPath           = [];
 
 function initialize() {
 
@@ -112,30 +117,99 @@ function initialize() {
     $(".backdrop").fadeOut(250, function() {
       $(this).remove();
     });
-    $("#share").fadeOut(250);
+    $("#share, #subscribe").fadeOut(250);
   });
 
-  $(".subscribe_link").on("click", function(e) {
-    e.preventDefault();
-    $("#content").append('<div class="backdrop" />');
-    $(".backdrop").fadeIn(250, function() {
 
-      var top = ( $(window).height() - $("#subscribe").height() ) / 2+$(window).scrollTop() + "px",
-      left = ( $(window).width() - $("#subscribe").width() ) / 2+$(window).scrollLeft() + "px";
+$(".subscribe").on("click", function(e) {
+  e.preventDefault();
 
-      $("#subscribe").css({top: top, left:left});
-      $("#subscribe").fadeIn(250);
+  $("#content").append('<div class="backdrop" />');
+  $(".backdrop").fadeIn(250, function() {
+
+    var $map = $("#subscribe").find(".map");
+
+    $("#subscribe").center();
+    $("#subscribe").fadeIn(250, function() {
+
+      // Initialise the google map
+      subscribeMap = new google.maps.Map(document.getElementById("subscribe_map"), config.mapOptions);
+      initSubscription();
+      initDrawingMode(subscribeMap, $map);
+
     });
   });
 
-  /*$("#subscribe").on("click", function(e) {
-    e.preventDefault();
-    $(".backdrop").fadeOut(250, function() {
-      $(this).remove();
-    });
-    $("#subscribe").fadeOut(250);
-  });*/
+});
 
+function initSubscription() {
+  if (polygon) {
+    polygon.setMap(null);
+  }
+  renderPolygonListener = null,
+  $("#subscribe input").val("");
+}
+
+$('#subscribe .remove').on("click", function(e){
+  e.preventDefault();
+
+  var $map = $("#subscribe").find(".map");
+  initSubscription();
+  initDrawingMode(subscribeMap, $map);
+});
+
+    $('#subscribe .btn').on("click", function(e){
+      e.preventDefault();
+
+      var $map  = $("#subscribe .map");
+      var $form = $("#subscribe form");
+      var $the_geom = $form.find('#area_the_geom');
+
+      $map.toggleClass('editing-mode');
+      $the_geom.val(JSON.stringify({
+        "type": "MultiPolygon",
+        "coordinates": [
+          [
+            $.map(polygonPath, function(latlong, index) {
+              return [[latlong.lng(), latlong.lat()]];
+            })
+          ]
+        ]
+      }));
+
+      $.post($form.attr('action'), $form.serialize(), function(response){
+        google.maps.event.removeListener(renderPolygonListener);
+        renderPolygonListener = null;
+      });
+
+    });
+
+function initDrawingMode(map, $map) {
+
+  $map.toggleClass('editing-mode');
+
+  map.setOptions({draggableCursor:'crosshair'});
+
+  if (renderPolygonListener) return;
+
+  polygonPath = [];
+
+  polygon = new google.maps.Polygon({
+    paths: [],
+    strokeColor: "#FF0000",
+    strokeOpacity: 0.8,
+    strokeWeight: 3,
+    fillColor: "#FF0000",
+    fillOpacity: 0.35
+  });
+
+  polygon.setMap(map);
+
+  renderPolygonListener = google.maps.event.addListener(map, 'click', function(e){
+    polygonPath.push(e.latLng);
+    polygon.setPath(polygonPath);
+  });
+}
 
   $("nav .map.ajax").on("click", function(e) {
     e.preventDefault();
@@ -153,9 +227,6 @@ function initialize() {
 $(function(){
 
   var
-  renderPolygonListener = null,
-  polygon               = null,
-  polygonPath           = [],
   resizePID;
 
   $(document).keyup(function(e) {

@@ -436,6 +436,24 @@ a.close_icon {
 
   .header .inner { padding: 40px 45px; }
 
+  .remove {
+    position:absolute;
+    top: 150px;
+    right: 25px;
+    z-index:1000;
+
+    display:block;
+  }
+
+  a.close_icon {
+    width: 8px;
+    height: 8px;
+    position:absolute;
+    right: 20px;
+    top: 15px;
+    background-image:url(icons/close_icon.png);
+  }
+
   .header {
     height: 132px;
     top: 9px;
@@ -456,10 +474,9 @@ a.close_icon {
         font-size:15px;
       }
     }
+  } // header
 
-  }
-
-  #map {
+  .map {
     position: absolute;
     top: 141px;
     height:291px;
@@ -472,9 +489,8 @@ a.close_icon {
     height: 120px;
 
     .input-field { position:relative; left: 50px; top: 30px; }
-    .btn { position:relative; top: 40px; left: 80px; }
+    .btn { position:relative; top: 30px; left: 80px; }
   }
-
 }
 
 .details {
@@ -628,21 +644,6 @@ a.close_icon {
       height:36px;
     }
   }
-
-
-
-}
-
-#map-container .save-area {
-  display: none;
-}
-
-#map-container.editing-mode .draw-area {
-  display: none;
-}
-
-#map-container.editing-mode .save-area {
-  display: inline;
 }
 
 // Forms

@@ -1,9 +1,6 @@
 class AreasController < ApplicationController
 
   def create
-    logger.info "*****"
-    logger.info params[:area]
-    logger.info "*****"
     area = Area.new params[:area]
     area.save
 

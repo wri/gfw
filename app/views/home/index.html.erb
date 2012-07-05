@@ -12,8 +12,9 @@ end %>
 <% end %>
 
 <%= render "common/map" %>
+<%= render "common/subscribe" %>
 
-<div id="subscribe"></div>
+
 
 <div class="actions">
   <ul>
@@ -35,7 +36,7 @@ end %>
     <div class="icon"></div>
     <h2><%= t('.icons.keep_updated.title') %></h2>
     <p><%= t('.icons.keep_updated.text') %></p>
-    <%= link_to (content_tag :span, t('.icons.keep_updated.link')), {}, :class => "btn subscribe_link"%>
+    <%= link_to (content_tag :span, t('.icons.keep_updated.link')), {}, :class => "btn subscribe" %>
     </li>
   </ul>
 </div>
