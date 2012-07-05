@@ -93,7 +93,7 @@ GFW.modules.app = function(gfw) {
     close: function(callback) {
       var that = this;
 
-      $("#map").animate({height: 400 }, 250, function() {
+      $("#map").animate({ height: 400 }, 250, function() {
 
         google.maps.event.trigger(that._map, "resize");
         that._map.setOptions({ scrollwheel: false });

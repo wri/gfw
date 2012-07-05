@@ -42,18 +42,6 @@ body.demo {
 
     background:$cWhite;
 
-    h3 {
-      @extend .font-golden;
-      margin: 0 0 10px 20px;
-    }
-
-    h4 {
-      @extend .font-golden;
-      color:#333;
-      text-transform: none;
-      margin: 0 0 5px 0;
-    }
-
     .explanation {
       padding: 40px 20px;
 
@@ -72,11 +60,24 @@ body.demo {
     .demo {
       padding-top: 20px;
 
-      p {
+    & > h3 {
+      @extend .font-golden;
+      margin: 0 0 10px 20px;
+    }
+
+    & > h4 {
+      @extend .font-golden;
+      color:#333;
+      text-transform: none;
+      margin: 0 0 5px 0;
+    }
+
+    & >  p {
         padding: 0 0 10px 20px;
         font: normal 12px "Helvetica Neue", sans-serif;
         color:#333;
       }
+
 
       &.dark, &.dark .snippet { background: #DEE; }
       &.dark .snippet { border-bottom: 1px solid #fff; }

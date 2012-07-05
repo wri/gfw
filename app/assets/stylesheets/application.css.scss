@@ -357,9 +357,9 @@ body.countries {
 }
 
 a.close_icon {
-	width: 8px;
-	height: 8px;
-	display: inline-block;
+  width: 8px;
+  height: 8px;
+  display: inline-block;
   background-image:url(icons/close_icon.png);
 }
 
@@ -371,59 +371,110 @@ a.close_icon {
   z-index: 1050;
   background-image:url(backgrounds/bkg_share.png);
 
-	h2{
+  h2{
     @extend .serif;
     font-size: 35px;
     color: $cGray2;
-		width: 100%;
-		margin: 60px 0 0 0;
-		text-align: center;
-	}
+    width: 100%;
+    margin: 60px 0 0 0;
+    text-align: center;
+  }
 
-	p {
+  p {
     @extend .sans-serif;
     font-size:15px;
     font-weight:300;
     color: $cGray2;
     line-height:20px;
-		width: 100%;
-		margin: 5px 0 0 0;
-		text-align: center;
-	}
+    width: 100%;
+    margin: 5px 0 0 0;
+    text-align: center;
+  }
 
-	a.close_icon {
-		position: absolute;
-		top: 25px;
-		right: 25px;
-	}
+  a.close_icon {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+  }
 
-	.share_buttons {
-		border-top: 1px solid $cGray4;
-		width: 386px;
-		margin: 35px 14px 0 14px;
-		padding: 30px 0 0 0;
-		text-align: center;
+  .share_buttons {
+    border-top: 1px solid $cGray4;
+    width: 386px;
+    margin: 35px 14px 0 14px;
+    padding: 30px 0 0 0;
+    text-align: center;
 
-	  .share_button {
-			vertical-align:top;
-			width: 85px;
-			text-align: center;
-			display: inline-block;
-		}
+    .share_button {
+      vertical-align:top;
+      width: 85px;
+      text-align: center;
+      display: inline-block;
+    }
 
-	}
-
+  }
 }
 
 #subscribe {
+
   $height: 559px;
   $width: 767px;
+
   position:absolute;
   display:none;
   width: $width;
   height: $height;
   z-index: 1050;
-  background-image:url(subscribe_alert.png);
+  background-image:url(backgrounds/bg_subscribe.png);
+
+  position:relative;
+
+  &.show { display: block; }
+
+  .header, .footer {
+    @include absolute-left-center($width);
+  }
+
+  .header .inner { padding: 40px 45px; }
+
+  .header {
+    height: 132px;
+    top: 9px;
+
+    .inner {
+      h3 {
+        margin: 0 0 5px 0;
+        font-size: 35px;
+        @extend .serif;
+        color: #666666;
+      }
+
+      p {
+        margin: 0;
+        padding: 0;
+        @extend .sans-serif;
+        color: #999999;
+        font-size:15px;
+      }
+    }
+
+  }
+
+  #map {
+    position: absolute;
+    top: 141px;
+    height:291px;
+    width: 747px;
+    left: 10px;
+  }
+
+  .footer {
+    bottom: 10px;
+    height: 120px;
+
+    .input-field { position:relative; left: 50px; top: 30px; }
+    .btn { position:relative; top: 40px; left: 80px; }
+  }
+
 }
 
 .details {
@@ -961,7 +1012,7 @@ footer > .download {
   }
 }
 
-.charts { padding: 10px; }
+.charts { position:relative; padding: 10px; }
 .chart rect {
   fill: #75ADB5;
   stroke: white;
@@ -995,15 +1046,15 @@ footer > .download {
   }
 
   .amount { font-size:24px; color:#F2B357; text-align:center; }
-  .amount .text { margin: auto; padding: 0 5px; @include inline-block(); background:#fff; }
+  .amount .text { margin: auto; padding: 0 5px; @include inline-block(); }
 
   .title { color: #F2B357; font-size: 18px; text-align:center; @extend .serif; }
 
   .subtitle { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
-  .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; background:#fff; }
+  .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; }
 
   .graph_legend { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
-  .graph_legend .text { margin: auto; width: 140px; background:#fff; }
+  .graph_legend .text { margin: auto; width: 140px; }
 }
 
 .bars {
@@ -1034,13 +1085,13 @@ footer > .download {
   }
 
   .amount { font-size:20px; color:#75ADB5; text-align:center; }
-  .amount .text { margin: auto; padding: 0 5px; @include inline-block(); background:#fff; }
+  .amount .text { margin: auto; padding: 0 5px; @include inline-block(); }
 
   .title { color: #75ADB5; font-size: 18px; text-align:center; @extend .serif; }
 
   .subtitle { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
-  .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; background:#fff; }
+  .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; }
 
   .graph_legend { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
-  .graph_legend .text { margin: auto; width: 140px; background:#fff; }
+  .graph_legend .text { margin: auto; width: 140px; }
 }

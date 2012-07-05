@@ -2,14 +2,38 @@
   This is a test
 </div>
 
-<div class="demo">
+<div class="demo big">
   <h3>Legend</h3>
 
-  <%= snippet %(
-  <div class="control">
-    <a href="#" class="left"><span>Control 1</span></a>
-    <a href="#" class="right"><span>Control 2</span></a>
-  </div>) %>
+    <a href="#" class="subscribe">Subscribe</a>
+  <div id="subscribe">
+  <div class="header">
+  <div class="inner">
+    <h3>Subscribe to a forest change alert</h3>
+    <p>Click on the map to draw a polygon around the area where you are interested.</p>
+  </div>
+  </div>
+  <div id="map"></div>
+  <div class="footer">
+
+  <div class="inner">
+
+    <%= form_for :area, :url => areas_path, :html => {:method => :post, :class => 'save-area'} do |f| %>
+      <%= f.hidden_field :the_geom %>
+
+      <div class="input-field">
+        <input type="text" name="email" placeholder="Insert your email here" />
+      </div>
+
+      <a href="#" class="btn">
+        <span>Subscribe to this alert</span>
+      </a>
+    <% end -%>
+
+  </div>
+  </div>
+  </div>
+
 
   <%= snippet %(
 <div class="legend">
@@ -157,9 +181,11 @@
   </div>
 </div>
 
+<!--
 <div class="demo">
   <h3>Charts</h3>
-  <div id="bars" class="charts"></div>
-  <div class="circle lines charts"></div>
-  <div class="circle bars charts"></div>
+  <div id="bars c1" class="charts"></div>
+  <div id="c2" class="circle lines charts"></div>
+  <div id="c3" class="circle bars charts"></div>
 </div>
+-->

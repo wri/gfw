@@ -1084,14 +1084,22 @@ function addCircle(id, type, options) {
   });
 
   function addText(opt) {
-    graph.append("foreignObject")
-    .attr('x', opt.x)
-    .attr('y', opt.y)
-    .attr('width', opt.width)
-    .attr('height', opt.height)
-    .attr('class', opt.c)
-    .append("xhtml:div")
-    .html(opt.html)
+
+    //if (typeof SVGForeignObjectElement !== 'undefined')  {
+    // graph.append("foreignObject")
+    // .attr('x', opt.x)
+    // .attr('y', opt.y)
+    // .attr('width', opt.width)
+    // .attr('height', opt.height)
+    // .attr('class', opt.c)
+    // .append("xhtml:div")
+    // .html(opt.html)
+
+     var $div = $('<div class="texto '+opt.c+'">'+opt.html+'</div>');
+     $div.css({position:"absolute", top: opt.x, top:opt.y, "pointer-events":"none", width: width, height: height });
+     console.log(id);
+     $(".circle." + type).append($div);
+
   }
 
 
@@ -1106,7 +1114,6 @@ function addCircle(id, type, options) {
 
 
       var data = json.rows.slice(1, json.rows.length);
-
       var x = d3.scale.linear()
       .domain([0, data.length - 1])
       .range([0, width - 80]);

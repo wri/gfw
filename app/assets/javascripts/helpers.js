@@ -4,6 +4,15 @@ _.templateSettings = {
 
 };
 
+jQuery.fn.center = function () {
+    this.css("position","absolute");
+    this.css("top", Math.max(0, (($(window).height() - this.outerHeight()) / 2) +
+                                                $(window).scrollTop()) + "px");
+    this.css("left", Math.max(0, (($(window).width() - this.outerWidth()) / 2) +
+                                                $(window).scrollLeft()) + "px");
+    return this;
+}
+
 String.prototype.truncate = function(n) {
   return this.substr(0, n - 1 ) + ( this.length > n ? '...' : '' );
 };
