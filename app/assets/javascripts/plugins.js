@@ -1,3 +1,146 @@
+var SubscriptionMap = (function() {
+
+var
+subscribeMap,
+renderPolygonListener = null,
+polygon               = null,
+polygonPath           = [],
+zoomInit              = false;
+
+  function initSubscription() {
+    if (polygon) polygon.setMap(null);
+    renderPolygonListener = null,
+    $("#subscribe input").val("");
+  }
+
+  function remove() {
+    var $map = $("#subscribe").find(".map");
+    initSubscription();
+    initDrawingMode(subscribeMap, $map);
+  }
+
+  function submit() {
+    var
+    $map      = $("#subscribe_map"),
+    $form     = $("#subscribe form");
+    $the_geom = $form.find('#area_the_geom');
+
+    $map.toggleClass('editing-mode');
+    $the_geom.val(JSON.stringify({
+      "type": "MultiPolygon",
+      "coordinates": [
+        [
+          $.map(polygonPath, function(latlong, index) {
+            return [[latlong.lng(), latlong.lat()]];
+          })
+        ]
+      ]
+    }));
+
+    $.post($form.attr('action'), $form.serialize(), function(response){
+      google.maps.event.removeListener(renderPolygonListener);
+      renderPolygonListener = null;
+    });
+
+  }
+
+  function initDrawingMode(map, $map) {
+
+    $map.toggleClass('editing-mode');
+
+    map.setOptions({draggableCursor:'crosshair'});
+
+    if (renderPolygonListener) return;
+
+    polygonPath = [];
+
+    polygon = new google.maps.Polygon({
+      paths: [],
+      strokeColor: "#FF0000",
+      strokeOpacity: 0.8,
+      strokeWeight: 3,
+      fillColor: "#FF0000",
+      fillOpacity: 0.35
+    });
+
+    polygon.setMap(map);
+
+    renderPolygonListener = google.maps.event.addListener(map, 'click', function(e){
+      polygonPath.push(e.latLng);
+      polygon.setPath(polygonPath);
+    });
+  }
+
+  function setupZoom() {
+    if (zoomInit) return ;
+
+    var overlayID =  document.getElementById("zoom_controls_subscribe");
+    // zoomIn
+    var zoomInControlDiv = document.createElement('DIV');
+    overlayID.appendChild(zoomInControlDiv);
+
+    var zoomInControl = new zoomIn(zoomInControlDiv, map);
+    zoomInControlDiv.index = 1;
+
+    // zoomOut
+    var zoomOutControlDiv = document.createElement('DIV');
+    overlayID.appendChild(zoomOutControlDiv);
+
+    var zoomOutControl = new zoomOut(zoomOutControlDiv, map);
+    zoomOutControlDiv.index = 2;
+    zoomInit = true;
+  }
+
+  function zoomIn(controlDiv, map) {
+    controlDiv.setAttribute('class', 'zoom_in');
+
+    google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
+      var zoom = subscribeMap.getZoom() + 1;
+      if (zoom < 20) {
+        subscribeMap.setZoom(zoom);
+      }
+    });
+  }
+
+  function zoomOut(controlDiv, map) {
+    controlDiv.setAttribute('class', 'zoom_out');
+
+    google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
+      var zoom = subscribeMap.getZoom() - 1;
+
+      if (zoom > 2) {
+        subscribeMap.setZoom(zoom);
+      }
+
+    });
+  }
+
+  function show() {
+    $("#content").append('<div class="backdrop" />');
+    $(".backdrop").fadeIn(250, function() {
+
+      var $map = $("#subscribe_map");
+
+      $("#subscribe").center();
+      $("#subscribe").fadeIn(250, function() {
+
+        // Initialise the google map
+        subscribeMap = new google.maps.Map(document.getElementById("subscribe_map"), config.mapOptions);
+        initSubscription();
+        initDrawingMode(subscribeMap, $map);
+        setupZoom();
+
+      });
+    });
+  }
+
+  return {
+    show: show,
+    remove: remove,
+    submit: submit
+  };
+
+}());
 
 var Navigation = (function() {
 

@@ -541,7 +541,8 @@ $timelineWidth: 947px;
   @extend .disable-selection;
 }
 
-#zoom_controls {
+#zoom_controls,
+#zoom_controls_subscribe {
 
   $zoomWidth: 36px;
   $zoomHeight: 29px; // height of the top button + border line
