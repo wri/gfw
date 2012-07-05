@@ -5,6 +5,7 @@
     <a href="/" class="logo">Global Forest Watch 2.0</a>
     <ul>
       <li><%= link_to t('layouts.application.header.share_this'), "#", :class => 'share_link' %></li>
+      <li><a href="javascript:UserVoice.Popin.show(uservoiceOptions);" title="Open feedback & support dialog (powered by UserVoice)" class="selector">FEEDBACK</a></li>
       <li><%= link_to t('layouts.application.header.other_wri_sites'), "http://wri.org", :class => :selector %></li>
     </ul>
   </div>
@@ -18,5 +19,28 @@
 
   <%= render "common/nav" %>
 </div>
+
+<script type="text/javascript">
+		var uservoiceOptions = {
+		  key: 'gfw2',
+		  host: 'gfw2.uservoice.com', 
+		  forum: '168140',
+		  showTab: false,  
+		  alignment: 'left',
+		  background_color:'#FF6600', 
+		  text_color: 'white',
+		  hover_color: '#C95000',
+		  lang: 'en'
+		};
+
+		function _loadUserVoice() {
+		  var s = document.createElement('script');
+		  s.setAttribute('type', 'text/javascript');
+		  s.setAttribute('src', ("https:" == document.location.protocol ? "https://" : "http://") + "cdn.uservoice.com/javascripts/widgets/tab.js");
+		  document.getElementsByTagName('head')[0].appendChild(s);
+		}
+		_loadSuper = window.onload;
+		window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
+</script>
 
 </header>

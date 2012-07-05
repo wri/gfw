@@ -70,9 +70,25 @@ TimePlayer.prototype.set_country_iso = function(country) {
 // get data from cartodb
 TimePlayer.prototype.sql = function(sql, callback) {
     var self = this;
-    $.getJSON(this.base_url  + "?q=" + encodeURIComponent(sql)+"&v="+this._version ,function(data){
-        callback(data);
-    });
+    var url = this.base_url  + "?q=" + encodeURIComponent(sql)+"&v="+this._version;
+    if($.browser.msie) {
+        $.ajax({
+            url: url, 
+            method: 'get',
+            dataType: 'jsonp',
+            error: function(e, t, ee) {
+                //console.log(e, t, ee);
+            },
+            success: function(data) {
+                console.log(data.rows.length);
+                callback(data);
+            }
+        });
+    } else {
+        $.getJSON(url ,function(data){
+            callback(data);
+        });
+    }
 };
 
 // precache data to render fast
@@ -82,7 +98,7 @@ TimePlayer.prototype.pre_cache_months = function(rows, coord, zoom, zoom_diff) {
     var ycoords;
     var deforestation;
 
-    if(typeof(ArrayBuffer) !== undefined) {
+    if(typeof(ArrayBuffer) !== "undefined") {
         xcoords = new Uint8Array(new ArrayBuffer(rows.length));
         ycoords = new Uint8Array(new ArrayBuffer(rows.length));
         deforestation = new Uint8Array(new ArrayBuffer(rows.length*MAX_MONTHS));// 256 months
