@@ -363,10 +363,82 @@ a.close_icon {
   background-image:url(icons/close_icon.png);
 }
 
+#analysis {
+  position:absolute;
+  display:none;
+  width: 719px;
+  height: 450px;
+  z-index: 1050;
+  background-image:url(backgrounds/bkg_analysis.png);
+
+  h2{
+    @extend .serif;
+    font-size: 35px;
+    color: $cGray2;
+    width: 100%;
+    margin: 50px 0 0 50px;
+    text-align: left;
+  }
+
+  p {
+    @extend .sans-serif;
+    font-size:15px;
+    font-weight:300;
+    color: $cGray2;
+    line-height:20px;
+    width: 170px;
+    margin: 30px 0 0 510px;
+    text-align: left;
+  }
+
+  a.close_icon {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+  }
+
+}
+
+#crowdsourcing {
+  position:absolute;
+  display:none;
+  width: 719px;
+  height: 493px;
+  z-index: 1050;
+  background-image:url(backgrounds/bkg_crowdsourcing.png);
+
+  h2{
+    @extend .serif;
+    font-size: 35px;
+    color: $cGray2;
+    width: 100%;
+    margin: 50px 0 0 50px;
+    text-align: left;
+  }
+
+  p {
+    @extend .sans-serif;
+    font-size:15px;
+    font-weight:300;
+    color: $cGray2;
+    line-height:20px;
+    width: 240px;
+    margin: 30px 0 0 430px;
+    text-align: left;
+  }
+
+  a.close_icon {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+  }
+
+}
+
 #share {
   position:absolute;
   display:none;
-  width: 414px;
+  width: 415px;
   height: 258px;
   z-index: 1050;
   background-image:url(backgrounds/bkg_share.png);

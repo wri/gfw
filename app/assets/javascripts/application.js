@@ -108,12 +108,42 @@ function initialize() {
     });
   });
 
+  $(".analysis").on("click", function(e) {
+    e.preventDefault();
+		
+    $("#content").append('<div class="backdrop" />');
+    $(".backdrop").fadeIn(250, function() {
+
+      var top = ( $(window).height() - $("#analysis").height() ) / 2+$(window).scrollTop() + "px",
+      left = ( $(window).width() - $("#analysis").width() ) / 2+$(window).scrollLeft() + "px";
+
+      $("#analysis").css({top: top, left:left});
+      $("#analysis").fadeIn(250);
+			
+    });
+  });
+
+  $(".crowdsourcing").on("click", function(e) {
+    e.preventDefault();
+		
+    $("#content").append('<div class="backdrop" />');
+    $(".backdrop").fadeIn(250, function() {
+
+      var top = ( $(window).height() - $("#crowdsourcing").height() ) / 2+$(window).scrollTop() + "px",
+      left = ( $(window).width() - $("#crowdsourcing").width() ) / 2+$(window).scrollLeft() + "px";
+
+      $("#crowdsourcing").css({top: top, left:left});
+      $("#crowdsourcing").fadeIn(250);
+			
+    });
+  });
+
   $(".close_icon").on("click", function(e) {
     e.preventDefault();
     $(".backdrop").fadeOut(250, function() {
       $(this).remove();
     });
-    $("#share, #subscribe").fadeOut(250);
+    $("#share, #subscribe, #analysis, #crowdsourcing").fadeOut(250);
   });
 
   $("#subscribe .map").on("click", function(e) {
