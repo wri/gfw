@@ -22,6 +22,8 @@ map           = null,
 previousState = null,
 subscribeMap;
 
+
+// Map init method
 function initialize() {
 
   var
@@ -108,12 +110,44 @@ function initialize() {
     });
   });
 
+  $(".analysis").on("click", function(e) {
+    e.preventDefault();
+
+    $("#content").append('<div class="backdrop" />');
+    $(".backdrop").fadeIn(250, function() {
+
+      var top = ( $(window).height() - $("#analysis").height() ) / 2+$(window).scrollTop() + "px",
+      left = ( $(window).width() - $("#analysis").width() ) / 2+$(window).scrollLeft() + "px";
+
+      $("#analysis").css({top: top, left:left});
+      $("#analysis").fadeIn(250);
+
+    });
+  });
+
+  $(".crowdsourcing").on("click", function(e) {
+    e.preventDefault();
+
+    $("#content").append('<div class="backdrop" />');
+    $(".backdrop").fadeIn(250, function() {
+
+      var top = ( $(window).height() - $("#crowdsourcing").height() ) / 2+$(window).scrollTop() + "px",
+      left = ( $(window).width() - $("#crowdsourcing").width() ) / 2+$(window).scrollLeft() + "px";
+
+      $("#crowdsourcing").css({top: top, left:left});
+      $("#crowdsourcing").fadeIn(250);
+
+    });
+  });
+
   $(".close_icon").on("click", function(e) {
     e.preventDefault();
     $(".backdrop").fadeOut(250, function() {
       $(this).remove();
     });
-    $("#share").fadeOut(250);
+
+    $("#share, #subscribe, #analysis, #crowdsourcing, #other_wri_sites").fadeOut(250);
+
   });
 
   $("#subscribe .map").on("click", function(e) {
@@ -122,6 +156,17 @@ function initialize() {
 
   $("#subscribe .input-field").on("click", function(e) {
     SubscriptionMap.clearEmailErrors();
+  });
+
+  $("#share, #subscribe, #analysis, #crowdsourcing, #other_wri_sites").on("click", function(e) {
+    e.stopPropagation();
+  });
+
+  $(".wri.selector").on("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    $("#other_wri_sites").fadeIn(250);
   });
 
   $(".subscribe").on("click", function(e) {
@@ -157,17 +202,44 @@ $(function(){
   var
   resizePID;
 
+  function hideOvers() {
+
+    if ($("#share:visible").length > 0) {
+      $("#share").fadeOut(250);
+      $(".backdrop").fadeOut(250);
+    }
+
+    if ($("#crowdsourcing:visible").length > 0) {
+      $("#crowdsourcing").fadeOut(250);
+      $(".backdrop").fadeOut(250);
+    }
+
+    if ($("#analysis:visible").length > 0) {
+      $("#analysis").fadeOut(250);
+      $(".backdrop").fadeOut(250);
+    }
+
+    if ($("#subscribe:visible").length > 0) {
+      $("#subscribe").fadeOut(250);
+      $(".backdrop").fadeOut(250);
+    }
+
+    if ($("#other_wri_sites:visible").length > 0) {
+      $("#other_wri_sites").fadeOut(250);
+    }
+  }
+
+  $(".backdrop").on("click", function(e) {
+    hideOvers();
+  });
+
+  $(document).on("click", function(e) {
+    hideOvers();
+  });
+
   $(document).keyup(function(e) {
     if (e.keyCode == 27) {
-      if ($("#share:visible").length > 0) {
-        $("#share").fadeOut(250);
-        $(".backdrop").fadeOut(250);
-      }
-      if ($("#subscribe:visible").length > 0) {
-        $("#subscribe").fadeOut(250);
-        $(".backdrop").fadeOut(250);
-      }
-
+      hideOvers();
     } // esc
   });
 
@@ -188,6 +260,5 @@ $(function(){
     addCircle("forest", "bars", { legendUnit: "m", countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"with {{n}} tall trees", hoverColor: "#427C8D", color: "#75ADB5", unit: "km<sup>2</sup>" });
     addCircle("forma", "lines", { countryCode: countryCode, width: 300, title: "FORMA", subtitle:"Forest clearing alerts", legend:"In the last month", hoverColor: "#F2B357", color: "#F2B357" });
   }
-
 
 });

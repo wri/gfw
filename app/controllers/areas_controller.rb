@@ -5,7 +5,7 @@ class AreasController < ApplicationController
     area.save
 
     respond_to do |format|
-      format.json { render :nothing => true }
+      format.js {   render( :json => ["OK"] ) }
     end
   end
 

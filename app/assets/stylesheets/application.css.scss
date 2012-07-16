@@ -35,6 +35,56 @@ header {
     z-index:1000;
   }
 
+  #other_wri_sites {
+    display:none;
+
+    width: 195px;
+    position:absolute;
+    right: -14px;
+    top: 10px;
+
+    background: #fff;
+
+    @include glow2(#000, 0.2);
+
+    z-index: 10000;
+
+    & > a  {
+      display:block;
+      border-bottom: 1px solid #ccc;
+      padding: 10px 15px;
+      text-align: right;
+
+      color: #75ADB5;
+      font-weight:bold;
+      font-size: 11px;
+      @extend .sans-serif;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    ul {
+      padding: 15px;
+
+      li {
+
+        margin: 0 0 3px 0;
+
+        a {
+          color: #CCC;
+          text-decoration: none;
+          font-size: 13px;
+          @extend .sans-serif;
+          &:hover {
+            color: #73ACB3;
+          }
+        }
+
+      }
+    }
+
+  }
+
   hgroup {
     position:relative;
     top: 52px;
@@ -75,7 +125,7 @@ header {
 
     background: $cTop;
 
-    ul {
+    .inner > ul {
 
       position:absolute;
       top: 15px;
@@ -104,7 +154,7 @@ nav {
   top: 47px;
   right: 10px;
 
-  ul {
+  & > ul {
 
     li {
 
@@ -363,10 +413,82 @@ a.close_icon {
   background-image:url(icons/close_icon.png);
 }
 
+#analysis {
+  position:absolute;
+  display:none;
+  width: 719px;
+  height: 450px;
+  z-index: 1050;
+  background-image:url(backgrounds/bkg_analysis.png);
+
+  h2{
+    @extend .serif;
+    font-size: 35px;
+    color: $cGray2;
+    width: 100%;
+    margin: 50px 0 0 50px;
+    text-align: left;
+  }
+
+  p {
+    @extend .sans-serif;
+    font-size:15px;
+    font-weight:300;
+    color: $cGray2;
+    line-height:20px;
+    width: 170px;
+    margin: 30px 0 0 510px;
+    text-align: left;
+  }
+
+  a.close_icon {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+  }
+
+}
+
+#crowdsourcing {
+  position:absolute;
+  display:none;
+  width: 719px;
+  height: 493px;
+  z-index: 1050;
+  background-image:url(backgrounds/bkg_crowdsourcing.png);
+
+  h2{
+    @extend .serif;
+    font-size: 35px;
+    color: $cGray2;
+    width: 100%;
+    margin: 50px 0 0 50px;
+    text-align: left;
+  }
+
+  p {
+    @extend .sans-serif;
+    font-size:15px;
+    font-weight:300;
+    color: $cGray2;
+    line-height:20px;
+    width: 240px;
+    margin: 30px 0 0 430px;
+    text-align: left;
+  }
+
+  a.close_icon {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+  }
+
+}
+
 #share {
   position:absolute;
   display:none;
-  width: 414px;
+  width: 415px;
   height: 258px;
   z-index: 1050;
   background-image:url(backgrounds/bkg_share.png);
@@ -420,13 +542,13 @@ a.close_icon {
   $width: 767px;
 
   position:absolute;
+
   display:none;
   width: $width;
   height: $height;
-  z-index: 1050;
   background-image:url(backgrounds/bg_subscribe.png);
 
-  position:relative;
+  z-index: 1050;
 
   &.show { display: block; }
 
@@ -437,22 +559,24 @@ a.close_icon {
   .header .inner { padding: 40px 45px; }
 
   .remove {
-    background: #fff;
-    position:absolute;
-    top: 146px;
-    right: 15px;
-    z-index:1000;
-
     display:none;
 
-    border: 1px solid #333;
+    position:absolute;
     padding: 7px 6px;
+    top: 146px;
+    right: 15px;
+
+    background: #fff;
+
+    border: 1px solid #333;
     text-transform: uppercase;
     color: #999999;
     font-size: 11px;
     font-weight:bold;
     text-decoration: none;
     @extend .sans-serif;
+
+    z-index:1000;
   }
 
   a.close_icon {
@@ -531,8 +655,6 @@ a.close_icon {
     bottom: 10px;
     height: 120px;
 
-    .input-field { position:relative; left: 50px; top: 30px; }
-
     .error_input_label {
       position:absolute;
       display:none;
@@ -562,7 +684,11 @@ a.close_icon {
     }
 
     .input-field.error input { color: red;}
-    .btn { position:relative; top: 30px; left: 80px; }
+    .input-field { position:absolute; width: 420px; top: 43px; left: 50px; }
+    .btn { position:absolute; top: 43px; right: 50px; }
+    .btn span { padding: 14px 32px 5px 27px; }
+    .btn.new { display: none; }
+    .ok { display:none; position:absolute; top: 54px; left: 50px; font-weight:normal; font-size: 21px; color: #fff; @extend .serif; }
   }
 }
 
@@ -754,15 +880,25 @@ a.close_icon {
 
   input[type="text"] {
     width:100%;
-    height:36px;
+    height:37px;
     margin: 0 0 0 7px;
-    padding: 0 7px 0 0;
+    padding: 0 7px 0 5px;
 
     font-size: 14px;
 
     background:url(backgrounds/bkg_form_input.png) repeat-x right -36px;
     border:none;
     outline:none;
+  }
+
+  &.big {
+    height: 42px;
+    background:url(backgrounds/bkg_form_input_big.png) no-repeat left 0;
+
+    input[type="text"] {
+      height:43px;
+      background:url(backgrounds/bkg_form_input_big.png) repeat-x right -42px;
+    }
   }
 }
 

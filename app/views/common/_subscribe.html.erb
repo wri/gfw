@@ -2,8 +2,8 @@
   <div class="header">
     <a href="#" class="close_icon" class="close"></a>
     <div class="inner">
-      <h3>Subscribe to a forest change alert</h3>
-      <p>Click on the map to draw a polygon around the area where you are interested.</p>
+      <h3>Subscribe to an area of interest</h3>
+      <p>You will receive new alerts by email when we detect forest clearing on this area</p>
     </div>
   </div>
 
@@ -21,15 +21,21 @@
       <%= form_for :area, :url => areas_path, :html => {:method => :post, :class => 'save-area'} do |f| %>
         <%= f.hidden_field :the_geom %>
 
-        <div class="input-field">
+        <div class="ok">You have been subscribed to the defined area.</div>
+        <div class="input-field big">
           <input type="text" name="area[email]" placeholder="Insert your email here" />
           <div class="icon error"></div>
           <div class="error_input_label"></div>
         </div>
 
-        <a href="#" class="btn">
+        <a href="#" class="btn create">
           <span>Subscribe to this alert</span>
         </a>
+
+        <a href="#" class="btn new">
+          <span>Define new alert</span>
+        </a>
+
       <% end -%>
     </div>
   </div>

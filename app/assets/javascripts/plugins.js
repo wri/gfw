@@ -119,7 +119,6 @@ var SubscriptionMap = (function() {
 
   }
 
-
   function remove() {
     clearErrors();
     deleteSelectedShape();
@@ -131,6 +130,7 @@ var SubscriptionMap = (function() {
   function submit() {
 
     clearErrors();
+
     var error = false;
 
     if (!validateEmail($input.find("input").val())) {
@@ -141,8 +141,6 @@ var SubscriptionMap = (function() {
 
       error = true;
     }
-
-    console.log(drawingManager.path);
 
     if (!drawingManager.path) {
       $modal.find(".error_box").html("Please, draw a polygon around the area you are interested in");
@@ -170,10 +168,27 @@ var SubscriptionMap = (function() {
       ]
     }));
 
-    $.post($form.attr('action'), $form.serialize(), function(response){
-      google.maps.event.removeListener(renderPolygonListener);
-      renderPolygonListener = null;
-    });
+    $.ajax({ type: 'POST', url: $form.attr('action'), data: $form.serialize(),
+
+      dataType: 'json',
+      success: function( data, status ){
+
+        $form.find(".btn.create, .input-field").fadeOut(250, function() {
+
+          $form.find(".input-field input").val("");
+
+          $form.find(".btn.new").fadeIn(250);
+          $form.find(".ok").fadeIn(250);
+
+          $modal.find(".remove").fadeOut(250);
+          deleteSelectedShape();
+          clearSelection();
+
+        });
+
+      }
+
+    })
 
   }
 
@@ -245,8 +260,14 @@ var SubscriptionMap = (function() {
       remove();
     });
 
-    $modal.find('.btn').off("click");
-    $modal.find('.btn').on("click", function(e){
+    $modal.find('.btn.new').off("click");
+    $modal.find('.btn.new').on("click", function(e){
+      e.preventDefault();
+      restart();
+    });
+
+    $modal.find('.btn.create').off("click");
+    $modal.find('.btn.create').on("click", function(e){
       e.preventDefault();
       submit();
     });
@@ -265,7 +286,27 @@ var SubscriptionMap = (function() {
     });
   }
 
+  function restart() {
+    var $form     = $("#subscribe form");
+    $form.find(".ok").fadeOut(250);
+    $modal.find(".remove").fadeOut(250);
+    $form.find(".btn.new").fadeOut(250);
+    $form.find(".btn.create").fadeIn(250);
+    $form.find(".input-field input").val("");
+    $form.find(".input-field").fadeIn(250);
+    deleteSelectedShape();
+    clearSelection();
+    initialize();
+  }
+
   function show() {
+
+    $modal.find(".ok").hide();
+    $modal.find(".btn.create").show();
+    $modal.find(".input-field").show();
+    $modal.find(".btn.new").hide();
+    $modal.find(".remove").hide();
+
     $("#content").append('<div class="backdrop" />');
     $(".backdrop").fadeIn(250, function() {
 
@@ -730,7 +771,6 @@ var Filter = (function() {
 
       if (!disabled) { // click binding
         $layerItem.find("a:not(.source)").on("click", function() {
-          console.log($(this));
           clickEvent();
           zoomEvent();
         });
@@ -1407,13 +1447,7 @@ function addCircle(id, type, options) {
     .append("xhtml:div")
     .html(opt.html)
 
-    /*var $div = $('<div class="texto '+opt.c+'">'+opt.html+'</div>');
-    $div.css({position:"absolute", top: opt.x, top:opt.y, "pointer-events":"none", width: width, height: height });
-    console.log(id);
-    $(".circle." + type).append($div);
-    */
   }
-
 
   // Content selection: lines or bars
   if (type == 'lines') {
