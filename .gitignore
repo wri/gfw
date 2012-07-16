@@ -3,5 +3,4 @@
 /db/*.sqlite3
 /log/*.log
 /tmp
-config/cartodb_config.development.*
-config/cartodb_config.test.*
+config/cartodb_config.*
