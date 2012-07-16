@@ -45,7 +45,7 @@ header {
 
     background: #fff;
 
-    @include glow2(#000, 0.2);
+    @include dark-glow(0.2);
 
     z-index: 10000;
 
