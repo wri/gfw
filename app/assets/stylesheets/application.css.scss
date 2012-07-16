@@ -656,6 +656,14 @@ a.close_icon {
   .footer {
     bottom: 10px;
     height: 120px;
+    .inner {
+      border-top: 1px solid #5E8A91;
+      height: 118px;
+      width: 749px;
+      margin-left: 9px;
+      margin-top: 3px;
+
+    }
 
     .error_input_label {
       position:absolute;
