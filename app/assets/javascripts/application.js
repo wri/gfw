@@ -113,7 +113,7 @@ function initialize() {
     $(".backdrop").fadeOut(250, function() {
       $(this).remove();
     });
-    $("#share, #subscribe").fadeOut(250);
+    $("#share").fadeOut(250);
   });
 
   $("#subscribe .map").on("click", function(e) {
