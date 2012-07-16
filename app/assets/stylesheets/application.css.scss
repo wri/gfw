@@ -37,7 +37,6 @@ header {
 
   #other_wri_sites {
     display:none;
-
     width: 195px;
     position:absolute;
     right: -14px;
@@ -73,7 +72,7 @@ header {
         margin: 0 0 3px 0;
 
         a {
-          color: #CCC;
+          color: #999;
           text-decoration: none;
           font-size: 13px;
           @extend .sans-serif;
