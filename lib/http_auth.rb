@@ -1,4 +1,4 @@
-module Gfw
+#module Gfw
 
   #module HttpAuth
     #DEMO_USER = {'gfw' => 'gfw'}
@@ -17,4 +17,4 @@ module Gfw
 
   #end
 
-end
+#end
