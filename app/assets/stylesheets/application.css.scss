@@ -68,6 +68,8 @@ header {
 
       li {
 
+        @include icons-sprite(bullet_square, $offset-y: 7px);
+        padding: 0 0 0 7px;
         margin: 0 0 3px 0;
 
         a {

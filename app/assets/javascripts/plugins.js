@@ -55,15 +55,15 @@ var SubscriptionMap = (function() {
   }
 
   function clearEmailErrors() {
-    $input.find(".icon.error").hide();
+    $input.find(".icon.error").fadeOut(250);
     $input.removeClass("error");
-    $input.find(".error_input_label").hide();
+    $input.find(".error_input_label").fadeOut(250);
     $input.find(".error_input_label").html("");
   }
 
 
   function clearMapErrors() {
-    $modal.find(".error_box").hide();
+    $modal.find(".error_box").fadeOut(250);
     $modal.find(".error_box").html("");
   }
 
