@@ -1,3 +1,4 @@
 bundle exec rake assets:precompile
 git commit -av -m 'Adding precompiled assets for deploy'
 git push heroku master
+rm -rf public/assets
