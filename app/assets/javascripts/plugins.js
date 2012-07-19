@@ -1119,7 +1119,8 @@ var Timeline = (function() {
   animationPid   = null,
   animationDelay = 500,
   animationSpeed = 120,
-  advance        = "8px",
+  step           = 8, // distance between the points/months
+  advance        = step + "px",
   playing        = false,
   instance       = null,
   dates = [
@@ -1165,7 +1166,7 @@ var Timeline = (function() {
     }
 
     if (playing) {
-      advance = "8px";
+      advance = step + "px";
       _animate();
     } else {
       _stopAnimation(true);
@@ -1245,7 +1246,7 @@ var Timeline = (function() {
 
   function _changeDate(pos, date) {
     var
-    monthPos = Math.round( ( -1 * date[0] + pos) / 8),
+    monthPos = Math.round( ( -1 * date[0] + pos) / step),
     month    = config.MONTHNAMES_SHORT[monthPos];
 
     console.log(monthPos, pos, date);
