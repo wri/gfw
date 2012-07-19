@@ -381,6 +381,7 @@ GFW.modules.app = function(gfw) {
         window.time_layer = this.time_layer;
         map.overlayMapTypes.setAt(0, this.time_layer);
         Timeline.bind('change_date', function(date, month_number) {
+            //month_number = Math.min(month_number, 147);
             self.time_layer.set_time(month_number);
         });
       } else if (this.currentBaseLayer === "annual") {

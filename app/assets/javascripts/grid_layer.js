@@ -4,7 +4,7 @@
  ====================
 */
 
-var MAX_MONTHS = 128;
+var MAX_MONTHS = 147;
 var BASE_MONTH = 71;
 
 function TimePlayer(table,version,cloudfront_url) {
