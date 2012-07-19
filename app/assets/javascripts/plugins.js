@@ -1123,17 +1123,19 @@ var Timeline = (function() {
   playing        = false,
   instance       = null,
   dates = [
-    [0,  110, 2006],
-    [120, 140, null],
-    [150, 260, 2007],
-    [270, 290, null],
-    [300, 410, 2008],
-    [420, 440, null],
-    [450, 560, 2009],
-    [570, 590, null],
-    [600, 710, 2010],
-    [720, 740, null],
-    [750, 860, 2011]
+    [0,   86, 2006],
+    [94, 118, null],
+    [126, 214, 2007],
+    [222, 246, null],
+    [254, 342, 2008],
+    [350, 376, null],
+    [384, 470, 2009],
+    [478, 502, null],
+    [510, 600, 2010],
+    [606, 632, null],
+    [640, 728, 2011],
+    [736, 760, null],
+    [768, 856, 2012]
   ];
 
   function _togglePlayState() {
@@ -1163,7 +1165,7 @@ var Timeline = (function() {
     }
 
     if (playing) {
-      advance = "10px";
+      advance = "8px";
       _animate();
     } else {
       _stopAnimation(true);
@@ -1243,8 +1245,11 @@ var Timeline = (function() {
 
   function _changeDate(pos, date) {
     var
-    monthPos = ( -1 * date[0] + pos) / 10,
+    monthPos = Math.round( ( -1 * date[0] + pos) / 8),
     month    = config.MONTHNAMES_SHORT[monthPos];
+
+    console.log(monthPos, pos, date);
+
     $handle.find("div").html("<strong>" + month + "</strong> " + date[2]);
     // year 2000 is base year
     instance.trigger('change_date', date, monthPos + (date[2] - 2000)*12);
@@ -1254,6 +1259,7 @@ var Timeline = (function() {
     _.each(dates, function(date, j) {
 
       if (pos >= date[0] && pos <= date[1]) {
+
 
         if ( date[2] ) {
 
@@ -1320,6 +1326,7 @@ var Timeline = (function() {
       axis: "x",
       drag: function() {
         var left = $(this).position().left;
+        console.log("-", left);
         _setDate(left);
 
         if (playing) {
