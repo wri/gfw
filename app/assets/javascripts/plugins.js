@@ -1136,7 +1136,8 @@ var Timeline = (function() {
     [606, 632, null],
     [640, 728, 2011],
     [736, 760, null],
-    [768, 856, 2012]
+    [768, 792, 2012],
+    [800, 856, null]
   ];
 
   function _togglePlayState() {
@@ -1198,7 +1199,7 @@ var Timeline = (function() {
 
       $handle.animate({ left: "+=" + advance }, animationSpeed, "easeInExpo", function() {
 
-        if ($handle.position().left >= dates[dates.length - 1][1]) {
+        if ($handle.position().left >= dates[dates.length - 1][1] || $handle.position().left == dates[dates.length - 1][0] ) {
           _stopAnimation(true);
           _setDate($handle.position().left);
         }
@@ -1215,6 +1216,8 @@ var Timeline = (function() {
   function _gotoDate(e) {
     e.preventDefault();
     e.stopPropagation();
+
+    if ($(this).parent().hasClass("disabled")) return;
 
     var
     year     = parseInt($(this).text(), 10),

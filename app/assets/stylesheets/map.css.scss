@@ -504,6 +504,8 @@ $timelineWidth: 940px;
 
   li {
 
+    &.disabled a {color: #ccc; }
+
     @include inline-block();
     height: 20px;
     margin: 0 120px 0 0;
@@ -538,7 +540,7 @@ $timelineWidth: 940px;
   position:absolute;
   width:$timelineWidth + 2px;
   height:52px;
-  background:url(backgrounds/bkg_timeline_dots_full.png) no-repeat 41px 24px;
+  background:url(backgrounds/bkg_timeline_dots.png) no-repeat 41px 24px;
   @extend .disable-selection;
 }
 
