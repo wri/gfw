@@ -294,9 +294,12 @@ body.sources {
       margin: 0 0 35px 0;
       padding: 0 0 18px 0;
 
-      h1 a {
-        font-size:29px;
-        color:$cGray1;
+      h1 {
+				margin: 0 0 30px 0;				
+				a {
+        	font-size:29px;
+        	color:$cGray1;
+				}
       }
 
       .footer {
@@ -318,13 +321,18 @@ body.sources {
         @extend .sans-serif;
 
         strong {
-          color: $cGray3;
+          color: $cGray2;
           font-size:12px;
           font-weight:bold;
           text-transform: uppercase;
         }
 
         a {
+					color: $cGold;
+					text-decoration: none;
+        }
+
+        a.download {
           @extend .font-golden;
           padding-left: 7px;
           background:url(icons/square.png) no-repeat left 6px;
@@ -332,10 +340,19 @@ body.sources {
 
         p {
           margin: 7px 0 0 0;
+          font-size:15px;
+          color:$cGray2;
+          line-height:20px;
+        }
+
+        p.credits {
+          margin: 7px 0 0 0;
           font-size:13px;
-          color:$cGray3;
+          color:$cGray4;
           line-height:16px;
         }
+
+
       }
     } // article
   } // section
