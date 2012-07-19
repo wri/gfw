@@ -1249,9 +1249,8 @@ var Timeline = (function() {
     monthPos = Math.round( ( -1 * date[0] + pos) / step),
     month    = config.MONTHNAMES_SHORT[monthPos];
 
-    console.log(monthPos, pos, date);
-
     $handle.find("div").html("<strong>" + month + "</strong> " + date[2]);
+
     // year 2000 is base year
     instance.trigger('change_date', date, monthPos + (date[2] - 2000)*12);
   }
@@ -1327,7 +1326,6 @@ var Timeline = (function() {
       axis: "x",
       drag: function() {
         var left = $(this).position().left;
-        console.log("-", left);
         _setDate(left);
 
         if (playing) {
