@@ -427,7 +427,7 @@
 * TIMELINE
 */
 
-$timelineWidth: 947px;
+$timelineWidth: 945px;
 
 .timeline  {
   position:absolute;
@@ -508,12 +508,13 @@ $timelineWidth: 947px;
     height: 20px;
     margin: 0 120px 0 0;
 
-    &:nth-child(1) { margin-left: 10px; margin-right: 122px; }
-    &:nth-child(2) { margin-right: 122px; }
-    &:nth-child(3) { margin-right: 122px; }
-    &:nth-child(4) { margin-right: 123px; }
-    &:nth-child(5) { margin-right: 120px; }
-    &:nth-child(6) { margin-left: 3px; margin-right: 121px; }
+    &:nth-child(1) { margin-left: 10px; margin-right: 100px; }
+    &:nth-child(2) { margin-right: 99px; }
+    &:nth-child(3) { margin-right: 101px; }
+    &:nth-child(4) { margin-right: 100px; }
+    &:nth-child(5) { margin-right: 101px; }
+    &:nth-child(6) { margin-right: 97px; }
+    &:nth-child(7) { margin-left: 3px; margin-right: 98px; }
 
     a {
       font: normal 10px "Futura", sans-serif;

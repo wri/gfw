@@ -1119,7 +1119,7 @@ var Timeline = (function() {
   animationPid   = null,
   animationDelay = 500,
   animationSpeed = 120,
-  advance        = "10px",
+  advance        = "8px",
   playing        = false,
   instance       = null,
   dates = [
@@ -1316,7 +1316,7 @@ var Timeline = (function() {
 
     $handle.draggable({
       containment: "parent",
-      grid: [10, 0],
+      grid: [8, 0],
       axis: "x",
       drag: function() {
         var left = $(this).position().left;
