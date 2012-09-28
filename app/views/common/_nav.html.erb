@@ -1,8 +1,8 @@
 <nav>
 <ul>
-  <% %w(home countries map blog sources about).each do |option| %>
+  <% %w(home countries stories map blog sources about).each do |option| %>
     <%
-      paths    = { "home" => root_path, "countries" => countries_path, "blog" => "http://gfw20.tumblr.com", "map" => map_path, "sources" => sources_path, "about" => about_path }
+      paths    = { "home" => root_path, "countries" => countries_path, "stories" => stories_path, "blog" => "http://gfw20.tumblr.com", "map" => map_path, "sources" => sources_path, "about" => about_path }
       path     = paths[option]
       option_class = request.path == path ? "selected" : ""
 
@@ -13,7 +13,7 @@
 
       option_class = "#{option_class} #{option}"
 
-      option_class = "#{option_class} ajax" if ((controller_name == 'home') && (option == "home" || option == "map")) 
+      option_class = "#{option_class} ajax" if ((controller_name == 'home') && (option == "home" || option == "map"))
     %>
 
     <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.' + option))), path, :class => option_class %></li>

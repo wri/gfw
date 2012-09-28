@@ -3,6 +3,8 @@ Gfw::Application.routes.draw do
   resources :areas
   resources :posts
   resources :sources
+  resources :stories
+  resources :media
 
   match 'blog'  => 'posts#index'
   match 'about' => 'static#about'

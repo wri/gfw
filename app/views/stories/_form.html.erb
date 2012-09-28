@@ -1,0 +1,44 @@
+<%= form_for :story, :url => @url do |f| %>
+  <div>
+    <%= f.label      :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label      :the_geom %>
+    <div id="affected_area">
+    </div>
+  </div>
+
+  <div>
+    <%= f.label      :when_did_it_happen %>
+    <%= f.text_field :when_did_it_happen %>
+  </div>
+
+  <div>
+    <%= f.label      :details %>
+    <%= f.text_field :details %>
+  </div>
+
+  <div>
+
+  </div>
+
+  <div>
+    <%= f.label      :your_name %>
+    <%= f.text_field :your_name %>
+  </div>
+
+  <div>
+    <%= f.submit :submit_story %>
+  </div>
+
+<% end %>
+
+<%= form_for :media, :url => @media_url do |f| %>
+  <div>
+    <%= f.label      :image %>
+    <%= f.file_field :image %>
+  </div>
+  <%= f.submit %>
+<% end %>

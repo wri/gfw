@@ -4,6 +4,10 @@ gem 'rails', '~> 3.2.3'
 
 gem 'cartodb-rb-client', '>= 0.4.0'
 
+gem 'carrierwave'
+gem 'rmagick'
+gem 'fog'
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
@@ -18,9 +22,9 @@ gem 'jquery-rails'
 
 group :development do
   gem 'heroku'
-  #gem 'ruby-debug' # for ruby 1.8.7+    
+  #gem 'ruby-debug' # for ruby 1.8.7+
   #gem 'ruby-debug19' # for ruby 1.9.2+
-  #gem 'debugger'
+  gem 'debugger'
 end
 
 group :development, :test do

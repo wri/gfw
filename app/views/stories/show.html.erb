@@ -1,0 +1,27 @@
+<h5><%= t('.forest_cleaning_stories') %></h5>
+<div class="story">
+
+  <div class="header">
+    <h1><%= @story.title %></h1>
+    <span><%= @story.when_did_it_happen %></span>
+    <% if @story.when_did_it_happen.present? %>
+    <span>&middot;</span>
+    <% end %>
+    <span><%= @story.your_name %></span>
+  </div>
+
+
+  <ul class="gallery">
+    <% @story.media.each do |media| %>
+    <li>
+      render_media(media)
+    </li>
+    <% end %>
+  </ul>
+
+  <div class="details">
+    <%= simple_format @story.details %>
+  </div>
+
+</div>
+

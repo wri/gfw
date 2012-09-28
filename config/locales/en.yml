@@ -21,7 +21,7 @@ en:
       footer:
         download:
           title: 'Browse forest data <a href="%{url}">by country</a>.'
-          title2: 'Interested in data? <a href="%{url}">Download it</a>.'          
+          title2: 'Interested in data? <a href="%{url}">Download it</a>.'
           data_html: 'You can also <a href="%{url}" class="icon download">download all our data</a>.'
   blog:
     read_more: "Read more"
@@ -72,7 +72,7 @@ en:
       supporters_providers: 'Supporters & data providers'
       website_team: 'Website team'
       contact_us: 'Contact us'
-        
+
   countries:
     show:
       detail:
@@ -85,3 +85,14 @@ en:
       blog_posts:
         title: '%{country} Blog Stories'
         more: 'more'
+
+  stories:
+    form:
+      title: 'Title'
+      the_geom: 'Affected Area'
+      when: 'When did it happen'
+      details: 'Details'
+      your_name: 'Your name'
+      submit_story: 'Submit Story'
+      image: 'Media'
+

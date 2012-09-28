@@ -1,0 +1,30 @@
+<ul class="featured">
+  <% @featured.each do |story| %>
+    <li class="<%= cycle('left', 'right') %>">
+      <%= image_tag story.main_thumbnail.try(:url) %>
+      <h3><%= story.title %></h3>
+      <p><%= story.details %></p>
+      <%= link_to t('.read_more'), story %>
+    </li>
+  <% end %>
+</ul>
+
+<div class="pagination">
+  <%= link_to t('.previous'), '#' %>
+  <%= link_to t('.next'), '#' %>
+</div>
+
+<div class="more_stories">
+  <h3><%= t('.more_stories') %></h3>
+  <p>
+    <%= t('.browse_or_submit', :browse_link => link_to(t('.browse'), '#'), :submit_link => link_to(t('.submit'), '#')) %>
+  </p>
+  <ul>
+    <% @stories.each do |story| %>
+      <li>
+        <%= image_tag story.main_thumbnail.try(:url) %>
+      </li>
+    <% end %>
+  </ul>
+  <%= link_to t('.submit'), new_story_path %>
+</div>
