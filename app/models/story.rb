@@ -5,6 +5,7 @@ class Story < CartoDB::Model::Base
   field :when_did_it_happen
   field :details
   field :your_name
+  field :your_email
   field :featured, :type => 'boolean'
   field :visible,  :type => 'boolean'
   field :token

@@ -30,6 +30,11 @@
   </div>
 
   <div>
+    <%= f.label      :your_email %>
+    <%= f.text_field :your_email %>
+  </div>
+
+  <div>
     <%= f.submit :submit_story %>
   </div>
 
@@ -40,5 +45,6 @@
     <%= f.label      :image %>
     <%= f.file_field :image %>
   </div>
-  <%= f.submit %>
+
+  <%= story_submit_button(f, @story) %>
 <% end %>

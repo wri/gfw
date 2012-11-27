@@ -1,10 +1,7 @@
 
 cartodb_config = {
-  'host'         => ENV['CARTODB_HOST'] || 'https://ferdev.cartodb.com',
-  'oauth_key'    => ENV['CARTODB_OAUTH_KEY'],
-  'oauth_secret' => ENV['CARTODB_OAUTH_SECRET'],
-  'username'     => ENV['CARTODB_USERNAME'],
-  'password'     => ENV['CARTODB_PASSWORD']
+  'host'    => ENV['CARTODB_HOST'] || 'https://ferdev.cartodb.com',
+  'api_key' => ENV['CARTODB_OAUTH_KEY']
 }
 
 config_file_path = Rails.root.join("config/cartodb_config.#{Rails.env}.yml")
