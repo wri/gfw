@@ -1136,8 +1136,8 @@ var Timeline = (function() {
     [606, 632, null],
     [640, 728, 2011],
     [736, 760, null],
-    [768, 792, 2012],
-    [800, 856, null]
+    [768, 832, 2012],
+    [840, 856, null]
   ];
 
   function _togglePlayState() {

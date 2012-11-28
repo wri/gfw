@@ -28,7 +28,7 @@ String.prototype.truncate = function(n) {
 var config = {
   ZOOM:               5,
   MINZOOM:            3,
-  MAXZOOM:            16,
+  MAXZOOM:            17,
   LAT:                3,
   LNG:                120,
   MONTHNAMES:         ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],

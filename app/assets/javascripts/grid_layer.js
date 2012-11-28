@@ -4,7 +4,7 @@
  ====================
 */
 
-var MAX_MONTHS = 147;
+var MAX_MONTHS = 152;
 var BASE_MONTH = 71;
 
 function TimePlayer(table,version,cloudfront_url) {
@@ -71,6 +71,7 @@ TimePlayer.prototype.set_country_iso = function(country) {
 TimePlayer.prototype.sql = function(sql, callback) {
     var self = this;
     var url = this.base_url  + "?q=" + encodeURIComponent(sql)+"&v="+this._version;
+    //console.log(url)
     if($.browser.msie) {
         $.ajax({
             url: url, 
