@@ -1,6 +1,7 @@
 class StoriesController < ApplicationController
 
   def index
+    @page = params[:page] || 1
     @featured = Story.where(:featured => true)
     @stories  = Story.all
   end

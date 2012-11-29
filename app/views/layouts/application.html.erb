@@ -8,7 +8,7 @@
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= csrf_meta_tags %>
   </head>
-  <body class="<%= controller.controller_name %>"<%= raw ' onload="initialize()"' if controller_name == 'maps' or controller_name == 'home' %>>
+  <body class="<%= controller_name %>"<%= raw ' onload="initialize()"' if %w(maps home).include?(controller_name) %>>
     <%= render "common/header" %>
 
     <div id="content">
@@ -17,14 +17,14 @@
     </div>
 
     <%= render "common/footer" %>
-    <%= yield :js %>
     <%= javascript_include_tag "application" %>
+    <%= yield :js %>
 
     <script type="text/javascript">
       <% if request.path.split("/")[1] == "map" %>
   var showMap = true;
       <% else %>
-  var showMap = false; 
+  var showMap = false;
      <% end %>
    </script>
  </body>

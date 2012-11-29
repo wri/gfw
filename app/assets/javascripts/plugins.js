@@ -451,6 +451,9 @@ var Navigation = (function() {
   }
 
   function _animateMap() {
+    if (skipMapAnimation) {
+      return;
+    }
     mapAnimationPID = setInterval(function() {
       map.panBy(-1, 0);
     }, mapAnimationInterval);

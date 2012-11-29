@@ -1,0 +1,298 @@
+@import "compass";
+@import "compass/reset";
+@import "helpers";
+@import "forms";
+
+body.stories {
+
+  header {
+    border-bottom: 1px solid $cGray4;
+    height: 235px;
+  }
+
+  #content { background: $cWhite; }
+  #content .inner { position:relative; width: 927px; margin: auto; }
+
+  h1 {
+    @extend .sans-serif;
+    font-size: 51px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .featured {
+    padding: 60px;
+
+    li {
+      margin-bottom: 20px;
+
+      img {
+        width: 276px;
+        height: 276px;
+      }
+
+      div {
+        @include inline-block();
+        width: 600px;
+
+        h2 {
+          margin: 0 0 12px 0;
+          @extend .serif;
+          font-size:29px;
+        }
+
+        p {
+          @extend .sans-serif;
+          font-size: 15px;
+          font-weight:400;
+          line-height: 1.2em;
+
+          color: $cGray1;
+          opacity:0.5;
+        }
+
+        a {
+          display: block;
+          margin: 10px 0;
+          @extend .sans-serif;
+          font-size: 12px;
+          font-weight: bold;
+          color: $cGreen1;
+          text-transform: uppercase;
+          text-decoration: none;
+        }
+      }
+
+      img, div { vertical-align: middle; }
+
+    }
+
+    .left {
+      text-align: left;
+
+      div { margin-left: 42px; }
+
+    }
+
+    .right {
+      text-align: right;
+
+      div { margin-right: 42px; }
+    }
+
+    .pagination {
+    }
+  }
+
+  .more_stories {
+    background-color: $cGray5;
+    height: 343px;
+    padding: 45px 0;
+    text-align: center;
+
+    .inner {
+
+      h1 {
+        margin: 0 0 12px 0;
+        @extend .serif;
+        font-size: 36px;
+        color: white;
+      }
+
+      p {
+        @extend .sans-serif;
+        font-size: 15px;
+        font-weight:400;
+        line-height: 1.2em;
+
+        color: $cGray6;
+        opacity:0.5;
+
+        a {
+          font-weight: bold;
+          text-decoration: none;
+          color: $cGreen1;
+        }
+      }
+
+      ul {
+        padding: 40px;
+
+        li {
+          @include inline-block();
+
+          img {
+            width: 117px;
+            height: 117px;
+            margin: 20px;
+          }
+
+        }
+
+      }
+
+      .submit {
+        @include inline-block();
+        padding: 10px 20px;
+        background-color: $cGreen1;
+        @extend .sans-serif;
+        font-size: 11px;
+        font-weight: bold;
+        color: white;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+    }
+
+  }
+
+  .story_form {
+
+    .inner {
+      position: relative;
+      padding: 50px 0;
+    }
+
+    .title {
+      padding: 50px 0;
+      border-bottom: 1px solid #CCCCCC;
+
+      h2 {
+        @extend .inner;
+        @extend .font-big;
+        padding: 0;
+        font-size: 36px;
+        color: black;
+      }
+    }
+
+    .input-field {
+      margin: 5px 0;
+      vertical-align: top;
+    }
+
+    .field {
+      margin: 0 0 30px;
+
+      &.media {
+
+        .thumbnails {
+          @include inline-block();
+          width: 588px;
+          margin: 5px 0;
+
+          .upload_picture {
+            @include inline-block();
+            background: transparent url('buttons/bkg_button_add_media.png') no-repeat center center;
+            width: 132px;
+            height: 78px;
+          }
+
+        }
+
+        .hint {
+          margin-left: 50px;
+        }
+      }
+
+      &.affected-area {
+
+        label, .map-help { display: inline; }
+
+        .map-help {
+          @extend .sans-serif;
+          font-size: 13px;
+          color: $cGray2;
+        }
+
+      }
+
+      #map-container {
+        width: 588px;
+        height: 293px;
+        background-color:black;
+
+        .map {
+          height: 293px;
+        }
+      }
+
+
+      .hint {
+        @include inline-block();
+        width: 284px;
+        margin-left: 372px;
+        @extend .sans-serif;
+        font-size: 15px;
+        color: $cGray2;
+        line-height: 1.2em;
+        vertical-align: top;
+      }
+
+      .optional {
+        width: 588px;
+
+        label, span { @include inline-block(); }
+
+        span {
+          float: right;
+          @extend .sans-serif;
+          font-size: 13px;
+          color: $cGray2;
+        }
+
+      }
+
+      input[type=submit] {
+        display:block;
+        background: transparent url('buttons/bkg_button_save_story.png') no-repeat center center;
+        border: 0 none;
+        width: 156px;
+        height: 40px;
+        @extend .sans-serif;
+        font-weight: bold;
+        color: white;
+        text-transform: uppercase;
+        text-decoration: none;
+        text-align: center;
+      }
+
+    }
+
+    aside {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 285px;
+
+      .title {
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid $cGray4;
+
+        h3 {
+          @extend .sans-serif;
+          font-weight: bold;
+          font-size:13px;
+          color: $cGray1;
+          text-transform: uppercase;
+        }
+
+      }
+
+      p {
+        @extend .sans-serif;
+        font-size: 15px;
+        color: $cGray2;
+        line-height: 1.1em;
+        padding-bottom: 20px;
+      }
+
+
+    }
+
+
+  }
+
+}

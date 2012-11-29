@@ -9,11 +9,7 @@ module StoriesHelper
   end
 
   def story_submit_button(form, story)
-    if story.new_record?
-      content_tag :div do
-        form.submit('Submit story')
-      end
-    else
+    if story.present?
       content_tag :div do
         raw [
           form.submit('Submit story'),
@@ -21,7 +17,15 @@ module StoriesHelper
           link_to('cancel', story_path(story))
         ].join
       end
+    else
+      content_tag :div do
+        form.submit('Submit story')
+      end
     end
+  end
+
+  def last_page?
+    false
   end
 
 end
