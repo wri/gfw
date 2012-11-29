@@ -5,11 +5,12 @@
 body.posts,
 body.static,
 body.sources,
+body.countries,
  {
 
   header {
     border-bottom: 1px solid #ccc;
-    height: 235px;
+    height: 195px;
   }
 
   #content { padding: 40px 0 0 0; background: $cWhite; }
@@ -256,8 +257,8 @@ body.static {
 
   header {
     hgroup {
-      width: 500px;
-      h1 { font-size:41px; }
+      width: 100%;
+      h1 { font-size:51px; }
     }
   }
 
@@ -287,6 +288,13 @@ body.static {
 } // body.static
 
 body.sources {
+
+  header {
+    hgroup {
+      width: 100%;
+      h1 { font-size:51px; }
+    }
+  }
 
   section {
     article {
@@ -328,7 +336,7 @@ body.sources {
         }
 
         a {
-					color: $cGold;
+					color: $cLime;
 					text-decoration: none;
         }
 
@@ -357,3 +365,18 @@ body.sources {
     } // article
   } // section
 } // body.sources
+
+body.countries {
+
+  header {
+    hgroup {
+      width: 100%;
+      h1 {
+        font-size:51px;
+        text-align: center;
+      }
+
+    }
+  }
+
+}

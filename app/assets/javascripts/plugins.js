@@ -1400,8 +1400,8 @@ function addCircle(id, type, options) {
   h                 = 100, // maxHeight
   legendUnit        = options.legendUnit || "",
   unit              = options.unit       || "",
-  color             = options.color      || "#75ADB5",
-  hoverColor        = options.hoverColor || "#427C8D",
+  color             = options.color      || "#333333",
+  hoverColor        = options.hoverColor || "#111111",
   radius            = width / 2,
   mouseOverDuration = 10,
   mouseOutDuration  = 700;

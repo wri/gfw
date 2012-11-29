@@ -34,7 +34,7 @@ header {
     height: 100px;
     left: -7px;
     text-indent: -99999px;
-    z-index:1000;
+
   }
 
   span.header_separator {
@@ -269,15 +269,10 @@ nav {
   @extend .actions;
 
   h3 {
-    margin: 0 0 20px 0;
-
-    @extend .sans-serif;
-    font-weight:bold;
-    font-size: 13px;
-
-    color: #264C59;
-    text-transform: uppercase;
-    opacity: 0.75;
+    text-align: center;
+    margin: 0 0 30px 0;
+    font-size: 36px;
+    color: $cLime;
   }
 
   ul {
@@ -311,12 +306,12 @@ nav {
         font-weight:400;
         line-height:20px;
 
-        color: #264C59;
+        color: $cGray2;
 
-        opacity: 0.85;
+        opacity: 1;
 
         a {
-          color: $cWhite;
+          color: $cLime;
           @extend .classic-hover;
         }
       }
@@ -404,7 +399,7 @@ article.contact {
 
     a {
       text-decoration: none;
-      color: #F2B257;
+      color: $cLime;
     }
 
 
@@ -810,7 +805,7 @@ a.close_icon {
 .btn.hollow {
 
   @include button('buttons/bkg_button_hollow.png', 38px, 5px, 11px, 27px, 5px, 22px, 0);
-  font: normal 12px "Futura", serif;
+  @extend .sans-serif;  
   text-transform: uppercase;
   color: $cLink;
 
@@ -961,7 +956,7 @@ footer > .download {
   }
 
   a { color: $cLink; }
-  a:hover { color: $cDarkGold; }
+  a:hover { color: $cDarkGreen; }
 }
 
 
@@ -984,7 +979,7 @@ footer > .download {
   margin-left:-504px;
   top: 50px;
   left: 50%;
-  z-index: 1050;
+  z-index: 10000;
 
   @include clearfix();
 
@@ -1199,7 +1194,7 @@ footer > .download {
 
 .charts { position:relative; padding: 10px; }
 .chart rect {
-  fill: #75ADB5;
+  fill: #333333;
   stroke: white;
 }
 
@@ -1208,12 +1203,12 @@ footer > .download {
   circle {
     fill: transparent;
     fill-opacity:0;
-    stroke: #F2B357;
+    stroke: #A1BA42;
     stroke-width: 10px;
   }
 
   circle#marker {
-    fill: #F2B357;
+    fill: #A1BA42;
     fill-opacity:1;
     stroke: white;
     stroke-width: 1px;
@@ -1224,16 +1219,16 @@ footer > .download {
   }
 
   path {
-    stroke: #F2B357;
+    stroke: #A1BA42;
     stroke-width: 4px;
     fill-opacity:0;
     fill: transparent;
   }
 
-  .amount { font-size:24px; color:#F2B357; text-align:center; }
+  .amount { font-size:24px; color:#A1BA42; text-align:center; }
   .amount .text { margin: auto; padding: 0 5px; @include inline-block(); }
 
-  .title { color: #F2B357; font-size: 18px; text-align:center; @extend .serif; }
+  .title { color: #A1BA42; font-size: 18px; text-align:center; @extend .serif; }
 
   .subtitle { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
   .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; }
@@ -1245,7 +1240,7 @@ footer > .download {
 .bars {
 
   rect {
-    fill: #75ADB5;
+    fill: #333333;
     stroke: white;
     shape-rendering: crispEdges;
     /*cursor:pointer;*/
@@ -1254,7 +1249,7 @@ footer > .download {
   circle {
     fill: transparent;
     fill-opacity:0;
-    stroke: #F2B357;
+    stroke: #333333;
     stroke-width: 10px;
   }
 
@@ -1263,16 +1258,16 @@ footer > .download {
   }
 
   path {
-    stroke: #F2B357;
+    stroke: #333333;
     stroke-width: 4px;
     fill-opacity:0;
     fill: transparent;
   }
 
-  .amount { font-size:20px; color:#75ADB5; text-align:center; }
+  .amount { font-size:20px; color:#333333; text-align:center; }
   .amount .text { margin: auto; padding: 0 5px; @include inline-block(); }
 
-  .title { color: #75ADB5; font-size: 18px; text-align:center; @extend .serif; }
+  .title { color: #333333; font-size: 18px; text-align:center; @extend .serif; }
 
   .subtitle { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
   .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; }
