@@ -1,50 +1,104 @@
-<%= form_for :story, :url => @url do |f| %>
-  <div>
-    <%= f.label      :title %>
-    <%= f.text_field :title %>
-  </div>
+<% content_for :js do %>
 
-  <div>
-    <%= f.label      :the_geom %>
-    <div id="affected_area">
+  <script type="text/javascript">
+    $(document).ready(function(){
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 8,
+        center: new google.maps.LatLng(-34.397, 150.644),
+        mapTypeId: google.maps.MapTypeId.TERRAIN,
+        disableDefaultUI: true
+      });
+    });
+  </script>
+
+<% end %>
+
+<%= form_for :story, :url => @url do |f| %>
+
+  <div class="field">
+    <%= f.label      :title %>
+    <div class="input-field huge">
+      <%= f.text_field :title, :placeholder => 'E.g. “Northern forests of Galizia”, “Coastal forest in Mozambique”...' %>
     </div>
   </div>
 
-  <div>
-    <%= f.label      :when_did_it_happen %>
-    <%= f.text_field :when_did_it_happen %>
-  </div>
-
-  <div>
-    <%= f.label      :details %>
-    <%= f.text_field :details %>
-  </div>
-
-  <div>
+  <div class="field affected-area">
+    <%= f.label      'Affected area' %>
+    <span class="map-help">Drop a pin or draw a shape on the map around the affected area</span>
+    <div id="map-container">
+      <div id="zoom_controls"></div>
+      <div id="map" class="map"></div>
+    </div>
 
   </div>
 
-  <div>
+  <div class="field">
+    <div class="optional">
+      <%= f.label      :when_did_it_happen %>
+      <span>Optional</span>
+    </div>
+    <div class="input-field huge">
+      <%= f.text_field :when_did_it_happen, :placeholder => '“November 2010”, “Since 2005”, etc.' %>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="optional">
+      <%= f.label      :details %>
+      <span>Optional</span>
+    </div>
+    <div class="input-field textarea">
+      <%= f.text_area :details, :placeholder => 'Affected species, deforestation type, source, etc.' %>
+    </div>
+  </div>
+
+  <div class="field media">
+    <%= f.label      :media %>
+    <div class="thumbnails">
+      <%= link_to '', '#', :class => 'upload_picture' %>
+    </div>
+
+    <p class="hint">Drag & drop images and videos to reorder them within the carrousel. The first one will be considered as the preferred one.</p>
+  </div>
+
+
+  <div class="field">
     <%= f.label      :your_name %>
-    <%= f.text_field :your_name %>
+    <div class="input-field short">
+      <%= f.text_field :your_name %>
+    </div>
+    <p class="hint">Your story and the name you choose to use will be visible in Global Forest Watch site, but your email will never be published.</p>
+
   </div>
 
-  <div>
+  <div class="field">
     <%= f.label      :your_email %>
-    <%= f.text_field :your_email %>
+    <div class="input-field short">
+      <%= f.text_field :your_email %>
+    </div>
   </div>
 
-  <div>
-    <%= f.submit :submit_story %>
+  <div class="field">
+    <%= f.submit 'Submit story' %>
   </div>
 
 <% end %>
 
-<%= form_for :media, :url => @media_url do |f| %>
+<aside>
   <div>
-    <%= f.label      :image %>
-    <%= f.file_field :image %>
+    <div class="title">
+      <h3>Why submit stories</h3>
+    </div>
+    <p>User participation is crucial in forest monitoring. The more people who participate in sharing information, the better.</p>
   </div>
 
-  <%= story_submit_button(f, @story) %>
-<% end %>
+  <div>
+    <div class="title">
+      <h3>HOW YOUR STORIES WILL BE USED</h3>
+    </div>
+    <p>Story information will be aggregated, processed and used by our data analysis algorithms for defining global forest status and detect trends and threads.</p>
+
+    <p>Your stories and photos will help improve forest clearing detection and spur action to stop forest clearing that should not be taking place.</p>
+  </div>
+
+</aside>

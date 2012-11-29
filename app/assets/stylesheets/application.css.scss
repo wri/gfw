@@ -5,6 +5,7 @@
 @import "compass";
 @import "compass/reset";
 @import "helpers";
+@import "forms";
 
 body {
   background: $cBackground;
@@ -122,7 +123,7 @@ header {
   & > .top {
 
     position: relative;
-    height: 52px;
+    height: 5px;
 
     background: $cTop;
 
@@ -270,10 +271,12 @@ nav {
 
   ul {
     width: 917px;
+    word-spacing: -1em;
 
     li {
       margin: 0 30px 0 0;
       text-align: left;
+      word-spacing: 0;
       &:last-child { margin: 0; }
 
       h2 {
@@ -854,62 +857,6 @@ a.close_icon {
   }
 }
 
-// Forms
-
-.textarea {
-
-  @include inline-block();
-  height:136px;
-  width: 580px;
-
-  background:url(backgrounds/bkg_form_textarea.png) no-repeat left 0;
-
-  textarea {
-    width: 100%;
-    height: 136px - 7*2;
-    margin: 0 0 0 5px;
-    padding: 7px 5px;
-
-    font-size: 14px;
-    background:url(backgrounds/bkg_form_textarea.png) repeat-x right -136px;
-
-    border:none;
-    outline:none;
-    resize: none;
-  }
-}
-
-.input-field {
-
-  @include inline-block();
-  height:36px;
-  width: 416px;
-
-  background:url(backgrounds/bkg_form_input.png) no-repeat left 0;
-
-  input[type="text"] {
-    width:100%;
-    height:37px;
-    margin: 0 0 0 7px;
-    padding: 0 7px 0 5px;
-
-    font-size: 14px;
-
-    background:url(backgrounds/bkg_form_input.png) repeat-x right -36px;
-    border:none;
-    outline:none;
-  }
-
-  &.big {
-    height: 42px;
-    background:url(backgrounds/bkg_form_input_big.png) no-repeat left 0;
-
-    input[type="text"] {
-      height:43px;
-      background:url(backgrounds/bkg_form_input_big.png) repeat-x right -42px;
-    }
-  }
-}
 
 .radio {
   @include radio(radio);

@@ -1,30 +1,48 @@
-<ul class="featured">
-  <% @featured.each do |story| %>
-    <li class="<%= cycle('left', 'right') %>">
-      <%= image_tag story.main_thumbnail.try(:url) %>
-      <h3><%= story.title %></h3>
-      <p><%= story.details %></p>
-      <%= link_to t('.read_more'), story %>
-    </li>
-  <% end %>
-</ul>
+<h1>Case Studies</h1>
 
-<div class="pagination">
-  <%= link_to t('.previous'), '#' %>
-  <%= link_to t('.next'), '#' %>
+<div class="featured">
+
+  <div class="inner">
+
+    <ul>
+      <% @featured.each do |story| %>
+        <li class="<%= left_or_right_class = cycle('left', 'right') %>">
+          <%= image_tag story.main_thumbnail.try(:url) if left_or_right_class == 'left' %>
+          <div>
+            <h2><%= story.title %></h2>
+            <p><%= story.details %></p>
+            <%= link_to 'Read more', story %>
+          </div>
+          <%= image_tag story.main_thumbnail.try(:url) if left_or_right_class == 'right' %>
+        </li>
+      <% end %>
+    </ul>
+
+    <div class="pagination">
+      <%= link_to 'Previous case studies', '#' if @page > 1 %>
+      <%= link_to 'Next case studies', '#' unless last_page? %>
+    </div>
+
+
+
+  </div>
+
 </div>
 
 <div class="more_stories">
-  <h3><%= t('.more_stories') %></h3>
-  <p>
-    <%= t('.browse_or_submit', :browse_link => link_to(t('.browse'), '#'), :submit_link => link_to(t('.submit'), '#')) %>
-  </p>
-  <ul>
-    <% @stories.each do |story| %>
-      <li>
-        <%= image_tag story.main_thumbnail.try(:url) %>
-      </li>
-    <% end %>
-  </ul>
-  <%= link_to t('.submit'), new_story_path %>
+  <div class="inner">
+    <h1>Stories reported by users</h1>
+    <p>
+      <%= link_to('Browse user stories', '#') %> in our map or <%= link_to('submit yours', '#') %>. People is a key factor in forest clearing detection.
+    </p>
+
+    <ul>
+      <% @stories.each do |story| %>
+        <li>
+          <%= image_tag story.main_thumbnail.try(:url) %>
+        </li>
+      <% end %>
+    </ul>
+    <%= link_to 'Submit your story', new_story_path, :class => 'submit' %>
+  </div>
 </div>
