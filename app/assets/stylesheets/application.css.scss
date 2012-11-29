@@ -23,16 +23,26 @@ a.icon {
 
 header {
   background:url(backgrounds/bkg_header.png) repeat-x top center;
-  height:247px;
+  height:226px;
 
   a.logo {
     position:absolute;
     display: inline-block;
     background:url(logos/logo.png) no-repeat center center;
-    width: 96px;
-    height: 93px;
+    width: 108px;
+    height: 100px;
+    left: -7px;
     text-indent: -99999px;
     z-index:1000;
+  }
+
+  span.header_separator {
+    position:absolute;
+    top: 67px;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    border-bottom: 1px solid #CFCFCF;
   }
 
   #other_wri_sites {
@@ -88,7 +98,7 @@ header {
 
   hgroup {
     position:relative;
-    top: 52px;
+    top: 74px;
     width:465px;
 
     h1 {
@@ -122,7 +132,8 @@ header {
   & > .top {
 
     position: relative;
-    height: 52px;
+    height: 5px;
+    z-index: 100000;
 
     background: $cTop;
 
@@ -152,8 +163,8 @@ header {
 
 nav {
   position:absolute;
-  top: 47px;
-  right: 10px;
+  top: 18px;
+  right: 10px;  
 
   & > ul {
 
@@ -172,7 +183,7 @@ nav {
         @extend .sans-serif;
         font-size:12px;
         font-weight:bold;
-        color: $cBackground;
+        color: #333333;
 
         &.selected {
           @include button('buttons/bkg_nav_button.png', $height, $mL, $pT, $pR, $pB, $pL, 0);
@@ -214,13 +225,14 @@ nav {
 
       p {
         height:50px;
-        margin: 24px;
+        margin: 18px 0 18px 0;
 
         @extend .sans-serif;
         font-size: 15px;
         font-weight:400;
+        line-height: 17px;
 
-        color: $cGray1;
+        color: $cGray3;
         opacity:0.5;
       }
 
@@ -783,7 +795,9 @@ a.close_icon {
 
   /* button ($url, $height, $mL, $pT, $pR, $pB, $pL) */
   @include button('buttons/bkg_button.png', 42px, 5px, 14px, 27px, 5px, 22px, 0);
-  font: normal 12px "Futura", serif;
+  @extend .sans-serif;
+  font-size:11px;
+  font-weight:600;
 
   &:hover {
     @include glow(0.5);
@@ -941,38 +955,44 @@ footer {
   .inner { position:relative; width: 871px; margin: auto; }
 
   .links {
-    height:216px;
-    background:url(backgrounds/bkg_footer.png) ;
+    height:246px;
+    background-color: #DFDFDC;
+    border-top: 1px solid #C8C8C6;
 
     @extend .sans-serif;
-    font-size:11px;
+    font-size:13px;
 
-    color: $cGray2;
+    color: $cGray3;
 
-    p {font-size: 15px;}
+    p {font-size: 13px;}
 
-    a { display: block; margin: 0 20px 0 0; @include inline-block(); }
+    a {display: block; color: $cGray3; margin: 0 20px 0 0; @include inline-block(); }
 
     div.partners {
       float: left;
       width: 550px;
       margin: 50px 0 0 0;
 
-      a.wri { width: 92px; height: 31px; @include icons-sprite(logo_wri_black); }
-      .google { width: 90px; height: 52px; @include icons-sprite(logo_google); }
-      .cfgd { width: 72px; height: 52px; @include icons-sprite(logo_cgd); }
-      .university_maryland { width: 77px; height: 52px; @include icons-sprite(logo_maryland); }
-      .imazon { width: 74px; height: 52px; @include icons-sprite(logo_imazon); }
+      a {
+        margin: 10px 20px 0 0;
+        
+        &.wri { width: 92px; height: 31px; @include icons-sprite(logo_wri_black); }
+        &.google { width: 90px; height: 52px; @include icons-sprite(logo_google); }
+        &.cfgd { width: 72px; height: 52px; @include icons-sprite(logo_cgd); }
+        &.university_maryland { width: 77px; height: 52px; @include icons-sprite(logo_maryland); }
+        &.imazon { width: 74px; height: 52px; @include icons-sprite(logo_imazon); }
+      }
+
 
     }
 
     div.wri {
       float: right;
-      margin: 50px 0 0 0;
+      margin: 50px 20px 0 0;
 
-      & > .wri { width:92px; height: 31px; margin: 10px 0 20px 0; @include icons-sprite(logo_wri_black); }
+      & > .wri { width:92px; height: 31px; margin: 20px 0 20px 0; @include icons-sprite(logo_wri_black); }
 
-      address { width:266px; color: $cGray3; font-size:11px; line-height:120%; }
+      address { width:266px; color: $cGray3; font-size:13px; line-height:120%; }
     }
   }
 }

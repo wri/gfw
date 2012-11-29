@@ -1,9 +1,10 @@
 /* Colors */
-$cBackground:            #75ADB5;
+$cBackground:            #222222;
 $cDarkGreen:             #264C59;
-$cLink:                  #F7BD63; // pastel yellow
+$cLink:                  #A1BA42;
 $cGreen:                 #74ACB4;
-$cGold:                  #F2B257; // gold
+$cGold:                  #F2B257;
+$cLime:                  #A1BA42;
 $cDarkGold:              #D69E4D;
 
 $cWhite:                 #FFFFFF;
@@ -39,7 +40,7 @@ $cFireHover:             #CA4C45;
 $cDeforestation:         #FF6699; // red
 $cDeforestationHover:    #C04B73;
 
-$cTop:                   rgba(117, 173, 181, 0.8);
+$cTop:                   #222222;
 $cPostTitle:             #73ACB3; // green
 $cPostBody:              #444444;
 
@@ -47,7 +48,7 @@ $cPostBody:              #444444;
 .cforest     { background-color: $cForest; }
 .cBackground { background-color: $cBackground; }
 .cDarkGreen  { background-color: $cDarkGreen; }
-.cLink       { baCkground-color: $cLink; }
+.cLink       { background-color: $cLink; }
 .cGreen      { background-color: $cGreen; }
 .cWhite      { background-color: $cWhite; }
 .cGray4      { background-color: $cGray4; }
@@ -73,8 +74,8 @@ $cPostBody:              #444444;
 .cPostBody { background-color: $cPostBody; }
 
 // SPRITES
-$icons-crowdsourcing-spacing:91px;
-$icons-analysis-spacing:90px;
+$icons-crowdsourcing-spacing:90px;
+$icons-analysis-spacing:91px;
 $icons-updates-spacing:90px;
 
 $icons-input_error-spacing:20px;
@@ -416,7 +417,7 @@ strong { font-weight: bold; } // This is sad, I know.
   @extend .sans-serif;
   font-size: 12px;
   font-weight:bold;
-  color: $cGold;
+  color: $cLime;
   text-transform: uppercase;
   text-decoration: none;
 
