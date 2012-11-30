@@ -125,6 +125,7 @@ function initialize() {
     });
   });
 
+/*
   $(".crowdsourcing").on("click", function(e) {
     e.preventDefault();
 
@@ -139,6 +140,7 @@ function initialize() {
 
     });
   });
+*/
 
   $(".close_icon").on("click", function(e) {
     e.preventDefault();
@@ -146,7 +148,8 @@ function initialize() {
       $(this).remove();
     });
 
-    $("#share, #subscribe, #analysis, #crowdsourcing, #other_wri_sites").fadeOut(250);
+    //$("#share, #subscribe, #analysis, #crowdsourcing, #other_wri_sites").fadeOut(250);
+    $("#share, #subscribe, #analysis, #other_wri_sites").fadeOut(250);
 
   });
 
@@ -158,7 +161,8 @@ function initialize() {
     SubscriptionMap.clearEmailErrors();
   });
 
-  $("#share, #subscribe, #analysis, #crowdsourcing, #other_wri_sites").on("click", function(e) {
+  //$("#share, #subscribe, #analysis, #crowdsourcing, #other_wri_sites").on("click", function(e) {
+  $("#share, #subscribe, #analysis, #other_wri_sites").on("click", function(e) {
     e.stopPropagation();
   });
 
@@ -209,10 +213,11 @@ $(function(){
       $(".backdrop").fadeOut(250);
     }
 
+    /*
     if ($("#crowdsourcing:visible").length > 0) {
       $("#crowdsourcing").fadeOut(250);
       $(".backdrop").fadeOut(250);
-    }
+    }*/
 
     if ($("#analysis:visible").length > 0) {
       $("#analysis").fadeOut(250);
