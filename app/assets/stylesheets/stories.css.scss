@@ -13,11 +13,20 @@ body.stories {
   #content { background: transparent; }
   #content .inner { position:relative; width: 927px; margin: auto; }
 
-  h1 {
-    @extend .sans-serif;
-    font-size: 51px;
-    width: 100%;
-    text-align: center;
+  .title {
+    background:transparent;
+    border-bottom: 1px solid $cGray4;
+    margin-top: -168px;
+
+    h2 {
+      @extend .inner;
+      @extend .serif;
+      padding: 50px 0;
+      color: black;
+      font-size: 51px;
+      text-align:center;
+    }
+
   }
 
   .featured {
