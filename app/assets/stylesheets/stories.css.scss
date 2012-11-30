@@ -4,13 +4,13 @@
 @import "forms";
 
 body.stories {
+  background: transparent;
 
   header {
-    border-bottom: 1px solid $cGray4;
     height: 235px;
   }
 
-  #content { background: $cWhite; }
+  #content { background: transparent; }
   #content .inner { position:relative; width: 927px; margin: auto; }
 
   h1 {
@@ -86,7 +86,6 @@ body.stories {
 
   .more_stories {
     background-color: $cGray5;
-    height: 343px;
     padding: 45px 0;
     text-align: center;
 
@@ -131,8 +130,17 @@ body.stories {
 
       }
 
+      hr {
+        border: none;
+        width: 909px;
+        height: 1px;
+        margin: 0;
+        background-color: $cGray8;
+      }
+
       .submit {
         @include inline-block();
+        margin-top: 45px;
         padding: 10px 20px;
         background-color: $cGreen1;
         @extend .sans-serif;
@@ -298,7 +306,9 @@ body.stories {
   .story {
 
     .title {
+      background:transparent;
       border-bottom: 1px solid $cGray4;
+      margin-top: -168px;
 
       h2 {
         @extend .inner;
@@ -315,6 +325,7 @@ body.stories {
       padding: 50px 0;
 
       .header {
+        background:transparent;
         h1 {
           @extend .serif;
           font-size: 51px;
@@ -330,9 +341,26 @@ body.stories {
       }
 
       .gallery {
+        position: relative;
         margin: 20px 0;
 
         .previous, .next {
+          position:absolute;
+          display:block;
+          width:68px;
+          height:68px;
+        }
+
+        .previous {
+          top: 30px;
+          left: -34px;
+          @include icons-sprite(button_story_gallery_left);
+        }
+
+        .next {
+          bottom: 30px;
+          right: -25px;
+          @include icons-sprite(button_story_gallery_right);
         }
 
         .active {
