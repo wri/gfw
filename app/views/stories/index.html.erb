@@ -29,20 +29,4 @@
 
 </div>
 
-<div class="more_stories">
-  <div class="inner">
-    <h1>Stories reported by users</h1>
-    <p>
-      <%= link_to('Browse user stories', '#') %> in our map or <%= link_to('submit yours', '#') %>. People is a key factor in forest clearing detection.
-    </p>
-
-    <ul>
-      <% @stories.each do |story| %>
-        <li>
-          <%= image_tag story.main_thumbnail.try(:url) %>
-        </li>
-      <% end %>
-    </ul>
-    <%= link_to 'Submit your story', new_story_path, :class => 'submit' %>
-  </div>
-</div>
+<%= render 'common/reported_stories' %>

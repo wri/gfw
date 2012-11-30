@@ -1,31 +1,50 @@
-<h1>Case Studies</h1>
 
 <div class="story">
+
+  <div class="title">
+    <h2>Case Studies</h2>
+  </div>
 
   <div class="inner">
     <div class="header">
       <h1><%= @story.title %></h1>
-      <span><%= @story.when_did_it_happen %></span>
-      <% if @story.when_did_it_happen.present? %>
-        <span>&middot;</span>
-      <% end %>
-      <span><%= @story.your_name %></span>
+      <div class="when-and-who">
+        <% if @story.when_did_it_happen.present?  %>
+          <span><%= @story.when_did_it_happen %></span>
+        <% end %>
+        <% if @story.when_did_it_happen.present? && @story.your_name.present? %>
+          <span>&middot;</span>
+        <% end %>
+        <% if @story.your_name.present?  %>
+          <span>Submitted by <%= @story.your_name %></span>
+        <% end %>
+      </div>
     </div>
 
 
-    <ul class="gallery">
+    <div class="gallery">
+      <%= link_to '', '#', :class => 'previous' %>
+      <%= link_to '', '#', :class => 'next' %>
+
+      <ul>
+        <li class="active">
+          <img src="" alt="" />
+        </li>
+      </ul>
+
       <% @story.media.each do |media| %>
         <li>
           render_media(media)
         </li>
       <% end %>
-    </ul>
+    </div>
 
     <div class="details">
-      <%= simple_format @story.details %>
+      <%= simple_format raw("<span class='dropcap'>#{@story.details[0, 1]}</span>") + @story.details[1, @story.details.length - 1] %>
     </div>
   </div>
 
 
 </div>
 
+<%= render 'common/reported_stories' %>

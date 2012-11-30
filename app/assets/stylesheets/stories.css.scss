@@ -295,4 +295,87 @@ body.stories {
 
   }
 
+  .story {
+
+    .title {
+      border-bottom: 1px solid $cGray4;
+
+      h2 {
+        @extend .inner;
+        @extend .serif;
+        padding: 50px 0;
+        color: $cGreen1;
+        font-size: 31px;
+        text-align:center;
+      }
+
+    }
+
+    .inner {
+      padding: 50px 0;
+
+      .header {
+        h1 {
+          @extend .serif;
+          font-size: 51px;
+        }
+
+        .when-and-who {
+          @extend .sans-serif;
+          font-size: 15px;
+          color: $cGray2;
+          text-align:center;
+          margin-top: 10px;
+        }
+      }
+
+      .gallery {
+        margin: 20px 0;
+
+        .previous, .next {
+        }
+
+        .active {
+
+          img {
+            width: 918px;
+            height: 362px;
+          }
+
+        }
+
+      }
+
+      .details {
+        p {
+          @extend .sans-serif;
+          color: $cGray7;
+          font-size: 16px;
+          line-height: 1.2em;
+          -moz-column-count: 2;
+          -moz-column-gap: 20px;
+          -o-column-count: 2;
+          -o-column-gap: 20px;
+          -webkit-column-count: 2;
+          -webkit-column-gap: 20px;
+          column-count: 2;
+          column-gap: 20px;
+
+          .dropcap{
+            @extend .serif;
+            float:left;
+            font-size:400%;
+            margin-top: 16px;
+            margin-right: 10px;
+            margin-bottom: 20px;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
 }
