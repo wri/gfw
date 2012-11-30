@@ -41,14 +41,24 @@ end %>
   </ul>
 </div>
 
-<ul>
-  <% @featured.each do |story| %>
-    <li>
-      <%= image_tag '' %>
-      <span><%= story.title %></span>
-      <%= link_to 'Read more', story_path(story) %>
-    </li>
-  <% end %>
-</ul>
+<div class="home-stories">
+
+  <h3>Stories behind forest clearing</h3>
+  <p>Browse <a href="">all stories</a> or <a href="">submit yours</a>. Participate in detecting forest change.</p>
+
+  <ul>
+    <% @featured.each do |story| %>
+      <li>
+        <%= image_tag 'tmp/stories1.png' %>
+        <div class="gradient"></div>
+        <div class="title">
+          <span><%= story.title %></span>
+          <%= link_to 'Read more', story_path(story) %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+
+</div>
 
 <%= render "common/js_templates" %>
