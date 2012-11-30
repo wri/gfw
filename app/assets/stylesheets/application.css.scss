@@ -46,6 +46,18 @@ header {
     border-bottom: 1px solid #CFCFCF;
   }
 
+  #other_sites_ribbon {
+    position: absolute;
+    right: 0;
+    width: 22px;
+    height: 25px;
+    padding: 25px 0 0px 0;
+    background-color: #222222;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: bold;
+  }
+
   #other_wri_sites {
     display:none;
     width: 195px;
@@ -196,7 +208,7 @@ header {
 nav {
   position:absolute;
   top: 18px;
-  right: 10px;  
+  right: 40px;  
 
   & > ul {
 

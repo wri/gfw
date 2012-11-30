@@ -258,7 +258,9 @@ body.static {
   header {
     hgroup {
       width: 100%;
-      h1 { font-size:51px; }
+      h1 {
+        @extend .serif;
+        font-size:51px; }
     }
   }
 
@@ -268,8 +270,11 @@ body.static {
       margin: 0 0 33px 0;
       padding: 0 0 33px 0;
 
-      h1 a {
+      h1 {
+        @extend .serif;
+        a {
           font-size:29px;
+        }
       }
     } // article
   } // section
@@ -292,7 +297,10 @@ body.sources {
   header {
     hgroup {
       width: 100%;
-      h1 { font-size:51px; }
+      h1 { 
+        @extend .serif;
+        font-size:51px;
+      }
     }
   }
 
@@ -304,6 +312,7 @@ body.sources {
 
       h1 {
 				margin: 0 0 30px 0;
+        @extend .serif;
 				a {
         	font-size:29px;
         	color:$cGray1;
