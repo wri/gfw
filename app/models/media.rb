@@ -5,6 +5,8 @@ class Media < CartoDB::Model::Base
   field :image
   field :video_url
   field :embed_html
+  field :image_url
+  field :thumbnail_url
 
   def to_param
     cartodb_id.to_s

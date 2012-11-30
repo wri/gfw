@@ -49,7 +49,7 @@ end %>
   <ul>
     <% @featured.each do |story| %>
       <li>
-        <%= image_tag 'tmp/stories1.png' %>
+        <%= image_tag story.main_thumbnail.try(:thumbnail_url) %>
         <div class="gradient"></div>
         <div class="title">
           <span><%= story.title %></span>
