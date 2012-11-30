@@ -268,13 +268,13 @@ nav {
 
 .home-stories {
 
-  padding: 41px 0 59px 0;
+  padding: 45px 0 59px 0;
   background:url(backgrounds/bkg_header.png) repeat-x top center #FFFFFF;  
   height: 400px;
 
   h3 {
     text-align: center;
-    margin: 0 0 10px 0;
+    margin: 0 0 8px 0;
     font-size: 36px;
     color: #222222;
   }
@@ -295,8 +295,8 @@ nav {
   }
 
   ul {
-    width:890px;
-    margin: 30px auto;
+    width:960px;
+    margin: 50px auto 40px auto;
 
     li {
       position: relative;
@@ -304,7 +304,7 @@ nav {
       width:266px;
       height: 266px;
       font-weight:400;
-      margin: 0 5px 0 5px;
+      margin: 0 22px 0 22px;
       text-align:center;
 
       img {
