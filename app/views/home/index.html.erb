@@ -23,9 +23,6 @@ end %>
     <h2><%= t('.icons.crowdsourcing.title') %></h2>
     <p><%= t('.icons.crowdsourcing.text') %></p>
     <a href="https://groups.google.com/forum/?fromgroups#!forum/gfw2" class="btn crowdsourcing"><span>Subscribe to the group</span></a>
-
-
-
     </li>
 
     <li class="analysis">
@@ -47,7 +44,7 @@ end %>
 <div class="home-stories">
 
   <h3>Stories behind forest clearing</h3>
-  <p>Browse <a href="">all stories</a> or <a href="">submit yours</a>. Participate in detecting forest change.</p>
+  <p>Browse <%= link_to "all stories", stories_path%> or <%= link_to "submit yours", new_story_path %>. Participate in detecting forest change.</p>
 
   <ul>
     <% @featured.each do |story| %>
