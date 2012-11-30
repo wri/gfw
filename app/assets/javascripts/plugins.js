@@ -439,6 +439,8 @@ var Navigation = (function() {
       $("header").animate({ height: "247px" }, 250, function() {
         $("hgroup h1").animate({ top: 29, opacity: 1 }, 250);
       });
+
+      $(".big_numbers").fadeIn(250);
     });
 
     this.time_layer.cache_time(true);
@@ -489,6 +491,7 @@ var Navigation = (function() {
     self.time_layer.set_time(self.time_layer.cache_time());
     Timeline.show(); // TODO: don't show the timeline if FORMA is not selected
 
+    $(".big_numbers").fadeOut(250);
 
 
     $("footer, .actions").fadeOut(250);
@@ -498,6 +501,7 @@ var Navigation = (function() {
 
     $("hgroup h1").animate({ top: "50px", opacity: 0 }, 250, function() {
       Filter.show();
+      $(".big_numbers").fadeOut(250);
     });
   }
 
