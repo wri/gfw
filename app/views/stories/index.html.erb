@@ -11,7 +11,7 @@
         <li class="<%= left_or_right_class = cycle('left', 'right') %>">
           <%= image_tag story.main_thumbnail.try(:thumbnail_url) if left_or_right_class == 'left' %>
           <div>
-            <h2><%= story.title %></h2>
+            <h2><%= link_to story.title, story%></h2>
             <p><%= truncate(story.details, :length => 295) %></p>
             <%= link_to 'Read more', story %>
           </div>
@@ -21,11 +21,9 @@
     </ul>
 
     <div class="pagination">
-      <%= link_to 'Previous case studies', '#' if @page > 1 %>
-      <%= link_to 'Next case studies', '#' unless last_page? %>
+      <%= link_to content_tag(:span, 'Previous case studies'), '#', :class => "btn hollow" if @page > 1%>
+      <%= link_to content_tag(:span, 'Next case studies'), '#', :class => "btn hollow" unless last_page?%>
     </div>
-
-
 
   </div>
 

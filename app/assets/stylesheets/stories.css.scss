@@ -50,10 +50,17 @@ body.stories {
         @include inline-block();
         width: 600px;
 
-        h2 {
+        h2 a {
           margin: 0 0 12px 0;
           @extend .serif;
           font-size:29px;
+          text-transform: none;
+          font-weight: normal;
+          color: #333333;
+
+          &:hover {
+            text-decoration: underline;
+          };
         }
 
         p {
@@ -96,6 +103,10 @@ body.stories {
     }
 
     .pagination {
+      margin: 60px 0 0 0;
+      padding: 30px 0 0 0;
+      border-top: 1px solid #E5E5E5;
+      text-align: center;
     }
   }
 
