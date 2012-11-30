@@ -265,11 +265,13 @@ nav {
   ul {
     width:890px;
     margin:auto;
+    word-spacing:-1em;
 
     li {
       @include inline-block();
       width:280px;
       font-weight:400;
+      word-spacing:normal;
 
       margin: 0 50px 0 0;
       text-align:center;

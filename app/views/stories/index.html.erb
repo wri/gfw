@@ -11,7 +11,7 @@
         <li class="<%= left_or_right_class = cycle('left', 'right') %>">
           <%= image_tag story.main_thumbnail.try(:thumbnail_url) if left_or_right_class == 'left' %>
           <div>
-            <h2><%= link_to story.title, story%></h2>
+            <h2><%= link_to story.title, story %></h2>
             <p><%= truncate(story.details, :length => 295) %></p>
             <%= link_to 'Read more', story %>
           </div>

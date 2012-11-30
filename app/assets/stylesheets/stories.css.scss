@@ -34,6 +34,7 @@ body.stories {
 
     li {
       margin-bottom: 20px;
+      word-spacing: -1em;
 
       img {
         width: 276px;
@@ -49,6 +50,7 @@ body.stories {
       div {
         @include inline-block();
         width: 600px;
+        word-spacing: normal;
 
         h2 a {
           margin: 0 0 12px 0;
@@ -304,21 +306,19 @@ body.stories {
       right: 0;
       top: 0;
       width: 285px;
+      margin-top: 50px;
 
-      .title {
-        padding-bottom: 20px;
+      h3 {
+        padding: 0 0 20px;
         margin-bottom: 20px;
         border-bottom: 1px solid $cGray4;
-
-        h3 {
-          @extend .sans-serif;
-          font-weight: bold;
-          font-size:13px;
-          color: $cGray1;
-          text-transform: uppercase;
-        }
-
+        @extend .sans-serif;
+        font-weight: bold;
+        font-size:13px;
+        color: $cGray1;
+        text-transform: uppercase;
       }
+
 
       p {
         @extend .sans-serif;
