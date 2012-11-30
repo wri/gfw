@@ -992,24 +992,10 @@ a.close_icon {
     }
 
     .icon {
-      &.wikipedia {
-        position:absolute;
-        top: 1px; right: 1px;
-        @include icons-sprite(wikipedia_hover);
-        width: 40px;
-        height:36px;
-      }
     }
   }
 
   .icon {
-    &.wikipedia {
-      position:absolute;
-      top: 1px; right: 1px;
-      @include icons-sprite(wikipedia);
-      width: 40px;
-      height:36px;
-    }
   }
 }
 
