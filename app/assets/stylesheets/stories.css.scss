@@ -114,12 +114,11 @@ body.stories {
         line-height: 1.2em;
 
         color: $cGray6;
-        opacity:0.5;
 
         a {
           font-weight: bold;
           text-decoration: none;
-          color: $cGreen1;
+          color: $cLime;
         }
       }
 
@@ -143,7 +142,7 @@ body.stories {
         border: none;
         width: 909px;
         height: 1px;
-        margin: 0;
+        margin: 0 0 40px 0;
         background-color: $cGray8;
       }
 
@@ -338,6 +337,7 @@ body.stories {
         h1 {
           @extend .serif;
           font-size: 51px;
+          text-align: center;
         }
 
         .when-and-who {
