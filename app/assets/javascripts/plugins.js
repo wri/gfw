@@ -313,7 +313,10 @@ var SubscriptionMap = (function() {
       var $map = $("#subscribe_map");
 
       $modal.center();
-      $modal.fadeIn(250, function() {
+
+      $modal.css({ opacity: '0', display: 'block', position: 'fixed' });
+      console.log('entra')
+      $modal.stop().animate({opacity: '1'}, 250, function(){
 
         var mapOptions = {
           zoom:               1,

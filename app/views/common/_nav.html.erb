@@ -2,7 +2,8 @@
 <ul>
   <% %w(home countries case\ studies map blog data about).each do |option| %>
     <%
-      paths    = { "home" => root_path, "countries" => countries_path, "case studies" => stories_path, "map" => map_path,  "blog" => "http://gfw20.tumblr.com", "data" => sources_path, "about" => about_path }
+      #paths    = { "home" => root_path, "countries" => countries_path, "case studies" => stories_path, "map" => map_path,  "blog" => "http://gfw20.tumblr.com", "data" => sources_path, "about" => about_path }
+      paths    = { "home" => root_path, "countries" => countries_path, "case studies" => stories_path, "map" => map_path,  "blog" => "#", "data" => sources_path, "about" => about_path }
       path     = paths[option]
       option_class = request.path == path ? "selected" : ""
 
@@ -10,6 +11,7 @@
       option_class = "selected" if controller_name == 'countries' && option == 'countries'
       option_class = "selected" if controller_name == 'posts'     && option == 'blog'
       option_class = "selected" if controller_name == 'static'    && option == 'about'
+      option_class = "disabled" if option == 'blog'
 
       option_class = "#{option_class} #{option}"
 

@@ -160,7 +160,7 @@ header {
         color: $cLime;
         font-size: 42px;
       }
-      
+
       p {
         @extend .sans-serif;
         color: $cGray3;
@@ -177,9 +177,12 @@ header {
   & > .top {
 
     position: relative;
-    height: 5px;
-    z-index: 100000;
-    background: $cTop;
+
+    .top_bar {
+      height: 5px;
+      z-index: 100000;
+      background: $cTop;
+    }
 
     .inner > ul {
 
@@ -208,7 +211,7 @@ header {
 nav {
   position:absolute;
   top: 18px;
-  right: 40px;  
+  right: 40px;
 
   & > ul {
 
@@ -313,7 +316,7 @@ nav {
 .home-stories {
 
   padding: 45px 0 59px 0;
-  background:url(backgrounds/bkg_header.png) repeat-x top center #FFFFFF;  
+  background:url(backgrounds/bkg_header.png) repeat-x top center #FFFFFF;
   height: 400px;
 
   h3 {
@@ -361,7 +364,7 @@ nav {
         -moz-border-radius: 133px;
         -moz-border-radius: 133px;
         border-radius: 133px;
-        border-radius: 133px;     
+        border-radius: 133px;
       }
 
       div.gradient {
@@ -376,7 +379,7 @@ nav {
         -moz-border-radius: 133px;
         -moz-border-radius: 133px;
         border-radius: 133px;
-        border-radius: 133px;        
+        border-radius: 133px;
       }
 
       div.title {
@@ -401,14 +404,14 @@ nav {
           @extend .sans-serif;
           font-size: 12px;
           font-weight: bold;
-          text-transform: uppercase;        
+          text-transform: uppercase;
           color: $cLime;
           text-decoration: none;
           z-index: 1000;
 
         }
       }
-    }    
+    }
   }
 
 }
@@ -701,12 +704,17 @@ a.close_icon {
   $height: 559px;
   $width: 767px;
 
-  position:absolute;
+  position:fixed;
 
   display:none;
   width: $width;
   height: $height;
   background-image:url(backgrounds/bg_subscribe.png);
+
+  top: 50%;
+  left: 50%;
+  margin-left: -$width/2;
+  margin-top: -$height/2;
 
   z-index: 1050;
 
@@ -955,7 +963,7 @@ a.close_icon {
 .btn.hollow {
 
   @include button('buttons/bkg_button_hollow.png', 38px, 5px, 11px, 27px, 5px, 22px, 0);
-  @extend .sans-serif;  
+  @extend .sans-serif;
   text-transform: uppercase;
   color: $cLink;
 
@@ -1052,12 +1060,12 @@ footer {
 
       a {
         margin: 10px 20px 0 0;
-        
+
         &.wri { width: 92px; height: 31px; @include icons-sprite(logo_wri_black); }
         &.google { width: 90px; height: 52px; @include icons-sprite(logo_google); }
         &.cfgd { width: 72px; height: 52px; @include icons-sprite(logo_cgd); }
         &.university_maryland { width: 77px; height: 52px; @include icons-sprite(logo_maryland); }
-        &.imazon { width: 74px; height: 52px; @include icons-sprite(logo_imazon); }              
+        &.imazon { width: 74px; height: 52px; @include icons-sprite(logo_imazon); }
         &.esri { width: 76px; height: 28px; @include icons-sprite(logo_esri); }
         &.unep { width: 39px; height: 45px; @include icons-sprite(logo_unep); }
       }
