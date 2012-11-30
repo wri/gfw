@@ -241,6 +241,17 @@ nav {
           color: $cBackground;
         }
       } // a
+
+      &.lang_selector {
+        border-left: 1px solid $cGray4;
+        margin-left: 10px;
+        padding-left: 10px;        
+
+        a {
+          @include inline-block();
+          background: url('backgrounds/triangle.png') no-repeat 32px 10px;
+        }
+      }
     } // li
   } // ul
 } // nav
@@ -1410,14 +1421,14 @@ footer > .download {
     fill: transparent;
   }
 
-  .amount { font-size:20px; color:#333333; text-align:center; }
+  .amount { font-size:20px; color:#333333; text-align:center; @extend .serif;}
   .amount .text { margin: auto; padding: 0 5px; @include inline-block(); }
 
   .title { color: #333333; font-size: 18px; text-align:center; @extend .serif; }
 
   .subtitle { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
-  .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; }
+  .subtitle .text { margin: auto; @include inline-block(); padding: 0 5px; text-decoration:underline; @extend .serif;}
 
   .graph_legend { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
-  .graph_legend .text { margin: auto; width: 140px; }
+  .graph_legend .text { margin: auto; width: 140px; @extend .serif;}
 }
