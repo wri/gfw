@@ -330,13 +330,14 @@ body.stories {
       border-bottom: 1px solid $cGray4;
       margin-top: -168px;
 
-      h2 {
+      h2 a {
         @extend .inner;
         @extend .serif;
         padding: 50px 0;
         color: $cGreen1;
         font-size: 31px;
         text-align:center;
+        text-decoration: none;
       }
 
     }
