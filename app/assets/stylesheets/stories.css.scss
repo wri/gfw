@@ -203,8 +203,9 @@ body.stories {
         @extend .inner;
         @extend .font-big;
         padding: 0;
-        font-size: 36px;
+        font-size: 49px;
         color: black;
+        text-align: left;
       }
     }
 
@@ -214,7 +215,7 @@ body.stories {
     }
 
     .field {
-      margin: 0 0 30px;
+      margin: 0 0 25px;
 
       &.media {
 
@@ -324,7 +325,7 @@ body.stories {
         @extend .sans-serif;
         font-size: 15px;
         color: $cGray2;
-        line-height: 1.1em;
+        line-height: 1.2em;
         padding-bottom: 20px;
       }
 
