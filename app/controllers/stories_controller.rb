@@ -1,13 +1,14 @@
 class StoriesController < ApplicationController
 
   def index
-    @page = params[:page] || 1
+    @page     = params[:page] || 1
     @featured = Story.where(:featured => true)
     @stories  = Story.all
   end
 
   def show
-    @story = Story.where(:cartodb_id => params[:id])
+    @story   = Story.where(:cartodb_id => params[:id])
+    @stories = Story.all
   end
 
   def new

@@ -451,7 +451,7 @@ var Navigation = (function() {
   }
 
   function _animateMap() {
-    if (skipMapAnimation) {
+    if (typeof skipMapAnimation != "undefined" && skipMapAnimation) {
       return;
     }
     mapAnimationPID = setInterval(function() {
