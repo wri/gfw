@@ -27,16 +27,12 @@
       <%= link_to '', '#', :class => 'next' %>
 
       <ul>
-        <li class="active">
-          <img src="" alt="" />
-        </li>
+        <% @story.media.each do |media| %>
+          <li class="active">
+            <%= image_tag @story.main_thumbnail.try(:image_url) %>
+          </li>
+        <% end %>
       </ul>
-
-      <% @story.media.each do |media| %>
-        <li>
-          render_media(media)
-        </li>
-      <% end %>
     </div>
 
     <div class="details">

@@ -38,6 +38,12 @@ body.stories {
       img {
         width: 276px;
         height: 276px;
+        -webkit-border-radius: 133px;
+        -webkit-border-radius: 133px;
+        -moz-border-radius: 133px;
+        -moz-border-radius: 133px;
+        border-radius: 133px;
+        border-radius: 133px;
       }
 
       div {
@@ -132,6 +138,12 @@ body.stories {
             width: 117px;
             height: 117px;
             margin: 20px;
+            -webkit-border-radius: 58.5px;
+            -webkit-border-radius: 58.5px;
+            -moz-border-radius: 58.5px;
+            -moz-border-radius: 58.5px;
+            border-radius: 58.5px;
+            border-radius: 58.5px;
           }
 
         }
@@ -351,7 +363,7 @@ body.stories {
 
       .gallery {
         position: relative;
-        margin: 20px 0;
+        margin: 40px 0;
 
         .previous, .next {
           position:absolute;

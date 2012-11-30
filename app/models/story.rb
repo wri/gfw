@@ -31,7 +31,7 @@ class Story < CartoDB::Model::Base
   end
 
   def main_thumbnail
-    media.first.thumb rescue nil
+    media.first rescue nil
   end
 
   def to_param
