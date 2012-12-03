@@ -144,14 +144,18 @@ header {
 
     position: absolute;
     top: 95px;
-    right: 0;
+    right: -40px;
 
     li {
       @include inline-block();
       width: 120px;
       padding: 0 20px 0 20px;
       border-right: 1px solid $cGray4;
-      &.last {border: 0;}
+
+      &.last {
+        border: 0;
+        padding-right:0;
+      }
 
       span {
         @include inline-block();
