@@ -9,8 +9,10 @@ en:
     application:
       title: "Global Forest Watch 2.0"
       header:
-        share_this: 'Share this'
-        other_wri_sites: 'Other WRI sites'
+        share_this: 'Share thisss'
+        other_wri_sites: 'Other WRI sitesss'
+        alerts: 'alerts in past 16 dayss'
+        stories: 'new forest storiess'
         nav:
           home: 'Home'
           countries: 'Countries'
@@ -23,6 +25,7 @@ en:
           title: 'Browse forest data <a href="%{url}">by country</a>.'
           title2: 'Interested in data? <a href="%{url}">Download it</a>.'
           data_html: 'You can also <a href="%{url}" class="icon download">download all our data</a>.'
+  
   blog:
     read_more: "Read more"
   sources:
@@ -33,14 +36,14 @@ en:
     index:
       title: "Find out what is happening in forests right now"
       icons:
-        crowdsourcing:
-          title: 'Crowdsourcing'
-          text: "Do you have any comment or photo to be shared with the community? Just do it."
-          link: 'Contribute Now'
+        community:
+          title: 'Join the community'
+          text: "Subscribe to the Global Forest Watch discussion group to stay up to date with the latest news on forest clearing."
+          link: 'Join the Group'
         analysis:
           title: 'Analysis tool'
           text: "Perform forest clearing analysis on the fly and get your answers in real time using our latest data"
-          link: 'Contribute Now'
+          link: 'Comming soon'
         keep_updated:
           title: 'Stay updated'
           text: "Subscribe to forest clearing alerts and receive frequent updates on your selected countries"
@@ -48,6 +51,9 @@ en:
   common:
     header:
       title: 'Global Forest Watch 2.0'
+      numbers:
+        alerts: 'alerts in past 16 dayss'
+        stories: 'new forest storiess'
     countries:
         title: "Select a country"
     filters:
