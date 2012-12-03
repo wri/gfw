@@ -1,0 +1,62 @@
+@import "compass";
+@import "compass/reset";
+@import "helpers";
+@import "forms";
+
+body.posts {
+
+
+  header {
+    height: 267px!Important;
+    background: #fff url(backgrounds/bkg_header.png) repeat-x top center;
+  }
+
+  hgroup {
+    $left: 40px;
+    width: 927px - $left;
+    top: 95px;
+    left: $left;
+    text-align: center;
+
+    h1 {
+      @include inline-block();
+      font-size: 36px;
+      position:static;
+      margin: 0 10px 0 0;
+    }
+
+    h2 {
+      @include inline-block();
+      font-size: 36px;
+      margin: 0 0 0 10px;
+
+      color:$cGray3;
+      position:static;
+    }
+
+    .the-watcher-logo {
+      @include inline-block();
+      @include logos-sprite(watcher);
+      width: 126px;
+      height: 126px;
+    }
+  }
+
+  #content .inner {
+    text-align:center;
+  }
+
+  #content .inner section {
+    margin:auto;
+    text-align: left;
+  }
+
+  #content .inner section article h1 a {
+    color: #333;
+  }
+
+  #content .inner section article p {
+    font-size: 16px;
+  }
+
+}

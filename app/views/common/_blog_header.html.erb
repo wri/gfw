@@ -1,0 +1,67 @@
+<header>
+
+<div class="top">
+  <div class="top_bar"></div>
+
+  <span class="header_separator"></span>
+
+  <div class="inner">
+    <a href="/" class="logo">Global Forest Watch 2.0</a>
+  </div>
+</div>
+
+
+<div class="inner">
+
+<div id="other_sites_ribbon">+</div>
+
+  <hgroup>
+  <h1>The Watcher</h1>
+  <div class="the-watcher-logo"></div>
+  <h2>The GFW Blog</h1>
+  </hgroup>
+
+  <% if controller_name == "home" %>
+
+  <ul class="big_numbers">
+    <li>
+    <span class="number">2,931</span>
+      <p>alerts in past 16 days</p>
+    </li>
+    <li class="last">
+      <span class="number"><%= @featured.count %></span>
+      <p>new forest stories</p>
+    </li>
+  </ul>
+
+  <% end %>
+
+  <%= render "common/nav" %>
+
+
+</div>
+
+<script type="text/javascript">
+		var uservoiceOptions = {
+		  key: 'gfw2',
+		  host: 'gfw2.uservoice.com',
+		  forum: '168140',
+		  showTab: false,
+		  alignment: 'left',
+		  background_color:'#FF6600',
+		  text_color: 'white',
+		  hover_color: '#C95000',
+		  lang: 'en'
+		};
+
+		function _loadUserVoice() {
+		  var s = document.createElement('script');
+		  s.setAttribute('type', 'text/javascript');
+		  s.setAttribute('src', ("https:" == document.location.protocol ? "https://" : "http://") + "cdn.uservoice.com/javascripts/widgets/tab.js");
+		  document.getElementsByTagName('head')[0].appendChild(s);
+		}
+		_loadSuper = window.onload;
+		window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
+</script>
+
+</header>
