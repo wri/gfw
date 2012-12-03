@@ -15,7 +15,7 @@ body.posts {
       height:56px;
     }
 
-    header { height: 180px; }
+    header { height: 180px!important; }
     hgroup h1, hgroup h2 { font-size: 31px; }
 
     article h1 {
@@ -32,7 +32,7 @@ body.posts {
   }
 
   header {
-    height: 267px;
+    height: 267px!important;
     background: #fff url(backgrounds/bkg_header.png) repeat-x top center;
   }
 
@@ -541,6 +541,4 @@ body.countries {
 
     }
   }
-
 }
-
