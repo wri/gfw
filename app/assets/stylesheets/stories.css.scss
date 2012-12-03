@@ -49,9 +49,8 @@ body.stories {
         @include border-radius(300px);
       }
 
-
-      &.left .frame { left: 0px; }
-      &.right  .frame { right: 0px; }
+      &.left  .frame { left: 0px; }
+      &.right .frame { right: 0px; }
 
       .frame {
 
@@ -129,6 +128,7 @@ body.stories {
   }
 
   .more_stories {
+
     background-color: $cGray5;
     padding: 45px 0;
     text-align: center;
@@ -162,21 +162,25 @@ body.stories {
 
         li {
           @include inline-block();
+          @include size(130px);
 
-          img {
-            width: 117px;
-            height: 117px;
-            margin: 20px;
-            -webkit-border-radius: 58.5px;
-            -webkit-border-radius: 58.5px;
-            -moz-border-radius: 58.5px;
-            -moz-border-radius: 58.5px;
-            border-radius: 58.5px;
-            border-radius: 58.5px;
+          position:relative;
+          margin: 0 20px;
+
+          .frame {
+            @include position(0, false, false, 0);
+            @include size(100%);
+            @include border-radius(300px);
+
+            background:#656565;
+            z-index: 10;
           }
 
+          img {
+            @include absolute-center(117px);
+            @include border-radius(120px);
+          }
         }
-
       }
 
       hr {
