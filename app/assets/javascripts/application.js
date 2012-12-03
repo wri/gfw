@@ -1,7 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.easing.1.3
-//= require jquery-ui-1.8.20.custom.min
+//= require jquery-ui-1.9.2.custom.min
 //= require wax.g.min-6.0.4
 //= require cartodb-gmapsv3
 //= require cartodb-infowindow-min
