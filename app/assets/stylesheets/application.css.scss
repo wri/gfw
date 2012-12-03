@@ -260,10 +260,10 @@ nav {
   padding: 51px 0 59px 0;
   background: $cBackground;
 
-  .inner { position:relative; width: 912px; margin: auto; }
+  .inner { position:relative; width: 950px; margin: auto; }
 
   ul {
-    width:890px;
+    width:960px;
     margin:auto;
     word-spacing:-1em;
 
@@ -301,15 +301,15 @@ nav {
         height:92px;
       }
 
-      &.crowdsourcing { width:246px; }
-      &.analysis { width:262px; }
-      &.keep_updated { width:274px; margin: 0; }
+      &.community { width:270px; }
+      &.analysis { width:270px; }
+      &.keep_updated { width:270px; margin: 0; }
 
-      &.crowdsourcing .icon {
-        top: -10px;
+      &.community .icon {
+        top: 0px;
         position:relative;
         width:134px;
-        @include icons-sprite(crowdsourcing);
+        @include icons-sprite(community);
       }
 
       &.analysis .icon {
