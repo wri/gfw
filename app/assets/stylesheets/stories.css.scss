@@ -38,8 +38,6 @@ body.stories {
       height: 174px;
       padding: 50px 0;
 
-      p { width: 550px; }
-
       img {
         position:absolute;
 
@@ -51,10 +49,11 @@ body.stories {
         @include border-radius(300px);
       }
 
-      .frame {
 
-        &.right { left: 0px; }
-        &.left  { right: 0px; }
+      &.left .frame { left: 0px; }
+      &.right  .frame { right: 0px; }
+
+      .frame {
 
         display:block;
         position:absolute;
@@ -77,6 +76,7 @@ body.stories {
           font-size:29px;
           text-transform: none;
           font-weight: normal;
+          line-height:normal;
           color: #333333;
 
           &:hover {
@@ -91,7 +91,6 @@ body.stories {
           line-height: 1.2em;
 
           color: $cGray1;
-          opacity:0.5;
         }
 
         a {
@@ -110,17 +109,15 @@ body.stories {
 
     }
 
-    .left {
+    .right {
       text-align: left;
-
-      div { margin-left: 42px; }
+      .content { text-align: right; }
 
     }
 
-    .right {
+    .left {
       text-align: right;
-
-      div { margin-right: 42px; }
+      .content { text-align:left; }
     }
 
     .pagination {
