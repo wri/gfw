@@ -26,7 +26,6 @@ body.stories {
       font-size: 51px;
       text-align:center;
     }
-
   }
 
   .featured {
@@ -35,19 +34,39 @@ body.stories {
     li {
       margin-bottom: 20px;
       word-spacing: -1em;
+      position:relative;
+      height: 174px;
+      padding: 50px 0;
+
+      p { width: 550px; }
 
       img {
+        position:absolute;
+
+        top: 5px;
+        left: 5px;
+
         width: 276px;
         height: 276px;
-        -webkit-border-radius: 133px;
-        -webkit-border-radius: 133px;
-        -moz-border-radius: 133px;
-        -moz-border-radius: 133px;
-        border-radius: 133px;
-        border-radius: 133px;
+        @include border-radius(300px);
       }
 
-      div {
+      .frame {
+
+        &.right { left: 0px; }
+        &.left  { right: 0px; }
+
+        display:block;
+        position:absolute;
+        top: 0px;
+        width: 286px;
+        height: 286px;
+        @include border-radius(300px);
+        background:#EBEBEB;
+        z-index: 10;
+      }
+
+      .content {
         @include inline-block();
         width: 600px;
         word-spacing: normal;
@@ -62,7 +81,7 @@ body.stories {
 
           &:hover {
             text-decoration: underline;
-          };
+          }
         }
 
         p {
