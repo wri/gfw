@@ -245,7 +245,7 @@ nav {
       &.lang_selector {
         border-left: 1px solid $cGray4;
         margin-left: 10px;
-        padding-left: 10px;        
+        padding-left: 10px;
 
         a {
           @include inline-block();
@@ -1335,9 +1335,11 @@ footer > .download {
   margin: 40px 0 40px -10px;
   height: 300px;
   width:100%;
+  word-spacing:-1em;
 
   .country, .chart {
     @include inline-block();
+    word-spacing:normal;
   }
   .country {
     width: 309px;
