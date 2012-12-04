@@ -85,10 +85,8 @@ body.stories {
 
         p {
           @extend .sans-serif;
-          font-size: 15px;
-          font-weight:400;
-          line-height: 1.2em;
-
+          font-size: 16px;
+          line-height: 20px;
           color: $cGray2;
         }
 
@@ -431,9 +429,10 @@ body.stories {
       .details {
         p {
           @extend .sans-serif;
-          color: $cGray7;
           font-size: 16px;
-          line-height: 1.2em;
+          line-height: 20px;
+          color: $cGray2;
+
           -moz-column-count: 2;
           -moz-column-gap: 20px;
           -o-column-count: 2;

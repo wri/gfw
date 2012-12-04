@@ -957,14 +957,12 @@ a.close_icon {
 
     p {
       height: 220px;
-      margin: 0 0 4px 0;
+      margin: 0 0 20px 0;
 
       @extend .sans-serif;
-      font-size:15px;
-      font-weight:300;
-      color: $cGray2;
-
+      font-size:16px;
       line-height:20px;
+      color: $cGray2;
     }
 
     h4 {
