@@ -979,7 +979,7 @@ a.close_icon {
 .btn {
 
   /* button ($url, $height, $mL, $pT, $pR, $pB, $pL) */
-  @include button('buttons/bkg_button.png', 42px, 5px, 14px, 27px, 5px, 22px, 0);
+  @include button('buttons/bkg_button.png', 42px, 5px, 15px, 27px, 5px, 22px, 0);
   @extend .sans-serif;
   font-size:11px;
   font-weight:600;
@@ -992,14 +992,14 @@ a.close_icon {
 
 .btn.hollow {
 
-  @include button('buttons/bkg_button_hollow.png', 38px, 5px, 11px, 27px, 5px, 22px, 0);
+  @include button('buttons/bkg_button_hollow.png', 38px, 5px, 13px, 27px, 5px, 22px, 0);
   @extend .sans-serif;
   text-transform: uppercase;
   color: $cLink;
 
   &:hover {
     @extend .no-glow;
-    @include button('buttons/bkg_button_hollow.png', 38px, 4px, 11px, 27px, 5px, 22px, 76px);
+    @include button('buttons/bkg_button_hollow.png', 38px, 4px, 13px, 27px, 5px, 22px, 76px);
     color: $cWhite;
   }
 
