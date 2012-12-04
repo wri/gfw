@@ -1,6 +1,9 @@
 <% content_for :js do %>
+
+
   <script type="text/javascript">
-    var summary = { count: "2,931", title: "Forest clearing alerts in the last 16 days" }
+    var flagSummary = { icon: "flag", count: "2,931", title: "Forest clearing alerts in the last 16 days" }
+    var areaSummary = { icon: "area", count: "3,182", title: "Hectares of forest cleared in 2012" }
   </script>
 
   <script id="legend-item-single-template" type="text/x-underscore-template">
@@ -9,12 +12,16 @@
     </li>
   </script>
 
+
+
   <script id="legend-item-double-template" type="text/x-underscore-template">
     <li id="{{ id }}" class="{{ category }}">
     <div class="icons"> {{ icons }} </div> <a href="#">{{ name }}</a>
     {{ parts }}
     </li>
   </script>
+
+
 
   <script id="legend-template" type="text/x-underscore-template">
     <div class="legend">
@@ -31,13 +38,19 @@
     </div>
   </script>
 
+
+
   <script id="layer-item-radio-template" type="text/x-underscore-template">
     <li id="filter_{{ id }}" class="{{ category }}"><a href="#" class="radio {{ category }} {{ disabled ? 'disabled' : '' }}" data-name={{ category }}>{{name}}</a>[ if (source) {]<a href="/sources/#{{source}}" target="_blank" class="source"></a>[}]</li>
   </script>
 
+
+
   <script id="layer-item-checkbox-template" type="text/x-underscore-template">
     <li id="filter_{{ id }}" class="{{ category }}"><a href="#" data-id={{ id }} class="checkbox {{ disabled ? 'disabled' : '' }}">{{name}}</a>[ if (source) {]<a href="/sources/#{{source}}" target="_blank" class="source"></a>[}]</li>
   </script>
+
+
 
   <script id="filter-template" type="text/x-underscore-template">
     <li class="{{ category }}" data-id="{{ data }}">
@@ -48,8 +61,13 @@
     </li>
   </script>
 
+
+
   <script id="circle-template" type="text/x-underscore-template">
     <div class="circle">
+      <div class="icon {{icon}}">
+        <i></i>
+      </div>
       <div class="inner">
         <div class="counter">{{count}}</div>
         <div class="title">{{title}}</div>
@@ -58,4 +76,5 @@
       </div>
     </div>
   </script>
+
 <% end %>

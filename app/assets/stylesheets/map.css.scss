@@ -14,19 +14,17 @@
   }
 
   .circle {
+
     $width: 318px;
 
-    top: -100px;
-    left: 50%;
+    @include size($width);
+    @include position(-100px, false, false, 50%);
 
-    position:absolute;
     margin-left: -1*$width/2;
     margin-top: -1*$width/2;
 
     opacity:0;
 
-    width: $width;
-    height: $width;
     @include icons-sprite(circle);
 
     text-align:center;
@@ -34,6 +32,36 @@
     .inner {
       position:relative;
       top:100px;
+    }
+
+    .icon {
+      background: url(icons/green_circle.png) no-repeat;
+      background-position: 50% 50%;
+      background-size: 10%;
+
+      @include size(74px);
+      @include position(25px, 25px, false, false);
+
+      opacity: 0;
+
+      z-index: 1000;
+
+      &.flag i {
+        @include absolute-center(26px, 28px);
+        @include icons-sprite(flag);
+        width: 26px;
+        height: 28px;
+      }
+
+      &.area i {
+        @include absolute-center(36px, 34px);
+        @include icons-sprite(area);
+        width: 36px;
+        height: 34px;
+      }
+
+      i { display: block; }
+
     }
 
     .inner > .title {
@@ -450,6 +478,19 @@ $timelineWidth: 940px;
   -moz-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);    // Firefox v3.5+
   -webkit-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15); // Safari v3.0+ and by Chrome v0.2+
   box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);         // Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+
+}
+
+.coordinates {
+  position:absolute;
+  top: -20px;
+  right: 5px;
+  text-align: right;
+
+  color:#fff;
+  font-weight:bold;
+  @extend .sans-serif;
+  font-size:11px;
+  text-shadow: 0px 0px 3px #222;
 }
 
 .timeline .handle {

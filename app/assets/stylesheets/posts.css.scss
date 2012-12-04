@@ -26,6 +26,17 @@ body.posts {
 
     }
 
+    article p {
+      -moz-column-count: 2;
+      -moz-column-gap: 20px;
+      -o-column-count: 2;
+      -o-column-gap: 20px;
+      -webkit-column-count: 2;
+      -webkit-column-gap: 20px;
+      column-count: 2;
+      column-gap: 20px;
+    }
+
     ul.meta { text-align: center; }
     ul.meta li { font-size:15px; }
     ul.meta li a { font-size:15px; }
@@ -109,7 +120,7 @@ body.countries {
 
       li {
         @include inline-block();
-        margin: 0 5px 0 5px;
+        margin: 0 12px 0 12px;
 
         a {
           text-decoration: none;

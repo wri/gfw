@@ -201,22 +201,36 @@ strong { font-weight: bold; } // This is sad, I know.
 
 }
 
+@mixin absolute-portrait-center($height) {
+  position:absolute;
+  top:50%;
+  height: $height;
+  margin-top: -1*$height/2;
+}
+
+@mixin absolute-landscape-center($width) {
+  @include absolute-left-center($width);
+}
+
 @mixin absolute-left-center($width) {
   position:absolute;
   left:50%;
   width: $width;
-  margin-left: -1*$width / 2;
+  margin-left: -1*$width/2;
 }
 
 @mixin absolute-center($width, $height:$width) {
+
   position:absolute;
   left:50%;
   top: 50%;
-  margin-left: -1*$width / 2;
-  margin-top:  -1*$height / 2;
+
+  margin-left: -1*$width/2;
+  margin-top:  -1*$height/2;
 
   @if $width  != false { width:  $width; }
   @if $height != false { height: $height; }
+
 }
 
 @mixin clearfix() {

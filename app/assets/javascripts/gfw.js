@@ -69,7 +69,13 @@ GFW.modules.app = function(gfw) {
       this._loadBaseLayer();
       this._setupZoom();
       this._setupTypeControls();
+
+      google.maps.event.addDomListener(this._map, 'mousemove', function(event) {
+        Timeline.updateCoordinates(event.latLng);
+      });
+
     },
+
     run: function() {
       this._setupListeners();
       gfw.log.info('App is now running!');
