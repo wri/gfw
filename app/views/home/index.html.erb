@@ -2,6 +2,14 @@
   t('.title')
 end %>
 
+<% content_for :js do %>
+
+  <script type="text/javascript">
+    var summary = { count: "<%= number_with_delimiter(@alerts_count) %>", title: "Forest clearing alerts in the last six months" }
+  </script>
+
+<% end %>
+
 <% content_for :download do %>
 <div class="download">
   <div class="inner">
@@ -50,7 +58,6 @@ end %>
     <% @featured.each do |story| %>
       <li>
         <%= image_tag story.main_thumbnail.try(:thumbnail_url) %>
-        <div class="frame"></div>
         <div class="gradient"></div>
         <div class="title">
           <span><%= story.title %></span>
