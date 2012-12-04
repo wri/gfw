@@ -50,6 +50,7 @@ end %>
     <% @featured.each do |story| %>
       <li>
         <%= image_tag story.main_thumbnail.try(:thumbnail_url) %>
+        <div class="frame"></div>
         <div class="gradient"></div>
         <div class="title">
           <span><%= story.title %></span>

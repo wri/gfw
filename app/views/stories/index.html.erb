@@ -9,13 +9,15 @@
     <ul>
       <% @featured.each do |story| %>
         <li class="<%= left_or_right_class = cycle('left', 'right') %>">
-          <%= image_tag story.main_thumbnail.try(:thumbnail_url) if left_or_right_class == 'left' %>
-          <div>
+
+          <div class="content">
             <h2><%= link_to story.title, story %></h2>
             <p><%= truncate(story.details, :length => 295) %></p>
             <%= link_to 'Read more', story %>
           </div>
-          <%= image_tag story.main_thumbnail.try(:thumbnail_url) if left_or_right_class == 'right' %>
+
+          <%= content_tag :div, (image_tag story.main_thumbnail.try(:thumbnail_url)), :class => "frame" %>
+
         </li>
       <% end %>
     </ul>

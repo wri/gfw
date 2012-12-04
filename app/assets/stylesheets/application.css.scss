@@ -372,31 +372,42 @@ nav {
       margin: 0 22px 0 22px;
       text-align:center;
 
+
+      .frame {
+        display:block;
+        position:absolute;
+        top: -5px;
+        left: -5px;
+        width: 276px;
+        height: 276px;
+        -webkit-border-radius: 163px;
+        -moz-border-radius: 163px;
+        border-radius: 163px;
+        background:#CCCCCC;
+        z-index: 10;
+      }
+
       img {
         position: absolute;
         left: 0;
         top: 0;
         -webkit-border-radius: 133px;
-        -webkit-border-radius: 133px;
-        -moz-border-radius: 133px;
         -moz-border-radius: 133px;
         border-radius: 133px;
-        border-radius: 133px;
+        z-index: 20;
       }
 
       div.gradient {
         background-image:url(backgrounds/bkg_circles_gradient.png);
         position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
+        left: 0px;
+        top: 0px;
+        width: 266px;
         height: 266px;
         -webkit-border-radius: 133px;
-        -webkit-border-radius: 133px;
-        -moz-border-radius: 133px;
         -moz-border-radius: 133px;
         border-radius: 133px;
-        border-radius: 133px;
+        z-index: 30;
       }
 
       div.title {
@@ -406,6 +417,7 @@ nav {
         margin: 100px 0;
         width: 100%;
         text-align: center;
+        z-index: 1000;
 
         span {
           @extend .serif;

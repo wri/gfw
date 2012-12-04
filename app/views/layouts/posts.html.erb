@@ -8,8 +8,20 @@
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= csrf_meta_tags %>
   </head>
-  <body class="<%= controller_name %>"<%= raw ' onload="initialize()"' if %w(maps home).include?(controller_name) %>>
+  <body class="<%= controller_name %> <%= action_name %>"<%= raw ' onload="initialize()"' if %w(maps home).include?(controller_name) %>>
     <%= render "common/blog_header" %>
+
+    <div class="navigation">
+
+      <ul>
+        <li><a href="#" class="selected">All posts</a></li>
+        <li><a href="#">Nature</a></li>
+        <li><a href="#">Statistics</a></li>
+        <li><a href="#">Industry</a></li>
+        <li><a href="#">Politics</a></li>
+      </ul>
+
+    </div>
 
     <div id="content">
       <%= yield %>
@@ -22,10 +34,10 @@
 
     <script type="text/javascript">
       <% if request.path.split("/")[1] == "map" %>
-  var showMap = true;
+        var showMap = true;
       <% else %>
-  var showMap = false;
-     <% end %>
-   </script>
- </body>
+        var showMap = false;
+      <% end %>
+    </script>
+  </body>
 </html>

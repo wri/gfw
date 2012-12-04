@@ -26,7 +26,6 @@ body.stories {
       font-size: 51px;
       text-align:center;
     }
-
   }
 
   .featured {
@@ -35,19 +34,37 @@ body.stories {
     li {
       margin-bottom: 20px;
       word-spacing: -1em;
+      position:relative;
+      height: 174px;
+      padding: 50px 0;
 
       img {
+        position:absolute;
+
+        top: 5px;
+        left: 5px;
+
         width: 276px;
         height: 276px;
-        -webkit-border-radius: 133px;
-        -webkit-border-radius: 133px;
-        -moz-border-radius: 133px;
-        -moz-border-radius: 133px;
-        border-radius: 133px;
-        border-radius: 133px;
+        @include border-radius(300px);
       }
 
-      div {
+      &.left  .frame { left: 0px; }
+      &.right .frame { right: 0px; }
+
+      .frame {
+
+        display:block;
+        position:absolute;
+        top: 0px;
+        width: 286px;
+        height: 286px;
+        @include border-radius(300px);
+        background:#EBEBEB;
+        z-index: 10;
+      }
+
+      .content {
         @include inline-block();
         width: 600px;
         word-spacing: normal;
@@ -58,11 +75,12 @@ body.stories {
           font-size:29px;
           text-transform: none;
           font-weight: normal;
+          line-height:normal;
           color: #333333;
 
           &:hover {
             text-decoration: underline;
-          };
+          }
         }
 
         p {
@@ -71,8 +89,7 @@ body.stories {
           font-weight:400;
           line-height: 1.2em;
 
-          color: $cGray1;
-          opacity:0.5;
+          color: $cGray2;
         }
 
         a {
@@ -91,17 +108,15 @@ body.stories {
 
     }
 
-    .left {
+    .right {
       text-align: left;
-
-      div { margin-left: 42px; }
+      .content { text-align: right; }
 
     }
 
-    .right {
+    .left {
       text-align: right;
-
-      div { margin-right: 42px; }
+      .content { text-align:left; }
     }
 
     .pagination {
@@ -113,6 +128,7 @@ body.stories {
   }
 
   .more_stories {
+
     background-color: $cGray5;
     padding: 45px 0;
     text-align: center;
@@ -146,21 +162,25 @@ body.stories {
 
         li {
           @include inline-block();
+          @include size(130px);
 
-          img {
-            width: 117px;
-            height: 117px;
-            margin: 20px;
-            -webkit-border-radius: 58.5px;
-            -webkit-border-radius: 58.5px;
-            -moz-border-radius: 58.5px;
-            -moz-border-radius: 58.5px;
-            border-radius: 58.5px;
-            border-radius: 58.5px;
+          position:relative;
+          margin: 0 20px;
+
+          .frame {
+            @include position(0, false, false, 0);
+            @include size(100%);
+            @include border-radius(300px);
+
+            background:#656565;
+            z-index: 10;
           }
 
+          img {
+            @include absolute-center(117px);
+            @include border-radius(120px);
+          }
         }
-
       }
 
       hr {

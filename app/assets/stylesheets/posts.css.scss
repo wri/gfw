@@ -2,6 +2,90 @@
 @import "compass/reset";
 @import "helpers";
 
+body.posts {
+
+  &.show {
+
+    section { width: 100%; }
+    .navigation { display: none; }
+
+    .the-watcher-logo {
+      @include logos-sprite(watcher_small);
+      width:56px;
+      height:56px;
+    }
+
+    header { height: 180px!important; }
+    hgroup h1, hgroup h2 { font-size: 31px; }
+
+    article h1 {
+
+      text-align: center;
+      a { font-size: 51px; }
+      font-size: 51px;
+
+    }
+
+    ul.meta { text-align: center; }
+    ul.meta li { font-size:15px; }
+    ul.meta li a { font-size:15px; }
+  }
+
+  header {
+    height: 267px!important;
+    background: #fff url(backgrounds/bkg_header.png) repeat-x top center;
+  }
+
+  hgroup {
+    $left: 40px;
+    width: 927px - $left;
+    top: 95px;
+    left: $left;
+    text-align: center;
+
+    h1 {
+      @include inline-block();
+      font-size: 36px;
+      position:static;
+      margin: 0 10px 0 0;
+    }
+
+    h2 {
+      @include inline-block();
+      font-size: 36px;
+      margin: 0 0 0 10px;
+
+      color:$cGray3;
+      position:static;
+    }
+
+    .the-watcher-logo {
+      @include inline-block();
+      @include logos-sprite(watcher);
+      width: 126px;
+      height: 126px;
+    }
+  }
+
+  #content .inner {
+    text-align:center;
+  }
+
+  #content .inner section {
+    margin:auto;
+    text-align: left;
+  }
+
+  #content .inner section article h1 a {
+    color: #333;
+  }
+
+  #content .inner section article p {
+    font-size: 16px;
+  }
+
+}
+
 body.posts,
 body.static,
 body.sources,
@@ -12,10 +96,81 @@ body.countries {
     height: 195px;
   }
 
-  #content { padding: 40px 0 0 0; background: $cWhite; }
-  #content .inner { position:relative; width: 927px; margin: auto; }
+  .navigation {
+    position:relative;
+
+    padding: 25px;
+    text-align: center;
+
+    border-bottom: 1px solid #CCC;
+    background:#fff;
+
+    ul {
+
+      li {
+        @include inline-block();
+        margin: 0 5px 0 5px;
+
+        a {
+          text-decoration: none;
+          font-size:13px;
+          font-weight:bold;
+          color: #A1BA42;
+          @extend .sans-serif;
+          text-transform: uppercase;
+
+          &:hover {
+            color: #666;
+          }
+
+          &.selected {
+            color: #666666;
+          }
+
+        }
+
+      }
+    }
+  }
+
+  #content {
+    padding: 40px 0 0 0;
+    background: $cWhite;
+  }
+
+  #content .inner {
+    position:relative;
+    width: 927px;
+    margin: auto;
+  }
 
   section, aside { @include inline-block(); }
+
+  section .navigation {
+    border:none;
+    text-align: center;
+    padding: 0;
+    background: none;
+
+    .btn.hollow {
+      margin: 0 2px 0 0;
+
+      &.last { margin: 0 0 0 2px; }
+
+      width: 180px;
+
+      line-height: 16px;
+
+      background:none;
+      border: 1px solid #A1BA42;
+
+      @include border-radius(3px);
+
+      &:hover { background: #A1BA42; }
+
+      span { background:none; }
+    }
+  }
 
   aside {
     width:280px;
@@ -130,11 +285,11 @@ body.countries {
         line-height:22px;
       }
 
-        a {
-          color: $cPostBody;
-          text-decoration:underline;
-          &:hover { color: $cDarkGold; }
-        }
+      a {
+        color: $cPostBody;
+        text-decoration:underline;
+        &:hover { color: $cDarkGold; }
+      }
 
 
       .meta {
@@ -173,8 +328,8 @@ body.countries {
   } // .posts
 
   div.comments {
-    background:$cBackground;
-    border: 1px solid #46686D;
+    background:$cWhite;
+    /*border: 1px solid #46686D;*/
     padding: 49px 0 0 0;
 
     h4 {
@@ -259,7 +414,7 @@ body.static {
       width: 100%;
       h1 {
         @extend .serif;
-        font-size:51px; }
+      font-size:51px; }
     }
   }
 
@@ -310,12 +465,12 @@ body.sources {
       padding: 0 0 18px 0;
 
       h1 {
-				margin: 0 0 30px 0;
+        margin: 0 0 30px 0;
         @extend .serif;
-				a {
-        	font-size:29px;
-        	color:$cGray1;
-				}
+        a {
+          font-size:29px;
+          color:$cGray1;
+        }
       }
 
       .footer {
@@ -344,8 +499,8 @@ body.sources {
         }
 
         a {
-					color: $cLime;
-					text-decoration: none;
+          color: $cLime;
+          text-decoration: none;
         }
 
         a.download {
@@ -386,6 +541,4 @@ body.countries {
 
     }
   }
-
 }
-
