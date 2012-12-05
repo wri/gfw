@@ -258,7 +258,10 @@ body.stories {
 
       &.affected-area {
 
-        label, .map-help { display: inline; }
+        label, .map-help {
+          @include inline-block();
+          margin: 0 0 7px 0;
+      }
 
         .map-help {
           @extend .sans-serif;
