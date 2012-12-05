@@ -7,8 +7,8 @@ class Notifications < ActionMailer::Base
   #   en.notifications.new_story.subject
   #
   def new_story(story)
-    @greeting = "Hi"
+    @story = story
 
-    mail to: "admin@gfw.org"
+    mail to: "ferdev@vizzuality.com"
   end
 end

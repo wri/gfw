@@ -10,7 +10,7 @@ class Story < CartoDB::Model::Base
   field :visible,  :type => 'boolean'
   field :token
 
-  set_geometry_type :polygon
+  set_geometry_type :geometry
 
   #validates_each :title, :the_geom, :your_name do |record, attr, value|
   validates_each :title do |record, attr, value|
@@ -35,6 +35,6 @@ class Story < CartoDB::Model::Base
   end
 
   def to_param
-    cartodb_id.to_s
+    token.to_s
   end
 end
