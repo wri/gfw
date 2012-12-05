@@ -9,7 +9,8 @@
   </div>
 
   <div class="field affected-area">
-    <%= f.label      'Affected area' %>
+    <%= f.label             'Affected area' %>
+    <%= f.hidden_field      :the_geom %>
     <span class="map-help">Drop a pin or draw a shape on the map around the affected area</span>
       <div id="map-container">
       <a href="#" class="remove">Remove</a>
