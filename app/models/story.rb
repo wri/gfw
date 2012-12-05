@@ -35,6 +35,6 @@ class Story < CartoDB::Model::Base
   end
 
   def to_param
-    token.to_s
+    cartodb_id.to_s
   end
 end

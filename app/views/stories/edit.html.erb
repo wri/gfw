@@ -1,3 +1,14 @@
-<h2>Edit "<%= @story.title %>" story</h2>
-<%= link_to("Destroy", story_path(@story), :method => :delete, :confirm => "Are you sure?") %>
-<%= render 'form' %>
+<div class="story_form">
+
+  <div class="title">
+    <h2>Edit "<%= @story.title %>" story</h2>
+    <%= link_to("Destroy", story_path(@story), :method => :delete, :confirm => "Are you sure?") %>
+  </div>
+
+  <div class="inner">
+
+    <%= render 'form' %>
+
+  </div>
+
+</div>
