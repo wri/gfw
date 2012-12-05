@@ -3,7 +3,7 @@ class MediaController < ApplicationController
   def create
     image_uploader = ImageUploader.new
     image_uploader.store!(params[:media][:image])
-    @media = Media.create(:image => image_uploader.identifier)
+    @media = Media.create(:image_url => image_uploader.url, :thumbnail_url => image_uploader.thumb.url)
 
     redirect_to @media
   end

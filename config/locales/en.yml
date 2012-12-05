@@ -1,4 +1,7 @@
 en:
+  errors:
+    messages:
+      extension_white_list_error: "error"
   date:
     formats:
       custom: '%B, %Y'

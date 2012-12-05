@@ -1,21 +1,35 @@
 $(function() {
 
-  var drawingManager, selectedShape, selectedMarker, selectedColor;
+  var uploadsIds = [], drawingManager, selectedShape, selectedMarker, selectedColor;
 
   if ($("#map.stories_map").length > 0) {
 
+    $(".upload_picture").on("click", function(e) {
+      e.preventDefault();
+      $("#fileupload").click();
+    });
 
-
-    /*$('#fileupload').fileupload({
+    $('#fileupload').fileupload({
       dataType: 'json',
+
+      drop: function (e, data) {
+        //$.each(data.files, function (index, file) {
+          //alert('Dropped file: ' + file.name);
+        //});
+      },
+
       done: function (e, data) {
-        $.each(data.result, function (index, file) {
-          $('<p/>').text(file.name).appendTo(document.body);
-        });
+        uploadsIds.push(data.result.attributes.cartodb_id);
+
+        $("#story_uploads_ids").val(uploadsIds.join(","));
+
+        //$.each(data.result, function (index, file) {
+        //$('<p/>').text(file.name).appendTo(document.body);
+        //});
       }
     });
 
-*/
+
 
     var $the_geom = $('#story_the_geom');
 

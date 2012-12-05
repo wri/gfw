@@ -11,6 +11,7 @@
   <div class="field affected-area">
     <%= f.label 'Affected area' %>
     <%= f.hidden_field :the_geom %>
+    <%= f.hidden_field :uploads_ids %>
     <span class="map-help">Drop a pin or draw a shape on the map around the affected area</span>
       <div id="map-container">
       <a href="#" class="remove">Remove</a>
@@ -72,6 +73,8 @@
 
 <% end %>
 
+<input id="fileupload" type="file" name="media[image]" data-url="/media" multiple>
+
 <aside>
   <h3>Why submit stories</h3>
   <p>User participation is crucial in forest monitoring. The more people who participate in sharing information, the better.</p>
@@ -82,3 +85,5 @@
   <p>Your stories and photos will help improve forest clearing detection and spur action to stop forest clearing that should not be taking place.</p>
 
 </aside>
+
+
