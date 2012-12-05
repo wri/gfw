@@ -315,7 +315,6 @@ var SubscriptionMap = (function() {
       $modal.center();
 
       $modal.css({ opacity: '0', display: 'block', position: 'fixed' });
-      console.log('entra')
       $modal.stop().animate({opacity: '1'}, 250, function(){
 
         var mapOptions = {
@@ -1012,21 +1011,41 @@ var Legend = (function() {
 
 var Circle = (function() {
 
-  var template, $circle, $title, $counter, $background, $explore, animating = true;
+  var template, $circle, $title, $counter, $background, $explore, animating = true, animatingB = false, circlePID;
+
+  function toggleData() {
+    var data = {};
+
+    if ($icon.hasClass("area")) {
+      data = flagSummary;
+      $icon.removeClass("area");
+    } else {
+      data = areaSummary;
+      $icon.removeClass("flag");
+    }
+
+    $icon.addClass(data.icon);
+    $title.html(data.title);
+    $counter.html(data.count);
+
+  }
 
   function _build(){
 
     if ( $("#circle-template").length > 0 ) {
 
       template    = _.template($("#circle-template").html());
-      $circle     = $(template({ count: summary.count, title: summary.title}));
+      $circle     = $(template(flagSummary));
 
       $title      = $circle.find(".title");
+      $icon       = $circle.find(".icon");
       $counter    = $circle.find(".counter");
       $background = $circle.find(".background");
       $explore    = $circle.find(".explore");
 
       $("#map").append($circle);
+
+      circlePID = _startAnimation();
 
       return true;
     }
@@ -1034,39 +1053,79 @@ var Circle = (function() {
     return false;
   }
 
+  function _startAnimation() {
+    return setInterval(function() {
+      _next();
+    }, 5000);
+  }
+
+  function _next() {
+
+    if (animatingB) return;
+    animatingB = true;
+
+    $icon.animate({ backgroundSize: "10%", opacity: 0 }, 250, "easeOutExpo", function() {
+      $circle.delay(200).animate({ marginLeft: -350, opacity: 0 }, 350, "easeOutQuad", function() {
+        $circle.css({marginLeft: 100 });
+        toggleData();
+        $circle.delay(400).animate({ marginLeft: -1*318/2, opacity: 1 }, 250, "easeOutQuad", function() {
+        $icon.animate({ backgroundSize: "100%", opacity: 1 }, 250, "easeInExpo");
+          animatingB = false;
+        });
+      });
+    });
+
+  }
+
   function _show(delay) {
 
     if (!delay) {
       delay = 0;
     }
+
     var $circle = $(".circle");
+
     $circle.show();
 
     $circle.delay(delay).animate({ top:'50%', marginTop:-1*($circle.height() / 2), opacity: 1 }, 250, function() {
       $title.animate({ opacity: 0.75 }, 150, "easeInExpo");
+
+      $icon.animate({ backgroundSize: "100%", opacity: 1 }, 350, "easeInExpo");
+
       $counter.animate({ opacity: 1 }, 150, "easeInExpo");
       animating = false;
 
       _onMouseLeave();
+
     });
   }
 
   function _onMouseEnter() {
+
+    clearInterval(circlePID);
     if (animating) return;
 
     var $circle = $(".circle");
+
     $circle.find(".title, .counter").stop().animate({ opacity: 0 }, 100, "easeInExpo", function() {
       $circle.find(".explore, .background").stop().animate({ opacity: 1 }, 100, "easeOutExpo");
+      $icon.stop().animate({ backgroundSize: "10%", opacity: 0 }, 200, "easeInExpo");
       $circle.addClass("selected");
     });
   }
 
   function _onMouseLeave() {
+
+    clearInterval(circlePID);
+    circlePID = _startAnimation();
+
     if (animating) return;
+
 
     $circle.find(".explore, .background").stop().animate({ opacity: 0 }, 100, "easeOutExpo", function(){
       $title.animate({ opacity: 0.75 }, 100, "easeOutExpo");
       $counter.animate({ opacity: 1 }, 100, "easeOutExpo");
+      $icon.stop().animate({ backgroundSize: "100%", opacity: 1 }, 200, "easeOutExpo");
       $circle.removeClass("selected");
     });
   }
@@ -1125,6 +1184,7 @@ var Timeline = (function() {
   var
   $timeline      = $(".timeline"),
   $handle        = $timeline.find(".handle"),
+  $coordinates   = $timeline.find(".coordinates"),
   $play          = $timeline.find(".handle .play"),
   animationPid   = null,
   animationDelay = 500,
@@ -1268,6 +1328,18 @@ var Timeline = (function() {
     instance.trigger('change_date', date, monthPos + (date[2] - 2000)*12);
   }
 
+  function _updateCoordinates(latLng) {
+
+    var lat = parseFloat(latLng.lat());
+    var lng = parseFloat(latLng.lng());
+
+    lat = lat.toFixed(2);
+    lng = lng.toFixed(2);
+
+    $coordinates.html(lat + ", " + lng);
+
+  }
+
   function _setDate(pos, stop) {
     _.each(dates, function(date, j) {
 
@@ -1362,6 +1434,7 @@ var Timeline = (function() {
     init: _init,
     hide: _hide,
     show: _show,
+    updateCoordinates: _updateCoordinates,
     isHidden: _isHidden
   });
   return instance;

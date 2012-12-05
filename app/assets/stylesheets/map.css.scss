@@ -14,19 +14,17 @@
   }
 
   .circle {
+
     $width: 318px;
 
-    top: -100px;
-    left: 50%;
+    @include size($width);
+    @include position(-100px, false, false, 50%);
 
-    position:absolute;
     margin-left: -1*$width/2;
     margin-top: -1*$width/2;
 
     opacity:0;
 
-    width: $width;
-    height: $width;
     @include icons-sprite(circle);
 
     text-align:center;
@@ -34,6 +32,36 @@
     .inner {
       position:relative;
       top:100px;
+    }
+
+    .icon {
+      background: url(icons/green_circle.png) no-repeat;
+      background-position: 50% 50%;
+      background-size: 10%;
+
+      @include size(74px);
+      @include position(25px, 25px, false, false);
+
+      opacity: 0;
+
+      z-index: 1000;
+
+      &.flag i {
+        @include absolute-center(26px, 28px);
+        @include icons-sprite(flag);
+        width: 26px;
+        height: 28px;
+      }
+
+      &.area i {
+        @include absolute-center(36px, 34px);
+        @include icons-sprite(area);
+        width: 36px;
+        height: 34px;
+      }
+
+      i { display: block; }
+
     }
 
     .inner > .title {
@@ -313,6 +341,93 @@
 
 }
 
+
+
+.legend_new {
+  display: none;
+
+  width:211px;
+  min-height: 40px;
+
+  @include position(400px, false, false, 100px);
+  @include border-radius(3px);
+  @include box-shadow(0px 0px 3px $cGray2);
+
+  background:#fff;
+  border: 1px solid #666;
+
+  @extend .sans-serif;
+  font-size:11px;
+  color: $cGray3;
+
+  /*display:none;*/
+  /*opacity: 0;*/
+
+  cursor: move;
+
+  .toggle {
+    @include position(2px, -25px, false, false);
+    @include size(25px, 38px);
+    @include icons-sprite(legend_toggle_close);
+  }
+
+  &.closed .toggle { @include icons-sprite(legend_toggle_open); }
+
+  .layer_count {
+
+    height: 20px;
+    line-height: 39px;
+    padding: 0 15px;
+
+    font-size: 11px;
+    color: #bbb;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    display:none;
+  }
+
+  .content {
+
+    overflow:hidden;
+    max-height: 200px;
+
+    ul {
+      &:first-child { border-top: none; }
+
+      border-top: 1px solid $cGray3;
+      padding: 15px;
+
+      li {
+
+        font-size: 13px;
+        display:none;
+        margin: 0 0 5px 0;
+
+        i {
+          @include inline-block();
+          @include size(7px);
+          @include border-radius(100px);
+          background:#ccc;
+
+        }
+
+        strong {
+          font-weight: bold;
+          text-transform: uppercase;
+          font-size: 11px;
+        }
+
+      }
+
+    }
+
+  }
+
+  z-index:1000;
+}
+
+
 .legend {
   position:absolute;
 
@@ -327,25 +442,41 @@
   display:none;
   opacity: 0;
 
+  cursor: move;
+
   z-index:100;
+
+  &.closed .header .toggle { @include icons-sprite(legend_toggle_open); }
+
+  .layer_count {
+    position:absolute;
+    top: 23px;
+    left: 20px;
+    font-size: 11px;
+    color: #bbb;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    display:none;
+  }
 
   & > .header {
     position:relative;
     height:45px - 34;
-    padding: 18px 23px 17px 23px;
-
-    cursor: move;
+    padding: 0;
 
     background:url(backgrounds/bkg_legend.png) no-repeat 0 0;
     text-transform:uppercase;
 
-    .close  { position:absolute; right: 15px; top: 22px; width: 6px; height:6px; @include icons-sprite(legend_close); }
-    .handle { position:absolute; left: 15px;  top: 22px; width: 3px; height:5px; @include icons-sprite(legend_handle); }
+    .toggle { position:absolute; right: -19px; top: 10px;  width: 25px; height:38px; @include icons-sprite(legend_toggle_close); }
   }
 
   & > .content {
     padding: 15px 12px 7px 15px;
     background:url(backgrounds/bkg_legend.png) repeat-y right 0;
+    max-height: 200px;
+    clear:both;
+    overflow:hidden;
 
     ul {
       border-bottom: 1px solid $cSeparator;
@@ -450,6 +581,19 @@ $timelineWidth: 940px;
   -moz-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);    // Firefox v3.5+
   -webkit-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15); // Safari v3.0+ and by Chrome v0.2+
   box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);         // Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+
+}
+
+.coordinates {
+  position:absolute;
+  top: -20px;
+  right: 5px;
+  text-align: right;
+
+  color:#fff;
+  font-weight:bold;
+  @extend .sans-serif;
+  font-size:11px;
+  text-shadow: 0px 0px 3px #222;
 }
 
 .timeline .handle {

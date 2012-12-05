@@ -1,17 +1,3 @@
-<% content_for :js do %>
-
-  <script type="text/javascript">
-    $(document).ready(function(){
-      map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 8,
-        center: new google.maps.LatLng(-34.397, 150.644),
-        mapTypeId: google.maps.MapTypeId.TERRAIN,
-        disableDefaultUI: true
-      });
-    });
-  </script>
-
-<% end %>
 
 <%= form_for :story, :url => @url do |f| %>
 
@@ -23,12 +9,14 @@
   </div>
 
   <div class="field affected-area">
-    <%= f.label      'Affected area' %>
+    <%= f.label             'Affected area' %>
+    <%= f.hidden_field      :the_geom %>
     <span class="map-help">Drop a pin or draw a shape on the map around the affected area</span>
-    <div id="map-container">
-      <div id="zoom_controls"></div>
-      <div id="map" class="map"></div>
-    </div>
+      <div id="map-container">
+      <a href="#" class="remove">Remove</a>
+        <div id="zoom_controls"></div>
+        <div id="map" class="stories_map map"></div>
+      </div>
 
   </div>
 
