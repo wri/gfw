@@ -9,10 +9,21 @@ end %>
 </div>
 <% end %>
 
-<div class="inner">
+<div class="navigation">
+  <ul>
+    <li><a href="#about"><%= t('static.about.about_link')%></a></li>
+    <li><a href="#partners"><%= t('static.about.partners')%></a> </li>    
+    <li><a href="#funders"><%= t('static.about.funders')%></a> </li>
+    <li><a href="#supporters"><%= t('static.about.supporters_providers')%></a> </li>
+    <li><a href="#websiteteam"><%= t('static.about.website_team')%></a></li>
+    <li><a href="#contactus"><%= t('static.about.contact_us')%></a></li>
+  </ul>
+</div>
+
+<div class="narrow_column">
+
   <section>
   <article>
-  <h1><a href="#" name="about"></a><%= t('static.about.title')%></h1>
   <%= raw t('static.about.introduction') %>
 </p>
   </article>
@@ -73,14 +84,4 @@ end %>
 
   </section>
 
-  <aside class="categories">
-  <ul>
-    <li><a href="#about"><%= t('static.about.title')%></a></li>
-    <li><a href="#partners"><%= t('static.about.partners')%></a> </li>    
-    <li><a href="#funders"><%= t('static.about.funders')%></a> </li>
-    <li><a href="#supporters"><%= t('static.about.supporters_providers')%></a> </li>
-    <li><a href="#websiteteam"><%= t('static.about.website_team')%></a></li>
-    <li><a href="#contactus"><%= t('static.about.contact_us')%></a></li>
-  </ul>
-  </aside>
 </div>

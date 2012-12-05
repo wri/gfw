@@ -69,6 +69,8 @@ body.posts {
 
   #content .inner {
     text-align:center;
+    margin: 0 auto;
+    width: 590px;
   }
 
   #content .inner section {
@@ -134,14 +136,8 @@ body.countries {
   }
 
   #content {
-    padding: 40px 0 0 0;
+    padding: 0;
     background: $cWhite;
-  }
-
-  #content .inner {
-    position:relative;
-    width: 927px;
-    margin: auto;
   }
 
   section, aside { @include inline-block(); }
@@ -169,77 +165,6 @@ body.countries {
       &:hover { background: #A1BA42; }
 
       span { background:none; }
-    }
-  }
-
-  aside {
-    width:280px;
-    margin: 0 0 0 40px;
-    vertical-align: top;
-
-    h3 {
-      margin: 0 0 20px 0;
-      padding: 0 0 20px 0;
-
-      border-bottom: 1px solid $cSeparator;
-
-      @extend .sans-serif;
-      font-size:13px;
-      font-weight:bold;
-      text-transform: uppercase;
-
-      color: $cGray1;
-    }
-
-    &.posts ul {
-
-      li {
-        .date {
-          margin: 0 0 5px 0;
-
-          color: $cGray3;
-          @extend .sans-serif;
-          font-size:13px;
-        }
-
-        a {
-          display:block;
-
-          text-transform: none;
-
-          @extend .serif;
-          font-size:18px;
-          font-weight:normal;
-          color: $cGreen;
-
-          line-height: 23px;
-
-          &:hover { color: $cDarkGreen; }
-        }
-      }
-    }
-
-    ul {
-
-      margin: 0 0 60px 0;
-
-      li {
-
-        margin: 0 0 20px 0;
-        padding: 0 0 20px 0;
-
-        border-bottom: 1px solid $cSeparator;
-
-        a { @extend .font-golden; }
-        a.selected { color: $cGray2; }
-
-        .count {
-          float:right;
-          color: #858585;
-          @extend .sans-serif;
-          font-size:13px;
-        }
-      }
     }
   }
 
@@ -403,6 +328,12 @@ body.countries {
   }
 }
 
+body.posts {
+  #content {
+    padding: 40px 0 0 0;
+  }
+}
+
 body.static {
 
   header {
@@ -410,8 +341,15 @@ body.static {
       width: 100%;
       h1 {
         @extend .serif;
-      font-size:51px; }
+        font-size:51px; 
+        text-align: center;
+      }
     }
+  }
+
+  .narrow_column {
+    margin: 40px auto 0 auto;
+    width: 590px;
   }
 
   section {
@@ -422,6 +360,8 @@ body.static {
 
       h1 {
         @extend .serif;
+        text-align: center;
+
         a {
           font-size:29px;
         }
@@ -450,8 +390,14 @@ body.sources {
       h1 {
         @extend .serif;
         font-size:51px;
+        text-align: center;        
       }
     }
+  }
+
+  .narrow_column {
+    margin: 40px auto 0 auto;
+    width: 590px;
   }
 
   section {
@@ -463,6 +409,7 @@ body.sources {
       h1 {
         margin: 0 0 30px 0;
         @extend .serif;
+        text-align: center;
         a {
           font-size:29px;
           color:$cGray1;
