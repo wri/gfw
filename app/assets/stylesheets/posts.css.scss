@@ -381,85 +381,90 @@ body.static {
           font-size:29px;
         }
       }
-    } // article
-  } // section
 
-  ul.logo_list {
-    @include clearfix();
+      ul.logo_list {
+        @include clearfix();        
+        margin: 20px auto 0 auto;
+        padding: 0;
 
-    li {
-      float: left;
+        li {
+          float: left;
+          margin: 0 45px 0 45px;
 
-      a {
-        display: inline-block;
-        width: 110px;
-        height: 80px;
-        background-position:left 0;
-        &:hover {
-          background-position:left -80px;
+          a {
+            display: inline-block;
+            width: 110px;
+            height: 80px;
+            background-repeat: repeat-none;
+            background-position:left 0;
+            &:hover {
+              background-position:left -80px;
+            }
+          }
+
+          a#centerglobaldevelopment {
+            background-image:url(logos/centerglobaldevelopment.png);
+          }
+
+          a#imazon {
+            background-image:url(logos/imazon.png);
+          }
+          a#universitymaryland {
+            background-image:url(logos/universitymaryland.png);
+          }
+          a#carpe {
+            background-image:url(logos/carpe.png);
+          }
+          a#sekala {
+            background-image:url(logos/sekala.png);
+          }
+          a#google {
+            background-image:url(logos/google.png);
+          }
+          a#googleearthengine {
+            background-image:url(logos/googleearthengine.png);
+          }
+          a#esri {
+            background-image:url(logos/esri.png);
+          }
+          a#unep {
+            background-image:url(logos/unep.png);
+          }
+          a#nasa {
+            background-image:url(logos/nasa.png);
+          }
+          a#tilafund {
+            background-image:url(logos/tilafund.png);
+          }
+          a#dutchforeign {
+            background-image:url(logos/dutchforeign.png);
+          }
+          a#danida {
+            background-image:url(logos/danida.png);
+          }
+          span#bobolink {
+            text-indent: -99999px;
+            display: inline-block;
+            width: 110px;
+            height: 80px;
+            background-image:url(logos/bobolink.png);
+          }
+          a#usaid {
+            background-image:url(logos/usaid.png);
+          }
+          a#wri {
+            background-image:url(logos/wri.png);
+          }
+          a#vizzuality {
+            background-image:url(logos/vizzuality.png);
+          }
         }
       }
 
-      a#centerglobaldevelopment {
-        background-image:url(logos/centerglobaldevelopment.png);
-      }
+    } // article
+  } // section
 
-      a#imazon {
-        background-image:url(logos/imazon.png);
-      }
-      a#universitymaryland {
-        background-image:url(logos/universitymaryland.png);
-      }
-      a#carpe {
-        background-image:url(logos/carpe.png);
-      }
-      a#sekala {
-        background-image:url(logos/sekala.png);
-      }
-      a#google {
-        background-image:url(logos/google.png);
-      }
-      a#googleearthengine {
-        background-image:url(logos/googleearthengine.png);
-      }
-      a#esri {
-        background-image:url(logos/esri.png);
-      }
-      a#unep {
-        background-image:url(logos/unep.png);
-      }
-      a#nasa {
-        background-image:url(logos/nasa.png);
-      }
-      a#tilafund {
-        background-image:url(logos/tilafund.png);
-      }
-      a#dutchforeign {
-        background-image:url(logos/dutchforeign.png);
-      }
-      a#danida {
-        background-image:url(logos/danida.png);
-      }
-      span#bobolink {
-        text-indent: -99999px;
-        display: inline-block;
-        width: 120px;
-        height: 80px;
-        background-image:url(logos/bobolink.png);
-      }
-      a#usaid {
-        background-image:url(logos/usaid.png);
-      }
-      a#wri {
-        background-image:url(logos/wri.png);
-      }
-      a#vizzuality {
-        background-image:url(logos/vizzuality.png);
-      }
-    }
-  }
-
-  .contact {
+  #contact {
 
     background-color: $cGray5;
     padding: 45px 0;
@@ -483,6 +488,10 @@ body.static {
         font-weight:400;
         line-height: 1.2em;
         color: $cGray6;
+
+        span.highlight {
+          color: white;
+        }
       }
 
       a {
