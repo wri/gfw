@@ -1,13 +1,25 @@
 $(function() {
 
-  var drawingManager;
-  var selectedShape, selectedMarker;
-  var colors = ['#1E90FF', '#FF1493', '#32CD32', '#FF8C00', '#4B0082'];
-  var selectedColor;
+  var drawingManager, selectedShape, selectedMarker, selectedColor;
 
   if ($("#map.stories_map").length > 0) {
 
-    map = new google.maps.Map(document.getElementById("map"), {
+
+
+    /*$('#fileupload').fileupload({
+      dataType: 'json',
+      done: function (e, data) {
+        $.each(data.result, function (index, file) {
+          $('<p/>').text(file.name).appendTo(document.body);
+        });
+      }
+    });
+
+*/
+
+    var $the_geom = $('#story_the_geom');
+
+    var map = new google.maps.Map(document.getElementById("map"), {
       zoom: 8,
       center: new google.maps.LatLng(-34.397, 150.644),
       mapTypeId: google.maps.MapTypeId.TERRAIN,
@@ -49,6 +61,17 @@ $(function() {
         newShape.type = e.type;
         setSelection(newShape);
 
+        $the_geom.val(JSON.stringify({
+          "type": "MultiPolygon",
+          "coordinates": [
+            [
+              $.map(drawingManager.path, function(latlong, index) {
+                return [[latlong.lng(), latlong.lat()]];
+              })
+            ]
+          ]
+        }));
+
       } else {
 
         drawingManager.setDrawingMode(null);
@@ -57,7 +80,13 @@ $(function() {
 
         selectedMarker = e.overlay;
 
+        $the_geom.val(JSON.stringify({
+          "type": "Point",
+          "coordinates": [ selectedMarker.position.lng(), selectedMarker.position.lat() ]
+        }));
+
       }
+
     });
 
     // Clear the current selection when the drawing mode is changed, or when the
@@ -85,6 +114,7 @@ $(function() {
 
       drawingManager.setOptions({ drawingControl: true });
       drawingManager.path = null;
+      $the_geom.val("");
 
       $(".remove").fadeOut(250);
     }
