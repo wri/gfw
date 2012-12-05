@@ -271,9 +271,29 @@ body.stories {
       }
 
       #map-container {
-        width: 588px;
-        height: 293px;
+        @include size(588px, 293px);
+        position:relative;
         background-color:black;
+
+        .remove {
+          display:none;
+          @include position(5px, 5px, false, false);
+          padding: 7px 6px;
+
+          background: #fff;
+
+          border: 1px solid #333;
+          text-transform: uppercase;
+          color: #999999;
+          font-size: 11px;
+          font-weight:bold;
+          text-decoration: none;
+          @extend .sans-serif;
+
+          z-index:1000;
+        }
+
+
 
         .map {
           height: 293px;
