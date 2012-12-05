@@ -60,8 +60,8 @@
       <ul>
         <% @blog_posts.each do |post| %>
           <li>
-          <h2><%= link_to post.title, post.link %></h2>
-          <%= simple_format truncate(post.body.strip, :length => 250, :omission => "... #{link_to t('.blog_posts.more'), post.link }") %>
+            <h2><%= link_to truncate(post.title, :length => 42), post.link %></h2>
+          <%= simple_format truncate_html(post.body.strip, :length => 250, :omission => "... #{link_to t('.blog_posts.more'), post.link }") %>
           </li>
         <% end %>
       </ul>

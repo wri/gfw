@@ -13,13 +13,15 @@ group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
-  gem "sass-rails", "~> 3.2.3"
+  gem 'sass-rails', '~> 3.2.3'
   gem 'compass', '~> 0.12.1'
-  gem "compass-rails", "~> 1.0.1"
+  gem 'compass-rails', '~> 1.0.1'
 end
 
 gem 'jquery-rails'
 
+gem 'nokogiri'
+gem 'htmlentities'
 
 group :development do
   gem 'heroku'
