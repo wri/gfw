@@ -285,15 +285,11 @@ body.countries {
       p {
 
         &:last-child { margin: 0; }
-
         margin: 0 0 20px 0;
-
         color: $cPostBody;
-
         @extend .sans-serif;
-        font-size:17px;
-        font-weight:300;
-        line-height:22px;
+        font-size:    16px;
+        line-height:  20px;
       }
 
       a {
@@ -522,7 +518,7 @@ body.sources {
 
         p {
           margin: 7px 0 0 0;
-          font-size:15px;
+          font-size:16px;
           color:$cGray2;
           line-height:20px;
         }

@@ -1,7 +1,7 @@
 en:
   date:
     formats:
-      custom: '%e, %B, %Y'
+      custom: '%B, %Y'
   time:
     formats:
       custom: '%R %Z'
@@ -25,7 +25,7 @@ en:
           title: 'Browse forest data <a href="%{url}">by country</a>.'
           title2: 'Interested in data? <a href="%{url}">Download it</a>.'
           data_html: 'You can also <a href="%{url}" class="icon download">download all our data</a>.'
-  
+
   blog:
     read_more: "Read more"
   sources:
@@ -43,7 +43,7 @@ en:
         analysis:
           title: 'Analysis tool'
           text: "Perform forest clearing analysis on the fly and get your answers in real time using our latest data"
-          link: 'Comming soon'
+          link: 'Coming soon'
         keep_updated:
           title: 'Stay updated'
           text: "Subscribe to forest clearing alerts and receive frequent updates on your selected countries"
