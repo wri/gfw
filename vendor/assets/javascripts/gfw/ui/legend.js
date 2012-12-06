@@ -53,6 +53,22 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
   },
 
+  addScroll: function() {
+
+    if (!this.model.get("scrollbar")) {
+      this.model.set("scrollbar", true);
+      this.$el.find(".content").jScrollPane( { showArrows: true });
+      this.api = this.$el.find(".content").data('jsp');
+    } else {
+      this.refreshScroll();
+    }
+
+  },
+
+  refreshScroll:function() {
+    if (this.api) this.api.reinitialise();
+  },
+
   increaseLayerCount: function() {
     this.model.set("layerCount", this.model.get("layerCount") + 1);
   },
@@ -73,10 +89,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
     });
 
-    if (_.size(this.categories) && duplicated) {
-      console.log("duplicated", duplicated);
-      return;
-    }
+    if (_.size(this.categories) && duplicated) return;
 
     if (!this.categories[category]) {
 
@@ -153,7 +166,13 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
       });
 
       var $item = template.render(item.attributes);
-      this.$content.append( $item );
+
+      if (this.model.get("scrollbar")) {
+        this.$content.find(".jspPane").append( $item );
+      } else {
+        this.$content.append( $item );
+      }
+
       this.$content.find("li." + item.attributes.category).fadeIn(250);
       this.$content.find("li#" + item.attributes.cat_id).fadeIn(250);
 
@@ -170,20 +189,25 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
     }
 
-    //this.resize();
+    if (this.model.get("layerCount") > 8) {
+      this.addScroll();
+    }
+
+    this.resize();
 
   },
 
   resize: function() {
 
-    var height = 0;
+    console.log(this.$content.height());
 
-    _.each(this.categories, function(c) {
-      //console.log(c.length);
-    });
+      var that = this;
 
-
-    //this.$content.animate({ height: height }, this.options.speed);
+      var marginTop = 50;
+      var height = marginTop + 30 * (this.$el.find("ul").length - 1) + (20 * this.model.get("layerCount"));
+      this.$content.animate({ height: height }, this.options.speed, function() {
+        that.refreshScroll();
+      });
 
   },
 

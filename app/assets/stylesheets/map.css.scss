@@ -389,8 +389,12 @@
 
   .content {
 
-    overflow:hidden;
     max-height: 200px;
+    height: 40px;
+
+    width: 100%;
+    overflow: auto;
+
 
     ul {
       &:first-child { border-top: none; }
@@ -731,3 +735,102 @@ div.cartodb_infowindow div.top p {display:block; width:170px; max-height:20px; p
 div.cartodb_infowindow div.top p.empty {font-weight:normal; font-style:italic; color:#b7b7b7;}
 div.cartodb_infowindow div.bottom {width:206px; height:15px; background:url('icons/sprite.png') no-repeat right -41px;}
 
+
+.jspContainer {
+  overflow: hidden;
+  position: relative;
+}
+
+.jspPane {
+  position: absolute;
+}
+
+.jspVerticalBar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 7px;
+  margin-right: 10px;
+  height: 100%;
+  background: none;
+}
+
+.jspHorizontalBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 16px;
+  background: none;
+}
+
+.jspVerticalBar *, .jspHorizontalBar * {
+  margin: 0;
+  padding: 0;
+}
+
+.jspCap {
+  display: none;
+}
+
+.jspHorizontalBar .jspCap {
+  float: left;
+}
+
+.jspTrack {
+  background: none;
+  position: relative;
+}
+
+.jspDrag {
+  @include border-radius(3px);
+  background: #ddd;
+  position: relative;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.jspHorizontalBar {
+  .jspTrack, .jspDrag {
+    float: left;
+    height: 100%;
+  }
+}
+
+.jspArrow {
+  background: none;
+  text-indent: -20000px;
+  display: block;
+  cursor: pointer;
+  &.jspDisabled {
+    cursor: default;
+    background: none;
+  }
+}
+
+.jspVerticalBar .jspArrow {
+  height: 16px;
+}
+
+.jspHorizontalBar .jspArrow {
+  width: 16px;
+  float: left;
+  height: 100%;
+}
+
+.jspVerticalBar .jspArrow:focus {
+  outline: none;
+}
+
+.jspCorner {
+  background: #eeeef4;
+  float: left;
+  height: 100%;
+}
+
+/* Yuk! CSS Hack for IE6 3 pixel bug :( */
+
+* html .jspCorner {
+  margin: 0 -3px 0 0;
+}
