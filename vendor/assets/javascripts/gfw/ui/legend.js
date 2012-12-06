@@ -77,6 +77,26 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
     this.model.set("layerCount", this.model.get("layerCount") - 1);
   },
 
+  show: function(callback) {
+    this.model.set("hidden", false);
+
+    this.resize();
+
+    callback && callback();
+
+    return this;
+  },
+
+  toggleItem: function(id, category, category_title, title, color) {
+
+    if (!this.categories[category] || !_.find(this.categories[category].models, function(c) { return id == c.get("cat_id"); }) ) {
+      this.add(id, category, category_title, title, color);
+    } else {
+      this.remove(category, id);
+    }
+
+  },
+
   add: function(id, category, category_title, title, color) {
 
     var duplicated = false;
@@ -131,6 +151,8 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
     });
 
+    this.resize();
+
   },
 
   removeContent: function(category, id) {
@@ -156,7 +178,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
   addContent: function(item) {
 
-    if (this.model.get("hidden")) this.show();
+    //if (this.model.get("hidden")) this.show();
 
     if (this.categories[item.attributes.category].length == 1) {
 
@@ -189,24 +211,18 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
     }
 
-    if (this.model.get("layerCount") > 8) {
-      this.addScroll();
-    }
-
     this.resize();
 
   },
 
   resize: function() {
 
-    console.log(this.$content.height());
-
       var that = this;
 
-      var marginTop = 50;
-      var height = marginTop + 30 * (this.$el.find("ul").length - 1) + (20 * this.model.get("layerCount"));
+      var marginTop = 12;
+      var height = marginTop + 54 * (this.$el.find("ul").length) + (10 * this.model.get("layerCount"));
       this.$content.animate({ height: height }, this.options.speed, function() {
-        that.refreshScroll();
+        that.addScroll();
       });
 
   },

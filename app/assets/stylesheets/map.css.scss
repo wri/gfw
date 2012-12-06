@@ -360,7 +360,7 @@
   font-size:11px;
   color: $cGray3;
 
-  /*display:none;*/
+  display:none;
   /*opacity: 0;*/
 
   cursor: move;
@@ -376,7 +376,7 @@
   .layer_count {
 
     height: 20px;
-    line-height: 39px;
+    line-height: 40px;
     padding: 0 15px;
 
     font-size: 11px;
@@ -749,7 +749,7 @@ div.cartodb_infowindow div.bottom {width:206px; height:15px; background:url('ico
   position: absolute;
   top: 0;
   right: 0;
-  width: 7px;
+  width: 4px;
   margin-right: 10px;
   height: 100%;
   background: none;

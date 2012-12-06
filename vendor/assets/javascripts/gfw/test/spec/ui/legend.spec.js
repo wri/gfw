@@ -52,8 +52,6 @@ describe("common.ui.view.Legend", function() {
     widget.add(2, "category", "Category Title", "title 2", "blue");
     widget.add(3, "category", "Category Title", "title 3", "blue");
 
-    expect(widget.model.get("hidden")).toBe(false);
-
     expect(_.size(widget.categories)).toEqual(1);
     expect(widget.categories.category.length).toEqual(3);
     expect(widget.model.get("layerCount")).toEqual(3);
@@ -67,8 +65,6 @@ describe("common.ui.view.Legend", function() {
 
     widget.add(1, "category", "Category Title", "title", "red");
     widget.add(2, "category_two", "Category Title 2", "title 2", "blue");
-
-    expect(widget.model.get("hidden")).toBe(false);
 
     expect(_.size(widget.categories)).toEqual(2);
     expect(widget.categories.category.length).toEqual(1);
@@ -129,11 +125,13 @@ describe("common.ui.view.Legend", function() {
 
   it("if there one items left the legend shouldn't be hidden", function() {
 
+    widget.show();
+
     widget.add(1, "category", "Category Title", "title", "red");
     widget.add(2, "category", "Category Title", "title 2", "blue");
     widget.remove("category", 1);
 
-    expect(widget.model.get("hidden")).toBeFalsy();
+    expect(widget.model.get("hidden")).toEqual(false);
 
   });
 
@@ -141,11 +139,12 @@ describe("common.ui.view.Legend", function() {
 
     widget.add(1, "category", "Category Title", "title", "red");
     widget.add(2, "category", "Category Title", "title 2", "blue");
+
     widget.remove("category", 1);
     widget.remove("category", 2);
 
-    expect(widget.model.get("hidden")).toBeTruthy();
     expect(widget.model.get("layerCount")).toEqual(0);
+    expect(widget.model.get("hidden")).toEqual(true);
 
   });
 
@@ -165,6 +164,25 @@ describe("common.ui.view.Legend", function() {
 
     widget.close();
     expect(widget.$el.find(".layer_count").text()).toEqual("8 layers");
+
+  });
+
+  it("should allow to toggle an item", function() {
+
+    widget.toggleItem(1, "countries", "Countries", "Spain", "red")
+    widget.toggleItem(2, "countries", "Countries", "Greece", "green")
+    widget.toggleItem(3, "countries", "Countries", "Italy", "yellow")
+    widget.toggleItem(4, "countries", "Countries", "France", "blue")
+
+    expect(widget.model.get("layerCount")).toEqual(4);
+
+    widget.toggleItem(1, "countries", "Countries", "Spain", "red")
+    widget.toggleItem(4, "countries", "Countries", "France", "blue")
+
+    expect(widget.model.get("layerCount")).toEqual(2);
+
+
+
 
   });
 
