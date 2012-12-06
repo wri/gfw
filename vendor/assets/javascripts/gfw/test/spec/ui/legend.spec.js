@@ -164,7 +164,7 @@ describe("common.ui.view.Legend", function() {
     expect(widget.model.get("layerCount")).toEqual(8);
 
     widget.close();
-    widget.$el.find(".layer_count");
+    expect(widget.$el.find(".layer_count").text()).toEqual("8 layers");
 
   });
 

@@ -200,6 +200,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
     if (this.model.get("closed")) {
 
       that.model.set("contentHeight", that.$content.height());
+      that.$layer_count.html( that.model.get("layerCount") + " layers");
       that.$content.animate({ opacity: 0, height: that.defaults.minHeight }, that.defaults.speed, function() {
         that.$layer_count.fadeIn(250);
       });
