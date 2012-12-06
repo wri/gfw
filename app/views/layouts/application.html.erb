@@ -5,10 +5,10 @@
     <script src="http://d3js.org/d3.v2.js"></script>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing&language=<%= I18n.locale %>"></script>
     <link rel="icon"type="image/png" href="<%= image_path 'favicon_32x32.ico' %>" />
-
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= csrf_meta_tags %>
   </head>
+
   <body class="<%= controller_name %>"<%= raw ' onload="initialize()"' if %w(maps home).include?(controller_name) %>>
     <%= render "common/header" %>
 
@@ -19,14 +19,15 @@
 
     <%= render "common/footer" %>
     <%= javascript_include_tag "application" %>
+
     <%= yield :js %>
 
     <script type="text/javascript">
       <% if request.path.split("/")[1] == "map" %>
-  var showMap = true;
+        var showMap = true;
       <% else %>
-  var showMap = false;
-     <% end %>
-   </script>
- </body>
+        var showMap = false;
+      <% end %>
+    </script>
+  </body>
 </html>

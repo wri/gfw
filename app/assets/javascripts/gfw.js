@@ -539,9 +539,13 @@ GFW.modules.maplayer = function(gfw) {
 
         Filter.check(this.layer.get('id'));
         Legend.toggleItem(this.layer.get('id'), this.layer.get('slug'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
+        //_Legend.add(this.layer.get('id'), this.layer.get('slug'), this.layer.get('slug'), this.layer.get('title'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
+
+
       } else if (this.layer.get('table_name') == 'gfw2_forma') {
           //show the legend on map start for forma
           Legend.toggleItem(this.layer.get('id'), this.layer.get('slug'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
+          //_Legend.add(this.layer.get('id'), this.layer.get('slug'), this.layer.get('slug'),  this.layer.get('title'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
       }
 
     },
@@ -583,6 +587,7 @@ GFW.modules.maplayer = function(gfw) {
 
       if (category != 'Forest clearing') {
         Legend.toggleItem(id, slug, title, category, title_color, title_subs, visible);
+        _Legend.add(id, slug, category, title, title_color, title_subs, visible);
       }
 
       if (slug === 'semi_monthly' || slug === "annual" || slug === "brazilian_amazon") {

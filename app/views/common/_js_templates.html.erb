@@ -12,6 +12,30 @@
   </script>
 
 
+  <script id="timeline-template" type="text/x-underscore-template">
+    <div class="inner">
+      <ul class="years">
+        <li><a href="#">2006</a></li>
+        <li><a href="#">2007</a></li>
+        <li><a href="#">2008</a></li>
+        <li><a href="#">2009</a></li>
+        <li><a href="#">2010</a></li>
+        <li><a href="#">2011</a></li>
+        <li><a href="#">2012</a></li>
+        <li class="disabled"><a href="#">2013</a></li>
+      </ul>
+      <div class="coordinates"></div>
+      <div class="constraint_handler">
+        <div class="handle">
+          <a href="#" class="play"></a>
+          <div><strong>JAN</strong> 2006</div>
+        </div>
+      </div>
+    </div>
+  </script>
+
+
+
 
   <script id="legend-item-double-template" type="text/x-underscore-template">
     <li id="{{ id }}" class="{{ category }}">
@@ -25,9 +49,8 @@
   <script id="legend-template" type="text/x-underscore-template">
     <div class="legend">
       <div class="header">
-        <strong>Legend</strong>
-        <a href="#" class="handle"></a>
-        <a href="#" class="close"></a>
+        <div class="layer_count">7 layers</div>
+        <a href="#" class="toggle"></a>
       </div>
       <div class="content">
         {{ layers }}
@@ -75,5 +98,26 @@
       </div>
     </div>
   </script>
+
+
+
+  <script id="new-legend-template" type="text/x-underscore-template">
+    <a href="#" class="toggle"></a>
+    <div class="layer_count">0 layers</div>
+    {{ layers }}
+    <div class="content"></div>
+  </script>
+
+  <script id="new-legend-group-template" type="text/x-underscore-template">
+    <ul class="{{category}}">
+      <li class="{{ category }}"><strong>{{category_title}}</strong></li>
+      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{color}};"></i> {{title}} </li>
+    </ul>
+  </script>
+
+  <script id="new-legend-item-template" type="text/x-underscore-template">
+    <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{color}};"></i> {{title}} </li>
+  </script>
+
 
 <% end %>

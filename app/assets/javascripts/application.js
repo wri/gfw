@@ -12,6 +12,10 @@
 //= require class
 //= require backbone.cartodb
 //= require d3.v2.min
+//= require gfw/gfw
+//= require jquery.fileupload
+//= require jquery.fileupload-ui
+//= require jquery.fileupload-fp
 //= require_tree .
 
 // Map needs to be a global var or
@@ -22,23 +26,24 @@ map           = null,
 previousState = null,
 subscribeMap;
 
+_Legend = {};
+
 
 // Map init method
 function initialize() {
 
-  var
-  State = History.getState(),
-  hash  = parseHash(State.hash);
+  gfw.load('/assets/gfw/', function() {
+    _Legend = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
+    $("body").append(_Legend.render());
+    _Legend.setDraggable(true);
+    window.legend = _Legend;
 
-  if (hash) {
-    config.mapOptions.center = hash.center;
-    config.mapOptions.zoom   = hash.zoom;
-  }
 
   // Initialise the google map
   map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 
-  var map_style = {};
+  //map.mapTypes.set('black_and_white', config.mapStyles.blackAndWhite);
+  //map.setMapTypeId('black_and_white');
 
   GFW(function(env) {
 
@@ -52,6 +57,16 @@ function initialize() {
     GFW.env = env;
 
   });
+  });
+
+  var
+  State = History.getState(),
+  hash  = parseHash(State.hash);
+
+  if (hash) {
+    config.mapOptions.center = hash.center;
+    config.mapOptions.zoom   = hash.zoom;
+  }
 
 }
 

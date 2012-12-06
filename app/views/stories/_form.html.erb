@@ -42,7 +42,9 @@
   </div>
 
   <div class="field media">
+
     <%= f.label      :media %>
+
     <div class="thumbnails">
       <%= link_to '', '#', :class => 'upload_picture' %>
     </div>
@@ -73,6 +75,7 @@
 
 <% end %>
 
+    <div class="files"></div>
 <input id="fileupload" type="file" name="media[image]" data-url="/media" multiple>
 
 <aside>

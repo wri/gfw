@@ -12,20 +12,44 @@ $(function() {
     $('#fileupload').fileupload({
       dataType: 'json',
 
+      added: function (e, data) {
+      console.log(e, data);
+        //$.each(data.files, function (index, file) {
+          //alert('Dropped file: ' + file.name);
+        //});
+      },
       drop: function (e, data) {
         //$.each(data.files, function (index, file) {
           //alert('Dropped file: ' + file.name);
         //});
       },
 
+      add: function (e, data) {
+        var files = data.files;
+
+        _.each(files, function(file, i) {
+        console.log(file);
+          var $thumb = $("<div class='thumbnail' />");
+          $(".thumbnails").append($thumb);
+        });
+
+        $(".thumbnail").each(function(i, thumb) {
+          $(thumb).delay((i+1) * 300).animate({ opacity: 1 }, 350);
+        });
+
+        data.submit();
+
+      },
+
       done: function (e, data) {
-        uploadsIds.push(data.result.attributes.cartodb_id);
+        $.each(data.result, function (index, file) {
+
+          console.log("-", file);
+          uploadsIds.push(file.cartodb_id);
+          //$('<p/>').text(file.name).appendTo(document.body);
+        });
 
         $("#story_uploads_ids").val(uploadsIds.join(","));
-
-        //$.each(data.result, function (index, file) {
-        //$('<p/>').text(file.name).appendTo(document.body);
-        //});
       }
     });
 
