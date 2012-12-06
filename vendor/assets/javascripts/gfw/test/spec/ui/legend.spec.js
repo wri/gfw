@@ -1,0 +1,171 @@
+/*
+* common.ui.view.Legend
+*
+*/
+describe("common.ui.view.Legend", function() {
+
+  var widget;
+
+  beforeEach(function() {
+
+    widget = new gfw.ui.view.Legend({
+      model: new gfw.ui.model.Legend
+    });
+
+    $("body").append(widget.render());
+
+  });
+
+  afterEach(function() {
+
+    $("body").find(".legend_new").remove();
+    widget.clean();
+
+  });
+
+  it("should be hidden by default", function() {
+    expect(widget.model.get("hidden")).toBeTruthy();
+  });
+
+  it("should have a layerCount", function() {
+    expect(widget.model.get("layerCount")).toEqual(0);
+  });
+
+  it("should allow to increase the layerCount", function() {
+    widget.increaseLayerCount();
+    widget.increaseLayerCount();
+    widget.increaseLayerCount();
+    expect(widget.model.get("layerCount")).toEqual(3);
+  });
+
+  it("should allow to decrease the layerCount", function() {
+    widget.model.set("layerCount", 10);
+    widget.decreaseLayerCount();
+    widget.decreaseLayerCount();
+    widget.decreaseLayerCount();
+    expect(widget.model.get("layerCount")).toEqual(7);
+  });
+
+  it("should allow to add an item", function() {
+
+    widget.add(1, "category", "Category Title", "title", "red");
+    widget.add(2, "category", "Category Title", "title 2", "blue");
+    widget.add(3, "category", "Category Title", "title 3", "blue");
+
+    expect(widget.model.get("hidden")).toBe(false);
+
+    expect(_.size(widget.categories)).toEqual(1);
+    expect(widget.categories.category.length).toEqual(3);
+    expect(widget.model.get("layerCount")).toEqual(3);
+
+    expect(widget.$el.find(".content ul.category").length).toEqual(1);
+    expect(widget.$el.find(".content ul.category li").length).toEqual(4);
+
+  });
+
+  it("should allow to add items in different categories", function() {
+
+    widget.add(1, "category", "Category Title", "title", "red");
+    widget.add(2, "category_two", "Category Title 2", "title 2", "blue");
+
+    expect(widget.model.get("hidden")).toBe(false);
+
+    expect(_.size(widget.categories)).toEqual(2);
+    expect(widget.categories.category.length).toEqual(1);
+    expect(widget.categories.category_two.length).toEqual(1);
+
+    expect(widget.model.get("layerCount")).toEqual(2);
+
+    expect(widget.$el.find(".content ul").length).toEqual(2);
+
+  });
+
+  it("shouldn't allow to add the same item twice", function() {
+
+    widget.add(1, "category", "Category Title", "title", "red");
+    widget.add(1, "category", "Category Title", "title", "red");
+    widget.add(1, "category_two", "Category Title", "title", "red");
+
+    expect(_.size(widget.categories)).toEqual(1);
+    expect(widget.categories.category.length).toEqual(1);
+    expect(widget.$el.find(".content ul").length).toEqual(1);
+    expect(widget.$el.find(".content ul li").length).toEqual(2);
+
+    expect(widget.model.get("layerCount")).toEqual(1);
+
+  });
+
+  it("should allow to remove an item", function() {
+
+    widget.add(1, "category", "Category Title", "title", "red");
+    widget.remove("category", 1);
+    expect(widget.model.get("layerCount")).toEqual(0);
+
+    expect(_.size(widget.categories)).toEqual(0);
+
+  });
+
+  it("should allow to remove an item (2)", function() {
+
+    widget.add(1, "category", "Category Title", "title", "red");
+    widget.add(2, "category", "Category Title", "title 2", "blue");
+    widget.remove("category", 1);
+
+    expect(_.size(widget.categories)).toEqual(1);
+
+  });
+
+  it("should allow to add and remove the same item", function() {
+
+    widget.add(1, "category", "Category Title", "title", "red");
+    widget.remove("category", 1);
+    widget.add(1, "category", "Category Title", "title", "red");
+
+    expect(_.size(widget.categories)).toEqual(1);
+    expect(widget.categories.category.length).toEqual(1);
+    expect(widget.model.get("layerCount")).toEqual(1);
+
+  });
+
+  it("if there one items left the legend shouldn't be hidden", function() {
+
+    widget.add(1, "category", "Category Title", "title", "red");
+    widget.add(2, "category", "Category Title", "title 2", "blue");
+    widget.remove("category", 1);
+
+    expect(widget.model.get("hidden")).toBeFalsy();
+
+  });
+
+  it("if there's no items left the legend should be hidden", function() {
+
+    widget.add(1, "category", "Category Title", "title", "red");
+    widget.add(2, "category", "Category Title", "title 2", "blue");
+    widget.remove("category", 1);
+    widget.remove("category", 2);
+
+    expect(widget.model.get("hidden")).toBeTruthy();
+    expect(widget.model.get("layerCount")).toEqual(0);
+
+  });
+
+
+  it("should show the number of layers on close", function() {
+
+    widget.add(1, "countries", "Countries", "Spain", "red")
+    widget.add(2, "countries", "Countries", "Greece", "green")
+    widget.add(3, "countries", "Countries", "Italy", "yellow")
+    widget.add(4, "countries", "Countries", "France", "blue")
+    widget.add(11, "colors", "Colors", "Red", "red")
+    widget.add(12, "colors", "Colors", "Green", "green")
+    widget.add(13, "colors", "Colors", "Yellow", "yellow")
+    widget.add(14, "colors", "Colors", "Blue", "blue")
+
+    expect(widget.model.get("layerCount")).toEqual(8);
+
+    widget.close();
+    widget.$el.find(".layer_count");
+
+  });
+
+});
