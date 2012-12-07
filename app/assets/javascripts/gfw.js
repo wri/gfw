@@ -156,7 +156,7 @@ GFW.modules.app = function(gfw) {
     _setupListeners: function(){
       var that = this;
 
-      Legend.init();
+      //Legend.init();
 
       // Setup listeners
       google.maps.event.addListener(this._map, 'zoom_changed', function() {
@@ -520,14 +520,15 @@ GFW.modules.maplayer = function(gfw) {
         this.layer.attributes["visible"] = true;
 
         Filter.check(this.layer.get('id'));
-        Legend.toggleItem(this.layer.get('id'), this.layer.get('slug'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
-        _Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
+        //Legend.toggleItem(this.layer.get('id'), this.layer.get('slug'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
+        legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
 
 
       } else if (this.layer.get('table_name') == 'gfw2_forma') {
         //show the legend on map start for forma
-        Legend.toggleItem(this.layer.get('id'), this.layer.get('category_name'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
-        _Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
+        //Legend.toggleItem(this.layer.get('id'), this.layer.get('category_name'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
+        //console.log(legend);
+        legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
       }
 
 
@@ -573,8 +574,8 @@ GFW.modules.maplayer = function(gfw) {
       sad           = GFW.app.datalayers.LayersObj.get(567);
 
       if (category != 'Forest clearing') {
-        Legend.toggleItem(id, slug, title, category, title_color, title_subs, visible);
-        _Legend.toggleItem(id, category_slug, category, title, category_color, title_color);
+        //Legend.toggleItem(id, slug, title, category, title_color, title_subs, visible);
+        legend.toggleItem(id, category_slug, category, title, category_color, title_color);
       }
 
       if (slug === 'semi_monthly' || slug === "annual" || slug === "brazilian_amazon") {
@@ -597,8 +598,9 @@ GFW.modules.maplayer = function(gfw) {
           sad.attributes['visible']  = true;
         }
 
-        Legend.reset(id, slug, title, category, title_color, title_subs);
-        _Legend.replace(id, category_slug, category, title, category_color, title_color);
+        //Legend.reset(id, slug, title, category, title_color, title_subs);
+        console.log('replacing');
+        legend.replace(id, category_slug, category, title, category_color, title_color);
 
       } else {
 

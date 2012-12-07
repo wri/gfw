@@ -430,9 +430,10 @@ var Navigation = (function() {
 
     _hideOverlays();
 
-    Legend.hide();
-    _Legend.hide();
+    //Legend.hide();
+    legend.hide();
     layerSelector.hide();
+
     Navigation.select("home");
 
     Filter.hide(function() {
@@ -485,10 +486,10 @@ var Navigation = (function() {
     Navigation.select("map");
 
     Circle.hide();
-    Legend.show();
+    //Legend.show();
 
     layerSelector.show();
-    _Legend.show();
+    legend.show();
 
     _stopMapAnimation();
 

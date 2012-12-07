@@ -12,11 +12,11 @@
 //= require class
 //= require backbone.cartodb
 //= require d3.v2.min
-//= require gfw/gfw
 //= require jquery.fileupload
 //= require jquery.fileupload-ui
 //= require jquery.fileupload-fp
 //= require_tree .
+//= require gfw/gfw
 
 // Map needs to be a global var or
 // CapybaraHelpers#draw_polygon won't work
@@ -26,7 +26,7 @@ map           = null,
 previousState = null,
 subscribeMap;
 
-_Legend = {},
+legend        = {},
 layerSelector = {};
 
 // Map init method
@@ -34,20 +34,18 @@ function initialize() {
 
   gfw.load('/assets/gfw/', function() {
 
-    // Initialise the google map
     map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 
     layerSelector = new gfw.ui.view.LayerSelector({ map: map });
-    _Legend       = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
+    legend        = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
 
     $("#map").append(layerSelector.render());
-    $("#map").append(_Legend.render());
+    $("#map").append(legend.render());
 
-    _Legend.setDraggable(true);
-    //layerSelector.setDraggable(true);
+    legend.setDraggable(true);
 
-    window.legend = layerSelector;
-    window.legend = _Legend;
+    window.layerSelector = layerSelector;
+    window.legend        = legend;
 
 
   //map.mapTypes.set('black_and_white', config.mapStyles.blackAndWhite);

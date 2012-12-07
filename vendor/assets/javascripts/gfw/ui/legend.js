@@ -136,12 +136,13 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
   replace: function(id, category, category_title, title, category_color, title_color) {
 
-    var that     = this;
+    var that = this;
 
     if (this.categories[category]) {
+
       _.each(this.categories[category].models, function(c) {
 
-        that.removeContent(category, id);
+        that.removeContent(category, c.get("id"), true);
         that.categories[category].remove(c);
         that.decreaseLayerCount();
 
@@ -178,10 +179,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
   remove: function(id) {
 
-    console.log(id);
-
     var that     = this;
-
     var item     = this.findItem(id);
 
     if (!item) return;
@@ -206,11 +204,13 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
     });
 
-    this.resize();
+    setTimeout( function() {
+      that.resize();
+    }, 300);
 
   },
 
-  removeContent: function(category, id) {
+  removeContent: function(category, id, hide) {
 
     if (this.categories[category].length == 1) {
 
@@ -218,7 +218,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
         $(this).remove();
       });
 
-      if (_.size(this.categories) == 1) {
+      if (!hide && _.size(this.categories) == 1) {
         this.hide();
       }
 
@@ -233,6 +233,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
   },
 
   addContent: function(item) {
+    var that = this;
 
     //if (this.model.get("hidden")) this.show();
 
@@ -267,7 +268,9 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
     }
 
-    this.resize();
+    setTimeout( function() {
+      that.resize();
+    }, 300);
 
   },
 
