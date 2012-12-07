@@ -358,6 +358,9 @@ gfw.ui.view.Widget = gfw.core.View.extend({
 
   onStopDragging: function(e, el) {
 
+    //e && e.preventDefault();
+    //e && e.stopImmediatePropagation();
+
     this.setPosition(el.position.left, el.position.top);
 
   },

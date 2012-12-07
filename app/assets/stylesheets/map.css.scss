@@ -365,13 +365,10 @@
   &.closed .toggle { @include icons-sprite(legend_toggle_open); }
 
   .layers {
-    width: 100%;
-
-    height: 0;
+    @include size(100%, 0);
     opacity: 0;
 
     li {
-      padding: 10px;
       border-bottom: 1px solid #ddd;
 
       &:last-child { border:none; }
@@ -380,9 +377,18 @@
 
   .layers li, .selected_layer li {
 
-    @extend .sans-serif;
-    font-size:13px;
-    color: $cGray2;
+    cursor: move;
+    padding: 10px;
+
+    a {
+      display:block;
+      @extend .sans-serif;
+      font-size:13px;
+      color: $cGray2;
+      text-decoration:none;
+
+      &:hover { color: $cGray1; }
+    }
 
     &.satellite   i { @include icons-sprite(map_satellite); }
     &.terrain     i { @include icons-sprite(map_terrain); }
@@ -398,11 +404,7 @@
   }
 
   .selected_layer {
-
-    height: 20px;
-    line-height: 40px;
-    padding: 0 10px;
-
+    height: 40px;
   }
 }
 

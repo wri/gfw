@@ -78,6 +78,52 @@ describe("common.ui.view.LayerSelector", function() {
     expect(widget.$layers.find("li").length).toEqual(widget.layers.length);
   });
 
+  it("should trigger a change action when the user clicks in a layer", function() {
+
+    var spy = spyOn(widget, 'onLayerClick');
+    widget.delegateEvents();
+
+    widget.open();
+
+    waits(550);
+
+    runs(function(){
+      $(widget.$layers.find("li")[0]).find("a").click();
+      expect(spy).toHaveBeenCalled();
+    });
+
+  });
+
+  it("should open the layer selector when the user clicks in the selected layer", function() {
+
+    widget.open();
+
+    waits(550);
+
+    runs(function(){
+      widget.$selected_layer.find("li a").click();
+      expect(widget.model.get("closed")).toEqual(false);
+    });
+
+  });
+  it("should allow to change layers", function() {
+
+    widget.open();
+
+    waits(550);
+
+    runs(function(){
+      $(widget.$layers.find("li")[1]).find("a").click();
+
+      var layer = widget.layers.find(function(layer) { return layer.get("selected"); });
+
+      expect(layer.get("title")).toEqual("Terrain");
+      expect(widget.model.get("closed")).toEqual(true);
+
+    });
+
+  });
+
   /*it("should hide the list of layers on close", function() {
 
     waits(250);

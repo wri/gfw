@@ -24,7 +24,8 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
 
   events: {
 
-    "click .toggle": "_toggleOpen"
+    "click .toggle": "_toggleOpen",
+    "click li a ": "onLayerClick"
 
   },
 
@@ -35,7 +36,7 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
 
   initialize: function() {
 
-    _.bindAll( this, "toggle", "toggleOpen", "toggleDraggable", "onStopDragging", "addLayers", "addSelectedLayer" );
+    _.bindAll( this, "toggle", "toggleOpen", "toggleDraggable", "onStopDragging", "onLayerClick", "addLayers", "addSelectedLayer" );
 
     this.options = _.extend(this.options, this.defaults);
 
@@ -44,6 +45,8 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
     this.layers.add(new gfw.ui.model.Layer({ title: "Satellite",   name: "satellite", selected: true }));
     this.layers.add(new gfw.ui.model.Layer({ title: "Terrain",     name: "terrain" }));
     this.layers.add(new gfw.ui.model.Layer({ title: "Tree Height", name: "tree_height" }));
+
+    this.selectedLayer = this.layers.find(function(layer) { return layer.get("selected"); });
 
     this.model = new gfw.ui.model.LayerSelector();
 
@@ -79,14 +82,13 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
 
   addSelectedLayer: function() {
 
-    var layer = this.layers.find(function(layer) { return layer.get("selected"); });
-
     var template = new gfw.core.Template({
       template: $("#layer-template").html(),
       type: 'mustache'
     });
 
-    this.$selected_layer.append(template.render( layer.toJSON() ));
+    this.$selected_layer.empty();
+    this.$selected_layer.append(template.render( this.selectedLayer.toJSON() ));
 
   },
 
@@ -103,11 +105,9 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
       });
 
     } else {
-    console.log("open", this.$el,this.$selected_layer);
 
       var marginTop = 10;
       var height    = marginTop + 40 * that.layers.length;
-      console.log(height, this.$layers);
 
       that.$el.removeClass("closed");
 
@@ -116,6 +116,39 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
       });
 
     }
+
+  },
+
+  onLayerClick: function(e) {
+
+    e && e.preventDefault();
+    e && e.stopImmediatePropagation();
+
+    var $li  = $(e.target).closest("li");
+    var name = $li.attr("id");
+    console.log(name);
+
+    if (this.selectedLayer.get("name") == name) {
+    console.log($li.parent().attr("class"));
+
+      if ($li.parent().hasClass("selected_layer")) {
+        this.open();
+      } else {
+        this.close();
+      }
+
+      return;
+    }
+
+    var layer = this.layers.find(function(layer) { return name == layer.get("name"); });
+
+    this.selectedLayer.set("selected", false);
+    layer.set("selected", true);
+    this.selectedLayer = layer;
+
+    this.addSelectedLayer();
+
+    this.close();
 
   },
 
