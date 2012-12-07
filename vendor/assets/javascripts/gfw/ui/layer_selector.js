@@ -42,9 +42,9 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
 
     this.layers = new gfw.ui.collection.Layers();
 
-    this.layers.add(new gfw.ui.model.Layer({ mapType: google.maps.MapTypeId.SATELLITE, title: "Satellite",   name: "satellite", selected: true }));
-    this.layers.add(new gfw.ui.model.Layer({ mapType: google.maps.MapTypeId.TERRAIN, title: "Terrain",     name: "terrain" }));
-    this.layers.add(new gfw.ui.model.Layer({ mapType: google.maps.MapTypeId.SATELLITE, title: "Tree Height", name: "tree_height" }));
+    this.layers.add(new gfw.ui.model.Layer({ mapType: google.maps.MapTypeId.TERRAIN, title: "Terrain",     name: "terrain", selected: true }));
+    this.layers.add(new gfw.ui.model.Layer({ mapType: google.maps.MapTypeId.SATELLITE, title: "Satellite",   name: "satellite", }));
+    this.layers.add(new gfw.ui.model.Layer({ customMapType:"TREEHEIGHT", mapType: config.mapStyles.TREEHEIGHT, title: "Tree Height", name: "tree_height" }));
 
     this.selectedLayer = this.layers.find(function(layer) { return layer.get("selected"); });
 
@@ -144,7 +144,12 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
     layer.set("selected", true);
     this.selectedLayer = layer;
 
-    this.options.map.setMapTypeId(layer.get("mapType"));
+    if (layer.get("customMapType")) {
+      this.options.map.mapTypes.set(layer.get("customMapType"), layer.get("mapType"));
+      this.options.map.setMapTypeId(layer.get("customMapType"));
+    } else {
+      this.options.map.setMapTypeId(layer.get("mapType"));
+    }
 
     this.addSelectedLayer();
 

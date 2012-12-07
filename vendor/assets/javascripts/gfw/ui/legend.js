@@ -276,13 +276,13 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
   resize: function() {
 
-      var that = this;
+    var that = this;
 
-      var marginTop = 12;
-      var height = marginTop + 54 * (this.$el.find("ul").length) + (17 * this.model.get("layerCount"));
-      this.$content.animate({ height: height }, this.options.speed, function() {
-        that.addScroll();
-      });
+    var marginTop = 12;
+    var height = marginTop + 54 * (this.$el.find("ul").length) + (17 * this.model.get("layerCount"));
+    this.$content.animate({ height: height }, this.options.speed, function() {
+      that.addScroll();
+    });
 
   },
 

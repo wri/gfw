@@ -61,7 +61,7 @@ config.mapOptions = {
 
 config.mapStyles = {};
 
-config.mapStyles.blackAndWhite = new google.maps.ImageMapType({
+config.mapStyles.TREEHEIGHT = new google.maps.ImageMapType({
   getTileUrl: function(ll, z) {
     var X = ll.x % (1 << z);  // wrap
     return "http://api.tiles.mapbox.com/v3/cartodb.map-4xtxp73f/" + z + "/" + X + "/" + ll.y + ".png";

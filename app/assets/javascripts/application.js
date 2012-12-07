@@ -47,11 +47,7 @@ function initialize() {
     window.layerSelector = layerSelector;
     window.legend        = legend;
 
-
-  //map.mapTypes.set('black_and_white', config.mapStyles.blackAndWhite);
-  //map.setMapTypeId('black_and_white');
-
-  GFW(function(env) {
+    GFW(function(env) {
 
     GFW.app = new env.app.Instance(map, {
       user       : 'wri-01',
