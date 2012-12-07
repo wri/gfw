@@ -17,7 +17,7 @@ gfw.ui.model.Legend = Backbone.Model.extend({
 
 gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
-  className: 'legend_new',
+  className: 'legend',
 
   events: {
 
@@ -44,7 +44,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
     this.model.set("containment", "#map-container .map");
 
-    var template = $("#new-legend-template").html();
+    var template = $("#legend-template").html();
 
     this.template = new gfw.core.Template({
       template: template,
@@ -246,7 +246,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
     if (this.categories[item.attributes.category].length == 1) {
 
       var template = new gfw.core.Template({
-        template: $("#new-legend-group-template").html(),
+        template: $("#legend-group-template").html(),
         type: 'mustache'
       });
 
@@ -264,7 +264,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
     } else {
 
       var template = new gfw.core.Template({
-        template: $("#new-legend-item-template").html(),
+        template: $("#legend-item-template").html(),
         type: 'mustache'
       });
 

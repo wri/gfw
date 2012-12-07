@@ -18,7 +18,7 @@ describe("common.ui.view.Legend", function() {
 
   afterEach(function() {
 
-    $("body").find(".legend_new").remove();
+    $("body").find(".legend").remove();
     widget.clean();
 
   });

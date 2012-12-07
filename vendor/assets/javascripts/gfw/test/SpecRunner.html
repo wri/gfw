@@ -96,13 +96,6 @@
     var areaSummary = { icon: "area", count: "3,182", title: "Hectares of forest cleared in 2012" }
   </script>
 
-  <script id="legend-item-single-template" type="text/x-underscore-template">
-    <li id="{{ id }}" class="{{ category }}">
-    <div class="icon" style="background-color:{{color}};"></div> <a href="#">{{ name }}[ if (source) {]<a href="/sources/#{{source}}" target="_blank" class="source"></a>[}]</a>
-    </li>
-  </script>
-
-
   <script id="timeline-template" type="text/x-underscore-template">
     <div class="inner">
       <ul class="years">
@@ -124,33 +117,6 @@
       </div>
     </div>
   </script>
-
-
-
-
-  <script id="legend-item-double-template" type="text/x-underscore-template">
-    <li id="{{ id }}" class="{{ category }}">
-    <div class="icons"> {{ icons }} </div> <a href="#">{{ name }}</a>
-    {{ parts }}
-    </li>
-  </script>
-
-
-
-  <script id="legend-template" type="text/x-underscore-template">
-    <div class="legend">
-      <div class="header">
-        <div class="layer_count">7 layers</div>
-        <a href="#" class="toggle"></a>
-      </div>
-      <div class="content">
-        {{ layers }}
-      </div>
-
-      <div class="t"></div><div class="b"></div>
-    </div>
-  </script>
-
 
 
   <script id="layer-item-radio-template" type="text/x-underscore-template">
@@ -201,21 +167,21 @@
     <li id="{{name}}" class="{{ name }}"><a href="#"><i></i>{{title}}</a></li>
   </script>
 
-  <script id="new-legend-template" type="text/x-underscore-template">
+  <script id="legend-template" type="text/x-underscore-template">
     <a href="#" class="toggle"></a>
     <div class="layer_count">0 layers</div>
     {{ layers }}
     <div class="content"></div>
   </script>
 
-  <script id="new-legend-group-template" type="text/x-underscore-template">
+  <script id="legend-group-template" type="text/x-underscore-template">
     <ul class="{{category}}">
       <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
       <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i> {{title}} </li>
     </ul>
   </script>
 
-  <script id="new-legend-item-template" type="text/x-underscore-template">
+  <script id="legend-item-template" type="text/x-underscore-template">
     <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i> {{title}} </li>
   </script>
 
