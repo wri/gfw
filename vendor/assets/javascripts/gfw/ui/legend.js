@@ -155,25 +155,30 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
   add: function(id, category, category_title, title, category_color, title_color) {
 
+    var that = this;
+
     if (_.size(this.categories) && this.isAdded(id)) return;
 
-    if (!this.categories[category]) {
+    this.open(function() {
 
-      this.categories[category] = new gfw.ui.collection.LegendItems;
-      this.categories[category].bind("add",    this.addContent);
-    }
+      if (!that.categories[category]) {
 
-    var item = new gfw.ui.model.LegendItem({
-      cat_id:         id,
-      title:          title,
-      category:       category,
-      category_title: category_title,
-      category_color: category_color,
-      title_color:    title_color
+        that.categories[category] = new gfw.ui.collection.LegendItems;
+        that.categories[category].bind("add", that.addContent);
+      }
+
+      var item = new gfw.ui.model.LegendItem({
+        cat_id:         id,
+        title:          title,
+        category:       category,
+        category_title: category_title,
+        category_color: category_color,
+        title_color:    title_color
+      });
+
+      that.categories[category].push( item );
+      that.increaseLayerCount();
     });
-
-    this.categories[category].push( item );
-    this.increaseLayerCount();
 
   },
 
@@ -184,29 +189,30 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
     if (!item) return;
 
-    var category = item.get("category");
+    this.open(function(){
 
-    if (!this.categories[category]) return;
+      var category = item.get("category");
 
-    this.categories[category].each(function(c) {
+      if (!that.categories[category]) return;
 
-      if (c && (c.get("cat_id") == id)) {
+      that.categories[category].each(function(c) {
 
-        that.removeContent(category, id);
-        that.categories[category].remove(c);
+        if (c && (c.get("cat_id") == id)) {
 
-        that.decreaseLayerCount();
+          that.removeContent(category, id);
+          that.categories[category].remove(c);
 
-        if (that.categories[category].length == 0) {
-          delete that.categories[category];
+          that.decreaseLayerCount();
+
+          if (that.categories[category].length == 0) {
+            delete that.categories[category];
+          }
         }
-      }
 
+      });
+
+      setTimeout( function() { that.resize(); }, 300);
     });
-
-    setTimeout( function() {
-      that.resize();
-    }, 300);
 
   },
 
@@ -268,9 +274,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
     }
 
-    setTimeout( function() {
-      that.resize();
-    }, 300);
+    setTimeout( function() { that.resize(); }, 300);
 
   },
 
