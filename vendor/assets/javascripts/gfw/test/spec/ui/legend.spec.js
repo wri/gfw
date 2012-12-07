@@ -94,10 +94,22 @@ describe("common.ui.view.Legend", function() {
   it("should allow to remove an item", function() {
 
     widget.add(1, "category", "Category Title", "title", "red");
-    widget.remove("category", 1);
+    widget.remove(1);
     expect(widget.model.get("layerCount")).toEqual(0);
 
     expect(_.size(widget.categories)).toEqual(0);
+
+  });
+
+  it("should allow to replace an item", function() {
+
+    widget.add(1, "category", "Category Title", "title", "red");
+    widget.replace(1, "category", "Category Title", "new_title", "red");
+
+    expect(widget.model.get("layerCount")).toEqual(1);
+
+    expect(_.size(widget.categories)).toEqual(1);
+    expect(widget.categories["category"].models[0].get("title")).toEqual("new_title");
 
   });
 
@@ -105,7 +117,7 @@ describe("common.ui.view.Legend", function() {
 
     widget.add(1, "category", "Category Title", "title", "red");
     widget.add(2, "category", "Category Title", "title 2", "blue");
-    widget.remove("category", 1);
+    widget.remove(1);
 
     expect(_.size(widget.categories)).toEqual(1);
 
@@ -114,7 +126,7 @@ describe("common.ui.view.Legend", function() {
   it("should allow to add and remove the same item", function() {
 
     widget.add(1, "category", "Category Title", "title", "red");
-    widget.remove("category", 1);
+    widget.remove(1);
     widget.add(1, "category", "Category Title", "title", "red");
 
     expect(_.size(widget.categories)).toEqual(1);
@@ -129,7 +141,7 @@ describe("common.ui.view.Legend", function() {
 
     widget.add(1, "category", "Category Title", "title", "red");
     widget.add(2, "category", "Category Title", "title 2", "blue");
-    widget.remove("category", 1);
+    widget.remove(1);
 
     expect(widget.model.get("hidden")).toEqual(false);
 
@@ -140,8 +152,8 @@ describe("common.ui.view.Legend", function() {
     widget.add(1, "category", "Category Title", "title", "red");
     widget.add(2, "category", "Category Title", "title 2", "blue");
 
-    widget.remove("category", 1);
-    widget.remove("category", 2);
+    widget.remove(1);
+    widget.remove(2);
 
     expect(widget.model.get("layerCount")).toEqual(0);
     expect(widget.model.get("hidden")).toEqual(true);

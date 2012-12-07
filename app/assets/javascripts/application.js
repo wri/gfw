@@ -2,7 +2,7 @@
 //= require jquery_ujs
 //= require jquery.easing.1.3
 //= require jquery-ui-1.9.2.custom.min
-//= require wax.g.min-6.0.4
+//= require wax.g.min
 //= require cartodb-gmapsv3
 //= require cartodb-infowindow-min
 //= require jquery.history
@@ -34,20 +34,21 @@ function initialize() {
 
   gfw.load('/assets/gfw/', function() {
 
-    layerSelector = new gfw.ui.view.LayerSelector();
+    // Initialise the google map
+    map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
+
+    layerSelector = new gfw.ui.view.LayerSelector({ map: map });
     _Legend       = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
 
-    $("body").append(layerSelector.render());
-    $("body").append(_Legend.render());
+    $("#map").append(layerSelector.render());
+    $("#map").append(_Legend.render());
 
     _Legend.setDraggable(true);
-    layerSelector.setDraggable(true);
+    //layerSelector.setDraggable(true);
 
     window.legend = layerSelector;
     window.legend = _Legend;
 
-  // Initialise the google map
-  map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 
   //map.mapTypes.set('black_and_white', config.mapStyles.blackAndWhite);
   //map.setMapTypeId('black_and_white');

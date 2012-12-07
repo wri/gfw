@@ -32,7 +32,8 @@ describe("common.ui.view.LayerSelector", function() {
 
   beforeEach(function() {
 
-    widget = new gfw.ui.view.LayerSelector();
+    var map = new google.maps.Map(document.getElementById("map"));
+    widget = new gfw.ui.view.LayerSelector({ map : map });
 
     $("body").append(widget.render());
 

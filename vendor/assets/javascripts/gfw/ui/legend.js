@@ -32,7 +32,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
   initialize: function() {
 
-    _.bindAll( this, "add", "toggle", "toggleOpen", "toggleDraggable", "onStopDragging", "addContent", "removeContent" );
+    _.bindAll( this, "add", "replace", "toggle", "toggleOpen", "toggleDraggable", "onStopDragging", "addContent", "removeContent" );
 
     this.options = _.extend(this.options, this.defaults);
 
@@ -89,17 +89,36 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
     return this;
   },
 
-  toggleItem: function(id, category, category_title, title, color) {
+  toggleItem: function(id, category, category_title, title, category_color, title_color) {
 
-    if (!this.categories[category] || !_.find(this.categories[category].models, function(c) { return id == c.get("cat_id"); }) ) {
-      this.add(id, category, category_title, title, color);
+
+    if (!this.categories[category] || !this.isAdded(id)) {
+      //console.log("Adding: ", id, category, category_title, title, category_color, title_color);
+      this.add(id, category, category_title, title, category_color, title_color);
     } else {
-      this.remove(category, id);
+      this.remove(id);
+      //console.log("Removing: ", id, category, category_title, title, category_color, title_color);
     }
 
   },
 
-  add: function(id, category, category_title, title, color) {
+  findItem: function(id) {
+
+    var foundItem = null;
+
+    _.each(this.categories, function(c) {
+
+      _.each(c.models, function(item) {
+        if (item.get("cat_id") == id) foundItem = item;
+      });
+
+    });
+
+    return foundItem;
+
+  },
+
+  isAdded: function(id) {
 
     var duplicated = false;
 
@@ -111,7 +130,31 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
     });
 
-    if (_.size(this.categories) && duplicated) return;
+    return duplicated;
+
+  },
+
+  replace: function(id, category, category_title, title, category_color, title_color) {
+
+    var that     = this;
+
+    if (this.categories[category]) {
+      _.each(this.categories[category].models, function(c) {
+
+        that.removeContent(category, id);
+        that.categories[category].remove(c);
+        that.decreaseLayerCount();
+
+      });
+    }
+
+    this.add(id, category, category_title, title, category_color, title_color);
+
+  },
+
+  add: function(id, category, category_title, title, category_color, title_color) {
+
+    if (_.size(this.categories) && this.isAdded(id)) return;
 
     if (!this.categories[category]) {
 
@@ -124,7 +167,8 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
       title:          title,
       category:       category,
       category_title: category_title,
-      color:          color
+      category_color: category_color,
+      title_color:    title_color
     });
 
     this.categories[category].push( item );
@@ -132,8 +176,17 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
   },
 
-  remove: function(category, id) {
-    var that = this;
+  remove: function(id) {
+
+    console.log(id);
+
+    var that     = this;
+
+    var item     = this.findItem(id);
+
+    if (!item) return;
+
+    var category = item.get("category");
 
     if (!this.categories[category]) return;
 
@@ -174,6 +227,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
       this.$el.find("li#" + id).fadeOut(250, function() {
         $(this).remove();
       });
+
     }
 
   },
@@ -192,7 +246,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
       var $item = template.render(item.attributes);
 
       if (this.model.get("scrollbar")) {
-        this.$content.find(".jspPane").append( $item );
+        this.$content.find(".jspPane").prepend( $item );
       } else {
         this.$content.append( $item );
       }
@@ -222,7 +276,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
       var that = this;
 
       var marginTop = 12;
-      var height = marginTop + 54 * (this.$el.find("ul").length) + (10 * this.model.get("layerCount"));
+      var height = marginTop + 54 * (this.$el.find("ul").length) + (17 * this.model.get("layerCount"));
       this.$content.animate({ height: height }, this.options.speed, function() {
         that.addScroll();
       });

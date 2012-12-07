@@ -16,10 +16,8 @@
     <script type="text/javascript" src="../vendor/jquery.easing.min.js"></script>
 
     <script type="text/javascript" src="../vendor/jquery.mousewheel.min.js"></script>
-    <script type="text/javascript" src="../vendor/jquery.mCustomScrollbar.js"></script>
     <script type="text/javascript" src="../vendor/jquery.jscrollpane.js"></script>
 
-    <script type="text/javascript" src="../vendor/jquery.ui.addresspicker.js"></script>
     <script type="text/javascript" src="../vendor/jquery.stylishSelect.js"></script>
 
     <script type="text/javascript" src="../vendor/spin.min.js"></script>
@@ -212,14 +210,16 @@
 
   <script id="new-legend-group-template" type="text/x-underscore-template">
     <ul class="{{category}}">
-      <li class="{{ category }}"><strong>{{category_title}}</strong></li>
-      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{color}};"></i> {{title}} </li>
+      <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
+      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i> {{title}} </li>
     </ul>
   </script>
 
   <script id="new-legend-item-template" type="text/x-underscore-template">
-    <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{color}};"></i> {{title}} </li>
+    <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i> {{title}} </li>
   </script>
+
+  <div id="map"></div>
 
   </body>
 </html>

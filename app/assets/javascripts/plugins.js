@@ -486,6 +486,7 @@ var Navigation = (function() {
 
     Circle.hide();
     Legend.show();
+
     layerSelector.show();
     _Legend.show();
 

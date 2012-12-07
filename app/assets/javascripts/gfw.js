@@ -68,7 +68,6 @@ GFW.modules.app = function(gfw) {
 
       this._loadBaseLayer();
       this._setupZoom();
-      this._setupTypeControls();
 
       google.maps.event.addDomListener(this._map, 'mousemove', function(event) {
         Timeline.updateCoordinates(event.latLng);
@@ -109,23 +108,6 @@ GFW.modules.app = function(gfw) {
           callback();
         }
 
-      });
-
-    },
-
-    _setupTypeControls:function() {
-      var that = this;
-
-      $("#type_controls .satellite").on("click", function() {
-        $("#type_controls").find("a.selected").removeClass("selected");
-        $(this).addClass("selected");
-       that._map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
-      });
-
-      $("#type_controls .terrain").on("click", function() {
-        $("#type_controls").find("a.selected").removeClass("selected");
-        $(this).addClass("selected");
-       that._map.setMapTypeId(google.maps.MapTypeId.TERRAIN);
       });
 
     },
@@ -539,14 +521,15 @@ GFW.modules.maplayer = function(gfw) {
 
         Filter.check(this.layer.get('id'));
         Legend.toggleItem(this.layer.get('id'), this.layer.get('slug'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
-          _Legend.toggleItem(this.layer.get('id'), this.layer.get('slug'), this.layer.get('slug'),  this.layer.get('title'), this.layer.get('title_color'));
+        _Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
 
 
       } else if (this.layer.get('table_name') == 'gfw2_forma') {
-          //show the legend on map start for forma
-          Legend.toggleItem(this.layer.get('id'), this.layer.get('slug'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
-          _Legend.toggleItem(this.layer.get('id'), this.layer.get('slug'), this.layer.get('slug'),  this.layer.get('title'), this.layer.get('title_color'));
+        //show the legend on map start for forma
+        Legend.toggleItem(this.layer.get('id'), this.layer.get('category_name'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
+        _Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
       }
+
 
     },
     _bindDisplay: function(display) {
@@ -566,18 +549,22 @@ GFW.modules.maplayer = function(gfw) {
       this.layer.attributes['visible'] = !this.layer.attributes['visible'];
 
       var
-      slug        = this.layer.get('slug'),
-      title       = this.layer.get('title'),
-      title_color = this.layer.get('title_color'),
-      title_subs  = this.layer.get('title_subs'),
-      visible     = this.layer.get('visible'),
-      tableName   = this.layer.get('table_name'),
-      category    = this.layer.get('category_name'),
-      visibility  = this.layer.get('visible');
-      id          = this.layer.get('id');
+      slug            = this.layer.get('slug'),
+      title           = this.layer.get('title'),
+      title_color     = this.layer.get('title_color'),
+      title_subs      = this.layer.get('title_subs'),
+      visible         = this.layer.get('visible'),
+      tableName       = this.layer.get('table_name'),
+      category        = this.layer.get('category_name'),
+      category_slug   = this.layer.get('category_slug'),
+      category_color  = this.layer.get('category_color'),
+      visibility      = this.layer.get('visible');
+      id              = this.layer.get('id');
 
-      if (category === null || !category) {
-        category = 'Protected Areas';
+      if (category === null || !category) { // Default data
+        category       = 'Protected Areas';
+        category_slug  = 'protected_areas';
+        category_color = '#707D92';
       }
 
       var // special layers
@@ -587,7 +574,7 @@ GFW.modules.maplayer = function(gfw) {
 
       if (category != 'Forest clearing') {
         Legend.toggleItem(id, slug, title, category, title_color, title_subs, visible);
-        _Legend.toggleItem(id, slug, category, title, title_color, title_subs, visible);
+        _Legend.toggleItem(id, category_slug, category, title, category_color, title_color);
       }
 
       if (slug === 'semi_monthly' || slug === "annual" || slug === "brazilian_amazon") {
@@ -611,7 +598,7 @@ GFW.modules.maplayer = function(gfw) {
         }
 
         Legend.reset(id, slug, title, category, title_color, title_subs);
-        _Legend.toggleItem(id, slug, category, title, title_color);
+        _Legend.replace(id, category_slug, category, title, category_color, title_color);
 
       } else {
 
@@ -643,7 +630,7 @@ GFW.modules.datalayers = function(gfw) {
 
       var LayersColl    = this._cartodb.CartoDBCollection.extend({
         sql: function(){
-          return "SELECT cartodb_id AS id, slug, title, title_color, title_subs, table_name, source, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
+          return "SELECT cartodb_id AS id, slug, title, title_color, title_subs, table_name, source, category_color, category_slug, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
           ST_XMIN(the_geom) AS xmin, ST_YMAX(the_geom) AS ymax, ST_YMIN(the_geom) AS ymin, tileurl, true AS visible \
           FROM " + layerTable + " \
           WHERE display = TRUE ORDER BY displaylayer,title ASC";

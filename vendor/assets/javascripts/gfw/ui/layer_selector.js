@@ -42,9 +42,9 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
 
     this.layers = new gfw.ui.collection.Layers();
 
-    this.layers.add(new gfw.ui.model.Layer({ title: "Satellite",   name: "satellite", selected: true }));
-    this.layers.add(new gfw.ui.model.Layer({ title: "Terrain",     name: "terrain" }));
-    this.layers.add(new gfw.ui.model.Layer({ title: "Tree Height", name: "tree_height" }));
+    this.layers.add(new gfw.ui.model.Layer({ mapType: google.maps.MapTypeId.SATELLITE, title: "Satellite",   name: "satellite", selected: true }));
+    this.layers.add(new gfw.ui.model.Layer({ mapType: google.maps.MapTypeId.TERRAIN, title: "Terrain",     name: "terrain" }));
+    this.layers.add(new gfw.ui.model.Layer({ mapType: google.maps.MapTypeId.SATELLITE, title: "Tree Height", name: "tree_height" }));
 
     this.selectedLayer = this.layers.find(function(layer) { return layer.get("selected"); });
 
@@ -126,10 +126,8 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
 
     var $li  = $(e.target).closest("li");
     var name = $li.attr("id");
-    console.log(name);
 
     if (this.selectedLayer.get("name") == name) {
-    console.log($li.parent().attr("class"));
 
       if ($li.parent().hasClass("selected_layer")) {
         this.open();
@@ -145,6 +143,8 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
     this.selectedLayer.set("selected", false);
     layer.set("selected", true);
     this.selectedLayer = layer;
+
+    this.options.map.setMapTypeId(layer.get("mapType"));
 
     this.addSelectedLayer();
 
