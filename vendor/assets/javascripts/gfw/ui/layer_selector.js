@@ -12,6 +12,7 @@ gfw.ui.model.LayerSelector = Backbone.Model.extend({
 
   defaults: {
     hidden: true,
+    closed: true,
     layerCount: 0
   }
 
@@ -34,7 +35,7 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
 
   initialize: function() {
 
-    _.bindAll( this, "toggle", "toggleOpen", "toggleDraggable", "onStopDragging" );
+    _.bindAll( this, "toggle", "toggleOpen", "toggleDraggable", "onStopDragging", "addLayers", "addSelectedLayer" );
 
     this.options = _.extend(this.options, this.defaults);
 
@@ -61,22 +62,58 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
 
   },
 
+  addLayers: function() {
+
+    var that = this;
+
+    var template = new gfw.core.Template({
+      template: $("#layer-template").html(),
+      type: 'mustache'
+    });
+
+    this.layers.each(function(layer) {
+      that.$layers.append(template.render( layer.toJSON() ));
+    });
+
+  },
+
+  addSelectedLayer: function() {
+
+    var layer = this.layers.find(function(layer) { return layer.get("selected"); });
+
+    var template = new gfw.core.Template({
+      template: $("#layer-template").html(),
+      type: 'mustache'
+    });
+
+    this.$selected_layer.append(template.render( layer.toJSON() ));
+
+  },
+
   toggleOpen: function() {
 
     var that = this;
 
     if (this.model.get("closed")) {
 
-      that.model.set("contentHeight", that.$content.height());
-      that.$content.animate({ opacity: 0, height: that.defaults.minHeight }, that.defaults.speed, function() {
-      });
-
       that.$el.addClass("closed");
 
-    } else {
+      that.$layers.animate({ opacity: 0, height: 0 }, that.defaults.speed, function() {
+        that.$selected_layer.fadeIn(250);
+      });
 
-      that.$content.animate({ opacity: 1, height: that.model.get("contentHeight") }, that.defaults.speed);
+    } else {
+    console.log("open", this.$el,this.$selected_layer);
+
+      var marginTop = 10;
+      var height    = marginTop + 40 * that.layers.length;
+      console.log(height, this.$layers);
+
       that.$el.removeClass("closed");
+
+      that.$selected_layer.fadeOut(250, function() {
+        that.$layers.animate({ opacity: 1, height: height }, that.defaults.speed);
+      });
 
     }
 
@@ -90,6 +127,10 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
 
     this.$layers         = this.$el.find(".layers");
     this.$selected_layer = this.$el.find(".selected_layer");
+
+    this.addSelectedLayer();
+    this.addLayers();
+    this.toggleOpen();
 
     return this.$el;
 
