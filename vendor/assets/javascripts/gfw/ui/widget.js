@@ -10,7 +10,7 @@ gfw.ui.view.Widget = gfw.core.View.extend({
 
   initialize: function() {
 
-    _.bindAll( this, "toggle", "toggleDraggable", "toggleResizable", "onStopDragging", "onStopResizing" );
+    _.bindAll( this, "toggle", "_toggleOpen", "toggleDraggable", "toggleResizable", "onStopDragging", "onStopResizing" );
 
     this.model.bind("change:hidden",    this.toggle);
     this.model.bind("change:draggable", this.toggleDraggable);
@@ -263,6 +263,29 @@ gfw.ui.view.Widget = gfw.core.View.extend({
     }
 
   },
+
+  _toggleOpen: function() {
+
+    this.model.get("closed") ? this.open() : this.close();
+
+  },
+
+  open: function(callback) {
+    this.model.set("closed", false);
+
+    callback && callback();
+
+    return this;
+  },
+
+  close: function(callback) {
+    this.model.set("closed", true);
+
+    callback && callback();
+
+    return this;
+  },
+
 
   show: function(callback) {
     this.model.set("hidden", false);

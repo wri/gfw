@@ -36,6 +36,8 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
     this.options = _.extend(this.options, this.defaults);
 
+    this.add_related_model(this.model);
+
     this.model.bind("change:hidden",    this.toggle);
     this.model.bind("change:closed",    this.toggleOpen);
     this.model.bind("change:draggable", this.toggleDraggable);
@@ -227,12 +229,6 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
   },
 
-  _toggleOpen: function() {
-
-    this.model.get("closed") ? this.open() : this.close();
-
-  },
-
   toggleOpen: function() {
 
     var that = this;
@@ -256,22 +252,6 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
     }
 
-  },
-
-  open: function(callback) {
-    this.model.set("closed", false);
-
-    callback && callback();
-
-    return this;
-  },
-
-  close: function(callback) {
-    this.model.set("closed", true);
-
-    callback && callback();
-
-    return this;
   },
 
   render: function() {

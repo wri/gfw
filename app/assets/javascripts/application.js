@@ -26,18 +26,25 @@ map           = null,
 previousState = null,
 subscribeMap;
 
-_Legend = {};
-
+_Legend = {},
+layerSelector = {};
 
 // Map init method
 function initialize() {
 
   gfw.load('/assets/gfw/', function() {
-    _Legend = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
-    $("body").append(_Legend.render());
-    _Legend.setDraggable(true);
-    window.legend = _Legend;
 
+    layerSelector = new gfw.ui.view.LayerSelector();
+    _Legend       = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
+
+    $("body").append(layerSelector.render());
+    $("body").append(_Legend.render());
+
+    _Legend.setDraggable(true);
+    layerSelector.setDraggable(true);
+
+    window.legend = layerSelector;
+    window.legend = _Legend;
 
   // Initialise the google map
   map = new google.maps.Map(document.getElementById("map"), config.mapOptions);

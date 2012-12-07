@@ -432,6 +432,7 @@ var Navigation = (function() {
 
     Legend.hide();
     _Legend.hide();
+    layerSelector.hide();
     Navigation.select("home");
 
     Filter.hide(function() {
@@ -485,6 +486,7 @@ var Navigation = (function() {
 
     Circle.hide();
     Legend.show();
+    layerSelector.show();
     _Legend.show();
 
     _stopMapAnimation();

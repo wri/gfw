@@ -100,7 +100,19 @@
   </script>
 
 
+  <!-- Layer selector -->
+  <script id="layer_selector-template" type="text/x-underscore-template">
+    <a href="#" class="toggle"></a>
+    <div class="selected_layer"></div>
+    <ul class="layers"></ul>
+  </script>
 
+  <script id="layer-template" type="text/x-underscore-template">
+    <li class="{{ name }}">{{title}}</li>
+  </script>
+
+
+  <!-- Legend -->
   <script id="new-legend-template" type="text/x-underscore-template">
     <a href="#" class="toggle"></a>
     <div class="layer_count">0 layers</div>

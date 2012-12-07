@@ -343,6 +343,36 @@
 
 
 
+.layer_selector {
+
+  width:211px;
+  min-height: 40px;
+
+  @include position(500px, false, false, 100px);
+  @include border-radius(3px);
+  @include box-shadow(0px 0px 3px $cGray2);
+
+  background:#fff;
+  border: 1px solid #666;
+
+  @extend .sans-serif;
+  font-size:11px;
+  color: $cGray3;
+
+  display:none;
+
+  cursor: move;
+
+  .toggle {
+    @include position(2px, -25px, false, false);
+    @include size(25px, 38px);
+    @include icons-sprite(legend_toggle_close);
+  }
+
+  &.closed .toggle { @include icons-sprite(legend_toggle_open); }
+
+}
+
 .legend_new {
   display: none;
 

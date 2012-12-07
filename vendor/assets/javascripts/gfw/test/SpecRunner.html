@@ -45,6 +45,7 @@
 
     <script type="text/javascript" src="../ui/widget.js"></script>
     <script type="text/javascript" src="../ui/legend.js"></script>
+    <script type="text/javascript" src="../ui/layer_selector.js"></script>
     <script type="text/javascript" src="../ui/timeline.js"></script>
 
     <!-- SPECS -->
@@ -56,6 +57,7 @@
     <!-- Common specs -->
     <script type="text/javascript" src="spec/ui/widget.spec.js"></script>
     <script type="text/javascript" src="spec/ui/legend.spec.js"></script> 
+    <script type="text/javascript" src="spec/ui/layer_selector.spec.js"></script> 
     <script type="text/javascript" src="spec/ui/timeline.spec.js"></script>
 
     <script type="text/javascript">
@@ -191,6 +193,15 @@
   </script>
 
 
+  <script id="layer_selector-template" type="text/x-underscore-template">
+    <a href="#" class="toggle"></a>
+    <div class="selected_layer"></div>
+    <ul class="layers"></ul>
+  </script>
+
+  <script id="layer-template" type="text/x-underscore-template">
+    <li class="{{ name }}">{{title}}</li>
+  </script>
 
   <script id="new-legend-template" type="text/x-underscore-template">
     <a href="#" class="toggle"></a>
