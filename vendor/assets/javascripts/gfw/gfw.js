@@ -46,6 +46,7 @@
     'ui/timeline.js',
     'ui/legend.js',
     'ui/layer_selector.js',
+    'ui/language_selector.js',
     //'ui/spinner.js',
     //'ui/backdrop.js',
     //'ui/tooltip.js',

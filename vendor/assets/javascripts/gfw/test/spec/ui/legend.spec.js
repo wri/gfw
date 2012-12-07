@@ -161,6 +161,21 @@ describe("common.ui.view.Legend", function() {
   });
 
 
+  it("should have the inner white shadow hidden by default", function() {
+    expect(widget.$el.find(".shadow")).toBeHidden();
+  });
+
+  it("should show the inner white shadow on open", function() {
+    widget.open();
+    expect(widget.$el.find(".shadow")).toBeVisible();
+  });
+
+  it("should hide the inner white shadow on close", function() {
+    widget.open();
+    widget.close();
+    expect(widget.$el.find(".shadow")).toBeHidden();
+  });
+
   it("should show the number of layers on close", function() {
 
     widget.add(1, "countries", "Countries", "Spain", "red")

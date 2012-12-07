@@ -300,6 +300,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
       that.$layer_count.html( that.model.get("layerCount") + " layers");
       that.$content.animate({ opacity: 0, height: that.defaults.minHeight }, that.defaults.speed, function() {
         that.$layer_count.fadeIn(250);
+        that.$shadow.fadeOut(250);
       });
 
       that.$el.addClass("closed");
@@ -308,6 +309,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
       that.$layer_count.fadeOut(250, function() {
         that.$content.animate({ opacity: 1, height: that.model.get("contentHeight") }, that.defaults.speed);
+        that.$shadow.fadeIn(250);
       });
       that.$el.removeClass("closed");
 
@@ -322,6 +324,7 @@ gfw.ui.view.Legend = gfw.ui.view.Widget.extend({
 
     this.$content     = this.$el.find(".content");
     this.$layer_count = this.$el.find(".layer_count");
+    this.$shadow      = this.$el.find(".shadow");
 
     return this.$el;
 
