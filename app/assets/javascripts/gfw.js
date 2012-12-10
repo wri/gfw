@@ -52,8 +52,8 @@ GFW.modules.app = function(gfw) {
 
       this.queries = {};
       // we can stop loading the blank (see limit=0 below) tileset here now that we are loading the animation. see todo on line 347
-      this.queries.semi_monthly  = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 17 ELSE {Z}+8 END limit 0";
-      this.queries.annual     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
+      this.queries.semi_monthly     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 17 ELSE {Z}+8 END limit 0";
+      this.queries.annual           = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
       this.queries.brazilian_amazon = "SELECT CASE WHEN {Z}<12 THEN st_buffer(the_geom_webmercator,(16-{Z})^3.8) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
 
       this.lastHash = null;
@@ -185,8 +185,6 @@ GFW.modules.app = function(gfw) {
           url: url,
           success: function(json) {
             var data = json[0];
-
-            console.log(data);
 
             if (data) {
               that.infowindow.setContent(data);

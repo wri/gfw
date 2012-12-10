@@ -23,13 +23,14 @@
       div = this.div_ = document.createElement('DIV');
       div.className = "cartodb_infowindow";
 
-      div.innerHTML = '<a href="#close" class="close">x</a>'+
+      div.innerHTML = '<a href="#close" class="close"></a>'+
                       '<div class="outer_top">'+
                         '<div class="top">'+
-                        '<strong>Title</strong>'+
+                        //'<div class="title"><strong>Title</strong></div>'+
                         '<div class="infowindow_content"></div>' +
                         '</div>'+
                       '</div>'+
+                      '<div class="shadow"></div>'+
                       '<div class="bottom"></div>';
 
       var a = this.getElementsByClassName("close", div)[0];

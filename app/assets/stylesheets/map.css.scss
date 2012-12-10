@@ -625,23 +625,19 @@ $timelineWidth: 940px;
   height: 232px;
   padding:0 0 6px;
   visibility:hidden;
+  text-align:center;
 
   a.close {
-    @include position(3px, 3px, false, false);
-    @include size(22px, 15px);
-    padding:4px 0 3px 0;
-    text-align:center;
-    font:bold 15px "Helvetica",Arial;
-    color:#666666;
-    text-decoration:none;
-    line-height:15px;
-    &:hover {color:#333333}
+    @include position(20px, 8px, false, false);
+    @include size(6px);
+    @include icons-sprite(infowindow_close);
   }
 
   $pR: 18px;
   $pL: 10px;
 
   .outer_top { width:$width - $pL - $pR; padding:25px $pR  5px $pL; background:url('icons/bkg_infowindow.png') no-repeat left top;}
+
   .bottom {
     @include position(false, false, 10px, 0);
     width:$width;
@@ -649,32 +645,54 @@ $timelineWidth: 940px;
     background:url('icons/bkg_infowindow.png') no-repeat right top;
   }
 
+  .shadow {
+
+    @include position(false, false, 22px, 6px);
+    @include size(100%, 24px);
+    background:url(backgrounds/white_shadow.png) repeat-x;
+
+    z-index: 100;
+  }
+
   .top {
-    width:210px;
+    width:200px;
     max-height:190px;
     margin:auto;
     overflow-y:auto;
     overflow-x:hidden;
 
-    .jspTrack {background: #dddddd;}
-    .jspDrag {background: #999999;}
-    .jspHover, .jspActive {background:#666666}
+    text-align: left;
 
-    label { display:block; width:auto; padding:0 0 0 5px; font:normal 11px Arial; color:#B3B3B3; text-shadow:0 1px white; }
+    .jspTrack {background: none;}
+    .jspDrag {background: #EDEDED;}
+    .jspHover, .jspActive {background:#666666}
+    .jspVerticalBar {
+      margin-right: 3px;
+    }
+
+    label {
+      display:block;
+      width:auto; padding:0 0 0 5px;
+      @extend .sans-serif;
+      font-size:11px;
+      color:#CCCCCC;
+      text-shadow:0 1px white;
+    }
 
     .infowindow_content {
-      padding:2px 4px;
-      margin:2px 0 7px;
-
+      width:190px;
+      margin: 0 0 0 5px;
     }
 
     p {
       display:block;
       width:170px;
       max-height:20px;
+      padding:2px 4px;
+      margin:2px 0 10px 0;
       @extend .sans-serif;
-      font-weight:bold;
-      font-size:11px;
+      font-weight:normal;
+      font-size:13px;
       color:#666666;
       border:none;
       background:none;
@@ -687,12 +705,20 @@ $timelineWidth: 940px;
     }
 
 
-    strong {
-      display:block;
-      @extend .sans-serif;
-      font-weight:bold;
-      font-size:12px;
-      background:#f1f1f1;
+    .title {
+
+      padding:2px 0 20px 0px;
+      margin:2px 0 10px 5px;
+      border-bottom: 3px solid #ccc;
+
+      strong {
+      text-overflow:ellipsis;
+        display:block;
+        @extend .sans-serif;
+        font-weight:bold;
+        font-size:12px;
+        text-transform: uppercase;
+      }
     }
 
   }
