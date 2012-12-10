@@ -279,12 +279,13 @@ GFW.modules.app = function(gfw) {
           layer_order: "bottom",
           opacity: 1,
           interactivity:"cartodb_id",
-          featureMouseClick: function(ev, latlng, data) {
+          featureClick: function(ev, latlng, pos, data) {
             //we needed the cartodb_id and table name
             var pair = data.cartodb_id.split(':');
             //here i make a crude request for the columns of the table
             //nulling out the geoms to save payload
             var request_sql = "SELECT *, null as the_geom, null as the_geom_webmercator FROM " + pair[1] + " WHERE cartodb_id = " + pair[0];
+            console.log(request_sql);
             $.ajax({
               async: false,
               dataType: 'json',
@@ -292,6 +293,7 @@ GFW.modules.app = function(gfw) {
               jsonpCallback:'iwcallback',
               url: 'http://dyynnn89u7nkm.cloudfront.net/api/v2/sql?q=' + encodeURIComponent(request_sql),
               success: function(json) {
+              console.log(json);
                 delete json.rows[0]['cartodb_id'],
                 delete json.rows[0]['the_geom'];
                 delete json.rows[0]['the_geom_webmercator'];
@@ -307,16 +309,17 @@ GFW.modules.app = function(gfw) {
                     data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
                   }
                 }
+                console.log(data);
                 that.infowindow.setContent(data);
                 that.infowindow.setPosition(latlng);
                 that.infowindow.open();
               }
             });
           },
-          featureMouseOver: function(ev, latlng, data) {
+          featureOver: function(ev, latlng, pos, data) {
             map.setOptions({draggableCursor: 'pointer'});
           },
-          featureMouseOut: function() {
+          featureOut: function() {
             map.setOptions({draggableCursor: 'default'});
           },
           debug:false,
@@ -350,14 +353,18 @@ GFW.modules.app = function(gfw) {
     },
 
     _updateBaseLayer: function() {
-      if (this.currentBaseLayer != "semi_monthly"){
-          map.overlayMapTypes.setAt(0, null);
-      } else {
-          map.overlayMapTypes.setAt(0, this.time_layer);
-      }
-      GFW.app.baseLayer.options.table_name = this._getTableName(this.currentBaseLayer);
-      GFW.app.baseLayer.setQuery(GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom()));
+    console.log(this.time_layer);
+      //if (this.currentBaseLayer != "semi_monthly"){
+          //map.overlayMapTypes.setAt(0, null);
+      //} else {
+          //map.overlayMapTypes.setAt(0, this.time_layer);
+      //}
+      //GFW.app.baseLayer.options.table_name = this._getTableName(this.currentBaseLayer);
+      GFW.app.baseLayer.setOptions({ table_name: this._getTableName(this.currentBaseLayer), query: GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom())  });
+      //debugger;
+      //GFW.app.baseLayer.setQuery(GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom()));
     },
+
     _loadBaseLayer: function() {
       var self = this;
       var table_name = null;

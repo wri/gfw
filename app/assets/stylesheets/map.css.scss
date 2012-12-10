@@ -636,7 +636,12 @@ $timelineWidth: 940px;
   $pR: 18px;
   $pL: 10px;
 
-  .outer_top { width:$width - $pL - $pR; padding:25px $pR  5px $pL; background:url('icons/bkg_infowindow.png') no-repeat left top;}
+  .outer_top {
+    width:$width - $pL - $pR;
+    height: 180px;
+    padding:25px $pR  5px $pL;
+    background:url('icons/bkg_infowindow.png') no-repeat left top;
+  }
 
   .bottom {
     @include position(false, false, 10px, 0);
