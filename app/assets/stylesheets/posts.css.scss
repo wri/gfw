@@ -5,6 +5,11 @@
 body.posts {
 
   &.show {
+  #content .inner {
+    text-align:center;
+    margin: 0 auto;
+    width: 927px;
+  }
 
     section { width: 100%; }
     .navigation { display: none; }
@@ -352,7 +357,7 @@ body.static {
       width: 100%;
       h1 {
         @extend .serif;
-        font-size:51px; 
+        font-size:51px;
         text-align: center;
       }
     }
@@ -383,7 +388,7 @@ body.static {
       }
 
       ul.logo_list {
-        @include clearfix();        
+        @include clearfix();
         margin: 20px auto 0 auto;
         padding: 0;
 
@@ -512,7 +517,7 @@ body.sources {
       h1 {
         @extend .serif;
         font-size:51px;
-        text-align: center;        
+        text-align: center;
       }
     }
   }

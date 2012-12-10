@@ -43,6 +43,7 @@ function initialize() {
     $("#map").append(legend.render());
 
     legend.setDraggable(true);
+    layerSelector.setDraggable(true);
 
     window.layerSelector = layerSelector;
     window.legend        = legend;
