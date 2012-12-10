@@ -13,8 +13,14 @@ body.stories {
     height: 235px;
   }
 
-  #content { background: transparent; }
-  #content .inner { position:relative; width: 927px; margin: auto; }
+  #content {
+    background: transparent;
+    .inner {
+      position:relative;
+      width: 927px;
+      margin: auto;
+    }
+  }
 
   .title {
     background:transparent;
@@ -396,14 +402,18 @@ body.stories {
       border-bottom: 1px solid $cGray4;
       margin-top: -168px;
 
-      h2 a {
+      h2.compact {
+        padding: 17px 0 34px 0;
+
+        a {
         @extend .inner;
         @extend .serif;
-        padding: 50px 0;
+        padding: 0;
         color: $cGreen1;
         font-size: 31px;
         text-align:center;
         text-decoration: none;
+        } 
       }
 
     }
