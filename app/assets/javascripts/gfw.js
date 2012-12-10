@@ -353,16 +353,14 @@ GFW.modules.app = function(gfw) {
     },
 
     _updateBaseLayer: function() {
-    console.log(this.time_layer);
+      // TODO: This was causing lots of trouble; hide the layers with a different method
       //if (this.currentBaseLayer != "semi_monthly"){
-          //map.overlayMapTypes.setAt(0, null);
+      //map.overlayMapTypes.setAt(0, null);
       //} else {
-          //map.overlayMapTypes.setAt(0, this.time_layer);
+      //map.overlayMapTypes.setAt(0, this.time_layer);
       //}
-      //GFW.app.baseLayer.options.table_name = this._getTableName(this.currentBaseLayer);
+
       GFW.app.baseLayer.setOptions({ table_name: this._getTableName(this.currentBaseLayer), query: GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom())  });
-      //debugger;
-      //GFW.app.baseLayer.setQuery(GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom()));
     },
 
     _loadBaseLayer: function() {
