@@ -8,7 +8,10 @@
     <ul>
       <% @stories.each do |story| %>
         <li>
-        <%= content_tag :div, (image_tag story.main_thumbnail.try(:thumbnail_url)), :class => :frame %>
+        <!-- <%= content_tag :div, (image_tag story.main_thumbnail.try(:thumbnail_url)), :class => :frame %> -->
+
+        <%= link_to (image_tag story.main_thumbnail.try(:thumbnail_url)), story, :class => :frame %>
+
         </li>
       <% end %>
     </ul>

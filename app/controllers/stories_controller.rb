@@ -3,12 +3,12 @@ class StoriesController < ApplicationController
   def index
     @page     = params[:page] || 1
     @featured = Story.where(:featured => true).order('cartodb_id ASC')
-    @stories  = Story.all
+    @stories  = Story.all.first(4)
   end
 
   def show
     @story   = Story.where(:cartodb_id => params[:id])
-    @stories  = Story.all
+    @stories  = Story.all.first(4)
   end
 
   def new
