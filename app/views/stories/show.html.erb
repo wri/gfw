@@ -29,7 +29,7 @@
       <ul>
         <% @story.media.each do |media| %>
           <li class="active">
-            <%= image_tag @story.main_thumbnail.try(:image_url) %>
+            <%= image_tag @story.main_thumbnail.try(:big_url) %>
           </li>
         <% end %>
       </ul>

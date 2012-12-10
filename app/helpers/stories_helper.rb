@@ -28,4 +28,8 @@ module StoriesHelper
     false
   end
 
+  def access_through_token?(story)
+    params[:id] == story.token
+  end
+
 end

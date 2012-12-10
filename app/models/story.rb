@@ -1,6 +1,8 @@
 class Story < CartoDB::Model::Base
   include ActiveModel::Validations
 
+  attr_accessor :uploads_ids
+
   field :title
   field :when_did_it_happen
   field :details
@@ -10,16 +12,31 @@ class Story < CartoDB::Model::Base
   field :visible,  :type => 'boolean'
   field :token
 
-  set_geometry_type :polygon
+  set_geometry_type :geometry
 
   #validates_each :title, :the_geom, :your_name do |record, attr, value|
-  validates_each :title do |record, attr, value|
+  validates_each :title, :your_name do |record, attr, value|
+  #validates_each :title do |record, attr, value|
     record.errors.add attr, 'cannot be empty' if value.blank?
+  end
+
+  def initialize(params)
+    self.uploads_ids = params.delete(:uploads_ids)
+    super
+  end
+
+  def the_geom=(the_geom)
+    @the_geom = the_geom unless the_geom.blank?
+  end
+
+  def uploads_ids
+    (media || []).map{|m| m.cartodb_id}.join(',')
   end
 
   def save
     generate_token
     super
+    save_thumbnails
   end
 
   def generate_token
@@ -36,5 +53,12 @@ class Story < CartoDB::Model::Base
 
   def to_param
     cartodb_id.to_s
+  end
+
+  def save_thumbnails
+    (@uploads_ids || '').split(',').each do |media_id|
+      media = Media.where(:cartodb_id => media_id)
+      media.update_story_id(cartodb_id)
+    end
   end
 end
