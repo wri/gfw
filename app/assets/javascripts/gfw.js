@@ -186,6 +186,8 @@ GFW.modules.app = function(gfw) {
           success: function(json) {
             var data = json[0];
 
+            console.log(data);
+
             if (data) {
               that.infowindow.setContent(data);
               that.infowindow.setPosition(event.latLng);

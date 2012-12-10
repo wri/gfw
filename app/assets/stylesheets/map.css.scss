@@ -616,20 +616,87 @@ $timelineWidth: 940px;
 }
 
 /*Marker infowindow*/
-div.cartodb_infowindow {position:absolute; display:block; width:214px; padding:0 0 6px; visibility:hidden;}
-div.cartodb_infowindow a.close {position:absolute; right:3px; top:3px; width:22px; height:15px; padding:4px 0 3px 0; text-align:center; font:bold 15px "Helvetica",Arial; color:#666666; text-decoration:none; line-height:15px}
-div.cartodb_infowindow a.close:hover {color:#333333}
-div.cartodb_infowindow div.outer_top {width:186px; padding:25px 18px 5px 10px; background:url('icons/sprite.png') 0 top;}
-div.cartodb_infowindow div.top {width:186px; max-height:200px; overflow-y:auto; overflow-x:hidden}
-div.cartodb_infowindow div.top .jspTrack {background: #dddddd;}
-div.cartodb_infowindow div.top .jspDrag {background: #999999;}
-div.cartodb_infowindow div.top .jspHover, div.cartodb_infowindow div.top .jspActive {background:#666666}
-div.cartodb_infowindow div.top label {display:block; width:auto; padding:0 0 0 5px; font:normal 11px Arial; color:#B3B3B3; text-shadow:0 1px white}
-div.cartodb_infowindow div.top p {display:block; width:170px; max-height:20px; padding:2px 4px; margin:2px 0 7px; font:bold 11px 'Helvetica',Arial; color:#666666; border:none; background:none; text-shadow:0 1px white;
-  text-overflow:ellipsis; overflow:hidden; white-space:nowrap;}
-div.cartodb_infowindow div.top p.empty {font-weight:normal; font-style:italic; color:#b7b7b7;}
-div.cartodb_infowindow div.bottom {width:206px; height:15px; background:url('icons/sprite.png') no-repeat right -41px;}
+.cartodb_infowindow {
+  $width: 227px;
 
+  position:absolute;
+  display:block;
+  width:$width;
+  height: 232px;
+  padding:0 0 6px;
+  visibility:hidden;
+
+  a.close {
+    @include position(3px, 3px, false, false);
+    @include size(22px, 15px);
+    padding:4px 0 3px 0;
+    text-align:center;
+    font:bold 15px "Helvetica",Arial;
+    color:#666666;
+    text-decoration:none;
+    line-height:15px;
+    &:hover {color:#333333}
+  }
+
+  $pR: 18px;
+  $pL: 10px;
+
+  .outer_top { width:$width - $pL - $pR; padding:25px $pR  5px $pL; background:url('icons/bkg_infowindow.png') no-repeat left top;}
+  .bottom {
+    @include position(false, false, 10px, 0);
+    width:$width;
+    height:20px;
+    background:url('icons/bkg_infowindow.png') no-repeat right top;
+  }
+
+  .top {
+    width:210px;
+    max-height:190px;
+    margin:auto;
+    overflow-y:auto;
+    overflow-x:hidden;
+
+    .jspTrack {background: #dddddd;}
+    .jspDrag {background: #999999;}
+    .jspHover, .jspActive {background:#666666}
+
+    label { display:block; width:auto; padding:0 0 0 5px; font:normal 11px Arial; color:#B3B3B3; text-shadow:0 1px white; }
+
+    .infowindow_content {
+      padding:2px 4px;
+      margin:2px 0 7px;
+
+    }
+
+    p {
+      display:block;
+      width:170px;
+      max-height:20px;
+      @extend .sans-serif;
+      font-weight:bold;
+      font-size:11px;
+      color:#666666;
+      border:none;
+      background:none;
+      text-shadow:0 1px white;
+      text-overflow:ellipsis;
+      overflow:hidden;
+      white-space:nowrap;
+
+      &.empty {font-weight:normal; font-style:italic; color:#b7b7b7;}
+    }
+
+
+    strong {
+      display:block;
+      @extend .sans-serif;
+      font-weight:bold;
+      font-size:12px;
+      background:#f1f1f1;
+    }
+
+  }
+}
 
 .jspContainer {
   overflow: hidden;
