@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 3.2.3'
 
-gem 'cartodb-rb-client', '>= 0.4.0'
+gem 'cartodb-rb-client', :git => 'git://github.com/Vizzuality/cartodb-rb-client.git'
 
 gem 'carrierwave'
 gem 'rmagick'

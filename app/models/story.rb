@@ -3,6 +3,8 @@ class Story < CartoDB::Model::Base
 
   attr_accessor :uploads_ids
 
+  set_geometry_type :geometry
+
   field :title
   field :when_did_it_happen
   field :details
@@ -12,21 +14,13 @@ class Story < CartoDB::Model::Base
   field :visible,  :type => 'boolean'
   field :token
 
-  set_geometry_type :geometry
-
-  #validates_each :title, :the_geom, :your_name do |record, attr, value|
-  validates_each :title, :your_name do |record, attr, value|
-  #validates_each :title do |record, attr, value|
+  validates_each :title, :the_geom, :your_name do |record, attr, value|
     record.errors.add attr, 'cannot be empty' if value.blank?
   end
 
   def initialize(params)
     self.uploads_ids = params.delete(:uploads_ids)
     super
-  end
-
-  def the_geom=(the_geom)
-    @the_geom = the_geom unless the_geom.blank?
   end
 
   def uploads_ids

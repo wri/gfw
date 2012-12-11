@@ -25,6 +25,7 @@ class StoriesController < ApplicationController
   def create
 
     @story = Story.new(params[:story])
+    require 'debugger'; debugger
 
     if @story.valid?
       @story.save
