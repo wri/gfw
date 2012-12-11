@@ -32,4 +32,10 @@ module StoriesHelper
     params[:id] == story.token
   end
 
+  def title_or_flash
+    return link_to flash[:notice], '#' if flash[:notice].present?
+
+    link_to 'Case Studies', stories_path
+  end
+
 end
