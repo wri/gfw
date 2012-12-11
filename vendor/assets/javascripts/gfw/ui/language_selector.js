@@ -58,6 +58,9 @@ gfw.ui.view.LanguageSelector = gfw.ui.view.Widget.extend({
 
     var language = new gfw.ui.model.Language( options );
 
+    var currentURL = window.location.href;
+    language.set("currentURL", currentURL);
+
     this.languages.add(language);
 
     var template = new gfw.core.Template({
@@ -70,7 +73,7 @@ gfw.ui.view.LanguageSelector = gfw.ui.view.Widget.extend({
 
   onLanguageClick: function(e) {
 
-    var $li = $(e.target).parent();
+    var $li  = $(e.target).parent();
     var code = $li.attr("data-code");
 
     this.$handler.find("span").html(code);
@@ -87,7 +90,7 @@ gfw.ui.view.LanguageSelector = gfw.ui.view.Widget.extend({
 
   onClick: function(e) {
 
-    e && e.preventDefault();
+    //e && e.preventDefault();
     e && e.stopImmediatePropagation();
     e && e.stopPropagation();
 

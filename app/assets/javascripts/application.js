@@ -50,14 +50,14 @@ function initialize() {
     $("nav").append(languageSelector.render());
     $("#map").append(legend.render());
 
-    languageSelector.addLanguage({ code: "en", title: "English",    url: "" });
-    languageSelector.addLanguage({ code: "fr", title: "French",     url: "" });
-    languageSelector.addLanguage({ code: "sp", title: "Spanish",    url: "" });
-    languageSelector.addLanguage({ code: "pr", title: "Portuguese", url: "" });
-    languageSelector.addLanguage({ code: "ba", title: "Bahasa",     url: "" });
-    languageSelector.addLanguage({ code: "ch", title: "Chinese",    url: "" });
-    languageSelector.addLanguage({ code: "ru", title: "Russian",    url: "" });
-    languageSelector.addLanguage({ code: "ar", title: "Arabic",     url: "" });
+    languageSelector.addLanguage({ code: "en", title: "English" });
+    languageSelector.addLanguage({ code: "fr", title: "French" });
+    languageSelector.addLanguage({ code: "sp", title: "Spanish" });
+    languageSelector.addLanguage({ code: "pr", title: "Portuguese" });
+    languageSelector.addLanguage({ code: "ba", title: "Bahasa" });
+    languageSelector.addLanguage({ code: "ch", title: "Chinese" });
+    languageSelector.addLanguage({ code: "ru", title: "Russian" });
+    languageSelector.addLanguage({ code: "ar", title: "Arabic" });
 
     legend.setDraggable(true);
     layerSelector.setDraggable(true);

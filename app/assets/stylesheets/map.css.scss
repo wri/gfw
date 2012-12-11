@@ -366,6 +366,7 @@
   color: $cGray3;
 
   z-index: 10000;
+  cursor: move;
 
   .tip {
     @include position(-12px, false, false, 50px);
