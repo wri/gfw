@@ -264,6 +264,11 @@ gfw.ui.view.Widget = gfw.core.View.extend({
 
   },
 
+  toggleHidden: function() {
+
+    this.model.get("hidden") ? this.show() : this.hide();
+
+  },
   _toggleOpen: function() {
 
     this.model.get("closed") ? this.open() : this.close();

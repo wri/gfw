@@ -34,7 +34,7 @@ describe("common.ui.view.LanguageSelector", function() {
 
     widget  = new gfw.ui.view.LanguageSelector();
 
-
+    $("body").append("<a href='#' class='handler'>xx</a>");
     $("body").append(widget.render());
 
   });
@@ -43,6 +43,7 @@ describe("common.ui.view.LanguageSelector", function() {
 
     $("body").find(".language_selector").remove();
     widget.clean();
+    $("body").find(".handler").remove();
 
   });
 
@@ -78,9 +79,34 @@ describe("common.ui.view.LanguageSelector", function() {
     widget.addLanguage({ name: "french",  title: "French",  url: "" });
     widget.addLanguage({ name: "spanish", title: "Spanish", url: "" });
 
-    console.log(widget.$el);
     expect(widget.languages.length).toEqual(3);
     expect(widget.$languages.find("li").length).toEqual(3);
+  });
+
+  it("should allow to add a handler", function() {
+
+    var $handler = $(".handler");
+    widget.addHandler($handler);
+
+    expect(widget.$handler).toBeDefined();
+  });
+
+  it("should change the handler text on click", function() {
+
+    var $handler = $(".handler");
+    widget.addHandler($handler);
+
+    widget.addLanguage({ code: "en", title: "English", url: "" });
+    widget.addLanguage({ code: "fr", title: "French",  url: "" });
+
+    $(widget.$languages.find("li")[0]).find("a").click();
+
+    waits(250);
+
+    runs(function(){
+      expect(widget.$handler.text()).toEqual("en");
+    });
+
   });
 
 });

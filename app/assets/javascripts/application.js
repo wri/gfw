@@ -26,6 +26,7 @@ map           = null,
 previousState = null,
 subscribeMap;
 
+GOD               = {},
 legend            = {},
 languageSelector  = {},
 layerSelector     = {};
@@ -35,29 +36,47 @@ function initialize() {
 
   gfw.load('/assets/gfw/', function() {
 
+    GOD = new gfw.ui.view.GOD();
+    window.GOD = GOD;
+
     map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 
     layerSelector     = new gfw.ui.view.LayerSelector({ map: map });
     legend            = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
     languageSelector  = new gfw.ui.view.LanguageSelector();
 
+
     $("#map").append(layerSelector.render());
-    $("header").append(languageSelector.render());
+    $("nav").append(languageSelector.render());
     $("#map").append(legend.render());
 
-
-    languageSelector.addLanguage({ name: "english", title: "English", url: "" });
-    languageSelector.addLanguage({ name: "french",  title: "French",  url: "" });
-    languageSelector.addLanguage({ name: "spanish", title: "Spanish", url: "" });
-
+    languageSelector.addLanguage({ code: "en", title: "English",    url: "" });
+    languageSelector.addLanguage({ code: "fr", title: "French",     url: "" });
+    languageSelector.addLanguage({ code: "sp", title: "Spanish",    url: "" });
+    languageSelector.addLanguage({ code: "pr", title: "Portuguese", url: "" });
+    languageSelector.addLanguage({ code: "ba", title: "Bahasa",     url: "" });
+    languageSelector.addLanguage({ code: "ch", title: "Chinese",    url: "" });
+    languageSelector.addLanguage({ code: "ru", title: "Russian",    url: "" });
+    languageSelector.addLanguage({ code: "ar", title: "Arabic",     url: "" });
 
     legend.setDraggable(true);
     layerSelector.setDraggable(true);
+    languageSelector.addHandler(".lang_selector a");
+
+    $(".lang_selector a").on("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      languageSelector.toggleHidden();
+      GOD.add(languageSelector, languageSelector.hide);
+    });
+
 
     // TODO: remove
     window.layerSelector    = layerSelector;
     window.languageSelector = languageSelector;
     window.legend           = legend;
+
 
     GFW(function(env) {
 

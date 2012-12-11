@@ -47,6 +47,10 @@ gfw.ui.view.GOD = gfw.core.View.extend({
 
     var that = this;
 
+    this.model = new gfw.ui.model.LanguageSelector();
+
+    this.add_related_model(this.model);
+
     $(document).on("click", function(e) {
 
       that.triggerCallbacks();
@@ -58,4 +62,5 @@ gfw.ui.view.GOD = gfw.core.View.extend({
   }
 
 });
+
 

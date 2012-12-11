@@ -36,7 +36,7 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
 
   initialize: function() {
 
-    _.bindAll( this, "toggle", "toggleOpen", "toggleDraggable", "onStopDragging", "onLayerClick", "addLayers", "addSelectedLayer" );
+    _.bindAll( this, "toggle", "toggleOpen", "toggleDraggable", "onStopDragging", "onLayerClick", "ddLayers", "addSelectedLayer" );
 
     this.options = _.extend(this.options, this.defaults);
 

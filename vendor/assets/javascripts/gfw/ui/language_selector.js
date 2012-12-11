@@ -34,21 +34,16 @@ gfw.ui.view.LanguageSelector = gfw.ui.view.Widget.extend({
 
   initialize: function() {
 
-    _.bindAll( this, "toggle" );
+    _.bindAll( this, "toggle", "show", "hide", "onLanguageClick", "addHandler" );
 
     this.options = _.extend(this.options, this.defaults);
 
     this.languages = new gfw.ui.collection.Languages();
 
-    //this.selectedLanguage = this.layers.find(function(layer) { return layer.get("selected"); });
-
     this.model = new gfw.ui.model.LanguageSelector();
+    this.add_related_model(this.model);
 
-    //this.model.bind("change:hidden",    this.toggle);
-    //this.model.bind("change:closed",    this.toggleOpen);
-    //this.model.bind("change:draggable", this.toggleDraggable);
-
-    //this.add_related_model(this.model);
+    this.model.bind("change:hidden", this.toggle);
 
     var template = $("#language_selector-template").html();
 
@@ -75,6 +70,27 @@ gfw.ui.view.LanguageSelector = gfw.ui.view.Widget.extend({
 
   onLanguageClick: function(e) {
 
+    var $li = $(e.target).parent();
+    var code = $li.attr("data-code");
+
+    this.$handler.find("span").html(code);
+
+    this.hide();
+
+  },
+
+  addHandler: function(el) {
+
+    this.$handler = $(el);
+
+  },
+
+  onClick: function(e) {
+
+    e && e.preventDefault();
+    e && e.stopImmediatePropagation();
+    e && e.stopPropagation();
+
   },
 
   render: function() {
@@ -82,8 +98,9 @@ gfw.ui.view.LanguageSelector = gfw.ui.view.Widget.extend({
     var that = this;
 
     this.$el.append(this.template.render( this.model.toJSON() ));
+    this.$el.on("click", this.onClick);
 
-    this.$languages      = this.$el.find(".languages");
+    this.$languages = this.$el.find(".languages");
 
     return this.$el;
 
