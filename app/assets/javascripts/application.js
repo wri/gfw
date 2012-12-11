@@ -26,8 +26,9 @@ map           = null,
 previousState = null,
 subscribeMap;
 
-legend        = {},
-layerSelector = {};
+legend            = {},
+languageSelector  = {},
+layerSelector     = {};
 
 // Map init method
 function initialize() {
@@ -36,17 +37,27 @@ function initialize() {
 
     map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 
-    layerSelector = new gfw.ui.view.LayerSelector({ map: map });
-    legend        = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
+    layerSelector     = new gfw.ui.view.LayerSelector({ map: map });
+    legend            = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
+    languageSelector  = new gfw.ui.view.LanguageSelector();
 
     $("#map").append(layerSelector.render());
+    $("header").append(languageSelector.render());
     $("#map").append(legend.render());
+
+
+    languageSelector.addLanguage({ name: "english", title: "English", url: "" });
+    languageSelector.addLanguage({ name: "french",  title: "French",  url: "" });
+    languageSelector.addLanguage({ name: "spanish", title: "Spanish", url: "" });
+
 
     legend.setDraggable(true);
     layerSelector.setDraggable(true);
 
-    window.layerSelector = layerSelector;
-    window.legend        = legend;
+    // TODO: remove
+    window.layerSelector    = layerSelector;
+    window.languageSelector = languageSelector;
+    window.legend           = legend;
 
     GFW(function(env) {
 

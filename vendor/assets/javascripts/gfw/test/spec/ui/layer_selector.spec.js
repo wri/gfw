@@ -118,7 +118,7 @@ describe("common.ui.view.LayerSelector", function() {
 
       var layer = widget.layers.find(function(layer) { return layer.get("selected"); });
 
-      expect(layer.get("title")).toEqual("Terrain");
+      expect(layer.get("title")).toEqual("Satellite");
       expect(widget.model.get("closed")).toEqual(true);
 
     });

@@ -4,21 +4,21 @@
   <head>
     <title>GFW Spec Runner</title>
 
-    <link rel="shortcut icon" type="image/png" href="lib/jasmine-1.2.0/jasmine_favicon.png">
-    <link rel="stylesheet" type="text/css" href="lib/jasmine-1.2.0/jasmine.css">
+    <link rel="shortcut icon" type="image/png" href="lib/jasmine-1.3.1/jasmine_favicon.png">
+    <link rel="stylesheet" type="text/css" href="lib/jasmine-1.3.1/jasmine.css">
+    <script type="text/javascript" src="lib/jasmine-1.3.1/jasmine.js"></script>
+    <script type="text/javascript" src="lib/jasmine-1.3.1/jasmine-html.js"></script>
 
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing"></script>
 
     <script type="text/javascript" src="../vendor/jquery.min.js"></script>
     <script type="text/javascript" src="../vendor/jquery-ui-1.8.24.custom.min.js"></script>
     <script type="text/javascript" src="../vendor/jquery.imagesloaded.min.js"></script>
 
     <script type="text/javascript" src="../vendor/jquery.easing.min.js"></script>
-
     <script type="text/javascript" src="../vendor/jquery.mousewheel.min.js"></script>
     <script type="text/javascript" src="../vendor/jquery.jscrollpane.js"></script>
-
     <script type="text/javascript" src="../vendor/jquery.stylishSelect.js"></script>
 
     <script type="text/javascript" src="../vendor/spin.min.js"></script>
@@ -26,8 +26,6 @@
     <script type="text/javascript" src="../vendor/backbone-min.js"></script>
     <script type="text/javascript" src="../vendor/mustache.js"></script>
 
-    <script type="text/javascript" src="lib/jasmine-1.2.0/jasmine.js"></script>
-    <script type="text/javascript" src="lib/jasmine-1.2.0/jasmine-html.js"></script>
     <script type="text/javascript" src="lib/jasmine-jquery-1.3.1.js"></script>
     <script type="text/javascript" src="lib/sinon-1.3.4.js"></script>
     <script type="text/javascript" src="/assets/helpers.js"></script>
@@ -160,6 +158,14 @@
     </div>
   </script>
 
+
+  <script id="language_selector-template" type="text/x-underscore-template">
+    <ul class="languages"></ul>
+  </script>
+
+  <script id="language-template" type="text/x-underscore-template">
+    <li class="{{ name }}"><a href="{{url}}">{{title}}</a></li>
+  </script>
 
   <script id="layer_selector-template" type="text/x-underscore-template">
     <a href="#" class="toggle"></a>

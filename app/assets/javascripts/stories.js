@@ -9,19 +9,23 @@ $(function() {
       $("#fileupload").click();
     });
 
+
+ $("#fileupload").bind('fileuploadprogress', function (e, data) {/* ... */})
     $('#fileupload').fileupload({
       dataType: 'json',
 
-      added: function (e, data) {
+      added: function (e, data) { },
+      drop:  function (e, data) { },
 
-        //$.each(data.files, function (index, file) {
-          //alert('Dropped file: ' + file.name);
-        //});
+      progress: function (e, data) {
+        console.log(data);
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        console.log(progress + '%');
       },
-      drop: function (e, data) {
-        //$.each(data.files, function (index, file) {
-          //alert('Dropped file: ' + file.name);
-        //});
+      progressall: function (e, data) {
+        console.log(data);
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        console.log(progress + '%');
       },
 
       add: function (e, data) {
@@ -41,15 +45,12 @@ $(function() {
         $.each(data.result, function (index, file) {
           filesAdded--;
 
-          console.log(file, file.thumbnail_url);
-          debugger;
           uploadsIds.push(file.cartodb_id);
 
           var $thumb = $("<div class='thumbnail'><img src='"+file.thumbnail_url+"' /></div>");
           $(".thumbnails").append($thumb);
           $thumb.fadeIn(250);
 
-          //$('<p/>').text(file.name).appendTo(document.body);
         });
 
 
@@ -173,7 +174,6 @@ $(function() {
       selectColor(shape.get('fillColor') || shape.get('strokeColor'));
     }
     function deleteSelectedMarker() {
-      console.log('a', selectedMarker);
       if (selectedMarker) {
         selectedMarker.setMap(null);
       }

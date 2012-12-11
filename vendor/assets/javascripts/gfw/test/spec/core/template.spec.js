@@ -4,7 +4,7 @@ describe("core.template", function() {
     var tmpl;
     beforeEach(function() {
       tmpl = new gfw.core.Template({
-        template: "hi, my name is <%= name %>"
+        template: "hi, my name is {{ name }}"
       });
     });
 
@@ -34,8 +34,8 @@ describe("core.template", function() {
     beforeEach(function() {
       tmpl = new gfw.core.TemplateList();
       tmpl.reset([
-        {name: 't1', template: "hi, my name is <%= name %>"},
-        {name: 't2', template: "byee!! <%= name %>"}
+        {name: 't1', template: "hi, my name is {{ name }}"},
+        {name: 't2', template: "byee!! {{ name }}"}
       ]);
     });
 

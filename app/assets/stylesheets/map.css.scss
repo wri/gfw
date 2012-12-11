@@ -628,7 +628,7 @@ $timelineWidth: 940px;
   text-align:center;
 
   a.close {
-    @include position(20px, 8px, false, false);
+    @include position(20px, 6px, false, false);
     @include size(6px);
     @include icons-sprite(infowindow_close);
   }

@@ -58,6 +58,7 @@ GFW.modules.app = function(gfw) {
 
       this.lastHash = null;
 
+      console.log(this.options.user);
       this._cartodb = Backbone.CartoDB({user: this.options.user});
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
 
@@ -102,6 +103,7 @@ GFW.modules.app = function(gfw) {
 
         google.maps.event.trigger(that._map, "resize");
         that._map.setOptions({ scrollwheel: false });
+
         $("body").css({ overflow:"auto" });
 
         if (callback) {
@@ -170,7 +172,10 @@ GFW.modules.app = function(gfw) {
 
       google.maps.event.addListener(this._map, 'click', function(event) {
 
-            that.infowindow.close();
+        console.log('close');
+
+        that.infowindow.close();
+
         if (!that.specialLayer) { return; }
 
         var // get click coordinates
@@ -187,6 +192,7 @@ GFW.modules.app = function(gfw) {
             var data = json[0];
 
             if (data) {
+              console.log(1, data);
               that.infowindow.setContent(data);
               that.infowindow.setPosition(event.latLng);
               that.infowindow.open();

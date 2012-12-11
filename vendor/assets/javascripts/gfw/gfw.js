@@ -17,12 +17,13 @@
   window.JST = window.JST || {};
 
   gfw.files = [
+
     //"vendor/jquery.min.js",
     //"vendor/jquery-1.8.1.js",
     //"vendor/jquery-ui-1.8.24.custom.min.js",
     //"vendor/jquery.easing.min.js",
     //"vendor/underscore-min.js",
-    //"vendor/backbone-min.js",
+    "vendor/backbone-min.js",
     "vendor/jquery.mousewheel.min.js",
     "vendor/jquery.imagesloaded.min.js",
     "vendor/jquery.jscrollpane.js",
@@ -46,14 +47,7 @@
     'ui/timeline.js',
     'ui/legend.js',
     'ui/layer_selector.js',
-    'ui/language_selector.js',
-    //'ui/spinner.js',
-    //'ui/backdrop.js',
-    //'ui/tooltip.js',
-    //'ui/statusbar.js',
-    //'ui/transcriptions.js',
-    //'ui/transcriber.js',
-    //'ui/photos.js',
+    'ui/language_selector.js'
 
   ];
 

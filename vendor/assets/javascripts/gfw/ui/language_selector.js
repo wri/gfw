@@ -34,19 +34,15 @@ gfw.ui.view.LanguageSelector = gfw.ui.view.Widget.extend({
 
   initialize: function() {
 
-    //_.bindAll( this, "toggle", "toggleOpen", "toggleDraggable", "onStopDragging", "onLanguageClick", "addLanguages", "addSelectedLanguage" );
+    _.bindAll( this, "toggle" );
 
-    //this.options = _.extend(this.options, this.defaults);
+    this.options = _.extend(this.options, this.defaults);
 
-    //this.layers = new gfw.ui.collection.Languages();
-
-    //this.layers.add(new gfw.ui.model.Language({ mapType: google.maps.MapTypeId.TERRAIN, title: "Terrain",     name: "terrain", selected: true }));
-    //this.layers.add(new gfw.ui.model.Language({ mapType: google.maps.MapTypeId.SATELLITE, title: "Satellite",   name: "satellite", }));
-    //this.layers.add(new gfw.ui.model.Language({ customMapType:"TREEHEIGHT", mapType: config.mapStyles.TREEHEIGHT, title: "Tree Height", name: "tree_height" }));
+    this.languages = new gfw.ui.collection.Languages();
 
     //this.selectedLanguage = this.layers.find(function(layer) { return layer.get("selected"); });
 
-    //this.model = new gfw.ui.model.LanguageSelector();
+    this.model = new gfw.ui.model.LanguageSelector();
 
     //this.model.bind("change:hidden",    this.toggle);
     //this.model.bind("change:closed",    this.toggleOpen);
@@ -54,12 +50,30 @@ gfw.ui.view.LanguageSelector = gfw.ui.view.Widget.extend({
 
     //this.add_related_model(this.model);
 
-    //var template = $("#layer_selector-template").html();
+    var template = $("#language_selector-template").html();
 
-    //this.template = new gfw.core.Template({
-      //template: template,
-      //type: 'mustache'
-    //});
+    this.template = new gfw.core.Template({
+      template: template,
+      type: 'mustache'
+    });
+
+  },
+
+  addLanguage: function(options) {
+
+    var language = new gfw.ui.model.Language( options );
+
+    this.languages.add(language);
+
+    var template = new gfw.core.Template({
+      template: $("#language-template").html(),
+      type: 'mustache'
+    });
+
+    this.$languages.append(template.render( language.toJSON() ));
+  },
+
+  onLanguageClick: function(e) {
 
   },
 
@@ -70,10 +84,6 @@ gfw.ui.view.LanguageSelector = gfw.ui.view.Widget.extend({
     this.$el.append(this.template.render( this.model.toJSON() ));
 
     this.$languages      = this.$el.find(".languages");
-
-    //this.addSelectedLanguage();
-    //this.addLanguages();
-    this.toggleOpen();
 
     return this.$el;
 
