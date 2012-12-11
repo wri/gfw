@@ -1,0 +1,15 @@
+language: ruby
+bundler_args: --without development
+script: "rspec --format=documentation spec"
+
+rvm:
+  - 1.9.2
+  - 1.9.3
+gemfile:
+  - Gemfile
+notifications:
+  recipients:
+    - ferdev+travis@vizzuality.com
+branches:
+  only:
+    - master

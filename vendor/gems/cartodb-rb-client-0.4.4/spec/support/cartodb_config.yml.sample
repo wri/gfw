@@ -1,0 +1,16 @@
+#############################
+# CartoDB Credentials
+#############################
+host:
+api_key:
+# oauth_key:
+# oauth_secret:
+# oauth_access_token:
+# oauth_access_token_secret:
+# username:
+# password:
+
+# cache_timeout: 60
+# debug: true
+# ssl_peer_verification: true
+# type_casting: true
