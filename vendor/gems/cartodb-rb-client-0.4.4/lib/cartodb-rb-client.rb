@@ -9,7 +9,6 @@ require 'active_support/core_ext/hash/slice'
 require 'active_support/time_with_zone'
 require 'rgeo'
 require 'rgeo/geo_json'
-require 'pg'
 require 'json/ext'
 
 require 'cartodb-rb-client/cartodb'

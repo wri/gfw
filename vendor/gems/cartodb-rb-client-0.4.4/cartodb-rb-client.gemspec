@@ -2,7 +2,6 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "cartodb-rb-client/version"
-require "cartodb-rb-client/install_utils"
 
 Gem::Specification.new do |s|
   s.name        = "cartodb-rb-client"
@@ -11,7 +10,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Fernando Espinosa"]
   s.email       = ["ferdev@vizzuality.com"]
   s.homepage    = %q{http://github.com/vizzuality/cartodb-rb-client}
-  s.licenses    = ["BSD"]
+  s.licenses    = ["MIT"]
   s.summary     = %q{Ruby client for the cartoDB API}
   s.description = %q{Allows quick and easy connection to the cartodb API.}
 
@@ -20,7 +19,6 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "cartodb-rb-client"
 
   s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
   s.add_dependency 'typhoeus', '0.3.3'
@@ -30,6 +28,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'i18n', '>= 0.5.0'
   s.add_dependency 'rgeo', '>= 0.3.2'
   s.add_dependency 'rgeo-geojson', '>= 0.2.1'
-  s.add_dependency('pg', '>= 0.11.0', '<= 0.13.2') if postgresql_installed?
   s.add_dependency 'json', '>= 1.5.3'
 end
