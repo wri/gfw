@@ -1,6 +1,6 @@
 $(function() {
 
-  var uploadsIds = [], drawingManager, selectedShape, selectedMarker, selectedColor;
+  var uploadsIds = [], drawingManager, selectedShape, selectedMarker, selectedColor, filesAdded = 0;
 
   if ($("#map.stories_map").length > 0) {
 
@@ -13,7 +13,7 @@ $(function() {
       dataType: 'json',
 
       added: function (e, data) {
-      console.log(e, data);
+
         //$.each(data.files, function (index, file) {
           //alert('Dropped file: ' + file.name);
         //});
@@ -27,27 +27,36 @@ $(function() {
       add: function (e, data) {
         var files = data.files;
 
-        _.each(files, function(file, i) {
-        console.log(file);
-          var $thumb = $("<div class='thumbnail' />");
-          $(".thumbnails").append($thumb);
-        });
+        filesAdded += _.size(data.files);
 
-        $(".thumbnail").each(function(i, thumb) {
-          $(thumb).delay((i+1) * 300).animate({ opacity: 1 }, 350);
-        });
+        $("form input[type='submit']").addClass("disabled");
+        $("form input[type='submit']").attr("disabled", "disabled");
 
         data.submit();
 
       },
 
       done: function (e, data) {
-        $.each(data.result, function (index, file) {
 
-          console.log("-", file);
+        $.each(data.result, function (index, file) {
+          filesAdded--;
+
+          console.log(file, file.thumbnail_url);
+          debugger;
           uploadsIds.push(file.cartodb_id);
+
+          var $thumb = $("<div class='thumbnail'><img src='"+file.thumbnail_url+"' /></div>");
+          $(".thumbnails").append($thumb);
+          $thumb.fadeIn(250);
+
           //$('<p/>').text(file.name).appendTo(document.body);
         });
+
+
+        if (filesAdded <= 0) {
+          $("form input[type='submit']").removeClass("disabled");
+          $("form input[type='submit']").attr("disabled", false);
+        }
 
         $("#story_uploads_ids").val(uploadsIds.join(","));
       }

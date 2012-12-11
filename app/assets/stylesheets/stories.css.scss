@@ -252,12 +252,15 @@ body.stories {
           margin: 5px 0;
 
           .thumbnail {
+            position:relative;
             @include inline-block();
             @include size(132px, 78px);
-            background: transparent url('buttons/bkg_button_add_media.png') no-repeat center center;
             margin: 0 10px 10px 0;
+            overflow: hidden;
+            clear:both;
 
-            opacity: 0;
+            img { height:78px; }
+
           }
 
           .upload_picture {
@@ -358,6 +361,10 @@ body.stories {
         text-transform: uppercase;
         text-decoration: none;
         text-align: center;
+
+        &.disabled {
+          background:#ccc;
+        }
       }
 
     }
@@ -413,7 +420,7 @@ body.stories {
         font-size: 31px;
         text-align:center;
         text-decoration: none;
-        } 
+        }
       }
 
     }
