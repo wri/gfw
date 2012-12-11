@@ -41,10 +41,14 @@ function initialize() {
 
     map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 
+    var styledMap = new google.maps.StyledMapType(config.BASE_MAP_STYLE, { name: "terrain" });
+
+    map.mapTypes.set("terrain", styledMap);
+    map.setMapTypeId("terrain");
+
     layerSelector     = new gfw.ui.view.LayerSelector({ map: map });
     legend            = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
     languageSelector  = new gfw.ui.view.LanguageSelector();
-
 
     $("#map").append(layerSelector.render());
     $("nav").append(languageSelector.render());
@@ -63,6 +67,10 @@ function initialize() {
     layerSelector.setDraggable(true);
     languageSelector.addHandler(".lang_selector a");
 
+    $("#other_sites_ribbon").on("click", function() {
+      $("header").animate({ marginTop: 400 }, 250);
+    });
+
     $(".lang_selector a").on("click", function(e) {
       e.preventDefault();
       e.stopPropagation();
@@ -71,12 +79,10 @@ function initialize() {
       GOD.add(languageSelector, languageSelector.hide);
     });
 
-
     // TODO: remove
     window.layerSelector    = layerSelector;
     window.languageSelector = languageSelector;
     window.legend           = legend;
-
 
     GFW(function(env) {
 

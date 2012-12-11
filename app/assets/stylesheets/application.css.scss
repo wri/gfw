@@ -49,13 +49,21 @@ header {
   #other_sites_ribbon {
     position: absolute;
     right: 0;
-    width: 22px;
-    height: 21px;
+    @include size(22px, 21px);
     padding: 25px 0 0px 0;
     background-color: #222222;
-    color: #FFFFFF;
     text-align: center;
-    font-weight: bold;
+
+    a {
+      color: #FFFFFF;
+      text-align: center;
+      font-weight: bold;
+      text-decoration:none;
+      &:hover {
+        @include text-shadow(0 0 1px rgba(255,255,255, .5));
+
+      }
+    }
   }
 
   #other_wri_sites {

@@ -42,9 +42,9 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
 
     this.layers = new gfw.ui.collection.Layers();
 
-    this.layers.add(new gfw.ui.model.Layer({ mapType: google.maps.MapTypeId.TERRAIN, title: "Terrain",     name: "terrain", selected: true }));
-    this.layers.add(new gfw.ui.model.Layer({ mapType: google.maps.MapTypeId.SATELLITE, title: "Satellite",   name: "satellite", }));
-    this.layers.add(new gfw.ui.model.Layer({ customMapType:"TREEHEIGHT", mapType: config.mapStyles.TREEHEIGHT, title: "Tree Height", name: "tree_height" }));
+    this.layers.add(new gfw.ui.model.Layer({ style: config.BASE_MAP_STYLE, customMapType: "TERRAIN", title: "Terrain", name: "terrain", selected: true }));
+    this.layers.add(new gfw.ui.model.Layer({ mapType: google.maps.MapTypeId.SATELLITE, title: "Satellite", name: "satellite", }));
+    //this.layers.add(new gfw.ui.model.Layer({ customMapType:"TREEHEIGHT", mapType: config.mapStyles.TREEHEIGHT, title: "Tree Height", name: "tree_height" }));
 
     this.selectedLayer = this.layers.find(function(layer) { return layer.get("selected"); });
 
@@ -124,6 +124,7 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
     e && e.preventDefault();
     e && e.stopImmediatePropagation();
 
+    var map = this.options.map;
     var $li  = $(e.target).closest("li");
     var name = $li.attr("id");
 
@@ -145,10 +146,14 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
     this.selectedLayer = layer;
 
     if (layer.get("customMapType")) {
-      this.options.map.mapTypes.set(layer.get("customMapType"), layer.get("mapType"));
-      this.options.map.setMapTypeId(layer.get("customMapType"));
+
+      var styledMap = new google.maps.StyledMapType(layer.get("style"), { name: layer.get("title") });
+
+      map.mapTypes.set(layer.get("title"), styledMap);
+      map.setMapTypeId(layer.get("title"));
+
     } else {
-      this.options.map.setMapTypeId(layer.get("mapType"));
+      map.setMapTypeId(layer.get("mapType"));
     }
 
     this.addSelectedLayer();
