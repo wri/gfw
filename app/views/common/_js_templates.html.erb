@@ -66,6 +66,30 @@
     </div>
   </script>
 
+  <!-- Gallery -->
+
+  <script id="gallery-template" type="text/x-underscore-template">
+    <div class="gallery">
+      <h3>{{title}}</h3>
+      <div class="inner">
+        <ul></ul>
+      </div>
+      <a href="#" class="left"></a>
+      <a href="#" class="right"></a>
+    </div>
+  </script>
+
+  <script id="gallery_item-template" type="text/x-underscore-template">
+    <li>
+    <a href="{{url}}">
+      <div class="thumb"><img src="{{thumb_url}}" alt="{{tilte}}" /></div>
+      <strong>{{title}}</strong>
+      <p>{{description}}</p>
+    </a>
+    </li>
+  </script>
+
+
   <!-- Language -->
   <script id="language_selector-template" type="text/x-underscore-template">
     <div class="tip"></div>

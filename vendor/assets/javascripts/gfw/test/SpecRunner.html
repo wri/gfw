@@ -45,6 +45,7 @@
     <script type="text/javascript" src="../ui/legend.js"></script>
     <script type="text/javascript" src="../ui/layer_selector.js"></script>
     <script type="text/javascript" src="../ui/language_selector.js"></script>
+    <script type="text/javascript" src="../ui/gallery.js"></script>
     <script type="text/javascript" src="../ui/timeline.js"></script>
 
     <!-- SPECS -->
@@ -59,6 +60,7 @@
     <script type="text/javascript" src="spec/ui/legend.spec.js"></script> 
     <script type="text/javascript" src="spec/ui/layer_selector.spec.js"></script> 
     <script type="text/javascript" src="spec/ui/language_selector.spec.js"></script> 
+    <script type="text/javascript" src="spec/ui/gallery.spec.js"></script> 
     <script type="text/javascript" src="spec/ui/timeline.spec.js"></script>
 
     <script type="text/javascript">
@@ -163,6 +165,19 @@
     </div>
   </script>
 
+  <script id="gallery-template" type="text/x-underscore-template">
+    <div class="gallery"></div>
+    <div class="left"></div>
+    <div class="right"></div>
+  </script>
+
+  <script id="gallery_item-template" type="text/x-underscore-template">
+    <li>
+    <div class="thumb"></div>
+    <strong>{{title}}</strong>
+    <p>{{description}}</p>
+    </li>
+  </script>
 
   <script id="language_selector-template" type="text/x-underscore-template">
     <ul class="languages"></ul>

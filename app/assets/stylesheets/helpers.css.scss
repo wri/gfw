@@ -1,3 +1,5 @@
+@import "compass/css3";
+
 /* Colors */
 $cBackground:            #222222;
 $cDarkGreen:             #264C59;
@@ -131,6 +133,12 @@ strong { font-weight: bold; } // This is sad, I know.
 
 .pull-right {
   float:right;
+}
+
+.opacity-transition {
+  @include transition-property(opacity);
+  @include transition-duration(250ms);
+  @include transition-timing-function(ease-in);
 }
 
 .shadow-transition {

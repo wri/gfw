@@ -28,31 +28,50 @@ subscribeMap;
 
 GOD               = {},
 legend            = {},
+gallery           = {},
 languageSelector  = {},
 layerSelector     = {};
 
-// Map init method
-function initialize() {
+function loadGFW() {
 
   gfw.load('/assets/gfw/', function() {
 
     GOD = new gfw.ui.view.GOD();
     window.GOD = GOD;
 
-    map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
+    if ($("#map").length > 0) {
+      map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 
-    var styledMap = new google.maps.StyledMapType(config.BASE_MAP_STYLE, { name: "terrain" });
+      var styledMap = new google.maps.StyledMapType(config.BASE_MAP_STYLE, { name: "terrain_style" });
 
-    map.mapTypes.set("terrain", styledMap);
-    map.setMapTypeId("terrain");
+      map.mapTypes.set("terrain_style", styledMap);
+      map.setMapTypeId("terrain_style");
 
-    layerSelector     = new gfw.ui.view.LayerSelector({ map: map });
-    legend            = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
+      layerSelector     = new gfw.ui.view.LayerSelector({ map: map });
+      legend            = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
+
+      $("#map").append(layerSelector.render());
+      $("#map").append(legend.render());
+
+      legend.setDraggable(true);
+      layerSelector.setDraggable(true);
+    }
+
+    var sites = [
+      new gfw.ui.model.Site({ title: "WRInsights", description: "Part of our mission to provide expert analysis on the most important environmental issues.", url: "", thumb_url: "assets/tmp/site_thumb.png" }),
+      new gfw.ui.model.Site({ title: "ChinaFAQs",  description: "Our support to China to incorporate some of the world’s development  best practices.",       url: "", thumb_url: "assets/tmp/site_thumb.png" }),
+      new gfw.ui.model.Site({ title: "TheCityFix", description: "Part of our mission to provide expert analysis on the most important environmental issues.", url: "", thumb_url: "assets/tmp/site_thumb.png" }),
+      new gfw.ui.model.Site({ title: "TheCityFix", description: "Our support to China to incorporate some of the world’s development  best practices.",       url: "", thumb_url: "assets/tmp/site_thumb.png" }),
+      new gfw.ui.model.Site({ title: "TheCityFix", description: "Part of our mission to provide expert analysis on the most important environmental issues.", url: "", thumb_url: "assets/tmp/site_thumb.png" }),
+      new gfw.ui.model.Site({ title: "TheCityFix", description: "Our support to China to incorporate some of the world’s development  best practices.",       url: "", thumb_url: "assets/tmp/site_thumb.png" })
+    ];
+
+    gallery           = new gfw.ui.view.Gallery({ title: "Other WRI sites", sites: sites });
     languageSelector  = new gfw.ui.view.LanguageSelector();
 
-    $("#map").append(layerSelector.render());
     $("nav").append(languageSelector.render());
-    $("#map").append(legend.render());
+
+    gallery.addHandler("#other_sites_ribbon");
 
     languageSelector.addLanguage({ code: "en", title: "English" });
     languageSelector.addLanguage({ code: "fr", title: "French" });
@@ -63,13 +82,7 @@ function initialize() {
     languageSelector.addLanguage({ code: "ru", title: "Russian" });
     languageSelector.addLanguage({ code: "ar", title: "Arabic" });
 
-    legend.setDraggable(true);
-    layerSelector.setDraggable(true);
     languageSelector.addHandler(".lang_selector a");
-
-    $("#other_sites_ribbon").on("click", function() {
-      $("header").animate({ marginTop: 400 }, 250);
-    });
 
     $(".lang_selector a").on("click", function(e) {
       e.preventDefault();
@@ -84,19 +97,29 @@ function initialize() {
     window.languageSelector = languageSelector;
     window.legend           = legend;
 
-    GFW(function(env) {
+    if (map) {
+      GFW(function(env) {
 
-    GFW.app = new env.app.Instance(map, {
-      user       : 'wri-01',
-      layerTable : 'layerinfo',
-      logging    : true
-    });
+        GFW.app = new env.app.Instance(map, {
+          user       : 'wri-01',
+          layerTable : 'layerinfo',
+          logging    : true
+        });
 
-    GFW.app.run();
-    GFW.env = env;
+        GFW.app.run();
+        GFW.env = env;
+
+      });
+    }
 
   });
-  });
+
+}
+
+// Map init method
+function initialize() {
+
+  loadGFW();
 
   var
   State = History.getState(),

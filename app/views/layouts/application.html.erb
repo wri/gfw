@@ -9,7 +9,7 @@
     <%= csrf_meta_tags %>
   </head>
 
-  <body class="<%= controller_name %>"<%= raw ' onload="initialize()"' if %w(maps home).include?(controller_name) %>>
+  <body class="<%= controller_name %>"<%= raw ' onload="loadGFW()"' unless %w(maps home).include?(controller_name) %><%= raw ' onload="initialize()"' if %w(maps home).include?(controller_name) %>>
     <%= render "common/header" %>
 
     <div id="content">
@@ -18,6 +18,7 @@
     </div>
 
     <%= render "common/footer" %>
+    <%= render "common/js_templates" %>
     <%= javascript_include_tag "application" %>
 
     <%= yield :js %>

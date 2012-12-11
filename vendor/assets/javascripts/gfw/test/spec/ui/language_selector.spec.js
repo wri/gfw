@@ -34,7 +34,7 @@ describe("common.ui.view.LanguageSelector", function() {
 
     widget  = new gfw.ui.view.LanguageSelector();
 
-    $("body").append("<a href='#' class='handler'>xx</a>");
+    $("body").append("<a href='#' class='handler'><span>xx</span></a>");
     $("body").append(widget.render());
 
   });
@@ -104,7 +104,7 @@ describe("common.ui.view.LanguageSelector", function() {
     waits(250);
 
     runs(function(){
-      expect(widget.$handler.text()).toEqual("en");
+      expect(widget.$handler.find("span").text()).toEqual("en");
     });
 
   });
