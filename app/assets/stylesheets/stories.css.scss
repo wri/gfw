@@ -9,8 +9,47 @@
 body.stories {
 
   header {
-    height: 235px;
+    height: 205px;
     border-bottom: 1px solid $cGray4;
+  }
+
+  .btn.edit {
+    position:absolute;
+    right:0;
+    top: 95px;
+  }
+
+  &.index {
+    hgroup { width: 927px; text-align: center; }
+
+    header {
+      height: 199px;
+    }
+
+    hgroup h1 { top: 27px; }
+
+    hgroup h1 {
+      font-size:51px;
+      font-family: Georgia;
+    }
+
+  }
+
+  &.show {
+    hgroup { width: 927px; text-align: center; }
+
+    header {
+      height: 169px;
+    }
+
+    hgroup h1 { top: 20px; }
+
+    hgroup h1 a {
+      color: #A0B941;
+      font-size:31px;
+      font-family: Georgia;
+    }
+
   }
 
   #content {
@@ -314,8 +353,6 @@ body.stories {
 
           z-index:1000;
         }
-
-
 
         .map {
           height: 293px;

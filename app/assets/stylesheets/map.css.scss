@@ -14,6 +14,20 @@
     border-bottom: 1px solid #717D80;
   }
 
+  // Markers
+  #map .marker {
+    position:absolute;
+    @include size(45px);
+
+    img {
+      @include size(100%);
+      position:relative;
+      display:block;
+    }
+
+    &:hover {cursor:pointer!important;}
+  }
+
   .circle {
 
     $width: 318px;

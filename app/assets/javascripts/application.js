@@ -15,8 +15,8 @@
 //= require jquery.fileupload
 //= require jquery.fileupload-ui
 //= require jquery.fileupload-fp
-//= require_tree .
 //= require gfw/gfw
+//= require_tree .
 
 // Map needs to be a global var or
 // CapybaraHelpers#draw_polygon won't work
@@ -24,6 +24,7 @@
 var
 map           = null,
 previousState = null,
+globalZindex     = 300,
 subscribeMap;
 
 GOD               = {},

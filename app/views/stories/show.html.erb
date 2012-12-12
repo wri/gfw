@@ -1,9 +1,12 @@
-<div class="story">
+<% content_for :title do
+  title_or_flash
+end %>
 
-  <div class="title">
-    <h2 class="compact"><%= title_or_flash %></h2>
-    <%= link_to 'Edit case study', edit_story_path(@story.token)  if access_through_token?(@story)%>
-  </div>
+<% content_for :inner_header do
+  link_to (content_tag :span, 'Edit case study'), edit_story_path(@story.token), :class => "btn edit"  if access_through_token?(@story)
+end %>
+
+<div class="story">
 
   <div class="inner">
     <div class="header">
