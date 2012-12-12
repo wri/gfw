@@ -375,46 +375,15 @@ GFW.modules.app = function(gfw) {
 
     _loadStoriesLayer: function() {
 
-      var CartoDB = Backbone.CartoDB({
-        user: "ferdev"
-      });
+      //var
+      //position = new google.maps.LatLng(story.get("lat"), story.get("lng")),
+      //thumb    = story.get("thumbnail_url"),
+      //icon     = '/assets/icons/exclamation.png',
+      //properties = null;
+      //console.log(thumb);
 
-      // Create a model, here directly from SQL
-      // You can also do it with simply a table name and list of columns
-      var sql = "SELECT media.thumbnail_url, stories.the_geom, ST_X(ST_Centroid(stories.the_geom)) AS lng, ST_Y(ST_Centroid(stories.the_geom)) AS lat FROM media, stories WHERE stories.cartodb_id = media.story_id";
-      var parksModel = CartoDB.CartoDBCollection.extend({
-        sql: sql
-      });
-
-      console.log(sql);
-
-      // Create a new instance of our model and fetch the records
-      var parks = new parksModel();
-      parks.fetch();
-
-      // When records are loaded, do something with them
-      parks.bind('reset', function(p) {
-
-        _.each(p.models, function(story) {
-
-
-          var
-          position = new google.maps.LatLng(story.get("lat"), story.get("lng")),
-          thumb    = story.get("thumbnail_url"),
-          icon     = '/assets/icons/exclamation.png',
-          properties = null;
-          console.log(thumb);
-
-          marker = new GFWMarker("project", { position: position, icon: icon, thumb: thumb }, properties);
-          marker.setMap(map);
-
-        });
-
-        //var parks_list = new Array();
-        //parks_list.push(p.get('name'));
-        //alert(parks_list);
-      });
-
+      //marker = new GFWMarker("project", { position: position, icon: icon, thumb: thumb }, properties);
+      //marker.setMap(map);
     },
 
     _loadBaseLayer: function() {
