@@ -2,6 +2,12 @@ en:
   errors:
     messages:
       extension_white_list_error: "error"
+    story:
+      blank:
+        title: 'Your story needs a title.'
+        the_geom: 'You have to drop a pin or draw a shape on the map around the affected area.'
+        your_name: 'You have to tell your name.'
+        your_email: 'You have to enter your email.'
   date:
     formats:
       custom: '%B, %Y'

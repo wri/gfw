@@ -14,13 +14,29 @@ class Story < CartoDB::Model::Base
   field :visible,  :type => 'boolean'
   field :token
 
-  validates_each :title, :the_geom, :your_name do |record, attr, value|
-    record.errors.add attr, 'cannot be empty' if value.blank?
+  validates_each :title, :the_geom, :your_name, :your_email do |record, attr, value|
+    record.errors.add attr, I18n.t(attr, :scope => 'errors.story.blank') if value.blank?
   end
 
   def initialize(params)
     self.uploads_ids = params.delete(:uploads_ids)
     super
+  end
+
+  def self.all_for_map
+    sql = <<-SQL
+      SELECT title,
+             your_name as name,
+             media.thumbnail_url,
+             ST_X(ST_Centroid(stories.the_geom)) AS lng,
+             ST_Y(ST_Centroid(stories.the_geom)) AS lat
+      FROM stories
+      LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
+    SQL
+
+    result = CartoDB::Connection.query(sql)
+
+    result[:rows] rescue []
   end
 
   def uploads_ids
@@ -56,4 +72,23 @@ class Story < CartoDB::Model::Base
     end
   end
 
+  def lat
+    return the_geom.centroid.y if respond_to?(:centroid)
+    the_geom.y
+  end
+
+  def lon
+    return the_geom.centroid.x if respond_to?(:centroid)
+    the_geom.x
+  end
+
+  def to_json
+    require 'debugger'; debugger
+    {
+      title: title,
+      name: your_name,
+      lat: lat,
+      lng: lon
+    }
+  end
 end

@@ -2,6 +2,7 @@
 <%= form_for :story, :url => @url do |f| %>
 
   <div class="field">
+    <%= error_message_for(@story, :title) %>
     <%= f.label      :title %>
     <div class="input-field huge">
       <%= f.text_field :title, :placeholder => 'E.g. “Northern forests of Galizia”, “Coastal forest in Mozambique”...' %>
@@ -9,6 +10,7 @@
   </div>
 
   <div class="field affected-area">
+    <%= error_message_for(@story, :the_geom) %>
     <%= f.label 'Affected area' %>
     <%= f.hidden_field :the_geom %>
     <%= f.hidden_field :uploads_ids %>
@@ -54,6 +56,7 @@
 
 
   <div class="field">
+    <%= error_message_for(@story, :your_name) %>
     <%= f.label      :your_name %>
     <div class="input-field short">
       <%= f.text_field :your_name %>
@@ -63,6 +66,7 @@
   </div>
 
   <div class="field">
+    <%= error_message_for(@story, :your_email) %>
     <%= f.label :your_email %>
     <div class="input-field short">
       <%= f.text_field :your_email %>
