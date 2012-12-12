@@ -59,8 +59,7 @@ GFW.modules.app = function(gfw) {
 
       this.lastHash = null;
 
-      console.log(this.options.user);
-      this._cartodb = Backbone.CartoDB({user: this.options.user});
+      this._cartodb   = Backbone.CartoDB({ user: this.options.user });
       this.datalayers = new gfw.datalayers.Engine(this._cartodb, options.layerTable, this._map);
 
       // Layers
@@ -69,6 +68,9 @@ GFW.modules.app = function(gfw) {
       this.currentBaseLayer = "semi_monthly";
 
       this._loadBaseLayer();
+      this._loadStoriesLayer();
+
+
       this._setupZoom();
 
       google.maps.event.addDomListener(this._map, 'mousemove', function(event) {
@@ -360,7 +362,9 @@ GFW.modules.app = function(gfw) {
     },
 
     _updateBaseLayer: function() {
+
       // TODO: This was causing lots of trouble; hide the layers with a different method
+
       //if (this.currentBaseLayer != "semi_monthly"){
       //map.overlayMapTypes.setAt(0, null);
       //} else {
@@ -370,20 +374,49 @@ GFW.modules.app = function(gfw) {
       GFW.app.baseLayer.setOptions({ table_name: this._getTableName(this.currentBaseLayer), query: GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom())  });
     },
 
+    _loadStoriesLayer: function() {
+
+      var WifiPlaces= CartoDB.CartoDBCollection.extend({
+        table: 'ferdev', //public table
+        columns: {
+          'address': 'address',
+          'type': 'type',
+          'name': 'name',
+          'location': 'the_geom'
+        }
+      });
+
+      var places = new WifiPlaces();
+      places.fetch();
+      places.bind('reset', function() {
+        places.each(function(p) {
+          console.log(p.get('address'));
+          console.log(p.get('location'));
+        });
+      });
+
+
+    },
+
     _loadBaseLayer: function() {
       var self = this;
       var table_name = null;
 
       if (this.currentBaseLayer === "semi_monthly") {
+
         table_name = 'gfw2_forma';
-        this.time_layer = new TimePlayer('gfw2_forma',this._global_version,this._cloudfront_url);
+
+        this.time_layer = new TimePlayer('gfw2_forma', this._global_version, this._cloudfront_url);
         this.time_layer.options.table_name = table_name;
+
         window.time_layer = this.time_layer;
         map.overlayMapTypes.setAt(0, this.time_layer);
+
         Timeline.bind('change_date', function(date, month_number) {
             //month_number = Math.min(month_number, 147);
             self.time_layer.set_time(month_number);
         });
+
       } else if (this.currentBaseLayer === "annual") {
         table_name = 'gfw2_hansen';
       } else if (this.currentBaseLayer === "brazilian_amazon") {

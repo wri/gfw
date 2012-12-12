@@ -1009,12 +1009,12 @@ footer > .download {
     }
 
     .left {
+      display:none;
       @include icons-sprite(gallery_btn_left);
       @include position(70px, false, false, -20px);
     }
 
     .right {
-      display:none;
       @include icons-sprite(gallery_btn_right);
       @include position(70px, -20px, false, false);
     }

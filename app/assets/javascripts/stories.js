@@ -1,5 +1,61 @@
 $(function() {
 
+    function clearSelection() {
+
+      if (selectedShape) {
+        selectedShape.setEditable(false);
+        selectedShape = null;
+        drawingManager.path = null;
+      }
+
+    }
+    function remove() {
+      deleteSelectedShape();
+      deleteSelectedMarker();
+
+      drawingManager.setOptions({ drawingControl: true });
+      drawingManager.path = null;
+      $the_geom.val("");
+
+      $(".remove").fadeOut(250);
+    }
+
+    function setSelection(shape) {
+      clearSelection();
+      selectedShape = shape;
+      shape.setEditable(true);
+      selectColor(shape.get('fillColor') || shape.get('strokeColor'));
+    }
+
+    function deleteSelectedMarker() {
+      if (selectedMarker) {
+        selectedMarker.setMap(null);
+      }
+    }
+    function deleteSelectedShape() {
+      if (selectedShape) {
+        selectedShape.setMap(null);
+      }
+    }
+
+    function selectColor(color) {
+      selectedColor = color;
+
+      var polygonOptions = drawingManager.get('polygonOptions');
+      polygonOptions.fillColor = color;
+      drawingManager.set('polygonOptions', polygonOptions);
+    }
+
+    function setSelectedShapeColor(color) {
+      if (selectedShape) {
+        if (selectedShape.type == google.maps.drawing.OverlayType.POLYLINE) {
+          selectedShape.set('strokeColor', color);
+        } else {
+          selectedShape.set('fillColor', color);
+        }
+      }
+    }
+
   var uploadsIds = [], drawingManager, selectedShape, selectedMarker, selectedColor, filesAdded = 0;
 
   if ($("#stories_map.stories_map").length > 0) {
@@ -62,8 +118,6 @@ $(function() {
         $("#story_uploads_ids").val(uploadsIds.join(","));
       }
     });
-
-
 
     var $the_geom = $('#story_the_geom');
 
@@ -147,60 +201,6 @@ $(function() {
       remove();
     });
 
-    function clearSelection() {
-
-      if (selectedShape) {
-        selectedShape.setEditable(false);
-        selectedShape = null;
-        drawingManager.path = null;
-      }
-
-    }
-    function remove() {
-      deleteSelectedShape();
-      deleteSelectedMarker();
-
-      drawingManager.setOptions({ drawingControl: true });
-      drawingManager.path = null;
-      $the_geom.val("");
-
-      $(".remove").fadeOut(250);
-    }
-
-    function setSelection(shape) {
-      clearSelection();
-      selectedShape = shape;
-      shape.setEditable(true);
-      selectColor(shape.get('fillColor') || shape.get('strokeColor'));
-    }
-    function deleteSelectedMarker() {
-      if (selectedMarker) {
-        selectedMarker.setMap(null);
-      }
-    }
-    function deleteSelectedShape() {
-      if (selectedShape) {
-        selectedShape.setMap(null);
-      }
-    }
-
-    function selectColor(color) {
-      selectedColor = color;
-
-      var polygonOptions = drawingManager.get('polygonOptions');
-      polygonOptions.fillColor = color;
-      drawingManager.set('polygonOptions', polygonOptions);
-    }
-
-    function setSelectedShapeColor(color) {
-      if (selectedShape) {
-        if (selectedShape.type == google.maps.drawing.OverlayType.POLYLINE) {
-          selectedShape.set('strokeColor', color);
-        } else {
-          selectedShape.set('fillColor', color);
-        }
-      }
-    }
 
 
   }
