@@ -31,7 +31,7 @@ header {
   background:url(backgrounds/bkg_header.png) repeat-x top center;
   height:226px;
   position:relative;
-  z-index: 100;
+  z-index: 1000;
 
   a.logo {
     position:absolute;
@@ -231,8 +231,6 @@ nav {
   position:absolute;
   top: 18px;
   right: 40px;
-
-  z-index: 10000;
 
   & > ul {
 
@@ -459,7 +457,6 @@ nav {
       }
     }
   }
-
 }
 
 .blog-links {

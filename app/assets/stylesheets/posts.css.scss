@@ -353,6 +353,9 @@ body.posts {
 body.static {
 
   header {
+
+    z-index: 1000;
+
     hgroup {
       width: 100%;
       h1 {
@@ -512,6 +515,9 @@ body.static {
 body.sources {
 
   header {
+
+    z-index: 1000;
+
     hgroup {
       width: 100%;
       h1 {

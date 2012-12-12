@@ -2,9 +2,193 @@
 @import "compass/reset";
 @import "helpers";
 
+#filters {
+  @include size(100%, 10px);
+  @include position(150px, false, false, 0);
+
+  z-index: 1000;
+
+  #layer {
+    position:absolute;
+    top: 0;
+    left:-9999px;
+    width:170px;
+    height:250px;
+    z-index:1000;
+    opacity:0;
+
+    @extend .filter-links;
+    @extend .filter-lines;
+    @extend .filter-icons;
+
+    .links {
+      position:absolute;
+      top: 90px;
+
+      overflow-y:auto;
+      overflow-x:hidden;
+
+      li {
+        position:relative;
+        list-style: none;
+        border-bottom: 1px solid $cSeparator;
+        padding: 9px 10px 10px 10px;
+        &.last { border:none; }
+      }
+
+      a {
+          @extend .sans-serif;
+          display:block;
+          width: 120px;
+          font-size:13px;
+          line-height:17px;
+      }
+
+      a.source {
+        position:absolute;
+        top: 13px;
+        right: 10px;
+        width: 11px;
+        height: 11px;
+        background:url(icons/help.png) no-repeat left top;
+
+        &:hover {
+          background:url(icons/help.png) no-repeat left bottom;
+        }
+      }
+    }
+
+    & > a {
+      display:block;
+      position:absolute;
+      top: 46px;
+      position:relative;
+      margin: 0 0 10px 0;
+
+      text-align:center;
+
+      @extend .sans-serif;
+      font-size: 12px;
+      font-weight:bold;
+      text-transform: uppercase;
+      text-decoration: none;
+
+    }
+
+    .line {
+      position:relative;
+      top:61px;
+      left:0;
+      height: 4px;
+      width:auto;
+    }
+
+    .icon  { position:absolute; top: 30px; left:50%; margin: -8px; width:16px; height:16px; }
+
+    @extend .filter-links;
+    @extend .filter-lines;
+    @extend .filter-icons;
+
+    background-color:rgb(255,255,255);
+    -moz-box-shadow:0px 0px 5px 1px rgba(0,0,0,0.15);
+    -webkit-box-shadow:0px 0px 5px 1px rgba(0,0,0,0.15);
+    box-shadow:0px 0px 5px 1px rgba(0,0,0,0.15);
+  }
+
+
+  .filters {
+    height: 20px;
+    @include absolute-left-center(924px);
+    @include clearfix();
+
+    top: -60px;
+    overflow:hidden;
+
+    display:none;
+
+    padding: 40px 0 0 0;
+
+    /*border-top: 1px solid $cGray4;*/
+    z-index:1000;
+  }
+
+  .filters .advance {
+    display:block;
+    position:absolute;
+    right: 10px;
+    top: 80px;
+    width:20px;
+    height:20px;
+    @include icons-sprite(arrow_right);
+    z-index:20;
+
+    &:hover {
+      @include icons-sprite(arrow_right_hover);
+    }
+
+    &:active {
+      @include icons-sprite(arrow_right_active);
+    }
+  }
+
+  .filters .white-shadow {
+    width:117px;
+    height:51px;
+    top: 9px;
+    right: -30px;
+    position:absolute;
+    background:url(backgrounds/bkg_filter_gradient.png) no-repeat;
+    z-index:10;
+    display:none;
+  }
+
+  .filters .inner { position:relative; }
+  .filters .inner > ul { width:3000px; }
+  .filters .inner > ul  > li {
+    position:relative;
+    float:left;
+    margin: 0 1px 0 0;
+    top: -30px;
+    padding: 30px 0 0 0;
+
+    opacity:0;
+
+    text-align: center;
+
+    @extend .filter-links;
+    @extend .filter-lines;
+    @extend .filter-icons;
+
+    .icon  { position:absolute; top: -20px; left:50%; margin: -8px; width:16px; height:16px; }
+
+    .line {
+      position:relative;
+      bottom:0px;
+      left:0;
+      height: 4px;
+      width:auto;
+    }
+
+    & > a {
+      position:relative;
+      top: 0;
+      padding: 0 14px;
+      margin: 0 0 18px 0;
+
+      @extend .sans-serif;
+      font-size:12px;
+      font-weight:bold;
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+  }
+
+
+}
+
 #map-container {
   position:relative;
-  z-index: 100;
+  z-index: 110;
 
   .map {
     width:100%;
@@ -126,180 +310,10 @@
 
   .draw { position:absolute; top: 20px; left: 70px; z-index:100; }
 
-  #layer {
-    position:absolute;
-    top: 0;
-    left:-9999px;
-    width:170px;
-    height:250px;
-    z-index:1000;
-    opacity:0;
 
-    @extend .filter-links;
-    @extend .filter-lines;
-    @extend .filter-icons;
-
-    .links {
-      position:absolute;
-      top: 90px;
-
-      overflow-y:auto;
-      overflow-x:hidden;
-
-      li {
-        position:relative;
-        list-style: none;
-        border-bottom: 1px solid $cSeparator;
-        padding: 9px 10px 10px 10px;
-        &.last { border:none; }
-      }
-
-      a {
-          @extend .sans-serif;
-          display:block;
-          width: 120px;
-          font-size:13px;
-          line-height:17px;
-      }
-
-      a.source {
-        position:absolute;
-        top: 13px;
-        right: 10px;
-        width: 11px;
-        height: 11px;
-        background:url(icons/help.png) no-repeat left top;
-
-        &:hover {
-          background:url(icons/help.png) no-repeat left bottom;
-        }
-      }
-    }
-
-    & > a {
-      display:block;
-      position:absolute;
-      top: 46px;
-      position:relative;
-      margin: 0 0 10px 0;
-
-      text-align:center;
-
-      @extend .sans-serif;
-      font-size: 12px;
-      font-weight:bold;
-      text-transform: uppercase;
-      text-decoration: none;
-
-    }
-
-    .line {
-      position:relative;
-      top:61px;
-      left:0;
-      height: 4px;
-      width:auto;
-    }
-
-    .icon  { position:absolute; top: 30px; left:50%; margin: -8px; width:16px; height:16px; }
-
-    @extend .filter-links;
-    @extend .filter-lines;
-    @extend .filter-icons;
-
-    background-color:rgb(255,255,255);
-    -moz-box-shadow:0px 0px 5px 1px rgba(0,0,0,0.15);
-    -webkit-box-shadow:0px 0px 5px 1px rgba(0,0,0,0.15);
-    box-shadow:0px 0px 5px 1px rgba(0,0,0,0.15);
-  }
-
-  .filters {
-    height: 20px;
-    @include absolute-left-center(924px);
-    @include clearfix();
-
-    top: -60px;
-    overflow:hidden;
-
-    display:none;
-
-    padding: 40px 0 0 0;
-
-    /*border-top: 1px solid $cGray4;*/
-    z-index:1000;
-  }
-
-  .filters .advance {
-    display:block;
-    position:absolute;
-    right: 10px;
-    top: 80px;
-    width:20px;
-    height:20px;
-    @include icons-sprite(arrow_right);
-    z-index:20;
-
-    &:hover {
-      @include icons-sprite(arrow_right_hover);
-    }
-
-    &:active {
-      @include icons-sprite(arrow_right_active);
-    }
-  }
-
-  .filters .white-shadow {
-    width:117px;
-    height:51px;
-    top: 9px;
-    right: -30px;
-    position:absolute;
-    background:url(backgrounds/bkg_filter_gradient.png) no-repeat;
-    z-index:10;
-    display:none;
-  }
-
-  .filters .inner { position:relative; }
-  .filters .inner > ul { width:3000px; }
-  .filters .inner > ul  > li {
-    position:relative;
-    float:left;
-    margin: 0 1px 0 0;
-    top: -30px;
-    padding: 30px 0 0 0;
-
-    opacity:0;
-
-    text-align: center;
-
-    @extend .filter-links;
-    @extend .filter-lines;
-    @extend .filter-icons;
-
-    .icon  { position:absolute; top: -20px; left:50%; margin: -8px; width:16px; height:16px; }
-
-    .line {
-      position:relative;
-      bottom:0px;
-      left:0;
-      height: 4px;
-      width:auto;
-    }
-
-    & > a {
-      position:relative;
-      top: 0;
-      padding: 0 14px;
-      margin: 0 0 18px 0;
-
-      @extend .sans-serif;
-      font-size:12px;
-      font-weight:bold;
-      text-transform: uppercase;
-      text-decoration: none;
-    }
-  }
 }
+
+
 
 .layer_selector {
 

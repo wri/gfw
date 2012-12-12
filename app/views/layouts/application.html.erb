@@ -17,6 +17,8 @@
       <%= render "common/share" %>
     </div>
 
+    <%= yield :filters %>
+
     <%= render "common/footer" %>
     <%= render "common/js_templates" %>
     <%= javascript_include_tag "application" %>

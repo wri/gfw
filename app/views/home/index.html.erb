@@ -19,6 +19,11 @@ end %>
 </div>
 <% end %>
 
+
+<% content_for :filters do %>
+<div id="filters"><%= render "common/filters" %></div>
+<% end %>
+
 <%= render "common/map" %>
 <%= render "common/subscribe" %>
 <%= render "common/analysis" %>
