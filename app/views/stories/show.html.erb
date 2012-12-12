@@ -24,18 +24,20 @@ end %>
       </div>
     </div>
 
-    <div class="gallery">
-      <%= link_to '', '#', :class => 'previous' %>
-      <%= link_to '', '#', :class => 'next' %>
+    <% if story_image_url = @story.main_thumbnail.try(:big_url) %>
+      <div class="gallery">
+        <%= link_to '', '#', :class => 'previous' %>
+        <%= link_to '', '#', :class => 'next' %>
 
-      <ul>
-        <% @story.media.each do |media| %>
-          <li class="active">
-            <%= image_tag @story.main_thumbnail.try(:big_url) %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+        <ul>
+          <% @story.media.each do |media| %>
+            <li class="active">
+              <%= image_tag story_image_url %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
     <div class="details">
       <%= simple_format raw("<span class='dropcap'>#{@story.details[0, 1]}</span>") + @story.details[1, @story.details.length - 1] %>
