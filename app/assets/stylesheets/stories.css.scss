@@ -184,6 +184,7 @@ body.stories {
             width: 45px;
             height: 45px;
             @include icons-sprite(exclamation);
+            z-index: 10;
           }
         }
       }
