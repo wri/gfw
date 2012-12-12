@@ -1,1 +1,51 @@
-<%= link_to story_url(@story.token), story_url(@story.token) %>
+<p>
+  A new forest story has been reported through GFW2.0 website:
+</p>
+
+<hr />
+
+<div class="story">
+
+  <div class="inner">
+    <div class="header">
+      <h1><%= link_to @story.title, story_url(@story.to_param) %></h1>
+      <div class="when-and-who">
+        <% if @story.when_did_it_happen.present?  %>
+          <span><%= @story.when_did_it_happen %></span>
+        <% end %>
+        <% if @story.when_did_it_happen.present? && @story.your_name.present? %>
+          <span>&middot;</span>
+        <% end %>
+        <% if @story.your_name.present?  %>
+          <span>Submitted by <%= @story.your_name %></span>
+        <% end %>
+      </div>
+    </div>
+
+
+    <div class="picture">
+      <%= image_tag @story.main_thumbnail.try(:big_url) %>
+    </div>
+
+    <div class="details">
+      <%= simple_format raw("<span class='dropcap'>#{@story.details[0, 1]}</span>") + @story.details[1, @story.details.length - 1] %>
+    </div>
+  </div>
+
+</div>
+
+<hr />
+
+<p>The story is already visible to all users. Remember you can:</p>
+
+<ul>
+  <li>Modify the data.</li>
+  <li>Remove it from the site.</li>
+  <li>Promote to case study.</li>
+</ul>
+
+<%= link_to 'Manage this story', story_url(@story.token) %>
+
+<hr />
+
+<%= link_to 'gfw.com', '#' %>

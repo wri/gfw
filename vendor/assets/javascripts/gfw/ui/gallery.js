@@ -36,7 +36,7 @@ gfw.ui.view.Gallery = gfw.core.View.extend({
 
   initialize: function() {
 
-    _.bindAll( this, "toggle", "toggleHidden", "onLeft", "onRight", "onCancelLeft", "onCancelRight", "onKeyUp" );
+    _.bindAll( this, "show", "hide", "toggle", "toggleHidden", "onLeft", "onRight", "onCancelLeft", "onCancelRight", "onKeyUp" );
 
     this.step = 0;
 
@@ -59,6 +59,8 @@ gfw.ui.view.Gallery = gfw.core.View.extend({
     var template = $("#gallery-template").html();
 
     $(document).on("keyup", this.onKeyUp);
+
+    var that = this;
 
     this.bind("onEscKey", this.hide);
 
@@ -110,14 +112,31 @@ gfw.ui.view.Gallery = gfw.core.View.extend({
 
   toggle: function() {
 
+    var that = this;
+
     if (this.model.get("hidden")) {
 
-      $("header").animate({marginTop: 0}, this.defaults.speed);
+      $("header").animate({marginTop: 0}, { duration: this.defaults.speed, complete: function() {
+        $("header, #content").off("hover");
+      }
+
+      });
+
       this.$handler.find("a").text("+");
 
     } else {
 
-      $("header").animate({marginTop: 395}, this.defaults.speed);
+      $("header").animate({marginTop: 395}, { duration: this.defaults.speed, complete: function() {
+
+        setTimeout(function() { // We need to give some time in order not to trigger the hover
+          $("header, #content").on("hover", function() {
+            that.hide();
+          });
+        }, 250);
+      }
+
+      });
+
       this.$handler.find("a").text("-");
 
     }
