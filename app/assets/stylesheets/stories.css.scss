@@ -11,6 +11,7 @@ body.stories {
   header {
     height: 205px;
     border-bottom: 1px solid $cGray4;
+    z-index: 1000;
   }
 
   .btn.edit {
@@ -391,6 +392,8 @@ body.stories {
         text-transform: uppercase;
         text-decoration: none;
         text-align: center;
+
+        &:hover { @include dark-glow(0.5); }
 
         &.disabled {
           background:#ccc;
