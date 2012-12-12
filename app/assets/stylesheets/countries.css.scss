@@ -367,10 +367,17 @@ a.close_icon {
       width: 309px;
       height: 299px;
 
-      &.brazil    { background:url(countries/map_brazil.png) no-repeat -5px -9px; }
-      &.cameroon  { background:url(countries/map_cameroon.png) no-repeat -5px -9px; }
-      &.malaysia  { background:url(countries/map_malaysia.png) no-repeat -5px -9px; }
-      &.indonesia { background:url(countries/map_indonesia.png) no-repeat -5px -9px; }
+      &.brazil    { background:url(http://maps.google.com/maps/api/staticmap?center=brazil&zoom=3&size=299x299&maptype=terrain&sensor=false) no-repeat    }
+      &.cameroon  { background:url(http://maps.google.com/maps/api/staticmap?center=cameroon&zoom=4&size=299x299&maptype=terrain&sensor=false) no-repeat  }
+      &.malaysia  { background:url(http://maps.google.com/maps/api/staticmap?center=malaysia&zoom=3&size=299x299&maptype=terrain&sensor=false) no-repeat  }
+      &.indonesia { background:url(http://maps.google.com/maps/api/staticmap?center=indonesia&zoom=3&size=299x299&maptype=terrain&sensor=false) no-repeat }
+
+      a {
+        display: block;
+        width: 309px;
+        height: 299px;
+        background:url(backgrounds/gfw_country_map_mask.png) no-repeat;
+      }
 
     }
   }
