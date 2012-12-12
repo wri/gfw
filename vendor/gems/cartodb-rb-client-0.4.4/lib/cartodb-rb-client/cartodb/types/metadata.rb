@@ -52,11 +52,12 @@ module CartoDB
         return the_geom unless the_geom.present? && the_geom.is_a?(String)
 
         begin
-          RGeo::WKRep::WKBParser.new(RGeo::Geographic.spherical_factory(:srid => 4326), :support_ewkb => true).parse(the_geom)
+          RGeo::Geographic.simple_mercator_factory(:wkb_parser => {:support_ewkb => true}).parse_wkb(the_geom)
         rescue
           begin
-            RGeo::GeoJSON.decode(the_geom, :json_parser => :json, :geo_factory => RGeo::Geographic.spherical_factory(:srid => 4326))
+            RGeo::Geographic.simple_mercator_factory(:wkb_parser => {:support_ewkb => true}).parse_wkt(the_geom)
           rescue
+            RGeo::GeoJSON.decode(the_geom, :json_parser => :json, :geo_factory => RGeo::Geographic.projected_factory(:srid => 4326)) rescue nil
           end
         end
 
