@@ -58,7 +58,7 @@ header {
     right: 0;
     @include size(22px, 21px);
     padding: 25px 0 0px 0;
-    background-color: #222222;
+    background-color: $cGray5;
     text-align: center;
 
     a {
@@ -989,13 +989,13 @@ footer > .download {
 
 #gallery {
   @include position(0, false, false, 0);
-  @include size(100%, 395px);
+  @include size(100%, 295px);
 
-  background: $cGray1;
+  background: $cGray5;
   z-index: 0;
 
   .gallery {
-    @include position(70px, false, false, false);
+    @include position(40px, false, false, false);
     @include absolute-landscape-center(940px);
 
     .inner {
@@ -1025,6 +1025,7 @@ footer > .download {
       text-transform: uppercase;
       color: $cWhite;
       margin: 0 0 20px 0;
+      font-weight: bold;
     }
 
     ul {

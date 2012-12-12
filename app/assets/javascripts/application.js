@@ -58,12 +58,18 @@ function loadGFW() {
     }
 
     var sites = [
-      new gfw.ui.model.Site({ title: "WRInsights", description: "Part of our mission to provide expert analysis on the most important environmental issues.", url: "", thumb_url: "/assets/tmp/site_thumb.png" }),
-      new gfw.ui.model.Site({ title: "ChinaFAQs",  description: "Our support to China to incorporate some of the world’s development  best practices.",       url: "", thumb_url: "/assets/tmp/site_thumb.png" }),
-      new gfw.ui.model.Site({ title: "TheCityFix", description: "Part of our mission to provide expert analysis on the most important environmental issues.", url: "", thumb_url: "/assets/tmp/site_thumb.png" }),
-      new gfw.ui.model.Site({ title: "TheCityFix", description: "Our support to China to incorporate some of the world’s development  best practices.",       url: "", thumb_url: "/assets/tmp/site_thumb.png" }),
-      new gfw.ui.model.Site({ title: "TheCityFix", description: "Part of our mission to provide expert analysis on the most important environmental issues.", url: "", thumb_url: "/assets/tmp/site_thumb.png" }),
-      new gfw.ui.model.Site({ title: "TheCityFix", description: "Our support to China to incorporate some of the world’s development  best practices.",       url: "", thumb_url: "/assets/tmp/site_thumb.png" })
+      new gfw.ui.model.Site({ title: "WRInsights", description: "To be completed.", url: "http://insights.wri.org/", thumb_url: "/assets/sites/site_wriinsights.png" }),
+      new gfw.ui.model.Site({ title: "WRI In China",  description: "To be completed.", url: "http://www.wri.org.cn/", thumb_url: "/assets/sites/site_wriinchina.png" }),
+      new gfw.ui.model.Site({ title: "ChinaFAQs",  description: "To be completed", url: "http://www.chinafaqs.org/", thumb_url: "/assets/sites/site_chinafaqs.png" }),
+      new gfw.ui.model.Site({ title: "TheCity Fix", description: "To be completed", url: "http://thecityfix.com/", thumb_url: "/assets/sites/site_thecityfix.png" }),
+      new gfw.ui.model.Site({ title: "Climate Analysis Indicators", description: "To be completed",  url: "http://www.wri.org/tools/cait/", thumb_url: "/assets/sites/site_climateanalysis.png" }),
+      new gfw.ui.model.Site({ title: "Earthtrends", description: "To be completed", url: "http://www.wri.org/project/earthtrends/", thumb_url: "/assets/sites/site_earthtrends.png" }),
+      new gfw.ui.model.Site({ title: "Electricity Governance", description: "To be completed", url: "http://electricitygovernance.wri.org/", thumb_url: "/assets/sites/site_electricity.png" }),
+      new gfw.ui.model.Site({ title: "EMBARQ", description: "To be completed", url: "http://www.embarq.org/", thumb_url: "/assets/sites/site_embarq.png" }),
+      new gfw.ui.model.Site({ title: "Forest Legality Alliance", description: "To be completed", url: "http://www.forestlegality.org/", thumb_url: "/assets/sites/site_forestlegality.png" }),
+      new gfw.ui.model.Site({ title: "New Ventures", description: "To be completed", url: "http://www.new-ventures.org/", thumb_url: "/assets/sites/site_newventures.png" }),
+      new gfw.ui.model.Site({ title: "Southern Forests for the Future", description: "To be completed", url: "http://www.seesouthernforests.org/", thumb_url: "/assets/sites/site_southernforests.png" }),
+      new gfw.ui.model.Site({ title: "World Resources Report", description: "To be completed", url: "http://www.worldresourcesreport.org/", thumb_url: "/assets/sites/site_worldresources.png" })
     ];
 
     gallery           = new gfw.ui.view.Gallery({ title: "Other WRI sites", sites: sites });

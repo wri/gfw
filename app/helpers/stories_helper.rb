@@ -32,4 +32,34 @@ module StoriesHelper
     params[:id] == story.token
   end
 
+  def title_or_flash
+    return link_to flash[:notice], '#' if flash[:notice].present?
+
+    link_to 'Case Studies', stories_path
+  end
+
+  def coords(story)
+    return '' if story.the_geom.blank?
+
+    coords = [story.the_geom.centroid.y, story.the_geom.centroid.x] if     story.the_geom.respond_to?(:centroid)
+    coords = [story.the_geom.y, story.the_geom.x]                   unless story.the_geom.respond_to?(:centroid)
+
+    coords.map{|coord| number_with_precision(coord, :precision => 2)}.join(', ')
+  end
+
+  def story_image_or_map(story)
+    image = story.main_thumbnail.try(:thumbnail_url)
+    return image if image.present?
+
+    static_map(story)
+  end
+
+  def static_map(story)
+    static_map_url = lambda{|lat_lon| "http://maps.google.com/maps/api/staticmap?center=#{lat_lon}&zoom=3&size=266x266&maptype=satellite&sensor=false" }
+    static_map_url.call(coords(story))
+  end
+
+  def show_exclamation?(story)
+    content_tag :div, nil, :class => 'exclamation' unless story.featured || story.main_thumbnail.try(:thumbnail_url).present?
+  end
 end

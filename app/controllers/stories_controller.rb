@@ -29,6 +29,8 @@ class StoriesController < ApplicationController
     if @story.valid?
       @story.save
 
+      flash[:notice] = 'Your story has been registered. Thanks!'
+
       Notifications.new_story(@story).deliver
 
       redirect_to story_path(@story)
