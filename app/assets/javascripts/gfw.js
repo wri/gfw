@@ -68,7 +68,7 @@ GFW.modules.app = function(gfw) {
       this.currentBaseLayer = "semi_monthly";
 
       this._loadBaseLayer();
-      this._loadStoriesLayer();
+      //this._loadStoriesLayer();
 
 
       this._setupZoom();
