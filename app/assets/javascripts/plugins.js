@@ -541,6 +541,7 @@ var Navigation = (function() {
 var Filter = (function() {
 
   var
+  scrollPane,
   pids,
   filters    = [],
   lastClass  =  null,
@@ -707,14 +708,30 @@ var Filter = (function() {
     $layer.find(".links li." + liClass).last().addClass("last");
 
     $layer.addClass(liClass);
+
     lastClass = liClass;
 
-    var width = $li.width() < 170 ? 170 : $li.width();
-    var left  = (l + $li.width() / 2) - (width / 2);
+    var
+    width  = $li.width() < 170 ? 170 : $li.width(),
+    left   = (l + $li.width() / 2) - (width / 2),
+    height = $layer.find(".links").height() + 93;
 
     $layer.find("li").css({ width:width - 20});
-    $layer.css({ left: left, width:width, height: $layer.find(".links").height() + 93, top: -80});
+    $layer.css({ left: left, width:width, height: height, top: -80});
     $layer.animate({ opacity: 1 }, 250);
+
+    var
+    l     = $layer.find(".links li." + liClass).length,
+    $pane = $layer.find(".links");
+
+    //if (scrollPane) {
+      //scrollPane.reinitialise();
+    //} else {
+      //$pane.jScrollPane( { showArrows: true });
+      //scrollPane = $pane.data('jsp');
+    //}
+    window.scrollPane = scrollPane;
+
   }
 
   function cancelClose() {

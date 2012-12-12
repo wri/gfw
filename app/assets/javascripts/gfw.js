@@ -68,7 +68,7 @@ GFW.modules.app = function(gfw) {
       this.currentBaseLayer = "semi_monthly";
 
       this._loadBaseLayer();
-      //this._loadStoriesLayer();
+      this._loadStoriesLayer();
 
 
       this._setupZoom();
@@ -375,26 +375,6 @@ GFW.modules.app = function(gfw) {
     },
 
     _loadStoriesLayer: function() {
-
-      var WifiPlaces= CartoDB.CartoDBCollection.extend({
-        table: 'ferdev', //public table
-        columns: {
-          'address': 'address',
-          'type': 'type',
-          'name': 'name',
-          'location': 'the_geom'
-        }
-      });
-
-      var places = new WifiPlaces();
-      places.fetch();
-      places.bind('reset', function() {
-        places.each(function(p) {
-          console.log(p.get('address'));
-          console.log(p.get('location'));
-        });
-      });
-
 
     },
 

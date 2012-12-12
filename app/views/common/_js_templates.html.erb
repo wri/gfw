@@ -30,13 +30,13 @@
 
 
   <script id="layer-item-radio-template" type="text/x-underscore-template">
-    <li id="filter_{{ id }}" class="{{ category }}"><a href="#" class="radio {{ category }} {{ disabled ? 'disabled' : '' }}" data-name={{ category }}>{{name}}</a>[ if (source) {]<a href="/sources/#{{source}}" target="_blank" class="source"></a>[}]</li>
+    <li id="filter_{{ id }}" class="{{ category }}"><a href="#" class="radio {{ category }} {{ disabled ? 'disabled' : '' }}" data-name={{ category }}>{{name}}</a></li>
   </script>
 
 
 
   <script id="layer-item-checkbox-template" type="text/x-underscore-template">
-    <li id="filter_{{ id }}" class="{{ category }}"><a href="#" data-id={{ id }} class="checkbox {{ disabled ? 'disabled' : '' }}">{{name}}</a>[ if (source) {]<a href="/sources/#{{source}}" target="_blank" class="source"></a>[}]</li>
+    <li id="filter_{{ id }}" class="{{ category }}"><a href="#" data-id={{ id }} class="checkbox {{ disabled ? 'disabled' : '' }}">{{name}}</a></li>
   </script>
 
 
@@ -97,7 +97,7 @@
   </script>
 
   <script id="language-template" type="text/x-underscore-template">
-    <li class="lang_{{ code }}" data-code="{{code}}"><a href="http://translate.google.com/translate?sl=en&tl={{code}}&js=n&prev=_t&hl=en&ie=UTF-8&eotf=1&u={{currentURL}}">{{title}}</a></li>
+    <li class="lang_{{ code }}" data-lang="{{lang}}"><a href="http://translate.google.com/translate?sl=en&tl={{code}}&js=n&prev=_t&hl=en&ie=UTF-8&eotf=1&u={{currentURL}}">{{title}}</a></li>
   </script>
 
   <!-- Layer selector -->

@@ -129,6 +129,9 @@
       position:absolute;
       top: 90px;
 
+      overflow-y:auto;
+      overflow-x:hidden;
+
       li {
         position:relative;
         list-style: none;
