@@ -46,4 +46,20 @@ module StoriesHelper
 
     coords.map{|coord| number_with_precision(coord, :precision => 2)}.join(', ')
   end
+
+  def story_image_or_map(story)
+    image = story.main_thumbnail.try(:thumbnail_url)
+    return image if image.present?
+
+    static_map(story)
+  end
+
+  def static_map(story)
+    static_map_url = lambda{|lat_lon| "http://maps.google.com/maps/api/staticmap?center=#{lat_lon}&zoom=3&size=266x266&maptype=satellite&sensor=false" }
+    static_map_url.call(coords(story))
+  end
+
+  def show_exclamation?(story)
+    content_tag :div, nil, :class => 'exclamation' unless story.featured || story.main_thumbnail.try(:thumbnail_url).present?
+  end
 end

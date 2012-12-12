@@ -16,7 +16,7 @@ end %>
             <%= link_to 'Read more', story %>
           </div>
 
-          <%= content_tag :div, (image_tag story.main_thumbnail.try(:thumbnail_url)), :class => "frame" %>
+          <%= content_tag :div, image_tag(story_image_or_map(story)), :class => "frame" %>
 
           <div class="coords">
             <span><%= coords(story) %></span>
