@@ -38,4 +38,10 @@ module StoriesHelper
     link_to 'Case Studies', stories_path
   end
 
+  def coords(story)
+    return '' if story.the_geom.blank?
+
+    coords = [story.the_geom.y, story.the_geom.x]
+    coords.map{|coord| number_with_precision(coord, :precision => 2)}.join(', ')
+  end
 end

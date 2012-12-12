@@ -18,6 +18,10 @@ end %>
 
           <%= content_tag :div, (image_tag story.main_thumbnail.try(:thumbnail_url)), :class => "frame" %>
 
+          <div class="coords">
+            <span><%= coords(story) %></span>
+          </div>
+
         </li>
       <% end %>
     </ul>
