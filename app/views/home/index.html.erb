@@ -59,6 +59,7 @@ end %>
       <li>
         <%= image_tag story.main_thumbnail.try(:thumbnail_url) %>
         <div class="gradient"></div>
+        <div class="frame"></div>
         <div class="title">
           <span><%= story.title %></span>
           <%= link_to 'Read more', story_path(story) %>
