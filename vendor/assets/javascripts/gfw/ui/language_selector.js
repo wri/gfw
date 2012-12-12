@@ -74,9 +74,9 @@ gfw.ui.view.LanguageSelector = gfw.ui.view.Widget.extend({
   onLanguageClick: function(e) {
 
     var $li  = $(e.target).parent();
-    var code = $li.attr("data-code");
+    var lang = $li.attr("data-lang");
 
-    this.$handler.find("span").html(code);
+    this.$handler.find("span").html(lang);
 
     this.hide();
 

@@ -73,14 +73,14 @@ function loadGFW() {
 
     gallery.addHandler("#other_sites_ribbon");
 
-    languageSelector.addLanguage({ code: "en", title: "English" });
-    languageSelector.addLanguage({ code: "fr", title: "French" });
-    languageSelector.addLanguage({ code: "sp", title: "Spanish" });
-    languageSelector.addLanguage({ code: "pr", title: "Portuguese" });
-    languageSelector.addLanguage({ code: "ba", title: "Bahasa" });
-    languageSelector.addLanguage({ code: "ch", title: "Chinese" });
-    languageSelector.addLanguage({ code: "ru", title: "Russian" });
-    languageSelector.addLanguage({ code: "ar", title: "Arabic" });
+    languageSelector.addLanguage({ code: "en",    lang: "en", title: "English" });
+    languageSelector.addLanguage({ code: "fr",    lang: "fr", title: "French" });
+    languageSelector.addLanguage({ code: "es",    lang: "es", title: "Spanish" });
+    languageSelector.addLanguage({ code: "pt",    lang: "pt", title: "Portuguese" });
+    languageSelector.addLanguage({ code: "id",    lang: "id", title: "Indonesian" });
+    languageSelector.addLanguage({ code: "zh-CN", lang: "cn", title: "Chinese" });
+    languageSelector.addLanguage({ code: "ru",    lang: "ru", title: "Russian" });
+    languageSelector.addLanguage({ code: "ar",    lang: "ar", title: "Arabic" });
 
     languageSelector.addHandler(".lang_selector a");
 
