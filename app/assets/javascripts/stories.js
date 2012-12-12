@@ -2,7 +2,7 @@ $(function() {
 
   var uploadsIds = [], drawingManager, selectedShape, selectedMarker, selectedColor, filesAdded = 0;
 
-  if ($("#map.stories_map").length > 0) {
+  if ($("#stories_map.stories_map").length > 0) {
 
     $(".upload_picture").on("click", function(e) {
       e.preventDefault();
@@ -67,7 +67,7 @@ $(function() {
 
     var $the_geom = $('#story_the_geom');
 
-    var map = new google.maps.Map(document.getElementById("map"), {
+    var map = new google.maps.Map(document.getElementById("stories_map"), {
       zoom: 8,
       center: new google.maps.LatLng(-34.397, 150.644),
       mapTypeId: google.maps.MapTypeId.TERRAIN,

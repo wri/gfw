@@ -58,12 +58,12 @@ function loadGFW() {
     }
 
     var sites = [
-      new gfw.ui.model.Site({ title: "WRInsights", description: "Part of our mission to provide expert analysis on the most important environmental issues.", url: "", thumb_url: "assets/tmp/site_thumb.png" }),
-      new gfw.ui.model.Site({ title: "ChinaFAQs",  description: "Our support to China to incorporate some of the world’s development  best practices.",       url: "", thumb_url: "assets/tmp/site_thumb.png" }),
-      new gfw.ui.model.Site({ title: "TheCityFix", description: "Part of our mission to provide expert analysis on the most important environmental issues.", url: "", thumb_url: "assets/tmp/site_thumb.png" }),
-      new gfw.ui.model.Site({ title: "TheCityFix", description: "Our support to China to incorporate some of the world’s development  best practices.",       url: "", thumb_url: "assets/tmp/site_thumb.png" }),
-      new gfw.ui.model.Site({ title: "TheCityFix", description: "Part of our mission to provide expert analysis on the most important environmental issues.", url: "", thumb_url: "assets/tmp/site_thumb.png" }),
-      new gfw.ui.model.Site({ title: "TheCityFix", description: "Our support to China to incorporate some of the world’s development  best practices.",       url: "", thumb_url: "assets/tmp/site_thumb.png" })
+      new gfw.ui.model.Site({ title: "WRInsights", description: "Part of our mission to provide expert analysis on the most important environmental issues.", url: "", thumb_url: "/assets/tmp/site_thumb.png" }),
+      new gfw.ui.model.Site({ title: "ChinaFAQs",  description: "Our support to China to incorporate some of the world’s development  best practices.",       url: "", thumb_url: "/assets/tmp/site_thumb.png" }),
+      new gfw.ui.model.Site({ title: "TheCityFix", description: "Part of our mission to provide expert analysis on the most important environmental issues.", url: "", thumb_url: "/assets/tmp/site_thumb.png" }),
+      new gfw.ui.model.Site({ title: "TheCityFix", description: "Our support to China to incorporate some of the world’s development  best practices.",       url: "", thumb_url: "/assets/tmp/site_thumb.png" }),
+      new gfw.ui.model.Site({ title: "TheCityFix", description: "Part of our mission to provide expert analysis on the most important environmental issues.", url: "", thumb_url: "/assets/tmp/site_thumb.png" }),
+      new gfw.ui.model.Site({ title: "TheCityFix", description: "Our support to China to incorporate some of the world’s development  best practices.",       url: "", thumb_url: "/assets/tmp/site_thumb.png" })
     ];
 
     gallery           = new gfw.ui.view.Gallery({ title: "Other WRI sites", sites: sites });

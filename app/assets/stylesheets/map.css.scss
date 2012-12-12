@@ -201,14 +201,14 @@
     @include absolute-left-center(924px);
     @include clearfix();
 
-    top: -61px;
+    top: -60px;
     overflow:hidden;
 
     display:none;
 
     padding: 40px 0 0 0;
 
-    border-top: 1px solid $cGray4;
+    /*border-top: 1px solid $cGray4;*/
     z-index:1000;
   }
 

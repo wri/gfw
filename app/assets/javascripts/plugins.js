@@ -500,7 +500,7 @@ var Navigation = (function() {
 
 
     $("footer, .actions").fadeOut(250);
-    $("header").animate({height: "220px"}, 250, function() {
+    $("header").animate({height: "150px"}, 250, function() {
       GFW.app.open();
     });
 
