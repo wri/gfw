@@ -7,33 +7,20 @@
 #fileupload { display: none; }
 
 body.stories {
-  background: #fff;
 
   header {
     height: 235px;
+    border-bottom: 1px solid $cGray4;
   }
 
   #content {
-    background: #fff;
+
+    background: $cWhite;
+
     .inner {
       position:relative;
       width: 927px;
       margin: auto;
-    }
-  }
-
-  .title {
-    background:transparent;
-    border-bottom: 1px solid $cGray4;
-    margin-top: -168px;
-
-    h2 {
-      @extend .inner;
-      @extend .serif;
-      padding: 50px 0;
-      color: black;
-      font-size: 51px;
-      text-align:center;
     }
   }
 
