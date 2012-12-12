@@ -23,6 +23,22 @@ class Story < CartoDB::Model::Base
     super
   end
 
+  def self.all_for_map
+    sql = <<-SQL
+      SELECT title,
+             your_name as name,
+             media.thumbnail_url,
+             ST_X(ST_Centroid(stories.the_geom)) AS lng,
+             ST_Y(ST_Centroid(stories.the_geom)) AS lat
+      FROM stories
+      LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
+    SQL
+
+    result = CartoDB::Connection.query(sql)
+
+    result[:rows] rescue []
+  end
+
   def uploads_ids
     (media || []).map{|m| m.cartodb_id}.join(',')
   end
@@ -56,4 +72,23 @@ class Story < CartoDB::Model::Base
     end
   end
 
+  def lat
+    return the_geom.centroid.y if respond_to?(:centroid)
+    the_geom.y
+  end
+
+  def lon
+    return the_geom.centroid.x if respond_to?(:centroid)
+    the_geom.x
+  end
+
+  def to_json
+    require 'debugger'; debugger
+    {
+      title: title,
+      name: your_name,
+      lat: lat,
+      lng: lon
+    }
+  end
 end

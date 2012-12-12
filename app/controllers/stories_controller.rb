@@ -3,7 +3,16 @@ class StoriesController < ApplicationController
   def index
     @page     = params[:page] || 1
     @featured = Story.where(:featured => true).order('cartodb_id ASC')
-    @stories  = Story.all.first(4)
+    @stories  = if params['for-map'].present?
+                  Story.all_for_map
+                else
+                  Story.all.first(4)
+                end
+
+    respond_to do |format|
+      format.json { render :json => @stories } if params['for-map']
+      format.html
+    end
   end
 
   def show
