@@ -62,4 +62,8 @@ module StoriesHelper
   def show_exclamation?(story)
     content_tag :div, nil, :class => 'exclamation' unless story.featured || story.main_thumbnail.try(:thumbnail_url).present?
   end
+
+  def error_class(story, field)
+    'error' if story.errors[field].present?
+  end
 end

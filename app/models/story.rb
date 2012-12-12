@@ -14,8 +14,8 @@ class Story < CartoDB::Model::Base
   field :visible,  :type => 'boolean'
   field :token
 
-  validates_each :title, :the_geom, :your_name do |record, attr, value|
-    record.errors.add attr, 'cannot be empty' if value.blank?
+  validates_each :title, :the_geom, :your_name, :your_email do |record, attr, value|
+    record.errors.add attr, I18n.t(attr, :scope => 'errors.story.blank') if value.blank?
   end
 
   def initialize(params)

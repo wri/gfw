@@ -13,6 +13,7 @@ class StoriesController < ApplicationController
   end
 
   def new
+    @story     = Story.new({})
     @url       = stories_path
     @media_url = media_path
   end
