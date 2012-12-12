@@ -32,4 +32,18 @@ module StoriesHelper
     params[:id] == story.token
   end
 
+  def title_or_flash
+    return link_to flash[:notice], '#' if flash[:notice].present?
+
+    link_to 'Case Studies', stories_path
+  end
+
+  def coords(story)
+    return '' if story.the_geom.blank?
+
+    coords = [story.the_geom.centroid.y, story.the_geom.centroid.x] if     story.the_geom.respond_to?(:centroid)
+    coords = [story.the_geom.y, story.the_geom.x]                   unless story.the_geom.respond_to?(:centroid)
+
+    coords.map{|coord| number_with_precision(coord, :precision => 2)}.join(', ')
+  end
 end

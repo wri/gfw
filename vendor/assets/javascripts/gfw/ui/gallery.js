@@ -88,24 +88,24 @@ gfw.ui.view.Gallery = gfw.core.View.extend({
 
   },
 
-  onLeft: function() {
+  onRight: function() {
     if (this.step < this.sites.length - 4) {
       this.step++;
       this.$el.find(".inner").animate({ scrollLeft:  239*this.step }, this.defaults.speed);
-      this.$right.fadeIn(250);
+      this.$left.fadeIn(250);
     } else {
-      this.$left.fadeOut(250);
+      this.$right.fadeOut(250);
     }
 
   },
 
-  onRight: function() {
+  onLeft: function() {
     if (this.step > 0) {
       this.step--;
       this.$el.find(".inner").animate({ scrollLeft:  239*this.step  }, this.defaults.speed);
-      this.$left.fadeIn(250);
+      this.$right.fadeIn(250);
     } else {
-      this.$right.fadeOut(250);
+      this.$left.fadeOut(250);
     }
 
   },

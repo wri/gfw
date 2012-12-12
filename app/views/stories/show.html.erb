@@ -1,8 +1,7 @@
-
 <div class="story">
 
   <div class="title">
-    <h2 class="compact"><%= link_to 'Case Studies', stories_path %></h2>
+    <h2 class="compact"><%= title_or_flash %></h2>
     <%= link_to 'Edit case study', edit_story_path(@story.token)  if access_through_token?(@story)%>
   </div>
 
@@ -21,7 +20,6 @@
         <% end %>
       </div>
     </div>
-
 
     <div class="gallery">
       <%= link_to '', '#', :class => 'previous' %>

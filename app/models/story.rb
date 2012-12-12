@@ -55,4 +55,5 @@ class Story < CartoDB::Model::Base
       media.update_story_id(cartodb_id)
     end
   end
+
 end
