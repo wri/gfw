@@ -156,7 +156,7 @@ body.stories {
 
         li {
           @include inline-block();
-          @include size(130px);
+          @include size(117px);
 
           position:relative;
           margin: 0 20px;
@@ -171,19 +171,13 @@ body.stories {
           }
 
           img {
-            @include absolute-center(117px);
+            @include absolute-center(105px);
             @include border-radius(120px);
           }
 
           .exclamation {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-top: -22.5px;
-            margin-left: -22.5px;
-            width: 45px;
-            height: 45px;
-            @include icons-sprite(exclamation);
+            @include absolute-center(105px);
+            @include icons-sprite(gfw_default_story_map_icon);
             z-index: 10;
           }
         }
