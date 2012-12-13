@@ -135,7 +135,7 @@ $(function() {
           uploadsIds.push(file.cartodb_id);
 
           var $thumb = $("<div class='thumbnail'><img src='"+file.thumbnail_url+"' /></div>");
-          $(".thumbnails").append($thumb);
+          $(".thumbnails").prepend($thumb);
           $thumb.fadeIn(250);
 
         });
