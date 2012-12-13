@@ -28,7 +28,9 @@
       <div class="graphs" data-load="graphs">
         <div class="circle lines chart"></div>
         <div class="circle bars chart"></div>
-        <a href="<%= @country.link %>" class="country <%= params[:id] %>"></a>
+        <div class="circle country <%= params[:id] %>">
+          <a href="<%= @country.link %>"></a>
+        </div>
       </div>
 
       <div class="alerts">
