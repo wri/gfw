@@ -7,24 +7,22 @@ $(function() {
 
       feature = new GeoJSON(geojson, style || null);
 
-      console.log(geojson, feature);
-
       if (feature.type && feature.type == "Error"){
         console.log(feature.message);
         return;
       }
 
-      drawingManager.setOptions({drawingControl: false});
-
+      drawingManager.setOptions({ drawingControl: false });
       drawingManager.setDrawingMode(null);
       $(".remove").fadeIn(250);
 
-      feature[0].setMap(map);
-      loadedFeature = feature[0];
-
-    google.maps.event.addListener(loadedFeature, 'bounds_changed', function(e) {
-    console.log(e);
-    });
+      if (feature.length > 0) {
+        feature[0].setMap(map);
+        loadedFeature = feature[0];
+      } else {
+        feature.setMap(map);
+        loadedFeature = feature;
+      }
 
     }
 
