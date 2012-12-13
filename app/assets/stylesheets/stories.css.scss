@@ -277,6 +277,28 @@ body.stories {
     .field {
       margin: 0 0 25px;
 
+      /*.field_title {
+        clear:both;
+        overflow:hidden;
+        background:red;
+        color: red;
+        label {
+          float:left;
+
+        }
+
+        .field_with_errors {
+          @include inline-block();
+        }
+
+
+        .error-message {
+          float:right;
+        }
+
+
+      }*/
+
       &.media {
 
         .thumbnails {
@@ -322,6 +344,7 @@ body.stories {
           @extend .sans-serif;
           font-size: 13px;
           color: $cGray2;
+          margin-left: 5px;
         }
 
       }

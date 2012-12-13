@@ -1,15 +1,44 @@
 $(function() {
 
+  drawingManager = {},
+  loadedFeature  = {};
+
+    function showFeature(geojson, style){
+
+      feature = new GeoJSON(geojson, style || null);
+
+      if (feature.type && feature.type == "Error"){
+        console.log(feature.message);
+        return;
+      }
+
+      drawingManager.setOptions({drawingControl: false});
+
+      drawingManager.setDrawingMode(null);
+      $(".remove").fadeIn(250);
+
+      feature[0].setMap(map);
+      loadedFeature = feature[0];
+
+    google.maps.event.addListener(loadedFeature, 'bounds_changed', function(e) {
+    console.log(e);
+    });
+
+    }
+
     function clearSelection() {
 
       if (selectedShape) {
-        selectedShape.setEditable(false);
-        selectedShape = null;
+        //selectedShape.setEditable(false);
+
+        selectedShape       = null;
         drawingManager.path = null;
       }
 
     }
+
     function remove() {
+
       deleteSelectedShape();
       deleteSelectedMarker();
 
@@ -17,13 +46,15 @@ $(function() {
       drawingManager.path = null;
       $the_geom.val("");
 
+      loadedFeature.setMap(null);
+
       $(".remove").fadeOut(250);
     }
 
     function setSelection(shape) {
       clearSelection();
       selectedShape = shape;
-      shape.setEditable(true);
+      //shape.setEditable(true);
       selectColor(shape.get('fillColor') || shape.get('strokeColor'));
     }
 
@@ -32,6 +63,7 @@ $(function() {
         selectedMarker.setMap(null);
       }
     }
+
     function deleteSelectedShape() {
       if (selectedShape) {
         selectedShape.setMap(null);
@@ -66,7 +98,6 @@ $(function() {
     });
 
 
- $("#fileupload").bind('fileuploadprogress', function (e, data) {/* ... */})
     $('#fileupload').fileupload({
       dataType: 'json',
 
@@ -130,13 +161,12 @@ $(function() {
 
     var polyOptions = {
       strokeWeight: 0,
-      fillOpacity: 0.45,
-      editable: true
+      fillOpacity: 0.45
+      //editable: true
     };
 
 
-    // Creates a drawing manager attached to the map that allows the user to draw
-    // markers, lines, and shapes.
+    // Creates a drawing manager attached to the map that allows the user to draw markers, lines, and shapes.
     drawingManager = new google.maps.drawing.DrawingManager({
       drawingModes: [google.maps.drawing.OverlayType.POLYGON, google.maps.drawing.OverlayType.MARKER],
       drawingControlOptions: {
@@ -155,6 +185,7 @@ $(function() {
         drawingManager.path = e.overlay.getPath().getArray();
 
         $(".remove").fadeIn(250);
+
         drawingManager.setOptions({drawingControl: false});
 
         // Add an event listener that selects the newly-drawn shape when the user
@@ -162,6 +193,7 @@ $(function() {
         var newShape = e.overlay;
         newShape.type = e.type;
         setSelection(newShape);
+        console.log(newShape, e);
 
         $the_geom.val(JSON.stringify({
           "type": "MultiPolygon",
@@ -191,19 +223,25 @@ $(function() {
 
     });
 
+    var the_geom = $('#story_the_geom').val()
+
+    the_geom = {"type":"MultiPolygon","coordinates":[[[[149.95513916015625,-33.984363728291875],[149.73541259765625,-34.49297540250153],[151.08123779296875,-34.52013562807767],[151.27349853515625,-34.09361045276871],[150.05401611328125,-34.09361045276871]]]]};
+
+    if (the_geom) {
+      showFeature(the_geom, polyOptions);
+    }
+
+
+
+
     // Clear the current selection when the drawing mode is changed, or when the
     // map is clicked.
     google.maps.event.addListener(drawingManager, 'drawingmode_changed', clearSelection);
-    //google.maps.event.addListener(map, 'click', clearSelection);
 
     $('.remove').on("click", function(e){
       e.preventDefault();
       remove();
     });
-
-
-
   }
-
 
 });

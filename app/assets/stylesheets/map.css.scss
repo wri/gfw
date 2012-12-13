@@ -190,6 +190,13 @@
   position:relative;
   z-index: 110;
 
+  &.error {
+    border: 1px solid #C12000;
+    clear: both;
+    overflow: hidden;
+    .map { border:none; }
+  }
+
   .map {
     width:100%;
     height:400px;

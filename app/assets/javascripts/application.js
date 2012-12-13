@@ -12,6 +12,7 @@
 //= require class
 //= require backbone.cartodb
 //= require d3.v2.min
+//= require geojson
 //= require jquery.fileupload
 //= require jquery.fileupload-ui
 //= require jquery.fileupload-fp

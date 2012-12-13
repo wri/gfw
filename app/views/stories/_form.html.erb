@@ -2,20 +2,31 @@
 <%= form_for :story, :url => @url do |f| %>
 
   <div class="field">
-    <%= error_message_for(@story, :title) %>
-    <%= f.label      :title %>
-    <div class="input-field huge">
+    <div class="input_title">
+      <%= f.label      :title %>
+      <%= error_message_for(@story, :title) %>
+    </div>
+    <div class="input-field huge<%= ' error' if !@story.errors[:title].empty? %>">
       <%= f.text_field :title, :placeholder => 'E.g. “Northern forests of Galizia”, “Coastal forest in Mozambique”...' %>
     </div>
   </div>
 
   <div class="field affected-area">
-    <%= error_message_for(@story, :the_geom) %>
-    <%= f.label 'Affected area' %>
+
+    <div class="input_title<%= ' error' if !@story.errors[:the_geom].empty? %>">
+      <%= error_message_for(@story, :the_geom) %>
+      <%= f.label 'Affected area' %>
+
+      <% if @story.errors[:the_geom].empty? %>
+        <span class="map-help">Drop a pin or draw a shape on the map around the affected area</span>
+      <% end %>
+
+    </div>
+
     <%= f.hidden_field :the_geom %>
     <%= f.hidden_field :uploads_ids %>
-    <span class="map-help">Drop a pin or draw a shape on the map around the affected area</span>
-    <div id="map-container">
+
+    <div id="map-container"<%= raw " class='error'" if !@story.errors[:the_geom].empty? %>>
       <a href="#" class="remove">Remove</a>
       <div id="zoom_controls"></div>
       <div id="stories_map" class="stories_map map"></div>
@@ -56,9 +67,13 @@
 
 
   <div class="field">
-    <%= error_message_for(@story, :your_name) %>
-    <%= f.label      :your_name %>
-    <div class="input-field short">
+
+    <div class="input_title short">
+      <%= f.label      :your_name %>
+      <%= error_message_for(@story, :your_name) %>
+    </div>
+
+    <div class="input-field short<%= ' error' if !@story.errors[:your_name].empty? %>">
       <%= f.text_field :your_name %>
     </div>
     <p class="hint">Your story and name will be visible in Global Forest Watch site, but your email will never be published.</p>
@@ -66,9 +81,13 @@
   </div>
 
   <div class="field">
-    <%= error_message_for(@story, :your_email) %>
-    <%= f.label :your_email %>
-    <div class="input-field short">
+
+    <div class="input_title short">
+      <%= f.label :your_email %>
+      <%= error_message_for(@story, :your_email) %>
+    </div>
+
+    <div class="input-field short<%= ' error' if !@story.errors[:your_email].empty? %>">
       <%= f.text_field :your_email %>
     </div>
   </div>

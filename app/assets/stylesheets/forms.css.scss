@@ -12,6 +12,30 @@ label {
   text-transform:uppercase;
 }
 
+.input_title {
+
+  &.short { width: 285px; }
+
+  &.error label, .field_with_errors  label { color: #C12000; }
+
+  width: 590px;
+  clear:both;
+  overflow:hidden;
+
+  @extend .sans-serif;
+  color: #C12000;
+  font-size:13px;
+
+  /*background:blue;*/
+
+  label { float: left; }
+
+  .error-message {
+    display:block;
+    float: right;
+  }
+}
+
 .input-field {
 
   @include inline-block();
@@ -42,6 +66,11 @@ label {
       height:43px;
       background:url(backgrounds/bkg_form_input_big.png) repeat-x right -42px;
     }
+
+    &.error {
+      background-position: left -84px;
+      input[type="text"] { background-position: right -126px; }
+    }
   }
 
   &.big {
@@ -63,6 +92,12 @@ label {
       height:43px;
       background:url(backgrounds/bkg_form_input_big.png) repeat-x right -42px;
     }
+
+    &.error {
+      background-position: left -84px;
+      input[type="text"] { background-position: right -126px; }
+    }
+
   }
 
   &.textarea {
