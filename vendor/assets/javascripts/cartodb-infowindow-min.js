@@ -91,6 +91,12 @@
   };
 
 
+  CartoDBInfowindow.prototype.setTemplate = function(template){
+
+      this.template_ = template;
+
+  };
+
   CartoDBInfowindow.prototype.setOffset = function(offsetVertical, offsetHorizontal){
 
       this.offsetHorizontal_ = offsetHorizontal;

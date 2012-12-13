@@ -116,7 +116,7 @@ gfw.ui.view.Gallery = gfw.core.View.extend({
 
     if (this.model.get("hidden")) {
 
-      $("header").animate({marginTop: 0}, { duration: this.defaults.speed, complete: function() {
+      $("#filters, header").animate({marginTop: 0}, { duration: this.defaults.speed, complete: function() {
         $("header, #content").off("hover");
       }
 
@@ -126,7 +126,7 @@ gfw.ui.view.Gallery = gfw.core.View.extend({
 
     } else {
 
-      $("header").animate({marginTop: 295}, { duration: this.defaults.speed, complete: function() {
+      $("#filters, header").animate({marginTop: 295}, { duration: this.defaults.speed, complete: function() {
 
         setTimeout(function() { // We need to give some time in order not to trigger the hover
           $("header, #content").on("hover", function() {

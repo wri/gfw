@@ -49,6 +49,11 @@ function loadGFW() {
       map.mapTypes.set("terrain_style", styledMap);
       map.setMapTypeId("terrain_style");
 
+      google.maps.event.addDomListener(map, 'click', function (ev) {
+        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+        Infowindow.close();
+      });
+
       layerSelector = new gfw.ui.view.LayerSelector({ map: map });
       legend        = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
       Infowindow    = new CartoDBInfowindow(map, { className: "story_infowindow", width: 174 });

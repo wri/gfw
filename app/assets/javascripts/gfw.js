@@ -377,20 +377,13 @@ GFW.modules.app = function(gfw) {
         success: function(data) {
           _.each(data, function(story) {
 
-            var template = '<a href="#close" class="close"></a>'+
-              '<div class="outer_top">'+
-              '<div class="top">'+
-              '<div class="infowindow_content"></div>' +
-              '</div></div>'+
-              '<div class="bottom"></div>';
-
             var
             position = new google.maps.LatLng(story.lat, story.lng),
             thumb    = story.thumbnail_url,
             icon     = '/assets/icons/exclamation.png',
             properties = null;
 
-            marker = new GFWMarker({ template: template, position: position, icon: icon, thumbnail_url: story.thumbnail_url, content: "<strong>" + story.title + "</strong> Submitted by " + story.name });
+            marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: story.thumbnail_url, content: "<strong>" + story.title + "</strong> Submitted by " + story.name });
             marker.setMap(map);
 
           });
