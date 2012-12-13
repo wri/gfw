@@ -48,6 +48,7 @@ GFW.modules.app = function(gfw) {
       gfw.log.enabled = options ? options.logging: false;
 
       this._map = map;
+
       this.infowindow = new CartoDBInfowindow(map);
 
       this.queries = {};
@@ -175,8 +176,6 @@ GFW.modules.app = function(gfw) {
 
       google.maps.event.addListener(this._map, 'click', function(event) {
 
-        console.log('close');
-
         that.infowindow.close();
 
         if (!that.specialLayer) { return; }
@@ -195,7 +194,6 @@ GFW.modules.app = function(gfw) {
             var data = json[0];
 
             if (data) {
-              console.log(1, data);
               that.infowindow.setContent(data);
               that.infowindow.setPosition(event.latLng);
               that.infowindow.open();
@@ -294,7 +292,6 @@ GFW.modules.app = function(gfw) {
             //here i make a crude request for the columns of the table
             //nulling out the geoms to save payload
             var request_sql = "SELECT *, null as the_geom, null as the_geom_webmercator FROM " + pair[1] + " WHERE cartodb_id = " + pair[0];
-            console.log(request_sql);
             $.ajax({
               async: false,
               dataType: 'json',
@@ -302,7 +299,6 @@ GFW.modules.app = function(gfw) {
               jsonpCallback:'iwcallback',
               url: 'http://dyynnn89u7nkm.cloudfront.net/api/v2/sql?q=' + encodeURIComponent(request_sql),
               success: function(json) {
-              console.log(json);
                 delete json.rows[0]['cartodb_id'],
                 delete json.rows[0]['the_geom'];
                 delete json.rows[0]['the_geom_webmercator'];
@@ -375,15 +371,32 @@ GFW.modules.app = function(gfw) {
 
     _loadStoriesLayer: function() {
 
-      //var
-      //position = new google.maps.LatLng(story.get("lat"), story.get("lng")),
-      //thumb    = story.get("thumbnail_url"),
-      //icon     = '/assets/icons/exclamation.png',
-      //properties = null;
-      //console.log(thumb);
+      $.ajax({
+        async: false,
+        url: "/stories.json?for-map=true",
+        success: function(data) {
+          _.each(data, function(story) {
 
-      //marker = new GFWMarker("project", { position: position, icon: icon, thumb: thumb }, properties);
-      //marker.setMap(map);
+            var template = '<a href="#close" class="close"></a>'+
+              '<div class="outer_top">'+
+              '<div class="top">'+
+              '<div class="infowindow_content"></div>' +
+              '</div></div>'+
+              '<div class="bottom"></div>';
+
+            var
+            position = new google.maps.LatLng(story.lat, story.lng),
+            thumb    = story.thumbnail_url,
+            icon     = '/assets/icons/exclamation.png',
+            properties = null;
+
+            marker = new GFWMarker({ template: template, position: position, icon: icon, thumbnail_url: story.thumbnail_url, content: "<strong>" + story.title + "</strong> Submitted by " + story.name });
+            marker.setMap(map);
+
+          });
+        }
+      });
+
     },
 
     _loadBaseLayer: function() {
@@ -560,7 +573,6 @@ GFW.modules.maplayer = function(gfw) {
       } else if (this.layer.get('table_name') == 'gfw2_forma') {
         //show the legend on map start for forma
         //Legend.toggleItem(this.layer.get('id'), this.layer.get('category_name'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
-        //console.log(legend);
         legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
       }
 
@@ -632,7 +644,6 @@ GFW.modules.maplayer = function(gfw) {
         }
 
         //Legend.reset(id, slug, title, category, title_color, title_subs);
-        console.log('replacing');
         legend.replace(id, category_slug, category, title, category_color, title_color);
 
       } else {

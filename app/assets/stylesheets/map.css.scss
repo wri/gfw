@@ -201,7 +201,9 @@
   // Markers
   #map .marker {
     position:absolute;
-    @include size(45px);
+    @include size(36px);
+
+    &.with_picture { @include size(67px); }
 
     img {
       @include size(100%);
@@ -209,7 +211,25 @@
       display:block;
     }
 
-    &:hover {cursor:pointer!important;}
+    &:hover { cursor:pointer!important; }
+
+    .mask {
+      @include position(-9px, false, false, -9px);
+      position:absolute;
+      @include size(67px);
+      @include icons-sprite(marker_hollow);
+      z-index: 100;
+    }
+
+    img.rounded {
+      @include position(0, false, false, 0);
+      @include size(50px);
+      display:block;
+      @include border-radius(200px);
+      z-index: 10;
+    }
+
+
   }
 
   .circle {
@@ -648,6 +668,64 @@ $timelineWidth: 940px;
 }
 
 /*Marker infowindow*/
+
+.story_infowindow {
+  $width: 175px;
+
+  position:absolute;
+  display:block;
+  width:$width;
+  padding:0 0 6px;
+  visibility:hidden;
+  text-align:center;
+
+  a.close {
+    @include position(10px, 7px, false, false);
+    @include size(6px);
+    @include icons-sprite(infowindow_close);
+  }
+
+  $pR: 18px;
+  $pL: 10px;
+
+  .outer_top {
+    width:$width - $pL - $pR;
+    padding:15px $pR  5px $pL;
+    background:url('icons/bkg_infowindow_story.png') no-repeat left top;
+  }
+
+  .bottom {
+    @include position(false, false, -8px, 0);
+    width:$width;
+    height:14px;
+    background:url('icons/bkg_infowindow_story.png') no-repeat right top;
+  }
+
+  .top {
+    width:174px;
+    max-height:190px;
+    margin:auto;
+    overflow-y:auto;
+    overflow-x:hidden;
+
+    text-align: left;
+
+
+    strong {
+      display:block;
+      color: #F3F2F0;
+      font-family: Georgia, serif;
+      font-size: 17px;
+      font-weight:normal;
+      margin: 0 0 5px 0;
+    }
+
+    color: #999999;
+    font-size: 12px;
+    @extend .sans-serif;
+  }
+}
+
 .cartodb_infowindow {
   $width: 227px;
 

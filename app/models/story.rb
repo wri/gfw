@@ -28,6 +28,7 @@ class Story < CartoDB::Model::Base
       SELECT title,
              your_name as name,
              media.thumbnail_url,
+             ST_ASGEOJSON(stories.the_geom) AS geometry,
              ST_X(ST_Centroid(stories.the_geom)) AS lng,
              ST_Y(ST_Centroid(stories.the_geom)) AS lat
       FROM stories

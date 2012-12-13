@@ -31,7 +31,8 @@ GOD               = {},
 legend            = {},
 gallery           = {},
 languageSelector  = {},
-layerSelector     = {};
+layerSelector     = {},
+Infowindow        = {};
 
 function loadGFW() {
 
@@ -48,8 +49,9 @@ function loadGFW() {
       map.mapTypes.set("terrain_style", styledMap);
       map.setMapTypeId("terrain_style");
 
-      layerSelector     = new gfw.ui.view.LayerSelector({ map: map });
-      legend            = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
+      layerSelector = new gfw.ui.view.LayerSelector({ map: map });
+      legend        = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
+      Infowindow    = new CartoDBInfowindow(map, { className: "story_infowindow", width: 174 });
 
       $("#map").append(layerSelector.render());
       $("#map").append(legend.render());

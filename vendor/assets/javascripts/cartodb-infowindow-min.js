@@ -3,13 +3,23 @@
  * v0.21
  */
 
-  function CartoDBInfowindow(map) {
+  function CartoDBInfowindow(map, opts) {
+
     this.latlng_ = null;
-    this.offsetHorizontal_ = -107;
+    this.offsetHorizontal_ = 5;
+    this.offsetVertical_   = 5;
     this.width_ = 214;
     this.div_ = null;
     this.map_ = map;
     this.setMap(map);
+
+    if (opts) {
+      this.className         = opts.className;
+      this.offsetHorizontal_ = ("offsetHorizontal" in opts) ? opts.offsetHorizontal : 0;
+      this.offsetVertical_   = ("offsetVertical" in opts) ? opts.offsetVertical : 0;
+      this.width_            = opts.width;
+      this.template          = opts.template;
+    }
   }
 
   CartoDBInfowindow.prototype = new google.maps.OverlayView();
@@ -21,9 +31,10 @@
     var div = this.div_;
     if (!div) {
       div = this.div_ = document.createElement('DIV');
-      div.className = "cartodb_infowindow";
 
-      div.innerHTML = '<a href="#close" class="close"></a>'+
+      div.className = this.className || "cartodb_infowindow";
+
+      div.innerHTML = this.template || '<a href="#close" class="close"></a>'+
                       '<div class="outer_top">'+
                         '<div class="top">'+
                         //'<div class="title"><strong>Title</strong></div>'+
@@ -80,7 +91,15 @@
   };
 
 
+  CartoDBInfowindow.prototype.setOffset = function(offsetVertical, offsetHorizontal){
+
+      this.offsetHorizontal_ = offsetHorizontal;
+      this.offsetVertical_   = offsetVertical;
+
+  };
+
   CartoDBInfowindow.prototype.setContent = function(content){
+
     if (this.div_) {
       var div = this.div_
         , top = this.getElementsByClassName("infowindow_content", div)[0];
@@ -119,9 +138,9 @@
         , pixPosition = this.getProjection().fromLatLngToDivPixel(this.latlng_);
       if (pixPosition) {
         div.style.width = this.width_ + 'px';
-        div.style.left = (pixPosition.x - this.width_ / 2 + 5) + 'px';
+        div.style.left = (pixPosition.x - this.width_ / 2 + this.offsetHorizontal_) + 'px';
         var actual_height = - div.clientHeight;
-        div.style.top = (pixPosition.y + actual_height + 5) + 'px';
+        div.style.top = (pixPosition.y + actual_height + this.offsetVertical_) + 'px';
       }
     }
   };
