@@ -7,6 +7,8 @@ $(function() {
 
       feature = new GeoJSON(geojson, style || null);
 
+      console.log(geojson, feature);
+
       if (feature.type && feature.type == "Error"){
         console.log(feature.message);
         return;
@@ -223,12 +225,10 @@ $(function() {
 
     });
 
-    var the_geom = $('#story_the_geom').val()
-
-    the_geom = {"type":"MultiPolygon","coordinates":[[[[149.95513916015625,-33.984363728291875],[149.73541259765625,-34.49297540250153],[151.08123779296875,-34.52013562807767],[151.27349853515625,-34.09361045276871],[150.05401611328125,-34.09361045276871]]]]};
+    var the_geom = $('#story_the_geom').val();
 
     if (the_geom) {
-      showFeature(the_geom, polyOptions);
+      showFeature(JSON.parse(the_geom), polyOptions);
     }
 
 
