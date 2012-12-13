@@ -39,10 +39,12 @@ module StoriesHelper
   end
 
   def coords(story)
-    return '' if story.the_geom.blank?
+    the_geom = story.attributes[:the_geom]
 
-    coords = [story.the_geom.centroid.y, story.the_geom.centroid.x] if     story.the_geom.respond_to?(:centroid)
-    coords = [story.the_geom.y, story.the_geom.x]                   unless story.the_geom.respond_to?(:centroid)
+    return '' if the_geom.blank?
+
+    coords = [the_geom.centroid.y, the_geom.centroid.x] if     the_geom.respond_to?(:centroid)
+    coords = [the_geom.y, the_geom.x]                   unless the_geom.respond_to?(:centroid)
 
     coords.map{|coord| number_with_precision(coord, :precision => 2)}.join(', ')
   end

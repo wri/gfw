@@ -44,6 +44,11 @@ class Story < CartoDB::Model::Base
     (media || []).map{|m| m.cartodb_id}.join(',')
   end
 
+  def the_geom
+    the_geom = attributes[:the_geom]
+    RGeo::GeoJSON.encode(the_geom).to_json if the_geom.present?
+  end
+
   def save
     generate_token
     super

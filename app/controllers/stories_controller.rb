@@ -33,7 +33,6 @@ class StoriesController < ApplicationController
   end
 
   def create
-
     @story = Story.new(params[:story])
 
     if @story.valid?
