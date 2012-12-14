@@ -383,7 +383,7 @@ GFW.modules.app = function(gfw) {
             icon     = '/assets/icons/exclamation.png',
             properties = null;
 
-            marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: story.thumbnail_url, content: "<strong>" + story.title + "</strong> Submitted by " + story.name });
+            marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: story.thumbnail_url, content: "<strong><a href='/stories/"+ story.id +"'>" + story.title + "</a></strong> Submitted by " + story.name });
             marker.setMap(map);
 
           });
