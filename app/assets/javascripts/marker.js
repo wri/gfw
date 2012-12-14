@@ -121,6 +121,7 @@ GFWMarker.prototype.showInfowindow = function() {
     Infowindow.setOffset(-25, 10);
   } else Infowindow.setOffset(-25, 17);
 
+  //Infowindow.close();
   Infowindow.setContent(this.content_);
   Infowindow.setPosition(this.latlng_);
   Infowindow.open();

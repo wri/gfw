@@ -94,20 +94,16 @@ $(function() {
 
 
   $('.thumbnails').sortable({
-    axis: 'y',
-    dropOnEmpty: false,
-    handle: '.handle',
-    cursor: 'crosshair',
     items: 'li',
     opacity: 0.4,
     scroll: true,
     update: function(){
       $.ajax({
-        type: 'post',
+        type: 'get',
         data: $('.thumbnails').sortable('serialize'),
         dataType: 'script',
         complete: function(request){
-        console.log(request);
+          console.log(request);
         },
       url: '/books/sort'})
     }
@@ -142,9 +138,9 @@ $(function() {
 
         filesAdded += _.size(data.files);
 
-        $("form input[type='submit']").addClass("disabled");
+        //$("form input[type='submit']").addClass("disabled");
         $("form input[type='submit']").val("Please wait...");
-        $("form input[type='submit']").attr("disabled", "disabled");
+        //$("form input[type='submit']").attr("disabled", "disabled");
 
         data.submit();
 
@@ -154,10 +150,11 @@ $(function() {
 
         $.each(data.result, function (index, file) {
           filesAdded--;
+          console.log(index);
 
           uploadsIds.push(file.cartodb_id);
 
-          var $thumb = $("<li class='thumbnail'><img src='"+file.thumbnail_url+"' /></li>");
+          var $thumb = $("<li id='photo_" + index + "' class='thumbnail'><img src='"+file.thumbnail_url+"' /></li>");
           $(".thumbnails").append($thumb);
 
           $thumb.fadeIn(250);
@@ -167,8 +164,8 @@ $(function() {
 
         if (filesAdded <= 0) {
           $("form input[type='submit']").val("Submit story");
-          $("form input[type='submit']").removeClass("disabled");
-          $("form input[type='submit']").attr("disabled", false);
+          //$("form input[type='submit']").removeClass("disabled");
+          //$("form input[type='submit']").attr("disabled", false);
         }
 
         $("#story_uploads_ids").val(uploadsIds.join(","));
