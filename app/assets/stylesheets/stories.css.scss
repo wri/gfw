@@ -300,28 +300,18 @@ body.stories {
       }*/
 
       &.media {
+          clear:both;
+          overflow:hidden;
 
-        .thumbnails {
-          @include inline-block();
-          width: 588px;
-          margin: 5px 0;
-
-          .thumbnail {
-            position:relative;
+          .inner_media {
             @include inline-block();
-            @include size(132px, 78px);
-            margin: 0 10px 10px 0;
-            overflow: hidden;
-            clear:both;
-            border: 2px solid $cWhite;
-
-            img { width:100%; }
-
-            &:hover { border: 2px solid #9EB741; }
-
+            width: 588px ;
+            margin: 5px 0;
           }
 
           .upload_picture {
+            float:left;
+
             @include inline-block();
             background: transparent url('buttons/bkg_button_add_media.png') no-repeat center center;
             width: 132px;
@@ -329,238 +319,260 @@ body.stories {
             margin: 0 10px 10px 0;
           }
 
+          .thumbnails {
+            float:left;
+
+            .thumbnail {
+              position:relative;
+              @include inline-block();
+              @include size(132px, 78px);
+              margin: 0 10px 10px 0;
+              overflow: hidden;
+              clear:both;
+              border: 2px solid $cWhite;
+
+              cursor: move;
+
+              img { width:100%; }
+
+              &:hover { border: 2px solid #9EB741; }
+
+            }
+
+          }
+
+          .hint {
+            margin-left: 50px;
+          }
         }
+
+        &.affected-area {
+
+          label, .map-help {
+            @include inline-block();
+            margin: 0 0 7px 0;
+          }
+
+          .map-help {
+            @extend .sans-serif;
+            font-size: 13px;
+            color: $cGray2;
+            margin-left: 5px;
+          }
+
+        }
+
+        #map-container {
+          @include size(588px, 293px);
+          position:relative;
+          background-color:black;
+
+          .remove {
+            display:none;
+            @include position(5px, 5px, false, false);
+            padding: 7px 6px;
+
+            background: #fff;
+
+            border: 1px solid #333;
+            text-transform: uppercase;
+            color: #999999;
+            font-size: 11px;
+            font-weight:bold;
+            text-decoration: none;
+            @extend .sans-serif;
+
+            z-index:1000;
+          }
+
+          .map {
+            height: 293px;
+          }
+        }
+
 
         .hint {
-          margin-left: 50px;
-        }
-      }
-
-      &.affected-area {
-
-        label, .map-help {
           @include inline-block();
-          margin: 0 0 7px 0;
-      }
-
-        .map-help {
-          @extend .sans-serif;
-          font-size: 13px;
-          color: $cGray2;
-          margin-left: 5px;
-        }
-
-      }
-
-      #map-container {
-        @include size(588px, 293px);
-        position:relative;
-        background-color:black;
-
-        .remove {
-          display:none;
-          @include position(5px, 5px, false, false);
-          padding: 7px 6px;
-
-          background: #fff;
-
-          border: 1px solid #333;
-          text-transform: uppercase;
-          color: #999999;
-          font-size: 11px;
-          font-weight:bold;
-          text-decoration: none;
-          @extend .sans-serif;
-
-          z-index:1000;
-        }
-
-        .map {
-          height: 293px;
-        }
-      }
-
-
-      .hint {
-        @include inline-block();
-        width: 284px;
-        margin-left: 372px;
-        @extend .sans-serif;
-        font-size: 15px;
-        color: $cGray2;
-        line-height: 1.2em;
-        vertical-align: top;
-      }
-
-      .optional {
-        width: 588px;
-
-        label, span { @include inline-block(); }
-
-        span {
-          float: right;
-          @extend .sans-serif;
-          font-size: 13px;
-          color: $cGray2;
-        }
-
-      }
-
-      input[type=submit] {
-        display:block;
-        background: transparent url('buttons/bkg_button_save_story.png') no-repeat center center;
-        border: 0 none;
-        width: 156px;
-        height: 40px;
-        @extend .sans-serif;
-        font-weight: bold;
-        color: white;
-        text-transform: uppercase;
-        text-decoration: none;
-        text-align: center;
-
-        &:hover { @include dark-glow(0.5); }
-
-        &.disabled {
-          background:#ccc;
-        }
-      }
-
-    }
-
-    aside {
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 285px;
-      margin-top: 50px;
-
-      h3 {
-        padding: 0 0 20px;
-        margin-bottom: 20px;
-        border-bottom: 1px solid $cGray4;
-        @extend .sans-serif;
-        font-weight: bold;
-        font-size:13px;
-        color: $cGray1;
-        text-transform: uppercase;
-      }
-
-
-      p {
-        @extend .sans-serif;
-        font-size: 15px;
-        color: $cGray2;
-        line-height: 1.2em;
-        padding-bottom: 20px;
-      }
-
-
-    }
-
-
-  }
-
-  .story {
-
-    .title {
-      background:transparent;
-      border-bottom: 1px solid $cGray4;
-      margin-top: -168px;
-
-      h2.compact {
-        padding: 17px 0 34px 0;
-
-        a {
-        @extend .inner;
-        @extend .serif;
-        padding: 0;
-        color: $cGreen1;
-        font-size: 31px;
-        text-align:center;
-        text-decoration: none;
-        }
-      }
-
-    }
-
-    .inner {
-      padding: 50px 0;
-
-      .header {
-        background:transparent;
-        h1 {
-          @extend .serif;
-          font-size: 51px;
-          text-align: center;
-        }
-
-        .when-and-who {
+          width: 284px;
+          margin-left: 372px;
           @extend .sans-serif;
           font-size: 15px;
           color: $cGray2;
-          text-align:center;
-          margin-top: 10px;
-        }
-      }
-
-      .gallery {
-        position: relative;
-        margin: 40px 0;
-
-        .previous, .next {
-          position:absolute;
-          display:block;
-          width:68px;
-          height:68px;
+          line-height: 1.2em;
+          vertical-align: top;
         }
 
-        .previous {
-          top: 30px;
-          left: -34px;
-          @include icons-sprite(button_story_gallery_left);
-        }
+        .optional {
+          width: 588px;
 
-        .next {
-          bottom: 30px;
-          right: -25px;
-          @include icons-sprite(button_story_gallery_right);
-        }
+          label, span { @include inline-block(); }
 
-        .active {
-
-          img {
-            width: 918px;
-            height: 362px;
+          span {
+            float: right;
+            @extend .sans-serif;
+            font-size: 13px;
+            color: $cGray2;
           }
 
         }
 
+        input[type=submit] {
+          display:block;
+          background: transparent url('buttons/bkg_button_save_story.png') no-repeat center center;
+          border: 0 none;
+          width: 156px;
+          height: 40px;
+          @extend .sans-serif;
+          font-weight: bold;
+          color: white;
+          text-transform: uppercase;
+          text-decoration: none;
+          text-align: center;
+
+          &:hover { @include dark-glow(0.5); }
+
+          &.disabled {
+            background:#ccc;
+          }
+        }
+
       }
 
-      .details {
+      aside {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 285px;
+        margin-top: 50px;
+
+        h3 {
+          padding: 0 0 20px;
+          margin-bottom: 20px;
+          border-bottom: 1px solid $cGray4;
+          @extend .sans-serif;
+          font-weight: bold;
+          font-size:13px;
+          color: $cGray1;
+          text-transform: uppercase;
+        }
+
+
         p {
           @extend .sans-serif;
-          font-size: 16px;
-          line-height: 20px;
+          font-size: 15px;
           color: $cGray2;
+          line-height: 1.2em;
+          padding-bottom: 20px;
+        }
 
-          -moz-column-count: 2;
-          -moz-column-gap: 20px;
-          -o-column-count: 2;
-          -o-column-gap: 20px;
-          -webkit-column-count: 2;
-          -webkit-column-gap: 20px;
-          column-count: 2;
-          column-gap: 20px;
 
-          .dropcap{
+      }
+
+
+    }
+
+    .story {
+
+      .title {
+        background:transparent;
+        border-bottom: 1px solid $cGray4;
+        margin-top: -168px;
+
+        h2.compact {
+          padding: 17px 0 34px 0;
+
+          a {
+            @extend .inner;
             @extend .serif;
-            float:left;
-            font-size:400%;
-            margin-top: 16px;
-            margin-right: 10px;
-            margin-bottom: 20px;
+            padding: 0;
+            color: $cGreen1;
+            font-size: 31px;
+            text-align:center;
+            text-decoration: none;
+          }
+        }
+
+      }
+
+      .inner {
+        padding: 50px 0;
+
+        .header {
+          background:transparent;
+          h1 {
+            @extend .serif;
+            font-size: 51px;
+            text-align: center;
+          }
+
+          .when-and-who {
+            @extend .sans-serif;
+            font-size: 15px;
+            color: $cGray2;
+            text-align:center;
+            margin-top: 10px;
+          }
+        }
+
+        .gallery {
+          position: relative;
+          margin: 40px 0;
+
+          .previous, .next {
+            position:absolute;
+            display:block;
+            width:68px;
+            height:68px;
+          }
+
+          .previous {
+            top: 30px;
+            left: -34px;
+            @include icons-sprite(button_story_gallery_left);
+          }
+
+          .next {
+            bottom: 30px;
+            right: -25px;
+            @include icons-sprite(button_story_gallery_right);
+          }
+
+          .active {
+
+            img {
+              width: 918px;
+              height: 362px;
+            }
+
+          }
+
+        }
+
+        .details {
+          p {
+            @extend .sans-serif;
+            font-size: 16px;
+            line-height: 20px;
+            color: $cGray2;
+
+            -moz-column-count: 2;
+            -moz-column-gap: 20px;
+            -o-column-count: 2;
+            -o-column-gap: 20px;
+            -webkit-column-count: 2;
+            -webkit-column-gap: 20px;
+            column-count: 2;
+            column-gap: 20px;
+
+            .dropcap{
+              @extend .serif;
+              float:left;
+              font-size:400%;
+              margin-top: 16px;
+              margin-right: 10px;
+              margin-bottom: 20px;
+            }
+
           }
 
         }
@@ -570,5 +582,3 @@ body.stories {
     }
 
   }
-
-}

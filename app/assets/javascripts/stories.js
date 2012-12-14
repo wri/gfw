@@ -46,7 +46,9 @@ $(function() {
       drawingManager.path = null;
       $the_geom.val("");
 
-      loadedFeature.setMap(null);
+      if (loadedFeature) {
+        loadedFeature.setMap(null);
+      }
 
       $(".remove").fadeOut(250);
     }
@@ -134,8 +136,8 @@ $(function() {
 
           uploadsIds.push(file.cartodb_id);
 
-          var $thumb = $("<div class='thumbnail'><img src='"+file.thumbnail_url+"' /></div>");
-          $(".thumbnails").prepend($thumb);
+          var $thumb = $("<li class='thumbnail'><img src='"+file.thumbnail_url+"' /></li>");
+          $(".thumbnails").append($thumb);
           $thumb.fadeIn(250);
 
         });
