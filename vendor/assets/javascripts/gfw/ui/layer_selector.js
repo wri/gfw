@@ -103,6 +103,7 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
       that.$el.addClass("closed");
 
       that.$layers.animate({ opacity: 0, height: 0 }, that.defaults.speed, function() {
+        that.$layers.hide();
         that.$selected_layer.fadeIn(250);
       });
 
@@ -114,7 +115,8 @@ gfw.ui.view.LayerSelector = gfw.ui.view.Widget.extend({
       that.$el.removeClass("closed");
 
       that.$selected_layer.fadeOut(250, function() {
-        that.$layers.animate({ opacity: 1, height: height }, that.defaults.speed);
+        that.$layers.show();
+        that.$layers.animate({ opacity: 1, height: height }, { duration: that.defaults.speed });
       });
 
     }
