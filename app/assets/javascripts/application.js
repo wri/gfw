@@ -208,10 +208,6 @@ function initialize() {
     $("#content").append('<div class="backdrop" />');
     $(".backdrop").fadeIn(250, function() {
 
-      var top = ( $(window).height() - $("#analysis").height() ) / 2+$(window).scrollTop() + "px",
-      left = ( $(window).width() - $("#analysis").width() ) / 2+$(window).scrollLeft() + "px";
-
-      $("#analysis").css({top: top, left:left});
       $("#analysis").fadeIn(250);
 
     });
