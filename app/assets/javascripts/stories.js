@@ -98,16 +98,10 @@ $(function() {
     opacity: 0.4,
     scroll: true,
     update: function(){
-      $.ajax({
-        type: 'get',
-        data: $('.thumbnails').sortable('serialize'),
-        dataType: 'script',
-        complete: function(request){
-          console.log(request);
-        },
-      url: '/books/sort'})
+      console.log($('.thumbnails').sortable('serialize'));
     }
   });
+
 
   if ($("#stories_map.stories_map").length > 0) {
 
@@ -115,7 +109,6 @@ $(function() {
       e.preventDefault();
       $("#fileupload").click();
     });
-
 
     $('#fileupload').fileupload({
       dataType: 'json',
@@ -150,11 +143,10 @@ $(function() {
 
         $.each(data.result, function (index, file) {
           filesAdded--;
-          console.log(index);
 
           uploadsIds.push(file.cartodb_id);
 
-          var $thumb = $("<li id='photo_" + index + "' class='thumbnail'><img src='"+file.thumbnail_url+"' /></li>");
+          var $thumb = $("<li id='photo_" + file.cartodb_id + "' class='thumbnail'><img src='"+file.thumbnail_url+"' /></li>");
           $(".thumbnails").append($thumb);
 
           $thumb.fadeIn(250);

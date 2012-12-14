@@ -733,7 +733,7 @@ $timelineWidth: 940px;
   position:absolute;
   display:block;
   width:$width;
-  height: 232px;
+  max-height: 232px;
   padding:0 0 6px;
   visibility:hidden;
   text-align:center;
@@ -749,13 +749,13 @@ $timelineWidth: 940px;
 
   .outer_top {
     width:$width - $pL - $pR;
-    height: 180px;
+    /*height: 180px;*/
     padding:25px $pR  5px $pL;
     background:url('icons/bkg_infowindow.png') no-repeat left top;
   }
 
   .bottom {
-    @include position(false, false, 10px, 0);
+    @include position(false, false, false, 0);
     width:$width;
     height:20px;
     background:url('icons/bkg_infowindow.png') no-repeat right top;
@@ -763,7 +763,7 @@ $timelineWidth: 940px;
 
   .shadow {
 
-    @include position(false, false, 22px, 6px);
+    @include position(false, false, 0, 6px);
     @include size(100%, 24px);
     background:url(backgrounds/white_shadow.png) repeat-x;
 
