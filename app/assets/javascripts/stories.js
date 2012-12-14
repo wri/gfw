@@ -92,6 +92,27 @@ $(function() {
 
   var uploadsIds = [], drawingManager, selectedShape, selectedMarker, selectedColor, filesAdded = 0;
 
+
+  $('.thumbnails').sortable({
+    axis: 'y',
+    dropOnEmpty: false,
+    handle: '.handle',
+    cursor: 'crosshair',
+    items: 'li',
+    opacity: 0.4,
+    scroll: true,
+    update: function(){
+      $.ajax({
+        type: 'post',
+        data: $('.thumbnails').sortable('serialize'),
+        dataType: 'script',
+        complete: function(request){
+        console.log(request);
+        },
+      url: '/books/sort'})
+    }
+  });
+
   if ($("#stories_map.stories_map").length > 0) {
 
     $(".upload_picture").on("click", function(e) {
@@ -107,12 +128,11 @@ $(function() {
       drop:  function (e, data) { },
 
       progress: function (e, data) {
-        console.log(data);
         var progress = parseInt(data.loaded / data.total * 100, 10);
-        console.log(progress + '%');
+        console.log("p", progress + '%');
       },
+
       progressall: function (e, data) {
-        console.log(data);
         var progress = parseInt(data.loaded / data.total * 100, 10);
         console.log(progress + '%');
       },
@@ -123,6 +143,7 @@ $(function() {
         filesAdded += _.size(data.files);
 
         $("form input[type='submit']").addClass("disabled");
+        $("form input[type='submit']").val("Please wait...");
         $("form input[type='submit']").attr("disabled", "disabled");
 
         data.submit();
@@ -138,12 +159,14 @@ $(function() {
 
           var $thumb = $("<li class='thumbnail'><img src='"+file.thumbnail_url+"' /></li>");
           $(".thumbnails").append($thumb);
+
           $thumb.fadeIn(250);
 
         });
 
 
         if (filesAdded <= 0) {
+          $("form input[type='submit']").val("Submit story");
           $("form input[type='submit']").removeClass("disabled");
           $("form input[type='submit']").attr("disabled", false);
         }
