@@ -1,7 +1,7 @@
 $(function() {
 
   drawingManager = {},
-  loadedFeature  = {};
+  loadedFeature  = null;
 
     function showFeature(geojson, style){
 
