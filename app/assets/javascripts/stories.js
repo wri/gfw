@@ -98,7 +98,9 @@ $(function() {
     opacity: 0.4,
     scroll: true,
     update: function(){
-      console.log($('.thumbnails').sortable('serialize'));
+      var order = $('.thumbnails').sortable('serialize', { key: 'string' } );
+      order = order.replace(/string=/g, "").split("&")
+      $("#story_media_order").val(order);
     }
   });
 
@@ -132,8 +134,8 @@ $(function() {
         filesAdded += _.size(data.files);
 
         //$("form input[type='submit']").addClass("disabled");
-        $("form input[type='submit']").val("Please wait...");
         //$("form input[type='submit']").attr("disabled", "disabled");
+        $("form input[type='submit']").val("Please wait...");
 
         data.submit();
 

@@ -8,6 +8,7 @@ class Story < CartoDB::Model::Base
   field :title
   field :when_did_it_happen
   field :details
+  field :media_order
   field :your_name
   field :your_email
   field :featured, :type => 'boolean'
