@@ -100,7 +100,7 @@ $(function() {
     update: function(){
       var order = $('.thumbnails').sortable('serialize', { key: 'string' } );
       order = order.replace(/string=/g, "").split("&")
-      $("#story_media_order").val(order);
+      $("#story_uploads_id").val(order);
     }
   });
 

@@ -8,7 +8,6 @@ class Story < CartoDB::Model::Base
   field :title
   field :when_did_it_happen
   field :details
-  field :media_order
   field :your_name
   field :your_email
   field :featured, :type => 'boolean'
@@ -20,14 +19,15 @@ class Story < CartoDB::Model::Base
   end
 
   def initialize(params)
-    self.uploads_ids = params.delete(:uploads_ids)
+    @uploads_ids = params.delete(:uploads_ids)
     super
   end
 
   def self.all_for_map
     sql = <<-SQL
-      SELECT title,
-             your_name as name,
+      SELECT story.cartodb_id AS id,
+             title,
+             your_name AS name,
              media.thumbnail_url,
              ST_ASGEOJSON(stories.the_geom) AS geometry,
              ST_X(ST_Centroid(stories.the_geom)) AS lng,
@@ -42,7 +42,7 @@ class Story < CartoDB::Model::Base
   end
 
   def uploads_ids
-    (media || []).map{|m| m.cartodb_id}.join(',')
+    (media || @uploads_ids.split(',')).map{|m| m.cartodb_id}.join(',')
   end
 
   def the_geom
@@ -61,7 +61,11 @@ class Story < CartoDB::Model::Base
   end
 
   def media
-    Media.where(:story_id => self.cartodb_id)
+    @media ||= Media.where(:story_id => self.cartodb_id).order('media_order ASC').all
+  end
+
+  def unlinked_media
+    (@uploads_ids || '').split(',').map{|id| Media.where(:cartodb_id => id)}
   end
 
   def main_thumbnail
@@ -73,9 +77,9 @@ class Story < CartoDB::Model::Base
   end
 
   def save_thumbnails
-    (@uploads_ids || '').split(',').each do |media_id|
+    (@uploads_ids || '').split(',').each_with_index do |media_id, index|
       media = Media.where(:cartodb_id => media_id)
-      media.update_story_id(cartodb_id)
+      media.update_story_id(cartodb_id, index)
     end
   end
 
@@ -90,7 +94,6 @@ class Story < CartoDB::Model::Base
   end
 
   def to_json
-    require 'debugger'; debugger
     {
       title: title,
       name: your_name,

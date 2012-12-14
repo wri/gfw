@@ -24,15 +24,15 @@ end %>
       </div>
     </div>
 
-    <% if story_image_url = @story.main_thumbnail.try(:big_url) %>
+    <% if @story.media.present? %>
       <div class="gallery">
         <%= link_to '', '#', :class => 'previous' %>
         <%= link_to '', '#', :class => 'next' %>
 
         <ul>
-          <% @story.media.each do |media| %>
+          <% @story.media.map(&:big_url).each do |image_url| %>
             <li class="active">
-              <%= image_tag story_image_url %>
+              <%= image_tag image_url %>
             </li>
           <% end %>
         </ul>
