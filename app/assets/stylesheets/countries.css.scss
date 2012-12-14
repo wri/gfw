@@ -32,12 +32,13 @@ a.close_icon {
 }
 
 #analysis {
-  position:absolute;
+  position:fixed;
   display:none;
   width: 719px;
   height: 450px;
-  z-index: 1050;
   background-image:url(backgrounds/bkg_analysis.png);
+
+  z-index: 2000;
 
   h2{
     @extend .serif;
@@ -72,7 +73,7 @@ a.close_icon {
   display:none;
   width: 719px;
   height: 493px;
-  z-index: 1050;
+  z-index: 2000;
   background-image:url(backgrounds/bkg_crowdsourcing.png);
 
   h2{
@@ -108,7 +109,7 @@ a.close_icon {
   display:none;
   width: 415px;
   height: 258px;
-  z-index: 1050;
+  z-index: 2000;
   background-image:url(backgrounds/bkg_share.png);
 
   h2{
