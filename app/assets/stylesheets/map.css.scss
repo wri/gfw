@@ -392,9 +392,10 @@
       &:hover { color: $cGray1; }
     }
 
-    &.satellite   i { @include icons-sprite(map_satellite); }
-    &.terrain     i { @include icons-sprite(map_terrain); }
-    &.tree_height i { @include icons-sprite(map_terrain); }
+    &.satellite      i { @include icons-sprite(map_satellite); }
+    &.terrain        i { @include icons-sprite(map_terrain_bn); }
+    &.classic        i { @include icons-sprite(map_terrain); }
+    &.tree_height    i { @include icons-sprite(map_terrain); }
 
     i {
       @include inline-block();
