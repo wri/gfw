@@ -1417,7 +1417,7 @@ function addCircle(id, type, options) {
             } else if (months == 1) {
               val = "in the last month";
             } else {
-              val = "in the last " + months + " months";
+              val = "in " + config.MONTHNAMES[data[index].m - 1] + " " + data[index].y;
             }
 
             $(".graph_legend." + id + " .text").html(val);
