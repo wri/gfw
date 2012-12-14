@@ -717,6 +717,10 @@ $timelineWidth: 940px;
       font-size: 17px;
       font-weight:normal;
       margin: 0 0 5px 0;
+
+      text-decoration :none;
+
+      &:hover { text-decoration: underline; }
     }
 
     color: #999999;
