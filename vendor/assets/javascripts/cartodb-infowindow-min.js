@@ -24,7 +24,6 @@
 
   CartoDBInfowindow.prototype = new google.maps.OverlayView();
 
-
   CartoDBInfowindow.prototype.draw = function() {
     var me = this;
 
@@ -93,25 +92,22 @@
     }
 
     this.setPosition();
+
   };
 
-
   CartoDBInfowindow.prototype.setTemplate = function(template){
-
-      this.template_ = template;
-
+    this.template_ = template;
   };
 
   CartoDBInfowindow.prototype.setOffset = function(offsetVertical, offsetHorizontal){
-
-      this.offsetHorizontal_ = offsetHorizontal;
-      this.offsetVertical_   = offsetVertical;
-
+    this.offsetHorizontal_ = offsetHorizontal;
+    this.offsetVertical_   = offsetVertical;
   };
 
   CartoDBInfowindow.prototype.setContent = function(content){
 
     if (this.div_) {
+
       var div = this.div_
         , top = this.getElementsByClassName("infowindow_content", div)[0];
 
@@ -134,14 +130,14 @@
 
       }
     }
-  };
 
+  };
 
   CartoDBInfowindow.prototype.setPosition = function(latlng) {
     if (latlng) {
       this.latlng_ = latlng;
       // Adjust pan
-      this._adjustPan();
+      //this._adjustPan();
     }
 
     if (this.div_) {
