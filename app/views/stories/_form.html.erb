@@ -24,7 +24,6 @@
     </div>
 
     <%= f.hidden_field :the_geom %>
-    <%= f.hidden_field :media_order %>
     <%= f.hidden_field :uploads_ids %>
 
     <div id="map-container"<%= raw " class='error'" if !@story.errors[:the_geom].empty? %>>
@@ -61,7 +60,13 @@
 
     <div class="inner_media">
       <%= link_to '', '#', :class => 'upload_picture' %>
-      <ul class="thumbnails"></ul>
+      <ul class="thumbnails">
+        <% (@story.unlinked_media || []).each do |media| %>
+          <li id="photo_<%= media.cartodb_id %>" class="thumbnail">
+            <img src="<%= media.thumbnail_url %>">
+          </li>
+        <% end %>
+      </ul>
     </div>
 
     <p class="hint">Drag & drop images and videos to reorder them within the carrousel. The first one will be considered as the preferred one.</p>

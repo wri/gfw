@@ -8,6 +8,7 @@ class Media < CartoDB::Model::Base
   field :image_url
   field :thumbnail_url
   field :big_url
+  field :media_order, :type => 'integer'
 
   def to_param
     cartodb_id.to_s
@@ -34,9 +35,10 @@ class Media < CartoDB::Model::Base
     video_url.match(/youtu\.be|youtube.com/)
   end
 
-  def update_story_id(story_id)
+  def update_story_id(story_id, order = 0)
     CartoDB::Connection.update_row 'media', cartodb_id, {
-      'story_id'      => story_id
+      'story_id'    => story_id,
+      'media_order' => order
     }
   end
 
