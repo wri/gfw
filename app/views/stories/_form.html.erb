@@ -56,19 +56,28 @@
 
   <div class="field media">
 
-    <%= f.label      :media %>
+    <%= f.label :media %>
 
     <div class="inner_media">
-      <%= link_to '', '#', :class => 'upload_picture' %>
+
       <ul class="thumbnails">
+        <li><%= link_to '', '#', :class => 'upload_picture' %></li>
+
+        <% (@story.media || []).each do |media| %>
+          <li id="photo_<%= media.cartodb_id %>" class="thumbnail">
+            <img src="<%= media.thumbnail_url %>">
+          </li>
+        <% end %>
+
         <% (@story.unlinked_media || []).each do |media| %>
           <li id="photo_<%= media.cartodb_id %>" class="thumbnail">
             <img src="<%= media.thumbnail_url %>">
           </li>
         <% end %>
-      </ul>
-    </div>
 
+      </ul>
+
+    </div>
     <p class="hint">Drag & drop images and videos to reorder them within the carrousel. The first one will be considered as the preferred one.</p>
   </div>
 

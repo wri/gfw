@@ -346,13 +346,13 @@ body.stories {
   .thumbnails {
 
     float:left;
-    width: 444px;
+    width: 585px;
 
     .thumbnail {
       position:relative;
       @include inline-block();
       @include size(132px, 76px);
-      margin: 0 10px 10px 0;
+      margin: 0 7px 10px 0;
       overflow: hidden;
       clear:both;
       border: 2px solid $cWhite;
