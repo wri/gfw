@@ -21,8 +21,6 @@ class StoriesController < ApplicationController
     @story   = @story || Story.where("token = '?'", params[:id]).first
     @stories = Story.all.first(4)
 
-    #Notifications.new_story(@story).deliver
-
   end
 
   def new

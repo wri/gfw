@@ -16,7 +16,7 @@
       p {color: #999999; margin: 1em 0;}
 
       ul { margin: 0; padding: 0;}
-      ul li { margin: 0 0 7px 5px; }
+      ul li { margin: 0 0 15px 0; }
 
       h1, h2, h3, h4, h5, h6 {color: black !important;}
 
@@ -123,9 +123,8 @@
                 <%= image_tag @story.main_thumbnail.try(:big_url) %>
               </div>
 
-              <div class="details" style="font-size: 15px!Important; color: #999999">
-                <%= simple_format @story.details %>
-              </div>
+              <p style="width: 900px; font-size: 15px; color: #999999"> <%= @story.details %> </p>
+
             </div>
 
           </div>
