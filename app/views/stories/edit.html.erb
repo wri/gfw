@@ -4,7 +4,7 @@ end %>
 
 
 <% content_for :inner_header do
-  link_to (content_tag :span, 'Destroy'), story_path(@story), :class => "btn destroy", :method => :delete, :class => "btn destroy", :confirm => "Are you sure?"
+  link_to (content_tag :span, 'Delete story'), story_path(@story), :class => "btn destroy", :method => :delete, :class => "btn destroy", :confirm => "Are you sure?"
 end %>
 
 <div class="story_form">

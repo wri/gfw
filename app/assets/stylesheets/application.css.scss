@@ -812,8 +812,12 @@ article.contact {
 .btn.destroy {
   @include button('buttons/bkg_button_destroy.png', 42px, 5px, 13px, 27px, 5px, 22px, 0);
   line-height: 18px;
-}
 
+  &:hover span {
+    text-decoration: underline;
+  }
+
+}
 
 .btn.with-icon {
   span {
