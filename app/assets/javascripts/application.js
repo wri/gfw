@@ -1,11 +1,11 @@
 //= require jquery
+//= require jquery.history
 //= require jquery_ujs
 //= require jquery.easing.1.3
 //= require jquery-ui-1.9.2.custom.min
 //= require wax.g.min
 //= require cartodb-gmapsv3
 //= require cartodb-infowindow-min
-//= require jquery.history
 //= require jstorage.min
 //= require lodash.min
 //= require backbone-min
