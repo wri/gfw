@@ -42,7 +42,6 @@ function loadGFW() {
     GOD = new gfw.ui.view.GOD();
     window.GOD = GOD;
 
-
     if ($("body.stories.show .carrousel").length > 0) {
       var carrousel = new gfw.ui.view.Carrousel();
       window.Carrousel = carrousel;
