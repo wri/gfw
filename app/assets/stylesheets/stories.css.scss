@@ -98,6 +98,22 @@ body.stories {
         @include border-radius(300px);
         background:#EBEBEB;
         z-index: 10;
+        word-spacing: normal;
+
+        .coords {
+          @include absolute-center(175px, 83px);
+          background: url(backgrounds/bkg_tooltip.png) no-repeat;
+          text-align: center;
+          z-index: 100;
+
+          strong {
+            position:relative;
+            top: 30px;
+            color: #9EB741;
+            font-size: 12px;
+            @extend .sans-serif;
+          }
+        }
       }
 
       .content {
@@ -278,167 +294,167 @@ body.stories {
       margin: 0 0 25px;
 
       /*.field_title {
-        clear:both;
-        overflow:hidden;
-        background:red;
-        color: red;
-        label {
-          float:left;
+      clear:both;
+      overflow:hidden;
+      background:red;
+      color: red;
+      label {
+      float:left;
 
-        }
+      }
 
-        .field_with_errors {
-          @include inline-block();
-        }
+      .field_with_errors {
+      @include inline-block();
+      }
 
 
-        .error-message {
-          float:right;
-        }
+      .error-message {
+      float:right;
+      }
 
 
       }*/
 
-      &.media {
-          clear:both;
-          overflow:hidden;
+&.media {
+  clear:both;
+  overflow:hidden;
 
-          .inner_media {
-            @include inline-block();
-            width: 588px ;
-            margin: 5px 0;
-          }
+  .inner_media {
+    @include inline-block();
+    width: 588px ;
+    margin: 5px 0;
+  }
 
-          .upload_picture {
-            float:left;
+  .upload_picture {
+    float:left;
 
-            @include inline-block();
-            @include size(132px, 78px);
-            margin: 0 10px 10px 0;
-            background: transparent url('buttons/bkg_button_add_media.png') no-repeat center center;
+    @include inline-block();
+    @include size(132px, 78px);
+    margin: 0 10px 10px 0;
+    background: transparent url('buttons/bkg_button_add_media.png') no-repeat center center;
 
-            &:hover { background: transparent url('buttons/bkg_button_add_media_hover.png') no-repeat center center; }
+    &:hover { background: transparent url('buttons/bkg_button_add_media_hover.png') no-repeat center center; }
 
-          }
+  }
 
-          .thumbnails {
+  .thumbnails {
 
-            float:left;
-            width: 444px;
+    float:left;
+    width: 444px;
 
-            .thumbnail {
-              position:relative;
-              @include inline-block();
-              @include size(132px, 76px);
-              margin: 0 10px 10px 0;
-              overflow: hidden;
-              clear:both;
-              border: 2px solid $cWhite;
+    .thumbnail {
+      position:relative;
+      @include inline-block();
+      @include size(132px, 76px);
+      margin: 0 10px 10px 0;
+      overflow: hidden;
+      clear:both;
+      border: 2px solid $cWhite;
 
-              cursor: move;
+      cursor: move;
 
-              img { width:100%; }
+      img { width:100%; }
 
-              &:hover { border: 2px solid #9EB741; }
+      &:hover { border: 2px solid #9EB741; }
 
-            }
+    }
 
-          }
+  }
 
-          .hint {
-            margin-left: 50px;
-          }
-        }
+  .hint {
+    margin-left: 50px;
+  }
+}
 
-        &.affected-area {
+&.affected-area {
 
-          label, .map-help {
-            @include inline-block();
-            margin: 0 0 7px 0;
-          }
+  label, .map-help {
+    @include inline-block();
+    margin: 0 0 7px 0;
+  }
 
-          .map-help {
-            @extend .sans-serif;
-            font-size: 13px;
-            color: $cGray2;
-            margin-left: 5px;
-          }
+  .map-help {
+    @extend .sans-serif;
+    font-size: 13px;
+    color: $cGray2;
+    margin-left: 5px;
+  }
 
-        }
+}
 
-        #map-container {
-          @include size(588px, 293px);
-          position:relative;
-          background-color:black;
+#map-container {
+  @include size(588px, 293px);
+  position:relative;
+  background-color:black;
 
-          .remove {
-            display:none;
-            @include position(5px, 5px, false, false);
-            padding: 7px 6px;
+  .remove {
+    display:none;
+    @include position(5px, 5px, false, false);
+    padding: 7px 6px;
 
-            background: #fff;
+    background: #fff;
 
-            border: 1px solid #333;
-            text-transform: uppercase;
-            color: #999999;
-            font-size: 11px;
-            font-weight:bold;
-            text-decoration: none;
-            @extend .sans-serif;
+    border: 1px solid #333;
+    text-transform: uppercase;
+    color: #999999;
+    font-size: 11px;
+    font-weight:bold;
+    text-decoration: none;
+    @extend .sans-serif;
 
-            z-index:1000;
-          }
+    z-index:1000;
+  }
 
-          .map {
-            height: 293px;
-          }
-        }
+  .map {
+    height: 293px;
+  }
+}
 
 
-        .hint {
-          @include inline-block();
-          width: 284px;
-          margin-left: 372px;
-          @extend .sans-serif;
-          font-size: 15px;
-          color: $cGray2;
-          line-height: 1.2em;
-          vertical-align: top;
-        }
+.hint {
+  @include inline-block();
+  width: 284px;
+  margin-left: 372px;
+  @extend .sans-serif;
+  font-size: 15px;
+  color: $cGray2;
+  line-height: 1.2em;
+  vertical-align: top;
+}
 
-        .optional {
-          width: 588px;
+.optional {
+  width: 588px;
 
-          label, span { @include inline-block(); }
+  label, span { @include inline-block(); }
 
-          span {
-            float: right;
-            @extend .sans-serif;
-            font-size: 13px;
-            color: $cGray2;
-          }
+  span {
+    float: right;
+    @extend .sans-serif;
+    font-size: 13px;
+    color: $cGray2;
+  }
 
-        }
+}
 
-        input[type=submit] {
-          display:block;
-          background: transparent url('buttons/bkg_button_save_story.png') no-repeat center center;
-          border: 0 none;
-          width: 156px;
-          height: 40px;
-          @extend .sans-serif;
-          font-weight: bold;
-          color: white;
-          text-transform: uppercase;
-          text-decoration: none;
-          text-align: center;
+input[type=submit] {
+  display:block;
+  background: transparent url('buttons/bkg_button_save_story.png') no-repeat center center;
+  border: 0 none;
+  width: 156px;
+  height: 40px;
+  @extend .sans-serif;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
 
-          &:hover { @include dark-glow(0.5); }
+  &:hover { @include dark-glow(0.5); }
 
-          &.disabled {
-            background:#ccc;
-          }
-        }
+  &.disabled {
+    background:#ccc;
+  }
+}
 
       }
 
