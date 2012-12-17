@@ -544,6 +544,50 @@ input[type=submit] {
 
           @include size($width, $height);
 
+          .frame {
+
+            display:block;
+            position:absolute;
+            bottom: 35px;
+            right: 35px;
+            width: 286px;
+            height: 286px;
+            @include border-radius(300px);
+            background:#333;
+            background:rgba(#000, .5);
+            z-index: 100;
+            word-spacing: normal;
+
+            img {
+              position:absolute;
+
+              top: 5px;
+              left: 5px;
+
+              width: 276px;
+              height: 276px;
+              @include border-radius(300px);
+            }
+
+
+            .coords {
+              @include absolute-center(175px, 83px);
+              background: url(backgrounds/bkg_tooltip.png) no-repeat;
+              text-align: center;
+              z-index: 100;
+
+              strong {
+                position:relative;
+                top: 30px;
+                color: #9EB741;
+                font-size: 12px;
+                @extend .sans-serif;
+              }
+            }
+          }
+
+
+
           .previous, .next {
             position:absolute;
             display:block;
