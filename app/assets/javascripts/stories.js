@@ -148,7 +148,9 @@ $(function() {
 
           uploadsIds.push(file.cartodb_id);
 
-          var $thumb = $("<li id='photo_" + file.cartodb_id + "' class='thumbnail'><img src='"+file.thumbnail_url+"' /></li>");
+          var url = file.thumbnail_url.replace("https", "http");
+          var $thumb = $("<li id='photo_" + file.cartodb_id + "' class='thumbnail'><img src='"+url+"' /></li>");
+
           $(".thumbnails").append($thumb);
 
           $thumb.fadeIn(250);

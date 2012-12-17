@@ -25,23 +25,29 @@ end %>
     </div>
 
     <% if @story.media.present? %>
+
       <div class="gallery">
-        <%= link_to '', '#', :class => 'previous' %>
-        <%= link_to '', '#', :class => 'next' %>
+
+        <% if @story.media.size > 1 %>
+          <%= link_to '', '#', :class => 'previous' %>
+          <%= link_to '', '#', :class => 'next' %>
+        <% end %>
 
         <ul>
           <% @story.media.map(&:big_url).each do |image_url| %>
             <li class="active">
-              <%= image_tag image_url %>
+            <%= image_tag image_url %>
             </li>
           <% end %>
         </ul>
+
       </div>
     <% end %>
 
     <div class="details">
       <%= simple_format raw("<span class='dropcap'>#{@story.details[0, 1]}</span>") + @story.details[1, @story.details.length - 1] %>
     </div>
+
   </div>
 
 

@@ -528,15 +528,16 @@ input[type=submit] {
           .when-and-who {
             @extend .sans-serif;
             font-size: 15px;
-            color: $cGray2;
+            color: $cGray3;
             text-align:center;
             margin-top: 10px;
+            margin-bottom: 40px;
           }
         }
 
         .gallery {
           position: relative;
-          margin: 40px 0;
+          margin: 0 0 40px 0;
 
           .previous, .next {
             position:absolute;
