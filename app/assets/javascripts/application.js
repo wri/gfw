@@ -3,12 +3,6 @@
 //= require jquery_ujs
 //= require jquery.easing.1.3
 //= require jquery-ui-1.9.2.custom.min
-//= require jquery.mousewheel.min
-//= require jquery.mousewheel.min
-//= require jquery.imagesloaded.min
-//= require jquery.jscrollpane
-//= require spin.min
-//= require mustache
 //= require wax.g.min
 //= require cartodb-gmapsv3
 //= require cartodb-infowindow-min
@@ -43,7 +37,7 @@ Infowindow        = {};
 
 function loadGFW() {
 
-  gfw.load('/assets/gfw/', function() {
+  //gfw.load('/assets/gfw/', function() {
 
     GOD = new gfw.ui.view.GOD();
     window.GOD = GOD;
@@ -138,7 +132,7 @@ function loadGFW() {
       });
     }
 
-  });
+  //});
 
 }
 

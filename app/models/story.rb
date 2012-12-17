@@ -25,7 +25,7 @@ class Story < CartoDB::Model::Base
 
   def self.all_for_map
     sql = <<-SQL
-      SELECT story.cartodb_id AS id,
+      SELECT stories.cartodb_id AS id,
              title,
              your_name AS name,
              media.thumbnail_url,
