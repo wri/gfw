@@ -16,9 +16,13 @@ class StoriesController < ApplicationController
   end
 
   def show
+
     @story   = Story.where("cartodb_id = ?", params[:id]).first
     @story   = @story || Story.where("token = '?'", params[:id]).first
     @stories = Story.all.first(4)
+
+    #Notifications.new_story(@story).deliver
+
   end
 
   def new

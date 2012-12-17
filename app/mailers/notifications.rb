@@ -10,5 +10,7 @@ class Notifications < ActionMailer::Base
     @story = story
 
     mail to: "ferdev@vizzuality.com"
+    #mail to: "javierarce@gmail.com"
   end
+
 end
