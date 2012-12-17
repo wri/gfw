@@ -27,7 +27,7 @@ gfw.ui.view.Carrousel = gfw.core.View.extend({
 
     _.bindAll( this, "onPrevious", "onNext" );
 
-    this.step = 0;
+    this.step = 1;
 
     this.options = _.extend(this.options, this.defaults);
 
@@ -39,26 +39,17 @@ gfw.ui.view.Carrousel = gfw.core.View.extend({
   },
 
   onNext: function() {
-    console.log('right');
-    if (this.step < this.sites.length - 4) {
-      this.step++;
-      //this.$el.find(".inner").animate({ scrollLeft:  239*this.step }, this.defaults.speed);
-      //this.$left.fadeIn(250);
-    } else {
-      //this.$right.fadeOut(250);
-    }
 
+    this.$carrousel.find("li:nth-child(" + this.step + ")").fadeOut(this.defaults.speed);
+    (this.step >= this.$images.length) ?  this.step = 1 : this.step++;
+    this.$carrousel.find("li:nth-child(" + this.step + ")").fadeIn(this.defaults.speed);
   },
 
   onPrevious: function() {
-    console.log('left');
-    if (this.step > 0) {
-      this.step--;
-      //this.$el.find(".inner").animate({ scrollLeft:  239*this.step  }, this.defaults.speed);
-      //this.$right.fadeIn(250);
-    } else {
-      //this.$left.fadeOut(250);
-    }
+
+    this.$carrousel.find("li:nth-child(" + this.step + ")").fadeOut(this.defaults.speed);
+    (this.step == 1) ? this.step = this.$images.length : this.step--;
+    this.$carrousel.find("li:nth-child(" + this.step + ")").fadeIn(this.defaults.speed);
 
   },
 
@@ -69,6 +60,11 @@ gfw.ui.view.Carrousel = gfw.core.View.extend({
 
     this.$previous = this.$el.find(".previous");
     this.$next     = this.$el.find(".next");
+
+    this.$carrousel = this.$el.find("ul");
+    this.$images    = this.$el.find("li");
+
+    this.$carrousel.find("li:nth-child(1)").fadeIn(this.defaults.speed);
 
     return this.$el;
 

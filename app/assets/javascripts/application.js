@@ -42,6 +42,12 @@ function loadGFW() {
     GOD = new gfw.ui.view.GOD();
     window.GOD = GOD;
 
+
+    if ($("body.stories.show .carrousel").length > 0) {
+      var carrousel = new gfw.ui.view.Carrousel();
+      window.Carrousel = carrousel;
+    }
+
     if ($("#map").length > 0) {
       map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 
@@ -143,11 +149,6 @@ function initialize() {
   if (hash) {
     config.mapOptions.center = hash.center;
     config.mapOptions.zoom   = hash.zoom;
-  }
-
-  if ($("body.stories.show .gallery").length > 0) {
-    //var carrousel = new gfw.ui.view.Carrousel();
-    //window.Carrousel = carrousel;
   }
 
 }

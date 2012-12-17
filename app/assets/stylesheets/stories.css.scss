@@ -535,7 +535,7 @@ input[type=submit] {
           }
         }
 
-        .gallery {
+        .carrousel {
           position: relative;
           margin: 0 0 40px 0;
 
@@ -566,7 +566,7 @@ input[type=submit] {
           }
 
           li {
-            /*display:none;*/
+            display:none;
             @include position(0, false, false, 0);
             z-index: 10;
 
