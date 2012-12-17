@@ -538,6 +538,8 @@ input[type=submit] {
         .gallery {
           position: relative;
           margin: 0 0 40px 0;
+          width: 918px;
+          height: 362px;
 
           .previous, .next {
             position:absolute;
@@ -550,17 +552,26 @@ input[type=submit] {
             top: 30px;
             left: -34px;
             @include icons-sprite(button_story_gallery_left);
+            z-index: 100;
           }
 
           .next {
             bottom: 30px;
             right: -25px;
             @include icons-sprite(button_story_gallery_right);
+            z-index: 100;
           }
 
           .active {
+            position:absolute;
+            top: 0;
+            left: 0;
+            width: 918px;
+            height: 362px;
+            z-index: 10;
 
             img {
+
               width: 918px;
               height: 362px;
             }
