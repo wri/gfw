@@ -38,7 +38,8 @@
     'ui/legend.js',
     'ui/layer_selector.js',
     'ui/language_selector.js',
-    'ui/gallery.js'
+    'ui/gallery.js',
+    'ui/carrousel.js'
 
   ];
 

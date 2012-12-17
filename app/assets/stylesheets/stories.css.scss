@@ -538,8 +538,11 @@ input[type=submit] {
         .gallery {
           position: relative;
           margin: 0 0 40px 0;
-          width: 918px;
-          height: 362px;
+
+          $width: 918px;
+          $height: 362px;
+
+          @include size($width, $height);
 
           .previous, .next {
             position:absolute;
@@ -562,18 +565,13 @@ input[type=submit] {
             z-index: 100;
           }
 
-          .active {
-            position:absolute;
-            top: 0;
-            left: 0;
-            width: 918px;
-            height: 362px;
+          li {
+            /*display:none;*/
+            @include position(0, false, false, 0);
             z-index: 10;
 
-            img {
-
-              width: 918px;
-              height: 362px;
+            &, img {
+              @include size($width, $height);
             }
 
           }

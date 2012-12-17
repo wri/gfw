@@ -35,9 +35,7 @@ end %>
 
         <ul>
           <% @story.media.map(&:big_url).each do |image_url| %>
-            <li class="active">
-            <%= image_tag image_url %>
-            </li>
+            <li> <%= image_tag image_url %> </li>
           <% end %>
         </ul>
 

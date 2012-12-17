@@ -145,6 +145,11 @@ function initialize() {
     config.mapOptions.zoom   = hash.zoom;
   }
 
+  if ($("body.stories.show .gallery").length > 0) {
+    //var carrousel = new gfw.ui.view.Carrousel();
+    //window.Carrousel = carrousel;
+  }
+
 }
 
 (function(window,undefined){
