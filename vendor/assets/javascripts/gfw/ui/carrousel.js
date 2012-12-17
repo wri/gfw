@@ -38,14 +38,18 @@ gfw.ui.view.Carrousel = gfw.core.View.extend({
 
   },
 
-  onNext: function() {
+  onNext: function(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
 
     this.$carrousel.find("li:nth-child(" + this.step + ")").fadeOut(this.defaults.speed);
     (this.step >= this.$images.length) ?  this.step = 1 : this.step++;
     this.$carrousel.find("li:nth-child(" + this.step + ")").fadeIn(this.defaults.speed);
   },
 
-  onPrevious: function() {
+  onPrevious: function(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
 
     this.$carrousel.find("li:nth-child(" + this.step + ")").fadeOut(this.defaults.speed);
     (this.step == 1) ? this.step = this.$images.length : this.step--;
