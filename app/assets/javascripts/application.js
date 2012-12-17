@@ -16,7 +16,7 @@
 //= require jquery.fileupload
 //= require jquery.fileupload-ui
 //= require jquery.fileupload-fp
-//= require gfw/gfw
+//= require gfw
 //= require_tree .
 
 // Map needs to be a global var or
