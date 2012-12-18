@@ -30,10 +30,12 @@ body.posts {
     article h1 {
 
       text-align: center;
-      a { font-size: 51px; }
       font-size: 51px;
+      a { font-size: 51px; }
 
     }
+
+    article a.author { display: none; }
 
     article .columns  {
       -moz-column-count: 2;
@@ -56,7 +58,9 @@ body.posts {
 
     ul.meta { text-align: center; }
     ul.meta li { font-size:15px; }
+    ul.meta li.author { background:none; }
     ul.meta li a { font-size:15px; }
+    ul.meta li:last-child { background:none; }
   }
 
   header {
