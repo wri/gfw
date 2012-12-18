@@ -570,13 +570,10 @@ GFW.modules.maplayer = function(gfw) {
           this.layer.attributes["visible"] = true;
 
           Filter.check(this.layer.get('id'));
-          //Legend.toggleItem(this.layer.get('id'), this.layer.get('slug'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
           legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
 
 
         } else if (this.layer.get('table_name') == 'gfw2_forma') {
-          //show the legend on map start for forma
-          //Legend.toggleItem(this.layer.get('id'), this.layer.get('category_name'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
           legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
         }
       }
@@ -599,6 +596,7 @@ GFW.modules.maplayer = function(gfw) {
 
       $(".time_layer").hide();
       Timeline.hide();
+      legend.removeCategory("forest_clearing");
       GFW.app.baseLayer.setOptions({ opacity: 0 });
 
     },
@@ -632,7 +630,6 @@ GFW.modules.maplayer = function(gfw) {
       sad           = GFW.app.datalayers.LayersObj.get(567);
 
       if (category != 'Forest clearing') {
-        //Legend.toggleItem(id, slug, title, category, title_color, title_subs, visible);
         legend.toggleItem(id, category_slug, category, title, category_color, title_color);
       }
 
@@ -656,7 +653,6 @@ GFW.modules.maplayer = function(gfw) {
           sad.attributes['visible']  = true;
         }
 
-        //Legend.reset(id, slug, title, category, title_color, title_subs);
         legend.replace(id, category_slug, category, title, category_color, title_color);
 
       } else {
