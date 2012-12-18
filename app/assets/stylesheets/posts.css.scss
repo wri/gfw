@@ -9,11 +9,12 @@ body.posts.show article img { display: block; }
 body.posts {
 
   &.show {
-  #content .inner {
-    text-align:center;
-    margin: 0 auto;
-    width: 927px;
-  }
+
+    #content .inner {
+      text-align:center;
+      margin: 0 auto;
+      width: 927px;
+    }
 
     section { width: 100%; }
     .navigation { display: none; }
@@ -60,8 +61,10 @@ body.posts {
     ul.meta li { font-size:15px; }
     ul.meta li.author { background:none; }
     ul.meta li a { font-size:15px; }
-    ul.meta li:last-child { background:none; }
+
   }
+
+  ul.meta li:last-child { background:none; }
 
   header {
     height: 267px!important;
