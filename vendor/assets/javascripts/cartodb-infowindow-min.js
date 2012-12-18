@@ -46,13 +46,13 @@
       var a = this.getElementsByClassName("close", div)[0];
 
       google.maps.event.addDomListener(a, 'click', function (ev) {
-        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+        //ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
         me._hide();
       });
 
       google.maps.event.addDomListener(div, 'click', function (ev) {
-        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-        ev.stopPropagation ? ev.stopPropagation() : window.event.cancelBubble = true;
+        //ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+        //ev.stopPropagation ? ev.stopPropagation() : window.event.cancelBubble = true;
       });
 
       google.maps.event.addDomListener(a, 'touchend', function (ev) {
