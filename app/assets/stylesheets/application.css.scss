@@ -843,25 +843,71 @@ article.contact {
   @include radio(radio);
 
   &.forest_clearing    { @include radio(radio_fire); }
-  &.fire             { @include radio(radio_fire); }
+  &.fire               { @include radio(radio_fire); }
 }
 
 .checkbox {
-  @include checkboxes(checkboxes);
 
-  &.disabled { color: $cGray4!important; @include checkboxes(checkboxes); }
 
-  &.concessions     { @include checkboxes(checkboxes_concessions); }
-  &.regrowth        { @include checkboxes(checkboxes_forest); }
-  &.mining          { @include checkboxes(checkboxes_mining); }
-  &.other_layers    { @include checkboxes(checkboxes_other_layers); }
-  &.regrowth        { @include checkboxes(checkboxes_regrowth); }
+  &.disabled, &.disabled.checked {
+    i {
+      span { left: 2px; }
+      background: #ddd!Important;
+    }
+  }
 
-  &.disabled.concessions,
-  &.disabled.regrowth,
-  &.disabled.mining,
-  &.disabled.other_layers,
-  &.disabled.regrowth { @include checkboxes(checkboxes); }
+  &.checked {
+
+    i span { left: 9px; }
+
+    &.special_projects  i { background: $cSpecialProjects; }
+    &.forest_cover      i { background: $cForest; }
+    &.protected_areas   i { background: $cProtectedAreas; }
+    &.concessions       i { background: $cConcessions; }
+    &.mining            i { background: $cMining; }
+    &.other_layers      i { background: $cGray2; }
+    &.regrowth          i { background: $cRegrowth; }
+
+  }
+
+  i {
+    position:relative;
+    @include inline-block();
+    width: 17px;
+    height: 10px;
+    background:#ddd;
+    margin: 0 3px 0 0;
+    @include border-radius(5px);
+
+    span {
+
+      background:#ddd;
+      position:absolute;
+      @include size(6px);
+      @include border-radius(23px);
+      left: 2px; top: 2px;
+      background:#fff;
+      @extend .position-transition;
+    }
+  }
+
+  @include inline-block();
+
+  /*@include checkboxes(checkboxes);*/
+
+  /*&.disabled { color: $cGray4!important; @include checkboxes(checkboxes); }*/
+
+  /*&.concessions     { @include checkboxes(checkboxes_concessions); }*/
+  /*&.regrowth        { @include checkboxes(checkboxes_forest); }*/
+  /*&.mining          { @include checkboxes(checkboxes_mining); }*/
+  /*&.other_layers    { @include checkboxes(checkboxes_other_layers); }*/
+  /*&.regrowth        { @include checkboxes(checkboxes_regrowth); }*/
+
+  /*&.disabled.concessions,*/
+  /*&.disabled.regrowth,*/
+  /*&.disabled.mining,*/
+  /*&.disabled.other_layers,*/
+  /*&.disabled.regrowth { @include checkboxes(checkboxes); }*/
 }
 
 footer {

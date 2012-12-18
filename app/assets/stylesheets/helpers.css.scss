@@ -39,6 +39,9 @@ $cMiningHover:           $cGray3;
 $cForest:                #707D92;
 $cForestHover:           #707D92;
 
+$cSpecialProjects:       #594694;
+$cSpecialProjectsHover:  #594694;
+
 $cRegrowth:              #B2D26E; // green
 $cRegrowthHover:         #9EBB62; // dark green
 
@@ -137,6 +140,12 @@ strong { font-weight: bold; } // This is sad, I know.
 
 .opacity-transition {
   @include transition-property(opacity);
+  @include transition-duration(250ms);
+  @include transition-timing-function(ease-in);
+}
+
+.position-transition {
+  @include transition-property(position);
   @include transition-duration(250ms);
   @include transition-timing-function(ease-in);
 }
@@ -261,16 +270,17 @@ strong { font-weight: bold; } // This is sad, I know.
 
   color: $cGray4;
 
-  &.concessions     { color: $cConcessions; }
-  &.regrowth        { color: $cRegrowth; }
-  &.mining          { color: $cMining; }
-  &.other_layers    { color: $cOtherLayers;  }
-  &.protected_areas { color: $cProtectedAreas; }
-  &.forest_clearing { color: $cDeforestation; }
-  &.forest_cover    { color: $cForest; }
-  &.fire            { color: $cFire; }
-  &.carbon          { color: $cGray4;}
-  &.biodiversity    { color: $cGray4; }
+  &.special_projects { color: $cSpecialProjects; }
+  &.concessions      { color: $cConcessions; }
+  &.regrowth         { color: $cRegrowth; }
+  &.mining           { color: $cMining; }
+  &.other_layers     { color: $cOtherLayers;  }
+  &.protected_areas  { color: $cProtectedAreas; }
+  &.forest_clearing  { color: $cDeforestation; }
+  &.forest_cover     { color: $cForest; }
+  &.fire             { color: $cFire; }
+  &.carbon           { color: $cGray4;}
+  &.biodiversity     { color: $cGray4; }
 }
 // Different filter elements
 .filter-links {
@@ -281,6 +291,14 @@ strong { font-weight: bold; } // This is sad, I know.
   a.title       { color: $cGray4; }
   a.title:hover { color: $cGray4; }
   a:hover       { color: $cGray3; }
+
+  &.special_projects {
+    & > a         { color: $cSpecialProjects; }
+    a.checked     { color: $cSpecialProjects; }
+    a.title       { color: $cSpecialProjects; }
+    a.title:hover { color: $cSpecialProjects; }
+    a:hover       { color: $cSpecialProjectsHover; }
+  }
 
   &.concessions {
     & > a         { color: $cConcessions; }
@@ -360,6 +378,7 @@ strong { font-weight: bold; } // This is sad, I know.
 
   .line { background-color: $cOtherLayers; }
 
+  &.special_projects .line { background-color: $cSpecialProjects; }
   &.concessions      .line { background-color: $cConcessions; }
   &.protected_areas  .line { background-color: $cProtectedAreas; }
   &.intact-forest    .line { background-color: $cForest; }
