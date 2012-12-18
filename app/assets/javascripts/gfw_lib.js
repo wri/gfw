@@ -226,7 +226,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _removeExternalLayer: function(layer) {
-      if (this.specialLayer) this.specialLayer.setMap(null);
+      if (this.specialLayer) this.specialLayer.setOpacity(0);
     },
 
     _renderExternalLayer: function(layer) {
@@ -234,7 +234,9 @@ GFW.modules.app = function(gfw) {
 
         var query = layer.get('tileurl');
 
-        if (this.specialLayer) this.specialLayer.setMap(null);
+        if (this.specialLayer) {
+          this.specialLayer.setOpacity(1);
+        } else {
 
         this.specialLayer = new google.maps.ImageMapType({
           getTileUrl: function(tile, zoom) {
@@ -246,9 +248,10 @@ GFW.modules.app = function(gfw) {
         });
 
         map.overlayMapTypes.setAt("0", this.specialLayer);
-
+        }
 
     },
+
     _renderLayers: function() {
       var that = this;
 
