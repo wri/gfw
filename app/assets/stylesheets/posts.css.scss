@@ -31,7 +31,9 @@ body.posts {
 
     }
 
-    article .columns p {
+    /*article .columns p,
+    article .columns ul,
+    {
       -moz-column-count: 2;
       -moz-column-gap: 20px;
       -o-column-count: 2;
@@ -41,7 +43,7 @@ body.posts {
       column-count: 2;
       column-gap: 20px;
     }
-
+*/
     ul.meta { text-align: center; }
     ul.meta li { font-size:15px; }
     ul.meta li a { font-size:15px; }
