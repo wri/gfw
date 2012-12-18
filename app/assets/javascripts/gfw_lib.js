@@ -236,20 +236,16 @@ GFW.modules.app = function(gfw) {
 
         if (this.specialLayer) this.specialLayer.setMap(null);
 
-        this.specialLayer = new CartoDBLayer({
-          map: map,
-          user_name:'',
-          tiler_domain:'184.73.201.235',
-          sql_domain:'184.73.201.235',
-          tiler_path:'/',
-          tiler_suffix:'',
-          tiler_grid:'',
-          table_name: layer.get("table_name"),
-          query: query,
-          layer_order: "bottom",
-          opacity: 1,
-          auto_bound: false
+        this.specialLayer = new google.maps.ImageMapType({
+          getTileUrl: function(tile, zoom) {
+            return "http://184.73.201.235/blue/" + zoom + "/" + tile.x + "/" + tile.y;
+          },
+          tileSize: new google.maps.Size(256, 256),
+          opacity:0.60,
+          isPng: true
         });
+
+        map.overlayMapTypes.setAt("0", this.specialLayer);
 
 
     },
@@ -268,10 +264,8 @@ GFW.modules.app = function(gfw) {
 
         if (this.mainLayer) this.mainLayer.setMap(null);
 
-        //var layer = (this._layers.length > 1) ? "gfw2_layerstyles_v2" : this._layers[0];
-        //console.log(layer);
-
         var layer = "gfw2_layerstyles_v4";
+
         this.mainLayer = new CartoDBLayer({
           map: map,
           user_name:'',
