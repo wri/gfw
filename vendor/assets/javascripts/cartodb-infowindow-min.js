@@ -176,6 +176,7 @@
   CartoDBInfowindow.prototype._hide = function() {
     if (this.div_) {
       var div = this.div_;
+      console.log('hiding');
       emile(div,{
         top: '+=' + 10 + 'px',
         opacity: 0,

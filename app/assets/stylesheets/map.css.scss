@@ -712,11 +712,14 @@ $timelineWidth: 940px;
 
     strong a {
       display:block;
+      margin: 0 0 5px 0;
+      width: 140px;
+
       color: #F3F2F0;
       font-family: Georgia, serif;
       font-size: 17px;
       font-weight:normal;
-      margin: 0 0 5px 0;
+      line-height:normal;
 
       text-decoration :none;
 

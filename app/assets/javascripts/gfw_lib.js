@@ -262,6 +262,7 @@ GFW.modules.app = function(gfw) {
         var queryArray = _.map(this._layers, function(layer) {
           return _.template(template, { table_name: layer });
         });
+
         queryArray.push("(SELECT cartodb_id||':' ||'caf_lc_1' as cartodb_id, the_geom_webmercator, 'caf_lc_1' AS name FROM caf_lc_1 LIMIT 0)") //a hack for the stupid layer show hide discoloration thing I found
         var query = queryArray.join(" UNION ALL ");
 
@@ -380,7 +381,13 @@ GFW.modules.app = function(gfw) {
             icon     = '/assets/icons/exclamation.png',
             properties = null;
 
-            marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: story.thumbnail_url, content: "<strong><a href='/stories/"+ story.id +"'>" + story.title + "</a></strong> Submitted by " + story.name });
+            var title = story.title;
+
+            //if (title.length > 20) {
+              //title = $.trim(title).substring(0, 20).split(" ").slice(0, -1).join(" ") + "...";
+            //}
+
+            marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: story.thumbnail_url, content: "<strong><a href='/stories/"+ story.id +"'>" + title + "</a></strong> Submitted by " + story.name });
             marker.setMap(map);
 
           });
