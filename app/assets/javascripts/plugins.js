@@ -453,7 +453,7 @@ var Navigation = (function() {
 
     GFW.app.close(function() {
       Circle.show(250);
-      $("footer, .actions").fadeIn(250);
+      //$("footer, .actions").fadeIn(250);
     });
   }
 
@@ -499,7 +499,7 @@ var Navigation = (function() {
     $(".big_numbers").fadeOut(250);
 
 
-    $("footer, .actions").fadeOut(250);
+    //$("footer, .actions").fadeOut(250);
     $("header").animate({height: "150px"}, 250, function() {
       GFW.app.open();
     });

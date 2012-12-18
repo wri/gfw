@@ -91,12 +91,12 @@ GFW.modules.app = function(gfw) {
       var
       dh = $(window).height(),
       hh = $("header").height(),
-      paddingBottom = 20;
+      paddingBottom = 120;
 
       $("#map").animate({ height: dh - hh - paddingBottom }, 250, function() {
         google.maps.event.trigger(that._map, "resize");
-        that._map.setOptions({ scrollwheel: true });
-        $("body").css({overflow:"hidden"});
+        that._map.setOptions({ scrollwheel: false });
+        //$("body").css({overflow:"hidden"});
       });
     },
 
@@ -108,7 +108,7 @@ GFW.modules.app = function(gfw) {
         google.maps.event.trigger(that._map, "resize");
         that._map.setOptions({ scrollwheel: false });
 
-        $("body").css({ overflow:"auto" });
+        //$("body").css({ overflow:"auto" });
 
         if (callback) {
           callback();
