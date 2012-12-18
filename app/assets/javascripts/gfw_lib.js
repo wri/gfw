@@ -356,17 +356,13 @@ GFW.modules.app = function(gfw) {
 
     _updateBaseLayer: function() {
 
-      // TODO: This was causing lots of trouble; hide the layers with a different method
-
-      if (this.currentBaseLayer != "semi_monthly"){
-        //map.overlayMapTypes.setAt(0, null);
+      if (this.currentBaseLayer != "semi_monthly") {
         $(".time_layer").hide();
       } else {
         $(".time_layer").show();
-        //map.overlayMapTypes.setAt(0, this.time_layer);
       }
 
-      GFW.app.baseLayer.setOptions({ table_name: this._getTableName(this.currentBaseLayer), query: GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom())  });
+      GFW.app.baseLayer.setOptions({ opacity: 1, table_name: this._getTableName(this.currentBaseLayer), query: GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom())  });
     },
 
     _loadStoriesLayer: function() {
@@ -557,22 +553,32 @@ GFW.modules.maplayer = function(gfw) {
         }
       };
 
-      Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, zoomEvent: zoomEvent, source: this.layer.get('source') });
+      if (this.layer.get('slug') == "nothing") {
+        var event = function() {
+          that._hideBaseLayers(GFW.app);
+        };
 
-      // Adds the layers from the hash
-      if (filters && _.include(filters, this.layer.get('id'))) {
-        GFW.app._addLayer(this.layer);
-        this.layer.attributes["visible"] = true;
+        Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, zoomEvent: function() { } , source: null });
 
-        Filter.check(this.layer.get('id'));
-        //Legend.toggleItem(this.layer.get('id'), this.layer.get('slug'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
-        legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
+      } else {
+
+        Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, zoomEvent: zoomEvent, source: this.layer.get('source') });
+
+        // Adds the layers from the hash
+        if (filters && _.include(filters, this.layer.get('id'))) {
+          GFW.app._addLayer(this.layer);
+          this.layer.attributes["visible"] = true;
+
+          Filter.check(this.layer.get('id'));
+          //Legend.toggleItem(this.layer.get('id'), this.layer.get('slug'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
+          legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
 
 
-      } else if (this.layer.get('table_name') == 'gfw2_forma') {
-        //show the legend on map start for forma
-        //Legend.toggleItem(this.layer.get('id'), this.layer.get('category_name'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
-        legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
+        } else if (this.layer.get('table_name') == 'gfw2_forma') {
+          //show the legend on map start for forma
+          //Legend.toggleItem(this.layer.get('id'), this.layer.get('category_name'), this.layer.get('title'), this.layer.get('category_name'), this.layer.get('title_color'), this.layer.get('title_subs'), true);
+          legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
+        }
       }
 
 
@@ -587,6 +593,14 @@ GFW.modules.maplayer = function(gfw) {
         gfw.log.info('LAYER OFF');
         this._map.overlayMapTypes.setAt(this._tileindex, null);
       }
+    },
+
+    _hideBaseLayers: function(that){
+
+      $(".time_layer").hide();
+      Timeline.hide();
+      GFW.app.baseLayer.setOptions({ opacity: 0 });
+
     },
 
     _toggleLayer: function(that){

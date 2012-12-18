@@ -742,6 +742,11 @@ var Filter = (function() {
     $layer.animate({ opacity: 1 }, 150);
   }
 
+
+  function _nothing() {
+
+  }
+
   function _init() {
 
     // Bindings
