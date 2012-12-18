@@ -19,6 +19,10 @@ CanvasTileLayer.prototype.create_tile_canvas = function(coord, zoom, ownerDocume
     // create canvas and reset style
     var canvas      = ownerDocument.createElement('canvas');
     var hit_canvas  = ownerDocument.createElement('canvas');
+
+    canvas.className     = "time_layer";
+    hit_canvas.className = "time_layer";
+
     canvas.style.border  = hit_canvas.style.border = "none";
     canvas.style.margin  = hit_canvas.style.margin = "0";
     canvas.style.padding = hit_canvas.style.padding = "0";
@@ -34,7 +38,7 @@ CanvasTileLayer.prototype.create_tile_canvas = function(coord, zoom, ownerDocume
 
     //set unique id
     var tile_id = coord.x + '_' + coord.y + '_' + zoom;
-    
+
     canvas.setAttribute('id', tile_id);
     hit_canvas.setAttribute('id', tile_id);
 
@@ -46,7 +50,7 @@ CanvasTileLayer.prototype.create_tile_canvas = function(coord, zoom, ownerDocume
     // custom setup
     if (this.canvas_setup)
         this.canvas_setup(this.tiles[tile_id], coord, zoom);
-    
+
     return canvas;
 }
 

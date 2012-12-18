@@ -2,6 +2,10 @@
 @import "compass/reset";
 @import "helpers";
 
+
+body.posts      article img { display: none; }
+body.posts.show article img { display: block; }
+
 body.posts {
 
   &.show {
@@ -31,9 +35,7 @@ body.posts {
 
     }
 
-    /*article .columns p,
-    article .columns ul,
-    {
+    article .columns  {
       -moz-column-count: 2;
       -moz-column-gap: 20px;
       -o-column-count: 2;
@@ -43,7 +45,15 @@ body.posts {
       column-count: 2;
       column-gap: 20px;
     }
-*/
+
+    article .columns li {
+      margin: 0 0 10px 0;
+      font-size:    16px;
+      line-height:  20px;
+      color: #666;
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
     ul.meta { text-align: center; }
     ul.meta li { font-size:15px; }
     ul.meta li a { font-size:15px; }
