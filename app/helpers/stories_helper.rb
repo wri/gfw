@@ -1,5 +1,19 @@
 module StoriesHelper
 
+  def previous_page_link(page)
+    page -= 1
+    stories_path(:page => page)
+  end
+
+  def next_page_link(page)
+    page += 1
+    stories_path(:page => page)
+  end
+
+  def last_page?
+    @page == @total_pages
+  end
+
   def render_media(media)
     if media.video?
       raw media.embed_html
@@ -22,10 +36,6 @@ module StoriesHelper
         form.submit('Submit story')
       end
     end
-  end
-
-  def last_page?
-    false
   end
 
   def access_through_token?(story)
