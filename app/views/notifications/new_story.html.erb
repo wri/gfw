@@ -120,7 +120,7 @@
               </div>
 
               <div class="picture">
-                <%= image_tag @story.main_thumbnail.try(:big_url) %>
+                <%= image_tag @story.main_thumbnail.try(:big_url) if @story.main_thumbnail.present? %>
               </div>
 
               <p style="width: 900px; font-size: 15px; color: #999999"> <%= @story.details %> </p>
