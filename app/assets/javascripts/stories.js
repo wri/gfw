@@ -290,8 +290,11 @@ $(function() {
     setupZoom();
 
     var polyOptions = {
-      strokeWeight: 0,
+      strokeWeight: 2,
+      fillOpacity: 0.25,
       fillOpacity: 0.45,
+      fillColor: "#75ADB5",
+      strokeColor: "#75ADB5",
       icon: new google.maps.MarkerImage(
         '/assets/icons/marker_exclamation.png',
         new google.maps.Size(45, 45), // desired size
@@ -371,9 +374,6 @@ $(function() {
     if (the_geom) {
       showFeature(JSON.parse(the_geom), polyOptions);
     }
-
-
-
 
     // Clear the current selection when the drawing mode is changed, or when the
     // map is clicked.
