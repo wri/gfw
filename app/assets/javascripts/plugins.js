@@ -312,10 +312,17 @@ var SubscriptionMap = (function() {
 
       var $map = $("#subscribe_map");
 
-      //$modal.center();
-
       $modal.css({ opacity: '0', display: 'block' });
       $modal.stop().animate({opacity: '1'}, 250, function(){
+
+      State = History.getState(),
+      hash  = parseHash(State.hash),
+      zoom = self._map.getZoom(),
+      lat  = self._map.getCenter().lat().toFixed(GFW.app._precision),
+      lng  = self._map.getCenter().lng().toFixed(GFW.app._precision);
+      console.log(lat, lng);
+
+
 
         var mapOptions = {
           zoom:               1,
@@ -430,7 +437,6 @@ var Navigation = (function() {
 
     _hideOverlays();
 
-    //Legend.hide();
     legend.hide();
     layerSelector.hide();
 
@@ -482,11 +488,9 @@ var Navigation = (function() {
 
     _hideOverlays();
 
-
     Navigation.select("map");
 
     Circle.hide();
-    //Legend.show();
 
     layerSelector.show();
     legend.show();
@@ -498,8 +502,6 @@ var Navigation = (function() {
 
     $(".big_numbers").fadeOut(250);
 
-
-    //$("footer, .actions").fadeOut(250);
     $("header").animate({height: "150px"}, 250, function() {
       GFW.app.open();
     });

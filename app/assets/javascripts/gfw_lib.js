@@ -162,8 +162,6 @@ GFW.modules.app = function(gfw) {
     _setupListeners: function(){
       var that = this;
 
-      //Legend.init();
-
       // Setup listeners
       google.maps.event.addListener(this._map, 'zoom_changed', function() {
         that._updateHash(that);

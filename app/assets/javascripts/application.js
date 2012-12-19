@@ -139,8 +139,6 @@ function loadGFW() {
 // Map init method
 function initialize() {
 
-  loadGFW();
-
   var
   State = History.getState(),
   hash  = parseHash(State.hash);
@@ -149,6 +147,8 @@ function initialize() {
     config.mapOptions.center = hash.center;
     config.mapOptions.zoom   = hash.zoom;
   }
+
+  loadGFW();
 
 }
 
@@ -177,6 +177,10 @@ function initialize() {
 
       previousState = State.title;
     }
+
+    //hash  = parseHash(State.hash);
+    //console.log("back", State.data.state, hash.center);
+
   });
 
   $("nav .home.ajax").on("click", function(e) {
