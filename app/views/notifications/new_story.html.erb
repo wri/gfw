@@ -119,9 +119,11 @@
                 </p>
               </div>
 
-              <div class="picture">
-                <%= image_tag @story.main_thumbnail.try(:big_url) %>
-              </div>
+              <% if @story.media.present? %>
+                <div class="picture">
+                  <%= image_tag @story.main_thumbnail.try(:big_url) %>
+                </div>
+              <% end %>
 
               <p style="width: 900px; font-size: 15px; color: #999999"> <%= @story.details %> </p>
 
