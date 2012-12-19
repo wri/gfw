@@ -215,7 +215,7 @@ $(function() {
     var $the_geom = $('#story_the_geom');
 
     var map = new google.maps.Map(document.getElementById("stories_map"), {
-      zoom: 3,
+      zoom: 4,
       center: new google.maps.LatLng(-34.397, 150.644),
       mapTypeId: google.maps.MapTypeId.TERRAIN,
       disableDefaultUI:   true,
