@@ -66,8 +66,12 @@ $(function() {
     }
 
     var bounds = new google.maps.LatLngBounds();
-    bounds.extend(loadedFeature);
+    bounds.extend(loadedFeature.position);
     map.fitBounds(bounds);
+
+    setTimeout(function() {
+      map.setZoom(2);
+    }, 250);
 
   }
 
@@ -261,6 +265,8 @@ $(function() {
       streetViewControl:  false,
       overviewMapControl: false
     });
+
+    window._map = map;
 
     setupZoom();
 
