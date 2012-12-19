@@ -201,7 +201,7 @@ $(function() {
 
         _.each(data.files, function(file) {
           var $thumbnail = $("<li class='thumbnail preview' data-name='"+file.name+"' />");
-          $(".thumbnails").append($thumbnail);
+          $(".thumbnails").prepend($thumbnail);
           $thumbnail.fadeIn(250);
 
           var opts = {
@@ -247,7 +247,7 @@ $(function() {
 
           var filename = getFilename(file.image_url);
 
-          $(".thumbnails").append($thumb);
+          $(".thumbnails").prepend($thumb);
 
           $(".thumbnail[data-name='"+filename+"']").fadeOut(250, function() {
             $(this).remove();

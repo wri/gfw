@@ -331,6 +331,10 @@ body.stories {
     margin: 5px 0;
   }
 
+  li {
+    @include inline-block();
+  }
+
   .upload_picture {
     float:left;
 
