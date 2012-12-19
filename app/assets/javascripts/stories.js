@@ -60,16 +60,18 @@ $(function() {
     var bounds = new google.maps.LatLngBounds();
 
     if (feature.length > 0) {
+
       feature[0].setMap(map);
-      loadedFeature = feature[0];
+
+      loadedFeature        = feature[0];
       window.loadedFeature = loadedFeature;
 
       _.each(loadedFeature.latLngs, function(latlng) {
 
-        var p = loadedFeature.latLngs.getAt(0);
+        var latlngs = loadedFeature.latLngs.getAt(0);
 
-        p.forEach(function(i) {
-          var point = new google.maps.LatLng(i.lat(), i.lng());
+        latlngs.forEach(function(position) {
+          var point = new google.maps.LatLng(position.lat(), position.lng());
           bounds.extend(point);
         });
 
@@ -82,7 +84,6 @@ $(function() {
     }
 
     map.fitBounds(bounds);
-
 
     setTimeout(function() {
       map.setZoom(2);
@@ -281,7 +282,10 @@ $(function() {
       overviewMapControl: false
     });
 
-    window._map = map;
+    var styledMap = new google.maps.StyledMapType(config.BASE_MAP_STYLE, { name: "Terrain" });
+
+    map.mapTypes.set("Terrain", styledMap);
+    map.setMapTypeId("Terrain");
 
     setupZoom();
 
