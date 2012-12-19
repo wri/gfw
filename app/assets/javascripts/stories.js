@@ -3,6 +3,50 @@ $(function() {
   drawingManager = {},
   loadedFeature  = null;
 
+
+
+    function setupZoom() {
+      var overlayID =  document.getElementById("zoom_controls");
+      // zoomIn
+      var zoomInControlDiv = document.createElement('DIV');
+      overlayID.appendChild(zoomInControlDiv);
+
+      var zoomInControl = new zoomIn(zoomInControlDiv, map);
+      zoomInControlDiv.index = 1;
+
+      // zoomOut
+      var zoomOutControlDiv = document.createElement('DIV');
+      overlayID.appendChild(zoomOutControlDiv);
+
+      var zoomOutControl = zoomOut(zoomOutControlDiv, map);
+      zoomOutControlDiv.index = 2;
+    }
+
+    function zoomIn(controlDiv, map) {
+      controlDiv.setAttribute('class', 'zoom_in');
+
+      google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
+        var zoom = map.getZoom() + 1;
+        if (zoom < 20) {
+          map.setZoom(zoom);
+        }
+      });
+    }
+
+    function zoomOut(controlDiv, map) {
+      controlDiv.setAttribute('class', 'zoom_out');
+
+      google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
+        var zoom = map.getZoom() - 1;
+
+        if (zoom > 2) {
+          map.setZoom(zoom);
+        }
+
+      });
+    }
+
+
     function showFeature(geojson, style){
 
       feature = new GeoJSON(geojson, style || null);
@@ -174,8 +218,16 @@ $(function() {
       zoom: 3,
       center: new google.maps.LatLng(-34.397, 150.644),
       mapTypeId: google.maps.MapTypeId.TERRAIN,
-      disableDefaultUI: true
+      disableDefaultUI:   true,
+      panControl:         false,
+      zoomControl:        false,
+      mapTypeControl:     false,
+      scaleControl:       false,
+      streetViewControl:  false,
+      overviewMapControl: false
     });
+
+    setupZoom();
 
     var polyOptions = {
       strokeWeight: 0,
