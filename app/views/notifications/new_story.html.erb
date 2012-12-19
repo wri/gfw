@@ -119,7 +119,7 @@
                 </p>
               </div>
 
-              <% if @story.media.present? %>
+              <% if @story.main_thumbnail.present? %>
                 <div class="picture">
                   <%= image_tag @story.main_thumbnail.try(:big_url) %>
                 </div>
