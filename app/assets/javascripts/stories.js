@@ -179,14 +179,28 @@ $(function() {
 
     var polyOptions = {
       strokeWeight: 0,
-      fillOpacity: 0.45
-      //editable: true
+      fillOpacity: 0.45,
+      icon: new google.maps.MarkerImage(
+        '/assets/icons/marker_exclamation.png',
+        new google.maps.Size(45, 45), // desired size
+        new google.maps.Point(0, 0), // offset within the scaled sprite
+        new google.maps.Point(20, 20) // anchor point is half of the desired size
+      )
     };
 
 
     // Creates a drawing manager attached to the map that allows the user to draw markers, lines, and shapes.
     drawingManager = new google.maps.drawing.DrawingManager({
       drawingModes: [google.maps.drawing.OverlayType.POLYGON, google.maps.drawing.OverlayType.MARKER],
+      markerOptions: {
+        draggable: true,
+        icon: new google.maps.MarkerImage(
+          '/assets/icons/marker_exclamation.png',
+          new google.maps.Size(45, 45), // desired size
+          new google.maps.Point(0, 0), // offset within the scaled sprite
+          new google.maps.Point(20, 20) // anchor point is half of the desired size
+        )
+      },
       drawingControlOptions: {
         position: google.maps.ControlPosition.RIGHT_TOP,
         drawingModes: [google.maps.drawing.OverlayType.POLYGON, google.maps.drawing.OverlayType.MARKER]
@@ -211,7 +225,6 @@ $(function() {
         var newShape = e.overlay;
         newShape.type = e.type;
         setSelection(newShape);
-        console.log(newShape, e);
 
         $the_geom.val(JSON.stringify({
           "type": "MultiPolygon",
