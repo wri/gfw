@@ -3,136 +3,137 @@ $(function() {
   drawingManager = {},
   loadedFeature  = null;
 
+  function setupZoom() {
+    var overlayID =  document.getElementById("zoom_controls");
+    // zoomIn
+    var zoomInControlDiv = document.createElement('DIV');
+    overlayID.appendChild(zoomInControlDiv);
 
+    var zoomInControl = new zoomIn(zoomInControlDiv, map);
+    zoomInControlDiv.index = 1;
 
-    function setupZoom() {
-      var overlayID =  document.getElementById("zoom_controls");
-      // zoomIn
-      var zoomInControlDiv = document.createElement('DIV');
-      overlayID.appendChild(zoomInControlDiv);
+    // zoomOut
+    var zoomOutControlDiv = document.createElement('DIV');
+    overlayID.appendChild(zoomOutControlDiv);
 
-      var zoomInControl = new zoomIn(zoomInControlDiv, map);
-      zoomInControlDiv.index = 1;
+    var zoomOutControl = zoomOut(zoomOutControlDiv, map);
+    zoomOutControlDiv.index = 2;
+  }
 
-      // zoomOut
-      var zoomOutControlDiv = document.createElement('DIV');
-      overlayID.appendChild(zoomOutControlDiv);
+  function zoomIn(controlDiv, map) {
+    controlDiv.setAttribute('class', 'zoom_in');
 
-      var zoomOutControl = zoomOut(zoomOutControlDiv, map);
-      zoomOutControlDiv.index = 2;
-    }
+    google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
+      var zoom = map.getZoom() + 1;
+      if (zoom < 20) {
+        map.setZoom(zoom);
+      }
+    });
+  }
 
-    function zoomIn(controlDiv, map) {
-      controlDiv.setAttribute('class', 'zoom_in');
+  function zoomOut(controlDiv, map) {
+    controlDiv.setAttribute('class', 'zoom_out');
 
-      google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
-        var zoom = map.getZoom() + 1;
-        if (zoom < 20) {
-          map.setZoom(zoom);
-        }
-      });
-    }
+    google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
+      var zoom = map.getZoom() - 1;
 
-    function zoomOut(controlDiv, map) {
-      controlDiv.setAttribute('class', 'zoom_out');
-
-      google.maps.event.addDomListener(controlDiv, 'mousedown', function() {
-        var zoom = map.getZoom() - 1;
-
-        if (zoom > 2) {
-          map.setZoom(zoom);
-        }
-
-      });
-    }
-
-
-    function showFeature(geojson, style){
-
-      feature = new GeoJSON(geojson, style || null);
-
-      if (feature.type && feature.type == "Error"){
-        console.log(feature.message);
-        return;
+      if (zoom > 2) {
+        map.setZoom(zoom);
       }
 
-      drawingManager.setOptions({ drawingControl: false });
-      drawingManager.setDrawingMode(null);
-      $(".remove").fadeIn(250);
+    });
+  }
 
-      if (feature.length > 0) {
-        feature[0].setMap(map);
-        loadedFeature = feature[0];
-      } else {
-        feature.setMap(map);
-        loadedFeature = feature;
-      }
 
+  function showFeature(geojson, style){
+
+    feature = new GeoJSON(geojson, style || null);
+
+    if (feature.type && feature.type == "Error"){
+      return;
     }
 
-    function clearSelection() {
+    drawingManager.setOptions({ drawingControl: false });
+    drawingManager.setDrawingMode(null);
+    $(".remove").fadeIn(250);
 
-      if (selectedShape) {
-        //selectedShape.setEditable(false);
-
-        selectedShape       = null;
-        drawingManager.path = null;
-      }
-
+    if (feature.length > 0) {
+      feature[0].setMap(map);
+      loadedFeature = feature[0];
+    } else {
+      feature.setMap(map);
+      loadedFeature = feature;
     }
 
-    function remove() {
+    var bounds = new google.maps.LatLngBounds();
+    bounds.extend(loadedFeature);
+    map.fitBounds(bounds);
 
-      deleteSelectedShape();
-      deleteSelectedMarker();
+  }
 
-      drawingManager.setOptions({ drawingControl: true });
+  function clearSelection() {
+
+    if (selectedShape) {
+      //selectedShape.setEditable(false);
+
+      selectedShape       = null;
       drawingManager.path = null;
-      $the_geom.val("");
+    }
 
-      if (loadedFeature) {
-        loadedFeature.setMap(null);
+  }
+
+  function remove() {
+
+    deleteSelectedShape();
+    deleteSelectedMarker();
+
+    drawingManager.setOptions({ drawingControl: true });
+    drawingManager.path = null;
+    $the_geom.val("");
+
+    if (loadedFeature) {
+      loadedFeature.setMap(null);
+    }
+
+    $(".remove").fadeOut(250);
+  }
+
+  function setSelection(shape) {
+    clearSelection();
+    selectedShape = shape;
+    //shape.setEditable(true);
+    selectColor(shape.get('fillColor') || shape.get('strokeColor'));
+  }
+
+  function deleteSelectedMarker() {
+    if (selectedMarker) {
+      selectedMarker.setMap(null);
+    }
+  }
+
+  function deleteSelectedShape() {
+    if (selectedShape) {
+      selectedShape.setMap(null);
+    }
+  }
+
+  function selectColor(color) {
+    selectedColor = color;
+
+    var polygonOptions = drawingManager.get('polygonOptions');
+    polygonOptions.fillColor = color;
+    drawingManager.set('polygonOptions', polygonOptions);
+  }
+
+  function setSelectedShapeColor(color) {
+    if (selectedShape) {
+      if (selectedShape.type == google.maps.drawing.OverlayType.POLYLINE) {
+        selectedShape.set('strokeColor', color);
+      } else {
+        selectedShape.set('fillColor', color);
       }
-
-      $(".remove").fadeOut(250);
     }
-
-    function setSelection(shape) {
-      clearSelection();
-      selectedShape = shape;
-      //shape.setEditable(true);
-      selectColor(shape.get('fillColor') || shape.get('strokeColor'));
-    }
-
-    function deleteSelectedMarker() {
-      if (selectedMarker) {
-        selectedMarker.setMap(null);
-      }
-    }
-
-    function deleteSelectedShape() {
-      if (selectedShape) {
-        selectedShape.setMap(null);
-      }
-    }
-
-    function selectColor(color) {
-      selectedColor = color;
-
-      var polygonOptions = drawingManager.get('polygonOptions');
-      polygonOptions.fillColor = color;
-      drawingManager.set('polygonOptions', polygonOptions);
-    }
-
-    function setSelectedShapeColor(color) {
-      if (selectedShape) {
-        if (selectedShape.type == google.maps.drawing.OverlayType.POLYLINE) {
-          selectedShape.set('strokeColor', color);
-        } else {
-          selectedShape.set('fillColor', color);
-        }
-      }
-    }
+  }
 
   var uploadsIds = [], drawingManager, selectedShape, selectedMarker, selectedColor, filesAdded = 0;
 
