@@ -42,7 +42,7 @@ class Story < CartoDB::Model::Base
   end
 
   def uploads_ids
-    (media.map{|m| m.cartodb_id}.presence || @uploads_ids.split(',')).join(',')
+    (media.map{|m| m.cartodb_id}.presence || (@uploads_ids.presence || '').split(',')).join(',')
   end
 
   def the_geom
