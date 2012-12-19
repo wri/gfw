@@ -1,3 +1,7 @@
+function getFilename(url) {
+  return url.replace(/^.*[\\\/]/, '')
+}
+
 _.templateSettings = {
   interpolate: /\{\{(.+?)\}\}/g,
   evaluate: /\[(.+?)\]/g

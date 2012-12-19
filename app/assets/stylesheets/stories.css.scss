@@ -356,12 +356,22 @@ body.stories {
       overflow: hidden;
       clear:both;
       border: 2px solid $cWhite;
-
+      background:#fff;
       cursor: move;
+
+      &:hover { border: 2px solid #9EB741; }
+
+      &.preview {
+        cursor: default;
+        border: 1px solid #9EB741;
+
+        &:hover { border: 1px solid #9EB741; }
+
+      }
 
       img { width:100%; }
 
-      &:hover { border: 2px solid #9EB741; }
+      .spinner { @include position(37px, false, false, 65px); }
 
     }
 

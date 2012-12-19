@@ -138,7 +138,8 @@ $(function() {
 
 
   $('.thumbnails').sortable({
-    items: 'li',
+    tolerance: "pointer",
+    items: 'li.sortable',
     opacity: 0.4,
     scroll: true,
     update: function(){
@@ -164,12 +165,12 @@ $(function() {
 
       progress: function (e, data) {
         var progress = parseInt(data.loaded / data.total * 100, 10);
-        console.log("p", progress + '%');
+        //console.log("p", progress + '%');
       },
 
       progressall: function (e, data) {
         var progress = parseInt(data.loaded / data.total * 100, 10);
-        console.log(progress + '%');
+        //console.log(progress + '%');
       },
 
       add: function (e, data) {
@@ -177,8 +178,36 @@ $(function() {
 
         filesAdded += _.size(data.files);
 
-        //$("form input[type='submit']").addClass("disabled");
-        //$("form input[type='submit']").attr("disabled", "disabled");
+        _.each(data.files, function(file) {
+          var $thumbnail = $("<li class='thumbnail preview' data-name='"+file.name+"' />");
+          $(".thumbnails").append($thumbnail);
+          $thumbnail.fadeIn(250);
+
+          var opts = {
+            lines: 11, // The number of lines to draw
+            length: 0, // The length of each line
+            width: 4, // The line thickness
+            radius: 9, // The radius of the inner circle
+            corners: 1, // Corner roundness (0..1)
+            rotate: 0, // The rotation offset
+            color: '#9EB741', // #rgb or #rrggbb
+            speed: 1, // Rounds per second
+            trail: 60, // Afterglow percentage
+            shadow: false, // Whether to render a shadow
+            hwaccel: false, // Whether to use hardware acceleration
+            className: 'spinner', // The CSS class to assign to the spinner
+            zIndex: 2e9, // The z-index (defaults to 2000000000)
+            top: 'auto', // Top position relative to parent in px
+            left: 'auto' // Left position relative to parent in px
+          };
+          var spinner = new Spinner(opts).spin();
+          $thumbnail.append($(spinner.el));
+
+
+        });
+
+        $("form input[type='submit']").addClass("disabled");
+        $("form input[type='submit']").attr("disabled", "disabled");
         $("form input[type='submit']").val("Please wait...");
 
         data.submit();
@@ -193,19 +222,24 @@ $(function() {
           uploadsIds.push(file.cartodb_id);
 
           var url = file.thumbnail_url.replace("https", "http");
-          var $thumb = $("<li id='photo_" + file.cartodb_id + "' class='thumbnail'><img src='"+url+"' /></li>");
+          var $thumb = $("<li id='photo_" + file.cartodb_id + "' class='sortable thumbnail'><img src='"+url+"' /></li>");
+
+          var filename = getFilename(file.image_url);
 
           $(".thumbnails").append($thumb);
 
-          $thumb.fadeIn(250);
+          $(".thumbnail[data-name='"+filename+"']").fadeOut(250, function() {
+            $(this).remove();
+            $thumb.fadeIn(250);
+          });
 
         });
 
 
         if (filesAdded <= 0) {
           $("form input[type='submit']").val("Submit story");
-          //$("form input[type='submit']").removeClass("disabled");
-          //$("form input[type='submit']").attr("disabled", false);
+          $("form input[type='submit']").removeClass("disabled");
+          $("form input[type='submit']").attr("disabled", false);
         }
 
         $("#story_uploads_ids").val(uploadsIds.join(","));

@@ -315,15 +315,6 @@ var SubscriptionMap = (function() {
       $modal.css({ opacity: '0', display: 'block' });
       $modal.stop().animate({opacity: '1'}, 250, function(){
 
-      State = History.getState(),
-      hash  = parseHash(State.hash),
-      zoom = self._map.getZoom(),
-      lat  = self._map.getCenter().lat().toFixed(GFW.app._precision),
-      lng  = self._map.getCenter().lng().toFixed(GFW.app._precision);
-      console.log(lat, lng);
-
-
-
         var mapOptions = {
           zoom:               1,
           minZoom:            config.MINZOOM,
