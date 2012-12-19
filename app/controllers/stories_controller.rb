@@ -1,13 +1,15 @@
 class StoriesController < ApplicationController
 
   def index
-    @page     = params[:page] || 1
-    @featured = Story.where(:featured => true).order('cartodb_id ASC')
-    @stories  = if params['for-map'].present?
-                  Story.all_for_map
-                else
-                  Story.all.first(4)
-                end
+    stories_per_page = 3
+    @page            = (params[:page] || 1).to_i
+    @total_pages     = Story.where(:featured => true).count / stories_per_page
+    @featured        = Story.where(:featured => true).order('cartodb_id ASC').page(@page).per_page(stories_per_page)
+    @stories         = if params['for-map'].present?
+                         Story.all_for_map
+                       else
+                         Story.all.sample(5)
+                       end
 
     respond_to do |format|
       format.json { render :json => @stories } if params['for-map']
