@@ -223,8 +223,7 @@ $(function() {
           };
           var spinner = new Spinner(opts).spin();
           $thumbnail.append($(spinner.el));
-
-
+          $thumbnail.append("<div class='filename'>"+ file.name.truncate(18) +"</div>");
         });
 
         $("form input[type='submit']").addClass("disabled");

@@ -375,7 +375,15 @@ body.stories {
 
       img { width:100%; }
 
-      .spinner { @include position(37px, false, false, 65px); }
+      .filename {
+        text-align: center;
+        width: 100%;
+        @include position(false, false, 12px, 0);
+        @extend .sans-serif;
+        font-size: 13px;
+        color: $cGray2;
+      }
+      .spinner  { @include position(30px, false, false, 65px); }
 
     }
 
