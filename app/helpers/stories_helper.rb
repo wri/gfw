@@ -57,7 +57,7 @@ module StoriesHelper
   end
 
   def static_map(story)
-    static_map_url = lambda{|lat_lon| "http://maps.google.com/maps/api/staticmap?center=#{lat_lon}&zoom=3&size=266x266&maptype=satellite&sensor=false" }
+    static_map_url = lambda{|lat_lon| "http://maps.google.com/maps/api/staticmap?center=#{lat_lon}&zoom=3&size=266x266&maptype=terrain&sensor=false" }
     static_map_url.call(coords(story))
   end
 
