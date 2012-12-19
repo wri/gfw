@@ -355,7 +355,9 @@ $(function() {
       } else {
 
         drawingManager.setDrawingMode(null);
+
         $(".remove").fadeIn(250);
+
         drawingManager.setOptions({drawingControl: false});
 
         selectedMarker = e.overlay;

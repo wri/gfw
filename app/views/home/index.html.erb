@@ -60,13 +60,16 @@ end %>
   <ul>
     <% @featured.each do |story| %>
       <li>
+      <a href="<%= story_path(story) %>">
         <%= image_tag(story_image_or_map(story)) %>
         <div class="gradient"></div>
         <div class="frame"></div>
         <div class="title">
           <span><%= story.title %></span>
-          <%= link_to 'Read more', story_path(story) %>
+          <%= content_tag :strong, 'Read more' %>
         </div>
+      </a>
+
       </li>
     <% end %>
   </ul>

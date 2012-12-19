@@ -387,7 +387,6 @@ nav {
       margin: 0 22px 0 22px;
       text-align:center;
 
-
       .frame {
         display:block;
         position:absolute;
@@ -410,6 +409,12 @@ nav {
         -moz-border-radius: 133px;
         border-radius: 133px;
         z-index: 20;
+      }
+
+      a {
+        display:block;
+        width: 266px;
+        height: 266px;
       }
 
       div.gradient {
@@ -444,7 +449,7 @@ nav {
           z-index: 1000;
         }
 
-        a {
+        strong {
           @extend .sans-serif;
           font-size: 12px;
           font-weight: bold;
