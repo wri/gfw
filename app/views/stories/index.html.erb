@@ -10,21 +10,17 @@ end %>
       <% @featured.each do |story| %>
         <li class="<%= left_or_right_class = cycle('left', 'right') %>">
 
-        <div class="content">
-          <h2><%= link_to story.title, story %></h2>
-          <p><%= truncate(story.details, :length => 295) %></p>
-          <%= link_to 'Read more', story %>
-        </div>
-
-        <div class="frame">
-
-          <%= image_tag(story_image_or_map(story)) %>
-
-          <div class="coords">
-            <strong><%= coords(story) %></strong>
+          <div class="content">
+            <h2><%= link_to story.title, story %></h2>
+            <p><%= truncate(story.details, :length => 295) %></p>
+            <%= link_to 'Read more', story %>
           </div>
 
-        </div>
+          <div class="frame">
+
+            <%= image_tag(story_image_or_map(story)) %>
+
+          </div>
 
         </li>
       <% end %>
