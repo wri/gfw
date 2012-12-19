@@ -57,17 +57,32 @@ $(function() {
     drawingManager.setDrawingMode(null);
     $(".remove").fadeIn(250);
 
+    var bounds = new google.maps.LatLngBounds();
+
     if (feature.length > 0) {
       feature[0].setMap(map);
       loadedFeature = feature[0];
+      window.loadedFeature = loadedFeature;
+
+      _.each(loadedFeature.latLngs, function(latlng) {
+
+        var p = loadedFeature.latLngs.getAt(0);
+
+        p.forEach(function(i) {
+          var point = new google.maps.LatLng(i.lat(), i.lng());
+          bounds.extend(point);
+        });
+
+      });
+
     } else {
       feature.setMap(map);
       loadedFeature = feature;
+      bounds.extend(loadedFeature.position);
     }
 
-    var bounds = new google.maps.LatLngBounds();
-    bounds.extend(loadedFeature.position);
     map.fitBounds(bounds);
+
 
     setTimeout(function() {
       map.setZoom(2);
