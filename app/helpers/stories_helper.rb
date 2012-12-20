@@ -53,6 +53,7 @@ module StoriesHelper
 
     return '' if the_geom.blank?
 
+    puts the_geom.class
     coords = [the_geom.centroid.y, the_geom.centroid.x] if     the_geom.respond_to?(:centroid)
     coords = [the_geom.y, the_geom.x]                   unless the_geom.respond_to?(:centroid)
 
