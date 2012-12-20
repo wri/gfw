@@ -187,8 +187,6 @@ $(function() {
       }
     }
 
-
-
     $('.thumbnails').sortable({
       tolerance: "pointer",
       items: 'li.sortable',
@@ -200,7 +198,6 @@ $(function() {
         $("#story_uploads_id").val(order);
       }
     });
-
 
     if ($("#stories_map.stories_map").length > 0) {
 

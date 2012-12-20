@@ -38,7 +38,7 @@
   </script>
 
   <script id="layer-item-checkbox-template" type="text/x-underscore-template">
-    <li id="filter_{{ id }}" class="{{ category }}"><a href="#" data-id={{ id }} class="checkbox {{ disabled ? 'disabled' : '' }}"><i><span></span></i><span class="name">{{name}}</a></a></li>
+    <li id="filter_{{ id }}" class="{{ category }}"><a href="#" data-id={{ id }} class="checkbox {{ disabled ? 'disabled' : '' }}"><i><span></span></i><span class="name">{{name}}</span></a></li>
   </script>
 
   <script id="filter-template" type="text/x-underscore-template">
@@ -121,7 +121,7 @@
   <script id="legend-group-template" type="text/x-underscore-template">
     <ul class="{{category}}">
       <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
-      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i> {{title}} </li>
+      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}}</div></li>
     </ul>
   </script>
 
