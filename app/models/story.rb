@@ -3,6 +3,13 @@ class Story < CartoDB::Model::Base
 
   attr_accessor :uploads_ids
 
+  SELECT_FIELDS = <<-SQL
+             *,
+             ST_ASGEOJSON(stories.the_geom) AS geometry,
+             ST_X(ST_Centroid(stories.the_geom)) AS lng,
+             ST_Y(ST_Centroid(stories.the_geom)) AS lat
+  SQL
+
   set_geometry_type :geometry
 
   field :title
@@ -48,6 +55,10 @@ class Story < CartoDB::Model::Base
   def the_geom
     the_geom = attributes[:the_geom]
     RGeo::GeoJSON.encode(the_geom).to_json if the_geom.present?
+  end
+
+  def coords
+    return "#{attributes[:lat]}, #{attributes[:lng]}" if attributes.slice(:lat, :lng).present?
   end
 
   def save

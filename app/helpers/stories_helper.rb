@@ -49,16 +49,15 @@ module StoriesHelper
   end
 
   def coords(story)
-    the_geom = story.attributes[:the_geom]
+    #the_geom = story.attributes[:the_geom]
 
-    return '' if the_geom.blank?
+    #return '' if the_geom.blank?
 
-    puts the_geom.class
-    puts the_geom.centroid.class
-    coords = [the_geom.centroid.y, the_geom.centroid.x] if     the_geom.respond_to?(:centroid)
-    coords = [the_geom.y, the_geom.x]                   unless the_geom.respond_to?(:centroid)
+    #coords = [the_geom.centroid.y, the_geom.centroid.x] if     the_geom.respond_to?(:centroid)
+    #coords = [the_geom.y, the_geom.x]                   unless the_geom.respond_to?(:centroid)
 
-    coords.map{|coord| number_with_precision(coord, :precision => 2)}.join(', ')
+    #coords.map{|coord| number_with_precision(coord, :precision => 2)}.join(', ')
+    story.coords
   end
 
   def story_image_or_map(story)

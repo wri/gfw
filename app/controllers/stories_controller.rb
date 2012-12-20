@@ -3,8 +3,8 @@ class StoriesController < ApplicationController
   def index
     stories_per_page = 3
     @page            = (params[:page] || 1).to_i
-    @total_pages     = (Story.where(:featured => true).count / stories_per_page).ceil
-    @featured        = Story.where(:featured => true).order('cartodb_id ASC').page(@page).per_page(stories_per_page)
+    @total_pages     = (Story.select(Story::SELECT_FIELDS).where(:featured => true).count / stories_per_page).ceil
+    @featured        = Story.select(Story::SELECT_FIELDS).where(:featured => true).order('cartodb_id ASC').page(@page).per_page(stories_per_page)
     @stories         = if params['for-map'].present?
                          Story.all_for_map
                        else
@@ -19,7 +19,7 @@ class StoriesController < ApplicationController
 
   def show
 
-    @story   = Story.where("cartodb_id = ?", params[:id]).first
+    @story = Story.select(Story::SELECT_FIELDS).where("cartodb_id = ?", params[:id]).first
     @story   = @story || Story.where("token = '?'", params[:id]).first
     @stories = Story.all.first(4)
 
