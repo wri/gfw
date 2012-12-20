@@ -13,11 +13,13 @@ $(function() {
       url: $(this).attr("href"),
       type: 'DELETE',
       success: function(result) {
-        console.log('result');
 
-        //$thumb.fadeOut(250, function() {
-          //$thumb.remove();
-        //});
+        uploadsIds = _.without(uploadsIds, file.cartodb_id);
+        $("#story_uploads_ids").val(uploadsIds.join(","));
+
+        $(this).parent().fadeOut(250, function() {
+          $(this).remove();
+        });
 
       }
     });
@@ -256,14 +258,12 @@ $(function() {
         $.each(data.result, function (index, file) {
           filesAdded--;
 
-          console.log(file);
-
           uploadsIds.push(file.cartodb_id);
 
           var url = file.thumbnail_url.replace("https", "http");
           var $thumb = $("<li id='photo_" + file.cartodb_id + "' class='sortable thumbnail'><div class='inner_box'><img src='"+url+"' /></div><a href='#' class='destroy'></a></li>");
 
-          $thumb.find(".remove").on("click", function(e) {
+          $thumb.find(".destroy").on("click", function(e) {
 
             e.preventDefault();
             e.stopPropagation();
@@ -275,7 +275,9 @@ $(function() {
                 url: '/media/' + file.cartodb_id,
                 type: 'DELETE',
                 success: function(result) {
-                console.log('result', result);
+
+                  uploadsIds = _.without(uploadsIds, file.cartodb_id);
+                  $("#story_uploads_ids").val(uploadsIds.join(","));
 
                   $thumb.fadeOut(250, function() {
                     $thumb.remove();
@@ -284,7 +286,6 @@ $(function() {
                 }
               });
             }
-
 
           });
 
