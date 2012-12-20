@@ -711,10 +711,11 @@ var Filter = (function() {
 
     $layer.find("li").css({ width:width - 20});
     $layer.css({ left: left, width:width, top: -80});
-    console.log(height);
+
     if (height < 200) {
       $(".scroll").css({ height: height });
     } else $(".scroll").css({ height: 200 });
+
     $layer.animate({ opacity: 1 }, 250);
 
     var
