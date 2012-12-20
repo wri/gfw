@@ -64,7 +64,7 @@
         <li><%= link_to '', '#', :class => 'upload_picture' %></li>
 
         <% (@story.media || []).each do |media| %>
-          <li id="photo_<%= media.cartodb_id %>" class="thumbnail">
+          <li id="photo_<%= media.cartodb_id %>" class="thumbnail sortable">
           <div class="inner_box">
             <img src="<%= media.thumbnail_url %>">
           </div>
@@ -73,7 +73,7 @@
         <% end %>
 
         <% (@story.unlinked_media || []).each do |media| %>
-          <li id="photo_<%= media.cartodb_id %>" class="thumbnail">
+          <li id="photo_<%= media.cartodb_id %>" class="thumbnail sortable">
           <div class="inner_box">
             <img src="<%= media.thumbnail_url %>">
           </div>
