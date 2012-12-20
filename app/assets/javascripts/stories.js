@@ -236,10 +236,35 @@ $(function() {
         $.each(data.result, function (index, file) {
           filesAdded--;
 
+          console.log(file);
+
           uploadsIds.push(file.cartodb_id);
 
           var url = file.thumbnail_url.replace("https", "http");
-          var $thumb = $("<li id='photo_" + file.cartodb_id + "' class='sortable thumbnail'><img src='"+url+"' /></li>");
+          var $thumb = $("<li id='photo_" + file.cartodb_id + "' class='sortable thumbnail'><div class='inner_box'><img src='"+url+"' /></div><a href='#' class='remove'></a></li>");
+
+          $thumb.find(".remove").on("click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            var confirmation = confirm("Are you sure?")
+
+            if (confirmation == true) {
+              $.ajax({
+                url: '/stories/' + file.cartodb_id,
+                type: 'DELETE',
+                success: function(result) {
+
+                  $thumb.fadeOut(250, function() {
+                    $thumb.remove();
+                  });
+
+                }
+              });
+            }
+
+
+          });
 
           var filename = getFilename(file.image_url);
 

@@ -27,7 +27,11 @@
     </div>
   </script>
 
-
+  <script id="window-template" type="text/x-underscore-template">
+    <div class="content">
+      {{ content }}
+    </div>
+  </script>
 
   <script id="layer-item-radio-template" type="text/x-underscore-template">
     <li id="filter_{{ id }}" class="{{ category }}"><a href="#" class="radio {{ category }} {{ disabled ? 'disabled' : '' }}" data-name={{ category }}>{{name}}</a></li>

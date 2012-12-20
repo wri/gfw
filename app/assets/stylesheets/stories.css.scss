@@ -352,16 +352,26 @@ body.stories {
     float:left;
     width: 585px;
 
+    .remove {
+      @include size(18px);
+      @include position(-9px, -9px, false, false);
+      @include icons-sprite(btn_remove);
+    }
+
     .thumbnail {
       position:relative;
       @include inline-block();
       @include size(132px, 76px);
       margin: 0 7px 10px 0;
-      overflow: hidden;
-      clear:both;
       border: 2px solid $cWhite;
       background:#fff;
       cursor: move;
+
+      .inner_box {
+        @include size(132px, 76px);
+        clear:both;
+        overflow: hidden;
+      }
 
       &:hover { border: 2px solid #9EB741; }
 
@@ -373,7 +383,9 @@ body.stories {
 
       }
 
-      img { width:100%; }
+      img {
+        width:100%;
+      }
 
       .filename {
         text-align: center;
