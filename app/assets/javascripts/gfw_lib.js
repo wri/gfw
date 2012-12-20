@@ -379,9 +379,9 @@ GFW.modules.app = function(gfw) {
 
             var title = story.title;
 
-            //if (title.length > 20) {
-              //title = $.trim(title).substring(0, 20).split(" ").slice(0, -1).join(" ") + "...";
-            //}
+            if (title.length > 30) {
+              title = $.trim(title).substring(0, 30).split(" ").slice(0, -1).join(" ") + "...";
+            }
 
             marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: story.thumbnail_url, content: "<strong><a href='/stories/"+ story.id +"'>" + title + "</a></strong> Submitted by " + story.name });
             marker.setMap(map);

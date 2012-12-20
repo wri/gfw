@@ -16,7 +16,6 @@
 //= require jquery.fileupload
 //= require jquery.fileupload-ui
 //= require jquery.fileupload-fp
-//= require jquery.mCustomScrollbar
 //= require gfw
 //= require_tree .
 
