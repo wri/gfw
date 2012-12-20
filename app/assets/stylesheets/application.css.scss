@@ -931,7 +931,7 @@ footer {
   .inner { position:relative; width: 920px; margin: auto; }
 
   .links {
-    height:246px;
+    height:246px;    
     background-color: #DFDFDC;
     border-top: 1px solid #C8C8C6;
 
@@ -950,15 +950,16 @@ footer {
       margin: 50px 0 0 0;
 
       a {
-        margin: 10px 20px 0 0;
+        margin: 10px 15px 0 0;
+        width: 88px;
 
-        &.wri { width: 92px; height: 31px; @include icons-sprite(logo_wri_black); }
-        &.google { width: 90px; height: 52px; @include icons-sprite(logo_google); }
-        &.cfgd { width: 72px; height: 52px; @include icons-sprite(logo_cgd); }
-        &.university_maryland { width: 77px; height: 52px; @include icons-sprite(logo_maryland); }
-        &.imazon { width: 74px; height: 52px; @include icons-sprite(logo_imazon); }
-        &.esri { width: 76px; height: 28px; @include icons-sprite(logo_esri); }
-        &.unep { width: 39px; height: 45px; @include icons-sprite(logo_unep); }
+        &.wri { height: 31px; @include icons-sprite(logo_wri_black); }
+        &.google { height: 52px; @include icons-sprite(logo_google); }
+        &.cfgd { height: 52px; @include icons-sprite(logo_cgd); }
+        &.university_maryland { height: 52px; @include icons-sprite(logo_maryland); }
+        &.imazon { height: 52px; @include icons-sprite(logo_imazon); }
+        &.esri { height: 28px; @include icons-sprite(logo_esri, $offset-x: 3px); }
+        &.unep { height: 52px; @include icons-sprite(logo_unep, $offset-x: 20px); }
       }
 
 
