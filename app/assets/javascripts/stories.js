@@ -251,9 +251,10 @@ $(function() {
 
             if (confirmation == true) {
               $.ajax({
-                url: '/stories/' + file.cartodb_id,
+                url: '/media/' + file.cartodb_id,
                 type: 'DELETE',
                 success: function(result) {
+                console.log('result', result);
 
                   $thumb.fadeOut(250, function() {
                     $thumb.remove();

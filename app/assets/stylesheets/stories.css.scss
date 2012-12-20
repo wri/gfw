@@ -495,38 +495,37 @@ input[type=submit] {
     background:#ccc;
   }
 }
+}
 
-      }
+aside {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 285px;
+  margin-top: 50px;
 
-      aside {
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 285px;
-        margin-top: 50px;
-
-        h3 {
-          padding: 0 0 20px;
-          margin-bottom: 20px;
-          border-bottom: 1px solid $cGray4;
-          @extend .sans-serif;
-          font-weight: bold;
-          font-size:13px;
-          color: $cGray1;
-          text-transform: uppercase;
-        }
-
-
-        p {
-          @extend .sans-serif;
-          font-size: 15px;
-          color: $cGray2;
-          line-height: 1.2em;
-          padding-bottom: 20px;
-        }
+  h3 {
+    padding: 0 0 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid $cGray4;
+    @extend .sans-serif;
+    font-weight: bold;
+    font-size:13px;
+    color: $cGray1;
+    text-transform: uppercase;
+  }
 
 
-      }
+  p {
+    @extend .sans-serif;
+    font-size: 15px;
+    color: $cGray2;
+    line-height: 1.2em;
+    padding-bottom: 20px;
+  }
+
+
+}
 
 
     }
