@@ -196,7 +196,7 @@ module CartoDB
         end
 
         def query(sql, options = {})
-          params = {:q => sql}
+          params = {:q => CGI::escape(sql)}
 
           uri = 'sql'
           uri_params = []
