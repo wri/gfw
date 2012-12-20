@@ -1,4 +1,5 @@
 class StoriesController < ApplicationController
+  before_filter :get_story, :only => [:show, :edit, :update, :destroy]
 
   def index
     stories_per_page = 3
@@ -18,11 +19,7 @@ class StoriesController < ApplicationController
   end
 
   def show
-
-    @story = Story.select(Story::SELECT_FIELDS).where("cartodb_id = ?", params[:id]).first
-    @story   = @story || Story.where("token = '?'", params[:id]).first
     @stories = Story.all.first(4)
-
   end
 
   def new
@@ -32,7 +29,8 @@ class StoriesController < ApplicationController
   end
 
   def edit
-    @story     = Story.where("token = '?'", params[:id]).first
+    @url       = story_path(@story.token)
+    @method    = :put
     @media_url = media_path
   end
 
@@ -53,4 +51,25 @@ class StoriesController < ApplicationController
 
   end
 
+  def update
+
+    @story = @story.update_attributes(params[:story])
+
+    if @story.valid?
+      @story.save
+
+      flash[:notice] = 'Your story has been updated. Thanks!'
+
+      Notifications.new_story(@story).deliver
+
+      redirect_to story_path(@story)
+    else
+      render :edit
+    end
+  end
+
+  def get_story
+    @story = Story.select(Story::SELECT_FIELDS).where("cartodb_id = ?", params[:id]).first
+    @story   = @story || Story.where("token = '?'", params[:id]).first
+  end
 end

@@ -4,7 +4,16 @@ class Story < CartoDB::Model::Base
   attr_accessor :uploads_ids
 
   SELECT_FIELDS = <<-SQL
-             *,
+             cartodb_id,
+             title,
+             description,
+             when_did_it_happen,
+             details,
+             your_name,
+             your_email,
+             featured,
+             visible,
+             token,
              ST_ASGEOJSON(stories.the_geom) AS geometry,
              ST_X(ST_Centroid(stories.the_geom)) AS lng,
              ST_Y(ST_Centroid(stories.the_geom)) AS lat
@@ -28,6 +37,13 @@ class Story < CartoDB::Model::Base
   def initialize(params)
     @uploads_ids = params.delete(:uploads_ids)
     super
+  end
+
+  def update_attributes(attributes)
+    (attributes.presence || {}).each do |k, v|
+      self.send("#{k}=", v)
+    end
+    self
   end
 
   def self.all_for_map

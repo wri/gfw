@@ -57,7 +57,7 @@ module CartoDB
           begin
             RGeo::Geographic.simple_mercator_factory(:wkb_parser => {:support_ewkb => true}).parse_wkt(the_geom)
           rescue
-            RGeo::GeoJSON.decode(the_geom, :json_parser => :json, :geo_factory => RGeo::Geographic.simple_mercator_factory(:wkb_parser => {:support_ewkb => true})) rescue nil
+            RGeo::GeoJSON.decode(the_geom, :json_parser => :json, :geo_factory => RGeo::Geographic.projected_factory(:srid => 4326)) rescue nil
           end
         end
 

@@ -1,7 +1,5 @@
 
-<%#= link_to (content_tag :span, 'Delete story'), story_path(@story), :class => "btn destroy", :method => :delete, :class => "btn destroy", :confirm => "Are you sure?" %>
-
-<%= form_for :story, :url => @url do |f| %>
+<%= form_for :story, :url => @url, :method => (@method || :post) do |f| %>
 
   <div class="field">
     <div class="input_title">

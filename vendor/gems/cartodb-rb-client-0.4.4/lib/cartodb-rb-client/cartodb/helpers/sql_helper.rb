@@ -4,10 +4,11 @@ module CartoDB
       require 'time'
 
       def prepare_data(hash)
+        new_hash = {}
         hash.each do |key, value|
-          hash[key] = format_value(key, value)
+          new_hash[key] = format_value(key, value)
         end
-        hash
+        new_hash
       end
 
       def format_value(key, value)
