@@ -313,12 +313,6 @@ $(function(){
       $(".backdrop").fadeOut(250);
     }
 
-    /*
-    if ($("#crowdsourcing:visible").length > 0) {
-      $("#crowdsourcing").fadeOut(250);
-      $(".backdrop").fadeOut(250);
-    }*/
-
     if ($("#analysis:visible").length > 0) {
       $("#analysis").fadeOut(250);
       $(".backdrop").fadeOut(250);

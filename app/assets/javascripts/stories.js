@@ -1,12 +1,15 @@
 $(function() {
 
+  if ($("body.stories").length == 0) return;
+
   drawingManager = {},
   loadedFeature  = null;
 
   var uploadsIds = [], drawingManager, selectedShape, selectedMarker, selectedColor, filesAdded = 0;
-  window.uploadsIds = uploadsIds;
 
-  uploadsIds = _.compact($("#story_uploads_ids").val().split(","));
+  if ($("#story_uploads_ids").length > 0) {
+    uploadsIds = _.compact($("#story_uploads_ids").val().split(","));
+  }
 
   $("a.destroy").on("click", function(e) {
 

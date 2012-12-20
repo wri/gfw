@@ -225,13 +225,13 @@
       @include size(100%);
       position:relative;
       display:block;
+      z-index: 10;
     }
 
     &:hover { cursor:pointer!important; }
 
     .mask {
       @include position(-9px, false, false, -9px);
-      position:absolute;
       @include size(67px);
       @include icons-sprite(marker_hollow);
       z-index: 100;
@@ -244,7 +244,6 @@
       @include border-radius(200px);
       z-index: 10;
     }
-
 
   }
 
