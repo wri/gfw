@@ -440,6 +440,8 @@ GFW.modules.app = function(gfw) {
       Timeline.init();
       Filter.init();
 
+      $(".scroll").jScrollPane();
+
       showMap ? Navigation.showState("map") : Navigation.showState("home");
     },
 
