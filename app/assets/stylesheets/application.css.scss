@@ -856,6 +856,8 @@ article.contact {
   clear:both;
   overflow:hidden;
 
+  text-decoration:none;
+
   &.disabled, &.disabled.checked {
     i {
       span { left: 2px; }
@@ -896,6 +898,7 @@ article.contact {
       background:#fff;
       @extend .position-transition;
     }
+
   }
 
   span.name {
