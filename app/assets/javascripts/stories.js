@@ -3,6 +3,25 @@ $(function() {
   drawingManager = {},
   loadedFeature  = null;
 
+
+  $("a.remove").on("click", function(e) {
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    $.ajax({
+      url: '/media/' + file.cartodb_id,
+      type: 'DELETE',
+      success: function(result) {
+        console.log('result');
+
+        //$thumb.fadeOut(250, function() {
+          //$thumb.remove();
+        //});
+      }
+    });
+  });
+
   function setupZoom() {
     var overlayID =  document.getElementById("zoom_controls");
     // zoomIn
@@ -244,6 +263,7 @@ $(function() {
           var $thumb = $("<li id='photo_" + file.cartodb_id + "' class='sortable thumbnail'><div class='inner_box'><img src='"+url+"' /></div><a href='#' class='remove'></a></li>");
 
           $thumb.find(".remove").on("click", function(e) {
+
             e.preventDefault();
             e.stopPropagation();
 

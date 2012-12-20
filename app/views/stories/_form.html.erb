@@ -68,7 +68,7 @@
           <div class="inner_box">
             <img src="<%= media.thumbnail_url %>">
           </div>
-          <a href='#' class='remove'></a>
+          <%= link_to '', story_path(@story), :method => :delete, :class => "remove", :confirm => "Are you sure?" %>
           </li>
         <% end %>
 
@@ -77,7 +77,7 @@
           <div class="inner_box">
             <img src="<%= media.thumbnail_url %>">
           </div>
-          <a href='#' class='remove'></a>
+          <%= link_to '', story_path(@story), :method => :delete, :class => "remove", :confirm => "Are you sure?" %>
           </li>
         <% end %>
 
