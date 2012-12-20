@@ -352,7 +352,7 @@ body.stories {
     float:left;
     width: 585px;
 
-    .remove {
+    .destroy {
       @include size(18px);
       @include position(-9px, -9px, false, false);
       @include icons-sprite(btn_remove);
@@ -491,10 +491,9 @@ input[type=submit] {
 
   &:hover { @include dark-glow(0.5); }
 
-  &.disabled {
-    background:#ccc;
-  }
+  &.disabled { background:#ccc; }
 }
+
 }
 
 aside {

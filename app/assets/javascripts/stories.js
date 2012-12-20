@@ -4,13 +4,13 @@ $(function() {
   loadedFeature  = null;
 
 
-  $("a.remove").on("click", function(e) {
+  $("a.destroy").on("click", function(e) {
 
     e.preventDefault();
     e.stopPropagation();
 
     $.ajax({
-      url: '/media/' + file.cartodb_id,
+      url: $(this).attr("href"),
       type: 'DELETE',
       success: function(result) {
         console.log('result');
@@ -18,6 +18,7 @@ $(function() {
         //$thumb.fadeOut(250, function() {
           //$thumb.remove();
         //});
+
       }
     });
   });
@@ -260,7 +261,7 @@ $(function() {
           uploadsIds.push(file.cartodb_id);
 
           var url = file.thumbnail_url.replace("https", "http");
-          var $thumb = $("<li id='photo_" + file.cartodb_id + "' class='sortable thumbnail'><div class='inner_box'><img src='"+url+"' /></div><a href='#' class='remove'></a></li>");
+          var $thumb = $("<li id='photo_" + file.cartodb_id + "' class='sortable thumbnail'><div class='inner_box'><img src='"+url+"' /></div><a href='#' class='destroy'></a></li>");
 
           $thumb.find(".remove").on("click", function(e) {
 
