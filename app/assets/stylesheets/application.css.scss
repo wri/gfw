@@ -692,7 +692,6 @@ article.contact {
     .input-field.error input { color: red;}
     .input-field { position:absolute; width: 420px; top: 43px; left: 50px; }
     .btn { position:absolute; top: 43px; right: 50px; }
-    .btn span { padding: 14px 32px 5px 27px; }
     .btn.new { display: none; }
     .ok { display:none; position:absolute; top: 54px; left: 50px; font-weight:normal; font-size: 21px; color: #fff; @extend .serif; }
   }
@@ -775,47 +774,69 @@ article.contact {
  **/
 
 .btn {
+  @include inline-block();
+  position:relative;
 
-  /* button ($url, $height, $mL, $pT, $pR, $pB, $pL) */
-  @include button('buttons/bkg_button.png', 42px, 5px, 15px, 27px, 5px, 22px, 0);
+  padding: 14px 34px;
+
+  color: $cWhite;
+  text-decoration:none;
+  text-transform: uppercase;
+
+  &.green {
+    background: #9bb251;
+  }
+
   @extend .sans-serif;
   font-size:11px;
   font-weight:600;
 
-  &:hover {
+  @include border-radius(2px);
+  border: 1px solid #839C26;
+
+  &.dark_glow:hover {
+    @include dark-glow(0.5);
+  }
+
+  &.white_glow:hover {
     @include glow(0.5);
+  }
+
+  & > span {
+    @include inline-block();
+    white-space:nowrap;
   }
 
 }
 
 .btn.hollow {
 
-  @include button('buttons/bkg_button_hollow.png', 38px, 5px, 13px, 27px, 5px, 22px, 0);
-  @extend .sans-serif;
-  text-transform: uppercase;
-  color: $cLink;
+  border: 1px solid #9bb251;
+  color: #9bb251;
 
   &:hover {
-    @extend .no-glow;
-    @include button('buttons/bkg_button_hollow.png', 38px, 4px, 13px, 27px, 5px, 22px, 76px);
+    background: #9bb251;
     color: $cWhite;
   }
-
 }
 
 .btn.disabled {
 
-  @include button('buttons/bkg_button_disabled.png', 40px, 5px, 13px, 27px, 5px, 22px, 0);
-  color:rgba(255, 255, 255, .3);
+  border:none!important;
+  color: #333!important;
+  background:#90a1a7;
+  opacity: .5;
 
-  &:hover {
+  &.dark_glow:hover, &.white_glow:hover, &:hover {
     @extend .no-glow;
   }
 
 }
 
 .btn.destroy {
-  @include button('buttons/bkg_button_destroy.png', 42px, 5px, 13px, 27px, 5px, 22px, 0);
+  background:#ae3531;
+  border:1px solid #333;
+  color: #fff;
   line-height: 18px;
 
   &:hover span {
@@ -931,7 +952,7 @@ footer {
   .inner { position:relative; width: 920px; margin: auto; }
 
   .links {
-    height:246px;    
+    height:246px;
     background-color: #DFDFDC;
     border-top: 1px solid #C8C8C6;
 
@@ -1153,223 +1174,4 @@ footer > .download {
       }
     }
   }
-
-}
-
-
-/* basic scrollbar styling */
-/* vertical scrollbar */
-.mCSB_container{
-	width:auto;
-	margin-right:30px;
-	overflow:hidden;
-}
-.mCSB_container.mCS_no_scrollbar{
-	margin-right:0;
-}
-.mCS_disabled .mCSB_container.mCS_no_scrollbar,
-.mCS_destroyed .mCSB_container.mCS_no_scrollbar{
-	margin-right:30px;
-}
-.mCustomScrollBox .mCSB_scrollTools{
-	width:16px;
-	height:100%;
-	top:0;
-	right:0;
-}
-.mCSB_scrollTools .mCSB_draggerContainer{
-	height:100%;
-	-webkit-box-sizing:border-box;
-	-moz-box-sizing:border-box;
-	box-sizing:border-box;
-}
-.mCSB_scrollTools .mCSB_buttonUp+.mCSB_draggerContainer{
-	padding-bottom:40px;
-}
-.mCSB_scrollTools .mCSB_draggerRail{
-	width:2px;
-	height:100%;
-	margin:0 auto;
-	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	border-radius:10px;
-}
-.mCSB_scrollTools .mCSB_dragger{
-	cursor:pointer;
-	width:100%;
-	height:30px;
-}
-.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
-	width:4px;
-	height:100%;
-	margin:0 auto;
-	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	border-radius:10px;
-	text-align:center;
-}
-.mCSB_scrollTools .mCSB_buttonUp,
-.mCSB_scrollTools .mCSB_buttonDown{
-	height:20px;
-	overflow:hidden;
-	margin:0 auto;
-	cursor:pointer;
-}
-.mCSB_scrollTools .mCSB_buttonDown{
-	bottom:0;
-	margin-top:-40px;
-}
-/* horizontal scrollbar */
-.mCSB_horizontal .mCSB_container{
-	height:auto;
-	margin-right:0;
-	margin-bottom:30px;
-	overflow:hidden;
-}
-.mCSB_horizontal .mCSB_container.mCS_no_scrollbar{
-	margin-bottom:0;
-}
-.mCS_disabled .mCSB_horizontal .mCSB_container.mCS_no_scrollbar,
-.mCS_destroyed .mCSB_horizontal .mCSB_container.mCS_no_scrollbar{
-	margin-right:0;
-	margin-bottom:30px;
-}
-.mCSB_horizontal.mCustomScrollBox .mCSB_scrollTools{
-	width:100%;
-	height:16px;
-	top:auto;
-	right:auto;
-	bottom:0;
-	left:0;
-	overflow:hidden;
-}
-.mCSB_horizontal .mCSB_scrollTools .mCSB_draggerContainer{
-	height:100%;
-	width:auto;
-	-webkit-box-sizing:border-box;
-	-moz-box-sizing:border-box;
-	box-sizing:border-box;
-	overflow:hidden;
-}
-.mCSB_horizontal .mCSB_scrollTools .mCSB_buttonLeft+.mCSB_draggerContainer{
-	padding-bottom:0;
-	padding-right:20px;
-}
-.mCSB_horizontal .mCSB_scrollTools .mCSB_draggerRail{
-	width:100%;
-	height:2px;
-	margin:7px 0;
-	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	border-radius:10px;
-}
-.mCSB_horizontal .mCSB_scrollTools .mCSB_dragger{
-	width:30px;
-	height:100%;
-}
-.mCSB_horizontal .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
-	width:100%;
-	height:4px;
-	margin:6px auto;
-	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	border-radius:10px;
-}
-.mCSB_horizontal .mCSB_scrollTools .mCSB_buttonLeft,
-.mCSB_horizontal .mCSB_scrollTools .mCSB_buttonRight{
-	width:20px;
-	height:100%;
-	overflow:hidden;
-	margin:0 auto;
-	cursor:pointer;
-	float:left;
-}
-.mCSB_horizontal .mCSB_scrollTools .mCSB_buttonRight{
-	right:0;
-	bottom:auto;
-	margin-left:-40px;
-	margin-top:-16px;
-	float:right;
-}
-
-/* default scrollbar colors and backgrounds */
-.mCustomScrollBox .mCSB_scrollTools{
-	opacity:0.75;
-}
-.mCustomScrollBox:hover .mCSB_scrollTools{
-	opacity:1;
-}
-.mCSB_scrollTools .mCSB_draggerRail{
-	background:#000; /* rgba fallback */
-	background:rgba(0,0,0,0.4);
-	filter:"alpha(opacity=40)"; -ms-filter:"alpha(opacity=40)"; /* old ie */
-}
-.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
-	background:#fff; /* rgba fallback */
-	background:rgba(255,255,255,0.75);
-	filter:"alpha(opacity=75)"; -ms-filter:"alpha(opacity=75)"; /* old ie */
-}
-.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
-	background:rgba(255,255,255,0.85);
-	filter:"alpha(opacity=85)"; -ms-filter:"alpha(opacity=85)"; /* old ie */
-}
-.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
-.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
-	background:rgba(255,255,255,0.9);
-	filter:"alpha(opacity=90)"; -ms-filter:"alpha(opacity=90)"; /* old ie */
-}
-.mCSB_scrollTools .mCSB_buttonUp,
-.mCSB_scrollTools .mCSB_buttonDown,
-.mCSB_scrollTools .mCSB_buttonLeft,
-.mCSB_scrollTools .mCSB_buttonRight{
-	background-image:url(mCSB_buttons.png);
-	background-repeat:no-repeat;
-	opacity:0.4;
-	filter:"alpha(opacity=40)"; -ms-filter:"alpha(opacity=40)"; /* old ie */
-}
-.mCSB_scrollTools .mCSB_buttonUp{
-	background-position:0 0;
-	/*
-	sprites locations are 0 0/-16px 0/-32px 0/-48px 0 (light) and -80px 0/-96px 0/-112px 0/-128px 0 (dark)
-	*/
-}
-.mCSB_scrollTools .mCSB_buttonDown{
-	background-position:0 -20px;
-	/*
-	sprites locations are 0 -20px/-16px -20px/-32px -20px/-48px -20px (light) and -80px -20px/-96px -20px/-112px -20px/-128px -20px (dark)
-	*/
-}
-.mCSB_scrollTools .mCSB_buttonLeft{
-	background-position:0 -40px;
-	/*
-	sprites locations are 0 -40px/-20px -40px/-40px -40px/-60px -40px (light) and -80px -40px/-100px -40px/-120px -40px/-140px -40px (dark)
-	*/
-}
-.mCSB_scrollTools .mCSB_buttonRight{
-	background-position:0 -56px;
-	/*
-	sprites locations are 0 -56px/-20px -56px/-40px -56px/-60px -56px (light) and -80px -56px/-100px -56px/-120px -56px/-140px -56px (dark)
-	*/
-}
-.mCSB_scrollTools .mCSB_buttonUp:hover,
-.mCSB_scrollTools .mCSB_buttonDown:hover,
-.mCSB_scrollTools .mCSB_buttonLeft:hover,
-.mCSB_scrollTools .mCSB_buttonRight:hover{
-	opacity:0.75;
-	filter:"alpha(opacity=75)"; -ms-filter:"alpha(opacity=75)"; /* old ie */
-}
-.mCSB_scrollTools .mCSB_buttonUp:active,
-.mCSB_scrollTools .mCSB_buttonDown:active,
-.mCSB_scrollTools .mCSB_buttonLeft:active,
-.mCSB_scrollTools .mCSB_buttonRight:active{
-	opacity:0.9;
-	filter:"alpha(opacity=90)"; -ms-filter:"alpha(opacity=90)"; /* old ie */
-}
-
-#test {
-  @include position(100px, false, false, 100px);
-  background:red;
-  width: 200px;
-  height: 200px;
-  z-index: 500000;
 }
