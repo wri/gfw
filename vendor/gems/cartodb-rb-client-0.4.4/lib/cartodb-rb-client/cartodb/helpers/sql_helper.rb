@@ -14,12 +14,7 @@ module CartoDB
       def format_value(key, value)
         case value
         when ::String
-          #value = value.gsub(/\\/, '\&\&').gsub(/'/, "''")
-          if key.match(/geo/)
-            "#{value}"
-          else
-            "'#{value.gsub(/\\/, '\&\&').gsub(/'/, "''")}'"
-          end
+          "E'#{value.gsub(/\\/, '\&\&').gsub(/'/, "''")}'"
         when ::Date, ::DateTime, ::Time
           "'#{value.to_time.utc}'"
         when RGeo::Feature::Geometry
