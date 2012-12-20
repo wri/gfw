@@ -12,8 +12,8 @@
     position:absolute;
     top: 0;
     left:-9999px;
-    width:170px;
-    height:250px;
+    @include size(170px, 90px);
+
     z-index:1000;
     opacity:0;
 
@@ -21,12 +21,21 @@
     @extend .filter-lines;
     @extend .filter-icons;
 
-    .links {
+    .scroll {
+      background:#fff;
       position:absolute;
       top: 90px;
+      overflow:hidden;
+      overflow-x: none;
+      outline:none;
 
-      overflow-y:auto;
-      overflow-x:hidden;
+      @include size(170px, 200px);
+      -moz-box-shadow:0px 0px 5px 1px rgba(0,0,0,0.15);
+      -webkit-box-shadow:0px 0px 5px 1px rgba(0,0,0,0.15);
+      box-shadow:0px 0px 5px 1px rgba(0,0,0,0.15);
+    }
+
+    .links {
 
       li {
         position:relative;
