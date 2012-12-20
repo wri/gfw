@@ -1,5 +1,5 @@
 
-<%= form_for :story, :url => @url do |f| %>
+<%= form_for :story, :url => @url, :method => (@method || :post) do |f| %>
 
   <div class="field">
     <div class="input_title">
@@ -123,6 +123,8 @@
 <div class="files"></div>
 <input id="fileupload" type="file" name="media[image]" data-url="/media" multiple>
 
+<% if action_name == 'new' %>
+
 <aside>
 <h3>Why submit stories</h3>
 <p>User participation is crucial in forest monitoring. The more people who participate in sharing information, the better.</p>
@@ -134,4 +136,5 @@
 
 </aside>
 
+<% end %>
 

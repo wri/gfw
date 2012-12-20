@@ -1,10 +1,11 @@
 class StoriesController < ApplicationController
+  before_filter :get_story, :only => [:show, :edit, :update, :destroy]
 
   def index
     stories_per_page = 3
     @page            = (params[:page] || 1).to_i
-    @total_pages     = Story.where(:featured => true).count / stories_per_page
-    @featured        = Story.where(:featured => true).order('cartodb_id ASC').page(@page).per_page(stories_per_page)
+    @total_pages     = (Story.select('count(cartodb_id) as count').where(:featured => true).first.attributes[:count].to_f / stories_per_page.to_f).ceil
+    @featured        = Story.select(Story::SELECT_FIELDS).where(:featured => true).order('cartodb_id ASC').page(@page).per_page(stories_per_page)
     @stories         = if params['for-map'].present?
                          Story.all_for_map
                        else
@@ -18,11 +19,7 @@ class StoriesController < ApplicationController
   end
 
   def show
-
-    @story   = Story.where("cartodb_id = ?", params[:id]).first
-    @story   = @story || Story.where("token = '?'", params[:id]).first
     @stories = Story.all.first(4)
-
   end
 
   def new
@@ -32,7 +29,8 @@ class StoriesController < ApplicationController
   end
 
   def edit
-    @story     = Story.where("token = '?'", params[:id]).first
+    @url       = story_path(@story.token)
+    @method    = :put
     @media_url = media_path
   end
 
@@ -53,4 +51,33 @@ class StoriesController < ApplicationController
 
   end
 
+  def update
+
+    @story = @story.update_attributes(params[:story])
+
+    if @story.valid?
+      @story.save
+
+      flash[:notice] = 'Your story has been updated. Thanks!'
+
+      Notifications.new_story(@story).deliver
+
+      redirect_to story_path(@story)
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @story.destroy
+
+    flash[:notice] = 'Your story has been deleted. Thanks!'
+
+    redirect_to stories_path
+  end
+
+  def get_story
+    @story = Story.select(Story::SELECT_FIELDS).where("cartodb_id = ?", params[:id]).first
+    @story   = @story || Story.where("token = '?'", params[:id]).first
+  end
 end
