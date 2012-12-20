@@ -3,7 +3,7 @@ class StoriesController < ApplicationController
   def index
     stories_per_page = 3
     @page            = (params[:page] || 1).to_i
-    @total_pages     = Story.where(:featured => true).count / stories_per_page
+    @total_pages     = (Story.where(:featured => true).count / stories_per_page).ceil
     @featured        = Story.where(:featured => true).order('cartodb_id ASC').page(@page).per_page(stories_per_page)
     @stories         = if params['for-map'].present?
                          Story.all_for_map
