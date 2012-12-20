@@ -377,16 +377,8 @@ GFW.modules.app = function(gfw) {
             icon     = '/assets/icons/exclamation.png',
             properties = null;
 
-            var style = {
-              strokeWeight: 2,
-              fillOpacity: 0.25,
-              fillOpacity: 0.45,
-              fillColor: "#75ADB5",
-              strokeColor: "#75ADB5"
-            };
-
             var geometry = JSON.parse(story.geometry)
-            var feature = new GeoJSON(geometry, style);
+            var feature = new GeoJSON(geometry, config.OVERLAYS_STYLE);
 
             if (feature.length > 0) {
               feature[0].setMap(map);

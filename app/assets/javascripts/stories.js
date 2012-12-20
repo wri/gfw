@@ -285,21 +285,6 @@ $(function() {
 
     setupZoom();
 
-    var polyOptions = {
-      strokeWeight: 2,
-      fillOpacity: 0.25,
-      fillOpacity: 0.45,
-      fillColor: "#75ADB5",
-      strokeColor: "#75ADB5",
-      icon: new google.maps.MarkerImage(
-        '/assets/icons/marker_exclamation.png',
-        new google.maps.Size(45, 45), // desired size
-        new google.maps.Point(0, 0), // offset within the scaled sprite
-        new google.maps.Point(20, 20) // anchor point is half of the desired size
-      )
-    };
-
-
     // Creates a drawing manager attached to the map that allows the user to draw markers, lines, and shapes.
     drawingManager = new google.maps.drawing.DrawingManager({
       drawingModes: [google.maps.drawing.OverlayType.POLYGON, google.maps.drawing.OverlayType.MARKER],
@@ -317,7 +302,7 @@ $(function() {
         drawingModes: [google.maps.drawing.OverlayType.POLYGON, google.maps.drawing.OverlayType.MARKER]
       },
 
-      polygonOptions: polyOptions,
+      polygonOptions: config.OVERLAYS_STYLE,
       map: map
     });
 

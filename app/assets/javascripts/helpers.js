@@ -41,10 +41,23 @@ var config = {
   DATE_FORMAT:        "yyyy-MM-dd",
   DATE_SUFFIXES:      ["th", "st", "nd", "rd"],
   MIN_PROJECT_RADIUS: 100,
-  BASE_MAP_STYLE: [ { "stylers": [ { "visibility": "simplified" }, { "saturation": -100 }, { "gamma": 0.79 }, { "lightness": 2 } ] } ] };
+  BASE_MAP_STYLE:     [ { "stylers": [ { "visibility": "simplified" }, { "saturation": -100 }, { "gamma": 0.79 }, { "lightness": 2 }]}],
+  OVERLAYS_STYLE: {
+    strokeWeight: 2,
+    fillOpacity: 0.25,
+    fillOpacity: 0.45,
+    fillColor: "#75ADB5",
+    strokeColor: "#75ADB5",
+    icon: new google.maps.MarkerImage(
+      '/assets/icons/marker_exclamation.png',
+      new google.maps.Size(45, 45), // desired size
+      new google.maps.Point(0, 0), // offset within the scaled sprite
+      new google.maps.Point(20, 20) // anchor point is half of the desired size
+    )
+  }
+};
 
-  config.mapLoaded = false;
-  //config.gfwStyle = new google.maps.StyledMapType( config.mapStyles, {name: "GFW Style"});
+config.mapLoaded = false;
 
 config.mapOptions = {
   zoom:               config.ZOOM,
