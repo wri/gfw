@@ -853,6 +853,8 @@ article.contact {
 
 .checkbox {
 
+  clear:both;
+  overflow:hidden;
 
   &.disabled, &.disabled.checked {
     i {
@@ -876,16 +878,16 @@ article.contact {
   }
 
   i {
+    float:left;
     position:relative;
     @include inline-block();
     width: 17px;
     height: 10px;
     background:#ddd;
-    margin: 0 3px 0 0;
+    margin: 4px 3px 0 0;
     @include border-radius(5px);
 
     span {
-
       background:#ddd;
       position:absolute;
       @include size(6px);
@@ -894,6 +896,12 @@ article.contact {
       background:#fff;
       @extend .position-transition;
     }
+  }
+
+  span.name {
+    display:block;
+    float:left;
+    width: 120px;
   }
 
   @include inline-block();

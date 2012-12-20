@@ -33,13 +33,9 @@
     <li id="filter_{{ id }}" class="{{ category }}"><a href="#" class="radio {{ category }} {{ disabled ? 'disabled' : '' }}" data-name={{ category }}>{{name}}</a></li>
   </script>
 
-
-
   <script id="layer-item-checkbox-template" type="text/x-underscore-template">
-    <li id="filter_{{ id }}" class="{{ category }}"><a href="#" data-id={{ id }} class="checkbox {{ disabled ? 'disabled' : '' }}"><i><span></span></i>{{name}}</a></li>
+    <li id="filter_{{ id }}" class="{{ category }}"><a href="#" data-id={{ id }} class="checkbox {{ disabled ? 'disabled' : '' }}"><i><span></span></i><span class="name">{{name}}</a></a></li>
   </script>
-
-
 
   <script id="filter-template" type="text/x-underscore-template">
     <li class="{{ category }}" data-id="{{ data }}">
@@ -49,8 +45,6 @@
     <div class="box"></div>
     </li>
   </script>
-
-
 
   <script id="circle-template" type="text/x-underscore-template">
     <div class="circle">
