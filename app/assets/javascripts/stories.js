@@ -44,7 +44,6 @@ $(function() {
     });
   }
 
-
   function showFeature(geojson, style){
 
     feature = new GeoJSON(geojson, style || null);
@@ -94,7 +93,6 @@ $(function() {
   function clearSelection() {
 
     if (selectedShape) {
-      //selectedShape.setEditable(false);
 
       selectedShape       = null;
       drawingManager.path = null;
@@ -121,7 +119,6 @@ $(function() {
   function setSelection(shape) {
     clearSelection();
     selectedShape = shape;
-    //shape.setEditable(true);
     selectColor(shape.get('fillColor') || shape.get('strokeColor'));
   }
 
@@ -307,7 +304,7 @@ $(function() {
     drawingManager = new google.maps.drawing.DrawingManager({
       drawingModes: [google.maps.drawing.OverlayType.POLYGON, google.maps.drawing.OverlayType.MARKER],
       markerOptions: {
-        draggable: true,
+        draggable: false,
         icon: new google.maps.MarkerImage(
           '/assets/icons/marker_exclamation.png',
           new google.maps.Size(45, 45), // desired size
