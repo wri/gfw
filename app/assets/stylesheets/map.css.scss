@@ -53,18 +53,6 @@
           line-height:17px;
       }
 
-      a.source {
-        position:absolute;
-        top: 13px;
-        right: 10px;
-        width: 11px;
-        height: 11px;
-        background:url(icons/help.png) no-repeat left top;
-
-        &:hover {
-          background:url(icons/help.png) no-repeat left bottom;
-        }
-      }
     }
 
     & > a {
@@ -527,6 +515,16 @@
           @include border-radius(100px);
 
           background:#ccc;
+        }
+
+        a.source {
+          @include inline-block();
+          @include size(11px);
+          @include icons-sprite(information);
+
+          &:hover {
+            @include icons-sprite(information);
+          }
         }
 
         div {

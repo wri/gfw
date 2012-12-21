@@ -73,7 +73,7 @@ var Legend = (function() {
       template = _.template($("#legend-item-single-template").html());
 
       color = title_color;
-      $item = $(template({ color:color, category: cat, id: id, name: name.truncate(32) }));
+      $item = $(template({ slug: slug, color:color, category: cat, id: id, name: name.truncate(32) }));
 
     } else {
 
@@ -91,7 +91,7 @@ var Legend = (function() {
         return '<div class="half_icon" style="background-color:' + e.color + ';"></div>';
       }).join("\n");
 
-      $item = $(template({ color:color, parts: parts, icons:icons, category: cat, id: id, name: name.truncate(32) }));
+      $item = $(template({ slug: slug, color:color, parts: parts, icons:icons, category: cat, id: id, name: name.truncate(32) }));
 
     }
 

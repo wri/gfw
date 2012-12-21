@@ -121,12 +121,12 @@
   <script id="legend-group-template" type="text/x-underscore-template">
     <ul class="{{category}}">
       <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
-      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}}</div></li>
+      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="/sources#{{category}}" class="source"></a></div></li>
     </ul>
   </script>
 
   <script id="legend-item-template" type="text/x-underscore-template">
-    <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i> {{title}} </li>
+    <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="/sources#{{category}}" class="source"></a></div></li>
   </script>
 
 
