@@ -4,7 +4,7 @@ var SubscriptionMap = (function() {
   $modal = $("#subscribe"),
   $input = $modal.find(".input-field"),
   subscribeMap,
-  zoomInit              = false;
+  zoomInit = false;
 
   var drawingManager;
   var selectedShape;

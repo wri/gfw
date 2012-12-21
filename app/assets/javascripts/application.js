@@ -61,16 +61,13 @@ function loadGFW() {
       });
 
       layerSelector = new gfw.ui.view.LayerSelector({ map: map });
-      legend        = new gfw.ui.view.Legend({ model: new gfw.ui.model.Legend() });
-      MapWindow     = new gfw.ui.view.Window({ model: new gfw.ui.model.Window() });
+      legend        = new gfw.ui.view.Legend();
       Infowindow    = new CartoDBInfowindow(map, { className: "story_infowindow", width: 174 });
 
       $("#map").append(layerSelector.render());
       $("#map").append(legend.render());
-      $("#map").append(MapWindow.render());
 
       legend.setDraggable(true);
-      MapWindow.setDraggable(true);
       layerSelector.setDraggable(true);
     }
 

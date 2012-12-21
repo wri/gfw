@@ -407,25 +407,6 @@
   }
 }
 
-.window {
-
-  @include position(100px, false, false, 100px);
-  @include size(400px, 300px);
-
-  background:$cWhite;
-  display:none;
-
-  @include position(80px, false, false, 20px);
-  @include border-radius(3px);
-  @include box-shadow(0px 0px 3px $cGray2);
-
-  background:#fff;
-  border: 1px solid #666;
-
-  z-index: 10000;
-
-}
-
 .legend {
 
   width:211px;

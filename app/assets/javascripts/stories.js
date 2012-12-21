@@ -11,6 +11,41 @@ $(function() {
     uploadsIds = _.compact($("#story_uploads_ids").val().split(","));
   }
 
+
+  var modelDialog = new gfw.ui.model.Dialog({
+    title: "Are you sure?",
+    accept: "Yes, delete it",
+    cancel: "No, let’s keep it"
+  });
+
+  var Dialog = new gfw.ui.view.Dialog({ model: modelDialog });
+
+  $("body").append(Dialog.render());
+
+  $("a.destroy_story").on("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var
+    $a  = $(this),
+    url = $(this).attr("href");
+
+    var callback =  function() {
+      $.ajax({
+        url: url,
+        type: 'DELETE',
+        success: function(result) {
+          window.location = '/stories';
+        }
+      });
+    };
+
+    Dialog.show();
+    Dialog.model.set("callback", callback);
+
+
+  });
+
   $("a.destroy").on("click", function(e) {
 
     e.preventDefault();
@@ -416,7 +451,7 @@ $(function() {
     var the_geom = $('#story_the_geom').val();
 
     if (the_geom) {
-      showFeature(JSON.parse(the_geom), polyOptions);
+      showFeature(JSON.parse(the_geom), config.OVERLAYS_STYLE);
     }
 
     // Clear the current selection when the drawing mode is changed, or when the map is clicked

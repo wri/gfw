@@ -4,7 +4,7 @@ end %>
 
 
 <% content_for :inner_header do
-  link_to (content_tag :span, 'Delete story'), story_path(@story), :class => "btn destroy", :method => :delete, :class => "btn destroy", :confirm => "Are you sure?"
+  link_to (content_tag :span, 'Delete story'), story_path(@story), :"data-id" => @story.cartodb_id, :class => "btn green dark_glow destroy_story"
 end %>
 
 <div class="story_form">
@@ -13,3 +13,4 @@ end %>
     <%= render 'form' %>
   </div>
 </div>
+

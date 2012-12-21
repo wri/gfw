@@ -49,6 +49,7 @@
     <script type="text/javascript" src="../ui/carrousel.js"></script>
     <script type="text/javascript" src="../ui/timeline.js"></script>
     <script type="text/javascript" src="../ui/window.js"></script>
+    <script type="text/javascript" src="../ui/dialog.js"></script>
 
     <!-- SPECS -->
     <!-- Core specs -->
@@ -65,7 +66,7 @@
     <script type="text/javascript" src="spec/ui/gallery.spec.js"></script> 
     <script type="text/javascript" src="spec/ui/carrousel.spec.js"></script> 
     <script type="text/javascript" src="spec/ui/timeline.spec.js"></script>
-    <script type="text/javascript" src="spec/ui/window.spec.js"></script>
+    <script type="text/javascript" src="spec/ui/dialog.spec.js"></script>
 
     <script type="text/javascript">
       (function() {
@@ -217,6 +218,15 @@
 
   <script id="legend-item-template" type="text/x-underscore-template">
     <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i> {{title}} </li>
+  </script>
+
+  <script id="dialog-template" type="text/x-underscore-template">
+    <h1>{{title}}</h1>
+    <a href="#" class="close"></a>
+    <ul class="buttons">
+      <li><a href="#" class="btn red accept">{{accept}}</a></li>
+      <li><a href="#" class="btn yellow cancel">{{cancel}}</a></li>
+    </ul>
   </script>
 
   <div id="map"></div>

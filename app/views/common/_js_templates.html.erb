@@ -129,5 +129,15 @@
     <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="/sources#{{category}}" class="source"></a></div></li>
   </script>
 
+  <script id="dialog-template" type="text/x-underscore-template">
+    <h1>{{title}}</h1>
+    <a href="#" class="close"></a>
+    <div class="buttons">
+      <a href="#" class="btn red dark_glow accept">{{accept}}</a>
+      <a href="#" class="btn yellow dark_glow cancel">{{cancel}}</a>
+    </div>
+  </script>
+
+
 
 <% end %>

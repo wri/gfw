@@ -23,6 +23,11 @@
 
     <%= render "common/footer" %>
     <%= render "common/js_templates" %>
+
+    <% if controller_name == 'stories' %>
+      <div class="backdrop"></div>
+    <% end %>
+
     <%= javascript_include_tag "application" %>
 
     <%= yield :js %>

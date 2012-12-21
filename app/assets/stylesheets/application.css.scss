@@ -783,6 +783,14 @@ article.contact {
   text-decoration:none;
   text-transform: uppercase;
 
+  &.yellow {
+    background: #E4A74E;
+    border-color: #C89203;
+  }
+  &.red {
+    background: #AC2E25;
+    border-color: #8B1F16;
+  }
   &.green {
     background: #9bb251;
   }
@@ -833,6 +841,7 @@ article.contact {
 
 }
 
+.btn.destroy_story,
 .btn.destroy {
   background:#ae3531;
   border:1px solid #333;
@@ -1174,4 +1183,39 @@ footer > .download {
       }
     }
   }
+}
+
+.dialog {
+
+  @include absolute-center(400px, 230px);
+
+  background:$cWhite;
+  display:none;
+
+  @include border-radius(3px);
+  @include box-shadow(0px 0px 3px $cGray2);
+
+  background:#fff;
+  border: 1px solid #666;
+
+  z-index: 10000;
+
+  h1 {
+    margin: 40px 0 0 0;
+
+    font-size: 35px;
+    color: #333333;
+    text-align: center;
+  }
+
+  .buttons {
+    width: 400px;
+    @include position(false, false, 10px, 0);
+    border-top: 1px solid #CCCCCC;
+    padding: 40px 0px;
+
+    text-align: center;
+
+  }
+
 }

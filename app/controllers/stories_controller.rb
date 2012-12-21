@@ -20,6 +20,7 @@ class StoriesController < ApplicationController
 
   def show
     @stories = Story.all.first(4)
+    Notifications.new_story(@story).deliver
   end
 
   def new
