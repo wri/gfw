@@ -537,10 +537,10 @@ article.contact {
 
 #subscribe {
 
-  $height: 559px;
-  $width: 767px;
+  $subscribe_height: 519px;
+  $subscribe_width: 765px;
 
-  @include absolute-center($width, $height);
+  @include absolute-center($subscribe_width, $subscribe_height);
   position:fixed;
 
   display:none;
@@ -551,7 +551,7 @@ article.contact {
   &.show { display: block; }
 
   .header, .footer {
-    @include absolute-left-center($width);
+    @include absolute-left-center($subscribe_width);
   }
 
   .header .inner { padding: 40px 45px; }
@@ -596,6 +596,7 @@ article.contact {
         font-size: 35px;
         @extend .serif;
         color: #666666;
+        text-align: center;
       }
 
       p {
@@ -610,10 +611,10 @@ article.contact {
 
   .map {
     position: absolute;
-    top: 141px;
+    top: 101px;
     height:291px;
-    width: 747px;
-    left: 10px;
+    width: $subscribe_width - 18;
+    left: 8px;
 
     .error_box {
       position:absolute;
@@ -643,22 +644,21 @@ article.contact {
 
 
     #subscribe_map {
-      height:291px;
-      width: 747px;
+      width: 100%;
+      height:327px;
     }
 
   }
 
   .footer {
-    bottom: 10px;
-    height: 120px;
+    bottom: 30px;
+    height: 85px;
+
     .inner {
-      border-top: 1px solid #5E8A91;
-      height: 118px;
-      width: 749px;
+      height: 80px;
+      width: $subscribe_width;
       margin-left: 9px;
       margin-top: 3px;
-      background: #222222;
     }
 
     .error_input_label {

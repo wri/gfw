@@ -236,16 +236,16 @@ GFW.modules.app = function(gfw) {
           this.specialLayer.setOpacity(1);
         } else {
 
-        this.specialLayer = new google.maps.ImageMapType({
-          getTileUrl: function(tile, zoom) {
-            return "http://184.73.201.235/blue/" + zoom + "/" + tile.x + "/" + tile.y;
-          },
-          tileSize: new google.maps.Size(256, 256),
-          opacity:0.60,
-          isPng: true
-        });
+          this.specialLayer = new google.maps.ImageMapType({
+            getTileUrl: function(tile, zoom) {
+              return "http://184.73.201.235/blue/" + zoom + "/" + tile.x + "/" + tile.y;
+            },
+            tileSize: new google.maps.Size(256, 256),
+            opacity:0.60,
+            isPng: true
+          });
 
-        map.overlayMapTypes.setAt("0", this.specialLayer);
+          map.overlayMapTypes.setAt("0", this.specialLayer);
         }
 
     },
