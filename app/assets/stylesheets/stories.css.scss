@@ -224,6 +224,40 @@ body.stories {
           position:relative;
           margin: 0 20px;
 
+          .infowindow {
+            display:none;
+            padding: 7px;
+            @include position(-40px, false, false, -30px);
+            @include size(156px, 69px);
+            background:url(backgrounds/bkg_infowindow.png) no-repeat;
+            z-index: 1000;
+
+            color: #999999;
+            font-size: 12px;
+            @extend .sans-serif;
+
+            text-align: left;
+
+            strong a {
+
+              display:block;
+              margin: 0 0 5px 0;
+              width: 140px;
+            text-align: left;
+
+              color: #F3F2F0;
+              font-family: Georgia, serif;
+              font-size: 17px;
+              font-weight:normal;
+              line-height:normal;
+
+              text-decoration :none;
+
+              &:hover { text-decoration: underline; }
+            }
+
+          }
+
           .frame {
             @include position(0, false, false, 0);
             @include size(100%);

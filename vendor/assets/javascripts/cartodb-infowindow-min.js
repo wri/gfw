@@ -36,7 +36,6 @@
       div.innerHTML = this.template || '<a href="#close" class="close"></a>'+
                       '<div class="outer_top">'+
                         '<div class="top">'+
-                        //'<div class="title"><strong>Title</strong></div>'+
                         '<div class="infowindow_content"></div>' +
                         '</div>'+
                       '</div>'+

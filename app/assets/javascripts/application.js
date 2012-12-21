@@ -91,6 +91,16 @@ function loadGFW() {
 
     $("nav").append(languageSelector.render());
 
+    $(".more_stories li").on("mouseleave", function(e) {
+      var $this = $(this);
+      $this.find(".infowindow").fadeOut(50);
+    });
+
+    $(".more_stories li").on("mouseenter", function(e) {
+      var $this = $(this);
+      $this.find(".infowindow").fadeIn(50);
+    });
+
     gallery.addHandler("#other_sites_ribbon");
 
     languageSelector.addLanguage({ code: "en",    lang: "en", title: "English" });

@@ -1,15 +1,14 @@
 var SubscriptionMap = (function() {
 
   var
-  $modal = $("#subscribe"),
-  $input = $modal.find(".input-field"),
+  $modal   = $("#subscribe"),
+  $input   = $modal.find(".input-field"),
+  colors   = ['#1E90FF', '#FF1493', '#32CD32', '#FF8C00', '#4B0082'],
+  zoomInit = false,
   subscribeMap,
-  zoomInit = false;
-
-  var drawingManager;
-  var selectedShape;
-  var colors = ['#1E90FF', '#FF1493', '#32CD32', '#FF8C00', '#4B0082'];
-  var selectedColor;
+  drawingManager,
+  selectedShape,
+  selectedColor;
 
   function clearSelection() {
 
@@ -36,6 +35,9 @@ var SubscriptionMap = (function() {
     }
   }
 
+  /*
+   * Changes polygon color
+   * */
   function selectColor(color) {
     selectedColor = color;
 
@@ -61,17 +63,25 @@ var SubscriptionMap = (function() {
     $input.find(".error_input_label").html("");
   }
 
-
+  /*
+   * Removes all the errors from the subscribe window
+   * */
   function clearMapErrors() {
     $modal.find(".error_box").fadeOut(250);
     $modal.find(".error_box").html("");
   }
 
+  /*
+   * Removes the errors
+   * */
   function clearErrors() {
     clearEmailErrors();
     clearMapErrors();
   }
 
+  /*
+   * Builder
+   * */
   function initialize() {
 
     clearErrors();
@@ -119,6 +129,9 @@ var SubscriptionMap = (function() {
 
   }
 
+  /*
+   * on remove event
+   * */
   function remove() {
     clearErrors();
     deleteSelectedShape();
@@ -127,6 +140,9 @@ var SubscriptionMap = (function() {
     $modal.find(".remove").fadeOut(250);
   }
 
+  /*
+   * on submit event
+   * */
   function submit() {
 
     clearErrors();
@@ -150,6 +166,8 @@ var SubscriptionMap = (function() {
     }
 
     if (error) return;
+
+    // If there are no errors, let's submit the geometry
 
     var
     $map      = $("#subscribe_map"),
@@ -236,6 +254,9 @@ var SubscriptionMap = (function() {
     });
   }
 
+  /**
+   * Setup the button bindings
+   **/
   function setupBindings() {
 
     $modal.find(".close_icon").off("click");
@@ -351,6 +372,14 @@ var SubscriptionMap = (function() {
   };
 
 }());
+
+
+
+
+
+
+
+
 
 var Navigation = (function() {
 
