@@ -5,6 +5,7 @@ var SubscriptionMap = (function() {
   $input   = $modal.find(".input-field"),
   colors   = ['#1E90FF', '#FF1493', '#32CD32', '#FF8C00', '#4B0082'],
   zoomInit = false,
+  state    = 0, 
   subscribeMap,
   drawingManager,
   selectedShape,
@@ -85,48 +86,7 @@ var SubscriptionMap = (function() {
   function initialize() {
 
     clearErrors();
-
-    var polyOptions = {
-      strokeWeight: 0,
-      fillOpacity: 0.45,
-      editable: true
-    };
-
-    // Creates a drawing manager attached to the map that allows the user to draw
-    // markers, lines, and shapes.
-    drawingManager = new google.maps.drawing.DrawingManager({
-      drawingMode: google.maps.drawing.OverlayType.POLYGON,
-      drawingControlOptions: {
-        position: google.maps.ControlPosition.RIGHT_TOP,
-        drawingModes: [google.maps.drawing.OverlayType.POLYGON]
-      },
-
-      polygonOptions: polyOptions,
-      map: subscribeMap
-    });
-
-    google.maps.event.addListener(drawingManager, 'overlaycomplete', function(e) {
-      if (e.type != google.maps.drawing.OverlayType.MARKER) {
-        // Switch back to non-drawing mode after drawing a shape.
-        drawingManager.setDrawingMode(null);
-        drawingManager.path = e.overlay.getPath().getArray();
-
-        $modal.find(".remove").fadeIn(250);
-        drawingManager.setOptions({drawingControl: false});
-
-        // Add an event listener that selects the newly-drawn shape when the user
-        // mouses down on it.
-        var newShape = e.overlay;
-        newShape.type = e.type;
-        setSelection(newShape);
-      }
-    });
-
-    // Clear the current selection when the drawing mode is changed, or when the
-    // map is clicked.
-    google.maps.event.addListener(drawingManager, 'drawingmode_changed', clearSelection);
-    google.maps.event.addListener(map, 'click', clearSelection);
-
+    changeToCustom();
   }
 
   /*
@@ -293,6 +253,106 @@ var SubscriptionMap = (function() {
       submit();
     });
 
+
+    // TABS
+    $modal.find(".tabs a.custom").off('click');
+    $modal.find(".tabs a.custom").on("click", function(e) {
+      e.preventDefault();
+      changeMapTo(0);
+    });
+
+    $modal.find(".tabs a.world").off('click');
+    $modal.find(".tabs a.world").on("click", function(e) {
+      e.preventDefault();
+      //changeMapTo(1);
+    });
+
+    $modal.find(".tabs a.ppe").off('click');
+    $modal.find(".tabs a.ppe").on("click", function(e) {
+      e.preventDefault();
+      changeMapTo(2);
+    });
+  }
+
+  function changeMapTo(num) {
+    if (state == num) return false;
+
+    state = num;
+
+    clearMap();
+
+    switch (state) {
+      case 0: changeToCustom(); break;
+      case 1: changeToWorld(); break;
+      case 2: changeToPPE(); break;
+      default: changeToCustom();
+    }
+  }
+
+
+  function clearMap(){
+    // Remove selected
+    $modal.find('ul.tabs a.selected').removeClass('selected');
+
+    // Removes draw manager
+    google.maps.event.clearListeners(drawingManager, 'overlaycomplete')
+    google.maps.event.clearListeners(drawingManager, 'drawingmode_changed')
+    drawingManager.setMap(null);
+
+    // Remove PPE bindings
+
+    // Remove World binding
+  }
+
+
+  function changeToCustom() {
+    $modal.find('ul.tabs a.custom').addClass('selected');
+
+    var polyOptions = {
+      strokeWeight: 0,
+      fillOpacity: 0.45,
+      editable: true
+    };
+
+    // Creates a drawing manager attached to the map that allows the user to draw
+    // markers, lines, and shapes.
+    drawingManager = new google.maps.drawing.DrawingManager({
+      drawingMode: google.maps.drawing.OverlayType.POLYGON,
+      drawingControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_TOP,
+        drawingModes: [google.maps.drawing.OverlayType.POLYGON]
+      },
+
+      polygonOptions: polyOptions,
+      map: subscribeMap
+    });
+
+    google.maps.event.addListener(drawingManager, 'overlaycomplete', function(e) {
+      if (e.type != google.maps.drawing.OverlayType.MARKER) {
+        // Switch back to non-drawing mode after drawing a shape.
+        drawingManager.setDrawingMode(null);
+        drawingManager.path = e.overlay.getPath().getArray();
+
+        $modal.find(".remove").fadeIn(250);
+        drawingManager.setOptions({drawingControl: false});
+
+        // Add an event listener that selects the newly-drawn shape when the user
+        // mouses down on it.
+        var newShape = e.overlay;
+        newShape.type = e.type;
+        setSelection(newShape);
+      }
+    });
+
+    // Clear the current selection when the drawing mode is changed, or when the
+    // map is clicked.
+    google.maps.event.addListener(drawingManager, 'drawingmode_changed', clearSelection);
+    google.maps.event.addListener(map, 'click', clearSelection);
+  }
+
+
+  function changeToPPE () {
+    $modal.find('ul.tabs a.ppe').addClass('selected');
   }
 
   function hide() {

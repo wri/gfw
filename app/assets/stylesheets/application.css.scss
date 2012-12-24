@@ -537,6 +537,8 @@ article.contact {
 
 #subscribe {
 
+  overflow:hidden;
+
   $subscribe_height: 519px;
   $subscribe_width: 765px;
 
@@ -561,12 +563,12 @@ article.contact {
 
     position:absolute;
     padding: 7px 6px;
-    top: 146px;
-    right: 15px;
+    top: 170px;
+    right: 30px;
 
     background: #fff;
 
-    border: 1px solid #333;
+    border: 1px solid #666;
     text-transform: uppercase;
     color: #999999;
     font-size: 11px;
@@ -587,10 +589,13 @@ article.contact {
   }
 
   .header {
-    height: 132px;
+    height: 94px;
     top: 9px;
 
     .inner {
+      padding-top:25px;
+      padding-bottom:4px;
+
       h3 {
         margin: 0 0 5px 0;
         font-size: 35px;
@@ -609,12 +614,63 @@ article.contact {
     }
   } // header
 
+  ul.tabs {
+    position:absolute;
+    display:block;
+    top:94px;
+    left:8px;
+    right:9px;
+    height:52px;
+    margin:0;
+    padding:0;
+    overflow:hidden;
+    background:rgba(white,0.8);
+    border:none;
+    border-top:1px solid rgba(black,.1);
+    border-bottom:1px solid rgba(black,.1);
+    letter-spacing: -4px;
+    word-spacing: -4px;
+    z-index:10;
+    @include box-shadow(rgba(black,0.2) 0 2px 2px 0);
+
+    li {
+      @include inline-block();
+      width: (($subscribe_width - 18)/3) - 1;
+      letter-spacing: 0;
+      word-spacing: 0;
+      text-align: center;
+      line-height: 52px;
+      border-right:1px solid rgba(black,0.2);
+      &:last-child {border:none;}
+
+      a {
+        font-size:12px;
+        font-weight:bold;
+        font-family: "Helvetica Neue",Arial;
+        text-transform: uppercase;
+        text-decoration:none;
+        color:#CCCCCC;
+
+        &:hover {
+          color:#666666;
+        }
+
+        &.selected {
+          color:#98B13A;
+
+          &:hover {cursor:default; color:#98B13A;}
+        }
+      }
+    }
+  } // tabs
+
   .map {
     position: absolute;
-    top: 101px;
-    height:291px;
+    top: 95px;
+    height:334px;
     width: $subscribe_width - 18;
-    left: 8px;
+    left: 9px;
+    z-index:0;
 
     .error_box {
       position:absolute;
@@ -640,12 +696,18 @@ article.contact {
       text-align: center;
 
       z-index:1000;
+
     }
 
 
     #subscribe_map {
       width: 100%;
-      height:327px;
+      height:100%;
+      div.gmnoprint:last-child {top:71px!important; right:19px!important;}
+    }
+
+    #zoom_controls_subscribe {
+      top:71px;
     }
 
   }
