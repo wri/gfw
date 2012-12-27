@@ -8,16 +8,23 @@ var SubscriptionMap = (function() {
   state    = 0, 
   subscribeMap,
   drawingManager,
-  selectedShape,
+  positionClicked,
+  ppeLayer,
+  worldLayer,
+  selectedShapes = [],
   selectedColor;
 
   function clearSelection() {
 
     clearErrors();
 
-    if (selectedShape) {
-      selectedShape.setEditable(false);
-      selectedShape = null;
+    if (selectedShapes.length > 0) {
+      for (var i in selectedShapes) {
+        if (selectedShapes[i]) {
+          selectedShapes[i].setEditable(false);
+        }
+      }
+      selectedShapes = [];
       drawingManager.path = null;
     }
 
@@ -25,14 +32,19 @@ var SubscriptionMap = (function() {
 
   function setSelection(shape) {
     clearSelection();
-    selectedShape = shape;
+    selectedShapes.push(shape);
     shape.setEditable(true);
     selectColor(shape.get('fillColor') || shape.get('strokeColor'));
   }
 
-  function deleteSelectedShape() {
-    if (selectedShape) {
-      selectedShape.setMap(null);
+  function deleteSelectedShapes() {
+    if (selectedShapes.length > 0) {
+      for (var i in selectedShapes) {
+        if (selectedShapes[i]) {
+          selectedShapes[i].setMap(null);
+        }
+      }
+      selectedShapes = [];
     }
   }
 
@@ -48,11 +60,13 @@ var SubscriptionMap = (function() {
   }
 
   function setSelectedShapeColor(color) {
-    if (selectedShape) {
-      if (selectedShape.type == google.maps.drawing.OverlayType.POLYLINE) {
-        selectedShape.set('strokeColor', color);
-      } else {
-        selectedShape.set('fillColor', color);
+    if (selectedShapes.length > 0) {
+      for (var i in selectedShapes) {
+        if (selectedShapes[i].type == google.maps.drawing.OverlayType.POLYLINE) {
+          selectedShapes[i].set('strokeColor', color);
+        } else {
+          selectedShapes[i].set('fillColor', color);
+        }
       }
     }
   }
@@ -84,9 +98,11 @@ var SubscriptionMap = (function() {
    * Builder
    * */
   function initialize() {
-
+    clearMap();
     clearErrors();
+    state = 0;
     changeToCustom();
+    hideLoader();
   }
 
   /*
@@ -94,7 +110,7 @@ var SubscriptionMap = (function() {
    * */
   function remove() {
     clearErrors();
-    deleteSelectedShape();
+    deleteSelectedShapes();
     drawingManager.setOptions({ drawingControl: true });
     drawingManager.path = null;
     $modal.find(".remove").fadeOut(250);
@@ -118,8 +134,8 @@ var SubscriptionMap = (function() {
       error = true;
     }
 
-    if (!drawingManager.path) {
-      $modal.find(".error_box").html("Please, draw a polygon around the area you are interested in");
+    if (!selectedShapes || selectedShapes.length == 0) {
+      $modal.find(".error_box").html("Please, " + (state == 0 ? "draw" : "select" ) + " a polygon around the area you are interested in");
       $modal.find(".error_box").fadeIn(250);
 
       error = true;
@@ -135,14 +151,23 @@ var SubscriptionMap = (function() {
     $the_geom = $form.find('#area_the_geom');
 
     $map.toggleClass('editing-mode');
+
     $the_geom.val(JSON.stringify({
-      "type": "MultiPolygon",
-      "coordinates": [
-        [
-          $.map(drawingManager.path, function(latlong, index) {
-            return [[latlong.lng(), latlong.lat()]];
-          })
-        ]
+      "type": "FeatureCollection",
+      "features": [
+        $.map(selectedShapes, function(shape, index) {
+          return {
+            "type": "Feature",
+            "geometry": {
+              "type": "Polygon",
+              "coordinates": [
+                  $.map(shape.getPath().getArray(), function(latlng, index) {
+                    return [[latlng.lng(), latlng.lat()]];
+                  })
+              ]
+            }
+          }
+        })
       ]
     }));
 
@@ -159,11 +184,9 @@ var SubscriptionMap = (function() {
           $form.find(".ok").fadeIn(250);
 
           $modal.find(".remove").fadeOut(250);
-          deleteSelectedShape();
+          deleteSelectedShapes();
           clearSelection();
-
         });
-
       }
 
     })
@@ -235,6 +258,13 @@ var SubscriptionMap = (function() {
       clearEmailErrors();
     });
 
+    $modal.find("form").on("submit");
+    $modal.find("form").on("submit", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      submit();
+    });
+
     $modal.find('.remove').off('click');
     $modal.find('.remove').on("click", function(e){
       e.preventDefault();
@@ -258,18 +288,21 @@ var SubscriptionMap = (function() {
     $modal.find(".tabs a.custom").off('click');
     $modal.find(".tabs a.custom").on("click", function(e) {
       e.preventDefault();
+      e.stopPropagation();
       changeMapTo(0);
     });
 
     $modal.find(".tabs a.world").off('click');
     $modal.find(".tabs a.world").on("click", function(e) {
       e.preventDefault();
-      //changeMapTo(1);
+      e.stopPropagation();
+      changeMapTo(1);
     });
 
     $modal.find(".tabs a.ppe").off('click');
     $modal.find(".tabs a.ppe").on("click", function(e) {
       e.preventDefault();
+      e.stopPropagation();
       changeMapTo(2);
     });
   }
@@ -294,14 +327,25 @@ var SubscriptionMap = (function() {
     // Remove selected
     $modal.find('ul.tabs a.selected').removeClass('selected');
 
+    // Remove common shapes
+    deleteSelectedShapes();
+
     // Removes draw manager
-    google.maps.event.clearListeners(drawingManager, 'overlaycomplete')
-    google.maps.event.clearListeners(drawingManager, 'drawingmode_changed')
-    drawingManager.setMap(null);
-
-    // Remove PPE bindings
-
-    // Remove World binding
+    if (drawingManager) {
+      google.maps.event.clearListeners(drawingManager, 'overlaycomplete')
+      google.maps.event.clearListeners(drawingManager, 'drawingmode_changed')
+      drawingManager.setMap(null);
+      $modal.find(".remove").fadeOut(250);  
+    }
+    
+    // Remove PPE & World bindings
+    if (subscribeMap.overlayMapTypes.getLength() > 0) {
+      google.maps.event.clearListeners(subscribeMap, 'click');
+      subscribeMap.overlayMapTypes.removeAt(0);
+    }
+    
+    // Remove loader
+    hideLoader();
   }
 
 
@@ -351,9 +395,149 @@ var SubscriptionMap = (function() {
   }
 
 
-  function changeToPPE () {
+  function changeToPPE() {
     $modal.find('ul.tabs a.ppe').addClass('selected');
+
+    google.maps.event.addListener(subscribeMap, 'click', function(e) {
+      positionClicked = e.latLng;
+      showLoader();
+
+      $.ajax({
+        url: 'http://protectedplanet.net/api/sites_by_point/' + e.latLng.lng() + '/' + e.latLng.lat(),
+        dataType: 'jsonp',
+        point: e.latLng,
+        success: function(r) {
+          if (this.point == positionClicked && r.length > 0) {
+
+            $.ajax({
+              url: 'http://protectedplanet.net/api2/sites/' + r[0].id + '/geom',
+              dataType: 'jsonp',
+              point: this.point,
+              success: function(pa) {
+                if (this.point == positionClicked && pa.the_geom) {
+
+                  // Remove old ones
+                  deleteSelectedShapes();
+
+                  var features = new GeoJSON(pa.the_geom, {
+                    strokeWeight: 2,
+                    strokeOpacity: 1,
+                    fillOpacity: 0.60,
+                    fillColor: "#F7B443",
+                    strokeColor: "#F9B33E"
+                  });
+
+                  for (var i in features) {
+                    if (features[i].length > 0) {
+                      for (var j in features[i]) {
+                        var feature = features[i][j];
+                        feature.setMap(subscribeMap);
+                        selectedShapes.push(feature);
+                      }
+                    } else {
+                      var feature = features[i];
+                      feature.setMap(subscribeMap);
+                      selectedShapes.push(feature);
+                    }
+                  }
+                }
+
+                hideLoader();
+              },
+              error: function() {console.log(e); hideLoader();}
+            });
+          } else {
+            hideLoader();
+          }
+        },
+        error: function(e) {console.log(e); hideLoader();}
+      });
+    });
+
+    // Add layer
+    ppeLayer = new google.maps.ImageMapType({
+      getTileUrl: function(coord, zoom) {
+        return "http://184.73.201.235/blue/" + zoom + "/" + coord.x + "/" + coord.y;
+      },
+      tileSize: new google.maps.Size(256, 256),
+      isPng: true,
+      maxZoom: 21,
+      name: 'ppe',
+      alt: "Protected Planet"
+    });
+    subscribeMap.overlayMapTypes.insertAt(0, ppeLayer);
   }
+
+
+  function changeToWorld() {
+    $modal.find('ul.tabs a.world').addClass('selected');
+
+    google.maps.event.addListener(subscribeMap, 'click', function(e) {
+      positionClicked = e.latLng;
+      showLoader();
+
+      $.ajax({
+        url: 'http://wri-01.cartodb.com/api/v2/sql?format=geojson&q=SELECT name,the_geom FROM world_countries WHERE ST_Intersects(the_geom,ST_SetSRID(ST_Makepoint(' + e.latLng.lng() + ',' + e.latLng.lat() + '),4326)) LIMIT 1',
+        dataType: 'jsonp',
+        feature: e.latLng,
+        success: function(r) {
+          if (this.feature == positionClicked && r.features && r.features.length > 0) {
+            // Remove old ones
+            deleteSelectedShapes();
+
+            var features = new GeoJSON(r, {
+              strokeWeight: 2,
+              strokeOpacity: 1,
+              fillOpacity: 0.60,
+              fillColor: "#F7B443",
+              strokeColor: "#F9B33E"
+            });
+
+            for (var i in features) {
+              if (features[i].length > 0) {
+                for (var j in features[i]) {
+                  var feature = features[i][j];
+                  feature.setMap(subscribeMap);
+                  selectedShapes.push(feature);
+                }
+              } else {
+                var feature = features[i].setMap(subscribeMap)
+                selectedShapes.push(feature);
+              }
+            }
+          }
+
+          hideLoader();
+        },
+        error: function(e) {
+          hideLoader();
+          console.log(e);
+        }
+      });
+    });
+
+    // Add layer
+    worldLayer = new google.maps.ImageMapType({
+      getTileUrl: function(coord, zoom) {
+        return "http://dyynnn89u7nkm.cloudfront.net/tiles/world_countries/" + zoom + "/" + coord.x + "/" + coord.y + ".png?v=16";
+      },
+      tileSize: new google.maps.Size(256, 256),
+      isPng: true,
+      maxZoom: 21,
+      name: 'world',
+      alt: "CartoDB world layer"
+    });
+    subscribeMap.overlayMapTypes.insertAt(0, worldLayer);
+  }
+
+  function showLoader() {
+    $modal.find("#loader_subscribe").fadeIn(250);
+  }
+
+  function hideLoader() {
+    $modal.find("#loader_subscribe").fadeOut(250);
+  }
+
 
   function hide() {
     $(".backdrop").fadeOut(250, function() {
@@ -375,9 +559,8 @@ var SubscriptionMap = (function() {
     $form.find(".btn.create").fadeIn(250);
     $form.find(".input-field input").val("");
     $form.find(".input-field").fadeIn(250);
-    deleteSelectedShape();
+    deleteSelectedShapes();
     clearSelection();
-    initialize();
   }
 
   function show() {

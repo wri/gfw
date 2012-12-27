@@ -701,13 +701,41 @@ article.contact {
 
 
     #subscribe_map {
+      position:relative;
+      top:0;
+      left:0;
+      right:0;
+      bottom:0;
       width: 100%;
       height:100%;
+      padding:0;
+      margin:0;
       div.gmnoprint:last-child {top:71px!important; right:19px!important;}
     }
 
     #zoom_controls_subscribe {
       top:71px;
+    }
+
+    #loader_subscribe {
+      position:absolute;
+      display:none;
+      z-index:2;
+      top:130px;
+      left:12px;
+      width:42px;
+      height:41px;
+      padding:0;
+      margin:0;
+      @include background(image-url('icons/loader_bkg.png') no-repeat center center);
+
+      span.loader {
+        position:relative;
+        float:left;
+        width:100%;
+        height:100%;
+        @include background(image-url('backgrounds/ajax-loader.gif') no-repeat center center);
+      }
     }
 
   }
