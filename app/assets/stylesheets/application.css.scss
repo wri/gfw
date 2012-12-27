@@ -727,7 +727,7 @@ article.contact {
       height:41px;
       padding:0;
       margin:0;
-      @include background(image-url('icons/loader_bkg.png') no-repeat center center);
+      @include background(image-url('backgrounds/loader_bkg.png') no-repeat center center);
 
       span.loader {
         position:relative;
