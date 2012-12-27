@@ -153,20 +153,14 @@ var SubscriptionMap = (function() {
     $map.toggleClass('editing-mode');
 
     $the_geom.val(JSON.stringify({
-      "type": "FeatureCollection",
-      "features": [
+      "type": "MultiPolygon",
+      "coordinates": [
         $.map(selectedShapes, function(shape, index) {
-          return {
-            "type": "Feature",
-            "geometry": {
-              "type": "Polygon",
-              "coordinates": [
-                  $.map(shape.getPath().getArray(), function(latlng, index) {
-                    return [[latlng.lng(), latlng.lat()]];
-                  })
-              ]
-            }
-          }
+          return [
+            $.map(shape.getPath().getArray(), function(latlng, index) {
+              return [[latlng.lng().toFixed(4), latlng.lat().toFixed(4)]];
+            })
+          ]
         })
       ]
     }));
