@@ -374,11 +374,6 @@ $(function() {
       overviewMapControl: false
     });
 
-    var styledMap = new google.maps.StyledMapType(config.BASE_MAP_STYLE, { name: "Terrain" });
-
-    map.mapTypes.set("Terrain", styledMap);
-    map.setMapTypeId("Terrain");
-
     setupZoom();
 
     // Creates a drawing manager attached to the map that allows the user to draw markers, lines, and shapes.
