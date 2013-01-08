@@ -8,7 +8,7 @@
     <ul>
       <% @stories.each do |story| %>
         <li>
-        <%= link_to image_tag(story_image_or_map(story)), story, :class => :frame %>
+        <%= link_to image_tag(story_image_or_map(story.thumbnail_url, story.coords)), story, :class => :frame %>
         <%= show_exclamation?(story) %>
 
         <div class="infowindow">

@@ -18,7 +18,7 @@ end %>
 
           <a href="<%= story_path(story) %>">
             <div class="frame">
-              <%= image_tag(story_image_or_map(story)) %>
+              <%= image_tag(story_image_or_map(story.thumbnail_url, story.coords)) %>
             </div>
           </a>
 

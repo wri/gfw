@@ -96,7 +96,11 @@ class Story < CartoDB::Model::Base
   end
 
   def main_thumbnail
-    media.first rescue nil
+    @main_thumbnail ||= media.first rescue nil
+  end
+
+  def thumbnail_url
+    @thumbnail_url ||= main_thumbnail.try(:thumbnail_url)
   end
 
   def to_param
@@ -128,4 +132,21 @@ class Story < CartoDB::Model::Base
       lng: lon
     }
   end
+
+  def self.random(limit)
+    results = CartoDB::Connection.query(<<-SQL)
+      SELECT DISTINCT ON (stories.cartodb_id)
+             stories.cartodb_id,
+             stories.title,
+             stories.your_name,
+             stories.featured,
+             ST_X(ST_Centroid(stories.the_geom)) || ',' || ST_Y(ST_Centroid(stories.the_geom)) AS coords,
+             media.thumbnail_url
+      FROM stories
+      LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
+    SQL
+    return results.rows.try(:sample, 5) || [] if results
+    []
+  end
+
 end

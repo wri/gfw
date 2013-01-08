@@ -9,7 +9,7 @@ class StoriesController < ApplicationController
     @stories         = if params['for-map'].present?
                          Story.all_for_map
                        else
-                         Story.all.sample(5)
+                         Story.random(5)
                        end
 
     respond_to do |format|
@@ -19,7 +19,7 @@ class StoriesController < ApplicationController
   end
 
   def show
-    @stories = Story.all.first(4)
+    @stories = Story.random(5)
   end
 
   def new
