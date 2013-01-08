@@ -24,8 +24,8 @@ $cGray0:                 #000000;
 
 $cSeparator:             #E5E5E5;
 
-$cConcessions:           $cGold;
-$cConcessionsHover:      $cDarkGold;
+$cPermits:           $cGold;
+$cPermitsHover:      $cDarkGold;
 
 $cProtectedAreas:        #00CED0; // blue
 $cProtectedAreasHover:   #00B9B9;
@@ -69,8 +69,8 @@ $cPostBody:              #666666;
 .cGray0      { background-color: $cGray0; }
 .cGold       { background-color: $cGold; }
 
-.cConcessions      { background-color: $cConcessions; }
-.cConcessionsHover { background-color: $cConcessionsHover; }
+.cPermits      { background-color: $cPermits; }
+.cPermitsHover { background-color: $cPermitsHover; }
 
 .cProtectedAreas   { background-color: $cProtectedAreas; }
 .cMining           { background-color: $cMining; }
@@ -95,7 +95,7 @@ $icons-download_arrow-spacing:20px;
 $icons-download_arrow_hover-spacing:20px;
 $icons-bars-spacing:20px;
 
-$icons-concessions-spacing:20px;
+$icons-permits-spacing:20px;
 $icons-protected_areas-spacing: 20px;
 $icons-mining-spacing: 20px;
 $icons-fire-spacing: 20px;
@@ -106,7 +106,7 @@ $icons-radio_fire-spacing: 44px;
 $icons-checkboxes-spacing: 40px;
 $icons-checkboxes_mining-spacing: 40px;
 $icons-checkboxes_regrowth-spacing: 40px;
-$icons-checkboxes_concessions-spacing: 40px;
+$icons-checkboxes_permits-spacing: 40px;
 $icons-checkboxes_forest-spacing: 40px;
 $icons-checkboxes_mining-spacing: 40px;
 $icons-checkboxes_other_layers-spacing: 40px;
@@ -271,7 +271,7 @@ strong { font-weight: bold; } // This is sad, I know.
   color: $cGray4;
 
   &.special_projects { color: $cSpecialProjects; }
-  &.concessions      { color: $cConcessions; }
+  &.permits      { color: $cPermits; }
   &.regrowth         { color: $cRegrowth; }
   &.mining           { color: $cMining; }
   &.other_layers     { color: $cOtherLayers;  }
@@ -300,12 +300,12 @@ strong { font-weight: bold; } // This is sad, I know.
     a:hover       { color: $cSpecialProjectsHover; }
   }
 
-  &.concessions {
-    & > a         { color: $cConcessions; }
-    a.checked     { color: $cConcessions; }
-    a.title       { color: $cConcessions; }
-    a.title:hover { color: $cConcessions; }
-    a:hover       { color: $cConcessionsHover; }
+  &.permits {
+    & > a         { color: $cPermits; }
+    a.checked     { color: $cPermits; }
+    a.title       { color: $cPermits; }
+    a.title:hover { color: $cPermits; }
+    a:hover       { color: $cPermitsHover; }
   }
 
   &.regrowth {
@@ -361,7 +361,7 @@ strong { font-weight: bold; } // This is sad, I know.
 }
 
 .filter-icons {
-  &.concessions     .icon  { @include icons-sprite(icon_concessions); }
+  &.permits     .icon  { @include icons-sprite(icon_concessions); }
   &.protected_areas .icon  { @include icons-sprite(icon_protected_areas); }
   &.mining          .icon  { @include icons-sprite(icon_mining); }
   &.fire            .icon  { @include icons-sprite(icon_fire); }
@@ -379,7 +379,7 @@ strong { font-weight: bold; } // This is sad, I know.
   .line { background-color: $cOtherLayers; }
 
   &.special_projects .line { background-color: $cSpecialProjects; }
-  &.concessions      .line { background-color: $cConcessions; }
+  &.permits      .line { background-color: $cPermits; }
   &.protected_areas  .line { background-color: $cProtectedAreas; }
   &.intact-forest    .line { background-color: $cForest; }
   &.regrowth         .line { background-color: $cRegrowth; }
@@ -407,7 +407,7 @@ strong { font-weight: bold; } // This is sad, I know.
     background:url(icons/bullet_deforestation.png) no-repeat $left $top;
   }
 
-  &.concessions {
+  &.permits {
     background:url(icons/bullet_concessions.png) no-repeat $left $top;
   }
   &.mining {
