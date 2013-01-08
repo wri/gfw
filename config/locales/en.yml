@@ -81,7 +81,7 @@ en:
     about:
       title: 'About Global Forest Watch'
       about_link: 'About'
-      introduction: '<p>Global Forest Watch 2.0 (GFW 2.0) is an initiative convened by the World Resources Institute that unites technology, transparency, and human networks to mobilize more timely and effective forest conservation and sustainable forest management.  GFW 2.0 combines near-real-time forest monitoring, forest management boundary maps, protected areas, mobile technology, crowd-sourced data, and a networked world to create never-before-possible forest transparency.</p><p>We welcome others to join our growing GFW 2.0 partnership.</p>'
+      introduction: '<p>Global Forest Watch 2.0 (GFW 2.0) is an initiative convened by the <a href="www.wri.org">World Resources Institute</a> that unites technology, transparency, and human networks to mobilize more timely and effective forest conservation and sustainable forest management.  GFW 2.0 combines near-real-time forest monitoring, forest management boundary maps, protected areas, mobile technology, crowd-sourced data, and a networked world to create never-before-possible forest transparency.</p><p>We welcome others to join our growing GFW 2.0 partnership.</p>'
       partners: 'Partners'
       project_funders: 'Funders'
       supporters_providers: 'Support & data'
@@ -105,7 +105,7 @@ en:
     index:
       title: "Case Studies"
     new:
-      title: "Submit Story"
+      title: "Submit a story"
     form:
       title: 'Title'
       the_geom: 'Affected Area'

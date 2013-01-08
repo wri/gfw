@@ -268,7 +268,8 @@ nav {
 
         a {
           @include inline-block();
-          background: url('backgrounds/triangle.png') no-repeat 32px 10px;
+          background: url('backgrounds/triangle.png') no-repeat 67px 10px;
+          color: $cGray3;
         }
       }
     } // li

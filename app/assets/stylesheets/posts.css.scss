@@ -240,12 +240,14 @@ body.countries {
         @extend .sans-serif;
         font-size:    16px;
         line-height:  20px;
+
       }
 
       a {
-        color: $cPostBody;
-        text-decoration:underline;
-        &:hover { color: $cDarkGold; }
+        color: $cLime;
+        text-decoration:none;
+        font-weight: bold;
+        &:hover {text-decoration: underline;}
       }
 
 
