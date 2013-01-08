@@ -1136,7 +1136,7 @@ footer > .download {
   display:none;
 
   @include size(117px, false);
-  @include position(33px, -45px, false, false);
+  @include position(33px, false, false, false);
   @include border-radius(3px);
   @include box-shadow(0px 0px 10px $cGray4);
 

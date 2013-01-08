@@ -89,7 +89,7 @@ function loadGFW() {
     gallery           = new gfw.ui.view.Gallery({ title: "Other WRI sites", sites: sites });
     languageSelector  = new gfw.ui.view.LanguageSelector();
 
-    $("nav").append(languageSelector.render());
+    $("body").append(languageSelector.render());
 
     $(".more_stories li").on("mouseleave", function(e) {
       var $this = $(this);
