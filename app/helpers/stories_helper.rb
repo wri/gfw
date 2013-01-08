@@ -48,32 +48,18 @@ module StoriesHelper
     link_to 'Case Studies', stories_path
   end
 
-  def coords(story)
-    #the_geom = story.attributes[:the_geom]
+  def story_image_or_map(thumbnail_url, coords)
+    return thumbnail_url if thumbnail_url.present?
 
-    #return '' if the_geom.blank?
-
-    #coords = [the_geom.centroid.y, the_geom.centroid.x] if     the_geom.respond_to?(:centroid)
-    #coords = [the_geom.y, the_geom.x]                   unless the_geom.respond_to?(:centroid)
-
-    #coords.map{|coord| number_with_precision(coord, :precision => 2)}.join(', ')
-    story.coords
+    static_map(coords)
   end
 
-  def story_image_or_map(story)
-    image = story.main_thumbnail.try(:thumbnail_url)
-    return image if image.present?
-
-    static_map(story)
-  end
-
-  def static_map(story)
-    static_map_url = lambda{|lat_lon| "http://maps.google.com/maps/api/staticmap?center=#{lat_lon}&zoom=3&size=266x266&maptype=terrain&sensor=false" }
-    static_map_url.call(coords(story))
+  def static_map(coords)
+    "http://maps.google.com/maps/api/staticmap?center=#{coords}&zoom=3&size=266x266&maptype=terrain&sensor=false"
   end
 
   def show_exclamation?(story)
-    link_to "", story, :class => 'exclamation' unless story.featured || story.main_thumbnail.try(:thumbnail_url).present?
+    link_to "", story, :class => 'exclamation' unless story.featured || story.thumbnail_url.present?
   end
 
   def error_message_for(story, field)

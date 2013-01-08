@@ -61,7 +61,7 @@ end %>
     <% @featured.each do |story| %>
       <li>
       <a href="<%= story_path(story) %>">
-        <%= image_tag(story_image_or_map(story)) %>
+        <%= image_tag(story_image_or_map(story.thumbnail_url, story.coords)) %>
         <div class="gradient"></div>
         <div class="frame"></div>
         <div class="title">
