@@ -105,7 +105,7 @@ en:
     index:
       title: "Case Studies"
     new:
-      title: "Submit Story"
+      title: "Submit a story"
     form:
       title: 'Title'
       the_geom: 'Affected Area'
