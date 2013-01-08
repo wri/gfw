@@ -86,6 +86,12 @@ GFWMarker.prototype.changeOpacity = function(opacity) {
   }, {queue: true, duration:500});
 };
 
+GFWMarker.prototype.toggle = function(animate) {
+  if (this.div_ && !$(this.div_).hasClass('h')) {
+  this.hide(animate);
+  } else this.show(animate);
+};
+
 GFWMarker.prototype.show = function(animate) {
   if (this.div_ && $(this.div_).hasClass('h')) {
     var div = this.div_;

@@ -52,6 +52,8 @@ GFW.modules.app = function(gfw) {
       this.infowindow = new CartoDBInfowindow(map);
 
       this.queries = {};
+      this.storiesMarkers = [];
+      this.storiesFeatures = [];
 
       // we can stop loading the blank (see limit=0 below) tileset here now that we are loading the animation. see todo on line 347
       this.queries.semi_monthly     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 17 ELSE {Z}+8 END limit 0";
@@ -70,7 +72,6 @@ GFW.modules.app = function(gfw) {
 
       this._loadBaseLayer();
       this._loadStoriesLayer();
-
 
       this._setupZoom();
 
@@ -363,7 +364,23 @@ GFW.modules.app = function(gfw) {
       GFW.app.baseLayer.setOptions({ opacity: 1, table_name: this._getTableName(this.currentBaseLayer), query: GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom())  });
     },
 
+    _toggleStoriesLayer: function() {
+      var that = this;
+
+      _.each(that.storiesFeatures, function(feature) {
+        if (feature.visible) feature.setVisible(false);
+        else feature.setVisible(true);
+      });
+
+      _.each(that.storiesMarkers, function(marker) {
+        marker.toggle();
+      });
+
+    },
+
     _loadStoriesLayer: function() {
+
+      var that = this;
 
       $.ajax({
         async: false,
@@ -382,6 +399,7 @@ GFW.modules.app = function(gfw) {
 
             if (feature.length > 0) {
               feature[0].setMap(map);
+              that.storiesFeatures.push(feature[0]);
             }
 
             var title = story.title;
@@ -392,6 +410,7 @@ GFW.modules.app = function(gfw) {
 
             marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: story.thumbnail_url, content: "<strong><a href='/stories/"+ story.id +"'>" + title + "</a></strong> Submitted by " + story.name });
             marker.setMap(map);
+            that.storiesMarkers.push(marker);
 
           });
         }
@@ -565,7 +584,20 @@ GFW.modules.maplayer = function(gfw) {
           that._hideBaseLayers(GFW.app);
         };
 
-        Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, zoomEvent: function() { } , source: null });
+        Filter.addFilter("", this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, zoomEvent: function() { } , source: null });
+
+      } else if (this.layer.get('slug') == "user_stories") {
+
+        var customEvent = function() {
+          clickEvent();
+          GFW.app._toggleStoriesLayer();
+        };
+
+        Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, zoomEvent: zoomEvent, source: null }, true);
+        Filter.check(this.layer.get('id'));
+
+        legend.add(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
+
 
       } else {
 
@@ -669,7 +701,12 @@ GFW.modules.maplayer = function(gfw) {
         } else {
           GFW.app._removeLayer(this.layer);
         }
-        Filter.toggle(id);
+
+        // We don't store the id of the user_stories layer in the URL
+        if (slug != 'user_stories') {
+          Filter.toggle(id);
+        }
+
       }
 
     }

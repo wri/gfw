@@ -24,8 +24,11 @@ $cGray0:                 #000000;
 
 $cSeparator:             #E5E5E5;
 
-$cPermits:           $cGold;
-$cPermitsHover:      $cDarkGold;
+$cStories:               $cGold;
+$cStoriesHover:          $cDarkGold;
+
+$cPermits:               $cGold;
+$cPermitsHover:          $cDarkGold;
 
 $cProtectedAreas:        #00CED0; // blue
 $cProtectedAreasHover:   #00B9B9;
@@ -68,6 +71,9 @@ $cPostBody:              #666666;
 .cGray1      { background-color: $cGray1; }
 .cGray0      { background-color: $cGray0; }
 .cGold       { background-color: $cGold; }
+
+.cStories      { background-color: $cStories; }
+.cStoriesHover { background-color: $cStoriesHover; }
 
 .cPermits      { background-color: $cPermits; }
 .cPermitsHover { background-color: $cPermitsHover; }
@@ -271,7 +277,8 @@ strong { font-weight: bold; } // This is sad, I know.
   color: $cGray4;
 
   &.special_projects { color: $cSpecialProjects; }
-  &.permits      { color: $cPermits; }
+  &.permits          { color: $cPermits; }
+  &.stories          { color: $cStories; }
   &.regrowth         { color: $cRegrowth; }
   &.mining           { color: $cMining; }
   &.other_layers     { color: $cOtherLayers;  }
@@ -298,6 +305,14 @@ strong { font-weight: bold; } // This is sad, I know.
     a.title       { color: $cSpecialProjects; }
     a.title:hover { color: $cSpecialProjects; }
     a:hover       { color: $cSpecialProjectsHover; }
+  }
+
+  &.stories {
+    & > a         { color: $cStories; }
+    a.checked     { color: $cStories; }
+    a.title       { color: $cStories; }
+    a.title:hover { color: $cStories; }
+    a:hover       { color: $cStoriesHover; }
   }
 
   &.permits {
@@ -365,6 +380,7 @@ strong { font-weight: bold; } // This is sad, I know.
   &.protected_areas .icon  { @include icons-sprite(icon_protected_areas); }
   &.mining          .icon  { @include icons-sprite(icon_mining); }
   &.fire            .icon  { @include icons-sprite(icon_fire); }
+  &.stories         .icon  { @include icons-sprite(icon_stories); }
   &.forest_clearing .icon  { @include icons-sprite(icon_forest_clearing); }
   &.forest_cover 		.icon  { @include icons-sprite(icon_forest_cover); }
   &.carbon          .icon  { @include icons-sprite(icon_concessions); }
@@ -379,7 +395,8 @@ strong { font-weight: bold; } // This is sad, I know.
   .line { background-color: $cOtherLayers; }
 
   &.special_projects .line { background-color: $cSpecialProjects; }
-  &.permits      .line { background-color: $cPermits; }
+  &.permits          .line { background-color: $cPermits; }
+  &.stories          .line { background-color: $cStories; }
   &.protected_areas  .line { background-color: $cProtectedAreas; }
   &.intact-forest    .line { background-color: $cForest; }
   &.regrowth         .line { background-color: $cRegrowth; }
@@ -406,7 +423,6 @@ strong { font-weight: bold; } // This is sad, I know.
   &.forest_clearing {
     background:url(icons/bullet_deforestation.png) no-repeat $left $top;
   }
-
   &.permits {
     background:url(icons/bullet_concessions.png) no-repeat $left $top;
   }

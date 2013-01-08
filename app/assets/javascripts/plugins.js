@@ -5,7 +5,7 @@ var SubscriptionMap = (function() {
   $input   = $modal.find(".input-field"),
   colors   = ['#1E90FF', '#FF1493', '#32CD32', '#FF8C00', '#4B0082'],
   zoomInit = false,
-  state    = 0, 
+  state    = 0,
   subscribeMap,
   drawingManager,
   positionClicked,
@@ -329,15 +329,15 @@ var SubscriptionMap = (function() {
       google.maps.event.clearListeners(drawingManager, 'overlaycomplete')
       google.maps.event.clearListeners(drawingManager, 'drawingmode_changed')
       drawingManager.setMap(null);
-      $modal.find(".remove").fadeOut(250);  
+      $modal.find(".remove").fadeOut(250);
     }
-    
+
     // Remove PPE & World bindings
     if (subscribeMap.overlayMapTypes.getLength() > 0) {
       google.maps.event.clearListeners(subscribeMap, 'click');
       subscribeMap.overlayMapTypes.removeAt(0);
     }
-    
+
     // Remove loader
     hideLoader();
   }
