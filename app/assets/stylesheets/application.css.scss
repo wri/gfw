@@ -350,7 +350,7 @@ nav {
 
   padding: 45px 0 59px 0;
   background:url(backgrounds/bkg_header.png) repeat-x top center #FFFFFF;
-  height: 400px;
+  height: 520px;
 
   h3 {
     @extend .serif;
@@ -372,6 +372,12 @@ nav {
       color: $cLime;
       text-decoration: none;
       font-weight: bold;
+
+      &.green {
+        margin: 15px 0 0 0;
+        color: #FFFFFF;
+        &:hover { @include dark-glow(0.5); }        
+      }
     }
   }
 
@@ -462,6 +468,14 @@ nav {
         }
       }
     }
+  }
+
+  div.submit_story {
+    width: 900px;
+    margin: 30px auto 0 auto;
+    padding: 40px 0 40px 0;
+    border-top: 1px solid $cGray4;
+
   }
 }
 
