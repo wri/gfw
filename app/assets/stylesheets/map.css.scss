@@ -427,8 +427,6 @@
 
   cursor: move;
 
-  z-index: 1000;
-
   .toggle {
     @include position(2px, -25px, false, false);
     @include size(25px, 38px);
@@ -700,16 +698,19 @@ $timelineWidth: 940px;
   position:absolute;
   display:block;
   width:$width;
-  padding:0 0 6px;
+  padding: 0 0 6px;
   visibility:hidden;
   text-align:center;
 
   $pR: 18px;
   $pL: 10px;
 
+  a.link { display: block!important; background:red!important; }
+  .infowindow_content a { color: $cLime; }
+
   .outer_top {
     width:$width - $pL - $pR;
-    padding:15px $pR  5px $pL;
+    padding:10px $pR  5px $pL;
     background:url('icons/bkg_infowindow_story.png') no-repeat left top;
   }
 

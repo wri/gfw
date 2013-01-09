@@ -408,7 +408,9 @@ GFW.modules.app = function(gfw) {
               title = $.trim(title).substring(0, 34).split(" ").slice(0, -1).join(" ") + "...";
             }
 
-            marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: story.thumbnail_url, content: "<strong><a href='/stories/"+ story.id +"'>" + title + "</a></strong> Submitted by " + story.name });
+            var content = "<strong><a href='/stories/"+ story.id +"'>" + title + "</a></strong> <span>by " + story.name + " &middot; </span><a href='/stories/"+ story.id +"'>read more</a>";
+
+            marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: story.thumbnail_url, content: content });
             marker.setMap(map);
             that.storiesMarkers.push(marker);
 
