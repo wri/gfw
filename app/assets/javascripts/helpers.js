@@ -1,3 +1,7 @@
+function prettifyFilename(filename) {
+  return filename.toLowerCase().replace(/ /g,"_")
+}
+
 function getFilename(url) {
   return url.replace(/^.*[\\\/]/, '')
 }

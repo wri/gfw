@@ -266,7 +266,10 @@ $(function() {
         filesAdded += _.size(data.files);
 
         _.each(data.files, function(file) {
-          var $thumbnail = $("<li class='thumbnail preview' data-name='"+file.name+"' />");
+
+          var filename = prettifyFilename(file.name);
+          var $thumbnail = $("<li class='thumbnail preview' data-name='"+filename+"' />");
+
           $(".thumbnails").append($thumbnail);
           $thumbnail.fadeIn(250);
 
@@ -336,14 +339,15 @@ $(function() {
 
           });
 
-          var filename = getFilename(file.image_url);
-
-          $(".thumbnails").append($thumb);
+          var filename = prettifyFilename(getFilename(file.image_url));
 
           $(".thumbnail[data-name='"+filename+"']").fadeOut(250, function() {
             $(this).remove();
+
+            $(".thumbnails").append($thumb);
             $thumb.fadeIn(250);
           });
+
 
         });
 
