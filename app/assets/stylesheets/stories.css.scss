@@ -226,24 +226,36 @@ body.stories {
 
           .infowindow {
             display:none;
-            padding: 7px;
-            @include position(-40px, false, false, -30px);
-            @include size(156px, 69px);
-            background:url(backgrounds/bkg_infowindow.png) no-repeat;
+            padding: 12px;
+            @include position(false, false, 90px, -30px);
+            width: 156px;
+            background:red;
+            @include border-radius(3px);
+
+            background:#111;
+
             z-index: 1000;
 
             color: #999999;
             font-size: 12px;
+
             @extend .sans-serif;
 
             text-align: left;
+
+            .tip {
+              @include size(13px, 6px);
+              @include absolute-landscape-center(13px);
+              @include icons-sprite(infowindow_tip);
+              bottom: -6px;
+            }
 
             strong a {
 
               display:block;
               margin: 0 0 5px 0;
               width: 140px;
-            text-align: left;
+              text-align: left;
 
               color: #F3F2F0;
               font-family: Georgia, serif;
