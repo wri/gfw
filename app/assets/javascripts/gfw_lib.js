@@ -598,7 +598,7 @@ GFW.modules.maplayer = function(gfw) {
         Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, zoomEvent: zoomEvent, source: null }, true);
         Filter.check(this.layer.get('id'));
 
-        legend.add(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
+        legend.add(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
 
 
       } else {
@@ -611,11 +611,11 @@ GFW.modules.maplayer = function(gfw) {
           this.layer.attributes["visible"] = true;
 
           Filter.check(this.layer.get('id'));
-          legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
+          legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
 
 
         } else if (this.layer.get('table_name') == 'gfw2_forma') {
-          legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('category_color'), this.layer.get('title_color'));
+          legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
         }
       }
 
@@ -671,7 +671,7 @@ GFW.modules.maplayer = function(gfw) {
       sad           = GFW.app.datalayers.LayersObj.get(567);
 
       if (category != 'Forest clearing') {
-        legend.toggleItem(id, category_slug, category, title, category_color, title_color);
+        legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
       }
 
       if (slug === 'semi_monthly' || slug === "annual" || slug === "brazilian_amazon") {
@@ -694,7 +694,7 @@ GFW.modules.maplayer = function(gfw) {
           sad.attributes['visible']  = true;
         }
 
-        legend.replace(id, category_slug, category, title, category_color, title_color);
+        legend.replace(id, category_slug, category, title, slug, category_color, title_color);
 
       } else {
 
