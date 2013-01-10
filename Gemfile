@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2.3'
+gem 'rails', '~> 3.2.11'
 
 gem 'rgeo', '0.3.19'
 gem 'cartodb-rb-client', :path => 'vendor/gems/cartodb-rb-client-0.4.4'
