@@ -702,10 +702,11 @@ $timelineWidth: 940px;
   height: $height;
 
   @include absolute-landscape-center($width);
-  top: 80px;
+  top: 230px;
 
   display:none;
   padding: 20px;
+  padding-right: 5px;
 
   @include box-shadow(0px 0px 7px $cGray2);
   @include border-radius(3px);
@@ -713,9 +714,11 @@ $timelineWidth: 940px;
   background:#fff;
   border: 1px solid #757573;
 
+  z-index: 10000;
+
   .close {
     display:block;
-    @include position(15px, 30px, false, false);
+    @include position(15px, 15px, false, false);
     @include icons-sprite(infowindow_close);
     @include size(6px);
   }

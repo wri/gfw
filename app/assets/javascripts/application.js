@@ -68,7 +68,7 @@ function loadGFW() {
 
       $("#map").append(layerSelector.render());
       $("#map").append(legend.render());
-      $("#map").append(sourceWindow.render());
+      $("body").append(sourceWindow.render());
 
       legend.setDraggable(true);
       layerSelector.setDraggable(true);
