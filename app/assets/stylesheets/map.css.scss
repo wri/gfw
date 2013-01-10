@@ -855,14 +855,13 @@ $timelineWidth: 940px;
   position:absolute;
   display:block;
   width:$width;
-  min-width:$width;
   max-height: 250px;
   padding:0 0 6px;
   visibility:hidden;
   text-align:center;
 
   a.close {
-    @include position(20px, 18px, false, false);
+    @include position(20px, 5px, false, false);
     @include size(6px);
     @include icons-sprite(infowindow_close);
   }

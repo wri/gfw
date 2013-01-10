@@ -6,9 +6,9 @@
   function CartoDBInfowindow(map, opts) {
 
     this.latlng_ = null;
-    this.offsetHorizontal_ = 5;
-    this.offsetVertical_   = 5;
-    this.width_ = 214;
+    this.offsetHorizontal_ = 0;
+    this.offsetVertical_   = -10;
+    this.width_ = 255;
     this.div_ = null;
     this.map_ = map;
     this.setMap(map);
