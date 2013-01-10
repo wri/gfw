@@ -783,6 +783,12 @@ $timelineWidth: 940px;
         margin: 0 0 7px 0;
         line-height:normal;
       }
+        p.credits {
+          margin: 7px 0 0 0;
+          font-size:13px;
+          color:$cGray4;
+          line-height:16px;
+        }
 
       strong {
         display:block;
