@@ -485,6 +485,13 @@
         clear:both;
         overflow:hidden;
 
+        &.stories {
+          .source {
+            display:none;
+
+          }
+        }
+
         &:last-child { margin: 0; }
 
         i {
