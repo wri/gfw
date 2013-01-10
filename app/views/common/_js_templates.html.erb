@@ -28,8 +28,9 @@
   </script>
 
   <script id="window-template" type="text/x-underscore-template">
-    <div class="content">
-      {{ content }}
+      <a href="#" class="close"></a>
+      <div class="content">
+        <%= render 'sources/sources' %>
     </div>
   </script>
 
@@ -121,12 +122,12 @@
   <script id="legend-group-template" type="text/x-underscore-template">
     <ul class="{{category}}">
       <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
-      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="/sources#{{category}}" class="source"></a></div></li>
+      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-category="{{category}}" class="source"></a></div></li>
     </ul>
   </script>
 
   <script id="legend-item-template" type="text/x-underscore-template">
-    <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="/sources#{{category}}" class="source"></a></div></li>
+    <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-category="{{category}}" class="source"></a></div></li>
   </script>
 
   <script id="dialog-template" type="text/x-underscore-template">

@@ -30,6 +30,7 @@ subscribeMap;
 
 GOD               = {},
 legend            = {},
+sourceWindow      = {},
 gallery           = {},
 languageSelector  = {},
 layerSelector     = {},
@@ -62,10 +63,12 @@ function loadGFW() {
 
       layerSelector = new gfw.ui.view.LayerSelector({ map: map });
       legend        = new gfw.ui.view.Legend();
+      sourceWindow  = new gfw.ui.view.SourceWindow();
       Infowindow    = new CartoDBInfowindow(map, { className: "story_infowindow", width: 174 });
 
       $("#map").append(layerSelector.render());
       $("#map").append(legend.render());
+      $("#map").append(sourceWindow.render());
 
       legend.setDraggable(true);
       layerSelector.setDraggable(true);
@@ -126,6 +129,7 @@ function loadGFW() {
     window.layerSelector    = layerSelector;
     window.languageSelector = languageSelector;
     window.legend           = legend;
+    window.sourceWindow     = sourceWindow;
 
     if (map) {
       GFW(function(env) {

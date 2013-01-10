@@ -11,17 +11,17 @@ end %>
 <% end %>
 
 <% content_for :download do %>
-<div class="download">
-  <div class="inner">
-    <%= content_tag :h1, (raw t('layouts.application.footer.download.title', :url => "/countries")) %>
-    <%= content_tag :p, (raw t('layouts.application.footer.download.data_html', :url => "/sources")) %>
-</div>
-</div>
+  <div class="download">
+    <div class="inner">
+      <%= content_tag :h1, (raw t('layouts.application.footer.download.title', :url => "/countries")) %>
+      <%= content_tag :p, (raw t('layouts.application.footer.download.data_html', :url => "/sources")) %>
+    </div>
+  </div>
 <% end %>
 
 
 <% content_for :filters do %>
-<div id="filters"><%= render "common/filters" %></div>
+  <div id="filters"><%= render "common/filters" %></div>
 <% end %>
 
 <%= render "common/map" %>
@@ -54,8 +54,8 @@ end %>
 
 <div class="home-stories">
 
-  <h3>Submit your story about forest change</h3>
-  <p>Browse <%= link_to "all stories", stories_path%> or <%= link_to "submit yours", new_story_path %>. Participate in detecting forest change.</p>
+  <h3>Stories about forest change</h3>
+  <p>Browse <%= link_to "featured case studies", stories_path%> or <%= link_to "explore all in the map", map_path%>.</p>
 
   <ul>
     <% @featured.each do |story| %>
@@ -73,6 +73,13 @@ end %>
       </li>
     <% end %>
   </ul>
+  <div class="submit_story">
+    <p>Do you have a story? Participate in detecting forest change.</p>
+    <p><%= link_to (content_tag :span, "Submit your story"), new_story_path, :class => "btn green white_glow" %></p>
+  </div>
 
 </div>
 
+<div id="sources" class="sources">
+  <%= render 'sources/sources' %>
+</div>

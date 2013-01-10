@@ -289,6 +289,24 @@ strong { font-weight: bold; } // This is sad, I know.
   &.carbon           { color: $cGray4;}
   &.biodiversity     { color: $cGray4; }
 }
+
+.filter-border-colors {
+
+  border-color: $cGray4;
+
+  &.special_projects { border-color: $cSpecialProjects; }
+  &.permits          { border-color: $cPermits; }
+  &.stories          { border-color: $cStories; }
+  &.regrowth         { border-color: $cRegrowth; }
+  &.mining           { border-color: $cMining; }
+  &.other_layers     { border-color: $cOtherLayers;  }
+  &.protected_areas  { border-color: $cProtectedAreas; }
+  &.forest_clearing  { border-color: $cDeforestation; }
+  &.forest_cover     { border-color: $cForest; }
+  &.fire             { border-color: $cFire; }
+  &.carbon           { border-color: $cGray4;}
+  &.biodiversity     { border-color: $cGray4; }
+}
 // Different filter elements
 .filter-links {
 
