@@ -524,12 +524,14 @@
 
         a.source {
           @include inline-block();
-          @include size(11px);
+          @include size(10px);
           @include icons-sprite(information);
 
           &:hover {
             @include icons-sprite(information);
           }
+
+          &.special_projects { display: none; }
         }
 
         div {
