@@ -33,7 +33,11 @@
   </script>
 
   <script id="layer-item-radio-template" type="text/x-underscore-template">
-    <li id="filter_{{ id }}" class="{{ category }}"><a href="#" class="radio {{ category }} {{ disabled ? 'disabled' : '' }}" data-name={{ category }}>{{name}}</a></li>
+    <li id="filter_{{ id }}" class="{{ category }}"><a href="#" class="radio {{ category }} {{ disabled ? 'disabled' : '' }}" data-name={{ category }}>{{name}}</a>
+
+    <a href="#" data-category="{{category}}" data-slug="{{slug}}" class="source {{ slug == 'nothing' || slug == 'regrowth' || slug == 'user_stories' ? 'hidden' : '' }}"></a>
+
+    </li>
   </script>
 
   <script id="layer-item-checkbox-template" type="text/x-underscore-template">
@@ -45,7 +49,6 @@
     </a>
 
     <a href="#" data-category="{{category}}" data-slug="{{slug}}" class="source"></a>
-    
 
     </li>
 
