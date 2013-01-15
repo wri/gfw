@@ -966,6 +966,18 @@ var Filter = (function() {
     $layer.find(".links li." + liClass).show();
     $layer.find(".links li." + liClass).last().addClass("last");
 
+
+
+    $layer.find(".source").click(function(e) {
+      e.preventDefault();
+
+      var source = $(e.target).attr("data-slug");
+
+      sourceWindow.show(source);
+    });
+
+
+
     $layer.addClass(liClass);
 
     lastClass = liClass;
@@ -1055,7 +1067,7 @@ var Filter = (function() {
     if (cat === 'forest_clearing') {
 
       layerItemTemplate = _.template($("#layer-item-radio-template").html());
-      $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat, disabled: disabled, source: source }));
+      $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
 
       if (!disabled) { // click binding
         $layerItem.find("a:not(.source)").on("click", function() {
@@ -1068,7 +1080,7 @@ var Filter = (function() {
 
     } else {
       layerItemTemplate = _.template($("#layer-item-checkbox-template").html());
-      $layerItem = $(layerItemTemplate({ name: name, id: id, category: cat, disabled: disabled, source: source }));
+      $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
 
       if (!disabled) { // click binding
         $layerItem.find("a:not(.source)").on("click", function() {

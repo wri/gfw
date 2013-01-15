@@ -45,19 +45,26 @@
         &.last { border:none; }
       }
 
-      a {
+      a.radio, a.checkbox {
+        position: relative;
         @extend .sans-serif;
         display:block;
-        width: 140px;
+        width: 130px;
         font-size:13px;
         line-height:17px;
+
+        .name { width :100px; }
       }
 
     }
-    span.source {
-      @include inline-block();
-      @include size(11px);
+
+    .source {
+      /*@include inline-block();*/
+      @include size(10px);
       @include icons-sprite(information);
+
+      @include absolute-portrait-center(10px);
+      right: 20px;
 
       &:hover {
         @include icons-sprite(information);
