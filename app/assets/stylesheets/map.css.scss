@@ -46,13 +46,22 @@
       }
 
       a {
-          @extend .sans-serif;
-          display:block;
-          width: 140px;
-          font-size:13px;
-          line-height:17px;
+        @extend .sans-serif;
+        display:block;
+        width: 140px;
+        font-size:13px;
+        line-height:17px;
       }
 
+    }
+    span.source {
+      @include inline-block();
+      @include size(11px);
+      @include icons-sprite(information);
+
+      &:hover {
+        @include icons-sprite(information);
+      }
     }
 
     & > a {
@@ -538,8 +547,8 @@
 
 
 /*
-* TIMELINE
-*/
+ * TIMELINE
+ */
 
 $timelineWidth: 940px;
 
@@ -706,7 +715,7 @@ $timelineWidth: 940px;
 .source_window {
 
   $width: 497px;
-  $height: 409px;
+  $height: 100px;
 
   height: $height;
 
@@ -769,13 +778,13 @@ $timelineWidth: 940px;
     }
 
     ul li {
-      margin: 0 0 10px 0;
+      /*margin: 0 0 10px 0;*/
 
       p { width: 475px; }
 
-      border-bottom: 1px solid #E5E5E5;
-      margin: 0 0 13px 0;
-      padding: 0 0 5px 0;
+      /*border-bottom: 1px solid #E5E5E5;*/
+      /*margin: 0 0 13px 0;*/
+      /*padding: 0 0 5px 0;*/
 
       &:last-child { border:none; }
 
@@ -785,12 +794,12 @@ $timelineWidth: 940px;
         margin: 0 0 7px 0;
         line-height:normal;
       }
-        p.credits {
-          margin: 7px 0 0 0;
-          font-size:13px;
-          color:$cGray4;
-          line-height:16px;
-        }
+      p.credits {
+        margin: 7px 0 0 0;
+        font-size:13px;
+        color:$cGray4;
+        line-height:16px;
+      }
 
       strong {
         display:block;
@@ -968,7 +977,7 @@ $timelineWidth: 940px;
       border-bottom: 3px solid #ccc;
 
       strong {
-      text-overflow:ellipsis;
+        text-overflow:ellipsis;
         display:block;
         @extend .sans-serif;
         font-weight:bold;
@@ -1287,28 +1296,28 @@ $timelineWidth: 940px;
   background-position: 0 0;
   /*
   sprites locations are 0 0/-16px 0/-32px 0/-48px 0 (light) and -80px 0/-96px 0/-112px 0/-128px 0 (dark)
-  */
+   */
 }
 
 .mCSB_scrollTools .mCSB_buttonDown {
   background-position: 0 -20px;
   /*
   sprites locations are 0 -20px/-16px -20px/-32px -20px/-48px -20px (light) and -80px -20px/-96px -20px/-112px -20px/-128px -20px (dark)
-  */
+   */
 }
 
 .mCSB_scrollTools .mCSB_buttonLeft {
   background-position: 0 -40px;
   /*
   sprites locations are 0 -40px/-20px -40px/-40px -40px/-60px -40px (light) and -80px -40px/-100px -40px/-120px -40px/-140px -40px (dark)
-  */
+   */
 }
 
 .mCSB_scrollTools .mCSB_buttonRight {
   background-position: 0 -56px;
   /*
   sprites locations are 0 -56px/-20px -56px/-40px -56px/-60px -56px (light) and -80px -56px/-100px -56px/-120px -56px/-140px -56px (dark)
-  */
+   */
 }
 
 .mCSB_scrollTools .mCSB_buttonUp:hover,
