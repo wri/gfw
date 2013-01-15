@@ -968,7 +968,8 @@ var Filter = (function() {
 
 
 
-    $layer.find(".source").click(function(e) {
+    $layer.find(".source").off("click");
+    $layer.find(".source").on("click", function(e) {
       e.preventDefault();
 
       var source = $(e.target).attr("data-slug");
