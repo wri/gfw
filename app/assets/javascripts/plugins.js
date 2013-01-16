@@ -1,3 +1,23 @@
+var CountryMenu = (function() {
+
+
+  function show(e) {
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    $(".countries_backdrop").fadeIn(250);
+    $("#countries").fadeIn(250);
+
+  }
+
+  return {
+    show: show
+  };
+
+}());
+
+
 var SubscriptionMap = (function() {
 
   var
@@ -49,8 +69,8 @@ var SubscriptionMap = (function() {
   }
 
   /*
-   * Changes polygon color
-   * */
+  * Changes polygon color
+  * */
   function selectColor(color) {
     selectedColor = color;
 
@@ -79,24 +99,24 @@ var SubscriptionMap = (function() {
   }
 
   /*
-   * Removes all the errors from the subscribe window
-   * */
+  * Removes all the errors from the subscribe window
+  * */
   function clearMapErrors() {
     $modal.find(".error_box").fadeOut(250);
     $modal.find(".error_box").html("");
   }
 
   /*
-   * Removes the errors
-   * */
+  * Removes the errors
+  * */
   function clearErrors() {
     clearEmailErrors();
     clearMapErrors();
   }
 
   /*
-   * Builder
-   * */
+  * Builder
+  * */
   function initialize() {
     clearMap();
     clearErrors();
@@ -106,8 +126,8 @@ var SubscriptionMap = (function() {
   }
 
   /*
-   * on remove event
-   * */
+  * on remove event
+  * */
   function remove() {
     clearErrors();
     deleteSelectedShapes();
@@ -117,8 +137,8 @@ var SubscriptionMap = (function() {
   }
 
   /*
-   * on submit event
-   * */
+  * on submit event
+  * */
   function submit() {
 
     clearErrors();
@@ -232,8 +252,8 @@ var SubscriptionMap = (function() {
   }
 
   /**
-   * Setup the button bindings
-   **/
+  * Setup the button bindings
+  **/
   function setupBindings() {
 
     $modal.find(".close_icon").off("click");
@@ -1174,7 +1194,7 @@ var Circle = (function() {
         $circle.css({marginLeft: 100 });
         toggleData();
         $circle.delay(400).animate({ marginLeft: -1*318/2, opacity: 1 }, 250, "easeOutQuad", function() {
-        $icon.animate({ backgroundSize: "100%", opacity: 1 }, 250, "easeInExpo");
+          $icon.animate({ backgroundSize: "100%", opacity: 1 }, 250, "easeInExpo");
           animatingB = false;
         });
       });

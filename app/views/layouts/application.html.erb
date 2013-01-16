@@ -28,6 +28,9 @@
       <div class="backdrop"></div>
     <% end %>
 
+    <%= render "common/countries" %>
+    <div class="countries_backdrop"></div>
+
     <%= javascript_include_tag "application" %>
 
     <%= yield :js %>

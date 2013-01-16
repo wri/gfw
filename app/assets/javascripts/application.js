@@ -74,6 +74,8 @@ function loadGFW() {
       layerSelector.setDraggable(true);
     }
 
+    $("nav ul li a.countries").on("click", CountryMenu.show);
+
     var sites = [
       new gfw.ui.model.Site({ title: "WRI", description: "To be completed.", url: "http://www.wri.org/", thumb_url: "/assets/sites/site_wri.png" }),
       new gfw.ui.model.Site({ title: "WRInsights", description: "To be completed.", url: "http://insights.wri.org/", thumb_url: "/assets/sites/site_wriinsights.png" }),
@@ -336,6 +338,11 @@ $(function(){
 
     if ($("#other_wri_sites:visible").length > 0) {
       $("#other_wri_sites").fadeOut(250);
+    }
+
+    if ($("#countries:visible").length > 0) {
+      $("#countries").fadeOut(250);
+      $(".countries_backdrop").fadeOut(250);
     }
   }
 
