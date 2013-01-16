@@ -75,18 +75,18 @@ function loadGFW() {
     }
 
     var sites = [
-      new gfw.ui.model.Site({ title: "WRI", description: "To be completed.", url: "http://www.wri.org/", thumb_url: "/assets/sites/site_wri.png" }),
-      new gfw.ui.model.Site({ title: "WRInsights", description: "To be completed.", url: "http://insights.wri.org/", thumb_url: "/assets/sites/site_wriinsights.png" }),
+      new gfw.ui.model.Site({ title: "WRI", description: "Focusing on the intersection of the environment and socio-economic development.", url: "http://www.wri.org/", thumb_url: "/assets/sites/site_wri.png" }),
+      new gfw.ui.model.Site({ title: "WRInsights", description: "Unbiased, expert analysis on the most important environmental issues facing the world today.", url: "http://insights.wri.org/", thumb_url: "/assets/sites/site_wriinsights.png" }),
       new gfw.ui.model.Site({ title: "WRI In China",  description: "To be completed.", url: "http://www.wri.org.cn/", thumb_url: "/assets/sites/site_wriinchina.png" }),
       new gfw.ui.model.Site({ title: "ChinaFAQs",  description: "To be completed", url: "http://www.chinafaqs.org/", thumb_url: "/assets/sites/site_chinafaqs.png" }),
       new gfw.ui.model.Site({ title: "TheCity Fix", description: "To be completed", url: "http://thecityfix.com/", thumb_url: "/assets/sites/site_thecityfix.png" }),
       new gfw.ui.model.Site({ title: "Climate Analysis Indicators", description: "To be completed",  url: "http://www.wri.org/tools/cait/", thumb_url: "/assets/sites/site_climateanalysis.png" }),
       new gfw.ui.model.Site({ title: "Electricity Governance", description: "To be completed", url: "http://electricitygovernance.wri.org/", thumb_url: "/assets/sites/site_electricity.png" }),
       new gfw.ui.model.Site({ title: "EMBARQ", description: "To be completed", url: "http://www.embarq.org/", thumb_url: "/assets/sites/site_embarq.png" }),
-      new gfw.ui.model.Site({ title: "Forest Legality Alliance", description: "To be completed", url: "http://www.forestlegality.org/", thumb_url: "/assets/sites/site_forestlegality.png" }),
+      new gfw.ui.model.Site({ title: "Forest Legality Alliance", description: "Reducing illegal logging through supporting the supply of legal forest products.", url: "http://www.forestlegality.org/", thumb_url: "/assets/sites/site_forestlegality.png" }),
       new gfw.ui.model.Site({ title: "New Ventures", description: "To be completed", url: "http://www.new-ventures.org/", thumb_url: "/assets/sites/site_newventures.png" }),
-      new gfw.ui.model.Site({ title: "Southern Forests for the Future", description: "To be completed", url: "http://www.seesouthernforests.org/", thumb_url: "/assets/sites/site_southernforests.png" }),
-      new gfw.ui.model.Site({ title: "World Resources Report", description: "To be completed", url: "http://www.worldresourcesreport.org/", thumb_url: "/assets/sites/site_worldresources.png" })
+      new gfw.ui.model.Site({ title: "Southern Forests for the Future", description: "Raise awareness about the forests of the southern United States", url: "http://www.seesouthernforests.org/", thumb_url: "/assets/sites/site_southernforests.png" }),
+      new gfw.ui.model.Site({ title: "World Resources Report", description: "How can the world adequately feed more than 9 billion people by 2050?", url: "http://www.worldresourcesreport.org/", thumb_url: "/assets/sites/site_worldresources.png" })
     ];
 
     gallery           = new gfw.ui.view.Gallery({ title: "Other WRI sites", sites: sites });
