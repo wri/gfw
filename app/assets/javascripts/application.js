@@ -203,9 +203,7 @@ function initialize() {
     e.preventDefault();
     History.pushState({ state: 2 }, "Home", "/");
 
-    $(".backdrop").fadeOut(250, function() {
-      $(this).remove();
-    });
+    $(".backdrop").fadeOut(250);
 
   });
 
@@ -214,9 +212,10 @@ function initialize() {
     Navigation.showState('countries');
   });
 
+  $(".share_link").off("click");
   $(".share_link").on("click", function(e) {
     e.preventDefault();
-    $("#content").append('<div class="backdrop" />');
+    //$("#content").append('<div class="backdrop" />');
     $(".backdrop").fadeIn(250, function() {
 
       var top = ( $(window).height() - $("#share").height() ) / 2+$(window).scrollTop() + "px",
@@ -227,15 +226,15 @@ function initialize() {
     });
   });
 
+  $(".analysis").off("click");
+
   $(".analysis").on("click", function(e) {
     e.preventDefault();
 
-    $("#content").append('<div class="backdrop" />');
     $(".backdrop").fadeIn(250, function() {
-
       $("#analysis").fadeIn(250);
-
     });
+
   });
 
 /*
@@ -257,9 +256,7 @@ function initialize() {
 
   $(".close_icon").on("click", function(e) {
     e.preventDefault();
-    $(".backdrop").fadeOut(250, function() {
-      $(this).remove();
-    });
+    $(".backdrop").fadeOut(250);
 
     //$("#share, #subscribe, #analysis, #crowdsourcing, #other_wri_sites").fadeOut(250);
     $("#share, #subscribe, #analysis, #other_wri_sites").fadeOut(250);
@@ -305,9 +302,8 @@ function initialize() {
     e.preventDefault();
     History.pushState({ state: 1 }, "Map", "/map");
 
-    $(".backdrop").fadeOut(250, function() {
-      $(this).remove();
-    });
+    $(".backdrop").fadeOut(250);
+
   });
 
   return false;

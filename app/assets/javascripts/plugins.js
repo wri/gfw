@@ -554,9 +554,7 @@ var SubscriptionMap = (function() {
 
 
   function hide() {
-    $(".backdrop").fadeOut(250, function() {
-      $(this).remove();
-    });
+    $(".backdrop").fadeOut(250);
 
     $modal.fadeOut(250, function() {
       clearErrors();
@@ -585,7 +583,6 @@ var SubscriptionMap = (function() {
     $modal.find(".btn.new").hide();
     $modal.find(".remove").hide();
 
-    $("#content").append('<div class="backdrop" />');
     $(".backdrop").fadeIn(250, function() {
 
       var $map = $("#subscribe_map");
