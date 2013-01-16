@@ -195,7 +195,6 @@ function initialize() {
     }
 
     //hash  = parseHash(State.hash);
-    //console.log("back", State.data.state, hash.center);
 
   });
 
