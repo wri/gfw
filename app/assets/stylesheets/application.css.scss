@@ -376,7 +376,7 @@ nav {
       &.green {
         margin: 15px 0 0 0;
         color: #FFFFFF;
-        &:hover { @include dark-glow(0.5); }        
+        &:hover { @include dark-glow(0.5); }
       }
     }
   }
@@ -549,6 +549,8 @@ article.contact {
 
   }
 }
+
+#countries { display: none; }
 
 #subscribe {
 
@@ -1134,7 +1136,7 @@ footer > .download {
 }
 
 
-.backdrop {
+.countries_backdrop, .backdrop {
   position: fixed;
   top: 0;
   right: 0;
