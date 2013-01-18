@@ -18,7 +18,7 @@ label {
   @include inline-block();
   padding: 0 0 0 20px;
 
-  @include icons-sprite(checkbox, $offset-y: 1px);
+  @include icons-sprite(checkbox, $offset-y: 2px);
 
   font-size: 15px;
   color: #666666;
@@ -30,11 +30,11 @@ label {
   @extend .sans-serif;
 
   &.hover {
-    @include icons-sprite(checkbox_hover, $offset-y: 1px);
+    @include icons-sprite(checkbox_hover, $offset-y: 2px);
   }
 
   &.checked {
-    @include icons-sprite(checkbox_checked, $offset-y: 1px);
+    @include icons-sprite(checkbox_checked, $offset-y: 2px);
   }
 
 }
