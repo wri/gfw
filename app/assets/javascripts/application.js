@@ -74,6 +74,19 @@ function loadGFW() {
       layerSelector.setDraggable(true);
     }
 
+    $(".styled.checkbox").on("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      $(this).toggleClass("checked");
+
+      if ($(this).hasClass("checked")) {
+        $(this).find("input").val(1);
+      } else
+        $(this).find("input").val(0);
+
+    });
+
     $("nav ul li a.countries").on("click", CountryMenu.show);
 
     var sites = [

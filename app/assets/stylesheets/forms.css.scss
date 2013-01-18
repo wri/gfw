@@ -12,6 +12,33 @@ label {
   text-transform:uppercase;
 }
 
+.field a.checkbox {
+
+  @include size(17px, 14px);
+  @include inline-block();
+  padding: 0 0 0 20px;
+
+  @include icons-sprite(checkbox, $offset-y: 1px);
+
+  font-size: 15px;
+  color: #666666;
+  font-weight:normal;
+  display: inline;
+
+  text-transform: none;
+
+  @extend .sans-serif;
+
+  &.hover {
+    @include icons-sprite(checkbox_hover, $offset-y: 1px);
+  }
+
+  &.checked {
+    @include icons-sprite(checkbox_checked, $offset-y: 1px);
+  }
+
+}
+
 .input_title {
 
   &.short { width: 285px; }

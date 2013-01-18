@@ -114,10 +114,15 @@
     </div>
   </div>
 
-  <div class="field">
-    <%= f.check_box :featured %>
-    <%= f.label :featured, 'Show it as Case Study' %>
+  <div class="field with_checkbox">
+
+    <a href="#" class="checkbox styled<%= @story.featured.to_i == 1 ? " checked" : "" %>">
+      Show it as Case Study
+      <input name="story[featured]" type="hidden" value="<%= @story.featured.to_i %>" />
+    </a>
+
   </div>
+
   <div class="field">
     <%= f.submit 'Submit story' %>
   </div>
