@@ -77,8 +77,14 @@ class Story < CartoDB::Model::Base
     return "#{attributes[:lat]}, #{attributes[:lng]}" if attributes.slice(:lat, :lng).present?
   end
 
+  def featured=(value)
+    require 'debugger'; debugger
+    @featured = value == '1'
+    attributes[:featured] = @featured
+  end
+
   def save
-    generate_token
+    generate_token if new_record?
     super
     save_thumbnails
   end

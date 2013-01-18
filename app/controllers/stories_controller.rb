@@ -60,8 +60,6 @@ class StoriesController < ApplicationController
 
       flash[:notice] = 'Your story has been updated. Thanks!'
 
-      Notifications.new_story(@story).deliver
-
       redirect_to story_path(@story)
     else
       render :edit
