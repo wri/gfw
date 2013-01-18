@@ -918,7 +918,7 @@ $timelineWidth: 940px;
 
   .shadow {
     @include position(false, false, 13px, 6px);
-    @include size(255px, 24px);
+    @include size(254px, 24px);
     background:url(backgrounds/white_shadow.png) repeat-x;
 
     z-index: 100;
