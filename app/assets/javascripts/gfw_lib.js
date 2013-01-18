@@ -246,7 +246,7 @@ GFW.modules.app = function(gfw) {
             isPng: true
           });
 
-          map.overlayMapTypes.setAt("0", this.specialLayer);
+          map.overlayMapTypes.setAt("1", this.specialLayer);
         }
 
     },
@@ -361,7 +361,12 @@ GFW.modules.app = function(gfw) {
         $(".time_layer").show();
       }
 
-      GFW.app.baseLayer.setOptions({ opacity: 1, table_name: this._getTableName(this.currentBaseLayer), query: GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom())  });
+      GFW.app.baseLayer.setOptions({
+        opacity: 1,
+        table_name: this._getTableName(this.currentBaseLayer),
+        query: GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom())
+      });
+
     },
 
     _toggleStoriesLayer: function() {
@@ -426,8 +431,6 @@ GFW.modules.app = function(gfw) {
 
       if (this.currentBaseLayer === "semi_monthly") {
 
-        table_name = 'gfw2_forma';
-
         this.time_layer = new TimePlayer('gfw2_forma', this._global_version, this._cloudfront_url);
         this.time_layer.options.table_name = table_name;
 
@@ -435,8 +438,8 @@ GFW.modules.app = function(gfw) {
         map.overlayMapTypes.setAt(0, this.time_layer);
 
         Timeline.bind('change_date', function(date, month_number) {
-            //month_number = Math.min(month_number, 147);
-            self.time_layer.set_time(month_number);
+          //month_number = Math.min(month_number, 147);
+          self.time_layer.set_time(month_number);
         });
 
       } else if (this.currentBaseLayer === "annual") {
@@ -686,12 +689,12 @@ GFW.modules.maplayer = function(gfw) {
 
         GFW.app._updateBaseLayer();
 
-        if ( slug == 'semi_monthly') {
-          semi_monthly.attributes['visible']  = true;
+        if (slug == 'semi_monthly') {
+          semi_monthly.attributes['visible'] = true;
         } else if (slug == 'annual') {
-          annual.attributes['visible']  = true;
+          annual.attributes['visible']       = true;
         } else if (slug == 'brazilian_amazon') {
-          sad.attributes['visible']  = true;
+          sad.attributes['visible']          = true;
         }
 
         legend.replace(id, category_slug, category, title, slug, category_color, title_color);
