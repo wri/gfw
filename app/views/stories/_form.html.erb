@@ -114,6 +114,7 @@
     </div>
   </div>
 
+  <% if action_name == 'edit' %>
   <div class="field with_checkbox">
 
     <a href="#" class="checkbox styled<%= @story.featured.to_i == 1 ? " checked" : "" %>">
@@ -122,6 +123,7 @@
     </a>
 
   </div>
+  <% end %>
 
   <div class="field">
     <%= f.submit 'Submit story' %>
