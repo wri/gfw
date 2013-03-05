@@ -78,7 +78,6 @@ class Story < CartoDB::Model::Base
   end
 
   def featured=(value)
-    require 'debugger'; debugger
     @featured = value == '1'
     attributes[:featured] = @featured
   end

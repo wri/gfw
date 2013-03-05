@@ -5,7 +5,7 @@ gem 'rails', '~> 3.2.11'
 gem 'rgeo', '0.3.19'
 gem 'cartodb-rb-client', :path => 'vendor/gems/cartodb-rb-client-0.4.4'
 
-gem 'carrierwave'
+gem 'carrierwave', :git => 'git://github.com/jnicklas/carrierwave.git'
 gem 'rmagick'
 gem 'fog'
 
