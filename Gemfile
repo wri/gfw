@@ -19,7 +19,7 @@ group :assets do
   gem 'compass-rails', '~> 1.0.1'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', '2.1.4'
 
 gem 'nokogiri'
 gem 'htmlentities'
