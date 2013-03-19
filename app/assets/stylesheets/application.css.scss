@@ -322,7 +322,7 @@ nav {
       }
 
       &.community { width:270px; }
-      &.analysis { width:270px; }
+      &.analysis_tool { width:270px; }
       &.keep_updated { width:270px; margin: 0; }
 
       &.community .icon {
@@ -332,7 +332,7 @@ nav {
         @include icons-sprite(community);
       }
 
-      &.analysis .icon {
+      &.analysis_tool .icon {
         width:150px;
         @include icons-sprite(analysis);
       }
