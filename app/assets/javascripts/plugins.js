@@ -718,7 +718,7 @@ var Navigation = (function() {
 
     Filter.hide(function() {
 
-      $("header").animate({ height: "247px" }, 250, function() {
+      $("header").animate({ height: "226px" }, 250, function() {
         $("hgroup h1").animate({ top: 29, opacity: 1 }, 250);
       });
 
@@ -776,7 +776,7 @@ var Navigation = (function() {
 
     $(".big_numbers").fadeOut(250);
 
-    $("header").animate({height: "150px"}, 250, function() {
+    $("header").animate({height: "135px"}, 250, function() {
       GFW.app.open();
     });
 
