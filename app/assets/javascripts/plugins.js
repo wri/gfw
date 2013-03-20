@@ -991,7 +991,7 @@ var Filter = (function() {
 
       var source = $(e.target).attr("data-slug");
 
-      sourceWindow.show(source);
+      sourceWindow.show(source).addScroll();
     });
 
 
