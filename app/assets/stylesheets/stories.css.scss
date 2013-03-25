@@ -736,6 +736,20 @@ aside {
 
         }
 
+        .share_buttons {
+          margin: 15px 0 0 0;
+
+          iframe.twitter-share-button {        
+            @include inline-block();
+          }
+
+          div.fb-like {
+            @include inline-block();
+            margin: 0 10px 0 0; 
+          }
+
+        }
+
       }
 
     }

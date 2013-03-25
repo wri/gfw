@@ -11,6 +11,16 @@
   <body class="<%= controller_name %> <%= action_name %>"<%= raw ' onload="loadGFW()"' unless %w(maps home).include?(controller_name) or (action_name == "index" and controller_name == "countries") %><%= raw ' onload="initialize()"' if %w(maps home).include?(controller_name) %>>
     <%= render "common/header" %>
 
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/es_ES/all.js#xfbml=1";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
     <div id="content">
       <%= yield %>
       <%= render "common/share" %>
