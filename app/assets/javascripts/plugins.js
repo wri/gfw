@@ -719,6 +719,7 @@ var Navigation = (function() {
     Filter.hide(function() {
 
       $("header").animate({ height: "226px" }, 250, function() {
+        $("hgroup h1").show();
         $("hgroup h1").animate({ top: 29, opacity: 1 }, 250);
       });
 
@@ -781,6 +782,8 @@ var Navigation = (function() {
     });
 
     $("hgroup h1").animate({ top: "50px", opacity: 0 }, 250, function() {
+      $("hgroup h1").hide();
+
       Filter.show();
       $(".big_numbers").fadeOut(250);
     });
