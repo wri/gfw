@@ -391,6 +391,7 @@ GFW.modules.app = function(gfw) {
         async: false,
         url: "/stories.json?for-map=true",
         success: function(data) {
+
           _.each(data, function(story) {
 
             var
@@ -547,175 +548,174 @@ GFW.modules.maplayer = function(gfw) {
   gfw.maplayer = {};
   gfw.maplayer.Engine = Class.extend(
     {
-    init: function(layer, map) {
-      this.layer = layer;
-      this._map = map;
+      init: function(layer, map) {
+        this.layer = layer;
+        this._map = map;
 
-      var sw = new google.maps.LatLng(this.layer.get('ymin'), this.layer.get('xmin'));
-      var ne = new google.maps.LatLng(this.layer.get('ymax'),this.layer.get('xmax'));
-      this._bounds = new google.maps.LatLngBounds(sw, ne);
+        var sw = new google.maps.LatLng(this.layer.get('ymin'), this.layer.get('xmin'));
+        var ne = new google.maps.LatLng(this.layer.get('ymax'),this.layer.get('xmax'));
+        this._bounds = new google.maps.LatLngBounds(sw, ne);
 
-      if (this.layer.get('slug') != 'semi_monthly'){
-        this.layer.attributes['visible'] = false;
-      }
-
-      var
-      State   = History.getState(),
-      hash    = parseHash(State.hash),
-      filters = [];
-
-      if (hash.filters) {
-        filters = _.map(hash.filters.split(","), function(i) { return parseInt(i, 10); });
-      }
-
-      this._addControl(filters);
-
-    },
-    _addControl: function(filters){
-      var that = this;
-
-      var clickEvent = function() {
-        that._toggleLayer(GFW.app);
-      };
-
-      var zoomEvent = function() {
-        if (that.layer.attributes['visible']) {
-          //that._map.fitBounds(that._bounds);
+        if (this.layer.get('slug') != 'semi_monthly'){
+          this.layer.attributes['visible'] = false;
         }
-      };
 
-      if (this.layer.get('slug') == "nothing") {
-        var event = function() {
-          that._hideBaseLayers(GFW.app);
+        var
+        State   = History.getState(),
+        hash    = parseHash(State.hash),
+        filters = [];
+
+        if (hash.filters) {
+          filters = _.map(hash.filters.split(","), function(i) { return parseInt(i, 10); });
+        }
+
+        this._addControl(filters);
+
+      },
+      _addControl: function(filters){
+        var that = this;
+
+        var clickEvent = function() {
+          that._toggleLayer(GFW.app);
         };
 
-        Filter.addFilter("", this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, zoomEvent: function() { } , source: null });
-
-      } else if (this.layer.get('slug') == "user_stories") {
-
-        var customEvent = function() {
-          clickEvent();
-          GFW.app._toggleStoriesLayer();
+        var zoomEvent = function() {
+          if (that.layer.attributes['visible']) {
+            //that._map.fitBounds(that._bounds);
+          }
         };
 
-        Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, zoomEvent: zoomEvent, source: null }, true);
-        Filter.check(this.layer.get('id'));
+        if (this.layer.get('slug') == "nothing") {
+          var event = function() {
+            that._hideBaseLayers(GFW.app);
+          };
 
-        legend.add(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
+          Filter.addFilter("", this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, zoomEvent: function() { } , source: null });
 
+        } else if (this.layer.get('slug') == "user_stories") {
 
-      } else {
+          var customEvent = function() {
+            GFW.app._toggleStoriesLayer();
+          };
 
-        Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, zoomEvent: zoomEvent, source: this.layer.get('source') });
-
-        // Adds the layers from the hash
-        if (filters && _.include(filters, this.layer.get('id'))) {
-          GFW.app._addLayer(this.layer);
-          this.layer.attributes["visible"] = true;
-
+          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, zoomEvent: zoomEvent, source: null }, true);
           Filter.check(this.layer.get('id'));
-          legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
+
+          legend.add(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
 
 
-        } else if (this.layer.get('table_name') == 'gfw2_forma') {
-          legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
-        }
-      }
-
-
-    },
-    _bindDisplay: function(display) {
-      var that = this;
-      display.setEngine(this);
-    },
-
-    _hideLayer: function(layer) {
-      if (layer.get('visible') == false){
-        gfw.log.info('LAYER OFF');
-        this._map.overlayMapTypes.setAt(this._tileindex, null);
-      }
-    },
-
-    _hideBaseLayers: function(that){
-
-      $(".time_layer").hide();
-      Timeline.hide();
-      legend.removeCategory("forest_clearing");
-      GFW.app.baseLayer.setOptions({ opacity: 0 });
-
-    },
-
-    _toggleLayer: function(that){
-
-      this.layer.attributes['visible'] = !this.layer.attributes['visible'];
-
-      var
-      slug            = this.layer.get('slug'),
-      title           = this.layer.get('title'),
-      title_color     = this.layer.get('title_color'),
-      title_subs      = this.layer.get('title_subs'),
-      visible         = this.layer.get('visible'),
-      tableName       = this.layer.get('table_name'),
-      category        = this.layer.get('category_name'),
-      category_slug   = this.layer.get('category_slug'),
-      category_color  = this.layer.get('category_color'),
-      visibility      = this.layer.get('visible');
-      id              = this.layer.get('id');
-
-      if (category === null || !category) { // Default data
-        category       = 'Protected Areas';
-        category_slug  = 'protected_areas';
-        category_color = '#707D92';
-      }
-
-      var // special layers
-      semi_monthly  = GFW.app.datalayers.LayersObj.get(569),
-      annual        = GFW.app.datalayers.LayersObj.get(568),
-      sad           = GFW.app.datalayers.LayersObj.get(567);
-
-      if (category != 'Forest clearing') {
-        legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
-      }
-
-      if (slug === 'semi_monthly' || slug === "annual" || slug === "brazilian_amazon") {
-
-        if (slug === 'semi_monthly' && showMap ) {
-          Timeline.show();
         } else {
-          Timeline.hide();
+
+          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, zoomEvent: zoomEvent, source: this.layer.get('source') });
+
+          // Adds the layers from the hash
+          if (filters && _.include(filters, this.layer.get('id'))) {
+            GFW.app._addLayer(this.layer);
+            this.layer.attributes["visible"] = true;
+
+            Filter.check(this.layer.get('id'));
+            legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
+
+
+          } else if (this.layer.get('table_name') == 'gfw2_forma') {
+            legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
+          }
         }
 
-        GFW.app.currentBaseLayer = slug;
 
-        GFW.app._updateBaseLayer();
+      },
+      _bindDisplay: function(display) {
+        var that = this;
+        display.setEngine(this);
+      },
 
-        if (slug == 'semi_monthly') {
-          semi_monthly.attributes['visible'] = true;
-        } else if (slug == 'annual') {
-          annual.attributes['visible']       = true;
-        } else if (slug == 'brazilian_amazon') {
-          sad.attributes['visible']          = true;
+      _hideLayer: function(layer) {
+        if (layer.get('visible') == false){
+          gfw.log.info('LAYER OFF');
+          this._map.overlayMapTypes.setAt(this._tileindex, null);
+        }
+      },
+
+      _hideBaseLayers: function(that){
+
+        $(".time_layer").hide();
+        Timeline.hide();
+        legend.removeCategory("forest_clearing");
+        GFW.app.baseLayer.setOptions({ opacity: 0 });
+
+      },
+
+      _toggleLayer: function(that){
+
+        this.layer.attributes['visible'] = !this.layer.attributes['visible'];
+
+        var
+        slug            = this.layer.get('slug'),
+        title           = this.layer.get('title'),
+        title_color     = this.layer.get('title_color'),
+        title_subs      = this.layer.get('title_subs'),
+        visible         = this.layer.get('visible'),
+        tableName       = this.layer.get('table_name'),
+        category        = this.layer.get('category_name'),
+        category_slug   = this.layer.get('category_slug'),
+        category_color  = this.layer.get('category_color'),
+        visibility      = this.layer.get('visible');
+        id              = this.layer.get('id');
+
+        if (category === null || !category) { // Default data
+          category       = 'Protected Areas';
+          category_slug  = 'protected_areas';
+          category_color = '#707D92';
         }
 
-        legend.replace(id, category_slug, category, title, slug, category_color, title_color);
+        var // special layers
+        semi_monthly  = GFW.app.datalayers.LayersObj.get(569),
+        annual        = GFW.app.datalayers.LayersObj.get(568),
+        sad           = GFW.app.datalayers.LayersObj.get(567);
 
-      } else {
+        if (category != 'Forest clearing') {
+          legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
+        }
 
-        if (visible) {
-          GFW.app._addLayer(this.layer);
+        if (slug === 'semi_monthly' || slug === "annual" || slug === "brazilian_amazon") {
+
+          if (slug === 'semi_monthly' && showMap ) {
+            Timeline.show();
+          } else {
+            Timeline.hide();
+          }
+
+          GFW.app.currentBaseLayer = slug;
+
+          GFW.app._updateBaseLayer();
+
+          if (slug == 'semi_monthly') {
+            semi_monthly.attributes['visible'] = true;
+          } else if (slug == 'annual') {
+            annual.attributes['visible']       = true;
+          } else if (slug == 'brazilian_amazon') {
+            sad.attributes['visible']          = true;
+          }
+
+          legend.replace(id, category_slug, category, title, slug, category_color, title_color);
+
         } else {
-          GFW.app._removeLayer(this.layer);
-        }
 
-        // We don't store the id of the user_stories layer in the URL
-        if (slug != 'user_stories') {
-          Filter.toggle(id);
+          if (visible) {
+            GFW.app._addLayer(this.layer);
+          } else {
+            GFW.app._removeLayer(this.layer);
+          }
+
+          // We don't store the id of the user_stories layer in the URL
+          if (slug != 'user_stories') {
+            Filter.toggle(id);
+          }
+
         }
 
       }
-
-    }
-  });
+    });
 
 };
 
@@ -724,53 +724,53 @@ GFW.modules.datalayers = function(gfw) {
 
   gfw.datalayers.Engine = Class.extend(
     {
-    init: function(CartoDB, layerTable, map) {
+      init: function(CartoDB, layerTable, map) {
 
-      this._map         = map;
-      this._bycartodbid = {};
-      this._bytitle     = {};
-      this._dataarray   = [];
-      this._cartodb     = CartoDB;
+        this._map         = map;
+        this._bycartodbid = {};
+        this._bytitle     = {};
+        this._dataarray   = [];
+        this._cartodb     = CartoDB;
 
-      var LayersColl    = this._cartodb.CartoDBCollection.extend({
-        sql: function(){
-          return "SELECT cartodb_id AS id, slug, title, title_color, title_subs, table_name, source, category_color, category_slug, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
-          ST_XMIN(the_geom) AS xmin, ST_YMAX(the_geom) AS ymax, ST_YMIN(the_geom) AS ymin, tileurl, true AS visible \
-          FROM " + layerTable + " \
-          WHERE display = TRUE ORDER BY displaylayer,title ASC";
-        }
-      });
-
-      this.LayersObj = new LayersColl();
-      this.LayersObj.fetch();
-      this._loadLayers();
-    },
-    _loadLayers: function(){
-      var that = this;
-
-      this.LayersObj.bind('reset', function() {
-        that.LayersObj.each(function(p) {
-          that._addLayer(p);
+        var LayersColl    = this._cartodb.CartoDBCollection.extend({
+          sql: function(){
+            return "SELECT cartodb_id AS id, slug, title, title_color, title_subs, table_name, source, category_color, category_slug, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
+              ST_XMIN(the_geom) AS xmin, ST_YMAX(the_geom) AS ymax, ST_YMIN(the_geom) AS ymin, tileurl, true AS visible \
+              FROM " + layerTable + " \
+              WHERE display = TRUE ORDER BY displaylayer,title ASC";
+          }
         });
 
-        // TODO: remove the below when real layers arrive
-        Filter.addFilter(0, 'regrowth', 'Regrowth', 'Coming soon...', { disabled: true });
+        this.LayersObj = new LayersColl();
+        this.LayersObj.fetch();
+        this._loadLayers();
+      },
+      _loadLayers: function(){
+        var that = this;
 
-      });
+        this.LayersObj.bind('reset', function() {
+          that.LayersObj.each(function(p) {
+            that._addLayer(p);
+          });
 
-    },
-    _addLayer: function(p){
-      var layer = new gfw.maplayer.Engine(p, this._map);
-    }
-  });
+          // TODO: remove the below when real layers arrive
+          Filter.addFilter(0, 'regrowth', 'Regrowth', 'Coming soon...', { disabled: true });
+
+        });
+
+      },
+      _addLayer: function(p){
+        var layer = new gfw.maplayer.Engine(p, this._map);
+      }
+    });
 };
 
 /**
- * Logging module that gfwtes log messages to the console and to the Speed
- * Tracer API. It contains convenience methods for info(), warn(), error(),
- * and todo().
- *
- */
+* Logging module that gfwtes log messages to the console and to the Speed
+* Tracer API. It contains convenience methods for info(), warn(), error(),
+* and todo().
+*
+*/
 GFW.modules.log = function(gfw) {
   gfw.log = {};
 
