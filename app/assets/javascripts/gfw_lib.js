@@ -165,8 +165,19 @@ GFW.modules.app = function(gfw) {
 
       // Setup listeners
       google.maps.event.addListener(this._map, 'zoom_changed', function() {
+
+        setTimeout(function() {
+          if (that.currentBaseLayer != "semi_monthly") {
+            $(".time_layer").hide();
+            Timeline.hide();
+          } else {
+            $(".time_layer").show();
+          }
+        }, 150);
+
         that._updateHash(that);
         that._refreshBaseLayer();
+
       });
 
       google.maps.event.addListener(this._map, 'dragend', function() {
@@ -337,8 +348,10 @@ GFW.modules.app = function(gfw) {
     },
 
     _refreshBaseLayer: function() {
-      var query = GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom());
-      GFW.app.baseLayer.setQuery(query);
+      if (GFW.app.currentBaseLayer) {
+        var query = GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom());
+        GFW.app.baseLayer.setQuery(query);
+      }
     },
 
     _getTableName: function(layerName) {
@@ -588,6 +601,7 @@ GFW.modules.maplayer = function(gfw) {
         if (this.layer.get('slug') == "nothing") {
           var event = function() {
             that._hideBaseLayers(GFW.app);
+            GFW.app.currentBaseLayer = null;
           };
 
           Filter.addFilter("", this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, zoomEvent: function() { } , source: null });
