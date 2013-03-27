@@ -6,6 +6,8 @@
     <link rel="icon"type="image/png" href="<%= image_path 'favicon_32x32.ico' %>" />
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= csrf_meta_tags %>
+
+    <!-- v 1.0 -->
   </head>
 
   <body class="<%= controller_name %> <%= action_name %>"<%= raw ' onload="loadGFW()"' unless %w(maps home).include?(controller_name) or (action_name == "index" and controller_name == "countries") %><%= raw ' onload="initialize()"' if %w(maps home).include?(controller_name) %>>
