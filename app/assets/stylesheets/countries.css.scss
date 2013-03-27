@@ -491,4 +491,10 @@ a.close_icon {
     .graph_legend .text { margin: auto; width: 140px; @extend .serif;}
   }
 
+  .hansen_placeholder {
+      width: 342px;
+      height: 299px;    
+      background:url(backgrounds/hansen_placeholder.png) no-repeat center;
+  }
+
 
