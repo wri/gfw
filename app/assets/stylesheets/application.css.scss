@@ -1082,11 +1082,11 @@ footer {
     p {font-size: 13px;}
 
     div.global_share {
-      
+
       border-bottom: 1px solid $cGray4;
 
       p {
-        @include inline-block(); 
+        @include inline-block();
         width: 600px;
         padding: 30px 0 22px 0;
         @extend .serif;
@@ -1109,25 +1109,25 @@ footer {
 
       .share_buttons {
 
-        @include inline-block(); 
+        @include inline-block();
         position: absolute;
         top: 30px;
-        right: -35px;        
+        right: -35px;
 
 
-        iframe.twitter-share-button {        
-          @include inline-block(); 
+        iframe.twitter-share-button {
+          @include inline-block();
 
         }
 
         div.fb-like {
-          @include inline-block(); 
+          @include inline-block();
         }
 
       }
 
 
-    }    
+    }
 
     div.partners {
 
@@ -1138,7 +1138,7 @@ footer {
       a {
         display: block;
         color: $cGray3;
-        @include inline-block(); 
+        @include inline-block();
 
         margin: 10px 15px 0 0;
         width: 88px;
@@ -1298,6 +1298,7 @@ footer > .download {
 
         opacity: .3;
         @include inline-block();
+        vertical-align: top;
         margin: 0 20px 0 0;
 
         &:hover {
