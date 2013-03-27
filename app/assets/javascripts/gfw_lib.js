@@ -617,7 +617,8 @@ GFW.modules.maplayer = function(gfw) {
 
           legend.add(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
 
-
+        } else if (this.layer.get('slug') == "annual") {
+          Filter.addFilter(0, 'forest_clearing', 'Forest clearing', 'Global annual area (Coming soon...)', { disabled: true });
         } else {
 
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, zoomEvent: zoomEvent, source: this.layer.get('source') });
