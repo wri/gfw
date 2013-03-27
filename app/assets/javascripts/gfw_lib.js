@@ -91,10 +91,9 @@ GFW.modules.app = function(gfw) {
 
       var
       dh = $(window).height(),
-      hh = $("header").height(),
-      paddingBottom = 120;
+      hh = $("header").height();
 
-      $("#map").animate({ height: dh - hh - paddingBottom }, 250, function() {
+      $("#map").animate({ height: dh - hh }, 250, function() {
         google.maps.event.trigger(that._map, "resize");
         that._map.setOptions({ scrollwheel: false });
         //$("body").css({overflow:"hidden"});
