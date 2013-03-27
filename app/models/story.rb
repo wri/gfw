@@ -74,7 +74,7 @@ class Story < CartoDB::Model::Base
   end
 
   def coords
-    return "#{attributes[:lat]}, #{attributes[:lng]}" if attributes.slice(:lat, :lng).present?
+    "#{attributes[:lat]}, #{attributes[:lng]}" if attributes.slice(:lat, :lng).present?
   end
 
   def featured=(value)
