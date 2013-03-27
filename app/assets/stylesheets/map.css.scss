@@ -43,9 +43,14 @@
         border-bottom: 1px solid $cSeparator;
         padding: 9px 10px 10px 10px;
         &.last { border:none; }
+
+        &.disabled {
+          background: #F5F5F5;
+          color: $cGray4;
+        }
       }
 
-      a.radio, a.checkbox {
+      a.radio, a.checkbox, span.disabled {
         position: relative;
         @extend .sans-serif;
         display:block;
@@ -56,6 +61,11 @@
         .name { width :100px; }
       }
 
+      span.disabled {
+        @include disabled(disabled);
+
+        strong { display: block; }
+      }
     }
 
     .source {
@@ -64,7 +74,7 @@
       @include icons-sprite(information);
 
       @include absolute-portrait-center(10px);
-      right: 20px;
+      right: 10px;
 
       &:hover {
         @include icons-sprite(information);

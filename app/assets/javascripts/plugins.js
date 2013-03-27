@@ -1084,32 +1084,34 @@ var Filter = (function() {
     layerItemTemplate = null,
     $layerItem        = null;
 
-    // Select the kind of input (radio or checkbox) depending on the category
-    if (cat === 'forest_clearing') {
+    if (!disabled) { // click binding
+      // Select the kind of input (radio or checkbox) depending on the category
+      if (cat === 'forest_clearing') {
+        layerItemTemplate = _.template($("#layer-item-radio-template").html());
+        $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
 
-      layerItemTemplate = _.template($("#layer-item-radio-template").html());
-      $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
-
-      if (!disabled) { // click binding
         $layerItem.find("a:not(.source)").on("click", function() {
           if (!$(this).find(".radio").hasClass("checked")) {
             clickEvent();
             zoomEvent();
           }
         });
-      }
+      } else {
+        layerItemTemplate = _.template($("#layer-item-checkbox-template").html());
+        $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
 
-    } else {
-      layerItemTemplate = _.template($("#layer-item-checkbox-template").html());
-      $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
-
-      if (!disabled) { // click binding
         $layerItem.find("a:not(.source)").on("click", function() {
           clickEvent();
           zoomEvent();
         });
       }
+    } else {
+      layerItemTemplate = _.template($("#layer-item-disabled-template").html());
+      $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
 
+      $layerItem.find("a:not(.source)").on("click", function(e) {
+        preventDefault();
+      });
     }
 
     $layer.find(".links").append($layerItem);
