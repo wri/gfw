@@ -76,6 +76,6 @@ class StoriesController < ApplicationController
 
   def get_story
     @story = Story.select(Story::SELECT_FIELDS).where("cartodb_id = ?", params[:id]).first
-    @story   = @story || Story.where("token = '?'", params[:id]).first
+    @story ||= Story.select(Story::SELECT_FIELDS).where("token = '?'", params[:id]).first
   end
 end
