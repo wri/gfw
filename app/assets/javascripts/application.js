@@ -38,8 +38,6 @@ Infowindow        = {};
 
 function loadGFW() {
 
-  //gfw.load('/assets/gfw/', function() {
-
     GOD = new gfw.ui.view.GOD();
     window.GOD = GOD;
 
@@ -48,44 +46,9 @@ function loadGFW() {
       window.Carrousel = carrousel;
     }
 
-    if ($("#map").length > 0) {
-      map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
+    if ($("#map").length > 0) setupMap();
 
-      var styledMap = new google.maps.StyledMapType(config.BASE_MAP_STYLE, { name: "terrain_style" });
-
-      map.mapTypes.set("terrain_style", styledMap);
-      map.setMapTypeId("terrain_style");
-
-      google.maps.event.addDomListener(map, 'click', function (ev) {
-        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-        Infowindow.close();
-      });
-
-      layerSelector = new gfw.ui.view.LayerSelector({ map: map });
-      legend        = new gfw.ui.view.Legend();
-      sourceWindow  = new gfw.ui.view.SourceWindow();
-      Infowindow    = new CartoDBInfowindow(map, { className: "story_infowindow", width: 174 });
-
-      $("#map").append(layerSelector.render());
-      $("#map").append(legend.render());
-      $("body").append(sourceWindow.render());
-
-      legend.setDraggable(true);
-      layerSelector.setDraggable(true);
-    }
-
-    $(".styled.checkbox").on("click", function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      $(this).toggleClass("checked");
-
-      if ($(this).hasClass("checked")) {
-        $(this).find("input").val(1);
-      } else
-        $(this).find("input").val(0);
-
-    });
+    $(".styled.checkbox").on("click", onClickCheckbox);
 
     $("nav ul li a.countries").on("click", CountryMenu.show);
 
@@ -161,8 +124,33 @@ function loadGFW() {
       });
     }
 
-  //});
+}
 
+function setupMap() {
+
+  map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
+
+  var styledMap = new google.maps.StyledMapType(config.BASE_MAP_STYLE, { name: "terrain_style" });
+
+  map.mapTypes.set("terrain_style", styledMap);
+  map.setMapTypeId("terrain_style");
+
+  google.maps.event.addDomListener(map, 'click', function (ev) {
+    ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+    Infowindow.close();
+  });
+
+  layerSelector = new gfw.ui.view.LayerSelector({ map: map });
+  legend        = new gfw.ui.view.Legend();
+  sourceWindow  = new gfw.ui.view.SourceWindow();
+  Infowindow    = new CartoDBInfowindow(map, { className: "story_infowindow", width: 174 });
+
+  $("#map").append(layerSelector.render());
+  $("#map").append(legend.render());
+  $("body").append(sourceWindow.render());
+
+  legend.setDraggable(true);
+  layerSelector.setDraggable(true);
 }
 
 // Map init method
@@ -178,6 +166,21 @@ function initialize() {
   }
 
   loadGFW();
+
+}
+
+function onClickCheckbox(e) {
+
+  e.preventDefault();
+  e.stopPropagation();
+
+  $(this).toggleClass("checked");
+
+  if ($(this).hasClass("checked")) {
+    $(this).find("input").val(1);
+  } else {
+    $(this).find("input").val(0);
+  }
 
 }
 
@@ -249,22 +252,22 @@ function initialize() {
 
   });
 
-/*
+  /*
   $(".crowdsourcing").on("click", function(e) {
-    e.preventDefault();
+  e.preventDefault();
 
-    $("#content").append('<div class="backdrop" />');
-    $(".backdrop").fadeIn(250, function() {
+  $("#content").append('<div class="backdrop" />');
+  $(".backdrop").fadeIn(250, function() {
 
-      var top = ( $(window).height() - $("#crowdsourcing").height() ) / 2+$(window).scrollTop() + "px",
-      left = ( $(window).width() - $("#crowdsourcing").width() ) / 2+$(window).scrollLeft() + "px";
+  var top = ( $(window).height() - $("#crowdsourcing").height() ) / 2+$(window).scrollTop() + "px",
+  left = ( $(window).width() - $("#crowdsourcing").width() ) / 2+$(window).scrollLeft() + "px";
 
-      $("#crowdsourcing").css({top: top, left:left});
-      $("#crowdsourcing").fadeIn(250);
+  $("#crowdsourcing").css({top: top, left:left});
+  $("#crowdsourcing").fadeIn(250);
 
-    });
   });
-*/
+  });
+  */
 
   $(".close_icon").on("click", function(e) {
     e.preventDefault();
