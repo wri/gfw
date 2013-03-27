@@ -29,7 +29,8 @@
         <div class="circle lines chart"></div>
         <div class="circle bars chart"></div>
         <div class="circle country <%= params[:id] %>">
-          <a href="<%= @country.link %>"></a>
+          <a class="mask" href="<%= @country.link %>"></a>
+          <a class="button" href="<%= @country.link %>">Explore map</a>
         </div>
       </div>
 

@@ -377,11 +377,31 @@ a.close_icon {
       &.malaysia  { background:url(http://maps.google.com/maps/api/staticmap?center=malaysia&zoom=3&size=299x299&maptype=terrain&sensor=false) no-repeat  }
       &.indonesia { background:url(http://maps.google.com/maps/api/staticmap?center=indonesia&zoom=3&size=299x299&maptype=terrain&sensor=false) no-repeat }
 
-      a {
+      a.mask {
         display: block;
         width: 309px;
         height: 299px;
         background:url(backgrounds/gfw_country_map_mask.png) no-repeat;
+      }
+
+      a.button {        
+        @include inline-block;
+        position: relative;
+        top: -165px;
+        left: 80px;
+        width: 141px;
+        height: 32px;
+        text-align: center;
+        padding: 10px 0 0 0;
+        background:url(buttons/explore_in_map.png) no-repeat;
+        color: white;
+        @extend .serif;
+        font-size: 18px;
+        text-decoration: none;
+
+        &:hover {
+          background-position:0 -42px;
+        }
       }
 
     }
