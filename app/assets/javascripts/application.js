@@ -13,6 +13,7 @@
 //= require backbone.cartodb
 //= require d3.v2.min
 //= require geojson
+//= require jquery.tipsy
 //= require jquery.fileupload
 //= require jquery.fileupload-ui
 //= require jquery.fileupload-fp
@@ -30,6 +31,7 @@ subscribeMap;
 
 GOD               = {},
 legend            = {},
+analysis          = {},
 sourceWindow      = {},
 gallery           = {},
 languageSelector  = {},
@@ -107,6 +109,7 @@ function loadGFW() {
     window.layerSelector    = layerSelector;
     window.languageSelector = languageSelector;
     window.legend           = legend;
+    window.analysis         = analysis;
     window.sourceWindow     = sourceWindow;
 
     if (map) {
@@ -142,11 +145,13 @@ function setupMap() {
 
   layerSelector = new gfw.ui.view.LayerSelector({ map: map });
   legend        = new gfw.ui.view.Legend();
+  analysis      = new gfw.ui.view.Analysis({ map: map });
   sourceWindow  = new gfw.ui.view.SourceWindow();
   Infowindow    = new CartoDBInfowindow(map, { className: "story_infowindow", width: 174 });
 
   $("#map").append(layerSelector.render());
   $("#map").append(legend.render());
+  $("#map").append(analysis.render());
   $("body").append(sourceWindow.render());
 
   legend.setDraggable(true);

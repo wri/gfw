@@ -28,8 +28,8 @@
   </script>
 
   <script id="window-template" type="text/x-underscore-template">
-      <a href="#" class="close"></a>
-      <div class="content"></div>
+    <a href="#" class="close"></a>
+    <div class="content"></div>
   </script>
 
   <script id="layer-item-radio-template" type="text/x-underscore-template">
@@ -122,6 +122,46 @@
     <li id="{{name}}" class="{{ name }}"><a href="#"><i></i>{{title}}</a></li>
   </script>
 
+  <!-- Analysis -->
+  <script id="analysis-info-template" type="text/x-underscore-template">
+    <a href="#" class="toggle"></a>
+    <div class="content">
+      
+      <div class="info">
+        <div class="titles">
+          <strong class="title">{{ title }}</strong>
+          <span class="subtitle">{{ subtitle }}</span>
+        </div>
+
+        <ul class="controls">
+          <li><a class="subscribe" href="#"></a></li>
+          <li><a class="remove" href="#"></a></li>
+        </ul>
+      </div>
+
+      <ul class="stats">
+        <li class="ha"><strong>{{ ha }}</strong><span>Hectares</span></li>
+        <li class="alerts"><strong>{{ alert_count }}<a href="" class="download"></a></strong> <span>Forma alerts</span></li>
+      </ul>
+
+    </div>
+  </script>
+
+  <!-- Analysis -->
+  <script id="analysis-template" type="text/x-underscore-template">
+    <a href="#" id="analysis_control"></a>
+
+    <div class="analysis helper_bar">
+      <p>Draw in the map the area you want to analyze</p>
+      <div class="options">
+        <a href="#" class="done">Done</a>
+        <a href="#" class="cancel">Cancel</a>
+      </div>
+    </div>
+
+
+
+  </script>
 
   <!-- Legend -->
   <script id="legend-template" type="text/x-underscore-template">

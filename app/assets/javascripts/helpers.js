@@ -46,6 +46,14 @@ var config = {
   DATE_SUFFIXES:      ["th", "st", "nd", "rd"],
   MIN_PROJECT_RADIUS: 100,
   BASE_MAP_STYLE:     [ { "stylers": [ { "visibility": "simplified" }, { "saturation": -100 }, { "gamma": 0.79 }, { "lightness": 2 }]}],
+  ANALYSIS_OVERLAYS_STYLE: {
+    strokeWeight: 2,
+    fillOpacity: 0.25,
+    fillOpacity: 0.45,
+    fillColor: "#FFF",
+    strokeColor: "#A2BC28",
+    editable: true
+  },
   OVERLAYS_STYLE: {
     strokeWeight: 2,
     fillOpacity: 0.25,
