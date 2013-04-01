@@ -1,6 +1,6 @@
 
 cartodb_config = {
-  'host'    => ENV['CARTODB_HOST'] || 'https://ferdev.cartodb.com',
+  'host'    => ENV['CARTODB_HOST'] || 'https://wri-01.cartodb.com',
   'api_key' => ENV['CARTODB_API_KEY']
 }
 
