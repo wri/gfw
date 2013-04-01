@@ -93,6 +93,18 @@ config.mapStyles.forestSoft = new google.maps.ImageMapType({
   alt: "Global forest height"
 });
 
+config.mapStyles.TREEHEIGHT = new google.maps.ImageMapType({
+  getTileUrl: function(ll, z) {
+    var X = ll.x % (1 << z);  // wrap
+    return "http://gfw-ee-tiles.appspot.com/gfw/simple_green_coverage/" + z + "/" + X + "/" + ll.y + ".png";
+  },
+  tileSize: new google.maps.Size(256, 256),
+  isPng: true,
+  maxZoom: 7,
+  name: "Forest Height",
+  alt: "Global forest height"
+});
+
 var Road = function(){
   this.Road = function(){
     map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
