@@ -1,33 +1,18 @@
-<% countries = [
-  { :title => "Brazil", :iso => 'BRA', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
-  { :title => "Cameroon", :iso => 'CMR', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
-  { :title => "Indonesia", :iso => 'IDN', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
-  { :title => "Malaysia", :iso => 'MYS', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months" },
-  { :title => "Angola", :iso => '???', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled },
-  { :title => "Bolivia", :iso => '???', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled },
-  { :title => "Congo", :iso => '???', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled },
-  { :title => "Guyana", :iso => '???', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled },
-  { :title => "Ivory Coast", :iso => '???', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled },
-  { :title => "Kenya", :iso => '???', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled },
-  { :title => "Laos", :iso => '???', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled },
-  { :title => "Nepal", :iso => '???', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled },
-  { :title => "Paraguay", :iso => '???', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled },
-  { :title => "Peru", :iso => '???', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled },
-  { :title => "Venezuela", :iso => '???', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled },
-  { :title => "Vietnam", :iso => '???', :amount => "19,312", :caption => "Forest Clearing Alerts in the last 6 months", :class => :disabled }
-] %>
+<%countries = Country.countries_info;%>
 
 <div id="countries">
 
   <h1><%= t(".title") %></h1>
 
   <% countries.each do |country| %>
-    <div class="country <%= country[:title].downcase.gsub(" ", "_") %> <%= country[:class] %> <%= country[:iso] %>">
+    <div class="country ">
       <% if country[:class] != :disabled %>
-        <a href="/country/<%= country[:title].downcase.gsub(" ", "_") %>">
+        <a href="/country/<%= country[:name].downcase.gsub(" ", "_") %>">
         <% end %>
-        <div class="icon"></div>
-        <div class="content"><h4><%= country[:title] %></h4> <strong><%= country[:amount] %></strong> <%= country[:caption] %></div>
+        <div class="icon" id="icon<%= country[:iso]%>">
+        </div>
+
+        <div class="content"><h4><%= country[:name] %></h4> <strong>19,312</strong> Forest Clearing Alerts in the last 6 months</div>
         <% if country[:class] != "disabled" %>
         </a>
       <% end %>
@@ -35,3 +20,4 @@
   <% end %>
   <div class="select"></div>
 </div>
+

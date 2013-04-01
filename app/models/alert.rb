@@ -22,7 +22,7 @@ class Alert
       FROM gfw2_forma_graphs gfg
       WHERE iso = '#{country_iso_code}' AND date > (SELECT n
                                     FROM gfw2_forma_datecode
-                                    WHERE now() -INTERVAL '10 months' < date
+                                    WHERE now() -INTERVAL '15 months' < date
                                     ORDER BY date ASC LIMIT 1)
       GROUP BY iso, date
       ORDER BY date DESC;
