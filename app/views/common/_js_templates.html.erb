@@ -41,7 +41,7 @@
 
   <script id="layer-item-checkbox-template" type="text/x-underscore-template">
     <li id="filter_{{ id }}" class="{{ category }}">
-      <a href="#" data-id={{ id }} class="checkbox {{ disabled ? 'disabled' : '' }}">
+    <a href="#" data-id="{{ id }}" data-color="{{ color}}" class="checkbox {{ disabled ? 'disabled' : '' }}">
         <i><span></span></i>
         <span class="name">{{name}}</span>
       </a>
@@ -65,7 +65,7 @@
     <li class="{{ category }}" data-id="{{ data }}">
     <div class="icon"></div>
     <a href="#">{{ name }}</a>
-    <div class="line"></div>
+    <div class="line" style="background-color:{{ category_color }}"></div>
     <div class="box"></div>
     </li>
   </script>

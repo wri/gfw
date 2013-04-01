@@ -608,7 +608,7 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app.currentBaseLayer = null;
           };
 
-          Filter.addFilter("", this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, zoomEvent: function() { } , source: null });
+          Filter.addFilter("", this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, zoomEvent: function() { } , source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
 
         } else if (this.layer.get('slug') == "user_stories") {
 
@@ -616,16 +616,16 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app._toggleStoriesLayer();
           };
 
-          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, zoomEvent: zoomEvent, source: null }, true);
+          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, zoomEvent: zoomEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") }, true);
           Filter.check(this.layer.get('id'));
 
           legend.add(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
 
         } else if (this.layer.get('slug') == "annual" || this.layer.get('slug') == "quarterly") {
-          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true });
+          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
         } else {
 
-          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, zoomEvent: zoomEvent, source: this.layer.get('source') });
+          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, zoomEvent: zoomEvent, source: this.layer.get('source'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
 
           // Adds the layers from the hash
           if (filters && _.include(filters, this.layer.get('id'))) {
@@ -771,13 +771,14 @@ GFW.modules.datalayers = function(gfw) {
         var that = this;
 
         this.LayersObj.bind('reset', function() {
+
           that.LayersObj.each(function(p) {
             that._addLayer(p);
           });
 
           // TODO: remove the below when real layers arrive
-          Filter.addFilter(0, 'nothing', 'Regrowth', 'Stay tuned', { disabled: true });
-          Filter.addFilter(0, 'nothing', 'Conservation', 'Stay tuned', { disabled: true });
+          Filter.addFilter(0, 'nothing', 'Regrowth', 'Stay tuned',     { disabled: true , category_color: "#B2D26E", color: "#B2D26E" });
+          Filter.addFilter(0, 'nothing', 'Conservation', 'Stay tuned', { disabled: true , category_color: "#CCC",    color: "#CCC"});
 
         });
 
