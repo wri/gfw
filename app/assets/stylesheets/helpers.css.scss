@@ -30,8 +30,8 @@ $cStoriesHover:          $cDarkGold;
 $cForestUse:             $cGold;
 $cForestUseHover:        $cDarkGold;
 
-$cProtectedAreas:        #00CED0; // blue
-$cProtectedAreasHover:   #00B9B9;
+$cConservation:          #00CED0; // blue
+$cConservationHover:     #00B9B9;
 
 $cOtherLayers:           #00CED0; // blue
 $cOtherLayersHover:      #00B9B9;
@@ -75,10 +75,10 @@ $cPostBody:              #666666;
 .cStories      { background-color: $cStories; }
 .cStoriesHover { background-color: $cStoriesHover; }
 
-.cForestUse    { background-color: $cForestUse; }
-.cForestUseHover { background-color: $cForestUseHover; }
+.cForestUse        { background-color: $cForestUse; }
+.cForestUseHover   { background-color: $cForestUseHover; }
 
-.cProtectedAreas   { background-color: $cProtectedAreas; }
+.cConservation     { background-color: $cConservation; }
 .cMining           { background-color: $cMining; }
 
 .cForest           { background-color: $cForest; }
@@ -106,7 +106,7 @@ $icons-download_arrow_hover-spacing:20px;
 $icons-bars-spacing:20px;
 
 $icons-forest_use-spacing:20px;
-$icons-protected_areas-spacing: 20px;
+$icons-conservation-spacing: 20px;
 $icons-mining-spacing: 20px;
 $icons-fire-spacing: 20px;
 
@@ -286,7 +286,7 @@ strong { font-weight: bold; } // This is sad, I know.
   &.regrowth         { color: $cRegrowth; }
   &.mining           { color: $cMining; }
   &.other_layers     { color: $cOtherLayers;  }
-  &.protected_areas  { color: $cProtectedAreas; }
+  &.conservation     { color: $cConservation; }
   &.forest_clearing  { color: $cDeforestation; }
   &.forest_cover     { color: $cForest; }
   &.fire             { color: $cFire; }
@@ -304,7 +304,7 @@ strong { font-weight: bold; } // This is sad, I know.
   &.regrowth         { border-color: $cRegrowth; }
   &.mining           { border-color: $cMining; }
   &.other_layers     { border-color: $cOtherLayers;  }
-  &.protected_areas  { border-color: $cProtectedAreas; }
+  &.conservation     { border-color: $cConservation; }
   &.forest_clearing  { border-color: $cDeforestation; }
   &.forest_cover     { border-color: $cForest; }
   &.fire             { border-color: $cFire; }
@@ -368,12 +368,12 @@ strong { font-weight: bold; } // This is sad, I know.
     a.title:hover { color: $cOtherLayers; }
     a:hover       { color: $cOtherLayersHover; }
   }
-  &.protected_areas {
-    & > a         { color: $cProtectedAreas; }
-    a.checked     { color: $cProtectedAreas; }
-    a.title       { color: $cProtectedAreas; }
-    a.title:hover { color: $cProtectedAreas; }
-    a:hover       { color: $cProtectedAreasHover; }
+  &.conservation {
+    & > a         { color: $cConservation; }
+    a.checked     { color: $cConservation; }
+    a.title       { color: $cConservation; }
+    a.title:hover { color: $cConservation; }
+    a:hover       { color: $cConservationHover; }
   }
 
   &.forest_clearing {
@@ -399,7 +399,7 @@ strong { font-weight: bold; } // This is sad, I know.
 
 .filter-icons {
   &.forest_use      .icon  { @include icons-sprite(icon_concessions); }
-  &.protected_areas .icon  { @include icons-sprite(icon_protected_areas); }
+  &.conservation    .icon  { @include icons-sprite(icon_conservation); }
   &.mining          .icon  { @include icons-sprite(icon_mining); }
   &.fire            .icon  { @include icons-sprite(icon_fire); }
   &.stories         .icon  { @include icons-sprite(icon_stories); }
@@ -419,7 +419,7 @@ strong { font-weight: bold; } // This is sad, I know.
   &.special_projects .line { background-color: $cSpecialProjects; }
   &.forest_use       .line { background-color: $cForestUse; }
   &.stories          .line { background-color: $cStories; }
-  &.protected_areas  .line { background-color: $cProtectedAreas; }
+  &.conservation     .line { background-color: $cConservation; }
   &.intact-forest    .line { background-color: $cForest; }
   &.regrowth         .line { background-color: $cRegrowth; }
   &.mining           .line { background-color: $cMining; }
@@ -438,8 +438,8 @@ strong { font-weight: bold; } // This is sad, I know.
   background:url(icons/bullet_other.png) no-repeat;
   background-position: $left $top;
 
-  &.protected_areas {
-    background:url(icons/bullet_protected_areas.png) no-repeat $left $top;
+  &.conservation {
+    background:url(icons/bullet_conservation.png) no-repeat $left $top;
   }
 
   &.forest_clearing {
@@ -502,7 +502,7 @@ strong { font-weight: bold; } // This is sad, I know.
   @include inline-block();
   @include icons-sprite(disabled);
 
-  padding-left: 17px;
+  padding-left: 22px;
 
   text-decoration:none;
 }

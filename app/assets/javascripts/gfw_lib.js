@@ -677,8 +677,8 @@ GFW.modules.maplayer = function(gfw) {
         id              = this.layer.get('id');
 
         if (category === null || !category) { // Default data
-          category       = 'Protected Areas';
-          category_slug  = 'protected_areas';
+          category       = 'Conservation';
+          category_slug  = 'conservation';
           category_color = '#707D92';
         }
 
@@ -768,7 +768,8 @@ GFW.modules.datalayers = function(gfw) {
           });
 
           // TODO: remove the below when real layers arrive
-          Filter.addFilter(0, 'regrowth', 'Regrowth', 'Stay tuned', { disabled: true });
+          Filter.addFilter(0, 'nothing', 'Regrowth', 'Stay tuned', { disabled: true });
+          Filter.addFilter(0, 'nothing', 'Conservation', 'Stay tuned', { disabled: true });
 
         });
 
