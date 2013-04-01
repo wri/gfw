@@ -58,6 +58,7 @@ GFW.modules.app = function(gfw) {
       // we can stop loading the blank (see limit=0 below) tileset here now that we are loading the animation. see todo on line 347
       this.queries.semi_monthly     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 17 ELSE {Z}+8 END limit 0";
       this.queries.annual           = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
+      this.queries.quarterly        = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
       this.queries.brazilian_amazon = "SELECT CASE WHEN {Z}<12 THEN st_buffer(the_geom_webmercator,(16-{Z})^3.8) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
 
       this.lastHash = null;
@@ -359,6 +360,8 @@ GFW.modules.app = function(gfw) {
         return 'gfw2_forma';
       } else if (layerName === "annual") {
         return 'gfw2_hansen';
+      } else if (layerName === "quarterly") {
+        return 'gfw2_hansen';
       } else if (layerName === "brazilian_amazon") {
         return 'gfw2_imazon';
       }
@@ -456,6 +459,8 @@ GFW.modules.app = function(gfw) {
         });
 
       } else if (this.currentBaseLayer === "annual") {
+        table_name = 'gfw2_hansen';
+      } else if (this.currentBaseLayer === "quarterly") {
         table_name = 'gfw2_hansen';
       } else if (this.currentBaseLayer === "brazilian_amazon") {
         table_name = 'gfw2_imazon';
@@ -616,7 +621,7 @@ GFW.modules.maplayer = function(gfw) {
 
           legend.add(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
 
-        } else if (this.layer.get('slug') == "annual") {
+        } else if (this.layer.get('slug') == "annual" || this.layer.get('slug') == "quarterly") {
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true });
         } else {
 
@@ -685,13 +690,14 @@ GFW.modules.maplayer = function(gfw) {
         var // special layers
         semi_monthly  = GFW.app.datalayers.LayersObj.get(569),
         annual        = GFW.app.datalayers.LayersObj.get(568),
+        quarterly     = GFW.app.datalayers.LayersObj.get(583),
         sad           = GFW.app.datalayers.LayersObj.get(567);
 
         if (category != 'Forest clearing') {
           legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
         }
 
-        if (slug === 'semi_monthly' || slug === "annual" || slug === "brazilian_amazon") {
+        if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon") {
 
           if (slug === 'semi_monthly' && showMap ) {
             Timeline.show();
@@ -706,6 +712,8 @@ GFW.modules.maplayer = function(gfw) {
           if (slug == 'semi_monthly') {
             semi_monthly.attributes['visible'] = true;
           } else if (slug == 'annual') {
+            annual.attributes['visible']       = true;
+          } else if (slug == 'quarterly') {
             annual.attributes['visible']       = true;
           } else if (slug == 'brazilian_amazon') {
             sad.attributes['visible']          = true;
