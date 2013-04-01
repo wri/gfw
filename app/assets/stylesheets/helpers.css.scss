@@ -27,8 +27,8 @@ $cSeparator:             #E5E5E5;
 $cStories:               $cGold;
 $cStoriesHover:          $cDarkGold;
 
-$cForestUse:             $cGold;
-$cForestUseHover:        $cDarkGold;
+$cForestUse:             #CC4C02;
+$cForestUseHover:        darken(#CC4C02, 15%);
 
 $cConservation:          #00CED0; // blue
 $cConservationHover:     #00B9B9;
@@ -398,7 +398,7 @@ strong { font-weight: bold; } // This is sad, I know.
 }
 
 .filter-icons {
-  &.forest_use      .icon  { @include icons-sprite(icon_concessions); }
+  &.forest_use      .icon  { @include icons-sprite(icon_forest_use); }
   &.conservation    .icon  { @include icons-sprite(icon_conservation); }
   &.mining          .icon  { @include icons-sprite(icon_mining); }
   &.fire            .icon  { @include icons-sprite(icon_fire); }
