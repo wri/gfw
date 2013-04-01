@@ -57,7 +57,7 @@ task :deploy do
     end
 
     # Precompile assets
-    Rake::Task['assets:precompile'].invoke
+    #Rake::Task['assets:precompile'].invoke
 
     # Add any extra tasks you want to run here, such as compiling static pages, etc.
 
