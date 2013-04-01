@@ -460,7 +460,7 @@ strong { font-weight: bold; } // This is sad, I know.
   @include inline-block();
   @include icons-sprite(radio, $offset-y: -67px);
 
-  padding-left: 12px;
+  padding-left: 17px;
 
   color:#333;
   text-decoration:none;
@@ -481,7 +481,7 @@ strong { font-weight: bold; } // This is sad, I know.
   @include inline-block();
   @include icons-sprite(checkboxes, $offset-y: -66px);
 
-  padding-left: 12px;
+  padding-left: 17px;
 
   color:#333;
   text-decoration:none;
@@ -496,6 +496,15 @@ strong { font-weight: bold; } // This is sad, I know.
 
   &.disabled       { color: $cGray4; @include icons-sprite($url, $offset-y:5px); }
   &.disabled:hover { @include icons-sprite($url, $offset-y:5px); }
+}
+
+@mixin disabled($url) {
+  @include inline-block();
+  @include icons-sprite(disabled);
+
+  padding-left: 17px;
+
+  text-decoration:none;
 }
 
 // Fonts

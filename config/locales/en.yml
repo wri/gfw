@@ -94,6 +94,7 @@ en:
         alerts:
           title: 'Last forest clearing alerts'
           subscribe: 'Subscribe to this country'
+          analyze: 'Analyze this country'
         description:
           title: 'About the country'
           read_more: 'Read more at Wikipedia'
