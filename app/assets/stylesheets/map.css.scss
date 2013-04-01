@@ -759,6 +759,8 @@ $timelineWidth: 940px;
     @include size(6px);
   }
 
+  section { clear:both; overflow:auto; height: 300px; }
+
   .content {
     height: 100%;
     width: 100%;
