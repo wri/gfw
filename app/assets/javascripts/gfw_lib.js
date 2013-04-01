@@ -677,8 +677,8 @@ GFW.modules.maplayer = function(gfw) {
         id              = this.layer.get('id');
 
         if (category === null || !category) { // Default data
-          category       = 'Protected Areas';
-          category_slug  = 'protected_areas';
+          category       = 'Conservation';
+          category_slug  = 'conservation';
           category_color = '#707D92';
         }
 
