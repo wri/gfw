@@ -768,7 +768,8 @@ GFW.modules.datalayers = function(gfw) {
           });
 
           // TODO: remove the below when real layers arrive
-          Filter.addFilter(0, 'regrowth', 'Regrowth', 'Stay tuned', { disabled: true });
+          Filter.addFilter(0, 'nothing', 'Regrowth', 'Stay tuned', { disabled: true });
+          Filter.addFilter(0, 'nothing', 'Conservation', 'Stay tuned', { disabled: true });
 
         });
 
