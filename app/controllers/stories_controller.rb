@@ -5,7 +5,7 @@ class StoriesController < ApplicationController
     stories_per_page = 3
     @page            = (params[:page] || 1).to_i
     @total_pages     = (Story.select('count(cartodb_id) as count').where(:featured => true).first.attributes[:count].to_f / stories_per_page.to_f).ceil
-    @featured        = Story.select(Story::SELECT_FIELDS).where(:featured => true).order('cartodb_id ASC').page(@page).per_page(stories_per_page)
+    @featured        = Story.featured(@page, stories_per_page)
     @stories         = if params['for-map'].present?
                          Story.all_for_map
                        else
