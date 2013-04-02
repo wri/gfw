@@ -38,8 +38,6 @@ Infowindow        = {};
 
 function loadGFW() {
 
-  //gfw.load('/assets/gfw/', function() {
-
     GOD = new gfw.ui.view.GOD();
     window.GOD = GOD;
 
@@ -140,11 +138,10 @@ function loadGFW() {
       GOD.add(languageSelector, languageSelector.hide);
     });
 
-    // TODO: remove
-    window.layerSelector    = layerSelector;
-    window.languageSelector = languageSelector;
-    window.legend           = legend;
-    window.sourceWindow     = sourceWindow;
+    //window.layerSelector    = layerSelector;
+    //window.languageSelector = languageSelector;
+    //window.legend           = legend;
+    //window.sourceWindow     = sourceWindow;
 
     if (map) {
       GFW(function(env) {
@@ -152,7 +149,7 @@ function loadGFW() {
         GFW.app = new env.app.Instance(map, {
           user       : 'wri-01',
           layerTable : 'layerinfo',
-          logging    : true
+          logging    : false
         });
 
         GFW.app.run();
@@ -160,9 +157,6 @@ function loadGFW() {
 
       });
     }
-
-  //});
-
 }
 
 // Map init method
@@ -248,23 +242,6 @@ function initialize() {
     });
 
   });
-
-/*
-  $(".crowdsourcing").on("click", function(e) {
-    e.preventDefault();
-
-    $("#content").append('<div class="backdrop" />');
-    $(".backdrop").fadeIn(250, function() {
-
-      var top = ( $(window).height() - $("#crowdsourcing").height() ) / 2+$(window).scrollTop() + "px",
-      left = ( $(window).width() - $("#crowdsourcing").width() ) / 2+$(window).scrollLeft() + "px";
-
-      $("#crowdsourcing").css({top: top, left:left});
-      $("#crowdsourcing").fadeIn(250);
-
-    });
-  });
-*/
 
   $(".close_icon").on("click", function(e) {
     e.preventDefault();
