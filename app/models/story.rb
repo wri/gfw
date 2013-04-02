@@ -195,4 +195,21 @@ class Story < CartoDB::Model::Base
     []
   end
 
+  def self.by_id_or_token(id)
+    results = CartoDB::Connection.query(<<-SQL)
+      SELECT stories.cartodb_id,
+             stories.title,
+             stories.details,
+             stories.your_name,
+             stories.featured,
+             ST_X(ST_Centroid(stories.the_geom)) || ',' || ST_Y(ST_Centroid(stories.the_geom)) AS coords,
+             media.big_url
+      FROM stories
+      LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
+      WHERE stories.cartodb_id = #{id} OR stories.token = '#{id}'
+    SQL
+    return results.rows || [] if results
+    []
+  end
+
 end

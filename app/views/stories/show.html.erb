@@ -24,7 +24,7 @@ end %>
       </div>
     </div>
 
-    <% if @story.media.present? %>
+    <% if @media.present? %>
 
       <div class="carrousel">
 
@@ -34,13 +34,13 @@ end %>
 
         </div>
 
-        <% if @story.media.size > 1 %>
+        <% if @media.size > 1 %>
           <%= link_to '', '#', :class => 'previous' %>
           <%= link_to '', '#', :class => 'next' %>
         <% end %>
 
         <ul>
-          <% @story.media.map(&:big_url).each do |image_url| %>
+          <% @media.map(&:big_url).each do |image_url| %>
             <li> <%= image_tag image_url %> </li>
           <% end %>
         </ul>
