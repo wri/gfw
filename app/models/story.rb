@@ -201,8 +201,10 @@ class Story < CartoDB::Model::Base
              stories.token,
              stories.title,
              stories.details,
+             stories.when_did_it_happen,
              stories.your_name,
              stories.featured,
+             stories.visible,
              ST_X(ST_Centroid(stories.the_geom)) || ',' || ST_Y(ST_Centroid(stories.the_geom)) AS coords,
              media.big_url
       FROM stories
