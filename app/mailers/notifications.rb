@@ -13,4 +13,8 @@ class Notifications < ActionMailer::Base
     #mail to: "dcano@vizzuality.com, ferdev@vizzuality.com"
   end
 
+  def new_user(user_email)
+    mail to: "gfw@wri.org", reply_to: user_email
+  end
+
 end
