@@ -60,7 +60,6 @@ function loadGFW() {
         Infowindow.close();
       });
 
-      wall          = new gfw.ui.view.Wall();
       layerSelector = new gfw.ui.view.LayerSelector({ map: map });
       legend        = new gfw.ui.view.Legend();
       sourceWindow  = new gfw.ui.view.SourceWindow();
@@ -69,8 +68,6 @@ function loadGFW() {
       $("#map").append(layerSelector.render());
       $("#map").append(legend.render());
       $("body").append(sourceWindow.render());
-
-      $("body").append(wall.render());
 
       legend.setDraggable(true);
       layerSelector.setDraggable(true);
@@ -307,6 +304,10 @@ $(function(){
 
   var
   resizePID;
+
+  wall          = new gfw.ui.view.Wall();
+  $("body").append(wall.render());
+
 
   function hideOvers() {
 
