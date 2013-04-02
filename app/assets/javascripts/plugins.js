@@ -990,6 +990,10 @@ var Filter = (function() {
 
     var name = $li.find("a").text();
     $layer.find("a.title").text(name);
+    var color = $li.find("a").css("color");
+
+    $layer.find("a.title").css({ color: color });
+    $layer.find(".line").css({ backgroundColor: color });
 
     $layer.find(".links li.last").removeClass('last');
     $layer.find(".links li").hide();

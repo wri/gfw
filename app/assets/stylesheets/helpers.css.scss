@@ -275,42 +275,7 @@ strong { font-weight: bold; } // This is sad, I know.
   user-select: none;
 }
 
-// Different filter elements
-.filter-colors {
 
-  color: $cGray4;
-
-  &.special_projects { color: $cSpecialProjects; }
-  &.forest_use       { color: $cForestUse; }
-  &.stories          { color: $cStories; }
-  &.regrowth         { color: $cRegrowth; }
-  &.mining           { color: $cMining; }
-  &.other_layers     { color: $cOtherLayers;  }
-  &.conservation     { color: $cConservation; }
-  &.forest_clearing  { color: $cDeforestation; }
-  &.forest_cover     { color: $cForest; }
-  &.fire             { color: $cFire; }
-  &.carbon           { color: $cGray4;}
-  &.biodiversity     { color: $cGray4; }
-}
-
-.filter-border-colors {
-
-  border-color: $cGray4;
-
-  &.special_projects { border-color: $cSpecialProjects; }
-  &.forest_use       { border-color: $cForestUse; }
-  &.stories          { border-color: $cStories; }
-  &.regrowth         { border-color: $cRegrowth; }
-  &.mining           { border-color: $cMining; }
-  &.other_layers     { border-color: $cOtherLayers;  }
-  &.conservation     { border-color: $cConservation; }
-  &.forest_clearing  { border-color: $cDeforestation; }
-  &.forest_cover     { border-color: $cForest; }
-  &.fire             { border-color: $cFire; }
-  &.carbon           { border-color: $cGray4;}
-  &.biodiversity     { border-color: $cGray4; }
-}
 // Different filter elements
 .filter-links {
 
@@ -410,25 +375,6 @@ strong { font-weight: bold; } // This is sad, I know.
   &.other_layers    .icon  { @include icons-sprite(icon_other); }
   &.regrowth        .icon  { @include icons-sprite(icon_regrowth); }
 
-}
-
-.filter-lines {
-
-  .line { background-color: $cOtherLayers; }
-
-  &.special_projects .line { background-color: $cSpecialProjects; }
-  &.forest_use       .line { background-color: $cForestUse; }
-  &.stories          .line { background-color: $cStories; }
-  &.conservation     .line { background-color: $cConservation; }
-  &.intact-forest    .line { background-color: $cForest; }
-  &.regrowth         .line { background-color: $cRegrowth; }
-  &.mining           .line { background-color: $cMining; }
-  &.forest_cover     .line { background-color: $cForest; }
-  &.forest           .line { background-color: $cForest; }
-  &.fire             .line { background-color: $cFire; }
-  &.forest_clearing  .line { background-color: $cDeforestation; }
-  &.carbon           .line { background-color: $cGray4;}
-  &.biodiversity     .line { background-color: $cGray4; }
 }
 
 .filter-bullets {
