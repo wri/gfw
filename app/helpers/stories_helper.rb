@@ -55,7 +55,7 @@ module StoriesHelper
   end
 
   def static_map(coords)
-    "http://maps.google.com/maps/api/staticmap?center=#{coords}&zoom=3&size=266x266&maptype=terrain&sensor=false"
+    "http://maps.google.com/maps/api/staticmap?center=#{coords.to_s.gsub(" ", "")}&zoom=3&size=266x266&maptype=terrain&sensor=false"
   end
 
   def show_exclamation?(story)
