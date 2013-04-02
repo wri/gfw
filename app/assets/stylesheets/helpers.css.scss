@@ -491,6 +491,16 @@ strong { font-weight: bold; } // This is sad, I know.
 
     // http://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
 
+    &.cm strong { background:url(flags/cm.png) no-repeat; }
+    &.cd strong { background:url(flags/cd.png) no-repeat; }
+    &.cf strong { background:url(flags/cf.png) no-repeat; }
+    &.cg strong { background:url(flags/cg.png) no-repeat; }
+    &.ga strong { background:url(flags/ga.png) no-repeat; }
+    &.id strong { background:url(flags/id.png) no-repeat; }
+
+    /* More flags: */
+
+    /*
     &.ad strong { background:url(flags/ad.png) no-repeat; }
     &.ae strong { background:url(flags/ae.png) no-repeat; }
     &.af strong { background:url(flags/af.png) no-repeat; }
@@ -528,14 +538,10 @@ strong { font-weight: bold; } // This is sad, I know.
     &.bz strong { background:url(flags/bz.png) no-repeat; }
     &.ca strong { background:url(flags/ca.png) no-repeat; }
     &.cc strong { background:url(flags/cc.png) no-repeat; }
-    &.cd strong { background:url(flags/cd.png) no-repeat; }
-    &.cf strong { background:url(flags/cf.png) no-repeat; }
-    &.cg strong { background:url(flags/cg.png) no-repeat; }
     &.ch strong { background:url(flags/ch.png) no-repeat; }
     &.ci strong { background:url(flags/ci.png) no-repeat; }
     &.ck strong { background:url(flags/ck.png) no-repeat; }
     &.cl strong { background:url(flags/cl.png) no-repeat; }
-    &.cm strong { background:url(flags/cm.png) no-repeat; }
     &.cn strong { background:url(flags/cn.png) no-repeat; }
     &.co strong { background:url(flags/co.png) no-repeat; }
     &.cr strong { background:url(flags/cr.png) no-repeat; }
@@ -564,7 +570,6 @@ strong { font-weight: bold; } // This is sad, I know.
     &.fm strong { background:url(flags/fm.png) no-repeat; }
     &.fo strong { background:url(flags/fo.png) no-repeat; }
     &.fr strong { background:url(flags/fr.png) no-repeat; }
-    &.ga strong { background:url(flags/ga.png) no-repeat; }
     &.gb strong { background:url(flags/gb.png) no-repeat; }
     &.gd strong { background:url(flags/gd.png) no-repeat; }
     &.ge strong { background:url(flags/ge.png) no-repeat; }
@@ -588,7 +593,6 @@ strong { font-weight: bold; } // This is sad, I know.
     &.hr strong { background:url(flags/hr.png) no-repeat; }
     &.ht strong { background:url(flags/ht.png) no-repeat; }
     &.hu strong { background:url(flags/hu.png) no-repeat; }
-    &.id strong { background:url(flags/id.png) no-repeat; }
     &.ie strong { background:url(flags/ie.png) no-repeat; }
     &.il strong { background:url(flags/il.png) no-repeat; }
     &.in strong { background:url(flags/in.png) no-repeat; }
@@ -738,4 +742,6 @@ strong { font-weight: bold; } // This is sad, I know.
     &.england strong { background:url(flags/england.png) no-repeat; }
     &.europeanunion strong { background:url(flags/europeanunion.png) no-repeat; }
     &.wales strong { background:url(flags/wales.png) no-repeat; }
+    */
+
   }
