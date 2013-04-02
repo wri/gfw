@@ -44,6 +44,18 @@ header {
     z-index: 1000;
   }
 
+  a#feedback {
+      @include inline-block();
+      position:absolute;
+      top:375px;
+      right:0px;
+      width:30px;
+      height:80px;
+      z-index: 9999;
+      background:url(buttons/feedback_button.png) no-repeat center center;
+      text-indent: -10000px;
+  }
+
   span.header_separator {
     position:absolute;
     top: 67px;
