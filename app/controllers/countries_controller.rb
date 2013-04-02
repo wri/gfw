@@ -3,15 +3,17 @@ class CountriesController < ApplicationController
   
   def show
 
-    @country_info = Country.country_info(params[:id])
+    country_info = Country.country_info(params[:id])
 
     @country = OpenStruct.new({
-      name: @country_info[0].name,
-      about: @country_info[0].about,
-      wikipedia_link: @country_info[0].wikipedia_link,
-      link: @country_info[0].map_coord,
-      iso:  @country_info[0].iso,
-      last_alerts: Alert.alerts_per_month_per_country(@country_info[0].iso)
+      name: country_info[0].name,
+      about: country_info[0].about,
+      wikipedia_link: country_info[0].wikipedia_link,
+      lat: country_info[0].lat.to_s,
+      lon: country_info[0].lon.to_s,
+      link: country_info[0].map_coord,
+      iso:  country_info[0].iso,
+      last_alerts: Alert.alerts_per_month_per_country(country_info[0].iso)
     })
 
     @blog_posts = [];

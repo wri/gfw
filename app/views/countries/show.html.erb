@@ -28,7 +28,7 @@
       <div class="graphs" data-load="graphs">
         <div class="circle lines chart"></div>
         <div class="circle hansen_placeholder chart"></div>
-        <div class="circle country" style="background: url(<%= static_map(@country_info[0].lat.to_s+","+@country_info[0].lon.to_s, "299x299") %>) no-repeat;">
+        <div class="circle country" style="background: url(<%= static_map(@country.lat+","+@country.lon, "299x299") %>) no-repeat;">
           <a class="mask" href="<%= @country.link %>"></a>
           <a class="button" href="<%= @country.link %>">Explore map</a>
         </div>
