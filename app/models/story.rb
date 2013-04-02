@@ -198,6 +198,7 @@ class Story < CartoDB::Model::Base
   def self.by_id_or_token(id)
     results = CartoDB::Connection.query(<<-SQL)
       SELECT stories.cartodb_id,
+             stories.token,
              stories.title,
              stories.details,
              stories.your_name,
