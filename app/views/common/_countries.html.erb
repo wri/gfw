@@ -5,15 +5,15 @@
   <h1><%= t(".title") %></h1>
 
   <% countries.each do |country| %>
-    <div class="country ">
-      <% if country[:class] != :disabled %>
+    <div class="country <% if !country[:enabled] %>disabled<% end %>">
+      <% if country[:enabled] %>
         <a href="/country/<%= country[:name].downcase.gsub(" ", "_") %>">
-        <% end %>
+      <% end %>
         <div class="icon" id="icon<%= country[:iso]%>">
         </div>
 
         <div class="content"><h4 <% if (country[:name].length > 17) %>class="small"<% end %>><%= country[:name] %></h4> <strong>19,312</strong> Forest Clearing Alerts in the last 6 months</div>
-        <% if country[:class] != "disabled" %>
+        <% if country[:enabled] %>
         </a>
       <% end %>
     </div>
