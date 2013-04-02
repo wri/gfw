@@ -1,7 +1,7 @@
 class Country
 
   def self.countries_info
-    CartoDB::Connection.query("SELECT name, iso FROM gfw2_countries ORDER BY name;")[:rows]
+    CartoDB::Connection.query("SELECT name, iso, enabled FROM gfw2_countries ORDER BY name;")[:rows]
   end
 
   def self.country_info(name = '')
