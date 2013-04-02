@@ -58,6 +58,7 @@ GFW.modules.app = function(gfw) {
       // we can stop loading the blank (see limit=0 below) tileset here now that we are loading the animation. see todo on line 347
       this.queries.semi_monthly     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 17 ELSE {Z}+8 END limit 0";
       this.queries.annual           = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
+      this.queries.quarterly        = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
       this.queries.brazilian_amazon = "SELECT CASE WHEN {Z}<12 THEN st_buffer(the_geom_webmercator,(16-{Z})^3.8) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
 
       this.lastHash = null;
@@ -359,6 +360,8 @@ GFW.modules.app = function(gfw) {
         return 'gfw2_forma';
       } else if (layerName === "annual") {
         return 'gfw2_hansen';
+      } else if (layerName === "quarterly") {
+        return 'gfw2_hansen';
       } else if (layerName === "brazilian_amazon") {
         return 'gfw2_imazon';
       }
@@ -456,6 +459,8 @@ GFW.modules.app = function(gfw) {
         });
 
       } else if (this.currentBaseLayer === "annual") {
+        table_name = 'gfw2_hansen';
+      } else if (this.currentBaseLayer === "quarterly") {
         table_name = 'gfw2_hansen';
       } else if (this.currentBaseLayer === "brazilian_amazon") {
         table_name = 'gfw2_imazon';
@@ -603,7 +608,7 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app.currentBaseLayer = null;
           };
 
-          Filter.addFilter("", this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, zoomEvent: function() { } , source: null });
+          Filter.addFilter("", this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, zoomEvent: function() { } , source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
 
         } else if (this.layer.get('slug') == "user_stories") {
 
@@ -611,16 +616,16 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app._toggleStoriesLayer();
           };
 
-          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, zoomEvent: zoomEvent, source: null }, true);
+          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, zoomEvent: zoomEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") }, true);
           Filter.check(this.layer.get('id'));
 
           legend.add(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
 
-        } else if (this.layer.get('slug') == "annual") {
-          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true });
+        } else if (this.layer.get('slug') == "annual" || this.layer.get('slug') == "quarterly") {
+          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
         } else {
 
-          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, zoomEvent: zoomEvent, source: this.layer.get('source') });
+          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, zoomEvent: zoomEvent, source: this.layer.get('source'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
 
           // Adds the layers from the hash
           if (filters && _.include(filters, this.layer.get('id'))) {
@@ -685,13 +690,14 @@ GFW.modules.maplayer = function(gfw) {
         var // special layers
         semi_monthly  = GFW.app.datalayers.LayersObj.get(569),
         annual        = GFW.app.datalayers.LayersObj.get(568),
+        quarterly     = GFW.app.datalayers.LayersObj.get(583),
         sad           = GFW.app.datalayers.LayersObj.get(567);
 
         if (category != 'Forest clearing') {
           legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
         }
 
-        if (slug === 'semi_monthly' || slug === "annual" || slug === "brazilian_amazon") {
+        if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon") {
 
           if (slug === 'semi_monthly' && showMap ) {
             Timeline.show();
@@ -706,6 +712,8 @@ GFW.modules.maplayer = function(gfw) {
           if (slug == 'semi_monthly') {
             semi_monthly.attributes['visible'] = true;
           } else if (slug == 'annual') {
+            annual.attributes['visible']       = true;
+          } else if (slug == 'quarterly') {
             annual.attributes['visible']       = true;
           } else if (slug == 'brazilian_amazon') {
             sad.attributes['visible']          = true;
@@ -763,13 +771,14 @@ GFW.modules.datalayers = function(gfw) {
         var that = this;
 
         this.LayersObj.bind('reset', function() {
+
           that.LayersObj.each(function(p) {
             that._addLayer(p);
           });
 
           // TODO: remove the below when real layers arrive
-          Filter.addFilter(0, 'nothing', 'Regrowth', 'Stay tuned', { disabled: true });
-          Filter.addFilter(0, 'nothing', 'Conservation', 'Stay tuned', { disabled: true });
+          Filter.addFilter(0, 'nothing', 'Regrowth', 'Stay tuned',     { disabled: true , category_color: "#B2D26E", color: "#B2D26E" });
+          Filter.addFilter(0, 'nothing', 'Conservation', 'Stay tuned', { disabled: true , category_color: "#CCC",    color: "#CCC"});
 
         });
 

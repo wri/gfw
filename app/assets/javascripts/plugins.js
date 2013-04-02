@@ -804,6 +804,16 @@ var Navigation = (function() {
       e.stopPropagation();
 
       $(this).toggleClass("checked");
+
+      if ($(this).hasClass("checked")) {
+        var color = $(this).attr("data-color");
+        $(this).css("color", color );
+        $(this).find("i").css("background-color", color );
+      } else {
+        $(this).css("color", "#ccc");
+        $(this).find("i").css("background-color", "#ccc");
+      }
+
     });
   }());
 
@@ -980,6 +990,10 @@ var Filter = (function() {
 
     var name = $li.find("a").text();
     $layer.find("a.title").text(name);
+    var color = $li.find("a").css("color");
+
+    $layer.find("a.title").css({ color: color });
+    $layer.find(".line").css({ backgroundColor: color });
 
     $layer.find(".links li.last").removeClass('last');
     $layer.find(".links li").hide();
@@ -1054,16 +1068,21 @@ var Filter = (function() {
 
   function _check(id) {
     $("#layer a[data-id=" + id +"]").addClass("checked");
+    var color = $("#layer a[data-id=" + id +"]").attr("data-color");
+    $("#layer a[data-id=" + id +"]").css("color", color );
+    $("#layer a[data-id=" + id +"]").find("i").css("background-color", color );
     filters.push(id);
   }
 
   function _addFilter(id, slug, category, name, options) {
 
     var
-    zoomEvent  = options.zoomEvent  || null,
-    clickEvent = options.clickEvent || null,
-    disabled   = options.disabled   || false;
-    source     = options.source     || null;
+    zoomEvent   = options.zoomEvent   || null,
+    clickEvent  = options.clickEvent  || null,
+    disabled    = options.disabled    || false;
+    source      = options.source      || null;
+    category_color = options.category_color || "#ccc";
+    color       = options.color       || "#ccc";
 
     if (category === null || !category) {
       category = 'Protected Areas';
@@ -1074,7 +1093,7 @@ var Filter = (function() {
     if (!_.include(categories, cat)) {
       var
       template = _.template($("#filter-template").html()),
-      $filter  = $(template({ name: category, category: cat, data: cat }));
+      $filter  = $(template({ name: category, category: cat, data: cat, category_color: category_color }));
 
       $filters.find("ul").append($filter);
       categories.push(cat);
@@ -1098,7 +1117,7 @@ var Filter = (function() {
         });
       } else {
         layerItemTemplate = _.template($("#layer-item-checkbox-template").html());
-        $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
+        $layerItem = $(layerItemTemplate({ name: name, id: id, color: color, slug:slug, category: cat, disabled: disabled, source: source }));
 
         $layerItem.find("a:not(.source)").on("click", function() {
           clickEvent();
@@ -1107,7 +1126,7 @@ var Filter = (function() {
       }
     } else {
       layerItemTemplate = _.template($("#layer-item-disabled-template").html());
-      $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
+      $layerItem = $(layerItemTemplate({ name: name, id: id, color: color, slug:slug, category: cat, disabled: disabled, source: source }));
 
       $layerItem.find("a:not(.source)").on("click", function(e) {
         preventDefault();

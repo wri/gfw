@@ -163,17 +163,19 @@ header {
 
     li {
       @include inline-block();
-      width: 120px;
+      width: 140px;
       padding: 0 20px 0 20px;
       border-right: 1px solid $cGray4;
 
       &.last {
+        width: 100px;
         border: 0;
         padding-right:0;
       }
 
       span {
         @include inline-block();
+        width: 100px;
         margin: 0 0 10px 0;
         @extend .serif;
         color: $cLime;
@@ -182,6 +184,7 @@ header {
 
       p {
         @extend .sans-serif;
+
         color: $cGray3;
         font-size: 12px;
         line-height: 130%;
@@ -1047,21 +1050,6 @@ article.contact {
 
   @include inline-block();
 
-  /*@include checkboxes(checkboxes);*/
-
-  /*&.disabled { color: $cGray4!important; @include checkboxes(checkboxes); }*/
-
-  /*&.concessions     { @include checkboxes(checkboxes_concessions); }*/
-  /*&.regrowth        { @include checkboxes(checkboxes_forest); }*/
-  /*&.mining          { @include checkboxes(checkboxes_mining); }*/
-  /*&.other_layers    { @include checkboxes(checkboxes_other_layers); }*/
-  /*&.regrowth        { @include checkboxes(checkboxes_regrowth); }*/
-
-  /*&.disabled.concessions,*/
-  /*&.disabled.regrowth,*/
-  /*&.disabled.mining,*/
-  /*&.disabled.other_layers,*/
-  /*&.disabled.regrowth { @include checkboxes(checkboxes); }*/
 }
 
 footer {

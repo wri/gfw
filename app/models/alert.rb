@@ -1,7 +1,7 @@
 class Alert
 
-  def self.ammount_in_the_last_six_months
-     result = CartoDB::Connection.query("SELECT sum(alerts) as alerts FROM gfw2_forma_graphs WHERE date > (SELECT n FROM gfw2_forma_datecode WHERE now() -INTERVAL '6 months' < date ORDER BY date ASC LIMIT 1);")
+  def self.ammount_in_the_last_year
+     result = CartoDB::Connection.query("SELECT sum(alerts) as alerts FROM gfw2_forma_graphs WHERE date > (SELECT n FROM gfw2_forma_datecode WHERE now() -INTERVAL '12 months' < date ORDER BY date ASC LIMIT 1);")
      result[:rows].first[:alerts] rescue 0
   end
 

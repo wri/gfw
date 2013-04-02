@@ -46,6 +46,28 @@ class Story < CartoDB::Model::Base
     self
   end
 
+  def self.first_three_featured
+    #select([:cartodb_id, :title]).
+    #where(:featured => true).
+    #order('cartodb_id DESC').
+    #per_page(3)
+
+    sql = <<-SQL
+      SELECT stories.cartodb_id AS id,
+             title,
+             media.thumbnail_url,
+             ST_Y(ST_Centroid(stories.the_geom)) || ', ' || ST_X(ST_Centroid(stories.the_geom)) AS coords
+      FROM stories
+      LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
+      ORDER BY stories.cartodb_id DESC
+      LIMIT 3
+    SQL
+
+    result = CartoDB::Connection.query(sql)
+
+    result[:rows] rescue []
+  end
+
   def self.all_for_map
     sql = <<-SQL
       SELECT stories.cartodb_id AS id,
