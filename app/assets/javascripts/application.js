@@ -30,6 +30,7 @@ subscribeMap;
 
 GOD               = {},
 legend            = {},
+wall              = {},
 sourceWindow      = {},
 gallery           = {},
 languageSelector  = {},
@@ -59,6 +60,7 @@ function loadGFW() {
         Infowindow.close();
       });
 
+      wall          = new gfw.ui.view.Wall();
       layerSelector = new gfw.ui.view.LayerSelector({ map: map });
       legend        = new gfw.ui.view.Legend();
       sourceWindow  = new gfw.ui.view.SourceWindow();
@@ -67,6 +69,8 @@ function loadGFW() {
       $("#map").append(layerSelector.render());
       $("#map").append(legend.render());
       $("body").append(sourceWindow.render());
+
+      $("body").append(wall.render());
 
       legend.setDraggable(true);
       layerSelector.setDraggable(true);
@@ -358,7 +362,7 @@ $(function(){
   }
 
   if ($("div[data-load]:visible").length > 0) {
-    updateFeed({countryCode: countryCode, n: 4});
+    //updateFeed({countryCode: countryCode, n: 4});
     addCircle("forest", "bars", { legendUnit: "m", countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"with {{n}} tall trees", hoverColor: "#333333", color: "#333333", unit: "km<sup>2</sup>" });
     addCircle("forma", "lines", { countryCode: countryCode, width: 300, title: "FORMA", subtitle:"Forest clearing alerts", legend:"In the last month", hoverColor: "#A1BA42", color: "#A1BA42" });
   }

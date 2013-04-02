@@ -567,6 +567,58 @@ article.contact {
 
 #countries { display: none; }
 
+.wall {
+
+  $width: 518px;
+  $height: 180px;
+
+  height: $height;
+
+  @include absolute-center($width, $height);
+
+  display:none;
+  padding: 30px;
+  padding-right: 5px;
+
+  @include box-shadow(0px 0px 7px $cGray2);
+  @include border-radius(3px);
+
+  background:#fff;
+  border: 1px solid #757573;
+  text-align:center;
+
+  z-index: 2000;
+
+  form {
+    border-top: 1px solid #f1f1f1;
+    position:absolute;
+    padding: 30px 0 30px 0;
+    left: 0;
+    bottom: 0px;
+    width: 543px;
+
+    .input-field {
+      margin: 0 30px 0px 0;
+    }
+
+  }
+
+  h1 {
+    font-size: 35px;
+    margin: 0 0 15px 0;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  p {
+    color: #999999;
+    font-family: "Helvetica Neue",Arial;
+    font-size: 15px;
+  }
+
+  p.help { margin: 0 0 20px 0; }
+
+}
+
 #subscribe {
 
   overflow:hidden;
@@ -1188,7 +1240,7 @@ footer > .download {
 }
 
 
-.countries_backdrop, .backdrop {
+.wall_backdrop, .countries_backdrop, .backdrop {
   position: fixed;
   top: 0;
   right: 0;

@@ -180,8 +180,29 @@ GFW.modules.app = function(gfw) {
 
       });
 
-      google.maps.event.addListener(this._map, 'dragend', function() {
+      google.maps.event.addListener(this._map, 'drag', function() {
+
+          if (that.currentBaseLayer != "semi_monthly") {
+            $(".time_layer").hide();
+            Timeline.hide();
+          } else {
+            $(".time_layer").show();
+          }
+
         that._updateHash(that);
+
+      });
+      google.maps.event.addListener(this._map, 'dragend', function() {
+
+          if (that.currentBaseLayer != "semi_monthly") {
+            $(".time_layer").hide();
+            Timeline.hide();
+          } else {
+            $(".time_layer").show();
+          }
+
+        that._updateHash(that);
+
       });
 
       google.maps.event.addListener(this._map, 'click', function(event) {
