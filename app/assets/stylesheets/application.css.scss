@@ -1246,7 +1246,7 @@ footer {
       float: right;
       margin: 50px 20px 0 0;
 
-      & > .wri { width:92px; height: 31px; margin: 20px 0 20px 0; @include icons-sprite(logo_wri_black); }
+      & > .wri { display:block; width:92px; height: 31px; margin: 20px 0 20px 0; @include icons-sprite(logo_wri_black); }
 
       address { width:266px; color: $cGray3; font-size:13px; line-height:120%; }
     }
