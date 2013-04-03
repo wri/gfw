@@ -358,7 +358,7 @@ $(function(){
   }
 
   if ($("div[data-load]:visible").length > 0) {
-    updateFeed({countryCode: countryCode, n: 4});
+    //updateFeed({countryCode: countryCode, n: 4});
     addCircle("forest", "bars", { legendUnit: "m", countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"with {{n}} tall trees", hoverColor: "#333333", color: "#333333", unit: "km<sup>2</sup>" });
     addCircle("forma", "lines", { countryCode: countryCode, width: 300, title: "FORMA", subtitle:"Forest clearing alerts", legend:"In the last month", hoverColor: "#A1BA42", color: "#A1BA42" });
   }
