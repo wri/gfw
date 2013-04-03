@@ -690,7 +690,7 @@ GFW.modules.maplayer = function(gfw) {
         $(".time_layer").hide();
         Timeline.hide();
         legend.removeCategory("forest_clearing");
-        GFW.app.baseLayer.setOptions({ opacity: 0 });
+        if (GFW.app.baseLayer) GFW.app.baseLayer.setOptions({ opacity: 0 });
 
       },
 
