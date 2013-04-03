@@ -12,7 +12,9 @@
         <div class="icon" id="icon<%= country[:iso]%>">
         </div>
 
-        <div class="content"><h4 <% if (country[:name].length > 17) %>class="small"<% end %>><%= country[:name] %></h4> <strong>19,312</strong> Forest Clearing Alerts in the last 6 months</div>
+        <% alerts = Alert.last_alerts_per_country(country[:iso]) %>
+        <% count = alerts[0] ? alerts[0][:count] : 0 %>
+        <div class="content"><h4 <% if (country[:name].length > 17) %>class="small"<% end %>><%= country[:name] %></h4> <strong><%= count %> </strong> Forest Clearing Alerts in the last 6 months</div>
         <% if country[:enabled] %>
         </a>
       <% end %>

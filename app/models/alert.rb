@@ -11,6 +11,22 @@ class Alert
     Hash[results[:rows].map{|r| [r[:iso].delete('{}'), r[:alerts_count]]}] rescue []
   end
 
+  def self.last_alerts_per_country(country_iso_code)
+
+    results = CartoDB::Connection.query(<<-SQL)
+      SELECT sum(alerts) as count,
+        iso
+      FROM gfw2_forma_graphs gfg
+      WHERE iso = '#{country_iso_code}' 
+      AND date > (SELECT n
+                  FROM gfw2_forma_datecode
+                  WHERE now() -INTERVAL '6 months' < date
+                  ORDER BY date ASC LIMIT 1)
+                  GROUP BY iso
+    SQL
+    results[:rows]
+  end
+
   def self.alerts_per_month_per_country(country_iso_code)
 
     results = CartoDB::Connection.query(<<-SQL)
