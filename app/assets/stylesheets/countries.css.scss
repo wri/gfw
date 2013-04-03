@@ -368,18 +368,22 @@ a.close_icon {
     word-spacing:-1em;
 
     .country, .chart {
-      @include inline-block();
+      width: 310px;
+      /*@include inline-block();*/
+      float:left;
       word-spacing:normal;
     }
+
+    .chart { width: 300px; }
+
     .country {
-      width: 309px;
+      width: 295px;
       height: 299px;
-      clear:both;
       overflow:hidden;
 
       a.mask {
         display: block;
-        width: 309px;
+        width: 100%;
         height: 299px;
         background:url(backgrounds/gfw_country_map_mask.png) no-repeat;
       }

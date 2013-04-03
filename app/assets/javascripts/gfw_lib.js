@@ -166,14 +166,6 @@ GFW.modules.app = function(gfw) {
       // Setup listeners
       google.maps.event.addListener(this._map, 'zoom_changed', function() {
 
-        setTimeout(function() {
-          if (that.currentBaseLayer != "semi_monthly") {
-            $(".time_layer").hide();
-            Timeline.hide();
-          } else {
-            $(".time_layer").show();
-          }
-        }, 150);
 
         that._updateHash(that);
         that._refreshBaseLayer();
@@ -182,24 +174,23 @@ GFW.modules.app = function(gfw) {
 
       google.maps.event.addListener(this._map, 'drag', function() {
 
-          if (that.currentBaseLayer != "semi_monthly") {
-            $(".time_layer").hide();
-            Timeline.hide();
-          } else {
-            $(".time_layer").show();
-          }
-
-        that._updateHash(that);
+        if (that.currentBaseLayer != "semi_monthly") {
+          $(".time_layer").hide();
+          Timeline.hide();
+        } else {
+          $(".time_layer").show();
+        }
 
       });
+
       google.maps.event.addListener(this._map, 'dragend', function() {
 
-          if (that.currentBaseLayer != "semi_monthly") {
-            $(".time_layer").hide();
-            Timeline.hide();
-          } else {
-            $(".time_layer").show();
-          }
+        if (that.currentBaseLayer != "semi_monthly") {
+          $(".time_layer").hide();
+          Timeline.hide();
+        } else {
+          $(".time_layer").show();
+        }
 
         that._updateHash(that);
 
@@ -369,10 +360,21 @@ GFW.modules.app = function(gfw) {
     },
 
     _refreshBaseLayer: function() {
-      if (GFW.app.currentBaseLayer) {
+
+      if (GFW.app.baseLayer && GFW.app.currentBaseLayer) {
         var query = GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom());
         GFW.app.baseLayer.setQuery(query);
       }
+
+      setTimeout(function() {
+        if (GFW.app.currentBaseLayer != "semi_monthly") {
+          $(".time_layer").hide();
+          Timeline.hide();
+        } else {
+          $(".time_layer").show();
+        }
+      }, 150);
+
     },
 
     _getTableName: function(layerName) {
@@ -397,11 +399,13 @@ GFW.modules.app = function(gfw) {
         $(".time_layer").show();
       }
 
-      GFW.app.baseLayer.setOptions({
-        opacity: 1,
-        table_name: this._getTableName(this.currentBaseLayer),
-        query: GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom())
-      });
+      if (GFW.app.baseLayer) {
+        GFW.app.baseLayer.setOptions({
+          opacity: 1,
+          table_name: this._getTableName(this.currentBaseLayer),
+          query: GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom())
+        });
+      }
 
     },
 
@@ -478,6 +482,10 @@ GFW.modules.app = function(gfw) {
           //month_number = Math.min(month_number, 147);
           self.time_layer.set_time(month_number);
         });
+
+        this.baseLayer = null;
+
+        return;
 
       } else if (this.currentBaseLayer === "annual") {
         table_name = 'gfw2_hansen';
@@ -610,6 +618,7 @@ GFW.modules.maplayer = function(gfw) {
         this._addControl(filters);
 
       },
+
       _addControl: function(filters){
         var that = this;
 
@@ -681,7 +690,7 @@ GFW.modules.maplayer = function(gfw) {
         $(".time_layer").hide();
         Timeline.hide();
         legend.removeCategory("forest_clearing");
-        GFW.app.baseLayer.setOptions({ opacity: 0 });
+        if (GFW.app.baseLayer) GFW.app.baseLayer.setOptions({ opacity: 0 });
 
       },
 
