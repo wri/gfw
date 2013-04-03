@@ -597,8 +597,10 @@ body.sources {
         }
 
         a {
-          color: $cLime;
-          text-decoration: none;
+          font-size: 16px;
+          font-weight: normal;
+          text-decoration: underline;
+          color: $cGray2;
         }
 
         a.download {
