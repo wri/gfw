@@ -308,6 +308,8 @@ $(function(){
   wall          = new gfw.ui.view.Wall();
   $("body").append(wall.render());
 
+  // TODO: remove
+  window.wall = wall;
 
   function hideOvers() {
 
