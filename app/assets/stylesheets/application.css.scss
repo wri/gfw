@@ -569,16 +569,16 @@ article.contact {
 
 .wall {
 
-  $width: 518px;
+  $width: 518px - 60;
   $height: 180px;
 
   height: $height;
 
   @include absolute-center($width, $height);
+  margin-top: -200px;
 
   display:none;
   padding: 30px;
-  padding-right: 5px;
 
   @include box-shadow(0px 0px 7px $cGray2);
   @include border-radius(3px);
@@ -592,20 +592,55 @@ article.contact {
   form {
     border-top: 1px solid #f1f1f1;
     position:absolute;
-    padding: 30px 0 30px 0;
-    left: 0;
-    bottom: 0px;
-    width: 543px;
+    padding: 28px 10px 30px 10px;
+    @include position(false, false, 0, 0);
+    width: 518px - 20;
+
+    .btn { width: 120px; padding: 14px 0px; }
 
     .input-field {
+      position:relative;
+      width: 300px;
       margin: 0 30px 0px 0;
     }
 
+    .error_input_label {
+      position:absolute;
+      display:none;
+      right: -92px;
+      bottom: 37px;
+
+      width: 190px;
+      height: 39px - 9px;
+      padding: 9px 0 0 0;
+
+      @include icons-sprite(error_input_label);
+
+      color: #fff;
+      font-size:15px;
+      @extend .sans-serif;
+      text-align: center;
+    }
+
+    .input-field .icon.error {
+      width: 21px;
+      height: 22px;
+      position:absolute;
+      right: -7px;
+      top: 10px;
+      @include icons-sprite(input_error);
+      display:none;
+    }
+
+    .input-field.error input { color: red;}
+
   }
+
+  .subtitle a { color: #A1BB27; text-decoration: underline; }
 
   h1 {
     font-size: 35px;
-    margin: 0 0 15px 0;
+    margin: 10px 0 15px 0;
     font-family: "Georgia", "Times New Roman", serif;
   }
 
