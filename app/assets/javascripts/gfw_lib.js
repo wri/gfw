@@ -483,8 +483,6 @@ GFW.modules.app = function(gfw) {
           self.time_layer.set_time(month_number);
         });
 
-        this.baseLayer = null;
-
       } else if (this.currentBaseLayer === "annual") {
         table_name = 'gfw2_hansen';
       } else if (this.currentBaseLayer === "quarterly") {
