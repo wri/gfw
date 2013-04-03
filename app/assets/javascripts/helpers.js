@@ -100,7 +100,7 @@ config.mapStyles.TREEHEIGHT = new google.maps.ImageMapType({
   },
   tileSize: new google.maps.Size(256, 256),
   isPng: true,
-  maxZoom: 7,
+  maxZoom: 8,
   name: "Forest Height",
   alt: "Global forest height"
 });
