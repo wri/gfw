@@ -17,4 +17,5 @@ Gfw::Application.routes.draw do
   resources :demo
 
   root :to => 'home#index'
+  post '/register' => 'home#register'
 end
