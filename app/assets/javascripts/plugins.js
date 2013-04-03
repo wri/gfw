@@ -1,18 +1,90 @@
 var CountryMenu = (function() {
 
+var drawn = false;
+
 
   function show(e) {
 
     e.preventDefault();
     e.stopPropagation();
 
+    var that = this;
+
     $(".countries_backdrop").fadeIn(250);
     $("#countries").fadeIn(250);
 
+    if (!drawn) drawCountries();
+
+  }
+
+  function drawCountries() {
+
+    $.ajax({ url: "/assets/country_shapes.json", success: function(data) {
+      for (var i=0; i<data.features.length; i++) {
+        var iso = data.features[i].properties.iso;
+        if ((iso != 'GUF')) draw(data, iso);
+      }
+      drawn = true;
+    }});
+
+  }
+
+ function draw(data, iso) {
+
+  var width = 270;
+  var height = 200;
+
+    var svg = d3.select("#icon"+iso).append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+    var country = null;
+    var i = 0;
+    while ((country == null)&&(i<data.features.length)) {
+      if (data.features[i].properties.iso == iso) {
+        country = data.features[i];
+      }
+      i++;
+    }
+    var path = d3.geo.path().projection(d3.geo.mercator().scale(30).translate([0,0]));
+
+    if (country != null) {
+
+      var centroid = path.centroid(country);
+      var scale = "";
+      var translate = "";
+
+      svg.append("g")
+        .selectAll("path")
+        .data([country])
+        .enter()
+        .append("path")
+        .attr("d", path)
+        .attr("transform", function(d) {
+          var x = centroid[0];
+          var y = centroid[1];
+          var bounds = d3.geo.bounds(country);
+          var x_range = bounds[1][0] - bounds[0][0];
+          var y_range = bounds[1][1] - bounds[0][1];
+
+          if (x_range > y_range) {
+            scale = (width/x_range);
+          } else {
+            scale = (height/y_range);
+          }
+
+          scale = scale*2;
+
+          return "scale("+scale+"), translate(" + (-x+(width/scale)/2) + "," + (-y+(height/scale)/2) + ")";
+
+        });
+
+    }
   }
 
   return {
-    show: show
+    show: show,
+    drawCountries: drawCountries
   };
 
 }());

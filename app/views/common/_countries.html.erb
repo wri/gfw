@@ -8,7 +8,7 @@
     <div class="country <% if !country[:enabled] %>disabled<% end %>">
       <% if country[:enabled] %>
         <a href="/country/<%= country[:name].downcase.gsub(" ", "_") %>">
-      <% end %>
+        <% end %>
         <div class="icon" id="icon<%= country[:iso]%>">
         </div>
 
@@ -20,4 +20,3 @@
   <% end %>
   <div class="select"></div>
 </div>
-

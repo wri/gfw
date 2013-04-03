@@ -178,6 +178,8 @@ function initialize() {
 
 (function(window,undefined){
 
+  if ($("body.countries").hasClass("index")) CountryMenu.drawCountries();
+
   // Prepare
   var History = window.History; // Note: We are using a capital H instead of a lower h
 
@@ -333,6 +335,9 @@ $(function(){
     }
 
     if ($("#countries:visible").length > 0) {
+
+      if ($("body").hasClass("countries") && $("body").hasClass("index")) return;
+
       $("#countries").fadeOut(250);
       $(".countries_backdrop").fadeOut(250);
     }
