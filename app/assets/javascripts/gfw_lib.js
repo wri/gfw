@@ -485,8 +485,6 @@ GFW.modules.app = function(gfw) {
 
         this.baseLayer = null;
 
-        return;
-
       } else if (this.currentBaseLayer === "annual") {
         table_name = 'gfw2_hansen';
       } else if (this.currentBaseLayer === "quarterly") {
