@@ -6,7 +6,7 @@ require 'fileutils'
 desc "Deploy app to Heroku after precompiling assets"
 task :deploy do
   deploy_branch   = 'master'
-  remote          = 'staging'
+  remote          = ENV['DEPLOY_TO'] || 'staging'
   deploy_repo_dir = "tmp/heroku_deploy"
 
   begin
@@ -57,7 +57,7 @@ task :deploy do
     end
 
     # Precompile assets
-    #Rake::Task['assets:precompile'].invoke
+    Rake::Task['assets:precompile'].invoke
 
     # Add any extra tasks you want to run here, such as compiling static pages, etc.
 
