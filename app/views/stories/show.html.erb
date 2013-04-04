@@ -3,7 +3,7 @@
 end %>
 
 <% content_for :inner_header do
-  link_to (content_tag :span, 'Edit case study'), edit_story_path(@story.token), :class => "btn green dark_glow edit"  if access_through_token?(@story)
+  link_to (content_tag :span, 'Edit story'), edit_story_path(@story.token), :class => "btn green dark_glow edit"  if access_through_token?(@story)
 end %>
 
 <div class="story">

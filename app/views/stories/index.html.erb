@@ -27,8 +27,8 @@ end %>
     </ul>
 
     <div class="pagination">
-      <%= link_to content_tag(:span, 'Previous case studies'), previous_page_link(@page), :class => "btn hollow" if @page > 1%>
-      <%= link_to content_tag(:span, 'Next case studies'), next_page_link(@page), :class => "btn hollow" unless last_page?%>
+      <%= link_to content_tag(:span, 'Previous stories'), previous_page_link(@page), :class => "btn hollow" if @page > 1%>
+      <%= link_to content_tag(:span, 'Next stories'), next_page_link(@page), :class => "btn hollow" unless last_page?%>
     </div>
 
   </div>
