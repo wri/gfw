@@ -1,5 +1,5 @@
 class Notifications < ActionMailer::Base
-  default from: "admin@gfw.org"
+  default from: "gfw2-website@wri.org"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -14,7 +14,7 @@ class Notifications < ActionMailer::Base
   end
 
   def new_user(user_email)
-    @user_email = user_email
+    @reply_to_email = user_email
 
     mail to: "gfw2@wri.org", reply_to: user_email, subject: 'A new user requested access to Global Forest Watch 2.0'
   end
