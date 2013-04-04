@@ -575,7 +575,7 @@ article.contact {
   height: $height;
 
   @include absolute-center($width, $height);
-  margin-top: -200px;
+  margin-top: -150px;
 
   display:none;
   padding: 30px;

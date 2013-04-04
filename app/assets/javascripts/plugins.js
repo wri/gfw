@@ -827,7 +827,7 @@ var Navigation = (function() {
     $("#subscribe").fadeOut(250);
     $("#share").fadeOut(250);
     $(".backdrop").fadeOut(250);
-    $("#countries").fadeOut(250);
+    //$("#countries").fadeOut(250);
   }
 
   function _showMapState() {
