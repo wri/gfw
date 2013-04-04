@@ -1367,6 +1367,8 @@ var Circle = (function() {
 
   function _onClick(e) {
     e && e.preventDefault();
+    e && e.stopPropagation();
+
     window.router.navigate("map", { trigger: true });
   }
 
