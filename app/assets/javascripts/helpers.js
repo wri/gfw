@@ -86,7 +86,7 @@ var config = {
   DATE_FORMAT:        "yyyy-MM-dd",
   DATE_SUFFIXES:      ["th", "st", "nd", "rd"],
   MIN_PROJECT_RADIUS: 100,
-  BASE_MAP_STYLE:     [ { "stylers": [ { "visibility": "simplified" }, { "saturation": -100 }, { "gamma": 0.79 }, { "lightness": 2 }]}],
+  BASE_MAP_STYLE:     [ { "featureType": "water"  },{ "featureType": "transit", "stylers": [ { "saturation": -100 } ] },{ "featureType": "road", "stylers": [ { "saturation": -100 } ] },{ "featureType": "poi", "stylers": [ { "saturation": -100 } ] },{ "featureType": "landscape", "stylers": [ { "saturation": -100 } ] },{ "featureType": "administrative", "stylers": [ { "saturation": -100 } ] } ],
   OVERLAYS_STYLE: {
     strokeWeight: 2,
     fillOpacity: 0.25,
@@ -140,6 +140,7 @@ config.mapStyles.TREEHEIGHT = new google.maps.ImageMapType({
     return "http://gfw-ee-tiles.appspot.com/gfw/simple_green_coverage/" + z + "/" + X + "/" + ll.y + ".png";
   },
   tileSize: new google.maps.Size(256, 256),
+  backgroundColor: "#99b3cc",
   isPng: true,
   maxZoom: 8,
   name: "Forest Height",
