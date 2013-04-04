@@ -17,7 +17,7 @@ class Alert
       SELECT sum(alerts) as count,
         iso
       FROM gfw2_forma_graphs gfg
-      WHERE iso = '#{country_iso_code}' 
+      WHERE iso = '#{country_iso_code}'
       AND date > (SELECT n
                   FROM gfw2_forma_datecode
                   WHERE now() -INTERVAL '6 months' < date
@@ -30,16 +30,17 @@ class Alert
   def self.alerts_per_month_per_country(country_iso_code)
 
     results = CartoDB::Connection.query(<<-SQL)
-      SELECT sum(alerts) as count,
-             iso,
-             (SELECT date
-              FROM gfw2_forma_datecode
-              WHERE n = gfg.date) as date
-      FROM gfw2_forma_graphs gfg
-      WHERE iso = '#{country_iso_code}' AND date > (SELECT n
-                                    FROM gfw2_forma_datecode
-                                    WHERE now() -INTERVAL '6 months' < date
-                                    ORDER BY date ASC LIMIT 1)
+      SELECT sum(alerts) as count, iso,
+      (SELECT date::date
+          FROM gfw2_forma_datecode
+          WHERE n = gfg.date) as date
+          FROM gfw2_forma_graphs gfg
+          WHERE iso = '#{country_iso_code}'
+          AND date > (
+        SELECT n
+        FROM gfw2_forma_datecode
+      WHERE now() -INTERVAL '6 months' < date
+      ORDER BY date ASC LIMIT 1)
       GROUP BY iso, date
       ORDER BY date DESC;
     SQL
