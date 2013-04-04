@@ -167,7 +167,7 @@ class Story < CartoDB::Model::Base
              details,
              your_name AS name,
              media.thumbnail_url,
-             ST_X(ST_Centroid(stories.the_geom)) || ',' || ST_Y(ST_Centroid(stories.the_geom)) AS coords
+             ST_Y(ST_Centroid(ST_Envelope(stories.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories.the_geom))) AS coords,
       FROM stories
       LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
       WHERE stories.featured = true
@@ -186,7 +186,7 @@ class Story < CartoDB::Model::Base
              stories.title,
              stories.your_name,
              stories.featured,
-             ST_X(ST_Centroid(stories.the_geom)) || ',' || ST_Y(ST_Centroid(stories.the_geom)) AS coords,
+             ST_Y(ST_Centroid(ST_Envelope(stories.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories.the_geom))) AS coords,
              media.thumbnail_url
       FROM stories
       LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
@@ -205,7 +205,7 @@ class Story < CartoDB::Model::Base
              stories.your_name,
              stories.featured,
              stories.visible,
-             ST_X(ST_Centroid(stories.the_geom)) || ',' || ST_Y(ST_Centroid(stories.the_geom)) AS coords,
+             ST_Y(ST_Centroid(ST_Envelope(stories.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories.the_geom))) AS coords,
              media.big_url
       FROM stories
       LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
