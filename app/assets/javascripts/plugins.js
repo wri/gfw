@@ -823,6 +823,7 @@ var Navigation = (function() {
     $("#subscribe").fadeOut(250);
     $("#share").fadeOut(250);
     $(".backdrop").fadeOut(250);
+    $("#countries").fadeOut(250);
     $(".countries_backdrop").fadeOut(250);
   }
 
@@ -918,7 +919,7 @@ var Filter = (function() {
     var lng  = map.getCenter().lng().toFixed(2);
 
     var hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + filters.join(",");
-    window.router.navigate(hash, { trigger: true });
+    window.router.navigate(hash, { replace: true, trigger: true });
   }
 
   function _toggle(id) {

@@ -536,7 +536,7 @@ GFW.modules.app = function(gfw) {
         hash = "map/" + zoom + "/" + lat + "/" + lng;
       }
 
-      window.router.navigate(hash, { trigger: true });
+      window.router.navigate(hash, { trigger: true, replace: true });
 
     },
 
@@ -617,7 +617,7 @@ GFW.modules.maplayer = function(gfw) {
         var that = this;
 
         var clickEvent = function() {
-          that._toggleLayer(GFW.app);
+          that._toggleLayer();
         };
 
         var zoomEvent = function() {
@@ -689,7 +689,7 @@ GFW.modules.maplayer = function(gfw) {
 
       },
 
-      _toggleLayer: function(that){
+      _toggleLayer: function(){
 
         this.layer.attributes['visible'] = !this.layer.attributes['visible'];
 
