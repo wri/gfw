@@ -310,9 +310,13 @@ $(function(){
      },
 
      map: function() {
+
+       if ($.browser.msie) $(document).scrollTop(0);
+
        loadGFW();
        Navigation.stopMapAnimation
        Navigation.showState("map");
+
      },
 
      mapWithCoordinates: function(zoom, lat, lon, layers) {
