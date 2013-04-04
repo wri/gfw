@@ -9,7 +9,7 @@
     <!-- v 2.1 -->
   </head>
 
-  <body class="<%= controller_name %> <%= action_name %>"<%= raw ' onload="loadGFW()"' unless %w(maps home).include?(controller_name) or (action_name == "index" and controller_name == "countries") %><%= raw ' onload="initialize()"' if %w(maps home).include?(controller_name) %>>
+  <body class="<%= controller_name %> <%= action_name %>">
     <%= render "common/header" %>
 
     <script>(function(d, s, id) {

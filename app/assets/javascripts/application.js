@@ -23,8 +23,9 @@
 // CapybaraHelpers#draw_polygon won't work
 
 var
-map           = null,
-previousState = null,
+loaded           = false,
+map              = null,
+previousState    = null,
 globalZindex     = 300,
 subscribeMap;
 
@@ -38,6 +39,12 @@ layerSelector     = {},
 Infowindow        = {};
 
 function loadGFW() {
+
+  if (loaded) return;
+
+  //console.log('loading gfw');
+
+  loaded = true;
 
     GOD = new gfw.ui.view.GOD();
     window.GOD = GOD;
@@ -160,65 +167,22 @@ function loadGFW() {
     }
 }
 
-// Map init method
-function initialize() {
-
-  var
-  State = History.getState(),
-  hash  = parseHash(State.hash);
-
-  if (hash) {
-    config.mapOptions.center = hash.center;
-    config.mapOptions.zoom   = hash.zoom;
-  }
-
-  loadGFW();
-
-}
-
 (function(window,undefined){
 
   if ($("body.countries").hasClass("index")) CountryMenu.drawCountries();
 
-  // Prepare
-  var History = window.History; // Note: We are using a capital H instead of a lower h
-
-  if ( !History.enabled ) {
-    // History.js is disabled for this browser.
-    // This is because we can optionally choose to support HTML4 browsers or not.
-    return false;
-  }
-
-  // Bind to StateChange Event
-  History.Adapter.bind(window,'statechange', function(){ // Note: We are using statechange instead of popstate
-    var State = History.getState(); // Note: We are using History.getState() instead of event.state
-
-    //History.log(State.data, State.title, State.url);
-    if (previousState != State.title) {
-      if (State.title === 'Home') {
-        Navigation.showState("home");
-      } else if (State.title === 'Map') {
-        Navigation.showState("map");
-      }
-
-      previousState = State.title;
-    }
-
-    //hash  = parseHash(State.hash);
-
-  });
-
   $("nav .home.ajax").on("click", function(e) {
     e.preventDefault();
-    History.pushState({ state: 2 }, "Home", "/");
-
+    e.stopPropagation();
+    window.router.navigate("", { trigger: true });
     $(".backdrop").fadeOut(250);
 
   });
 
   $("nav .countries.ajax").on("click", function(e) {
     e.preventDefault();
-    Navigation.showState('countries');
+    e.stopPropagation();
+    window.router.navigate("countries", { trigger: true });
   });
 
   $(".share_link").off("click");
@@ -277,22 +241,39 @@ function initialize() {
 
   $(".subscribe").on("click", function(e) {
     e.preventDefault();
+    e.stopPropagation();
     SubscriptionMap.show();
   });
 
   $('#subscribe .remove').on("click", function(e){
     e.preventDefault();
+    e.stopPropagation();
     SubscriptionMap.remove();
   });
 
   $('#subscribe .btn').on("click", function(e){
     e.preventDefault();
+    e.stopPropagation();
     SubscriptionMap.submit();
   });
 
   $("nav .map.ajax").on("click", function(e) {
     e.preventDefault();
-    History.pushState({ state: 1 }, "Map", "/map");
+    e.stopPropagation();
+
+    var lat = map.getCenter().lat().toFixed(GFW.app._precision);
+    var lng = map.getCenter().lng().toFixed(GFW.app._precision);
+
+    var zoom   = config.mapOptions.zoom;
+    var layers = config.mapOptions.layers || "";
+
+    if (filters) {
+      hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + layers;
+    } else {
+      hash = "map/" + zoom + "/" + lat + "/" + lng;
+    }
+
+    window.router.navigate(hash, { trigger: true });
 
     $(".backdrop").fadeOut(250);
 
@@ -302,13 +283,59 @@ function initialize() {
 
 })(window);
 
+
 $(function(){
 
   var
   resizePID;
 
-  wall          = new gfw.ui.view.Wall();
-  $("body").append(wall.render());
+  wall = new gfw.ui.view.Wall();
+
+
+   var Router = Backbone.Router.extend({
+
+     routes: {
+       "countries":                   "countries",
+       "map":                         "map",
+       "map/:zoom/:lat/:lon":         "mapWithCoordinates",
+       "map/:zoom/:lat/:lon/*layers": "mapWithCoordinates",
+       "/":                           "home",
+       "":                            "home"
+     },
+
+     countries: function() {
+       Navigation.showState('countries');
+     },
+
+     map: function() {
+       loadGFW();
+       Navigation.showState("map");
+     },
+
+     mapWithCoordinates: function(zoom, lat, lon, layers) {
+      console.log('map',zoom,lat,lon,layers );
+
+      if (lat && lon) { config.mapOptions.center = new google.maps.LatLng(lat, lon); }
+      if (zoom)       { config.mapOptions.zoom   = parseInt(zoom, 10); }
+      if (layers)     { config.mapOptions.layers = layers; }
+
+      loadGFW();
+      Navigation.showState("map");
+    },
+
+    home: function(query, page) {
+      //console.log('home');
+
+      loadGFW();
+      Navigation.showState("home");
+    }
+
+  });
+
+  window.router = new Router;
+  Backbone.history.start({ pushState: true });
+
+  $("body.home.index").append(wall.render());
 
   // TODO: remove
   window.wall = wall;

@@ -705,8 +705,6 @@ var SubscriptionMap = (function() {
 
 
 
-
-
 var Navigation = (function() {
 
   var
@@ -806,7 +804,6 @@ var Navigation = (function() {
 
     GFW.app.close(function() {
       Circle.show(250);
-      //$("footer, .actions").fadeIn(250);
     });
   }
 
@@ -827,7 +824,6 @@ var Navigation = (function() {
     $("#subscribe").fadeOut(250);
     $("#share").fadeOut(250);
     $(".backdrop").fadeOut(250);
-    //$("#countries").fadeOut(250);
   }
 
   function _showMapState() {
@@ -845,7 +841,10 @@ var Navigation = (function() {
     _stopMapAnimation();
 
     self.time_layer.set_time(self.time_layer.cache_time());
-    Timeline.show(); // TODO: don't show the timeline if FORMA is not selected
+
+    if (GFW.app.currentBaseLayer == "semi_monthly") {
+      Timeline.show();
+    }
 
     $(".big_numbers").fadeOut(250);
 
@@ -918,9 +917,8 @@ var Filter = (function() {
     var lat  = map.getCenter().lat().toFixed(2);
     var lng  = map.getCenter().lng().toFixed(2);
 
-    var hash = "/map/" + zoom + "/" + lat + "/" + lng + "/" + filters.join(",");
-
-    History.pushState({ state: 3 }, "Map", hash);
+    var hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + filters.join(",");
+    window.router.navigate(hash, { trigger: true });
   }
 
   function _toggle(id) {
@@ -1367,11 +1365,8 @@ var Circle = (function() {
   }
 
   function _onClick(e) {
-    if (e) {
-      e.preventDefault();
-    }
-
-    History.pushState({ state: 1 }, "Map", "/map");
+    e && e.preventDefault();
+    window.router.navigate("map", { trigger: true });
   }
 
   function _init() {

@@ -528,18 +528,16 @@ GFW.modules.app = function(gfw) {
       lat  = self._map.getCenter().lat().toFixed(GFW.app._precision),
       lng  = self._map.getCenter().lng().toFixed(GFW.app._precision);
 
-      filters = hash.filters || "";
-      if (filters) {
-        var filters = filters.substr(0, filters.indexOf("?"));
-      }
+      var layers = config.mapOptions.layers || "";
 
       if (filters) {
-        hash = "/map/" + zoom + "/" + lat + "/" + lng + "/" + filters;
+        hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + layers;
       } else {
-        hash = "/map/" + zoom + "/" + lat + "/" + lng;
+        hash = "map/" + zoom + "/" + lat + "/" + lng;
       }
 
-      History.pushState({ state: 3 }, "Map", hash);
+      window.router.navigate(hash, { trigger: true });
+
     },
 
     _parseHash: function(hash) {
