@@ -167,7 +167,7 @@ class Story < CartoDB::Model::Base
              details,
              your_name AS name,
              media.thumbnail_url,
-             ST_Y(ST_Centroid(ST_Envelope(stories.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories.the_geom))) AS coords,
+             ST_Y(ST_Centroid(ST_Envelope(stories.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories.the_geom))) AS coords
       FROM stories
       LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
       WHERE stories.featured = true
