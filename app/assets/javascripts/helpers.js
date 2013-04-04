@@ -110,6 +110,7 @@ config.mapOptions = {
   maxZoom:            config.MAXZOOM,
   center:             new google.maps.LatLng(config.LAT, config.LNG),
   mapTypeId:          google.maps.MapTypeId.TERRAIN,
+  backgroundColor:    '#99b3cc',
   disableDefaultUI:   true,
   panControl:         false,
   zoomControl:        false,
@@ -140,7 +141,6 @@ config.mapStyles.TREEHEIGHT = new google.maps.ImageMapType({
     return "http://gfw-ee-tiles.appspot.com/gfw/simple_green_coverage/" + z + "/" + X + "/" + ll.y + ".png";
   },
   tileSize: new google.maps.Size(256, 256),
-  backgroundColor: "#99b3cc",
   isPng: true,
   maxZoom: 8,
   name: "Forest Height",
