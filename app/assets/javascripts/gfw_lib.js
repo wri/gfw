@@ -536,7 +536,7 @@ GFW.modules.app = function(gfw) {
         hash = "map/" + zoom + "/" + lat + "/" + lng;
       }
 
-      window.router.navigate(hash, { trigger: true, replace: true });
+      window.router.navigate(hash, { replace: true });
 
     },
 
