@@ -316,7 +316,7 @@ $(function(){
      },
 
      mapWithCoordinates: function(zoom, lat, lon, layers) {
-      console.log('map',zoom,lat,lon,layers );
+      //console.log('map',zoom,lat,lon,layers );
 
       if (lat && lon) { config.mapOptions.center = new google.maps.LatLng(lat, lon); }
       if (zoom)       { config.mapOptions.zoom   = parseInt(zoom, 10); }
