@@ -30,6 +30,7 @@ subscribeMap;
 
 GOD               = {},
 legend            = {},
+wall              = {},
 sourceWindow      = {},
 gallery           = {},
 languageSelector  = {},
@@ -177,6 +178,8 @@ function initialize() {
 
 (function(window,undefined){
 
+  if ($("body.countries").hasClass("index")) CountryMenu.drawCountries();
+
   // Prepare
   var History = window.History; // Note: We are using a capital H instead of a lower h
 
@@ -304,6 +307,12 @@ $(function(){
   var
   resizePID;
 
+  wall          = new gfw.ui.view.Wall();
+  $("body").append(wall.render());
+
+  // TODO: remove
+  window.wall = wall;
+
   function hideOvers() {
 
     if ($("#share:visible").length > 0) {
@@ -326,6 +335,9 @@ $(function(){
     }
 
     if ($("#countries:visible").length > 0) {
+
+      if ($("body").hasClass("countries") && $("body").hasClass("index")) return;
+
       $("#countries").fadeOut(250);
       $(".countries_backdrop").fadeOut(250);
     }
@@ -358,7 +370,7 @@ $(function(){
   }
 
   if ($("div[data-load]:visible").length > 0) {
-    updateFeed({countryCode: countryCode, n: 4});
+    //updateFeed({countryCode: countryCode, n: 4});
     addCircle("forest", "bars", { legendUnit: "m", countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"with {{n}} tall trees", hoverColor: "#333333", color: "#333333", unit: "km<sup>2</sup>" });
     addCircle("forma", "lines", { countryCode: countryCode, width: 300, title: "FORMA", subtitle:"Forest clearing alerts", legend:"In the last month", hoverColor: "#A1BA42", color: "#A1BA42" });
   }

@@ -44,6 +44,18 @@ header {
     z-index: 1000;
   }
 
+  a#feedback {
+      @include inline-block();
+      position:absolute;
+      top:375px;
+      right:0px;
+      width:30px;
+      height:80px;
+      z-index: 9999;
+      background:url(buttons/feedback_button.png) no-repeat center center;
+      text-indent: -10000px;
+  }
+
   span.header_separator {
     position:absolute;
     top: 67px;
@@ -554,6 +566,93 @@ article.contact {
 }
 
 #countries { display: none; }
+
+.wall {
+
+  $width: 523px - 60;
+  $height: 180px;
+
+  height: $height;
+
+  @include absolute-center($width, $height);
+  margin-top: -200px;
+
+  display:none;
+  padding: 30px;
+
+  @include box-shadow(0px 0px 7px $cGray2);
+  @include border-radius(3px);
+
+  background:#fff;
+  border: 1px solid #757573;
+  text-align:center;
+
+  z-index: 2000;
+
+  form {
+    border-top: 1px solid #f1f1f1;
+    position:absolute;
+    padding: 28px 10px 30px 10px;
+    @include position(false, false, 0, 0);
+    width: 518px - 20;
+
+    .btn { width: 120px; padding: 14px 0px; }
+
+    .input-field {
+      position:relative;
+      width: 300px;
+      margin: 0 30px 0px 0;
+    }
+
+    .error_input_label {
+      position:absolute;
+      display:none;
+      right: -92px;
+      bottom: 37px;
+
+      width: 190px;
+      height: 39px - 9px;
+      padding: 9px 0 0 0;
+
+      @include icons-sprite(error_input_label);
+
+      color: #fff;
+      font-size:15px;
+      @extend .sans-serif;
+      text-align: center;
+    }
+
+    .input-field .icon.error {
+      width: 21px;
+      height: 22px;
+      position:absolute;
+      right: -7px;
+      top: 10px;
+      @include icons-sprite(input_error);
+      display:none;
+    }
+
+    .input-field.error input { color: red;}
+
+  }
+
+  .subtitle a { color: #A1BB27; text-decoration: underline; }
+
+  h1 {
+    font-size: 35px;
+    margin: 10px 0 15px 0;
+    font-family: "Georgia", "Times New Roman", serif;
+  }
+
+  p {
+    color: #999999;
+    font-family: "Helvetica Neue",Arial;
+    font-size: 15px;
+  }
+
+  p.help { display:none; margin: 0 0 20px 0; }
+
+}
 
 #subscribe {
 
@@ -1147,7 +1246,7 @@ footer {
       float: right;
       margin: 50px 20px 0 0;
 
-      & > .wri { width:92px; height: 31px; margin: 20px 0 20px 0; @include icons-sprite(logo_wri_black); }
+      & > .wri { display:block; width:92px; height: 31px; margin: 20px 0 20px 0; @include icons-sprite(logo_wri_black); }
 
       address { width:266px; color: $cGray3; font-size:13px; line-height:120%; }
     }
@@ -1176,7 +1275,7 @@ footer > .download {
 }
 
 
-.countries_backdrop, .backdrop {
+.wall_backdrop, .countries_backdrop, .backdrop {
   position: fixed;
   top: 0;
   right: 0;

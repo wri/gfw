@@ -1,8 +1,8 @@
 <nav>
 <ul>
-  <% %w(home countries case\ studies map blog data about).each do |option| %>
+  <% %w(home countries stories map blog data about).each do |option| %>
     <%
-      paths    = { "home" => root_path, "countries" => countries_path, "case studies" => stories_path, "map" => map_path,  "blog" => "http://gfw20.tumblr.com", "data" => sources_path, "about" => about_path }
+      paths    = { "home" => root_path, "countries" => countries_path, "stories" => stories_path, "map" => map_path,  "blog" => "http://gfw20.tumblr.com", "data" => sources_path, "about" => about_path }
       path     = paths[option]
       option_class = request.path == path ? "selected" : ""
 
@@ -17,7 +17,7 @@
       option_class = "#{option_class} ajax" if ((controller_name == 'home') && (option == "home" || option == "map"))
     %>
 
-    <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.' + option))), path, :class => option_class %></li>
+    <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.' + option ))), path, :class => option_class %></li>
   <% end %>
 
     <li class="lang_selector"><a href="#"><span>ENGLISH</span></a></li>

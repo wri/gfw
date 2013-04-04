@@ -27,6 +27,30 @@
     </div>
   </script>
 
+  <script id="wall-template" type="text/x-underscore-template">
+    <div class="content">
+
+      <h1 class="title">{{ title }}</h1>
+      <p class="subtitle"><span>{{ subtitle }}</span> <a href='#' class="invite">Request an invite</a></p>
+
+      <form action="#">
+
+        <p class="help">{{ help }}</p>
+
+        <div class="input-field huge">
+          <input type="text" name="area[email]" placeholder="{{ placeholder }}">
+          <div class="icon error"></div>
+          <div class="error_input_label"></div>
+        </div>
+
+        <a href="#" class="btn green white_glow send">
+          <span>{{ button_title }}</span>
+        </a>
+
+      </form>
+    </div>
+  </script>
+
   <script id="window-template" type="text/x-underscore-template">
     <a href="#" class="close"></a>
     <div class="content"></div>

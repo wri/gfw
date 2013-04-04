@@ -43,7 +43,7 @@ GFW.modules.app = function(gfw) {
       this._precision = 2;
       this._layers = [];
       this._cloudfront_url = "dyynnn89u7nkm.cloudfront.net";
-      this._global_version = 11;
+      this._global_version = 12;
 
       gfw.log.enabled = options ? options.logging: false;
 
@@ -166,22 +166,34 @@ GFW.modules.app = function(gfw) {
       // Setup listeners
       google.maps.event.addListener(this._map, 'zoom_changed', function() {
 
-        setTimeout(function() {
-          if (that.currentBaseLayer != "semi_monthly") {
-            $(".time_layer").hide();
-            Timeline.hide();
-          } else {
-            $(".time_layer").show();
-          }
-        }, 150);
 
         that._updateHash(that);
         that._refreshBaseLayer();
 
       });
 
+      google.maps.event.addListener(this._map, 'drag', function() {
+
+        if (that.currentBaseLayer != "semi_monthly") {
+          $(".time_layer").hide();
+          Timeline.hide();
+        } else {
+          $(".time_layer").show();
+        }
+
+      });
+
       google.maps.event.addListener(this._map, 'dragend', function() {
+
+        if (that.currentBaseLayer != "semi_monthly") {
+          $(".time_layer").hide();
+          Timeline.hide();
+        } else {
+          $(".time_layer").show();
+        }
+
         that._updateHash(that);
+
       });
 
       google.maps.event.addListener(this._map, 'click', function(event) {
@@ -348,10 +360,21 @@ GFW.modules.app = function(gfw) {
     },
 
     _refreshBaseLayer: function() {
-      if (GFW.app.currentBaseLayer) {
+
+      if (GFW.app.baseLayer && GFW.app.currentBaseLayer) {
         var query = GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom());
         GFW.app.baseLayer.setQuery(query);
       }
+
+      setTimeout(function() {
+        if (GFW.app.currentBaseLayer != "semi_monthly") {
+          $(".time_layer").hide();
+          Timeline.hide();
+        } else {
+          $(".time_layer").show();
+        }
+      }, 150);
+
     },
 
     _getTableName: function(layerName) {
@@ -376,11 +399,13 @@ GFW.modules.app = function(gfw) {
         $(".time_layer").show();
       }
 
-      GFW.app.baseLayer.setOptions({
-        opacity: 1,
-        table_name: this._getTableName(this.currentBaseLayer),
-        query: GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom())
-      });
+      if (GFW.app.baseLayer) {
+        GFW.app.baseLayer.setOptions({
+          opacity: 1,
+          table_name: this._getTableName(this.currentBaseLayer),
+          query: GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom())
+        });
+      }
 
     },
 
@@ -589,6 +614,7 @@ GFW.modules.maplayer = function(gfw) {
         this._addControl(filters);
 
       },
+
       _addControl: function(filters){
         var that = this;
 
@@ -614,12 +640,13 @@ GFW.modules.maplayer = function(gfw) {
 
           var customEvent = function() {
             GFW.app._toggleStoriesLayer();
+            legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
           };
 
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, zoomEvent: zoomEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") }, true);
           Filter.check(this.layer.get('id'));
 
-          legend.add(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
+          legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
 
         } else if (this.layer.get('slug') == "annual" || this.layer.get('slug') == "quarterly") {
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
@@ -660,7 +687,7 @@ GFW.modules.maplayer = function(gfw) {
         $(".time_layer").hide();
         Timeline.hide();
         legend.removeCategory("forest_clearing");
-        GFW.app.baseLayer.setOptions({ opacity: 0 });
+        if (GFW.app.baseLayer) GFW.app.baseLayer.setOptions({ opacity: 0 });
 
       },
 

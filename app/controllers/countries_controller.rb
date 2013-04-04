@@ -9,6 +9,8 @@ class CountriesController < ApplicationController
       name: country_info[0].name,
       about: country_info[0].about,
       wikipedia_link: country_info[0].wikipedia_link,
+      lat: country_info[0].lat.to_s,
+      lon: country_info[0].lon.to_s,
       link: country_info[0].map_coord,
       iso:  country_info[0].iso,
       last_alerts: Alert.alerts_per_month_per_country(country_info[0].iso)

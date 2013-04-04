@@ -259,101 +259,27 @@ a.close_icon {
         text-align:center;
       }
 
-      &.bolivia .icon {
-        @include countries-sprite(country_bolivia_disabled);
-        width: 127px; height: 136px;
-      }
-
-      &.congo .icon {
-        @include countries-sprite(country_congo_disabled);
-        width: 127px; height: 136px;
-      }
-
-      &.guyana .icon {
-        @include countries-sprite(country_guyana_disabled);
-        width: 127px; height: 136px;
-      }
-
-      &.cameroon .icon {
-        @include countries-sprite(country_cameroon);
-        width: 127px; height: 136px;
-      }
-
-      &.angola .icon {
-        @include countries-sprite(country_angola_disabled);
-        width: 127px; height: 136px;
-      }
-
-      &.india .icon {
-        @include countries-sprite(country_india);
-        width: 127px; height: 136px;
-      }
-
-      &.indonesia .icon {
-        top: 50px;
-        @include countries-sprite(country_indonesia);
-        width: 184px; height: 69px;
-      }
-
-      &.brazil .icon {
-        @include countries-sprite(country_brazil);
-        width: 126px; height: 131px;
-      }
-
-      &.venezuela .icon {
-        @include countries-sprite(country_venezuela_disabled);
-        width: 127px; height: 136px;
-      }
-
-      &.peru .icon {
-        @include countries-sprite(country_peru_disabled);
-        width: 127px; height: 136px;
-      }
-
-      &.vietnam .icon {
-        @include countries-sprite(country_vietnam_disabled);
-        width: 126px; height: 131px;
-      }
-
-      &.malaysia .icon {
-        top: 50px; left: 10px;
-        @include countries-sprite(country_malaysia);
-        width: 184px; height: 69px;
-      }
-
-      &.paraguay .icon {
-        @include countries-sprite(country_paraguay_disabled);
-        width: 127px; height: 136px;
-      }
-
-      &.nepal .icon {
-        @include countries-sprite(country_nepal_disabled);
-        width: 127px; height: 136px;
-      }
-
-      &.laos .icon {
-        @include countries-sprite(country_laos_disabled);
-        width: 127px; height: 136px;
-      }
-
-      &.kenya .icon {
-        @include countries-sprite(country_kenya_disabled);
-        width: 127px; height: 136px;
-      }
-
-      &.ivory_coast .icon {
-        @include countries-sprite(country_ivory_coast_disabled);
-        width: 127px; height: 136px;
-      }
-
       h4 {
         color: #666666;
         font-size:29px;
-        margin: 0 0 12px 0;
+        margin: 0 0 11px 0;
+        line-height:normal;
         @extend .serif;
+
+        &.small { font-size: 20px; }
       }
 
+
       a { color: #999999; text-decoration: none;}
+
+      path { fill:rgb(100,100,100); }
+
+      &.disabled path,
+      &.disabled:hover path { fill: rgb(220, 220, 220); }
+
+      &:hover path {
+        fill:rgb(150,150,150);
+      }
 
     }
   }
@@ -365,26 +291,27 @@ a.close_icon {
     word-spacing:-1em;
 
     .country, .chart {
-      @include inline-block();
+      width: 310px;
+      /*@include inline-block();*/
+      float:left;
       word-spacing:normal;
     }
-    .country {
-      width: 309px;
-      height: 299px;
 
-      &.brazil    { background:url(http://maps.google.com/maps/api/staticmap?center=brazil&zoom=3&size=299x299&maptype=terrain&sensor=false) no-repeat    }
-      &.cameroon  { background:url(http://maps.google.com/maps/api/staticmap?center=cameroon&zoom=4&size=299x299&maptype=terrain&sensor=false) no-repeat  }
-      &.malaysia  { background:url(http://maps.google.com/maps/api/staticmap?center=malaysia&zoom=3&size=299x299&maptype=terrain&sensor=false) no-repeat  }
-      &.indonesia { background:url(http://maps.google.com/maps/api/staticmap?center=indonesia&zoom=3&size=299x299&maptype=terrain&sensor=false) no-repeat }
+    .chart { width: 300px; }
+
+    .country {
+      width: 295px;
+      height: 299px;
+      overflow:hidden;
 
       a.mask {
         display: block;
-        width: 309px;
+        width: 100%;
         height: 299px;
         background:url(backgrounds/gfw_country_map_mask.png) no-repeat;
       }
 
-      a.button {        
+      a.button {
         @include inline-block;
         position: relative;
         top: -165px;
@@ -493,7 +420,7 @@ a.close_icon {
 
   .hansen_placeholder {
       width: 342px;
-      height: 299px;    
+      height: 299px;
       background:url(backgrounds/hansen_placeholder.png) no-repeat center;
   }
 

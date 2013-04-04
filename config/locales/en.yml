@@ -25,6 +25,8 @@ en:
         nav:
           home: 'Home'
           countries: 'Countries'
+          stories: "Stories"
+          data: "Data"
           map: 'Map'
           blog: 'Blog'
           sources: 'Data Sources'
