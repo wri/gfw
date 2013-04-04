@@ -310,10 +310,11 @@ $(function(){
      map: function() {
        loadGFW();
        Navigation.showState("map");
+       Navigation.stopMapAnimation
      },
 
      mapWithCoordinates: function(zoom, lat, lon, layers) {
-      console.log('map',zoom,lat,lon,layers );
+      //console.log('map',zoom,lat,lon,layers );
 
       if (lat && lon) { config.mapOptions.center = new google.maps.LatLng(lat, lon); }
       if (zoom)       { config.mapOptions.zoom   = parseInt(zoom, 10); }
@@ -321,6 +322,7 @@ $(function(){
 
       loadGFW();
       Navigation.showState("map");
+      Navigation.stopMapAnimation
     },
 
     home: function(query, page) {
