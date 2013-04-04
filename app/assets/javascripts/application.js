@@ -25,6 +25,8 @@
 var
 loaded           = false,
 map              = null,
+mapAnimationPID      = null,
+mapAnimation     = true,
 previousState    = null,
 globalZindex     = 300,
 subscribeMap;
@@ -309,8 +311,8 @@ $(function(){
 
      map: function() {
        loadGFW();
-       Navigation.showState("map");
        Navigation.stopMapAnimation
+       Navigation.showState("map");
      },
 
      mapWithCoordinates: function(zoom, lat, lon, layers) {
@@ -321,13 +323,11 @@ $(function(){
       if (layers)     { config.mapOptions.layers = layers; }
 
       loadGFW();
-      Navigation.showState("map");
       Navigation.stopMapAnimation
+      Navigation.showState("map");
     },
 
     home: function(query, page) {
-      //console.log('home');
-
       loadGFW();
       Navigation.showState("home");
     }

@@ -707,9 +707,7 @@ var SubscriptionMap = (function() {
 
 var Navigation = (function() {
 
-  var
-  mapAnimationPID      = null,
-  mapAnimationInterval = 50;
+  var mapAnimationInterval = 50;
 
   function _select(name) {
     $("nav li a").removeClass("selected");
@@ -800,6 +798,7 @@ var Navigation = (function() {
     Timeline.hide();
     self.time_layer.set_time(128);
 
+    mapAnimation = true;
     _animateMap();
 
     GFW.app.close(function() {
@@ -808,15 +807,15 @@ var Navigation = (function() {
   }
 
   function _animateMap() {
-    if (typeof skipMapAnimation != "undefined" && skipMapAnimation) {
-      return;
-    }
+
     mapAnimationPID = setInterval(function() {
-      map.panBy(-1, 0);
+      mapAnimation && map.panBy(-1, 0);
     }, mapAnimationInterval);
+
   }
 
   function _stopMapAnimation() {
+    mapAnimation = false;
     clearInterval(mapAnimationPID);
   }
 
@@ -824,6 +823,7 @@ var Navigation = (function() {
     $("#subscribe").fadeOut(250);
     $("#share").fadeOut(250);
     $(".backdrop").fadeOut(250);
+    $(".countries_backdrop").fadeOut(250);
   }
 
   function _showMapState() {
