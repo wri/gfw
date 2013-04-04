@@ -10,7 +10,7 @@ class HomeController < ApplicationController
 
   def register
     Notifications.new_user(params[:email]).deliver
-    head :success
+    head 200
   end
 
 end
