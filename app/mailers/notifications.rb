@@ -14,7 +14,7 @@ class Notifications < ActionMailer::Base
   end
 
   def new_user(user_email)
-    @user_email = user_email
+    @reply_to_email = user_email
 
     mail to: "dcano@vizzuality.com", reply_to: user_email, subject: 'A new user requested access to Global Forest Watch 2.0'
   end
