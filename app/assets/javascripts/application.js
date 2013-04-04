@@ -44,8 +44,6 @@ function loadGFW() {
 
   if (loaded) return;
 
-  //console.log('loading gfw');
-
   loaded = true;
 
     GOD = new gfw.ui.view.GOD();
@@ -285,7 +283,6 @@ function loadGFW() {
 
 })(window);
 
-
 $(function(){
 
   var
@@ -293,33 +290,32 @@ $(function(){
 
   wall = new gfw.ui.view.Wall();
 
+  var Router = Backbone.Router.extend({
 
-   var Router = Backbone.Router.extend({
+    routes: {
+      "countries":                   "countries",
+      "map":                         "map",
+      "map/:zoom/:lat/:lon":         "mapWithCoordinates",
+      "map/:zoom/:lat/:lon/*layers": "mapWithCoordinates",
+      "/":                           "home",
+      "":                            "home"
+    },
 
-     routes: {
-       "countries":                   "countries",
-       "map":                         "map",
-       "map/:zoom/:lat/:lon":         "mapWithCoordinates",
-       "map/:zoom/:lat/:lon/*layers": "mapWithCoordinates",
-       "/":                           "home",
-       "":                            "home"
-     },
+    countries: function() {
+      Navigation.showState('countries');
+    },
 
-     countries: function() {
-       Navigation.showState('countries');
-     },
+    map: function() {
 
-     map: function() {
+      if ($.browser.msie) $(document).scrollTop(0);
 
-       if ($.browser.msie) $(document).scrollTop(0);
+      loadGFW();
+      Navigation.stopMapAnimation
+      Navigation.showState("map");
 
-       loadGFW();
-       Navigation.stopMapAnimation
-       Navigation.showState("map");
+    },
 
-     },
-
-     mapWithCoordinates: function(zoom, lat, lon, layers) {
+    mapWithCoordinates: function(zoom, lat, lon, layers) {
       //console.log('map',zoom,lat,lon,layers );
 
       if (lat && lon) { config.mapOptions.center = new google.maps.LatLng(lat, lon); }
@@ -406,7 +402,6 @@ $(function(){
   }
 
   if ($("div[data-load]:visible").length > 0) {
-    //updateFeed({countryCode: countryCode, n: 4});
     addCircle("forest", "bars", { legendUnit: "m", countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"with {{n}} tall trees", hoverColor: "#333333", color: "#333333", unit: "km<sup>2</sup>" });
     addCircle("forma", "lines", { countryCode: countryCode, width: 300, title: "FORMA", subtitle:"Forest clearing alerts", legend:"In the last month", hoverColor: "#A1BA42", color: "#A1BA42" });
   }
