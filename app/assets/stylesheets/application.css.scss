@@ -1283,7 +1283,20 @@ footer > .download {
 }
 
 
-.wall_backdrop, .countries_backdrop, .backdrop {
+.countries_backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  background:#fff;
+
+  display:none;
+  &.show { display: block; }
+}
+
+.wall_backdrop, .backdrop {
   position: fixed;
   top: 0;
   right: 0;

@@ -86,7 +86,7 @@ function loadGFW() {
 
     });
 
-    $("nav ul li a.countries").on("click", CountryMenu.show);
+    //$("nav ul li a.countries").on("click", CountryMenu.show);
 
     var sites = [
       new gfw.ui.model.Site({ title: "WRI", description: "Focusing on the intersection of the environment and socio-economic development.", url: "http://www.wri.org/", thumb_url: "/assets/sites/site_wri.png" }),
@@ -336,6 +336,7 @@ $(function(){
   // TODO: remove
   window.wall = wall;
 
+
   function hideOvers() {
 
     if ($("#share:visible").length > 0) {
@@ -357,13 +358,6 @@ $(function(){
       $("#other_wri_sites").fadeOut(250);
     }
 
-    if ($("#countries:visible").length > 0) {
-
-      if ($("body").hasClass("countries") && $("body").hasClass("index")) return;
-
-      $("#countries").fadeOut(250);
-      $(".countries_backdrop").fadeOut(250);
-    }
   }
 
   $(".backdrop").on("click", function(e) {
