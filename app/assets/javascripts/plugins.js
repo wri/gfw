@@ -1422,7 +1422,10 @@ var Timeline = (function() {
     [606, 632, null],
     [640, 728, 2011],
     [736, 760, null],
-    [768, 856, 2012]
+    [768, 856, 2012],
+    [864, 888, null],
+    [896, 904, 2013],
+    [904, 992, null]
   ];
 
   function _togglePlayState() {
@@ -1510,10 +1513,13 @@ var Timeline = (function() {
 
     // if the user clicked on the last year of the timeline
     if (year === lastYear) {
-      var pos = dates[ dates.length - 1 ][1];
 
-      $handle.animate({ left: pos }, 150, "easeOutExpo");
-      _changeDate(pos, dates[ dates.length - 1 ]);
+      pos = _.find(dates, function(i) {
+        if (i[2] == lastYear) return i;
+      });
+
+      $handle.animate({ left: pos[0] }, 150, "easeOutExpo");
+      _changeDate(pos[0], pos);
 
       return;
     }
@@ -1627,6 +1633,7 @@ var Timeline = (function() {
       drag: function() {
         var left = $(this).position().left;
         _setDate(left);
+        //console.log(left);
 
         if (playing) {
           _stopAnimation(false);
@@ -1634,6 +1641,7 @@ var Timeline = (function() {
       },
       stop: function() {
         var left = $(this).position().left;
+        //console.log(left);
         _setDate(left, true);
       }
     });

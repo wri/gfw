@@ -566,7 +566,7 @@
  * TIMELINE
  */
 
-$timelineWidth: 940px;
+$timelineWidth: 1048px;
 
 .timeline  {
   position:absolute;
@@ -685,7 +685,7 @@ $timelineWidth: 940px;
   height:52px;
   top: 0;
   left:-13px;
-  width: $timelineWidth + 30;
+  width: $timelineWidth + 60;
 }
 
 .timeline .inner {
