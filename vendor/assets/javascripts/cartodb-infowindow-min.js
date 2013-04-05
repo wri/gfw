@@ -119,8 +119,12 @@ CartoDBInfowindow.prototype.setContent = function(content){
       var html = '';
 
       for(var column in content) {
-        html += '<label>' + column + '</label>';
-        html += '<p class="'+((content[column]!=null && content[column]!='')?'':'empty')+'">'+(content[column] || 'empty')+'</p>';
+
+        if (content[column]!=null && content[column]!=''){
+          html += '<label>' + column + '</label>';
+          html += '<p class="'+((content[column]!=null && content[column]!='')?'':'empty')+'">'+(content[column] || 'empty')+'</p>';
+        }
+
       }
 
       top.innerHTML = html;
