@@ -49,11 +49,6 @@ function loadGFW() {
     GOD = new gfw.ui.view.GOD();
     window.GOD = GOD;
 
-    if ($("body.stories.show .carrousel").length > 0) {
-      var carrousel = new gfw.ui.view.Carrousel();
-      window.Carrousel = carrousel;
-    }
-
     if ($("#map").length > 0) {
       map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 
@@ -282,8 +277,6 @@ $(function(){
   var
   resizePID;
 
-  wall = new gfw.ui.view.Wall();
-
   var Router = Backbone.Router.extend({
 
     routes: {
@@ -334,7 +327,15 @@ $(function(){
   window.router = new Router;
   Backbone.history.start({ pushState: true });
 
-  $("body.home.index").append(wall.render());
+  if ($("body.stories.index").length > 0) {
+    wall = new gfw.ui.view.Wall();
+    $("body").append(wall.render());
+  }
+
+  if ($("body.stories.show .carrousel").length > 0) {
+    carrousel = new gfw.ui.view.Carrousel();
+  }
+
 
   // TODO: remove
   window.wall = wall;
