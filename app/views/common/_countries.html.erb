@@ -1,4 +1,4 @@
-<%countries = Country.countries_info;%>
+<% countries = Country.countries_info_with_alerts %>
 
 <div id="countries">
 
@@ -14,7 +14,8 @@
         </div>
 
         <div class="content">
-          <h4 <% if (country[:name].length > 17) %>class="small"<% end %>><%= country[:name] %></h4>
+          <h4 <% if (country[:name].present? && country[:name].length > 17) %>class="small"<% end %>><%= country[:name] %></h4>
+<strong><%= country[:count] %> </strong> Forest Clearing Alerts in the last 6 months
         </div>
 
         <% if country[:enabled] %>
