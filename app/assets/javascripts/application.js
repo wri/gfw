@@ -146,11 +146,6 @@ function loadGFW() {
       GOD.add(languageSelector, languageSelector.hide);
     });
 
-    //window.layerSelector    = layerSelector;
-    //window.languageSelector = languageSelector;
-    //window.legend           = legend;
-    //window.sourceWindow     = sourceWindow;
-
     if (map) {
       GFW(function(env) {
 
@@ -188,7 +183,6 @@ function loadGFW() {
   $(".share_link").off("click");
   $(".share_link").on("click", function(e) {
     e.preventDefault();
-    //$("#content").append('<div class="backdrop" />');
     $(".backdrop").fadeIn(250, function() {
 
       var top = ( $(window).height() - $("#share").height() ) / 2+$(window).scrollTop() + "px",
