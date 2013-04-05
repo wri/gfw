@@ -4,7 +4,7 @@ this class renders deforestation data in a given time
 ====================
 */
 
-var MAX_MONTHS = 152;
+var MAX_MONTHS = 160;
 var BASE_MONTH = 71;
 
 function TimePlayer(table,version,cloudfront_url) {
@@ -15,7 +15,6 @@ function TimePlayer(table,version,cloudfront_url) {
   this.cells = [];
   this.table = table;
   this._version = version;
-  //this.base_url = 'http://sql.wri-01.cartodb.com/api/v2/sql';
   this.base_url = 'http://'+cloudfront_url+'/api/v2/sql';
   this.options = {};
 }
@@ -135,58 +134,6 @@ TimePlayer.prototype.pre_cache_months = function(rows, coord, zoom, zoom_diff) {
     deforestation: deforestation,
     size: 1 << zoom_diff
   };
-  /*var row;
-  var cells = [];
-  var d;
-  for(var i in rows) {
-  row = rows[i];
-  // filter the spikes in deforestation change
-
-
-  var acumm_normalized = [];
-  var cumm = row.cummulative;
-  var max = this.pixel_size*this.pixel_size;
-  var max_p = max >>4;
-
-  for(d = 0, l = cumm.length; d < l; ++d) {
-  //acumm_normalized[d] = (4*((cumm[d] - cumm[0])/(max - cumm[0]))) >> 0;
-  if((cumm[d] - cumm[0]) > max_p) {
-  acumm_normalized[d] = 1 + ((3*((cumm[d] - cumm[0])/(max - cumm[0]))) >> 0);
-  } else {
-  acumm_normalized[d] = 0;
-  }
-  }
-
-  // steps!
-  var def = row.time_series;
-  var steps = row.time_series;
-  var last = -10;
-
-  steps[0] = 0;
-  steps[1] = 0;
-  for(d = 2; d < def.length; ++d) {
-  if(def[d] > 0) {
-  last = d;
-  }
-  steps[d] = 0;
-  if(acumm_normalized[d] > 0) {
-  steps[d] = Math.max(0, 3 - (d - last));
-  }
-  }
-
-  //var buffer = new ArrayBuffer(row.);
-
-  cells[i] = {
-  x: row.upper_left_x,
-  y: row.upper_left_y,
-  w: row.cell_width,
-  h: row.cell_width,
-  months_accum: acumm_normalized,//row.cummulative,
-  months: row.time_series
-  }
-  }
-  return cells;
-  */
 };
 
 // get time data in json format
@@ -280,16 +227,10 @@ TimePlayer.prototype.render_time = function(tile, coord, zoom) {
     // set pixel by hand
     // faster than doing fill rect (below)
     if(cells.deforestation[MAX_MONTHS*i + month]) {
-      /*pixels[idx + 0] = 247;
-      pixels[idx + 1] = 104;
-      pixels[idx + 2] = 161;
-      pixels[idx + 3] = 255;
-      */
 
       ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
     }
   }
-  //ctx.putImageData(data, 0, 0);
 };
 
 
@@ -363,5 +304,3 @@ Profiler.get = function(type) {
     }
   };
 };
-
-

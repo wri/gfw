@@ -278,16 +278,11 @@ $(function(){
   var Router = Backbone.Router.extend({
 
     routes: {
-      "countries":                   "countries",
       "map":                         "map",
       "map/:zoom/:lat/:lon":         "mapWithCoordinates",
       "map/:zoom/:lat/:lon/*layers": "mapWithCoordinates",
       "/":                           "home",
       "":                            "home"
-    },
-
-    countries: function() {
-      Navigation.showState('countries');
     },
 
     map: function() {
@@ -321,7 +316,20 @@ $(function(){
   });
 
   window.router = new Router;
-  Backbone.history.start({ pushState: true });
+
+  $("#layer a.title").on("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  $("#filters ul.filters li a").on("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  if ($("body.home.index").length > 0) {
+    Backbone.history.start({ pushState: true });
+  }
 
   if ($("body.home.index").length > 0) {
     wall = new gfw.ui.view.Wall();
