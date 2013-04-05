@@ -13,7 +13,11 @@
         <div class="icon" id="icon<%= country[:iso]%>">
         </div>
 
-      <% if country[:enabled] %>
+        <div class="content">
+          <h4 <% if (country[:name].length > 17) %>class="small"<% end %>><%= country[:name] %></h4>
+        </div>
+
+        <% if country[:enabled] %>
         </a>
       <% end %>
     </div>
