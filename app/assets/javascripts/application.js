@@ -327,7 +327,7 @@ $(function(){
   window.router = new Router;
   Backbone.history.start({ pushState: true });
 
-  if ($("body.stories.index").length > 0) {
+  if ($("body.home.index").length > 0) {
     wall = new gfw.ui.view.Wall();
     $("body").append(wall.render());
   }
