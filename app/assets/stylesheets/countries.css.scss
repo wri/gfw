@@ -297,6 +297,55 @@ a.close_icon {
       word-spacing:normal;
     }
 
+    .chart { position: relative; }
+
+    .chart .title {
+      position: absolute;
+      top: 35px;
+      left: 0;
+      width: 100%;
+      color: #A1BA42;
+      font-size: 18px;
+      text-align:center;
+      @extend .serif;
+    }
+
+    .chart .subtitle {
+      position: absolute;
+      top: 55px;
+      left: 0;
+      width: 100%;
+      @include inline-block();
+
+      text-align:center;
+      font-size:13px;
+      color:#666;
+      @extend .serif;
+      text-decoration:underline;
+    }
+
+    .chart  .amount {
+      position: absolute;
+      width: 100%;
+      color:#A1BA42;
+      text-align: center;
+      bottom: 70px;
+      left: 0;
+      font-size:24px;
+      z-index: 100;
+    }
+    .chart  .date {
+      position: absolute;
+      text-align: center;
+      bottom: 48px;
+      left: 0;
+      width: 100%;
+      color: #333;
+      font-size: 14px;
+      z-index: 100;
+    }
+
+
     .chart { width: 300px; }
 
     .country {

@@ -1733,17 +1733,7 @@ function addCircle(id, type, options) {
   });
 
   function addText(opt) {
-
-    //if (typeof SVGForeignObjectElement !== 'undefined')  {
-    graph.append("foreignObject")
-    .attr('x', opt.x)
-    .attr('y', opt.y)
-    .attr('width', opt.width)
-    .attr('height', opt.height)
-    .attr('class', opt.c)
-    .append("xhtml:div")
-    .html(opt.html)
-
+    $(".chart ." + opt.c).html(opt.html);
   }
 
   // Content selection: lines or bars
@@ -1779,11 +1769,12 @@ function addCircle(id, type, options) {
         .attr("d", line(data))
         .on("mousemove", function(d) {
 
+
           var index = Math.round(x.invert(d3.mouse(this)[0]));
 
           if (data[index]) { // if there's data
             var val = data[index].alerts + " <small>" + unit + "</small>";
-            $(".amount." + id + " .text").html(val);
+            $(".circle .amount").html(val);
 
             var date = new Date(data[index].y, data[index].m);
             months = monthDiff(date, new Date());
@@ -1796,7 +1787,7 @@ function addCircle(id, type, options) {
               val = "in " + config.MONTHNAMES[data[index].m - 1] + " " + data[index].y;
             }
 
-            $(".graph_legend." + id + " .text").html(val);
+            $(".circle .date").html(val);
 
             d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
 
@@ -1875,17 +1866,12 @@ function addCircle(id, type, options) {
   // Adds texts
 
   if (title) {
-    addText({ x: 0, y: 40, width: width, height: 50, c:"title", html: '<div class="text">' + title + '</div>' });
+    addText({ x: 0, y: 40, width: width, height: 50, c:"title", html: title });
   }
 
   if (subtitle) {
-    addText({ x: 0, y: height/4 - 10, width: width, height: 50, c:"subtitle", html: '<div class="text">' + subtitle + '</div>' });
+    addText({ x: 0, y: height/4 - 10, width: width, height: 50, c:"subtitle", html: subtitle });
   }
 
-  addText({ x: 0, y: 3*height/4 - 13, width: width, height: 50, c:"amount " + id, html: '<div class="text"></div>' });
-
-  if (legend) {
-    addText({ x: 0, y: 3*height/4 + 15, width: width, height: 50, c:"graph_legend " + id, html: '<div class="text"></div>' });
-  }
 }
 
