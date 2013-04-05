@@ -76,9 +76,9 @@ GFW.modules.app = function(gfw) {
 
       this._setupZoom();
 
-      google.maps.event.addDomListener(this._map, 'mousemove', function(event) {
-        Timeline.updateCoordinates(event.latLng);
-      });
+      //google.maps.event.addDomListener(this._map, 'mousemove', function(event) {
+        //Timeline.updateCoordinates(event.latLng);
+      //});
 
     },
 
