@@ -47,11 +47,6 @@ class Story < CartoDB::Model::Base
   end
 
   def self.first_three_featured
-    #select([:cartodb_id, :title]).
-    #where(:featured => true).
-    #order('cartodb_id DESC').
-    #per_page(3)
-
     sql = <<-SQL
       SELECT stories.cartodb_id AS id,
              title,

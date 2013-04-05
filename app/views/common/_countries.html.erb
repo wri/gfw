@@ -8,14 +8,12 @@
     <div class="country <% if !country[:enabled] %>disabled<% end %>">
       <% if country[:enabled] %>
         <a href="/country/<%= country[:name].downcase.gsub(" ", "_") %>">
-        <% end %>
+      <% end %>
+
         <div class="icon" id="icon<%= country[:iso]%>">
         </div>
 
-        <% alerts = Alert.last_alerts_per_country(country[:iso]) %>
-        <% count = alerts[0] ? alerts[0][:count] : 0 %>
-        <div class="content"><h4 <% if (country[:name].length > 10) %>class="small"<% end %>><%= country[:name] %></h4> <strong><%= count %> </strong> Forest Clearing Alerts in the last 6 months</div>
-        <% if country[:enabled] %>
+      <% if country[:enabled] %>
         </a>
       <% end %>
     </div>
