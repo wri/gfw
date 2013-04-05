@@ -25,8 +25,6 @@
 var
 loaded           = false,
 map              = null,
-mapAnimationPID      = null,
-mapAnimation     = true,
 previousState    = null,
 globalZindex     = 300,
 subscribeMap;
@@ -297,7 +295,6 @@ $(function(){
       if ($.browser.msie) $(document).scrollTop(0);
 
       loadGFW();
-      Navigation.stopMapAnimation
       Navigation.showState("map");
 
     },
@@ -310,7 +307,6 @@ $(function(){
       if (layers)     { config.mapOptions.layers = layers; }
 
       loadGFW();
-      Navigation.stopMapAnimation
       Navigation.showState("map");
 
       if (lat && lon) map.setCenter(new google.maps.LatLng(lat, lon));

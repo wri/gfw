@@ -1,7 +1,6 @@
 var CountryMenu = (function() {
 
-var drawn = false;
-
+  var drawn = false;
 
   function show(e) {
 
@@ -29,10 +28,10 @@ var drawn = false;
 
   }
 
- function draw(data, iso) {
+  function draw(data, iso) {
 
-  var width = 270;
-  var height = 200;
+    var width = 270;
+    var height = 200;
 
     var svg = d3.select("#icon"+iso).append("svg")
     .attr("width", width)
@@ -55,29 +54,29 @@ var drawn = false;
       var translate = "";
 
       svg.append("g")
-        .selectAll("path")
-        .data([country])
-        .enter()
-        .append("path")
-        .attr("d", path)
-        .attr("transform", function(d) {
-          var x = centroid[0];
-          var y = centroid[1];
-          var bounds = d3.geo.bounds(country);
-          var x_range = bounds[1][0] - bounds[0][0];
-          var y_range = bounds[1][1] - bounds[0][1];
+      .selectAll("path")
+      .data([country])
+      .enter()
+      .append("path")
+      .attr("d", path)
+      .attr("transform", function(d) {
+        var x = centroid[0];
+        var y = centroid[1];
+        var bounds = d3.geo.bounds(country);
+        var x_range = bounds[1][0] - bounds[0][0];
+        var y_range = bounds[1][1] - bounds[0][1];
 
-          if (x_range > y_range) {
-            scale = (width/x_range);
-          } else {
-            scale = (height/y_range);
-          }
+        if (x_range > y_range) {
+          scale = (width/x_range);
+        } else {
+          scale = (height/y_range);
+        }
 
-          scale = scale*2;
+        scale = scale*2;
 
-          return "scale("+scale+"), translate(" + (-x+(width/scale)/2) + "," + (-y+(height/scale)/2) + ")";
+        return "scale("+scale+"), translate(" + (-x+(width/scale)/2) + "," + (-y+(height/scale)/2) + ")";
 
-        });
+      });
 
     }
   }
@@ -707,8 +706,6 @@ var SubscriptionMap = (function() {
 
 var Navigation = (function() {
 
-  var mapAnimationInterval = 50;
-
   function _select(name) {
     $("nav li a").removeClass("selected");
     $("nav ." + name).addClass("selected");
@@ -798,25 +795,9 @@ var Navigation = (function() {
     Timeline.hide();
     self.time_layer.set_time(128);
 
-    mapAnimation = true;
-    _animateMap();
-
     GFW.app.close(function() {
       Circle.show(250);
     });
-  }
-
-  function _animateMap() {
-
-    mapAnimationPID = setInterval(function() {
-      mapAnimation && map.panBy(-1, 0);
-    }, mapAnimationInterval);
-
-  }
-
-  function _stopMapAnimation() {
-    mapAnimation = false;
-    clearInterval(mapAnimationPID);
   }
 
   function _hideOverlays() {
@@ -838,8 +819,6 @@ var Navigation = (function() {
 
     layerSelector.show();
     legend.show();
-
-    _stopMapAnimation();
 
     self.time_layer.set_time(self.time_layer.cache_time());
 
@@ -892,8 +871,6 @@ var Navigation = (function() {
   return {
     select: _select,
     showState: _showState,
-    animateMap: _animateMap,
-    stopMapAnimation: _stopMapAnimation,
     hideOverlays: _hideOverlays
   };
 
@@ -1337,7 +1314,6 @@ var Circle = (function() {
     circlePID = _startAnimation();
 
     if (animating) return;
-
 
     $circle.find(".explore, .background").stop().animate({ opacity: 0 }, 100, "easeOutExpo", function(){
       $title.animate({ opacity: 0.75 }, 100, "easeOutExpo");
