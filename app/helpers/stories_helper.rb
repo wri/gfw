@@ -45,7 +45,7 @@ module StoriesHelper
   def title_or_flash
     return link_to flash[:notice], '#' if flash[:notice].present?
 
-    link_to 'Case Studies', stories_path
+    link_to 'Stories', stories_path
   end
 
   def story_image_or_map(thumbnail_url, coords)

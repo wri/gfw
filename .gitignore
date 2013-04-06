@@ -4,5 +4,5 @@
 /log/*.log
 /tmp
 config/cartodb_config.*
-public/assets
 public/uploads
+.ruby-version

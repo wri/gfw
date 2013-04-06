@@ -1,18 +1,89 @@
 var CountryMenu = (function() {
 
+  var drawn = false;
 
   function show(e) {
 
     e.preventDefault();
     e.stopPropagation();
 
+    var that = this;
+
     $(".countries_backdrop").fadeIn(250);
     $("#countries").fadeIn(250);
 
+    if (!drawn) drawCountries();
+
+  }
+
+  function drawCountries() {
+
+    $.ajax({ url: "/assets/country_shapes.json", success: function(data) {
+      for (var i=0; i<data.features.length; i++) {
+        var iso = data.features[i].properties.iso;
+        if ((iso != 'GUF')) draw(data, iso);
+      }
+      drawn = true;
+    }});
+
+  }
+
+  function draw(data, iso) {
+
+    var width = 270;
+    var height = 200;
+
+    var svg = d3.select("#icon"+iso).append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+    var country = null;
+    var i = 0;
+    while ((country == null)&&(i<data.features.length)) {
+      if (data.features[i].properties.iso == iso) {
+        country = data.features[i];
+      }
+      i++;
+    }
+    var path = d3.geo.path().projection(d3.geo.mercator().scale(30).translate([0,0]));
+
+    if (country != null) {
+
+      var centroid = path.centroid(country);
+      var scale = "";
+      var translate = "";
+
+      svg.append("g")
+      .selectAll("path")
+      .data([country])
+      .enter()
+      .append("path")
+      .attr("d", path)
+      .attr("transform", function(d) {
+        var x = centroid[0];
+        var y = centroid[1];
+        var bounds = d3.geo.bounds(country);
+        var x_range = bounds[1][0] - bounds[0][0];
+        var y_range = bounds[1][1] - bounds[0][1];
+
+        if (x_range > y_range) {
+          scale = (width/x_range);
+        } else {
+          scale = (height/y_range);
+        }
+
+        scale = scale*2;
+
+        return "scale("+scale+"), translate(" + (-x+(width/scale)/2) + "," + (-y+(height/scale)/2) + ")";
+
+      });
+
+    }
   }
 
   return {
-    show: show
+    show: show,
+    drawCountries: drawCountries
   };
 
 }());
@@ -633,13 +704,7 @@ var SubscriptionMap = (function() {
 
 
 
-
-
 var Navigation = (function() {
-
-  var
-  mapAnimationPID      = null,
-  mapAnimationInterval = 50;
 
   function _select(name) {
     $("nav li a").removeClass("selected");
@@ -730,25 +795,9 @@ var Navigation = (function() {
     Timeline.hide();
     self.time_layer.set_time(128);
 
-    _animateMap();
-
     GFW.app.close(function() {
       Circle.show(250);
-      //$("footer, .actions").fadeIn(250);
     });
-  }
-
-  function _animateMap() {
-    if (typeof skipMapAnimation != "undefined" && skipMapAnimation) {
-      return;
-    }
-    mapAnimationPID = setInterval(function() {
-      map.panBy(-1, 0);
-    }, mapAnimationInterval);
-  }
-
-  function _stopMapAnimation() {
-    clearInterval(mapAnimationPID);
   }
 
   function _hideOverlays() {
@@ -756,6 +805,7 @@ var Navigation = (function() {
     $("#share").fadeOut(250);
     $(".backdrop").fadeOut(250);
     $("#countries").fadeOut(250);
+    $(".countries_backdrop").fadeOut(250);
   }
 
   function _showMapState() {
@@ -770,10 +820,11 @@ var Navigation = (function() {
     layerSelector.show();
     legend.show();
 
-    _stopMapAnimation();
-
     self.time_layer.set_time(self.time_layer.cache_time());
-    Timeline.show(); // TODO: don't show the timeline if FORMA is not selected
+
+    if (GFW.app.currentBaseLayer == "semi_monthly") {
+      Timeline.show();
+    }
 
     $(".big_numbers").fadeOut(250);
 
@@ -820,8 +871,6 @@ var Navigation = (function() {
   return {
     select: _select,
     showState: _showState,
-    animateMap: _animateMap,
-    stopMapAnimation: _stopMapAnimation,
     hideOverlays: _hideOverlays
   };
 
@@ -846,9 +895,8 @@ var Filter = (function() {
     var lat  = map.getCenter().lat().toFixed(2);
     var lng  = map.getCenter().lng().toFixed(2);
 
-    var hash = "/map/" + zoom + "/" + lat + "/" + lng + "/" + filters.join(",");
-
-    History.pushState({ state: 3 }, "Map", hash);
+    var hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + filters.join(",");
+    window.router.navigate(hash, { replace: true, trigger: true });
   }
 
   function _toggle(id) {
@@ -1267,7 +1315,6 @@ var Circle = (function() {
 
     if (animating) return;
 
-
     $circle.find(".explore, .background").stop().animate({ opacity: 0 }, 100, "easeOutExpo", function(){
       $title.animate({ opacity: 0.75 }, 100, "easeOutExpo");
       $counter.animate({ opacity: 1 }, 100, "easeOutExpo");
@@ -1295,11 +1342,10 @@ var Circle = (function() {
   }
 
   function _onClick(e) {
-    if (e) {
-      e.preventDefault();
-    }
+    e && e.preventDefault();
+    e && e.stopPropagation();
 
-    History.pushState({ state: 1 }, "Map", "/map");
+    window.router.navigate("map", { trigger: true });
   }
 
   function _init() {
@@ -1352,8 +1398,10 @@ var Timeline = (function() {
     [606, 632, null],
     [640, 728, 2011],
     [736, 760, null],
-    [768, 832, 2012],
-    [840, 856, null]
+    [768, 856, 2012],
+    [864, 888, null],
+    [896, 904, 2013],
+    [904, 992, null]
   ];
 
   function _togglePlayState() {
@@ -1441,10 +1489,13 @@ var Timeline = (function() {
 
     // if the user clicked on the last year of the timeline
     if (year === lastYear) {
-      var pos = dates[ dates.length - 1 ][1];
 
-      $handle.animate({ left: pos }, 150, "easeOutExpo");
-      _changeDate(pos, dates[ dates.length - 1 ]);
+      pos = _.find(dates, function(i) {
+        if (i[2] == lastYear) return i;
+      });
+
+      $handle.animate({ left: pos[0] }, 150, "easeOutExpo");
+      _changeDate(pos[0], pos);
 
       return;
     }
@@ -1558,6 +1609,7 @@ var Timeline = (function() {
       drag: function() {
         var left = $(this).position().left;
         _setDate(left);
+        //console.log(left);
 
         if (playing) {
           _stopAnimation(false);
@@ -1565,6 +1617,7 @@ var Timeline = (function() {
       },
       stop: function() {
         var left = $(this).position().left;
+        //console.log(left);
         _setDate(left, true);
       }
     });
@@ -1680,17 +1733,7 @@ function addCircle(id, type, options) {
   });
 
   function addText(opt) {
-
-    //if (typeof SVGForeignObjectElement !== 'undefined')  {
-    graph.append("foreignObject")
-    .attr('x', opt.x)
-    .attr('y', opt.y)
-    .attr('width', opt.width)
-    .attr('height', opt.height)
-    .attr('class', opt.c)
-    .append("xhtml:div")
-    .html(opt.html)
-
+    $(".chart ." + opt.c).html(opt.html);
   }
 
   // Content selection: lines or bars
@@ -1726,11 +1769,12 @@ function addCircle(id, type, options) {
         .attr("d", line(data))
         .on("mousemove", function(d) {
 
+
           var index = Math.round(x.invert(d3.mouse(this)[0]));
 
           if (data[index]) { // if there's data
             var val = data[index].alerts + " <small>" + unit + "</small>";
-            $(".amount." + id + " .text").html(val);
+            $(".circle .amount").html(val);
 
             var date = new Date(data[index].y, data[index].m);
             months = monthDiff(date, new Date());
@@ -1743,7 +1787,7 @@ function addCircle(id, type, options) {
               val = "in " + config.MONTHNAMES[data[index].m - 1] + " " + data[index].y;
             }
 
-            $(".graph_legend." + id + " .text").html(val);
+            $(".circle .date").html(val);
 
             d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
 
@@ -1822,17 +1866,12 @@ function addCircle(id, type, options) {
   // Adds texts
 
   if (title) {
-    addText({ x: 0, y: 40, width: width, height: 50, c:"title", html: '<div class="text">' + title + '</div>' });
+    addText({ x: 0, y: 40, width: width, height: 50, c:"title", html: title });
   }
 
   if (subtitle) {
-    addText({ x: 0, y: height/4 - 10, width: width, height: 50, c:"subtitle", html: '<div class="text">' + subtitle + '</div>' });
+    addText({ x: 0, y: height/4 - 10, width: width, height: 50, c:"subtitle", html: subtitle });
   }
 
-  addText({ x: 0, y: 3*height/4 - 13, width: width, height: 50, c:"amount " + id, html: '<div class="text"></div>' });
-
-  if (legend) {
-    addText({ x: 0, y: 3*height/4 + 15, width: width, height: 50, c:"graph_legend " + id, html: '<div class="text"></div>' });
-  }
 }
 

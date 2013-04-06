@@ -1,8 +1,6 @@
-<%
-  content_for :title do
+<% content_for :title do
     @country.name.titleize
-  end
-%>
+  end %>
 
 <% content_for :title do %>
   <script type="text/javascript">
@@ -18,15 +16,18 @@
   </div>
 <% end %>
 
-<%#= render :partial => "common/subscribe" %>
-
 <div id="country">
 
   <div class="details">
     <div class="inner">
 
       <div class="graphs" data-load="graphs">
-        <div class="circle lines chart"></div>
+        <div class="circle lines chart">
+          <div class="title"></div>
+          <div class="subtitle"></div>
+          <div class="amount"></div>
+          <div class="date"></div>
+        </div>
         <div class="circle hansen_placeholder chart"></div>
         <div class="circle country" style="background: url(<%= static_map(@country.lat+","+@country.lon, "299x299", 4) %>) no-repeat;">
           <a class="mask" href="<%= @country.link %>"></a>

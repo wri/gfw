@@ -43,7 +43,7 @@ GFW.modules.app = function(gfw) {
       this._precision = 2;
       this._layers = [];
       this._cloudfront_url = "dyynnn89u7nkm.cloudfront.net";
-      this._global_version = 11;
+      this._global_version = 12;
 
       gfw.log.enabled = options ? options.logging: false;
 
@@ -76,9 +76,9 @@ GFW.modules.app = function(gfw) {
 
       this._setupZoom();
 
-      google.maps.event.addDomListener(this._map, 'mousemove', function(event) {
-        Timeline.updateCoordinates(event.latLng);
-      });
+      //google.maps.event.addDomListener(this._map, 'mousemove', function(event) {
+        //Timeline.updateCoordinates(event.latLng);
+      //});
 
     },
 
@@ -165,35 +165,17 @@ GFW.modules.app = function(gfw) {
 
       // Setup listeners
       google.maps.event.addListener(this._map, 'zoom_changed', function() {
-
-
         that._updateHash(that);
         that._refreshBaseLayer();
-
       });
 
       google.maps.event.addListener(this._map, 'drag', function() {
-
-        if (that.currentBaseLayer != "semi_monthly") {
-          $(".time_layer").hide();
-          Timeline.hide();
-        } else {
-          $(".time_layer").show();
-        }
-
+        that._unloadTimeLayer();
       });
 
       google.maps.event.addListener(this._map, 'dragend', function() {
-
-        if (that.currentBaseLayer != "semi_monthly") {
-          $(".time_layer").hide();
-          Timeline.hide();
-        } else {
-          $(".time_layer").show();
-        }
-
+        that._unloadTimeLayer();
         that._updateHash(that);
-
       });
 
       google.maps.event.addListener(this._map, 'click', function(event) {
@@ -361,19 +343,14 @@ GFW.modules.app = function(gfw) {
 
     _refreshBaseLayer: function() {
 
+      //console.log("Refreshing base layer");
+
       if (GFW.app.baseLayer && GFW.app.currentBaseLayer) {
         var query = GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom());
         GFW.app.baseLayer.setQuery(query);
       }
 
-      setTimeout(function() {
-        if (GFW.app.currentBaseLayer != "semi_monthly") {
-          $(".time_layer").hide();
-          Timeline.hide();
-        } else {
-          $(".time_layer").show();
-        }
-      }, 150);
+      this._unloadTimeLayer();
 
     },
 
@@ -393,11 +370,9 @@ GFW.modules.app = function(gfw) {
 
     _updateBaseLayer: function() {
 
-      if (this.currentBaseLayer != "semi_monthly") {
-        $(".time_layer").hide();
-      } else {
-        $(".time_layer").show();
-      }
+    //console.log("Updating base layer");
+
+      this._unloadTimeLayer();
 
       if (GFW.app.baseLayer) {
         GFW.app.baseLayer.setOptions({
@@ -466,11 +441,27 @@ GFW.modules.app = function(gfw) {
 
     },
 
+    _unloadTimeLayer: function() {
+    //console.log("Unload time layer");
+
+    setTimeout(function() {
+      if (GFW.app.currentBaseLayer != "semi_monthly") {
+        $(".time_layer").hide();
+        Timeline.hide();
+      } else {
+        $(".time_layer").show();
+      }
+    }, 150);
+
+    },
+
     _loadBaseLayer: function() {
       var self = this;
       var table_name = null;
 
       if (this.currentBaseLayer === "semi_monthly") {
+
+        //console.log("Loading time layer");
 
         this.time_layer = new TimePlayer('gfw2_forma', this._global_version, this._cloudfront_url);
         this.time_layer.options.table_name = table_name;
@@ -528,18 +519,16 @@ GFW.modules.app = function(gfw) {
       lat  = self._map.getCenter().lat().toFixed(GFW.app._precision),
       lng  = self._map.getCenter().lng().toFixed(GFW.app._precision);
 
-      filters = hash.filters || "";
-      if (filters) {
-        var filters = filters.substr(0, filters.indexOf("?"));
-      }
+      var layers = config.mapOptions.layers || "";
 
       if (filters) {
-        hash = "/map/" + zoom + "/" + lat + "/" + lng + "/" + filters;
+        hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + layers;
       } else {
-        hash = "/map/" + zoom + "/" + lat + "/" + lng;
+        hash = "map/" + zoom + "/" + lat + "/" + lng;
       }
 
-      History.pushState({ state: 3 }, "Map", hash);
+      window.router.navigate(hash);
+
     },
 
     _parseHash: function(hash) {
@@ -619,7 +608,7 @@ GFW.modules.maplayer = function(gfw) {
         var that = this;
 
         var clickEvent = function() {
-          that._toggleLayer(GFW.app);
+          that._toggleLayer();
         };
 
         var zoomEvent = function() {
@@ -670,8 +659,8 @@ GFW.modules.maplayer = function(gfw) {
 
 
       },
+
       _bindDisplay: function(display) {
-        var that = this;
         display.setEngine(this);
       },
 
@@ -682,16 +671,18 @@ GFW.modules.maplayer = function(gfw) {
         }
       },
 
-      _hideBaseLayers: function(that){
+      _hideBaseLayers: function(){
+        //console.log("Hiding base layers");
 
-        $(".time_layer").hide();
-        Timeline.hide();
+        GFW.app._unloadTimeLayer();
+
         legend.removeCategory("forest_clearing");
+
         if (GFW.app.baseLayer) GFW.app.baseLayer.setOptions({ opacity: 0 });
 
       },
 
-      _toggleLayer: function(that){
+      _toggleLayer: function(){
 
         this.layer.attributes['visible'] = !this.layer.attributes['visible'];
 

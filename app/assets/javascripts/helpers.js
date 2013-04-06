@@ -29,6 +29,47 @@ jQuery.fn.center = function () {
   return this;
 }
 
+
+/**
+ * Hides/shows placeholders
+ *
+ * @param {Hash} [opt] Optional arguments (speed, timeOut)
+*/
+
+jQuery.fn.smartPlaceholder = function(opt){
+
+  this.each(function(){
+    var
+    speed   = (opt && opt.speed)   || 150,
+    timeOut = (opt && opt.timeOut) || 100,
+    $span   = $(this).find("span.holder"),
+    $input  = $(this).find(":input").not("input[type='hidden'], input[type='submit']");
+
+    if ($input.val()) {
+      $span.hide();
+    }
+
+    $input.keydown(function(e) {
+
+      if (e.metaKey && e.keyCode == 88) { // command+x
+        setTimeout(function() {
+          isEmpty($input.val()) && $span.fadeIn(speed);
+        }, timeOut);
+      } else if (e.metaKey && e.keyCode == 86) { // command+v
+        setTimeout(function() {
+          !isEmpty($input.val()) && $span.fadeOut(speed);
+        }, timeOut);
+      } else {
+        setTimeout(function() { ($input.val()) ?  $span.fadeOut(speed) : $span.fadeIn(speed); }, 0);
+      }
+    });
+
+    $span.click(function() { $input.focus(); });
+    $input.blur(function() { !$input.val() && $span.fadeIn(speed); });
+  });
+}
+
+
 String.prototype.truncate = function(n) {
   return this.substr(0, n - 1 ) + ( this.length > n ? '...' : '' );
 };
@@ -45,7 +86,7 @@ var config = {
   DATE_FORMAT:        "yyyy-MM-dd",
   DATE_SUFFIXES:      ["th", "st", "nd", "rd"],
   MIN_PROJECT_RADIUS: 100,
-  BASE_MAP_STYLE:     [ { "stylers": [ { "visibility": "simplified" }, { "saturation": -100 }, { "gamma": 0.79 }, { "lightness": 2 }]}],
+  BASE_MAP_STYLE:     [ { "featureType": "water"  },{ "featureType": "transit", "stylers": [ { "saturation": -100 } ] },{ "featureType": "road", "stylers": [ { "saturation": -100 } ] },{ "featureType": "poi", "stylers": [ { "saturation": -100 } ] },{ "featureType": "landscape", "stylers": [ { "saturation": -100 } ] },{ "featureType": "administrative", "stylers": [ { "saturation": -100 } ] } ],
   OVERLAYS_STYLE: {
     strokeWeight: 2,
     fillOpacity: 0.25,
@@ -69,6 +110,7 @@ config.mapOptions = {
   maxZoom:            config.MAXZOOM,
   center:             new google.maps.LatLng(config.LAT, config.LNG),
   mapTypeId:          google.maps.MapTypeId.TERRAIN,
+  backgroundColor:    '#99b3cc',
   disableDefaultUI:   true,
   panControl:         false,
   zoomControl:        false,

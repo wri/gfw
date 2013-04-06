@@ -15,7 +15,7 @@
         <li><a href="#">2010</a></li>
         <li><a href="#">2011</a></li>
         <li><a href="#">2012</a></li>
-        <li class="disabled"><a href="#">2013</a></li>
+        <li><a href="#">2013</a></li>
       </ul>
       <div class="coordinates"></div>
       <div class="constraint_handler">
@@ -33,12 +33,13 @@
       <h1 class="title">{{ title }}</h1>
       <p class="subtitle"><span>{{ subtitle }}</span> <a href='#' class="invite">Request an invite</a></p>
 
-      <form action="#">
+      <div class="form">
 
         <p class="help">{{ help }}</p>
 
         <div class="input-field huge">
-          <input type="text" name="area[email]" placeholder="{{ placeholder }}">
+          <input type="text" name="area[email]">
+          <span class="holder">{{ placeholder }}</span>
           <div class="icon error"></div>
           <div class="error_input_label"></div>
         </div>
@@ -47,7 +48,7 @@
           <span>{{ button_title }}</span>
         </a>
 
-      </form>
+      </div>
     </div>
   </script>
 
