@@ -658,8 +658,12 @@ if (typeof(google.maps.CartoDBLayer) === "undefined") {
      */
     CartoDBLayer.prototype._setLayerOrder = function() {
 
+
+        //this.options.map.overlayMapTypes.push(this.layer);
+//return;
       // Remove this layer from the order array if it is present
       var self = this;
+
       this.options.map.overlayMapTypes.forEach(function(l,i){
         if (l == self.layer) {
           self.options.map.overlayMapTypes.removeAt(i);
