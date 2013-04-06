@@ -46,6 +46,7 @@
         &.disabled {
           background: #F5F5F5;
           color: $cGray4;
+          strong {font-size: 12px;}
         }
       }
 
@@ -656,19 +657,20 @@ $timelineWidth: 1038px;
 
   li {
 
-    &.disabled a {color: #ccc; }
+    &.disabled a { color: #ccc; }
 
     @include inline-block();
     height: 20px;
     margin: 0 120px 0 0;
+    position:relative;
 
-    &:nth-child(1) { margin-left: 10px; margin-right: 100px; }
-    &:nth-child(2) { margin-right: 99px; }
-    &:nth-child(3) { margin-right: 101px; }
-    &:nth-child(4) { margin-right: 100px; }
-    &:nth-child(5) { margin-right: 101px; }
-    &:nth-child(6) { margin-right: 97px; }
-    &:nth-child(7) { margin-left: 3px; margin-right: 98px; }
+    &.y2006 { margin-left: 10px; margin-right: 100px; }
+    &.y2007 { margin-right: 99px; }
+    &.y2008 { margin-right: 101px; }
+    &.y2009 { margin-right: 100px; }
+    &.y2010 { margin-right: 101px; }
+    &.y2011 { margin-right: 97px; }
+    &.y2012 { margin-left: 3px; margin-right: 98px; }
 
     a {
       font: normal 10px "Futura", sans-serif;

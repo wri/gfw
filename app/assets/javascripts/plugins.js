@@ -1373,6 +1373,10 @@ var Circle = (function() {
 
 var Timeline = (function() {
 
+  var that = this;
+
+  this.stored_month_number  = null;
+
   var
   $timeline      = $(".timeline"),
   $handle        = $timeline.find(".handle"),
@@ -1403,6 +1407,11 @@ var Timeline = (function() {
     [896, 904, 2013],
     [904, 992, null]
   ];
+
+
+  function getStoredMonth() {
+    return that.stored_month_number;
+  }
 
   function _togglePlayState() {
     $play.fadeOut(100, "easeOutExpo", function() {
@@ -1523,6 +1532,7 @@ var Timeline = (function() {
 
     // year 2000 is base year
     instance.trigger('change_date', date, monthPos + (date[2] - 2000)*12);
+    that.stored_month_number = monthPos + (date[2] - 2000)*12;
   }
 
   function _updateCoordinates(latLng) {
@@ -1633,6 +1643,7 @@ var Timeline = (function() {
     init: _init,
     hide: _hide,
     show: _show,
+    getStoredMonth: getStoredMonth,
     updateCoordinates: _updateCoordinates,
     isHidden: _isHidden
   });
