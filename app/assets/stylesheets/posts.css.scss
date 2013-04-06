@@ -412,6 +412,21 @@ body.static {
         }
       }
 
+      p {
+
+        a {
+          font-size: 16px;
+          font-weight: normal;
+          text-decoration: underline;
+          color: $cGray2;
+
+          &:hover {
+            color: $cLime;            
+          }
+        }
+
+      }
+
       ul.logo_list {
         @include clearfix();
         margin: 20px auto 0 auto;
@@ -601,6 +616,11 @@ body.sources {
           font-weight: normal;
           text-decoration: underline;
           color: $cGray2;
+
+          &:hover {
+            color: $cLime;            
+          }
+
         }
 
         a.download {
