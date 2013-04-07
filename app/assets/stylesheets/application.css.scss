@@ -1356,6 +1356,7 @@ footer > .download {
 #gallery {
   @include position(0, false, false, 0);
   @include size(100%, 295px);
+  display:none;
 
   background: $cGray5;
   z-index: 0;

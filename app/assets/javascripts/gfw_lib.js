@@ -79,7 +79,7 @@ GFW.modules.app = function(gfw) {
       this._setupZoom();
 
       //google.maps.event.addDomListener(this._map, 'mousemove', function(event) {
-        //Timeline.updateCoordinates(event.latLng);
+      //Timeline.updateCoordinates(event.latLng);
       //});
 
     },
@@ -99,7 +99,6 @@ GFW.modules.app = function(gfw) {
       $("#map").animate({ height: dh - hh }, 250, function() {
         google.maps.event.trigger(that._map, "resize");
         that._map.setOptions({ scrollwheel: false });
-        //$("body").css({overflow:"hidden"});
       });
     },
 
@@ -110,8 +109,6 @@ GFW.modules.app = function(gfw) {
 
         google.maps.event.trigger(that._map, "resize");
         that._map.setOptions({ scrollwheel: false });
-
-        //$("body").css({ overflow:"auto" });
 
         if (callback) {
           callback();
@@ -214,10 +211,12 @@ GFW.modules.app = function(gfw) {
     },
 
     _removeLayer: function(layer) {
-    //console.log('Removing layer', layer.get("table_name"));
+
       if (!layer.get('external')) {
+
         this._layers = _.without(this._layers, layer.get("table_name"));
         this._renderLayers();
+
       } else {
         this._removeExternalLayer();
       }
@@ -227,7 +226,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _addLayer: function(layer) {
-      //console.log('Adding layer', layer.get("table_name"));
+
       if (!layer.get('external')) {
         this._layers.push(layer.get('table_name'));
         this._renderLayers();
@@ -252,32 +251,28 @@ GFW.modules.app = function(gfw) {
     _renderExternalLayer: function(layer) {
       var that = this;
 
-        var query = layer.get('tileurl');
+      var query = layer.get('tileurl');
 
-        if (this.specialLayer) {
-          this.specialLayer.setOpacity(1);
-        } else {
+      if (this.specialLayer) {
+        this.specialLayer.setOpacity(1);
+      } else {
 
-          this.specialLayer = new google.maps.ImageMapType({
-            getTileUrl: function(tile, zoom) {
-              return "http://184.73.201.235/blue/" + zoom + "/" + tile.x + "/" + tile.y;
-            },
-            tileSize: new google.maps.Size(256, 256),
-            opacity:0.60,
-            isPng: true
-          });
+        this.specialLayer = new google.maps.ImageMapType({
+          getTileUrl: function(tile, zoom) {
+            return "http://184.73.201.235/blue/" + zoom + "/" + tile.x + "/" + tile.y;
+          },
+          tileSize: new google.maps.Size(256, 256),
+          opacity:0.60,
+          isPng: true
+        });
 
-          map.overlayMapTypes.push(this.specialLayer);
-      //console.log(map.overlayMapTypes.getArray());
-
-        }
+        map.overlayMapTypes.push(this.specialLayer);
+      }
 
     },
 
     _renderLayers: function() {
 
-
-        //console.log("Rendering layers", this._layers);
 
       if (this._layers.length > 0) {
 
@@ -290,15 +285,7 @@ GFW.modules.app = function(gfw) {
         queryArray.push("(SELECT cartodb_id||':' ||'caf_lc_1' as cartodb_id, the_geom_webmercator, 'caf_lc_1' AS name FROM caf_lc_1 LIMIT 0)") //a hack for the stupid layer show hide discoloration thing I found
         var query = queryArray.join(" UNION ALL ");
 
-          this.mainLayer && this.mainLayer.setMap(null);
-
-        //if (this.mainLayer) {
-          //var layers = map.overlayMapTypes.getArray();
-
-          //_.each(layers, function(l, i) {
-            //if (l instanceof wax.g.connector) map.overlayMapTypes.setAt(i, null);
-          //});
-        //}
+        this.mainLayer && this.mainLayer.setMap(null);
 
         this.mainLayer = new CartoDBLayer({
           map: map,
@@ -328,7 +315,6 @@ GFW.modules.app = function(gfw) {
         this.mainLayer.setInteraction(false);
       }
 
-
     },
 
     _onMainLayerClick: function(ev, latlng, pos, data) {
@@ -340,6 +326,7 @@ GFW.modules.app = function(gfw) {
       //here i make a crude request for the columns of the table
       //nulling out the geoms to save payload
       var request_sql = "SELECT *, null as the_geom, null as the_geom_webmercator FROM " + pair[1] + " WHERE cartodb_id = " + pair[0];
+
       $.ajax({
         async: false,
         dataType: 'json',
@@ -374,21 +361,14 @@ GFW.modules.app = function(gfw) {
 
     _refreshBaseLayer: function() {
 
-      //console.log("Refreshing base layer");
-
       if (GFW.app.baseLayer && GFW.app.currentBaseLayer != "semi_monthly") {
-
-        //console.log("Refreshing base layer", GFW.app.currentBaseLayer, GFW.app.queries[GFW.app.currentBaseLayer]);
 
         try {
           var query = GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom());
           GFW.app.baseLayer.setQuery(query);
         }
         catch(err) { }
-
       }
-
-      //this._unloadTimeLayer();
 
     },
 
@@ -408,28 +388,15 @@ GFW.modules.app = function(gfw) {
 
     _updateBaseLayer: function() {
 
-      //console.log("Updating base layer", GFW.app.currentBaseLayer);
-
       if (GFW.app.baseLayer && GFW.app.currentBaseLayer != "semi_monthly") {
 
         this._unloadTimeLayer();
-
-        //console.log('->', this._getTableName(this.currentBaseLayer));
-
         this._loadBaseLayer();
-
-        //GFW.app.baseLayer.setOptions({
-          //opacity: 1,
-          //table_name: this._getTableName(this.currentBaseLayer),
-          //query: GFW.app.queries[GFW.app.currentBaseLayer].replace(/{Z}/g, GFW.app._map.getZoom())
-        //});
 
       } else {
 
         if (GFW.app.currentBaseLayer != "semi_monthly") this._unloadTimeLayer();
-        else  {
-          GFW.app.baseLayer && GFW.app.baseLayer.setMap(null);
-        }
+        else GFW.app.baseLayer && GFW.app.baseLayer.setMap(null);
 
         this._loadBaseLayer();
 
@@ -438,14 +405,13 @@ GFW.modules.app = function(gfw) {
     },
 
     _toggleStoriesLayer: function() {
-      var that = this;
 
-      _.each(that.storiesFeatures, function(feature) {
+      _.each(this.storiesFeatures, function(feature) {
         if (feature.visible) feature.setVisible(false);
         else feature.setVisible(true);
       });
 
-      _.each(that.storiesMarkers, function(marker) {
+      _.each(this.storiesMarkers, function(marker) {
         marker.toggle();
       });
 
@@ -496,66 +462,37 @@ GFW.modules.app = function(gfw) {
 
     _unloadTimeLayer: function() {
 
-      //console.log("Unloading timelayer: ", GFW.app.currentBaseLayer, this.time_layer);
+      if (!this.time_layer) return;
 
-      //if (GFW.app.currentBaseLayer != "semi_monthly") {
+      this.time_layer = null;
+      Timeline.hide();
 
-        if (!this.time_layer) return;
+      var layers = map.overlayMapTypes.getArray();
 
-        //console.log("Unload time layer");
-        //console.log("Removing timelayer");
+      var pos = null;
 
-        this.time_layer = null;
-        Timeline.hide();
+      _.each(layers, function(l, i) {
+        if (l instanceof TimePlayer) pos = i;
+      });
 
-        var layers = map.overlayMapTypes.getArray();
+      if (pos == (layers.length - 1)) map.overlayMapTypes.pop();
+      else {
 
-        var pos = null;
-        _.each(layers, function(l, i) {
-          if (l instanceof TimePlayer) pos = i;
-        });
-        //console.log(pos, layers.length);
+        map.overlayMapTypes.setAt(pos, null);
 
-        if (pos == (layers.length - 1)) map.overlayMapTypes.pop();
-        else {
-
-          map.overlayMapTypes.setAt(pos, null);
-
-          for (var i = pos; i < layers.length; i++) {
-          //console.log('moving', i, i+1);
-            map.overlayMapTypes.setAt(i, map.overlayMapTypes.getAt(i + 1));
-          }
-
-
-            map.overlayMapTypes.pop();
-          //console.log(map.overlayMapTypes.getArray());
-
-
+        for (var i = pos; i < layers.length; i++) {
+          map.overlayMapTypes.setAt(i, map.overlayMapTypes.getAt(i + 1));
         }
 
-      //}
-      //else {
-      //console.log('loading tl');
-        //this._loadTimeLayer();
-      //}
+        map.overlayMapTypes.pop();
 
-
-    //setTimeout(function() {
-      //if (GFW.app.currentBaseLayer != "semi_monthly") {
-        //$(".time_layer").hide();
-        //Timeline.hide();
-      //} else {
-        //$(".time_layer").show();
-      //}
-    //}, 150);
+      }
 
     },
 
     _loadTimeLayer: function() {
 
       var self = this;
-
-      //console.log("Loading time layer");
 
       this.time_layer = new TimePlayer('gfw2_forma', this._global_version, this._cloudfront_url);
       this.time_layer.options.table_name = null;
@@ -570,8 +507,6 @@ GFW.modules.app = function(gfw) {
     },
 
     _loadBaseLayer: function() {
-
-      //console.log("Loading base layers", this.currentBaseLayer);
 
       var self = this;
       var table_name = null;
@@ -600,8 +535,6 @@ GFW.modules.app = function(gfw) {
         layer_order: "top",
         auto_bound: false
       });
-
-      //console.log(map.overlayMapTypes.getArray());
 
     },
 
@@ -718,19 +651,13 @@ GFW.modules.maplayer = function(gfw) {
           that._toggleLayer();
         };
 
-        var zoomEvent = function() {
-          if (that.layer.attributes['visible']) {
-            //that._map.fitBounds(that._bounds);
-          }
-        };
-
         if (this.layer.get('slug') == "nothing") {
           var event = function() {
             that._hideBaseLayers(GFW.app);
             GFW.app.currentBaseLayer = null;
           };
 
-          Filter.addFilter("", this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, zoomEvent: function() { } , source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
+          Filter.addFilter("", this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
 
         } else if (this.layer.get('slug') == "user_stories") {
 
@@ -739,7 +666,7 @@ GFW.modules.maplayer = function(gfw) {
             legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
           };
 
-          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, zoomEvent: zoomEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") }, true);
+          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") }, true);
           Filter.check(this.layer.get('id'));
 
           legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
@@ -748,7 +675,7 @@ GFW.modules.maplayer = function(gfw) {
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
         } else {
 
-          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, zoomEvent: zoomEvent, source: this.layer.get('source'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
+          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, source: this.layer.get('source'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
 
           // Adds the layers from the hash
           if (filters && _.include(filters, this.layer.get('id'))) {
@@ -764,7 +691,6 @@ GFW.modules.maplayer = function(gfw) {
           }
         }
 
-
       },
 
       _bindDisplay: function(display) {
@@ -772,10 +698,8 @@ GFW.modules.maplayer = function(gfw) {
       },
 
       _hideBaseLayers: function(){
-        //console.log("Hiding base layers");
 
         GFW.app._unloadTimeLayer();
-
         legend.removeCategory("forest_clearing");
 
         if (GFW.app.baseLayer) GFW.app.baseLayer.setOptions({ opacity: 0 });

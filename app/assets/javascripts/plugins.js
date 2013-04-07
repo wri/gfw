@@ -1125,7 +1125,6 @@ var Filter = (function() {
   function _addFilter(id, slug, category, name, options) {
 
     var
-    zoomEvent   = options.zoomEvent   || null,
     clickEvent  = options.clickEvent  || null,
     disabled    = options.disabled    || false;
     source      = options.source      || null;
@@ -1160,7 +1159,6 @@ var Filter = (function() {
         $layerItem.find("a:not(.source)").on("click", function() {
           if (!$(this).find(".radio").hasClass("checked")) {
             clickEvent();
-            zoomEvent();
           }
         });
       } else {
@@ -1169,7 +1167,6 @@ var Filter = (function() {
 
         $layerItem.find("a:not(.source)").on("click", function() {
           clickEvent();
-          zoomEvent();
         });
       }
     } else {
