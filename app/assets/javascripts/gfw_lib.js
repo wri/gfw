@@ -324,12 +324,17 @@ GFW.modules.app = function(gfw) {
       //here i make a crude request for the columns of the table
       //nulling out the geoms to save payload
       var request_sql = "SELECT *, null as the_geom, null as the_geom_webmercator FROM " + pair[1] + " WHERE cartodb_id = " + pair[0];
+
       $.ajax({
         async: false,
-        dataType: 'json',
-        jsonp:false,
+        dataType: 'jsonp',
+        crossDomain: true,
+        //jsonp:false,
         jsonpCallback:'iwcallback',
         url: 'http://dyynnn89u7nkm.cloudfront.net/api/v2/sql?q=' + encodeURIComponent(request_sql),
+        error: function(xhr, status, c) {
+          console.log("Error", xhr, status, c);
+        },
         success: function(json) {
           delete json.rows[0]['cartodb_id'],
           delete json.rows[0]['the_geom'];
