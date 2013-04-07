@@ -1,5 +1,4 @@
 //= require jquery
-//= require jquery.history
 //= require jquery_ujs
 //= require jquery.easing.1.3
 //= require jquery-ui-1.9.2.custom.min

@@ -305,5 +305,3 @@ Profiler.get = function(type) {
     }
   };
 };
-
-window.Profiler = Profiler;

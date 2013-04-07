@@ -592,25 +592,8 @@ GFW.modules.app = function(gfw) {
       }
 
       return false;
-    },
-
-    update: function() {
-      var hash = location.hash;
-
-      if (hash === this.lastHash) {
-        return;
-      }
-
-      var
-      State  = History.getState(),
-      parsed = this._parseHash(State.hash);
-
-      if (parsed) {
-        this._map.setZoom(parsed.zoom);
-        this._map.setCenter(parsed.center);
-      }
-
     }
+
   });
 };
 
