@@ -170,6 +170,7 @@ TimePlayer.prototype.get_time_data = function(tile, coord, zoom) {
   sql += " AND y >= {0} AND y < {1}".format(cy, cy1);
 
   var prof = Profiler.get('tile fetch');
+
   prof.start();
   this.sql(sql, function(data) {
     prof.end();
@@ -304,3 +305,5 @@ Profiler.get = function(type) {
     }
   };
 };
+
+window.Profiler = Profiler;

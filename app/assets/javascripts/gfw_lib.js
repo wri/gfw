@@ -73,7 +73,7 @@ GFW.modules.app = function(gfw) {
       this.specialLayer     = null;
       this.currentBaseLayer = "semi_monthly";
 
-      this._loadBaseLayer();
+      //this._loadBaseLayer();
       this._loadStoriesLayer();
 
       this._setupZoom();
@@ -168,10 +168,6 @@ GFW.modules.app = function(gfw) {
         that._refreshBaseLayer();
       });
 
-      google.maps.event.addListener(this._map, 'drag', function() {
-        //that._unloadTimeLayer();
-      });
-
       google.maps.event.addListener(this._map, 'dragend', function() {
         //that._unloadTimeLayer();
         that._updateHash(that);
@@ -206,7 +202,8 @@ GFW.modules.app = function(gfw) {
         });
       });
 
-      google.maps.event.addListenerOnce(this._map, 'tilesloaded', this._mapLoaded);
+
+      google.maps.event.addListener(this._map, 'tilesloaded', this._mapLoaded);
 
     },
 
@@ -242,6 +239,7 @@ GFW.modules.app = function(gfw) {
       setTimeout(function() {
         if (window.time_layer && Timeline.getStoredMonth()) window.time_layer.set_time(Timeline.getStoredMonth());
       }, 800);
+      this._unloadTimeLayer();
     },
 
     _removeExternalLayer: function(layer) {
@@ -326,7 +324,6 @@ GFW.modules.app = function(gfw) {
       //here i make a crude request for the columns of the table
       //nulling out the geoms to save payload
       var request_sql = "SELECT *, null as the_geom, null as the_geom_webmercator FROM " + pair[1] + " WHERE cartodb_id = " + pair[0];
-
       $.ajax({
         async: false,
         dataType: 'json',
@@ -462,48 +459,18 @@ GFW.modules.app = function(gfw) {
 
     _unloadTimeLayer: function() {
 
-      if (!this.time_layer) return;
-
-      this.time_layer = null;
-      Timeline.hide();
-
-      var layers = map.overlayMapTypes.getArray();
-
-      var pos = null;
-
-      _.each(layers, function(l, i) {
-        if (l instanceof TimePlayer) pos = i;
-      });
-
-      if (pos == (layers.length - 1)) map.overlayMapTypes.pop();
-      else {
-
-        map.overlayMapTypes.setAt(pos, null);
-
-        for (var i = pos; i < layers.length; i++) {
-          map.overlayMapTypes.setAt(i, map.overlayMapTypes.getAt(i + 1));
-        }
-
-        map.overlayMapTypes.pop();
-
+      if (GFW.app.currentBaseLayer != "semi_monthly") {
+        $(".time_layer").hide();
+        Timeline.hide();
+      } else {
+        $(".time_layer").show();
+        Timeline.show();
       }
 
     },
 
     _loadTimeLayer: function() {
-
-      var self = this;
-
-      this.time_layer = new TimePlayer('gfw2_forma', this._global_version, this._cloudfront_url);
-      this.time_layer.options.table_name = null;
-
-      map.overlayMapTypes.push(this.time_layer);
-
-      window.time_layer = this.time_layer;
-
-      Timeline.bind('change_date', function(date, month_number) {
-        self.time_layer.set_time(month_number);
-      });
+      $(".time_layer").show();
     },
 
     _loadBaseLayer: function() {
@@ -512,7 +479,26 @@ GFW.modules.app = function(gfw) {
       var table_name = null;
 
       if (this.currentBaseLayer === "semi_monthly") {
-        this._loadTimeLayer();
+
+        if (config.mapLoaded && !this.time_layer) {
+
+          this.time_layer = new TimePlayer('gfw2_forma', this._global_version, this._cloudfront_url);
+
+          this.time_layer.options.table_name = null;
+
+          map.overlayMapTypes.push(this.time_layer);
+
+          window.time_layer = this.time_layer;
+
+          Timeline.bind('change_date', function(date, month_number) {
+            self.time_layer.set_time(month_number);
+          });
+
+        } else {
+          $(".time_layer").show();
+          Timeline.show();
+        }
+
         return;
       } else if (this.currentBaseLayer === "annual") {
         table_name = 'gfw2_hansen';
@@ -539,22 +525,30 @@ GFW.modules.app = function(gfw) {
     },
 
     _mapLoaded: function(){
-      config.mapLoaded = true;
 
-      Circle.init();
-      Timeline.init();
-      Filter.init();
+      GFW.app._unloadTimeLayer();
 
-      $(".scroll").jScrollPane();
+      if (!config.mapLoaded) {
+        config.mapLoaded = true;
 
-      showMap ? Navigation.showState("map") : Navigation.showState("home");
+        Circle.init();
+        Timeline.init();
+        Filter.init();
+
+        $(".scroll").jScrollPane();
+
+        showMap ? Navigation.showState("map") : Navigation.showState("home");
+
+        GFW.app._loadBaseLayer();
+      }
+
+
     },
 
     _updateHash: function(self) {
 
       var
-      State = History.getState(),
-      hash  = parseHash(State.hash),
+      hash,
       zoom = self._map.getZoom(),
       lat  = self._map.getCenter().lat().toFixed(GFW.app._precision),
       lng  = self._map.getCenter().lng().toFixed(GFW.app._precision);
@@ -631,13 +625,8 @@ GFW.modules.maplayer = function(gfw) {
           this.layer.attributes['visible'] = false;
         }
 
-        var
-        State   = History.getState(),
-        hash    = parseHash(State.hash),
-        filters = [];
-
-        if (hash.filters) {
-          filters = _.map(hash.filters.split(","), function(i) { return parseInt(i, 10); });
+        if (config.mapOptions.layers) {
+          filters = _.map(config.mapOptions.layers.split(","), function(i) { return parseInt(i, 10); });
         }
 
         this._addControl(filters);
@@ -651,10 +640,11 @@ GFW.modules.maplayer = function(gfw) {
           that._toggleLayer();
         };
 
+
         if (this.layer.get('slug') == "nothing") {
           var event = function() {
-            that._hideBaseLayers(GFW.app);
             GFW.app.currentBaseLayer = null;
+            that._hideBaseLayers(GFW.app);
           };
 
           Filter.addFilter("", this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
@@ -678,7 +668,7 @@ GFW.modules.maplayer = function(gfw) {
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, source: this.layer.get('source'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
 
           // Adds the layers from the hash
-          if (filters && _.include(filters, this.layer.get('id'))) {
+          if (filters && GFW.app && _.include(filters, this.layer.get('id'))) {
             GFW.app._addLayer(this.layer);
             this.layer.attributes["visible"] = true;
 
@@ -699,6 +689,7 @@ GFW.modules.maplayer = function(gfw) {
 
       _hideBaseLayers: function(){
 
+        GFW.app.currentBaseLayer = null;
         GFW.app._unloadTimeLayer();
         legend.removeCategory("forest_clearing");
 
@@ -863,7 +854,6 @@ GFW.modules.log = function(gfw) {
       if (logger && logger.markTimeline) {
         logger.markTimeline(msg);
       }
-      //console.log(msg);
     }
   };
 };

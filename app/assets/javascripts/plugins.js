@@ -772,6 +772,11 @@ var Navigation = (function() {
   });
 
   function _showHomeState() {
+
+    google.maps.event.addListenerOnce(map, 'dragend', function (ev) {
+      Navigation.showState("map");
+    });
+
     showMap = false;
 
     _hideOverlays();
@@ -791,13 +796,18 @@ var Navigation = (function() {
       $(".big_numbers").fadeIn(250);
     });
 
-    this.time_layer.cache_time(true);
     Timeline.hide();
-    self.time_layer.set_time(128);
 
-    GFW.app.close(function() {
-      Circle.show(250);
-    });
+    if (this.time_layer) {
+      this.time_layer.cache_time(true);
+      this.time_layer.set_time(128);
+    }
+
+    if (GFW && GFW.app) {
+      GFW.app.close(function() {
+        Circle.show(250);
+      });
+    }
   }
 
   function _hideOverlays() {
@@ -820,16 +830,14 @@ var Navigation = (function() {
     layerSelector.show();
     legend.show();
 
-    self.time_layer.set_time(self.time_layer.cache_time());
+    if (this.time_layer) this.time_layer.set_time(self.time_layer.cache_time());
 
-    if (GFW.app.currentBaseLayer == "semi_monthly") {
-      Timeline.show();
-    }
+    if (GFW.currentBaseLayer == "semi_monthly") Timeline.show();
 
     $(".big_numbers").fadeOut(250);
 
     $("header").animate({height: "135px"}, 250, function() {
-      GFW.app.open();
+      if (GFW.app) GFW.app.open();
     });
 
     $("hgroup h1").animate({ top: "50px", opacity: 0 }, 250, function() {

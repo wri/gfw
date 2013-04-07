@@ -38,6 +38,65 @@ languageSelector  = {},
 layerSelector     = {},
 Infowindow        = {};
 
+function loadOtherStuff() {
+
+
+  //if ($("body.home.index").length > 0) {
+    //wall = new gfw.ui.view.Wall();
+    //$("body").append(wall.render());
+  //}
+
+  sourceWindow  = new gfw.ui.view.SourceWindow();
+  Infowindow    = new CartoDBInfowindow(map, { className: "story_infowindow", width: 174 });
+
+  $("body").append(sourceWindow.render());
+
+  $(".styled.checkbox").on("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    $(this).toggleClass("checked");
+    $(this).hasClass("checked") ? $(this).find("input").val(1) : $(this).find("input").val(0);
+
+  });
+
+  gallery           = new gfw.ui.view.Gallery({ title: "Other WRI sites" });
+  languageSelector  = new gfw.ui.view.LanguageSelector();
+
+  $("body").append(languageSelector.render());
+
+  $(".more_stories li").on("mouseleave", function(e) {
+    var $this = $(this);
+    $this.find(".infowindow").fadeOut(50);
+  });
+
+  $(".more_stories li").on("mouseenter", function(e) {
+    var $this = $(this);
+    $this.find(".infowindow").fadeIn(50);
+  });
+
+  gallery.addHandler("#other_sites_ribbon");
+
+  languageSelector.addLanguage({ code: "en",    lang: "en", title: "English" });
+  languageSelector.addLanguage({ code: "fr",    lang: "fr", title: "French" });
+  languageSelector.addLanguage({ code: "es",    lang: "es", title: "Spanish" });
+  languageSelector.addLanguage({ code: "pt",    lang: "pt", title: "Portuguese" });
+  languageSelector.addLanguage({ code: "id",    lang: "id", title: "Indonesian" });
+  languageSelector.addLanguage({ code: "zh-CN", lang: "cn", title: "Chinese" });
+  languageSelector.addLanguage({ code: "ru",    lang: "ru", title: "Russian" });
+  languageSelector.addLanguage({ code: "ar",    lang: "ar", title: "Arabic" });
+
+  languageSelector.addHandler(".lang_selector a");
+
+  $(".lang_selector a").on("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    languageSelector.toggleHidden();
+    GOD.add(languageSelector, languageSelector.hide);
+  });
+}
+
 function loadGFW() {
 
   if (loaded) return;
@@ -47,97 +106,20 @@ function loadGFW() {
     GOD = new gfw.ui.view.GOD();
     window.GOD = GOD;
 
-    if ($("#map").length > 0) {
-      map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
+    map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 
-      var styledMap = new google.maps.StyledMapType(config.BASE_MAP_STYLE, { name: "terrain_style" });
+    var styledMap = new google.maps.StyledMapType(config.BASE_MAP_STYLE, { name: "terrain_style" });
 
-      map.mapTypes.set("terrain_style", styledMap);
-      map.setMapTypeId("terrain_style");
+    map.mapTypes.set("terrain_style", styledMap);
+    map.setMapTypeId("terrain_style");
 
-      google.maps.event.addDomListener(map, 'click', function (ev) {
-        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-        Infowindow.close();
-      });
-
-      layerSelector = new gfw.ui.view.LayerSelector({ map: map });
-      legend        = new gfw.ui.view.Legend();
-      sourceWindow  = new gfw.ui.view.SourceWindow();
-      Infowindow    = new CartoDBInfowindow(map, { className: "story_infowindow", width: 174 });
-
-      $("#map").append(layerSelector.render());
-      $("#map").append(legend.render());
-      $("body").append(sourceWindow.render());
-
-      legend.setDraggable(true);
-      layerSelector.setDraggable(true);
-    }
-
-    $(".styled.checkbox").on("click", function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      $(this).toggleClass("checked");
-
-      if ($(this).hasClass("checked")) {
-        $(this).find("input").val(1);
-      } else
-        $(this).find("input").val(0);
-
+    google.maps.event.addDomListener(map, 'click', function (ev) {
+      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+      Infowindow.close();
     });
 
-    //$("nav ul li a.countries").on("click", CountryMenu.show);
-
-    var sites = [
-      new gfw.ui.model.Site({ title: "WRI", description: "Focusing on the intersection of the environment and socio-economic development.", url: "http://www.wri.org/", thumb_url: "/assets/sites/site_wri.png" }),
-      new gfw.ui.model.Site({ title: "WRInsights", description: "Unbiased, expert analysis on the most important environmental issues facing the world today.", url: "http://insights.wri.org/", thumb_url: "/assets/sites/site_wriinsights.png" }),
-      new gfw.ui.model.Site({ title: "WRI In China",  description: "To be completed.", url: "http://www.wri.org.cn/", thumb_url: "/assets/sites/site_wriinchina.png" }),
-      new gfw.ui.model.Site({ title: "ChinaFAQs",  description: "To be completed", url: "http://www.chinafaqs.org/", thumb_url: "/assets/sites/site_chinafaqs.png" }),
-      new gfw.ui.model.Site({ title: "TheCity Fix", description: "To be completed", url: "http://thecityfix.com/", thumb_url: "/assets/sites/site_thecityfix.png" }),
-      new gfw.ui.model.Site({ title: "Climate Analysis Indicators", description: "To be completed",  url: "http://www.wri.org/tools/cait/", thumb_url: "/assets/sites/site_climateanalysis.png" }),
-      new gfw.ui.model.Site({ title: "Electricity Governance", description: "To be completed", url: "http://electricitygovernance.wri.org/", thumb_url: "/assets/sites/site_electricity.png" }),
-      new gfw.ui.model.Site({ title: "EMBARQ", description: "To be completed", url: "http://www.embarq.org/", thumb_url: "/assets/sites/site_embarq.png" }),
-      new gfw.ui.model.Site({ title: "Forest Legality Alliance", description: "Reducing illegal logging through supporting the supply of legal forest products.", url: "http://www.forestlegality.org/", thumb_url: "/assets/sites/site_forestlegality.png" }),
-      new gfw.ui.model.Site({ title: "New Ventures", description: "To be completed", url: "http://www.new-ventures.org/", thumb_url: "/assets/sites/site_newventures.png" }),
-      new gfw.ui.model.Site({ title: "Southern Forests for the Future", description: "Raise awareness about the forests of the southern United States", url: "http://www.seesouthernforests.org/", thumb_url: "/assets/sites/site_southernforests.png" }),
-      new gfw.ui.model.Site({ title: "World Resources Report", description: "How can the world adequately feed more than 9 billion people by 2050?", url: "http://www.worldresourcesreport.org/", thumb_url: "/assets/sites/site_worldresources.png" })
-    ];
-
-    gallery           = new gfw.ui.view.Gallery({ title: "Other WRI sites", sites: sites });
-    languageSelector  = new gfw.ui.view.LanguageSelector();
-
-    $("body").append(languageSelector.render());
-
-    $(".more_stories li").on("mouseleave", function(e) {
-      var $this = $(this);
-      $this.find(".infowindow").fadeOut(50);
-    });
-
-    $(".more_stories li").on("mouseenter", function(e) {
-      var $this = $(this);
-      $this.find(".infowindow").fadeIn(50);
-    });
-
-    gallery.addHandler("#other_sites_ribbon");
-
-    languageSelector.addLanguage({ code: "en",    lang: "en", title: "English" });
-    languageSelector.addLanguage({ code: "fr",    lang: "fr", title: "French" });
-    languageSelector.addLanguage({ code: "es",    lang: "es", title: "Spanish" });
-    languageSelector.addLanguage({ code: "pt",    lang: "pt", title: "Portuguese" });
-    languageSelector.addLanguage({ code: "id",    lang: "id", title: "Indonesian" });
-    languageSelector.addLanguage({ code: "zh-CN", lang: "cn", title: "Chinese" });
-    languageSelector.addLanguage({ code: "ru",    lang: "ru", title: "Russian" });
-    languageSelector.addLanguage({ code: "ar",    lang: "ar", title: "Arabic" });
-
-    languageSelector.addHandler(".lang_selector a");
-
-    $(".lang_selector a").on("click", function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      languageSelector.toggleHidden();
-      GOD.add(languageSelector, languageSelector.hide);
-    });
+    google.maps.event.addListenerOnce(map, 'idle', function (ev) {
+      loadOtherStuff();
 
     if (map) {
       GFW(function(env) {
@@ -153,6 +135,19 @@ function loadGFW() {
 
       });
     }
+
+    });
+
+    // Layer selector
+    layerSelector = new gfw.ui.view.LayerSelector({ map: map });
+    $("#map").append(layerSelector.render());
+    layerSelector.setDraggable(true);
+
+    // Legend
+    legend        = new gfw.ui.view.Legend();
+    legend.setDraggable(true);
+    $("#map").append(legend.render());
+
 }
 
 (function(window,undefined){
@@ -272,8 +267,7 @@ function loadGFW() {
 
 $(function(){
 
-  var
-  resizePID;
+  var resizePID;
 
   var Router = Backbone.Router.extend({
 
@@ -295,7 +289,6 @@ $(function(){
     },
 
     mapWithCoordinates: function(zoom, lat, lon, layers) {
-      //console.log('map',zoom,lat,lon,layers );
 
       if (lat && lon) { config.mapOptions.center = new google.maps.LatLng(lat, lon); }
       if (zoom)       { config.mapOptions.zoom   = parseInt(zoom, 10); }
@@ -315,6 +308,10 @@ $(function(){
 
   });
 
+  if ($("body.about").length > 0 || $("body.sources").length > 0 || $("body.blog").length > 0 || $("body.stories").length > 0) {
+    loadOtherStuff();
+  }
+
   window.router = new Router;
 
   $("#layer a.title").on("click", function(e) {
@@ -331,19 +328,9 @@ $(function(){
     Backbone.history.start({ pushState: true });
   }
 
-  if ($("body.home.index").length > 0) {
-    wall = new gfw.ui.view.Wall();
-    $("body").append(wall.render());
-  }
-
   if ($("body.stories.show .carrousel").length > 0) {
     carrousel = new gfw.ui.view.Carrousel();
   }
-
-
-  // TODO: remove
-  window.wall = wall;
-
 
   function hideOvers() {
 
@@ -389,7 +376,7 @@ $(function(){
 
   function resizeWindow(e) {
     if (showMap) {
-      GFW.app.open();
+      if (GFW.app) GFW.app.open();
       Filter.calcFiltersPosition();
     }
   }
