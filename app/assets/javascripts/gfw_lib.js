@@ -45,7 +45,7 @@ GFW.modules.app = function(gfw) {
       this._precision = 2;
       this._layers = [];
       this._cloudfront_url = "dyynnn89u7nkm.cloudfront.net";
-      this._global_version = 12;
+      this._global_version = 13;
 
       gfw.log.enabled = options ? options.logging: false;
 
@@ -357,9 +357,7 @@ GFW.modules.app = function(gfw) {
             }
           }
 
-
           if (data) {
-
             GFW.app.infowindow.setContent(data);
             GFW.app.infowindow.setPosition(latlng);
             GFW.app.infowindow.open();
