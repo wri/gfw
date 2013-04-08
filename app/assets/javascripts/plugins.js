@@ -1622,17 +1622,12 @@ var Timeline = (function() {
       grid: [8, 0],
       axis: "x",
       drag: function() {
-        var left = $(this).position().left;
-        _setDate(left);
-        //console.log(left);
-
         if (playing) {
           _stopAnimation(false);
         }
       },
       stop: function() {
         var left = $(this).position().left;
-        //console.log(left);
         _setDate(left, true);
       }
     });
