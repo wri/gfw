@@ -72,7 +72,7 @@ var CountryMenu = (function() {
           scale = (height/y_range);
         }
 
-        scale = scale*2;
+        scale = scale*3;
 
         return "scale("+scale+"), translate(" + (-x+(width/scale)/2) + "," + (-y+(height/scale)/2) + ")";
 
