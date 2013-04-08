@@ -46,7 +46,7 @@ CartoDBInfowindow.prototype.draw = function() {
 
     google.maps.event.addDomListener(a, 'click', function (ev) {
       //ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      me._hide();
+      //me._hide();
     });
 
     google.maps.event.addDomListener(div, 'click', function (ev) {
@@ -56,7 +56,7 @@ CartoDBInfowindow.prototype.draw = function() {
 
     google.maps.event.addDomListener(a, 'touchend', function (ev) {
       ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      me._hide();
+      //me._hide();
     });
 
     google.maps.event.addDomListener(div, 'touchstart', function (ev) {
@@ -120,7 +120,7 @@ CartoDBInfowindow.prototype.setContent = function(content){
 
       for(var column in content) {
 
-        if (content[column]!=null && content[column]!=''){
+        if (column != "slug" && content[column] != null && content[column] != ''){
           html += '<label>' + column + '</label>';
           html += '<p class="'+((content[column]!=null && content[column]!='')?'':'empty')+'">'+(content[column] || 'empty')+'</p>';
         }
@@ -163,6 +163,9 @@ CartoDBInfowindow.prototype.open = function(){
 };
 
 
+CartoDBInfowindow.prototype.close2 = function(){
+  this._hide();
+};
 CartoDBInfowindow.prototype.close = function(){
   this._hide();
 };
@@ -179,13 +182,14 @@ CartoDBInfowindow.prototype.destroy = function() {
 
 
 CartoDBInfowindow.prototype._hide = function() {
+
   if (this.div_) {
+
     var div = this.div_;
 
     emile(div,{
-      top: '+=' + 10 + 'px',
       opacity: 0,
-      duration: 250,
+      duration: 1,
       after: function(){
         div.style.visibility = "hidden";
       }
@@ -196,6 +200,8 @@ CartoDBInfowindow.prototype._hide = function() {
 
 CartoDBInfowindow.prototype._show = function() {
   if (this.div_) {
+
+
     var div = this.div_;
     div.style.opacity = 0;
     div.style.top = (parseInt(div.style.top, 10) - 10) + 'px';

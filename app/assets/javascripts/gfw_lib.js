@@ -188,7 +188,11 @@ GFW.modules.app = function(gfw) {
           async: false,
           dataType: "jsonp",
           jsonpCallback:'iwcallback',
+          crossDomain: true,
           url: url,
+          error: function(xhr, status, c) {
+            console.log("Error", xhr, status, c);
+          },
           success: function(json) {
             var data = json[0];
 
@@ -271,7 +275,6 @@ GFW.modules.app = function(gfw) {
 
     _renderLayers: function() {
 
-
       if (this._layers.length > 0) {
 
         var template = "SELECT cartodb_id||':' ||'{{ table_name }}' as cartodb_id, the_geom_webmercator, '{{ table_name }}' AS name FROM {{ table_name }}";
@@ -336,12 +339,14 @@ GFW.modules.app = function(gfw) {
           console.log("Error", xhr, status, c);
         },
         success: function(json) {
+
           delete json.rows[0]['cartodb_id'],
           delete json.rows[0]['the_geom'];
           delete json.rows[0]['the_geom_webmercator'];
           delete json.rows[0]['created_at'];
           delete json.rows[0]['updated_at'];
           var data = json.rows[0];
+
           for (var key in data) {
             var temp;
             if (data.hasOwnProperty(key)) {
@@ -352,9 +357,13 @@ GFW.modules.app = function(gfw) {
             }
           }
 
-          GFW.app.infowindow.setContent(data);
-          GFW.app.infowindow.setPosition(latlng);
-          GFW.app.infowindow.open();
+
+          if (data) {
+
+            GFW.app.infowindow.setContent(data);
+            GFW.app.infowindow.setPosition(latlng);
+            GFW.app.infowindow.open();
+          }
 
         }
       });
