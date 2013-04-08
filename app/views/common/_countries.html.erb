@@ -5,6 +5,7 @@
   <h1><%= t(".title") %></h1>
 
   <% countries.each do |country| %>
+    <% if country[:iso] != "UNK" %>
     <div class="country <% if !country[:enabled] %>disabled<% end %>">
       <% if country[:enabled] %>
         <a href="/country/<%= country[:name].downcase.gsub(" ", "_") %>">
@@ -13,7 +14,7 @@
         <div class="icon" id="icon<%= country[:iso]%>"> </div>
 
         <div class="content">
-          <h4 <% if (country[:name].present? && country[:name].length > 17) %>class="small"<% end %>><%= country[:name] %></h4>
+          <h4 <% if (country[:name].present? && country[:name].length > 14) %>class="small"<% end %>><%= country[:name] %></h4>
           <strong><%= country[:count] %> </strong> Forest Clearing Alerts in the last 6 months
         </div>
 
@@ -21,6 +22,7 @@
         </a>
       <% end %>
     </div>
+      <% end %>
   <% end %>
   <div class="select"></div>
 </div>
