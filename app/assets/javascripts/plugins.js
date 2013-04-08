@@ -1266,7 +1266,7 @@ var Circle = (function() {
     $icon.animate({ backgroundSize: "10%", opacity: 0 }, 250, "easeOutExpo", function() {
       $circle.delay(200).animate({ marginLeft: -350, opacity: 0 }, 350, "easeOutQuad", function() {
         $circle.css({marginLeft: 100 });
-        toggleData();
+        //toggleData();
         $circle.delay(400).animate({ marginLeft: -1*318/2, opacity: 1 }, 250, "easeOutQuad", function() {
           $icon.animate({ backgroundSize: "100%", opacity: 1 }, 250, "easeInExpo");
           animatingB = false;
