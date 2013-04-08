@@ -306,7 +306,7 @@ $(function(){
 
   });
 
-  if ($("body.about").length > 0 || $("body.sources").length > 0 || $("body.blog").length > 0 || $("body.stories").length > 0) {
+  if ($("body.about").length > 0 || $("body.sources").length > 0 || $("body.blog").length > 0 || $("body.countries").length > 0 || $("body.stories").length > 0) {
     loadOtherStuff();
   }
 
