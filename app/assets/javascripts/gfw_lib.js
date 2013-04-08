@@ -656,7 +656,7 @@ GFW.modules.maplayer = function(gfw) {
 
           legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
 
-        } else if (this.layer.get('slug') == "annual" || this.layer.get('slug') == "quarterly") {
+        } else if (this.layer.get('slug') == "annual" || this.layer.get('slug') == "quarterly" || this.layer.get('slug') == "brazilian_amazon") {
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
         } else {
 
