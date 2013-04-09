@@ -106,14 +106,8 @@ GFW.modules.app = function(gfw) {
       var that = this;
 
       $("#map").animate({ height: 400 }, 250, function() {
-
         google.maps.event.trigger(that._map, "resize");
-        that._map.setOptions({ scrollwheel: false });
-
-        if (callback) {
-          callback();
-        }
-
+        callback && callback();
       });
 
     },
@@ -542,18 +536,8 @@ GFW.modules.app = function(gfw) {
 
       if (!config.mapLoaded) {
         config.mapLoaded = true;
-
-        Circle.init();
-        Timeline.init();
-        Filter.init();
-
-        $(".scroll").jScrollPane();
-
-        showMap ? Navigation.showState("map") : Navigation.showState("home");
-
         GFW.app._loadBaseLayer();
       }
-
 
     },
 

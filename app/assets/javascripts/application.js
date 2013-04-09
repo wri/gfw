@@ -37,7 +37,7 @@ languageSelector  = {},
 layerSelector     = {},
 Infowindow        = {};
 
-function loadOtherStuff() {
+function loadOtherStuff(callback) {
 
   if ($("body.home.index").length > 0) {
     wall = new gfw.ui.view.Wall();
@@ -93,11 +93,24 @@ function loadOtherStuff() {
     languageSelector.toggleHidden();
     GOD.add(languageSelector, languageSelector.hide);
   });
+
+  Circle.init();
+  Timeline.init();
+  Filter.init();
+
+  $(".scroll").jScrollPane();
+
+  callback && callback();
+
 }
 
-function loadGFW() {
+function loadGFW(callback) {
 
-  if (loaded) return;
+  if (loaded) {
+
+    callback && callback();
+    return;
+  }
 
   loaded = true;
 
@@ -117,9 +130,7 @@ function loadGFW() {
     });
 
     google.maps.event.addListenerOnce(map, 'idle', function (ev) {
-      loadOtherStuff();
 
-    if (map) {
       GFW(function(env) {
 
         GFW.app = new env.app.Instance(map, {
@@ -131,8 +142,9 @@ function loadGFW() {
         GFW.app.run();
         GFW.env = env;
 
+        loadOtherStuff(callback);
+
       });
-    }
 
     });
 
@@ -277,12 +289,19 @@ $(function(){
       "":                            "home"
     },
 
+    home: function(query, page) {
+      loadGFW( function() {
+        Navigation.showState("home");
+      });
+    },
+
     map: function() {
 
       if ($.browser.msie) $(document).scrollTop(0);
 
-      loadGFW();
-      Navigation.showState("map");
+      loadGFW( function() {
+        Navigation.showState("map");
+      });
 
     },
 
@@ -292,16 +311,12 @@ $(function(){
       if (zoom)       { config.mapOptions.zoom   = parseInt(zoom, 10); }
       if (layers)     { config.mapOptions.layers = layers; }
 
-      loadGFW();
-      Navigation.showState("map");
+      loadGFW( function() {
+        Navigation.showState("map");
+      });
 
       if (lat && lon) map.setCenter(new google.maps.LatLng(lat, lon));
 
-    },
-
-    home: function(query, page) {
-      loadGFW();
-      Navigation.showState("home");
     }
 
   });

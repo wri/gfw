@@ -711,14 +711,6 @@ var Navigation = (function() {
     $("nav ." + name).addClass("selected");
   }
 
-  function _showState(state) {
-    if (state === 'home') {
-      _showHomeState();
-    } else if (state === "map") {
-      _showMapState();
-    }
-  }
-
   var lastCountryClass;
   if ($('body').find("#countries").length>0) {
     $.ajax({
@@ -771,6 +763,10 @@ var Navigation = (function() {
     $("#countries .select").show();
   });
 
+  function _showState(state) {
+    state == 'home' ?  _showHomeState() : _showMapState();
+  }
+
   function _showHomeState() {
 
     google.maps.event.addListenerOnce(map, 'dragend', function (ev) {
@@ -794,6 +790,7 @@ var Navigation = (function() {
       });
 
       $(".big_numbers").fadeIn(250);
+
     });
 
     Timeline.hide();
@@ -810,15 +807,8 @@ var Navigation = (function() {
     }
   }
 
-  function _hideOverlays() {
-    $("#subscribe").fadeOut(250);
-    $("#share").fadeOut(250);
-    $(".backdrop").fadeOut(250);
-    $("#countries").fadeOut(250);
-    $(".countries_backdrop").fadeOut(250);
-  }
-
   function _showMapState() {
+
     showMap = true;
 
     _hideOverlays();
@@ -846,6 +836,15 @@ var Navigation = (function() {
       Filter.show();
       $(".big_numbers").fadeOut(250);
     });
+  }
+
+
+  function _hideOverlays() {
+    $("#subscribe").fadeOut(250);
+    $("#share").fadeOut(250);
+    $(".backdrop").fadeOut(250);
+    $("#countries").fadeOut(250);
+    $(".countries_backdrop").fadeOut(250);
   }
 
   // Init method
@@ -952,7 +951,10 @@ var Filter = (function() {
 
     _hideLayer();
 
-    if ($filters.hasClass("hide")) return;
+    if ($filters.hasClass("hide")) {
+      callback && callback();
+      return;
+    }
 
     var count = categories.length;
 
@@ -1579,8 +1581,10 @@ var Timeline = (function() {
 
   function _show() {
 
-    if (_isHidden()) {
+    if (_isHidden() && showMap) {
       $timeline.removeClass("hidden");
+      $timeline.show();
+
       $timeline.animate({ bottom: parseInt($timeline.css("bottom"), 10) + 20, opacity: 1 }, 150, _afterShow);
     }
 
@@ -1602,6 +1606,7 @@ var Timeline = (function() {
 
   function _afterHide() {
     $timeline.addClass("hidden");
+    $timeline.hide();
   }
 
   function _isHidden() {
@@ -1625,6 +1630,12 @@ var Timeline = (function() {
         if (playing) {
           _stopAnimation(false);
         }
+
+        if (!$.browser.msie) { // disable refresh on drag for IE
+          var left = $(this).position().left;
+          _setDate(left, true);
+        }
+
       },
       stop: function() {
         var left = $(this).position().left;
