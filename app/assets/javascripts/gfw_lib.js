@@ -515,7 +515,7 @@ GFW.modules.app = function(gfw) {
 
           window.time_layer = this.time_layer;
 
-          Timeline.bind('change_date', function(date, month_number) {
+          Timeline.bind('change_date', function(month_number) {
             self.time_layer.set_time(month_number);
           });
 

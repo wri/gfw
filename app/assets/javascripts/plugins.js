@@ -30,7 +30,7 @@ var CountryMenu = (function() {
 
   function draw(data, iso) {
 
-    var width = 270;
+    var width  = 270;
     var height = 200;
 
     var svg = d3.select("#icon"+iso).append("svg")
@@ -1548,8 +1548,9 @@ var Timeline = (function() {
     $handle.find("div").html("<strong>" + month + "</strong> " + date[2]);
 
     // year 2000 is base year
-    instance.trigger('change_date', date, monthPos + (date[2] - 2000)*12);
-    that.stored_month_number = monthPos + (date[2] - 2000)*12;
+    month_number = monthPos + (date[2] - 2000)*12;
+    instance.trigger('change_date', month_number);
+    that.stored_month_number = month_number;
   }
 
   function _updateCoordinates(latLng) {

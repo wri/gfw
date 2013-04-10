@@ -8,15 +8,15 @@ var MAX_MONTHS = 160;
 var BASE_MONTH = 71;
 
 function TimePlayer(table,version,cloudfront_url) {
-  this.time = 71;
-  this.stored_time = 71;
+  this.time         = 71;
+  this.stored_time  = 71;
   this.canvas_setup = this.get_time_data;
-  this.render = this.render_time;
-  this.cells = [];
-  this.table = table;
-  this._version = version;
-  this.base_url = 'http://'+cloudfront_url+'/api/v2/sql';
-  this.options = {};
+  this.render       = this.render_time;
+  this.cells        = [];
+  this.table        = table;
+  this._version     = version;
+  this.base_url     = 'http://'+cloudfront_url+'/api/v2/sql';
+  this.options      = {};
 }
 
 TimePlayer.prototype = new CanvasTileLayer();
