@@ -45,7 +45,7 @@ function loadOtherStuff(callback) {
   }
 
   sourceWindow  = new gfw.ui.view.SourceWindow();
-  Infowindow    = new CartoDBInfowindow(map, { className: "story_infowindow", width: 174 });
+  Infowindow    = new CartoDBInfowindow(map, { className: "story_infowindow", width: 215 });
 
   $("body").append(sourceWindow.render());
 
