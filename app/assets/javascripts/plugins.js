@@ -836,6 +836,16 @@ var Navigation = (function() {
       Filter.show();
       $(".big_numbers").fadeOut(250);
     });
+
+
+    if (config.pendingLayers.length > 0) {
+      _.each(config.pendingLayers, function(layer) {{
+        GFW.app._loadLayer(layer);
+      }});
+
+      config.pendingLayers = [];
+
+    }
   }
 
 

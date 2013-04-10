@@ -84,6 +84,18 @@ GFW.modules.app = function(gfw) {
 
     },
 
+    // Loads single layer
+    _loadLayer: function(layer) {
+      var id = layer.get('id');
+
+      GFW.app._addLayer(layer);
+      layer.attributes["visible"] = true;
+
+      Filter.check(id);
+      legend.toggleItem(id, layer.get('category_slug'), layer.get('category_name'),  layer.get('title'), layer.get('slug'), layer.get('category_color'), layer.get('title_color'));
+
+    },
+
     run: function() {
       this._setupListeners();
       gfw.log.info('App is now running!');
@@ -181,13 +193,16 @@ GFW.modules.app = function(gfw) {
         $.ajax({
           async: false,
           dataType: "jsonp",
-          jsonpCallback:'iwcallback',
+          jsonpCallback:'iwcallback2',
           crossDomain: true,
           url: url,
           error: function(xhr, status, c) {
             console.log("Error", xhr, status, c);
           },
           success: function(json) {
+
+            if (!json) return;
+
             var data = json[0];
 
             if (data) {
@@ -321,6 +336,7 @@ GFW.modules.app = function(gfw) {
       //here i make a crude request for the columns of the table
       //nulling out the geoms to save payload
       var request_sql = "SELECT *, null as the_geom, null as the_geom_webmercator FROM " + pair[1] + " WHERE cartodb_id = " + pair[0];
+      var url = 'http://dyynnn89u7nkm.cloudfront.net/api/v2/sql?q=' + encodeURIComponent(request_sql);
 
       $.ajax({
         async: false,
@@ -328,17 +344,20 @@ GFW.modules.app = function(gfw) {
         crossDomain: true,
         //jsonp:false,
         jsonpCallback:'iwcallback',
-        url: 'http://dyynnn89u7nkm.cloudfront.net/api/v2/sql?q=' + encodeURIComponent(request_sql),
+        url: url,
         error: function(xhr, status, c) {
           console.log("Error", xhr, status, c);
         },
         success: function(json) {
+
+          if (!json || (json && !json.rows)) return;
 
           delete json.rows[0]['cartodb_id'],
           delete json.rows[0]['the_geom'];
           delete json.rows[0]['the_geom_webmercator'];
           delete json.rows[0]['created_at'];
           delete json.rows[0]['updated_at'];
+
           var data = json.rows[0];
 
           for (var key in data) {
@@ -612,6 +631,7 @@ GFW.modules.maplayer = function(gfw) {
 
       },
 
+
       _addControl: function(filters){
         var that = this;
 
@@ -647,13 +667,13 @@ GFW.modules.maplayer = function(gfw) {
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, source: this.layer.get('source'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
 
           // Adds the layers from the hash
-          if (filters && GFW.app && _.include(filters, this.layer.get('id'))) {
-            GFW.app._addLayer(this.layer);
-            this.layer.attributes["visible"] = true;
+          if (filters && _.include(filters, this.layer.get('id'))) {
 
-            Filter.check(this.layer.get('id'));
-            legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
-
+            if (GFW.app) {
+              GFW.app._loadLayer(this.layer);
+            } else {
+              config.pendingLayers.push(this.layer);
+            }
 
           } else if (this.layer.get('table_name') == 'gfw2_forma') {
             legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));

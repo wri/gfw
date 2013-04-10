@@ -87,6 +87,7 @@ var config = {
   DATE_SUFFIXES:      ["th", "st", "nd", "rd"],
   MIN_PROJECT_RADIUS: 100,
   BASE_MAP_STYLE:     [ { "featureType": "water"  },{ "featureType": "transit", "stylers": [ { "saturation": -100 } ] },{ "featureType": "road", "stylers": [ { "saturation": -100 } ] },{ "featureType": "poi", "stylers": [ { "saturation": -100 } ] },{ "featureType": "landscape", "stylers": [ { "saturation": -100 } ] },{ "featureType": "administrative", "stylers": [ { "saturation": -100 } ] } ],
+  pendingLayers: [],
   OVERLAYS_STYLE: {
     strokeWeight: 2,
     fillOpacity: 0.25,
