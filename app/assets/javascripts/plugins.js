@@ -1640,6 +1640,11 @@ var Timeline = (function() {
 
     if ($.browser.msie) { // disable refresh on drag for IE
       $timeline.find(".play").addClass("disabled");
+
+      $timeline.find(".play").on("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      });
     } else {
       $timeline.find(".play").on("click", _play);
     }
