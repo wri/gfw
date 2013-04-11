@@ -507,6 +507,7 @@ GFW.modules.app = function(gfw) {
 
       if ($.browser.msie) {
         this.time_layer = new StaticGridLayer({
+          map: that._map,
           _global_version: that._global_version,
           _cloudfront_url: that._cloudfront_url
         });

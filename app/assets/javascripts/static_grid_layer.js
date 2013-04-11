@@ -24,7 +24,7 @@ var StaticGridLayer = Backbone.View.extend({
 
   _onYearUpdate: function() {
 
-    var query = "SELECT * FROM cdm_april_2013 WHERE p < " + this.model.get("month");
+    var query = "SELECT * FROM gfw2_forma_ie_fix WHERE p <= " + this.model.get("month");
     this.model.set("query", query);
     this.layer.setQuery(query);
 
@@ -45,7 +45,7 @@ var StaticGridLayer = Backbone.View.extend({
     this.model.bind("change:year",  this._onYearUpdate,  this);
     this.model.bind("change:opacity", this._onOpacityUpdate, this);
 
-    var query = "SELECT * FROM cdm_april_2013 WHERE p < " + this.model.get("month");
+    var query = "SELECT * FROM gfw2_forma_ie_fix WHERE p <= " + this.model.get("month");
     this.model.set("query", query);
 
     this.layer = new CartoDBLayer({
