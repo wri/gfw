@@ -1203,25 +1203,15 @@ footer {
       }
 
       .share_buttons {
-
         @include inline-block();
         position: absolute;
-        top: 30px;
+        top: 34px;
         right: -35px;
 
-
-        iframe.twitter-share-button {
-          @include inline-block();
-
-        }
-
-        div.fb-like {
-          @include inline-block();
-        }
+        iframe.twitter-share-button { @include inline-block(); vertical-align:top;  }
+        div.fb-like { margin: 0 3px 0 0; @include inline-block(); vertical-align:top; }
 
       }
-
-
     }
 
     div.partners {
