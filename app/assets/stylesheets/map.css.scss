@@ -2,6 +2,32 @@
 @import "compass/reset";
 @import "helpers";
 
+
+#credit-control {
+  a { color: #444; }
+  display:none;
+  font-size: 11px;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  color: #444;
+  z-index: 0;
+  position: absolute;
+  right: 113px;
+  bottom: 0px;
+  height: 19px;
+  line-height: 19px;
+  padding-right: 20px;
+  padding-left: 50px;
+  margin-right: -40px;
+  background-image: -moz-linear-gradient(left, rgba(255, 255, 255, 0) 0px, rgba(255, 255, 255, 0.498039) 50px);
+  background-image: -o-linear-gradient(left, rgba(255, 255, 255, 0) 0px, rgba(255, 255, 255, 0.498039) 50px);
+  background-image: -webkit-linear-gradient(left, rgba(255, 255, 255, 0) 0px, rgba(255, 255, 255, 0.498039) 50px);
+  direction: ltr;
+  text-align: right;
+  background-position: initial initial;
+  background-repeat: initial initial;
+}
+
 #filters {
   @include size(100%, 10px);
   @include position(135px, false, false, 0);
