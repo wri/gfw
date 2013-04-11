@@ -652,6 +652,11 @@ $timelineWidth: 1038px;
     left:11px;
     @include icons-sprite(timeline_handle_play);
 
+    &.disabled {
+      cursor: default;
+      opacity: .3;
+    }
+
     &.playing { // stop icon
       @include icons-sprite(timeline_handle_stop, $offset-x:-1px);
     }

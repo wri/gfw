@@ -1637,7 +1637,12 @@ var Timeline = (function() {
 
     // Bindings
     $timeline.find(".years a").on("click", _gotoDate);
-    $timeline.find(".play").on("click", _play);
+
+    if ($.browser.msie) { // disable refresh on drag for IE
+      $timeline.find(".play").addClass("disabled");
+    } else {
+      $timeline.find(".play").on("click", _play);
+    }
 
     $handle.draggable({
       containment: "parent",
