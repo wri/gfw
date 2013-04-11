@@ -700,10 +700,6 @@ var SubscriptionMap = (function() {
 
 
 
-
-
-
-
 var Navigation = (function() {
 
   function _select(name) {
@@ -838,13 +834,13 @@ var Navigation = (function() {
     });
 
 
+    // Firefox hack to show the unload layers
     if (config.pendingLayers.length > 0) {
       _.each(config.pendingLayers, function(layer) {{
         GFW.app._loadLayer(layer);
       }});
 
       config.pendingLayers = [];
-
     }
   }
 
@@ -1426,6 +1422,10 @@ var Timeline = (function() {
   ];
 
 
+  function getStoredYear() {
+    return that.stored_year;
+  }
+
   function getStoredMonth() {
     return that.stored_month_number;
   }
@@ -1543,13 +1543,16 @@ var Timeline = (function() {
   function _changeDate(pos, date) {
     var
     monthPos = Math.round( ( -1 * date[0] + pos) / step),
-    month    = config.MONTHNAMES_SHORT[monthPos];
+    month    = config.MONTHNAMES_SHORT[monthPos],
+    year     = date[2];
 
-    $handle.find("div").html("<strong>" + month + "</strong> " + date[2]);
+    $handle.find("div").html("<strong>" + month + "</strong> " + year);
 
-    // year 2000 is base year
-    month_number = monthPos + (date[2] - 2000)*12;
-    instance.trigger('change_date', month_number);
+    month_number = monthPos + (year - 2000)*12; // year 2000 is base year
+
+    instance.trigger('change_date', month_number, year);
+
+    that.stored_year = year;
     that.stored_month_number = month_number;
   }
 
@@ -1660,15 +1663,18 @@ var Timeline = (function() {
   // see _changeDate
   function obj() {}
   _.extend(obj.prototype, Backbone.Events);
+
   instance = new obj();
   _.extend(instance, {
     init: _init,
     hide: _hide,
     show: _show,
+    getStoredYear:  getStoredYear,
     getStoredMonth: getStoredMonth,
     updateCoordinates: _updateCoordinates,
     isHidden: _isHidden
   });
+
   return instance;
 
 })();

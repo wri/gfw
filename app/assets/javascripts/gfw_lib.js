@@ -175,7 +175,6 @@ GFW.modules.app = function(gfw) {
       });
 
       google.maps.event.addListener(this._map, 'dragend', function() {
-        //that._unloadTimeLayer();
         that._updateHash(that);
       });
 
@@ -249,10 +248,15 @@ GFW.modules.app = function(gfw) {
     },
 
     _refreshTimeLine: function() {
+
+      var that = this;
+
       setTimeout(function() {
-        if (window.time_layer && Timeline.getStoredMonth()) window.time_layer.set_time(Timeline.getStoredMonth());
+        if (that.time_layer && Timeline.getStoredMonth()) that.time_layer.refresh_time(Timeline.getStoredMonth());
       }, 800);
-      this._unloadTimeLayer();
+
+      this._toggleTimeLayer();
+
     },
 
     _removeExternalLayer: function(layer) {
@@ -412,12 +416,12 @@ GFW.modules.app = function(gfw) {
 
       if (GFW.app.baseLayer && GFW.app.currentBaseLayer != "semi_monthly") {
 
-        this._unloadTimeLayer();
+        this._toggleTimeLayer();
         this._loadBaseLayer();
 
       } else {
 
-        if (GFW.app.currentBaseLayer != "semi_monthly") this._unloadTimeLayer();
+        if (GFW.app.currentBaseLayer != "semi_monthly") this._toggleTimeLayer();
         else GFW.app.baseLayer && GFW.app.baseLayer.setMap(null);
 
         this._loadBaseLayer();
@@ -482,20 +486,47 @@ GFW.modules.app = function(gfw) {
 
     },
 
-    _unloadTimeLayer: function() {
+    _toggleTimeLayer: function() {
 
-      if (GFW.app.currentBaseLayer != "semi_monthly") {
-        $(".time_layer").hide();
-        Timeline.hide();
-      } else {
-        $(".time_layer").show();
-        Timeline.show();
+      if (this.time_layer) {
+
+        if (GFW.app.currentBaseLayer != "semi_monthly") {
+          this.time_layer.hide();
+          Timeline.hide();
+        } else {
+          this.time_layer.show();
+          Timeline.show();
+        }
+
       }
 
     },
 
     _loadTimeLayer: function() {
-      $(".time_layer").show();
+      var that = this;
+
+      if ($.browser.msie) {
+        this.time_layer = new StaticGridLayer({
+          _global_version: that._global_version,
+          _cloudfront_url: that._cloudfront_url
+        });
+
+        window.time_layer = this.time_layer;
+
+      } else {
+        this.time_layer = new TimePlayer('gfw2_forma', this._global_version, this._cloudfront_url);
+        this.time_layer.options.table_name = null;
+        map.overlayMapTypes.push(this.time_layer);
+        window.time_layer = this.time_layer;
+
+      }
+
+      Timeline.show();
+
+      Timeline.bind('change_date', function(month_number, year) {
+        self.time_layer.set_time(month_number, year);
+      });
+
     },
 
     _loadBaseLayer: function() {
@@ -507,21 +538,15 @@ GFW.modules.app = function(gfw) {
 
         if (config.mapLoaded && !this.time_layer) {
 
-          this.time_layer = new TimePlayer('gfw2_forma', this._global_version, this._cloudfront_url);
-
-          this.time_layer.options.table_name = null;
-
-          map.overlayMapTypes.push(this.time_layer);
-
-          window.time_layer = this.time_layer;
-
-          Timeline.bind('change_date', function(month_number) {
-            self.time_layer.set_time(month_number);
-          });
+          this._loadTimeLayer();
 
         } else {
-          $(".time_layer").show();
-          Timeline.show();
+
+          if (this.time_layer) {
+            this.time_layer.show();
+            Timeline.show();
+          }
+
         }
 
         return;
@@ -539,7 +564,7 @@ GFW.modules.app = function(gfw) {
         tiler_domain:'dyynnn89u7nkm.cloudfront.net',
         sql_domain:'dyynnn89u7nkm.cloudfront.net',
         tiler_path:'/tiles/',
-        extra_params:{v:this._global_version}, //define a verison number on requests
+        extra_params:{ v: this._global_version}, //define a verison number on requests
         tiler_suffix:'.png',
         table_name: this._getTableName(this.currentBaseLayer),
         query: this.queries[this.currentBaseLayer].replace(/{Z}/g, this._map.getZoom()),
@@ -551,7 +576,7 @@ GFW.modules.app = function(gfw) {
 
     _mapLoaded: function(){
 
-      GFW.app._unloadTimeLayer();
+      GFW.app._toggleTimeLayer();
 
       if (!config.mapLoaded) {
         config.mapLoaded = true;
@@ -689,7 +714,7 @@ GFW.modules.maplayer = function(gfw) {
       _hideBaseLayers: function(){
 
         GFW.app.currentBaseLayer = null;
-        GFW.app._unloadTimeLayer();
+        GFW.app._toggleTimeLayer();
         legend.removeCategory("forest_clearing");
 
         if (GFW.app.baseLayer) GFW.app.baseLayer.setOptions({ opacity: 0 });
@@ -731,11 +756,7 @@ GFW.modules.maplayer = function(gfw) {
 
         if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon") {
 
-          if (slug === 'semi_monthly' && showMap ) {
-            Timeline.show();
-          } else {
-            Timeline.hide();
-          }
+          (slug === 'semi_monthly' && showMap ) ?  Timeline.show() : Timeline.hide();
 
           GFW.app.currentBaseLayer = slug;
 

@@ -30,6 +30,21 @@ TimePlayer.prototype.set_time = function(t) {
     this.redraw();
   }
 };
+TimePlayer.prototype.refresh_time = function(t) {
+  if(this.time != (t>>0)) {
+    this.time = t;
+    this.redraw();
+  }
+};
+
+TimePlayer.prototype.show = function(t) {
+  $(".time_layer").show();
+};
+
+TimePlayer.prototype.hide = function(t) {
+  $(".time_layer").hide();
+};
+
 TimePlayer.prototype.cache_time = function(t) {
   if (t) {
     this.stored_time = this.time;
@@ -207,7 +222,6 @@ TimePlayer.prototype.render_time = function(tile, coord, zoom) {
 
   var fillStyle;
 
-
   //ctx.fillStyle = '#000';
   // clear canvas
   tile.canvas.width = w;
@@ -223,17 +237,14 @@ TimePlayer.prototype.render_time = function(tile, coord, zoom) {
   //var pixels = data.data;
   var len = cells.length;
   var pixel_size = cells.size;
-  for(i = 0; i < len; ++i) {
-    var idx = (4*(256*yc[i] + xc[i]))>>0;
-    // set pixel by hand
-    // faster than doing fill rect (below)
-    if(cells.deforestation[MAX_MONTHS*i + month]) {
 
+  for (i = 0; i < len; ++i) {
+    // set pixel by hand faster than doing fill rect (below)
+    if (cells.deforestation[MAX_MONTHS*i + month]) {
       ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
     }
   }
 };
-
 
 /**
 * String formatting for JavaScript.
