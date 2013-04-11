@@ -830,9 +830,9 @@ var Navigation = (function() {
       $("hgroup h1").hide();
 
       Filter.show();
+
       $(".big_numbers").fadeOut(250);
     });
-
 
     // Firefox hack to show the unload layers
     if (config.pendingLayers.length > 0) {
@@ -842,6 +842,9 @@ var Navigation = (function() {
 
       config.pendingLayers = [];
     }
+
+    Filter.show();
+
   }
 
 
