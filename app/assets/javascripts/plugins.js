@@ -843,8 +843,6 @@ var Navigation = (function() {
       config.pendingLayers = [];
     }
 
-    Filter.show();
-
   }
 
 

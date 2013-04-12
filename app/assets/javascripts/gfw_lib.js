@@ -581,6 +581,9 @@ GFW.modules.app = function(gfw) {
       if (!config.mapLoaded) {
         config.mapLoaded = true;
         GFW.app._loadBaseLayer();
+
+        if (showMap) Filter.show();
+
       }
 
     },

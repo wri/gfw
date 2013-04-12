@@ -146,7 +146,7 @@ config.mapStyles.TREEHEIGHT = new google.maps.ImageMapType({
   maxZoom: 8,
   name: "Forest Height",
   alt: "Global forest height",
-  alt: 'NASA JPL, California Institute of Technology, "<a href="http://lidarradar.jpl.nasa.gov/">3D Global Vegetation Map</a>'
+  alt: 'NASA JPL, California Institute of Technology, <a href="http://lidarradar.jpl.nasa.gov">3D Global Vegetation Map</a>'
 });
 
 var Road = function(){
