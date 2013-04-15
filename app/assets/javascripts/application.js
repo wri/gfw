@@ -7,6 +7,7 @@
 //= require cartodb-infowindow-min
 //= require jstorage.min
 //= require lodash.min
+//= require underscore-min
 //= require backbone-min
 //= require class
 //= require backbone.cartodb
@@ -285,6 +286,7 @@ function loadGFW(callback) {
 })(window);
 
 $(function(){
+
 
   if ($.browser.msie && $.browser.version < 9) {
     location.href = "/old";
