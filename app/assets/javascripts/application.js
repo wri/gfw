@@ -286,7 +286,10 @@ function loadGFW(callback) {
 
 $(function(){
 
-  if ($.browser.msie && $.browser.version < 9) location.href = "/old";
+  if ($.browser.msie && $.browser.version < 9) {
+    location.href = "/old";
+    return;
+  }
 
   var resizePID;
 
