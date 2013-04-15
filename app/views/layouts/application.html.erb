@@ -8,6 +8,15 @@
     <%= csrf_meta_tags %>
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
     <!-- v 2.5 -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+    <script type="text/javascript">
+      if ($.browser.msie && $.browser.version < 9) {
+        location.href = "/old";
+      }
+
+    </script>
   </head>
 
   <body class="<%= controller_name %> <%= action_name %>">

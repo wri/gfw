@@ -1,4 +1,3 @@
-//= require jquery
 //= require jquery_ujs
 //= require jquery.easing.1.3
 //= require jquery-ui-1.9.2.custom.min
@@ -170,11 +169,6 @@ function loadGFW(callback) {
 }
 
 (function(window,undefined){
-
-  if ($.browser.msie && $.browser.version < 9) {
-    location.href = "/old";
-    return;
-  }
 
   if ($("body.countries").hasClass("index")) CountryMenu.drawCountries();
 
