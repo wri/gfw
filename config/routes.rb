@@ -8,6 +8,7 @@ Gfw::Application.routes.draw do
 
   match 'blog'  => 'posts#index'
   match 'about' => 'static#about'
+  match 'old' => 'static#old'
 
   match 'map'   => 'home#index'
   match 'map/:zoom/:lat/:lng(/:filters)'   => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/

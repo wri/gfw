@@ -286,6 +286,8 @@ function loadGFW(callback) {
 
 $(function(){
 
+  if ($.browser.msie && $.browser.version < 9) location.href = "/old";
+
   var resizePID;
 
   var Router = Backbone.Router.extend({

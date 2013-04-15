@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= t(".title") %></title>
+    <link rel="icon"type="image/png" href="<%= image_path 'favicon_32x32.ico' %>" />
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body class="<%= controller_name %> <%= action_name %>">
+    <%= yield %>
+  </body>
+</html>
