@@ -1,6 +1,6 @@
 class Story < CartoDB::Model::Base
   include ActiveModel::Validations
-
+  cartodb_table_name 'stories_dev'
   attr_accessor :uploads_ids
 
   SELECT_FIELDS = <<-SQL
@@ -14,9 +14,9 @@ class Story < CartoDB::Model::Base
              featured,
              visible,
              token,
-             ST_ASGEOJSON(stories.the_geom) AS geometry,
-             ST_X(ST_Centroid(stories.the_geom)) AS lng,
-             ST_Y(ST_Centroid(stories.the_geom)) AS lat
+             ST_ASGEOJSON(stories_dev.the_geom) AS geometry,
+             ST_X(ST_Centroid(stories_dev.the_geom)) AS lng,
+             ST_Y(ST_Centroid(stories_dev.the_geom)) AS lat
   SQL
 
   set_geometry_type :geometry
@@ -48,13 +48,13 @@ class Story < CartoDB::Model::Base
 
   def self.first_three_featured
     sql = <<-SQL
-      SELECT stories.cartodb_id AS id,
+      SELECT stories_dev.cartodb_id AS id,
              title,
-             media.thumbnail_url,
-             ST_Y(ST_Centroid(stories.the_geom)) || ', ' || ST_X(ST_Centroid(stories.the_geom)) AS coords
-      FROM stories
-      LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
-      ORDER BY stories.cartodb_id DESC
+             media_dev.thumbnail_url,
+             ST_Y(ST_Centroid(stories_dev.the_geom)) || ', ' || ST_X(ST_Centroid(stories_dev.the_geom)) AS coords
+      FROM stories_dev
+      LEFT OUTER JOIN media_dev ON media_dev.story_id = stories_dev.cartodb_id
+      ORDER BY stories_dev.cartodb_id DESC
       LIMIT 3
     SQL
 
@@ -65,15 +65,15 @@ class Story < CartoDB::Model::Base
 
   def self.all_for_map
     sql = <<-SQL
-      SELECT stories.cartodb_id AS id,
+      SELECT stories_dev.cartodb_id AS id,
              title,
              your_name AS name,
-             media.thumbnail_url,
-             ST_ASGEOJSON(stories.the_geom) AS geometry,
-             ST_X(ST_Centroid(stories.the_geom)) AS lng,
-             ST_Y(ST_Centroid(stories.the_geom)) AS lat
-      FROM stories
-      LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
+             media_dev.thumbnail_url,
+             ST_ASGEOJSON(stories_dev.the_geom) AS geometry,
+             ST_X(ST_Centroid(stories_dev.the_geom)) AS lng,
+             ST_Y(ST_Centroid(stories_dev.the_geom)) AS lat
+      FROM stories_dev
+      LEFT OUTER JOIN media_dev ON media_dev.story_id = stories_dev.cartodb_id
     SQL
 
     result = CartoDB::Connection.query(sql)
@@ -155,20 +155,20 @@ class Story < CartoDB::Model::Base
     }
   end
 
-  def self.featured(page, stories_per_page)
+  def self.featured(page, stories_dev_per_page)
     results = CartoDB::Connection.query(<<-SQL)
-      SELECT stories.cartodb_id AS id,
+      SELECT stories_dev.cartodb_id AS id,
              title,
              details,
              your_name AS name,
-             media.thumbnail_url,
-             ST_Y(ST_Centroid(ST_Envelope(stories.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories.the_geom))) AS coords
-      FROM stories
-      LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
-      WHERE stories.featured = true
-      ORDER BY stories.cartodb_id ASC
-      LIMIT #{stories_per_page}
-      OFFSET #{(page - 1) * stories_per_page}
+             media_dev.thumbnail_url,
+             ST_Y(ST_Centroid(ST_Envelope(stories_dev.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories_dev.the_geom))) AS coords
+      FROM stories_dev
+      LEFT OUTER JOIN media_dev ON media_dev.story_id = stories_dev.cartodb_id
+      WHERE stories_dev.featured = true
+      ORDER BY stories_dev.cartodb_id ASC
+      LIMIT #{stories_dev_per_page}
+      OFFSET #{(page - 1) * stories_dev_per_page}
     SQL
     return results.rows.try(:sample, 5) || [] if results
     []
@@ -176,15 +176,15 @@ class Story < CartoDB::Model::Base
 
   def self.random(limit)
     results = CartoDB::Connection.query(<<-SQL)
-      SELECT DISTINCT ON (stories.cartodb_id)
-             stories.cartodb_id,
-             stories.title,
-             stories.your_name,
-             stories.featured,
-             ST_Y(ST_Centroid(ST_Envelope(stories.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories.the_geom))) AS coords,
-             media.thumbnail_url
-      FROM stories
-      LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
+      SELECT DISTINCT ON (stories_dev.cartodb_id)
+             stories_dev.cartodb_id,
+             stories_dev.title,
+             stories_dev.your_name,
+             stories_dev.featured,
+             ST_Y(ST_Centroid(ST_Envelope(stories_dev.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories_dev.the_geom))) AS coords,
+             media_dev.thumbnail_url
+      FROM stories_dev
+      LEFT OUTER JOIN media_dev ON media_dev.story_id = stories_dev.cartodb_id
     SQL
     return results.rows.try(:sample, 5) || [] if results
     []
@@ -192,19 +192,19 @@ class Story < CartoDB::Model::Base
 
   def self.by_id_or_token(id)
     results = CartoDB::Connection.query(<<-SQL)
-      SELECT stories.cartodb_id,
-             stories.token,
-             stories.title,
-             stories.details,
-             stories.when_did_it_happen,
-             stories.your_name,
-             stories.featured,
-             stories.visible,
-             ST_Y(ST_Centroid(ST_Envelope(stories.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories.the_geom))) AS coords,
-             media.big_url
-      FROM stories
-      LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
-      WHERE stories.cartodb_id = #{id} OR stories.token = '#{id}'
+      SELECT stories_dev.cartodb_id,
+             stories_dev.token,
+             stories_dev.title,
+             stories_dev.details,
+             stories_dev.when_did_it_happen,
+             stories_dev.your_name,
+             stories_dev.featured,
+             stories_dev.visible,
+             ST_Y(ST_Centroid(ST_Envelope(stories_dev.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories_dev.the_geom))) AS coords,
+             media_dev.big_url
+      FROM stories_dev
+      LEFT OUTER JOIN media_dev ON media_dev.story_id = stories_dev.cartodb_id
+      WHERE stories_dev.cartodb_id = #{id} OR stories_dev.token = '#{id}'
     SQL
     return results.rows || [] if results
     []
