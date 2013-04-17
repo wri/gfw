@@ -1,6 +1,5 @@
 class Media < CartoDB::Model::Base
   include ActiveModel::Validations
-  cartodb_table_name 'media_dev'
 
   field :story_id
   field :image
@@ -37,7 +36,7 @@ class Media < CartoDB::Model::Base
   end
 
   def update_story_id(story_id, order = 0)
-    CartoDB::Connection.update_row 'media_dev', cartodb_id, {
+    CartoDB::Connection.update_row 'media', cartodb_id, {
       'story_id'    => story_id,
       'media_order' => order
     }
