@@ -9,7 +9,7 @@ class Notifications < ActionMailer::Base
   def new_story(story)
     @story = story
 
-    mail to: "dcano@vizzuality.com, sminnemeyer@wri.org, aleach@wri.org"
+    mail to: "janderson@wri.org, gfw2@wri.org, sminnemeyer@wri.org, aleach@wri.org"
     #mail to: "dcano@vizzuality.com, ferdev@vizzuality.com"
   end
 
