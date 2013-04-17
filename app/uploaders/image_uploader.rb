@@ -35,13 +35,46 @@ class ImageUploader < CarrierWave::Uploader::Base
   #do something
   #end
 
+  # Rotates the image based on the EXIF Orientation
+  def fix_exif_rotation
+    manipulate! do |img|
+      img.auto_orient!
+      img = yield(img) if block_given?
+      img
+    end
+  end
+
+  # Strips out all embedded information from the image
+  def strip
+    manipulate! do |img|
+      img.strip!
+      img = yield(img) if block_given?
+      img
+    end
+  end
+
+  # Reduces the quality of the image to the percentage given
+  def quality(percentage)
+    manipulate! do |img|
+      img.write(current_path){ self.quality = percentage }
+      img = yield(img) if block_given?
+      img
+    end
+  end
+
   # Create different versions of your uploaded files:
   version :thumb do
+    process :fix_exif_rotation
+    process :strip
     process :resize_to_fill => [266, 266]
+    process :quality => 90
   end
 
   version :big do
+    process :fix_exif_rotation
+    process :strip
     process :resize_to_fill => [918, 362]
+    process :quality => 90
   end
 
   # Add a white list of extensions which are allowed to be uploaded.
