@@ -333,6 +333,8 @@ GFW.modules.app = function(gfw) {
 
     _onMainLayerClick: function(ev, latlng, pos, data) {
 
+      if(data['cartodb_id'] === '1165:world_ifl') return;
+
       var that = this;
 
       //we needed the cartodb_id and table name
