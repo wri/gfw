@@ -45,7 +45,7 @@ GFW.modules.app = function(gfw) {
       this._precision = 2;
       this._layers = [];
       this._cloudfront_url = "dyynnn89u7nkm.cloudfront.net";
-      this._global_version = 13;
+      this._global_version = 14;
 
       gfw.log.enabled = options ? options.logging: false;
 
@@ -289,7 +289,6 @@ GFW.modules.app = function(gfw) {
     _renderLayers: function() {
 
       if (this._layers.length > 0) {
-
         var template = "SELECT cartodb_id||':' ||'{{ table_name }}' as cartodb_id, the_geom_webmercator, '{{ table_name }}' AS name FROM {{ table_name }}";
 
         var queryArray = _.map(this._layers, function(layer) {
@@ -333,12 +332,13 @@ GFW.modules.app = function(gfw) {
 
     _onMainLayerClick: function(ev, latlng, pos, data) {
 
-      if(data['cartodb_id'] === '1165:world_ifl') return;
-
       var that = this;
 
       //we needed the cartodb_id and table name
       var pair = data.cartodb_id.split(':');
+
+      if(pair[1] === 'world_ifl') return;
+
       //here i make a crude request for the columns of the table
       //nulling out the geoms to save payload
       var request_sql = "SELECT *, null as the_geom, null as the_geom_webmercator FROM " + pair[1] + " WHERE cartodb_id = " + pair[0];
