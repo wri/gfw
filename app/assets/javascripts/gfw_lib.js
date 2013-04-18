@@ -73,9 +73,6 @@ GFW.modules.app = function(gfw) {
       this.specialLayer     = null;
       this.currentBaseLayer = "semi_monthly";
 
-      //this._loadBaseLayer();
-      this._loadStoriesLayer();
-
       this._setupZoom();
 
       google.maps.event.addDomListener(this._map, 'mousemove', function(event) {
@@ -432,7 +429,7 @@ GFW.modules.app = function(gfw) {
 
     },
 
-    _toggleStoriesLayer: function() {
+    _toggleStoriesLayer: function(id) {
 
       _.each(this.storiesFeatures, function(feature) {
         if (feature.visible) feature.setVisible(false);
@@ -443,6 +440,7 @@ GFW.modules.app = function(gfw) {
         marker.toggle();
       });
 
+      Filter.toggle(id);
     },
 
     _loadStoriesLayer: function() {
@@ -680,16 +678,20 @@ GFW.modules.maplayer = function(gfw) {
           Filter.addFilter("", this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
 
         } else if (this.layer.get('slug') == "user_stories") {
-
           var customEvent = function() {
-            GFW.app._toggleStoriesLayer();
+            GFW.app._toggleStoriesLayer(that.layer.get('id'));
             legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
           };
 
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") }, true);
-          Filter.check(this.layer.get('id'));
 
-          legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
+          if(config.mapOptions.layers !== "" && filters.indexOf(this.layer.get('id')) > -1) {
+            GFW.app._loadStoriesLayer();
+
+            Filter.check(this.layer.get('id'));
+
+            legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
+          }
 
         } else if (this.layer.get('slug') == "annual" || this.layer.get('slug') == "quarterly" || this.layer.get('slug') == "brazilian_amazon") {
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
@@ -788,11 +790,10 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app._removeLayer(this.layer);
           }
 
-          // We don't store the id of the user_stories layer in the URL
+          // We store the id via _toggleStoriesLayer
           if (slug != 'user_stories') {
             Filter.toggle(id);
           }
-
         }
 
       }

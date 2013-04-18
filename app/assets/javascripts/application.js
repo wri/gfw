@@ -291,8 +291,10 @@ $(function(){
 
     routes: {
       "map":                         "map",
+      "map/":                        "map",
       "map/:zoom/:lat/:lon":         "mapWithCoordinates",
-      "map/:zoom/:lat/:lon/*layers": "mapWithCoordinates",
+      "map/:zoom/:lat/:lon/":        "mapWithCoordinatesAndLayers",
+      "map/:zoom/:lat/:lon/*layers": "mapWithCoordinatesAndLayers",
       "/":                           "home",
       "":                            "home"
     },
@@ -303,9 +305,11 @@ $(function(){
       });
     },
 
-    map: function() {
+    map: function(layers) {
 
       if ($.browser.msie) $(document).scrollTop(0);
+
+      if (layers) { config.mapOptions.layers = layers; } else { config.mapOptions.layers = "580"; }
 
       loadGFW( function() {
         Navigation.showState("map");
@@ -317,7 +321,21 @@ $(function(){
 
       if (lat && lon) { config.mapOptions.center = new google.maps.LatLng(lat, lon); }
       if (zoom)       { config.mapOptions.zoom   = parseInt(zoom, 10); }
-      if (layers)     { config.mapOptions.layers = layers; }
+      if (layers)     { config.mapOptions.layers = layers; } else { config.mapOptions.layers = "580"; }
+
+      loadGFW( function() {
+        Navigation.showState("map");
+      });
+
+      if (lat && lon) map.setCenter(new google.maps.LatLng(lat, lon));
+
+    },
+
+    mapWithCoordinatesAndLayers: function(zoom, lat, lon, layers) {
+
+      if (lat && lon) { config.mapOptions.center = new google.maps.LatLng(lat, lon); }
+      if (zoom)       { config.mapOptions.zoom   = parseInt(zoom, 10); }
+      if (layers)     { config.mapOptions.layers = layers; } else { config.mapOptions.layers = ""; }
 
       loadGFW( function() {
         Navigation.showState("map");
