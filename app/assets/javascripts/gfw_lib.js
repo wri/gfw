@@ -685,11 +685,9 @@ GFW.modules.maplayer = function(gfw) {
 
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") }, true);
 
-          if(config.mapOptions.layers !== "" && filters.indexOf(this.layer.get('id')) > -1) {
+          if(config.mapOptions.layers.indexOf(this.layer.get('id')) > -1) {
             GFW.app._loadStoriesLayer();
-
             Filter.check(this.layer.get('id'));
-
             legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
           }
 

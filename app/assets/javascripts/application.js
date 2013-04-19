@@ -293,7 +293,6 @@ $(function(){
       "map":                         "map",
       "map/":                        "map",
       "map/:zoom/:lat/:lon":         "mapWithCoordinates",
-      "map/:zoom/:lat/:lon/":        "mapWithCoordinatesAndLayers",
       "map/:zoom/:lat/:lon/*layers": "mapWithCoordinatesAndLayers",
       "/":                           "home",
       "":                            "home"
@@ -309,7 +308,7 @@ $(function(){
 
       if ($.browser.msie) $(document).scrollTop(0);
 
-      if (layers) { config.mapOptions.layers = layers; } else { config.mapOptions.layers = "580"; }
+      if (layers) { config.mapOptions.layers = layers; }
 
       loadGFW( function() {
         Navigation.showState("map");
@@ -321,7 +320,7 @@ $(function(){
 
       if (lat && lon) { config.mapOptions.center = new google.maps.LatLng(lat, lon); }
       if (zoom)       { config.mapOptions.zoom   = parseInt(zoom, 10); }
-      if (layers)     { config.mapOptions.layers = layers; } else { config.mapOptions.layers = "580"; }
+      if (layers)     { config.mapOptions.layers = layers; }
 
       loadGFW( function() {
         Navigation.showState("map");
