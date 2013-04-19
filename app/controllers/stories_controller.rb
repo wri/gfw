@@ -2,7 +2,7 @@ class StoriesController < ApplicationController
   before_filter :get_story, :only => [:show, :edit, :update, :destroy]
 
   def index
-    stories_per_page = 3
+    stories_per_page = 5
     @page            = (params[:page] || 1).to_i
     @total_pages     = (Story.select('count(cartodb_id) as count').where(:featured => true).first.attributes[:count].to_f / stories_per_page.to_f).ceil
     @featured        = Story.featured(@page, stories_per_page)

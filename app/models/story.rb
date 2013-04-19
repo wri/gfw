@@ -157,16 +157,17 @@ class Story < CartoDB::Model::Base
 
   def self.featured(page, stories_per_page)
     results = CartoDB::Connection.query(<<-SQL)
-      SELECT stories.cartodb_id AS id,
-             title,
-             details,
-             your_name AS name,
-             media.thumbnail_url,
-             ST_Y(ST_Centroid(ST_Envelope(stories.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories.the_geom))) AS coords
-      FROM stories
-      LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
-      WHERE stories.featured = true
-      ORDER BY stories.cartodb_id ASC
+      SELECT stories_dev.cartodb_id AS id,
+        title,
+        details,
+        your_name AS name,
+        ST_Y(ST_Centroid(ST_Envelope(stories_dev.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories_dev.the_geom))) AS coords,
+        array_agg(media_dev.image_url) as thumbnail_url
+      FROM stories_dev, media_dev
+      WHERE stories_dev.cartodb_id = media_dev.story_id
+      AND stories_dev.featured = true
+      GROUP BY stories_dev.cartodb_id
+      ORDER BY stories_dev.cartodb_id ASC
       LIMIT #{stories_per_page}
       OFFSET #{(page - 1) * stories_per_page}
     SQL
