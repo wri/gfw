@@ -595,12 +595,12 @@ GFW.modules.app = function(gfw) {
       lat  = self._map.getCenter().lat().toFixed(GFW.app._precision),
       lng  = self._map.getCenter().lng().toFixed(GFW.app._precision);
 
-      var layers = config.mapOptions.layers || "";
+      var layers = config.mapOptions.layers;
 
       if (layers) {
         hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + layers;
       } else {
-        hash = "map/" + zoom + "/" + lat + "/" + lng;
+        hash = "map/" + zoom + "/" + lat + "/" + lng + "/";
       }
 
       window.router.navigate(hash);
@@ -667,7 +667,7 @@ GFW.modules.maplayer = function(gfw) {
             Filter.check(this.layer.get('id'));
             legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
           } else {
-            Filter.check(0);
+            Filter.fakeCheck(0);
           }
         } else if (this.layer.get('slug') == "annual" || this.layer.get('slug') == "quarterly" || this.layer.get('slug') == "brazilian_amazon") {
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
@@ -816,8 +816,7 @@ GFW.modules.datalayers = function(gfw) {
 
           // TODO: remove the below when real layers arrive
           Filter.addFilter(0, 'nothing', 'Regrowth', 'Stay tuned',     { disabled: true , category_color: "#B2D26E", color: "#B2D26E" });
-          //Filter.addFilter(0, 'nothing', 'Conservation', 'Stay tuned', { disabled: true , category_color: "#CCC",    color: "#CCC"});
-
+          // Filter.addFilter(0, 'nothing', 'Conservation', 'Stay tuned', { disabled: true , category_color: "#CCC",    color: "#CCC"});
         });
 
       },

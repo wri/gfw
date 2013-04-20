@@ -265,7 +265,7 @@ function loadGFW(callback) {
     var lng = map.getCenter().lng().toFixed(GFW.app._precision);
 
     var zoom   = config.mapOptions.zoom;
-    var layers = config.mapOptions.layers || "";
+    var layers = config.mapOptions.layers;
 
     if(layers) {
       hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + layers;

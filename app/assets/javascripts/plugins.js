@@ -902,7 +902,6 @@ var Filter = (function() {
   $advance   = $filters.find(".advance"),
   $layer     = $("#layer");
 
-
   function _updateHash() {
 
     var zoom = map.getZoom();
@@ -1138,7 +1137,7 @@ var Filter = (function() {
     $("#layer a[data-id=" + id +"]").css("color", color );
     $("#layer a[data-id=" + id +"]").find("i").css("background-color", color );
 
-    filters.push(id);
+    if(id !== 580) filters.push(id);
   }
 
   function _fakeCheck(id) {
