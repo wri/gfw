@@ -56,6 +56,7 @@ GFW.modules.app = function(gfw) {
       this.queries = {};
       this.storiesMarkers = [];
       this.storiesFeatures = [];
+      this.storiesLoaded = false;
 
       // we can stop loading the blank (see limit=0 below) tileset here now that we are loading the animation. see todo on line 347
       this.queries.semi_monthly     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 17 ELSE {Z}+8 END limit 0";
@@ -429,8 +430,7 @@ GFW.modules.app = function(gfw) {
 
     },
 
-    _toggleStoriesLayer: function(id) {
-
+    _toggleStoriesLayer: function() {
       _.each(this.storiesFeatures, function(feature) {
         if (feature.visible) feature.setVisible(false);
         else feature.setVisible(true);
@@ -440,11 +440,10 @@ GFW.modules.app = function(gfw) {
         marker.toggle();
       });
 
-      Filter.toggle(id);
+      Filter.toggle(0);
     },
 
     _loadStoriesLayer: function() {
-
       var that = this;
 
       $.ajax({
@@ -479,11 +478,11 @@ GFW.modules.app = function(gfw) {
             marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: story.thumbnail_url, content: content });
             marker.setMap(map);
             that.storiesMarkers.push(marker);
-
           });
+
+          that.storiesLoaded = true;
         }
       });
-
     },
 
     _toggleTimeLayer: function() {
@@ -590,7 +589,6 @@ GFW.modules.app = function(gfw) {
     },
 
     _updateHash: function(self) {
-
       var
       hash,
       zoom = self._map.getZoom(),
@@ -599,7 +597,7 @@ GFW.modules.app = function(gfw) {
 
       var layers = config.mapOptions.layers || "";
 
-      if (filters) {
+      if (layers) {
         hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + layers;
       } else {
         hash = "map/" + zoom + "/" + lat + "/" + lng;
@@ -608,31 +606,6 @@ GFW.modules.app = function(gfw) {
       window.router.navigate(hash);
 
     },
-
-    _parseHash: function(hash) {
-
-      var args = hash.split("/");
-
-      if (args.length >= 3) {
-
-        var
-        zoom = parseInt(args[2], 10),
-        lat  = parseFloat(args[3]),
-        lon  = parseFloat(args[4]);
-
-        if (isNaN(zoom) || isNaN(lat) || isNaN(lon)) {
-          return false;
-        }
-
-        return {
-          center: new google.maps.LatLng(lat, lon),
-          zoom: zoom
-        };
-      }
-
-      return false;
-    }
-
   });
 };
 
@@ -653,7 +626,7 @@ GFW.modules.maplayer = function(gfw) {
         }
 
         if (config.mapOptions.layers) {
-          filters = _.map(config.mapOptions.layers.split(","), function(i) { return parseInt(i, 10); });
+          var filters = _.map(config.mapOptions.layers.split(","), function(i) { return parseInt(i, 10); });
         }
 
         this._addControl(filters);
@@ -679,18 +652,23 @@ GFW.modules.maplayer = function(gfw) {
 
         } else if (this.layer.get('slug') == "user_stories") {
           var customEvent = function() {
-            GFW.app._toggleStoriesLayer(that.layer.get('id'));
+            GFW.app._toggleStoriesLayer();
             legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
+
+            if(!GFW.app.storiesLoaded) {
+              GFW.app._loadStoriesLayer();
+            }
           };
 
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") }, true);
 
-          if(config.mapOptions.layers.indexOf(this.layer.get('id')) > -1) {
+          if(!_.include(filters, 0)) {
             GFW.app._loadStoriesLayer();
             Filter.check(this.layer.get('id'));
             legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
+          } else {
+            Filter.check(0);
           }
-
         } else if (this.layer.get('slug') == "annual" || this.layer.get('slug') == "quarterly" || this.layer.get('slug') == "brazilian_amazon") {
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
         } else {
@@ -788,10 +766,11 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app._removeLayer(this.layer);
           }
 
-          // We store the id via _toggleStoriesLayer
+          // We don't store the id of the user_stories layer in the URL
           if (slug != 'user_stories') {
             Filter.toggle(id);
           }
+
         }
 
       }

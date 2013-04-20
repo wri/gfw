@@ -267,7 +267,7 @@ function loadGFW(callback) {
     var zoom   = config.mapOptions.zoom;
     var layers = config.mapOptions.layers || "";
 
-    if (filters) {
+    if(layers) {
       hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + layers;
       window.router.navigate(hash, { trigger: true, replace: true });
     } else {
@@ -291,9 +291,8 @@ $(function(){
 
     routes: {
       "map":                         "map",
-      "map/":                        "map",
       "map/:zoom/:lat/:lon":         "mapWithCoordinates",
-      "map/:zoom/:lat/:lon/*layers": "mapWithCoordinatesAndLayers",
+      "map/:zoom/:lat/:lon/*layers": "mapWithCoordinates",
       "/":                           "home",
       "":                            "home"
     },
@@ -304,11 +303,8 @@ $(function(){
       });
     },
 
-    map: function(layers) {
-
+    map: function() {
       if ($.browser.msie) $(document).scrollTop(0);
-
-      if (layers) { config.mapOptions.layers = layers; }
 
       loadGFW( function() {
         Navigation.showState("map");
@@ -317,7 +313,6 @@ $(function(){
     },
 
     mapWithCoordinates: function(zoom, lat, lon, layers) {
-
       if (lat && lon) { config.mapOptions.center = new google.maps.LatLng(lat, lon); }
       if (zoom)       { config.mapOptions.zoom   = parseInt(zoom, 10); }
       if (layers)     { config.mapOptions.layers = layers; }
@@ -327,21 +322,6 @@ $(function(){
       });
 
       if (lat && lon) map.setCenter(new google.maps.LatLng(lat, lon));
-
-    },
-
-    mapWithCoordinatesAndLayers: function(zoom, lat, lon, layers) {
-
-      if (lat && lon) { config.mapOptions.center = new google.maps.LatLng(lat, lon); }
-      if (zoom)       { config.mapOptions.zoom   = parseInt(zoom, 10); }
-      if (layers)     { config.mapOptions.layers = layers; } else { config.mapOptions.layers = ""; }
-
-      loadGFW( function() {
-        Navigation.showState("map");
-      });
-
-      if (lat && lon) map.setCenter(new google.maps.LatLng(lat, lon));
-
     }
 
   });

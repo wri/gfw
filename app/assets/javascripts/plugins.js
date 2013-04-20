@@ -903,7 +903,7 @@ var Filter = (function() {
   $layer     = $("#layer");
 
 
-  function _updateHash(id, visible) {
+  function _updateHash() {
 
     var zoom = map.getZoom();
     var lat  = map.getCenter().lat().toFixed(2);
@@ -914,12 +914,13 @@ var Filter = (function() {
   }
 
   function _toggle(id) {
-    if (_.include(filters, id)) {
+    if(_.include(filters, id)) {
       filters = _.without(filters, id);
     } else {
       filters.push(id);
     }
-    _updateHash(id);
+
+    _updateHash();
   }
 
   function _show(callback) {
@@ -1136,6 +1137,11 @@ var Filter = (function() {
     var color = $("#layer a[data-id=" + id +"]").attr("data-color");
     $("#layer a[data-id=" + id +"]").css("color", color );
     $("#layer a[data-id=" + id +"]").find("i").css("background-color", color );
+
+    filters.push(id);
+  }
+
+  function _fakeCheck(id) {
     filters.push(id);
   }
 
@@ -1212,7 +1218,8 @@ var Filter = (function() {
     toggle: _toggle,
     closeOpenFilter:_closeOpenFilter,
     calcFiltersPosition: _calcFiltersPosition,
-    check: _check
+    check: _check,
+    fakeCheck: _fakeCheck
   };
 
 }());
