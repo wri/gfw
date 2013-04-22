@@ -88,6 +88,14 @@ var config = {
   MIN_PROJECT_RADIUS: 100,
   BASE_MAP_STYLE:     [ { "featureType": "water"  },{ "featureType": "transit", "stylers": [ { "saturation": -100 } ] },{ "featureType": "road", "stylers": [ { "saturation": -100 } ] },{ "featureType": "poi", "stylers": [ { "saturation": -100 } ] },{ "featureType": "landscape", "stylers": [ { "saturation": -100 } ] },{ "featureType": "administrative", "stylers": [ { "saturation": -100 } ] } ],
   pendingLayers: [],
+  ANALYSIS_OVERLAYS_STYLE: {
+    strokeWeight: 2,
+    fillOpacity: 0.25,
+    fillOpacity: 0.45,
+    fillColor: "#FFF",
+    strokeColor: "#A2BC28",
+    editable: true
+  },
   OVERLAYS_STYLE: {
     strokeWeight: 2,
     fillOpacity: 0.25,

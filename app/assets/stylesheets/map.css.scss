@@ -496,7 +496,7 @@
   width:211px;
   min-height: 40px;
 
-  @include position(80px, false, false, 20px);
+  @include position(120px, false, false, 20px);
   @include border-radius(3px);
   @include box-shadow(0px 0px 3px $cGray2);
 
@@ -762,6 +762,159 @@ $timelineWidth: 1038px;
   height:52px;
   background:url(backgrounds/bkg_timeline_dots.png) no-repeat 41px 24px;
   @extend .disable-selection;
+}
+
+.info_bar {
+  display:none;
+
+  position:absolute;
+  top: 200px;
+  right: 100px;
+  z-index: 1000;
+
+  .toggle {
+    @include position(2px, -24px, false, false);
+    @include size(25px, 38px);
+    @include icons-sprite(legend_toggle_close);
+    z-index: 10;
+  }
+
+  &.closed .toggle { @include icons-sprite(legend_toggle_open); }
+
+  .content {
+    position:relative;
+    width: 248px;
+
+    @include border-radius(5px);
+
+    background:#fff;
+    border: 1px solid #666666;
+
+    font-family: "Helvetica Neue",Arial;
+
+    .info {
+      padding: 13px 20px;
+      border-bottom: 1px solid #999;
+      clear:both;
+      overflow:hidden;
+    }
+
+    .titles {
+      float:left;
+      @include inline-block();
+
+      .title {
+        display:block;
+        color: #999999;
+        font-size:11px;
+        font-weight:bold;
+        text-transform:uppercase;
+      }
+
+      .subtitle {
+        color: #666666;
+        font-size:11px;
+      }
+    }
+
+    .stats {
+      display:block;
+      padding: 13px 20px;
+
+      li {
+        @include inline-block();
+        strong {
+          display:block;
+        }
+
+      }
+    }
+
+    ul.controls {
+      float:right;
+      @include inline-block();
+      border: 1px solid #CCCCCC;
+      @include border-radius(3px);
+
+      li {
+        @include inline-block();
+        padding: 9px 8px;
+      }
+
+      li:first-child { border-right: 1px solid #CCCCCC; }
+
+    }
+
+
+  }
+
+}
+
+.analysis.helper_bar {
+  display:none;
+
+  $width: 476px;
+  bottom: 100px;
+
+  width: $width;
+  padding: 13px 20px;
+
+  @include absolute-landscape-center($width);
+  @include border-radius(5px);
+
+  background:#fff;
+  border: 1px solid #666666;
+
+  font-family: "Helvetica Neue",Arial;
+  clear:both;
+  overflow:hidden;
+
+  p  {
+    float:left;
+    @include inline-block();
+    margin: 10px 0 0 0;
+    padding: 0;
+    color: #666666;
+    font-size:13px;
+  }
+
+  .options { float:right; }
+
+  a  {
+    @include inline-block();
+    width: 70px;
+    padding: 10px 0;
+    border: #666666;
+    @include border-radius(3px);
+    font-weight:bold;
+
+    text-align: center;
+    font-size:11px;
+    text-transform:uppercase;
+    text-decoration:none;
+
+    &.done {
+      background:#A1BA42;
+      color: #fff;
+      border: 1px solid #839C26;
+      &:hover { background:darken(#A1BA42, 10%); border-color:darken(#A1BA42, 10%); }
+    }
+
+    &.cancel {
+      background: #fff;
+      color: #666666;
+      border: 1px solid #CCCCCC;
+
+      &:hover { background:#f1f1f1; }
+
+    }
+  }
+}
+
+#analysis_control {
+  @include size(41px, 42px);
+  @include position(70px, false, false, 15px);
+  @include icons-sprite(analysis_button);
 }
 
 #zoom_controls,

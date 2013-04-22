@@ -11,6 +11,7 @@
 //= require backbone.cartodb
 //= require d3.v2.min
 //= require geojson
+//= require jquery.tipsy
 //= require jquery.fileupload
 //= require jquery.fileupload-ui
 //= require jquery.fileupload-fp
@@ -29,6 +30,7 @@ subscribeMap;
 
 GOD               = {},
 legend            = {},
+analysis          = {},
 wall              = {},
 sourceWindow      = {},
 gallery           = {},
@@ -166,6 +168,10 @@ function loadGFW(callback) {
     legend.setDraggable(true);
     $("#map").append(legend.render());
 
+
+    // Analysis
+    analysis        = new gfw.ui.view.Analysis({ map: map });
+    $("#map").append(analysis.render());
 }
 
 (function(window,undefined){
