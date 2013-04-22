@@ -1,6 +1,8 @@
 class Media < CartoDB::Model::Base
   include ActiveModel::Validations
 
+  cartodb_table_name "media#{CartoDB::TABLES_SUFFIX}"
+
   field :story_id
   field :image
   field :video_url
