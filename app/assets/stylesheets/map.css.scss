@@ -679,11 +679,13 @@
 
 
   .range {
+    display:none;
     position:absolute;
     top: 7px; left: 10px;
     background:#A2BC28;
     height: 6px;
     width: 200px;
+    @include box-shadow(1px 0 3px #ddd);
   }
 
   .tipsy {
