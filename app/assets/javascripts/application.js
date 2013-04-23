@@ -93,6 +93,12 @@ function loadOtherStuff(callback) {
     GOD.add(languageSelector, languageSelector.hide);
   });
 
+  var TimelineNew = new gfw.ui.view.Timeline({
+    container: $("#map")
+  });
+
+  window.timeline = TimelineNew;
+
   Circle.init();
   Timeline.init();
   Filter.init();
@@ -113,58 +119,58 @@ function loadGFW(callback) {
 
   loaded = true;
 
-    GOD = new gfw.ui.view.GOD();
-    window.GOD = GOD;
+  GOD = new gfw.ui.view.GOD();
+  window.GOD = GOD;
 
-    map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
+  map = new google.maps.Map(document.getElementById("map"), config.mapOptions);
 
-    var styledMap = new google.maps.StyledMapType(config.BASE_MAP_STYLE, { name: "terrain_style" });
+  var styledMap = new google.maps.StyledMapType(config.BASE_MAP_STYLE, { name: "terrain_style" });
 
-    map.mapTypes.set("terrain_style", styledMap);
-    map.setMapTypeId("terrain_style");
+  map.mapTypes.set("terrain_style", styledMap);
+  map.setMapTypeId("terrain_style");
 
-    google.maps.event.addDomListener(map, 'click', function (ev) {
-      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      Infowindow.close();
-    });
+  google.maps.event.addDomListener(map, 'click', function (ev) {
+    ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+    Infowindow.close();
+  });
 
-    google.maps.event.addListener(map, 'maptypeid_changed', function() {
-      if (map.getMapTypeId() == 'Tree Height') $("#credit-control").html(config.mapStyles.TREEHEIGHT.alt).fadeIn(250);
-      else $("#credit-control").html("").fadeOut(250);
-    });
+  google.maps.event.addListener(map, 'maptypeid_changed', function() {
+    if (map.getMapTypeId() == 'Tree Height') $("#credit-control").html(config.mapStyles.TREEHEIGHT.alt).fadeIn(250);
+    else $("#credit-control").html("").fadeOut(250);
+  });
 
-    var creditNode = document.createElement('div');
-    creditNode.id = 'credit-control';
-    map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(creditNode);
+  var creditNode = document.createElement('div');
+  creditNode.id = 'credit-control';
+  map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(creditNode);
 
-    google.maps.event.addListenerOnce(map, 'idle', function (ev) {
+  google.maps.event.addListenerOnce(map, 'idle', function (ev) {
 
-      GFW(function(env) {
+    GFW(function(env) {
 
-        GFW.app = new env.app.Instance(map, {
-          user       : 'wri-01',
-          layerTable : 'layerinfo_minus_imazon', // TODO: change back to layerinfo when we have imazon
-          logging    : false
-        });
-
-        GFW.app.run();
-        GFW.env = env;
-
-        loadOtherStuff(callback);
-
+      GFW.app = new env.app.Instance(map, {
+        user       : 'wri-01',
+        layerTable : 'layerinfo_minus_imazon', // TODO: change back to layerinfo when we have imazon
+        logging    : false
       });
 
+      GFW.app.run();
+      GFW.env = env;
+
+      loadOtherStuff(callback);
+
     });
 
-    // Layer selector
-    layerSelector = new gfw.ui.view.LayerSelector({ map: map });
-    $("#map").append(layerSelector.render());
-    layerSelector.setDraggable(true);
+  });
 
-    // Legend
-    legend        = new gfw.ui.view.Legend();
-    legend.setDraggable(true);
-    $("#map").append(legend.render());
+  // Layer selector
+  layerSelector = new gfw.ui.view.LayerSelector({ map: map });
+  $("#map").append(layerSelector.render());
+  layerSelector.setDraggable(true);
+
+  // Legend
+  legend        = new gfw.ui.view.Legend();
+  legend.setDraggable(true);
+  $("#map").append(legend.render());
 
 }
 

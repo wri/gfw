@@ -627,6 +627,144 @@
  * TIMELINE
  */
 
+
+.timeline_new {
+  position:absolute;
+  bottom: 120px;
+  /*height: 52px;*/
+  z-index: 1000;
+
+  /*display:none;*/
+  /*opacity: 0;*/
+
+  background-color: $cWhite;
+  border-color:rgb(102,102,102);
+  border-width:1px;
+  -moz-border-radius:5px; // Firefox v1.0+
+  -webkit-border-radius:5px; // Safari v3.0+ and by Chrome v0.2+
+  border-radius:5px; // Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+
+  border-style:solid;
+  -moz-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);    // Firefox v3.5+
+  -webkit-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15); // Safari v3.0+ and by Chrome v0.2+
+  box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);         // Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+
+
+  .inner { clear:both; overflow:hidden; position:relative; }
+
+  $handleWidth: 14px;
+
+  &.pause .action a {
+    background: url(icons/timeline_pause.png) no-repeat 0 0;
+  }
+
+  .action {
+    position:relative;
+    float:left;
+    width: 52px;
+    height: 50px;
+    border-right: 1px solid #333;
+
+    a {
+      @include absolute-center(13px);
+      display:block;
+      background: url(icons/timeline_play.png) no-repeat 0 0;
+    }
+
+  }
+
+  .time {
+    float:left;
+    position:relative;
+    margin: 15px 0 0 13px;
+  }
+
+  .tipsy {
+    position:absolute;
+    display:none;
+    width: 70px;
+    bottom: 43px; left: 20px;
+    padding: 7px 0;
+
+    background:#333;
+
+    @include border-radius(1px);
+    font-weight:normal;
+
+    font-size:11px;
+    text-transform: uppercase;
+    text-align: center;
+    color:#fff;
+    font: normal 10px "Futura", sans-serif;
+  }
+
+  .years {
+    position:relative;
+
+    li {
+
+      &:last-child {
+        width: 9px*4;
+        span { width: 27px; }
+      }
+
+      @include inline-block();
+      width: 9px*12 + 9px*4;
+      /*margin-right: 9px*2;*/
+
+      .year {
+        @include inline-block();
+        width: 33px;
+        font-size: 11px;
+        text-align:center;
+        width: 9px*3;
+        font: normal 10px "Futura", sans-serif;
+        color:#333;
+        text-decoration:none;
+        background:#fff;
+      }
+
+      a {
+        @include inline-block();
+        @include size(9px, $handleWidth);
+        background: url(icons/point.png) no-repeat 6px center;
+        /*margin: 0 7px 0 0;*/
+        /*&:last-child { margin-right: 7px; }*/
+      }
+
+    }
+
+  }
+
+  .trail {
+    position:absolute;
+    top: 0px; left: 0px;
+    width: 100%;
+    height: $handleWidth;
+
+    .ui-slider-handle.ui-state-default.ui-corner-all {
+      position:absolute;
+      top: 3px; left: 0;
+      z-index: 200;
+      @include size(14px);
+      background: url(icons/timeline_handler.png) no-repeat 0 0;
+      cursor:col-resize;
+      @extend .disable-selection;
+      outline:none;
+    }
+
+    .handle {
+      position:absolute;
+      top: 3px; left: 27px;
+      z-index: 200;
+      @include size(14px);
+      background: url(icons/timeline_handler.png) no-repeat 0 0;
+      cursor:col-resize;
+      @extend .disable-selection;
+
+      &.right { left: 846px; }
+    }
+  }
+}
+
 $timelineWidth: 1038px;
 
 .timeline  {
