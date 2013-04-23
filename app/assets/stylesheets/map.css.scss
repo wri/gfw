@@ -19,8 +19,8 @@
     top:57px;
     left:20px;
     margin:20px 0 0 0;
-    width: 24px;
     height:24px;
+    width: 24px;
     -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 0 4px 2px;
     -moz-box-shadow: rgba(0, 0, 0, 0.2) 0 0 4px 2px;
     box-shadow: rgba(0, 0, 0, 0.2) 0 0 4px 2px;
@@ -492,7 +492,6 @@
 }
 
 .legend {
-
   width:211px;
   min-height: 40px;
 
@@ -765,61 +764,77 @@ $timelineWidth: 1038px;
 }
 
 .info_bar {
-  display:none;
+  width: 248px;
+  min-height: 40px;
 
-  position:absolute;
-  top: 200px;
-  right: 100px;
-  z-index: 1000;
+  @include position(87px, 30px, false, false);
+  @include border-radius(3px);
+  @include box-shadow(0px 0px 3px $cGray2);
+
+  background:#fff;
+  border: 1px solid #666;
+
+  @extend .sans-serif;
+  font-size:11px;
+  color: $cGray3;
+
+  display: none;
+
+  cursor: move;
 
   .toggle {
-    @include position(2px, -24px, false, false);
+    @include position(2px, -25px, false, false);
     @include size(25px, 38px);
-    @include icons-sprite(legend_toggle_close);
-    z-index: 10;
+    @include icons-sprite(info_bar_toggle_close);
   }
 
-  &.closed .toggle { @include icons-sprite(legend_toggle_open); }
+  &.closed .toggle { @include icons-sprite(info_bar_toggle_open); }
+
+  .shadow {
+    display:none;
+
+    @include position(false, false, 1px, 0);
+    @include size(100%, 20px);
+    background:url(backgrounds/white_shadow.png) repeat-x;
+
+    z-index: 100;
+  }
+
+  .jspPane { width: 248px!important; }
 
   .content {
-    position:relative;
+    position: relative;
     width: 248px;
 
-    @include border-radius(5px);
-
-    background:#fff;
-    border: 1px solid #666666;
-
-    font-family: "Helvetica Neue",Arial;
+    font-family: "Helvetica Neue", Arial;
 
     .info {
-      padding: 13px 20px;
-      border-bottom: 1px solid #999;
+      padding: 17px 20px 13px;
+      border-bottom: 1px solid #ccc;
       clear:both;
       overflow:hidden;
+      background: #F1F1F1;
+      @include border-top-radius(3px);
     }
 
-    .titles {
-      float:left;
-      @include inline-block();
+    .title {
+      display:block;
+      color: #999999;
+      font-size:11px;
+      line-height: 1.2;
+      font-weight:bold;
+      text-transform:uppercase;
+    }
 
-      .title {
-        display:block;
-        color: #999999;
-        font-size:11px;
-        font-weight:bold;
-        text-transform:uppercase;
-      }
-
-      .subtitle {
-        color: #666666;
-        font-size:11px;
-      }
+    .subtitle {
+      color: #bababa;
+      font-size: 12px;
+      line-height: 2;
     }
 
     .stats {
       display:block;
-      padding: 13px 20px;
+      padding: 17px 20px 13px;
 
       li {
         @include inline-block();
@@ -830,28 +845,57 @@ $timelineWidth: 1038px;
       }
     }
 
-    ul.controls {
+    .controls {
+      padding: 13px 20px 17px;
+      border-top: 1px solid #ccc;
+      clear:both;
+      overflow:hidden;
+      background: #F1F1F1;
+      @include border-bottom-radius(3px);
+    }
+
+    .control_buttons {
       float:right;
-      @include inline-block();
+
       border: 1px solid #CCCCCC;
       @include border-radius(3px);
 
       li {
-        @include inline-block();
-        padding: 9px 8px;
+        float: left;
+        display: block;
+        cursor: pointer;
+        height: 28px;
+        width: 28px;
       }
 
-      li:first-child { border-right: 1px solid #CCCCCC; }
-
+      li:first-child { border-right: 1px solid #ccc; }
     }
-
-
   }
 
+  .ha,
+  .alert { font-size: 12px; }
+
+  .alert {
+    display: block;
+    margin-top: 13px;
+    padding-top: 17px;
+    width: 100%;
+    border-top: 1px solid #ccc;
+    color: #F13588;
+  }
+
+  .count {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.5;
+  }
+
+  z-index:1000;
 }
 
-.analysis.helper_bar {
-  display:none;
+.helper_bar {
+  display: none;
+  z-index: 1000;
 
   $width: 476px;
   bottom: 100px;
@@ -897,13 +941,27 @@ $timelineWidth: 1038px;
       background:#A1BA42;
       color: #fff;
       border: 1px solid #839C26;
-      &:hover { background:darken(#A1BA42, 10%); border-color:darken(#A1BA42, 10%); }
+
+      &:hover {
+        background: darken(#A1BA42, 10%);
+        border-color:darken(#A1BA42, 10%);
+      }
+
+      &.disabled {
+        opacity: .5;
+
+        &:hover {
+          background:#A1BA42;
+          border-color: #839C26;
+          cursor: default;
+        }
+      }
     }
 
     &.cancel {
       background: #fff;
-      color: #666666;
       border: 1px solid #CCCCCC;
+      color: #666666;
 
       &:hover { background:#f1f1f1; }
 
@@ -912,8 +970,9 @@ $timelineWidth: 1038px;
 }
 
 #analysis_control {
-  @include size(41px, 42px);
-  @include position(70px, false, false, 15px);
+  z-index: 1000;
+  @include size(38px, 38px);
+  @include position(76px, false, false, 15px);
   @include icons-sprite(analysis_button);
 }
 
@@ -925,8 +984,8 @@ $timelineWidth: 1038px;
 
   position:absolute;
 
-  top:  15px;
   left: 15px;
+  top:  15px;
 
   z-index: 1000;
 

@@ -165,9 +165,8 @@ function loadGFW(callback) {
 
     // Legend
     legend        = new gfw.ui.view.Legend();
-    legend.setDraggable(true);
     $("#map").append(legend.render());
-
+    legend.setDraggable(true);
 
     // Analysis
     analysis        = new gfw.ui.view.Analysis({ map: map });
@@ -210,9 +209,7 @@ function loadGFW(callback) {
   $(".analysis").on("click", function(e) {
     e.preventDefault();
 
-    $(".backdrop").fadeIn(250, function() {
-      $("#analysis").fadeIn(250);
-    });
+    $(".backdrop").fadeIn(250);
 
   });
 
@@ -220,8 +217,7 @@ function loadGFW(callback) {
     e.preventDefault();
     $(".backdrop").fadeOut(250);
 
-    //$("#share, #subscribe, #analysis, #crowdsourcing, #other_wri_sites").fadeOut(250);
-    $("#share, #subscribe, #analysis, #other_wri_sites").fadeOut(250);
+    $("#share, #subscribe, #other_wri_sites").fadeOut(250);
 
   });
 
@@ -233,8 +229,7 @@ function loadGFW(callback) {
     SubscriptionMap.clearEmailErrors();
   });
 
-  //$("#share, #subscribe, #analysis, #crowdsourcing, #other_wri_sites").on("click", function(e) {
-  $("#share, #subscribe, #analysis, #other_wri_sites").on("click", function(e) {
+  $("#share, #subscribe, #other_wri_sites").on("click", function(e) {
     e.stopPropagation();
   });
 
@@ -360,11 +355,6 @@ $(function(){
 
     if ($("#share:visible").length > 0) {
       $("#share").fadeOut(250);
-      $(".backdrop").fadeOut(250);
-    }
-
-    if ($("#analysis:visible").length > 0) {
-      $("#analysis").fadeOut(250);
       $(".backdrop").fadeOut(250);
     }
 

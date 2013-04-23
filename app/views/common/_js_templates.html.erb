@@ -142,18 +142,26 @@
           <strong class="title">{{ title }}</strong>
           <span class="subtitle">{{ subtitle }}</span>
         </div>
+      </div>
 
-        <ul class="controls">
+      <div class="stats">
+        <strong class="title">Total selected area</strong>
+
+        <ul>
+          <li class="ha"><span class="count">{{ ha }}</span> Ha</li>
+          <li class="alert">
+            <strong class="title">{{ alert_title }}</strong>
+            <span class="count">{{ alert_count }}</span> alerts <a href="" class="download"></a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="controls">
+        <ul class="control_buttons">
           <li><a class="subscribe" href="#"></a></li>
           <li><a class="remove" href="#"></a></li>
         </ul>
       </div>
-
-      <ul class="stats">
-        <li class="ha"><strong>{{ ha }}</strong><span>Hectares</span></li>
-        <li class="alerts"><strong>{{ alert_count }}<a href="" class="download"></a></strong> <span>Forma alerts</span></li>
-      </ul>
-
     </div>
   </script>
 
@@ -164,7 +172,7 @@
     <div class="analysis helper_bar">
       <p>Draw in the map the area you want to analyze</p>
       <div class="options">
-        <a href="#" class="done">Done</a>
+        <a href="#" class="done disabled">Done</a>
         <a href="#" class="cancel">Cancel</a>
       </div>
     </div>

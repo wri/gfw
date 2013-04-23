@@ -774,6 +774,7 @@ var Navigation = (function() {
     _hideOverlays();
 
     legend.hide();
+    analysis.hide();
     layerSelector.hide();
 
     Navigation.select("home");
@@ -815,6 +816,7 @@ var Navigation = (function() {
 
     layerSelector.show();
     legend.show();
+    analysis.show();
 
     if (this.time_layer) this.time_layer.set_time(self.time_layer.cache_time());
 
