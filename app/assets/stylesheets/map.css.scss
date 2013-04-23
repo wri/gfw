@@ -677,6 +677,15 @@
     margin: 15px 0 0 13px;
   }
 
+
+  .range {
+    position:absolute;
+    top: 7px; left: 10px;
+    background:#A2BC28;
+    height: 6px;
+    width: 200px;
+  }
+
   .tipsy {
     position:absolute;
     display:none;
@@ -698,6 +707,7 @@
 
   .years {
     position:relative;
+    z-index: 100;
 
     li {
 
@@ -726,6 +736,7 @@
         @include inline-block();
         @include size(9px, $handleWidth);
         background: url(icons/point.png) no-repeat 6px center;
+        z-index: 100;
         /*margin: 0 7px 0 0;*/
         /*&:last-child { margin-right: 7px; }*/
       }
