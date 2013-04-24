@@ -132,14 +132,15 @@
     <li id="{{name}}" class="{{ name }}"><a href="#"><i></i>{{title}}</a></li>
   </script>
 
-  <!-- Analysis -->
+  <!-- Analysis info -->
   <script id="analysis-info-template" type="text/x-underscore-template">
     <a href="#" class="toggle"></a>
+    <div class="info_title">User defined area analysis</div>
     <div class="content">
       
       <div class="info">
         <div class="titles">
-          <strong class="title">{{ title }}</strong>
+          <strong class="title">User defined area</strong>
           <span class="subtitle">{{ subtitle }}</span>
         </div>
       </div>
@@ -148,18 +149,23 @@
         <strong class="title">Total selected area</strong>
 
         <ul>
-          <li class="ha"><span class="count">{{ ha }}</span> Ha</li>
+          <li class="ha">
+            <p class="count"><strong>{{ ha }}</strong> Ha</p>
+          </li>
+
           <li class="alert">
             <strong class="title">{{ alert_title }}</strong>
-            <span class="count">{{ alert_count }}</span> alerts <a href="" class="download"></a>
+            <p class="count forma"><strong>{{ alert_count }}</strong> alerts <a href="" class="download">download</a></p>
           </li>
         </ul>
+
+        <div class="shadow"></div>
       </div>
 
       <div class="controls">
         <ul class="control_buttons">
           <li><a class="subscribe" href="#"></a></li>
-          <li><a class="remove" href="#"></a></li>
+          <li><a class="reset" href="#"></a></li>
         </ul>
       </div>
     </div>
@@ -167,8 +173,6 @@
 
   <!-- Analysis -->
   <script id="analysis-template" type="text/x-underscore-template">
-    <a href="#" id="analysis_control"></a>
-
     <div class="analysis helper_bar">
       <p>Draw in the map the area you want to analyze</p>
       <div class="options">
@@ -176,9 +180,11 @@
         <a href="#" class="cancel">Cancel</a>
       </div>
     </div>
+  </script>
 
-
-
+  <!-- Analysis control -->
+  <script id="analysis_control-template" type="text/x-underscore-template">
+    <a href="#" id="analysis_control" data-tip="{{ tip }}"></a>
   </script>
 
   <!-- Legend -->
@@ -208,7 +214,4 @@
       <a href="#" class="btn yellow dark_glow cancel">{{cancel}}</a>
     </div>
   </script>
-
-
-
 <% end %>

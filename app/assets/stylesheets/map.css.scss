@@ -2,7 +2,6 @@
 @import "compass/reset";
 @import "helpers";
 
-
   /* Tiles loader control */
 
   div.cartodb-tiles-loader {
@@ -766,12 +765,12 @@ $timelineWidth: 1038px;
 .info_bar {
   width: 248px;
   min-height: 40px;
+  background: #F1F1F1;
 
   @include position(87px, 30px, false, false);
   @include border-radius(3px);
   @include box-shadow(0px 0px 3px $cGray2);
 
-  background:#fff;
   border: 1px solid #666;
 
   @extend .sans-serif;
@@ -802,9 +801,23 @@ $timelineWidth: 1038px;
 
   .jspPane { width: 248px!important; }
 
+  .info_title {
+    height: 20px;
+    line-height: 40px;
+    padding: 0 15px;
+
+    font-size: 11px;
+    color: #bbb;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    display:none;
+  }
+
   .content {
     position: relative;
     width: 248px;
+    @include border-radius(3px);
 
     font-family: "Helvetica Neue", Arial;
 
@@ -813,8 +826,6 @@ $timelineWidth: 1038px;
       border-bottom: 1px solid #ccc;
       clear:both;
       overflow:hidden;
-      background: #F1F1F1;
-      @include border-top-radius(3px);
     }
 
     .title {
@@ -835,13 +846,10 @@ $timelineWidth: 1038px;
     .stats {
       display:block;
       padding: 17px 20px 13px;
+      background: #fff;
 
       li {
         @include inline-block();
-        strong {
-          display:block;
-        }
-
       }
     }
 
@@ -850,25 +858,27 @@ $timelineWidth: 1038px;
       border-top: 1px solid #ccc;
       clear:both;
       overflow:hidden;
-      background: #F1F1F1;
-      @include border-bottom-radius(3px);
     }
 
     .control_buttons {
       float:right;
 
-      border: 1px solid #CCCCCC;
-      @include border-radius(3px);
-
       li {
         float: left;
-        display: block;
-        cursor: pointer;
-        height: 28px;
-        width: 28px;
+
+        a {
+          display: block;
+          cursor: pointer;
+          height: 29px;
+          width: 30px;
+        }
       }
 
-      li:first-child { border-right: 1px solid #ccc; }
+      .subscribe { @include icons-sprite(control_buttons_subscribe); }
+      .reset {
+        width: 31px;
+        @include icons-sprite(control_buttons_reset);
+      }
     }
   }
 
@@ -881,13 +891,27 @@ $timelineWidth: 1038px;
     padding-top: 17px;
     width: 100%;
     border-top: 1px solid #ccc;
-    color: #F13588;
   }
 
   .count {
-    font-size: 18px;
-    font-weight: bold;
-    line-height: 1.5;
+    strong {
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 1.5;
+      color: #666;
+    }
+
+    &.forma {
+      color: #F13588;
+
+      strong,
+      a { color: #F13588; }
+    }
+  }
+
+  .download {
+    float: right;
+    margin-top: 10px;
   }
 
   z-index:1000;
@@ -898,10 +922,10 @@ $timelineWidth: 1038px;
   z-index: 1000;
 
   $width: 476px;
-  bottom: 100px;
+  bottom: 39px;
 
   width: $width;
-  padding: 13px 20px;
+  padding: 9px 13px;
 
   @include absolute-landscape-center($width);
   @include border-radius(5px);
@@ -913,7 +937,7 @@ $timelineWidth: 1038px;
   clear:both;
   overflow:hidden;
 
-  p  {
+  p {
     float:left;
     @include inline-block();
     margin: 10px 0 0 0;
@@ -974,6 +998,14 @@ $timelineWidth: 1038px;
   @include size(38px, 38px);
   @include position(76px, false, false, 15px);
   @include icons-sprite(analysis_button);
+
+  &:hover { @include icons-sprite(analysis_button_hover); }
+  &:active { @include icons-sprite(analysis_button_active); }
+
+  &.disabled {
+    cursor: default;
+    @include icons-sprite(analysis_button_disabled);
+  }
 }
 
 #zoom_controls,
@@ -1632,3 +1664,4 @@ $timelineWidth: 1038px;
   /* old ie */
 }
 
+.tipsy { font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif; }

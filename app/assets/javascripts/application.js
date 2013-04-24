@@ -164,13 +164,14 @@ function loadGFW(callback) {
     layerSelector.setDraggable(true);
 
     // Legend
-    legend        = new gfw.ui.view.Legend();
+    legend = new gfw.ui.view.Legend();
     $("#map").append(legend.render());
     legend.setDraggable(true);
 
     // Analysis
-    analysis        = new gfw.ui.view.Analysis({ map: map });
+    analysis = new gfw.ui.view.Analysis({ map: map });
     $("#map").append(analysis.render());
+    analysis.info.setDraggable(true);
 }
 
 (function(window,undefined){

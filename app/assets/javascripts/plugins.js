@@ -1603,24 +1603,21 @@ var Timeline = (function() {
   }
 
   function _show() {
-
-    if (_isHidden() && showMap) {
+    if (_isHidden() && showMap && !analysis.$helper.is(':visible')) {
       $timeline.removeClass("hidden");
+
       $timeline.show();
 
       $timeline.animate({ bottom: parseInt($timeline.css("bottom"), 10) + 20, opacity: 1 }, 150, _afterShow);
     }
-
   }
 
   function _hide() {
-
     if (!_isHidden()) {
       $handle.fadeOut(250, function() {
         $timeline.animate({ bottom: parseInt($timeline.css("bottom"), 10) - 20, opacity: 0 }, 150, _afterHide);
       });
     }
-
   }
 
   function _afterShow() {

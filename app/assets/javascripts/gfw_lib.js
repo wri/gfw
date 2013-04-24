@@ -740,7 +740,7 @@ GFW.modules.maplayer = function(gfw) {
 
         if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon") {
 
-          (slug === 'semi_monthly' && showMap ) ?  Timeline.show() : Timeline.hide();
+          (slug === 'semi_monthly' && showMap) ?  Timeline.show() : Timeline.hide();
 
           GFW.app.currentBaseLayer = slug;
 
