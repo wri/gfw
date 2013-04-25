@@ -1,0 +1,3 @@
+host: ''
+api_key: ''
+tables_suffix: '_dev'
