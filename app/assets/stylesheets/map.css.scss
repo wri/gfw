@@ -677,7 +677,6 @@
     margin: 15px 0 0 13px;
   }
 
-
   .range {
     display:none;
     position:absolute;
@@ -686,6 +685,7 @@
     height: 6px;
     width: 200px;
     @include box-shadow(1px 0 3px #ddd);
+    z-index: 10;
   }
 
   .tipsy {
@@ -705,6 +705,33 @@
     text-align: center;
     color:#fff;
     font: normal 10px "Futura", sans-serif;
+  }
+
+  .visible_months {
+    position:absolute;
+    top: 0;
+    z-index: 1;
+
+    li {
+
+      @include inline-block();
+      width: 9px*12 + 9px*4;
+
+      .year {
+        @include inline-block();
+        width: 9px*3;
+      }
+
+      .month {
+        @include inline-block();
+        @include size(9px, $handleWidth);
+
+        background: url(icons/point.png) no-repeat 6px center;
+
+        z-index: 100;
+      }
+
+    }
   }
 
   .years {
@@ -734,13 +761,11 @@
         background:#fff;
       }
 
-      a {
+      .month {
         @include inline-block();
         @include size(9px, $handleWidth);
-        background: url(icons/point.png) no-repeat 6px center;
+
         z-index: 100;
-        /*margin: 0 7px 0 0;*/
-        /*&:last-child { margin-right: 7px; }*/
       }
 
     }
