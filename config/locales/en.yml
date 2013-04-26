@@ -51,13 +51,13 @@ en:
           text: "Subscribe to the Global Forest Watch discussion group to stay up to date with the latest news on forest clearing."
           link: 'Join the Group'
         analysis:
-          title: 'Analysis tool'
-          text: "Perform forest clearing analysis on the fly and get your answers in real time using our latest data"
-          link: 'Coming soon'
-        keep_updated:
-          title: 'Stay updated'
-          text: "Subscribe to forest clearing alerts and receive frequent updates on your selected countries"
-          link: 'Subscribe to alerts'
+          title: 'Analysis & alerts'
+          text: "Perform forest clearing analysis on the fly and get your answers in real time, or suscribe to change alerts."
+          link: 'Start analyzing'
+        submit_story:
+          title: 'Submit your story'
+          text: "Participate in detecting forest change. Send your story about forest clearing and we will add it to our collection"
+          link: 'Send a story'
   common:
     header:
       title: 'Global Forest Watch 2.0'
