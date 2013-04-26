@@ -57,6 +57,7 @@ class Story < CartoDB::Model::Base
       FROM stories#{CartoDB::TABLES_SUFFIX} stories,
            media#{CartoDB::TABLES_SUFFIX} media
       WHERE media.story_id = stories.cartodb_id
+      AND stories.featured = true
       ORDER BY stories.cartodb_id DESC
       LIMIT 3
     SQL
