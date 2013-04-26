@@ -38,7 +38,7 @@ class Media < CartoDB::Model::Base
   end
 
   def update_story_id(story_id, order = 0)
-    CartoDB::Connection.update_row 'media', cartodb_id, {
+    CartoDB::Connection.update_row "media#{CartoDB::TABLES_SUFFIX}", cartodb_id, {
       'story_id'    => story_id,
       'media_order' => order
     }

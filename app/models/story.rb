@@ -54,8 +54,9 @@ class Story < CartoDB::Model::Base
              title,
              media.thumbnail_url,
              ST_Y(ST_Centroid(stories.the_geom)) || ', ' || ST_X(ST_Centroid(stories.the_geom)) AS coords
-      FROM stories#{CartoDB::TABLES_SUFFIX} stories
-      LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
+      FROM stories#{CartoDB::TABLES_SUFFIX} stories,
+           media#{CartoDB::TABLES_SUFFIX} media
+      WHERE media.story_id = stories.cartodb_id
       ORDER BY stories.cartodb_id DESC
       LIMIT 3
     SQL
@@ -157,22 +158,22 @@ class Story < CartoDB::Model::Base
     }
   end
 
-  def self.featured(page, storiesper_page)
+  def self.featured(page, stories_per_page)
     results = CartoDB::Connection.query(<<-SQL)
       SELECT stories.cartodb_id AS id,
         title,
         details,
         your_name AS name,
         ST_Y(ST_Centroid(ST_Envelope(stories.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories.the_geom))) AS coords,
-        array_agg(media.image_url) as thumbnail_url
+        array_agg(media.thumbnail_url) as thumbnail_url
       FROM stories#{CartoDB::TABLES_SUFFIX} stories,
            media#{CartoDB::TABLES_SUFFIX} media
       WHERE stories.cartodb_id = media.story_id
       AND stories.featured = true
       GROUP BY stories.cartodb_id
       ORDER BY stories.cartodb_id ASC
-      LIMIT #{storiesper_page}
-      OFFSET #{(page - 1) * storiesper_page}
+      LIMIT #{stories_per_page}
+      OFFSET #{(page - 1) * stories_per_page}
     SQL
     return results.rows.try(:sample, 5) || [] if results
     []
@@ -187,8 +188,9 @@ class Story < CartoDB::Model::Base
              stories.featured,
              ST_Y(ST_Centroid(ST_Envelope(stories.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories.the_geom))) AS coords,
              media.thumbnail_url
-      FROM stories#{CartoDB::TABLES_SUFFIX} stories
-      LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
+      FROM stories#{CartoDB::TABLES_SUFFIX} stories,
+           media#{CartoDB::TABLES_SUFFIX} media
+      WHERE media.story_id = stories.cartodb_id
     SQL
     return results.rows.try(:sample, 5) || [] if results
     []
@@ -206,9 +208,10 @@ class Story < CartoDB::Model::Base
              stories.visible,
              ST_Y(ST_Centroid(ST_Envelope(stories.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories.the_geom))) AS coords,
              media.big_url
-      FROM stories#{CartoDB::TABLES_SUFFIX} stories
-      LEFT OUTER JOIN media ON media.story_id = stories.cartodb_id
-      WHERE stories.cartodb_id = #{id} OR stories.token = '#{id}'
+      FROM stories#{CartoDB::TABLES_SUFFIX} stories,
+           media#{CartoDB::TABLES_SUFFIX} media
+      WHERE (stories.cartodb_id = #{id} OR stories.token = '#{id}')
+      AND stories.cartodb_id = media.story_id
     SQL
     return results.rows || [] if results
     []
