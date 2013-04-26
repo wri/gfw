@@ -43,11 +43,12 @@ end %>
     <%= link_to (content_tag :span, t('.icons.analysis.link')), {}, :class => "btn green white_glow analysis" %>
     </li>
 
-    <li class="keep_updated">
+    <li class="submit_story">
     <div class="icon"></div>
-    <h2><%= t('.icons.keep_updated.title') %></h2>
-    <p><%= t('.icons.keep_updated.text') %></p>
-    <%= link_to (content_tag :span, t('.icons.keep_updated.link')), {}, :class => "btn green white_glow subscribe" %>
+    <h2><%= t('.icons.submit_story.title') %></h2>
+    <p><%= t('.icons.submit_story.text') %></p>
+    <%= link_to (content_tag :span, t('.icons.submit_story.link')), new_story_path, :class => "btn green white_glow submit_story" %>
+
     </li>
   </ul>
 </div>

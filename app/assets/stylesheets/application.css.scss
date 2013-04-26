@@ -353,9 +353,9 @@ nav {
         @include icons-sprite(analysis);
       }
 
-      &.keep_updated .icon {
+      &.submit_story .icon {
         width:122px;
-        @include icons-sprite(updates);
+        @include icons-sprite(submit_story);
       }
     }
   }
