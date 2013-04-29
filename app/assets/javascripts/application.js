@@ -93,14 +93,14 @@ function loadOtherStuff(callback) {
     GOD.add(languageSelector, languageSelector.hide);
   });
 
-  var TimelineNew = new gfw.ui.view.Timeline({
+  Timeline = new gfw.ui.view.Timeline({
     container: $("#map")
   });
 
-  window.timeline = TimelineNew;
+  window.timeline = Timeline;
 
   Circle.init();
-  Timeline.init();
+  //Timeline.init();
   Filter.init();
 
   $(".scroll").jScrollPane();

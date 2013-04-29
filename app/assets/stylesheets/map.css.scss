@@ -631,11 +631,9 @@
 .timeline_new {
   position:absolute;
   bottom: 120px;
-  /*height: 52px;*/
   z-index: 1000;
 
-  /*display:none;*/
-  /*opacity: 0;*/
+  display:none;
 
   background-color: $cWhite;
   border-color:rgb(102,102,102);
@@ -649,6 +647,19 @@
   box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);         // Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+
 
   .inner { clear:both; position:relative; }
+
+  .coordinates {
+    position:absolute;
+    top: -20px;
+    right: 5px;
+    text-align: right;
+
+    color:#fff;
+    font-weight:bold;
+    @extend .sans-serif;
+    font-size:11px;
+    text-shadow: 0px 0px 3px #222;
+  }
 
   $handleWidth: 14px;
 
@@ -667,6 +678,9 @@
       @include absolute-center(13px);
       display:block;
       background: url(icons/timeline_play.png) no-repeat 0 0;
+
+      &.pause { display:none; background: url(icons/timeline_pause.png) no-repeat 0 0; }
+
     }
 
   }
@@ -675,6 +689,22 @@
     float:left;
     position:relative;
     margin: 15px 0 0 13px;
+
+    .line {
+
+      .tipsy { display:block; bottom: 43px; left:-36px; }
+
+      display:none;
+      position:absolute;
+      top: -15px;
+      left: 95px;
+      border-left: 1px solid #A2BE00;
+      height: 50px;
+      width: 1px;
+
+      z-index: 210;
+    }
+
   }
 
   .range {
@@ -684,7 +714,7 @@
     background:#A2BC28;
     height: 6px;
     width: 200px;
-    @include box-shadow(1px 0 3px #ddd);
+    @include box-shadow(1px 0 3px #ccc);
     z-index: 10;
   }
 
@@ -692,19 +722,29 @@
     position:absolute;
     display:none;
     width: 70px;
-    bottom: 20px; left: -30px;
+    bottom: 25px; left: -29px;
     padding: 7px 0;
 
     background:#333;
 
-    @include border-radius(1px);
-    font-weight:normal;
+    @include border-radius(2px);
 
+    font-weight:normal;
     font-size:11px;
     text-transform: uppercase;
     text-align: center;
     color:#fff;
     font: normal 10px "Futura", sans-serif;
+
+    .arrow {
+      position:absolute;
+      @include size(0);
+      @include position(20px, false, false, 25px);
+      border-left: 11px solid transparent;
+      border-right: 11px solid transparent;
+      border-top: 12px solid #333;
+    }
+
   }
 
   .visible_months {
@@ -720,6 +760,7 @@
       .year {
         @include inline-block();
         width: 9px*3;
+
       }
 
       .month {
@@ -759,6 +800,8 @@
         color:#333;
         text-decoration:none;
         background:#fff;
+
+        &.active { color: #A2BE00; }
       }
 
       .month {

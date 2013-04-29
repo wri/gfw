@@ -1550,6 +1550,7 @@ var Timeline = (function() {
     $handle.find("div").html("<strong>" + month + "</strong> " + year);
 
     month_number = monthPos + (year - 2000)*12; // year 2000 is base year
+    console.log(month_number, year);
 
     instance.trigger('change_date', month_number, year);
 

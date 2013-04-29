@@ -1,31 +1,5 @@
 <div id="map-container">
 
-  <div class="timeline hidden">
-
-    <div class="inner">
-      <ul class="years">
-        <li class="y2006" ><a href="#">2006</a></li>
-        <li class="y2007" ><a href="#">2007</a></li>
-        <li class="y2008" ><a href="#">2008</a></li>
-        <li class="y2009" ><a href="#">2009</a></li>
-        <li class="y2010" ><a href="#">2010</a></li>
-        <li class="y2011" ><a href="#">2011</a></li>
-        <li class="y2012" ><a href="#">2012</a></li>
-        <li class="y2013" ><a href="#">2013</a></li>
-      </ul>
-
-      <div class="coordinates"></div>
-
-      <div class="constraint_handler">
-        <div class="handle">
-          <a href="#" class="play"></a>
-          <div><strong>JAN</strong> 2006</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
   <div class="draw hidden">
     <%= link_to t('.draw_area'), '#', :class => 'draw-area' %>
     <%= form_for :area, :url => areas_path, :html => {:method => :post, :class => 'save-area'} do |f| %>
