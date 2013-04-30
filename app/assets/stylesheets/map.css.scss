@@ -625,19 +625,12 @@
  * TIMELINE
  */
 
-$timelineWidth: 1038px;
-
-.timeline  {
+.timeline {
   position:absolute;
-  bottom: 20px;
-  left: 50%;
-  margin-left: -1*$timelineWidth / 2;
-  width: $timelineWidth;
-  height: 52px;
+  bottom: 40px;
   z-index: 1000;
 
   display:none;
-  opacity: 0;
 
   background-color: $cWhite;
   border-color:rgb(102,102,102);
@@ -649,117 +642,205 @@ $timelineWidth: 1038px;
   -moz-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);    // Firefox v3.5+
   -webkit-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15); // Safari v3.0+ and by Chrome v0.2+
   box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);         // Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+
-}
 
-.coordinates {
-  position:absolute;
-  top: -20px;
-  right: 5px;
-  text-align: right;
+  .inner { clear:both; position:relative; }
 
-  color:#fff;
-  font-weight:bold;
-  @extend .sans-serif;
-  font-size:11px;
-  text-shadow: 0px 0px 3px #222;
-}
-
-.timeline .handle {
-  position:absolute;
-  top: -29px;
-  left: 0px;
-  width: 112px;
-  height: 61px;
-  @include icons-sprite(timeline_handle_with_play);
-  @extend .disable-selection;
-  cursor:col-resize;
-  z-index:1001;
-
-  & > .play {
+  .coordinates {
     position:absolute;
-    display:block;
-    width:19px;
-    height:17px;
-    top: 13px;
-    left:11px;
-    @include icons-sprite(timeline_handle_play);
+    top: -20px;
+    right: 5px;
+    text-align: right;
 
-    &.disabled {
-      cursor: default;
-      opacity: .3;
-    }
-
-    &.playing { // stop icon
-      @include icons-sprite(timeline_handle_stop, $offset-x:-1px);
-    }
+    color:#fff;
+    font-weight:bold;
+    @extend .sans-serif;
+    font-size:11px;
+    text-shadow: 0px 0px 3px #222;
   }
 
-  & > div {
-    position:absolute;
-    top: 15px;
-    left: 32px;
-    width: 86px - 10;
-    padding: 5;
+  $handleWidth: 14px;
 
-    font: normal 12px "Futura", sans-serif;
-    text-align:center;
-    text-transform: uppercase;
-    color: $cGray1;
+  &.pause .action a {
+    background: url(icons/timeline_pause.png) no-repeat 0 0;
   }
 
-  &.hidden {
-    display:block;
-    @include icons-sprite(timeline_handle_hidden);
-  }
-}
-
-.timeline .years {
-  position:absolute;
-  top: 17px;
-
-  z-index:100;
-
-  li {
-
-    &.disabled a { color: #ccc; }
-
-    @include inline-block();
-    height: 20px;
-    margin: 0 120px 0 0;
+  .action {
     position:relative;
-
-    &.y2006 { margin-left: 10px; margin-right: 100px; }
-    &.y2007 { margin-right: 99px; }
-    &.y2008 { margin-right: 101px; }
-    &.y2009 { margin-right: 100px; }
-    &.y2010 { margin-right: 101px; }
-    &.y2011 { margin-right: 97px; }
-    &.y2012 { margin-left: 3px; margin-right: 98px; }
+    float:left;
+    width: 52px;
+    height: 50px;
+    border-right: 1px solid #333;
 
     a {
-      font: normal 10px "Futura", sans-serif;
-      color: #000;
-      text-decoration:none;
+      @include absolute-center(13px);
+      display:block;
+      background: url(icons/timeline_play.png) no-repeat 0 0;
+
+      &.pause { display:none; background: url(icons/timeline_pause.png) no-repeat 0 0; }
+
     }
 
-    &:last-child { width:auto; margin: 0; }
   }
-}
 
-.timeline .constraint_handler {
-  position:absolute;
-  height:52px;
-  top: 0;
-  left:-13px;
-  width: $timelineWidth + 60;
-}
+  .time {
+    float:left;
+    position:relative;
+    margin: 15px 0 0 13px;
 
-.timeline .inner {
-  position:absolute;
-  width:$timelineWidth + 2px;
-  height:52px;
-  background:url(backgrounds/bkg_timeline_dots.png) no-repeat 41px 24px;
-  @extend .disable-selection;
+    .line {
+
+      .tipsy { display:block; bottom: 43px; left:-36px; }
+
+      display:none;
+      position:absolute;
+      top: -15px;
+      left: 95px;
+      border-left: 1px solid #A2BE00;
+      height: 50px;
+      width: 1px;
+
+      z-index: 210;
+    }
+
+  }
+
+  .range {
+    display:none;
+    position:absolute;
+    top: 7px; left: 10px;
+    background:#A2BC28;
+    height: 6px;
+    width: 200px;
+    @include box-shadow(1px 0 3px #ccc);
+    z-index: 10;
+  }
+
+  .tipsy {
+    position:absolute;
+    display:none;
+    width: 70px;
+    bottom: 25px; left: -29px;
+    padding: 7px 0;
+
+    background:#333;
+
+    @include border-radius(2px);
+
+    font-weight:normal;
+    font-size:11px;
+    text-transform: uppercase;
+    text-align: center;
+    color:#fff;
+    font: normal 10px "Futura", sans-serif;
+
+    .arrow {
+      position:absolute;
+      @include size(0);
+      @include position(20px, false, false, 25px);
+      border-left: 11px solid transparent;
+      border-right: 11px solid transparent;
+      border-top: 12px solid #333;
+    }
+
+  }
+
+  .visible_months {
+    position:absolute;
+    top: 0;
+    z-index: 1;
+
+    li {
+
+      @include inline-block();
+      width: 9px*12 + 9px*4;
+
+      .year {
+        @include inline-block();
+        width: 9px*3;
+
+      }
+
+      .month {
+        @include inline-block();
+        @include size(9px, $handleWidth);
+
+        background: url(icons/point.png) no-repeat 6px center;
+
+        z-index: 100;
+      }
+
+    }
+  }
+
+  .years {
+    position:relative;
+    z-index: 100;
+
+    li {
+
+      &:last-child {
+        width: 9px*4;
+        span { width: 27px; }
+      }
+
+      @include inline-block();
+      width: 9px*12 + 9px*4;
+      /*margin-right: 9px*2;*/
+
+      .year {
+        @include inline-block();
+        width: 33px;
+        font-size: 11px;
+        text-align:center;
+        width: 9px*3;
+        font: normal 10px "Futura", sans-serif;
+        color:#333;
+        text-decoration:none;
+        background:#fff;
+
+        &.active { color: #A2BE00; }
+      }
+
+      .month {
+        @include inline-block();
+        @include size(9px, $handleWidth);
+
+        z-index: 100;
+      }
+
+    }
+
+  }
+
+  .trail {
+    position:absolute;
+    top: 0px; left: 0px;
+    width: 100%;
+    height: $handleWidth;
+
+    .ui-slider-handle.ui-state-default.ui-corner-all {
+      position:absolute;
+      top: 3px; left: 0;
+      z-index: 200;
+      @include size(14px);
+      background: url(icons/timeline_handler.png) no-repeat 0 0;
+      cursor:col-resize;
+      @extend .disable-selection;
+      outline:none;
+    }
+
+    .handle {
+      position:absolute;
+      top: 3px; left: 27px;
+      z-index: 200;
+      @include size(14px);
+      background: url(icons/timeline_handler.png) no-repeat 0 0;
+      cursor:col-resize;
+      @extend .disable-selection;
+
+      &.right { left: 846px; }
+    }
+  }
 }
 
 .info_bar {
