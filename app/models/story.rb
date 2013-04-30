@@ -184,7 +184,7 @@ class Story < CartoDB::Model::Base
   def self.random(limit)
     results = CartoDB::Connection.query(<<-SQL)
       SELECT DISTINCT ON (stories.cartodb_id)
-             stories.cartodb_id,
+             stories.cartodb_id as id,
              stories.title,
              stories.your_name,
              stories.featured,

@@ -8,11 +8,11 @@
     <ul>
       <% @stories.each do |story| %>
         <li>
-        <%= link_to image_tag(story_image_or_map(story.thumbnail_url, story.coords)), story, :class => :frame %>
+        <%= link_to image_tag(story_image_or_map(story.thumbnail_url, story.coords)), story_path(story.id), :class => :frame %>
         <%= show_exclamation?(story) %>
 
         <div class="infowindow">
-          <strong><%= link_to truncate(story.title, :length => 20, :length => 25), story %></strong>
+          <strong><%= link_to truncate(story.title, :length => 20, :length => 25), story_path(story.id) %></strong>
           <span>Submitted by <%= story.your_name %></span>
           <div class="tip"></div>
         </div>
