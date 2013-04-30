@@ -52,12 +52,13 @@ class Story < CartoDB::Model::Base
     sql = <<-SQL
       SELECT stories.cartodb_id AS id,
              title,
-             media.thumbnail_url,
-             ST_Y(ST_Centroid(stories.the_geom)) || ', ' || ST_X(ST_Centroid(stories.the_geom)) AS coords
+             ST_Y(ST_Centroid(stories.the_geom)) || ', ' || ST_X(ST_Centroid(stories.the_geom)) AS coords,
+             array_agg(media.thumbnail_url) as thumbnail_url
       FROM stories#{CartoDB::TABLES_SUFFIX} stories,
            media#{CartoDB::TABLES_SUFFIX} media
       WHERE media.story_id = stories.cartodb_id
       AND stories.featured = true
+      GROUP BY stories.cartodb_id
       ORDER BY stories.cartodb_id DESC
       LIMIT 3
     SQL
@@ -172,11 +173,11 @@ class Story < CartoDB::Model::Base
       WHERE stories.cartodb_id = media.story_id
       AND stories.featured = true
       GROUP BY stories.cartodb_id
-      ORDER BY stories.cartodb_id ASC
+      ORDER BY stories.cartodb_id DESC
       LIMIT #{stories_per_page}
       OFFSET #{(page - 1) * stories_per_page}
     SQL
-    return results.rows.try(:sample, 5) || [] if results
+    return results.rows || [] if results
     []
   end
 
