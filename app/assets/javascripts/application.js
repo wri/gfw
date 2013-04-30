@@ -102,7 +102,6 @@ function loadOtherStuff(callback) {
   window.timeline = Timeline;
 
   Circle.init();
-  //Timeline.init();
   Filter.init();
 
   $(".scroll").jScrollPane();

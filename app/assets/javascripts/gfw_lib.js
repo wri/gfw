@@ -494,7 +494,7 @@ GFW.modules.app = function(gfw) {
           Timeline.hide();
         } else {
           this.time_layer.show();
-          Timeline.show();
+          if (showMap) Timeline.show();
         }
 
       }
@@ -521,7 +521,7 @@ GFW.modules.app = function(gfw) {
 
       }
 
-      Timeline.show();
+      if (showMap) Timeline.show();
 
       Timeline.bind('change_date', function(month_number, year) {
         self.time_layer.set_time(month_number, year);
@@ -544,7 +544,7 @@ GFW.modules.app = function(gfw) {
 
           if (this.time_layer) {
             this.time_layer.show();
-            Timeline.show();
+            if (showMap) Timeline.show();
           }
 
         }
