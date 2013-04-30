@@ -627,10 +627,9 @@
  * TIMELINE
  */
 
-
-.timeline_new {
+.timeline {
   position:absolute;
-  bottom: 120px;
+  bottom: 40px;
   z-index: 1000;
 
   display:none;
@@ -844,143 +843,6 @@
       &.right { left: 846px; }
     }
   }
-}
-
-$timelineWidth: 1038px;
-
-.timeline  {
-  position:absolute;
-  bottom: 20px;
-  left: 50%;
-  margin-left: -1*$timelineWidth / 2;
-  width: $timelineWidth;
-  height: 52px;
-  z-index: 1000;
-
-  display:none;
-  opacity: 0;
-
-  background-color: $cWhite;
-  border-color:rgb(102,102,102);
-  border-width:1px;
-  -moz-border-radius:5px; // Firefox v1.0+
-  -webkit-border-radius:5px; // Safari v3.0+ and by Chrome v0.2+
-  border-radius:5px; // Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+
-  border-style:solid;
-  -moz-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);    // Firefox v3.5+
-  -webkit-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15); // Safari v3.0+ and by Chrome v0.2+
-  box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);         // Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+
-}
-
-.coordinates {
-  position:absolute;
-  top: -20px;
-  right: 5px;
-  text-align: right;
-
-  color:#fff;
-  font-weight:bold;
-  @extend .sans-serif;
-  font-size:11px;
-  text-shadow: 0px 0px 3px #222;
-}
-
-.timeline .handle {
-  position:absolute;
-  top: -29px;
-  left: 0px;
-  width: 112px;
-  height: 61px;
-  @include icons-sprite(timeline_handle_with_play);
-  @extend .disable-selection;
-  cursor:col-resize;
-  z-index:1001;
-
-  & > .play {
-    position:absolute;
-    display:block;
-    width:19px;
-    height:17px;
-    top: 13px;
-    left:11px;
-    @include icons-sprite(timeline_handle_play);
-
-    &.disabled {
-      cursor: default;
-      opacity: .3;
-    }
-
-    &.playing { // stop icon
-      @include icons-sprite(timeline_handle_stop, $offset-x:-1px);
-    }
-  }
-
-  & > div {
-    position:absolute;
-    top: 15px;
-    left: 32px;
-    width: 86px - 10;
-    padding: 5;
-
-    font: normal 12px "Futura", sans-serif;
-    text-align:center;
-    text-transform: uppercase;
-    color: $cGray1;
-  }
-
-  &.hidden {
-    display:block;
-    @include icons-sprite(timeline_handle_hidden);
-  }
-}
-
-.timeline .years {
-  position:absolute;
-  top: 17px;
-
-  z-index:100;
-
-  li {
-
-    &.disabled a { color: #ccc; }
-
-    @include inline-block();
-    height: 20px;
-    margin: 0 120px 0 0;
-    position:relative;
-
-    &.y2006 { margin-left: 10px; margin-right: 100px; }
-    &.y2007 { margin-right: 99px; }
-    &.y2008 { margin-right: 101px; }
-    &.y2009 { margin-right: 100px; }
-    &.y2010 { margin-right: 101px; }
-    &.y2011 { margin-right: 97px; }
-    &.y2012 { margin-left: 3px; margin-right: 98px; }
-
-    a {
-      font: normal 10px "Futura", sans-serif;
-      color: #000;
-      text-decoration:none;
-    }
-
-    &:last-child { width:auto; margin: 0; }
-  }
-}
-
-.timeline .constraint_handler {
-  position:absolute;
-  height:52px;
-  top: 0;
-  left:-13px;
-  width: $timelineWidth + 60;
-}
-
-.timeline .inner {
-  position:absolute;
-  width:$timelineWidth + 2px;
-  height:52px;
-  background:url(backgrounds/bkg_timeline_dots.png) no-repeat 41px 24px;
-  @extend .disable-selection;
 }
 
 #zoom_controls,
