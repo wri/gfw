@@ -159,6 +159,7 @@ TimePlayer.prototype.get_time_data = function(tile, coord, zoom) {
     return;
   }
 
+
   // get x, y for cells and sd, se for deforestation changes
   // sd contains the months
   // se contains the deforestation for each entry in sd
@@ -209,7 +210,7 @@ TimePlayer.prototype.render_time = function(tile, coord, zoom) {
   var i, x, y, cell, cells;
   cells = tile.cells;
 
-  if(!cells || cells.length === 0) {
+  if (!cells || cells.length === 0) {
     return;
   }
 

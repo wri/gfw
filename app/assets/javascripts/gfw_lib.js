@@ -527,6 +527,8 @@ GFW.modules.app = function(gfw) {
         self.time_layer.set_time(month_number, year);
       });
 
+      Timeline.loadDefaultRange();
+
     },
 
     _loadBaseLayer: function() {
