@@ -536,7 +536,7 @@ input[type=submit] {
   text-decoration: none;
   text-align: center;
 
-  &:hover { @include dark-glow(0.5); }
+  &:hover { @include dark-glow(0.2); }
 
   &.disabled { background:#ccc; }
 }

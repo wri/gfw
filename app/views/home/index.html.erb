@@ -33,21 +33,21 @@ end %>
     <div class="icon"></div>
     <h2><%= t('.icons.community.title') %></h2>
     <p><%= t('.icons.community.text') %></p>
-    <a href="https://groups.google.com/forum/?fromgroups#!forum/gfw2" class="btn green white_glow community" target="_blank"><span><%= t('.icons.community.link') %></span></a>
+    <a href="https://groups.google.com/forum/?fromgroups#!forum/gfw2" class="btn green darker_glow community" target="_blank"><span><%= t('.icons.community.link') %></span></a>
     </li>
 
     <li class="analysis_tool">
     <div class="icon"></div>
     <h2><%= t('.icons.analysis.title') %></h2>
     <p><%= t('.icons.analysis.text') %></p>
-    <%= link_to (content_tag :span, t('.icons.analysis.link')), {}, :class => "btn green white_glow analysis" %>
+    <%= link_to (content_tag :span, t('.icons.analysis.link')), {}, :class => "btn green darker_glow analysis" %>
     </li>
 
     <li class="submit_story">
     <div class="icon"></div>
     <h2><%= t('.icons.submit_story.title') %></h2>
     <p><%= t('.icons.submit_story.text') %></p>
-    <%= link_to (content_tag :span, t('.icons.submit_story.link')), new_story_path, :class => "btn green white_glow submit_story" %>
+    <%= link_to (content_tag :span, t('.icons.submit_story.link')), new_story_path, :class => "btn green darker_glow submit_story" %>
 
     </li>
   </ul>
@@ -77,7 +77,7 @@ end %>
   </ul>
   <div class="submit_story">
     <p>Do you have a story? Participate in detecting forest change.</p>
-    <p><%= link_to (content_tag :span, "Submit your story"), new_story_path, :class => "btn green white_glow" %></p>
+    <p><%= link_to (content_tag :span, "Submit your story"), new_story_path, :class => "btn green darker_glow" %></p>
   </div>
 
 </div>

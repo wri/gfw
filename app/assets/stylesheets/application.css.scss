@@ -392,7 +392,7 @@ nav {
       &.green {
         margin: 15px 0 0 0;
         color: #FFFFFF;
-        &:hover { @include dark-glow(0.5); }
+        &:hover { @include dark-glow(0.2); }
       }
     }
   }
@@ -1021,11 +1021,11 @@ article.contact {
   border: 1px solid #839C26;
 
   &.dark_glow:hover {
-    @include dark-glow(0.5);
+    @include dark-glow(1);
   }
 
-  &.white_glow:hover {
-    @include glow(0.5);
+  &.darker_glow:hover {
+    @include darker-glow(0.7);
   }
 
   & > span {
@@ -1053,7 +1053,7 @@ article.contact {
   background:#90a1a7;
   opacity: .5;
 
-  &.dark_glow:hover, &.white_glow:hover, &:hover {
+  &.dark_glow:hover, &.darker_glow:hover, &:hover {
     @extend .no-glow;
   }
 
