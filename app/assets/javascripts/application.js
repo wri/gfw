@@ -4,6 +4,8 @@
 //= require wax.g.min
 //= require cartodb-gmapsv3
 //= require cartodb-infowindow-min
+//= require protected-infowindow-min
+//= require imgLiquid.min
 //= require jstorage.min
 //= require lodash.min
 //= require backbone-min

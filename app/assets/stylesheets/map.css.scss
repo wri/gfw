@@ -1282,6 +1282,142 @@
   }
 }
 
+.cartodb_infowindow.with_image {
+  $width: 295px + 13;
+
+  position:absolute;
+  display:block;
+  width:$width;
+  max-height: 312px;
+  padding:0 0 6px;
+  visibility:hidden;
+  text-align:center;
+
+  a.close {
+    @include position(27px, 5px, false, false);
+    @include size(6px);
+    @include icons-sprite(infowindow_close);
+  }
+
+  $pR: 25px;
+  $pL: 17px;
+
+  .outer_top {
+    width:$width;
+    padding:25px 0 5px 0;
+    background:url('icons/bkg_image_infowindow.png') no-repeat left top;
+  }
+
+  .header {
+    margin: 0 0 10px 6px;
+    width: 295px;
+    text-align: left;
+
+    .cover {
+      width:295px;
+      height: 120px;
+      overflow:hidden;
+      clear:both;
+    }
+
+    h1 {
+      padding: 0 15px;
+      margin: 0 0 17px 0;
+      font-weight:bold;
+      font-size: 12px;
+      color: #FF5292;
+      line-height:normal;
+      text-transform: uppercase;
+      @extend .sans-serif;
+    }
+  }
+
+  .bottom {
+    @include position(false, false, -6px, -1px);
+    width:$width;
+    height:20px;
+    background:url('icons/bkg_image_infowindow.png') no-repeat right top;
+  }
+
+  .shadow {
+    @include position(false, false, 13px, 6px);
+    @include size(254px, 24px);
+    background:url(backgrounds/white_shadow.png) repeat-x;
+
+    z-index: 100;
+  }
+
+  .top {
+    width:275px;
+    margin:auto;
+
+    text-align: left;
+
+    .jspTrack {background: none;}
+    .jspDrag {background: #EDEDED;}
+    .jspHover, .jspActive {background:#666666}
+    .jspVerticalBar {
+      margin-right: 3px;
+    }
+
+    label {
+      display:block;
+      width:auto; padding:0 0 0 5px;
+      @extend .sans-serif;
+      font-size:11px;
+      color:#CCCCCC;
+      text-shadow:0 1px white;
+    }
+
+    .infowindow_content {
+      width:100%;
+      padding: 0 0 10px 0;
+      max-height:133px;
+      overflow-y:auto;
+      overflow-x:hidden;
+
+      /*margin: 0 0 0 5px;*/
+    }
+
+    p {
+      display:block;
+      width:255px;
+      max-height:20px;
+      padding:2px 0px;
+      margin:2px 0 10px 5px;
+      @extend .sans-serif;
+      font-weight:normal;
+      font-size:13px;
+      color:#666666;
+      border:none;
+      background:none;
+      text-shadow:0 1px white;
+      text-overflow:ellipsis;
+      overflow:hidden;
+      white-space:nowrap;
+
+      &.empty {font-weight:normal; font-style:italic; color:#b7b7b7;}
+    }
+
+
+    .title {
+
+      padding:2px 0 20px 0px;
+      margin:2px 0 10px 5px;
+      border-bottom: 3px solid #ccc;
+
+      strong {
+        text-overflow:ellipsis;
+        display:block;
+        @extend .sans-serif;
+        font-weight:bold;
+        font-size:12px;
+        text-transform: uppercase;
+      }
+    }
+
+  }
+}
 .cartodb_infowindow {
   $width: 268px;
 
@@ -1292,6 +1428,7 @@
   padding:0 0 6px;
   visibility:hidden;
   text-align:center;
+
 
   a.close {
     @include position(20px, 5px, false, false);

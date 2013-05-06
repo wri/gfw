@@ -51,7 +51,8 @@ GFW.modules.app = function(gfw) {
 
       this._map = map;
 
-      this.infowindow = new CartoDBInfowindow(map);
+      this.infowindow          = new CartoDBInfowindow(map);
+      this.protectedInfowindow = new ProtectedInfowindow(map);
 
       this.queries = {};
       this.storiesMarkers = [];
@@ -179,6 +180,7 @@ GFW.modules.app = function(gfw) {
       google.maps.event.addListener(this._map, 'click', function(event) {
 
         that.infowindow.close();
+        that.protectedInfowindow.close();
 
         if (!that.specialLayer) { return; }
 
@@ -203,9 +205,9 @@ GFW.modules.app = function(gfw) {
             var data = json[0];
 
             if (data) {
-              that.infowindow.setContent(data);
-              that.infowindow.setPosition(event.latLng);
-              that.infowindow.open();
+              that.protectedInfowindow.setContent(data);
+              that.protectedInfowindow.setPosition(event.latLng);
+              that.protectedInfowindow.open();
             }
 
           }
