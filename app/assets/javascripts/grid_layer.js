@@ -9,6 +9,7 @@ var BASE_MONTH = 71;
 
 function TimePlayer(table,version,cloudfront_url) {
   this.time         = 71;
+  this.start_time   = 0;
   this.stored_time  = 71;
   this.canvas_setup = this.get_time_data;
   this.render       = this.render_time;
@@ -21,6 +22,12 @@ function TimePlayer(table,version,cloudfront_url) {
 
 TimePlayer.prototype = new CanvasTileLayer();
 
+TimePlayer.prototype.set_start_time = function(t) {
+  if(this.start_time != (t>>0)) {
+    this.start_time = t >> 0;
+    this.redraw();
+  }
+}
 /**
 * change time, t is the month (integer)
 */
@@ -103,6 +110,14 @@ TimePlayer.prototype.sql = function(sql, callback) {
   }
 };
 
+function Uint8ArrayHack(len) {
+  var canvas = document.createElement('canvas');
+  canvas.width = Math.ceil(len/4);
+  canvas.height = 1;
+  return canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height).data;
+}
+
+
 // precache data to render fast
 TimePlayer.prototype.pre_cache_months = function(rows, coord, zoom, zoom_diff) {
   var row;
@@ -115,14 +130,20 @@ TimePlayer.prototype.pre_cache_months = function(rows, coord, zoom, zoom_diff) {
     ycoords = new Uint8Array(new ArrayBuffer(rows.length));
     deforestation = new Uint8Array(new ArrayBuffer(rows.length*MAX_MONTHS));// 256 months
   } else {
-    // fallback
-    xcoords = [];
-    ycoords = [];
-    deforestation = [];
-    // array buffer set by default to 0
-    // fucking javascript arrays not
-    for(var i = 0; i < rows.length*MAX_MONTHS; ++i){
-      deforestation[i] = 0;
+    if ($.browser.msie) {
+      xcoords = Uint8ArrayHack(rows.length);
+      ycoords = Uint8ArrayHack(rows.length);
+      deforestation = Uint8ArrayHack(rows.length * MAX_MONTHS);
+    } else {
+      // fallback
+      xcoords = [];
+      ycoords = [];
+      deforestation = [];
+      // array buffer set by default to 0
+      // fucking javascript arrays not
+      for(var i = 0; i < rows.length*MAX_MONTHS; ++i){
+        deforestation[i] = 0;
+      }
     }
   }
 
@@ -172,7 +193,7 @@ TimePlayer.prototype.get_time_data = function(tile, coord, zoom) {
   // for current zoom
   // zoom + 8 is get because a tile in "zoom" zoom level is a pixel in "zoom + 8"
   // level. Remember, it is a quadtree, 1^8 = 256 and tile size is 256px
-  var pixel_zoom = Math.min(zoom + 8, 16);
+  var pixel_zoom = Math.min(zoom + 8, $.browser.msie ? 12: 16);
   //pixel_zoom = zoom + 8;
   sql += " z = {0} ".format(pixel_zoom);
 
@@ -204,6 +225,7 @@ TimePlayer.prototype.get_time_data = function(tile, coord, zoom) {
 TimePlayer.prototype.render_time = function(tile, coord, zoom) {
   var self = this;
   var month = -BASE_MONTH + this.time>>0;
+  var month_start = -BASE_MONTH + this.start_time>>0;
   var w = tile.canvas.width;
   var h = tile.canvas.height;
   var ctx = tile.ctx;
@@ -238,10 +260,13 @@ TimePlayer.prototype.render_time = function(tile, coord, zoom) {
   //var pixels = data.data;
   var len = cells.length;
   var pixel_size = cells.size;
-
+  var index, index0, mul;
   for (i = 0; i < len; ++i) {
+    mul = MAX_MONTHS*i;
+    index = mul + month;
+    index0 = mul + month_start;
     // set pixel by hand faster than doing fill rect (below)
-    if (cells.deforestation[MAX_MONTHS*i + month]) {
+    if (cells.deforestation[index] - cells.deforestation[index0] > 0) {
       ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
     }
   }
