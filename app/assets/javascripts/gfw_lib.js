@@ -260,7 +260,10 @@ GFW.modules.app = function(gfw) {
     },
 
     _removeExternalLayer: function(layer) {
-      if (this.specialLayer) this.specialLayer.setOpacity(0);
+      if (this.specialLayer) {
+        this.specialLayer.setOpacity(0);
+        this.specialLayer = null;
+      }
     },
 
     _renderExternalLayer: function(layer) {
