@@ -523,8 +523,9 @@ GFW.modules.app = function(gfw) {
 
       if (showMap) Timeline.show();
 
-      Timeline.bind('change_date', function(month_number, year) {
-        self.time_layer.set_time(month_number, year);
+      Timeline.bind('change_date', function(start_month, end_month, year) {
+        self.time_layer.set_start_time(start_month);
+        self.time_layer.set_time(end_month, year);
       });
 
       Timeline.loadDefaultRange();
