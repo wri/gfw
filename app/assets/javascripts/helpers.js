@@ -145,6 +145,17 @@ config.mapStyles.forestSoft = new google.maps.ImageMapType({
   alt: "Global forest height"
 });
 
+config.mapStyles.LANDSAT = new google.maps.ImageMapType({
+  getTileUrl: function(ll, z) {
+    var X = ll.x % (1 << z);  // wrap
+    return "http://gfw-ee-tiles.appspot.com/gfw/l7_toa_1year_2012/" + z + "/" + X + "/" + ll.y + ".png";
+  },
+  tileSize: new google.maps.Size(256, 256),
+  isPng: true,
+  maxZoom: 8,
+  name: "Landsat"
+});
+
 config.mapStyles.TREEHEIGHT = new google.maps.ImageMapType({
   getTileUrl: function(ll, z) {
     var X = ll.x % (1 << z);  // wrap
