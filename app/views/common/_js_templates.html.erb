@@ -74,7 +74,7 @@
 
   <script id="layer-item-radio-template" type="text/x-underscore-template">
     <li id="filter_{{ id }}" class="{{ category }}">
-      <a href="#" class="radio {{ category }} {{ disabled ? 'disabled' : '' }}" data-name={{ category }}>{{name}}</a>
+      <a href="#" class="radio {{ category }} {{ slug }} {{ disabled ? 'disabled' : '' }}" data-name={{ category }}>{{name}}</a>
       <a href="#" data-category="{{category}}" data-slug="{{slug}}" class="source{{ slug == 'nothing' ? ' hidden' : '' }}"></a>
     </li>
   </script>

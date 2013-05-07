@@ -30,6 +30,9 @@ $cStoriesHover:          $cDarkGold;
 $cForestUse:             #CC4C02;
 $cForestUseHover:        darken(#CC4C02, 15%);
 
+$cForestClearing:        #F69;
+$cForestClearingHover:   darken(#F69, 15%);
+
 $cConservation:          #00CED0; // blue
 $cConservationHover:     #00B9B9;
 
@@ -321,7 +324,7 @@ strong { font-weight: bold; } // This is sad, I know.
 
   padding-left: 17px;
 
-  color:#333;
+  color:$cForestClearing;
   text-decoration:none;
 
   &:hover          { @include icons-sprite($url, $offset-y:-207px); }
@@ -329,8 +332,8 @@ strong { font-weight: bold; } // This is sad, I know.
   &:active         { @include icons-sprite($url, $offset-y:-207px); }
   &:active:hover   { @include icons-sprite($url, $offset-y:-277px); }
 
-  &.checked        { @include icons-sprite($url, $offset-y:-137px); }
-  &.checked:hover  { @include icons-sprite($url, $offset-y:-277px); }
+  &.checked        { color:$cForestClearing;      @include icons-sprite($url, $offset-y:-137px); }
+  &.checked:hover  { color:$cForestClearingHover; @include icons-sprite($url, $offset-y:-277px); }
 
   &.disabled       { color: $cGray4; @include icons-sprite($url, $offset-y:5px); }
   &.disabled:hover { @include icons-sprite($url, $offset-y:5px); }

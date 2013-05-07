@@ -1092,7 +1092,7 @@ article.contact {
 }
 
 
-.radio {
+#filters #layer ul li .radio {
   @include radio(radio);
 
   &.forest_clearing    { @include radio(radio_fire); }
