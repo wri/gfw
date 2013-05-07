@@ -1075,21 +1075,6 @@
   }
 }
 
-#analysis_control {
-  z-index: 1000;
-  @include size(38px, 38px);
-  @include position(76px, false, false, 15px);
-  @include icons-sprite(analysis_button);
-
-  &:hover { @include icons-sprite(analysis_button_hover); }
-  &:active { @include icons-sprite(analysis_button_active); }
-
-  &.disabled {
-    cursor: default;
-    @include icons-sprite(analysis_button_disabled);
-  }
-}
-
 #zoom_controls,
 #zoom_controls_subscribe {
 
