@@ -1298,11 +1298,21 @@
     width: 295px;
     text-align: left;
 
+    .analyse {
+      @include position(65px, 5px, false, false);
+      @include size(41px, 42px);
+      @include icons-sprite(graph);
+    }
+
     .cover {
       width:295px;
       height: 120px;
       overflow:hidden;
       clear:both;
+
+      border-top: 1px solid rgba(#000, .2);
+      border-bottom: 1px solid rgba(#000, .2);
+
     }
 
     h1 {
@@ -1314,6 +1324,13 @@
       line-height:normal;
       text-transform: uppercase;
       @extend .sans-serif;
+
+      @include inline-block();
+      white-space: nowrap;
+      width: 235px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
     }
   }
 
@@ -1357,7 +1374,7 @@
     .infowindow_content {
       width:100%;
       padding: 0 0 10px 0;
-      max-height:133px;
+      max-height:113px;
       overflow-y:auto;
       overflow-x:hidden;
 
