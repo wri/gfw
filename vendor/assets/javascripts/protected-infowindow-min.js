@@ -36,7 +36,7 @@ ProtectedInfowindow.prototype.draw = function() {
     div.innerHTML = '<a href="#close" class="close"></a>'+
       '<div class="outer_top">'+
       '<div class="header">' +
-      '<h1></h1><a href="#analyse" class="analyse"></a><div class="cover imgLiquidFill" style="width:295px; height:120px;"><img src="/assets/backgrounds/cover.png" /></div>'+
+      '<h1></h1><div class="cover imgLiquidFill" style="width:295px; height:120px;"><img src="/assets/backgrounds/cover.png" /></div>'+
       '</div>' +
       '<div class="top">'+
       '<div class="infowindow_content"></div>' +
