@@ -152,7 +152,7 @@ config.mapStyles.LANDSAT = new google.maps.ImageMapType({
   },
   tileSize: new google.maps.Size(256, 256),
   isPng: true,
-  maxZoom: 8,
+  maxZoom: 5,
   name: "Landsat"
 });
 
