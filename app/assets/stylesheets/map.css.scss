@@ -303,7 +303,7 @@
 
     .mask {
       @include position(-9px, false, false, -9px);
-      @include size(67px);
+      @include size(67px, 66px);
       @include icons-sprite(marker_hollow);
       z-index: 100;
     }
