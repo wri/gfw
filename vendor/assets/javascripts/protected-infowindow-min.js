@@ -144,7 +144,7 @@ ProtectedInfowindow.prototype.setPosition = function(latlng) {
   if (latlng) {
     this.latlng_ = latlng;
     // Adjust pan
-    //this._adjustPan();
+    this._adjustPan();
   }
 
   if (this.div_) {
@@ -228,8 +228,8 @@ ProtectedInfowindow.prototype._adjustPan = function() {
   , container = this.map_.getDiv()
   , div_height = this.div_.clientHeight;
 
-  if ((pixPosition.x - 65) < 0) {
-    left = (pixPosition.x - 65);
+  if ((pixPosition.x - 165) < 0) {
+    left = (pixPosition.x - 165);
   }
 
   if ((pixPosition.x + 180) >= container.clientWidth) {
