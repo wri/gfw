@@ -46,13 +46,13 @@ ProtectedInfowindow.prototype.draw = function() {
       '<div class="bottom"></div>';
 
     var close = this.getElementsByClassName("close", div)[0];
-    var analyse = this.getElementsByClassName("analyse", div)[0];
+    //var analyse = this.getElementsByClassName("analyse", div)[0];
 
-    google.maps.event.addDomListener(analyse, 'click', function (ev) {
-      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      analysis._loadCountry("MEX")
-      me._hide();
-    });
+    //google.maps.event.addDomListener(analyse, 'click', function (ev) {
+      //ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+      //analysis._loadCountry("MEX")
+      //me._hide();
+    //});
 
     google.maps.event.addDomListener(close, 'click', function (ev) {
       //ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;

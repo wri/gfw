@@ -252,7 +252,7 @@ GFW.modules.app = function(gfw) {
       var that = this;
 
       setTimeout(function() {
-        if (that.time_layer && Timeline.getStoredMonth()) that.time_layer.refresh_time(Timeline.getStoredMonth());
+        Timeline.refresh();
       }, 800);
 
       this._toggleTimeLayer();
