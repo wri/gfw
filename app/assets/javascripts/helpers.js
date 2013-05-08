@@ -75,11 +75,11 @@ String.prototype.truncate = function(n) {
 };
 
 var config = {
-  ZOOM:               5,
+  ZOOM:               3,
   MINZOOM:            3,
   MAXZOOM:            17,
-  LAT:                3,
-  LNG:                120,
+  LAT:                15,
+  LNG:                27,
   MONTHNAMES:         ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
   MONTHNAMES_SHORT:   ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
   YEARS:              [2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014],
