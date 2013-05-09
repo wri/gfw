@@ -52,7 +52,7 @@ ProtectedInfowindow.prototype.draw = function() {
 
     google.maps.event.addDomListener(analyse, 'click', function (ev) {
       ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      analysis._loadProtectedArea(me.content.id, me.content.title)
+      analysis._loadProtectedArea(me.content.id, me.content.name)
       me._hide();
     });
 
@@ -128,6 +128,7 @@ ProtectedInfowindow.prototype.setContent = function(content){
       var html = '';
 
       this.content = content;
+      console.log(content);
 
       for (var column in content) {
 
