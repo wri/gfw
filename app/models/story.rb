@@ -177,7 +177,7 @@ class Story < CartoDB::Model::Base
       LIMIT #{stories_per_page}
       OFFSET #{(page - 1) * stories_per_page}
     SQL
-    return results.rows || [] if results
+    return results.rows.try(:first, 5) || [] if results
     []
   end
 
