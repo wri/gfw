@@ -5,6 +5,8 @@
 
 function ProtectedInfowindow(map, opts) {
 
+  this.content = {};
+
   this.latlng_ = null;
   this.offsetHorizontal_ = 0;
   this.offsetVertical_   = -10;
@@ -50,7 +52,7 @@ ProtectedInfowindow.prototype.draw = function() {
 
     google.maps.event.addDomListener(analyse, 'click', function (ev) {
       ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      analysis._loadCountry("MEX")
+      analysis._loadProtectedArea(me.content.id, me.content.title)
       me._hide();
     });
 
@@ -125,7 +127,9 @@ ProtectedInfowindow.prototype.setContent = function(content){
       top.innerHTML = '';
       var html = '';
 
-      for(var column in content) {
+      this.content = content;
+
+      for (var column in content) {
 
         if (column != "title" && column != "image" && column != "image" && column != "slug" && content[column] != null && content[column] != ''){
           html += '<label>' + column + '</label>';
