@@ -8,8 +8,8 @@ var MAX_MONTHS = 160;
 var BASE_MONTH = 71;
 
 function TimePlayer(table,version,cloudfront_url) {
-  this.time         = 71;
-  this.start_time   = 0;
+  this.time         = MAX_MONTHS;
+  this.start_time   = BASE_MONTH;
   this.stored_time  = 71;
   this.canvas_setup = this.get_time_data;
   this.render       = this.render_time;
