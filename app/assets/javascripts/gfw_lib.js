@@ -188,7 +188,6 @@ GFW.modules.app = function(gfw) {
         lat = event.latLng.lat(),
         lng = event.latLng.lng(),
         url = 'http://protectedplanet.net/api/sites_by_point/'+lng+'/'+lat;
-        console.log(url);
 
         $.ajax({
           async: false,
@@ -607,9 +606,9 @@ GFW.modules.app = function(gfw) {
       var layers = config.mapOptions.layers;
 
       if (layers) {
-        hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + layers;
+        hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + config.iso + "/" + layers;
       } else {
-        hash = "map/" + zoom + "/" + lat + "/" + lng + "/";
+        hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + config.iso + "/";
       }
 
       window.router.navigate(hash);

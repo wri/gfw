@@ -112,6 +112,7 @@ var config = {
 };
 
 config.mapLoaded = false;
+config.iso       = "ALL";
 
 config.mapOptions = {
   zoom:               config.ZOOM,

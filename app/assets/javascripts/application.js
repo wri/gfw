@@ -33,6 +33,7 @@ subscribeMap;
 GOD               = {},
 legend            = {},
 analysis          = {},
+Timeline          = {},
 wall              = {},
 sourceWindow      = {},
 gallery           = {},
@@ -179,6 +180,7 @@ function loadGFW(callback) {
   analysis = new gfw.ui.view.Analysis({ map: map });
   $("#map").append(analysis.render());
   analysis.info.setDraggable(true);
+
 }
 
 (function(window,undefined){
@@ -277,10 +279,10 @@ function loadGFW(callback) {
     var layers = config.mapOptions.layers;
 
     if(layers) {
-      hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + layers;
+      hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + config.iso + "/" + layers;
       window.router.navigate(hash, { trigger: true, replace: true });
     } else {
-      hash = "map/" + zoom + "/" + lat + "/" + lng;
+      hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + config.iso;
       window.router.navigate(hash, { trigger: true });
     }
 
@@ -300,8 +302,9 @@ $(function(){
 
     routes: {
       "map":                         "map",
-      "map/:zoom/:lat/:lon":         "mapWithCoordinates",
-      "map/:zoom/:lat/:lon/*layers": "mapWithCoordinates",
+      "map/:zoom/:lat/:lon":              "mapWithCoordinates",
+      "map/:zoom/:lat/:lon/:iso":         "mapWithCoordinates",
+      "map/:zoom/:lat/:lon/:iso/*layers": "mapWithCoordinates",
       "/":                           "home",
       "":                            "home"
     },
@@ -321,16 +324,20 @@ $(function(){
 
     },
 
-    mapWithCoordinates: function(zoom, lat, lon, layers) {
+    mapWithCoordinates: function(zoom, lat, lon, iso, layers) {
       if (lat && lon) { config.mapOptions.center = new google.maps.LatLng(lat, lon); }
       if (zoom)       { config.mapOptions.zoom   = parseInt(zoom, 10); }
       if (layers)     { config.mapOptions.layers = layers; }
+
+      if (!iso) config.iso = "ALL";
+      else config.iso = iso;
 
       loadGFW( function() {
         Navigation.showState("map");
       });
 
       if (lat && lon) map.setCenter(new google.maps.LatLng(lat, lon));
+      if (iso != "ALL") analysis._loadCountry(iso);
     }
 
   });

@@ -775,13 +775,14 @@ var Navigation = (function() {
 
     legend.hide();
     analysis.hide();
+    analysis.button.hide();
     layerSelector.hide();
 
     Navigation.select("home");
 
     Filter.hide(function() {
 
-      $("header").animate({ height: "226px" }, 250, function() {
+      $("header").animate({ height: "230px" }, 250, function() {
         $("hgroup h1").show();
         $("hgroup h1").animate({ top: 29, opacity: 1 }, 250);
       });
@@ -816,7 +817,9 @@ var Navigation = (function() {
 
     layerSelector.show();
     legend.show();
+
     analysis.show();
+    analysis.button.show();
 
     if (this.time_layer) this.time_layer.set_time(self.time_layer.cache_time());
 
@@ -912,7 +915,7 @@ var Filter = (function() {
     var lat  = map.getCenter().lat().toFixed(2);
     var lng  = map.getCenter().lng().toFixed(2);
 
-    var hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + filters.join(",");
+    var hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + config.iso + "/" + filters.join(",");
     window.router.navigate(hash, { replace: true, trigger: true });
   }
 

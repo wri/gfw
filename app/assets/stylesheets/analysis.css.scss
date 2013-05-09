@@ -4,7 +4,7 @@
 @import "helpers";
 
 #analysis_control {
-  display:none;
+  /*display:none;*/
 
   z-index: 1000;
   @include size(38px, 38px);

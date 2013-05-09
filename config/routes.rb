@@ -11,7 +11,8 @@ Gfw::Application.routes.draw do
   match 'old' => 'static#old'
 
   match 'map'   => 'home#index'
-  match 'map/:zoom/:lat/:lng(/:filters)'   => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
+  match 'map/:zoom/:lat/:lng(/:iso)'            => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
+  match 'map/:zoom/:lat/:lng/:iso(/:filters)'   => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
 
   match 'country/:id'   => 'countries#show'
 
