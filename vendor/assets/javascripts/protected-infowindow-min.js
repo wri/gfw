@@ -36,7 +36,7 @@ ProtectedInfowindow.prototype.draw = function() {
     div.innerHTML = '<a href="#close" class="close"></a>'+
       '<div class="outer_top">'+
       '<div class="header">' +
-      '<h1></h1><div class="cover imgLiquidFill" style="width:295px; height:120px;"><img src="/assets/backgrounds/cover.png" /></div>'+
+      '<h1><h1><a href="#" class="analyse"></a></h1><div class="cover imgLiquidFill" style="width:295px; height:120px;"><img src="/assets/backgrounds/cover.png" /></div>'+
       '</div>' +
       '<div class="top">'+
       '<div class="infowindow_content"></div>' +
@@ -46,13 +46,13 @@ ProtectedInfowindow.prototype.draw = function() {
       '<div class="bottom"></div>';
 
     var close = this.getElementsByClassName("close", div)[0];
-    //var analyse = this.getElementsByClassName("analyse", div)[0];
+    var analyse = this.getElementsByClassName("analyse", div)[0];
 
-    //google.maps.event.addDomListener(analyse, 'click', function (ev) {
-      //ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      //analysis._loadCountry("MEX")
-      //me._hide();
-    //});
+    google.maps.event.addDomListener(analyse, 'click', function (ev) {
+      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+      analysis._loadCountry("MEX")
+      me._hide();
+    });
 
     google.maps.event.addDomListener(close, 'click', function (ev) {
       //ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;

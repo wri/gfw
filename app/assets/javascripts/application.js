@@ -176,9 +176,9 @@ function loadGFW(callback) {
   legend.setDraggable(true);
 
   // Analysis
-  //analysis = new gfw.ui.view.Analysis({ map: map });
-  //$("#map").append(analysis.render());
-  //analysis.info.setDraggable(true);
+  analysis = new gfw.ui.view.Analysis({ map: map });
+  $("#map").append(analysis.render());
+  analysis.info.setDraggable(true);
 }
 
 (function(window,undefined){
