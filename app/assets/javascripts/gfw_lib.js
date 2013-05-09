@@ -188,6 +188,7 @@ GFW.modules.app = function(gfw) {
         lat = event.latLng.lat(),
         lng = event.latLng.lng(),
         url = 'http://protectedplanet.net/api/sites_by_point/'+lng+'/'+lat;
+        console.log(url);
 
         $.ajax({
           async: false,
