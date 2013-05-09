@@ -128,7 +128,6 @@ ProtectedInfowindow.prototype.setContent = function(content){
       var html = '';
 
       this.content = content;
-      console.log(content);
 
       for (var column in content) {
 

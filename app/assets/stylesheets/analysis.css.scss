@@ -125,3 +125,245 @@
 
 }
 
+.analysis_info {
+  width: 248px;
+  min-height: 40px;
+  background: #F1F1F1;
+
+  @include position(87px, 30px, false, false);
+  @include border-radius(3px);
+  @include box-shadow(0px 0px 3px $cGray2);
+
+  border: 1px solid #666;
+
+  @extend .sans-serif;
+  font-size:11px;
+  color: $cGray3;
+
+  display: none;
+
+  cursor: move;
+
+  .toggle {
+    @include position(2px, -25px, false, false);
+    @include size(25px, 38px);
+    @include icons-sprite(info_bar_toggle_close);
+  }
+
+  &.closed .toggle { @include icons-sprite(info_bar_toggle_open); }
+
+  .shadow {
+    display:none;
+
+    @include position(false, false, 1px, 0);
+    @include size(100%, 20px);
+    background:url(backgrounds/white_shadow.png) repeat-x;
+
+    z-index: 100;
+  }
+
+  .jspPane { width: 248px!important; }
+
+  .info_title {
+    width: 205px;
+    height: 25px;
+    line-height: 40px;
+    padding: 0 15px;
+
+    font-size: 11px;
+    color: #bbb;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    display:none;
+
+    clear:both;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .content {
+    position: relative;
+    width: 248px;
+    @include border-radius(3px);
+
+    font-family: "Helvetica Neue", Arial;
+
+    .info {
+      padding: 17px 20px 13px;
+      border-bottom: 1px solid #ccc;
+      clear:both;
+      overflow:hidden;
+    }
+
+    .title {
+      display:block;
+      color: #999999;
+      font-size:11px;
+      line-height: 1.2;
+      font-weight:bold;
+      text-transform:uppercase;
+
+      clear:both;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .subtitle {
+      color: #bababa;
+      font-size: 12px;
+      line-height: 2;
+    }
+
+    .stats {
+      display:block;
+      padding: 17px 20px 13px;
+      background: #fff;
+
+      li {
+        @include inline-block();
+      }
+    }
+
+    .controls {
+      padding: 13px 20px 17px;
+      border-top: 1px solid #ccc;
+      clear:both;
+      overflow:hidden;
+    }
+
+    .control_buttons {
+      float:right;
+
+      li {
+        float: left;
+
+        a {
+          display: block;
+          cursor: pointer;
+          height: 29px;
+          width: 30px;
+        }
+      }
+
+      .subscribe { @include icons-sprite(control_buttons_subscribe); }
+      .reset {
+        width: 31px;
+        @include icons-sprite(control_buttons_reset);
+      }
+    }
+  }
+
+  .ha,
+  .alert { font-size: 12px; }
+
+  .alert {
+    display: block;
+    margin-top: 13px;
+    padding-top: 17px;
+    width: 100%;
+    border-top: 1px solid #ccc;
+  }
+
+  .count {
+    strong {
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 1.5;
+      color: #666;
+    }
+
+    &.forma {
+      color: #F13588;
+
+      strong,
+      a { color: #F13588; }
+    }
+  }
+
+  .download {
+    float: right;
+    margin-top: 10px;
+  }
+
+  z-index:1000;
+}
+
+.helper_bar {
+  display: none;
+  z-index: 1000;
+
+  $width: 476px;
+  bottom: 39px;
+
+  width: $width;
+  padding: 9px 13px;
+
+  @include absolute-landscape-center($width);
+  @include border-radius(5px);
+
+  background:#fff;
+  border: 1px solid #666666;
+
+  font-family: "Helvetica Neue",Arial;
+  clear:both;
+  overflow:hidden;
+
+  p {
+    float:left;
+    @include inline-block();
+    margin: 10px 0 0 0;
+    padding: 0;
+    color: #666666;
+    font-size:13px;
+  }
+
+  .options { float:right; }
+
+  a  {
+    @include inline-block();
+    width: 70px;
+    padding: 10px 0;
+    border: #666666;
+    @include border-radius(3px);
+    font-weight:bold;
+
+    text-align: center;
+    font-size:11px;
+    text-transform:uppercase;
+    text-decoration:none;
+
+    &.done {
+      background:#A1BA42;
+      color: #fff;
+      border: 1px solid #839C26;
+
+      &:hover {
+        background: darken(#A1BA42, 10%);
+        border-color:darken(#A1BA42, 10%);
+      }
+
+      &.disabled {
+        opacity: .5;
+
+        &:hover {
+          background:#A1BA42;
+          border-color: #839C26;
+          cursor: default;
+        }
+      }
+    }
+
+    &.cancel {
+      background: #fff;
+      border: 1px solid #CCCCCC;
+      color: #666666;
+
+      &:hover { background:#f1f1f1; }
+
+    }
+  }
+}
+
