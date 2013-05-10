@@ -218,8 +218,11 @@ function loadGFW(callback) {
 
   $(".analysis").on("click", function(e) {
     e.preventDefault();
+    console.log('a');
 
-    $(".backdrop").fadeIn(250);
+    $("body").animate({ scrollTop: 0 }, 250, function() {
+      analysis._showHelper();
+    });
 
   });
 
