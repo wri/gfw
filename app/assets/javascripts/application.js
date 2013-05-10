@@ -221,7 +221,7 @@ function loadGFW(callback) {
     console.log('a');
 
     $("body").animate({ scrollTop: 0 }, 250, function() {
-      analysis._showHelper();
+      analysis.startAnalyzing();
     });
 
   });
