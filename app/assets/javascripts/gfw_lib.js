@@ -314,6 +314,37 @@ GFW.modules.app = function(gfw) {
         }
       }];
 
+      styles = {
+        "items": [ {
+            "tableId": "2949980",
+            "styleId": 1,
+            "polygonOptions": {
+              "fillColorStyler": {
+                "kind": "gradient",
+                "columnName": "type",
+                "gradient": {
+                  "colors": [
+                    {
+                      "color": "#23819c",
+                      "opacity": 0.5
+                    },
+                    {
+                      "color": "#2dc800",
+                      "opacity": 0.5
+                    },
+                    {
+                      "color": "#f7de00",
+                      "opacity": 0.5
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      };
+
+
       this.imazonLayer = new google.maps.FusionTablesLayer({
         query: {
           select: "geo",
