@@ -298,60 +298,29 @@ GFW.modules.app = function(gfw) {
 
       //Filter.toggle(584)
 
-      var styles = [{
-        where: "type = '7'",
-        polygonOptions: {
-          fillColor: "#ECCD50",
-          strokeWeight: "#ECCD50",
-          strokeWeight: 1
-        }
-      }, {
-        where: "type = '8'",
-        polygonOptions: {
-          fillColor: "#EC5150",
-          strokeWeight: "#EC5150",
-          strokeWeight: 1
-        }
-      }];
-
-      styles = {
-        "items": [ {
-            "tableId": "2949980",
-            "styleId": 1,
-            "polygonOptions": {
-              "fillColorStyler": {
-                "kind": "gradient",
-                "columnName": "type",
-                "gradient": {
-                  "colors": [
-                    {
-                      "color": "#23819c",
-                      "opacity": 0.5
-                    },
-                    {
-                      "color": "#2dc800",
-                      "opacity": 0.5
-                    },
-                    {
-                      "color": "#f7de00",
-                      "opacity": 0.5
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        ]
-      };
-
-
       this.imazonLayer = new google.maps.FusionTablesLayer({
         query: {
           select: "geo",
           from: "2949980"
         },
         suppressInfoWindows:true,
-        styles: styles,
+        styles: [
+        {
+          where: 'type = 8', // degradation
+          polygonOptions: {
+            fillColor: "#ff8208",
+            strokeColor: "#ff8208",
+            strokeWeight: 5
+          }
+        }, {
+          where: 'type = 7', // deforestation
+          polygonOptions: {
+            fillColor: "#DE4535",
+            strokeColor: "#DE4535",
+            strokeWeight: 5
+          }
+        }
+        ],
         map: this._map
       });
 
@@ -617,8 +586,6 @@ GFW.modules.app = function(gfw) {
       var self = this;
       var table_name = null;
 
-      console.log('loading base layer', this.currentBaseLayer);
-
       this._removeImazonLayer();
 
       if (this.currentBaseLayer === "semi_monthly") {
@@ -643,7 +610,6 @@ GFW.modules.app = function(gfw) {
         table_name = 'gfw2_hansen';
       } else if (this.currentBaseLayer === "brazilian_amazon") {
         table_name = 'brazilian_amazon';
-        console.log('load brazilian');
         this._renderImazonLayer();
         return;
       }
@@ -850,7 +816,6 @@ GFW.modules.maplayer = function(gfw) {
             annual.attributes['visible']       = true;
           } else if (slug == 'brazilian_amazon') {
             sad.attributes['visible']          = true;
-            console.log('brazil');
           }
 
           legend.replace(id, category_slug, category, title, slug, category_color, title_color);
