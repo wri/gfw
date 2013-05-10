@@ -73,6 +73,7 @@ GFW.modules.app = function(gfw) {
       // Layers
       this.mainLayer        = null;
       this.specialLayer     = null;
+      this.imazonLayer      = null;
       this.currentBaseLayer = "semi_monthly";
 
       this._setupZoom();
@@ -236,11 +237,19 @@ GFW.modules.app = function(gfw) {
 
     _addLayer: function(layer) {
 
-      if (!layer.get('external')) {
+      if (layer.get("external")) {
+
+        var table_name = layer.get("table_name");
+
+        if (table_name == "protected_areas") {
+          this._renderExternalLayer(layer);
+        } else if (table_name == "gfw2_imazon") {
+          this._renderImazonLayer(layer);
+        }
+
+      } else {
         this._layers.push(layer.get('table_name'));
         this._renderLayers();
-      } else {
-        this._renderExternalLayer(layer);
       }
 
       this._refreshTimeLine();
@@ -287,6 +296,31 @@ GFW.modules.app = function(gfw) {
         map.overlayMapTypes.push(this.specialLayer);
       }
 
+    },
+
+    _renderImazonLayer: function(layer) {
+      var that = this;
+
+      this.imazonLayer = new google.maps.FusionTablesLayer({
+        query: {
+          select: "geo",
+          from: "2949980",
+          where: "type = '7'"
+        },
+        suppressInfoWindows:true,
+        styles: [
+          { polygonOptions: {fillColor:'#333333',fillOpacity:0.1,strokeColor:'#333333',strokeWeight:2,strokeOpacity:0.6    }}
+        ],
+        map: this._map
+      });
+
+    },
+
+    _removeImazonLayer: function(layer) {
+      if (this.imazonLayer) {
+        this.imazonLayer.setOpacity(0);
+        this.imazonLayer = null;
+      }
     },
 
     _renderLayers: function() {
@@ -499,7 +533,7 @@ GFW.modules.app = function(gfw) {
           Timeline.hide();
         } else {
           this.time_layer.show();
-          if (showMap) Timeline.show();
+          Timeline.show();
         }
 
       }
@@ -526,7 +560,7 @@ GFW.modules.app = function(gfw) {
 
       }
 
-      if (showMap) Timeline.show();
+      Timeline.show();
 
       Timeline.bind('change_date', function(start_month, end_month, year) {
         self.time_layer.set_start_time(start_month);
@@ -552,7 +586,7 @@ GFW.modules.app = function(gfw) {
 
           if (this.time_layer) {
             this.time_layer.show();
-            if (showMap) Timeline.show();
+            Timeline.show();
           }
 
         }
@@ -748,7 +782,11 @@ GFW.modules.maplayer = function(gfw) {
 
         if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon") {
 
-          (slug === 'semi_monthly' && showMap) ?  Timeline.show() : Timeline.hide();
+          if (slug === 'semi_monthly' && showMap) {
+            Timeline.show();
+          } else {
+            Timeline.hide();
+          }
 
           GFW.app.currentBaseLayer = slug;
 
