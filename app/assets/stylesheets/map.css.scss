@@ -475,7 +475,7 @@
     &.terrain        i { @include icons-sprite(map_terrain_bn); }
     &.classic        i { @include icons-sprite(map_terrain); }
     &.tree_height    i { @include icons-sprite(map_tree_height); }
-    &.landsat        i { @include icons-sprite(map_satellite); }
+    &.landsat        i { @include icons-sprite(map_landsat); }
 
     i {
       @include inline-block();
