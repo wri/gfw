@@ -299,18 +299,18 @@ GFW.modules.app = function(gfw) {
       //Filter.toggle(584)
 
       var styles = [{
-        where: "type = 7",
+        where: "type = '7'",
         polygonOptions: {
           fillColor: "#ECCD50",
           strokeWeight: "#ECCD50",
-          strokeWeight: 0
+          strokeWeight: 1
         }
       }, {
-        where: "type = 8",
+        where: "type = '8'",
         polygonOptions: {
           fillColor: "#EC5150",
           strokeWeight: "#EC5150",
-          strokeWeight: 0
+          strokeWeight: 1
         }
       }];
 
