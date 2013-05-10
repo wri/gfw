@@ -272,6 +272,17 @@
     <div class="shadow"></div>
   </script>
 
+  <script id="legend-group-double-template" type="text/x-underscore-template">
+    <ul class="{{category}} double">
+      <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
+      <li id="{{cat_id}}" class="{{ category }}"> 
+      <div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{category}}"></a></div>
+      <p><i style="background-color:#DE4535;"></i> Deforestation</p>
+      <p><i style="background-color:#ff8208;"></i> Degradation</p>
+      </li>
+    </ul>
+  </script>
+
   <script id="legend-group-template" type="text/x-underscore-template">
     <ul class="{{category}}">
       <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
