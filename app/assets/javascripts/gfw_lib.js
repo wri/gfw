@@ -240,12 +240,7 @@ GFW.modules.app = function(gfw) {
       if (layer.get("external")) {
 
         var table_name = layer.get("table_name");
-
-        if (table_name == "protected_areas") {
-          this._renderExternalLayer(layer);
-        } else if (table_name == "gfw2_imazon") {
-          this._renderImazonLayer(layer);
-        }
+        if (table_name == "protected_areas") { this._renderExternalLayer(layer); }
 
       } else {
         this._layers.push(layer.get('table_name'));
@@ -301,16 +296,31 @@ GFW.modules.app = function(gfw) {
     _renderImazonLayer: function(layer) {
       var that = this;
 
+      //Filter.toggle(584)
+
+      var styles = [{
+        where: "type = 7",
+        polygonOptions: {
+          fillColor: "#ECCD50",
+          strokeWeight: "#ECCD50",
+          strokeWeight: 0
+        }
+      }, {
+        where: "type = 8",
+        polygonOptions: {
+          fillColor: "#EC5150",
+          strokeWeight: "#EC5150",
+          strokeWeight: 0
+        }
+      }];
+
       this.imazonLayer = new google.maps.FusionTablesLayer({
         query: {
           select: "geo",
-          from: "2949980",
-          where: "type = '7'"
+          from: "2949980"
         },
         suppressInfoWindows:true,
-        styles: [
-          { polygonOptions: {fillColor:'#333333',fillOpacity:0.1,strokeColor:'#333333',strokeWeight:2,strokeOpacity:0.6    }}
-        ],
+        styles: styles,
         map: this._map
       });
 
@@ -318,7 +328,8 @@ GFW.modules.app = function(gfw) {
 
     _removeImazonLayer: function(layer) {
       if (this.imazonLayer) {
-        this.imazonLayer.setOpacity(0);
+        //Filter.toggle(584)
+        this.imazonLayer.setMap(null);
         this.imazonLayer = null;
       }
     },
@@ -445,9 +456,8 @@ GFW.modules.app = function(gfw) {
         return 'gfw2_hansen';
       } else if (layerName === "quarterly") {
         return 'gfw2_hansen';
-      } else if (layerName === "brazilian_amazon") {
-        return 'gfw2_imazon';
       }
+
       return null;
     },
 
@@ -576,6 +586,10 @@ GFW.modules.app = function(gfw) {
       var self = this;
       var table_name = null;
 
+      console.log('loading base layer', this.currentBaseLayer);
+
+      this._removeImazonLayer();
+
       if (this.currentBaseLayer === "semi_monthly") {
 
         if (config.mapLoaded && !this.time_layer) {
@@ -597,7 +611,10 @@ GFW.modules.app = function(gfw) {
       } else if (this.currentBaseLayer === "quarterly") {
         table_name = 'gfw2_hansen';
       } else if (this.currentBaseLayer === "brazilian_amazon") {
-        table_name = 'gfw2_imazon';
+        table_name = 'brazilian_amazon';
+        console.log('load brazilian');
+        this._renderImazonLayer();
+        return;
       }
 
       this.baseLayer = new CartoDBLayer({
@@ -642,7 +659,7 @@ GFW.modules.app = function(gfw) {
       if (layers) {
         hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + config.iso + "/" + layers;
       } else {
-        hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + config.iso + "/";
+        hash = "map/" + zoom + "/" + lat + "/" + lng + "/" + config.iso;
       }
 
       window.router.navigate(hash);
@@ -683,8 +700,8 @@ GFW.modules.maplayer = function(gfw) {
           that._toggleLayer();
         };
 
-
         if (this.layer.get('slug') == "nothing") {
+
           var event = function() {
             GFW.app.currentBaseLayer = null;
             that._hideBaseLayers(GFW.app);
@@ -693,6 +710,7 @@ GFW.modules.maplayer = function(gfw) {
           Filter.addFilter("", this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
 
         } else if (this.layer.get('slug') == "user_stories") {
+
           var customEvent = function() {
             GFW.app._toggleStoriesLayer();
             legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
@@ -704,14 +722,15 @@ GFW.modules.maplayer = function(gfw) {
 
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") }, true);
 
-          if(!_.include(filters, 0)) {
+          if (!_.include(filters, 0)) {
             GFW.app._loadStoriesLayer();
             Filter.check(this.layer.get('id'));
             legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
           } else {
             Filter.fakeCheck(0);
           }
-        } else if (this.layer.get('slug') == "annual" || this.layer.get('slug') == "quarterly" || this.layer.get('slug') == "brazilian_amazon") {
+
+        } else if (this.layer.get('slug') == "annual" || this.layer.get('slug') == "quarterly") {
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
         } else {
 
@@ -741,6 +760,7 @@ GFW.modules.maplayer = function(gfw) {
 
         GFW.app.currentBaseLayer = null;
         GFW.app._toggleTimeLayer();
+        GFW.app._removeImazonLayer();
         legend.removeCategory("forest_clearing");
 
         if (GFW.app.baseLayer) GFW.app.baseLayer.setOptions({ opacity: 0 });
@@ -774,7 +794,7 @@ GFW.modules.maplayer = function(gfw) {
         semi_monthly  = GFW.app.datalayers.LayersObj.get(569),
         annual        = GFW.app.datalayers.LayersObj.get(568),
         quarterly     = GFW.app.datalayers.LayersObj.get(583),
-        sad           = GFW.app.datalayers.LayersObj.get(567);
+        sad           = GFW.app.datalayers.LayersObj.get(584);
 
         if (category != 'Forest clearing') {
           legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
@@ -789,7 +809,6 @@ GFW.modules.maplayer = function(gfw) {
           }
 
           GFW.app.currentBaseLayer = slug;
-
           GFW.app._updateBaseLayer();
 
           if (slug == 'semi_monthly') {
@@ -800,6 +819,7 @@ GFW.modules.maplayer = function(gfw) {
             annual.attributes['visible']       = true;
           } else if (slug == 'brazilian_amazon') {
             sad.attributes['visible']          = true;
+            console.log('brazil');
           }
 
           legend.replace(id, category_slug, category, title, slug, category_color, title_color);

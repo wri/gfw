@@ -224,6 +224,13 @@ TimePlayer.prototype.get_time_data = function(tile, coord, zoom) {
 };
 
 TimePlayer.prototype.render_time = function(tile, coord, zoom) {
+
+
+  if (GFW.app.currentBaseLayer != "semi_monthly") {
+    return;
+  }
+
+
   var self = this;
   var month = -BASE_MONTH + this.time>>0;
   var month_start = -BASE_MONTH + this.start_time>>0;
