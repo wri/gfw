@@ -304,12 +304,13 @@ $(function(){
   var Router = Backbone.Router.extend({
 
     routes: {
-      "map":                         "map",
+      "map":                              "map",
+      "map/":                             "map",
       "map/:zoom/:lat/:lon":              "mapWithCoordinates",
       "map/:zoom/:lat/:lon/:iso":         "mapWithCoordinates",
       "map/:zoom/:lat/:lon/:iso/*layers": "mapWithCoordinates",
-      "/":                           "home",
-      "":                            "home"
+      "/":                                "home",
+      "":                                 "home"
     },
 
     home: function(query, page) {
