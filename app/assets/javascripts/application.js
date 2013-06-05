@@ -43,10 +43,10 @@ Infowindow        = {};
 
 function loadOtherStuff(callback) {
 
-  //if ($("body.home.index").length > 0) {
-    //wall = new gfw.ui.view.Wall();
-    //$("body").append(wall.render());
-  //}
+  if ($("body.home.index").length > 0) {
+    wall = new gfw.ui.view.Wall();
+    $("body").append(wall.render());
+  }
 
   sourceWindow  = new gfw.ui.view.SourceWindow();
   Infowindow    = new CartoDBInfowindow(map, { className: "story_infowindow", width: 215 });
