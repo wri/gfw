@@ -20,6 +20,12 @@
     <li><%= link_to (content_tag(:span, t('layouts.application.header.nav.' + option ))), path, :class => option_class %></li>
   <% end %>
 
-    <li class="lang_selector"><a href="#"><span>ENGLISH</span></a></li>
+  <li class="lang_selector">
+  <div id="google_translate_element"></div><script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ar,es,fr,id,pt,ru,zh-CN', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+}
+</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  </li>
 </ul>
 </nav>
