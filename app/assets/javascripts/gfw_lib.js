@@ -719,12 +719,10 @@ GFW.modules.maplayer = function(gfw) {
 
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") }, true);
 
-          if (!_.include(filters, 0)) {
+          if (_.include(filters, 0)) {
             GFW.app._loadStoriesLayer();
             Filter.check(this.layer.get('id'));
             legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
-          } else {
-            Filter.fakeCheck(0);
           }
 
         } else if (this.layer.get('slug') == "annual" || this.layer.get('slug') == "quarterly") {
@@ -829,9 +827,9 @@ GFW.modules.maplayer = function(gfw) {
           }
 
           // We don't store the id of the user_stories layer in the URL
-          if (slug != 'user_stories') {
-            Filter.toggle(id);
-          }
+          // if (slug != 'user_stories') {
+          //   Filter.toggle(id);
+          // }
 
         }
 
