@@ -248,10 +248,23 @@
         }
       }
 
-      .subscribe { @include icons-sprite(control_buttons_subscribe); }
+      .subscribe {
+        @include icons-sprite(control_buttons_subscribe);
+        &:hover {
+          @include icons-sprite(control_buttons_subscribe_hover);
+          width: 31px;
+          margin-right: -1px;
+          position: relative;
+        }
+
+        &:active { @include icons-sprite(control_buttons_subscribe_active); }
+      }
+
       .reset {
         width: 31px;
         @include icons-sprite(control_buttons_reset);
+        &:hover { @include icons-sprite(control_buttons_reset_hover); }
+        &:active { @include icons-sprite(control_buttons_reset_active); }
       }
     }
   }
@@ -367,3 +380,43 @@
   }
 }
 
+.analysis_reset {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 190px;
+  margin-left: -115px;
+  margin-top: -120px;
+  font-size: 13px;
+  font-family: "Helvetica Neue",Arial;
+  z-index: 1000;
+  text-align: center;
+  padding: 10px 15px 15px;
+  color: #ccc;
+  @include background(linear-gradient(top, rgba(#000, .8), #000 100%));
+  @include border-radius(3px);
+
+  p { margin-bottom: 10px; }
+
+  span.tail {
+    position:absolute;
+    bottom: -8px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin: 0 0 0 -8px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #000;
+  }
+
+  .button {
+
+  }
+
+  .delete {
+    border: 1px solid #600;
+    background: #B20000;
+  }
+}
