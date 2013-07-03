@@ -426,7 +426,7 @@
   width:140px;
   min-height: 40px;
 
-  @include position(15px, 30px, false, false);
+  @include position(15px, 65px, false, false);
   @include border-radius(3px);
   @include box-shadow(0px 0px 3px $cGray2);
 

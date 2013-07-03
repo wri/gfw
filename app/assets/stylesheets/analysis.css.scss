@@ -130,7 +130,7 @@
   min-height: 40px;
   background: #F1F1F1;
 
-  @include position(87px, 30px, false, false);
+  @include position(87px, 65px, false, false);
   @include border-radius(3px);
   @include box-shadow(0px 0px 3px $cGray2);
 
@@ -383,18 +383,18 @@
 .analysis_reset {
   display: none;
   position: absolute;
+  z-index: 1000;
   top: 0;
   left: 0;
-  width: 190px;
-  margin-left: -115px;
-  margin-top: -120px;
+  width: 170px;
+  margin-left: -80px;
+  margin-top: -105px;
   font-size: 13px;
   font-family: "Helvetica Neue",Arial;
-  z-index: 1000;
   text-align: center;
-  padding: 10px 15px 15px;
+  padding: 10px 10px 15px;
   color: #ccc;
-  @include background(linear-gradient(top, rgba(#000, .8), #000 100%));
+  @include background(linear-gradient(top, rgba(#000, .8), rgba(#000, .9) 100%));
   @include border-radius(3px);
 
   p { margin-bottom: 10px; }
@@ -412,7 +412,20 @@
   }
 
   .button {
+    display: inline-block;
+    line-height: 30px;
+    padding: 0 10px;
+    color: #eee;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 500;
+    background: #181818;
+    @include border-radius(5px);
 
+    &:hover {
+      color: #fff;
+    }
   }
 
   .delete {
