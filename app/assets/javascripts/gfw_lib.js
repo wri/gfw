@@ -479,7 +479,7 @@ GFW.modules.app = function(gfw) {
 
     },
 
-    _toggleStoriesLayer: function() {
+    _toggleStoriesLayer: function(id) {
       _.each(this.storiesFeatures, function(feature) {
         if (feature.visible) feature.setVisible(false);
         else feature.setVisible(true);
@@ -489,7 +489,7 @@ GFW.modules.app = function(gfw) {
         marker.toggle();
       });
 
-      Filter.toggle(0);
+      Filter.toggle(id);
     },
 
     _loadStoriesLayer: function() {
@@ -684,9 +684,7 @@ GFW.modules.maplayer = function(gfw) {
         if (config.mapOptions.layers) {
           var filters = _.map(config.mapOptions.layers.split(","), function(i) { return parseInt(i, 10); });
         }
-
         this._addControl(filters);
-
       },
 
 
@@ -709,7 +707,7 @@ GFW.modules.maplayer = function(gfw) {
         } else if (this.layer.get('slug') == "user_stories") {
 
           var customEvent = function() {
-            GFW.app._toggleStoriesLayer();
+            GFW.app._toggleStoriesLayer(that.layer.get('id'));
             legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
 
             if(!GFW.app.storiesLoaded) {
@@ -719,7 +717,7 @@ GFW.modules.maplayer = function(gfw) {
 
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") }, true);
 
-          if (_.include(filters, 0)) {
+          if (_.include(filters, this.layer.get('id'))) {
             GFW.app._loadStoriesLayer();
             Filter.check(this.layer.get('id'));
             legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
@@ -828,7 +826,7 @@ GFW.modules.maplayer = function(gfw) {
 
           // We don't store the id of the user_stories layer in the URL
           // if (slug != 'user_stories') {
-          //   Filter.toggle(id);
+            Filter.toggle(id);
           // }
 
         }

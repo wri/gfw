@@ -927,6 +927,7 @@ var Filter = (function() {
     } else {
       filters.push(id);
     }
+    config.mapOptions.layers = filters;
 
     _updateHash();
   }
@@ -1146,7 +1147,7 @@ var Filter = (function() {
     $("#layer a[data-id=" + id +"]").css("color", color );
     $("#layer a[data-id=" + id +"]").find("i").css("background-color", color );
 
-    if(id !== 580) filters.push(id);
+    filters.push(id);
   }
 
   function _fakeCheck(id) {
