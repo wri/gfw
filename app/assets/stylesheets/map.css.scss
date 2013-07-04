@@ -907,12 +907,10 @@
     @include size(6px);
   }
 
-  section { clear:both; overflow:auto; height: 300px; }
-
   .content {
-    height: 100%;
+    height: $height;
     width: 100%;
-    overflow:none;
+    overflow: auto;
 
     @extend .sans-serif;
     color: #666666;
