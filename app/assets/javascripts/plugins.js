@@ -873,7 +873,7 @@ var Navigation = (function() {
       $(this).addClass("checked");
     });
 
-    $(document).on("click", ".checkbox", function(e) {
+    $(document).on("click", ".checkbox:not(.disabled)", function(e) {
       e.preventDefault();
       e.stopPropagation();
 
@@ -927,9 +927,30 @@ var Filter = (function() {
     } else {
       filters.push(id);
     }
+
     config.mapOptions.layers = filters;
 
     _updateHash();
+  }
+
+  function _toggleBiome(id) {
+    var checkbox = $(".checkbox.forest_clearing");
+
+    this.toggle(id);
+
+    if(checkbox.hasClass("checked")) {
+      $(checkbox).css("color", "#ccc");
+      $(checkbox).find("i").css("background-color", "#ccc");
+      $(checkbox).removeClass("checked");
+    }
+  }
+
+  function _disableBiome() {
+    $(".checkbox.forest_clearing").addClass("disabled").closest("li").addClass("disabled");
+  }
+
+  function _enableBiome() {
+    $(".checkbox.forest_clearing").removeClass("disabled").closest("li").removeClass("disabled");
   }
 
   function _show(callback) {
@@ -1110,13 +1131,13 @@ var Filter = (function() {
     l     = $layer.find(".links li." + liClass).length,
     $pane = $layer.find(".scroll");
 
-    if (scrollPane) {
-      scrollPane.reinitialise();
-    } else {
-      $pane.jScrollPane( { showArrows: true });
-      scrollPane = $pane.data('jsp');
-    }
-    window.scrollPane = scrollPane;
+    // if (scrollPane) {
+    //   scrollPane.reinitialise();
+    // } else {
+    //   $pane.jScrollPane( { showArrows: true });
+    //   scrollPane = $pane.data('jsp');
+    // }
+    // window.scrollPane = scrollPane;
 
   }
 
@@ -1184,7 +1205,7 @@ var Filter = (function() {
 
     if (!disabled) { // click binding
       // Select the kind of input (radio or checkbox) depending on the category
-      if (cat === 'forest_clearing') {
+      if (cat === 'forest_clearing' && slug != 'biome') {
         layerItemTemplate = _.template($("#layer-item-radio-template").html());
         $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
 
@@ -1225,6 +1246,9 @@ var Filter = (function() {
     hide: _hide,
     addFilter: _addFilter,
     toggle: _toggle,
+    toggleBiome: _toggleBiome,
+    disableBiome: _disableBiome,
+    enableBiome: _enableBiome,
     closeOpenFilter:_closeOpenFilter,
     calcFiltersPosition: _calcFiltersPosition,
     check: _check,
