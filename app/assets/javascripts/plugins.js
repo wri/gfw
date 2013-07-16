@@ -1116,20 +1116,14 @@ var Filter = (function() {
     var
     width  = $li.width() < 170 ? 170 : $li.width(),
     left   = (l + $li.width() / 2) - (width / 2),
-    height = $layer.find(".links").height() ;
+    height = $layer.find(".links").height();
 
     $layer.find("li").css({ width:width - 20});
     $layer.css({ left: left, width:width, top: -80});
 
-    if (height < 200) {
-      $(".scroll").css({ height: height });
-    } else $(".scroll").css({ height: 200 });
-
     $layer.animate({ opacity: 1 }, 250);
 
-    var
-    l     = $layer.find(".links li." + liClass).length,
-    $pane = $layer.find(".scroll");
+    $(".scroll").css({ height: $layer.find(".links").height() });
 
     // if (scrollPane) {
     //   scrollPane.reinitialise();
