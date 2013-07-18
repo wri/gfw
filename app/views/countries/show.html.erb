@@ -5,6 +5,7 @@
 <% content_for :title do %>
   <script type="text/javascript">
     var countryCode = "<%= @country.iso %>";
+    var countryKeyword = "<%= @country.name.downcase %>";
   </script>
   <% end %>
 
@@ -36,18 +37,25 @@
       </div>
 
       <div class="alerts">
-        <h4><%= t('.detail.alerts.title') %></h4>
-        <ul>
-          <% @country.last_alerts.each do |alert| %>
-            <li>
-            <span class="date"><%= l alert[:date].to_date, :format => :custom %></span>
-            <span class="time"><%= l alert[:date].to_time, :format => :custom %></span>
-            <span class="count"><%= alert[:count] %> Alerts</span>
-            </li>
-          <% end %>
-        </ul>
+        <% if @country.last_alerts.count > 0 %>
+          <h4><%= t('.detail.alerts.title') %></h4>
+          <ul>
+            <% @country.last_alerts.each do |alert| %>
+              <li>
+              <span class="date"><%= l alert[:date].to_date, :format => :custom %></span>
+              <span class="time"><%= l alert[:date].to_time, :format => :custom %></span>
+              <span class="count"><%= alert[:count] %> Alerts</span>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+
+        <h4><%= t('.detail.mongobay.title', :country => @country.name) %></h4>
+        <ul class="mongobay"></ul>
+        <%= link_to (content_tag :span, t('.detail.mongobay.read_more', :country => @country.name)), "http://news.mongabay.com/news-index/#{@country.name.downcase}1.html", :class => "btn hollow"%>
         <!--<%= link_to (content_tag :span, t('.detail.alerts.analyze')), "#", :class => "btn hollow subscribe"%>-->
       </div>
+
 
       <div class="description">
         <h4><%= t('.detail.description.title') %></h4>

@@ -1,5 +1,4 @@
 function GFWMarker(opts) {
-
   this.latlng_            = opts.position;
   this.content_           = opts.content;
   this.opts               = opts;
@@ -8,7 +7,8 @@ function GFWMarker(opts) {
   this.width_             = 36;
   this.height_            = 36;
   this.div_               = null;
-
+  this.map_               = opts.map;
+  this.type_              = opts.type;
 }
 
 GFWMarker.prototype = new google.maps.OverlayView();
@@ -23,9 +23,16 @@ GFWMarker.prototype.draw = function() {
     div.className = 'marker';
 
     if (that.opts.thumbnail_url) {
-      div.innerHTML = '<div class="mask"></div><img src="' + that.opts.thumbnail_url + '" class="rounded" />';
+      var mask = "mask";
+
+      if(this.type_ === 'mongabay') mask = "mask green";
+
+      div.innerHTML = '<img src="' + that.opts.thumbnail_url + '" class="rounded" /><div class="'+ mask +'"></div>';
     } else {
       var icon     = '/assets/icons/marker_exclamation.png';
+
+      if(this.type_ === 'mongabay') icon = '/assets/icons/green_exclamation.png';
+
       div.innerHTML = '<img src="' + icon + '"/>';
     }
 
@@ -76,6 +83,15 @@ GFWMarker.prototype.hide = function(animate) {
       $(div).css({opacity: 0, display: 'none'});
       $(div).addClass('h');
     }
+  }
+};
+
+GFWMarker.prototype.onRemove = function () {
+  if (this.div_ && this.div_.parentNode) {
+    this.hide();
+    google.maps.event.clearInstanceListeners(this.div_);
+    this.div_.parentNode.removeChild(this.div_);
+    this.div_ = null;
   }
 };
 

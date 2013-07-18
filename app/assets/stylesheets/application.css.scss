@@ -958,6 +958,16 @@ article.contact {
         font-weight:200;
         color: $cGray2;
 
+        a {
+          font-weight: normal;
+          color: $cGray2;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+
         .count {
           float:right;
           padding-left: 15px;
@@ -968,6 +978,15 @@ article.contact {
           color: #858585;
 
           @include icons-sprite(bars, $offset-y: 4px);
+        }
+
+        .date {
+          float:right;
+
+          @extend .sans-serif;
+          font-size:13px;
+          font-weight:200;
+          color: #858585;
         }
       }
     } // ul

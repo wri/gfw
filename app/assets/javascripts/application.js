@@ -17,6 +17,7 @@
 //= require jquery.fileupload
 //= require jquery.fileupload-ui
 //= require jquery.fileupload-fp
+//= require markerclusterer_compiled
 //= require gfw
 //= require_tree .
 
@@ -133,7 +134,7 @@ function loadGFW(callback) {
   map.mapTypes.set("terrain_style", styledMap);
   map.setMapTypeId("terrain_style");
 
-  google.maps.event.addDomListener(map, 'click', function (ev) {
+  google.maps.event.addListener(map, 'click', function (ev) {
     ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
     Infowindow.close();
   });
@@ -186,6 +187,8 @@ function loadGFW(callback) {
 (function(window,undefined){
 
   if ($("body.countries").hasClass("index")) CountryMenu.drawCountries();
+
+  if($("body.countries").hasClass("show")) CountryFeed.getNews();
 
   $("nav .home.ajax").on("click", function(e) {
     e.preventDefault();

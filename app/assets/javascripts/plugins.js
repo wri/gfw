@@ -1,3 +1,23 @@
+var CountryFeed = (function() {
+  function getNews() {
+    $.getJSON("http://dl.dropboxusercontent.com/u/355423/mongobay.json", function(data) {
+      var items = [];
+
+      $.each(data, function(key, val) {
+        if($.inArray(countryKeyword, val.keywords) > -1 && items.length < 5) { // only 5 first news
+          items.push('<li><span class="date">'+val.published+'</span><a href="'+this.loc+'" target="_blank">'+this.title+'</a></li>');
+        }
+      });
+
+      $(".mongobay").html(items);
+    });
+  }
+
+  return {
+    getNews: getNews
+  }
+}());
+
 var CountryMenu = (function() {
 
   var drawn = false;

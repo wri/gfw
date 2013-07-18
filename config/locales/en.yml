@@ -93,6 +93,9 @@ en:
   countries:
     show:
       detail:
+        mongobay:
+          title: '%{country} Mongobay Stories'
+          read_more: 'More %{country} Mongobay Stories'
         alerts:
           title: 'Last forest clearing alerts'
           subscribe: 'Subscribe to this country'

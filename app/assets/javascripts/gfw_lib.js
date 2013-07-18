@@ -58,6 +58,9 @@ GFW.modules.app = function(gfw) {
       this.storiesMarkers = [];
       this.storiesFeatures = [];
       this.storiesLoaded = false;
+      this.mongabayMarkers = [];
+      this.mongabayFeatures = [];
+      this.mongabayLoaded = false;
 
       // we can stop loading the blank (see limit=0 below) tileset here now that we are loading the animation. see todo on line 347
       this.queries.semi_monthly     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 17 ELSE {Z}+8 END limit 0";
@@ -509,6 +512,27 @@ GFW.modules.app = function(gfw) {
       Filter.toggle(id);
     },
 
+    _hideStoriesMarkers: function() {
+      _.each(this.storiesFeatures, function(feature) {
+        if (feature.visible) feature.setVisible(false);
+      });
+
+      _.each(this.storiesMarkers, function(marker) {
+        console.log(marker);
+        marker.hide();
+      });
+    },
+
+    _showStoriesMarkers: function() {
+      _.each(this.storiesFeatures, function(feature) {
+        if (!feature.visible) feature.setVisible(true);
+      });
+
+      _.each(this.storiesMarkers, function(marker) {
+        marker.show();
+      });
+    },
+
     _loadStoriesLayer: function() {
       var that = this;
 
@@ -549,6 +573,86 @@ GFW.modules.app = function(gfw) {
           that.storiesLoaded = true;
         }
       });
+    },
+
+    _loadMongabayLayer: function() {
+      var that = this;
+
+      $.ajax({
+        async: true,
+        url: "https://matallo.cartodb.com/api/v2/sql?q=SELECT * FROM mongabay&format=geojson",
+        success: function(data) {
+          _.each(data.features, function(features) {
+            var position = new google.maps.LatLng(features.properties.lat, features.properties.lon),
+                thumb    = features.properties.thumbnail,
+                icon     = '/assets/icons/green_marker.png',
+                properties = null;
+
+            var feature = new GeoJSON(features.geometry, config.OVERLAYS_STYLE);
+
+            if(feature.length > 0) {
+              feature[0].setMap(map);
+              that.mongabayFeatures.push(feature[0]);
+            }
+
+            var title = features.properties.title;
+
+            if (title.length > 34) {
+              title = $.trim(title).substring(0, 34).split(" ").slice(0, -1).join(" ") + "...";
+            }
+
+            var content = "<strong><a href='"+ features.properties.loc +"'>" + title + "</a></strong> <span>by " + features.properties.author + " &middot; </span><a href='"+ features.properties.loc +"'>read more</a>";
+
+            marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: thumb, content: content, map: map, type: 'mongabay' });
+
+            that.mongabayMarkers.push(marker);
+          });
+
+          var clusterStyles = [
+            {
+              textColor: '#ffffff',
+              url: '/assets/icons/marker_cluster.png',
+              width: 36,
+              height: 36
+            },
+           {
+              textColor: '#ffffff',
+              url: '/assets/icons/marker_cluster.png',
+              width: 36,
+              height: 36
+            },
+           {
+              textColor: '#ffffff',
+              url: '/assets/icons/marker_cluster.png',
+              width: 36,
+              height: 36
+            }
+          ];
+
+          var mcOptions = {
+            gridSize: 50,
+            styles: clusterStyles,
+            maxZoom: 15
+          };
+
+          var mc = new MarkerClusterer(map, that.mongabayMarkers, mcOptions);
+
+          that.mongabayLoaded = true;
+        }
+      });
+    },
+
+    _toggleMongabayLayer: function(id) {
+      _.each(this.mongabayFeatures, function(feature) {
+        if (feature.visible) feature.setVisible(false);
+        else feature.setVisible(true);
+      });
+
+      _.each(this.mongabayFeatures, function(marker) {
+        marker.toggle();
+      });
+
+      Filter.toggle(id);
     },
 
     _toggleTimeLayer: function() {
@@ -743,7 +847,23 @@ GFW.modules.maplayer = function(gfw) {
             Filter.check(this.layer.get('id'));
             legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
           }
+        } else if (this.layer.get('slug') === "mongabay") {
+          var mongabayEvent = function() {
+            GFW.app._toggleMongabayLayer(that.layer.get('id'));
+            legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
 
+            if(!GFW.app.mongabayLoaded) {
+              GFW.app._loadMongabayLayer();
+            }
+          };
+
+          Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: mongabayEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") }, true);
+
+          if (_.include(filters, this.layer.get('id'))) {
+            GFW.app._loadMongabayLayer();
+            Filter.check(this.layer.get('id'));
+            legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
+          }
         } else if (this.layer.get('slug') == "annual" || this.layer.get('slug') == "quarterly") {
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
         } else if (this.layer.get('slug') === 'brazilian_amazon') {

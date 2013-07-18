@@ -310,6 +310,10 @@
       @include size(67px, 66px);
       @include icons-sprite(marker_hollow);
       z-index: 100;
+
+      &.green {
+        @include icons-sprite(green_marker_hollow);
+      }
     }
 
     img.rounded {
@@ -317,7 +321,7 @@
       @include size(50px);
       display:block;
       @include border-radius(200px);
-      z-index: 10;
+      z-index: 100;
     }
 
   }
@@ -958,6 +962,8 @@
       p {
         margin: 0 0 7px 0;
         line-height:normal;
+
+        span { font-weight: bold; }
       }
       p.credits {
         margin: 7px 0 0 0;
