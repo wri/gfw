@@ -583,11 +583,8 @@
         clear:both;
         overflow:hidden;
 
-        &.stories {
-          .source {
-            display:none;
-
-          }
+        .source.user_stories {
+          display:none;
         }
 
         &:last-child { margin: 0; }
