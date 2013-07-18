@@ -657,8 +657,6 @@ GFW.modules.app = function(gfw) {
     },
 
     _toggleMongabayLayer: function(id) {
-      that = this;
-
       if(this.mongabayLoaded) {
         this.mc.clearMarkers();
         this.mongabayMarkers = [];
@@ -668,6 +666,14 @@ GFW.modules.app = function(gfw) {
       }
 
       Filter.toggle(id);
+    },
+
+    _hideMongabayLayer: function() {
+      if(this.mongabayLoaded) {
+        this.mc.clearMarkers();
+        this.mongabayMarkers = [];
+        this.mongabayLoaded = false;
+      }
     },
 
     _toggleTimeLayer: function() {
