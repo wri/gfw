@@ -61,6 +61,7 @@ GFW.modules.app = function(gfw) {
       this.mongabayMarkers = [];
       this.mongabayFeatures = [];
       this.mongabayLoaded = false;
+      this.mc = {};
 
       // we can stop loading the blank (see limit=0 below) tileset here now that we are loading the animation. see todo on line 347
       this.queries.semi_monthly     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 17 ELSE {Z}+8 END limit 0";
@@ -108,13 +109,15 @@ GFW.modules.app = function(gfw) {
       var that = this;
 
       var
-      dh = $(window).height(),
+      dh = $(window).height() + 67,
       hh = $("header").height();
 
       $("#map").animate({ height: dh - hh }, 250, function() {
         google.maps.event.trigger(that._map, "resize");
         that._map.setOptions({ scrollwheel: false });
       });
+
+      this.goTo($("#map"), {margin: "67"});
     },
 
     close: function(callback) {
@@ -125,6 +128,18 @@ GFW.modules.app = function(gfw) {
         callback && callback();
       });
 
+      this.goTo($("body"));
+    },
+
+    goTo: function($el, opt, callback) {
+      if ($el) {
+        var speed  = (opt && opt.speed)  || 400;
+        var delay  = (opt && opt.delay)  || 100;
+        var margin = (opt && opt.margin) || 0;
+
+        $('html, body').delay(delay).animate({scrollTop:$el.offset().top - margin}, speed);
+        callback && callback();
+      }
     },
 
     _setupZoom:function() {
@@ -518,7 +533,6 @@ GFW.modules.app = function(gfw) {
       });
 
       _.each(this.storiesMarkers, function(marker) {
-        console.log(marker);
         marker.hide();
       });
     },
@@ -579,7 +593,7 @@ GFW.modules.app = function(gfw) {
       var that = this;
 
       $.ajax({
-        async: true,
+        async: false,
         url: "https://matallo.cartodb.com/api/v2/sql?q=SELECT * FROM mongabay&format=geojson",
         success: function(data) {
           _.each(data.features, function(features) {
@@ -635,7 +649,7 @@ GFW.modules.app = function(gfw) {
             maxZoom: 15
           };
 
-          var mc = new MarkerClusterer(map, that.mongabayMarkers, mcOptions);
+          that.mc = new MarkerClusterer(map, that.mongabayMarkers, mcOptions);
 
           that.mongabayLoaded = true;
         }
@@ -643,14 +657,15 @@ GFW.modules.app = function(gfw) {
     },
 
     _toggleMongabayLayer: function(id) {
-      _.each(this.mongabayFeatures, function(feature) {
-        if (feature.visible) feature.setVisible(false);
-        else feature.setVisible(true);
-      });
+      that = this;
 
-      _.each(this.mongabayFeatures, function(marker) {
-        marker.toggle();
-      });
+      if(this.mongabayLoaded) {
+        this.mc.clearMarkers();
+        this.mongabayMarkers = [];
+        this.mongabayLoaded = false;
+      } else {
+        this._loadMongabayLayer();
+      }
 
       Filter.toggle(id);
     },
@@ -851,10 +866,6 @@ GFW.modules.maplayer = function(gfw) {
           var mongabayEvent = function() {
             GFW.app._toggleMongabayLayer(that.layer.get('id'));
             legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
-
-            if(!GFW.app.mongabayLoaded) {
-              GFW.app._loadMongabayLayer();
-            }
           };
 
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: mongabayEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") }, true);

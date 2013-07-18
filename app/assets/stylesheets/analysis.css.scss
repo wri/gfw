@@ -8,7 +8,7 @@
 
   z-index: 1000;
   @include size(38px, 38px);
-  @include position(76px, false, false, 15px);
+  @include position(91px, false, false, 15px);
   @include icons-sprite(analysis_button);
 
   &:hover { @include icons-sprite(analysis_button_hover); }

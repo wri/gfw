@@ -22,19 +22,16 @@ GFWMarker.prototype.draw = function() {
     div = this.div_ = document.createElement('DIV');
     div.className = 'marker';
 
-    if (that.opts.thumbnail_url) {
-      var mask = "mask";
-
-      if(this.type_ === 'mongabay') mask = "mask green";
-
-      div.innerHTML = '<img src="' + that.opts.thumbnail_url + '" class="rounded" /><div class="'+ mask +'"></div>';
+    if(this.type_ === 'mongabay') {
+      div.innerHTML = '<img src="/assets/icons/green_exclamation.png"/>';
     } else {
-      var icon     = '/assets/icons/marker_exclamation.png';
-
-      if(this.type_ === 'mongabay') icon = '/assets/icons/green_exclamation.png';
-
-      div.innerHTML = '<img src="' + icon + '"/>';
+      if (that.opts.thumbnail_url) {
+        div.innerHTML = '<img src="' + that.opts.thumbnail_url + '" class="rounded" /><div class="mask"></div>';
+      } else {
+        div.innerHTML = '<img src="/assets/icons/marker_exclamation.png"/>';
+      }
     }
+
 
     google.maps.event.addDomListener(div, 'click', function (ev) {
 
@@ -147,5 +144,6 @@ GFWMarker.prototype.showInfowindow = function() {
   Infowindow.setContent(this.content_);
   Infowindow.setPosition(this.latlng_);
   Infowindow.open();
-
 };
+
+MarkerClusterer.prototype.remove = function () {}

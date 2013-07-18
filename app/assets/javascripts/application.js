@@ -294,6 +294,12 @@ function loadGFW(callback) {
 
     $(".backdrop").fadeOut(250);
 
+    $("header a.logo").css({
+      'position': 'absolute',
+      'top': '0',
+      'left': '50%',
+      'margin-left': '-470px'
+    });
   });
 
   return false;
@@ -410,10 +416,32 @@ $(function(){
     resizePID = setTimeout(function() { resizeWindow(); }, 100);
   });
 
+  $(window).scroll(positionScroll);
+
   function resizeWindow(e) {
     if (showMap) {
       if (GFW.app) GFW.app.open();
       Filter.calcFiltersPosition();
+    }
+  }
+
+  function positionScroll() {
+    // stuck logo to top of viewport
+    if($(window).scrollTop() < 5) {
+      $("header a.logo").css({
+        "position": "absolute",
+        "top": "0"
+      });
+    } else if($(window).scrollTop() >= 5 && $(window).scrollTop() <= 68) {
+      $("header a.logo").css({
+        "position": "fixed",
+        "top": "0"
+      });
+    } else if($(window).scrollTop() > 68) {
+      $("header a.logo").css({
+        "position": "absolute",
+        "top": "63px"
+      });
     }
   }
 
