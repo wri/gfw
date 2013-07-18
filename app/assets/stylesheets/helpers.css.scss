@@ -324,7 +324,7 @@ strong { font-weight: bold; } // This is sad, I know.
 
   padding-left: 17px;
 
-  color:$cForestClearing;
+  color: #ccc;
   text-decoration:none;
 
   &:hover          { @include icons-sprite($url, $offset-y:-207px); }
