@@ -437,7 +437,7 @@
   width:140px;
   min-height: 40px;
 
-  @include position(30px, 65px, false, false);
+  @include position(35px, 65px, false, false);
   @include border-radius(3px);
   @include box-shadow(0px 0px 3px $cGray2);
 
@@ -629,6 +629,53 @@
   }
 
   z-index:1000;
+}
+
+.searchbox {
+  display: none;
+  width: 195px;
+  position: absolute;
+  height: 20px;
+  top: 35px;
+  right: 222px;
+  @include border-radius(3px);
+  @include box-shadow(0px 0px 3px #666);
+  background: #FFF;
+  border: 1px solid #666;
+  cursor: move;
+  z-index: 1000;
+  padding: 10px;
+
+  strong {
+    font: bold 11px "Helvetica Neue", Helvetica, Arial, sans-serif; 
+    text-transform: uppercase;
+    font-size: 11px;
+    color: #ccc;
+    float: left;
+    margin-right: 10px;
+    line-height: 22px;
+  }
+
+  input {
+    float: left;
+    border: none;
+    font-size: 12px;
+    margin: 3px 0 0;
+    padding: 0;
+    width: 122px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  button {
+    float: left;
+    height: 16px;
+    width: 16px;
+    background: url('buttons/search.png') no-repeat center center;
+    border: 0;
+  }
 }
 
 
@@ -881,6 +928,10 @@
     &:hover { background: transparent url(icons/map_zoom.png) no-repeat -1*$zoomWidth -1*$zoomHeight; }
     &:active { background: transparent url(icons/map_zoom.png) no-repeat -2*$zoomWidth -1*$zoomHeight; }
   }
+}
+
+#zoom_controls {
+  display: none;
 }
 
 #sources {

@@ -40,6 +40,7 @@ sourceWindow      = {},
 gallery           = {},
 languageSelector  = {},
 layerSelector     = {},
+searchBox         = {},
 Infowindow        = {};
 
 function loadOtherStuff(callback) {
@@ -182,6 +183,15 @@ function loadGFW(callback) {
   $("#map").append(analysis.render());
   analysis.info.setDraggable(true);
 
+  // Search box
+  searchBox = new gfw.ui.view.SearchBox({ map: map });
+  $("#map").append(searchBox.render());
+  searchBox.setDraggable(true);
+
+  searchBox.bind('goto', function(latlng, bounds) {
+    map.setCenter(latlng);
+    map.fitBounds(bounds);
+  });
 }
 
 (function(window,undefined){

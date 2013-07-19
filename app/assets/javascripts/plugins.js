@@ -797,6 +797,9 @@ var Navigation = (function() {
     analysis.hide();
     analysis.button.hide();
     layerSelector.hide();
+    searchBox.hide();
+
+    $("#zoom_controls").hide();
 
     Navigation.select("home");
 
@@ -842,6 +845,10 @@ var Navigation = (function() {
 
     analysis.show();
     analysis.button.show();
+
+    searchBox.show();
+
+    $("#zoom_controls").show();
 
     if (this.time_layer) this.time_layer.set_time(self.time_layer.cache_time());
 
