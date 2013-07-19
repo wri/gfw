@@ -808,7 +808,7 @@ var Navigation = (function() {
       $("header").animate({ height: "230px" }, 250, function() {
         $("hgroup h1").show();
         $("hgroup h1").animate({ top: 29, opacity: 1 }, 250);
-      });
+      }).removeClass("stuck");
 
       $(".big_numbers").fadeIn(250);
 
@@ -858,7 +858,7 @@ var Navigation = (function() {
 
     $("header").animate({height: "135px"}, 250, function() {
       if (GFW.app) GFW.app.open();
-    });
+    }).addClass("stuck");
 
     $("hgroup h1").animate({ top: "50px", opacity: 0 }, 250, function() {
       $("hgroup h1").hide();

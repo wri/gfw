@@ -436,22 +436,24 @@ $(function(){
   }
 
   function positionScroll() {
-    // stuck logo to top of viewport
-    if($(window).scrollTop() < 5) {
-      $("header a.logo").css({
-        "position": "absolute",
-        "top": "0"
-      });
-    } else if($(window).scrollTop() >= 5 && $(window).scrollTop() <= 68) {
-      $("header a.logo").css({
-        "position": "fixed",
-        "top": "0"
-      });
-    } else if($(window).scrollTop() > 68) {
-      $("header a.logo").css({
-        "position": "absolute",
-        "top": "63px"
-      });
+    if($("header").hasClass("stuck")) {
+      // stuck logo to top of viewport
+      if($(window).scrollTop() < 5) {
+        $("header a.logo").css({
+          "position": "absolute",
+          "top": "0"
+        });
+      } else if($(window).scrollTop() >= 5 && $(window).scrollTop() <= 68) {
+        $("header a.logo").css({
+          "position": "fixed",
+          "top": "0"
+        });
+      } else if($(window).scrollTop() > 68) {
+        $("header a.logo").css({
+          "position": "absolute",
+          "top": "63px"
+        });
+      }
     }
   }
 
