@@ -382,7 +382,7 @@ $(function() {
 
     // Creates a drawing manager attached to the map that allows the user to draw markers, lines, and shapes.
     drawingManager = new google.maps.drawing.DrawingManager({
-      drawingModes: [google.maps.drawing.OverlayType.POLYGON, google.maps.drawing.OverlayType.MARKER],
+      drawingModes: [google.maps.drawing.OverlayType.MARKER],
       markerOptions: {
         draggable: false,
         icon: new google.maps.MarkerImage(
@@ -394,7 +394,7 @@ $(function() {
       },
       drawingControlOptions: {
         position: google.maps.ControlPosition.RIGHT_TOP,
-        drawingModes: [google.maps.drawing.OverlayType.POLYGON, google.maps.drawing.OverlayType.MARKER]
+        drawingModes: [google.maps.drawing.OverlayType.MARKER]
       },
 
       polygonOptions: config.OVERLAYS_STYLE,

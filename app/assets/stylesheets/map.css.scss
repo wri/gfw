@@ -313,10 +313,6 @@
       @include size(67px, 66px);
       @include icons-sprite(marker_hollow);
       z-index: 100;
-
-      &.green {
-        @include icons-sprite(green_marker_hollow);
-      }
     }
 
     img.rounded {

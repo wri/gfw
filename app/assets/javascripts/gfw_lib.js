@@ -62,6 +62,8 @@ GFW.modules.app = function(gfw) {
       this.mongabayFeatures = [];
       this.mongabayLoaded = false;
       this.mc = {};
+      this.selectedShapes = [];
+      this.selectedShape;
 
       // we can stop loading the blank (see limit=0 below) tileset here now that we are loading the animation. see todo on line 347
       this.queries.semi_monthly     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 17 ELSE {Z}+8 END limit 0";
@@ -566,10 +568,14 @@ GFW.modules.app = function(gfw) {
             var geometry = JSON.parse(story.geometry)
             var feature = new GeoJSON(geometry, config.OVERLAYS_STYLE);
 
+            // place markers
             if (feature.length > 0) {
               feature[0].setMap(map);
               that.storiesFeatures.push(feature[0]);
             }
+
+            // place borders
+            that._loadCountryGeoJSONforStories(story.lng,story.lat);
 
             var title = story.title;
 
@@ -589,6 +595,47 @@ GFW.modules.app = function(gfw) {
       });
     },
 
+    _loadCountryGeoJSONforStories: function(lng,lat) {
+
+      var that = this;
+      var query = "https://wri-01.cartodb.com/api/v2/sql?q=SELECT the_geom, the_geom_webmercator FROM gfw2_countries WHERE ST_Intersects(the_geom,ST_SetSRID(ST_Makepoint(" + lng + "," + lat + "),4326))&format=geojson";
+
+      $.ajax({
+        url: query,
+        dataType: 'jsonp',
+        success: function(the_geom) {
+          that._loadStoryPolygon(the_geom);
+        }
+      });
+
+    },
+
+    _loadStoryPolygon: function(the_geom) {
+
+      var that = this;
+
+      var style = config.ANALYSIS_OVERLAYS_STYLE;
+
+      style.editable = false;
+
+      var features = new GeoJSON(the_geom, style);
+
+      for (var i in features) {
+        if (features[i].length > 0) {
+          for (var j in features[i]) {
+            var feature = features[i][j];
+            feature.setMap(map);
+            this.selectedShapes.push(feature);
+          }
+        } else {
+          var feature = features[i];
+          feature.setMap(map);
+          this.selectedShapes.push(feature);
+        }
+
+      }
+    },
+
     _loadMongabayLayer: function() {
       var that = this;
 
@@ -599,7 +646,7 @@ GFW.modules.app = function(gfw) {
           _.each(data.features, function(features) {
             var position = new google.maps.LatLng(features.properties.lat, features.properties.lon),
                 thumb    = features.properties.thumbnail,
-                icon     = '/assets/icons/green_marker.png',
+                icon     = '/assets/icons/exclamation.png',
                 properties = null;
 
             var feature = new GeoJSON(features.geometry, config.OVERLAYS_STYLE);
