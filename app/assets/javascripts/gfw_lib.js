@@ -615,7 +615,7 @@ GFW.modules.app = function(gfw) {
               title = $.trim(title).substring(0, 34).split(" ").slice(0, -1).join(" ") + "...";
             }
 
-            var content = "<strong><a href='"+ features.properties.loc +"'>" + title + "</a></strong> <span>by " + features.properties.author + " &middot; </span><a href='"+ features.properties.loc +"'>read more</a>";
+            var content = "<strong><a href='"+ features.properties.loc +"'>" + title + "</a></strong> <span>by " + features.properties.author + " &middot; </span><a href='"+ features.properties.loc +"' target='_blank'>read more</a>";
 
             marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: thumb, content: content, map: map, type: 'mongabay' });
 
