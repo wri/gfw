@@ -1121,8 +1121,13 @@ article.contact {
 #filters #layer ul li .radio {
   @include radio(radio);
 
-  &.forest_clearing    { @include radio(radio_fire); }
-  &.fire               { @include radio(radio_fire); }
+  &.forest_clearing    {
+    @include radio(radio_fire);
+
+    &.semi_monthly { width: 100px; }
+  }
+
+  &.fire { @include radio(radio_fire); }
 }
 
 .checkbox {
