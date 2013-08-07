@@ -7,7 +7,7 @@
       <%= error_message_for(@story, :title) %>
     </div>
     <div class="input-field huge<%= ' error' if !@story.errors[:title].empty? %>">
-      <%= f.text_field :title, :placeholder => 'E.g. “Northern forests of Galizia”, “Coastal forest in Mozambique”...' %>
+      <%= f.text_field :title, :placeholder => 'E.g. “Northern forests”, “Coastal forest”...' %>
     </div>
   </div>
 
@@ -18,7 +18,7 @@
       <%= f.label 'Affected area' %>
 
       <% if @story.errors[:the_geom].empty? %>
-        <span class="map-help">Drop a pin or draw a shape on the map around the affected area</span>
+        <span class="map-help">Drop a pin on the map around the affected area</span>
       <% end %>
 
     </div>
@@ -32,6 +32,16 @@
       <div id="stories_map" class="stories_map map"></div>
     </div>
 
+  </div>
+
+  <div class="field">
+    <div class="optional">
+      <%= f.label      :where_did_it_happen %>
+      <span>Optional</span>
+    </div>
+    <div class="input-field huge">
+      <%= f.text_field :where_did_it_happen, :placeholder => 'E.g. “Galizia”, “Mozambique”...' %>
+    </div>
   </div>
 
   <div class="field">

@@ -10,6 +10,7 @@ class Story < CartoDB::Model::Base
              title,
              description,
              when_did_it_happen,
+             where_did_it_happen,
              details,
              your_name,
              your_email,
@@ -25,6 +26,7 @@ class Story < CartoDB::Model::Base
 
   field :title
   field :when_did_it_happen
+  field :where_did_it_happen
   field :details
   field :your_name
   field :your_email

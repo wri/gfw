@@ -15,6 +15,9 @@ end %>
         <% if @story.when_did_it_happen.present?  %>
           <span><%= @story.when_did_it_happen %></span>
         <% end %>
+        <% if @story.where_did_it_happen.present?  %>
+          <span><%= @story.where_did_it_happen %></span>
+        <% end %>
         <% if @story.when_did_it_happen.present? && @story.your_name.present? %>
           <span>&middot;</span>
         <% end %>
