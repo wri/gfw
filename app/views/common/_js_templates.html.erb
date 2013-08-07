@@ -166,7 +166,10 @@
   </script>
 
   <script id="layer-template" type="text/x-underscore-template">
-    <li id="{{name}}" class="{{ name }}"><a href="#"><i></i>{{title}}</a></li>
+    <li id="{{name}}" class="{{ name }}">
+      <a href="#"><i></i>{{title}}</a>
+      <a href="#" data-source="{{name}}" class="source"></a>
+    </li>
   </script>
 
   <!-- Analysis info -->
