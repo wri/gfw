@@ -23,7 +23,7 @@ GFWMarker.prototype.draw = function() {
     div.className = 'marker';
 
     if(this.type_ === 'mongabay') {
-      div.innerHTML = '<img src="/assets/icons/green_exclamation.png"/>';
+      div.innerHTML = '<img src="/assets/icons/mongabay_exclamation.png"/>';
     } else {
       if (that.opts.thumbnail_url) {
         div.innerHTML = '<img src="' + that.opts.thumbnail_url + '" class="rounded" /><div class="mask"></div>';

@@ -560,7 +560,7 @@ GFW.modules.app = function(gfw) {
             var
             position = new google.maps.LatLng(story.lat, story.lng),
             thumb    = story.thumbnail_url,
-            icon     = '/assets/icons/exclamation.png',
+            icon     = '/assets/icons/marker_exclamation.png',
             properties = null;
 
             var geometry = JSON.parse(story.geometry)
@@ -644,7 +644,7 @@ GFW.modules.app = function(gfw) {
           _.each(data.features, function(features) {
             var position = new google.maps.LatLng(features.properties.lat, features.properties.lon),
                 thumb    = features.properties.thumbnail,
-                icon     = '/assets/icons/exclamation.png',
+                icon     = '/assets/icons/marker_exclamation.png',
                 properties = null;
 
             var feature = new GeoJSON(features.geometry, config.OVERLAYS_STYLE);
