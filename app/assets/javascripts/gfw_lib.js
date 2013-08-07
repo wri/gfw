@@ -62,8 +62,6 @@ GFW.modules.app = function(gfw) {
       this.mongabayFeatures = [];
       this.mongabayLoaded = false;
       this.mc = {};
-      this.selectedShapes = [];
-      this.selectedShape;
 
       // we can stop loading the blank (see limit=0 below) tileset here now that we are loading the animation. see todo on line 347
       this.queries.semi_monthly     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 17 ELSE {Z}+8 END limit 0";
@@ -625,12 +623,12 @@ GFW.modules.app = function(gfw) {
           for (var j in features[i]) {
             var feature = features[i][j];
             feature.setMap(map);
-            this.selectedShapes.push(feature);
+            that.storiesFeatures.push(feature);
           }
         } else {
           var feature = features[i];
           feature.setMap(map);
-          this.selectedShapes.push(feature);
+          that.storiesFeatures.push(feature);
         }
 
       }
