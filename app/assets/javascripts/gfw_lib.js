@@ -888,9 +888,9 @@ GFW.modules.maplayer = function(gfw) {
 
         if (this.layer.get('slug') == "nothing") {
           var event = function() {
+            GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
             GFW.app.currentBaseLayer = null;
             that._hideBaseLayers(GFW.app);
-            GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
           };
 
           Filter.addFilter("", this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
