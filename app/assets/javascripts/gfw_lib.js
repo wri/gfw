@@ -61,6 +61,7 @@ GFW.modules.app = function(gfw) {
       this.mongabayMarkers = [];
       this.mongabayFeatures = [];
       this.mongabayLoaded = false;
+      this.mongabayHidden = false;
       this.mc = {};
 
       // we can stop loading the blank (see limit=0 below) tileset here now that we are loading the animation. see todo on line 347
