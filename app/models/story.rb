@@ -207,6 +207,7 @@ class Story < CartoDB::Model::Base
              stories.title,
              stories.details,
              stories.when_did_it_happen,
+             stories.where_did_it_happen,
              stories.your_name,
              stories.featured,
              stories.visible,
