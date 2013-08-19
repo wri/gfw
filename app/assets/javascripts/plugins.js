@@ -1,9 +1,10 @@
 var CountryFeed = (function() {
   function getNews() {
-    $.getJSON("http://dl.dropboxusercontent.com/u/355423/mongobay.json", function(data) {
+    $.getJSON("https://wri-01.cartodb.com/api/v2/sql?q=SELECT * FROM mongabaydb", function(data) {
       var items = [];
 
-      $.each(data, function(key, val) {
+      $.each(data.rows, function(key, val) {
+        // pending keyword population
         if($.inArray(countryKeyword, val.keywords) > -1 && items.length < 5) { // only 5 first news
           items.push('<li><span class="date">'+val.published+'</span><a href="'+this.loc+'" target="_blank">'+this.title+'</a></li>');
         }

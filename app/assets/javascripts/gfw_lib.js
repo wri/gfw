@@ -573,9 +573,6 @@ GFW.modules.app = function(gfw) {
               that.storiesFeatures.push(feature[0]);
             }
 
-            // place borders
-            that._loadCountryGeoJSONforStories(story.lng,story.lat);
-
             var title = story.title;
 
             if (title.length > 34) {
@@ -594,53 +591,12 @@ GFW.modules.app = function(gfw) {
       });
     },
 
-    _loadCountryGeoJSONforStories: function(lng,lat) {
-
-      var that = this;
-      var query = "https://wri-01.cartodb.com/api/v2/sql?q=SELECT the_geom, the_geom_webmercator FROM gfw2_countries WHERE ST_Intersects(the_geom,ST_SetSRID(ST_Makepoint(" + lng + "," + lat + "),4326))&format=geojson";
-
-      $.ajax({
-        url: query,
-        dataType: 'jsonp',
-        success: function(the_geom) {
-          that._loadStoryPolygon(the_geom);
-        }
-      });
-
-    },
-
-    _loadStoryPolygon: function(the_geom) {
-
-      var that = this;
-
-      var style = config.ANALYSIS_OVERLAYS_STYLE;
-
-      style.editable = false;
-
-      var features = new GeoJSON(the_geom, style);
-
-      for (var i in features) {
-        if (features[i].length > 0) {
-          for (var j in features[i]) {
-            var feature = features[i][j];
-            feature.setMap(map);
-            that.storiesFeatures.push(feature);
-          }
-        } else {
-          var feature = features[i];
-          feature.setMap(map);
-          that.storiesFeatures.push(feature);
-        }
-
-      }
-    },
-
     _loadMongabayLayer: function() {
       var that = this;
 
       $.ajax({
         async: false,
-        url: "https://matallo.cartodb.com/api/v2/sql?q=SELECT * FROM mongabay&format=geojson",
+        url: "https://wri-01.cartodb.com/api/v2/sql?q=SELECT * FROM mongabaydb&format=geojson",
         success: function(data) {
           _.each(data.features, function(features) {
             var position = new google.maps.LatLng(features.properties.lat, features.properties.lon),
