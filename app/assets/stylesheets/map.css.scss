@@ -290,6 +290,12 @@
     margin:auto;
     border-top: 1px solid #717D80;
     border-bottom: 1px solid #717D80;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   // Markers
