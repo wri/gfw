@@ -106,6 +106,13 @@ en:
       blog_posts:
         title: '%{country} Blog Stories'
         more: 'more'
+      country_menu:
+        state: 'State of the Forest'
+        people: 'People & Economy'
+        tenure: 'Tenure & Laws'
+        climate: 'Climate Change'
+        agreements: 'Agreements'
+
 
   stories:
     index:

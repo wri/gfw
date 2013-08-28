@@ -1,23 +1,23 @@
-var CountryFeed = (function() {
-  function getNews() {
-    $.getJSON("https://wri-01.cartodb.com/api/v2/sql?q=SELECT * FROM mongabaydb", function(data) {
-      var items = [];
+// var CountryFeed = (function() {
+//   function getNews() {
+//     $.getJSON("https://wri-01.cartodb.com/api/v2/sql?q=SELECT * FROM mongabaydb", function(data) {
+//       var items = [];
 
-      $.each(data.rows, function(key, val) {
-        // pending keyword population
-        if($.inArray(countryKeyword, val.keywords) > -1 && items.length < 5) { // only 5 first news
-          items.push('<li><span class="date">'+val.published+'</span><a href="'+this.loc+'" target="_blank">'+this.title+'</a></li>');
-        }
-      });
+//       $.each(data.rows, function(key, val) {
+//         // pending keyword population
+//         if($.inArray(countryKeyword, val.keywords) > -1 && items.length < 5) { // only 5 first news
+//           items.push('<li><span class="date">'+val.published+'</span><a href="'+this.loc+'" target="_blank">'+this.title+'</a></li>');
+//         }
+//       });
 
-      $(".mongobay").html(items);
-    });
-  }
+//       $(".mongobay").html(items);
+//     });
+//   }
 
-  return {
-    getNews: getNews
-  }
-}());
+//   return {
+//     getNews: getNews
+//   }
+// }());
 
 var CountryMenu = (function() {
 
@@ -37,26 +37,41 @@ var CountryMenu = (function() {
 
   }
 
+  function drawCountry(iso) {
+
+    $.ajax({ url: "/assets/country_shapes.json", success: function(data) {
+      if ((iso != 'GUF')) draw(data, iso, "country");
+
+      drawn = true;
+    }});
+  }
+
+
   function drawCountries() {
 
     $.ajax({ url: "/assets/country_shapes.json", success: function(data) {
       for (var i=0; i<data.features.length; i++) {
         var iso = data.features[i].properties.iso;
-        if ((iso != 'GUF')) draw(data, iso);
+        if ((iso != 'GUF')) draw(data, iso, "icon");
       }
       drawn = true;
     }});
 
   }
 
-  function draw(data, iso) {
+  function draw(data, iso, el) {
 
-    var width  = 270;
-    var height = 200;
+    if(el === "icon") {
+      var width = 270,
+          height = 200;
+    } else if(el === "country") {
+      var width = 300,
+          height = 250;
+    }
 
-    var svg = d3.select("#icon"+iso).append("svg")
-    .attr("width", width)
-    .attr("height", height);
+    var svg = d3.select("#"+el+iso).append("svg")
+      .attr("width", width)
+      .attr("height", height);
 
     var country = null;
     var i = 0;
@@ -93,7 +108,11 @@ var CountryMenu = (function() {
           scale = (height/y_range);
         }
 
-        scale = scale*3;
+        if(el === "country") {
+          scale = scale*7.5;
+        } else {
+          scale = scale*3;
+        }
 
         return "scale("+scale+"), translate(" + (-x+(width/scale)/2) + "," + (-y+(height/scale)/2) + ")";
 
@@ -104,7 +123,8 @@ var CountryMenu = (function() {
 
   return {
     show: show,
-    drawCountries: drawCountries
+    drawCountries: drawCountries,
+    drawCountry: drawCountry
   };
 
 }());
@@ -1352,7 +1372,7 @@ var Circle = (function() {
       delay = 0;
     }
 
-    var $circle = $(".circle");
+    var $circle = $(".lines");
 
     $circle.show();
 
@@ -1477,7 +1497,7 @@ function addCircle(id, type, options) {
 
   var
   countryCode       = options.countryCode || 'MYS',
-  width             = options.width      || 300,
+  width             = options.width      || 310,
   height            = options.height     || width,
   barWidth          = options.barWidth   || 5,
   title             = options.title      || "",
@@ -1492,7 +1512,7 @@ function addCircle(id, type, options) {
   mouseOverDuration = 10,
   mouseOutDuration  = 700;
 
-  var graph = d3.select(".circle." + type)
+  var graph = d3.select(".lines." + type)
   .append("svg:svg")
   .attr("class", id)
   .attr("width", width)
@@ -1534,7 +1554,7 @@ function addCircle(id, type, options) {
   });
 
   function addText(opt) {
-    $(".chart ." + opt.c).html(opt.html);
+    $(".lines ." + opt.c).find("span").html(opt.html);
   }
 
   // Content selection: lines or bars
@@ -1574,8 +1594,8 @@ function addCircle(id, type, options) {
           var index = Math.round(x.invert(d3.mouse(this)[0]));
 
           if (data[index]) { // if there's data
-            var val = data[index].alerts + " <small>" + unit + "</small>";
-            $(".circle .amount").html(val);
+            var val = "<span>" + data[index].alerts + "</span> <small>" + unit + "</small>";
+            $(".lines .amount").html(val);
 
             var date = new Date(data[index].y, data[index].m);
             months = monthDiff(date, new Date());
@@ -1588,7 +1608,7 @@ function addCircle(id, type, options) {
               val = "in " + config.MONTHNAMES[data[index].m - 1] + " " + data[index].y;
             }
 
-            $(".circle .date").html(val);
+            $(".lines .date").html(val);
 
             d3.select(this).transition().duration(mouseOverDuration).style("fill", hoverColor);
 
@@ -1649,7 +1669,7 @@ function addCircle(id, type, options) {
         .attr("transform", "translate(" + marginLeft + "," + marginTop + ")")
         .on("mouseover", function(d) {
 
-          var val = Math.floor(d.area_sqkm) + " <small>" + unit + "</small>";
+          var val = "<span>" + Math.floor(d.area_sqkm) + "</span> <small>" + unit + "</small>";
           $(".amount." + id + " .text").html(val);
 
           var t = _.template(legend);

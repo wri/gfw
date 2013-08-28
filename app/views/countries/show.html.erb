@@ -24,45 +24,175 @@
 
       <div class="graphs" data-load="graphs">
         <div class="circle lines chart">
-          <div class="title"></div>
-          <div class="subtitle"></div>
-          <div class="amount"></div>
+          <a href="#" class="info">i</a>
+          <div class="title"><span></span></div>
+          <div class="subtitle"><span></span></div>
           <div class="date"></div>
+          <a href="#" class="action"></a>
         </div>
-        <div class="circle hansen_placeholder chart"></div>
-        <div class="circle country" style="background: url(<%= static_map(@country.lat+","+@country.lon, "299x299", 4) %>) no-repeat;">
+        <div class="circle forest_loss chart">
+          <a href="#" class="info">i</a>
+          <div class="title"><span>Forest Loss 2012</span></div>
+          <div class="amount"><span>14<span>M*</span></span></div>
+          <div class="date">*Million Hectares</div>
+          <a href="#" class="action"></a>
+        </div>
+        <div class="chart circle country" style="background: url(<%= static_map(@country.lat+","+@country.lon, "299x299", 4) %>) no-repeat;">
           <a class="mask" href="<%= @country.link %>"></a>
-          <a class="button" href="<%= @country.link %>/<%= @country.iso %>">Analyze map</a>
+          <a href="#" class="info">i</a>
+          <a href="<%= @country.link %>/<%= @country.iso %>" class="action"></a>
         </div>
-      </div>
-
-      <div class="alerts">
-        <% if @country.last_alerts.count > 0 %>
-          <h4><%= t('.detail.alerts.title') %></h4>
-          <ul>
-            <% @country.last_alerts.each do |alert| %>
-              <li>
-              <span class="date"><%= l alert[:date].to_date, :format => :custom %></span>
-              <span class="time"><%= l alert[:date].to_time, :format => :custom %></span>
-              <span class="count"><%= alert[:count] %> Alerts</span>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
-
-        <h4><%= t('.detail.mongobay.title', :country => @country.name) %></h4>
-        <ul class="mongobay"></ul>
-        <%= link_to (content_tag :span, t('.detail.mongobay.read_more', :country => @country.name)), "http://news.mongabay.com/news-index/#{@country.name.downcase}1.html", :class => "btn hollow"%>
-        <!--<%= link_to (content_tag :span, t('.detail.alerts.analyze')), "#", :class => "btn hollow subscribe"%>-->
-      </div>
-
-
-      <div class="description">
-        <h4><%= t('.detail.description.title') %></h4>
-        <%= simple_format truncate(@country.about, :length => 400) %>
-        <%= link_to (content_tag :span, t('.detail.description.read_more')) + (content_tag :div, "", :class => "icon wikipedia") , @country.wikipedia_link, :class => "btn hollow" %>
       </div>
     </div>
+
+    <section class="state" data-menu="state">
+      <div class="country-menu">
+        <ul class="country-menu-inner">
+          <li class="selected state">
+            <a href="#"><%= t('.country_menu.state') %></a>
+          </li>
+          <li class="people">
+            <a href="#"><%= t('.country_menu.people') %></a>
+          </li>
+          <li class="laws">
+            <a href="#"><%= t('.country_menu.tenure') %></a>
+          </li>
+          <li class="climate">
+            <a href="#"><%= t('.country_menu.climate') %></a>
+          </li>
+          <li class="agreements">
+            <a href="#"><%= t('.country_menu.agreements') %></a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="inner">
+        <div id="<%= "country#{@country.iso}" %>" class="country-path"></div>
+        <h2>Central African Republic is covered by <span>57.1 Million Hectares of forest.</span><a href="#" class="info"><i></i></a></h2>
+
+
+        <h3>The type of forest in this country is...</h3>
+        <div class="line-graph">
+          <%= image_tag 'tmp/graph1.png' %>
+        </div>
+      </div>
+    </section>
+
+    <section class="people" data-menu="people">
+      <div class="inner">
+        <h3>Gross value add for the forest sector <a href="#" class="info"><i></i></a></h3>
+        <h2>The forest sector contributed <span>$149,488,000</span> to the economy in 2006, which is approximately <span>9% of the GDP</span></h2>
+
+        <ul class="employment block">
+          <li>
+            <h3>Employment in forest sector</h3>
+            <h2>287.231 <span>people</span></h2>
+
+            <div class="man-list">
+              <% (1..27).each do |i| %>
+                <%= image_tag 'countries/man.png' %>
+              <% end %>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="laws" data-menu="laws">
+      <div class="inner">
+        <div class="tenure">
+          <h3>Forest tenure <a href="#" class="info"><i></i></a></h3>
+          <div class="line-graph">
+            <%= image_tag 'tmp/graph.png' %>
+          </div>
+        </div>
+
+        <div class="legislation">
+          <h3>Forest legislation <a href="#" class="info"><i></i></a></h3>
+          <ul>
+            <li><a href="#">Another important legislation link</a></li>
+            <li><a href="#">Forest legislation II - 2981</a></li>
+            <li><a href="#">Original laws</a></li>
+          </ul>
+
+          <a href="#" class="people-link">Are we missing a link?</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="climate" data-menu="climate">
+      <div class="inner">
+        <ul>
+          <li>
+            <h3>Carbon stocks <a href="#" class="info"><i></i></a></h3>
+            <h2>This country has <span>4,442 Million<br />tonnes of CO2</span> in living forest biomass.</h2>
+          </li>
+
+          <li class="last">
+            <h3><a href="#" class="info"><i class="dark"></i></a> CO2 emissions</h3>
+            <h2><span>25% of CO2 emissions</span> on this country come from land use change.</h2>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="agreements" data-menu="agreements">
+      <div class="inner">
+        <h3>International agreements</h3>
+
+        <ul>
+          <li>CDB <a href="#" class="info"><i></i></a> <span>ratified</span></li>
+
+          <li>KYOTO<br />PROTCOL <a href="#" class="info"><i></i></a> <span>signed</span></li>
+
+          <li>CITES <a href="#" class="info"><i></i></a> <span>signed</span></li>
+
+          <li>UNCCD <a href="#" class="info"><i></i></a> <span>ratified</span></li>
+
+          <li>ITTA <a href="#" class="info"><i></i></a> <span>ratified</span></li>
+
+          <li>NLBI <a href="#" class="info"><i></i></a> <span>signed</span></li>
+
+          <li>RAMSAR <a href="#" class="info"><i></i></a> <span>ratified</span></li>
+
+          <li>ILO 169 <a href="#" class="info"><i></i></a> <span>ratified</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="external-links">
+      <div class="inner">
+        <h3>External links</h3>
+
+        <ul>
+          <li class="selected">
+            <a href="#"><%= t('.Ministry website') %></a>
+          </li>
+          <li>
+            <a href="#"><%= t('.Moabi') %></a>
+          </li>
+          <li>
+            <a href="#"><%= t('.Interactive Forest Atlas for Democratic Republic of Congo') %></a>
+          </li>
+          <li>
+            <a href="#"><%= t('.DRC Mining') %></a>
+          </li>
+          <li>
+            <a href="#"><%= t('.OSFAC') %></a>
+          </li>
+          <li>
+            <a href="#"><%= t('.National Forest Monitoring System') %></a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="download-links">
+      <ul class="inner">
+        <li><a href="#">Subscribe to alerts for this country</a></li>
+        <li><a href="#">Download relevant datasets</a></li>
+      </ul>
+    </section>
   </div>
 
   <div class="blog-links">

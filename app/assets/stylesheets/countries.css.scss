@@ -17,11 +17,15 @@ body.countries {
   }
 
   header {
-    border-bottom: 1px solid #ccc;
+    border-bottom: none;
   }
 
   #country {
     background: $cWhite;
+  }
+
+  .blog-links {
+    margin-top: 0;
   }
 }
 
@@ -284,8 +288,226 @@ a.close_icon {
     }
   }
 
+  .details {
+    section {
+      position: relative;
+      background-color: #eee;
+      background-repeat: no-repeat;
+      border-bottom: 1px solid #ddd;
+
+      &.state {
+        padding-top: 48px;
+        background-image: url(backgrounds/bkg_country.png);
+
+        .inner {
+          padding-left: 300px;
+          width: 617px;
+        }
+      }
+
+      &.people {
+        .inner {
+          padding-right: 273px;
+          width: 644px;
+          background-position: right bottom;
+        }
+
+        background-image: url(backgrounds/bkg_country.png);
+        background-position: right 0;
+      }
+
+      &.laws {
+        background-image: url(backgrounds/bkg_country.png);
+      }
+
+      &.climate {
+        overflow: hidden;
+
+        .inner {
+          padding: 0;
+          margin: 0 auto;
+        }
+
+        ul {
+          margin-right: -50px;
+        }
+
+        li {
+          float: left;
+          width: 422px;
+          padding: 50px 35px 50px 0;
+
+          &.last {
+            background: #444;
+            text-align: right;
+            padding: 50px 50px 50px 35px;
+
+            h2 { color: #fff; }
+          }
+        }
+
+        h2 {
+          margin: 0;
+        }
+      }
+
+      &.agreements {
+        background-image: url(backgrounds/bkg_country.png);
+        background-position: right 0;
+
+        h3 { margin-bottom: 20px; }
+
+        ul {
+          overflow: hidden;
+          margin-right: -8px;
+        }
+
+        li {
+          position: relative;
+          display: block;
+          float: left;
+          margin: 0 8px 8px 0;
+          width: 120px;
+          height: 67px;
+          border: 2px solid #ccc;
+          @include border-radius(2px);
+          text-align: center;
+          padding-top: 25px;
+          @extend .sans-serif;
+          font-size: 12px;
+          font-weight: bold;
+          color: #aaa;
+
+          span {
+            position: absolute;
+            display: block;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            line-height: 22px;
+            font-weight: normal;
+            font-style: italic;
+            text-transform: uppercase;
+            border-top: 1px solid #D9D9D9;
+          }
+        }
+      }
+
+      &.external-links {
+        @extend .sans-serif;
+        font-size: 13px;
+        color: #ddd;
+
+        li {
+          display: inline-block;
+          line-height: 14px;
+          border-left: 1px solid #ddd;
+          padding-left: 8px;
+          margin-left: 5px;
+
+          &:first-child {
+            border: 0;
+            margin: 0;
+            padding: 0;
+          }
+        }
+
+        a {
+          color: #A1BA42;
+
+          &:hover {
+            color: darken(#A1BA42, 5%);
+          }
+        }
+      }
+
+      &.download-links {
+        border-bottom: 0;
+        text-align: center;
+        background: #E9EAE0;
+
+        li {
+          @extend .sans-serif;
+          display: inline-block;
+          margin-left: 7px;
+
+          a {
+            @include inline-block();
+            text-decoration: none;
+            border: 2px solid rgba(#ACCD00, .5);
+            @include border-radius(25px);
+            line-height: 30px;
+            padding: 0 20px;
+            margin-top: 10px;
+            color: #333;
+            font-weight: bold;
+            font-size: 13px;
+            line-height: 44px;
+            text-transform: uppercase;
+
+            &:hover {
+              border: 2px solid #ACCD00;
+            }
+          }
+        }
+      }
+
+      .inner {
+        margin-bottom: 0;
+        padding: 50px 0;
+      }
+    }
+
+    h2 {
+      @extend .serif;
+      font-size: 45px;
+      line-height: 1.1;
+      color: #444;
+      margin-bottom: 40px;
+
+      .info i { top: -12px; }
+
+      span {
+        color: #AAC600;
+      }
+    }
+
+    h3 {
+      @extend .serif;
+      margin-bottom: 10px;
+      font-size: 17px;
+      color: #888;
+    }
+
+    .block {
+      margin-bottom: 30px;
+      width: 100%;
+
+
+      &.last {
+        margin-bottom: 0;
+      }
+
+      &.employment {
+        overflow: hidden;
+
+        h2 {
+          float: left;
+          margin-bottom: 10px;
+
+          span {
+            @extend .sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #444;
+          }
+        }
+      }
+    }
+  }
+
   .graphs {
-    margin: 40px 0 40px -10px;
+    margin: 0 0 40px -10px;
     height: 300px;
     width:100%;
     word-spacing:-1em;
@@ -299,12 +521,61 @@ a.close_icon {
 
     .chart { position: relative; }
 
+    .chart .info {
+      position: absolute;
+      top: 2px;
+      left: 50%;
+      margin-left: -12px;
+      width: 24px;
+      color: #fff;
+      font-size: 14px;
+      line-height: 24px;
+      text-align:center;
+      background: #FF4D4D;
+      border: 2px solid #fff;
+      text-decoration: none;
+      @extend .serif;
+      @include border-radius(14px);
+    }
+
+    .forest_loss .info { background: #FFC926; }
+
+    .circle .action {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      margin-left: -20px;
+      width: 36px;
+      height: 36px;
+      background: #fff;
+      border: 2px solid #FF4D4D;
+      @include border-radius(20px);
+      background: #fff url(icons/chart_action.png) no-repeat center;
+    }
+
+    .forest_loss .action {
+      bottom: -14px;
+      border: 2px solid #FFC926; 
+      background-image: url(icons/chart_forest_action.png);
+    }
+
+    .country .action {
+      margin-left: -15px;
+      bottom: -14px;
+      border: 2px solid #444;
+      background-image: url(icons/chart_country_action.png);
+    }
+
+    .country .info {
+      background: #444;
+    }
+
     .chart .title {
       position: absolute;
-      top: 50px;
+      top: 47px;
       left: 0;
       width: 100%;
-      color: #A1BA42;
+      color: #FF4D4D;
       font-size: 18px;
       text-align:center;
       @extend .serif;
@@ -312,7 +583,7 @@ a.close_icon {
 
     .chart .subtitle {
       position: absolute;
-      top: 70px;
+      top: 67px;
       left: 0;
       width: 100%;
       @include inline-block();
@@ -322,22 +593,38 @@ a.close_icon {
       color:#666;
       @extend .serif;
       text-decoration:underline;
+
+      span {
+        line-height: 1.4;
+        background: #fff;
+        padding: 0 5px;
+      }
     }
 
     .chart  .amount {
       position: absolute;
       width: 100%;
-      color:#A1BA42;
+      color: #FFC926;
       text-align: center;
-      bottom: 70px;
+      bottom: 110px;
       left: 0;
-      font-size:24px;
+      font-size: 97px;
       z-index: 100;
+      @extend .serif;
+
+      span {
+        background: rgba(#fff, .8);
+        padding: 0 5px;
+
+        span {
+          font-size: 41px;
+        }
+      }
     }
     .chart  .date {
       position: absolute;
       text-align: center;
-      bottom: 48px;
+      bottom:53px;
       left: 0;
       width: 100%;
       color: #333;
@@ -346,12 +633,16 @@ a.close_icon {
     }
 
 
-    .chart { width: 300px; }
+    .chart { width: 310px; }
+
+    .forest_loss .title { color: #FFC926 }
+
+    .forest_loss .date { bottom: 39px; }
 
     .country {
       width: 295px;
       height: 299px;
-      overflow:hidden;
+      position: relative;
 
       a.mask {
         display: block;
@@ -359,27 +650,6 @@ a.close_icon {
         height: 299px;
         background:url(backgrounds/gfw_country_map_mask.png) no-repeat;
       }
-
-      a.button {
-        @include inline-block;
-        position: relative;
-        top: -165px;
-        left: 80px;
-        width: 141px;
-        height: 32px;
-        text-align: center;
-        padding: 10px 0 0 0;
-        background:url(buttons/explore_in_map.png) no-repeat;
-        color: white;
-        @extend .serif;
-        font-size: 18px;
-        text-decoration: none;
-
-        &:hover {
-          background-position:0 -42px;
-        }
-      }
-
     }
   }
 
@@ -392,14 +662,16 @@ a.close_icon {
   .lines {
 
     circle {
+      position: relative;
+      top: -4px;
       fill: transparent;
       fill-opacity:0;
-      stroke: #A1BA42;
-      stroke-width: 10px;
+      stroke: #FF4D4D;
+      stroke-width: 8px;
     }
 
     circle#marker {
-      fill: #A1BA42;
+      fill: #FF4D4D;
       fill-opacity:1;
       stroke: white;
       stroke-width: 1px;
@@ -410,7 +682,7 @@ a.close_icon {
     }
 
     path {
-      stroke: #A1BA42;
+      stroke: #FF4D4D;
       stroke-width: 4px;
       fill-opacity:0;
       fill: transparent;
@@ -467,10 +739,120 @@ a.close_icon {
     .graph_legend .text { margin: auto; width: 140px; @extend .serif;}
   }
 
-  .hansen_placeholder {
-      width: 342px;
-      height: 299px;
-      background:url(backgrounds/hansen_placeholder.png) no-repeat center;
+  .forest_loss {
+    width: 342px;
+    height: 299px;
+    background:url(backgrounds/forest_loss.png) no-repeat center 5px;
   }
 
+  .country-menu {
+    background: #242424;
+    height: 48px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 10;
 
+    li {
+      float: left;
+      width: 182px;
+      text-align: center;
+      border-left: 1px solid #4E4E4E;
+
+      &:last-child {
+        border-right: 1px solid #4E4E4E;
+      }
+
+      &.selected {
+        background:url(icons/selected_country_menu.png) no-repeat center bottom;
+
+        a { color: #fff; }
+      }
+    }
+
+    a {
+      @extend .serif;
+      display: block;
+      color: #BEBEBE;
+      font-size: 17px;
+      line-height: 48px;
+      text-decoration: none;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+
+  .country-menu-inner {
+    position: relative;
+    width: 917px;
+    margin: 0 auto 49px auto;
+  }
+
+  .country-path {
+    float: left;
+    margin: -40px 0 0 -300px;
+
+    path {
+      fill: #444;
+    }
+  }
+
+  .legislation {
+    margin-left: 50px;
+
+    li {
+      list-style: none;
+      padding-left: 10px;
+      @include icons-sprite(bullet_country);
+    }
+
+    a {
+      color: #555;
+      font-size: 15px;
+      line-height: 1.6;
+      @extend .sans-serif;
+
+      &:hover {
+        color: #333;
+      }
+    }
+
+    .people-link {
+      @include inline-block();
+      text-decoration: none;
+      border: 2px solid rgba(#ACCD00, .5);
+      @include border-radius(18px);
+      line-height: 30px;
+      padding: 0 15px;
+      margin-top: 10px;
+
+      &:hover {
+        border: 2px solid #ACCD00;
+      }
+    }
+  }
+
+  .man-list {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .man {
+    display: block;
+    float: left;
+    margin-right: 3px;
+  }
+
+  .info i {
+    position: relative;
+    top: 3px;
+    margin-left: 3px;
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    @include icons-sprite(country_info);
+
+    &.dark { @include icons-sprite(country_info_dark); }
+  }

@@ -198,7 +198,10 @@ function loadGFW(callback) {
 
   if ($("body.countries").hasClass("index")) CountryMenu.drawCountries();
 
-  if($("body.countries").hasClass("show")) CountryFeed.getNews();
+  if($("body.countries").hasClass("show")) {
+    CountryMenu.drawCountry(countryCode);
+
+  }
 
   $("nav .home.ajax").on("click", function(e) {
     e.preventDefault();
@@ -455,11 +458,44 @@ $(function(){
         });
       }
     }
+
+    if($("body.countries").hasClass("show")) {
+      if($(window).scrollTop() < $("section.state").offset().top) {
+        $(".country-menu").css({
+          "position": "absolute",
+          "top": "0"
+        });
+      } else if($(window).scrollTop() >= $("section.state").offset().top && $(window).scrollTop() <= ($("section.agreements").offset().top - 48)) {
+        $(".country-menu").css({
+          "position": "fixed",
+          "top": "0"
+        });
+
+        selectedSection();
+      } else if($(window).scrollTop() > ($("section.agreements").offset().top - 48)) {
+        $(".country-menu").css({
+          "position": "absolute",
+          "top": ($("section.agreements").offset().top - $("section.state").offset().top - 48)
+        });
+
+        selectedSection();
+      }
+    }
+
+  }
+
+  function selectedSection() {
+    _.each($(".details section[data-menu]"), function(section) {
+      if($(window).scrollTop() >= $(".details section[data-menu='" + $(section).attr("data-menu") +"']").offset().top - 48) {
+        $(".country-menu li").removeClass("selected");
+        $(".country-menu li."+$(section).attr("data-menu")).addClass("selected");
+        return;
+      }
+    });
   }
 
   if ($("div[data-load]:visible").length > 0) {
-    addCircle("forest", "bars", { legendUnit: "m", countryCode: countryCode, width: 300, title: "Height", subtitle:"Tree height distribution", legend:"with {{n}} tall trees", hoverColor: "#333333", color: "#333333", unit: "km<sup>2</sup>" });
-    addCircle("forma", "lines", { countryCode: countryCode, width: 300, title: "FORMA", subtitle:"Forest clearing alerts", legend:"In the last month", hoverColor: "#A1BA42", color: "#A1BA42" });
+    addCircle("forma", "lines", { countryCode: countryCode, width: 310, title: "Humid Tropics", subtitle:"Forest Clearing Alerts", legend:"In the last month", hoverColor: "#A1BA42", color: "#FF4D4D" });
   }
 
 
