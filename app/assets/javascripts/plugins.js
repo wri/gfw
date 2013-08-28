@@ -1372,7 +1372,7 @@ var Circle = (function() {
       delay = 0;
     }
 
-    var $circle = $(".lines");
+    var $circle = $(".circle");
 
     $circle.show();
 
