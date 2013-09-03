@@ -920,3 +920,14 @@ a.close_icon {
       color: #FFD24D;
     }
   }
+
+  .comments {
+    padding: 50px 0 30px;
+    border-top: 1px solid #d9d9d9;
+
+    .inner {
+      position: relative;
+      width: 917px;
+      margin: 0 auto;      
+    }
+  }
