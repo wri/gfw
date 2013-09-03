@@ -111,8 +111,20 @@ en:
         people: 'People & Economy'
         tenure: 'Tenure & Laws'
         climate: 'Climate Change'
-        agreements: 'Agreements'
-
+        conventions: 'Conventions'
+      conventions:
+        cbd_title: "CBD"
+        kyoto_title: "KYOTO PROTOCOL"
+        unfccc_title: "UNFCCC"
+        cbd_title: "CBD"
+        kyoto_title_html: "KYOTO<br />PROTOCOL"
+        unccd_title: "UNCCD"
+        cites_title: "CITES"
+        ramsar_title: "RAMSAR"
+        world_heritage_title: "WORLD HERITAGE"
+        nlbi_title: "NLBI"
+        ilo_title: "ILO 169"
+      ministry_link: "Ministry website"
 
   stories:
     index:

@@ -8,13 +8,26 @@ class CountriesController < ApplicationController
     @country = OpenStruct.new({
       name: country_info[0].name,
       about: country_info[0].about,
-      wikipedia_link: country_info[0].wikipedia_link,
+      forest_extent: country_info[0].forest_extent,
+      gross_value: country_info[0].gross_value,
+      gdp_percent: country_info[0].gdp_percent,
+      employment: country_info[0].employment,
+      national_policy_link: country_info[0].national_policy_link,
+      national_policy_title: country_info[0].national_policy_title,
+      carbon_stocks: country_info[0].carbon_stocks,
+      emissions_land: country_info[0].emissions_land,
+      emissions_noland: country_info[0].emissions_noland,
+      conventions: country_info[0].conventions,
+      ministry_link: country_info[0].ministry_link,
+      dataset_link: country_info[0].dataset_link,
       lat: country_info[0].lat.to_s,
       lon: country_info[0].lon.to_s,
       link: country_info[0].map_coord,
       iso:  country_info[0].iso,
       last_alerts: Alert.alerts_per_month_per_country(country_info[0].iso)
     })
+
+    @featured = Story.first_three_featured
 
     @blog_posts = [];
 

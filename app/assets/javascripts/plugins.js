@@ -46,6 +46,117 @@ var CountryMenu = (function() {
     }});
   }
 
+  function drawForest(iso) {
+    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20unnest(array['type_primary',%20'type_regenerated',%20'type_planted'])%20AS%20type,%20unnest(array[type_primary,%20type_regenerated,%20type_planted])%20AS%20percent%20FROM%20gfw2_countries%20WHERE%20iso%20=%20'"+iso+"'", function(data) {
+      var svg = d3.select(".state .line-graph")
+        .append("svg")
+        .attr("width", 630)
+        .attr("height", 16);
+
+      var x_extent = [0, 100],
+          x_scale = d3.scale.linear()
+                      .range([0,625])
+                      .domain(x_extent);
+
+      var origins = [],
+          aggr = 0,
+          klass = ['one', 'two', 'three'];
+
+      _.each(data.rows, function(d, i) {
+        var current = data.rows[i-1] && data.rows[i-1]['percent'] || 0;
+
+        aggr = aggr + current;
+
+        origins[i] = aggr;
+      });
+
+      svg.selectAll("rect")
+        .data(data.rows)
+        .enter()
+        .append("rect")
+        .attr("class", function(d, i) {
+          return klass[i];
+        })
+        .attr("x", function(d, i) {
+          return x_scale(origins[i]);
+        })
+        .attr("y", 6)
+        .attr("width", function(d) {
+          return x_scale(d['percent']);
+        })
+        .attr("height", 4);
+
+      // add balls
+      svg.selectAll("circle")
+        .data(data.rows)
+        .enter()
+        .append("circle")
+        .attr("class", function(d, i) {
+          return klass[i];
+        })
+        .attr("cx", function(d, i) {
+          return x_scale(d['percent']+origins[i]);
+        })
+        .attr("cy", 8)
+        .attr("r", 5);
+    });
+  }
+
+  function drawTenure(iso) {
+    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20unnest(array['tenure_government',%20'tenure_community'])%20AS%20type,%20unnest(array[tenure_government,tenure_community])%20AS%20percent%20FROM%20gfw2_countries%20WHERE%20iso%20=%20'"+iso+"'", function(data) {
+      var svg = d3.select(".tenure .line-graph")
+        .append("svg")
+        .attr("width", 560)
+        .attr("height", 16);
+
+      var x_extent = [0, 100],
+          x_scale = d3.scale.linear()
+                      .range([0,555])
+                      .domain(x_extent);
+
+      var origins = [],
+          aggr = 0,
+          klass = ['one', 'three']
+
+      _.each(data.rows, function(d, i) {
+        var current = data.rows[i-1] && data.rows[i-1]['percent'] || 0;
+
+        aggr = aggr + current;
+
+        origins[i] = aggr;
+      });
+
+      svg.selectAll("rect")
+        .data(data.rows)
+        .enter()
+        .append("rect")
+        .attr("class", function(d, i) {
+          return klass[i];
+        })
+        .attr("x", function(d, i) {
+          return x_scale(origins[i]);
+        })
+        .attr("y", 6)
+        .attr("width", function(d) {
+          return x_scale(d['percent']);
+        })
+        .attr("height", 4);
+
+      // add balls
+      svg.selectAll("circle")
+        .data(data.rows)
+        .enter()
+        .append("circle")
+        .attr("class", function(d, i) {
+          return klass[i];
+        })
+        .attr("cx", function(d, i) {
+          return x_scale(d['percent']+origins[i]);
+        })
+        .attr("cy", 8)
+        .attr("r", 5);
+    });
+  }
 
   function drawCountries() {
 
@@ -124,7 +235,9 @@ var CountryMenu = (function() {
   return {
     show: show,
     drawCountries: drawCountries,
-    drawCountry: drawCountry
+    drawCountry: drawCountry,
+    drawForest: drawForest,
+    drawTenure: drawTenure
   };
 
 }());

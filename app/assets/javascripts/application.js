@@ -200,7 +200,8 @@ function loadGFW(callback) {
 
   if($("body.countries").hasClass("show")) {
     CountryMenu.drawCountry(countryCode);
-
+    CountryMenu.drawForest(countryCode);
+    CountryMenu.drawTenure(countryCode);
   }
 
   $("nav .home.ajax").on("click", function(e) {
@@ -392,6 +393,15 @@ $(function(){
     carrousel = new gfw.ui.view.Carrousel();
   }
 
+  $(".country-menu a").on("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    var el = $('[data-menu="'+$(e.target).attr("data-slug")+'"]');
+
+    goTo(el);
+  });
+
   function hideOvers() {
 
     if ($("#share:visible").length > 0) {
@@ -408,10 +418,18 @@ $(function(){
       $("#other_wri_sites").fadeOut(250);
     }
 
+    if ($("#window:visible").length > 0) {
+      $(".backdrop").hide();
+    }
   }
 
   $(".backdrop").on("click", function(e) {
     hideOvers();
+  });
+
+  $(".close").on("click", function(e) {
+    e.preventDefault();
+    $(".backdrop").fadeOut(250);
   });
 
   $(document).on("click", function(e) {
@@ -465,21 +483,30 @@ $(function(){
           "position": "absolute",
           "top": "0"
         });
-      } else if($(window).scrollTop() >= $("section.state").offset().top && $(window).scrollTop() <= ($("section.agreements").offset().top - 48)) {
+      } else if($(window).scrollTop() >= $("section.state").offset().top && $(window).scrollTop() <= ($("section.conventions").offset().top - 48)) {
         $(".country-menu").css({
           "position": "fixed",
           "top": "0"
         });
 
         selectedSection();
-      } else if($(window).scrollTop() > ($("section.agreements").offset().top - 48)) {
+      } else if($(window).scrollTop() > ($("section.conventions").offset().top - 48)) {
         $(".country-menu").css({
           "position": "absolute",
-          "top": ($("section.agreements").offset().top - $("section.state").offset().top - 48)
+          "top": ($("section.conventions").offset().top - $("section.state").offset().top - 48)
         });
 
         selectedSection();
       }
+
+      $("a.info").on("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var source = $(e.target).attr("data-source");
+
+        sourceWindow.show(source).addScroll();
+      });
     }
 
   }
@@ -492,6 +519,17 @@ $(function(){
         return;
       }
     });
+  }
+
+  function goTo($el, opt, callback) {
+    if ($el) {
+      var speed  = (opt && opt.speed)  || 400;
+      var delay  = (opt && opt.delay)  || 100;
+      var margin = (opt && opt.margin) || 0;
+
+      $('html, body').delay(delay).animate({scrollTop:$el.offset().top - margin}, speed);
+      callback && callback();
+    }
   }
 
   if ($("div[data-load]:visible").length > 0) {

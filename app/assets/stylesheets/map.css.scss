@@ -961,6 +961,7 @@
   height: $height;
 
   @include absolute-center($width, $height);
+  position: fixed;
 
   display:none;
   padding: 20px;
@@ -1036,6 +1037,11 @@
         font-size:13px;
         color:$cGray4;
         line-height:16px;
+
+        a {
+          font-size:13px;
+          color:$cGray4;
+        }
       }
 
       strong {

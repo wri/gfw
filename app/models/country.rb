@@ -9,7 +9,7 @@ class Country
   end
 
   def self.country_info(name = '')
-    CartoDB::Connection.query("SELECT name, iso, about, wikipedia_link, lat, lon, map_coord FROM gfw2_countries where name = '"+name.humanize.titleize+"';")[:rows]
+    CartoDB::Connection.query("SELECT name, iso, about, forest_extent, gross_value, gdp_percent, employment, national_policy_link, national_policy_title, carbon_stocks, emissions_land, emissions_noland, conventions, ministry_link, dataset_link, lat, lon, map_coord FROM gfw2_countries where name = '"+name.humanize.titleize+"';")[:rows]
   end
 
 end
