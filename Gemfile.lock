@@ -88,6 +88,7 @@ GEM
     erubis (2.7.0)
     eventmachine (1.0.3)
     excon (0.25.3)
+    execjs (2.0.1)
     faye-websocket (0.4.7)
       eventmachine (>= 0.12.0)
     ffi (1.9.0)
@@ -217,6 +218,9 @@ GEM
     typhoeus (0.3.3)
       mime-types
     tzinfo (0.3.37)
+    uglifier (2.2.1)
+      execjs (>= 0.3.0)
+      multi_json (~> 1.0, >= 1.0.2)
     vcr (2.5.0)
     websocket (1.0.7)
     xpath (1.0.0)
@@ -249,4 +253,5 @@ DEPENDENCIES
   rspec-rails
   sass-rails
   turbo-sprockets-rails3
+  uglifier
   vcr
