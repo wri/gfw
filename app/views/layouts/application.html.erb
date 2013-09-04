@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -12,6 +12,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <meta name="DC.title" content="">
+  <meta name="google-translate-customization" content="6aceed296652d5c6-62253bbcb659da8b-g723e6f4fbbbd449d-11"></meta>
   <meta property="og:title" content=""/>
   <meta property="og:description" content=""/> 
   <meta property="og:type" content="Visualization"/>
@@ -21,23 +22,20 @@
   <%= stylesheet_link_tag "application" %>
   <%= csrf_meta_tags %>
 
-  <script src="scripts/vendor/modernizr.custom.82536.js"></script>
+  <link rel="icon" type="image/png" href="<%= image_path 'favicon_32x32.ico' %>" />
 
-    <link rel="icon" type="image/png" href="<%= image_path 'favicon_32x32.ico' %>" />
-    <meta name="google-translate-customization" content="6aceed296652d5c6-62253bbcb659da8b-g723e6f4fbbbd449d-11"></meta>
+  <% if(ENV["RAILS_ENV"] === 'production') %>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    <% if(ENV["RAILS_ENV"] === 'production') %>
-      <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-        ga('create', 'UA-1981881-32', 'gfw-beta.org');
-        ga('send', 'pageview');
-      </script>
-    <% end %>
-  </head>
+      ga('create', 'UA-1981881-32', 'gfw-beta.org');
+      ga('send', 'pageview');
+    </script>
+  <% end %>
+</head>
 
   <body class="<%= controller_name %> <%= action_name %>">
     <%= render "common/header" %>
@@ -54,7 +52,7 @@
 
     <div class="backdrop"></div>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing&language=<%= I18n.locale %>"></script>
 

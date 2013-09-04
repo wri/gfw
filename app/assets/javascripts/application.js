@@ -1,6 +1,4 @@
-//= require jquery
 //= require jquery_ujs
-//= require jquery-migrate-min
 //= require jquery.easing.1.3
 //= require jquery-ui-1.9.2.custom.min
 //= require wax.g.min
@@ -24,24 +22,22 @@
 // Map needs to be a global var or
 // CapybaraHelpers#draw_polygon won't work
 
-var
-loaded           = false,
-map              = null,
-previousState    = null,
-globalZindex     = 300,
-subscribeMap;
-
-GOD               = {},
-legend            = {},
-analysis          = {},
-Timeline          = {},
-wall              = {},
-sourceWindow      = {},
-gallery           = {},
-languageSelector  = {},
-layerSelector     = {},
-searchBox         = {},
-Infowindow        = {};
+var loaded           = false,
+    map              = null,
+    previousState    = null,
+    globalZindex     = 300,
+    subscribeMap;
+    GOD               = {},
+    legend            = {},
+    analysis          = {},
+    Timeline          = {},
+    wall              = {},
+    sourceWindow      = {},
+    gallery           = {},
+    languageSelector  = {},
+    layerSelector     = {},
+    searchBox         = {},
+    Infowindow        = {};
 
 function loadOtherStuff(callback) {
 
