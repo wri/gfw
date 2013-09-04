@@ -1,31 +1,37 @@
-<% content_for :title do
-  t('.title')
-end %>
+<% content_for :title do %>
+  <% t('.title') %>
+<% end %>
 
 <% content_for :js do %>
-
   <script type="text/javascript">
     var summary = { count: "<%= number_with_delimiter(@alerts_count) %>", title: "Forest clearing alerts in the last six months" }
   </script>
-
 <% end %>
 
-<% content_for :download do %>
-  <div class="download">
-    <div class="inner">
-      <%= content_tag :h1, (raw t('layouts.application.footer.download.title', :url => "/countries")) %>
-      <%= content_tag :p, (raw t('layouts.application.footer.download.data_html', :url => "/sources")) %>
+<% content_for :filters do %>
+  <div id="filters">
+    <div class="filters hide">
+      <div class="inner">
+        <ul></ul>
+      </div>
+
+      <a href="#" class="advance"></a>
+      <div class="white-shadow"></div>
+    </div>
+
+    <div id="layer">
+      <a href="#" class="title"></a>
+      <div class="scroll">
+        <ul class="links"></ul>
+      </div>
+
+      <div class="icon"></div>
+      <div class="line"></div>
     </div>
   </div>
 <% end %>
 
-
-<% content_for :filters do %>
-  <div id="filters"><%= render "common/filters" %></div>
-<% end %>
-
 <%= render "common/map" %>
-<%= render "common/crowdsourcing" %>
 
 <div class="actions">
   <ul>

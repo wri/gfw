@@ -1,44 +1,82 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= t(".title") %></title>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing&language=<%= I18n.locale %>"></script>
-    <link rel="icon"type="image/png" href="<%= image_path 'favicon_32x32.ico' %>" />
-    <%= stylesheet_link_tag "application", :media => "all" %>
-    <%= csrf_meta_tags %>
-    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-    <!-- v 2.5 -->
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title><%= t(".title") %></title>
+  <meta name="viewport" content="width=device-width">
+  <meta name="robots" content="noindex">
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <!-- TODO: metas -->
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="DC.title" content="">
+  <meta property="og:title" content=""/>
+  <meta property="og:description" content=""/> 
+  <meta property="og:type" content="Visualization"/>
+  <meta property="og:url" content=""/>
+  <meta property="og:image" content=""/>
 
-    <script type="text/javascript">
-      if ($.browser.msie && $.browser.version < 9) {
-        location.href = "/old";
-      }
+  <%= stylesheet_link_tag "application" %>
+  <%= csrf_meta_tags %>
 
-    </script>
+  <script src="scripts/vendor/modernizr.custom.82536.js"></script>
 
-    <% if (ENV["RAILS_ENV"] == 'production') %>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <link rel="icon" type="image/png" href="<%= image_path 'favicon_32x32.ico' %>" />
+    <meta name="google-translate-customization" content="6aceed296652d5c6-62253bbcb659da8b-g723e6f4fbbbd449d-11"></meta>
 
-      ga('create', 'UA-1981881-32', 'gfw-beta.org');
-      ga('send', 'pageview');
+    <% if(ENV["RAILS_ENV"] === 'production') %>
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-    </script>
-  <% end %>
-
-  <meta name="google-translate-customization" content="6aceed296652d5c6-62253bbcb659da8b-g723e6f4fbbbd449d-11"></meta>
-        
-        
+        ga('create', 'UA-1981881-32', 'gfw-beta.org');
+        ga('send', 'pageview');
+      </script>
+    <% end %>
   </head>
 
   <body class="<%= controller_name %> <%= action_name %>">
     <%= render "common/header" %>
 
+    <%= yield :filters %>
+
+    <div id="content">
+      <%= yield %>
+    </div>
+
+    <%= render "common/footer" %>
+    <%= render "common/countries" %>
+    <%= render "common/js_templates" %>
+
+    <div class="backdrop"></div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing&language=<%= I18n.locale %>"></script>
+
+    <!-- TODO: Improve browser detection -->
+    <script type="text/javascript">
+      if($.browser.msie && $.browser.version < 9) {
+        location.href = "/old";
+      }
+    </script>
+
+    <%= javascript_include_tag "application" %>
+    <%= yield :js %>
+
+    <script type="text/javascript">
+      <% if request.path.split("/")[1] == "map" %>
+        var showMap = true;
+      <% else %>
+        var showMap = false;
+      <% end %>
+    </script>
+
+    <!-- social -->
     <script>(function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
@@ -49,35 +87,6 @@
 
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
-    <div id="content">
-      <%= yield %>
-      <%= render "common/share" %>
-    </div>
-
-    <%#= render "common/subscribe" %>
-    <%= render "common/analysis" %>
-
-    <%= yield :filters %>
-
-    <%= render "common/footer" %>
-    <%= render "common/js_templates" %>
-
-
-    <%= render "common/countries" %>
-    <div class="countries_backdrop"></div>
-    <div class="backdrop"></div>
-    <div class="white_backdrop"></div>
-
-    <%= javascript_include_tag "application" %>
-
-    <%= yield :js %>
-
-    <script type="text/javascript">
-      <% if request.path.split("/")[1] == "map" %>
-        var showMap = true;
-      <% else %>
-        var showMap = false;
-      <% end %>
-    </script>
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
   </body>
 </html>

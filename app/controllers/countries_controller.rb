@@ -2,12 +2,10 @@
 class CountriesController < ApplicationController
   
   def show
-
     country_info = Country.country_info(params[:id])
 
     @country = OpenStruct.new({
       name: country_info[0].name,
-      about: country_info[0].about,
       forest_extent: country_info[0].forest_extent,
       gross_value: country_info[0].gross_value,
       gdp_percent: country_info[0].gdp_percent,

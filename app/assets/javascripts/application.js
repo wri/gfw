@@ -1,12 +1,12 @@
+//= require jquery
 //= require jquery_ujs
+//= require jquery-migrate-min
 //= require jquery.easing.1.3
 //= require jquery-ui-1.9.2.custom.min
 //= require wax.g.min
 //= require cartodb-gmapsv3
 //= require cartodb-infowindow-min
 //= require protected-infowindow-min
-//= require imgLiquid.min
-//= require jstorage.min
 //= require lodash.min
 //= require backbone-min
 //= require class
@@ -64,11 +64,6 @@ function loadOtherStuff(callback) {
 
   });
 
-  gallery           = new gfw.ui.view.Gallery({ title: "Other WRI sites" });
-  languageSelector  = new gfw.ui.view.LanguageSelector();
-
-  $("body").append(languageSelector.render());
-
   $(".more_stories li").on("mouseleave", function(e) {
     var $this = $(this);
     $this.find(".infowindow").fadeOut(50);
@@ -79,25 +74,9 @@ function loadOtherStuff(callback) {
     $this.find(".infowindow").fadeIn(50);
   });
 
-  gallery.addHandler("#other_sites_ribbon");
-
-  languageSelector.addLanguage({ code: "en",    lang: "en", title: "English" });
-  languageSelector.addLanguage({ code: "fr",    lang: "fr", title: "French" });
-  languageSelector.addLanguage({ code: "es",    lang: "es", title: "Spanish" });
-  languageSelector.addLanguage({ code: "pt",    lang: "pt", title: "Portuguese" });
-  languageSelector.addLanguage({ code: "id",    lang: "id", title: "Indonesian" });
-  languageSelector.addLanguage({ code: "zh-CN", lang: "cn", title: "Chinese" });
-  languageSelector.addLanguage({ code: "ru",    lang: "ru", title: "Russian" });
-  languageSelector.addLanguage({ code: "ar",    lang: "ar", title: "Arabic" });
-
-  languageSelector.addHandler(".lang_selector a");
-
   $(".lang_selector a").on("click", function(e) {
     e.preventDefault();
     e.stopPropagation();
-
-    languageSelector.toggleHidden();
-    GOD.add(languageSelector, languageSelector.hide);
   });
 
   Timeline = new gfw.ui.view.Timeline({
