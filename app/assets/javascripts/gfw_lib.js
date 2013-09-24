@@ -320,7 +320,7 @@ GFW.modules.app = function(gfw) {
       this.imazonLayer = new google.maps.FusionTablesLayer({
         query: {
           select: "geo",
-          from: "2949980"
+          from: "1zUrv8l3GJdAuyqYLeFN5oMEyv-OIDK_pMYnoU-c"
         },
         suppressInfoWindows:true,
         styles: [
