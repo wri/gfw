@@ -1,4 +1,6 @@
+//= require jquery
 //= require jquery_ujs
+//= require jquery-migrate-min
 //= require jquery.easing.1.3
 //= require jquery-ui-1.9.2.custom.min
 //= require wax.g.min
@@ -178,6 +180,13 @@ function loadGFW(callback) {
     CountryMenu.drawForest(countryCode);
     CountryMenu.drawTenure(countryCode);
   }
+
+  $(".signin a").on("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    wall.open();
+  });
 
   $("nav .home.ajax").on("click", function(e) {
     e.preventDefault();
@@ -399,7 +408,7 @@ $(function(){
   }
 
   $(".backdrop").on("click", function(e) {
-    hideOvers();
+    $(".backdrop").fadeOut(250);
   });
 
   $(".close").on("click", function(e) {
@@ -407,9 +416,9 @@ $(function(){
     $(".backdrop").fadeOut(250);
   });
 
-  $(document).on("click", function(e) {
-    hideOvers();
-  });
+  // $(document).on("click", function(e) {
+  //   hideOvers();
+  // });
 
   $(document).keyup(function(e) {
     if (e.keyCode == 27) {

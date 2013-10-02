@@ -2,6 +2,10 @@
   <% t('.title') %>
 <% end %>
 
+<% content_for :splash_title do %>
+  <% t('.splash_title_html') %>
+<% end %>
+
 <% content_for :js do %>
   <script type="text/javascript">
     var summary = { count: "<%= number_with_delimiter(@alerts_count) %>", title: "Forest clearing alerts in the last six months" }

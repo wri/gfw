@@ -44,26 +44,38 @@
 
     <div id="content">
       <%= yield %>
+
+      <div class="splash">
+        <div class="inner">
+          <p>Global Forest Watch 2.0 is a new initiative that mobilizes satellite technology, open data, and human networks to monitor forests in near-real-time and support better management. It provides the most current, reliable, and spatially explicit information about what is happening in forests around the world. <strong>GFW</strong> is intended for use by governments, companies, NGOs, researchers, communities, and others seeking to better manage forests and improve local livelihoods.</p>
+
+          <p>The <strong>GFW</strong> website is currently under development. Additional datasets and new functionalities are being added and an official beta site will be released for testing and feedback later this year. Data and related information on the development site should be considered preliminary and should not be used for policy or decision-making. Additionally, this information should not be published or shared in publically available formats, including but not limited to media stories, official statements, and academic research.</p>
+
+          <p>We recommend visiting <strong>GFW</strong> using the latest version of Google Chrome, Mozilla Firefox, or Apple Safari. Internet Explorer may cause errors when viewing the site.</p>
+
+          <p>For additional information about GFW, please send an email to <a href="mailto:gfw2@wri.org">gfw2@wri.org</a>.</p>
+
+          <p>For media inquiries, please contact <strong>James Anderson</strong>, <em>Communications Officer, World Resources Institute</em> (<a href="mailto:janderson@wri.org">janderson@wri.org</a>, +1 (202) 729-7608).</p>
+        </div>
+      </div>
     </div>
 
     <%= render "common/footer" %>
     <%= render "common/countries" %>
     <%= render "common/js_templates" %>
 
-    <div class="backdrop"></div>
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <div class="backdrop white_backdrop"></div>
 
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&libraries=drawing&language=<%= I18n.locale %>"></script>
 
-    <!-- TODO: Improve browser detection -->
+    <%= javascript_include_tag "application" %>
+
     <script type="text/javascript">
       if($.browser.msie && $.browser.version < 9) {
         location.href = "/old";
       }
     </script>
 
-    <%= javascript_include_tag "application" %>
     <%= yield :js %>
 
     <script type="text/javascript">

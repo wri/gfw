@@ -31,6 +31,7 @@ en:
           blog: 'Blog'
           sources: 'Data Sources'
           about: 'About'
+          signin: 'Sign in'
       footer:
         download:
           title: 'Browse forest data <a href="%{url}">by country</a>.'
@@ -45,6 +46,7 @@ en:
   home:
     index:
       title: "Find out what is happening in forests right now"
+      splash_title_html: "Welcome to the <span>Global Forest Watch 2.0</span><br />development site"
       icons:
         community:
           title: 'Join the community'

@@ -15,6 +15,7 @@ group :assets do
   gem 'sass-rails'
   gem 'compass-rails'
   gem 'jquery-rails'
+  gem 'jquery-migrate-rails'
   gem 'uglifier'
   gem 'turbo-sprockets-rails3'
 end

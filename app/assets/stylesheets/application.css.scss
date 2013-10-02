@@ -14,7 +14,7 @@ body {
 }
 
 #content {
-  position:relative;
+  position: relative;
   z-index: 100;
 }
 
@@ -168,6 +168,14 @@ header {
         color: $cLink;
       }
     }
+
+    .splash_title {
+      width: 927px;
+      text-align: center;
+      display: none;
+
+      span { color: #A0B941; }
+    }
   }
 
   ul.big_numbers {
@@ -296,6 +304,9 @@ nav {
       }
     } // li
   } // ul
+
+  &.signin { display: none; }
+
 } // nav
 
 .actions {
@@ -1280,7 +1291,14 @@ footer {
 
       & > .wri { display:block; width:92px; height: 31px; margin: 20px 0 20px 0; @include icons-sprite(logo_wri_black); }
 
-      address { width:266px; color: $cGray3; font-size:13px; line-height:120%; }
+      address {
+        width:266px; color: $cGray3; font-size:13px; line-height:120%;
+
+        a {
+          color: #666;
+          text-decoration: underline;
+        }
+      }
     }
   }
 }
@@ -1319,20 +1337,6 @@ footer > .download {
   display:none;
   &.show { display: block; }
 }
-
-.white_backdrop, .backdrop {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1040;
-  background:rgba(255,255,255, .9);
-
-  display:none;
-  &.show { display: block; }
-}
-
 
 .language_selector {
   display:none;
@@ -1544,4 +1548,45 @@ body.static.old {
 
   }
 
+}
+
+
+
+// splash
+
+.splash,
+.backdrop {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  z-index: 1040;
+  display: none;
+  background: rgba(255,255,255, .9);
+
+  &.show { display: block; }
+}
+
+.backdrop {
+  background: #fff;
+  @include opacity(.9);
+
+  &.white_backdrop {
+    position: fixed;
+  }
+}
+
+.splash .inner {
+  position: relative;
+  width: 927px;
+  margin: auto;
+  padding-top: 50px;
+  @extend .serif;
+  line-height: 1.4;
+  color: #444;
+
+  p {
+    margin-bottom: 20px;
+    font-size: 17px;
+  }
+
+  a { color: #444; }
 }

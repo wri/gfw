@@ -857,8 +857,8 @@ var SubscriptionMap = (function() {
 var Navigation = (function() {
 
   function _select(name) {
-    $("nav li a").removeClass("selected");
-    $("nav ." + name).addClass("selected");
+    $(".navbar li a").removeClass("selected");
+    $(".navbar ." + name).addClass("selected");
   }
 
   var lastCountryClass;
@@ -938,14 +938,22 @@ var Navigation = (function() {
     Navigation.select("home");
 
     Filter.hide(function() {
+      if (wall.readCookie("pass") == 'ok') {
+        $("header").animate({ height: "230px" }, 250, function() {
+          $("hgroup .title").show();
+          $("hgroup .title").animate({ top: 29, opacity: 1 }, 250);
+        }).removeClass("stuck");
 
-      $("header").animate({ height: "230px" }, 250, function() {
-        $("hgroup h1").show();
-        $("hgroup h1").animate({ top: 29, opacity: 1 }, 250);
-      }).removeClass("stuck");
+        $(".big_numbers").fadeIn(250);
+      } else {
+        $("hgroup .title").hide();
+        $("hgroup .splash_title").show();
 
-      $(".big_numbers").fadeIn(250);
+        $(".navbar").hide();
+        $(".signin").show();
 
+        $(".big_numbers").hide();
+      }
     });
 
     Timeline.hide();
@@ -994,8 +1002,8 @@ var Navigation = (function() {
       if (GFW.app) GFW.app.open();
     }).addClass("stuck");
 
-    $("hgroup h1").animate({ top: "50px", opacity: 0 }, 250, function() {
-      $("hgroup h1").hide();
+    $("hgroup .title").animate({ top: "50px", opacity: 0 }, 250, function() {
+      $("hgroup .title").hide();
 
       Filter.show();
 
