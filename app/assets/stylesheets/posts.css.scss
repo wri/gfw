@@ -3,6 +3,128 @@
 @import "helpers";
 
 
+body.posts      article img { display: none; }
+body.posts.show article img { display: block; }
+
+body.posts {
+
+  &.show {
+
+    #content .inner {
+      text-align:center;
+      margin: 0 auto;
+      width: 927px;
+    }
+
+    section { width: 100%; }
+    .navigation { display: none; }
+
+    .the-watcher-logo {
+      @include logos-sprite(watcher_small);
+      width:56px;
+      height:56px;
+    }
+
+    header { height: 180px!important; }
+    hgroup h1, hgroup h2 { font-size: 31px; }
+
+    article h1 {
+
+      text-align: center;
+      font-size: 51px;
+      a { font-size: 51px; }
+
+    }
+
+    article a.author { display: none; }
+
+    article .columns  {
+      -moz-column-count: 2;
+      -moz-column-gap: 20px;
+      -o-column-count: 2;
+      -o-column-gap: 20px;
+      -webkit-column-count: 2;
+      -webkit-column-gap: 20px;
+      column-count: 2;
+      column-gap: 20px;
+    }
+
+    article .columns li {
+      margin: 0 0 10px 0;
+      font-size:    16px;
+      line-height:  20px;
+      color: #666;
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
+    ul.meta { text-align: center; }
+    ul.meta li { font-size:15px; }
+    ul.meta li.author { background:none; }
+    ul.meta li.author a { display:block; background:none; }
+    ul.meta li a { font-size:15px; }
+
+  }
+
+  ul.meta li:last-child { background:none; }
+
+  header {
+    height: 267px!important;
+    background: #fff url(backgrounds/bkg_header.png) repeat-x top center;
+  }
+
+  hgroup {
+    $left: 40px;
+    width: 927px - $left;
+    top: 95px;
+    left: $left;
+    text-align: center;
+
+    h1 {
+      @include inline-block();
+      font-size: 36px;
+      position:static;
+      margin: 0 10px 0 0;
+    }
+
+    h2 {
+      @include inline-block();
+      font-size: 36px;
+      margin: 0 0 0 10px;
+
+      color:$cGray3;
+      position:static;
+    }
+
+    .the-watcher-logo {
+      @include inline-block();
+      @include logos-sprite(watcher);
+      width: 126px;
+      height: 126px;
+    }
+  }
+
+  #content .inner {
+    text-align:center;
+    margin: 0 auto;
+    width: 590px;
+  }
+
+  #content .inner section {
+    margin:auto;
+    text-align: left;
+  }
+
+  #content .inner section article h1 a {
+    color: #333;
+  }
+
+  #content .inner section article p {
+    font-size: 16px;
+  }
+
+}
+
+body.posts,
 body.static,
 body.sources {
 
