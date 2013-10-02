@@ -16,7 +16,7 @@ en:
       custom: '%R %Z'
   layouts:
     application:
-      title: "Global Forest Watch 2.0"
+      title: "Global Forest Watch"
       header:
         share_this: 'Share thisss'
         other_wri_sites: 'Other WRI sitesss'
@@ -46,7 +46,7 @@ en:
   home:
     index:
       title: "Find out what is happening in forests right now"
-      splash_title_html: "Welcome to the <span>Global Forest Watch 2.0</span><br />development site"
+      splash_title_html: "Welcome to the <span>Global Forest Watch</span><br />development site"
       icons:
         community:
           title: 'Join the community'
@@ -62,7 +62,7 @@ en:
           link: 'Send a story'
   common:
     header:
-      title: 'Global Forest Watch 2.0'
+      title: 'Global Forest Watch'
       numbers:
         alerts: 'alerts in past 16 dayss'
         stories: 'new forest storiess'
@@ -85,7 +85,7 @@ en:
     about:
       title: 'About Global Forest Watch'
       about_link: 'About'
-      introduction: '<p>Global Forest Watch 2.0 (GFW 2.0) is an initiative convened by the <a href="http:\\www.wri.org">World Resources Institute</a> that unites technology, transparency, and human networks to mobilize more timely and effective forest conservation and sustainable forest management.  GFW 2.0 combines near-real-time forest monitoring, forest management boundary maps, protected areas, mobile technology, crowd-sourced data, and a networked world to create never-before-possible forest transparency.</p><p>We welcome others to join our growing GFW 2.0 partnership.</p>'
+      introduction: '<p>Global Forest Watch (GFW) is an initiative convened by the <a href="http:\\www.wri.org">World Resources Institute</a> that unites technology, transparency, and human networks to mobilize more timely and effective forest conservation and sustainable forest management. GFW combines near-real-time forest monitoring, forest management boundary maps, protected areas, mobile technology, crowd-sourced data, and a networked world to create never-before-possible forest transparency.</p><p>We welcome others to join our growing GFW partnership.</p>'
       partners: 'Partners'
       project_funders: 'Funders'
       supporters_providers: 'Support & data'
