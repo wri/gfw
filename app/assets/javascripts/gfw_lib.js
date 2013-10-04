@@ -67,8 +67,8 @@ GFW.modules.app = function(gfw) {
       // we can stop loading the blank (see limit=0 below) tileset here now that we are loading the animation. see todo on line 347
       this.queries.semi_monthly     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 17 ELSE {Z}+8 END limit 0";
       this.queries.annual           = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
-      this.queries.quarterly        = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
-      this.queries.brazilian_amazon = "SELECT CASE WHEN {Z}<12 THEN st_buffer(the_geom_webmercator,(16-{Z})^3.8) ELSE the_geom_webmercator END the_geom_webmercator, stage, cartodb_id FROM gfw2_imazon WHERE year = 2012";
+      this.queries.quarterly        = "SELECT cartodb_id,the_geom_webmercator FROM modis_forest_change_copy";
+      this.queries.brazilian_amazon = "SELECT cartodb_id,type,the_geom_webmercator FROM sad_polygons_fixed_2";
 
       this.lastHash = null;
 
@@ -78,7 +78,6 @@ GFW.modules.app = function(gfw) {
       // Layers
       this.mainLayer        = null;
       this.specialLayer     = null;
-      this.imazonLayer      = null;
       this.currentBaseLayer = "semi_monthly";
 
       this._setupZoom();
@@ -474,7 +473,9 @@ GFW.modules.app = function(gfw) {
       } else if (layerName === "annual") {
         return 'gfw2_hansen';
       } else if (layerName === "quarterly") {
-        return 'gfw2_hansen';
+        return 'modis_forest_change_copy';
+      } else if (layerName === "brazilian_amazon") {
+        return 'sad_polygons_fixed_2';
       }
 
       return null;
@@ -751,11 +752,9 @@ GFW.modules.app = function(gfw) {
       } else if (this.currentBaseLayer === "annual") {
         table_name = 'gfw2_hansen';
       } else if (this.currentBaseLayer === "quarterly") {
-        table_name = 'gfw2_hansen';
+        table_name = 'modis_forest_change_copy';
       } else if (this.currentBaseLayer === "brazilian_amazon") {
-        table_name = 'brazilian_amazon';
-        this._renderImazonLayer();
-        return;
+        table_name = 'sad_polygons_fixed_2';
       }
 
       this.baseLayer = new CartoDBLayer({
@@ -883,9 +882,9 @@ GFW.modules.maplayer = function(gfw) {
             Filter.check(this.layer.get('id'));
             legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), this.layer.get('slug'), this.layer.get('category_color'), this.layer.get('title_color'));
           }
-        } else if (this.layer.get('slug') == "annual" || this.layer.get('slug') == "quarterly") {
+        } else if (this.layer.get('slug') == "annual") {
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
-        } else if (this.layer.get('slug') === 'brazilian_amazon') {
+        } else if (this.layer.get('slug') === 'brazilian_amazon' || this.layer.get('slug') === 'quarterly') {
           var biomeEvent = function() {
             that._toggleLayer();
             GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
@@ -955,7 +954,7 @@ GFW.modules.maplayer = function(gfw) {
         biome         = GFW.app.datalayers.LayersObj.get(585),
         semi_monthly  = GFW.app.datalayers.LayersObj.get(569),
         annual        = GFW.app.datalayers.LayersObj.get(568),
-        quarterly     = GFW.app.datalayers.LayersObj.get(583),
+        quarterly     = GFW.app.datalayers.LayersObj.get(588),
         sad           = GFW.app.datalayers.LayersObj.get(584);
 
         if (category != 'Forest clearing' || slug === 'biome') {
@@ -980,7 +979,7 @@ GFW.modules.maplayer = function(gfw) {
           } else if (slug == 'annual') {
             annual.attributes['visible']       = true;
           } else if (slug == 'quarterly') {
-            annual.attributes['visible']       = true;
+            quarterly.attributes['visible']       = true;
           } else if (slug == 'brazilian_amazon') {
             sad.attributes['visible']          = true;
           }
