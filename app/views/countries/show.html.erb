@@ -72,7 +72,7 @@
 
       <div class="inner">
         <div id="<%= "country#{@country.iso}" %>" class="country-path"></div>
-        <h2><%= @country.name.titleize %> is covered by <span><%= @country.forest_extent/1000.00 %> Million Hectares of forest.</span><a href="#" class="info"><i data-source="forest_extent"></i></a></h2>
+        <h2><%= @country.name.titleize %> is covered by <span><%= @country.forest_extent/1000.00 %> million hectares of forest.</span><a href="#" class="info"><i data-source="forest_extent"></i></a></h2>
 
         <h3>The type of forest in this country is... <a href="#" class="info"><i data-source="forest_type"></i></a></h3>
         <div class="line-graph"></div>
@@ -86,13 +86,13 @@
 
     <section class="people" data-menu="people">
       <div class="inner">
-        <h3>Gross value add for the forest sector <a href="#" class="info"><i data-source="gross_value"></i></a></h3>
-        <h2>The forest sector contributed <span>$<%= @country.gross_value/1000000.00 %> Million</span> to the economy in 2006, which is approximately <span><%= @country.gdp_percent %>% of the GDP</span></h2>
+        <h3>Gross value add for the Argentina's forest sector <a href="#" class="info"><i data-source="gross_value"></i></a></h3>
+        <h2>The forest sector contributed <span>$<%= @country.gross_value/1000000.00 %> million</span> to the economy in 2006, which is approximately <span><%= @country.gdp_percent_fixed %>% of the GDP</span></h2>
 
         <ul class="employment block">
           <li>
             <h3>Employment in forest sector <a href="#" class="info"><i data-source="employment"></i></a></h3>
-            <h2><%= @country.employment %> <span>people</span></h2>
+            <h2><%= @country.employment %> <span>million people</span></h2>
 
             <div class="man-list">
               <% @country.employment.times do |i| %>
@@ -109,10 +109,7 @@
         <div class="tenure">
           <h3>Forest tenure <a href="#" class="info"><i data-source="forest_tenure"></i></a></h3>
           <div class="line-graph"></div>
-          <div class="legend-graph">
-            <p class="one">Government</p>
-            <p class="three">Community</p>
-          </div>
+          <div class="legend-graph"></div>
         </div>
 
         <div class="legislation">
@@ -123,7 +120,7 @@
             <% end %>
           </ul>
 
-          <a href="#" class="people-link">Are we missing a link?</a>
+          <a href="mailto:gfw@wri.org" class="people-link">Are we missing a link?</a>
         </div>
       </div>
     </section>
@@ -133,12 +130,14 @@
         <ul>
           <li>
             <h3>Carbon stocks <a href="#" class="info"><i data-source="carbon_stocks"></i></a></h3>
-            <h2>This country has <span><%= @country.carbon_stocks %> Million<br />tonnes of CO2</span> in living forest biomass.</h2>
+            <h2>This country has <span><%= @country.carbon_stocks %> million<br />tonnes of CO2</span> in living forest biomass.</h2>
           </li>
 
           <li class="last">
             <h3><a href="#" class="info"><i class="dark" data-source="co2_emissions"></i></a> CO2 emissions</h3>
-            <h2><span><%= number_to_percentage(100 * @country.emissions_noland / @country.emissions_land, precision: 2) %> of CO2 emissions</span> on this country come from land use change.</h2>
+            <% if @country.emissions_noland.present? && @country.emissions_land.present? %>
+              <h2><span><%= number_to_percentage(100 * @country.emissions_noland / @country.emissions_land, precision: 2) %> of CO2 emissions</span> on this country come from land use change.</h2>
+            <% end %>
           </li>
         </ul>
       </div>
@@ -149,30 +148,35 @@
         <h3>Conventions</h3>
 
         <ul>
-          <% @country.conventions.split(', ').each do |convention| %>
-            <li><%= t('.conventions.'+convention+'_title') %> <a href="#" class="info"><i data-source="<%= "conventions_#{convention}" %>"></i></a> <span>signed</span></li>
-          <% end %>
-        </ul>
-      </div>
-    </section>
-
-    <section class="external-links">
-      <div class="inner">
-        <h3>External links</h3>
-
-        <ul>
-          <% if @country.ministry_link.present? %>
-            <li><a href="<%= @country.ministry_link %>"><%= t('.ministry_link') %></a></li>
-          <% end %>
-
-          <% if @country.external_links.present? %>
-            <% @country.external_links.split(', ').each do |link| %>
-              <li><%= link %></li>
+          <% conventions = ['cbd', 'unfccc', 'kyoto', 'unccd', 'itta', 'cites', 'ramsar', 'world_heritage', 'nlbi', 'ilo'] %>
+          <% conventions.each do |convention| %>
+            <% if @country.send("convention_#{convention}").present? %>
+              <li class="<%= convention %>"><%= t('.conventions.'+convention+'_title_html') %> <a href="#" class="info"><i data-source="<%= "conventions_#{convention}" %>"></i></a> <span><%= @country.send("convention_#{convention}") %></span></li>
             <% end %>
           <% end %>
         </ul>
       </div>
     </section>
+
+    <% if @country.ministry_link.present? || @country.external_links.present? %>
+      <section class="external-links">
+        <div class="inner">
+          <h3>External links</h3>
+
+          <ul>
+            <% if @country.ministry_link.present? %>
+              <li><a href="<%= @country.ministry_link %>"><%= t('.ministry_link') %></a></li>
+            <% end %>
+
+            <% if @country.external_links.present? %>
+              <% @country.external_links.split(', ').each do |link| %>
+                <li><%= link %></li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      </section>
+    <% end %>
 
     <section class="download-links">
       <ul class="inner">
@@ -194,7 +198,7 @@
         <% @blog_posts.each do |post| %>
           <li>
             <h2><%= link_to truncate(post.title, :length => 42), post.link %></h2>
-          <%= simple_format truncate_html(post.body.strip, :length => 250, :omission => "... #{link_to t('.blog_posts.more'), post.link }") %>
+            <%= simple_format truncate_html(post.body.strip, :length => 250, :omission => "... #{link_to t('.blog_posts.more'), post.link }") %>
           </li>
         <% end %>
       </ul>

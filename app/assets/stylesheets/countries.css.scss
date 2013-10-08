@@ -384,7 +384,8 @@ a.close_icon {
             left: 0;
             right: 0;
             bottom: 0;
-            line-height: 22px;
+            line-height: 12px;
+            padding: 5px 0;
             font-weight: normal;
             font-style: italic;
             text-transform: uppercase;
@@ -832,6 +833,7 @@ a.close_icon {
       @include icons-sprite(bullet_country);
     }
 
+
     a {
       color: #555;
       font-size: 15px;
@@ -887,6 +889,11 @@ a.close_icon {
       stroke: #f5f5f5;
     }
 
+    text {
+      font-family: sans-serif;
+      font-size: 11px;
+    }
+
     .one {
       fill: #75B22E;
     }
@@ -896,6 +903,10 @@ a.close_icon {
     }
 
     .three {
+      fill: #AC0;
+    }
+
+    .four {
       fill: #FFD24D;
     }
   }
@@ -917,6 +928,10 @@ a.close_icon {
     }
 
     .three {
+      color: #AC0;
+    }
+
+    .four {
       color: #FFD24D;
     }
   }

@@ -8,21 +8,30 @@ class CountriesController < ApplicationController
       name: country_info[0].name,
       forest_extent: country_info[0].forest_extent,
       gross_value: country_info[0].gross_value,
-      gdp_percent: country_info[0].gdp_percent,
+      gdp_percent_fixed: country_info[0].gdp_percent_fixed,
       employment: country_info[0].employment,
       national_policy_link: country_info[0].national_policy_link,
       national_policy_title: country_info[0].national_policy_title,
       carbon_stocks: country_info[0].carbon_stocks,
       emissions_land: country_info[0].emissions_land,
       emissions_noland: country_info[0].emissions_noland,
-      conventions: country_info[0].conventions,
       ministry_link: country_info[0].ministry_link,
       dataset_link: country_info[0].dataset_link,
       lat: country_info[0].lat.to_s,
       lon: country_info[0].lon.to_s,
       link: country_info[0].map_coord,
       iso:  country_info[0].iso,
-      last_alerts: Alert.alerts_per_month_per_country(country_info[0].iso)
+      last_alerts: Alert.alerts_per_month_per_country(country_info[0].iso),
+      convention_cbd: country_info[0].convention_cbd,
+      convention_unfccc: country_info[0].convention_unfccc,
+      convention_kyoto: country_info[0].convention_kyoto,
+      convention_unccd: country_info[0].convention_unccd,
+      convention_itta: country_info[0].convention_itta,
+      convention_cites: country_info[0].convention_cites,
+      convention_ramsar: country_info[0].convention_ramsar,
+      convention_world_heritage: country_info[0].convention_world_heritage,
+      convention_nlbi: country_info[0].convention_nlbi,
+      convention_ilo: country_info[0].convention_ilo
     })
 
     @featured = Story.first_three_featured

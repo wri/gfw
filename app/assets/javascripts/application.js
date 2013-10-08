@@ -517,7 +517,7 @@ $(function(){
   }
 
   if ($("div[data-load]:visible").length > 0) {
-    addCircle("forma", "lines", { countryCode: countryCode, width: 310, title: "Humid Tropics", subtitle:"Forest Clearing Alerts", legend:"In the last month", hoverColor: "#A1BA42", color: "#FF4D4D" });
+    addCircle("forma", "lines", { countryCode: countryCode, width: 310, title:"Forest Clearing Alerts", subtitle: "Humid Tropics", legend:"In the last month", hoverColor: "#A1BA42", color: "#FF4D4D" });
   }
 
 
