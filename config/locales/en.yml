@@ -115,17 +115,16 @@ en:
         climate: 'Climate Change'
         conventions: 'Conventions'
       conventions:
-        cbd_title: "CBD"
-        kyoto_title: "KYOTO PROTOCOL"
-        unfccc_title: "UNFCCC"
-        cbd_title: "CBD"
+        cbd_title_html: "CBD"
+        unfccc_title_html: "UNFCCC"
+        itta_title_html: "ITTA"
         kyoto_title_html: "KYOTO<br />PROTOCOL"
-        unccd_title: "UNCCD"
-        cites_title: "CITES"
-        ramsar_title: "RAMSAR"
-        world_heritage_title: "WORLD HERITAGE"
-        nlbi_title: "NLBI"
-        ilo_title: "ILO 169"
+        unccd_title_html: "UNCCD"
+        cites_title_html: "CITES"
+        ramsar_title_html: "RAMSAR"
+        world_heritage_title_html: "WORLD<br />HERITAGE"
+        nlbi_title_html: "NLBI"
+        ilo_title_html: "ILO 169"
       ministry_link: "Ministry website"
 
   stories:

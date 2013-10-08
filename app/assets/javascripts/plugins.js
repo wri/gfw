@@ -50,8 +50,8 @@ var CountryMenu = (function() {
     d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20unnest(array['type_primary',%20'type_regenerated',%20'type_planted'])%20AS%20type,%20unnest(array[type_primary,%20type_regenerated,%20type_planted])%20AS%20percent%20FROM%20gfw2_countries%20WHERE%20iso%20=%20'"+iso+"'", function(data) {
       var svg = d3.select(".state .line-graph")
         .append("svg")
-        .attr("width", 630)
-        .attr("height", 16);
+        .attr("width", 635)
+        .attr("height", 26);
 
       var x_extent = [0, 100],
           x_scale = d3.scale.linear()
@@ -60,12 +60,12 @@ var CountryMenu = (function() {
 
       var origins = [],
           aggr = 0,
-          klass = ['one', 'two', 'three'];
+          klass = ['one', 'three', 'four'];
 
       _.each(data.rows, function(d, i) {
         var current = data.rows[i-1] && data.rows[i-1]['percent'] || 0;
 
-        aggr = aggr + current;
+        aggr += current;
 
         origins[i] = aggr;
       });
@@ -98,45 +98,86 @@ var CountryMenu = (function() {
           return x_scale(d['percent']+origins[i]);
         })
         .attr("cy", 8)
-        .attr("r", 5);
+        .attr("r", 5)
+
+      // add values
+      svg.selectAll("text")
+        .data(data.rows)
+        .enter()
+        .append("text")
+        .text(function(d) {
+          return d['percent'] + "%";
+        })
+        .attr("class", function(d, i) {
+          return klass[i];
+        })
+        .attr("x", function(d, i) {
+          return x_scale(d['percent']+origins[i]-2);
+        })
+        .attr("y", 24);
     });
   }
 
   function drawTenure(iso) {
-    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20unnest(array['tenure_government',%20'tenure_community'])%20AS%20type,%20unnest(array[tenure_government,tenure_community])%20AS%20percent%20FROM%20gfw2_countries%20WHERE%20iso%20=%20'"+iso+"'", function(data) {
+    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20tenure_government,%20tenure_owned,%20tenure_owned_individuals,%20tenure_reserved,%20greatest(tenure_government,%20tenure_owned,%20tenure_owned_individuals,%20tenure_reserved)%20as%20max%20FROM%20gfw2_countries%20WHERE%20iso%20=%20'"+iso+"'", function(data) {
+
       var svg = d3.select(".tenure .line-graph")
         .append("svg")
         .attr("width", 560)
-        .attr("height", 16);
+        .attr("height", 16 * 4);
 
-      var x_extent = [0, 100],
+      var x_extent = [0, data.rows[0].max],
           x_scale = d3.scale.linear()
-                      .range([0,555])
+                      .range([0,500])
                       .domain(x_extent);
 
       var origins = [],
           aggr = 0,
-          klass = ['one', 'three']
+          klass = ['one', 'two', 'three', 'four']
 
-      _.each(data.rows, function(d, i) {
-        var current = data.rows[i-1] && data.rows[i-1]['percent'] || 0;
+      var tenures = [
+        {
+          name: 'Government Administered',
+          percent: data.rows[0].tenure_government
+        },
+        {
+          name: 'Owned by Communities and Indigenous Groups',
+          percent: data.rows[0].tenure_owned
+        },
+        {
+          name: 'Owned by Firms and Individuals',
+          percent: data.rows[0].tenure_owned_individuals
+        },
+        {
+          name: 'Reserved for Communities and Indigenous Groups',
+          percent: data.rows[0].tenure_reserved
+        }
+      ];
 
-        aggr = aggr + current;
+      var tenures_ord = [];
 
-        origins[i] = aggr;
+      _.each(tenures, function(tenure, i) {
+        if(tenure['percent'] !== 0) {
+          tenures_ord.push({
+            name: tenure['name'],            
+            percent: tenure['percent']
+          });
+        }
       });
 
       svg.selectAll("rect")
-        .data(data.rows)
+        .data(tenures_ord)
         .enter()
         .append("rect")
         .attr("class", function(d, i) {
           return klass[i];
         })
-        .attr("x", function(d, i) {
-          return x_scale(origins[i]);
+        .attr("x", function() {
+          return x_scale(0);
         })
-        .attr("y", 6)
+        .attr("y", function(d, i) {
+          return 3 + (16 * i)
+        })
         .attr("width", function(d) {
           return x_scale(d['percent']);
         })
@@ -144,17 +185,50 @@ var CountryMenu = (function() {
 
       // add balls
       svg.selectAll("circle")
-        .data(data.rows)
+        .data(tenures_ord)
         .enter()
         .append("circle")
         .attr("class", function(d, i) {
           return klass[i];
         })
         .attr("cx", function(d, i) {
-          return x_scale(d['percent']+origins[i]);
+          return x_scale(d['percent']);
         })
-        .attr("cy", 8)
+        .attr("cy", function(d, i) {
+          return 5 + (16 * i)
+        })
         .attr("r", 5);
+
+      // add values
+      svg.selectAll("text")
+        .data(tenures_ord)
+        .enter()
+        .append("text")
+        .text(function(d) {
+          return d['percent']/1000000.0 + "Mha";
+        })
+        .attr("class", function(d, i) {
+          return klass[i];
+        })
+        .attr("x", function(d, i) {
+          return x_scale(d['percent'])+10;
+        })
+        .attr("y", function(d, i) {
+          return 9 + (16 * i)
+        });
+
+      // add legend
+      d3.select(".tenure .legend-graph")
+        .selectAll("p")
+        .data(tenures_ord)
+        .enter()
+        .append("p")
+        .text(function(d) {
+          return d['name'];
+        })
+        .attr("class", function(d, i) {
+          return klass[i];
+        });
     });
   }
 
