@@ -14,19 +14,28 @@ class Country
              iso,
              forest_extent,
              gross_value,
-             gdp_percent,
+             gdp_percent_fixed,
              employment,
              national_policy_link,
              national_policy_title,
              carbon_stocks,
              emissions_land,
              emissions_noland,
-             conventions,
              ministry_link,
              dataset_link,
              lat,
              lon,
-             map_coord
+             map_coord,
+             convention_cbd,
+             convention_unfccc,
+             convention_kyoto,
+             convention_unccd,
+             convention_itta,
+             convention_cites,
+             convention_ramsar,
+             convention_world_heritage,
+             convention_nlbi,
+             convention_ilo
       FROM gfw2_countries
       WHERE name = '"+name.humanize.titleize+"';")[:rows]
   end
