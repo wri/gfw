@@ -114,7 +114,7 @@ GFW.modules.app = function(gfw) {
 
       $("#map").animate({ height: dh - hh }, 250, function() {
         google.maps.event.trigger(that._map, "resize");
-        that._map.setOptions({ scrollwheel: false });
+        that._map.setOptions({ scrollwheel: true });
       });
 
       this.goTo($("#map"), {margin: "67"});
