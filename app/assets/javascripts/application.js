@@ -491,8 +491,15 @@ $(function(){
 
         sourceWindow.show(source).addScroll();
       });
-    }
 
+      $(".close").on("click", function(e) {
+        hideOvers();
+      });
+
+      $(".backdrop").on("click", function(e) {
+        hideOvers();
+      });
+    }
   }
 
   function selectedSection() {
