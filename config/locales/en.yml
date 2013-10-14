@@ -32,6 +32,7 @@ en:
           sources: 'Data Sources'
           about: 'About'
           signin: 'Sign in'
+          register: 'Request an invite'
       footer:
         download:
           title: 'Browse forest data <a href="%{url}">by country</a>.'

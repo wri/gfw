@@ -181,11 +181,18 @@ function loadGFW(callback) {
     CountryMenu.drawTenure(countryCode);
   }
 
-  $(".signin a").on("click", function(e) {
+  $(".signin a.login").on("click", function(e) {
     e.preventDefault();
     e.stopPropagation();
 
-    wall.open();
+    wall.login();
+  });
+
+  $(".signin a.register").on("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    wall.register();
   });
 
   $("nav .home.ajax").on("click", function(e) {
