@@ -92,7 +92,7 @@
         <ul class="employment block">
           <li>
             <h3>Employment in forest sector <a href="#" class="info"><i data-source="employment"></i></a></h3>
-            <h2><%= @country.employment %> <span>million people</span></h2>
+            <h2><%= @country.employment %> <span>thousand people</span></h2>
 
             <div class="man-list">
               <% @country.employment.times do |i| %>
@@ -165,7 +165,7 @@
 
           <ul>
             <% if @country.ministry_link.present? %>
-              <li><a href="<%= @country.ministry_link %>"><%= t('.ministry_link') %></a></li>
+              <li><a href="<%= @country.ministry_link %>" target="_blank"><%= t('.ministry_link') %></a></li>
             <% end %>
 
             <% if @country.external_links.present? %>

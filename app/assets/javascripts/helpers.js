@@ -128,7 +128,7 @@ config.mapOptions = {
   scaleControl:       false,
   streetViewControl:  false,
   overviewMapControl: false,
-  scrollwheel:        true,
+  scrollwheel:        false,
   layers:             ""
 };
 

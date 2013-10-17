@@ -125,6 +125,7 @@ GFW.modules.app = function(gfw) {
 
       $("#map").animate({ height: 400 }, 250, function() {
         google.maps.event.trigger(that._map, "resize");
+        that._map.setOptions({ scrollwheel: false });
         callback && callback();
       });
 
@@ -567,7 +568,7 @@ GFW.modules.app = function(gfw) {
               title = $.trim(title).substring(0, 34).split(" ").slice(0, -1).join(" ") + "...";
             }
 
-            var content = "<strong><a href='"+ features.properties.loc +"'>" + title + "</a></strong> <span>by " + features.properties.author + " &middot; </span><a href='"+ features.properties.loc +"' target='_blank'>read more</a>";
+            var content = "<strong><a href='"+ features.properties.loc +"' target='_blank'>" + title + "</a></strong> <span>by " + features.properties.author + " &middot; </span><a href='"+ features.properties.loc +"' target='_blank'>read more</a>";
 
             marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: thumb, content: content, map: map, type: 'mongabay' });
 
@@ -681,7 +682,6 @@ GFW.modules.app = function(gfw) {
       var table_name = null;
 
       if (this.currentBaseLayer === "semi_monthly") {
-
         if (config.mapLoaded && !this.time_layer) {
 
           this._loadTimeLayer();
