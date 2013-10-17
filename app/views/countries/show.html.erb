@@ -165,7 +165,7 @@
 
           <ul>
             <% if @country.ministry_link.present? %>
-              <li><a href="<%= @country.ministry_link %>"><%= t('.ministry_link') %></a></li>
+              <li><a href="<%= @country.ministry_link %>" target="_blank"><%= t('.ministry_link') %></a></li>
             <% end %>
 
             <% if @country.external_links.present? %>
