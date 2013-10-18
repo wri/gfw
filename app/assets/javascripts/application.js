@@ -7,6 +7,7 @@
 //= require cartodb-gmapsv3
 //= require cartodb-infowindow-min
 //= require protected-infowindow-min
+//= require imgLiquid.min
 //= require lodash.min
 //= require backbone-min
 //= require class
