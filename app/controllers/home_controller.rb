@@ -7,8 +7,15 @@ class HomeController < ApplicationController
   end
 
   def register
-    Notifications.new_user(params['email']).deliver
+    @email = params['email']
+
+    @user = User.new(email: @email)
+    @user.save
+
+    Notifications.new_user(@email).deliver
+
     head 200
+
   end
 
 end
