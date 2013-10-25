@@ -442,7 +442,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _updateBaseLayer: function() {
-      if (GFW.app.currentBaseLayer !== "semi_monthly") this._toggleTimeLayer();
+      this._toggleTimeLayer();
 
       GFW.app.baseLayer && GFW.app.baseLayer.setMap(null);
 
@@ -633,14 +633,15 @@ GFW.modules.app = function(gfw) {
 
       if (this.time_layer) {
 
-        if (GFW.app.currentBaseLayer != "semi_monthly") {
+        if (GFW.app.currentBaseLayer !== "semi_monthly") {
           this.time_layer.hide();
           Timeline.hide();
-        } else {
-          this.time_layer.show();
-          Timeline.show();
         }
 
+        if (GFW.app.currentBaseLayer !== "quarterly") {
+          this.time_layer_notplayer && this.time_layer_notplayer.hide();
+          TimelineNotPlayer.hide();
+        }
       }
 
     },
@@ -648,11 +649,25 @@ GFW.modules.app = function(gfw) {
     _loadTimeLayer: function() {
       var that = this;
 
+      // commented in gmaps library
+      setTimeout(function(){
+        if (!document.getElementById('cartodb_logo')) {
+          var cartodb_link = document.createElement("a");
+          cartodb_link.setAttribute('id','cartodb_logo');
+          cartodb_link.setAttribute('style',"position:absolute; bottom:3px; left:74px; display:block; border:none; z-index:100");
+          cartodb_link.setAttribute('href','http://www.cartodb.com');
+          cartodb_link.setAttribute('target','_blank');
+          cartodb_link.innerHTML = "<img src='http://cartodb.s3.amazonaws.com/static/new_logo.png' alt='CartoDB' title='CartoDB' style='border:none;' />";
+          map.getDiv().appendChild(cartodb_link)
+        }
+      },2000);
+
       if ($.browser.msie) {
         this.time_layer = new StaticGridLayer({
           map: that._map,
           _global_version: that._global_version,
-          _cloudfront_url: that._cloudfront_url
+          _cloudfront_url: that._cloudfront_url,
+          _table: 'gfw2_forma_ie_fix'
         });
 
         window.time_layer = this.time_layer;
@@ -673,6 +688,28 @@ GFW.modules.app = function(gfw) {
       });
 
       Timeline.loadDefaultRange();
+
+    },
+
+    _loadTimeLayerNotPlayer: function() {
+      var that = this;
+
+      this.time_layer_notplayer = new StaticGridLayer({
+        map: that._map,
+        _table: 'modis_forest_change_copy',
+        _global_version: that._global_version,
+        _cloudfront_url: that._cloudfront_url
+      });
+
+      window.time_layer_notplayer = this.time_layer_notplayer;
+
+      TimelineNotPlayer.show();
+
+      TimelineNotPlayer.bind('change_date', function(start_month, end_month, year) {
+        self.time_layer.set_time(end_month, year);
+      });
+
+      TimelineNotPlayer.loadDefaultRange();
 
     },
 
@@ -699,7 +736,19 @@ GFW.modules.app = function(gfw) {
       } else if (this.currentBaseLayer === "annual") {
         table_name = 'gfw2_hansen';
       } else if (this.currentBaseLayer === "quarterly") {
-        table_name = 'modis_forest_change_copy';
+        if (config.mapLoaded && !this.time_layer_notplayer) {
+
+          this._loadTimeLayerNotPlayer();
+
+        } else {
+
+          if (this.time_layer_notplayer) {
+            this.time_layer_notplayer.show();
+            TimelineNotPlayer.show();
+          }
+        }
+
+        return;
       } else if (this.currentBaseLayer === "brazilian_amazon") {
         table_name = 'sad_polygons_fixed_2';
       }

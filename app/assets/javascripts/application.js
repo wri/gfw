@@ -34,6 +34,7 @@ var loaded           = false,
     legend            = {},
     analysis          = {},
     Timeline          = {},
+    TimelineNotPlayer = {},
     wall              = {},
     sourceWindow      = {},
     gallery           = {},
@@ -82,7 +83,12 @@ function loadOtherStuff(callback) {
     container: $("#map")
   });
 
+  TimelineNotPlayer = new gfw.ui.view.TimelineNotPlayer({
+    container: $("#map")
+  });
+
   window.timeline = Timeline;
+  window.timelineNotPlayer = TimelineNotPlayer;
 
   Circle.init();
   Filter.init();
