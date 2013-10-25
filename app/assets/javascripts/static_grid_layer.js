@@ -24,7 +24,8 @@ var StaticGridLayer = Backbone.View.extend({
 
   _onYearUpdate: function() {
 
-    var query = "SELECT * FROM gfw2_forma_ie_fix WHERE p <= " + this.model.get("month");
+    var query = "SELECT * FROM " + this.options._table;
+    // var query = "SELECT * FROM " + this.options._table + " WHERE p <= " + this.model.get("month");
     this.model.set("query", query);
     this.layer.setQuery(query);
 
@@ -45,7 +46,8 @@ var StaticGridLayer = Backbone.View.extend({
     this.model.bind("change:year",  this._onYearUpdate,  this);
     this.model.bind("change:opacity", this._onOpacityUpdate, this);
 
-    var query = "SELECT * FROM gfw2_forma_ie_fix WHERE p <= " + this.model.get("month");
+    var query = "SELECT * FROM " + this.options._table;
+    // var query = "SELECT * FROM " + this.options._table + " WHERE p <= " + this.model.get("month");
     this.model.set("query", query);
 
     this.layer = new CartoDBLayer({
@@ -57,7 +59,7 @@ var StaticGridLayer = Backbone.View.extend({
       tiler_path:'/tiles/',
       tiler_suffix:'.png',
       tiler_grid: '.grid.json',
-      table_name: "cdm_april_2013",
+      table_name: that.options._table,
       query: query,
       layer_order: "bottom",
       opacity: 1,

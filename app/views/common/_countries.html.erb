@@ -15,7 +15,7 @@
 
         <div class="content">
           <h4 <% if (country[:name].present? && country[:name].length > 14) %>class="small"<% end %>><%= country[:name] %></h4>
-          <strong><%= country[:count] %> </strong> Forest Clearing Alerts in the last 6 months
+          <strong><%= country[:sum_alerts] %> </strong> Forest Clearing Alerts in the last 6 months
         </div>
 
         <% if country[:enabled] %>
