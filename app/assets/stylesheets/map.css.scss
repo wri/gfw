@@ -716,6 +716,20 @@
 
   display:none;
 
+  &.timeline_notplayer .time .line {
+    left: 23px;
+    z-index: 220px;
+
+    .tipsy {
+      width: 100px;
+      left: -50px;
+
+      .arrow {
+        left: 50%;
+        margin-left: -11px;
+      }
+    }
+  }
 
   .inner { clear:both; position:relative; }
 
@@ -846,9 +860,39 @@
     }
   }
 
-  .years {
+  .visible_quarters {
+    position:absolute;
+    top: 0;
+    z-index: 1;
+
+    li {
+
+      @include inline-block();
+      width: 87px;
+
+      .year {
+        @include inline-block();
+        width: 51px;
+
+      }
+
+      .interval {
+        @include inline-block();
+        @include size(9px, $handleWidth);
+
+        background: url(icons/interval.png) no-repeat center;
+
+        z-index: 100;
+        margin-left: 57px;
+        width: 30px;
+      }
+    }
+  }
+
+  .years,
+  .quarters {
     position:relative;
-    z-index: 100;
+    z-index: 220;
 
     li {
 
@@ -859,7 +903,6 @@
 
       @include inline-block();
       width: 9px*12 + 9px*4;
-      /*margin-right: 9px*2;*/
 
       .year {
         @include inline-block();
@@ -868,7 +911,7 @@
         text-align:center;
         width: 9px*3;
         font: normal 10px "Futura", sans-serif;
-        color:#333;
+        color: #666;
         text-decoration:none;
         background:#fff;
 
@@ -884,6 +927,34 @@
 
     }
 
+  }
+
+  .quarters li {
+    width: 9px*4 + 51px;
+
+    &:last-child {
+      width: 51px;
+      span { width: 27px; }
+    }
+
+    .year {
+      width: 51px;
+      padding: 3px;
+
+      &.active {
+        border: 1px solid #999;
+        padding: 2px;
+        @include border-radius(3px);
+        color: #666;
+
+        &.selected {
+          background: #A1BA42;
+          border: 1px solid #839C26;
+          color: #fff;
+          @include box-shadow(0 0 5px rgba(#000, 0.15));
+        }
+      }
+    }
   }
 
   .trail {
@@ -905,8 +976,8 @@
 
     .handle {
       position:absolute;
-      top: 3px; left: 27px;
-      z-index: 200;
+      top: 3px; left: 9px;
+      z-index: 300;
       @include size(14px);
       background: url(icons/timeline_handler.png) no-repeat 0 0;
       cursor:col-resize;

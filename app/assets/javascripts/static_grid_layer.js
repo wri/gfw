@@ -10,25 +10,21 @@ var StaticGridLayer = Backbone.View.extend({
     this.model.set("opacity", 1);
   },
 
-  refresh_time: function(month) {
-  },
-
   set_time: function(month, year) {
     month && this.model.set("month", month);
-    year  && this.model.set("year", year);
+    year && this.model.set("year", year);
+
+    this._onDateUpdate();
   },
 
   _onOpacityUpdate: function() {
     this.layer.setOpacity(this.model.get("opacity"));
   },
 
-  _onYearUpdate: function() {
-
-    var query = "SELECT * FROM " + this.options._table;
-    // var query = "SELECT * FROM " + this.options._table + " WHERE p <= " + this.model.get("month");
+  _onDateUpdate: function() {
+    var query = "SELECT * FROM " + this.options._table + " WHERE EXTRACT(YEAR FROM date) = " + this.model.get("year") + " AND EXTRACT(MONTH FROM date) = " + this.model.get("month");
     this.model.set("query", query);
     this.layer.setQuery(query);
-
   },
 
   cache_time: function() {
@@ -39,15 +35,13 @@ var StaticGridLayer = Backbone.View.extend({
     var that = this;
 
     this.model = new StaticGridLayerModel({
-      year: 2006,
-      month: 72
+      year: 2013,
+      month: 06
     });
 
-    this.model.bind("change:year",  this._onYearUpdate,  this);
     this.model.bind("change:opacity", this._onOpacityUpdate, this);
 
-    var query = "SELECT * FROM " + this.options._table;
-    // var query = "SELECT * FROM " + this.options._table + " WHERE p <= " + this.model.get("month");
+    var query = "SELECT * FROM " + this.options._table + " WHERE EXTRACT(YEAR FROM date) = " + this.model.get("year") + " AND EXTRACT(MONTH FROM date) = " + this.model.get("month");
     this.model.set("query", query);
 
     this.layer = new CartoDBLayer({
@@ -55,7 +49,7 @@ var StaticGridLayer = Backbone.View.extend({
       user_name:'',
       tiler_domain: that.options._cloudfront_url,
       sql_domain:   that.options._cloudfront_url,
-      extra_params: { v: that.options._global_version}, //define a verison number on requests
+      extra_params: { v: that.options._global_version}, //define a version number on requests
       tiler_path:'/tiles/',
       tiler_suffix:'.png',
       tiler_grid: '.grid.json',
@@ -67,8 +61,5 @@ var StaticGridLayer = Backbone.View.extend({
       debug:false,
       auto_bound: false
     });
-
   }
-
 });
-
