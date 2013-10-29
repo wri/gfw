@@ -45,7 +45,7 @@ GFW.modules.app = function(gfw) {
       this._precision = 2;
       this._layers = [];
       this._cloudfront_url = "dyynnn89u7nkm.cloudfront.net";
-      this._global_version = 28;
+      this._global_version = 30;
 
       gfw.log.enabled = options ? options.logging: false;
 
@@ -705,11 +705,9 @@ GFW.modules.app = function(gfw) {
 
       TimelineNotPlayer.show();
 
-      TimelineNotPlayer.bind('change_date', function(start_month, end_month, year) {
-        self.time_layer.set_time(end_month, year);
+      TimelineNotPlayer.bind('change_date', function(month, year) {
+        self.time_layer_notplayer.set_time(month, year);
       });
-
-      TimelineNotPlayer.loadDefaultRange();
 
     },
 
