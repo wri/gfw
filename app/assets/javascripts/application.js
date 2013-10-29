@@ -233,7 +233,6 @@ function loadGFW(callback) {
 
   $(".analysis").on("click", function(e) {
     e.preventDefault();
-    console.log('a');
 
     $("body").animate({ scrollTop: 0 }, 250, function() {
       analysis.startAnalyzing();
