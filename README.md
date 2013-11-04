@@ -1,6 +1,8 @@
 # What is Global Forest Watch?
 
-Global Forest Watch (GFW) is powerful, near-real-time forest monitoring system that unites satellite technology, data sharing, and human networks around the world to fight deforestation. This repository contains the GFW web app.
+[Global Forest Watch](http://www.wri.org/our-work/project/global-forest-watch) (GFW) is powerful, near-real-time forest monitoring system that unites satellite technology, data sharing, and human networks around the world to fight deforestation. 
+
+This repository contains the GFW web app.
 
 ![](http://i.imgur.com/oIk9IDK.jpg)
 
