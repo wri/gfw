@@ -6,7 +6,8 @@ class Country
 
   def self.countries_info_with_alerts
     CartoDB::Connection.query("
-      SELECT c.name as name,
+      SELECT c.iso as iso,
+             c.name as name,
              c.enabled as enabled,
              (SELECT COALESCE(sum(alerts), 0) as sum
               FROM gfw2_forma_graphs as d
