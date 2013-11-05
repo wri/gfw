@@ -1037,6 +1037,13 @@ var Navigation = (function() {
       this.time_layer.set_time(128);
     }
 
+    TimelineNotPlayer.hide();
+
+    if (this.time_layer_notplayer) {
+      this.time_layer_notplayer.cache_time(true);
+      this.time_layer_notplayer.set_time(128);
+    }
+
     if (GFW && GFW.app) {
       GFW.app.close(function() {
         Circle.show(250);
@@ -1068,7 +1075,11 @@ var Navigation = (function() {
 
     if (this.time_layer) this.time_layer.set_time(self.time_layer.cache_time());
 
-    if (GFW.currentBaseLayer == "semi_monthly") Timeline.show();
+    if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === "semi_monthly") {
+      Timeline.show();
+    } else if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === "quarterly") {
+      TimelineNotPlayer.show();
+    }
 
     $(".big_numbers").fadeOut(250);
 
