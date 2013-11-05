@@ -638,10 +638,13 @@ GFW.modules.app = function(gfw) {
           Timeline.hide();
         }
 
+      } else if(this.time_layer_notplayer) {
+
         if (GFW.app.currentBaseLayer !== "quarterly") {
-          this.time_layer_notplayer && this.time_layer_notplayer.hide();
+          this.time_layer_notplayer.hide();
           TimelineNotPlayer.hide();
         }
+
       }
 
     },
