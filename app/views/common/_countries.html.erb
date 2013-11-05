@@ -1,9 +1,6 @@
 <% countries = Country.countries_info_with_alerts %>
 
 <div id="countries">
-
-  <h1><%= t(".title") %></h1>
-
   <% countries.each do |country| %>
     <% if country[:iso] != "UNK" %>
     <div class="country <% if !country[:enabled] %>disabled<% end %>">
