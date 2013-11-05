@@ -8,16 +8,10 @@ body.countries {
 
     background: $cWhite;
 
-    header, footer { display: none; }
-
     #countries {
       display:block;
       padding-bottom: 50px;
     }
-  }
-
-  header {
-    border-bottom: none;
   }
 
   #country {
@@ -164,12 +158,8 @@ a.close_icon {
 }
 
   #countries {
-    position:absolute;
+    margin: 0 auto;
     width:1008px;
-    margin-left:-504px;
-    top: 50px;
-    left: 50%;
-    z-index: 10000;
 
     @include clearfix();
 

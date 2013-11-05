@@ -67,8 +67,6 @@ en:
       numbers:
         alerts: 'alerts in past 16 dayss'
         stories: 'new forest storiess'
-    countries:
-        title: "Select a country"
     filters:
       concessions: 'Concessions'
       conservation: 'Conservation'
@@ -94,6 +92,8 @@ en:
       contact_us: 'Contact us'
 
   countries:
+    index:
+      title: "Select a country"
     show:
       detail:
         mongobay:
