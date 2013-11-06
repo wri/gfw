@@ -733,6 +733,19 @@
 
   .inner { clear:both; position:relative; }
 
+  .timeline_legend {
+    position:absolute;
+    top: -20px;
+    left: 13px;
+    text-align: left;
+
+    color:#fff;
+    font-weight:bold;
+    @extend .sans-serif;
+    font-size:12px;
+    text-shadow: 0px 0px 3px #222;
+  }
+
   .coordinates {
     position:absolute;
     top: -20px;
