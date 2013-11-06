@@ -78,7 +78,7 @@
     <%= yield :js %>
 
     <script type="text/javascript">
-      <% if request.path.split("/")[1] == "map" %>
+      <% if request.path.split("/")[1] === "map" %>
         var showMap = true;
       <% else %>
         var showMap = false;

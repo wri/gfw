@@ -7,14 +7,6 @@
   </script>
 <% end %>
 
-<% content_for :download do %>
-  <div class="download">
-    <div class="inner">
-      <%= content_tag :h1, (raw t('layouts.application.footer.download.title2', :url => "/sources")) %>
-    </div>
-  </div>
-<% end %>
-
 <div id="country">
 
   <div class="details">
@@ -42,9 +34,9 @@
           </div>
         </div>
         <div class="chart circle country" style="background: url(<%= static_map(@country.coords, '299x299', 4) %>) no-repeat;">
-          <a class="mask" href="<%= @country.link %>/<%= @country.iso %>"></a>
+          <a class="mask" href="<%= @country.map_coord %>/<%= @country.iso %>"></a>
           <a href="#" class="info" data-source="semi_monthly"><span>i</span></a>
-          <a href="<%= @country.link %>/<%= @country.iso %>" class="action"></a>
+          <a href="<%= @country.map_coord %>/<%= @country.iso %>" class="action"></a>
         </div>
       </div>
     </div>
@@ -180,7 +172,7 @@
 
     <section class="download-links">
       <ul class="inner">
-        <li><a href="<%= @country.link %>/<%= @country.iso %>">Subscribe to alerts for this country</a></li>
+        <li><a href="<%= @country.map_coord %>/<%= @country.iso %>">Subscribe to alerts for this country</a></li>
         <% if @country.dataset_link %>
           <li><%= link_to "Download relevant datasets", sources_path %></li>
         <% else %>
@@ -247,6 +239,6 @@
 </div>
 
 <div id="sources" class="sources">
-  <%= render 'sources/sources' %>
+  <%= render 'common/countries' %>
 </div>
 
