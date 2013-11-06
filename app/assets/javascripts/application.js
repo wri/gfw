@@ -35,6 +35,7 @@ var loaded           = false,
     analysis          = {},
     Timeline          = {},
     TimelineNotPlayer = {},
+    TimelineImazon    = {},
     wall              = {},
     sourceWindow      = {},
     gallery           = {},
@@ -83,12 +84,17 @@ function loadOtherStuff(callback) {
     container: $("#map")
   });
 
+  TimelineImazon = new gfw.ui.view.TimelineImazon({
+    container: $("#map")
+  });
+
   TimelineNotPlayer = new gfw.ui.view.TimelineNotPlayer({
     container: $("#map")
   });
 
   window.timeline = Timeline;
   window.timelineNotPlayer = TimelineNotPlayer;
+  window.timelineImazon = TimelineImazon;
 
   Circle.init();
   Filter.init();

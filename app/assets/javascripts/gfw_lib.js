@@ -631,20 +631,19 @@ GFW.modules.app = function(gfw) {
 
     _toggleTimeLayer: function() {
 
-      if (this.time_layer) {
+      if (this.time_layer && GFW.app.currentBaseLayer !== "semi_monthly") {
+        this.time_layer.hide();
+        Timeline.hide();
+      }
 
-        if (GFW.app.currentBaseLayer !== "semi_monthly") {
-          this.time_layer.hide();
-          Timeline.hide();
-        }
+      if(this.time_layer_notplayer &&GFW.app.currentBaseLayer !== "quarterly") {
+        this.time_layer_notplayer.hide();
+        TimelineNotPlayer.hide();
+      }
 
-      } else if(this.time_layer_notplayer) {
-
-        if (GFW.app.currentBaseLayer !== "quarterly") {
-          this.time_layer_notplayer.hide();
-          TimelineNotPlayer.hide();
-        }
-
+      if(this.time_layer_imazon &&GFW.app.currentBaseLayer !== "brazilian_amazon") {
+        this.time_layer_imazon.hide();
+        TimelineImazon.hide();
       }
 
     },
@@ -714,6 +713,26 @@ GFW.modules.app = function(gfw) {
 
     },
 
+    _loadTimeLayerImazon: function() {
+      var that = this;
+
+      this.time_layer_imazon = new StaticGridLayerImazon({
+        map: that._map,
+        _table: 'sad_polygons_fixed_2',
+        _global_version: that._global_version,
+        _cloudfront_url: that._cloudfront_url
+      });
+
+      window.time_layer_imazon = this.time_layer_imazon;
+
+      TimelineImazon.show();
+
+      TimelineImazon.bind('change_date', function(start_month, end_month, start_year, end_year) {
+        self.time_layer_imazon.set_time(start_month, end_month, start_year, end_year);
+      });
+
+    },
+
     _loadBaseLayer: function() {
 
       var self = this;
@@ -751,7 +770,19 @@ GFW.modules.app = function(gfw) {
 
         return;
       } else if (this.currentBaseLayer === "brazilian_amazon") {
-        table_name = 'sad_polygons_fixed_2';
+        if (config.mapLoaded && !this.time_layer_imazon) {
+
+          this._loadTimeLayerImazon();
+
+        } else {
+
+          if (this.time_layer_imazon) {
+            this.time_layer_imazon.show();
+            TimelineImazon.show();
+          }
+        }
+
+        return;
       }
 
       this.baseLayer = new CartoDBLayer({
@@ -962,6 +993,18 @@ GFW.modules.maplayer = function(gfw) {
             Timeline.show();
           } else {
             Timeline.hide();
+          }
+
+          if (slug === 'quarterly' && showMap) {
+            TimelineNotPlayer.show();
+          } else {
+            TimelineNotPlayer.hide();
+          }
+
+          if (slug === 'brazilian_amazon' && showMap) {
+            TimelineImazon.show();
+          } else {
+            TimelineImazon.hide();
           }
 
           GFW.app.currentBaseLayer = slug;

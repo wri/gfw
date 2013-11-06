@@ -1044,6 +1044,13 @@ var Navigation = (function() {
       this.time_layer_notplayer.set_time(128);
     }
 
+    TimelineImazon.hide();
+
+    if (this.time_layer_imazon) {
+      this.time_layer_imazon.cache_time(true);
+      this.time_layer_imazon.set_time(128);
+    }
+
     if (GFW && GFW.app) {
       GFW.app.close(function() {
         Circle.show(250);

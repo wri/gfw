@@ -7,6 +7,7 @@
 
   <script id="timeline_new-template" type="text/x-underscore-template">
     <div class="coordinates"></div>
+    <div class="timeline_legend"><p>Humid tropics monthly alerts</p></div>
     <div class="inner">
       <div class="action">
         <a class="play" href="#"></a>
@@ -38,8 +39,39 @@
     </div>
   </script>
 
+  <script id="timeline_imazon-template" type="text/x-underscore-template">
+    <div class="coordinates"></div>
+    <div class="timeline_legend"><p>Imazon SAD (Brazilian Amazon)</p></div>
+    <div class="inner">
+      <div class="time">
+        <div class="line"><div class="tipsy"><span>Month</span><div class="arrow"></div></div></div>
+
+        <div class="trail">
+          <div class="handle left">
+            <div class="tipsy">
+              <span></span>
+              <div class="arrow"></div>
+            </div>
+          </div>
+
+          <div class="handle right">
+            <div class="tipsy">
+              <span></span>
+              <div class="arrow"></div>
+            </div>
+          </div>
+        </div>
+
+        <ul class="years"></ul>
+        <div class="range"></div>
+        <ul class="visible_months"></ul>
+      </div>
+    </div>
+  </script>
+
   <script id="timeline_notplayer-template" type="text/x-underscore-template">
     <div class="coordinates"></div>
+    <div class="timeline_legend"><p>Global quarterly area</p></div>
     <div class="inner">
       <div class="time">
         <ul class="quarters"></ul>
