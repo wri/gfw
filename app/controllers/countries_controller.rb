@@ -10,7 +10,7 @@ class CountriesController < ApplicationController
       attrs[attr.to_sym] = country_info[0].send(attr)
     end
 
-    attrs[:coords] = "#{country_info[0].lat.to_s}, #{country_info[0].lon.to_s}"''
+    attrs[:coords] = "#{country_info[0].lat.to_s}, #{country_info[0].lon.to_s}"
 
     attrs[:last_alerts] = Alert.alerts_per_month_per_country(country_info[0].iso)
 
