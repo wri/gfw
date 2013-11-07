@@ -7,14 +7,6 @@
   </script>
 <% end %>
 
-<% content_for :download do %>
-  <div class="download">
-    <div class="inner">
-      <%= content_tag :h1, (raw t('layouts.application.footer.download.title2', :url => "/sources")) %>
-    </div>
-  </div>
-<% end %>
-
 <div id="country">
 
   <div class="details">
@@ -41,10 +33,10 @@
             <a href="/assets/gfw_analysis.zip" class="action"></a>
           </div>
         </div>
-        <div class="chart circle country" style="background: url(<%= static_map(@country.lat+","+@country.lon, "299x299", 4) %>) no-repeat;">
-          <a class="mask" href="<%= @country.link %>/<%= @country.iso %>"></a>
+        <div class="chart circle country" style="background: url(<%= static_map(@country.coords, '299x299', 4) %>) no-repeat;">
+          <a class="mask" href="<%= @country.map_coord %>/<%= @country.iso %>"></a>
           <a href="#" class="info" data-source="semi_monthly"><span>i</span></a>
-          <a href="<%= @country.link %>/<%= @country.iso %>" class="action"></a>
+          <a href="<%= @country.map_coord %>/<%= @country.iso %>" class="action"></a>
         </div>
       </div>
     </div>
@@ -180,7 +172,7 @@
 
     <section class="download-links">
       <ul class="inner">
-        <li><a href="<%= @country.link %>/<%= @country.iso %>">Subscribe to alerts for this country</a></li>
+        <li><a href="<%= @country.map_coord %>/<%= @country.iso %>">Subscribe to alerts for this country</a></li>
         <% if @country.dataset_link %>
           <li><%= link_to "Download relevant datasets", sources_path %></li>
         <% else %>
@@ -195,12 +187,6 @@
       <h3><%= t('.blog_posts.title', :country => @country.name ) %></h3>
 
       <ul>
-        <% @blog_posts.each do |post| %>
-          <li>
-            <h2><%= link_to truncate(post.title, :length => 42), post.link %></h2>
-            <%= simple_format truncate_html(post.body.strip, :length => 250, :omission => "... #{link_to t('.blog_posts.more'), post.link }") %>
-          </li>
-        <% end %>
       </ul>
     </div>
   </div>
@@ -253,6 +239,6 @@
 </div>
 
 <div id="sources" class="sources">
-  <%= render 'sources/sources' %>
+  <%= render 'common/countries' %>
 </div>
 

@@ -1,5 +1,27 @@
-<% content_for :title do
-  t('.title')
-end %>
+<% content_for :title do %>
+  <% t('.title') %>
+<% end %>
 
-<%= render 'common/countries' %>
+<div id="countries">
+  <% Country.countries_info_with_alerts.each do |country| %>
+    <% if country[:iso] != "UNK" %>
+    <div class="country <% if !country[:enabled] %>disabled<% end %>">
+      <% if country[:enabled] %>
+        <a href="/country/<%= country[:name].downcase.gsub(" ", "_") %>">
+        <% end %>
+
+        <div class="icon" id="icon<%= country[:iso]%>"> </div>
+
+        <div class="content">
+          <h4 <% if (country[:name].present? && country[:name].length > 14) %>class="small"<% end %>><%= country[:name] %></h4>
+          <strong><%= country[:sum_alerts] %> </strong> Forest Clearing Alerts in the last 6 months
+        </div>
+
+        <% if country[:enabled] %>
+        </a>
+      <% end %>
+    </div>
+      <% end %>
+  <% end %>
+  <div class="select"></div>
+</div>
