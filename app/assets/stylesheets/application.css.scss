@@ -319,14 +319,14 @@ nav {
     width:960px;
     margin:auto;
     word-spacing:-1em;
+    overflow: hidden;
 
     li {
-      @include inline-block();
-      width:280px;
+      float: left;
+      width:266px;
+      margin: 0 27px 0 27px;
       font-weight:400;
       word-spacing:normal;
-
-      margin: 0 50px 0 0;
       text-align:center;
 
       h2 {
@@ -353,10 +353,6 @@ nav {
         margin:auto;
         height:92px;
       }
-
-      &.community { width:270px; }
-      &.analysis_tool { width:270px; }
-      &.keep_updated { width:270px; margin: 0; }
 
       &.community .icon {
         top: 0px;
@@ -417,14 +413,16 @@ nav {
   ul {
     width:960px;
     margin: 50px auto 40px auto;
+    padding: 5px 0;
+    overflow: hidden;
 
     li {
       position: relative;
-      @include inline-block();
+      float: left;
       width:266px;
       height: 266px;
       font-weight:400;
-      margin: 0 22px 0 22px;
+      margin: 0 27px 0 27px;
       text-align:center;
 
       .frame {

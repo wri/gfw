@@ -351,12 +351,9 @@ $(function(){
     },
 
     map: function() {
-      if ($.browser.msie) $(document).scrollTop(0);
-
       loadGFW( function() {
         Navigation.showState("map");
       });
-
     },
 
     mapWithCoordinates: function(zoom, lat, lon, iso, layers) {
