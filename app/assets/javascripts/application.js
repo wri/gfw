@@ -19,6 +19,11 @@
 //= require jquery.fileupload-ui
 //= require jquery.fileupload-fp
 //= require markerclusterer_compiled
+//= require jquery.mousewheel.min
+//= require jquery.jscrollpane
+//= require spin.min
+//= require mustache
+
 //= require gfw
 //= require_tree .
 
