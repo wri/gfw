@@ -664,33 +664,19 @@ GFW.modules.app = function(gfw) {
         }
       },2000);
 
-      if ($.browser.msie) {
-        this.time_layer = new StaticGridLayer({
-          map: that._map,
-          _global_version: that._global_version,
-          _cloudfront_url: that._cloudfront_url,
-          _table: 'gfw2_forma_ie_fix'
-        });
-
-        window.time_layer = this.time_layer;
-
-      } else {
-        this.time_layer = new TimePlayer('gfw2_forma', this._global_version, this._cloudfront_url);
-        this.time_layer.options.table_name = null;
-        map.overlayMapTypes.push(this.time_layer);
-        window.time_layer = this.time_layer;
-
-      }
+      this.time_layer = new TimePlayer('gfw2_forma', this._global_version, this._cloudfront_url);
+      this.time_layer.options.table_name = null;
+      map.overlayMapTypes.push(this.time_layer);
+      window.time_layer = this.time_layer;
 
       Timeline.show();
 
       Timeline.bind('change_date', function(start_month, end_month, year) {
-        self.time_layer.set_start_time(start_month);
-        self.time_layer.set_time(end_month, year);
+        that.time_layer.set_start_time(start_month);
+        that.time_layer.set_time(end_month, year);
       });
 
       Timeline.loadDefaultRange();
-
     },
 
     _loadTimeLayerNotPlayer: function() {
