@@ -24,7 +24,7 @@
 //= require spin.min
 //= require mustache
 
-//= require gfw
+//= require gfw/index
 //= require_tree .
 
 // Map needs to be a global var or
