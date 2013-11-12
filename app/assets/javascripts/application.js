@@ -194,6 +194,8 @@ function loadGFW(callback) {
   if ($("body.countries").hasClass("index")) CountryMenu.drawCountries();
 
   if($("body.countries").hasClass("show")) {
+    CountryFeed.getNews(countryCode);
+    CountryFeed.getMongabayNews(countryKeyword);
     CountryMenu.drawCountry(countryCode);
     CountryMenu.drawForest(countryCode);
     CountryMenu.drawTenure(countryCode);

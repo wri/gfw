@@ -187,34 +187,33 @@
       <h3><%= t('.blog_posts.title', :country => @country.name ) %></h3>
 
       <ul>
-      </ul>
-    </div>
-  </div>
+        <li class="first"></li>
 
-  <div class="home-stories">
-    <h3>Stories about forest change</h3>
-    <p>Browse <%= link_to "featured stories", stories_path%> or <%= link_to "explore all in the map", map_path%>.</p>
-
-    <ul>
-      <% @featured.each do |story| %>
-        <li>
-
-        <a href="<%= story_path(story.id) %>">
-          <%= image_tag(story_image_or_map(story.thumbnail_url.first, story.coords)) %>
-          <div class="gradient"></div>
-          <div class="frame"></div>
-          <div class="title">
-            <span><%= story.title %></span>
-            <%= content_tag :strong, 'Read more' %>
-          </div>
-        </a>
-
+        <li class="story">
+          <% if @country.related_story.present? %>
+          <a href="<%= story_path(@country.related_story[0].id) %>">
+            <%= image_tag(story_image_or_map(@country.related_story[0].thumbnail_url, @country.related_story[0].coords)) %>
+            <div class="gradient"></div>
+            <div class="frame"></div>
+            <div class="title">
+              <span><%= @country.related_story[0].title %></span>
+              <strong>Read more</strong>
+            </div>
+          </a>
+          <% else %>
+          <a href="<%= new_story_path %>" class="nostory">
+            <div class="gradient"></div>
+            <div class="frame"></div>
+            <div class="title">
+              <span>No stories for this country yet.</span>
+              <strong>Add one.</strong>
+            </div>
+          </a>
+          <% end %>
         </li>
-      <% end %>
-    </ul>
-    <div class="submit_story">
-      <p>Do you have a story? Participate in detecting forest change.</p>
-      <p><%= link_to (content_tag :span, "Submit your story"), new_story_path, :class => "btn green darker_glow" %></p>
+  
+        <li class="last"></li>
+      </ul>
     </div>
   </div>
 

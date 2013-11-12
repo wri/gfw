@@ -14,6 +14,8 @@ class CountriesController < ApplicationController
 
     attrs[:last_alerts] = Alert.alerts_per_month_per_country(country_info[0].iso)
 
+    attrs[:related_story] = Story.last_story_per_country(params[:id])
+
     @country = OpenStruct.new(attrs)
 
     @featured = Story.first_three_featured
