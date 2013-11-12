@@ -32,7 +32,7 @@ class Country
   end
 
   def self.countries_info
-    CartoDB::Connection.query("SELECT name, iso, enabled FROM gfw2_countries ORDER BY name;")[:rows]
+    CartoDB::Connection.query("SELECT name, iso, enabled FROM gfw_country_page_data ORDER BY name;")[:rows]
   end
 
   def self.countries_info_with_alerts
@@ -44,7 +44,7 @@ class Country
                 FROM gfw2_forma_graphs as d
                 WHERE d.iso = c.iso AND date >= (SELECT MAX(n) FROM gfw2_forma_datecode WHERE date < now() - INTERVAL '12 MONTHS')
              ) as sum_alerts
-      FROM gfw2_countries as c
+      FROM gfw_country_page_data as c
       ORDER BY name ASC;")[:rows]
   end
 
@@ -56,7 +56,7 @@ class Country
     end
 
     CartoDB::Connection.query(
-      query.gsub(/\, $/, '') << " FROM gfw2_countries WHERE name = '"+name.humanize.titleize+"'"
+      query.gsub(/\, $/, '') << " FROM gfw_country_page_data WHERE name = '"+name.humanize.titleize+"'"
     )[:rows]
   end
 

@@ -214,12 +214,12 @@ GFW.modules.app = function(gfw) {
           dataType: "jsonp",
           jsonpCallback:'iwcallback2',
           crossDomain: true,
+          type: "GET",
           url: url,
           error: function(xhr, status, c) {
             console.log("Error", xhr, status, c);
           },
           success: function(json) {
-
             if (!json) return;
 
             var data = json[0];
@@ -229,7 +229,6 @@ GFW.modules.app = function(gfw) {
               that.protectedInfowindow.setPosition(event.latLng);
               that.protectedInfowindow.open();
             }
-
           }
         });
       });

@@ -1,23 +1,60 @@
-// var CountryFeed = (function() {
-//   function getNews() {
-//     $.getJSON("https://wri-01.cartodb.com/api/v2/sql?q=SELECT * FROM mongabaydb", function(data) {
-//       var items = [];
+var CountryFeed = (function() {
+  function getNews() {
+    var googleAPI = "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&q=",
+        url = "http://globalforestwatch.tumblr.com/rss";
 
-//       $.each(data.rows, function(key, val) {
-//         // pending keyword population
-//         if($.inArray(countryKeyword, val.keywords) > -1 && items.length < 5) { // only 5 first news
-//           items.push('<li><span class="date">'+val.published+'</span><a href="'+this.loc+'" target="_blank">'+this.title+'</a></li>');
-//         }
-//       });
+    // Use Tumblr RSS
+    $.getJSON(googleAPI + url + "&callback=?", function(data) {
+      $.each(data.responseData.feed.entries, function(key, val) {
+        if($.inArray(countryKeyword, val.categories) > -1) {
+          $(".blog-links .first").html('<p class="subtitle">Blog stories</p><h4><a href="'+val.link+'" target="_blank" title="'+val.title+'">'+val.title+'</a></h4><p>'+truncate(val.content, 300, val.link)+'</p>');
 
-//       $(".mongobay").html(items);
-//     });
-//   }
+          return;
+        }
+      });
+    });
+  }
 
-//   return {
-//     getNews: getNews
-//   }
-// }());
+  function getMongabayNews() {
+    var url = "https://wri-01.cartodb.com/api/v2/sql?q=SELECT * FROM mongabaydb WHERE position('" + countryKeyword + "' in keywords) <> 0";
+
+    // Use Mongabay News RSS
+    $.getJSON(url, function(data) {
+      if(data.total_rows > 0) {
+        var val = data.rows[0];
+
+        $(".blog-links .last").html('<p class="subtitle">Mongabay stories</p><h4><a href="'+val.loc+'" target="_blank" title="'+val.title+'">'+truncate_title(val.title, 35)+'</a></h4><p>'+truncate(val.description, 300, val.loc)+'</p>');
+      }
+    });
+  }
+
+  function truncate_title(string, limit) {
+    if (string.length > limit) {
+      var string_truncated = string.substring(0, limit);
+      string_truncated = string_truncated.replace(/w+$/, '');
+
+      string_truncated += '...';
+      return string_truncated;
+    }
+    return string;
+  }
+
+  function truncate(string, limit, url) {
+    if (string.length > limit) {
+      var string_truncated = string.substring(0, limit);
+      string_truncated = string_truncated.replace(/w+$/, '');
+
+      string_truncated += '... <a href="' + url + '"  target="_blank">more</a>.';
+      return string_truncated;
+    }
+    return string;
+  }
+
+  return {
+    getNews: getNews,
+    getMongabayNews: getMongabayNews
+  }
+}());
 
 var CountryMenu = (function() {
 
@@ -1678,33 +1715,6 @@ var Circle = (function() {
   };
 
 })();
-
-function updateFeed(options) {
-  var
-  countryCode       = options.countryCode || 'MYS',
-  n                 = options.n || 4;
-  var url = "https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20to_char(gfw2_forma_datecode.date,%20'dd,%20FMMonth,%20yyyy')%20as%20date,alerts%20FROM%20gfw2_forma_graphs,gfw2_forma_datecode%20WHERE%20gfw2_forma_datecode.n%20=%20gfw2_forma_graphs.date%20AND%20iso%20=%20'"+countryCode+"'%20order%20by%20gfw2_forma_datecode.date%20desc%20LIMIT%20"+n;
-  $.ajax({
-    dataType: "jsonp",
-    jsonpCallback:'iwcallback',
-    url: url,
-    success: function(json) {
-      if (0<json.rows.length){
-        $('.alerts ul').html("");
-      }
-      for (var i=0; i<json.rows.length; i++){
-        $('.alerts ul').append(
-          $('<li></li>')
-          .append(
-            $('<span></span>').addClass('data').html(json.rows[i].date))
-            .append(
-              $('<span></span>').addClass('count').html(json.rows[i].alerts+' Alerts'))
-        );
-      }
-    }
-  });
-}
-
 
 function addCircle(id, type, options) {
 

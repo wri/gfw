@@ -106,7 +106,7 @@ en:
           title: 'About the country'
           read_more: 'Read more at Wikipedia'
       blog_posts:
-        title: '%{country} Blog Stories'
+        title: '%{country} stories'
         more: 'more'
       country_menu:
         state: 'State of the Forest'
