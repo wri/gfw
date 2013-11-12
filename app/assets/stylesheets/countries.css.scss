@@ -95,7 +95,7 @@ body.countries {
                 }
 
                 strong {
-                  clear: both;
+                  display: block;
                   @extend .serif;
                   font-weight: normal;
                   font-size: 15px;
