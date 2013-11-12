@@ -213,12 +213,30 @@ class Story < CartoDB::Model::Base
              stories.visible,
              ST_Y(ST_Centroid(ST_Envelope(stories.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories.the_geom))) AS coords,
              media.big_url
-      FROM stories#{CartoDB::TABLES_SUFFIX} stories,
-           media#{CartoDB::TABLES_SUFFIX} media
+      FROM stories#{CartoDB::TABLES_SUFFIX},
+           media#{CartoDB::TABLES_SUFFIX}
       WHERE (stories.cartodb_id = #{id} OR stories.token = '#{id}')
       AND stories.cartodb_id = media.story_id
     SQL
     return results.rows || [] if results
+    []
+  end
+
+  def self.last_story_per_country(name = '')
+    result = CartoDB::Connection.query(<<-SQL)
+      SELECT stories.cartodb_id as id,
+             stories.title,
+             stories.your_name,
+             stories.featured,
+             ST_Y(ST_Centroid(ST_Envelope(stories.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories.the_geom))) AS coords,
+             media.thumbnail_url
+      FROM stories#{CartoDB::TABLES_SUFFIX} stories,
+           media#{CartoDB::TABLES_SUFFIX} media,
+           tm_world_borders_simpl_0_3 countries
+      WHERE media.story_id = stories.cartodb_id
+      AND ST_Intersects((SELECT the_geom FROM tm_world_borders_simpl_0_3 WHERE name = '#{name.humanize.titleize}'), stories.the_geom)
+    SQL
+    return result.rows || [] if result
     []
   end
 

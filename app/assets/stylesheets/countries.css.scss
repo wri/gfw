@@ -20,6 +20,177 @@ body.countries {
 
   .blog-links {
     margin-top: 0;
+
+    ul {
+      width:960px;
+      margin:auto;
+      word-spacing:-1em;
+      overflow: hidden;
+      padding: 5px 0;
+
+      li {
+        position: relative;
+        float: left;
+        width:266px;
+        min-height: 266px;
+        margin: 0 27px 0 27px;
+        font-weight:400;
+        word-spacing:normal;
+        text-align:center;
+
+        &.first {
+          text-align: left;
+        }
+
+        &.last {
+          text-align: right;
+        }
+
+        &.story {
+          .frame {
+            display:block;
+            position:absolute;
+            top: -5px;
+            left: -5px;
+            width: 276px;
+            height: 276px;
+            -webkit-border-radius: 163px;
+            -moz-border-radius: 163px;
+            border-radius: 163px;
+            background:#CCCCCC;
+            z-index: 10;
+          }
+
+          img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            -webkit-border-radius: 133px;
+            -moz-border-radius: 133px;
+            border-radius: 133px;
+            z-index: 20;
+            width: 100%;
+            height: 100%;
+          }
+
+          a {
+            display:block;
+            width: 266px;
+            height: 266px;
+
+            &.nostory {
+              .frame {
+                background:#111;
+              }
+              div.gradient {
+                background-image:url(backgrounds/bkg_circles_gradient_nostory.png);
+              }
+
+              div.title {
+                span {
+                  font-size: 15px;
+                  color: #555;
+                  margin-bottom: 5px;
+                  width: 60%;
+                }
+
+                strong {
+                  clear: both;
+                  @extend .serif;
+                  font-weight: normal;
+                  font-size: 15px;
+                  text-transform: none;
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+
+          div.gradient {
+            background-image:url(backgrounds/bkg_circles_gradient.png);
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 266px;
+            height: 266px;
+            -webkit-border-radius: 133px;
+            -moz-border-radius: 133px;
+            border-radius: 133px;
+            z-index: 30;
+          }
+
+          div.title {
+            position: absolute;
+            left: 0;
+            top: 0;
+            margin: 100px 0;
+            width: 100%;
+            text-align: center;
+            z-index: 1000;
+
+            span {
+              @extend .serif;
+              @include inline-block();
+              width: 100%;
+              margin: 0 0 30px 0;
+              color: #FFFFFF;
+              font-size: 21px;
+              z-index: 1000;
+            }
+
+            strong {
+              @extend .sans-serif;
+              font-size: 12px;
+              font-weight: bold;
+              text-transform: uppercase;
+              color: $cLime;
+              text-decoration: none;
+              z-index: 1000;
+
+            }
+          }
+        }
+
+        h4 {
+          margin: 10px 0 20px;
+
+          a {
+            @extend .serif;
+            font-size:27px;
+            font-weight: normal;
+            color: $cWhite;
+            text-decoration: none;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+
+        .subtitle {
+          display: block;
+          color: #444;
+          text-transform: uppercase;
+          font: bold 13px "Helvetica Neue", Arial;
+          margin-top: 0;
+        }
+
+        p {
+          margin: 18px 0 18px 0;
+
+          @extend .sans-serif;
+          font-size: 15px;
+          font-weight:400;
+          line-height: 17px;
+          color: #777;
+
+          a {
+            color: #777;
+            text-decoration: underline;
+          }
+        }
+      }
+    }
   }
 }
 
