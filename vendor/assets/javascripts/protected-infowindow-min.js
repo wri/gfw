@@ -131,12 +131,6 @@ ProtectedInfowindow.prototype.setContent = function(content){
       var sorted = [];
 
       for (var column in content) {
-        if (column === "id") {
-          sorted[column] = content[column];
-        }
-      }
-
-      for (var column in content) {
         if (column === "name") {
           sorted[column] = content[column];
         }
@@ -149,7 +143,7 @@ ProtectedInfowindow.prototype.setContent = function(content){
       }
 
       for (var column in content) {
-        if (column === "local_name") {
+        if (column === "id") {
           sorted[column] = content[column];
         }
       }
