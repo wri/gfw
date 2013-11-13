@@ -128,12 +128,36 @@ ProtectedInfowindow.prototype.setContent = function(content){
       var html = '';
 
       this.content = content;
+      var sorted = [];
 
       for (var column in content) {
+        if (column === "id") {
+          sorted[column] = content[column];
+        }
+      }
 
-        if (column != "title" && column != "image" && column != "image" && column != "slug" && content[column] != null && content[column] != ''){
+      for (var column in content) {
+        if (column === "name") {
+          sorted[column] = content[column];
+        }
+      }
+
+      for (var column in content) {
+        if (column === "desig_eng") {
+          sorted[column] = content[column];
+        }
+      }
+
+      for (var column in content) {
+        if (column === "local_name") {
+          sorted[column] = content[column];
+        }
+      }
+
+      for (var column in sorted) {
+        if (sorted[column] != null && sorted[column] != ''){
           html += '<label>' + column + '</label>';
-          html += '<p class="'+((content[column]!=null && content[column]!='')?'':'empty')+'">'+(content[column] || 'empty')+'</p>';
+          html += '<p class="'+((sorted[column]!=null && sorted[column]!='')?'':'empty')+'">'+(sorted[column] || 'empty')+'</p>';
         }
 
       }
@@ -142,10 +166,6 @@ ProtectedInfowindow.prototype.setContent = function(content){
       $(div).find("h1").html(content.name);
       $(div).find("img").attr("src", content.image.replace("square", "medium"));
       $(div).find("img").css("width", "295px");
-
-      var pane = $(".cartodb_infowindow.with_image .infowindow_content").jScrollPane( { showArrows: true });
-      var api = pane.data('jsp');
-      api.scrollToY(0); // scroll to top
 
   }
 
@@ -223,6 +243,14 @@ ProtectedInfowindow.prototype._show = function() {
 
     div.style.visibility = "visible";
      $(".imgLiquidFill").imgLiquid();
+
+    if (this.api_) {
+      this.api_.destroy();
+    }
+
+    var pane = $(".cartodb_infowindow.with_image .infowindow_content").jScrollPane( { showArrows: true });
+    var api = this.api_ = pane.data('jsp');
+    api.scrollToY(0); // scroll to top
 
     emile(div,{
       opacity: 1,
