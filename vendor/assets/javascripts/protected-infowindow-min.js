@@ -120,7 +120,7 @@ ProtectedInfowindow.prototype.setContent = function(content){
   if (this.div_) {
 
     var div = this.div_
-    , top = this.getElementsByClassName("infowindow_content", div)[0];
+    , $top = $(".infowindow_content");
 
     if (!content) { return; }
 
@@ -156,7 +156,16 @@ ProtectedInfowindow.prototype.setContent = function(content){
 
       }
 
-      top.innerHTML = html;
+      if (this.api_) {
+        this.api_.destroy();
+      }
+
+      $top.html(html);
+
+      var pane = $top.jScrollPane( { showArrows: true });
+      var api = this.api_ = pane.data('jsp');
+      api.scrollToY(0); // scroll to top
+
       $(div).find("h1").html(content.name);
       $(div).find("img").attr("src", content.image.replace("square", "medium"));
       $(div).find("img").css("width", "295px");
@@ -237,14 +246,6 @@ ProtectedInfowindow.prototype._show = function() {
 
     div.style.visibility = "visible";
      $(".imgLiquidFill").imgLiquid();
-
-    if (this.api_) {
-      this.api_.destroy();
-    }
-
-    var pane = $(".cartodb_infowindow.with_image .infowindow_content").jScrollPane( { showArrows: true });
-    var api = this.api_ = pane.data('jsp');
-    api.scrollToY(0); // scroll to top
 
     emile(div,{
       opacity: 1,
