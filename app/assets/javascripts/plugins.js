@@ -1734,6 +1734,7 @@ function addCircle(id, type, options) {
   radius            = width / 2,
   mouseOverDuration = 10,
   mouseOutDuration  = 700;
+  formaDownloadURL   = 'http://gfw_downloads_iso.s3.amazonaws.com/' + countryCode + '.zip';
 
   var graph = d3.select(".lines." + type)
   .append("svg:svg")
@@ -1917,5 +1918,7 @@ function addCircle(id, type, options) {
     addText({ x: 0, y: height/4 - 10, width: width, height: 50, c:"subtitle", html: subtitle });
   }
 
+  // Hook up the FORMA download URL (zipped up Shapefile):
+  $('.lines a.action').attr('href', formaDownloadURL);
 }
 
