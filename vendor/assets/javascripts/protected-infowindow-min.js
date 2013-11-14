@@ -119,8 +119,7 @@ ProtectedInfowindow.prototype.setContent = function(content){
 
   if (this.div_) {
 
-    var div = this.div_
-    , $top = $(".infowindow_content");
+    var div = this.div_;
 
     if (!content) { return; }
 
@@ -128,42 +127,77 @@ ProtectedInfowindow.prototype.setContent = function(content){
       var html = '';
 
       this.content = content;
-      var sorted = [];
+
+      var sorted = {
+        'name': '',
+        'local_name': '',
+        'desig_eng': '',
+        'id': '',
+      };
 
       for (var column in content) {
         if (column === "name") {
-          sorted[column] = content[column];
+          sorted[column] = {
+            'val': '',
+            'name': ''
+          };
+
+          sorted[column]['val'] = content[column];
+          sorted[column]['name'] = 'Name';
+        }
+      }
+
+      for (var column in content) {
+        if (column === "local_name") {
+          sorted[column] = {
+            'val': '',
+            'name': ''
+          };
+
+          sorted[column]['val'] = content[column];
+          sorted[column]['name'] = 'Local name';
         }
       }
 
       for (var column in content) {
         if (column === "desig_eng") {
-          sorted[column] = content[column];
+          sorted[column] = {
+            'val': '',
+            'name': ''
+          };
+
+          sorted[column]['val'] = content[column];
+          sorted[column]['name'] = 'Legal Designation';
         }
       }
 
       for (var column in content) {
         if (column === "id") {
-          sorted[column] = content[column];
+          sorted[column] = {
+            'val': '',
+            'name': ''
+          };
+
+          sorted[column]['val'] = content[column];
+          sorted[column]['name'] = 'WDPA ID';
         }
       }
 
       for (var column in sorted) {
         if (sorted[column] != null && sorted[column] != ''){
-          html += '<label>' + column + '</label>';
-          html += '<p class="'+((sorted[column]!=null && sorted[column]!='')?'':'empty')+'">'+(sorted[column] || 'empty')+'</p>';
+          html += '<label>' + sorted[column]['name'] + '</label>';
+          html += '<p class="'+((sorted[column]['val']!=null && sorted[column]['val']!='')?'':'empty')+'">'+(sorted[column]['val'] || 'empty')+'</p>';
         }
 
       }
 
-      if (this.api_) {
-        this.api_.destroy();
-      }
+      this.api_ && this.api_.destroy();
 
-      $top.html(html);
+      $(this.getElementsByClassName("infowindow_content", div)[0]).html(html);
 
-      var pane = $top.jScrollPane( { showArrows: true });
+      var pane = $(this.getElementsByClassName("infowindow_content", div)[0]).jScrollPane( { showArrows: true });
       var api = this.api_ = pane.data('jsp');
+
       api.scrollToY(0); // scroll to top
 
       $(div).find("h1").html(content.name);
