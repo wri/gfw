@@ -75,11 +75,8 @@ var CountryMenu = (function() {
   }
 
   function drawCountry(iso) {
-
-    $.ajax({ url: "/assets/country_shapes.json", success: function(data) {
-      if ((iso != 'GUF')) draw(data, iso, "country");
-
-      drawn = true;
+    $.ajax({ url: "https://wri-01.cartodb.com/api/v2/sql?q=SELECT the_geom FROM forest_cov_glob_v3 WHERE country_code = '"+iso+"' UNION SELECT the_geom FROM tm_world_borders_simpl_0_3 WHERE iso3 = '"+iso+"'&format=GeoJSON", success: function(data) {
+      drawForestExtent(data, iso, "country");
     }});
   }
 
@@ -271,14 +268,109 @@ var CountryMenu = (function() {
 
   function drawCountries() {
 
-    $.ajax({ url: "/assets/country_shapes.json", success: function(data) {
+    $.ajax({ url: "https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20iso3,%20the_geom%20FROM%20tm_world_borders_simpl_0_3%20WHERE%20iso3%20IS%20NOT%20NULL&format=GeoJSON", success: function(data) {
       for (var i=0; i<data.features.length; i++) {
-        var iso = data.features[i].properties.iso;
+        var iso = data.features[i].properties.iso3;
         if ((iso != 'GUF')) draw(data, iso, "icon");
       }
       drawn = true;
     }});
 
+  }
+
+  function drawForestExtent(data, iso, el) {
+
+    var width = 300,
+        height = 250;
+
+    var svg = d3.select("#"+el+iso).append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+    var country = null;
+
+    country = data.features[0];
+
+    var path = d3.geo.path().projection(d3.geo.mercator().scale(30).translate([0,0]));
+
+    if (country != null) {
+
+      var centroid = path.centroid(country);
+      var scale = "";
+      var translate = "";
+
+      var map = svg.append("g")
+      .selectAll("path")
+      .data([country])
+      .enter()
+      .append("path")
+      .attr("d", path)
+      .attr("transform", function(d) {
+        var x = centroid[0];
+        var y = centroid[1];
+        var bounds = d3.geo.bounds(country);
+        var x_range = bounds[1][0] - bounds[0][0];
+        var y_range = bounds[1][1] - bounds[0][1];
+
+        if (x_range > y_range) {
+          scale = (width/x_range);
+        } else {
+          scale = (height/y_range);
+        }
+
+        if(el === "country") {
+          scale = scale*7.5;
+        } else {
+          scale = scale*3;
+        }
+
+        return "scale("+scale+"), translate(" + (-x+(width/scale)/2) + "," + (-y+(height/scale)/2) + ")";
+
+      });
+
+      data.features.shift()
+      var forest = data.features;
+
+      var projection = d3.geo.mercator().scale(30).translate([0,0]);
+
+      var map = svg.append("g")
+        .selectAll("circle")
+        .data(forest)
+        .enter()
+        .append("circle")
+      .attr("transform", function(d) {
+        var x = centroid[0];
+        var y = centroid[1];
+        var bounds = d3.geo.bounds(country);
+        var x_range = bounds[1][0] - bounds[0][0];
+        var y_range = bounds[1][1] - bounds[0][1];
+
+        if (x_range > y_range) {
+          scale = (width/x_range);
+        } else {
+          scale = (height/y_range);
+        }
+
+        if(el === "country") {
+          scale = scale*7.5;
+        } else {
+          scale = scale*3;
+        }
+
+        return "scale("+scale+"),translate(" + (-x+(width/scale)/2) + "," + (-y+(height/scale)/2) + ")";
+
+      })
+        .attr('cx', function(d) {
+          var coordinates = projection([d.geometry.coordinates[0], d.geometry.coordinates[1]]);
+          return coordinates[0];
+        })
+        .attr('cy', function(d) {
+          var coordinates = projection([d.geometry.coordinates[0], d.geometry.coordinates[1]]);
+          return coordinates[1];
+        })
+        .attr('r', 1/30)
+        .style("fill", "#AAC600");
+    }
   }
 
   function draw(data, iso, el) {
@@ -298,7 +390,7 @@ var CountryMenu = (function() {
     var country = null;
     var i = 0;
     while ((country == null)&&(i<data.features.length)) {
-      if (data.features[i].properties.iso == iso) {
+      if (data.features[i].properties.iso3 == iso) {
         country = data.features[i];
       }
       i++;
