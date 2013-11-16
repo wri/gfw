@@ -213,10 +213,9 @@ class Story < CartoDB::Model::Base
              stories.visible,
              ST_Y(ST_Centroid(ST_Envelope(stories.the_geom))) || ',' || ST_X(ST_Centroid(ST_Envelope(stories.the_geom))) AS coords,
              media.big_url
-      FROM stories#{CartoDB::TABLES_SUFFIX},
-           media#{CartoDB::TABLES_SUFFIX}
+      FROM stories#{CartoDB::TABLES_SUFFIX} stories
+      LEFT OUTER JOIN media#{CartoDB::TABLES_SUFFIX} media ON media.story_id = stories.cartodb_id
       WHERE (stories.cartodb_id = #{id} OR stories.token = '#{id}')
-      AND stories.cartodb_id = media.story_id
     SQL
     return results.rows || [] if results
     []
