@@ -794,7 +794,7 @@ GFW.modules.app = function(gfw) {
         config.mapLoaded = true;
         GFW.app._loadBaseLayer();
 
-        if (showMap) Filter.show();
+        if (showMap && wall.readCookie("pass") == 'ok') Filter.show();
 
       }
 

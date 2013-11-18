@@ -457,7 +457,7 @@ $(function(){
   $(window).scroll(positionScroll);
 
   function resizeWindow(e) {
-    if (showMap) {
+    if (showMap && wall.readCookie("pass") == 'ok') {
       if (GFW.app) GFW.app.open();
       Filter.calcFiltersPosition();
     }
