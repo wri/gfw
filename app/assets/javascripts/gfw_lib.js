@@ -339,7 +339,7 @@ GFW.modules.app = function(gfw) {
             return "http://gfw-ee-tiles.appspot.com/gfw/masked_forest_carbon/" + zoom + "/" + tile.x + "/" + tile.y + ".png";
           },
           tileSize: new google.maps.Size(256, 256),
-          opacity:0.40,
+          opacity:0.60,
           isPng: true
         });
 
