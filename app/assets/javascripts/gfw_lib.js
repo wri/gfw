@@ -45,7 +45,7 @@ GFW.modules.app = function(gfw) {
       this._precision = 2;
       this._layers = [];
       this._cloudfront_url = "dyynnn89u7nkm.cloudfront.net";
-      this._global_version = 31;
+      this._global_version = 32;
 
       gfw.log.enabled = options ? options.logging: false;
 
@@ -78,6 +78,7 @@ GFW.modules.app = function(gfw) {
       // Layers
       this.mainLayer        = null;
       this.specialLayer     = null;
+      this.pantropicalLayer = null;
       this.currentBaseLayer = "semi_monthly";
 
       this._setupZoom();
@@ -203,6 +204,7 @@ GFW.modules.app = function(gfw) {
         that.protectedInfowindow.close();
 
         if (!that.specialLayer) { return; }
+        if (!that.pantropicalLayer) { return; }
 
         var // get click coordinates
         lat = event.latLng.lat(),
@@ -246,7 +248,11 @@ GFW.modules.app = function(gfw) {
         this._renderLayers();
 
       } else {
-        this._removeExternalLayer();
+        if(layer.get('slug') === 'pantropical') {
+          this._removePantropicalLayer();
+        } else {
+          this._removeExternalLayer();
+        }
       }
 
       this._refreshTimeLine();
@@ -259,6 +265,7 @@ GFW.modules.app = function(gfw) {
 
         var table_name = layer.get("table_name");
         if (table_name == "protected_areas") { this._renderExternalLayer(layer); }
+        if (table_name == "pantropical") { this._renderPantropicalLayer(layer); }
 
       } else {
         this._layers.push(layer.get('table_name'));
@@ -288,6 +295,13 @@ GFW.modules.app = function(gfw) {
       }
     },
 
+    _removePantropicalLayer: function(layer) {
+      if (this.pantropicalLayer) {
+        this.pantropicalLayer.setOpacity(0);
+        this.pantropicalLayer = null;
+      }
+    },
+
     _renderExternalLayer: function(layer) {
       var that = this;
 
@@ -311,6 +325,28 @@ GFW.modules.app = function(gfw) {
 
     },
 
+    _renderPantropicalLayer: function(layer) {
+      var that = this;
+
+      var query = layer.get('tileurl');
+
+      if (this.pantropicalLayer) {
+        this.pantropicalLayer.setOpacity(1);
+      } else {
+
+        this.pantropicalLayer = new google.maps.ImageMapType({
+          getTileUrl: function(tile, zoom) {
+            return "http://gfw-ee-tiles.appspot.com/gfw/masked_forest_carbon/" + zoom + "/" + tile.x + "/" + tile.y + ".png";
+          },
+          tileSize: new google.maps.Size(256, 256),
+          opacity:0.40,
+          isPng: true
+        });
+
+        map.overlayMapTypes.push(this.pantropicalLayer);
+      }
+
+    },
     _renderLayers: function() {
 
       if (this._layers.length > 0) {
@@ -336,7 +372,7 @@ GFW.modules.app = function(gfw) {
           tiler_grid: '.grid.json',
           table_name: "gfw2_layerstyles_v4",
           query: query,
-          layer_order: "bottom",
+          layer_order: "top",
           opacity: 1,
           interactivity:"cartodb_id",
           featureClick: this._onMainLayerClick,
@@ -1060,7 +1096,7 @@ GFW.modules.datalayers = function(gfw) {
           });
 
           // TODO: remove the below when real layers arrive
-          Filter.addFilter(0, 'nothing', 'Regrowth', 'Stay tuned', { disabled: true , category_color: "#B2D26E", color: "#B2D26E" });
+          Filter.addFilter(0, 'nothing', 'Regrowth', 'Stay tuned', { disabled: true , category_color: "#707D92", color: "#707D92" });
           // Filter.addFilter(0, 'nothing', 'Conservation', 'Stay tuned', { disabled: true , category_color: "#CCC",    color: "#CCC"});
         });
 
