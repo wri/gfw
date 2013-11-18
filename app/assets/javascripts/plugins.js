@@ -899,7 +899,6 @@ var SubscriptionMap = (function() {
     // Add layer
     ppeLayer = new google.maps.ImageMapType({
       getTileUrl: function(coord, zoom) {
-        return "http://184.73.201.235/blue/" + zoom + "/" + coord.x + "/" + coord.y;
       },
       tileSize: new google.maps.Size(256, 256),
       isPng: true,
