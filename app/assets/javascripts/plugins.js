@@ -1191,8 +1191,6 @@ var Navigation = (function() {
 
     showMap = true;
 
-    Filter.show();
-
     _hideOverlays();
 
     Navigation.select("map");
@@ -1217,33 +1215,41 @@ var Navigation = (function() {
       TimelineNotPlayer.show();
     }
 
-    $(".big_numbers").fadeOut(250);
+    if (wall.readCookie("pass") == 'ok') {
+      $(".big_numbers").fadeOut(250);
 
-    $("header").animate({height: "135px"}, 250, function() {
-      if (GFW.app) GFW.app.open();
-    }).addClass("stuck");
+      $("header").animate({height: "135px"}, 250, function() {
+        if (GFW.app) GFW.app.open();
+      }).addClass("stuck");
 
-    $("hgroup .title").animate({ top: "50px", opacity: 0 }, 250, function() {
-      $("hgroup .title").hide();
+      $("hgroup .title").animate({ top: "50px", opacity: 0 }, 250, function() {
+        $("hgroup .title").hide();
+
+        Filter.show();
+
+        $(".big_numbers").fadeOut(250);
+      });
+
+      // Firefox hack to show the unload layers
+      if (config.pendingLayers.length > 0) {
+        _.each(config.pendingLayers, function(layer) {{
+          GFW.app._loadLayer(layer);
+        }});
+
+        config.pendingLayers = [];
+      }
 
       Filter.show();
+    } else {
+      $("hgroup .title").hide();
+      $("hgroup .splash_title").show();
 
-      $(".big_numbers").fadeOut(250);
-    });
+      $(".navbar").hide();
+      $(".signin").show();
 
-    // Firefox hack to show the unload layers
-    if (config.pendingLayers.length > 0) {
-      _.each(config.pendingLayers, function(layer) {{
-        GFW.app._loadLayer(layer);
-      }});
-
-      config.pendingLayers = [];
+      $(".big_numbers").hide();
     }
-
-    Filter.show();
-
   }
-
 
   function _hideOverlays() {
     $("#subscribe").fadeOut(250);

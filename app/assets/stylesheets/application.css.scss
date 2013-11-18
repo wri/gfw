@@ -10,7 +10,7 @@
 
 body {
   background: $cBackground;
-  position: static !important;
+  position: relative !important;
 }
 
 #content {
@@ -253,10 +253,16 @@ header {
   } // top
 } // header
 
+#google_translate_element {
+  position: absolute;
+  right: 0;
+  top: 18px;
+}
+
 nav {
   position:absolute;
   top: 18px;
-  right: 40px;
+  right: 174px;
 
   & > ul {
 
