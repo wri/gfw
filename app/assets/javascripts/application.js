@@ -23,7 +23,6 @@
 //= require jquery.jscrollpane
 //= require spin.min
 //= require mustache
-//= require minpubsub
 
 //= require gfw/index
 //= require_tree .
@@ -89,7 +88,6 @@ function loadOtherStuff(callback) {
   Timeline = new gfw.ui.view.Timeline({
     container: $("#map")
   });
-  publish('timeline:change_dates', Timeline._getDates());  
 
   TimelineImazon = new gfw.ui.view.TimelineImazon({
     container: $("#map")
@@ -110,39 +108,6 @@ function loadOtherStuff(callback) {
 
   callback && callback();
 
-}
-
-/**
- * Executes an AJAX request and returns handle to resulting jqxhr object.
- * 
- * Args:
- *   url: The URL endpoint.
- *   data: Object with parameters.
- *   callback: Object with a success and error function.
- */
-function executeAjax(url, data, callback) {
-  var jqxhr = null;
-  var key = null;
-  var val = null;
-
-  $.ajax({
-    url: url,
-    type: "POST",
-    data: JSON.stringify(data),
-    success: function(response) {
-      if (callback) {
-        callback.success(response);
-      }
-    },
-    error: function(status, error) {
-      if (callback) {
-        callback.error(status, error);
-      }
-    },
-    contentType: 'application/json', 
-    dataType: 'json'
-  });
-  return jqxhr;
 }
 
 function loadGFW(callback) {
