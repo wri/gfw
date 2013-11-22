@@ -1012,18 +1012,21 @@ GFW.modules.maplayer = function(gfw) {
         if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon") {
           if (slug === 'semi_monthly' && showMap) {
             Timeline.show();
+            analysis.info.model.set("dataset", "forma");
           } else {
             Timeline.hide();
           }
 
           if (slug === 'quarterly' && showMap) {
             TimelineNotPlayer.show();
+            analysis.info.model.set("dataset", "modis");
           } else {
             TimelineNotPlayer.hide();
           }
 
           if (slug === 'brazilian_amazon' && showMap) {
             TimelineImazon.show();
+            analysis.info.model.set("dataset", "imazon");
           } else {
             TimelineImazon.hide();
           }
