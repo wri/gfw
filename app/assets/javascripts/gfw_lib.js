@@ -588,7 +588,8 @@ GFW.modules.app = function(gfw) {
             var position = new google.maps.LatLng(features.properties.lat, features.properties.lon),
                 thumb    = features.properties.thumbnail,
                 icon     = '/assets/icons/marker_exclamation.png',
-                properties = null;
+                properties = null,
+                published = new Date(features.properties.published).toLocaleDateString();
 
             var feature = new GeoJSON(features.geometry, config.OVERLAYS_STYLE);
 
@@ -603,7 +604,7 @@ GFW.modules.app = function(gfw) {
               title = $.trim(title).substring(0, 34).split(" ").slice(0, -1).join(" ") + "...";
             }
 
-            var content = "<strong><a href='"+ features.properties.loc +"' target='_blank'>" + title + "</a></strong> <span>by " + features.properties.author + " &middot; </span><a href='"+ features.properties.loc +"' target='_blank'>read more</a>";
+            var content = "<strong><a href='"+ features.properties.loc +"' target='_blank'>" + title + "</a></strong> <span>by " + features.properties.author + " </span><span>on " + published + "</span><br><a href='"+ features.properties.loc +"' target='_blank'>read more</a>";
 
             marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: thumb, content: content, map: map, type: 'mongabay' });
 

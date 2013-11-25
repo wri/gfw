@@ -1,0 +1,194 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/eightysteele/Documents/aaron-steele.html",
+		"/Users/eightysteele/Dropbox/github/vertnet/webapp/www/js/app/views/detailrow.html",
+		"/Users/eightysteele/Dropbox/github/vertnet/webapp/vertnet/service/download.py",
+		"/Users/eightysteele/Dropbox/github/vertnet/webapp/app-dev.yaml",
+		"/Users/eightysteele/Dropbox/github/vertnet/webapp/www/js/app/views/detail.html",
+		"/home/eightysteele/Dropbox/github/vertnet/webapp/vertnet-webapp-mac.sublime-workspace"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			"*.py"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"eightysteele",
+			"eight",
+			"eig",
+			"eigh",
+			"github"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 21.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"project": "gfw.sublime-project",
+	"replace":
+	{
+		"height": 40.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"util",
+				"www/js/app/util.js"
+			],
+			[
+				"detai",
+				"www/js/app/views/detailrow.html"
+			],
+			[
+				"row",
+				"www/js/app/views/detailrow.js"
+			],
+			[
+				"down",
+				"vertnet/service/download.py"
+			],
+			[
+				"dev",
+				"app-dev.yaml"
+			],
+			[
+				"detail.js",
+				"www/js/app/views/detail.js"
+			],
+			[
+				"githu",
+				"vertnet/service/github.py"
+			],
+			[
+				"api",
+				"vertnet/service/api.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
