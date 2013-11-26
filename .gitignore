@@ -6,3 +6,4 @@
 config/cartodb_config.*
 public/uploads
 .ruby-version
+*.sublime-*
