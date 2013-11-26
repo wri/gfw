@@ -120,15 +120,17 @@ function loadOtherStuff(callback) {
  *   data: Object with parameters.
  *   callback: Object with a success and error function.
  */
-function executeAjax(url, data, callback) {
+function executeAjax(url, data, callback, type) {
   var jqxhr = null;
   var key = null;
   var val = null;
 
+  type = type ? type : "GET";
+
   $.ajax({
     url: url,
-    type: "POST",
-    data: JSON.stringify(data),
+    type: type,
+    data: data,
     success: function(response) {
       if (callback) {
         callback.success(response);
