@@ -836,65 +836,60 @@ var SubscriptionMap = (function() {
     google.maps.event.addListener(map, 'click', clearSelection);
   }
 
+  function addWpdaSite(pa) {
+    if (this.point == positionClicked && pa.the_geom) {
+      // Remove old ones
+      deleteSelectedShapes();
+
+      var features = new GeoJSON(pa.the_geom, {
+        strokeWeight: 2,
+        strokeOpacity: 1,
+        fillOpacity: 0.60,
+        fillColor: "#F7B443",
+        strokeColor: "#F9B33E"
+      });
+
+      for (var i in features) {
+        if (features[i].length > 0) {
+          for (var j in features[i]) {
+            var feature = features[i][j];
+            feature.setMap(subscribeMap);
+            selectedShapes.push(feature);
+          }
+        } else {
+          var feature = features[i];
+          feature.setMap(subscribeMap);
+          selectedShapes.push(feature);
+        }
+      }
+    }
+
+    hideLoader();
+  }
+
 
   function changeToPPE() {
     $modal.find('ul.tabs a.ppe').addClass('selected');
 
     google.maps.event.addListener(subscribeMap, 'click', function(e) {
+      var params = {lat:e.LatLng.lat(), lon:e.LatLng.lng()};
+      var url = 'http:/wip.gfw-apis.appspot.com/wdpa/sites';
+
       positionClicked = e.latLng;
       showLoader();
 
-      $.ajax({
-        url: 'http://protectedplanet.net/api/sites_by_point/' + e.latLng.lng() + '/' + e.latLng.lat(),
-        dataType: 'jsonp',
-        point: e.latLng,
-        success: function(r) {
-          if (this.point == positionClicked && r.length > 0) {
-
-            $.ajax({
-              url: 'http://protectedplanet.net/api2/sites/' + r[0].id + '/geom',
-              dataType: 'jsonp',
-              point: this.point,
-              success: function(pa) {
-                if (this.point == positionClicked && pa.the_geom) {
-
-                  // Remove old ones
-                  deleteSelectedShapes();
-
-                  var features = new GeoJSON(pa.the_geom, {
-                    strokeWeight: 2,
-                    strokeOpacity: 1,
-                    fillOpacity: 0.60,
-                    fillColor: "#F7B443",
-                    strokeColor: "#F9B33E"
-                  });
-
-                  for (var i in features) {
-                    if (features[i].length > 0) {
-                      for (var j in features[i]) {
-                        var feature = features[i][j];
-                        feature.setMap(subscribeMap);
-                        selectedShapes.push(feature);
-                      }
-                    } else {
-                      var feature = features[i];
-                      feature.setMap(subscribeMap);
-                      selectedShapes.push(feature);
-                    }
-                  }
-                }
-
-                hideLoader();
-              },
-              error: function() {console.log(e); hideLoader();}
-            });
-          } else {
-            hideLoader();
+      executeAjax(url, params, {
+        success: function(sites) {
+          if (sites && sites.length > 0) {
+            addWpdaSite(sites[0]);
           }
         },
-        error: function(e) {console.log(e); hideLoader();}
+        error: function(e) {
+          console.error('WDPA API failed', e);
+          hideLoader();
+        }
       });
-    });
+
 
     // Add layer
     ppeLayer = new google.maps.ImageMapType({
@@ -907,7 +902,8 @@ var SubscriptionMap = (function() {
       alt: "Protected Planet"
     });
     subscribeMap.overlayMapTypes.insertAt(0, ppeLayer);
-  }
+  });
+}
 
 
   function changeToWorld() {
