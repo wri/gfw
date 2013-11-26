@@ -878,7 +878,7 @@ var SubscriptionMap = (function() {
       positionClicked = e.latLng;
       showLoader();
 
-      executeAjax(url, data, {
+      executeAjax(url, params, {
         success: function(sites) {
           if (sites && sites.length > 0) {
             addWpdaSite(sites[0]);
@@ -890,57 +890,6 @@ var SubscriptionMap = (function() {
         }
       });
 
-    //   $.ajax({
-    //     url: 'http://protectedplanet.net/api/sites_by_point/' + e.latLng.lng() + '/' + e.latLng.lat(),
-    //     dataType: 'jsonp',
-    //     point: e.latLng,
-    //     success: function(r) {
-    //       if (this.point == positionClicked && r.length > 0) {
-
-    //         $.ajax({
-    //           url: 'http://protectedplanet.net/api2/sites/' + r[0].id + '/geom',
-    //           dataType: 'jsonp',
-    //           point: this.point,
-    //           success: function(pa) {
-    //             if (this.point == positionClicked && pa.the_geom) {
-
-    //               // Remove old ones
-    //               deleteSelectedShapes();
-
-    //               var features = new GeoJSON(pa.the_geom, {
-    //                 strokeWeight: 2,
-    //                 strokeOpacity: 1,
-    //                 fillOpacity: 0.60,
-    //                 fillColor: "#F7B443",
-    //                 strokeColor: "#F9B33E"
-    //               });
-
-    //               for (var i in features) {
-    //                 if (features[i].length > 0) {
-    //                   for (var j in features[i]) {
-    //                     var feature = features[i][j];
-    //                     feature.setMap(subscribeMap);
-    //                     selectedShapes.push(feature);
-    //                   }
-    //                 } else {
-    //                   var feature = features[i];
-    //                   feature.setMap(subscribeMap);
-    //                   selectedShapes.push(feature);
-    //                 }
-    //               }
-    //             }
-
-    //             hideLoader();
-    //           },
-    //           error: function() {console.log(e); hideLoader();}
-    //         });
-    //       } else {
-    //         hideLoader();
-    //       }
-    //     },
-    //     error: function(e) {console.log(e); hideLoader();}
-    //   });
-    // });
 
     // Add layer
     ppeLayer = new google.maps.ImageMapType({

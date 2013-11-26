@@ -209,28 +209,21 @@ GFW.modules.app = function(gfw) {
         var // get click coordinates
         lat = event.latLng.lat(),
         lng = event.latLng.lng(),
-        url = 'http://protectedplanet.net/api/sites_by_point/'+lng+'/'+lat;
+        params = {lat:lat, lon:lng},
+        url = 'http://wip.gfw-apis.appspot.com/wdpa/sites';
 
-        $.ajax({
-          async: false,
-          dataType: "jsonp",
-          jsonpCallback:'iwcallback2',
-          crossDomain: true,
-          type: "GET",
-          url: url,
-          error: function(xhr, status, c) {
-            console.log("Error", xhr, status, c);
-          },
-          success: function(json) {
-            if (!json) return;
-
-            var data = json[0];
-
-            if (data) {
-              that.protectedInfowindow.setContent(data);
+        executeAjax(url, params, {
+          success: function(sites) {
+            var site = null;
+            if (sites && sites.length > 0) {
+              site = sites[0];
+              that.protectedInfowindow.setContent(site);
               that.protectedInfowindow.setPosition(event.latLng);
               that.protectedInfowindow.open();
             }
+          },
+          error: function(e) {
+            console.error('WDPA API call failed', e, url);
           }
         });
       });
