@@ -157,9 +157,12 @@ TimePlayer.prototype.pre_cache_months = function(rows, coord, zoom, zoom_diff) {
     ycoords[i] = (row.y - tile_base_y) << zoom_diff;
     var base_idx = i*MAX_MONTHS;
     //def[row.sd[0]] = row.se[0];
-    for(var j = 0; j < row.sd.length; ++j) {
-      deforestation[base_idx + row.sd[j] - BASE_MONTH] = row.se[j];
-    };
+
+    if(row.sd != null) {
+      for(var j = 0; j < row.sd.length; ++j) {
+        deforestation[base_idx + row.sd[j] - BASE_MONTH] = row.se[j];
+      };
+    }
     for(var j = 1; j < MAX_MONTHS; ++j) {
       deforestation[base_idx + j] += deforestation[base_idx + j - 1];
     }

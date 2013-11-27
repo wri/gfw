@@ -45,7 +45,7 @@ GFW.modules.app = function(gfw) {
       this._precision = 2;
       this._layers = [];
       this._cloudfront_url = "dyynnn89u7nkm.cloudfront.net";
-      this._global_version = 32;
+      this._global_version = 34;
 
       gfw.log.enabled = options ? options.logging: false;
 
@@ -68,7 +68,7 @@ GFW.modules.app = function(gfw) {
       this.queries.semi_monthly     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 17 ELSE {Z}+8 END limit 0";
       this.queries.annual           = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
       this.queries.quarterly        = "SELECT cartodb_id,the_geom_webmercator FROM modis_forest_change_copy";
-      this.queries.brazilian_amazon = "SELECT cartodb_id,type,the_geom_webmercator FROM sad_polygons_fixed_2";
+      this.queries.brazilian_amazon = "SELECT cartodb_id,type,the_geom_webmercator FROM imazon_clean";
 
       this.lastHash = null;
 
@@ -204,33 +204,25 @@ GFW.modules.app = function(gfw) {
         that.protectedInfowindow.close();
 
         if (!that.specialLayer) { return; }
-        if (!that.pantropicalLayer) { return; }
 
         var // get click coordinates
         lat = event.latLng.lat(),
         lng = event.latLng.lng(),
-        url = 'http://protectedplanet.net/api/sites_by_point/'+lng+'/'+lat;
+        params = {lat:lat, lon:lng},
+        url = 'http://wip.gfw-apis.appspot.com/wdpa/sites';
 
-        $.ajax({
-          async: false,
-          dataType: "jsonp",
-          jsonpCallback:'iwcallback2',
-          crossDomain: true,
-          type: "GET",
-          url: url,
-          error: function(xhr, status, c) {
-            console.log("Error", xhr, status, c);
-          },
-          success: function(json) {
-            if (!json) return;
-
-            var data = json[0];
-
-            if (data) {
-              that.protectedInfowindow.setContent(data);
+        executeAjax(url, params, {
+          success: function(sites) {
+            var site = null;
+            if (sites && sites.length > 0) {
+              site = sites[0];
+              that.protectedInfowindow.setContent(site);
               that.protectedInfowindow.setPosition(event.latLng);
               that.protectedInfowindow.open();
             }
+          },
+          error: function(e) {
+            console.error('WDPA API call failed', e, url);
           }
         });
       });
@@ -339,7 +331,7 @@ GFW.modules.app = function(gfw) {
             return "http://gfw-ee-tiles.appspot.com/gfw/masked_forest_carbon/" + zoom + "/" + tile.x + "/" + tile.y + ".png";
           },
           tileSize: new google.maps.Size(256, 256),
-          opacity:0.60,
+          opacity:1,
           isPng: true
         });
 
@@ -470,7 +462,7 @@ GFW.modules.app = function(gfw) {
       } else if (layerName === "quarterly") {
         return 'modis_forest_change_copy';
       } else if (layerName === "brazilian_amazon") {
-        return 'sad_polygons_fixed_2';
+        return 'imazon_clean';
       }
 
       return null;
@@ -582,13 +574,14 @@ GFW.modules.app = function(gfw) {
 
       $.ajax({
         async: false,
-        url: "https://wri-01.cartodb.com/api/v2/sql?q=SELECT * FROM mongabaydb&format=geojson",
+        url: "https://wri-01.cartodb.com/api/v1/sql?q=SELECT * FROM mongabaydb WHERE published >= now() - INTERVAL '3 Months'&format=geojson",
         success: function(data) {
           _.each(data.features, function(features) {
             var position = new google.maps.LatLng(features.properties.lat, features.properties.lon),
                 thumb    = features.properties.thumbnail,
                 icon     = '/assets/icons/marker_exclamation.png',
-                properties = null;
+                properties = null,
+                published = new Date(features.properties.published).toLocaleDateString();
 
             var feature = new GeoJSON(features.geometry, config.OVERLAYS_STYLE);
 
@@ -603,7 +596,7 @@ GFW.modules.app = function(gfw) {
               title = $.trim(title).substring(0, 34).split(" ").slice(0, -1).join(" ") + "...";
             }
 
-            var content = "<strong><a href='"+ features.properties.loc +"' target='_blank'>" + title + "</a></strong> <span>by " + features.properties.author + " &middot; </span><a href='"+ features.properties.loc +"' target='_blank'>read more</a>";
+            var content = "<strong><a href='"+ features.properties.loc +"' target='_blank'>" + title + "</a></strong> <span>by " + features.properties.author + " </span><span>on " + published + "</span><br><a href='"+ features.properties.loc +"' target='_blank'>read more</a>";
 
             marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: thumb, content: content, map: map, type: 'mongabay' });
 
@@ -739,7 +732,7 @@ GFW.modules.app = function(gfw) {
 
       this.time_layer_imazon = new StaticGridLayerImazon({
         map: that._map,
-        _table: 'sad_polygons_fixed_2',
+        _table: 'imazon_clean',
         _global_version: that._global_version,
         _cloudfront_url: that._cloudfront_url
       });
@@ -1012,18 +1005,21 @@ GFW.modules.maplayer = function(gfw) {
         if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon") {
           if (slug === 'semi_monthly' && showMap) {
             Timeline.show();
+            analysis.info.model.set("dataset", "forma");
           } else {
             Timeline.hide();
           }
 
           if (slug === 'quarterly' && showMap) {
             TimelineNotPlayer.show();
+            analysis.info.model.set("dataset", "modis");
           } else {
             TimelineNotPlayer.hide();
           }
 
           if (slug === 'brazilian_amazon' && showMap) {
             TimelineImazon.show();
+            analysis.info.model.set("dataset", "imazon");
           } else {
             TimelineImazon.hide();
           }

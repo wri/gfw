@@ -233,8 +233,16 @@
           </li>
 
           <li class="alert">
-            <strong class="title">{{ alert_title }}</strong>
-            <p class="count forma"><strong>{{ alert_count }}</strong> alerts <a href="/assets/gfw_analysis.zip" class="download">download</a></p>
+            <strong class="title">Total {{ dataset }} alerts</strong>
+            <p class="count forma">
+              <strong>
+                <span id="alerts-count">
+                  {{ alert_count }}
+                </span>
+              </strong>
+
+              <a href="/assets/gfw_analysis.zip" class="download">download</a>
+            </p>
           </li>
         </ul>
 
