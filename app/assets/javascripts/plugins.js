@@ -273,13 +273,20 @@ var CountryMenu = (function() {
   }
 
   function draw(topology, c, iso, options) {
-    var width = 200,
-        height = 120;
+    if(!options) {
+      var width = 200,
+          height = 120,
+          icon = "icon";
+    } else if(options) {
+      var width = 300,
+          height = 250,
+          icon = "country";
+    }
 
     // c is index for country
     var country = topojson.feature(topology, topology.objects[c]);
 
-    var svg = d3.select("#icon"+iso).append("svg")
+    var svg = d3.select("#"+icon+iso).append("svg")
       .attr("width", width)
       .attr("height", height);
 
