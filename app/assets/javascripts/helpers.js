@@ -147,15 +147,37 @@ config.mapStyles.forestSoft = new google.maps.ImageMapType({
   alt: "Global forest height"
 });
 
-config.mapStyles.LANDSAT = new google.maps.ImageMapType({
+config.mapStyles.LANDSAT2012 = new google.maps.ImageMapType({
   getTileUrl: function(ll, z) {
     var X = ll.x % (1 << z);  // wrap
-    return "http://gfw-ee-tiles.appspot.com/gfw/l7_toa_1year_2012/" + z + "/" + X + "/" + ll.y + ".png";
+    return "http://gfw-ee-tiles.appspot.com/gfw/landsat_composites/" + z + "/" + X + "/" + ll.y + ".png?year=2012";
   },
   tileSize: new google.maps.Size(256, 256),
   isPng: true,
   maxZoom: 13,
-  name: "Landsat"
+  name: "Landsat 2012"
+});
+
+config.mapStyles.LANDSAT2007 = new google.maps.ImageMapType({
+  getTileUrl: function(ll, z) {
+    var X = ll.x % (1 << z);  // wrap
+    return "http://gfw-ee-tiles.appspot.com/gfw/landsat_composites/" + z + "/" + X + "/" + ll.y + ".png?year=2007";
+  },
+  tileSize: new google.maps.Size(256, 256),
+  isPng: true,
+  maxZoom: 13,
+  name: "Landsat 2007"
+});
+
+config.mapStyles.LANDSAT2002 = new google.maps.ImageMapType({
+  getTileUrl: function(ll, z) {
+    var X = ll.x % (1 << z);  // wrap
+    return "http://gfw-ee-tiles.appspot.com/gfw/landsat_composites/" + z + "/" + X + "/" + ll.y + ".png?year=2002";
+  },
+  tileSize: new google.maps.Size(256, 256),
+  isPng: true,
+  maxZoom: 13,
+  name: "Landsat 2002"
 });
 
 config.mapStyles.TREEHEIGHT = new google.maps.ImageMapType({
