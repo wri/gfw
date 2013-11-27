@@ -376,7 +376,10 @@ a.close_icon {
 
     .select {
 
-      .icon { position:relative; top: 30px; margin: auto; }
+      .icon {
+        position:relative; top: 30px; margin: auto;
+        text-align: center;
+      }
       .content { top: 180px!important; }
 
       &.malaysia a .icon {
@@ -403,7 +406,10 @@ a.close_icon {
     }
 
     .country  {
-      .icon { position:relative; top: 10px; margin: auto; }
+      .icon {
+        position:relative; top: 20px; margin: auto;
+        text-align: center;
+      }
     }
 
     .country, .select {

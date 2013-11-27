@@ -266,173 +266,72 @@ var CountryMenu = (function() {
     });
   }
 
-  function drawCountries() {
-
-    $.ajax({ url: "https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20iso3,%20the_geom%20FROM%20tm_world_borders_simpl_0_3%20WHERE%20iso3%20IS%20NOT%20NULL&format=GeoJSON", success: function(data) {
-      for (var i=0; i<data.features.length; i++) {
-        var iso = data.features[i].properties.iso3;
-        if ((iso != 'GUF')) draw(data, iso, "icon");
-      }
-      drawn = true;
-    }});
-
+  function drawCountry(iso) {
+    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT the_geom FROM forest_cov_glob_v3 WHERE country_code = '"+iso+"' UNION SELECT the_geom FROM ne_50m_admin_0_countries WHERE adm0_a3 = '"+iso+"'&format=topojson", function(error, topology) {
+      draw(topology, 0, iso, {alerts: true});
+    });
   }
 
-  function drawForestExtent(data, iso, el) {
+  function draw(topology, c, iso, options) {
+    var width = 200,
+        height = 120;
 
-    var width = 300,
-        height = 250;
+    // c is index for country
+    var country = topojson.feature(topology, topology.objects[c]);
 
-    var svg = d3.select("#"+el+iso).append("svg")
+    var svg = d3.select("#icon"+iso).append("svg")
       .attr("width", width)
       .attr("height", height);
 
-    var country = null;
+    var projection = d3.geo.mercator().scale(1).translate([0, 0]);
+    var path = d3.geo.path().projection(projection);
 
-    country = data.features[0];
+    var b = path.bounds(country),
+        s = 1 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
+        t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
 
-    var path = d3.geo.path().projection(d3.geo.mercator().scale(30).translate([0,0]));
+    projection
+      .scale(s)
+      .translate(t);
 
-    if (country != null) {
-
-      var centroid = path.centroid(country);
-      var scale = "";
-      var translate = "";
-
-      var map = svg.append("g")
-      .selectAll("path")
+    svg.append("path")
       .data([country])
-      .enter()
-      .append("path")
-      .attr("d", path)
-      .attr("transform", function(d) {
-        var x = centroid[0];
-        var y = centroid[1];
-        var bounds = d3.geo.bounds(country);
-        var x_range = bounds[1][0] - bounds[0][0];
-        var y_range = bounds[1][1] - bounds[0][1];
+      .attr("d", path);
 
-        if (x_range > y_range) {
-          scale = (width/x_range);
-        } else {
-          scale = (height/y_range);
-        }
+    if(options && options.alerts) {
+      var forest = [];
 
-        if(el === "country") {
-          scale = scale*7.5;
-        } else {
-          scale = scale*3;
-        }
+      for(var i = 1; i < Object.keys(topology.objects).length; i++) {
+        forest.push(topojson.feature(topology, topology.objects[i]).geometry);
+      }
 
-        return "scale("+scale+"), translate(" + (-x+(width/scale)/2) + "," + (-y+(height/scale)/2) + ")";
-
-      });
-
-      data.features.shift()
-      var forest = data.features;
-
-      var projection = d3.geo.mercator().scale(30).translate([0,0]);
-
-      var map = svg.append("g")
+      svg.append("g")
         .selectAll("circle")
         .data(forest)
         .enter()
         .append("circle")
-      .attr("transform", function(d) {
-        var x = centroid[0];
-        var y = centroid[1];
-        var bounds = d3.geo.bounds(country);
-        var x_range = bounds[1][0] - bounds[0][0];
-        var y_range = bounds[1][1] - bounds[0][1];
-
-        if (x_range > y_range) {
-          scale = (width/x_range);
-        } else {
-          scale = (height/y_range);
-        }
-
-        if(el === "country") {
-          scale = scale*7.5;
-        } else {
-          scale = scale*3;
-        }
-
-        return "scale("+scale+"),translate(" + (-x+(width/scale)/2) + "," + (-y+(height/scale)/2) + ")";
-
-      })
-        .attr('cx', function(d) {
-          var coordinates = projection([d.geometry.coordinates[0], d.geometry.coordinates[1]]);
-          return coordinates[0];
+        .attr("class", "alert")
+        .attr('cx', function(d){
+          var coordinates = projection([d.coordinates[0], d.coordinates[1]])
+          return coordinates[0]
         })
-        .attr('cy', function(d) {
-          var coordinates = projection([d.geometry.coordinates[0], d.geometry.coordinates[1]]);
-          return coordinates[1];
+        .attr('cy', function(d){
+          var coordinates = projection([d.coordinates[0], d.coordinates[1]])
+          return coordinates[1]
         })
-        .attr('r', 1/30)
+        .attr('r', 2)
         .style("fill", "#AAC600");
     }
   }
 
-  function draw(data, iso, el) {
+  function drawCountries() {
+    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT d.iso3 as iso, c.the_geom FROM ne_50m_admin_0_countries c, tm_world_borders_simpl_0_3 d WHERE d.iso3 = c.adm0_a3&format=topojson", function(topology) {
+      for (var i = 0; i < Object.keys(topology.objects).length; i++) {
+        var iso = topology.objects[i].properties.iso;
 
-    if(el === "icon") {
-      var width = 270,
-          height = 200;
-    } else if(el === "country") {
-      var width = 300,
-          height = 250;
-    }
-
-    var svg = d3.select("#"+el+iso).append("svg")
-      .attr("width", width)
-      .attr("height", height);
-
-    var country = null;
-    var i = 0;
-    while ((country == null)&&(i<data.features.length)) {
-      if (data.features[i].properties.iso3 == iso) {
-        country = data.features[i];
+        draw(topology, i, iso);
       }
-      i++;
-    }
-    var path = d3.geo.path().projection(d3.geo.mercator().scale(30).translate([0,0]));
-
-    if (country != null) {
-
-      var centroid = path.centroid(country);
-      var scale = "";
-      var translate = "";
-
-      svg.append("g")
-      .selectAll("path")
-      .data([country])
-      .enter()
-      .append("path")
-      .attr("d", path)
-      .attr("transform", function(d) {
-        var x = centroid[0];
-        var y = centroid[1];
-        var bounds = d3.geo.bounds(country);
-        var x_range = bounds[1][0] - bounds[0][0];
-        var y_range = bounds[1][1] - bounds[0][1];
-
-        if (x_range > y_range) {
-          scale = (width/x_range);
-        } else {
-          scale = (height/y_range);
-        }
-
-        if(el === "country") {
-          scale = scale*7.5;
-        } else {
-          scale = scale*3;
-        }
-
-        return "scale("+scale+"), translate(" + (-x+(width/scale)/2) + "," + (-y+(height/scale)/2) + ")";
-
-      });
-
-    }
+    });
   }
 
   return {
