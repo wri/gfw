@@ -12,7 +12,8 @@
 //= require backbone-min
 //= require class
 //= require backbone.cartodb
-//= require d3.v2.min
+//= require d3.v3.min
+//= require topojson.v1.min
 //= require geojson
 //= require jquery.tipsy
 //= require jquery.fileupload
