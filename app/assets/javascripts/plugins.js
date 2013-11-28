@@ -74,12 +74,6 @@ var CountryMenu = (function() {
 
   }
 
-  function drawCountry(iso) {
-    $.ajax({ url: "https://wri-01.cartodb.com/api/v2/sql?q=SELECT the_geom FROM forest_cov_glob_v3 WHERE country_code = '"+iso+"' UNION SELECT the_geom FROM tm_world_borders_simpl_0_3 WHERE iso3 = '"+iso+"'&format=GeoJSON", success: function(data) {
-      drawForestExtent(data, iso, "country");
-    }});
-  }
-
   function drawForest(iso) {
     d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20unnest(array['type_primary',%20'type_regenerated',%20'type_planted'])%20AS%20type,%20unnest(array[type_primary,%20type_regenerated,%20type_planted])%20AS%20percent%20FROM%20gfw2_countries%20WHERE%20iso%20=%20'"+iso+"'", function(data) {
       var svg = d3.select(".state .line-graph")
