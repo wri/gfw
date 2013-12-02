@@ -45,7 +45,7 @@ GFW.modules.app = function(gfw) {
       this._precision = 2;
       this._layers = [];
       this._cloudfront_url = "dyynnn89u7nkm.cloudfront.net";
-      this._global_version = 32;
+      this._global_version = 34;
 
       gfw.log.enabled = options ? options.logging: false;
 
@@ -68,7 +68,7 @@ GFW.modules.app = function(gfw) {
       this.queries.semi_monthly     = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 17 ELSE {Z}+8 END limit 0";
       this.queries.annual           = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
       this.queries.quarterly        = "SELECT cartodb_id,the_geom_webmercator FROM modis_forest_change_copy";
-      this.queries.brazilian_amazon = "SELECT cartodb_id,type,the_geom_webmercator FROM sad_polygons_fixed_2";
+      this.queries.brazilian_amazon = "SELECT cartodb_id,type,the_geom_webmercator FROM imazon_clean";
 
       this.lastHash = null;
 
@@ -204,7 +204,6 @@ GFW.modules.app = function(gfw) {
         that.protectedInfowindow.close();
 
         if (!that.specialLayer) { return; }
-        if (!that.pantropicalLayer) { return; }
 
         var // get click coordinates
         lat = event.latLng.lat(),
@@ -332,7 +331,7 @@ GFW.modules.app = function(gfw) {
             return "http://gfw-ee-tiles.appspot.com/gfw/masked_forest_carbon/" + zoom + "/" + tile.x + "/" + tile.y + ".png";
           },
           tileSize: new google.maps.Size(256, 256),
-          opacity:0.60,
+          opacity:1,
           isPng: true
         });
 
@@ -463,7 +462,7 @@ GFW.modules.app = function(gfw) {
       } else if (layerName === "quarterly") {
         return 'modis_forest_change_copy';
       } else if (layerName === "brazilian_amazon") {
-        return 'sad_polygons_fixed_2';
+        return 'imazon_clean';
       }
 
       return null;
@@ -733,7 +732,7 @@ GFW.modules.app = function(gfw) {
 
       this.time_layer_imazon = new StaticGridLayerImazon({
         map: that._map,
-        _table: 'sad_polygons_fixed_2',
+        _table: 'imazon_clean',
         _global_version: that._global_version,
         _cloudfront_url: that._cloudfront_url
       });

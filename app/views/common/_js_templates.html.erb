@@ -207,7 +207,7 @@
   <script id="layer-template" type="text/x-underscore-template">
     <li id="{{name}}" class="{{ name }}">
       <a href="#"><i></i>{{title}}</a>
-      <a href="#" data-source="{{name}}" class="source"></a>
+      <a href="#" data-source="{{ source }}" class="source"></a>
     </li>
   </script>
 
@@ -233,7 +233,7 @@
           </li>
 
           <li class="alert">
-            <strong class="title">Total forma alerts</strong>
+            <strong class="title">Total {{ dataset }} alerts</strong>
             <p class="count forma">
               <strong>
                 <span id="alerts-count">
