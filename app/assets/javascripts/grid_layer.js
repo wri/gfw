@@ -197,8 +197,7 @@ TimePlayer.prototype.get_time_data = function(tile, coord, zoom) {
   // for current zoom
   // zoom + 8 is get because a tile in "zoom" zoom level is a pixel in "zoom + 8"
   // level. Remember, it is a quadtree, 1^8 = 256 and tile size is 256px
-  var pixel_zoom = Math.min(zoom + 8, $.browser.msie ? 12: 16);
-  //pixel_zoom = zoom + 8;
+  var pixel_zoom = Math.min(zoom + 8, 15);
   sql += " z = {0} ".format(pixel_zoom);
 
   var zoom_diff =  zoom + 8 - pixel_zoom;
