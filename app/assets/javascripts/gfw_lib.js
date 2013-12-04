@@ -85,6 +85,8 @@ GFW.modules.app = function(gfw) {
 
       google.maps.event.addDomListener(this._map, 'mousemove', function(event) {
         Timeline.updateCoordinates(event.latLng);
+        TimelineNotPlayer.updateCoordinates(event.latLng);
+        TimelineImazon.updateCoordinates(event.latLng);
       });
 
     },

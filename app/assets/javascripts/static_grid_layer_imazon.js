@@ -37,10 +37,10 @@ var StaticGridLayerImazon = Backbone.View.extend({
     var that = this;
 
     this.model = new StaticGridLayerModelImazon({
-      start_year: 2011,
-      start_month: 10,
-      end_year: 2012,
-      end_month: 08
+      start_year: 2007,
+      start_month: 1,
+      end_year: 2013,
+      end_month: 12
     });
 
     this.model.bind("change:opacity", this._onOpacityUpdate, this);
