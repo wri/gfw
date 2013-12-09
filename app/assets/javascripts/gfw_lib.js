@@ -35,6 +35,8 @@ GFW.modules.app = function(gfw) {
   gfw.app.Instance = Class.extend({
 
     init: function(map, options) {
+      var that = this;
+
       this.options = _.defaults(options, {
         user       : 'gfw-01',
         layerTable : 'layerinfo_minus_imazon' // TODO: change back to layerinfo when we have imazon
@@ -50,6 +52,7 @@ GFW.modules.app = function(gfw) {
       gfw.log.enabled = options ? options.logging: false;
 
       this._map = map;
+      this.$map_coordinates = $(".map_coordinates");
 
       this.infowindow          = new CartoDBInfowindow(map);
       this.protectedInfowindow = new ProtectedInfowindow(map);
@@ -83,11 +86,39 @@ GFW.modules.app = function(gfw) {
 
       this._setupZoom();
 
-      google.maps.event.addDomListener(this._map, 'mousemove', function(event) {
-        Timeline.updateCoordinates(event.latLng);
-        TimelineNotPlayer.updateCoordinates(event.latLng);
-        TimelineImazon.updateCoordinates(event.latLng);
+      google.maps.event.addDomListener(this._map, 'dragend', function(event) {
+        Timeline.updateCoordinates(that._map.getCenter());
+        TimelineNotPlayer.updateCoordinates(that._map.getCenter());
+        TimelineImazon.updateCoordinates(that._map.getCenter());
+        that.updateCoordinates(that._map.getCenter());
       });
+
+      google.maps.event.addListener(this._map, 'center_changed', function(event) {
+        Timeline.updateCoordinates(that._map.getCenter());
+        TimelineNotPlayer.updateCoordinates(that._map.getCenter());
+        TimelineImazon.updateCoordinates(that._map.getCenter());
+        that.updateCoordinates(that._map.getCenter());
+      });
+
+      google.maps.event.addListener(this._map, 'zoom_changed', function(event) {
+        Timeline.updateCoordinates(that._map.getCenter());
+        TimelineNotPlayer.updateCoordinates(that._map.getCenter());
+        TimelineImazon.updateCoordinates(that._map.getCenter());
+        that.updateCoordinates(that._map.getCenter());
+      });
+    },
+
+    updateCoordinates: function(latLng) {
+
+      var lat = parseFloat(latLng.lat());
+      var lng = parseFloat(latLng.lng());
+
+      lat = lat.toFixed(6);
+      lng = lng.toFixed(6);
+
+      if (this.$map_coordinates) {
+        this.$map_coordinates.html("Lat/Long: "+lat + "," + lng);
+      }
 
     },
 
@@ -700,6 +731,7 @@ GFW.modules.app = function(gfw) {
       window.time_layer = this.time_layer;
 
       Timeline.show();
+      Timeline.updateCoordinates(that._map.getCenter());
 
       Timeline.bind('change_date', function(start_month, end_month, year) {
         that.time_layer.set_start_time(start_month);
@@ -722,6 +754,7 @@ GFW.modules.app = function(gfw) {
       window.time_layer_notplayer = this.time_layer_notplayer;
 
       TimelineNotPlayer.show();
+      TimelineNotPlayer.updateCoordinates(that._map.getCenter());
 
       TimelineNotPlayer.bind('change_date', function(month, year) {
         self.time_layer_notplayer.set_time(month, year);
@@ -742,6 +775,7 @@ GFW.modules.app = function(gfw) {
       window.time_layer_imazon = this.time_layer_imazon;
 
       TimelineImazon.show();
+      TimelineImazon.updateCoordinates(that._map.getCenter());
 
       TimelineImazon.bind('change_date', function(start_month, end_month, start_year, end_year) {
         self.time_layer_imazon.set_time(start_month, end_month, start_year, end_year);
@@ -768,6 +802,8 @@ GFW.modules.app = function(gfw) {
 
         }
 
+        this.$map_coordinates.hide();
+
         return;
       } else if (this.currentBaseLayer === "annual") {
         table_name = 'gfw2_hansen';
@@ -784,6 +820,8 @@ GFW.modules.app = function(gfw) {
           }
         }
 
+        this.$map_coordinates.hide();
+
         return;
       } else if (this.currentBaseLayer === "brazilian_amazon") {
         if (config.mapLoaded && !this.time_layer_imazon) {
@@ -797,6 +835,8 @@ GFW.modules.app = function(gfw) {
             TimelineImazon.show();
           }
         }
+
+        this.$map_coordinates.hide();
 
         return;
       }
@@ -859,6 +899,8 @@ GFW.modules.maplayer = function(gfw) {
       init: function(layer, map) {
         this.layer = layer;
         this._map = map;
+
+        this.$map_coordinates = $(".map_coordinates");
 
         var sw = new google.maps.LatLng(this.layer.get('ymin'), this.layer.get('xmin'));
         var ne = new google.maps.LatLng(this.layer.get('ymax'),this.layer.get('xmax'));
@@ -958,11 +1000,28 @@ GFW.modules.maplayer = function(gfw) {
       },
 
       _hideBaseLayers: function(){
+        this.$map_coordinates.show();
+        this.updateCoordinates(this._map.getCenter());
+
         GFW.app.currentBaseLayer = null;
         GFW.app._toggleTimeLayer();
         legend.removeCategory("forest_clearing");
 
         if (GFW.app.baseLayer) GFW.app.baseLayer.setOptions({ opacity: 0 });
+      },
+
+      updateCoordinates: function(latLng) {
+
+        var lat = parseFloat(latLng.lat());
+        var lng = parseFloat(latLng.lng());
+
+        lat = lat.toFixed(6);
+        lng = lng.toFixed(6);
+
+        if (this.$map_coordinates) {
+          this.$map_coordinates.html("Lat/Long: "+lat + "," + lng);
+        }
+
       },
 
       _toggleLayer: function(){
