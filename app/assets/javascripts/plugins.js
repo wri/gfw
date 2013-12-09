@@ -1032,6 +1032,7 @@ var Navigation = (function() {
     searchBox.hide();
 
     $("#zoom_controls").hide();
+    $("#viewfinder").hide();
 
     Navigation.select("home");
 
@@ -1101,6 +1102,7 @@ var Navigation = (function() {
     searchBox.show();
 
     $("#zoom_controls").show();
+    $("#viewfinder").show();
 
     if (this.time_layer) this.time_layer.set_time(self.time_layer.cache_time());
 

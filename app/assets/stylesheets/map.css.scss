@@ -1,6 +1,7 @@
 @import "compass";
 @import "compass/reset";
 @import "helpers";
+@import "compass/css3/user-interface";
 
   /* Tiles loader control */
 
@@ -271,6 +272,31 @@
   }
 
 
+}
+
+#viewfinder {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  height: 19px;
+  width: 19px;
+  display: block;
+  @include icons-sprite(viewfinder);
+}
+
+.map_coordinates {
+  position: absolute;
+  z-index: 10;
+  bottom: 20px;
+  right: 10px;
+  text-align: right;
+  color:#fff;
+  font-weight:bold;
+  @extend .sans-serif;
+  font-size:11px;
+  text-shadow: 0px 0px 3px #222;
+  @include user-select(text);
 }
 
 #map-container {
@@ -754,12 +780,12 @@
     top: -20px;
     right: 5px;
     text-align: right;
-
     color:#fff;
     font-weight:bold;
     @extend .sans-serif;
     font-size:11px;
     text-shadow: 0px 0px 3px #222;
+    @include user-select(text);
   }
 
   $handleWidth: 14px;
@@ -1032,7 +1058,9 @@
   }
 }
 
-#zoom_controls {
+#zoom_controls,
+#viewfinder,
+.map_coordinates {
   display: none;
 }
 
