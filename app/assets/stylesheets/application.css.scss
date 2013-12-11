@@ -1344,49 +1344,6 @@ footer > .download {
   &.show { display: block; }
 }
 
-.language_selector {
-  display:none;
-
-  @include size(117px, false);
-  @include position(33px, false, false, false);
-  @include border-radius(3px);
-  @include box-shadow(0px 0px 10px $cGray4);
-
-  background:#fff;
-  border: 1px solid #666;
-
-  @extend .sans-serif;
-  font-size:11px;
-  color: $cGray3;
-
-  z-index: 10000;
-
-  .tip {
-    @include position(-12px, false, false, 50px);
-    @include size(11px, 12px);
-    @include icons-sprite(language_selector_tip);
-  }
-
-  .languages {
-    padding: 10px 21px 5px 21px;
-    text-align:left;
-
-    li { margin: 0 0 5px 0; }
-
-    li a {
-      text-decoration:none;
-      @extend .sans-serif;
-      font-size:13px;
-      color: $cGray2;
-
-      &:hover { color: $cGray2; }
-
-    }
-
-  }
-
-}
-
 #gallery {
   @include position(0, false, false, 0);
   @include size(100%, 295px);

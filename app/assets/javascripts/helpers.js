@@ -147,39 +147,6 @@ config.mapStyles.forestSoft = new google.maps.ImageMapType({
   alt: "Global forest height"
 });
 
-config.mapStyles.LANDSAT2012 = new google.maps.ImageMapType({
-  getTileUrl: function(ll, z) {
-    var X = ll.x % (1 << z);  // wrap
-    return "http://gfw-ee-tiles.appspot.com/gfw/landsat_composites/" + z + "/" + X + "/" + ll.y + ".png?year=2012";
-  },
-  tileSize: new google.maps.Size(256, 256),
-  isPng: true,
-  maxZoom: 13,
-  name: "Landsat 2012"
-});
-
-config.mapStyles.LANDSAT2007 = new google.maps.ImageMapType({
-  getTileUrl: function(ll, z) {
-    var X = ll.x % (1 << z);  // wrap
-    return "http://gfw-ee-tiles.appspot.com/gfw/landsat_composites/" + z + "/" + X + "/" + ll.y + ".png?year=2007";
-  },
-  tileSize: new google.maps.Size(256, 256),
-  isPng: true,
-  maxZoom: 13,
-  name: "Landsat 2007"
-});
-
-config.mapStyles.LANDSAT2002 = new google.maps.ImageMapType({
-  getTileUrl: function(ll, z) {
-    var X = ll.x % (1 << z);  // wrap
-    return "http://gfw-ee-tiles.appspot.com/gfw/landsat_composites/" + z + "/" + X + "/" + ll.y + ".png?year=2002";
-  },
-  tileSize: new google.maps.Size(256, 256),
-  isPng: true,
-  maxZoom: 13,
-  name: "Landsat 2002"
-});
-
 config.mapStyles.TREEHEIGHT = new google.maps.ImageMapType({
   getTileUrl: function(ll, z) {
     var X = ll.x % (1 << z);  // wrap
@@ -192,6 +159,26 @@ config.mapStyles.TREEHEIGHT = new google.maps.ImageMapType({
   alt: "Global forest height",
   alt: 'NASA JPL, California Institute of Technology, <a href="http://lidarradar.jpl.nasa.gov" target="_blank">3D Global Vegetation Map</a>'
 });
+
+config.mapStyles.LANDSAT = [];
+window.landsat_year = [];
+
+for(var i = 1999;i < 2013; i++) {
+  window.landsat_year[i] = i;
+
+  (function(year) {
+    config.mapStyles.LANDSAT[i] = new google.maps.ImageMapType({
+      getTileUrl: function(ll, z) {
+        var X = ll.x % (1 << z);  // wrap
+        return "http://gfw-ee-tiles.appspot.com/gfw/landsat_composites/" + z + "/" + X + "/" + ll.y + ".png?year="+year;
+      },
+      tileSize: new google.maps.Size(256, 256),
+      isPng: true,
+      maxZoom: 13,
+      name: "Landsat "+i
+    });
+  })(i);
+}
 
 var Road = function(){
   this.Road = function(){
