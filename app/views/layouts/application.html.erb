@@ -21,11 +21,23 @@
   <meta property="og:url" content=""/>
   <meta property="og:image" content=""/>
 
-  <link rel="icon" type="image/png" href="<%= image_path 'favicon_32x32.ico' %>" />
-
   <%= stylesheet_link_tag "application" %>
   <%= javascript_include_tag "modernizr-2.6.2.min" %>
   <%= csrf_meta_tags %>
+
+  <link rel="icon" type="image/png" href="<%= image_path 'favicon_32x32.ico' %>" />
+
+  <% if(ENV["RAILS_ENV"] === 'production') %>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-1981881-32', 'gfw-beta.org');
+      ga('send', 'pageview');
+    </script>
+  <% end %>
 </head>
 
 <body class="<%= controller_name %> <%= action_name %>">
@@ -90,18 +102,6 @@
       var showMap = false;
     <% end %>
   </script>
-
-  <!-- analytics -->
-  <% if(ENV["RAILS_ENV"] === 'production') %>
-    <script>
-      (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-      e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-      e.src='//www.google-analytics.com/analytics.js';
-      r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-      ga('create','UA-1981881-32');ga('send','gfw-beta.org');
-    </script>
-  <% end %>
 
   <!-- social -->
   <script>(function(d, s, id) {
