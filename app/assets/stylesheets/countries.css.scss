@@ -690,7 +690,182 @@ a.close_icon {
       word-spacing:normal;
     }
 
-    .chart { position: relative; }
+    .chart {
+      position: relative;
+
+      &.map {
+        .frame,
+        .info {
+          background: #444;
+        }
+
+        .action {
+          border-color: #444;
+          background-color: #fff;
+        }
+      }
+
+      &.forest_loss {
+        .graph-title,
+        .graph-amount {
+          color: #FFC926;
+        }
+      }
+
+      .frame {
+        position: absolute;
+        top: 0; left: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+      &.ghost {
+        @include opacity(.5);
+      }
+
+      .coming_soon {
+        display: none;
+        position: absolute;
+        z-index: 10;
+        top: 50%; left: 0;
+        width: 100%;
+        margin-top: -9px;
+        font-size: 17px;
+        font-weight: bold;
+        text-align: center;
+        text-transform: uppercase;
+        color:  #111;
+      }
+
+      .info {
+        position: absolute;
+        z-index: 10;
+        top: -14px; left: 50%;
+        border: 2px solid #fff;
+        margin-left: -14px;
+        width: 24px;
+        color: #fff;
+        font-size: 14px;
+        line-height: 24px;
+        @extend .serif;
+        text-align: center;
+        background: #FF4D4D;
+        @include border-radius(14px);
+      }
+
+      .action {
+        position: absolute;
+        z-index: 10;
+        bottom: -20px; left: 50%;
+        border: 2px solid #FF4D4D;
+        margin-left: -20px;
+        width: 36px;
+        height: 36px;
+        background-color: #fff;
+        @include border-radius(20px);
+      }
+
+      img ,
+      .frame_bkg {
+        position: absolute;
+        top: 5px; left: 5px;
+      }
+
+      path {
+        stroke: #FF4D4D;
+        stroke-width: 4px;
+        fill: none;
+      }
+    }
+
+    .forma_marker {
+      stroke: #fff;
+      stroke-width: 2px;
+      fill: #FF4D4D;
+    }
+
+    .graph-title {
+      position: absolute;
+      z-index: 10;
+      top: 42px; left: 0;
+      width: 100%;
+      color: #FF4D4D;
+      font-size: 18px;
+      @extend .serif;
+      text-align: center;
+    }
+
+    .graph-subtitle {
+      position: absolute;
+      z-index: 10;
+      top: 62px; left: 0;
+      width: 100%;
+      font-size:13px;
+      @extend .serif;
+      text-align: center;
+      color: #666;
+      text-decoration: underline;
+
+      span,
+      a {
+        line-height: 1.4;
+        background: #fff;
+        padding: 0 5px;
+      }
+
+      a {
+        color: #666;
+
+        &:after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          margin: -1px 0 0 3px;
+          border-color: #666 rgba(#000, 0);
+          border-width: 4px 4px 0 4px;
+          border-style: solid;
+        }
+      }
+    }
+
+    .graph-amount {
+      position: absolute;
+      z-index: 10;
+      bottom: 57px; left: 0;
+      width: 100%;
+      font-size: 27px;
+      @extend .serif;
+      color: #FF4D4D;
+      text-align: center;
+
+      span {
+        position: relative;
+        top: -16px;
+      }
+    }
+
+    .graph-date {
+      position: absolute;
+      z-index: 100;
+      bottom: 37px; left: 0;
+      width: 100%;
+      font-size: 13px;
+      @extend .serif;
+      text-align: center;
+      color: #333;
+    }
+
+    .forma_dropdown-menu {
+      display: none;
+    }
+
+    .bar {
+      @include opacity(.5);
+
+      &.first {
+      @include opacity(1);
+      }
+    }
 
     .chart .info {
       position: absolute;
@@ -824,6 +999,37 @@ a.close_icon {
     }
   }
 
+  .qtip-default {
+    border: 1px solid #ccc;
+    background: #fff;
+    @include border-radius(3px);
+    @include box-shadow(0 0 3px rgba(#000, .2));
+  }
+
+  .qtip-content {
+    padding: 0;
+
+    li {
+      &:first-child a {
+        border-top: 0;
+      }
+
+      a {
+        display: block;
+        border-top: 1px solid #ddd;
+        padding: 10px;
+        font-size: 13px;
+        @extend .serif;
+        color: #666;
+
+        &:hover {
+          background: #fafafa;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
   .charts { position:relative; padding: 10px; }
   .chart rect {
     fill: #333333;
@@ -869,6 +1075,8 @@ a.close_icon {
 
     .graph_legend { margin:auto; text-align:center; font-size:13px; color:#666; @extend .serif; }
     .graph_legend .text { margin: auto; width: 140px; }
+
+    &.chart .date { bottom: 53px; }
   }
 
   .bars {

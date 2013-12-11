@@ -326,7 +326,7 @@ var CountryMenu = (function() {
   }
 
   function drawCountries() {
-    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT d.iso3 as iso, c.the_geom FROM ne_50m_admin_0_countries c, tm_world_borders_simpl_0_3 d WHERE d.iso3 = c.adm0_a3&format=topojson", function(topology) {
+    d3.json("https://wri-01.cartodb.com/api/v2/sql?q=SELECT adm0_a3 as iso, the_geom FROM ne_50m_admin_0_countries&format=topojson", function(topology) {
       for (var i = 0; i < Object.keys(topology.objects).length; i++) {
         var iso = topology.objects[i].properties.iso;
 
@@ -335,12 +335,285 @@ var CountryMenu = (function() {
     });
   }
 
+  function initDropdown() {
+    $('.forma_dropdown-link').qtip({
+      show: 'click',
+      hide: {
+        event: 'click unfocus'
+      },
+      content: {
+        text: $('.forma_dropdown-menu')
+      },
+      position: {
+        my: 'top right',
+        at: 'bottom right',
+        target: $('.forma_dropdown-link'),
+        adjust: {
+          x: 10
+        }
+      },
+      style: {
+        tip: {
+          corner: 'top right',
+          mimic: 'top center',
+          border: 1,
+          width: 10,
+          height: 6
+        }
+      }
+    });
+
+    $('.selector').on('click', function(event) {
+      api.hide();
+    })
+  }
+
+  function drawCircle(id, type, options) {
+    var $graph = $("."+id),
+        $title = $graph.find(".graph-title"),
+        $ammount = $graph.find(".graph-amount"),
+        $date = $graph.find(".graph-date");
+        $coming_soon = $graph.find(".coming_soon");
+
+    $(".frame_bkg").empty();
+    $graph.addClass('ghost');
+    $title.html(title);
+    $ammount.html("");
+    $date.html("");
+    $coming_soon.hide();
+
+    var width     = options.width     || 310,
+        height    = options.height    || width,
+        title     = options.title     || "",
+        subtitle  = options.subtitle  || "",
+        h         = 100, // maxHeight
+        radius    = width / 2;
+
+    var graph = d3.select("."+ id+" .frame_bkg")
+      .append("svg:svg")
+      .attr("class", type)
+      .attr("width", width)
+      .attr("height", height);
+
+    var sql = "SELECT date_trunc('month', date) as date, COUNT(*) as alerts\
+              FROM cdm_latest\
+              WHERE iso = '"+options.iso+"'\
+              GROUP BY date_trunc('month', date)\
+              ORDER BY date_trunc('month', date) ASC"
+
+    if (type === 'lines') {
+      d3.json("https://wri-01.cartodb.com/api/v2/sql?q="+sql, function(json) {
+        if(json) {
+          $graph.removeClass('ghost');
+
+          var data = json.rows.slice(1, json.rows.length - 1);
+        } else {
+          $coming_soon.show();
+
+          return;
+        }
+
+        var x_scale = d3.scale.linear()
+              .domain([0, data.length - 1])
+              .range([0, width - 80]);
+
+        var y_scale = d3.scale.linear()
+              .domain([0, d3.max(data, function(d) {return d.alerts})])
+              .range([0, h]);
+
+        var line = d3.svg.line()
+              .x(function(d, i) { return x_scale(i); })
+              .y(function(d, i) { return h - y_scale(d.alerts); })
+              .interpolate("basis");
+
+        var marginLeft = 40,
+            marginTop = radius - h/2;
+
+        $ammount.html(data[0].alerts);
+        var date = new Date(data[0].date),
+            form_date = "Alerts in " + config.MONTHNAMES[date.getMonth()] + " " + date.getFullYear();
+        $date.html(form_date);
+
+        graph.append("svg:path")
+          .attr("transform", "translate(" + marginLeft + "," + marginTop + ")")
+          .attr("d", line(data))
+          .on("mousemove", function(d) {
+            var index = Math.round(x_scale.invert(d3.mouse(this)[0]));
+
+            if (data[index]) { // if there's data
+              var val = data[index].alerts;
+              $ammount.html(val);
+
+              var date = new Date(data[index].date),
+                  form_date = "Alerts in " + config.MONTHNAMES[date.getMonth()] + " " + date.getFullYear();
+
+              $date.html(form_date);
+
+              var cx = d3.mouse(this)[0] + marginLeft;
+              var cy = h - y_scale(data[index].alerts) + marginTop;
+
+              graph.select(".forma_marker")
+                .attr("cx", cx)
+                .attr("cy", cy);
+            }
+          });
+
+        graph.append("svg:circle")
+          .attr("class", "forma_marker")
+          .attr("cx", -10000)
+          .attr("cy",100)
+          .attr("r", 5);
+      });
+    } else if (type === 'bars') {
+      var sql = 'SELECT ';
+
+      for(var y = 2001; y < 2012; y++) {
+        sql += "y"+y+", "
+      }
+
+      sql += "y2012\
+              FROM "+options.dataset+"\
+              WHERE iso = '"+options.iso+"'";
+
+      d3.json("https://wri-01.cartodb.com/api/v2/sql?q="+sql, function(json) {
+        if(json) {
+          $graph.removeClass('ghost');
+
+          var data = json.rows[0];
+        } else {
+          $coming_soon.show();
+
+          return;
+        }
+
+        var data_ = [];
+
+        _.each(data, function(val, key) {
+          data_.push({
+            "year": key.replace("y",""),
+            "value": val
+          });
+        });
+
+        $ammount.html(data_[0].value);
+        $date.html("M Hectares in " + data_[0].year);
+
+        var marginLeft = 40,
+            marginTop = radius - h/2;
+
+        var y_scale = d3.scale.linear()
+              .domain([0, d3.max(data_, function(d) { return d.value; })])
+              .range([height - marginTop, marginTop*2]);
+
+        var barWidth = (width - 80) / data_.length;
+
+        var bar = graph.selectAll("g")
+              .data(data_)
+              .enter().append("g")
+              .attr("transform", function(d, i) { return "translate(" + (marginLeft + i * barWidth) + "," + -marginTop + ")"; });
+
+        bar.append("svg:rect")
+              .attr("class", function(d, i) {
+                if(i === 0) {
+                  return "first bar"
+                } else {
+                  return "bar"
+                }
+              })
+              .attr("y", function(d) { return y_scale(d.value); })
+              .attr("height", function(d) { return height - y_scale(d.value); })
+              .attr("width", barWidth - 1)
+              .style("fill", "#FFC926")
+              .style("shape-rendering", "crispEdges")
+              .on("mouseover", function(d) {
+                d3.selectAll(".bar").style("opacity", ".5");
+                d3.select(this).style("opacity", "1");
+
+                $ammount.html(d.value);
+                $date.html("M Hectares in " + d.year);
+              });
+      });
+    } else if (type === 'comp') {
+      var sql = 'SELECT gain.hectares as total_gain, (SELECT SUM(';
+
+      for(var y = 2001; y < 2012; y++) {
+        sql += "loss.y"+y+"+";
+      }
+
+      sql += "loss.y2012) FROM hansen_forest_loss loss WHERE loss.iso = gain.iso) as total_loss FROM hansen_forest_gain gain WHERE gain.iso = '"+options.iso+"'";
+
+      d3.json("https://wri-01.cartodb.com/api/v2/sql?q="+encodeURIComponent(sql), function(json) {
+        if(json) {
+          $graph.removeClass('ghost');
+
+          var data = json.rows[0];
+        } else {
+          $coming_soon.show();
+
+          return;
+        }
+
+        var data_ = [],
+            form_key = {
+              "total_gain": "Forest Cover Gain",
+              "total_loss": "Forest Cover Loss"
+            };
+
+        _.each(data, function(val, key) {
+          data_.push({
+            "key": form_key[key],
+            "value": val
+          });
+        });
+
+        $ammount.html(data_[0].value);
+        $date.html("M ha "+data_[0].key);
+
+        var barWidth = (width - 80) / 12;
+
+        var marginLeft = 40 + 5*barWidth,
+            marginTop = radius - h/2;
+
+        var y_scale = d3.scale.linear()
+              .domain([0, d3.max(data_, function(d) { return d.value; })])
+              .range([height - marginTop, marginTop*2]);
+
+        var bar = graph.selectAll("g")
+              .data(data_)
+              .enter().append("g")
+              .attr("transform", function(d, i) { return "translate(" + (marginLeft + i * barWidth) + "," + -marginTop + ")"; });
+
+        bar.append("svg:rect")
+              .attr("class", function(d, i) {
+                if(i === 0) {
+                  return "first bar"
+                } else {
+                  return "bar"
+                }
+              })
+              .attr("y", function(d) { return y_scale(d.value); })
+              .attr("height", function(d) { return height - y_scale(d.value); })
+              .attr("width", barWidth - 1)
+              .style("fill", "#FFC926")
+              .style("shape-rendering", "crispEdges")
+              .on("mouseover", function(d) {
+                d3.selectAll(".bar").style("opacity", ".5");
+                d3.select(this).style("opacity", "1");
+
+                $ammount.html(d.value);
+                $date.html("M ha "+d.key);
+              });
+      });
+    }
+  }
+
   return {
     show: show,
     drawCountries: drawCountries,
     drawCountry: drawCountry,
     drawForest: drawForest,
-    drawTenure: drawTenure
+    drawTenure: drawTenure,
+    drawCircle: drawCircle
   };
 
 }());
@@ -1804,6 +2077,22 @@ function addCircle(id, type, options) {
         var marginLeft = 40;
         var marginTop = radius - h/2;
 
+        var val = "<span>" + data[0].alerts + "</span> <small>" + unit + "</small>";
+        $(".lines .graph-amount").html(val);
+
+        var date = new Date(data[0].y, data[0].m);
+        months = monthDiff(date, new Date());
+
+        if (months === 0) {
+          val = "in this month";
+        } else if (months == 1) {
+          val = "in the last month";
+        } else {
+          val = "in " + config.MONTHNAMES[data[0].m - 1] + " " + data[0].y;
+        }
+
+        $(".lines .date").html(val);
+
         var p = graph.append("svg:path")
         .attr("transform", "translate(" + marginLeft + "," + marginTop + ")")
         .attr("d", line(data))
@@ -1814,7 +2103,7 @@ function addCircle(id, type, options) {
 
           if (data[index]) { // if there's data
             var val = "<span>" + data[index].alerts + "</span> <small>" + unit + "</small>";
-            $(".lines .amount").html(val);
+            $(".lines .graph-amount").html(val);
 
             var date = new Date(data[index].y, data[index].m);
             months = monthDiff(date, new Date());

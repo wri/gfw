@@ -17,21 +17,28 @@
           <a href="#" class="info" data-source="semi_monthly"><span>i</span></a>
           <div class="title"><span></span></div>
           <div class="subtitle"><span></span></div>
+          <div class="graph-amount"></div>
           <div class="date"></div>
           <!-- TODO: replace with actual data -->
           <a href="/assets/gfw_analysis.zip" class="action"></a>
         </div>
         <!-- TODO: remove ghost when we have data -->
         <div class="circle forest_loss ghost chart">
-          <p>Coming soon</p>
-          <div class="ghost">
-            <a href="#" class="info" data-source="semi_monthly"><span>i</span></a>
-            <div class="title"><span>Forest Loss 2012</span></div>
-            <div class="amount"><span>14<span>M*</span></span></div>
-            <div class="date">*Million Hectares</div>
-            <!-- TODO: replace with actual data -->
-            <a href="/assets/gfw_analysis.zip" class="action"></a>
+          <a href="#" class="info" data-source="forest_loss"><span>i</span></a>
+          <div class="graph-title">Forest Cover Loss</div>
+          <div class="graph-subtitle"><a href="#" class="forma_dropdown-link">Data options</a></div>
+          <div class="forma_dropdown-menu">
+            <ul>
+              <li><a href="#" class="forma_dropdown-loss" data-slug="hansen_forest_extent">Forest Cover Loss</a></li>
+              <li><a href="#" class="forma_dropdown-extent" data-slug="hansen_forest_loss">Forest Cover Extent</a></li>
+              <li><a href="#" class="forma_dropdown-gain" data-slug="hansen_forest_gain">Loss vs Gain</a></li>
+            </ul>
           </div>
+          <div class="graph-amount"></div>
+          <div class="graph-date"></div>
+          <div class="coming_soon">Coming soon</div>
+          <div class="frame"><div class="frame_bkg"></div></div>
+          <a href="#" class="action"></a>
         </div>
         <div class="chart circle country" style="background: url(<%= static_map(@country.coords, '299x299', 4) %>) no-repeat;">
           <a class="mask" href="<%= @country.map_coord %>/<%= @country.iso %>"></a>

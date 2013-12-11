@@ -25,6 +25,7 @@
 //= require spin.min
 //= require mustache
 //= require minpubsub
+//= require jquery.qtip.min.js
 
 //= require gfw/index
 //= require_tree .
@@ -49,7 +50,8 @@ var loaded           = false,
     languageSelector  = {},
     layerSelector     = {},
     searchBox         = {},
-    Infowindow        = {};
+    Infowindow        = {},
+    dropdown          = {};
 
 function loadOtherStuff(callback) {
 
@@ -237,7 +239,56 @@ function loadGFW(callback) {
     CountryMenu.drawCountry(countryCode);
     CountryMenu.drawForest(countryCode);
     CountryMenu.drawTenure(countryCode);
+    CountryMenu.drawCircle("forest_loss", "bars", { iso: countryCode, title: "Forest Cover Loss", subtitle: "Data Options", dataset: "hansen_forest_loss" });
   }
+
+  dropdown = $('.forma_dropdown-link').qtip({
+    show: 'click',
+    hide: {
+      event: 'click unfocus'
+    },
+    content: {
+      text: $('.forma_dropdown-menu')
+    },
+    position: {
+      my: 'top right',
+      at: 'bottom right',
+      target: $('.forma_dropdown-link'),
+      adjust: {
+        x: 10
+      }
+    },
+    style: {
+      tip: {
+        corner: 'top right',
+        mimic: 'top center',
+        border: 1,
+        width: 10,
+        height: 6
+      }
+    }
+  });
+
+  $(".forma_dropdown-link").on("click", function(e) {
+    e.preventDefault();
+  });
+
+  $(".forma_dropdown-menu a").on("click", function(e) {
+    e.preventDefault();
+
+    var dataset = $(e.target).attr("data-slug"),
+        title = $(e.target).text();
+
+    var api = dropdown.qtip('api');
+
+    api.hide();
+
+    if(dataset === 'hansen_forest_gain') {
+      CountryMenu.drawCircle("forest_loss", "comp", { iso: countryCode, title: title });
+    } else {
+      CountryMenu.drawCircle("forest_loss", "bars", { iso: countryCode, title: title, dataset: dataset });
+    }
+  });
 
   $(".signin a.login").on("click", function(e) {
     e.preventDefault();
