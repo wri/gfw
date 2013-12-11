@@ -460,6 +460,7 @@
 
 
 
+.landsat_layers,
 .layer_selector {
 
   width:155px;
@@ -496,7 +497,7 @@
     }
   }
 
-  .layers li, .selected_layer li {
+  .layers li, .selected_layer li, li {
 
     padding: 10px;
     position: relative;
@@ -527,10 +528,23 @@
     &.terrain        i { @include icons-sprite(map_terrain_bn); }
     &.classic        i { @include icons-sprite(map_terrain); }
     &.tree_height    i { @include icons-sprite(map_tree_height); }
-    &.landsat_2002   i { @include icons-sprite(map_landsat); }
-    &.landsat_2007   i { @include icons-sprite(map_landsat); }
-
-    &.landsat_2012   i { @include icons-sprite(map_landsat); }
+    &.landsat,
+    &.landsat1999,
+    &.landsat2000,
+    &.landsat2001,
+    &.landsat2002,
+    &.landsat2003,
+    &.landsat2004,
+    &.landsat2005,
+    &.landsat2006,
+    &.landsat2007,
+    &.landsat2008,
+    &.landsat2009,
+    &.landsat2010,
+    &.landsat2011,
+    &.landsat2012 {
+      i { @include icons-sprite(map_landsat); }
+    }
 
     i {
       @include inline-block();
@@ -543,6 +557,26 @@
 
   .selected_layer {
     height: 40px;
+  }
+}
+
+.landsat_layers {
+  width:200px;
+  z-index: 10000;
+
+  li {
+    width:80px;
+    float: left;
+
+    i,
+    .source { display: none; }
+  }
+
+  .tip {
+    @include size(8px, 11px);
+    @include absolute-portrait-center(13px);
+    @include icons-sprite(landsat_selector_tip);
+    right: -8px;
   }
 }
 

@@ -186,17 +186,6 @@
     </li>
   </script>
 
-
-  <!-- Language -->
-  <script id="language_selector-template" type="text/x-underscore-template">
-    <div class="tip"></div>
-    <ul class="languages"></ul>
-  </script>
-
-  <script id="language-template" type="text/x-underscore-template">
-    <li class="lang_{{ code }}" data-lang="{{lang}}" data-title="{{title}}"><a href="http://translate.google.com/translate?sl=en&tl={{code}}&js=n&prev=_t&hl=en&ie=UTF-8&eotf=1&u={{currentURL}}">{{title}}</a></li>
-  </script>
-
   <!-- Layer selector -->
   <script id="layer_selector-template" type="text/x-underscore-template">
     <a href="#" class="toggle"></a>
@@ -209,6 +198,11 @@
       <a href="#"><i></i>{{title}}</a>
       <a href="#" data-source="{{ source }}" class="source"></a>
     </li>
+  </script>
+
+  <!-- Landsat selector -->
+  <script id="landsat_selector-template" type="text/x-underscore-template">
+    <ul class="landsat_layers"><div class="tip"></div></ul>
   </script>
 
   <!-- Analysis info -->
