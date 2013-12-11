@@ -569,14 +569,14 @@ var CountryMenu = (function() {
         $ammount.html(data_[0].value);
         $date.html("M ha "+data_[0].key);
 
-        var marginLeft = 40,
+        var barWidth = (width - 80) / 12;
+
+        var marginLeft = 40 + 5*barWidth,
             marginTop = radius - h/2;
 
         var y_scale = d3.scale.linear()
               .domain([0, d3.max(data_, function(d) { return d.value; })])
               .range([height - marginTop, marginTop*2]);
-
-        var barWidth = (width - 80) / data_.length;
 
         var bar = graph.selectAll("g")
               .data(data_)

@@ -50,7 +50,8 @@ var loaded           = false,
     languageSelector  = {},
     layerSelector     = {},
     searchBox         = {},
-    Infowindow        = {};
+    Infowindow        = {},
+    dropdown          = {};
 
 function loadOtherStuff(callback) {
 
@@ -241,7 +242,7 @@ function loadGFW(callback) {
     CountryMenu.drawCircle("forest_loss", "bars", { iso: countryCode, title: "Forest Cover Loss", subtitle: "Data Options", dataset: "hansen_forest_loss" });
   }
 
-  $('.forma_dropdown-link').qtip({
+  dropdown = $('.forma_dropdown-link').qtip({
     show: 'click',
     hide: {
       event: 'click unfocus'
@@ -268,7 +269,7 @@ function loadGFW(callback) {
     }
   });
 
-  $(".forma_dropdown-link a").on("click", function(e) {
+  $(".forma_dropdown-link").on("click", function(e) {
     e.preventDefault();
   });
 
@@ -277,6 +278,10 @@ function loadGFW(callback) {
 
     var dataset = $(e.target).attr("data-slug"),
         title = $(e.target).text();
+
+    var api = dropdown.qtip('api');
+
+    api.hide();
 
     if(dataset === 'hansen_forest_gain') {
       CountryMenu.drawCircle("forest_loss", "comp", { iso: countryCode, title: title });
