@@ -49,6 +49,12 @@
     </div>
 
     <section class="state" data-menu="state">
+      <% if @country.indepth.present? %>
+        <div class="indepth">
+          <p><strong>Global Forest Watch</strong> has done in-depth work in this country. Find more information <%= link_to "here", @country.indepth %>.</p>
+        </div>
+      <% end %>
+
       <div class="country-menu">
         <ul class="country-menu-inner">
           <li class="selected state">
