@@ -463,6 +463,8 @@ a.close_icon {
       border-bottom: 1px solid #ddd;
 
       &.state {
+        top: 48px;
+        margin-bottom: 48px;
         padding-top: 48px;
         background-image: url(backgrounds/bkg_country.png);
 
@@ -729,12 +731,13 @@ a.close_icon {
         z-index: 10;
         top: 50%; left: 0;
         width: 100%;
-        margin-top: -9px;
+        margin-top: -5px;
         font-size: 17px;
         font-weight: bold;
         text-align: center;
         text-transform: uppercase;
         color:  #111;
+        @extend .sans-serif;
       }
 
       .info {
@@ -1195,6 +1198,31 @@ a.close_icon {
 
     path {
       fill: #444;
+    }
+  }
+
+  .indepth {
+    background: #ccc;
+    height: 48px;
+    width: 100%;
+    position: absolute;
+    top: -48px;
+    z-index: 10;
+
+    p {
+      font-size: 17px;
+      line-height: 48px;
+      @extend .serif;
+      text-align: center;
+      color: #555;
+    }
+
+    a {
+      color: #333;
+
+      &:hover {
+        color: #222;
+      }
     }
   }
 

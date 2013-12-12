@@ -27,7 +27,8 @@ class Country
       'convention_ramsar',
       'convention_world_heritage',
       'convention_nlbi',
-      'convention_ilo'
+      'convention_ilo',
+      'indepth'
      ]
   end
 
