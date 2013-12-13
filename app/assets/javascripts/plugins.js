@@ -2058,8 +2058,16 @@ function addCircle(id, type, options) {
       url: "https://wri-01.cartodb.com/api/v2/sql?q=SELECT date_part('year',gfw2_forma_datecode.date) as y, date_part('month',gfw2_forma_datecode.date) as m,alerts FROM gfw2_forma_graphs,gfw2_forma_datecode WHERE  71<gfw2_forma_datecode.n AND gfw2_forma_datecode.n = gfw2_forma_graphs.date AND iso = '" + countryCode + "' order by gfw2_forma_datecode.date asc",
       success: function(json) {
 
-
         var data = json.rows.slice(1, json.rows.length);
+
+        if (data.length === 0) {
+          $(".lines .coming_soon").show();
+
+          return;
+        }
+
+        $(".lines").removeClass("ghost");
+
         var x = d3.scale.linear()
         .domain([0, data.length - 1])
         .range([0, width - 80]);
