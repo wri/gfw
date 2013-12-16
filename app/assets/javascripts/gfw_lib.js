@@ -82,6 +82,7 @@ GFW.modules.app = function(gfw) {
       this.mainLayer        = null;
       this.specialLayer     = null;
       this.pantropicalLayer = null;
+      this.forest2000Layer  = null;
       this.currentBaseLayer = "semi_monthly";
 
       this._setupZoom();
@@ -273,7 +274,9 @@ GFW.modules.app = function(gfw) {
         this._renderLayers();
 
       } else {
-        if(layer.get('slug') === 'pantropical') {
+        if(layer.get('slug') === 'forest2000') {
+          this._removeForest2000Layer();
+        } else if(layer.get('slug') === 'pantropical') {
           this._removePantropicalLayer();
         } else {
           this._removeExternalLayer();
@@ -291,6 +294,7 @@ GFW.modules.app = function(gfw) {
         var table_name = layer.get("table_name");
         if (table_name == "protected_areas") { this._renderExternalLayer(layer); }
         if (table_name == "pantropical") { this._renderPantropicalLayer(layer); }
+        if (table_name == "forest2000") { this._renderForest2000Layer(layer); }
 
       } else {
         this._layers.push(layer.get('table_name'));
@@ -324,6 +328,13 @@ GFW.modules.app = function(gfw) {
       if (this.pantropicalLayer) {
         this.pantropicalLayer.setOpacity(0);
         this.pantropicalLayer = null;
+      }
+    },
+
+    _removeForest2000Layer: function(layer) {
+      if (this.forest2000Layer) {
+        this.forest2000Layer.setOpacity(0);
+        this.forest2000Layer = null;
       }
     },
 
@@ -372,6 +383,29 @@ GFW.modules.app = function(gfw) {
       }
 
     },
+
+    _renderForest2000Layer: function(layer) {
+      var that = this;
+
+      var query = layer.get('tileurl');
+
+      if (this.forest2000Layer) {
+        this.forest2000Layer.setOpacity(1);
+      } else {
+        this.forest2000Layer = new google.maps.ImageMapType({
+          getTileUrl: function(tile, zoom) {
+            return "http://gfw-ee-tiles.appspot.com/gfw/forest_cover_2000/" + zoom + "/" + tile.x + "/" + tile.y + ".png";
+          },
+          tileSize: new google.maps.Size(256, 256),
+          opacity:1,
+          isPng: true
+        });
+
+        map.overlayMapTypes.push(this.forest2000Layer);
+      }
+
+    },
+
     _renderLayers: function() {
 
       if (this._layers.length > 0) {
