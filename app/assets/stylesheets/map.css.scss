@@ -725,7 +725,7 @@
   padding: 10px;
 
   strong {
-    font: bold 11px "Helvetica Neue", Helvetica, Arial, sans-serif; 
+    font: bold 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: uppercase;
     font-size: 11px;
     color: #ccc;
@@ -1266,6 +1266,44 @@
     font-size: 12px;
     @extend .sans-serif;
   }
+}
+
+.cartodb_infowindow.with_image_2 {
+  .cover {
+    width:215px;
+    margin: 10px 0;
+  }
+
+  h1 {
+    font-weight:bold;
+    font-size: 12px;
+    color: #FF5292;
+    line-height:normal;
+    text-transform: uppercase;
+    @extend .sans-serif;
+
+    @include inline-block();
+    white-space: nowrap;
+    width: 215px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+
+  }
+
+  .top .infowindow_content label { padding-left: 0; }
+
+  .top p {
+    display:block;
+    width:215px;
+    max-height:none;
+    padding:2px 0px;
+    margin: 2px 0 10px 0;
+    text-overflow:inherit;
+    overflow:auto;
+    white-space:normal;
+
+  }
+
 }
 
 .cartodb_infowindow.with_image {
