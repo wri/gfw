@@ -39,7 +39,7 @@ GFW.modules.app = function(gfw) {
 
       this.options = _.defaults(options, {
         user       : 'gfw-01',
-        layerTable : 'layerinfo_dev' // TODO: change back to layerinfo when we have imazon
+        layerTable : 'layerinfo_minus_imazon' // TODO: change back to layerinfo when we have imazon
       });
 
       this.timeLayerPosition = null;
@@ -72,6 +72,7 @@ GFW.modules.app = function(gfw) {
       this.queries.annual           = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
       this.queries.quarterly        = "SELECT cartodb_id,the_geom_webmercator FROM modis_forest_change_copy";
       this.queries.brazilian_amazon = "SELECT cartodb_id,type,the_geom_webmercator FROM imazon_clean";
+      this.queries.fires            = "SELECT cartodb_id,the_geom_webmercator FROM global_7d";
 
       this.lastHash = null;
 
@@ -539,6 +540,8 @@ GFW.modules.app = function(gfw) {
 
     _getTableName: function(layerName) {
 
+      console.log(layerName);
+
       if (layerName === "semi_monthly") {
         return 'gfw2_forma';
       } else if (layerName === "annual") {
@@ -547,6 +550,8 @@ GFW.modules.app = function(gfw) {
         return 'modis_forest_change_copy';
       } else if (layerName === "brazilian_amazon") {
         return 'imazon_clean';
+      } else if (layerName === "fires") {
+        return 'global_7d';
       }
 
       return null;
@@ -874,6 +879,7 @@ GFW.modules.app = function(gfw) {
         this.$map_coordinates.hide();
 
         return;
+
       } else if (this.currentBaseLayer === "brazilian_amazon") {
         if (config.mapLoaded && !this.time_layer_imazon) {
 
@@ -1109,12 +1115,21 @@ GFW.modules.maplayer = function(gfw) {
         annual        = GFW.app.datalayers.LayersObj.get(568),
         quarterly     = GFW.app.datalayers.LayersObj.get(588),
         sad           = GFW.app.datalayers.LayersObj.get(584);
+        fires         = GFW.app.datalayers.LayersObj.get(593);
 
         if (category != 'Forest clearing' || slug === 'biome') {
           legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
         }
 
-        if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon") {
+        if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon" || slug === "fires") {
+
+          if (slug === 'fires' && showMap) {
+            Timeline.hide();
+            //analysis.info.model.set("dataset", "forma");
+          } else {
+            Timeline.hide();
+          }
+
           if (slug === 'semi_monthly' && showMap) {
             Timeline.show();
             analysis.info.model.set("dataset", "forma");
@@ -1153,6 +1168,7 @@ GFW.modules.maplayer = function(gfw) {
           }
 
           legend.replace(id, category_slug, category, title, slug, category_color, title_color);
+
         } else {
           if (visible) {
             GFW.app._addLayer(this.layer);
