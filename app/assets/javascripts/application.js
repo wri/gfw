@@ -94,6 +94,10 @@ function loadOtherStuff(callback) {
   });
   publish('timeline:change_dates', Timeline._getDates());
 
+  TimelineLoss = new gfw.ui.view.TimelineLoss({
+    container: $("#map")
+  });
+
   TimelineImazon = new gfw.ui.view.TimelineImazon({
     container: $("#map")
   });
@@ -103,6 +107,7 @@ function loadOtherStuff(callback) {
   });
 
   window.timeline = Timeline;
+  window.timeline_loss = TimelineLoss;
   window.timelineNotPlayer = TimelineNotPlayer;
   window.timelineImazon = TimelineImazon;
 

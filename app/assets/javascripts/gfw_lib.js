@@ -580,6 +580,8 @@ GFW.modules.app = function(gfw) {
         return 'modis_forest_change_copy';
       } else if (layerName === "brazilian_amazon") {
         return 'imazon_clean';
+      } else if (layerName === "forest_loss") {
+        return 'gfw_loss_year';
       } else if (layerName === "fires") {
         return 'global_7d';
       }
@@ -778,6 +780,12 @@ GFW.modules.app = function(gfw) {
 
     _toggleTimeLayer: function() {
 
+      if (this.time_layer_loss && GFW.app.currentBaseLayer !== "loss") {
+        this.time_layer_loss.hide();
+        this.time_layer_loss = null;
+        TimelineLoss.hide();
+      }
+
       if (this.time_layer && GFW.app.currentBaseLayer !== "semi_monthly") {
         this.time_layer.hide();
         Timeline.hide();
@@ -795,6 +803,27 @@ GFW.modules.app = function(gfw) {
 
     },
 
+    _loadTimeLayerLoss: function() {
+
+      var that = this;
+
+      this.time_layer_loss = Deforestation.init(that._map);
+
+      window.time_layer_loss = this.time_layer_loss;
+      this.time_layer_loss.set_start_time(2010);
+
+      TimelineLoss.show();
+      TimelineLoss.updateCoordinates(that._map.getCenter());
+
+      TimelineLoss.bind('change_date', function(start_month, end_month, year) {
+        //that.time_layer_loss.set_start_time(start_month);
+        that.time_layer_loss.set_time(end_month, year);
+      });
+
+      TimelineLoss.loadDefaultRange();
+
+    },
+
     _loadTimeLayer: function() {
       var that = this;
 
@@ -809,11 +838,13 @@ GFW.modules.app = function(gfw) {
           cartodb_link.innerHTML = "<img src='http://cartodb.s3.amazonaws.com/static/new_logo.png' alt='CartoDB' title='CartoDB' style='border:none;' />";
           map.getDiv().appendChild(cartodb_link)
         }
-      },2000);
+      }, 2000);
+
 
       this.time_layer = new TimePlayer('gfw2_forma', this._global_version, this._cloudfront_url);
       this.time_layer.options.table_name = null;
       map.overlayMapTypes.push(this.time_layer);
+
       window.time_layer = this.time_layer;
 
       Timeline.show();
@@ -873,6 +904,7 @@ GFW.modules.app = function(gfw) {
 
       var self = this;
       var table_name = null;
+      console.log("layer", this.currentBaseLayer);
 
       if (this.currentBaseLayer === "semi_monthly") {
         if (config.mapLoaded && !this.time_layer) {
@@ -891,6 +923,26 @@ GFW.modules.app = function(gfw) {
         this.$map_coordinates.hide();
 
         return;
+
+      } else if (this.currentBaseLayer === "loss") {
+
+        if (config.mapLoaded && !this.time_layer_loss) {
+
+          this._loadTimeLayerLoss();
+
+        } else {
+
+          if (this.time_layer_loss) {
+            this.time_layer_loss.show();
+            TimelineLoss.show();
+          }
+
+        }
+
+        this.$map_coordinates.hide();
+
+        return;
+
       } else if (this.currentBaseLayer === "annual") {
         table_name = 'gfw2_hansen';
       } else if (this.currentBaseLayer === "quarterly") {
@@ -1147,12 +1199,20 @@ GFW.modules.maplayer = function(gfw) {
         sad           = GFW.app.datalayers.LayersObj.get(584);
         fires         = GFW.app.datalayers.LayersObj.get(593);
         forestgain    = GFW.app.datalayers.LayersObj.get(594);
+        loss          = GFW.app.datalayers.LayersObj.get(595);
 
         if (category != 'Forest change' || slug === 'biome') {
           legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
         }
 
-        if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon" || slug === "fires" || slug === "forestgain") {
+        if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon" || slug === "fires" || slug === "forestgain" || slug === "loss") {
+
+          if (slug === 'loss' && showMap) {
+            Timeline.show();
+            //analysis.info.model.set("dataset", "forest_loss");
+          } else {
+            Timeline.hide();
+          }
 
           if (slug === 'semi_monthly' && showMap) {
             Timeline.show();
