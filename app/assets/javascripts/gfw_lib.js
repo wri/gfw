@@ -84,6 +84,7 @@ GFW.modules.app = function(gfw) {
       this.specialLayer     = null;
       this.pantropicalLayer = null;
       this.forest2000Layer  = null;
+      this.forestGainLayer  = null;
       this.currentBaseLayer = "semi_monthly";
 
       this._setupZoom();
@@ -277,6 +278,8 @@ GFW.modules.app = function(gfw) {
       } else {
         if(layer.get('slug') === 'forest2000') {
           this._removeForest2000Layer();
+        } else if(layer.get('slug') === 'forestgain') {
+          this._removeForestGainLayer();
         } else if(layer.get('slug') === 'pantropical') {
           this._removePantropicalLayer();
         } else {
@@ -296,6 +299,7 @@ GFW.modules.app = function(gfw) {
         if (table_name == "protected_areas") { this._renderExternalLayer(layer); }
         if (table_name == "pantropical") { this._renderPantropicalLayer(layer); }
         if (table_name == "forest2000") { this._renderForest2000Layer(layer); }
+        if (table_name == "forestgain") { this._renderForestGainLayer(layer); }
 
       } else {
         this._layers.push(layer.get('table_name'));
@@ -336,6 +340,13 @@ GFW.modules.app = function(gfw) {
       if (this.forest2000Layer) {
         this.forest2000Layer.setOpacity(0);
         this.forest2000Layer = null;
+      }
+    },
+
+    _removeForestGainLayer: function(layer) {
+      if (this.forestGainLayer) {
+        this.forestGainLayer.setOpacity(0);
+        this.forestGainLayer = null;
       }
     },
 
@@ -395,7 +406,7 @@ GFW.modules.app = function(gfw) {
       } else {
         this.forest2000Layer = new google.maps.ImageMapType({
           getTileUrl: function(tile, zoom) {
-            return "http://gfw-ee-tiles.appspot.com/gfw/forest_cover_2000/" + zoom + "/" + tile.x + "/" + tile.y + ".png";
+            return "http://earthengine.google.org/static/hansen_2013/tree_alpha/" + zoom + "/" + tile.x + "/" + tile.y + ".png";
           },
           tileSize: new google.maps.Size(256, 256),
           opacity:1,
@@ -404,7 +415,27 @@ GFW.modules.app = function(gfw) {
 
         map.overlayMapTypes.push(this.forest2000Layer);
       }
+    },
 
+    _renderForestGainLayer: function(layer) {
+      var that = this;
+
+      var query = layer.get('tileurl');
+
+      if (this.forestGainLayer) {
+        this.forestGainLayer.setOpacity(1);
+      } else {
+        this.forestGainLayer = new google.maps.ImageMapType({
+          getTileUrl: function(tile, zoom) {
+            return "http://earthengine.google.org/static/hansen_2013/gain_alpha/" + zoom + "/" + tile.x + "/" + tile.y + ".png";
+          },
+          tileSize: new google.maps.Size(256, 256),
+          opacity:1,
+          isPng: true
+        });
+
+        map.overlayMapTypes.push(this.forestGainLayer);
+      }
     },
 
     _renderLayers: function() {
