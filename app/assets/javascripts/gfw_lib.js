@@ -540,8 +540,6 @@ GFW.modules.app = function(gfw) {
 
     _getTableName: function(layerName) {
 
-      console.log(layerName);
-
       if (layerName === "semi_monthly") {
         return 'gfw2_forma';
       } else if (layerName === "annual") {
