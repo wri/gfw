@@ -39,7 +39,8 @@ GFW.modules.app = function(gfw) {
 
       this.options = _.defaults(options, {
         user       : 'gfw-01',
-        layerTable : 'layerinfo_minus_imazon' // TODO: change back to layerinfo when we have imazon
+        //layerTable : 'layerinfo_minus_imazon' // TODO: change back to layerinfo when we have imazon
+        layerTable : 'layerinfo_dev' // TODO: change back to layerinfo when we have imazon
       });
 
       this.timeLayerPosition = null;

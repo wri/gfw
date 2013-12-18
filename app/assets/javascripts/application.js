@@ -190,7 +190,8 @@ function loadGFW(callback) {
 
       GFW.app = new env.app.Instance(map, {
         user       : 'wri-01',
-        layerTable : 'layerinfo_minus_imazon', // TODO: change back to layerinfo when we have imazon
+        //layerTable : 'layerinfo_minus_imazon', // TODO: change back to layerinfo when we have imazon
+        layerTable : 'layerinfo_dev', // TODO: change back to layerinfo when we have imazon
         logging    : false
       });
 
