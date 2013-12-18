@@ -31,6 +31,7 @@
 
   display:none;
   padding: 30px;
+  position: fixed;
 
   @include box-shadow(0px 0px 7px $cGray2);
   @include border-radius(3px);

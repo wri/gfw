@@ -285,7 +285,7 @@
 
     <div class="content">
 
-      <%= form_for :area, :url => areas_path, :html => {:method => :post, :class => 'save-area'} do |f| %>
+      <%= form_for :area, :url => "http://wip.gfw-apis.appspot.com/subscribe", :html => {:method => :post, :class => 'save-area'} do |f| %>
         <%= f.hidden_field :the_geom %>
 
 
@@ -298,7 +298,7 @@
         <p class="help">{{ help }}</p>
 
         <div class="input-field huge">
-          <input class="field" type="{{ input_type }}" name="area[email]" />
+          <input class="field" type="{{ input_type }}" name="area[email]" id="area_email" />
           <span class="holder">{{ placeholder }}</span>
           <div class="icon error"></div>
           <div class="error_input_label"></div>
