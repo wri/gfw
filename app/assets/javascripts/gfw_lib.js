@@ -1214,12 +1214,12 @@ GFW.modules.datalayers = function(gfw) {
         this.LayersObj.bind('reset', function() {
 
           that.LayersObj.each(function(p) {
+            if(p.get('slug') === 'user_stories') {
+              Filter.addFilter(0, 'nothing', 'Community lands', 'Stay tuned', { disabled: true , category_color: "#707D92", color: "#707D92" });
+            }
+
             that._addLayer(p);
           });
-
-          // TODO: remove the below when real layers arrive
-          Filter.addFilter(0, 'nothing', 'Regrowth', 'Stay tuned', { disabled: true , category_color: "#707D92", color: "#707D92" });
-          // Filter.addFilter(0, 'nothing', 'Conservation', 'Stay tuned', { disabled: true , category_color: "#CCC",    color: "#CCC"});
         });
 
       },
