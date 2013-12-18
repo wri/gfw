@@ -4,7 +4,7 @@ this class renders deforestation data in a given time
 ====================
 */
 
-var MAX_MONTHS = 160;
+var MAX_MONTHS = 200;
 var BASE_MONTH = 71;
 
 function TimePlayer(table,version,cloudfront_url) {
@@ -197,7 +197,7 @@ TimePlayer.prototype.get_time_data = function(tile, coord, zoom) {
   // for current zoom
   // zoom + 8 is get because a tile in "zoom" zoom level is a pixel in "zoom + 8"
   // level. Remember, it is a quadtree, 1^8 = 256 and tile size is 256px
-  var pixel_zoom = Math.min(zoom + 8, 15);
+  var pixel_zoom = Math.min(zoom + 8, 16);
   sql += " z = {0} ".format(pixel_zoom);
 
   var zoom_diff =  zoom + 8 - pixel_zoom;
