@@ -187,7 +187,7 @@ var CountryMenu = (function() {
       _.each(tenures, function(tenure, i) {
         if(tenure['percent'] !== 0) {
           tenures_ord.push({
-            name: tenure['name'],            
+            name: tenure['name'],
             percent: tenure['percent']
           });
         }
@@ -1771,7 +1771,7 @@ var Filter = (function() {
 
         $layerItem.find("a:not(.source)").on("click", function() {
           if (!$(this).find(".radio").hasClass("checked")) {
-            clickEvent();
+            clickEvent && clickEvent();
           }
         });
       } else {

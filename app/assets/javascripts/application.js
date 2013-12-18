@@ -92,7 +92,7 @@ function loadOtherStuff(callback) {
   Timeline = new gfw.ui.view.Timeline({
     container: $("#map")
   });
-  publish('timeline:change_dates', Timeline._getDates());  
+  publish('timeline:change_dates', Timeline._getDates());
 
   TimelineImazon = new gfw.ui.view.TimelineImazon({
     container: $("#map")
@@ -117,7 +117,7 @@ function loadOtherStuff(callback) {
 
 /**
  * Executes an AJAX request and returns handle to resulting jqxhr object.
- * 
+ *
  * Args:
  *   url: The URL endpoint.
  *   data: Object with parameters.
@@ -144,7 +144,7 @@ function executeAjax(url, data, callback, type) {
         callback.error(status, error);
       }
     },
-    contentType: 'application/json', 
+    contentType: 'application/json',
     dataType: 'json'
   });
   return jqxhr;

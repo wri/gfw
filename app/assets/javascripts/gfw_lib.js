@@ -72,6 +72,7 @@ GFW.modules.app = function(gfw) {
       this.queries.annual           = "SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_hansen WHERE z=CASE WHEN 9 < {Z} THEN 17 ELSE {Z}+8 END";
       this.queries.quarterly        = "SELECT cartodb_id,the_geom_webmercator FROM modis_forest_change_copy";
       this.queries.brazilian_amazon = "SELECT cartodb_id,type,the_geom_webmercator FROM imazon_clean";
+      this.queries.fires            = "SELECT cartodb_id,the_geom_webmercator FROM global_7d";
 
       this.lastHash = null;
 
@@ -451,7 +452,6 @@ GFW.modules.app = function(gfw) {
     },
 
     _onMainLayerClick: function(ev, latlng, pos, data) {
-
       var that = this;
 
       //we needed the cartodb_id and table name
@@ -464,17 +464,9 @@ GFW.modules.app = function(gfw) {
       var request_sql = "SELECT *, null as the_geom, null as the_geom_webmercator FROM " + pair[1] + " WHERE cartodb_id = " + pair[0];
       var url = 'http://dyynnn89u7nkm.cloudfront.net/api/v2/sql?q=' + encodeURIComponent(request_sql);
 
-      $.ajax({
-        async: false,
-        dataType: 'jsonp',
-        crossDomain: true,
-        //jsonp:false,
-        jsonpCallback:'iwcallback',
-        url: url,
-        error: function(xhr, status, c) {
-          console.log("Error", xhr, status, c);
-        },
-        success: function(json) {
+      var makeSuccessCallback = function(pairs) {
+
+        return function(json) {
 
           if (!json || (json && !json.rows)) return;
 
@@ -484,24 +476,50 @@ GFW.modules.app = function(gfw) {
           delete json.rows[0]['created_at'];
           delete json.rows[0]['updated_at'];
 
-          var data = json.rows[0];
+          var data = _.clone(json.rows[0]);
+          var content_data = json.rows[0];
 
-          for (var key in data) {
+          for (var key in content_data) {
             var temp;
-            if (data.hasOwnProperty(key)) {
-              temp = data[key];
-              delete data[key];
+
+            if (content_data.hasOwnProperty(key)) {
+              temp = content_data[key];
+              delete content_data[key];
               key = key.replace(/_/g,' '); //add spaces to key names
-              data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
+              content_data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
             }
           }
 
           if (data) {
-            GFW.app.infowindow.setContent(data);
+
+            if ( pair[1] == 'biodiversity_hotspots' ) {
+              GFW.app.infowindow.setMode("image")
+              GFW.app.infowindow.setVisibleColumns(["description"]);
+              GFW.app.infowindow.setContent(data);
+            } else {
+              GFW.app.infowindow.setMode("normal")
+              GFW.app.infowindow.setVisibleColumns();
+              GFW.app.infowindow.setContent(content_data);
+            }
+
             GFW.app.infowindow.setPosition(latlng);
             GFW.app.infowindow.open();
           }
 
+        }
+      }
+
+      var onSuccess = makeSuccessCallback(pair);
+
+      $.ajax({
+        async: false,
+        dataType: 'jsonp',
+        crossDomain: true,
+        jsonpCallback:'iwcallback',
+        url: url,
+        success: onSuccess,
+        error: function(xhr, status, c) {
+          console.log("Error", xhr, status, c);
         }
       });
 
@@ -522,6 +540,8 @@ GFW.modules.app = function(gfw) {
 
     _getTableName: function(layerName) {
 
+      console.log(layerName);
+
       if (layerName === "semi_monthly") {
         return 'gfw2_forma';
       } else if (layerName === "annual") {
@@ -530,6 +550,8 @@ GFW.modules.app = function(gfw) {
         return 'modis_forest_change_copy';
       } else if (layerName === "brazilian_amazon") {
         return 'imazon_clean';
+      } else if (layerName === "fires") {
+        return 'global_7d';
       }
 
       return null;
@@ -857,6 +879,7 @@ GFW.modules.app = function(gfw) {
         this.$map_coordinates.hide();
 
         return;
+
       } else if (this.currentBaseLayer === "brazilian_amazon") {
         if (config.mapLoaded && !this.time_layer_imazon) {
 
@@ -1092,12 +1115,21 @@ GFW.modules.maplayer = function(gfw) {
         annual        = GFW.app.datalayers.LayersObj.get(568),
         quarterly     = GFW.app.datalayers.LayersObj.get(588),
         sad           = GFW.app.datalayers.LayersObj.get(584);
+        fires         = GFW.app.datalayers.LayersObj.get(593);
 
         if (category != 'Forest clearing' || slug === 'biome') {
           legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
         }
 
-        if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon") {
+        if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon" || slug === "fires") {
+
+          if (slug === 'fires' && showMap) {
+            Timeline.hide();
+            //analysis.info.model.set("dataset", "forma");
+          } else {
+            Timeline.hide();
+          }
+
           if (slug === 'semi_monthly' && showMap) {
             Timeline.show();
             analysis.info.model.set("dataset", "forma");
@@ -1136,6 +1168,7 @@ GFW.modules.maplayer = function(gfw) {
           }
 
           legend.replace(id, category_slug, category, title, slug, category_color, title_color);
+
         } else {
           if (visible) {
             GFW.app._addLayer(this.layer);

@@ -33,7 +33,19 @@ CartoDBInfowindow.prototype.draw = function() {
 
     div.className = this.className || "cartodb_infowindow";
 
-    div.innerHTML = this.template || '<a href="#close" class="close"></a>'+
+    this.template_image = '<a href="#close" class="close"></a>'+
+      '<div class="outer_top">'+
+      '<div class="top">'+
+      '<div class="header">' +
+      '<h1></h1><div class="cover imgLiquidFill" style="width:295px; height:120px;"><img src="/assets/backgrounds/cover.png" /></div>'+
+      '</div>' +
+      '<div class="infowindow_content"></div>' +
+      '</div>'+
+      '</div>'+
+      '<div class="shadow"></div>'+
+      '<div class="bottom"></div>';
+
+     this.template_base = '<a href="#close" class="close"></a>'+
       '<div class="outer_top">'+
       '<div class="top">'+
       '<div class="infowindow_content"></div>' +
@@ -41,6 +53,8 @@ CartoDBInfowindow.prototype.draw = function() {
       '</div>'+
       '<div class="shadow"></div>'+
       '<div class="bottom"></div>';
+
+    div.innerHTML = this.template || this.template_base;
 
     var a = this.getElementsByClassName("close", div)[0];
 
@@ -94,6 +108,25 @@ CartoDBInfowindow.prototype.draw = function() {
 
 };
 
+CartoDBInfowindow.prototype.setVisibleColumns = function(columns){
+  this.visible_columns = columns;
+},
+
+CartoDBInfowindow.prototype.setMode = function(mode){
+
+  this.mode = mode;
+
+  if (this.mode == "image") {
+    this.template = this.template_image;
+    this.div_.innerHTML = this.template;
+    this.div_.className = "cartodb_infowindow with_image_2";
+  } else {
+    this.template = this.template_base;
+    this.div_.innerHTML = this.template;
+    this.div_.className = "cartodb_infowindow";
+  }
+};
+
 CartoDBInfowindow.prototype.setTemplate = function(template){
   this.template_ = template;
 };
@@ -118,9 +151,19 @@ CartoDBInfowindow.prototype.setContent = function(content){
       top.innerHTML = '';
       var html = '';
 
+      function show_column(column, content, visible_columns) {
+
+        if (!visible_columns) {
+          return column != "slug" && content[column] != null && content[column] != '';
+        } else {
+          return column != "slug" && content[column] != null && content[column] != '' && _.contains(visible_columns, column);
+        }
+
+      }
+
       for(var column in content) {
 
-        if (column != "slug" && content[column] != null && content[column] != ''){
+        if (show_column(column, content, this.visible_columns)) {
           html += '<label>' + column + '</label>';
           html += '<p class="'+((content[column]!=null && content[column]!='')?'':'empty')+'">'+(content[column] || 'empty')+'</p>';
         }
@@ -132,6 +175,12 @@ CartoDBInfowindow.prototype.setContent = function(content){
       var pane = $(".cartodb_infowindow .top").jScrollPane( { showArrows: true });
       var api = pane.data('jsp');
       api.scrollToY(0); // scroll to top
+
+      if (this.mode == "image") {
+        $(div).find("h1").html(content.name);
+        $(div).find("img").attr("src", content.image.replace("square", "medium"));
+        $(div).find("img").css("width", "295px");
+      }
 
     }
   }
@@ -201,12 +250,15 @@ CartoDBInfowindow.prototype._hide = function() {
 CartoDBInfowindow.prototype._show = function() {
   if (this.div_) {
 
-
     var div = this.div_;
     div.style.opacity = 0;
     div.style.top = (parseInt(div.style.top, 10) - 10) + 'px';
 
     div.style.visibility = "visible";
+
+    if (this.mode == "image") {
+      $(".imgLiquidFill").imgLiquid();
+    }
 
     emile(div,{
       opacity: 1,
