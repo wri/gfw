@@ -8,17 +8,17 @@
 
 <nav class="navbar">
 <ul>
-  <% %w(home countries stories map blog data about).each do |option| %>
+  <% %w(home map countries stories blog data howto about).each do |option| %>
     <%
-      paths    = { "home" => root_path, "countries" => countries_path, "stories" => stories_path, "map" => map_path,  "blog" => "http://globalforestwatch.tumblr.com", "data" => sources_path, "about" => about_path }
+      paths    = { "home" => root_path, "countries" => countries_path, "stories" => stories_path, "map" => map_path,  "blog" => "http://globalforestwatch.tumblr.com", "data" => sources_path, "howto" => "", "about" => about_path }
       path     = paths[option]
-      option_class = request.path == path ? "selected" : ""
+      option_class = request.path === path ? "selected" : ""
 
       # Exceptions
       option_class = "selected" if controller_name == 'countries' && option == 'countries'
       option_class = "selected" if controller_name == 'posts'     && option == 'blog'
-      option_class = "selected" if controller_name == 'static'    && option == 'about'
-      # option_class = "disabled" if option == 'blog'
+      # option_class = "selected" if controller_name == 'static'    && option == 'about'
+      #option_class = "disabled" if option == 'blog'
 
       option_class = "#{option_class} #{option}"
 
