@@ -297,12 +297,12 @@ strong { font-weight: bold; } // This is sad, I know.
   &.mining          .icon  { @include icons-sprite(icon_mining); }
   &.fire            .icon  { @include icons-sprite(icon_fire); }
   &.stories         .icon  { @include icons-sprite(icon_stories); }
-  &.forest_clearing .icon  { @include icons-sprite(icon_forest_clearing); }
+  &.forest_change   .icon  { @include icons-sprite(icon_forest_clearing); }
   &.forest_cover 		.icon  { @include icons-sprite(icon_forest_cover); }
   &.carbon          .icon  { @include icons-sprite(icon_concessions); }
   &.biodiversity    .icon  { @include icons-sprite(icon_concessions); }
   &.other_layers    .icon  { @include icons-sprite(icon_other); }
-  &.regrowth        .icon  { @include icons-sprite(icon_regrowth); }
+  &.people          .icon  { @include icons-sprite(icon_regrowth); }
 }
 
 .filter-bullets {
@@ -313,10 +313,10 @@ strong { font-weight: bold; } // This is sad, I know.
   background-position: $left $top;
 
   &.conservation    { background:url(icons/bullet_conservation.png) no-repeat $left $top; }
-  &.forest_clearing { background:url(icons/bullet_deforestation.png) no-repeat $left $top; }
+  &.forest_change   { background:url(icons/bullet_deforestation.png) no-repeat $left $top; }
   &.forest_use      { background:url(icons/bullet_concessions.png) no-repeat $left $top; }
   &.mining          { background:url(icons/bullet_mining.png) no-repeat $left $top; }
-  &.regrowth        { background:url(icons/bullet_regrowth.png) no-repeat $left $top; }
+  &.people          { background:url(icons/bullet_regrowth.png) no-repeat $left $top; }
 }
 
 @mixin radio($url) {

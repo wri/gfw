@@ -925,6 +925,8 @@ GFW.modules.app = function(gfw) {
         this.$map_coordinates.hide();
 
         return;
+      } else if (this.currentBaseLayer === "forestgain") {
+        return;
       }
 
       this.baseLayer = new CartoDBLayer({
@@ -1056,7 +1058,7 @@ GFW.modules.maplayer = function(gfw) {
           }
         } else if (this.layer.get('slug') == "annual") {
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true });
-        } else if (this.layer.get('slug') === 'brazilian_amazon' || this.layer.get('slug') === 'quarterly') {
+        } else if (this.layer.get('slug') === 'brazilian_amazon' || this.layer.get('slug') === 'quarterly' || this.layer.get('slug') === 'forestgain'|| this.layer.get('slug') === 'fires') {
           var biomeEvent = function() {
             that._toggleLayer();
             GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
@@ -1118,7 +1120,6 @@ GFW.modules.maplayer = function(gfw) {
         }
 
         this.layer.attributes['visible'] = !this.layer.attributes['visible'];
-
         var
         slug            = this.layer.get('slug'),
         title           = this.layer.get('title'),
@@ -1129,7 +1130,6 @@ GFW.modules.maplayer = function(gfw) {
         category        = this.layer.get('category_name'),
         category_slug   = this.layer.get('category_slug'),
         category_color  = this.layer.get('category_color'),
-        visibility      = this.layer.get('visible');
         id              = this.layer.get('id');
 
         if (category === null || !category) { // Default data
@@ -1145,19 +1145,13 @@ GFW.modules.maplayer = function(gfw) {
         quarterly     = GFW.app.datalayers.LayersObj.get(588),
         sad           = GFW.app.datalayers.LayersObj.get(584);
         fires         = GFW.app.datalayers.LayersObj.get(593);
+        forestgain    = GFW.app.datalayers.LayersObj.get(594);
 
-        if (category != 'Forest clearing' || slug === 'biome') {
+        if (category != 'Forest change' || slug === 'biome') {
           legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
         }
 
-        if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon" || slug === "fires") {
-
-          if (slug === 'fires' && showMap) {
-            Timeline.hide();
-            //analysis.info.model.set("dataset", "forma");
-          } else {
-            Timeline.hide();
-          }
+        if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon" || slug === "fires" || slug === "forestgain") {
 
           if (slug === 'semi_monthly' && showMap) {
             Timeline.show();
@@ -1194,6 +1188,12 @@ GFW.modules.maplayer = function(gfw) {
             quarterly.attributes['visible'] = true;
           } else if (slug == 'brazilian_amazon') {
             sad.attributes['visible'] = true;
+          }
+
+          if (slug == 'forestgain') {
+            GFW.app._addLayer(this.layer);
+          } else {
+            GFW.app._removeLayer(forestgain);
           }
 
           legend.replace(id, category_slug, category, title, slug, category_color, title_color);
@@ -1246,7 +1246,7 @@ GFW.modules.datalayers = function(gfw) {
 
           that.LayersObj.each(function(p) {
             if(p.get('slug') === 'user_stories') {
-              Filter.addFilter(0, 'nothing', 'Community lands', 'Stay tuned', { disabled: true , category_color: "#707D92", color: "#707D92" });
+              Filter.addFilter(0, 'nothing', 'People', 'Stay tuned', { disabled: true , category_color: "#707D92", color: "#707D92" });
             }
 
             that._addLayer(p);

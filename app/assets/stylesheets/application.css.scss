@@ -1140,7 +1140,7 @@ article.contact {
 #filters #layer ul li .radio {
   @include radio(radio);
 
-  &.forest_clearing    {
+  &.forest_change    {
     @include radio(radio_fire);
 
     &.semi_monthly { width: 100px; }
