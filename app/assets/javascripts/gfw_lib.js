@@ -1058,7 +1058,7 @@ GFW.modules.maplayer = function(gfw) {
           }
         } else if (this.layer.get('slug') == "annual") {
           Filter.addFilter(this.layer.get('id'), this.layer.get('slug'), this.layer.get('category_name'), this.layer.get('title'), { disabled: true });
-        } else if (this.layer.get('slug') === 'brazilian_amazon' || this.layer.get('slug') === 'quarterly' || this.layer.get('slug') === 'forestgain'|| this.layer.get('slug') === 'fires') {
+        } else if (this.layer.get('slug') === 'brazilian_amazon' || this.layer.get('slug') === 'quarterly' || this.layer.get('slug') === 'forestgain' || this.layer.get('slug') === 'fires') {
           var biomeEvent = function() {
             that._toggleLayer();
             GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
@@ -1193,7 +1193,7 @@ GFW.modules.maplayer = function(gfw) {
           if (slug == 'forestgain') {
             GFW.app._addLayer(this.layer);
           } else {
-            GFW.app._removeLayer(forestgain);
+            forestgain && GFW.app._removeLayer(forestgain);
           }
 
           legend.replace(id, category_slug, category, title, slug, category_color, title_color);
