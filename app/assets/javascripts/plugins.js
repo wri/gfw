@@ -1500,7 +1500,7 @@ var Filter = (function() {
   }
 
   function _toggleBiome(id) {
-    var checkbox = $(".checkbox.forest_clearing");
+    var checkbox = $(".checkbox.forest_change");
 
     this.toggle(id);
 
@@ -1512,11 +1512,11 @@ var Filter = (function() {
   }
 
   function _disableBiome() {
-    $(".checkbox.forest_clearing").addClass("disabled").closest("li").addClass("disabled");
+    $(".checkbox.forest_change").addClass("disabled").closest("li").addClass("disabled");
   }
 
   function _enableBiome() {
-    $(".checkbox.forest_clearing").removeClass("disabled").closest("li").removeClass("disabled");
+    $(".checkbox.forest_change").removeClass("disabled").closest("li").removeClass("disabled");
   }
 
   function _show(callback) {
@@ -1765,7 +1765,7 @@ var Filter = (function() {
 
     if (!disabled) { // click binding
       // Select the kind of input (radio or checkbox) depending on the category
-      if (cat === 'forest_clearing' && slug != 'biome') {
+      if (cat === 'forest_change' && slug != 'biome') {
         layerItemTemplate = _.template($("#layer-item-radio-template").html());
         $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
 
