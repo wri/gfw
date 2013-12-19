@@ -17,8 +17,7 @@
       # Exceptions
       option_class = "selected" if controller_name == 'countries' && option == 'countries'
       option_class = "selected" if controller_name == 'posts'     && option == 'blog'
-      # option_class = "selected" if controller_name == 'static'    && option == 'about'
-      #option_class = "disabled" if option == 'blog'
+      option = "how to" if option == "howto"
 
       option_class = "#{option_class} #{option}"
 
