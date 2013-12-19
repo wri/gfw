@@ -815,9 +815,9 @@ GFW.modules.app = function(gfw) {
       TimelineLoss.show();
       TimelineLoss.updateCoordinates(that._map.getCenter());
 
-      TimelineLoss.bind('change_date', function(start_month, end_month, year) {
+      TimelineLoss.bind('change_date', function(start_year, end_year) {
         //that.time_layer_loss.set_start_time(start_month);
-        that.time_layer_loss.set_time(end_month, year);
+        that.time_layer_loss.set_range(start_year, end_year);
       });
 
       TimelineLoss.loadDefaultRange();

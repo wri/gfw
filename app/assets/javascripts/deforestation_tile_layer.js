@@ -64,10 +64,7 @@ DeforestationTileLayer.prototype.composed = function(map, w, h) {
 }
 
 DeforestationTileLayer.prototype.filter_tiles = function() {
-  var args = [];
-  for (var i in arguments) {
-    args.push(arguments[i]);
-  }
+  var args = Array.prototype.slice.call(arguments);
   for(var c in this.tiles) {
     this.filter_tile(this.tiles[c], args);
   }
@@ -87,6 +84,7 @@ DeforestationTileLayer.prototype.releaseTile = function(tile) {
 function DeforestationTileLayerThreshold (canvas_setup, filter) {
   DeforestationTileLayer.call(this, canvas_setup, filter);
   this.threshold = 0;
+  this.start_threshold = 0;
 }
 
 DeforestationTileLayerThreshold.prototype = new DeforestationTileLayer();
@@ -110,7 +108,7 @@ var Deforestation = function() {
 
   var me = { };
 
-  function filter(image_data, w, h, threshold) {
+  function filter(image_data, w, h, year_start, year_end) {
     var components = 4; //rgba
     var pixel_pos;
     for(var i=0; i < w; ++i) {
@@ -123,7 +121,7 @@ var Deforestation = function() {
 
           yearLoss = 2000 + yearLoss;
 
-          if (yearLoss < threshold) {
+          if (yearLoss >= year_start && yearLoss <= year_end) {
             image_data[pixel_pos] = intensity;
             image_data[pixel_pos + 1] = 0;
             image_data[pixel_pos + 2] = 0;
@@ -148,7 +146,7 @@ var Deforestation = function() {
     $(image).load(function() {
       //ctx.globalAlpha = 0.5;
       ctx.drawImage(image, 0, 0);
-      Deforestation.heightLayer.filter_tile(canvas, [Deforestation.threshold]);
+      Deforestation.heightLayer.filter_tile(canvas, [Deforestation.start_threshold, Deforestation.threshold]);
     });
   }
 
@@ -190,28 +188,25 @@ var Deforestation = function() {
     }
   }
 
-  me.set_start_time = function(v) {
+  me.set_range = function(s, e) {
+    console.log(s, e);
+
+    this.threshold = e;
+    this.start_threshold = s;
+    this.heightLayer.filter_tiles(this.start_threshold, this.threshold);
+  }
+
+  me.set_start_time = function(year) {
     //console.log("start", v)
-    this.threshold = v
-    this.heightLayer.filter_tiles(v);
+    this.start_threshold = year;
+    this.heightLayer.filter_tiles(this.start_threshold, this.threshold);
   }
 
   me.set_time = function(month, year) {
     console.log("time", year)
     this.threshold = year;
-    this.heightLayer.filter_tiles(year);
+    this.heightLayer.filter_tiles(this.start_threshold, this.threshold);
   }
 
-  me.setup_ui = function() {
-    var that = this;
-    $("#slider").slider({
-      slide: function(event, ui) {
-        var v = (2000 + 13*ui.value/100) | 0;
-        //$("#slider_value").html("year " + v);
-        that.threshold = v
-        that.heightLayer.filter_tiles(v);
-      }
-    });
-  }
   return me;
 }();
