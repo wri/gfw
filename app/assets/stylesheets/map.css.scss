@@ -1234,7 +1234,7 @@
         @include inline-block();
         @include size(5px, $handleWidth);
 
-        background: url(icons/point.png) no-repeat 6px center;
+        background: url(icons/point_small.png) no-repeat 4px center;
 
         z-index: 100;
       }
