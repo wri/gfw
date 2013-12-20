@@ -581,7 +581,7 @@
 }
 
 .legend {
-  width:211px;
+  width:245px;
   min-height: 40px;
 
   @include position(35px, false, false, 60px);
@@ -631,7 +631,7 @@
     display:none;
   }
 
-  .jspPane { width: 211px!important; }
+  .jspPane { width: 245px!important; }
 
   .content {
 
@@ -639,8 +639,43 @@
     height: 40px;
 
     width: 100%;
-    width: 211px;
+    width: 245px;
     overflow: auto;
+
+    ul li  .info {
+      margin: 9px 0 0 0;
+      font-size: 11px;
+
+      strong { display: block; margin: 0 0 7px 0; font-size: 10px; }
+      p { font-size: 11px;}
+      .units { font-weight:normal; font-size: 10px; }
+
+      .colors div {
+        width: 25%;
+        height: 10px;
+        display: table-cell;
+
+        &:first-child {
+          @include border-radius(3px 0 0 3px);
+        }
+        &:last-child {
+          @include border-radius(0 3px 3px 0px);
+        }
+      }
+
+      .data .min { width: auto; float:left; }
+      .data .max { width: auto; float:right; }
+
+
+      .colors {
+        display: table-row;
+        margin: 3px 0 5px 0;
+        border: 1px solid #FED98E;
+        @include border-radius(3px 3px 3px 3px);
+      }
+
+
+    }
 
     ul {
       &:first-child { border-top: none; }
@@ -681,6 +716,7 @@
           @include inline-block();
           @include size(10px);
           @include icons-sprite(information);
+          margin-top: -2px;
 
           &:hover {
             @include icons-sprite(information);
@@ -691,7 +727,7 @@
 
         div {
           float:left;
-          width: 150px;
+          width: 184px;
         }
 
         strong {
@@ -1678,7 +1714,7 @@
 
       @include inline-block();
       white-space: nowrap;
-      width: 235px;
+      width: 245px;
       text-overflow: ellipsis;
       overflow: hidden;
 
@@ -1814,7 +1850,7 @@
   }
 
   .top {
-    width:235px;
+    width:245px;
     max-height:200px;
     margin:auto;
     overflow-y:auto;

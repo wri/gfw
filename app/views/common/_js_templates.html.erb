@@ -374,6 +374,27 @@
     </ul>
   </script>
 
+  <script id="legend-group-pantropical-template" type="text/x-underscore-template">
+    <ul class="{{category}}">
+      <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
+      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a>
+
+      <div class="info">
+      <strong>Total Biomass Carbon <span class="units">(MgC/ha)</span></strong>
+      <div class="data">
+      <div class="min">75</div>
+      <div class="max">383 </div>
+      <div class="colors">
+      <div class="quartile" style="background-color:#FFFFD4"></div>
+      <div class="quartile" style="background-color:#FED98E"></div>
+      <div class="quartile" style="background-color:#FE9929"></div>
+      <div class="quartile" style="background-color:#dd8653"></div>
+      </div>
+      </div>
+      </li>
+
+    </ul>
+  </script>
   <script id="legend-group-template" type="text/x-underscore-template">
     <ul class="{{category}}">
       <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
@@ -383,6 +404,28 @@
 
   <script id="legend-item-template" type="text/x-underscore-template">
     <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a></div></li>
+  </script>
+
+  <script id="legend-item-pantropical-template" type="text/x-underscore-template">
+    <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a>
+    
+      <div class="info">
+      <strong>Total Biomass Carbon <span class="units">(MgC/ha)</span></strong>
+      <div class="data">
+      <div class="min">75</div>
+      <div class="max">383</div>
+      <div class="colors">
+      <div class="quartile" style="background-color:#FFFFD4"></div>
+      <div class="quartile" style="background-color:#FED98E"></div>
+      <div class="quartile" style="background-color:#FE9929"></div>
+      <div class="quartile" style="background-color:#dd8653"></div>
+      </div>
+      </div>
+      </li>
+</div>
+    
+    
+    </li>
   </script>
 
   <script id="dialog-template" type="text/x-underscore-template">
