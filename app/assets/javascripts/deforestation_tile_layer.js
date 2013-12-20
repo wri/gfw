@@ -189,21 +189,17 @@ var Deforestation = function() {
   }
 
   me.set_range = function(s, e) {
-    console.log(s, e);
-
     this.threshold = e;
     this.start_threshold = s;
     this.heightLayer.filter_tiles(this.start_threshold, this.threshold);
   }
 
   me.set_start_time = function(year) {
-    //console.log("start", v)
     this.start_threshold = year;
     this.heightLayer.filter_tiles(this.start_threshold, this.threshold);
   }
 
   me.set_time = function(month, year) {
-    console.log("time", year)
     this.threshold = year;
     this.heightLayer.filter_tiles(this.start_threshold, this.threshold);
   }

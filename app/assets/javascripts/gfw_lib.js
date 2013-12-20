@@ -39,8 +39,8 @@ GFW.modules.app = function(gfw) {
 
       this.options = _.defaults(options, {
         user       : 'gfw-01',
-        //layerTable : 'layerinfo_minus_imazon' // TODO: change back to layerinfo when we have imazon
-        layerTable : 'layerinfo_dev' // TODO: change back to layerinfo when we have imazon
+        layerTable : 'layerinfo_minus_imazon'
+        // layerTable : 'layerinfo_dev'
       });
 
       this.timeLayerPosition = null;
@@ -904,7 +904,6 @@ GFW.modules.app = function(gfw) {
 
       var self = this;
       var table_name = null;
-      console.log("layer", this.currentBaseLayer);
 
       if (this.currentBaseLayer === "semi_monthly") {
         if (config.mapLoaded && !this.time_layer) {
