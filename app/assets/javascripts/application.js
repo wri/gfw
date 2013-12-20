@@ -428,7 +428,10 @@ function loadGFW(callback) {
 $(function(){
 
   // Loads the WRI Global Nav Bar
-  wri_global_nav({});
+  wri_global_nav({
+    string: "A partnership convened by the <a href='http://www.wri.org'>World Resources Institute</a>",
+    disabled: true
+  });
 
   var resizePID;
 
