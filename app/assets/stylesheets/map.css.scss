@@ -64,7 +64,7 @@
 
 #filters {
   @include size(100%, 10px);
-  @include position(135px, false, false, 0);
+  @include position(180px, false, false, 0);
 
   z-index: 1000;
 

@@ -427,6 +427,12 @@ function loadGFW(callback) {
 
 $(function(){
 
+  // Loads the WRI Global Nav Bar
+  wri_global_nav({
+    string: "A partnership convened by the <a href='http://www.wri.org'>World Resources Institute</a>",
+    disabled: true
+  });
+
   var resizePID;
 
   var Router = Backbone.Router.extend({
@@ -561,20 +567,20 @@ $(function(){
   function positionScroll() {
     if($("header").hasClass("stuck")) {
       // stuck logo to top of viewport
-      if($(window).scrollTop() < 5) {
+      if($(window).scrollTop() < 39) {
         $("header a.logo").css({
           "position": "absolute",
           "top": "0"
         });
-      } else if($(window).scrollTop() >= 5 && $(window).scrollTop() <= 68) {
+      } else if($(window).scrollTop() >= 39 && $(window).scrollTop() <= 115) {
         $("header a.logo").css({
           "position": "fixed",
           "top": "0"
         });
-      } else if($(window).scrollTop() > 68) {
+      } else if($(window).scrollTop() > 115) {
         $("header a.logo").css({
           "position": "absolute",
-          "top": "63px"
+          "top": "67px"
         });
       }
     }
