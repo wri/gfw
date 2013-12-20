@@ -5,6 +5,40 @@
     var areaSummary = { icon: "area", count: "3,182", title: "Hectares of forest cleared in 2012" }
   </script>
 
+  <script id="timeline_loss-template" type="text/x-underscore-template">
+    <div class="coordinates"></div>
+    <div class="timeline_legend"><p>Loss</p></div>
+    <div class="inner">
+      <div class="action">
+        <a class="play" href="#"></a>
+        <a class="pause" href="#"></a>
+      </div>
+      <div class="time">
+        <div class="line"><div class="tipsy"><span>Month</span><div class="arrow"></div></div></div>
+
+        <div class="trail">
+          <div class="handle left">
+            <div class="tipsy">
+              <span></span>
+              <div class="arrow"></div>
+            </div>
+          </div>
+
+          <div class="handle right">
+            <div class="tipsy">
+              <span></span>
+              <div class="arrow"></div>
+            </div>
+          </div>
+        </div>
+
+        <ul class="years"></ul>
+        <div class="range"></div>
+        <ul class="visible_months"></ul>
+      </div>
+    </div>
+  </script>
+
   <script id="timeline_new-template" type="text/x-underscore-template">
     <div class="coordinates"></div>
     <div class="timeline_legend"><p>Humid tropics monthly alerts</p></div>

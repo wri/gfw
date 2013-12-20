@@ -756,7 +756,6 @@
   }
 }
 
-
 /*
  * TIMELINE
  */
@@ -1052,7 +1051,7 @@
 
     .handle {
       position:absolute;
-      top: 3px; left: 9px;
+      top: 3px; left: 27px;
       z-index: 300;
       @include size(14px);
       background: url(icons/timeline_handler.png) no-repeat 0 0;
@@ -1061,6 +1060,319 @@
 
       &.right { left: 846px; }
     }
+  }
+}
+
+/*
+ * TIMELINE LOSS
+ */
+
+.timeline.loss {
+  position:absolute;
+  bottom: 40px;
+  z-index: 1000;
+
+  background-color: $cWhite;
+  border-color:rgb(102,102,102);
+  border-width:1px;
+  -moz-border-radius:5px; // Firefox v1.0+
+  -webkit-border-radius:5px; // Safari v3.0+ and by Chrome v0.2+
+  border-radius:5px; // Firefox v4.0+ , Safari v5.0+ , Chrome v4.0+ , Opera v10.5+  and by IE v9.0+
+  border-style:solid;
+  -moz-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);    // Firefox v3.5+
+  -webkit-box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15); // Safari v3.0+ and by Chrome v0.2+
+  box-shadow:0px 0px 6px 1px rgba(0,0,0,0.15);         // Firefox v4.0+ , Safari v5.1+ , Chrome v10.0+, IE v10+ and by Opera v10.5+
+
+  display:none;
+
+  &.timeline_notplayer .time .line {
+    left: 23px;
+    z-index: 220px;
+
+    .tipsy {
+      width: 100px;
+      left: -50px;
+
+      .arrow {
+        left: 50%;
+        margin-left: -11px;
+      }
+    }
+  }
+
+  .inner { clear:both; position:relative; }
+
+  .timeline_legend {
+    position:absolute;
+    top: -20px;
+    left: 13px;
+    text-align: left;
+
+    color:#fff;
+    font-weight:bold;
+    @extend .sans-serif;
+    font-size:12px;
+    text-shadow: 0px 0px 3px #222;
+  }
+
+  .coordinates {
+    position:absolute;
+    top: -20px;
+    right: 5px;
+    text-align: right;
+    color:#fff;
+    font-weight:bold;
+    @extend .sans-serif;
+    font-size:11px;
+    text-shadow: 0px 0px 3px #222;
+    @include user-select(text);
+  }
+
+  $handleWidth: 14px;
+
+  &.pause .action a {
+    background: url(icons/timeline_pause.png) no-repeat 0 0;
+  }
+
+  .action {
+    position:relative;
+    float:left;
+    width: 52px;
+    height: 50px;
+    border-right: 1px solid #333;
+
+    a {
+      @include absolute-center(13px);
+      display:block;
+      background: url(icons/timeline_play.png) no-repeat 0 0;
+
+      &.pause { display:none; background: url(icons/timeline_pause.png) no-repeat 0 0; }
+
+    }
+
+  }
+
+  .time {
+    float:left;
+    position:relative;
+    margin: 15px 0 0 13px;
+
+    .line {
+
+      .tipsy { display:block; bottom: 43px; left:-36px; }
+
+      display:none;
+      position:absolute;
+      top: -15px;
+      left: 95px;
+      border-left: 1px solid #A2BE00;
+      height: 50px;
+      width: 1px;
+
+      z-index: 210;
+    }
+
+  }
+
+  .range {
+    display:none;
+    position:absolute;
+    top: 7px; left: 10px;
+    background:#A2BC28;
+    height: 6px;
+    width: 200px;
+    @include box-shadow(1px 0 3px #ccc);
+    z-index: 10;
+  }
+
+  .tipsy {
+    position:absolute;
+    display:none;
+    width: 70px;
+    bottom: 25px; left: -29px;
+    padding: 7px 0;
+
+    background:#333;
+
+    @include border-radius(2px);
+
+    font-weight:normal;
+    font-size:11px;
+    text-transform: uppercase;
+    text-align: center;
+    color:#fff;
+    font: normal 10px "Futura", sans-serif;
+
+    .arrow {
+      position:absolute;
+      @include size(0);
+      @include position(20px, false, false, 25px);
+      border-left: 11px solid transparent;
+      border-right: 11px solid transparent;
+      border-top: 12px solid #333;
+    }
+
+  }
+
+  .visible_months {
+    position:absolute;
+    top: 0;
+    z-index: 1;
+
+    li {
+
+      @include inline-block();
+      width: 5px*12 + 5px*4;
+
+      .year {
+        @include inline-block();
+        width: 5px*3;
+
+      }
+
+      .month {
+        @include inline-block();
+        @include size(5px, $handleWidth);
+
+        background: url(icons/point_small.png) no-repeat 4px center;
+
+        z-index: 100;
+      }
+
+    }
+  }
+
+  .visible_quarters {
+    position:absolute;
+    top: 0;
+    z-index: 1;
+
+    li {
+
+      @include inline-block();
+      width: 87px;
+
+      .year {
+        @include inline-block();
+        width: 51px;
+
+      }
+
+      .interval {
+        @include inline-block();
+        @include size(5px, $handleWidth);
+
+        background: url(icons/interval.png) no-repeat center;
+
+        z-index: 100;
+        margin-left: 57px;
+        width: 30px;
+      }
+    }
+  }
+
+  .years,
+  .quarters {
+    position:relative;
+    z-index: 220;
+
+    li {
+
+      &:last-child {
+        width: 5px*4;
+        height:30px;
+        margin-left: 10px;
+        span { width: 27px; }
+      }
+
+      @include inline-block();
+      width: 5px*12 + 5px*4;
+
+      .year {
+        @include inline-block();
+        width: 33px;
+        font-size: 11px;
+        text-align:center;
+        width: 30px;
+        font: normal 10px "Futura", sans-serif;
+        color: #666;
+        text-decoration:none;
+        background:#fff;
+
+        &.active { color: #A2BE00; }
+      }
+
+      .month {
+        @include inline-block();
+        @include size(5px, $handleWidth);
+
+        z-index: 100;
+      }
+
+    }
+
+  }
+
+  .quarters li {
+    width: 5px*4 + 51px;
+
+    &:last-child {
+      width: 51px;
+      span { width: 27px; }
+    }
+
+    .year {
+      width: 51px;
+      padding: 3px;
+
+      &.active {
+        border: 1px solid #999;
+        padding: 2px;
+        @include border-radius(3px);
+        color: #666;
+
+        &.selected {
+          background: #A1BA42;
+          border: 1px solid #839C26;
+          color: #fff;
+          @include box-shadow(0 0 5px rgba(#000, 0.15));
+        }
+      }
+    }
+  }
+
+  .trail {
+    position:absolute;
+    top: 0px; left: 0px;
+    width: 100%;
+    height: $handleWidth;
+
+    .ui-slider-handle.ui-state-default.ui-corner-all {
+      position:absolute;
+      top: 3px; left: 0;
+      z-index: 200;
+      @include size(14px);
+      background: url(icons/timeline_handler.png) no-repeat 0 0;
+      cursor:col-resize;
+      @extend .disable-selection;
+      outline:none;
+    }
+
+    .handle {
+      position:absolute;
+      top: 3px; left: 27px;
+      z-index: 300;
+      @include size(14px);
+      background: url(icons/timeline_handler.png) no-repeat 0 0;
+      cursor:col-resize;
+      @extend .disable-selection;
+
+      &.right { left: 846px; }
+    }
+  }
+
+  &.loss .handle {
+    left: 30px;
   }
 }
 
