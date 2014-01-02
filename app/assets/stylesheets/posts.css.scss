@@ -125,8 +125,7 @@ body.posts {
 }
 
 body.posts,
-body.static,
-body.sources {
+body.static {
 
   header {
     border-bottom: 1px solid #ccc;
@@ -554,8 +553,8 @@ body.static {
 body.sources {
 
   header {
-
-    z-index: 1000;
+    border-bottom: 0;
+    z-index: 10;
 
     hgroup {
       width: 100%;
@@ -568,8 +567,12 @@ body.sources {
   }
 
   .narrow_column {
-    margin: 40px auto 0 auto;
-    width: 590px;
+    margin: 0 auto;
+    width: 940px;
+  }
+
+  .narrow_column {
+    padding-top: 10px;
   }
 
   section {
@@ -658,8 +661,13 @@ body.sources {
 } // body.sources
 
 body.countries {
+  .narrow_column {
+    padding-top: 10px;
+  }
 
   header {
+    z-index: 10;
+
     hgroup {
       width: 100%;
       h1 {
@@ -667,6 +675,83 @@ body.countries {
         text-align: center;
       }
 
+    }
+  }
+}
+
+.header_block {
+  position: relative;
+  margin-top: -75px;
+  background: image-url('backgrounds/header_block.jpg');
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 49px;
+    line-height: 46px;
+    @extend .sans-serif;
+    color: rgba(#fff, .3);
+    background: rgba(#000, .2);
+    text-align: center;
+    text-decoration: none;
+  }
+}
+
+.header_block-body {
+  padding: 40px 40px 30px;
+
+  p {
+    font-size: 17px;
+    line-height: 1.2;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: rgba(#fff, .7);
+  }
+}
+
+.header_block-title {
+  margin-bottom: 20px;
+  font-size: 47px;
+  font-family: "fira_sans_otligh";
+  color: #fff;
+}
+
+.header_block-footer {
+  border-top: 1px solid rgba(#fff, .15);
+  height: 98px;
+
+  li {
+    float: left;
+    width: 312px;
+    border-left: 1px solid rgba(#fff, .15);
+
+    &.last {
+      border: 0;
+    }
+  }
+
+  a {
+    display: block;
+    width: 212px;
+    border: 2px solid rgba(#fff, .25);
+    margin: 30px auto;
+    padding-left: 20px;
+    font-size: 14px;
+    line-height: 38px;
+    font-family: 'fira_sans_otmedium';
+    color: rgba(#fff, .65);
+    text-transform: uppercase;
+    text-decoration: none;
+    @include border-radius(22px);
+
+    span {
+      float: right;
+      display: block;
+      height: 38px;
+      width: 38px;
+      @include icons-sprite(hader_block-link);
+
+      span { display: none; }
     }
   }
 }
