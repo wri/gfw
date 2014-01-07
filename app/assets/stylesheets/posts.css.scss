@@ -549,8 +549,40 @@ body.static {
   footer { border-top: 1px solid $cSeparator; }
 
 } // body.static
+body.howto article {
+  h3 {
+    margin: 30px 0 10px;
+    font: 21px/1.1 "fira_sans_otmedium";
+    color: #463F52;
+  }
 
-body.sources {
+  ul,
+  p {
+    font: 15px/1.2 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-bottom: 10px;
+    color: #666;
+
+    a {
+      color: #98BD17;
+    }
+  }
+
+  ul li {
+    background: image-url('icons/bullet.png') no-repeat 0 8px;
+    padding: 0 0 0 20px;
+
+    + li {
+      margin-top: 10px;
+    }
+  }
+
+  strong {
+    color: #463F52;
+  }
+}
+
+body.sources,
+body.howto {
 
   header {
     border-bottom: 0;
@@ -700,6 +732,14 @@ body.countries {
   margin: -75px auto 40px;
   background: image-url('backgrounds/header_block.jpg');
 
+  &.header_block_howto {
+    background: #464352 image-url('backgrounds/header_block_howto.jpg');
+
+    .header_block-description {
+      margin-bottom: 30px;
+    }
+  }
+
   .close {
     position: absolute;
     top: 0;
@@ -736,6 +776,14 @@ body.countries {
   border-top: 1px solid rgba(#fff, .15);
   height: 98px;
 
+  &.header_block_howto-footer {
+    li {
+      float: left;
+      width: 469px;
+      border-left: 1px solid rgba(#fff, .15);
+    }
+  }
+
   li {
     float: left;
     width: 312px;
@@ -760,12 +808,20 @@ body.countries {
     text-decoration: none;
     @include border-radius(22px);
 
+    &.selected {
+      @include opacity(.35);
+    }
+
     i {
       float: right;
       display: block;
       height: 38px;
       width: 38px;
       @include icons-sprite(hader_block-link);
+
+      &.play {
+        @include icons-sprite(hader_block-play);
+      }
     }
   }
 }
@@ -989,8 +1045,7 @@ body.countries {
 
   h3 {
     margin: 30px 0 10px;
-    font-size: 21px;
-    font-family: "fira_sans_otmedium";
+    font: 21px/1.1 "fira_sans_otmedium";
     color: #463F52;
   }
 

@@ -12,7 +12,7 @@
 <ul>
   <% %w(home map countries stories blog data howto about).each do |option| %>
     <%
-      paths    = { "home" => root_path, "countries" => countries_path, "stories" => stories_path, "map" => map_path,  "blog" => "http://globalforestwatch.tumblr.com", "data" => sources_path, "howto" => "", "about" => about_path }
+      paths    = { "home" => root_path, "countries" => countries_path, "stories" => stories_path, "map" => map_path,  "blog" => "http://globalforestwatch.tumblr.com", "data" => sources_path, "howto" => howto_path, "about" => about_path }
       path     = paths[option]
       option_class = request.path === path ? "selected" : ""
 

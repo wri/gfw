@@ -6,6 +6,7 @@ Gfw::Application.routes.draw do
 
   # static
   match 'about' => 'static#about'
+  match 'howto' => 'static#howto'
   match 'notsupportedbrowser' => 'static#old'
   match 'sources' => 'static#sources'
 
