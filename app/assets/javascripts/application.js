@@ -87,13 +87,9 @@ function loadOtherStuff(callback) {
   $(".navigation_left li").on("click", function(e) {
     e.preventDefault();
 
-    if($(this).hasClass("item_title")) {
-      return;
-    }
-
     var name = $(e.target).attr("data-slug");
 
-    if(name === $("article.selected").attr("id")) {
+    if($(this).hasClass("item_title") || name === $("article.selected").attr("id")) {
       return;
     }
 
@@ -101,14 +97,15 @@ function loadOtherStuff(callback) {
     $(this).find("a").addClass("selected");
 
     $("article.selected").fadeOut(250);
-    $("article.selected").removeClass("selected");
-    $(".expanded").removeClass("expanded")
 
-    $("#"+name).addClass("selected");
-    $("#"+name).addClass("selected").find(".sources li.first").addClass("expanded")
+    $(".expanded").removeClass("expanded")
+    $("#"+name).find(".sources li.first").addClass("expanded")
 
     setTimeout(function() {
+      $("article.selected").removeClass("selected");
+
       $("#"+name).fadeIn();
+      $("#"+name).addClass("selected");
     }, 250);
   });
 
@@ -515,7 +512,7 @@ $(function(){
 
   });
 
-  if ($("body.about").length > 0 || $("body.sources").length > 0 || $("body.blog").length > 0 || $("body.countries").length > 0 || $("body.stories").length > 0) {
+  if ($("body.about").length > 0 || $("body.sources").length > 0 || $("body.blog").length > 0 || $("body.countries").length > 0 || $("body.stories").length > 0 || $("body.howto").length > 0) {
     loadOtherStuff();
   }
 
