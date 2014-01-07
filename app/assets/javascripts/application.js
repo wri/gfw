@@ -74,6 +74,44 @@ function loadOtherStuff(callback) {
 
   });
 
+  $(".source_header").on("click", function(e) {
+    $(".sources li").removeClass("expanded")
+
+    $(this).parent("li").addClass("expanded");
+  });
+
+  $(".source_download .disabled").on("click", function(e) {
+    e.preventDefault();
+  });
+
+  $(".navigation_left li").on("click", function(e) {
+    e.preventDefault();
+
+    if($(this).hasClass("item_title")) {
+      return;
+    }
+
+    var name = $(e.target).attr("data-slug");
+
+    if(name === $("article.selected").attr("id")) {
+      return;
+    }
+
+    $(".navigation_left li a").removeClass("selected");
+    $(this).find("a").addClass("selected");
+
+    $("article.selected").fadeOut(250);
+    $("article.selected").removeClass("selected");
+    $(".expanded").removeClass("expanded")
+
+    $("#"+name).addClass("selected");
+    $("#"+name).addClass("selected").find(".sources li.first").addClass("expanded")
+
+    setTimeout(function() {
+      $("#"+name).fadeIn();
+    }, 250);
+  });
+
   $(".more_stories li").on("mouseleave", function(e) {
     var $this = $(this);
     $this.find(".infowindow").fadeOut(50);

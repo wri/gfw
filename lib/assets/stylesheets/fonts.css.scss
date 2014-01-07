@@ -6,3 +6,26 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'fira_sans_otmedium';
+  src: asset-path('firasansot-medium-webfont.eot', font);
+  src: local('☺'), url(asset-path("firasansot-medium-webfont.woff", font)) format('woff'), url(asset-path("firasansot-medium-webfont.ttf", font)) format('truetype'), url(asset-path("firasansot-medium-webfont.svg", font)) format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'fira_sans_otregular';
+  src: asset-path('firasansot-regular-webfont.eot', font);
+  src: local('☺'), url(asset-path("firasansot-regular-webfont.woff", font)) format('woff'), url(asset-path("firasansot-regular-webfont.ttf", font)) format('truetype'), url(asset-path("firasansot-regular-webfont.svg", font)) format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'fira_sans_otligh';
+  src: asset-path('firasansot-light-webfont.eot', font);
+  src: local('☺'), url(asset-path("firasansot-light-webfont.woff", font)) format('woff'), url(asset-path("firasansot-light-webfont.ttf", font)) format('truetype'), url(asset-path("firasansot-light-webfont.svg", font)) format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

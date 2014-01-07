@@ -641,6 +641,7 @@
     width: 100%;
     width: 245px;
     overflow: auto;
+    outline: none;
 
     ul li  .info {
       margin: 9px 0 0 0;
@@ -1483,6 +1484,7 @@
     height: $height;
     width: 100%;
     overflow: auto;
+    outline: none;
 
     @extend .sans-serif;
     color: #666666;
@@ -1508,7 +1510,111 @@
       }
     }
 
-    .navigation { display: none; }
+    .navigation,
+    .navigation_left { display: none; }
+
+    .content_right {
+      float: auto;
+      width: 100%;
+      border-left: 0;
+      padding: 0;
+    }
+
+    li.expanded {
+      + li {
+        margin-top: 0;
+      }
+
+      .source_body {
+        display: block;
+      }
+
+      .source_table {
+        margin: 20px 0;
+        border-top: 1px solid #ccc;
+      }
+
+      .source_description,
+      .source_download {
+        display: none;
+      }
+
+      .source_summary {
+        display: block;
+
+        h3 { display: none; }
+
+        .credits { display: block; }
+      }
+
+      .source_header {
+        border-bottom: 0;
+        border-top: 0;
+        cursor: default;
+
+        strong {
+          display: block;
+          color: #CCC;
+          font-size: 11px;
+          line-height: 1;
+        }
+
+        i,
+        em { display: none; }
+      }
+
+      .source_title {
+        display: block;
+        font-size: 13px;
+        font-weight: bold;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        margin: 0 0 20px 0;
+        padding: 0 0 20px 0;
+        border-bottom: 2px solid #CCC;
+        text-transform: uppercase;
+        color: #666;
+      }
+
+    }
+
+    .description,
+    .source_description,
+    .source_download {
+      display: none;
+    }
+
+    .source_summary {
+      display: block;
+
+      h3 { display: none; }
+    }
+
+    .source_header {
+      border-bottom: 0;
+      cursor: default;
+
+      strong {
+        display: block;
+        color: #CCC;
+        font-size: 11px;
+        line-height: 1;
+      }
+
+      i,
+      em { display: none; }
+    }
+
+    .source_title {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      margin: 0 0 20px 0;
+      padding: 0 0 20px 0;
+      border-bottom: 2px solid #CCC;
+      text-transform: uppercase;
+      color: #666;
+    }
 
     ul li {
       margin: 0 0 20px 0;
