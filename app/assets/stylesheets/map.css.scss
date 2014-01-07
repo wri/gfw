@@ -133,7 +133,6 @@
     }
 
     .source {
-      /*@include inline-block();*/
       @include size(10px);
       @include icons-sprite(information);
 
@@ -143,6 +142,12 @@
       &:hover {
         @include icons-sprite(information);
       }
+
+      &.top {
+        top: 13px;
+        margin-top: 0;
+      }
+
     }
 
     & > a {

@@ -14,7 +14,6 @@ body {
   position: relative !important;
 }
 
-
 #tpglt-nav-wrapper {
   padding-top: 15px;
   margin-top: 5px;
@@ -1142,6 +1141,19 @@ article.contact {
 
 }
 
+
+#filters #layer ul li {
+  .extra { display: none; }
+  .extra li {
+    border: none;
+    padding: 0 0 0 15px;
+
+    a { margin: 5px 0 0 0; }
+
+    .source { display: none; }
+
+  }
+}
 
 #filters #layer ul li .radio {
   @include radio(radio);

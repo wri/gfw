@@ -1487,7 +1487,20 @@ var Filter = (function() {
     window.router.navigate(hash, { replace: true, trigger: true });
   }
 
+  function _remove(id) {
+
+    if(_.include(filters, id)) {
+      filters = _.without(filters, id);
+    }
+
+    config.mapOptions.layers = filters;
+
+    _updateHash();
+
+  }
+
   function _toggle(id) {
+
     if(_.include(filters, id)) {
       filters = _.without(filters, id);
     } else {
@@ -1497,6 +1510,7 @@ var Filter = (function() {
     config.mapOptions.layers = filters;
 
     _updateHash();
+
   }
 
   function _toggleBiome(id) {
@@ -1512,11 +1526,11 @@ var Filter = (function() {
   }
 
   function _disableBiome() {
-    $(".checkbox.forest_change").addClass("disabled").closest("li").addClass("disabled");
+    $("ul.links li.biome .checkbox.forest_change").addClass("disabled").closest("li").addClass("disabled");
   }
 
   function _enableBiome() {
-    $(".checkbox.forest_change").removeClass("disabled").closest("li").removeClass("disabled");
+    $("ul.links li.biome .checkbox.forest_change").removeClass("disabled").closest("li").removeClass("disabled");
   }
 
   function _show(callback) {
@@ -1662,8 +1676,6 @@ var Filter = (function() {
     $layer.find(".links li." + liClass).show();
     $layer.find(".links li." + liClass).last().addClass("last");
 
-
-
     $layer.find(".source").off("click");
     $layer.find(".source").on("click", function(e) {
       e.preventDefault();
@@ -1672,8 +1684,6 @@ var Filter = (function() {
 
       sourceWindow.show(source).addScroll();
     });
-
-
 
     $layer.addClass(liClass);
 
@@ -1691,14 +1701,6 @@ var Filter = (function() {
 
     $(".scroll").css({ height: $layer.find(".links").height() });
 
-    // if (scrollPane) {
-    //   scrollPane.reinitialise();
-    // } else {
-    //   $pane.jScrollPane( { showArrows: true });
-    //   scrollPane = $pane.data('jsp');
-    // }
-    // window.scrollPane = scrollPane;
-
   }
 
   function cancelClose() {
@@ -1709,10 +1711,7 @@ var Filter = (function() {
     $layer.animate({ opacity: 1 }, 150);
   }
 
-
-  function _nothing() {
-
-  }
+  function _nothing() { }
 
   function _init() {
 
@@ -1733,6 +1732,110 @@ var Filter = (function() {
 
   function _fakeCheck(id) {
     filters.push(id);
+  }
+
+  function _resize() {
+
+    var height = $(".scroll .links").height();
+    $(".scroll").animate({ height: height }, 150);
+
+  }
+
+  function _addForestLostFilter(id, slug, category, name, options) {
+    var
+    clickEvent  = options.clickEvent  || null,
+    disabled    = options.disabled    || false;
+    source      = options.source      || null;
+    category_color = options.category_color || "#ccc";
+    color       = options.color       || "#ccc";
+
+    if (category === null || !category) {
+      category = 'Protected Areas';
+    }
+
+    var cat  = category.replace(/ /g, "_").toLowerCase();
+
+    if (!_.include(categories, cat)) {
+      var
+      template = _.template($("#filter-template").html()),
+      $filter  = $(template({ name: category, category: cat, data: cat, category_color: category_color }));
+
+      $filters.find("ul").append($filter);
+      categories.push(cat);
+    }
+
+    var
+    layerItemTemplate = null,
+    $layerItem        = null;
+
+    // Select the kind of input (radio or checkbox) depending on the category
+    if (cat === 'forest_change' && slug != 'biome') {
+
+      layerItemTemplate = _.template($("#layer-item-checkbox-loss-template").html());
+
+      $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
+
+      $layerItem.find("a.checkbox").on("click", function() {
+
+        $layerItem.parent().find(".extra").slideUp();
+        setTimeout(function() { _resize(); }, 300);
+
+          clickEvent && clickEvent();
+
+      });
+
+    }
+
+    $layer.find(".links .extra").append($layerItem);
+    $layerItem.find(".checkbox").addClass(cat);
+  }
+
+  function _addForestLostFilters(id, slug, category, name, options) {
+
+    var
+    clickEvent  = options.clickEvent  || null,
+    disabled    = options.disabled    || false;
+    source      = options.source      || null;
+    category_color = options.category_color || "#ccc";
+    color       = options.color       || "#ccc";
+
+    var cat  = category.replace(/ /g, "_").toLowerCase();
+
+    if (!_.include(categories, cat)) {
+      var
+      template = _.template($("#filter-template").html()),
+      $filter  = $(template({ name: category, category: cat, data: cat, category_color: category_color }));
+
+      $filters.find("ul").append($filter);
+      categories.push(cat);
+    }
+
+    var
+    layerItemTemplate = null,
+    $layerItem        = null;
+
+    layerItemTemplate = _.template($("#layer-item-radio-loss-template").html());
+
+    $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
+
+    $layerItem.find("a.radio").on("click", function() {
+
+      $layerItem.parent().find(".extra").slideUp();
+      $layerItem.find(".extra").slideDown(150);
+
+      setTimeout(function() {
+        _resize();
+      }, 300);
+
+      if (!$(this).find(".radio").hasClass("checked")) {
+        clickEvent && clickEvent();
+      }
+
+    });
+
+    $layer.find(".links").append($layerItem);
+    $layerItem.find(".checkbox").addClass(cat);
+
   }
 
   function _addFilter(id, slug, category, name, options) {
@@ -1766,14 +1869,22 @@ var Filter = (function() {
     if (!disabled) { // click binding
       // Select the kind of input (radio or checkbox) depending on the category
       if (cat === 'forest_change' && slug != 'biome') {
+
         layerItemTemplate = _.template($("#layer-item-radio-template").html());
+
         $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
 
-        $layerItem.find("a:not(.source)").on("click", function() {
+        $layerItem.find("a.radio").on("click", function() {
+
+          $layerItem.parent().find(".extra").slideUp();
+          setTimeout(function() { _resize(); }, 300);
+
           if (!$(this).find(".radio").hasClass("checked")) {
             clickEvent && clickEvent();
           }
+
         });
+
       } else {
         layerItemTemplate = _.template($("#layer-item-checkbox-template").html());
         $layerItem = $(layerItemTemplate({ name: name, id: id, color: color, slug:slug, category: cat, disabled: disabled, source: source }));
@@ -1805,7 +1916,10 @@ var Filter = (function() {
     show: _show,
     hide: _hide,
     addFilter: _addFilter,
+    addForestLossFilters: _addForestLostFilters,
+    addForestLossFilter: _addForestLostFilter,
     toggle: _toggle,
+    remove: _remove,
     toggleBiome: _toggleBiome,
     disableBiome: _disableBiome,
     enableBiome: _enableBiome,
