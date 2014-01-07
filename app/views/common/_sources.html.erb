@@ -1,239 +1,741 @@
-<div class="navigation">
-<ul>
-  <li><a href="#forest_change">Forest Change</a></li>
-  <li><a href="#forest_use">Forest use</a>  </li>
-  <li><a href="#forest_cover">Forest cover</a> </li>
-  <li><a href="#conservation">Conservation</a> </li>
-  <li><a href="#stories">Stories</a> </li>
-  <li><a href="#base_maps">Base maps</a> </li>
-</ul>
-</div>
-
 <div class="narrow_column">
-<section>
-  <article id="forest_change">
-    <h1 class="forest_change">Forest Change</h1>
-
-    <ul class="sources">
-      <li id="semi_monthly" data-slug="semi_monthly">
-        <strong>Humid tropics monthly alerts</strong> <a href="#" class="download">Download coming soon</a>
-        <p>Forest Monitoring for Action (FORMA) is a system for identifying near real-time forest change across the tropics, developed by researchers Dan Hammer, Robin Kraft, and David Wheeler. FORMA uses imagery from the MODIS Terra satellite to assess forest disturbance through time series analysis of vegetation intensity (NDVI) and other factors at 500m resolution. FORMA forest clearing alerts are produced every 16-days, and are compiled on the GFW 2.0 platform as monthly alerts. FORMA is a project of World Resources Institute and was developed at the Center for Global Development.</p>
-        <p class="credits">Credit: Dan Hammer, Robin Kraft, and David Wheeler; World Resouces Institute; Center for Global Development (2013)</p>
-      </li>
-
-      <li id="biome" data-slug="biome">
-        <strong>Humid tropical forest biome</strong>
-        <p class="credits">Source: <a href="http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf" target="_blank">WWF Terrestrial Ecoregions (PDF)</a></p>
-      </li>
-
-      <li id="brazilian_amazon" data-slug="brazilian_amazon">
-        <strong>Brazilian Amazon monthly alerts</strong> <a href="#" class="download">Download coming soon</a>
-        <p>SAD or Sistema de Alerta de Desmatemento is a monthly deforestation alert system that monitors increments of forest degradation and deforestation in the Brazilian Amazon. The information the systems generates is published monthly by Imazon, a Brazilian NGO, through the Forest Transparency bulletin. The monthly alerts are derived from a temporal mosaic of MODIS (Moderate Resolution Imaging Spectroradiometer) daily images that are scaled down from 500-meter to 250-meter. The monthly results are also validated using more detailed images from the China-Brazil Earth Resource Satellite (CBERS) and NASA Landsat data.</p>
-        <p class="credits">Credit: Martins, H., Fonseca, A., Souza Jr., C., Sales, M., & Veríssimo, A.; Imazon (2012)</p>
-      </li>
-
-      <li id="annual" data-slug="annual">
-        <strong>Global annual area</strong>
-        <p>Coming soon.</p>
-        <p class="credits">Credit: Matthew Hansen, University of Maryland (2013)</p>
-      </li>
-
-      <li id="fires" data-slug="fires">
-        <strong>Fires</strong>
-        <p>The Fire Information for Resource Management System (FIRMS) delivers global MODIS-derived hotspots and fire locations. The active fire locations represent the center of a 1 kilometer pixel that is flagged by the MOD14/MYD14 Fire and Thermal Anomalies Algorithm as containing one or more fires within the pixel.</p>
-        <p>The near real-time active fire locations are processed by the NASA Land and Atmosphere Near Real-Time Capability for EOS (LANCE) using the standard MODIS MOD14/MYD14 Fire and Thermal Anomalies product. Data older than the past 7 days can be obtained from the <a href="https://earthdata.nasa.gov/data/near-real-time-data/firms/active-fire-data">Archive Download Tool</a>. The Tool provides near-real-time data and, as it becomes available, it is replaced with the standard MCD14ML fire product.</p>
-        <p>More information on active fire data is available from the NASA <a href="https://earthdata.nasa.gov/data/near-real-time-data/firms">FIRMS website</a>.</p>
-        <p class="credits">
-          NASA FIRMS, 2012. MODIS Hotspot / Active Fire Detections. <a href="http://earthdata.nasa.gov/firms">Available on-line</a>.
-        </p>
-      </li>
-
-      <li id="quarterly" data-slug="quarterly">
-        <strong>Global quarterly alerts</strong>
-        <p>The QUICC (Quarterly Indicator of Cover Change) product was developed at NASA Ames Research Center by the CASA ecosystem modeling team. QUICC is based on a comparison of the MODIS Global Vegetation Index (VI) images at the exact same time period each year (end of March, June, September and December) in consecutive years and detects areas of major  landcover change (not just forest). The CASA team updates the global QUICC products as soon as the newest quarterly MODIS worldwide VI image at 5-km spatial resolution is available.</p>
-        <p class="credits">Credit: NASA Ames Research Center, Cal State</p>
-      </li>
+  <div class="navigation_left">
+    <ul>
+      <li class="item_title"><i class="caret_down"></i></li>
+      <li><a href="#forest_change" class="selected forest_change" data-slug="forest_change">Forest Change</a></li>
+      <li><a href="#forest_cover" class="forest_cover" data-slug="forest_cover">Forest cover</a> </li>
+      <li><a href="#forest_use" class="forest_use" data-slug="forest_use">Forest use</a>  </li>
+      <li><a href="#conservation" class="conservation" data-slug="conservation">Conservation</a> </li>
+      <li><a href="#stories" class="stories" data-slug="stories">Stories</a> </li>
+      <li><a href="#base_maps" class="base_maps" data-slug="base_maps">Base maps</a> </li>
     </ul>
-  </article>
+  </div>
 
-  <article id="forest_cover">
-    <h1 class="forest_cover">Forest Cover</h1>
+  <div class="content_right">
+    <article id="forest_change" class="selected">
+      <h2 class="forest_change source_title">Forest Change</h2>
+      <p class="description">Forest clearing data measure forest cover loss or forest disturbance.</p>
 
-    <ul class="sources">
-      <li id="intact_forest_landscapes" data-slug="intact_forest_landscapes">
-        <strong>Intact Forest Landscapes</strong> <a href="http://www.intactforests.org/" class="download" target="_blank">Visit</a>
-        <p>The Intact Forest Landscapes dataset identifies unbroken expanses of natural ecosystems within the zone of current forest extent (as of 2000), mapped from Landsat satellite imagery. These landscapes show no signs of significant human activity, are not fragmented by infrastructure, and are at least 50,000 hectares in size. These data can be used for assessment of forest intactness, alteration and degradation at global and regional scales. More information and data downloads are available from the project website.</p>
-        <p class="credits">Credit: Greenpeace, World Resources Institute, and Transparent World (2012)</p>
-      </li>
+      <ul class="sources">
+        <li id="forest_loss" data-slug="forest_loss" class="first expanded">
+          <div class="source_header">
+            <strong>UMD Forest cover loss</strong>
+            <i class="expand_arrow"></i>
+            <em>(annual, 30m, global)</em>
+          </div>
 
-      <li id="pantropical" data-slug="pantropical">
-        <strong>Tropical forest carbon stocks</strong> <a href="http://www.ncbi.nlm.nih.gov/pubmed/21628575" class="download" target="_blank">Visit</a>
-        <p>The Tropical forest carbon stocks shows biomass carbon stocks for over 2.5 billion ha of forest on three continents and encompasses tropical forests for the early 2000s.  The total carbon stock is based on live biomass (above-and below-ground), using a combination of data from 4,079 in situ inventory plots and satellite light detection and ranging (Lidar) samples of forest structure to estimate carbon storage, plus optical microwave and imagery (1-km resolution) to extrapolate over the landscape.  The total biomass carbon stock of forests in the study region is estimated to be 247 Gt C, with 193 Gt C stored aboveground and 54 Gt C stored belowground in roots. Forests in Latin America, sub-Saharan Africa, and Southeast Asia accounted for 49%, 25%, and 26% of the total stock, respectively. By analyzing the errors propagated through the estimation process, uncertainty at the pixel level (100 ha) ranged from ± 6% to ± 53%, but was constrained at the typical project (10,000 ha) and national (>1,000,000 ha) scales at ca. ± 5% and ca. ± 1%, respectively. The benchmark map illustrates regional patterns and provides methodologically comparable estimates of carbon stocks for 75 developing countries where previous assessments were either poor or incomplete.</p>
-        <p class="credits">Credit: Benchmark map of forest carbon stocks in tropical regions across three continents (Proc Natl Acad Sci U S A. (2011)</p>
-      </li>
-    </ul>
-  </article>
+          <div class="source_body">
+            <div class="source_download">
+              <a href="#" class="disabled">Download coming soon<i class="arrow_down"></i></a>
+            </div>
+          </div>
+        </li>
 
-  <article id="forest_use">
-    <h1 class="forest_use">Forest Use</h1>
+        <li id="semi_monthly" data-slug="semi_monthly">
+          <div class="source_header">
+            <strong>Forma alerts</strong>
+            <i class="expand_arrow"></i>
+            <em>(monthly, 500m, humid tropical forest)</em>
+          </div>
 
-    <ul class="sources">
-      <li id="cameroon_logging" data-slug="logging" country-slug="cmr" class="flag cm">
-        <strong>Cameroon Forest Management Units</strong> <a href="http://data.wri.org/gfw2/gfw2_cmr_lc.zip" class="download">Download</a>
-        <p>Logging in Cameroon’s forests is permitted within Forest Management Units (FMUs). This dataset displays the FMUs within Cameroon’s permanent forest estate. There are 114 FMUs in Cameroon which are further divided into logging concessions called annual allowable cuts (AACs), where selective logging is permitted. These logging permits require owners and operators to maintain permanent forest cover. This dataset, released in 2012, was produced in a collaboration between the Cameroon Ministry of Forestry and Wildlife and WRI. For more information and datasets, see the <a href="http://www.wri.org/project/interactive-forest-atlas-cameroon" target="_blank">Cameroon Forest Atlas</a>.</p>
-        <p class="credits">Credit: Ministry of Forestry and Wildlife, World Resources Institute (2012)</p>
-      </li>
+          <div class="source_body">
+            <div class="source_download">
+              <a href="#" class="disabled">Download coming soon<i class="arrow_down"></i></a>
+            </div>
 
-      <li id="central_african_republic_logging" data-slug="logging" country-slug="caf" class="flag cf">
-        <strong>Central African Republic Logging Permits</strong> <a href="http://data.wri.org/gfw2/gfw2_car_lc.zip" class="download">Download</a>
-        <p>This dataset provides the permit boundaries for selective logging in the  Central African Republic's production forests. There are 14 separate logging concessions currently in the CAR. This dataset, released in 2010, was produced through a collaboration between CAR Ministry of Water, Forests, Hunting and Fishing (MEFCP) and WRI. For more information, see the <a href="http://www.wri.org/publication/interactive-forest-atlas-central-african-republic" target="_blank">Interactive Forest Atlas for the Central African Republic</a>.</p>
-        <p class="credits">Credit: Central African Republic Ministry of Water and Forests, Hunting, and Fishing, German Technical Cooperation (GTZ), French Development Agency (AFD), Special Allocation Fund for Forest Development (CASDF), and the World Resources Institute (2010)</p>
-      </li>
+            <div class="source_table">
+              <dl class="sources_row">
+                <dt>Function</dt>
+                <dd>Detects probability of forest clearing in near-real-time</dd>
+              </dl>
+              <dl class="sources_row even">
+                <dt>Resolution</dt>
+                <dd>500 x 500 meters</dd>
+              </dl>
+              <dl class="sources_row">
+                <dt>Function</dt>
+                <dd>Detects probability of forest clearing in near-real-time</dd>
+              </dl>
+              <dl class="sources_row even">
+                <dt>Img. source</dt>
+                <dd><a href="http://modis.gsfc.nasa.gov/about/" target="_blank">MODIS</a></dd>
+              </dl>
+              <dl class="sources_row">
+                <dt>Update freq.</dt>
+                <dd>Produced every 16 days and displayed on the GFW website as monthly alerts</dd>
+              </dl>
+              <dl class="sources_row even">
+                <dt>Temp. resolution</dt>
+                <dd>January 2006 - present</dd>
+              </dl>
+              <dl class="sources_row">
+                <dt class="even">Citation</dt>
+                <dd class="even">FORMA Alerts. Dan Hammer, Robin Kraft, and David Wheeler; World Resources Institute and Center for Global Development (2013). Accessed through Global Forest Watch on and Center for Global Development 2013</dd>
+              </dl>
+              <dl class="sources_row even">
+                <dt>Cautions</dt>
+                <dd>When using the “play” button on the timeslider, some data from before January 2006 may appear</dd>
+              </dl>
+            </div>
 
-      <li id="democratic_republic_of_congo_logging" data-slug="logging" country-slug="cod" class="flag cd">
-        <strong>Democratic Republic of Congo Forest Titles</strong> <a href="http://data.wri.org/gfw2/gfw2_drc_lc.zip" class="download">Download</a>
-        <p>Forest concession data for the Democratic Republic of Congo (DRC) represent geographic areas permitted for exploitation of timber by selective logging. There are 80 active logging concessions in DRC. This dataset, released in 2011, was produced through a collaboration between the DRC Ministry of Environment, Nature Conservation, and Tourism (MECNT) and WRI. For more information, see the <a href="http://www.wri.org/publication/interactive-forest-atlas-democratic-republic-of-congo" target="_blank">Interactive Forest Atlas for the Democratic Republic of Congo</a>.</p>
-        <p class="credits">Credit: Democratic Republic Of Congo Ministry of Environment, Nature Conservation and Tourism (MECNT), SPIAF, the World Resources Institute, DIAF (Asset Management and Forest Management), and FMB (Forest Management Branch) (2011)</p>
-      </li>
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>The FORMA alerts dataset uses a computer algorithm to analyze satellite imagery and identify new areas of forest clearing in near-real-time across the world’s humid tropical forest biome. The system analyzes freely available satellite imagery, recorded daily by the <a href="http://modis.gsfc.nasa.gov/about/" target="_blank">MODIS</a> sensor, which operates on NASA’s Terra and Aqua satellite platforms. The FORMA alerts system then detects pronounced changes in vegetation cover over time, as measured by an indicator known as the <a href="http://earthobservatory.nasa.gov/Features/MeasuringVegetation/measuring_vegetation_2.php" target="_blank">NDVI</a>. These pronounced changes in vegetation cover are often indicative of forest being cleared, burned, or replaced by pastures, croplands, or plantations.</p>
 
-      <li id="republic_of_congo_logging" data-slug="logging" country-slug="cog" class="flag cg">
-        <strong>Republic of Congo Logging Concessions</strong> <a href="http://data.wri.org/gfw2/gfw2_cgo_lc.zip" class="download">Download</a>
-        <p>Forest concession data for the Republic of Congo provide the boundaries of areas permitted for selective logging. There are currently 63 logging concessions, also called Forest Exploitation Units, which are managed in accordance with the national Forest Code. This dataset, released in 2011, was produced through a collaboration between the Republic of Congo Ministry of Forest Economy and WRI. For more information, see the <a href="http://www.wri.org/project/interactive-forest-atlas-congo" target="_blank">Forest Atlas of Congo</a>.</p>
-        <p class="credits">Credit: Republic of Congo Ministry of Forest Economy (MEF), Centre National Inventory and Planning of Forest and Wildlife Resources (CNIAF), and the World Resources Institute (2011)</p>
-      </li>
+              <p>This algorithm produces alerts that indicate where forest clearing is statistically likely to have occurred within a 500 x 500 meter area.</p>
 
-      <li id="gabon_logging" data-slug="logging" country-slug="ga" class="flag ga">
-        <strong>Gabon Forest licenses</strong> <a href="http://data.wri.org/gfw2/gfw2_gab_lc.zip" class="download">Download</a>
-        <p>This dataset provides the boundaries for forest licenses in Gabon, which are areas permitted for selective logging. There are 627 separate forest licenses currently in Gabon. This dataset, released in 2011, was produced in a collaboration between the Gabon Ministry of Forest Economy, Water, Fisheries, and Aquaculture (MEFEPA) and WRI. For more information, see the <a href="http://www.wri.org/publication/interactive-forestry-atlas-gabon" target="_blank">Interactive Forest Atlas for Gabon</a>.</p>
-        <p class="credits">Credit: Gabon Ministry of Forest Economy, Water, Fisheries and Aquaculture (MEFEPA) and the World Resources Institute (2010)</p>
-      </li>
+              <p>Upcoming upgrades to FORMA include improving the resolution to 250 meters x 250 meters, and expanding coverage to the rest of the tropics and eventually to other forest ecoregions.</p>
 
-      <li id="indonesia_logging" data-slug="logging" country-slug="idn" class="flag id">
-        <strong>Indonesia Logging Concessions</strong> <a href="http://data.wri.org/gfw2/gfw2_idn_lc.zip" class="download">Download</a>
-        <p>This dataset, produced by the Indonesia Ministry of Forestry, provides the boundaries of logging concessions for the selective logging of natural forests in Indonesia. There are 557 active logging concessions in Indonesia.</p>
-        <p class="credits">Credit: Ministry of Forestry Indonesia (2011)</p>
-      </li>
+              <p class="credits">FORMA Alerts. Dan Hammer, Robin Kraft, and David Wheeler; World Resources Institute and Center for Global Development (2013). Accessed through Global Forest Watch on and Center for Global Development 2013.</p>
+            </div>
 
-      <li id="indonesia_oil_palm" data-slug="oil_palm" country-slug="idn" class="flag id">
-        <strong>Indonesia Oil palm concessions</strong> <a href="http://data.wri.org/gfw2/gfw2_idn_op.zip" class="download">Download</a>
-        <p>This dataset, produced by the Indonesia Ministry of Forestry, provides the boundaries of current or planned oil palm plantations in Indonesia. This dataset is known to be incomplete, but is currently the best available.</p>
-        <p class="credits">Credit: Indonesia Ministry of Forestry (2011)</p>
-      </li>
+            <div class="source_description">
+              <h3>Methodology</h3>
+              <p>This dataset uses freely available satellite imagery, collected by the Moderate Resolution Imaging Spectroradiometer (<a href="http://modis.gsfc.nasa.gov/about/" target="_blank">MODIS</a>), which operates on NASAs Terra and Aqua (EOS PM) satellite platforms and views the entire Earth’s surface every 1 to 2 days. The images help to reveal notable changes in vegetation cover over time using an indicator that measures vegetation intensity called the Normalized Difference Vegetation Index (<a href="http://earthobservatory.nasa.gov/Features/MeasuringVegetation/measuring_vegetation_2.php" target="_blank">NDVI</a>). By applying an automated algorithm to this input and in combination with complementary data inputs for fire hotspots and global precipitation averages, areas where forest clearing is likely to have occurred are therefore identified. The algorithm also employs parallel processing in a remote server system the cloud that enables the rapid analysis of these very large data sets.</p>
 
-      <li id="cameroon_oil_palm" data-slug="oil_palm" country-slug="cmr" class="flag cm">
-        <strong>Cameroon Agro-industrial zones</strong> <a href="http://data.wri.org/gfw2/gfw2_cmr_op.zip" class="download">Download</a>
-        <p>This data layer shows the boundaries of agro-industrial zones, where oil palm and rubber tree plantations, as well as other crops, may be established. In Cameroon, industrial agriculture falls outside of the National Forest Estate. Agricultural plantations are allocated by the Ministry of Economy and Planning to private entitities under long-term, renewable contracts, which are then monitored by the Ministry of Agriculture. The agro-industrial dataset was mapped using satellite imagery, with ground-truthing to determine the crop type and operating company. Official documentation was often lacking, so boundaries should be considered approximate and are not exhaustive.</p>
-        <p class="credits">Credit: World Resources Institute (2012)</p>
-      </li>
+              <h3>Explanation</h3>
+              <p>Forest clearing alerts appear when and where new, large-scale clearing is likely to have occurred after 2005. Thus, the alerts should not be interpreted as an analysis of total forest cover loss area, but rather as an indication of an area that has a high probability of having experienced forest cover loss or disturbance over time. The system employs advanced statistical techniques to achieve the best fit to scientifically validate information on clearing, measured as a probability.  On the GFW website, alerts appear only for 50 percent or higher probability. That is, alerts appear for a particular period when there has been significant clearing in the area during or before that period.</p>
 
-      <li id="republic_of_congo_oil_palm" data-slug="oil_palm" country-slug="cog" class="flag cg">
-        <strong>Republic Of Congo oil palm concessions</strong> <a href="http://data.wri.org/gfw2/gfw2_cgo_op.zip" class="download">Download</a>
-        <p>This dataset provides the boundaries for oil palm plantations in the Republic of Congo. The World Resources Institute compiled information from the Republic of Congo Ministry of Agriculture to produce this data layer.</p>
-        <p class="credits">Credit: World Resources Institute and Republic of Congo, Ministry of Agriculture (2013)</p>
-      </li>
+              <h3>Temporal and spatial resolution</h3>
+              <p>The forest clearing alerts are produced every 16 days, however they are presented on the GFW site as monthly alerts because the precipitation data input is only available on a monthly time cycle. Users can manipulate the GFW time slider to view trends in clearing alerts from December 2005 to present.</p>
 
+              <p>The alert system currently identifies 500 x 500 meter areas where clearing is statistically likely to have occurred. Alerts for a 250-meter resolution version are currently being developed on Google’s Earth Engine platform and will be available in 2014.</p>
 
-      <li id="indonesia_timber" data-slug="wood_fiber_plantations" country-slug="idn" class="flag id">
-        <strong>Indonesia Wood Fiber Plantations</strong> <a href="http://data.wri.org/gfw2/gfw2_idn_wf.zip" class="download">Download</a>
-        <p>This dataset, produced by the Indonesia Ministry of Forestry, provides the boundaries of current or planned wood fiber plantations in Indonesia. This dataset is known to be incomplete, but is currently the best available.</p>
-        <p class="credits">Credit: Indonesia Ministry of Forestry (2011)</p>
-      </li>
+              <h3>Geographic extent</h3>
+              <p>FORMA alerts are currently available only for humid tropical forests (as defined by <a href="http://www.pnas.org/content/105/27/9439.full#ref-1" target="_blank">Hansen et al. (2008)</a>, based on <a href="http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf">WWF’s terrestrial ecoregions</a>) spanning portions of 89 countries. The development team is working to incorporate additional data to extend the geographic coverage beyond the current extent. Currently FORMA data spans across portions of 89 countries. To visualize the geographic extent of the alerts on the map, switch on the “Humid Tropical Forest Biome” layer.</p>
 
-      <li data-slug="wood_fiber_plantations" country-slug="cog" class="flag cg">
-        <strong>Republic Of Congo Eucalyptus Plantations</strong> <a href="http://data.wri.org/gfw2/gfw2_cgo_wf.zip" class="download">Download</a>
-        <p>This dataset provides the boundaries for eucalyptus and other plantations in the Republic of Congo. The World Resources Institute compiled information from the Republic of Congo Ministry of Agriculture to produce this data layer.</p>
-        <p class="credits">Credit: World Resources Institute and Republic of Congo, Ministry of Agriculture (2013)</p>
-      </li>
+              <h3>Data applications</h3>
+              <p>The forest clearing alerts have been designed for quick identification of forest clearing as it emerges. This allows for rapid response and prioritization of scarce financial and human resources dedicated to forest conservation or sustainable forest management. Armed with this information, stakeholders can use preemptive methods such as on-the-ground visits or aerial inspection with high-resolution satellite imagery (less than 5 meter pixel resolution) to investigate suspected forest clearing areas.</p>
 
-      <li id="democratic_republic_of_congo_mining" data-slug="mining" country-slug="cod" class="flag cd">
-        <strong>Democratic Republic of Congo mining permits</strong> <a href="http://www.miningcongo.cd" class="download" target="_blank">Visit</a>
-        <p>This dataset provides the boundaries for mining permits in the Democratic Republic of Congo. This dataset is available from CAMI for purchase and could not be made available for public download. For more information, see <a href="http://www.miningcongo.cd" target="_blank">http://www.miningcongo.cd/</a>.</p>
-        <p class="credits">Credit: Ministère de Mines, Cadastre Miniers (CAMI), DRC</p>
-      </li>
+              <p>In addition, the alerts may be of value to a variety of researchers who study both temporal and spatial patterns related to forest clearing areas.</p>
 
-      <li id="cameroon_mining" data-slug="mining" country-slug="cmr" class="flag cm">
-        <strong>Cameroon mining permits</strong> <a href="http://data.wri.org/gfw2/gfw2_cmr_mc.zip" class="download">Download</a>
-        <p>This dataset provides the boundaries of prospective mining permits for Cameroon, as well as the type of mineral resource. Map data were provided by the Cameroon Ministry of Mines and Technological Development and published in a collaboration with the World Resources Institute. For more information and datasets, see the <a href="http://www.wri.org/project/interactive-forest-atlas-cameroon" target="_blank">Cameroon Forest Atlas</a>.</p>
-        <p class="credits">Credit: Cameroon Ministry of Mines and Technological Development (2012)</p>
-      </li>
+              <p>Using the GFW platform, the alerts can be compared against other relevant data layers, such as protected areas and concessions boundaries, to evaluate the effectiveness of forest management practices across time and spatial extent.</p>
 
-      <li id="gabon_mining" data-slug="mining" country-slug="ga" class="flag ga">
-        <strong>Gabon mining permits</strong> <a href="http://data.wri.org/gfw2/gfw2_gab_mc.zip" class="download">Download</a>
-        <p>This dataset provides the boundaries for mining permits and prospecting permits for Gabon. The dataset was produced by the Gabon Ministry of Mines, Petroleum and Hydrocarbons and the World Resources Institute, for the Interactive Mining, Forest, and Conservations Atlas of Gabon. For more information see the <a href="http://www.wri.org/publication/interactive-forestry-atlas-gabon" target="_blank">Interactive Forest Atlas of Gabon</a>.</p>
-        <p class="credits">Credit: Gabon Ministry of Mines, Petroleum and Hydrocarbons; World Resources Institute (2011)</p>
-      </li>
+              <h3>Accuracy and validation</h3>
+              <p>Inaccuracies are an inherent part of remote sensing analysis. FORMA Alerts appear in areas with a greater than 50% probability of deforestation, based on the algorithm described under methodology. However, persistent cloud cover is a continuous issue in the tropics, and extreme flooding can also produce unreliable remotely-sensed data that will result in forest clearing “false positives.” Furthermore, the alerting system cannot detect all forest cover loss, whether due to the small size of clearings, persistent cloud cover, or other explanations still being identified through GFW validation efforts.</p>
 
-      <li id="republic_of_congo_mining" data-slug="mining" country-slug="cog" class="flag cg">
-        <strong>Republic Of Congo mining permits</strong> <a href="http://data.wri.org/gfw2/gfw2_cgo_mc.zip" class="download">Download</a>
-        <p>This dataset provides the boundaries of mining permits for the Republic of Congo. The original map data were produced by the Republic of Congo Ministry of Mines and Geology, with the support of the World Resources Institute through the Interactive Forest Atlas of Congo project. For more information on the <a href="http://www.wri.org/project/interactive-forest-atlas-congo" target="_blank">Forest Atlas</a>.</p>
-        <p class="credits">Credit: Republic of Congo Ministry of Mines and Geology, the World Resources Institute (2012)</p>
-      </li>
-    </ul>
-  </article>
+              <p>The GFW team is working aggressively to address potential inaccuracies in the data through rigorous validation methods. Specifically, the GFW team is comparing the growing data set of historical alerts to other validated data sets, which are being used for similar applications.</p>
 
-  <article id="conservation">
-    <h1 class="conservation"><a href="#" name="conservation"></a>Conservation</h1>
+              <p>This paper demonstrates the spatial correlation of the alerts with the PRODES and DETER data sets, produced by the Brazilian Space Agency for the Amazon.  The conclusions from the paper help to illustrate the potential pitfalls of the algorithm, along with its strengths. Through future refinement and proposed crowdsourcing efforts, the GFW team expects the data quality of the FORMA Alerts will continue to improve.</p>
 
-    <ul class="sources">
-      <li id="conservation" data-slug="conservation">
-        <strong>Global Protected Areas</strong> <a href="http://www.protectedplanet.net" class="download" target="_blank">Visit</a>
-        <p>All protected areas are from Protectedplanet.net which is the home of the World Database on Protected Areas (WDPA).   The WDPA is a joint initiative between the IUCN and UNEP-WCMC to compile spatially referenced information about parks and protected areas globally. Data can be downloaded from <a href="http://www.protectedplanet.net/" target="_blank">Protected Planet site</a>.</p>
-      </li>
-      <li id="biodiversity_hotspots" data-slug="biodiversity_hotspots">
-        <strong>Biodiversity hotspots</strong>
-        <p>Coming soon.</p>
-        <p class="credits"></p>
-      </li>
-    </ul>
-  </article>
+              <h3>Additional Resources on FORMA</h3>
+              <strong>Working Papers:</strong>
+              <ul>
+                <li>FORMA: Forest Monitoring for Action – Rapid Identification of Pan-tropical Deforestation Using Moderate-Resolution Remotely Sensed Data (CGD Working Paper 192, November 2009) [<a href="http://www.cgdev.org/sites/default/files/1423248_file_Hammer_Kraft_Wheeler_FORMA_FINAL.pdf">pdf</a>]</li>
+                <li>From REDD to Green: A Global Incentive System to Stop Tropical Forest Clearing (CGD Working Paper 282, December 2011) [<a href="http://www.cgdev.org/sites/default/files/1425830_file_Wheeler_et_al_REDD_to_Green.pdf">pdf</a>]</li>
+                <li>Forest Clearing in the Pantropics: December 2005-2011 (CGD Working Paper 283, December 2011) [<a href="http://www.cgdev.org/publication/forest-clearing-pantropics-december-2005%E2%80%93august-2011-working-paper-283" target="_blank">pdf</a>] Data Set for Working Paper 283</li>
+                <li>FORMA and fCPR: Accelerating a Performance-Based Payment System for REDD+ (CGD Policy Paper 006, June 2012) [<a href="http://www.cgdev.org/publication/forma-and-fcpr-accelerating-performance-based-payment-system-redd" target="_blank">pdf</a>]</li>
+                <li>FORMA: Comparative Analysis in the Brazilian Amazon (forthcoming WRI Working Paper, expected publication date January 2014)</li>
+              </ul>
 
-  <article id="stories">
-    <h1 class="stories">Stories</h1>
+              <strong>GitHub Repositories:</strong>
+              <ul>
+                <li><a href="https://github.com/reddmetrics/forma-clj" target="_blank">REDD Metrics FORMA page</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
 
-    <ul class="sources">
-      <li id="mongabay" data-slug="mongabay">
-        <strong>Mongabay Stories</strong>
-        <p>This layer displays stories from Mongabay.com, a leading environmental science and conservation website. Stories are tagged to a specific location, and provide in-depth research or commentary on local forest issues. More information can be found at <a href="http://www.mongabay.com/" target="_blank">Mongabay site</a>.</p>
-      </li>
+        <li id="geographic_coverage_forma" data-slug="geographic_coverage_forma">
+          <div class="source_header">
+            <strong>Geographic coverage of forma alerts</strong>
+            <i class="expand_arrow"></i>
+          </div>
 
-      <li id="user_stories" data-slug="user_stories">
-        <strong>User Stories</strong>
-        <p>This layer displays forest-related stories reported by GFW users. Stories are tagged to a specific location and can include photos, video, or explanatory text. See all GFW stories, or report your own <%= link_to "here", stories_path %>.</p>
-      </li>
-    </ul>
-  </article>
+          <div class="source_body">
+            <div class="source_download">
+              <a href="https://wri-01.cartodb.com/tables/ecoregions/map" target="_blank" title="Download at project website">Download<i class="arrow_down"></i></a>
+            </div>
+          </div>
+        </li>
 
-  <article id="base_maps">
-    <h1 class="base_maps">Base maps</h1>
+        <li id="brazilian_amazon" data-slug="brazilian_amazon">
+          <div class="source_header">
+            <strong>Imazon SAD alerts</strong>
+            <i class="expand_arrow"></i>
+            <em>(monthly, 250m, Brazilian Amazon)</em>
+          </div>
 
-    <ul class="sources">
-      <li id="terrain" data-slug="terrain">
-        <strong>Black & White</strong>
-        <p>Google Maps black-and-white base map, showing political boundaries and human-made features. Scale varies by location. Read terms of service <a href="http://www.google.com/help/terms_maps.html" target="_blank">here</a>.</p>
-      </li>
+          <div class="source_body">
+            <div class="source_download">
+              <a href="#" class="disabled">Download coming soon<i class="arrow_down"></i></a>
+            </div>
 
-      <li id="classic" data-slug="classic">
-        <strong>Terrain</strong>
-        <p>Google Maps terrain base map, showing geographical and topographical details. Scale varies by location. Read terms of service <a href="http://www.google.com/help/terms_maps.html" target="_blank">here</a>.</p>
-      </li>
+            <div class="source_summary">
+              <h3>Summary</h3>
 
-      <li id="satellite" data-slug="satellite">
-        <strong>Satellite</strong>
-        <p>Google Maps satellite imagery base map is created using recent satellite images, most of which are one to three years old. Google Maps satellite imagery uses Landsat images at 30 meter spatial resolution. More information available <a href="http://www.google.com/help/terms_maps.html" target="_blank">here</a>.</p>
-      </li>
+              <p>SAD or Sistema de Alerta de Desmatemento is a monthly deforestation alert system that monitors increments of forest degradation and deforestation in the Brazilian Amazon. The information the systems generates is published monthly by Imazon, a Brazilian NGO, through the Forest Transparency bulletin. The monthly alerts are derived from a temporal mosaic of MODIS (Moderate Resolution Imaging Spectroradiometer) daily images that are scaled down from 500-meter to 250-meter. The monthly results are also validated using more detailed images from the China-Brazil Earth Resource Satellite (CBERS) and NASA Landsat data.</p>
 
-      <li id="tree_height" data-slug="tree_height">
-        <strong>Tree Height</strong>
-        <p>Global base map showing forest canopy height, as well as forest extent and distribution. This dataset was obtained using spaceborne lidar, and was produced by the NASA Jet Propulsion Laboratory, California Institute of Technology, and may be downloaded from <a href="http://lidarradar.jpl.nasa.gov" target="_blank">project website</a>. Spatial resolution is 1 km.</p>
+              <p class="credits">Credit: Martins, H., Fonseca, A., Souza Jr., C., Sales, M., & Veríssimo, A.; Imazon (2012)</p>
+            </div>
+          </div>
+        </li>
 
-        <p class="credits">Simard, M., Pinto, N., Fisher, J., Baccini, A., (2011), "Mapping forest canopy height globally with spaceborne lidar", Journal of Geophysical Research, VOL. 116, G04021, 12 PP., 2011, doi:10.1029/2011JG001708.</p>
-      </li>
+        <li id="quarterly" data-slug="quarterly">
+          <div class="source_header">
+            <strong>QUICC alerts </strong>
+            <i class="expand_arrow"></i>
+            <em>(quarterly, 5km, global)</em>
+          </div>
 
-      <li id="landsat" data-slug="landsat">
-        <strong>2012 Landsat</strong>
-        <p>This base map shows a <a href="http://earthengine.google.org/#detail/LANDSAT/L7_L1T_ANNUAL_TOA" target="_blank">composite</a> of 2012 Landsat satellite imagery (USGS/NASA), compiled by Google Earth Engine. More info is available from the <a href="http://landsat.usgs.gov/" target="_blank">Landsat website</a>. This Landsat composite displays “Top-of-Atmosphere” imagery at 30 meter spatial resolution.</p>
-      </li>
-    </ul>
-  </article>
-</section>
+          <div class="source_body">
+            <div class="source_download">
+              <a href="#" class="disabled">Download coming soon<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+
+              <p>The QUICC (Quarterly Indicator of Cover Change) product was developed at NASA Ames Research Center by the CASA ecosystem modeling team. QUICC is based on a comparison of the MODIS Global Vegetation Index (VI) images at the exact same time period each year (end of March, June, September and December) in consecutive years and detects areas of major  landcover change (not just forest). The CASA team updates the global QUICC products as soon as the newest quarterly MODIS worldwide VI image at 5-km spatial resolution is available.</p>
+
+              <p class="credits">Credit: NASA Ames Research Center, Cal State</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="fires" data-slug="fires" class="last">
+          <div class="source_header">
+            <strong>NASA fires </strong>
+            <i class="expand_arrow"></i>
+            <em>(quarterly, 5km, global)</em>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="#" class="disabled">Download coming soon<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+
+              <p>The Fire Information for Resource Management System (FIRMS) delivers global MODIS-derived hotspots and fire locations. The active fire locations represent the center of a 1 kilometer pixel that is flagged by the MOD14/MYD14 Fire and Thermal Anomalies Algorithm as containing one or more fires within the pixel.</p>
+
+              <p>The near real-time active fire locations are processed by the NASA Land and Atmosphere Near Real-Time Capability for EOS (LANCE) using the standard MODIS MOD14/MYD14 Fire and Thermal Anomalies product. Data older than the past 7 days can be obtained from the <a href="https://earthdata.nasa.gov/data/near-real-time-data/firms/active-fire-data" target="_blank">Archive Download Tool</a>. The Tool provides near-real-time data and, as it becomes available, it is replaced with the standard MCD14ML fire product.</p>
+
+              <p>More information on active fire data is available from the NASA <a href="https://earthdata.nasa.gov/data/near-real-time-data/firms" target="_blank">FIRMS website</a>.</p>
+
+              <p class="credits">
+                NASA FIRMS, 2012. MODIS Hotspot / Active Fire Detections. <a href="http://earthdata.nasa.gov/firms" target="_blank">Available on-line</a>.
+              </p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </article>
+
+    <article id="forest_cover">
+      <h2 class="forest_cover source_title">Forest Use</h2>
+      <p class="description">Forest cover data measure the extent of forests, forest ecosystems, and related features such as carbon stocks.</p>
+
+      <ul class="sources">
+        <li id="intact_forest_landscapes" data-slug="intact_forest_landscapes" class="first">
+          <div class="source_header">
+            <strong>Intact forest landscapes</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://www.intactforests.org/" target="_blank" title="Download at project website">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>The Intact Forest Landscapes dataset identifies unbroken expanses of natural ecosystems within the zone of current forest extent (as of 2000), mapped from Landsat satellite imagery. These landscapes show no signs of significant human activity, are not fragmented by infrastructure, and are at least 50,000 hectares in size. These data can be used for assessment of forest intactness, alteration and degradation at global and regional scales. More information and data downloads are available from the project website.</p>
+
+              <p class="credits">Credit: Greenpeace, World Resources Institute, and Transparent World (2012)</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="pantropical" data-slug="pantropical" class="last">
+          <div class="source_header">
+            <strong>Tropical forest carbon stocks</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://www.ncbi.nlm.nih.gov/pubmed/21628575" class="download" target="_blank" title="Download at project website">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>The Tropical forest carbon stocks shows biomass carbon stocks for over 2.5 billion ha of forest on three continents and encompasses tropical forests for the early 2000s.  The total carbon stock is based on live biomass (above-and below-ground), using a combination of data from 4,079 in situ inventory plots and satellite light detection and ranging (Lidar) samples of forest structure to estimate carbon storage, plus optical microwave and imagery (1-km resolution) to extrapolate over the landscape.  The total biomass carbon stock of forests in the study region is estimated to be 247 Gt C, with 193 Gt C stored aboveground and 54 Gt C stored belowground in roots. Forests in Latin America, sub-Saharan Africa, and Southeast Asia accounted for 49%, 25%, and 26% of the total stock, respectively. By analyzing the errors propagated through the estimation process, uncertainty at the pixel level (100 ha) ranged from ± 6% to ± 53%, but was constrained at the typical project (10,000 ha) and national (>1,000,000 ha) scales at ca. ± 5% and ca. ± 1%, respectively. The benchmark map illustrates regional patterns and provides methodologically comparable estimates of carbon stocks for 75 developing countries where previous assessments were either poor or incomplete.</p>
+
+              <p class="credits">Credit: Benchmark map of forest carbon stocks in tropical regions across three continents (Proc Natl Acad Sci U S A. (2011)</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </article>
+
+    <article id="forest_use">
+      <h2 class="forest_use source_title">Forest Use</h2>
+      <p class="description">Forest use data measure human use of forests, especially the boundaries of areas allocated for a certain land use through concessions, licenses, permits, titles, management units, etc.</p>
+
+      <ul class="sources">
+        <li id="cameroon_logging" data-slug="logging" class="first">
+          <div class="source_header">
+            <strong>Cameroon Forest Management Units</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://data.wri.org/gfw2/gfw2_cmr_lc.zip">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>Logging in Cameroon’s forests is permitted within Forest Management Units (FMUs). This dataset displays the FMUs within Cameroon’s permanent forest estate. There are 114 FMUs in Cameroon which are further divided into logging concessions called annual allowable cuts (AACs), where selective logging is permitted. These logging permits require owners and operators to maintain permanent forest cover. This dataset, released in 2012, was produced in a collaboration between the Cameroon Ministry of Forestry and Wildlife and WRI. For more information and datasets, see the <a href="http://www.wri.org/project/interactive-forest-atlas-cameroon" target="_blank">Cameroon Forest Atlas</a>.</p>
+
+              <p class="credits">Credit: Ministry of Forestry and Wildlife, World Resources Institute (2012)</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="central_african_republic_logging" data-slug="logging">
+          <div class="source_header">
+            <strong>Central African Republic Logging Permits</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://data.wri.org/gfw2/gfw2_car_lc.zip">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>This dataset provides the permit boundaries for selective logging in the  Central African Republic's production forests. There are 14 separate logging concessions currently in the CAR. This dataset, released in 2010, was produced through a collaboration between CAR Ministry of Water, Forests, Hunting and Fishing (MEFCP) and WRI. For more information, see the <a href="http://www.wri.org/publication/interactive-forest-atlas-central-african-republic" target="_blank">Interactive Forest Atlas for the Central African Republic</a>.</p>
+
+              <p class="credits">Credit: Central African Republic Ministry of Water and Forests, Hunting, and Fishing, German Technical Cooperation (GTZ), French Development Agency (AFD), Special Allocation Fund for Forest Development (CASDF), and the World Resources Institute (2010)</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="democratic_republic_of_congo_logging" data-slug="logging">
+          <div class="source_header">
+            <strong>Democratic Republic of Congo Forest Titles</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://data.wri.org/gfw2/gfw2_drc_lc.zip">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>Forest concession data for the Democratic Republic of Congo (DRC) represent geographic areas permitted for exploitation of timber by selective logging. There are 80 active logging concessions in DRC. This dataset, released in 2011, was produced through a collaboration between the DRC Ministry of Environment, Nature Conservation, and Tourism (MECNT) and WRI. For more information, see the <a href="http://www.wri.org/publication/interactive-forest-atlas-democratic-republic-of-congo" target="_blank">Interactive Forest Atlas for the Democratic Republic of Congo</a>.</p>
+
+              <p class="credits">Credit: Democratic Republic Of Congo Ministry of Environment, Nature Conservation and Tourism (MECNT), SPIAF, the World Resources Institute, DIAF (Asset Management and Forest Management), and FMB (Forest Management Branch) (2011)</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="republic_of_congo_logging" data-slug="logging">
+          <div class="source_header">
+            <strong>Republic of Congo Logging Concessions</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://data.wri.org/gfw2/gfw2_cgo_lc.zip">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>Forest concession data for the Republic of Congo provide the boundaries of areas permitted for selective logging. There are currently 63 logging concessions, also called Forest Exploitation Units, which are managed in accordance with the national Forest Code. This dataset, released in 2011, was produced through a collaboration between the Republic of Congo Ministry of Forest Economy and WRI. For more information, see the <a href="http://www.wri.org/project/interactive-forest-atlas-congo" target="_blank">Forest Atlas of Congo</a>.</p>
+
+              <p class="credits">Credit: Republic of Congo Ministry of Forest Economy (MEF), Centre National Inventory and Planning of Forest and Wildlife Resources (CNIAF), and the World Resources Institute (2011)</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="gabon_logging" data-slug="logging">
+          <div class="source_header">
+            <strong>Gabon Forest licenses</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://data.wri.org/gfw2/gfw2_gab_lc.zip">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>This dataset provides the boundaries for forest licenses in Gabon, which are areas permitted for selective logging. There are 627 separate forest licenses currently in Gabon. This dataset, released in 2011, was produced in a collaboration between the Gabon Ministry of Forest Economy, Water, Fisheries, and Aquaculture (MEFEPA) and WRI. For more information, see the <a href="http://www.wri.org/publication/interactive-forestry-atlas-gabon" target="_blank">Interactive Forest Atlas for Gabon</a>.</p>
+
+              <p class="credits">Credit: Gabon Ministry of Forest Economy, Water, Fisheries and Aquaculture (MEFEPA) and the World Resources Institute (2010)</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="indonesia_logging" data-slug="logging">
+          <div class="source_header">
+            <strong>Indonesia Logging Concessions</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://data.wri.org/gfw2/gfw2_idn_lc.zip">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>This dataset, produced by the Indonesia Ministry of Forestry, provides the boundaries of logging concessions for the selective logging of natural forests in Indonesia. There are 557 active logging concessions in Indonesia.</p>
+
+              <p class="credits">Credit: Ministry of Forestry Indonesia (2011)</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="indonesia_oil_palm" data-slug="oil_palm">
+          <div class="source_header">
+            <strong>Indonesia Oil palm concessions</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://data.wri.org/gfw2/gfw2_idn_op.zip">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>This dataset, produced by the Indonesia Ministry of Forestry, provides the boundaries of current or planned oil palm plantations in Indonesia. This dataset is known to be incomplete, but is currently the best available.</p>
+
+              <p class="credits">Credit: Indonesia Ministry of Forestry (2011)</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="cameroon_oil_palm" data-slug="oil_palm">
+          <div class="source_header">
+            <strong>Cameroon Agro-industrial zones</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://data.wri.org/gfw2/gfw2_cmr_op.zip">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>This data layer shows the boundaries of agro-industrial zones, where oil palm and rubber tree plantations, as well as other crops, may be established. In Cameroon, industrial agriculture falls outside of the National Forest Estate. Agricultural plantations are allocated by the Ministry of Economy and Planning to private entitities under long-term, renewable contracts, which are then monitored by the Ministry of Agriculture. The agro-industrial dataset was mapped using satellite imagery, with ground-truthing to determine the crop type and operating company. Official documentation was often lacking, so boundaries should be considered approximate and are not exhaustive.</p>
+
+              <p class="credits">Credit: World Resources Institute (2012)</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="republic_of_congo_oil_palm" data-slug="oil_palm">
+          <div class="source_header">
+            <strong>Republic Of Congo oil palm concessions</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://data.wri.org/gfw2/gfw2_cgo_op.zip">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>This dataset provides the boundaries for oil palm plantations in the Republic of Congo. The World Resources Institute compiled information from the Republic of Congo Ministry of Agriculture to produce this data layer.</p>
+
+              <p class="credits">Credit: World Resources Institute and Republic of Congo, Ministry of Agriculture (2013)</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="indonesia_timber" data-slug="wood_fiber_plantations">
+          <div class="source_header">
+            <strong>Indonesia Wood Fiber Plantations</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://data.wri.org/gfw2/gfw2_idn_wf.zip">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>This dataset, produced by the Indonesia Ministry of Forestry, provides the boundaries of current or planned wood fiber plantations in Indonesia. This dataset is known to be incomplete, but is currently the best available.</p>
+
+              <p class="credits">Credit: Indonesia Ministry of Forestry (2011)</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="republic_of_congo_fiber" data-slug="wood_fiber_plantations">
+          <div class="source_header">
+            <strong>Republic Of Congo Eucalyptus Plantations</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://data.wri.org/gfw2/gfw2_cgo_wf.zip">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>This dataset provides the boundaries for eucalyptus and other plantations in the Republic of Congo. The World Resources Institute compiled information from the Republic of Congo Ministry of Agriculture to produce this data layer.</p>
+
+              <p class="credits">Credit: World Resources Institute and Republic of Congo, Ministry of Agriculture (2013)</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="democratic_republic_of_congo_mining" data-slug="mining">
+          <div class="source_header">
+            <strong>Democratic Republic of Congo mining permits</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://www.miningcongo.cd" target="_blank" title="Download at project website">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>This dataset provides the boundaries for mining permits in the Democratic Republic of Congo. This dataset is available from CAMI for purchase and could not be made available for public download. For more information, see <a href="http://www.miningcongo.cd" target="_blank">http://www.miningcongo.cd/</a>.</p>
+
+              <p class="credits">Credit: Ministère de Mines, Cadastre Miniers (CAMI), DRC</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="cameroon_mining" data-slug="mining">
+          <div class="source_header">
+            <strong>Cameroon mining permits</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://data.wri.org/gfw2/gfw2_cmr_mc.zip">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>This dataset provides the boundaries of prospective mining permits for Cameroon, as well as the type of mineral resource. Map data were provided by the Cameroon Ministry of Mines and Technological Development and published in a collaboration with the World Resources Institute. For more information and datasets, see the <a href="http://www.wri.org/project/interactive-forest-atlas-cameroon" target="_blank">Cameroon Forest Atlas</a>.</p>
+
+              <p class="credits">Credit: Cameroon Ministry of Mines and Technological Development (2012)</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="gabon_mining" data-slug="mining">
+          <div class="source_header">
+            <strong>Gabon mining permits</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://data.wri.org/gfw2/gfw2_gab_mc.zip">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>This dataset provides the boundaries for mining permits and prospecting permits for Gabon. The dataset was produced by the Gabon Ministry of Mines, Petroleum and Hydrocarbons and the World Resources Institute, for the Interactive Mining, Forest, and Conservations Atlas of Gabon. For more information see the <a href="http://www.wri.org/publication/interactive-forestry-atlas-gabon" target="_blank">Interactive Forest Atlas of Gabon</a>.</p>
+
+              <p class="credits">Credit: Gabon Ministry of Mines, Petroleum and Hydrocarbons; World Resources Institute (2011)</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="republic_of_congo_mining" data-slug="mining" class="last">
+          <div class="source_header">
+            <strong>Republic Of Congo mining permits</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://data.wri.org/gfw2/gfw2_cgo_mc.zip">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>This dataset provides the boundaries of mining permits for the Republic of Congo. The original map data were produced by the Republic of Congo Ministry of Mines and Geology, with the support of the World Resources Institute through the Interactive Forest Atlas of Congo project. For more information on the <a href="http://www.wri.org/project/interactive-forest-atlas-congo" target="_blank">Forest Atlas</a>.</p>
+
+              <p class="credits">Credit: Republic of Congo Ministry of Mines and Geology, the World Resources Institute (2012)</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </article>
+
+    <article id="conservation">
+      <h2 class="conservation source_title">Conservation</h2>
+      <p class="description">Conservation data measure information that is important for preservation and enhancement of protected areas and natural resources such as biodiversity.</p>
+
+      <ul class="sources">
+        <li id="conservation" data-slug="conservation" class="first">
+          <div class="source_header">
+            <strong>Global Protected Areas</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="http://www.protectedplanet.net" target="_blank" title="Download at project website">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>All protected areas are from Protectedplanet.net which is the home of the World Database on Protected Areas (WDPA). The WDPA is a joint initiative between the IUCN and UNEP-WCMC to compile spatially referenced information about parks and protected areas globally. Data can be downloaded from <a href="http://www.protectedplanet.net/" target="_blank">Protected Planet site</a>.</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="biodiversity_hotspots" data-slug="biodiversity_hotspots" class="last">
+          <div class="source_header">
+            <strong>Biodiversity hotspots</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_download">
+              <a href="#" class="disabled">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>Biodiversity "hotspots" were first defined in 1988 by Norman Myers as areas characterized by high levels of endemic plants and habitat loss. Conservation International (CI) has since reevaluated and further defined the term. Under the CI definition, a region must "must contain at least 1,500 species of vascular plants as endemics, and it has to have lost at least 70 percent of its original habitat" to be considered a true biodiversity hotspot.</p>
+
+              <p>Please note that the data visualization is a reproduction of CI's Biodiversity Hotspot shapefile.</p>
+ 
+              <p class="credits">Credit: All text and images come from <a href="http://www.conservation.org/where/priority_areas/hotspots/Pages/hotspots_main.aspx.">http://www.conservation.org/where/priority_areas/hotspots/Pages/hotspots_main.aspx.</a> </p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </article>
+
+    <article id="stories">
+      <h2 class="stories source_title">Stories</h2>
+      <p class="description">Stories share qualitative or anecdotal data on forests, submitted by users or written and compiled from other sources.</p>
+
+      <ul class="sources">
+        <li id="mongabay" data-slug="mongabay" class="first">
+          <div class="source_header">
+            <strong>Mongabay Stories</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>This layer displays stories from Mongabay.com, a leading environmental science and conservation website. Stories are tagged to a specific location, and provide in-depth research or commentary on local forest issues. More information can be found at <a href="http://www.mongabay.com/" target="_blank">Mongabay site</a>.</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="user_stories" data-slug="user_stories" class="last">
+          <div class="source_header">
+            <strong>User Stories</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>This layer displays forest-related stories reported by GFW users. Stories are tagged to a specific location and can include photos, video, or explanatory text. See all GFW stories, or report your own <%= link_to "here", stories_path %>.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </article>
+
+    <article id="base_maps">
+      <h2 class="base_maps source_title">Base maps</h2>
+      <p class="description">Base maps provide a variety of map backgrounds for visual comparison with other data.</p>
+
+      <ul class="sources">
+        <li id="terrain" data-slug="terrain" class="first">
+          <div class="source_header">
+            <strong>Black & White</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>Google Maps black-and-white base map, showing political boundaries and human-made features. Scale varies by location. Read terms of service <a href="http://www.google.com/help/terms_maps.html" target="_blank">here</a>.</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="classic" data-slug="classic">
+          <div class="source_header">
+            <strong>Terrain</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>Google Maps terrain base map, showing geographical and topographical details. Scale varies by location. Read terms of service <a href="http://www.google.com/help/terms_maps.html" target="_blank">here</a>.</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="satellite" data-slug="satellite">
+          <div class="source_header">
+            <strong>Satellite</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>Google Maps satellite imagery base map is created using recent satellite images, most of which are one to three years old. Google Maps satellite imagery uses Landsat images at 30 meter spatial resolution. More information available <a href="http://www.google.com/help/terms_maps.html" target="_blank">here</a>.</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="tree_height" data-slug="tree_height">
+          <div class="source_header">
+            <strong>Tree Height</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>Global base map showing forest canopy height, as well as forest extent and distribution. This dataset was obtained using spaceborne lidar, and was produced by the NASA Jet Propulsion Laboratory, California Institute of Technology, and may be downloaded from <a href="http://lidarradar.jpl.nasa.gov" target="_blank">project website</a>. Spatial resolution is 1 km.</p>
+
+              <p class="credits">Simard, M., Pinto, N., Fisher, J., Baccini, A., (2011), "Mapping forest canopy height globally with spaceborne lidar", Journal of Geophysical Research, VOL. 116, G04021, 12 PP., 2011, doi:10.1029/2011JG001708.</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="landsat" data-slug="landsat" class="last">
+          <div class="source_header">
+            <strong>Landsat</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_summary">
+              <h3>Summary</h3>
+              <p>This base map shows a <a href="http://earthengine.google.org/#detail/LANDSAT/L7_L1T_ANNUAL_TOA" target="_blank">composite</a> of 2012 Landsat satellite imagery (USGS/NASA), compiled by Google Earth Engine. More info is available from the <a href="http://landsat.usgs.gov/" target="_blank">Landsat website</a>. This Landsat composite displays “Top-of-Atmosphere” imagery at 30 meter spatial resolution.</p>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </article>
+  </div>
 </div>
