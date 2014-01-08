@@ -39,7 +39,7 @@ GFW.modules.app = function(gfw) {
 
       this.options = _.defaults(options, {
         user       : 'gfw-01',
-        layerTable : 'layerinfo_minus_imazon_dev'
+        layerTable : 'layerinfo_minus_imazon'
         // layerTable : 'layerinfo_dev'
       });
 
