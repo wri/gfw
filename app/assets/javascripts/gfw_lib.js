@@ -1236,7 +1236,7 @@ GFW.modules.maplayer = function(gfw) {
         sad           = GFW.app.datalayers.LayersObj.get(584);
         fires         = GFW.app.datalayers.LayersObj.get(593);
 
-        forestgain    = GFW.app.datalayers.LayersObj.get(594);
+        forestgain    = GFW.app.datalayers.LayersObj.get(596);
         loss          = GFW.app.datalayers.LayersObj.get(595);
 
         if (category != 'Forest change' || slug === 'biome') {
