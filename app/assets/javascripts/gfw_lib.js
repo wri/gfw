@@ -1243,7 +1243,16 @@ GFW.modules.maplayer = function(gfw) {
           legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
         }
 
-        if (slug === 'loss') {
+        if (slug === 'forestgain') {
+
+          if (visible) {
+            GFW.app._addLayer(this.layer);
+          } else {
+            GFW.app._removeLayer(this.layer);
+          }
+          legend.toggleItemBySlug(slug);
+
+        } else if (slug === 'loss') {
 
           if (visible) {
             GFW.app.currentBaseLayer = slug;
@@ -1253,6 +1262,8 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app.currentBaseLayer = null;
             GFW.app._updateBaseLayer();
           }
+
+          legend.toggleItemBySlug(slug);
 
         }
 
@@ -1323,9 +1334,7 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app._removeLayer(this.layer);
           }
 
-          if (slug !== "forestgain") {
             Filter.toggle(id);
-          }
         }
       }
   });

@@ -414,6 +414,16 @@
 
     </ul>
   </script>
+  <script id="legend-loss-template" type="text/x-underscore-template">
+    <ul class="{{category}}">
+      <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
+      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a></div></li>
+      <ul>
+      <li id="{{cat_id}}" class="forestgain"> <i style="background-color:{{title_color}};"></i><div>Cover Gain <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a></div></li>
+      <li id="{{cat_id}}" class="loss"> <i style="background-color:{{title_color}};"></i><div>Cover Loss <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a></div></li>
+      </ul>
+    </ul>
+  </script>
   <script id="legend-group-template" type="text/x-underscore-template">
     <ul class="{{category}}">
       <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
