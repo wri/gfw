@@ -144,6 +144,26 @@
     <div class="content"></div>
   </script>
 
+  <script id="layer-item-radio-loss-template" type="text/x-underscore-template">
+    <li id="filter_{{ id }}" class="{{ category }}">
+      <a href="#" class="radio {{ category }} {{ slug }}" data-name={{ category }}>{{name}}</a>
+      <a href="#" data-category="{{category}}" data-slug="{{slug}}" class="source top{{ slug == 'nothing' ? ' hidden' : '' }}"></a>
+      <ul class="extra"></ul>
+    </li>
+  </script>
+
+  <script id="layer-item-checkbox-loss-template" type="text/x-underscore-template">
+    <li id="filter_{{ id }}" class="{{ category }}">
+    <a href="#" data-id="{{ id }}" data-color="{{ color}}" class="checkbox">
+        <i><span></span></i>
+        <span class="name">{{name}}</span>
+      </a>
+
+      <a href="#" data-category="{{category}}" data-slug="{{slug}}" class="source"></a>
+    </li>
+  </script>
+
+
   <script id="layer-item-radio-template" type="text/x-underscore-template">
     <li id="filter_{{ id }}" class="{{ category }}">
       <a href="#" class="radio {{ category }} {{ slug }} {{ disabled ? 'disabled' : '' }}" data-name={{ category }}>{{name}}</a>
@@ -152,7 +172,7 @@
   </script>
 
   <script id="layer-item-checkbox-template" type="text/x-underscore-template">
-    <li id="filter_{{ id }}" class="{{ category }}">
+    <li id="filter_{{ id }}" class="{{ category }} {{slug}}">
     <a href="#" data-id="{{ id }}" data-color="{{ color}}" class="checkbox {{ disabled ? 'disabled' : '' }}">
         <i><span></span></i>
         <span class="name">{{name}}</span>
@@ -392,6 +412,16 @@
       </div>
       </li>
 
+    </ul>
+  </script>
+  <script id="legend-loss-template" type="text/x-underscore-template">
+    <ul class="{{category}}">
+      <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
+      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a></div></li>
+      <ul>
+      <li id="{{cat_id}}" class="forestgain"> <i style="background-color:{{title_color}};"></i><div>Cover Gain <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a></div></li>
+      <li id="{{cat_id}}" class="loss"> <i style="background-color:{{title_color}};"></i><div>Cover Loss <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a></div></li>
+      </ul>
     </ul>
   </script>
   <script id="legend-group-template" type="text/x-underscore-template">

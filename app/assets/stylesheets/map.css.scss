@@ -133,7 +133,6 @@
     }
 
     .source {
-      /*@include inline-block();*/
       @include size(10px);
       @include icons-sprite(information);
 
@@ -143,6 +142,12 @@
       &:hover {
         @include icons-sprite(information);
       }
+
+      &.top {
+        top: 13px;
+        margin-top: 0;
+      }
+
     }
 
     & > a {
@@ -635,7 +640,8 @@
 
   .content {
 
-    max-height: 200px;
+    max-height: 400px;
+
     height: 40px;
 
     width: 100%;
@@ -685,6 +691,12 @@
       padding: 15px;
 
       &.double li div { float:none; clear:both; margin: 0 0 7px 0; }
+
+      & > ul {
+        padding: 0 0 0 10px;
+        border:none;
+        li { margin: 0 0 5px 0; }
+      }
 
       li {
 
