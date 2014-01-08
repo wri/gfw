@@ -981,19 +981,23 @@ GFW.modules.app = function(gfw) {
         return;
       }
 
-      this.baseLayer = new CartoDBLayer({
-        map: map,
-        user_name:'',
-        tiler_domain:'dyynnn89u7nkm.cloudfront.net',
-        sql_domain:'dyynnn89u7nkm.cloudfront.net',
-        tiler_path:'/tiles/',
-        extra_params:{ v: this._global_version}, //define a verison number on requests
-        tiler_suffix:'.png',
-        table_name: this._getTableName(this.currentBaseLayer),
-        query: this.queries[this.currentBaseLayer].replace(/{Z}/g, this._map.getZoom()),
-        layer_order: "top",
-        auto_bound: false
-      });
+      if (this.currentBaseLayer) {
+
+        this.baseLayer = new CartoDBLayer({
+          map: map,
+          user_name:'',
+          tiler_domain:'dyynnn89u7nkm.cloudfront.net',
+          sql_domain:'dyynnn89u7nkm.cloudfront.net',
+          tiler_path:'/tiles/',
+          extra_params:{ v: this._global_version}, //define a verison number on requests
+          tiler_suffix:'.png',
+          table_name: this._getTableName(this.currentBaseLayer),
+          query: this.queries[this.currentBaseLayer].replace(/{Z}/g, this._map.getZoom()),
+          layer_order: "top",
+          auto_bound: false
+        });
+
+      }
 
     },
 
@@ -1205,6 +1209,7 @@ GFW.modules.maplayer = function(gfw) {
         }
 
         this.layer.attributes['visible'] = !this.layer.attributes['visible'];
+
         var
         slug            = this.layer.get('slug'),
         title           = this.layer.get('title'),
@@ -1230,6 +1235,7 @@ GFW.modules.maplayer = function(gfw) {
         quarterly     = GFW.app.datalayers.LayersObj.get(588),
         sad           = GFW.app.datalayers.LayersObj.get(584);
         fires         = GFW.app.datalayers.LayersObj.get(593);
+
         forestgain    = GFW.app.datalayers.LayersObj.get(594);
         loss          = GFW.app.datalayers.LayersObj.get(595);
 
@@ -1237,26 +1243,22 @@ GFW.modules.maplayer = function(gfw) {
           legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
         }
 
-        if (slug === 'loss' || slug === 'forestgain') {
+        if (slug === 'loss') {
 
-          if (slug === 'loss' && showMap) {
-            Timeline.show();
-            //analysis.info.model.set("dataset", "forest_loss");
+          if (visible) {
+            GFW.app.currentBaseLayer = slug;
+            GFW.app._updateBaseLayer();
+
           } else {
-            Timeline.hide();
+            GFW.app.currentBaseLayer = null;
+            GFW.app._updateBaseLayer();
           }
-
-          if (slug == 'forestgain') {
-            GFW.app._addLayer(this.layer);
-          } else {
-            forestgain && GFW.app._removeLayer(forestgain);
-          }
-
-          legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
 
         }
 
-        if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon" || slug === "fires") {
+        else if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon" || slug === "fires") {
+
+          if (forestgain) GFW.app._removeLayer(forestgain);
 
           if (slug === 'semi_monthly' && showMap) {
             Timeline.show();
@@ -1302,9 +1304,14 @@ GFW.modules.maplayer = function(gfw) {
 
           GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
           GFW.app.currentBaseLayer = null;
+
           this._hideBaseLayers(GFW.app);
 
-          debugger;
+          GFW.app.currentBaseLayer = "loss";
+          GFW.app._addLayer(forestgain);
+          forestgain.set("visible", true);
+          loss.set("visible", true);
+          GFW.app._updateBaseLayer();
 
           legend.replace(id, category_slug, category, title, slug, category_color, title_color);
 
@@ -1316,7 +1323,9 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app._removeLayer(this.layer);
           }
 
-          Filter.toggle(id);
+          if (slug !== "forestgain") {
+            Filter.toggle(id);
+          }
         }
       }
   });

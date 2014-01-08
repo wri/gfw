@@ -1769,7 +1769,7 @@ var Filter = (function() {
     $layerItem        = null;
 
     // Select the kind of input (radio or checkbox) depending on the category
-    if (cat === 'forest_change' && slug != 'biome') {
+    if (cat === 'forest_change') {
 
       layerItemTemplate = _.template($("#layer-item-checkbox-loss-template").html());
 
@@ -1829,6 +1829,12 @@ var Filter = (function() {
 
       if (!$(this).find(".radio").hasClass("checked")) {
         clickEvent && clickEvent();
+
+        var $c = $(this).parent().find(".checkbox");
+        $c.addClass("checked");
+        var color = $c.attr("data-color");
+        $c.css("color", color );
+        $c.find("i").css("background-color", color );
       }
 
     });
