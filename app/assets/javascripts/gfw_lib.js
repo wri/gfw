@@ -292,6 +292,16 @@ GFW.modules.app = function(gfw) {
 
     },
 
+    _removeSubLayer: function(layer) {
+      this._layers = _.without(this._layers, layer.get("sublayer"));
+      this._renderLayers();
+    },
+
+    _addSubLayer: function(layer) {
+      this._layers.push(layer.get("sublayer"));
+      this._renderLayers();
+    },
+
     _addLayer: function(layer) {
 
       if (layer.get("external")) {
@@ -1044,6 +1054,7 @@ GFW.modules.maplayer = function(gfw) {
         this.layer = layer;
         this._map = map;
 
+        console.log(this.layer.get("title"))
         this.$map_coordinates = $(".map_coordinates");
 
         var sw = new google.maps.LatLng(this.layer.get('ymin'), this.layer.get('xmin'));
@@ -1201,6 +1212,20 @@ GFW.modules.maplayer = function(gfw) {
 
       },
 
+      _toggleSubLayer: function(){
+
+        this.layer.attributes['sublayer_visible'] = !this.layer.attributes['sublayer_visible'];
+
+        var visible = this.layer.get("sublayer_visible")
+
+        if (visible) {
+          GFW.app._addSubLayer(this.layer);
+        } else {
+          GFW.app._removeSubLayer(this.layer);
+        }
+
+      },
+
       _toggleLayer: function(){
         var self = this;
 
@@ -1270,6 +1295,12 @@ GFW.modules.maplayer = function(gfw) {
 
           if (forestgain) GFW.app._removeLayer(forestgain);
 
+          // Remove quicc extended layer
+          if (_.include(GFW.app._layers, "quicc_bounding_box_extent")) {
+            GFW.app._layers = _.without(GFW.app._layers, "quicc_bounding_box_extent");
+            GFW.app._renderLayers();
+          }
+
           if (slug === 'semi_monthly' && showMap) {
             Timeline.show();
             analysis.info.model.set("dataset", "forma");
@@ -1307,7 +1338,19 @@ GFW.modules.maplayer = function(gfw) {
             sad.attributes['visible'] = true;
           }
 
-          legend.replace(id, category_slug, category, title, slug, category_color, title_color);
+          var subEvent;
+
+          this.layer.attributes['sublayer_visible'] = false;
+
+          if (this.layer.get("sublayer")) {
+
+            subEvent = function() {
+              self._toggleSubLayer();
+            };
+
+          }
+
+          legend.replace(id, category_slug, category, title, slug, category_color, title_color, subEvent);
         }
 
         else if (slug === 'umd_tree_loss_gain') {
@@ -1333,7 +1376,8 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app._removeLayer(this.layer);
           }
 
-            Filter.toggle(id);
+          Filter.toggle(id);
+
         }
       }
   });
@@ -1355,7 +1399,7 @@ GFW.modules.datalayers = function(gfw) {
 
         var LayersColl    = this._cartodb.CartoDBCollection.extend({
           sql: function(){
-            return "SELECT cartodb_id AS id, slug, title, title_color, subtitle, table_name, source, category_color, category_slug, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
+            return "SELECT cartodb_id AS id, slug, title, title_color, subtitle, sublayer, table_name, source, category_color, category_slug, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
               ST_XMIN(the_geom) AS xmin, ST_YMAX(the_geom) AS ymax, ST_YMIN(the_geom) AS ymin, tileurl, true AS visible \
               FROM " + layerTable + " \
               WHERE display = TRUE ORDER BY displaylayer,title ASC";

@@ -656,6 +656,16 @@
     overflow: auto;
     outline: none;
 
+    .checkbox {
+      position: relative;
+      @extend .sans-serif;
+      display:block;
+      width: 130px;
+      font-size:13px;
+      line-height:17px;
+      .name { color: #ccc; width :100px; }
+    }
+
     ul li  .info {
       margin: 9px 0 0 0;
       font-size: 11px;
@@ -687,7 +697,6 @@
         border: 1px solid #FED98E;
         @include border-radius(3px 3px 3px 3px);
       }
-
 
     }
 
