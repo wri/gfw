@@ -1094,7 +1094,7 @@ GFW.modules.maplayer = function(gfw) {
             }
           };
 
-          Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
+          Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color"), subtitle: this.layer.get("subtitle") });
 
           if (_.include(filters, this.layer.get('id'))) {
             GFW.app._loadStoriesLayer();
@@ -1123,7 +1123,7 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
           };
 
-          Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: biomeEvent, source: slug, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
+          Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: biomeEvent, source: slug, category_color: this.layer.get("category_color"), color: this.layer.get("title_color"), subtitle: this.layer.get("subtitle") });
         }
         else if (slug === 'umd_tree_loss_gain') {
 
@@ -1132,7 +1132,7 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
           };
 
-          Filter.addForestLossFilters(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
+          Filter.addForestLossFilters(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color"), subtitle: this.layer.get("subtitle") });
 
         }
         else if (slug === 'loss' || slug === 'forestgain') {
@@ -1141,7 +1141,7 @@ GFW.modules.maplayer = function(gfw) {
             that._toggleLayer();
           };
 
-          Filter.addForestLossFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
+          Filter.addForestLossFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color"), subtitle: this.layer.get("subtitle") });
 
           // Adds the layers from the hash
           if (filters && _.include(filters, this.layer.get('id'))) {
@@ -1155,7 +1155,7 @@ GFW.modules.maplayer = function(gfw) {
           }
 
         } else {
-          Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, source: this.layer.get('source'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
+          Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, source: this.layer.get('source'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color"), subtitle: this.layer.get("subtitle") });
 
           // Adds the layers from the hash
           if (filters && _.include(filters, this.layer.get('id'))) {
@@ -1214,7 +1214,6 @@ GFW.modules.maplayer = function(gfw) {
         slug            = this.layer.get('slug'),
         title           = this.layer.get('title'),
         title_color     = this.layer.get('title_color'),
-        title_subs      = this.layer.get('title_subs'),
         visible         = this.layer.get('visible'),
         tableName       = this.layer.get('table_name'),
         category        = this.layer.get('category_name'),
@@ -1356,7 +1355,7 @@ GFW.modules.datalayers = function(gfw) {
 
         var LayersColl    = this._cartodb.CartoDBCollection.extend({
           sql: function(){
-            return "SELECT cartodb_id AS id, slug, title, title_color, title_subs, table_name, source, category_color, category_slug, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
+            return "SELECT cartodb_id AS id, slug, title, title_color, subtitle, table_name, source, category_color, category_slug, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax, \
               ST_XMIN(the_geom) AS xmin, ST_YMAX(the_geom) AS ymax, ST_YMIN(the_geom) AS ymin, tileurl, true AS visible \
               FROM " + layerTable + " \
               WHERE display = TRUE ORDER BY displaylayer,title ASC";

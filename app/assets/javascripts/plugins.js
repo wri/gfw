@@ -1798,6 +1798,7 @@ var Filter = (function() {
     source      = options.source      || null;
     category_color = options.category_color || "#ccc";
     color       = options.color       || "#ccc";
+    subtitle       = options.subtitle    || "";
 
     var cat  = category.replace(/ /g, "_").toLowerCase();
 
@@ -1816,7 +1817,7 @@ var Filter = (function() {
 
     layerItemTemplate = _.template($("#layer-item-radio-loss-template").html());
 
-    $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
+    $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source, subtitle: subtitle }));
 
     $layerItem.find("a.radio").on("click", function() {
 
@@ -1847,11 +1848,12 @@ var Filter = (function() {
   function _addFilter(id, slug, category, name, options) {
 
     var
-    clickEvent  = options.clickEvent  || null,
-    disabled    = options.disabled    || false;
-    source      = options.source      || null;
+    clickEvent     = options.clickEvent  || null,
+    disabled       = options.disabled    || false;
+    source         = options.source      || null;
     category_color = options.category_color || "#ccc";
-    color       = options.color       || "#ccc";
+    color          = options.color       || "#ccc";
+    subtitle       = options.subtitle    || "";
 
     if (category === null || !category) {
       category = 'Protected Areas';
@@ -1878,7 +1880,7 @@ var Filter = (function() {
 
         layerItemTemplate = _.template($("#layer-item-radio-template").html());
 
-        $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
+        $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source, subtitle: subtitle }));
 
         $layerItem.find("a.radio").on("click", function() {
 
