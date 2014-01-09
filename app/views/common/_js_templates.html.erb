@@ -178,7 +178,7 @@
         <span class="name">{{name}}</span>
       </a>
 
-      <a href="#" data-category="{{category}}" data-slug="{{slug}}" class="source{{ slug == 'ip_brazil_eucalyptus' || slug == 'app_indonesia_wgs84' || slug == 'ip_brazil_farm_wgs84' || slug == 'regrowth' ? ' hidden' : '' }}"></a>
+      <a href="#" data-category="{{category}}" data-slug="{{slug}}" class="source{{ slug == 'ip_brazil_eucalyptus' || slug == 'app_indonesia_wgs84' || slug == 'ip_brazil_farm_wgs84' || slug == 'regrowth' || !source ? ' hidden' : '' }}"></a>
     </li>
   </script>
 
@@ -432,11 +432,11 @@
   </script>
 
   <script id="legend-item-template" type="text/x-underscore-template">
-    <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a></div></li>
+    <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source{{ !source ? ' hidden ' : ' ' }}{{ slug }}"></a></div></li>
   </script>
 
   <script id="legend-item-pantropical-template" type="text/x-underscore-template">
-    <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a>
+    <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source{{ !source ? ' hidden ' : ' ' }}{{ slug }}"></a>
     
       <div class="info">
       <strong>Total Biomass Carbon <span class="units">(MgC/ha)</span></strong>
