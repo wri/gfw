@@ -56,7 +56,7 @@ en:
         submit_story:
           title: 'Submit your story'
           text: "Participate in detecting forest change. Send your story about forest clearing and we will add it to our collection"
-          link: 'Send a story'
+          link: 'Submit your story'
   common:
     header:
       title: 'Global Forest Watch'
