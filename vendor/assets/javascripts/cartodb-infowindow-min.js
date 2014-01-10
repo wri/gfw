@@ -164,7 +164,7 @@ CartoDBInfowindow.prototype.setContent = function(content){
       for(var column in content) {
 
         if (show_column(column, content, this.visible_columns)) {
-          html += '<label>' + column + '</label>';
+          html += '<label>' + column.replace(/_/g, " ") + '</label>';
           html += '<p class="'+((content[column]!=null && content[column]!='')?'':'empty')+'">'+(content[column] || 'empty')+'</p>';
         }
 
