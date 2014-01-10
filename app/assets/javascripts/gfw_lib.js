@@ -1054,7 +1054,6 @@ GFW.modules.maplayer = function(gfw) {
         this.layer = layer;
         this._map = map;
 
-        console.log(this.layer.get("title"))
         this.$map_coordinates = $(".map_coordinates");
 
         var sw = new google.maps.LatLng(this.layer.get('ymin'), this.layer.get('xmin'));
@@ -1086,10 +1085,12 @@ GFW.modules.maplayer = function(gfw) {
         }
 
         if (slug == "nothing") {
+
           var event = function() {
             GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
             GFW.app.currentBaseLayer = null;
             that._hideBaseLayers(GFW.app);
+            that._removeExtendedLayers();
           };
 
           Filter.addFilter("", slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
@@ -1225,6 +1226,27 @@ GFW.modules.maplayer = function(gfw) {
 
       },
 
+      _removeExtendedLayers: function() {
+
+        var renderLayers = false;
+
+        // Remove extended layers
+        if (_.include(GFW.app._layers, "quicc_bounding_box_extent")) {
+          GFW.app._layers = _.without(GFW.app._layers, "quicc_bounding_box_extent");
+          renderLayers = true;
+        }
+
+        if (_.include(GFW.app._layers, "ecoregions_biome")) {
+          GFW.app._layers = _.without(GFW.app._layers, "ecoregions_biome");
+          renderLayers = true;
+        }
+
+        if (renderLayers) {
+          GFW.app._renderLayers();
+        }
+
+      },
+
       _toggleSubLayer: function(){
 
         this.layer.attributes['sublayer_visible'] = !this.layer.attributes['sublayer_visible'];
@@ -1308,22 +1330,7 @@ GFW.modules.maplayer = function(gfw) {
 
           if (forestgain) GFW.app._removeLayer(forestgain);
 
-          var renderLayers = false;
-
-          // Remove extended layers
-          if (_.include(GFW.app._layers, "quicc_bounding_box_extent")) {
-            GFW.app._layers = _.without(GFW.app._layers, "quicc_bounding_box_extent");
-            renderLayers = true;
-          }
-
-          if (_.include(GFW.app._layers, "ecoregions_biome")) {
-            GFW.app._layers = _.without(GFW.app._layers, "ecoregions_biome");
-            renderLayers = true;
-          }
-
-          if (renderLayers) {
-            GFW.app._renderLayers();
-          }
+          this._removeExtendedLayers();
 
           if (slug === 'semi_monthly' && showMap) {
             Timeline.show();
@@ -1378,6 +1385,8 @@ GFW.modules.maplayer = function(gfw) {
         }
 
         else if (slug === 'umd_tree_loss_gain') {
+
+          this._removeExtendedLayers();
 
           GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
           GFW.app.currentBaseLayer = null;
