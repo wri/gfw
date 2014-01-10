@@ -55,7 +55,7 @@ en:
           link: 'Start analyzing'
         submit_story:
           title: 'Submit your story'
-          text: "Participate in detecting forest change. Send your story about forest clearing and we will add it to our collection"
+          text: "Have a story to share about forest change? Help improve our forest monitoring by submitting your stories and photos for display on the GFW map."
           link: 'Send a story'
   common:
     header:
