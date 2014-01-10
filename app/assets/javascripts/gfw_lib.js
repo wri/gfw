@@ -1178,7 +1178,20 @@ GFW.modules.maplayer = function(gfw) {
             }
 
           } else if (this.layer.get('table_name') == 'gfw2_forma') {
-            legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'));
+
+            var subEvent;
+
+            this.layer.attributes['sublayer_visible'] = false;
+
+            if (this.layer.get("sublayer")) {
+
+              subEvent = function() {
+                that._toggleSubLayer();
+              };
+
+            }
+
+            legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
           }
         }
       },
@@ -1295,9 +1308,20 @@ GFW.modules.maplayer = function(gfw) {
 
           if (forestgain) GFW.app._removeLayer(forestgain);
 
-          // Remove quicc extended layer
+          var renderLayers = false;
+
+          // Remove extended layers
           if (_.include(GFW.app._layers, "quicc_bounding_box_extent")) {
             GFW.app._layers = _.without(GFW.app._layers, "quicc_bounding_box_extent");
+            renderLayers = true;
+          }
+
+          if (_.include(GFW.app._layers, "ecoregions_biome")) {
+            GFW.app._layers = _.without(GFW.app._layers, "ecoregions_biome");
+            renderLayers = true;
+          }
+
+          if (renderLayers) {
             GFW.app._renderLayers();
           }
 
