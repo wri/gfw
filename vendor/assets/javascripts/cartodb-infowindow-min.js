@@ -119,7 +119,7 @@ CartoDBInfowindow.prototype.setMode = function(mode){
   if (this.mode == "image") {
     this.template = this.template_image;
     this.div_.innerHTML = this.template;
-    this.div_.className = "cartodb_infowindow with_image_2";
+    this.div_.className = "cartodb_infowindow with_image_small";
   } else {
     this.template = this.template_base;
     this.div_.innerHTML = this.template;

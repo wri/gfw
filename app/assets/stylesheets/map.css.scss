@@ -1751,9 +1751,10 @@
   }
 }
 
-.cartodb_infowindow.with_image_2 {
-  .cover {
-    width:215px;
+.cartodb_infowindow.with_image_small {
+
+  .header  .cover {
+    width:230px!important;
     margin: 10px 0;
   }
 
@@ -1827,7 +1828,7 @@
     }
 
     .cover {
-      width:295px;
+      width: 295px;
       height: 120px;
       overflow:hidden;
       clear:both;
