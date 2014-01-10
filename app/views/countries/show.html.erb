@@ -145,9 +145,9 @@
               <% emissions = 100 * @country.emissions_noland / @country.emissions_land %>
 
               <% if emissions <= 100 %>
-                <h2>According to FAO data, in 2010 <span><%= number_to_percentage(emissions, precision: 2) %> of GHG emissions</span> in this country came from changes to forest land.</h2>
+                <h2>According to FAO data, <span><%= number_to_percentage(emissions, precision: 2) %> of GHG emissions</span> in this country came from land use change and forestry in 2010.</h2>
               <% else %>
-                <h2>According to FAO data, in 2010 changes to forest land sequestered <span><%= number_to_percentage(emissions-100, precision: 2) %> of this country’s GHG emissions.</span></h2>
+                <h2>According to FAO data, land use change and forestry sequestered <span><%= number_to_percentage(emissions-100, precision: 2) %> of this country’s GHG emissions in 2010.</span></h2>
               <% end %>
             <% end %>
           </li>
