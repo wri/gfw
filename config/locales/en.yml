@@ -47,11 +47,11 @@ en:
       icons:
         community:
           title: 'Join the community'
-          text: "Subscribe to the Global Forest Watch discussion group."
+          text: "Subscribe to the “Global Forest Watchers” discussion group to learn more about data and interact with fellow users and researchers."
           link: 'Join the Group'
         analysis:
           title: 'Analysis & alerts'
-          text: "Perform forest clearing analysis on the fly and get your answers in real time, or suscribe to change alerts."
+          text: "Perform forest cover change analyses on the fly and get answers in real time. Subscribe to receive automated alerts to forest cover change in your area of interest."
           link: 'Start analyzing'
         submit_story:
           title: 'Submit your story'
