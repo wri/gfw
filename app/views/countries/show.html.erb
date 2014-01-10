@@ -119,7 +119,7 @@
         </div>
 
         <div class="legislation">
-          <h3>Forest legislation <a href="#" class="info"><i data-source="forest_legislation"></i></a></h3>
+          <h3>Forest policy and legislation <a href="#" class="info"><i data-source="forest_legislation"></i></a></h3>
           <ul>
             <% if @country.national_policy_link.present? %>
               <li><%= link_to @country.national_policy_title.present? ? @country.national_policy_title : "National Forest Policy", @country.national_policy_link %></li>
@@ -136,11 +136,11 @@
         <ul>
           <li>
             <h3>Carbon stocks <a href="#" class="info"><i data-source="carbon_stocks"></i></a></h3>
-            <h2>This country has <span><%= @country.carbon_stocks %> million<br />tonnes of CO2</span> in living forest biomass.</h2>
+            <h2>This country has <span><%= @country.carbon_stocks %> million<br />tonnes of carbon stocks</span> in living forest biomass.</h2>
           </li>
 
           <li class="last">
-            <h3><a href="#" class="info"><i class="dark" data-source="co2_emissions"></i></a> CO2 emissions</h3>
+            <h3><a href="#" class="info"><i class="dark" data-source="co2_emissions"></i></a> GHG emissions</h3>
             <% if @country.emissions_noland.present? && @country.emissions_land.present? %>
               <% emissions = 100 * @country.emissions_noland / @country.emissions_land %>
 
