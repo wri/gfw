@@ -536,7 +536,7 @@ GFW.modules.app = function(gfw) {
 
             if ( pair[1] == 'biodiversity_hotspots' ) {
               GFW.app.infowindow.setMode("image")
-              GFW.app.infowindow.setVisibleColumns(["description"]);
+              GFW.app.infowindow.setVisibleColumns(["description", "photo_credit"]);
               GFW.app.infowindow.setContent(data);
             } else {
               GFW.app.infowindow.setMode("normal")
