@@ -14,12 +14,12 @@
   <div class="content_right">
     <article id="forest_change" class="selected">
       <h2 class="forest_change source_title">Forest Change</h2>
-      <p class="description">Forest clearing data measure forest cover loss or forest disturbance.</p>
+      <p class="description">Forest change data measure tree cover loss, tree cover gain, or forest disturbance.</p>
 
       <ul class="sources">
         <li id="forest_loss" data-slug="forest_loss" class="first expanded">
           <div class="source_header">
-            <strong>UMD Forest cover loss</strong>
+            <strong>UMD tree cover loss &amp; gain</strong>
             <i class="expand_arrow"></i>
             <em>(annual, 30m, global)</em>
           </div>
@@ -35,7 +35,7 @@
           <div class="source_header">
             <strong>Forma alerts</strong>
             <i class="expand_arrow"></i>
-            <em>(monthly, 500m, humid tropical forest)</em>
+            <em>(monthly, 500m, humid tropics)</em>
           </div>
 
           <div class="source_body">
@@ -49,55 +49,52 @@
                 <dd>Detects probability of forest clearing in near-real-time</dd>
               </dl>
               <dl class="sources_row even">
-                <dt>Resolution</dt>
+                <dt>Resolution/scale</dt>
                 <dd>500 x 500 meters</dd>
               </dl>
               <dl class="sources_row">
-                <dt>Function</dt>
-                <dd>Detects probability of forest clearing in near-real-time</dd>
+                <dt>Geographical coverage</dt>
+                <dd>Humid tropical forest biome</dd>
               </dl>
               <dl class="sources_row even">
-                <dt>Img. source</dt>
+                <dt>Source data</dt>
                 <dd><a href="http://modis.gsfc.nasa.gov/about/" target="_blank">MODIS</a></dd>
               </dl>
               <dl class="sources_row">
-                <dt>Update freq.</dt>
-                <dd>Produced every 16 days and displayed on the GFW website as monthly alerts</dd>
+                <dt>Frequency of updates</dt>
+                <dd>Displayed on the GFW site as monthly alerts. Available for download in 16 day increments.</dd>
               </dl>
               <dl class="sources_row even">
-                <dt>Temp. resolution</dt>
+                <dt>Date of content</dt>
                 <dd>January 2006 - present</dd>
-              </dl>
-              <dl class="sources_row">
-                <dt class="even">Citation</dt>
-                <dd class="even">FORMA Alerts. Dan Hammer, Robin Kraft, and David Wheeler; World Resources Institute and Center for Global Development (2013). Accessed through Global Forest Watch on and Center for Global Development 2013</dd>
               </dl>
               <dl class="sources_row even">
                 <dt>Cautions</dt>
-                <dd>When using the “play” button on the timeslider, some data from before January 2006 may appear</dd>
+                <dd><p>Viewing data for the first period available via the time slider may include alerts that reflect detections from the February 2000 to December 2005 training period as the algorithm "catches up" post-training. </p><p>The GFW team has clipped out some data in regions where data quality is suspected to be low because of persistent cloud cover over identified ecoregions. This covers parts of Liberia, Venezuela, Guyana, Vietnam, Laos, and Burma/Myanmar. The current extent of the FORMA alerts is available for viewing here—<a href="http://wri-01.cartodb.com/viz/3cc0f4c2-56d3-11e3-80bb-c8600054c0d1/embed_map?title=true&description=true&search=false&shareable=false&cartodb_logo=false&layer_selector=false&legends=false&scrollwheel=true&sublayer_options=1&sql=&zoom=3&center_lat=-1.845383988573187&center_lon=16.34765625" target="_blank">FORMA geographic extent</a>. While the <a href="https://github.com/wri/forma-ee" target="_blank">algorithm</a> behind the FORMA alerts is stable, occasional bug fixes will change what appears on the site. For questions, please contact <a href="mailto:gfw@wri.org">gfw@wri.org</a>.</p></dd>
               </dl>
             </div>
 
             <div class="source_summary">
-              <h3>Summary</h3>
-              <p>The FORMA alerts dataset uses a computer algorithm to analyze satellite imagery and identify new areas of forest clearing in near-real-time across the world’s humid tropical forest biome. The system analyzes freely available satellite imagery, recorded daily by the <a href="http://modis.gsfc.nasa.gov/about/" target="_blank">MODIS</a> sensor, which operates on NASA’s Terra and Aqua satellite platforms. The FORMA alerts system then detects pronounced changes in vegetation cover over time, as measured by an indicator known as the <a href="http://earthobservatory.nasa.gov/Features/MeasuringVegetation/measuring_vegetation_2.php" target="_blank">NDVI</a>. These pronounced changes in vegetation cover are often indicative of forest being cleared, burned, or replaced by pastures, croplands, or plantations.</p>
+              <h3>Overview</h3>
+              <p>The FORMA alerts data set uses an <a href="https://github.com/wri/forma-ee" target="_blank">algorithm</a> to analyze freely available satellite imagery products and other ancillary data to identify new areas of forest clearing in near real-time across the world’s <a href="http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf" target="_blank">humid tropical forest biome</a>. The system analyzes data gathered daily by the <a href="http://modis.gsfc.nasa.gov/about/" target="_blank">MODIS</a> sensor, which operates on NASA’s Terra and Aqua satellites. The FORMA alerts system then detects pronounced changes in vegetation cover over time, as measured by the <a href="http://earthobservatory.nasa.gov/Features/MeasuringVegetation/measuring_vegetation_2.php" target="_blank">Normalized Difference Vegetation Index (NDVI)</a>, a measure of vegetation greenness. These pronounced changes in vegetation cover are likely to be indicative of forest being cleared, burned, or defoliated.</p>
 
-              <p>This algorithm produces alerts that indicate where forest clearing is statistically likely to have occurred within a 500 x 500 meter area.</p>
+              <p>This algorithm produces alerts that indicate where forest clearing is statistically likely to have occurred within a 500 meter × 500 meter area. FORMA alerts only appear in areas where the probability of forest clearing is greater than or equal to 50.</p>
 
-              <p>Upcoming upgrades to FORMA include improving the resolution to 250 meters x 250 meters, and expanding coverage to the rest of the tropics and eventually to other forest ecoregions.</p>
+              <p>Upcoming upgrades to FORMA include improving the resolution to 250 meters × 250 meters, and expanding coverage to tropical dry forest and eventually to other biomes across the global scale.</p>
 
-              <p class="credits">FORMA Alerts. Dan Hammer, Robin Kraft, and David Wheeler; World Resources Institute and Center for Global Development (2013). Accessed through Global Forest Watch on and Center for Global Development 2013.</p>
+            <h3>Citation:</h3>
+              <p>Hammer, Dan, Robin Kraft, and David Wheeler. 2013. “FORMA Alerts.” World Resources Institute and Center for Global Development. Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org" target="_blank">www.globalforestwatch.org</a>.</p>
             </div>
 
             <div class="source_description">
               <h3>Methodology</h3>
-              <p>This dataset uses freely available satellite imagery, collected by the Moderate Resolution Imaging Spectroradiometer (<a href="http://modis.gsfc.nasa.gov/about/" target="_blank">MODIS</a>), which operates on NASAs Terra and Aqua (EOS PM) satellite platforms and views the entire Earth’s surface every 1 to 2 days. The images help to reveal notable changes in vegetation cover over time using an indicator that measures vegetation intensity called the Normalized Difference Vegetation Index (<a href="http://earthobservatory.nasa.gov/Features/MeasuringVegetation/measuring_vegetation_2.php" target="_blank">NDVI</a>). By applying an automated algorithm to this input and in combination with complementary data inputs for fire hotspots and global precipitation averages, areas where forest clearing is likely to have occurred are therefore identified. The algorithm also employs parallel processing in a remote server system the cloud that enables the rapid analysis of these very large data sets.</p>
+              <p>This dataset uses freely available satellite imagery, collected by the <a href="http://modis.gsfc.nasa.gov/about/" target="_blank">Moderate Resolution Imaging Spectroradiometer (MODIS)</a>, which operates on NASA's Terra and Aqua (EOS PM) satellite platforms and views the entire Earth’s surface every 1 to 2 days. The images help to reveal notable changes in vegetation cover over time using an indicator that measures vegetation intensity called the <a href="http://earthobservatory.nasa.gov/Features/MeasuringVegetation/measuring_vegetation_2.php" target="_blank">Normalized Difference Vegetation Index (NDVI)</a>. By applying an automated algorithm to this input and in combination with complementary data inputs for fire hotspots and global precipitation averages, areas where forest clearing is likely to have occurred are therefore identified. The algorithm also employs parallel processing in a remote server system the cloud that enables the rapid analysis of these very large data sets.</p>
 
               <h3>Explanation</h3>
-              <p>Forest clearing alerts appear when and where new, large-scale clearing is likely to have occurred after 2005. Thus, the alerts should not be interpreted as an analysis of total forest cover loss area, but rather as an indication of an area that has a high probability of having experienced forest cover loss or disturbance over time. The system employs advanced statistical techniques to achieve the best fit to scientifically validate information on clearing, measured as a probability.  On the GFW website, alerts appear only for 50 percent or higher probability. That is, alerts appear for a particular period when there has been significant clearing in the area during or before that period.</p>
+              <p>Forest clearing alerts appear when and where new, large-scale clearing is likely to have occurred after 2005. Thus, the alerts should not be interpreted as an analysis of total forest cover loss area, but rather as an indication of an area that has a high probability of having experienced forest cover loss or disturbance over time. The system employs advanced statistical techniques to achieve the best fit to scientifically validate information on clearing, measured as a probability. On the GFW website, alerts appear only for 50 percent or higher probability. That is, alerts appear for a particular period when there has been significant clearing in the area during or before that period.</p>
 
               <h3>Temporal and spatial resolution</h3>
-              <p>The forest clearing alerts are produced every 16 days, however they are presented on the GFW site as monthly alerts because the precipitation data input is only available on a monthly time cycle. Users can manipulate the GFW time slider to view trends in clearing alerts from December 2005 to present.</p>
+              <p>FORMA alerts are displayed on the GFW site as monthly data, and the site is updated each month. Users who download data for analysis will find that the underlying dataset is actually available at 16-day intervals, intervals that do not line up perfectly with calendar months. Data is displayed at a monthly resolution on GFW due to the monthly availability of precipitation data input. Users can manipulate the GFW time slider to view trends in clearing alerts from December 2005 to present.</p>
 
               <p>The alert system currently identifies 500 x 500 meter areas where clearing is statistically likely to have occurred. Alerts for a 250-meter resolution version are currently being developed on Google’s Earth Engine platform and will be available in 2014.</p>
 
@@ -112,11 +109,18 @@
               <p>Using the GFW platform, the alerts can be compared against other relevant data layers, such as protected areas and concessions boundaries, to evaluate the effectiveness of forest management practices across time and spatial extent.</p>
 
               <h3>Accuracy and validation</h3>
-              <p>Inaccuracies are an inherent part of remote sensing analysis. FORMA Alerts appear in areas with a greater than 50% probability of deforestation, based on the algorithm described under methodology. However, persistent cloud cover is a continuous issue in the tropics, and extreme flooding can also produce unreliable remotely-sensed data that will result in forest clearing “false positives.” Furthermore, the alerting system cannot detect all forest cover loss, whether due to the small size of clearings, persistent cloud cover, or other explanations still being identified through GFW validation efforts.</p>
+              <p>Inaccuracies are an inherent part of remote sensing analysis. FORMA Alerts appear in areas with a greater than 50% probability of deforestation, based on the algorithm described under methodology. However, persistent cloud cover is a continuous issue in the tropics, and extreme flooding can also produce unreliable remotely-sensed data that will result in forest clearing “false positives” (alerts where no actual tree cover loss has occurred). Furthermore, the alerting system cannot detect all forest cover loss, whether due to the small size of clearings, persistent cloud cover, or other explanations still being identified through GFW validation efforts.</p>
+              <p>The major instances of false positives may occur as the following:</p>
+              <p><strong>1) A random, "speckled" distribution of alerts across an ecoregion, or complete filling of a small ecoregion.</strong></p>
+              <p>Caused by limited or sparse training data, particularly in small ecoregions, which makes it difficult to tune the model there. As a result, alerts cannot be reliably detected. In a normal ecoregion, alerts are usually clustered.</p>
+              <p><strong>2) A rapid explosion of alerts over 1-3 months covering a relatively large area.</strong></p>
+              <p>Caused by a significant, persistent drop in detected vegetation levels due to persistent cloud cover along coastlines, in mountains, or elsewhere.</p>
+              <p><strong>3) Alerts in water.</strong></p>
+              <p>Caused by shifting water bodies. These alerts should not necessarily be considered false positives, but rather ambiguous alerts requiring additional data for corroboration.</p>
 
               <p>The GFW team is working aggressively to address potential inaccuracies in the data through rigorous validation methods. Specifically, the GFW team is comparing the growing data set of historical alerts to other validated data sets, which are being used for similar applications.</p>
 
-              <p>This paper demonstrates the spatial correlation of the alerts with the PRODES and DETER data sets, produced by the Brazilian Space Agency for the Amazon.  The conclusions from the paper help to illustrate the potential pitfalls of the algorithm, along with its strengths. Through future refinement and proposed crowdsourcing efforts, the GFW team expects the data quality of the FORMA Alerts will continue to improve.</p>
+              <p>This paper demonstrates the spatial correlation of the alerts with the PRODES and DETER data sets, produced by the Brazilian Space Agency for the Amazon. The conclusions from the paper help to illustrate the potential pitfalls of the algorithm, along with its strengths. Through future refinement and proposed crowdsourcing efforts, the GFW team expects the data quality of the FORMA Alerts will continue to improve.</p>
 
               <h3>Additional Resources on FORMA</h3>
               <strong>Working Papers:</strong>
@@ -175,7 +179,7 @@
           <div class="source_header">
             <strong>QUICC alerts </strong>
             <i class="expand_arrow"></i>
-            <em>(quarterly, 5km, global)</em>
+            <em>(quarterly, 5km, near-global)</em>
           </div>
 
           <div class="source_body">
@@ -195,9 +199,9 @@
 
         <li id="fires" data-slug="fires" class="last">
           <div class="source_header">
-            <strong>NASA fires </strong>
+            <strong>NASA active fires </strong>
             <i class="expand_arrow"></i>
-            <em>(quarterly, 5km, global)</em>
+            <em>(daily, 1km, global)</em>
           </div>
 
           <div class="source_body">
