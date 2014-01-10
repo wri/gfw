@@ -426,10 +426,18 @@
       </ul>
     </ul>
   </script>
+
   <script id="legend-group-template" type="text/x-underscore-template">
     <ul class="{{category}}">
       <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
       <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a></div></li>
+
+      {{#sublayer}}
+      <a href="#" data-id="{{ id }}" data-color="{{ category_color }}" class="checkbox {{slug}}">
+      <i><span></span></i><span class="name">Geographic coverage</span>
+      </a>
+      {{/sublayer}}
+
     </ul>
   </script>
 

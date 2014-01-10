@@ -1793,11 +1793,11 @@ var Filter = (function() {
   function _addForestLostFilters(id, slug, category, name, options) {
 
     var
-    clickEvent  = options.clickEvent  || null,
-    disabled    = options.disabled    || false;
-    source      = options.source      || null;
+    clickEvent     = options.clickEvent  || null,
+    disabled       = options.disabled    || false;
+    source         = options.source      || null;
     category_color = options.category_color || "#ccc";
-    color       = options.color       || "#ccc";
+    color          = options.color       || "#ccc";
     subtitle       = options.subtitle    || "";
 
     var cat  = category.replace(/ /g, "_").toLowerCase();
@@ -1849,6 +1849,7 @@ var Filter = (function() {
 
     var
     clickEvent     = options.clickEvent  || null,
+    clickSubEvent  = options.clickSubEvent  || null,
     disabled       = options.disabled    || false;
     source         = options.source      || null;
     category_color = options.category_color || "#ccc";
@@ -1896,6 +1897,7 @@ var Filter = (function() {
       } else {
         layerItemTemplate = _.template($("#layer-item-checkbox-template").html());
         $layerItem = $(layerItemTemplate({ name: name, id: id, color: color, slug:slug, category: cat, disabled: disabled, source: source }));
+
 
         $layerItem.find("a:not(.source)").on("click", function() {
           clickEvent();
