@@ -132,6 +132,13 @@
         .name { width :100px; }
       }
 
+      li.stories {
+        a {
+          width: 140px;
+          .name { width: 120px;}
+        }
+      }
+
       span.disabled {
         @include disabled(disabled);
 

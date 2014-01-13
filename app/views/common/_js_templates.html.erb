@@ -423,6 +423,13 @@
       <ul>
       <li id="{{cat_id}}" class="loss"> <i style="background-color:{{title_color}};"></i><div>Loss</div></li>
       <li id="{{cat_id}}" class="forestgain"> <i style="background-color:{{title_color}};"></i><div>Gain</div></li>
+
+      {{#sublayer}}
+      <a href="#" data-id="{{ id }}" data-color="{{ category_color }}" class="checkbox {{slug}}">
+      <i><span></span></i><span class="name">Geographic coverage</span>
+      </a>
+      {{/sublayer}}
+
       </ul>
     </ul>
   </script>
