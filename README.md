@@ -107,3 +107,5 @@ If the site doesn't appear immediately when you visit the address above, give it
 # Build status
 
 [![Build Status](https://secure.travis-ci.org/Vizzuality/gfw.png?branch=master)](http://travis-ci.org/Vizzuality/gfw)
+
+Test commit from James
