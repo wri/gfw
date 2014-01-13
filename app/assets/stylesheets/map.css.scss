@@ -124,8 +124,8 @@
       a.radio, a.checkbox, span.disabled {
         position: relative;
         @extend .sans-serif;
+        width: 120px;
         display:block;
-        width: 130px;
         font-size:13px;
         line-height:17px;
 
