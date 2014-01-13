@@ -124,12 +124,19 @@
       a.radio, a.checkbox, span.disabled {
         position: relative;
         @extend .sans-serif;
+        width: 120px;
         display:block;
-        width: 130px;
         font-size:13px;
         line-height:17px;
 
         .name { width :100px; }
+      }
+
+      li.stories {
+        a {
+          width: 140px;
+          .name { width: 120px;}
+        }
       }
 
       span.disabled {
