@@ -1087,7 +1087,7 @@ GFW.modules.maplayer = function(gfw) {
         if (slug == "nothing") {
 
           var event = function() {
-            GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
+            //GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
             GFW.app.currentBaseLayer = null;
             that._hideBaseLayers(GFW.app);
             that._removeExtendedLayers();
@@ -1132,7 +1132,7 @@ GFW.modules.maplayer = function(gfw) {
 
           var biomeEvent = function() {
             that._toggleLayer();
-            GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
+            //GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
           };
 
           Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: biomeEvent, source: slug, category_color: this.layer.get("category_color"), color: this.layer.get("title_color"), subtitle: this.layer.get("subtitle") });
@@ -1141,7 +1141,7 @@ GFW.modules.maplayer = function(gfw) {
 
           var event = function() {
             that._toggleLayer();
-            GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
+            //GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
           };
 
           Filter.addForestLossFilters(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color"), subtitle: this.layer.get("subtitle") });
@@ -1230,6 +1230,8 @@ GFW.modules.maplayer = function(gfw) {
 
         var renderLayers = false;
 
+        GFW.app._removeForest2000Layer();
+
         // Remove extended layers
         if (_.include(GFW.app._layers, "quicc_bounding_box_extent")) {
           GFW.app._layers = _.without(GFW.app._layers, "quicc_bounding_box_extent");
@@ -1254,9 +1256,18 @@ GFW.modules.maplayer = function(gfw) {
         var visible = this.layer.get("sublayer_visible")
 
         if (visible) {
-          GFW.app._addSubLayer(this.layer);
+
+          if (this.layer.get("sublayer") == "forest_cover_2000") {
+            GFW.app._renderForest2000Layer(this.layer);
+          } else {
+            GFW.app._addSubLayer(this.layer);
+          }
         } else {
-          GFW.app._removeSubLayer(this.layer);
+          if (this.layer.get("sublayer") == "forest_cover_2000") {
+            GFW.app._removeForest2000Layer();
+          } else {
+            GFW.app._removeSubLayer(this.layer);
+          }
         }
 
       },
@@ -1358,7 +1369,7 @@ GFW.modules.maplayer = function(gfw) {
 
           if (slug == 'semi_monthly') {
             semi_monthly.attributes['visible'] = true;
-            biome.attributes['disabled'] = false;
+            //biome.attributes['disabled'] = false;
 
             Filter.enableBiome();
           } else if (slug == 'annual') {
@@ -1388,7 +1399,7 @@ GFW.modules.maplayer = function(gfw) {
 
           this._removeExtendedLayers();
 
-          GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
+          //GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
           GFW.app.currentBaseLayer = null;
 
           this._hideBaseLayers(GFW.app);
@@ -1399,7 +1410,19 @@ GFW.modules.maplayer = function(gfw) {
           loss.set("visible", true);
           GFW.app._updateBaseLayer();
 
-          legend.replace(id, category_slug, category, title, slug, category_color, title_color);
+          var subEvent;
+
+          this.layer.attributes['sublayer_visible'] = false;
+
+          if (this.layer.get("sublayer")) {
+
+            subEvent = function() {
+              self._toggleSubLayer();
+            };
+
+          }
+
+          legend.replace(id, category_slug, category, title, slug, category_color, title_color, subEvent);
 
         } else {
 
