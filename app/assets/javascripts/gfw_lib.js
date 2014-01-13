@@ -1091,6 +1091,8 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app.currentBaseLayer = null;
             that._hideBaseLayers(GFW.app);
             that._removeExtendedLayers();
+            if (forestgain) GFW.app._removeLayer(forestgain);
+
           };
 
           Filter.addFilter("", slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
