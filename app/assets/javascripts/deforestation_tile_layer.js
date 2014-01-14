@@ -13,8 +13,8 @@ DeforestationTileLayer.prototype.create_tile_canvas = function(coord, zoom, owne
 
   // create canvas and reset style
   var canvas = ownerDocument.createElement('canvas');
-  canvas.style.border = "none";
-  canvas.style.margin= "0";
+  canvas.style.border  = "none";
+  canvas.style.margin  = "0";
   canvas.style.padding = "0";
 
   // prepare canvas and context sizes
@@ -120,12 +120,11 @@ var Deforestation = function() {
         if (yearLoss) {
 
           yearLoss = 2000 + yearLoss;
-
           if (yearLoss >= year_start && yearLoss <= year_end) {
-            image_data[pixel_pos] = intensity;
-            image_data[pixel_pos + 1] = 0;
-            image_data[pixel_pos + 2] = 0;
-            image_data[pixel_pos + 3] =  intensity < 10 ? 0: 255;
+            image_data[pixel_pos] = 220 + intensity; // r
+            image_data[pixel_pos + 1] = 102; // g
+            image_data[pixel_pos + 2] = 153; // b
+            image_data[pixel_pos + 3] =  intensity < 10 ? 0: 255; // a
           } else {
             image_data[pixel_pos + 3] = 0;
           }

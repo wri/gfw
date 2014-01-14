@@ -1773,7 +1773,7 @@ var Filter = (function() {
 
       layerItemTemplate = _.template($("#layer-item-checkbox-loss-template").html());
 
-      $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source }));
+      $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source, color: color }));
 
       $layerItem.find("a.checkbox").on("click", function() {
 
@@ -1831,11 +1831,14 @@ var Filter = (function() {
       if (!$(this).find(".radio").hasClass("checked")) {
         clickEvent && clickEvent();
 
-        var $c = $(this).parent().find(".checkbox");
-        $c.addClass("checked");
-        var color = $c.attr("data-color");
-        $c.css("color", color );
-        $c.find("i").css("background-color", color );
+        $(this).parent().find(".checkbox").each(function(i, c) {
+          var $c = $(c);
+          $c.addClass("checked");
+          var color = $c.attr("data-color");
+          $c.css("color", color );
+          $c.find("i").css("background-color", color );
+        });
+
       }
 
     });

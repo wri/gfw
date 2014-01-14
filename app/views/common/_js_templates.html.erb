@@ -155,6 +155,7 @@
 
   <script id="layer-item-checkbox-loss-template" type="text/x-underscore-template">
     <li id="filter_{{ id }}" class="{{ category }}">
+
     <a href="#" data-id="{{ id }}" data-color="{{ color}}" class="checkbox">
         <i><span></span></i>
         <span class="name">{{name}}</span>
@@ -422,7 +423,7 @@
       <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a></div></li>
       <ul>
       <li id="{{cat_id}}" class="loss"> <i style="background-color:{{title_color}};"></i><div>Loss</div></li>
-      <li id="{{cat_id}}" class="forestgain"> <i style="background-color:{{title_color}};"></i><div>Gain</div></li>
+      <li id="{{cat_id}}" class="forestgain"> <i style="background-color:#6d6de5"></i><div>Gain</div></li>
 
       {{#sublayer}}
       <a href="#" data-id="{{ id }}" data-color="{{ category_color }}" class="checkbox {{slug}}">
