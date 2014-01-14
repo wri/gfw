@@ -878,7 +878,7 @@
     font-weight:bold;
     @extend .sans-serif;
     font-size:12px;
-    text-shadow: 0px 0px 3px #222;
+    text-shadow: 0px 0px 3px #000;
   }
 
   .coordinates {
@@ -890,7 +890,7 @@
     font-weight:bold;
     @extend .sans-serif;
     font-size:11px;
-    text-shadow: 0px 0px 3px #222;
+    text-shadow: 0px 0px 3px #000;
     @include user-select(text);
   }
 
