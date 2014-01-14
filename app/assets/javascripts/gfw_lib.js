@@ -468,7 +468,7 @@ GFW.modules.app = function(gfw) {
           user_name:'',
           tiler_domain:this._cloudfront_url,
           sql_domain:this._cloudfront_url,
-          extra_params:{v:this._global_version}, //define a verison number on requests
+          extra_params:{v:this._global_version, cache_policy: "persist" }, //define a verison number on requests
           tiler_path:'/tiles/',
           tiler_suffix:'.png',
           tiler_grid: '.grid.json',
@@ -999,7 +999,7 @@ GFW.modules.app = function(gfw) {
           tiler_domain:'dyynnn89u7nkm.cloudfront.net',
           sql_domain:'dyynnn89u7nkm.cloudfront.net',
           tiler_path:'/tiles/',
-          extra_params:{ v: this._global_version}, //define a verison number on requests
+          extra_params:{ v: this._global_version, cache_policy: "persist" }, //define a verison number on requests
           tiler_suffix:'.png',
           table_name: this._getTableName(this.currentBaseLayer),
           query: this.queries[this.currentBaseLayer].replace(/{Z}/g, this._map.getZoom()),
