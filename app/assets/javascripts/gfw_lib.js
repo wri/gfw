@@ -51,7 +51,7 @@ GFW.modules.app = function(gfw) {
       this._precision = 2;
       this._layers = [];
       this._cloudfront_url = "dyynnn89u7nkm.cloudfront.net";
-      this._global_version = 38;
+      this._global_version = 42;
 
       gfw.log.enabled = options ? options.logging: false;
 
@@ -458,7 +458,7 @@ GFW.modules.app = function(gfw) {
           isPng: true
         });
 
-        map.overlayMapTypes.push(this.forest2000Layer);
+        map.overlayMapTypes.insertAt(0, this.forest2000Layer);
       }
     },
 
@@ -508,7 +508,7 @@ GFW.modules.app = function(gfw) {
           tiler_grid: '.grid.json',
           table_name: "gfw2_layerstyles_v4",
           query: query,
-          layer_order: "top",
+          layer_order: "bottom", // top
           opacity: 1,
           interactivity:"cartodb_id",
           featureClick: this._onMainLayerClick,
@@ -554,6 +554,8 @@ GFW.modules.app = function(gfw) {
 
           var data = _.clone(json.rows[0]);
           var content_data = json.rows[0];
+
+          if ($.isEmptyObject(data)) return;
 
           for (var key in content_data) {
             var temp;
@@ -1037,7 +1039,7 @@ GFW.modules.app = function(gfw) {
           tiler_suffix:'.png',
           table_name: this._getTableName(this.currentBaseLayer),
           query: this.queries[this.currentBaseLayer].replace(/{Z}/g, this._map.getZoom()),
-          layer_order: "top",
+          layer_order: "top", // bottom
           auto_bound: false
         });
 
@@ -1471,6 +1473,8 @@ GFW.modules.maplayer = function(gfw) {
 
             subEvent = function() {
               self._toggleSubLayer();
+              $(".legend .content ul li .info.tree").toggle();
+              legend.resize();
             };
 
           }
