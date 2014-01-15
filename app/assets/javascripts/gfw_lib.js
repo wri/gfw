@@ -1,3 +1,6 @@
+loss = null
+forestgain = null
+
 function GFW() {
   var args = Array.prototype.slice.call(arguments),
   callback = args.pop(),
@@ -89,6 +92,7 @@ GFW.modules.app = function(gfw) {
       this.currentBaseLayer = "semi_monthly";
 
       this._setupZoom();
+      this._setupNoDataLayer();
 
       google.maps.event.addDomListener(this._map, 'dragend', function(event) {
         Timeline.updateCoordinates(that._map.getCenter());
@@ -105,6 +109,9 @@ GFW.modules.app = function(gfw) {
       });
 
       google.maps.event.addListener(this._map, 'zoom_changed', function(event) {
+
+        that._toggleNoDataLayer();
+
         Timeline.updateCoordinates(that._map.getCenter());
         TimelineNotPlayer.updateCoordinates(that._map.getCenter());
         TimelineImazon.updateCoordinates(that._map.getCenter());
@@ -179,6 +186,33 @@ GFW.modules.app = function(gfw) {
         $('html, body').delay(delay).animate({scrollTop:$el.offset().top - margin}, speed);
         callback && callback();
       }
+    },
+
+    _setupNoDataLayer: function() {
+      $(".map").append("<div class='no_data' />");
+    },
+
+    _toggleNoDataLayer: function() {
+
+      var zoom = this._map.getZoom();
+
+      if (zoom >= 12 && (forestgain && forestgain.get("visible") || loss && loss.get("visible"))) {
+        this._enableNoDataLayer();
+      } else if ($(".no_data").length > 0) {
+        this._disableNoDataLayer();
+      }
+
+    },
+
+    _enableNoDataLayer: function() {
+      $(".no_data").show();
+      $(".no_data").animate({ opacity: 1 }, 250);
+    },
+
+    _disableNoDataLayer: function() {
+      $(".no_data").animate({ opacity: 0 }, {duration: 250, complete: function() {
+        $(".no_data").hide();
+      }});
     },
 
     _setupZoom:function() {
@@ -1087,12 +1121,14 @@ GFW.modules.maplayer = function(gfw) {
         if (slug == "nothing") {
 
           var event = function() {
+
+            GFW.app._disableNoDataLayer();
+
             //GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
             GFW.app.currentBaseLayer = null;
             that._hideBaseLayers(GFW.app);
             that._removeExtendedLayers();
             if (forestgain) GFW.app._removeLayer(forestgain);
-
           };
 
           Filter.addFilter("", slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
@@ -1300,7 +1336,7 @@ GFW.modules.maplayer = function(gfw) {
           category_color = '#707D92';
         }
 
-        var // special layers
+        // special layers
         biome         = GFW.app.datalayers.LayersObj.get(585),
         semi_monthly  = GFW.app.datalayers.LayersObj.get(569),
         annual        = GFW.app.datalayers.LayersObj.get(568),
@@ -1323,6 +1359,7 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app._removeLayer(this.layer);
           }
           legend.toggleItemBySlug(slug);
+          GFW.app._toggleNoDataLayer();
 
         } else if (slug === 'loss') {
 
@@ -1336,12 +1373,23 @@ GFW.modules.maplayer = function(gfw) {
           }
 
           legend.toggleItemBySlug(slug);
+          GFW.app._toggleNoDataLayer();
+
 
         }
 
         else if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon" || slug === "fires") {
 
-          if (forestgain) GFW.app._removeLayer(forestgain);
+          GFW.app._disableNoDataLayer();
+
+          if (forestgain) {
+            GFW.app._removeLayer(forestgain);
+            forestgain.set("visible", false);
+          }
+
+          if (loss) {
+            loss.set("visible", false);
+          }
 
           this._removeExtendedLayers();
 
@@ -1399,6 +1447,7 @@ GFW.modules.maplayer = function(gfw) {
 
         else if (slug === 'umd_tree_loss_gain') {
 
+
           this._removeExtendedLayers();
 
           //GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
@@ -1415,6 +1464,8 @@ GFW.modules.maplayer = function(gfw) {
           var subEvent;
 
           this.layer.attributes['sublayer_visible'] = false;
+
+          GFW.app._toggleNoDataLayer();
 
           if (this.layer.get("sublayer")) {
 
