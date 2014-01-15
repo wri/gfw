@@ -391,7 +391,7 @@ body.static {
     width: 590px;
   }
 
-  section {
+  .content_right {
     article {
 
       margin: 0 0 33px 0;
@@ -410,6 +410,10 @@ body.static {
         }
       }
 
+      .source_title {
+        margin-bottom: 20px;
+      }
+
       p {
 
         a {
@@ -425,6 +429,11 @@ body.static {
 
       }
 
+      ul {
+        margin-left: 40px;
+        margin-top: 30px;
+      }
+
       ul.logo_list {
         @include clearfix();
         margin: 20px auto 0 auto;
@@ -432,7 +441,9 @@ body.static {
 
         li {
           float: left;
-          margin: 0 45px 0 45px;
+          margin: 0 40px 40px 40px;
+          background: transparent;
+          padding: 0;
 
           a {
             display: inline-block;
@@ -549,7 +560,9 @@ body.static {
   footer { border-top: 1px solid $cSeparator; }
 
 } // body.static
-body.howto article {
+
+body.howto article,
+body.about article {
   h3 {
     margin: 30px 0 10px;
     font: 21px/1.1 "fira_sans_otmedium";
@@ -589,8 +602,26 @@ body.howto article {
   }
 }
 
+body.about .content_right article {
+  margin: 0 0 50px 0;
+  padding: 0;
+
+  p {
+    margin-bottom: 15px;
+
+    iframe + iframe {
+      margin-left: 15px;
+    }
+
+    a {
+      color: #98BD17;
+    }
+  }
+}
+
 body.sources,
-body.howto {
+body.howto,
+body.about {
 
   header {
     border-bottom: 0;
@@ -760,6 +791,10 @@ body.countries {
     text-align: center;
     text-decoration: none;
   }
+
+  p {
+    margin-bottom: 10px;
+  }
 }
 
 .header_block-body {
@@ -871,6 +906,12 @@ body.countries {
   border-left: 1px solid #ccc;
   padding: 40px 0 40px 40px;
   min-height: 378px;
+
+  &.wide {
+    width: 100%;
+    padding-left: 0;
+    border-left: 0;
+  }
 }
 
 .item_title {

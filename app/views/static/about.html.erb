@@ -1,83 +1,107 @@
-<% content_for :title do %>
-  <%= t('.title') %>
-<% end %>
+<div class="narrow_column">
+  <div class="header_block header_block_howto">
+    <div class="header_block-body">
+      <h1 class="header_block-title">About</h1>
+      <p>Global Forest Watch (GFW) is an initiative that mobilizes technology, transparency, and human networks for global forest conservation. GFW uses satellite technology, open data, and human networks to monitor forests in near real-time, support better forest management, and improve the lives of people who depend on forests around the world.</p>
+      <p>GFW is supported by a diverse partnership of organizations that contribute data, technical capabilities, funding, and expertise. The partnership is convened by the World Resources Institute. See a full list of partners below.</p>
+      <p class="header_block-description">Watch our video here:</p>
 
-<% content_for :download do %>
-<div class="download">
-  <div class="inner">
-      <%= content_tag :h1, (raw t('layouts.application.footer.download.title2', :url => "/sources")) %></div></div>
-</div>
-<% end %>
-
-<div class="navigation">
-  <ul>
-    <li><a href="#about"><%= t('static.about.about_link')%></a></li>
-    <li><a href="#partners"><%= t('static.about.partners')%></a> </li>    
-    <li><a href="#funders"><%= t('static.about.funders')%></a> </li>
-    <li><a href="#supporters"><%= t('static.about.supporters_providers')%></a> </li>
-    <li><a href="#websiteteam"><%= t('static.about.website_team')%></a></li>
-    <li><a href="#contact"><%= t('static.about.contact_us')%></a></li>
-  </ul>
+      <iframe width="860" height="484" src="//www.youtube.com/embed/5HH1qaBAQRA" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
 </div>
 
 <div class="narrow_column">
+  <div class="content_right wide">
+    <article class="selected">
+      <h2 class="users source_title">Users</h2>
 
-  <section>
-  <article>
-  <%= raw t('static.about.introduction') %>
-</p>
-  </article>
+      <p>GFW aims to radically improve the availability, quality, and accessibility of forest data for a diverse range of forest stakeholders. For example:</p>
 
-  <article>
-  <h1><a href="#" name="partners"></a><%= t('static.about.partners')%></h1>
-    <ul class="logo_list">
-      <li><a target="_blank" href="http://www.wri.org" id="wri"></a></li>
-      <li><a target="_blank" href="http://www.cgdev.org/" id="centerglobaldevelopment"></a></li>
-      <li><a target="_blank" href="http://earthengine.google.org/" id="google"></a></li>
-      <li><a target="_blank" href="http://www.imazon.org.br/pagina-inicial-en?set_language=en&cl=en" id="imazon"></a></li>
-      <li><a target="_blank" href="http://www.geog.umd.edu/" id="universitymaryland"></a></li>
-      <li><a target="_blank" href="http://www.esri.com/" id="esri"></a></li>
-      <li><a target="_blank" href="http://www.unep.org/" id="unep"></a></li>            
-    </ul>
-  </article>
+      <ul>
+        <li><strong>Governments</strong> can use GFW to detect illegal forest clearing and target forest law enforcement efforts</li>
+        <li><strong>Companies</strong> can monitor the impacts of commodity supply chains on forests and demonstrate compliance with sustainability commitments and certifications.</li>
+        <li><strong>NGOs</strong> can identify deforestation hotspots and bolster their investigations, advocacy, and campaigns.</li>
+        <li><strong>Indigenous communities</strong> can monitor their territories and raise an alarm when their customary forests are threatened.</li>
+        <li><strong>Media</strong> can gather evidence for reporting.</li>
+        <li><strong>Researchers</strong> can analyze forest trends on a global scale.</li>
+        <li><strong>Concerned citizens everywhere</strong> can learn more about the state of forests and participate in forest monitoring.</li>
+      </ul>
+    </article>
 
-  <article>
-  <h1><a href="#" name="funders"></a><%= t('static.about.funders')%></h1>
-    <ul class="logo_list">
-      <li><a target="_blank" href="http://www.regjeringen.no/en/dep/md.html?id=668" id="norwegian"></a></li>
-      <li><a target="_blank" href="http://tiliafund.org/" id="tilafund"></a></li>
-      <li><a target="_blank" href="http://www.usaid.gov/" id="usaid"></a></li>
-      <li><span id="bobolink">Bobolink</span></li>
-      <li><a target="_blank" href="http://www.minbuza.nl/en" id="dutchforeign"></a></li>
-    </ul>
-  </article>
+    <article class="selected">
+      <h2 class="videos source_title">Videos</h2>
+      <p>Here’s a brief video introduction from the GFW team, presented in six of our key languages.</p>
 
-  <article>
-  <h1><a href="#" name="supporters"></a><%= t('static.about.supporters_providers')%></h1>
-    <ul class="logo_list">
-      <li><a target="_blank" href="http://carpe.umd.edu/" id="carpe"></a></li>
-      <li><a target="_blank" href="http://um.dk/en/danida-en/" id="danida"></a></li>
-      <li><a target="_blank" href="http://www.nasa.gov/" id="nasa"></a></li>
-      <li><a target="_blank" href="http://www.sekala.net/" id="sekala"></a></li>
-    </ul>
-  </article>
+      <p><iframe width="300" height="169" src="//www.youtube.com/embed/BZx2edin9do" frameborder="0" allowfullscreen></iframe> <iframe width="300" height="169" src="//www.youtube.com/embed/L8jA8ush7d8" frameborder="0" allowfullscreen></iframe> <iframe width="300" height="169" src="//www.youtube.com/embed/d3xUkSjlNjQ" frameborder="0" allowfullscreen></iframe></p>
+      <p><iframe width="300" height="169" src="//www.youtube.com/embed/0K684H-yKWQ" frameborder="0" allowfullscreen></iframe> <iframe width="300" height="169" src="//www.youtube.com/embed/metb4Cm9Zh0" frameborder="0" allowfullscreen></iframe> <iframe width="300" height="169" src="//www.youtube.com/embed/ayqMDX-672g" frameborder="0" allowfullscreen></iframe></p>
+    </article>
 
-  <article class="last">
-  <h1><a href="#" name="websiteteam"></a><%= t('static.about.website_team')%></h1>
-    <ul class="logo_list">
-      <li><a target="_blank" href="http://www.vizzuality.com" id="vizzuality"></a></li>
-      <li><a target="_blank" href="http://www.wri.org" id="wri"></a></li>
-      <li><a target="_blank" href="http://earthengine.google.org/" id="googleearthengine"></a></li>
-    </ul>
-  </article>
-  
-  </section>
+    <article class="selected">
+      <h2 class="partners source_title"><%= t('static.about.partners')%></h2>
+      <ul class="logo_list">
+        <li><a target="_blank" href="http://www.wri.org" id="wri"></a></li>
+        <li><a target="_blank" href="http://earthengine.google.org/" id="google"></a></li>
+        <li><a target="_blank" href="http://www.esri.com/" id="esri"></a></li>
+        <li><a target="_blank" href="http://www.geog.umd.edu/" id="universitymaryland"></a></li>
+        <li><a target="_blank" href="http://www.unep.org/" id="unep"></a></li>            
+        <li><a target="_blank" href="http://www.imazon.org.br/pagina-inicial-en?set_language=en&cl=en" id="imazon"></a></li>
+        <li><a target="_blank" href="http://www.cgdev.org/" id="centerglobaldevelopment"></a></li>
+      </ul>
+    </article>
 
-</div>
+    <article class="selected">
+      <h2 class="partners source_title">Funders</h2>
+      <ul class="logo_list">
+        <li><a target="_blank" href="http://www.regjeringen.no/en/dep/md.html?id=668" id="norwegian"></a></li>
+        <li><a target="_blank" href="http://www.usaid.gov/" id="usaid"></a></li>
+        <li><a target="_blank" href="http://tiliafund.org/" id="tilafund"></a></li>
+        <li><a target="_blank" href="http://um.dk/en/danida-en/" id="danida"></a></li>
+        <li><a target="_blank" href="http://www.minbuza.nl/en" id="dutchforeign"></a></li>
+        <li><span id="bobolink">Bobolink</span></li>
+      </ul>
+    </article>
 
-<div id="contact">
-  <div class="inner">
-    <h1>Contact us</h1>
-    <p><a href="mailto:gfw@wri.org" class="btn green darker_glow"><span>gfw@wri.org</span></a></p>
+    <article class="selected">
+      <h2 class="partners source_title">Additional partners & data providers</h2>
+      <ul>
+        <li>Conservation International</li>
+        <li>NASA AMES Research Center</li>
+        <li>Global Witness</li>
+        <li>UNEP-WCMC</li>
+        <li>JGI</li>
+        <li>Winrock</li>
+        <li>Mongabay</li>
+      </ul>
+    </article>
+
+    <article class="selected">
+      <h2 class="partners source_title">Website designed by</h2>
+      <ul class="logo_list">
+        <li><a target="_blank" href="http://www.vizzuality.com" id="vizzuality"></a></li>
+      </ul>
+    </article>
+
+    <article class="selected">
+      <h2 class="history source_title">History of GFW</h2>
+      <p>Global Forest Watch originally began in 1997 as an initiative to establish a global forest monitoring network around the world, convened by the World Resources Institute and partners. It began as part of WRI’s Forest Frontiers Initiative. The original GFW achieved many outcomes towards the conservation of large intact forest areas.</p> 
+       
+      <p>WRI has <a href="http://www.wri.org/our-work/topics/forests" target="_blank">continued</a> the work that Global Forest Watch started, working to improve <a href="http://www.wri.org/our-work/topics/forests" target="_blank">forest information</a> by merging the latest technology with on the ground partnerships. In the  <a href="http://www.wri.org/our-work/project/congo-basin-forest-atlases" target="_blank">Congo Basin</a> countries, WRI has published Forest Atlases that help decision makers achieve sustainable management of forest resources through strengthened land use planning and monitoring.  These are now available for <a href="http://www.wri.org/our-work/project/congo-basin-forests/cameroon#project-tabs" target="_blank">Cameroon</a>, <a href="http://www.wri.org/our-work/project/congo-basin-forests/central-african-republic#project-tabs" target="_blank">Central African Republic</a>, <a href="http://www.wri.org/our-work/project/congo-basin-forests/congo#project-tabs" target="_blank">Congo</a>, <a href="http://www.wri.org/our-work/project/congo-basin-forests/democratic-republic-congo#project-tabs" target="_blank">Democratic Republic of Congo</a>, <a href="http://www.wri.org/our-work/project/congo-basin-forests/equatorial-guinea#project-tabs" target="_blank">Equatorial Guinea</a> and <a href="http://www.wri.org/our-work/project/congo-basin-forests/gabon#project-tabs" target="_blank">Gabon</a>. The <a href="http://www.wri.org/our-work/project/forests-and-landscapes-indonesia" target="_blank">Forest and Landscapes in Indonesia</a> project works to support government and civil society actions for effective and equitable land use in Indonesia. This work now continues as part of WRI’s work on forests, and is integrated with Global Forest Watch. In addition to the countries listed above, GFW published state of the forest reports for <a href="http://www.wri.org/publication/canadas-large-intact-forest-landscapes-2006-update" target="_blank">Canada</a>, <a href="http://www.wri.org/publication/chiles-frontier-forests" target="_blank">Chile</a>, <a href="http://www.wri.org/publication/last-intact-forest-landscapes-northern-european-russia" target="_blank">Russia</a>, and <a href="http://www.wri.org/publication/all-glitters-not-gold" target="_blank">Venezuela</a> and related policy reports for <a href="http://www.wri.org/publication/profit-without-plunder" target="_blank">Guyana</a> and <a href="http://www.wri.org/publication/backs-wall-suriname" target="_blank">Suriname</a>.</p> 
+
+      <p>The GFW network also developed the methods for mapping <a href="http://www.intactforests.org" target="_blank">Intact Forest Landscapes</a>, by piloting this method in Russia, Canada, and then expanding it to the global level, for the year 2000. Monitoring of these areas continues, with an ongoing update for the year 2012 underway.</p>
+
+      <p>Leveraging the advent of new technologies and increased global connectivity, work on the next generation Global Forest Watch began in 2011 with an expanded group of partners and powerful new monitoring capabilities. Help be part of GFW’s future by participating and contributing to the GFW system.</p>
+    </article>
+
+    <article class="selected">
+      <h2 class="staff source_title">Staff</h2>
+      <p>View a <a href="http://www.wri.org/our-work/project/global-forest-watch" target="_blank">list of staff</a> who work on Global Forest Watch. </p>
+    </article>
+
+    <article class="selected">
+      <h2 class="contact source_title">Contact us</h2>
+      <p><a href="mailto:gfw@wri.org">GFW@WRI.ORG</a></p>
+    </article>
+
   </div>
 </div>
