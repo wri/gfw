@@ -51,7 +51,7 @@ GFW.modules.app = function(gfw) {
       this._precision = 2;
       this._layers = [];
       this._cloudfront_url = "dyynnn89u7nkm.cloudfront.net";
-      this._global_version = 42;
+      this._global_version = 43;
 
       gfw.log.enabled = options ? options.logging: false;
 
