@@ -574,10 +574,18 @@ body.howto article {
     + li {
       margin-top: 10px;
     }
+
+    strong a {
+      color: #463F52;
+    }
   }
 
   strong {
     color: #463F52;
+  }
+
+  em {
+    font-style: italic;
   }
 }
 
@@ -1067,6 +1075,10 @@ body.countries {
     + li {
       margin-top: 10px;
     }
+
+    strong a {
+      color: #463F52;
+    }
   }
 
   strong {
@@ -1074,5 +1086,9 @@ body.countries {
     line-height: 60px;
     text-transform: uppercase;
     color: #463F52;
+
+    a {
+      color: #463F52;
+    }
   }
 }
