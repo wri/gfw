@@ -96,9 +96,27 @@ DeforestationTileLayerThreshold.prototype.filter_tiles = function() {
 }
 
 DeforestationTileLayerThreshold.prototype.filter_tile = function(canvas, args) {
-  var new_threshold = args[0];
+
   var ctx = canvas.getContext('2d');
-  ctx.drawImage(canvas.image, 0, 0);
+  var coord = canvas.coord;
+  var zsteps = coord.z - 12;
+
+  if (zsteps > 0) {
+    ctx['imageSmoothingEnabled'] = false;
+    ctx['mozImageSmoothingEnabled'] = false;
+    ctx['webkitImageSmoothingEnabled'] = false;
+
+    var srcX = 256 / Math.pow(2, zsteps) * (coord.x % Math.pow(2, zsteps));
+    var srcY = 256 / Math.pow(2, zsteps) * (coord.y % Math.pow(2, zsteps));
+    var srcW = 256 / Math.pow(2, zsteps);
+    var srcH = 256 / Math.pow(2, zsteps);
+    ctx.drawImage(canvas.image, srcX, srcY, srcW, srcH, 0, 0, 256, 256);
+  } else {
+    ctx.drawImage(canvas.image, 0, 0);
+  }
+
+  var new_threshold = args[0];
+
   var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
   this.filter.apply(this, [I.data, ctx.width, ctx.height].concat(args));
   ctx.putImageData(I,0,0);
@@ -140,8 +158,22 @@ var Deforestation = function() {
     var image = new Image();
     var ctx = canvas.getContext('2d');
     image.crossOrigin = '';
-    image.src = 'http://earthengine.google.org/static/hansen_2013/gfw_loss_year/' + zoom + "/"+ coord.x + "/" + coord.y +".png";
+
+    var x = coord.x;
+    var y = coord.y;
+    var z = zoom;
+
+    if (zoom > 12) {
+      x = Math.floor(coord.x/(Math.pow(2, zoom - 12)));
+      y = Math.floor(coord.y/(Math.pow(2, zoom - 12)));
+      z = 12;
+    }
+
+    image.src = 'http://earthengine.google.org/static/hansen_2013/gfw_loss_year/' + z + "/"+ x + "/" + y +".png";
     canvas.image = image;
+    canvas.coord = coord;
+    canvas.coord.z = zoom;
+
     $(image).load(function() {
       //ctx.globalAlpha = 0.5;
       ctx.drawImage(image, 0, 0);
