@@ -194,6 +194,13 @@ var Satellite = function(){
   };
 };
 
+var Hybrid = function(){
+  this.Hybrid = function(){
+    map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+    map.setOptions({styles: null});
+  };
+};
+
 var Forest = function(){
   this.Forest = function(){
     map.setMapTypeId('forests');
