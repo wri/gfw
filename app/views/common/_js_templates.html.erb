@@ -391,7 +391,7 @@
       <li id="{{cat_id}}" class="{{ category }}"> 
       <div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{category}}"></a></div>
       <p><i style="background-color:#F13689;"></i> Deforestation</p>
-      <p><i style="background-color:#F69;"></i> Degradation</p>
+      <p><i style="background-color:#FA98B9;"></i> Degradation</p>
       </li>
     </ul>
   </script>
@@ -431,6 +431,21 @@
       </a>
       {{/sublayer}}
 
+      <li class="{{ category }}">
+    <div class="info tree">
+    <strong>2000 Percent Tree Cover</strong>
+    <div class="data">
+    <div class="colors">
+      <div class="quartile" style="background-color:#00ff00">100-75%</div>
+      <div class="quartile" style="background-color:#00aa00">75-50%</div>
+      <div class="quartile" style="background-color:#005500">50-25%</div>
+    </div>
+    </div>
+    </div>
+
+
+      </li>
+
       </ul>
     </ul>
   </script>
@@ -456,22 +471,21 @@
   <script id="legend-item-pantropical-template" type="text/x-underscore-template">
     <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source{{ !source ? ' hidden ' : ' ' }}{{ slug }}"></a>
     
-      <div class="info">
-      <strong>Total Biomass Carbon <span class="units">(MgC/ha)</span></strong>
-      <div class="data">
-      <div class="min">75</div>
-      <div class="max">383</div>
-      <div class="colors">
-      <div class="quartile" style="background-color:#FFFFD4"></div>
-      <div class="quartile" style="background-color:#FED98E"></div>
-      <div class="quartile" style="background-color:#FE9929"></div>
-      <div class="quartile" style="background-color:#dd8653"></div>
-      </div>
-      </div>
-      </li>
-</div>
-    
-    
+    <div class="info">
+    <strong>Total Biomass Carbon <span class="units">(MgC/ha)</span></strong>
+    <div class="data">
+    <div class="min">75</div>
+    <div class="max">383</div>
+    <div class="colors">
+    <div class="quartile" style="background-color:#FFFFD4"></div>
+    <div class="quartile" style="background-color:#FED98E"></div>
+    <div class="quartile" style="background-color:#FE9929"></div>
+    <div class="quartile" style="background-color:#dd8653"></div>
+    </div>
+    </div>
+    </div>
+
+
     </li>
   </script>
 

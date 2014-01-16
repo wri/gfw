@@ -558,6 +558,7 @@ div.cartodb-tiles-loader div.loader {
     &.satellite      i { @include icons-sprite(map_satellite); }
     &.terrain        i { @include icons-sprite(map_terrain_bn); }
     &.classic        i { @include icons-sprite(map_terrain); }
+    &.hybrid         i { @include icons-sprite(map_hybrid); }
     &.tree_height    i { @include icons-sprite(map_tree_height); }
     &.landsat,
     &.landsat1999,
@@ -694,6 +695,28 @@ div.cartodb-tiles-loader div.loader {
       p { font-size: 11px;}
       .units { font-weight:normal; font-size: 10px; }
 
+      &.tree {
+
+        display:none;
+
+        .colors {
+
+          border: 1px solid #ccc;
+
+          div {
+            width: 33%;
+            &:last-child { width: 34%; }
+
+            text-align: center;
+            padding: 6px 0;
+            font-size: 10px;
+            line-height:100%;
+            color: #fff;
+            text-shadow: 0px 0px 2px #000;
+          }
+        }
+      }
+
       .colors div {
         width: 25%;
         height: 10px;
@@ -709,7 +732,6 @@ div.cartodb-tiles-loader div.loader {
 
       .data .min { width: auto; float:left; }
       .data .max { width: auto; float:right; }
-
 
       .colors {
         display: table-row;
@@ -886,11 +908,11 @@ div.cartodb-tiles-loader div.loader {
     left: 13px;
     text-align: left;
 
-    color:#fff;
+    color:#333;
     font-weight:bold;
     @extend .sans-serif;
     font-size:12px;
-    text-shadow: 0px 0px 3px #000;
+    text-shadow: 0px 0px 3px #fff;
   }
 
   .coordinates {
@@ -898,11 +920,11 @@ div.cartodb-tiles-loader div.loader {
     top: -20px;
     right: 5px;
     text-align: right;
-    color:#fff;
+    color:#333;
     font-weight:bold;
     @extend .sans-serif;
     font-size:11px;
-    text-shadow: 0px 0px 3px #000;
+    text-shadow: 0px 0px 3px #fff;
     @include user-select(text);
   }
 
