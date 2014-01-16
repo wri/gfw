@@ -1538,7 +1538,8 @@ div.cartodb-tiles-loader div.loader {
     color: #666666;
     font-size:15px;
 
-    .download { display: none; }
+    .download,
+    .overview_title { display: none !important; }
 
     h1 {
       display:block;
@@ -1566,6 +1567,7 @@ div.cartodb-tiles-loader div.loader {
       width: 100%;
       border-left: 0;
       padding: 0;
+      min-height: 0;
     }
 
     li.expanded {
@@ -1575,6 +1577,19 @@ div.cartodb-tiles-loader div.loader {
 
       .source_body {
         display: block;
+
+        strong { line-height: 1.5; }
+
+        .source_summary h3 {
+          display: block;
+          color: #666;
+          font-size: 11px;
+          line-height: 1;
+          margin-top: 10px;
+          text-transform: uppercase;
+          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-weight: bold;
+        }
       }
 
       .source_table {
@@ -1668,6 +1683,10 @@ div.cartodb-tiles-loader div.loader {
       margin: 0 0 20px 0;
 
       p { width: 475px; }
+
+      dl p {
+        width: auto;
+      }
 
       /*border-bottom: 1px solid #E5E5E5;*/
       /*margin: 0 0 13px 0;*/

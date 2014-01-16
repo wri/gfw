@@ -99,7 +99,6 @@ function loadOtherStuff(callback) {
     $("article.selected").fadeOut(250);
 
     $(".expanded").removeClass("expanded")
-    $("#"+name).find(".sources li.first").addClass("expanded")
 
     setTimeout(function() {
       $("article.selected").removeClass("selected");
