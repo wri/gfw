@@ -92,7 +92,7 @@ GFW.modules.app = function(gfw) {
       this.currentBaseLayer = "semi_monthly";
 
       this._setupZoom();
-      this._setupNoDataLayer();
+      //this._setupNoDataLayer();
 
       google.maps.event.addDomListener(this._map, 'dragend', function(event) {
         Timeline.updateCoordinates(that._map.getCenter());
@@ -110,7 +110,7 @@ GFW.modules.app = function(gfw) {
 
       google.maps.event.addListener(this._map, 'zoom_changed', function(event) {
 
-        that._toggleNoDataLayer();
+        //that._toggleNoDataLayer();
 
         Timeline.updateCoordinates(that._map.getCenter());
         TimelineNotPlayer.updateCoordinates(that._map.getCenter());
@@ -389,9 +389,21 @@ GFW.modules.app = function(gfw) {
     },
 
     _removeForestGainLayer: function(layer) {
+
       if (this.forestGainLayer) {
-        this.forestGainLayer.setOpacity(0);
-        this.forestGainLayer = null;
+        var layers = map.overlayMapTypes.getArray();
+        for (var i = 0; i <= layers.length; i++) {
+
+          if (layers[i] == this.forestGainLayer)  {
+            if (this.forestGainLayer) {
+              this.forestGainLayer.setOpacity(0);
+              this.forestGainLayer = null;
+              map.overlayMapTypes.setAt(i, null);
+            }
+          }
+
+        }
+
       }
     },
 
@@ -442,6 +454,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _renderForest2000Layer: function(layer) {
+
       var that = this;
 
       var query = layer.get('tileurl');
@@ -470,15 +483,64 @@ GFW.modules.app = function(gfw) {
       if (this.forestGainLayer) {
         this.forestGainLayer.setOpacity(1);
       } else {
-        this.forestGainLayer = new google.maps.ImageMapType({
-          getTileUrl: function(tile, zoom) {
-            return "http://earthengine.google.org/static/hansen_2013/gain_alpha/" + zoom + "/" + tile.x + "/" + tile.y + ".png";
-          },
-          tileSize: new google.maps.Size(256, 256),
-          opacity:1,
-          isPng: true
-        });
 
+        function CoordMapType() { }
+
+        CoordMapType.prototype.tileSize = new google.maps.Size(256,256);
+        CoordMapType.prototype.maxZoom = 19;
+        CoordMapType.prototype.setOpacity = function(opacity) {
+          $(".gain_alpha").css("opacity", opacity);
+        };
+
+        CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
+
+          var x = coord.x;
+          var y = coord.y;
+          var z = zoom;
+
+          var zsteps = zoom - 12;
+
+          if (zoom > 12) {
+            x = Math.floor(coord.x/(Math.pow(2, zoom - 12)));
+            y = Math.floor(coord.y/(Math.pow(2, zoom - 12)));
+            z = 12;
+          }
+
+          var url = "http://earthengine.google.org/static/hansen_2013/gain_alpha/" + z + "/" + x + "/" + y + ".png";
+
+          var image = new Image();
+          image.src = url;
+          image.className += "gain_alpha";
+
+          if (zsteps <= 0) return image;
+
+          image.width = 256 * Math.pow(2, zsteps);
+          image.height = 256 * Math.pow(2, zsteps);
+
+          if (zsteps > 0) {
+            var srcX = 256 * (coord.x % Math.pow(2, zsteps));
+            var srcY = 256 * (coord.y % Math.pow(2, zsteps));
+
+            image.style.position = "absolute";
+            image.style.top      = -srcY + "px";
+            image.style.left     = -srcX + "px";
+          }
+
+          var div = ownerDocument.createElement('div');
+          div.appendChild(image);
+          div.style.width = this.tileSize.width + 'px';
+          div.style.height = this.tileSize.height + 'px';
+          div.style.position = 'relative';
+          div.style.overflow = 'hidden';
+          div.className += "gain_alpha";
+
+          return div;
+        };
+
+        CoordMapType.prototype.name = "Tile #s";
+        CoordMapType.prototype.alt = "Tile Coordinate Map Type";
+
+        this.forestGainLayer = new CoordMapType();
         map.overlayMapTypes.push(this.forestGainLayer);
       }
     },
@@ -521,8 +583,10 @@ GFW.modules.app = function(gfw) {
         this.mainLayer.setInteraction(true);
 
       } else {
-        this.mainLayer.setOpacity(0);
-        this.mainLayer.setInteraction(false);
+        if (this.mainLayer) {
+          this.mainLayer.setOpacity(0);
+          this.mainLayer.setInteraction(false);
+        }
       }
 
     },
@@ -1124,7 +1188,7 @@ GFW.modules.maplayer = function(gfw) {
 
           var event = function() {
 
-            GFW.app._disableNoDataLayer();
+            //GFW.app._disableNoDataLayer();
 
             //GFW.app._hideBiomeLayer(GFW.app.biomeLayer);
             GFW.app.currentBaseLayer = null;
@@ -1361,7 +1425,8 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app._removeLayer(this.layer);
           }
           legend.toggleItemBySlug(slug);
-          GFW.app._toggleNoDataLayer();
+
+          //GFW.app._toggleNoDataLayer();
 
         } else if (slug === 'loss') {
 
@@ -1375,14 +1440,14 @@ GFW.modules.maplayer = function(gfw) {
           }
 
           legend.toggleItemBySlug(slug);
-          GFW.app._toggleNoDataLayer();
+          //GFW.app._toggleNoDataLayer();
 
 
         }
 
         else if (slug === 'semi_monthly' || slug === "annual" || slug === "quarterly" || slug === "brazilian_amazon" || slug === "fires") {
 
-          GFW.app._disableNoDataLayer();
+          //GFW.app._disableNoDataLayer();
 
           if (forestgain) {
             GFW.app._removeLayer(forestgain);
@@ -1467,7 +1532,7 @@ GFW.modules.maplayer = function(gfw) {
 
           this.layer.attributes['sublayer_visible'] = false;
 
-          GFW.app._toggleNoDataLayer();
+          //GFW.app._toggleNoDataLayer();
 
           if (this.layer.get("sublayer")) {
 
