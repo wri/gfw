@@ -558,6 +558,7 @@ div.cartodb-tiles-loader div.loader {
     &.satellite      i { @include icons-sprite(map_satellite); }
     &.terrain        i { @include icons-sprite(map_terrain_bn); }
     &.classic        i { @include icons-sprite(map_terrain); }
+    &.hybrid         i { @include icons-sprite(map_hybrid); }
     &.tree_height    i { @include icons-sprite(map_tree_height); }
     &.landsat,
     &.landsat1999,
@@ -907,11 +908,11 @@ div.cartodb-tiles-loader div.loader {
     left: 13px;
     text-align: left;
 
-    color:#fff;
+    color:#333;
     font-weight:bold;
     @extend .sans-serif;
     font-size:12px;
-    text-shadow: 0px 0px 3px #000;
+    text-shadow: 0px 0px 3px #fff;
   }
 
   .coordinates {
@@ -919,11 +920,11 @@ div.cartodb-tiles-loader div.loader {
     top: -20px;
     right: 5px;
     text-align: right;
-    color:#fff;
+    color:#333;
     font-weight:bold;
     @extend .sans-serif;
     font-size:11px;
-    text-shadow: 0px 0px 3px #000;
+    text-shadow: 0px 0px 3px #fff;
     @include user-select(text);
   }
 
