@@ -1538,7 +1538,7 @@ GFW.modules.maplayer = function(gfw) {
 
             subEvent = function() {
               self._toggleSubLayer();
-              $(".legend .content ul li .info.tree").toggle();
+              $(".legend .content ul li > .info.tree").toggle();
               legend.resize();
             };
 

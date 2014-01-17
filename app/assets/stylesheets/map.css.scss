@@ -697,6 +697,8 @@ div.cartodb-tiles-loader div.loader {
 
       &.tree {
 
+        &.show { display: block; }
+
         display:none;
 
         .colors {

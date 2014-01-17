@@ -385,6 +385,14 @@
     <div class="shadow"></div>
   </script>
 
+  <script id="legend-forest2000-template" type="text/x-underscore-template">
+    <ul class="{{category}}">
+      <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
+      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a></div></li>
+
+    </ul>
+  </script>
+
   <script id="legend-group-double-template" type="text/x-underscore-template">
     <ul class="{{category}} double">
       <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
@@ -396,27 +404,6 @@
     </ul>
   </script>
 
-  <script id="legend-group-pantropical-template" type="text/x-underscore-template">
-    <ul class="{{category}}">
-      <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
-      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a>
-
-      <div class="info">
-      <strong>Total Biomass Carbon <span class="units">(MgC/ha)</span></strong>
-      <div class="data">
-      <div class="min">75</div>
-      <div class="max">383 </div>
-      <div class="colors">
-      <div class="quartile" style="background-color:#FFFFD4"></div>
-      <div class="quartile" style="background-color:#FED98E"></div>
-      <div class="quartile" style="background-color:#FE9929"></div>
-      <div class="quartile" style="background-color:#dd8653"></div>
-      </div>
-      </div>
-      </li>
-
-    </ul>
-  </script>
   <script id="legend-loss-template" type="text/x-underscore-template">
     <ul class="{{category}}">
       <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
@@ -431,20 +418,23 @@
       </a>
       {{/sublayer}}
 
+
+
+
+      {{#legend}}
       <li class="{{ category }}">
-    <div class="info tree">
-    <strong>2000 Percent Tree Cover</strong>
-    <div class="data">
-    <div class="colors">
-      <div class="quartile" style="background-color:#00ff00">100-75%</div>
-      <div class="quartile" style="background-color:#00aa00">75-50%</div>
-      <div class="quartile" style="background-color:#005500">50-25%</div>
-    </div>
-    </div>
-    </div>
-
-
+      <div class="info {{ legend_class }} ">
+      <strong>{{{ legend }}}</strong>
+      <div class="data">
+      <div class="colors">
+      {{#colors}}
+      <div class="quartile" style="background-color:{{color}}">{{title}}</div>
+      {{/colors}}
+      </div>
+      </div>
+      </div>
       </li>
+      {{/legend}}
 
       </ul>
     </ul>
@@ -453,7 +443,24 @@
   <script id="legend-group-template" type="text/x-underscore-template">
     <ul class="{{category}}">
       <li class="{{ category }}"><strong style="color:{{category_color}};">{{category_title}}</strong></li>
-      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a></div></li>
+      <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{ slug }}"></a>
+      
+      {{#legend}}
+      <div class="info {{ legend_class }} ">
+      <strong>{{{ legend }}}</strong>
+      <div class="data">
+      <div class="colors">
+      {{#colors}}
+      <div class="quartile" style="background-color:{{color}}">{{title}}</div>
+      {{/colors}}
+      </div>
+      </div>
+      </div>
+      {{/legend}}
+
+
+      
+      </div></li>
 
       {{#sublayer}}
       <a href="#" data-id="{{ id }}" data-color="{{ category_color }}" class="checkbox {{slug}}">
@@ -465,28 +472,25 @@
   </script>
 
   <script id="legend-item-template" type="text/x-underscore-template">
-    <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source{{ !source ? ' hidden ' : ' ' }}{{ slug }}"></a></div></li>
-  </script>
-
-  <script id="legend-item-pantropical-template" type="text/x-underscore-template">
     <li id="{{cat_id}}" class="{{ category }}"> <i style="background-color:{{title_color}};"></i><div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source{{ !source ? ' hidden ' : ' ' }}{{ slug }}"></a>
-    
-    <div class="info">
-    <strong>Total Biomass Carbon <span class="units">(MgC/ha)</span></strong>
-    <div class="data">
-    <div class="min">75</div>
-    <div class="max">383</div>
-    <div class="colors">
-    <div class="quartile" style="background-color:#FFFFD4"></div>
-    <div class="quartile" style="background-color:#FED98E"></div>
-    <div class="quartile" style="background-color:#FE9929"></div>
-    <div class="quartile" style="background-color:#dd8653"></div>
-    </div>
-    </div>
-    </div>
 
-
+      {{#legend}}
+      <div class="info {{ legend_class }} ">
+      <strong>{{{ legend }}}</strong>
+      <div class="data">
+      {{#min}}<div class="min">{{min}}</div>{{/min}}
+      {{#max}}<div class="max">{{max}}</div>{{/max}}
+      <div class="colors">
+      {{#colors}}
+      <div class="quartile" style="background-color:{{color}}">{{title}}</div>
+      {{/colors}}
+      </div>
+      </div>
+      </div>
+      {{/legend}}
+    </div>
     </li>
+
   </script>
 
   <script id="dialog-template" type="text/x-underscore-template">
