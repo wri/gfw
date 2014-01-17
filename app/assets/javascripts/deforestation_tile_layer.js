@@ -112,7 +112,11 @@ DeforestationTileLayerThreshold.prototype.filter_tile = function(canvas, args) {
     var srcH = 256 / Math.pow(2, zsteps);
     ctx.drawImage(canvas.image, srcX, srcY, srcW, srcH, 0, 0, 256, 256);
   } else {
+
+  try {
     ctx.drawImage(canvas.image, 0, 0);
+  } catch(err) { }
+
   }
 
   var new_threshold = args[0];

@@ -1342,12 +1342,15 @@ var Navigation = (function() {
       this.time_layer_notplayer.set_time(128);
     }
 
+
     TimelineImazon.hide();
 
     if (this.time_layer_imazon) {
       this.time_layer_imazon.cache_time(true);
       this.time_layer_imazon.set_time(128);
     }
+
+    TimelineLoss.hide()
 
     if (GFW && GFW.app) {
       GFW.app.close(function() {
@@ -1379,7 +1382,9 @@ var Navigation = (function() {
 
     if (this.time_layer) this.time_layer.set_time(self.time_layer.cache_time());
 
-    if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === "semi_monthly") {
+    if (GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === "loss") {
+      TimelineLoss.show();
+    } else if (GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === "semi_monthly") {
       Timeline.show();
     } else if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === "quarterly") {
       TimelineNotPlayer.show();
@@ -1632,6 +1637,7 @@ var Filter = (function() {
   }
 
   function _closeOpenFilter() {
+
     var c = $layer.attr("class");
 
     if (c === undefined) return;
@@ -1648,6 +1654,7 @@ var Filter = (function() {
       $layer.css("left", -10000);
       $layer.removeClass(c);
     });
+    $layer.css("left", "-10000px");
   }
 
   function _open() {
@@ -1741,7 +1748,7 @@ var Filter = (function() {
 
   }
 
-  function _addForestLostFilter(id, slug, category, name, options) {
+  function _addForestLossFilter(id, slug, category, name, options) {
     var
     clickEvent  = options.clickEvent  || null,
     disabled    = options.disabled    || false;
@@ -1775,6 +1782,12 @@ var Filter = (function() {
 
       $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source, color: color }));
 
+      // Enable checkboxes by default
+      $layerItem.find(".checkbox").addClass("checked");
+      var color = $layerItem.find(".checkbox").attr("data-color");
+      $layerItem.find(".checkbox").css("color", color );
+      $layerItem.find(".checkbox").find("i").css("background-color", color );
+
       $layerItem.find("a.checkbox").on("click", function() {
 
         $layerItem.parent().find(".extra").slideUp();
@@ -1790,7 +1803,7 @@ var Filter = (function() {
     $layerItem.find(".checkbox").addClass(cat);
   }
 
-  function _addForestLostFilters(id, slug, category, name, options) {
+  function _addForestLossFilters(id, slug, category, name, options) {
 
     var
     clickEvent     = options.clickEvent  || null,
@@ -1818,6 +1831,9 @@ var Filter = (function() {
     layerItemTemplate = _.template($("#layer-item-radio-loss-template").html());
 
     $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source, subtitle: subtitle }));
+
+    $layerItem.find(".radio").addClass('checked');
+    $layerItem.find(".extra").slideDown(150);
 
     $layerItem.find("a.radio").on("click", function() {
 
@@ -1878,6 +1894,7 @@ var Filter = (function() {
     layerItemTemplate = null,
     $layerItem        = null;
 
+
     if (!disabled) { // click binding
       // Select the kind of input (radio or checkbox) depending on the category
       if (cat === 'forest_change' && slug != 'biome') {
@@ -1905,6 +1922,7 @@ var Filter = (function() {
         $layerItem.find("a:not(.source)").on("click", function() {
           clickEvent();
         });
+
       }
     } else {
       layerItemTemplate = _.template($("#layer-item-disabled-template").html());
@@ -1918,10 +1936,6 @@ var Filter = (function() {
     $layer.find(".links").append($layerItem);
     $layerItem.find(".checkbox").addClass(cat);
 
-    // We select the FORMA layer by default
-    if ( slug == "semi_monthly" ) {
-      $layerItem.find(".radio").addClass('checked');
-    }
   }
 
   return {
@@ -1929,8 +1943,8 @@ var Filter = (function() {
     show: _show,
     hide: _hide,
     addFilter: _addFilter,
-    addForestLossFilters: _addForestLostFilters,
-    addForestLossFilter: _addForestLostFilter,
+    addForestLossFilters: _addForestLossFilters,
+    addForestLossFilter: _addForestLossFilter,
     toggle: _toggle,
     remove: _remove,
     toggleBiome: _toggleBiome,
@@ -1947,22 +1961,20 @@ var Filter = (function() {
 var Circle = (function() {
 
   var template, $circle, $title, $counter, $background, $explore, animating = true, animatingB = false, circlePID;
+  var p = 0;
 
   function toggleData() {
     var data = {};
 
-    if ($icon.hasClass("area")) {
-      data = flagSummary;
-      $icon.removeClass("area");
-    } else {
-      data = areaSummary;
-      $icon.removeClass("flag");
-    }
+    p = (p + 1) % circleSummary.length;
 
+    $icon.removeClass("area");
+    $icon.removeClass("flag");
+
+    data = circleSummary[p];
     $icon.addClass(data.icon);
     $title.html(data.title);
     $counter.html(data.count);
-
   }
 
   function _build(){
@@ -1970,7 +1982,7 @@ var Circle = (function() {
     if ( $("#circle-template").length > 0 ) {
 
       template    = _.template($("#circle-template").html());
-      $circle     = $(template(flagSummary));
+      $circle     = $(template(circleSummary[0]));
 
       $title      = $circle.find(".title");
       $icon       = $circle.find(".icon");
@@ -2001,6 +2013,7 @@ var Circle = (function() {
 
     $icon.animate({ backgroundSize: "10%", opacity: 0 }, 250, "easeOutExpo", function() {
       $circle.delay(200).animate({ marginLeft: -350, opacity: 0 }, 350, "easeOutQuad", function() {
+        toggleData();
         $circle.css({marginLeft: 100 });
         $circle.delay(400).animate({ marginLeft: -1*318/2, opacity: 1 }, 250, "easeOutQuad", function() {
           $icon.animate({ backgroundSize: "100%", opacity: 1 }, 250, "easeInExpo");
@@ -2106,6 +2119,7 @@ var Circle = (function() {
   return {
     init: _init,
     show: _show,
+    toggleData: toggleData,
     hide: _hide
   };
 
