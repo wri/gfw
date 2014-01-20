@@ -991,11 +991,9 @@ body.countries {
       @include icons-sprite(expand_arrow_up);
     }
 
-    .source_coverage {
-      display: none;
-    }
-
-    .source_body {
+    .source_coverage,
+    .source_body,
+    .source_coverage_header {
       display: block;
     }
   }
@@ -1041,7 +1039,8 @@ body.countries {
   @include icons-sprite(expand_arrow_down);
 }
 
-.source_body {
+.source_body,
+.source_coverage {
   display: none;
 }
 
@@ -1122,17 +1121,26 @@ body.countries {
   }
 }
 
-.source_coverage_header,
-.source_coverage {
+.source_coverage_header {
   display: none;
+  margin: 30px 0 10px;
+  font: 21px/1.1 "fira_sans_otmedium";
+  color: #463F52;
 }
 
 .source_summary {
   .credits {
-    margin: 7px 0 0 0;
+    margin: 10px 0 0 0;
     font-size:13px;
     color:$cGray4;
     line-height:16px;
+
+    strong {
+      font-size:13px;
+      color:$cGray4;
+      line-height:16px;
+      font-weight: bold;
+    }
   }
 
   .read_more {
@@ -1146,12 +1154,15 @@ body.countries {
   }
 }
 
-.source_description,
-.source_summary {
+.source_table + .source_summary {
   padding-top: 10px;
+}
 
+.source_description,
+.source_summary,
+.source_coverage {
   h3 {
-    margin: 30px 0 10px;
+    margin: 20px 0 10px;
     font: 21px/1.1 "fira_sans_otmedium";
     color: #463F52;
   }

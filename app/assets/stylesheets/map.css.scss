@@ -1616,8 +1616,18 @@ div.cartodb-tiles-loader div.loader {
         margin-top: 0;
       }
 
+      .source_coverage_header {
+        margin: 20px 0;
+        display: block;
+        color: #CCC;
+        font-size: 11px;
+        line-height: 1;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-transform: uppercase;
+      }
+
       .source_coverage {
-        margin-top: 20px;
+        padding-top: 0;
 
         .read_more {
           display: block;
