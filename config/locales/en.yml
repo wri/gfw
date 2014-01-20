@@ -33,6 +33,7 @@ en:
           about: 'About'
           signin: 'Sign in'
           register: 'Request an invite'
+          'how to': 'Howto'
       footer:
         download:
           title: 'Browse forest data <a href="%{url}">by country</a>.'
