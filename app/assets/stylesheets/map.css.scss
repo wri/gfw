@@ -683,6 +683,7 @@ div.cartodb-tiles-loader div.loader {
       width: auto;
       font-size:13px;
       line-height:17px;
+      float: left;
 
       .name { color: #ccc; width: auto; }
     }
@@ -758,6 +759,24 @@ div.cartodb-tiles-loader div.loader {
         li { margin: 0 0 5px 0; }
       }
 
+      &.sublayer {
+        min-height: 73px;
+      }
+
+      .coverage a.source {
+        display: block;
+        position: relative;
+        top: 2px;
+        @include inline-block();
+        @include size(10px);
+        @include icons-sprite(information);
+        margin-left: 5px;
+
+        &:hover {
+          @include icons-sprite(information);
+        }
+      }
+
       li {
 
         font-size: 13px;
@@ -785,6 +804,17 @@ div.cartodb-tiles-loader div.loader {
           background:#ccc;
         }
 
+        div {
+          float:left;
+          width: 184px;
+        }
+
+        strong {
+          font-weight: bold;
+          text-transform: uppercase;
+          font-size: 11px;
+        }
+
         a.source {
           @include inline-block();
           @include size(10px);
@@ -797,20 +827,7 @@ div.cartodb-tiles-loader div.loader {
 
           &.special_projects { display: none; }
         }
-
-        div {
-          float:left;
-          width: 184px;
-        }
-
-        strong {
-          font-weight: bold;
-          text-transform: uppercase;
-          font-size: 11px;
-        }
-
       }
-
     }
 
   }
@@ -1599,6 +1616,21 @@ div.cartodb-tiles-loader div.loader {
         margin-top: 0;
       }
 
+      .source_coverage {
+        margin-top: 20px;
+
+        .read_more {
+          display: block;
+          margin-top: 20px;
+          font-style: italic;
+          text-align: center;
+
+          a {
+            color: #98BD17;
+          }
+        }
+      }
+
       .source_body {
         display: block;
 
@@ -1632,6 +1664,15 @@ div.cartodb-tiles-loader div.loader {
         h3 { display: none; }
 
         .credits { display: block; }
+
+        .read_more {
+          display: block;
+          margin-top: 20px;
+
+          a {
+            color: #98BD17;
+          }
+        }
       }
 
       .source_header {

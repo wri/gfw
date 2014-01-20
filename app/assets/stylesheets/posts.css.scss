@@ -444,6 +444,10 @@ body.static {
             color:$cGray4;
             line-height:16px;
         }
+
+        &.read_more a {
+          color:#98BD17;
+        }
       }
 
       ul.logo_list {
@@ -987,6 +991,10 @@ body.countries {
       @include icons-sprite(expand_arrow_up);
     }
 
+    .source_coverage {
+      display: none;
+    }
+
     .source_body {
       display: block;
     }
@@ -1114,11 +1122,28 @@ body.countries {
   }
 }
 
-.source_summary .credits {
-  margin: 7px 0 0 0;
-  font-size:13px;
-  color:$cGray4;
-  line-height:16px;
+.source_coverage_header,
+.source_coverage {
+  display: none;
+}
+
+.source_summary {
+  .credits {
+    margin: 7px 0 0 0;
+    font-size:13px;
+    color:$cGray4;
+    line-height:16px;
+  }
+
+  .read_more {
+    margin-top: 20px;
+    font-style: italic;
+    text-align: center;
+
+    &.hidden {
+      display: none;
+    }
+  }
 }
 
 .source_description,

@@ -19,16 +19,70 @@
       <p class="description">Forest change data measure tree cover loss, tree cover gain, or forest disturbance.</p>
 
       <ul class="sources">
-        <li id="forest_loss" data-slug="forest_loss" class="first">
+        <li id="umd_tree_loss_gain" data-slug="umd_tree_loss_gain" class="first">
           <div class="source_header">
             <strong>UMD tree cover loss &amp; gain</strong>
             <i class="expand_arrow"></i>
-            <em>(annual, 30m, global)</em>
+            <em>(annual, 30m, global & 12 years, 30m, global)</em>
+          </div>
+
+          <div class="source_header source_coverage_header">
+            <strong>Geographic coverage of umd tree cover loss & gain</strong>
+          </div>
+
+          <div class="source_coverage">
+            <p>Description coming soon...</p>
           </div>
 
           <div class="source_body">
             <div class="source_download">
               <a href="#" class="disabled">Download coming soon<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_table">
+              <dl class="sources_row">
+                <dt>Function</dt>
+                <dd>Identifies tree cover loss and gain with global coverage</dd>
+              </dl>
+              <dl class="sources_row even">
+                <dt>Resolution/scale</dt>
+                <dd>30 × 30 meters</dd>
+              </dl>
+              <dl class="sources_row">
+                <dt>Geographical coverage</dt>
+                <dd>Forests with >25% canopy cover</dd>
+              </dl>
+              <dl class="sources_row even">
+                <dt>Source data</dt>
+                <dd><a href="http://landsat.usgs.gov/" target="_blank">Landsat 7 ETM+</a></dd>
+              </dl>
+              <dl class="sources_row">
+                <dt>Frequency of updates</dt>
+                <dd><strong>Loss:</strong> Annual<br /><strong>Gain:</strong> 12 year cumulative, updated annually</dd>
+              </dl>
+              <dl class="sources_row even">
+                <dt>Date of content</dt>
+                <dd>January 2001–2012</dd>
+              </dl>
+              <dl class="sources_row">
+                <dt>Cautions</dt>
+                <dd>
+                  <p>Forest > 25% includes all types of forest be it plantations, primary forest, secondary forest or any other type of cover that has trees. Hence tree cover change does not equate deforestation. The change could be the result of harvesting of timber in plantations or replanting of palm oil trees.</p>
+
+                  <p>In some cases tree cover loss between 2000 and 2012 appears in areas where there was no tree cover in 2000 according to the tree cover extent map. This is because Landsat did not register tree cover in areas that had very low tree cover density (e.g. <5%) in 2000, but the process used to detect tree cover loss between 2000 and 2012 was capable of detecting drops in tree cover at even the lowest densities (e.g. 0-5%). In these instances it appears as though tree cover loss occurred in areas without tree cover in the year 2000, when in fact there was tree cover in these areas, just at very low densities that were not detected by Landsat.</p>
+                </dd>
+              </dl>
+            </div>
+
+            <div class="source_summary">
+              <h3 class="overview_title">Overview</h3>
+              <p>This data set measures both area of tree cover loss and gain across the globe at 30 × 30 meter spatial resolution on an annual basis from 2001 to 2012.  However gain is only displayed as a 12 year cumulative layer.  The data were generated using multispectral satellite imagery from the <a href="http://landsat.usgs.gov/science_L7_cpf.php" target="_blank">Landsat 7 thematic mapper plus (ETM+)</a> sensor. Multiple Landsat 7 images were compiled in Google Earth Engine and the clear surface observations from these images were then assembled into a per pixel forest probability time series that was classified into either tree cover loss or no change. Tree cover loss was defined as “stand replacement disturbance,” or the complete removal of tree cover canopy at the Landsat pixel scale.  Forest gain was defined as the inverse of loss, or the establishment of tree canopy from non-forest state.  Both global forest loss and gain were related to tree cover density for climate domains, ecozones, and countries. Previously tested methods of high- (Quickbird) and medium- (Landsat) resolution satellite imagery interpretation for tree cover were used to delineate change and no change for training data and to determine the areas of tree cover loss and gain.</p>
+
+              <p class="credits">Citation: Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Science 342 (15 November): 850–53.</p>
+
+              <p class="credits">Suggested citations for data as displayed on GFW: Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “UMD Forest Cover Gain.” University of Maryland and Google. Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org">www.globalforestwatch.org</a>.</p>
+
+              <p class="read_more hidden"><em><%= link_to "Learn more or download data", sources_path %></em>
             </div>
           </div>
         </li>
@@ -38,6 +92,47 @@
             <strong>Forma alerts</strong>
             <i class="expand_arrow"></i>
             <em>(monthly, 500m, humid tropics)</em>
+          </div>
+
+          <div class="source_header source_coverage_header">
+            <strong>Geographic coverage of forma alerts</strong>
+          </div>
+
+          <div class="source_coverage">
+            <div class="source_download">
+              <a href="https://wri-01.cartodb.com/tables/ecoregions/map" target="_blank" title="Download at project website">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_table">
+              <dl class="sources_row">
+                <dt>Function</dt>
+                <dd>Displays the geographic coverage of FORMA alerts</dd>
+              </dl>
+              <dl class="sources_row even">
+                <dt>Resolution/scale</dt>
+                <dd>Regional</dd>
+              </dl>
+              <dl class="sources_row">
+                <dt>Geographic coverage</dt>
+                <dd>This data layer shows the geographic coverage of FORMA alerts, which largely corresponds to the extent of the humid tropic forest biome, as defined by <a href="http://www.pnas.org/content/105/27/9439.full#ref-1" target="_blank">Hansen et al. (2008)</a></dd>
+              </dl>
+              <dl class="sources_row even">
+                <dt>Source data</dt>
+                <dd><a href="http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf" target="_blank">WWF's terrestrial ecoregions</a></dd>
+              </dl>
+              <dl class="sources_row">
+                <dt>Frequency of Updates</dt>
+                <dd>TBD</dd>
+              </dl>
+              <dl class="sources_row even">
+                <dt>Date of Content</dt>
+                <dd>2001</dd>
+              </dl>
+            </div>
+
+            <p class="credits">Citation: Olson, D. M., E. Dinerstein, E. D. Wikramanayake, N. D. Burgess, G. V. N. Powell, E. C. Underwood, J. A. D’Amico, I. Itoua, H. E. Strand, J. C. Morrison, C. J. Loucks, T. F. Allnutt, T. H. Ricketts, Y. Kura, J. F. Lamoreux, W.W. Wettengel, P. Hedao, and K. R. Kassem. 2001. “Terrestrial Ecoregions of the World: A New Map of Life on Earth.” BioScience 51, no. 11 (November): 933–38.</p>
+
+            <p class="read_more hidden"><em>Download from <a href="http://wri-01.cartodb.com/tables/ecoregions/public">CartoDB</a></em>
           </div>
 
           <div class="source_body">
@@ -89,6 +184,8 @@
               <p>Upcoming upgrades to FORMA include improving the resolution to 250 meters × 250 meters, and expanding coverage to tropical dry forest and eventually to other biomes across the global scale.</p>
 
               <p class="credits">Citation: Hammer, Dan, Robin Kraft, and David Wheeler. 2013. “FORMA Alerts.” World Resources Institute and Center for Global Development. Accessed through Global Forest Watch on [date]. <a href="http://www.globalforestwatch.org" target="_blank">www.globalforestwatch.org</a>.</p>
+
+              <p class="read_more hidden"><em><%= link_to "Learn more or download data", sources_path %></em>
             </div>
 
             <div class="source_description">
@@ -148,13 +245,14 @@
           </div>
         </li>
 
-        <li id="geographic_coverage_forma" data-slug="geographic_coverage_forma">
+        <li id="brazilian_amazon" data-slug="brazilian_amazon">
           <div class="source_header">
-            <strong>Geographic coverage of forma alerts</strong>
+            <strong>Imazon SAD alerts</strong>
             <i class="expand_arrow"></i>
+            <em>(monthly, 250m, Brazilian Amazon)</em>
           </div>
 
-          <div class="source_body">
+          <div class="source_coverage">
             <div class="source_download">
               <a href="https://wri-01.cartodb.com/tables/ecoregions/map" target="_blank" title="Download at project website">Download<i class="arrow_down"></i></a>
             </div>
@@ -185,16 +283,10 @@
                 <dd>2001</dd>
               </dl>
             </div>
-          </div>
-          <p class="credits">Citation: Olson, D. M., E. Dinerstein, E. D. Wikramanayake, N. D. Burgess, G. V. N. Powell, E. C. Underwood, J. A. D’Amico, I. Itoua, H. E. Strand, J. C. Morrison, C. J. Loucks, T. F. Allnutt, T. H. Ricketts, Y. Kura, J. F. Lamoreux, W.W. Wettengel, P. Hedao, and K. R. Kassem. 2001. “Terrestrial Ecoregions of the World: A New Map of Life on Earth.” BioScience 51, no. 11 (November): 933–38.</p>
-            </div>
-        </li>
 
-        <li id="brazilian_amazon" data-slug="brazilian_amazon">
-          <div class="source_header">
-            <strong>Imazon SAD alerts</strong>
-            <i class="expand_arrow"></i>
-            <em>(monthly, 250m, Brazilian Amazon)</em>
+            <p class="credits">Citation: Olson, D. M., E. Dinerstein, E. D. Wikramanayake, N. D. Burgess, G. V. N. Powell, E. C. Underwood, J. A. D’Amico, I. Itoua, H. E. Strand, J. C. Morrison, C. J. Loucks, T. F. Allnutt, T. H. Ricketts, Y. Kura, J. F. Lamoreux, W.W. Wettengel, P. Hedao, and K. R. Kassem. 2001. “Terrestrial Ecoregions of the World: A New Map of Life on Earth.” BioScience 51, no. 11 (November): 933–38.</p>
+
+            <p class="read_more hidden"><em>Download from <a href="http://wri-01.cartodb.com/tables/ecoregions/public">CartoDB</a></em>
           </div>
 
           <div class="source_body">
@@ -208,6 +300,8 @@
               <p>SAD or Sistema de Alerta de Desmatemento is a monthly deforestation alert system that monitors increments of forest degradation and deforestation in the Brazilian Amazon. The information the systems generates is published monthly by Imazon, a Brazilian NGO, through the Forest Transparency bulletin. The monthly alerts are derived from a temporal mosaic of MODIS (Moderate Resolution Imaging Spectroradiometer) daily images that are scaled down from 500-meter to 250-meter. The monthly results are also validated using more detailed images from the China-Brazil Earth Resource Satellite (CBERS) and NASA Landsat data.</p>
 
               <p class="credits">Credit: Martins, H., Fonseca, A., Souza Jr., C., Sales, M., & Veríssimo, A.; Imazon (2012)</p>
+
+              <p class="read_more hidden"><em><%= link_to "Learn more or download data", sources_path %></em>
             </div>
           </div>
         </li>
@@ -217,6 +311,43 @@
             <strong>QUICC alerts </strong>
             <i class="expand_arrow"></i>
             <em>(quarterly, 5km, near-global)</em>
+          </div>
+
+          <div class="source_coverage">
+            <div class="source_download">
+              <a href="https://wri-01.cartodb.com/tables/ecoregions/map" target="_blank" title="Download at project website">Download<i class="arrow_down"></i></a>
+            </div>
+
+            <div class="source_table">
+              <dl class="sources_row">
+                <dt>Function</dt>
+                <dd>Displays the geographic coverage of FORMA alerts</dd>
+              </dl>
+              <dl class="sources_row even">
+                <dt>Resolution/scale</dt>
+                <dd>Regional</dd>
+              </dl>
+              <dl class="sources_row">
+                <dt>Geographic coverage</dt>
+                <dd>This data layer shows the geographic coverage of FORMA alerts, which largely corresponds to the extent of the humid tropic forest biome, as defined by <a href="http://www.pnas.org/content/105/27/9439.full#ref-1" target="_blank">Hansen et al. (2008)</a></dd>
+              </dl>
+              <dl class="sources_row even">
+                <dt>Source data</dt>
+                <dd><a href="http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf" target="_blank">WWF's terrestrial ecoregions</a></dd>
+              </dl>
+              <dl class="sources_row">
+                <dt>Frequency of Updates</dt>
+                <dd>TBD</dd>
+              </dl>
+              <dl class="sources_row even">
+                <dt>Date of Content</dt>
+                <dd>2001</dd>
+              </dl>
+            </div>
+
+            <p class="credits">Citation: Olson, D. M., E. Dinerstein, E. D. Wikramanayake, N. D. Burgess, G. V. N. Powell, E. C. Underwood, J. A. D’Amico, I. Itoua, H. E. Strand, J. C. Morrison, C. J. Loucks, T. F. Allnutt, T. H. Ricketts, Y. Kura, J. F. Lamoreux, W.W. Wettengel, P. Hedao, and K. R. Kassem. 2001. “Terrestrial Ecoregions of the World: A New Map of Life on Earth.” BioScience 51, no. 11 (November): 933–38.</p>
+
+            <p class="read_more hidden"><em>Download from <a href="http://wri-01.cartodb.com/tables/ecoregions/public">CartoDB</a></em>
           </div>
 
           <div class="source_body">
@@ -230,6 +361,8 @@
               <p>The QUICC (Quarterly Indicator of Cover Change) product was developed at NASA Ames Research Center by the CASA ecosystem modeling team. QUICC is based on a comparison of the MODIS Global Vegetation Index (VI) images at the exact same time period each year (end of March, June, September and December) in consecutive years and detects areas of major  landcover change (not just forest). The CASA team updates the global QUICC products as soon as the newest quarterly MODIS worldwide VI image at 5-km spatial resolution is available.</p>
 
               <p class="credits">Credit: NASA Ames Research Center, Cal State</p>
+
+              <p class="read_more hidden"><em><%= link_to "Learn more or download data", sources_path %></em>
             </div>
           </div>
         </li>
@@ -240,6 +373,7 @@
             <i class="expand_arrow"></i>
             <em>(daily, 1km, global)</em>
           </div>
+
 
           <div class="source_body">
             <div class="source_download">
@@ -258,6 +392,8 @@
               <p class="credits">
                 NASA FIRMS, 2012. MODIS Hotspot / Active Fire Detections. <a href="http://earthdata.nasa.gov/firms" target="_blank">Available on-line</a>.
               </p>
+
+              <p class="read_more hidden"><em><%= link_to "Learn more or download data", sources_path %></em>
             </div>
           </div>
         </li>
@@ -564,7 +700,9 @@
                 <li><a href="http://ramsar.org/cda/en/ramsar-home/main/ramsar/1_4000_0__" target="_blank">Ramsar Sites—Wetlands of International Importance</a>: wetlands that hold significant value designated under the Ramsar Convention on Wetlands.</li>
               </ul>
                
-               <p class="credits">Citation: UNEP-WCMC, UNEP, and IUCN. “World Database on Protected Areas.” Accessed on [date]. <a href="http://www.protectedplanet.net/" target="_blank">www.protectedplanet.net</a>. <em>Learn more or download data at <a href="http://www.protectedplanet.net/" target="_blank">www.protectedplanet.net</a>.</em></p>
+               <p class="credits">Citation: UNEP-WCMC, UNEP, and IUCN. “World Database on Protected Areas.” Accessed on [date]. <a href="http://www.protectedplanet.net/" target="_blank">www.protectedplanet.net</a>.</p>
+
+               <p class="read_more"><em>Learn more or download data at <a href="http://www.protectedplanet.net/" target="_blank">www.protectedplanet.net</a></em>
             </div>
           </div>
         </li>
