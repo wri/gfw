@@ -74,14 +74,15 @@
                 <dt>Cautions</dt>
                 <dd>
                   <p>Viewing data for the first period available via the time slider may include alerts that reflect detections from the February 2000 to December 2005 training period as the algorithm "catches up" post-training. </p>
-                  <p>The GFW team has clipped out some data in regions where data quality is suspected to be low because of persistent cloud cover over identified ecoregions. This covers parts of Liberia, Venezuela, Guyana, Vietnam, Laos, and Burma/Myanmar. The current extent of the FORMA alerts is available for viewing here—<a href="http://wri-01.cartodb.com/viz/3cc0f4c2-56d3-11e3-80bb-c8600054c0d1/embed_map?title=true&description=true&search=false&shareable=false&cartodb_logo=false&layer_selector=false&legends=false&scrollwheel=true&sublayer_options=1&sql=&zoom=3&center_lat=-1.845383988573187&center_lon=16.34765625" target="_blank">FORMA geographic extent</a>. While the <a href="https://github.com/wri/forma-ee" target="_blank">algorithm</a> behind the FORMA alerts is stable, occasional bug fixes will change what appears on the site. For questions, please contact <a href="mailto:gfw@wri.org">gfw@wri.org</a>.</p>
+                  <p>The GFW team has clipped out some data in regions where data quality is suspected to be low because of persistent cloud cover over identified ecoregions. This covers parts of Liberia, Venezuela, Guyana, Vietnam, Laos, and Burma/Myanmar. The current extent of the FORMA alerts is available for viewing here—<a href="http://wri-01.cartodb.com/viz/3cc0f4c2-56d3-11e3-80bb-c8600054c0d1/embed_map?title=true&description=true&search=false&shareable=false&cartodb_logo=false&layer_selector=false&legends=false&scrollwheel=true&sublayer_options=1&sql=&zoom=3&center_lat=-1.845383988573187&center_lon=16.34765625" target="_blank">FORMA geographic extent</a>.</p>
+                  <p>The <a href="https://github.com/reddmetrics/forma-clj" target="_blank">algorithm</a> behind the FORMA alerts is constantly evolving to fix bugs and improve accuracy. As a result, what appears on the site and the results of analyses conducted on the site may change over time. It is important to always include the access date when citing FORMA. For questions, please contact <a href="mailto:gfw@wri.org">gfw@wri.org</a>.
                 </dd>
               </dl>
             </div>
 
             <div class="source_summary">
               <h3 class="overview_title">Overview</h3>
-              <p>The FORMA alerts data set uses an <a href="https://github.com/wri/forma-ee" target="_blank">algorithm</a> to analyze freely available satellite imagery products and other ancillary data to identify new areas of forest clearing in near real-time across the world’s <a href="http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf" target="_blank">humid tropical forest biome</a>. The system analyzes data gathered daily by the <a href="http://modis.gsfc.nasa.gov/about/" target="_blank">MODIS</a> sensor, which operates on NASA’s Terra and Aqua satellites. The FORMA alerts system then detects pronounced changes in vegetation cover over time, as measured by the <a href="http://earthobservatory.nasa.gov/Features/MeasuringVegetation/measuring_vegetation_2.php" target="_blank">Normalized Difference Vegetation Index (NDVI)</a>, a measure of vegetation greenness. These pronounced changes in vegetation cover are likely to be indicative of forest being cleared, burned, or defoliated.</p>
+              <p>The FORMA alerts data set uses an <a href="https://github.com/reddmetrics/forma-clj" target="_blank">algorithm</a> to analyze freely available satellite imagery products and other ancillary data to identify new areas of forest clearing in near real-time across the world’s <a href="http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf" target="_blank">humid tropical forest biome</a>. The system analyzes data gathered daily by the <a href="http://modis.gsfc.nasa.gov/about/" target="_blank">MODIS</a> sensor, which operates on NASA’s Terra and Aqua satellites. The FORMA alerts system then detects pronounced changes in vegetation cover over time, as measured by the <a href="http://earthobservatory.nasa.gov/Features/MeasuringVegetation/measuring_vegetation_2.php" target="_blank">Normalized Difference Vegetation Index (NDVI)</a>, a measure of vegetation greenness. These pronounced changes in vegetation cover are likely to be indicative of forest being cleared, burned, or defoliated.</p>
 
               <p>This algorithm produces alerts that indicate where forest clearing is statistically likely to have occurred within a 500 meter × 500 meter area. FORMA alerts only appear in areas where the probability of forest clearing is greater than or equal to 50.</p>
 
@@ -103,7 +104,7 @@
               <p>The alert system currently identifies 500 x 500 meter areas where clearing is statistically likely to have occurred. Alerts for a 250-meter resolution version are currently being developed on Google’s Earth Engine platform and will be available in 2014.</p>
 
               <h3>Geographic extent</h3>
-              <p>FORMA alerts are currently available only for humid tropical forests (as defined by <a href="http://www.pnas.org/content/105/27/9439.full#ref-1" target="_blank">Hansen et al. (2008)</a>, based on <a href="http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf">WWF’s terrestrial ecoregions</a>) spanning portions of 89 countries. The development team is working to incorporate additional data to extend the geographic coverage beyond the current extent. Currently FORMA data spans across portions of 89 countries. To visualize the geographic extent of the alerts on the map, switch on the “Humid Tropical Forest Biome” layer.</p>
+              <p>FORMA alerts are currently available only for humid tropical forests (as defined by <a href="http://www.pnas.org/content/105/27/9439.full#ref-1" target="_blank">Hansen et al. (2008)</a>, based on <a href="http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf" target="_blank">WWF’s terrestrial ecoregions</a>) spanning portions of 89 countries. The development team is working to incorporate additional data to extend the geographic coverage beyond the current extent. Currently FORMA data spans across portions of 89 countries. To visualize the geographic extent of the alerts on the map, switch on the “Humid Tropical Forest Biome” layer.</p>
 
               <h3>Data applications</h3>
               <p>The forest clearing alerts have been designed for quick identification of forest clearing as it emerges. This allows for rapid response and prioritization of scarce financial and human resources dedicated to forest conservation or sustainable forest management. Armed with this information, stakeholders can use preemptive methods such as on-the-ground visits or aerial inspection with high-resolution satellite imagery (less than 5 meter pixel resolution) to investigate suspected forest clearing areas.</p>
@@ -132,8 +133,8 @@
               <h3>Additional Resources on FORMA</h3>
               <strong>Working Papers:</strong>
               <ul>
-                <li>FORMA: Forest Monitoring for Action – Rapid Identification of Pan-tropical Deforestation Using Moderate-Resolution Remotely Sensed Data (CGD Working Paper 192, November 2009) [<a href="http://www.cgdev.org/sites/default/files/1423248_file_Hammer_Kraft_Wheeler_FORMA_FINAL.pdf">pdf</a>]</li>
-                <li>From REDD to Green: A Global Incentive System to Stop Tropical Forest Clearing (CGD Working Paper 282, December 2011) [<a href="http://www.cgdev.org/sites/default/files/1425830_file_Wheeler_et_al_REDD_to_Green.pdf">pdf</a>]</li>
+                <li>FORMA: Forest Monitoring for Action – Rapid Identification of Pan-tropical Deforestation Using Moderate-Resolution Remotely Sensed Data (CGD Working Paper 192, November 2009) [<a href="http://www.cgdev.org/sites/default/files/1423248_file_Hammer_Kraft_Wheeler_FORMA_FINAL.pdf" target="_blank">pdf</a>]</li>
+                <li>From REDD to Green: A Global Incentive System to Stop Tropical Forest Clearing (CGD Working Paper 282, December 2011) [<a href="http://www.cgdev.org/sites/default/files/1425830_file_Wheeler_et_al_REDD_to_Green.pdf" target="_blank">pdf</a>]</li>
                 <li>Forest Clearing in the Pantropics: December 2005-2011 (CGD Working Paper 283, December 2011) [<a href="http://www.cgdev.org/publication/forest-clearing-pantropics-december-2005%E2%80%93august-2011-working-paper-283" target="_blank">pdf</a>] Data Set for Working Paper 283</li>
                 <li>FORMA and fCPR: Accelerating a Performance-Based Payment System for REDD+ (CGD Policy Paper 006, June 2012) [<a href="http://www.cgdev.org/publication/forma-and-fcpr-accelerating-performance-based-payment-system-redd" target="_blank">pdf</a>]</li>
                 <li>FORMA: Comparative Analysis in the Brazilian Amazon (forthcoming WRI Working Paper, expected publication date January 2014)</li>
@@ -180,11 +181,13 @@
                 <dd>TBD</dd>
               </dl>
               <dl class="sources_row even">
-                <dt>Temp. resolution</dt>
+                <dt>Date of Content</dt>
                 <dd>2001</dd>
               </dl>
             </div>
           </div>
+          <p class="credits">Citation: Olson, D. M., E. Dinerstein, E. D. Wikramanayake, N. D. Burgess, G. V. N. Powell, E. C. Underwood, J. A. D’Amico, I. Itoua, H. E. Strand, J. C. Morrison, C. J. Loucks, T. F. Allnutt, T. H. Ricketts, Y. Kura, J. F. Lamoreux, W.W. Wettengel, P. Hedao, and K. R. Kassem. 2001. “Terrestrial Ecoregions of the World: A New Map of Life on Earth.” BioScience 51, no. 11 (November): 933–38.</p>
+            </div>
         </li>
 
         <li id="brazilian_amazon" data-slug="brazilian_amazon">
@@ -494,13 +497,13 @@
       <ul class="sources">
         <li id="conservation" data-slug="conservation" class="first">
           <div class="source_header">
-            <strong>Global Protected Areas</strong>
+            <strong>Protected Areas</strong>
             <i class="expand_arrow"></i>
           </div>
 
           <div class="source_body">
             <div class="source_download">
-              <a href="http://www.protectedplanet.net" target="_blank" title="Download at project website">Download<i class="arrow_down"></i></a>
+              <a href="http://www.protectedplanet.net" target="_blank" title="Download at project website">Download at project website<i class="arrow_down"></i></a>
             </div>
 
             <div class="source_table">
@@ -571,10 +574,10 @@
             <strong>Biodiversity hotspots</strong>
             <i class="expand_arrow"></i>
           </div>
-
-          <div class="source_body">
+            
+            <div class="source_body">
             <div class="source_download">
-              <a href="#" class="disabled">Download<i class="arrow_down"></i></a>
+              <a href="http://www.conservation.org/where/priority_areas/hotspots/Pages/hotspots_main.aspx" target="_blank" title="Download at project website">Download at project website<i class="arrow_down"></i></a>
             </div>
             
             <div class="source_table">
@@ -606,7 +609,7 @@
 
               <ul>
                 <li>At least 1,500 species of vascular plants (>0.5% of the world’s total) are endemic</li>
-                <li>At least 70% of the original habitat has been lost</li>
+                <li>At least 70% of the original natural vegetation has been lost</li>
               </ul>
 
               <p>When Myers first defined the term, he identified 10 tropical forest hotspots. The need to pinpoint priority conservation regions led Conservation International (CI) to adopt the term and reassess the hotspot concept. In this process, CI introduced quantitative thresholds (see above) and added additional regions. At that time, there were 25 hotspots. Because of the constant change in environmental threats and the improved understanding of biodiversity, CI has since revisited the hotspots to refine boundaries, update information, and add new regions. This process produced an additional 10 hotspots, bringing the total to 35.</p>
@@ -621,7 +624,7 @@
 
     <article id="people">
       <h2 class="people source_title">People</h2>
-      <p class="description"></p>
+      <p class="description"> This tab will contain data sets that contextualize the social significance of forests, including boundaries for indigenous territories, community managed forests, and wildlife rights.</p>
     </article>
 
     <article id="stories">
@@ -638,7 +641,7 @@
           <div class="source_body">
             <div class="source_summary">
               <h3 class="overview_title">Overview</h3>
-              <p>This layer displays stories from <a href="http://www.mongabay.com/" target="_blank">Mongabay.com</a>, a leading environmental science and conservation website. Stories published within three months of the current date are tagged to a specific location and provide in-depth research or commentary on local forest issues. More information can be found at <a href="http://www.mongabay.com/" target="_blank">Mongabay site</a>.</p>
+              <p>This layer displays recent stories from <a href="http://www.mongabay.com/" target="_blank">Mongabay.com</a>, a leading environmental science and conservation news website. Stories published within three months of the current date are tagged to a specific location and provide in-depth research or commentary on local forest issues. More information can be found at <a href="http://www.mongabay.com/" target="_blank">Mongabay site</a>.</p>
             </div>
           </div>
         </li>
@@ -652,7 +655,7 @@
           <div class="source_body">
             <div class="source_summary">
               <h3 class="overview_title">Overview</h3>
-              <p>This layer displays forest-related stories reported by GFW users. Stories are tagged to a specific location and can include photos, video, or explanatory text. See all GFW stories, or report your own <%= link_to "here", stories_path %>.</p>
+              <p>This layer displays forest-related stories reported by GFW users. Stories are tagged to a specific location and can include photos, video, or explanatory text. See all GFW stories or report your own <%= link_to "here", stories_path %>.</p>
             </div>
           </div>
         </li>
