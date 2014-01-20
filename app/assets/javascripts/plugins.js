@@ -1750,11 +1750,12 @@ var Filter = (function() {
 
   function _addForestLossFilter(id, slug, category, name, options) {
     var
-    clickEvent  = options.clickEvent  || null,
-    disabled    = options.disabled    || false;
-    source      = options.source      || null;
-    category_color = options.category_color || "#ccc";
-    color       = options.color       || "#ccc";
+    clickEvent      = options.clickEvent  || null,
+    disabled        = options.disabled    || false;
+    source          = options.source      || null;
+    category_color  = options.category_color || "#ccc";
+    color           = options.color       || "#ccc";
+    subtitle        = options.subtitle    || "";
 
     if (category === null || !category) {
       category = 'Protected Areas';
@@ -1780,7 +1781,7 @@ var Filter = (function() {
 
       layerItemTemplate = _.template($("#layer-item-checkbox-loss-template").html());
 
-      $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source, color: color }));
+      $layerItem = $(layerItemTemplate({ name: name, id: id, slug:slug, category: cat, disabled: disabled, source: source, color: color, subtitle: subtitle }));
 
       // Enable checkboxes by default
       $layerItem.find(".checkbox").addClass("checked");
