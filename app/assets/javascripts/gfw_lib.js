@@ -1246,6 +1246,10 @@ GFW.modules.maplayer = function(gfw) {
             that._toggleLayer();
           };
 
+          var subEvent = function() {
+            that._toggleSubLayer();
+          };
+
           Filter.addForestLossFilters(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color"), subtitle: this.layer.get("subtitle") });
 
           legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
