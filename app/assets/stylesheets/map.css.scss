@@ -767,6 +767,11 @@ div.cartodb-tiles-loader div.loader {
         min-height: 73px;
       }
 
+      .coverage a.checkbox i {
+        width: 17px;
+        height: 10px;
+      }
+
       .coverage a.source {
         display: block;
         position: relative;
@@ -1238,11 +1243,11 @@ div.cartodb-tiles-loader div.loader {
     left: 13px;
     text-align: left;
 
-    color:#fff;
     font-weight:bold;
     @extend .sans-serif;
     font-size:12px;
-    text-shadow: 0px 0px 3px #222;
+    text-shadow: 0px 0px 3px #fff;
+    color:#333;
   }
 
   .coordinates {
@@ -1250,11 +1255,11 @@ div.cartodb-tiles-loader div.loader {
     top: -20px;
     right: 5px;
     text-align: right;
-    color:#fff;
     font-weight:bold;
     @extend .sans-serif;
     font-size:11px;
-    text-shadow: 0px 0px 3px #222;
+    text-shadow: 0px 0px 3px #fff;
+    color:#333;
     @include user-select(text);
   }
 

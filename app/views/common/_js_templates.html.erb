@@ -404,6 +404,13 @@
       <div>{{title}} <a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source {{category}}"></a></div>
       <p><i style="background-color:#F13689;"></i> Deforestation</p>
       <p><i style="background-color:#FA98B9;"></i> Degradation</p>
+      {{#sublayer}}
+      <div class="coverage">
+        <a href="#" data-id="{{ id }}" data-color="{{ category_color }}" class="checkbox {{slug}}">
+        <i><span></span></i><span class="name">Geographic coverage</span>
+        </a><a href="#" data-slug="{{slug}}" data-category="{{category}}" class="source coverage {{ slug }}"></a>
+      </div>
+      {{/sublayer}}
       </li>
     </ul>
   </script>
