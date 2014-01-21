@@ -1775,7 +1775,14 @@ div.cartodb-tiles-loader div.loader {
         margin: 0 0 7px 0;
         line-height:normal;
 
-        span { font-weight: bold; }
+        span {
+          font-weight: bold;
+
+          &.hidden {
+            display: inline;
+            font-weight: normal;
+          }
+        }
       }
       p.credits {
         margin: 7px 0 0 0;
