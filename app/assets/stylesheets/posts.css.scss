@@ -416,7 +416,7 @@ body.static {
 
       ul.bullets li {
         strong {
-          line-height: 1.2;
+          padding: 10px 0;
         }
 
         em {
@@ -687,7 +687,11 @@ body.about {
   article {
     display: none;
 
-    &.selected { display: block; }
+    &.selected {
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
   }
 
   section {
@@ -933,7 +937,7 @@ body.countries {
   width: 586px;
   border-left: 1px solid #ccc;
   padding: 40px 0 40px 40px;
-  min-height: 424px;
+  min-height: 536px;
 
   &.wide {
     width: 100%;
@@ -1157,13 +1161,14 @@ body.countries {
   }
 }
 
-.source_description > .first {
-  margin-top: 30px;
-}
-
 .source_description,
 .source_summary,
 .source_coverage {
+
+  > .first {
+    margin-top: 30px;
+  }
+
   h3 {
     margin: 30px 0 10px;
     font: 21px/1.1 "fira_sans_otmedium";
