@@ -1210,7 +1210,7 @@ GFW.modules.maplayer = function(gfw) {
             }
           };
 
-          Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color"), subtitle: this.layer.get("subtitle") });
+          Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: this.layer.get('source'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color"), subtitle: this.layer.get("subtitle") });
 
           if (_.include(filters, this.layer.get('id'))) {
             GFW.app._loadStoriesLayer();
@@ -1223,7 +1223,7 @@ GFW.modules.maplayer = function(gfw) {
             legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
           };
 
-          Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: mongabayEvent, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
+          Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: mongabayEvent, source: this.layer.get('title'), category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
 
           if (_.include(filters, this.layer.get('id'))) {
             GFW.app._loadMongabayLayer();

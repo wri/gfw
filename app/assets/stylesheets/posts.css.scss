@@ -416,7 +416,7 @@ body.static {
 
       ul.bullets li {
         strong {
-          line-height: 1.2;
+          padding: 10px 0;
         }
 
         em {
@@ -584,7 +584,7 @@ body.static {
 body.howto article,
 body.about article {
   h3 {
-    margin: 30px 0 10px;
+    margin: 20px 0 10px;
     font: 21px/1.1 "fira_sans_otmedium";
     color: #463F52;
   }
@@ -687,7 +687,11 @@ body.about {
   article {
     display: none;
 
-    &.selected { display: block; }
+    &.selected {
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
   }
 
   section {
@@ -933,7 +937,7 @@ body.countries {
   width: 586px;
   border-left: 1px solid #ccc;
   padding: 40px 0 40px 40px;
-  min-height: 424px;
+  min-height: 536px;
 
   &.wide {
     width: 100%;
@@ -1128,14 +1132,17 @@ body.countries {
   color: #463F52;
 }
 
-.source_summary {
+.source_summary,
+.source_description {
   .credits {
-    margin: 10px 0 0 0;
+    margin: 0 0 10px 0;
     font-size:13px;
     color:$cGray4;
     line-height:16px;
 
     strong {
+      display: inline-block;
+      padding: 0;
       font-size:13px;
       color:$cGray4;
       line-height:16px;
@@ -1154,15 +1161,16 @@ body.countries {
   }
 }
 
-.source_table + .source_summary {
-  padding-top: 10px;
-}
-
 .source_description,
 .source_summary,
 .source_coverage {
+
+  > .first {
+    margin-top: 30px;
+  }
+
   h3 {
-    margin: 20px 0 10px;
+    margin: 30px 0 10px;
     font: 21px/1.1 "fira_sans_otmedium";
     color: #463F52;
   }
@@ -1210,9 +1218,10 @@ body.countries {
 
   strong {
     font: bold 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
-    line-height: 60px;
     text-transform: uppercase;
     color: #666;
+    padding: 10px 0 20px;
+    display: block;
 
     a {
       color: #666;

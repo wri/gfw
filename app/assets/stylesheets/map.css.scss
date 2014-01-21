@@ -147,7 +147,11 @@ div.cartodb-tiles-loader div.loader {
       li.stories {
         a {
           width: 140px;
-          .name { width: 120px;}
+          .name { width: 120px; }
+
+          &.source {
+            width: 10px;
+          }
         }
       }
 
@@ -1644,17 +1648,31 @@ div.cartodb-tiles-loader div.loader {
       .source_body {
         display: block;
 
-        strong { line-height: 1.5; }
+        strong {
+          line-height: 1.5;
+          padding: 0;
+          margin: 0 0 10px;
+        }
 
-        .source_summary h3 {
-          display: block;
-          color: #666;
-          font-size: 11px;
-          line-height: 1;
-          margin-top: 10px;
-          text-transform: uppercase;
-          font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-          font-weight: bold;
+        .credits strong {
+          margin: 0;
+        }
+
+        .source_summary {
+          .source_user_summary {
+            margin-top: 20px;
+          }
+
+          h3 {
+            display: block;
+            color: #666;
+            font-size: 11px;
+            line-height: 1;
+            margin-top: 10px;
+            text-transform: uppercase;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-weight: bold;
+          }
         }
       }
 
@@ -1755,7 +1773,7 @@ div.cartodb-tiles-loader div.loader {
     }
 
     ul li {
-      margin: 0 0 20px 0;
+      margin: 0 0 10px 0;
 
       p { width: 475px; }
 
@@ -1775,7 +1793,14 @@ div.cartodb-tiles-loader div.loader {
         margin: 0 0 7px 0;
         line-height:normal;
 
-        span { font-weight: bold; }
+        span {
+          font-weight: bold;
+
+          &.hidden {
+            display: inline;
+            font-weight: normal;
+          }
+        }
       }
       p.credits {
         margin: 7px 0 0 0;
