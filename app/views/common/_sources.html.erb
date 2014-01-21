@@ -10,6 +10,7 @@
       <li><a href="#stories" class="stories" data-slug="stories">Stories</a></li>
       <li><a href="#base_maps" class="base_maps" data-slug="base_maps">Base maps</a></li>
       <li><a href="#code" class="code" data-slug="code">Code</a></li>
+      <li><a href="#arcgis" class="arcgis" data-slug="arcgis">ArcGIS</a></li>
       <li><a href="#data_policy" class="data_policy" data-slug="data_policy">Data policy</a></li>
     </ul>
   </div>
@@ -175,7 +176,7 @@
 
               <p>The major instances of false positives may occur as the following:</p>
 
-              <ol>
+              <ol class="bullets">
                 <li><strong>A random, "speckled" distribution of alerts across an ecoregion, or complete filling of a small ecoregion.</strong> Caused by limited or sparse training data, particularly in small ecoregions, which makes it difficult to tune the model there. As a result, alerts cannot be reliably detected. In a normal ecoregion, alerts are usually clustered.</li>
 
                 <li><strong>A rapid explosion of alerts over 1-3 months covering a relatively large area.</strong> Caused by a significant, persistent drop in detected vegetation levels due to persistent cloud cover along coastlines, in mountains, or elsewhere.</li>
@@ -758,7 +759,7 @@
 
               <p>If you are aware of concession data for additional countries, please e-mail us <a href="mailto:gfw@wri.org">here</a>.</p>
 
-              <p class="credits"><strong>Suggested citation for data as displayed on GFW:</strong><br />“Mining.” World Resources Institute. Accessed through Global Forest Watch on [date].<br />Please refer to the <%= link_to "Data page", sources_path %> for information on how to cite individual country concession data sets.</p>
+              <p class="credits"><strong>Suggested citation for data as displayed on GFW:</strong><br />“Mining.” World Resources Institute. Accessed through Global Forest Watch on [date]. Please refer to the <%= link_to "Data page", sources_path %> for information on how to cite individual country concession data sets.</p>
 
               <p class="read_more hidden"><em><%= link_to "Learn more or download data", sources_path %></em></p>
             </div>
@@ -844,7 +845,7 @@
 
               <p>If you are aware of concession data for additional countries, please e-mail us <a href="mailto:gfw@wri.org">here</a>.</p>
 
-              <p class="credits"><strong>Suggested citation for data as displayed on GFW:</strong><br />“Oil Palm.” World Resources Institute. Accessed through Global Forest Watch on [date].<br />Please refer to the <%= link_to "Data page", sources_path %> for information on how to cite individual country concession data sets.</p>
+              <p class="credits"><strong>Suggested citation for data as displayed on GFW:</strong><br />“Oil Palm.” World Resources Institute. Accessed through Global Forest Watch on [date]. Please refer to the <%= link_to "Data page", sources_path %> for information on how to cite individual country concession data sets.</p>
 
               <p class="read_more hidden"><em><%= link_to "Learn more or download data", sources_path %></em></p>
             </div>
@@ -930,7 +931,7 @@
 
               <p>If you are aware of concession data for additional countries, please e-mail us <a href="mailto:gfw@wri.org">here</a>.</p>
 
-              <p class="credits"><strong>Suggested citation for data as displayed on GFW:</strong><br />“Wood Fiber.” World Resources Institute. Accessed through Global Forest Watch on [date].<br />Please refer to the <%= link_to "Data page", sources_path %> for information on how to cite individual country concession data sets.</p>
+              <p class="credits"><strong>Suggested citation for data as displayed on GFW:</strong><br />“Wood Fiber.” World Resources Institute. Accessed through Global Forest Watch on [date]. Please refer to the <%= link_to "Data page", sources_path %> for information on how to cite individual country concession data sets.</p>
 
               <p class="read_more hidden"><em><%= link_to "Learn more or download data", sources_path %></em></p>
             </div>
@@ -1007,8 +1008,7 @@
             <div class="source_summary">
               <h3 class="overview_title">Overview</h3>
               <p>The World Database on Protected Areas (WDPA) is the most comprehensive global spatial data set on marine and terrestrial protected areas available. Protected area data are provided via <a href="http://www.protectedplanet.net/" target="_blank">protectedplanet.net</a>, the online interface for the <a href="http://www.wdpa.org/" target="_blank">World Database on Protected Areas</a> (WDPA). WDPA is a joint initiative of the IUCN and UNEP-WCMC to compile spatially referenced information about protected areas.</p>
-              <p ><strong><a href="http://www.iucn.org/about/work/programmes/gpap_home/gpap_quality/gpap_pacategories/" target="_blank">IUCN Management Categories</a></strong></p>
-              <p>Not all protected areas receive the same degree of protection. While some have strict guidelines designed to preserve intact ecosystems, others allow for sustainable land use, often including limited resource extraction. In addition, not all countries use the same terminology when designating a protected area. Accordingly, the  <a href="http://www.iucn.org/" target="_blank">International Union for Conservation of Nature</a> defined universal management categories that stipulate the level of protection for most protected areas.</p>
+              <p ><strong><a href="http://www.iucn.org/about/work/programmes/gpap_home/gpap_quality/gpap_pacategories/" target="_blank">IUCN Management Categories</a></strong> Not all protected areas receive the same degree of protection. While some have strict guidelines designed to preserve intact ecosystems, others allow for sustainable land use, often including limited resource extraction. In addition, not all countries use the same terminology when designating a protected area. Accordingly, the  <a href="http://www.iucn.org/" target="_blank">International Union for Conservation of Nature</a> defined universal management categories that stipulate the level of protection for most protected areas.</p>
               <p>As you click through protected areas in this layer, note the “legal designation” and the explanations below to better understand the degree to which an area is protected.</p>
 
               <ul class="bullets">
@@ -1021,14 +1021,14 @@
                 <li><strong>VI. Protected Areas with Sustainable Use of Natural Resources.</strong> Areas designed to manage natural resources and uphold the livelihoods of surrounding communities. These regions have a low level of human occupation, small-scale developments (i.e., not industrial), and part of the landscape in its natural condition. <em>Other common designations:</em> Wildlife Reserve, Biosphere Reserve, Forest Reserve, Protective Zone, National Forest, Natural and National Reserves, Reserve, Multiple Use Reserve, Municipal Reserve</li>
               </ul>
 
-              <p><strong>Other Important Designations</strong></p>
               <ul>
+                <strong>Other Important Designations</strong>
                 <li><a href="http://www.unesco.org/new/en/natural-sciences/environment/ecological-sciences/biosphere-reserves/" target="_blank">UNESCO-MAP Biosphere Reserves</a>: areas under UNESCO’s Man and the Biosphere Programme designated to “promote sustainable development based on local community efforts and sound science.”</li> 
                 <li><a href="http://whc.unesco.org/" target="_blank">World Heritage Sites</a>: areas considered to have “outstanding universal value” and meet at least one of ten criteria, as described <a href="http://whc.unesco.org/en/criteria/" target="_blank">here</a>.</li> 
                 <li><a href="http://ramsar.org/cda/en/ramsar-home/main/ramsar/1_4000_0__" target="_blank">Ramsar Sites—Wetlands of International Importance</a>: wetlands that hold significant value designated under the Ramsar Convention on Wetlands.</li>
               </ul>
                
-               <p class="credits">Citation: UNEP-WCMC, UNEP, and IUCN. “World Database on Protected Areas.” Accessed on [date]. <a href="http://www.protectedplanet.net/" target="_blank">www.protectedplanet.net</a>.</p>
+               <p class="credits"><strong>Citation:</strong><br />UNEP-WCMC, UNEP, and IUCN. “World Database on Protected Areas.” Accessed on [date]. <a href="http://www.protectedplanet.net/" target="_blank">www.protectedplanet.net</a>.</p>
 
                <p class="read_more"><em>Learn more or download data at <a href="http://www.protectedplanet.net/" target="_blank">www.protectedplanet.net</a></em>
             </div>
@@ -1080,7 +1080,7 @@
 
               <p>When Myers first defined the term, he identified 10 tropical forest hotspots. The need to pinpoint priority conservation regions led Conservation International (CI) to adopt the term and reassess the hotspot concept. In this process, CI introduced quantitative thresholds (see above) and added additional regions. At that time, there were 25 hotspots. Because of the constant change in environmental threats and the improved understanding of biodiversity, CI has since revisited the hotspots to refine boundaries, update information, and add new regions. This process produced an additional 10 hotspots, bringing the total to 35.</p>
       
-              <p class="credits">Citation: Conservation International. “Biodiversity Hotspots.” Accessed on [date]. <a href="http://www.conservation.org/where/priority_areas/hotspots/Pages/hotspots_main.aspx.">http://www.conservation.org/where/priority_areas/hotspots/Pages/hotspots_main.aspx</a>.</p>
+              <p class="credits"><strong>Citation:</strong><br />Conservation International. “Biodiversity Hotspots.” Accessed on [date]. <a href="http://www.conservation.org/where/priority_areas/hotspots/Pages/hotspots_main.aspx.">http://www.conservation.org/where/priority_areas/hotspots/Pages/hotspots_main.aspx</a>.</p>
               <p class="credits"><em>Learn more or download data at <a href="http://www.conservation.org/where/priority_areas/hotspots/Pages/hotspots_main.aspx.">Conservation International</a></em></p>
             </div>
           </div>
@@ -1100,28 +1100,30 @@
       <ul class="sources">
         <li id="mongabay" data-slug="mongabay" class="first">
           <div class="source_header">
-            <strong>Mongabay Stories</strong>
+            <strong>User Stories</strong>
             <i class="expand_arrow"></i>
           </div>
 
           <div class="source_body">
-            <div class="source_summary">
+            <div class="source_summary source_user_summary">
               <h3 class="overview_title">Overview</h3>
-              <p>This layer displays recent stories from <a href="http://www.mongabay.com/" target="_blank">Mongabay.com</a>, a leading environmental science and conservation news website. Stories published within three months of the current date are tagged to a specific location and provide in-depth research or commentary on local forest issues. More information can be found at <a href="http://www.mongabay.com/" target="_blank">Mongabay site</a>.</p>
+              <p class="source_user_summary">This layer displays forest-related stories reported by GFW users. Stories are tagged to a specific location and can include photos, video, or explanatory text.</p>
+              <p class="read_more">See all GFW stories or report your own <%= link_to "here", stories_path %>.</p>
             </div>
           </div>
         </li>
 
         <li id="user_stories" data-slug="user_stories" class="last">
           <div class="source_header">
-            <strong>User Stories</strong>
+            <strong>Mongabay Stories</strong>
             <i class="expand_arrow"></i>
           </div>
 
           <div class="source_body">
-            <div class="source_summary">
+            <div class="source_summary source_user_summary">
               <h3 class="overview_title">Overview</h3>
-              <p>This layer displays forest-related stories reported by GFW users. Stories are tagged to a specific location and can include photos, video, or explanatory text. See all GFW stories or report your own <%= link_to "here", stories_path %>.</p>
+              <p class="source_user_summary">This layer displays recent stories from <a href="http://www.mongabay.com/" target="_blank">Mongabay.com</a>, a leading environmental science and conservation news website. Stories published within three months of the current date are tagged to a specific location and provide in-depth research or commentary on local forest issues.</p>
+              <p class="read_more">More information can be found at <a href="http://www.mongabay.com/" target="_blank">Mongabay site</a>.</p>
             </div>
           </div>
         </li>
@@ -1141,8 +1143,7 @@
 
           <div class="source_body">
             <div class="source_summary">
-              <h3 class="overview_title">Overview</h3>
-              <p>Google Maps’ grayscale base map shows political boundaries, parks and protected areas, and human-made features. Scale varies by location. Read the terms of service <a href="http://www.google.com/help/terms_maps.html" target="_blank">here</a>.</p>
+              <p class="first">Google Maps’ grayscale base map shows political boundaries, parks and protected areas, and human-made features. Scale varies by location. Read the terms of service <a href="http://www.google.com/help/terms_maps.html" target="_blank">here</a>.</p>
             </div>
           </div>
         </li>
@@ -1155,8 +1156,7 @@
 
           <div class="source_body">
             <div class="source_summary">
-              <h3 class="overview_title">Overview</h3>
-              <p>Google Maps’ terrain base map shows geographical and topographical details. Scale varies by location. Read the terms of service <a href="http://www.google.com/help/terms_maps.html" target="_blank">here</a>.</p>
+              <p class="first">Google Maps’ terrain base map shows geographical and topographical details. Scale varies by location. Read the terms of service <a href="http://www.google.com/help/terms_maps.html" target="_blank">here</a>.</p>
             </div>
           </div>
         </li>
@@ -1169,8 +1169,20 @@
 
           <div class="source_body">
             <div class="source_summary">
-              <h3 class="overview_title">Overview</h3>
-              <p>Google Maps’ satellite base map consists of a mix of recent (1–3 years old) mid-resolution and high-resolution satellite and aerial imagery from multiple providers for a given area. TerraMetrics TruEarth 15-meter imagery is the baselayer imagery that covers the entire globe, and Google adds high-resolution imagery, where available, over TruEarth 15-meter imagery to provide additional visual details. Read the terms of service <a href="http://www.google.com/help/terms_maps.html" target="_blank">here</a>.</p>
+              <p class="first">Google Maps’ satellite base map consists of a mix of recent (1–3 years old) mid-resolution and high-resolution satellite and aerial imagery from multiple providers for a given area. TerraMetrics TruEarth 15-meter imagery is the baselayer imagery that covers the entire globe, and Google adds high-resolution imagery, where available, over TruEarth 15-meter imagery to provide additional visual details. Read the terms of service <a href="http://www.google.com/help/terms_maps.html" target="_blank">here</a>.</p>
+            </div>
+          </div>
+        </li>
+
+        <li id="roads" data-slug="roads">
+          <div class="source_header">
+            <strong>Roads</strong>
+            <i class="expand_arrow"></i>
+          </div>
+
+          <div class="source_body">
+            <div class="source_summary">
+              <p class="first">Google Maps’ satellite base map consists of a mix of recent (1–3 years old) mid-resolution and high-resolution satellite and aerial imagery from multiple providers for a given area. TerraMetrics TruEarth 15-meter imagery is the baselayer imagery that covers the entire globe, and Google adds high-resolution imagery, where available, over TruEarth 15-meter imagery to provide additional visual details. Read the terms of service <a href="http://www.google.com/help/terms_maps.html" target="_blank">here</a>.</p>
             </div>
           </div>
         </li>
@@ -1183,10 +1195,9 @@
 
           <div class="source_body">
             <div class="source_summary">
-              <h3 class="overview_title">Overview</h3>
-              <p>Global base map showing forest canopy height, as well as forest extent and distribution. This dataset was obtained using spaceborne lidar, and was produced by the NASA Jet Propulsion Laboratory, California Institute of Technology, and may be downloaded from <a href="http://lidarradar.jpl.nasa.gov" target="_blank">project website</a>. Spatial resolution is 1 km.</p>
+              <p class="first">This base map depicts the highest points in the forest canopy. Its spatial resolution is 0.6 miles (1 km) and was validated against data from a network of nearly 70 ground sites around the world. It was developed by a team of scientists from NASA’s Jet Propulsion Laboratory, Pasadena, California; the University of Maryland, College Park; and Woods Hole Research Center, Falmouth, Massachusetts.  The map was created using 2.5 million carefully screened, globally distributed laser pulse measurements from space. The light detection and ranging (lidar) data were collected in 2005 by the Geoscience Laser Altimeter System instrument on NASA’s Ice, Cloud, and land Elevation Satellite (ICESat).</p>
 
-              <p class="credits">Simard, M., Pinto, N., Fisher, J., Baccini, A., (2011), "Mapping forest canopy height globally with spaceborne lidar", Journal of Geophysical Research, VOL. 116, G04021, 12 PP., 2011, doi:10.1029/2011JG001708.</p>
+              <p class="credits"><strong>Source:</strong><br /><a href="http://www.nasa.gov/topics/earth/features/forest20120217.html" target="_blank">http://www.nasa.gov/topics/earth/features/forest20120217.html</a></p>
             </div>
           </div>
         </li>
@@ -1199,9 +1210,9 @@
 
           <div class="source_body">
             <div class="source_summary">
-              <h3 class="overview_title">Overview</h3>
-              <p>This base map shows a <a href="http://earthengine.google.org/#detail/LANDSAT/L7_L1T_ANNUAL_TOA" target="_blank">composite</a> the best annual Landsat satellite imagery (USGS/NASA) from 2000 to 2012. The annual composities were generated by Google in the Google Earth Engine. The Landsat composites display "Top-of-Atmosphere," or the most cloud-free, images at 30-meter resolution. More information on Landsat imagery is available from the <a href="http://landsat.usgs.gov/" target="_blank">Landsat website</a>. Read the terms of service <a href=" http://www.google.com/help/terms_maps.html" target=" blank">here</a>.</p>
-              <p class="credits">Note: Because of the very large file size of the annual Landsat composite layers, images will take some time to reload on the website and as you zoom in and out.</p>
+              <p class="first">These base maps show a <a href="http://earthengine.google.org/#detail/LANDSAT/L7_L1T_ANNUAL_TOA" target="_blank">composite</a> of the best annual Landsat satellite imagery (USGS/NASA) from 2000 to 2012.  The annual composites were generated by Google in the Google Earth Engine. The Landsat composites display “Top-of-Atmosphere,” or the most cloud-free, images at 30-meter resolution. More information on Landsat imagery is available from the <a href="http://landsat.usgs.gov/" target="_blank">Landsat website</a>. Read the terms of service <a href="http://www.google.com/help/terms_maps.html" target="_blank">here</a>.</p>
+
+              <p class="credits"><strong>Note:</strong><br />Because of the very large file size of the annual Landsat composite layers, images will take some time to reload on the website and as you zoom in and out.</p>
             </div>
           </div>
         </li>
@@ -1213,9 +1224,14 @@
       <p class="description">The Global Forest Watch website and Global Forest Watch API are both collaborative and open-source projects <a href="https://github.com/Vizzuality/gfw" target="_blank">hosted on GitHub</a>. If you would like to contribute source code, please send pull requests to our <a href="https://github.com/Vizzuality/gfw" target="_blank">website repository</a> or <a href="https://github.com/wri/gfw-api" target="_blank">API repository</a>. All Global Forest Watch source code is released under a <a href="http://creativecommons.org/publicdomain/zero/1.0/" target="_blank">Creative Commons 0 Universal (CC0)</a> license.</p>
     </article>
 
-    <article id="data_policy">
-      <h2 class="data_policy source_title">Data policy</h2>
+    <article id="arcgis">
+      <h2 class="arcgis source_title">ArcGIS</h2>
       <p class="description"></p>
+    </article>
+
+    <article id="data_policy">
+      <h2 class="data_policy source_title">Data policy & standards</h2>
+      <p class="description">Learn more about Global Forest Watch’s commitment to high quality, open data</p>
 
       <ul class="sources">
         <li id="data_standards" data-slug="data_standards" class="first">
@@ -1227,26 +1243,32 @@
           <div class="source_body">
             <div class="source_summary">
               <h3 class="overview_title">Overview</h3>
-              <p></p>
+              <p>Global Forest Watch is committed to providing the highest-quality data on the world’s forests that is currently available. All of the data provided on GFW have been assessed with respect to several indicators of quality, including timeliness, accuracy, completeness, geographical coverage, innovation, and objectivity.</p>
+
+              <p>In some cases, the best available data still have known shortcomings with respect to one or more of these indicators. In those cases, we provide a “caution” explaining known issues or inaccuracies.</p>
+
+              <p>Global Forest Watch has an open data policy and commits to make our data, and that of our partners, open, discoverable, downloadable, and usable. We believe that open data enables the innovation, information sharing, analysis, and transparency required to support policies that better manage and sustain the world’s forests.</p>
             </div>
           </div>
         </li>
 
-        <li id="data_transparency" data-slug="data_transparency">
+        <li id="open_data" data-slug="open_data">
           <div class="source_header">
-            <strong>Data transparency</strong>
+            <strong>Open data policy</strong>
             <i class="expand_arrow"></i>
           </div>
 
           <div class="source_body">
             <div class="source_summary">
               <h3 class="overview_title">Overview</h3>
-              <p></p>
+              <p>Global Forest Watch has an open data policy, intended to provide information free of constraints and restrictions on use. All of the data we produce is shared using <a href="http://opendefinition.org/licenses/" target="_blank">licensing which conforms to open data standards</a> and made available for download whenever possible.</p>
+
+              <p>For data sets not produced by GFW, we provide links to download data from the original source when they are available.</p>
             </div>
           </div>
         </li>
 
-        <li id="data_sharing" data-slug="data_sharing">
+        <li id="data_sharing" data-slug="data_sharing" class="last">
           <div class="source_header">
             <strong>Data sharing</strong>
             <i class="expand_arrow"></i>
@@ -1255,7 +1277,31 @@
           <div class="source_body">
             <div class="source_summary">
               <h3 class="overview_title">Overview</h3>
-              <p></p>
+              <ul>
+                <strong>Terms of Use</strong>
+                <li>For data sets produced by GFW, you are free to use, distribute, copy, modify, display and use the data for commercial and noncommercial purposes.</li>
+                <li>You are free to use maps, graphics, charts and other representations of data on the GFW website, with <a href="http://creativecommons.org/licenses/by/3.0/us/" target="_blank">attribution</a>.</li>
+                <li>Licensing is determined for each individual dataset – please refer to the licensing text for detailed information.</li>
+                <li>You must attribute the data as indicated in the metadata or licensing for each individual dataset.</li>
+                <li>You must not imply that Global Forest Watch endorses your use of the data, or use the Global Forest Watch logo in conjunction with such use.</li>
+                <li>Through accessing the GFW site you have acknowledged our Terms of Service</li>
+                <li>The GFW site includes datasets produced by many organizations, some of which may have more restrictive data licensing. Please refer to the licensing of the original data source for more information.</li>
+              </ul>
+
+              <p>
+                <strong>Permissions & Licensing</strong>
+                <%= image_tag('logos/cc.png') %>
+              </p>
+
+              <p>Except as noted below, all material on this site carries a <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank">Creative Commons license</a> which permits unrestricted re-use of GFW content when proper attribution is provided. This means you are free to copy, display and distribute GFW’s work, or include our content in derivative works, under the following conditions:</p>
+
+              <ul class="bullets">
+                <li><strong>Attribution.</strong> You must clearly attribute the work and provide a link back to the work on www.globalforestwatch.org. Doing so ensures that people access the latest available information, in the event that the publication is revised or more research is published. Click <a href="http://creativecommons.org/licenses/by/4.0/legalcode" target="_blank">here</a> for the full legal code of this Creative Commons license. Some content on this site may carry additional copyright restrictions. GFW has made every effort to clearly label such content.</li>
+
+                <li><strong>Photographs.</strong> Most of the photographs featured on this site have either been licensed under non-transferable terms, or have been acquired from photo sharing sites such as Flickr that have their own policies for public use. Unless indicated otherwise, the Creative Commons license described above does not apply to photographs and images used on this site.</li>
+
+                <li><strong>Charts, Graphs & Maps.</strong> Charts, graphs and maps produced by GFW may be used according to our Creative Commons license. Where graphs employ data from third parties, we may not be able to grant permissions to the original data used in these charts, although, such permissions may be granted by the owners of the data. In these cases, please contact the third party organizations directly to ask about permissions. If you have any <%= link_to "questions about citing", howto_path %> or re-using GFW content, please <a href="mailto:gfw@wri.org">contact us</a>.</li>
+              </ul>
             </div>
           </div>
         </li>
