@@ -1194,7 +1194,9 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app.currentBaseLayer = null;
             that._hideBaseLayers(GFW.app);
             that._removeExtendedLayers();
+
             if (forestgain) GFW.app._removeLayer(forestgain);
+
           };
 
           Filter.addFilter("", slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: null, category_color: this.layer.get("category_color"), color: this.layer.get("title_color") });
@@ -1341,16 +1343,17 @@ GFW.modules.maplayer = function(gfw) {
 
         GFW.app._removeForest2000Layer();
 
-        // Remove extended layers
-        if (_.include(GFW.app._layers, "quicc_bounding_box_extent")) {
-          GFW.app._layers = _.without(GFW.app._layers, "quicc_bounding_box_extent");
-          renderLayers = true;
-        }
+        var extendedLayers = ["quicc_bounding_box_extent", "imazon_sad_geografic_extent", "ecoregions_biome"];
 
-        if (_.include(GFW.app._layers, "ecoregions_biome")) {
-          GFW.app._layers = _.without(GFW.app._layers, "ecoregions_biome");
-          renderLayers = true;
-        }
+        // Remove extended layers
+        _.each(extendedLayers, function(name) {
+
+          if (_.include(GFW.app._layers, name)) {
+            GFW.app._layers = _.without(GFW.app._layers, name);
+            renderLayers = true;
+          }
+
+        });
 
         if (renderLayers) {
           GFW.app._renderLayers();
