@@ -295,7 +295,7 @@
                 </span>
               </strong>
 
-              <a href="/assets/gfw_analysis.zip" class="download">download</a>
+              <a href="#" class="download">download</a>
             </p>
           </li>
         </ul>
@@ -321,6 +321,17 @@
         <a href="#" class="cancel">Cancel</a>
       </div>
     </div>
+  </script>
+
+  <!-- Analysis -->
+  <script id="analysis-dropdown-template" type="text/x-underscore-template">
+    <ul>
+
+      {{#urls}}
+        <li><a href='{{url}}'>{{name}}</a></li>
+      {{/urls}}
+
+    </ul>
   </script>
 
   <!-- Analysis reset -->

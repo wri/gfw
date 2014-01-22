@@ -17,6 +17,11 @@
     cursor: default;
     @include icons-sprite(analysis_button_disabled);
   }
+
+}
+
+.analysis_dropdown a {
+  text-decoration:none;
 }
 
 .analysis_subscribe {
