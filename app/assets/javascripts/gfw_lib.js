@@ -1523,6 +1523,7 @@ GFW.modules.maplayer = function(gfw) {
           forestgain.set("visible", true);
           //loss.set("visible", true);
           GFW.app._updateBaseLayer();
+          analysis.info.model.set("dataset", "umd");
 
           var subEvent;
 

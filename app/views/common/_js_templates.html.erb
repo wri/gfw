@@ -279,8 +279,19 @@
       </div>
 
       <div class="stats">
+        {{#umd}}
+        <div class="spinner"></div>
+        <strong class="title hidden">Total selected area</strong>
+        <ul class="hidden">
+          <li class="ha">
+            <p class="count"><strong>{{ loss }}</strong> Ha</p>
+            <p class="count"><strong>{{ gain }}</strong> Ha</p>
+            <p class="count"><strong>{{ treecover_2000 }}</strong> Ha</p>
+          </li>
+        </ul>
+        {{/umd}}
+        {{^umd}}
         <strong class="title">Total selected area</strong>
-
         <ul>
           <li class="ha">
             <p class="count"><strong>{{ ha }}</strong> Ha</p>
@@ -299,6 +310,8 @@
             </p>
           </li>
         </ul>
+        {{/umd}}
+
 
         <div class="shadow"></div>
       </div>

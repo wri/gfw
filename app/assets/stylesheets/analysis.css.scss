@@ -170,6 +170,7 @@
   .jspPane { width: 248px!important; }
 
   .info_title {
+
     width: 205px;
     height: 25px;
     line-height: 40px;
@@ -203,6 +204,9 @@
     }
 
     .title {
+
+      &.hidden { display:none; }
+
       display:block;
       color: #999999;
       font-size:11px;
@@ -220,6 +224,13 @@
       color: #bababa;
       font-size: 12px;
       line-height: 2;
+    }
+
+    .spinner {
+      display:block;
+      width: 24px; height: 24px;
+      background:url(icons/spinner.gif) no-repeat;
+      margin: 10px auto;
     }
 
     .stats {
