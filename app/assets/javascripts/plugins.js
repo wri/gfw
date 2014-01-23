@@ -1310,22 +1310,22 @@ var Navigation = (function() {
     Navigation.select("home");
 
     Filter.hide(function() {
-      // if (wall.readCookie("pass") == 'ok') {
+      if (wall.readCookie("pass") == 'ok') {
         $("header").animate({ height: "230px" }, 250, function() {
           $("hgroup .title").show();
           $("hgroup .title").animate({ top: 29, opacity: 1 }, 250);
         }).removeClass("stuck");
 
         $(".big_numbers").fadeIn(250);
-      // } else {
-      //   $("hgroup .title").hide();
-      //   $("hgroup .splash_title").show();
+      } else {
+        $("hgroup .title").hide();
+        $("hgroup .splash_title").show();
 
-      //   $(".navbar").hide();
-      //   $(".signin").show();
+        $(".navbar").hide();
+        $(".signin").show();
 
-      //   $(".big_numbers").hide();
-      // }
+        $(".big_numbers").hide();
+      }
     });
 
     Timeline.hide();
@@ -1390,7 +1390,7 @@ var Navigation = (function() {
       TimelineNotPlayer.show();
     }
 
-    // if (wall.readCookie("pass") == 'ok') {
+    if (wall.readCookie("pass") == 'ok') {
       $(".big_numbers").fadeOut(250);
 
       $("header").animate({height: "135px"}, 250, function() {
@@ -1415,15 +1415,15 @@ var Navigation = (function() {
       }
 
       Filter.show();
-    // } else {
-    //   $("hgroup .title").hide();
-    //   $("hgroup .splash_title").show();
+    } else {
+      $("hgroup .title").hide();
+      $("hgroup .splash_title").show();
 
-    //   $(".navbar").hide();
-    //   $(".signin").show();
+      $(".navbar").hide();
+      $(".signin").show();
 
-    //   $(".big_numbers").hide();
-    // }
+      $(".big_numbers").hide();
+    }
   }
 
   function _hideOverlays() {
