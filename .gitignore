@@ -20,4 +20,3 @@
 .gitignore
 .ruby-version
 .env
-/config/*.yml

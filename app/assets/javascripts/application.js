@@ -1,6 +1,6 @@
 //= require jquery
 //= require jquery_ujs
-//= require GeoJSON
+//= require geojson
 //= require gfw
 //= require helpers
 
