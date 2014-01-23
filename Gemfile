@@ -1,38 +1,25 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 3.2.11'
+ruby '2.1.0'
 
-gem 'rgeo', '0.3.19'
-gem 'cartodb-rb-client', :path => 'vendor/gems/cartodb-rb-client-0.4.4'
-
-gem 'carrierwave', :git => 'git://github.com/jnicklas/carrierwave.git'
-gem 'rmagick'
-gem 'fog'
-gem 'nokogiri'
-gem 'htmlentities'
-
-group :assets do
-  gem 'sass-rails'
-  gem 'compass-rails'
-  gem 'jquery-rails'
-  gem 'jquery-migrate-rails'
-  gem 'uglifier'
-  gem 'turbo-sprockets-rails3'
-end
+gem 'rails', '4.0.2'
+gem 'jquery-rails'
+gem 'sass-rails', '~> 4.0.0'
+gem 'compass-rails', '1.1.2'
+gem 'uglifier', '>= 1.3.0'
+gem 'httparty'
+gem 'useragent'
 
 group :development do
-  gem 'heroku'
-  gem 'debugger'
-  gem 'better_errors'
-  gem 'binding_of_caller'
-  gem 'meta_request'
+  gem 'foreman'
+  gem 'capistrano'
 end
 
 group :development, :test do
-  gem 'rake'
-  gem 'rspec-rails'
-  gem 'capybara', '2.0.3'
-  gem 'vcr'
-  gem 'poltergeist'
-  gem 'launchy'
+  gem 'debugger'
+end
+
+group :production do 
+  gem 'pg'
+  gem 'rails_12factor'
 end

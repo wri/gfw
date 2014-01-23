@@ -1,93 +1,93 @@
 <% content_for :title do %>
-  <% t('.title') %>
-<% end %>
-
-<% content_for :splash_title do %>
-  <% t('.splash_title_html') %>
-<% end %>
-
-<% content_for :js do %>
-  <script type="text/javascript">
-    var summary = { count: "<%= number_with_delimiter(@alerts_count) %>", title: "Forest clearing alerts in the last six months" }
-  </script>
+  <%= t('.title') %>
 <% end %>
 
 <% content_for :filters do %>
   <div id="filters">
-    <div class="filters hide">
-      <div class="inner">
+    <div class="inner">
+      <div class="filters hide">
         <ul></ul>
       </div>
 
-      <a href="#" class="advance"></a>
-      <div class="white-shadow"></div>
-    </div>
+      <div id="layer">
+        <a href="#" class="title"></a>
+        <div class="scroll">
+          <ul class="links"></ul>
+        </div>
 
-    <div id="layer">
-      <a href="#" class="title"></a>
-      <div class="scroll">
-        <ul class="links"></ul>
+        <div class="icon"></div>
+        <div class="line"></div>
       </div>
-
-      <div class="icon"></div>
-      <div class="line"></div>
     </div>
   </div>
 <% end %>
 
-<%= render "common/map" %>
+<section class='map-container'>
+  <div class="analysis">
+    <%= link_to t('.analysis_button'), '/#analysis', :'data-tip' => t('.analysis_tip'), :class => 'analysis-link' %>
 
-<div class="actions">
-  <ul>
-    <li class="community">
-    <div class="icon"></div>
-    <h2><%= t('.icons.community.title') %></h2>
-    <p><%= t('.icons.community.text') %></p>
-    <a href="https://groups.google.com/d/forum/globalforestwatch" class="btn green darker_glow community" target="_blank"><span><%= t('.icons.community.link') %></span></a>
-    </li>
+    <div class="analysis-bar">
+      <p><%= t('.analysis_bar.title') %></p>
+      <div class="options">
+        <a href='/#done' class='done disabled'><%= t('.analysis_bar.done') %></a>
+        <a href='/#cancel' class='cancel'><%= t('.analysis_bar.cancel') %></a>
+      </div>
+    </div>
+  </div>
 
-    <li class="analysis_tool">
-    <div class="icon"></div>
-    <h2><%= t('.icons.analysis.title') %></h2>
-    <p><%= t('.icons.analysis.text') %></p>
-    <%= link_to (content_tag :span, t('.icons.analysis.link')), {}, :class => "btn green darker_glow analysis" %>
-    </li>
+  <div id='map' class='map'></div>
+</section>
 
-    <li class="submit_story">
-    <div class="icon"></div>
-    <h2><%= t('.icons.submit_story.title') %></h2>
-    <p><%= t('.icons.submit_story.text') %></p>
-    <%= link_to (content_tag :span, t('.icons.submit_story.link')), new_story_path, :class => "btn green darker_glow submit_story" %>
+<section class='section section_dark home_actions'>
+  <div class='inner'>
+    <ul class='columns'>
+      <li class='column three community'>
+        <i></i>
+        <h3><%= t('.actions.community.title') %></h3>
+        <p><%= t('.actions.community.text') %></p>
+        <a href="https://groups.google.com/d/forum/globalforestwatch" class="btn darker_glow community" target="_blank"><%= t('.actions.community.link') %></a>
+      </li>
 
-    </li>
-  </ul>
-</div>
+      <li class='column three analysis_tool'>
+        <i></i>
+        <h3><%= t('.actions.analysis.title') %></h3>
+        <p><%= t('.actions.analysis.text') %></p>
+        <%= link_to t('.actions.analysis.link'), map_path, :class => 'btn darker_glow map ajax' %>
+      </li>
 
-<div class="home-stories">
+      <li class='column three submit_story'>
+        <i></i>
+        <h3><%= t('.actions.submit_story.title') %></h3>
+        <p><%= t('.actions.submit_story.text') %></p>
+        <%= link_to t('.actions.submit_story.link'), new_story_path, :class => 'btn darker_glow' %>
+      </li>
+    </ul>
+  </div>
+</section>
 
-  <h3>Stories about forest change</h3>
-  <p>Browse <%= link_to "featured user stories", stories_path%> or <%= link_to "explore all in the map", "#{map_path}/3/15.00/27.00/ALL/580,586"%>.</p>
+<section class='section home_stories'>
+  <div class='inner'>
+    <h2 class='section-title'><%= t('.home_stories.featured.title') %></h2>
+    <p class="section-desc"><%= t(".home_stories.featured.text_html", :featured => link_to(t('.home_stories.featured.featured'), stories_path), :explore => link_to(t('.home_stories.featured.explore'), 'http://www.globalforestwatch.org/map', :class => 'map ajax')) %></p>
 
-  <ul>
+    <ul class="columns">
     <% @featured.each do |story| %>
-      <li>
-
-      <a href="<%= story_path(story.id) %>">
-        <%= image_tag(story_image_or_map(story.thumbnail_url.first, story.coords)) %>
-        <div class="gradient"></div>
-        <div class="frame"></div>
-        <div class="title">
-          <span><%= story.title %></span>
-          <%= content_tag :strong, 'Read more' %>
-        </div>
-      </a>
-
+      <li class='column round three'>
+        <a href="<%= story_path(story['id']) %>">
+          <%= image_tag story_image_or_map(story['media'][0]['preview_url'], story['coordinates']), :alt => story['title'] %>
+          <div class="gradient"></div>
+          <div class="frame"></div>
+          <div class="title">
+            <strong><%= story['title'] %></strong>
+            <span><%= t('.home_stories.featured.read_more') %></span>
+          </div>
+        </a>
       </li>
     <% end %>
-  </ul>
-</div>
+    </ul>
+  </div>
+</section>
 
-<div id="sources" class="sources">
-  <%= render 'common/sources' %>
+<div id='sources' class='sources'>
+  <%= render 'shared/sources' %>
 </div>
-

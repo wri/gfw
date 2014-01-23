@@ -1,81 +1,79 @@
 class StoriesController < ApplicationController
-  before_filter :get_story, :only => [:show, :edit, :update, :destroy]
+
+  helper_method :access_through_token?
+
+  before_filter :load_stories
+  before_filter :load_story, :only => [:show, :edit, :update, :destroy]
+  before_filter :check_token, :only => [:edit]
 
   def index
     stories_per_page = 5
+
     @page            = (params[:page] || 1).to_i
-    @total_pages     = (Story.select('count(cartodb_id) as count').where(:featured => true).first.attributes[:count].to_f / stories_per_page.to_f).ceil
-    @featured        = Story.featured(@page, stories_per_page)
-    @stories         = if params['for-map'].present?
-                         Story.all_for_map
-                       else
-                         Story.random(5)
-                       end
+    @total_pages     = (Api::Story.featured.count.to_f / stories_per_page.to_f).ceil
+    @featured        = Api::Story.find_featured_by_page(@page, stories_per_page)
 
     respond_to do |format|
-      format.json { render :json => @stories } if params['for-map']
+      format.json { render :json => @stories } if params['for_map']
       format.html
     end
   end
 
   def show
-    @stories = Story.random(5)
+
   end
 
   def new
-    @story     = Story.new({})
-    @url       = stories_path
-    @media_url = media_path
+
   end
 
   def edit
-    @url       = story_path(@story.token)
-    @method    = :put
-    @media_url = media_path
+    # @url = story_path(@story.token)
+    @url = story_path(@story.id)
+    @method = :put
   end
 
   def create
-    @story = Story.new(params[:story])
-
-    if @story.valid?
-      @story.save
-
-      flash[:notice] = 'Your story has been registered. Thanks!'
-
-      Notifications.new_story(@story).deliver
-
-      redirect_to story_path(@story)
-    else
-      render :new
-    end
 
   end
 
   def update
 
-    @story = @story.update_attributes(params[:story])
-
-    if @story.valid?
-      @story.save
-
-      flash[:notice] = 'Your story has been updated. Thanks!'
-
-      redirect_to story_path(@story)
-    else
-      render :edit
-    end
   end
 
   def destroy
-    @story.destroy
 
-    flash[:notice] = 'Your story has been deleted. Thanks!'
-
-    redirect_to stories_path
   end
 
-  def get_story
-    @media = Story.by_id_or_token(params[:id])
-    @story = @media.first
+  def access_through_token?(story)
+
   end
+
+  private
+
+    def load_stories
+      @stories = if params['for_map'].present?
+                   Api::Story.featured_for_map
+                 else
+                   Api::Story.featured.sample(5)
+                 end
+    end
+
+    def access_through_token?(story)
+      # params[:id] === story.token
+      true
+    end
+
+    def check_token
+      redirect_to(story_path(@story), :notice => "You don't have permissions to edit this story.") unless access_through_token?(@story)
+    end
+
+    def load_story
+      story = Api::Story.find_by_id_or_token(params[:id])
+
+      not_found unless story.present?
+
+      @story = story
+    end
+
 end

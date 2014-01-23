@@ -1,1 +1,0 @@
-require 'cartodb-rb-client/cartodb/helpers/sql_helper'

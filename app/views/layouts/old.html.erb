@@ -6,17 +6,15 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Oops, your browser isn't supported</title>
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
 
-  <link rel="icon"type="image/png" href="<%= image_path 'favicon_32x32.ico' %>" />
-
-  <%= stylesheet_link_tag "application" %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
   <%= javascript_include_tag "modernizr-2.6.2.min" %>
   <%= csrf_meta_tags %>
 </head>
-
-<body class="<%= controller_name %> <%= action_name %>">
+<body>
   <%= yield %>
 </body>
 </html>

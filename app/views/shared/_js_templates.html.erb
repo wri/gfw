@@ -1,0 +1,44 @@
+<% content_for :js do %>
+  <script id="window-template" type="text/x-underscore-template">
+    <a href="#" class="close"></a>
+    <div class="content"></div>
+  </script>
+
+  <script id="filter-template" type="text/x-underscore-template">
+    <li class="filter {{ category }}" data-id="{{ data }}">
+      <div class="icon"></div>
+      <a href="#" style="color: {{ category_color }}">{{ name }}</a>
+      <div class="line" style="background-color:{{ category_color }}"></div>
+      <div class="box"></div>
+    </li>
+  </script>
+
+  <script id="layer-item-radio-template" type="text/x-underscore-template">
+    <li id="filter_{{ id }}" class="{{ category }}">
+      <a href="#" class="radio {{ category }} {{ slug }} {{ disabled ? 'disabled' : '' }}" data-name={{ category }}>{{name}}</a>
+      <a href="#" data-category="{{category}}" data-source="{{slug}}" class="source{{ slug == 'nothing' ? ' hidden' : '' }}"></a>
+    </li>
+  </script>
+
+  <script id="layer-item-checkbox-template" type="text/x-underscore-template">
+    <li id="filter_{{ id }}" class="{{ category }}">
+    <a href="#" data-id="{{ id }}" data-color="{{ color}}" class="checkbox {{ disabled ? 'disabled' : '' }}">
+        <i><span></span></i>
+        <span class="name">{{name}}</span>
+      </a>
+
+      <a href="#" data-category="{{category}}" data-slug="{{slug}}" class="source{{ slug == 'ip_brazil_eucalyptus' || slug == 'app_indonesia_wgs84' || slug == 'ip_brazil_farm_wgs84' || slug == 'regrowth' ? ' hidden' : '' }}"></a>
+    </li>
+  </script>
+
+  <script id="layer-item-disabled-template" type="text/x-underscore-template">
+    <li id="filter_{{ id }}" class="{{ category }} disabled">
+      <span class="{{ category }} {{ disabled ? 'disabled' : '' }}" data-name={{ category }}>
+        <i><span></span></i>
+        <span class="name"><strong>{{name}}</strong>Coming soon…</span>
+      </span>
+
+      <a href="#" data-category="{{category}}" data-slug="{{slug}}" class="source{{ slug == 'nothing' ? ' hidden' : '' }}"></a>
+    </li>
+  </script>
+<% end %>

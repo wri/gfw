@@ -1,2 +1,0 @@
-class SourcesController < ApplicationController
-end

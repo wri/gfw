@@ -1,0 +1,120 @@
+<% content_for :js do %>
+  <script>
+    $(function() {
+      cdb.init(function() {
+        window.stories_map = new gfw.ui.view.StoriesEdit();
+      });
+    });
+  </script>
+<% end %>
+
+<%= form_for :story, :url => @url, :method => (@method || :post) do |f| %>
+  <div class="field">
+    <%= f.label :title %>
+    <%= error_message_for(@story, :title) %>
+
+    <div class="<%= ' error' if !@story.errors[:title].empty? %>">
+      <%= f.text_field :title, :placeholder => 'E.g. “Northern forests”, “Coastal forest”...' %>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="<%= ' error' if !@story.errors[:the_geom].empty? %>">
+      <%= error_message_for(@story, :the_geom) %>
+      <%= f.label 'Affected area' %>
+
+      <% if @story.errors[:the_geom].empty? %>
+        <span class="map-help">Drop a pin on the map around the affected area</span>
+      <% end %>
+    </div>
+
+    <div class="stories_map-container" class="<%= ' error' if !@story.errors[:the_geom].empty? %>">
+      <a href="/#remove" class="remove_story-link">Remove</a>
+      <div id="stories_map" class="map stories_map"></div>
+    </div>
+
+    <%= f.text_field :the_geom %>
+  </div>
+
+  <div class="field">
+    <%= f.label :where_did_it_happen %>
+    <span>Optional</span>
+
+    <%= f.text_field :where_did_it_happen, :placeholder => 'E.g. “Galizia”, “Mozambique”...' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :when_did_it_happen %>
+    <span>Optional</span>
+
+    <%= f.text_field :when_did_it_happen, :placeholder => '“November 2010”, “Since 2005”, etc.' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :details %>
+    <span>Optional</span>
+
+    <%= f.text_area :details, :placeholder => 'Affected species, deforestation type, source, etc.' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :media %>
+    <%= f.hidden_field :uploads_ids %>
+
+    <ul class="thumbnails">
+      <li><%= link_to '', '#', :class => 'upload_picture' %></li>
+
+      <% (@story.media || []).each do |media| %>
+        <li id="photo_<%= media.cartodb_id %>" class="thumbnail sortable">
+          <img src="<%= media.thumbnail_url %>">
+          <%= link_to '', media, :class => "destroy" %>
+        </li>
+      <% end %>
+    </ul>
+
+    <p class="hint">Drag & drop images and videos to reorder them within the carrousel. The first one will be considered as the preferred one.</p >
+  </div>
+
+  <div class="field">
+    <%= f.label :your_name %>
+    <%= error_message_for(@story, :your_name) %>
+
+    <div class="<%= ' error' if !@story.errors[:your_name].empty? %>">
+      <%= f.text_field :your_name %>
+    </div>
+    <p class="hint">Your story and name will be visible in Global Forest Watch site, but your email will never be published.</p>
+  </div>
+
+  <div class="field">
+    <%= f.label :your_email %>
+    <%= error_message_for(@story, :your_email) %>
+
+    <div class="<%= ' error' if !@story.errors[:your_email].empty? %>">
+      <%= f.text_field :your_email %>
+    </div>
+  </div>
+
+  <% if action_name == 'edit' %>
+  <div class="field with_checkbox">
+    <a href="#" class="checkbox styled<%= @story.featured ? " checked" : "" %>">
+      Show it as Story
+      <input name="story[featured]" type="hidden" value="<%= @story.featured %>" />
+    </a>
+  </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.submit 'Submit story' %>
+  </div>
+<% end %>
+
+<% if action_name == 'new' %>
+<aside>
+  <h3>Why submit stories?</h3>
+  <p>User participation is crucial in forest monitoring. The more people who participate in sharing information, the better.</p>
+
+  <h3>How your stories will be used</h3>
+  <p>Your stories and photos will help improve forest change detection and spur action to stop forest clearing that should not be taking place.</p>
+</aside>
+<% end %>
+

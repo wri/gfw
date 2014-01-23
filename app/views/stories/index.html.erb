@@ -1,38 +1,32 @@
-<% content_for :title do
-  t('.title')
-end %>
+<% content_for :title do %>
+  <% t('.title') %>
+<% end %>
 
-<div class="featured">
-
+<section class='section'>
   <div class="inner">
-
     <ul>
       <% @featured.each do |story| %>
-        <li class="<%= left_or_right_class = cycle('left', 'right') %>">
-
-          <div class="content">
-            <h2><%= link_to story.title, story_path(story.id) %></h2>
-            <p><%= truncate(story.details, :length => 295) %></p>
-            <%= link_to 'Read more', story_path(story.id) %>
+        <li class="featured_story <%= cycle('left', 'right') %>">
+          <div class="featured_story-content">
+            <h2><%= link_to story['title'], story_path(story['id']), :class => 'featured_story-title' %></h2>
+            <p><%= truncate(story['details'], :length => 295) %></p>
+            <%= link_to t('.read_more'), story_path(story['id']) %>
           </div>
 
-          <a href="<%= story_path(story.id) %>">
+          <a href="<%= story_path(story['id']) %>">
             <div class="frame">
-              <%= image_tag(story_image_or_map(story.thumbnail_url.first, story.coords)) %>
+              <%= image_tag(story_image_or_map(story['media'][0]['preview_url'], story['coordinates'])) %>
             </div>
           </a>
-
         </li>
       <% end %>
     </ul>
 
     <div class="pagination">
-      <%= link_to content_tag(:span, 'Previous stories'), previous_page_link(@page), :class => "btn hollow" if @page > 1%>
-      <%= link_to content_tag(:span, 'Next stories'), next_page_link(@page), :class => "btn hollow" unless last_page?%>
+      <%= link_to content_tag(:span, t('.previous')), previous_page_link(@page), :class => "btn dark_glow" if @page > 1%>
+      <%= link_to content_tag(:span, t('.next')), next_page_link(@page), :class => "btn dark_glow" unless last_page?%>
     </div>
-
   </div>
+</section>
 
-</div>
-
-<%= render 'common/reported_stories' %>
+<%= render 'shared/more_stories' %>

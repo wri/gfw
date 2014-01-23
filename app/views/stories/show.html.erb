@@ -1,72 +1,78 @@
-<% content_for :title do
-  title_or_flash
+<% content_for :title do %>
+  <%= link_to t(".title"), stories_path %>
+<% end %>
+
+<% content_for :js do %>
+  <script>
+    $(function() {
+      cdb.init(function() {
+        var carrousel = new gfw.ui.view.Carrousel();
+      });
+    });
+  </script>
+<% end %>
+
+<%# content_for :inner_header do
+  link_to (content_tag :span, 'Edit story'), edit_story_path(@story.token), :class => "btn green edit" if access_through_token?(@story)
 end %>
 
-<% content_for :inner_header do
-  link_to (content_tag :span, 'Edit story'), edit_story_path(@story.token), :class => "btn green dark_glow edit"  if access_through_token?(@story)
-end %>
+<div class='section inner'>
+  <div class='story-header'>
+    <h1 class='section-title'><%= @story['title'] %></h1>
 
-<div class="story">
-  <div class="inner">
-    <div class="header">
-      <h1><%= @story.title %></h1>
-      <div class="when-and-who">
-        <% if @story.where_did_it_happen.present?  %>
-          <span><%= @story.where_did_it_happen %></span>
-        <% end %>
-        <% if @story.where_did_it_happen.present? && (@story.your_name.present? || @story.when_did_it_happen.present?)%>
-          <span>&middot;</span>
-        <% end %>
-        <% if @story.when_did_it_happen.present?  %>
-          <span><%= @story.when_did_it_happen %></span>
-        <% end %>
-        <% if @story.when_did_it_happen.present? && @story.your_name.present? %>
-          <span>&middot;</span>
-        <% end %>
-        <% if @story.your_name.present?  %>
-          <span>Submitted by <%= @story.your_name %></span>
-        <% end %>
-      </div>
+    <div class="when-and-who">
+      <% if @story['where_did_it_happen'].present?  %>
+        <span><%= @story['where_did_it_happen'] %></span>
+      <% end %>
+      <% if @story['where_did_it_happen'].present? && (@story['name'].present? || @story['when_did_it_happen'].present?)%>
+        <span>&middot;</span>
+      <% end %>
+      <% if @story['when_did_it_happen'].present?  %>
+        <span><%= @story['when_did_it_happen'] %></span>
+      <% end %>
+      <% if @story['when_did_it_happen'].present? && @story['name'].present? %>
+        <span>&middot;</span>
+      <% end %>
+      <% if @story['name'].present?  %>
+        <span>Submitted by <%= @story['name'] %></span>
+      <% end %>
     </div>
-
-    <% if @media.present? %>
-
-      <div class="carrousel">
-
-        <div class="frame">
-
-          <%= image_tag(static_map(@story.coords)) %>
-
-        </div>
-
-        <% if @media.size > 1 %>
-          <%= link_to '', '#', :class => 'previous' %>
-          <%= link_to '', '#', :class => 'next' %>
-        <% end %>
-
-        <ul>
-          <% @media.map(&:big_url).each do |image_url| %>
-            <li> <%= image_tag image_url %> </li>
-          <% end %>
-        </ul>
-
-      </div>
-    <% end %>
-
-    <div class="details">
-      <p><%= simple_format(raw("<span class='dropcap'>#{@story.details[0, 1]}</span>") + @story.details[1, @story.details.length - 1]).gsub("</p>\n\n<p>", "<br /><br />").html_safe %></p>
-    </div>
-
-    <div class="share_buttons">
-      <div id="fb-root"></div>
-      <div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-href="<%= "#{request.url}" %>"></div>
-
-      <a href="http://twitter.com/share" target="_blank" class="twitter-share-button" data-url="<%= "#{request.url}" %>" data-text="GFW 2.0 · <%= @story.title %> · ">Tweet</a>
-    </div>
-
   </div>
 
+  <% if @story['media'].present?  %>
+    <div class="carrousel">
+      <div class="frame">
+        <%= image_tag(static_map(@story['coordinates'])) %>
+      </div>
 
+      <% if @story['media'].size > 1 %>
+        <a href='#' class='previous'></a>
+        <a href='#' class='next'></a>
+      <% end %>
+
+      <ul>
+        <% @story['media'].each do |media| %>
+          <% if media['embed_url'].present? %>
+            <li class='slide'><%= youtube_embed(media['embed_url']).html_safe %></li>
+          <% else %>
+            <li class='slide'><%= image_tag media['url'] %></li>
+          <% end %>
+        <% end %>
+      </ul>
+
+    </div>
+  <% end %>
+
+  <div class='story-content'>
+    <p><%= simple_format(raw("<span class='dropcap'>#{@story['details'][0, 1]}</span>") + @story['details'][1, @story['details'].length - 1]).gsub("</p>\n\n<p>", "<br /><br />").html_safe %></p>
+  </div>
+
+  <div class="story-share_buttons">
+    <div id="fb-root"></div>
+    <a href="http://twitter.com/share" target="_blank" class="twitter-share-button" data-url="http://www.gfw-beta.org/" data-text="Global Forest Watch">Tweet</a>
+    <div class="g-plusone" data-size="medium" data-href="http://www.gfw-beta.org/"></div>
+    <div class="fb-like" data-href="http://www.gfw-beta.org/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+  </div>
 </div>
 
-<%= render 'common/reported_stories' %>
+<%= render 'shared/more_stories' %>

@@ -1,16 +1,9 @@
-<% content_for :title do
-  "Edit #{@story.title} story"
-end %>
+<% content_for :title do %>
+  <%= "Edit story" %>
+<% end %>
 
+<% content_for :inner_header do %>
+  <%= link_to t(".delete"), stories_path(@story.id), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn green" %>
+<% end %>
 
-<% content_for :inner_header do
-  link_to (content_tag :span, 'Delete story'), story_path(@story), :"data-id" => @story.cartodb_id, :class => "btn green dark_glow destroy_story"
-end %>
-
-<div class="story_form">
-
-  <div class="inner">
-    <%= render 'form' %>
-  </div>
-</div>
-
+<%= render 'form' %>

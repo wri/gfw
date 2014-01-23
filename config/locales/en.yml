@@ -1,121 +1,33 @@
 en:
-  errors:
-    messages:
-      extension_white_list_error: "error"
-    story:
-      blank:
-        title: 'Your story needs a title.'
-        the_geom: 'You have to drop a pin or draw a shape on the map around the affected area.'
-        your_name: 'You have to tell your name.'
-        your_email: 'You have to enter your email.'
-  date:
-    formats:
-      custom: '%B, %Y'
-  time:
-    formats:
-      custom: '%R %Z'
-  layouts:
-    application:
-      title: "Global Forest Watch"
-      header:
-        share_this: 'Share thisss'
-        other_wri_sites: 'Other WRI sitesss'
-        alerts: 'alerts in past 16 dayss'
-        stories: 'new forest storiess'
-        nav:
-          home: 'Home'
-          countries: 'Countries'
-          stories: "Stories"
-          data: "Data"
-          map: 'Map'
-          blog: 'Blog'
-          sources: 'Data Sources'
-          about: 'About'
-          signin: 'Sign in'
-          register: 'Request an invite'
-          howto: 'How to'
-      footer:
-        download:
-          title: 'Browse forest data <a href="%{url}">by country</a>.'
-          title2: 'Interested in data? <a href="%{url}">Download it</a>.'
-          data_html: 'You can also <a href="%{url}" class="icon download">download all our data</a>.'
-  blog:
-    read_more: "Read more"
-  home:
-    index:
-      title: "Find out what is happening in forests right now"
-      splash_title_html: "Welcome to the <span>Global Forest Watch</span><br />development site"
-      icons:
-        community:
-          title: 'Join the community'
-          text: "Subscribe to the “Global Forest Watchers” discussion group to learn more about data and interact with fellow users and researchers."
-          link: 'Join the Group'
-        analysis:
-          title: 'Analysis & alerts'
-          text: "Perform forest cover change analyses on the fly and get answers in real time. Subscribe to receive automated alerts to forest cover change in your area of interest."
-          link: 'Start analyzing'
-        submit_story:
-          title: 'Submit your story'
-          text: "Have a story to share about forest change? Help improve our forest monitoring by submitting your stories and photos for display on the GFW map."
-          link: 'Submit your story'
-  common:
-    header:
-      title: 'Global Forest Watch'
-      numbers:
-        alerts: 'alerts in past 16 dayss'
-        stories: 'new forest storiess'
-    filters:
-      concessions: 'Concessions'
-      conservation: 'Conservation'
-      intact_forest: 'Intact Forest'
-      mining: 'Mining'
-      forest_cover: 'Forest Cover'
-      forest: 'Forest'
-      fire: 'Fire'
-      carbon: 'Carbon'
-      biodiversity: 'Biodiversity'
-    map:
-      draw_area: 'Draw Area'
-      save_area: 'Save Area'
   static:
     about:
-      title: 'About Global Forest Watch'
-      about_link: 'About'
-      introduction: '<p>Global Forest Watch (GFW) is an initiative that mobilizes technology, transparency, and human networks for global forest conservation. GFW uses satellite technology, open data, and human networks to monitor forests in near real-time, support better forest management, and improve the lives of people who depend on forests around the world.</p><p>
-GFW is supported by a diverse partnership of organizations that contribute data, technical capabilities, funding, and expertise. The partnership is convened by the <a href="http:\\www.wri.org" target="_blank">World Resources Institute</a>. See a full list of partners below.<p>We welcome others to join our growing GFW partnership.</p>'
-      partners: 'Partners'
-      project_funders: 'Funders'
-      supporters_providers: 'Support & data'
-      website_team: 'Website team'
-      contact_us: 'Contact us'
+      title: About Global Forest Watch
+      nav:
+        about: About
+        partners: Partners
+        funders: Funders
+        supporters: Supporters
+        website_team: Website team
+        contact: Contact
+      introduction: |
+        Global Forest Watch (GFW) is an initiative convened by the <a href="http:\\www.wri.org" target="_blank">World Resources Institute</a> that unites technology, transparency, and human networks to mobilize more timely and effective forest conservation and sustainable forest management. GFW combines near-real-time forest monitoring, forest management boundary maps, protected areas, mobile technology, crowd-sourced data, and a networked world to create never-before-possible forest transparency.
+
+        We welcome others to join our growing GFW partnership.
+      contact: Contact us
+      information: For more information on Global Forest Watch, or to provide feedback, please email
     sources:
       title: Data sources
-      all_countries: All countries
-
+      nav:
+        forest_clearing: Forest Clearing
+        forest_use: Forest use
+        forest_cover: Forest cover
+        conservation: Conservation
+        stories: Stories
+        base_maps: Base maps
   countries:
     index:
-      title: "Select a country"
+      title: Select a country
     show:
-      detail:
-        mongobay:
-          title: '%{country} Mongobay Stories'
-          read_more: 'More %{country} Mongobay Stories'
-        alerts:
-          title: 'Last forest clearing alerts'
-          subscribe: 'Subscribe to this country'
-          analyze: 'Analyze this country'
-        description:
-          title: 'About the country'
-          read_more: 'Read more at Wikipedia'
-      blog_posts:
-        title: '%{country} stories'
-        more: 'more'
-      country_menu:
-        state: 'State of the Forest'
-        people: 'People & Economy'
-        tenure: 'Tenure & Laws'
-        climate: 'Climate Change'
-        conventions: 'Conventions'
       conventions:
         cbd_title_html: "CBD"
         unfccc_title_html: "UNFCCC"
@@ -127,19 +39,67 @@ GFW is supported by a diverse partnership of organizations that contribute data,
         world_heritage_title_html: "WORLD<br />HERITAGE"
         nlbi_title_html: "NLBI"
         ilo_title_html: "ILO 169"
-      ministry_link: "Ministry website"
-
+      country_blog:
+        title: "%{country} stories"
+      ministry_link: "Ministry link"
   stories:
     index:
-      title: "Stories"
-    new:
-      title: "Submit a story"
-    form:
-      title: 'Title'
-      the_geom: 'Affected Area'
-      when: 'When did it happen'
-      details: 'Details'
-      your_name: 'Your name'
-      submit_story: 'Submit Story'
-      image: 'Media'
-
+      title: Stories
+      previous: Previous stories
+      next: Next stories
+      read_more: Read more
+    show:
+      title: Stories
+    more_stories:
+      title: Stories reported by users
+      text_html: "%{browse} or %{submit}. People are a key factor in forest clearing detection."
+      browse: Browse user stories in our map
+      submit: submit yours
+      submitted_by: "Submitted by %{name}"
+      submit_your: Submit your story
+  home:
+    index:
+      title: Find out what is happening in forests right now
+      analysis_tip: Analyze an area on the map
+      analysis_button: Analysis
+      analysis_bar:
+        title: Draw in the map the area you want to analyze
+        done: Done
+        cancel: Cancel
+      actions:
+        community:
+          title: Join the community
+          text: Subscribe to the Global Forest Watch discussion group.
+          link: Join the group
+        analysis:
+          title: 'Analysis & alerts'
+          text: Perform forest clearing analysis on the fly and get your answers in real time, or suscribe to change alerts.
+          link: Start analyzing
+        submit_story:
+          title: Submit your story
+          text: Participate in detecting forest change. Send your story about forest clearing and we will add it to our collection.
+          link: Send a story
+      home_stories:
+        featured:
+          title: Stories about forest change
+          text_html: "Browse %{featured} or %{explore}"
+          featured: featured stories
+          explore: explore all in the map
+          read_more: Read more
+        submit_story:
+          text: Do you have a story? Participate in detecting forest change.
+          link: Submit your story
+  header:
+    nav:
+      home: Home
+      countries: Countries
+      stories: Stories
+      map: Map
+      blog: Blog
+      data: Data
+      about: About
+  footer:
+    spread: Spread the word.
+    share: Share Global Forest Watch.
+    partnership: A partnership of
+    strategic: A strategic initiative of

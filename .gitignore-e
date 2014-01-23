@@ -1,9 +1,0 @@
-.DS_Store
-/.bundle
-/db/*.sqlite3
-/log/*.log
-/tmp
-config/cartodb_config.*
-public/assets
-public/uploads
-.ruby-version

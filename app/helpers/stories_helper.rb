@@ -14,40 +14,6 @@ module StoriesHelper
     @page == @total_pages
   end
 
-  def render_media(media)
-    if media.video?
-      raw media.embed_html
-    else
-      image_tag media.url
-    end
-  end
-
-  def story_submit_button(form, story)
-    if story.present?
-      content_tag :div do
-        raw [
-          form.submit('Submit story'),
-          content_tag(:span, ' or '),
-          link_to('cancel', story_path(story))
-        ].join
-      end
-    else
-      content_tag :div do
-        form.submit('Submit story')
-      end
-    end
-  end
-
-  def access_through_token?(story)
-    params[:id] == story.token
-  end
-
-  def title_or_flash
-    return link_to flash[:notice], '#' if flash[:notice].present?
-
-    link_to 'Stories', stories_path
-  end
-
   def story_image_or_map(thumbnail_url, coords)
     return thumbnail_url if thumbnail_url.present?
 
@@ -58,11 +24,16 @@ module StoriesHelper
     "http://maps.google.com/maps/api/staticmap?center=#{coords.to_s.gsub(" ", "")}&zoom=#{zoom}&size=#{size}&maptype=terrain&sensor=false"
   end
 
-  def show_exclamation?(story)
-    link_to "", story, :class => 'exclamation' unless story.featured || story.thumbnail_url.present?
+  def youtube_embed(youtube_url)
+    if youtube_url[/youtu\.be\/([^\?]*)/]
+      youtube_id = $1
+    else
+      # Regex from # http://stackoverflow.com/questions/3452546/javascript-regex-how-to-get-youtube-video-id-from-url/4811367#4811367
+      youtube_url[/^.*((v\/)|(embed\/)|(watch\?))\??v?=?([^\&\?]*).*/]
+      youtube_id = $5
+    end
+
+    %Q(<iframe width="483" height="362" src="//www.youtube.com/embed/#{youtube_id}" frameborder="0" allowfullscreen></iframe>)
   end
 
-  def error_message_for(story, field)
-    content_tag :span, story.errors[field].first, :class => 'error-message'
-  end
 end
