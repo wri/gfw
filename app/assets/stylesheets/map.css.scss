@@ -562,7 +562,7 @@ div.cartodb-tiles-loader div.loader {
     &.satellite      i { @include icons-sprite(map_satellite); }
     &.terrain        i { @include icons-sprite(map_terrain_bn); }
     &.classic        i { @include icons-sprite(map_terrain); }
-    &.hybrid         i { @include icons-sprite(map_hybrid); }
+    &.roads          i { @include icons-sprite(map_hybrid); }
     &.tree_height    i { @include icons-sprite(map_tree_height); }
     &.landsat,
     &.landsat1999,
