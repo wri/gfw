@@ -151,7 +151,7 @@
     top: 25px; right: 25px;
     height: 74px;
     width: 74px;
-    background: url(icons/green_circle.png) no-repeat 50% 50%;
+    background: image-url('icons/green_circle.png') no-repeat 50% 50%;
     @include background-size(10%);
     @include opacity(0);
 

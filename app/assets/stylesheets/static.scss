@@ -405,79 +405,109 @@
       display: inline-block;
       width: 110px;
       height: 80px;
-      background-repeat: repeat-none;
-      background-position: left 0;
       @include transition(none);
-
-      &:hover {
-        background-position: left -80px;
-      }
     }
   }
 
-  #wri {
+  .osfac {
+    @include static-logos-sprite(osfac);
+    &:hover { @include static-logos-sprite(osfac_hover); }
+  }
+
+  .wri {
     @include static-logos-sprite(wri);
     &:hover { @include static-logos-sprite(wri_hover); }
   }
 
-  #google {
+  .google {
     @include static-logos-sprite(google);
     &:hover { @include static-logos-sprite(google_hover); }
   }
 
-  #esri {
+  .esri {
     @include static-logos-sprite(esri);
     &:hover { @include static-logos-sprite(esri_hover); }
   }
 
-  #universitymaryland {
+  .universitymaryland {
     @include static-logos-sprite(universitymaryland);
     &:hover { @include static-logos-sprite(universitymaryland_hover); }
   }
 
-  #unep {
+  .unep {
     @include static-logos-sprite(unep);
     &:hover { @include static-logos-sprite(unep_hover); }
   }
 
-  #imazon {
+  .imazon {
     @include static-logos-sprite(imazon);
     &:hover { @include static-logos-sprite(imazon_hover); }
   }
 
-  #centerglobaldevelopment {
+  .centerglobaldevelopment {
     @include static-logos-sprite(centerglobaldevelopment);
     &:hover { @include static-logos-sprite(centerglobaldevelopment_hover); }
   }
 
-  #norwegian {
+  .osfac {
+    @include static-logos-sprite(osfac);
+    &:hover { @include static-logos-sprite(osfac); }
+  }
+
+  .gfwca {
+    @include static-logos-sprite(gfwca);
+    &:hover { @include static-logos-sprite(gfwca_hover); }
+  }
+
+  .scanex {
+    @include static-logos-sprite(scanex);
+    &:hover { @include static-logos-sprite(scanex_hover); }
+  }
+
+
+  .twrus {
+    @include static-logos-sprite(twrus);
+    &:hover { @include static-logos-sprite(twrus_hover); }
+  }
+
+  .norwegian {
     @include static-logos-sprite(norwegian);
     &:hover { @include static-logos-sprite(norwegian_hover); }
   }
 
-  #usaid {
+  .usaid {
     @include static-logos-sprite(usaid);
     &:hover { @include static-logos-sprite(usaid_hover); }
   }
 
-  #tilafund {
+  .gef {
+    @include static-logos-sprite(gef);
+    &:hover { @include static-logos-sprite(gef); }
+  }
+
+  .ukaid {
+    @include static-logos-sprite(ukaid);
+    &:hover { @include static-logos-sprite(ukaid); }
+  }
+
+  .tilafund {
     @include static-logos-sprite(tilafund);
     &:hover { @include static-logos-sprite(tilafund_hover); }
   }
 
-  #danida {
+  .danida {
     @include static-logos-sprite(danida);
     &:hover { @include static-logos-sprite(danida_hover); }
   }
 
-  #dutchforeign {
+  .dutchforeign {
     @include static-logos-sprite(dutchforeign);
     &:hover { @include static-logos-sprite(dutchforeign_hover); }
   }
 
-  #bobolink { @include static-logos-sprite(bobolink); }
+  .bobolink { @include static-logos-sprite(bobolink); }
 
-  #vizzuality {
+  .vizzuality {
     @include static-logos-sprite(vizzuality);
     &:hover { @include static-logos-sprite(vizzuality_hover); }
   }
