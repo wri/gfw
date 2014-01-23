@@ -281,8 +281,9 @@
       <div class="stats">
         {{#umd}}
         <div class="spinner"></div>
-        <strong class="title hidden">Total selected area</strong>
-        <ul class="hidden">
+        <div class="error">We couldn't load the data</div>
+        <strong class="title">Total selected area</strong>
+        <ul>
           <li class="ha">
             <p class="count"><strong>{{ loss }}</strong> Ha</p>
             <p class="count"><strong>{{ gain }}</strong> Ha</p>
@@ -291,7 +292,9 @@
         </ul>
         {{/umd}}
         {{^umd}}
+        <div class="spinner"></div>
         <strong class="title">Total selected area</strong>
+        <div class="error">We couldn't load the data</div>
         <ul>
           <li class="ha">
             <p class="count"><strong>{{ ha }}</strong> Ha</p>

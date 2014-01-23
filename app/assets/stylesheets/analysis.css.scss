@@ -203,11 +203,20 @@
       overflow:hidden;
     }
 
+    .stats .error {
+      display: none;
+      text-align: center;
+    }
+
+    .stats ul {
+      display:none;
+    }
+
+    .stats .title {
+      display:none;
+    }
+
     .title {
-
-      &.hidden { display:none; }
-
-      display:block;
       color: #999999;
       font-size:11px;
       line-height: 1.2;
