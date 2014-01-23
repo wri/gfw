@@ -11,6 +11,7 @@
 //= require ui/infowindow
 //= require home/analysis
 //= require home/filter
+//= require home/circle
 
 
 /*
@@ -175,7 +176,7 @@ $(function() {
       // });
 
       Filter.init();
-      // Circle.init()
+      Circle.init()
     },
 
     _openSource: function(e) {

@@ -1,4 +1,25 @@
 <% content_for :js do %>
+  <script type="text/javascript">
+    var circleSummary = [
+      { icon: "flag", count: "2,931", title: "Forest clearing alerts in the last 16 days" },
+      { icon: "area", count: "3,182", title: "Hectares of forest cleared in 2012" }
+    ];
+  </script>
+
+  <script id="circle-template" type="text/x-underscore-template">
+    <div class="circle">
+      <div class="icon {{icon}}">
+        <i></i>
+      </div>
+      <div class="circle-inner">
+        <div class="circle-counter">{{count}}</div>
+        <div class="circle-title">{{title}}</div>
+        <div class="circle-background"></div>
+        <div class="circle-explore">Explore the map</div>
+      </div>
+    </div>
+  </script>
+
   <script id="window-template" type="text/x-underscore-template">
     <a href="#" class="close"></a>
     <div class="content"></div>
