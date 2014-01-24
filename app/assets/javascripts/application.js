@@ -126,7 +126,6 @@ function loadOtherStuff(callback) {
   Timeline = new gfw.ui.view.Timeline({
     container: $("#map")
   });
-  publish('timeline:change_dates', Timeline._getDates());
 
   TimelineLoss = new gfw.ui.view.TimelineLoss({
     container: $("#map")

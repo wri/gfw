@@ -887,7 +887,6 @@ GFW.modules.app = function(gfw) {
     },
 
     _toggleTimeLayer: function() {
-
       if (this.time_layer_loss && GFW.app.currentBaseLayer !== "loss") {
         this.time_layer_loss.hide();
         this.time_layer_loss = null;
@@ -897,6 +896,8 @@ GFW.modules.app = function(gfw) {
       if (this.time_layer && GFW.app.currentBaseLayer !== "semi_monthly") {
         this.time_layer.hide();
         Timeline.hide();
+      } else {
+        Timeline.loadDefaultRange();
       }
 
       if(this.time_layer_notplayer && GFW.app.currentBaseLayer !== "quarterly") {
@@ -1458,6 +1459,7 @@ GFW.modules.maplayer = function(gfw) {
 
           if (slug === 'semi_monthly' && showMap) {
             Timeline.show();
+            Timeline.loadDefaultRange();
             analysis.info.model.set("dataset", "forma");
           } else {
             Timeline.hide();
