@@ -1,5 +1,5 @@
 <% content_for :title do %>
-  <% t('.title') %>
+  <% t(".title", :link => link_to('go to overview', overview_path)).html_safe %>
 <% end %>
 
 <% content_for :js do %>
