@@ -262,6 +262,21 @@
     @include country-icons-sprite(action);
     background-color: #fff;
     @include border-radius(20px);
+
+    &.disabled {
+      cursor: default;
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: -2px; left: -2px;
+        display: block;
+        width: 40px;
+        height: 40px;
+        background: #fff;
+        @include opacity(.5);
+      }
+    }
   }
 
   img ,

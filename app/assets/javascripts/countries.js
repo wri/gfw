@@ -124,7 +124,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
     api.hide();
 
-    $('.forma_dropdown-link').html(subtitle);
+    $('.hansen_dropdown-link').html(subtitle);
 
     if(dataset === 'countries_gain') {
       this._drawCircle('forest_loss', 'comp', { iso: this.iso });
@@ -655,7 +655,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
       }
 
       sql += "y2012) FROM countries_loss\
-                    WHERE iso = '"+options.iso+") as loss\
+                    WHERE iso = '"+options.iso+"') as loss\
                     FROM countries_gain\
                     WHERE iso = '"+options.iso+"'";
 

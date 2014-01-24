@@ -52,7 +52,7 @@
         <div class='graph-date'></div>
         <div class='coming_soon'>Not yet available for this country</div>
         <div class='frame'><div class='frame_bkg'></div></div>
-        <a href='<%= overview_path %>' class='action'></a>
+        <a href='#' class='action disabled'></a>
       </li>
 
       <% map_coords = "http://www.globalforestwatch.org/map/5/#{@country['lat'].round(2)}/#{@country['lng'].round(2)}/#{@country['iso']}" %>
@@ -222,7 +222,7 @@
 <section class='section country_download_links'>
   <div class='inner'>
     <ul>
-      <li><a href='#'>Subscribe to alerts for this country</a></li>
+      <li><a href='<%= map_coords %>'>Subscribe to alerts for this country</a></li>
       <% if @country['dataset_link'] %>
         <li><%= link_to 'Download relevant datasets', sources_path %></li>
       <% else %>
