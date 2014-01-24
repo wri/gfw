@@ -12,7 +12,7 @@
 <ul>
   <% %w(home map countries stories blog data howto about).each do |option| %>
     <%
-      paths    = { "home" => "http://shrouded-retreat-4352.herokuapp.com/", "countries" => "http://shrouded-retreat-4352.herokuapp.com/countries", "stories" => "http://shrouded-retreat-4352.herokuapp.com/stories", "map" => map_path,  "blog" => "http://blog.globalforestwatch.org", "data" => "http://shrouded-retreat-4352.herokuapp.com/sources", "howto" => "http://shrouded-retreat-4352.herokuapp.com/howto", "about" => "http://shrouded-retreat-4352.herokuapp.com/about" }
+      paths    = { "home" => "/", "countries" => "http://shrouded-retreat-4352.herokuapp.com/countries", "stories" => "http://shrouded-retreat-4352.herokuapp.com/stories", "map" => map_path,  "blog" => "http://blog.globalforestwatch.org", "data" => "http://shrouded-retreat-4352.herokuapp.com/sources", "howto" => "http://shrouded-retreat-4352.herokuapp.com/howto", "about" => "http://shrouded-retreat-4352.herokuapp.com/about" }
       path     = paths[option]
       option_class = request.path === path ? "selected" : ""
 

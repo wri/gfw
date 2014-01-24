@@ -462,7 +462,7 @@ GFW.modules.app = function(gfw) {
       } else {
         this.forest2000Layer = new google.maps.ImageMapType({
           getTileUrl: function(tile, zoom) {
-            return "http://earthengine.google.org/static/hansen_2013/tree_alpha/" + zoom + "/" + tile.x + "/" + tile.y + ".png";
+            return "http://earthengine.google.org/static/hansen_2013/gfw_pink_tree/" + zoom + "/" + tile.x + "/" + tile.y + ".png";
           },
           tileSize: new google.maps.Size(256, 256),
           opacity:1,

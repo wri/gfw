@@ -349,7 +349,7 @@ nav {
       }
 
       p {
-        height:50px;
+        height:90px;
         margin: 18px 0 18px 0;
 
         @extend .sans-serif;
@@ -1573,4 +1573,100 @@ body.static.old {
   }
 
   a { color: #444; }
+}
+
+/* =Footer
+----------------------------------------------- */
+
+.site-footer {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  min-height: 440px;
+  background-color: #464352;
+}
+
+.site-info {
+  font-size: 13px;
+  color: #b1afb6;
+
+  a {
+    color: #eee;
+    text-decoration: underline;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+
+.footer-share {
+  overflow: hidden;
+  display: block;
+  margin-bottom: 50px;
+  border-bottom: 1px solid #625f6d;
+  height: 45px;
+  padding: 16px 0;
+  font-size: 17px;
+  font-family: "fira_sans_otregular";
+  color: #fff;
+
+  p {
+    float: left;
+    line-height: 45px;
+
+    strong {
+      font-family: "fira_sans_otmedium";
+    }
+  }
+}
+
+.share_buttons {
+  float: right;
+  height: 27px;
+  padding: 12px 20px 6px;
+  background: #fff;
+  @include border-radius(23px);
+}
+
+.footer-logos {
+  float: left;
+  width: 460px;
+}
+
+.footer-logos p { margin-bottom: 10px; }
+
+.footer-address {
+  @extend .footer-logos;
+
+  p,
+  .footer-logo {
+    margin-bottom: 20px;
+  }
+
+  address {
+    line-height: 1.1;
+  }
+}
+
+.footer-logo {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 15px 10px 0;
+  width: 88px;
+
+  &.wri { height: 31px; width: 269px; @include logos-sprite(wri); }
+  &.google { height: 52px; @include logos-sprite(google); }
+  &.esri { height: 28px; @include logos-sprite(esri); }
+  &.universitymaryland { height: 52px; @include logos-sprite(universitymaryland); }
+  &.unep { height: 52px; @include logos-sprite(unep); }
+  &.imazon { height: 52px; @include logos-sprite(imazon); }
+  &.cfgd { height: 52px; @include logos-sprite(cfgd); }
+  &.osfac { height: 52px; @include logos-sprite(osfac); }
+  &.gfwca { height: 44px; @include logos-sprite(gfwca); }
+  &.scanex { height: 16px; @include logos-sprite(scannex); }
+  &.twrus { height: 20px; @include logos-sprite(twrus); }
+  &.norwegian { height: 52px; @include logos-sprite(norwegian); }
+  &.usaid { height: 53px; @include logos-sprite(usaid); }
+  &.gef { height: 42px; @include logos-sprite(gef); }
+  &.ukaid { height: 52px; @include logos-sprite(ukaid); }
+  &.tilia { height: 38px; @include logos-sprite(tilia); }
 }
