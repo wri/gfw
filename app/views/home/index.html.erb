@@ -3,32 +3,33 @@
 <% end %>
 
 <% content_for :filters do %>
-  <div id="filters">
-    <div class="inner">
-      <div class="filters hide">
-        <ul></ul>
+  <div id='filters'>
+    <div class='inner'>
+      <div class='filters hide'>
+        <ul class='filters-list'></ul>
       </div>
 
-      <div id="layer">
-        <a href="#" class="title"></a>
-        <div class="scroll">
-          <ul class="links"></ul>
+      <div id='layer'>
+        <a href='#' class='filter-title'></a>
+
+        <div class='filter-scroll'>
+          <ul class='filter-links'></ul>
         </div>
 
-        <div class="icon"></div>
-        <div class="line"></div>
+        <div class='filter-icon'></div>
+        <div class='filter-line'></div>
       </div>
     </div>
   </div>
 <% end %>
 
 <section class='map-container'>
-  <div class="analysis">
+  <div class='analysis'>
     <%= link_to t('.analysis_button'), '/#analysis', :'data-tip' => t('.analysis_tip'), :class => 'analysis-link' %>
 
-    <div class="analysis-bar">
+    <div class='analysis-bar'>
       <p><%= t('.analysis_bar.title') %></p>
-      <div class="options">
+      <div class='options'>
         <a href='/#done' class='done disabled'><%= t('.analysis_bar.done') %></a>
         <a href='/#cancel' class='cancel'><%= t('.analysis_bar.cancel') %></a>
       </div>
@@ -45,7 +46,7 @@
         <i></i>
         <h3><%= t('.actions.community.title') %></h3>
         <p><%= t('.actions.community.text') %></p>
-        <a href="https://groups.google.com/d/forum/globalforestwatch" class="btn darker_glow community" target="_blank"><%= t('.actions.community.link') %></a>
+        <a href='https://groups.google.com/d/forum/globalforestwatch' class='btn darker_glow community' target='_blank'><%= t('.actions.community.link') %></a>
       </li>
 
       <li class='column three analysis_tool'>
@@ -68,16 +69,16 @@
 <section class='section home_stories'>
   <div class='inner'>
     <h2 class='section-title'><%= t('.home_stories.featured.title') %></h2>
-    <p class="section-desc"><%= t(".home_stories.featured.text_html", :featured => link_to(t('.home_stories.featured.featured'), stories_path), :explore => link_to(t('.home_stories.featured.explore'), 'http://www.globalforestwatch.org/map', :class => 'map ajax')) %></p>
+    <p class='section-desc'><%= t('.home_stories.featured.text_html', :featured => link_to(t('.home_stories.featured.featured'), stories_path), :explore => link_to(t('.home_stories.featured.explore'), 'http://www.globalforestwatch.org/map', :class => 'map ajax')) %></p>
 
-    <ul class="columns">
+    <ul class='columns'>
     <% @featured.each do |story| %>
       <li class='column round three'>
-        <a href="<%= story_path(story['id']) %>">
+        <a href='<%= story_path(story['id']) %>'>
           <%= image_tag story_image_or_map(story['media'][0]['preview_url'], story['coordinates']), :alt => story['title'] %>
-          <div class="gradient"></div>
-          <div class="frame"></div>
-          <div class="title">
+          <div class='gradient'></div>
+          <div class='frame'></div>
+          <div class='title'>
             <strong><%= story['title'] %></strong>
             <span><%= t('.home_stories.featured.read_more') %></span>
           </div>

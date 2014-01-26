@@ -1,0 +1,14 @@
+@mixin radio($url) {
+  @include icons-sprite(radio, $offset-y:-67px);
+
+  &:hover          { @include icons-sprite($url, $offset-y:-207px); }
+
+  &:active         { @include icons-sprite($url, $offset-y:-207px); }
+  &:active:hover   { @include icons-sprite($url, $offset-y:-277px); }
+
+  &.checked        { @include icons-sprite($url, $offset-y:-137px); }
+  &.checked:hover  { @include icons-sprite($url, $offset-y:-277px); }
+
+  &.disabled       { @include icons-sprite($url, $offset-y:5px); }
+  &.disabled:hover { @include icons-sprite($url, $offset-y:5px); }
+}

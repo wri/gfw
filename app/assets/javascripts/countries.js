@@ -2,8 +2,8 @@
 //= require topojson.v1.min
 //= require scrollIt.min
 //= require jquery.qtip.min
-//= require ui/widget
-//= require ui/sourcewindow
+//= require gfw/ui/widget
+//= require gfw/ui/sourcewindow
 
 
 gfw.ui.view.CountriesShow = cdb.core.View.extend({

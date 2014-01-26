@@ -1,17 +1,26 @@
 //= require jquery-migrate-1.2.1.min
+//= require jquery-ui-1.10.4.custom.min
 //= require class
 //= require backbone.cartodb
 //= require jquery.easing.1.3
 //= require jquery.tipsy
 //= require gfw/canvas_tile_layer
+//= require gfw/deforestation_tile_layer
 //= require gfw/gfw_lib
 //= require gfw/grid_layer
-//= require ui/widget
-//= require ui/sourcewindow
-//= require ui/infowindow
-//= require home/analysis
-//= require home/filter
-//= require home/circle
+//= require gfw/ui/widget
+//= require gfw/ui/sourcewindow
+//= require gfw/ui/infowindow
+//= require gfw/ui/protected-infowindow
+//= require gfw/ui/legend
+//= require gfw/ui/analysis
+//= require gfw/ui/search
+//= require gfw/ui/filter
+//= require gfw/ui/layer_selector
+//= require gfw/ui/timeline
+//= require gfw/ui/timeline_loss
+//= require gfw/ui/timeline_modis
+//= require gfw/ui/timeline_imazon
 
 
 /*
@@ -22,8 +31,17 @@
 
 
 var loaded = false,
-    map = null;
-
+    map = null,
+    showMap = false,
+    LayerSelector = {},
+    Legend = {},
+    Analysis = {},
+    SearchBox = {},
+    Timeline = {},
+    TimelineLoss = {},
+    TimelineImazon = {},
+    TimelineModis = {};
+    // Filter and Circle have already been init
 
 $(function() {
 
@@ -85,6 +103,8 @@ $(function() {
     initialize: function() {
       this.model = new AppModel();
 
+      this.$map = $("#map");
+
       this._initRouter();
     },
 
@@ -113,11 +133,12 @@ $(function() {
         map = new google.maps.Map(document.getElementById('map'), config.MAPOPTIONS);
 
         google.maps.event.addListenerOnce(map, 'idle', function() {
+          that._loadOtherStuff();
+
           GFW(function(env) {
             GFW.app = new env.app.Instance(map, {
               user       : 'wri-01',
-              // layerTable : 'layerinfo_minus_imazon',
-              layerTable : 'layerinfo_minus_imazon_copy',
+              layerTable : 'layerinfo_dev_copy',
               logging    : false
             });
 
@@ -129,9 +150,6 @@ $(function() {
               state === 'home' ? that._showHomeState() : that._showMapState();
             }
           });
-
-          that._initListeners();
-          that._loadOtherStuff();
 
           loaded = true;
         });
@@ -145,13 +163,6 @@ $(function() {
     },
 
     _loadOtherStuff: function() {
-      this.analysis = new gfw.ui.view.Analysis(map);
-      this.storyInfowindow = new CartoDBInfowindow(map, { className: 'story_infowindow', width: 215 });
-
-      this.sourceWindow  = new gfw.ui.view.SourceWindow();
-
-      $('body').append(this.sourceWindow.render());
-
       $('.styled.checkbox').on('click', function(e) {
         e.preventDefault();
 
@@ -159,24 +170,46 @@ $(function() {
         $(this).hasClass('checked') ? $(this).find('input').val(1) : $(this).find('input').val(0);
       });
 
-      // this.timeline = new gfw.ui.view.Timeline({
-      //   container: $('#map')
-      // });
+      // Source window
+      this.sourceWindow = new gfw.ui.view.SourceWindow();
+      this.$el.append(this.sourceWindow.render());
 
-      // this.timeline_loss = new gfw.ui.view.TimelineLoss({
-      //   container: $('#map')
-      // });
+      // Info window
+      this.storyInfowindow = new CartoDBInfowindow(map, { className: 'story_infowindow', width: 215 });
 
-      // this.timeline_imazon = new gfw.ui.view.TimelineImazon({
-      //   container: $('#map')
-      // });
+      // Timeline
+      Timeline = new gfw.ui.view.Timeline({ container: this.$map });
+      TimelineLoss = new gfw.ui.view.TimelineLoss({ container: this.$map });
+      TimelineImazon = new gfw.ui.view.TimelineImazon({ container: this.$map });
+      TimelineModis = new gfw.ui.view.TimelineModis({ container: this.$map });
 
-      // this.timeline_modis = new gfw.ui.view.TimelineModis({
-      //   container: $('#map')
-      // });
+      // Layer selector
+      LayerSelector = new gfw.ui.view.LayerSelector({ map: map });
+      this.$map.append(LayerSelector);
+      LayerSelector.setDraggable(true);
+
+      // Legend
+      Legend = new gfw.ui.view.Legend();
+      this.$map.append(Legend);
+      Legend.setDraggable(true);
+
+      // Analysis
+      Analysis = new gfw.ui.view.Analysis();
+      this.$map.append(Analysis);
+      // this.analysis.setDraggable(true);
+
+      // Search box
+      SearchBox = new gfw.ui.view.SearchBox({ map: map });
+      this.$map.append(SearchBox);
+      SearchBox.setDraggable(true);
+
+      SearchBox.bind('goto', function(latlng, bounds) {
+        map.setCenter(latlng);
+        map.fitBounds(bounds);
+      });
 
       Filter.init();
-      Circle.init()
+      // Circle.init()
     },
 
     _openSource: function(e) {
@@ -185,36 +218,6 @@ $(function() {
       var source = $(e.target).attr("data-source");
 
       this.sourceWindow.show(source).addScroll();
-    },
-
-    _initListeners: function() {
-      var that = this;
-
-      google.maps.event.addListener(map, 'dragend', function() {
-        that._updateHash();
-      });
-
-      google.maps.event.addListener(map, 'zoom_changed', function() {
-        that._updateHash();
-      });
-
-      google.maps.event.addDomListener(map, 'dragend', function(event) {
-        that._updateCoordinates();
-      });
-
-      google.maps.event.addListener(map, 'center_changed', function(event) {
-        that._updateCoordinates();
-      });
-
-      google.maps.event.addListener(map, 'zoom_changed', function(event) {
-        that._updateCoordinates();
-      });
-    },
-
-    _updateCoordinates: function() {
-      // Timeline.updateCoordinates(that._map.getCenter());
-      // TimelineNotPlayer.updateCoordinates(that._map.getCenter());
-      // TimelineImazon.updateCoordinates(that._map.getCenter());
     },
 
     _selectMenu: function(name) {
@@ -233,11 +236,6 @@ $(function() {
         });
       });
 
-      if (this.time_layer) {
-        this.time_layer.cache_time(true);
-        this.time_layer.set_time(128);
-      }
-
       if (GFW && GFW.app) {
         GFW.app.close(function() {
           // Circle.show(250);
@@ -246,28 +244,27 @@ $(function() {
     },
 
     _showMapState: function() {
+      var that = this;
+
       this._selectMenu('map');
 
+      LayerSelector.show();
+      Legend.show();
+      Analysis.show();
+      SearchBox.show();
       // Circle.hide();
-
-      // layerSelector.show();
-      // legend.show();
-      // analysis.show();
-      // searchBox.show();
       // $('#zoom_controls').show();
       // $('#viewfinder').show();
 
-      if (this.time_layer) this.time_layer.set_time(self.time_layer.cache_time());
-
-      // if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'forma') {
-      //   Timeline.show();
-      // } else if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'modis') {
-      //   TimelineModis.show();
-      // } else if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'imazon') {
-      //   TimelineImazon.show();
-      // } else if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'loss') {
-      //   TimelineLoss.show();
-      // }
+      if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'forma') {
+        Timeline.show();
+      } else if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'modis') {
+        TimelineModis.show();
+      } else if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'imazon') {
+        TimelineImazon.show();
+      } else if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'loss') {
+        TimelineLoss.show();
+      }
 
       $('.big_numbers').fadeOut(250);
 
