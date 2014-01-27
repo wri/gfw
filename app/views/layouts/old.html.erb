@@ -1,21 +1,47 @@
 <!DOCTYPE html>
-<!--[if lt IE 10]>      <html class="no-js lt-ie10"> <![endif]-->
-<!--[if IE 10]>         <html class="no-js ie10"> <![endif]-->
-<!--[if gt IE 10]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title><%= yield :filters %></title>
-  <!-- title>Oops, your browser isn't supported</title -->
-
+  <title>Global Forest Watch</title>
+  <meta name="description" content="Global Forest Watch (GFW) is a partnership that provides the most current, reliable, and actionable information about what is happening in forests worldwide.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex">
 
   <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag "static", :media => "all" %>
   <%= javascript_include_tag "modernizr-2.6.2.min" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-  <%= yield %>
+<body class="<%= "#{controller_name} #{action_name}" %>">
+  <header class="header">
+    <div class="inner">
+      <a href="/" class="header-logo">Global Forest Watch</a>
+
+      <nav class="navbar">
+        <div id="google_translate_element"></div>
+      </nav>
+    </div>
+
+    <div class="header_separator"></div>
+
+    <div class="header-inner inner">
+      <h1 class="header-title"><%= yield :title %></h1>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="inner">
+      <%= yield %>
+    </div>
+  </div>
+
+  <%= render 'shared/footer' %>
+
+  <%= javascript_include_tag 'application' %>
+  <%= render 'shared/js_footer' %>
 </body>
 </html>

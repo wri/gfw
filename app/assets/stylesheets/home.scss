@@ -23,7 +23,18 @@
 ----------------------------------------------- */
 
 .home {
+  .header-inner {
+    overflow: hidden;
+  }
+
+  .header-logo {
+    position: absolute;
+    top: 44px;
+  }
+
   .header-title {
+    position: absolute;
+    top: 144px;
     float: left;
     width: 465px;
     font-size: 36px;
@@ -36,6 +47,7 @@
 }
 
 .big_numbers {
+  margin-top: 57px;
   float: right;
 
   li {
@@ -84,6 +96,10 @@
   border-top: 1px solid #717D80;
   border-bottom: 1px solid #717D80;
   @include user-select(none);
+
+  a {
+    @include transition(none);
+  }
 }
 
 .analysis-link {

@@ -92,14 +92,26 @@ GFW.modules.app = function(gfw) {
       this._setupZoom();
 
       google.maps.event.addDomListener(map, 'dragend', function(event) {
+        Timeline.updateCoordinates(map.getCenter());
+        TimelineLoss.updateCoordinates(map.getCenter());
+        TimelineModis.updateCoordinates(map.getCenter());
+        TimelineImazon.updateCoordinates(map.getCenter());
         that._updateCoordinates(map.getCenter());
       });
 
       google.maps.event.addListener(map, 'center_changed', function(event) {
+        Timeline.updateCoordinates(map.getCenter());
+        TimelineLoss.updateCoordinates(map.getCenter());
+        TimelineModis.updateCoordinates(map.getCenter());
+        TimelineImazon.updateCoordinates(map.getCenter());
         that._updateCoordinates(map.getCenter());
       });
 
       google.maps.event.addListener(map, 'zoom_changed', function(event) {
+        Timeline.updateCoordinates(map.getCenter());
+        TimelineLoss.updateCoordinates(map.getCenter());
+        TimelineModis.updateCoordinates(map.getCenter());
+        TimelineImazon.updateCoordinates(map.getCenter());
         that._updateCoordinates(map.getCenter());
       });
     },
@@ -1264,27 +1276,33 @@ GFW.modules.maplayer = function(gfw) {
 
           this._removeExtendedLayers();
 
-          // if (slug === 'forma' && showMap) {
-          //   Timeline.show();
-          //   Timeline.loadDefaultRange();
-          //   analysis.info.model.set('dataset', 'forma');
-          // } else {
-          //   Timeline.hide();
-          // }
+          if (slug === 'forma' && showMap) {
+            Timeline.show();
+            Analysis.info.model.set('dataset', 'forma');
+          } else {
+            Timeline.hide();
+          }
 
-          // if (slug === 'modis' && showMap) {
-          //   TimelineModis.show();
-          //   analysis.info.model.set('dataset', 'modis');
-          // } else {
-          //   TimelineModis.hide();
-          // }
+          if (slug === 'loss' && showMap) {
+            TimelineLoss.show();
+            Analysis.info.model.set('dataset', 'umd');
+          } else {
+            TimelineLoss.hide();
+          }
 
-          // if (slug === 'imazon' && showMap) {
-          //   TimelineImazon.show();
-          //   analysis.info.model.set('dataset', 'imazon');
-          // } else {
-          //   TimelineImazon.hide();
-          // }
+          if (slug === 'modis' && showMap) {
+            TimelineModis.show();
+            Analysis.info.model.set('dataset', 'modis');
+          } else {
+            TimelineModis.hide();
+          }
+
+          if (slug === 'imazon' && showMap) {
+            TimelineImazon.show();
+            Analysis.info.model.set('dataset', 'imazon');
+          } else {
+            TimelineImazon.hide();
+          }
 
           GFW.app.currentBaseLayer = slug;
           GFW.app._updateBaseLayer();
@@ -1317,7 +1335,7 @@ GFW.modules.maplayer = function(gfw) {
           GFW.app._addLayer(forestgain);
           forestgain.set('visible', true);
           GFW.app._updateBaseLayer();
-          // Analysis.info.model.set('dataset', 'umd');
+          Analysis.info.model.set('dataset', 'umd');
 
           var subEvent;
 

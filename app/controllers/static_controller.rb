@@ -7,7 +7,7 @@ class StaticController < ApplicationController
     render :layout => "old"
   end
 
-  def tos
+  def terms
     render :layout => "old"
   end
 

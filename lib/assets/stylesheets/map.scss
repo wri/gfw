@@ -1643,3 +1643,159 @@
     cursor: pointer;
   }
 }
+
+.qtip-default {
+  border: 1px solid #ccc;
+  background: #fff;
+  @include border-radius(3px);
+  @include box-shadow(0 0 3px rgba(#000, .2));
+}
+
+.qtip-content {
+  padding: 0;
+
+  li {
+    &:first-child a {
+      border-top: 0;
+    }
+
+    a {
+      display: block;
+      border-top: 1px solid #ddd;
+      padding: 10px;
+      font-size: 13px;
+      @extend .serif;
+      color: #666;
+
+      &:hover {
+        background: #fafafa;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+label {
+  display: block;
+  @extend .sans-serif;
+  color: #333333;
+  font-weight:bold;
+  font-size:12px;
+  text-decoration:none;
+  text-transform:uppercase;
+}
+
+
+.input_title {
+
+  &.short { width: 285px; }
+
+  &.error label, .field_with_errors  label { color: #C12000; }
+
+  width: 590px;
+  clear:both;
+  overflow:hidden;
+
+  @extend .sans-serif;
+  color: #C12000;
+  font-size:13px;
+
+  /*background:blue;*/
+
+  label { float: left; }
+
+  .error-message {
+    display:block;
+    float: right;
+  }
+}
+
+.input-field {
+
+  @include inline-block();
+  height:36px;
+  width: 416px;
+
+  background: url(backgrounds/bkg_form_input.png) no-repeat left 0;
+
+  input[type="text"], input[type="password"], input[type="email"] {
+    width:100%;
+    height:37px;
+    margin: 0 0 0 7px;
+    padding: 0 7px 0 5px;
+
+    font-size: 14px;
+
+    background:url(backgrounds/bkg_form_input.png) repeat-x right -36px;
+    border:none;
+    outline:none;
+  }
+
+  &.short {
+    width: 267px;
+    height: 42px;
+    background:url(backgrounds/bkg_form_input_big.png) no-repeat left 0;
+
+    input[type="text"] {
+      height:43px;
+      background:url(backgrounds/bkg_form_input_big.png) repeat-x right -42px;
+    }
+
+    &.error {
+      background-position: left -84px;
+      input[type="text"] { background-position: right -126px; }
+    }
+  }
+
+  &.big {
+    height: 42px;
+    background:url(backgrounds/bkg_form_input_big.png) no-repeat left 0;
+
+    input[type="text"] {
+      height:43px;
+      background:url(backgrounds/bkg_form_input_big.png) repeat-x right -42px;
+    }
+  }
+
+  &.huge {
+    width: 570px;
+    height: 42px;
+    background:url(backgrounds/bkg_form_input_big.png) no-repeat left 0;
+
+    input[type="password"], input[type="text"], input[type="email"] {
+      height:43px;
+      background:url(backgrounds/bkg_form_input_big.png) repeat-x right -42px;
+    }
+
+    &.error {
+      background-position: left -84px;
+      input[type="text"], input[type="password"], input[type="email"] { background-position: right -126px; }
+    }
+
+  }
+
+  &.textarea {
+
+    $width: 573px;
+    $height: 196px;
+
+    @include inline-block();
+    @include size($width, $height);
+
+    background:url(backgrounds/bkg_form_textarea.png) no-repeat left 0;
+
+    textarea {
+      @include size(100%, $height - 7*2);
+      margin: 0 0 0 5px;
+      padding: 7px 5px;
+
+      font-size: 14px;
+      background:url(backgrounds/bkg_form_textarea.png) repeat-x right -1*$height;
+
+      border:none;
+      outline:none;
+      resize: none;
+    }
+  }
+
+}

@@ -71,10 +71,12 @@ strong {
   color: #fff;
   font-size: 11px;
   font-weight: 600;
+  @extend .sans-serif;
   text-decoration: none;
   text-transform: uppercase;
   background: #9bb251;
   @include border-radius(2px);
+  cursor: pointer;
 
   &.red {
     background: #AC2E25;
@@ -92,6 +94,16 @@ strong {
   &.darker_glow:hover {
     @include box-shadow(0 0 6px 1px rgba(#000, .8));
   }
+}
+
+.accept_btn {
+  margin: 0;
+  width: 180px;
+}
+
+a.accept_btn {
+  padding: 13px 0;
+  margin-left: 20px;
 }
 
 
@@ -372,11 +384,12 @@ strong {
 .header-logo {
   display: inline-block;
   position: relative;
-  z-index: 1000;
+  z-index: 1050;
   @include logos-sprite(logo);
   width: 108px;
   height: 100px;
   text-indent: -99999px;
+  @include transition(none);
 }
 
 .navbar {
@@ -425,12 +438,20 @@ strong {
 .header-title {
   margin-left: 10px;
   @extend .serif;
-  font-size: 51px;
+  font-size: 37px;
   text-align: center;
   color: #333;
 
+  &.big {
+    font-size: 51px;
+  }
+
   a {
     text-decoration: none;
+  }
+
+  span {
+    color: #A1BA42;
   }
 }
 
@@ -628,6 +649,7 @@ strong {
 .footer-logos p { margin-bottom: 10px; }
 
 .footer-address {
+  @extend .sans-serif;
   @extend .footer-logos;
 
   p,

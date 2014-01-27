@@ -10,6 +10,8 @@
 //= require cartodb-gmapsv3
 //= require minpubsub
 //= require markerclusterer_compiled
+//= require geojson
+//= require gfw/map_helpers
 //= require gfw/canvas_tile_layer
 //= require gfw/deforestation_tile_layer
 //= require gfw/static_grid_layer_imazon
@@ -54,6 +56,8 @@ var loaded = false,
     TimelineImazon = {},
     TimelineModis = {};
     // Filter and Circle have already been init
+
+var resizePID;
 
 $(function() {
 
@@ -228,6 +232,13 @@ $(function() {
       Filter.init();
       Circle.init();
       Circle.show();
+
+      $(window).resize(function() {
+        clearTimeout(resizePID);
+        resizePID = setTimeout(function() { resizeWindow(); }, 100);
+      });
+
+      $(window).scroll(positionScroll);
     },
 
     _onClickSource: function(e) {
@@ -242,6 +253,12 @@ $(function() {
     _selectMenu: function(name) {
       $('.navbar li a').removeClass('selected');
       $('.navbar .' + name).addClass('selected');
+
+      if (name === 'map') {
+        $('.header').addClass('stuck');
+      } else {
+        $('.header').removeClass('stuck');
+      }
     },
 
     _showHomeState: function() {

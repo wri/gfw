@@ -1,6 +1,7 @@
 @import 'compass/css3/border-radius';
 @import 'compass/css3/opacity';
 @import 'compass/css3/transition';
+@import 'compass/css3/box-shadow';
 
 @import 'fonts';
 
@@ -513,4 +514,63 @@
     @include static-logos-sprite(vizzuality);
     &:hover { @include static-logos-sprite(vizzuality_hover); }
   }
+}
+
+.static {
+  &.terms {
+    font-size: 17px;
+    line-height: 1.4;
+    @extend .serif;
+    color: #444;
+  }
+}
+
+.terms_field {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 450px;
+  margin: 30px 0;
+  padding: 8px;
+  border: 1px solid #CCC;
+  outline: none;
+  font-size: 15px;
+  @extend .serif;
+  @include box-shadow(0 1px 5px rgba(#000, .2) inset);
+  @include border-radius(3px);
+
+  p {
+    margin-bottom: 10px;
+
+    &.terms_header {
+      text-align: center;
+      font-weight: bold;
+      margin: 10px 0 20px;
+
+      strong { text-decoration: underline; }
+    }
+  }
+
+  ol,
+  ul {
+    list-style-position: outside;
+    margin-left: 25px;
+  }
+
+  span { text-decoration: underline; }
+
+  li { margin-bottom: 10px; }
+
+  .num { list-style-type: decimal; }
+  .let { list-style-type: lower-alpha; }
+  .rom { list-style-type: lower-roman; }
+  .bullets { list-style-type: disc; }
+
+  .num_title {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+}
+
+.terms_footer {
+  text-align: center;
 }
