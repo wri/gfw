@@ -16,8 +16,8 @@ class CountriesController < ApplicationController
 
   private
 
-  def load_countries
-    @countries = Api::Country.all['countries']
-  end
+    def load_countries
+      @countries = Api::Country.all['countries']
+    end
 
 end

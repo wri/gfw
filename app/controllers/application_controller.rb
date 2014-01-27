@@ -1,11 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  # before_filter :check_browser
-
-  def not_supported_browser
-    redirect_to "/notsupportedbrowser"
-  end
+  before_filter :check_browser
+  before_filter :check_terms
 
   def not_found
     raise ActionController::RoutingError.new('Not Found')
@@ -26,7 +23,15 @@ class ApplicationController < ActionController::Base
     def check_browser
       user_agent = UserAgent.parse(request.user_agent)
 
-      not_supported_browser unless SupportedBrowsers.detect { |browser| user_agent >= browser }
+      redirect_to "/notsupportedbrowser" unless SupportedBrowsers.detect { |browser| user_agent >= browser }
+    end
+
+    def check_terms
+      cookies[:go_to] = request.path
+
+      unless cookies.permanent[ENV['TERMS_COOKIE'].to_sym]
+        redirect_to "/terms"
+      end
     end
 
 end

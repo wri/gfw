@@ -1,7 +1,7 @@
 <section class="section section_dark more_stories">
   <div class="inner">
     <h2 class="section-title"><%= t('stories.more_stories.title') %></h2>
-    <p><%= t("stories.more_stories.text_html", :browse => link_to(t('stories.more_stories.browse'), 'http://www.globalforestwatch.org/map'), :submit => link_to(t('stories.more_stories.submit'), new_story_path)) %></p>
+    <p><%= t("stories.more_stories.text_html", :browse => link_to(t('stories.more_stories.browse'), map_path), :submit => link_to(t('stories.more_stories.submit'), new_story_path)) %></p>
 
     <ul class='columns'>
       <% @stories.each do |story| %>

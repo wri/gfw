@@ -55,7 +55,7 @@
         <a href='#' class='action disabled'></a>
       </li>
 
-      <% map_coords = "http://www.globalforestwatch.org/map/5/#{@country['lat'].round(2)}/#{@country['lng'].round(2)}/#{@country['iso']}" %>
+      <% map_coords = "#{root_path}/map/5/#{@country['lat'].round(2)}/#{@country['lng'].round(2)}/#{@country['iso']}" %>
       <li class='column three graph map'>
         <a href='<%= map_coords %>' class='info' title='Use this icon to navigate to the GFW map.' data-source='forest_map'><span>i</span></a>
         <a href='<%= map_coords %>'>
@@ -268,7 +268,7 @@
             </div>
           </a>
         <% end %>
-        <p>See more on the <%= link_to 'map', 'http://www.globalforestwatch.org/map/3/15.00/27.00/ALL/580', :class => 'inline' %></p>
+        <p>See more on the <%= link_to 'map', '/map/3/15.00/27.00/ALL/580', :class => 'inline' %></p>
       </li>
 
       <li class='column three last'>
@@ -276,7 +276,7 @@
           <strong class='column-title'>Mongabay stories</strong>
           <h3 class='story-title'><%= truncate(@mongabay_story[0]['title'], :length => 35) %></h3>
           <p class='story-content'><%= truncate(@mongabay_story[0]['description'], :length => 300) %> <%= link_to('more', @mongabay_story[0]['loc'], :target => '_blank') %></p>
-          <p>See more on the <%= link_to 'map', 'http://www.globalforestwatch.org/map/3/15.00/27.00/ALL/586' %></p>
+          <p>See more on the <%= link_to 'map', '/map/3/15.00/27.00/ALL/586' %></p>
         <% end %>
       </li>
     </ul>

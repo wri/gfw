@@ -61,7 +61,7 @@
 <section class='section home_stories'>
   <div class='inner'>
     <h2 class='section-title'><%= t('.home_stories.featured.title') %></h2>
-    <p class='section-desc'><%= t('.home_stories.featured.text_html', :featured => link_to(t('.home_stories.featured.featured'), stories_path), :explore => link_to(t('.home_stories.featured.explore'), 'http://www.globalforestwatch.org/map', :class => 'map ajax')) %></p>
+    <p class='section-desc'><%= t('.home_stories.featured.text_html', :featured => link_to(t('.home_stories.featured.featured'), stories_path), :explore => link_to(t('.home_stories.featured.explore'), map_path, :class => 'map ajax')) %></p>
 
     <ul class='columns'>
     <% @featured.each do |story| %>
