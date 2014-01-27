@@ -12,7 +12,8 @@ var config = {
   ISO:          'ALL',
   MONTHNAMES:         ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
   MONTHNAMES_SHORT:   ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
-  QUARTERNAMES:       ["JAN - MAR", "APR - JUN", "JUL - SEP", "OCT - DEC"]
+  QUARTERNAMES:       ["JAN - MAR", "APR - JUN", "JUL - SEP", "OCT - DEC"],
+  BASE_MAP_STYLE:     [ { "featureType": "water"  }, { "featureType": "transit", "stylers": [ { "saturation": -100 } ] }, { "featureType": "road", "stylers": [ { "saturation": -100 } ] }, { "featureType": "poi", "stylers": [ { "saturation": -100 } ] }, { "featureType": "landscape", "stylers": [ { "saturation": -100 } ] }, { "featureType": "administrative", "stylers": [ { "saturation": -100 } ] } ]
 };
 
 config.MAPOPTIONS = {
@@ -21,6 +22,7 @@ config.MAPOPTIONS = {
   maxZoom:  config.MAXZOOM,
   center:   new google.maps.LatLng(config.LAT, config.LNG),
   mapTypeId: google.maps.MapTypeId.TERRAIN,
+  backgroundColor: '#99b3cc',
   disableDefaultUI: true,
   panControl: false,
   zoomControl: false,
@@ -28,6 +30,7 @@ config.MAPOPTIONS = {
   scaleControl: false,
   streetViewControl: false,
   overviewMapControl: false,
+  scrollwheel: false,
   layers: ''
 };
 
@@ -44,6 +47,95 @@ config.OVERLAYSTYLES = {
     new google.maps.Point(0, 0), // offset
     new google.maps.Point(18, 18) // anchor
   )
+};
+
+config.MAPSTYLES = {};
+
+config.MAPSTYLES.forestsoft = new google.maps.ImageMapType({
+  getTileUrl: function(ll, z) {
+    var X = ll.x % (1 << z);  // wrap
+    return "http://api.tiles.mapbox.com/v3/cartodb.global-forest-height/" + z + "/" + X + "/" + ll.y + ".png";
+  },
+  tileSize: new google.maps.Size(256, 256),
+  isPng: true,
+  maxZoom: 7,
+  name: "Forest Height",
+  alt: "Global forest height"
+});
+
+config.MAPSTYLES.treeheight = new google.maps.ImageMapType({
+  getTileUrl: function(ll, z) {
+    var X = ll.x % (1 << z);  // wrap
+    return "http://gfw-ee-tiles.appspot.com/gfw/simple_green_coverage/" + z + "/" + X + "/" + ll.y + ".png";
+  },
+  tileSize: new google.maps.Size(256, 256),
+  isPng: true,
+  maxZoom: 8,
+  name: "Forest Height",
+  alt: "Global forest height",
+  alt: 'NASA JPL, California Institute of Technology, <a href="http://lidarradar.jpl.nasa.gov" target="_blank">3D Global Vegetation Map</a>'
+});
+
+config.MAPSTYLES.landsat = [];
+window.landsat_year = [];
+
+for(var i = 1999;i < 2013; i++) {
+  window.landsat_year[i] = i;
+
+  (function(year) {
+    config.MAPSTYLES.landsat[i] = new google.maps.ImageMapType({
+      getTileUrl: function(ll, z) {
+        var X = ll.x % (1 << z);  // wrap
+        return "http://gfw-ee-tiles.appspot.com/gfw/landsat_composites/" + z + "/" + X + "/" + ll.y + ".png?year="+year;
+      },
+      tileSize: new google.maps.Size(256, 256),
+      isPng: true,
+      maxZoom: 13,
+      name: "Landsat "+i
+    });
+  })(i);
+}
+
+var Road = function(){
+  this.Road = function(){
+    map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+    map.setOptions({styles: null});
+  };
+};
+
+var Satellite = function(){
+  this.Satellite = function(){
+    map.setMapTypeId(google.maps.MapTypeId.SATELLITE);
+    map.setOptions({styles: null});
+  };
+};
+
+var Hybrid = function(){
+  this.Hybrid = function(){
+    map.setMapTypeId(google.maps.MapTypeId.HYBRID);
+    map.setOptions({styles: null});
+  };
+};
+
+var Forest = function(){
+  this.Forest = function(){
+    map.setMapTypeId('forests');
+    map.setOptions({styles: null});
+  };
+};
+
+var ForestSoft = function(){
+  this.ForestSoft = function(){
+    map.setMapTypeId('forests_soft');
+    map.setOptions({styles: null});
+  };
+};
+
+var Soft = function(){
+  this.Soft = function(){
+    map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+    map.setOptions({styles: map_style.google_maps_customization_style});
+  };
 };
 
 config.GRAPHS = {

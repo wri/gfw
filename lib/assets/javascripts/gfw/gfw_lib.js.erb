@@ -89,7 +89,7 @@ GFW.modules.app = function(gfw) {
 
       this.currentBaseLayer = 'loss';
 
-      // this._setupZoom();
+      this._setupZoom();
 
       google.maps.event.addDomListener(map, 'dragend', function(event) {
         that._updateCoordinates(map.getCenter());

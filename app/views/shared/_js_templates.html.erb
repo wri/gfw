@@ -1,9 +1,11 @@
 <% content_for :js do %>
+  <!-- Source window -->
   <script id='window-template' type='text/x-underscore-template'>
     <a href='#' class='close'></a>
     <div class='content'></div>
   </script>
 
+  <!-- Filters -->
   <script id='filter-template' type='text/x-underscore-template'>
     <li class='filter {{ category }}' data-id='{{ data }}'>
       <a href='#' style='color: {{ category_color }}'>{{ name }}</a>
@@ -60,6 +62,7 @@
     </li>
   </script>
 
+  <!-- Legends -->
   <script id='legend-template' type='text/x-underscore-template'>
     <a href='#' class='toggle'></a>
     <div class='layer_count'>0 layers</div>
@@ -170,6 +173,24 @@
         {{/sublayer}}
       </ul>
     </ul>
+  </script>
+
+  <!-- Layer selector -->
+  <script id='layer_selector-template' type='text/x-underscore-template'>
+    <a href='#' class='toggle'></a>
+    <ul class='selected_layer'></ul>
+    <ul class='layers'></ul>
+  </script>
+
+  <script id='layer-template' type='text/x-underscore-template'>
+    <li id='{{name}}' class='{{ name }}'>
+      <a href='#'><i></i>{{title}}</a>
+      <a href='#' data-source='{{ name }}' class='source'></a>
+    </li>
+  </script>
+
+  <script id='landsat_selector-template' type='text/x-underscore-template'>
+    <ul class='landsat_layers'><div class='tip'></div></ul>
   </script>
 
 
@@ -324,32 +345,13 @@
       <div class='icon {{icon}}'>
         <i></i>
       </div>
-      <div class='timeline-inner'>
+      <div class='circle-inner'>
         <div class='counter'>{{count}}</div>
         <div class='title'>{{title}}</div>
         <div class='background'></div>
         <div class='explore'>Explore the map</div>
       </div>
     </div>
-  </script>
-
-  <!-- Layer selector -->
-  <script id='layer_selector-template' type='text/x-underscore-template'>
-    <a href='#' class='toggle'></a>
-    <ul class='selected_layer'></ul>
-    <ul class='layers'></ul>
-  </script>
-
-  <script id='layer-template' type='text/x-underscore-template'>
-    <li id='{{name}}' class='{{ name }}'>
-      <a href='#'><i></i>{{title}}</a>
-      <a href='#' data-source='{{ source }}' class='source'></a>
-    </li>
-  </script>
-
-  <!-- Landsat selector -->
-  <script id='landsat_selector-template' type='text/x-underscore-template'>
-    <ul class='landsat_layers'><div class='tip'></div></ul>
   </script>
 
   <!-- Analysis info -->

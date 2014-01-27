@@ -24,17 +24,9 @@
 <% end %>
 
 <section class='map-container'>
-  <div class='analysis'>
-    <%= link_to t('.analysis_button'), '/#analysis', :'data-tip' => t('.analysis_tip'), :class => 'analysis-link' %>
-
-    <div class='analysis-bar'>
-      <p><%= t('.analysis_bar.title') %></p>
-      <div class='options'>
-        <a href='/#done' class='done disabled'><%= t('.analysis_bar.done') %></a>
-        <a href='/#cancel' class='cancel'><%= t('.analysis_bar.cancel') %></a>
-      </div>
-    </div>
-  </div>
+  <div id="viewfinder"></div>
+  <div id="zoom_controls"></div>
+  <div class="coordinates map_coordinates"></div>
 
   <div id='map' class='map'></div>
 </section>

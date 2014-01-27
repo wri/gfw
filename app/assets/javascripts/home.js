@@ -4,6 +4,7 @@
 //= require backbone.cartodb
 //= require jquery.easing.1.3
 //= require jquery.tipsy
+//= require jquery.qtip.min
 //= require imgLiquid.min
 //= require wax.g.min
 //= require cartodb-gmapsv3
@@ -24,6 +25,7 @@
 //= require gfw/ui/analysis
 //= require gfw/ui/search
 //= require gfw/ui/filter
+//= require gfw/ui/circle
 //= require gfw/ui/layer_selector
 //= require gfw/ui/timeline
 //= require gfw/ui/timeline_loss
@@ -90,7 +92,6 @@ $(function() {
       this.trigger('loadgfw', 'map');
 
       if (lat && lon) map.setCenter(new google.maps.LatLng(lat, lon));
-      // if (iso != 'ALL') analysis._loadCountry(iso);
     }
   });
 
@@ -141,6 +142,10 @@ $(function() {
 
       if (!loaded) {
         map = new google.maps.Map(document.getElementById('map'), config.MAPOPTIONS);
+
+        var styledMap = new google.maps.StyledMapType(config.BASE_MAP_STYLE, { name: 'terrain_style' });
+        map.mapTypes.set('terrain_style', styledMap);
+        map.setMapTypeId('terrain_style');
 
         google.maps.event.addListenerOnce(map, 'idle', function() {
           that._loadOtherStuff();
@@ -195,7 +200,7 @@ $(function() {
 
       // Layer selector
       LayerSelector = new gfw.ui.view.LayerSelector({ map: map });
-      this.$map.append(LayerSelector);
+      this.$map.append(LayerSelector.render());
       LayerSelector.setDraggable(true);
 
       // Legend
@@ -205,8 +210,10 @@ $(function() {
 
       // Analysis
       Analysis = new gfw.ui.view.Analysis();
-      this.$map.append(Analysis);
-      // this.analysis.setDraggable(true);
+      this.$map.append(Analysis.render());
+      Analysis.show();
+
+      if (config.ISO != 'ALL') Analysis._loadCountry(config.ISO);
 
       // Search box
       SearchBox = new gfw.ui.view.SearchBox({ map: map });
@@ -219,7 +226,8 @@ $(function() {
       });
 
       Filter.init();
-      // Circle.init()
+      Circle.init();
+      Circle.show();
     },
 
     _onClickSource: function(e) {
@@ -251,7 +259,18 @@ $(function() {
 
       if (GFW && GFW.app) {
         GFW.app.close(function() {
-          // Circle.show(250);
+          Circle.show(250);
+          LayerSelector.hide();
+          Legend.hide();
+          SearchBox.hide();
+          Timeline.hide();
+          TimelineModis.hide();
+          TimelineImazon.hide();
+          TimelineLoss.hide();
+          Analysis.hide();
+          $('#analysis_control').hide();
+          $('#zoom_controls').hide();
+          $('#viewfinder').hide();
         });
       }
     },
@@ -265,11 +284,12 @@ $(function() {
 
       LayerSelector.show();
       Legend.show();
-      Analysis.show();
       SearchBox.show();
-      // Circle.hide();
-      // $('#zoom_controls').show();
-      // $('#viewfinder').show();
+      Analysis.show();
+      $('#analysis_control').show();
+      $('#zoom_controls').show();
+      $('#viewfinder').show();
+      Circle.hide();
 
       if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'forma') {
         Timeline.show();
