@@ -183,7 +183,7 @@
   <script id='timeline_loss-template' type='text/x-underscore-template'>
     <div class='coordinates'></div>
     <div class='timeline_legend'><p>Loss</p></div>
-    <div class='inner'>
+    <div class='timeline-inner'>
       <div class='action'>
         <a class='play' href='#'></a>
         <a class='pause' href='#'></a>
@@ -217,7 +217,7 @@
   <script id='timeline_new-template' type='text/x-underscore-template'>
     <div class='coordinates'></div>
     <div class='timeline_legend'><p>FORMA alerts</p></div>
-    <div class='inner'>
+    <div class='timeline-inner'>
       <div class='action'>
         <a class='play' href='#'></a>
         <a class='pause' href='#'></a>
@@ -251,7 +251,7 @@
   <script id='timeline_imazon-template' type='text/x-underscore-template'>
     <div class='coordinates'></div>
     <div class='timeline_legend'><p>Imazon SAD alerts</p></div>
-    <div class='inner'>
+    <div class='timeline-inner'>
       <div class='time'>
         <div class='line'><div class='tipsy'><span>Month</span><div class='arrow'></div></div></div>
 
@@ -278,10 +278,10 @@
     </div>
   </script>
 
-  <script id='timeline_notplayer-template' type='text/x-underscore-template'>
+  <script id='timeline_modis-template' type='text/x-underscore-template'>
     <div class='coordinates'></div>
     <div class='timeline_legend'><p>QUICC alerts</p></div>
-    <div class='inner'>
+    <div class='timeline-inner'>
       <div class='time'>
         <ul class='quarters'></ul>
         <div class='line'><div class='tipsy'><span>APR - JUN 2013</span><div class='arrow'></div></div></div>
@@ -324,36 +324,13 @@
       <div class='icon {{icon}}'>
         <i></i>
       </div>
-      <div class='inner'>
+      <div class='timeline-inner'>
         <div class='counter'>{{count}}</div>
         <div class='title'>{{title}}</div>
         <div class='background'></div>
         <div class='explore'>Explore the map</div>
       </div>
     </div>
-  </script>
-
-  <!-- Gallery -->
-
-  <script id='gallery-template' type='text/x-underscore-template'>
-    <div class='gallery'>
-      <h3>{{title}}</h3>
-      <div class='inner'>
-        <ul></ul>
-      </div>
-      <a href='#' class='left'></a>
-      <a href='#' class='right'></a>
-    </div>
-  </script>
-
-  <script id='gallery_item-template' type='text/x-underscore-template'>
-    <li>
-    <a href='{{url}}'>
-      <div class='thumb'><img src='{{thumb_url}}' alt='{{tilte}}' /></div>
-      <strong>{{title}}</strong>
-      <p>{{description}}</p>
-    </a>
-    </li>
   </script>
 
   <!-- Layer selector -->

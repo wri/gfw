@@ -847,7 +847,7 @@ GFW.modules.app = function(gfw) {
       Timeline.loadDefaultRange();
     },
 
-    _loadTimeLayerNotPlayer: function() {
+    _loadTimeLayerModis: function() {
       var that = this;
 
       this.time_layer_modis = new StaticGridLayer({
@@ -920,7 +920,7 @@ GFW.modules.app = function(gfw) {
 
       } else if (this.currentBaseLayer === 'modis') {
         if (config.mapLoaded && !this.time_layer_modis) {
-          this._loadTimeLayerNotPlayer();
+          this._loadTimeLayerModis();
         } else {
           if (this.time_layer_modis) {
             this.time_layer_modis.show();
@@ -939,7 +939,7 @@ GFW.modules.app = function(gfw) {
         } else {
           if (this.time_layer_imazon) {
             this.time_layer_imazon.show();
-            // TimelineImazon.show();
+            TimelineImazon.show();
           }
         }
 

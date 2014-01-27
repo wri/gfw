@@ -7,6 +7,7 @@
 //= require imgLiquid.min
 //= require wax.g.min
 //= require cartodb-gmapsv3
+//= require minpubsub
 //= require markerclusterer_compiled
 //= require gfw/canvas_tile_layer
 //= require gfw/deforestation_tile_layer
