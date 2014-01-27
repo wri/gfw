@@ -1,4 +1,4 @@
-//= require ui/carrousel
+//= require gfw/ui/carrousel
 
 gfw.ui.view.StoriesEdit = cdb.core.View.extend({
 
