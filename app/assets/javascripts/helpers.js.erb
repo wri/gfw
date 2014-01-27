@@ -134,3 +134,31 @@ function draw(topology, c, iso, options) {
       .style("fill", "#AAC600");
   }
 }
+
+function executeAjax(url, data, callback, type) {
+  var jqxhr = null;
+  var key = null;
+  var val = null;
+
+  type = type ? type : "GET";
+
+  $.ajax({
+    url: url,
+    type: type,
+    data: data,
+    success: function(response) {
+      if (callback) {
+        callback.success(response);
+      }
+    },
+    error: function(status, error) {
+      if (callback) {
+        callback.error(status, error);
+      }
+    },
+    contentType: 'application/json',
+    dataType: 'json'
+  });
+
+  return jqxhr;
+}

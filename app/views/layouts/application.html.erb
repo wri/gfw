@@ -29,8 +29,6 @@
   <%= csrf_meta_tags %>
 </head>
 <body class="<%= "#{controller_name} #{action_name}" %>">
-  <script src="http://wri.org/wri-global-nav/wri-nav.js"></script>
-
   <header class="header">
     <div class="inner">
       <a href="/" class="header-logo">Global Forest Watch</a>
@@ -157,6 +155,9 @@
   <%= javascript_include_tag 'application' %>
   <%= controller_javascript_include_tag %>
   <%= yield :js %>
+
+  <!-- wri -->
+  <script src="http://wri.org/wri-global-nav/wri-nav.js"></script>
 
   <!-- analytics -->
   <% if(ENV["RAILS_ENV"] == 'production') %>

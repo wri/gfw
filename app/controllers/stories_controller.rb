@@ -53,7 +53,7 @@ class StoriesController < ApplicationController
 
     def load_stories
       @stories = if params['for_map'].present?
-                   Api::Story.featured_for_map
+                   Api::Story.featured
                  else
                    Api::Story.featured.sample(5)
                  end

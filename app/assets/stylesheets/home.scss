@@ -8,6 +8,7 @@
 @import 'compass/css3/opacity';
 @import 'compass/css3/inline-block';
 @import 'compass/css3/transition';
+@import 'compass/css3/text-shadow';
 
 @import 'fonts';
 @import 'helpers';
@@ -125,6 +126,10 @@
     color: #000;
   }
 }
+
+
+/* =Circle
+----------------------------------------------- */
 
 .circle {
   $width: 318px;
@@ -390,34 +395,16 @@
     @include radio(radio);
   }
 
-  .checkbox.checked {
-    i span { left: 9px; }
+  .checkbox {
+    @extend .check_icon;
 
-    &.forest_change { background: #F69; }
-    &.forest_cover  { background: #B2D26E; }
-    &.forest_use    { background: #c98e6c; }
-    &.conservation  { background: #3182BD; }
-    &.people        { background: #707D92; }
-    &.stories       { background: #F2B257; }
-  }
-
-  i {
-    display: inline-block;
-    position: relative;
-    float: left;
-    width: 17px;
-    height: 10px;
-    background: #ddd;
-    margin: 4px 8px 0 0;
-    @include border-radius(5px);
-
-    span {
-      position: absolute;
-      left: 2px; top: 2px;
-      width: 6px;
-      height: 6px;
-      background: #fff;
-      @include border-radius(4px);
+    &.checked {
+      &.forest_change { background: #F69; }
+      &.forest_cover  { background: #B2D26E; }
+      &.forest_use    { background: #c98e6c; }
+      &.conservation  { background: #3182BD; }
+      &.people        { background: #707D92; }
+      &.stories       { background: #F2B257; }
     }
   }
 
@@ -436,17 +423,21 @@
   }
 
   .disabled {
-    background: #F5F5F5;
+    background: #F5F5F5 image-url('icons/disabled.png') no-repeat 10px 50%;
     color: #ccc;
 
     strong {
       display: block;
       font-size: 12px;
     }
+
+    .name { margin-left: 27px; }
   }
 
   .extra {
-    margin-left: 17px;
+    margin: 10px 0 0 17px;
+
+    .subtitle { margin-left: 0; }
   }
 }
 
@@ -456,6 +447,226 @@
   width: 16px;
   height:16px;
   margin: -8px;
+}
+
+
+/* =Legend
+----------------------------------------------- */
+
+.legend {
+  position: absolute;
+  z-index: 1000;
+  top: 35px; left: 60px;
+  width: 245px;
+  min-height: 20px;
+  border: 1px solid #666;
+  padding: 10px 0;
+  font-size: 11px;
+  @extend .sans-serif;
+  color: #999;
+  background: #fff;
+  @include border-radius(3px);
+  @include box-shadow(0px 0px 3px #666);
+  cursor: move;
+
+  .toggle {
+    position: absolute;
+    top: 2px; right: -25px;
+    width: 25px;
+    height: 38px;
+    @include icons-sprite(legend_toggle_close);
+    @include transition(none);
+  }
+
+  &.closed .toggle { @include icons-sprite(legend_toggle_open); }
+
+  .shadow {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    bottom: 1px;
+    width: 100%;
+    height: 20px;
+    background: image-url('backgrounds/white_shadow.png') repeat-x;
+  }
+
+  .jspPane {
+    width: 245px;
+  }
+
+  .jspVerticalBar {
+    margin-right: 10px;
+  }
+
+  .content {
+    width: 245px;
+    max-height: 400px;
+    height: 20px;
+    overflow: auto;
+    outline: none;
+  }
+
+  .checkbox {
+    display: block;
+    float: left;
+    position: relative;
+    width: auto;
+    font-size: 13px;
+    line-height: 17px;
+    @extend .sans-serif;
+
+    @extend .check_icon;
+
+    .name {
+      color: #ccc;
+      width: auto;
+    }
+  }
+
+  .info {
+    margin: 9px 0 0;
+    font-size: 11px;
+
+    strong {
+      display: block;
+      margin: 0 0 7px;
+      font-size: 10px;
+    }
+
+    p { font-size: 11px; }
+
+    .units {
+      font-weight: normal;
+      font-size: 10px;
+    }
+
+    &.tree {
+      display: none;
+
+      &.show { display: block; }
+
+      .colors {
+        border: 1px solid #ccc;
+
+        div {
+          width: 33%;
+
+          &:last-child { width: 34%; }
+
+          text-align: center;
+          padding: 6px 0;
+          font-size: 10px;
+          line-height: 100%;
+          color: #fff;
+          @include text-shadow(0px 0px 2px #000);
+        }
+      }
+    }
+
+    .data .min { width: auto; float: left; }
+    .data .max { width: auto; float: right; }
+
+    .colors {
+      display: table-row;
+      margin: 3px 0 5px 0;
+      border: 1px solid #FED98E;
+      @include border-radius(3px 3px 3px 3px);
+
+      div {
+        width: 25%;
+        height: 10px;
+        display: table-cell;
+
+        &:first-child {
+          @include border-radius(3px 0 0 3px);
+        }
+
+        &:last-child {
+          @include border-radius(0 3px 3px 0px);
+        }
+      }
+    }
+  }
+
+  ul {
+    border-top: 1px solid #E5E5E5;
+    padding: 15px;
+
+    &:first-child { border-top: none; }
+
+    > ul {
+      padding: 0 0 0 10px;
+      border: none;
+
+      li {
+        margin: 0 0 5px;
+
+        div { width: 184px; }
+      }
+    }
+
+    &.double li {
+      display: block;
+    }
+
+    &.sublayer {
+      min-height: 73px;
+    }
+
+    li {
+      display: none;
+      clear: both;
+      position: relative;
+      overflow: hidden;
+      font-size: 13px;
+      margin: 0 0 10px;
+      padding: 1px 0;
+      line-height: normal;
+
+      &:last-child { margin: 0; }
+
+      i {
+        @include inline-block();
+        float: left;
+        margin: 3px 5px 0 0;
+        width: 7px;
+        height: 7px;
+        background:#ccc;
+        @include border-radius(100px);
+      }
+
+      div {
+        float: left;
+        width: 194px;
+      }
+
+      strong {
+        font-weight: bold;
+        font-size: 11px;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  .coverage_category {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .source {
+    top: 3px; right: 0;
+  }
+}
+
+.layer_count {
+  display: none;
+  height: 20px;
+  line-height: 20px;
+  padding: 0 15px;
+  font-weight: bold;
+  font-size: 11px;
+  color: #bbb;
+  text-transform: uppercase;
 }
 
 
@@ -484,7 +695,7 @@
   }
 
   .community i {
-    position:relative;
+    position: relative;
     top: 0px;
     width: 134px;
     @include icons-sprite(community);
@@ -504,4 +715,120 @@
 .home_stories {
   padding-bottom: 0;
   background: #fff image-url('backgrounds/bkg_header.png') repeat-x top center;
+}
+
+
+.story_infowindow {
+  $pR: 18px;
+  $pL: 10px;
+  $w: 215px;
+
+  display: block;
+  position: absolute;
+  width: $w;
+  padding: 0 0 6px;
+  visibility: hidden;
+  text-align: center;
+
+  .infowindow_content a { color: #A1BA42; }
+
+  .outer_top {
+    width:$w - $pL - $pR;
+    padding: 10px $pR  5px $pL;
+    background: image-url('icons/bkg_infowindow_story.png') no-repeat;
+  }
+
+  .bottom {
+    position: absolute;
+    bottom: -8px;
+    width: $w;
+    height: 14px;
+    background: image-url('icons/bkg_infowindow_story.png') no-repeat right top;
+  }
+
+  .top {
+    width: 174px;
+    max-height: 190px;
+    margin: 0 auto;
+    text-align: left;
+
+    strong a {
+      display: block;
+      margin: 0 0 5px;
+      width: 180px;
+      color: #F3F2F0;
+      font-size: 17px;
+      @extend .serif;
+      text-decoration :none;
+
+      &:hover { text-decoration: underline; }
+    }
+
+    color: #999;
+    font-size: 12px;
+    @extend .sans-serif;
+  }
+}
+
+.cartodb_infowindow {
+  display: none;
+
+  &.with_image {
+    display: none;
+  }
+}
+
+.map_coordinates {
+  position: absolute;
+  z-index: 10;
+  bottom: 20px; right: 10px;
+  font-weight: bold;
+  font-size: 11px;
+  @extend .sans-serif;
+  text-align: right;
+  color: #fff;
+  @include text-shadow(0px 0px 3px #222);
+  @include user-select(text);
+}
+
+#viewfinder {
+  position: absolute;
+  z-index: 10;
+  top: 50%; left: 50%;
+  height: 19px;
+  width: 19px;
+  display: block;
+  @include icons-sprite(viewfinder);
+}
+
+.marker {
+  position: absolute;
+  height: 36px;
+  width: 36px;
+
+  img {
+    display: block;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+
+    &.rounded {
+      z-index: 100;
+      width: 50px;
+      height: 50px;
+      @include border-radius(26px);
+    }
+  }
+
+  &:hover { cursor: pointer!important; }
+
+  .mask {
+    position: absolute;
+    top: -9px; left: -9px;
+    width: 67px;
+    height: 66px;
+    @include icons-sprite(marker_hollow);
+    z-index: 100;
+  }
 }

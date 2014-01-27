@@ -4,10 +4,17 @@
 //= require backbone.cartodb
 //= require jquery.easing.1.3
 //= require jquery.tipsy
+//= require imgLiquid.min
+//= require wax.g.min
+//= require cartodb-gmapsv3
+//= require markerclusterer_compiled
 //= require gfw/canvas_tile_layer
 //= require gfw/deforestation_tile_layer
+//= require gfw/static_grid_layer_imazon
+//= require gfw/static_grid_layer
 //= require gfw/gfw_lib
 //= require gfw/grid_layer
+//= require gfw/marker
 //= require gfw/ui/widget
 //= require gfw/ui/sourcewindow
 //= require gfw/ui/infowindow
@@ -33,6 +40,8 @@
 var loaded = false,
     map = null,
     showMap = false,
+    Infowindow = {},
+    SourceWindow = {},
     LayerSelector = {},
     Legend = {},
     Analysis = {},
@@ -80,7 +89,7 @@ $(function() {
       this.trigger('loadgfw', 'map');
 
       if (lat && lon) map.setCenter(new google.maps.LatLng(lat, lon));
-      if (iso != 'ALL') analysis._loadCountry(iso);
+      // if (iso != 'ALL') analysis._loadCountry(iso);
     }
   });
 
@@ -95,7 +104,7 @@ $(function() {
     events: {
       'click .home.ajax':   '_onClickHome',
       'click .map.ajax':    '_onClickMap',
-      'click .source':      '_openSource'
+      'click .source':      '_onClickSource'
     },
 
     el: document.body,
@@ -171,11 +180,11 @@ $(function() {
       });
 
       // Source window
-      this.sourceWindow = new gfw.ui.view.SourceWindow();
-      this.$el.append(this.sourceWindow.render());
+      SourceWindow = new gfw.ui.view.SourceWindow();
+      this.$el.append(SourceWindow.render());
 
       // Info window
-      this.storyInfowindow = new CartoDBInfowindow(map, { className: 'story_infowindow', width: 215 });
+      Infowindow = new CartoDBInfowindow(map, { className: 'story_infowindow', width: 215 });
 
       // Timeline
       Timeline = new gfw.ui.view.Timeline({ container: this.$map });
@@ -190,7 +199,7 @@ $(function() {
 
       // Legend
       Legend = new gfw.ui.view.Legend();
-      this.$map.append(Legend);
+      this.$map.append(Legend.render());
       Legend.setDraggable(true);
 
       // Analysis
@@ -212,12 +221,13 @@ $(function() {
       // Circle.init()
     },
 
-    _openSource: function(e) {
+    _onClickSource: function(e) {
       e.preventDefault();
 
-      var source = $(e.target).attr("data-source");
+      var source = $(e.target).attr('data-source'),
+          coverage = $(e.target).hasClass('coverage');
 
-      this.sourceWindow.show(source).addScroll();
+      SourceWindow.show(source, coverage).addScroll();;
     },
 
     _selectMenu: function(name) {
@@ -227,6 +237,8 @@ $(function() {
 
     _showHomeState: function() {
       this._selectMenu('home');
+
+      showMap = false;
 
       Filter.hide(function() {
         $('.header').animate({ height: '230px' }, 250, function() {
@@ -247,6 +259,8 @@ $(function() {
       var that = this;
 
       this._selectMenu('map');
+
+      showMap = true;
 
       LayerSelector.show();
       Legend.show();

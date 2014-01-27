@@ -1,3 +1,29 @@
+.check_icon {
+  &.checked {
+    i span { left: 9px; }
+  }
+
+  i {
+    display: inline-block;
+    position: relative;
+    float: left;
+    width: 17px;
+    height: 10px;
+    background: #ddd;
+    margin: 4px 8px 0 0;
+    @include border-radius(5px);
+
+    span {
+      position: absolute;
+      left: 2px; top: 2px;
+      width: 6px;
+      height: 6px;
+      background: #fff;
+      @include border-radius(4px);
+    }
+  }
+}
+
 @mixin radio($url) {
   @include icons-sprite(radio, $offset-y:-67px);
 

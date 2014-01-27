@@ -666,23 +666,16 @@ GFW.modules.app = function(gfw) {
 
       $.ajax({
         async: false,
-        url: '/stories.json?for-map=true',
+        url: '/stories.json?for_map=true',
         success: function(data) {
           _.each(data, function(story) {
             var
-            position = new google.maps.LatLng(story.lat, story.lng),
-            thumb    = story.thumbnail_url,
-            icon     = '/assets/icons/marker_exclamation.png',
+            lat        = story.lat,
+            lng        = story.lng,
+            position   = new google.maps.LatLng(lat, lng),
+            thumb      = story.media[0].preview_url,
+            icon       = '<%= image_path "icons/marker_exclamation.png" %>',
             properties = null;
-
-            var geometry = JSON.parse(story.geometry)
-            var feature = new GeoJSON(geometry, config.OVERLAYS_STYLE);
-
-            // place markers
-            if (feature.length > 0) {
-              feature[0].setMap(map);
-              that.storiesFeatures.push(feature[0]);
-            }
 
             var title = story.title;
 
@@ -690,9 +683,9 @@ GFW.modules.app = function(gfw) {
               title = $.trim(title).substring(0, 34).split(' ').slice(0, -1).join(' ') + '...';
             }
 
-            var content = "<strong><a href='/stories/"+story.id+"'>"+title+"</a></strong> <span>by "+story.name+"&middot; </span><a href='/stories/"+story.id+"'>read more</a>";
+            var content = "<strong><a href='/stories/"+story.id+"'>"+title+"</a></strong> <span>by "+story.name+" &middot; </span><a href='/stories/"+story.id+"'>read more</a>";
 
-            marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: story.thumbnail_url, content: content });
+            marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: thumb, content: content });
             marker.setMap(map);
             that.storiesMarkers.push(marker);
           });
@@ -712,16 +705,9 @@ GFW.modules.app = function(gfw) {
           _.each(data.features, function(features) {
             var position = new google.maps.LatLng(features.properties.lat, features.properties.lon),
                 thumb    = features.properties.thumbnail,
-                icon     = '/assets/icons/marker_exclamation.png',
+                icon     = '<%= image_path "icons/mongabay_exclamation.png" %>',
                 properties = null,
                 published = new Date(features.properties.published).toLocaleDateString();
-
-            var feature = new GeoJSON(features.geometry, config.OVERLAYS_STYLE);
-
-            if (feature.length > 0) {
-              feature[0].setMap(map);
-              that.mongabayFeatures.push(feature[0]);
-            }
 
             var title = features.properties.title;
 
@@ -729,10 +715,9 @@ GFW.modules.app = function(gfw) {
               title = $.trim(title).substring(0, 34).split(' ').slice(0, -1).join(' ') + '...';
             }
 
-            var content = "<strong><a href='"+features.properties.loc+"' target='_blank'>"+title+"</a></strong> <span>by "+features.properties.author+"</span><span>on "+published+"</span><br><a href='"+features.properties.loc+"target='_blank'>read more</a>";
+            var content = "<strong><a href='"+features.properties.loc+"' target='_blank'>"+title+"</a></strong> <span>by "+features.properties.author+"</span> <span>on "+published+"</span><br><a href='"+features.properties.loc+"target='_blank'>read more</a>";
 
             marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: thumb, content: content, map: map, type: 'mongabay' });
-
             that.mongabayMarkers.push(marker);
           });
 
@@ -742,14 +727,12 @@ GFW.modules.app = function(gfw) {
               url: '/assets/icons/marker_cluster.png',
               width: 36,
               height: 36
-            },
-           {
+            }, {
               textColor: '#ffffff',
               url: '/assets/icons/marker_cluster.png',
               width: 36,
               height: 36
-            },
-           {
+            }, {
               textColor: '#ffffff',
               url: '/assets/icons/marker_cluster.png',
               width: 36,
@@ -956,7 +939,7 @@ GFW.modules.app = function(gfw) {
         } else {
           if (this.time_layer_imazon) {
             this.time_layer_imazon.show();
-            TimelineImazon.show();
+            // TimelineImazon.show();
           }
         }
 
@@ -1109,7 +1092,7 @@ GFW.modules.maplayer = function(gfw) {
 
           Filter.addForestLossFilters(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
 
-          // Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
+          Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
         } else if (slug === 'loss' || slug === 'forestgain') {
           var event = function() {
             that._toggleLayer();
@@ -1281,27 +1264,27 @@ GFW.modules.maplayer = function(gfw) {
 
           this._removeExtendedLayers();
 
-          if (slug === 'forma' && showMap) {
-            Timeline.show();
-            Timeline.loadDefaultRange();
-            analysis.info.model.set('dataset', 'forma');
-          } else {
-            Timeline.hide();
-          }
+          // if (slug === 'forma' && showMap) {
+          //   Timeline.show();
+          //   Timeline.loadDefaultRange();
+          //   analysis.info.model.set('dataset', 'forma');
+          // } else {
+          //   Timeline.hide();
+          // }
 
-          if (slug === 'modis' && showMap) {
-            TimelineModis.show();
-            analysis.info.model.set('dataset', 'modis');
-          } else {
-            TimelineModis.hide();
-          }
+          // if (slug === 'modis' && showMap) {
+          //   TimelineModis.show();
+          //   analysis.info.model.set('dataset', 'modis');
+          // } else {
+          //   TimelineModis.hide();
+          // }
 
-          if (slug === 'imazon' && showMap) {
-            TimelineImazon.show();
-            analysis.info.model.set('dataset', 'imazon');
-          } else {
-            TimelineImazon.hide();
-          }
+          // if (slug === 'imazon' && showMap) {
+          //   TimelineImazon.show();
+          //   analysis.info.model.set('dataset', 'imazon');
+          // } else {
+          //   TimelineImazon.hide();
+          // }
 
           GFW.app.currentBaseLayer = slug;
           GFW.app._updateBaseLayer();
@@ -1309,9 +1292,9 @@ GFW.modules.maplayer = function(gfw) {
           if (slug === 'forma') {
             forma.attributes['visible'] = true;
           } else if (slug ==='modis') {
-            quarterly.attributes['visible'] = true;
+            modis.attributes['visible'] = true;
           } else if (slug === 'imazon') {
-            sad.attributes['visible'] = true;
+            imazon.attributes['visible'] = true;
           }
 
           var subEvent;
@@ -1334,7 +1317,7 @@ GFW.modules.maplayer = function(gfw) {
           GFW.app._addLayer(forestgain);
           forestgain.set('visible', true);
           GFW.app._updateBaseLayer();
-          Analysis.info.model.set('dataset', 'umd');
+          // Analysis.info.model.set('dataset', 'umd');
 
           var subEvent;
 

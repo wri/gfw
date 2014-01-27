@@ -248,7 +248,8 @@ strong {
   }
 
   .source_title,
-  .source_category_title {
+  .source_category_title,
+  .source_coverage_title {
     display: block;
     font-weight: bold;
     font-size: 13px;
@@ -258,7 +259,8 @@ strong {
   }
 
   .source_header,
-  .source_category_title {
+  .source_category_title,
+  .source_coverage_header {
     padding: 0 0 20px;
   }
 
@@ -572,7 +574,7 @@ strong {
 ----------------------------------------------- */
 
 .site-footer {
-  min-height: 404px;
+  min-height: 440px;
   background-color: #464352;
 }
 

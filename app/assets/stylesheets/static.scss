@@ -305,7 +305,8 @@
   display: none;
 }
 
-.source_download {
+.source_download,
+.source_coverage_download {
   text-align: right;
   background: #F0F5DC;
   border-top: 1px solid #ccc;
@@ -356,17 +357,18 @@
   }
 }
 
-.overview_title {
+.overview_title,
+.source_coverage_title {
   margin: 30px 0 10px;
   font: 21px/1.1 "fira_sans_otmedium";
   color: #463F52;
 }
 
-.source_coverage_header .source_download {
+.source_coverage_download {
   border-top: 0;
   background: transparent;
 
-  .overview_title {
+  .source_coverage_title {
     float: left;
   }
 }
