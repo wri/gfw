@@ -341,6 +341,27 @@
   }
 }
 
+.source_coverage_download {
+  border-top: 0;
+  background: transparent;
+
+  .source_coverage_title_forma {
+    float: left;
+  }
+
+  .source_download {
+    margin-right: 0;
+  }
+
+  &.source_coverage_download_imazon {
+    text-align: left;
+
+    .source_download {
+      margin: 0 0 20px;
+    }
+  }
+}
+
 .arrow_down {
   display: inline-block;
   height: 10px;
@@ -363,15 +384,6 @@
   margin: 30px 0 10px;
   font: 21px/1.1 "fira_sans_otmedium";
   color: #463F52;
-}
-
-.source_coverage_download {
-  border-top: 0;
-  background: transparent;
-
-  .source_coverage_title {
-    float: left;
-  }
 }
 
 .videos_list p {

@@ -148,11 +148,15 @@ a.accept_btn {
   }
 }
 
-.source_body,
-.source_coverage {
+.single-source-item {
   font-size: 15px;
   line-height: 1.4;
   color: #666;
+}
+
+.source_body,
+.source_coverage {
+  @extend .single-source-item;
 
   p {
     margin-bottom: 10px;
@@ -251,12 +255,18 @@ a.accept_btn {
   .source_category_description,
   .overview_title,
   .source_download,
-  .source_description,
   .source_extended,
   .source_coverage_header,
   .source_coverage,
   .download {
     display: none;
+  }
+
+  .source_description {
+    display: block;
+    margin-top: 5px;
+    font: 13px/1.2 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #999;
   }
 
   .source_title,
