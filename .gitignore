@@ -19,4 +19,5 @@
 
 .gitignore
 .ruby-version
+.rvmrc
 .env
