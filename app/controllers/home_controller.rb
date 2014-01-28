@@ -4,12 +4,8 @@ class HomeController < ApplicationController
 
   private
 
-    def one_year_ago
-      1.year.ago.to_date.strftime("%Y-%m-%d")
-    end
-
     def load_stories
-      @stories_count = Api::Story.since(one_year_ago).count
+      @stories_count = Api::Story.since(1.year.ago.to_date.to_s).count
 
       @featured = Api::Story.featured.first(3)
     end

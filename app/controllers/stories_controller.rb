@@ -9,9 +9,11 @@ class StoriesController < ApplicationController
   def index
     stories_per_page = 5
 
-    @page            = (params[:page] || 1).to_i
-    @total_pages     = (Api::Story.featured.count.to_f / stories_per_page.to_f).ceil
-    @featured        = Api::Story.find_featured_by_page(@page, stories_per_page)
+    unless params['for_map']
+      @page            = (params[:page] || 1).to_i
+      @total_pages     = (Api::Story.featured.count.to_f / stories_per_page.to_f).ceil
+      @featured        = Api::Story.find_featured_by_page(@page, stories_per_page)
+    end
 
     respond_to do |format|
       format.json { render :json => @stories } if params['for_map']
