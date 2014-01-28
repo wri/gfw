@@ -90,6 +90,27 @@
           <li><strong>Use Global Forest Watch and let us know how it has helped you</strong> using our feedback survey <a href='https://www.surveymonkey.com/s/gfw2' target='_blank'>here</a>.</li>
           <li><strong>(Coming soon) Validate data</strong> by participating in citizen science. GFW will invite users to help classify satellite images and strengthen global forest change data sets.</li>
         </ul>
+
+        <h3 class='overview_title'>What is the history of Global Forest Watch?</h3>
+        <p>The original Global Forest Watch began in 1997 as an initiative to establish a global forest monitoring network around the world, convened by the <a href='http://www.wri.org/' target='_blank'>World Resources Institute</a> and partners. The original GFW achieved many outcomes that helped advance the conservation of large intact forest areas. Visit the <%= link_to 'About page', about_path %> for the full story.</p>
+
+        <p>Global Forest Watch was relaunched in 2014 with an expanded group of partners and powerful new monitoring capabilities. To learn more about how you can get involved in developing GFW, please take our online <a href='https://www.surveymonkey.com/s/gfw2' target='_blank'>User Challenge</a>.</p>
+
+        <h3 class='overview_title'>What features are coming down the road for GFW?</h3>
+        <p>Here is a list of additional features that we are working to add to the GFW platform:</p>
+
+        <ul class='bullets'>
+          <li>On-the-fly analysis for subnational administrative areas, concession areas, and protected areas (applicable to all “forest change” data sets)</li>
+          <li>Additional “Forest Use” data sets, including concession boundaries for additional countries and commodities</li>
+          <li>Community land claims and tenure rights under the “People” tab</li>
+          <li>A “plantation forests map” for the tropical regions</li>
+          <li>An updated version of the “Intact Forests Landscapes” layer</li>
+          <li>Updated carbon density maps and estimates of emissions for forest loss and land use change</li>
+          <li>Mobile optimization for the GFW site</li>
+          <li>A citizen-science platform for comparing and classifying satellite imagery of forests as well as an additional crowd-sourcing tool allowing direct upload of georeferenced information and photos from the field</li>
+          <li>A specialized portal for corporate users</li>
+          <li>And much more...</li>
+        </ul>
       </div>
     </article>
 
@@ -102,14 +123,20 @@
 
         <p>See the next entry for GFW’s approach to tree plantations versus natural forests.</p>
 
-        <p>Here are key examples of how a few GFW-hosted data sets define “forest”.</p>
+        <p>Here are key examples of how a few GFW-hosted data sets define these terms</p>
 
         <ul class='bullets'>
           <li>The UMD Tree Cover Loss and Gain data sets define “forest” based on <a href='http://glcf.umd.edu/data/vcf/' target='_blank'>MODIS Vegetation Continuous Fields</a>. “Forest” is further defined as areas where canopy cover exceeds 25%, with vegetation more than 5 meters tall.</li>
 
-          <li>FORMA alerts apply to areas considered “forest” within the humid tropical forest biome, as defined by <a href='http://www.pnas.org/content/105/27/9439.full#ref-1' target='_blank'>Hansen et al.(2008)</a>, based on <a href='http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf' target='_blank'>WWF’s terrestrial ecoregions</a>. This layer, a composite of forest ecoregions, is available for viewing or downloading on <a href='https://wri-01.cartodb.com/tables/ecoregions/map' target='_blank'>CartoDB</a>.</li>
+          <li>The UMD Tree Cover Loss data sets define “tree cover loss” as stand replacement disturbance, or the death of living trees within a 30 meter × 30 meter area. This definition only applies to areas where canopy cover exceeds 25%, with vegetation more than 5 meters tall.</li>
+
+          <li>FORMA alerts apply to areas considered “forest” within the humid tropical forest biome, as defined by <a href='http://www.pnas.org/content/105/27/9439.full#ref-1' target='_blank'>Hansen et al.(2008)</a>, based on <a href='http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf' target='_blank'>WWF’s terrestrial ecoregions</a>. This layer, a composite of forest ecoregions, is available for viewing or downloading on <a href='http://wri-01.cartodb.com/tables/ecoregions_biome/public' target='_blank'>CartoDB</a>.</li>
+
+          <li>FORMA alerts indicate areas of 500 meters × 500 meters where there is a high probability of tree cover loss. It is important to note that this alert-based system is not the same as an area measurement of tree cover loss.</li>
 
           <li><a href='http://www.intactforests.org/' target='_blank'>Intact Forest Landscapes</a> (IFL) are defined as an unbroken expanse of natural ecosystems within the zone of current forest extent, showing no signs of significant human activity and large enough that all native biodiversity, including viable populations of wide-ranging species, could be maintained. Although all IFL are within the forest zone, some may contain extensive naturally treeless areas, including grasslands, wetlands, lakes, alpine areas, and ice. Read more <a href='http://www.intactforests.org/' target='_blank'>here</a>.</li>
+
+          <li>QUICC alerts measure significant changes in green vegetation cover.</li>
         </ul>
 
         <p>In our general writing, including the GFW blog, “forest” refers to a landscape with a high density of trees and value for biodiversity, carbon storage, and human use.</p>
@@ -171,7 +198,7 @@
         <p>By monitoring changes tracked by these data sets over time, users can better understand drivers and patterns of forest loss worldwide.</p>
 
         <p>See our <%= link_to 'Data page', sources_path %> for more detail. To contribute or suggest data, please <a href='mailto:gfw@wri.com'>email</a> us.</p>
-   
+
         <h3 class='overview_title'>Where do the data come from?</h3>
         <p>The data on GFW come from various sources. Most of the data are in the public domain and have been developed by governments, NGOs, research institutions, or companies. Note that the data come in different formats and vary in their accuracy, timeliness, and geographical extent. See GFW’s <%= link_to 'Data policy', sources_path %> for more details.</p>
 
@@ -183,7 +210,7 @@
         <p>GFW aims to provide data with global coverage, but this isn’t always possible. The geographic coverage of each data set is described on the <%= link_to 'Data page', sources_path %>.</p>
 
         <p>Data may have limited coverage for various reasons. GFW works to incorporate new data as quickly as possible as they are made available. If you know of a publicly available data set that we do not have, please <a href='mailto:gfw@wri.com'>contact us</a> to let us know.</p>
-    
+
         <h3 class='overview_title'>How accurate are the data displayed on Global Forest Watch?</h3>
         <p>The accuracy of the data displayed on GFW is variable. Methodologies and cautions for specific data sets are available on the <%= link_to 'Data page', sources_path %>.</p>
 
@@ -202,7 +229,7 @@
         <p>First, please make sure you understand the differences in the data layers and their respective methodologies.</p>
 
          <p>If you still believe our data are inaccurate, please <a href='mailto:gfw@wri.com'>contact us</a> with a brief description of the location, data set in question, and observed issue. Or <%= link_to 'submit a story', new_story_path %>, with photos or other details. Our team will flag the area for further investigation.</p>
-   
+
         <h3 class='overview_title'>How do I cite Global Forest Watch as a data source? </h3>
         <p>Each data set has an individual citation, which can be found on the <%= link_to 'Data page', sources_path %>. If you are referencing the source website or publication for a data set please use the “Citation.”  If you are referencing a figure or number generated by GFW or data downloaded from the GFW website, please use the “Suggested citation for data as displayed on GFW.”  For data that are displayed in their original form or when users are directed to the original source to download data, a suggested citation is not listed.</p>
 
@@ -222,43 +249,13 @@
         <p>While GFW is fully functional, we are still collecting user feedback to improve website features and functionality.</p>
 
         <p>Establishing an effective web-based tool requires an iterative process of feedback and refinement. This is why your feedback is important to us. Please take our online <a href='https://www.surveymonkey.com/s/gfw2' target='_blank'>User Challenge</a> to help us improve the site.</p>
-   
+
         <h3 class='overview_title'>I am experiencing difficulties with the site. What should I do?</h3>
         <p>Please first ensure that you are using an appropriate web browser. We recommend using a recent version of Google <a href='https://www.google.com/intl/en/chrome/browser/' target='_blank'>Chrome</a>, Mozilla <a href='http://www.mozilla.org/en-US/firefox/new/' target='_blank'>Firefox</a>, or Apple <a href='http://www.apple.com/safari/' target='_blank'>Safari</a>. We highly discourage viewing Global Forest Watch in Internet Explorer because of problems with the map functionality</p>
 
         <p>If errors persist when using a recommended browser, please contact us at <a href='mailto:gfw@wri.org'>gfw@wri.org</a>.</p>
 
         <p>GFW is still in “beta,” which means that there may still be some minor issues and errors within the site. We are usually able to fix them in a timely manner. It is helpful if you send us a link to the page or data set you had open when you encountered the problem, and if you tell us which browser you are using. If you want to give us general feedback or suggestions about new data or functionality, please use the <a href='http://cait2.wri.org/feedback.html' target='blank_'>feedback form</a>.</p>
-
-        <h3 class='overview_title'>What is the history of Global Forest Watch?</h3>
-        <p>The original Global Forest Watch began in 1997 as an initiative to establish a global forest monitoring network around the world, convened by the <a href='http://www.wri.org/' target='_blank'>World Resources Institute</a> and partners. The original GFW achieved many outcomes that helped advance the conservation of large intact forest areas. Visit the <%= link_to 'About page', about_path %> for the full story.</p>
-
-        <p>Global Forest Watch was relaunched in 2014 with an expanded group of partners and powerful new monitoring capabilities. To learn more about how you can get involved in developing GFW, please take our online <a href='https://www.surveymonkey.com/s/gfw2' target='_blank'>User Challenge</a>.</p>
-   
-        <h3 class='overview_title'>What features are coming down the road for GFW?</h3>
-        <p>Here is a list of additional features that we are working to add to the GFW platform:</p>
-
-        <ul class='bullets'>
-          <li>On-the-fly analysis for subnational administrative areas, concession areas, and protected areas (applicable to all “forest change” data sets)</li>
-
-          <li>Additional “Forest Use” data sets, including concession boundaries for additional countries and commodities</li>
-
-          <li>Community land claims and tenure rights under the “People” tab</li>
-
-          <li>A “plantation forests map” for the tropical regions</li>
-
-          <li>An updated version of the “Intact Forests Landscapes” layer</li>
-
-          <li>Updated carbon density maps and estimates of emissions for forest loss and land use change</li>
-
-          <li>Mobile optimization for the GFW site</li>
-
-          <li>A citizen-science platform for comparing and classifying satellite imagery of forests as well as an additional crowd-sourcing tool allowing direct upload of georeferenced information and photos from the field</li>
-
-          <li>A specialized portal for corporate users</li>
-
-          <li>And much more...</li>
-        </ul>
 
         <h3 class='overview_title'>Whom do I contact with questions about the site?</h3>
         <p>Please e-mail general inquiries to <a href='gfw@wri.org'>gfw@wri.org</a>.</p>
@@ -270,7 +267,7 @@
     </article>
 
     <article id='corporate'>
-      <h2 class='source_category_title'>Global Forest Watch for businesses</h2>
+      <h2 class='source_category_title'>Global Forest Watch for Businesses</h2>
 
       <div class='source_body'>
         <p>Almost every business depends on forests in some way. As a buyer of commodities, you can face risks if you don’t know how your supply chain depends on or affects forest resources. As a seller of commodities, you may risk losing customers if you can’t demonstrate that your products are deforestation-free.</p>
