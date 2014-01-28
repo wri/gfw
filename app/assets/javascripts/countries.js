@@ -107,9 +107,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
     var source = $(e.target).closest('.info').attr('data-source');
 
-    if (source !== 'forest_map') {
-      this.sourceWindow.show(source).addScroll();
-    }
+    this.sourceWindow.show(source).addScroll();
   },
 
   _openDropdown: function(e) {

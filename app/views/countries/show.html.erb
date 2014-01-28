@@ -19,7 +19,7 @@
     <ul class='columns'>
       <li class='column three graph forma ghost'>
         <a href='#' class='info' data-source='forma'><span>i</span></a>
-        <div class='graph-title'>Forest Clearing Alerts</div>
+        <div class='graph-title'>FORMA Alerts</div>
         <div class='graph-subtitle'><span>Humid Tropics</span></div>
         <div class='graph-amount'></div>
         <div class='graph-date'></div>
@@ -52,12 +52,12 @@
         <div class='graph-date'></div>
         <div class='coming_soon'>Not yet available for this country</div>
         <div class='frame'><div class='frame_bkg'></div></div>
-        <a href='#' class='action disabled'></a>
+        <a href='#' class='action disabled' title='Download coming soon'></a>
       </li>
 
       <% map_coords = "#{root_path}/map/5/#{@country['lat'].round(2)}/#{@country['lng'].round(2)}/#{@country['iso']}" %>
       <li class='column three graph map'>
-        <a href='<%= map_coords %>' class='info' title='Use this icon to navigate to the GFW map.' data-source='forest_map'><span>i</span></a>
+        <a href='<%= map_coords %>' class='info' data-source='forest_map'><span>i</span></a>
         <a href='<%= map_coords %>'>
           <div class='frame'>
             <%= image_tag static_map("#{@country['lat']}, #{@country['lng']}", '266x266', 4), :alt => @country['name'] %>
