@@ -123,20 +123,14 @@
 
         <p>See the next entry for GFW’s approach to tree plantations versus natural forests.</p>
 
-        <p>Here are key examples of how a few GFW-hosted data sets define these terms</p>
+        <p>Here are key examples of how a few GFW-hosted data sets define “forest”:</p>
 
         <ul class='bullets'>
           <li>The UMD Tree Cover Loss and Gain data sets define “forest” based on <a href='http://glcf.umd.edu/data/vcf/' target='_blank'>MODIS Vegetation Continuous Fields</a>. “Forest” is further defined as areas where canopy cover exceeds 25%, with vegetation more than 5 meters tall.</li>
 
-          <li>The UMD Tree Cover Loss data sets define “tree cover loss” as stand replacement disturbance, or the death of living trees within a 30 meter × 30 meter area. This definition only applies to areas where canopy cover exceeds 25%, with vegetation more than 5 meters tall.</li>
-
           <li>FORMA alerts apply to areas considered “forest” within the humid tropical forest biome, as defined by <a href='http://www.pnas.org/content/105/27/9439.full#ref-1' target='_blank'>Hansen et al.(2008)</a>, based on <a href='http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf' target='_blank'>WWF’s terrestrial ecoregions</a>. This layer, a composite of forest ecoregions, is available for viewing or downloading on <a href='http://wri-01.cartodb.com/tables/ecoregions_biome/public' target='_blank'>CartoDB</a>.</li>
 
-          <li>FORMA alerts indicate areas of 500 meters × 500 meters where there is a high probability of tree cover loss. It is important to note that this alert-based system is not the same as an area measurement of tree cover loss.</li>
-
           <li><a href='http://www.intactforests.org/' target='_blank'>Intact Forest Landscapes</a> (IFL) are defined as an unbroken expanse of natural ecosystems within the zone of current forest extent, showing no signs of significant human activity and large enough that all native biodiversity, including viable populations of wide-ranging species, could be maintained. Although all IFL are within the forest zone, some may contain extensive naturally treeless areas, including grasslands, wetlands, lakes, alpine areas, and ice. Read more <a href='http://www.intactforests.org/' target='_blank'>here</a>.</li>
-
-          <li>QUICC alerts measure significant changes in green vegetation cover.</li>
         </ul>
 
         <p>In our general writing, including the GFW blog, “forest” refers to a landscape with a high density of trees and value for biodiversity, carbon storage, and human use.</p>
@@ -160,9 +154,9 @@
 
         <p>Data sets such as FORMA alerts, QUICC alerts, MODIS fire alerts, and SAD alerts are “forest cover loss alerts.”</p>
 
-        <p>Here are key examples of how a few GFW-hosted data sets define these terms.</p>
+        <p>Here are key examples of how a few GFW-hosted data sets define these terms:</p>
 
-        <ul>
+        <ul class='bullets'>
           <li>The UMD Tree Cover Loss data sets define “tree cover loss” as stand replacement disturbance, or the death of living trees within a 30 meter × 30 meter area. This definition only applies to areas where canopy cover exceeds 25%, with vegetation more than 5 meters tall.</li>
 
           <li>FORMA alerts indicate areas of 500 meters × 500 meters where there is a high probability of tree cover loss. It is important to note that this alert-based system is not the same as an area measurement of tree cover loss.</li>
@@ -219,18 +213,22 @@
         <h3 class='overview_title'>Why do different data layers contradict each other or not overlap exactly?</h3>
         <p>Different data sets measure different things and are derived using different methodologies. Such differences can lead to results that may manifest as contradictory layers on the GFW platform. In some cases, a lack of available high-quality data may cause a greater margin of error for certain data sets.</p>
 
-        <p>While no data set is 100% accurate, comparing these multiple models can help users narrow down the drivers and impacts of forest change.</p>
+        <p></p>
 
-        <p>For example, the boundaries for protected areas on the Google grayscale base map do not always align with the protected areas from the World Database on Protected Areas (WDPA).</p>
+        <ul class='bullets'>
+          <li><strong>Protected areas vs. the grayscale base map:</strong> The boundaries for protected areas on the Google grayscale base map do not always align with the protected areas from the World Database on Protected Areas (WDPA). In this case, the WDPA data set only includes official protected areas—defined regions formally protected by law at the national level—whereas the base map includes recreational areas and other informal green spaces. Furthermore, the WDPA data is approved and reported by individual countries, while Google’s base map is composed of data from a variety of sources. Therefore, the base map grayscale network of parks and protected areas is more expansive (and less defined) than that of the protected areas layer, causing visible incongruities between the two data sets.</li>
 
-        <p>In this case, the WDPA data set only includes official protected areas—defined regions formally protected by law at the national level—whereas the base map includes recreational areas and other informal green spaces. Furthermore, the WDPA data is approved and reported by individual countries, while Google’s base map is composed of data from a variety of sources. Therefore, the base map grayscale network of parks and protected areas is more expansive (and less defined) than that of the protected areas layer, causing visible incongruities between the two data sets.</p>
+          <li><strong>Intact forest landscapes vs. tree cover extent:</strong> These data sets measure different things. Tree cover extent shows all 30 X 30 meter areas that meet a minimum threshold of tree cover, whereas intact forest landscapes only show forests that show no significant signs of human activity (see the <%= link_to 'Data page', sources_path %> for specifics).</li>
+        </ul>
+
+        <p>Users may find instances where tree cover extent does not fall within the boundaries of intact forest landscapes. This is because the intact forest landscapes layer is based on MODIS (250 meter resolution satellite imagery), which is known to overestimate low tree cover densities, whereas the tree cover extent layer is based on Landsat (30 meter resolution satellite imagery).  As a result, the tree cover extent layer may not show tree cover in an area that is covered by an intact forest landscape polygon.</p>
 
         <h3 class='overview_title'>I am familiar with a particular geographic area and believe your data set is inaccurate. What can I do?</h3>
         <p>First, please make sure you understand the differences in the data layers and their respective methodologies.</p>
 
          <p>If you still believe our data are inaccurate, please <a href='mailto:gfw@wri.com'>contact us</a> with a brief description of the location, data set in question, and observed issue. Or <%= link_to 'submit a story', new_story_path %>, with photos or other details. Our team will flag the area for further investigation.</p>
 
-        <h3 class='overview_title'>How do I cite Global Forest Watch as a data source? </h3>
+        <h3 class='overview_title'>How do I cite Global Forest Watch as a data source?</h3>
         <p>Each data set has an individual citation, which can be found on the <%= link_to 'Data page', sources_path %>. If you are referencing the source website or publication for a data set please use the “Citation.”  If you are referencing a figure or number generated by GFW or data downloaded from the GFW website, please use the “Suggested citation for data as displayed on GFW.”  For data that are displayed in their original form or when users are directed to the original source to download data, a suggested citation is not listed.</p>
 
         <p>To cite the website or initiative overall, please use:</p>
