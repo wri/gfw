@@ -69,7 +69,7 @@ export S3_KEY_SECRET={secret}
 export CARTODB_API_KEY={cdbkey}
 ```
 
-Last step for real. Start the app server and access it at [http://0.0.0.0:3000](http://0.0.0.0:3000):
+Last step. For real. Start the app server and access it at [http://0.0.0.0:3000](http://0.0.0.0:3000):
 
 ```bash
 $ rails server
