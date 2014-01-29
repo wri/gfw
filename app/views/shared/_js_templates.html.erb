@@ -81,22 +81,35 @@
       <ul>
         <li id='{{cat_id}}' class='loss'> <i style='background-color:{{title_color}};'></i><div>Loss</div></li>
         <li id='{{cat_id}}' class='forestgain'> <i style='background-color:#6d6de5'></i><div>Gain</div></li>
-
-        {{#sublayer}}
-        <div class='coverage_category'>
-          <a href='#' data-id='{{ id }}' data-color='{{ category_color }}' class='checkbox {{slug}}'>
-          <i><span></span></i><span class='name'>Geographic coverage</span>
-          </a><a href='#' data-source='{{slug}}' class='source coverage {{ slug }}'></a>
-        </div>
-        {{/sublayer}}
       </ul>
+
+      {{#sublayer}}
+      <div class='coverage_category'>
+        <a href='#' data-id='{{ id }}' data-color='{{ category_color }}' class='checkbox {{slug}}'>
+        <i><span></span></i><span class='name'>Geographic coverage</span>
+        </a><a href='#' data-source='{{slug}}' class='source coverage {{ slug }}'></a>
+      </div>
+      {{/sublayer}}
+
+      {{#legend}}
+      <div class='info {{ legend_class }} '>
+        <strong>{{{ legend }}}</strong>
+        <div class='data'>
+          <div class='colors'>
+            {{#colors}}
+            <div class='quartile' style='background-color:{{color}}'>{{title}}</div>
+            {{/colors}}
+          </div>
+        </div>
+      </div>
+      {{/legend}}
     </ul>
   </script>
 
   <script id='legend-item-template' type='text/x-underscore-template'>
     <li id='{{cat_id}}' class='{{ category }}'>
       <i style='background-color:{{title_color}};'></i>
-        <div>
+      <div>
         {{title}} <a href='#' data-source='{{slug}}' class="source{{ slug == 'nothing' ? ' hidden' : '' }}"></a>
 
         {{#legend}}
@@ -125,7 +138,7 @@
         <i style='background-color:{{title_color}};'></i>
         <div>
           {{title}} <a href='#' data-source='{{slug}}' class='source {{ slug }}'></a>
-        
+
           {{#legend}}
           <div class='info {{ legend_class }} '>
             <strong>{{{ legend }}}</strong>
@@ -145,7 +158,6 @@
       <div class='coverage_category'>
         <a href='#' data-id='{{ id }}' data-color='{{ category_color }}' class='checkbox {{slug}}'>
         <i><span></span></i><span class='name'>Geographic coverage</span>
-
         </a><a href='#' data-source='{{slug}}' class='source coverage {{ slug }}'></a>
       </div>
       {{/sublayer}}
@@ -163,15 +175,15 @@
       <ul>
         <li><i style='background-color:#F13689;'></i> <div>Deforestation</div></li>
         <li><i style='background-color:#FA98B9;'></i> <div>Degradation</div></li>
-
-        {{#sublayer}}
-        <div class='coverage_category'>
-          <a href='#' data-id='{{ id }}' data-color='{{ category_color }}' class='checkbox {{slug}}'>
-          <i><span></span></i><span class='name'>Geographic coverage</span>
-          </a><a href='#' data-source='{{slug}}' class='source coverage {{ slug }}'></a>
-        </div>
-        {{/sublayer}}
       </ul>
+
+      {{#sublayer}}
+      <div class='coverage_category'>
+        <a href='#' data-id='{{ id }}' data-color='{{ category_color }}' class='checkbox {{slug}}'>
+        <i><span></span></i><span class='name'>Geographic coverage</span>
+        </a><a href='#' data-source='{{slug}}' class='source coverage {{ slug }}'></a>
+      </div>
+      {{/sublayer}}
     </ul>
   </script>
 
@@ -359,7 +371,7 @@
     <a href='#' class='toggle'></a>
     <div class='info_title'>User defined area</div>
     <div class='content'>
-      
+
       <div class='info'>
         <div class='titles'>
           <strong class='title'>User defined area</strong>

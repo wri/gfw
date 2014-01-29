@@ -69,6 +69,7 @@ $(function() {
       'map':                                'map',
       'map/':                               'map',
       'map/:zoom/:lat/:lon':                'mapWithCoordinates',
+      'map/:zoom/:lat/:lon/':               'mapWithCoordinates',
       'map/:zoom/:lat/:lon/:iso':           'mapWithCoordinates',
       'map/:zoom/:lat/:lon/:iso/*layers':   'mapWithCoordinates',
     },
@@ -182,13 +183,6 @@ $(function() {
     },
 
     _loadOtherStuff: function() {
-      $('.styled.checkbox').on('click', function(e) {
-        e.preventDefault();
-
-        $(this).toggleClass('checked');
-        $(this).hasClass('checked') ? $(this).find('input').val(1) : $(this).find('input').val(0);
-      });
-
       // Source window
       SourceWindow = new gfw.ui.view.SourceWindow();
       this.$el.append(SourceWindow.render());

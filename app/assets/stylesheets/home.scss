@@ -556,9 +556,7 @@
     }
 
     &.tree {
-      display: none;
-
-      &.show { display: block; }
+      &.pink { display: none; }
 
       .colors {
         border: 1px solid #ccc;
@@ -663,14 +661,15 @@
     }
   }
 
-  .coverage_category {
-    position: relative;
-    overflow: hidden;
-  }
-
   .source {
     top: 3px; right: 0;
   }
+}
+
+.coverage_category {
+  margin: 10px 0 0 10px;
+  position: relative;
+  overflow: hidden;
 }
 
 .layer_count {

@@ -345,20 +345,12 @@
   border-top: 0;
   background: transparent;
 
-  .source_coverage_title_forma {
+  .source_coverage_title {
     float: left;
   }
 
   .source_download {
     margin-right: 0;
-  }
-
-  &.source_coverage_download_imazon {
-    text-align: left;
-
-    .source_download {
-      margin: 0 0 20px;
-    }
   }
 }
 
