@@ -145,7 +145,7 @@
   </div>
 
   <div class='inner'>
-    <h3 class='section-subtitle'><a href='#' class='info' data-source='forest_legislation'><i></i></a>Forest legislation</h3>
+    <h3 class='section-subtitle'><a href='#' class='info' data-source='forest_legislation'><i></i></a>Forest policy and legislation</h3>
     <ul>
       <% if @country['national_policy_link'].present? %>
         <li><%= link_to @country['national_policy_title'].present? ? @country['national_policy_title'] : 'National Forest Policy', @country['national_policy_link'] %></li>
@@ -168,12 +168,12 @@
 
       <% if @country['emissions'].present? %>
         <li class='<%= 'wide' unless @country['carbon_stocks'].present? %> last'>
-          <h3 class='section-subtitle'><a href='#' class='info' data-source='emissions'><i class='dark'></i></a> Carbon emissions</h3>
+          <h3 class='section-subtitle'><a href='#' class='info' data-source='emissions'><i class='dark'></i></a> GHG emissions</h3>
 
           <% if @country['emissions'] > 0 %>
-            <h2 class='section-title'>According to FAO data, <span><%= number_to_percentage(@country['emissions'], precision: 2) %> of GHG emissions in this country</span> came from landuse change and forestry in 2010.</h2>
+            <h2 class='section-title'>According to FAO data, <span><%= number_to_percentage(emissions, precision: 2) %> of GHG emissions</span> in this country came from land use change and forestry in 2010.</h2>
           <% else %>
-            <h2 class='section-title'>According to FAO data, landuse change and forestry sequested <span><%= number_to_percentage(-@country['emissions'], precision: 1) %> of this country's GHG emissions</span> in 2010.</h2>
+            <h2 class='section-title'>According to FAO data, land use change and forestry sequestered <span><%= number_to_percentage(emissions-100, precision: 2) %> of this country’s GHG emissions in 2010.</span></h2>
           <% end %>
         </li>
       <% end %>

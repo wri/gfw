@@ -769,8 +769,6 @@ GFW.modules.app = function(gfw) {
       if (this.time_layer && GFW.app.currentBaseLayer !== 'forma') {
         this.time_layer.hide();
         Timeline.hide();
-      } else {
-        Timeline.loadDefaultRange();
       }
 
       if (this.time_layer_modis && GFW.app.currentBaseLayer !== 'modis') {
@@ -1253,6 +1251,7 @@ GFW.modules.maplayer = function(gfw) {
 
           if (slug === 'forma' && showMap) {
             Timeline.show();
+            Timeline.loadDefaultRange();
             Analysis.info.model.set('dataset', 'forma');
           } else {
             Timeline.hide();
@@ -1267,6 +1266,7 @@ GFW.modules.maplayer = function(gfw) {
 
           if (slug === 'modis' && showMap) {
             TimelineModis.show();
+            TimelineModis.loadDefaultRange();
             Analysis.info.model.set('dataset', 'modis');
           } else {
             TimelineModis.hide();
