@@ -71,37 +71,41 @@
   </script>
 
   <script id='legend-loss-template' type='text/x-underscore-template'>
-    <ul class='{{category}}'>
-      <li class='{{ category }}'><strong style='color:{{category_color}};'>{{category_title}}</strong></li>
-      <li id='{{cat_id}}' class='{{ category }}'>
-        <i style='background-color:{{title_color}};'></i>
-        <div>{{title}} <a href='#' data-source='{{slug}}' class='source {{ slug }}'></a></div>
+    <ul class='legend_category {{category}}'>
+      <li class='{{category}}'><strong style='color:{{category_color}};'>{{category_title}}</strong></li>
+
+      <li id='{{cat_id}}' class='{{category}}'>
+        <i style='background-color:{{title_color}};'></i> {{title}} <a href='#' data-source='{{slug}}' class='source {{slug}}'></a>
       </li>
 
       <ul>
-        <li id='{{cat_id}}' class='loss'> <i style='background-color:{{title_color}};'></i><div>Loss</div></li>
-        <li id='{{cat_id}}' class='forestgain'> <i style='background-color:#6d6de5'></i><div>Gain</div></li>
+        <li id='{{cat_id}}' class='loss'> <i style='background-color:{{title_color}};'></i> Loss</li>
+        <li id='{{cat_id}}' class='forestgain'> <i style='background-color:#6d6de5'></i> Gain</li>
       </ul>
 
       {{#sublayer}}
       <div class='coverage_category'>
-        <a href='#' data-id='{{ id }}' data-color='{{ category_color }}' class='checkbox {{slug}}'>
-        <i><span></span></i><span class='name'>Geographic coverage</span>
-        </a><a href='#' data-source='{{slug}}' class='source coverage {{ slug }}'></a>
+        <a href='#' data-id='{{id}}' data-color='{{category_color}}' class='checkbox {{slug}}'>
+          <i><span></span></i><span class='name'>Geographic coverage</span>
+        </a>
+        <a href='#' data-source='{{slug}}' class='source coverage {{slug}}'></a>
       </div>
       {{/sublayer}}
 
       {{#legend}}
-      <div class='info {{ legend_class }} '>
-        <strong>{{{ legend }}}</strong>
-        <div class='data'>
-          <div class='colors'>
-            {{#colors}}
-            <div class='quartile' style='background-color:{{color}}'>{{title}}</div>
-            {{/colors}}
+      <ul class='legend_info {{legend_class}}'>
+        <li class='forest2000'>
+          <strong>{{{ legend }}}</strong>
+
+          <div class='data'>
+            <div class='colors'>
+              {{#colors}}
+              <div class='quartile' style='background-color:{{color}}'>{{title}}</div>
+              {{/colors}}
+            </div>
           </div>
-        </div>
-      </div>
+        </li>
+      </ul>
       {{/legend}}
     </ul>
   </script>
@@ -109,54 +113,56 @@
   <script id='legend-item-template' type='text/x-underscore-template'>
     <li id='{{cat_id}}' class='{{ category }}'>
       <i style='background-color:{{title_color}};'></i>
-      <div>
-        {{title}} <a href='#' data-source='{{slug}}' class="source{{ slug == 'nothing' ? ' hidden' : '' }}"></a>
+      {{title}} <a href='#' data-source='{{slug}}' class="source{{ slug == 'nothing' ? ' hidden' : '' }}"></a>
 
-        {{#legend}}
-        <div class='info {{ legend_class }} '>
-          <strong>{{{ legend }}}</strong>
-          <div class='data'>
-            {{#min}}<div class='min'>{{min}}</div>{{/min}}
-            {{#max}}<div class='max'>{{max}}</div>{{/max}}
-            <div class='colors'>
-            {{#colors}}
-              <div class='quartile' style='background-color:{{color}}'>{{title}}</div>
-            {{/colors}}
-            </div>
+      {{#legend}}
+      <ul class='legend_info {{legend_class}}'>
+        <strong>{{{legend}}}</strong>
+
+        <div class='data'>
+          {{#min}}<div class='min'>{{min}}</div>{{/min}}
+          {{#max}}<div class='max'>{{max}}</div>{{/max}}
+
+          <div class='colors'>
+          {{#colors}}
+            <div class='quartile' style='background-color:{{color}}'>{{title}}</div>
+          {{/colors}}
           </div>
         </div>
-        {{/legend}}
-      </div>
+      </ul>
+      {{/legend}}
     </li>
   </script>
 
   <script id='legend-group-template' type='text/x-underscore-template'>
-    <ul class='{{category}}{{#sublayer}} sublayer{{/sublayer}}'>
-      <li class='{{ category }}'><strong style='color:{{category_color}};'>{{category_title}}</strong></li>
+    <ul class='legend_category {{category}}{{#sublayer}} sublayer{{/sublayer}}'>
+      <li class='{{category}}'><strong style='color:{{category_color}};'>{{category_title}}</strong></li>
 
-      <li id='{{cat_id}}' class='{{ category }}'>
+      <li id='{{cat_id}}' class='{{category}}'>
         <i style='background-color:{{title_color}};'></i>
-        <div>
-          {{title}} <a href='#' data-source='{{slug}}' class='source {{ slug }}'></a>
+        {{title}} <a href='#' data-source='{{slug}}' class='source {{slug}}'></a>
 
-          {{#legend}}
-          <div class='info {{ legend_class }} '>
-            <strong>{{{ legend }}}</strong>
-            <div class='data'>
-              <div class='colors'>
-                {{#colors}}
-                <div class='quartile' style='background-color:{{color}}'>{{title}}</div>
-                {{/colors}}
-              </div>
+        {{#legend}}
+        <ul class='legend_info {{legend_class}}'>
+          <strong>{{{legend}}}</strong>
+
+          <div class='data'>
+            {{#min}}<div class='min'>{{min}}</div>{{/min}}
+            {{#max}}<div class='max'>{{max}}</div>{{/max}}
+
+            <div class='colors'>
+              {{#colors}}
+              <div class='quartile' style='background-color:{{color}}'>{{title}}</div>
+              {{/colors}}
             </div>
           </div>
-          {{/legend}}
-        </div>
+        </ul>
+        {{/legend}}
       </li>
 
       {{#sublayer}}
       <div class='coverage_category'>
-        <a href='#' data-id='{{ id }}' data-color='{{ category_color }}' class='checkbox {{slug}}'>
+        <a href='#' data-id='{{id}}' data-color='{{category_color}}' class='checkbox {{slug}}'>
         <i><span></span></i><span class='name'>Geographic coverage</span>
         </a><a href='#' data-source='{{slug}}' class='source coverage {{ slug }}'></a>
       </div>
@@ -165,9 +171,9 @@
   </script>
 
   <script id='legend-group-double-template' type='text/x-underscore-template'>
-    <ul class='{{category}} double'>
-      <li class='{{ category }}'><strong style='color:{{ category_color }};'>{{category_title}}</strong></li>
-      <li id='{{cat_id}}' class='{{ category }}'>
+    <ul class='legend_category {{category}} double'>
+      <li class='{{category}}'><strong style='color:{{category_color}};'>{{category_title}}</strong></li>
+      <li id='{{cat_id}}' class='{{category}}'>
         <i style="background-color:{{category_color}};"></i>
         <div>{{title}} <a href='#' data-source='{{slug}}' class='source {{category}}'></a></div>
       </li>
@@ -181,7 +187,7 @@
       <div class='coverage_category'>
         <a href='#' data-id='{{ id }}' data-color='{{ category_color }}' class='checkbox {{slug}}'>
         <i><span></span></i><span class='name'>Geographic coverage</span>
-        </a><a href='#' data-source='{{slug}}' class='source coverage {{ slug }}'></a>
+        </a><a href='#' data-source='{{slug}}' class='source coverage {{slug}}'></a>
       </div>
       {{/sublayer}}
     </ul>
@@ -507,14 +513,6 @@
     <strong>search</strong>
     <input type='text' placeholder='...............................' />
     <button>&nbsp;</button>
-  </script>
-
-  <script id='legend-forest2000-template' type='text/x-underscore-template'>
-    <ul class='{{category}}'>
-      <li class='{{ category }}'><strong style='color:{{category_color}};'>{{category_title}}</strong></li>
-      <li id='{{cat_id}}' class='{{ category }}'> <i style='background-color:{{title_color}};'></i><div>{{title}} <a href='#' data-slug='{{slug}}' class='source {{ slug }}'></a></div></li>
-
-    </ul>
   </script>
 
   <script id='dialog-template' type='text/x-underscore-template'>
