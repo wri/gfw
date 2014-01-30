@@ -92,16 +92,18 @@
       {{/sublayer}}
 
       {{#legend}}
-      <div class='info {{ legend_class }} '>
-        <strong>{{{ legend }}}</strong>
-        <div class='data'>
-          <div class='colors'>
-            {{#colors}}
-            <div class='quartile' style='background-color:{{color}}'>{{title}}</div>
-            {{/colors}}
+      <ul class='info {{ legend_class }} '>
+        <li class='forest2000'>
+          <strong>{{{ legend }}}</strong>
+          <div class='data'>
+            <div class='colors'>
+              {{#colors}}
+              <div class='quartile' style='background-color:{{color}}'>{{title}}</div>
+              {{/colors}}
+            </div>
           </div>
-        </div>
-      </div>
+        </li>
+      </ul>
       {{/legend}}
     </ul>
   </script>
@@ -507,14 +509,6 @@
     <strong>search</strong>
     <input type='text' placeholder='...............................' />
     <button>&nbsp;</button>
-  </script>
-
-  <script id='legend-forest2000-template' type='text/x-underscore-template'>
-    <ul class='{{category}}'>
-      <li class='{{ category }}'><strong style='color:{{category_color}};'>{{category_title}}</strong></li>
-      <li id='{{cat_id}}' class='{{ category }}'> <i style='background-color:{{title_color}};'></i><div>{{title}} <a href='#' data-slug='{{slug}}' class='source {{ slug }}'></a></div></li>
-
-    </ul>
   </script>
 
   <script id='dialog-template' type='text/x-underscore-template'>
