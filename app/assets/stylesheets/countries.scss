@@ -623,10 +623,19 @@ section.country_people {
     }
 
     .section-title {
+      overflow: hidden;
       margin-bottom: 10px;
 
+      div,
       span {
+        float: left;
+      }
+
+      span {
+        width: 250px;
+        margin: 10px 0 0 10px;
         font-size: 13px;
+        line-height: 1.4;
         @extend .sans-serif;
         text-transform: uppercase;
         color: #444;

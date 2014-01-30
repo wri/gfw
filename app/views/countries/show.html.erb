@@ -116,12 +116,12 @@
     <% if employees.present? && employees > 0%>
       <ul class='employment <%= employees < 25 ? 'short' : '' %>'>
         <li>
-          <h3 class='section-subtitle'><a href='#' class='info' data-source='employment'><i></i></a>Employment in forest sector</h3>
+          <h3 class='section-subtitle'><a href='#' class='info' data-source='employment'><i></i></a>Employment</h3>
 
           <% if employees < 1000 %>
-            <h2 class='section-title'><%= employees %> <span>thousand people</span></h2>
+            <h2 class='section-title'><div><%= employees %></div> <span>thousand people are directly employed by the forestry sector</span></h2>
           <% else %>
-            <h2 class='section-title'><%= (employees/1000.00).round(2) %> <span>million people</span></h2>
+            <h2 class='section-title'><div><%= (employees/1000.00).round(2) %></div> <span>million people are directly employed by the forestry sector</span></h2>
           <% end %>
 
           <% employees = employees < 100 ? employees : 100 %>
@@ -162,7 +162,7 @@
       <% if @country['carbon_stocks'].present? %>
         <li class='<%= 'wide' unless @country['emissions'].present? %>'>
           <h3 class='section-subtitle'><a href='#' class='info' data-source='carbon_stocks'><i></i></a> Carbon stocks</h3>
-          <h2 class='section-title'>This country has <span><%= number_with_delimiter(@country['carbon_stocks']) %> million<br />tonnes of carbon</span> in living forest biomass.</h2>
+          <h2 class='section-title'>This country has <span><%= number_with_delimiter(@country['carbon_stocks']) %> million<br />metric tons of carbon stocks</span> in living forest biomass.</h2>
         </li>
       <% end %>
 
