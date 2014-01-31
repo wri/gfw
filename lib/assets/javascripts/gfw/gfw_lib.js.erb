@@ -255,9 +255,12 @@ GFW.modules.app = function(gfw) {
         executeAjax(url, params, {
           success: function(sites) {
             var site = null;
+
             if (sites && sites.length > 0) {
-              site = sites[0];
-              that.protectedInfowindow.setContent(site);
+              var site = sites[0],
+                  baselayer = that.currentBaseLayer;
+
+              that.protectedInfowindow.setContent(site, baselayer);
               that.protectedInfowindow.setPosition(event.latLng);
               that.protectedInfowindow.open();
             }

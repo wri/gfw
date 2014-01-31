@@ -1024,7 +1024,7 @@
 
   .top {
     width:245px;
-    max-height:200px;
+    height:200px;
     margin:auto;
     overflow-y:auto;
     overflow-x:hidden;
@@ -1803,4 +1803,8 @@ label {
     }
   }
 
+}
+
+.jspHorizontalBar {
+  display: none;
 }
