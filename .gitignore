@@ -21,5 +21,3 @@
 .ruby-version
 .rvmrc
 .env
-
-Gemfile.lock
