@@ -1,7 +1,7 @@
 class StaticController < ApplicationController
 
   skip_before_filter :check_browser
-  skip_before_filter :check_terms, :only => [:terms, :old]
+  skip_before_filter :check_terms, :only => [:terms, :old, :accept_and_redirect]
 
   def old
     render :layout => "old"
