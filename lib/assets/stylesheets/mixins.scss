@@ -321,3 +321,10 @@ strong { font-weight: bold; } // This is sad, I know.
     color: $cGray2;
   }
 }
+
+@mixin pointer-events($type: none) {
+  $type: unquote($type);
+  @include experimental(pointer-events, $type,
+    -moz, -webkit, not -o, not -ms, -khtml, official
+  );
+}

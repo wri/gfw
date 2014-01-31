@@ -785,7 +785,7 @@
 
 .cartodb_infowindow.with_image_small {
 
-  .header  .cover {
+  .protected-header  .cover {
     width:230px!important;
     margin: 10px 0;
   }
@@ -848,7 +848,7 @@
     background:url('icons/bkg_image_infowindow.png') no-repeat left top;
   }
 
-  .header {
+  .protected-header {
     margin: 0 0 10px 6px;
     width: 295px;
     text-align: left;
@@ -857,6 +857,11 @@
       @include position(65px, 5px, false, false);
       @include size(41px, 42px);
       @include mixins-sprite(graph);
+
+      &.disabled {
+        @include opacity(.6);
+        @include pointer-events(none);
+      }
     }
 
     .cover {
