@@ -14,7 +14,6 @@ en:
 
         We welcome others to join our growing GFW partnership.
       contact: Contact us
-      information: For more information on Global Forest Watch, or to provide feedback, please email
     sources:
       title: Data sources
       nav:
@@ -84,7 +83,7 @@ en:
         featured:
           title: Stories about forest change
           text_html: "Browse %{featured} or %{explore}"
-          featured: featured stories
+          featured: featured user stories
           explore: explore all in the map
           read_more: Read more
         submit_story:

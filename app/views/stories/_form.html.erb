@@ -13,7 +13,7 @@
     <%= f.label :title %>
 
     <div class="error">
-      <%= f.text_field :title, :placeholder => 'E.g. “Northern forests”, “Coastal forest”...' %>
+      <%= f.text_field :title, :placeholder => 'Illegal Logging in National Park' %>
     </div>
   </div>
 
@@ -21,7 +21,7 @@
     <div class="error">
       <%= f.label 'Affected area' %>
 
-      <span class="map-help">Drop a pin on the map around the affected area</span>
+      <span class="map-help">Drop a pin on the map near the affected area</span>
     </div>
 
     <div class="stories_map-container" class="error">
@@ -36,21 +36,21 @@
     <%= f.label :where_did_it_happen %>
     <span>Optional</span>
 
-    <%= f.text_field :where_did_it_happen, :placeholder => 'E.g. “Galizia”, “Mozambique”...' %>
+    <%= f.text_field :where_did_it_happen, :placeholder => 'E.g. "Katingan Peatland area, Indonesia,”  “Near Ambanja, Mozambique"' %>
   </div>
 
   <div class="field">
     <%= f.label :when_did_it_happen %>
     <span>Optional</span>
 
-    <%= f.text_field :when_did_it_happen, :placeholder => '“November 2010”, “Since 2005”, etc.' %>
+    <%= f.text_field :when_did_it_happen, :placeholder => '“November 2013”, “Since 2005”, etc.' %>
   </div>
 
   <div class="field">
     <%= f.label :details %>
     <span>Optional</span>
 
-    <%= f.text_area :details, :placeholder => 'Affected species, deforestation type, source, etc.' %>
+    <%= f.text_area :details, :placeholder => '“Selective logging with chainsaws”, “Burning peatland”, “Forest cleared for agriculture”, “Affected species”' %>
   </div>
 
   <div class="field">
@@ -68,7 +68,7 @@
       <% end %>
     </ul>
 
-    <p class="hint">Drag & drop images and videos to reorder them within the carrousel. The first one will be considered as the preferred one.</p >
+    <p class="hint">Drag and drop images and videos to upload them or reorder them in the carrousel. The first one will appear as the featured image.</p >
   </div>
 
   <div class="field">
@@ -77,7 +77,7 @@
     <div class="error">
       <%= f.text_field :name %>
     </div>
-    <p class="hint">Your story and name will be visible in Global Forest Watch site, but your email will never be published.</p>
+    <p class="hint"><em>If you share your name, it will be visible on the GFW website, but your e-mail will not be published. In some areas, forest clearing information is considered to be highly sensitive—users are encouraged to be cautious when sharing their names.</em></p>
   </div>
 
   <div class="field">
