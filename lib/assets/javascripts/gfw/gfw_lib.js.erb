@@ -86,32 +86,6 @@ GFW.modules.app = function(gfw) {
       this.forestGainLayer  = null;
 
       this.currentBaseLayer = 'loss';
-
-      this._setupZoom();
-
-      google.maps.event.addDomListener(map, 'dragend', function(event) {
-        Timeline.updateCoordinates(map.getCenter());
-        TimelineLoss.updateCoordinates(map.getCenter());
-        TimelineModis.updateCoordinates(map.getCenter());
-        TimelineImazon.updateCoordinates(map.getCenter());
-        that._updateCoordinates(map.getCenter());
-      });
-
-      google.maps.event.addListener(map, 'center_changed', function(event) {
-        Timeline.updateCoordinates(map.getCenter());
-        TimelineLoss.updateCoordinates(map.getCenter());
-        TimelineModis.updateCoordinates(map.getCenter());
-        TimelineImazon.updateCoordinates(map.getCenter());
-        that._updateCoordinates(map.getCenter());
-      });
-
-      google.maps.event.addListener(map, 'zoom_changed', function(event) {
-        Timeline.updateCoordinates(map.getCenter());
-        TimelineLoss.updateCoordinates(map.getCenter());
-        TimelineModis.updateCoordinates(map.getCenter());
-        TimelineImazon.updateCoordinates(map.getCenter());
-        that._updateCoordinates(map.getCenter());
-      });
     },
 
     _updateCoordinates: function(latLng) {
@@ -228,15 +202,60 @@ GFW.modules.app = function(gfw) {
       });
     },
 
-    _setupListeners: function(){
+    _checkZoomAnalysis: function() {
+      var zoom = map.getZoom(),
+          disabled = Analysis.buttonModel.get('disabled');
+
+      $("#analysis_control").attr('data-tip', '')
+      $('.tipsy').remove();
+
+      if (zoom >= 8 && disabled && !Analysis.analyzing) {
+        $('#analysis_control').removeClass('disabled');
+        Analysis.buttonModel.set('disabled', false);
+
+        $("#analysis_control").attr('data-tip', 'Analyze an area on the map')
+      } else if (zoom < 8 && disabled && !Analysis.analyzing) {
+        $('#analysis_control').addClass('disabled');
+        Analysis.buttonModel.set('disabled', true);
+
+        $("#analysis_control").attr('data-tip', 'Analysis is disabled for this zoom level')
+      }
+    },
+
+    _setupListeners: function() {
       var that = this;
 
+      this._setupZoom();
+      this._checkZoomAnalysis();
+
+      google.maps.event.addListener(map, 'center_changed', function() {
+        Timeline.updateCoordinates(map.getCenter());
+        TimelineLoss.updateCoordinates(map.getCenter());
+        TimelineModis.updateCoordinates(map.getCenter());
+        TimelineImazon.updateCoordinates(map.getCenter());
+
+        that._updateCoordinates(map.getCenter());
+      });
+
       google.maps.event.addListener(map, 'zoom_changed', function() {
+        Timeline.updateCoordinates(map.getCenter());
+        TimelineLoss.updateCoordinates(map.getCenter());
+        TimelineModis.updateCoordinates(map.getCenter());
+        TimelineImazon.updateCoordinates(map.getCenter());
+
+        that._updateCoordinates(map.getCenter());
         that._updateHash();
         that._refreshBaseLayer();
+        that._checkZoomAnalysis();
       });
 
       google.maps.event.addListener(map, 'dragend', function() {
+        Timeline.updateCoordinates(map.getCenter());
+        TimelineLoss.updateCoordinates(map.getCenter());
+        TimelineModis.updateCoordinates(map.getCenter());
+        TimelineImazon.updateCoordinates(map.getCenter());
+
+        that._updateCoordinates(map.getCenter());
         that._updateHash();
       });
 
