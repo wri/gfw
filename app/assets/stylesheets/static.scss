@@ -41,8 +41,13 @@
 }
 
 
-/* =Header
+
+/* =Content
 ----------------------------------------------- */
+
+/*
+ * Header block
+ */
 
 .header_block {
   margin: -106px auto 40px;
@@ -153,8 +158,9 @@
 }
 
 
-/* =Content
------------------------------------------------ */
+/*
+ * Navigation
+ */
 
 .navigation_left {
   float: left;
@@ -187,6 +193,11 @@
     }
   }
 }
+
+
+/*
+ * Accordion
+ */
 
 .content_right {
   float: left;
@@ -520,12 +531,39 @@
   }
 }
 
-.static {
-  &.terms {
-    font-size: 17px;
-    line-height: 1.4;
-    @extend .serif;
-    color: #444;
+
+/*
+ * Terms
+ */
+
+.map-container {
+  position: absolute;
+
+  &:after {
+    content: ' ';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 100%;
+    background: #fff;
+    @include opacity(.85);
+  }
+}
+
+.container-inner {
+  position: relative;
+  min-height: 332px;
+  padding-top: 30px;
+  font-size: 17px;
+  line-height: 1.4;
+  @extend .serif;
+  color: #444;
+
+  &.not_supported {
+    text-align: center;
+  }
+
+  p {
+    margin-bottom: 20px;
   }
 }
 
@@ -577,4 +615,5 @@
 
 .terms_footer {
   text-align: center;
+  margin: 30px auto 22px;
 }

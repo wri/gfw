@@ -7,7 +7,6 @@ gfw.ui.model.Static = cdb.core.Model.extend({
 
 
 gfw.ui.view.Static = cdb.core.View.extend({
-
   el: document.body,
 
   events: {
