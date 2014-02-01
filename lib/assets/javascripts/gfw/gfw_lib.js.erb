@@ -1266,6 +1266,12 @@ GFW.modules.maplayer = function(gfw) {
             forestgain.set('visible', false);
           }
 
+          var $infowindow_analysis = $('.cartodb_infowindow .analyse.disabled');
+
+          if ($infowindow_analysis.length > 0) {
+            $infowindow_analysis.removeClass('disabled');
+          }
+
           umd_tree_loss_gain.set('visible', false);
 
           this.layer.attributes['sublayer_visible'] = false;
@@ -1330,6 +1336,12 @@ GFW.modules.maplayer = function(gfw) {
           GFW.app._addLayer(forestgain);
           forestgain.set('visible', true);
           GFW.app._updateBaseLayer();
+
+          var $infowindow_analysis = $('.cartodb_infowindow .analyse');
+
+          if ($infowindow_analysis.length > 0) {
+            $infowindow_analysis.addClass('disabled');
+          }
 
           umd_tree_loss_gain.set('visible', true);
 
