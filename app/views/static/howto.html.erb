@@ -105,7 +105,7 @@
           <li>Community land claims and tenure rights under the “People” tab</li>
           <li>A “plantation forests map” for the tropical regions</li>
           <li>An updated version of the “Intact Forests Landscapes” layer</li>
-          <li>Updated carbon density maps and estimates of emissions for forest loss and land use change</li>
+          <li>Updated carbon density maps and estimates of emissions for forest loss and land-use change</li>
           <li>Mobile optimization for the GFW site</li>
           <li>A citizen-science platform for comparing and classifying satellite imagery of forests as well as an additional crowd-sourcing tool allowing direct upload of georeferenced information and photos from the field</li>
           <li>A specialized portal for corporate users</li>
@@ -142,7 +142,7 @@
 
         <p>It is nonetheless important to <a href='http://www.sciencemag.org/content/342/6160/805.full' target='_blank'>distinguish</a> between natural forests and tree plantations when considering conservation value, carbon storage, and value to local communities. Natural forests have higher biodiversity, store more carbon, and are more often associated with the traditional livelihoods of forest-dependent communities.</p>
 
-        <p>Global Forest Watch users may be able to use contextual data such as concession boundaries, protected areas, and satellite imagery base maps  to help distinguish tree plantation from natural forests. Users are also encouraged to compare data available on GFW to other data sets that may help plantations for natural forests. GFW and partners are also currently developing “plantation forests map” for the tropical regions to determine the local of plantations on a near-global scale. The map, developed through remote sensing methods, will be coming soon to the GFW site.</p>
+        <p>Global Forest Watch users may be able to use contextual data such as concession boundaries, protected areas, and satellite imagery base maps  to help distinguish tree plantation from natural forests. Users are also encouraged to compare data available on GFW to other data sets that may help distinguish plantations from natural forests. GFW and partners are also currently developing a “plantation forests map” for the tropical regions to determine the location of plantations on a near-global scale. The map, developed through remote sensing methods, will be coming soon to the GFW site.</p>
 
         <h3 class='overview_title'>How do you define “deforestation” and related terms (e.g., “forest loss,” “forest clearing,” “tree cover loss,” and “tree cover loss alerts”?)</h3>
 
@@ -182,7 +182,7 @@
 
         <ul clasS='bullets'>
           <li><strong>Forest change data</strong>, such as global forest change data from the University of Maryland, near real-time FORMA alerts for the humid tropics, SAD alerts for the Brazilian Amazon from Imazon, quarterly vegetation change data from NASA, and others</li>
-          <li><strong>Forest cover data</strong>, including the extent of forest land in 2000, intact forest landscapes, and pantropical carbon density</li>
+          <li><strong>Forest cover data</strong>, including the extent of forest land in 2000, Intact Forest Landscapes, and pantropical carbon density</li>
           <li><strong>Forest use data</strong>, which includes contextual information, such as concession areas for natural resource extraction or agricultural production</li>
           <li><strong>Conservation data</strong>, such as global boundaries for protected areas, biogeographical data on threatened species, and biodiversity hotspots</li>
           <li><strong>Qualitative and anecdotal data</strong>, such as user-submitted stories (submit one <%= link_to 'here', new_story_path %>)</li>
@@ -196,7 +196,7 @@
         <h3 class='overview_title'>Where do the data come from?</h3>
         <p>The data on GFW come from various sources. Most of the data are in the public domain and have been developed by governments, NGOs, research institutions, or companies. Note that the data come in different formats and vary in their accuracy, timeliness, and geographical extent. See GFW’s <%= link_to 'Data policy', sources_path %> for more details.</p>
 
-        <p>Some data are produced directly by WRI and our partners, such as FORMA alerts, intact forest landscapes, and some forest use data.</p>
+        <p>Some data are produced directly by WRI and our partners, such as FORMA alerts, Intact Forest Landscapes, and some forest use data.</p>
 
         <p>For more details, see the <%= link_to 'Data page', sources_path %>.</p>
 
@@ -218,9 +218,9 @@
         <ul class='bullets'>
           <li><strong>Protected areas vs. the grayscale base map:</strong> The boundaries for protected areas on the Google grayscale base map do not always align with the protected areas from the World Database on Protected Areas (WDPA). In this case, the WDPA data set only includes official protected areas—defined regions formally protected by law at the national level—whereas the base map includes recreational areas and other informal green spaces. Furthermore, the WDPA data is approved and reported by individual countries, while Google’s base map is composed of data from a variety of sources. Therefore, the base map grayscale network of parks and protected areas is more expansive (and less defined) than that of the protected areas layer, causing visible incongruities between the two data sets.</li>
 
-          <li><p><strong>Intact forest landscapes vs. tree cover extent:</strong> These data sets measure different things. Tree cover extent shows all 30 X 30 meter areas that meet a minimum threshold of tree cover, whereas intact forest landscapes only show forests that show no significant signs of human activity (see the <%= link_to 'Data page', sources_path %> for specifics).</p>
+          <li><p><strong>Intact Forest Landscapes vs. tree cover extent:</strong> These data sets measure different things. Tree cover extent shows all 30 X 30 meter areas that meet a minimum threshold of tree cover, whereas Intact Forest Landscapes only show forests that show no significant signs of human activity (see the <%= link_to 'Data page', sources_path %> for specifics).</p>
 
-          <p>Users may find instances where tree cover extent does not fall within the boundaries of intact forest landscapes. This is because the intact forest landscapes layer is based on MODIS (250 meter resolution satellite imagery), which is known to overestimate low tree cover densities, whereas the tree cover extent layer is based on Landsat (30 meter resolution satellite imagery).  As a result, the tree cover extent layer may not show tree cover in an area that is covered by an intact forest landscape polygon.</p></li>
+          <p>Users may find instances where tree cover extent does not fall within the boundaries of Intact Forest Landscapes. This is because the Intact Forest Landscapes layer is based on MODIS (250 meter resolution satellite imagery), which is known to overestimate low tree cover densities, whereas the tree cover extent layer is based on Landsat (30 meter resolution satellite imagery).  As a result, the tree cover extent layer may not show tree cover in an area that is covered by an intact forest landscape polygon.</p></li>
         </ul>
 
         <h3 class='overview_title'>I am familiar with a particular geographic area and believe your data set is inaccurate. What can I do?</h3>
@@ -229,7 +229,7 @@
          <p>If you still believe our data are inaccurate, please <a href='mailto:gfw@wri.com'>contact us</a> with a brief description of the location, data set in question, and observed issue. Or <%= link_to 'submit a story', new_story_path %>, with photos or other details. Our team will flag the area for further investigation.</p>
 
         <h3 class='overview_title'>How do I cite Global Forest Watch as a data source?</h3>
-        <p>Each data set has an individual citation, which can be found on the <%= link_to 'Data page', sources_path %>. If you are referencing the source website or publication for a data set please use the “Citation.”  If you are referencing a figure or number generated by GFW or data downloaded from the GFW website, please use the “Suggested citation for data as displayed on GFW.”  For data that are displayed in their original form or when users are directed to the original source to download data, a suggested citation is not listed.</p>
+        <p>Each data set has an individual citation, which can be found on the <%= link_to 'Data page', sources_path %>. If you are referencing the source website or publication for a data set, please use the “Citation.”  If you are referencing a figure or number generated by GFW or data downloaded from the GFW website, please use the “Suggested citation for data as displayed on GFW.”  For data that are displayed in their original form or when users are directed to the original source to download data, a suggested citation is not listed.</p>
 
         <p>To cite the website or initiative overall, please use:</p>
         <p>Global Forest Watch. 2014. World Resources Institute. Accessed on (date). <a href='http://www.globalforestwatch.org'>www.globalforestwatch.org</a></p>
@@ -241,7 +241,7 @@
 
       <div class='source_body'>
         <h3 class='overview_title'>How was the Global Forest Watch website built?</h3>
-        <p>he Global Forest Watch website is an open source platform designed and built by <a href='http://www.vizzuality.com/' target='_blank'>Vizzuality</a>, in partnership with the <a href='http://www.wri.org/' target='_blank'>World Resources Institute</a>. Data are hosted on <a href='https://cartodb.com/' target='_blank'>CartoDB</a>, <a href='https://support.google.com/fusiontables/answer/2571232?hl=en' target='_blank'>Google Fusion Tables</a>, and <a href='https://earthengine.google.org/#intro' target='_blank'>Google Earth Engine</a>. Map visualizations are powered using CartoDB. The platform is designed for <a href='http://rubyonrails.org/' target='_blank'>Ruby on Rails</a> and uses the Global Forest Watch API for data analysis, download, and subscription features. All code is available through our <a href='https://github.com/Vizzuality/gfw' target='_blank'>website repository</a> and <a href='https://github.com/wri/gfw-api' target='_blank'>API repository</a> on GitHub.</p>
+        <p>The Global Forest Watch website is an open source platform designed and built by <a href='http://www.vizzuality.com/' target='_blank'>Vizzuality</a>, in partnership with the <a href='http://www.wri.org/' target='_blank'>World Resources Institute</a>. Data are hosted on <a href='https://cartodb.com/' target='_blank'>CartoDB</a>, <a href='https://support.google.com/fusiontables/answer/2571232?hl=en' target='_blank'>Google Fusion Tables</a>, and <a href='https://earthengine.google.org/#intro' target='_blank'>Google Earth Engine</a>. Map visualizations are powered using CartoDB. The platform is designed for <a href='http://rubyonrails.org/' target='_blank'>Ruby on Rails</a> and uses the Global Forest Watch API for data analysis, download, and subscription features. All code is available through our <a href='https://github.com/Vizzuality/gfw' target='_blank'>website repository</a> and <a href='https://github.com/wri/gfw-api' target='_blank'>API repository</a> on GitHub.</p>
 
         <h3 class='overview_title'>What does it mean that Global Forest Watch is in “beta”?</h3>
         <p>While GFW is fully functional, we are still collecting user feedback to improve website features and functionality.</p>
@@ -249,7 +249,7 @@
         <p>Establishing an effective web-based tool requires an iterative process of feedback and refinement. This is why your feedback is important to us. Please take our online <a href='https://www.surveymonkey.com/s/gfw2' target='_blank'>User Challenge</a> to help us improve the site.</p>
 
         <h3 class='overview_title'>I am experiencing difficulties with the site. What should I do?</h3>
-        <p>Please first ensure that you are using an appropriate web browser. We recommend using a recent version of Google <a href='https://www.google.com/intl/en/chrome/browser/' target='_blank'>Chrome</a>, Mozilla <a href='http://www.mozilla.org/en-US/firefox/new/' target='_blank'>Firefox</a>, or Apple <a href='http://www.apple.com/safari/' target='_blank'>Safari</a>. We highly discourage viewing Global Forest Watch in Internet Explorer because of problems with the map functionality</p>
+        <p>Please first ensure that you are using an appropriate web browser. We recommend using a recent version of Google <a href='https://www.google.com/intl/en/chrome/browser/' target='_blank'>Chrome</a>, Mozilla <a href='http://www.mozilla.org/en-US/firefox/new/' target='_blank'>Firefox</a>, or Apple <a href='http://www.apple.com/safari/' target='_blank'>Safari</a>. We highly discourage viewing Global Forest Watch in Internet Explorer because of problems with the map functionality.</p>
 
         <p>If errors persist when using a recommended browser, please contact us at <a href='mailto:gfw@wri.org'>gfw@wri.org</a>.</p>
 
@@ -286,7 +286,7 @@
           <li>Assess supply chain risks</li>
         </ul>
 
-        <p>Over the coming year, GFW will develop these features together with a core group of corporate partners committed to supply chain transparency and ending commodity-driven deforestation. We’ll also establish a working group of interested companies who we’ll invite to test the site as it is developed and provide feedback.</p>
+        <p>Over the coming year, GFW will develop these features together with a core group of corporate partners committed to supply chain transparency and ending commodity-driven deforestation. We’ll also establish a working group of interested companies we’ll invite to test the site as it is developed and provide feedback.</p>
 
         <p>For more information or to join the conversation, contact: <strong>Elizabeth Baer</strong>, <em>Corporate Engagement Manager for Global Forest Watch, World Resources Institute</em> (<a href='linkto:ebaer@wri.org'>ebaer@wri.org</a>, +1 (202) 729-7818).</p>
 
