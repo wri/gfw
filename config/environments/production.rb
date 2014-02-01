@@ -80,7 +80,7 @@ Gfw::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.middleware.insert_after(::Rack::Runtime, "::Rack::Auth::Basic", "Development") do |u, p|
-    [u, p] == ['admin', 'WsxGAZi4TuazqFl']
+  config.middleware.insert_after(::Rack::Runtime, "::Rack::Auth::Basic", "Production") do |u, p|
+    [u, p] == ['admin', ENV['PASSWORD']]
   end
 end
