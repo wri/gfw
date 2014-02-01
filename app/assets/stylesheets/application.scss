@@ -278,6 +278,16 @@ a.accept_btn {
     @extend .sans-serif;
     text-transform: uppercase;
     color: #ccc;
+
+    span {
+      text-transform: none;
+    }
+
+    sub {
+      position: relative;
+      bottom: -3px;
+      font-size: 80%;
+    }
   }
 
   .source_header,
