@@ -90,13 +90,13 @@ $(function() {
 
       if (!iso) {
         config.ISO = 'ALL';
+
+        if (lat && lon) map.setCenter(new google.maps.LatLng(lat, lon));
       } else {
         config.ISO = iso;
       }
 
       this.trigger('loadgfw', 'map');
-
-      if (lat && lon) map.setCenter(new google.maps.LatLng(lat, lon));
     }
   });
 
@@ -209,7 +209,6 @@ $(function() {
       // Analysis
       Analysis = new gfw.ui.view.Analysis();
       this.$map.append(Analysis.render());
-      Analysis.show();
 
       if (config.ISO != 'ALL') Analysis._loadCountry(config.ISO);
 
