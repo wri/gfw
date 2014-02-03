@@ -15,7 +15,7 @@
     </div>
 
     <div class="input-field huge">
-      <%= text_field_tag :title, '', :placeholder => 'Illegal Logging in National Park' %>
+      <%= text_field_tag :title, (@story['title'] || ''), :placeholder => 'Illegal Logging in National Park' %>
     </div>
   </div>
 
@@ -29,7 +29,7 @@
       <div id="stories_map" class="map stories_map"></div>
     </div>
 
-    <%= hidden_field_tag :the_geom %>
+    <%= hidden_field_tag :the_geom, (@story['the_geom'] || '') %>
   </div>
 
   <div class="field">
@@ -38,19 +38,31 @@
     </div>
 
     <div class="input-field huge">
-      <%= text_field_tag :location, '', :placeholder => 'Katingan Peatland area, Indonesia,” “Near Ambanja, Mozambique"' %>
+      <%= text_field_tag :location, (@story['location'] || ''), :placeholder => 'Katingan Peatland area, Indonesia,” “Near Ambanja, Mozambique"' %>
     </div>
   </div>
 
-  <div class="field">
-    <div class="optional short">
-      <%= label_tag 'When did it happen' %> <span>Optional</span>
-    </div>
+  <% if action_name == 'edit' %>
+    <div class="field">
+      <div class="optional">
+        <%= label_tag 'When did it happen' %> <span>Optional</span>
+      </div>
 
-    <div class="input-field short">
-      <%= date_field_tag :date, '', :placeholder => '“November 2013”, “Since 2005”, etc.' %>
+      <div class="input-field huge">
+        <%= text_field_tag :when_did_it_happen, @story['when_did_it_happen'], :placeholder => '“November 2013”, “Since 2005”, etc.' %>
+      </div>
     </div>
-  </div>
+  <% elsif action_name == 'new' %>
+    <div class="field">
+      <div class="optional short">
+        <%= label_tag 'When did it happen' %> <span>Optional</span>
+      </div>
+
+      <div class="input-field short">
+        <%= date_field_tag :date, @story['date'] %>
+      </div>
+    </div>
+  <% end %>
 
   <div class="field">
     <div class="optional">
@@ -58,7 +70,7 @@
     </div>
 
     <div class="input-field textarea">
-      <%= text_area_tag :details, '', :placeholder => '“Selective logging with chainsaws”, “Burning peatland”, “Forest cleared for agriculture”, “Affected species”' %>
+      <%= text_area_tag :details, (@story['details'] || ''), :placeholder => '“Selective logging with chainsaws”, “Burning peatland”, “Forest cleared for agriculture”, “Affected species”' %>
     </div>
   </div>
 
@@ -87,7 +99,7 @@
     <%= label_tag 'Your name' %>
 
     <div class="input-field short">
-      <%= text_field_tag :name %>
+      <%= text_field_tag :name, (@story['name'] || '') %>
     </div>
 
     <p class="hint">If you share your name, it will be visible on the GFW website, but your e-mail will not be published.</p>
@@ -97,7 +109,7 @@
     <%= label_tag 'Your email' %>
 
     <div class="input-field short">
-      <%= text_field_tag :email %>
+      <%= text_field_tag :email, (@story['email'] || '') %>
     </div>
 
     <p class="hint">In some areas, forest clearing information is considered to be highly sensitive—users are encouraged to be cautious when sharing their names.</p>
@@ -105,11 +117,10 @@
 
   <% if action_name == 'edit' %>
   <div class="field with_checkbox">
-    <a href="#" class="checkbox styled<%= @story.featured ? " checked" : "" %>">
+    <a href="#" class="checkbox styled<%= @story['featured'] ? " checked" : "" %>">
       Show it as Story
 
-      <%= text_field_tag :name %>
-      <input name="story[featured]" type="hidden" value="<%= @story.featured %>" />
+      <input name="featured" type="hidden" value="<%= @story['featured'] %>" />
     </a>
   </div>
   <% end %>

@@ -25,6 +25,7 @@ class StoriesController < ApplicationController
 
   def new
     @url = stories_path
+    @story = {}
   end
 
   def edit
@@ -34,12 +35,16 @@ class StoriesController < ApplicationController
   end
 
   def create
-    Api::Story.create(params)
+    response = Api::Story.create(params)
 
-    flash[:notice] = 'Your story has been registered. Thanks!'
-
-    # redirect_to story_path(@story)
-    redirect_to story_path(1)
+    if response.nil?
+      flash[:error] = 'Your story has been registered. Thanks!'
+      redirect_to new_story_path
+    else
+      flash[:notice] = 'Your story has been registered. Thanks!'
+      # redirect_to story_path(response['id'])
+      redirect_to stories_path
+    end
   end
 
   def update
