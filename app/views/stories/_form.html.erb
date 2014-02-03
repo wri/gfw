@@ -8,7 +8,7 @@
   </script>
 <% end %>
 
-<%= form_tag('http://wip.gfw-apis.appspot.com/stories/new') do %>
+<%= form_for :story, :url => @url, :method => (@method || :post) do |f| %>
   <div class="field">
     <div class='input_title'>
       <%= label_tag 'Title' %>
@@ -34,21 +34,21 @@
 
   <div class="field">
     <div class="optional">
-      <%= label_tag 'Where did it happen areas' %> <span>Optional</span>
+      <%= label_tag 'Where did it happen' %> <span>Optional</span>
     </div>
 
     <div class="input-field huge">
-      <%= text_field_tag :where_did_it_happen, '', :placeholder => 'Katingan Peatland area, Indonesia,” “Near Ambanja, Mozambique"' %>
+      <%= text_field_tag :location, '', :placeholder => 'Katingan Peatland area, Indonesia,” “Near Ambanja, Mozambique"' %>
     </div>
   </div>
 
   <div class="field">
-    <div class="optional">
+    <div class="optional short">
       <%= label_tag 'When did it happen' %> <span>Optional</span>
     </div>
 
-    <div class="input-field huge">
-      <%= text_field_tag :when_did_it_happen, '', :placeholder => '“November 2013”, “Since 2005”, etc.' %>
+    <div class="input-field short">
+      <%= date_field_tag :date, '', :placeholder => '“November 2013”, “Since 2005”, etc.' %>
     </div>
   </div>
 
@@ -57,12 +57,16 @@
       <%= label_tag 'Details' %> <span>Optional</span>
     </div>
 
-    <div class="input-field huge">
-      <%= text_field_tag :details, '', :placeholder => '“Selective logging with chainsaws”, “Burning peatland”, “Forest cleared for agriculture”, “Affected species”' %>
+    <div class="input-field textarea">
+      <%= text_area_tag :details, '', :placeholder => '“Selective logging with chainsaws”, “Burning peatland”, “Forest cleared for agriculture”, “Affected species”' %>
     </div>
   </div>
 
   <div class="field media">
+    <div class="optional">
+      <%= label_tag 'Media' %> <span>Optional</span>
+    </div>
+
     <div class='inner_media'>
       <ul class="thumbnails">
         <li><a href='#' class='upload_picture'></a></li>
@@ -80,7 +84,7 @@
   </div>
 
   <div class="field">
-    <%= label_tag 'Name' %>
+    <%= label_tag 'Your name' %>
 
     <div class="input-field short">
       <%= text_field_tag :name %>
@@ -90,7 +94,7 @@
   </div>
 
   <div class="field">
-    <%= label_tag 'Email' %>
+    <%= label_tag 'Your email' %>
 
     <div class="input-field short">
       <%= text_field_tag :email %>
