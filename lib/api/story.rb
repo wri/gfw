@@ -16,6 +16,28 @@ module Api
       response.select { |r| r['featured'] }
     end
 
+    def self.create(params)
+      options = {
+                  :email => params['email'],
+                  :date => params['date'],
+                  :media => nil,
+                  :geom => {
+                    :type => "Point",
+                    :coordinates => [
+                       23.90625,
+                       0
+                    ]
+                  },
+                  :details => params['details'],
+                  :location => params['location'],
+                  :name => params['name'],
+                  :title => params['title']
+                }.to_json
+
+      post('/stories/new', :body => options,
+                           :options => { :headers => { 'Content-Type' => 'application/json' } } )
+    end
+
     def self.find_featured_by_page(page, stories_per_page)
       response = featured
 
