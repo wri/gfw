@@ -57,6 +57,10 @@ en:
       submit: submit yours
       submitted_by: "Submitted by %{name}"
       submit_your: Submit your story
+    new:
+      title: Submit a story
+    edit:
+      title: Edit story
   home:
     index:
       title: Find out what is happening in forests right now

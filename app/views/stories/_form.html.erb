@@ -10,18 +10,18 @@
 
 <%= form_for :story, :url => @url, :method => (@method || :post) do |f| %>
   <div class="field">
-    <%= f.label :title %>
+    <div class='input_title'>
+      <%= label_tag 'Title' %>
+    </div>
 
-    <div class="error">
-      <%= f.text_field :title, :placeholder => 'Illegal Logging in National Park' %>
+    <div class="input-field huge">
+      <%= text_field_tag :title, (@story['title'] || ''), :placeholder => 'Illegal Logging in National Park' %>
     </div>
   </div>
 
   <div class="field">
-    <div class="error">
-      <%= f.label 'Affected area' %>
-
-      <span class="map-help">Drop a pin on the map near the affected area</span>
+    <div class='optional'>
+      <%= label_tag 'Affected areas' %> <span>Drop a pin on the map near the affected area</span>
     </div>
 
     <div class="stories_map-container" class="error">
@@ -29,94 +29,103 @@
       <div id="stories_map" class="map stories_map"></div>
     </div>
 
-    <%= f.text_field :the_geom %>
+    <%= hidden_field_tag :the_geom, (@story['the_geom'] || '') %>
   </div>
 
   <div class="field">
-    <%= f.label :where_did_it_happen %>
-    <span>Optional</span>
+    <div class="optional">
+      <%= label_tag 'Where did it happen' %> <span>Optional</span>
+    </div>
 
-    <%= f.text_field :where_did_it_happen, :placeholder => 'E.g. "Katingan Peatland area, Indonesia,”  “Near Ambanja, Mozambique"' %>
+    <div class="input-field huge">
+      <%= text_field_tag :location, (@story['location'] || ''), :placeholder => 'Katingan Peatland area, Indonesia,” “Near Ambanja, Mozambique"' %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :when_did_it_happen %>
-    <span>Optional</span>
+  <% if action_name == 'edit' %>
+    <div class="field">
+      <div class="optional">
+        <%= label_tag 'When did it happen' %> <span>Optional</span>
+      </div>
 
-    <%= f.text_field :when_did_it_happen, :placeholder => '“November 2013”, “Since 2005”, etc.' %>
+      <div class="input-field huge">
+        <%= text_field_tag :when_did_it_happen, @story['when_did_it_happen'], :placeholder => '“November 2013”, “Since 2005”, etc.' %>
+      </div>
+    </div>
+  <% elsif action_name == 'new' %>
+    <div class="field">
+      <div class="optional short">
+        <%= label_tag 'When did it happen' %> <span>Optional</span>
+      </div>
+
+      <div class="input-field short">
+        <%= date_field_tag :date, @story['date'] %>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <div class="optional">
+      <%= label_tag 'Details' %> <span>Optional</span>
+    </div>
+
+    <div class="input-field textarea">
+      <%= text_area_tag :details, (@story['details'] || ''), :placeholder => '“Selective logging with chainsaws”, “Burning peatland”, “Forest cleared for agriculture”, “Affected species”' %>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :details %>
-    <span>Optional</span>
+  <div class="field media">
+    <div class="optional">
+      <%= label_tag 'Media' %> <span>Optional</span>
+    </div>
 
-    <%= f.text_area :details, :placeholder => '“Selective logging with chainsaws”, “Burning peatland”, “Forest cleared for agriculture”, “Affected species”' %>
-  </div>
+    <div class='inner_media'>
+      <ul class="thumbnails">
+        <li><a href='#' class='upload_picture'></a></li>
 
-  <div class="field">
-    <%= f.label :media %>
-    <%= f.hidden_field :media %>
-
-    <ul class="thumbnails">
-      <li><%= link_to '', '#', :class => 'upload_picture' %></li>
-
-      <% (@story.media || []).each do |media| %>
-        <li id="photo_<%= @story.id %>" class="thumbnail sortable">
-          <img src="<%= media['url'] %>">
-          <%= link_to '', media, :class => "destroy" %>
-        </li>
-      <% end %>
-    </ul>
+      <%# (@story.media || []).each do |media| %>
+        <!-- li id="photo_<%#= @story.id %>" class="thumbnail sortable">
+          <img src="<%#= media['url'] %>">
+          <%#= link_to '', media, :class => "destroy" %>
+        </li -->
+      <%# end %>
+      </ul>
+    </div>
 
     <p class="hint">Drag and drop images and videos to upload them or reorder them in the carrousel. The first one will appear as the featured image.</p >
   </div>
 
   <div class="field">
-    <%= f.label :name %>
+    <%= label_tag 'Your name' %>
 
-    <div class="error">
-      <%= f.text_field :name %>
+    <div class="input-field short">
+      <%= text_field_tag :name, (@story['name'] || '') %>
     </div>
-    <p class="hint"><em>If you share your name, it will be visible on the GFW website, but your e-mail will not be published. In some areas, forest clearing information is considered to be highly sensitive—users are encouraged to be cautious when sharing their names.</em></p>
+
+    <p class="hint">If you share your name, it will be visible on the GFW website, but your e-mail will not be published.</p>
   </div>
 
   <div class="field">
-    <%= f.label :email %>
+    <%= label_tag 'Your email' %>
 
-    <div class="error">
-      <%= f.text_field :email %>
+    <div class="input-field short">
+      <%= text_field_tag :email, (@story['email'] || '') %>
     </div>
+
+    <p class="hint">In some areas, forest clearing information is considered to be highly sensitive—users are encouraged to be cautious when sharing their names.</p>
   </div>
 
   <% if action_name == 'edit' %>
   <div class="field with_checkbox">
-    <a href="#" class="checkbox styled<%= @story.featured ? " checked" : "" %>">
+    <a href="#" class="checkbox styled<%= @story['featured'] ? " checked" : "" %>">
       Show it as Story
-      <input name="story[featured]" type="hidden" value="<%= @story.featured %>" />
+
+      <input name="featured" type="hidden" value="<%= @story['featured'] %>" />
     </a>
   </div>
   <% end %>
 
-  <div class="field">
-    <%= f.submit 'Submit story' %>
+  <div class="field last">
+    <%= submit_tag 'Submit story' %>
   </div>
-<% end %>
-
-<% if action_name == 'new' %>
-<aside>
-  <h3>Why submit stories?</h3>
-  <p>Your participation can greatly improve understanding of what is happening to forests around the world.</p>
-
-  <h3>How your stories will be used</h3>
-  <p>Your stories will be immediately displayed as a layer on the GFW map and will be visible to all visitors to the site. WRI is not responsible for how this information is used by these visitors, and it reserves the right to remove stories that are inappropriate or not related to forest issues.</p>
-
-  <p>You can submit a story by sharing text, image, video or web links showing how forests are being managed, cleared, or protected in your area. Submit a story to:</p>
-  <ul>
-    <li>confirm or refute remotely sensed data;</li>
-    <li>report illegal activities;</li>
-    <li>call attention to a threat or conflict in your area;</li>
-    <li>tell a forest conservation sucess story; or</li>
-    <li>share your local expertise.</li>
-  </ul>
-</aside>
 <% end %>
