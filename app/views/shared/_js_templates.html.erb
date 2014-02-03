@@ -215,7 +215,9 @@
   <script type='text/javascript'>
     var circleSummary = [
       { icon: 'flag', count: '2,931', title: 'Forest clearing alerts in the last 16 days' },
-      { icon: 'area', count: '3,182', title: 'Hectares of forest cleared in 2012' }
+      { icon: 'area', count: '19.27', title: 'Million hectares of forest cleared in 2012' },
+      { icon: 'area', count: '211.47', title: 'Million hectares of forest cleared from 2000 to 2012' },
+      { icon: 'area', count: '80.62', title: 'Million hectares of forest gain from 2000 to 2012' }
     ];
   </script>
 
@@ -392,9 +394,9 @@
         <strong class='title'>Total selected area</strong>
         <ul>
           <li class='ha'>
-            <p class='count'><strong>{{ loss }}</strong> Ha</p>
-            <p class='count'><strong>{{ gain }}</strong> Ha</p>
-            <p class='count'><strong>{{ treecover_2000 }}</strong> Ha</p>
+            <p class='count'><strong>{{ loss }}</strong> Ha Loss</p>
+            <p class='count'><strong>{{ gain }}</strong> Ha Gain</p>
+            <p class='count'><strong>{{ treecover_2000 }}</strong> Ha Tree cover</p>
           </li>
         </ul>
         {{/umd}}

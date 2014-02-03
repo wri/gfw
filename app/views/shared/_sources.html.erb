@@ -74,11 +74,11 @@
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
-            <dd>Shows global tree cover extent for the year 2000 and is the baseline for the UMD tree cover loss and gain layers</dd>
+            <dd>SShows the baseline tree cover extent for the UMD tree cover loss and gain layers</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Resolution/scale</dt>
-            <dd>30 meters × 30 meters</dd>
+            <dd>30 × 30 meters</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Geographical coverage</dt>
@@ -92,11 +92,15 @@
             <dt>Date of content</dt>
             <dd>2000</dd>
           </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd>Forest > 25% tree canopy cover includes all types of forest, be it plantations, primary forest, secondary forest or any other type of tree cover. Hence, tree cover change does not equate to deforestation.</dd>
+          </dl>
         </div>
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>This data set shows the global tree cover extent for the year 2000 at 30 × 30 meter spatial resolution and covering all global lands except for Antarctica and a number of Arctic islands.  The extent data was generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a> sensor, and all images were compiled in the Google Earth Engine. The clear surface observations from the thousands of images employed for the analysis were then assembled into a per pixel forest probability time series to classify tree cover. For the classification threshold of tree cover, trees were defined as all vegetation taller than 5 meters in height.</p>
+          <p>This data set shows the global percent tree cover for the year 2000 at 30 × 30 meter spatial resolution and covering all global lands except for Antarctica and a number of Arctic islands.  The extent data was generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a> sensor, and all images were compiled in the Google Earth Engine. The clear surface observations from over 600,000 images employed for the analysis were then assembled into a per pixel forest probability time series to classify tree cover. For the classification threshold of tree cover, trees were defined as all vegetation taller than 5 meters in height.</p>
 
           <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Science 342 (15 November): 850–53.</p>
 
@@ -580,7 +584,7 @@
           </dl>
           <dl class='sources_row even'>
             <dt>Resolution/scale</dt>
-            <dd>1 × 1 kilometer (Each hotspot/active fire detection represents the center of approximately 1km pixel. The actual pixel size varies with the scan and track)</dd>
+            <dd>1 × 1 kilometer (100 ha)</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Geographical coverage</dt>
@@ -588,21 +592,25 @@
           </dl>
           <dl class='sources_row even'>
             <dt>Source data</dt>
-            <dd>ICESAT GLAS Lidar and other radar satellite imagery</dd>
+            <dd><a href='http://icesat.gsfc.nasa.gov/icesat/glas.php' target='_blank'>ICESAT GLAS Lidar</a> and other radar satellite imagery</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Date of content</dt>
             <dd>Early 2000s</dd>
           </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd>The forest above and below ground biomass were produced at 1 × 1 kilometer (100 ha) spatial resolution. The values for each pixel (1 × 1km) refer to the biomass of forests remaining within the pixel and can be used directly to estimate total carbon stock in forests within one pixel. Along with the biomass values, there is an error map at the same spatial resolution providing the uncertainty in biomass estimation. It is recommended that both biomass and uncertainty values be used together for carbon assessments and verifications. The map will provide accurate estimates of total carbon stock and carbon density when aggregated to large areas (5,000-10,000 ha) for project and regional level assessments. The biomass value of a single pixel may have large uncertainty when compared with small plots for verification.</dd>
+          </dl>
         </div>
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>The Tropical Forest Carbon Stocks data layer shows a “benchmark” map of biomass carbon stocks for more than 2.5 billion ha of forests on three continents, encompassing all tropical forests, for the early 2000s. Researchers from NASA’s <a href='http://www.jpl.nasa.gov/' target='_blank'>Jet Propulsion Laboratory</a> (JPL) and <a href='http://www.winrock.org/' target='_blank'>Winrock International</a> developed the layer by collecting data from more than 4,000 in situ inventory plots, plus optical and microwave imagery (1km resolution) to extrapolate the amount of calculated carbon stocks from forests distributed over the South American, Southeast Asia, and the Sub-Saharan African regions. Further data on tree height and landscape characteristics across the tropics were derived using satellite light detection and ranging (Lidar) data from the <a href='http://icesat.gsfc.nasa.gov/icesat/glas.php' target='_blank'>ICESAT GLAS Lidar</a>. This data set also helps to illustrate regional patterns and provides methodologically comparable estimates of carbon stocks for 75 developing countries where previous assessments were either poor or incomplete.</p>
+          <p>The Tropical Forest Carbon Stocks data layer shows a “benchmark” map of biomass carbon stocks for more than 2.5 billion hectares of forests on three continents, encompassing all tropical forests, for the early 2000s. Researchers from NASA’s <a href='http://www.jpl.nasa.gov/' target='_blank'>Jet Propulsion Laboratory (JPL)</a> and <a href='http://www.winrock.org/' target='_blank'>Winrock International</a> developed the layer by collecting data from more than 4,000 in situ inventory plots, plus optical and microwave imagery (1km resolution) to extrapolate the amount of calculated carbon stocks from forests distributed over the South American, Southeast Asia, and the Sub-Saharan African regions. Further data on tree height and landscape characteristics across the tropics were derived using satellite light detection and ranging (Lidar) data from the <a href='http://icesat.gsfc.nasa.gov/icesat/glas.php' target='_blank'>ICESAT GLAS Lidar</a>. This data set also helps illustrate regional patterns and provides methodologically comparable estimates of carbon stocks for 75 developing countries where previous assessments were either poor or incomplete.</p>
 
-          <p class='credits'><strong>Citation:</strong> Saatchi, S.S., N.L. Harris, S. Brown, M. Lefsky, E. Mitchard, W. Salas, B. Zutta, W. Buermann, S. Lewis, S. Hagen, S. Petrova, L. White, M. Silman and A. Morel. 2011. “Benchmark map of forest carbon stocks in tropical regions across three continents.” Proceedings of the National Academy of Sciences vol 108, no. 24, pp 9899-9904. DOI: 10.1073/pnas.1019576108</p>
+          <p class='credits'><strong>Citation:</strong> Saatchi, S.S., N.L. Harris, S. Brown, M. Lefsky, E. Mitchard, W. Salas, B. Zutta, W. Buermann, S. Lewis, S. Hagen, S. Petrova, L. White, M. Silman and A. Morel. 2011. “<a href='http://www.pnas.org/content/suppl/2011/05/24/1019576108.DCSupplemental' target='_blank'>Benchmark map of forest carbon stocks in tropical regions across three continents</a>.” <i>Proceedings of the National Academy of Sciences</i> vol 108, no. 24, pp 9899-9904. DOI: 10.1073/pnas.1019576108.</p>
 
-          <p class='read_more'><em>Learn more at the <a href='http://www.pnas.org/content/suppl/2011/05/24/1019576108.DCSupplemental' target='_blank'>PNAS website</a></em>
+          <p class='read_more'><em>Learn more or download data at the <a href='http://www.pnas.org/content/suppl/2011/05/24/1019576108.DCSupplemental' target='_blank'>NASA Jet Propulsion Laboratory website</a>.</em>
         </div>
       </div>
     </li>
@@ -762,7 +770,7 @@
           </dl>
           <dl class='sources_row'>
             <dt>Geographical coverage</dt>
-            <dd>Currently available for Cameroon, Democratic Republic of the Congo (DRC), Gabon, Republic of the Congo, and Indonesia</dd>
+            <dd>Currently available for Cameroon, Democratic Republic of the Congo (DRC), Gabon, and Republic of the Congo</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Source data</dt>
@@ -851,7 +859,7 @@
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
-            <dd>Displays boundaries of areas allocated by governments to companies for extraction of minerals</dd>
+            <dd>Displays boundaries of areas allocated by governments to companies for oil palm plantations</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Resolution/scale</dt>
@@ -941,7 +949,7 @@
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
-            <dd>Displays boundaries of areas allocated by governments to private companies for tree plantations for production of wood pulp for paper and paper products</dd>
+            <dd>Displays boundaries of areas allocated by governments to private companies for tree plantations for production of timber and wood pulp for paper and paper products</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Resolution/scale</dt>
@@ -971,7 +979,7 @@
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>“Wood fiber concession” refers to an area allocated by a government or other body for establishment of fast-growing tree plantations for the production of wood pulp for paper and paper products.</p>
+          <p>“Wood fiber concession” refers to an area allocated by a government or other body for establishment of fast-growing tree plantations for the production of timber and wood pulp for paper and paper products.</p>
 
           <p>The wood fiber concession data on GFW, while displayed as a single layer, is assembled on a country-by-country basis from multiple sources.</p>
 
@@ -987,7 +995,9 @@
         <div class='source_description'>
           <p class='first'>GFW currently hosts wood fiber concession data for the following countries:</p>
 
-          <h3>Indonesia wood fiber plantations</h3>
+         <h3 class='overview_title'>Indonesia wood fiber plantations</h3>
+         <p class='download'><a href='http://www.wri.org/our-work/project/forests-and-landscapes-indonesia' target='_blank'>Download at WRI.org</a></p>
+         
           <p>This data set, produced by the Indonesia Ministry of Forestry, provides the boundaries of current or planned wood fiber plantations in Indonesia. This data set is known to be incomplete, but it is compiled from the best information currently available.</p>
 
           <p class='credits'><strong>Credit:</strong> Indonesia Ministry of Forestry.</p>
