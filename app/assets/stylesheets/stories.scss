@@ -285,13 +285,13 @@
 }
 
 .remove_story-link {
-  margin: 5px;
-  z-index: 10;
+  display: none;
   position: absolute;
-  right: 0px;
-  top: 0px;
-  background-color: #fff;
+  z-index: 10;
+  top: 0px; right: 0px;
+  margin: 5px;
   padding: 4px;
+  background-color: #fff;
   @include border-right-radius(2px);
   border: 1px solid rgba(#000, 0.14902);
   @include box-shadow(rgba(#000, 0.298039) 0px 1px 4px -1px);

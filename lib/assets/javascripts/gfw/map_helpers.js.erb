@@ -34,21 +34,6 @@ config.MAPOPTIONS = {
   layers: ''
 };
 
-config.OVERLAYSTYLES = {
-  strokeWeight: 2,
-  fillOpacity: 0.25,
-  fillOpacity: 0.45,
-  fillColor: "#FFF",
-  strokeColor: "#A2BC28",
-  editable: true,
-  icon: new google.maps.MarkerImage(
-    '<%= image_path "marker_exclamation.png" %>',
-    new google.maps.Size(36, 36), // size
-    new google.maps.Point(0, 0), // offset
-    new google.maps.Point(18, 18) // anchor
-  )
-};
-
 config.MAPSTYLES = {};
 
 config.MAPSTYLES.forestsoft = new google.maps.ImageMapType({

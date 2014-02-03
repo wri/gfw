@@ -1,9 +1,11 @@
-<% content_for :title do %>
-  <%= "Edit story" %>
-<% end %>
+<% content_for :title do
+  t('.title')
+end %>
 
 <% content_for :inner_header do %>
-  <%= link_to t(".delete"), stories_path(@story.id), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn green" %>
+  <%= link_to t(".delete"), stories_path(@story['id']), method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn green" %>
 <% end %>
 
-<%= render 'form' %>
+<div class='inner story_form'>
+  <%= render 'form' %>
+</div>

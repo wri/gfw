@@ -87,7 +87,7 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
   },
 
   _toggleButton: function() {
-    if(this.model.get('the_geom') !== '') {
+    if (this.model.get('the_geom') !== '') {
       this.$the_geom.val(this.model.get('the_geom'));
       this.drawingManager.setOptions({ drawingControl: false });
       this.$remove.fadeIn(250);
@@ -99,7 +99,7 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
   },
 
   render: function() {
-    this.$the_geom = this.$('#story_the_geom');
+    this.$the_geom = this.$('#the_geom');
     this.$remove = this.$('.remove_story-link');
 
     var the_geom = this.$the_geom.val()
