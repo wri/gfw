@@ -1400,11 +1400,19 @@
   }
 
   .count {
+
+    font-weight:bold;
+
     strong {
       font-size: 18px;
       font-weight: bold;
       line-height: 1.5;
       color: #666;
+    }
+
+    sup {
+      vertical-align: super;
+      font-size: 11px;
     }
 
     &.forma {
