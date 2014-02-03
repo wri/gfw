@@ -18,7 +18,7 @@ Gfw::Application.routes.draw do
   # countries
   get 'countries' => 'countries#index'
   get 'country/:id' => 'countries#show', :as => 'country'
-  get 'overview' => 'countries#overview'
+  get 'countries/overview' => 'countries#overview'
 
   root 'home#index'
 end

@@ -1,5 +1,5 @@
 <% content_for :title do %>
-  <% t(".title", :link => link_to('go to overview', overview_path)).html_safe %>
+  <% t(".title") %>
 <% end %>
 
 <% content_for :js do %>
@@ -11,6 +11,12 @@
     });
   </script>
 <% end %>
+
+<div class="inner">
+  <div class="countries_block">
+    <h2 class="header-title">Explore latest data worldwide in the <%= link_to "countries overview", countries_overview_path %></h2>
+  </div>
+</div>
 
 <ul class="countries inner">
   <% @countries.each do |c| %>

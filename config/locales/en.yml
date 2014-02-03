@@ -25,8 +25,7 @@ en:
         base_maps: Base maps
   countries:
     index:
-      title: "Select a country or %{link}"
-      link: go to overview
+      title: Select a country
     show:
       conventions:
         cbd_title_html: "CBD"
