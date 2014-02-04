@@ -184,7 +184,7 @@
   padding-top: 0;
 
   .columns {
-    padding: 14px 0 20px;
+    padding: 14px 0 57px;
   }
 }
 
@@ -386,15 +386,23 @@
   }
 }
 
+.graph-action-subtitle,
 .graph-date {
   position: absolute;
   z-index: 100;
-  bottom: 37px; left: 0;
-  width: 100%;
   font-size: 13px;
+  width: 100%;
   @extend .serif;
   text-align: center;
   color: #333;
+}
+
+.graph-date {
+  bottom: 37px; left: 0;
+}
+
+.graph-action-subtitle {
+  bottom: -50px; left: 0;
 }
 
 .hansen_dropdown-menu,

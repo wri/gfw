@@ -34,7 +34,9 @@
             <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.kml?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>KML</a></li>
             <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.csv?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>CSV</a></li>
           </ul>
-        </div></a>
+        </div>
+        <div class='graph-action-subtitle'></div>
+        <div class='graph-action-subtitle'>Download</div>
       </li>
 
       <li class='column three graph forest_loss ghost'>
@@ -53,6 +55,7 @@
         <div class='coming_soon'>Not yet available for this country</div>
         <div class='frame'><div class='frame_bkg'></div></div>
         <a href='#' class='action disabled' title='Download coming soon'></a>
+        <div class='graph-action-subtitle'>Download coming soon</div>
       </li>
 
       <% map_coords = "#{map_path}/5/#{@country['lat'].round(2)}/#{@country['lng'].round(2)}/#{@country['iso']}" %>
@@ -64,6 +67,7 @@
           </div>
         </a>
         <a href='<%= map_coords %>' class='action' title='Analyze forest change'></a>
+        <div class='graph-action-subtitle'>Analyze</div>
       </li>
     </ul>
   </div>
