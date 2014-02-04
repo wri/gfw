@@ -14,7 +14,6 @@
 ----------------------------------------------- */
 
 .stories .header {
-  height: 169px;
   border-bottom: 1px solid #e5e5e5;
 }
 
@@ -27,8 +26,8 @@
     height: 196px;
   }
 
-  .header-title {
-    font-size: 51px;
+  .header-subtitle {
+    margin-bottom: 40px;
   }
 }
 

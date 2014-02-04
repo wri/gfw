@@ -76,7 +76,7 @@
     <div class="header_separator"></div>
 
     <div class="header-inner inner">
-      <h1 class="header-title"><%= yield :title %></h1>
+      <h1 class="header-title <%= "big" if controller_name == 'stories' %>"><%= yield :title %></h1>
 
       <% if controller_name == 'home' %>
         <ul class="big_numbers">
