@@ -26,7 +26,7 @@
           </dl>
           <dl class='sources_row'>
             <dt>Geographical coverage</dt>
-            <dd>Forests with >25% canopy cover</dd>
+            <dd>Global forests (forests defined as >25% canopy cover)</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Source data</dt>
@@ -34,7 +34,7 @@
           </dl>
           <dl class='sources_row'>
             <dt>Frequency of updates</dt>
-            <dd><strong>Loss:</strong> Annual<br /><strong>Gain:</strong> 12 year cumulative, updated annually</dd>
+            <dd><strong>Loss:</strong> Annual<br /><strong>Gain:</strong> 12-year cumulative, updated annually</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Date of content</dt>
@@ -43,20 +43,20 @@
           <dl class='sources_row'>
             <dt>Cautions</dt>
             <dd>
-              <p>This data set measures change in all landscapes with tree cover, including plantations, "production forests," and natural forests. Tree cover loss may indicate a number of potential activities, such as timber harvesting, fires or disease, or conversion of natural forest to plantations. Tree cover gain may indicate natural regrowth of forests, forest restoration, or the growth of plantation trees.</p>
+              <p>This data set measures change in all landscapes with >25% canopy cover, including plantations, "production forests," primary forest, secondary forest, and any other type of tree cover. Tree cover loss may indicate a number of potential activities, such as timber harvesting, fires or disease, or conversion of natural forest to plantations. Tree cover gain may indicate natural regrowth of forests, forest restoration, or the growth of plantation trees.</p>
 
-              <p>In some cases tree cover loss appears in areas where there was no tree cover in 2000 according to the tree cover extent layer. This is because Landsat did not register tree cover in areas that had very low tree cover density (e.g. <5%) in 2000, but the process used to detect tree cover loss was capable of detecting drops in tree cover at even the lowest densities (e.g. 0-5%).</p>
+              <p>In some cases tree cover loss appears in areas where there was no tree cover in 2000 according to the tree cover extent layer. This is because Landsat did not register tree cover in areas that had very low tree cover density (e.g., <5%) in 2000, but the process used to detect tree cover loss was capable of detecting drops in tree cover at even the lowest densities (e.g., 0-5%).</p>
             </dd>
           </dl>
         </div>
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>This data set measures both area of tree cover loss and gain across the globe at 30 × 30 meter spatial resolution on an annual basis from 2001 to 2012.  However gain is only displayed as a 12 year cumulative layer.  The data were generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a> sensor. Multiple Landsat 7 images were compiled in Google Earth Engine and the clear surface observations from these images were then assembled into a per pixel forest probability time series that was classified into either tree cover loss or no change. Tree cover loss was defined as “stand replacement disturbance,” or the complete removal of tree cover canopy at the Landsat pixel scale.  Forest gain was defined as the inverse of loss, or the establishment of tree canopy from non-forest state.  Both global forest loss and gain were related to tree cover density for climate domains, ecozones, and countries. Previously tested methods of high- (Quickbird) and medium- (Landsat) resolution satellite imagery interpretation for tree cover were used to delineate change and no change for training data and to determine the areas of tree cover loss and gain.</p>
+          <p>This data set measures both area of tree cover loss and gain across the globe at 30 × 30 meter spatial resolution on an annual basis from 2001 to 2012. However, gain is only displayed as a 12-year cumulative layer. The data were generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a> sensor. Over 600,000 Landsat 7 images were compiled in Google Earth Engine. The clear land surface observations from these images were then assembled into time series for characterization as either tree cover loss or no change. Tree cover loss was defined as “stand replacement disturbance,” or the complete removal of tree cover canopy at the Landsat pixel scale. Forest gain was defined as the inverse of loss, or the establishment of tree canopy from non-forest state. Both global forest loss and gain were related to tree cover density for climate domains, ecozones, and countries. Previously tested methods of high- (Quickbird) and medium- (Landsat) resolution satellite imagery interpretation for tree cover were used to delineate change and no change for training data and to determine areas of tree cover loss and gain.</p>
 
           <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Science 342 (15 November): 850–53.</p>
 
-          <p class='credits'><strong>Suggested citations for data as displayed on GFW:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “UMD Forest Cover Gain.” University of Maryland and Google. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a></p>
+          <p class='credits'><strong>Suggested citations for data as displayed on GFW:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “UMD Tree Cover Loss and Gain Area.” University of Maryland and Google. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a></p>
 
           <p class='read_more hidden'><em><%= link_to 'Learn more or download data', sources_path %></em>
         </div>
@@ -74,7 +74,7 @@
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
-            <dd>SShows the baseline tree cover extent for the UMD tree cover loss and gain layers</dd>
+            <dd>Shows the baseline tree cover extent for the UMD tree cover loss and gain layers</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Resolution/scale</dt>
@@ -82,7 +82,7 @@
           </dl>
           <dl class='sources_row'>
             <dt>Geographical coverage</dt>
-            <dd>Global</dd>
+            <dd>Global forests (forests defined as >25% canopy cover)</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Source data</dt>
@@ -94,15 +94,15 @@
           </dl>
           <dl class='sources_row'>
             <dt>Cautions</dt>
-            <dd>Forest > 25% tree canopy cover includes all types of forest, be it plantations, primary forest, secondary forest or any other type of tree cover. Hence, tree cover change does not equate to deforestation.</dd>
+            <dd>This data set includes all landscapes with >25% canopy cover, including plantations, "production forests," primary forest, secondary forest, and any other type of tree cover.</dd>
           </dl>
         </div>
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>This data set shows the global percent tree cover for the year 2000 at 30 × 30 meter spatial resolution and covering all global lands except for Antarctica and a number of Arctic islands.  The extent data was generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a> sensor, and all images were compiled in the Google Earth Engine. The clear surface observations from over 600,000 images employed for the analysis were then assembled into a per pixel forest probability time series to classify tree cover. For the classification threshold of tree cover, trees were defined as all vegetation taller than 5 meters in height.</p>
+          <p>This data set shows the global percent tree cover for the year 2000 at 30 × 30 meter spatial resolution and covers all global lands except for Antarctica and a number of Arctic islands. The extent data was generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a> sensor, and all images were compiled in the Google Earth Engine. The clear surface observations from over 600,000 images employed for the analysis were then assembled into a per pixel forest probability time series to classify tree cover. For the classification threshold of tree cover, trees were defined as all vegetation taller than 5 meters in height.</p>
 
-          <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Science 342 (15 November): 850–53.</p>
+          <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” <i>Science</i> 342 (15 November): 850–53.</p>
 
           <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Tree Cover Extent.” University of Maryland and Google. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
