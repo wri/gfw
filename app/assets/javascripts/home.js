@@ -208,6 +208,7 @@ $(function() {
       // Analysis
       Analysis = new gfw.ui.view.Analysis();
       this.$map.append(Analysis.render());
+      Analysis.info.setDraggable(true);
 
       if (config.ISO != 'ALL') Analysis._loadCountry(config.ISO);
 
