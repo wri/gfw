@@ -1151,7 +1151,13 @@ section.country_conventions {
     }
 
     .countries_list__minioverview {
-      color: #74717D;
+      .loss {
+        color: #9DC200;
+      }
+
+      .gain {
+        color: #C443FF;
+      }
     }
   }
 }
@@ -1219,6 +1225,14 @@ section.country_conventions {
   line-height: 50px;
   font-family: "fira_sans_otmedium";
   color: #A2A0A9;
+
+  .loss {
+    color: rgba(#9DC200, .5);
+  }
+
+  .gain {
+    color: rgba(#C443FF, .5);
+  }
 
   .bar {
     fill: #C443FF;

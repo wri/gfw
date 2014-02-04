@@ -200,13 +200,13 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   _drawCountry: function(iso) {
     var that = this;
 
-    var sql = "SELECT the_geom\
-               FROM forest_cov_glob_v3\
-               WHERE country_code = '"+iso+"'\
-               UNION\
-               SELECT the_geom\
-               FROM ne_50m_admin_0_countries\
-               WHERE adm0_a3 = '"+iso+"'&format=topojson";
+    var sql = ['SELECT the_geom',
+               'FROM forest_cov_glob_v3',
+               "WHERE country_code = '"+iso+"'",
+               'UNION',
+               'SELECT the_geom',
+               'FROM ne_50m_admin_0_countries',
+               "WHERE adm0_a3 = '"+iso+"'&format=topojson"].join(' ');
 
     d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(error, topology) {
       draw(topology, 0, iso, {alerts: true});
@@ -214,13 +214,13 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   },
 
   _drawForest: function(iso) {
-    var sql = "SELECT unnest(array['forest_primary', 'forest_regenerated', 'forest_planted'])\
-               AS type, unnest(array[COALESCE(forest_primary, 0),\
-                                     COALESCE(forest_regenerated, 0),\
-                                     COALESCE(forest_planted, 0)])\
-               AS percent\
-               FROM gfw2_countries\
-               WHERE iso = '"+iso+"'";
+    var sql = ["SELECT unnest(array['forest_primary', 'forest_regenerated', 'forest_planted'])",
+               'AS type, unnest(array[COALESCE(forest_primary, 0),',
+                                     'COALESCE(forest_regenerated, 0),',
+                                     'COALESCE(forest_planted, 0)])',
+               'AS percent',
+               'FROM gfw2_countries',
+               "WHERE iso = '"+iso+"'"].join(' ');
 
     d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
       var data = json.rows;
@@ -330,11 +330,12 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   },
 
   _drawTenure: function(iso) {
-    var sql = "SELECT tenure_government, tenure_owned, tenure_owned_individuals,\
-                          tenure_reserved, GREATEST(tenure_government, tenure_owned,\
-                                                    tenure_owned_individuals,\
-                                                    tenure_reserved) as max\
-                   FROM gfw2_countries WHERE iso = '"+iso+"'";
+    var sql = ['SELECT tenure_government, tenure_owned, tenure_owned_individuals,',
+               'tenure_reserved, GREATEST(tenure_government, tenure_owned,',
+                                        'tenure_owned_individuals,',
+                                        'tenure_owned_individuals,',
+                                        'tenure_reserved) as max',
+               "FROM gfw2_countries WHERE iso = '"+iso+"'"].join(' ');
 
     d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
       var data = json.rows[0],
@@ -506,11 +507,11 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
       .style('stroke', line.color);
     });
 
-    var sql = "SELECT date_trunc('month', date) as date, COUNT(*) as alerts\
-               FROM cdm_latest\
-               WHERE iso = '"+options.iso+"'\
-               GROUP BY date_trunc('month', date)\
-               ORDER BY date_trunc('month', date) ASC";
+    var sql = ["SELECT date_trunc('month', date) as date, COUNT(*) as alerts",
+              'FROM cdm_latest',
+              "WHERE iso = '"+options.iso+"'",
+              "GROUP BY date_trunc('month', date)",
+              "ORDER BY date_trunc('month', date) ASC"].join(' ');
 
     if (type === 'lines') {
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
@@ -585,9 +586,9 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         sql += 'y'+y+', ';
       }
 
-      sql += "y2012\
-              FROM "+options.dataset+"\
-              WHERE iso = '"+options.iso+"'";
+      sql += ['y2012',
+              'FROM '+options.dataset,
+              "WHERE iso = '"+options.iso+"'"].join(' ');
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
         if(json) {
@@ -653,10 +654,10 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         sql += 'y'+y+' + ';
       }
 
-      sql += "y2012) FROM countries_loss\
-                    WHERE iso = '"+options.iso+"') as loss\
-                    FROM countries_gain\
-                    WHERE iso = '"+options.iso+"'";
+      sql += ['y2012) FROM countries_loss',
+                     "WHERE iso = '"+options.iso+"') as loss",
+              'FROM countries_gain',
+              "WHERE iso = '"+options.iso+"'"].join(' ');
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         if(json) {
@@ -882,6 +883,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       sql += 'SELECT c.iso, c.name, c.enabled, sum_loss\
               FROM loss, gfw2_countries c\
               WHERE loss.iso = c.iso\
+              AND NOT sum_loss = 0\
               ORDER BY sum_loss DESC ';
 
       if(e) {
@@ -928,6 +930,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       var sql = 'SELECT c.iso, c.name, c.enabled, loss_y2001_y2012 as ratio_loss\
                  FROM countries_percent percent, gfw2_countries c\
                  WHERE percent.iso = c.iso\
+                 AND NOT loss_y2001_y2012 = 0\
                  ORDER BY ratio_loss DESC ';
 
       if(e) {
@@ -984,6 +987,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       sql += 'SELECT c.iso, c.name, c.enabled, sum_extent\
               FROM extent, gfw2_countries c\
               WHERE extent.iso = c.iso\
+              AND NOT sum_extent = 0\
               ORDER BY sum_extent DESC ';
 
       if(e) {
@@ -1109,9 +1113,9 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         _.each(data, function(val, key) {
           markup_list += '<li>\
-                            <div class="countries_list__minioverview huge countries_list__minioverview_'+val.iso+'">\
-                              <div class="half">'+parseFloat(val.total_loss/1000000).toFixed(2)+' MHa</div>\
-                              <div class="half last">'+parseFloat(val.total_gain/1000000).toFixed(2)+' MHa</div>\
+                            <div class="countries_list__minioverview huge">\
+                              <div class="gain half">'+parseFloat(val.total_loss/1000000).toFixed(2)+' MHa</div>\
+                              <div class="loss half last">'+parseFloat(val.total_gain/1000000).toFixed(2)+' MHa</div>\
                             </div>\
                             <div class="countries_list__num">'+(key+1)+'</div>\
                             <div class="countries_list__title">'+val.name+'</div>\
