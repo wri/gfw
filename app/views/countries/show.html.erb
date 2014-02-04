@@ -112,7 +112,7 @@
   <div class='inner'>
     <div class='gross_value <%= 'narrow' if @country['employment'].present? && @country['employment'] > 0 && @country['employment'] < 25 %>'>
       <h3 class='section-subtitle'><a href='#' class='info' data-source='gross_value'><i></i></a>Economic value of <%= @country['name'].titleize %>'s forestry sector</h3>
-      <h2 class='section-title'><%= "The forestry sector contributed <span>$#{number_with_delimiter(@country['gva'].to_i)} million</span> to the economy in 2006, which is approximately <span>#{number_to_percentage(@country['gva_percent'], precision: 2)} of the GDP.</span>".html_safe %></h2>
+      <h2 class='section-title'><%= "The forestry sector contributed <span>USD #{number_with_delimiter(@country['gva'].to_i)} million</span> to the economy in 2006, which is approximately <span>#{number_to_percentage(@country['gva_percent'], precision: 2)} of the GDP.</span>".html_safe %></h2>
     </div>
 
     <% employees = @country['employment'] %>
