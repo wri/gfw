@@ -21,10 +21,6 @@
       margin-bottom: 0;
     }
 
-    .sources {
-      display: none;
-    }
-
     .section {
       overflow: hidden;
       border-bottom: 1px solid #ddd;
@@ -66,6 +62,10 @@
 
   .header {
     height: 211px;
+  }
+
+  .sources {
+    display: none;
   }
 }
 

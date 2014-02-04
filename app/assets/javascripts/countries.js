@@ -865,7 +865,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     var graph = this.model.get('graph');
 
     $('.overview_graph__title').html(config.GRAPHS[graph].title);
-    $('.overview_graph__legend p').text(config.GRAPHS[graph].subtitle);
+    $('.overview_graph__legend p').html(config.GRAPHS[graph].subtitle);
     $('.overview_graph__legend .info').attr('data-source', graph);
 
     this.$graph.find('.'+graph);
