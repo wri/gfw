@@ -209,17 +209,25 @@ GFW.modules.app = function(gfw) {
       $("#analysis_control").attr('data-tip', '')
       $('.tipsy').remove();
 
-      if (zoom >= 8 && disabled && !Analysis.analyzing) {
+      // if (zoom >= 8 && disabled && !Analysis.analyzing) {
+      //   $('#analysis_control').removeClass('disabled');
+      //   Analysis.buttonModel.set('disabled', false);
+
+      //   $("#analysis_control").attr('data-tip', 'Analyze an area on the map')
+      // } else if (zoom < 8 && disabled && !Analysis.analyzing) {
+      //   $('#analysis_control').addClass('disabled');
+      //   Analysis.buttonModel.set('disabled', true);
+
+      //   $("#analysis_control").attr('data-tip', 'Analysis is disabled for this zoom level')
+      // }
+
+      if (disabled && !Analysis.analyzing) {
         $('#analysis_control').removeClass('disabled');
         Analysis.buttonModel.set('disabled', false);
 
         $("#analysis_control").attr('data-tip', 'Analyze an area on the map')
-      } else if (zoom < 8 && disabled && !Analysis.analyzing) {
-        $('#analysis_control').addClass('disabled');
-        Analysis.buttonModel.set('disabled', true);
-
-        $("#analysis_control").attr('data-tip', 'Analysis is disabled for this zoom level')
       }
+
     },
 
     _setupListeners: function() {
