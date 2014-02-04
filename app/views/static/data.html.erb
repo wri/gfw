@@ -1,6 +1,12 @@
 <% content_for :js do %>
   <script>
     $(function() {
+      setTimeout(function() {
+        if (location.hash) {
+          window.scrollTo(0, 0);
+        }
+      }, 1);
+
       var StaticRouter = Backbone.Router.extend({
 
         routes: {
@@ -20,7 +26,7 @@
         initialize: function() {},
 
         change: function() {
-          var tab = window.location.hash.replace('#/','');
+          var tab = window.location.hash.replace('#','');
 
           window.static_data._onNavChange(tab);
         }
@@ -29,8 +35,8 @@
       cdb.init(function() {
         window.static_data = new gfw.ui.view.Static();
 
-        var router = new StaticRouter();
-        Backbone.history.start();
+        window.router = new StaticRouter();
+        Backbone.history.start({ root: "/sources/" });
       });
     });
   </script>
@@ -63,17 +69,17 @@
   <div class='navigation_left'>
     <ul>
       <li class='item_title'><i class='caret_down'></i></li>
-      <li><%= link_to "Forest Change", "#{sources_path}/#/forest_change", :class => 'selected nav-item', :'data-slug' => 'forest_change' %></li>
-      <li><%= link_to "Forest cover", "#{sources_path}/#/forest_cover", :class => 'nav-item', :'data-slug' => 'forest_cover' %></li>
-      <li><%= link_to "Forest use", "#{sources_path}/#/forest_use", :class => 'nav-item', :'data-slug' => 'forest_use' %></li>
-      <li><%= link_to "Conservation", "#{sources_path}/#/conservation", :class => 'nav-item', :'data-slug' => 'conservation' %></li>
-      <li><%= link_to "People", "#{sources_path}/#/people", :class => 'nav-item', :'data-slug' => 'people' %></li>
-      <li><%= link_to "Stories", "#{sources_path}/#/stories", :class => 'nav-item', :'data-slug' => 'stories' %></li>
-      <li><%= link_to "Base maps", "#{sources_path}/#/base_maps", :class => 'nav-item', :'data-slug' => 'base_maps' %></li>
-      <li><%= link_to "Code", "#{sources_path}/#/code", :class => 'nav-item', :'data-slug' => 'code' %></li>
-      <li><%= link_to "GFW on Google Earth Engine", "#{sources_path}/#/earth_engine", :class => 'nav-item', :'data-slug' => 'earth_engine' %></li>
-      <li><%= link_to "GFW on ArcGIS Online", "#{sources_path}/#/arcgis", :class => 'nav-item', :'data-slug' => 'arcgis' %></li>
-      <li><%= link_to "Data policy", "#{sources_path}/#/data_policy", :class => 'nav-item', :'data-slug' => 'data_policy' %></li>
+      <li><a href='#forest_change' class='selected nav-item' data-slug='forest_change'>Forest Change</a></li>
+      <li><a href='#forest_cover' data-slug='forest_cover' class='nav-item'>Forest cover</a></li>
+      <li><a href='#forest_use' data-slug='forest_use' class='nav-item'>Forest use</a></li>
+      <li><a href='#conservation' data-slug='conservation' class='nav-item'>Conservation</a></li>
+      <li><a href='#people'  data-slug='people' class='nav-item'>People</a></li>
+      <li><a href='#stories' data-slug='stories' class='nav-item'>Stories</a></li>
+      <li><a href='#base_maps' data-slug='base_maps' class='nav-item'>Base maps</a></li>
+      <li><a href='#code' data-slug='code' class='nav-item'>Code</a></li>
+      <li><a href='#earth_engine' data-slug='earth_engine' class='nav-item'>GFW on Google Earth Engine</a></li>
+      <li><a href='#arcgis' data-slug='arcgis' class='nav-item'>GFW on ArcGIS Online</a></li>
+      <li><a href='#data_policy' data-slug='data_policy' class='nav-item'>Data policy</a></li>
     </ul>
   </div>
 

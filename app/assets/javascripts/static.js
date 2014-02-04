@@ -32,12 +32,14 @@ gfw.ui.view.Static = cdb.core.View.extend({
   },
 
   _onClickNav: function(e) {
-    // e.preventDefault();
+    e.preventDefault();
 
     var $selected = $(e.target).closest('.nav-item'),
         selected = $selected.attr('data-slug');
 
     if (selected !== this.model.get('selected')) {
+      window.router.navigate(selected);
+
       $('.nav-item.selected').removeClass('selected');
       $selected.addClass('selected');
 

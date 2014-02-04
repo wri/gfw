@@ -1,6 +1,12 @@
 <% content_for :js do %>
   <script>
     $(function() {
+      setTimeout(function() {
+        if (location.hash) {
+          window.scrollTo(0, 0);
+        }
+      }, 1);
+
       var StaticRouter = Backbone.Router.extend({
 
         routes: {
@@ -13,7 +19,7 @@
         initialize: function() {},
 
         change: function() {
-          var tab = window.location.hash.replace('#/','');
+          var tab = window.location.hash.replace('#','');
 
           window.static_about._onNavChange(tab);
         }
@@ -22,8 +28,8 @@
       cdb.init(function() {
         window.static_about = new gfw.ui.view.Static();
 
-        var router = new StaticRouter();
-        Backbone.history.start();
+        window.router = new StaticRouter();
+        Backbone.history.start({ root: "/about/" });
       });
     });
   </script>
@@ -58,10 +64,10 @@
   <div class='navigation_left'>
     <ul>
       <li class='item_title'><i class='caret_down'></i></li>
-      <li><%= link_to "Users", "#{about_path}/#/users", :class => 'selected nav-item', :'data-slug' => 'users' %></li>
-      <li><%= link_to "Videos", "#{about_path}/#/videos", :class => 'selected nav-item', :'data-slug' => 'videos' %></li>
-      <li><%= link_to "About GFW", "#{about_path}/#/gfw", :class => 'selected nav-item', :'data-slug' => 'gfw' %></li>
-      <li><%= link_to "Partners", "#{about_path}/#/partners", :class => 'selected nav-item', :'data-slug' => 'partners' %></li>
+      <li><a href='#users' class='selected nav-item' data-slug='users'>Users</a></li>
+      <li><a href='#videos' data-slug='videos' class='nav-item'>Videos</a></li>
+      <li><a href='#gfw' data-slug='gfw' class='nav-item'>About GFW</a></li>
+      <li><a href='#partners' data-slug='partners' class='nav-item'>Partners</a></li>
     </ul>
   </div>
 
