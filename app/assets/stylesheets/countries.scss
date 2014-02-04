@@ -67,18 +67,18 @@
   .header {
     height: 211px;
   }
+}
 
-  .info i {
-    display: inline-block;
-    position: relative;
-    top: 3px;
-    margin-left: 3px;
-    height: 16px;
-    width: 16px;
-    @include country-icons-sprite(country_info);
+.info i {
+  display: inline-block;
+  position: relative;
+  top: 3px;
+  margin-left: 3px;
+  height: 16px;
+  width: 16px;
+  @include country-icons-sprite(country_info);
 
-    &.dark { @include country-icons-sprite(country_info_dark); }
-  }
+  &.dark { @include country-icons-sprite(country_info_dark); }
 }
 
 
@@ -1026,6 +1026,7 @@ section.country_conventions {
       a {
         position: relative;
         border-bottom: 0;
+        color: rgba(#fff, .75);
         background: rgba(#000, .2);
       }
     }
@@ -1049,27 +1050,27 @@ section.country_conventions {
       }
     }
   }
+}
 
-  a {
-    display: table-cell;
-    height: 99px;
-    width: 159px;
-    border-left: 1px solid #615D6C;
-    border-bottom: 1px solid #615D6C;
-    font-size: 14px;
-    font-family: "fira_sans_otmedium";
-    vertical-align: middle;
-    text-align: center;
-    text-transform: uppercase;
-    color: rgba(#fff, .75);
-    @include transition(none);
+.overview_graph__link {
+  display: table-cell;
+  height: 99px;
+  width: 159px;
+  border-left: 1px solid #615D6C;
+  border-bottom: 1px solid #615D6C;
+  font-size: 14px;
+  font-family: "fira_sans_otmedium";
+  vertical-align: middle;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgba(#fff, .75);
+  @include transition(none);
 
-    span {
-      display: block;
-      font-size: 12px;
-      line-height: 1.5;
-      color: #A39FAA;
-    }
+  span {
+    display: block;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #A39FAA;
   }
 }
 
@@ -1084,6 +1085,11 @@ section.country_conventions {
   text-align: center;
   background: rgba(#000, .2);
   color: #fff;
+
+  .info {
+    float: right;
+    margin-right: 20px;
+  }
 }
 
 .overview_graph__years,

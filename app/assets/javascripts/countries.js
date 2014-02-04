@@ -767,6 +767,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
   el: document.body,
 
   events: {
+    'click .info': '_openSource',
     'click .graph_tab': '_updateGraph',
     'click .countries_list__footer': '_drawList'
   },
@@ -798,6 +799,9 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
   },
 
   _initViews: function() {
+    this.sourceWindow  = new gfw.ui.view.SourceWindow();
+    this.$el.append(this.sourceWindow.render());
+
     this.tooltip = d3.select('body')
       .append('div')
       .attr('class', 'tooltip');
@@ -805,6 +809,14 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     this._drawYears();
     this._drawGraph();
     this._drawList();
+  },
+
+  _openSource: function(e) {
+    e.preventDefault();
+
+    var source = $(e.target).closest('.info').attr('data-source');
+
+    this.sourceWindow.show(source).addScroll();
   },
 
   _toggleYears: function() {
@@ -853,7 +865,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     var graph = this.model.get('graph');
 
     $('.overview_graph__title').html(config.GRAPHS[graph].title);
-    $('.overview_graph__legend').html(config.GRAPHS[graph].subtitle);
+    $('.overview_graph__legend p').text(config.GRAPHS[graph].subtitle);
+    $('.overview_graph__legend .info').attr('data-source', graph);
 
     this.$graph.find('.'+graph);
 
