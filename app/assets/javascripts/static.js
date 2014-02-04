@@ -32,7 +32,7 @@ gfw.ui.view.Static = cdb.core.View.extend({
   },
 
   _onClickNav: function(e) {
-    e.preventDefault();
+    // e.preventDefault();
 
     var $selected = $(e.target).closest('.nav-item'),
         selected = $selected.attr('data-slug');
@@ -42,6 +42,36 @@ gfw.ui.view.Static = cdb.core.View.extend({
       $selected.addClass('selected');
 
       this.model.set('selected', selected);
+    }
+  },
+
+  _goTo: function($el, opt, callback) {
+    if ($el) {
+      var speed  = (opt && opt.speed)  || 500;
+      var delay  = (opt && opt.delay)  || 200;
+      var margin = (opt && opt.margin) || 0;
+
+      $('html, body').delay(delay).animate({scrollTop:$el.offset().top - margin}, speed);
+
+      callback && callback();
+    }
+  },
+
+  _onNavChange: function(tab) {
+    var that = this;
+
+    var $selected = $("[data-slug=" + tab + "]"),
+        selected = tab;
+
+    if (selected !== this.model.get('selected')) {
+      $('.nav-item.selected').removeClass('selected');
+      $selected.addClass('selected');
+
+      this.model.set('selected', selected);
+
+      setTimeout(function() {
+        that._goTo($('#'+selected), { margin: 40 });
+      }, 800);
     }
   },
 
