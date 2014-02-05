@@ -45,9 +45,11 @@ config.OVERLAYSTYLES = {
 };
 
 function formatNumber(x) {
-  var number = parseInt(x, 10).toString();
+  var parts = x.toString().split('.');
 
-  number = number.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+  var number = parts.join('.');
 
   return number;
 }

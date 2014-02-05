@@ -434,7 +434,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         .enter()
         .append('text')
         .text(function(d) {
-          return d['percent']/1000000.0 + 'Mha';
+          return d['percent']/1000000 + 'Mha';
         })
         .attr('class', function(d, i) {
           return 'units ' + klass[i];
@@ -610,7 +610,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           });
         });
 
-        $amount.html('<span>'+formatNumber(data_[data_.length - 1].value)+'</span>');
+        $amount.html('<span>'+formatNumber(parseInt(data_[data_.length - 1].value, 10))+'</span>');
         $date.html('Hectares in ' + data_[data_.length - 1].year);
 
         var marginLeft = 40,
@@ -643,7 +643,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
             d3.selectAll('.bar').style('opacity', '.5');
             d3.select(this).style('opacity', '1');
 
-            $amount.html('<span>'+formatNumber(d.value)+'</span>');
+            $amount.html('<span>'+formatNumber(parseInt(d.value, 10))+'</span>');
             $date.html('Hectares in ' + d.year);
           });
       });
@@ -683,7 +683,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           });
         });
 
-        $amount.html('<span>'+formatNumber(data_[data_.length - 1].value)+'</span>');
+        $amount.html('<span>'+formatNumber(parseInt(data_[data_.length - 1].value, 10))+'</span>');
         $date.html('Ha '+data_[data_.length - 1].key);
 
         var barWidth = (width - 80) / 12;
@@ -718,7 +718,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
             d3.selectAll('.bar').style('opacity', '.5');
             d3.select(this).style('opacity', '1');
 
-            $amount.html('<span>'+formatNumber(d.value)+'</span>');
+            $amount.html('<span>'+formatNumber(parseInt(d.value, 10))+'</span>');
             $date.html('Ha '+d.key);
           });
       });
@@ -1084,7 +1084,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
 
           markup_list += '<li>\
-                            <div class="countries_list__minioverview medium countries_list__minioverview_'+val.iso+'">'+parseFloat(val.ratio_loss).toFixed(2)+'</div>\
+                            <div class="countries_list__minioverview medium countries_list__minioverview_'+val.iso+'">'+formatNumber(parseFloat(val.ratio_loss).toFixed(2))+'</div>\
                             <div class="countries_list__num">'+ord+'</div>\
                             <div class="countries_list__title">'+enabled+'</div>\
                           </li>';
@@ -1125,14 +1125,14 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         var data = json.rows;
 
         _.each(data, function(val, key) {
-          markup_list += '<li>\
-                            <div class="countries_list__minioverview huge">\
-                              <div class="gain half">'+parseFloat(val.total_loss/1000000).toFixed(2)+' MHa</div>\
-                              <div class="loss half last">'+parseFloat(val.total_gain/1000000).toFixed(2)+' MHa</div>\
-                            </div>\
-                            <div class="countries_list__num">'+(key+1)+'</div>\
-                            <div class="countries_list__title">'+val.name+'</div>\
-                          </li>';
+          markup_list += ['<li>',
+                            '<div class="countries_list__minioverview huge">',
+                              '<div class="gain half">'+formatNumber((val.total_loss/1000000).toFixed(2))+' Mha</div>',
+                              '<div class="loss half last">'+formatNumber((val.total_gain/1000000).toFixed(2))+' Mha</div>',
+                            '</div>',
+                            '<div class="countries_list__num">'+(key+1)+'</div>',
+                            '<div class="countries_list__title">'+val.name+'</div>',
+                          '</li>'].join('');
         });
 
         $('.countries_list__footer').hide();
@@ -1523,7 +1523,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       svg.append('text')
         .attr('class', 'axis')
         .attr('id', 'axis_y')
-        .text('Ha')
+        .text('Mha')
         .attr('x', -h/2)
         .attr('y', 30)
         .attr('transform', 'rotate(-90)');
@@ -1585,7 +1585,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           })
           .attr('r', 6)
           .attr('name', function(d) {
-            return '<span>'+d.year+'</span>'+parseFloat(d.value).toFixed(2)+' Ha';
+            return '<span>'+d.year+'</span>'+formatNumber(parseInt(d.value/1000000))+' Mha';
           })
           .on('mouseover', function(d) {
             that.tooltip.html($(this).attr('name'))
@@ -1649,7 +1649,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           })
           .attr('r', 6)
           .attr('name', function(d) {
-            return '<span>2001-2012</span>'+parseFloat(d.value).toFixed(2)+' Ha';
+            return '<span>2001-2012</span>'+formatNumber(parseInt(d.value/1000000))+' Mha';
           })
           .on('mouseover', function(d) {
             that.tooltip.html($(this).attr('name'))
@@ -1861,7 +1861,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       svg.append('text')
         .attr('class', 'axis')
         .attr('id', 'axis_y')
-        .text('Ha')
+        .text('Mha')
         .attr('x', -h/2)
         .attr('y', 30)
         .attr('transform', 'rotate(-90)');
@@ -1982,7 +1982,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           })
           .attr('r', 6)
           .attr('name', function(d) {
-            return '<span>'+d.year+'</span>'+parseFloat(d.value).toFixed(2)+' Ha';
+            return '<span>'+d.year+'</span>'+formatNumber(parseInt(d.value/1000000))+' Mha';
           })
           .on('mouseover', function(d) {
             that.tooltip.html($(this).attr('name'))
@@ -2022,7 +2022,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           })
           .attr('r', 6)
           .attr('name', function(d) {
-            return '<span>'+d.year+'</span>'+parseFloat(d.value).toFixed(2)+' Ha';
+            return '<span>'+d.year+'</span>'+formatNumber(parseInt(d.value/1000000))+' Mha';
           })
           .on('mouseover', function(d) {
             that.tooltip.html($(this).attr('name'))
@@ -2306,7 +2306,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             .attr(circle_attr)
             .attr('data-slug', domain)
             .attr('name', function(d) {
-              return '<span>'+d.year+'</span>'+parseFloat(d.value).toFixed(2)+' Ha';
+              return '<span>'+d.year+'</span>'+formatNumber(parseInt(d.value/1000000))+' Mha';
             })
             .style('fill', function(d) { return config.GRAPHCOLORS[domain]; })
             .on('mouseover', function() {
