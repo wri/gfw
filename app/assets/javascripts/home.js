@@ -186,9 +186,6 @@ $(function() {
       SourceWindow = new gfw.ui.view.SourceWindow();
       this.$el.append(SourceWindow.render());
 
-      // Info window
-      Infowindow = new CartoDBInfowindow(map, { className: 'story_infowindow', width: 215 });
-
       // Timeline
       Timeline = new gfw.ui.view.Timeline({ container: this.$map });
       TimelineLoss = new gfw.ui.view.TimelineLoss({ container: this.$map });

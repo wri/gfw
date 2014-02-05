@@ -137,13 +137,15 @@ GFWMarker.prototype.getPosition = function() {
 GFWMarker.prototype.showInfowindow = function() {
 
   if (!this.opts.thumbnail_url) {
-    Infowindow.setOffset(-25, 10);
-  } else Infowindow.setOffset(-25, 17);
+    this.opts.infowindow.setOffset(-25, 10);
+  } else {
+    this.opts.infowindow.setOffset(-25, 17);
+  };
 
   //Infowindow.close();
-  Infowindow.setContent(this.content_);
-  Infowindow.setPosition(this.latlng_);
-  Infowindow.open();
+  this.opts.infowindow.setContent(this.content_);
+  this.opts.infowindow.setPosition(this.latlng_);
+  this.opts.infowindow.open();
 };
 
 MarkerClusterer.prototype.remove = function () {}
