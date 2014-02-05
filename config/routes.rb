@@ -8,6 +8,7 @@ Gfw::Application.routes.draw do
   get 'about' => 'static#about'
   get 'notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'
   get 'terms' => 'static#terms'
+  get 'accept_terms' => 'static#accept_terms'
   post 'accept' => 'static#accept_and_redirect'
 
   # map

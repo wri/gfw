@@ -567,18 +567,9 @@
   }
 }
 
-.terms_field {
-  overflow-y: scroll;
-  overflow-x: hidden;
-  height: 450px;
-  margin: 30px 0;
-  padding: 8px;
-  border: 1px solid #CCC;
-  outline: none;
+.terms_inner {
   font-size: 15px;
   @extend .serif;
-  @include box-shadow(0 1px 5px rgba(#000, .2) inset);
-  @include border-radius(3px);
 
   p {
     margin-bottom: 10px;
@@ -586,7 +577,7 @@
     &.terms_header {
       text-align: center;
       font-weight: bold;
-      margin: 10px 0 20px;
+      margin: 10px 0 30px;
 
       strong { text-decoration: underline; }
     }
@@ -602,7 +593,14 @@
 
   li { margin-bottom: 10px; }
 
-  .num { list-style-type: decimal; }
+  .num {
+    list-style-type: decimal;
+
+    > li {
+      padding-top: 20px;
+    }
+  }
+
   .let { list-style-type: lower-alpha; }
   .rom { list-style-type: lower-roman; }
   .bullets { list-style-type: disc; }
@@ -611,6 +609,20 @@
     font-weight: bold;
     margin-bottom: 10px;
   }
+}
+
+.terms_field {
+  @extend .terms_inner;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 450px;
+  margin: 30px 0;
+  padding: 8px;
+  border: 1px solid #CCC;
+  outline: none;
+  @include box-shadow(0 1px 5px rgba(#000, .2) inset);
+  @include border-radius(3px);
 }
 
 .terms_footer {
