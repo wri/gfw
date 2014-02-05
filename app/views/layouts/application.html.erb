@@ -78,15 +78,6 @@
     <div class="header-inner inner">
       <h1 class="header-title <%= "big" if controller_name == 'stories' %>"><%= yield :title %></h1>
 
-      <% if controller_name == 'home' %>
-        <ul class="big_numbers">
-          <li class="last">
-            <span class="number"><%= @stories_count %></span>
-            <p>new forest stories</p>
-          </li>
-        </ul>
-      <% end %>
-
       <%= yield :inner_header %>
     </div>
 
