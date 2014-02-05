@@ -2129,13 +2129,19 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         };
 
         var data_ = [],
-            data_link_ = [];
+            data_link_ = [],
+            exclude = ['Saint Barthélemy', 'Saint Kitts and Nevis',
+                       'Saint Pierre and Miquelon', 'Virgin Islands', 'Oman',
+                       'Gibraltar', 'Saudi Arabia', 'French Polynesia',
+                       'Samoa', 'Western Sahara', 'United Arab Emirates'];
 
         _.each(data, function(row) {
-          if(row.enabled === true) {
-            data_link_.push(row);
-          } else {
-            data_.push(row);
+          if (!_.contains(exclude, row.name)) {
+            if(row.enabled === true) {
+              data_link_.push(row);
+            } else {
+              data_.push(row);
+            }
           }
         });
 
@@ -2354,7 +2360,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                 .attr('class', 'tooltip')
                 .attr('data-slug', 'tooltip')
                 .style('color', function() {
-                  console.log(domain);
                   if (domain === 'subtropical') { return config.GRAPHCOLORS[domain]; }
                 });
             })
