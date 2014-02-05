@@ -99,7 +99,7 @@
   <div class='inner'>
     <div id="<%= @country['iso'] %>" class='country-path'></div>
 
-    <h2 class='section-title country_state-title'><%= "#{@country['name'].titleize} has <span>#{number_with_delimiter((@country['extent']/1000000).to_i)} million</span> hectares of trees.".html_safe %><a href='#' class='info' data-source='extent'><i></i></a></h2>
+    <h2 class='section-title country_state-title'><%= "#{@country['name'].titleize} has <span>#{number_with_delimiter((@country['extent']/1000000).round(1))} million</span> hectares of trees.".html_safe %><a href='#' class='info' data-source='extent'><i></i></a></h2>
 
     <div class='forest_type'>
       <h3 class='section-subtitle'><a href='#' class='info' data-source='forest_type'><i></i></a>The type of forest in this country is...</h3>
@@ -112,7 +112,7 @@
   <div class='inner'>
     <div class='gross_value <%= 'narrow' if @country['employment'].present? && @country['employment'] > 0 && @country['employment'] < 25 %>'>
       <h3 class='section-subtitle'><a href='#' class='info' data-source='gross_value'><i></i></a>Economic value of <%= @country['name'].titleize %>'s forestry sector</h3>
-      <h2 class='section-title'><%= "The forestry sector contributed <span>USD #{number_with_delimiter(@country['gva'].to_i)} million</span> to the economy in 2006, which is approximately <span>#{number_to_percentage(@country['gva_percent'], precision: 2)} of the GDP.</span>".html_safe %></h2>
+      <h2 class='section-title'><%= "The forestry sector contributed <span>USD #{number_with_delimiter(@country['gva'].round(1))} million</span> to the economy in 2006, which is approximately <span>#{number_to_percentage(@country['gva_percent'], precision: 1)} of the GDP.</span>".html_safe %></h2>
     </div>
 
     <% employees = @country['employment'] %>
