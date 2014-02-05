@@ -56,6 +56,8 @@ GFW.modules.app = function(gfw) {
 
       this.infowindow          = new CartoDBInfowindow(map);
       this.protectedInfowindow = new ProtectedInfowindow(map);
+      this.storiesInfowindow   = new CartoDBInfowindow(map, { className: 'story_infowindow', width: 215 });
+      this.mongabayInfowindow   = new CartoDBInfowindow(map, { className: 'story_infowindow', width: 215 });
 
       this.queries = {};
 
@@ -357,6 +359,8 @@ GFW.modules.app = function(gfw) {
 
     _removeExternalLayer: function() {
       if (this.specialLayer) {
+        this.protectedInfowindow.close();
+
         this.specialLayer.setOpacity(0);
         this.specialLayer = null;
       }
@@ -657,12 +661,16 @@ GFW.modules.app = function(gfw) {
       this._loadBaseLayer();
     },
 
-    _toggleStoriesLayer: function(id) {
+    _toggleStoriesLayer: function(layer) {
+      if (!layer.get('visible')) {
+        this.storiesInfowindow.close();
+      }
+
       _.each(this.storiesMarkers, function(marker) {
         marker.toggle();
       });
 
-      Filter.toggle(id);
+      Filter.toggle(layer.get('id'));
     },
 
     _hideStoriesMarkers: function() {
@@ -701,7 +709,14 @@ GFW.modules.app = function(gfw) {
 
             var content = "<strong><a href='/stories/"+story.id+"'>"+title+"</a></strong> <span>by "+story.name+" &middot; </span><a href='/stories/"+story.id+"'>read more</a>";
 
-            marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: thumb, content: content });
+            marker = new GFWMarker({
+              position: position,
+              icon: icon,
+              thumbnail_url: thumb,
+              content: content,
+              infowindow: that.storiesInfowindow
+            });
+
             marker.setMap(map);
             that.storiesMarkers.push(marker);
           });
@@ -733,7 +748,16 @@ GFW.modules.app = function(gfw) {
 
             var content = "<strong><a href='"+features.properties.loc+"' target='_blank'>"+title+"</a></strong> <span>by "+features.properties.author+"</span> <span>on "+published+"</span><br><a href='"+features.properties.loc+"target='_blank'>read more</a>";
 
-            marker = new GFWMarker({ position: position, icon: icon, thumbnail_url: thumb, content: content, map: map, type: 'mongabay' });
+            marker = new GFWMarker({
+              position: position,
+              icon: icon,
+              thumbnail_url: thumb,
+              content: content,
+              map: map,
+              type: 'mongabay',
+              infowindow: that.mongabayInfowindow
+            });
+
             that.mongabayMarkers.push(marker);
           });
 
@@ -769,7 +793,11 @@ GFW.modules.app = function(gfw) {
       });
     },
 
-    _toggleMongabayLayer: function(id) {
+    _toggleMongabayLayer: function(layer) {
+      if (!layer.get('visible')) {
+        this.mongabayInfowindow.close();
+      }
+
       if (this.mongabayLoaded) {
         this.mc.clearMarkers();
         this.mongabayMarkers = [];
@@ -778,7 +806,7 @@ GFW.modules.app = function(gfw) {
         this._loadMongabayLayer();
       }
 
-      Filter.toggle(id);
+      Filter.toggle(layer.get('id'));
     },
 
     _hideMongabayLayer: function() {
@@ -1060,7 +1088,7 @@ GFW.modules.maplayer = function(gfw) {
           Filter.addFilter('', slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: null, category_color: this.layer.get('category_color'), color: this.layer.get('title_color') });
         } else if (slug == 'user_stories') {
           var customEvent = function() {
-            GFW.app._toggleStoriesLayer(that.layer.get('id'));
+            GFW.app._toggleStoriesLayer(that.layer);
             Legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
 
             if (!GFW.app.storiesLoaded) {
@@ -1077,7 +1105,7 @@ GFW.modules.maplayer = function(gfw) {
           }
         } else if (slug === 'mongabay') {
           var mongabayEvent = function() {
-            GFW.app._toggleMongabayLayer(that.layer.get('id'));
+            GFW.app._toggleMongabayLayer(that.layer);
             Legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
           };
 
@@ -1222,6 +1250,11 @@ GFW.modules.maplayer = function(gfw) {
 
       _toggleLayer: function() {
         var self = this;
+
+        GFW.app.infowindow.close();
+        GFW.app.protectedInfowindow.close();
+        GFW.app.storiesInfowindow.close();
+        GFW.app.mongabayInfowindow.close();
 
         if (this.layer.attributes['disabled']) {
           return false;
@@ -1390,6 +1423,10 @@ GFW.modules.maplayer = function(gfw) {
 
           Filter.toggle(id);
         } else {
+          if (slug == 'biodiversity_hotspots') {
+            GFW.app.infowindow.close();
+          }
+
           if (visible) {
             GFW.app._addLayer(this.layer);
           } else {
