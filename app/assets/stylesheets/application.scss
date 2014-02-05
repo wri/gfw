@@ -145,6 +145,12 @@ a.accept_btn {
       &:last-child {
         margin-bottom: 0;
       }
+
+      sup {
+        position: relative;
+        top: -3px;
+        font-size: 80%;
+      }
     }
   }
 }
