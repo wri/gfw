@@ -72,7 +72,7 @@ GFW.modules.app = function(gfw) {
       // we can stop loading the blank (see limit=0 below) tileset here now that we are loading the animation. see todo on line 347
       this.queries.forma    = 'SELECT cartodb_id,alerts,z,the_geom_webmercator FROM gfw2_forma WHERE z=CASE WHEN 8 < {Z} THEN 17 ELSE {Z}+8 END limit 0';
       this.queries.modis    = 'SELECT cartodb_id,the_geom_webmercator FROM modis_forest_change_copy';
-      this.queries.imazon   = 'SELECT cartodb_id,type,the_geom_webmercator FROM imazon_clean';
+      this.queries.imazon   = 'SELECT cartodb_id,type,the_geom_webmercator FROM imazon_clean2';
       this.queries.fires    = 'SELECT cartodb_id,the_geom_webmercator FROM global_7d';
 
       this.lastHash = null;
@@ -643,7 +643,7 @@ GFW.modules.app = function(gfw) {
       } else if (layerName === 'modis') {
         return 'modis_forest_change_copy';
       } else if (layerName === 'imazon') {
-        return 'imazon_clean';
+        return 'imazon_clean2';
       } else if (layerName === 'loss') {
         return 'gfw_loss_year';
       } else if (layerName === 'fires') {
@@ -907,7 +907,7 @@ GFW.modules.app = function(gfw) {
 
       this.time_layer_imazon = new StaticGridLayerImazon({
         map: map,
-        _table: 'imazon_clean',
+        _table: 'imazon_clean2',
         _global_version: that._global_version,
         _cloudfront_url: that._cloudfront_url
       });
