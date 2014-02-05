@@ -99,7 +99,9 @@
   <div class='inner'>
     <div id="<%= @country['iso'] %>" class='country-path'></div>
 
-    <h2 class='section-title country_state-title'><%= "#{@country['name'].titleize} has <span>#{number_with_delimiter((@country['extent']/1000000).round(1))} million</span> hectares of trees.".html_safe %><a href='#' class='info' data-source='extent'><i></i></a></h2>
+    <% extent = (@country['extent'].to_i < 1000) ? "#{number_with_delimiter((@country['extent']).round(1))} thousand ": "#{number_with_delimiter((@country['extent']/1000000).round(1))} million" %>
+
+    <h2 class='section-title country_state-title'><%= "#{@country['name'].titleize} has <span>#{extent}</span> hectares of trees.".html_safe %><a href='#' class='info' data-source='extent'><i></i></a></h2>
 
     <div class='forest_type'>
       <h3 class='section-subtitle'><a href='#' class='info' data-source='forest_type'><i></i></a>The type of forest in this country is...</h3>
@@ -117,7 +119,7 @@
 
     <% employees = @country['employment'] %>
 
-    <% if employees.present? && employees > 0%>
+    <% if employees.present? && employees > 0 %>
       <ul class='employment <%= employees < 25 ? 'short' : '' %>'>
         <li>
           <h3 class='section-subtitle'><a href='#' class='info' data-source='employment'><i></i></a>Employment</h3>
