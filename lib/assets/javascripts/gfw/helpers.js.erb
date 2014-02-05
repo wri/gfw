@@ -43,3 +43,11 @@ config.OVERLAYSTYLES = {
     new google.maps.Point(18, 18) // anchor
   )
 };
+
+function formatNumber(x) {
+  var number = parseInt(x, 10).toString();
+
+  number = number.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+  return number;
+}

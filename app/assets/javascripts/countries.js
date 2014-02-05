@@ -508,10 +508,10 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     });
 
     var sql = ["SELECT date_trunc('month', date) as date, COUNT(*) as alerts",
-              'FROM cdm_latest',
-              "WHERE iso = '"+options.iso+"'",
-              "GROUP BY date_trunc('month', date)",
-              "ORDER BY date_trunc('month', date) ASC"].join(' ');
+               'FROM cdm_latest',
+               "WHERE iso = '"+options.iso+"'",
+               "GROUP BY date_trunc('month', date)",
+               "ORDER BY date_trunc('month', date) ASC"].join(' ');
 
     if (type === 'lines') {
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
@@ -543,7 +543,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         var marginLeft = 40,
             marginTop = radius - h/2;
 
-        $amount.html('<span>'+data[data.length - 1].alerts+'</span>');
+        $amount.html('<span>'+formatNumber(data[data.length - 1].alerts)+'</span>');
 
         var date = new Date(data[data.length - 1].date),
             form_date = 'Alerts in ' + config.MONTHNAMES[date.getMonth()] + ' ' + date.getFullYear();
@@ -557,7 +557,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
             var index = Math.round(x_scale.invert(d3.mouse(this)[0]));
 
             if (data[index]) { // if there's data
-              $amount.html('<span>'+data[index].alerts+'</span>');
+              $amount.html('<span>'+formatNumber(data[index].alerts)+'</span>');
 
               var date = new Date(data[index].date),
                   form_date = 'Alerts in ' + config.MONTHNAMES[date.getMonth()] + ' ' + date.getFullYear();
@@ -610,7 +610,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           });
         });
 
-        $amount.html('<span>'+parseFloat(data_[data_.length - 1].value).toFixed(2)+'</span>');
+        $amount.html('<span>'+formatNumber(data_[data_.length - 1].value)+'</span>');
         $date.html('Hectares in ' + data_[data_.length - 1].year);
 
         var marginLeft = 40,
@@ -643,7 +643,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
             d3.selectAll('.bar').style('opacity', '.5');
             d3.select(this).style('opacity', '1');
 
-            $amount.html('<span>'+parseFloat(d.value).toFixed(2)+'</span>');
+            $amount.html('<span>'+formatNumber(d.value)+'</span>');
             $date.html('Hectares in ' + d.year);
           });
       });
@@ -683,7 +683,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           });
         });
 
-        $amount.html('<span>'+parseFloat(data_[data_.length - 1].value).toFixed(2)+'</span>');
+        $amount.html('<span>'+formatNumber(data_[data_.length - 1].value)+'</span>');
         $date.html('Ha '+data_[data_.length - 1].key);
 
         var barWidth = (width - 80) / 12;
@@ -703,7 +703,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
         bar.append('svg:rect')
           .attr('class', function(d, i) {
-            if(i === 1) { // last bar index
+            if (i === 1) { // last bar index
               return 'last bar'
             } else {
               return 'bar'
@@ -718,7 +718,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
             d3.selectAll('.bar').style('opacity', '.5');
             d3.select(this).style('opacity', '1');
 
-            $amount.html('<span>'+parseFloat(d.value).toFixed(2)+'</span>');
+            $amount.html('<span>'+formatNumber(d.value)+'</span>');
             $date.html('Ha '+d.key);
           });
       });
