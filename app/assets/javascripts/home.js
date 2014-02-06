@@ -339,32 +339,33 @@ $(function() {
 
           Filter.show();
 
+          $('.for_business').fadeOut(250);
+
+          if($("header").hasClass("stuck")) {
+            // stuck logo to top of viewport
+            if($(window).scrollTop() < 49) {
+              $(".header-logo").css({
+                "position": "absolute",
+                "top": "44px"
+              });
+            } else if($(window).scrollTop() >= 49 && $(window).scrollTop() <= 112) {
+              $(".header-logo").css({
+                "position": "fixed",
+                "top": "0"
+              });
+            } else if($(window).scrollTop() > 112) {
+              $(".header-logo").css({
+                "position": "absolute",
+                "top": "108px"
+              });
+            }
+          }
+
+          that._selectMenu('map');
+
         });
       }});
 
-      $('.for_business').fadeOut(250);
-
-      if($("header").hasClass("stuck")) {
-        // stuck logo to top of viewport
-        if($(window).scrollTop() < 49) {
-          $(".header-logo").css({
-            "position": "absolute",
-            "top": "44px"
-          });
-        } else if($(window).scrollTop() >= 49 && $(window).scrollTop() <= 112) {
-          $(".header-logo").css({
-            "position": "fixed",
-            "top": "0"
-          });
-        } else if($(window).scrollTop() > 112) {
-          $(".header-logo").css({
-            "position": "absolute",
-            "top": "108px"
-          });
-        }
-      }
-
-      that._selectMenu('map');
 
     },
 
