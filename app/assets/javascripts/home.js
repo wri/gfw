@@ -339,7 +339,6 @@ $(function() {
 
           Filter.show();
 
-          $('.for_business').fadeOut(250);
         });
       }});
 
