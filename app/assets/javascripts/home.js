@@ -260,7 +260,7 @@ $(function() {
         $('.header').animate({ height: '230px' }, 250, function() {
           $('.header-title').animate({ opacity: 1 }, 250);
 
-          $('.big_numbers').fadeIn(250);
+          $('.for_business').fadeIn(250);
         });
       });
 
@@ -309,7 +309,7 @@ $(function() {
         $('.timeline.loss').fadeIn();
       }
 
-      $('.big_numbers').fadeOut(250);
+      $('.for_business').fadeOut(250);
 
       $('.header').animate({height: '135px'}, 250, function() {
         if (GFW.app) GFW.app.open();
@@ -320,7 +320,7 @@ $(function() {
 
         Filter.show();
 
-        $('.big_numbers').fadeOut(250);
+        $('.for_business').fadeOut(250);
       });
     },
 
