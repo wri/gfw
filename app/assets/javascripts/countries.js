@@ -531,8 +531,14 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           .domain([0, data.length - 1])
           .range([0, width - 80]);
 
+        var max = d3.max(data, function(d) { return parseFloat(d.alerts); });
+
+        if (max === d3.min(data, function(d) { return parseFloat(d.alerts); })) {
+          h = h/2;
+        }
+
         var y_scale = d3.scale.linear()
-          .domain([0, d3.max(data, function(d) { return parseFloat(d.alerts); })])
+          .domain([0, max])
           .range([0, h]);
 
         var line = d3.svg.line()
