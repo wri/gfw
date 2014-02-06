@@ -252,16 +252,38 @@ $(function() {
     },
 
     _showHomeState: function() {
-      this._selectMenu('home');
-
       showMap = false;
+
+      var that = this;
 
       Filter.hide(function() {
         $('.header').animate({ height: '230px' }, 250, function() {
           $('.header-title').animate({ opacity: 1 }, 250);
 
           $('.for_business').fadeIn(250);
+
+          if($("header").hasClass("stuck")) {
+            // stuck logo to top of viewport
+            if($(window).scrollTop() < 49) {
+              $(".header-logo").css({
+                "position": "absolute",
+                "top": "44px"
+              });
+            } else if($(window).scrollTop() >= 49 && $(window).scrollTop() <= 112) {
+              $(".header-logo").css({
+                "position": "fixed",
+                "top": "0"
+              });
+            } else if($(window).scrollTop() > 112) {
+              $(".header-logo").css({
+                "position": "absolute",
+                "top": "108px"
+              });
+            }
+          }
         });
+
+        that._selectMenu('home');
       });
 
       if (GFW && GFW.app) {
@@ -284,8 +306,6 @@ $(function() {
 
     _showMapState: function() {
       var that = this;
-
-      this._selectMenu('map');
 
       showMap = true;
 
@@ -322,6 +342,30 @@ $(function() {
           $('.for_business').fadeOut(250);
         });
       }});
+
+      $('.for_business').fadeOut(250);
+
+      if($("header").hasClass("stuck")) {
+        // stuck logo to top of viewport
+        if($(window).scrollTop() < 49) {
+          $(".header-logo").css({
+            "position": "absolute",
+            "top": "44px"
+          });
+        } else if($(window).scrollTop() >= 49 && $(window).scrollTop() <= 112) {
+          $(".header-logo").css({
+            "position": "fixed",
+            "top": "0"
+          });
+        } else if($(window).scrollTop() > 112) {
+          $(".header-logo").css({
+            "position": "absolute",
+            "top": "108px"
+          });
+        }
+      }
+
+      that._selectMenu('map');
 
     },
 
