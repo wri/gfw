@@ -99,7 +99,7 @@
   <div class='inner'>
     <div id="<%= @country['iso'] %>" class='country-path'></div>
 
-    <% extent = (@country['extent'].to_i < 1000) ? "#{number_with_delimiter((@country['extent']).round(1))} thousand ": "#{number_with_delimiter((@country['extent']/1000000).round(1))} million" %>
+    <% extent = (@country['extent'].to_i < 1000000) ? "#{number_with_delimiter((@country['extent']).round(1))} thousand ": "#{number_with_delimiter((@country['extent']/1000000).round(1))} million" %>
 
     <h2 class='section-title country_state-title'><%= "#{@country['name'].titleize} has <span>#{extent}</span> hectares of trees.".html_safe %><a href='#' class='info' data-source='extent'><i></i></a></h2>
 
@@ -114,7 +114,12 @@
   <div class='inner'>
     <div class='gross_value <%= 'narrow' if @country['employment'].present? && @country['employment'] > 0 && @country['employment'] < 25 %>'>
       <h3 class='section-subtitle'><a href='#' class='info' data-source='gross_value'><i></i></a>Economic value of <%= @country['name'].titleize %>'s forestry sector</h3>
-      <h2 class='section-title'><%= "The forestry sector contributed <span>USD #{number_with_delimiter(@country['gva'].round(1))} million</span> to the economy in 2006, which is approximately <span>#{number_to_percentage(@country['gva_percent'], precision: 1)} of the GDP.</span>".html_safe %></h2>
+
+      <% gva = (@country['gva'].to_i < 1000000) ? "#{number_with_delimiter((@country['gva']).round(1))} thousand ": "#{number_with_delimiter((@country['gva']/1000000).round(1))} million" %>
+
+      <% gva_percent = (@country['gva_percent'] < 0.1) ? number_to_percentage(@country['gva_percent'], precision: 2) : number_to_percentage(@country['gva_percent'], precision: 1) %>
+
+      <h2 class='section-title'><%= "The forestry sector contributed <span>USD #{gva}</span> to the economy in 2006, which is approximately <span>#{gva_percent} of the GDP.</span>".html_safe %></h2>
     </div>
 
     <% employees = @country['employment'] %>
@@ -179,7 +184,7 @@
           <% if @country['emissions'] > 0 %>
             <h2 class='section-title'>According to FAO data, <span><%= number_to_percentage(@country['emissions'], precision: 1) %> of GHG emissions</span> in this country came from land-use change and forestry in 2010.</h2>
           <% else %>
-            <h2 class='section-title'>According to FAO data, land-use change and forestry sequestered <span><%= number_to_percentage(@country['emissions']*(-1), precision: 1) %> of this country’s GHG emissions</span> in 2010.</h2>
+            <h2 class='section-title'>According to FAO data, land-use change and forestry sequestered <span><%= number_to_percentage(@country['emissions'].abs, precision: 1) %> of this country’s GHG emissions</span> in 2010.</h2>
           <% end %>
         </li>
       <% end %>
