@@ -170,15 +170,15 @@
 <section class='section country_climate' data-scroll-index='3'>
   <div class='inner'>
     <ul>
-      <% if @country['carbon_stocks'].present? %>
-        <li class='<%= 'wide' unless @country['emissions'].present? %>'>
+      <% if @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>
+        <li class='<%= 'wide' unless @country['emissions'].present? && @country['emissions'] != 0 %>'>
           <h3 class='section-subtitle'><a href='#' class='info' data-source='carbon_stocks'><i></i></a> Carbon stocks</h3>
           <h2 class='section-title'>This country has <span><%= number_with_delimiter(@country['carbon_stocks']) %> million<br />metric tons of carbon stocks</span> in living forest biomass.</h2>
         </li>
       <% end %>
 
-      <% if @country['emissions'].present? %>
-        <li class='<%= 'wide' unless @country['carbon_stocks'].present? %> last'>
+      <% if @country['emissions'].present? && @country['emissions'] != 0 %>
+        <li class='<%= 'wide' unless @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %> last'>
           <h3 class='section-subtitle'><a href='#' class='info' data-source='emissions'><i class='dark'></i></a> GHG emissions</h3>
 
           <% if @country['emissions'] > 0 %>
