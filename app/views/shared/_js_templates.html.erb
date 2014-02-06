@@ -390,13 +390,29 @@
       <div class='stats'>
         {{#umd}}
         <div class='spinner'></div>
-        <div class='error'>Earth Engine timed out.<br />Try smaller polygon.</div>
         <strong class='title'>Total selected area</strong>
+        <div class='error'>Earth Engine timed out.<br />Try smaller polygon.</div>
         <ul>
           <li class='ha'>
-            <p class='count'><strong>{{ loss }}</strong> Ha Loss 2000-2012</p>
-            <p class='count'><strong>{{ gain }}</strong> Ha Gain 2000-2012</p>
-            <p class='count'><strong>{{ treecover_2000 }}</strong> Ha Tree cover 2000</p>
+            <p class='count'><strong>{{ ha }}</strong> Ha</p>
+          </li>
+
+          <li class='alert'>
+            <strong class='title'>Total UMD tree cover alerts</strong>
+            <p class='count forma'>
+              <strong>
+                <span id='alerts-count'>
+                  {{ loss }}</strong>
+                </span>
+              </strong> Ha Loss {{ begin }}-{{ end }}
+            </p>
+          </li>
+
+          <li>
+            {{#gain}}<p class='count'><strong></strong> Ha Gain 2000-2012</p>{{/gain}}
+          </li>
+          <li>
+            {{#treecover_2000}}<p class='count'><strong></strong> Ha Tree cover 2000</p>{{/treecover_2000}}
           </li>
         </ul>
         {{/umd}}
