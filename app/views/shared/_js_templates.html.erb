@@ -398,21 +398,36 @@
           </li>
 
           <li class='alert'>
-            <strong class='title'>Total UMD tree cover alerts</strong>
+            <strong class='title'>Loss {{ begin }}-{{ end }}</strong>
             <p class='count forma'>
               <strong>
                 <span id='alerts-count'>
                   {{ loss }}</strong>
                 </span>
-              </strong> Ha Loss {{ begin }}-{{ end }}
+              </strong> Ha
             </p>
           </li>
 
-          <li>
-            {{#gain}}<p class='count'><strong></strong> Ha Gain 2000-2012</p>{{/gain}}
+          <li class='alert'>
+            <strong class='title'>Gain 2000-2012</strong>
+            <p class='count forma'>
+              <strong>
+                <span id='alerts-count'>
+                  {{ gain }}</strong>
+                </span>
+              </strong> Ha
+            </p>
           </li>
-          <li>
-            {{#treecover_2000}}<p class='count'><strong></strong> Ha Tree cover 2000</p>{{/treecover_2000}}
+
+          <li class='alert'>
+            <strong class='title'>Tree cover 2000</strong>
+            <p class='count forma'>
+              <strong>
+                <span id='alerts-count'>
+                  {{ treecover_2000 }}</strong>
+                </span>
+              </strong> Ha
+            </p>
           </li>
         </ul>
         {{/umd}}
