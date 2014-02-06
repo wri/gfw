@@ -402,7 +402,7 @@
             <p class='count forma'>
               <strong>
                 <span id='alerts-count'>
-                  {{ loss }}</strong>
+                  {{ loss }}
                 </span>
               </strong> Ha
             </p>
@@ -413,7 +413,7 @@
             <p class='count forma'>
               <strong>
                 <span id='alerts-count'>
-                  {{ gain }}</strong>
+                  {{ gain }}
                 </span>
               </strong> Ha
             </p>
@@ -424,14 +424,68 @@
             <p class='count forma'>
               <strong>
                 <span id='alerts-count'>
-                  {{ treecover_2000 }}</strong>
+                  {{ treecover_2000 }}
                 </span>
               </strong> Ha
             </p>
           </li>
         </ul>
         {{/umd}}
+        {{#imazon}}
+        <div class='spinner'></div>
+        <strong class='title'>Total selected area</strong>
+        <div class='error'>Earth Engine timed out.<br />Try smaller polygon.</div>
+        <ul>
+          <li class='ha'>
+            <p class='count'><strong>{{ ha }}</strong> Ha</p>
+          </li>
+
+          {{#defor}}
+          <li class='alert'>
+            <strong class='title'>Deforestation alerts</strong>
+            <p class='count forma'>
+              <strong>
+                <span id='alerts-count'>
+                  {{ defor }}
+                </span>
+              </strong> Ha
+            </p>
+          </li>
+          {{/defor}}
+
+          {{#degrad}}
+          <li class='alert'>
+            <strong class='title'>Degradation alerts</strong>
+            <p class='count forma'>
+              <strong>
+                <span id='alerts-count'>
+                  {{ degrad }}
+                </span>
+              </strong> Ha
+            </p>
+          </li>
+          {{/degrad}}
+
+          {{^defor}}
+          {{^degrad}}
+          <li class='alert'>
+            <strong class='title'>Total {{ dataset }} alerts</strong>
+            <p class='count forma'>
+              <strong>
+                <span id='alerts-count'>
+                  {{ alert_count }}
+                </span>
+              </strong>
+
+              <a href='#' target="_blank" class='download'>download</a>
+            </p>
+          </li>
+          {{/degrad}}
+          {{/defor}}
+        </ul>
+        {{/imazon}}
         {{^umd}}
+        {{^imazon}}
         <div class='spinner'></div>
         <strong class='title'>Total selected area</strong>
         <div class='error'>Earth Engine timed out.<br />Try smaller polygon.</div>
@@ -441,7 +495,7 @@
           </li>
 
           <li class='alert'>
-            <strong class='title'>Total {{ dataset == 'hansen' ? 'UMD tree cover' : dataset }} alerts</strong>
+            <strong class='title'>Total {{ dataset }} alerts</strong>
             <p class='count forma'>
               <strong>
                 <span id='alerts-count'>
@@ -453,8 +507,8 @@
             </p>
           </li>
         </ul>
+        {{/imazon}}
         {{/umd}}
-
 
         <div class='shadow'></div>
       </div>
