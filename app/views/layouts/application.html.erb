@@ -78,6 +78,13 @@
     <div class="header-inner inner">
       <h1 class="header-title <%= "big" if controller_name == 'stories' %>"><%= yield :title %></h1>
 
+      <% if controller_name == 'home' %>
+        <div class="for_business">
+          <p>Almost every business depends on forest in some way.</p>
+          <p><%= link_to "Check out GFW for business", "#{howto_path}#for_business" %></p>
+        </div>
+      <% end %>
+
       <%= yield :inner_header %>
     </div>
 

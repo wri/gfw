@@ -46,35 +46,19 @@
   }
 }
 
-.big_numbers {
-  margin-top: 57px;
+.for_business {
+  margin-top: 63px;
+  width: 240px;
   float: right;
+  line-height: 1.3;
+  text-align: right;
 
-  li {
-    display: inline-block;
-    width: 140px;
-    padding: 0 20px;
-    border-right: 1px solid #ccc;
+  p {
+    color: #666;
+    margin-bottom: 10px;
 
-    &.last {
-      width: 100px;
-      border: 0;
-      padding-right: 0;
-    }
-
-    span {
-      display: inline-block;
-      width: 100px;
-      margin: 0 0 10px;
-      @extend .serif;
-      color: #A1BA42;
-      font-size: 41px;
-    }
-
-    p {
-      color: #999;
+    a {
       font-size: 12px;
-      line-height: 1.3;
       font-weight: bold;
       text-transform: uppercase;
     }
