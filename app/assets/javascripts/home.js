@@ -311,17 +311,18 @@ $(function() {
 
       $('.for_business').fadeOut(250);
 
-      $('.header').animate({height: '135px'}, 250, function() {
+      $('.header').animate({height: '135px'}, { duration: 250, complete: function() {
         if (GFW.app) GFW.app.open();
-      });
 
-      $('.header-title').animate({ opacity: 0 }, 250, function() {
-        $('header-title').hide();
+        $('.header-title').animate({ opacity: 0 }, 250, function() {
+          $('header-title').hide();
 
-        Filter.show();
+          Filter.show();
 
-        $('.for_business').fadeOut(250);
-      });
+          $('.for_business').fadeOut(250);
+        });
+      }});
+
     },
 
     _updateHash: function() {

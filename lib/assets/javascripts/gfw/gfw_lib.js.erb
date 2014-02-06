@@ -1094,6 +1094,7 @@ GFW.modules.maplayer = function(gfw) {
         }
 
         this._addControl(filters);
+
       },
 
       _addControl: function(filters) {
@@ -1514,6 +1515,7 @@ GFW.modules.datalayers = function(gfw) {
       var that = this;
 
       this.LayersObj.bind('reset', function() {
+
         that.LayersObj.each(function(p) {
           if (p.get('slug') === 'user_stories') {
             Filter.addFilter(0, 'nothing', 'People', 'Stay tuned', { disabled: true , category_color: '#707D92', color: '#707D92' });
@@ -1521,6 +1523,9 @@ GFW.modules.datalayers = function(gfw) {
 
           that._addLayer(p);
         });
+
+        if (showMap) Filter.show();
+
       });
     },
 
