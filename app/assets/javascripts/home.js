@@ -296,8 +296,8 @@ $(function() {
           TimelineModis.hide();
           TimelineImazon.hide();
           TimelineLoss.hide();
-          Analysis.hide();
           $('#analysis_control').hide();
+          Analysis.info.hide();
           $('#zoom_controls').hide();
           $('#viewfinder').hide();
         });
@@ -312,8 +312,12 @@ $(function() {
       LayerSelector.show();
       Legend.show();
       SearchBox.show();
-      Analysis.show();
       $('#analysis_control').show();
+      if (Analysis.info.dataset) {
+        Analysis.info.show();
+        $('.analysis_info').find(".spinner").hide();
+        $('.analysis_info').find(".stats .title, .stats ul").fadeIn(250);
+      }
       $('#zoom_controls').show();
       $('#viewfinder').show();
       Circle.hide();
