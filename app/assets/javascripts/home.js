@@ -313,11 +313,13 @@ $(function() {
       Legend.show();
       SearchBox.show();
       $('#analysis_control').show();
-      if (Analysis.info.dataset) {
+      if (Analysis.info.dataset && Analysis.info.initStats) {
         Analysis.info.show();
+
         $('.analysis_info').find(".spinner").hide();
         $('.analysis_info').find(".stats .title, .stats ul").fadeIn(250);
       }
+
       $('#zoom_controls').show();
       $('#viewfinder').show();
       Circle.hide();
