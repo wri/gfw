@@ -211,7 +211,7 @@ $(function() {
 
       // Search box
       SearchBox = new gfw.ui.view.SearchBox({ map: map });
-      this.$map.append(SearchBox);
+      this.$map.append(SearchBox.render());
       SearchBox.setDraggable(true);
 
       SearchBox.bind('goto', function(latlng, bounds) {
