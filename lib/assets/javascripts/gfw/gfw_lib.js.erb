@@ -109,11 +109,7 @@ GFW.modules.app = function(gfw) {
 
       Filter.check(id);
 
-      if (layer.get('slug') !== 'forest2000') {
-        Legend.toggleItem(id, layer.get('category_slug'), layer.get('category_name'), layer.get('title'), layer.get('slug'), layer.get('category_color'), layer.get('title_color'));
-      } else {
-        Legend.toggleItemBySlug('forest2000');
-      }
+      Legend.toggleItem(id, layer.get('category_slug'), layer.get('category_name'), layer.get('title'), layer.get('slug'), layer.get('category_color'), layer.get('title_color'));
     },
 
     run: function() {
@@ -375,8 +371,33 @@ GFW.modules.app = function(gfw) {
 
     _removeForest2000Layer: function() {
       if (this.forest2000Layer) {
-        this.forest2000Layer.setOpacity(0);
-        this.forest2000Layer = null;
+        var layers = map.overlayMapTypes.getArray();
+
+        for (var i = 0; i <= layers.length; i++) {
+          if (layers[i] == this.forest2000Layer) {
+            if (this.forest2000Layer) {
+              this.forest2000Layer.setOpacity(0);
+              this.forest2000Layer = null;
+              map.overlayMapTypes.setAt(i, null);
+            }
+          }
+        }
+      }
+    },
+
+    _removeUmdCoverageLayer: function() {
+      if (this.umdCoverageLayer) {
+        var layers = map.overlayMapTypes.getArray();
+
+        for (var i = 0; i <= layers.length; i++) {
+          if (layers[i] == this.umdCoverageLayer) {
+            if (this.umdCoverageLayer) {
+              this.umdCoverageLayer.setOpacity(0);
+              this.umdCoverageLayer = null;
+              map.overlayMapTypes.setAt(i, null);
+            }
+          }
+        }
       }
     },
 
@@ -431,9 +452,9 @@ GFW.modules.app = function(gfw) {
       }
     },
 
-    _renderForest2000Layer: function() {
-      if (this.forest2000Layer) {
-        this.forest2000Layer.setOpacity(1);
+    _renderUmdCoverageLayer: function() {
+      if (this.umdCoverageLayer) {
+        this.umdCoverageLayer.setOpacity(1);
       } else {
         function CoordMapType() { }
 
@@ -483,6 +504,70 @@ GFW.modules.app = function(gfw) {
           div.style.position = 'relative';
           div.style.overflow = 'hidden';
           div.className += 'pink_tree';
+
+          return div;
+        };
+
+        CoordMapType.prototype.name = 'Tile #s';
+        CoordMapType.prototype.alt = 'Tile Coordinate Map Type';
+
+        this.umdCoverageLayer = new CoordMapType();
+        map.overlayMapTypes.push(this.umdCoverageLayer);
+      }
+    },
+
+    _renderForest2000Layer: function() {
+      if (this.forest2000Layer) {
+        this.forest2000Layer.setOpacity(1);
+      } else {
+        function CoordMapType() { }
+
+        CoordMapType.prototype.tileSize = new google.maps.Size(256,256);
+        CoordMapType.prototype.maxZoom = 17;
+        CoordMapType.prototype.setOpacity = function(opacity) {
+          $('.tree_alpha').css('opacity', opacity);
+        };
+
+        CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
+          var x = coord.x;
+          var y = coord.y;
+          var z = zoom;
+
+          var zsteps = zoom - 12;
+
+          if (zoom > 12) {
+            x = Math.floor(coord.x/(Math.pow(2, zoom - 12)));
+            y = Math.floor(coord.y/(Math.pow(2, zoom - 12)));
+            z = 12;
+          }
+
+          var url = 'http://earthengine.google.org/static/hansen_2013/tree_alpha/' + z + '/' + x + '/' + y + '.png';
+
+          var image = new Image();
+          image.src = url;
+          image.className += 'tree_alpha';
+
+          if (zsteps <= 0) return image;
+
+          image.width = 256 * Math.pow(2, zsteps);
+          image.height = 256 * Math.pow(2, zsteps);
+
+          if (zsteps > 0) {
+            var srcX = 256 * (coord.x % Math.pow(2, zsteps));
+            var srcY = 256 * (coord.y % Math.pow(2, zsteps));
+
+            image.style.position = 'absolute';
+            image.style.top      = -srcY + 'px';
+            image.style.left     = -srcX + 'px';
+          }
+
+          var div = ownerDocument.createElement('div');
+          div.appendChild(image);
+          div.style.width = this.tileSize.width + 'px';
+          div.style.height = this.tileSize.height + 'px';
+          div.style.position = 'relative';
+          div.style.overflow = 'hidden';
+          div.className += 'tree_alpha';
 
           return div;
         };
@@ -1130,6 +1215,10 @@ GFW.modules.maplayer = function(gfw) {
             that._hideBaseLayers(GFW.app);
             that._removeExtendedLayers();
 
+            $('#analysis_control').hide();
+            Analysis.info.model.set('dataset', false);
+            Analysis.info.hide();
+
             if (forestgain) GFW.app._removeLayer(forestgain);
           };
 
@@ -1244,16 +1333,7 @@ GFW.modules.maplayer = function(gfw) {
         var renderLayers = false;
 
         // Remove UMD extended layers
-        GFW.app._removeForest2000Layer();
-        forest2000.set('visible', false);
-
-        $comp_layer = $('#layer a[data-id="591"]');
-        $comp_layer.removeClass('checked');
-        $comp_layer.css('color', '#ccc');
-        $comp_layer.find('i').css('background-color', '#ccc');
-
-        Filter.remove(591);
-        Legend.remove(591);
+        GFW.app._removeUmdCoverageLayer();
 
         var extendedLayers = ['quicc_bounding_box_extent', 'imazon_sad_geografic_extent', 'ecoregions_biome'];
 
@@ -1271,23 +1351,17 @@ GFW.modules.maplayer = function(gfw) {
       },
 
       _toggleSubLayer: function() {
-        if (this.layer.get('sublayer') == 'forest_cover_2000') {
-          forest2000.attributes['visible'] = !forest2000.attributes['visible'];
+        this.layer.attributes['sublayer_visible'] = !this.layer.attributes['sublayer_visible'];
 
-          var visible = forest2000.get('visible');
+        var visible = this.layer.get('sublayer_visible');
 
+        if (this.layer.get('sublayer') == 'forest2000') {
           if (visible) {
-            GFW.app._renderForest2000Layer();
+            GFW.app._renderUmdCoverageLayer();
           } else {
-            GFW.app._removeForest2000Layer();
+            GFW.app._removeUmdCoverageLayer();
           }
-
-          Legend.toggleItemBySlug('forest2000');
         } else {
-          this.layer.attributes['sublayer_visible'] = !this.layer.attributes['sublayer_visible'];
-
-          var visible = this.layer.get('sublayer_visible');
-
           if (visible) {
             GFW.app._addSubLayer(this.layer);
           } else {
@@ -1327,8 +1401,22 @@ GFW.modules.maplayer = function(gfw) {
           category_color = '#707D92';
         }
 
-        if (category != 'Forest change' && slug != 'forest2000') {
+        if (category != 'Forest change') {
           Legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
+        }
+
+        if (slug === ('fires')) {
+          $('#analysis_control').hide();
+          Analysis.info.model.set('dataset', false);
+          Analysis.info.hide();
+        } else {
+          if (Analysis.info.dataset && Analysis.info.initStats) {
+            $('#analysis_control').show();
+            Analysis.info.show();
+
+            $('.analysis_info').find(".spinner").hide();
+            $('.analysis_info').find(".stats .title, .stats ul").fadeIn(250);
+          }
         }
 
         if (slug === 'forestgain') {
@@ -1396,12 +1484,6 @@ GFW.modules.maplayer = function(gfw) {
             TimelineImazon.hide();
           }
 
-          if (slug === 'fires') {
-            $('#analysis_control').hide();
-          } else {
-            $('#analysis_control').show();
-          }
-
           GFW.app.currentBaseLayer = slug;
           GFW.app._updateBaseLayer();
 
@@ -1461,12 +1543,6 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app._renderForest2000Layer();
           } else {
             GFW.app._removeForest2000Layer();
-          }
-
-          if (umd_tree_loss_gain.get('visible')) {
-            Legend.toggleItemBySlug(slug);
-          } else {
-            Legend.toggleItemBySlug(slug, forest2000);
           }
 
           Filter.toggle(id);
