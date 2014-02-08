@@ -441,7 +441,7 @@ GFW.modules.app = function(gfw) {
       } else {
         this.pantropicalLayer = new google.maps.ImageMapType({
           getTileUrl: function(tile, zoom) {
-            return 'http://gfw-ee-tiles.appspot.com/gfw/masked_forest_carbon/' + zoom + '/' + tile.x + '/' + tile.y + '.png';
+            return 'http://wip.gfw-ee-tiles.appspot.com/gfw/masked_forest_carbon/' + zoom + '/' + tile.x + '/' + tile.y + '.png';
           },
           tileSize: new google.maps.Size(256, 256),
           opacity: 1,
@@ -1201,7 +1201,7 @@ GFW.modules.maplayer = function(gfw) {
 
         var slug = this.layer.get('slug');
 
-        if (slug !== ('loss' || 'forestgain')) {
+        if (slug !== ('loss' || 'forestgain')) {
           this.layer.attributes['visible'] = false;
         }
 
