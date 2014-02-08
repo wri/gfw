@@ -128,7 +128,9 @@ a.accept_btn {
     width: 120px;
     padding: 10px;
     border-bottom: 1px solid #ccc;
-    font: 500 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    @extend .sans-serif;
     text-transform: uppercase;
   }
 
@@ -137,7 +139,8 @@ a.accept_btn {
     padding: 10px 10px 10px 15px;
     border-left: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
-    font: 13px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    @extend .sans-serif;
 
     p {
       margin-bottom: 10px;
@@ -192,12 +195,10 @@ a.accept_btn {
     }
   }
 
-  .bullets {
-    li {
-      margin: 0 0 10px 20px;
-      padding: 0 0 0 20px;
-      background: image-url('icons/bullet.png') no-repeat 0 8px;
-    }
+  .bullets li {
+    margin: 0 0 10px 20px;
+    padding: 0 0 0 20px;
+    background: image-url('icons/bullet.png') no-repeat 0 8px;
   }
 
   .read_more {
@@ -272,7 +273,9 @@ a.accept_btn {
   .source_description {
     display: block;
     margin-top: 5px;
-    font: 13px/1.2 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 1.2;
+    @extend .sans-serif;
     color: #999;
   }
 
@@ -384,7 +387,6 @@ a.accept_btn {
 }
 
 .header {
-  overflow: hidden;
   background: image-url('backgrounds/bkg_header.png') repeat-x top center;
   height: 226px;
 }
@@ -508,10 +510,6 @@ a.accept_btn {
 /* =Content
 ----------------------------------------------- */
 
-.content {
-  overflow: hidden;
-}
-
 .section {
   padding: 40px 0;
   text-align: center;
@@ -548,7 +546,6 @@ a.accept_btn {
 }
 
 .columns {
-  overflow: hidden;
   padding: 40px 0;
 }
 
@@ -644,7 +641,6 @@ a.accept_btn {
 ----------------------------------------------- */
 
 .site-footer {
-  overflow: hidden;
   min-height: 440px;
   background-color: #464352;
 }
@@ -664,7 +660,6 @@ a.accept_btn {
 }
 
 .footer-share {
-  overflow: hidden;
   display: block;
   margin-bottom: 50px;
   border-bottom: 1px solid #625f6d;

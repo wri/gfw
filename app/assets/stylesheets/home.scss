@@ -24,7 +24,6 @@
 
 .home {
   .header-inner {
-    overflow: hidden;
   }
 
   .header-logo {
@@ -231,7 +230,6 @@
   display: none;
   position: absolute;
   z-index: 1000;
-  overflow: hidden;
   top: -60px; left: 0;
   width: 980px;
   height: 20px;
@@ -324,7 +322,6 @@
 }
 
 .filter-scroll {
-  overflow: hidden;
   overflow-x: none;
   position: absolute;
   top: 87px;
@@ -337,7 +334,6 @@
 .filter-links {
   > li {
     position: relative;
-    overflow: hidden;
     border-bottom: 1px solid #e5e5e5;
     padding: 9px 10px 10px;
     width: 150px;
@@ -605,7 +601,6 @@
     display: none;
     clear: both;
     position: relative;
-    overflow: hidden;
     width: 205px;
     margin: 0 0 10px;
     padding: 1px 0;
@@ -638,7 +633,6 @@
 
 .coverage_category {
   position: relative;
-  overflow: hidden;
   width: 195px;
   margin: 10px 0 0 10px;
 }
@@ -702,7 +696,6 @@
   background: #fff image-url('backgrounds/bkg_header.png') repeat-x top center;
 }
 
-
 .story_infowindow {
   $pR: 18px;
   $pL: 10px;
@@ -754,6 +747,9 @@
     @extend .sans-serif;
   }
 }
+
+/* =Infowindows
+----------------------------------------------- */
 
 // .cartodb_infowindow {
 //   $width: 268px;
@@ -920,7 +916,7 @@
     }
   }
 
-  &:hover { cursor: pointer!important; }
+  &:hover { cursor: pointer !important; }
 
   .mask {
     position: absolute;
@@ -931,3 +927,6 @@
     z-index: 100;
   }
 }
+
+/* =Map
+----------------------------------------------- */

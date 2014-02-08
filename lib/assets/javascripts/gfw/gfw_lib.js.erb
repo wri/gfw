@@ -904,7 +904,8 @@ GFW.modules.app = function(gfw) {
       }, 2000);
 
       this.time_layer_loss = Deforestation.init(map);
-      this.time_layer_loss.set_start_time(2010);
+      this.time_layer_loss.set_start_time(2000);
+      this.time_layer_loss.set_time(2012);
 
       Timeline.loss_timeline.bind('change_date', function(start_year, end_year) {
         that.time_layer_loss.set_range(start_year, end_year);
@@ -1097,7 +1098,8 @@ GFW.modules.maplayer = function(gfw) {
 
         if (slug === 'nothing') {
           var event = function() {
-            GFW.app.currentBaseLayer = null;
+            GFW.app.updateBaseLayer(null);
+
             that._hideBaseLayers();
             that._removeSubLayers();
 

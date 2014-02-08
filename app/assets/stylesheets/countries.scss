@@ -22,7 +22,6 @@
     }
 
     .section {
-      overflow: hidden;
       border-bottom: 1px solid #ddd;
       background-color: #F5F5F5;
       background-repeat: no-repeat;
@@ -650,7 +649,6 @@ section.country_people {
     }
 
     .section-title {
-      overflow: hidden;
       margin-bottom: 10px;
 
       div,
@@ -735,7 +733,6 @@ section.country_laws {
 }
 
 section.country_climate {
-  overflow: hidden;
   padding: 0;
 
   .inner {
@@ -790,7 +787,6 @@ section.country_conventions {
   .section-subtitle { margin-bottom: 20px; }
 
   ul {
-    overflow: hidden;
     margin-right: -15px;
   }
 
@@ -1021,7 +1017,6 @@ section.country_conventions {
 }
 
 .overview_graph__tabs {
-  overflow: hidden;
 
   li {
     display: table;
@@ -1107,7 +1102,6 @@ section.country_conventions {
 .overview_graph__axis,
 .countries_list__header {
   position: relative;
-  overflow: hidden;
   height: 28px;
   border-bottom: 1px solid #CCC;
   line-height: 28px;
@@ -1152,7 +1146,6 @@ section.country_conventions {
 }
 
 .countries_list ul li {
-  overflow: hidden;
   border-bottom: 1px solid #ccc;
   padding: 18px 0;
 

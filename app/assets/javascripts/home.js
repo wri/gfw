@@ -11,8 +11,8 @@
 //= require minpubsub
 //= require markerclusterer_compiled
 //= require gfw/map_helpers
-//= require gfw/canvas_tile_layer
 //= require gfw/deforestation_tile_layer
+//= require gfw/canvas_tile_layer
 //= require gfw/static_grid_layer_imazon
 //= require gfw/static_grid_layer
 //= require gfw/gfw_lib
@@ -39,6 +39,7 @@
  */
 
 
+// Filter and Circle have already been init
 var loaded = false,
     map = null,
     showMap = false,
@@ -49,12 +50,7 @@ var loaded = false,
     Analysis = {},
     SearchBox = {},
     Timeline = {},
-    TimelineLoss = {},
-    TimelineImazon = {},
-    TimelineModis = {};
-    // Filter and Circle have already been init
-
-var resizePID;
+    resizePID;
 
 $(function() {
 
@@ -181,65 +177,13 @@ $(function() {
     },
 
     _loadOtherStuff: function() {
-      // // Source window
-      // SourceWindow = new gfw.ui.view.SourceWindow({ container: this.$map });
-
-      // Timeline
-      Timeline = new gfw.ui.view.Timeline({ container: this.$map });
-
-      // // Layer selector
-      // LayerSelector = new gfw.ui.view.LayerSelector({
-      //   container: this.$map,
-      //   map: map
-      // });
-
-      // // Legend
-      // Legend = new gfw.ui.view.Legend({ container: this.$map });
-
-      // // Analysis
-      // Analysis = new gfw.ui.view.Analysis({ container: this.$map });
-
-      // if (config.ISO != 'ALL') Analysis.loadCountry(config.ISO);
-
-      // // Search box
-      // SearchBox = new gfw.ui.view.SearchBox({
-      //   container: this.$map,
-      //   map: map
-      // });
-
-      // SearchBox.bind('goto', function(latlng, bounds) {
-      //   map.setCenter(latlng);
-      //   map.fitBounds(bounds);
-      // });
-
-      // // Filter
-      // Filter = new gfw.ui.view.Filter();
-
-      // // Circle
-      // Circle = new gfw.ui.view.Circle({ container: this.$map });
-
-      // Filter.init();
-      // Circle.init();
-      // Circle.show();
-
-      // $(window).resize(function() {
-      //   clearTimeout(resizePID);
-      //   resizePID = setTimeout(function() { resizeWindow(); }, 100);
-      // });
-
-      // $(window).scroll(positionScroll);
-
-
-
       // Source window
       SourceWindow = new gfw.ui.view.SourceWindow();
       this.$el.append(SourceWindow.render());
 
       // Timeline
-      Timeline = new gfw.ui.view.Timeline({ container: this.$map });
-      TimelineLoss = new gfw.ui.view.TimelineLoss({ container: this.$map });
-      // TimelineImazon = new gfw.ui.view.TimelineImazon({ container: this.$map });
-      // TimelineModis = new gfw.ui.view.TimelineModis({ container: this.$map });
+      Timeline = new gfw.ui.view.Timeline();
+      this.$map.append(Timeline.render());
 
       // Layer selector
       LayerSelector = new gfw.ui.view.LayerSelector({ map: map });
@@ -256,7 +200,7 @@ $(function() {
       this.$map.append(Analysis.render());
       Analysis.info.setDraggable(true);
 
-      if (config.ISO != 'ALL') Analysis._loadCountry(config.ISO);
+      if (config.ISO != 'ALL') Analysis.loadCountry(config.ISO);
 
       // Search box
       SearchBox = new gfw.ui.view.SearchBox({ map: map });
@@ -338,16 +282,11 @@ $(function() {
 
       if (GFW && GFW.app) {
         GFW.app.close(function() {
-          Circle.show(250);
+          Circle.show();
           LayerSelector.hide();
           Legend.hide();
           SearchBox.hide();
           Timeline.hide();
-          TimelineModis.hide();
-          TimelineImazon.hide();
-          TimelineLoss.hide();
-          $('#analysis_control').hide();
-          Analysis.info.hide();
           $('#zoom_controls').hide();
           $('#viewfinder').hide();
         });
@@ -359,34 +298,15 @@ $(function() {
 
       showMap = true;
 
+      Circle.hide();
       LayerSelector.show();
       Legend.show();
       SearchBox.show();
-      $('#analysis_control').show();
-      if (Analysis.info.dataset && Analysis.info.initStats) {
-        Analysis.info.show();
-
-        $('.analysis_info').find(".spinner").hide();
-        $('.analysis_info').find(".stats .title, .stats ul").fadeIn(250);
-      }
-
+      Timeline.show();
       $('#zoom_controls').show();
       $('#viewfinder').show();
-      Circle.hide();
-
-      if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'forma') {
-        Timeline.show();
-      } else if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'modis') {
-        TimelineModis.show();
-      } else if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'imazon') {
-        TimelineImazon.show();
-      } else if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'loss') {
-        TimelineLoss.show();
-        $('.timeline.loss').fadeIn();
-      }
 
       $('.for_business').fadeOut(250);
-
       $('.header').animate({height: '135px'}, { duration: 250, complete: function() {
         if (GFW.app) GFW.app.open();
 
@@ -394,8 +314,6 @@ $(function() {
           $('header-title').hide();
 
           Filter.show();
-
-          $('.for_business').fadeOut(250);
 
           if($("header").hasClass("stuck")) {
             // stuck logo to top of viewport
@@ -418,11 +336,8 @@ $(function() {
           }
 
           that._selectMenu('map');
-
         });
       }});
-
-
     },
 
     _updateHash: function() {
