@@ -30,8 +30,6 @@
 //= require gfw/ui/layer_selector
 //= require gfw/ui/timeline
 //= require gfw/ui/timeline_loss
-//= require gfw/ui/timeline_modis
-//= require gfw/ui/timeline_imazon
 
 
 /*
@@ -118,7 +116,8 @@ $(function() {
     initialize: function() {
       this.model = new AppModel();
 
-      this.$map = $("#map");
+      this.$map = $('#map');
+      this.$header = $('.header')
 
       this._initRouter();
     },
@@ -182,6 +181,56 @@ $(function() {
     },
 
     _loadOtherStuff: function() {
+      // // Source window
+      // SourceWindow = new gfw.ui.view.SourceWindow({ container: this.$map });
+
+      // Timeline
+      Timeline = new gfw.ui.view.Timeline({ container: this.$map });
+
+      // // Layer selector
+      // LayerSelector = new gfw.ui.view.LayerSelector({
+      //   container: this.$map,
+      //   map: map
+      // });
+
+      // // Legend
+      // Legend = new gfw.ui.view.Legend({ container: this.$map });
+
+      // // Analysis
+      // Analysis = new gfw.ui.view.Analysis({ container: this.$map });
+
+      // if (config.ISO != 'ALL') Analysis.loadCountry(config.ISO);
+
+      // // Search box
+      // SearchBox = new gfw.ui.view.SearchBox({
+      //   container: this.$map,
+      //   map: map
+      // });
+
+      // SearchBox.bind('goto', function(latlng, bounds) {
+      //   map.setCenter(latlng);
+      //   map.fitBounds(bounds);
+      // });
+
+      // // Filter
+      // Filter = new gfw.ui.view.Filter();
+
+      // // Circle
+      // Circle = new gfw.ui.view.Circle({ container: this.$map });
+
+      // Filter.init();
+      // Circle.init();
+      // Circle.show();
+
+      // $(window).resize(function() {
+      //   clearTimeout(resizePID);
+      //   resizePID = setTimeout(function() { resizeWindow(); }, 100);
+      // });
+
+      // $(window).scroll(positionScroll);
+
+
+
       // Source window
       SourceWindow = new gfw.ui.view.SourceWindow();
       this.$el.append(SourceWindow.render());
@@ -189,8 +238,8 @@ $(function() {
       // Timeline
       Timeline = new gfw.ui.view.Timeline({ container: this.$map });
       TimelineLoss = new gfw.ui.view.TimelineLoss({ container: this.$map });
-      TimelineImazon = new gfw.ui.view.TimelineImazon({ container: this.$map });
-      TimelineModis = new gfw.ui.view.TimelineModis({ container: this.$map });
+      // TimelineImazon = new gfw.ui.view.TimelineImazon({ container: this.$map });
+      // TimelineModis = new gfw.ui.view.TimelineModis({ container: this.$map });
 
       // Layer selector
       LayerSelector = new gfw.ui.view.LayerSelector({ map: map });
@@ -211,7 +260,7 @@ $(function() {
 
       // Search box
       SearchBox = new gfw.ui.view.SearchBox({ map: map });
-      this.$map.append(SearchBox);
+      this.$map.append(SearchBox.render());
       SearchBox.setDraggable(true);
 
       SearchBox.bind('goto', function(latlng, bounds) {
@@ -229,6 +278,7 @@ $(function() {
       });
 
       $(window).scroll(positionScroll);
+
     },
 
     _onClickSource: function(e) {

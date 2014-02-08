@@ -36,54 +36,13 @@
     <div class="inner">
       <a href="/" class="header-logo">Global Forest Watch</a>
 
-      <nav class="navbar">
-        <div id="google_translate_element"></div>
-
-        <ul>
-          <% paths = {
-            "home" => root_path,
-            "map" => map_path,
-            "countries" => countries_path,
-            "stories" => stories_path,
-            "blog" => "http://blog.globalforestwatch.org",
-            "data" => sources_path,
-            "howto" => howto_path,
-            "about" => about_path
-          } %>
-
-          <% %w(home map countries stories blog data howto about).each do |option| %>
-            <% path = paths[option]
-              option_class = request.path == path ? 'selected' : ''
-              option_class = "selected" if (
-                                            action_name == 'show' ||
-                                            action_name == 'edit' ||
-                                            action_name == 'index'
-                                           ) && controller_name == 'countries' && option == 'countries' # exception
-              option_class = "selected" if controller_name == 'stories' && option == 'stories' # exception
-              option_class = "#{option_class} #{option}"
-              option_class = "#{option_class} ajax" if (
-                                                        controller_name == 'home' &&
-                                                        (option == 'home' || option == 'map')
-                                                       )
-            %>
-
-            <li><%= link_to (content_tag(:span, t('header.nav.' + option ))), path, :class => option_class %></li>
-          <% end %>
-        </ul>
-      </nav>
+      <%= render 'shared/navbar' %>
     </div>
 
     <div class="header_separator"></div>
 
     <div class="header-inner inner">
-      <h1 class="header-title <%= "big" if controller_name == 'stories' %>"><%= yield :title %></h1>
-
-      <% if controller_name == 'home' %>
-        <div class="for_business">
-          <p>Almost every business depends on forests in some way.</p>
-          <p><%= link_to "Check out GFW for business", "#{howto_path}#for_business" %></p>
-        </div>
-      <% end %>
+      <%= yield :title %>
 
       <%= yield :inner_header %>
     </div>
