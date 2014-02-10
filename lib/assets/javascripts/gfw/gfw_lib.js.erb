@@ -908,7 +908,12 @@ GFW.modules.app = function(gfw) {
       this.time_layer_loss.set_time(2012);
 
       Timeline.loss_timeline.bind('change_date', function(start_year, end_year) {
+        // map
         that.time_layer_loss.set_range(start_year, end_year);
+
+        // analysis
+        var date = [start_year, end_year];
+        publish('timeline:change_date', date);
       });
     },
 
