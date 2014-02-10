@@ -275,7 +275,7 @@ GFW.modules.app = function(gfw) {
         lat = event.latLng.lat(),
         lng = event.latLng.lng(),
         params = {lat:lat, lon:lng},
-        url = 'http://wip.gfw-apis.appspot.com/wdpa/sites';
+        url = ENV['GFW_API_HOST'] + '/wdpa/sites';
 
         executeAjax(url, params, {
           success: function(sites) {
@@ -878,7 +878,7 @@ GFW.modules.app = function(gfw) {
               title = $.trim(title).substring(0, 34).split(' ').slice(0, -1).join(' ') + '...';
             }
 
-            var content = "<strong><a href='"+features.properties.loc+"' target='_blank'>"+title+"</a></strong> <span>by "+features.properties.author+"</span> <span>on "+published+"</span><br><a href='"+features.properties.loc+"' target='_blank'>read more</a>";
+            var content = "<strong><a href='"+features.properties.loc+"' target='_blank'>"+title+"</a></strong> <span>by "+features.properties.author+"</span> <span>on "+published+"</span><br><a href='"+features.properties.loc+"target='_blank'>read more</a>";
 
             marker = new GFWMarker({
               position: position,
@@ -1201,7 +1201,7 @@ GFW.modules.maplayer = function(gfw) {
 
         var slug = this.layer.get('slug');
 
-        if (slug !== ('loss' || 'forestgain')) {
+        if (slug !== ('loss' || 'forestgain')) {
           this.layer.attributes['visible'] = false;
         }
 
