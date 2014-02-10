@@ -794,7 +794,7 @@ GFW.modules.app = function(gfw) {
               title = $.trim(title).substring(0, 34).split(' ').slice(0, -1).join(' ') + '...';
             }
 
-            var content = "<strong><a href='"+features.properties.loc+"' target='_blank'>"+title+"</a></strong> <span>by "+features.properties.author+"</span> <span>on "+published+"</span><br><a href='"+features.properties.loc+"target='_blank'>read more</a>";
+            var content = "<strong><a href='"+features.properties.loc+"' target='_blank'>"+title+"</a></strong> <span>by "+features.properties.author+"</span> <span>on "+published+"</span><br><a href='"+features.properties.loc+"' target='_blank'>read more</a>";
 
             marker = new GFWMarker({
               position: position,
