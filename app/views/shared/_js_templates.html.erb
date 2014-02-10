@@ -113,7 +113,7 @@
   <script id='legend-item-template' type='text/x-underscore-template'>
     <li id='{{cat_id}}' class='{{ category }}'>
       <i style='background-color:{{title_color}};'></i>
-      {{title}} <a href='#' data-source='{{slug}}' class="source{{ slug == 'nothing' ? ' hidden' : '' }}"></a>
+      {{title}} <a href='#' data-source='{{slug}}' class='source{{ slug == 'nothing' ? ' hidden' : '' }}'></a>
 
       {{#legend}}
       <ul class='legend_info {{legend_class}}'>
@@ -174,7 +174,7 @@
     <ul class='legend_category {{category}} double'>
       <li class='{{category}}'><strong style='color:{{category_color}};'>{{category_title}}</strong></li>
       <li id='{{cat_id}}' class='{{category}}'>
-        <i style="background-color:{{category_color}};"></i>
+        <i style='background-color:{{category_color}};'></i>
         <div>{{title}} <a href='#' data-source='{{slug}}' class='source {{category}}'></a></div>
       </li>
 
@@ -237,6 +237,40 @@
         <ul class='quarters'></ul>
         <div class='line'><div class='tipsy'><span>APR - JUN 2013</span><div class='arrow'></div></div></div>
         <ul class='visible_quarters'></ul>
+      </div>
+    </div>
+  </script>
+
+  <script id='timeline_forma-template' type='text/x-underscore-template'>
+    <div class='coordinates'></div>
+    <div class='timeline_legend'><p>FORMA alerts</p></div>
+    <div class='inner'>
+      <div class='action'>
+        <a class='play' href='#'></a>
+        <a class='pause' href='#'></a>
+      </div>
+      <div class='time'>
+        <div class='line'><div class='tipsy'><span>Month</span><div class='arrow'></div></div></div>
+
+        <div class='trail'>
+          <div class='handle left'>
+            <div class='tipsy'>
+              <span></span>
+              <div class='arrow'></div>
+            </div>
+          </div>
+
+          <div class='handle right'>
+            <div class='tipsy'>
+              <span></span>
+              <div class='arrow'></div>
+            </div>
+          </div>
+        </div>
+
+        <ul class='years'></ul>
+        <div class='range'></div>
+        <ul class='visible_months'></ul>
       </div>
     </div>
   </script>
@@ -486,7 +520,7 @@
                 </span>
               </strong>
 
-              <a href='#' target="_blank" class='download'>download</a>
+              <a href='#' target='_blank' class='download'>download</a>
             </p>
           </li>
           {{/degrad}}
@@ -512,7 +546,7 @@
                 </span>
               </strong>
 
-              <a href='#' target="_blank" class='download'>download</a>
+              <a href='#' target='_blank' class='download'>download</a>
             </p>
           </li>
         </ul>
