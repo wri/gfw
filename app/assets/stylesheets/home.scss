@@ -931,17 +931,57 @@
   border: 1px solid #666;
   @include border-radius(5px);
   @include box-shadow(0px 0px 6px 1px rgba(#000, .15));
+}
 
-  &.timeline_modis .tipsy {
-    width: 90px;
+.timeline_modis .timeline-inner .time .line .tipsy {
+  width: 90px;
+  left: -45px;
+
+  .arrow {
+    left: 35px;
+  }
+}
+
+.timeline_forma .timeline-inner {
+  .range { width: 1108px; }
+
+  .years,
+  .visible_months {
+    li {
+      width: 144px;
+    }
+  }
+
+  .trail .handle.right { left: 1129px; }
+}
+
+.visible_months {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+
+  li {
+    @include inline-block();
+    width: 144px;
+
+    .year {
+      @include inline-block();
+      width: 27px;
+    }
+
+    .month {
+      @include inline-block();
+      z-index: 100;
+      width: 9px;
+      height: 14px;
+      background: image-url('icons/point.png') no-repeat 6px center;
+    }
   }
 }
 
 .timeline-inner {
   clear: both;
   position: relative;
-
-  $handleWidth: 14px;
 
   .action {
     position: relative;
@@ -989,9 +1029,9 @@
   }
 
   .range {
-    display: none;
+    display: block;
     position: absolute;
-    top: 8px; left: 10px;
+    top: 8px; left: 30px;
     background: #A2BC28;
     height: 6px;
     width: 960px;
@@ -1039,12 +1079,12 @@
       width: 80px;
 
       &:last-child {
-        width: 30px;
+        width: 27px;
       }
 
       .year {
         @include inline-block();
-        width: 30px;
+        width: 27px;
         font-size: 10px;
         @extend .futura;
         text-align: center;
@@ -1053,6 +1093,13 @@
         background: #fff;
 
         &.active { color: #A2BE00; }
+      }
+
+      .month {
+        @include inline-block();
+        z-index: 100;
+        width: 9px;
+        height: 14px;
       }
     }
   }
@@ -1068,8 +1115,8 @@
     @include inline-block();
     z-index: 100;
     width: 50px;
-    height: $handleWidth;
-    margin-left: 30px;
+    height: 14px;
+    width: 27px;
     background: image-url('icons/interval.png') no-repeat center;
   }
 
@@ -1099,7 +1146,7 @@
   }
 
   .visible_quarters .interval {
-    width: 30px;
+    width: 27px;
     margin-left: 50px;
   }
 
@@ -1107,15 +1154,15 @@
     position: absolute;
     top: 0px; left: 0px;
     width: 100%;
-    height: $handleWidth;
+    height: 14px;
 
     .handle {
       position: absolute;
-      top: 4px; left: 30px;
+      top: 4px; left: 27px;
       z-index: 300;
       float: left;
-      width: $handleWidth;
-      height: $handleWidth;
+      width: 14px;
+      height: 14px;
       @include icons-sprite(timeline_handler);
       cursor: col-resize;
       @include user-select(none);
