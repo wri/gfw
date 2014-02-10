@@ -2,12 +2,14 @@
   <h1 class="header-title"><%= t('.title') %></h1>
 <% end %>
 
-<% content_for :filters do %>
+<% content_for :inner_header do %>
   <div class="for_business">
     <p>Almost every business depends on forests in some way.</p>
     <p><%= link_to "Check out GFW for business", "#{howto_path}#for_business" %></p>
   </div>
+<% end %>
 
+<% content_for :filters do %>
   <div id='filters'>
     <div class='inner'>
       <div class='filters hide'>

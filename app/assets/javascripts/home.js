@@ -10,7 +10,6 @@
 //= require cartodb-gmapsv3
 //= require minpubsub
 //= require markerclusterer_compiled
-//= require gfw/map_helpers
 //= require gfw/deforestation_tile_layer
 //= require gfw/canvas_tile_layer
 //= require gfw/static_grid_layer_imazon
@@ -30,6 +29,7 @@
 //= require gfw/ui/layer_selector
 //= require gfw/ui/timeline
 //= require gfw/ui/timeline_loss
+//= require gfw/ui/timeline_modis
 
 
 /*
@@ -252,29 +252,11 @@ $(function() {
 
       Filter.hide(function() {
         $('.header').animate({ height: '230px' }, 250, function() {
-          $('.header-title').animate({ opacity: 1 }, 250);
+          $('.header-title').fadeIn(250);
 
           $('.for_business').fadeIn(250);
 
-          if($("header").hasClass("stuck")) {
-            // stuck logo to top of viewport
-            if($(window).scrollTop() < 49) {
-              $(".header-logo").css({
-                "position": "absolute",
-                "top": "44px"
-              });
-            } else if($(window).scrollTop() >= 49 && $(window).scrollTop() <= 112) {
-              $(".header-logo").css({
-                "position": "fixed",
-                "top": "0"
-              });
-            } else if($(window).scrollTop() > 112) {
-              $(".header-logo").css({
-                "position": "absolute",
-                "top": "108px"
-              });
-            }
-          }
+          positionScroll();
         });
 
         that._selectMenu('home');
@@ -307,37 +289,22 @@ $(function() {
       $('#viewfinder').show();
 
       $('.for_business').fadeOut(250);
-      $('.header').animate({height: '135px'}, { duration: 250, complete: function() {
-        if (GFW.app) GFW.app.open();
 
-        $('.header-title').animate({ opacity: 0 }, 250, function() {
-          $('header-title').hide();
+      $('.header-title').fadeOut(250, function() {
+        $('.header').animate({ height: '135px' }, 250, function() {
+          if (GFW.app) GFW.app.open();
 
-          Filter.show();
+          $('.header-title').fadeOut(250, function() {
+            $('header-title').hide();
 
-          if($("header").hasClass("stuck")) {
-            // stuck logo to top of viewport
-            if($(window).scrollTop() < 49) {
-              $(".header-logo").css({
-                "position": "absolute",
-                "top": "44px"
-              });
-            } else if($(window).scrollTop() >= 49 && $(window).scrollTop() <= 112) {
-              $(".header-logo").css({
-                "position": "fixed",
-                "top": "0"
-              });
-            } else if($(window).scrollTop() > 112) {
-              $(".header-logo").css({
-                "position": "absolute",
-                "top": "108px"
-              });
-            }
-          }
+            Filter.show();
 
-          that._selectMenu('map');
+            positionScroll();
+
+            that._selectMenu('map');
+          });
         });
-      }});
+      });
     },
 
     _updateHash: function() {

@@ -32,16 +32,13 @@ GFWMarker.prototype.draw = function() {
       }
     }
 
-
     google.maps.event.addDomListener(div, 'click', function (ev) {
-
       if (ev) {
         ev.preventDefault  ? ev.preventDefault()  : ev.returnValue            = false;
         ev.stopPropagation ? ev.stopPropagation() : window.event.cancelBubble = true;
       }
 
       that.showInfowindow();
-
     });
 
     var panes = this.getPanes();
@@ -49,7 +46,6 @@ GFWMarker.prototype.draw = function() {
   }
 
   this.setPosition();
-
 };
 
 GFWMarker.prototype.setPosition = function() {
@@ -135,9 +131,8 @@ GFWMarker.prototype.getPosition = function() {
 };
 
 GFWMarker.prototype.showInfowindow = function() {
-
   if (!this.opts.thumbnail_url) {
-    this.opts.infowindow.setOffset(-25, 10);
+    this.opts.infowindow.setOffset(-13, 10);
   } else {
     this.opts.infowindow.setOffset(-25, 17);
   };

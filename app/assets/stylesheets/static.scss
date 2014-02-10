@@ -1,24 +1,22 @@
 @import 'compass/css3/border-radius';
 @import 'compass/css3/opacity';
-@import 'compass/css3/transition';
 @import 'compass/css3/box-shadow';
 
 @import 'fonts';
+@import 'sprites';
+@import 'helpers';
 
-@import 'static-icons/*.png';
-@import 'static-logos/*.png';
-
-
-.content {
-  overflow: visible;
+.static-inner {
+  @extend .clearfix;
+  background: #F2F2F3;
   margin-bottom: 40px;
 }
 
-.static-inner {
-
-}
-
 .static {
+  .header {
+    margin-bottom: -106px;
+  }
+
   &.howto,
   &.about {
     .source_body {
@@ -50,7 +48,7 @@
  */
 
 .header_block {
-  margin: -106px auto 40px;
+  margin-bottom: 40px;
   background: image-url('backgrounds/header_block.jpg');
 
   &.header_block_howto {
@@ -101,7 +99,7 @@
     display: block;
     width: 212px;
     border: 2px solid rgba(#fff, .25);
-    margin: 30px auto;
+    margin: 28px auto;
     padding-left: 20px;
     font-size: 14px;
     line-height: 38px;
@@ -165,9 +163,6 @@
 .navigation_left {
   float: left;
   width: 313px;
-  padding-bottom: 9999px;
-  margin-bottom: -9999px;
-  background: #F2F2F3;
 
   a {
     display: block;
@@ -179,7 +174,6 @@
     text-transform: uppercase;
     text-decoration: none;
     color: #464052;
-    @include transition(none);
 
     &:hover {
       background: darken(#F2F2F3, 5%);
@@ -205,6 +199,7 @@
   border-left: 1px solid #ccc;
   padding: 40px 0 40px 40px;
   min-height: 592px;
+  background: #fff;
 
   &.wide {
     width: 100%;
@@ -421,7 +416,6 @@
       display: inline-block;
       width: 110px;
       height: 80px;
-      @include transition(none);
     }
   }
 

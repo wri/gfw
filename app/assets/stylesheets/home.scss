@@ -5,38 +5,24 @@
 
 @import 'compass/css3/border-radius';
 @import 'compass/css3/box-shadow';
-@import 'compass/css3/transition';
 @import 'compass/css3/user-interface';
 @import 'compass/css3/background-size';
 @import 'compass/css3/opacity';
 @import 'compass/css3/inline-block';
-@import 'compass/css3/transition';
 @import 'compass/css3/text-shadow';
 
 @import 'fonts';
 @import 'helpers';
-
-@import 'icons/*.png';
+@import 'sprites';
 
 
 /* =Header
 ----------------------------------------------- */
 
 .home {
-  .header-inner {
-  }
-
-  .header-logo {
-    position: absolute;
-    top: 44px;
-  }
-
   .header-title {
-    position: absolute;
-    top: 144px;
     float: left;
     width: 465px;
-    font-size: 36px;
     text-align: left;
   }
 
@@ -46,7 +32,6 @@
 }
 
 .for_business {
-  margin-top: 63px;
   width: 240px;
   float: right;
   line-height: 1.3;
@@ -229,6 +214,7 @@
 .filters {
   display: none;
   position: absolute;
+  overflow: hidden;
   z-index: 1000;
   top: -60px; left: 0;
   width: 980px;
@@ -318,7 +304,6 @@
   text-align: center;
   text-transform: uppercase;
   text-decoration: none;
-  @include transition(none);
 }
 
 .filter-scroll {
@@ -334,6 +319,7 @@
 .filter-links {
   > li {
     position: relative;
+    overflow: hidden;
     border-bottom: 1px solid #e5e5e5;
     padding: 9px 10px 10px;
     width: 150px;
@@ -358,7 +344,6 @@
     position: relative;
     width: 120px;
     color: #ccc;
-    @include transition(none);
 
     .name { width: 95px; }
   }
@@ -450,7 +435,6 @@
     width: 25px;
     height: 38px;
     @include icons-sprite(legend_toggle_close);
-    @include transition(none);
   }
 
   &.closed .toggle { @include icons-sprite(legend_toggle_open); }
@@ -504,6 +488,7 @@
 }
 
 .legend_info {
+  @extend .clearfix;
   width: 195px;
   font-size: 11px;
   margin-top: 10px;
@@ -591,6 +576,7 @@
 
   &.double li {
     display: block;
+    overflow: hidden;
   }
 
   &.sublayer {
@@ -633,6 +619,7 @@
 
 .coverage_category {
   position: relative;
+  overflow: hidden;
   width: 195px;
   margin: 10px 0 0 10px;
 }
@@ -940,11 +927,14 @@
   position: absolute;
   bottom: 40px;
   z-index: 1000;
-
   background: #fff;
   border: 1px solid #666;
   @include border-radius(5px);
   @include box-shadow(0px 0px 6px 1px rgba(#000, .15));
+
+  &.timeline_modis .tipsy {
+    width: 90px;
+  }
 }
 
 .timeline-inner {
@@ -1037,6 +1027,8 @@
   }
 
   .years,
+  .quarters,
+  .visible_quarters,
   .visible_years {
     position: relative;
     z-index: 220;
@@ -1065,7 +1057,8 @@
     }
   }
 
-  .visible_years {
+  .visible_years,
+  .visible_quarters {
     position: absolute;
     z-index: 218;
     top: 0;
@@ -1078,6 +1071,36 @@
     height: $handleWidth;
     margin-left: 30px;
     background: image-url('icons/interval.png') no-repeat center;
+  }
+
+  .quarters,
+  .visible_quarters {
+    li:last-child {
+      width: 50px;
+    }
+  }
+
+  .quarters li .year {
+    width: 50px;
+
+    &.active {
+      border: 1px solid #999;
+      padding: 3px 2px 2px;
+      @include border-radius(3px);
+      color: #666;
+
+      &.selected {
+        background: #A1BA42;
+        border: 1px solid #839C26;
+        color: #fff;
+        @include box-shadow(0 0 5px rgba(#000, .15));
+      }
+    }
+  }
+
+  .visible_quarters .interval {
+    width: 30px;
+    margin-left: 50px;
   }
 
   .trail {
@@ -1105,8 +1128,7 @@
 
 .timeline_legend {
   position: absolute;
-  top: -20px;
-  left: 13px;
+  top: -20px; left: 13px;
   text-align: left;
   color: #333;
   font-weight: bold;
@@ -1117,8 +1139,7 @@
 
 .timeline_coordinates {
   position: absolute;
-  top: -20px;
-  right: 5px;
+  top: -20px; right: 13px;
   text-align: right;
   color:#333;
   font-size: 11px;

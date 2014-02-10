@@ -2,16 +2,14 @@
 //= require jquery.jscrollpane
 
 @import 'compass/reset';
-@import 'compass/css3/transition';
 @import 'compass/css3/border-radius';
 @import 'compass/css3/box-shadow';
 @import 'compass/css3/opacity';
 @import 'compass/css3/user-interface';
 
 @import 'fonts';
-
-@import "logos/*.png";
-@import "icons/*.png";
+@import 'sprites';
+@import 'helpers';
 
 
 /* =Globals
@@ -29,7 +27,6 @@ body {
 a {
   text-decoration: none;
   color: #A1BA42;
-  @include transition(.3s all);
 
   &:hover {
     color: darken(#A1BA42, 5%);
@@ -387,8 +384,14 @@ a.accept_btn {
 }
 
 .header {
-  background: image-url('backgrounds/bkg_header.png') repeat-x top center;
+  overflow: hidden;
   height: 226px;
+  background: image-url('backgrounds/bkg_header.png') repeat-x top center;
+}
+
+.header-inner {
+  @extend .clearfix;
+  height: 100px;
 }
 
 .feedback-link {
@@ -418,7 +421,6 @@ a.accept_btn {
   width: 108px;
   height: 100px;
   text-indent: -99999px;
-  @include transition(none);
 }
 
 .navbar {
@@ -500,15 +502,15 @@ a.accept_btn {
   border-top: 1px solid #717D80;
   border-bottom: 1px solid #717D80;
   @include user-select(none);
-
-  a {
-    @include transition(none);
-  }
 }
 
 
 /* =Content
 ----------------------------------------------- */
+
+.content {
+  @extend .clearfix;
+}
 
 .section {
   padding: 40px 0;
@@ -540,12 +542,13 @@ a.accept_btn {
 
 .section-title {
   margin: 0 0 8px;
-  font-size: 36px;
+  font-size: 37px;
   @extend .serif;
   color: #222;
 }
 
 .columns {
+  @extend .clearfix;
   padding: 40px 0;
 }
 
@@ -641,11 +644,11 @@ a.accept_btn {
 ----------------------------------------------- */
 
 .site-footer {
-  min-height: 440px;
   background-color: #464352;
 }
 
 .site-info {
+  @extend .clearfix;
   font-size: 13px;
   color: #b1afb6;
 

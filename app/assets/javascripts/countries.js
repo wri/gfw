@@ -2,7 +2,6 @@
 //= require topojson.v1.min
 //= require scrollIt.min
 //= require jquery.qtip.min
-//= require gfw/countries_helpers
 //= require gfw/ui/widget
 //= require gfw/ui/sourcewindow
 
