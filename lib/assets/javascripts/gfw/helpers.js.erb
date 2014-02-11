@@ -182,12 +182,15 @@ function draw(topology, c, iso, options) {
       .style("fill", "#AAC600");
   }
 }
-function formatNumber(x) {
+
+function formatNumber(x, abs) {
   var parts = x.toString().split('.');
 
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   var number = parts.join('.');
+
+  if (abs && number) number = number.replace('-', ''); // abs
 
   return number;
 }
@@ -247,4 +250,40 @@ function positionScroll() {
       });
     }
   }
+}
+
+function validateEmail(email) {
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+
+jQuery.fn.smartPlaceholder = function(opt){
+  this.each(function(){
+    var
+    speed   = (opt && opt.speed)   || 150,
+    timeOut = (opt && opt.timeOut) || 100,
+    $span   = $(this).find("span.holder"),
+    $input  = $(this).find(":input").not("input[type='hidden'], input[type='submit']");
+
+    if ($input.val()) {
+      $span.hide();
+    }
+
+    $input.keydown(function(e) {
+      if (e.metaKey && e.keyCode == 88) { // command+x
+        setTimeout(function() {
+          isEmpty($input.val()) && $span.fadeIn(speed);
+        }, timeOut);
+      } else if (e.metaKey && e.keyCode == 86) { // command+v
+        setTimeout(function() {
+          !isEmpty($input.val()) && $span.fadeOut(speed);
+        }, timeOut);
+      } else {
+        setTimeout(function() { ($input.val()) ?  $span.fadeOut(speed) : $span.fadeIn(speed); }, 0);
+      }
+    });
+
+    $span.click(function() { $input.focus(); });
+    $input.blur(function() { !$input.val() && $span.fadeIn(speed); });
+  });
 }

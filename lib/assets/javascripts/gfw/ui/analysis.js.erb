@@ -1,0 +1,345 @@
+gfw.ui.model.Analysis = cdb.core.Model.extend({
+  defaults: {
+    baselayer: 'loss'
+  }
+});
+
+gfw.ui.view.Analysis = cdb.core.View.extend({
+  className: 'analysis',
+
+  events: {
+    // 'click .done'    : '_onClickDone',
+    // 'click .cancel'  : '_onClickCancel',
+    // 'click .reset'   : '_onClickDone'
+  },
+
+  initialize: function() {
+    _.bindAll(this, '_onOverlayComplete');
+
+    this.model = new gfw.ui.model.Analysis();
+
+    this.model.on('change:hidden',    this._toggle);
+    this.model.on('change:baselayer', this._toggleBaselayer, this);
+
+    this.iso = config.ISO;
+
+    this.analyzing = false;
+    this.selectedShape = null;
+    this.selectedShapes = [];
+
+    this.start = 2000;
+    this.end = 2012;
+
+    var template = $('#analysis-template').html();
+
+    this.template = new cdb.core.Template({
+      template: template,
+      type: 'mustache'
+    });
+
+    this._initViews();
+    this._initSubscribes();
+  },
+
+  _initViews: function() {
+    this.loss_analysis = new gfw.ui.view.AnalysisLoss();
+    this.$el.append(this.loss_analysis.$el);
+  },
+
+  _initSubscribes: function() {
+    subscribe('timeline:change_date_loss', _.bind(function(start_year, end_year) {
+      this.start = start_year;
+      this.end = end_year;
+
+      this._getAlertCount();
+    }, this));
+
+    subscribe('timeline:change_date_forma', _.bind(function(dates) {
+      var start_year = dates[0],
+          start_month = ((dates[1] - 71) % 12) + 1, // Convert months to (1-12)
+          end_year = dates[2],
+          end_month = ((dates[3] - 71) % 12) + 1; // Convert months to (1-12)
+
+      // Create dates, 0 padding months < 10:
+      this.start = start_year + '-' + ((start_month < 10) ? ("0" + start_month) : start_month) + '-01';
+      this.end = end_year + '-' + ((end_month < 10) ? ("0" + end_month) : end_month) + '-01';
+
+      // if((start_month >= 1 && start_month <= 12) && (end_month >= 1 && end_month <= 12)) {
+      //   this.model.set({'subtitle': start_year+", "+config.MONTHNAMES_SHORT[start_month-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month-1].slice(1).toLowerCase()+" to "+start_year+", "+config.MONTHNAMES_SHORT[end_month-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month-1].slice(1).toLowerCase()});
+      // }
+
+      this._getAlertCount();
+    }, this));
+
+    subscribe('timeline:change_date_imazon', _.bind(function(start_year, start_month, end_year, end_month) {
+      // Create dates, 0 padding months < 10:
+      this.start = start_year + '-' + ((start_month < 10) ? ("0" + start_month) : start_month) + '-01';
+      this.end = end_year + '-' + ((end_month < 10) ? ("0" + end_month) : end_month) + '-01';
+
+      // if((start_month >= 1 && start_month <= 12) && (end_month >= 1 && end_month <= 12)) {
+      //   this.model.set({'subtitle': start_year+", "+config.MONTHNAMES_SHORT[start_month-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month-1].slice(1).toLowerCase()+" to "+start_year+", "+config.MONTHNAMES_SHORT[end_month-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month-1].slice(1).toLowerCase()});
+      // }
+
+      this._getAlertCount();
+    }, this));
+
+    subscribe('timeline:change_date_modis', _.bind(function(month, year) {
+      var year_ = parseInt(year, 10),
+          month_ = parseInt(month, 10);
+
+      this.date = year_+'-'+month_+'-'+'15';
+
+      // var q1 = config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].slice(1).toLowerCase()
+      // var q2 = config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].slice(1).toLowerCase()
+
+      // this.model.set({ 'subtitle': year_+', '+q1+' to '+year_+', '+q2 });
+
+      this._getAlertCount();
+    }, this));
+  },
+
+  _toggleBaselayer: function() {
+    var that = this;
+
+    var baselayer = this.model.get('baselayer');
+
+    this.$el.animate({ opacity: 0 }, 250, function() {
+      if (baselayer === 'loss') {
+        that.loss_analysis.show();
+      } else {
+        that.loss_analysis.hide();
+      }
+    }).delay(250).animate({ opacity: 1 }, 250);
+  },
+
+  _startAnalyzing: function() {
+    this._clearAnalysis();
+    this.button.disable();
+    this._showHelper();
+    this._setupDrawingManager();
+    this.analyzing = true;
+
+    this.analyzing = true;
+
+    GFW.app.closeInfowindows();
+    GFW.app.hidemarkers();
+
+    if (Timeline.loss_timeline) Timeline.loss_timeline.hide();
+    if (Timeline.forma_timeline) Timeline.forma_timeline.hide();
+    if (Timeline.imazon_timeline) Timeline.imazon_timeline.hide();
+    if (Timeline.loss_timeline) Timeline.loss_timeline.hide();
+  },
+
+  loadCountry: function(ISO) {
+    this.analyzing = true;
+
+    this._loadCountryGeoJSON(ISO);
+  },
+
+  _loadPolygon: function(the_geom) {
+    var that = this;
+
+    var style = config.OVERLAYSTYLES;
+    style.editable = false;
+
+    var features = new GeoJSON(the_geom, style);
+
+    for (var i in features) {
+      if (features[i].length > 0) {
+        for (var j in features[i]) {
+          var feature = features[i][j];
+          feature.setMap(map);
+          this.selectedShapes.push(feature);
+        }
+      } else {
+        var feature = features[i];
+        feature.setMap(map);
+        this.selectedShapes.push(feature);
+      }
+    }
+
+    var ha = 0;
+
+    if (the_geom.features[0].properties['area']) { // from country
+      ha = the_geom.features[0].properties['area'];
+    } else {
+      ha = that._calcAreaPolygon(the_geom);
+    }
+
+    that.model.set('title', the_geom.features[0].properties['name']);
+    Analysis.model.set('area', JSON.stringify(the_geom));
+    Analysis.model.set('ha', ha);
+
+    if(!this.initStats) this.initStats = true;
+
+    this._fitBounds();
+    this._getAlertCount();
+  },
+
+  _fitBounds: function() {
+    var bounds = new google.maps.LatLngBounds();
+    var features = this.selectedShapes;
+
+    for (var i in features) {
+      if (features[i].length > 0) {
+        for (var j in features[i]) {
+          var feature = features[i][j];
+          feature.setMap(map);
+          this.selectedShapes.push(feature);
+        }
+      } else {
+        var feature = features[i];
+        feature.setMap(map);
+        this.selectedShapes.push(feature);
+      }
+
+      var points = feature.latLngs.getArray()[0].getArray();
+
+      // Extend bounds
+      for (var z = 0; z < points.length; z++) {
+        lat = points[z].lat();
+        lng = points[z].lng();
+        point = new google.maps.LatLng(lat, lng);
+        bounds.extend(point);
+      }
+    }
+
+    map.fitBounds(bounds);
+  },
+
+  _getAlertCount: function() {
+    var that = this;
+
+    if (!this.initStats) return;
+
+    var area = this.model.get('area'),
+        baselayer = this.model.get('baselayer'),
+        url = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
+        range;
+
+    var dataset = (baselayer === 'loss') ? 'hansen' : baselayer;
+
+    if (baselayer === 'modis') {
+      range = '&date='+this.date;
+    } else {
+      range = '&begin='+this.start+'&end='+this.end;
+    }
+
+    if (this.iso === 'ALL' || this.protectedArea) {
+      this.alertsUrl = url+dataset+'?geom='+encodeURI(area)+range;
+      this.downloadUrl = url+dataset+'.shp?geom='+encodeURI(area)+range;
+    } else {
+      this.alertsUrl = url+dataset+'?iso='+this.iso+range;
+      this.downloadUrl = url+dataset+'.shp?iso='+this.iso+range;
+    }
+
+    if (baselayer === 'loss') {
+      this.alertsUrl += '&layer=loss';
+      this.downloadUrl += '&layer=loss';
+    }
+
+    console.log(this.alertsUrl);
+  },
+
+  _loadCountryGeoJSON: function(ISO) {
+    var that = this;
+    var query = "https://wri-01.cartodb.com/api/v2/sql?q=SELECT the_geom, name, st_area(the_geom::geography) as area FROM ne_50m_admin_0_countries WHERE iso_a3 ='" + ISO + "'&format=geojson";
+
+    $.ajax({
+      url: query,
+      dataType: 'jsonp',
+      success: function(the_geom) {
+        that._loadPolygon(the_geom);
+      }
+    });
+  },
+
+  _setupDrawingManager: function() {
+    var self = this;
+
+    var options = {
+      drawingModes: [ google.maps.drawing.OverlayType.POLYGON ],
+      drawingControl: false,
+      polygonOptions: config.OVERLAYSTYLES,
+      panControl: false,
+      map: map
+    };
+
+    // Create the drawing manager
+    this.drawingManager = new google.maps.drawing.DrawingManager(options);
+
+    // Start drawing right away
+    this.drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+
+    // Event binding
+    google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this._onOverlayComplete);
+  },
+
+  _onOverlayComplete: function(e) {
+    var polygon = {};
+    var c0 = [];
+    var area = null;
+
+    this.drawingManager.setDrawingMode(null);
+    this.drawingManager.path = e.overlay.getPath().getArray();
+    this.drawingManager.setOptions({ drawingControl: false });
+    this._enableDoneButton();
+
+    var newShape = e.overlay;
+    newShape.type = e.type;
+
+    this._setSelection(newShape);
+
+    polygon = {
+      'type': 'Polygon',
+      'coordinates': [
+        $.map(this.drawingManager.path, function(latlong, index) {
+          return [[latlong.lng(), latlong.lat()]];
+        })
+      ]
+    };
+
+    // Close the polygon:
+    c0 = polygon.coordinates[0][0];
+    polygon.coordinates[0].push(c0);
+
+    area = this._calcAreaPolygon(polygon);
+
+    Analysis.model.set('area', JSON.stringify(polygon));
+    Analysis.model.set('ha', area);
+  },
+
+  // _calcAreaPolygon: function(polygon) {
+  //   // https://github.com/maxogden/geojson-js-utils
+  //   var area = 0;
+  //   var points = polygon.coordinates[0];
+  //   var j = points.length - 1;
+  //   var p1, p2;
+
+  //   for (var i = 0; i < points.length; j = i++) {
+  //     var p1 = {
+  //       x: points[i][1],
+  //       y: points[i][0]
+  //     };
+  //     var p2 = {
+  //       x: points[j][1],
+  //       y: points[j][0]
+  //     };
+  //     area += p1.x * p2.y;
+  //     area -= p1.y * p2.x;
+  //   }
+
+  //   area /= 2;
+
+  //   return formatNumber(Math.ceil((area*1000000) * 10) / 10, true);
+  // },
+
+  render: function() {
+    var that = this;
+
+    this.$el.append(this.template.render( this.model.toJSON() ));
+
+    return this.$el;
+  }
+});
+

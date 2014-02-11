@@ -89,6 +89,11 @@ GFW.modules.app = function(gfw) {
       this.mongabayInfowindow.close();
     },
 
+    hideMarkers: function() {
+      this._hideMongabayLayer();
+      this._hideStoriesMarkers();
+    },
+
     updateCoordinates: function() {
       var lat = parseFloat(map.getCenter().lat()).toFixed(6),
           lng = parseFloat(map.getCenter().lng()).toFixed(6);
@@ -224,7 +229,7 @@ GFW.modules.app = function(gfw) {
         lat = event.latLng.lat(),
         lng = event.latLng.lng(),
         params = { lat: lat, lon: lng },
-        url = 'http://wip.gfw-apis.appspot.com/wdpa/sites';
+        url = "//<%= ENV['GFW_API_HOST'] %>/wdpa/sites";
 
         executeAjax(url, params, {
           success: function(sites) {
@@ -710,6 +715,7 @@ GFW.modules.app = function(gfw) {
       this._loadBaseLayer();
 
       Timeline.model.set('baselayer', this.currentBaseLayer);
+      Analysis.model.set('baselayer', this.currentBaseLayer);
     },
 
     _toggleStoriesLayer: function(layer) {
@@ -913,7 +919,7 @@ GFW.modules.app = function(gfw) {
 
         // analysis
         var date = [start_year, end_year];
-        publish('timeline:change_date', date);
+        publish('timeline:change_date_loss', date);
       });
     },
 
@@ -925,8 +931,13 @@ GFW.modules.app = function(gfw) {
       map.overlayMapTypes.push(this.time_layer);
 
       Timeline.forma_timeline.bind('change_date', function(start_month, end_month, year) {
+        // map
         that.time_layer.set_start_time(start_month);
         that.time_layer.set_time(end_month, year);
+
+        // analysis
+        var date = [start_month, end_month, year];
+        publish('timeline:change_date_forma', date);
       });
     },
 
@@ -941,7 +952,12 @@ GFW.modules.app = function(gfw) {
       });
 
       Timeline.modis_timeline.bind('change_date', function(month, year) {
+        // map
         that.time_layer_modis.set_time(month, year);
+
+        // analysis
+        var date = [month, year];
+        publish('timeline:change_date_modis', date);
       });
     },
 
@@ -955,8 +971,13 @@ GFW.modules.app = function(gfw) {
         cloudfront_url: that.cloudfront_url
       });
 
-      Timeline.imazon_timeline.bind('change_date', function(start_month, end_month, start_year, end_year) {
-        that.time_layer_imazon.set_time(start_month, end_month, start_year, end_year);
+      Timeline.imazon_timeline.bind('change_date', function(start_year, start_month, end_year, end_month) {
+        // map
+        that.time_layer_imazon.set_time(start_year, start_month, end_year, end_month);
+
+        // analysis
+        var date = [start_year, start_month, end_year, end_month];
+        publish('timeline:change_date_imazon', date);
       });
     },
 
@@ -1108,9 +1129,7 @@ GFW.modules.maplayer = function(gfw) {
             that._hideBaseLayers();
             that._removeSubLayers();
 
-            // $('#analysis_control').hide();
-            // Analysis.info.model.set('dataset', false);
-            // Analysis.info.hide();
+            Analysis.hide();
 
             if (forestgain) GFW.app.removeLayer(forestgain);
           };
@@ -1275,19 +1294,11 @@ GFW.modules.maplayer = function(gfw) {
           Legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
         }
 
-        // if (slug === ('fires')) {
-        //   $('#analysis_control').hide();
-        //   Analysis.info.model.set('dataset', false);
-        //   Analysis.info.hide();
-        // } else {
-        //   if (Analysis.info.dataset && Analysis.info.initStats) {
-        //     $('#analysis_control').show();
-        //     Analysis.info.show();
-
-        //     $('.analysis_info').find(".spinner").hide();
-        //     $('.analysis_info').find(".stats .title, .stats ul").fadeIn(250);
-        //   }
-        // }
+        if (slug === ('fires')) {
+          Analysis.hide();
+        } else {
+          Analysis.show();
+        }
 
         if (slug === 'forestgain') {
           if (visible) {

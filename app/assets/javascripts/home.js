@@ -22,16 +22,17 @@
 //= require gfw/ui/infowindow
 //= require gfw/ui/protected-infowindow
 //= require gfw/ui/legend
-//= require gfw/ui/analysis
 //= require gfw/ui/search
 //= require gfw/ui/filter
 //= require gfw/ui/circle
 //= require gfw/ui/layer_selector
 //= require gfw/ui/timeline
-//= require gfw/ui/timeline_loss
-//= require gfw/ui/timeline_modis
-//= require gfw/ui/timeline_forma
-//= require gfw/ui/timeline_imazon
+//= require gfw/ui/timeline/timeline_loss
+//= require gfw/ui/timeline/timeline_modis
+//= require gfw/ui/timeline/timeline_forma
+//= require gfw/ui/timeline/timeline_imazon
+//= require gfw/ui/analysis
+//= require gfw/ui/analysis/analysis_loss
 
 
 /*
@@ -45,7 +46,6 @@
 var loaded = false,
     map = null,
     showMap = false,
-    Infowindow = {},
     SourceWindow = {},
     LayerSelector = {},
     Legend = {},
@@ -200,7 +200,6 @@ $(function() {
       // Analysis
       Analysis = new gfw.ui.view.Analysis();
       this.$map.append(Analysis.render());
-      Analysis.info.setDraggable(true);
 
       if (config.ISO != 'ALL') Analysis.loadCountry(config.ISO);
 
@@ -271,6 +270,7 @@ $(function() {
           Legend.hide();
           SearchBox.hide();
           Timeline.hide();
+          Analysis.hide();
           $('#zoom_controls').hide();
           $('#viewfinder').hide();
         });
@@ -287,6 +287,7 @@ $(function() {
       Legend.show();
       SearchBox.show();
       Timeline.show();
+      Analysis.show();
       $('#zoom_controls').show();
       $('#viewfinder').show();
 
