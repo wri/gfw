@@ -357,19 +357,29 @@
   </script>
 
   <!-- Analysis info -->
-  <script id='analysis-info-template' type='text/x-underscore-template'>
+  <script id='analysis_info-template' type='text/x-underscore-template'>
     <a href='#' class='toggle'></a>
-    <div class='info_title'>User defined area</div>
+    <div class='info_title'>
+      {{#title}}{{ title }}{{/title}}
+      {{^title}}User defined area{{/title}}
+    </div>
     <div class='content'>
-
       <div class='info'>
         <div class='titles'>
-          <strong class='title'>User defined area</strong>
+          <strong class='title'>
+          {{#title}}{{ title }}{{/title}}
+          {{^title}}User defined area{{/title}}
+          </strong>
           <span class='subtitle'>{{ subtitle }}</span>
         </div>
       </div>
 
       <div class='stats'>
+        {{#spinner}}
+        <div class='spinner'></div>
+        {{/spinner}}
+
+        {{^spinner}}
         {{#umd}}
         <div class='spinner'></div>
         <strong class='title'>Total selected area</strong>
@@ -413,6 +423,7 @@
           </li>
         </ul>
         {{/umd}}
+
         {{#imazon}}
         <div class='spinner'></div>
         <strong class='title'>Total selected area</strong>
@@ -466,6 +477,7 @@
           {{/defor}}
         </ul>
         {{/imazon}}
+
         {{^umd}}
         {{^imazon}}
         <div class='spinner'></div>
@@ -491,13 +503,14 @@
         </ul>
         {{/imazon}}
         {{/umd}}
+        {{/spinner}}
 
         <div class='shadow'></div>
       </div>
 
       <div class='controls'>
         <ul class='control_buttons'>
-          <li><a class='subscribe' href='#'></a></li>
+          <li><a class='subscribe{{#subdisabled}} disabled{{/subdisabled}}' href='#'></a></li>
           <li><a class='reset' href='#'></a></li>
         </ul>
       </div>
@@ -517,7 +530,7 @@
     </div>
   </script>
 
-  <script id='analysis-dropdown-template' type='text/x-underscore-template'>
+  <script id='analysis_dropdown-template' type='text/x-underscore-template'>
     <ul>
       {{#urls}}
         <li><a href='{{url}}' target='_blank'>{{name}}</a></li>

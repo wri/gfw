@@ -715,7 +715,10 @@ GFW.modules.app = function(gfw) {
       this._loadBaseLayer();
 
       Timeline.model.set('baselayer', this.currentBaseLayer);
-      Analysis.model.set('baselayer', this.currentBaseLayer);
+      Analysis.info.model.set({
+        'baselayer': this.currentBaseLayer,
+        'subdisabled': true
+      });
     },
 
     _toggleStoriesLayer: function(layer) {
@@ -913,13 +916,13 @@ GFW.modules.app = function(gfw) {
       this.time_layer_loss.set_start_time(2000);
       this.time_layer_loss.set_time(2012);
 
-      Timeline.loss_timeline.bind('change_date', function(start_year, end_year) {
+      Timeline.loss_timeline.bind('change_date', function(start_year, end_year, options) {
         // map
         that.time_layer_loss.set_range(start_year, end_year);
 
         // analysis
         var date = [start_year, end_year];
-        publish('timeline:change_date_loss', date);
+        if (options && options.publish) publish('timeline:change_date_loss', date);
       });
     },
 
@@ -930,14 +933,19 @@ GFW.modules.app = function(gfw) {
       this.time_layer.options.table_name = null;
       map.overlayMapTypes.push(this.time_layer);
 
-      Timeline.forma_timeline.bind('change_date', function(start_month, end_month, year) {
+      Timeline.forma_timeline.bind('change_date', function(dates) {
+        var start_year = dates[0],
+            start_month = dates[1],
+            end_year = dates[2],
+            end_month = dates[3],
+            options = dates[4];
+
         // map
         that.time_layer.set_start_time(start_month);
-        that.time_layer.set_time(end_month, year);
+        that.time_layer.set_time(end_month);
 
         // analysis
-        var date = [start_month, end_month, year];
-        publish('timeline:change_date_forma', date);
+        if (options && options.publish) publish('timeline:change_date_forma', dates);
       });
     },
 
@@ -971,13 +979,13 @@ GFW.modules.app = function(gfw) {
         cloudfront_url: that.cloudfront_url
       });
 
-      Timeline.imazon_timeline.bind('change_date', function(start_year, start_month, end_year, end_month) {
+      Timeline.imazon_timeline.bind('change_date', function(start_year, start_month, end_year, end_month, options) {
         // map
         that.time_layer_imazon.set_time(start_year, start_month, end_year, end_month);
 
         // analysis
         var date = [start_year, start_month, end_year, end_month];
-        publish('timeline:change_date_imazon', date);
+        if (options && options.publish) publish('timeline:change_date_imazon', date);
       });
     },
 

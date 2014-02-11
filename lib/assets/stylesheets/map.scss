@@ -757,6 +757,11 @@
         }
 
         &:active { @include mixins-sprite(control_buttons_subscribe_active); }
+
+        &.disabled {
+          @include opacity(.5);
+          @include pointer-events(none);
+        }
       }
 
       .reset {

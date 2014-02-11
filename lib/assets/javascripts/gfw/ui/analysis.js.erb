@@ -1,6 +1,8 @@
 gfw.ui.model.Analysis = cdb.core.Model.extend({
   defaults: {
-    baselayer: 'loss'
+    analyzing: false,
+    baselayer: 'loss',
+    subtitle: '2000, Jan to 2012, Dec'
   }
 });
 
@@ -20,6 +22,14 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     this.model.on('change:hidden',    this._toggle);
     this.model.on('change:baselayer', this._toggleBaselayer, this);
+    this.model.on('change:analyzing', this._toggleInfo, this);
+
+    var template = $('#analysis_info-template').html();
+
+    this.template = new cdb.core.Template({
+      template: template,
+      type: 'mustache'
+    });
 
     this.iso = config.ISO;
 
@@ -42,8 +52,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   },
 
   _initViews: function() {
-    this.loss_analysis = new gfw.ui.view.AnalysisLoss();
-    this.$el.append(this.loss_analysis.$el);
+    this.info = new gfw.ui.view.AnalysisInfo();
+    this.$el.append(this.info.render());
   },
 
   _initSubscribes: function() {
@@ -51,34 +61,37 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       this.start = start_year;
       this.end = end_year;
 
+      this.info.model.set({ 'subtitle': start_year+', Jan to '+end_year+', Dec' });
+
       this._getAlertCount();
     }, this));
 
-    subscribe('timeline:change_date_forma', _.bind(function(dates) {
-      var start_year = dates[0],
-          start_month = ((dates[1] - 71) % 12) + 1, // Convert months to (1-12)
-          end_year = dates[2],
-          end_month = ((dates[3] - 71) % 12) + 1; // Convert months to (1-12)
+    subscribe('timeline:change_date_forma', _.bind(function(start_year, start_month, end_year, end_month) {
+      var start_month_ = ((start_month - 71) % 12) + 1, // Convert months to (1-12)
+          end_month_ = ((end_month - 71) % 12) + 1; // Convert months to (1-12)
 
-      // Create dates, 0 padding months < 10:
-      this.start = start_year + '-' + ((start_month < 10) ? ("0" + start_month) : start_month) + '-01';
-      this.end = end_year + '-' + ((end_month < 10) ? ("0" + end_month) : end_month) + '-01';
+      // Create dates, 0 padding months < 10
+      this.start = start_year + '-' + ((start_month_ < 10) ? ("0" + start_month_) : start_month_) + '-01';
+      this.end = end_year + '-' + ((end_month_ < 10) ? ("0" + end_month_) : end_month_) + '-01';
 
-      // if((start_month >= 1 && start_month <= 12) && (end_month >= 1 && end_month <= 12)) {
-      //   this.model.set({'subtitle': start_year+", "+config.MONTHNAMES_SHORT[start_month-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month-1].slice(1).toLowerCase()+" to "+start_year+", "+config.MONTHNAMES_SHORT[end_month-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month-1].slice(1).toLowerCase()});
-      // }
+      if((start_month_ >= 1 && start_month_ <= 12) && (end_month_ >= 1 && end_month_ <= 12)) {
+        this.info.model.set({ 'subtitle': start_year+", "+config.MONTHNAMES_SHORT[start_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_-1].slice(1).toLowerCase()+" to "+end_year+", "+config.MONTHNAMES_SHORT[end_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_-1].slice(1).toLowerCase() });
+      }
 
       this._getAlertCount();
     }, this));
 
     subscribe('timeline:change_date_imazon', _.bind(function(start_year, start_month, end_year, end_month) {
-      // Create dates, 0 padding months < 10:
+      var start_month_ = start_month - 1, // Convert months to (0-11)
+          end_month_ = end_month - 1; // Convert months to (0-11)
+
+      // Create dates, 0 padding months < 10
       this.start = start_year + '-' + ((start_month < 10) ? ("0" + start_month) : start_month) + '-01';
       this.end = end_year + '-' + ((end_month < 10) ? ("0" + end_month) : end_month) + '-01';
 
-      // if((start_month >= 1 && start_month <= 12) && (end_month >= 1 && end_month <= 12)) {
-      //   this.model.set({'subtitle': start_year+", "+config.MONTHNAMES_SHORT[start_month-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month-1].slice(1).toLowerCase()+" to "+start_year+", "+config.MONTHNAMES_SHORT[end_month-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month-1].slice(1).toLowerCase()});
-      // }
+      if((start_month >= 1 && start_month <= 12) && (end_month >= 1 && end_month <= 12)) {
+        this.info.model.set({ 'subtitle': start_year+", "+config.MONTHNAMES_SHORT[start_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_].slice(1).toLowerCase()+" to "+end_year+", "+config.MONTHNAMES_SHORT[end_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_].slice(1).toLowerCase() });
+      }
 
       this._getAlertCount();
     }, this));
@@ -89,27 +102,13 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
       this.date = year_+'-'+month_+'-'+'15';
 
-      // var q1 = config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].slice(1).toLowerCase()
-      // var q2 = config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].slice(1).toLowerCase()
+      var q1 = config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].slice(1).toLowerCase()
+      var q2 = config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].slice(1).toLowerCase()
 
-      // this.model.set({ 'subtitle': year_+', '+q1+' to '+year_+', '+q2 });
+      this.info.model.set({ 'subtitle': year_+', '+q1+' to '+year_+', '+q2 });
 
       this._getAlertCount();
     }, this));
-  },
-
-  _toggleBaselayer: function() {
-    var that = this;
-
-    var baselayer = this.model.get('baselayer');
-
-    this.$el.animate({ opacity: 0 }, 250, function() {
-      if (baselayer === 'loss') {
-        that.loss_analysis.show();
-      } else {
-        that.loss_analysis.hide();
-      }
-    }).delay(250).animate({ opacity: 1 }, 250);
   },
 
   _startAnalyzing: function() {
@@ -131,14 +130,12 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   },
 
   loadCountry: function(ISO) {
-    this.analyzing = true;
+    this.model.set('analyzing', true);
 
     this._loadCountryGeoJSON(ISO);
   },
 
   _loadPolygon: function(the_geom) {
-    var that = this;
-
     var style = config.OVERLAYSTYLES;
     style.editable = false;
 
@@ -163,12 +160,12 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if (the_geom.features[0].properties['area']) { // from country
       ha = the_geom.features[0].properties['area'];
     } else {
-      ha = that._calcAreaPolygon(the_geom);
+      ha = this._calcAreaPolygon(the_geom);
     }
 
-    that.model.set('title', the_geom.features[0].properties['name']);
-    Analysis.model.set('area', JSON.stringify(the_geom));
-    Analysis.model.set('ha', ha);
+    this.model.set('area', JSON.stringify(the_geom));
+    this.info.model.set('ha', formatNumber(Math.ceil((ha) * 10) / 10, true));
+    this.info.model.set('title', the_geom.features[0].properties['name']);
 
     if(!this.initStats) this.initStats = true;
 
@@ -213,7 +210,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if (!this.initStats) return;
 
     var area = this.model.get('area'),
-        baselayer = this.model.get('baselayer'),
+        baselayer = this.info.model.get('baselayer'),
         url = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
         range;
 
@@ -234,11 +231,94 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     }
 
     if (baselayer === 'loss') {
+      this.info.model.set({ 'subtitle': this.start+', Jan to '+this.end+', Dec' });
+
       this.alertsUrl += '&layer=loss';
       this.downloadUrl += '&layer=loss';
     }
 
-    console.log(this.alertsUrl);
+    this.info.render();
+
+    executeAjax(this.alertsUrl, {}, {
+      success: _.bind(function(data) {
+        var baselayer = this.info.model.get('baselayer');
+
+        if (baselayer === 'loss' && data) {
+          var loss      = formatNumber(Math.ceil((data.range.area.value) * 10) / 10, true);
+          var treeCover = formatNumber(Math.ceil((data.range.area.treecover_2000) * 10) / 10, true);
+          var gain      = formatNumber(Math.ceil((data.range.area.gain) * 10) / 10, true);
+
+          this.info.model.set({
+            'spinner': false, // first load spinner
+            'baselayer': baselayer,
+            'alert_count': false,
+            'loss': loss,
+            'treecover_2000': treeCover,
+            'gain': gain,
+            'begin': data.range.area.begin,
+            'end': data.range.area.end,
+            'showAlerts': false,
+            'subdisabled': true
+          });
+        } else if (baselayer === 'modis' && data && data.total) {
+          this.info.model.set({
+            'baselayer': baselayer,
+            'alert_count': formatNumber((data.total), true) + ' alerts',
+            'showAlerts': true,
+            'subdisabled': true
+          });
+        } else if (baselayer === 'imazon' && data) {
+            var defor = null,
+                degrad = null;
+
+            if (data[0]) defor = formatNumber(Math.ceil((data[0].value) * 10) / 10, true);
+            if (data[1]) degrad = formatNumber(Math.ceil((data[1].value) * 10) / 10, true);
+
+            this.info.model.set({
+              'baselayer': baselayer,
+              'defor': defor,
+              'degrad': degrad,
+              'subdisabled': true
+            });
+
+            if (data[0] == null && data[1] == null) {
+              this.info.model.set({
+                'baselayer': baselayer,
+                'alert_count': 'No alerts',
+                'showAlerts': false,
+                'subdisabled': true
+              });
+            }
+          } else if (baselayer === "forma" && data && data.value) {
+            this.info.model.set({
+              'baselayer': baselayer,
+              'alert_count': formatNumber(Math.ceil((data.value) * 10) / 10, true) + ' alerts',
+              'showAlerts': true,
+              'subdisabled': false
+            });
+          } else {
+            this.info.model.set({
+              'baselayer': baselayer,
+              'alert_count': 'No alerts',
+              'showAlerts': false,
+              'subdisabled': true
+            });
+          }
+
+        this.info.render();
+
+        this.$el.find('.stats .error').fadeOut(150);
+
+        this.$el.find('.stats .spinner').fadeOut(250, function() {
+          that.$el.find('.stats .title, .stats ul').fadeIn(250);
+        });
+      }, this),
+      error: _.bind(function(error) {
+        this.$el.find('.stats .title, .stats ul, .stats .spinner').fadeOut(150, function() {
+          that.$el.find('.error').fadeIn(250);
+        });
+      }, this)
+    });
   },
 
   _loadCountryGeoJSON: function(ISO) {
@@ -305,8 +385,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     area = this._calcAreaPolygon(polygon);
 
-    Analysis.model.set('area', JSON.stringify(polygon));
-    Analysis.model.set('ha', area);
+    this.model.set('area', JSON.stringify(polygon));
+    this.info.model.set('ha', formatNumber(Math.ceil((area) * 10) / 10, true));
   },
 
   // _calcAreaPolygon: function(polygon) {
@@ -334,6 +414,30 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   //   return formatNumber(Math.ceil((area*1000000) * 10) / 10, true);
   // },
 
+  _toggle: function() {
+    var that = this;
+
+    if(this.model.get('hidden')) {
+      this.$el.fadeOut();
+    } else {
+      this.$el.fadeIn(200, function() {
+        if (!that.initialized) {
+          that.loss_analysis.show();
+
+          that.initialized = true;
+        }
+      });
+    }
+  },
+
+  _toggleInfo: function() {
+    if (this.model.get('analyzing')) {
+      this.info.show();
+    } else {
+      this.info.hide();
+    }
+  },
+
   render: function() {
     var that = this;
 
@@ -343,3 +447,526 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   }
 });
 
+
+gfw.ui.model.AnalysisInfo = cdb.core.Model.extend({
+  defaults: {
+    hidden: true,
+    baselayer: 'loss',
+    spinner: true
+  }
+});
+
+gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
+  className: 'analysis_info',
+
+  events: {
+    'click .toggle': '_toggleOpen',
+    'click a.reset': '_onClickReset'
+  },
+
+  initialize: function() {
+    _.bindAll( this, 'toggleDraggable', 'onStopDragging', '_toggleOpen', 'open', 'close');
+
+    this.model = new gfw.ui.model.AnalysisInfo();
+
+    this.model.on('change:hidden',      this._toggle,             this);
+    this.model.on('change:draggable',   this.toggleDraggable,     this);
+    this.model.on('change:baselayer',   this._onChangeBaselayer,  this);
+    this.model.on('change:subtitle',    this._updateSubtitle);
+
+    this.model.set('containment', '#map-container .map');
+
+    this._initViews();
+
+    var template = $('#analysis_info-template').html();
+
+    this.template = new cdb.core.Template({
+      template: template,
+      type: 'mustache'
+    });
+  },
+
+  _initViews: function() {
+    // this.subscribe = new gfw.ui.view.AnalysisSubscribe();
+    // $('body').append(this.subscribe.render());
+
+    // this.reset = new gfw.ui.view.AnalysisReset();
+    // this.$el.append(this.reset.render());
+  },
+
+  _onClickReset: function(e) {
+    e.preventDefault();
+
+    var pos = this.$el.find(".reset").offset();
+
+    this.reset.$el.css({
+      top: pos.top,
+      left: pos.left
+    });
+
+    this.reset.show();
+  },
+
+  _onChangeBaselayer: function() {
+    this.model.set('closed', false);
+    this.$el.removeClass('closed');
+    this.render();
+  },
+
+  _toggle: function() {
+    if(this.model.get('hidden')) {
+      this.$el.fadeOut();
+    } else {
+      this.$el.fadeIn();
+    }
+  },
+
+  show: function() {
+    this.model.set('hidden', false);
+  },
+
+  hide: function() {
+    this.model.set('hidden', true);
+  },
+
+  _updateSubtitle: function() {
+
+  },
+
+  _onClickReset: function(e) {
+    e.preventDefault();
+
+  },
+
+  _onClickSubscribe: function(e) {
+    e.preventDefault();
+
+  },
+
+  show: function() {
+    this.model.set('hidden', false);
+  },
+
+  hide: function() {
+    this.model.set('hidden', false);
+  },
+
+  resize: function() {
+    var that = this;
+
+    var $header = this.$el.find('.info'),
+        $stats = this.$el.find('.stats'),
+        $controls = this.$el.find('.controls');
+
+    var height = $header.outerHeight()+$stats.outerHeight()+$controls.outerHeight();
+
+    this.$content.animate({
+      opacity: 1,
+      height: height
+    }, { duration: 100 });
+  },
+
+  open: function() {
+    var that = this;
+
+    this.model.set('closed', false);
+
+    this.$info_title.fadeOut(250, function() {
+      that.resize();
+      that.$shadow.fadeIn(250);
+    });
+
+    this.$el.removeClass('closed');
+  },
+
+  close: function() {
+    var that = this;
+    this.model.set('closed', true);
+
+    this.$content.css('overflow', 'hidden');
+    this.$content.animate({
+      opacity: 0,
+      height: '15px',
+      padding: 0
+    }, 250, function() {
+      that.$info_title.fadeIn(250);
+      that.$shadow.fadeOut(250);
+    });
+
+    this.$el.addClass('closed');
+  },
+
+  render: function() {
+    var that = this;
+
+    var options = _.extend(this.model.toJSON(), {
+      umd: this.model.get('baselayer') === 'loss',
+      imazon: this.model.get('baselayer') === 'imazon',
+      modis: this.model.get('baselayer') === 'modis'
+    });
+
+    this.$el.html(this.template.render( options ));
+
+    this.$content     = this.$el.find(".content");
+    this.$info_title  = this.$el.find(".info_title");
+    this.$title       = this.$el.find(".info .titles .title");
+    this.$dataset     = this.$el.find(".alert .title");
+    this.$shadow      = this.$el.find(".shadow");
+    this.$alert_count = this.$el.find("#alerts-count");
+    this.$subtitle    = this.$el.find(".subtitle");
+
+    this.downloadDropdown = new gfw.ui.view.DownloadDropdown({
+      model: this.model,
+      downloadEl: this.$el.find('.download')
+    });
+
+    this.$el.append(this.downloadDropdown.render());
+
+    return this.$el;
+  }
+});
+
+
+gfw.ui.view.DownloadDropdown = cdb.core.View.extend({
+  className: 'analysis_dropdown hidden',
+
+  initialize: function() {
+    var template = $("#analysis_dropdown-template").html();
+
+    this.template = new cdb.core.Template({
+      template: template,
+      type: 'mustache'
+    });
+  },
+
+  _generateURL: function(format) {
+
+  },
+
+  render: function() {
+    var options = {
+      urls: [
+        { name: "SVG",     url: this._generateURL('svg') },
+        { name: "GeoJSON", url: this._generateURL('geojson') },
+        { name: "SHP",     url: this._generateURL('shp') },
+        { name: "KML",     url: this._generateURL('kml') },
+        { name: "CSV",     url: this._generateURL('csv') }
+      ]
+    };
+
+    this.$el.html(this.template.render( options ));
+
+    var $el = this.$el;
+
+    $('.download').qtip({
+      show: 'click',
+      hide: {
+        event: 'click unfocus'
+      },
+      content: {
+        text: $el
+      },
+      position: {
+        my: 'top right',
+        at: 'bottom right',
+        target: $('.download'),
+        adjust: {
+          x: 10
+        }
+      },
+      style: {
+        tip: {
+          corner: 'top right',
+          mimic: 'top center',
+          border: 1,
+          width: 10,
+          height: 6
+        }
+      }
+    });
+
+    return this.$el;
+  }
+});
+
+gfw.ui.model.AnalysisSubscribe = Backbone.Model.extend({
+
+  defaults: {
+    title: "Subscribe to alerts",
+    subtitle: "You will receive a monthly email summarizing forest change in this area",
+    hidden: false,
+    placeholder: "Enter your email",
+    mode: "subscribe",
+    button_title: "SUBSCRIBE",
+    input_type: "text"
+  }
+
+});
+
+gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
+
+  className: 'analysis_subscribe',
+
+  events: {
+
+    "click .invite": "_gotoInvite",
+    "click .send":   "_send",
+    'click a.close'   : 'hide'
+
+  },
+
+  defaults: {
+    speed: 250,
+    minHeight: 15
+  },
+
+  initialize: function() {
+
+    _.bindAll( this, "toggle", "_toggleMode", "_updateTitle", "_updateHelp", "_updateButtonTitle", "_updateSubtitle", "_updatePlaceholder", "_updateInputType", "_onKeyDown", "_sendData" );
+
+    this.options = _.extend(this.options, this.defaults);
+
+    this.model = new gfw.ui.model.AnalysisSubscribe();
+
+    this.add_related_model(this.model);
+
+    this.model.bind("change:hidden", this.toggle);
+
+    this.model.bind("change:title",         this._updateTitle);
+    this.model.bind("change:button_title",  this._updateButtonTitle);
+    this.model.bind("change:subtitle",      this._updateSubtitle);
+    this.model.bind("change:help",          this._updateHelp);
+    this.model.bind("change:placeholder",   this._updatePlaceholder);
+    this.model.bind("change:input_type",    this._updateInputType);
+    this.model.bind("change:mode",          this._toggleMode);
+
+    this.$backdrop = $(".white_backdrop");
+
+    var template = $("#analysis_subscribe-template").html();
+
+    this.template = new cdb.core.Template({
+      template: template,
+      type: 'mustache'
+    });
+
+  },
+
+  show: function() {
+    $(".backdrop").fadeIn(250);
+    this.$el.fadeIn(250);
+
+    $(document).on("keydown", this._onKeyDown);
+  },
+
+  hide: function(e) {
+    var that = this;
+
+    this.$el.fadeOut(250, function() {
+      that._clearErrors();
+      that._setMode("subscribe");
+    });
+
+    this.$backdrop.fadeOut(250);
+
+    $(document).off("keyup");
+  },
+
+  _onKeyDown: function(e) {
+    if (e.which == 27) {
+      this._onEscKey(e);
+    } else if (e.which == 13) {
+      this._onKeyPress(e);
+    }
+  },
+
+  _onEscKey: function(e) {
+    e && e.preventDefault();
+    e && e.stopImmediatePropagation();
+
+    this.hide();
+
+  },
+
+  _onKeyPress: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (e.keyCode == 13) {
+      this._send(e);
+      return false;
+    } else {
+      this._clearErrors();
+    }
+
+  },
+
+  _clearErrors: function() {
+
+    this.$el.find(".input-field .icon.error").fadeOut(250);
+    this.$el.find(".input-field").removeClass("error");
+    this.$el.find(".input-field .error_input_label").fadeOut(250);
+    this.$el.find(".input-field .error_input_label").html("");
+
+  },
+
+  _send: function(e) {
+    var that = this;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    var mode = this.model.get("mode");
+    var error = false;
+
+    if (mode == "subscribe") {
+
+      this._clearErrors();
+
+      var email = this.$el.find("input.field").val();
+      if (!validateEmail(email)) {
+        this.$el.find(".input-field").addClass("error");
+        this.$el.find(".input-field").find(".icon.error").fadeIn(250);
+        this.$el.find(".input-field").find(".error_input_label").html("Please enter a valid email");
+        this.$el.find(".input-field").find(".error_input_label").fadeIn(250);
+
+        error = true;
+      }
+
+      if (!error) {
+        that._sendData();
+      }
+
+    } else {
+      this.hide();
+    }
+
+  },
+
+  _sendData: function() {
+
+    var
+    that      = this,
+    $form     = this.$el.find("form"),
+    $the_geom = $form.find('#area_the_geom');
+
+    if (Analysis.selectedShapes && Analysis.selectedShapes.length > 0) {
+      s = Analysis.selectedShapes;
+      $the_geom.val(JSON.stringify({
+        "type": "MultiPolygon",
+        "coordinates": [
+          $.map(s, function(shape, index) {
+            return [
+              $.map(shape.getPath().getArray(), function(latlng, index) {
+                return [[latlng.lng().toFixed(4), latlng.lat().toFixed(4)]];
+              })
+            ]
+          })
+        ]
+      }));
+    } else {
+      s = Analysis.selectedShape;
+      $the_geom.val(JSON.stringify({
+        "type": "MultiPolygon",
+        "coordinates": [[
+          $.map(s.getPath().getArray(), function(latlng, index) {
+            return [[latlng.lng().toFixed(4), latlng.lat().toFixed(4)]];
+          })
+        ]]
+      }));
+
+    }
+
+    var form_data = '{"topic": "updates/forma", "geom": '+$the_geom.val()+', "email": "'+$form.find("#area_email").val()+'"}';
+
+    $.ajax({
+        type: 'POST',
+        url: $form.attr('action'),
+        crossDomain: true,
+        data: form_data,
+        dataType: 'json',
+        success: function(responseData, textStatus, jqXHR) {
+          that._setMode('thanks');
+          Analysis._clearAnalysis();
+          Analysis.info.hide();
+        },
+        error: function (responseData, textStatus, errorThrown) {
+          alert('POST failed.');
+        }
+    });
+  },
+
+  _setMode: function(mode) {
+    this._clearErrors();
+
+    if (mode === 'subscribe') {
+      this.model.set({
+        title: this.model.defaults.title,
+        help: this.model.defaults.subtitle,
+        button_title: this.model.defaults.button_title,
+        placeholder: this.model.defaults.placeholder,
+        input_type: 'email',
+        mode: mode
+      });
+
+      this.$el.find('input').val('');
+      this.$el.find('input').focus();
+    } else if (mode == "thanks") {
+      this.model.set({
+        title: 'Thank you',
+        help: "You're now subscribed to this area",
+        button_title: 'Close',
+        mode: mode
+      });
+
+      this.$('input').val('');
+    }
+  },
+
+  _toggleMode: function() {
+    var mode = this.model.get('mode');
+
+    if (mode === 'subscribe') {
+      this.$('.subtitle').fadeOut(250);;
+      this.$('.help').fadeIn(250);
+      this.$('.input-field').show();
+    } else if (mode === 'thanks') {
+      this.$('.subtitle').fadeOut(250);;
+      this.$('.help').fadeIn(250);
+      this.$('.input-field').hide();
+    }
+  },
+
+  _updatePlaceholder: function() {
+    this.$el.find(".holder").html(this.model.get('placeholder'));
+  },
+
+  _updateInputType: function() {
+    this.$el.find(".field").prop("type", this.model.get('input_type'));
+  },
+
+  _updateHelp: function() {
+    this.$el.find(".help").html(this.model.get('help'));
+  },
+
+  _updateSubtitle: function() {
+    this.$el.find(".subtitle").html(this.model.get('subtitle'));
+  },
+
+  _updateButtonTitle: function() {
+    this.$el.find(".send span").html(this.model.get('button_title'));
+  },
+
+  _updateTitle: function() {
+    this.$el.find(".title").html(this.model.get('title'));
+  },
+
+  render: function() {
+    var that = this;
+
+    this.$el.append(this.template.render( this.model.toJSON() ));
+
+    $(this.$el.find(".input-field")).smartPlaceholder();
+
+    return this.$el;
+  }
+});
