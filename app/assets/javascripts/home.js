@@ -31,6 +31,7 @@
 //= require gfw/ui/timeline_loss
 //= require gfw/ui/timeline_modis
 //= require gfw/ui/timeline_forma
+//= require gfw/ui/timeline_imazon
 
 
 /*

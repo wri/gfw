@@ -942,17 +942,20 @@
   }
 }
 
-.timeline_forma .timeline-inner {
-  .range { width: 1108px; }
+.timeline_forma,
+.timeline_imazon {
+  .timeline-inner {
+    .range { width: 1108px; }
 
-  .years,
-  .visible_months {
-    li {
-      width: 144px;
+    .years,
+    .visible_months {
+      li {
+        width: 144px;
+      }
     }
-  }
 
-  .trail .handle.right { left: 1129px; }
+    .trail .handle.right { left: 1129px; }
+  }
 }
 
 .visible_months {
