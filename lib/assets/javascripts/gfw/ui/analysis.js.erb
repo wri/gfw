@@ -1002,7 +1002,7 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
 
     $.ajax({
         type: 'POST',
-        url: "http://"+$form.attr('action'),
+        url: $form.attr('action'),
         crossDomain: true,
         data: form_data,
         dataType: 'json',
