@@ -1016,6 +1016,7 @@ section.country_conventions {
 }
 
 .overview_graph__tabs {
+  @extend .clearfix;
 
   li {
     display: table;
@@ -1144,6 +1145,7 @@ section.country_conventions {
 }
 
 .countries_list ul li {
+  @extend .clearfix;
   border-bottom: 1px solid #ccc;
   padding: 18px 0;
 
