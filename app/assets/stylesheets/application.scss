@@ -733,4 +733,6 @@ a.accept_btn {
   &.gef { height: 42px; @include logos-sprite(gef); }
   &.ukaid { height: 52px; @include logos-sprite(ukaid); }
   &.tilia { height: 38px; @include logos-sprite(tilia); }
+  &.goodall { height: 51px; width: 206px; @include logos-sprite(goodall); }
+
 }
