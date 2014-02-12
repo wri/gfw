@@ -13,8 +13,12 @@
 }
 
 .static {
-  .header {
-    margin-bottom: -106px;
+  &.howto,
+  &.data,
+  &.about {
+    .header {
+      margin-bottom: -106px;
+    }
   }
 
   &.howto,
