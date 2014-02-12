@@ -35,6 +35,12 @@
 //= require gfw/ui/analysis/analysis_loss
 
 
+_.templateSettings = {
+  interpolate: /\{\{(.+?)\}\}/g,
+  evaluate: /\[(.+?)\]/g
+};
+
+
 /*
  *
  *  Home entry point

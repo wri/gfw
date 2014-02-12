@@ -1,21 +1,18 @@
 <% content_for :title do %>
-  <%= 'Welcome to the <span>Global Forest Watch</span><br />beta site'.html_safe %>
+  <h1 class='header-title'><%= 'Welcome to the <span>Global Forest Watch</span> beta site'.html_safe %></h1>
+  <p class='header-description'><i class='scroll-icon'></i> Before entering the GFW beta site, you must read and agree to the Terms of Service</p>
 <% end %>
 
-<p>Global Forest Watch (GFW) is a partnership that provides the most current, reliable, and actionable information about what is happening in forests worldwide. GFW unites satellite technology, open data, and human networks to show where and how forests are changing, who is using them, and how we can sustain them for future generations. GFW is a free, open data platform putting decision-relevant information in the hands of governments, companies, NGOs, and the public.</p>
-
-<p>The Global Forest Watch website contains a treasure trove of data, including maps of forest change, fires, protected areas, concessions boundaries, and geo-tagged stories from journalists and people on the ground. The GFW website is currently a beta site, which means that there may be some minor issues and errors within the site. Please report errors and send us your comments by clicking the green <a href='https://www.surveymonkey.com/s/gfw2' target='_blank'>“Feedback”</a> tab, so that we can continue improving website content and functionality. Be sure to visit the “About” and “How to” pages to learn more about how to use GFW, forthcoming features, and the GFW initiative in general.</p>
+<p>Global Forest Watch (GFW) is a dynamic online forest monitoring and alert system that empowers people everywhere to better manage forests.</p>
 
 <p><strong>We recommend visiting GFW using the latest version of Google Chrome, Mozilla Firefox, or Apple Safari. Internet Explorer may cause errors when viewing the site.</strong></p>
 
-<p>For additional information about GFW, please send an email to <a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>
-
-<p>Before entering the GFW site, you must agree to the Terms of Service. <strong>Please scroll down in the window below to select "I agree” or “I do not agree."</strong></p>
-
 <div contenteditable='false' class='terms_field'>
   <%= render 'shared/terms' %>
-
-  <%= form_tag('/accept', { :class => 'terms_footer' }) do %>
-    <%= submit_tag "I agree", class: 'btn accept_btn dark_glow' %> <a href='#' class='btn accept_btn dark_glow'>I do not agree</a>
-  <% end %>
 </div>
+
+<%= form_tag('/accept', { :class => 'terms_footer' }) do %>
+  <%= submit_tag "I agree", class: 'btn accept_btn dark_glow' %> <a href='#' class='btn accept_btn dark_glow'>I do not agree</a>
+<% end %>
+
+<p class='last'>For additional information about GFW, please send an email to <a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>

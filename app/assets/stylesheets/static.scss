@@ -1,6 +1,7 @@
 @import 'compass/css3/border-radius';
 @import 'compass/css3/opacity';
 @import 'compass/css3/box-shadow';
+@import 'compass/css3/inline-block';
 
 @import 'fonts';
 @import 'sprites';
@@ -38,6 +39,21 @@
       .source_body {
         text-align: center;
       }
+    }
+  }
+
+  &.accept_terms .header {
+    height: 218px;
+  }
+
+  &.terms,
+  &.old {
+    .header {
+      height: 196px;
+    }
+
+    .content {
+      margin-bottom: 40px;
     }
   }
 }
@@ -528,9 +544,25 @@
 }
 
 
-/*
- * Terms
- */
+/* =Terms
+----------------------------------------------- */
+
+.header-description {
+  margin: 30px auto;
+  font-size: 17px;
+  line-height: 1.1;
+  font-family: "fira_sans_otlight";
+  text-align: center;
+  text-transform: uppercase;
+  color: #ccc;
+}
+
+.scroll-icon {
+  @include inline-block();
+  width: 14px;
+  height: 16px;
+  @include icons-sprite(scroll_icon);
+}
 
 .map-container {
   position: absolute;
@@ -560,6 +592,10 @@
 
   p {
     margin-bottom: 20px;
+
+    &.last {
+      text-align: center;
+    }
   }
 }
 
@@ -616,6 +652,7 @@
   margin: 30px 0;
   padding: 8px;
   border: 1px solid #CCC;
+  background: #fff;
   outline: none;
   @include box-shadow(0 1px 5px rgba(#000, .2) inset);
   @include border-radius(3px);
