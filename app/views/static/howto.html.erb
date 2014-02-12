@@ -223,7 +223,7 @@
           <p>See our <%= link_to 'Data page', sources_path %> for more detail. To contribute or suggest data, please <a href='mailto:gfw@wri.com'>email</a> us.</p>
 
           <h3 class='overview_title'>Where do the data come from?</h3>
-          <p>The data on GFW come from various sources. Most of the data are in the public domain and have been developed by governments, NGOs, research institutions, or companies. Note that the data come in different formats and vary in their accuracy, timeliness, and geographical extent. See GFW’s <%= link_to 'Data policy', sources_path %> for more details.</p>
+          <p>The data on GFW come from various sources. Most of the data are in the public domain and have been developed by governments, NGOs, research institutions, or companies. Note that the data come in different formats and vary in their accuracy, timeliness, and geographical extent. See GFW’s <%= link_to 'Data policy', "#{sources_path}#data_policy" %> for more details.</p>
 
           <p>Some data are produced directly by WRI and our partners, such as FORMA alerts, Intact Forest Landscapes, and some forest use data.</p>
 
@@ -237,12 +237,10 @@
           <h3 class='overview_title'>How accurate are the data displayed on Global Forest Watch?</h3>
           <p>The accuracy of the data displayed on GFW is variable. Methodologies and cautions for specific data sets are available on the <%= link_to 'Data page', sources_path %>.</p>
 
-          <p>GFW strives to include only the most accurate data whenever possible and to make the user aware of the risk of inaccuracies in the data. GFW is not responsible for data from other sources. See more about GFW’s approach to data in our <%= link_to 'Data policy', sources_path %>.</p>
+          <p>GFW strives to include only the most accurate data whenever possible and to make the user aware of the risk of inaccuracies in the data. GFW is not responsible for data from other sources. See more about GFW’s approach to data in our <%= link_to 'Data policy', "#{sources_path}#data_policy" %>.</p>
 
           <h3 class='overview_title'>Why do different data layers contradict each other or not overlap exactly?</h3>
           <p>Different data sets measure different things and are derived using different methodologies. Such differences can lead to results that may manifest as contradictory layers on the GFW platform. In some cases, a lack of available high-quality data may cause a greater margin of error for certain data sets.</p>
-
-          <p></p>
 
           <ul class='bullets'>
             <li><strong>Protected areas vs. the grayscale base map:</strong> The boundaries for protected areas on the Google grayscale base map do not always align with the protected areas from the World Database on Protected Areas (WDPA). In this case, the WDPA data set only includes official protected areas—defined regions formally protected by law at the national level—whereas the base map includes recreational areas and other informal green spaces. Furthermore, the WDPA data is approved and reported by individual countries, while Google’s base map is composed of data from a variety of sources. Therefore, the base map grayscale network of parks and protected areas is more expansive (and less defined) than that of the protected areas layer, causing visible incongruities between the two data sets.</li>
