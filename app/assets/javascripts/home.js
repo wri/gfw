@@ -10,9 +10,8 @@
 //= require cartodb-gmapsv3
 //= require minpubsub
 //= require markerclusterer_compiled
-//= require gfw/map_helpers
-//= require gfw/canvas_tile_layer
 //= require gfw/deforestation_tile_layer
+//= require gfw/canvas_tile_layer
 //= require gfw/static_grid_layer_imazon
 //= require gfw/static_grid_layer
 //= require gfw/gfw_lib
@@ -23,15 +22,17 @@
 //= require gfw/ui/infowindow
 //= require gfw/ui/protected-infowindow
 //= require gfw/ui/legend
-//= require gfw/ui/analysis
 //= require gfw/ui/search
 //= require gfw/ui/filter
 //= require gfw/ui/circle
 //= require gfw/ui/layer_selector
 //= require gfw/ui/timeline
-//= require gfw/ui/timeline_loss
-//= require gfw/ui/timeline_modis
-//= require gfw/ui/timeline_imazon
+//= require gfw/ui/timeline/timeline_loss
+//= require gfw/ui/timeline/timeline_modis
+//= require gfw/ui/timeline/timeline_forma
+//= require gfw/ui/timeline/timeline_imazon
+//= require gfw/ui/analysis
+//= require gfw/ui/analysis/analysis_loss
 
 
 /*
@@ -41,22 +42,17 @@
  */
 
 
+// Filter and Circle have already been init
 var loaded = false,
     map = null,
     showMap = false,
-    Infowindow = {},
     SourceWindow = {},
     LayerSelector = {},
     Legend = {},
     Analysis = {},
     SearchBox = {},
     Timeline = {},
-    TimelineLoss = {},
-    TimelineImazon = {},
-    TimelineModis = {};
-    // Filter and Circle have already been init
-
-var resizePID;
+    resizePID;
 
 $(function() {
 
@@ -118,7 +114,8 @@ $(function() {
     initialize: function() {
       this.model = new AppModel();
 
-      this.$map = $("#map");
+      this.$map = $('#map');
+      this.$header = $('.header')
 
       this._initRouter();
     },
@@ -187,10 +184,8 @@ $(function() {
       this.$el.append(SourceWindow.render());
 
       // Timeline
-      Timeline = new gfw.ui.view.Timeline({ container: this.$map });
-      TimelineLoss = new gfw.ui.view.TimelineLoss({ container: this.$map });
-      TimelineImazon = new gfw.ui.view.TimelineImazon({ container: this.$map });
-      TimelineModis = new gfw.ui.view.TimelineModis({ container: this.$map });
+      Timeline = new gfw.ui.view.Timeline();
+      this.$map.append(Timeline.render());
 
       // Layer selector
       LayerSelector = new gfw.ui.view.LayerSelector({ map: map });
@@ -202,13 +197,6 @@ $(function() {
       this.$map.append(Legend.render());
       Legend.setDraggable(true);
 
-      // Analysis
-      Analysis = new gfw.ui.view.Analysis();
-      this.$map.append(Analysis.render());
-      Analysis.info.setDraggable(true);
-
-      if (config.ISO != 'ALL') Analysis._loadCountry(config.ISO);
-
       // Search box
       SearchBox = new gfw.ui.view.SearchBox({ map: map });
       this.$map.append(SearchBox.render());
@@ -219,6 +207,12 @@ $(function() {
         map.fitBounds(bounds);
       });
 
+      // Analysis
+      Analysis = new gfw.ui.view.Analysis();
+      this.$map.append(Analysis.render());
+      Analysis.info.setDraggable(true);
+
+      if (config.ISO != 'ALL') Analysis.loadCountry(config.ISO);
       Filter.init();
       Circle.init();
       Circle.show();
@@ -229,6 +223,7 @@ $(function() {
       });
 
       $(window).scroll(positionScroll);
+
     },
 
     _onClickSource: function(e) {
@@ -258,29 +253,11 @@ $(function() {
 
       Filter.hide(function() {
         $('.header').animate({ height: '230px' }, 250, function() {
-          $('.header-title').animate({ opacity: 1 }, 250);
+          $('.header-title').fadeIn(250);
 
           $('.for_business').fadeIn(250);
 
-          if($("header").hasClass("stuck")) {
-            // stuck logo to top of viewport
-            if($(window).scrollTop() < 49) {
-              $(".header-logo").css({
-                "position": "absolute",
-                "top": "44px"
-              });
-            } else if($(window).scrollTop() >= 49 && $(window).scrollTop() <= 112) {
-              $(".header-logo").css({
-                "position": "fixed",
-                "top": "0"
-              });
-            } else if($(window).scrollTop() > 112) {
-              $(".header-logo").css({
-                "position": "absolute",
-                "top": "108px"
-              });
-            }
-          }
+          positionScroll();
         });
 
         that._selectMenu('home');
@@ -288,16 +265,12 @@ $(function() {
 
       if (GFW && GFW.app) {
         GFW.app.close(function() {
-          Circle.show(250);
+          Circle.show();
           LayerSelector.hide();
           Legend.hide();
           SearchBox.hide();
           Timeline.hide();
-          TimelineModis.hide();
-          TimelineImazon.hide();
-          TimelineLoss.hide();
-          $('#analysis_control').hide();
-          Analysis.info.hide();
+          Analysis.hide();
           $('#zoom_controls').hide();
           $('#viewfinder').hide();
         });
@@ -309,70 +282,32 @@ $(function() {
 
       showMap = true;
 
+      Circle.hide();
       LayerSelector.show();
       Legend.show();
       SearchBox.show();
-      $('#analysis_control').show();
-      if (Analysis.info.dataset && Analysis.info.initStats) {
-        Analysis.info.show();
-
-        $('.analysis_info').find(".spinner").hide();
-        $('.analysis_info').find(".stats .title, .stats ul").fadeIn(250);
-      }
-
+      Timeline.show();
+      Analysis.show();
       $('#zoom_controls').show();
       $('#viewfinder').show();
-      Circle.hide();
-
-      if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'forma') {
-        Timeline.show();
-      } else if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'modis') {
-        TimelineModis.show();
-      } else if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'imazon') {
-        TimelineImazon.show();
-      } else if(GFW.app.currentBaseLayer && GFW.app.currentBaseLayer === 'loss') {
-        TimelineLoss.show();
-        $('.timeline.loss').fadeIn();
-      }
 
       $('.for_business').fadeOut(250);
 
-      $('.header').animate({height: '135px'}, { duration: 250, complete: function() {
-        if (GFW.app) GFW.app.open();
+      $('.header-title').fadeOut(250, function() {
+        $('.header').animate({ height: '135px' }, 250, function() {
+          if (GFW.app) GFW.app.open();
 
-        $('.header-title').animate({ opacity: 0 }, 250, function() {
-          $('header-title').hide();
+          $('.header-title').fadeOut(250, function() {
+            $('header-title').hide();
 
-          Filter.show();
+            Filter.show();
 
-          $('.for_business').fadeOut(250);
+            positionScroll();
 
-          if($("header").hasClass("stuck")) {
-            // stuck logo to top of viewport
-            if($(window).scrollTop() < 49) {
-              $(".header-logo").css({
-                "position": "absolute",
-                "top": "44px"
-              });
-            } else if($(window).scrollTop() >= 49 && $(window).scrollTop() <= 112) {
-              $(".header-logo").css({
-                "position": "fixed",
-                "top": "0"
-              });
-            } else if($(window).scrollTop() > 112) {
-              $(".header-logo").css({
-                "position": "absolute",
-                "top": "108px"
-              });
-            }
-          }
-
-          that._selectMenu('map');
-
+            that._selectMenu('map');
+          });
         });
-      }});
-
-
+      });
     },
 
     _updateHash: function() {
@@ -388,7 +323,7 @@ $(function() {
         window.router.navigate(hash, { trigger: true, replace: true });
       } else {
         hash = 'map/' + zoom + '/' + lat + '/' + lng + '/' + config.ISO;
-        window.router.navigate(hash, { trigger: true } );
+        window.router.navigate(hash, { trigger: true });
       }
     }
   });

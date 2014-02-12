@@ -1,4 +1,3 @@
-@import 'compass/css3/transition';
 @import 'compass/css3/box-shadow';
 @import 'compass/css3/border-radius';
 @import 'compass/css3/opacity';
@@ -7,9 +6,8 @@
 @import 'compass/css3/text-shadow';
 
 @import 'fonts';
-
-@import "country-icons/*.png";
-
+@import 'sprites';
+@import 'helpers';
 
 .countries {
   &.index .content {
@@ -22,7 +20,7 @@
     }
 
     .section {
-      overflow: hidden;
+      @extend .clearfix;
       border-bottom: 1px solid #ddd;
       background-color: #F5F5F5;
       background-repeat: no-repeat;
@@ -120,7 +118,6 @@
     padding: 20px;
     border: 1px solid #E5E5E5;
     background: #fff;
-    @include transition(none);
 
     &:hover {
       z-index: 1000;
@@ -650,7 +647,7 @@ section.country_people {
     }
 
     .section-title {
-      overflow: hidden;
+      @extend .clearfix;
       margin-bottom: 10px;
 
       div,
@@ -735,7 +732,6 @@ section.country_laws {
 }
 
 section.country_climate {
-  overflow: hidden;
   padding: 0;
 
   .inner {
@@ -790,7 +786,6 @@ section.country_conventions {
   .section-subtitle { margin-bottom: 20px; }
 
   ul {
-    overflow: hidden;
     margin-right: -15px;
   }
 
@@ -1021,7 +1016,6 @@ section.country_conventions {
 }
 
 .overview_graph__tabs {
-  overflow: hidden;
 
   li {
     display: table;
@@ -1075,7 +1069,6 @@ section.country_conventions {
   text-align: center;
   text-transform: uppercase;
   color: rgba(#fff, .75);
-  @include transition(none);
 
   span {
     display: block;
@@ -1107,7 +1100,6 @@ section.country_conventions {
 .overview_graph__axis,
 .countries_list__header {
   position: relative;
-  overflow: hidden;
   height: 28px;
   border-bottom: 1px solid #CCC;
   line-height: 28px;
@@ -1152,7 +1144,6 @@ section.country_conventions {
 }
 
 .countries_list ul li {
-  overflow: hidden;
   border-bottom: 1px solid #ccc;
   padding: 18px 0;
 

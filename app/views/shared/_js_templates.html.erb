@@ -1,4 +1,29 @@
 <% content_for :js do %>
+  <!-- Circle -->
+  <script type='text/javascript'>
+    var circleSummary = [
+      { icon: 'area', count: '19.27', title: 'Million hectares of tree cover loss in 2012' },
+      { icon: 'area', count: '211.47', title: 'Million hectares of tree cover loss from 2000 to 2012' },
+      { icon: 'area', count: '80.62', title: 'Million hectares of tree cover gain from 2000 to 2012' },
+      { icon: 'flag', count: '16,261', title: 'FORMA alerts in December 2013' }
+    ];
+  </script>
+  <!-- TODO: api queries -->
+
+  <script id='circle-template' type='text/x-underscore-template'>
+    <div class='circle'>
+      <div class='icon {{icon}}'>
+        <i></i>
+      </div>
+      <div class='circle-inner'>
+        <div class='counter'>{{count}}</div>
+        <div class='title'>{{title}}</div>
+        <div class='background'></div>
+        <div class='explore'>Explore the map</div>
+      </div>
+    </div>
+  </script>
+
   <!-- Source window -->
   <script id='window-template' type='text/x-underscore-template'>
     <a href='#' class='close'></a>
@@ -113,7 +138,7 @@
   <script id='legend-item-template' type='text/x-underscore-template'>
     <li id='{{cat_id}}' class='{{ category }}'>
       <i style='background-color:{{title_color}};'></i>
-      {{title}} <a href='#' data-source='{{slug}}' class="source{{ slug == 'nothing' ? ' hidden' : '' }}"></a>
+      {{title}} <a href='#' data-source='{{slug}}' class='source{{ slug == 'nothing' ? ' hidden' : '' }}'></a>
 
       {{#legend}}
       <ul class='legend_info {{legend_class}}'>
@@ -174,7 +199,7 @@
     <ul class='legend_category {{category}} double'>
       <li class='{{category}}'><strong style='color:{{category_color}};'>{{category_title}}</strong></li>
       <li id='{{cat_id}}' class='{{category}}'>
-        <i style="background-color:{{category_color}};"></i>
+        <i style='background-color:{{category_color}};'></i>
         <div>{{title}} <a href='#' data-source='{{slug}}' class='source {{category}}'></a></div>
       </li>
 
@@ -193,51 +218,18 @@
     </ul>
   </script>
 
-  <!-- Layer selector -->
-  <script id='layer_selector-template' type='text/x-underscore-template'>
-    <a href='#' class='toggle'></a>
-    <ul class='selected_layer'></ul>
-    <ul class='layers'></ul>
-  </script>
-
-  <script id='layer-template' type='text/x-underscore-template'>
-    <li id='{{name}}' class='{{ name }}'>
-      <a href='#'><i></i>{{title}}</a>
-      <a href='#' data-source='{{ name }}' class='source'></a>
-    </li>
-  </script>
-
-  <script id='landsat_layer-template' type='text/x-underscore-template'>
-    <li id='landsat' class='landsat'>
-      <a href='#'><i></i>{{title}}</a>
-      <a href='#' data-source='landsat' class='source'></a>
-    </li>
-  </script>
-
-  <script id='landsat_selector-template' type='text/x-underscore-template'>
-    <ul class='landsat_layers'><div class='tip'></div></ul>
-  </script>
-
-
-  <script type='text/javascript'>
-    var circleSummary = [
-      { icon: 'area', count: '19.27', title: 'Million hectares of tree cover loss in 2012' },
-      { icon: 'area', count: '211.47', title: 'Million hectares of tree cover loss from 2000 to 2012' },
-      { icon: 'area', count: '80.62', title: 'Million hectares of tree cover gain from 2000 to 2012' },
-      { icon: 'flag', count: '16,261', title: 'FORMA alerts in December 2013' }
-    ];
-  </script>
-
+  <!-- Timeline -->
   <script id='timeline_loss-template' type='text/x-underscore-template'>
-    <div class='coordinates'></div>
+    <div class='timeline_coordinates'></div>
     <div class='timeline_legend'><p>Loss</p></div>
     <div class='timeline-inner'>
       <div class='action'>
         <a class='play' href='#'></a>
         <a class='pause' href='#'></a>
       </div>
+
       <div class='time'>
-        <div class='line'><div class='tipsy'><span>Month</span><div class='arrow'></div></div></div>
+        <div class='line'><div class='tipsy'><span>Year</span><div class='arrow'></div></div></div>
 
         <div class='trail'>
           <div class='handle left'>
@@ -257,19 +249,32 @@
 
         <ul class='years'></ul>
         <div class='range'></div>
-        <ul class='visible_months'></ul>
+        <ul class='visible_years'></ul>
       </div>
     </div>
   </script>
 
-  <script id='timeline_new-template' type='text/x-underscore-template'>
-    <div class='coordinates'></div>
+  <script id='timeline_modis-template' type='text/x-underscore-template'>
+    <div class='timeline_coordinates'></div>
+    <div class='timeline_legend'><p>QUICC alerts</p></div>
+    <div class='timeline-inner'>
+      <div class='time'>
+        <ul class='quarters'></ul>
+        <div class='line'><div class='tipsy'><span>Quarter</span><div class='arrow'></div></div></div>
+        <ul class='visible_quarters'></ul>
+      </div>
+    </div>
+  </script>
+
+  <script id='timeline_forma-template' type='text/x-underscore-template'>
+    <div class='timeline_coordinates'></div>
     <div class='timeline_legend'><p>FORMA alerts</p></div>
     <div class='timeline-inner'>
       <div class='action'>
         <a class='play' href='#'></a>
         <a class='pause' href='#'></a>
       </div>
+
       <div class='time'>
         <div class='line'><div class='tipsy'><span>Month</span><div class='arrow'></div></div></div>
 
@@ -297,7 +302,7 @@
   </script>
 
   <script id='timeline_imazon-template' type='text/x-underscore-template'>
-    <div class='coordinates'></div>
+    <div class='timeline_coordinates'></div>
     <div class='timeline_legend'><p>Imazon SAD alerts</p></div>
     <div class='timeline-inner'>
       <div class='time'>
@@ -326,79 +331,53 @@
     </div>
   </script>
 
-  <script id='timeline_modis-template' type='text/x-underscore-template'>
-    <div class='coordinates'></div>
-    <div class='timeline_legend'><p>QUICC alerts</p></div>
-    <div class='timeline-inner'>
-      <div class='time'>
-        <ul class='quarters'></ul>
-        <div class='line'><div class='tipsy'><span>APR - JUN 2013</span><div class='arrow'></div></div></div>
-        <ul class='visible_quarters'></ul>
-      </div>
-    </div>
+  <!-- Layer selector -->
+  <script id='layer_selector-template' type='text/x-underscore-template'>
+    <a href='#' class='toggle'></a>
+    <ul class='selected_layer'></ul>
+    <ul class='layers'></ul>
   </script>
 
-  <script id='wall-template' type='text/x-underscore-template'>
-    <div class='content'>
-
-      <h1 class='title'>{{ title }}</h1>
-
-      <div class='form'>
-
-        <p class='help'>{{ help }}</p>
-
-        <div class='input-field huge'>
-          <input class='field' type='{{ input_type }}' name='area[email]'>
-          <span class='holder'>{{ placeholder }}</span>
-          <div class='icon error'></div>
-          <div class='error_input_label'></div>
-        </div>
-
-        <a href='#' class='btn green darker_glow send'>
-          <span>{{ button_title }}</span>
-        </a>
-
-      </div>
-    </div>
+  <script id='layer-template' type='text/x-underscore-template'>
+    <li id='{{name}}' class='{{ name }}'>
+      <a href='#'><i></i>{{title}}</a>
+      <a href='#' data-source='{{ name }}' class='source'></a>
+    </li>
   </script>
 
-  <script id='window-template' type='text/x-underscore-template'>
-    <a href='#' class='close'></a>
-    <div class='content'></div>
+  <script id='landsat_layer-template' type='text/x-underscore-template'>
+    <li id='landsat' class='landsat'>
+      <a href='#'><i></i>{{title}}</a>
+      <a href='#' data-source='landsat' class='source'></a>
+    </li>
   </script>
 
-  <script id='circle-template' type='text/x-underscore-template'>
-    <div class='circle'>
-      <div class='icon {{icon}}'>
-        <i></i>
-      </div>
-      <div class='circle-inner'>
-        <div class='counter'>{{count}}</div>
-        <div class='title'>{{title}}</div>
-        <div class='background'></div>
-        <div class='explore'>Explore the map</div>
-      </div>
-    </div>
+  <script id='landsat_selector-template' type='text/x-underscore-template'>
+    <ul class='landsat_layers'><div class='tip'></div></ul>
   </script>
 
   <!-- Analysis info -->
-  <script id='analysis-info-template' type='text/x-underscore-template'>
+  <script id='analysis_info-template' type='text/x-underscore-template'>
     <a href='#' class='toggle'></a>
-    <div class='info_title'>User defined area</div>
+    <div class='info_title'>{{ title }}</div>
     <div class='content'>
-
       <div class='info'>
         <div class='titles'>
-          <strong class='title'>User defined area</strong>
+          <strong class='title'>{{ title }}</strong>
           <span class='subtitle'>{{ subtitle }}</span>
         </div>
       </div>
 
       <div class='stats'>
+        {{#spinner}}
+        <div class='spinner'></div>
+        <div class='error'>Earth Engine timed out.<br />Try smaller polygon.</div>
+        {{/spinner}}
+
+        {{^spinner}}
         {{#umd}}
         <div class='spinner'></div>
         <strong class='title'>Total selected area</strong>
-        <div class='error'>Earth Engine timed out.<br />Try smaller polygon.</div>
         <ul>
           <li class='ha'>
             <p class='count'><strong>{{ ha }}</strong> Ha</p>
@@ -438,10 +417,10 @@
           </li>
         </ul>
         {{/umd}}
+
         {{#imazon}}
         <div class='spinner'></div>
         <strong class='title'>Total selected area</strong>
-        <div class='error'>Earth Engine timed out.<br />Try smaller polygon.</div>
         <ul>
           <li class='ha'>
             <p class='count'><strong>{{ ha }}</strong> Ha</p>
@@ -483,19 +462,17 @@
                   {{ alert_count }}
                 </span>
               </strong>
-
-              <a href='#' target="_blank" class='download'>download</a>
             </p>
           </li>
           {{/degrad}}
           {{/defor}}
         </ul>
         {{/imazon}}
+
         {{^umd}}
         {{^imazon}}
         <div class='spinner'></div>
         <strong class='title'>Total selected area</strong>
-        <div class='error'>Earth Engine timed out.<br />Try smaller polygon.</div>
         <ul>
           <li class='ha'>
             <p class='count'><strong>{{ ha }}</strong> Ha</p>
@@ -510,19 +487,20 @@
                 </span>
               </strong>
 
-              <a href='#' target="_blank" class='download'>download</a>
+              {{#download}}<a href='{{download}}' target='_blank' class='download'>download</a>{{/download}}
             </p>
           </li>
         </ul>
         {{/imazon}}
         {{/umd}}
+        {{/spinner}}
 
         <div class='shadow'></div>
       </div>
 
       <div class='controls'>
         <ul class='control_buttons'>
-          <li><a class='subscribe' href='#'></a></li>
+          <li><a class='subscribe{{#subdisabled}} disabled{{/subdisabled}}' href='#'></a></li>
           <li><a class='reset' href='#'></a></li>
         </ul>
       </div>
@@ -531,7 +509,9 @@
 
   <!-- Analysis -->
   <script id='analysis-template' type='text/x-underscore-template'>
-    <div class='analysis helper_bar'>
+    <a href='#' id='analysis_control' class='analysis_control' data-tip='Analyze an area on the map'></a>
+
+    <div class='helper_bar'>
       <p>Draw in the map the area you want to analyze</p>
       <div class='options'>
         <a href='#' class='done disabled'>Done</a>
@@ -540,18 +520,14 @@
     </div>
   </script>
 
-  <!-- Analysis -->
-  <script id='analysis-dropdown-template' type='text/x-underscore-template'>
+  <script id='analysis_dropdown-template' type='text/x-underscore-template'>
     <ul>
-
       {{#urls}}
         <li><a href='{{url}}' target='_blank'>{{name}}</a></li>
       {{/urls}}
-
     </ul>
   </script>
 
-  <!-- Analysis reset -->
   <script id='analysis_reset-template' type='text/x-underscore-template'>
     <p>Are you sure you want to delete the current analysis?</p>
 
@@ -563,42 +539,30 @@
     <span class='tail'></span>
   </script>
 
-  <!-- Analysis control -->
-  <script id='analysis_control-template' type='text/x-underscore-template'>
-    <a href='#' id='analysis_control' data-tip='{{ tip }}'></a>
-  </script>
-
   <!-- Analysis subscribe -->
   <script id='analysis_subscribe-template' type='text/x-underscore-template'>
-
     <div class='content'>
-
-      <%= form_for :area, :url => ENV['GFW_API_HOST'] + '/subscribe', :html => {:method => :post, :class => 'save-area'} do |f| %>
+      <%= form_for :area, :url => "//#{ENV['GFW_API_HOST']}/subscribe", :html => { :method => :post, :class => 'save-area' } do |f| %>
         <%= f.hidden_field :the_geom %>
 
+        <a href='#' class='close'></a>
+        <h1 class='title'>{{ title }}</h1>
 
-      <a href='#' class='close'></a>
-      <h1 class='title'>{{ title }}</h1>
-      <div class='form'>
+        <div class='form'>
+          <p class='subtitle'><span>{{ subtitle }}</span></p>
 
-        <p class='subtitle'><span>{{ subtitle }}</span></p>
+          <div class='input-field huge'>
+            <input class='field' type='{{ input_type }}' name='area[email]' id='area_email' />
+            <span class='holder'>{{ placeholder }}</span>
+            <div class='icon error'></div>
+            <div class='error_input_label'></div>
+          </div>
 
-        <p class='help'>{{ help }}</p>
-
-        <div class='input-field huge'>
-          <input class='field' type='{{ input_type }}' name='area[email]' id='area_email' />
-          <span class='holder'>{{ placeholder }}</span>
-          <div class='icon error'></div>
-          <div class='error_input_label'></div>
+          <a href='#' class='btn green darker_glow send'>
+            <span>{{ button_title }}</span>
+          </a>
         </div>
-
-        <a href='#' class='btn green darker_glow send'>
-          <span>{{ button_title }}</span>
-        </a>
-
       <% end -%>
-
-      </div>
     </div>
   </script>
 
@@ -607,14 +571,5 @@
     <strong>search</strong>
     <input type='text' placeholder='...............................' />
     <button>&nbsp;</button>
-  </script>
-
-  <script id='dialog-template' type='text/x-underscore-template'>
-    <h1>{{title}}</h1>
-    <a href='#' class='close'></a>
-    <div class='buttons'>
-      <a href='#' class='btn red dark_glow accept'>{{accept}}</a>
-      <a href='#' class='btn yellow dark_glow cancel'>{{cancel}}</a>
-    </div>
   </script>
 <% end %>
