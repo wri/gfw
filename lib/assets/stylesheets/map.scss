@@ -477,7 +477,6 @@
 .tipsy { font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif; }
 
 #analysis_control {
-  display: none;
   z-index: 1000;
   @include size(38px, 38px);
   @include position(91px, false, false, 15px);

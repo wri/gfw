@@ -197,13 +197,6 @@ $(function() {
       this.$map.append(Legend.render());
       Legend.setDraggable(true);
 
-      // Analysis
-      Analysis = new gfw.ui.view.Analysis();
-      this.$map.append(Analysis.render());
-      Analysis.info.setDraggable(true);
-
-      if (config.ISO != 'ALL') Analysis.loadCountry(config.ISO);
-
       // Search box
       SearchBox = new gfw.ui.view.SearchBox({ map: map });
       this.$map.append(SearchBox.render());
@@ -214,6 +207,12 @@ $(function() {
         map.fitBounds(bounds);
       });
 
+      // Analysis
+      Analysis = new gfw.ui.view.Analysis();
+      this.$map.append(Analysis.render());
+      Analysis.info.setDraggable(true);
+
+      if (config.ISO != 'ALL') Analysis.loadCountry(config.ISO);
       Filter.init();
       Circle.init();
       Circle.show();
@@ -324,7 +323,7 @@ $(function() {
         window.router.navigate(hash, { trigger: true, replace: true });
       } else {
         hash = 'map/' + zoom + '/' + lat + '/' + lng + '/' + config.ISO;
-        window.router.navigate(hash, { trigger: true } );
+        window.router.navigate(hash, { trigger: true });
       }
     }
   });

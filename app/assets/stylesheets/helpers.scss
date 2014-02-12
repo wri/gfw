@@ -53,3 +53,11 @@
   &.disabled       { @include icons-sprite($url, $offset-y:5px); }
   &.disabled:hover { @include icons-sprite($url, $offset-y:5px); }
 }
+
+@mixin pointer-events($type: none) {
+  $type: unquote($type);
+
+  @include experimental(pointer-events, $type,
+    -moz, -webkit, not -o, not -ms, -khtml, official
+  );
+}

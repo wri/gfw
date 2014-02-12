@@ -359,17 +359,11 @@
   <!-- Analysis info -->
   <script id='analysis_info-template' type='text/x-underscore-template'>
     <a href='#' class='toggle'></a>
-    <div class='info_title'>
-      {{#title}}{{ title }}{{/title}}
-      {{^title}}User defined area{{/title}}
-    </div>
+    <div class='info_title'>{{ title }}</div>
     <div class='content'>
       <div class='info'>
         <div class='titles'>
-          <strong class='title'>
-          {{#title}}{{ title }}{{/title}}
-          {{^title}}User defined area{{/title}}
-          </strong>
+          <strong class='title'>{{ title }}</strong>
           <span class='subtitle'>{{ subtitle }}</span>
         </div>
       </div>
@@ -377,13 +371,13 @@
       <div class='stats'>
         {{#spinner}}
         <div class='spinner'></div>
+        <div class='error'>Earth Engine timed out.<br />Try smaller polygon.</div>
         {{/spinner}}
 
         {{^spinner}}
         {{#umd}}
         <div class='spinner'></div>
         <strong class='title'>Total selected area</strong>
-        <div class='error'>Earth Engine timed out.<br />Try smaller polygon.</div>
         <ul>
           <li class='ha'>
             <p class='count'><strong>{{ ha }}</strong> Ha</p>
@@ -427,7 +421,6 @@
         {{#imazon}}
         <div class='spinner'></div>
         <strong class='title'>Total selected area</strong>
-        <div class='error'>Earth Engine timed out.<br />Try smaller polygon.</div>
         <ul>
           <li class='ha'>
             <p class='count'><strong>{{ ha }}</strong> Ha</p>
@@ -469,8 +462,6 @@
                   {{ alert_count }}
                 </span>
               </strong>
-
-              <a href='#' target='_blank' class='download'>download</a>
             </p>
           </li>
           {{/degrad}}
@@ -482,7 +473,6 @@
         {{^imazon}}
         <div class='spinner'></div>
         <strong class='title'>Total selected area</strong>
-        <div class='error'>Earth Engine timed out.<br />Try smaller polygon.</div>
         <ul>
           <li class='ha'>
             <p class='count'><strong>{{ ha }}</strong> Ha</p>
@@ -497,7 +487,7 @@
                 </span>
               </strong>
 
-              <a href='#' target='_blank' class='download'>download</a>
+              {{#download}}<a href='{{download}}' target='_blank' class='download'>download</a>{{/download}}
             </p>
           </li>
         </ul>
@@ -519,9 +509,9 @@
 
   <!-- Analysis -->
   <script id='analysis-template' type='text/x-underscore-template'>
-    <a href='#' id='analysis_control' data-tip='{{ tip }}'></a>
+    <a href='#' id='analysis_control' class='analysis_control' data-tip='Analyze an area on the map'></a>
 
-    <div class='analysis helper_bar'>
+    <div class='helper_bar'>
       <p>Draw in the map the area you want to analyze</p>
       <div class='options'>
         <a href='#' class='done disabled'>Done</a>
@@ -560,7 +550,6 @@
 
         <div class='form'>
           <p class='subtitle'><span>{{ subtitle }}</span></p>
-          <p class='help'>{{ help }}</p>
 
           <div class='input-field huge'>
             <input class='field' type='{{ input_type }}' name='area[email]' id='area_email' />
