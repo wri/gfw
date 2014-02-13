@@ -102,6 +102,19 @@
     @extend .sans-serif;
     color: rgba(#fff, .7);
   }
+
+  .carrousel {
+    height: 484px;
+    margin-bottom: 0;
+
+    .previous {
+      left: -84px;
+    }
+
+    .next {
+      right: -84px;
+    }
+  }
 }
 
 .header_block__title {
@@ -158,7 +171,7 @@
   }
 }
 
-.header_block__link {
+.header_block__tab {
   float: left;
   border-left: 1px solid rgba(#fff, .15);
 
