@@ -1,5 +1,12 @@
 <% content_for :js do %>
   <script>
+    var player1, player2;
+
+    function onYouTubeIframeAPIReady() {
+      player1 = new YT.Player('player1');
+      player2 = new YT.Player('player2');
+    }
+
     $(function() {
       setTimeout(function() {
         if (location.hash) {
@@ -26,6 +33,8 @@
       });
 
       cdb.init(function() {
+        window.carrousel = new gfw.ui.view.Carrousel({ el: $('.carrousel'), video: true });
+
         window.static_about = new gfw.ui.view.Static();
 
         window.router = new StaticRouter();
@@ -43,16 +52,22 @@
 
       <p class='header_block__description'>GFW is supported by a diverse partnership of organizations that contribute data, technical capabilities, funding, and expertise. The partnership is convened by the World Resources Institute. See a full list of partners below.</p>
 
-      <iframe width='860' height='484' src='//www.youtube.com/embed/5HH1qaBAQRA' frameborder='0' allowfullscreen></iframe>
+      <div class='carrousel'>
+        <ul>
+          <li class='slide site_overview'><iframe id='player1' width='860' height='484' src='//www.youtube.com/embed/nbnJtOSeBC4?enablejsapi=1' frameborder='0' allowfullscreen></iframe></li>
+
+          <li class='slide map_tutorial'><iframe id='player2' width='860' height='484' src='//www.youtube.com/embed/nbnJtOSeBC4?enablejsapi=1' frameborder='0' allowfullscreen></iframe></li>
+        </ul>
+      </div>
     </div>
 
     <ul class='header_block__footer'>
-      <li class='header_block__link two'>
-        <a href='#' class='site_overview selected'>GFW site overview<i class='play'></i></a>
+      <li class='header_block__tab two'>
+        <a href='#' class='header_block__link selected' data-tab='site_overview'>GFW site overview<i class='play'></i></a>
       </li>
 
-      <li class='header_block__link two last'>
-        <a href='#' class='map_tutorial'>GFW map tutorial<i class='play'></i></a>
+      <li class='header_block__tab two last'>
+        <a href='#' class='header_block__link' data-tab='map_tutorial'>GFW map tutorial<i class='play'></i></a>
       </li>
     </ul>
   </div>

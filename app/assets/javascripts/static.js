@@ -1,3 +1,5 @@
+//= require gfw/ui/carrousel
+
 gfw.ui.model.Static = cdb.core.Model.extend({
   defaults: {
     expanded: null, // accordion
