@@ -978,7 +978,8 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
   _sendData: function() {
     var that      = this,
         $form     = this.$el.find('form'),
-        $the_geom = $form.find('#area_the_geom');
+        $the_geom = $form.find('#area_the_geom'),
+        form_data = null;
 
     if (Analysis.selectedShapes && Analysis.selectedShapes.length > 0) {
       s = Analysis.selectedShapes;
@@ -1006,7 +1007,11 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
       }));
     }
 
-    var form_data = '{"topic": "updates/forma", "geom": '+$the_geom.val()+', "email": "'+$form.find("#area_email").val()+'"}';
+    if (config.ISO && config.ISO !== 'ALL') {
+      form_data = '{"topic": "updates/forma", "iso": '+'"'+config.ISO+'"'+', "email": "'+$form.find("#area_email").val()+'"}';
+    } else {
+      form_data = '{"topic": "updates/forma", "geom": '+$the_geom.val()+', "email": "'+$form.find("#area_email").val()+'"}';
+    }
 
     $.ajax({
         type: 'POST',
