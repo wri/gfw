@@ -3,10 +3,6 @@ class MediaController < ApplicationController
     uploader = MediaUploader.new
     uploader.store!(params[:media][:image])
 
-    @media = uploader.url
-
-    puts "*********** #{@media} ***********"
-
-    render :nothing => true
+    render nothing: true
   end
 end
