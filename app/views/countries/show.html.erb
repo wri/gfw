@@ -235,7 +235,7 @@
 <section class='section country_download_links'>
   <div class='inner'>
     <ul>
-      <li><a href='<%= map_coords %>'>Subscribe to alerts for this country</a></li>
+      <li><a href='<%= "#{map_coords}#subscribe" %>'>Subscribe to alerts for this country</a></li>
       <% if @country['dataset_link'] %>
         <li><%= link_to 'Download relevant datasets', sources_path %></li>
       <% else %>
