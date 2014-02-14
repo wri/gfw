@@ -154,13 +154,15 @@ $(function() {
         map.mapTypes.set('terrain_style', styledMap);
         map.setMapTypeId('terrain_style');
 
+        var subscribe = this.subscribe = window.location.hash.replace('#','') === 'subscribe';
+
+        if (subscribe) config.BASELAYER = 'forma';
+
         google.maps.event.addListenerOnce(map, 'idle', function() {
           that._loadOtherStuff();
 
           GFW(function(env) {
             GFW.app = new env.app.Instance(map, {
-              user       : 'wri-01',
-              layerTable : 'layerinfo_dev_copy',
               logging    : false
             });
 
@@ -214,7 +216,7 @@ $(function() {
       });
 
       // Analysis
-      Analysis = new gfw.ui.view.Analysis();
+      Analysis = new gfw.ui.view.Analysis({ subscribe: this.subscribe });
       this.$map.append(Analysis.render());
       Analysis.info.setDraggable(true);
 
