@@ -21,3 +21,6 @@
 .ruby-version
 .rvmrc
 .env
+
+# Ingore Sublime project files:
+*.sublime-*
