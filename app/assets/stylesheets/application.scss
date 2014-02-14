@@ -206,10 +206,10 @@ a.accept_btn {
     padding: 10px 0;
     font-size: 14px;
     text-align: center;
+  }
 
-    &.hidden {
-      display: none;
-    }
+  .hidden {
+    display: none;
   }
 }
 
@@ -352,7 +352,7 @@ a.accept_btn {
     border-bottom-color: #AAC600;
   }
 
-  .read_more.hidden {
+  .hidden {
     display: block;
   }
 }
