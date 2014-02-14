@@ -1,34 +1,12 @@
 class MediaController < ApplicationController
-  before_filter :load_media, :only => [:show, :destroy]
+  def upload
+    uploader = MediaUploader.new
+    uploader.store!(params[:media][:image])
 
-  def create
-    image_uploader = ImageUploader.new
-    image_uploader.store!(params[:media][:image])
+    @media = uploader.url
 
-    @media = Media.create(:image_url => image_uploader.url,
-                          :big_url => image_uploader.big.url,
-                          :thumbnail_url => image_uploader.thumb.url)
-
-    redirect_to @media
-  end
-
-  def show
-    respond_to do |format|
-      format.json { render :json => @media }
-      format.html { render :json => @media }
-    end
-  end
-
-  def destroy
-    @media.destroy
+    puts "*********** #{@media} ***********"
 
     render :nothing => true
   end
-
-  private
-
-    def load_media
-      @media = Media.where(:cartodb_id => params[:id])
-    end
-
 end

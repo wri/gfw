@@ -1,6 +1,5 @@
 Gfw::Application.routes.draw do
   resources :stories
-  resources :media
 
   # static
   get 'sources' => 'static#data'
@@ -20,6 +19,9 @@ Gfw::Application.routes.draw do
   get 'countries' => 'countries#index'
   get 'country/:id' => 'countries#show', :as => 'country'
   get 'countries/overview' => 'countries#overview'
+
+  # media
+  post 'upload' => 'media#upload'
 
   root 'home#index'
 end
