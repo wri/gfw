@@ -23,7 +23,9 @@
     <div class='inner'>
       <a href='/' class='header-logo'>Global Forest Watch</a>
 
-      <nav class='navbar'></nav>
+      <nav class='navbar'><ul>
+        <li><%= link_to (content_tag(:span, 'Back to the home page')), root_path unless action_name == 'old' || action_name == 'accept_terms' %></li>
+      </ul></nav>
     </div>
 
     <div class='header_separator'></div>
@@ -45,9 +47,13 @@
 
   <%= render 'shared/footer' %>
 
+  <div class="backdrop"></div>
+
   <script type='text/javascript' src='http://maps.googleapis.com/maps/api/js?sensor=false' ></script>
+  <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
   <%= javascript_include_tag 'application' %>
   <%= javascript_include_tag 'old' %>
+
   <%= yield :js %>
   <%= render 'shared/js_footer' %>
 </body>

@@ -422,6 +422,7 @@ a.accept_btn {
   position: relative;
   z-index: 1050;
   @include logos-sprite(logo);
+  margin-left: -10px;
   width: 108px;
   height: 100px;
   text-indent: -99999px;
@@ -529,7 +530,6 @@ a.accept_btn {
 
     .section-footer {
       border-top: 1px solid #333;
-      padding-top: 40px;
     }
   }
 
@@ -636,6 +636,7 @@ a.accept_btn {
 }
 
 .section-footer {
+  padding-top: 40px;
   border-top: 1px solid #ccc;
 
   p + p {
@@ -706,6 +707,7 @@ a.accept_btn {
   @extend .sans-serif;
 
   p,
+  address,
   .footer-logo {
     margin-bottom: 20px;
   }
@@ -713,12 +715,6 @@ a.accept_btn {
   address {
     line-height: 1.1;
   }
-}
-
-.system-status {
-  float: left;
-  width: 470px;
-  margin-top: -200px;
 }
 
 .footer-logo {

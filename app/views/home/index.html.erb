@@ -3,10 +3,7 @@
 <% end %>
 
 <% content_for :inner_header do %>
-  <div class="for_business">
-    <p>Almost every business depends on forests in some way.</p>
-    <p><%= link_to "Check out GFW for business", "#{howto_path}#for_business" %></p>
-  </div>
+  <%= link_to content_tag(:span, "Check out GFW for business"), "#{howto_path}#for_business", class: 'for_business' %>
 <% end %>
 
 <% content_for :filters do %>

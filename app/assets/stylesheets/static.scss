@@ -42,8 +42,14 @@
     }
   }
 
-  &.accept_terms .header {
-    height: 218px;
+  &.accept_terms {
+    .header {
+      height: 218px;
+    }
+
+    .sources {
+      display: none;
+    }
   }
 
   &.terms,
@@ -567,11 +573,14 @@
   font-family: "fira_sans_otlight";
   text-align: center;
   text-transform: uppercase;
-  color: #ccc;
+  color: #999;
 }
 
 .scroll-icon {
+  position: relative;
+  top: -1px;
   @include inline-block();
+  margin-right: 8px;
   width: 14px;
   height: 16px;
   @include icons-sprite(scroll_icon);
@@ -607,6 +616,7 @@
     margin-bottom: 20px;
 
     &.last {
+      margin-bottom: 0;
       text-align: center;
     }
   }
