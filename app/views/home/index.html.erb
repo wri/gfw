@@ -68,7 +68,7 @@
 <section class='section home_stories'>
   <div class='inner'>
     <h2 class='section-title'><%= t('.home_stories.featured.title') %></h2>
-    <p class='section-desc'><%= t('.home_stories.featured.text_html', :featured => link_to(t('.home_stories.featured.featured'), stories_path), :explore => link_to(t('.home_stories.featured.explore'), map_path, :class => 'map ajax')) %></p>
+    <p class='section-desc'><%= t('.home_stories.featured.text_html', :featured => link_to(t('.home_stories.featured.featured'), stories_path), :explore => link_to(t('.home_stories.featured.explore'), "#{map_path}/3/15.00/27.00/ALL/580", :class => 'map ajax all')) %></p>
 
     <ul class='columns'>
     <% @featured.each do |story| %>

@@ -141,6 +141,12 @@ $(function() {
     _onClickMap: function(e) {
       e.preventDefault();
 
+      if($(e.target).hasClass('all')) {
+        if (!_.include(config.MAPOPTIONS.layers.split(','), '581')) {
+          $('.user_stories .checkbox').click();
+        }
+      }
+
       this._updateHash();
     },
 
@@ -154,9 +160,9 @@ $(function() {
         map.mapTypes.set('terrain_style', styledMap);
         map.setMapTypeId('terrain_style');
 
-        var subscribe = this.subscribe = window.location.hash.replace('#','') === 'subscribe';
+        this.subscribe = window.location.hash.replace('#','') === 'subscribe';
 
-        if (subscribe) config.BASELAYER = 'forma';
+        if (this.subscribe) config.BASELAYER = 'forma';
 
         google.maps.event.addListenerOnce(map, 'idle', function() {
           that._loadOtherStuff();
