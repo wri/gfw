@@ -34,6 +34,8 @@
 }
 
 .for_business {
+  position: relative;
+  z-index: 1010;
   display: block;
   float: right;
   margin-top: -10px;

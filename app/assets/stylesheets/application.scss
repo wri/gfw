@@ -472,6 +472,8 @@ a.accept_btn {
 }
 
 .header-title {
+  position: relative;
+  z-index: 1010;
   font-size: 37px;
   line-height: 1.1;
   @extend .serif;
