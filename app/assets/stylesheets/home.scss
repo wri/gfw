@@ -868,6 +868,8 @@
 // }
 
 .map_coordinates {
+  color:#333;
+  text-shadow: 0px 0px 3px #fff;
   position: absolute;
   z-index: 10;
   bottom: 20px; right: 10px;
@@ -875,8 +877,6 @@
   font-size: 11px;
   @extend .sans-serif;
   text-align: right;
-  color: #fff;
-  @include text-shadow(0px 0px 3px #222);
   @include user-select(text);
 }
 
