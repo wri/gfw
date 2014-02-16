@@ -623,6 +623,8 @@ GFW.modules.app = function(gfw) {
     },
 
     _onMainLayerClick: function(ev, latlng, pos, data) {
+      if (Analysis.model.get('analyzing')) return;
+
       //we needed the cartodb_id and table name
       var pair = data.cartodb_id.split(':');
 
