@@ -147,6 +147,10 @@ $(function() {
         }
       }
 
+      if($(e.target).hasClass('analyzing')) {
+        Analysis.startAnalyzing();
+      }
+
       this._updateHash();
     },
 
@@ -297,13 +301,17 @@ $(function() {
       showMap = true;
 
       Circle.hide();
-      LayerSelector.show();
-      Legend.show();
-      SearchBox.show();
-      Timeline.show();
-      Analysis.show();
+
+      if (!Analysis.model.get('analyzing')) {
+        LayerSelector.show();
+        Legend.show();
+        SearchBox.show();
+        Timeline.show();
+      }
+
       $('#zoom_controls').show();
       $('#viewfinder').show();
+      Analysis.show();
 
       $('.for_business').fadeOut(250);
 
