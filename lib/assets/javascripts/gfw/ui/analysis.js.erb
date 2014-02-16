@@ -266,8 +266,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     var ha = 0;
 
     if (the_geom.features[0].properties['area']) { // from country
-      ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']) * 10) / 10, true);
-    } else {
+      ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']/10000) * 10) / 10, true);
+    } else { // from protected areas
       ha = this._calcAreaPolygon(the_geom);
     }
 
@@ -526,7 +526,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     c0 = polygon.coordinates[0][0];
     polygon.coordinates[0].push(c0);
 
-    area = this._calcAreaPolygon(polygon);
+    area = formatNumber(Math.ceil((google.maps.geometry.spherical.computeArea(this.drawingManager.path)/10000) * 10) / 10, true)
 
     this.model.set('area', JSON.stringify(polygon));
     this.info.model.set('ha', area);
@@ -555,7 +555,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     area /= 2;
 
-    return formatNumber(Math.ceil((area*10000) * 10) / 10, true);
+    return formatNumber(Math.ceil((area*1000000) * 10) / 10, true);
   },
 
   _toggle: function() {
