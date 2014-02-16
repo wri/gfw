@@ -92,6 +92,10 @@ strong {
   &.darker_glow:hover {
     @include box-shadow(0 0 6px 1px rgba(#000, .8));
   }
+
+  &.disabled {
+    @include opacity(.5);
+  }
 }
 
 .accept_btn {

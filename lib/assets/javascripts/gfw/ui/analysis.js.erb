@@ -770,7 +770,6 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
     this.$dataset     = this.$el.find(".alert .title");
     this.$shadow      = this.$el.find(".shadow");
     this.$alert_count = this.$el.find("#alerts-count");
-    this.$subtitle    = this.$el.find(".subtitle");
 
     if (this.model.get('download')) {
       this.downloadDropdown = new gfw.ui.view.DownloadDropdown({
@@ -855,7 +854,7 @@ gfw.ui.model.AnalysisSubscribe = Backbone.Model.extend({
 
   defaults: {
     title: "Subscribe to alerts",
-    subtitle: "You will receive a monthly email summarizing forest change in this area",
+    help: "You will receive a monthly email summarizing forest change in this area",
     hidden: false,
     placeholder: "Enter your email",
     mode: "subscribe",
@@ -949,7 +948,11 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
   _send: function(e) {
     var that = this;
 
-    e.preventDefault();
+    e && e.preventDefault();
+
+    if(this.$('.btn').hasClass('disabled')) return;
+
+    this.$('.btn').addClass('disabled');
 
     var mode = this.model.get("mode");
     var error = false;
@@ -966,6 +969,8 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
         this.$el.find('.input-field').find('.error_input_label').fadeIn(250);
 
         error = true;
+
+        this.$('.btn').removeClass('disabled');
       }
 
       if (!error) {
@@ -1031,11 +1036,12 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
 
   _setMode: function(mode) {
     this._clearErrors();
+    this.$('.btn').removeClass('disabled');
 
     if (mode === 'subscribe') {
       this.model.set({
         title: this.model.defaults.title,
-        help: this.model.defaults.subtitle,
+        help: this.model.defaults.help,
         button_title: this.model.defaults.button_title,
         placeholder: this.model.defaults.placeholder,
         input_type: 'email',
@@ -1060,11 +1066,9 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
     var mode = this.model.get('mode');
 
     if (mode === 'subscribe') {
-      this.$('.subtitle').fadeOut(250);;
-      this.$('.help').fadeIn(250);
+      this.$('.help').fadeOut(250);
       this.$('.input-field').show();
     } else if (mode === 'thanks') {
-      this.$('.subtitle').fadeOut(250);;
       this.$('.help').fadeIn(250);
       this.$('.input-field').hide();
     }
