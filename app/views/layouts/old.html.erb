@@ -11,6 +11,8 @@
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <meta name='robots' content='noindex'>
 
+  <meta name="google-translate-customization" content="a45cf8584243ba0e-f48b15cdb6a3ab9b-gd8c738d3a7ff42de-11"></meta>
+
   <%= favicon_link_tag 'favicon.ico' %>
 
   <%= stylesheet_link_tag 'application', :media => 'all' %>
@@ -24,7 +26,11 @@
       <a href='/' class='header-logo'>Global Forest Watch</a>
 
       <nav class='navbar'><ul>
-        <li><%= link_to (content_tag(:span, 'Back to the home page')), root_path unless action_name == 'old' || action_name == 'accept_terms' %></li>
+        <% if action_name == 'old' || action_name == 'accept_terms' %>
+          <div id="google_translate_element"></div>
+        <% else %>
+          <li><%= link_to (content_tag(:span, 'Back to the home page')), root_path %></li>
+        <% end %>
       </ul></nav>
     </div>
 
