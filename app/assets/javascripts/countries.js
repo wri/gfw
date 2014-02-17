@@ -2113,11 +2113,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .range([h, 0])
           .domain([0, d3.max(data, function(d) { return d.gain; })]);
 
-        var x_log_scale = d3.scale.log()
+        var x_log_scale = d3.scale.linear()
           .range([m, w-m])
           .domain([1, d3.max(data, function(d) { return d.loss; })]);
 
-        var y_log_scale = d3.scale.log()
+        var y_log_scale = d3.scale.linear()
           .range([h-log_m, m])
           .domain([1, d3.max(data, function(d) { return d.gain; })]);
 
