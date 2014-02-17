@@ -183,8 +183,8 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     this._positionScroll();
 
     $.scrollIt({
-      upKey: 38,
-      downKey: 40,
+      upKey: null,
+      downKey: null,
       easing: 'linear',
       scrollTime: 600,
       activeClass: 'active',
