@@ -171,7 +171,7 @@
 
             <div class='colors'>
               {{#colors}}
-              <div class='quartile' style='background-color:{{color}}'>{{title}}</div>
+              <div class="quartile wide" style="background: {{color_min}};background: -moz-linear-gradient(left, {{color_min}} 0%, {{color_max}} 100%);background: -webkit-gradient(linear, left top, right top, color-stop(0%,{{color_min}}), color-stop(100%,{{color_max}}));background: -webkit-linear-gradient(left, {{color_min}} 0%,{{color_max}} 100%);background: -o-linear-gradient(left, {{color_min}} 0%,{{color_max}} 100%);background: -ms-linear-gradient(left, {{color_min}} 0%,{{color_max}} 100%)background: linear-gradient(to right, {{color_min}} 0%,{{color_max}} 100%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{{color_min}}', endColorstr='{{color_max}}',GradientType=1 );background-image: -ms-linear-gradient(left, {{color_min}} 0%,{{color_max}} 100%)"></div>
               {{/colors}}
             </div>
           </div>
