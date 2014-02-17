@@ -1073,7 +1073,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               ORDER BY ratio_loss DESC ';
 
       if(e) {
-        sql += 'OFFSET 10';
+        sql += ['OFFSET 10',
+                'LIMIT 40'].join('\n');
       } else {
         sql += 'LIMIT 10';
       }
