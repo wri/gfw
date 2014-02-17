@@ -8,8 +8,10 @@
 @import 'compass/css3/user-interface';
 
 @import 'fonts';
-@import 'sprites';
 @import 'helpers';
+
+@import 'icons/*.png';
+@import 'logos/*.png';
 
 
 /* =Globals
@@ -26,10 +28,10 @@ body {
 
 a {
   text-decoration: none;
-  color: #A1BA42;
+  color: $green;
 
   &:hover {
-    color: darken(#A1BA42, 5%);
+    color: darken($green, 5%);
   }
 }
 
@@ -47,28 +49,17 @@ strong {
   padding: 0 10px;
 }
 
-.share_buttons {
-  float: right;
-}
-
-.dropcap {
-  float: left;
-  font-size: 400%;
-  @extend .serif;
-  margin: 20px 10px 16px 0;
-}
-
 
 /* =Buttons
 ----------------------------------------------- */
 
 .btn {
-  display: inline-block;
+  @include inline-block();
   border: 1px solid #839C26;
   padding: 14px 34px;
   color: #fff;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: bold;
   @extend .sans-serif;
   text-decoration: none;
   text-transform: uppercase;
@@ -82,7 +73,7 @@ strong {
   }
 
   &:hover {
-   color: #fff;
+    color: #fff;
   }
 
   &.dark_glow:hover {
@@ -112,16 +103,16 @@ a.accept_btn {
 /* =Sources
 ----------------------------------------------- */
 
+#sources {
+  display: none;
+}
+
 .sources_row {
   display: table;
   width: 100%;
 
   &.even {
     background: #F2F2F3;
-  }
-
-  a {
-    color: #98BD17;
   }
 
   dt {
@@ -166,15 +157,6 @@ a.accept_btn {
 
   p {
     margin-bottom: 10px;
-  }
-}
-
-.source_body,
-.source_coverage {
-  @extend .single-source-item;
-
-  p {
-    margin-bottom: 10px;
 
     &:last-child {
       margin-bottom: 0;
@@ -199,6 +181,11 @@ a.accept_btn {
       }
     }
   }
+}
+
+.source_body,
+.source_coverage {
+  @extend .single-source-item;
 
   .bullets li {
     margin: 0 0 10px 20px;
@@ -352,8 +339,8 @@ a.accept_btn {
   }
 
   .source_category_title {
-    color: #AAC600;
-    border-bottom-color: #AAC600;
+    color: $green;
+    border-bottom-color: $green;
   }
 
   .hidden {
@@ -450,9 +437,9 @@ a.accept_btn {
       display: block;
       height: 26px;
       padding: 0 10px;
+      font-weight: bold;
       font-size: 12px;
       line-height: 27px;
-      font-weight: bold;
       text-transform: uppercase;
       color: #333;
       @include border-radius(3px);
@@ -460,16 +447,16 @@ a.accept_btn {
       span { background:none; }
 
       &.selected {
-        background: #a1ba42;
+        background: $green;
         color: #fff;
 
         &:hover {
-          background: #a1ba42;
+          background: $green;
         }
       }
 
       &:hover {
-        background: rgba(#a1ba42, .5);
+        background: rgba($green, .5);
       }
     }
   }
@@ -493,7 +480,7 @@ a.accept_btn {
   }
 
   span {
-    color: #A1BA42;
+    color: $green;
   }
 }
 
@@ -625,6 +612,7 @@ a.accept_btn {
       strong {
         display: block;
         margin: 0 30px 30px;
+        font-weight: 500;
         font-size: 21px;
         @extend .serif;
         color: #fff;
@@ -635,7 +623,7 @@ a.accept_btn {
         font-weight: bold;
         font-size: 12px;
         text-transform: uppercase;
-        color: #A1BA42;
+        color: $green;
       }
     }
   }
@@ -694,6 +682,7 @@ a.accept_btn {
 }
 
 .share_buttons {
+  float: right;
   height: 27px;
   padding: 12px 20px 6px;
   background: #fff;
@@ -749,6 +738,10 @@ a.accept_btn {
 
   &.last { margin-right: 0; }
 }
+
+
+/* =Carrousel
+----------------------------------------------- */
 
 .carrousel {
   position: relative;

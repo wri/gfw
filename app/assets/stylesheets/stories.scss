@@ -6,29 +6,38 @@
 @import 'compass/css3/columns';
 
 @import 'fonts';
-@import 'sprites';
+
+@import 'stories-icons/*.png';
 
 
-/* =Header
------------------------------------------------ */
-
-.stories .header {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-
-/* =Index
------------------------------------------------ */
-
-.stories.index {
+.stories {
   .header {
-    height: 196px;
+    border-bottom: 1px solid #e5e5e5;
   }
 
-  .header-subtitle {
-    margin-bottom: 40px;
+  &.index {
+    .header {
+      height: 196px;
+    }
+
+    .header-subtitle {
+      margin-bottom: 40px;
+    }
+  }
+
+  &.edit .header-inner {
+    position: relative;
+
+    .btn {
+      position: absolute;
+      top: -6px; right: 10px;
+    }
   }
 }
+
+
+/* =Show
+----------------------------------------------- */
 
 .featured_story {
   position: relative;
@@ -112,10 +121,6 @@
   a + a { margin-left: 10px; }
 }
 
-.columns {
-  overflow: visible;
-}
-
 .column {
   &:hover .infowindow {
     display: block;
@@ -159,7 +164,7 @@
     height: 6px;
     width: 13px;
     margin-left: -6px;
-    @include icons-sprite(infowindow_tip);
+    @include stories-icons-sprite(infowindow_tip);
   }
 
   strong a {
@@ -167,7 +172,7 @@
     margin: 0 0 5px;
     width: 140px;
     font-size: 17px;
-    font-family: Georgia, serif;
+    @extend .serif;
     text-align: left;
     color: #f5f5f5;
 
@@ -207,6 +212,13 @@
   }
 }
 
+.dropcap {
+  float: left;
+  font-size: 400%;
+  @extend .serif;
+  margin: 20px 10px 16px 0;
+}
+
 .story-share_buttons {
   text-align: left;
 }
@@ -214,15 +226,6 @@
 
 /* =Edit
 ----------------------------------------------- */
-
-.stories.edit .header-inner {
-  position: relative;
-
-  .btn {
-    position: absolute;
-    top: -6px; right: 10px;
-  }
-}
 
 .remove_story-link {
   display: none;
@@ -233,8 +236,8 @@
   padding: 4px;
   background-color: #fff;
   @include border-right-radius(2px);
-  border: 1px solid rgba(#000, 0.14902);
-  @include box-shadow(rgba(#000, 0.298039) 0px 1px 4px -1px);
+  border: 1px solid rgba(#000, .15);
+  @include box-shadow(0px 1px 4px -1px rgba(#000, .3));
   font: 400 11px Roboto, Arial, sans-serif;
   color: rgb(86, 86, 86);
   text-decoration: none;

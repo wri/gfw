@@ -33,8 +33,9 @@ module Api
                   :title => params['title']
                 }.to_json
 
-      response = post('/stories/new', :body => options,
-                           :options => { :headers => { 'Content-Type' => 'application/json' } } )
+      response = post('/stories/new',
+                        :body => options,
+                        :options => { :headers => { 'Content-Type' => 'application/json' } })
 
       if response.success?
         response

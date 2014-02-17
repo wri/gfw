@@ -4,8 +4,11 @@
 @import 'compass/css3/inline-block';
 
 @import 'fonts';
-@import 'sprites';
 @import 'helpers';
+
+@import 'static-icons/*.png';
+@import 'static-logos/*.png';
+
 
 .static-inner {
   @extend .clearfix;
@@ -589,7 +592,7 @@
   margin-right: 8px;
   width: 14px;
   height: 16px;
-  @include icons-sprite(scroll_icon);
+  @include static-icons-sprite(scroll_icon);
 }
 
 .map-container {

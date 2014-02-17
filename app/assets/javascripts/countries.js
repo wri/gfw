@@ -7,7 +7,6 @@
 
 
 gfw.ui.view.CountriesShow = cdb.core.View.extend({
-
   el: document.body,
 
   events: {
@@ -124,7 +123,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
     $('.hansen_dropdown-link').html(subtitle);
 
-    if(dataset === 'countries_gain') {
+    if (dataset === 'countries_gain') {
       this._drawCircle('forest_loss', 'comp', { iso: this.iso });
     } else {
       this._drawCircle('forest_loss', 'bars', { iso: this.iso, dataset: dataset });
@@ -137,7 +136,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     var h_min = $('.country_state').offset().top - 48,
         h_max = $('.country_conventions').offset().top - 48;
 
-    if(this.$('.country_indepth').length > 0) {
+    if (this.$('.country_indepth').length > 0) {
       this.indepth_bar = 48;
 
       h_min -= 48;
@@ -192,8 +191,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
       topOffset: -48 - this.indepth_bar
     });
 
-    $(window)
-      .scroll(this._positionScroll);
+    $(window).scroll(this._positionScroll);
   },
 
   _drawCountry: function(iso) {
@@ -225,7 +223,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
       var data = json.rows;
 
       _.each(data, function(type) {
-        if(type['percent'] !== 0) {
+        if (type['percent'] !== 0) {
           $('.country_state-title').css({
             'padding-top': '40px'
           });
@@ -514,7 +512,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
     if (type === 'lines') {
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
-        if(json && json.rows.length > 0) {
+        if (json && json.rows.length > 0) {
           $graph.removeClass('ghost');
           $action.removeClass('disabled');
           that._initFormaDropdown();
@@ -596,7 +594,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
               "WHERE iso = '"+options.iso+"'"].join(' ');
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
-        if(json) {
+        if (json) {
           $graph.removeClass('ghost');
 
           var data = json.rows[0];
@@ -635,7 +633,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
         bar.append('svg:rect')
           .attr('class', function(d, i) {
-            if(i === 11) { // last year index
+            if (i === 11) { // last year index
               return 'last bar'
             } else {
               return 'bar'
@@ -665,7 +663,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
               "WHERE iso = '"+options.iso+"'"].join(' ');
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
-        if(json) {
+        if (json) {
           $graph.removeClass('ghost');
 
           var data = json.rows[0];
@@ -733,7 +731,6 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
 
 gfw.ui.view.CountriesIndex = cdb.core.View.extend({
-
   el: document.body,
 
   initialize: function() {
@@ -768,7 +765,6 @@ gfw.ui.model.CountriesOverview = cdb.core.Model.extend({
 
 
 gfw.ui.view.CountriesOverview = cdb.core.View.extend({
-
   el: document.body,
 
   events: {
@@ -827,7 +823,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
   _toggleYears: function() {
     var that = this;
 
-    if(this.model.get('years') === false) {
+    if (this.model.get('years') === false) {
       this.$years.slideUp(250, function() {
         $('.overview_graph__axis').slideDown();
       });
@@ -887,7 +883,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
     e && e.preventDefault();
 
-    if(this.model.get('graph') === 'total_loss') {
+    if (this.model.get('graph') === 'total_loss') {
       var sql = 'WITH loss as (SELECT iso, SUM(';
 
       for(var y = 2001; y < 2012; y++) {
@@ -904,7 +900,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               AND NOT sum_loss = 0\
               ORDER BY sum_loss DESC ';
 
-      if(e) {
+      if (e) {
         sql += 'OFFSET 10';
       } else {
         sql += 'LIMIT 10';
@@ -927,7 +923,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                           </li>';
         });
 
-        if(e) {
+        if (e) {
           $('.countries_list__footer').fadeOut();
         } else {
           $('.countries_list ul').html('');
@@ -944,14 +940,14 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           self._drawMiniOverview(val.iso);
         });
       });
-    } else if(this.model.get('graph') === 'percent_loss') {
+    } else if (this.model.get('graph') === 'percent_loss') {
       var sql = 'SELECT c.iso, c.name, c.enabled, loss_y2001_y2012 as ratio_loss\
                  FROM countries_percent percent, gfw2_countries c\
                  WHERE percent.iso = c.iso\
                  AND NOT loss_y2001_y2012 = 0\
                  ORDER BY ratio_loss DESC ';
 
-      if(e) {
+      if (e) {
         sql += 'OFFSET 10';
       } else {
         sql += 'LIMIT 10';
@@ -974,7 +970,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                           </li>';
         });
 
-        if(e) {
+        if (e) {
           $('.countries_list__footer').fadeOut();
         } else {
           $('.countries_list ul').html('');
@@ -991,7 +987,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           self._drawMiniOverview(val.iso);
         });
       });
-    } else if(this.model.get('graph') === 'total_extent') {
+    } else if (this.model.get('graph') === 'total_extent') {
       var sql = 'WITH extent as (SELECT iso, SUM(';
 
       for(var y = 2001; y < 2012; y++) {
@@ -1008,7 +1004,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               AND NOT sum_extent = 0\
               ORDER BY sum_extent DESC ';
 
-      if(e) {
+      if (e) {
         sql += 'OFFSET 10';
       } else {
         sql += 'LIMIT 10';
@@ -1031,7 +1027,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                           </li>';
         });
 
-        if(e) {
+        if (e) {
           $('.countries_list__footer').fadeOut();
         } else {
           $('.countries_list ul').html('');
@@ -1048,7 +1044,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           self._drawMiniOverview(val.iso);
         });
       });
-    } else if(this.model.get('graph') === 'ratio') {
+    } else if (this.model.get('graph') === 'ratio') {
       var sql = 'WITH loss as (SELECT iso, SUM(';
 
       for(var y = 2001; y < 2012; y++) {
@@ -1072,7 +1068,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               WHERE gain.iso = c.iso\
               ORDER BY ratio_loss DESC ';
 
-      if(e) {
+      if (e) {
         sql += 'OFFSET 10';
       } else {
         sql += 'LIMIT 10';
@@ -1095,7 +1091,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                           </li>';
         });
 
-        if(e) {
+        if (e) {
           $('.countries_list__footer').fadeOut();
         } else {
           $('.countries_list ul').html('');
@@ -1112,7 +1108,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           self._drawMiniOverview(val.iso);
         });
       });
-    } else if(this.model.get('graph') === 'domains') {
+    } else if (this.model.get('graph') === 'domains') {
       var sql = 'SELECT name, total_loss, total_gain, GREATEST('
 
       for(var y = 2001; y < 2012; y++) {
@@ -1443,7 +1439,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     for (var y = 2001; y<=2012; y += 1) {
       var y_ = this.x_scale(y);
 
-      if(y === 2001) {
+      if (y === 2001) {
         y_ += 5;
       } else if (y === 2012) {
         y_ -= 25;
@@ -1918,7 +1914,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
           var obj = _.find(data_, function(obj) { return obj.year == year; });
 
-          if(obj === undefined) {
+          if (obj === undefined) {
             data_.push({ 'year': year });
           }
 
@@ -2142,7 +2138,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         _.each(data, function(row) {
           if (!_.contains(exclude, row.name)) {
-            if(row.enabled === true) {
+            if (row.enabled === true) {
               data_link_.push(row);
             } else {
               data_.push(row);

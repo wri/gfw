@@ -323,6 +323,47 @@
   @include box-shadow(0px 0px 5px 1px rgba(#000, .15));
 }
 
+@mixin radio($url) {
+  @include icons-sprite(radio, $offset-y:-67px);
+
+  &:hover          { @include icons-sprite($url, $offset-y:-207px); }
+
+  &:active         { @include icons-sprite($url, $offset-y:-207px); }
+  &:active:hover   { @include icons-sprite($url, $offset-y:-277px); }
+
+  &.checked        { @include icons-sprite($url, $offset-y:-137px); }
+  &.checked:hover  { @include icons-sprite($url, $offset-y:-277px); }
+
+  &.disabled       { @include icons-sprite($url, $offset-y:5px); }
+  &.disabled:hover { @include icons-sprite($url, $offset-y:5px); }
+}
+
+.check_icon {
+  &.checked {
+    i span { left: 9px; }
+  }
+
+  i {
+    display: inline-block;
+    position: relative;
+    float: left;
+    width: 17px;
+    height: 10px;
+    background: #ddd;
+    margin: 4px 8px 0 0;
+    @include border-radius(5px);
+
+    span {
+      position: absolute;
+      left: 2px; top: 2px;
+      width: 6px;
+      height: 6px;
+      background: #fff;
+      @include border-radius(4px);
+    }
+  }
+}
+
 .filter-links {
   > li {
     position: relative;

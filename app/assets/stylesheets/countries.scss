@@ -6,8 +6,9 @@
 @import 'compass/css3/text-shadow';
 
 @import 'fonts';
-@import 'sprites';
 @import 'helpers';
+
+@import 'country-icons/*.png';
 
 .countries {
   &.index .content {
@@ -54,16 +55,11 @@
   }
 
   &.overview .content {
-    overflow: visible;
     margin-bottom: 40px;
   }
 
   .header {
     height: 211px;
-  }
-
-  .sources {
-    display: none;
   }
 }
 
@@ -157,9 +153,9 @@
 
   h3 {
     display: block;
+    margin-bottom: 5px;
     font-size: 29px;
     line-height: 1.1;
-    margin-bottom: 5px;
     @extend .serif;
     color: #666;
 
@@ -244,11 +240,11 @@
     width: 206px;
     padding: 0 30px;
     margin-top: -9px;
-    font-size: 17px;
     font-weight: bold;
-    text-align: center;
+    font-size: 17px;
     text-transform: uppercase;
-    color:  #111;
+    text-align: center;
+    color: #111;
   }
 
   .info {
@@ -258,10 +254,10 @@
     border: 2px solid #fff;
     margin-left: -14px;
     width: 24px;
-    color: #fff;
     font-size: 14px;
     line-height: 24px;
     @extend .serif;
+    color: #fff;
     text-align: center;
     background: #FF4D4D;
     @include border-radius(14px);
@@ -354,7 +350,7 @@
     color: #666;
 
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       top: 50%;
       margin: -1px 0 0 3px;
@@ -461,8 +457,8 @@
 
 .bar-inner {
   position: absolute;
-  top: 0;
   z-index: 10;
+  top: 0;
 }
 
 .country_indepth {
@@ -479,8 +475,8 @@
   }
 
   a {
-    color: #333;
     text-decoration: underline;
+    color: #333;
 
     &:hover {
       color: darken(#333, 5%);
@@ -525,7 +521,7 @@
       color: #fff;
 
       &:after {
-        content: "";
+        content: '';
         position: absolute;
         bottom: 0; left: 50%;
         margin-left: -3px;
@@ -546,7 +542,7 @@
   .info i { top: -12px; }
 
   span {
-    color: #AAC600;
+    color: $green;
   }
 }
 
@@ -779,7 +775,7 @@ section.country_climate {
   }
 }
 
-section.country_conventions {
+.section.country_conventions {
   background-image: image-url('backgrounds/bkg_country.png');
   background-position: right 0;
 
@@ -790,33 +786,31 @@ section.country_conventions {
   }
 
   li {
-    position: relative;
     display: block;
+    position: relative;
     float: left;
     margin: 0 15px 15px 0;
+    padding-top: 25px;
     width: 120px;
     height: 67px;
     border: 2px solid #ccc;
-    @include border-radius(2px);
-    text-align: center;
-    padding-top: 25px;
-    @extend .sans-serif;
-    font-size: 12px;
     font-weight: bold;
+    font-size: 12px;
+    @extend .sans-serif;
+    text-align: center;
     color: #aaa;
+    @include border-radius(2px);
 
     span {
       position: absolute;
       display: block;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      line-height: 12px;
+      left: 0; right: 0; bottom: 0;
       padding: 5px;
+      border-top: 1px solid #D9D9D9;
       font-weight: normal;
       font-style: italic;
+      line-height: 12px;
       text-transform: uppercase;
-      border-top: 1px solid #D9D9D9;
     }
   }
 }
@@ -827,11 +821,11 @@ section.country_conventions {
   margin-bottom: -10px;
 
   li {
-    display: inline-block;
-    line-height: 14px;
+    @include inline-block();
     border-left: 1px solid #ddd;
     padding-left: 8px;
     margin: 0 0 10px 5px;
+    line-height: 14px;
 
     &:first-child {
       border: 0;
@@ -847,25 +841,24 @@ section.country_conventions {
 
 .country_download_links {
   li {
-    display: inline-block;
+    @include inline-block();
     margin-left: 7px;
 
     a,
     span {
-      display: inline-block;
-      border: 2px solid rgba(#ACCD00, .5);
-      @include border-radius(25px);
-      line-height: 30px;
+      @include inline-block();
+      border: 2px solid rgba($green, .5);
       padding: 0 20px;
-      color: #333;
       font-weight: bold;
       font-size: 13px;
       line-height: 44px;
       text-transform: uppercase;
+      color: #333;
+      @include border-radius(25px);
     }
 
     a:hover {
-      border: 2px solid #ACCD00;
+      border: 2px solid $green;
     }
 
     span { @include opacity(.4); }
@@ -883,8 +876,8 @@ section.country_conventions {
   .column-title {
     position: relative;
     top: -40px;
-    font-size: 13px;
     font-weight: bold;
+    font-size: 13px;
     text-transform: uppercase;
     color: #555;
   }
@@ -1038,7 +1031,7 @@ section.country_conventions {
     }
 
     &.selected a:after {
-      content: "";
+      content: '';
       position: absolute;
       top: 0; left: 50%;
       margin-left: -3px;
@@ -1162,7 +1155,7 @@ section.country_conventions {
 
     .countries_list__minioverview {
       .loss {
-        color: #9DC200;
+        color: $green;
       }
 
       .gain {
@@ -1237,7 +1230,7 @@ section.country_conventions {
   color: #A2A0A9;
 
   .loss {
-    color: rgba(#9DC200, .5);
+    color: rgba($green, .5);
   }
 
   .gain {
@@ -1248,7 +1241,7 @@ section.country_conventions {
     fill: #C443FF;
 
     &.extent {
-      fill: #9DC200;
+      fill: $green;
     }
   }
 
@@ -1324,7 +1317,7 @@ section.country_conventions {
   @include box-shadow(0 0 3px #000);
 
   &:after {
-    content: "";
+    content: '';
     position: absolute;
     bottom: -6px; left: 50%;
     border-color: #fff rgba(#fff, 0);

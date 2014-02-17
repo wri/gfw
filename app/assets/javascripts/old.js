@@ -2,7 +2,7 @@
 //= require gfw/ui/sourcewindow
 
 
-var map;
+var map = null;
 
 gfw.ui.view.Terms = cdb.core.View.extend({
   el: document.body,

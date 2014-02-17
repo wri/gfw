@@ -1,7 +1,6 @@
 //= require gfw/ui/carrousel
 
 gfw.ui.view.StoriesEdit = cdb.core.View.extend({
-
   el: document.body,
 
   events: {
@@ -111,5 +110,4 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
 
     return this;
   }
-
 });

@@ -48,7 +48,6 @@ _.templateSettings = {
  */
 
 
-// Filter and Circle have already been init
 var loaded = false,
     map = null,
     showMap = false,
@@ -59,11 +58,10 @@ var loaded = false,
     SearchBox = {},
     Timeline = {},
     resizePID;
+    // Filter and Circle already init
 
 $(function() {
-
   var Router = Backbone.Router.extend({
-
     routes: {
       '':                                   'home',
       '/':                                  'home',
@@ -108,7 +106,6 @@ $(function() {
   })
 
   var App = cdb.core.View.extend({
-
     events: {
       'click .home.ajax':   '_onClickHome',
       'click .map.ajax':    '_onClickMap',
@@ -231,6 +228,7 @@ $(function() {
       Analysis.info.setDraggable(true);
 
       if (config.ISO != 'ALL') Analysis.loadCountry(config.ISO);
+
       Filter.init();
       Circle.init();
       Circle.show();
@@ -241,7 +239,6 @@ $(function() {
       });
 
       $(window).scroll(positionScroll);
-
     },
 
     _onClickSource: function(e) {
