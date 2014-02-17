@@ -2102,7 +2102,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                      WHERE loss.iso = c.iso) as loss, (SELECT SUM(y2000)\
                                                        FROM countries_extent extent\
                                                        WHERE extent.iso = c.iso) as extent\
-                     FROM gfw2_countries c';
+                     FROM gfw2_countries c\
+                     LIMIT 50';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows;
@@ -2113,11 +2114,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .range([h, 0])
           .domain([0, d3.max(data, function(d) { return d.gain; })]);
 
-        var x_log_scale = d3.scale.linear()
+        var x_log_scale = d3.scale.log()
           .range([m, w-m])
           .domain([1, d3.max(data, function(d) { return d.loss; })]);
 
-        var y_log_scale = d3.scale.linear()
+        var y_log_scale = d3.scale.log()
           .range([h-log_m, m])
           .domain([1, d3.max(data, function(d) { return d.gain; })]);
 
