@@ -21,11 +21,13 @@
   <%= render 'shared/terms' %>
 </div>
 
-<p class='last'>For additional information about GFW, please send an email to <a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>
+<div class="terms_footer">
+  <%= link_to 'I agree', root_path, class: 'btn accept_btn dark_glow continue', :'data-source' => "accept_terms" %> <%= link_to 'I do not agree', root_path, class: 'btn accept_btn dark_glow' %>
+</div>
 
-<section class='section'>
+<section class="section">
   <div class="section-footer">
-    <%= link_to 'I agree', root_path, class: 'btn accept_btn dark_glow continue', :'data-source' => "accept_terms" %> <%= link_to 'I do not agree', root_path, class: 'btn accept_btn dark_glow' %>
+    <p class='last'>For additional information about GFW, please send an email to <a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>
   </div>
 </section>
 
