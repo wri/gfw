@@ -85,7 +85,7 @@ en:
       home_stories:
         featured:
           title: Stories about forest change
-          text_html: "Browse %{featured} or %{explore}"
+          text_html: "Browse %{featured} or %{explore}."
           featured: featured user stories
           explore: explore all in the map
           read_more: Read more
