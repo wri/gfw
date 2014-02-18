@@ -101,6 +101,11 @@ strong {
 .accept_btn {
   margin: 0;
   width: 180px;
+  text-align: center;
+
+  &.continue {
+    margin-left: 0;
+  }
 }
 
 a.accept_btn {

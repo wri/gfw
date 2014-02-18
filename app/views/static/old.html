@@ -1,3 +1,13 @@
+<% content_for :js do %>
+  <script>
+    $(function() {
+      cdb.init(function() {
+        window.accept_terms = new gfw.ui.view.Terms();
+      });
+    });
+  </script>
+<% end %>
+
 <% content_for :title do %>
   <h1 class='header-title'>Oops, your browser isn't supported.</h1>
 <% end %>
