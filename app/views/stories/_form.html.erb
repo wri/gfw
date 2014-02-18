@@ -75,6 +75,16 @@
     </div>
   </div>
 
+  <div class="field">
+    <div class="optional">
+      <%= label_tag 'Video' %> <span>Optional</span>
+    </div>
+
+    <div class="input-field huge">
+      <%= text_field_tag :video, @story['video'], :placeholder => 'http://www.youtube.com/watch?v=lTG-0brb98I' %>
+    </div>
+  </div>
+
   <div class="field media">
     <div class="optional">
       <%= label_tag 'Media' %> <span>Optional</span>

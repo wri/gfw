@@ -8,10 +8,10 @@ class MediaController < ApplicationController
   end
 
   def show
-    respond_to do |format|
-      format.json { render :json => { url: params['url'] } }
-      format.html { render :json => { url: params['url'] } }
-    end
+    url = params['url']
+    basename = File.basename(url)
+
+    render :json => { url: url, basename: basename }
   end
 
 end
