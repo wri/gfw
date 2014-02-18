@@ -9,6 +9,7 @@ gem 'compass-rails', '1.1.2'
 gem 'uglifier', '>= 1.3.0'
 gem 'httparty'
 gem 'useragent'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'foreman'
