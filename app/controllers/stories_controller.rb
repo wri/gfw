@@ -42,8 +42,7 @@ class StoriesController < ApplicationController
       redirect_to new_story_path
     else
       flash[:notice] = 'Your story has been registered. Thanks!'
-      # redirect_to story_path(response['id'])
-      redirect_to stories_path
+      redirect_to story_path(response['id'])
     end
   end
 

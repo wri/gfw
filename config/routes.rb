@@ -21,7 +21,8 @@ Gfw::Application.routes.draw do
   get 'countries/overview' => 'countries#overview'
 
   # media
-  post 'upload' => 'media#upload'
+  post 'media/upload' => 'media#upload'
+  get 'media/show' => 'media#show'
 
   # embed
   get 'embed/country/:id' => 'embed#show'

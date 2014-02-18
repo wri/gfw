@@ -20,7 +20,15 @@ module Api
       options = {
                   :email => params['email'],
                   :date => params['date'],
-                  :media => nil,
+                  :media => [
+                              {
+                                url: params['uploads_ids'],
+                                embed_url:"",
+                                preview_url: "http://gfw.stories.s3.amazonaws.com/uploads/thumb_forest.jpeg",
+                                mime_type: "image/jpeg",
+                                order: 1
+                              }
+                            ],
                   :geom => (if params['the_geom'] != ''
                               JSON.parse(params['the_geom'])
                             else

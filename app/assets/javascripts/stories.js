@@ -44,7 +44,7 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
     });
 
     $('#fileupload').fileupload({
-        url: '/upload',
+        url: '/media/upload',
         dataType: 'json',
         autoUpload: true,
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
@@ -59,17 +59,6 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
         previewCrop: true
     }).on('fileuploadadd', function (e, data) {
       data.context = $('<div/>').appendTo('#files');
-
-      $.each(data.files, function (index, file) {
-          var node = $('<p/>')
-            .append($('<span/>').text(file.name));
-
-          if (!index) {
-              node
-                  .append('<br>');
-          }
-          node.appendTo(data.context);
-      });
 
       that.filesAdded += _.size(data.files);
 
@@ -114,95 +103,53 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
           node = $(data.context.children()[index]);
 
       var $thumb = $("<li class='thumbnail'><div class='inner_box'><img src='"+file.preview.toDataURL()+"' /></div><a href='#' class='destroy'></a></li>");
-
-      if (file.preview) {
-        $(".thumbnail[data-name='"+prettifyFilename(file.name)+"']").fadeOut(250, function() {
-          $(this).remove();
-
-          $(".thumbnails").append($thumb);
-          $thumb.fadeIn(250);
-        });
-      }
-      if (file.error) {
-          node
-              .append('<br>')
-              .append($("<span class='text-danger'/>").text(file.error));
-      }
-      if (index + 1 === data.files.length) {
-          data.context.find('button')
-              .text('Upload')
-              .prop('disabled', !!data.files.error);
-      }
     }).on('fileuploaddone', function (e, data) {
       var index = data.index,
           file = data.files[index],
           node = $(data.context.children()[index]);
 
-      var $thumb = $("<li class='thumbnail'><div class='inner_box'>"+file.preview+"</div><a href='#' class='destroy'></a></li>");
+      $.each(data.result, function (index, thumbnail_url) {
+        that.filesAdded--;
 
-      if (file.preview) {
-        $(".thumbnail[data-name='"+file+"']").fadeOut(250, function() {
+        that.uploadsIds.push(thumbnail_url);
+
+        var url = thumbnail_url.replace('https', 'http');
+        var $thumb = $("<li class='sortable thumbnail'><div class='inner_box'><img src='"+thumbnail_url+"' /></div><a href='#' class='destroy'></a></li>");
+
+        var filename = prettifyFilename(getFilename(thumbnail_url));
+
+        $(".thumbnail[data-name='"+filename+"']").fadeOut(250, function() {
           $(this).remove();
 
           $(".thumbnails").append($thumb);
           $thumb.fadeIn(250);
         });
 
-
-          node
-              .prepend('<br>')
-              .prepend(file.preview);
-      }
-      $.each(data.result, function (index, file) {
-        that.filesAdded--;
-
-        that.uploadsIds.push(file.cartodb_id);
-
-        var url = file.thumbnail_url.replace('https', 'http');
-        var $thumb = $("<li id='photo_" + file.cartodb_id + "' class='sortable thumbnail'><div class='inner_box'><img src='"+url+"' /></div><a href='#' class='destroy'></a></li>");
-
         $thumb.find('.destroy').on('click', function(e) {
-
           e.preventDefault();
-          e.stopPropagation();
 
           var confirmation = confirm('Are you sure?')
 
-          $thumb.fadeOut(250, function() {
-            $thumb.remove();
-          });
+          if (confirmation == true) {
+            debugger;
+            uploadsIds = _.without(that.uploadsIds, thumbnail_url);
+            $("#uploads_ids").val(uploadsIds.join(","));
 
+            $thumb.fadeOut(250, function() {
+              $thumb.remove();
+            });
+          }
         });
-
-        var filename = prettifyFilename(getFilename(file.image_url));
-
-        $(".thumbnail[data-name='"+filename+"']").fadeOut(250, function() {
-          $(this).remove();
-
-          $('.thumbnails').append($thumb);
-          $thumb.fadeIn(250);
-        });
-
-
       });
 
-
-      if (filesAdded <= 0) {
+      if (that.filesAdded <= 0) {
         $("form input[type='submit']").val('Submit story');
         $("form input[type='submit']").removeClass('disabled');
         $("form input[type='submit']").attr('disabled', false);
       }
 
-      $('#story_uploads_ids').val(uploadsIds.join(','));
-        }).on('fileuploadfail', function (e, data) {
-            $.each(data.files, function (index, file) {
-                var error = $("<span class='text-danger'/>").text('File upload failed.');
-                $(data.context.children()[index])
-                    .append('<br>')
-                    .append(error);
-            });
-        }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+      $('#uploads_ids').val(that.uploadsIds.join(','));
+    });
   },
 
   _initViews: function() {
@@ -292,5 +239,4 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
 
     return this;
   }
-
 });
