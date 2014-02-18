@@ -25,7 +25,7 @@
 
 <section class='section'>
   <div class="section-footer">
-    <a href='#' class='btn accept_btn dark_glow continue' data-source="accept_terms">Continue</a>
+    <%= link_to 'I agree', root_path, class: 'btn accept_btn dark_glow continue', :'data-source' => "accept_terms" %> <%= link_to 'I do not agree', root_path, class: 'btn accept_btn dark_glow' %>
   </div>
 </section>
 
