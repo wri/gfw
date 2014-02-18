@@ -21,5 +21,9 @@ Gfw::Application.routes.draw do
   get 'country/:id' => 'countries#show', :as => 'country'
   get 'countries/overview' => 'countries#overview'
 
+  # embed
+  get 'embed/country/:id' => 'embed#show'
+  get 'embed/countries/overview' => 'embed#overview'
+
   root 'home#index'
 end
