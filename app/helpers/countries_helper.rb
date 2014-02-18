@@ -1,5 +1,9 @@
 module CountriesHelper
 
+  def map_coords
+    "#{map_path}/5/#{@country['lat'].round(2)}/#{@country['lng'].round(2)}/#{@country['iso']}"
+  end
+
   def extent_to_human(extent)
     extent /= 1000
 
