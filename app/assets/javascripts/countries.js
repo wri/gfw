@@ -1064,11 +1064,12 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
       sql += 'SELECT loss.sum_loss/gain.sum_gain\
               FROM loss\
-              WHERE loss.iso = gain.iso) as ratio_loss ';
-
+              WHERE loss.iso = gain.iso) as ratio_loss, (SELECT loss.sum_loss\
+                                                         FROM loss\
+                                                         WHERE loss.iso = gain.iso) as sum_loss ';
       sql += 'FROM gain, gfw2_countries c\
               WHERE gain.iso = c.iso\
-              ORDER BY ratio_loss DESC ';
+              ORDER BY sum_loss DESC ';
 
       if(e) {
         sql += ['OFFSET 10',
@@ -2100,8 +2101,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                      WHERE loss.iso = c.iso) as loss, (SELECT SUM(y2000)\
                                                        FROM countries_extent extent\
                                                        WHERE extent.iso = c.iso) as extent\
-                     FROM gfw2_countries c\
-                     LIMIT 50';
+                     FROM gfw2_countries c';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows;
