@@ -329,7 +329,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     this.info.setDraggable(true);
 
-    var dataset = (baselayer === 'loss') ? 'hansen' : baselayer;
+    var dataset = (baselayer === 'loss') ? 'umd' : baselayer;
 
     if (baselayer === 'modis') {
       range = this.range || '&date=2013-9-15';
@@ -349,29 +349,23 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       this.downloadUrl = url+dataset+'.shp?iso='+config.ISO+range;
     }
 
-    if (baselayer === 'loss') {
-      this.alertsUrl += '&layer=loss';
-      this.downloadUrl += '&layer=loss';
-    }
-
     executeAjax(this.alertsUrl, {}, {
       success: _.bind(function(data) {
         var baselayer = config.BASELAYER;
 
         if (baselayer === 'loss' && data) {
-          var loss      = formatNumber(Math.ceil((data.range.area.value) * 10) / 10, true);
-          var treeCover = formatNumber(Math.ceil((data.range.area.treecover_2000) * 10) / 10, true);
-          var gain      = formatNumber(Math.ceil((data.range.area.gain) * 10) / 10, true);
+          var loss  = formatNumber(Math.ceil((data.loss_area) * 10) / 10, true);
+          var gain  = formatNumber(Math.ceil((data.gain_area) * 10) / 10, true);
 
           this.info.model.set({
             'spinner': false,
             'baselayer': baselayer,
             'alert_count': false,
             'loss': loss,
-            'treecover_2000': treeCover,
             'gain': gain,
-            'begin': data.range.area.begin,
-            'end': data.range.area.end,
+            'begin': data.begin,
+            'end': data.end,
+            'units': data.units,
             'subdisabled': true
           });
         } else if (baselayer === 'modis' && data && data.total) {
