@@ -19,7 +19,7 @@
   display:none;
   cursor: move;
 
-  z-index: 1000;
+  z-index: 1010;
 
   .toggle {
     @include transition(none);
@@ -234,6 +234,7 @@
     text-align: left;
 
     .analyse {
+      display: none;
       @include position(65px, 5px, false, false);
       @include size(41px, 42px);
       @include mixins-sprite(graph);
@@ -598,7 +599,7 @@
     font-size: 15px;
   }
 
-  p.help { display:none; margin: 0 0 20px 0; }
+  p.help { margin: 0 0 20px 0; }
 
 }
 

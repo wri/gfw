@@ -25,7 +25,7 @@
       <% end %>
     </ul>
 
-    <div class="pagination">
+    <div class="section-footer">
       <%= link_to content_tag(:span, t('.previous')), previous_page_link(@page), :class => "btn dark_glow" if @page > 1%>
       <%= link_to content_tag(:span, t('.next')), next_page_link(@page), :class => "btn dark_glow" unless last_page?%>
     </div>

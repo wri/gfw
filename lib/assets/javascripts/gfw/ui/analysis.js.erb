@@ -9,7 +9,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   className: 'analysis',
 
   events: {
-    'click .analysis_control'   : '_startAnalyzing',
+    'click .analysis_control'   : 'startAnalyzing',
     'click .done'               : '_onClickDone',
     'click .cancel'             : '_onClickCancel'
   },
@@ -119,10 +119,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     }, this));
   },
 
-  _startAnalyzing: function(e) {
-    e.preventDefault();
+  startAnalyzing: function(e) {
+    e && e.preventDefault();
 
-    if ($(e.target).hasClass('disabled')) return;
+    if ($(this.$analysis_control).hasClass('disabled')) return;
 
     this.model.set('analyzing', true);
 
@@ -266,8 +266,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     var ha = 0;
 
     if (the_geom.features[0].properties['area']) { // from country
-      ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']) * 10) / 10, true);
-    } else {
+      ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']/10000) * 10) / 10, true);
+    } else { // from protected areas
       ha = this._calcAreaPolygon(the_geom);
     }
 
@@ -329,7 +329,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     this.info.setDraggable(true);
 
-    var dataset = (baselayer === 'loss') ? 'hansen' : baselayer;
+    var dataset = (baselayer === 'loss') ? 'umd' : baselayer;
 
     if (baselayer === 'modis') {
       range = this.range || '&date=2013-9-15';
@@ -349,29 +349,23 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       this.downloadUrl = url+dataset+'.shp?iso='+config.ISO+range;
     }
 
-    if (baselayer === 'loss') {
-      this.alertsUrl += '&layer=loss';
-      this.downloadUrl += '&layer=loss';
-    }
-
     executeAjax(this.alertsUrl, {}, {
       success: _.bind(function(data) {
         var baselayer = config.BASELAYER;
 
         if (baselayer === 'loss' && data) {
-          var loss      = formatNumber(Math.ceil((data.range.area.value) * 10) / 10, true);
-          var treeCover = formatNumber(Math.ceil((data.range.area.treecover_2000) * 10) / 10, true);
-          var gain      = formatNumber(Math.ceil((data.range.area.gain) * 10) / 10, true);
+          var loss  = formatNumber(Math.ceil((data.loss_area) * 10) / 10, true);
+          var gain  = formatNumber(Math.ceil((data.gain_area) * 10) / 10, true);
 
           this.info.model.set({
             'spinner': false,
             'baselayer': baselayer,
             'alert_count': false,
             'loss': loss,
-            'treecover_2000': treeCover,
             'gain': gain,
-            'begin': data.range.area.begin,
-            'end': data.range.area.end,
+            'begin': data.begin,
+            'end': data.end,
+            'units': data.units,
             'subdisabled': true
           });
         } else if (baselayer === 'modis' && data && data.total) {
@@ -394,6 +388,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
             'baselayer': baselayer,
             'defor': defor,
             'degrad': degrad,
+            'download': this.downloadUrl,
             'subdisabled': true
           });
 
@@ -525,7 +520,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     c0 = polygon.coordinates[0][0];
     polygon.coordinates[0].push(c0);
 
-    area = this._calcAreaPolygon(polygon);
+    area = formatNumber(Math.ceil((google.maps.geometry.spherical.computeArea(this.drawingManager.path)/10000) * 10) / 10, true)
 
     this.model.set('area', JSON.stringify(polygon));
     this.info.model.set('ha', area);
@@ -769,7 +764,6 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
     this.$dataset     = this.$el.find(".alert .title");
     this.$shadow      = this.$el.find(".shadow");
     this.$alert_count = this.$el.find("#alerts-count");
-    this.$subtitle    = this.$el.find(".subtitle");
 
     if (this.model.get('download')) {
       this.downloadDropdown = new gfw.ui.view.DownloadDropdown({
@@ -854,7 +848,7 @@ gfw.ui.model.AnalysisSubscribe = Backbone.Model.extend({
 
   defaults: {
     title: "Subscribe to alerts",
-    subtitle: "You will receive a monthly email summarizing forest change in this area",
+    help: "You will receive a monthly email summarizing forest change in this area",
     hidden: false,
     placeholder: "Enter your email",
     mode: "subscribe",
@@ -917,7 +911,7 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
 
     this.$backdrop.fadeOut(250);
 
-    $(document).off('keyup');
+    $(document).off('keydown');
   },
 
   _onKeyDown: function(e) {
@@ -948,7 +942,11 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
   _send: function(e) {
     var that = this;
 
-    e.preventDefault();
+    e && e.preventDefault();
+
+    if(this.$('.btn').hasClass('disabled')) return;
+
+    this.$('.btn').addClass('disabled');
 
     var mode = this.model.get("mode");
     var error = false;
@@ -965,6 +963,8 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
         this.$el.find('.input-field').find('.error_input_label').fadeIn(250);
 
         error = true;
+
+        this.$('.btn').removeClass('disabled');
       }
 
       if (!error) {
@@ -978,7 +978,8 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
   _sendData: function() {
     var that      = this,
         $form     = this.$el.find('form'),
-        $the_geom = $form.find('#area_the_geom');
+        $the_geom = $form.find('#area_the_geom'),
+        form_data = null;
 
     if (Analysis.selectedShapes && Analysis.selectedShapes.length > 0) {
       s = Analysis.selectedShapes;
@@ -1006,30 +1007,35 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
       }));
     }
 
-    var form_data = '{"topic": "updates/forma", "geom": '+$the_geom.val()+', "email": "'+$form.find("#area_email").val()+'"}';
+    if (config.ISO && config.ISO !== 'ALL') {
+      form_data = '{"topic": "updates/forma", "iso": '+'"'+config.ISO+'"'+', "email": "'+$form.find("#area_email").val()+'"}';
+    } else {
+      form_data = '{"topic": "updates/forma", "geom": '+$the_geom.val()+', "email": "'+$form.find("#area_email").val()+'"}';
+    }
 
     $.ajax({
-        type: 'POST',
-        url: $form.attr('action'),
-        crossDomain: true,
-        data: form_data,
-        dataType: 'json',
-        success: function(responseData, textStatus, jqXHR) {
-          that._setMode('thanks');
-        },
-        error: function (responseData, textStatus, errorThrown) {
-          alert('POST failed.');
-        }
+      type: 'POST',
+      url: $form.attr('action'),
+      crossDomain: true,
+      data: form_data,
+      dataType: 'json',
+      success: function(responseData, textStatus, jqXHR) {
+        that._setMode('thanks');
+      },
+      error: function (responseData, textStatus, errorThrown) {
+        alert('POST failed.');
+      }
     });
   },
 
   _setMode: function(mode) {
     this._clearErrors();
+    this.$('.btn').removeClass('disabled');
 
     if (mode === 'subscribe') {
       this.model.set({
         title: this.model.defaults.title,
-        help: this.model.defaults.subtitle,
+        help: this.model.defaults.help,
         button_title: this.model.defaults.button_title,
         placeholder: this.model.defaults.placeholder,
         input_type: 'email',
@@ -1054,11 +1060,9 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
     var mode = this.model.get('mode');
 
     if (mode === 'subscribe') {
-      this.$('.subtitle').fadeOut(250);;
-      this.$('.help').fadeIn(250);
+      this.$('.help').fadeOut(250);
       this.$('.input-field').show();
     } else if (mode === 'thanks') {
-      this.$('.subtitle').fadeOut(250);;
       this.$('.help').fadeIn(250);
       this.$('.input-field').hide();
     }

@@ -603,7 +603,7 @@ GFW.modules.app = function(gfw) {
           tiler_grid: '.grid.json',
           table_name: 'gfw2_layerstyles_v4',
           query: query,
-          layer_order: 'bottom',
+          layer_order: 'top',
           opacity: 1,
           interactivity: 'cartodb_id',
           featureClick: this._onMainLayerClick,
@@ -614,6 +614,8 @@ GFW.modules.app = function(gfw) {
         });
 
         this.mainLayer.setInteraction(true);
+
+        if (forest2000.attributes['visible']) GFW.app._refreshForest2000Layer();
       } else {
         if (this.mainLayer) {
           this.mainLayer.setOpacity(0);
@@ -623,6 +625,8 @@ GFW.modules.app = function(gfw) {
     },
 
     _onMainLayerClick: function(ev, latlng, pos, data) {
+      if (Analysis.model.get('analyzing')) return;
+
       //we needed the cartodb_id and table name
       var pair = data.cartodb_id.split(':');
 
@@ -1000,7 +1004,7 @@ GFW.modules.app = function(gfw) {
     _loadBaseLayer: function() {
       var table_name = null;
 
-      this.$map_coordinates.hide();
+      if (this.currentBaseLayer !== 'fires') this.$map_coordinates.hide();
 
       if (this.currentBaseLayer === 'loss') {
         if (config.mapLoaded && !this.time_layer_loss) {
@@ -1064,6 +1068,8 @@ GFW.modules.app = function(gfw) {
             auto_bound: false
           });
         }
+
+        this.$map_coordinates.show();
       }
     },
 
@@ -1194,8 +1200,6 @@ GFW.modules.maplayer = function(gfw) {
           };
 
           Filter.addForestLossFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
-
-
 
           if (GFW.app.currentBaseLayer === 'loss') {
             if (filters && _.include(filters, this.layer.get('id'))) {

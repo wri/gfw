@@ -1,7 +1,3 @@
-<% content_for :title do %>
-  <h1 class="header-title big"><%= @country['name'] %></h1>
-<% end %>
-
 <% content_for :js do %>
   <script>
     $(function() {
@@ -14,64 +10,11 @@
   </script>
 <% end %>
 
-<section class='section country_graphs'>
-  <div class='inner'>
-    <ul class='columns'>
-      <li class='column three graph forma ghost'>
-        <a href='#' class='info' data-source='forma'><span>i</span></a>
-        <div class='graph-title'>FORMA Alerts</div>
-        <div class='graph-subtitle'><span>Humid Tropics</span></div>
-        <div class='graph-amount'></div>
-        <div class='graph-date'></div>
-        <div class='coming_soon'>Not yet available for this country</div>
-        <div class='frame'><div class='frame_bkg'></div></div>
-        <a href='#' class='action disabled forma_dropdown-link' title='This chart of FORMA alerts only displays data from the humid tropics, which may or may not cover the extent of this country.'></a>
-        <div class='forma_dropdown-menu'>
-          <ul>
-            <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.svg?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>SVG</a></li>
-            <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.geojson?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>GeoJSON</a></li>
-            <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.shp?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>SHP</a></li>
-            <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.kml?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>KML</a></li>
-            <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.csv?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>CSV</a></li>
-          </ul>
-        </div>
-        <div class='graph-action-subtitle'></div>
-        <div class='graph-action-subtitle'>Download</div>
-      </li>
+<% content_for :title do %>
+  <h1 class="header-title big"><%= @country['name'] %></h1>
+<% end %>
 
-      <li class='column three graph forest_loss ghost'>
-        <a href='#' class='info' data-source='umd_tree_loss_gain'><span>i</span></a>
-        <div class='graph-title'>UMD Tree Cover</div>
-        <div class='graph-subtitle'><a href='#' class='hansen_dropdown-link'>Loss</a></div>
-        <div class='hansen_dropdown-menu'>
-          <ul>
-            <li><a href='#' data-slug='countries_loss'>Loss</a></li>
-            <li><a href='#' data-slug='countries_extent'>Extent</a></li>
-            <li><a href='#' data-slug='countries_gain'>Loss vs. Gain</a></li>
-          </ul>
-        </div>
-        <div class='graph-amount'></div>
-        <div class='graph-date'></div>
-        <div class='coming_soon'>Not yet available for this country</div>
-        <div class='frame'><div class='frame_bkg'></div></div>
-        <a href='#' class='action disabled' title='Download coming soon'></a>
-        <div class='graph-action-subtitle'>Download coming soon</div>
-      </li>
-
-      <% map_coords = "#{map_path}/5/#{@country['lat'].round(2)}/#{@country['lng'].round(2)}/#{@country['iso']}" %>
-      <li class='column three graph map'>
-        <a href='<%= map_coords %>' class='info' data-source='forest_map'><span>i</span></a>
-        <a href='<%= map_coords %>'>
-          <div class='frame'>
-            <%= image_tag static_map("#{@country['lat']}, #{@country['lng']}", '266x266', 4), :alt => @country['name'] %>
-          </div>
-        </a>
-        <a href='<%= map_coords %>' class='action' title='Analyze forest change'></a>
-        <div class='graph-action-subtitle'>Analyze</div>
-      </li>
-    </ul>
-  </div>
-</section>
+<%= render 'shared/circles' %>
 
 <% if @country['indepth'].present? %>
 <section class='bar-container'>
@@ -99,9 +42,7 @@
   <div class='inner'>
     <div id="<%= @country['iso'] %>" class='country-path'></div>
 
-    <% extent = (@country['extent'].to_i < 1000000) ? "#{number_with_delimiter((@country['extent']).round(1))} thousand ": "#{number_with_delimiter((@country['extent']/1000000).round(1))} million" %>
-
-    <h2 class='section-title country_state-title'><%= "#{@country['name'].titleize} has <span>#{extent}</span> hectares of trees.".html_safe %><a href='#' class='info' data-source='extent'><i></i></a></h2>
+    <h2 class='section-title country_state-title'><%= "#{@country['name'].titleize} has <span>#{extent_to_human(@country['extent'])}</span> hectares of trees.".html_safe %><a href='#' class='info' data-source='extent'><i></i></a></h2>
 
     <div class='forest_type'>
       <h3 class='section-subtitle'><a href='#' class='info' data-source='forest_type'><i></i></a>The type of forest in this country is...</h3>
@@ -115,11 +56,9 @@
     <div class='gross_value <%= 'narrow' if @country['employment'].present? && @country['employment'] > 0 && @country['employment'] < 25 %>'>
       <h3 class='section-subtitle'><a href='#' class='info' data-source='gross_value'><i></i></a>Economic value of <%= @country['name'].titleize %>'s forestry sector</h3>
 
-      <% gva = (@country['gva'].to_i < 1000000) ? "#{number_with_delimiter((@country['gva']).round(1))} thousand ": "#{number_with_delimiter((@country['gva']/1000000).round(1))} million" %>
-
       <% gva_percent = (@country['gva_percent'] < 0.1) ? number_to_percentage(@country['gva_percent'], precision: 2) : number_to_percentage(@country['gva_percent'], precision: 1) %>
 
-      <h2 class='section-title'><%= "The forestry sector contributed <span>USD #{gva}</span> to the economy in 2006, which is approximately <span>#{gva_percent} of the GDP.</span>".html_safe %></h2>
+      <h2 class='section-title'><%= "The forestry sector contributed <span>USD #{gva_to_human(@country['gva'])}</span> to the economy in 2006, which is approximately <span>#{gva_percent} of the GDP.</span>".html_safe %></h2>
     </div>
 
     <% employees = @country['employment'] %>
@@ -224,7 +163,7 @@
 
         <% if @country['external_links'].present? %>
           <% JSON.parse(@country['external_links']).each do |link| %>
-            <li><%= link_to link['title'], link['url'] %></li>
+            <li><%= link_to link['title'], link['url'], :target => '_blank' %></li>
           <% end %>
         <% end %>
       </ul>
@@ -314,7 +253,7 @@
   </div>
 </section>
 
-<div id='sources' class='sources'>
+<div id='sources' class='sources notranslate'>
   <%= render 'shared/countries' %>
   <%= render 'shared/sources' %>
 </div>

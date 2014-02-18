@@ -92,7 +92,7 @@
 
         <div class='source_body'>
           <h3 class='overview_title'>What is Global Forest Watch?</h3>
-          <p>Global Forest Watch (GFW) is a dynamic online forest monitoring and alert system that empowers people everywhere to better manage forests. For the first time, Global Forest Watch unites satellite technology, open data, and crowdsourcing to guarantee access to timely and reliable information about forests. GFW adheres to an <a href='https://github.com/Vizzuality/gfw'>open source</a> and <%= link_to 'open data', sources_path %> policy, providing access to data that are free for everyone. GFW is intended for use by governments, companies, NGOs, researchers, communities, and others seeking to better manage forests and improve local livelihoods.</p>
+          <p>Global Forest Watch (GFW) is a dynamic online forest monitoring and alert system that empowers people everywhere to better manage forests. For the first time, Global Forest Watch unites satellite technology, open data, and crowdsourcing to guarantee access to timely and reliable information about forests. GFW adheres to an <a href='https://github.com/Vizzuality/gfw'>open source</a> and <%= link_to 'open data', "#{sources_path}#data_policy" %> policy, providing access to data that are free for everyone. GFW is intended for use by governments, companies, NGOs, researchers, communities, and others seeking to better manage forests and improve local livelihoods.</p>
 
           <h3 class='overview_title'>Who can use it?</h3>
           <p>GFW aims to radically improve the availability, quality, and accessibility of forest data for everyone:</p>
@@ -261,7 +261,7 @@
           <ul class='bullets'>
             <li><strong>Protected areas vs. the grayscale base map:</strong> The boundaries for protected areas on the Google grayscale base map do not always align with the protected areas from the World Database on Protected Areas (WDPA). In this case, the WDPA data set only includes official protected areas—defined regions formally protected by law at the national level—whereas the base map includes recreational areas and other informal green spaces. Furthermore, the WDPA data is approved and reported by individual countries, while Google’s base map is composed of data from a variety of sources. Therefore, the base map grayscale network of parks and protected areas is more expansive (and less defined) than that of the protected areas layer, causing visible incongruities between the two data sets.</li>
 
-            <li><p><strong>Intact Forest Landscapes vs. tree cover extent:</strong> These data sets measure different things. Tree cover extent shows all 30 X 30 meter areas that meet a minimum threshold of tree cover, whereas Intact Forest Landscapes only show forests that show no significant signs of human activity (see the <%= link_to 'Data page', sources_path %> for specifics).</p>
+            <li><p><strong>Intact Forest Landscapes vs. tree cover extent:</strong> These data sets measure different things. Tree cover extent shows all 30 X 30 meter areas that meet a minimum threshold of tree cover (25% canopy cover), whereas Intact Forest Landscapes only show forests that show no significant signs of human activity (see the <%= link_to 'Data page', "#{sources_path}#forest_cover" %> for specifics).</p>
 
             <p>Users may find instances where tree cover extent does not fall within the boundaries of Intact Forest Landscapes. This is because the Intact Forest Landscapes layer is based on MODIS (250 meter resolution satellite imagery), which is known to overestimate low tree cover densities, whereas the tree cover extent layer is based on Landsat (30 meter resolution satellite imagery).  As a result, the tree cover extent layer may not show tree cover in an area that is covered by an intact forest landscape polygon.</p></li>
           </ul>
@@ -289,7 +289,7 @@
           <h3 class='overview_title'>What does it mean that Global Forest Watch is in “beta”?</h3>
           <p>While GFW is fully functional, we are still collecting user feedback to improve website features and functionality.</p>
 
-          <p>Establishing an effective web-based tool requires an iterative process of feedback and refinement. This is why your feedback is important to us. Please take our online <a href='https://www.surveymonkey.com/s/gfw2' target='_blank'>User Challenge</a> to help us improve the site.</p>
+          <p>Establishing an effective web-based tool requires an iterative process of feedback and refinement. This is why your feedback is important to us. Please take our online <a href='https://www.surveymonkey.com/s/gfw2' target='_blank'>User Survey</a> to help us improve the site.</p>
 
           <h3 class='overview_title'>I am experiencing difficulties with the site. What should I do?</h3>
           <p>Please first ensure that you are using an appropriate web browser. We recommend using a recent version of Google <a href='https://www.google.com/intl/en/chrome/browser/' target='_blank'>Chrome</a>, Mozilla <a href='http://www.mozilla.org/en-US/firefox/new/' target='_blank'>Firefox</a>, or Apple <a href='http://www.apple.com/safari/' target='_blank'>Safari</a>. We highly discourage viewing Global Forest Watch in Internet Explorer because of problems with the map functionality.</p>

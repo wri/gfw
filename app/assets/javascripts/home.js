@@ -141,6 +141,16 @@ $(function() {
     _onClickMap: function(e) {
       e.preventDefault();
 
+      if($(e.target).hasClass('all')) {
+        if (!_.include(config.MAPOPTIONS.layers.split(','), '581')) {
+          $('.user_stories .checkbox').click();
+        }
+      }
+
+      if($(e.target).hasClass('analyzing')) {
+        Analysis.startAnalyzing();
+      }
+
       this._updateHash();
     },
 
@@ -154,9 +164,9 @@ $(function() {
         map.mapTypes.set('terrain_style', styledMap);
         map.setMapTypeId('terrain_style');
 
-        var subscribe = this.subscribe = window.location.hash.replace('#','') === 'subscribe';
+        this.subscribe = window.location.hash.replace('#','') === 'subscribe';
 
-        if (subscribe) config.BASELAYER = 'forma';
+        if (this.subscribe) config.BASELAYER = 'forma';
 
         google.maps.event.addListenerOnce(map, 'idle', function() {
           that._loadOtherStuff();
@@ -291,13 +301,17 @@ $(function() {
       showMap = true;
 
       Circle.hide();
-      LayerSelector.show();
-      Legend.show();
-      SearchBox.show();
-      Timeline.show();
-      Analysis.show();
+
+      if (!Analysis.model.get('analyzing')) {
+        LayerSelector.show();
+        Legend.show();
+        SearchBox.show();
+        Timeline.show();
+      }
+
       $('#zoom_controls').show();
       $('#viewfinder').show();
+      Analysis.show();
 
       $('.for_business').fadeOut(250);
 

@@ -11,10 +11,12 @@
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <meta name='robots' content='noindex'>
 
+  <meta name="google-translate-customization" content="a45cf8584243ba0e-f48b15cdb6a3ab9b-gd8c738d3a7ff42de-11"></meta>
+
   <%= favicon_link_tag 'favicon.ico' %>
 
   <%= stylesheet_link_tag 'application', :media => 'all' %>
-  <%= stylesheet_link_tag 'static', :media => 'all' %>
+  <%= stylesheet_link_tag 'static' %>
   <%= javascript_include_tag 'modernizr-2.6.2.min' %>
   <%= csrf_meta_tags %>
 </head>
@@ -23,7 +25,13 @@
     <div class='inner'>
       <a href='/' class='header-logo'>Global Forest Watch</a>
 
-      <nav class='navbar'></nav>
+      <nav class='navbar'><ul>
+        <% if action_name == 'old' || action_name == 'accept_terms' %>
+          <div id="google_translate_element"></div>
+        <% else %>
+          <li><%= link_to (content_tag(:span, 'Back to the home page')), root_path %></li>
+        <% end %>
+      </ul></nav>
     </div>
 
     <div class='header_separator'></div>
@@ -45,9 +53,13 @@
 
   <%= render 'shared/footer' %>
 
+  <div class="backdrop"></div>
+
   <script type='text/javascript' src='http://maps.googleapis.com/maps/api/js?sensor=false' ></script>
+  <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
   <%= javascript_include_tag 'application' %>
   <%= javascript_include_tag 'old' %>
+
   <%= yield :js %>
   <%= render 'shared/js_footer' %>
 </body>

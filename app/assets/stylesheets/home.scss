@@ -10,6 +10,7 @@
 @import 'compass/css3/opacity';
 @import 'compass/css3/inline-block';
 @import 'compass/css3/text-shadow';
+@import 'compass/css3/transform';
 
 @import 'fonts';
 @import 'helpers';
@@ -33,20 +34,25 @@
 }
 
 .for_business {
-  width: 240px;
+  position: relative;
+  z-index: 1010;
+  display: block;
   float: right;
-  line-height: 1.3;
-  text-align: right;
+  margin-top: -10px;
+  height: 108px;
+  width: 108px;
+  @include icons-sprite(stamp);
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
 
-  p {
-    color: #666;
-    margin-bottom: 10px;
-
-    a {
-      font-size: 12px;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
+  span {
+    display: block;
+    position: relative;
+    top: 50px; left: -5px;
+    color: #fff;
+    @include rotate(30deg);
   }
 }
 
@@ -204,7 +210,7 @@
 
 #filters {
   position: absolute;
-  z-index: 1000;
+  z-index: 1010;
   top: 180px;
   width: 100%;
   height: 10px;
@@ -270,7 +276,7 @@
 
 #layer {
   position: absolute;
-  z-index: 1000;
+  z-index: 1010;
   top: -77px; left: -9999px;
   width: 170px;
   height: 90px;
@@ -488,78 +494,6 @@
   }
 }
 
-.legend_info {
-  @extend .clearfix;
-  width: 195px;
-  font-size: 11px;
-  margin-top: 10px;
-
-  strong {
-    display: block;
-    margin: 0 0 7px;
-    font-size: 10px;
-  }
-
-  p { font-size: 11px; }
-
-  .units {
-    font-weight: normal;
-    font-size: 10px;
-  }
-
-  &.tree {
-    margin-left: 0;
-
-    div { width: 193px; }
-
-    .colors {
-      border: 1px solid #ccc;
-
-      div {
-        width: 33%;
-
-        &:last-child { width: 34%; }
-
-        text-align: center;
-        padding: 6px 0;
-        font-size: 10px;
-        line-height: 100%;
-        color: #fff;
-        @include text-shadow(0px 0px 2px #000);
-      }
-    }
-  }
-
-  .data {
-    width: 193px;
-
-    .min { width: auto; float: left; }
-    .max { width: auto; float: right; }
-  }
-
-  .colors {
-    display: table-row;
-    margin: 3px 0 5px 0;
-    border: 1px solid #FED98E;
-    @include border-radius(3px);
-    width: 193px;
-
-    div {
-      width: 25%;
-      height: 10px;
-      display: table-cell;
-
-      &:first-child {
-        @include border-radius(3px 0 0 3px);
-      }
-
-      &:last-child {
-        @include border-radius(0 3px 3px 0px);
-      }
-    }
-  }
-}
-
 .legend_category {
   border-top: 1px solid #E5E5E5;
   padding: 15px;
@@ -614,6 +548,89 @@
       font-weight: bold;
       font-size: 11px;
       text-transform: uppercase;
+    }
+  }
+
+  .legend_info {
+    @extend .clearfix;
+    width: 195px;
+    margin-top: 10px;
+
+    strong {
+      display: block;
+      margin: 0 0 7px;
+      font-size: 10px;
+    }
+
+    p { font-size: 11px; }
+
+    .units {
+      font-weight: normal;
+      font-size: 10px;
+      text-transform: none;
+    }
+
+    sup {
+      position: relative;
+      top: -3px;
+      font-size: 80%;
+    }
+
+    &.tree {
+      margin-left: 0;
+
+      div { width: 193px; }
+
+      .colors {
+        border: 1px solid #ccc;
+
+        div {
+          width: 33%;
+
+          &:last-child { width: 34%; }
+
+          text-align: center;
+          padding: 6px 0;
+          font-size: 10px;
+          line-height: 100%;
+          color: #fff;
+          @include text-shadow(0px 0px 2px #000);
+        }
+      }
+    }
+
+    .data {
+      width: 193px;
+      font-size: 10px;
+
+      .min { width: auto; float: left; }
+      .max { width: auto; float: right; }
+    }
+
+    .colors {
+      display: table-row;
+      margin: 3px 0 5px 0;
+      border: 1px solid #FED98E;
+      @include border-radius(3px);
+      width: 193px;
+
+      div {
+        width: 25%;
+        height: 10px;
+        display: table-cell;
+
+        &:first-child {
+          @include border-radius(3px 0 0 3px);
+        }
+
+        &:last-child {
+          @include border-radius(0 3px 3px 0px);
+        }
+
+        &.wide {
+          width: 100%;
+        }
+      }
     }
   }
 }
@@ -862,6 +879,8 @@
 // }
 
 .map_coordinates {
+  color:#333;
+  text-shadow: 0px 0px 3px #fff;
   position: absolute;
   z-index: 10;
   bottom: 20px; right: 10px;
@@ -869,8 +888,6 @@
   font-size: 11px;
   @extend .sans-serif;
   text-align: right;
-  color: #fff;
-  @include text-shadow(0px 0px 3px #222);
   @include user-select(text);
 }
 
@@ -1199,4 +1216,8 @@
   @extend .sans-serif;
   text-shadow: 0px 0px 3px #fff;
   @include user-select(text);
+}
+
+.analysis {
+  display: none;
 }

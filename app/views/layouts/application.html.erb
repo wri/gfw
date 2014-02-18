@@ -56,22 +56,15 @@
 
   <%= render 'shared/footer' %>
 
-  <div class="backdrop white_backdrop"></div>
+  <div class="backdrop"></div>
 
   <%= render 'shared/js_templates' %>
 
-  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=drawing&sensor=false"></script>
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=drawing,geometry&sensor=false"></script>
   <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
   <%= javascript_include_tag 'application' %>
   <%= controller_javascript_include_tag %>
   <%= yield :js %>
   <%= render 'shared/js_footer' %>
-  <!-- translate -->
-  <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ar,es,fr,id,pt,ru,zh-CN', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-    }
-  </script>
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

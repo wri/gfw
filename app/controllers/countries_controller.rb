@@ -1,6 +1,6 @@
 class CountriesController < ApplicationController
 
-  before_filter :load_countries, :only => [:index, :overview]
+  before_filter :load_countries, :only => [:index]
 
   # GET /country/:id
   def show

@@ -1,0 +1,13 @@
+<% content_for :js do %>
+  <script>
+    $(function() {
+      cdb.init(function() {
+        window.countries_show = new gfw.ui.view.CountriesEmbedShow({
+          iso: "<%= @country['iso'] %>"
+        });
+      });
+    });
+  </script>
+<% end %>
+
+<%= render 'shared/circles' %>

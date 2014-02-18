@@ -13,6 +13,7 @@ gem 'carrierwave'
 gem 'fog'
 gem 'rmagick'
 gem 'unf'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'foreman'

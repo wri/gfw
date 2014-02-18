@@ -2,9 +2,9 @@
   <!-- Circle -->
   <script type='text/javascript'>
     var circleSummary = [
-      { icon: 'area', count: '19.27', title: 'Million hectares of tree cover loss in 2012' },
-      { icon: 'area', count: '211.47', title: 'Million hectares of tree cover loss from 2000 to 2012' },
-      { icon: 'area', count: '80.62', title: 'Million hectares of tree cover gain from 2000 to 2012' },
+      { icon: 'area', count: '20.8', title: 'Million hectares of tree cover loss in 2012' },
+      { icon: 'area', count: '229.8', title: 'Million hectares of tree cover loss from 2000 to 2012' },
+      { icon: 'area', count: '80.6', title: 'Million hectares of tree cover gain from 2000 to 2012' },
       { icon: 'flag', count: '16,261', title: 'FORMA alerts in December 2013' }
     ];
   </script>
@@ -22,12 +22,6 @@
         <div class='explore'>Explore the map</div>
       </div>
     </div>
-  </script>
-
-  <!-- Source window -->
-  <script id='window-template' type='text/x-underscore-template'>
-    <a href='#' class='close'></a>
-    <div class='content'></div>
   </script>
 
   <!-- Filters -->
@@ -149,9 +143,9 @@
           {{#max}}<div class='max'>{{max}}</div>{{/max}}
 
           <div class='colors'>
-          {{#colors}}
-            <div class='quartile' style='background-color:{{color}}'>{{title}}</div>
-          {{/colors}}
+            {{#colors}}
+            <div class="quartile wide" style="background: {{color_min}};background: -moz-linear-gradient(left, {{color_min}} 0%, {{color_max}} 100%);background: -webkit-gradient(linear, left top, right top, color-stop(0%,{{color_min}}), color-stop(100%,{{color_max}}));background: -webkit-linear-gradient(left, {{color_min}} 0%,{{color_max}} 100%);background: -o-linear-gradient(left, {{color_min}} 0%,{{color_max}} 100%);background: -ms-linear-gradient(left, {{color_min}} 0%,{{color_max}} 100%)background: linear-gradient(to right, {{color_min}} 0%,{{color_max}} 100%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{{color_min}}', endColorstr='{{color_max}}',GradientType=1 );background-image: -ms-linear-gradient(left, {{color_min}} 0%,{{color_max}} 100%)"></div>
+            {{/colors}}
           </div>
         </div>
       </ul>
@@ -177,7 +171,7 @@
 
             <div class='colors'>
               {{#colors}}
-              <div class='quartile' style='background-color:{{color}}'>{{title}}</div>
+              <div class="quartile wide" style="background: {{color_min}};background: -moz-linear-gradient(left, {{color_min}} 0%, {{color_max}} 100%);background: -webkit-gradient(linear, left top, right top, color-stop(0%,{{color_min}}), color-stop(100%,{{color_max}}));background: -webkit-linear-gradient(left, {{color_min}} 0%,{{color_max}} 100%);background: -o-linear-gradient(left, {{color_min}} 0%,{{color_max}} 100%);background: -ms-linear-gradient(left, {{color_min}} 0%,{{color_max}} 100%)background: linear-gradient(to right, {{color_min}} 0%,{{color_max}} 100%);filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='{{color_min}}', endColorstr='{{color_max}}',GradientType=1 );background-image: -ms-linear-gradient(left, {{color_min}} 0%,{{color_max}} 100%)"></div>
               {{/colors}}
             </div>
           </div>
@@ -390,7 +384,7 @@
                 <span id='alerts-count'>
                   {{ loss }}
                 </span>
-              </strong> Ha
+              </strong> {{ units }}
             </p>
           </li>
 
@@ -401,18 +395,7 @@
                 <span id='alerts-count'>
                   {{ gain }}
                 </span>
-              </strong> Ha
-            </p>
-          </li>
-
-          <li class='alert'>
-            <strong class='title'>Tree cover 2000</strong>
-            <p class='count forma'>
-              <strong>
-                <span id='alerts-count'>
-                  {{ treecover_2000 }}
-                </span>
-              </strong> Ha
+              </strong> {{ units }}
             </p>
           </li>
         </ul>
@@ -448,6 +431,8 @@
                   {{ degrad }}
                 </span>
               </strong> Ha
+
+              {{#download}}<a href='{{download}}' target='_blank' class='download'>download</a>{{/download}}
             </p>
           </li>
           {{/degrad}}
@@ -549,7 +534,7 @@
         <h1 class='title'>{{ title }}</h1>
 
         <div class='form'>
-          <p class='subtitle'><span>{{ subtitle }}</span></p>
+          <p class='help'><span>{{ help }}</span></p>
 
           <div class='input-field huge'>
             <input class='field' type='{{ input_type }}' name='area[email]' id='area_email' />
@@ -558,7 +543,7 @@
             <div class='error_input_label'></div>
           </div>
 
-          <a href='#' class='btn green darker_glow send'>
+          <a href='#' class='btn darker_glow send'>
             <span>{{ button_title }}</span>
           </a>
         </div>
