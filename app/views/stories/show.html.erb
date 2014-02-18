@@ -55,7 +55,7 @@ end %>
           <% if media['embed_url'].present? %>
             <li class='slide'><%= youtube_embed(media['embed_url']).html_safe %></li>
           <% else %>
-            <li class='slide'><%= image_tag media['url'] %></li>
+            <li class='slide'><%= image_tag "#{ENV['AWS_HOST']}/big_#{media['url']}" %></li>
           <% end %>
         <% end %>
       </ul>

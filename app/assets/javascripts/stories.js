@@ -64,7 +64,7 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
 
       _.each(data.files, function(file) {
         var filename = prettifyFilename(file.name);
-        var $thumbnail = $("<li class='thumbnail preview' data-name='"+filename+"' />");
+        var $thumbnail = $("<li class='thumbnail preview' data-name='"+prettifyFilename(filename)+"' />");
 
         $('.thumbnails').append($thumbnail);
         $thumbnail.fadeIn(250);
@@ -104,19 +104,17 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
 
       var $thumb = $("<li class='thumbnail'><div class='inner_box'><img src='"+file.preview.toDataURL()+"' /></div><a href='#' class='destroy'></a></li>");
     }).on('fileuploaddone', function (e, data) {
-      var index = data.index,
-          file = data.files[index],
-          node = $(data.context.children()[index]);
+      var files = [data.result]
 
-      $.each(data.result, function (index, thumbnail_url) {
+      $.each(files, function (index, file) {
         that.filesAdded--;
 
-        that.uploadsIds.push(thumbnail_url);
+        that.uploadsIds.push(file.basename);
 
-        var url = thumbnail_url.replace('https', 'http');
-        var $thumb = $("<li class='sortable thumbnail'><div class='inner_box'><img src='"+thumbnail_url+"' /></div><a href='#' class='destroy'></a></li>");
+        var url = file.url.replace('https', 'http');
+        var $thumb = $("<li class='sortable thumbnail'><div class='inner_box'><img src='"+url+"' /></div><a href='#' class='destroy'></a></li>");
 
-        var filename = prettifyFilename(getFilename(thumbnail_url));
+        var filename = prettifyFilename(file.basename);
 
         $(".thumbnail[data-name='"+filename+"']").fadeOut(250, function() {
           $(this).remove();
@@ -131,8 +129,7 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
           var confirmation = confirm('Are you sure?')
 
           if (confirmation == true) {
-            debugger;
-            uploadsIds = _.without(that.uploadsIds, thumbnail_url);
+            uploadsIds = _.without(that.uploadsIds, file.basename);
             $("#uploads_ids").val(uploadsIds.join(","));
 
             $thumb.fadeOut(250, function() {
