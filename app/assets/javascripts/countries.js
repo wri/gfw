@@ -2,6 +2,7 @@
 //= require topojson.v1.min
 //= require scrollIt.min
 //= require jquery.qtip.min
+//= require simple_statistics
 //= require gfw/ui/widget
 //= require gfw/ui/sourcewindow
 
@@ -1159,6 +1160,38 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     }
   },
 
+  linearRegressionLine: function(svg, dataset, x_scale, y_scale) {
+    // linear regresion line
+    var lr_line = ss.linear_regression()
+      .data(dataset.rows.map(function(d) { return [d.loss, d.gain]; }))
+      .line();
+
+    var line = d3.svg.line()
+      .x(x_scale)
+      .y(function(d) { return y_scale(lr_line(d));} )
+
+    var x0 = x_scale.domain()[0];
+    var x1 = x_scale.domain()[1];
+    var lr = svg.selectAll('.linear_regression').data([0]);
+
+    var attrs = {
+       "x1": x_scale(x0),
+       "y1": y_scale(lr_line(x0)),
+       "x2": x_scale(x1),
+       "y2": y_scale(lr_line(x1)),
+       "stroke-width": 1.3,
+       "stroke": "white",
+       "stroke-dasharray": "7,5"
+    };
+
+    lr.enter()
+      .append("line")
+       .attr('class', 'linear_regression')
+       .attr(attrs);
+
+    lr.transition().attr(attrs);
+  },
+
   _toggleClass: function() {
     if (this.model.get('class') === 'expanded') {
       $('.countries_list__header__minioverview').addClass('expanded');
@@ -2095,9 +2128,10 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('in2', 'blurOut')
         .attr('mode', 'normal');
 
-      var sql = 'SELECT iso, name, enabled, (SELECT SUM(y2001_y2012)\
+      var sql = 'WITH ratio as (SELECT iso, name, enabled, (SELECT SUM(y2001_y2012)\
                                              FROM countries_gain g\
-                                             WHERE g.iso = c.iso) as gain, (SELECT SUM(';
+                                             WHERE g.iso = c.iso\
+                                             AND y2001_y2012 is not null) as gain, (SELECT SUM(';
 
       for(var y = 2001; y < 2012; y++) {
         sql += 'y'+y+' + ';
@@ -2107,7 +2141,13 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                      WHERE loss.iso = c.iso) as loss, (SELECT SUM(y2000)\
                                                        FROM countries_extent extent\
                                                        WHERE extent.iso = c.iso) as extent\
-                     FROM gfw2_countries c';
+                     FROM gfw2_countries c)\
+                     SELECT *\
+                     FROM ratio\
+                     WHERE enabled is true\
+                     AND loss is not null\
+                     ORDER BY loss DESC\
+                     LIMIT 50';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows;
@@ -2118,17 +2158,19 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .range([h, 0])
           .domain([0, d3.max(data, function(d) { return d.gain; })]);
 
-        var x_log_scale = d3.scale.log()
+        var x_log_scale = d3.scale.linear()
           .range([m, w-m])
           .domain([1, d3.max(data, function(d) { return d.loss; })]);
 
-        var y_log_scale = d3.scale.log()
+        var y_log_scale = d3.scale.linear()
           .range([h-log_m, m])
-          .domain([1, d3.max(data, function(d) { return d.gain; })]);
+          .domain([d3.min(data, function(d) { return d.gain; }), d3.max(data, function(d) { return d.gain; })]);
 
         var r_scale = d3.scale.linear()
           .range([5, 30]) // max ball radius
           .domain([0, d3.max(data, function(d) { return d.extent; })])
+
+        that.linearRegressionLine(svg, json, x_log_scale, y_log_scale);
 
         // circles w/ magic numbers :(
         var circle_attr = {
