@@ -1204,6 +1204,10 @@
   font-size: 12px;
   @extend .sans-serif;
   text-shadow: 0px 0px 3px #fff;
+
+  span {
+    font-weight: normal;
+  }
 }
 
 .timeline_coordinates {

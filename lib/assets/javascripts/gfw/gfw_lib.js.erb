@@ -1241,6 +1241,7 @@ GFW.modules.maplayer = function(gfw) {
         GFW.app.baseLayer && GFW.app.baseLayer.setOptions({ opacity: 0 });
         GFW.app.currentBaseLayer = null;
         GFW.app._toggleTimeLayer();
+        Legend.removeCategory('forest_clearing');
       },
 
       _removeSubLayers: function() {

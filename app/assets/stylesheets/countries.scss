@@ -507,6 +507,11 @@
     &:last-child {
       border-right: 1px solid #4E4E4E;
     }
+
+    &.disabled {
+      @include opacity(.5);
+      @include pointer-events(none);
+    }
   }
 
   a {

@@ -29,7 +29,7 @@
     <div class='inner'>
       <ul>
         <li><a href='#state' data-scroll-nav='0'>State of the Forest</a></li>
-        <li><a href='#people' data-scroll-nav='1'>People & Economy</a></li>
+        <li class='<%= 'disabled' unless @country['gva'].present? && @country['gva'] > 0 %>'><a href='#people' data-scroll-nav='1'>People & Economy</a></li>
         <li><a href='#tenure' data-scroll-nav='2'>Tenure & Laws</a></li>
         <li><a href='#climate' data-scroll-nav='3'>Climate Change</a></li>
         <li><a href='#conventions' data-scroll-nav='4'>Conventions</a></li>
@@ -51,6 +51,7 @@
   </div>
 </section>
 
+<% if @country['gva'].present? && @country['gva'] > 0 %>
 <section class='section country_people' data-scroll-index='1'>
   <div class='inner'>
     <div class='gross_value <%= 'narrow' if @country['employment'].present? && @country['employment'] > 0 && @country['employment'] < 25 %>'>
@@ -87,6 +88,7 @@
     <% end %>
   </div>
 </section>
+<% end %>
 
 <section class='section country_laws' data-scroll-index='2'>
   <div class='inner forest_tenure'>
