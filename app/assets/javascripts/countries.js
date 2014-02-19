@@ -1069,7 +1069,13 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                                                          WHERE loss.iso = gain.iso) as sum_loss ';
       sql += 'FROM gain, gfw2_countries c\
               WHERE gain.iso = c.iso AND c.enabled is true\
-              ORDER BY sum_loss DESC ';
+              ORDER BY sum_loss DESC\
+              LIMIT 50';
+
+      sql = 'WITH ratio as ('+sql+')\
+             SELECT *\
+             FROM ratio\
+             ORDER BY ratio_loss DESC ';
 
       if(e) {
         sql += ['OFFSET 10',
