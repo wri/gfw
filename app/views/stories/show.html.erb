@@ -42,7 +42,7 @@ end %>
   <% if @story['media'].present?  %>
     <div class="carrousel">
       <div class="frame">
-        <%= image_tag(static_map(@story['coordinates'])) %>
+        <%= image_tag(static_map(@story['coordinates'], '266x266', 4, true)) %>
       </div>
 
       <% if @story['media'].size > 1 %>
