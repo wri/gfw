@@ -354,8 +354,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         var baselayer = config.BASELAYER;
 
         if (baselayer === 'loss' && data) {
-          var loss  = formatNumber(Math.ceil((data.loss_area) * 10) / 10, true);
-          var gain  = formatNumber(Math.ceil((data.gain_area) * 10) / 10, true);
+          var loss  = formatNumber(Math.ceil((data.loss) * 10) / 10, true);
+          var gain  = formatNumber(Math.ceil((data.gain) * 10) / 10, true);
 
           this.info.model.set({
             'spinner': false,
