@@ -215,9 +215,9 @@
 
           <ul clasS='bullets'>
             <li><strong>Forest change data</strong>, such as global forest change data from the University of Maryland, near real-time FORMA alerts for the humid tropics, SAD alerts for the Brazilian Amazon from Imazon, quarterly vegetation change data from NASA, and others</li>
-            <li><strong>Forest cover data</strong>, including the extent of forest land in 2000, Intact Forest Landscapes, and pantropical carbon density</li>
+            <li><strong>Forest cover data</strong>, including the extent of tree cover in 2000, Intact Forest Landscapes, and pantropical carbon density</li>
             <li><strong>Forest use data</strong>, which includes contextual information, such as concession areas for natural resource extraction or agricultural production</li>
-            <li><strong>Conservation data</strong>, such as global boundaries for protected areas, biogeographical data on threatened species, and biodiversity hotspots</li>
+            <li><strong>Conservation data</strong>, such as global boundaries for protected areas and biodiversity hotspots</li>
             <li><strong>Qualitative and anecdotal data</strong>, such as user-submitted stories (submit one <%= link_to 'here', new_story_path %>)</li>
             <li><strong>People data</strong>, including community land boundaries and land tenure rights (coming soon)</li>
           </ul>
@@ -247,7 +247,7 @@
           <p>Different data sets measure different things and are derived using different methodologies. Such differences can lead to results that may manifest as contradictory layers on the GFW platform. In some cases, a lack of available high-quality data may cause a greater margin of error for certain data sets.</p>
 
           <ul class='bullets'>
-            <li><strong>Protected areas vs. the grayscale base map:</strong> The boundaries for protected areas on the Google grayscale base map do not always align with the protected areas from the World Database on Protected Areas (WDPA). In this case, the WDPA data set only includes official protected areas—defined regions formally protected by law at the national level—whereas the base map includes recreational areas and other informal green spaces. Furthermore, the WDPA data is approved and reported by individual countries, while Google’s base map is composed of data from a variety of sources. Therefore, the base map grayscale network of parks and protected areas is more expansive (and less defined) than that of the protected areas layer, causing visible incongruities between the two data sets.</li>
+            <li><strong>Protected areas vs. the grayscale base map:</strong> The boundaries for protected areas on the Google grayscale base map do not always align with the protected areas from the World Database on Protected Areas (WDPA). In this case, the WDPA data set only includes official protected areas -- defined regions formally protected by law at the national level -- whereas the base map includes recreational areas and other informal green spaces. Furthermore, the WDPA data is approved and reported by individual countries, while Google’s base map is composed of data from a variety of sources. Therefore, the base map grayscale network of parks and protected areas is more expansive (and less defined) than that of the protected areas layer, causing visible incongruities between the two data sets.</li>
 
             <li><p><strong>Intact Forest Landscapes vs. tree cover extent:</strong> These data sets measure different things. Tree cover extent shows all 30 X 30 meter areas that meet a minimum threshold of tree cover (25% canopy cover), whereas Intact Forest Landscapes only show forests that show no significant signs of human activity (see the <%= link_to 'Data page', "#{sources_path}#forest_cover" %> for specifics).</p>
 
