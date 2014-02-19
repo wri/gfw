@@ -356,15 +356,15 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         },
         {
           name: 'Public lands reserved for communities and indigenous groups',
-          percent: data.tenure_owned
+          percent: data.tenure_reserved
         },
         {
           name: 'Private lands owned by communities and indigenous groups',
-          percent: data.tenure_owned_individuals
+          percent: data.tenure_owned
         },
         {
           name: 'Private lands owned by firms and individuals',
-          percent: data.tenure_reserved
+          percent: data.tenure_owned_individuals
         }
       ];
 
