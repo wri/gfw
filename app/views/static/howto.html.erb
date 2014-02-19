@@ -92,7 +92,7 @@
 
         <div class='source_body'>
           <h3 class='overview_title'>What is Global Forest Watch?</h3>
-          <p>Global Forest Watch (GFW) is a dynamic online forest monitoring and alert system that empowers people everywhere to better manage forests. For the first time, Global Forest Watch unites satellite technology, open data, and crowdsourcing to guarantee access to timely and reliable information about forests. GFW adheres to an <a href='https://github.com/Vizzuality/gfw'>open source</a> and <%= link_to 'open data', "#{sources_path}#data_policy" %> policy, providing access to data that are free for everyone. GFW is intended for use by governments, companies, NGOs, researchers, communities, and others seeking to better manage forests and improve local livelihoods.</p>
+          <p>Global Forest Watch (GFW) is a dynamic online forest monitoring and alert system that empowers people everywhere to better manage forests. For the first time, Global Forest Watch unites satellite technology, open data, and crowdsourcing to guarantee access to timely and reliable information about forests. GFW adheres to an <a href='https://github.com/Vizzuality/gfw' target='_blank'>open source</a> and <%= link_to 'open data', "#{sources_path}#data_policy" %> policy, providing access to data that are free for everyone. GFW is intended for use by governments, companies, NGOs, researchers, communities, and others seeking to better manage forests and improve local livelihoods.</p>
 
           <h3 class='overview_title'>Who can use it?</h3>
           <p>GFW aims to radically improve the availability, quality, and accessibility of forest data for everyone:</p>
@@ -110,7 +110,7 @@
           <p>GFW also brings together a dynamic community of partners with expertise in forest science, conservation, supply chain management, web development, citizen science, community outreach, and in-depth knowledge of priority forests around the world.</p>
 
           <h3 class='overview_title'>Who is behind Global Forest Watch?</h3>
-          <p>GFW is supported by a diversity of partners that contribute data, technical capabilities, funding, and expertise. The partnership is convened by the World Resources Institute. Visit the <%= link_to 'GFW about page', about_path %> for a full list of partners.</p>
+          <p>GFW is supported by a diversity of partners that contribute data, technical capabilities, funding, and expertise. The partnership is convened by the World Resources Institute. Visit the <%= link_to 'GFW About page', about_path %> for a full list of partners.</p>
 
           <p>Interested in joining the GFW partnership? Email us <a href='mailto:gfw@wri.com'>here</a>.</p>
 
@@ -129,17 +129,12 @@
 
           <ul class='bullets'>
             <li><strong><%= link_to 'Submit a story', new_story_path %></strong> about forest change.</li>
-            <li><strong><a href='mailto:mailto:gfw@wri.org'>Contribute or share data</a></strong> through GFW. Please send an email <a href='mailto:mailto:gfw@wri.org'>here</a></li>
-            <li><strong><a href='https://github.com/Vizzuality/gfw' target='_blank'>Contribute open source code</a></strong> by submitting a pull request to our <a href='https://github.com/Vizzuality/gfw' target='_blank'>website repository</a> or <a href='https://github.com/wri/gfw-api' target='_blank'>API repository</a> on GitHub.</li>
-            <li><strong><a href='https://www.surveymonkey.com/s/gfw2' target='_blank'>Suggest improvements</a></strong> by filling out our “user feedback survey” vey.</li>
-            <li><strong>Use Global Forest Watch and let us know how it has helped you</strong> using our feedback survey <a href='https://www.surveymonkey.com/s/gfw2' target='_blank'>here</a>.</li>
+            <li><strong>Contribute or share data</strong> through GFW. Please send an email <a href='mailto:mailto:gfw@wri.org'>here</a>.</li>
+            <li><strong>Suggest improvements</strong> by filling out our <a href='https://www.surveymonkey.com/s/gfw2' target='_blank'>User Survey</a>.</li>
+            <li><strong>Use Global Forest Watch and let us know how it has helped you</strong> by filling out our <a href='https://www.surveymonkey.com/s/gfw2' target='_blank'>User Survey</a>.</li>
+            <li><strong>Contribute open source code</strong> by submitting a pull request to our <a href='https://github.com/Vizzuality/gfw' target='_blank'>website repository</a> or <a href='https://github.com/wri/gfw-api' target='_blank'>API repository</a> on GitHub.</li>
             <li><strong>(Coming soon) Validate data</strong> by participating in citizen science. GFW will invite users to help classify satellite images and strengthen global forest change data sets.</li>
           </ul>
-
-          <h3 class='overview_title'>What is the history of Global Forest Watch?</h3>
-          <p>The original Global Forest Watch began in 1997 as an initiative to establish a global forest monitoring network around the world, convened by the <a href='http://www.wri.org/' target='_blank'>World Resources Institute</a> and partners. The original GFW achieved many outcomes that helped advance the conservation of large intact forest areas. Visit the <%= link_to 'About page', about_path %> for the full story.</p>
-
-          <p>Global Forest Watch was relaunched in 2014 with an expanded group of partners and powerful new monitoring capabilities. To learn more about how you can get involved in developing GFW, please take our online <a href='https://www.surveymonkey.com/s/gfw2' target='_blank'>User Challenge</a>.</p>
 
           <h3 class='overview_title'>What features are coming down the road for GFW?</h3>
           <p>Here is a list of additional features that we are working to add to the GFW platform:</p>
@@ -249,7 +244,7 @@
           <ul class='bullets'>
             <li><strong>Protected areas vs. the grayscale base map:</strong> The boundaries for protected areas on the Google grayscale base map do not always align with the protected areas from the World Database on Protected Areas (WDPA). In this case, the WDPA data set only includes official protected areas—defined regions formally protected by law at the national level—whereas the base map includes recreational areas and other informal green spaces. Furthermore, the WDPA data is approved and reported by individual countries, while Google’s base map is composed of data from a variety of sources. Therefore, the base map grayscale network of parks and protected areas is more expansive (and less defined) than that of the protected areas layer, causing visible incongruities between the two data sets.</li>
 
-            <li><p><strong>Intact Forest Landscapes vs. tree cover extent:</strong> These data sets measure different things. Tree cover extent shows all 30 X 30 meter areas that meet a minimum threshold of tree cover (25% canopy cover), whereas Intact Forest Landscapes only show forests that show no significant signs of human activity (see the <%= link_to 'Data page', "#{sources_path}#forest_cover" %> for specifics).</p>
+            <li><p><strong>Intact Forest Landscapes vs. tree cover extent:</strong> These data sets measure different things. Tree cover extent shows all 30 x 30 meter areas that meet a minimum threshold of tree cover (25% canopy cover), whereas Intact Forest Landscapes only show forests that show no significant signs of human activity (see the <%= link_to 'Data page', "#{sources_path}#forest_cover" %> for specifics).</p>
 
             <p>Users may find instances where tree cover extent does not fall within the boundaries of Intact Forest Landscapes. This is because the Intact Forest Landscapes layer is based on MODIS (250 meter resolution satellite imagery), which is known to overestimate low tree cover densities, whereas the tree cover extent layer is based on Landsat (30 meter resolution satellite imagery).  As a result, the tree cover extent layer may not show tree cover in an area that is covered by an intact forest landscape polygon.</p></li>
           </ul>
@@ -280,11 +275,11 @@
           <p>Establishing an effective web-based tool requires an iterative process of feedback and refinement. This is why your feedback is important to us. Please take our online <a href='https://www.surveymonkey.com/s/gfw2' target='_blank'>User Survey</a> to help us improve the site.</p>
 
           <h3 class='overview_title'>I am experiencing difficulties with the site. What should I do?</h3>
-          <p>Please first ensure that you are using an appropriate web browser. We recommend using a recent version of Google <a href='https://www.google.com/intl/en/chrome/browser/' target='_blank'>Chrome</a>, Mozilla <a href='http://www.mozilla.org/en-US/firefox/new/' target='_blank'>Firefox</a>, or Apple <a href='http://www.apple.com/safari/' target='_blank'>Safari</a>. We highly discourage viewing Global Forest Watch in Internet Explorer because of problems with the map functionality.</p>
+          <p>Please first ensure that you are using an appropriate web browser. We recommend using a recent version of <a href='https://www.google.com/intl/en/chrome/browser/' target='_blank'>Google Chrome</a>, <a href='http://www.mozilla.org/en-US/firefox/new/' target='_blank'>Mozilla Firefox</a>, <a href='http://www.apple.com/safari/' target='_blank'>Apple Safari</a>, or <a href='http://windows.microsoft.com/en-us/internet-explorer/download-ie' target='_blank'>Internet Explorer</a>. We also recommend that you install <a href='http://get.adobe.com/flashplayer/' target='_blank'>Adobe Flash Player</a> before using the GFW website.</p>
 
           <p>If errors persist when using a recommended browser, please contact us at <a href='mailto:gfw@wri.org'>gfw@wri.org</a>.</p>
 
-          <p>GFW is still in “beta,” which means that there may still be some minor issues and errors within the site. We are usually able to fix them in a timely manner. It is helpful if you send us a link to the page or data set you had open when you encountered the problem, and if you tell us which browser you are using. If you want to give us general feedback or suggestions about new data or functionality, please use the <a href='http://cait2.wri.org/feedback.html' target='blank_'>feedback form</a>.</p>
+          <p>GFW is still in “beta,” which means that there may still be some minor issues and errors within the site. We are usually able to fix them in a timely manner. It is helpful if you send us a link to the page or data set you had open when you encountered the problem, and if you tell us which browser you are using. You can also view the <a href='http://stats.pingdom.com/me0q72oj01nt' target='_blank'>Global Forest Watch System Status</a> page to see if there are any portions of the website that are not working properly. If you want to give us general feedback or suggestions about new data or functionality, please use the <a href='https://www.surveymonkey.com/s/gfw2' target='_blank'>User Survey</a>.</p>
 
           <h3 class='overview_title'>Whom do I contact with questions about the site?</h3>
           <p>Please email general inquiries to <a href='mailto:gfw@wri.org'>gfw@wri.org</a>.</p>
@@ -303,7 +298,7 @@
 
           <p><%= link_to 'Global Forest Watch (GFW)', about_path %> provides information and analysis to help you avoid these risks and be a better steward of forests.</p>
 
-          <p>GFW is now open for beta testing to users around the world who want to see what is happening in forests in near-real-time. Building on the core data platform, we are now engaging interested companies to develop specialized features and services geared for business users. We envision this platform enabling business users to:</p>
+          <p>GFW is now open for beta testing to users around the world who want to see what is happening in forests in near real-time. Building on the core data platform, we are now engaging interested companies to develop specialized features and services geared for business users. We envision this platform enabling business users to:</p>
 
           <ul class='bullets'>
             <li>Communicate with customers about deforestation-free commodity production</li>
