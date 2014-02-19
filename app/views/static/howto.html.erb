@@ -158,44 +158,44 @@
         <h2 class='source_category_title'>Terminology</h2>
 
         <div class='source_body'>
-          <h3 class='overview_title'>How does Global Forest Watch define “forest”?</h3>
-          <p>Various definitions exist for the term “forest,” and GFW does not aim to provide a consensus definition. The various data sets hosted on GFW may define “forest” differently or pertain to different types of forest. Some data sets avoid the term altogether, instead referring to “tree cover,” as defined by key parameters (tree height, density, etc.). Through information found on the <%= link_to 'Data page', sources_path %>, we aim to be transparent about the assumptions and definitions feeding into each data set. In our general writing, including the GFW blog, “forest” refers to a landscape with a high density of trees and value for biodiversity, carbon storage, and human use.</p>
+          <h3 class='overview_title'>How does GFW define key terms?</h3>
+          <strong>Forest</strong>
+          <p></p>
+          <p>Various definitions exist for the term “forest,” and GFW does not aim to provide a consensus definition. Data sets hosted on GFW may define “forest” differently or pertain to different types of forest (primary, secondary, tree plantations, etc.). Through information found on the <%= link_to 'Data page', sources_path %>, we aim to be transparent about the assumptions and definitions feeding into each data set.</p>
 
-          <p>See the next entry for GFW’s approach to tree plantations versus natural forests.</p>
-
-          <h3 class='overview_title'>Do you distinguish tree plantations from natural forests?</h3>
-          <p>As noted above, the various data sets hosted on GFW may define “forest” differently.</p>
-
-          <p>Tree plantations are not distinguished from natural forests in the case of several key data sets hosted on GFW (including 2000 Forest Cover Extent, UMD tree cover loss and gain, FORMA alerts, and QUICC alerts). Tree cover loss may include cases of plantation forests being harvested, and tree cover gain may include cases where natural forests are replaced with tree plantations.</p>
-
-          <p>It is nonetheless important to <a href='http://www.sciencemag.org/content/342/6160/805.full' target='_blank'>distinguish</a> between natural forests and tree plantations when considering conservation value, carbon storage, and value to local communities. Natural forests have higher biodiversity, store more carbon, and are more often associated with the traditional livelihoods of forest-dependent communities.</p>
-
-          <p>Global Forest Watch users may be able to use contextual data such as concession boundaries, protected areas, and satellite imagery base maps  to help distinguish tree plantation from natural forests. Users are also encouraged to compare data available on GFW to other data sets that may help distinguish plantations from natural forests. GFW and partners are also currently developing a “plantation forests map” for the tropical regions to determine the location of plantations on a near-global scale. The map, developed through remote sensing methods, will be coming soon to the GFW site.</p>
-
-          <h3 class='overview_title'>How do you define “deforestation” and related terms (e.g., “forest loss,” “forest clearing,” “tree cover loss,” and “tree cover loss alerts”?)</h3>
-
-          <p>The various data sets hosted on GFW have different terminology for types of forest change and may define these terms differently. GFW does not aim to provide a consensus definition. See our <%= link_to 'Data page', sources_path %> for more detail.</p>
-
-          <p>In general writing, GFW uses “forest loss,” “forest clearing,” “forest cover loss,” “forest degradation,” and similar terms to refer to the removal of a significant number of trees from a landscape. This can be the result of human use of forest landscapes or natural events. These terms are generally “gross,” not “net,” as they do not take into account regrowth of forests.</p>
-
-          <p>Note: We generally do not use the term “deforestation” on the GFW website in order to avoid confusion with technical usages of this word by different sectors.</p>
-
-          <p>Data sets such as FORMA alerts, QUICC alerts, MODIS fire alerts, and SAD alerts are “forest cover loss alerts.”</p>
-
-          <p>Here are key examples of how a few GFW-hosted data sets define these terms:</p>
-
+          <p>In our general writing, including the GFW blog, “forest” refers to a landscape with a high density of trees and value for biodiversity, carbon storage, and human use.</p>
+          
+          <p><strong>Deforestation</strong></p>
+          <p></p>
+          <p>How one defines “deforestation” is dependent on how one defines “forest.” As noted above, various definitions of forest exist and GFW does not aim to provide a consensus view. Correspondingly, GFW does not provide a single definition for “deforestation.”</p>
+          <p>In general writing, GFW uses “deforestation” to refer to the removal of a significant number of trees from a landscape, typically in the context of human actions rather than natural events such as fires or disease. We generally refer to “gross” deforestation (the total amount of forest loss), rather than “net deforestation” (the total amount of forest loss minus the amount of forest gain), or clearly specify otherwise.</p>
+          <p>For more information on each data set, please visit our <%= link_to 'Data page', sources_path %></p>
+          
+           <p><strong>Tree cover</strong></p>
+          <p></p>
+          <p>Where found on the GFW website, “tree cover” refers to the biophysical presence of trees, which may be part of natural forests or tree plantations. The inclusion of all types of tree plantations in the “tree cover” definition notably distinguishes the term from some definitions of “forest.” Accordingly, “tree cover” and “forest” should not be used interchangeably. Different data sets further define “tree cover” with added parameters (see the Data page <%= link_to 'Data page', sources_path %> for details and distinctions).</p>
+          
+          <p><strong>Tree cover loss</strong></p>
+          <p></p>
+          <p>“Tree cover loss” refers to the removal of trees, which may be within natural forests or tree plantations. Accordingly, “tree cover loss” does not necessarily equate to “deforestation” and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. Different data sets have additional parameters that must be met for the indication or alert of loss to appear on the GFW map (see examples below).</p>
           <ul class='bullets'>
-            <li>The UMD Tree Cover Loss data sets define “tree cover loss” as stand replacement disturbance, or the death of living trees within a 30 meter × 30 meter area. This definition only applies to areas where canopy cover exceeds 25%, with vegetation more than 5 meters tall.</li>
+            <li><strong>UMD Tree Cover Loss:</strong> Loss is defined as “stand replacement disturbance,” or the complete removal or mortality of tree cover canopy (of any canopy cover density) at the Landsat pixel scale (30x30 meters).</li>
 
-            <li>FORMA alerts indicate areas of 500 meters × 500 meters where there is a high probability of tree cover loss. It is important to note that this alert-based system is not the same as an area measurement of tree cover loss.</li>
-
-            <li>QUICC alerts measure significant changes in green vegetation cover.</li>
+            <li><strong>FORMA Alerts:</strong> Loss alerts are triggered by areas exhibiting a steep, persistent drop in vegetation intensity, indicating a high probability (equal to or greater than 50%) of the occurrence of tree cover loss. It is important to note that this alert-based system is not the same as an area measurement of tree cover loss.</li>
           </ul>
 
-          <p>For more information on each data set, please visit our <%= link_to 'Data page', sources_path %>.</p>
+          <h3 class='overview_title'>Does GFW distinguish tree plantations from natural forests?</h3>
 
-          <h3 class='overview_title'>Do GFW data reveal the quality of forest management (e.g., sustainable vs. unsustainable)? What about forest change from natural versus human causes?</h3>
-          <p>GFW forest change data (such as UMD tree cover loss and FORMA alerts) do not necessarily distinguish the quality of the forest management (e.g., sustainable or unsustainable), the legality (illegal or legal), or the cause (e.g., natural or human) of forest change events. For example, the forest change data available on GFW will include forest change from tree harvesting, fires, pests, and forest clearing for agriculture.</p>
+          <p>Tree plantations are not distinguished from natural forests in the case of several key data sets hosted on GFW (including 2000 Tree Cover Extent, UMD tree cover loss and gain, FORMA alerts, and QUICC alerts). Tree cover loss may include cases of tree plantations being harvested, and tree cover gain may include cases where natural forests are replaced with tree plantations.</p>
+
+          <p>It is nonetheless important to <a href='http://www.sciencemag.org/content/342/6160/805.full' target='_blank'>distinguish</a> between natural forests and tree plantations when considering conservation value, carbon storage, and value to local communities. Natural forests have higher biodiversity, store more carbon, and are more often associated with the traditional livelihoods of forest-dependent communities.</p> 
+          
+          <p>Global Forest Watch users may be able to use contextual data such as concession boundaries, protected areas, and satellite imagery base maps to help distinguish tree plantations from natural forests. Users are also encouraged to compare data available on GFW to other data sets that may help distinguish plantations from natural forests. GFW and partners are also currently developing a “plantation forests map” for the tropical regions to determine the location of plantations on a near-global scale. The map, developed through remote sensing methods, will be coming soon to the GFW site.</p>
+
+
+          <h3 class='overview_title'>Do GFW data reveal the quality of forest management (e.g., sustainable versus unsustainable)? What about forest change from natural versus human causes?</h3>
+          
+          <p>The forest change data displayed on GFW (such as UMD tree cover loss and FORMA alerts) do not necessarily distinguish the quality of the forest management (e.g., sustainable or unsustainable), the legality (illegal or legal), or the cause (e.g., natural or human) of forest change events. For example, the forest change data available on GFW will include forest change from tree harvesting, fires, pests, and forest clearing for agriculture.</p>
 
           <p>However, contextual data available on GFW can help users draw more informed conclusions about the nature and drivers of forest change events. For example, users can overlay forest change data over the protected areas layer to flag areas of potential concern. Or users can pull up satellite imagery base maps to look for “burnscars,” “blowdowns,” logging roads, and so on.</p>
         </div>
