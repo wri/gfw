@@ -77,7 +77,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       this.range = '&begin='+start+'&end='+end;
 
       if((start_month_ >= 1 && start_month_ <= 12) && (end_month_ >= 1 && end_month_ <= 12)) {
-        this.info.model.set({ 'subtitle': start_year+", "+config.MONTHNAMES_SHORT[start_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_-1].slice(1).toLowerCase()+" to "+end_year+", "+config.MONTHNAMES_SHORT[end_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_-1].slice(1).toLowerCase() });
+        this.info.model.set({ 'subtitle': config.MONTHNAMES_SHORT[start_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_-1].slice(1).toLowerCase()+"-"+start_year+" to "+config.MONTHNAMES_SHORT[end_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_-1].slice(1).toLowerCase()+"-"+end_year });
       }
 
       this._getAlertCount();
@@ -96,7 +96,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       this.range = '&begin='+start+'&end='+end;
 
       if((start_month >= 1 && start_month <= 12) && (end_month >= 1 && end_month <= 12)) {
-        this.info.model.set({ 'subtitle': start_year+", "+config.MONTHNAMES_SHORT[start_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_].slice(1).toLowerCase()+" to "+end_year+", "+config.MONTHNAMES_SHORT[end_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_].slice(1).toLowerCase() });
+        this.info.model.set({ 'subtitle': config.MONTHNAMES_SHORT[start_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_].slice(1).toLowerCase()+"-"+start_year+" to "+config.MONTHNAMES_SHORT[end_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_].slice(1).toLowerCase()+"-"+end_year });
       }
 
       this._getAlertCount();
@@ -113,7 +113,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       var q1 = config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].slice(1).toLowerCase()
       var q2 = config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].slice(1).toLowerCase()
 
-      this.info.model.set({ 'subtitle': year_+', '+q1+' to '+year_+', '+q2 });
+      this.info.model.set({ 'subtitle': q1+"-"+year_+' to '+q2+'-'+year_ });
 
       this._getAlertCount();
     }, this));
@@ -338,7 +338,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     } else if (baselayer === 'imazon') {
       range = this.range || '&begin=2007-01-01&end=2013-12-01';
     } if (baselayer === 'loss') {
-      range = this.range || '&begin=2000&end=2011';
+      range = this.range || '&begin=2000&end=2013';
     }
 
     if (config.ISO === 'ALL' || this.protectedArea) {
