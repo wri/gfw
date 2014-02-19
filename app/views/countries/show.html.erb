@@ -71,7 +71,7 @@
           <% if employees < 1000 %>
             <h2 class='section-title'><div><%= employees %></div> <span>thousand people are directly employed by the forestry sector</span></h2>
           <% else %>
-            <h2 class='section-title'><div><%= (employees/1000.00).round(2) %></div> <span>million people are directly employed by the forestry sector</span></h2>
+            <h2 class='section-title'><div><%= (employees/1000.00).round(2) %></div> <span>million people were directly employed by the forestry sector, according to 2006 FAO data</span></h2>
           <% end %>
 
           <% employees = employees < 100 ? employees : 100 %>
