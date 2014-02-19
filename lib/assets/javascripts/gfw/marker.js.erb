@@ -26,7 +26,7 @@ GFWMarker.prototype.draw = function() {
       div.innerHTML = '<%= image_tag "icons/mongabay_exclamation.png" %>';
     } else {
       if (that.opts.thumbnail_url) {
-        div.innerHTML = '<img src="' + that.opts.thumbnail_url + '" class="rounded" alt ="" /><div class="mask"></div>';
+        div.innerHTML = '<img src="<%= ENV['AWS_HOST'] %>/'+that.opts.thumbnail_url + '" class="rounded" alt ="" /><div class="mask"></div>';
       } else {
         div.innerHTML = '<%= image_tag "icons/marker_exclamation.png" %>';
       }
