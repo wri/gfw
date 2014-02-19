@@ -21,7 +21,7 @@ module StoriesHelper
   end
 
   def static_map(coords, size="266x266", zoom="3")
-    "http://maps.google.com/maps/api/staticmap?center=#{coords.to_s.gsub(" ", "")}&zoom=#{zoom}&size=#{size}&maptype=terrain&sensor=false"
+    "http://maps.google.com/maps/api/staticmap?center=#{coords.to_s.gsub(" ", "")}&zoom=#{zoom}&size=#{size}&markers=icon:#{ENV['AWS_HOST']}/marker_exclamation.png%7C#{coords.to_s.gsub(" ", "")}&maptype=terrain&sensor=false"
   end
 
   def youtube_embed(youtube_url)
