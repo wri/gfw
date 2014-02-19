@@ -142,8 +142,15 @@ $(function() {
       e.preventDefault();
 
       if($(e.target).hasClass('all')) {
-        if (!_.include(config.MAPOPTIONS.layers.split(','), '581')) {
+        if (config.MAPOPTIONS.layers.length >= 1) {
+          if (!_.include(config.MAPOPTIONS.layers.split(','), '580')) {
+            $('.user_stories .checkbox').click();
+          } else {
+            GFW.app._goTo($('#map'), { margin: '67' })
+          }
+        } else {
           $('.user_stories .checkbox').click();
+          GFW.app._goTo($('#map'), { margin: '67' })
         }
       }
 
