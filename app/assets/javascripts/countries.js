@@ -1068,7 +1068,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                                                          FROM loss\
                                                          WHERE loss.iso = gain.iso) as sum_loss ';
       sql += 'FROM gain, gfw2_countries c\
-              WHERE gain.iso = c.iso\
+              WHERE gain.iso = c.iso AND c.enabled is true\
               ORDER BY sum_loss DESC ';
 
       if(e) {
