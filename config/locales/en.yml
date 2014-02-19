@@ -52,7 +52,7 @@ en:
     more_stories:
       title: Stories reported by users
       text_html: "%{browse} or %{submit}. People are a key factor in forest clearing detection."
-      browse: Browse user stories in our map
+      browse: Browse user stories in the map
       submit: submit yours
       submitted_by: "Submitted by %{name}"
       submit_your: Submit your story
