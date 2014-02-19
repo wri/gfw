@@ -946,7 +946,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     } else if(this.model.get('graph') === 'percent_loss') {
       var sql = 'SELECT c.iso, c.name, c.enabled, loss_y2001_y2012 as ratio_loss\
                  FROM countries_percent percent, gfw2_countries c\
-                 WHERE percent.iso = c.iso\
+                 WHERE percent.iso = c.iso AND c.enabled IS true\
                  AND NOT loss_y2001_y2012 = 0\
                  ORDER BY ratio_loss DESC ';
 
@@ -1055,9 +1055,9 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       }
 
       sql += 'loss.y2012) as sum_loss\
-              FROM countries_loss loss\
+              FROM loss_gt_50 loss\
               GROUP BY iso), gain as (SELECT g.iso, SUM(y2001_y2012) as sum_gain\
-                                      FROM countries_gain g, countries_loss loss\
+                                      FROM countries_gain g, loss_gt_50 loss\
                                       WHERE loss.iso = g.iso\
                                       GROUP BY g.iso), ratio as (';
 
@@ -2134,9 +2134,9 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       }
 
       sql += 'loss.y2012) as sum_loss\
-              FROM countries_loss loss\
+              FROM loss_gt_50 loss\
               GROUP BY iso), gain as (SELECT g.iso, SUM(y2001_y2012) as sum_gain\
-                                      FROM countries_gain g, countries_loss loss\
+                                      FROM countries_gain g, loss_gt_50 loss\
                                       WHERE loss.iso = g.iso\
                                       GROUP BY g.iso), ratio as (';
 
