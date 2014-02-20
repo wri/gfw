@@ -3,7 +3,7 @@
 <% end %>
 
 <% content_for :inner_header do %>
-  <%= link_to content_tag(:span, "Check out GFW for business"), "#{howto_path}#for_business", class: 'for_business' %>
+  <%= link_to content_tag(:span, "Check out GFW for businesses"), "#{howto_path}#for_business", class: 'for_business' %>
 <% end %>
 
 <% content_for :filters do %>
@@ -71,7 +71,7 @@
     <% @featured.each do |story| %>
       <li class='column round three'>
         <a href='<%= story_path(story['id']) %>'>
-          <%= image_tag story_image_or_map(story['media'][0]['preview_url'], story['coordinates']), :alt => story['title'] %>
+          <%= image_tag story_image_or_map("#{ENV['AWS_HOST']}/#{story['media'][0]['preview_url']}", story['coordinates']), :alt => story['title'] %>
           <div class='gradient'></div>
           <div class='frame'></div>
           <div class='title'>
@@ -85,6 +85,6 @@
   </div>
 </section>
 
-<div id='sources' class='sources'>
+<div id='sources' class='sources notranslate'>
   <%= render 'shared/sources' %>
 </div>

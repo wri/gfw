@@ -1,12 +1,12 @@
 <% content_for :title do %>
-  <%= link_to t(".title"), stories_path %>
+  <h1 class="header-title"><%= link_to t(".title"), stories_path %></h1>
 <% end %>
 
 <% content_for :js do %>
   <script>
     $(function() {
       cdb.init(function() {
-        var carrousel = new gfw.ui.view.Carrousel();
+        window.carrousel = new gfw.ui.view.Carrousel();
       });
     });
   </script>
@@ -42,7 +42,7 @@ end %>
   <% if @story['media'].present?  %>
     <div class="carrousel">
       <div class="frame">
-        <%= image_tag(static_map(@story['coordinates'])) %>
+        <%= image_tag(static_map(@story['coordinates'], '266x266', 4, true)) %>
       </div>
 
       <% if @story['media'].size > 1 %>
@@ -55,7 +55,7 @@ end %>
           <% if media['embed_url'].present? %>
             <li class='slide'><%= youtube_embed(media['embed_url']).html_safe %></li>
           <% else %>
-            <li class='slide'><%= image_tag media['url'] %></li>
+            <li class='slide'><%= image_tag "#{ENV['AWS_HOST']}/big_#{media['url']}" %></li>
           <% end %>
         <% end %>
       </ul>

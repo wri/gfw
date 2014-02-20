@@ -6,6 +6,8 @@
 @import 'compass/css3/box-shadow';
 @import 'compass/css3/opacity';
 @import 'compass/css3/user-interface';
+@import 'compass/css3/inline-block';
+@import 'compass/css3/transform';
 
 @import 'fonts';
 @import 'helpers';
@@ -92,6 +94,11 @@ strong {
 .accept_btn {
   margin: 0;
   width: 180px;
+  text-align: center;
+
+  &.continue {
+    margin-left: 0;
+  }
 }
 
 a.accept_btn {
@@ -390,14 +397,25 @@ a.accept_btn {
 }
 
 .feedback-link {
-  position: absolute;
-  top: 375px;
-  right: 0px;
-  width: 30px;
-  height: 80px;
+  position: fixed;
   z-index: 9999;
-  background: image-url('buttons/feedback_button.png') repeat-x top center;
-  text-indent: -10000px;
+  top: 375px; right: -1px;
+  width: 30px;
+  border: 1px solid #697E1D;
+  height: 80px;
+  font-weight: bold;
+  font-size: 11px;
+  text-align: center;
+  text-transform: uppercase;
+  background: $green;
+
+  span {
+    display: block;
+    position: relative;
+    top: 20px;
+    color: #fff;
+    @include rotate(90deg);
+  }
 }
 
 .header_separator {
@@ -661,6 +679,7 @@ a.accept_btn {
   }
 }
 
+
 .footer-share {
   display: block;
   margin-bottom: 50px;
@@ -795,8 +814,11 @@ a.accept_btn {
 
 .slide {
   display: none;
+  overflow: hidden;
   position: absolute;
   z-index: 10;
   top: 0; left: 0;
   width: 100%;
+
+  img { width: 100%; }
 }

@@ -792,7 +792,7 @@ GFW.modules.app = function(gfw) {
 
       $.ajax({
         async: false,
-        url: "https://wri-01.cartodb.com/api/v1/sql?q=SELECT * FROM mongabaydb WHERE published >= now() - INTERVAL '3 Months'&format=geojson",
+        url: "https://wri-01.cartodb.com/api/v2/sql?q=SELECT * FROM mongabaydb WHERE published >= now() - INTERVAL '3 Months'&format=geojson",
         success: function(data) {
           _.each(data.features, function(features) {
             var position = new google.maps.LatLng(features.properties.lat, features.properties.lon),
@@ -1241,6 +1241,7 @@ GFW.modules.maplayer = function(gfw) {
         GFW.app.baseLayer && GFW.app.baseLayer.setOptions({ opacity: 0 });
         GFW.app.currentBaseLayer = null;
         GFW.app._toggleTimeLayer();
+        Legend.removeCategory('forest_clearing');
       },
 
       _removeSubLayers: function() {
@@ -1249,7 +1250,7 @@ GFW.modules.maplayer = function(gfw) {
         // Remove UMD extended layers
         GFW.app.removeUmdCoverageLayer();
 
-        var extendedLayers = ['quicc_bounding_box_extent', 'imazon_sad_geografic_extent', 'ecoregions_biome'];
+        var extendedLayers = ['quicc_bounding_box_extent', 'imazon_sad_geografic_extent', 'forma_extent'];
 
         // Remove extended layers
         _.each(extendedLayers, function(name) {

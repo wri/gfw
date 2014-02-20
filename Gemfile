@@ -9,6 +9,11 @@ gem 'compass-rails', '1.1.2'
 gem 'uglifier', '>= 1.3.0'
 gem 'httparty'
 gem 'useragent'
+gem 'carrierwave'
+gem 'fog'
+gem 'rmagick'
+gem 'unf'
+gem 'newrelic_rpm'
 
 group :development do
   gem 'foreman'

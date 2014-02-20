@@ -17,10 +17,32 @@ module Api
     end
 
     def self.create(params)
+      uploads ||= []
+
+      if params['video'].present?
+        uploads << {
+          url: "",
+          embed_url: params['video'],
+          preview_url: "",
+          mime_type: "",
+          order: 1
+        }
+      end
+
+      params['uploads_ids'].split(',').each_with_index do |id, index|
+        uploads << {
+          url: id,
+          embed_url: "",
+          preview_url: "#{ENV['AWS_HOST']}/thumb_#{id}",
+          mime_type: "image/jpeg",
+          order: params['video'].present? ? index+1 : index
+        }
+      end
+
       options = {
                   :email => params['email'],
                   :date => params['date'],
-                  :media => nil,
+                  :media => uploads,
                   :geom => (if params['the_geom'] != ''
                               JSON.parse(params['the_geom'])
                             else

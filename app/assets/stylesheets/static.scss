@@ -653,7 +653,7 @@
     margin-left: 25px;
   }
 
-  span { text-decoration: underline; }
+  .underline { text-decoration: underline; }
 
   li { margin-bottom: 10px; }
 
@@ -680,8 +680,8 @@
 
   overflow-y: scroll;
   overflow-x: hidden;
-  height: 450px;
-  margin: 30px 0;
+  height: 240px;
+  margin-top: 30px;
   padding: 8px;
   border: 1px solid #CCC;
   background: #fff;
@@ -692,5 +692,5 @@
 
 .terms_footer {
   text-align: center;
-  margin: 30px auto 22px;
+  margin: 30px auto 0;
 }

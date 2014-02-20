@@ -14,8 +14,8 @@
 
 @import 'fonts';
 @import 'helpers';
-@import 'sprites';
 
+@import 'home-icons/*.png';
 
 
 /* =Header
@@ -35,22 +35,27 @@
 
 .for_business {
   position: relative;
-  z-index: 1010;
+  z-index: 1020;
   display: block;
   float: right;
   margin-top: -10px;
   height: 108px;
   width: 108px;
-  @include icons-sprite(stamp);
-  font-size: 11px;
   font-weight: bold;
+  font-size: 11px;
   text-align: center;
   text-transform: uppercase;
+  background: $green;
+  @include border-radius(55px);
+
+  &:hover {
+    background: darken($green, 5%);
+  }
 
   span {
     display: block;
     position: relative;
-    top: 50px; left: -5px;
+    top: 45px;
     color: #fff;
     @include rotate(30deg);
   }
@@ -210,7 +215,7 @@
 
 #filters {
   position: absolute;
-  z-index: 1000;
+  z-index: 1010;
   top: 180px;
   width: 100%;
   height: 10px;
@@ -267,7 +272,7 @@
   right: 10px;
   width: 10px;
   height: 10px;
-  @include icons-sprite(information);
+  @include home-icons-sprite(information);
 
   &.hidden {
     display: none;
@@ -276,7 +281,7 @@
 
 #layer {
   position: absolute;
-  z-index: 1000;
+  z-index: 1010;
   top: -77px; left: -9999px;
   width: 170px;
   height: 90px;
@@ -284,12 +289,12 @@
   @include opacity(0);
   @include box-shadow(0px 0px 5px 1px rgba(#000, .15));
 
-  &.forest_change .filter-icon  { @include icons-sprite(icon_forest_clearing); }
-  &.forest_cover  .filter-icon  { @include icons-sprite(icon_forest_cover); }
-  &.forest_use    .filter-icon  { @include icons-sprite(icon_forest_use); }
-  &.conservation  .filter-icon  { @include icons-sprite(icon_conservation); }
-  &.people        .filter-icon  { @include icons-sprite(icon_regrowth); }
-  &.stories       .filter-icon  { @include icons-sprite(icon_stories); }
+  &.forest_change .filter-icon  { @include home-icons-sprite(icon_forest_clearing); }
+  &.forest_cover  .filter-icon  { @include home-icons-sprite(icon_forest_cover); }
+  &.forest_use    .filter-icon  { @include home-icons-sprite(icon_forest_use); }
+  &.conservation  .filter-icon  { @include home-icons-sprite(icon_conservation); }
+  &.people        .filter-icon  { @include home-icons-sprite(icon_regrowth); }
+  &.stories       .filter-icon  { @include home-icons-sprite(icon_stories); }
 
   .filter-line {
     position: relative;
@@ -324,18 +329,18 @@
 }
 
 @mixin radio($url) {
-  @include icons-sprite(radio, $offset-y:-67px);
+  @include home-icons-sprite(radio, $offset-y:-67px);
 
-  &:hover          { @include icons-sprite($url, $offset-y:-207px); }
+  &:hover          { @include home-icons-sprite($url, $offset-y:-207px); }
 
-  &:active         { @include icons-sprite($url, $offset-y:-207px); }
-  &:active:hover   { @include icons-sprite($url, $offset-y:-277px); }
+  &:active         { @include home-icons-sprite($url, $offset-y:-207px); }
+  &:active:hover   { @include home-icons-sprite($url, $offset-y:-277px); }
 
-  &.checked        { @include icons-sprite($url, $offset-y:-137px); }
-  &.checked:hover  { @include icons-sprite($url, $offset-y:-277px); }
+  &.checked        { @include home-icons-sprite($url, $offset-y:-137px); }
+  &.checked:hover  { @include home-icons-sprite($url, $offset-y:-277px); }
 
-  &.disabled       { @include icons-sprite($url, $offset-y:5px); }
-  &.disabled:hover { @include icons-sprite($url, $offset-y:5px); }
+  &.disabled       { @include home-icons-sprite($url, $offset-y:5px); }
+  &.disabled:hover { @include home-icons-sprite($url, $offset-y:5px); }
 }
 
 .check_icon {
@@ -482,10 +487,10 @@
     top: 2px; right: -25px;
     width: 25px;
     height: 38px;
-    @include icons-sprite(legend_toggle_close);
+    @include home-icons-sprite(legend_toggle_close);
   }
 
-  &.closed .toggle { @include icons-sprite(legend_toggle_open); }
+  &.closed .toggle { @include home-icons-sprite(legend_toggle_open); }
 
   .shadow {
     display: none;
@@ -532,78 +537,6 @@
 
   .source {
     top: 3px; right: 0;
-  }
-}
-
-.legend_info {
-  @extend .clearfix;
-  width: 195px;
-  font-size: 11px;
-  margin-top: 10px;
-
-  strong {
-    display: block;
-    margin: 0 0 7px;
-    font-size: 10px;
-  }
-
-  p { font-size: 11px; }
-
-  .units {
-    font-weight: normal;
-    font-size: 10px;
-  }
-
-  &.tree {
-    margin-left: 0;
-
-    div { width: 193px; }
-
-    .colors {
-      border: 1px solid #ccc;
-
-      div {
-        width: 33%;
-
-        &:last-child { width: 34%; }
-
-        text-align: center;
-        padding: 6px 0;
-        font-size: 10px;
-        line-height: 100%;
-        color: #fff;
-        @include text-shadow(0px 0px 2px #000);
-      }
-    }
-  }
-
-  .data {
-    width: 193px;
-
-    .min { width: auto; float: left; }
-    .max { width: auto; float: right; }
-  }
-
-  .colors {
-    display: table-row;
-    margin: 3px 0 5px 0;
-    border: 1px solid #FED98E;
-    @include border-radius(3px);
-    width: 193px;
-
-    div {
-      width: 25%;
-      height: 10px;
-      display: table-cell;
-
-      &:first-child {
-        @include border-radius(3px 0 0 3px);
-      }
-
-      &:last-child {
-        @include border-radius(0 3px 3px 0px);
-      }
-    }
   }
 }
 
@@ -663,6 +596,89 @@
       text-transform: uppercase;
     }
   }
+
+  .legend_info {
+    @extend .clearfix;
+    width: 195px;
+    margin-top: 10px;
+
+    strong {
+      display: block;
+      margin: 0 0 7px;
+      font-size: 10px;
+    }
+
+    p { font-size: 11px; }
+
+    .units {
+      font-weight: normal;
+      font-size: 10px;
+      text-transform: none;
+    }
+
+    sup {
+      position: relative;
+      top: -3px;
+      font-size: 80%;
+    }
+
+    &.tree {
+      margin-left: 0;
+
+      div { width: 193px; }
+
+      .colors {
+        border: 1px solid #ccc;
+
+        div {
+          width: 33%;
+
+          &:last-child { width: 34%; }
+
+          text-align: center;
+          padding: 6px 0;
+          font-size: 10px;
+          line-height: 100%;
+          color: #fff;
+          @include text-shadow(0px 0px 2px #000);
+        }
+      }
+    }
+
+    .data {
+      width: 193px;
+      font-size: 10px;
+
+      .min { width: auto; float: left; }
+      .max { width: auto; float: right; }
+    }
+
+    .colors {
+      display: table-row;
+      margin: 3px 0 5px 0;
+      border: 1px solid #FED98E;
+      @include border-radius(3px);
+      width: 193px;
+
+      div {
+        width: 25%;
+        height: 10px;
+        display: table-cell;
+
+        &:first-child {
+          @include border-radius(3px 0 0 3px);
+        }
+
+        &:last-child {
+          @include border-radius(0 3px 3px 0px);
+        }
+
+        &.wide {
+          width: 100%;
+        }
+      }
+    }
+  }
 }
 
 .coverage_category {
@@ -712,17 +728,17 @@
     position: relative;
     top: 0px;
     width: 134px;
-    @include icons-sprite(community);
+    @include home-icons-sprite(community);
   }
 
   .analysis_tool i {
     width: 150px;
-    @include icons-sprite(analysis);
+    @include home-icons-sprite(analysis);
   }
 
   .submit_story i {
     width: 122px;
-    @include icons-sprite(submit_story);
+    @include home-icons-sprite(submit_story);
   }
 }
 
@@ -928,7 +944,7 @@
   top: 50%; left: 50%;
   height: 19px;
   width: 19px;
-  @include icons-sprite(viewfinder);
+  @include home-icons-sprite(viewfinder);
 }
 
 .marker {
@@ -958,7 +974,7 @@
     top: -9px; left: -9px;
     width: 67px;
     height: 66px;
-    @include icons-sprite(marker_hollow);
+    @include home-icons-sprite(marker_hollow);
     z-index: 100;
   }
 }
@@ -1215,7 +1231,7 @@
       float: left;
       width: 14px;
       height: 14px;
-      @include icons-sprite(timeline_handler);
+      @include home-icons-sprite(timeline_handler);
       cursor: col-resize;
       @include user-select(none);
       outline: none;
@@ -1234,6 +1250,10 @@
   font-size: 12px;
   @extend .sans-serif;
   text-shadow: 0px 0px 3px #fff;
+
+  span {
+    font-weight: normal;
+  }
 }
 
 .timeline_coordinates {
@@ -1251,3 +1271,4 @@
 .analysis {
   display: none;
 }
+
