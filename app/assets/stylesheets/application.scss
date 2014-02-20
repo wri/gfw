@@ -400,10 +400,11 @@ a.accept_btn {
 .feedback-link {
   position: absolute;
   z-index: 9999;
-  top: 50%; right: -1px;
+  top: 50%; right: 0;
   margin-top: -40px;
   width: 30px;
   border: 1px solid #697E1D;
+  border-right: 0;
   height: 80px;
   font-weight: bold;
   font-size: 11px;

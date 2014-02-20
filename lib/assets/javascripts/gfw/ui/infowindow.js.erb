@@ -224,7 +224,6 @@ CartoDBInfowindow.prototype._hide = function() {
       opacity: 0,
       duration: 1
     }, function() {
-      div.style.visibility = "hidden";
     });
   }
 };
@@ -235,8 +234,6 @@ CartoDBInfowindow.prototype._show = function() {
     var div = this.div_;
     div.style.opacity = 0;
     div.style.top = (parseInt(div.style.top, 10) - 10) + 'px';
-
-    div.style.visibility = "visible";
 
     if (this.mode === "image") {
       $(".imgLiquidFill").imgLiquid();
