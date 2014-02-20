@@ -213,7 +213,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
 
       sql += 'SUM(y2012) as y2012, (SELECT SUM(y2001_y2012)\
                                     FROM countries_gain) as gain\
-              FROM countries_loss';
+              FROM loss_gt_0';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(error, json) {
         var data = json.rows[0];
@@ -371,14 +371,14 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
       }
 
       sql += 'SUM(y2012) as sum_loss_y2012\
-              FROM countries_loss), extent as (SELECT ';
+              FROM loss_gt_25), extent as (SELECT ';
 
       for(var y = 2001; y < 2012; y++) {
         sql += 'SUM(y'+y+') as sum_extent_y'+y+', ';
       }
 
       sql += 'SUM(y2012) as sum_extent_y2012\
-              FROM countries_extent)\
+              FROM extent_gt_25)\
               SELECT ';
 
       for(var y = 2001; y < 2012; y++) {
@@ -575,7 +575,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
       }
 
       sql += 'SUM(extent.y2012) as extent_y2012\
-              FROM countries_loss loss, countries_extent extent\
+              FROM loss_gt_25 loss, extent_gt_25 extent\
               WHERE loss.iso = extent.iso';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
@@ -761,20 +761,32 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
         .attr('in2', 'blurOut')
         .attr('mode', 'normal');
 
-      var sql = 'SELECT iso, name, enabled, (SELECT SUM(y2001_y2012)\
-                                             FROM countries_gain g\
-                                             WHERE g.iso = c.iso) as gain, (SELECT SUM(';
+      var sql = 'WITH loss as (SELECT iso, SUM(';
 
       for(var y = 2001; y < 2012; y++) {
-        sql += 'y'+y+' + ';
+        sql += 'loss.y'+y+' + ';
       }
 
-      sql += 'y2012) FROM countries_loss loss\
-                     WHERE loss.iso = c.iso) as loss, (SELECT SUM(y2000)\
-                                                       FROM countries_extent extent\
-                                                       WHERE extent.iso = c.iso) as extent\
-                     FROM gfw2_countries c\
-                     LIMIT 50';
+      sql += 'loss.y2012) as sum_loss\
+              FROM loss_gt_50 loss\
+              GROUP BY iso), gain as (SELECT g.iso, SUM(y2001_y2012) as sum_gain\
+                                      FROM countries_gain g, loss_gt_50 loss\
+                                      WHERE loss.iso = g.iso\
+                                      GROUP BY g.iso), ratio as (';
+
+      sql += 'SELECT c.iso, c.name, c.enabled, loss.sum_loss as loss, gain.sum_gain as gain, loss.sum_loss/gain.sum_gain as ratio\
+              FROM loss, gain, gfw2_countries c\
+              WHERE sum_gain IS NOT null\
+              AND NOT sum_gain = 0\
+              AND c.iso = gain.iso\
+              AND c.iso = loss.iso\
+              ORDER BY loss.sum_loss DESC\
+              LIMIT 50) ';
+
+      sql += 'SELECT *\
+              FROM ratio\
+              WHERE ratio IS NOT null\
+              ORDER BY ratio DESC';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows;
@@ -1356,7 +1368,7 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
         sql += 'y'+y+' + ';
       }
 
-      sql += ['y2012) FROM countries_loss',
+      sql += ['y2012) FROM loss_gt_0',
                      "WHERE iso = '"+options.iso+"') as loss",
               'FROM countries_gain',
               "WHERE iso = '"+options.iso+"'"].join(' ');
