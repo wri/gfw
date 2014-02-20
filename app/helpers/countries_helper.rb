@@ -5,12 +5,12 @@ module CountriesHelper
   end
 
   def extent_to_human(extent)
-    extent /= 1000
-
     if extent < 1000
-      result = "#{number_with_delimiter(extent.round(1))} thousand"
+      result = "#{number_with_delimiter(extent.round(1))}"
+    elsif extent >= 1000 && extent < 1000000
+      result = "#{number_with_delimiter((extent/1000).round(1))} thousand"
     else
-      result = "#{number_with_delimiter((extent/1000).round(1))} million"
+      result = "#{number_with_delimiter((extent/1000000).round(1))} million"
     end
 
     return result

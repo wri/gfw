@@ -42,9 +42,9 @@
   <div class='inner'>
     <div id="<%= @country['iso'] %>" class='country-path'></div>
 
-    <h2 class='section-title country_state-title'><%= "#{@country['name'].titleize} has <span>#{extent_to_human(@country['extent'])}</span> hectares of tree cover.".html_safe %><a href='#' class='info' data-source='extent'><i></i></a></h2>
+    <% if @country['extent'] > 0 %><h2 class='section-title country_state-title'><%= "#{@country['name'].titleize} has <span>#{extent_to_human(@country['extent'])}</span> hectares of tree cover.".html_safe %><a href='#' class='info' data-source='extent'><i></i></a></h2><% end %>
 
-    <div class='forest_type'>
+    <div class='forest_type <%= 'tall' unless @country['extent'] > 0 %>'>
       <h3 class='section-subtitle'><a href='#' class='info' data-source='forest_type'><i></i></a>The type of forest in this country is...</h3>
       <div class='line-graph'></div>
     </div>
