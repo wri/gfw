@@ -507,7 +507,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     });
 
     var sql = ["SELECT date_trunc('month', date) as date, COUNT(*) as alerts",
-               'FROM cdm_latest',
+               'FROM forma_api',
                "WHERE iso = '"+options.iso+"'",
                "GROUP BY date_trunc('month', date)",
                "ORDER BY date_trunc('month', date) ASC"].join(' ');
@@ -2598,7 +2598,7 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
     });
 
     var sql = ["SELECT date_trunc('month', date) as date, COUNT(*) as alerts",
-               'FROM cdm_latest',
+               'FROM forma_api',
                "WHERE iso = '"+options.iso+"'",
                "GROUP BY date_trunc('month', date)",
                "ORDER BY date_trunc('month', date) ASC"].join(' ');
