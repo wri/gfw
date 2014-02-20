@@ -8,8 +8,8 @@ module Api
       get('/countries')
     end
 
-    def self.find_by_iso(iso, interval = '12 Months')
-      options = { :query => { :iso => iso, :interval => interval } }
+    def self.find_by_iso(iso)
+      options = { :query => { :iso => iso } }
 
       get('/countries', options)
     end
