@@ -206,6 +206,7 @@
   $width: 295px + 13;
 
   position:absolute;
+  left: -999px;
   display:block;
   width:$width;
   max-height: 312px;
@@ -364,7 +365,7 @@
   $width: 268px;
 
   position:absolute;
-  display:block;
+  display:none;
   width:$width;
   max-height: 250px;
   padding:0 0 6px;
