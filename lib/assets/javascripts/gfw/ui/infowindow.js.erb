@@ -148,7 +148,13 @@ CartoDBInfowindow.prototype.setContent = function(content){
 
       for(var column in content) {
         if (show_column(column, content, this.visible_columns)) {
-          html += '<label>' + column + '</label>';
+          var column_ = column;
+
+          if (column === 'photo_credit') {
+            column_ = 'Photo credit'
+          }
+
+          html += '<label>' + column_ + '</label>';
           html += '<p class="'+((content[column]!=null && content[column]!='')?'':'empty')+'">'+(content[column] || 'empty')+'</p>';
         }
       }
