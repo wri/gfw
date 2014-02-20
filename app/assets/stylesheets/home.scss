@@ -753,11 +753,10 @@
   $pL: 10px;
   $w: 215px;
 
-  display: block;
+  display: none;
   position: absolute;
   width: $w;
   padding: 0 0 6px;
-  visibility: hidden;
   text-align: center;
 
   .infowindow_content a { color: #A1BA42; }
