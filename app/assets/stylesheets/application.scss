@@ -398,9 +398,10 @@ a.accept_btn {
 }
 
 .feedback-link {
-  position: fixed;
+  position: absolute;
   z-index: 9999;
-  top: 375px; right: -1px;
+  top: 50%; right: -1px;
+  margin-top: -40px;
   width: 30px;
   border: 1px solid #697E1D;
   height: 80px;
