@@ -977,7 +977,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           $('.countries_list ul').html('');
           $('.countries_list__footer').show();
 
-          $('.countries_list__header__minioverview').html('% Loss <span>vs</span> % Gain');
+          $('.countries_list__header__minioverview').html('% Loss');
         }
 
         $('.countries_list ul').append(markup_list);
@@ -1318,32 +1318,19 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         sql += 'loss_y'+y+'/extent_y'+y+' as percent_'+y+', ';
       }
 
-      sql += 'loss_y2012/extent_y2012 as percent_2012, (SELECT y2001_y2012/(';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'extent_y'+y+' + ';
-      }
-
-      sql += "extent_y2012)\
-              FROM countries_gain\
-              WHERE iso = '"+iso+"') as gain\
-              FROM loss, extent";
+      sql += 'loss_y2012/extent_y2012 as percent_2012\
+              FROM loss, extent';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows[0];
 
-        var data_ = [],
-            gain = null;
+        var data_ = [];
 
         _.each(data, function(val, key) {
-          if (key === 'gain') {
-            gain = (val*100)/12;
-          } else {
-            data_.push({
-              'year': key.replace('y',''),
-              'value': val*100
-            });
-          }
+          data_.push({
+            'year': key.replace('y',''),
+            'value': val*100
+          });
         });
 
         var y_scale = d3.scale.linear()
@@ -1363,28 +1350,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .attr('height', function(d) { return height - y_scale(d.value); })
           .attr('width', barWidth - 1);
 
-        var data_gain_ = [
-          {
-            year: 2001,
-            value: gain
-          },
-          {
-            year: 2012,
-            value: gain
-          }
-        ];
-
-        graph.selectAll('line.minioverview_line')
-          .data(data_gain_)
-          .enter()
-          .append('line')
-          .attr({
-            'class': 'minioverview_line',
-            'x1': 0,
-            'x2': width,
-            'y1': function(d) { return y_scale(gain); },
-            'y2': function(d) { return y_scale(gain); }
-          });
       });
     } else if (this.model.get('graph') === ('total_extent')) {
       var sql = 'SELECT ';
