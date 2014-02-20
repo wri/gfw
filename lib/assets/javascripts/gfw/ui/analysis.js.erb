@@ -59,7 +59,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
       this.range = '&begin='+start_year+'&end='+end_year;
 
-      this.info.model.set({ 'subtitle': 'Jan-'+start_year+' to Jan-'+end_year });
+      this.info.model.set({ 'subtitle': 'Jan-'+start_year+' to Dec-'+(parseInt(end_year, 10)-1) });
 
       this._getAlertCount();
     }, this));
@@ -608,7 +608,7 @@ gfw.ui.model.AnalysisInfo = cdb.core.Model.extend({
     baselayer: config.BASELAYER,
     spinner: true,
     title: 'User defined area',
-    subtitle: 'Jan-2000 to Jan-2013',
+    subtitle: 'Jan-2000 to Dec-2012',
     subdisabled: true
   }
 });
