@@ -223,8 +223,9 @@ CartoDBInfowindow.prototype._hide = function() {
     $(div).animate({
       opacity: 0,
       duration: 1
-    }, function() {
     });
+
+    $(div).hide();
   }
 };
 
@@ -233,15 +234,17 @@ CartoDBInfowindow.prototype._show = function() {
   if (this.div_) {
     var div = this.div_;
     div.style.opacity = 0;
-    div.style.top = (parseInt(div.style.top, 10) - 10) + 'px';
+    div.style.top = (parseInt(div.style.top, 10) - 255) + 'px';
 
     if (this.mode === "image") {
       $(".imgLiquidFill").imgLiquid();
     }
 
-    $(div).animate({
-      opacity: 1,
-      duration: 250
+    $(div).show(function() {
+      $(div).animate({
+        opacity: 1,
+        duration: 250
+      });
     });
   }
 };
@@ -262,8 +265,8 @@ CartoDBInfowindow.prototype._adjustPan = function() {
     left = (pixPosition.x + 180 - container.clientWidth);
   }
 
-  if ((pixPosition.y - div_height) < 0) {
-    top = (pixPosition.y - div_height - 20);
+  if ((pixPosition.y - (div_height + 255)) < 0) {
+    top = (pixPosition.y - div_height - 20-255);
   }
 
   this.map_.panBy(left,top);
