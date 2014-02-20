@@ -204,7 +204,7 @@
         <strong class='column-title'>User stories</strong>
         <% if @country['story'].present? %>
           <a href='<%= story_path(@country['story']['cartodb_id']) %>'>
-            <%= image_tag story_image_or_map("#{ENV['AWS_HOST']}/#{@country['story']['media'][0]['preview_url']}", @country['story']['coordinates']), :alt => @country['story']['title'] %>
+            <%= image_tag story_image_or_map(@country['story']['media'].present? ? "#{ENV['AWS_HOST']}/#{@country['story']['media'][0]['preview_url']}" : "", @country['story']['coordinates']), :alt => @country['story']['title'] %>
             <div class='gradient'></div>
             <div class='frame'></div>
             <div class='title'>
