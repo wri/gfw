@@ -1571,9 +1571,8 @@ body.stories {
           margin: 0 20px;
 
           .infowindow {
-            display:none;
             padding: 12px;
-            @include position(false, false, 90px, -30px);
+            @include position(false, false, 125px, false);
             width: 156px;
             background:red;
             @include border-radius(3px);
