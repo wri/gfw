@@ -200,15 +200,15 @@
         <% end %>
       </li>
 
-      <li class='column three round <%= @country['related_story'].present? ? '' : 'no_story' %>'>
+      <li class='column three round <%= @country['story'].present? ? '' : 'no_story' %>'>
         <strong class='column-title'>User stories</strong>
-        <% if @country['related_story'].present? %>
-          <a href='<%= story_path(@country['related_story']['id']) %>'>
-            <%= image_tag story_image_or_map(@country['related_story']['thumbnail_url'], @country['related_story']['coordinates']), :alt => story['title'] %>
+        <% if @country['story'].present? %>
+          <a href='<%= story_path(@country['story']['cartodb_id']) %>'>
+            <%= image_tag story_image_or_map(@country['story']['media'][0]['preview_url'], @country['story']['coordinates']), :alt => story['title'] %>
             <div class='gradient'></div>
             <div class='frame'></div>
             <div class='title'>
-              <strong><%= @country['related_story']['title'] %></strong>
+              <strong><%= @country['story']['title'] %></strong>
               <span><%= t('.home_stories.featured.read_more') %></span>
             </div>
           </a>
