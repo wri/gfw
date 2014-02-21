@@ -17,13 +17,11 @@
 
 <p><strong>We recommend visiting GFW using the latest version of <a href='https://www.google.com/intl/en/chrome/browser/' target='_blank'>Google Chrome</a>, <a href='http://www.mozilla.org/en-US/firefox/new/' target='_blank'>Mozilla Firefox</a>, <a href='http://support.apple.com/downloads/#safari' target='_blank'>Apple Safari</a>, or <a href='http://windows.microsoft.com/en-us/internet-explorer/download-ie' target='_blank'>Internet Explorer</a>.  We also recommend installing <a href='http://get.adobe.com/flashplayer' target='_blank'>Adobe Flash Player</a>.</strong></p>
 
-<div contenteditable='false' class='terms_field'>
-  <%= render 'shared/terms' %>
-</div>
+<p>You acknowledge that you have read and agree to the Global Forest Watch <%= link_to 'Terms of Service', terms_path %>.</p>
 
-<div class="terms_footer notranslate">
-  <%= link_to 'I agree', root_path, class: 'btn accept_btn dark_glow continue', :'data-source' => "accept_terms" %> <%= link_to 'I do not agree', root_path, class: 'btn accept_btn dark_glow' %>
-</div>
+<%= form_tag('/accept', { :class => 'terms_footer' }) do %>
+  <%= submit_tag "I agree", class: 'btn accept_btn dark_glow' %> <%= link_to 'I do not agree', root_path, class: 'btn accept_btn dark_glow' %>
+<% end %>
 
 <section class="section">
   <div class="section-footer">
@@ -37,11 +35,6 @@
   <ul class='sources'>
     <li id='accept_terms'>
       <div class='source_body notranslate'>
-        <p>You acknowledge that you have read and agree to the Global Forest Watch Terms of Service.</p>
-
-        <%= form_tag('/accept', { :class => 'terms_footer' }) do %>
-          <%= submit_tag "I agree", class: 'btn accept_btn dark_glow' %> <%= link_to 'I do not agree', root_path, class: 'btn accept_btn dark_glow' %>
-        <% end %>
       </div>
     </li>
   </ul>
