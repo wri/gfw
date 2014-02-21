@@ -318,8 +318,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         url = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
         range;
 
-    if (this.model.get('area') === undefined) return false;
-
     if (!this.initStats) {
       this.$el.find('.stats .title, .stats ul').hide();
       this.info.show();
@@ -517,6 +515,12 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         })
       ]
     };
+
+    if (polygon === undefined || polygon === '' || polygon.coordinates[0].length < 3) {
+      this.$('.cancel').click();
+
+      return false;
+    }
 
     // Close the polygon:
     c0 = polygon.coordinates[0][0];
