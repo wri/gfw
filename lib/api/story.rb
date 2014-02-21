@@ -11,7 +11,7 @@ module Api
     end
 
     def self.featured
-      response = get('/stories')
+      response = get('/stories?bust=1')
 
       response.select { |r| r['featured'] }
     end
