@@ -1,7 +1,6 @@
 class StaticController < ApplicationController
 
-  skip_before_filter :check_browser
-  skip_before_filter :check_terms, :only => [:accept_terms, :old, :accept_and_redirect, :terms]
+  skip_before_filter :check_terms, :only => [:old, :terms]
 
   def old
     render :layout => "old"
@@ -9,16 +8,6 @@ class StaticController < ApplicationController
 
   def terms
     render :layout => "old"
-  end
-
-  def accept_terms
-    render :layout => "old"
-  end
-
-  def accept_and_redirect
-    cookies.permanent[ENV['TERMS_COOKIE'].to_sym] = true
-
-    redirect_to cookies[:go_to]
   end
 
 end
