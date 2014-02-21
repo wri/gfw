@@ -1,10 +1,10 @@
 # What is Global Forest Watch?
 
-[Global Forest Watch](http://www.wri.org/our-work/project/global-forest-watch) (GFW) is powerful, near-real-time forest monitoring system that unites satellite technology, data sharing, and human networks around the world to fight deforestation.
+[Global Forest Watch](http://www.globalforestwatch.org/) (GFW) is a dynamic online forest monitoring and alert system that empowers people everywhere to better manage forests.
 
 This repository contains the GFW web app.
 
-![](http://i.imgur.com/oIk9IDK.jpg)
+![](http://i.imgur.com/JnVtiHU.png)
 
 # Developing
 
@@ -37,8 +37,8 @@ Using rbenv, install and set Ruby 2.0.0-p247 in the main app directory:
 
 ```bash
 $ cd gfw
-$ rbenv install 2.0.0-p247
-$ rbenv local 2.0.0-p247
+$ rbenv install 2.1.0
+$ rbenv local 2.1.0
 ```
 
 Now let's install Ruby on Rails:
@@ -53,28 +53,44 @@ Aaaaand now use [Bundler](http://bundler.io/), a rubygem manager, to install all
 $ bundle install
 ```
 
-If anything goes wrong during `bundle install`, try this:
+Almost there! Final steps are to update your `.env` file:
 
 ```bash
-$ brew install libtool --universal
-$ brew link libtool
-$ bundle install
+RACK_ENV=development
+GFW_API_HOST=gfw-apis.appspot.com
+BLOG_HOST=http://blog.globalforestwatch.org
+AWS_HOST=
+TERMS_COOKIE=
+S3_BUCKET_NAME=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
 ```
 
-Almost there! Final steps are to update your `~/.bash_profile` with your AWS credentials and the API Key for CartoDB:
+Last step. For real. Start the app server and access it at [http://0.0.0.0:5000](http://0.0.0.0:5000):
 
 ```bash
-export S3_KEY_ID={key}
-export S3_KEY_SECRET={secret}
-export CARTODB_API_KEY={cdbkey}
+$ foreman start
 ```
 
-Last step. For real. Start the app server and access it at [http://0.0.0.0:3000](http://0.0.0.0:3000):
+# Liscense
 
-```bash
-$ rails server
-```
+The MIT License (MIT)
 
-# Build status
+Copyright (c) 2014 Vizzuality
 
-[![Build Status](https://secure.travis-ci.org/Vizzuality/gfw.png?branch=master)](http://travis-ci.org/Vizzuality/gfw)
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
