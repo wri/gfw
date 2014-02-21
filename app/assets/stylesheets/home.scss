@@ -1006,19 +1006,31 @@
   }
 }
 
-.timeline_forma,
-.timeline_imazon {
+.timeline_imazon,
+.timeline_forma {
   .timeline-inner {
-    .range { width: 930px; }
-
     .years,
     .visible_months {
       li {
         width: 108px;
       }
     }
+  }
+}
+
+.timeline_forma {
+  .timeline-inner {
+    .range { width: 930px; }
 
     .trail .handle.right { left: 957px; }
+  }
+}
+
+.timeline_imazon {
+  .timeline-inner {
+    .range { width: 714px; }
+
+    .trail .handle.right { left: 741px; }
   }
 }
 
