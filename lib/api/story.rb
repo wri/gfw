@@ -33,7 +33,7 @@ module Api
         uploads << {
           url: id,
           embed_url: "",
-          preview_url: "#{ENV['AWS_HOST']}/thumb_#{id}",
+          preview_url: id,
           mime_type: "image/jpeg",
           order: params['video'].present? ? index+1 : index
         }
