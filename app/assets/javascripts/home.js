@@ -32,7 +32,6 @@
 //= require gfw/ui/timeline/timeline_forma
 //= require gfw/ui/timeline/timeline_imazon
 //= require gfw/ui/analysis
-//= require gfw/ui/analysis/analysis_loss
 
 
 _.templateSettings = {

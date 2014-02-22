@@ -11,7 +11,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   events: {
     'click .analysis_control'   : 'startAnalyzing',
     'click .done'               : '_onClickDone',
-    'click .cancel'             : '_onClickCancel'
+    'click .cancel'             : 'onClickCancel'
   },
 
   initialize: function() {
@@ -133,8 +133,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this._setupDrawingManager();
   },
 
-  _onClickCancel: function(e) {
-    e.preventDefault();
+  onClickCancel: function(e) {
+    e && e.preventDefault();
 
     this.model.set('analyzing', false);
 
@@ -347,6 +347,14 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     } else {
       this.alertsUrl = url+dataset+'?iso='+config.ISO+range;
       this.downloadUrl = url+dataset+'.shp?iso='+config.ISO+range;
+    }
+
+    // hack to prevent undefined geoms :(
+    if (encodeURI(area) === undefined || encodeURI(area) === '') {
+      this.onClickCancel();
+      this.clearInfo();
+
+      return false;
     }
 
     executeAjax(this.alertsUrl, {}, {
@@ -1157,6 +1165,7 @@ gfw.ui.view.AnalysisReset = cdb.core.View.extend({
     e.preventDefault();
 
     this._onClickCancel();
+    Analysis.onClickCancel();
     Analysis.clearInfo();
   },
 
