@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
       cookies[:go_to] = request.path
 
       unless cookies.permanent[ENV['TERMS_COOKIE'].to_sym]
-        redirect_to "/accept_terms"
+        redirect_to root_path
       end
     end
 

@@ -77,7 +77,6 @@ $(function() {
       this.trigger('loadgfw', 'home');
     },
 
-
     map: function() {
       this.trigger('loadgfw', 'map');
     },
@@ -177,7 +176,7 @@ $(function() {
 
           GFW(function(env) {
             GFW.app = new env.app.Instance(map, {
-              logging    : false
+              logging : false
             });
 
             GFW.app.run();
@@ -188,6 +187,11 @@ $(function() {
               state === 'home' ? that._showHomeState() : that._showMapState();
             }
           });
+
+          if (!window.accept_terms) {
+            SourceWindow.show('accept_terms').addScroll();
+            SourceWindow.$el.find('.close').hide();
+          }
 
           loaded = true;
         });
@@ -254,7 +258,7 @@ $(function() {
       var source = $(e.target).attr('data-source'),
           coverage = $(e.target).hasClass('coverage');
 
-      SourceWindow.show(source, coverage).addScroll();;
+      SourceWindow.show(source, coverage).addScroll();
     },
 
     _selectMenu: function(name) {

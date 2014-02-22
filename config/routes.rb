@@ -1,14 +1,15 @@
 Gfw::Application.routes.draw do
   resources :stories
 
+  # terms
+  post 'accept' => 'home#accept_and_redirect'
+
   # static
   get 'sources' => 'static#data'
   get 'howto' => 'static#howto'
   get 'about' => 'static#about'
   get 'notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'
   get 'terms' => 'static#terms'
-  get 'accept_terms' => 'static#accept_terms'
-  post 'accept' => 'static#accept_and_redirect'
 
   # map
   get 'map' => 'home#index'

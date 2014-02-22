@@ -1,3 +1,9 @@
+<% content_for :js do %>
+  <script>
+    window.accept_terms = <%= cookies.permanent[ENV['TERMS_COOKIE'].to_sym] ? 'true' : 'false' %>;
+  </script>
+<% end %>
+
 <% content_for :title do %>
   <h1 class="header-title"><%= t('.title') %></h1>
 <% end %>
@@ -89,4 +95,26 @@
 
 <div id='sources' class='sources notranslate'>
   <%= render 'shared/sources' %>
+
+  <article>
+    <h2 class='source_category_title'>Terms of Service</h2>
+
+    <ul class='sources'>
+      <li id='accept_terms' class='terms_inner'>
+        <div class='source_body notranslate'>
+          <p>You acknowledge that you have read and agree to the Global Forest Watch <%= link_to 'Terms of Service', terms_path, :target => '_blank' %>.</p>
+
+          <section class="section">
+            <%= form_tag('/accept', { :class => 'terms_footer' }) do %>
+              <%= submit_tag "I agree", class: 'btn accept_btn dark_glow' %> <%= link_to 'I do not agree', root_path, class: 'btn accept_btn dark_glow' %>
+            <% end %>
+
+            <div class="section-footer">
+              <p class='last'>For additional information about GFW, please send an email to <a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>
+            </div>
+          </section>
+        </div>
+      </li>
+    </ul>
+  </article>
 </div>
