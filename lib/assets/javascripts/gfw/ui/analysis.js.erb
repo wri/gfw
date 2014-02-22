@@ -524,7 +524,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       ]
     };
 
-    if (polygon === undefined || polygon === '' || polygon.coordinates[0].length < 3) {
+    if (typeof polygon === 'undefined' || polygon === '' || polygon.coordinates[0].length < 3) {
       this.$('.cancel').click();
 
       return false;
