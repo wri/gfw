@@ -199,7 +199,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   },
 
   clearInfo: function() {
-    this.info.model.clear().set(this.info.model.defaults);
+    this.info.model.set(this.info.model.defaults);
 
     if (this.protectedArea) this.protectedArea = false;
 
@@ -591,12 +591,20 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
       this.$helper.delay(250).fadeIn(250);
     } else {
-      this.$helper.fadeOut(250, function() {
+      if (this.$helper.is(':visible')) {
+        this.$helper.fadeOut(250, function() {
+          LayerSelector.show();
+          Legend.show();
+          SearchBox.show();
+          Timeline.show();
+        });
+      } else {
+        this.$helper.hide();
         LayerSelector.show();
         Legend.show();
         SearchBox.show();
         Timeline.show();
-      });
+      }
     }
   },
 
@@ -623,7 +631,16 @@ gfw.ui.model.AnalysisInfo = cdb.core.Model.extend({
     spinner: true,
     title: 'User defined area',
     subtitle: 'Jan-2000 to Dec-2012',
-    subdisabled: true
+    subdisabled: true,
+    alert_count: '',
+    loss: '',
+    gain: '',
+    begin: '',
+    end: '',
+    units: '',
+    download: false,
+    defor: '',
+    degrad: ''
   }
 });
 
