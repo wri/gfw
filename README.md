@@ -72,7 +72,7 @@ Last step. For real. Start the app server and access it at [http://0.0.0.0:5000]
 $ foreman start
 ```
 
-# Liscense
+# License
 
 The MIT License (MIT)
 
