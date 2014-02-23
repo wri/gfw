@@ -17,7 +17,8 @@ class ApplicationController < ActionController::Base
       Browser.new('Firefox', '12.0'),
       Browser.new('Internet Explorer', '9.0'),
       Browser.new('Chrome', '19.0.1036.7'),
-      Browser.new('Opera', '11.00')
+      Browser.new('Opera', '11.00'),
+      Browser.new('Pingdom.com_bot_version_1.4_(http:', '/www.pingdom.com/)')
     ]
 
     def check_browser
