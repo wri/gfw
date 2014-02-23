@@ -1,9 +1,3 @@
-<% content_for :js do %>
-  <script>
-    window.accept_terms = <%= cookies.permanent[ENV['TERMS_COOKIE'].to_sym] ? 'true' : 'false' %>;
-  </script>
-<% end %>
-
 <% content_for :title do %>
   <h1 class="header-title"><%= t('.title') %></h1>
 <% end %>

@@ -669,6 +669,10 @@ a.accept_btn {
   p + p {
     margin-top: 15px;
   }
+
+  .btn + .btn {
+    margin-left: 20px;
+  }
 }
 
 

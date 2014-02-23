@@ -1,3 +1,7 @@
+<script>
+  window.accept_terms = <%= cookies.permanent[ENV['TERMS_COOKIE'].to_sym] ? 'true' : 'false' %>;
+</script>
+
 <!-- wri -->
 <script src="http://wri.org/wri-global-nav/wri-nav.js"></script>
 
