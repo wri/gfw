@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
 
-  skip_before_filter :check_terms, :only => [:index, :accept_and_redirect]
+  skip_before_filter :check_terms, :only => [:accept_and_redirect]
   before_filter :load_stories, :load_alerts, :only => [:index]
 
   def accept_and_redirect

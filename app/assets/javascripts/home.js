@@ -173,6 +173,11 @@ $(function() {
         google.maps.event.addListenerOnce(map, 'idle', function() {
           that._loadOtherStuff();
 
+          if (!window.terms_cookie) {
+            SourceWindow.show('accept_terms').addScroll();
+            SourceWindow.$el.find('.close').hide();
+          }
+
           GFW(function(env) {
             GFW.app = new env.app.Instance(map, {
               logging : false
@@ -186,11 +191,6 @@ $(function() {
               state === 'home' ? that._showHomeState() : that._showMapState();
             }
           });
-
-          if (!window.accept_terms) {
-            SourceWindow.show('accept_terms').addScroll();
-            SourceWindow.$el.find('.close').hide();
-          }
 
           loaded = true;
         });

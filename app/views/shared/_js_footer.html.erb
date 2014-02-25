@@ -1,5 +1,5 @@
 <script>
-  window.accept_terms = <%= cookies.permanent[ENV['TERMS_COOKIE'].to_sym] ? 'true' : 'false' %>;
+  window.terms_cookie = <%= cookies.permanent[ENV['TERMS_COOKIE'].to_sym] ? 'true' : 'false' %>;
 </script>
 
 <!-- wri -->
