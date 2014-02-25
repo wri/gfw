@@ -147,6 +147,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   _onClickDone: function(e) {
     e.preventDefault();
 
+    if (this.$doneButton.attr('class') === 'done disabled') {
+      return;
+    }
+
     this.model.set('analyzing', false);
 
     this._getAlertCount();
