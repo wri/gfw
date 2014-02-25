@@ -1330,8 +1330,11 @@ GFW.modules.maplayer = function(gfw) {
             GFW.app.updateBaseLayer(null);
 
             Analysis.hide();
-            Analysis.clearInfo();
-            Analysis.onClickCancel();
+
+            if (!Analysis.model.get('area') || (Analysis.model.get('area') && Analysis.model.get('area') === '')) {
+              Analysis.clearInfo();
+              Analysis.onClickCancel();
+            }
           }
 
           Legend.toggleItemBySlug(slug);
