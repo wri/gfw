@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     def check_terms
       cookies[:go_to] = request.path
 
-      unless cookies.permanent[ENV['TERMS_COOKIE'].to_sym] || controller_name == 'home'
+      unless cookies.permanent[ENV['TERMS_COOKIE'].to_sym] || controller_name == 'home' || controller_name == 'embed'
         redirect_to root_path
       end
     end

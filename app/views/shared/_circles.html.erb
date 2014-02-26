@@ -43,13 +43,13 @@
       </li>
 
       <li class='column three graph map'>
-        <a href='<%= map_coords %>' class='info' data-source='forest_map'><span>i</span></a>
-        <a href='<%= map_coords %>'>
+        <a href='<%= map_coords %>' target="<%= controller_name === 'embed' ? '_blank' : '' %>" class='info' data-source='forest_map'><span>i</span></a>
+        <a href='<%= map_coords %>' target="<%= controller_name === 'embed' ? '_blank' : '' %>">
           <div class='frame'>
             <%= image_tag static_map("#{@country['lat']}, #{@country['lng']}", '266x266', 4), :alt => @country['name'] %>
           </div>
         </a>
-        <a href='<%= map_coords %>' class='action' title='Analyze forest change'></a>
+        <a href='<%= map_coords %>' class='action' title='Analyze forest change' target="<%= controller_name === 'embed' ? '_blank' : '' %>"></a>
         <div class='graph-action-subtitle'>Analyze</div>
       </li>
     </ul>

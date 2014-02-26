@@ -17,15 +17,44 @@
   <%= stylesheet_link_tag "countries" %>
   <style>
     body { border: 0; }
+
+    .header-logo {
+      position: absolute;
+      left: 10px;
+    }
+
     .overview_graph { margin: 0; }
     .overview_graph__title,
     .countries_list { display: none; }
+
+    .footer {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .left {
+      float: left;
+      margin-left: 10px;
+    }
+
+    .right { float: right; }
   </style>
   <%= javascript_include_tag 'modernizr-2.6.2.min' %>
   <%= csrf_meta_tags %>
 </head>
 <body class='<%= "#{controller_name} #{action_name}" %>'>
+  <a href="/" class="header-logo">Global Forest Watch</a>
+
+  <div class="header-inner inner">
+    <%= yield :title %>
+  </div>
+
   <%= yield %>
+
+  <footer class="footer">
+    <%= link_to 'www.globalforestwatch.org', root_path, :target => '_blank', :class=> 'left' %>
+    <p class="right">Find out what is happening in forests right now.</p>
+  </footer>
 
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
   <script src="http://libs.cartocdn.com/cartodb.js/v3/3.6.02/cartodb.js"></script>

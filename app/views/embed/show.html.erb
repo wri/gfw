@@ -10,4 +10,8 @@
   </script>
 <% end %>
 
+<% content_for :title do %>
+  <h1 class="header-title big"><%= @country['name'] %></h1>
+<% end %>
+
 <%= render 'shared/circles' %>

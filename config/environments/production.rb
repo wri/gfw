@@ -80,6 +80,10 @@ Gfw::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
+  config.action_dispatch.default_headers = {
+    'X-Frame-Options' => 'ALLOWALL'
+  }
+
   # config.middleware.insert_after(::Rack::Runtime, "::Rack::Auth::Basic", "Production") do |u, p|
   #   [u, p] == ['admin', ENV['PASSWORD']]
   # end
