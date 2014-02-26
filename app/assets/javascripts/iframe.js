@@ -1,5 +1,6 @@
 //= require d3.v3.min
 //= require jquery.qtip.min
+//= require simple_statistics
 
 gfw.ui.model.CountriesEmbedOverview = cdb.core.Model.extend({
   defaults: {
@@ -761,32 +762,32 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
         .attr('in2', 'blurOut')
         .attr('mode', 'normal');
 
-      var sql = 'WITH loss as (SELECT iso, SUM(';
+        var sql = 'WITH loss as (SELECT iso, SUM(';
 
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'loss.y'+y+' + ';
-      }
+        for(var y = 2001; y < 2012; y++) {
+          sql += 'loss.y'+y+' + ';
+        }
 
-      sql += 'loss.y2012) as sum_loss\
-              FROM loss_gt_50 loss\
-              GROUP BY iso), gain as (SELECT g.iso, SUM(y2001_y2012) as sum_gain\
-                                      FROM countries_gain g, loss_gt_50 loss\
-                                      WHERE loss.iso = g.iso\
-                                      GROUP BY g.iso), ratio as (';
+        sql += 'loss.y2012) as sum_loss\
+                FROM loss_gt_50 loss\
+                GROUP BY iso), gain as (SELECT g.iso, SUM(y2001_y2012) as sum_gain\
+                                        FROM countries_gain g, loss_gt_50 loss\
+                                        WHERE loss.iso = g.iso\
+                                        GROUP BY g.iso), ratio as (';
 
-      sql += 'SELECT c.iso, c.name, c.enabled, loss.sum_loss as loss, gain.sum_gain as gain, loss.sum_loss/gain.sum_gain as ratio\
-              FROM loss, gain, gfw2_countries c\
-              WHERE sum_gain IS NOT null\
-              AND NOT sum_gain = 0\
-              AND c.iso = gain.iso\
-              AND c.iso = loss.iso\
-              ORDER BY loss.sum_loss DESC\
-              LIMIT 50) ';
+        sql += 'SELECT c.iso, c.name, c.enabled, loss.sum_loss as loss, gain.sum_gain as gain, loss.sum_loss/gain.sum_gain as ratio\
+                FROM loss, gain, gfw2_countries c\
+                WHERE sum_gain IS NOT null\
+                AND NOT sum_gain = 0\
+                AND c.iso = gain.iso\
+                AND c.iso = loss.iso\
+                ORDER BY loss.sum_loss DESC\
+                LIMIT 50) ';
 
-      sql += 'SELECT *\
-              FROM ratio\
-              WHERE ratio IS NOT null\
-              ORDER BY ratio DESC';
+        sql += 'SELECT *\
+                FROM ratio\
+                WHERE ratio IS NOT null\
+                ORDER BY ratio DESC';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows;
@@ -797,23 +798,29 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
           .range([h, 0])
           .domain([0, d3.max(data, function(d) { return d.gain; })]);
 
+        var x_scale = d3.scale.linear()
+          .range([m, w-m])
+          .domain([d3.min(data, function(d) { return d.loss; }), d3.max(data, function(d) { return d.loss; })]);
+
         var x_log_scale = d3.scale.log()
           .range([m, w-m])
-          .domain([1, d3.max(data, function(d) { return d.loss; })]);
+          .domain([d3.min(data, function(d) { return d.loss; }), d3.max(data, function(d) { return d.loss; })]);
 
         var y_log_scale = d3.scale.log()
           .range([h-log_m, m])
-          .domain([1, d3.max(data, function(d) { return d.gain; })]);
+          .domain([d3.min(data, function(d) { return d.gain; }), d3.max(data, function(d) { return d.gain; })]);
 
         var r_scale = d3.scale.linear()
-          .range([5, 30]) // max ball radius
-          .domain([0, d3.max(data, function(d) { return d.extent; })])
+          .range(['yellow', 'red'])
+          .domain([0, d3.max(data, function(d) { return d.ratio; })]);
+
+        that.linearRegressionLine(svg, json, x_scale, y_scale);
 
         // circles w/ magic numbers :(
         var circle_attr = {
           'cx': function(d) { return d.loss >= 1 ? x_log_scale(d.loss) : m; },
           'cy': function(d) { return d.gain >= 1 ? y_log_scale(d.gain) : h-log_m; },
-          'r': function(d) { return r_scale(d.extent); },
+          'r': '5',
           'name': function(d) { return d.name; },
           'class': function(d) { return d.enabled ? 'ball ball_link' : 'ball ball_nolink'; }
         };
@@ -827,7 +834,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
 
         _.each(data, function(row) {
           if (!_.contains(exclude, row.name)) {
-            if(row.enabled === true) {
+            if (row.enabled === true) {
               data_link_.push(row);
             } else {
               data_.push(row);
@@ -842,11 +849,14 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
           .attr('xlink:href', function(d) { return '/country/' + d.iso})
           .append('svg:circle')
           .attr(circle_attr)
+          .style('fill', function(d) {
+            return r_scale(d.ratio);
+          })
           .style('filter', 'url(#shadow)')
           .on('mouseover', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', function(d) { return circle_attr.r(d) + 2; })
+              .attr('r', '7')
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -863,7 +873,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
           .on('mouseenter', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', function(d) { return circle_attr.r(d) + 2; })
+              .attr('r', '7')
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -880,7 +890,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
           .on('mouseout', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', function(d) { return circle_attr.r(d); })
+              .attr('r', '5')
               .style('opacity', .8);
 
             that.tooltip.style('visibility', 'hidden');
@@ -895,7 +905,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
           .on('mouseover', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', function(d) { return circle_attr.r(d) + 2; })
+              .attr('r', '7')
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -912,7 +922,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
           .on('mouseenter', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', function(d) { return circle_attr.r(d) + 2; })
+              .attr('r', '7')
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -929,7 +939,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
           .on('mouseout', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', function(d) { return circle_attr.r(d); })
+              .attr('r', '5')
               .style('opacity', .8);
 
             that.tooltip.style('visibility', 'hidden');
@@ -1008,7 +1018,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
             .on('mouseover', function() {
               d3.select(d3.event.target)
                 .transition()
-                .attr('r', function(d) { return circle_attr.r(d) + 2; })
+                .attr('r', '7')
                 .style('opacity', 1);
 
               var t = $(this).offset().top - 100,
@@ -1034,7 +1044,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
             .on('mouseenter', function() {
               d3.select(d3.event.target)
                 .transition()
-                .attr('r', function(d) { return circle_attr.r(d) + 2; })
+                .attr('r', '7')
                 .style('opacity', 1);
 
               var t = $(this).offset().top - 80,
@@ -1056,7 +1066,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
             .on('mouseout', function() {
               d3.select(d3.event.target)
                 .transition()
-                .attr('r', function(d) { return circle_attr.r(d); })
+                .attr('r', '5')
                 .style('opacity', .8);
 
               that.tooltip
@@ -1066,6 +1076,40 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
         }
       });
     }
+  },
+
+  linearRegressionLine: function(svg, dataset, x_log_scale, y_log_scale) {
+    var that = this;
+
+    // linear regresion line
+    var lr_line = ss.linear_regression()
+      .data(dataset.rows.map(function(d) { return [d.loss, d.gain]; }))
+      .line();
+
+    var line = d3.svg.line()
+      .x(x_log_scale)
+      .y(function(d) { return that.y_log_scale(lr_line(d));} )
+
+    var x0 = x_log_scale.domain()[0];
+    var x1 = x_log_scale.domain()[1];
+    var lr = svg.selectAll('.linear_regression').data([0]);
+
+    var attrs = {
+       "x1": x_log_scale(x0),
+       "y1": y_log_scale(lr_line(x0)),
+       "x2": x_log_scale(x1),
+       "y2": y_log_scale(lr_line(x1)),
+       "stroke-width": 1.3,
+       "stroke": "white",
+       "stroke-dasharray": "7,5"
+    };
+
+    lr.enter()
+      .append("line")
+       .attr('class', 'linear_regression')
+       .attr(attrs);
+
+    lr.transition().attr(attrs);
   }
 });
 
