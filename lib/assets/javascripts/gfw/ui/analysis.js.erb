@@ -405,22 +405,33 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
               'subdisabled': true
             });
           }
-        } else if (baselayer === "forma" && data && data.value) {
-          this.info.model.set({
-            'spinner': false,
-            'baselayer': baselayer,
-            'alert_count': formatNumber(Math.ceil((data.value) * 10) / 10, true) + ' alerts',
-            'download': this.downloadUrl,
-            'subdisabled': false
-          });
-
+        } else if (baselayer === "forma" && data) {
           if (this.subscribecountry) {
             this.info.subscribe.show();
 
             this.subscribecountry = false;
             this._updateHash(config.ISO);
           }
+
+          if (data.value) {
+            this.info.model.set({
+              'spinner': false,
+              'baselayer': baselayer,
+              'alert_count': formatNumber(Math.ceil((data.value) * 10) / 10, true) + ' alerts',
+              'download': this.downloadUrl,
+              'subdisabled': false
+            });
+          } else {
+            this.info.model.set({
+              'spinner': false,
+              'baselayer': baselayer,
+              'alert_count': 'No alerts',
+              'subdisabled': true
+            });
+          }
         } else {
+          var disabled = baselayer !== "forma";
+
           this.info.model.set({
             'spinner': false,
             'baselayer': baselayer,
@@ -921,10 +932,16 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
   },
 
   show: function() {
-    this.$backdrop.fadeIn(250);
+    var that = this;
+
     this.$el.fadeIn(250);
+    this.$backdrop.show();
 
     $(document).on('keydown', this._onKeyDown);
+
+    this.$backdrop.on('click', function() {
+      that.hide();
+    });
   },
 
   hide: function(e) {
@@ -940,6 +957,8 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
     this.$backdrop.fadeOut(250);
 
     $(document).off('keydown');
+
+    this.$backdrop.off('click');
   },
 
   _onKeyDown: function(e) {
@@ -952,6 +971,8 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
     } else {
       this._clearErrors();
     }
+
+
   },
 
   _onEscKey: function(e) {

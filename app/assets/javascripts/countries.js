@@ -801,7 +801,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
   },
 
   _initViews: function() {
-    this.sourceWindow  = new gfw.ui.view.SourceWindow();
+    this.sourceWindow = new gfw.ui.view.SourceWindow();
     this.$el.append(this.sourceWindow.render());
 
     this.tooltip = d3.select('body')
