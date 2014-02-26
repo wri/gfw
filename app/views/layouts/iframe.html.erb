@@ -31,20 +31,17 @@
     .countries_list { display: none; }
 
     .footer {
-      margin-top: 10px;
+      margin: 0 10px;
       font-weight: bold;
       font-size: 14px;
     }
 
-    .left {
-      float: left;
-      margin-left: 10px;
+    .overview .footer {
+      margin: 10px 30px 0;
     }
 
-    .right {
-      float: right;
-      margin-right: 10px;
-    }
+    .left { float: left; }
+    .right { float: right; }
   </style>
   <%= javascript_include_tag 'modernizr-2.6.2.min' %>
   <%= csrf_meta_tags %>
