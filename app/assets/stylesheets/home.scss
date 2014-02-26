@@ -989,20 +989,31 @@
 .timeline {
   display: none;
   position: absolute;
-  bottom: 40px;
+  bottom: 40px; left: 50%;
   z-index: 1000;
+  width: 1163px;
+  height: 50px;
   background: #fff;
   border: 1px solid #666;
   @include border-radius(5px);
   @include box-shadow(0px 0px 6px 1px rgba(#000, .15));
 }
 
-.timeline_modis .timeline-inner .time .line .tipsy {
-  width: 90px;
-  left: -45px;
+.timeline_loss {
+  left: 30px;
+}
 
-  .arrow {
-    left: 35px;
+.timeline_modis {
+  width: 876px;
+  margin-left: -438px;
+
+  .timeline-inner .time .line .tipsy {
+    width: 90px;
+    left: -45px;
+
+    .arrow {
+      left: 35px;
+    }
   }
 }
 
@@ -1019,6 +1030,9 @@
 }
 
 .timeline_forma {
+  width: 1078px;
+  margin-left: -539px;
+
   .timeline-inner {
     .range { width: 930px; }
 
@@ -1027,6 +1041,9 @@
 }
 
 .timeline_imazon {
+  width: 812px;
+  margin-left: -406px;
+
   .timeline-inner {
     .range { width: 714px; }
 
@@ -1248,7 +1265,7 @@
       @include user-select(none);
       outline: none;
 
-      &.right { left: 976px; }
+      &.right { left: 1070px; }
     }
   }
 }
