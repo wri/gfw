@@ -1088,7 +1088,7 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
 
   _initViews: function() {
     this._drawCircle('forma', 'lines', { iso: this.iso });
-    this._drawCircle('forest_loss', 'bars', { iso: this.iso, dataset: 'countries_loss' });
+    this._drawCircle('forest_loss', 'bars', { iso: this.iso, dataset: 'loss' });
   },
 
   _initFormaDropdown: function() {
@@ -1294,21 +1294,19 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
           .attr('r', 5);
       });
     } else if (type === 'bars') {
-      var sql = 'SELECT ';
+      var sql = "SELECT ";
 
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'y'+y+', ';
+      if (options.dataset === 'loss') {
+        sql += "year, loss_gt_0 loss FROM umd WHERE iso='"+options.iso+"'";
+      } else if (options.dataset === 'extent') {
+        sql += "year, extent_gt_25 extent FROM umd WHERE iso='"+options.iso+"'";
       }
-
-      sql += ['y2012',
-              'FROM '+options.dataset,
-              "WHERE iso = '"+options.iso+"'"].join(' ');
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
         if(json) {
           $graph.removeClass('ghost');
 
-          var data = json.rows[0];
+          var data = json.rows;
         } else {
           $coming_soon.show();
 
@@ -1318,10 +1316,12 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
         var data_ = [];
 
         _.each(data, function(val, key) {
-          data_.push({
-            'year': key.replace('y',''),
-            'value': val
-          });
+          if (val.year >= 2001) {
+            data_.push({
+              'year': val.year,
+              'value': eval('val.'+options.dataset)
+            });
+          }
         });
 
         $amount.html('<span>'+formatNumber(parseInt(data_[data_.length - 1].value, 10))+'</span>');
@@ -1362,16 +1362,7 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
           });
       });
     } else if (type === 'comp') {
-      var sql = 'SELECT y2001_y2012 as gain, (SELECT SUM(';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'y'+y+' + ';
-      }
-
-      sql += ['y2012) FROM loss_gt_0',
-                     "WHERE iso = '"+options.iso+"') as loss",
-              'FROM countries_gain',
-              "WHERE iso = '"+options.iso+"'"].join(' ');
+      var sql = "SELECT iso, sum(umd.loss_gt_0) loss, max(umd.gain) gain FROM umd WHERE iso='"+options.iso+"' GROUP BY iso";
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         if(json) {
@@ -1384,18 +1375,13 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
           return;
         }
 
-        var data_ = [],
-            form_key = {
-              'gain': 'Tree cover gain',
-              'loss': 'Tree cover loss'
-            };
-
-        _.each(data, function(val, key) {
-          data_.push({
-            'key': form_key[key],
-            'value': val
-          });
-        });
+        var data_ = [{
+                      'key': 'Tree cover gain',
+                      'value': data.gain
+                    }, {
+                      'key': 'Tree cover loss',
+                      'value': data.loss
+                    }];
 
         $amount.html('<span>'+formatNumber(parseInt(data_[data_.length - 1].value, 10))+'</span>');
         $date.html('Ha '+data_[data_.length - 1].key);
