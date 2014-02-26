@@ -1018,7 +1018,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
             .on('mouseover', function() {
               d3.select(d3.event.target)
                 .transition()
-                .attr('r', '7')
+                .attr('r', function(d) { return circle_attr.r(d) + 2; })
                 .style('opacity', 1);
 
               var t = $(this).offset().top - 100,
@@ -1044,7 +1044,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
             .on('mouseenter', function() {
               d3.select(d3.event.target)
                 .transition()
-                .attr('r', '7')
+                .attr('r', function(d) { return circle_attr.r(d) + 2; })
                 .style('opacity', 1);
 
               var t = $(this).offset().top - 80,
@@ -1066,7 +1066,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
             .on('mouseout', function() {
               d3.select(d3.event.target)
                 .transition()
-                .attr('r', '5')
+                .attr('r', function(d) { return circle_attr.r(d); })
                 .style('opacity', .8);
 
               that.tooltip
