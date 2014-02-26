@@ -1,15 +1,4 @@
 <% content_for :js do %>
-  <!-- Circle -->
-  <script type='text/javascript'>
-    var circleSummary = [
-      { icon: 'area', count: '20.8', title: 'Million hectares of tree cover loss in 2012' },
-      { icon: 'area', count: '229.8', title: 'Million hectares of tree cover loss from 2000 to 2012' },
-      { icon: 'area', count: '80.6', title: 'Million hectares of tree cover gain from 2000 to 2012' },
-      { icon: 'flag', count: '8,949', title: 'FORMA alerts in January 2014' }
-    ];
-  </script>
-  <!-- TODO: api queries -->
-
   <script id='circle-template' type='text/x-underscore-template'>
     <div class='circle'>
       <div class='icon {{icon}}'>
@@ -101,7 +90,7 @@
         <li id='{{cat_id}}' class='loss'> <i style='background-color:{{title_color}};'></i> Loss</li>
         <li id='{{cat_id}}' class='forestgain'> <i style='background-color:#6d6de5'></i> Gain</li>
       </ul>
-       
+
       {{#sublayer}}
       <!-- div class='coverage_category'>
         <a href='#' data-id='{{id}}' data-color='{{category_color}}' class='checkbox {{slug}}'>
