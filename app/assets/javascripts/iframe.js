@@ -115,12 +115,12 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
     for (var y = 2001; y<=2012; y += 1) {
       var y_ = this.x_scale(y);
 
-      if(y === 2001) {
-        y_ += 5;
-      } else if (y === 2012) {
+      if (y === 2001) {
         y_ -= 25;
+      } else if (y === 2012) {
+        y_ -= 55;
       } else {
-        y_ -= 10;
+        y_ -= 40;
       }
 
       markup_years += '<span class="year" style="left:'+y_+'px">'+y+'</span>';

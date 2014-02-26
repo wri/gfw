@@ -1445,11 +1445,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       var y_ = this.x_scale(y);
 
       if (y === 2001) {
-        y_ += 5;
-      } else if (y === 2012) {
         y_ -= 25;
+      } else if (y === 2012) {
+        y_ -= 55;
       } else {
-        y_ -= 10;
+        y_ -= 40;
       }
 
       markup_years += '<span class="year" style="left:'+y_+'px">'+y+'</span>';

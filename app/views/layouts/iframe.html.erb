@@ -16,7 +16,10 @@
   <%= stylesheet_link_tag "application", :media => "all" %>
   <%= stylesheet_link_tag "countries" %>
   <style>
-    body { border: 0; }
+    body {
+      border: 0;
+      overflow: hidden;
+    }
 
     .header-logo {
       position: absolute;
@@ -28,6 +31,7 @@
     .countries_list { display: none; }
 
     .footer {
+      margin-top: 10px;
       font-weight: bold;
       font-size: 14px;
     }
@@ -37,17 +41,22 @@
       margin-left: 10px;
     }
 
-    .right { float: right; }
+    .right {
+      float: right;
+      margin-right: 10px;
+    }
   </style>
   <%= javascript_include_tag 'modernizr-2.6.2.min' %>
   <%= csrf_meta_tags %>
 </head>
 <body class='<%= "#{controller_name} #{action_name}" %>'>
-  <a href="/" class="header-logo">Global Forest Watch</a>
+  <% if action_name == 'show' %>
+    <a href="/" class="header-logo">Global Forest Watch</a>
 
-  <div class="header-inner inner">
-    <%= yield :title %>
-  </div>
+    <div class="header-inner inner">
+      <%= yield :title %>
+    </div>
+  <% end %>
 
   <%= yield %>
 
