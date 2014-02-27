@@ -346,6 +346,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       range = this.range || '&begin=2000&end=2013';
     }
 
+    
     if (config.ISO === 'ALL' || this.protectedArea) {
       this.alertsUrl = url+dataset+'?geom='+encodeURI(area)+range;
       this.downloadUrl = url+dataset+'.shp?geom='+encodeURI(area)+range;
