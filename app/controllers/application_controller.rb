@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  helper_method :cookie_or_bot?
+
   protect_from_forgery with: :exception
 
   before_filter :check_browser
@@ -17,22 +19,26 @@ class ApplicationController < ActionController::Base
       Browser.new('Firefox', '12.0'),
       Browser.new('Internet Explorer', '9.0'),
       Browser.new('Chrome', '19.0.1036.7'),
-      Browser.new('Opera', '11.00'),
-      Browser.new('Pingdom.com_bot_version_1.4_(http:', '/www.pingdom.com/)')
+      Browser.new('Opera', '11.00')
     ]
 
     def check_browser
       user_agent = UserAgent.parse(request.user_agent)
+      puts'***'
 
-      redirect_to "/notsupportedbrowser" unless SupportedBrowsers.detect { |browser| user_agent >= browser }
+      redirect_to "/notsupportedbrowser" unless SupportedBrowsers.detect { |browser| user_agent >= browser } || user_agent.bot?
     end
 
     def check_terms
       cookies[:go_to] = request.path
 
-      unless cookies.permanent[ENV['TERMS_COOKIE'].to_sym] || controller_name == 'home' || controller_name == 'embed'
+      unless cookie_or_bot? || controller_name == 'home' || controller_name == 'embed'
         redirect_to root_path
       end
+    end
+
+    def cookie_or_bot?
+      cookies.permanent[ENV['TERMS_COOKIE'].to_sym] || UserAgent.parse(request.user_agent).bot?
     end
 
 end
