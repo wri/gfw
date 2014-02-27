@@ -24,13 +24,12 @@ class ApplicationController < ActionController::Base
 
     def check_browser
       user_agent = UserAgent.parse(request.user_agent)
-      puts'***'
 
       redirect_to "/notsupportedbrowser" unless SupportedBrowsers.detect { |browser| user_agent >= browser } || user_agent.bot?
     end
 
     def check_terms
-      cookies[:go_to] = request.path
+      cookies[:go_to] ||= request.path
 
       unless cookie_or_bot? || controller_name == 'home' || controller_name == 'embed'
         redirect_to root_path
