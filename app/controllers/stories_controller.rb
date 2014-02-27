@@ -37,7 +37,7 @@ class StoriesController < ApplicationController
     response = Api::Story.create(params)
 
     if response.nil?
-      flash[:error] = 'Your story has been registered. Thanks!'
+      flash[:error] = 'Sorry, there was an error while submitting your story'
       redirect_to new_story_path
     else
       flash[:notice] = 'Your story has been registered. Thanks!'
