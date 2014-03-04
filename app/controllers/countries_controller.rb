@@ -8,7 +8,7 @@ class CountriesController < ApplicationController
 
     not_found unless country.present?
 
-    @blog_story = Api::Blog.find_post_by_country(country['name'].downcase.gsub(" ", "_"))
+    @blog_story = Api::Blog.find_post_by_country(country['name'].downcase.gsub(" ", "_")).first
     @mongabay_story = HTTParty.get("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20mongabaydb%20WHERE%20position('#{I18n.transliterate(country['name']).downcase.gsub(" ", "_")}'%20in%20keywords)%20%3C%3E%200")['rows']
 
     @country = country
