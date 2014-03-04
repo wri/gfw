@@ -176,6 +176,14 @@ $(function() {
           if (!window.terms_cookie) {
             SourceWindow.show('accept_terms').addScroll();
             SourceWindow.$el.find('.close').hide();
+
+            SourceWindow.$el.find('.accept_btn').on('click', function() {
+              ga('send', 'event', 'Terms', 'Click', 'I agree');
+            });
+
+            SourceWindow.$el.find('.cancel_btn').on('click', function() {
+              ga('send', 'event', 'Terms', 'Click', 'I do not agree');
+            });
           }
 
           GFW(function(env) {

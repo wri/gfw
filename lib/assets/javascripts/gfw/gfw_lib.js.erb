@@ -615,7 +615,7 @@ GFW.modules.app = function(gfw) {
 
         this.mainLayer.setInteraction(true);
 
-        if (forest2000.attributes['visible']) GFW.app._refreshForest2000Layer();
+        if (cover_extent.attributes['visible']) GFW.app._refreshForest2000Layer();
       } else {
         if (this.mainLayer) {
           this.mainLayer.setOpacity(0);
@@ -1316,7 +1316,8 @@ GFW.modules.maplayer = function(gfw) {
         if (slug === 'forestgain') {
           if (visible) {
             GFW.app.addLayer(this.layer);
-            if (forest2000.attributes['visible']) GFW.app._refreshForest2000Layer();
+
+            if (cover_extent.attributes['visible']) GFW.app._refreshForest2000Layer();
           } else {
             GFW.app.removeLayer(this.layer);
           }
@@ -1325,7 +1326,8 @@ GFW.modules.maplayer = function(gfw) {
         } else if (slug === 'loss') {
           if (GFW.app.currentBaseLayer === null) {
             GFW.app.updateBaseLayer(slug);
-            if (forest2000.attributes['visible']) GFW.app._refreshForest2000Layer();
+
+            if (cover_extent.attributes['visible']) GFW.app._refreshForest2000Layer();
           } else {
             GFW.app.updateBaseLayer(null);
 
@@ -1374,7 +1376,7 @@ GFW.modules.maplayer = function(gfw) {
 
           forestgain.set('visible', true);
           umd_tree_loss_gain.set('visible', true);
-          if (forest2000.attributes['visible']) GFW.app._refreshForest2000Layer();
+          if (cover_extent.attributes['visible']) GFW.app._refreshForest2000Layer();
 
           this._removeSubLayers();
 
@@ -1390,7 +1392,7 @@ GFW.modules.maplayer = function(gfw) {
 
           Legend.replace(id, category_slug, category, title, slug, category_color, title_color, subEvent);
         } else if (slug === 'forest2000') {
-          if (forest2000.attributes['visible']) {
+          if (cover_extent.attributes['visible']) {
             GFW.app._renderForest2000Layer();
           } else {
             GFW.app._removeForest2000Layer();
@@ -1451,7 +1453,7 @@ GFW.modules.datalayers = function(gfw) {
         fires               = GFW.app.datalayers.LayersObj.get(593);
         forestgain          = GFW.app.datalayers.LayersObj.get(596);
         umd_tree_loss_gain  = GFW.app.datalayers.LayersObj.get(597);
-        forest2000          = GFW.app.datalayers.LayersObj.get(591);
+        cover_extent        = GFW.app.datalayers.LayersObj.get(591);
 
         that.LayersObj.each(function(p) {
           if (p.get('slug') === 'user_stories') {
