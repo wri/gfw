@@ -346,7 +346,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       range = this.range || '&begin=2000&end=2013';
     }
 
-    
+
     if (config.ISO === 'ALL' || this.protectedArea) {
       this.alertsUrl = url+dataset+'?geom='+encodeURI(area)+range;
       this.downloadUrl = url+dataset+'.shp?geom='+encodeURI(area)+range;
@@ -357,7 +357,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     executeAjax(this.alertsUrl, {}, {
       success: _.bind(function(data) {
-        var baselayer = config.BASELAYER;
+        var baselayer = config.BASELAYER,
+            iso = (config.ISO && config.ISO !== 'ALL') ? config.ISO : 'GeoJSON';
+
+        ga('send', 'event', 'Analysis', 'Success', iso + ' - ' + baselayer);
 
         if (baselayer === 'loss' && data) {
           var loss  = formatNumber(Math.ceil((data.loss) * 10) / 10, true);
@@ -451,6 +454,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         });
       }, this),
       error: _.bind(function(error) {
+        ga('send', 'event', 'Analysis', 'Error', (config.ISO && config.ISO !== 'ALL') ? config.ISO : '');
+
         this.$el.find('.stats .title, .stats ul, .stats .spinner').fadeOut(150, function() {
           that.$el.find('.error').fadeIn(250);
         });
@@ -593,6 +598,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
   _toggleAnalysis: function() {
     if (this.model.get('analyzing')) {
+      ga('send', 'event', 'Analysis', 'Start', (config.ISO && config.ISO !== 'ALL') ? config.ISO : '');
+
       LayerSelector.hide();
       Legend.hide();
       SearchBox.hide();
@@ -717,6 +724,12 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
 
     $(document).on('click', '.download', function(e) {
       e.preventDefault();
+    });
+
+    $(document).on('click', '.analysis_dropdown a', function(e) {
+      var iso = (config.ISO && config.ISO !== 'ALL') ? config.ISO : 'GeoJSON';
+
+      ga('send', 'event', 'Analysis', 'Download', iso + ' - ' + config.BASELAYER + ' - ' + $(e.target).text());
     });
   },
 
