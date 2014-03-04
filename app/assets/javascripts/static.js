@@ -63,7 +63,7 @@ gfw.ui.view.Static = cdb.core.View.extend({
     }
   },
 
-  _onNavChange: function(tab) {
+  _onNavChange: function(tab, accordion) {
     var that = this;
 
     var $selected = $("[data-slug=" + tab + "]"),
@@ -79,6 +79,8 @@ gfw.ui.view.Static = cdb.core.View.extend({
         that._goTo($('#'+selected), { margin: 40 });
       }, 800);
     }
+
+    accordion && this.model.set('expanded', accordion);
   },
 
   _toggleSource: function() {

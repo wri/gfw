@@ -7,7 +7,9 @@
         },
 
         change: function(tab) {
-          window.static_data._onNavChange(tab);
+          var accordion = window.location.hash.replace('#','');
+
+          window.static_data._onNavChange(tab, accordion);
         }
       });
 

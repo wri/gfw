@@ -17,7 +17,7 @@
       <% path = paths[option]
         option_class = request.path == path ? 'selected' : ''
         # exceptions
-        option_class = "selected" if request.path.include?(paths[action_name]) && option == action_name
+        option_class = "selected" if option == action_name && request.path.include?(paths[action_name])
         option_class = "selected" if controller_name == 'countries' && option == 'countries'
         option_class = "selected" if controller_name == 'stories' && option == 'stories'
         option_class = "#{option_class} #{option}"
