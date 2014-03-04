@@ -76,7 +76,7 @@ gfw.ui.view.Static = cdb.core.View.extend({
       this.model.set('selected', selected);
 
       setTimeout(function() {
-        that._goTo($('#'+selected), { margin: 40 });
+        if (!accordion) that._goTo($('#'+selected), { margin: 40 });
       }, 800);
     }
 
@@ -88,9 +88,7 @@ gfw.ui.view.Static = cdb.core.View.extend({
 
     $('.expanded').removeClass('expanded');
 
-    if (source) {
-      $('#'+source).addClass('expanded');
-    }
+    if (source) $('#'+source).addClass('expanded');
   },
 
   _toggleNav: function() {
