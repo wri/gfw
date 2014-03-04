@@ -45,6 +45,13 @@ gfw.ui.view.Static = cdb.core.View.extend({
       $('.nav-item.selected').removeClass('selected');
       $selected.addClass('selected');
 
+      var root = Backbone.history.options.root;
+
+      ga('send', 'pageview', {
+        'page': root+selected,
+        'title': selected
+      });
+
       this.model.set('selected', selected);
     }
   },
@@ -70,6 +77,13 @@ gfw.ui.view.Static = cdb.core.View.extend({
     if (selected !== this.model.get('selected')) {
       $('.nav-item.selected').removeClass('selected');
       $selected.addClass('selected');
+
+      var root = Backbone.history.options.root;
+
+      ga('send', 'pageview', {
+        'page': root+selected,
+        'title': selected
+      });
 
       this.model.set('selected', selected);
 

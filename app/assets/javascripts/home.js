@@ -265,6 +265,7 @@ $(function() {
       var source = $(e.target).attr('data-source'),
           coverage = $(e.target).hasClass('coverage');
 
+      ga('send', 'event', 'SourceWindow', 'Open', source);
       SourceWindow.show(source, coverage).addScroll();
     },
 

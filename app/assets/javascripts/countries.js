@@ -105,6 +105,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
     var source = $(e.target).closest('.info').attr('data-source');
 
+    ga('send', 'event', 'SourceWindow', 'Open', source);
     this.sourceWindow.show(source).addScroll();
   },
 
@@ -818,6 +819,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
     var source = $(e.target).closest('.info').attr('data-source');
 
+    ga('send', 'event', 'SourceWindow', 'Open', source);
     this.sourceWindow.show(source).addScroll();
   },
 
