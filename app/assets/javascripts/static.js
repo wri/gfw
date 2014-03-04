@@ -37,21 +37,16 @@ gfw.ui.view.Static = cdb.core.View.extend({
     e.preventDefault();
 
     var $selected = $(e.target).closest('.nav-item'),
-        selected = $selected.attr('data-slug');
+        selected = $selected.attr('data-slug'),
+        href = $selected.attr('href');
 
     if (selected !== this.model.get('selected')) {
-      window.router.navigate(selected);
+      window.router.navigate(href);
 
       $('.nav-item.selected').removeClass('selected');
       $selected.addClass('selected');
 
-      var root = Backbone.history.options.root;
-
-      ga('send', 'pageview', {
-        'page': root+selected,
-        'title': selected
-      });
-
+      ga('send', 'pageview');
       this.model.set('selected', selected);
     }
   },
@@ -77,13 +72,6 @@ gfw.ui.view.Static = cdb.core.View.extend({
     if (selected !== this.model.get('selected')) {
       $('.nav-item.selected').removeClass('selected');
       $selected.addClass('selected');
-
-      var root = Backbone.history.options.root;
-
-      ga('send', 'pageview', {
-        'page': root+selected,
-        'title': selected
-      });
 
       this.model.set('selected', selected);
 
