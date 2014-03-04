@@ -1,6 +1,7 @@
 <% content_for :js do %>
   <script>
-    var player1, player2;
+    var player1,
+        player2;
 
     function onYouTubeIframeAPIReady() {
       player1 = new YT.Player('player1');
@@ -8,27 +9,12 @@
     }
 
     $(function() {
-      setTimeout(function() {
-        if (location.hash) {
-          window.scrollTo(0, 0);
-        }
-      }, 1);
-
       var StaticRouter = Backbone.Router.extend({
-
         routes: {
-          'general_questions':  'change',
-          'terminology':        'change',
-          'data':               'change',
-          'web_platform':       'change',
-          'for_business':       'change'
+          'howto/:section': 'change'
         },
 
-        initialize: function() {},
-
-        change: function() {
-          var tab = window.location.hash.replace('#','');
-
+        change: function(tab) {
           window.static_howto._onNavChange(tab);
         }
       });
@@ -39,7 +25,7 @@
         window.static_howto = new gfw.ui.view.Static();
 
         window.router = new StaticRouter();
-        Backbone.history.start({ root: "/howto/" });
+        Backbone.history.start({ pushState: true });
       });
     });
   </script>
@@ -78,11 +64,11 @@
     <div class='navigation_left'>
       <ul>
         <li class='item_title'><i class='caret_down'></i></li>
-        <li><a href='#general_questions' class='selected nav-item' data-slug='general_questions'>General FAQs</a></li>
-        <li><a href='#terminology' class='nav-item' data-slug='terminology'>Terminology FAQs</a></li>
-        <li><a href='#data' class='nav-item' data-slug='data'>Data FAQs</a></li>
-        <li><a href='#web_platform' class='nav-item' data-slug='web_platform'>Web Platform FAQs</a></li>
-        <li><a href='#for_business' class='nav-item' data-slug='for_business'>GFW for businesses</a></li>
+        <li><%= link_to 'General FAQs', howto_path, :"data-slug" => 'general_questions', :class => 'nav-item selected' %></li>
+        <li><%= link_to 'Terminology FAQs', "#{howto_path}/terminology", :"data-slug" => 'terminology', :class => 'nav-item' %></li>
+        <li><%= link_to 'Data FAQs', "#{howto_path}/data", :"data-slug" => 'data', :class => 'nav-item' %></li>
+        <li><%= link_to 'Web Platform FAQs', "#{howto_path}/web_platform", :"data-slug" => 'web_platform', :class => 'nav-item' %></li>
+        <li><%= link_to 'GFW for businesses', "#{howto_path}/for_business", :"data-slug" => 'for_business', :class => 'nav-item' %></li>
       </ul>
     </div>
 

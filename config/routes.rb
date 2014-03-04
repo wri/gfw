@@ -6,8 +6,12 @@ Gfw::Application.routes.draw do
 
   # static
   get 'sources' => 'static#data'
+  get 'sources(/:section)' => 'static#data'
   get 'howto' => 'static#howto'
+  get 'howto(/:section)' => 'static#howto'
   get 'about' => 'static#about'
+  get 'about(/:section)' => 'static#about'
+
   get 'notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'
   get 'terms' => 'static#terms'
 
