@@ -1316,6 +1316,7 @@ GFW.modules.maplayer = function(gfw) {
         if (slug === 'forestgain') {
           if (visible) {
             GFW.app.addLayer(this.layer);
+            ga('send', 'event', 'Filter', 'Toggle', slug);
 
             if (cover_extent.attributes['visible']) GFW.app._refreshForest2000Layer();
           } else {
@@ -1326,6 +1327,7 @@ GFW.modules.maplayer = function(gfw) {
         } else if (slug === 'loss') {
           if (GFW.app.currentBaseLayer === null) {
             GFW.app.updateBaseLayer(slug);
+            ga('send', 'event', 'Filter', 'Toggle', slug);
 
             if (cover_extent.attributes['visible']) GFW.app._refreshForest2000Layer();
           } else {
@@ -1342,6 +1344,7 @@ GFW.modules.maplayer = function(gfw) {
           Legend.toggleItemBySlug(slug);
         } else if (slug === 'forma' || slug === 'modis' || slug === 'imazon' || slug === 'fires') {
           GFW.app.updateBaseLayer(slug);
+          ga('send', 'event', 'Filter', 'Toggle', slug);
 
           if (forestgain) {
             GFW.app.removeLayer(forestgain);
@@ -1394,6 +1397,7 @@ GFW.modules.maplayer = function(gfw) {
         } else if (slug === 'forest2000') {
           if (cover_extent.attributes['visible']) {
             GFW.app._renderForest2000Layer();
+            ga('send', 'event', 'Filter', 'Toggle', slug);
           } else {
             GFW.app._removeForest2000Layer();
           }
@@ -1406,6 +1410,7 @@ GFW.modules.maplayer = function(gfw) {
 
           if (visible) {
             GFW.app.addLayer(this.layer);
+            ga('send', 'event', 'Filter', 'Toggle', slug);
           } else {
             GFW.app.removeLayer(this.layer);
           }
