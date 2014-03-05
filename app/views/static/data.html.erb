@@ -51,7 +51,7 @@
     <div class='navigation_left'>
       <ul>
         <li class='item_title'><i class='caret_down'></i></li>
-        <li><%= link_to 'Forest change', sources_path, :"data-slug" => 'forest_change', :class => 'nav-item selected' %></li>
+        <li><%= link_to 'Forest change', "#{sources_path}/forest_change", :"data-slug" => 'forest_change', :class => 'nav-item selected' %></li>
         <li><%= link_to 'Forest cover', "#{sources_path}/forest_cover", :"data-slug" => 'forest_cover', :class => 'nav-item' %></li>
         <li><%= link_to 'Forest use', "#{sources_path}/forest_use", :"data-slug" => 'forest_use', :class => 'nav-item' %></li>
         <li><%= link_to 'Conservation', "#{sources_path}/conservation", :"data-slug" => 'conservation', :class => 'nav-item' %></li>

@@ -39,7 +39,7 @@
     <div class='navigation_left'>
       <ul>
         <li class='item_title'><i class='caret_down'></i></li>
-        <li><%= link_to 'About GFW', about_path, :"data-slug" => 'gfw', :class => 'nav-item selected' %></li>
+        <li><%= link_to 'About GFW', "#{about_path}/gfw", :"data-slug" => 'gfw', :class => 'nav-item selected' %></li>
         <li><%= link_to 'Partners', "#{about_path}/partners", :"data-slug" => 'partners', :class => 'nav-item' %></li>
         <li><%= link_to 'Users', "#{about_path}/users", :"data-slug" => 'users', :class => 'nav-item' %></li>
         <li><%= link_to 'Videos', "#{about_path}/videos", :"data-slug" => 'videos', :class => 'nav-item' %></li>

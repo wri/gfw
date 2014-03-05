@@ -64,7 +64,7 @@
     <div class='navigation_left'>
       <ul>
         <li class='item_title'><i class='caret_down'></i></li>
-        <li><%= link_to 'General FAQs', howto_path, :"data-slug" => 'general_questions', :class => 'nav-item selected' %></li>
+        <li><%= link_to 'General FAQs', "#{howto_path}/general_questions", :"data-slug" => 'general_questions', :class => 'nav-item selected' %></li>
         <li><%= link_to 'Terminology FAQs', "#{howto_path}/terminology", :"data-slug" => 'terminology', :class => 'nav-item' %></li>
         <li><%= link_to 'Data FAQs', "#{howto_path}/data", :"data-slug" => 'data', :class => 'nav-item' %></li>
         <li><%= link_to 'Web Platform FAQs', "#{howto_path}/web_platform", :"data-slug" => 'web_platform', :class => 'nav-item' %></li>
