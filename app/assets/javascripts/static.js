@@ -88,7 +88,14 @@ gfw.ui.view.Static = cdb.core.View.extend({
 
     $('.expanded').removeClass('expanded');
 
-    if (source) $('#'+source).addClass('expanded');
+    if (source) {
+      var hash = '#'+source;
+
+      $(hash).addClass('expanded');
+      window.location.hash = hash;
+    } else {
+      window.location.hash = '';
+    }
   },
 
   _toggleNav: function() {
