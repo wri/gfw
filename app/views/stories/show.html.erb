@@ -39,29 +39,30 @@ end %>
     </div>
   </div>
 
-  <% if @story['media'].present?  %>
-    <div class="carrousel">
-      <div class="frame">
-        <%= image_tag(static_map(@story['coordinates'], '266x266', 4, true)) %>
-      </div>
+  <div class="carrousel">
+    <div class="frame">
+      <%= image_tag(static_map(@story['coordinates'], '266x266', 4, true)) %>
+    </div>
 
-      <% if @story['media'].size > 1 %>
-        <a href='#' class='previous'></a>
-        <a href='#' class='next'></a>
-      <% end %>
+    <% if @story['media'].size > 2 %>
+      <a href='#' class='previous'></a>
+      <a href='#' class='next'></a>
+    <% end %>
 
+    <% if (@story['media'][1].present? || @story['media'][0]['embed_url'].present?)  %>
       <ul>
         <% @story['media'].each do |media| %>
           <% if media['embed_url'].present? %>
             <li class='slide'><%= youtube_embed(media['embed_url']).html_safe %></li>
-          <% else %>
+          <% end %>
+
+          <% if media['url'].present? %>
             <li class='slide'><%= image_tag "#{ENV['AWS_HOST']}/big_#{media['url']}" %></li>
           <% end %>
         <% end %>
-      </ul>
-
-    </div>
-  <% end %>
+        </ul>
+    <% end %>
+  </div>
 
   <div class='story-content'>
     <p><%= simple_format(raw("<span class='dropcap'>#{@story['details'][0, 1]}</span>") + @story['details'][1, @story['details'].length - 1]).gsub("</p>\n\n<p>", "<br /><br />").html_safe %></p>

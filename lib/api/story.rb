@@ -25,18 +25,30 @@ module Api
           embed_url: params['video'],
           preview_url: "",
           mime_type: "",
-          order: 1
+          order: 0
+        }
+      else
+        uploads << {
+          url: "",
+          embed_url: "",
+          preview_url: "",
+          mime_type: "image/jpeg",
+          order: 0
         }
       end
 
-      params['uploads_ids'].split(',').each_with_index do |id, index|
-        uploads << {
-          url: id,
-          embed_url: "",
-          preview_url: id,
-          mime_type: "image/jpeg",
-          order: params['video'].present? ? index+1 : index
-        }
+      uploads_ids = params['uploads_ids'].split(',')
+
+      if uploads_ids.length >= 1
+        params['uploads_ids'].split(',').each_with_index do |id, index|
+          uploads << {
+            url: id,
+            embed_url: "",
+            preview_url: id,
+            mime_type: "image/jpeg",
+            order: params['video'].present? ? index+1 : index+2
+          }
+        end
       end
 
       options = {

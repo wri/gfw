@@ -11,7 +11,7 @@ gem 'httparty'
 gem 'useragent'
 gem 'carrierwave'
 gem 'fog'
-gem 'rmagick'
+gem 'rmagick', :require => false
 gem 'unf'
 gem 'newrelic_rpm'
 
