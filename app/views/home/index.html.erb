@@ -85,7 +85,7 @@
     <% @featured.each do |story| %>
       <li class='column round three'>
         <a href='<%= story_path(story['id']) %>'>
-          <%= image_tag story_image_or_map("#{ENV['AWS_HOST']}/#{story['media'][0]['preview_url']}", story['coordinates']), :alt => story['title'] %>
+          <%= image_tag story_image_or_map("#{ENV['AWS_HOST']}/#{story['media'][1]['preview_url']}", "#{story['lat']}, #{story['lng']}"), :alt => story['title'] %>
           <div class='gradient'></div>
           <div class='frame'></div>
           <div class='title'>
