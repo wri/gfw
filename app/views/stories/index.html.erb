@@ -9,7 +9,7 @@
 
     <ul>
       <% @featured.each do |story| %>
-        <li class="featured_story <%= cycle('left', 'right') %>">
+        <li class='featured_story <%= cycle('left', 'right') %>'>
           <div class="featured_story-content">
             <h2><%= link_to story['title'], story_path(story['id']), :class => 'featured_story-title' %></h2>
             <p><%= truncate(story['details'], :length => 295) %></p>
@@ -17,9 +17,7 @@
           </div>
 
           <a href="<%= story_path(story['id']) %>">
-            <div class="frame">
-              <%= image_tag(story_image_or_map((story['media'][1].present? && story['media'][1]['preview_url'].present?) ? "#{ENV['AWS_HOST']}/#{story['media'][1]['preview_url']}" : '', "#{story['lat']}, #{story['lng']}")) %>
-            </div>
+            <div class="frame"><img src="<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>" alt="<%= story['title'] %>" /></div>
           </a>
         </li>
       <% end %>

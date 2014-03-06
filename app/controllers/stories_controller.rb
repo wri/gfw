@@ -13,7 +13,7 @@ class StoriesController < ApplicationController
     unless params['for_map']
       @page         = (params[:page] || 1).to_i
       @total_pages  = (Api::Story.featured.count.to_f / stories_per_page.to_f).ceil
-      @featured     = Api::Story.find_featured_by_page(@page, stories_per_page)
+      @featured     = Api::Story.find_by_page(@page, stories_per_page)
     end
 
     respond_to do |format|
@@ -24,7 +24,7 @@ class StoriesController < ApplicationController
 
   def new
     @url = stories_path
-    @story = {}
+    @story = Api::Story.new
   end
 
   def edit
@@ -34,14 +34,14 @@ class StoriesController < ApplicationController
   end
 
   def create
-    response = Api::Story.create(params)
+    @story = Api::Story.new(params[:story])
 
-    if response.nil?
-      flash[:error] = 'Sorry, there was an error while submitting your story'
-      redirect_to new_story_path
-    else
+    if @story.valid?
       flash[:notice] = 'Your story has been registered. Thanks!'
+
       redirect_to story_path(response['id'])
+    else
+      render :new
     end
   end
 
@@ -64,8 +64,7 @@ class StoriesController < ApplicationController
     end
 
     def access_through_token?(story)
-      # params[:id] === story.token
-      true
+      params[:id] === story.token
     end
 
     def check_token

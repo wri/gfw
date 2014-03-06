@@ -1,14 +1,18 @@
 module Api
   class Story
+    include ActiveModel::Model
+
     include HTTParty
 
     base_uri ENV['GFW_API_HOST']
 
-    def self.since(date)
-      options = { :query => { :since => date } }
+    attr_accessor :title, :the_geom, :uploads_ids, :where_did_it_happen,
+                  :when_did_it_happen, :details, :video, :media, :your_name,
+                  :your_email
 
-      get('/stories', options)
-    end
+    validates :title,      presence: true
+    validates :your_email, presence: true,
+                           format: { :with => /\A[^@]+@[^@]+\z/ }
 
     def self.featured
       response = get('/stories?bust=1')
@@ -16,26 +20,19 @@ module Api
       response.select { |r| r['featured'] }
     end
 
-    def self.create(params)
-      uploads ||= []
+    def initialize(attributes={})
+      super
+      @media ||= []
+    end
 
-      if params['video'].present?
-        uploads << {
-          url: "",
-          embed_url: params['video'],
-          preview_url: "",
-          mime_type: "",
-          order: 0
-        }
-      else
-        uploads << {
-          url: "",
-          embed_url: "",
-          preview_url: "",
-          mime_type: "image/jpeg",
-          order: 0
-        }
-      end
+    def self.create(params)
+      uploads = [{
+                  url: "",
+                  embed_url: params['video'].present? ? params['video'] : "",
+                  preview_url: "",
+                  mime_type: "",
+                  order: 0
+                }]
 
       uploads_ids = params['uploads_ids'].split(',')
 
@@ -78,7 +75,7 @@ module Api
       end
     end
 
-    def self.find_featured_by_page(page, stories_per_page)
+    def self.find_by_page(page, stories_per_page)
       response = featured
 
       response.shift((page - 1) * stories_per_page)

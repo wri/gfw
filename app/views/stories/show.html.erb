@@ -57,10 +57,10 @@ end %>
           <% end %>
 
           <% if media['url'].present? %>
-            <li class='slide'><%= image_tag "#{ENV['AWS_HOST']}/big_#{media['url']}" %></li>
+            <li class='slide'><img src="<%= "#{ENV['AWS_HOST']}/big_#{media['url']}" %>" alt="" /></li>
           <% end %>
         <% end %>
-        </ul>
+      </ul>
     <% end %>
   </div>
 
