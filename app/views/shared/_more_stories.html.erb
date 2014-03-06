@@ -6,7 +6,11 @@
     <ul class='columns'>
       <% @stories.each do |story| %>
         <li class='column five'>
-          <%= link_to image_tag(story_image_or_map(story['media'][0]['preview_url'] == '' ? '' : "#{ENV['AWS_HOST']}/#{story['media'][0]['preview_url']}", "#{story['lat']}, #{story['lng']}")), story_path(story['id']), :class => 'frame' %>
+          <a href="<%= story_path(story['id']) %>">
+            <div class="frame">
+              <%= image_tag(story_image_or_map((story['media'][1].present? && story['media'][1]['preview_url'].present?) ? "#{ENV['AWS_HOST']}/#{story['media'][1]['preview_url']}" : '', "#{story['lat']}, #{story['lng']}")) %>
+            </div>
+          </a>
 
           <div class='infowindow'>
             <strong><%= link_to truncate(story['title'], :length => 20), story_path(story['id']) %></strong>

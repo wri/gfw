@@ -18,7 +18,7 @@
 
           <a href="<%= story_path(story['id']) %>">
             <div class="frame">
-              <%= image_tag(story_image_or_map(story['media'][0]['preview_url'] == '' ? '' : "#{ENV['AWS_HOST']}/#{story['media'][0]['preview_url']}", "#{story['lat']}, #{story['lng']}")) %>
+              <%= image_tag(story_image_or_map((story['media'][1].present? && story['media'][1]['preview_url'].present?) ? "#{ENV['AWS_HOST']}/#{story['media'][1]['preview_url']}" : '', "#{story['lat']}, #{story['lng']}")) %>
             </div>
           </a>
         </li>
