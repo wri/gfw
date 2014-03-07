@@ -2,13 +2,12 @@ module Api
   class Story
     include ActiveModel::Model
 
-    attr_accessor :id, :visible, :featured, :title, :the_geom, :uploads_ids,
-                  :date, :when_did_it_happen, :details, :video, :media, :name,
-                  :email, :location, :lat, :lng
+    attr_accessor :id, :visible, :title, :the_geom, :uploads_ids, :date,
+                  :details, :video, :media, :name, :email, :location, :lat,
+                  :lng
 
     validates :title, presence: true
     validates :the_geom, presence: true
-    validates :name, presence: true
     validates :email, presence: true,
                       format: { :with => /@/ }
 

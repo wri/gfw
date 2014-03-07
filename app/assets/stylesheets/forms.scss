@@ -8,7 +8,6 @@
 
 .field_with_errors {
   label {
-    float: left;
     color: #C12000;
   }
 
@@ -19,7 +18,7 @@
 }
 
 label {
-  display: block;
+  float: left;
   color: #333;
   font-weight: bold;
   font-size: 12px;
@@ -58,11 +57,7 @@ textarea {
     }
   }
 
-  &.optional {
-    label {
-      @include inline-block();
-    }
-
+  &.required {
     span {
       float: right;
       font-size: 13px;

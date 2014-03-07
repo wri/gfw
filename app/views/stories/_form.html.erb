@@ -9,48 +9,50 @@
 <% end %>
 
 <%= form_for :story, :url => @url, :method => (@method || :post) do |f| %>
-  <div class="field <%= 'with_error' if !@story.errors[:title].empty? %>">
+  <div class="field required">
     <%= f.label :title %>
+    <span>Required</span>
 
     <%= f.text_field :title, :placeholder => 'Illegal Logging in National Park' %>
   </div>
 
-  <div class="field optional">
-    <%= label_tag 'Affected areas' %> <span>Drop a pin on the map near the affected area</span>
+  <div class="field required">
+    <div class="<%= 'field_with_errors' if @story.errors[:the_geom].present? %>">
+      <%= label_tag 'Affected areas' %>
+    </div>
+    <span>Drop a pin on the map near the affected area</span>
 
-    <div class="stories_map-container" class="<%= 'error' if !@story.errors[:the_geom].empty? %>">
-      <a href="/#remove" class="remove_story-link">Remove</a>
-      <div id="stories_map" class="map stories_map"></div>
+    <div class="<%= 'field_with_errors' if @story.errors[:the_geom].present? %>">
+      <div class="stories_map-container">
+        <a href="/#remove" class="remove_story-link">Remove</a>
+        <div id="stories_map" class="map stories_map"></div>
+      </div>
     </div>
 
     <%= f.hidden_field :the_geom %>
     <%= f.hidden_field :uploads_ids %>
   </div>
 
-  <div class="field optional">
+  <div class="field">
     <%= f.label :location %>
-    <span>Optional</span>
 
     <%= f.text_field :location, :placeholder => '“Katingan Peatland area, Indonesia,” “Near Ambanja, Mozambique”' %>
   </div>
 
-  <div class="field short optional">
+  <div class="field short">
     <%= f.label :date %>
-    <span>Optional</span>
 
     <%= f.date_field :date %>
   </div>
 
-  <div class="field optional">
+  <div class="field">
     <%= f.label :details %>
-    <span>Optional</span>
 
     <%= f.text_area :details, :placeholder => '“Selective logging with chainsaws,” “Burning peatland,” “Forest cleared for agriculture,” “Affected species”' %>
   </div>
 
-  <div class="field optional">
+  <div class="field">
     <%= f.label :video %>
-    <span>Optional</span>
 
     <%= f.text_field :video, :placeholder => 'http://www.youtube.com/watch?v=lTG-0brb98I' %>
   </div>
@@ -74,16 +76,16 @@
   </div>
 
   <p class="hint">If you share your name, it will be visible on the GFW website, but your email will not be published.</p>
-  <div class="field short optional">
+  <div class="field short">
     <%= f.label :name %>
-    <span>Optional</span>
 
     <%= f.text_field :name %>
   </div>
 
   <p class="hint">In some areas, forest clearing information is considered to be highly sensitive—users are encouraged to be cautious when sharing their names.</p>
-  <div class="field short">
+  <div class="field short required">
     <%= f.label :email %>
+    <span>Required</span>
 
     <%= f.text_field :email %>
   </div>

@@ -288,8 +288,9 @@
 }
 
 .stories_map-container {
+  overflow: hidden;
   width: 582px;
-  margin-top: 5px;
+  padding-top: 5px;
 }
 
 .stories_map {
@@ -333,7 +334,7 @@
   @include inline-block();
   width: 132px;
   height: 76px;
-  margin: 0 7px 10px 0;
+  margin: 5px 10px 0 0;
   border: 2px solid #fff;
   background: #fff;
   cursor: move;
@@ -373,4 +374,8 @@
     top: 30px;
     left: 65px;
   }
+}
+
+.field_with_errors .stories_map {
+  border: 1px solid #C12000;
 }
