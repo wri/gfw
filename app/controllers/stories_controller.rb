@@ -38,7 +38,13 @@ class StoriesController < ApplicationController
     if @story.valid?
       response = @story.create(params[:story])
 
-      redirect_to story_path(response.id)
+      # API error
+      if response.nil?
+        flash[:error] = 'Sorry, there was an error while submitting your story.'
+        redirect_to new_story_path
+      else
+        redirect_to story_path(response.id)
+      end
     else
       respond_with @story
     end

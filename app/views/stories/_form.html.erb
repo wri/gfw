@@ -11,7 +11,13 @@
 <%= form_for :story, :url => @url, :method => (@method || :post) do |f| %>
   <% if @story.errors.present? %>
     <div class="field field_with_errors">
-      <p>Sorry, there was an error while submitting your story</p>
+      <p>Sorry, there was an error while submitting your story.</p>
+    </div>
+  <% end %>
+
+  <% if flash[:error] %>
+    <div class="field field_with_errors">
+      <p><%= flash[:error] %></p>
     </div>
   <% end %>
 
