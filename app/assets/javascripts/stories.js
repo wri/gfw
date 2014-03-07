@@ -129,7 +129,7 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
 
           if (confirmation == true) {
             uploadsIds = _.without(that.uploadsIds, file.basename);
-            $("#uploads_ids").val(uploadsIds.join(","));
+            $("#story_uploads_ids").val(uploadsIds.join(","));
 
             $thumb.fadeOut(250, function() {
               $thumb.remove();
@@ -144,7 +144,7 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
         $("form input[type='submit']").attr('disabled', false);
       }
 
-      $('#uploads_ids').val(that.uploadsIds.join(','));
+      $('#story_uploads_ids').val(that.uploadsIds.join(','));
     });
   },
 
