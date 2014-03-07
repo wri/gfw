@@ -1,28 +1,30 @@
-//= require mixins
-
 @import 'compass/css3/border-radius';
 @import 'compass/css3/box-shadow';
 @import 'compass/css3/columns';
 @import 'compass/css3/inline-block';
 
 @import 'fonts';
+@import 'helpers';
 @import 'forms';
+
 @import 'stories-icons/*.png';
 
 
 .stories {
   .header {
+    height: 205px;
     border-bottom: 1px solid #e5e5e5;
   }
 
-  &.index {
-    .header {
-      height: 196px;
-    }
+  &.index .header-subtitle {
+    margin-bottom: 40px;
+    font-size: 29px;
+    color: #666;
+  }
 
-    .header-subtitle {
-      margin-bottom: 40px;
-    }
+  &.show .header-title {
+    font-size: 29px;
+    line-height: 51px;
   }
 
   &.edit .header-inner {
@@ -36,7 +38,7 @@
 }
 
 
-/* =Show
+/* =Index
 ----------------------------------------------- */
 
 .featured_story {
@@ -148,14 +150,14 @@
   display: none;
   position: absolute;
   z-index: 200;
-  bottom: 90px; left: 50%;
+  bottom: 125px; left: 50%;
   margin-left: -90px;
   padding: 12px;
   width: 156px;
   background: #111;
   font-size: 12px;
   text-align: left;
-  color: #999;
+  color: #666;
   @include border-radius(3px);
 
   .tip {
@@ -194,7 +196,7 @@
 
 .when-and-who {
   font-size: 15px;
-  color: #999;
+  color: #666;
   text-align: center;
 }
 
@@ -227,6 +229,43 @@
 /* =Edit
 ----------------------------------------------- */
 
+.story_form {
+  position: relative;
+  margin: 40px auto;
+
+  aside {
+    position: absolute;
+    top: 0; right: 0;
+    width: 282px;
+    font-size: 13px;
+
+    h3 {
+      padding: 0 0 5px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #ccc;
+      font-weight: bold;
+      font-size: 12px;
+      color: #333;
+      text-transform: uppercase;
+    }
+
+    p,
+    ul {
+      margin-bottom: 15px;
+      font-size: 15px;
+      line-height: 1.2em;
+      color: #666;
+    }
+
+    ul {
+      list-style: disc;
+      margin-left: 15px;
+    }
+
+    li { margin-bottom: 10px; }
+  }
+}
+
 .remove_story-link {
   display: none;
   position: absolute;
@@ -248,6 +287,90 @@
   }
 }
 
+.stories_map-container {
+  width: 582px;
+  margin-top: 5px;
+}
+
 .stories_map {
   height: 295px;
+}
+
+.hint {
+  float: right;
+  width: 282px;
+  font-size: 15px;
+  line-height: 1.2em;
+  color: #666;
+}
+
+.upload_picture {
+  @include inline-block();
+  float: left;
+  width: 132px;
+  height: 78px;
+  margin: 5px 10px 10px 0;
+  background: transparent url('buttons/bkg_button_add_media.png') no-repeat center;
+
+  &:hover { background: transparent url('buttons/bkg_button_add_media_hover.png') no-repeat center; }
+}
+
+.thumbnails {
+  float: left;
+  width: 585px;
+
+  .destroy {
+    position: absolute;
+    top: -9px; right: -9px;
+    width: 18px;
+    height: 18px;
+    @include stories-icons-sprite(btn_remove);
+  }
+}
+
+.thumbnail {
+  position: relative;
+  @include inline-block();
+  width: 132px;
+  height: 76px;
+  margin: 0 7px 10px 0;
+  border: 2px solid #fff;
+  background: #fff;
+  cursor: move;
+
+  .inner_box {
+    width: 132px;
+    height: 76px;
+    clear: both;
+    overflow: hidden;
+  }
+
+  &:hover { border: 2px solid #9EB741; }
+
+  &.preview {
+    cursor: default;
+    border: 1px solid #9EB741;
+
+    &:hover { border: 1px solid #9EB741; }
+  }
+
+  img {
+    width: 100%;
+  }
+
+  .filename {
+    position: absolute;
+    bottom: 12px; left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 13px;
+    @extend .sans-serif;
+    color: #666;
+  }
+
+  .spinner {
+    position: absolute;
+    top: 30px;
+    left: 65px;
+  }
 }

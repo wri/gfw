@@ -1,3 +1,72 @@
+@import 'compass/css3/border-radius';
+@import 'compass/css3/inline-block';
+
+
+.field {
+  margin: 0 0 25px;
+}
+
 .field_with_errors {
-  color: #C12000;
+  label {
+    float: left;
+    color: #C12000;
+  }
+
+  input[type="text"],
+  input[type="email"] {
+    border: 1px solid #C12000;
+  }
+}
+
+label {
+  display: block;
+  color: #333;
+  font-weight: bold;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+input[type="password"],
+input[type="text"],
+input[type="date"],
+input[type="email"],
+textarea {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 560px;
+  margin: 5px 0;
+  font-size: 14px;
+  @include border-radius(3px);
+  outline: none;
+}
+
+textarea {
+  height: 182px;
+}
+
+.field {
+  @extend .clearfix;
+  width: 582px;
+
+  &.short {
+    width: 304px;
+
+    input[type="text"],
+    input[type="date"],
+    input[type="email"] {
+      width: 282px;
+    }
+  }
+
+  &.optional {
+    label {
+      @include inline-block();
+    }
+
+    span {
+      float: right;
+      font-size: 13px;
+      color: #666;
+    }
+  }
 }

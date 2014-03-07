@@ -1,7 +1,3 @@
-<% content_for :title do %>
-  <h1 class="header-title"><%= link_to t(".title"), stories_path %></h1>
-<% end %>
-
 <% content_for :js do %>
   <script>
     $(function() {
@@ -12,8 +8,14 @@
   </script>
 <% end %>
 
-<%# content_for :inner_header do
-  link_to (content_tag :span, 'Edit story'), edit_story_path(@story.token), :class => "btn green edit" if access_through_token?(@story)
+<% content_for :title do %>
+  <h1 class="header-title big"><%= link_to t(".title"), stories_path %></h1>
+<% end %>
+
+<% content_for :inner_header do
+  if access_through_token?(@story.id)
+    link_to (content_tag :span, 'Edit story'), edit_story_path(@story.token), :class => "btn green edit"
+  end
 end %>
 
 <div class='section inner'>
@@ -28,7 +30,7 @@ end %>
         <span>&middot;</span>
       <% end %>
       <% if @story.date.present?  %>
-        <span><%= @story.date %></span>
+        <span><%= @story.date.to_datetime.strftime("%B %d, %Y") %></span>
       <% end %>
       <% if @story.date.present? && @story.name.present? %>
         <span>&middot;</span>
