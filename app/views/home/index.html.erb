@@ -82,8 +82,9 @@
     <p class='section-desc'><%= t('.home_stories.featured.text_html', :featured => link_to(t('.home_stories.featured.featured'), stories_path), :explore => link_to(t('.home_stories.featured.explore'), "#{map_path}/3/15.00/27.00/ALL/580", :class => 'map ajax all')) %></p>
 
     <ul class='columns'>
-    <% @featured.each do |story| %>
-      <li class='column round three'>
+    <% @visible.each do |story| %>
+      <li class='column round three'
+      >
         <a href="<%= story_path(story['id']) %>">
           <img src="<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>" alt="<%= story['title'] %>" />
           <div class="frame"></div>

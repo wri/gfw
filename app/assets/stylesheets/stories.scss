@@ -270,7 +270,7 @@
   display: none;
   position: absolute;
   z-index: 10;
-  top: 0px; right: 0px;
+  top: 5px; right: 0px;
   margin: 5px;
   padding: 4px;
   background-color: #fff;
@@ -288,6 +288,7 @@
 }
 
 .stories_map-container {
+  position: relative;
   overflow: hidden;
   width: 582px;
   padding-top: 5px;

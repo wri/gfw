@@ -11,11 +11,11 @@ module Api
     validates :email, presence: true,
                       format: { :with => /@/ }
 
-    def self.featured
+    def self.visible
       response = Typhoeus.get("#{ENV['GFW_API_HOST']}/stories?bust=1", headers: {"Accept" => "application/json"})
 
       if response.success?
-        return JSON.parse(response.body).select { |r| r['featured'] }
+        return JSON.parse(response.body).select { |r| r['visible'] }
       else
         return nil
       end
@@ -72,7 +72,7 @@ module Api
     end
 
     def self.find_by_page(page, stories_per_page)
-      response = featured
+      response = visible
 
       response.shift((page - 1) * stories_per_page)
 

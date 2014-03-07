@@ -15,8 +15,8 @@ class StoriesController < ApplicationController
 
     unless params['for_map']
       @page        = (params[:page] || 1).to_i
-      @total_pages = (Api::Story.featured.count.to_f / stories_per_page.to_f).ceil
-      @featured    = Api::Story.find_by_page(@page, stories_per_page)
+      @total_pages = (Api::Story.visible.count.to_f / stories_per_page.to_f).ceil
+      @visible     = Api::Story.find_by_page(@page, stories_per_page)
     end
 
     respond_with @stories
@@ -56,9 +56,9 @@ class StoriesController < ApplicationController
 
     def load_stories
       @stories = if params['for_map'].present?
-                   Api::Story.featured
+                   Api::Story.visible
                  else
-                   Api::Story.featured.sample(5)
+                   Api::Story.visible.sample(5)
                  end
     end
 
