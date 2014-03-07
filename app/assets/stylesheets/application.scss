@@ -69,6 +69,7 @@ strong {
   background: #9bb251;
   @include border-radius(2px);
   cursor: pointer;
+  outline: none;
 
   &.red {
     background: #AC2E25;

@@ -245,8 +245,8 @@
       border-bottom: 1px solid #ccc;
       font-weight: bold;
       font-size: 12px;
-      color: #333;
       text-transform: uppercase;
+      color: #333;
     }
 
     p,
@@ -379,4 +379,8 @@
 
 .field_with_errors .stories_map {
   border: 1px solid #C12000;
+}
+
+#fileupload {
+  display: none;
 }

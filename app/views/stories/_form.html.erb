@@ -9,6 +9,12 @@
 <% end %>
 
 <%= form_for :story, :url => @url, :method => (@method || :post) do |f| %>
+  <% if @story.errors.present? %>
+    <div class="field field_with_errors">
+      <p>Sorry, there was an error while submitting your story</p>
+    </div>
+  <% end %>
+
   <div class="field required">
     <%= f.label :title %>
     <span>Required</span>
@@ -91,7 +97,7 @@
   </div>
 
   <div class="field">
-    <%= f.submit 'Submit story' %>
+    <%= f.submit 'Submit story', class: 'btn dark_glow' %>
   </div>
 <% end %>
 
