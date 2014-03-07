@@ -95,7 +95,7 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
       $("form input[type='submit']").attr('disabled', 'disabled');
       $("form input[type='submit']").val('Please wait...');
 
-      data.submit();
+      // data.submit();
     }).on('fileuploadprocessalways', function (e, data) {
       var index = data.index,
           file = data.files[index],
@@ -223,7 +223,7 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
   },
 
   render: function() {
-    this.$the_geom = this.$('#the_geom');
+    this.$the_geom = this.$('#story_the_geom');
     this.$remove = this.$('.remove_story-link');
 
     var the_geom = this.$the_geom.val()

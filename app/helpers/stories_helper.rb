@@ -14,8 +14,8 @@ module StoriesHelper
     @page == @total_pages
   end
 
-  def story_image_or_map(thumbnail_url, coords)
-    return thumbnail_url if thumbnail_url.present?
+  def story_image_or_map(media, coords)
+    return "#{ENV['AWS_HOST']}/#{media[1]['preview_url']}" if media[1].present?
 
     static_map(coords)
   end

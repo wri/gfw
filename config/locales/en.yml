@@ -48,7 +48,7 @@ en:
       next: Next stories
       read_more: Read more
     show:
-      title: Stories
+      title: Featured stories
     more_stories:
       title: Stories reported by users
       text_html: "%{browse} or %{submit}. People are a key factor in forest clearing detection."

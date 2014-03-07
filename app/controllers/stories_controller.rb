@@ -7,41 +7,40 @@ class StoriesController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :only => [:create]
 
+  respond_to :html
+  respond_to :json, :only => :index
+
   def index
     stories_per_page = 5
 
     unless params['for_map']
-      @page         = (params[:page] || 1).to_i
-      @total_pages  = (Api::Story.featured.count.to_f / stories_per_page.to_f).ceil
-      @featured     = Api::Story.find_featured_by_page(@page, stories_per_page)
+      @page        = (params[:page] || 1).to_i
+      @total_pages = (Api::Story.visible.count.to_f / stories_per_page.to_f).ceil
+      @visible     = Api::Story.find_by_page(@page, stories_per_page)
     end
 
-    respond_to do |format|
-      format.json { render :json => @stories } if params['for_map']
-      format.html
-    end
+    respond_with @stories
   end
 
   def new
     @url = stories_path
-    @story = {}
+    @story = Api::Story.new
   end
 
   def edit
     # @url = story_path(@story.token)
-    @url = story_path(@story)
     @method = :put
   end
 
   def create
-    response = Api::Story.create(params)
+    @story = Api::Story.new(params[:story])
 
-    if response.nil?
-      flash[:error] = 'Sorry, there was an error while submitting your story'
-      redirect_to new_story_path
+    if @story.valid?
+      response = @story.create(params[:story])
+
+      redirect_to story_path(response.id)
     else
-      flash[:notice] = 'Your story has been registered. Thanks!'
-      redirect_to story_path(response['id'])
+      respond_with @story
     end
   end
 
@@ -57,15 +56,15 @@ class StoriesController < ApplicationController
 
     def load_stories
       @stories = if params['for_map'].present?
-                   Api::Story.featured
+                   Api::Story.visible
                  else
-                   Api::Story.featured.sample(5)
+                   Api::Story.visible.sample(5)
                  end
     end
 
     def access_through_token?(story)
       # params[:id] === story.token
-      true
+      false
     end
 
     def check_token

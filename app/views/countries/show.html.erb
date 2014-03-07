@@ -203,8 +203,9 @@
       <li class='column three round <%= @country['story'].present? ? '' : 'no_story' %>'>
         <strong class='column-title'>User stories</strong>
         <% if @country['story'].present? %>
-          <a href='<%= story_path(@country['story']['cartodb_id']) %>'>
-            <%= image_tag story_image_or_map(@country['story']['media'].present? ? "#{ENV['AWS_HOST']}/#{@country['story']['media'][0]['preview_url']}" : "", @country['story']['coordinates']), :alt => @country['story']['title'] %>
+          <a href="<%= story_path(@country['story']['cartodb_id']) %>">
+            <img src="<%= story_image_or_map(@country['story']['media'], "#{@country['story']['lat']}, #{@country['story']['lng']}") %>" alt="<%= @country['story']['title'] %>" />
+            <div class="frame"></div>
             <div class='gradient'></div>
             <div class='frame'></div>
             <div class='title'>
@@ -228,8 +229,8 @@
       <li class='column three last'>
         <% if @mongabay_story.present? %>
           <strong class='column-title'>Mongabay stories</strong>
-          <h3 class='story-title'><%= truncate(@mongabay_story[0]['title'], :length => 35) %></h3>
-          <p class='story-content'><%= truncate(@mongabay_story[0]['description'], :length => 300) %> <%= link_to('more', @mongabay_story[0]['loc'], :target => '_blank') %></p>
+          <h3 class='story-title'><%= truncate(@mongabay_story['title'], :length => 35) %></h3>
+          <p class='story-content'><%= truncate(@mongabay_story['description'], :length => 300) %> <%= link_to('more', @mongabay_story['loc'], :target => '_blank') %></p>
           <p>See more on the <%= link_to 'map', "#{map_path}/3/15.00/27.00/ALL/586" %></p>
         <% end %>
       </li>

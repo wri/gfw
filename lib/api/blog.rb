@@ -13,11 +13,7 @@ module Api
 
       response = get('/', options)
 
-      if response.success?
-        response['rss']['channel']['item']
-      else
-        nil
-      end
+      response['rss']['channel']['item']
     end
   end
 end
