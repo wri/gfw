@@ -32,20 +32,20 @@
 
   <div class="field">
     <div class="optional">
-      <%= f.label :where_did_it_happen %>
+      <%= f.label :location %>
       <span>Optional</span>
     </div>
 
-    <%= f.text_field :where_did_it_happen, :placeholder => '“Katingan Peatland area, Indonesia,” “Near Ambanja, Mozambique”' %>
+    <%= f.text_field :location, :placeholder => '“Katingan Peatland area, Indonesia,” “Near Ambanja, Mozambique”' %>
   </div>
 
   <div class="field">
     <div class="optional short">
-      <%= f.label :when_did_it_happen %>
+      <%= f.label :date %>
       <span>Optional</span>
     </div>
 
-    <%= f.date_field :when_did_it_happen %>
+    <%= f.date_field :date %>
   </div>
 
   <div class="field">
@@ -72,7 +72,7 @@
     <ul class="thumbnails">
       <li><a href='#' class='upload_picture'></a></li>
 
-      <% @story.media.each do |media| %>
+      <% (@story.media ||= []).each do |media| %>
         <% if media['thumbnail_url'].present? %>
           <li class="thumbnail sortable">
             <img src="<%= media['thumbnail_url'] %>" alt="" />
@@ -89,12 +89,12 @@
   <div class="field">
 
     <div class="input_title short optional">
-      <%= f.label      :your_name %>
+      <%= f.label :name %>
       <span>Optional</span>
     </div>
 
-    <div class="input-field short<%= ' error' if !@story.errors[:your_name].empty? %>">
-      <%= f.text_field :your_name %>
+    <div class="input-field short<%= ' error' if !@story.errors[:name].empty? %>">
+      <%= f.text_field :name %>
     </div>
     <p class="hint">Your story and name will be visible in Global Forest Watch site, but your email will never be published.</p>
 
@@ -103,11 +103,11 @@
   <div class="field">
 
     <div class="input_title short">
-      <%= f.label :your_email %>
+      <%= f.label :email %>
     </div>
 
-    <div class="input-field short<%= ' error' if !@story.errors[:your_email].empty? %>">
-      <%= f.text_field :your_email %>
+    <div class="input-field short<%= ' error' if !@story.errors[:email].empty? %>">
+      <%= f.text_field :email %>
     </div>
   </div>
 

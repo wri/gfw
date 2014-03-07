@@ -7,19 +7,19 @@ class StoriesController < ApplicationController
 
   skip_before_filter :verify_authenticity_token, :only => [:create]
 
+  respond_to :html
+  respond_to :json, :only => :index
+
   def index
     stories_per_page = 5
 
     unless params['for_map']
-      @page         = (params[:page] || 1).to_i
-      @total_pages  = (Api::Story.featured.count.to_f / stories_per_page.to_f).ceil
-      @featured     = Api::Story.find_by_page(@page, stories_per_page)
+      @page        = (params[:page] || 1).to_i
+      @total_pages = (Api::Story.featured.count.to_f / stories_per_page.to_f).ceil
+      @featured    = Api::Story.find_by_page(@page, stories_per_page)
     end
 
-    respond_to do |format|
-      format.json { render :json => @stories } if params['for_map']
-      format.html
-    end
+    respond_with @stories
   end
 
   def new
@@ -29,7 +29,6 @@ class StoriesController < ApplicationController
 
   def edit
     # @url = story_path(@story.token)
-    @url = story_path(@story)
     @method = :put
   end
 
@@ -37,11 +36,11 @@ class StoriesController < ApplicationController
     @story = Api::Story.new(params[:story])
 
     if @story.valid?
-      flash[:notice] = 'Your story has been registered. Thanks!'
+      response = @story.create(params[:story])
 
-      redirect_to story_path(response['id'])
+      redirect_to story_path(response.id)
     else
-      render :new
+      respond_with @story
     end
   end
 
@@ -64,7 +63,8 @@ class StoriesController < ApplicationController
     end
 
     def access_through_token?(story)
-      params[:id] === story.token
+      # params[:id] === story.token
+      false
     end
 
     def check_token
