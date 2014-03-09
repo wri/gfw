@@ -1,7 +1,7 @@
 class EmbedController < ApplicationController
   layout 'iframe'
 
-  # GET /country/:id
+  # GET /embed/country/:id
   def show
     country = Api::Country.find_by_iso(params[:id])['countries'][0]
 

@@ -12,24 +12,24 @@ module Api
                       format: { :with => /@/ }
 
     def self.visible
-      response = Typhoeus.get("#{ENV['GFW_API_HOST']}/stories?bust=1", headers: {"Accept" => "application/json"})
+      response = Typhoeus.get("#{ENV['GFW_API_HOST']}/stories?bust=1", headers: { "Accept" => "application/json" })
 
       if response.success?
-        return JSON.parse(response.body).select { |r| r['visible'] }
+        JSON.parse(response.body).select { |r| r['visible'] }
       else
-        return nil
+        nil
       end
     end
 
     def create(params)
       if valid?
         uploads = [{
-                    url: "",
-                    embed_url: params['video'].present? ? params['video'] : "",
-                    preview_url: "",
-                    mime_type: "",
-                    order: 0
-                  }]
+          url: "",
+          embed_url: params['video'].present? ? params['video'] : "",
+          preview_url: "",
+          mime_type: "",
+          order: 0
+        }]
 
         uploads_ids = params['uploads_ids'].split(',')
 
@@ -46,27 +46,22 @@ module Api
         end
 
         options = {
-                    :email => params['email'],
-                    :date => params['date'],
-                    :media => uploads,
-                    :geom => (if params['the_geom'] != ''
-                                JSON.parse(params['the_geom'])
-                              else
-                                ''
-                              end
-                             ),
-                    :details => params['details'],
-                    :location => params['location'],
-                    :name => params['name'],
-                    :title => params['title']
-                  }.to_json
+          :email => params['email'],
+          :date => params['date'],
+          :media => uploads,
+          :geom => (params['the_geom'] != '') ? JSON.parse(params['the_geom']) : '',
+          :details => params['details'],
+          :location => params['location'],
+          :name => params['name'],
+          :title => params['title']
+        }.to_json
 
         response = Typhoeus.post("#{ENV['GFW_API_HOST']}/stories/new", body: options, headers: { 'Content-Type' => 'application/json' })
 
         if response.success?
-          return Story.new(JSON.parse(response.body))
+          Story.new(JSON.parse(response.body))
         else
-          return nil
+          nil
         end
       end
     end
@@ -80,14 +75,12 @@ module Api
     end
 
     def self.find_by_id_or_token(id)
-      response = Typhoeus.get("#{ENV['GFW_API_HOST']}/stories/#{id}", headers: {"Accept" => "application/json"})
+      response = Typhoeus.get("#{ENV['GFW_API_HOST']}/stories/#{id}", headers: { "Accept" => "application/json" })
 
       if response.success?
-        data = JSON.parse(response.body)
-
-        return Story.new(data)
+        Story.new(JSON.parse(response.body))
       else
-        return nil
+        nil
       end
     end
   end

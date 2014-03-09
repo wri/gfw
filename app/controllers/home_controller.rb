@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-
   skip_before_filter :check_terms, :only => [:accept_and_redirect]
 
   def index
@@ -14,5 +13,4 @@ class HomeController < ApplicationController
 
     redirect_to cookies[:go_to].nil? ? root_path : cookies[:go_to]
   end
-
 end
