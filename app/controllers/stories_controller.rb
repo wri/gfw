@@ -76,7 +76,7 @@ class StoriesController < ApplicationController
     def check_token
       unless access_through_token?(@story)
         flash[:notice] = "You don't have permissions to edit this story."
-        redirect_to(story_path(@story)
+        redirect_to story_path(@story)
       end
     end
 

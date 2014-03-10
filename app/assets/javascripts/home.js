@@ -173,19 +173,6 @@ $(function() {
         google.maps.event.addListenerOnce(map, 'idle', function() {
           that._loadOtherStuff();
 
-          if (!window.terms_cookie) {
-            SourceWindow.show('accept_terms').addScroll();
-            SourceWindow.$el.find('.close').hide();
-
-            SourceWindow.$el.find('.accept_btn').on('click', function() {
-              ga('send', 'event', 'Terms', 'Click', 'I agree');
-            });
-
-            SourceWindow.$el.find('.cancel_btn').on('click', function() {
-              ga('send', 'event', 'Terms', 'Click', 'I do not agree');
-            });
-          }
-
           GFW(function(env) {
             GFW.app = new env.app.Instance(map, {
               logging : false
@@ -315,6 +302,8 @@ $(function() {
       var that = this;
 
       showMap = true;
+
+      if (!window.terms_cookie) window.location.replace("/accept_terms");
 
       Circle.hide();
 
