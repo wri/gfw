@@ -51,11 +51,11 @@ class StoriesController < ApplicationController
   end
 
   def update
-
+    # TODO
   end
 
   def destroy
-
+    # TODO
   end
 
   private
@@ -74,7 +74,10 @@ class StoriesController < ApplicationController
     end
 
     def check_token
-      redirect_to(story_path(@story), :notice => "You don't have permissions to edit this story.") unless access_through_token?(@story)
+      unless access_through_token?(@story)
+        flash[:notice] = "You don't have permissions to edit this story."
+        redirect_to story_path(@story)
+      end
     end
 
     def load_story

@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-
   skip_before_filter :check_terms, :only => [:accept_and_redirect]
 
   def index
@@ -12,7 +11,14 @@ class HomeController < ApplicationController
   def accept_and_redirect
     cookies.permanent[ENV['TERMS_COOKIE'].to_sym] = true
 
-    redirect_to cookies[:go_to].nil? ? root_path : cookies[:go_to]
-  end
+    if cookies[:go_to].nil?
+      redirect = root_path
+    elsif cookies[:go_to] == root_path
+      redirect = map_path
+    else
+      redirect = cookies[:go_to]
+    end
 
+    redirect_to redirect
+  end
 end

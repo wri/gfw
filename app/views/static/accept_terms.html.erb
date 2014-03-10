@@ -1,0 +1,48 @@
+<% content_for :js do %>
+  <script>
+    $(function() {
+      cdb.init(function() {
+        window.accept_terms = new gfw.ui.view.Terms();
+      });
+    });
+  </script>
+<% end %>
+
+<% content_for :title do %>
+  <h1 class='header-title'><%= 'Welcome to the <span>Global Forest Watch</span> beta site'.html_safe %></h1>
+  <p class='header-description'><i class='scroll-icon'></i> Before entering the GFW beta site, you must agree to the Terms of Service</p>
+<% end %>
+
+<p>Global Forest Watch (GFW) is a dynamic online forest monitoring and alert system that empowers people everywhere to better manage forests.</p>
+
+<p><strong>We recommend visiting GFW using the latest version of <a href='https://www.google.com/intl/en/chrome/browser/' target='_blank'>Google Chrome</a>, <a href='http://www.mozilla.org/en-US/firefox/new/' target='_blank'>Mozilla Firefox</a>, <a href='http://support.apple.com/downloads/#safari' target='_blank'>Apple Safari</a>, or <a href='http://windows.microsoft.com/en-us/internet-explorer/download-ie' target='_blank'>Internet Explorer</a>.  We also recommend installing <a href='http://get.adobe.com/flashplayer' target='_blank'>Adobe Flash Player</a>.</strong></p>
+
+<div contenteditable='false' class='terms_field'>
+  <%= render 'shared/terms' %>
+</div>
+
+<div class="terms_footer notranslate">
+  <%= link_to 'I agree', root_path, class: 'btn accept_btn dark_glow continue', :'data-source' => "accept_terms" %> <%= link_to 'I do not agree', root_path, class: 'btn cancel_btn dark_glow cancel' %>
+</div>
+
+<section class="section">
+  <div class="section-footer">
+    <p class='last'>For additional information about GFW, please send an email to <a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>
+  </div>
+</section>
+
+<div id='sources' class='sources notranslate'>
+  <h2 class='source_category_title'>Terms of Service</h2>
+
+  <ul class='sources'>
+    <li id='accept_terms'>
+      <div class='source_body'>
+        <p>You acknowledge that you have read and agree to the Global Forest Watch Terms of Service.</p>
+
+        <%= form_tag('/accept', { :class => 'terms_footer' }) do %>
+          <%= submit_tag "I agree", class: 'btn accept_btn dark_glow' %> <%= link_to 'I do not agree', root_path, class: 'btn cancel_btn dark_glow' %>
+        <% end %>
+      </div>
+    </li>
+  </ul>
+</div>

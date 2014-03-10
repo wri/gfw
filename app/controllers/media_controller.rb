@@ -1,5 +1,4 @@
 class MediaController < ApplicationController
-
   def upload
     uploader = MediaUploader.new
     uploader.store!(params[:media][:image])
@@ -13,5 +12,4 @@ class MediaController < ApplicationController
 
     render :json => { url: url, basename: basename }
   end
-
 end

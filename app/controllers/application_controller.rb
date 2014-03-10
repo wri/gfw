@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
       cookies[:go_to] ||= request.path
 
       unless cookie_or_bot? || controller_name == 'home' || controller_name == 'embed'
-        redirect_to root_path
+        redirect_to accept_terms_path
       end
     end
 
