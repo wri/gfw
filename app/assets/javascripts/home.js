@@ -62,14 +62,12 @@ var loaded = false,
 $(function() {
   var Router = Backbone.Router.extend({
     routes: {
-      '':                                   'home',
-      '/':                                  'home',
-      'map':                                'map',
-      'map/':                               'map',
-      'map/:zoom/:lat/:lon':                'mapWithCoordinates',
-      'map/:zoom/:lat/:lon/':               'mapWithCoordinates',
-      'map/:zoom/:lat/:lon/:iso':           'mapWithCoordinates',
-      'map/:zoom/:lat/:lon/:iso/*layers':   'mapWithCoordinates',
+      '':                                                       'home',
+      '/':                                                      'home',
+      'map':                                                    'map',
+      'map/':                                                   'map',
+      'map/:zoom/:lat/:lon/:iso/:basemap/:baselayer':           'mapWithCoordinates',
+      'map/:zoom/:lat/:lon/:iso/:basemap/:baselayer/*layers':   'mapWithCoordinates',
     },
 
     home: function() {
@@ -80,18 +78,23 @@ $(function() {
       this.trigger('loadgfw', 'map');
     },
 
-    mapWithCoordinates: function(zoom, lat, lon, iso, layers) {
-      if (lat && lon) { config.MAPOPTIONS.center = new google.maps.LatLng(lat, lon); }
-      if (zoom)       { config.MAPOPTIONS.zoom   = parseInt(zoom, 10); }
-      if (layers)     { config.MAPOPTIONS.layers = layers; }
+    mapWithCoordinates: function(zoom, lat, lon, iso, basemap, baselayer, layers) {
+      if (zoom) { config.MAPOPTIONS.zoom = parseInt(zoom, 10); }
 
-      if (!iso) {
-        config.ISO = 'ALL';
-
-        if (lat && lon) map.setCenter(new google.maps.LatLng(lat, lon));
-      } else {
-        config.ISO = iso;
+      if (lat && lon) {
+        config.MAPOPTIONS.center = new google.maps.LatLng(lat, lon);
+        map && map.setCenter(config.MAPOPTIONS.center);
       }
+
+      if (iso) { config.ISO = iso; }
+
+      if (basemap) {
+        config.BASEMAP = basemap;
+      }
+
+      if (baselayer) { config.BASELAYER = baselayer; }
+
+      if (layers) { config.MAPOPTIONS.layers = layers; }
 
       this.trigger('loadgfw', 'map');
     }
@@ -162,13 +165,24 @@ $(function() {
       if (!loaded) {
         map = new google.maps.Map(document.getElementById('map'), config.MAPOPTIONS);
 
-        var styledMap = new google.maps.StyledMapType(config.BASE_MAP_STYLE, { name: 'terrain_style' });
-        map.mapTypes.set('terrain_style', styledMap);
-        map.setMapTypeId('terrain_style');
+        var basemap = config.BASEMAP,
+            styledMap = {};
 
-        this.subscribe = window.location.hash.replace('#','') === 'subscribe';
+        if (basemap === 'classic' ||
+            basemap === 'satellite' ||
+            basemap === 'roads') {
+          map.setMapTypeId(basemap);
+        } else if (basemap === 'terrain' ||
+            basemap === 'treeheight') {
+          var eh = config.MAPSTYLES.treeheight
+          styledMap = new google.maps.StyledMapType(eh, { name: basemap });
+          map.mapTypes.set(basemap, styledMap);
+        } else if (isLandsat(basemap)) {
+          styledMap = new google.maps.StyledMapType(isLandsat(basemap), { name: basemap });
+          map.mapTypes.set(basemap, styledMap);
+        }
 
-        if (this.subscribe) config.BASELAYER = 'forma';
+        this.subscribe = window.location.hash.replace('#', '') === 'subscribe';
 
         google.maps.event.addListenerOnce(map, 'idle', function() {
           that._loadOtherStuff();

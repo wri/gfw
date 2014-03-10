@@ -18,8 +18,8 @@ Gfw::Application.routes.draw do
 
   # map
   get 'map' => 'home#index'
-  get 'map/:zoom/:lat/:lng(/:iso)' => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
-  get 'map/:zoom/:lat/:lng/:iso(/:filters)' => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get 'map/:zoom/:lat/:lng/:iso/:basemap/:baselayer' => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get 'map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
 
   # countries
   get 'countries' => 'countries#index'
