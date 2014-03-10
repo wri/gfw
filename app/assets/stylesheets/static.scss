@@ -47,6 +47,10 @@
 
     .bullets {
       padding-bottom: 30px;
+
+      &.last {
+        padding-bottom: 0;
+      }
     }
   }
 
