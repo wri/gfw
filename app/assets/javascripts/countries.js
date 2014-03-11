@@ -519,7 +519,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           $action.removeClass('disabled');
           that._initFormaDropdown();
 
-          var data = json.rows.slice(1, json.rows.length - 1);
+          var data = json.rows.slice(1, json.rows.length);
         } else {
           $coming_soon.show();
 
@@ -551,9 +551,12 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         $amount.html('<span>'+formatNumber(data[data.length - 1].alerts)+'</span>');
 
         var date = new Date(data[data.length - 1].date),
-            form_date = 'Alerts in ' + config.MONTHNAMES[date.getMonth()] + ' ' + date.getFullYear();
+            form_date = 'Alerts in ' + config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
 
         $date.html(form_date);
+
+        var cx = width - 80 + marginLeft;
+        var cy = h - y_scale(data[data.length - 1].alerts) + marginTop;
 
         graph.append('svg:path')
           .attr('transform', 'translate(' + marginLeft + ',' + marginTop + ')')
@@ -565,7 +568,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
               $amount.html('<span>'+formatNumber(data[index].alerts)+'</span>');
 
               var date = new Date(data[index].date),
-                  form_date = 'Alerts in ' + config.MONTHNAMES[date.getMonth()] + ' ' + date.getFullYear();
+                  form_date = 'Alerts in ' + config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
 
               $date.html(form_date);
 
@@ -580,8 +583,8 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
         graph.append('svg:circle')
           .attr('class', 'forma_marker')
-          .attr('cx', -10000)
-          .attr('cy',100)
+          .attr('cx', cx)
+          .attr('cy', cy)
           .attr('r', 5);
       });
     } else if (type === 'bars') {
@@ -2575,7 +2578,7 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
           $action.removeClass('disabled');
           that._initFormaDropdown();
 
-          var data = json.rows.slice(1, json.rows.length - 1);
+          var data = json.rows.slice(1, json.rows.length);
         } else {
           $coming_soon.show();
 
@@ -2607,9 +2610,12 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
         $amount.html('<span>'+formatNumber(data[data.length - 1].alerts)+'</span>');
 
         var date = new Date(data[data.length - 1].date),
-            form_date = 'Alerts in ' + config.MONTHNAMES[date.getMonth()] + ' ' + date.getFullYear();
+            form_date = 'Alerts in ' + config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
 
         $date.html(form_date);
+
+        var cx = width - 80 + marginLeft;
+        var cy = h - y_scale(data[data.length - 1].alerts) + marginTop;
 
         graph.append('svg:path')
           .attr('transform', 'translate(' + marginLeft + ',' + marginTop + ')')
@@ -2621,7 +2627,7 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
               $amount.html('<span>'+formatNumber(data[index].alerts)+'</span>');
 
               var date = new Date(data[index].date),
-                  form_date = 'Alerts in ' + config.MONTHNAMES[date.getMonth()] + ' ' + date.getFullYear();
+                  form_date = 'Alerts in ' + config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
 
               $date.html(form_date);
 
@@ -2636,8 +2642,8 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
 
         graph.append('svg:circle')
           .attr('class', 'forma_marker')
-          .attr('cx', -10000)
-          .attr('cy',100)
+          .attr('cx', cx)
+          .attr('cy', cy)
           .attr('r', 5);
       });
     } else if (type === 'bars') {
