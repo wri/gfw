@@ -170,7 +170,7 @@ strong {
 
     &.credits {
       font-size: 12px;
-      color: #ccc;
+      color: #aaa;
 
       strong {
         display: block;
@@ -178,11 +178,11 @@ strong {
       }
 
       a {
-        color: #ccc;
+        color: #aaa;
         text-decoration: underline;
 
         &:hover {
-          color: #ccc;
+          color: #aaa;
         }
       }
     }
@@ -285,7 +285,7 @@ strong {
     font-size: 13px;
     @extend .sans-serif;
     text-transform: uppercase;
-    color: #ccc;
+    color: #aaa;
 
     span {
       text-transform: none;

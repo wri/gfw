@@ -40,7 +40,7 @@ en:
         ilo_title_html: "ILO 169"
       country_blog:
         title: "%{country} stories"
-      ministry_link: "Ministry link"
+      ministry_link: "Governing agency"
   stories:
     index:
       title: Featured stories

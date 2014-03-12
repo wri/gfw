@@ -22,13 +22,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.model.on('change:hidden',    this._toggle);
     this.model.on('change:analyzing', this._toggleAnalysis,   this);
 
-    var template = $('#analysis_info-template').html();
-
-    this.template = new cdb.core.Template({
-      template: template,
-      type: 'mustache'
-    });
-
     this.selectedShape = null;
     this.selectedShapes = [];
 

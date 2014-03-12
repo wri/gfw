@@ -151,7 +151,7 @@ GEM
       polyglot (>= 0.3.1)
     typhoeus (0.6.7)
       ethon (~> 0.6.2)
-    tzinfo (0.3.38)
+    tzinfo (0.3.39)
     uglifier (2.4.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)

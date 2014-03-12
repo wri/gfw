@@ -67,7 +67,7 @@ module Api
     end
 
     def self.find_by_page(page, stories_per_page)
-      response = visible
+      response = visible.reverse!
 
       response.shift((page - 1) * stories_per_page)
 
