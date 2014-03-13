@@ -168,18 +168,12 @@ $(function() {
         var basemap = config.BASEMAP,
             styledMap = {};
 
-        if (basemap === 'classic' ||
-            basemap === 'satellite' ||
-            basemap === 'roads') {
+        if (_.contains(['terrain', 'satellite', 'roads'], basemap)) {
           map.setMapTypeId(basemap);
-        } else if (basemap === 'terrain' ||
-            basemap === 'treeheight') {
-          var eh = config.MAPSTYLES.treeheight
-          styledMap = new google.maps.StyledMapType(eh, { name: basemap });
+        } else if (isLandsat(basemap) || _.contains(['grayscale', 'treeheight'], basemap)) {
+          styledMap = new google.maps.StyledMapType(isLandsat(basemap) || config.MAPSTYLES[basemap].style, { name: basemap });
           map.mapTypes.set(basemap, styledMap);
-        } else if (isLandsat(basemap)) {
-          styledMap = new google.maps.StyledMapType(isLandsat(basemap), { name: basemap });
-          map.mapTypes.set(basemap, styledMap);
+          map.setMapTypeId(basemap);
         }
 
         this.subscribe = window.location.hash.replace('#', '') === 'subscribe';
