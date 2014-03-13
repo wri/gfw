@@ -603,7 +603,7 @@ GFW.modules.app = function(gfw) {
           tiler_grid: '.grid.json',
           table_name: 'gfw2_layerstyles_v4',
           query: query,
-          layer_order: 'top',
+          layer_order: 0,
           opacity: 1,
           interactivity: 'cartodb_id',
           featureClick: this._onMainLayerClick,
@@ -1060,11 +1060,11 @@ GFW.modules.app = function(gfw) {
             tiler_domain: 'dyynnn89u7nkm.cloudfront.net',
             sql_domain: 'dyynnn89u7nkm.cloudfront.net',
             tiler_path: '/tiles/',
-            extra_params: { v: this.global_version, cache_policy: "persist" }, //define a verison number on requests
+            extra_params: { v: this.global_version, cache_policy: "persist" }, // define a verison number on requests
             tiler_suffix: '.png',
             table_name: this._getTableName(this.currentBaseLayer),
-            query: 'SELECT cartodb_id,the_geom_webmercator FROM global_7d',
-            layer_order: "top", // bottom
+            query: 'SELECT cartodb_id, the_geom_webmercator FROM global_7d',
+            layer_order: 1,
             auto_bound: false
           });
         }

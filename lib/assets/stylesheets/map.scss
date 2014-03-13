@@ -1752,7 +1752,6 @@ body.stories {
     .destroy {
       @include size(18px);
       @include position(-9px, -9px, false, false);
-      @include mixins-sprite(btn_remove);
     }
 
     .thumbnail {

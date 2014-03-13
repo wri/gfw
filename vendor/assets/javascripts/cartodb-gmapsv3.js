@@ -700,8 +700,10 @@ if (typeof(google.maps.CartoDBLayer) === "undefined") {
       }
 
       // New layer, new indexes, let's check them!
-      this.options.map.overlayMapTypes.forEach(function(l,i){
-        l.gmaps_index = i
+      this.options.map.overlayMapTypes.forEach(function(l, i){
+        if (l) {
+          l.gmaps_index = i;
+        }
       })
     }
 
