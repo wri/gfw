@@ -130,7 +130,7 @@ function draw(topology, c, iso, options) {
       height = 300,
       el = "#"+iso;
 
-  if(!options) {
+  if (!options.alerts) {
     width = 150;
     height = 150;
     el = el+" a";
@@ -143,7 +143,7 @@ function draw(topology, c, iso, options) {
   var projection = d3.geo.mercator().scale(1).translate([0, 0]);
   var path = d3.geo.path().projection(projection);
 
-  var b = path.bounds(country),
+  var b = path.bounds((options && options.bounds) || country),
       s = 1 / Math.max((b[1][0] - b[0][0]) / width, (b[1][1] - b[0][1]) / height),
       t = [(width - s * (b[1][0] + b[0][0])) / 2, (height - s * (b[1][1] + b[0][1])) / 2];
 
@@ -153,9 +153,10 @@ function draw(topology, c, iso, options) {
 
   svg.append("svg:path")
     .data([country])
-    .attr("d", path);
+    .attr("d", path)
+    .attr("class", (options && options.bounds) ? 'country_alt' : 'country_main');
 
-  if(options && options.alerts) {
+  if (options && options.alerts) {
     var forest = [];
 
     for(var i = 1; i < Object.keys(topology.objects).length; i++) {
@@ -181,6 +182,8 @@ function draw(topology, c, iso, options) {
       .attr('r', 2)
       .style("fill", "#AAC600");
   }
+
+  return country;
 }
 
 function formatNumber(x, abs) {
