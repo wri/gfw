@@ -334,16 +334,10 @@
   </script>
 
   <script id='layer-template' type='text/x-underscore-template'>
-    <li id='{{name}}' class='{{ name }}'>
-      <a href='#'><i></i>{{title}}</a>
-      <a href='#' data-source='{{ name }}' class='source'></a>
-    </li>
-  </script>
 
-  <script id='landsat_layer-template' type='text/x-underscore-template'>
-    <li id='landsat' class='landsat'>
+    <li id='{{ name }}' class="{{ name }} {{#landsat}}landsat{{/landsat}}">
       <a href='#'><i></i>{{title}}</a>
-      <a href='#' data-source='landsat' class='source'></a>
+      {{^landsat}}<a href='#' data-source="{{ name }}" class='source'></a>{{/landsat}}
     </li>
   </script>
 

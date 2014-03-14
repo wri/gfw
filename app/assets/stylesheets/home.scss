@@ -1315,12 +1315,8 @@
   z-index: 1010;
   top: 35px; right: 65px;
   width: 155px;
-  border: 1px solid #666;
   min-height: 40px;
-  background: #fff;
   cursor: move;
-  @include border-radius(3px);
-  @include box-shadow(0px 0px 3px #666);
 
   .toggle {
     position: absolute;
@@ -1367,11 +1363,12 @@
       }
     }
 
-    &.grayscale  i { @include home-icons-sprite(map_grayscale); }
-    &.terrain    i { @include home-icons-sprite(map_terrain); }
-    &.satellite  i { @include home-icons-sprite(map_satellite); }
-    &.roads      i { @include home-icons-sprite(map_roads); }
-    &.treeheight i { @include home-icons-sprite(map_treeheight); }
+    &.grayscale   i { @include home-icons-sprite(map_grayscale); }
+    &.terrain     i { @include home-icons-sprite(map_terrain); }
+    &.satellite   i { @include home-icons-sprite(map_satellite); }
+    &.roads       i { @include home-icons-sprite(map_roads); }
+    &.treeheight  i { @include home-icons-sprite(map_treeheight); }
+    &.landsat     i { @include home-icons-sprite(map_landsat); }
 
     i {
       @include inline-block();
@@ -1381,11 +1378,15 @@
       margin: 0 5px 0 0;
       background: #ddd;
     }
-
-    &.landsat {
-      i { @include home-icons-sprite(map_landsat); }
-    }
   }
+}
+
+.landsat_layers,
+.layer_selector {
+  border: 1px solid #666;
+  background: #fff;
+  @include border-radius(3px);
+  @include box-shadow(0px 0px 3px #666);
 }
 
 .landsat_layers {
@@ -1402,10 +1403,11 @@
   }
 
   .tip {
-    width: 8px;
-    height: 12px;
+    position: absolute;
     top: 50%; right: -8px;
     margin-top: -6px;
+    width: 8px;
+    height: 12px;
     @include home-icons-sprite(landsat_selector_tip);
   }
 }
