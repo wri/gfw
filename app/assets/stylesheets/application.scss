@@ -31,10 +31,10 @@ body {
 
 a {
   text-decoration: none;
-  color: $green;
+  color: $cGreen;
 
   &:hover {
-    color: darken($green, 5%);
+    color: darken($cGreen, 5%);
   }
 }
 
@@ -345,8 +345,8 @@ strong {
   }
 
   .source_category_title {
-    color: $green;
-    border-bottom-color: $green;
+    color: $cGreen;
+    border-bottom-color: $cGreen;
   }
 
   .hidden {
@@ -420,7 +420,7 @@ strong {
   font-size: 11px;
   text-align: center;
   text-transform: uppercase;
-  background: $green;
+  background: $cGreen;
 
   span {
     display: block;
@@ -478,16 +478,16 @@ strong {
       span { background:none; }
 
       &.selected {
-        background: $green;
+        background: $cGreen;
         color: #fff;
 
         &:hover {
-          background: $green;
+          background: $cGreen;
         }
       }
 
       &:hover {
-        background: rgba($green, .5);
+        background: rgba($cGreen, .5);
       }
     }
   }
@@ -511,7 +511,7 @@ strong {
   }
 
   span {
-    color: $green;
+    color: $cGreen;
   }
 }
 
@@ -654,7 +654,7 @@ strong {
         font-weight: bold;
         font-size: 12px;
         text-transform: uppercase;
-        color: $green;
+        color: $cGreen;
       }
     }
   }

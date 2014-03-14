@@ -46,11 +46,11 @@
   font-size: 11px;
   text-align: center;
   text-transform: uppercase;
-  background: $green;
+  background: $cGreen;
   @include border-radius(55px);
 
   &:hover {
-    background: darken($green, 5%);
+    background: darken($cGreen, 5%);
   }
 
   span {

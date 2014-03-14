@@ -48,6 +48,10 @@
       <h3 class='section-subtitle'><a href='#' class='info' data-source='forest_type'><i></i></a>The type of forest in this country is...</h3>
       <div class='line-graph'></div>
     </div>
+
+    <% if @country['country_alt'].present? %>
+      <p class="country_alt"><%= @country['country_alt'].html_safe %></p>
+    <% end %>
   </div>
 </section>
 
