@@ -156,7 +156,7 @@ $(function() {
         Analysis.startAnalyzing();
       }
 
-      this._updateHash();
+      updateHash();
     },
 
     _loadGFW: function(state) {
@@ -171,7 +171,7 @@ $(function() {
         if (_.contains(['terrain', 'satellite', 'roads'], basemap)) {
           map.setMapTypeId(basemap);
         } else if (isLandsat(basemap) || _.contains(['grayscale', 'treeheight'], basemap)) {
-          styledMap = new google.maps.StyledMapType(isLandsat(basemap) || config.MAPSTYLES[basemap].style, { name: basemap });
+          styledMap = isLandsat(basemap) || new google.maps.StyledMapType(config.MAPSTYLES[basemap].style, { name: basemap });
           map.mapTypes.set(basemap, styledMap);
           map.setMapTypeId(basemap);
         }
@@ -266,7 +266,7 @@ $(function() {
 
     _selectMenu: function(name) {
       $('.navbar li a').removeClass('selected');
-      $('.navbar .' + name).addClass('selected');
+      $('.navbar .'+name).addClass('selected');
 
       if (name === 'map') {
         $('.header').addClass('stuck');
@@ -343,23 +343,6 @@ $(function() {
           });
         });
       });
-    },
-
-    _updateHash: function() {
-      var hash,
-          zoom = map.getZoom(),
-          lat = map.getCenter().lat().toFixed(2),
-          lng = map.getCenter().lng().toFixed(2);
-
-      var layers = config.MAPOPTIONS.layers;
-
-      if (layers) {
-        hash = 'map/' + zoom + '/' + lat + '/' + lng + '/' + config.ISO + '/' + layers;
-        window.router.navigate(hash, { trigger: true, replace: true });
-      } else {
-        hash = 'map/' + zoom + '/' + lat + '/' + lng + '/' + config.ISO;
-        window.router.navigate(hash, { trigger: true });
-      }
     }
   });
 

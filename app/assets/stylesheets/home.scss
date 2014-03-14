@@ -1410,4 +1410,6 @@
     height: 12px;
     @include home-icons-sprite(landsat_selector_tip);
   }
+
+  .source { display: none; }
 }

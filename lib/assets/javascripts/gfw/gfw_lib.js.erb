@@ -212,12 +212,12 @@ GFW.modules.app = function(gfw) {
 
       google.maps.event.addListener(map, 'zoom_changed', function() {
         that.updateCoordinates();
-        that._updateHash();
+        updateHash();
       });
 
       google.maps.event.addListener(map, 'dragend', function() {
         that.updateCoordinates();
-        that._updateHash();
+        updateHash();
       });
 
       google.maps.event.addListener(map, 'click', function(event) {
@@ -1079,23 +1079,6 @@ GFW.modules.app = function(gfw) {
         GFW.app._loadBaseLayer();
 
         if (showMap) Filter.show();
-      }
-    },
-
-    _updateHash: function() {
-      var hash,
-          zoom = map.getZoom(),
-          lat = map.getCenter().lat().toFixed(2),
-          lng = map.getCenter().lng().toFixed(2);
-
-      var layers = config.MAPOPTIONS.layers;
-
-      if (layers) {
-        hash = 'map/' + zoom + '/' + lat + '/' + lng + '/' + config.ISO + '/' + layers;
-        window.router.navigate(hash, { trigger: true, replace: true });
-      } else {
-        hash = 'map/' + zoom + '/' + lat + '/' + lng + '/' + config.ISO;
-        window.router.navigate(hash, { trigger: true } );
       }
     }
   });

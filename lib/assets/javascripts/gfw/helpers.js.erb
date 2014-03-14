@@ -311,9 +311,30 @@ function prettifyFilename(filename) {
 function isLandsat(basemap) {
   var landsat = false;
 
-  if ((basemap.indexOf("landsat") !== -1) && config.MAPSTYLES.landsat[index].style) {
-    landsat = config.MAPSTYLES.landsat[index].style
+  if ((basemap.indexOf("landsat") !== -1) && config.MAPSTYLES.landsat[basemap.replace('landsat', '')]) {
+    landsat = config.MAPSTYLES.landsat[basemap.replace('landsat', '')]
   }
 
   return landsat
+}
+
+function updateHash(iso) {
+  var hash,
+      zoom = map.getZoom(),
+      lat = map.getCenter().lat().toFixed(2),
+      lng = map.getCenter().lng().toFixed(2);
+
+  if (iso) config.ISO = iso;
+
+  var layers = config.MAPOPTIONS.layers,
+      configs = config.ISO+'/'+config.BASEMAP+'/'+config.BASELAYER;
+
+
+  if (layers) {
+    hash = 'map/'+zoom+'/'+lat+'/'+lng+'/'+configs+'/'+layers;
+    window.router.navigate(hash, { trigger: true, replace: true });
+  } else {
+    hash = 'map/'+zoom+'/'+lat+'/'+lng+'/'+configs;
+    window.router.navigate(hash, { trigger: true });
+  }
 }

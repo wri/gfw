@@ -206,7 +206,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this._clearAnalysis();
     this._enableAnalysisButton();
 
-    this._updateHash('ALL');
+    updateHash('ALL');
   },
 
   _enableAnalysisButton: function() {
@@ -220,25 +220,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     $('.tipsy').remove();
 
     this.$analysis_control.addClass('disabled');
-  },
-
-  _updateHash: function(iso) {
-    var hash,
-        zoom = map.getZoom(),
-        lat = map.getCenter().lat().toFixed(2),
-        lng = map.getCenter().lng().toFixed(2);
-
-    config.ISO = iso;
-
-    var layers = config.MAPOPTIONS.layers;
-
-    if (layers) {
-      hash = 'map/' + zoom + '/' + lat + '/' + lng + '/' + config.ISO + '/' + layers;
-      window.router.navigate(hash, { trigger: true, replace: true });
-    } else {
-      hash = 'map/' + zoom + '/' + lat + '/' + lng + '/' + config.ISO;
-      window.router.navigate(hash, { trigger: true });
-    }
   },
 
   _loadPolygon: function(the_geom) {
@@ -407,7 +388,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
             this.info.subscribe.show();
 
             this.subscribecountry = false;
-            this._updateHash(config.ISO);
+            updateHash();
           }
 
           if (data.value) {
@@ -469,7 +450,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
           that._disableAnalysisButton();
           that._loadPolygon(the_geom);
         } else {
-          that._updateHash('ALL');
+          updateHash('ALL');
         }
       }
     });
