@@ -18,7 +18,7 @@
   </div>
 </div>
 
-<ul class="countries inner">
+<ul class="countries_list inner">
   <% @countries.each do |c| %>
     <% if c['enabled'] %>
       <li id="<%= c['iso'] %>" class="country">
@@ -31,3 +31,6 @@
     <% end %>
   <% end %>
 </ul>
+
+<p class="disclaimer inner">The Global Forest Watch country pages include only countries and territories that meet a minimum threshold of tree cover extent. Country lists and map boundaries do not imply any opinion on the part of Global Forest Watch or partners concerning the legal status or delineation of any country or territory.
+</p>

@@ -1486,3 +1486,15 @@ section.country_climate {
 .source_window .conventions .credits {
   margin-bottom: 30px;
 }
+
+.countries_list {
+  @extend .clearfix;
+}
+
+.disclaimer {
+  margin-top: 40px;
+  font-style: italic;
+  line-height: 1.4;
+  @extend .serif;
+  color: #666;
+}
