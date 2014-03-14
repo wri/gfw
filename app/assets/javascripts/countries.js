@@ -34,7 +34,17 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     this.sourceWindow  = new gfw.ui.view.SourceWindow();
     this.$el.append(this.sourceWindow.render());
 
-    this._drawCountry(this.iso);
+
+    if (this.iso === 'CHN') {
+      var that = this;
+
+      this._drawCountry(this.iso, function() {
+        that._drawCountry('TWN');
+      });
+    } else {
+      this._drawCountry(this.iso);
+    }
+
     this._drawForest(this.iso);
     this._drawTenure(this.iso);
 
@@ -196,7 +206,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     $(window).scroll(this._positionScroll);
   },
 
-  _drawCountry: function(iso) {
+  _drawCountry: function(iso, callback) {
     var that = this;
 
     var sql = ['SELECT the_geom',
@@ -208,7 +218,15 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
                "WHERE adm0_a3 = '"+iso+"'&format=topojson"].join(' ');
 
     d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(error, topology) {
-      draw(topology, 0, iso, {alerts: true});
+      if (iso === 'TWN') {
+        draw(topology, 0, 'CHN', { alerts: true, bounds: that.bounds });
+      } else {
+        var bounds = draw(topology, 0, iso, { alerts: true });
+
+        if (iso === 'CHN') that.bounds = bounds;
+      }
+
+      callback && callback();
     });
   },
 
@@ -745,15 +763,29 @@ gfw.ui.view.CountriesIndex = cdb.core.View.extend({
   _drawCountries: function() {
     var that = this;
 
-    var sql = 'SELECT c.iso, m.the_geom\
-               FROM ne_50m_admin_0_countries m, gfw2_countries c\
-               WHERE c.iso = m.adm0_a3&format=topojson';
+    var sql = ['SELECT c.iso, c.enabled, m.the_geom',
+               'FROM ne_50m_admin_0_countries m, gfw2_countries c',
+               'WHERE c.iso = m.adm0_a3 AND c.enabled',
+               '&format=topojson'].join(' ');
+
+    var sql_ = ['SELECT c.iso, m.the_geom',
+                'FROM ne_50m_admin_0_countries m, gfw2_countries c',
+                'WHERE c.iso = m.adm0_a3',
+                "AND c.iso = 'TWN'&format=topojson"].join(' ');
 
     d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(error, topology) {
       for (var i = 0; i < Object.keys(topology.objects).length; i++) {
         var iso = topology.objects[i].properties.iso;
 
-        draw(topology, i, iso);
+        var bounds = draw(topology, i, iso, { alerts: false });
+
+        if (iso === 'CHN') {
+          that.bounds = bounds;
+
+          d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql_, function(error, topology) {
+            draw(topology, 0, 'CHN', { alerts: false, bounds: that.bounds});
+          });
+        }
       }
     });
   }

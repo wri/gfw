@@ -123,21 +123,20 @@
       padding: 30px;
       @include box-shadow(0 0 5px rgba(#000, .1));
 
-      path {
-        fill: #999;
+      .country_main,
+      .country_alt {
+        fill: $cGreen;
       }
 
       .country-content {
         position: absolute;
-        top: 200px;
-        left: 30px;
-        right: 30px;
+        top: 200px; left: 30px; right: 30px;
+      }
+
+      svg {
+        top: 30px;
       }
     }
-  }
-
-  path {
-    fill: #666;
   }
 
   .country-content {
@@ -168,6 +167,12 @@
 
   strong {
     font-weight: bold;
+  }
+
+  svg {
+    position: absolute;
+    top: 20px; left: 50%;
+    margin-left: -75px;
   }
 }
 
@@ -549,7 +554,7 @@
   .info i { top: -12px; }
 
   span {
-    color: $green;
+    color: $cGreen;
   }
 }
 
@@ -575,16 +580,24 @@
     width: 600px;
   }
 
-  .country-path {
-    float: left;
-    margin-left: -360px;
-    height: 302px;
-
-    path {
-      fill: #444;
-    }
+  .country_alt {
+    line-height: 1.4;
   }
 }
+
+.country-path {
+  position: relative;
+  float: left;
+  margin-left: -360px;
+  height: 302px;
+
+  svg {
+    position: absolute;
+  }
+}
+
+.country_main { fill: #444; }
+.country_alt { fill: #999; }
 
 .country_state-title {
   padding-top: 80px;
@@ -628,6 +641,12 @@
   .four {
     fill: #FFD24D;
   }
+}
+
+.country_alt {
+  margin-top: 30px;
+  font-style: italic;
+  @extend .serif;
 }
 
 .man_list {
@@ -858,7 +877,7 @@ section.country_climate {
     a,
     span {
       @include inline-block();
-      border: 2px solid rgba($green, .5);
+      border: 2px solid rgba($cGreen, .5);
       padding: 0 20px;
       font-weight: bold;
       font-size: 13px;
@@ -869,7 +888,7 @@ section.country_climate {
     }
 
     a:hover {
-      border: 2px solid $green;
+      border: 2px solid $cGreen;
     }
 
     span { @include opacity(.4); }
@@ -1166,7 +1185,7 @@ section.country_climate {
 
     .countries_list__minioverview {
       .loss {
-        color: $green;
+        color: $cGreen;
       }
 
       .gain {
@@ -1241,7 +1260,7 @@ section.country_climate {
   color: #A2A0A9;
 
   .loss {
-    color: rgba($green, .5);
+    color: rgba($cGreen, .5);
   }
 
   .gain {
@@ -1252,7 +1271,7 @@ section.country_climate {
     fill: #C443FF;
 
     &.extent {
-      fill: $green;
+      fill: $cGreen;
     }
   }
 
