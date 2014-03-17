@@ -167,9 +167,14 @@ $(function() {
             styledMap = {};
 
         if (_.contains(['terrain', 'satellite', 'roads'], basemap)) {
-          map.setMapTypeId(basemap);
+          map.setMapTypeId(config.MAPSTYLES[basemap].style);
         } else if (isLandsat(basemap) || _.contains(['grayscale', 'treeheight'], basemap)) {
-          styledMap = isLandsat(basemap) || new google.maps.StyledMapType(config.MAPSTYLES[basemap].style, { name: basemap });
+          if (basemap === 'treeheight') {
+            styledMap = config.MAPSTYLES[basemap].style;
+          } else {
+            styledMap = isLandsat(basemap) || new google.maps.StyledMapType(config.MAPSTYLES[basemap].style, { name: basemap });
+          }
+
           map.mapTypes.set(basemap, styledMap);
           map.setMapTypeId(basemap);
         }
