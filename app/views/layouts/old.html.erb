@@ -53,13 +53,10 @@
 
   <%= render 'shared/footer' %>
 
-  <div class="backdrop"></div>
-
   <script type='text/javascript' src='http://maps.googleapis.com/maps/api/js?sensor=false' ></script>
-  <script src="http://libs.cartocdn.com/cartodb.js/v3/3.6.02/cartodb.js"></script>
+  <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
   <%= javascript_include_tag 'application' %>
   <%= javascript_include_tag 'old' %>
-
   <%= yield :js %>
   <%= render 'shared/js_footer' %>
 </body>

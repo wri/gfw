@@ -213,8 +213,11 @@ function formatNumber(x, abs) {
 
 function resizeWindow(e) {
   if (showMap) {
-    if (GFW.app) GFW.app.open();
-    Filter.calcFiltersPosition();
+    if (GFW.app && !$('body').hasClass('embed')) {
+      GFW.app.open();
+
+      Filter.calcFiltersPosition();
+    }
   }
 }
 
