@@ -10,6 +10,7 @@
 <% end %>
 
 <% content_for :js do %>
+  <%= render 'shared/breaking_news' %>
   <%= render 'shared/js_templates' %>
   <%= javascript_include_tag 'home' %>
 <% end %>
