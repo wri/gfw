@@ -66,8 +66,9 @@ $(function() {
       '/':                                                      'home',
       'map':                                                    'map',
       'map/':                                                   'map',
+      'map/:zoom/:lat/:lon/:iso':                               'mapWithCoordinates',
       'map/:zoom/:lat/:lon/:iso/:basemap/:baselayer':           'mapWithCoordinates',
-      'map/:zoom/:lat/:lon/:iso/:basemap/:baselayer/*layers':   'mapWithCoordinates',
+      'map/:zoom/:lat/:lon/:iso/:basemap/:baselayer/*layers':   'mapWithCoordinates'
     },
 
     home: function() {
