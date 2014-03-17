@@ -1124,6 +1124,8 @@ GFW.modules.maplayer = function(gfw) {
             Analysis.hide();
 
             if (forestgain) GFW.app.removeLayer(forestgain);
+
+            updateHash();
           };
 
           Filter.addFilter('', slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: null, category_color: this.layer.get('category_color'), color: this.layer.get('title_color') });
@@ -1163,6 +1165,16 @@ GFW.modules.maplayer = function(gfw) {
           };
 
           Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: slug, category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
+
+          var subEvent;
+
+          if (this.layer.get('sublayer')) {
+            subEvent = function() {
+              that._toggleSubLayer();
+            };
+          }
+
+          if (GFW.app.currentBaseLayer === slug) Legend.replace(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
         } else if (slug === 'umd_tree_loss_gain') {
           if (GFW.app.currentBaseLayer === 'loss') umd_tree_loss_gain.set('visible', true);
 
@@ -1209,7 +1221,17 @@ GFW.modules.maplayer = function(gfw) {
             }
           }
 
-          if (GFW.app.currentBaseLayer === slug && slug === 'forma') Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
+          var subEvent;
+
+          if (GFW.app.currentBaseLayer === slug && slug === 'forma') {
+            if (this.layer.get('sublayer')) {
+              subEvent = function() {
+                that._toggleSubLayer();
+              };
+            }
+
+            Legend.replace(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
+          }
         }
       },
 
@@ -1286,7 +1308,7 @@ GFW.modules.maplayer = function(gfw) {
           category_color = '#707D92';
         }
 
-        if (category != 'Forest change') {
+        if (category !== 'Forest change') {
           Legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
         }
 
@@ -1307,6 +1329,8 @@ GFW.modules.maplayer = function(gfw) {
           }
 
           Legend.toggleItemBySlug(slug);
+
+          updateHash();
         } else if (slug === 'loss') {
           if (GFW.app.currentBaseLayer === null) {
             GFW.app.updateBaseLayer(slug);
@@ -1325,6 +1349,8 @@ GFW.modules.maplayer = function(gfw) {
           }
 
           Legend.toggleItemBySlug(slug);
+
+          updateHash();
         } else if (slug === 'forma' || slug === 'modis' || slug === 'imazon' || slug === 'fires') {
           GFW.app.updateBaseLayer(slug);
           ga('send', 'event', 'Filter', 'Toggle', slug);
@@ -1348,6 +1374,8 @@ GFW.modules.maplayer = function(gfw) {
           }
 
           Legend.replace(id, category_slug, category, title, slug, category_color, title_color, subEvent);
+
+          updateHash();
         } else if (slug === 'umd_tree_loss_gain') {
           GFW.app.updateBaseLayer('loss');
           GFW.app.addLayer(forestgain);
@@ -1369,6 +1397,8 @@ GFW.modules.maplayer = function(gfw) {
           }
 
           Legend.replace(id, category_slug, category, title, slug, category_color, title_color, subEvent);
+
+          updateHash();
         } else if (slug === 'forest2000') {
           if (cover_extent.attributes['visible']) {
             GFW.app._renderForest2000Layer();

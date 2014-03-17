@@ -19,8 +19,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     this.model = new gfw.ui.model.Analysis();
 
-    this.model.on('change:hidden',    this._toggle);
-    this.model.on('change:analyzing', this._toggleAnalysis,   this);
+    this.model.on('change:hidden', this._toggle);
+    this.model.on('change:analyzing', this._toggleAnalysis, this);
 
     this.selectedShape = null;
     this.selectedShapes = [];
@@ -297,6 +297,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         url = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
         range;
 
+    if (config.BASELAYER === 'fires' || config.BASELAYER === null) return false;
+
     if (!this.initStats) {
       this.$el.find('.stats .title, .stats ul').hide();
       this.info.show();
@@ -560,13 +562,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if(this.model.get('hidden')) {
       this.$el.fadeOut();
     } else {
-      this.$el.fadeIn(200, function() {
-        if (!that.initialized) {
-          that.loss_analysis.show();
-
-          that.initialized = true;
-        }
-      });
+      this.$el.fadeIn();
     }
   },
 

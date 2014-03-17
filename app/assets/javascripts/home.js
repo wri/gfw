@@ -79,22 +79,20 @@ $(function() {
     },
 
     mapWithCoordinates: function(zoom, lat, lon, iso, basemap, baselayer, layers) {
-      if (zoom) { config.MAPOPTIONS.zoom = parseInt(zoom, 10); }
+      if (zoom) config.MAPOPTIONS.zoom = parseInt(zoom, 10);
 
       if (lat && lon) {
         config.MAPOPTIONS.center = new google.maps.LatLng(lat, lon);
         map && map.setCenter(config.MAPOPTIONS.center);
       }
 
-      if (iso) { config.ISO = iso; }
+      if (iso) config.ISO = iso;
 
-      if (basemap) {
-        config.BASEMAP = basemap;
-      }
+      if (basemap) config.BASEMAP = basemap;
 
-      if (baselayer) { config.BASELAYER = baselayer; }
+      if (baselayer) config.BASELAYER = (baselayer === 'none') ? null : baselayer;
 
-      if (layers) { config.MAPOPTIONS.layers = layers; }
+      if (layers) config.MAPOPTIONS.layers = layers;
 
       this.trigger('loadgfw', 'map');
     }
@@ -240,7 +238,7 @@ $(function() {
       this.$map.append(Analysis.render());
       Analysis.info.setDraggable(true);
 
-      if (config.ISO != 'ALL') Analysis.loadCountry(config.ISO);
+      if (config.ISO !== 'ALL') Analysis.loadCountry(config.ISO);
 
       Filter.init();
       Circle.init();
@@ -324,7 +322,8 @@ $(function() {
 
       $('#zoom_controls').show();
       $('#viewfinder').show();
-      Analysis.show();
+
+      if (config.BASELAYER !== 'fires' && config.BASELAYER !== null) Analysis.show();
 
       $('.for_business').fadeOut(250);
 

@@ -322,13 +322,13 @@ function updateHash(iso) {
   var hash,
       zoom = map.getZoom(),
       lat = map.getCenter().lat().toFixed(2),
-      lng = map.getCenter().lng().toFixed(2);
+      lng = map.getCenter().lng().toFixed(2),
+      baselayer = config.BASELAYER === null ? 'none' : config.BASELAYER;
 
   if (iso) config.ISO = iso;
 
   var layers = config.MAPOPTIONS.layers,
-      configs = config.ISO+'/'+config.BASEMAP+'/'+config.BASELAYER;
-
+      configs = config.ISO+'/'+config.BASEMAP+'/'+baselayer;
 
   if (layers) {
     hash = 'map/'+zoom+'/'+lat+'/'+lng+'/'+configs+'/'+layers;
