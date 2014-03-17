@@ -1,8 +1,10 @@
 class EmbedController < ApplicationController
-  layout 'iframe'
+  before_filter :load_circles, :only => [:map]
+
+  layout 'embed'
 
   # GET /embed/country/:id
-  def show
+  def countries_show
     country = Api::Country.find_by_iso(params[:id])['countries'][0]
 
     not_found unless country.present?

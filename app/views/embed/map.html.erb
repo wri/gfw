@@ -1,0 +1,22 @@
+<% content_for :css do %>
+  <%= stylesheet_link_tag "home" %>
+
+  <style>
+    #map {
+      height: 530px;
+      border: 0;
+    }
+  </style>
+<% end %>
+
+<% content_for :js do %>
+  <%= render 'shared/breaking_news' %>
+  <%= render 'shared/js_templates' %>
+  <%= javascript_include_tag 'home' %>
+<% end %>
+
+<%= render 'shared/map' %>
+
+<div id='sources' class='sources notranslate'>
+  <%= render 'shared/sources' %>
+</div>

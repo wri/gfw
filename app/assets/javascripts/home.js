@@ -62,13 +62,18 @@ var loaded = false,
 $(function() {
   var Router = Backbone.Router.extend({
     routes: {
-      '':                                                       'home',
-      '/':                                                      'home',
-      'map':                                                    'map',
-      'map/':                                                   'map',
-      'map/:zoom/:lat/:lon/:iso':                               'mapWithCoordinates',
-      'map/:zoom/:lat/:lon/:iso/:basemap/:baselayer':           'mapWithCoordinates',
-      'map/:zoom/:lat/:lon/:iso/:basemap/:baselayer/*layers':   'mapWithCoordinates'
+      '':                                                             'home',
+      '/':                                                            'home',
+      'map':                                                          'map',
+      'map/':                                                         'map',
+      'embed/map':                                                    'map',
+      'embed/map/':                                                   'map',
+      'map/:zoom/:lat/:lon/:iso':                                     'mapWithCoordinates',
+      'map/:zoom/:lat/:lon/:iso/:basemap/:baselayer':                 'mapWithCoordinates',
+      'map/:zoom/:lat/:lon/:iso/:basemap/:baselayer/*layers':         'mapWithCoordinates',
+      'embed/map/:zoom/:lat/:lon/:iso':                               'mapWithCoordinates',
+      'embed/map/:zoom/:lat/:lon/:iso/:basemap/:baselayer':           'mapWithCoordinates',
+      'embed/map/:zoom/:lat/:lon/:iso/:basemap/:baselayer/*layers':   'mapWithCoordinates'
     },
 
     home: function() {

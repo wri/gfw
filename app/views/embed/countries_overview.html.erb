@@ -1,0 +1,28 @@
+<% content_for :css do %>
+  <%= stylesheet_link_tag "countries" %>
+
+  <style>
+    .overview_graph { margin: 0; }
+
+    .overview_graph__title,
+    .countries_list { display: none; }
+
+    .overview_graph__years { border: 0; }
+  </style>
+<% end %>
+
+<% content_for :js do %>
+  <%= javascript_include_tag "embed_countries" %>
+
+  <script>
+    var countries = <%= @countries.to_json.html_safe %>;
+
+    $(function() {
+      cdb.init(function() {
+        window.countries_overview = new gfw.ui.view.CountriesEmbedOverview();
+      });
+    });
+  </script>
+<% end %>
+
+<%= render 'shared/overview' %>

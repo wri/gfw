@@ -1,13 +1,5 @@
 <% content_for :js do %>
-  <!-- Circle -->
-  <script type='text/javascript'>
-    var circleSummary = [
-      { icon: 'area', count: '<%= (@circles['loss_2012']/1000000).round(1) %>', title: 'Million hectares of tree cover loss in 2012' },
-      { icon: 'area', count: '<%= (@circles['sum_loss']/1000000).round(1) %>', title: 'Million hectares of tree cover loss from 2000 to 2012' },
-      { icon: 'area', count: '<%= (@circles['last_gain']/1000000).round(1) %>', title: 'Million hectares of tree cover gain from 2000 to 2012' },
-      { icon: 'flag', count: '<%= number_with_delimiter(@circles['count']) %>', title: 'FORMA alerts<br />in the last month' }
-    ];
-  </script>
+  <%= render 'shared/breaking_news' %>
 <% end %>
 
 <% content_for :title do %>
@@ -39,15 +31,7 @@
   </div>
 <% end %>
 
-<section class='map-container'>
-  <div id="viewfinder"></div>
-  <div id="zoom_controls"></div>
-  <div class="coordinates map_coordinates"></div>
-
-  <div id='map' class='map'></div>
-
-  <a class="feedback-link" href="https://www.surveymonkey.com/s/S6B53DT" target="_blank"><span>Feedback</span></a>
-</section>
+<%= render 'shared/map' %>
 
 <section class='section section_dark home_actions'>
   <div class='inner'>
