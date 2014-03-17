@@ -982,6 +982,10 @@
 /* =Map
 ----------------------------------------------- */
 
+/*
+ * Timeline
+ */
+
 .timeline_container {
   display: none;
 }
@@ -1301,3 +1305,111 @@
   display: none;
 }
 
+/*
+ * Timeline
+ */
+
+.layer_selector {
+  display: none;
+  position: absolute;
+  z-index: 1010;
+  top: 35px; right: 65px;
+  width: 155px;
+  min-height: 40px;
+  cursor: move;
+
+  .toggle {
+    position: absolute;
+    z-index: 1010;
+    top: 2px; right: -25px;
+    width: 25px;
+    height: 38px;
+    @include home-icons-sprite(layer_arrow_down);
+  }
+
+  &.closed .toggle { @include home-icons-sprite(layer_arrow_up); }
+
+  .layers {
+    width: 100%;
+    opacity: 0;
+
+    li {
+      border-bottom: 1px solid #ddd;
+
+      &:last-child { border:none; }
+    }
+  }
+
+  li {
+    position: relative;
+    padding: 10px;
+
+    a {
+      display: block;
+      font-size: 13px;
+      @extend .sans-serif;
+      text-decoration: none;
+      color: #666;
+
+      &:hover { color: #333; }
+
+      &.source {
+        position: absolute;
+        top: 50%; right: 10px;
+        margin-top: -5px;
+        width: 10px;
+        height: 10px;
+        @include home-icons-sprite(information);
+      }
+    }
+
+    &.grayscale   i { @include home-icons-sprite(map_grayscale); }
+    &.terrain     i { @include home-icons-sprite(map_terrain); }
+    &.satellite   i { @include home-icons-sprite(map_satellite); }
+    &.roads       i { @include home-icons-sprite(map_roads); }
+    &.treeheight  i { @include home-icons-sprite(map_treeheight); }
+    &.landsat     i { @include home-icons-sprite(map_landsat); }
+
+    i {
+      @include inline-block();
+      width: 24px;
+      height: 18px;
+      border: 1px solid rgba(#333, .5);
+      margin: 0 5px 0 0;
+      background: #ddd;
+    }
+  }
+}
+
+.landsat_layers,
+.layer_selector {
+  border: 1px solid #666;
+  background: #fff;
+  @include border-radius(3px);
+  @include box-shadow(0px 0px 3px #666);
+}
+
+.landsat_layers {
+  display: none;
+  z-index: 1020;
+  width: 200px;
+
+  li {
+    width: 80px;
+    float: left;
+
+    i,
+    .source { display: none; }
+  }
+
+  .tip {
+    position: absolute;
+    top: 50%; right: -8px;
+    margin-top: -6px;
+    width: 8px;
+    height: 12px;
+    @include home-icons-sprite(landsat_selector_tip);
+  }
+
+  .source { display: none; }
+}

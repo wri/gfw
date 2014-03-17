@@ -1,24 +1,24 @@
 var config = {
-  ZOOM:         3,
-  MINZOOM:      3,
-  MAXZOOM:      17,
-  LAT:          15,
-  LNG:          27,
-  ISO:          'ALL',
-  MONTHNAMES:         ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-  MONTHNAMES_SHORT:   ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
-  QUARTERNAMES:       ["JAN - MAR", "APR - JUN", "JUL - SEP", "OCT - DEC"],
-  BASE_MAP_STYLE:     [ { "featureType": "water"  }, { "featureType": "transit", "stylers": [ { "saturation": -100 } ] }, { "featureType": "road", "stylers": [ { "saturation": -100 } ] }, { "featureType": "poi", "stylers": [ { "saturation": -100 } ] }, { "featureType": "landscape", "stylers": [ { "saturation": -100 } ] }, { "featureType": "administrative", "stylers": [ { "saturation": -100 } ] } ],
-  mapLoaded: false,
-  BASELAYER: 'loss'
+  ZOOM: 3,
+  MINZOOM: 3,
+  MAXZOOM: 17,
+  LAT: 15,
+  LNG: 27,
+  ISO: 'ALL',
+  BASEMAP: 'grayscale',
+  BASELAYER: 'loss',
+  MONTHNAMES: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  MONTHNAMES_SHORT: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
+  QUARTERNAMES: ["JAN - MAR", "APR - JUN", "JUL - SEP", "OCT - DEC"],
+  mapLoaded: false
 };
 
 config.MAPOPTIONS = {
-  zoom:     config.ZOOM,
-  minZoom:  config.MINZOOM,
-  maxZoom:  config.MAXZOOM,
-  center:   new google.maps.LatLng(config.LAT, config.LNG),
-  mapTypeId: google.maps.MapTypeId.TERRAIN,
+  zoom: config.ZOOM,
+  minZoom: config.MINZOOM,
+  maxZoom: config.MAXZOOM,
+  center: new google.maps.LatLng(config.LAT, config.LNG),
+  mapTypeId: google.maps.MapTypeId.HYBRID,
   backgroundColor: '#99b3cc',
   disableDefaultUI: true,
   panControl: false,
@@ -48,34 +48,47 @@ config.OVERLAYSTYLES = {
 
 config.MAPSTYLES = {};
 
-config.MAPSTYLES.forestsoft = new google.maps.ImageMapType({
-  getTileUrl: function(ll, z) {
-    var X = Math.abs(ll.x % (1 << z));  // wrap
-    return "http://api.tiles.mapbox.com/v3/cartodb.global-forest-height/" + z + "/" + X + "/" + ll.y + ".png";
-  },
-  tileSize: new google.maps.Size(256, 256),
-  isPng: true,
-  maxZoom: 7,
-  name: "Forest Height",
-  alt: "Global forest height"
-});
+config.MAPSTYLES.grayscale = {
+  type: 'style',
+  style: [ { "featureType": "water" }, { "featureType": "transit", "stylers": [ { "saturation": -100 } ] }, { "featureType": "road", "stylers": [ { "saturation": -100 } ] }, { "featureType": "poi", "stylers": [ { "saturation": -100 } ] }, { "featureType": "landscape", "stylers": [ { "saturation": -100 } ] }, { "featureType": "administrative", "stylers": [ { "saturation": -100 } ] } ]
+}
 
-config.MAPSTYLES.treeheight = new google.maps.ImageMapType({
-  getTileUrl: function(ll, z) {
-    var X = Math.abs(ll.x % (1 << z));  // wrap
-    return "//<%= ENV['GFW_API_HOST'] %>/gee/simple_green_coverage/" + z + "/" + X + "/" + ll.y + ".png";
-  },
-  tileSize: new google.maps.Size(256, 256),
-  isPng: true,
-  maxZoom: 17,
-  name: "Forest Height",
-  alt: "Global forest height",
-  alt: 'NASA JPL, California Institute of Technology, <a href="http://lidarradar.jpl.nasa.gov" target="_blank">3D Global Vegetation Map</a>'
-});
+config.MAPSTYLES.terrain = {
+  type: 'mapType',
+  style: google.maps.MapTypeId.TERRAIN,
+  title: "Terrain"
+}
+
+config.MAPSTYLES.satellite = {
+  type: 'mapType',
+  style: google.maps.MapTypeId.SATELLITE,
+  title: "Satellite"
+}
+
+config.MAPSTYLES.roads = {
+  type: 'mapType',
+  style: google.maps.MapTypeId.HYBRID,
+  title: "Roads"
+}
+
+config.MAPSTYLES.treeheight = {
+  type: 'customMapType',
+  style: new google.maps.ImageMapType({
+    getTileUrl: function(ll, z) {
+      var X = Math.abs(ll.x % (1 << z)); // wrap
+      return "//<%= ENV['GFW_API_HOST'] %>/gee/simple_green_coverage/" + z + "/" + X + "/" + ll.y + ".png";
+    },
+    tileSize: new google.maps.Size(256, 256),
+    isPng: true,
+    maxZoom: 17,
+    name: "Forest Height",
+    alt: "Global forest height"
+  })
+}
 
 config.MAPSTYLES.landsat = [];
 
-for(var i = 1999;i < 2013; i++) {
+for(var i = 1999; i < 2013; i++) {
   (function(year) {
     config.MAPSTYLES.landsat[i] = new google.maps.ImageMapType({
       getTileUrl: function(ll, z) {
@@ -114,10 +127,10 @@ config.GRAPHS = {
 }
 
 config.GRAPHCOLORS = {
-  tropical:     "#9BC000",
-  subtropical:  "#FFFF73",
-  boreal:       "#FFB973",
-  temperate:    "#73DCFF"
+  tropical: "#9BC000",
+  subtropical: "#FFFF73",
+  boreal: "#FFB973",
+  temperate: "#73DCFF"
 }
 
 function draw(topology, c, iso, options) {
@@ -295,6 +308,33 @@ function prettifyFilename(filename) {
   return filename.toLowerCase().replace(/ /g,"_");
 }
 
-function getFilename(url) {
-  return url.replace(/^.*[\\\/]/, '');
+function isLandsat(basemap) {
+  var landsat = false;
+
+  if ((basemap.indexOf("landsat") !== -1) && config.MAPSTYLES.landsat[basemap.replace('landsat', '')]) {
+    landsat = config.MAPSTYLES.landsat[basemap.replace('landsat', '')]
+  }
+
+  return landsat
+}
+
+function updateHash(iso) {
+  var hash,
+      zoom = map.getZoom(),
+      lat = map.getCenter().lat().toFixed(2),
+      lng = map.getCenter().lng().toFixed(2),
+      baselayer = config.BASELAYER === null ? 'none' : config.BASELAYER;
+
+  if (iso) config.ISO = iso;
+
+  var layers = config.MAPOPTIONS.layers,
+      configs = config.ISO+'/'+config.BASEMAP+'/'+baselayer;
+
+  if (layers) {
+    hash = 'map/'+zoom+'/'+lat+'/'+lng+'/'+configs+'/'+layers;
+    window.router.navigate(hash, { trigger: true, replace: true });
+  } else {
+    hash = 'map/'+zoom+'/'+lat+'/'+lng+'/'+configs;
+    window.router.navigate(hash, { trigger: true });
+  }
 }

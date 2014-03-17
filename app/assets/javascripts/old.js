@@ -18,9 +18,9 @@ gfw.ui.view.Terms = cdb.core.View.extend({
 
     map = new google.maps.Map(document.getElementById('map'), config.MAPOPTIONS);
 
-    var styledMap = new google.maps.StyledMapType(config.BASE_MAP_STYLE, { name: 'terrain_style' });
-    map.mapTypes.set('terrain_style', styledMap);
-    map.setMapTypeId('terrain_style');
+    var styledMap = new google.maps.StyledMapType(config.MAPSTYLES.grayscale, { name: 'grayscale' });
+    map.mapTypes.set('grayscale', styledMap);
+    map.setMapTypeId('grayscale');
   },
 
   _onClickContinue: function(e) {

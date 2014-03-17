@@ -19,8 +19,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     this.model = new gfw.ui.model.Analysis();
 
-    this.model.on('change:hidden',    this._toggle);
-    this.model.on('change:analyzing', this._toggleAnalysis,   this);
+    this.model.on('change:hidden', this._toggle);
+    this.model.on('change:analyzing', this._toggleAnalysis, this);
 
     this.selectedShape = null;
     this.selectedShapes = [];
@@ -206,7 +206,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this._clearAnalysis();
     this._enableAnalysisButton();
 
-    this._updateHash('ALL');
+    updateHash('ALL');
   },
 
   _enableAnalysisButton: function() {
@@ -220,25 +220,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     $('.tipsy').remove();
 
     this.$analysis_control.addClass('disabled');
-  },
-
-  _updateHash: function(iso) {
-    var hash,
-        zoom = map.getZoom(),
-        lat = map.getCenter().lat().toFixed(2),
-        lng = map.getCenter().lng().toFixed(2);
-
-    config.ISO = iso;
-
-    var layers = config.MAPOPTIONS.layers;
-
-    if (layers) {
-      hash = 'map/' + zoom + '/' + lat + '/' + lng + '/' + config.ISO + '/' + layers;
-      window.router.navigate(hash, { trigger: true, replace: true });
-    } else {
-      hash = 'map/' + zoom + '/' + lat + '/' + lng + '/' + config.ISO;
-      window.router.navigate(hash, { trigger: true });
-    }
   },
 
   _loadPolygon: function(the_geom) {
@@ -315,6 +296,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         baselayer = config.BASELAYER,
         url = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
         range;
+
+    if (config.BASELAYER === 'fires' || config.BASELAYER === null) return false;
 
     if (!this.initStats) {
       this.$el.find('.stats .title, .stats ul').hide();
@@ -407,7 +390,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
             this.info.subscribe.show();
 
             this.subscribecountry = false;
-            this._updateHash(config.ISO);
+            updateHash();
           }
 
           if (data.value) {
@@ -469,7 +452,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
           that._disableAnalysisButton();
           that._loadPolygon(the_geom);
         } else {
-          that._updateHash('ALL');
+          updateHash('ALL');
         }
       }
     });
@@ -579,13 +562,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if(this.model.get('hidden')) {
       this.$el.fadeOut();
     } else {
-      this.$el.fadeIn(200, function() {
-        if (!that.initialized) {
-          that.loss_analysis.show();
-
-          that.initialized = true;
-        }
-      });
+      this.$el.fadeIn();
     }
   },
 

@@ -62,14 +62,12 @@ var loaded = false,
 $(function() {
   var Router = Backbone.Router.extend({
     routes: {
-      '':                                   'home',
-      '/':                                  'home',
-      'map':                                'map',
-      'map/':                               'map',
-      'map/:zoom/:lat/:lon':                'mapWithCoordinates',
-      'map/:zoom/:lat/:lon/':               'mapWithCoordinates',
-      'map/:zoom/:lat/:lon/:iso':           'mapWithCoordinates',
-      'map/:zoom/:lat/:lon/:iso/*layers':   'mapWithCoordinates',
+      '':                                                       'home',
+      '/':                                                      'home',
+      'map':                                                    'map',
+      'map/':                                                   'map',
+      'map/:zoom/:lat/:lon/:iso/:basemap/:baselayer':           'mapWithCoordinates',
+      'map/:zoom/:lat/:lon/:iso/:basemap/:baselayer/*layers':   'mapWithCoordinates',
     },
 
     home: function() {
@@ -80,18 +78,21 @@ $(function() {
       this.trigger('loadgfw', 'map');
     },
 
-    mapWithCoordinates: function(zoom, lat, lon, iso, layers) {
-      if (lat && lon) { config.MAPOPTIONS.center = new google.maps.LatLng(lat, lon); }
-      if (zoom)       { config.MAPOPTIONS.zoom   = parseInt(zoom, 10); }
-      if (layers)     { config.MAPOPTIONS.layers = layers; }
+    mapWithCoordinates: function(zoom, lat, lon, iso, basemap, baselayer, layers) {
+      if (zoom) config.MAPOPTIONS.zoom = parseInt(zoom, 10);
 
-      if (!iso) {
-        config.ISO = 'ALL';
-
-        if (lat && lon) map.setCenter(new google.maps.LatLng(lat, lon));
-      } else {
-        config.ISO = iso;
+      if (lat && lon) {
+        config.MAPOPTIONS.center = new google.maps.LatLng(lat, lon);
+        map && map.setCenter(config.MAPOPTIONS.center);
       }
+
+      if (iso) config.ISO = iso;
+
+      if (basemap) config.BASEMAP = basemap;
+
+      if (baselayer) config.BASELAYER = (baselayer === 'none') ? null : baselayer;
+
+      if (layers) config.MAPOPTIONS.layers = layers;
 
       this.trigger('loadgfw', 'map');
     }
@@ -153,7 +154,7 @@ $(function() {
         Analysis.startAnalyzing();
       }
 
-      this._updateHash();
+      updateHash();
     },
 
     _loadGFW: function(state) {
@@ -162,13 +163,18 @@ $(function() {
       if (!loaded) {
         map = new google.maps.Map(document.getElementById('map'), config.MAPOPTIONS);
 
-        var styledMap = new google.maps.StyledMapType(config.BASE_MAP_STYLE, { name: 'terrain_style' });
-        map.mapTypes.set('terrain_style', styledMap);
-        map.setMapTypeId('terrain_style');
+        var basemap = config.BASEMAP,
+            styledMap = {};
 
-        this.subscribe = window.location.hash.replace('#','') === 'subscribe';
+        if (_.contains(['terrain', 'satellite', 'roads'], basemap)) {
+          map.setMapTypeId(basemap);
+        } else if (isLandsat(basemap) || _.contains(['grayscale', 'treeheight'], basemap)) {
+          styledMap = isLandsat(basemap) || new google.maps.StyledMapType(config.MAPSTYLES[basemap].style, { name: basemap });
+          map.mapTypes.set(basemap, styledMap);
+          map.setMapTypeId(basemap);
+        }
 
-        if (this.subscribe) config.BASELAYER = 'forma';
+        this.subscribe = window.location.hash.replace('#', '') === 'subscribe';
 
         google.maps.event.addListenerOnce(map, 'idle', function() {
           that._loadOtherStuff();
@@ -232,7 +238,7 @@ $(function() {
       this.$map.append(Analysis.render());
       Analysis.info.setDraggable(true);
 
-      if (config.ISO != 'ALL') Analysis.loadCountry(config.ISO);
+      if (config.ISO !== 'ALL') Analysis.loadCountry(config.ISO);
 
       Filter.init();
       Circle.init();
@@ -258,7 +264,7 @@ $(function() {
 
     _selectMenu: function(name) {
       $('.navbar li a').removeClass('selected');
-      $('.navbar .' + name).addClass('selected');
+      $('.navbar .'+name).addClass('selected');
 
       if (name === 'map') {
         $('.header').addClass('stuck');
@@ -316,7 +322,8 @@ $(function() {
 
       $('#zoom_controls').show();
       $('#viewfinder').show();
-      Analysis.show();
+
+      if (config.BASELAYER !== 'fires' && config.BASELAYER !== null) Analysis.show();
 
       $('.for_business').fadeOut(250);
 
@@ -335,23 +342,6 @@ $(function() {
           });
         });
       });
-    },
-
-    _updateHash: function() {
-      var hash,
-          zoom = map.getZoom(),
-          lat = map.getCenter().lat().toFixed(2),
-          lng = map.getCenter().lng().toFixed(2);
-
-      var layers = config.MAPOPTIONS.layers;
-
-      if (layers) {
-        hash = 'map/' + zoom + '/' + lat + '/' + lng + '/' + config.ISO + '/' + layers;
-        window.router.navigate(hash, { trigger: true, replace: true });
-      } else {
-        hash = 'map/' + zoom + '/' + lat + '/' + lng + '/' + config.ISO;
-        window.router.navigate(hash, { trigger: true });
-      }
     }
   });
 
