@@ -10,7 +10,9 @@ class HomeController < ApplicationController
   def accept_and_redirect
     cookies.permanent[ENV['TERMS_COOKIE'].to_sym] = { :value => true, :domain => ENV['GFW_HOST'] }
 
-    if cookies[:go_to_from_blog].nil?
+    if cookies[:go_to_from_blog].present?
+      redirect = cookies[:go_to_from_blog]
+    else
       if cookies[:go_to].nil?
         redirect = root_path
       elsif cookies[:go_to] == root_path
@@ -18,8 +20,6 @@ class HomeController < ApplicationController
       else
         redirect = cookies[:go_to]
       end
-    else
-      redirect = ENV['BLOG_HOST']
     end
 
     redirect_to redirect
