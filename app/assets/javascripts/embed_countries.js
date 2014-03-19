@@ -846,7 +846,8 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
           .data(data_link_)
           .enter()
           .append('a')
-          .attr('xlink:href', function(d) { return '/country/' + d.iso})
+          .attr('xlink:href', function(d) { return '/country/' + d.iso })
+          .attr('target', '_blank')
           .append('svg:circle')
           .attr(circle_attr)
           .style('fill', function(d) {
