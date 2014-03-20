@@ -109,7 +109,7 @@ $(function() {
         config.BASELAYER = (baselayer === 'none') ? null : baselayer;
       }
 
-      if (layers) config.MAPOPTIONS.layers = layers;
+      config.MAPOPTIONS.layers = layers ? _.map(layers.split(","), function(i) { return parseInt(i, 10); }) : [];
 
       this.trigger('loadgfw', 'map');
     }

@@ -111,7 +111,7 @@ GFW.modules.app = function(gfw) {
 
       Filter.check(id);
 
-      Legend.toggleItem(id, layer.get('category_slug'), layer.get('category_name'), layer.get('title'), layer.get('slug'), layer.get('category_color'), layer.get('title_color'));
+      if (layer.get('id') !== 596) Legend.toggleItem(id, layer.get('category_slug'), layer.get('category_name'), layer.get('title'), layer.get('slug'), layer.get('category_color'), layer.get('title_color'));
     },
 
     run: function() {
@@ -259,7 +259,11 @@ GFW.modules.app = function(gfw) {
         if (table_name == 'protected_areas') { this._removeSpecialLayer(); }
         if (table_name == 'pantropical') { this._removePantropicalLayer(); }
         if (table_name == 'forest2000') { this._removeForest2000Layer(); }
-        if (table_name == 'forestgain') { this._removeForestGainLayer(); }
+        if (table_name == 'forestgain') {
+          this.layers = _.without(this.layers, layer.get('table_name'));
+
+          this._removeForestGainLayer();
+        }
       } else {
         this.layers = _.without(this.layers, layer.get('table_name'));
         this.renderLayers();
@@ -1087,132 +1091,114 @@ GFW.modules.app = function(gfw) {
 GFW.modules.maplayer = function(gfw) {
   gfw.maplayer = {};
   gfw.maplayer.Engine = Class.extend({
-      init: function(layer) {
-        this.layer = layer;
+    init: function(layer) {
+      this.layer = layer;
 
-        var sw = new google.maps.LatLng(this.layer.get('ymin'), this.layer.get('xmin'));
-        var ne = new google.maps.LatLng(this.layer.get('ymax'),this.layer.get('xmax'));
-        this._bounds = new google.maps.LatLngBounds(sw, ne);
+      var filters = _.map(config.MAPOPTIONS.layers, function(i) { return parseInt(i, 10); }),
+          sw = new google.maps.LatLng(this.layer.get('ymin'), this.layer.get('xmin')),
+          ne = new google.maps.LatLng(this.layer.get('ymax'),this.layer.get('xmax'));
 
-        if (config.MAPOPTIONS.layers) {
-          var filters = _.map(config.MAPOPTIONS.layers.split(','), function(i) { return parseInt(i, 10); });
+      this._bounds = new google.maps.LatLngBounds(sw, ne);
+
+      this._addControl(filters);
+    },
+
+    _addControl: function(filters) {
+      var that = this;
+
+      var slug = this.layer.get('slug');
+
+      if (slug !== 'loss' || slug !== 'forestgain') {
+        this.layer.attributes['visible'] = false;
+      }
+
+      var clickEvent = function() {
+        that._toggleLayer();
+      };
+
+      if (slug === 'nothing') {
+        var event = function() {
+          GFW.app.updateBaseLayer(null);
+
+          that._hideBaseLayers();
+          that._removeSubLayers();
+
+          Analysis.hide();
+
+          if (forestgain) GFW.app.removeLayer(forestgain);
+
+          updateHash();
+        };
+
+        Filter.addFilter('', slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: null, category_color: this.layer.get('category_color'), color: this.layer.get('title_color') });
+      } else if (slug === 'user_stories') {
+        var customEvent = function() {
+          GFW.app._toggleStoriesLayer(that.layer);
+          Legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
+
+          if (!GFW.app.storiesLoaded) {
+            GFW.app._loadStoriesLayer();
+          }
+        };
+
+        Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
+
+        if (_.include(filters, this.layer.get('id'))) {
+          GFW.app._loadStoriesLayer();
+          Filter.check(this.layer.get('id'));
+          Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'));
         }
+      } else if (slug === 'mongabay') {
+        var mongabayEvent = function() {
+          GFW.app._toggleMongabayLayer(that.layer);
+          Legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
+        };
 
-        this._addControl(filters);
-      },
+        Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: mongabayEvent, source: this.layer.get('title'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color') });
 
-      _addControl: function(filters) {
-        var that = this;
-
-        var slug = this.layer.get('slug');
-
-        if (slug !== 'loss' || slug !== 'forestgain') {
-          this.layer.attributes['visible'] = false;
+        if (_.include(filters, this.layer.get('id'))) {
+          GFW.app._loadMongabayLayer();
+          Filter.check(this.layer.get('id'));
+          Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'));
         }
-
-        var clickEvent = function() {
+      } else if (slug === 'imazon' || slug === 'modis' || slug === 'fires') {
+        var event = function() {
           that._toggleLayer();
         };
 
-        if (slug === 'nothing') {
-          var event = function() {
-            GFW.app.updateBaseLayer(null);
+        Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: slug, category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
 
-            that._hideBaseLayers();
-            that._removeSubLayers();
+        var subEvent;
 
-            Analysis.hide();
-
-            if (forestgain) GFW.app.removeLayer(forestgain);
-
-            updateHash();
-          };
-
-          Filter.addFilter('', slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: null, category_color: this.layer.get('category_color'), color: this.layer.get('title_color') });
-        } else if (slug == 'user_stories') {
-          var customEvent = function() {
-            GFW.app._toggleStoriesLayer(that.layer);
-            Legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
-
-            if (!GFW.app.storiesLoaded) {
-              GFW.app._loadStoriesLayer();
-            }
-          };
-
-          Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
-
-          if (_.include(filters, this.layer.get('id'))) {
-            GFW.app._loadStoriesLayer();
-            Filter.check(this.layer.get('id'));
-            Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'));
-          }
-        } else if (slug === 'mongabay') {
-          var mongabayEvent = function() {
-            GFW.app._toggleMongabayLayer(that.layer);
-            Legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
-          };
-
-          Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: mongabayEvent, source: this.layer.get('title'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color') });
-
-          if (_.include(filters, this.layer.get('id'))) {
-            GFW.app._loadMongabayLayer();
-            Filter.check(this.layer.get('id'));
-            Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'));
-          }
-        } else if (slug === 'imazon' || slug === 'modis' || slug === 'fires') {
-          var event = function() {
-            that._toggleLayer();
-          };
-
-          Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: slug, category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
-
-          var subEvent;
-
-          if (this.layer.get('sublayer')) {
-            subEvent = function() {
-              that._toggleSubLayer();
-            };
-          }
-
-          if (GFW.app.currentBaseLayer === slug) Legend.replace(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
-        } else if (slug === 'umd_tree_loss_gain') {
-          if (GFW.app.currentBaseLayer === 'loss') umd_tree_loss_gain.set('visible', true);
-
-          var event = function() {
-            that._toggleLayer();
-          };
-
-          var subEvent = function() {
+        if (this.layer.get('sublayer')) {
+          subEvent = function() {
             that._toggleSubLayer();
           };
+        }
 
-          Filter.addForestLossFilters(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
+        if (GFW.app.currentBaseLayer === slug) Legend.replace(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
+      } else if (slug === 'umd_tree_loss_gain') {
+        if (GFW.app.currentBaseLayer === 'loss') umd_tree_loss_gain.set('visible', true);
 
-          if (GFW.app.currentBaseLayer === 'loss') Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
-        } else if (slug === 'loss' || slug === 'forestgain') {
-          var event = function() {
-            that._toggleLayer();
-          };
+        var event = function() {
+          that._toggleLayer();
+        };
 
-          Filter.addForestLossFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
+        var subEvent = function() {
+          that._toggleSubLayer();
+        };
 
-          if (GFW.app.currentBaseLayer === 'loss') {
-            if (filters && _.include(filters, this.layer.get('id'))) {
-              if (GFW.app) {
-                GFW.app.loadLayer(this.layer);
-              } else {
-                config.pendingLayers.push(this.layer);
-              }
-            }
+        Filter.addForestLossFilters(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
 
-            if (slug === 'forestgain') {
-              forestgain.set('visible', true);
-              GFW.app.addLayer(forestgain);
-            }
-          }
-        } else {
-          Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
+        if (GFW.app.currentBaseLayer === 'loss' || _.include(config.MAPOPTIONS.layers, 596)) Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
+      } else if (slug === 'loss') {
+        var event = function() {
+          that._toggleLayer();
+        };
 
+        Filter.addForestLossFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
+
+        if (GFW.app.currentBaseLayer === 'loss') {
           if (filters && _.include(filters, this.layer.get('id'))) {
             if (GFW.app) {
               GFW.app.loadLayer(this.layer);
@@ -1220,209 +1206,243 @@ GFW.modules.maplayer = function(gfw) {
               config.pendingLayers.push(this.layer);
             }
           }
+        }
+      } else if (slug === 'forestgain') {
+        var event = function() {
+          that._toggleLayer();
+        };
 
-          var subEvent;
+        Filter.addForestLossFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
 
-          if (GFW.app.currentBaseLayer === slug && slug === 'forma') {
-            if (this.layer.get('sublayer')) {
-              subEvent = function() {
-                that._toggleSubLayer();
-              };
-            }
+        if (filters && _.include(filters, this.layer.get('id'))) {
+          forestgain.set('visible', true);
 
-            Legend.replace(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
+          if (GFW.app) {
+            GFW.app.loadLayer(forestgain);
+          } else {
+            config.pendingLayers.push(forestgain);
           }
         }
-      },
 
-      _bindDisplay: function(display) {
-        display.setEngine(this);
-      },
-
-      _hideBaseLayers: function(){
-        GFW.app.$map_coordinates.show();
-        GFW.app.updateCoordinates();
-
-        GFW.app.baseLayer && GFW.app.baseLayer.setOptions({ opacity: 0 });
-        GFW.app.currentBaseLayer = null;
-        GFW.app._toggleTimeLayer();
-        Legend.removeCategory('forest_clearing');
-      },
-
-      _removeSubLayers: function() {
-        var renderLayers = false;
-
-        // Remove UMD extended layers
-        GFW.app.removeUmdCoverageLayer();
-
-        var extendedLayers = ['quicc_bounding_box_extent', 'imazon_sad_geografic_extent', 'forma_extent'];
-
-        // Remove extended layers
-        _.each(extendedLayers, function(name) {
-          if (_.include(GFW.app.layers, name)) {
-            GFW.app.layers = _.without(GFW.app.layers, name);
-            renderLayers = true;
-          }
-        });
-
-        if (renderLayers) {
-          GFW.app.renderLayers();
+        if (GFW.app.currentBaseLayer === 'loss') {
+        } else {
         }
-      },
+      } else {
+        Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
 
-      _toggleSubLayer: function() {
-        this.layer.set('sublayer_visible', !this.layer.get('sublayer_visible'));
+        if (filters && _.include(filters, this.layer.get('id'))) {
+          if (GFW.app) {
+            GFW.app.loadLayer(this.layer);
+          } else {
+            config.pendingLayers.push(this.layer);
+          }
+        }
 
-        var visible = this.layer.get('sublayer_visible');
+        var subEvent;
 
+        if (GFW.app.currentBaseLayer === slug && slug === 'forma') {
+          if (this.layer.get('sublayer')) {
+            subEvent = function() {
+              that._toggleSubLayer();
+            };
+          }
+
+          Legend.replace(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
+        }
+      }
+    },
+
+    _bindDisplay: function(display) {
+      display.setEngine(this);
+    },
+
+    _hideBaseLayers: function(){
+      GFW.app.$map_coordinates.show();
+      GFW.app.updateCoordinates();
+
+      GFW.app.baseLayer && GFW.app.baseLayer.setOptions({ opacity: 0 });
+      GFW.app.currentBaseLayer = null;
+      GFW.app._toggleTimeLayer();
+      Legend.removeCategory('forest_clearing');
+    },
+
+    _removeSubLayers: function() {
+      var renderLayers = false;
+
+      // Remove UMD extended layers
+      GFW.app.removeUmdCoverageLayer();
+
+      var extendedLayers = ['quicc_bounding_box_extent', 'imazon_sad_geografic_extent', 'forma_extent'];
+
+      // Remove extended layers
+      _.each(extendedLayers, function(name) {
+        if (_.include(GFW.app.layers, name)) {
+          GFW.app.layers = _.without(GFW.app.layers, name);
+          renderLayers = true;
+        }
+      });
+
+      if (renderLayers) {
+        GFW.app.renderLayers();
+      }
+    },
+
+    _toggleSubLayer: function() {
+      this.layer.set('sublayer_visible', !this.layer.get('sublayer_visible'));
+
+      var visible = this.layer.get('sublayer_visible');
+
+      if (visible) {
+        GFW.app.addSubLayer(this.layer);
+      } else {
+        GFW.app.removeSubLayer(this.layer);
+      }
+    },
+
+    _toggleLayer: function() {
+      var self = this;
+
+      this.layer.attributes['visible'] = !this.layer.attributes['visible'];
+
+      var slug            = this.layer.get('slug'),
+          title           = this.layer.get('title'),
+          title_color     = this.layer.get('title_color'),
+          visible         = this.layer.get('visible'),
+          tableName       = this.layer.get('table_name'),
+          category        = this.layer.get('category_name'),
+          category_slug   = this.layer.get('category_slug'),
+          category_color  = this.layer.get('category_color'),
+          id              = this.layer.get('id'),
+          disabled        = this.layer.get('disabled');
+
+      if (disabled) return false;
+
+      GFW.app.closeInfowindows();
+
+      if (category === null || !category) { // Default data
+        category       = 'Conservation';
+        category_slug  = 'conservation';
+        category_color = '#707D92';
+      }
+
+      if (category !== 'Forest change') {
+        Legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
+      }
+
+      if (slug === ('fires')) {
+        Analysis.hide();
+      } else {
+        Analysis.show();
+      }
+
+      if (slug === 'forestgain') {
         if (visible) {
-          GFW.app.addSubLayer(this.layer);
+          GFW.app.addLayer(this.layer);
+          ga('send', 'event', 'Filter', 'Toggle', slug);
+
+          if (cover_extent.attributes['visible']) GFW.app._refreshForest2000Layer();
         } else {
-          GFW.app.removeSubLayer(this.layer);
-        }
-      },
-
-      _toggleLayer: function() {
-        var self = this;
-
-        this.layer.attributes['visible'] = !this.layer.attributes['visible'];
-
-        var slug            = this.layer.get('slug'),
-            title           = this.layer.get('title'),
-            title_color     = this.layer.get('title_color'),
-            visible         = this.layer.get('visible'),
-            tableName       = this.layer.get('table_name'),
-            category        = this.layer.get('category_name'),
-            category_slug   = this.layer.get('category_slug'),
-            category_color  = this.layer.get('category_color'),
-            id              = this.layer.get('id'),
-            disabled        = this.layer.get('disabled');
-
-        if (disabled) return false;
-
-        GFW.app.closeInfowindows();
-
-        if (category === null || !category) { // Default data
-          category       = 'Conservation';
-          category_slug  = 'conservation';
-          category_color = '#707D92';
+          GFW.app.removeLayer(this.layer);
         }
 
-        if (category !== 'Forest change') {
-          Legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
-        }
+        Legend.toggleItemBySlug(slug);
+        Filter.toggle(id);
 
-        if (slug === ('fires')) {
-          Analysis.hide();
-        } else {
-          Analysis.show();
-        }
-
-        if (slug === 'forestgain') {
-          if (visible) {
-            GFW.app.addLayer(this.layer);
-            ga('send', 'event', 'Filter', 'Toggle', slug);
-
-            if (cover_extent.attributes['visible']) GFW.app._refreshForest2000Layer();
-          } else {
-            GFW.app.removeLayer(this.layer);
-          }
-
-          Legend.toggleItemBySlug(slug);
-
-          updateHash();
-        } else if (slug === 'loss') {
-          if (GFW.app.currentBaseLayer === null) {
-            GFW.app.updateBaseLayer(slug);
-            ga('send', 'event', 'Filter', 'Toggle', slug);
-
-            if (cover_extent.attributes['visible']) GFW.app._refreshForest2000Layer();
-          } else {
-            GFW.app.updateBaseLayer(null);
-
-            Analysis.hide();
-
-            if (!Analysis.model.get('area') || (Analysis.model.get('area') && Analysis.model.get('area') === '')) {
-              Analysis.clearInfo();
-              Analysis.onClickCancel();
-            }
-          }
-
-          Legend.toggleItemBySlug(slug);
-
-          updateHash();
-        } else if (slug === 'forma' || slug === 'modis' || slug === 'imazon' || slug === 'fires') {
+        updateHash();
+      } else if (slug === 'loss') {
+        if (GFW.app.currentBaseLayer === null) {
           GFW.app.updateBaseLayer(slug);
           ga('send', 'event', 'Filter', 'Toggle', slug);
 
-          if (forestgain) {
-            GFW.app.removeLayer(forestgain);
-            forestgain.set('visible', false);
-          }
-
-          umd_tree_loss_gain.set('visible', false);
-
-          this.layer.set('sublayer_visible', false);
-          this._removeSubLayers();
-
-          var subEvent;
-
-          if (this.layer.get('sublayer')) {
-            subEvent = function() {
-              self._toggleSubLayer();
-            };
-          }
-
-          Legend.replace(id, category_slug, category, title, slug, category_color, title_color, subEvent);
-
-          updateHash();
-        } else if (slug === 'umd_tree_loss_gain') {
-          GFW.app.updateBaseLayer('loss');
-          GFW.app.addLayer(forestgain);
-
-          forestgain.set('visible', true);
-          umd_tree_loss_gain.set('visible', true);
           if (cover_extent.attributes['visible']) GFW.app._refreshForest2000Layer();
-
-          this._removeSubLayers();
-
-          var subEvent;
-
-          if (this.layer.get('sublayer')) {
-            subEvent = function() {
-              self._toggleSubLayer();
-
-              Legend.resize();
-            };
-          }
-
-          Legend.replace(id, category_slug, category, title, slug, category_color, title_color, subEvent);
-
-          updateHash();
-        } else if (slug === 'forest2000') {
-          if (cover_extent.attributes['visible']) {
-            GFW.app._renderForest2000Layer();
-            ga('send', 'event', 'Filter', 'Toggle', slug);
-          } else {
-            GFW.app._removeForest2000Layer();
-          }
-
-          Filter.toggle(id);
         } else {
-          if (slug === 'biodiversity_hotspots') {
-            GFW.app.closeInfowindows();
-          }
+          GFW.app.updateBaseLayer(null);
 
-          if (visible) {
-            GFW.app.addLayer(this.layer);
-            ga('send', 'event', 'Filter', 'Toggle', slug);
-          } else {
-            GFW.app.removeLayer(this.layer);
-          }
+          Analysis.hide();
 
-          Filter.toggle(id);
+          if (!Analysis.model.get('area') || (Analysis.model.get('area') && Analysis.model.get('area') === '')) {
+            Analysis.clearInfo();
+            Analysis.onClickCancel();
+          }
         }
+
+        Legend.toggleItemBySlug(slug);
+
+        updateHash();
+      } else if (slug === 'forma' || slug === 'modis' || slug === 'imazon' || slug === 'fires') {
+        GFW.app.updateBaseLayer(slug);
+        ga('send', 'event', 'Filter', 'Toggle', slug);
+
+        if (forestgain) {
+          GFW.app.removeLayer(forestgain);
+          forestgain.set('visible', false);
+          Filter.remove(forestgain.get('id'));
+        }
+
+        umd_tree_loss_gain.set('visible', false);
+
+        this.layer.set('sublayer_visible', false);
+        this._removeSubLayers();
+
+        var subEvent;
+
+        if (this.layer.get('sublayer')) {
+          subEvent = function() {
+            self._toggleSubLayer();
+          };
+        }
+
+        Legend.replace(id, category_slug, category, title, slug, category_color, title_color, subEvent);
+
+        updateHash();
+      } else if (slug === 'umd_tree_loss_gain') {
+        GFW.app.updateBaseLayer('loss');
+        GFW.app.addLayer(forestgain);
+        Filter.add(596);
+
+        forestgain.set('visible', true);
+        umd_tree_loss_gain.set('visible', true);
+        if (cover_extent.attributes['visible']) GFW.app._refreshForest2000Layer();
+
+        this._removeSubLayers();
+
+        var subEvent;
+
+        if (this.layer.get('sublayer')) {
+          subEvent = function() {
+            self._toggleSubLayer();
+
+            Legend.resize();
+          };
+        }
+
+        Legend.replace(id, category_slug, category, title, slug, category_color, title_color, subEvent);
+
+        updateHash();
+      } else if (slug === 'forest2000') {
+        if (cover_extent.attributes['visible']) {
+          GFW.app._renderForest2000Layer();
+          ga('send', 'event', 'Filter', 'Toggle', slug);
+        } else {
+          GFW.app._removeForest2000Layer();
+        }
+
+        Filter.toggle(id);
+      } else {
+        if (slug === 'biodiversity_hotspots') {
+          GFW.app.closeInfowindows();
+        }
+
+        if (visible) {
+          GFW.app.addLayer(this.layer);
+          ga('send', 'event', 'Filter', 'Toggle', slug);
+        } else {
+          GFW.app.removeLayer(this.layer);
+        }
+
+        Filter.toggle(id);
       }
+    }
   });
 };
 

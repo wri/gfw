@@ -29,14 +29,16 @@ class HomeController < ApplicationController
   private
 
     def validate_url
-      baselayers = ['loss', 'forma', 'imazon', 'modis', 'none']
-      basemaps = ['grayscale', 'terrain', 'satellite', 'roads', 'treeheight']
+      if (params[:basemap].present? && params[:baselayer].present?)
+        baselayers = ['loss', 'forma', 'imazon', 'modis', 'none']
+        basemaps = ['grayscale', 'terrain', 'satellite', 'roads', 'treeheight']
 
-      for i in 1999..2012
-        baselayers.push('landsat'+i.to_s)
+        for i in 1999..2012
+          baselayers.push('landsat'+i.to_s)
+        end
+
+        redirect_to map_path unless basemaps.include?(params[:basemap]) && baselayers.include?(params[:baselayer])
       end
-
-      redirect_to '/map/3/15.00/27.00/ALL/grayscale/loss' unless basemaps.include?(params[:basemap]) && baselayers.include?(params[:baselayer])
     end
 
 end
