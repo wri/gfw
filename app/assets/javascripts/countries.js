@@ -2179,9 +2179,9 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .range([h-log_m, m])
           .domain([d3.min(data, function(d) { return d.gain; }), d3.max(data, function(d) { return d.gain; })]);
 
-        var r_scale = d3.scale.linear()
-          .range(['yellow', 'red'])
-          .domain([0, d3.max(data, function(d) { return d.ratio; })]);
+        var r_scale = d3.scale.quantile()
+          .domain([d3.min(data, function(d) { return d.ratio; }), 1, d3.max(data, function(d) { return d.ratio; })])
+          .range(["#9ABF00", "#C441FF"]);
 
         that.linearRegressionLine(svg, json, x_scale, y_scale);
 
