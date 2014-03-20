@@ -1,6 +1,7 @@
 class HomeController < ApplicationController
   skip_before_filter :check_terms, :only => [:accept_and_redirect]
 
+  before_filter :validate_url, :only => [:index]
   before_filter :load_circles, :only => [:index]
 
   def index
@@ -24,4 +25,18 @@ class HomeController < ApplicationController
 
     redirect_to redirect
   end
+
+  private
+
+    def validate_url
+      baselayers = ['loss', 'forma', 'imazon', 'modis', 'none']
+      basemaps = ['grayscale', 'terrain', 'satellite', 'roads', 'treeheight']
+
+      for i in 1999..2012
+        baselayers.push('landsat'+i.to_s)
+      end
+
+      redirect_to '/map/3/15.00/27.00/ALL/grayscale/loss' unless basemaps.include?(params[:basemap]) && baselayers.include?(params[:baselayer])
+    end
+
 end

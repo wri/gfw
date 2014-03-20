@@ -238,7 +238,7 @@ GFW.modules.app = function(gfw) {
             if (sites && sites.length > 0) {
               var site = sites[0];
 
-              that.protectedInfowindow.setContent(site, that.currentBaseLayer);
+              that.protectedInfowindow.setContent(site);
               that.protectedInfowindow.setPosition(event.latLng);
               that.protectedInfowindow.open();
             }

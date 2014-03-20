@@ -96,7 +96,18 @@ $(function() {
 
       if (basemap) config.BASEMAP = basemap;
 
-      if (baselayer) config.BASELAYER = (baselayer === 'none') ? null : baselayer;
+      var baselayers = [
+        'loss',
+        'forma',
+        'imazon',
+        'modis',
+        'nasa',
+        'none'
+      ]
+
+      if (baselayer && _.contains(baselayers, baselayer)) {
+        config.BASELAYER = (baselayer === 'none') ? null : baselayer;
+      }
 
       if (layers) config.MAPOPTIONS.layers = layers;
 
