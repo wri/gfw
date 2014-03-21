@@ -23,15 +23,15 @@
 //= require gfw/ui/protected-infowindow
 //= require gfw/ui/legend
 //= require gfw/ui/search
+//= require gfw/ui/layer_selector
+//= require gfw/ui/analysis
 //= require gfw/ui/filter
 //= require gfw/ui/circle
-//= require gfw/ui/layer_selector
 //= require gfw/ui/timeline
 //= require gfw/ui/timeline/timeline_loss
 //= require gfw/ui/timeline/timeline_modis
 //= require gfw/ui/timeline/timeline_forma
 //= require gfw/ui/timeline/timeline_imazon
-//= require gfw/ui/analysis
 
 
 _.templateSettings = {
@@ -231,9 +231,11 @@ $(function() {
       SourceWindow = new gfw.ui.view.SourceWindow();
       this.$el.append(SourceWindow.render());
 
-      // Timeline
-      Timeline = new gfw.ui.view.Timeline();
-      this.$map.append(Timeline.render());
+      if (!$('body').hasClass('embed')) {
+        // Timeline
+        Timeline = new gfw.ui.view.Timeline();
+        this.$map.append(Timeline.render());
+      }
 
       // Layer selector
       LayerSelector = new gfw.ui.view.LayerSelector({ map: map });
@@ -318,7 +320,9 @@ $(function() {
           LayerSelector.hide();
           Legend.hide();
           SearchBox.hide();
-          Timeline.hide();
+          if (!$('body').hasClass('embed')) {
+            Timeline.hide();
+          }
           Analysis.hide();
           $('#zoom_controls').hide();
           $('#viewfinder').hide();
@@ -339,7 +343,9 @@ $(function() {
         LayerSelector.show();
         Legend.show();
         SearchBox.show();
-        Timeline.show();
+        if (!$('body').hasClass('embed')) {
+          Timeline.show();
+        }
       }
 
       $('#zoom_controls').show();

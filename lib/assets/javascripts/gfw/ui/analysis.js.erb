@@ -47,33 +47,37 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   },
 
   _initSubscribes: function() {
-    subscribe('timeline:change_date_loss', _.bind(function(start_year, end_year) {
-      this.range = '&begin='+start_year+'&end='+end_year;
+    subscribe('timeline:change_date_loss', _.bind(function(start_year, end_year, options) {
+      if (options && options.publish) {
+        this.range = '&begin='+start_year+'&end='+end_year;
 
-      this.info.model.set({ 'subtitle': 'Jan-'+start_year+' to Dec-'+(parseInt(end_year, 10)-1) });
+        this.info.model.set({ 'subtitle': 'Jan-'+start_year+' to Dec-'+(parseInt(end_year, 10)-1) });
 
-      if (this.info.model.get('hidden')) return false;
+        if (this.info.model.get('hidden')) return false;
 
-      this._getAlertCount();
+        this._getAlertCount();
+      }
     }, this));
 
-    subscribe('timeline:change_date_forma', _.bind(function(start_year, start_month, end_year, end_month) {
-      var start_month_ = ((start_month - 71) % 12) + 1, // Convert months to (1-12)
-          end_month_ = ((end_month - 71) % 12) + 1; // Convert months to (1-12)
+    subscribe('timeline:change_date_forma', _.bind(function(start_year, start_month, end_year, end_month, options) {
+      if (options && options.publish) {
+        var start_month_ = ((start_month - 71) % 12) + 1, // Convert months to (1-12)
+            end_month_ = ((end_month - 71) % 12) + 1; // Convert months to (1-12)
 
-      // Create dates, 0 padding months < 10
-      var start = start_year + '-' + ((start_month_ < 10) ? ("0" + start_month_) : start_month_) + '-01',
-          end = end_year + '-' + ((end_month_ < 10) ? ("0" + end_month_) : end_month_) + '-01';
+        // Create dates, 0 padding months < 10
+        var start = start_year + '-' + ((start_month_ < 10) ? ("0" + start_month_) : start_month_) + '-01',
+            end = end_year + '-' + ((end_month_ < 10) ? ("0" + end_month_) : end_month_) + '-01';
 
-      this.range = '&begin='+start+'&end='+end;
+        this.range = '&begin='+start+'&end='+end;
 
-      if ((start_month_ >= 1 && start_month_ <= 12) && (end_month_ >= 1 && end_month_ <= 12)) {
-        this.info.model.set({ 'subtitle': config.MONTHNAMES_SHORT[start_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_-1].slice(1).toLowerCase()+"-"+start_year+" to "+config.MONTHNAMES_SHORT[end_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_-1].slice(1).toLowerCase()+"-"+end_year });
+        if ((start_month_ >= 1 && start_month_ <= 12) && (end_month_ >= 1 && end_month_ <= 12)) {
+          this.info.model.set({ 'subtitle': config.MONTHNAMES_SHORT[start_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_-1].slice(1).toLowerCase()+"-"+start_year+" to "+config.MONTHNAMES_SHORT[end_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_-1].slice(1).toLowerCase()+"-"+end_year });
+        }
+
+        if (this.info.model.get('hidden')) return false;
+
+        this._getAlertCount();
       }
-
-      if (this.info.model.get('hidden')) return false;
-
-      this._getAlertCount();
     }, this));
 
     subscribe('timeline:change_date_imazon', _.bind(function(start_year, start_month, end_year, end_month) {
@@ -573,7 +577,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       LayerSelector.hide();
       Legend.hide();
       SearchBox.hide();
-      Timeline.hide();
+      publish('timeline:hide');
 
       this.$helper.delay(250).fadeIn(250);
     } else {
@@ -582,14 +586,14 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
           LayerSelector.show();
           Legend.show();
           SearchBox.show();
-          Timeline.show();
+          publish('timeline:show');
         });
       } else {
         this.$helper.hide();
         LayerSelector.show();
         Legend.show();
         SearchBox.show();
-        Timeline.show();
+        publish('timeline:show');
       }
     }
   },

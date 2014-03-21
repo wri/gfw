@@ -2,21 +2,52 @@
   <%= stylesheet_link_tag "home" %>
 
   <style>
+    html {
+      min-width: 640px;
+    }
+
     #map {
       height: 530px;
       border: 0;
+    }
+
+    @media all and (max-width: 795px) {
+      .analysis_info {
+        top: 92px;
+        right: 45px;
+      }
+
+      .layer_selector {
+        top: 35px;
+        right: 45px;
+      }
+
+      .searchbox {
+        top: 35px;
+        left: 60px;
+      }
+
+      .legend {
+        top: 92px;
+      }
     }
   </style>
 <% end %>
 
 <% content_for :js do %>
-  <%= render 'shared/breaking_news' %>
-  <%= render 'shared/js_templates' %>
+  <script>
+    var circleSummary = [
+      { icon: 'area', count: '<%= (@circles['loss_2012']/1000000).round(1) %>', title: 'Million hectares of tree cover loss in 2012' },
+      { icon: 'area', count: '<%= (@circles['sum_loss']/1000000).round(1) %>', title: 'Million hectares of tree cover loss from 2000 to 2012' },
+      { icon: 'area', count: '<%= (@circles['last_gain']/1000000).round(1) %>', title: 'Million hectares of tree cover gain from 2000 to 2012' },
+      { icon: 'flag', count: '<%= number_with_delimiter(@circles['count']) %>', title: 'FORMA alerts<br />in the last month' }
+    ];
+  </script>
   <%= javascript_include_tag 'home' %>
 <% end %>
 
 <%= render 'shared/map' %>
 
-<div id='sources' class='sources notranslate'>
+<div id='sources' class='sources'>
   <%= render 'shared/sources' %>
 </div>

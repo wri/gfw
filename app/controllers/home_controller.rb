@@ -1,8 +1,7 @@
 class HomeController < ApplicationController
   skip_before_filter :check_terms, :only => [:accept_and_redirect]
 
-  before_filter :validate_url, :only => [:index]
-  before_filter :load_circles, :only => [:index]
+  before_filter :load_circles, :validate_url, :only => [:index]
 
   def index
     @visible = Api::Story.visible.first(3)

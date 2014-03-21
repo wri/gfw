@@ -100,7 +100,7 @@ GFW.modules.app = function(gfw) {
 
       this.$map_coordinates.html('Lat/Long: '+lat + ',' + lng);
 
-      Timeline.model.set('coordinates', map.getCenter());
+      publish('timeline:update_coordinates');
     },
 
     loadLayer: function(layer) {
@@ -721,7 +721,8 @@ GFW.modules.app = function(gfw) {
       this._toggleTimeLayer();
       this._loadBaseLayer();
 
-      Timeline.model.set('baselayer', this.currentBaseLayer);
+      publish('timeline:change_baselayer', [this.currentBaseLayer]);
+
       Analysis.info.model.set({
         'baselayer': this.currentBaseLayer,
         'subdisabled': true
@@ -927,37 +928,24 @@ GFW.modules.app = function(gfw) {
       this.time_layer_loss.set_start_time(2000);
       this.time_layer_loss.set_time(2012);
 
-      Timeline.loss_timeline.bind('change_date', function(start_year, end_year, options) {
-        // map
-        that.time_layer_loss.set_range(start_year, end_year);
-
-        // analysis
-        var date = [start_year, end_year];
-        if (options && options.publish) publish('timeline:change_date_loss', date);
-      });
+      subscribe('timeline:change_date_loss', _.bind(function(start_year, end_year, options) {
+        this.time_layer_loss.set_range(start_year, end_year);
+      }, this));
     },
 
     _loadTimeLayer: function() {
-      var that = this;
-
       this.time_layer = new TimePlayer('gfw2_forma', this.global_version, this.cloudfront_url);
       this.time_layer.options.table_name = null;
       map.overlayMapTypes.push(this.time_layer);
 
-      Timeline.forma_timeline.bind('change_date', function(dates) {
-        var start_year = dates[0],
-            start_month = dates[1],
-            end_year = dates[2],
-            end_month = dates[3],
-            options = dates[4];
+      subscribe('timeline:change_date_forma', _.bind(function(dates) {
+        var start_month = dates[1],
+            end_month = dates[3];
 
         // map
-        that.time_layer.set_start_time(start_month);
-        that.time_layer.set_time(end_month);
-
-        // analysis
-        if (options && options.publish) publish('timeline:change_date_forma', dates);
-      });
+        this.time_layer.set_start_time(start_month);
+        this.time_layer.set_time(end_month);
+      }, this));
     },
 
     _loadTimeLayerModis: function() {
@@ -970,14 +958,9 @@ GFW.modules.app = function(gfw) {
         cloudfront_url: that.cloudfront_url
       });
 
-      Timeline.modis_timeline.bind('change_date', function(month, year) {
-        // map
-        that.time_layer_modis.set_time(month, year);
-
-        // analysis
-        var date = [month, year];
-        publish('timeline:change_date_modis', date);
-      });
+      subscribe('timeline:change_date_modis', _.bind(function(month, year) {
+        this.time_layer_modis.set_time(month, year);
+      }, this));
     },
 
     _loadTimeLayerImazon: function() {
@@ -990,14 +973,9 @@ GFW.modules.app = function(gfw) {
         cloudfront_url: that.cloudfront_url
       });
 
-      Timeline.imazon_timeline.bind('change_date', function(start_year, start_month, end_year, end_month, options) {
-        // map
-        that.time_layer_imazon.set_time(start_year, start_month, end_year, end_month);
-
-        // analysis
-        var date = [start_year, start_month, end_year, end_month];
-        if (options && options.publish) publish('timeline:change_date_imazon', date);
-      });
+      subscribe('timeline:change_date_imazon', _.bind(function(start_year, start_month, end_year, end_month, options) {
+        this.time_layer_imazon.set_time(start_year, start_month, end_year, end_month);
+      }, this));
     },
 
     _refreshForest2000Layer: function() {
