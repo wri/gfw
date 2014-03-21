@@ -31,11 +31,11 @@ Gfw::Application.routes.draw do
   get 'media/show' => 'media#show'
 
   # embed
-  get 'embed/country/:id' => 'embed#countries_show'
-  get 'embed/countries/overview' => 'embed#countries_overview'
-  get 'embed/map' => 'embed#map'
-  get 'embed/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'embed#map', :lat => /[^\/]+/, :lng => /[^\/]+/
-  get 'embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'embed#map', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get '/embed/country/:id' => 'embed#countries_show'
+  get '/embed/countries/overview' => 'embed#countries_overview'
+  get '/embed/map' => 'embed#map'
+  get '/embed/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'embed#map', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'embed#map', :lat => /[^\/]+/, :lng => /[^\/]+/
 
   root 'home#index'
 end

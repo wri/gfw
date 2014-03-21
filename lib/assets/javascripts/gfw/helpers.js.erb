@@ -103,6 +103,11 @@ for(var i = 1999; i < 2013; i++) {
   })(i);
 }
 
+_.templateSettings = {
+  interpolate: /\{\{(.+?)\}\}/g,
+  evaluate: /\[(.+?)\]/g
+};
+
 config.GRAPHS = {
   total_loss: {
     title: "Countries with greatest tree cover loss <sup>(2001-2012)</sup>",

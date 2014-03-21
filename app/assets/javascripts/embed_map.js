@@ -26,10 +26,4 @@
 //= require gfw/ui/layer_selector
 //= require gfw/ui/analysis
 //= require gfw/ui/filter
-//= require gfw/ui/circle
-//= require gfw/ui/timeline
-//= require gfw/ui/timeline/timeline_loss
-//= require gfw/ui/timeline/timeline_modis
-//= require gfw/ui/timeline/timeline_forma
-//= require gfw/ui/timeline/timeline_imazon
 //= require gfw/map
