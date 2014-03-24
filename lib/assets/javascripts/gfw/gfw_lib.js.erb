@@ -938,10 +938,7 @@ GFW.modules.app = function(gfw) {
       this.time_layer.options.table_name = null;
       map.overlayMapTypes.push(this.time_layer);
 
-      subscribe('timeline:change_date_forma', _.bind(function(dates) {
-        var start_month = dates[1],
-            end_month = dates[3];
-
+      subscribe('timeline:change_date_forma', _.bind(function(start_year, start_month, end_year, end_month, options) {
         // map
         this.time_layer.set_start_time(start_month);
         this.time_layer.set_time(end_month);
