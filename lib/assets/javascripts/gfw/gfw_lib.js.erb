@@ -1293,7 +1293,7 @@ GFW.modules.maplayer = function(gfw) {
           id              = this.layer.get('id'),
           disabled        = this.layer.get('disabled');
 
-      if (disabled) return false;
+      if (disabled) return;
 
       GFW.app.closeInfowindows();
 

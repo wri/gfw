@@ -2,6 +2,17 @@
   <h1 class="header-title"><%= t('.title') %></h1>
 <% end %>
 
+<% content_for :js do %>
+  <script>
+    var circleSummary = [
+      { icon: 'area', count: '<%= (@circles['loss_2012']/1000000).round(1) %>', title: 'Million hectares of tree cover loss in 2012' },
+      { icon: 'area', count: '<%= (@circles['sum_loss']/1000000).round(1) %>', title: 'Million hectares of tree cover loss from 2000 to 2012' },
+      { icon: 'area', count: '<%= (@circles['last_gain']/1000000).round(1) %>', title: 'Million hectares of tree cover gain from 2000 to 2012' },
+      { icon: 'flag', count: '<%= number_with_delimiter(@circles['count']) %>', title: 'FORMA alerts<br />in the last month' }
+    ];
+  </script>
+<% end %>
+
 <% content_for :inner_header do %>
   <%= link_to content_tag(:span, "Check out GFW for businesses"), "#{howto_path}/for_business", class: 'for_business' %>
 <% end %>
@@ -25,17 +36,6 @@
       </div>
     </div>
   </div>
-<% end %>
-
-<% content_for :js do %>
-  <script>
-    var circleSummary = [
-      { icon: 'area', count: '<%= (@circles['loss_2012']/1000000).round(1) %>', title: 'Million hectares of tree cover loss in 2012' },
-      { icon: 'area', count: '<%= (@circles['sum_loss']/1000000).round(1) %>', title: 'Million hectares of tree cover loss from 2000 to 2012' },
-      { icon: 'area', count: '<%= (@circles['last_gain']/1000000).round(1) %>', title: 'Million hectares of tree cover gain from 2000 to 2012' },
-      { icon: 'flag', count: '<%= number_with_delimiter(@circles['count']) %>', title: 'FORMA alerts<br />in the last month' }
-    ];
-  </script>
 <% end %>
 
 <%= render 'shared/map' %>

@@ -107,102 +107,101 @@
 /* =Circle
 ----------------------------------------------- */
 
-// .circle {
-//   $width: 318px;
-//   position: absolute;
-//   top: 50%; left: 50%;
-//   width: 318px;
-//   height: 318px;
-//   margin-left: -1*$width/2;
-//   @include opacity(0);
-//   @include icons-sprite(circle);
-//   text-align: center;
+.circle {
+  $width: 318px;
+  position: absolute;
+  top: -160px; left: 50%;
+  width: 318px;
+  height: 318px;
+  margin-top: -1*$width/2;
+  margin-left: -1*$width/2;
+  @include opacity(0);
+  @include home-icons-sprite(circle);
+  text-align: center;
 
-//   &:hover {
-//     cursor: pointer;
-//   }
+  &:hover {
+    cursor: pointer;
+  }
 
-//   .circle-inner {
-//     position: relative;
-//     top: 100px;
-//     width: 100%;
-//   }
+  .circle-inner {
+    position: relative;
+    top: 100px;
+    width: 100%;
+  }
 
-//   .icon {
-//     position: absolute;
-//     z-index: 1000;
-//     top: 25px; right: 25px;
-//     height: 74px;
-//     width: 74px;
-//     background: image-url('icons/green_circle.png') no-repeat 50% 50%;
-//     @include background-size(10%);
-//     @include opacity(0);
+  .circle-icon {
+    position: absolute;
+    z-index: 1000;
+    top: 25px; right: 25px;
+    height: 74px;
+    width: 74px;
+    background: image-url('home-icons/green_circle.png') no-repeat 50% 50%;
+    @include background-size(10%);
+    @include opacity(0);
 
-//     &.flag i {
-//       position: absolute;
-//       top: 50%; left: 50%;
-//       margin: -14px 0 0 -13px;
-//       width: 26px;
-//       height: 28px;
-//       @include icons-sprite(flag);
-//     }
+    &.flag i {
+      position: absolute;
+      top: 50%; left: 50%;
+      margin: -14px 0 0 -13px;
+      width: 26px;
+      height: 28px;
+      @include home-icons-sprite(flag);
+    }
 
-//     &.area i {
-//       position: absolute;
-//       top: 50%; left: 50%;
-//       margin: -17px 0 0 -18px;
-//       width: 36px;
-//       height: 34px;
-//       @include icons-sprite(area);
-//     }
+    &.area i {
+      position: absolute;
+      top: 50%; left: 50%;
+      margin: -17px 0 0 -18px;
+      width: 36px;
+      height: 34px;
+      @include home-icons-sprite(area);
+    }
 
-//     i { display: block; }
-//   }
-// }
+    i { display: block; }
+  }
+}
 
-// .circle-title {
-//   margin: 10px auto 0;
-//   width:175px;
-//   font-size: 15px;
-//   line-height: 18px;
-//   @extend .sans-serif;
-//   color: #fff;
-//   // @include opacity(0);
-// }
+.circle-title {
+  margin: 10px auto 0;
+  width: 195px;
+  font-size: 15px;
+  line-height: 18px;
+  @extend .sans-serif;
+  color: #fff;
+}
 
-// .circle-counter {
-//   text-align: center;
-//   font-weight: 300;
-//   font-size: 67px;
-//   @extend .serif;
-//   color: #A1BA42;
-//   // @include opacity(0);
-// }
+.circle-counter {
+  text-align: center;
+  font-weight: 300;
+  font-size: 67px;
+  @extend .serif;
+  color: #A1BA42;
+}
 
-// .circle-explore {
-//   position: relative;
-//   top: -56px;
-//   font-weight: bold;
-//   font-size: 13px;
-//   @extend .sans-serif;
-//   text-transform: uppercase;
-//   text-align: center;
-//   color: #fff;
-//   @include opacity(0);
-//   cursor: pointer;
-// }
+.circle-explore {
+  position: relative;
+  top: -58px;
+  font-weight: bold;
+  font-size: 13px;
+  @extend .sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  @include opacity(0);
+  cursor: pointer;
+}
 
-// .circle-background {
-//   position: absolute;
-//   top: -100px; left: 0;
-//   width: 250px;
-//   height: 250px;
-//   margin-top: 35px;
-//   margin-left: 35px;
-//   @include icons-sprite(four_arrows);
-//   // @include opacity(0);
-//   cursor: pointer;
-// }
+.circle-background {
+  position: absolute;
+  top: -100px; left: 0;
+  width: 250px;
+  height: 250px;
+  margin-top: 35px;
+  margin-left: 35px;
+  @include home-icons-sprite(four_arrows);
+  @include opacity(0);
+  cursor: pointer;
+}
 
 .draw {
   position: absolute;
