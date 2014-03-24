@@ -1,6 +1,4 @@
 class EmbedController < ApplicationController
-  before_filter :load_circles, :only => [:map]
-
   layout 'embed'
 
   # GET /embed/country/:id

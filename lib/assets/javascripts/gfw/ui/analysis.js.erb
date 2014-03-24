@@ -53,7 +53,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
         this.info.model.set({ 'subtitle': 'Jan-'+start_year+' to Dec-'+(parseInt(end_year, 10)-1) });
 
-        if (this.info.model.get('hidden')) return false;
+        if (this.info.model.get('hidden')) return;
 
         this._getAlertCount();
       }
@@ -74,7 +74,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
           this.info.model.set({ 'subtitle': config.MONTHNAMES_SHORT[start_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_-1].slice(1).toLowerCase()+"-"+start_year+" to "+config.MONTHNAMES_SHORT[end_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_-1].slice(1).toLowerCase()+"-"+end_year });
         }
 
-        if (this.info.model.get('hidden')) return false;
+        if (this.info.model.get('hidden')) return;
 
         this._getAlertCount();
       }
@@ -94,7 +94,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         this.info.model.set({ 'subtitle': config.MONTHNAMES_SHORT[start_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_].slice(1).toLowerCase()+"-"+start_year+" to "+config.MONTHNAMES_SHORT[end_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_].slice(1).toLowerCase()+"-"+end_year });
       }
 
-      if (this.info.model.get('hidden')) return false;
+      if (this.info.model.get('hidden')) return;
 
       this._getAlertCount();
     }, this));
@@ -110,7 +110,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
       this.info.model.set({ 'subtitle': q1+"-"+year_+' to '+q2+'-'+year_ });
 
-      if (this.info.model.get('hidden')) return false;
+      if (this.info.model.get('hidden')) return;
 
       this._getAlertCount();
     }, this));
@@ -119,7 +119,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   startAnalyzing: function(e) {
     e && e.preventDefault();
 
-    if ($(this.$analysis_control).hasClass('disabled')) return false;
+    if ($(this.$analysis_control).hasClass('disabled')) return;
 
     this.model.set('analyzing', true);
 
@@ -301,7 +301,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         url = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
         range;
 
-    if (config.BASELAYER === 'fires' || config.BASELAYER === null) return false;
+    if (config.BASELAYER === 'fires' || config.BASELAYER === null) return;
 
     if (!this.initStats) {
       this.$el.find('.stats .title, .stats ul').hide();
@@ -521,7 +521,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if (typeof polygon === 'undefined' || polygon === '' || polygon.coordinates[0].length < 3) {
       this.$('.cancel').click();
 
-      return false;
+      return;
     }
 
     // Close the polygon:
@@ -691,7 +691,7 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
     $(document).on('click', '.subscribe', function(e) {
       e.preventDefault();
 
-      if ($(e.target).hasClass('disabled')) return false;
+      if ($(e.target).hasClass('disabled')) return;
 
       that.subscribe.show();
     });
@@ -955,7 +955,7 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
     } else if (e.which == 13) {
       this._send(e);
 
-      return false;
+      return;
     } else {
       this._clearErrors();
     }
@@ -981,7 +981,7 @@ gfw.ui.view.AnalysisSubscribe = gfw.ui.view.Widget.extend({
 
     e && e.preventDefault();
 
-    if(this.$('.btn').hasClass('disabled')) return false;
+    if(this.$('.btn').hasClass('disabled')) return;
 
     this.$('.btn').addClass('disabled');
 
