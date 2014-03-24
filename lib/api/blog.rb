@@ -8,11 +8,7 @@ module Api
       blog_stories = []
 
       if response['rss']['channel']['item'].present?
-        response['rss']['channel']['item'].each do |s|
-          blog_stories.push(s)
-        end
-
-        blog_stories[0]
+        response['rss']['channel']['item'].is_a?(Array) ? response['rss']['channel']['item'][0] : response['rss']['channel']['item']
       else
         nil
       end
