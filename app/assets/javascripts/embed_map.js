@@ -10,6 +10,7 @@
 //= require cartodb-gmapsv3
 //= require minpubsub
 //= require markerclusterer_compiled
+//= require url.min
 //= require gfw/deforestation_tile_layer
 //= require gfw/canvas_tile_layer
 //= require gfw/static_grid_layer_imazon

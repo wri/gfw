@@ -28,7 +28,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.initStats = false;
     this.protectedArea = false;
 
-    this.subscribecountry = this.options.subscribe;
+    this.subscribecountry = this.options.subscribecountry;
 
     var template = $('#analysis-template').html();
 
@@ -226,37 +226,47 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.$analysis_control.addClass('disabled');
   },
 
-  _loadPolygon: function(the_geom) {
+  loadPolygon: function(the_geom) {
+    var ha = 0,
+        title = "";
+
     var style = config.OVERLAYSTYLES;
     style.editable = false;
 
     var features = new GeoJSON(the_geom, style);
 
-    for (var i in features) {
-      if (features[i].length > 0) {
-        for (var j in features[i]) {
-          var feature = features[i][j];
+    if (Array.isArray(features)) { // countries
+      for (var i in features) {
+        if (features[i].length > 0) {
+          for (var j in features[i]) {
+            var feature = features[i][j];
+            feature.setMap(map);
+            this.selectedShapes.push(feature);
+          }
+        } else {
+          var feature = features[i];
           feature.setMap(map);
           this.selectedShapes.push(feature);
         }
-      } else {
-        var feature = features[i];
-        feature.setMap(map);
-        this.selectedShapes.push(feature);
       }
+    } else {
+      var feature = features;
+      feature.setMap(map);
+      this.selectedShapes.push(feature);
     }
 
-    var ha = 0;
-
-    if (the_geom.features[0].properties['area']) { // from country
+    if (the_geom.features && the_geom.features[0]) {
+       // countries
       ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']/10000) * 10) / 10, true);
-    } else { // from protected areas
+      title = the_geom.features[0].properties['name'];
+    } else {
       ha = this._calcAreaPolygon(the_geom);
+      title = "User defined area";
     }
 
     this.model.set('area', JSON.stringify(the_geom));
     this.info.model.set('ha', ha);
-    this.info.model.set('title', the_geom.features[0].properties['name']);
+    this.info.model.set('title', title);
 
     this._fitBounds();
     this._getAlertCount();
@@ -390,12 +400,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
             });
           }
         } else if (baselayer === "forma" && data) {
-          if (this.subscribecountry) {
-            this.info.subscribe.show();
-
-            this.subscribecountry = false;
-            updateHash();
-          }
+          if (this.subscribecountry) this.info.subscribe.show();
 
           if (data.value) {
             this.info.model.set({
@@ -454,7 +459,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       success: function(the_geom) {
         if (the_geom.features.length != 0 ) {
           that._disableAnalysisButton();
-          that._loadPolygon(the_geom);
+          that.loadPolygon(the_geom);
         } else {
           updateHash('ALL');
         }
