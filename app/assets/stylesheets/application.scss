@@ -21,12 +21,16 @@
 ----------------------------------------------- */
 
 html {
-  min-width: 980px;
   @extend .sans-serif;
 }
 
 body {
+  min-width: 980px;
   border-top: 5px solid #222;
+
+  &.embed {
+    min-width: 0;
+  }
 }
 
 a {
