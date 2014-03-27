@@ -29,11 +29,9 @@ class ApplicationController < ActionController::Base
     end
 
     def check_terms
-      cookies[:go_to] ||= request.path
+      session[:return_to] = request.path
 
-      unless watch_cookie? || controller_name == 'home'
-        redirect_to accept_terms_path
-      end
+      redirect_to accept_terms_path unless watch_cookie?
     end
 
     def watch_cookie?
