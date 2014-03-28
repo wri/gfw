@@ -126,7 +126,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     GFW.app.closeInfowindows();
     GFW.app.hideMarkers();
 
-    this._disableAnalysisButton();
+    this.disableAnalysisButton();
     this._setupDrawingManager();
   },
 
@@ -144,9 +144,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   _onClickDone: function(e) {
     e.preventDefault();
 
-    if (this.$doneButton.attr('class') === 'done disabled') {
-      return;
-    }
+    if (this.$doneButton.attr('class') === 'done disabled') return;
 
     this.model.set('analyzing', false);
 
@@ -154,7 +152,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     GFW.app._showStoriesMarkers();
 
-    if(GFW.app.mongabayHidden) {
+    if (GFW.app.mongabayHidden) {
       GFW.app._loadMongabayLayer();
       GFW.app.mongabayHidden = false;
     }
@@ -219,7 +217,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.$analysis_control.attr('data-tip', 'Analyze an area on the map');
   },
 
-  _disableAnalysisButton: function() {
+  disableAnalysisButton: function() {
     this.$analysis_control.attr('data-tip', '')
     $('.tipsy').remove();
 
@@ -308,7 +306,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     var area = this.model.get('area'),
         baselayer = config.BASELAYER,
-        url = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
+        baseurl = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
         range;
 
     if (config.BASELAYER === 'fires' || config.BASELAYER === null) return;
@@ -336,13 +334,14 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       range = this.range || '&begin=2000&end=2013';
     }
 
-
     if (config.ISO === 'ALL' || this.protectedArea) {
-      this.alertsUrl = url+dataset+'?geom='+encodeURI(area)+range;
-      this.downloadUrl = url+dataset+'.shp?geom='+encodeURI(area)+range;
+      this.alertsUrl = baseurl+dataset+'?geom='+encodeURI(area)+range;
+      this.downloadUrl = baseurl+dataset+'.shp?geom='+encodeURI(area)+range;
+
+      if (!url('?geom')) updateHash('ALL', encodeURI(area)+range);
     } else {
-      this.alertsUrl = url+dataset+'?iso='+config.ISO+range;
-      this.downloadUrl = url+dataset+'.shp?iso='+config.ISO+range;
+      this.alertsUrl = baseurl+dataset+'?iso='+config.ISO+range;
+      this.downloadUrl = baseurl+dataset+'.shp?iso='+config.ISO+range;
     }
 
     executeAjax(this.alertsUrl, {}, {
@@ -458,7 +457,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       dataType: 'jsonp',
       success: function(the_geom) {
         if (the_geom.features.length != 0 ) {
-          that._disableAnalysisButton();
+          that.disableAnalysisButton();
           that.loadPolygon(the_geom);
         } else {
           updateHash('ALL');
@@ -651,10 +650,10 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
 
     this.model = new gfw.ui.model.AnalysisInfo({ baselayer: config.BASELAYER });
 
-    this.model.on('change:hidden',      this._toggle);
-    this.model.on('change:draggable',   this.toggleDraggable,     this);
-    this.model.on('change:baselayer',   this._onChangeBaselayer,  this);
-    this.model.on('change:subtitle',    this._updateSubtitle);
+    this.model.on('change:hidden',    this._toggle);
+    this.model.on('change:draggable', this.toggleDraggable,    this);
+    this.model.on('change:baselayer', this._onChangeBaselayer, this);
+    this.model.on('change:subtitle',  this._updateSubtitle);
 
     this.model.set('containment', '#map-container .map');
 

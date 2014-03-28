@@ -347,7 +347,7 @@
 <script id='analysis_info-template' type='text/x-underscore-template'>
   <a href='#' class='toggle'></a>
   <div class='info_title'>{{ title }}</div>
-  <div class='content'>
+  <div class='info_content'>
     <div class='info'>
       <div class='titles'>
         <strong class='title'>{{ title }}</strong>
@@ -479,10 +479,10 @@
       <div class='shadow'></div>
     </div>
 
-    <div class='controls'>
-      <ul class='control_buttons'>
-        <li><a class='subscribe{{#subdisabled}} disabled{{/subdisabled}}' href='#' title="Subscribe to alerts"></a></li>
-        <li><a class='reset' href='#' title="Delete analysis"></a></li>
+    <div class='info_controls'>
+      <ul class='info_control_buttons'>
+        <li><a class='subscribe_control{{#subdisabled}} disabled{{/subdisabled}}' href='#' title="Subscribe to alerts"></a></li>
+        <li><a class='reset_control' href='#' title="Delete analysis"></a></li>
       </ul>
     </div>
   </div>
@@ -491,6 +491,7 @@
 <!-- Analysis -->
 <script id='analysis-template' type='text/x-underscore-template'>
   <a href='#' id='analysis_control' class='analysis_control' data-tip='Analyze an area on the map'></a>
+  <a href='#' id='share_control' class='share_control' data-tip='Share'></a>
 
   <div class='helper_bar'>
     <p>Draw in the map the area you want to analyze</p>

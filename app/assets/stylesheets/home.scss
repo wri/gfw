@@ -979,6 +979,7 @@
   }
 }
 
+
 /* =Map
 ----------------------------------------------- */
 
@@ -1301,12 +1302,259 @@
   @include user-select(text);
 }
 
+
+/*
+ * Analysis
+ */
+
 .analysis {
   display: none;
 }
 
+.tipsy { font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+.analysis_control {
+}
+
+.analysis_control,
+.share_control {
+  position: absolute;
+  z-index: 1000;
+  width: 38px;
+  height: 38px;
+}
+
+.analysis_control {
+  top: 92px; left: 15px;
+  @include home-icons-sprite(analysis_button);
+
+  &:hover { @include home-icons-sprite(analysis_button_hover); }
+  &:active { @include home-icons-sprite(analysis_button_active); }
+
+  &.disabled {
+    cursor: default;
+    @include home-icons-sprite(analysis_button_disabled);
+  }
+}
+
+.share_control {
+  display: none;
+  top: 130px; left: 15px;
+  @include home-icons-sprite(share_button);
+
+  &:hover { @include home-icons-sprite(share_button_hover); }
+  &:active { @include home-icons-sprite(share_button_active); }
+}
+
+.analysis_info {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  top: 87px; right: 65px;
+  width: 248px;
+  min-height: 40px;
+  border: 1px solid #666;
+  font-size: 11px;
+  @extend .sans-serif;
+  background: #F1F1F1;
+  color: #999;
+  @include border-radius(3px);
+  @include box-shadow(0px 0px 3px #666);
+  cursor: move;
+
+  .toggle {
+    position: absolute;
+    top: 2px; right: -25px;
+    width: 25px;
+    height: 38px;
+    @include home-icons-sprite(info_bar_toggle_close);
+  }
+
+  &.closed .toggle { @include home-icons-sprite(info_bar_toggle_open); }
+
+  .shadow {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    bottom: 1px; left: 0;
+    width: 100%;
+    height: 20px;
+    background: image-url('backgrounds/white_shadow.png') repeat-x;
+  }
+
+  .jspPane { width: 248px !important; }
+
+  .ha,
+  .alert { font-size: 12px; }
+
+  .alert {
+    display: block;
+    margin-top: 13px;
+    padding-top: 17px;
+    width: 100%;
+    border-top: 1px solid #ccc;
+  }
+
+  .count {
+    font-weight: bold;
+
+    strong {
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 1.5;
+      color: #666;
+    }
+
+    sup {
+      vertical-align: super;
+      font-size: 11px;
+    }
+
+    &.forma {
+      color: #F13588;
+
+      strong,
+      a { color: #F13588; }
+    }
+  }
+
+  .download {
+    float: right;
+    margin-top: 10px;
+  }
+}
+
+.info_title {
+  display: none;
+  width: 205px;
+  height: 25px;
+  line-height: 40px;
+  padding: 0 15px;
+  font-weight: bold;
+  font-size: 11px;
+  color: #bbb;
+  text-transform: uppercase;
+  clear: both;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.info_content {
+  position: relative;
+  width: 248px;
+  @extend .sans_serif;
+  @include border-radius(3px);
+
+  .info {
+    padding: 17px 20px 13px;
+    border-bottom: 1px solid #ccc;
+    clear: both;
+    overflow: hidden;
+  }
+
+  .stats {
+    .error,
+    .title,
+    .stats,
+    ul {
+      display:none;
+    }
+
+    .error {
+      text-align: center;
+    }
+  }
+
+  .title {
+    display: block;
+    color: #999;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 1.2;
+    text-transform: uppercase;
+    clear: both;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .subtitle {
+    color: #bababa;
+    font-size: 12px;
+    line-height: 2;
+  }
+
+  .spinner {
+    display:block;
+    width: 24px; height: 24px;
+    background: image-url('icons/spinner.gif') no-repeat;
+    margin: 10px auto;
+  }
+
+  .stats {
+    display: block;
+    padding: 17px 20px 13px;
+    background: #fff;
+
+    li {
+      @include inline-block();
+    }
+  }
+}
+
+.info_controls {
+  padding: 13px 20px 17px;
+  border-top: 1px solid #ccc;
+  clear: both;
+  overflow: hidden;
+}
+
+.info_control_buttons {
+  float: right;
+
+  li {
+    float: left;
+  }
+
+  a {
+    display: block;
+    cursor: pointer;
+    height: 29px;
+    width: 30px;
+
+    &.subscribe_control {
+      @include home-icons-sprite(control_buttons_subscribe);
+
+      &:hover {
+        position: relative;
+        width: 31px;
+        margin-right: -1px;
+        @include home-icons-sprite(control_buttons_subscribe_hover);
+      }
+
+      &:active { @include home-icons-sprite(control_buttons_subscribe_active); }
+
+      &.disabled {
+        @include opacity(.5);
+        @include pointer-events(none);
+      }
+    }
+
+    &.reset_control {
+      width: 31px;
+
+      @include home-icons-sprite(control_buttons_reset);
+
+      &:hover { @include home-icons-sprite(control_buttons_reset_hover); }
+      &:active { @include home-icons-sprite(control_buttons_reset_active); }
+    }
+  }
+}
+
+
 /*
- * Timeline
+ * Layer selector
  */
 
 .layer_selector {
