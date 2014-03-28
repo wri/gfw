@@ -326,7 +326,7 @@ function isLandsat(basemap) {
   return landsat
 }
 
-function updateHash(iso) {
+function updateHash(iso, analysis) {
   var hash,
       zoom = map.getZoom(),
       lat = map.getCenter().lat().toFixed(2),
@@ -335,14 +335,15 @@ function updateHash(iso) {
 
   if (iso) config.ISO = iso;
 
-  var layers = config.MAPOPTIONS.layers,
-      configs = config.ISO+'/'+config.BASEMAP+'/'+baselayer;
+  var configs = config.ISO+'/'+config.BASEMAP+'/'+baselayer,
+      layers = (config.MAPOPTIONS.layers.length > 0) ? '/'+config.MAPOPTIONS.layers : null,
+      analysis_ = analysis ? '#?geom='+analysis : '';
 
   if (layers) {
-    hash = 'map/'+zoom+'/'+lat+'/'+lng+'/'+configs+'/'+layers;
+    hash = 'map/'+zoom+'/'+lat+'/'+lng+'/'+configs+layers+analysis_;
     window.router.navigate(hash, { trigger: true, replace: true });
   } else {
-    hash = 'map/'+zoom+'/'+lat+'/'+lng+'/'+configs;
+    hash = 'map/'+zoom+'/'+lat+'/'+lng+'/'+configs+analysis_
     window.router.navigate(hash, { trigger: true });
   }
 }
