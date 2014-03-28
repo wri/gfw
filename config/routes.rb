@@ -19,7 +19,7 @@ Gfw::Application.routes.draw do
   # map
   get '/map' => 'home#index'
   get '/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
-  get '/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)(/:query)' => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get '/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
 
   # countries
   get '/countries' => 'countries#index'
@@ -35,7 +35,7 @@ Gfw::Application.routes.draw do
   get '/embed/countries/overview' => 'embed#countries_overview'
   get '/embed/map' => 'embed#map'
   get '/embed/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'embed#map', :lat => /[^\/]+/, :lng => /[^\/]+/
-  get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)(/:query)' => 'embed#map', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'embed#map', :lat => /[^\/]+/, :lng => /[^\/]+/
 
   root 'home#index'
 end
