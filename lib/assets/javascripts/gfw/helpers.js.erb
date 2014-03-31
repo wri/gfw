@@ -324,7 +324,7 @@ function isLandsat(basemap) {
     landsat = config.MAPSTYLES.landsat[basemap.replace('landsat', '')]
   }
 
-  return landsat
+  return landsat;
 }
 
 function updateHash(options) {
@@ -333,7 +333,7 @@ function updateHash(options) {
       lng = map.getCenter().lng().toFixed(2),
       baselayer = config.BASELAYER === null ? 'none' : config.BASELAYER,
       layers = (config.MAPOPTIONS.layers.length > 0) ? '/'+config.MAPOPTIONS.layers : '',
-      analysis = config.BASELAYER === null ? '' : config.MAPOPTIONS.analysis;
+      analysis = (config.BASELAYER === null || config.ISO !== 'ALL') ? '' : config.MAPOPTIONS.analysis;
 
   var hash = 'map/'+zoom+'/'+lat+'/'+lng+'/'+config.ISO+'/'+config.BASEMAP+'/'+baselayer+layers+analysis;
 

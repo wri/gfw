@@ -158,7 +158,7 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
 
   _generateShortUrl: function(url, callback) {
     $.ajax({
-      url:"https://api-ssl.bitly.com/v3/shorten?longUrl=" + encodeURIComponent(url)+ "&login=" + this.options.bitly.login + "&apiKey=" + this.options.bitly.key,
+      url:"https://api-ssl.bitly.com/v3/shorten?longUrl=" + encodeURIComponent(url) + "&login=" + this.options.bitly.login + "&apiKey=" + this.options.bitly.key,
       type:"GET",
       async: false,
       dataType: 'jsonp',

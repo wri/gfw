@@ -1447,13 +1447,13 @@ GFW.modules.datalayers = function(gfw) {
       this.LayersObj.bind('reset', function() {
 
         // special layers
-        forma               = GFW.app.datalayers.LayersObj.get(569),
-        modis               = GFW.app.datalayers.LayersObj.get(588),
-        imazon              = GFW.app.datalayers.LayersObj.get(584);
-        fires               = GFW.app.datalayers.LayersObj.get(593);
-        forestgain          = GFW.app.datalayers.LayersObj.get(596);
-        umd_tree_loss_gain  = GFW.app.datalayers.LayersObj.get(597);
-        cover_extent        = GFW.app.datalayers.LayersObj.get(591);
+        forma              = GFW.app.datalayers.LayersObj.get(569),
+        modis              = GFW.app.datalayers.LayersObj.get(588),
+        imazon             = GFW.app.datalayers.LayersObj.get(584);
+        fires              = GFW.app.datalayers.LayersObj.get(593);
+        forestgain         = GFW.app.datalayers.LayersObj.get(596);
+        umd_tree_loss_gain = GFW.app.datalayers.LayersObj.get(597);
+        cover_extent       = GFW.app.datalayers.LayersObj.get(591);
 
         that.LayersObj.each(function(p) {
           if (p.get('slug') === 'user_stories') {

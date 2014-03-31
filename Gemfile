@@ -15,6 +15,7 @@ gem 'fog'
 gem 'rmagick', :require => false
 gem 'unf'
 gem 'newrelic_rpm'
+gem 'unicorn'
 
 group :development do
   gem 'foreman'
