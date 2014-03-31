@@ -1420,9 +1420,30 @@
 }
 
 .share_dialog {
+  height: 210px;
+
   .input-field {
     width: 444px;
     margin: 0 30px 0 20px;
+  }
+
+  .share_buttons {
+    float: left;
+    width: 112px;
+
+    a {
+      display: block;
+      float: left;
+      width: 32px;
+      height: 32px;
+      margin-right: 5px;
+      background: image-url('home-icons/ess-icons-2.png') no-repeat;
+
+      &.twitter { background-position: -102px 0; }
+      &.facebook { background-position: -68px 0; }
+
+      span { display: none; }
+    }
   }
 }
 
@@ -1661,6 +1682,46 @@
   }
 }
 
+.share_loading {
+  display: block;
+  position: absolute;
+  top: 4px; left: 15px;
+  width: 38px;
+  height: 34px;
+  background: image-url('home-icons/loading.gif') no-repeat center;
+}
+
+.mode_menu {
+  position: absolute;
+  top: 4px; right: -15px;
+  width: 120px;
+  background: #fff;
+
+  li.first a {
+    @include border-right-radius(3px);
+  }
+
+  li.last a {
+    @include border-left-radius(3px);
+  }
+
+  li.selected a {
+    background: $cGreen;
+    color: #fff;
+  }
+
+  a {
+    display: block;
+    float: right;
+    width: 55px;
+    margin-left: 2px;
+    font-weight: bold;
+    font-size: 11px;
+    line-height: 34px;
+    text-transform: uppercase;
+    background: #eee;
+  }
+}
 
 /*
  * Layer selector
