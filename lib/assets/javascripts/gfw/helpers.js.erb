@@ -24,7 +24,10 @@ config.MAPOPTIONS = {
   panControl: false,
   zoomControl: false,
   mapTypeControl: false,
-  scaleControl: false,
+  scaleControl: true,
+  scaleControlOptions: {
+        position: google.maps.ControlPosition.TOP_LEFT
+    },
   streetViewControl: false,
   overviewMapControl: false,
   scrollwheel: false,
