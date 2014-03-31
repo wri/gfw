@@ -337,5 +337,9 @@ function updateHash(options) {
 
   var hash = 'map/'+zoom+'/'+lat+'/'+lng+'/'+config.ISO+'/'+config.BASEMAP+'/'+baselayer+layers+analysis;
 
-  window.router.navigate(hash, { trigger: true, replace: options && options.replace });
+  if (options && options.replace) {
+    window.router.navigate(hash, { replace: true });
+  } else {
+    window.router.navigate(hash, { trigger: true });
+  }
 }

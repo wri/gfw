@@ -1153,7 +1153,7 @@ GFW.modules.maplayer = function(gfw) {
 
         if (GFW.app.currentBaseLayer === slug) Legend.replace(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
       } else if (slug === 'umd_tree_loss_gain') {
-        if (GFW.app.currentBaseLayer === 'loss') umd_tree_loss_gain.set('visible', true);
+        if (umd_tree_loss_gain && GFW.app.currentBaseLayer === 'loss') umd_tree_loss_gain.set('visible', true);
 
         var event = function() {
           that._toggleLayer();
@@ -1351,7 +1351,7 @@ GFW.modules.maplayer = function(gfw) {
           Filter.remove(forestgain.get('id'));
         }
 
-        umd_tree_loss_gain.set('visible', false);
+        umd_tree_loss_gain && umd_tree_loss_gain.set('visible', false);
 
         this.layer.set('sublayer_visible', false);
         this._removeSubLayers();
@@ -1371,7 +1371,7 @@ GFW.modules.maplayer = function(gfw) {
         Filter.add(596);
 
         forestgain.set('visible', true);
-        umd_tree_loss_gain.set('visible', true);
+        umd_tree_loss_gain && umd_tree_loss_gain.set('visible', true);
         if (cover_extent.attributes['visible']) GFW.app._refreshForest2000Layer();
 
         this._removeSubLayers();
