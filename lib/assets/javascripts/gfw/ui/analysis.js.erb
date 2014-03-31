@@ -208,7 +208,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this._clearAnalysis();
     this._enableAnalysisButton();
 
-    updateHash('ALL');
+    config.ISO = 'ALL';
+    config.MAPOPTIONS.analysis = '';
+
+    updateHash();
   },
 
   _enableAnalysisButton: function() {
@@ -334,11 +337,13 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       range = this.range || '&begin=2000&end=2013';
     }
 
-    if (config.ISO === 'ALL' || this.protectedArea) {
-      this.alertsUrl = baseurl+dataset+'?geom='+encodeURI(area)+range;
-      this.downloadUrl = baseurl+dataset+'.shp?geom='+encodeURI(area)+range;
+    config.MAPOPTIONS.analysis = '?geom='+encodeURI(area)+range;
 
-      if (!url('?geom')) updateHash('ALL', encodeURI(area)+range);
+    if (config.ISO === 'ALL' || this.protectedArea) {
+      this.alertsUrl = baseurl+dataset+config.MAPOPTIONS.analysis;
+      this.downloadUrl = baseurl+dataset+'.shp?geom='+config.MAPOPTIONS.analysis;
+
+      updateHash({ replace: true });
     } else {
       this.alertsUrl = baseurl+dataset+'?iso='+config.ISO+range;
       this.downloadUrl = baseurl+dataset+'.shp?iso='+config.ISO+range;
@@ -460,7 +465,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
           that.disableAnalysisButton();
           that.loadPolygon(the_geom);
         } else {
-          updateHash('ALL');
+          config.ISO = 'ALL';
+          updateHash();
         }
       }
     });

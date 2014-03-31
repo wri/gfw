@@ -1322,8 +1322,6 @@ GFW.modules.maplayer = function(gfw) {
 
         Legend.toggleItemBySlug(slug);
         Filter.toggle(id);
-
-        updateHash();
       } else if (slug === 'loss') {
         if (GFW.app.currentBaseLayer === null) {
           GFW.app.updateBaseLayer(slug);
@@ -1343,7 +1341,6 @@ GFW.modules.maplayer = function(gfw) {
 
         Legend.toggleItemBySlug(slug);
 
-        updateHash();
       } else if (slug === 'forma' || slug === 'modis' || slug === 'imazon' || slug === 'fires') {
         GFW.app.updateBaseLayer(slug);
         ga('send', 'event', 'Filter', 'Toggle', slug);
@@ -1368,8 +1365,6 @@ GFW.modules.maplayer = function(gfw) {
         }
 
         Legend.replace(id, category_slug, category, title, slug, category_color, title_color, subEvent);
-
-        updateHash();
       } else if (slug === 'umd_tree_loss_gain') {
         GFW.app.updateBaseLayer('loss');
         GFW.app.addLayer(forestgain);
@@ -1392,8 +1387,6 @@ GFW.modules.maplayer = function(gfw) {
         }
 
         Legend.replace(id, category_slug, category, title, slug, category_color, title_color, subEvent);
-
-        updateHash();
       } else if (slug === 'forest2000') {
         if (cover_extent.attributes['visible']) {
           GFW.app._renderForest2000Layer();
@@ -1417,6 +1410,8 @@ GFW.modules.maplayer = function(gfw) {
 
         Filter.toggle(id);
       }
+
+      updateHash();
     }
   });
 };
