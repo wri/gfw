@@ -4,12 +4,7 @@
 
 <% content_for :js do %>
   <script>
-    var circleSummary = [
-      { icon: 'area', count: '<%= number_for_circle(@circles['loss_2012']) %>', title: 'Million hectares of tree cover loss in 2012' },
-      { icon: 'area', count: '<%= number_for_circle(@circles['sum_loss']) %>', title: 'Million hectares of tree cover loss from 2000 to 2012' },
-      { icon: 'area', count: '<%= number_for_circle(@circles['last_gain']) %>', title: 'Million hectares of tree cover gain from 2000 to 2012' },
-      { icon: 'flag', count: '<%= number_with_delimiter(@circles['count']) %>', title: 'FORMA alerts<br />in the last month' }
-    ];
+    var circleSummary = <%= @circles.to_json.html_safe %>;
   </script>
 <% end %>
 
