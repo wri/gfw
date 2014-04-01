@@ -342,9 +342,10 @@ function updateHash(options) {
       lng = map.getCenter().lng().toFixed(2),
       baselayer = config.BASELAYER === null ? 'none' : config.BASELAYER,
       layers = (config.MAPOPTIONS.layers.length > 0) ? '/'+config.MAPOPTIONS.layers : '',
-      analysis = (config.BASELAYER === null || config.ISO !== 'ALL') ? '' : config.MAPOPTIONS.analysis;
+      analysis = (config.BASELAYER === null || config.ISO !== 'ALL') ? '' : config.MAPOPTIONS.analysis,
+      embed = $('body').hasClass('embed') ? 'embed/' : '';
 
-  var hash = 'map/'+zoom+'/'+lat+'/'+lng+'/'+config.ISO+'/'+config.BASEMAP+'/'+baselayer+layers+analysis;
+  var hash = embed+'map/'+zoom+'/'+lat+'/'+lng+'/'+config.ISO+'/'+config.BASEMAP+'/'+baselayer+layers+analysis;
 
   if (options && options.replace) {
     window.router.navigate(hash, { replace: true });
