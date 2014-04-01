@@ -206,6 +206,10 @@ GFW.modules.app = function(gfw) {
 
       this._setupZoom();
 
+      $(document).on('click', '.close', function(e) {
+        e.preventDefault();
+      });
+
       google.maps.event.addListener(map, 'center_changed', function() {
         that.updateCoordinates();
       });
@@ -1042,14 +1046,78 @@ GFW.modules.app = function(gfw) {
             extra_params: { v: this.global_version, cache_policy: "persist" }, // define a verison number on requests
             tiler_suffix: '.png',
             table_name: this._getTableName(this.currentBaseLayer),
-            query: 'SELECT cartodb_id, the_geom_webmercator FROM global_7d',
+            query: 'SELECT * FROM global_7d',
             layer_order: 1,
+            interactivity: 'cartodb_id',
+            featureClick: this._onFiresLayerClick,
+            featureOver: function(ev, latlng, pos, data) { map.setOptions({ draggableCursor: 'pointer' }); },
+            featureOut: function() { map.setOptions({ draggableCursor: 'default' }); },
             auto_bound: false
           });
         }
 
         this.$map_coordinates.show();
       }
+    },
+
+    _onFiresLayerClick: function(ev, latlng, pos, data) {
+      if (Analysis.model.get('analyzing')) return;
+
+      //here i make a crude request for the columns of the table
+      //nulling out the geoms to save payload
+      var request_sql = 'SELECT *, null as the_geom, null as the_geom_webmercator FROM global_7d WHERE cartodb_id = ' + data.cartodb_id;
+      var url = 'http://dyynnn89u7nkm.cloudfront.net/api/v2/sql?q=' + encodeURIComponent(request_sql);
+
+      var makeSuccessCallback = function(cartodb_id) {
+        return function(json) {
+          if (!json || (json && !json.rows)) return;
+
+          delete json.rows[0]['cartodb_id'],
+          delete json.rows[0]['the_geom'];
+          delete json.rows[0]['the_geom_webmercator'];
+          delete json.rows[0]['created_at'];
+          delete json.rows[0]['updated_at'];
+
+          var data = _.clone(json.rows[0]);
+          var content_data = json.rows[0];
+
+          if ($.isEmptyObject(data)) return;
+
+          for (var key in content_data) {
+            var temp;
+
+            if (content_data.hasOwnProperty(key)) {
+              temp = content_data[key];
+              delete content_data[key];
+              key = key.replace(/_/g,' '); //add spaces to key names
+              content_data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
+            }
+          }
+
+          if (data) {
+            GFW.app.infowindow.setMode('normal')
+            GFW.app.infowindow.setVisibleColumns();
+            GFW.app.infowindow.setContent(content_data);
+
+            GFW.app.infowindow.setPosition(latlng);
+            GFW.app.infowindow.open();
+          }
+        }
+      }
+
+      var onSuccess = makeSuccessCallback(data.cartodb_id);
+
+      $.ajax({
+        async: false,
+        dataType: 'jsonp',
+        crossDomain: true,
+        jsonpCallback:'iwcallback',
+        url: url,
+        success: onSuccess,
+        error: function(xhr, status, c) {
+          console.log('Error', xhr, status, c);
+        }
+      });
     },
 
     _mapLoaded: function() {
