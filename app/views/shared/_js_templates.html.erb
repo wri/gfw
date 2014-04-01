@@ -491,7 +491,6 @@
 <!-- Analysis -->
 <script id='analysis-template' type='text/x-underscore-template'>
   <a href='#' id='analysis_control' class='analysis_control' data-tip='Analyze an area on the map'></a>
-  <a href='#' id='share_control' class='share_control' data-tip='Share'></a>
 
   <div class='helper_bar'>
     <p>Draw in the map the area you want to analyze</p>
@@ -521,7 +520,6 @@
   <span class='tail'></span>
 </script>
 
-<!-- Analysis subscribe -->
 <script id='analysis_subscribe-template' type='text/x-underscore-template'>
   <div class='content'>
     <%= form_for :area, :url => "//#{ENV['GFW_API_HOST']}/subscribe", :html => { :method => :post, :class => 'save-area' } do |f| %>
@@ -553,4 +551,33 @@
   <strong>search</strong>
   <input type='text' placeholder='...............................' />
   <button>&nbsp;</button>
+</script>
+
+<!-- Share -->
+<script id='share-template' type='text/x-underscore-template'>
+  <a href='#' id='share_control' class='share_control' data-tip='Share'></a>
+</script>
+
+<script id='share_dialog-template' type='text/x-underscore-template'>
+  <a href='#' class='close'></a>
+  <h1 class='title'>{{ title }}</h1>
+
+  <div class='form'>
+    <p class='help'><span>{{ help }}</span></p>
+
+    <div class='input-field huge'>
+      <div class="share_loading"></div>
+      <input class='field' type='text' id='share_field' readonly />
+      <ul class="mode_menu">
+        <li class="selected first"><a href="#url" data-embed="url">link</a></li>
+        <li class="last"><a href="#embed" data-embed="embed">embed</a></li>
+      </ul>
+    </div>
+
+    <ul class="share_buttons">
+      <li><a href="https://twitter.com/share?url=" target="_blank" class="twitter"><span>twitter</span></a></li>
+      <li><a href="http://www.facebook.com/sharer.php?u=" target="_blank" class="facebook"><span>facebook</span></a></li>
+      <li><a href="https://plus.google.com/share?url=" target="_blank" class="google_plus"><span>google+</span></a></li>
+    </ul>
+  </div>
 </script>

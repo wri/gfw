@@ -26,6 +26,7 @@
 //= require gfw/ui/search
 //= require gfw/ui/layer_selector
 //= require gfw/ui/analysis
+//= require gfw/ui/share
 //= require gfw/ui/filter
 //= require gfw/ui/circle
 //= require gfw/ui/timeline
