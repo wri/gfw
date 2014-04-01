@@ -1493,6 +1493,9 @@
     cursor: default;
     @include home-icons-sprite(analysis_button_disabled);
   }
+  .embed &{
+    display: none; 
+  }
 }
 
 .share_control {
