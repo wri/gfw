@@ -1,4 +1,24 @@
-<!-- Circle -->
+<!-- Circles -->
+<script id='circle-template' type='text/x-underscore-template'>
+  <div class='circle-icon {{ icon }}'><i></i></div>
+
+    {{#count}}
+    <div class='circle-inner'>
+      <div class='circle-counter'>{{ count }}</div>
+      <div class='circle-title'>{{ title }}</div>
+      <div class='circle-background'></div>
+      <div class='circle-explore'>Explore the map</div>
+    </div>
+    {{/count}}
+
+    {{^count}}
+    <div class='circle-inner fake_title'>
+      <a href="{{ link }}" class='circle-counter'>{{ title }}</div>
+    </div>
+    {{/count}}
+  </div>
+</script>
+
 <script id='circle-template' type='text/x-underscore-template'>
   <div class='circle-icon {{ icon }}'><i></i></div>
 
