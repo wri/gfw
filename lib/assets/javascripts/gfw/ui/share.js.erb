@@ -4,10 +4,12 @@ gfw.ui.view.Share = cdb.core.View.extend({
   className: 'share',
 
   events: {
-    'click .share_control' : '_openShare',
+    'click .share_control' : '_openShare'
   },
 
   initialize: function() {
+    _.bindAll( this, '_toggle' );
+
     this.model = new gfw.ui.model.Share();
 
     this.model.on('change:hidden', this._toggle);
@@ -37,6 +39,22 @@ gfw.ui.view.Share = cdb.core.View.extend({
     e.preventDefault();
 
     this.share.show();
+  },
+
+  _toggle: function() {
+    if (this.model.get('hidden')) {
+      this.$el.hide();
+    } else {
+      this.$el.show();
+    }
+  },
+
+  show: function() {
+    this.model.set('hidden', false);
+  },
+
+  hide: function() {
+    this.model.set('hidden', true);
   },
 
   render: function() {
