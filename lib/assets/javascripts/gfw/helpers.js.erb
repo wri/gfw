@@ -220,6 +220,12 @@ function formatNumber(x, abs) {
   return number;
 }
 
+function numberForCircle(num, proc) {
+  var num_ = !proc ? (num/1000000).toFixed(1) : num;
+
+  return formatNumber(num_);
+}
+
 function resizeWindow(e) {
   if (showMap) {
     if (GFW.app && !$('body').hasClass('embed')) {
