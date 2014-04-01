@@ -18,7 +18,7 @@ class HomeController < ApplicationController
 
     def validate_url
       if (params[:basemap].present? && params[:baselayer].present?)
-        baselayers = ['loss', 'forma', 'imazon', 'modis', 'none']
+        baselayers = ['loss', 'forma', 'imazon', 'modis', 'fires', 'none']
         basemaps = ['grayscale', 'terrain', 'satellite', 'roads', 'treeheight']
 
         for i in 1999..2012
