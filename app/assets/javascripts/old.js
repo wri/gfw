@@ -41,6 +41,8 @@ gfw.ui.view.Terms = cdb.core.View.extend({
     this.sourceWindow.$el.find('.cancel_btn').on('click', function() {
       ga('send', 'event', 'Terms', 'Click', 'I do not agree (Dialog)');
     });
+
+    
   },
 
   _onClickCancel: function() {
@@ -49,13 +51,9 @@ gfw.ui.view.Terms = cdb.core.View.extend({
 
   _onClickWhyTerms: function(e) {
     e.preventDefault();
-    var source      = $(e.target).closest('.why_terms').attr('data-source'),
-        self_window = this.sourceWindow;
-    self_window.show(source).addScroll();
+    var source = $(e.target).closest('.why_terms').attr('data-source');
+    this.sourceWindow.show(source).addScroll();
 
-    self_window.$el.find('.close').on('click', function(){
-      self_window.hide()
-    })
     ga('send', 'event', 'Terms', 'Click', 'Why terms (Dialog)');
   }
 });
