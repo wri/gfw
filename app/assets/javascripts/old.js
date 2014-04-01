@@ -8,8 +8,9 @@ gfw.ui.view.Terms = cdb.core.View.extend({
   el: document.body,
 
   events: {
-    'click .continue': '_onClickContinue',
-    'click .cancel': '_onClickCancel'
+    'click .continue'  : '_onClickContinue',
+    'click .cancel'    : '_onClickCancel',
+    'click .why_terms' : '_onClickWhyTerms'
   },
 
   initialize: function() {
@@ -44,5 +45,17 @@ gfw.ui.view.Terms = cdb.core.View.extend({
 
   _onClickCancel: function() {
     ga('send', 'event', 'Terms', 'Click', 'I do not agree');
+  },
+
+  _onClickWhyTerms: function(e) {
+    e.preventDefault();
+    var source      = $(e.target).closest('.why_terms').attr('data-source'),
+        self_window = this.sourceWindow;
+    self_window.show(source).addScroll();
+
+    self_window.$el.find('.close').on('click', function(){
+      self_window.hide()
+    })
+    ga('send', 'event', 'Terms', 'Click', 'Why terms (Dialog)');
   }
 });
