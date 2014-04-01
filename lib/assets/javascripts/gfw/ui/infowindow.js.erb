@@ -161,10 +161,6 @@ CartoDBInfowindow.prototype.setContent = function(content){
 
       top.innerHTML = html;
 
-      var pane = $(".cartodb_infowindow .top").jScrollPane();
-      var api = pane.data('jsp');
-      api.scrollToY(0); // scroll to top
-
       if (this.mode == "image") {
         $(div).find("h1").html(content.name);
         $(div).find("img").attr("src", content.image.replace("square", "medium"));
@@ -197,6 +193,10 @@ CartoDBInfowindow.prototype.setPosition = function(latlng) {
 
 CartoDBInfowindow.prototype.open = function(){
   this._show();
+
+  var pane = $(".cartodb_infowindow .top").jScrollPane();
+  var api = pane.data('jsp');
+  api.scrollToY(0); // scroll to top
 };
 
 
