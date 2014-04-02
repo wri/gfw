@@ -22,7 +22,7 @@ class HomeController < ApplicationController
         basemaps = ['grayscale', 'terrain', 'satellite', 'roads', 'treeheight']
 
         for i in 1999..2012
-          baselayers.push('landsat'+i.to_s)
+          basemaps.push('landsat'+i.to_s)
         end
 
         redirect_to map_path unless basemaps.include?(params[:basemap]) && baselayers.include?(params[:baselayer])
