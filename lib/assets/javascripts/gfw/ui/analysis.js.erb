@@ -9,9 +9,9 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   className: 'analysis',
 
   events: {
-    'click .analysis_control'   : 'startAnalyzing',
-    'click .done'               : '_onClickDone',
-    'click .cancel'             : 'onClickCancel'
+    'click .analysis_control' : 'startAnalyzing',
+    'click .done' : '_onClickDone',
+    'click .cancel' : 'onClickCancel'
   },
 
   initialize: function() {
@@ -53,7 +53,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
         this.info.model.set({ 'subtitle': 'Jan-'+start_year+' to Dec-'+(parseInt(end_year, 10)-1) });
 
-        if (this.info.model.get('hidden')) return;
+        if (this.info.model.get('hidden') && !url('?begin') && !url('?end')) return;
 
         this._getAlertCount();
       }
@@ -229,7 +229,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.$analysis_control.addClass('disabled');
   },
 
-  loadPolygon: function(the_geom) {
+  loadPolygon: function(the_geom, options) {
     var ha = 0,
         title = "";
 
@@ -272,7 +272,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.info.model.set('title', title);
 
     this._fitBounds();
-    this._getAlertCount();
+
+    if (config.ISO !== 'ALL') this._getAlertCount();
   },
 
   _fitBounds: function() {
@@ -322,7 +323,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
       this.initStats = true;
     } else {
-      this.info.render();
+      this.info.onChangeBaselayer();
     }
 
     this.info.setDraggable(true);
@@ -341,7 +342,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     config.MAPOPTIONS.analysis = '?geom='+encodeURI(area)+range;
 
-    if (config.ISO === 'ALL' || this.protectedArea) {
+    if (config.ISO === 'ALL') {
       this.alertsUrl = baseurl+dataset+config.MAPOPTIONS.analysis;
       this.downloadUrl = baseurl+dataset+'.shp?geom='+config.MAPOPTIONS.analysis;
 
@@ -654,13 +655,13 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
   },
 
   initialize: function() {
-    _.bindAll( this, 'toggleDraggable', 'onStopDragging', '_toggleOpen', 'open', 'close', '_toggle');
+    _.bindAll( this, 'toggleDraggable', 'onStopDragging', 'open', 'close', '_toggle');
 
     this.model = new gfw.ui.model.AnalysisInfo({ baselayer: config.BASELAYER });
 
     this.model.on('change:hidden',    this._toggle);
     this.model.on('change:draggable', this.toggleDraggable,    this);
-    this.model.on('change:baselayer', this._onChangeBaselayer, this);
+    this.model.on('change:baselayer', this.onChangeBaselayer, this);
     this.model.on('change:subtitle',  this._updateSubtitle);
 
     this.model.set('containment', '#map-container .map');
@@ -719,10 +720,10 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
     });
   },
 
-  _onChangeBaselayer: function() {
+  onChangeBaselayer: function() {
     this.model.set('closed', false);
-    this.$el.removeClass('closed');
     this.render();
+    this.$el.removeClass('closed');
   },
 
   _toggle: function() {
@@ -746,7 +747,7 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
 
     var $header = this.$el.find('.info'),
         $stats = this.$el.find('.stats'),
-        $controls = this.$el.find('.controls');
+        $controls = this.$el.find('.info_controls');
 
     var height = $header.outerHeight()+$stats.outerHeight()+$controls.outerHeight();
 
@@ -797,7 +798,7 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
 
     this.$el.html(this.template.render( options ));
 
-    this.$content     = this.$el.find(".content");
+    this.$content     = this.$el.find(".info_content");
     this.$info_title  = this.$el.find(".info_title");
     this.$title       = this.$el.find(".info .titles .title");
     this.$dataset     = this.$el.find(".alert .title");
