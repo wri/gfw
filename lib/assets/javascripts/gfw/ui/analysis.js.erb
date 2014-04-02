@@ -137,7 +137,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     this._clearAnalysis();
     this._deleteSelectedShape();
-    this._enableAnalysisButton();
     this._disableDoneButton();
   },
 
@@ -206,7 +205,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.initStats = false;
 
     this._clearAnalysis();
-    this._enableAnalysisButton();
+
+    if (!$('body').hasClass('embed')){
+      this._enableAnalysisButton();
+    }
 
     config.ISO = 'ALL';
     config.MAPOPTIONS.analysis = '';
