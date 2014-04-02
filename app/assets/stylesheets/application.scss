@@ -683,6 +683,15 @@ strong {
 
 .site-footer {
   background-color: #464352;
+
+  & .right,
+  & .left{
+    float: right;
+    width: 49%;
+  }
+  & .left{
+    float: left
+  }
 }
 
 .site-info {
@@ -847,12 +856,4 @@ strong {
   width: 100%;
 
   img { width: 100%; }
-}
-.right,
-.left{
-  float: right;
-  width: 49%;
-}
-.left{
-  float: left
 }
