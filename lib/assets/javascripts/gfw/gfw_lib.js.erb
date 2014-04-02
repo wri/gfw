@@ -743,6 +743,8 @@ GFW.modules.app = function(gfw) {
       });
 
       Filter.toggle(layer.get('id'));
+
+      updateHash();
     },
 
     _hideStoriesMarkers: function() {
@@ -876,6 +878,8 @@ GFW.modules.app = function(gfw) {
       }
 
       Filter.toggle(layer.get('id'));
+
+      updateHash();
     },
 
     _hideMongabayLayer: function() {
