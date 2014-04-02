@@ -704,8 +704,7 @@ strong {
 .footer-share {
   display: block;
   margin-bottom: 50px;
-  border-bottom: 1px solid #625f6d;
-  height: 45px;
+  height: 80px;
   padding: 16px 0;
   font-size: 17px;
   font-family: "fira_sans_otregular";
@@ -722,21 +721,27 @@ strong {
 }
 
 .share_buttons {
-  float: right;
+  float: left;
   height: 27px;
   padding: 12px 20px 6px;
   background: #fff;
   @include border-radius(23px);
+
+  & .fb_iframe_widget{
+    top: -4px;
+  }
 }
 
 .footer-logos {
   float: left;
+  margin-top: 37px;
   width: 480px;
 }
 
 .footer-logos p { margin-bottom: 10px; }
 
 .footer-address {
+  margin: 60px 0 40px;
   @extend .footer-logos;
   @extend .sans-serif;
 
@@ -842,4 +847,12 @@ strong {
   width: 100%;
 
   img { width: 100%; }
+}
+.right,
+.left{
+  float: right;
+  width: 49%;
+}
+.left{
+  float: left
 }
