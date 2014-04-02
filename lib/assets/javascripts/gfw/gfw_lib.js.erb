@@ -45,7 +45,7 @@ GFW.modules.app = function(gfw) {
 
       this.layers = [];
       this.cloudfront_url = 'dyynnn89u7nkm.cloudfront.net';
-      this.global_version = 15;
+      this.global_version = 1;
 
       gfw.log.enabled = options ? options.logging : false;
 
@@ -1265,10 +1265,6 @@ GFW.modules.maplayer = function(gfw) {
           } else {
             config.pendingLayers.push(forestgain);
           }
-        }
-
-        if (GFW.app.currentBaseLayer === 'loss') {
-        } else {
         }
       } else {
         Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: clickEvent, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
