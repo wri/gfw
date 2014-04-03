@@ -51,7 +51,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       if (options && options.publish) {
         this.range = '&begin='+start_year+'&end='+end_year;
 
-        this.info.model.set({ 'subtitle': 'Jan-'+start_year+' to Dec-'+(parseInt(end_year, 10)-1) });
+        this.info.model.set({ 'subtitle': 'Jan-'+start_year+' to Jan-'+parseInt(end_year, 10) });
 
         if (this.info.model.get('hidden') && !url('?begin') && !url('?end')) return;
 
