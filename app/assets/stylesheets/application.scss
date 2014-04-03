@@ -30,13 +30,6 @@ body {
 
   &.embed {
     min-width: 0;
-
-    & .analysis_info{
-      display: block;
-      & .info_controls{
-        display: none;
-      }
-    }
   }
 }
 

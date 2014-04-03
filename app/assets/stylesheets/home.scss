@@ -19,6 +19,21 @@
 @import 'home-icons/*.png';
 
 
+/* =Globals
+----------------------------------------------- */
+
+body {
+  &.embed {
+    .analysis_info{
+      display: block;
+    .info_controls{
+        display: none;
+      }
+    }
+  }
+}
+
+
 /* =Header
 ----------------------------------------------- */
 
