@@ -1519,12 +1519,6 @@
   @include box-shadow(0px 0px 3px #666);
   cursor: move;
 
-  .embed &{
-    display: block;
-    & .info_controls{
-      display: none;
-    }
-  }
   .toggle {
     position: absolute;
     top: 2px; right: -25px;

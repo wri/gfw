@@ -757,9 +757,9 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
         $controls_height = 0;
 
     if( $controls.is(":visible") ){
-      $controls_height = $controls.outerHeight();
+      controls_height = $controls.outerHeight();
     }
-    var height = $header.outerHeight()+$stats.outerHeight()+$controls_height;
+    var height = $header.outerHeight()+$stats.outerHeight()+controls_height;
 
     this.$content.animate({
       opacity: 1,
