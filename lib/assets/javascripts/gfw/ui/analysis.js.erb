@@ -114,6 +114,15 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
       this._getAlertCount();
     }, this));
+
+    subscribe('timeline:change_date_fires', _.bind(function(month, year) {
+      
+      this.info.model.set({ 'subtitle': q1+"-"+year_+' to '+q2+'-'+year_ });
+
+      if (this.info.model.get('hidden')) return;
+
+      this._getAlertCount();
+    }, this));
   },
 
   startAnalyzing: function(e) {
