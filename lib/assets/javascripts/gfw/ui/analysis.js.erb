@@ -329,10 +329,12 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.info.setDraggable(true);
 
     var dataset = (baselayer === 'loss') ? 'umd' : baselayer;
-    //TODO: refactor
+
     if (!this.range && url('?begin') && url('?end')) {
       this.range = '&begin=' + url('?begin') + '&end=' + url('?end');
-      this.info.model.set({ 'subtitle': 'Jan-'+url('?begin')+' to Dec-'+(parseInt(url('?end'), 10)-1) });
+      this.info.model.set({ 'subtitle': 'Jan-' + parseInt( url('?begin'), 10) +
+                                    ' to Dec-' + parseInt( url('?end')  , 10)
+                          });
     }
 
     if (baselayer === 'modis') {
