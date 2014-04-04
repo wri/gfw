@@ -734,7 +734,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _toggleStoriesLayer: function(layer) {
-      layer.attributes['visible'] = (layer.attributes['visible']) ? false : true;
+      layer.set('visible', (layer.get('visible')) ? false : true);
       GFW.app.storiesLoaded = true;
 
       if (!layer.get('visible')) {
@@ -766,6 +766,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _loadStoriesLayer: function() {
+      if (!GFW.app.storiesLoaded) return;
       var that = this;
 
       $.ajax({
@@ -805,6 +806,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _loadMongabayLayer: function() {
+      if (!GFW.app.mongabayHidden) return;
       var that = this;
 
       $.ajax({
@@ -871,8 +873,11 @@ GFW.modules.app = function(gfw) {
     },
 
     _toggleMongabayLayer: function(layer) {
+      layer.set('visible', (layer.get('visible')) ? false : true) ;
+      GFW.app.mongabayHidden = true;
       if (!layer.get('visible')) {
         this.mongabayInfowindow.close();
+        GFW.app.mongabayHidden = false;        
       }
 
       if (this.mongabayLoaded) {
@@ -1189,9 +1194,7 @@ GFW.modules.maplayer = function(gfw) {
           GFW.app._toggleStoriesLayer(that.layer);
           Legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
 
-          if (GFW.app.storiesLoaded) {
             GFW.app._loadStoriesLayer();
-          }
         };
 
         Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
