@@ -53,14 +53,16 @@
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
           <p>This data set measures areas of tree cover loss and tree cover gain across all global land (except Antarctica and other Arctic islands) at 30 × 30 meter resolution. Loss is presented annually (2000 through 2012), while gain is displayed as a 12-year cumulative layer. Loss and gain are displayed differently due to the underlying dynamics of tree cover loss (rapid) versus tree cover gain (slow).</p>
+
           <p>The data were generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a> sensor. Over 600,000 Landsat 7 images were compiled and analyzed using Google Earth Engine, a cloud platform for earth observation and data analysis. The clear land surface observations (30 × 30 meter pixels) in the satellite images were assembled chronologically and a supervised learning algorithm was then applied to identify per pixel tree cover loss or gain.</p>
+
           <p>Tree cover loss is defined as “stand replacement disturbance,” or the complete removal of tree cover canopy at the Landsat pixel scale. Tree cover loss may indicate a number of potential activities, such as timber harvesting, fires or disease, the conversion of natural forest to other land uses, or the crop rotations cycle of tree plantations. Tree cover gain was defined as the inverse of loss, or the establishment of tree canopy in an area that previously had no tree cover.</p>
 
           <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” <em>Science</em> 342 (15 November): 850–53.</p>
 
           <p class='credits'><strong>Suggested citations for data as displayed on GFW:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “UMD Tree Cover Loss and Gain Area.” University of Maryland and Google. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
-          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', sources_path %></em>
+          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', sources_path %></em></p>
         </div>
       </div>
     </li>
@@ -105,12 +107,14 @@
           <dl class='sources_row'>
             <dt>Cautions</dt>
             <dd>
-              <p>Viewing data for the first period available via the time slider may include alerts that reflect detections from the February 2000 to December 2005 training period as the algorithm "catches up" post-training. </p>
+              <p>Viewing data for the first period available via the time slider may include alerts that reflect detections from the February 2000 to December 2005 training period as the algorithm "catches up" post-training.</p>
+
               <p>The GFW team has clipped out some data in regions where data quality is suspected to be low because of persistent cloud cover over identified ecoregions. This covers parts of Liberia, Venezuela, Guyana, Vietnam, Laos, and Burma/Myanmar. The current extent of the FORMA alerts is available for viewing here—<a href='http://wri-01.cartodb.com/viz/3cc0f4c2-56d3-11e3-80bb-c8600054c0d1/embed_map?title=true&description=true&search=false&shareable=false&cartodb_logo=false&layer_selector=false&legends=false&scrollwheel=true&sublayer_options=1&sql=&zoom=3&center_lat=-1.845383988573187&center_lon=16.34765625' target='_blank'>FORMA geographic extent</a>.</p>
+
               <p>The <a href='https://github.com/wri/forma-clj' target='_blank'>algorithm</a> behind the FORMA alerts is constantly evolving to fix bugs and improve accuracy. As a result, what appears on the site and the results of analyses conducted on the site may change over time. It is important to always include the access date when citing FORMA. Analysis of FORMA alerts on the map should be considered definitive, as analysis is based on raw FORMA data, whereas the data on the map are optimized for visual display. For questions, please join the <a href='https://groups.google.com/forum/#!forum/globalforestwatch' target='_blank'>GFW discussion forum</a> or <a href='mailto:gfw@wri.org'>email us</a>.</p>
 
-
               <p>For the purpose of this study, “tree cover” was defined as areas with greater than 25% canopy cover (as determined by the <a href='http://journals.ametsoc.org/doi/abs/10.1175/1087-3562(2003)007%3C0001%3AGPTCAA%3E2.0.CO%3B2' target='_blank'>Vegetation Continuous Fields data set</a>), and change was measured without regard to forest land use. Tree cover assemblages that meet the 25% threshold include intact forests, plantations, and forest regrowth.</p>
+
               <p>When zoomed out, this data layer displays some degree of inaccuracy because the data points must be collapsed to be visible on a larger scale. Zoom in for greater detail.</p>
             </dd>
           </dl>
@@ -128,7 +132,7 @@
 
           <p class='credits'><strong>Citation:</strong> Hammer, Dan, Robin Kraft, and David Wheeler. 2013. “FORMA Alerts.” World Resources Institute and Center for Global Development. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
-          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', sources_path %></em>
+          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', sources_path %></em></p>
         </div>
 
         <div class='source_extended'>
@@ -277,7 +281,7 @@
 
           <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> “SAD Alerts.” Imazon. Accessed through Global Forest Watch on [date].<a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
-          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', sources_path %></em>
+          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', sources_path %></em></p>
         </div>
       </div>
 
@@ -290,7 +294,7 @@
       <div class='source_coverage'>
         <p>The geographic coverage of Imazon SAD alerts is the Legal Amazon (political) excluding the Brazilian state of Maranhão.</p>
 
-        <p class='read_more hidden'><em>Download data from <a href='http://wri-01.cartodb.com/tables/imazon_sad_geografic_extent/public' target='_blank'>CartoDB</a></em>
+        <p class='read_more hidden'><em>Download data from <a href='http://wri-01.cartodb.com/tables/imazon_sad_geografic_extent/public' target='_blank'>CartoDB</a></em></p>
       </div>
     </li>
 
@@ -298,7 +302,7 @@
       <div class='source_header'>
         <strong class='source_title'>QUICC alerts</strong>
         <i class='expand_arrow'></i>
-        <em class='source_description'>(quarterly, 5km, <37 degrees north)</em>
+        <em class='source_description'>(quarterly, 5km, &lt;37 degrees north)</em>
       </div>
 
       <div class='source_body'>
@@ -334,7 +338,7 @@
           <dl class='sources_row'>
             <dt>Cautions</dt>
             <dd>
-            <p>The data represents an indicator of vegetation cover change, not necessarily tree or forest cover loss.</p>
+              <p>The data represents an indicator of vegetation cover change, not necessarily tree or forest cover loss.</p>
               <p>When zoomed out, this data layer displays some degree of inaccuracy because the data points must be collapsed to be visible on a larger scale. Zoom in for greater detail.</p>
             </dd>
           </dl>
@@ -351,7 +355,7 @@
 
           <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> “QUICC Alerts.” NASA Ames Research Center and California State University. Accessed through Global Forest Watch on [date].<a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
-          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', sources_path %></em>
+          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', sources_path %></em></p>
         </div>
       </div>
 
@@ -424,7 +428,7 @@
 
           <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> “NASA Active Fires.” NASA FIRMS. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
-          <p class='read_more hidden'><em>Learn more or download data at the <a href='https://earthdata.nasa.gov/data/near-real-time-data/firms' target='_blank'>NASA FIRMS website</a></em>
+          <p class='read_more hidden'><em>Learn more or download data at the <a href='https://earthdata.nasa.gov/data/near-real-time-data/firms' target='_blank'>NASA FIRMS website</a></em></p>
         </div>
       </div>
     </li>
@@ -483,7 +487,7 @@
 
           <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Tree Cover Extent.” University of Maryland and Google. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
-          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "#{sources_path}#forest_cover" %></em>
+          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "#{sources_path}#forest_cover" %></em></p>
         </div>
       </div>
     </li>
@@ -536,7 +540,7 @@
 
           <p class='credits'><strong>Citation:</strong> Potapov, P., A. Yaroshenko, S. Turubanova, M. Dubinin, L. Laestadius, C. Thies, D. Aksenov, A. Egorov, Y. Yesipova, I. Glushkov, M. Karpachevski, A. Kostickova, A. Manisha, E. Tsybikova, and I. Zhuravleva. 2008. “Mapping the World’s Intact Forest Landscapes by Remote Sensing.” <em>Ecology and Society</em> 13, no. 2: Art. 51. <a href='http://www.ecologyandsociety.org/vol13/iss2/art51' target='_blank'>www.ecologyandsociety.org/vol13/iss2/art51</a>.</p>
 
-          <p class='read_more hidden'><em>Learn more or download data at the <a href='http://intactforests.org/' target='_blank'>Intact Forest Landscapes website</a></em>
+          <p class='read_more hidden'><em>Learn more or download data at the <a href='http://intactforests.org/' target='_blank'>Intact Forest Landscapes website</a></em></p>
         </div>
       </div>
     </li>
@@ -581,7 +585,7 @@
 
           <p class='credits'><strong>Citation:</strong> Saatchi, S.S., N.L. Harris, S. Brown, M. Lefsky, E. Mitchard, W. Salas, B. Zutta, W. Buermann, S. Lewis, S. Hagen, S. Petrova, L. White, M. Silman, and A. Morel. 2011. “<a href='http://www.pnas.org/content/108/24/9899.full' target='_blank'>Benchmark map of forest carbon stocks in tropical regions across three continents</a>.” <em>Proceedings of the National Academy of Sciences</em> vol 108, no. 24, pp 9899-9904. DOI: 10.1073/pnas.1019576108.</p>
 
-          <p class='read_more'><em>Learn more or download data at the <a href='http://www.pnas.org/content/suppl/2011/05/24/1019576108.DCSupplemental' target='_blank'>NASA Jet Propulsion Laboratory website</a>.</em>
+          <p class='read_more'><em>Learn more or download data at the <a href='http://www.pnas.org/content/suppl/2011/05/24/1019576108.DCSupplemental' target='_blank'>NASA Jet Propulsion Laboratory website</a>.</em></p>
         </div>
       </div>
     </li>
@@ -653,67 +657,96 @@
         <div class='source_extended'>
           <p class='first'>GFW currently includes logging concession data for the following countries:</p>
 
-          <h3 class='overview_title'>Cameroon forest management units</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Cameroon/GIS_Data/cmr_ufa_2013.zip'>Download</a></p>
+          <div class="source_dropdown">
+            <a href="#" class="source_dropdown_header source_dropdown_header_logging">
+              <h3 class='overview_title' title="Select a country"><span>Select a country</span> <i class='dropdown_arrow'></i></h3>
+            </a>
 
-          <p>Logging in Cameroon’s forests is permitted within Forest Management Units (FMUs). This data set displays the FMUs within Cameroon’s permanent forest estate. Selective logging is permitted in Cameroon’s FMUs, which are further divided into logging concessions called annual allowable cuts (AACs). These logging permits require owners and operators to maintain permanent forest cover. This data set was produced in collaboration between the Cameroon Ministry of Forestry and Wildlife and WRI. For more information and data sets, see the <a href='http://www.wri.org/project/interactive-forest-atlas-cameroon' target='_blank'>Interactive Forest Atlas for Cameroon</a>.</p>
+            <div class='source_dropdown_menu source_dropdown_menu_logging'>
+              <ul>
+                <li><a href='#' data-slug="cameroon_forest_management_units">Cameroon forest management units</a></li>
+                <li><a href='#' data-slug="canada_forest_tenures">Canada forest tenures</a></li>
+                <li><a href='#' data-slug="central_african_republic_logging_permits">Central African republic logging permits</a></li>
+                <li><a href='#' data-slug="democratic_republic_of_the_congo_forest_titles">Democratic Republic of the Congo forest titles</a></li>
+                <li><a href='#' data-slug="equatorial_guinea_logging_concessions">Equatorial Guinea logging concessions</a></li>
+                <li><a href='#' data-slug="gabon_forest_licenses">Gabon forest licenses</a></li>
+                <li><a href='#' data-slug="indonesia_logging_concessions">Indonesia logging concessions</a></li>
+                <li><a href='#' data-slug="liberia_logging_concessions">Liberia logging concessions</a></li>
+                <li><a href='#' data-slug="republic_of_the_congo_logging_concessions">Republic of the Congo logging concessions</a></li>
+              </ul>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> Cameroon Ministry of Forestry and Wildlife, World Resources Institute.</p>
+            <div id="cameroon_forest_management_units" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Cameroon/GIS_Data/cmr_ufa_2013.zip'>Download</a></p>
 
-          <h3 class='overview_title'>Canada forest tenures</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/Original/Canada_forest_tenures_2013.zip' target='_blank'>Download</a></p>
+              <p>Logging in Cameroon’s forests is permitted within Forest Management Units (FMUs). This data set displays the FMUs within Cameroon’s permanent forest estate. Selective logging is permitted in Cameroon’s FMUs, which are further divided into logging concessions called annual allowable cuts (AACs). These logging permits require owners and operators to maintain permanent forest cover. This data set was produced in collaboration between the Cameroon Ministry of Forestry and Wildlife and WRI. For more information and data sets, see the <a href='http://www.wri.org/project/interactive-forest-atlas-cameroon' target='_blank'>Interactive Forest Atlas for Cameroon</a>.</p>
 
-          <p>This data set provides the boundaries of forest areas licensed to companies for forestry and is a compilation of provincial forest tenure data sets across Canada. Tenures for Nova Scotia are not provided, due to changes underway in forest management in that province, and will be added to this data set when available. Much of Canada’s logging activity occurs on Crown (often referred to as “public”) land and is regulated by various provincial commercial forest tenure systems that allocate cutting rights to and confer obligations on recipients of the tenures. It is these tenure systems on Crown forest land that are the focus of this data product. The information in this data set was gathered in order to continue to develop an understanding of how much of Canada’s forest area is under commercial forest tenures, where these tenures (including the operating areas of major forest companies) are located, and who is most likely to control them. This information and these data sets are important because of the extent of tenures and the resulting logging activity over vast areas of Canada’s Crown forest land.</p>
+              <p class='credits'><strong>Credit:</strong> Cameroon Ministry of Forestry and Wildlife, World Resources Institute.</p>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> Global Forest Watch Canada, 2013.</p>
+            <div id="canada_forest_tenures" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/Original/Canada_forest_tenures_2013.zip' target='_blank'>Download</a></p>
 
-          <h3 class='overview_title'>Central African republic logging permits</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Central_African_Republic/GIS_Data/CAF_permits_exploitation_2013.zip' target='_blank'>Download</a></p>
+              <p>This data set provides the boundaries of forest areas licensed to companies for forestry and is a compilation of provincial forest tenure data sets across Canada. Tenures for Nova Scotia are not provided, due to changes underway in forest management in that province, and will be added to this data set when available. Much of Canada’s logging activity occurs on Crown (often referred to as “public”) land and is regulated by various provincial commercial forest tenure systems that allocate cutting rights to and confer obligations on recipients of the tenures. It is these tenure systems on Crown forest land that are the focus of this data product. The information in this data set was gathered in order to continue to develop an understanding of how much of Canada’s forest area is under commercial forest tenures, where these tenures (including the operating areas of major forest companies) are located, and who is most likely to control them. This information and these data sets are important because of the extent of tenures and the resulting logging activity over vast areas of Canada’s Crown forest land.</p>
 
-          <p>This data set provides the permit boundaries for selective logging in the Central African Republic’s production forests. This data set was produced through a collaboration between the CAR Ministry of Water, Forests, Hunting, and Fishing (MEFCP) and WRI. For more information, see the <a href='http://www.wri.org/publication/interactive-forest-atlas-central-african-republic' target='_blank'>Interactive Forest Atlas for the Central African Republic</a>.</p>
+              <p class='credits'><strong>Credit:</strong> Global Forest Watch Canada, 2013.</p>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> Central African Republic Ministry of Water and Forests, Hunting, and Fishing; German Technical Cooperation (GIZ); French Development Agency (AFD); Special Allocation Fund for Forest Development (CASDF); World Resources Institute</p>
+            <div id="central_african_republic_logging_permits" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Central_African_Republic/GIS_Data/CAF_permits_exploitation_2013.zip' target='_blank'>Download</a></p>
 
-          <h3 class='overview_title'>Democratic Republic of the Congo forest titles</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Democratic_Republic_Congo/GIS_Data/DRC_affectation_territoriale_2013.zip'>Download</a></p>
+              <p>This data set provides the permit boundaries for selective logging in the Central African Republic’s production forests. This data set was produced through a collaboration between the CAR Ministry of Water, Forests, Hunting, and Fishing (MEFCP) and WRI. For more information, see the <a href='http://www.wri.org/publication/interactive-forest-atlas-central-african-republic' target='_blank'>Interactive Forest Atlas for the Central African Republic</a>.</p>
 
-          <p>Forest concession data for the Democratic Republic of the Congo (DRC) represent geographic areas permitted for exploitation of timber by selective logging. This data set was produced through a collaboration between the DRC Ministry of Environment, Nature Conservation, and Tourism (MECNT) and WRI. For more information, see the <a href='http://www.wri.org/publication/interactive-forest-atlas-democratic-republic-of-congo' target='_blank'>Interactive Forest Atlas for the Democratic Republic of the Congo</a></p>
+              <p class='credits'><strong>Credit:</strong> Central African Republic Ministry of Water and Forests, Hunting, and Fishing; German Technical Cooperation (GIZ); French Development Agency (AFD); Special Allocation Fund for Forest Development (CASDF); World Resources Institute</p>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> Democratic Republic of the Congo Ministry of Environment, Nature Conservation, and Tourism (MECNT); Department for Permanent Service for Forest Inventory and Management (SPIAF); World Resources Institute; Asset Management and Forest Management (DIAF); Forest Management Branch (FMB)</p>
+            <div id="democratic_republic_of_the_congo_forest_titles" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Democratic_Republic_Congo/GIS_Data/DRC_affectation_territoriale_2013.zip'>Download</a></p>
 
-          <h3 class='overview_title'>Equatorial Guinea logging concessions</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Equatorial_Guinea/GIS_Data/Parcelas_forestales.zip'>Download</a></p>
+              <p>Forest concession data for the Democratic Republic of the Congo (DRC) represent geographic areas permitted for exploitation of timber by selective logging. This data set was produced through a collaboration between the DRC Ministry of Environment, Nature Conservation, and Tourism (MECNT) and WRI. For more information, see the <a href='http://www.wri.org/publication/interactive-forest-atlas-democratic-republic-of-congo' target='_blank'>Interactive Forest Atlas for the Democratic Republic of the Congo</a></p>
 
-          <p>This data set provides the boundaries for logging concessions for Equatorial Guinea, where commercial forestry is permitted. The Equatorial Guinea Ministry of Agriculture and Forests and the World Resources Institute produced this information in a collaboration for the Interactive Forest Atlas of Equatorial Guinea. Information provided in the data set includes the boundaries of concessions, the operating company, the ownership group, documentation on the permit process, and other information.</p>
+              <p class='credits'><strong>Credit:</strong> Democratic Republic of the Congo Ministry of Environment, Nature Conservation, and Tourism (MECNT); Department for Permanent Service for Forest Inventory and Management (SPIAF); World Resources Institute; Asset Management and Forest Management (DIAF); Forest Management Branch (FMB)</p>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> Equatorial Guinea Ministry of Agriculture and Forests and the World Resources Institute, 2013</p>
+            <div id="equatorial_guinea_logging_concessions" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Equatorial_Guinea/GIS_Data/Parcelas_forestales.zip'>Download</a></p>
 
-          <h3 class='overview_title'>Gabon forest licenses</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Gabon/GIS_Data/Amenagement_forestier.zip'>Download</a></p>
+              <p>This data set provides the boundaries for logging concessions for Equatorial Guinea, where commercial forestry is permitted. The Equatorial Guinea Ministry of Agriculture and Forests and the World Resources Institute produced this information in a collaboration for the Interactive Forest Atlas of Equatorial Guinea. Information provided in the data set includes the boundaries of concessions, the operating company, the ownership group, documentation on the permit process, and other information.</p>
 
-          <p>This data set provides the boundaries for forest licenses in Gabon. The licenses cover areas permitted for selective logging. This data set was produced in a collaboration between the Gabon Ministry of Forest Economy, Water, Fisheries, and Aquaculture (MEFEPA) and WRI. For more information, see the Interactive Forest Atlas for Gabon.</p>
+              <p class='credits'><strong>Credit:</strong> Equatorial Guinea Ministry of Agriculture and Forests and the World Resources Institute, 2013</p>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> Gabon Ministry of Forest Economy, Water, Fisheries, and Aquaculture (MEFEPA); World Resources Institute</p>
+            <div id="gabon_forest_licenses" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Gabon/GIS_Data/Amenagement_forestier.zip'>Download</a></p>
 
-          <h3 class='overview_title'>Indonesia logging concessions</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/Original/Indonesia_logging_2010_wgs84.zip'>Download</a></p>
-          <p>This data set, produced by the Indonesia Ministry of Forestry, provides the boundaries of logging concessions for the selective logging of natural forests in Indonesia. According to this data set, there are 557 active logging concessions in Indonesia.</p>
+              <p>This data set provides the boundaries for forest licenses in Gabon. The licenses cover areas permitted for selective logging. This data set was produced in a collaboration between the Gabon Ministry of Forest Economy, Water, Fisheries, and Aquaculture (MEFEPA) and WRI. For more information, see the Interactive Forest Atlas for Gabon.</p>
 
-          <p class='credits'><strong>Credit:</strong> Indonesia Ministry of Forestry</p>
+              <p class='credits'><strong>Credit:</strong> Gabon Ministry of Forest Economy, Water, Fisheries, and Aquaculture (MEFEPA); World Resources Institute</p>
+            </div>
 
-          <h3 class='overview_title'>Liberia logging concessions</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/gfw2_lbr_lc.zip' target='_blank'>Download</a></p>
+            <div id="indonesia_logging_concessions" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/Original/Indonesia_logging_2010_wgs84.zip'>Download</a></p>
+              <p>This data set, produced by the Indonesia Ministry of Forestry, provides the boundaries of logging concessions for the selective logging of natural forests in Indonesia. According to this data set, there are 557 active logging concessions in Indonesia.</p>
 
-          <p>The Liberia logging concessions data set combines the boundaries of forest management contracts, timber sale contracts, and private use permits, compiled by Global Witness from available government and contractual maps. Due to a lack of quality data, this data set should be used for demonstration purposes only and not for land use planning purposes. Forests in Liberia are managed by the state under the National Forestry Reform Law, enacted in October 2006. Following the enactment of this law, UN Security Council timber export sanctions against Liberia were lifted, permitting commercial forestry activities to resume. Forest management contracts include concession areas of 50,000 hectares to 400,000 hectares and are open for bids from qualified bidders that demonstrate at least 51% ownership by Liberian citizens; concessions of more than 100,000 hectares are open for bidding from international investors. Timber sale contracts are established through a bidding process for areas up to 5,000 hectares; bidders must demonstrate at least 51% ownership by Liberian citizens. Private Use Permits are licenses issued to private landowners to extract wood and lack sustainability regulations. Global Witness compiled the logging concession data as part of the report <em>Signing Their Lives Away: Liberia’s Private Use Permits and the Destruction of Community Owned Rainforest</em> (Global Witness, 2012).</p>
+              <p class='credits'><strong>Credit:</strong> Indonesia Ministry of Forestry</p>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> Global Witness, 2012</p>
+            <div id="liberia_logging_concessions" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/gfw2_lbr_lc.zip' target='_blank'>Download</a></p>
 
-          <h3 class='overview_title'>Republic of the Congo logging concessions</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Congo/GIS_Data/COG_affectation_territoriale_2013.zip'>Download</a></p>
+              <p>The Liberia logging concessions data set combines the boundaries of forest management contracts, timber sale contracts, and private use permits, compiled by Global Witness from available government and contractual maps. Due to a lack of quality data, this data set should be used for demonstration purposes only and not for land use planning purposes. Forests in Liberia are managed by the state under the National Forestry Reform Law, enacted in October 2006. Following the enactment of this law, UN Security Council timber export sanctions against Liberia were lifted, permitting commercial forestry activities to resume. Forest management contracts include concession areas of 50,000 hectares to 400,000 hectares and are open for bids from qualified bidders that demonstrate at least 51% ownership by Liberian citizens; concessions of more than 100,000 hectares are open for bidding from international investors. Timber sale contracts are established through a bidding process for areas up to 5,000 hectares; bidders must demonstrate at least 51% ownership by Liberian citizens. Private Use Permits are licenses issued to private landowners to extract wood and lack sustainability regulations. Global Witness compiled the logging concession data as part of the report <em>Signing Their Lives Away: Liberia’s Private Use Permits and the Destruction of Community Owned Rainforest</em> (Global Witness, 2012).</p>
 
-          <p>Forest concession data for the Republic of the Congo provide the boundaries of areas permitted for selective logging. These areas, also called Forest Exploitation Units, are managed in accordance with the national Forest Code. This data set was produced through a collaboration between the Republic of the Congo Ministry of Forest Economy and WRI. For more information, see the <a href='http://www.wri.org/project/interactive-forest-atlas-congo' target='_blank'>Interactive Forest Atlas for the Republic of the Congo</a>.</p>
+              <p class='credits'><strong>Credit:</strong> Global Witness, 2012</p>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> Republic of the Congo Ministry of Forest Economy (MEF), National Center for Inventory and Planning of Forest and Wildlife Resources (CNIAF), World Resources Institute</p>
+            <div id="republic_of_the_congo_logging_concessions" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Congo/GIS_Data/COG_affectation_territoriale_2013.zip'>Download</a></p>
+
+              <p>Forest concession data for the Republic of the Congo provide the boundaries of areas permitted for selective logging. These areas, also called Forest Exploitation Units, are managed in accordance with the national Forest Code. This data set was produced through a collaboration between the Republic of the Congo Ministry of Forest Economy and WRI. For more information, see the <a href='http://www.wri.org/project/interactive-forest-atlas-congo' target='_blank'>Interactive Forest Atlas for the Republic of the Congo</a>.</p>
+
+              <p class='credits'><strong>Credit:</strong> Republic of the Congo Ministry of Forest Economy (MEF), National Center for Inventory and Planning of Forest and Wildlife Resources (CNIAF), World Resources Institute</p>
+            </div>
+          </div>
         </div>
       </div>
     </li>
@@ -778,38 +811,60 @@
         <div class='source_extended'>
           <p class='first'>GFW currently includes mining concession data for the following countries:</p>
 
-          <h3 class='overview_title'>Cameroon mining permits</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Cameroon/GIS_Data/CMR_mining_2013.zip' target='_blank'>Download</a></p>
+          <div class="source_dropdown">
+            <a href="#" class="source_dropdown_header source_dropdown_header_mining">
+              <h3 class='overview_title' title="Select a country"><span>Select a country</span> <i class='dropdown_arrow'></i></h3>
+            </a>
 
-          <p>This data set provides the boundaries of prospective mining permits for Cameroon, as well as the type of mineral resource. Map data were provided by the Cameroon Ministry of Mines and Technological Development and published in a collaboration with the World Resources Institute. For more information and data sets, see the <a href='http://www.wri.org/project/interactive-forest-atlas-cameroon' target='_blank'>Interactive Forest Atlas for Cameroon</a>.</p>
+            <div class='source_dropdown_menu source_dropdown_menu_mining'>
+              <ul>
+                <li><a href='#' data-slug="cameroon_mining_permits">Cameroon mining permits</a></li>
+                <li><a href='#' data-slug="colombia_mining_titles">Colombia mining titles</a></li>
+                <li><a href='#' data-slug="democratic_republic_of_the_congo_mining_permits">Democratic Republic of the Congo mining permits</a></li>
+                <li><a href='#' data-slug="gabon_mining_permits">Gabon mining permits</a></li>
+                <li><a href='#' data-slug="republic_of_the_congo_mining_permits">Republic of the Congo mining permits</a></li>
+              </ul>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> Cameroon Ministry of Mines and Technological Development.</p>
+            <div id="cameroon_mining_permits" class="source_dropdown_body">
+              <h3 class='overview_title'>Cameroon mining permits</h3>
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Cameroon/GIS_Data/CMR_mining_2013.zip' target='_blank'>Download</a></p>
 
-          <h3 class='overview_title'>Colombia mining titles</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/Colombia_Mining_Permits_201401.zip' target="_blank">Download</a></p>
+              <p>This data set provides the boundaries of prospective mining permits for Cameroon, as well as the type of mineral resource. Map data were provided by the Cameroon Ministry of Mines and Technological Development and published in a collaboration with the World Resources Institute. For more information and data sets, see the <a href='http://www.wri.org/project/interactive-forest-atlas-cameroon' target='_blank'>Interactive Forest Atlas for Cameroon</a>.</p>
 
-          <p>This data set provides the boundaries of mining titles (<em>títulos mineros concedidos</em>) for Colombia. The shapefiles are compiled by Tierra Minada, a Colombian civil society group, utilizing information from the Colombian Mining Registry, which is maintained by the National Mining Agency. For more information about the data sets, visit the <a href="https://sites.google.com/site/tierraminada/" target="_blank">Tierra Minada website</a> or <a href="http://www.simco.gov.co/Inicio/CatastroMineroColombiano/tabid/107/Default.aspx" target="_blank">Colombia’s Mining Cadaster Portal</a>.</p>
+              <p class='credits'><strong>Credit:</strong> Cameroon Ministry of Mines and Technological Development.</p>
+            </div>
 
-          <p class="credits"><strong>Credit:</strong> Tierra Minada; Agencia Nacional de Minería de Colombia.</p>
+            <div id="colombia_mining_titles" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/Colombia_Mining_Permits_201401.zip' target="_blank">Download</a></p>
 
-          <h3 class='overview_title'>Democratic Republic of the Congo mining permits</h3>
-          <p>This data set provides the boundaries for mining permits in the Democratic Republic of the Congo. This data set is available from the Ministry of Mines Mining Registry (CAMI), for purchase and could not be made available for public download. For more information, see the <a href='http://portals.flexicadastre.com/drc/en/'>DRC's mining cadaster portal</a>.</p>
+              <p>This data set provides the boundaries of mining titles (<em>títulos mineros concedidos</em>) for Colombia. The shapefiles are compiled by Tierra Minada, a Colombian civil society group, utilizing information from the Colombian Mining Registry, which is maintained by the National Mining Agency. For more information about the data sets, visit the <a href="https://sites.google.com/site/tierraminada/" target="_blank">Tierra Minada website</a> or <a href="http://www.simco.gov.co/Inicio/CatastroMineroColombiano/tabid/107/Default.aspx" target="_blank">Colombia’s Mining Cadaster Portal</a>.</p>
 
-          <p class='credits'><strong>Credit:</strong> Democratic Republic of the Congo Ministry of Mines Mining Registry (CAMI)</p>
+              <p class="credits"><strong>Credit:</strong> Tierra Minada; Agencia Nacional de Minería de Colombia.</p>
+            </div>
 
-          <h3 class='overview_title'>Gabon mining permits</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/gfw2_gab_mc.zip' target='_blank'>Download</a></p>
+            <div id="democratic_republic_of_the_congo_mining_permits" class="source_dropdown_body">
+              <p>This data set provides the boundaries for mining permits in the Democratic Republic of the Congo. This data set is available from the Ministry of Mines Mining Registry (CAMI), for purchase and could not be made available for public download. For more information, see the <a href='http://portals.flexicadastre.com/drc/en/'>DRC's mining cadaster portal</a>.</p>
 
-          <p>This data set provides the boundaries for mining permits and prospecting permits for Gabon. The data set was produced by the Gabon Ministry of Mines, Petroleum, and Hydrocarbons and the World Resources Institute for the Interactive Mining, Forest, and Conservation Atlas of Gabon. For more information, see the <a href='http://www.wri.org/publication/interactive-forestry-atlas-gabon' target='_blank'>Interactive Forest Atlas of Gabon</a>.</p>
+              <p class='credits'><strong>Credit:</strong> Democratic Republic of the Congo Ministry of Mines Mining Registry (CAMI)</p>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> Gabon Ministry of Mines, Petroleum, and Hydrocarbons; World Resources Institute.</p>
+            <div id="gabon_mining_permits" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/gfw2_gab_mc.zip' target='_blank'>Download</a></p>
 
-          <h3 class='overview_title'>Republic of the Congo mining permits</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Congo/GIS_Data/COG_permis_minier_2011.zip' target='_blank'>Download</a></p>
+              <p>This data set provides the boundaries for mining permits and prospecting permits for Gabon. The data set was produced by the Gabon Ministry of Mines, Petroleum, and Hydrocarbons and the World Resources Institute for the Interactive Mining, Forest, and Conservation Atlas of Gabon. For more information, see the <a href='http://www.wri.org/publication/interactive-forestry-atlas-gabon' target='_blank'>Interactive Forest Atlas of Gabon</a>.</p>
 
-          <p>This data set provides the boundaries of mining permits for the Republic of the Congo. The original map data were produced by the Republic of the Congo Ministry of Mines and Geology with the support of the World Resources Institute. For more information, see the <a href='http://www.wri.org/project/interactive-forest-atlas-congo' target='_blank'>Interactive Forest Atlas for the Republic of the Congo</a>.</p>
+              <p class='credits'><strong>Credit:</strong> Gabon Ministry of Mines, Petroleum, and Hydrocarbons; World Resources Institute.</p>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> Republic of the Congo Ministry of Mines and Geology, World Resources Institute.</p>
+            <div id="republic_of_the_congo_mining_permits" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Congo/GIS_Data/COG_permis_minier_2011.zip' target='_blank'>Download</a></p>
+
+              <p>This data set provides the boundaries of mining permits for the Republic of the Congo. The original map data were produced by the Republic of the Congo Ministry of Mines and Geology with the support of the World Resources Institute. For more information, see the <a href='http://www.wri.org/project/interactive-forest-atlas-congo' target='_blank'>Interactive Forest Atlas for the Republic of the Congo</a>.</p>
+
+              <p class='credits'><strong>Credit:</strong> Republic of the Congo Ministry of Mines and Geology, World Resources Institute.</p>
+            </div>
+          </div>
         </div>
       </div>
     </li>
@@ -874,32 +929,51 @@
         <div class='source_extended'>
           <p class='first'>GFW currently includes oil palm concession data for the following countries:</p>
 
-          <h3 class='overview_title'>Cameroon agro-industrial zones</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Cameroon/GIS_Data/CMR_agric_zone_2013.zip' target='_blank'>Download</a></p>
+          <div class="source_dropdown">
+            <a href="#" class="source_dropdown_header source_dropdown_header_oil_palm">
+              <h3 class='overview_title' title="Select a country"><span>Select a country</span> <i class='dropdown_arrow'></i></h3>
+            </a>
 
-          <p>This data layer shows the boundaries of agro-industrial zones, where oil palm and rubber tree plantations, as well as other crops, may be established. In Cameroon, industrial agriculture falls outside of the National Forest Estate. Agricultural plantations are allocated by the Ministry of Economy and Planning to private entities under long-term, renewable contracts, which are then monitored by the Ministry of Agriculture. The agro-industrial data set was mapped using satellite imagery, with ground-truthing to determine the crop type and operating company. Official documentation was often lacking, so boundaries should be considered approximate and nonexhaustive.</p>
+            <div class='source_dropdown_menu source_dropdown_menu_oil_palm'>
+              <ul>
+                <li><a href='#' data-slug="cameroon_agro_industrial_zones">Cameroon agro-industrial zones</a></li>
+                <li><a href='#' data-slug="indonesia_oil_palm_concessions">Indonesia oil palm concessions</a></li>
+                <li><a href='#' data-slug="liberia_oil_palm_concessions">Liberia oil palm concessions</a></li>
+                <li><a href='#' data-slug="republic_of_the_congo_oil_palm_concessions">Republic of the Congo oil palm concessions</a></li>
+              </ul>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> World Resources Institute.</p>
+            <div id="cameroon_agro_industrial_zones" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Cameroon/GIS_Data/CMR_agric_zone_2013.zip' target='_blank'>Download</a></p>
 
-          <h3 class='overview_title'>Indonesia oil palm concessions</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/Original/Indonesia_oilpalm_2010_wgs84.zip' target='_blank'>Download</a></p>
-          <p>This data set, produced by the Indonesia Ministry of Forestry, provides the boundaries of current or planned oil palm plantations in Indonesia. This data set is known to be incomplete, but it is currently the best available.</p>
+              <p>This data layer shows the boundaries of agro-industrial zones, where oil palm and rubber tree plantations, as well as other crops, may be established. In Cameroon, industrial agriculture falls outside of the National Forest Estate. Agricultural plantations are allocated by the Ministry of Economy and Planning to private entities under long-term, renewable contracts, which are then monitored by the Ministry of Agriculture. The agro-industrial data set was mapped using satellite imagery, with ground-truthing to determine the crop type and operating company. Official documentation was often lacking, so boundaries should be considered approximate and nonexhaustive.</p>
 
-          <p class='credits'><strong>Credit:</strong> Indonesia Ministry of Forestry.</p>
+              <p class='credits'><strong>Credit:</strong> World Resources Institute.</p>
+            </div>
 
-          <h3 class='overview_title'>Liberia oil palm concessions</h3>
-         <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/gfw2_lbr_op.zip' target='_blank'>Download</a></p>
+            <div id="indonesia_oil_palm_concessions" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/Original/Indonesia_oilpalm_2010_wgs84.zip' target='_blank'>Download</a></p>
+              <p>This data set, produced by the Indonesia Ministry of Forestry, provides the boundaries of current or planned oil palm plantations in Indonesia. This data set is known to be incomplete, but it is currently the best available.</p>
 
-          <p>This data set provides the boundaries of known oil palm plantations for Liberia and was compiled by Global Witness from available government maps. Information provided with this data set includes company, ownership group, and land area.</p>
+              <p class='credits'><strong>Credit:</strong> Indonesia Ministry of Forestry.</p>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> Global Witness, 2013.</p>
+            <div id="liberia_oil_palm_concessions" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/gfw2_lbr_op.zip' target='_blank'>Download</a></p>
 
-          <h3 class='overview_title'>Republic of the Congo oil palm concessions</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/gfw2_cgo_op.zip' target='_blank'>Download</a></p>
+              <p>This data set provides the boundaries of known oil palm plantations for Liberia and was compiled by Global Witness from available government maps. Information provided with this data set includes company, ownership group, and land area.</p>
 
-          <p>This data set provides the boundaries for oil palm plantations according to the Republic of the Congo Ministry of Agriculture. </p>
+              <p class='credits'><strong>Credit:</strong> Global Witness, 2013.</p>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> World Resources Institute; Republic of the Congo Ministry of Agriculture.</p>
+            <div id="republic_of_the_congo_oil_palm_concessions" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/gfw2_cgo_op.zip' target='_blank'>Download</a></p>
+
+              <p>This data set provides the boundaries for oil palm plantations according to the Republic of the Congo Ministry of Agriculture. </p>
+
+              <p class='credits'><strong>Credit:</strong> World Resources Institute; Republic of the Congo Ministry of Agriculture.</p>
+            </div>
+          </div>
         </div>
       </div>
     </li>
@@ -964,19 +1038,34 @@
         <div class='source_extended'>
           <p class='first'>GFW currently hosts wood fiber concession data for the following countries:</p>
 
-         <h3 class='overview_title'>Indonesia wood fiber plantations</h3>
-         <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/Original/Indonesia_timber_2010_wgs84.zip' target='_blank'>Download</a></p>
+          <div class="source_dropdown">
+            <a href="#" class="source_dropdown_header source_dropdown_header_wood_fiber_plantations">
+              <h3 class='overview_title' title="Select a country"><span>Select a country</span> <i class='dropdown_arrow'></i></h3>
+            </a>
 
-          <p>This data set, produced by the Indonesia Ministry of Forestry, provides the boundaries of current or planned wood fiber plantations in Indonesia. This data set is known to be incomplete, but it is compiled from the best information currently available.</p>
+            <div class='source_dropdown_menu source_dropdown_menu_wood_fiber_plantations'>
+              <ul>
+                <li><a href='#' data-slug="indonesia_wood_fiber_plantations">Indonesia wood fiber plantations</a></li>
+                <li><a href='#' data-slug="republic_of_the_congo_eucalyptus_plantations">Republic of the Congo eucalyptus plantations</a></li>
+              </ul>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> Indonesia Ministry of Forestry.</p>
+            <div id="indonesia_wood_fiber_plantations" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/Original/Indonesia_timber_2010_wgs84.zip' target='_blank'>Download</a></p>
 
-          <h3 class='overview_title'>Republic of the Congo eucalyptus plantations</h3>
-          <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/gfw2_cgo_wf.zip' target='_blank'>Download</a></p>
+              <p>This data set, produced by the Indonesia Ministry of Forestry, provides the boundaries of current or planned wood fiber plantations in Indonesia. This data set is known to be incomplete, but it is compiled from the best information currently available.</p>
 
-          <p>This data set provides the boundaries for eucalyptus and other plantations in the Republic of the Congo. The World Resources Institute compiled information from the Republic of the Congo Ministry of Agriculture to produce this data layer.</p>
+              <p class='credits'><strong>Credit:</strong> Indonesia Ministry of Forestry.</p>
+            </div>
 
-          <p class='credits'><strong>Credit:</strong> World Resources Institute; Republic of the Congo Ministry of Agriculture.</p>
+            <div id="republic_of_the_congo_eucalyptus_plantations" class="source_dropdown_body">
+              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/gfw2_cgo_wf.zip' target='_blank'>Download</a></p>
+
+              <p>This data set provides the boundaries for eucalyptus and other plantations in the Republic of the Congo. The World Resources Institute compiled information from the Republic of the Congo Ministry of Agriculture to produce this data layer.</p>
+
+              <p class='credits'><strong>Credit:</strong> World Resources Institute; Republic of the Congo Ministry of Agriculture.</p>
+            </div>
+          </div>
         </div>
       </div>
     </li>
@@ -1051,7 +1140,6 @@
           </ul>
 
           <h3 class='overview_title'>Other Important Designations</h3>
-
           <ul class='bullets'>
             <li><a href='http://www.unesco.org/new/en/natural-sciences/environment/ecological-sciences/biosphere-reserves/' target='_blank'>UNESCO-MAP Biosphere Reserves</a>: areas under UNESCO’s Man and the Biosphere Programme designated to “promote sustainable development based on local community efforts and sound science.”</li>
             <li><a href='http://whc.unesco.org/' target='_blank'>World Heritage Sites</a>: areas considered to have “outstanding universal value” and meet at least one of ten criteria, as described <a href='http://whc.unesco.org/en/criteria/' target='_blank'>here</a>.</li>
@@ -1060,7 +1148,7 @@
 
            <p class='credits'><strong>Citation:</strong> UNEP-WCMC, UNEP, and IUCN. “World Database on Protected Areas.” Accessed on [date]. <a href='http://www.protectedplanet.net/' target='_blank'>www.protectedplanet.net</a>.</p>
 
-           <p class='read_more hidden'><em><a href='http://www.protectedplanet.net/' target='_blank'>Learn more or download data at www.protectedplanet.net</a></em>
+           <p class='read_more hidden'><em><a href='http://www.protectedplanet.net/' target='_blank'>Learn more or download data at www.protectedplanet.net</a></em></p>
         </div>
       </div>
     </li>
@@ -1151,7 +1239,6 @@
       <div class='source_body'>
         <div class='source_summary'>
           <p>This layer displays recent stories from <a href='http://www.mongabay.com/' target='_blank'>Mongabay.com</a>, a leading environmental science and conservation news website. Stories published within three months of the current date are tagged to a specific location and provide in-depth research or commentary on local forest issues. More information can be found at <a href='http://www.mongabay.com/' target='_blank'>Mongabay.com</a></p>
-
         </div>
       </div>
     </li>
@@ -1268,6 +1355,7 @@
 
     <h3 class='overview_title'>European Space Agency (GlobCover)</h3>
     <p>Data from the European Space Agency’s GlobCover was used to visualize tree cover extent on the country pages. As stated on the <a href='http://due.esrin.esa.int/globcover/' target='_blank'>ESA website</a>, GlobCover is an initiative which began in 2005 in partnership with a number of organizations. The aim of the project was to develop a service capable of delivering global composites and land cover maps using input observations from the 300m MERIS sensor on board the ENVISAT satellite mission. ESA makes available the land cover maps, which cover 2 periods: December 2004 - June 2006 and January - December 2009. To learn more, visit the <a href='http://due.esrin.esa.int/globcover/' target='_blank'>GlobCover website</a> or <a href='http://due.esrin.esa.int/globcover/LandCover2009/Globcover2009_V2.3_Global_.zip' target='_blank'>download the 2009 GlobCover map</a>.</p>
+
     <p><strong>Figures:</strong> Map of tree cover extent</p>
 
     <h3 class='overview_title'>The Rights and Resources Initiative (RRI)</h3>
