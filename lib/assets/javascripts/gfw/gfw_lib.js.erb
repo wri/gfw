@@ -734,10 +734,14 @@ GFW.modules.app = function(gfw) {
     },
 
     _toggleStoriesLayer: function(layer) {
+      layer.attributes['visible'] = (layer.attributes['visible']) ? false : true;
+      GFW.app.storiesLoaded = true;
+
       if (!layer.get('visible')) {
         this.storiesInfowindow.close();
-      }
+        GFW.app.storiesLoaded = false;
 
+      }
       _.each(this.storiesMarkers, function(marker) {
         marker.toggle();
       });
@@ -754,9 +758,11 @@ GFW.modules.app = function(gfw) {
     },
 
     _showStoriesMarkers: function() {
-      _.each(this.storiesMarkers, function(marker) {
-        marker.show();
-      });
+      if(GFW.app.storiesLoaded){      
+        _.each(this.storiesMarkers, function(marker) {
+          marker.show();
+        });
+      }
     },
 
     _loadStoriesLayer: function() {
@@ -1183,7 +1189,7 @@ GFW.modules.maplayer = function(gfw) {
           GFW.app._toggleStoriesLayer(that.layer);
           Legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
 
-          if (!GFW.app.storiesLoaded) {
+          if (GFW.app.storiesLoaded) {
             GFW.app._loadStoriesLayer();
           }
         };
