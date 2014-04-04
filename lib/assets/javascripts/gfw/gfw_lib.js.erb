@@ -740,8 +740,8 @@ GFW.modules.app = function(gfw) {
       if (!layer.get('visible')) {
         this.storiesInfowindow.close();
         GFW.app.storiesLoaded = false;
-
       }
+
       _.each(this.storiesMarkers, function(marker) {
         marker.toggle();
       });
@@ -758,7 +758,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _showStoriesMarkers: function() {
-      if(GFW.app.storiesLoaded){      
+      if (GFW.app.storiesLoaded){      
         _.each(this.storiesMarkers, function(marker) {
           marker.show();
         });
