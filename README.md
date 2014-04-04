@@ -72,6 +72,8 @@ Last step. For real. Start the app server and access it at [http://0.0.0.0:5000]
 $ foreman start
 ```
 
+Oh, and you should probably launch the [gfw-api](https://github.com/wri/gfw-api) [dev_apperver.py](https://github.com/wri/gfw-api#developing) before you try to visit the site on your local machine.
+
 # License
 
 The MIT License (MIT)
