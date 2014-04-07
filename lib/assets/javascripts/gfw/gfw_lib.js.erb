@@ -224,6 +224,11 @@ GFW.modules.app = function(gfw) {
         updateHash();
       });
 
+      google.maps.event.addDomListener(window, 'resize', function() {
+        that.updateCoordinates();
+        updateHash();
+      });
+
       google.maps.event.addListener(map, 'click', function(event) {
         that.closeInfowindows();
 
