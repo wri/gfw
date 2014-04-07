@@ -1080,7 +1080,7 @@ GFW.modules.app = function(gfw) {
 
       //here i make a crude request for the columns of the table
       //nulling out the geoms to save payload
-      var request_sql = 'SELECT *, null as the_geom, null as the_geom_webmercator FROM global_7d WHERE cartodb_id = ' + data.cartodb_id;
+      var request_sql = 'SELECT latitude, longitude, brightness, confidence, acq_date, acq_time, the_geom, the_geom_webmercator, null as the_geom, null as the_geom_webmercator FROM global_7d WHERE cartodb_id = ' + data.cartodb_id;
       var url = 'http://dyynnn89u7nkm.cloudfront.net/api/v2/sql?q=' + encodeURIComponent(request_sql);
 
       var makeSuccessCallback = function(cartodb_id) {
