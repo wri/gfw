@@ -141,6 +141,10 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
     this.$backdrop.on('click', function() {
       that.hide();
     });
+
+    this.$input.on('click',function(){
+      this.select()
+    });
   },
 
   _disableBindings: function() {
