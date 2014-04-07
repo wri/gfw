@@ -148,14 +148,30 @@ CartoDBInfowindow.prototype.setContent = function(content){
 
       for(var column in content) {
         if (show_column(column, content, this.visible_columns)) {
-          var column_ = column;
+          var column_ = column,
+              suffix  = '';
 
-          if (column === 'photo_credit') {
-            column_ = 'Photo credit'
+          switch(column){
+            case 'photo_credit':
+              column_ = 'Photo credit';
+            break;
+            case 'Brightness':
+              suffix = ' (Kelvin)';
+            break;
+            case 'Confidence':
+              suffix = ' (%)';
+            break;
+            case 'Acq time':
+              column_ = 'Acquisition time';
+              suffix   = ' (UTC)';
+            break;
+            case 'Acq date':
+              column_ = 'Acquisition date';
+            break;
           }
 
           html += '<label>' + column_ + '</label>';
-          html += '<p class="'+((content[column]!=null && content[column]!='')?'':'empty')+'">'+(content[column] || 'empty')+'</p>';
+          html += '<p class="'+((content[column]!=null && content[column]!='')?'':'empty')+'">'+(content[column] || 'empty')+ suffix + '</p>';
         }
       }
 
