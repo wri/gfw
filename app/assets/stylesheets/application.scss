@@ -684,13 +684,16 @@ strong {
 .site-footer {
   background-color: #464352;
 
-  & .right,
-  & .left{
+  .right,
+  .left{
     float: right;
     width: 49%;
   }
-  & .left{
-    float: left
+  .left{
+    float: left;
+    .tweet-to{
+      margin-top: 15px;
+    }
   }
 }
 
@@ -736,7 +739,7 @@ strong {
   background: #fff;
   @include border-radius(23px);
 
-  & .fb_iframe_widget{
+  .fb_iframe_widget{
     top: -4px;
   }
 }
@@ -789,7 +792,6 @@ strong {
   &.tilia { height: 38px; @include logos-sprite(tilia); }
   &.goodall { height: 36px; width: 147px; @include logos-sprite(goodall); }
   &.vizzuality { height: 45px; @include logos-sprite(vizzuality); }
-
   &.last { margin-right: 0; }
 }
 

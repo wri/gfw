@@ -734,8 +734,12 @@ GFW.modules.app = function(gfw) {
     },
 
     _toggleStoriesLayer: function(layer) {
+      layer.set('visible', !layer.get('visible'));
+      GFW.app.storiesLoaded = true;
+
       if (!layer.get('visible')) {
         this.storiesInfowindow.close();
+        GFW.app.storiesLoaded = false;
       }
 
       _.each(this.storiesMarkers, function(marker) {
@@ -754,12 +758,15 @@ GFW.modules.app = function(gfw) {
     },
 
     _showStoriesMarkers: function() {
-      _.each(this.storiesMarkers, function(marker) {
-        marker.show();
-      });
+      if (GFW.app.storiesLoaded){      
+        _.each(this.storiesMarkers, function(marker) {
+          marker.show();
+        });
+      }
     },
 
     _loadStoriesLayer: function() {
+      if (!GFW.app.storiesLoaded) return;
       var that = this;
 
       $.ajax({
@@ -799,6 +806,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _loadMongabayLayer: function() {
+      if (!GFW.app.mongabayHidden) return;
       var that = this;
 
       $.ajax({
@@ -865,8 +873,11 @@ GFW.modules.app = function(gfw) {
     },
 
     _toggleMongabayLayer: function(layer) {
+      layer.set('visible', !layer.get('visible'));
+      GFW.app.mongabayHidden = true;
       if (!layer.get('visible')) {
         this.mongabayInfowindow.close();
+        GFW.app.mongabayHidden = false;        
       }
 
       if (this.mongabayLoaded) {
@@ -1069,7 +1080,7 @@ GFW.modules.app = function(gfw) {
 
       //here i make a crude request for the columns of the table
       //nulling out the geoms to save payload
-      var request_sql = 'SELECT *, null as the_geom, null as the_geom_webmercator FROM global_7d WHERE cartodb_id = ' + data.cartodb_id;
+      var request_sql = 'SELECT latitude, longitude, brightness, confidence, acq_date, acq_time, the_geom, the_geom_webmercator, null as the_geom, null as the_geom_webmercator FROM global_7d WHERE cartodb_id = ' + data.cartodb_id;
       var url = 'http://dyynnn89u7nkm.cloudfront.net/api/v2/sql?q=' + encodeURIComponent(request_sql);
 
       var makeSuccessCallback = function(cartodb_id) {
@@ -1183,9 +1194,7 @@ GFW.modules.maplayer = function(gfw) {
           GFW.app._toggleStoriesLayer(that.layer);
           Legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
 
-          if (!GFW.app.storiesLoaded) {
             GFW.app._loadStoriesLayer();
-          }
         };
 
         Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
