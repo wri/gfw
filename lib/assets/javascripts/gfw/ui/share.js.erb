@@ -74,7 +74,7 @@ gfw.ui.model.ShareDialog = Backbone.Model.extend({
 
   defaults: {
     title: "Share this map view",
-    help: "Paste link in email or IM",
+    help: "Click and paste link in email or IM",
     button_title: "Copy URL",
     hidden: false,
     mode: "link"
@@ -140,6 +140,10 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
 
     this.$backdrop.on('click', function() {
       that.hide();
+    });
+
+    this.$input.on('click',function(){
+      this.select()
     });
   },
 
@@ -233,7 +237,7 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
       this._setLink();
     } else if (mode === 'embed') {
       this.model.set({
-        help: 'Paste HTML to embed in website',
+        help: 'Click and paste HTML to embed in website',
         button_title: 'Copy code'
       });
 
