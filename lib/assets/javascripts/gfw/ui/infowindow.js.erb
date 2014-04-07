@@ -209,12 +209,13 @@ CartoDBInfowindow.prototype.setPosition = function(latlng) {
 
 CartoDBInfowindow.prototype.open = function(){
   this._show();
-
-  var pane = $(".cartodb_infowindow .top").jScrollPane();
-  var api = pane.data('jsp');
-  api.scrollToY(0); // scroll to top
 };
 
+CartoDBInfowindow.prototype._createScroll = function() {
+  var pane = $(".cartodb_infowindow").find(".top").jScrollPane(),
+      api = pane.data('jsp');
+  api.scrollToY(0); // scroll to top
+};
 
 CartoDBInfowindow.prototype.close = function(){
   this._hide();
@@ -248,7 +249,8 @@ CartoDBInfowindow.prototype._hide = function() {
 
 CartoDBInfowindow.prototype._show = function() {
   if (this.div_) {
-    var div = this.div_;
+    var div  = this.div_,
+        that = this;
     div.style.opacity = 0;
 
     var offset = 0;
@@ -271,6 +273,8 @@ CartoDBInfowindow.prototype._show = function() {
       $(div).animate({
         opacity: 1,
         duration: 250
+      }, function(){
+        that._createScroll()
       });
     });
   }
