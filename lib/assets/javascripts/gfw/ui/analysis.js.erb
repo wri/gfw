@@ -150,11 +150,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this._getAlertCount();
 
     GFW.app._showStoriesMarkers();
-
-    if (GFW.app.mongabayHidden) {
-      GFW.app._loadMongabayLayer();
-      GFW.app.mongabayHidden = false;
-    }
+    GFW.app._loadMongabayLayer();
 
     if (this.selectedShape) this.selectedShape.setEditable(false);
   },
