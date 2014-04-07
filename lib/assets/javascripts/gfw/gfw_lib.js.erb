@@ -734,7 +734,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _toggleStoriesLayer: function(layer) {
-      layer.set('visible', (layer.get('visible')) ? false : true);
+      layer.set('visible', !layer.get('visible'));
       GFW.app.storiesLoaded = true;
 
       if (!layer.get('visible')) {
@@ -873,7 +873,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _toggleMongabayLayer: function(layer) {
-      layer.set('visible', (layer.get('visible')) ? false : true) ;
+      layer.set('visible', !layer.get('visible'));
       GFW.app.mongabayHidden = true;
       if (!layer.get('visible')) {
         this.mongabayInfowindow.close();
