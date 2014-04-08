@@ -2147,16 +2147,19 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .domain([d3.min(data, function(d) { return d.ratio; }), d3.max(data, function(d) { return d.ratio; })]);
 
         // line
-        svg.selectAll('line.overview_line')
+        svg.selectAll('line.linear_regression')
           .data([1])
           .enter()
           .append('line')
           .attr({
-            'class': 'overview_line',
+            'class': 'linear_regression',
             'x1': m,
             'x2': w-m,
             'y1': function(d) { return y_log_scale(d); },
-            'y2': function(d) { return y_log_scale(d); }
+            'y2': function(d) { return y_log_scale(d); },
+            "stroke-width": 1.3,
+            "stroke": "white",
+            "stroke-dasharray": "7,5"
           });
 
         // circles w/ magic numbers :(
