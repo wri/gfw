@@ -25,7 +25,7 @@
       position: absolute;
       right: 0; bottom: 0; left: 0;
       margin: 0;
-      padding: 0 10px;
+      padding: 0 7px;
       background: #FFF;
       font: normal 11px "Helvetica", Arial;
       color: #999;
@@ -48,7 +48,23 @@
 
   <footer class="footer">
     <%= link_to 'www.globalforestwatch.org', root_path, :target => '_blank', :class=> 'left' %>
-    <p class="right"><%= link_to 'Explore this map', (request.original_url.sub! 'embed/', '') %>. Find out what is happening in forests right now.</p>
+    <p class="right">
+      <% if (!request.original_url.include?("&begin") && !request.original_url.include?("&date")) %>
+        Time range:
+        <% if (request.original_url.include?("/loss")) %>
+          Jan 2000, Jan 2013.
+        <% elsif (request.original_url.include?("/forma")) %>
+          Jan 2006, Dec 2014.
+        <% elsif (request.original_url.include?("/imazon")) %>
+          2007, 2014.
+        <% elsif (request.original_url.include?("/modis")) %>
+          Oct-Dec 2013.
+        <% elsif (request.original_url.include?("/fires")) %>
+          Last 8 days.
+        <% end %>
+      <% end %>
+      <%= link_to 'Explore this map', (request.original_url.sub! 'embed/', '') %>. Find out what is happening in forests right now.
+    </p>
   </footer>
   <div class="backdrop"></div>
   <%= render 'shared/js_templates' %>
