@@ -148,14 +148,30 @@ CartoDBInfowindow.prototype.setContent = function(content){
 
       for(var column in content) {
         if (show_column(column, content, this.visible_columns)) {
-          var column_ = column;
+          var column_ = column,
+              suffix  = '';
 
-          if (column === 'photo_credit') {
-            column_ = 'Photo credit'
+          switch(column){
+            case 'photo_credit':
+              column_ = 'Photo credit';
+            break;
+            case 'Brightness':
+              suffix = ' (Kelvin)';
+            break;
+            case 'Confidence':
+              suffix = ' (%)';
+            break;
+            case 'Acq time':
+              column_ = 'Acquisition time';
+              suffix   = ' (UTC)';
+            break;
+            case 'Acq date':
+              column_ = 'Acquisition date';
+            break;
           }
 
           html += '<label>' + column_ + '</label>';
-          html += '<p class="'+((content[column]!=null && content[column]!='')?'':'empty')+'">'+(content[column] || 'empty')+'</p>';
+          html += '<p class="'+((content[column]!=null && content[column]!='')?'':'empty')+'">'+(content[column] || 'empty')+ suffix + '</p>';
         }
       }
 
@@ -193,12 +209,13 @@ CartoDBInfowindow.prototype.setPosition = function(latlng) {
 
 CartoDBInfowindow.prototype.open = function(){
   this._show();
-
-  var pane = $(".cartodb_infowindow .top").jScrollPane();
-  var api = pane.data('jsp');
-  api.scrollToY(0); // scroll to top
 };
 
+CartoDBInfowindow.prototype._createScroll = function() {
+  var pane = $(".cartodb_infowindow").find(".top").jScrollPane(),
+      api = pane.data('jsp');
+  api.scrollToY(0); // scroll to top
+};
 
 CartoDBInfowindow.prototype.close = function(){
   this._hide();
@@ -232,7 +249,8 @@ CartoDBInfowindow.prototype._hide = function() {
 
 CartoDBInfowindow.prototype._show = function() {
   if (this.div_) {
-    var div = this.div_;
+    var div  = this.div_,
+        that = this;
     div.style.opacity = 0;
 
     var offset = 0;
@@ -255,6 +273,8 @@ CartoDBInfowindow.prototype._show = function() {
       $(div).animate({
         opacity: 1,
         duration: 250
+      }, function(){
+        that._createScroll()
       });
     });
   }

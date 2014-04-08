@@ -48,7 +48,7 @@
 
   <footer class="footer">
     <%= link_to 'www.globalforestwatch.org', root_path, :target => '_blank', :class=> 'left' %>
-    <p class="right">Find out what is happening in forests right now.</p>
+    <p class="right"><%= link_to 'Explore this map', (request.original_url.sub! 'embed/', '') %>. Find out what is happening in forests right now.</p>
   </footer>
   <div class="backdrop"></div>
   <%= render 'shared/js_templates' %>
