@@ -1086,8 +1086,23 @@ body {
   }
 }
 
+.timeline_fires {
+  width: 710px;
+  margin-left: -355px;
+
+  .timeline-inner {
+    .range { width: 640px; }
+
+    .trail .handle {
+      left: 30px;
+
+      &.right { left: 670px; }
+    }
+  }
+}
+
 .timeline_imazon {
-  width: 812px;
+  width: 763px;
   margin-left: -406px;
 
   .timeline-inner {
@@ -1208,8 +1223,10 @@ body {
     }
   }
 
-  .years,
+  .days,
   .quarters,
+  .years,
+  .visible_days,
   .visible_quarters,
   .visible_years {
     position: relative;
@@ -1224,6 +1241,7 @@ body {
         width: 27px;
       }
 
+      .day,
       .year {
         @include inline-block();
         width: 27px;
@@ -1246,8 +1264,9 @@ body {
     }
   }
 
-  .visible_years,
-  .visible_quarters {
+  .visible_days,
+  .visible_quarters,
+  .visible_years {
     position: absolute;
     z-index: 218;
     top: 0;

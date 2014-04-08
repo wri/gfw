@@ -763,7 +763,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _showStoriesMarkers: function() {
-      if (GFW.app.storiesLoaded){      
+      if (GFW.app.storiesLoaded){
         _.each(this.storiesMarkers, function(marker) {
           marker.show();
         });
@@ -882,7 +882,7 @@ GFW.modules.app = function(gfw) {
       GFW.app.mongabayHidden = true;
       if (!layer.get('visible')) {
         this.mongabayInfowindow.close();
-        GFW.app.mongabayHidden = false;        
+        GFW.app.mongabayHidden = false;
       }
 
       if (this.mongabayLoaded) {
@@ -1074,6 +1074,19 @@ GFW.modules.app = function(gfw) {
             featureOut: function() { map.setOptions({ draggableCursor: 'default' }); },
             auto_bound: false
           });
+
+          subscribe('timeline:change_date_fires', _.bind(function(start_year, end_year, options) {
+            var query = [
+              "WITH dates as (SELECT *, to_date(acq_date, 'YYYY-MM-DD') as acq_date_proc FROM global_7d)",
+              'SELECT *',
+              'FROM dates',
+              'WHERE acq_date_proc',
+              "BETWEEN to_date('"+start_year+"', 'MM-DD-YYYY')",
+              "AND to_date('"+end_year+"', 'MM-DD-YYYY')"
+            ].join(' ');
+
+            this.baseLayer.setQuery(query);
+          }, this));
         }
 
         this.$map_coordinates.show();

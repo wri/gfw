@@ -85,7 +85,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
           end_month_ = end_month - 1; // Convert months to (0-11)
 
       // Create dates, 0 padding months < 10
-      var start = start = start_year + '-' + ((start_month < 10) ? ("0" + start_month) : start_month) + '-01',
+      var start = start_year + '-' + ((start_month < 10) ? ("0" + start_month) : start_month) + '-01',
           end = end_year + '-' + ((end_month < 10) ? ("0" + end_month) : end_month) + '-01';
 
       this.range = '&begin='+start+'&end='+end;
@@ -115,13 +115,31 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       this._getAlertCount();
     }, this));
 
-    subscribe('timeline:change_date_fires', _.bind(function(month, year) {
-      
-      this.info.model.set({ 'subtitle': q1+"-"+year_+' to '+q2+'-'+year_ });
+    subscribe('timeline:change_date_fires', _.bind(function(start_day, end_day, options) {
+      // if (options && options.publish) {
+      //   var start_day_ = start_day.split('-')[1],
+      //       start_month = start_day.split('-')[0],
+      //       start_month_ = start_month - 1, // Convert months to (0-11)
+      //       start_year = start_day.split('-')[2],
+      //       end_day_ = end_day.split('-')[1],
+      //       end_month = end_day.split('-')[0],
+      //       end_month_ = end_month - 1, // Convert months to (0-11)
+      //       end_year = end_day.split('-')[2];
 
-      if (this.info.model.get('hidden')) return;
+      //   // Create dates, 0 padding months < 10
+      //   var start = start_year + '-' + start_month_ + '-'+start_day_,
+      //       end = end_day_ + '-' + end_month_ + '-'+end_day_;
 
-      this._getAlertCount();
+      //   this.range = '&begin='+start+'&end='+end;
+
+      //   if ((start_month >= 1 && start_month <= 12) && (end_month >= 1 && end_month <= 12)) {
+      //     this.info.model.set({ 'subtitle': config.MONTHNAMES_SHORT[start_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_].slice(1).toLowerCase()+"-"+start_year+" to "+config.MONTHNAMES_SHORT[end_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_].slice(1).toLowerCase()+"-"+end_year });
+      //   }
+
+      //   if (this.info.model.get('hidden') && !url('?begin') && !url('?end')) return;
+
+      //   this._getAlertCount();
+      // }
     }, this));
   },
 
