@@ -123,15 +123,16 @@ GFW.modules.app = function(gfw) {
     open: function() {
       var that = this;
 
-      var dh = $(window).height() + 67,
-          hh = $('.header').height();
+      var dh   = $(window).height() + 67,
+          hh   = $('.header').height(),
+          $map = $('#map');
 
-      $('#map').animate({ height: dh - hh }, 250, function() {
+      $map.animate({ height: dh - hh }, 250, function() {
         google.maps.event.trigger(map, 'resize');
         map.setOptions({ scrollwheel: true });
       });
 
-      this._goTo($('#map'), { margin: '67' });
+      this._goTo($map, { margin: '67' },updateHash);
     },
 
     close: function(callback) {
@@ -153,9 +154,10 @@ GFW.modules.app = function(gfw) {
         var delay  = (opt && opt.delay)  || 100;
         var margin = (opt && opt.margin) || 0;
 
-        $('html, body').delay(delay).animate({scrollTop:$el.offset().top - margin}, speed);
+        $('html, body').delay(delay).animate({scrollTop:$el.offset().top - margin}, speed, function(){
+            callback && callback() 
+        });
 
-        callback && callback();
       }
     },
 
