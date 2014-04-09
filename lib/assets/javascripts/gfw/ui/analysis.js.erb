@@ -346,7 +346,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     if (config.ISO === 'ALL') {
       this.alertsUrl = baseurl+dataset+config.MAPOPTIONS.analysis;
-      this.downloadUrl = baseurl+dataset+'.shp?geom='+config.MAPOPTIONS.analysis;
+      this.downloadUrl = baseurl+dataset+'.shp'+config.MAPOPTIONS.analysis;
 
       updateHash({ replace: true });
     } else {
