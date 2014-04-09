@@ -232,13 +232,6 @@ GFW.modules.app = function(gfw) {
       });
 
       google.maps.event.addListener(map, 'click', function(event) {
-        
-        if( window.location.href.indexOf('/map') === -1 ){
-          that.updateCoordinates();
-          updateHash();
-          return true;
-        }
-
         that.closeInfowindows();
 
         if (!that.specialLayer) { return; }
