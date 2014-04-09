@@ -2064,8 +2064,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       svg.append('text')
         .attr('class', 'axis light')
         .attr('id', 'axis_y')
-        .text('Cover gain 2001-2012')
-        .attr('x', -(h/2))
+        .text('Cover loss relative to gain 2001-2012')
+        .attr('x', -(h/2)-100)
         .attr('y', 30)
         .attr('transform', 'rotate(-90)');
 
