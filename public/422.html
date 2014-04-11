@@ -16,10 +16,8 @@
 
   <link href="/assets/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
 
-  <link href="/assets/jquery.qtip.min.css?body=1" media="all" rel="stylesheet" />
-<link href="/assets/jquery.jscrollpane.css?body=1" media="all" rel="stylesheet" />
-<link href="/assets/application.css?body=1" media="all" rel="stylesheet" />
-  <link href="/assets/static.css?body=1" media="screen" rel="stylesheet" />
+  <link href="/assets/static_public.css" media="all" rel="stylesheet" />
+
   <script src="/assets/modernizr-2.6.2.min.js?body=1"></script>
   <meta content="authenticity_token" name="csrf-param" />
 <meta content="GkWFLDbKuJLWkFX8Rox2DK5SbjhZuHHlZVSYxvcc7lA=" name="csrf-token" />
@@ -52,7 +50,7 @@
     </div>
   </div>
 
-  <footer class="site-footer">
+<footer class="site-footer">
   <div class="site-info inner">
     <div class='left'>
       <div class="footer-share">
@@ -64,7 +62,16 @@
           <div class="fb-like" data-href="http://www.globalforestwatch.org/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
         </div>
       </div>
-      <a class="twitter-timeline" href="https://twitter.com/globalforests" data-widget-id="452107742602219521" data-chrome="nofooter noscrollbar transparent" width="400" height="566">Tweets by @globalforests</a>
+      <div class="footer-share keep-updated">
+        <p>Keep updated: 
+            <a href="http://www.wri.org/global-forest-watch-stay-informed" title="Receive Global Forest Watch updates">
+              <img src="/assets/icons/envelope-gray.png" class="subscribe"></a>
+            <a href="https://twitter.com/globalforests" title="Follow @globalforests">
+              <img src="/assets/icons/twitter-gray.png" class="subscribe">
+            </a>
+        </p>
+      </div>
+      <a class="twitter-timeline" href="https://twitter.com/globalforests" data-widget-id="452107742602219521" data-chrome="nofooter noheader noscrollbar transparent" width="400" height="566">Tweets by @globalforests</a>
       <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
       <p class="tweet-to"><a href="https://twitter.com/intent/tweet?screen_name=globalforests">Tweet to @globalforests</a></p>
     </div>
@@ -130,32 +137,20 @@
 <!-- translate -->
 <script type="text/javascript">
   function googleTranslateElementInit() {
-    new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ar,es,fr,id,pt,ru,zh-CN', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true, gaId: 'UA-XXXXX-X'}, 'google_translate_element');
+    new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ar,es,fr,id,pt,ru,zh-CN', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true, gaId: 'UA-48182293-1'}, 'google_translate_element');
   }
 </script>
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-
-  <script type='text/javascript' src='http://maps.googleapis.com/maps/api/js?sensor=false' ></script>
-  <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
-  <script src="/assets/jquery.js?body=1"></script>
-<script src="/assets/jquery_ujs.js?body=1"></script>
-<script src="/assets/gfw.js?body=1"></script>
-<script src="/assets/geojson.js?body=1"></script>
-<script src="/assets/gfw/helpers.js?body=1"></script>
-<script src="/assets/application.js?body=1"></script>
-  <script src="/assets/gfw/ui/widget.js?body=1"></script>
-<script src="/assets/jquery.mousewheel.js?body=1"></script>
-<script src="/assets/jquery.jscrollpane.min.js?body=1"></script>
-<script src="/assets/gfw/ui/sourcewindow.js?body=1"></script>
-<script src="/assets/old.js?body=1"></script>
-    <script>
-    $(function() {
-      cdb.init(function() {
-        window.accept_terms = new gfw.ui.view.Terms();
-      });
+<script type='text/javascript' src='http://maps.googleapis.com/maps/api/js?sensor=false' ></script>
+<script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+<script src="/assets/static_public.js"></script>
+<script>
+  $(function() {
+    cdb.init(function() {
+      window.accept_terms = new gfw.ui.view.Terms();
     });
-  </script>
+  });
+</script>
 
   <!-- Source window -->
 <script>
@@ -174,7 +169,7 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-XXXXX-X', 'globalforestwatch.org');
+  ga('create', 'UA-48182293-1', 'globalforestwatch.org');
   ga('send', 'pageview');
 </script>
 
