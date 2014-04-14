@@ -172,9 +172,12 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
   },
 
   _setEmbed: function() {
-    var that = this;
+    var that  = this,
+        dim_x = (this.$el.hasClass('home')) ? '640' : 1000,
+        dim_y = (this.$el.hasClass('home')) ? '530' : 520;
 
-    this.$input.val('<iframe width="640" height="530" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname+'"></iframe>');
+console.log(dim_x,dim_y)
+    this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname+'"></iframe>');
   },
 
   _generateShortUrl: function(url, callback) {
