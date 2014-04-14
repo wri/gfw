@@ -14,7 +14,9 @@
 @import 'helpers';
 
 @import 'icons/*.png';
+/**/
 @import 'logos/*.png';
+/**/
 
 
 /* =Globals
@@ -715,8 +717,8 @@ strong {
 
 .footer-share {
   display: block;
-  margin-bottom: 50px;
-  height: 80px;
+  margin-bottom: 30px;
+  height: 50px;
   padding: 16px 0;
   font-size: 17px;
   font-family: "fira_sans_otregular";
@@ -729,6 +731,13 @@ strong {
     strong {
       font-family: "fira_sans_otmedium";
     }
+    .subscribe{
+      vertical-align: sub;
+    }
+  }
+  &.keep-updated{
+    margin-bottom: 0;
+    height: 35px;
   }
 }
 
