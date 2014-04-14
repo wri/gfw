@@ -5,6 +5,7 @@
 //= require simple_statistics
 //= require gfw/ui/widget
 //= require gfw/ui/sourcewindow
+//= require gfw/ui/share
 
 
 gfw.ui.view.CountriesShow = cdb.core.View.extend({
@@ -50,6 +51,9 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
     this._drawCircle('forma', 'lines', { iso: this.iso });
     this._drawCircle('forest_loss', 'bars', { iso: this.iso, dataset: 'loss' });
+
+    Share = new gfw.ui.view.Share();
+    this.$el.find('.country_graphs .inner').append(Share.render());
   },
 
   _initFormaDropdown: function() {
@@ -847,6 +851,9 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     this._drawYears();
     this._drawGraph();
     this._drawList();
+
+    Share = new gfw.ui.view.Share();
+    this.$el.find('.overview_graph').append(Share.render());
   },
 
   _openSource: function(e) {
