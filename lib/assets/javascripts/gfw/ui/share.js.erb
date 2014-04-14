@@ -176,7 +176,7 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
         dim_x = 640,
         dim_y = 530;
 
-    if (this.$el.hasClass('home')) {
+    if (!this.$el.hasClass('home')) {
       dim_x = 1000;
       dim_y = 520;
     }
