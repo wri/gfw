@@ -838,7 +838,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     this.model.bind('change:class', this._toggleClass, this);
 
     this._initViews();
-    this._initShare();
   },
 
   _initViews: function() {
