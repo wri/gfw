@@ -29,7 +29,6 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     this._stickynav();
     this._initViews();
     this._initHansenDropdown();
-    this._initShare();
   },
 
   _initViews: function() {
@@ -52,9 +51,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
     this._drawCircle('forma', 'lines', { iso: this.iso });
     this._drawCircle('forest_loss', 'bars', { iso: this.iso, dataset: 'loss' });
-  },
 
-  _initShare: function(){
     Share = new gfw.ui.view.Share();
       this.$el.find('.country_graphs .inner').append(Share.render());
   },
@@ -855,12 +852,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     this._drawYears();
     this._drawGraph();
     this._drawList();
-  },
 
-  _initShare: function(){
     Share = new gfw.ui.view.Share();
     this.$el.find('.overview_graph').append(Share.render());
   },
+
   _openSource: function(e) {
     e.preventDefault();
 
