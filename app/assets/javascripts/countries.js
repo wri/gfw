@@ -53,7 +53,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     this._drawCircle('forest_loss', 'bars', { iso: this.iso, dataset: 'loss' });
 
     Share = new gfw.ui.view.Share();
-      this.$el.find('.country_graphs .inner').append(Share.render());
+    this.$el.find('.country_graphs .inner').append(Share.render());
   },
 
   _initFormaDropdown: function() {
