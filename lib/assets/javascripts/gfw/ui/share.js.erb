@@ -172,13 +172,13 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
   },
 
   _setEmbed: function() {
-    var that  = this,
+    var $body  = $('body'),
         dim_x = 640,
         dim_y = 530;
 
-    if (!this.$el.hasClass('home')) {
+    if (!$body.hasClass('home')) {
       dim_x = 1000;
-      dim_y = 520;
+      dim_y = ($body.hasClass('show')) ? 480 : 600;
     }
 
     this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname+'"></iframe>');
