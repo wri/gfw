@@ -45,7 +45,7 @@ GFW.modules.app = function(gfw) {
 
       this.layers = [];
       this.cloudfront_url = 'dyynnn89u7nkm.cloudfront.net';
-      this.global_version = 1;
+      this.global_version = 2;
 
       gfw.log.enabled = options ? options.logging : false;
 
@@ -155,7 +155,7 @@ GFW.modules.app = function(gfw) {
         var margin = (opt && opt.margin) || 0;
 
         $('html, body').delay(delay).animate({scrollTop:$el.offset().top - margin}, speed, function(){
-            callback && callback() 
+            callback && callback()
         });
 
       }
@@ -765,7 +765,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _showStoriesMarkers: function() {
-      if (GFW.app.storiesLoaded){      
+      if (GFW.app.storiesLoaded){
         _.each(this.storiesMarkers, function(marker) {
           marker.show();
         });
@@ -884,7 +884,7 @@ GFW.modules.app = function(gfw) {
       GFW.app.mongabayHidden = true;
       if (!layer.get('visible')) {
         this.mongabayInfowindow.close();
-        GFW.app.mongabayHidden = false;        
+        GFW.app.mongabayHidden = false;
       }
 
       if (this.mongabayLoaded) {
