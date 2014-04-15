@@ -159,7 +159,10 @@ gfw.ui.view.Static = cdb.core.View.extend({
   _onClickSource: function(e) {
     e.preventDefault();
 
-    var source = $(e.target).closest('.source-item').attr('id');
+    var $target = $(e.target).closest('.source-item'),
+        source = $target.attr('id');
+
+    if ($target.hasClass('disabled')) return;
 
     if (source === this.model.get('expanded')) {
       this.model.set('expanded', null);
