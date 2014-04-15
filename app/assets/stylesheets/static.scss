@@ -302,6 +302,14 @@
     }
   }
 
+  &.disabled {
+    @include opacity(.5);
+  }
+
+  &.disabled:hover .source_header {
+    color: #464052;
+  }
+
   &.expanded {
     + .source-item {
       margin-top: 30px;
@@ -309,6 +317,10 @@
 
     .expand_arrow {
       @include static-icons-sprite(expand_arrow_up);
+    }
+
+    .source_header {
+      color: #98BD17;
     }
 
     .source_coverage,
