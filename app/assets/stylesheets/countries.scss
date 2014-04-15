@@ -1,4 +1,3 @@
-
 @import 'compass/css3/box-shadow';
 @import 'compass/css3/border-radius';
 @import 'compass/css3/opacity';
@@ -11,6 +10,7 @@
 @import 'helpers';
 
 @import 'country-icons/*.png';
+/**/
 
 .countries {
   &.index .content {
@@ -52,6 +52,9 @@
 
       &.country_graphs {
         background: #fff;
+        .inner{
+          height: 340px;
+        }
       }
     }
   }
@@ -185,6 +188,18 @@
 
   .columns {
     padding: 14px 0 57px;
+  }
+  .share_control {
+    position: relative;
+    display: block;
+    width: 38px;
+    height: 38px;
+    left: 960px;
+    top: -38px;
+    @include country-icons-sprite(share_button);
+
+    &:hover {  @include country-icons-sprite(share_button_hover); }
+    &:active { @include country-icons-sprite(share_button_active); }
   }
 }
 
@@ -1450,4 +1465,195 @@ section.country_climate {
   line-height: 1.4;
   @extend .serif;
   color: #666;
+}
+.share_dialog {
+  $width: 463px;
+  $height: 170px;
+
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  top: 50%; left: 50%;
+  margin-top: -$height/2;
+  margin-left: -$width/2;
+  height: $height;
+  width: $width;
+  padding: 30px;
+  border: 1px solid #757573;
+  background: #fff;
+  @include box-shadow(0 0 7px #666);
+  @include border-radius(3px);
+  text-align: center;
+
+  .form {
+    position: absolute;
+    bottom: 0; left: 0;
+    border-top: 1px solid #f1f1f1;
+    padding: 28px 10px 30px;
+    width: 498px;
+  }
+
+  .error_input_label {
+    display: none;
+    position: absolute;
+    right: -92px; bottom: 37px;
+    width: 190px;
+    height: 39px - 9px;
+    padding: 9px 0 0;
+    color: #fff;
+    font-size: 15px;
+    @extend .sans-serif;
+    text-align: center;
+    @include country-icons-sprite(error_input_label);
+  }
+
+  .btn {
+    width: 120px;
+    padding: 14px 0;
+  }
+
+  .input-field {
+    position: relative;
+    width: 300px;
+    margin: 0 30px 0 0;
+
+    &.error input { color: red;}
+
+    .icon.error {
+      display: none;
+      width: 21px;
+      height: 22px;
+      position:absolute;
+      right: -7px;
+      top: 10px;
+      @include country-icons-sprite(input_error);
+    }
+  }
+
+  .holder {
+    position: absolute;
+    top: 14px; left: 12px;
+    font-size: 15px;
+    @extend .sans-serif;
+    color: #ddd;
+  }
+
+  .subtitle {
+    margin: 0 0 20px 0;
+
+    a {
+      color: #A1BB27;
+      text-decoration: underline;
+    }
+  }
+
+  .close {
+    display: block;
+    position: absolute;
+    top: 15px; right: 15px;
+    width: 6px;
+    height: 6px;
+    @include country-icons-sprite(infowindow_close);
+  }
+
+  h1 {
+    font-size: 35px;
+    margin: 10px 0 5px;
+    @extend .serif;
+  }
+
+  p {
+    font-size: 15px;
+    @extend .sans_serif;
+    color: #999;
+
+    &.help { margin: 0 0 20px; }
+  }
+  .mode_menu {
+  position: absolute;
+  top: 4px; right: -15px;
+  width: 120px;
+  background: #fff;
+
+    li.first a {
+      @include border-right-radius(3px);
+    }
+
+    li.last a {
+      @include border-left-radius(3px);
+    }
+
+    li.selected a {
+      background: $cGreen;
+      color: #fff;
+    }
+
+    a {
+      display: block;
+      float: right;
+      width: 55px;
+      margin-left: 2px;
+      font-weight: bold;
+      font-size: 11px;
+      line-height: 34px;
+      text-transform: uppercase;
+      background: #eee;
+    }
+  }
+  .input-field {
+    @include inline-block();
+    height:36px;
+    width: 416px;
+
+    background: url(backgrounds/bkg_form_input.png) no-repeat left 0;
+
+    input[type="text"], input[type="password"], input[type="email"],input[type="date"] {
+      width:100%;
+      height:37px;
+      margin: 0 0 0 7px;
+      padding: 0 7px 0 5px;
+
+      font-size: 14px;
+
+      background:url(backgrounds/bkg_form_input.png) repeat-x right -36px;
+      border:none;
+      outline:none;
+    }
+    &.huge {
+      height: 42px;
+      background:url(backgrounds/bkg_form_input_big.png) no-repeat left 0;
+
+      input[type="password"], input[type="text"], input[type="email"] {
+        height:43px;
+        background:url(backgrounds/bkg_form_input_big.png) repeat-x right -42px;
+      }
+    }
+  }
+}
+.share_dialog {
+  height: 210px;
+
+  .input-field {
+    width: 444px;
+    margin: 0 30px 0 20px;
+  }
+
+  .share_buttons {
+    float: left;
+    width: 112px;
+
+    a {
+      display: block;
+      float: left;
+      width: 32px;
+      height: 32px;
+      margin-right: 5px;
+      background: image-url('home-icons/ess-icons-2.png') no-repeat;
+
+      &.twitter { background-position: -102px 0; }
+      &.facebook { background-position: -68px 0; }
+
+      span { display: none; }
+    }
+  }
 }

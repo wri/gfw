@@ -61,9 +61,10 @@ gfw.ui.view.Share = cdb.core.View.extend({
     var that = this;
 
     this.$el.append(this.template.render( this.model.toJSON() ));
-
-    this.$analysis_control = this.$el.find('.analysis_control');
-    $(this.$analysis_control).tipsy({ title: 'data-tip', fade: true, gravity: 'w' });
+    this.$analysis_control = (this.$el.find('.analysis_control').length > 0) ? this.$el.find('.analysis_control') : null;
+    if (!!this.$analysis_control) {
+      $(this.$analysis_control).tipsy({ title: 'data-tip', fade: true, gravity: 'w' });
+    }
 
     return this.$el;
   }
@@ -71,9 +72,8 @@ gfw.ui.view.Share = cdb.core.View.extend({
 
 
 gfw.ui.model.ShareDialog = Backbone.Model.extend({
-
   defaults: {
-    title: "Share this map view",
+    title: $('body').hasClass('home') ? "Share this map view" : "Share this graphic",
     help: "Click and paste link in email or IM",
     button_title: "Copy URL",
     hidden: false,
@@ -112,7 +112,6 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
 
   show: function() {
     this._setLink();
-
     this.$el.fadeIn(250);
     this.$backdrop.show();
 
@@ -173,9 +172,16 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
   },
 
   _setEmbed: function() {
-    var that = this;
+    var $body  = $('body'),
+        dim_x = 640,
+        dim_y = 530;
 
-    this.$input.val('<iframe width="640" height="530" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname+'"></iframe>');
+    if (!$body.hasClass('home')) {
+      dim_x = 1000;
+      dim_y = ($body.hasClass('show')) ? 480 : 600;
+    }
+
+    this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname+'"></iframe>');
   },
 
   _generateShortUrl: function(url, callback) {
