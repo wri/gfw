@@ -1541,7 +1541,8 @@ GFW.modules.datalayers = function(gfw) {
 
         that.LayersObj.each(function(p) {
           if (p.get('slug') === 'user_stories') {
-            Filter.addFilter(0, 'nothing', 'People', 'Stay tuned', { disabled: true , category_color: '#707D92', color: '#707D92' });
+            Filter.addFilter(0, 'nothing', 'People', 'Land Rights', { disabled: true , category_color: '#707D92', color: '#707D92' });
+            Filter.addFilter(0, 'nothing', 'People', 'Resource Rights', { disabled: true , category_color: '#707D92', color: '#707D92' });
           }
 
           that._addLayer(p);
