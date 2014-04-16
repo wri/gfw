@@ -460,8 +460,10 @@
 .source_dropdown_header {
   @extend .clearfix;
   display: block;
+  margin-top: 20px;
 
   .overview_title {
+    margin: 0;
     padding: 0 10px;
     line-height: 60px;
   }

@@ -136,6 +136,33 @@ gfw.ui.view.Static = cdb.core.View.extend({
         }
       }
     });
+
+    this.dropdown_wood_fiber_plantations = $('.source_dropdown_header_land_rights').qtip({
+      show: 'click',
+      hide: {
+        event: 'click unfocus'
+      },
+      content: {
+        text: $('.source_dropdown_menu_land_rights')
+      },
+      position: {
+        my: 'top right',
+        at: 'bottom right',
+        target: $('.source_dropdown_header_land_rights'),
+        adjust: {
+          x: -20
+        }
+      },
+      style: {
+        tip: {
+          corner: 'top right',
+          mimic: 'top center',
+          border: 1,
+          width: 10,
+          height: 6
+        }
+      }
+    });
   },
 
   _openDropdowns: function(e) {
