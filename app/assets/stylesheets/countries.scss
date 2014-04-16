@@ -1118,6 +1118,7 @@ section.country_climate {
 
 .overview_graph__axis {
   display: none;
+  text-transform: none;
 }
 
 .year {
@@ -1365,26 +1366,6 @@ section.country_climate {
   width: 960px;
   height: 371px;
   color: #fff;
-
-  &.ratio {
-    z-index: 400;
-    background: rgba(#333, .4);
-
-    h3 {
-      width: 100%;
-      margin-top: 170px;
-      font-weight: bold;
-      font-size: 17px;
-      @extend .sans-serif;
-      text-transform: uppercase;
-      text-align: center;
-      color: #eee;
-    }
-
-    p {
-      @include opacity(.5);
-    }
-  }
 
   &.total_loss {
     display: block;
