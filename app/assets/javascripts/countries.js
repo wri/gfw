@@ -2157,10 +2157,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .domain([d3.min(data, function(d) { return d.ratio; }), 1, 10, d3.max(data, function(d) { return d.ratio; })])
           .range(["#9ABF00", "#9ABF00", "#CA46FF", "#CA46FF"]);
 
-        var r_scale = d3.scale.linear()
-          .range([5, 30]) // max ball radius
-          .domain([d3.min(data, function(d) { return d.extent; }), d3.max(data, function(d) { return d.extent; })])
-
         // line
         svg.selectAll('line.linear_regression')
           .data([1])
@@ -2181,7 +2177,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         var circle_attr = {
           'cx': function(d) { return x_log_scale(d.extent) },
           'cy': function(d) { return y_log_scale(d.ratio) },
-          'r': function(d) { return r_scale(d.extent) },
+          'r': 5,
           'name': function(d) { return d.name; },
           'class': function(d) { return d.enabled ? 'ball ball_link' : 'ball ball_nolink'; }
         };
@@ -2214,7 +2210,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .on('mouseover', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', function(d) { return r_scale(d.extent) + 2 })
+              .attr('r', 7)
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -2231,7 +2227,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .on('mouseenter', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', function(d) { return (r_scale(d.extent) + 2) })
+              .attr('r', 7)
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -2248,7 +2244,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .on('mouseout', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', function(d) { return r_scale(d.extent) })
+              .attr('r', 5)
               .style('opacity', .8);
 
             that.tooltip.style('visibility', 'hidden');
@@ -2266,7 +2262,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .on('mouseover', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', function(d) { return r_scale(d.extent) + 2 })
+              .attr('r', 7)
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -2283,7 +2279,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .on('mouseenter', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', function(d) { return (r_scale(d.extent) + 2) })
+              .attr('r', 7)
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -2300,7 +2296,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .on('mouseout', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', function(d) { return r_scale(d.extent) })
+              .attr('r', 5)
               .style('opacity', .8);
 
             that.tooltip.style('visibility', 'hidden');
