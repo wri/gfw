@@ -1,4 +1,8 @@
-gfw.ui.model.Share = cdb.core.Model.extend();
+gfw.ui.model.Share = cdb.core.Model.extend({  
+  defaults: {
+    tooltip: $('body').hasClass('home') ? "Share this map view" : "Share this graphic"
+  }
+});
 
 gfw.ui.view.Share = cdb.core.View.extend({
   className: 'share',
