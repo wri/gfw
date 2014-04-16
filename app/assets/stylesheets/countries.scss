@@ -1367,14 +1367,6 @@ section.country_climate {
   height: 371px;
   color: #fff;
 
-  &.ratio {
-    z-index: 400;
-
-    p {
-      @include opacity(.5);
-    }
-  }
-
   &.total_loss {
     display: block;
   }
