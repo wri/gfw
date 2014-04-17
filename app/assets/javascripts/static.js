@@ -178,9 +178,9 @@ gfw.ui.view.Static = cdb.core.View.extend({
 
     if ($('.source_dropdown_body.active').attr('id') === dropdown) return;
 
-    $('.source_dropdown_body.active').removeClass('active').slideUp();
+    $('.source_dropdown_body.active').removeClass('active');
     $('.overview_title:visible span').html(title);
-    $('#'+dropdown).addClass('active').slideDown();
+    $('#'+dropdown).addClass('active');
   },
 
   _onClickSource: function(e) {
