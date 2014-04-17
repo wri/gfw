@@ -2072,9 +2072,16 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('class', 'axis light')
         .attr('id', 'axis_y')
         .text('Ratio of tree cover loss to gain 2001-2012')
-        .attr('x', -(h/2)-100)
+        .attr('x', -(h/2)-60)
         .attr('y', 30)
         .attr('transform', 'rotate(-90)');
+
+      svg.append('text')
+        .attr('class', 'axis light')
+        .attr('id', 'axis_ratio')
+        .text('1')
+        .attr('x', 25)
+        .attr('y', h-60);
 
       var shadow = svg.append('svg:defs')
         .append('svg:filter')
@@ -2082,7 +2089,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('x', '0%')
         .attr('y', '0%')
         .attr('width', '200%')
-        .attr('height', '200%')
+        .attr('height', '200%');
 
       shadow.append('svg:feOffset')
         .attr('result', 'offOut')
@@ -2125,13 +2132,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               'ORDER BY loss.sum_loss DESC',
               'LIMIT 50), extent as ('].join(' ');
 
-      sql += 'SELECT extent.iso, SUM(';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'extent.y'+y+' + ';
-      }
-
-      sql += ['extent.y2012) as extent',
+      sql += ['SELECT extent.iso, SUM(extent.y2012) as extent',
               'FROM countries_extent extent',
               'GROUP BY extent.iso) '].join(' ');
 
