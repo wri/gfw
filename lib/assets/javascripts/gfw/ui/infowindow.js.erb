@@ -154,20 +154,20 @@ CartoDBInfowindow.prototype.setContent = function(content){
           switch(column){
             case 'photo_credit':
               column_ = 'Photo credit';
-            break;
+              break;
             case 'Brightness':
               suffix = ' (Kelvin)';
-            break;
+              break;
             case 'Confidence':
               suffix = ' (%)';
-            break;
+              break;
             case 'Acq time':
               column_ = 'Acquisition time';
               suffix   = ' (UTC)';
-            break;
+              break;
             case 'Acq date':
               column_ = 'Acquisition date';
-            break;
+              break;
           }
 
           html += '<label>' + column_ + '</label>';

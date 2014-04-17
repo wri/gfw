@@ -292,6 +292,8 @@
 .source_category_description {
   font: 13px/1.2 "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #999;
+
+  + .source_category_description { margin-top: 10px; }
 }
 
 .source-item {
@@ -460,8 +462,10 @@
 .source_dropdown_header {
   @extend .clearfix;
   display: block;
+  margin-top: 20px;
 
   .overview_title {
+    margin: 0;
     padding: 0 10px;
     line-height: 60px;
   }
@@ -478,6 +482,9 @@
 
 .source_dropdown_body {
   padding: 0 10px 10px;
+
+  &.active,
+  &.sinlge_active { display: block; }
 }
 
 .videos_list p {
