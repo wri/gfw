@@ -308,10 +308,11 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     var that = this;
 
     var area = this.model.get('area'),
+        not_analyze = typeof area !== 'string',
         baselayer = config.BASELAYER,
         baseurl = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
         range;
-
+console.log(area, not_analyze)
     if (config.BASELAYER === 'fires' || config.BASELAYER === null) return;
 
     if (!this.initStats) {
@@ -343,7 +344,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     } if (baselayer === 'loss') {
       range = this.range || '&begin=2000&end=2013';
     }
-    config.MAPOPTIONS.analysis = '?geom='+encodeURI(area)+range;
+
+    config.MAPOPTIONS.analysis = (not_analyze) ? '?'+range.substr(1) : '?geom='+encodeURI(area)+range;
 
     if (config.ISO === 'ALL') {
       this.alertsUrl = baseurl+dataset+config.MAPOPTIONS.analysis;
@@ -353,6 +355,17 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     } else {
       this.alertsUrl = baseurl+dataset+'?iso='+config.ISO+range;
       this.downloadUrl = baseurl+dataset+'.shp?iso='+config.ISO+range;
+    }
+
+    if (not_analyze) {
+      if (this.$el.find('.analysis_info').is(':visible')) {
+        this.$el.find('.analysis_info').hide();
+      }
+      return true;
+    } else {
+      if (! this.$el.find('.analysis_info').is(':visible')) {
+        this.$el.find('.analysis_info').show();
+      }
     }
 
     executeAjax(this.alertsUrl, {}, {
