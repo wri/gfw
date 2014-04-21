@@ -1199,40 +1199,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     }
   },
 
-  linearRegressionLine: function(svg, dataset, x_log_scale, y_log_scale) {
-    var that = this;
-
-    // linear regresion line
-    var lr_line = ss.linear_regression()
-      .data(dataset.rows.map(function(d) { return [d.loss, d.gain]; }))
-      .line();
-
-    var line = d3.svg.line()
-      .x(x_log_scale)
-      .y(function(d) { return that.y_log_scale(lr_line(d));} )
-
-    var x0 = x_log_scale.domain()[0];
-    var x1 = x_log_scale.domain()[1];
-    var lr = svg.selectAll('.linear_regression').data([0]);
-
-    var attrs = {
-       "x1": x_log_scale(x0),
-       "y1": y_log_scale(lr_line(x0)),
-       "x2": x_log_scale(x1),
-       "y2": y_log_scale(lr_line(x1)),
-       "stroke-width": 1.3,
-       "stroke": "white",
-       "stroke-dasharray": "7,5"
-    };
-
-    lr.enter()
-      .append("line")
-       .attr('class', 'linear_regression')
-       .attr(attrs);
-
-    lr.transition().attr(attrs);
-  },
-
   _toggleClass: function() {
     if (this.model.get('class') === 'expanded') {
       $('.countries_list__header__minioverview').addClass('expanded');
@@ -1675,7 +1641,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         // line
         svg.selectAll('line.overview_line')
-          .data(data_gain_)
+          .data([data_gain_[0]])
           .enter()
           .append('line')
           .attr({
@@ -1853,7 +1819,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         // line
         svg.selectAll('line.overview_line')
-          .data(data_gain_)
+          .data([data_gain_[0]])
           .enter()
           .append('line')
           .attr({
@@ -2105,10 +2071,17 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       svg.append('text')
         .attr('class', 'axis light')
         .attr('id', 'axis_y')
-        .text('Cover gain 2001-2012')
-        .attr('x', -(h/2))
+        .text('Ratio of tree cover loss to gain 2001-2012')
+        .attr('x', -(h/2)-60)
         .attr('y', 30)
         .attr('transform', 'rotate(-90)');
+
+      svg.append('text')
+        .attr('class', 'axis light')
+        .attr('id', 'axis_ratio')
+        .text('1')
+        .attr('x', 25)
+        .attr('y', h-60);
 
       var shadow = svg.append('svg:defs')
         .append('svg:filter')
@@ -2116,7 +2089,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('x', '0%')
         .attr('y', '0%')
         .attr('width', '200%')
-        .attr('height', '200%')
+        .attr('height', '200%');
 
       shadow.append('svg:feOffset')
         .attr('result', 'offOut')
@@ -2140,73 +2113,79 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         sql += 'loss.y'+y+' + ';
       }
 
-      sql += 'loss.y2012) as sum_loss\
-              FROM loss_gt_50 loss\
-              GROUP BY iso), gain as (SELECT g.iso, SUM(y2001_y2012) as sum_gain\
-                                      FROM countries_gain g, loss_gt_50 loss\
-                                      WHERE loss.iso = g.iso\
-                                      GROUP BY g.iso), ratio as (';
+      sql += ['loss.y2012) as sum_loss',
+              'FROM loss_gt_50 loss',
+              'GROUP BY iso), gain as ('].join(' ');
 
-      sql += 'SELECT c.iso, c.name, c.enabled, loss.sum_loss as loss, gain.sum_gain as gain, loss.sum_loss/gain.sum_gain as ratio\
-              FROM loss, gain, gfw2_countries c\
-              WHERE sum_gain IS NOT null\
-              AND NOT sum_gain = 0\
-              AND c.iso = gain.iso\
-              AND c.iso = loss.iso\
-              ORDER BY loss.sum_loss DESC\
-              LIMIT 50) ';
+      sql += ['SELECT g.iso, SUM(y2001_y2012) as sum_gain',
+              'FROM countries_gain g, loss_gt_50 loss',
+              'WHERE loss.iso = g.iso',
+              'GROUP BY g.iso), ratio as ('].join(' ');
 
-      sql += 'SELECT *\
-              FROM ratio\
-              WHERE ratio IS NOT null\
-              ORDER BY ratio DESC';
+      sql += ['SELECT c.iso, c.name, c.enabled, loss.sum_loss as loss,',
+                     'gain.sum_gain as gain, loss.sum_loss/gain.sum_gain as ratio',
+              'FROM loss, gain, gfw2_countries c',
+              'WHERE sum_gain IS NOT null',
+              'AND NOT sum_gain = 0',
+              'AND c.iso = gain.iso',
+              'AND c.iso = loss.iso',
+              'ORDER BY loss.sum_loss DESC',
+              'LIMIT 50), extent as ('].join(' ');
+
+      sql += ['SELECT extent.iso, SUM(extent.y2012) as extent',
+              'FROM countries_extent extent',
+              'GROUP BY extent.iso) '].join(' ');
+
+      sql += ['SELECT *',
+              'FROM ratio, extent',
+              'WHERE ratio IS NOT null',
+              'AND extent.iso = ratio.iso'].join(' ');
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows;
 
         var log_m = 50;
 
-        var y_scale = d3.scale.linear()
-          .range([h, 0])
-          .domain([0, d3.max(data, function(d) { return d.gain; })]);
-
-        var x_scale = d3.scale.linear()
-          .range([m, w-m])
-          .domain([d3.min(data, function(d) { return d.loss; }), d3.max(data, function(d) { return d.loss; })]);
-
-        var y_scale = d3.scale.linear()
-          .range([h-log_m, m])
-          .domain([d3.min(data, function(d) { return d.gain; }), d3.max(data, function(d) { return d.gain; })]);
-
         var x_log_scale = d3.scale.log()
           .range([m, w-m])
-          .domain([d3.min(data, function(d) { return d.loss; }), d3.max(data, function(d) { return d.loss; })]);
+          .domain([d3.min(data, function(d) { return d.extent; }), d3.max(data, function(d) { return d.extent; })]);
 
         var y_log_scale = d3.scale.log()
           .range([h-log_m, m])
-          .domain([d3.min(data, function(d) { return d.gain; }), d3.max(data, function(d) { return d.gain; })]);
+          .domain([d3.min(data, function(d) { return d.ratio; }), d3.max(data, function(d) { return d.ratio; })]);
 
-        var r_scale = d3.scale.quantile()
-          .domain([d3.min(data, function(d) { return d.ratio; }), 1, d3.max(data, function(d) { return d.ratio; })])
-          .range(["#9ABF00", "#C441FF"]);
+        var color_scale = d3.scale.linear()
+          .domain([d3.min(data, function(d) { return d.ratio; }), 1, 10, d3.max(data, function(d) { return d.ratio; })])
+          .range(["#9ABF00", "#9ABF00", "#CA46FF", "#CA46FF"]);
 
-        that.linearRegressionLine(svg, json, x_scale, y_scale);
+        // line
+        svg.selectAll('line.linear_regression')
+          .data([1])
+          .enter()
+          .append('line')
+          .attr({
+            'class': 'linear_regression',
+            'x1': m,
+            'x2': w-m,
+            'y1': function(d) { return y_log_scale(d); },
+            'y2': function(d) { return y_log_scale(d); },
+            "stroke-width": 1.3,
+            "stroke": "white",
+            "stroke-dasharray": "7,5"
+          });
 
         // circles w/ magic numbers :(
         var circle_attr = {
-          'cx': function(d) { return d.loss >= 1 ? x_log_scale(d.loss) : m; },
-          'cy': function(d) { return d.gain >= 1 ? y_log_scale(d.gain) : h-log_m; },
-          'r': '5',
+          'cx': function(d) { return x_log_scale(d.extent) },
+          'cy': function(d) { return y_log_scale(d.ratio) },
+          'r': 5,
           'name': function(d) { return d.name; },
           'class': function(d) { return d.enabled ? 'ball ball_link' : 'ball ball_nolink'; }
         };
 
         var data_ = [],
             data_link_ = [],
-            exclude = ['Saint Barthélemy', 'Saint Kitts and Nevis',
-                       'Saint Pierre and Miquelon', 'Virgin Islands', 'Oman',
-                       'Gibraltar', 'Saudi Arabia', 'French Polynesia',
-                       'Samoa', 'Western Sahara', 'United Arab Emirates'];
+            exclude = [];
 
         _.each(data, function(row) {
           if (!_.contains(exclude, row.name)) {
@@ -2226,13 +2205,13 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .append('svg:circle')
           .attr(circle_attr)
           .style('fill', function(d) {
-            return r_scale(d.ratio);
+            return color_scale(d.ratio);
           })
           .style('filter', 'url(#shadow)')
           .on('mouseover', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', '7')
+              .attr('r', 7)
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -2249,7 +2228,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .on('mouseenter', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', '7')
+              .attr('r', 7)
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -2266,7 +2245,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .on('mouseout', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', '5')
+              .attr('r', 5)
               .style('opacity', .8);
 
             that.tooltip.style('visibility', 'hidden');
@@ -2278,13 +2257,13 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .append('svg:circle')
           .attr(circle_attr)
           .style('fill', function(d) {
-            return r_scale(d.ratio);
+            return color_scale(d.ratio);
           })
           .style('filter', 'url(#shadow)')
           .on('mouseover', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', '7')
+              .attr('r', 7)
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -2301,7 +2280,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .on('mouseenter', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', '7')
+              .attr('r', 7)
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -2318,7 +2297,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .on('mouseout', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', '5')
+              .attr('r', 5)
               .style('opacity', .8);
 
             that.tooltip.style('visibility', 'hidden');

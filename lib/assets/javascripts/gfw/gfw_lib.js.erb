@@ -45,7 +45,7 @@ GFW.modules.app = function(gfw) {
 
       this.layers = [];
       this.cloudfront_url = 'dyynnn89u7nkm.cloudfront.net';
-      this.global_version = 2;
+      this.global_version = 3;
 
       gfw.log.enabled = options ? options.logging : false;
 
@@ -951,8 +951,8 @@ GFW.modules.app = function(gfw) {
         GFW.app._renderForest2000Layer();
       });
 
-      this.time_layer_loss.set_start_time(2000);
-      this.time_layer_loss.set_time(2012);
+      this.time_layer_loss.set_start_time(2001);
+      this.time_layer_loss.set_time(2013);
 
       subscribe('timeline:change_date_loss', _.bind(function(start_year, end_year, options) {
         this.time_layer_loss.set_range(start_year, end_year);
@@ -1542,7 +1542,6 @@ GFW.modules.datalayers = function(gfw) {
         that.LayersObj.each(function(p) {
           if (p.get('slug') === 'user_stories') {
             Filter.addFilter(0, 'nothing', 'People', 'Land Rights', { disabled: true , category_color: '#707D92', color: '#707D92' });
-            Filter.addFilter(0, 'nothing', 'People', 'Resource Rights', { disabled: true , category_color: '#707D92', color: '#707D92' });
           }
 
           that._addLayer(p);
