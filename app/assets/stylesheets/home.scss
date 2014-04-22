@@ -1343,12 +1343,6 @@ body {
   @extend .sans-serif;
   text-shadow: 0px 0px 3px #fff;
   @include user-select(text);
-
-  &.visibility_show{
-    visibility: visible;
-    top: 78px;
-    right: 165px;
-  }
 }
 
 
