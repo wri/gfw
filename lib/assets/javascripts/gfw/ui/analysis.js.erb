@@ -84,11 +84,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
           end_month_ = end_month - 1; // Convert months to (0-11)
 
       // Create dates, 0 padding months < 10
-      var start = start = start_year + '-' + ((start_month < 10) ? ("0" + start_month) : start_month) + '-01',
+      var start = start_year + '-' + ((start_month < 10) ? ("0" + start_month) : start_month) + '-01',
           end = end_year + '-' + ((end_month < 10) ? ("0" + end_month) : end_month) + '-01';
 
       this.range = '&begin='+start+'&end='+end;
-
       if ((start_month >= 1 && start_month <= 12) && (end_month >= 1 && end_month <= 12)) {
         this.info.model.set({ 'subtitle': config.MONTHNAMES_SHORT[start_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_].slice(1).toLowerCase()+"-"+start_year+" to "+config.MONTHNAMES_SHORT[end_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_].slice(1).toLowerCase()+"-"+end_year });
       }
@@ -343,8 +342,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       range = this.range || '&begin=' + fbegin + '&end=' + fend;
 
     } else if (baselayer === 'imazon') {
-      var ibegin = '2007-01-01' || url('?begin'),
-          iend   = '2013-12-01' || url('?end');
+      var ibegin = '2007-0-9-01'  || url('?begin'),
+          iend   = '2013-0-10-01' || url('?end');
       range = this.range || '&begin=' + ibegin + '&end=' + iend;
 
     } if (baselayer === 'loss') {
