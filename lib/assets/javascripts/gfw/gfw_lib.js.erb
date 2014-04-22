@@ -1388,12 +1388,6 @@ GFW.modules.maplayer = function(gfw) {
         Legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
       }
 
-      if (slug === ('fires')) {
-        Analysis.hide();
-      } else {
-        Analysis.show();
-      }
-
       if (slug === 'forestgain') {
         if (visible) {
           GFW.app.addLayer(this.layer);
@@ -1495,6 +1489,11 @@ GFW.modules.maplayer = function(gfw) {
         Filter.toggle(id);
       }
 
+      if (slug === ('fires') || GFW.app.currentBaseLayer === 'fires' || GFW.app.currentBaseLayer === null) {
+        Analysis.hide();
+      } else {
+        Analysis.show();
+      }
       updateHash();
     }
   });
