@@ -1494,7 +1494,12 @@ GFW.modules.maplayer = function(gfw) {
 
         Filter.toggle(id);
       }
-
+      
+      if (slug === ('fires') || GFW.app.currentBaseLayer === 'fires' || GFW.app.currentBaseLayer === null) {
+        Analysis.hide();
+      } else {
+        Analysis.show();
+      }
       updateHash();
     }
   });
