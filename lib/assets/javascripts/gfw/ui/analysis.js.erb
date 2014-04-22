@@ -212,10 +212,27 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     updateHash();
   },
 
-  _enableAnalysisButton: function() {
-    this.$analysis_control.removeClass('disabled');
+  unblock_analysis: function() {
+    this.$analysis_control.removeClass('analysis_blocked');
+    this._enableAnalysisButton();
+  },
 
-    this.$analysis_control.attr('data-tip', 'Analyze an area on the map');
+  block_analysis: function() {
+    this.$analysis_control.on('click',function(e){
+      e.stopPropagation();
+    }
+    ).attr('data-tip', 'Please, it is necessary to unlock Forest Change Loss Layer before start analyzing')
+     .addClass('analysis_blocked')
+  },
+
+  _enableAnalysisButton: function() {
+    var control = this.$analysis_control
+    
+    control.removeClass('disabled');
+
+    if (!control.hasClass('analysis_blocked')) {
+      control.attr('data-tip', 'Analyze an area on the map');
+    }
   },
 
   disableAnalysisButton: function() {
