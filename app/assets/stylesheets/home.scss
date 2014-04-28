@@ -985,6 +985,11 @@ body {
   height: 19px;
   width: 19px;
   @include home-icons-sprite(viewfinder);
+
+  &:hover,
+  &:active{
+    z-index: 0;
+  }
 }
 
 .marker {
