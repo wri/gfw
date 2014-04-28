@@ -987,8 +987,10 @@ body {
   @include home-icons-sprite(viewfinder);
 
   &:hover,
-  &:active{
+  &:active,
+  &:focus{
     z-index: 0;
+    top: -19;
   }
 }
 
