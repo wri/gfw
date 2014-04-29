@@ -200,7 +200,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.initStats = false;
 
     this._clearAnalysis();
-
     if (!$('body').hasClass('embed')){
       this._enableAnalysisButton();
     }
@@ -854,6 +853,10 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
     this.$dataset     = this.$el.find(".alert .title");
     this.$shadow      = this.$el.find(".shadow");
     this.$alert_count = this.$el.find("#alerts-count");
+    
+    if ($('body').hasClass('embed')){
+      this.close();
+    }
 
     if (this.model.get('download')) {
       this.downloadDropdown = new gfw.ui.view.DownloadDropdown({

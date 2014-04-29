@@ -32,6 +32,15 @@ body {
 
   &.embed {
     min-width: 0;
+    #analysis_control{
+      display: none;
+    }
+    .analysis_info{
+      display: block;
+      .info_controls{
+        display: none;
+      }
+    }
   }
 }
 
