@@ -145,7 +145,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if (this.$doneButton.attr('class') === 'done disabled') return;
 
     this.model.set('analyzing', false);
-
+    this.info.model.set('closed', false);
     this._getAlertCount();
 
     GFW.app._showStoriesMarkers();
@@ -323,7 +323,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     var that = this;
 
     var area = this.model.get('area'),
-        not_analyze = typeof area !== 'string',
+        not_analyze = (typeof area !== 'string' || area.length == 0),
         baselayer = config.BASELAYER,
         baseurl = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
         range;
@@ -762,14 +762,19 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
   },
 
   onChangeBaselayer: function() {
-    this.model.set('closed', false);
-    this.render();
-    this.$el.removeClass('closed');
+    if (this.model.get('closed')) {
+      this.close();
+    } else {
+      this.model.set('closed', false);
+      this.render();
+      this.$el.removeClass('closed');
+    }
   },
 
   _toggle: function() {
-    if (this.model.get('hidden')) {
+    if (this.model.get('hidden') || this.model.get('closed')) {
       this.$el.fadeOut();
+      this.model.set('closed', true);
     } else {
       this.$el.fadeIn();
     }
