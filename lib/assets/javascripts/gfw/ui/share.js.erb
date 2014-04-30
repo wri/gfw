@@ -185,7 +185,7 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
       dim_y = ($body.hasClass('show')) ? 480 : 600;
     }
 
-    this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname+'"></iframe>');
+    this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname + window.location.search+'"></iframe>');
   },
 
   _generateShortUrl: function(url, callback) {
