@@ -17,7 +17,7 @@ First make sure you have [Xcode](https://developer.apple.com/xcode) and [Command
 Next install [Homebrew](http://brew.sh), the OS X package manager:
 
 ```bash
-$ ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+$ ruby -e "$(ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)")"
 ```
 
 We recommend managing your Ruby installation through [rbenv](https://github.com/sstephenson/rbenv). It's just an easy way to run multiple Ruby versions for different applications:
