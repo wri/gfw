@@ -8,6 +8,7 @@
 @import 'forms';
 
 @import 'stories-icons/*.png';
+/**/
 
 
 .stories {
@@ -40,6 +41,9 @@
 
 /* =Index
 ----------------------------------------------- */
+.featured_stories {
+  margin-top: 40px;
+}
 
 .featured_story {
   position: relative;

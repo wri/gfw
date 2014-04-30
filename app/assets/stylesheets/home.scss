@@ -77,7 +77,6 @@ body {
   }
 }
 
-
 // .analysis-link {
 //   margin: 5px;
 //   z-index: 10;
@@ -335,7 +334,7 @@ body {
   &.forest_use    .filter-icon  { @include home-icons-sprite(icon_forest_use); }
   &.conservation  .filter-icon  { @include home-icons-sprite(icon_conservation); }
   &.people        .filter-icon  { @include home-icons-sprite(icon_regrowth); }
-  &.stories       .filter-icon  { @include home-icons-sprite(icon_stories); }
+  &.stories       .filter-icon  { @include home-icons-sprite(marker_exclamation); }
 
   .filter-line {
     position: relative;
@@ -1047,6 +1046,9 @@ body {
 
 .timeline_loss {
   left: 30px;
+  &.visibility_hidden{
+    visibility: hidden;
+  }
 }
 
 .timeline_modis {
@@ -1587,6 +1589,13 @@ body {
 
       strong,
       a { color: #F13588; }
+    }
+
+    &.gain {
+      color: #6D6DE5;
+
+      strong,
+      a { color: #6D6DE5; }
     }
   }
 

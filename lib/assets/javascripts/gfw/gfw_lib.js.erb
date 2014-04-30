@@ -45,7 +45,7 @@ GFW.modules.app = function(gfw) {
 
       this.layers = [];
       this.cloudfront_url = 'dyynnn89u7nkm.cloudfront.net';
-      this.global_version = 1;
+      this.global_version = 3;
 
       gfw.log.enabled = options ? options.logging : false;
 
@@ -123,15 +123,16 @@ GFW.modules.app = function(gfw) {
     open: function() {
       var that = this;
 
-      var dh = $(window).height() + 67,
-          hh = $('.header').height();
+      var dh   = $(window).height() + 67,
+          hh   = $('.header').height(),
+          $map = $('#map');
 
-      $('#map').animate({ height: dh - hh }, 250, function() {
+      $map.animate({ height: dh - hh }, 250, function() {
         google.maps.event.trigger(map, 'resize');
         map.setOptions({ scrollwheel: true });
       });
 
-      this._goTo($('#map'), { margin: '67' });
+      this._goTo($map, { margin: '67' },updateHash);
     },
 
     close: function(callback) {
@@ -153,9 +154,10 @@ GFW.modules.app = function(gfw) {
         var delay  = (opt && opt.delay)  || 100;
         var margin = (opt && opt.margin) || 0;
 
-        $('html, body').delay(delay).animate({scrollTop:$el.offset().top - margin}, speed);
+        $('html, body').delay(delay).animate({scrollTop:$el.offset().top - margin}, speed, function(){
+            callback && callback()
+        });
 
-        callback && callback();
       }
     },
 
@@ -763,7 +765,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _showStoriesMarkers: function() {
-      if (GFW.app.storiesLoaded){      
+      if (GFW.app.storiesLoaded){
         _.each(this.storiesMarkers, function(marker) {
           marker.show();
         });
@@ -816,7 +818,7 @@ GFW.modules.app = function(gfw) {
 
       $.ajax({
         async: false,
-        url: "https://wri-01.cartodb.com/api/v2/sql?q=SELECT * FROM mongabaydb WHERE published >= now() - INTERVAL '3 Months'&format=geojson",
+        url: "https://wri-01.cartodb.com/api/v2/sql?q=SELECT * FROM mongabaydb WHERE published >= now() - INTERVAL '12 Months'&format=geojson",
         success: function(data) {
           _.each(data.features, function(features) {
             var position = new google.maps.LatLng(features.properties.lat, features.properties.lon),
@@ -882,7 +884,7 @@ GFW.modules.app = function(gfw) {
       GFW.app.mongabayHidden = true;
       if (!layer.get('visible')) {
         this.mongabayInfowindow.close();
-        GFW.app.mongabayHidden = false;        
+        GFW.app.mongabayHidden = false;
       }
 
       if (this.mongabayLoaded) {
@@ -949,8 +951,8 @@ GFW.modules.app = function(gfw) {
         GFW.app._renderForest2000Layer();
       });
 
-      this.time_layer_loss.set_start_time(2000);
-      this.time_layer_loss.set_time(2012);
+      this.time_layer_loss.set_start_time(2001);
+      this.time_layer_loss.set_time(2013);
 
       subscribe('timeline:change_date_loss', _.bind(function(start_year, end_year, options) {
         this.time_layer_loss.set_range(start_year, end_year);
@@ -1199,12 +1201,14 @@ GFW.modules.maplayer = function(gfw) {
           GFW.app._toggleStoriesLayer(that.layer);
           Legend.toggleItem(that.layer.get('id'), that.layer.get('category_slug'), that.layer.get('category_name'),  that.layer.get('title'), that.layer.get('slug'), that.layer.get('category_color'), that.layer.get('title_color'));
 
-            GFW.app._loadStoriesLayer();
+          GFW.app._loadStoriesLayer();
         };
 
         Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: customEvent, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
 
         if (_.include(filters, this.layer.get('id'))) {
+          GFW.app.storiesLoaded = true;
+          this.layer.set('visible',true);
           GFW.app._loadStoriesLayer();
           Filter.check(this.layer.get('id'));
           Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'));
@@ -1218,6 +1222,8 @@ GFW.modules.maplayer = function(gfw) {
         Filter.addFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: mongabayEvent, source: this.layer.get('title'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color') });
 
         if (_.include(filters, this.layer.get('id'))) {
+          GFW.app.mongabayHidden = true;
+          this.layer.set('visible',true);
           GFW.app._loadMongabayLayer();
           Filter.check(this.layer.get('id'));
           Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'));
@@ -1373,6 +1379,8 @@ GFW.modules.maplayer = function(gfw) {
           disabled        = this.layer.get('disabled');
 
       if (disabled) return;
+      
+      Analysis.unblock_analysis();
 
       GFW.app.closeInfowindows();
 
@@ -1384,12 +1392,6 @@ GFW.modules.maplayer = function(gfw) {
 
       if (category !== 'Forest change') {
         Legend.toggleItem(id, category_slug, category, title, slug, category_color, title_color);
-      }
-
-      if (slug === ('fires')) {
-        Analysis.hide();
-      } else {
-        Analysis.show();
       }
 
       if (slug === 'forestgain') {
@@ -1413,7 +1415,7 @@ GFW.modules.maplayer = function(gfw) {
         } else {
           GFW.app.updateBaseLayer(null);
 
-          Analysis.hide();
+          Analysis.block_analysis();
 
           if (!Analysis.model.get('area') || (Analysis.model.get('area') && Analysis.model.get('area') === '')) {
             Analysis.clearInfo();
@@ -1493,6 +1495,11 @@ GFW.modules.maplayer = function(gfw) {
         Filter.toggle(id);
       }
 
+      if (slug === ('fires') || GFW.app.currentBaseLayer === 'fires' || GFW.app.currentBaseLayer === null) {
+        Analysis.hide();
+      } else {
+        Analysis.show();
+      }
       updateHash();
     }
   });
@@ -1539,7 +1546,7 @@ GFW.modules.datalayers = function(gfw) {
 
         that.LayersObj.each(function(p) {
           if (p.get('slug') === 'user_stories') {
-            Filter.addFilter(0, 'nothing', 'People', 'Stay tuned', { disabled: true , category_color: '#707D92', color: '#707D92' });
+            Filter.addFilter(0, 'nothing', 'People', 'Land Rights', { disabled: true , category_color: '#707D92', color: '#707D92' });
           }
 
           that._addLayer(p);
