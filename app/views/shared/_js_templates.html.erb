@@ -343,14 +343,66 @@
   </div>
 </script>
 
+<script id='timeline_loss-template' type='text/x-underscore-template'>
+  <div class='timeline_coordinates'></div>
+  <div class='timeline_legend'><p>UMD tree cover loss <span>(zoom in for most accurate viewing)</span></p></div>
+  <div class='timeline-inner'>
+    <div class='action'>
+      <a class='play' href='#'></a>
+      <a class='pause' href='#'></a>
+    </div>
+
+    <div class='time'>
+      <div class='line'><div class='tipsy'><span>Year</span><div class='arrow'></div></div></div>
+
+      <div class='trail'>
+        <div class='handle left'>
+          <div class='tipsy'>
+            <span></span>
+            <div class='arrow'></div>
+          </div>
+        </div>
+
+        <div class='handle right'>
+          <div class='tipsy'>
+            <span></span>
+            <div class='arrow'></div>
+          </div>
+        </div>
+      </div>
+
+      <ul class='years'></ul>
+      <div class='range'></div>
+    </div>
+  </div>
+</script>
+
 <script id='timeline_fires-template' type='text/x-underscore-template'>
   <div class='timeline_coordinates'></div>
-  <div class='timeline_legend'><p>NASA active fire alerts</p></div>
+  <div class='timeline_legend'><p>NASA active fire alerts <span>(Last 8 days)</p></div>
   <div class='timeline-inner'>
     <div class='time'>
-      <ul class='quarters'></ul>
-      <div class='line'><div class='tipsy'><span>Quarter</span><div class='arrow'></div></div></div>
-      <ul class='visible_quarters'></ul>
+      <div class='line'><div class='tipsy'><span>Year</span><div class='arrow'></div></div></div>
+
+      <div class='trail'>
+        <div class='handle left'>
+          <div class='tipsy'>
+            <span></span>
+            <div class='arrow'></div>
+          </div>
+        </div>
+
+        <div class='handle right'>
+          <div class='tipsy'>
+            <span></span>
+            <div class='arrow'></div>
+          </div>
+        </div>
+      </div>
+
+      <ul class='days'></ul>
+      <div class='range'></div>
+      <ul class='visible_days'></ul>
     </div>
   </div>
 </script>
