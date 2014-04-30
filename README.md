@@ -33,7 +33,7 @@ Next clone the gfw repo:
 $ git clone https://github.com/Vizzuality/gfw.git
 ```
 
-Using rbenv, install and set Ruby 2.0.0-p247 in the main app directory:
+Using rbenv, install and set Ruby 2.1.1 in the main app directory:
 
 ```bash
 $ cd gfw
