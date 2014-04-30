@@ -200,7 +200,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.initStats = false;
 
     this._clearAnalysis();
-
     if (!$('body').hasClass('embed')){
       this._enableAnalysisButton();
     }
@@ -707,6 +706,9 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
 
     this.model.set('containment', '#map-container .map');
 
+    if ($('body').hasClass('embed')){
+      this.$el.css('right','-99999px');
+    }
     this._initViews();
     this._initBindings();
 
@@ -854,6 +856,14 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
     this.$dataset     = this.$el.find(".alert .title");
     this.$shadow      = this.$el.find(".shadow");
     this.$alert_count = this.$el.find("#alerts-count");
+    
+    if ($('body').hasClass('embed')){
+      this.$el.hide();
+      this.close();
+      setTimeout(function(){
+        that.$el.css('right','45px').delay(300).fadeIn();
+      },1000)
+    }
 
     if (this.model.get('download')) {
       this.downloadDropdown = new gfw.ui.view.DownloadDropdown({
