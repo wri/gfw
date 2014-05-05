@@ -613,9 +613,9 @@
 
   .bobolink { @include static-logos-sprite(bobolink); }
 
-  .vizzuality {
-    @include static-logos-sprite(vizzuality);
-    &:hover { @include static-logos-sprite(vizzuality_hover); }
+  .simbiotica {
+    @include static-logos-sprite(simbiotica);
+    &:hover { @include static-logos-sprite(simbiotica_hover); }
   }
 
   .goodall {
