@@ -944,6 +944,15 @@ GFW.modules.app = function(gfw) {
           cartodb_link.innerHTML = "<img src='http://cartodb.s3.amazonaws.com/static/new_logo.png' alt='CartoDB' title='CartoDB' style='border:none;' />";
           map.getDiv().appendChild(cartodb_link)
         }
+        if (!document.getElementById('gee_logo')) {
+          var cartodb_link = document.createElement('a');
+          cartodb_link.setAttribute('id','gee_logo');
+          cartodb_link.setAttribute('style','position:absolute; bottom: 0px; left:160px; display:block; border:none; z-index:100');
+          cartodb_link.setAttribute('href','https://earthengine.google.org');
+          cartodb_link.setAttribute('target','_blank');
+          cartodb_link.innerHTML = "<img src='/assets/logos/geengine.png' alt='Powered by Google Earth Engine' title='Powered by Google Earth Engine' style='border:none;' />";
+          map.getDiv().appendChild(cartodb_link)
+        }
       }, 2000);
 
       this.time_layer_loss = Deforestation.init(map, function() {
