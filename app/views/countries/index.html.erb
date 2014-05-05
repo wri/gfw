@@ -13,9 +13,11 @@
 <% end %>
 
 <div class="inner">
-  <div class="countries_block">
-    <h2 class="header-title">Explore worldwide data in the <%= link_to "global overview", countries_overview_path %></h2>
-  </div>
+  <a href="<%= countries_overview_path %>" title="Explore worldwide data in the global overview">
+    <div class="countries_block">
+      <h2 class="header-title">Explore worldwide data in the <span>global overview</span></h2>
+    </div>
+  </a>
 </div>
 
 <ul class="countries_list inner">

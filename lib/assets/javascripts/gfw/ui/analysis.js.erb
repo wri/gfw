@@ -145,7 +145,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if (this.$doneButton.attr('class') === 'done disabled') return;
 
     this.model.set('analyzing', false);
-
+    this.info.model.set('closed', false);
     this._getAlertCount();
 
     GFW.app._showStoriesMarkers();
@@ -200,7 +200,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.initStats = false;
 
     this._clearAnalysis();
-
     if (!$('body').hasClass('embed')){
       this._enableAnalysisButton();
     }
@@ -236,7 +235,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
   disableAnalysisButton: function() {
     this.$analysis_control.attr('data-tip', '')
-    $('.tipsy').remove();
 
     this.$analysis_control.addClass('disabled');
   },
@@ -323,7 +321,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     var that = this;
 
     var area = this.model.get('area'),
-        not_analyze = typeof area !== 'string',
+        not_analyze = (typeof area !== 'string' || area.length == 0),
         baselayer = config.BASELAYER,
         baseurl = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
         range;
@@ -707,6 +705,9 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
 
     this.model.set('containment', '#map-container .map');
 
+    if ($('body').hasClass('embed')){
+      this.$el.css('right','-99999px');
+    }
     this._initViews();
     this._initBindings();
 
@@ -762,14 +763,19 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
   },
 
   onChangeBaselayer: function() {
-    this.model.set('closed', false);
-    this.render();
-    this.$el.removeClass('closed');
+    if (this.model.get('closed')) {
+      this.close();
+    } else {
+      this.model.set('closed', false);
+      this.render();
+      this.$el.removeClass('closed');
+    }
   },
 
   _toggle: function() {
-    if (this.model.get('hidden')) {
+    if (this.model.get('hidden') || this.model.get('closed')) {
       this.$el.fadeOut();
+      this.model.set('closed', true);
     } else {
       this.$el.fadeIn();
     }
@@ -849,6 +855,14 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
     this.$dataset     = this.$el.find(".alert .title");
     this.$shadow      = this.$el.find(".shadow");
     this.$alert_count = this.$el.find("#alerts-count");
+    
+    if ($('body').hasClass('embed')){
+      this.$el.hide();
+      this.close();
+      setTimeout(function(){
+        that.$el.css('right','45px').delay(300).fadeIn();
+      },1000)
+    }
 
     if (this.model.get('download')) {
       this.downloadDropdown = new gfw.ui.view.DownloadDropdown({
