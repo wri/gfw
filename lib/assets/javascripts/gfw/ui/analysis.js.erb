@@ -120,6 +120,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if ($(this.$analysis_control).hasClass('disabled')) return;
 
     this.model.set('analyzing', true);
+    $viewfinder.addClass('analysing');
 
     GFW.app.closeInfowindows();
     GFW.app.hideMarkers();
@@ -132,6 +133,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     e && e.preventDefault();
 
     this.model.set('analyzing', false);
+    $viewfinder.removeClass('analysing');
 
     this._clearAnalysis();
     this._deleteSelectedShape();
@@ -145,6 +147,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if (this.$doneButton.attr('class') === 'done disabled') return;
 
     this.model.set('analyzing', false);
+    $viewfinder.removeClass('analysing');
     this.info.model.set('closed', false);
     this._getAlertCount();
 
@@ -658,6 +661,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.$helper = this.$el.find('.helper_bar');
     this.$analysis_control = this.$el.find('.analysis_control');
     $(this.$analysis_control).tipsy({ title: 'data-tip', fade: true, gravity: 'w' });
+    $viewfinder = $('#viewfinder');
 
     this.$doneButton = this.$el.find('.done');
 

@@ -986,9 +986,7 @@ body {
   width: 19px;
   @include home-icons-sprite(viewfinder);
 
-  &:hover,
-  &:active,
-  &:focus{
+  &.analysing{
     z-index: 0;
     top: -19;
   }
