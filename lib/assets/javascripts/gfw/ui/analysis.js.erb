@@ -121,6 +121,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     this.model.set('analyzing', true);
     $viewfinder.addClass('analysing');
+    $map_coordinates.fadeIn();
 
     GFW.app.closeInfowindows();
     GFW.app.hideMarkers();
@@ -134,6 +135,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     this.model.set('analyzing', false);
     $viewfinder.removeClass('analysing');
+    $map_coordinates.fadeOut();
 
     this._clearAnalysis();
     this._deleteSelectedShape();
@@ -148,6 +150,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     this.model.set('analyzing', false);
     $viewfinder.removeClass('analysing');
+    $map_coordinates.fadeOut();
+
     this.info.model.set('closed', false);
     this._getAlertCount();
 
@@ -662,6 +666,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.$analysis_control = this.$el.find('.analysis_control');
     $(this.$analysis_control).tipsy({ title: 'data-tip', fade: true, gravity: 'w' });
     $viewfinder = $('#viewfinder');
+    $map_coordinates = $('.coordinates.map_coordinates');
 
     this.$doneButton = this.$el.find('.done');
 

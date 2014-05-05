@@ -985,11 +985,7 @@ body {
   height: 19px;
   width: 19px;
   @include home-icons-sprite(viewfinder);
-
-  &.analysing{
-    z-index: 0;
-    top: -19;
-  }
+  pointer-events:none;
 }
 
 .marker {
