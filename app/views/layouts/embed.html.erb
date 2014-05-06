@@ -52,7 +52,7 @@
       <% if (!request.original_url.include?("&begin") && !request.original_url.include?("&date")) %>
         Time range:
         <% if (request.original_url.include?("/loss")) %>
-          Jan 2000, Jan 2013.
+          Jan 2000, Jan 2013 (loss layer).
         <% elsif (request.original_url.include?("/forma")) %>
           Jan 2006, Dec 2014.
         <% elsif (request.original_url.include?("/imazon")) %>
@@ -63,7 +63,9 @@
           Last 8 days.
         <% end %>
       <% end %>
-      <%= link_to 'Explore this map', (request.original_url.sub! 'embed/', '') %>. Find out what is happening in forests right now.
+    </p>
+    <p class="right">
+      <%= link_to 'Explore this map', (request.original_url.sub! 'embed/', ''), :target => '_blank' %>. Find out what is happening in forests right now.
     </p>
   </footer>
   <div class="backdrop"></div>

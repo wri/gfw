@@ -50,7 +50,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     subscribe('timeline:change_date_loss', _.bind(function(start_year, end_year, options) {
       if (options && options.publish) {
         this.range = '&begin='+start_year+'&end='+end_year;
-
         this.info.model.set({ 'subtitle': 'Jan-'+start_year+' to Jan-'+parseInt(end_year, 10) });
 
         if (this.info.model.get('hidden') && !url('?begin') && !url('?end')) return;
@@ -85,11 +84,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
           end_month_ = end_month - 1; // Convert months to (0-11)
 
       // Create dates, 0 padding months < 10
-      var start = start = start_year + '-' + ((start_month < 10) ? ("0" + start_month) : start_month) + '-01',
+      var start = start_year + '-' + ((start_month < 10) ? ("0" + start_month) : start_month) + '-01',
           end = end_year + '-' + ((end_month < 10) ? ("0" + end_month) : end_month) + '-01';
 
       this.range = '&begin='+start+'&end='+end;
-
       if ((start_month >= 1 && start_month <= 12) && (end_month >= 1 && end_month <= 12)) {
         this.info.model.set({ 'subtitle': config.MONTHNAMES_SHORT[start_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_].slice(1).toLowerCase()+"-"+start_year+" to "+config.MONTHNAMES_SHORT[end_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_].slice(1).toLowerCase()+"-"+end_year });
       }
@@ -122,6 +120,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if ($(this.$analysis_control).hasClass('disabled')) return;
 
     this.model.set('analyzing', true);
+    $viewfinder.addClass('analysing');
+    $map_coordinates.fadeIn();
 
     GFW.app.closeInfowindows();
     GFW.app.hideMarkers();
@@ -134,10 +134,13 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     e && e.preventDefault();
 
     this.model.set('analyzing', false);
+    $viewfinder.removeClass('analysing');
+    $map_coordinates.fadeOut();
 
     this._clearAnalysis();
     this._deleteSelectedShape();
     this._disableDoneButton();
+    this._enableAnalysisButton();
   },
 
   _onClickDone: function(e) {
@@ -146,7 +149,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if (this.$doneButton.attr('class') === 'done disabled') return;
 
     this.model.set('analyzing', false);
+    $viewfinder.removeClass('analysing');
+    $map_coordinates.fadeOut();
 
+    this.info.model.set('closed', false);
     this._getAlertCount();
 
     GFW.app._showStoriesMarkers();
@@ -201,7 +207,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.initStats = false;
 
     this._clearAnalysis();
-
     if (!$('body').hasClass('embed')){
       this._enableAnalysisButton();
     }
@@ -237,7 +242,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
   disableAnalysisButton: function() {
     this.$analysis_control.attr('data-tip', '')
-    $('.tipsy').remove();
 
     this.$analysis_control.addClass('disabled');
   },
@@ -273,12 +277,12 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     if (the_geom.features && the_geom.features[0]) {
        // countries
-      ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']/10000) * 10) / 10, true);
+      //ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']/10000) * 10) / 10, true);
       title = the_geom.features[0].properties['name'];
     } else {
-      ha = this._calcAreaPolygon(the_geom);
       title = "User defined area";
     }
+      ha = this._calcAreaPolygon(the_geom);
 
     this.model.set('area', JSON.stringify(the_geom));
     this.info.model.set('ha', ha);
@@ -324,10 +328,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     var that = this;
 
     var area = this.model.get('area'),
+        not_analyze = (typeof area !== 'string' || area.length == 0),
         baselayer = config.BASELAYER,
         baseurl = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
         range;
-
     if (config.BASELAYER === 'fires' || config.BASELAYER === null) return;
 
     if (!this.initStats) {
@@ -351,15 +355,27 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     }
 
     if (baselayer === 'modis') {
-      range = this.range || '&date=2013-12-15';
+      var mdate = url('?date') || '2013-12-15';
+      range = this.range || '&date=' + mdate;
+
     } else if (baselayer === 'forma') {
-      range = this.range || '&begin=2006-01-01&end=2013-12-01';
+      var fbegin = url('?begin'),
+          fend   = url('?end');
+      range = this.range || '&begin=' + fbegin + '&end=' + fend;
+
     } else if (baselayer === 'imazon') {
-      range = this.range || '&begin=2007-01-01&end=2013-12-01';
+      var ibegin = '2007-0-9-01'  || url('?begin'),
+          iend   = '2013-0-10-01' || url('?end');
+      range = this.range || '&begin=' + ibegin + '&end=' + iend;
+
     } if (baselayer === 'loss') {
-      range = this.range || '&begin=2000&end=2013';
+      var lbegin = '2000' || url('?begin'),
+          lend   = '2013' || url('?end');
+      range = this.range || '&begin=' + lbegin +'&end=' + lend;
+
     }
-    config.MAPOPTIONS.analysis = '?geom='+encodeURI(area)+range;
+
+    config.MAPOPTIONS.analysis = (not_analyze) ? '?'+range.substr(1) : '?geom='+encodeURI(area)+range;
 
     if (config.ISO === 'ALL') {
       this.alertsUrl = baseurl+dataset+config.MAPOPTIONS.analysis;
@@ -369,6 +385,17 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     } else {
       this.alertsUrl = baseurl+dataset+'?iso='+config.ISO+range;
       this.downloadUrl = baseurl+dataset+'.shp?iso='+config.ISO+range;
+    }
+
+    if (not_analyze) {
+      if (this.$el.find('.analysis_info').is(':visible')) {
+        this.$el.find('.analysis_info').hide();
+      }
+      return true;
+    } else {
+      if (! this.$el.find('.analysis_info').is(':visible')) {
+        this.$el.find('.analysis_info').show();
+      }
     }
 
     executeAjax(this.alertsUrl, {}, {
@@ -560,10 +587,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     c0 = polygon.coordinates[0][0];
     polygon.coordinates[0].push(c0);
 
-    area = formatNumber(Math.ceil((google.maps.geometry.spherical.computeArea(this.drawingManager.path)/10000) * 10) / 10, true)
+    //area = formatNumber(Math.ceil((google.maps.geometry.spherical.computeArea(this.drawingManager.path)/10000) * 10) / 10, true)
 
     this.model.set('area', JSON.stringify(polygon));
-    this.info.model.set('ha', area);
+    this.info.model.set('ha', this._calcAreaPolygon(polygon));
     this.info.model.set('title', this.info.model.defaults.title);
   },
 
@@ -638,6 +665,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.$helper = this.$el.find('.helper_bar');
     this.$analysis_control = this.$el.find('.analysis_control');
     $(this.$analysis_control).tipsy({ title: 'data-tip', fade: true, gravity: 'w' });
+    $viewfinder = $('#viewfinder');
+    $map_coordinates = $('.coordinates.map_coordinates');
 
     this.$doneButton = this.$el.find('.done');
 
@@ -685,6 +714,9 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
 
     this.model.set('containment', '#map-container .map');
 
+    if ($('body').hasClass('embed')){
+      this.$el.css('right','-99999px');
+    }
     this._initViews();
     this._initBindings();
 
@@ -740,14 +772,19 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
   },
 
   onChangeBaselayer: function() {
-    this.model.set('closed', false);
-    this.render();
-    this.$el.removeClass('closed');
+    if (this.model.get('closed')) {
+      this.close();
+    } else {
+      this.model.set('closed', false);
+      this.render();
+      this.$el.removeClass('closed');
+    }
   },
 
   _toggle: function() {
-    if (this.model.get('hidden')) {
+    if (this.model.get('hidden') || this.model.get('closed')) {
       this.$el.fadeOut();
+      this.model.set('closed', true);
     } else {
       this.$el.fadeIn();
     }
@@ -827,6 +864,14 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
     this.$dataset     = this.$el.find(".alert .title");
     this.$shadow      = this.$el.find(".shadow");
     this.$alert_count = this.$el.find("#alerts-count");
+    
+    if ($('body').hasClass('embed')){
+      this.$el.hide();
+      this.close();
+      setTimeout(function(){
+        that.$el.css('right','45px').delay(300).fadeIn();
+      },1000)
+    }
 
     if (this.model.get('download')) {
       this.downloadDropdown = new gfw.ui.view.DownloadDropdown({
