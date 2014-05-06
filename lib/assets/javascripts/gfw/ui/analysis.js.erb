@@ -277,12 +277,12 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     if (the_geom.features && the_geom.features[0]) {
        // countries
-      ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']/10000) * 10) / 10, true);
+      //ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']/10000) * 10) / 10, true);
       title = the_geom.features[0].properties['name'];
     } else {
-      ha = this._calcAreaPolygon(the_geom);
       title = "User defined area";
     }
+      ha = this._calcAreaPolygon(the_geom);
 
     this.model.set('area', JSON.stringify(the_geom));
     this.info.model.set('ha', ha);
@@ -587,10 +587,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     c0 = polygon.coordinates[0][0];
     polygon.coordinates[0].push(c0);
 
-    area = formatNumber(Math.ceil((google.maps.geometry.spherical.computeArea(this.drawingManager.path)/10000) * 10) / 10, true)
+    //area = formatNumber(Math.ceil((google.maps.geometry.spherical.computeArea(this.drawingManager.path)/10000) * 10) / 10, true)
 
     this.model.set('area', JSON.stringify(polygon));
-    this.info.model.set('ha', area);
+    this.info.model.set('ha', this._calcAreaPolygon(polygon));
     this.info.model.set('title', this.info.model.defaults.title);
   },
 
