@@ -45,7 +45,7 @@ GFW.modules.app = function(gfw) {
 
       this.layers = [];
       this.cloudfront_url = 'dyynnn89u7nkm.cloudfront.net';
-      this.global_version = 3;
+      this.global_version = 4;
 
       gfw.log.enabled = options ? options.logging : false;
 
@@ -943,6 +943,15 @@ GFW.modules.app = function(gfw) {
           cartodb_link.setAttribute('target','_blank');
           cartodb_link.innerHTML = "<img src='http://cartodb.s3.amazonaws.com/static/new_logo.png' alt='CartoDB' title='CartoDB' style='border:none;' />";
           map.getDiv().appendChild(cartodb_link)
+        }
+        if (!document.getElementById('gee_logo')) {
+          var gee_link = document.createElement('a');
+          gee_link.setAttribute('id','gee_logo');
+          gee_link.setAttribute('style','position:absolute; bottom: 0px; left:160px; display:block; border:none; z-index:100');
+          gee_link.setAttribute('href','https://earthengine.google.org');
+          gee_link.setAttribute('target','_blank');
+          gee_link.innerHTML = "<img src='/assets/logos/geengine.png' alt='Powered by Google Earth Engine' title='Powered by Google Earth Engine' style='border:none;' />";
+          map.getDiv().appendChild(gee_link)
         }
       }, 2000);
 

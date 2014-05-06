@@ -133,6 +133,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if ($(this.$analysis_control).hasClass('disabled')) return;
 
     this.model.set('analyzing', true);
+    $viewfinder.addClass('analysing');
+    $map_coordinates.fadeIn();
 
     GFW.app.closeInfowindows();
     GFW.app.hideMarkers();
@@ -145,6 +147,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     e && e.preventDefault();
 
     this.model.set('analyzing', false);
+    $viewfinder.removeClass('analysing');
+    $map_coordinates.fadeOut();
 
     this._clearAnalysis();
     this._deleteSelectedShape();
@@ -158,6 +162,9 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if (this.$doneButton.attr('class') === 'done disabled') return;
 
     this.model.set('analyzing', false);
+    $viewfinder.removeClass('analysing');
+    $map_coordinates.fadeOut();
+
     this.info.model.set('closed', false);
     this._getAlertCount();
 
@@ -248,7 +255,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
   disableAnalysisButton: function() {
     this.$analysis_control.attr('data-tip', '')
-    $('.tipsy').remove();
 
     this.$analysis_control.addClass('disabled');
   },
@@ -284,12 +290,12 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     if (the_geom.features && the_geom.features[0]) {
        // countries
-      ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']/10000) * 10) / 10, true);
+      //ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']/10000) * 10) / 10, true);
       title = the_geom.features[0].properties['name'];
     } else {
-      ha = this._calcAreaPolygon(the_geom);
       title = "User defined area";
     }
+      ha = this._calcAreaPolygon(the_geom);
 
     this.model.set('area', JSON.stringify(the_geom));
     this.info.model.set('ha', ha);
@@ -594,10 +600,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     c0 = polygon.coordinates[0][0];
     polygon.coordinates[0].push(c0);
 
-    area = formatNumber(Math.ceil((google.maps.geometry.spherical.computeArea(this.drawingManager.path)/10000) * 10) / 10, true)
+    //area = formatNumber(Math.ceil((google.maps.geometry.spherical.computeArea(this.drawingManager.path)/10000) * 10) / 10, true)
 
     this.model.set('area', JSON.stringify(polygon));
-    this.info.model.set('ha', area);
+    this.info.model.set('ha', this._calcAreaPolygon(polygon));
     this.info.model.set('title', this.info.model.defaults.title);
   },
 
@@ -672,6 +678,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.$helper = this.$el.find('.helper_bar');
     this.$analysis_control = this.$el.find('.analysis_control');
     $(this.$analysis_control).tipsy({ title: 'data-tip', fade: true, gravity: 'w' });
+    $viewfinder = $('#viewfinder');
+    $map_coordinates = $('.coordinates.map_coordinates');
 
     this.$doneButton = this.$el.find('.done');
 
