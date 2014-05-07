@@ -1086,14 +1086,12 @@ GFW.modules.app = function(gfw) {
             auto_bound: false
           });
 
-          subscribe('timeline:change_date_fires', _.bind(function(start_year, end_year, options) {
+          subscribe('timeline:change_date_fires', _.bind(function(end_day, options) {
+            var year  = end_day.getUTCFullYear(),
+                month = (end_day.getUTCMonth() + 1) < 10 ? '0' + parseInt(end_day.getUTCMonth() + 1, 10) : parseInt(end_day.getUTCMonth(), 10),
+                day   = end_day.getUTCDate() < 10 ? '0' + end_day.getUTCDate() : end_day.getUTCDate();
             var query = [
-              "WITH dates as (SELECT *, to_date(acq_date, 'YYYY-MM-DD') as acq_date_proc FROM global_7d)",
-              'SELECT *',
-              'FROM dates',
-              'WHERE acq_date_proc',
-              "BETWEEN to_date('"+start_year+"', 'MM-DD-YYYY')",
-              "AND to_date('"+end_year+"', 'MM-DD-YYYY')"
+              "SELECT * FROM global_7d where acq_date > '" + year + "-" + month + "-" + day + "'"
             ].join(' ');
 
             this.baseLayer.setQuery(query);

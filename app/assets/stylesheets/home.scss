@@ -1090,17 +1090,13 @@ body {
 }
 
 .timeline_fires {
-  width: 710px;
-  margin-left: -355px;
-
-  .timeline-inner {
-    .range { width: 640px; }
-
-    .trail .handle {
-      left: 30px;
-
-      &.right { left: 670px; }
-    }
+  width: 500px;
+  margin-left: -240px;
+  .year{
+    width: 100%;
+  }
+  .timeline-inner .time {
+    margin: 15px 0 0 7px;
   }
 }
 
@@ -1240,6 +1236,11 @@ body {
       overflow: hidden;
       width: 80px;
 
+      .timeline_fires &{
+        padding: 0 14px;
+        width: 90px;
+      }
+
       &:last-child {
         width: 27px;
       }
@@ -1289,12 +1290,18 @@ body {
   .visible_quarters {
     li:last-child {
       width: 50px;
+      .timeline_fires & {
+        width: 90px;
+      }
     }
   }
 
   .quarters li .year {
     width: 50px;
-
+    .timeline_fires & {
+      width: 100%;
+      text-transform: uppercase;
+    }
     &.active {
       border: 1px solid #999;
       padding: 3px 2px 2px;
