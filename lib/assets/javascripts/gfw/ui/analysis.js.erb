@@ -101,12 +101,35 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       var year_ = parseInt(year, 10),
           month_ = parseInt(month, 10);
 
-      this.range = '&date='+year_+'-'+month_+'-'+'15';
-
       var q1 = config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].slice(1).toLowerCase()
       var q2 = config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].slice(1).toLowerCase()
 
       this.info.model.set({ 'subtitle': q1+"-"+year_+' to '+q2+'-'+year_ });
+
+      if (this.info.model.get('hidden')) return;
+
+      this._getAlertCount();
+    }, this));
+
+    subscribe('timeline:change_date_fires', _.bind(function(end_day, year) {
+      var year_ = parseInt(year, 10),
+          end_day_ = parseInt(end_day, 10),
+          subtitle = 'Last week';
+
+      switch (end_day_) {
+        case 1:
+          subtitle = 'Yesterday';
+        break;
+
+        case 2:
+          subtitle = '2 days ago';
+        break;
+
+        case 3:
+          subtitle = '3 days ago';
+        break;
+      }
+      this.info.model.set({ 'subtitle': subtitle });
 
       if (this.info.model.get('hidden')) return;
 

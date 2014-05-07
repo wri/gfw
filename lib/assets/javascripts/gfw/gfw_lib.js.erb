@@ -1085,6 +1085,17 @@ GFW.modules.app = function(gfw) {
             featureOut: function() { map.setOptions({ draggableCursor: 'default' }); },
             auto_bound: false
           });
+
+          subscribe('timeline:change_date_fires', _.bind(function(end_day, options) {
+            var year  = end_day.getUTCFullYear(),
+                month = (end_day.getUTCMonth() + 1) < 10 ? '0' + parseInt(end_day.getUTCMonth() + 1, 10) : parseInt(end_day.getUTCMonth(), 10),
+                day   = end_day.getUTCDate() < 10 ? '0' + end_day.getUTCDate() : end_day.getUTCDate();
+            var query = [
+              "SELECT * FROM global_7d where acq_date > '" + year + "-" + month + "-" + day + "'"
+            ].join(' ');
+
+            this.baseLayer.setQuery(query);
+          }, this));
         }
 
         this.$map_coordinates.show();
