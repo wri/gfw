@@ -151,7 +151,7 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
   _initViews: function() {
     var that = this;
 
-    this.map = new google.maps.Map(document.getElementById('stories_map'), config.MAPOPTIONS);
+    this.map = new google.maps.Map(document.getElementById('stories_map'), _.extend({}, config.MAPOPTIONS, { zoomControl: true }));
 
     this.drawingManager = new google.maps.drawing.DrawingManager({
       drawingControl: true,
