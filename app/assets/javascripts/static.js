@@ -233,6 +233,8 @@ gfw.ui.view.Static = cdb.core.View.extend({
   },
 
   _onNavChange: function(tab, accordion) {
+    if(!tab || tab == 'video') return;
+
     var that = this;
 
     var $selected = $("[data-slug=" + tab + "]"),
