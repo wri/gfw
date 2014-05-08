@@ -104,6 +104,7 @@ GFW.modules.app = function(gfw) {
     },
 
     loadLayer: function(layer) {
+      console.log('load')
       var id = layer.get('id');
 
       this.addLayer(layer);
@@ -219,6 +220,10 @@ GFW.modules.app = function(gfw) {
       google.maps.event.addListener(map, 'zoom_changed', function() {
         that.updateCoordinates();
         updateHash();
+      });
+
+      google.maps.event.addListener(map, 'dragstart', function() {
+        $('#spinner_tiles').fadeIn();
       });
 
       google.maps.event.addListener(map, 'dragend', function() {
@@ -1163,6 +1168,7 @@ GFW.modules.app = function(gfw) {
     },
 
     _mapLoaded: function() {
+      $('#spinner_tiles').fadeOut();
       if (!config.mapLoaded) {
         config.mapLoaded = true;
         GFW.app._loadBaseLayer();
