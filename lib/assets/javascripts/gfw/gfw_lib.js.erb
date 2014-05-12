@@ -1018,8 +1018,6 @@ GFW.modules.app = function(gfw) {
     _loadBaseLayer: function() {
       var table_name = null;
 
-      if (this.currentBaseLayer !== 'fires') this.$map_coordinates.hide();
-
       if (this.currentBaseLayer === 'loss') {
         if (config.mapLoaded && !this.time_layer_loss) {
           this._loadTimeLayerLoss();
@@ -1097,8 +1095,6 @@ GFW.modules.app = function(gfw) {
             this.baseLayer.setQuery(query);
           }, this));
         }
-
-        this.$map_coordinates.show();
       }
     },
 
