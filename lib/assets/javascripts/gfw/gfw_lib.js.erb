@@ -222,6 +222,7 @@ GFW.modules.app = function(gfw) {
       });
 
       google.maps.event.addListener(map, 'dragstart', function() {
+        $('#viewfinder').hide();
         $('#spinner_tiles').fadeIn();
       });
 
@@ -1163,7 +1164,9 @@ GFW.modules.app = function(gfw) {
     },
 
     _mapLoaded: function() {
-      $('#spinner_tiles').fadeOut();
+      $('#spinner_tiles').fadeOut(function(){
+        $('#viewfinder').show();
+      });
       if (!config.mapLoaded) {
         config.mapLoaded = true;
         GFW.app._loadBaseLayer();
