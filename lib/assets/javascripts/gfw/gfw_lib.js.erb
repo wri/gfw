@@ -427,12 +427,8 @@ GFW.modules.app = function(gfw) {
             z = 12;
           }
 
-          if (x < 0 || x > 2*z ){
-            x = 0;
-          }
-          if (y < 0 || y > z*z ){
-            y = 0;
-          }
+          x= (x>Math.pow(2,z) ? x % Math.pow(2,z) : x);
+          y= (y>Math.pow(2,z) ? y % Math.pow(2,z) : y);
 
           var url = 'http://earthengine.google.org/static/hansen_2013/gfw_pink_tree/' + z + '/' + x + '/' + y + '.png';
 
@@ -497,12 +493,8 @@ GFW.modules.app = function(gfw) {
             y = Math.floor(coord.y/(Math.pow(2, zoom - 12)));
             z = 12;
           }
-          if (x < 0 || x > 2*z ){
-            x = 0;
-          }
-          if (y < 0 || y > z*z ){
-            y = 0;
-          }
+          x= (x>Math.pow(2,z) ? x % Math.pow(2,z) : x);
+          y= (y>Math.pow(2,z) ? y % Math.pow(2,z) : y);
 
           var url = 'http://earthengine.google.org/static/hansen_2013/tree_alpha/' + z + '/' + x + '/' + y + '.png';
 
@@ -568,12 +560,8 @@ GFW.modules.app = function(gfw) {
             z = 12;
           }
 
-          if (x < 0 || x > 2*z ){
-            x = 0;
-          }
-          if (y < 0 || y > z*z ){
-            y = 0;
-          }
+          x= (x>Math.pow(2,z) ? x % Math.pow(2,z) : x);
+          y= (y>Math.pow(2,z) ? y % Math.pow(2,z) : y);
 
           var url = 'http://earthengine.google.org/static/hansen_2013/gain_alpha/' + z + '/' + x + '/' + y + '.png';
 
