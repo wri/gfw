@@ -425,13 +425,14 @@ GFW.modules.app = function(gfw) {
             x = Math.floor(coord.x/(Math.pow(2, zoom - 12)));
             y = Math.floor(coord.y/(Math.pow(2, zoom - 12)));
             z = 12;
-          }
-
-          if (x < 0 || x > 2*z ){
-            x = 0;
-          }
-          if (y < 0 || y > z*z ){
-            y = 0;
+          } else {
+            y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
+            
+            if (x >= Math.pow(2,z)) {
+              x = x % Math.pow(2,z);
+            } else if (x < 0) {
+              x = Math.pow(2,z) - Math.abs(x);
+            }
           }
 
           var url = 'http://earthengine.google.org/static/hansen_2013/gfw_pink_tree/' + z + '/' + x + '/' + y + '.png';
@@ -496,12 +497,14 @@ GFW.modules.app = function(gfw) {
             x = Math.floor(coord.x/(Math.pow(2, zoom - 12)));
             y = Math.floor(coord.y/(Math.pow(2, zoom - 12)));
             z = 12;
-          }
-          if (x < 0 || x > 2*z ){
-            x = 0;
-          }
-          if (y < 0 || y > z*z ){
-            y = 0;
+          } else {
+            y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
+            
+            if (x >= Math.pow(2,z)) {
+              x = x % Math.pow(2,z);
+            } else if (x < 0) {
+              x = Math.pow(2,z) - Math.abs(x);
+            }
           }
 
           var url = 'http://earthengine.google.org/static/hansen_2013/tree_alpha/' + z + '/' + x + '/' + y + '.png';
@@ -566,13 +569,14 @@ GFW.modules.app = function(gfw) {
             x = Math.floor(coord.x/(Math.pow(2, zoom - 12)));
             y = Math.floor(coord.y/(Math.pow(2, zoom - 12)));
             z = 12;
-          }
-
-          if (x < 0 || x > 2*z ){
-            x = 0;
-          }
-          if (y < 0 || y > z*z ){
-            y = 0;
+          } else {
+            y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
+            
+            if (x >= Math.pow(2,z)) {
+              x = x % Math.pow(2,z);
+            } else if (x < 0) {
+              x = Math.pow(2,z) - Math.abs(x);
+            }
           }
 
           var url = 'http://earthengine.google.org/static/hansen_2013/gain_alpha/' + z + '/' + x + '/' + y + '.png';

@@ -351,6 +351,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   },
 
   _getAlertCount: function() {
+
     var that = this;
 
     var area = this.model.get('area'),
@@ -385,8 +386,16 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       range = this.range || '&date=' + mdate;
 
     } else if (baselayer === 'forma') {
-      var fbegin = url('?begin'),
-          fend   = url('?end');
+      var fbegin, fend;
+      if (url('?begin') && url('?end') && url('?begin').length > 6 && url('?end').length > 6) {
+        fbegin = url('?begin'),
+        fend   = url('?end');
+      } else {
+        var today = new Date();
+
+        fbegin = '2006-01-01',
+        fend   = today.getUTCFullYear() + '-' + (today.getUTCMonth() < 10) ? '0'+today.getUTCFullYear() : today.getUTCFullYear() + '-01';
+      }
       range = this.range || '&begin=' + fbegin + '&end=' + fend;
 
     } else if (baselayer === 'imazon') {
