@@ -381,7 +381,7 @@ GFW.modules.app = function(gfw) {
           isPng: true
         });
 
-        map.overlayMapTypes.push(this.specialLayer);
+        map.overlayMapTypes.insertAt(0, this.specialLayer);
       }
     },
 
