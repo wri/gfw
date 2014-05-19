@@ -59,24 +59,22 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     }, this));
 
     subscribe('timeline:change_date_forma', _.bind(function(start_year, start_month, end_year, end_month, options) {
-      if (options && options.publish) {
-        var start_month_ = ((start_month - 71) % 12) + 1, // Convert months to (1-12)
-            end_month_ = ((end_month - 71) % 12) + 1; // Convert months to (1-12)
+      var start_month_ = ((start_month - 71) % 12) + 1, // Convert months to (1-12)
+          end_month_ = ((end_month - 71) % 12) + 1; // Convert months to (1-12)
 
-        // Create dates, 0 padding months < 10
-        var start = start_year + '-' + ((start_month_ < 10) ? ("0" + start_month_) : start_month_) + '-01',
-            end = end_year + '-' + ((end_month_ < 10) ? ("0" + end_month_) : end_month_) + '-01';
+      // Create dates, 0 padding months < 10
+      var start = start_year + '-' + ((start_month_ < 10) ? ("0" + start_month_) : start_month_) + '-01',
+          end = end_year + '-' + ((end_month_ < 10) ? ("0" + end_month_) : end_month_) + '-01';
 
-        this.range = '&begin='+start+'&end='+end;
+      this.range = '&begin='+start+'&end='+end;
 
-        if ((start_month_ >= 1 && start_month_ <= 12) && (end_month_ >= 1 && end_month_ <= 12)) {
-          this.info.model.set({ 'subtitle': config.MONTHNAMES_SHORT[start_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_-1].slice(1).toLowerCase()+"-"+start_year+" to "+config.MONTHNAMES_SHORT[end_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_-1].slice(1).toLowerCase()+"-"+end_year });
-        }
-
-        if (this.info.model.get('hidden')) return;
-
-        this._getAlertCount();
+      if ((start_month_ >= 1 && start_month_ <= 12) && (end_month_ >= 1 && end_month_ <= 12)) {
+        this.info.model.set({ 'subtitle': config.MONTHNAMES_SHORT[start_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_-1].slice(1).toLowerCase()+"-"+start_year+" to "+config.MONTHNAMES_SHORT[end_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_-1].slice(1).toLowerCase()+"-"+end_year });
       }
+
+      if (this.info.model.get('hidden')) return;
+
+      if (options && options.publish) { this._getAlertCount(); }
     }, this));
 
     subscribe('timeline:change_date_imazon', _.bind(function(start_year, start_month, end_year, end_month) {
@@ -351,7 +349,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   },
 
   _getAlertCount: function() {
-
     var that = this;
 
     var area = this.model.get('area'),
@@ -395,9 +392,11 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
         fbegin = '2006-01-01',
         fend   = today.getUTCFullYear() + '-' + (today.getUTCMonth() < 10) ? '0'+today.getUTCFullYear() : today.getUTCFullYear() + '-01';
+        this.info.model.set({ 'subtitle': 'Jan-' + fbegin.substring(0,4) +
+                                      ' to '+ config.MONTHNAMES_SHORT[today.getUTCMonth()].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[today.getUTCMonth()].substr(1).toLowerCase()  +'-' + today.getUTCFullYear()
+                            });
       }
       range = this.range || '&begin=' + fbegin + '&end=' + fend;
-
     } else if (baselayer === 'imazon') {
       var ibegin = '2007-0-9-01'  || url('?begin'),
           iend   = '2013-0-10-01' || url('?end');
@@ -432,7 +431,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         this.$el.find('.analysis_info').show();
       }
     }
-
     executeAjax(this.alertsUrl, {}, {
       success: _.bind(function(data) {
         var baselayer = config.BASELAYER,
