@@ -292,7 +292,6 @@ GFW.modules.app = function(gfw) {
     },
 
     addLayer: function(layer) {
-      console.log(layer);
       if (layer.get('external')) {
         var table_name = layer.get('table_name');
 
@@ -369,7 +368,6 @@ GFW.modules.app = function(gfw) {
     },
 
     _renderExternalLayer: function() {
-      console.log(this.specialLayer)
       if (this.specialLayer) {
         this.specialLayer.setOpacity(1);
       } else {
