@@ -356,7 +356,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         baselayer = config.BASELAYER,
         baseurl = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
         range;
-    if (config.BASELAYER === 'fires' || config.BASELAYER === null) return;
+    if (config.BASELAYER === null) return;
 
     if (!this.initStats) {
       this.$el.find('.stats .title, .stats ul').hide();
@@ -631,6 +631,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     // https://github.com/maxogden/geojson-js-utils
     var area = 0;
     var points = (typeof(polygon.features) !== 'undefined') ? polygon.features[0].geometry.coordinates[0] : polygon.coordinates[0];
+        points = (points.length === 1 && points[0].length > 1) ? points[0] : points;
+
     var j = points.length - 1;
     var p1, p2;
 
@@ -688,6 +690,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         publish('timeline:show');
       }
     }
+  },
+
+  _loadProtectedArea: function(the_geom,area_id, area_name){
+    this.loadPolygon(the_geom)
   },
 
   render: function() {

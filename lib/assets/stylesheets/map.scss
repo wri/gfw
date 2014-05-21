@@ -111,7 +111,6 @@
     text-align: left;
 
     .analyse {
-      display: none;
       @include position(65px, 5px, false, false);
       @include size(41px, 42px);
       @include mixins-sprite(graph);
