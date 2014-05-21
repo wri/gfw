@@ -221,6 +221,11 @@ GFW.modules.app = function(gfw) {
         updateHash();
       });
 
+      google.maps.event.addListener(map, 'dragstart', function() {
+        $('#viewfinder').hide();
+        $('#spinner_tiles').fadeIn();
+      });
+
       google.maps.event.addListener(map, 'dragend', function() {
         that.updateCoordinates();
         updateHash();
@@ -1183,6 +1188,9 @@ GFW.modules.app = function(gfw) {
     },
 
     _mapLoaded: function() {
+      $('#spinner_tiles').fadeOut(function(){
+        $('#viewfinder').show();
+      });
       if (!config.mapLoaded) {
         config.mapLoaded = true;
         GFW.app._loadBaseLayer();
