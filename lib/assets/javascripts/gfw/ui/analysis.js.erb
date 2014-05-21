@@ -60,7 +60,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     subscribe('timeline:change_date_forma', _.bind(function(start_year, start_month, end_year, end_month, options) {
       var start_month_ = ((start_month - 71) % 12) + 1, // Convert months to (1-12)
-          end_month_ = ((end_month - 71) % 12) + 1; // Convert months to (1-12)
+          end_month_   = ((end_month  -  71) % 12) + 1; // Convert months to (1-12)
 
       // Create dates, 0 padding months < 10
       var start = start_year + '-' + ((start_month_ < 10) ? ("0" + start_month_) : start_month_) + '-01',
