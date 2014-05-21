@@ -1,7 +1,7 @@
 class CountriesController < ApplicationController
-  before_filter :load_countries, :only => [:index]
+  before_filter :load_countries, :only => [:index, :show_redesign]
+  include ActionView::Helpers::NumberHelper
 
-  # GET /country/:id
   def show
     country = Api::Country.find_by_iso(params[:id])['countries'][0]
 
@@ -14,6 +14,15 @@ class CountriesController < ApplicationController
     @mongabay_story = response.success? ? JSON.parse(response.body)['rows'][0] : nil
 
     @country = country
+  end
+
+  def show_redesign
+    @country = Api::Country.find_by_iso(params[:id])['countries'][0]
+    not_found unless @country.present?
+
+    @country['gva_percent'] = (@country['gva_percent'] < 0.1) ? number_to_percentage(@country['gva_percent'], precision: 2) : number_to_percentage(@country['gva_percent'], precision: 1)
+    @employees = @country['employment']
+    @conventions = %w(cbd unfccc kyoto unccd itta cites ramsar world_heritage nlbi ilo)
   end
 
   private
