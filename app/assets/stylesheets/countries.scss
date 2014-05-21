@@ -6,12 +6,14 @@
         "compass/css3/images",
         "compass/css3/text-shadow",
         "compass/css3/inline-block",
+        "compass/utilities/sprites",
         "fonts",
         "helpers";
 
 @import "country-icons/*.png";
+@include all-country-icons-sprites;
 
-$primary-color: #A0B941;
+$primary-color: #9FBA2B;
 $default-color: #463F52;
 $font-light: "fira_sans_otlight", Georgia, sans-serif;
 $font-regular: "fira_sans_otregular", Georgia, sans-serif;
@@ -191,18 +193,25 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
 /* =Show
 ----------------------------------------------- */
 .country-show {
-  font-family: $font-medium;
+  font-family: $font-regular;
+  color: $default-color;
 }
 
 .country-header {
   width: 100%;
-  color: $default-color;
   border-bottom: 1px solid #CCCCCC;
 
   .country-header-inner {
     height: 350px;
-    background: #383643 image-url('backgrounds/wall_background_alpha.png');
-    //@include background-size(cover);
+    $wall-background: "backgrounds/wall_background_alpha.png";
+    background: #464253;
+    background-image: image-url($wall-background); /* fallback */
+    background-image: image-url($wall-background), -webkit-gradient(linear, left top, left bottom, from(#464253), to(#383643)); /* Saf4+, Chrome */
+    background-image: image-url($wall-background), -webkit-linear-gradient(top, #464253, #383643); /* Chrome 10+, Saf5.1+ */
+    background-image: image-url($wall-background),    -moz-linear-gradient(top, #464253, #383643); /* FF3.6+ */
+    background-image: image-url($wall-background),     -ms-linear-gradient(top, #464253, #383643); /* IE10 */
+    background-image: image-url($wall-background),      -o-linear-gradient(top, #464253, #383643); /* Opera 11.10+ */
+    background-image: image-url($wall-background),         linear-gradient(to bottom, #464253, #383643); /* W3C */
   }
 
   .country-title {
@@ -214,7 +223,7 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
       max-width: 500px;
       margin-right: 20px;
       display: inline-block;
-      font-weight: normal;
+      font-family: $font-regular;
     }
 
     .country-selector {
@@ -245,7 +254,7 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
 
   .country-details {
     background-color:rgba(0, 0, 0, 0.2);
-    height: 261px;
+    height: 263px;
 
     .country-preview {
       width: 735px;
@@ -281,6 +290,7 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
 
         .amount,
         .unit {
+          margin-top: 6px;
           color: $primary-color;
           display: inline-block;
         }
@@ -290,8 +300,8 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
           font-weight: bold;
         }
 
-        .tree-cover {
-          margin-bottom: 25px;
+        .total-extension {
+          margin-top: 18px;
         }
 
         .total-extension .amount {
@@ -317,12 +327,12 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
         > li {
           height: 53px;
           width: 100%;
-          padding: 20px;
+          padding: 20px 25px;
           @include box-sizing(border-box);
-          font-weight: bold;
+          font-family: $font-medium;
           text-transform: uppercase;
           color: #464152;
-          font-size: 13px;
+          font-size: 14px;
           cursor: pointer;
 
           &:hover {
@@ -341,7 +351,7 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
     height: 185px;
     width: 100%;
     padding: 35px 20px;
-    color: $default-color;
+    font-family: $font-medium;
     @include box-sizing(border-box);
     
     //@include country-icons-sprite(country-indepth);
@@ -358,17 +368,25 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
     }
 
     .country-indepth__links {
-      margin-top: 20px;
+      margin-top: 25px;
+      color: #bbb;
+      font-family: $font-light;
+      font-size: 13px;
 
       a {
+        font-size: 14px;
         display: inline-block;
         vertical-align: top;
         color: $primary-color;
-        font-weight: 700;
+        font-family: $font-medium;
       }
     }
 
   } // country-indepth
+
+  .country-nav-container {
+    position: relative;
+  }
 
   .country-nav {
     width: 100%;
@@ -385,12 +403,11 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
         width: 135px;
         float: left;
         margin-right: -1px;
-        font-size: 13px;
-        font-weight: 700;
-        color: #464052;
+        font-size: 14px;
         text-transform: uppercase;
         cursor: pointer;
         background: #F2F2F3;
+        font-family: $font-medium;
 
         &:first-child {
           width: 156px;
@@ -412,12 +429,12 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
 }
 
 .country-section {
-  border-bottom: 1px solid #CCCCCC;
+  border-bottom: 1px solid #E5E5E5;
   width: 100%;
-  padding: 40px 0;
+  padding: 45px 0;
 
   .section-info {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     font-size: 14px;
     color: $default-color;
     font-family: $font-medium;
@@ -425,7 +442,7 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
     letter-spacing: -0.2px;
 
     .info {
-      margin-right: 10px;
+      margin-right: 6px;
     }
   }
 
@@ -448,7 +465,7 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
     }
 
     .section-title {
-      font-size: 30px;
+      font-size: 29px;
       line-height: 36px;
       font-family: $font-medium;
       color: $default-color;
@@ -456,33 +473,147 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
   }
 }
 
-.country-state {
+.country-alerts {
+  .forma-alerts-legend {
+    margin: 5px 0 25px 0;
 
-} // country-state
+    span {
+      color: #666666;
+      font-size: 13px;
+      font-family: $font-light;
+      display: block;
+    }
+
+    .legend-title {
+      color: $primary-color;
+      font-size: 14px;
+      font-family: $font-medium;
+      margin-bottom: 3px;
+    }
+  }
+
+  .btn {
+    border-radius: 20px;
+    border: none;
+    padding: 10px 20px 8px;
+    background: $primary-color;
+    font-family: $font-regular;
+    font-size: 13px;
+  }
+}
+
+.country-forests-type {
+  .forests-type-graph {
+    margin-top: -25px;
+  }
+
+  .forest-type-legends {
+    font-size: 14px;
+    display: inline-block;
+    margin-top: 10px;
+
+    .legends-title {
+      color: $primary-color;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .legends-list {
+      li {
+        display: block;
+        margin-bottom: 5px;
+        color: #777;
+        font-family: $font-light;
+        vertical-align: top;
+
+        span {
+          height: 14px;
+          width: 14px;
+          border-radius: 100px;
+          display: inline-block;
+          margin-right: 4px;
+        }
+
+        .regenerated {
+          background: #819515;
+        }
+
+        .primary {
+          background: #A1BA42;
+        }
+
+        .planted {
+          background: #DDDDDD;
+        }
+      }
+    }
+  }
+}
+
+.country-tenure {
+  .line-graph {
+    font-weight: bold;
+    text-transform: uppercase;
+
+    circle {
+      stroke-width: 2px;
+      stroke: #f5f5f5;
+    }
+
+    text {
+      @extend .sans-serif;
+      font-size: 12px;
+    }
+
+    .one {
+      fill: #75B22E;
+    }
+
+    .two {
+      fill: #AAC700;
+    }
+
+    .three {
+      fill: #AC0;
+    }
+
+    .four {
+      fill: #FFD24D;
+    }
+  }
+} // country-tenure
 
 .country-employment {
   .section-content .left-col {
     width: 460px;
   }
 
-  .section-title {
+  .section-content .left-col .section-title {
     @extend .clearfix;
     margin-bottom: 10px;
+    font-size: 47px;
+    display: inline-block;
 
     div,
     span {
+      margin-top: 8px;
       float: left;
     }
 
     span {
       width: 250px;
-      margin: 10px 0 0 10px;
-      font-size: 13px;
-      line-height: 1.4;
+      margin: 4px 0 0 10px;
+      font-size: 11px;
+      line-height: 1.2;
       @extend .sans-serif;
       text-transform: uppercase;
       color: #444;
     }
+
+  }
+
+  .man-list {
+    color: #919191;
   }
 }
 

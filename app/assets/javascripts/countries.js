@@ -7,174 +7,59 @@
 //= require gfw/ui/sourcewindow
 //= require gfw/ui/share
 
-
 gfw.ui.view.CountriesShow = cdb.core.View.extend({
   el: document.body,
 
   events: {
-    'click .info': '_openSource',
-    'click .forma_dropdown-link': '_openDropdown',
-    'click .hansen_dropdown-link': '_openDropdown',
-    'click .hansen_dropdown-menu a': '_redrawCircle'
   },
 
   initialize: function() {
     _.bindAll(this, '_positionScroll');
 
     this.iso = this.options.iso;
+    this.$nav = this.$('.country-nav');
+    this.$indepth = this.$('.country-indepth');
 
-    this.$nav = this.$('.country_menu');
-    this.$indepth = this.$('.country_indepth');
-
-    this._stickynav();
+    //this._stickynav();
     this._initViews();
-    this._initHansenDropdown();
   },
+
 
   _initViews: function() {
-    this.sourceWindow  = new gfw.ui.view.SourceWindow();
-    this.$el.append(this.sourceWindow.render());
-
-
-    if (this.iso === 'CHN') {
-      var that = this;
-
-      this._drawCountry(this.iso, function() {
-        that._drawCountry('TWN');
-      });
-    } else {
-      this._drawCountry(this.iso);
-    }
-
-    this._drawForest(this.iso);
     this._drawTenure(this.iso);
-
-    this._drawCircle('forma', 'lines', { iso: this.iso });
-    this._drawCircle('forest_loss', 'bars', { iso: this.iso, dataset: 'loss' });
-
-    Share = new gfw.ui.view.Share();
-    this.$el.find('.country_graphs .inner').append(Share.render());
-  },
-
-  _initFormaDropdown: function() {
-    $('.forma_dropdown-link').qtip({
-      show: 'click',
-      hide: {
-        event: 'click unfocus'
-      },
-      content: {
-        text: $('.forma_dropdown-menu')
-      },
-      position: {
-        my: 'bottom right',
-        at: 'top right',
-        target: $('.forma_dropdown-link'),
-        adjust: {
-          x: -10
-        }
-      },
-      style: {
-        tip: {
-          corner: 'bottom right',
-          mimic: 'bottom center',
-          border: 1,
-          width: 10,
-          height: 6
-        }
-      }
-    });
-  },
-
-  _initHansenDropdown: function() {
-    this.dropdown = $('.hansen_dropdown-link').qtip({
-      show: 'click',
-      hide: {
-        event: 'click unfocus'
-      },
-      content: {
-        text: $('.hansen_dropdown-menu')
-      },
-      position: {
-        my: 'top right',
-        at: 'bottom right',
-        target: $('.hansen_dropdown-link'),
-        adjust: {
-          x: 10
-        }
-      },
-      style: {
-        tip: {
-          corner: 'top right',
-          mimic: 'top center',
-          border: 1,
-          width: 10,
-          height: 6
-        }
-      }
-    });
-  },
-
-  _openSource: function(e) {
-    e.preventDefault();
-
-    var source = $(e.target).closest('.info').attr('data-source');
-
-    ga('send', 'event', 'SourceWindow', 'Open', source);
-    this.sourceWindow.show(source).addScroll();
-  },
-
-  _openDropdown: function(e) {
-    e.preventDefault();
-  },
-
-  _redrawCircle: function(e) {
-    e.preventDefault();
-
-    var dataset = $(e.target).attr('data-slug'),
-        subtitle = $(e.target).text();
-
-    var api = this.dropdown.qtip('api');
-
-    api.hide();
-
-    $('.hansen_dropdown-link').html(subtitle);
-
-    if (dataset === 'countries_gain') {
-      this._drawCircle('forest_loss', 'comp', { iso: this.iso });
-    } else {
-      this._drawCircle('forest_loss', 'bars', { iso: this.iso, dataset: dataset });
-    }
+    this._drawForestsType(this.iso);
+    this._drawFormaAlerts(this.iso);
   },
 
   _positionScroll: function() {
     this.indepth_bar = 0;
 
-    var h_min = $('.country_state').offset().top - 48,
-        h_max = $('.country_conventions').offset().top - 48;
+    var h_min = $('.country-alerts').offset().top - 48,
+        h_max = $('.country-conventions').offset().top - 48;
 
-    if (this.$('.country_indepth').length > 0) {
-      this.indepth_bar = 48;
+    // if (this.$('.country-indepth').length > 0) {
+    //   this.indepth_bar = 48;
 
-      h_min -= 48;
-      h_max -= 48;
+    //   h_min -= 48;
+    //   h_max -= 48;
 
-      if ($(window).scrollTop() > (h_min) && $(window).scrollTop() < h_max) {
-        this.$indepth.css({
-          position: 'fixed',
-          top: 0
-        });
-      } else if ($(window).scrollTop() >= h_max) {
-        this.$indepth.css({
-          position: 'absolute',
-          top: h_max - h_min
-        });
-      } else {
-        this.$indepth.css({
-          position: 'absolute',
-          top: 0
-        });
-      }
-    }
+    //   if ($(window).scrollTop() > (h_min) && $(window).scrollTop() < h_max) {
+    //     this.$indepth.css({
+    //       position: 'fixed',
+    //       top: 0
+    //     });
+    //   } else if ($(window).scrollTop() >= h_max) {
+    //     this.$indepth.css({
+    //       position: 'absolute',
+    //       top: h_max - h_min
+    //     });
+    //   } else {
+    //     this.$indepth.css({
+    //       position: 'absolute',
+    //       top: 0
+    //     });
+    //   }
+    // }
 
     if ($(window).scrollTop() > (h_min) && $(window).scrollTop() < h_max) {
       this.$nav.css({
@@ -208,146 +93,6 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     });
 
     $(window).scroll(this._positionScroll);
-  },
-
-  _drawCountry: function(iso, callback) {
-    var that = this;
-
-    var sql = ['SELECT the_geom',
-               'FROM forest_cov_glob_v3',
-               "WHERE country_code = '"+iso+"'",
-               'UNION',
-               'SELECT the_geom',
-               'FROM ne_50m_admin_0_countries',
-               "WHERE adm0_a3 = '"+iso+"'&format=topojson"].join(' ');
-
-    d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(error, topology) {
-      if (iso === 'TWN') {
-        draw(topology, 0, 'CHN', { alerts: true, bounds: that.bounds });
-      } else {
-        var bounds = draw(topology, 0, iso, { alerts: true });
-
-        if (iso === 'CHN') that.bounds = bounds;
-      }
-
-      callback && callback();
-    });
-  },
-
-  _drawForest: function(iso) {
-    var sql = ["SELECT unnest(array['forest_primary', 'forest_regenerated', 'forest_planted'])",
-               'AS type, unnest(array[COALESCE(forest_primary, 0),',
-                                     'COALESCE(forest_regenerated, 0),',
-                                     'COALESCE(forest_planted, 0)])',
-               'AS percent',
-               'FROM gfw2_countries',
-               "WHERE iso = '"+iso+"'"].join(' ');
-
-    d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
-      var data = json.rows;
-
-      _.each(data, function(type) {
-        if (type['percent'] !== 0) {
-          $('.country_state-title').css({
-            'padding-top': '40px'
-          });
-          $('.forest_type').show();
-        }
-      });
-
-      var svg = d3.select('.country_state .line-graph')
-        .append('svg')
-        .attr('width', 635)
-        .attr('height', 50);
-
-      var x_extent = [0, 100],
-          x_scale = d3.scale.linear()
-                      .range([0, 590])
-                      .domain(x_extent);
-
-      var origins = [],
-          aggr = 0,
-          klass = ['one', 'three', 'four'],
-          type = ['Primary', 'Regenerated', 'Planted'];
-
-      _.each(data, function(d, i) {
-        var current = data[i-1] && data[i-1]['percent'] || 0;
-
-        aggr += current;
-
-        origins[i] = aggr;
-      });
-
-      // add lines
-      svg.selectAll('rect')
-        .data(data)
-        .enter()
-        .append('rect')
-        .attr('class', function(d, i) {
-          return 'line ' + klass[i];
-        })
-        .attr('x', function(d, i) {
-          return x_scale(origins[i]);
-        })
-        .attr('y', 19)
-        .attr('width', function(d) {
-          return x_scale(d['percent']);
-        })
-        .attr('height', 4)
-        .attr('rx', 2)
-        .attr('ry', 2);
-
-      // add balls
-      svg.selectAll('circle')
-        .data(data)
-        .enter()
-        .append('svg:circle')
-        .attr('class', function(d, i) {
-          return klass[i];
-        })
-        .attr('cx', function(d, i) {
-          return x_scale(d['percent']+origins[i]);
-        })
-        .attr('cy', 21)
-        .attr('r', 5)
-        .style('visibility', function(d) {
-          return d['percent'] === 0 ? 'hidden' : 'visible';
-        });
-
-      // add values
-      svg.selectAll('.text')
-        .data(data)
-        .enter()
-        .append('text')
-        .text(function(d, i) {
-          return type[i]+' '+d['percent']+'%';
-        })
-        .attr('class', function(d, i) {
-          return 'text ' + klass[i];
-        })
-        .attr('x', function(d, i) {
-          var w_line = $('.line.'+klass[i]).attr('width'),
-              w_text = $(this).width();
-
-          if ((i === 0 && w_text > w_line) ||
-              (i === 1 && w_text > (parseFloat(w_line) +
-                                    parseFloat($('.line.one').attr('width'))))) {
-            return x_scale(d['percent']+origins[i]) - w_line;
-          } else if (i === 2 && w_text > w_line) {
-            return x_scale(d['percent']+origins[i]) - w_text;
-          } else {
-            var offset = (w_text > w_line) ? w_text : (w_line/2 + w_text/2);
-
-            return x_scale(d['percent']+origins[i]) - offset;
-          }
-        })
-        .attr('y', function(d, i) {
-          return (i % 2 === 0) ? 42 : 08;
-        })
-        .style('visibility', function(d) {
-          return d['percent'] === 0 ? 'hidden' : 'visible';
-        });
-    });
   },
 
   _drawTenure: function(iso) {
@@ -394,8 +139,8 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
       _.each(tenures, function(tenure, i) {
         if (tenure['percent'] !== null && tenure['percent'] !== 0) {
-          if ($('.forest_tenure').not(':visible')) {
-            $('.forest_tenure').show();
+          if ($('.country-tenure').not(':visible')) {
+            $('.country-tenure').show();
           }
 
           h += 50;
@@ -407,9 +152,9 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         }
       });
 
-      var svg = d3.select('.country_laws .line-graph')
+      var svg = d3.select('.country-tenure .line-graph')
         .append('svg')
-        .attr('width', 570)
+        .attr('width', 600)
         .attr('height', h);
 
       // add lines
@@ -485,70 +230,103 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     });
   },
 
-  _drawCircle: function(id, type, options) {
+  _drawForestsType: function(iso) {
+    var sql = ["SELECT unnest(array['forest_regenerated', 'forest_primary', 'forest_planted'])",
+               'AS type, unnest(array[COALESCE(forest_regenerated, 0),',
+                                     'COALESCE(forest_primary, 0),',
+                                     'COALESCE(forest_planted, 0)])',
+               'AS percent',
+               'FROM gfw2_countries',
+               "WHERE iso = '"+iso+"'"].join(' ');
+
+    d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
+      // TODO => if percents are 0
+      var data = _.pluck(json.rows, 'percent');
+
+      var width = 225,
+          height = 225,
+          radius = Math.min(width, height) / 2,
+          colors = ['#819515', '#A1BA42', '#DDDDDD'],
+          labelColors = ['white', 'white', '#555'];
+   
+      var pie = d3.layout.pie()
+          .sort(null);
+
+      var arc = d3.svg.arc() // create <path> elements for using arc data
+          .innerRadius(radius - 67)
+          .outerRadius(radius)
+
+      var svg = d3.select(".forests-type-graph")
+          .append("svg")
+          .attr("width", width)
+          .attr("height", height)
+          .append("g")
+          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+      var path = svg.selectAll("path")
+          .data(pie(data));
+
+      path.enter().append("path")
+        .attr("fill", function(d, i) { return colors[i]; })
+        .attr("d", arc);
+      
+      path.enter().append('text')
+        .attr('transform', function(d) { var c = arc.centroid(d); return 'translate(' + (c[0]-12) + ',' + (c[1]+8) + ')'})
+        .text(function(d) { return d.data + '%' })
+        .attr('fill', function(d, i) { return labelColors[i]; } )
+        .style('font-size', '13px');
+    });
+  },
+
+  _drawFormaAlerts: function(iso) {
     var that = this;
 
-    var $graph = $('.'+id),
-        $amount = $('.'+id+' .graph-amount'),
-        $date = $('.'+id+' .graph-date'),
-        $coming_soon = $('.'+id+' .coming_soon'),
-        $action = $('.'+id+' .action');
+    var $graph = $('.forma-graph');
 
-    $('.graph.'+id+' .frame_bkg').empty();
-    $graph.addClass('ghost');
-    $amount.html('');
-    $date.html('');
-    $coming_soon.hide();
+    var width     = 500,
+        height    = 156,
+        h         = 156, // maxHeight
+        radius    = width / 2,
+        gridLinesCount = 7;
 
-    var width     = options.width     || 256,
-        height    = options.height    || width,
-        h         = 100, // maxHeight
-        radius    = width / 2;
-
-    var graph = d3.select('.graph.'+id+' .frame_bkg')
+    // Add dashed grid
+    var graph = d3.select('.forma-graph')
       .append('svg:svg')
-      .attr('class', type)
+      .attr('class', 'line')
       .attr('width', width)
       .attr('height', height);
 
-    var dashedLines = [
-      { x1:17, y:height/4, x2:239, color: '#ccc' },
-      { x1:0, y:height/2, x2:width, color: '#ccc' },
-      { x1:17, y:3*height/4, x2:239, color: '#ccc' }
-    ];
-
-    // Adds the dotted lines
-    _.each(dashedLines, function(line) {
+    var gridLineY = height;
+    for (var i = 0; i < gridLinesCount; i++) {
       graph.append('svg:line')
-      .attr('x1', line.x1)
-      .attr('y1', line.y)
-      .attr('x2', line.x2)
-      .attr('y2', line.y)
-      .style('stroke-dasharray', '2,2')
-      .style('stroke', line.color);
-    });
+        .attr('x1', 0)
+        .attr('y1', gridLineY)
+        .attr('x2', width)
+        .attr('y2', gridLineY)
+        .style('stroke-dasharray', ('2, 3'))
+        .style('stroke', function() { return (i == 0) ? '#333' : '#CCC'; } );
 
+      gridLineY -= height/(gridLinesCount-1);
+    };
+
+    // Render forma graph
     var sql = ["SELECT date_trunc('month', date) as date, COUNT(*) as alerts",
                'FROM forma_api',
-               "WHERE iso = '"+options.iso+"'",
+               "WHERE iso = '"+iso+"'",
                "GROUP BY date_trunc('month', date)",
                "ORDER BY date_trunc('month', date) ASC"].join(' ');
 
-    if (type === 'lines') {
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
-        if (json && json.rows.length > 0) {
-          $graph.removeClass('ghost');
-          $action.removeClass('disabled');
-          that._initFormaDropdown();
+    d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
+      if (json && json.rows.length > 0) {
+        var data = json.rows.slice(1, json.rows.length);
+        console.log(data);
+      } else {
+        console.log('no data');
+        //$coming_soon.show();
+        return;
+      };
 
-          var data = json.rows.slice(1, json.rows.length);
-        } else {
-          $coming_soon.show();
-
-          return;
-        }
-
-        var x_scale = d3.scale.linear()
+       var x_scale = d3.scale.linear()
           .domain([0, data.length - 1])
           .range([0, width - 80]);
 
@@ -570,12 +348,12 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         var marginLeft = 40,
             marginTop = radius - h/2;
 
-        $amount.html('<span>'+formatNumber(data[data.length - 1].alerts)+'</span>');
+        //$amount.html('<span>'+formatNumber(data[data.length - 1].alerts)+'</span>');
 
         var date = new Date(data[data.length - 1].date),
             form_date = 'Alerts in ' + config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
 
-        $date.html(form_date);
+        //$date.html(form_date);
 
         var cx = width - 80 + marginLeft;
         var cy = h - y_scale(data[data.length - 1].alerts) + marginTop;
@@ -587,12 +365,12 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
             var index = Math.round(x_scale.invert(d3.mouse(this)[0]));
 
             if (data[index]) { // if there's data
-              $amount.html('<span>'+formatNumber(data[index].alerts)+'</span>');
+              //$amount.html('<span>'+formatNumber(data[index].alerts)+'</span>');
 
               var date = new Date(data[index].date),
                   form_date = 'Alerts in ' + config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
 
-              $date.html(form_date);
+              //$date.html(form_date);
 
               var cx = d3.mouse(this)[0] + marginLeft;
               var cy = h - y_scale(data[index].alerts) + marginTop;
@@ -608,154 +386,10 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           .attr('cx', cx)
           .attr('cy', cy)
           .attr('r', 5);
-      });
-    } else if (type === 'bars') {
-      var sql = "SELECT ";
-
-      if (options.dataset === 'loss') {
-        sql += "year, loss_gt_0 loss FROM umd WHERE iso='"+options.iso+"'";
-      } else if (options.dataset === 'extent') {
-        sql += "year, extent_gt_25 extent FROM umd WHERE iso='"+options.iso+"'";
-      }
-
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
-        if (json) {
-          $graph.removeClass('ghost');
-
-          var data = json.rows;
-        } else {
-          $coming_soon.show();
-
-          return;
-        }
-
-        var data_ = [];
-
-        _.each(data, function(val, key) {
-          if (val.year >= 2001) {
-            data_.push({
-              'year': val.year,
-              'value': eval('val.'+options.dataset)
-            });
-          }
-        });
-
-        $amount.html('<span>'+formatNumber(parseInt(data_[data_.length - 1].value, 10))+'</span>');
-        $date.html('Hectares in ' + data_[data_.length - 1].year);
-
-        var marginLeft = 40,
-            marginTop = radius - h/2 + 5;
-
-        var y_scale = d3.scale.linear()
-          .domain([0, d3.max(data_, function(d) { return parseFloat(d.value); })])
-          .range([height, marginTop*2]);
-
-        var barWidth = (width - 80) / data_.length;
-
-        var bar = graph.selectAll('g')
-          .data(data_)
-          .enter()
-          .append('g')
-          .attr('transform', function(d, i) { return 'translate(' + (marginLeft + i * barWidth) + ','+ -marginTop+')'; });
-
-        bar.append('svg:rect')
-          .attr('class', function(d, i) {
-            if (i === 11) { // last year index
-              return 'last bar'
-            } else {
-              return 'bar'
-            }
-          })
-          .attr('y', function(d) { return y_scale(d.value); })
-          .attr('height', function(d) { return height - y_scale(d.value); })
-          .attr('width', barWidth - 1)
-          .on('mouseover', function(d) {
-            d3.selectAll('.bar').style('opacity', '.5');
-            d3.select(this).style('opacity', '1');
-
-            $amount.html('<span>'+formatNumber(parseInt(d.value, 10))+'</span>');
-            $date.html('Hectares in ' + d.year);
-          });
-      });
-    } else if (type === 'comp') {
-      var sql = 'SELECT y2001_y2012 as gain, (SELECT SUM(';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'y'+y+' + ';
-      }
-
-      sql += ['y2012) FROM countries_loss',
-                     "WHERE iso = '"+options.iso+"') as loss",
-              'FROM countries_gain',
-              "WHERE iso = '"+options.iso+"'"].join(' ');
-
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
-        if (json) {
-          $graph.removeClass('ghost');
-
-          var data = json.rows[0];
-        } else {
-          $coming_soon.show();
-
-          return;
-        }
-
-        var data_ = [],
-            form_key = {
-              'gain': 'Tree cover gain',
-              'loss': 'Tree cover loss'
-            };
-
-        _.each(data, function(val, key) {
-          data_.push({
-            'key': form_key[key],
-            'value': val
-          });
-        });
-
-        $amount.html('<span>'+formatNumber(parseInt(data_[data_.length - 1].value, 10))+'</span>');
-        $date.html('Ha '+data_[data_.length - 1].key);
-
-        var barWidth = (width - 80) / 12;
-
-        var marginLeft = 40 + barWidth*5,
-            marginTop = radius - h/2 + 5;
-
-        var y_scale = d3.scale.linear()
-          .domain([0, d3.max(data_, function(d) { return parseFloat(d.value); })])
-          .range([height, marginTop*2]);
-
-        var bar = graph.selectAll('g')
-          .data(data_)
-          .enter()
-          .append('g')
-          .attr('transform', function(d, i) { return 'translate(' + (marginLeft + i * barWidth) + ',' + -marginTop + ')'; });
-
-        bar.append('svg:rect')
-          .attr('class', function(d, i) {
-            if (i === 1) { // last bar index
-              return 'last bar'
-            } else {
-              return 'bar'
-            }
-          })
-          .attr('y', function(d) { return y_scale(d.value); })
-          .attr('height', function(d) { return height - y_scale(d.value); })
-          .attr('width', barWidth - 1)
-          .style('fill', '#FFC926')
-          .style('shape-rendering', 'crispEdges')
-          .on('mouseover', function(d) {
-            d3.selectAll('.bar').style('opacity', '.5');
-            d3.select(this).style('opacity', '1');
-
-            $amount.html('<span>'+formatNumber(parseFloat(d.value).toFixed(1))+'</span>');
-            $date.html('Ha '+d.key);
-          });
-      });
-    }
+    });
   }
-});
 
+});
 
 gfw.ui.view.CountriesIndex = cdb.core.View.extend({
   el: document.body,

@@ -1,3 +1,15 @@
+<% content_for :js do %>
+  <script>
+    $(function() {
+      cdb.init(function() {
+        window.countries_show = new gfw.ui.view.CountriesShow({
+          iso: "<%= @country['iso'] %>"
+        });
+      });
+    });
+  </script>
+<% end %>
+
 <div class="country-show">
   <div class="country-header">
     <div class="inner">
@@ -31,13 +43,19 @@
             </div>
             <div class="loss-gain-graph">
               <h4>LOSS AND GAIN (2001 - 2012)</h4>
+              <div class='graph-amount'></div>
+              <div class='graph-date'></div>
+              <div class='frame'><div class='frame_bkg'></div></div>
             </div>
           </div>        
           <div class="country-sidenav">
             <ul>
-              <li>Info</li>
-              <li>Download data</li>
-              <li>Analyze</li>
+              <li>
+                <a href="#">Info</a>
+                <span class="country-icons-info_reverse"></span>
+              </li>
+              <li><a href="#">Download data</a></li>
+              <li><a href="#">Analyze</a></li>
             </ul>
           </div>
         </div>
@@ -56,16 +74,18 @@
       <% end %>
 
       <!--  country nav -->
-      <div class="country-nav">
-        <ul>
-          <li>Forma clearing alerts</li>
-          <li>Forest type</li>
-          <li>State of the forest</li>
-          <li>People & Economy</li>
-          <li>Tenure & Laws</li>
-          <li>Climate Change</li>
-          <li>International agreements</li>
-        </ul>
+      <div class="country-nav-container">
+        <div class="country-nav">
+          <ul>
+            <li><a href="#" data-scroll-nav='0'>Forma<br>clearing alerts</a></li>
+            <li><a href="#" data-scroll-nav='1'>Forest<br>type</a></li>
+            <li><a href="#" data-scroll-nav='2'>State of the forest</a></li>
+            <li><a href="#" data-scroll-nav='3'>People<br>& Economy</a></li>
+            <li><a href="#" data-scroll-nav='4'>Tenure<br>& Laws</a></li>
+            <li><a href="#" data-scroll-nav='4'>Climate Change</a></li>
+            <li><a href="#" data-scroll-nav='6'>International agreements</a></li>
+          </ul>
+        </div>
       </div>
 
     </div>
@@ -82,9 +102,16 @@
       <div class="section-content">
         <div class="left-col">
           <h3 class="section-title">There were <span class="highlight">7,363</span> FORMA alerts in <span class="highlight">october</span></h3>
+
+          <div class="forma-alerts-legend">
+            <span class="legend-title">Forest Clearing Alerts</span>
+            <span>Humid Tropics</span>
+          </div>
+
+          <a href="#" class="btn">Download data</a>
         </div>
         <div class="right-col">
-          
+          <div class="forma-graph"></div>
         </div>
       </div>
     </div>
@@ -101,11 +128,20 @@
       <div class="section-content">
         <div class="left-col">
           <h3 class="section-title">
-            <%= @country['name'] %> has <span class="highlight"><%= number_to_human(@country['extent'], precision: 2) %></span> hectares of tree cover
+            <%= @country['name'] %> has <span class="highlight"><%= number_to_human(@country['extent'], precision: 2).downcase %></span> hectares of tree cover
           </h3>
+
+          <div class="forest-type-legends">
+            <span class="legends-title">Forest Type:</span>
+            <ul class="legends-list">
+              <li><span class="regenerated"></span>Regenerated</li>
+              <li><span class="primary"></span>Primary</li>
+              <li><span class="planted"></span>Planted</li>
+            </ul>
+          </div>
         </div>
         <div class="right-col">
-          
+          <div class="forests-type-graph"></div>
         </div>
       </div>
     </div>
@@ -128,6 +164,7 @@
   </section>
 
   <!-- employment -->
+  <% if @employees.present? && @employees > 0 %>
   <section class="country-section country-employment" data-scroll-index='3'>
     <div class="inner">
       <div class="section-info">
@@ -137,17 +174,16 @@
 
       <div class="section-content">
         <div class="left-col">
-          <% if @employees.present? && @employees > 0 %>
+          <% if @employees < 1000 %>
+            <h3 class='section-title'><div><%= @employees %></div> <span>thousand people are directly employed by the forestry sector, according to 2006 FAO data.</span></h3>
+          <% else %>
+            <h3 class='section-title'><div><%= (@employees/1000.00).round(2) %></div> <span>million people are directly employed by the forestry sector, according to 2006 FAO data.</span></h3>
+          <% end %>
+
           <ul class='employment <%= @employees < 25 ? 'short' : '' %>'>
             <li>
-              <% if @employees < 1000 %>
-                <h3 class='section-title'><div><%= @employees %></div> <span>thousand people are directly employed by the forestry sector, according to 2006 FAO data</span></h3>
-              <% else %>
-                <h3 class='section-title'><div><%= (@employees/1000.00).round(2) %></div> <span>million people are directly employed by the forestry sector, according to 2006 FAO data</span></h3>
-              <% end %>
-
               <% @employees = @employees < 100 ? @employees : 100 %>
-              <div class='man_list'>
+              <div class='man-list'>
                 <% @employees.times do |i| %>
                   <%= image_tag 'countries/man.png' %>
                 <% end %>
@@ -156,11 +192,11 @@
               </div>
             </li>
           </ul>
-          <% end %>
         </div>
       </div>
     </div>
   </section>
+  <% end %>
 
   <!-- tenure -->
   <section class="country-section country-tenure" data-scroll-index='4'>
@@ -171,8 +207,7 @@
       </div>
 
       <div class="section-content">
-        <h3 class="section-title">
-        </h3>
+        <div class='line-graph'></div>
       </div>
     </div>
   </section>
