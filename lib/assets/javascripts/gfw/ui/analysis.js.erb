@@ -50,8 +50,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     subscribe('timeline:change_date_loss', _.bind(function(start_year, end_year, options) {
       if (options && options.publish) {
         this.range = '&begin='+start_year+'&end='+end_year;
-
-        this.info.model.set({ 'subtitle': 'Jan-'+start_year+' to Dec-'+(parseInt(end_year, 10)-1) });
+        this.info.model.set({ 'subtitle': 'Jan-'+start_year+' to Jan-'+parseInt(end_year, 10) });
 
         if (this.info.model.get('hidden') && !url('?begin') && !url('?end')) return;
 
@@ -60,24 +59,22 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     }, this));
 
     subscribe('timeline:change_date_forma', _.bind(function(start_year, start_month, end_year, end_month, options) {
-      if (options && options.publish) {
-        var start_month_ = ((start_month - 71) % 12) + 1, // Convert months to (1-12)
-            end_month_ = ((end_month - 71) % 12) + 1; // Convert months to (1-12)
+      var start_month_ = ((start_month - 71) % 12) + 1, // Convert months to (1-12)
+          end_month_ = ((end_month - 71) % 12) + 1; // Convert months to (1-12)
 
-        // Create dates, 0 padding months < 10
-        var start = start_year + '-' + ((start_month_ < 10) ? ("0" + start_month_) : start_month_) + '-01',
-            end = end_year + '-' + ((end_month_ < 10) ? ("0" + end_month_) : end_month_) + '-01';
+      // Create dates, 0 padding months < 10
+      var start = start_year + '-' + ((start_month_ < 10) ? ("0" + start_month_) : start_month_) + '-01',
+          end = end_year + '-' + ((end_month_ < 10) ? ("0" + end_month_) : end_month_) + '-01';
 
-        this.range = '&begin='+start+'&end='+end;
+      this.range = '&begin='+start+'&end='+end;
 
-        if ((start_month_ >= 1 && start_month_ <= 12) && (end_month_ >= 1 && end_month_ <= 12)) {
-          this.info.model.set({ 'subtitle': config.MONTHNAMES_SHORT[start_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_-1].slice(1).toLowerCase()+"-"+start_year+" to "+config.MONTHNAMES_SHORT[end_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_-1].slice(1).toLowerCase()+"-"+end_year });
-        }
-
-        if (this.info.model.get('hidden')) return;
-
-        this._getAlertCount();
+      if ((start_month_ >= 1 && start_month_ <= 12) && (end_month_ >= 1 && end_month_ <= 12)) {
+        this.info.model.set({ 'subtitle': config.MONTHNAMES_SHORT[start_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_-1].slice(1).toLowerCase()+"-"+start_year+" to "+config.MONTHNAMES_SHORT[end_month_-1].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_-1].slice(1).toLowerCase()+"-"+end_year });
       }
+
+      if (this.info.model.get('hidden')) return;
+
+      if (options && options.publish) { this._getAlertCount(); }
     }, this));
 
     subscribe('timeline:change_date_imazon', _.bind(function(start_year, start_month, end_year, end_month) {
@@ -85,11 +82,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
           end_month_ = end_month - 1; // Convert months to (0-11)
 
       // Create dates, 0 padding months < 10
-      var start = start = start_year + '-' + ((start_month < 10) ? ("0" + start_month) : start_month) + '-01',
+      var start = start_year + '-' + ((start_month < 10) ? ("0" + start_month) : start_month) + '-01',
           end = end_year + '-' + ((end_month < 10) ? ("0" + end_month) : end_month) + '-01';
 
       this.range = '&begin='+start+'&end='+end;
-
       if ((start_month >= 1 && start_month <= 12) && (end_month >= 1 && end_month <= 12)) {
         this.info.model.set({ 'subtitle': config.MONTHNAMES_SHORT[start_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[start_month_].slice(1).toLowerCase()+"-"+start_year+" to "+config.MONTHNAMES_SHORT[end_month_].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[end_month_].slice(1).toLowerCase()+"-"+end_year });
       }
@@ -103,12 +99,36 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       var year_ = parseInt(year, 10),
           month_ = parseInt(month, 10);
 
-      this.range = '&date='+year_+'-'+month_+'-'+'15';
-
       var q1 = config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].slice(1).toLowerCase()
       var q2 = config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].slice(1).toLowerCase()
-
+      
+      this.range = '&date='+year_+'-'+month_;
       this.info.model.set({ 'subtitle': q1+"-"+year_+' to '+q2+'-'+year_ });
+
+      if (this.info.model.get('hidden')) return;
+
+      this._getAlertCount();
+    }, this));
+
+    subscribe('timeline:change_date_fires', _.bind(function(end_day, year) {
+      var year_ = parseInt(year, 10),
+          end_day_ = parseInt(end_day, 10),
+          subtitle = 'Last week';
+
+      switch (end_day_) {
+        case 1:
+          subtitle = 'Yesterday';
+        break;
+
+        case 2:
+          subtitle = '2 days ago';
+        break;
+
+        case 3:
+          subtitle = '3 days ago';
+        break;
+      }
+      this.info.model.set({ 'subtitle': subtitle });
 
       if (this.info.model.get('hidden')) return;
 
@@ -122,6 +142,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if ($(this.$analysis_control).hasClass('disabled')) return;
 
     this.model.set('analyzing', true);
+    $viewfinder.addClass('analysing');
+    $map_coordinates.fadeIn();
 
     GFW.app.closeInfowindows();
     GFW.app.hideMarkers();
@@ -134,10 +156,13 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     e && e.preventDefault();
 
     this.model.set('analyzing', false);
+    $viewfinder.removeClass('analysing');
+    $map_coordinates.fadeOut();
 
     this._clearAnalysis();
     this._deleteSelectedShape();
     this._disableDoneButton();
+    this._enableAnalysisButton();
   },
 
   _onClickDone: function(e) {
@@ -146,15 +171,14 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if (this.$doneButton.attr('class') === 'done disabled') return;
 
     this.model.set('analyzing', false);
+    $viewfinder.removeClass('analysing');
+    $map_coordinates.fadeOut();
 
+    this.info.model.set('closed', false);
     this._getAlertCount();
 
     GFW.app._showStoriesMarkers();
-
-    if (GFW.app.mongabayHidden) {
-      GFW.app._loadMongabayLayer();
-      GFW.app.mongabayHidden = false;
-    }
+    GFW.app._loadMongabayLayer();
 
     if (this.selectedShape) this.selectedShape.setEditable(false);
   },
@@ -205,7 +229,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.initStats = false;
 
     this._clearAnalysis();
-
     if (!$('body').hasClass('embed')){
       this._enableAnalysisButton();
     }
@@ -216,15 +239,31 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     updateHash();
   },
 
-  _enableAnalysisButton: function() {
-    this.$analysis_control.removeClass('disabled');
+  unblock_analysis: function() {
+    this.$analysis_control.removeClass('analysis_blocked');
+    this._enableAnalysisButton();
+  },
 
-    this.$analysis_control.attr('data-tip', 'Analyze an area on the map');
+  block_analysis: function() {
+    this.$analysis_control.on('click',function(e){
+      e.stopPropagation();
+    }
+    ).attr('data-tip', 'Please turn on the UMD tree cover loss layer to use the analysis tool')
+     .addClass('analysis_blocked')
+  },
+
+  _enableAnalysisButton: function() {
+    var control = this.$analysis_control
+    
+    control.removeClass('disabled');
+
+    if (!control.hasClass('analysis_blocked')) {
+      control.attr('data-tip', 'Analyze an area on the map');
+    }
   },
 
   disableAnalysisButton: function() {
     this.$analysis_control.attr('data-tip', '')
-    $('.tipsy').remove();
 
     this.$analysis_control.addClass('disabled');
   },
@@ -259,21 +298,23 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     }
 
     if (the_geom.features && the_geom.features[0]) {
-       // countries
-      ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']/10000) * 10) / 10, true);
       title = the_geom.features[0].properties['name'];
     } else {
-      ha = this._calcAreaPolygon(the_geom);
       title = "User defined area";
     }
-
+    ha = this._calcAreaPolygon(the_geom);
+    if (isNaN(ha)) {
+      ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']/10000) * 10) / 10, true);
+    } else {
+      ha = formatNumber(ha, true);
+    }
     this.model.set('area', JSON.stringify(the_geom));
     this.info.model.set('ha', ha);
     this.info.model.set('title', title);
 
     this._fitBounds();
 
-    if (config.ISO !== 'ALL') this._getAlertCount();
+    this._getAlertCount();
   },
 
   _fitBounds: function() {
@@ -311,10 +352,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     var that = this;
 
     var area = this.model.get('area'),
+        not_analyze = (typeof area !== 'string' || area.length == 0),
         baselayer = config.BASELAYER,
         baseurl = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
         range;
-
     if (config.BASELAYER === 'fires' || config.BASELAYER === null) return;
 
     if (!this.initStats) {
@@ -330,21 +371,49 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     var dataset = (baselayer === 'loss') ? 'umd' : baselayer;
 
-    if (baselayer === 'modis') {
-      range = this.range || '&date=2013-12-15';
-    } else if (baselayer === 'forma') {
-      range = this.range || '&begin=2006-01-01&end=2013-12-01';
-    } else if (baselayer === 'imazon') {
-      range = this.range || '&begin=2007-01-01&end=2013-12-01';
-    } if (baselayer === 'loss') {
-      range = this.range || '&begin=2000&end=2013';
+    if (!this.range && url('?begin') && url('?end')) {
+      this.range = '&begin=' + url('?begin') + '&end=' + url('?end');
+      this.info.model.set({ 'subtitle': 'Jan-' + parseInt( url('?begin'), 10) +
+                                    ' to Jan-' + parseInt( url('?end')  , 10)
+                          });
     }
 
-    config.MAPOPTIONS.analysis = '?geom='+encodeURI(area)+range;
+    if (baselayer === 'modis') {
+      var mdate = url('?date') || '2013-12-15';
+      range = this.range || '&date=' + mdate;
+
+    } else if (baselayer === 'forma') {
+      var fbegin, fend;
+      if (url('?begin') && url('?end') && url('?begin').length > 6 && url('?end').length > 6) {
+        fbegin = url('?begin'),
+        fend   = url('?end');
+      } else {
+        var today = new Date();
+
+        fbegin = '2006-01-01',
+        fend   = today.getUTCFullYear() + '-' + (today.getUTCMonth() < 10) ? '0'+today.getUTCFullYear() : today.getUTCFullYear() + '-01';
+        this.info.model.set({ 'subtitle': 'Jan-' + fbegin.substring(0,4) +
+                                      ' to '+ config.MONTHNAMES_SHORT[today.getUTCMonth()].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[today.getUTCMonth()].substr(1).toLowerCase()  +'-' + today.getUTCFullYear()
+                            });
+      }
+      range = this.range || '&begin=' + fbegin + '&end=' + fend;
+    } else if (baselayer === 'imazon') {
+      var ibegin = '2007-0-9-01'  || url('?begin'),
+          iend   = '2013-0-10-01' || url('?end');
+      range = this.range || '&begin=' + ibegin + '&end=' + iend;
+
+    } if (baselayer === 'loss') {
+      var lbegin = '2000' || url('?begin'),
+          lend   = '2013' || url('?end');
+      range = this.range || '&begin=' + lbegin +'&end=' + lend;
+
+    }
+
+    config.MAPOPTIONS.analysis = (not_analyze) ? '?'+range.substr(1) : '?geom='+encodeURI(area)+range;
 
     if (config.ISO === 'ALL') {
       this.alertsUrl = baseurl+dataset+config.MAPOPTIONS.analysis;
-      this.downloadUrl = baseurl+dataset+'.shp?geom='+config.MAPOPTIONS.analysis;
+      this.downloadUrl = baseurl+dataset+'.shp'+config.MAPOPTIONS.analysis;
 
       updateHash({ replace: true });
     } else {
@@ -352,6 +421,16 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       this.downloadUrl = baseurl+dataset+'.shp?iso='+config.ISO+range;
     }
 
+    if (not_analyze) {
+      if (this.$el.find('.analysis_info').is(':visible')) {
+        this.$el.find('.analysis_info').hide();
+      }
+      return true;
+    } else {
+      if (! this.$el.find('.analysis_info').is(':visible')) {
+        this.$el.find('.analysis_info').show();
+      }
+    }
     executeAjax(this.alertsUrl, {}, {
       success: _.bind(function(data) {
         var baselayer = config.BASELAYER,
@@ -541,17 +620,17 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     c0 = polygon.coordinates[0][0];
     polygon.coordinates[0].push(c0);
 
-    area = formatNumber(Math.ceil((google.maps.geometry.spherical.computeArea(this.drawingManager.path)/10000) * 10) / 10, true)
+    //area = formatNumber(Math.ceil((google.maps.geometry.spherical.computeArea(this.drawingManager.path)/10000) * 10) / 10, true)
 
     this.model.set('area', JSON.stringify(polygon));
-    this.info.model.set('ha', area);
+    this.info.model.set('ha', formatNumber(this._calcAreaPolygon(polygon), true));
     this.info.model.set('title', this.info.model.defaults.title);
   },
 
    _calcAreaPolygon: function(polygon) {
     // https://github.com/maxogden/geojson-js-utils
     var area = 0;
-    var points = polygon.coordinates[0];
+    var points = (typeof(polygon.features) !== 'undefined') ? polygon.features[0].geometry.coordinates[0] : polygon.coordinates[0];
     var j = points.length - 1;
     var p1, p2;
 
@@ -570,7 +649,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     area /= 2;
 
-    return formatNumber(Math.ceil((area*1000000) * 10) / 10, true);
+    return Math.ceil((area*1000000) * 10) / 10;
   },
 
   _toggle: function() {
@@ -619,6 +698,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     this.$helper = this.$el.find('.helper_bar');
     this.$analysis_control = this.$el.find('.analysis_control');
     $(this.$analysis_control).tipsy({ title: 'data-tip', fade: true, gravity: 'w' });
+    $viewfinder = $('#viewfinder');
+    $map_coordinates = $('.coordinates.map_coordinates');
 
     this.$doneButton = this.$el.find('.done');
 
@@ -633,7 +714,7 @@ gfw.ui.model.AnalysisInfo = cdb.core.Model.extend({
     baselayer: config.BASELAYER,
     spinner: true,
     title: 'User defined area',
-    subtitle: 'Jan-2000 to Dec-2012',
+    subtitle: 'Jan-2000 to Jan-2013',
     subdisabled: true,
     alert_count: '',
     loss: '',
@@ -666,6 +747,9 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
 
     this.model.set('containment', '#map-container .map');
 
+    if ($('body').hasClass('embed')){
+      this.$el.css('right','-99999px');
+    }
     this._initViews();
     this._initBindings();
 
@@ -721,14 +805,19 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
   },
 
   onChangeBaselayer: function() {
-    this.model.set('closed', false);
-    this.render();
-    this.$el.removeClass('closed');
+    if (this.model.get('closed')) {
+      this.close();
+    } else {
+      this.model.set('closed', false);
+      this.render();
+      this.$el.removeClass('closed');
+    }
   },
 
   _toggle: function() {
-    if (this.model.get('hidden')) {
+    if (this.model.get('hidden') || this.model.get('closed')) {
       this.$el.fadeOut();
+      this.model.set('closed', true);
     } else {
       this.$el.fadeIn();
     }
@@ -747,9 +836,13 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
 
     var $header = this.$el.find('.info'),
         $stats = this.$el.find('.stats'),
-        $controls = this.$el.find('.info_controls');
+        $controls = this.$el.find('.info_controls'),
+        controls_height = 0;
 
-    var height = $header.outerHeight()+$stats.outerHeight()+$controls.outerHeight();
+    if( $controls.is(":visible") ){
+      controls_height = $controls.outerHeight();
+    }
+    var height = $header.outerHeight()+$stats.outerHeight()+controls_height;
 
     this.$content.animate({
       opacity: 1,
@@ -804,6 +897,14 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
     this.$dataset     = this.$el.find(".alert .title");
     this.$shadow      = this.$el.find(".shadow");
     this.$alert_count = this.$el.find("#alerts-count");
+    
+    if ($('body').hasClass('embed')){
+      this.$el.hide();
+      this.close();
+      setTimeout(function(){
+        that.$el.css('right','45px').delay(300).fadeIn();
+      },1000)
+    }
 
     if (this.model.get('download')) {
       this.downloadDropdown = new gfw.ui.view.DownloadDropdown({

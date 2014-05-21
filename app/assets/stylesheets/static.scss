@@ -7,7 +7,9 @@
 @import 'helpers';
 
 @import 'static-icons/*.png';
+/**/
 @import 'static-logos/*.png';
+/**/
 
 
 .static-inner {
@@ -290,6 +292,8 @@
 .source_category_description {
   font: 13px/1.2 "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: #999;
+
+  + .source_category_description { margin-top: 10px; }
 }
 
 .source-item {
@@ -300,6 +304,14 @@
     }
   }
 
+  &.disabled {
+    @include opacity(.5);
+  }
+
+  &.disabled:hover .source_header {
+    color: #464052;
+  }
+
   &.expanded {
     + .source-item {
       margin-top: 30px;
@@ -307,6 +319,10 @@
 
     .expand_arrow {
       @include static-icons-sprite(expand_arrow_up);
+    }
+
+    .source_header {
+      color: #98BD17;
     }
 
     .source_coverage,
@@ -446,8 +462,10 @@
 .source_dropdown_header {
   @extend .clearfix;
   display: block;
+  margin-top: 20px;
 
   .overview_title {
+    margin: 0;
     padding: 0 10px;
     line-height: 60px;
   }
@@ -464,6 +482,9 @@
 
 .source_dropdown_body {
   padding: 0 10px 10px;
+
+  &.active,
+  &.sinlge_active { display: block; }
 }
 
 .videos_list p {
@@ -592,9 +613,9 @@
 
   .bobolink { @include static-logos-sprite(bobolink); }
 
-  .vizzuality {
-    @include static-logos-sprite(vizzuality);
-    &:hover { @include static-logos-sprite(vizzuality_hover); }
+  .simbiotica {
+    @include static-logos-sprite(simbiotica);
+    &:hover { @include static-logos-sprite(simbiotica_hover); }
   }
 
   .goodall {

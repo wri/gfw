@@ -234,6 +234,7 @@
 <script id='timeline_loss-template' type='text/x-underscore-template'>
   <div class='timeline_coordinates'></div>
   <div class='timeline_legend'><p>UMD tree cover loss <span>(zoom in for most accurate viewing)</span></p></div>
+
   <div class='timeline-inner'>
     <div class='action'>
       <a class='play' href='#'></a>
@@ -343,6 +344,29 @@
   </div>
 </script>
 
+<script id='timeline_fires-template' type='text/x-underscore-template'>
+  <div class='timeline_coordinates'></div>
+  <div class='timeline_legend'><p>NASA active fire alerts</p></div>
+  <div class='timeline-inner'>
+    <div class='time'>
+      <ul class="quarters">
+        <li>
+          <a href="#" class="year active selected" data-quarter="7">Past week</a>
+        </li>
+        <li>
+          <a href="#" class="year active" data-quarter="3">Past 72 hours</a>
+        </li>
+        <li>
+          <a href="#" class="year active" data-quarter="2">Past 48 hours</a>
+        </li>
+        <li>
+          <a href="#" class="year active" data-quarter="1">Past 24 hours</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</script>
+
 <!-- Layer selector -->
 <script id='layer_selector-template' type='text/x-underscore-template'>
   <a href='#' class='toggle'></a>
@@ -403,7 +427,7 @@
 
         <li class='alert'>
           <strong class='title'>Gain 2000-2012</strong>
-          <p class='count forma'>
+          <p class='count gain'>
             <strong>
               <span id='alerts-count'>
                 {{ gain }}
@@ -575,7 +599,7 @@
 
 <!-- Share -->
 <script id='share-template' type='text/x-underscore-template'>
-  <a href='#' id='share_control' class='share_control' data-tip='Share'></a>
+  <a href='#' id='share_control' title=" {{ tooltip }} " class='share_control' data-tip='Share'></a>
 </script>
 
 <script id='share_dialog-template' type='text/x-underscore-template'>

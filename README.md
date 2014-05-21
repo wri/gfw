@@ -17,7 +17,7 @@ First make sure you have [Xcode](https://developer.apple.com/xcode) and [Command
 Next install [Homebrew](http://brew.sh), the OS X package manager:
 
 ```bash
-$ ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+$ ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 ```
 
 We recommend managing your Ruby installation through [rbenv](https://github.com/sstephenson/rbenv). It's just an easy way to run multiple Ruby versions for different applications:
@@ -33,12 +33,12 @@ Next clone the gfw repo:
 $ git clone https://github.com/Vizzuality/gfw.git
 ```
 
-Using rbenv, install and set Ruby 2.0.0-p247 in the main app directory:
+Using rbenv, install and set Ruby 2.1.1 in the main app directory:
 
 ```bash
 $ cd gfw
-$ rbenv install 2.1.0
-$ rbenv local 2.1.0
+$ rbenv install 2.1.1
+$ rbenv local 2.1.1
 ```
 
 Now let's install Ruby on Rails:
@@ -71,6 +71,8 @@ Last step. For real. Start the app server and access it at [http://0.0.0.0:5000]
 ```bash
 $ foreman start
 ```
+
+Oh, and you should probably launch the [gfw-api](https://github.com/wri/gfw-api) [dev_apperver.py](https://github.com/wri/gfw-api#developing) before you try to visit the site on your local machine.
 
 # License
 

@@ -5,11 +5,12 @@ Gfw::Application.routes.draw do
   post '/accept' => 'home#accept_and_redirect'
 
   # static
+  get '/data' => redirect("sources/forest_change")
   get '/sources' => redirect('sources/forest_change')
   get '/sources(/:section)' => 'static#data'
-  get '/howto' => redirect('howto/general_questions')
+  get '/howto' => redirect('howto/video')
   get '/howto(/:section)' => 'static#howto'
-  get '/about' => redirect('about/gfw')
+  get '/about' => redirect('about/video')
   get '/about(/:section)' => 'static#about'
 
   get '/notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'

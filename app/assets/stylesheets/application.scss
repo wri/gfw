@@ -14,7 +14,9 @@
 @import 'helpers';
 
 @import 'icons/*.png';
+/**/
 @import 'logos/*.png';
+/**/
 
 
 /* =Globals
@@ -30,6 +32,18 @@ body {
 
   &.embed {
     min-width: 0;
+    #analysis_control{
+      display: none;
+    }
+    .analysis_info{
+      display: block;
+      .info_controls{
+        display: none;
+      }
+      .spinner{
+        display: none;
+      }
+    }
   }
 }
 
@@ -173,6 +187,7 @@ strong {
     }
 
     &.credits {
+      margin-bottom: 10px;
       font-size: 12px;
       color: #aaa;
 
@@ -684,13 +699,16 @@ strong {
 .site-footer {
   background-color: #464352;
 
-  & .right,
-  & .left{
+  .right,
+  .left{
     float: right;
     width: 49%;
   }
-  & .left{
-    float: left
+  .left{
+    float: left;
+    .tweet-to{
+      margin-top: 15px;
+    }
   }
 }
 
@@ -712,8 +730,8 @@ strong {
 
 .footer-share {
   display: block;
-  margin-bottom: 50px;
-  height: 80px;
+  margin-bottom: 30px;
+  height: 50px;
   padding: 16px 0;
   font-size: 17px;
   font-family: "fira_sans_otregular";
@@ -726,6 +744,13 @@ strong {
     strong {
       font-family: "fira_sans_otmedium";
     }
+    .subscribe{
+      vertical-align: sub;
+    }
+  }
+  &.keep-updated{
+    margin-bottom: 0;
+    height: 35px;
   }
 }
 
@@ -736,7 +761,7 @@ strong {
   background: #fff;
   @include border-radius(23px);
 
-  & .fb_iframe_widget{
+  .fb_iframe_widget{
     top: -4px;
   }
 }
@@ -788,8 +813,7 @@ strong {
   &.ukaid { height: 52px; @include logos-sprite(ukaid); }
   &.tilia { height: 38px; @include logos-sprite(tilia); }
   &.goodall { height: 36px; width: 147px; @include logos-sprite(goodall); }
-  &.vizzuality { height: 45px; @include logos-sprite(vizzuality); }
-
+  &.cartodb { height: 45px; @include logos-sprite(cartodb); }
   &.last { margin-right: 0; }
 }
 
@@ -897,4 +921,19 @@ strong {
       }
     }
   }
+}
+
+/* =Share embed
+----------------------------------------------- */
+.share_control {
+  position: relative;
+  display: block;
+  width: 38px;
+  height: 38px;
+  left: 980px;
+  top: -3px;
+  @include icons-sprite(share_button);
+
+  &:hover {  @include icons-sprite(share_button_hover); }
+  &:active { @include icons-sprite(share_button_active); }
 }
