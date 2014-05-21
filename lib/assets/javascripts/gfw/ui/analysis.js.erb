@@ -269,9 +269,14 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   },
 
   loadPolygon: function(the_geom, options) {
-    var ha = 0,
-        title = "";
+    var ha         = 0,
+        title      = "",
+        element_id;
 
+    if (options && options[0] !== 0 && !isNaN(options[0])) {
+      ha = formatNumber(options[0]);
+      element_id = options[1];
+    }
     var style = config.OVERLAYSTYLES;
     style.editable = false;
 
@@ -302,11 +307,13 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     } else {
       title = "User defined area";
     }
-    ha = this._calcAreaPolygon(the_geom);
-    if (isNaN(ha)) {
-      ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']/10000) * 10) / 10, true);
-    } else {
-      ha = formatNumber(ha, true);
+    if (ha === 0) {
+      ha = this._calcAreaPolygon(the_geom);
+      if (isNaN(ha)) {
+        ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']/10000) * 10) / 10, true);
+      } else {
+        ha = formatNumber(ha, true);
+      }
     }
     this.model.set('area', JSON.stringify(the_geom));
     this.info.model.set('ha', ha);
@@ -314,7 +321,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     this._fitBounds();
 
-    this._getAlertCount();
+    this._getAlertCount(element_id);
   },
 
   _fitBounds: function() {
@@ -348,7 +355,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     map.fitBounds(bounds);
   },
 
-  _getAlertCount: function() {
+  _getAlertCount: function(elem) {
     var that = this;
 
     var area = this.model.get('area'),
@@ -409,7 +416,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     }
 
-    config.MAPOPTIONS.analysis = (not_analyze) ? '?'+range.substr(1) : '?geom='+encodeURI(area)+range;
+    config.MAPOPTIONS.analysis = (not_analyze) ? '?'+range.substr(1) : ((elem) ? '?'+elem+range : '?geom='+encodeURI(area)+range);
 
     if (config.ISO === 'ALL') {
       this.alertsUrl = baseurl+dataset+config.MAPOPTIONS.analysis;
@@ -420,7 +427,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       this.alertsUrl = baseurl+dataset+'?iso='+config.ISO+range;
       this.downloadUrl = baseurl+dataset+'.shp?iso='+config.ISO+range;
     }
-
+console.log(this.alertsUrl);
     if (not_analyze) {
       if (this.$el.find('.analysis_info').is(':visible')) {
         this.$el.find('.analysis_info').hide();
@@ -550,6 +557,28 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
           config.ISO = 'ALL';
           updateHash();
         }
+      }
+    });
+  },
+
+  loadProtectedAreaByWpaid: function(wdpaid,the_geom) {
+    var that = this;
+
+    var query = "https://wri-01.cartodb.com/api/v2/sql?q=SELECT shape_area FROM wdpa_all WHERE wdpaid =" + wdpaid;
+
+    $.ajax({
+      url: query,
+      dataType: 'jsonp',
+      success: function(area) {
+        if (area.rows[0].shape_area) {
+          that.loadPolygon(the_geom, [area.rows[0].shape_area, 'protected_area=' + wdpaid]);
+        }
+        else{
+          return 0;
+        }
+      },
+      error: function(){
+        return 'API: No area data';
       }
     });
   },
@@ -692,8 +721,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     }
   },
 
-  _loadProtectedArea: function(the_geom,area_id, area_name){
-    this.loadPolygon(the_geom)
+  _loadProtectedArea: function(the_geom,area_id){
+    this.loadProtectedAreaByWpaid(area_id, the_geom);
   },
 
   render: function() {
