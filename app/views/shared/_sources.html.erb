@@ -1230,7 +1230,7 @@
           <p>Land rights data displayed on the GFW website vary from country to country by date and data sources. Data may come from government agencies, NGOs, or other organizations.See the Data page for details on specific data sets.</p>
           <p>If you are aware of land rights data for additional countries, please email us <a href='mailto:gfw@wri.org'>here</a>.</p>
 
-          <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> “Land Rights.” World Resources Institute. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a></p>
+          <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> “Land Rights.” World Resources Institute. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
         </div>
 
         <!-- div class='source_extended'>
@@ -1295,11 +1295,13 @@
 
           <p>The resource rights data on GFW, while displayed as a single layer, is assembled on a country-by-country basis from multiple sources.</p>
 
-          <p>Resource rights  data displayed on the GFW website vary from country to country by date and data sources. Data may come from government agencies, NGOs, or other organizations.See the Data page for details on specific data sets.</p>
+          <p>Resource rights data displayed on the GFW website vary from country to country by date and data sources. Data may come from government agencies, NGOs, or other organizations. See the <%= link_to 'Data page', "#{sources_path}/people#resource_rights" %> for details on specific data sets.</p>
 
           <p>If you are aware of resource rights data for additional countries, please email us <a href='mailto:gfw@wri.org'>here</a>.</p>
 
-          <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> “Resource Rights.” World Resources Institute. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a></p>
+          <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> “Resource Rights.” World Resources Institute. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
+
+          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "#{sources_path}/people#resource_rights" %></em></p>
         </div>
 
         <div class='source_extended'>
@@ -1573,7 +1575,7 @@
 
             <li><strong>Photographs.</strong> Most of the photographs featured on this site have either been licensed under nontransferable terms, or have been acquired from photo-sharing sites such as Flickr that have their own policies for public use. Unless indicated otherwise, The MIT License (MIT) described above does not apply to photographs and images used on this site.</li>
 
-            <li><strong>Charts, Graphs, & Maps.</strong> Charts, graphs, and maps produced by GFW may be used according to The MIT License (MIT). Where graphs employ data from third parties, we may not be able to grant permissions to the original data used in these charts, although such permissions may be granted by the owners of the data. In these cases, please contact the third-party organizations directly to ask about permissions. If you have any questions about citing or reusing GFW content, please visit the <%= link_to 'Data page', sources_path %> or <a href='mailto:gfw@wri.org'>contact us</a>.</li>
+            <li><strong>Charts, Graphs, & Maps.</strong> Charts, graphs, and maps produced by GFW may be used according to The MIT License (MIT). Where graphs employ data from third parties, we may not be able to grant permissions to the original data used in these charts, although such permissions may be granted by the owners of the data. In these cases, please contact the third-party organizations directly to ask about permissions. If you have any questions about citing or reusing GFW content, please visit the <%= link_to 'How to page', "#{howto_path}/data" %> or <a href='mailto:gfw@wri.org'>contact us</a>.</li>
           </ul>
         </div>
       </div>

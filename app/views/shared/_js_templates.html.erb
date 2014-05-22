@@ -234,6 +234,7 @@
 <script id='timeline_loss-template' type='text/x-underscore-template'>
   <div class='timeline_coordinates'></div>
   <div class='timeline_legend'><p>UMD tree cover loss <span>(zoom in for most accurate viewing)</span></p></div>
+
   <div class='timeline-inner'>
     <div class='action'>
       <a class='play' href='#'></a>
@@ -339,6 +340,29 @@
       <ul class='years'></ul>
       <div class='range'></div>
       <ul class='visible_months'></ul>
+    </div>
+  </div>
+</script>
+
+<script id='timeline_fires-template' type='text/x-underscore-template'>
+  <div class='timeline_coordinates'></div>
+  <div class='timeline_legend'><p>NASA active fire alerts</p></div>
+  <div class='timeline-inner'>
+    <div class='time'>
+      <ul class="quarters">
+        <li>
+          <a href="#" class="year active selected" data-quarter="7">Past week</a>
+        </li>
+        <li>
+          <a href="#" class="year active" data-quarter="3">Past 72 hours</a>
+        </li>
+        <li>
+          <a href="#" class="year active" data-quarter="2">Past 48 hours</a>
+        </li>
+        <li>
+          <a href="#" class="year active" data-quarter="1">Past 24 hours</a>
+        </li>
+      </ul>
     </div>
   </div>
 </script>

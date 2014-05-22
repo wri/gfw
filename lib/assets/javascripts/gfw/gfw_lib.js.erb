@@ -381,7 +381,7 @@ GFW.modules.app = function(gfw) {
           isPng: true
         });
 
-        map.overlayMapTypes.push(this.specialLayer);
+        map.overlayMapTypes.insertAt(0, this.specialLayer);
       }
     },
 
@@ -425,6 +425,14 @@ GFW.modules.app = function(gfw) {
             x = Math.floor(coord.x/(Math.pow(2, zoom - 12)));
             y = Math.floor(coord.y/(Math.pow(2, zoom - 12)));
             z = 12;
+          } else {
+            y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
+            
+            if (x >= Math.pow(2,z)) {
+              x = x % Math.pow(2,z);
+            } else if (x < 0) {
+              x = Math.pow(2,z) - Math.abs(x);
+            }
           }
 
           var url = 'http://earthengine.google.org/static/hansen_2013/gfw_pink_tree/' + z + '/' + x + '/' + y + '.png';
@@ -489,6 +497,14 @@ GFW.modules.app = function(gfw) {
             x = Math.floor(coord.x/(Math.pow(2, zoom - 12)));
             y = Math.floor(coord.y/(Math.pow(2, zoom - 12)));
             z = 12;
+          } else {
+            y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
+            
+            if (x >= Math.pow(2,z)) {
+              x = x % Math.pow(2,z);
+            } else if (x < 0) {
+              x = Math.pow(2,z) - Math.abs(x);
+            }
           }
 
           var url = 'http://earthengine.google.org/static/hansen_2013/tree_alpha/' + z + '/' + x + '/' + y + '.png';
@@ -553,6 +569,14 @@ GFW.modules.app = function(gfw) {
             x = Math.floor(coord.x/(Math.pow(2, zoom - 12)));
             y = Math.floor(coord.y/(Math.pow(2, zoom - 12)));
             z = 12;
+          } else {
+            y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
+            
+            if (x >= Math.pow(2,z)) {
+              x = x % Math.pow(2,z);
+            } else if (x < 0) {
+              x = Math.pow(2,z) - Math.abs(x);
+            }
           }
 
           var url = 'http://earthengine.google.org/static/hansen_2013/gain_alpha/' + z + '/' + x + '/' + y + '.png';
@@ -1018,8 +1042,6 @@ GFW.modules.app = function(gfw) {
     _loadBaseLayer: function() {
       var table_name = null;
 
-      if (this.currentBaseLayer !== 'fires') this.$map_coordinates.hide();
-
       if (this.currentBaseLayer === 'loss') {
         if (config.mapLoaded && !this.time_layer_loss) {
           this._loadTimeLayerLoss();
@@ -1085,9 +1107,18 @@ GFW.modules.app = function(gfw) {
             featureOut: function() { map.setOptions({ draggableCursor: 'default' }); },
             auto_bound: false
           });
-        }
 
-        this.$map_coordinates.show();
+          subscribe('timeline:change_date_fires', _.bind(function(end_day, options) {
+            var year  = end_day.getUTCFullYear(),
+                month = (end_day.getUTCMonth() + 1) < 10 ? '0' + parseInt(end_day.getUTCMonth() + 1, 10) : parseInt(end_day.getUTCMonth(), 10),
+                day   = end_day.getUTCDate() < 10 ? '0' + end_day.getUTCDate() : end_day.getUTCDate();
+            var query = [
+              "SELECT * FROM global_7d where acq_date > '" + year + "-" + month + "-" + day + "'"
+            ].join(' ');
+
+            this.baseLayer.setQuery(query);
+          }, this));
+        }
       }
     },
 
