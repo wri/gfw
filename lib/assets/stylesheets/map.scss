@@ -36,6 +36,17 @@
   display: none;
 }
 
+#spinner_tiles{
+  position:absolute;
+  background: image-url('icons/spinner.gif') no-repeat;
+  top: 50%;
+  left: 50%;
+  z-index: 1000;
+  height: 24px;
+  width: 24px;
+  opacity: 0.6;
+}
+
 #sources {
   display: none;
 }
