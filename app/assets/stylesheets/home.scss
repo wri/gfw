@@ -988,6 +988,22 @@ body {
   pointer-events:none;
 }
 
+.umdoptions {
+  display: none;
+  z-index: 10;
+
+  .umd_options_control {
+    position: absolute;
+    top: 130px;
+    left: 15px;
+    width: 37px;
+    height: 37px;
+    @include home-icons-sprite(icon_options);
+    &:hover { @include home-icons-sprite(icon_options_hover); }
+    &:active { @include home-icons-sprite(icon_options_active); }
+  }
+}
+
 .marker {
   position: absolute;
   height: 36px;
@@ -1545,6 +1561,9 @@ body {
 
   &:hover { @include home-icons-sprite(share_button_hover); }
   &:active { @include home-icons-sprite(share_button_active); }
+  &.umd_options {
+    top: 168px;
+  }
 }
 
 .analysis_info {

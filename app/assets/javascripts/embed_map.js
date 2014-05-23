@@ -29,3 +29,4 @@
 //= require gfw/ui/share
 //= require gfw/ui/filter
 //= require gfw/map
+//= require gfw/ui/umd_options

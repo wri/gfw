@@ -6,6 +6,7 @@
 //= require gfw/ui/widget
 //= require gfw/ui/sourcewindow
 //= require gfw/ui/share
+//= require gfw/ui/umd_options
 
 
 gfw.ui.view.CountriesShow = cdb.core.View.extend({
