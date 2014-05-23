@@ -10,6 +10,10 @@
   </script>
 <% end %>
 
+<% content_for :css do %>
+  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
+<% end %>
+
 <div class="country-show">
   <div class="country-header">
     <div class="inner">
@@ -19,15 +23,15 @@
         <div class="country-title">
           <h1><%= @country['name'] %></h1>
           <div class="country-selector">
-            <select>
-              <%= options_for_select(@countries.map{|c| [c['name'], c['iso']]}) %>
+            <select id="areaSelector">
+              <option>Select area</option>
             </select>
           </div>
         </div>
 
         <div class="country-details">
           <div class="country-preview">
-            <div class="map"></div>
+            <div class="map" id="countryMap"></div>
             <div class="tree-numbers">
               <div class="tree-cover">
                 <h4>Tree cover</h4>
@@ -52,17 +56,23 @@
             <ul>
               <li>
                 <a href="#">Info</a>
-                <span class="country-icons-info_reverse"></span>
+                <span class="sidenav-icon country-icons-info_inverse"></span>
               </li>
-              <li><a href="#">Download data</a></li>
-              <li><a href="#">Analyze</a></li>
+              <li>
+                <a href="#">Download data</a>
+                <span class="sidenav-icon country-icons-download_inverse"></span>
+              </li>
+              <li>
+                <a href="#">Analyze</a>
+                <span class="sidenav-icon country-icons-chart_inverse"></span>
+              </li>
             </ul>
           </div>
         </div>
       </div>
 
       <!--  indepth message -->
-      <% if !@country['indepth'].present? %>
+      <% if @country['indepth'].present? %>
       <div class="country-indepth">
         <h3 class="country-indepth__title">Global Forest Watch does in-depth work in this country.</h3>
         <p class="country-indepth__body">Find more information at the Atlas Foreiester Interactif de la République Democratique Du Congo</p>
@@ -72,22 +82,23 @@
         </div>
       </div>
       <% end %>
+    </div>
+  </div>
 
-      <!--  country nav -->
-      <div class="country-nav-container">
-        <div class="country-nav">
-          <ul>
-            <li><a href="#" data-scroll-nav='0'>Forma<br>clearing alerts</a></li>
-            <li><a href="#" data-scroll-nav='1'>Forest<br>type</a></li>
-            <li><a href="#" data-scroll-nav='2'>State of the forest</a></li>
-            <li><a href="#" data-scroll-nav='3'>People<br>& Economy</a></li>
-            <li><a href="#" data-scroll-nav='4'>Tenure<br>& Laws</a></li>
-            <li><a href="#" data-scroll-nav='4'>Climate Change</a></li>
-            <li><a href="#" data-scroll-nav='6'>International agreements</a></li>
-          </ul>
-        </div>
+  <!--  country nav -->
+  <div class="country-nav-container">
+    <div class="country-nav">
+      <div class="inner">
+        <ul class="country-nav-items">
+          <li><a href="#" data-scroll-nav='0'>Forma<br>clearing alerts</a></li>
+          <li><a href="#" data-scroll-nav='1'>Forest<br>type</a></li>
+          <li><a href="#" data-scroll-nav='2'>State of the forest</a></li>
+          <li><a href="#" data-scroll-nav='3'>People<br>& Economy</a></li>
+          <li><a href="#" data-scroll-nav='4'>Tenure<br>& Laws</a></li>
+          <li><a href="#" data-scroll-nav='5'>Climate Change</a></li>
+          <li><a href="#" data-scroll-nav='6'>International agreements</a></li>
+        </ul>
       </div>
-
     </div>
   </div>
 
@@ -213,7 +224,7 @@
   </section>
 
   <!-- legislation -->
-  <section class="country-section country-legislation" data-scroll-index='5'>
+  <section class="country-section country-legislation">
     <div class="inner">
       <div class="section-info">
         <a href="#" class="info" data-source=""><i></i></a>
@@ -227,7 +238,7 @@
   </section>
 
   <!-- carbon stocks -->
-  <section class="country-section country-tenure" data-scroll-index='6'>
+  <section class="country-section country-tenure" data-scroll-index='5'>
     <div class="inner">
       <div class="section-info">
         <a href="#" class="info" data-source=""><i></i></a>
@@ -246,7 +257,7 @@
   </section>
 
   <!-- conventions -->
-  <section class='country-section country-conventions' data-scroll-index='4'>
+  <section class='country-section country-conventions' data-scroll-index='6'>
     <div class='inner'>
       <div class="section-info">
         <a href="#" class="info" data-source=""><i></i></a>
