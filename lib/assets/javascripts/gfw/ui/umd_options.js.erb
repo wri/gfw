@@ -8,7 +8,7 @@ gfw.ui.view.UmdOptions = cdb.core.View.extend({
   className: 'umdoptions',
 
   events: {
-    'click .umd-options-control' : '_openUMDoptions'
+    'click #umd_options-control' : '_openUMDoptions'
   },
 
   initialize: function() {
@@ -29,15 +29,15 @@ gfw.ui.view.UmdOptions = cdb.core.View.extend({
   },
 
   _initViews: function() {
-    this.umdoptions = new gfw.ui.view.umdoptionsDialog({});
+    this.umdoptions_dialog = new gfw.ui.view.umdoptionsDialog({});
 
-    $('body').append(this.umdoptions.render());
+    $('#map').append(this.umdoptions_dialog.render());
   },
 
   _openUMDoptions: function(e) {
     e.preventDefault();
 
-    this.umdoptions.show();
+    this.umdoptions_dialog.show();
   },
 
   _toggle: function() {
@@ -72,6 +72,7 @@ gfw.ui.view.UmdOptions = cdb.core.View.extend({
 
 gfw.ui.model.umdoptionsDialog = Backbone.Model.extend({
   defaults: {
+    title: "Options"
   }
 
 });
@@ -80,12 +81,10 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
   className: 'umdoptions_dialog',
 
   events: {
-    'click .close': 'hide',
-    'click .mode_menu a': '_onClickMode'
+    'click .close': 'hide'
   },
 
   initialize: function() {
-    _.bindAll( this, 'toggle', '_toggleMode', '_onKeyDown' );
 
     this.options = _.extend(this.options, this.defaults);
 
@@ -93,8 +92,6 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
 
     this.model.on('change:hidden', this.toggle);
     this.model.on('change:mode', this._toggleMode);
-
-    this.$backdrop = $('.backdrop');
 
     var template = $('#umdoptions_dialog-template').html();
 
@@ -105,11 +102,7 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
   },
 
   show: function() {
-    this._setLink();
     this.$el.fadeIn(250);
-    this.$backdrop.show();
-
-    this._initBindings();
   },
 
   hide: function(e) {
@@ -117,86 +110,7 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
 
     var that = this;
 
-    this.$el.fadeOut(250, function() {
-      that._setMode('link');
-    });
-
-    this.$backdrop.fadeOut(250);
-
-    this._disableBindings();
-  },
-
-  _initBindings: function() {
-    var that = this;
-
-    $(document).on('keydown', this._onKeyDown);
-
-    this.$backdrop.on('click', function() {
-      that.hide();
-    });
-
-    this.$input.on('click',function(){
-      this.select()
-    });
-  },
-
-  _disableBindings: function() {
-    $(document).off('keydown');
-
-    this.$backdrop.off('click');
-  },
-
-  _setLink: function() {
-    var that = this;
-
-    // Disable textarea
-    this.$input.val('');
-
-    // Get link short
-    this._generateShortUrl(window.location.href, function(url) {
-      that.$input.val(url);
- 
-      that.$share.find('.twitter').attr('href', "https://twitter.com/share?url=" + url);
-      that.$share.find('.facebook').attr('href', "https://www.facebook.com/sharer.php?u=" + url);
-      that.$share.find('.google_plus').attr('href', "https://plus.google.com/share?url=" + url);
-
-    });
-  },
-
-  _setEmbed: function() {
-    var $body  = $('body'),
-        dim_x = 640,
-        dim_y = 530;
-
-    if (!$body.hasClass('home')) {
-      dim_x = 1000;
-      dim_y = ($body.hasClass('show')) ? 480 : 600;
-    }
-
-    this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname + window.location.search+'"></iframe>');
-  },
-
-  _generateShortUrl: function(url, callback) {
-    $.ajax({
-      url:"https://api-ssl.bitly.com/v3/shorten?longUrl=" + encodeURIComponent(url) + "&login=" + this.options.bitly.login + "&apiKey=" + this.options.bitly.key,
-      type:"GET",
-      async: false,
-      dataType: 'jsonp',
-      success: function(r) {
-        if (!r.data.url) {
-          callback && callback(url);
-
-          throw new Error('BITLY doesn\'t allow localhost alone as domain, use localhost.lan for example');
-        } else {
-          callback && callback(r.data.url)
-        }
-      },
-      error: function(e) { callback && callback(url) }
-    });
-  },
-
-  _onKeyDown: function(e) {
-    if (e.which == 27) this._onEscKey(e);
+    this.$el.fadeOut(250);
   },
 
   _onEscKey: function(e) {
@@ -205,55 +119,8 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
     this.hide();
   },
 
-  _onClickMode: function(e) {
-    e && e.preventDefault();
-
-    var $target = $(e.target),
-        mode = $target.attr('data-embed');
-
-    if (mode != this.model.get('mode')) {
-      $('.mode_menu li').removeClass('selected');
-      $target.closest('li').addClass('selected');
-
-      this._setMode(mode);
-    }
-  },
-
-  _setMode: function(mode) {
-    this.model.set({ mode: mode });
-  },
-
-  _toggleMode: function() {
-    var mode = this.model.get('mode');
-
-    if (mode === 'url') {
-      this.model.set({
-        help: this.model.defaults.help,
-        button_title: this.model.defaults.button_title
-      });
-
-      this._setLink();
-    } else if (mode === 'embed') {
-      this.model.set({
-        help: 'Click and paste HTML to embed in website',
-        button_title: 'Copy code'
-      });
-
-      this._setEmbed();
-    }
-
-    this.$help.html(this.model.get('help'));
-    this.$button.html(this.model.get('button_title'));
-  },
-
   render: function() {
     this.$el.append(this.template.render( this.model.toJSON() ));
-
-    this.$help = this.$el.find('.help span');
-    this.$input = this.$el.find('.field');
-    this.$button = this.$el.find('.copy');
-    this.$loading = this.$el.find('.umdoptions_loading');
-    this.$share = this.$el.find('.share_buttons');
 
     return this.$el;
   }
