@@ -157,7 +157,7 @@
               cursor: pointer;
             }
 
-            .sidenav-icon {
+            a .sidenav-icon {
               display: inline-block;
               position: absolute;
               top: 17px; right: 20px;
@@ -331,9 +331,24 @@
         color: $default-color;
       }
     }
+
+    .country-alt {
+      display: inline-block;
+      width: 100%;
+      clear: both;
+      padding-top: 20px;
+      color: #666;
+      line-height: 1.4;
+      font-size: 14px;
+      font-style: italic;
+    }
   }
 
   .country-alerts {
+    .forma_dropdown-menu {
+      display: none;
+    }
+
     .forma-alerts-legend {
       margin: 5px 0 25px 0;
 

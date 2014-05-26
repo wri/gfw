@@ -3,6 +3,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
   events: {
     'click .info': '_openSource',
+    'click .forma_dropdown-link': '_openDropdown',
     'change #areaSelector': '_onSelectArea'
   },
 
@@ -34,9 +35,11 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
   _initViews: function() {
     this._initSource();
+    this._drawLossAndGain();
     this._drawTenure();
     this._drawForestsType();
     this._drawFormaAlerts();
+    this._initFormaDropdown();
   },
 
   _initSource: function() {
@@ -51,6 +54,35 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
     ga('send', 'event', 'SourceWindow', 'Open', source);
     this.sourceWindow.show(source).addScroll();
+  },
+
+  _initFormaDropdown: function() {
+    $('.forma_dropdown-link').qtip({
+      show: 'click',
+      hide: {
+        event: 'click unfocus'
+      },
+      content: {
+        text: $('.forma_dropdown-menu')
+      },
+      position: {
+        my: 'bottom right',
+        at: 'top right',
+        target: $('.forma_dropdown-link'),
+        adjust: {
+          x: -10
+        }
+      },
+      style: {
+        tip: {
+          corner: 'bottom right',
+          mimic: 'bottom center',
+          border: 1,
+          width: 10,
+          height: 6
+        }
+      }
+    });
   },
 
   _setAreaSelector: function() {
@@ -307,6 +339,76 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     });
   },
 
+  _drawLossAndGain: function() {
+    var sql = "SELECT year, loss_gt_0 loss, extent_gt_25 extent FROM umd WHERE iso='" + this.country.get('iso') + "'";
+
+    // if (options.dataset === 'loss') {
+    //   sql += "year, loss_gt_0 loss FROM umd WHERE iso='" + this.country.get('iso') + "'";
+    // } else if (options.dataset === 'extent') {
+    //   sql += "year, extent_gt_25 extent FROM umd WHERE iso='" + this.country.get('iso') + "'";
+    // }
+
+    d3.json('https://wri-01.cartodb.com/api/v2/sql?q=' + sql, function(json) {
+      if (json) {
+        $graph.removeClass('ghost');
+
+        var data = json.rows;
+      } else {
+        $coming_soon.show();
+
+        return;
+      }
+
+      var data_ = [];
+
+      _.each(data, function(val, key) {
+        if (val.year >= 2001) {
+          data_.push({
+            'year': val.year,
+            'value': eval('val.'+options.dataset)
+          });
+        }
+      });
+
+      $amount.html('<span>'+formatNumber(parseInt(data_[data_.length - 1].value, 10))+'</span>');
+      $date.html('Hectares in ' + data_[data_.length - 1].year);
+
+      var marginLeft = 40,
+          marginTop = radius - h/2 + 5;
+
+      var y_scale = d3.scale.linear()
+        .domain([0, d3.max(data_, function(d) { return parseFloat(d.value); })])
+        .range([height, marginTop*2]);
+
+      var barWidth = (width - 80) / data_.length;
+
+      var bar = graph.selectAll('g')
+        .data(data_)
+        .enter()
+        .append('g')
+        .attr('transform', function(d, i) { return 'translate(' + (marginLeft + i * barWidth) + ','+ -marginTop+')'; });
+
+      bar.append('svg:rect')
+        .attr('class', function(d, i) {
+          if (i === 11) { // last year index
+            return 'last bar'
+          } else {
+            return 'bar'
+          }
+        })
+        .attr('y', function(d) { return y_scale(d.value); })
+        .attr('height', function(d) { return height - y_scale(d.value); })
+        .attr('width', barWidth - 1)
+        .on('mouseover', function(d) {
+          d3.selectAll('.bar').style('opacity', '.5');
+          d3.select(this).style('opacity', '1');
+
+          $amount.html('<span>'+formatNumber(parseInt(d.value, 10))+'</span>');
+          $date.html('Hectares in ' + d.year);
+        });
+    });
+  },
+
   _drawForestsType: function() {
     var sql = ["SELECT unnest(array['forest_regenerated', 'forest_primary', 'forest_planted'])",
                'AS type, unnest(array[COALESCE(forest_regenerated, 0),',
@@ -463,6 +565,10 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           .attr('cy', cy)
           .attr('r', 5);
     });
-  }
+  },
+
+  _openDropdown: function(e) {
+    e.preventDefault();
+  },
 
 });

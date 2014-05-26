@@ -124,8 +124,18 @@
             <span>Humid Tropics</span>
           </div>
 
-          <a href="#" class="btn-rdn btn-rdn-primary">Download data</a>
+          <div class="forma_dropdown-menu">
+            <ul>
+              <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.svg?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>SVG</a></li>
+              <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.geojson?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>GeoJSON</a></li>
+              <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.shp?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>SHP</a></li>
+              <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.kml?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>KML</a></li>
+              <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.csv?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>CSV</a></li>
+            </ul>
+          </div>
+          <a href="#" class="btn-rdn btn-rdn-primary forma_dropdown-link">Download data</a>
         </div>
+
         <div class="right-col">
           <div class="forma-graph"></div>
         </div>
@@ -159,6 +169,12 @@
         <div class="right-col">
           <div class="forests-type-graph"></div>
         </div>
+
+        <% if @country['country_alt'].present? %>
+        <div class="country-alt">
+          <p><%= @country['country_alt'].html_safe %></p>
+        </div>
+        <% end %>
       </div>
     </div>
   </section>
@@ -269,11 +285,13 @@
           <a href="#" class="info" data-source="emissions"><i class="dark"></i></a>
         </div>
 
+         <% precission = (@country['emissions'].abs.to_i < 0.1) ? 2 : 1 %>
+
         <div class="section-content">
           <% if @country['emissions'] > 0 %>
-            <h3 class='section-title'>According to FAO data, <span class="highlight"><%= number_to_percentage(@country['emissions'], precision: @precission) %> of GHG emissions</span> in this country came from land-use change and forestry in 2010.</h3>
+            <h3 class='section-title'>According to FAO data, <span class="highlight"><%= number_to_percentage(@country['emissions'], precision: precission) %> of GHG emissions</span> in this country came from land-use change and forestry in 2010.</h3>
           <% else %>
-            <h3 class='section-title'>According to FAO data, land-use change and forestry sequestered <span class="highlight"><%= number_to_percentage(@country['emissions'].abs, precision: @precission) %> of this country’s GHG emissions</span> in 2010.</h3>
+            <h3 class='section-title'>According to FAO data, land-use change and forestry sequestered <span class="highlight"><%= number_to_percentage(@country['emissions'].abs, precision: precission) %> of this country’s GHG emissions</span> in 2010.</h3>
           <% end %>
         </div>
       </div>
