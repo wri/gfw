@@ -14,6 +14,8 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+/media
+/public/uploads
 
 .DS_Store
 
@@ -21,6 +23,7 @@
 .ruby-version
 .rvmrc
 .env
+.idea/
 
 # Ingore Sublime project files:
 *.sublime-*
