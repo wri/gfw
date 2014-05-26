@@ -14,7 +14,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
-/media
+/media/upload
 /public/uploads
 
 .DS_Store
