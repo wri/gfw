@@ -2,6 +2,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   el: $('.country-show'),
 
   events: {
+    'click .info': '_openSource',
     'change #areaSelector': '_onSelectArea'
   },
 
@@ -32,9 +33,24 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   },
 
   _initViews: function() {
+    this._initSource();
     this._drawTenure();
     this._drawForestsType();
     this._drawFormaAlerts();
+  },
+
+  _initSource: function() {
+    this.sourceWindow  = new gfw.ui.view.SourceWindow();
+    this.$el.append(this.sourceWindow.render());
+  },
+
+  _openSource: function(e) {
+    e.preventDefault();
+
+    var source = $(e.target).closest('.info').attr('data-source');
+
+    ga('send', 'event', 'SourceWindow', 'Open', source);
+    this.sourceWindow.show(source).addScroll();
   },
 
   _setAreaSelector: function() {
@@ -71,9 +87,12 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
       attributionControl: false
     });
 
+    this.map.fitBounds(bounds);
+
     // set forest cover layer
-    L.tileLayer('http://earthengine.google.org/static/hansen_2013/tree_alpha/{z}/{x}/{y}.png')
-     .addTo(this.map);
+    var tileLayer = L.tileLayer('http://earthengine.google.org/static/hansen_2013/tree_alpha/{z}/{x}/{y}.png', {
+      opacity: 0
+    }).addTo(this.map);
 
     // set country layer
     cartodb.createLayer(this.map, {
@@ -93,14 +112,17 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           #country_mask[code='" + this.country.get('iso') + "'] {\
             polygon-fill: #FF6600;\
             polygon-opacity: 0;\
-            line-color: #FFFFFF;\
-            line-width: 0;\
+            line-color: #73707D;\
+            line-width: 1;\
             line-opacity: 1;\
           }"
       }]
     })
     .addTo(this.map)
     .done(function(layer) {
+      setTimeout(function() {
+        tileLayer.setOpacity(1)
+      }, 600);
     });
   },
 
@@ -108,40 +130,14 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   },
 
   _positionScroll: function() {
-    this.indepth_bar = 0;
-
     var h_min = $('.country-alerts').offset().top - 48,
         h_max = $('.country-conventions').offset().top - 46;
-
-    // if (this.$('.country-indepth').length > 0) {
-    //   this.indepth_bar = 48;
-
-    //   h_min -= 48;
-    //   h_max -= 48;
-
-    //   if ($(window).scrollTop() > (h_min) && $(window).scrollTop() < h_max) {
-    //     this.$indepth.css({
-    //       position: 'fixed',
-    //       top: 0
-    //     });
-    //   } else if ($(window).scrollTop() >= h_max) {
-    //     this.$indepth.css({
-    //       position: 'absolute',
-    //       top: h_max - h_min
-    //     });
-    //   } else {
-    //     this.$indepth.css({
-    //       position: 'absolute',
-    //       top: 0
-    //     });
-    //   }
-    // }
 
     if ($(window).scrollTop() > (h_min) && $(window).scrollTop() < h_max) {
       // fixed
       this.$nav.css({
         position: 'fixed',
-        top: this.indepth_bar
+        top: 0
       });
       this.$nav.addClass('fixed');
     } else if ($(window).scrollTop() >= h_max) {
@@ -170,7 +166,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
       scrollTime: 400,
       activeClass: 'active',
       onPageChange: null,
-      topOffset: -48 - this.indepth_bar
+      topOffset: - 48
     });
 
     $(window).scroll(this._positionScroll);

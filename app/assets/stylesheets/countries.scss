@@ -95,3 +95,44 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
 
   &.dark { @include country-icons-sprite(country_info_dark); }
 }
+
+.btn-rdn {
+  padding: 8px 15px 5px 15px;
+  border: 2px solid #D6E681;
+  color: #545454;
+  font-size: 15px;
+  display: inline-block;
+  text-decoration: none;
+  margin-top: 10px;
+  -webkit-border-radius: 18px;
+  -moz-border-radius: 18px;
+  -ms-border-radius: 18px;
+  -o-border-radius: 18px;
+  border-radius: 18px;
+
+  &:hover {
+    border: 2px solid #ACCD00;
+    color: #444;
+  }
+
+  &.btn-default {
+  }
+
+  &.btn-rdn-primary {
+    background: #A1BB38;
+    border: none;
+    color: white;
+    text-transform: uppercase;
+
+    &:hover {
+      background: $primary-color
+    }
+  }
+
+  &.disabled {
+    @include opacity(.4);
+    pointer-events: none;
+    cursor: default;
+  }
+}
+

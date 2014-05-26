@@ -26,9 +26,6 @@ Gfw::Application.routes.draw do
   get '/countries' => 'countries#index'
   get '/country/:id' => 'countries#show', :as => 'country'
   get '/countries/overview' => 'countries#overview'
-  # New country page
-  get '/r/country/:id' => 'countries#show_redesign', :as =>'country_redesign'
-
 
   # media
   post 'media/upload' => 'media#upload'

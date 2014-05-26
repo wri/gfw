@@ -1,6 +1,7 @@
 .country-show {
   font-family: $font-regular;
   color: $default-color;
+  margin-top: -60px;
 
   .country-header {
     width: 100%;
@@ -89,6 +90,10 @@
         .map {
           width: 40%;
           height: 100%;
+    
+          &.leaflet-container {
+            background: transparent;
+          }
         }
 
         .tree-numbers {
@@ -131,29 +136,33 @@
         height: 100%;
         background: #F2F2F3;
 
-        .sidenav-icon {
-          display: inline-block;
-          float: right;
-          height: 18px;
-          width: 18px;
-        }
-
         > ul {
           padding: 10px 0;
           width: 100%;
 
           > li {
-            height: 53px;
             width: 100%;
-            padding: 20px 25px;
-            @include box-sizing(border-box);
-            font-family: $font-medium;
-            text-transform: uppercase;
-            font-size: 14px;
-            cursor: pointer;
+            position: relative;
 
             a {
               color: #464152;
+              display: block;
+              height: 53px;
+              width: 100%;
+              padding: 20px 25px;
+              @include box-sizing(border-box);
+              font-family: $font-medium;
+              text-transform: uppercase;
+              font-size: 14px;
+              cursor: pointer;
+            }
+
+            .sidenav-icon {
+              display: inline-block;
+              position: absolute;
+              top: 17px; right: 20px;
+              height: 18px;
+              width: 18px;
             }
 
             &:hover {
@@ -434,6 +443,48 @@
     }
   } // country-tenure
 
+  .country-carbon-stocks {
+    .carbon-text,
+    .emissions-text {
+      float: left;
+      padding: 50px 0;
+      @include box-sizing(border-box);
+
+      .section-info {
+        margin-bottom: 25px;
+      }
+
+      &.wide {
+        width: 100%;
+      }
+    }
+
+    .carbon-text {
+      width: 44%;
+      margin-right: 4%;
+    }
+
+    .emissions-text {
+      width: 52%;
+      background: #444050;
+      text-align: right;
+      padding-right: 20px;
+
+      .section-info {
+        color: #908E97;
+        a {
+          margin-right: 0;
+          margin-left: 5px;
+        }
+      }
+
+      .section-content h3 {
+        color: white;
+        padding-right: 28px;
+      }
+    }
+  } // country-carbon-stocks
+
   .country-employment {
     .section-content .left-col {
       width: 460px;
@@ -460,11 +511,225 @@
         text-transform: uppercase;
         color: #444;
       }
-
     }
 
     .man-list {
       color: #919191;
     }
-  }
+  } // country-employment
+
+  .country-conventions {
+    ul {
+      margin-right: -15px;
+    }
+
+    li {
+      display: block;
+      position: relative;
+      float: left;
+      margin: 0 10px 10px 0;
+      padding-top: 25px;
+      width: 120px;
+      height: 67px;
+      border: 2px solid #CCCCCC;
+      font-weight: bold;
+      font-size: 12px;
+      @extend .sans-serif;
+      text-align: center;
+      color: #AAAAAA;
+      @include border-radius(2px);
+
+      span {
+        position: absolute;
+        display: block;
+        left: 0; right: 0; bottom: 0;
+        padding: 5px;
+        border-top: 1px solid #E2E2E2;
+        font-weight: normal;
+        font-style: italic;
+        line-height: 12px;
+        font-size: 11px;
+        text-transform: uppercase;
+      }
+    }
+  } // country-conventions
+
+  .country-external-links {
+    color: #ddd;
+    font-size: 14px;
+
+    .section-content {
+      padding-left: 0;
+      padding-bottom: 10px;
+    }
+
+    li {
+      @include inline-block();
+      border-left: 1px solid #ddd;
+      padding-left: 8px;
+      margin: 0 0 10px 5px;
+      line-height: 14px;
+
+      &:first-child {
+        border: 0;
+        margin-left: 0;
+        padding-left: 0;
+      }
+    }
+
+    a {
+      text-decoration: underline;
+    }
+  } // external-links
+
+  .country-download-links {
+    background-color: #F8FAF0;
+    text-align: center;
+    padding: 50px 0;
+    border-bottom-color: #141414;
+
+    a {
+      text-transform: uppercase;
+      padding: 14px 30px 12px 30px;
+      font-size: 13px;
+      color: #393939;
+      font-family: $font-medium;
+      border-color: #E0E9C1;
+      margin-top: 0;
+
+      &:first-child {
+        margin-right: 10px;
+      }
+
+      &:hover {
+        border: 2px solid #ACCD00;
+      }
+    }
+  } // download-links
+
+  .country-blog {
+    text-align: center;
+    background: #141414;
+    color: white;
+
+    .section-content {
+      padding: 0;
+
+      .section-title {
+        color: #A0B941;
+        font-family: $font-regular;
+        font-size: 36px;
+        margin-bottom: 25px;
+      }
+    }
+
+    .columns {
+      padding: 0;
+      min-height: 340px;
+    }
+
+    .column-title {
+      position: relative;
+      font-size: 14px;
+      text-transform: uppercase;
+      color: #444;
+      font-family: $font-medium;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+
+    .story-title {
+      margin-bottom: 18px;
+      font-size: 27px;
+      color: #FFF;
+    }
+
+    .story-content {
+      margin-bottom: 30px;
+      color: #727272;
+      line-height: 1.3;
+      font-size: 14px;
+
+      a {
+        text-decoration: underline;
+        color: #666;
+      }
+    }
+
+    .column {
+      display: block;
+      margin-top: 40px;
+      min-height: 266px;
+
+      &.first,
+      &.last,
+      &.round {
+        width: 33%;
+        margin: 0;
+        margin-top: 10px;
+        padding: 0;
+      }
+
+      &.round {
+        a {
+          margin: auto;
+        }
+
+        .circle-wrapper {
+          position: relative;
+          width: 266px;
+          height: 100%;
+          margin: auto;
+          margin-bottom: 20px;
+        }
+
+        .title strong,
+        .title span {
+          font-family: $font-medium;
+          font-weight: normal;
+          font-size: 21;
+        }
+
+        .title span {
+          font-size: 14px;
+        }
+      }
+
+      &.first {
+        text-align: left;
+      }
+
+      &.last {
+        text-align: right;
+      }
+
+      &.no_story {
+        .gradient {
+          background-image: image-url('backgrounds/bkg_circles_gradient_nostory.png');
+        }
+      }
+
+      .inline {
+        display: inline;
+        width: auto;
+        height: auto;
+      }
+
+      .frame {
+        width: 266px;
+        background: #5E5E5E;
+      }
+
+      .see-more {
+        text-transform: uppercase;
+        font-size: 14px;
+        color: #797979;
+        font-family: $font-medium;
+      }
+    }
+  } // country-blog
+
+  .country-comments {
+    background-color: #F5F5F5;
+  } // country-comments
 }
