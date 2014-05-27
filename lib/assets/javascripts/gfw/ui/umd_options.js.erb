@@ -153,29 +153,29 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
         $('.visible_range').css('width', 60 + 281);
       break;
       case slider_val >= 18 && slider_val < 28:
-        slider_val = 22; //15
+        slider_val = 21; //15
         this.canopy = 15;
-        $('.visible_range').css('width', 60 + 232);
+        $('.visible_range').css('width', 60 + 233);
       break;
       case slider_val >= 28  && slider_val < 38:
-        slider_val = 32; //20
+        slider_val = 31; //20
         this.canopy = 20;
-        $('.visible_range').css('width', 60 + 190);
+        $('.visible_range').css('width', 60 + 192);
       break;
       case slider_val >= 38  && slider_val < 48:
-        slider_val = 43; //25
+        slider_val = 42; //25
         this.canopy = 25;
-        $('.visible_range').css('width', 60 + 142);
+        $('.visible_range').css('width', 60 + 143);
       break;
       case slider_val >= 48  && slider_val < 58:
-        slider_val = 54; //30
+        slider_val = 53; //30
         this.canopy = 30;
-        $('.visible_range').css('width', 60 + 95);
+        $('.visible_range').css('width', 60 + 97);
       break;
       case slider_val >= 58  && slider_val < 69:
-        slider_val = 65; //50
+        slider_val = 64; //50
         this.canopy = 50;
-        $('.visible_range').css('width', 60 + 52);
+        $('.visible_range').css('width', 60 + 54);
       break;
       case slider_val >= 69  && slider_val < 100:
       default:
@@ -189,7 +189,13 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
 
   _onClickApply: function(e) {
     e && e.preventDefault();
-    console.log(this.canopy)
+    console.log(this.canopy);
+    GFW.app.
+    this.hide()
+  },
+  
+  updateMap: function() {
+    publish('timeline:change_date_fires', [this.model.get('end_day')]);
   },
 
   show: function() {
