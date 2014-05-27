@@ -1570,6 +1570,8 @@ body {
       .source {
         top: 4px;
         right: 7px;
+        width: 10px;
+        padding: 0;
       }
     }
     &.trees {
@@ -1605,6 +1607,7 @@ body {
         background: image-url('/assets/icons/point.png') repeat-x -2px center;
         position: relative;
         top: 21px;
+        cursor: pointer;
         &:focus {
           outline: 0;
         }
@@ -1615,6 +1618,9 @@ body {
           height: 14px;
           @include home-icons-sprite(timeline_handler);
           cursor: col-resize;
+          border-radius: 3px;
+          z-index: 500;
+          position:relative;
         }
       }
       /*#canopy_slider::-webkit-slider-thumb/*,
@@ -1637,6 +1643,46 @@ body {
       box-shadow: 1px 0 3px #cccccc;
       right: 0;
       width: 60px;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      pointer-events:none;
+    }
+    a {
+      @include inline-block();
+      width: 70px;
+      padding: 10px 0;
+      border: #666666;
+      @include border-radius(3px);
+      font-weight:bold;
+
+      text-align: center;
+      font-size:11px;
+      text-transform:uppercase;
+      text-decoration:none;
+
+      &.apply {
+        background:#A1BA42;
+        color: #fff;
+        border: 1px solid #839C26;
+
+        &:hover {
+          background: darken(#A1BA42, 10%);
+          border-color:darken(#A1BA42, 10%);
+        }
+      }
+
+      &.cancel {
+        background: #fff;
+        border: 1px solid #CCCCCC;
+        color: #666666;
+
+        &:hover { background:#f1f1f1; }
+
+      }
+    }
+    &:last-child {
+      float: right;
+      margin-bottom: 0;
     }
   }
   ul {
@@ -1649,9 +1695,13 @@ body {
       color: #A2BE00;
       font-size: 10px;
       position: absolute;
-      &.p0 {
+      cursor: pointer;
+      z-index: 5;
+      &.p0,
+      &.p100 {
         color: #666;
         left: 0;
+        cursor: default;
       }
       &.p10 {
         left: calc(12% - 5px);
@@ -1675,7 +1725,6 @@ body {
         left: calc(12*7% - 5px);
       }
       &.p100 {
-        color: #666;
         left: calc(12*8% - 5px);
       }
     }

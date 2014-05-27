@@ -81,7 +81,12 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
   className: 'umdoptions_dialog',
 
   events: {
-    'click .close': 'hide'
+    'click .close':           'hide',
+    'click .cancel':          'hide',
+    'click .apply':           '_onClickApply',
+    'change #canopy_slider':  '_onChangeSlider',
+    'input #canopy_slider':   '_onDragSlider',
+    'click .slider_option':   '_onClickOption'
   },
 
   initialize: function() {
@@ -92,13 +97,99 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
 
     this.model.on('change:hidden', this.toggle);
     this.model.on('change:mode', this._toggleMode);
+    this.canopy = 75;
 
-    var template = $('#umdoptions_dialog-template').html();
+    var template         = $('#umdoptions_dialog-template').html();
 
     this.template = new cdb.core.Template({
       template: template,
       type: 'mustache'
     });
+  },
+
+  _onDragSlider: function() {
+    this._paintRange($('#canopy_slider').val())
+  },
+
+  _onChangeSlider: function() {
+    this._paintRange($('#canopy_slider').val())
+  },
+
+  _onClickOption: function(e) {
+    switch($(e.target).data('option')) {
+      case 0:
+      case 100:
+        return true;
+      break;
+      case 10:
+        this._paintRange(15)
+      break;
+      case 15:
+        this._paintRange(25)
+      break;
+      case 20:
+        this._paintRange(35)
+      break;
+      case 25:
+        this._paintRange(45)
+      break;
+      case 30:
+        this._paintRange(55)
+      break;
+      case 50:
+        this._paintRange(65)
+      break;
+      case 75:
+        this._paintRange(75)
+      break;
+    }
+  },
+
+  _paintRange: function(slider_val) {
+    switch(true) {
+      case slider_val >= 10 && slider_val < 18:
+        slider_val = 10;
+        this.canopy = 10;
+        $('.visible_range').css('width', 60 + 281);
+      break;
+      case slider_val >= 18 && slider_val < 28:
+        slider_val = 22; //15
+        this.canopy = 15;
+        $('.visible_range').css('width', 60 + 232);
+      break;
+      case slider_val >= 28  && slider_val < 38:
+        slider_val = 32; //20
+        this.canopy = 20;
+        $('.visible_range').css('width', 60 + 190);
+      break;
+      case slider_val >= 38  && slider_val < 48:
+        slider_val = 43; //25
+        this.canopy = 25;
+        $('.visible_range').css('width', 60 + 142);
+      break;
+      case slider_val >= 48  && slider_val < 58:
+        slider_val = 54; //30
+        this.canopy = 30;
+        $('.visible_range').css('width', 60 + 95);
+      break;
+      case slider_val >= 58  && slider_val < 69:
+        slider_val = 65; //50
+        this.canopy = 50;
+        $('.visible_range').css('width', 60 + 52);
+      break;
+      case slider_val >= 69  && slider_val < 100:
+      default:
+        slider_val = 75;
+        this.canopy = 75;
+        $('.visible_range').css('width', 60);
+      break;
+    }
+      document.getElementById('canopy_slider').value = slider_val;
+  },
+
+  _onClickApply: function(e) {
+    e && e.preventDefault();
+    console.log(this.canopy)
   },
 
   show: function() {
@@ -107,16 +198,7 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
 
   hide: function(e) {
     e && e.preventDefault();
-
-    var that = this;
-
     this.$el.fadeOut(250);
-  },
-
-  _onEscKey: function(e) {
-    e && e.preventDefault();
-
-    this.hide();
   },
 
   render: function() {

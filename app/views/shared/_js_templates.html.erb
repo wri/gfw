@@ -640,19 +640,23 @@
     <p class='canopy'>Change canopy treshold. <a href="#" data-source="umd_tree_loss_gain" class="source"></a></p>
     <p class='trees'><span class='tree_icon'></span><span class='forest_icon'></span></p>
     <ul>
-      <li class='p0'>0%</li>
-      <li class='p10'>10%</li>
-      <li class='p15'>15%</li>
-      <li class='p20'>20%</li>
-      <li class='p25'>25%</li>
-      <li class='p30'>30%</li>
-      <li class='p50'>50%</li>
-      <li class='p75'>75%</li>
-      <li class='p100'>100%</li>
+      <li class='slider_option p0'   data-option='0'>0%</li>
+      <li class='slider_option p10'  data-option='10'>10%</li>
+      <li class='slider_option p15'  data-option='15'>15%</li>
+      <li class='slider_option p20'  data-option='20'>20%</li>
+      <li class='slider_option p25'  data-option='25'>25%</li>
+      <li class='slider_option p30'  data-option='30'>30%</li>
+      <li class='slider_option p50'  data-option='50'>50%</li>
+      <li class='slider_option p75'  data-option='75'>75%</li>
+      <li class='slider_option p100' data-option='100'>100%</li>
     </ul>
     <p class='slider_container'>
-      <span class='slider'><input type=range min=0 max=100 value=50 id='canopy_slider'></span>
+      <span class='slider'><input type=range min=10 max=75 value=75 id='canopy_slider'></span>
       <span class='visible_range'></span>
+    </p>
+    <p>
+      <a href='#' class='cancel'>Cancel</a>
+      <a href='#' class='apply'>Apply</a>
     </p>
   </div>
 </script>
