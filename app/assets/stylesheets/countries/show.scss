@@ -121,6 +121,32 @@
 
         .loss-gain-graph {
           width: 35%;
+          position: relative;
+
+          .coming-soon {
+            display: none;
+            position: absolute;
+            z-index: 10;
+            top: 70px;
+            left: 10px;
+            padding: 30px 0;
+            margin-right: 10px;
+            font-size: 17px;
+            text-transform: uppercase;
+            text-align: center;
+            color: #999;
+            background: $default-color;
+
+            span {
+              width: 90%;
+              display: inline-block;
+            }
+          }
+
+          &.ghost {
+            @include opacity(.5);
+            cursor: default;
+          }
 
           h4 {
             margin-bottom: 20px;
@@ -205,8 +231,9 @@
       padding: 35px 20px;
       font-family: $font-medium;
       @include box-sizing(border-box);
-      
-      //@include country-icons-sprite(country-indepth);
+      background-image: image-url('backgrounds/country-indepth.png');
+      background-repeat: no-repeat;
+      background-position: 96% 50%;
 
       .country-indepth__title {
         font-size: 29px;
@@ -369,6 +396,45 @@
   .country-alerts {
     .forma_dropdown-menu {
       display: none;
+    }
+
+    .forma-graph path {
+      stroke: $primary-color;
+      stroke-width: 4px;
+      fill: none;
+    }
+
+    .coming-soon {
+      display: none;
+    }
+
+    .graph-tooltip {
+      position: absolute;
+      width: 150px;
+      height: 84px;
+      background: $primary-color;
+      @include box-sizing(border-box);
+      padding: 12px 20px;
+      border-radius: 5px;
+      text-align: center;
+      z-index: 9999;
+
+      .graph-amount {
+        font-size: 29px;
+        color: white;
+        margin-bottom: 4px;
+        display: block;
+      }
+
+      .graph-date {
+        font-size: 12px;
+        color: #60644D;
+        .date {
+          margin-top: 2px;
+          display: block;
+          font-size: 15px;
+        }
+      }
     }
 
     .forma-alerts-legend {

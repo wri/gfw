@@ -337,8 +337,10 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     var sql = "SELECT year, loss_gt_0 loss FROM umd WHERE iso='" + this.country.get('iso') + "'",
         that = this;
 
-    var $amount = this.$('.loss-gain-graph .graph-amount'),
-        $date = this.$('.loss-gain-graph .graph-date');
+    var $graph = this.$('.loss-gain-graph'),
+        $comingSoon = $graph.find('.coming-soon'),
+        $amount = $graph.find('.graph-amount'),
+        $date = $graph.find('.graph-date');
 
     var width     = 200,
         height    = 90,
@@ -351,18 +353,15 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
       .attr('height', height);
 
     d3.json('https://wri-01.cartodb.com/api/v2/sql?q=' + sql, function(json) {
-      var data = json.rows;
+      if (json) {
+        $graph.removeClass('ghost');
+        var data = json.rows;
+      } else {
+        $comingSoon.show();
+        return;
+      }
+
       var data_ = [];
-
-      // if (json) {
-      //   $graph.removeClass('ghost');
-
-      //   var data = json.rows;
-      // } else {
-      //   $coming_soon.show();
-
-      //   return;
-      // }
 
       _.each(data, function(val, key) {
         if (val.year >= 2001) {
@@ -426,9 +425,6 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q=' + encodeURIComponent(sql), function(json) {
         var gainAverage = json.rows[0].gain / 12;
 
-        console.log(gainAverage);
-        console.log(Math.abs(y_scale(gainAverage)));
-
         var gainLine = graph.append('svg:svg')
           .attr('class', 'line')
           .attr('width', width)
@@ -487,7 +483,9 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
       
       path.enter().append('text')
         .attr('transform', function(d) { var c = arc.centroid(d); return 'translate(' + (c[0]-12) + ',' + (c[1]+8) + ')'})
-        .text(function(d) { return d.data + '%' })
+        .text(function(d) {
+          if (d.data > 0) return d.data + '%'
+        })
         .attr('fill', function(d, i) { return labelColors[i]; } )
         .style('font-size', '13px');
     });
@@ -496,21 +494,27 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   _drawFormaAlerts: function() {
     var that = this;
 
-    var $graph = $('.forma-graph');
+    var $graph = this.$('.forma-graph'),
+        $tooltip = this.$('.graph-tooltip')
+        $amount = $tooltip.find('.graph-amount'),
+        $date = $tooltip.find('.graph-date'),
+        $comingSoon = this.$('.forma-graph');
 
+    // Dimensions variables
     var width     = 500,
         height    = 156,
         h         = 156, // maxHeight
         radius    = width / 2,
         gridLinesCount = 7;
 
-    // Add dashed grid
+    // Init graph
     var graph = d3.select('.forma-graph')
       .append('svg:svg')
       .attr('class', 'line')
       .attr('width', width)
       .attr('height', height);
 
+    // Add dashed lines grid
     var gridLineY = height;
     for (var i = 0; i < gridLinesCount; i++) {
       graph.append('svg:line')
@@ -536,70 +540,73 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         var data = json.rows.slice(1, json.rows.length);
       } else {
         console.log('no data');
-        //$coming_soon.show();
+        // $comingSoon.show();
         return;
       };
 
-       var x_scale = d3.scale.linear()
-          .domain([0, data.length - 1])
-          .range([0, width - 80]);
+      var x_scale = d3.scale.linear()
+        .domain([0, data.length - 1])
+        .range([0, width - 40]);
 
-        var max = d3.max(data, function(d) { return parseFloat(d.alerts); });
+      var max = d3.max(data, function(d) { return parseFloat(d.alerts); });
+      if (max === d3.min(data, function(d) { return parseFloat(d.alerts); })) {
+        h = h/2;
+      }
 
-        if (max === d3.min(data, function(d) { return parseFloat(d.alerts); })) {
-          h = h/2;
-        }
+      var y_scale = d3.scale.linear()
+        .domain([0, max])
+        .range([0, h]);
 
-        var y_scale = d3.scale.linear()
-          .domain([0, max])
-          .range([0, h]);
+      var line = d3.svg.line()
+        .x(function(d, i) { return x_scale(i); })
+        .y(function(d, i) { console.log(y_scale(d.alerts));return h - y_scale(d.alerts); })
+        .interpolate("basis");
 
-        var line = d3.svg.line()
-          .x(function(d, i) { return x_scale(i); })
-          .y(function(d, i) { return h - y_scale(d.alerts); })
-          .interpolate('basis');
+      // var marginLeft = 40,
+      //     marginTop = radius - h/2;
+      var marginTop = 0,
+          marginLeft = 20;
 
-        var marginLeft = 40,
-            marginTop = radius - h/2;
+      // Default amount:
+      // $amount.html('<span>' + formatNumber(data[data.length - 1].alerts) + '</span>');
 
-        //$amount.html('<span>'+formatNumber(data[data.length - 1].alerts)+'</span>');
+      // Default date:
+      // var date = new Date(data[data.length - 1].date),
+      //     form_date = 'Alerts in ' + config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
+      // $date.html(form_date);
 
-        var date = new Date(data[data.length - 1].date),
-            form_date = 'Alerts in ' + config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
+      var cx = width - 40 + marginLeft;
+      var cy = h - y_scale(data[data.length - 1].alerts) + marginTop;
 
-        //$date.html(form_date);
+      var marker = graph.append('svg:circle')
+        .attr('class', 'forma_marker')
+        .attr('cx', cx)
+        .attr('cy', cy)
+        .attr('r', 5);
 
-        var cx = width - 80 + marginLeft;
-        var cy = h - y_scale(data[data.length - 1].alerts) + marginTop;
+      graph.append('svg:path')
+        .attr('transform', 'translate(' + marginLeft + ',' + marginTop + ')')
+        .attr('d', line(data))
+        .on('mousemove', function(d) {
+          // var index = Math.round(x_scale.invert(d3.mouse(this)[0]));
 
-        graph.append('svg:path')
-          .attr('transform', 'translate(' + marginLeft + ',' + marginTop + ')')
-          .attr('d', line(data))
-          .on('mousemove', function(d) {
-            var index = Math.round(x_scale.invert(d3.mouse(this)[0]));
+          // if (data[index]) { // if there's data
+          //   // $amount.html('<span>'+formatNumber(data[index].alerts)+'</span>');
 
-            if (data[index]) { // if there's data
-              //$amount.html('<span>'+formatNumber(data[index].alerts)+'</span>');
+          //   // var date = new Date(data[index].date),
+          //   //     form_date = 'Alerts in ' + config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
 
-              var date = new Date(data[index].date),
-                  form_date = 'Alerts in ' + config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
+          //   // $date.html(form_date);
 
-              //$date.html(form_date);
+          //   var cx = d3.mouse(this)[0] + marginLeft;
+          //   var cy = h - y_scale(data[index].alerts);
 
-              var cx = d3.mouse(this)[0] + marginLeft;
-              var cy = h - y_scale(data[index].alerts) + marginTop;
+          //   graph.select('.forma_marker')
+          //     .attr('cx', cx)
+          //     .attr('cy', cy);
+          //}
+        });
 
-              graph.select('.forma_marker')
-                .attr('cx', cx)
-                .attr('cy', cy);
-            }
-          });
-
-        graph.append('svg:circle')
-          .attr('class', 'forma_marker')
-          .attr('cx', cx)
-          .attr('cy', cy)
-          .attr('r', 5);
     });
   },
 
