@@ -11,12 +11,6 @@
       $wall-background: "backgrounds/wall_background_alpha.png";
       background: #464253;
       background-image: image-url($wall-background); /* fallback */
-      background-image: image-url($wall-background), -webkit-gradient(linear, left top, left bottom, from(#464253), to(#383643)); /* Saf4+, Chrome */
-      background-image: image-url($wall-background), -webkit-linear-gradient(top, #464253, #383643); /* Chrome 10+, Saf5.1+ */
-      background-image: image-url($wall-background),    -moz-linear-gradient(top, #464253, #383643); /* FF3.6+ */
-      background-image: image-url($wall-background),     -ms-linear-gradient(top, #464253, #383643); /* IE10 */
-      background-image: image-url($wall-background),      -o-linear-gradient(top, #464253, #383643); /* Opera 11.10+ */
-      background-image: image-url($wall-background),         linear-gradient(to bottom, #464253, #383643); /* W3C */
     }
 
     .country-title {
@@ -127,6 +121,33 @@
 
         .loss-gain-graph {
           width: 35%;
+
+          h4 {
+            margin-bottom: 20px;
+          }
+
+          .bar {
+            shape-rendering: "crispEdges";
+          }
+
+          .graph-amount,
+          .graph-date {
+            text-align: center;
+            display: block;
+            max-width: 205px;
+          }
+
+          .graph-amount {
+            font-size: 30px;
+            color: $primary-color;
+            margin-top: 10px;
+          }
+
+          .graph-date {
+            color: white;
+            margin-top: 2px;
+            font-size: 13px;
+          }
         }
       }
 
@@ -134,7 +155,8 @@
         float: right;
         width: 215px;
         height: 100%;
-        background: #F2F2F3;
+        background: transparent;
+        border-left: 2px solid #464254;
 
         > ul {
           padding: 10px 0;
@@ -145,7 +167,7 @@
             position: relative;
 
             a {
-              color: #464152;
+              color: #BEBCC2;
               display: block;
               height: 53px;
               width: 100%;
@@ -166,7 +188,7 @@
             }
 
             &:hover {
-              background: #FFFFFF;
+              background: #464254;
             }
           }
         }

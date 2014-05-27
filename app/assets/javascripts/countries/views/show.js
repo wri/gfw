@@ -11,14 +11,13 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     var self = this;
     _.bindAll(this, '_positionScroll');
 
-    this.iso = this.options.iso;
     this.$nav = this.$('.country-nav');
     this.$indepth = this.$('.country-indepth');
-    this.$areaSelector = this.$('#areaSelector');
+    // this.$areaSelector = this.$('#areaSelector');
 
-    this.country = new gfw.ui.model.Country({ iso: this.iso });
+    this.country = new gfw.ui.model.Country({ iso: this.options.iso });
 
-    this._setAreaSelector();
+    // this._setAreaSelector();
     this._stickynav();
     this._initViews();
 
@@ -28,7 +27,6 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         var bounds = JSON.parse(data.rows[0].bounds),
             geojson = L.geoJson(bounds);
         
-        //self.map.fitBounds(geojson.getBounds());
         self._initMap(geojson.getBounds());
       });
   },
@@ -101,7 +99,6 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   _onSelectArea: function() {
     var areaName = this.$areaSelector.val();
     var area = this.country.get('areas').where({ name_1: areaName })[0];
-    this._highlightArea(area);
   },
 
   _initMap: function(bounds) {
@@ -135,9 +132,9 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         sql: "SELECT * FROM country_mask",
         cartocss: "\
           #country_mask {\
-            polygon-fill: #2D2B36;\
+            polygon-fill: #373442;\
             polygon-opacity: 1;\
-            line-color: #2D2B36;\
+            line-color: #373442;\
             line-width: 1;\
             line-opacity: 1;\
           }\
@@ -156,9 +153,6 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         tileLayer.setOpacity(1)
       }, 600);
     });
-  },
-
-  _highlightArea: function(area) {
   },
 
   _positionScroll: function() {
@@ -340,72 +334,114 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   },
 
   _drawLossAndGain: function() {
-    var sql = "SELECT year, loss_gt_0 loss, extent_gt_25 extent FROM umd WHERE iso='" + this.country.get('iso') + "'";
+    var sql = "SELECT year, loss_gt_0 loss FROM umd WHERE iso='" + this.country.get('iso') + "'",
+        that = this;
 
-    // if (options.dataset === 'loss') {
-    //   sql += "year, loss_gt_0 loss FROM umd WHERE iso='" + this.country.get('iso') + "'";
-    // } else if (options.dataset === 'extent') {
-    //   sql += "year, extent_gt_25 extent FROM umd WHERE iso='" + this.country.get('iso') + "'";
-    // }
+    var $amount = this.$('.loss-gain-graph .graph-amount'),
+        $date = this.$('.loss-gain-graph .graph-date');
+
+    var width     = 200,
+        height    = 90,
+        h         = 90, // maxHeight
+        radius    = width / 2;
+
+    var graph = d3.select('.loss-gain-graph .graph')
+      .append('svg:svg')
+      .attr('width', width)
+      .attr('height', height);
 
     d3.json('https://wri-01.cartodb.com/api/v2/sql?q=' + sql, function(json) {
-      if (json) {
-        $graph.removeClass('ghost');
-
-        var data = json.rows;
-      } else {
-        $coming_soon.show();
-
-        return;
-      }
-
+      var data = json.rows;
       var data_ = [];
+
+      // if (json) {
+      //   $graph.removeClass('ghost');
+
+      //   var data = json.rows;
+      // } else {
+      //   $coming_soon.show();
+
+      //   return;
+      // }
 
       _.each(data, function(val, key) {
         if (val.year >= 2001) {
           data_.push({
             'year': val.year,
-            'value': eval('val.'+options.dataset)
+            'value': val.loss//eval('val.' + options.dataset)
           });
         }
       });
 
-      $amount.html('<span>'+formatNumber(parseInt(data_[data_.length - 1].value, 10))+'</span>');
+      $amount.html('<span>' + formatNumber(parseInt(data_[data_.length - 1].value, 10)) + '</span>');
       $date.html('Hectares in ' + data_[data_.length - 1].year);
 
-      var marginLeft = 40,
-          marginTop = radius - h/2 + 5;
+      var marginLeft = 5,
+          marginTop = 0;
 
       var y_scale = d3.scale.linear()
         .domain([0, d3.max(data_, function(d) { return parseFloat(d.value); })])
-        .range([height, marginTop*2]);
+        .range([height, marginTop * 2]);
 
-      var barWidth = (width - 80) / data_.length;
+      var barWidth = 16;
 
       var bar = graph.selectAll('g')
         .data(data_)
         .enter()
         .append('g')
-        .attr('transform', function(d, i) { return 'translate(' + (marginLeft + i * barWidth) + ','+ -marginTop+')'; });
+        .attr('transform', function(d, i) { return 'translate(' + (marginLeft + i * barWidth) + ',' + -marginTop + ')'; });
 
       bar.append('svg:rect')
-        .attr('class', function(d, i) {
-          if (i === 11) { // last year index
-            return 'last bar'
-          } else {
-            return 'bar'
-          }
-        })
+        .attr('class', 'bar')
         .attr('y', function(d) { return y_scale(d.value); })
         .attr('height', function(d) { return height - y_scale(d.value); })
-        .attr('width', barWidth - 1)
+        .attr('width', barWidth - 2)
+        .style('fill', function(d, i) {
+          if (i === 11) {
+            return '#9FBA2B';
+          } else {
+            return '#524F5C';
+          }
+        })
         .on('mouseover', function(d) {
-          d3.selectAll('.bar').style('opacity', '.5');
-          d3.select(this).style('opacity', '1');
+          d3.selectAll('.bar').style('fill', '#524F5C');
+          d3.select(this).style('fill', '#9FBA2B');
 
           $amount.html('<span>'+formatNumber(parseInt(d.value, 10))+'</span>');
           $date.html('Hectares in ' + d.year);
         });
+
+      // Draw gain line
+      var sql = 'SELECT y2001_y2012 as gain, (SELECT SUM(';
+
+      for(var y = 2001; y < 2012; y++) {
+        sql += 'y'+y+' + ';
+      }
+
+      sql += ['y2012) FROM countries_loss',
+              "WHERE iso = '" + that.country.get('iso') + "') as loss",
+              'FROM countries_gain',
+              "WHERE iso = '" + that.country.get('iso') + "'"].join(' ');
+
+      d3.json('https://wri-01.cartodb.com/api/v2/sql?q=' + encodeURIComponent(sql), function(json) {
+        var gainAverage = json.rows[0].gain / 12;
+
+        console.log(gainAverage);
+        console.log(Math.abs(y_scale(gainAverage)));
+
+        var gainLine = graph.append('svg:svg')
+          .attr('class', 'line')
+          .attr('width', width)
+          .attr('height', height);
+
+        gainLine.append('svg:line')
+          .attr('x1', 0)
+          .attr('x2', width)
+          .attr('y1', Math.abs(y_scale(gainAverage)))
+          .attr('y2', Math.abs(y_scale(gainAverage)))
+          .style('stroke', '#CCC')
+      });
+
     });
   },
 
