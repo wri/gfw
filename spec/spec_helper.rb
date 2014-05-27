@@ -27,6 +27,9 @@ RSpec.configure do |config|
   config.include Capybara::DSL
   config.include ShowMeTheCookies, :type => :feature
   config.filter_run_excluding upload: true
+  config.before :each do
+    Typhoeus::Expectation.clear
+  end
 end
 
 Capybara.run_server     = false
