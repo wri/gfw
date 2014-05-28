@@ -608,7 +608,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         .style('visibility', 'hidden')
         .style('stroke', '#aaa');
 
-      graph.append('svg:circle')
+      var marker = graph.append('svg:circle')
         .attr('class', 'forma-marker')
         .attr('cx', cx)
         .attr('cy', cy)
@@ -624,27 +624,27 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           tooltip.style("visibility", "visible");
         })
         .on('mousemove', function(d) {
-          positioner.attr('x1', d3.mouse(this)[0] + marginLeft);
-          positioner.attr('x2', d3.mouse(this)[0] + marginLeft);
+          var index = Math.round(x_scale.invert(d3.mouse(this)[0]));
 
-          var index = Math.round(x_scale.invert(d3.mouse(this)[0])),
-              cx = d3.mouse(this)[0] + marginLeft,
-              cy = h - y_scale(data[index].alerts) + marginTop;
-
-          var marker = graph.select('.forma-marker')
-            .attr('cx', cx)
-            .attr('cy', cy);
-
-          if (data[index]) { // if there's data
-            amount.text(formatNumber(data[index].alerts));
-
-            var date = new Date(data[index].date),
+          if (data[index]) {
+            var cx = d3.mouse(this)[0] + marginLeft,
+                cy = h - y_scale(data[index].alerts) + marginTop,
+                date = new Date(data[index].date),
                 form_date = config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
 
+            marker
+              .attr('cx', cx)
+              .attr('cy', cy);
+
+            positioner
+              .attr('x1', d3.mouse(this)[0] + marginLeft)
+              .attr('x2', d3.mouse(this)[0] + marginLeft);
+
+            amount.text(formatNumber(data[index].alerts));
             tooltipDate.text(form_date);
+            tooltip.style("top", "-20px").style("left", (cx - 162) + "px");
           }
 
-          tooltip.style("top", "-20px").style("left", (cx - 162) + "px");
         });
 
     });
