@@ -498,12 +498,15 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         $tooltip = this.$('.graph-tooltip')
         $amount = $tooltip.find('.graph-amount'),
         $date = $tooltip.find('.graph-date'),
-        $comingSoon = this.$('.forma-graph');
+        $comingSoonContent = this.$('#comingSoonContent'),
+        $formaAlertsContent = this.$('#formaAlertsContent'),
+        $formaAlertsTitle = this.$('#formaAlertsTitle');
+
 
     // Dimensions variables
     var width     = 500,
         height    = 156,
-        h         = 156, // maxHeight
+        h         = 136, // maxHeight
         radius    = width / 2,
         gridLinesCount = 7;
 
@@ -538,9 +541,14 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
       if (json && json.rows.length > 0) {
         var data = json.rows.slice(1, json.rows.length);
+
+        var lastMonth = data[data.length - 1];
+        $formaAlertsTitle.find('.amount').text(formatNumber(lastMonth.alerts));
+        $formaAlertsTitle.find('.month').text(config.MONTHNAMES[new Date(lastMonth.date).getUTCMonth()])
+
+        $formaAlertsContent.show();
       } else {
-        console.log('no data');
-        // $comingSoon.show();
+        $comingSoonContent.show();
         return;
       };
 
@@ -559,52 +567,84 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
       var line = d3.svg.line()
         .x(function(d, i) { return x_scale(i); })
-        .y(function(d, i) { console.log(y_scale(d.alerts));return h - y_scale(d.alerts); })
-        .interpolate("basis");
+        .y(function(d, i) { return h - y_scale(d.alerts); })
+        .interpolate("monotone");
 
-      // var marginLeft = 40,
-      //     marginTop = radius - h/2;
-      var marginTop = 0,
+      var marginTop = 20,
           marginLeft = 20;
-
-      // Default amount:
-      // $amount.html('<span>' + formatNumber(data[data.length - 1].alerts) + '</span>');
-
-      // Default date:
-      // var date = new Date(data[data.length - 1].date),
-      //     form_date = 'Alerts in ' + config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
-      // $date.html(form_date);
 
       var cx = width - 40 + marginLeft;
       var cy = h - y_scale(data[data.length - 1].alerts) + marginTop;
 
-      var marker = graph.append('svg:circle')
-        .attr('class', 'forma_marker')
+      var tooltip = d3.select('.forma-graph')
+        .append('div')
+        .attr('class', 'graph-tooltip')
+        .style('visibility', 'hidden')
+
+      var amount = tooltip
+        .append('div')
+        .attr('class', 'graph-amount')
+        .text('21,123')
+
+      tooltip
+        .append('div')
+        .attr('class', 'graph-date')
+        .text('Alerts in')
+
+      var tooltipDate = tooltip.select('.graph-date')
+        .append('div')
+        .attr('class', 'date')
+        .text('November 2012');
+
+      graph.append('svg:path')
+        .attr('transform', 'translate(' + marginLeft + ',' + marginTop + ')')
+        .attr('d', line(data));
+
+      var positioner = graph.append('svg:line')
+        .attr('x1', 0)
+        .attr('y1', 0)
+        .attr('x2', 0)
+        .attr('y2', height)
+        .style('visibility', 'hidden')
+        .style('stroke', '#aaa');
+
+      graph.append('svg:circle')
+        .attr('class', 'forma-marker')
         .attr('cx', cx)
         .attr('cy', cy)
         .attr('r', 5);
 
-      graph.append('svg:path')
-        .attr('transform', 'translate(' + marginLeft + ',' + marginTop + ')')
-        .attr('d', line(data))
+      graph
+        .on("mouseout", function() {
+          positioner.style("visibility", "hidden");
+          tooltip.style("visibility", "hidden");
+        })
+        .on("mouseover", function() {
+          positioner.style("visibility", "visible");
+          tooltip.style("visibility", "visible");
+        })
         .on('mousemove', function(d) {
-          // var index = Math.round(x_scale.invert(d3.mouse(this)[0]));
+          positioner.attr('x1', d3.mouse(this)[0] + marginLeft);
+          positioner.attr('x2', d3.mouse(this)[0] + marginLeft);
 
-          // if (data[index]) { // if there's data
-          //   // $amount.html('<span>'+formatNumber(data[index].alerts)+'</span>');
+          var index = Math.round(x_scale.invert(d3.mouse(this)[0])),
+              cx = d3.mouse(this)[0] + marginLeft,
+              cy = h - y_scale(data[index].alerts) + marginTop;
 
-          //   // var date = new Date(data[index].date),
-          //   //     form_date = 'Alerts in ' + config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
+          var marker = graph.select('.forma-marker')
+            .attr('cx', cx)
+            .attr('cy', cy);
 
-          //   // $date.html(form_date);
+          if (data[index]) { // if there's data
+            amount.text(formatNumber(data[index].alerts));
 
-          //   var cx = d3.mouse(this)[0] + marginLeft;
-          //   var cy = h - y_scale(data[index].alerts);
+            var date = new Date(data[index].date),
+                form_date = config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
 
-          //   graph.select('.forma_marker')
-          //     .attr('cx', cx)
-          //     .attr('cy', cy);
-          //}
+            tooltipDate.text(form_date);
+          }
+
+          tooltip.style("top", "-20px").style("left", (cx - 162) + "px");
         });
 
     });

@@ -394,6 +394,21 @@
   }
 
   .country-alerts {
+    #formaAlertsContent,
+    #comingSoonContent {
+      display: none;
+    }
+
+    .coming-soon {
+      width: 100%;
+      font-size: 16px;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 40px 0;
+      background: #f2f2f2;
+      color: #666;
+    }
+
     .forma_dropdown-menu {
       display: none;
     }
@@ -404,23 +419,30 @@
       fill: none;
     }
 
-    .coming-soon {
-      display: none;
+    .forma-graph {
+      position: relative;
+    }
+
+    .forma-marker {
+      stroke: white;
+      stroke-width: 2px;
+      fill: $primary-color;
     }
 
     .graph-tooltip {
       position: absolute;
       width: 150px;
-      height: 84px;
+      height: 78px;
       background: $primary-color;
       @include box-sizing(border-box);
-      padding: 12px 20px;
+      padding: 12px 10px;
       border-radius: 5px;
       text-align: center;
-      z-index: 9999;
+      z-index: 10;
+      pointer-events: none;
 
       .graph-amount {
-        font-size: 29px;
+        font-size: 26px;
         color: white;
         margin-bottom: 4px;
         display: block;
@@ -432,8 +454,27 @@
         .date {
           margin-top: 2px;
           display: block;
-          font-size: 15px;
+          font-size: 14px;
         }
+      }
+
+      @include box-shadow(#ddd 2px 2px 10px);
+
+      &:before {
+        content:'';
+        display:block;
+        width:0;
+        height:0;
+        position:absolute;
+        
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 8px solid $primary-color;
+
+        right: -8px;
+        margin: auto;
+        top: 0;
+        bottom: 0;
       }
     }
 
