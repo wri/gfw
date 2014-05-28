@@ -108,11 +108,11 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
   },
 
   _onDragSlider: function() {
-    this._paintRange($('#canopy_slider').val())
+    this._paintRange(document.getElementById('canopy_slider').value)
   },
 
   _onChangeSlider: function() {
-    this._paintRange($('#canopy_slider').val())
+    this._paintRange(document.getElementById('canopy_slider').value)
   },
 
   _onClickOption: function(e) {
@@ -189,8 +189,6 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
 
   _onClickApply: function(e) {
     e && e.preventDefault();
-    console.log(this.canopy);
-    GFW.app.
     this.hide()
   },
   
