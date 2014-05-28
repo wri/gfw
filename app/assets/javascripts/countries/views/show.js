@@ -242,10 +242,6 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
       _.each(tenures, function(tenure, i) {
         if (tenure['percent'] !== null && tenure['percent'] !== 0) {
-          if ($('.country-tenure').not(':visible')) {
-            $('.country-tenure').show();
-          }
-
           h += 50;
 
           tenures_ord.push({
@@ -254,6 +250,12 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           });
         }
       });
+
+      if (tenures_ord.length === 0) {
+        $('.country-tenure .coming-soon').show();
+        return;
+      }
+      console.log('draw tenures');
 
       var svg = d3.select('.country-tenure .line-graph')
         .append('svg')
