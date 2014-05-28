@@ -221,6 +221,11 @@ GFW.modules.app = function(gfw) {
         updateHash();
       });
 
+      google.maps.event.addListener(map, 'dragstart', function() {
+        $('#viewfinder').hide();
+        $('#spinner_tiles').fadeIn();
+      });
+
       google.maps.event.addListener(map, 'dragend', function() {
         that.updateCoordinates();
         updateHash();
@@ -984,8 +989,8 @@ GFW.modules.app = function(gfw) {
         GFW.app._renderForest2000Layer();
       });
 
-      this.time_layer_loss.set_start_time(2001);
-      this.time_layer_loss.set_time(2013);
+      this.time_layer_loss.set_start_time(url('?begin') ? url('?begin') : 2001);
+      this.time_layer_loss.set_time(url('?end') ? url('?end') : 2013);
 
       subscribe('timeline:change_date_loss', _.bind(function(start_year, end_year, options) {
         this.time_layer_loss.set_range(start_year, end_year);
@@ -1183,6 +1188,9 @@ GFW.modules.app = function(gfw) {
     },
 
     _mapLoaded: function() {
+      $('#spinner_tiles').fadeOut(function(){
+        $('#viewfinder').show();
+      });
       if (!config.mapLoaded) {
         config.mapLoaded = true;
         GFW.app._loadBaseLayer();
