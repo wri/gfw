@@ -373,7 +373,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
       });
 
       $amount.html('<span>' + formatNumber(parseInt(data_[data_.length - 1].value, 10)) + '</span>');
-      $date.html('Hectares in ' + data_[data_.length - 1].year);
+      $date.html('Hectares lost in ' + data_[data_.length - 1].year);
 
       var marginLeft = 5,
           marginTop = 0;
@@ -406,8 +406,8 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           d3.selectAll('.bar').style('fill', '#524F5C');
           d3.select(this).style('fill', '#9FBA2B');
 
-          $amount.html('<span>'+formatNumber(parseInt(d.value, 10))+'</span>');
-          $date.html('Hectares in ' + d.year);
+          $amount.html('<span>' + formatNumber(parseInt(d.value, 10)) + '</span>');
+          $date.html('Hectares lost in ' + d.year);
         });
 
       // Draw gain line
@@ -425,17 +425,44 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q=' + encodeURIComponent(sql), function(json) {
         var gainAverage = json.rows[0].gain / 12;
 
-        var gainLine = graph.append('svg:svg')
-          .attr('class', 'line')
-          .attr('width', width)
-          .attr('height', height);
+        var tooltip = d3.select('.loss-gain-graph')
+          .append('div')
+          .attr('class', 'gain-tooltip')
+          .style('visibility', 'hidden')
+          .text(formatNumber(parseInt(gainAverage), 10));
 
-        gainLine.append('svg:line')
-          .attr('x1', 0)
-          .attr('x2', width)
-          .attr('y1', Math.abs(y_scale(gainAverage)))
-          .attr('y2', Math.abs(y_scale(gainAverage)))
-          .style('stroke', '#CCC')
+        tooltip
+          .append('span')
+          .text('Average Ha gained');
+
+        var gainLine = graph.append('svg:rect')
+          .attr('class', 'gain-line')
+          .attr('x', 0)
+          .attr('y', Math.abs(y_scale(gainAverage)))
+          .attr('height', 1)
+          .attr('width', width)
+          .style('stroke', 'transparent')
+          .style("stroke-width", "5")
+          .style('fill', '#ccc');
+
+        gainLine
+          .on('mousemove', function() {
+            d3.select('.gain-line')
+              .style('height', 2)
+              .style('fill', '#9FBA2B');
+
+            tooltip
+              .style('visibility', 'visible')
+              .style("top", Math.abs(y_scale(gainAverage)) + "px")
+              .style("left", (d3.mouse(this)[0] - 58) + "px");
+          })
+          .on('mouseout', function() {
+            d3.select('.gain-line')
+              .style('height', 1)
+              .style('fill', '#ccc');
+
+            tooltip.style('visibility', 'hidden');
+          })
       });
 
     });
@@ -450,9 +477,19 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
                'FROM gfw2_countries',
                "WHERE iso = '" + this.country.get('iso') + "'"].join(' ');
 
-    d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
-      // TODO => if percents are 0
-      var data = _.pluck(json.rows, 'percent');
+    d3.json('https://wri-01.cartodb.com/api/v2/sql?q=' + sql, function(json) {
+      var data = _.pluck(json.rows, 'percent'),
+          sumData = _.reduce(data, function(memo, num){ return memo + num; }, 0),
+          $countryForestType = $('.country-forests-type');
+
+      if (sumData === 0) {
+        $countryForestType.find('.left-col').addClass('wide');
+        $countryForestType.find('.forest-type-legends').hide();
+        $countryForestType.find('.section-content').show();
+        return;
+      }
+
+      $countryForestType.find('.section-content').show();
 
       var width = 225,
           height = 225,
@@ -501,7 +538,6 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         $comingSoonContent = this.$('#comingSoonContent'),
         $formaAlertsContent = this.$('#formaAlertsContent'),
         $formaAlertsTitle = this.$('#formaAlertsTitle');
-
 
     // Dimensions variables
     var width     = 500,
@@ -630,7 +666,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
             var cx = d3.mouse(this)[0] + marginLeft,
                 cy = h - y_scale(data[index].alerts) + marginTop,
                 date = new Date(data[index].date),
-                form_date = config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
+                formattedDate = config.MONTHNAMES[date.getUTCMonth()] + ' ' + date.getUTCFullYear();
 
             marker
               .attr('cx', cx)
@@ -641,7 +677,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
               .attr('x2', d3.mouse(this)[0] + marginLeft);
 
             amount.text(formatNumber(data[index].alerts));
-            tooltipDate.text(form_date);
+            tooltipDate.text(formattedDate);
             tooltip.style("top", "-20px").style("left", (cx - 162) + "px");
           }
 

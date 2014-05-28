@@ -411,6 +411,20 @@ strong {
 
 #tpglt-nav-wrapper {
   padding-top: 15px;
+  min-height: 28px;
+  width: 100%;
+  background-color: #e6e6e6;
+  border-bottom: 1px solid #9b9b9b;
+  z-index: 1001;
+  font-size: 12px;
+  color: #747474;
+
+  div:first-child {
+    margin: 0 auto;
+    position: relative;
+    padding: 0 10px;
+    max-width: 960px;
+  }
 
   a { color: #333; }
 }

@@ -7,7 +7,6 @@
     width: 100%;
 
     .country-header-inner {
-      height: 350px;
       $wall-background: "backgrounds/wall_background_alpha.png";
       background: #464253;
       background-image: image-url($wall-background); /* fallback */
@@ -174,7 +173,42 @@
             margin-top: 2px;
             font-size: 13px;
           }
-        }
+
+          .gain-tooltip {
+            position: absolute;
+            padding: 10px;
+            width: 110px;
+            background: $primary-color;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 22px;
+            color: white;
+
+            span {
+              font-size: 13px;
+              color: #60644D;
+              margin-top: 2px;
+              display: block;
+            }
+
+            &:before {
+              content:'';
+              display:block;
+              width:0;
+              height:0;
+              position:absolute;
+              
+              border-left: 8px solid transparent;
+              border-right: 8px solid transparent;
+              border-top: 8px solid $primary-color;
+
+              right: 0;
+              left: 0;
+              margin: auto;
+              bottom: -8px;
+            }
+          }
+        } // loss-gain-graph
       }
 
       .country-sidenav {
@@ -268,7 +302,7 @@
     width: 100%;
     position: relative;
     height: 49px;
-
+    
     .country-nav {
       width: 100%;
       border-bottom: 1px solid #CCCCCC;
@@ -362,6 +396,10 @@
       .left-col,
       .right-col {
         float: left;
+
+        &.wide {
+          width: 100%;
+        }
       }
 
       .left-col {
@@ -383,13 +421,12 @@
 
     .country-alt {
       display: inline-block;
-      width: 100%;
+      width: 80%;
       clear: both;
       padding-top: 20px;
       color: #666;
       line-height: 1.4;
       font-size: 14px;
-      font-style: italic;
     }
   }
 
@@ -507,6 +544,10 @@
   }
 
   .country-forests-type {
+    .section-content {
+      display: none;
+    }
+
     .forests-type-graph {
       margin-top: -25px;
     }
@@ -555,6 +596,8 @@
   }
 
   .country-tenure {
+    display: none;
+
     .line-graph {
       font-weight: bold;
       text-transform: uppercase;
