@@ -16,6 +16,7 @@
 /tmp
 /media/upload
 /public/uploads
+/public/media
 
 .DS_Store
 
