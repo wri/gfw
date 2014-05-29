@@ -431,7 +431,9 @@
   }
 
   .country-alerts,
-  .country-tenure {
+  .country-production,
+  .country-tenure,
+  .country-employment {
     .coming-soon {
       width: 100%;
       font-size: 16px;
@@ -443,8 +445,10 @@
     }
   }
 
-  .country-tenure .coming-soon {
-    display: none;
+  .country-tenure {
+    .coming-soon {
+      display: none;
+    }
   }
 
   .country-alerts {
@@ -603,8 +607,6 @@
   }
 
   .country-tenure {
-    // display: none;
-
     .line-graph {
       font-weight: bold;
       text-transform: uppercase;
@@ -636,6 +638,14 @@
       }
     }
   } // country-tenure
+
+  .country-legislation {
+    .national-policy-links {
+      margin: 5px 0 4px 0;
+      font-size: 14px;
+      text-decoration: underline;
+    }
+  } // country-legislation
 
   .country-carbon-stocks {
     .carbon-text,

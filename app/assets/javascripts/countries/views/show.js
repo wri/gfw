@@ -255,7 +255,6 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         $('.country-tenure .coming-soon').show();
         return;
       }
-      console.log('draw tenures');
 
       var svg = d3.select('.country-tenure .line-graph')
         .append('svg')

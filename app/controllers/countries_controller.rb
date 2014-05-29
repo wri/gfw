@@ -7,7 +7,8 @@ class CountriesController < ApplicationController
     not_found unless @country.present?
 
     if @country['gva'].present? && @country['gva'] > 0
-      @country['gva_percent'] = (@country['gva_percent'] < 0.1) ? number_to_percentage(@country['gva_percent'], precision: 2) : number_to_percentage(@country['gva_percent'], precision: 1)
+      gva_precision = (@country['gva_percent'] < 0.1) ? 2 : 1
+      @country['gva_percent'] = number_to_percentage(@country['gva_percent'], precision: gva_precision)
     end
 
     @employees = @country['employment']

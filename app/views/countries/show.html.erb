@@ -81,11 +81,9 @@
       <% if @country['indepth'].present? %>
       <div class="country-indepth">
         <h3 class="country-indepth__title">Global Forest Watch does in-depth work in this country.</h3>
-        <p class="country-indepth__body">Find more information at the Atlas Foreiester Interactif de la République Democratique Du Congo</p>
-        <div class="country-indepth__links">
-          <a href="<%= @country['indepth'] %>">Interactive Map</a> |  
-          <a href="">Report</a>
-        </div>
+        <p class="country-indepth__body">Find more information <a href="<%= @country['indepth'] %>">here</a></p>
+        <!-- <div class="country-indepth__links">
+        </div> -->
       </div>
       <% end %>
 
@@ -194,15 +192,18 @@
       </div>
 
       <div class="section-content">
+        <% if @country['gva'].present? && @country['gva'] > 0 %>
         <h3 class="section-title">
           The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2006, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> of the GDP.</span>
         </h3>
+        <% else %>
+        <div class="coming-soon">No data available</div>
+        <% end %>
       </div>
     </div>
   </section>
 
   <!-- employment -->
-  <% if @employees.present? && @employees > 0 %>
   <section class="country-section country-employment" data-scroll-index='3'>
     <div class="inner">
       <div class="section-info">
@@ -211,6 +212,7 @@
       </div>
 
       <div class="section-content">
+        <% if @employees.present? && @employees > 0 %>
         <div class="left-col">
           <% if @employees < 1000 %>
             <h3 class='section-title'><div><%= @employees %></div> <span>thousand people are directly employed by the forestry sector, according to 2006 FAO data.</span></h3>
@@ -231,11 +233,13 @@
             </li>
           </ul>
         </div>
+      <% else %>
+      <div class="coming-soon">No data available</div>
+      <% end %>
       </div>
     </div>
   </section>
-  <% end %>
-
+  
   <!-- tenure -->
   <section class="country-section country-tenure" data-scroll-index='4'>
     <div class="inner">
@@ -260,6 +264,12 @@
       </div>
 
       <div class="section-content">
+        <% if @country['national_policy_link'].present? %>
+        <div class="national-policy-links">
+          <%= link_to @country['national_policy_title'].present? ? @country['national_policy_title'] : 'National Forest Policy', @country['national_policy_link'] %>
+        </div>
+        <% end %>
+
         <a href='mailto:gfw@wri.org' class='btn-rdn'>Are we missing a link?</a>
       </div>
     </div>

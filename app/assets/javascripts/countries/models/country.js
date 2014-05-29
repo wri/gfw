@@ -15,10 +15,3 @@ gfw.ui.model.Country = cdb.core.Model.extend({
   }
 
 });
-
-gfw.ui.model.CountryArea = cdb.core.Model.extend({
-});
-
-gfw.ui.collection.CountryAreas = Backbone.Collection.extend({
-  model: gfw.ui.model.CountryArea
-});
