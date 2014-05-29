@@ -1,7 +1,43 @@
 .country-show {
   font-family: $font-regular;
   color: $default-color;
-  margin-top: -60px;
+  margin-top: -128px;
+
+  .share {
+    text-align: right;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .share_control {
+    position: relative;
+    width: auto;
+    height: 32px;
+    left: auto;
+    right: auto;
+    top: auto;
+    display: inline-block;
+    background: none;
+    border: 2px solid #C4C3C7;
+    padding: 6px 12px 0 12px;
+    text-transform: uppercase;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #464152;
+    @include box-sizing(border-box);
+
+    .country-icons-share {
+      height: 16px;
+      width: 16px;
+      display: inline-block;
+      vertical-align: bottom;
+      margin-left: 5px;
+    }
+
+    &:hover {
+      border-color: #BAB8BE;
+    }
+  }
 
   .country-header {
     width: 100%;

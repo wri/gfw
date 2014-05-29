@@ -38,6 +38,12 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     this._drawForestsType();
     this._drawFormaAlerts();
     this._initFormaDropdown();
+    this._initShare();
+  },
+
+  _initShare: function() {
+    Share = new gfw.ui.view.Share();
+    this.$el.find('.country-show .inner').append(Share.render());
   },
 
   _initSource: function() {
@@ -335,7 +341,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   },
 
   _drawLossAndGain: function() {
-    var sql = "SELECT year, loss_gt_0 loss FROM umd WHERE iso='" + this.country.get('iso') + "'",
+    var sql = "SELECT year, loss_gt_0 loss FROM umd WHERE iso='" + this.country.get('iso') + "' ORDER BY year ASC",
         that = this;
 
     var $graph = this.$('.loss-gain-graph'),
