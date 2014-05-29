@@ -440,7 +440,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
         tooltip
           .append('span')
-          .text('Average Ha gained');
+          .text('Average Ha of gain/year');
 
         var gainLine = graph.append('svg:rect')
           .attr('class', 'gain-line')
@@ -456,7 +456,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           .on('mousemove', function() {
             d3.select('.gain-line')
               .style('height', 2)
-              .style('fill', '#9FBA2B');
+              .style('fill', 'white');
 
             tooltip
               .style('visibility', 'visible')

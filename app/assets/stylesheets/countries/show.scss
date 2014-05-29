@@ -213,16 +213,16 @@
           .gain-tooltip {
             position: absolute;
             padding: 10px;
-            width: 110px;
-            background: $primary-color;
+            width: 150px;
+            background: white;
             text-align: center;
             border-radius: 5px;
             font-size: 22px;
-            color: white;
+            color: $primary-color;
 
             span {
               font-size: 13px;
-              color: #60644D;
+              color: #524F5C;
               margin-top: 2px;
               display: block;
             }
@@ -236,7 +236,7 @@
               
               border-left: 8px solid transparent;
               border-right: 8px solid transparent;
-              border-top: 8px solid $primary-color;
+              border-top: 8px solid white;
 
               right: 0;
               left: 0;
