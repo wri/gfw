@@ -403,7 +403,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       range = this.range || '&begin=' + ibegin + '&end=' + iend;
 
     } if (baselayer === 'loss') {
-      var lbegin = '2000' || url('?begin'),
+      var lbegin = '2001' || url('?begin'),
           lend   = '2013' || url('?end');
       range = this.range || '&begin=' + lbegin +'&end=' + lend;
 
@@ -714,7 +714,7 @@ gfw.ui.model.AnalysisInfo = cdb.core.Model.extend({
     baselayer: config.BASELAYER,
     spinner: true,
     title: 'User defined area',
-    subtitle: 'Jan-2000 to Jan-2013',
+    subtitle: 'Jan-2001 to Jan-2013',
     subdisabled: true,
     alert_count: '',
     loss: '',
