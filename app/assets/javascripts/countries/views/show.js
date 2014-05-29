@@ -43,7 +43,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
   _initShare: function() {
     Share = new gfw.ui.view.Share();
-    this.$el.find('.country-show .inner').append(Share.render());
+    //this.$el.find('.country-show .inner').append(Share.render());
   },
 
   _initSource: function() {
