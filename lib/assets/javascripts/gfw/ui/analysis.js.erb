@@ -349,6 +349,9 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   },
 
   _getAlertCount: function() {
+    var $spinner = this.$el.find('.stats .spinner')
+    if (!$spinner.is('visible')) $spinner.fadeIn(250);
+    
     var that = this;
 
     var area = this.model.get('area'),
@@ -431,6 +434,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         this.$el.find('.analysis_info').show();
       }
     }
+    
     executeAjax(this.alertsUrl, {}, {
       success: _.bind(function(data) {
         var baselayer = config.BASELAYER,
