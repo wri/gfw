@@ -77,7 +77,7 @@
         background: transparent;
         color: #BEBCC2;
         -webkit-appearance: none;
-        padding: 9px 15px;
+        padding: 10px 15px;
         width: 100%;
 
         &:focus {
@@ -119,9 +119,11 @@
         .map {
           width: 40%;
           height: 100%;
-    
-          &.leaflet-container {
-            background: transparent;
+          background: transparent;
+          cursor: default;
+
+          &.loaded {
+            background: #464253;
           }
         }
 
@@ -145,11 +147,11 @@
             font-weight: bold;
           }
 
-          .total-extension {
+          .total-area {
             margin-top: 18px;
           }
 
-          .total-extension .amount {
+          .total-area .amount {
             font-size: 29px;
           }
         }

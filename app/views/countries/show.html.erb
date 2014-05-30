@@ -29,11 +29,11 @@
       <div class="country-header-inner">
         <div class="country-title">
           <h1><%= @country['name'] %></h1>
-<!--           <div class="country-selector">
+          <div class="country-selector">
             <select id="areaSelector">
               <option>Select area</option>
             </select>
-          </div> -->
+          </div>
         </div>
 
         <div class="country-details">
@@ -45,8 +45,8 @@
                   <span class="amount"><%= extent_to_human(@country['extent'], format: '%n') %></span>
                   <span class="unit"><%= extent_to_human(@country['extent'], format: '%u', shortUnit: true) %></span>
               </div>
-              <div class="total-extension">
-                <h4>Total extension</h4>
+              <div class="total-area">
+                <h4>Total area</h4>
                 <span class="amount">851</span>
                 <span class="unit">Mha</span> 
               </div>

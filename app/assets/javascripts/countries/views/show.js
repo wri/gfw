@@ -11,27 +11,19 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     var self = this;
     _.bindAll(this, '_positionScroll');
 
+    // Cache
     this.$nav = this.$('.country-nav');
     this.$indepth = this.$('.country-indepth');
-    // this.$areaSelector = this.$('#areaSelector');
+    this.$areaSelector = this.$('#areaSelector');
+    this.$map = this.$('.map');
 
+    // Models
     this.country = new gfw.ui.model.Country({ iso: this.options.iso });
 
-    // this._setAreaSelector();
+    // Initialize modules
+    this._initMap();
     this._stickynav();
-    this._initViews();
-
-    var sql = new cartodb.SQL({ user: 'wri-01' });
-    sql.execute("SELECT bounds FROM country_mask WHERE code = '" + this.country.get('iso')  + "'")
-      .done(function(data) {
-        var bounds = JSON.parse(data.rows[0].bounds),
-            geojson = L.geoJson(bounds);
-        
-        self._initMap(geojson.getBounds());
-      });
-  },
-
-  _initViews: function() {
+    this._setAreaSelector();
     this._initSource();
     this._drawLossAndGain();
     this._drawTenure();
@@ -56,7 +48,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
     var source = $(e.target).closest('.info').attr('data-source');
 
-    ga('send', 'event', 'SourceWindow', 'Open', source);
+    // ga('send', 'event', 'SourceWindow', 'Open', source);
     this.sourceWindow.show(source).addScroll();
   },
 
@@ -97,45 +89,97 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         _.each(model.get('areas').models, function(area) {
           self.$areaSelector.append('<option value="' + area.get('name_1') + '">' + area.get('name_1') + '</option>')
         });
-      },
-      error: function() {}
+      }
     });
   },
 
   _onSelectArea: function() {
-    var areaName = this.$areaSelector.val();
-    var area = this.country.get('areas').where({ name_1: areaName })[0];
+    var self = this,
+        areaName = this.$areaSelector.val(),
+        area = this.country.get('areas').where({ name_1: areaName })[0];
+    if (area) {
+      this._displayArea(area);
+    } else {
+      this._displayCountry();
+    }
   },
 
-  _initMap: function(bounds) {
+  _initMap: function() {
+    var self = this,
+        sql = new cartodb.SQL({ user: 'wri-01' });
+
+    sql.execute("SELECT bounds FROM country_mask WHERE code = '" + this.country.get('iso')  + "'")
+      .done(function(data) {
+        var geojson = L.geoJson(JSON.parse(data.rows[0].bounds)),
+            bounds = geojson.getBounds();
+        
+        self.country.set('bounds', bounds);
+        self._renderMap();
+      });
+  },
+
+  _renderMap: function() {
     var self = this;
+
+    // Map & layers
+    this.cartodbLayer = {};
+    this.forestLayer = {};
+    this.map = {};
 
     this.map = new L.Map('countryMap', {
       center: [0, 0],
-      maxBounds: bounds,
+      maxBounds: this.country.get('bounds'),
       zoom: 3,
       zoomControl: false,
       dragging: false,
       touchZoom: false,
       doubleClickZoom: false,
       scrollWheelZoom: false,
-      attributionControl: false
+      attributionControl: false,
+      zoomAnimation: false,
+      fadeAnimation: false
     });
 
-    this.map.fitBounds(bounds);
-
-    // set forest cover layer
-    var tileLayer = L.tileLayer('http://earthengine.google.org/static/hansen_2013/tree_alpha/{z}/{x}/{y}.png', {
+    // Set forest-cover layer
+    this.forestLayer = L.tileLayer('http://earthengine.google.org/static/hansen_2013/tree_alpha/{z}/{x}/{y}.png', {
       opacity: 0
     }).addTo(this.map);
 
-    // set country layer
+    // Set country layer
     cartodb.createLayer(this.map, {
       user_name: 'wri-01',
       type: 'cartodb',
       cartodb_logo: false,
       sublayers: [{
-        sql: "SELECT * FROM country_mask",
+        sql: "SELECT * FROM country_mask"
+      }, {
+        sql: "SELECT * FROM gadm_1_all"
+      }]
+    })
+    .addTo(this.map)
+    .done(function(layer) {
+      self.cartodbLayer = layer;
+      self._displayCountry();
+      
+      self.cartodbLayer.on('loading' , function() {
+        self.$map.removeClass('loaded');
+        self.forestLayer.setOpacity(0);
+      });
+      
+      self.cartodbLayer.on('load' , function() {
+        setTimeout(function() {
+          self.$map.addClass('loaded');
+          self.forestLayer.setOpacity(1);
+        }, 100);
+      });
+    });
+  },
+
+  _displayCountry: function() {
+    this.map.fitBounds(this.country.get('bounds'));
+    this.cartodbLayer.getSubLayer(1).hide();
+    this.cartodbLayer.getSubLayer(0)
+      .set({
         cartocss: "\
           #country_mask {\
             polygon-fill: #373442;\
@@ -145,20 +189,55 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
             line-opacity: 1;\
           }\
           #country_mask[code='" + this.country.get('iso') + "'] {\
-            polygon-fill: #FF6600;\
             polygon-opacity: 0;\
             line-color: #73707D;\
             line-width: 1;\
             line-opacity: 1;\
           }"
-      }]
-    })
-    .addTo(this.map)
-    .done(function(layer) {
-      setTimeout(function() {
-        tileLayer.setOpacity(1)
-      }, 600);
-    });
+      });
+  },
+
+  _displayArea: function(area) {
+    this.map.fitBounds(area.get('bounds'));
+    this.cartodbLayer.getSubLayer(1).show();
+    this.cartodbLayer.getSubLayer(1)
+      .set({
+        cartocss: "\
+          #gadm_1_all {\
+            polygon-fill: #373442;\
+            polygon-opacity: 1;\
+            line-color: #373442;\
+            line-width: 1;\
+            line-opacity: 1;\
+            [cartodb_id=" + area.get('cartodb_id') + "]{\
+              polygon-opacity: 0;\
+            }\
+            ::active[cartodb_id=" + area.get('cartodb_id') + "] {\
+              polygon-opacity: 0;\
+              line-color: #73707D;\
+              line-width: 1;\
+              line-opacity: 1;\
+            }\
+          }"
+      });
+
+    this.cartodbLayer.getSubLayer(0)
+      .set({
+        cartocss: "\
+          #country_mask {\
+            polygon-fill: #373442;\
+            polygon-opacity: 1;\
+            line-color: #373442;\
+            line-width: 1;\
+            line-opacity: 1;\
+          }\
+          #country_mask[code='" + this.country.get('iso') + "'] {\
+            polygon-opacity: 0;\
+            line-color: #373442;\
+            line-width: 1;\
+            line-opacity: 1;\
+          }"
+      });
   },
 
   _positionScroll: function() {
@@ -691,6 +770,11 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         });
 
     });
+  },
+
+  _toggleMapBg: function() {
+    console.log('togggle map');
+    this.$map.toggleClass('loaded');
   },
 
   _openDropdown: function(e) {
