@@ -68,6 +68,7 @@
         border-radius: 40px;
         height: 39px;
         width: 310px;
+        position: relative;
       }
 
       select {
@@ -82,6 +83,33 @@
 
         &:focus {
           outline: 0;
+        }
+      }
+
+      .selector-arrow {
+        border-color: #73707D transparent;
+        border-style: solid;
+        border-width: 6px 5px 0 5px;
+        width: 0;
+        height: 0;
+        top: 50%;
+        right: 20px;
+        margin-top: -3px;
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .selector-remove {
+        padding: 5px;
+        color: #73707D;
+        font-size: 13px;
+        top: 9px;
+        right: 35px;
+        position: absolute;
+        cursor: pointer;
+        display: none;
+        &:hover {
+          color: lighten(#73707D, 10);
         }
       }
     } // country-title
