@@ -1118,7 +1118,7 @@ GFW.modules.app = function(gfw) {
                 month = (end_day.getUTCMonth() + 1) < 10 ? '0' + parseInt(end_day.getUTCMonth() + 1, 10) : parseInt(end_day.getUTCMonth(), 10),
                 day   = end_day.getUTCDate() < 10 ? '0' + end_day.getUTCDate() : end_day.getUTCDate();
             var query = [
-              "SELECT * FROM global_7d where acq_date > '" + year + "-" + month + "-" + day + "'"
+              "SELECT * FROM global_7d where acq_date > '" + year + "-" + month + "-" + day + "' AND CAST(confidence AS INT)> 30"
             ].join(' ');
 
             this.baseLayer.setQuery(query);
