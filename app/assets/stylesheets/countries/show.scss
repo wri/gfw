@@ -81,6 +81,10 @@
         padding: 10px 15px;
         width: 100%;
 
+        option {
+          color: #666;
+        }
+
         &:focus {
           outline: 0;
         }

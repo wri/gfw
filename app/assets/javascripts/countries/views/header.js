@@ -31,8 +31,8 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       loadArea: function(countryId, areaId) {
         var area = self.country.get('areas').where({ id_1: Number(areaId) })[0];
         self.area = area;
-        self._setAreaSelector();
         if (!self.map) {
+          self._setAreaSelector();
           self._initMap(function() {
             self._displayArea(area);
           });
@@ -42,8 +42,8 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       },
 
       loadCountry: function(countryId) {
-        self._setAreaSelector();
         if (!self.map) {
+          self._setAreaSelector();
           self._initMap(function() {
             self._displayCountry();
           });
