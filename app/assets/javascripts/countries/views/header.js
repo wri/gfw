@@ -127,11 +127,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     var ctx = canvas.getContext('2d'),
         coord = canvas.coord;
 
-    // en este momento el canvas puede tener una imagen que haya que agrandar, ya que pertenece a un zoom menor:
     if (canvas.coord) {
       var zsteps = coord.z - 12;
 
-      // si hay que agrandar canvas:
       if (zsteps > 0) {
         ctx['imageSmoothingEnabled'] = false;
         ctx['mozImageSmoothingEnabled'] = false;
@@ -143,7 +141,6 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
             srcH = 256 / Math.pow(2, zsteps);
         ctx.drawImage(canvas.image, srcX, srcY, srcW, srcH, 0, 0, 256, 256);
       
-      // si no hay que agrandarlo:
       } else {
         try {
           ctx.drawImage(canvas.image, 0, 0);
