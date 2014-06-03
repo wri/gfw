@@ -15,6 +15,8 @@
 <% end %>
 
 <div class="country-show">
+
+  <!-- share button -->
   <div class="country-share share inner">
     <a href="#" id="share_control" title="Share this graphic " class="share_control" data-tip="Share">
       Share
@@ -22,15 +24,18 @@
     </a>
   </div>
 
+  <!-- header -->
   <%= render 'header' %>
 
   <!--  indepth message -->
   <% if @country['indepth'].present? %>
-  <div class="country-indepth">
-    <h3 class="country-indepth__title">Global Forest Watch does in-depth work in this country.</h3>
-    <p class="country-indepth__body">Find more information <a href="<%= @country['indepth'] %>">here</a></p>
-    <!-- <div class="country-indepth__links">
-    </div> -->
+  <div class="inner">
+    <div class="inner country-indepth">
+      <h3 class="country-indepth__title">Global Forest Watch does in-depth work in this country.</h3>
+      <p class="country-indepth__body">Find more information <a href="<%= @country['indepth'] %>">here</a></p>
+      <!-- <div class="country-indepth__links">
+      </div> -->
+    </div>
   </div>
   <% end %>
 

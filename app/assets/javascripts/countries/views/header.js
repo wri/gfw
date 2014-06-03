@@ -21,7 +21,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     var Router = Backbone.Router.extend({
       routes: {
         'country/:id': 'loadCountry',
-        'country/:id/:areaId': 'loadArea'
+        'country/:id/': 'loadCountry',
+        'country/:id/:areaId': 'loadArea',
+        'country/:id/:areaId/': 'loadArea'
       },
 
       initialize: function() {
@@ -80,7 +82,11 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         areaName = this.$areaSelector.val(),
         area = this.country.get('areas').where({ name_1: areaName })[0];
 
-    this.router.navigate('country/' + this.country.get('iso') + '/' + String(area.get('id_1')), {trigger: true});
+    if (area) {
+      this.router.navigate('country/' + this.country.get('iso') + '/' + String(area.get('id_1')), {trigger: true});
+    } else {
+      this._navigateCountry();
+    }
   },
 
   _navigateCountry: function() {
@@ -125,7 +131,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
     // Set forest-cover layer
     this.forestLayer = L.tileLayer('http://earthengine.google.org/static/hansen_2013/tree_alpha/{z}/{x}/{y}.png', {
-      opacity: 0
+      opacity: 0,
     }).addTo(this.map);
 
     // Set country layer
@@ -143,19 +149,19 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     .done(function(layer) {
       self.cartodbLayer = layer;
 
-      callback();
-
       self.cartodbLayer.on('loading' , function() {
         self.$map.removeClass('loaded');
         self.forestLayer.setOpacity(0);
       });
-      
+
       self.cartodbLayer.on('load' , function() {
         setTimeout(function() {
           self.$map.addClass('loaded');
           self.forestLayer.setOpacity(1);
-        }, 150);
+        }, 200);
       });
+  
+      callback();
     });
   },
 

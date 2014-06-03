@@ -12,10 +12,10 @@ module CountriesHelper
       unit = options[:shortUnit] ? "Ha" : ''
     elsif extent >= 1000 && extent < 1000000
       number = "#{number_with_delimiter((extent/1000).round(1))}"
-      unit = options[:shortUnit] ? "KHa" : 'thousands'
+      unit = options[:shortUnit] ? "KHa" : 'thousand'
     else
       number = "#{number_with_delimiter((extent/1000000).round(1))}"
-      unit = options[:shortUnit] ? "MHa" : 'millions'
+      unit = options[:shortUnit] ? "MHa" : 'million'
     end
 
     string = options[:format]

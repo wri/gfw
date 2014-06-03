@@ -54,7 +54,7 @@
       h1 {
         color: white;
         font-size: 47px;
-        max-width: 500px;
+        max-width: 545px;
         margin-right: 20px;
         display: inline-block;
         font-family: $font-regular;
@@ -325,48 +325,48 @@
       }
 
     } // country-details
-
-    .country-indepth {
-      clear: both;
-      border: 1px solid #CCCCCC;
-      border-bottom: 0;
-      height: 185px;
-      width: 100%;
-      padding: 35px 20px;
-      font-family: $font-medium;
-      @include box-sizing(border-box);
-      background-image: image-url('backgrounds/country-indepth.png');
-      background-repeat: no-repeat;
-      background-position: 96% 50%;
-
-      .country-indepth__title {
-        font-size: 29px;
-      }
-
-      .country-indepth__body {
-        text-transform: uppercase;
-        font-size: 14px;
-        font-weight: 700;
-        margin-top: 20px;
-      }
-
-      .country-indepth__links {
-        margin-top: 25px;
-        color: #bbb;
-        font-family: $font-light;
-        font-size: 13px;
-
-        a {
-          font-size: 14px;
-          display: inline-block;
-          vertical-align: top;
-          color: $primary-color;
-          font-family: $font-medium;
-        }
-      }
-
-    } // country-indepth
   } // country-header
+
+  .country-indepth {
+    clear: both;
+    border: 1px solid #CCCCCC;
+    border-bottom: 0;
+    height: 185px;
+    width: 100%;
+    padding: 35px 20px;
+    font-family: $font-medium;
+    @include box-sizing(border-box);
+    background-image: image-url('backgrounds/country-indepth.png');
+    background-repeat: no-repeat;
+    background-position: 96% 50%;
+
+    .country-indepth__title {
+      font-size: 29px;
+    }
+
+    .country-indepth__body {
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 700;
+      margin-top: 20px;
+    }
+
+    .country-indepth__links {
+      margin-top: 25px;
+      color: #bbb;
+      font-family: $font-light;
+      font-size: 13px;
+
+      a {
+        font-size: 14px;
+        display: inline-block;
+        vertical-align: top;
+        color: $primary-color;
+        font-family: $font-medium;
+      }
+    }
+
+  } // country-indepth
 
   .country-nav-container {
     width: 100%;
