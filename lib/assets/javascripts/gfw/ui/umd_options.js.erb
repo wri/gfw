@@ -189,11 +189,9 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
 
   _onClickApply: function(e) {
     e && e.preventDefault();
-    this.hide()
-  },
-  
-  updateMap: function() {
-    publish('timeline:change_date_fires', [this.model.get('end_day')]);
+    console.log(this.range);debugger;
+    this.range = '&begin='+start+'&end='+end;
+    this.hide();
   },
 
   show: function() {
