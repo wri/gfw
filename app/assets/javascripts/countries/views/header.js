@@ -56,7 +56,6 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
     });
 
-
     this.country.fetch({
       success: function() {
         self.router = new Router();
@@ -107,6 +106,53 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       });
   },
 
+  _filterCanvasImage: function(imageData, w, h) {
+    var components = 4,
+        pixelPos;
+
+    for(var i = 0 ; i < w; ++i) {
+      for(var j = 0; j < h; ++j) {
+        var pixelPos = (j * w + i) * components,
+            intensity = imageData[pixelPos + 3];
+
+        imageData[pixelPos] = 0;
+        imageData[pixelPos + 1] = intensity * 0.7;
+        imageData[pixelPos + 2] = 250;
+        imageData[pixelPos+ 3] = intensity * 0.7;
+      }
+    }
+  },
+
+  _drawImageCanvas: function(canvas) {
+    var ctx = canvas.getContext('2d'),
+        coord = canvas.coord;
+
+    if (canvas.coord) {
+      var zsteps = coord.z - 12;
+
+      if (zsteps > 0) {
+        ctx['imageSmoothingEnabled'] = false;
+        ctx['mozImageSmoothingEnabled'] = false;
+        ctx['webkitImageSmoothingEnabled'] = false;
+
+        var srcX = 256 / Math.pow(2, zsteps) * (coord.x % Math.pow(2, zsteps)),
+            srcY = 256 / Math.pow(2, zsteps) * (coord.y % Math.pow(2, zsteps)),
+            srcW = 256 / Math.pow(2, zsteps),
+            srcH = 256 / Math.pow(2, zsteps);
+        ctx.drawImage(canvas.image, srcX, srcY, srcW, srcH, 0, 0, 256, 256);
+      
+      } else {
+        try {
+          ctx.drawImage(canvas.image, 0, 0);
+        } catch(err) { }
+      }
+
+      var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      this._filterCanvasImage(I.data, canvas.width, canvas.height);
+      ctx.putImageData(I, 0, 0);
+    }
+  },
+
   _renderMap: function(callback) {
     var self = this;
 
@@ -129,10 +175,56 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       fadeAnimation: false,
     });
 
-    // Set forest-cover layer
-    this.forestLayer = L.tileLayer('http://earthengine.google.org/static/hansen_2013/tree_alpha/{z}/{x}/{y}.png', {
-      opacity: 0,
-    }).addTo(this.map);
+    this.forestLayer = L.tileLayer.canvas().addTo(this.map);
+
+    this.forestLayer.drawTile = function(canvas, tilePoint, zoom) {
+      var xhr = new XMLHttpRequest(),
+          ctx = canvas.getContext('2d');
+
+      var x = tilePoint.x,
+          y = tilePoint.y,
+          z = zoom;
+
+      // floor = round a number downward to its nearest integer
+      // pow = return the value of the number 4 to be the power of 3 (4*4*4):
+      if (zoom > 12) {
+        x = Math.floor(x / (Math.pow(2, zoom - 12)));
+        y = Math.floor(y / (Math.pow(2, zoom - 12)));
+        z = 12;
+      } else {
+        y = (y > Math.pow(2, z) ? y % Math.pow(2,z) : y);
+        if (x >= Math.pow(2, z)) {
+          x = x % Math.pow(2, z);
+        } else if (x < 0) {
+          x = Math.pow(2,z) - Math.abs(x);
+        }
+      }
+
+      var url = 'http://earthengine.google.org/static/hansen_2013/tree_alpha/' + z + '/' + x + '/' + y + '.png';
+
+      xhr.onload = function () {
+        var url = URL.createObjectURL(this.response),
+            image = new Image();
+
+        image.onload = function () {
+          image.crossOrigin = '';
+
+          canvas.image = image;
+          canvas.coord = {x: tilePoint.x, y: tilePoint.y};
+          canvas.coord.z = zoom;
+
+          self._drawImageCanvas(canvas);
+
+          URL.revokeObjectURL(url);
+        };
+
+        image.src = url;
+      };
+
+      xhr.open('GET', url, true);
+      xhr.responseType = 'blob';
+      xhr.send();
+    }
 
     // Set country layer
     cartodb.createLayer(this.map, {
@@ -151,13 +243,13 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
       self.cartodbLayer.on('loading' , function() {
         self.$map.removeClass('loaded');
-        self.forestLayer.setOpacity(0);
+        // self.forestLayer.setOpacity(0);
       });
 
       self.cartodbLayer.on('load' , function() {
         setTimeout(function() {
           self.$map.addClass('loaded');
-          self.forestLayer.setOpacity(1);
+          // self.forestLayer.setOpacity(1);
         }, 200);
       });
   
