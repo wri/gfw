@@ -326,17 +326,18 @@ GFW.modules.app = function(gfw) {
 
     _removeForest2000Layer: function() {
       if (this.forest2000Layer) {
-        var layers = map.overlayMapTypes.getArray();
+        this.forest2000Layer.hide();
+        // var layers = map.overlayMapTypes.getArray();
 
-        for (var i = 0; i <= layers.length; i++) {
-          if (layers[i] == this.forest2000Layer) {
-            if (this.forest2000Layer) {
-              this.forest2000Layer.setOpacity(0);
-              this.forest2000Layer = null;
-              map.overlayMapTypes.setAt(i, null);
-            }
-          }
-        }
+        // for (var i = 0; i <= layers.length; i++) {
+        //   if (layers[i] == this.forest2000Layer) {
+        //     if (this.forest2000Layer) {
+        //       this.forest2000Layer.setOpacity(0);
+        //       this.forest2000Layer = null;
+        //       map.overlayMapTypes.setAt(i, null);
+        //     }
+        //   }
+        // }
       }
     },
 
@@ -481,73 +482,76 @@ GFW.modules.app = function(gfw) {
 
     _renderForest2000Layer: function() {
       if (this.forest2000Layer) {
-        this.forest2000Layer.setOpacity(1);
+        this.forest2000Layer.show();
+        // this.forest2000Layer.setOpacity(1);
       } else {
-        function CoordMapType() { }
+        this.forest2000Layer = Forest2000.init(map);
 
-        CoordMapType.prototype.tileSize = new google.maps.Size(256,256);
-        CoordMapType.prototype.maxZoom = 17;
-        CoordMapType.prototype.setOpacity = function(opacity) {
-          $('.tree_alpha').css('opacity', opacity);
-        };
+        // function CoordMapType() { }
 
-        CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
-          var x = coord.x;
-          var y = coord.y;
-          var z = zoom;
+        // CoordMapType.prototype.tileSize = new google.maps.Size(256,256);
+        // CoordMapType.prototype.maxZoom = 17;
+        // CoordMapType.prototype.setOpacity = function(opacity) {
+        //   $('.tree_alpha').css('opacity', opacity);
+        // };
 
-          var zsteps = zoom - 12;
+        // CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
+        //   var x = coord.x;
+        //   var y = coord.y;
+        //   var z = zoom;
 
-          if (zoom > 12) {
-            x = Math.floor(coord.x/(Math.pow(2, zoom - 12)));
-            y = Math.floor(coord.y/(Math.pow(2, zoom - 12)));
-            z = 12;
-          } else {
-            y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
+        //   var zsteps = zoom - 12;
+
+        //   if (zoom > 12) {
+        //     x = Math.floor(coord.x/(Math.pow(2, zoom - 12)));
+        //     y = Math.floor(coord.y/(Math.pow(2, zoom - 12)));
+        //     z = 12;
+        //   } else {
+        //     y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
             
-            if (x >= Math.pow(2,z)) {
-              x = x % Math.pow(2,z);
-            } else if (x < 0) {
-              x = Math.pow(2,z) - Math.abs(x);
-            }
-          }
+        //     if (x >= Math.pow(2,z)) {
+        //       x = x % Math.pow(2,z);
+        //     } else if (x < 0) {
+        //       x = Math.pow(2,z) - Math.abs(x);
+        //     }
+        //   }
 
-          var url = 'http://earthengine.google.org/static/hansen_2013/tree_alpha/' + z + '/' + x + '/' + y + '.png';
+        //   var url = 'http://earthengine.google.org/static/hansen_2013/tree_alpha/' + z + '/' + x + '/' + y + '.png';
 
-          var image = new Image();
-          image.src = url;
-          image.className += 'tree_alpha';
+        //   var image = new Image();
+        //   image.src = url;
+        //   image.className += 'tree_alpha';
 
-          if (zsteps <= 0) return image;
+        //   if (zsteps <= 0) return image;
 
-          image.width = 256 * Math.pow(2, zsteps);
-          image.height = 256 * Math.pow(2, zsteps);
+        //   image.width = 256 * Math.pow(2, zsteps);
+        //   image.height = 256 * Math.pow(2, zsteps);
 
-          if (zsteps > 0) {
-            var srcX = 256 * (coord.x % Math.pow(2, zsteps));
-            var srcY = 256 * (coord.y % Math.pow(2, zsteps));
+        //   if (zsteps > 0) {
+        //     var srcX = 256 * (coord.x % Math.pow(2, zsteps));
+        //     var srcY = 256 * (coord.y % Math.pow(2, zsteps));
 
-            image.style.position = 'absolute';
-            image.style.top      = -srcY + 'px';
-            image.style.left     = -srcX + 'px';
-          }
+        //     image.style.position = 'absolute';
+        //     image.style.top      = -srcY + 'px';
+        //     image.style.left     = -srcX + 'px';
+        //   }
 
-          var div = ownerDocument.createElement('div');
-          div.appendChild(image);
-          div.style.width = this.tileSize.width + 'px';
-          div.style.height = this.tileSize.height + 'px';
-          div.style.position = 'relative';
-          div.style.overflow = 'hidden';
-          div.className += 'tree_alpha';
+        //   var div = ownerDocument.createElement('div');
+        //   div.appendChild(image);
+        //   div.style.width = this.tileSize.width + 'px';
+        //   div.style.height = this.tileSize.height + 'px';
+        //   div.style.position = 'relative';
+        //   div.style.overflow = 'hidden';
+        //   div.className += 'tree_alpha';
 
-          return div;
-        };
+        //   return div;
+        // };
 
-        CoordMapType.prototype.name = 'Tile #s';
-        CoordMapType.prototype.alt = 'Tile Coordinate Map Type';
+        // CoordMapType.prototype.name = 'Tile #s';
+        // CoordMapType.prototype.alt = 'Tile Coordinate Map Type';
 
-        this.forest2000Layer = new CoordMapType();
-        map.overlayMapTypes.insertAt(0, this.forest2000Layer);
+        // this.forest2000Layer = new CoordMapType();
+        // map.overlayMapTypes.insertAt(0, this.forest2000Layer);
       }
     },
 
@@ -1040,8 +1044,8 @@ GFW.modules.app = function(gfw) {
     },
 
     _refreshForest2000Layer: function() {
-      GFW.app._removeForest2000Layer();
-      GFW.app._renderForest2000Layer();
+      // GFW.app._removeForest2000Layer();
+      // GFW.app._renderForest2000Layer();
     },
 
     _loadBaseLayer: function() {
