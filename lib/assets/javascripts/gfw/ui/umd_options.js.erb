@@ -189,9 +189,10 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
 
   _onClickApply: function(e) {
     e && e.preventDefault();
-    config.MAPOPTIONS.analysis = config.MAPOPTIONS.analysis + '&pc=' + this.canopy;
-    console.log(config.MAPOPTIONS.analysis);
-    updateHash()
+
+    config.BASELAYER = 'loss' + this.canopy;
+    updateHash();
+    GFW.app.updateBaseLayer(config.BASELAYER)
     this.hide();
   },
 

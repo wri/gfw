@@ -757,7 +757,6 @@ GFW.modules.app = function(gfw) {
 
     updateBaseLayer: function(baselayer) {
       this.currentBaseLayer = config.BASELAYER = baselayer;
-
       this._toggleTimeLayer();
       this._loadBaseLayer();
 
@@ -983,8 +982,8 @@ GFW.modules.app = function(gfw) {
           map.getDiv().appendChild(gee_link)
         }
       }, 2000);
-
-      this.time_layer_loss = Deforestation.init(map, function() {
+debugger;
+      this.time_layer_loss = Deforestation.init(map, this.currentBaseLayer, function() {
         GFW.app._removeForest2000Layer();
         GFW.app._renderForest2000Layer();
       });
@@ -1047,14 +1046,14 @@ GFW.modules.app = function(gfw) {
     _loadBaseLayer: function() {
       var table_name = null;
 
-      if (this.currentBaseLayer === 'loss') {
-        if (config.mapLoaded && !this.time_layer_loss) {
+      if (this.currentBaseLayer.indexOf('loss') === 0) {
+        // if (config.mapLoaded && !this.time_layer_loss) {
           this._loadTimeLayerLoss();
-        } else {
-          if (this.time_layer_loss) {
-            this.time_layer_loss.show();
-          }
-        }
+        // } else {
+          // if (this.time_layer_loss) {
+            // this.time_layer_loss.show();
+          // }
+        // }
 
         return;
 
