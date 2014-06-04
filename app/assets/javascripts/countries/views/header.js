@@ -1,5 +1,160 @@
 gfw.ui.model.CountryHeaderStatus = cdb.core.Model.extend({});
 
+gfw.ui.model.layersOptions = Backbone.Model.extend({
+
+  initialize: function(options) {
+    options = options || {};
+
+    var layers = {
+      'forest2000': {
+        url: 'http://earthengine.google.org/static/hansen_2013/tree_alpha/%z/%x/%y.png',
+        dataMaxZoom: 12,
+        tileSize: [256, 256],
+        _filterCanvasImage: function(imageData, w, h) {
+          var components = 4,
+              pixelPos;
+
+          for(var i = 0 ; i < w; ++i) {
+            for(var j = 0; j < h; ++j) {
+              var pixelPos = (j * w + i) * components,
+                  intensity = imageData[pixelPos + 3];
+
+              imageData[pixelPos] = 0;
+              imageData[pixelPos + 1] = intensity * 0.7;
+              imageData[pixelPos + 2] = 0;
+              imageData[pixelPos+ 3] = intensity * 0.7;
+            }
+          }
+        }
+      }
+    };
+
+    var self = this,
+        layer = layers[options.layer];
+
+    if (layer) {
+      _.each(layer, function(row, i) {
+        self.set(i, row);
+      })
+    }
+  },
+
+
+});
+
+gfw.ui.view.leafletCanvasLayer = Backbone.View.extend({
+
+  initialize: function(options) {
+    var self = this;
+    options = options || {layerName: ''};
+
+    this.layerOptions = new gfw.ui.model.layersOptions({layer: options.layerName});
+    _.extend(this, this.layerOptions.toJSON());
+
+    this.layer = L.tileLayer.canvas();
+
+    this.layer.drawTile = function(canvas, tilePoint, zoom) {
+      var xhr = new XMLHttpRequest(),
+          ctx = canvas.getContext('2d');
+
+      var x = tilePoint.x,
+          y = tilePoint.y,
+          z = zoom,
+          mz = self.dataMaxZoom;
+
+      if (zoom > mz) {
+        x = Math.floor(x / (Math.pow(2, zoom - mz)));
+        y = Math.floor(y / (Math.pow(2, zoom - mz)));
+        z = mz;
+      } else {
+        y = (y > Math.pow(2, z) ? y % Math.pow(2,z) : y);
+        if (x >= Math.pow(2, z)) {
+          x = x % Math.pow(2, z);
+        } else if (x < 0) {
+          x = Math.pow(2,z) - Math.abs(x);
+        }
+      }
+      
+      var url = self.url.replace('%z', z).replace('%x', x).replace('%y', y);
+
+      xhr.onload = function () {
+        var url = URL.createObjectURL(this.response),
+            image = new Image();
+
+        image.onload = function () {
+          image.crossOrigin = '';
+
+          canvas.image = image;
+          canvas.coord = {x: tilePoint.x, y: tilePoint.y};
+          canvas.coord.z = zoom;
+
+          self._drawImageCanvas(canvas);
+
+          URL.revokeObjectURL(url);
+        };
+
+        image.src = url;
+      };
+
+      xhr.open('GET', url, true);
+      xhr.responseType = 'blob';
+      xhr.send();
+    }
+  },
+
+  _filterCanvasImage: function(imageData, w, h) {
+    var components = 4,
+        pixelPos;
+
+    for(var i = 0 ; i < w; ++i) {
+      for(var j = 0; j < h; ++j) {
+        var pixelPos = (j * w + i) * components,
+            intensity = imageData[pixelPos + 3];
+
+        imageData[pixelPos] = 0;
+        imageData[pixelPos + 1] = intensity * 0.7;
+        imageData[pixelPos + 2] = 255;
+        imageData[pixelPos+ 3] = intensity * 0.7;
+      }
+    }
+  },
+
+  _drawImageCanvas: function(canvas) {
+    var ctx = canvas.getContext('2d'),
+        coord = canvas.coord;
+
+    if (canvas.coord) {
+      var zsteps = coord.z - this.dataMaxZoom;
+
+      if (zsteps > 0) {
+        ctx['imageSmoothingEnabled'] = false;
+        ctx['mozImageSmoothingEnabled'] = false;
+        ctx['webkitImageSmoothingEnabled'] = false;
+
+        var srcX = 256 / Math.pow(2, zsteps) * (coord.x % Math.pow(2, zsteps)),
+            srcY = 256 / Math.pow(2, zsteps) * (coord.y % Math.pow(2, zsteps)),
+            srcW = 256 / Math.pow(2, zsteps),
+            srcH = 256 / Math.pow(2, zsteps);
+        ctx.drawImage(canvas.image, srcX, srcY, srcW, srcH, 0, 0, 256, 256);
+      
+      } else {
+        try {
+          ctx.drawImage(canvas.image, 0, 0);
+        } catch(err) { }
+      }
+
+      var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      this._filterCanvasImage(I.data, canvas.width, canvas.height);
+      ctx.putImageData(I, 0, 0);
+    }
+  },
+
+  getLayer: function() {
+    return this.layer;
+  }
+
+});
+
 gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
   el: $('.country-header'),
@@ -106,53 +261,6 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       });
   },
 
-  _filterCanvasImage: function(imageData, w, h) {
-    var components = 4,
-        pixelPos;
-
-    for(var i = 0 ; i < w; ++i) {
-      for(var j = 0; j < h; ++j) {
-        var pixelPos = (j * w + i) * components,
-            intensity = imageData[pixelPos + 3];
-
-        imageData[pixelPos] = 0;
-        imageData[pixelPos + 1] = intensity * 0.7;
-        imageData[pixelPos + 2] = 250;
-        imageData[pixelPos+ 3] = intensity * 0.7;
-      }
-    }
-  },
-
-  _drawImageCanvas: function(canvas) {
-    var ctx = canvas.getContext('2d'),
-        coord = canvas.coord;
-
-    if (canvas.coord) {
-      var zsteps = coord.z - 12;
-
-      if (zsteps > 0) {
-        ctx['imageSmoothingEnabled'] = false;
-        ctx['mozImageSmoothingEnabled'] = false;
-        ctx['webkitImageSmoothingEnabled'] = false;
-
-        var srcX = 256 / Math.pow(2, zsteps) * (coord.x % Math.pow(2, zsteps)),
-            srcY = 256 / Math.pow(2, zsteps) * (coord.y % Math.pow(2, zsteps)),
-            srcW = 256 / Math.pow(2, zsteps),
-            srcH = 256 / Math.pow(2, zsteps);
-        ctx.drawImage(canvas.image, srcX, srcY, srcW, srcH, 0, 0, 256, 256);
-      
-      } else {
-        try {
-          ctx.drawImage(canvas.image, 0, 0);
-        } catch(err) { }
-      }
-
-      var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      this._filterCanvasImage(I.data, canvas.width, canvas.height);
-      ctx.putImageData(I, 0, 0);
-    }
-  },
-
   _renderMap: function(callback) {
     var self = this;
 
@@ -163,7 +271,6 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
     this.map = new L.Map('countryMap', {
       center: [0, 0],
-      maxBounds: this.country.get('bounds'),
       zoom: 3,
       zoomControl: false,
       dragging: false,
@@ -175,56 +282,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       fadeAnimation: false,
     });
 
-    this.forestLayer = L.tileLayer.canvas().addTo(this.map);
-
-    this.forestLayer.drawTile = function(canvas, tilePoint, zoom) {
-      var xhr = new XMLHttpRequest(),
-          ctx = canvas.getContext('2d');
-
-      var x = tilePoint.x,
-          y = tilePoint.y,
-          z = zoom;
-
-      // floor = round a number downward to its nearest integer
-      // pow = return the value of the number 4 to be the power of 3 (4*4*4):
-      if (zoom > 12) {
-        x = Math.floor(x / (Math.pow(2, zoom - 12)));
-        y = Math.floor(y / (Math.pow(2, zoom - 12)));
-        z = 12;
-      } else {
-        y = (y > Math.pow(2, z) ? y % Math.pow(2,z) : y);
-        if (x >= Math.pow(2, z)) {
-          x = x % Math.pow(2, z);
-        } else if (x < 0) {
-          x = Math.pow(2,z) - Math.abs(x);
-        }
-      }
-
-      var url = 'http://earthengine.google.org/static/hansen_2013/tree_alpha/' + z + '/' + x + '/' + y + '.png';
-
-      xhr.onload = function () {
-        var url = URL.createObjectURL(this.response),
-            image = new Image();
-
-        image.onload = function () {
-          image.crossOrigin = '';
-
-          canvas.image = image;
-          canvas.coord = {x: tilePoint.x, y: tilePoint.y};
-          canvas.coord.z = zoom;
-
-          self._drawImageCanvas(canvas);
-
-          URL.revokeObjectURL(url);
-        };
-
-        image.src = url;
-      };
-
-      xhr.open('GET', url, true);
-      xhr.responseType = 'blob';
-      xhr.send();
-    }
+    this.forestLayer = new gfw.ui.view.leafletCanvasLayer({
+      layerName: 'forest2000'
+    }).getLayer().addTo(this.map);
 
     // Set country layer
     cartodb.createLayer(this.map, {
@@ -240,17 +300,14 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     .addTo(this.map)
     .done(function(layer) {
       self.cartodbLayer = layer;
-
       self.cartodbLayer.on('loading' , function() {
         self.$map.removeClass('loaded');
-        // self.forestLayer.setOpacity(0);
+        self.forestLayer.setOpacity(0);
       });
 
       self.cartodbLayer.on('load' , function() {
-        setTimeout(function() {
-          self.$map.addClass('loaded');
-          // self.forestLayer.setOpacity(1);
-        }, 200);
+        self.$map.addClass('loaded');
+        self.forestLayer.setOpacity(1);
       });
   
       callback();
