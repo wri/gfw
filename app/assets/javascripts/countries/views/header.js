@@ -310,6 +310,12 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         self.forestLayer.setOpacity(1);
       });
   
+      self.cartodbLayer.on('tileload' , function() {
+        // _.each(self.map._layers, function(layer) {
+        //   console.log(layer._tilesToLoad);
+        // });
+      });
+
       callback();
     });
   },
