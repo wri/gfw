@@ -274,6 +274,10 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
         return;
       }
 
+      if (sumData !== 100) {
+        data[2] = (100 - (data[0] + data[1]));
+      }
+
       $countryForestType.find('.forest-type-legends').show();
 
       var width = 225,
