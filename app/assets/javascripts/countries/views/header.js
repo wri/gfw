@@ -135,6 +135,7 @@ gfw.ui.view.leafletCanvasLayer = Backbone.View.extend({
             srcY = 256 / Math.pow(2, zsteps) * (coord.y % Math.pow(2, zsteps)),
             srcW = 256 / Math.pow(2, zsteps),
             srcH = 256 / Math.pow(2, zsteps);
+        ctx.clearRect(0, 0, 256, 256);
         ctx.drawImage(canvas.image, srcX, srcY, srcW, srcH, 0, 0, 256, 256);
       
       } else {
@@ -396,10 +397,6 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     this.cartodbLayer.on('load' , function() {
       self.$map.addClass('loaded');
       self.forestLayer.setOpacity(1);
-    });
-
-    this.cartodbLayer.on('tileload' , function() {
-      console.log(self.cartodbLayer._tilesToLoad);
     });
   },
 
