@@ -269,7 +269,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           sumData = _.reduce(data, function(memo, num){ return memo + num; }, 0),
           $countryForestType = $('.country-forests-type');
 
-      if (sumData !== 100) {
+      if (sumData === 0) {
         $countryForestType.find('.coming-soon').show();
         return;
       }
