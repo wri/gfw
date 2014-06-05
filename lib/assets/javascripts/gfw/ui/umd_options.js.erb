@@ -189,7 +189,6 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
 
   _onClickApply: function(e) {
     e && e.preventDefault();
-console.log(config.BASELAYER)
     config.BASELAYER = 'loss' + this.canopy;
     updateHash();
     GFW.app.updateBaseLayer(config.BASELAYER)
