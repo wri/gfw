@@ -15,7 +15,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
   el: document.body,
 
   events: {
-    'click .graph_tab': '_updateGraph',
+    'click .graph_tab': '_updateGraph'
   },
 
   initialize: function() {

@@ -503,7 +503,8 @@
   .country-alerts,
   .country-production,
   .country-tenure,
-  .country-employment {
+  .country-employment,
+  .country-forests-type {
     .coming-soon {
       width: 100%;
       font-size: 16px;
@@ -515,7 +516,8 @@
     }
   }
 
-  .country-tenure {
+  .country-tenure,
+  .country-forests-type {
     .coming-soon {
       display: none;
     }
@@ -625,17 +627,13 @@
   }
 
   .country-forests-type {
-    .section-content {
-      display: none;
-    }
-
     .forests-type-graph {
       margin-top: -25px;
     }
 
     .forest-type-legends {
       font-size: 14px;
-      display: inline-block;
+      display: none;
       margin-top: 10px;
 
       .legends-title {

@@ -269,14 +269,12 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           sumData = _.reduce(data, function(memo, num){ return memo + num; }, 0),
           $countryForestType = $('.country-forests-type');
 
-      if (sumData === 0) {
-        $countryForestType.find('.left-col').addClass('wide');
-        $countryForestType.find('.forest-type-legends').hide();
-        $countryForestType.find('.section-content').show();
+      if (sumData !== 100) {
+        $countryForestType.find('.coming-soon').show();
         return;
       }
 
-      $countryForestType.find('.section-content').show();
+      $countryForestType.find('.forest-type-legends').show();
 
       var width = 225,
           height = 225,
