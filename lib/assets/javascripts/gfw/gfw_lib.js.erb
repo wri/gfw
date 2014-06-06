@@ -99,7 +99,6 @@ GFW.modules.app = function(gfw) {
           lng = parseFloat(map.getCenter().lng()).toFixed(6);
 
       this.$map_coordinates.html('Lat/Long: '+lat + ',' + lng);
-
       publish('timeline:update_coordinates');
     },
 
@@ -213,7 +212,7 @@ GFW.modules.app = function(gfw) {
       });
 
       google.maps.event.addListener(map, 'center_changed', function() {
-        that.updateCoordinates();
+        //that.updateCoordinates();
       });
 
       google.maps.event.addListener(map, 'zoom_changed', function() {
@@ -227,8 +226,8 @@ GFW.modules.app = function(gfw) {
       });
 
       google.maps.event.addListener(map, 'dragend', function() {
-        that.updateCoordinates();
-        updateHash();
+        //that.updateCoordinates();
+        //updateHash();
       });
 
       google.maps.event.addDomListener(window, 'resize', function() {
@@ -237,32 +236,32 @@ GFW.modules.app = function(gfw) {
       });
 
       google.maps.event.addListener(map, 'click', function(event) {
-        that.closeInfowindows();
+        // that.closeInfowindows();
 
-        if (!that.specialLayer) { return; }
+        // if (!that.specialLayer) { return; }
 
-        var // get click coordinates
-        lat = event.latLng.lat(),
-        lng = event.latLng.lng(),
-        params = { lat: lat, lon: lng },
-        url = "//<%= ENV['GFW_API_HOST'] %>/wdpa/sites";
+        // var // get click coordinates
+        // lat = event.latLng.lat(),
+        // lng = event.latLng.lng(),
+        // params = { lat: lat, lon: lng },
+        // url = "//<%= ENV['GFW_API_HOST'] %>/wdpa/sites";
 
-        executeAjax(url, params, {
-          success: function(sites) {
-            var site = null;
+        // executeAjax(url, params, {
+        //   success: function(sites) {
+        //     var site = null;
 
-            if (sites && sites.length > 0) {
-              var site = sites[0];
+        //     if (sites && sites.length > 0) {
+        //       var site = sites[0];
 
-              that.protectedInfowindow.setContent(site);
-              that.protectedInfowindow.setPosition(event.latLng);
-              that.protectedInfowindow.open();
-            }
-          },
-          error: function(e) {
-            console.error('WDPA API call failed', e, url);
-          }
-        });
+        //       that.protectedInfowindow.setContent(site);
+        //       that.protectedInfowindow.setPosition(event.latLng);
+        //       that.protectedInfowindow.open();
+        //     }
+        //   },
+        //   error: function(e) {
+        //     console.error('WDPA API call failed', e, url);
+        //   }
+        // });
       });
 
       google.maps.event.addListener(map, 'tilesloaded', this._mapLoaded);
@@ -1045,7 +1044,6 @@ GFW.modules.app = function(gfw) {
 
     _loadBaseLayer: function() {
       var table_name = null;
-      debugger;
       if (this.currentBaseLayer.indexOf('loss') === 0) {
         if (config.mapLoaded && !this.time_layer_loss) {
           this._loadTimeLayerLoss();
@@ -1154,7 +1152,7 @@ GFW.modules.app = function(gfw) {
 
             if (content_data.hasOwnProperty(key)) {
               temp = content_data[key];
-              delete content_data[key];
+              delete content_data[key];x
               key = key.replace(/_/g,' '); //add spaces to key names
               content_data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
             }
