@@ -1,25 +1,14 @@
-//= require d3.v3.min
-//= require jquery.qtip.min
-//= require simple_statistics
-
-gfw.ui.model.CountriesEmbedOverview = cdb.core.Model.extend({
-  defaults: {
-    graph: 'total_loss',
-    years: true,
-    class: null
-  }
-});
-
-
-gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
+gfw.ui.view.CountriesOverview = cdb.core.View.extend({
   el: document.body,
 
   events: {
-    'click .graph_tab': '_updateGraph'
+    'click .info': '_openSource',
+    'click .graph_tab': '_updateGraph',
+    'click .countries_list__footer': '_drawList'
   },
 
   initialize: function() {
-    this.model = new gfw.ui.model.CountriesEmbedOverview();
+    this.model = new gfw.ui.model.CountriesOverview();
 
     this.$graph = $('.overview_graph__area');
     this.$years = $('.overview_graph__years');
@@ -45,18 +34,34 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
   },
 
   _initViews: function() {
+    this.sourceWindow = new gfw.ui.view.SourceWindow();
+    this.$el.append(this.sourceWindow.render());
+
     this.tooltip = d3.select('body')
       .append('div')
       .attr('class', 'tooltip');
 
     this._drawYears();
     this._drawGraph();
+    this._drawList();
+
+    Share = new gfw.ui.view.Share();
+    this.$el.find('.overview_graph').append(Share.render());
+  },
+
+  _openSource: function(e) {
+    e.preventDefault();
+
+    var source = $(e.target).closest('.info').attr('data-source');
+
+    ga('send', 'event', 'SourceWindow', 'Open', source);
+    this.sourceWindow.show(source).addScroll();
   },
 
   _toggleYears: function() {
     var that = this;
 
-    if(this.model.get('years') === false) {
+    if (this.model.get('years') === false) {
       this.$years.slideUp(250, function() {
         $('.overview_graph__axis').slideDown();
       });
@@ -108,6 +113,532 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
     this.$graph.find('.'+graph).fadeIn();
 
     this._drawGraph();
+    this._drawList();
+  },
+
+  _drawList: function(e) {
+    var that = this;
+
+    e && e.preventDefault();
+
+    if (this.model.get('graph') === 'total_loss') {
+      var sql = 'WITH loss as (SELECT iso, SUM(';
+
+      for(var y = 2001; y < 2012; y++) {
+        sql += 'y'+y+' + ';
+      }
+
+      sql += 'y2012) as sum_loss\
+              FROM countries_loss\
+              GROUP BY iso)';
+
+      sql += 'SELECT c.iso, c.name, c.enabled, sum_loss\
+              FROM loss, gfw2_countries c\
+              WHERE loss.iso = c.iso\
+              AND NOT sum_loss = 0\
+              ORDER BY sum_loss DESC ';
+
+      if (e) {
+        sql += 'OFFSET 10';
+      } else {
+        sql += 'LIMIT 10';
+      }
+
+      d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
+        var self = that,
+            markup_list = '';
+
+        var data = json.rows;
+
+        _.each(data, function(val, key) {
+          var ord = e ? (key+11) : (key+1),
+              enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
+
+          markup_list += '<li>\
+                            <div class="countries_list__minioverview countries_list__minioverview_'+val.iso+'"></div>\
+                            <div class="countries_list__num">'+ord+'</div>\
+                            <div class="countries_list__title">'+enabled+'</div>\
+                          </li>';
+        });
+
+        if (e) {
+          $('.countries_list__footer').fadeOut();
+        } else {
+          $('.countries_list ul').html('');
+          $('.countries_list__footer').show();
+
+          $('.countries_list__header__minioverview').html('Loss <span>vs</span> Gain');
+        }
+
+        $('.countries_list ul').append(markup_list);
+
+        that.model.set('class', null);
+
+        _.each(data, function(val, key) {
+          self._drawMiniOverview(val.iso);
+        });
+      });
+    } else if (this.model.get('graph') === 'percent_loss') {
+      var sql = 'SELECT c.iso, c.name, c.enabled, loss_y2001_y2012 as ratio_loss\
+                 FROM countries_percent percent, gfw2_countries c\
+                 WHERE percent.iso = c.iso AND c.enabled IS true\
+                 AND NOT loss_y2001_y2012 = 0\
+                 ORDER BY ratio_loss DESC ';
+
+      if (e) {
+        sql += 'OFFSET 10';
+      } else {
+        sql += 'LIMIT 10';
+      }
+
+      d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
+        var self = that,
+            markup_list = '';
+
+        var data = json.rows;
+
+        _.each(data, function(val, key) {
+          var ord = e ? (key+11) : (key+1),
+              enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
+
+          markup_list += '<li>\
+                            <div class="countries_list__minioverview countries_list__minioverview_'+val.iso+'"></div>\
+                            <div class="countries_list__num">'+ord+'</div>\
+                            <div class="countries_list__title">'+enabled+'</div>\
+                          </li>';
+        });
+
+        if (e) {
+          $('.countries_list__footer').fadeOut();
+        } else {
+          $('.countries_list ul').html('');
+          $('.countries_list__footer').show();
+
+          $('.countries_list__header__minioverview').html('% Loss');
+        }
+
+        $('.countries_list ul').append(markup_list);
+
+        that.model.set('class', null);
+
+        _.each(data, function(val, key) {
+          self._drawMiniOverview(val.iso);
+        });
+      });
+    } else if (this.model.get('graph') === 'total_extent') {
+      var sql = 'WITH extent as (SELECT iso, SUM(';
+
+      for(var y = 2001; y < 2012; y++) {
+        sql += 'y'+y+' + ';
+      }
+
+      sql += 'y2012) as sum_extent\
+              FROM extent_gt_25\
+              GROUP BY iso)';
+
+      sql += 'SELECT c.iso, c.name, c.enabled, sum_extent\
+              FROM extent, gfw2_countries c\
+              WHERE extent.iso = c.iso\
+              AND NOT sum_extent = 0\
+              ORDER BY sum_extent DESC ';
+
+      if (e) {
+        sql += 'OFFSET 10';
+      } else {
+        sql += 'LIMIT 10';
+      }
+
+      d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
+        var self = that,
+            markup_list = '';
+
+        var data = json.rows;
+
+        _.each(data, function(val, key) {
+          var ord = e ? (key+11) : (key+1),
+              enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
+
+          markup_list += '<li>\
+                            <div class="countries_list__minioverview expanded countries_list__minioverview_'+val.iso+'"></div>\
+                            <div class="countries_list__num">'+ord+'</div>\
+                            <div class="countries_list__title">'+enabled+'</div>\
+                          </li>';
+        });
+
+        if (e) {
+          $('.countries_list__footer').fadeOut();
+        } else {
+          $('.countries_list ul').html('');
+          $('.countries_list__footer').show();
+
+          $('.countries_list__header__minioverview').html('Cover extent <span>vs</span> Cover loss');
+        }
+
+        $('.countries_list ul').append(markup_list);
+
+        that.model.set('class', 'expanded');
+
+        _.each(data, function(val, key) {
+          self._drawMiniOverview(val.iso);
+        });
+      });
+    } else if (this.model.get('graph') === 'ratio') {
+      var sql = 'WITH loss as (SELECT iso, SUM(';
+
+      for(var y = 2001; y < 2012; y++) {
+        sql += 'loss.y'+y+' + ';
+      }
+
+      sql += 'loss.y2012) as sum_loss\
+              FROM loss_gt_50 loss\
+              GROUP BY iso), gain as (SELECT g.iso, SUM(y2001_y2012) as sum_gain\
+                                      FROM countries_gain g, loss_gt_50 loss\
+                                      WHERE loss.iso = g.iso\
+                                      GROUP BY g.iso), ratio as (';
+
+      sql += 'SELECT c.iso, c.name, c.enabled, loss.sum_loss/gain.sum_gain as ratio\
+              FROM loss, gain, gfw2_countries c\
+              WHERE sum_gain IS NOT null\
+              AND NOT sum_gain = 0\
+              AND c.iso = gain.iso\
+              AND c.iso = loss.iso\
+              ORDER BY loss.sum_loss DESC\
+              LIMIT 50) ';
+
+      sql += 'SELECT *\
+              FROM ratio\
+              WHERE ratio IS NOT null\
+              ORDER BY ratio DESC ';
+
+      if (e) {
+        sql += ['OFFSET 10',
+                'LIMIT 40'].join('\n');
+      } else {
+        sql += 'LIMIT 10';
+      }
+
+      d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
+        var self = that,
+            markup_list = '';
+
+        var data = json.rows;
+
+        _.each(data, function(val, key) {
+          var ord = e ? (key+11) : (key+1),
+              enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
+
+          markup_list += '<li>\
+                            <div class="countries_list__minioverview medium countries_list__minioverview_'+val.iso+'">'+formatNumber(parseFloat(val.ratio).toFixed(2))+'</div>\
+                            <div class="countries_list__num">'+ord+'</div>\
+                            <div class="countries_list__title">'+enabled+'</div>\
+                          </li>';
+        });
+
+        if (e) {
+          $('.countries_list__footer').fadeOut();
+        } else {
+          $('.countries_list ul').html('');
+          $('.countries_list__footer').show();
+
+          $('.countries_list__header__minioverview').html('Ratio of Loss to Gain');
+        }
+
+        $('.countries_list ul').append(markup_list);
+
+        that.model.set('class', 'medium');
+
+        _.each(data, function(val, key) {
+          self._drawMiniOverview(val.iso);
+        });
+      });
+    } else if (this.model.get('graph') === 'domains') {
+      var sql = 'SELECT name, total_loss, total_gain, GREATEST('
+
+      for(var y = 2001; y < 2012; y++) {
+        sql += 'y'+y+', '
+      }
+
+      sql += 'y2012) as max\
+              FROM countries_domains\
+              ORDER BY total_loss DESC ';
+
+      d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
+        var self = that,
+            markup_list = '';
+
+        var data = json.rows;
+
+        _.each(data, function(val, key) {
+          markup_list += ['<li>',
+                            '<div class="countries_list__minioverview huge">',
+                              '<div class="gain half">'+formatNumber(parseFloat(val.total_loss/1000000).toFixed(1))+' Mha</div>',
+                              '<div class="loss half last">'+formatNumber(parseFloat(val.total_gain/1000000).toFixed(1))+' Mha</div>',
+                            '</div>',
+                            '<div class="countries_list__num">'+(key+1)+'</div>',
+                            '<div class="countries_list__title">'+val.name+'</div>',
+                          '</li>'].join('');
+        });
+
+        $('.countries_list__footer').hide();
+        $('.countries_list__header__minioverview').html('Total loss <span>vs</span> Total gain');
+        $('.countries_list ul').html(markup_list);
+
+        that.model.set('class', 'huge');
+
+        _.each(data, function(val, key) {
+          self._drawMiniOverview(val.iso);
+        });
+      });
+    }
+  },
+
+  _toggleClass: function() {
+    if (this.model.get('class') === 'expanded') {
+      $('.countries_list__header__minioverview').addClass('expanded');
+      $('.countries_list__minioverview').addClass('expanded');
+
+      $('.countries_list__header__minioverview').removeClass('medium huge');
+      $('.countries_list__minioverview').removeClass('medium huge');
+    } else if (this.model.get('class') === 'medium') {
+      $('.countries_list__header__minioverview').addClass('medium');
+      $('.countries_list__minioverview').addClass('medium');
+
+      $('.countries_list__header__minioverview').removeClass('expanded huge');
+      $('.countries_list__minioverview').removeClass('expanded huge');
+    } else if (this.model.get('class') === 'huge') {
+      $('.countries_list__header__minioverview').addClass('huge');
+      $('.countries_list__minioverview').addClass('huge');
+
+      $('.countries_list__header__minioverview').removeClass('expanded medium');
+      $('.countries_list__minioverview').removeClass('expanded medium');
+    } else {
+      $('.countries_list__header__minioverview').removeClass('expanded medium huge');
+      $('.countries_list__minioverview').removeClass('expanded medium huge');
+    }
+  },
+
+  _drawMiniOverview: function(iso) {
+    var width   = 90,
+        height  = 30;
+
+    var graph = d3.select('.countries_list__minioverview_'+iso)
+      .append('svg:svg')
+      .attr('width', width)
+      .attr('height', height);
+
+    if (this.model.get('graph') === ('total_loss')) {
+      var sql = 'SELECT ';
+
+      for(var y = 2001; y < 2012; y++) {
+        sql += 'y'+y+', '
+      }
+
+      sql += "y2012, (SELECT y2001_y2012\
+                      FROM countries_gain\
+                      WHERE c.iso = iso) as gain\
+              FROM loss_gt_0 c \
+              WHERE iso = '"+iso+"'";
+
+      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
+        var data = json.rows[0];
+
+        var data_ = [],
+            gain = null;
+
+        _.each(data, function(val, key) {
+          if (key === 'gain') {
+            gain = val/12;
+          } else {
+            data_.push({
+              'year': key.replace('y',''),
+              'value': val
+            });
+          }
+        });
+
+        var y_scale = d3.scale.linear()
+          .domain([0, d3.max(data_, function(d) { return d.value; })])
+          .range([height, 0]);
+
+        var barWidth = width / data_.length;
+
+        var bar = graph.selectAll('g')
+          .data(data_)
+          .enter().append('g')
+          .attr('transform', function(d, i) { return 'translate(' + (i * barWidth) + ', 0)'; });
+
+        bar.append('svg:rect')
+          .attr('class', 'bar')
+          .attr('y', function(d) { return y_scale(d.value); })
+          .attr('height', function(d) { return height - y_scale(d.value); })
+          .attr('width', barWidth - 1);
+
+        var data_gain_ = [
+          {
+            year: 2001,
+            value: gain
+          },
+          {
+            year: 2012,
+            value: gain
+          }
+        ];
+
+        graph.selectAll('line.minioverview_line')
+          .data(data_gain_)
+          .enter()
+          .append('line')
+          .attr({
+            'class': 'minioverview_line',
+            'x1': 0,
+            'x2': width,
+            'y1': function(d) { return y_scale(gain); },
+            'y2': function(d) { return y_scale(gain); }
+          });
+      });
+    } else if (this.model.get('graph') === ('percent_loss')) {
+      var sql = 'WITH loss as (SELECT ';
+
+      for(var y = 2001; y < 2012; y++) {
+        sql += 'y'+y+' as loss_y'+y+', ';
+      }
+
+      sql += "y2012 as loss_y2012\
+              FROM loss_gt_25\
+              WHERE iso = '"+iso+"'), extent as (SELECT ";
+
+      for(var y = 2001; y < 2012; y++) {
+        sql += 'y'+y+' as extent_y'+y+', ';
+      }
+
+      sql += "y2012 as extent_y2012\
+              FROM extent_gt_25\
+              WHERE iso = '"+iso+"')";
+
+      sql += 'SELECT ';
+
+      for(var y = 2001; y < 2012; y++) {
+        sql += 'loss_y'+y+'/extent_y'+y+' as percent_'+y+', ';
+      }
+
+      sql += 'loss_y2012/extent_y2012 as percent_2012\
+              FROM loss, extent';
+
+      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
+        var data = json.rows[0];
+
+        var data_ = [];
+
+        _.each(data, function(val, key) {
+          data_.push({
+            'year': key.replace('y',''),
+            'value': val*100
+          });
+        });
+
+        var y_scale = d3.scale.linear()
+          .domain([0, d3.max(data_, function(d) { return d.value; })])
+          .range([height, 0]);
+
+        var barWidth = width / data_.length;
+
+        var bar = graph.selectAll('g')
+          .data(data_)
+          .enter().append('g')
+          .attr('transform', function(d, i) { return 'translate(' + (i * barWidth) + ', 0)'; });
+
+        bar.append('svg:rect')
+          .attr('class', 'bar')
+          .attr('y', function(d) { return y_scale(d.value); })
+          .attr('height', function(d) { return height - y_scale(d.value); })
+          .attr('width', barWidth - 1);
+
+      });
+    } else if (this.model.get('graph') === ('total_extent')) {
+      var sql = 'SELECT ';
+
+      for(var y = 2001; y < 2012; y++) {
+        sql += 'loss.y'+y+' as loss_y'+y+', ';
+      }
+
+      sql += 'loss.y2012 as loss_y2012, ';
+
+      for(var y = 2001; y < 2012; y++) {
+        sql += 'extent.y'+y+' as extent_y'+y+', ';
+      }
+
+      sql += "extent.y2012 as extent_y2012\
+              FROM loss_gt_0 loss, extent_gt_25 extent\
+              WHERE loss.iso = extent.iso\
+              AND loss.iso = '"+iso+"'";
+
+      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
+
+        var graph2 = d3.select('.countries_list__minioverview_'+iso)
+          .append('div')
+          .attr('class', 'sibling')
+          .append('svg:svg')
+          .attr('width', width)
+          .attr('height', height);
+
+        var data = json.rows[0];
+
+        var data_loss_ = [],
+            data_extent_ = [];
+
+        _.each(data, function(val, key) {
+          if (key.indexOf('loss_y') != -1) {
+            data_loss_.push({
+              'year': key.split('_y')[1],
+              'value': val
+            });
+          }
+
+          if (key.indexOf('extent_y') != -1) {
+            data_extent_.push({
+              'year': key.split('extent_y')[1],
+              'value': val
+            });
+          }
+        });
+
+        var y_scale_loss = d3.scale.linear()
+          .domain([0, d3.max(data_loss_, function(d) { return d.value; })])
+          .range([height, 0]);
+
+        var y_scale_extent = d3.scale.linear()
+          .domain([0, d3.max(data_extent_, function(d) { return d.value; })])
+          .range([height, 0]);
+
+        var barWidth_loss = width / data_loss_.length;
+
+        var bar = graph.selectAll('g')
+          .data(data_loss_)
+          .enter()
+          .append('g')
+          .attr('transform', function(d, i) { return 'translate(' + (i * barWidth_loss) + ', 0)'; });
+
+        bar.append('svg:rect')
+          .attr('class', 'bar')
+          .attr('y', function(d) { return y_scale_loss(d.value); })
+          .attr('height', function(d) { return height - y_scale_loss(d.value); })
+          .attr('width', barWidth_loss - 1);
+
+        var barWidth_extent = width / data_extent_.length;
+
+        var bar2 = graph2.selectAll('g')
+          .data(data_extent_)
+          .enter()
+          .append('g')
+          .attr('transform', function(d, i) { return 'translate(' + (i * barWidth_extent) + ', 0)'; });
+
+        bar2.append('svg:rect')
+          .attr('class', 'bar extent')
+          .attr('y', function(d) { return y_scale_extent(d.value); })
+          .attr('height', function(d) { return height - y_scale_extent(d.value); })
+          .attr('width', barWidth_extent - 1);
+      });
+    }
   },
 
   _drawYears: function() {
@@ -303,7 +834,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
 
         // line
         svg.selectAll('line.overview_line')
-          .data(data_gain_)
+          .data([data_gain_[0]])
           .enter()
           .append('line')
           .attr({
@@ -481,7 +1012,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
 
         // line
         svg.selectAll('line.overview_line')
-          .data(data_gain_)
+          .data([data_gain_[0]])
           .enter()
           .append('line')
           .attr({
@@ -591,7 +1122,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
 
           var obj = _.find(data_, function(obj) { return obj.year == year; });
 
-          if(obj === undefined) {
+          if (obj === undefined) {
             data_.push({ 'year': year });
           }
 
@@ -733,10 +1264,17 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
       svg.append('text')
         .attr('class', 'axis light')
         .attr('id', 'axis_y')
-        .text('Cover gain 2001-2012')
-        .attr('x', -(h/2))
+        .text('Ratio of tree cover loss to gain 2001-2012')
+        .attr('x', -(h/2)-60)
         .attr('y', 30)
         .attr('transform', 'rotate(-90)');
+
+      svg.append('text')
+        .attr('class', 'axis light')
+        .attr('id', 'axis_ratio')
+        .text('1')
+        .attr('x', 25)
+        .attr('y', h-60);
 
       var shadow = svg.append('svg:defs')
         .append('svg:filter')
@@ -744,7 +1282,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
         .attr('x', '0%')
         .attr('y', '0%')
         .attr('width', '200%')
-        .attr('height', '200%')
+        .attr('height', '200%');
 
       shadow.append('svg:feOffset')
         .attr('result', 'offOut')
@@ -762,75 +1300,85 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
         .attr('in2', 'blurOut')
         .attr('mode', 'normal');
 
-        var sql = 'WITH loss as (SELECT iso, SUM(';
+      var sql = 'WITH loss as (SELECT iso, SUM(';
 
-        for(var y = 2001; y < 2012; y++) {
-          sql += 'loss.y'+y+' + ';
-        }
+      for(var y = 2001; y < 2012; y++) {
+        sql += 'loss.y'+y+' + ';
+      }
 
-        sql += 'loss.y2012) as sum_loss\
-                FROM loss_gt_50 loss\
-                GROUP BY iso), gain as (SELECT g.iso, SUM(y2001_y2012) as sum_gain\
-                                        FROM countries_gain g, loss_gt_50 loss\
-                                        WHERE loss.iso = g.iso\
-                                        GROUP BY g.iso), ratio as (';
+      sql += ['loss.y2012) as sum_loss',
+              'FROM loss_gt_50 loss',
+              'GROUP BY iso), gain as ('].join(' ');
 
-        sql += 'SELECT c.iso, c.name, c.enabled, loss.sum_loss as loss, gain.sum_gain as gain, loss.sum_loss/gain.sum_gain as ratio\
-                FROM loss, gain, gfw2_countries c\
-                WHERE sum_gain IS NOT null\
-                AND NOT sum_gain = 0\
-                AND c.iso = gain.iso\
-                AND c.iso = loss.iso\
-                ORDER BY loss.sum_loss DESC\
-                LIMIT 50) ';
+      sql += ['SELECT g.iso, SUM(y2001_y2012) as sum_gain',
+              'FROM countries_gain g, loss_gt_50 loss',
+              'WHERE loss.iso = g.iso',
+              'GROUP BY g.iso), ratio as ('].join(' ');
 
-        sql += 'SELECT *\
-                FROM ratio\
-                WHERE ratio IS NOT null\
-                ORDER BY ratio DESC';
+      sql += ['SELECT c.iso, c.name, c.enabled, loss.sum_loss as loss,',
+                     'gain.sum_gain as gain, loss.sum_loss/gain.sum_gain as ratio',
+              'FROM loss, gain, gfw2_countries c',
+              'WHERE sum_gain IS NOT null',
+              'AND NOT sum_gain = 0',
+              'AND c.iso = gain.iso',
+              'AND c.iso = loss.iso',
+              'ORDER BY loss.sum_loss DESC',
+              'LIMIT 50), extent as ('].join(' ');
+
+      sql += ['SELECT extent.iso, SUM(extent.y2012) as extent',
+              'FROM countries_extent extent',
+              'GROUP BY extent.iso) '].join(' ');
+
+      sql += ['SELECT *',
+              'FROM ratio, extent',
+              'WHERE ratio IS NOT null',
+              'AND extent.iso = ratio.iso'].join(' ');
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows;
 
         var log_m = 50;
 
-        var y_scale = d3.scale.linear()
-          .range([h, 0])
-          .domain([0, d3.max(data, function(d) { return d.gain; })]);
-
-        var x_scale = d3.scale.linear()
-          .range([m, w-m])
-          .domain([d3.min(data, function(d) { return d.loss; }), d3.max(data, function(d) { return d.loss; })]);
-
         var x_log_scale = d3.scale.log()
           .range([m, w-m])
-          .domain([d3.min(data, function(d) { return d.loss; }), d3.max(data, function(d) { return d.loss; })]);
+          .domain([d3.min(data, function(d) { return d.extent; }), d3.max(data, function(d) { return d.extent; })]);
 
         var y_log_scale = d3.scale.log()
           .range([h-log_m, m])
-          .domain([d3.min(data, function(d) { return d.gain; }), d3.max(data, function(d) { return d.gain; })]);
+          .domain([d3.min(data, function(d) { return d.ratio; }), d3.max(data, function(d) { return d.ratio; })]);
 
-        var r_scale = d3.scale.linear()
-          .range(['yellow', 'red'])
-          .domain([0, d3.max(data, function(d) { return d.ratio; })]);
+        var color_scale = d3.scale.linear()
+          .domain([d3.min(data, function(d) { return d.ratio; }), 1, 10, d3.max(data, function(d) { return d.ratio; })])
+          .range(["#9ABF00", "#9ABF00", "#CA46FF", "#CA46FF"]);
 
-        that.linearRegressionLine(svg, json, x_scale, y_scale);
+        // line
+        svg.selectAll('line.linear_regression')
+          .data([1])
+          .enter()
+          .append('line')
+          .attr({
+            'class': 'linear_regression',
+            'x1': m,
+            'x2': w-m,
+            'y1': function(d) { return y_log_scale(d); },
+            'y2': function(d) { return y_log_scale(d); },
+            "stroke-width": 1.3,
+            "stroke": "white",
+            "stroke-dasharray": "7,5"
+          });
 
         // circles w/ magic numbers :(
         var circle_attr = {
-          'cx': function(d) { return d.loss >= 1 ? x_log_scale(d.loss) : m; },
-          'cy': function(d) { return d.gain >= 1 ? y_log_scale(d.gain) : h-log_m; },
-          'r': '5',
+          'cx': function(d) { return x_log_scale(d.extent) },
+          'cy': function(d) { return y_log_scale(d.ratio) },
+          'r': 5,
           'name': function(d) { return d.name; },
           'class': function(d) { return d.enabled ? 'ball ball_link' : 'ball ball_nolink'; }
         };
 
         var data_ = [],
             data_link_ = [],
-            exclude = ['Saint Barthélemy', 'Saint Kitts and Nevis',
-                       'Saint Pierre and Miquelon', 'Virgin Islands', 'Oman',
-                       'Gibraltar', 'Saudi Arabia', 'French Polynesia',
-                       'Samoa', 'Western Sahara', 'United Arab Emirates'];
+            exclude = [];
 
         _.each(data, function(row) {
           if (!_.contains(exclude, row.name)) {
@@ -846,18 +1394,17 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
           .data(data_link_)
           .enter()
           .append('a')
-          .attr('xlink:href', function(d) { return '/country/' + d.iso })
-          .attr('target', '_blank')
+          .attr('xlink:href', function(d) { return '/country/' + d.iso})
           .append('svg:circle')
           .attr(circle_attr)
           .style('fill', function(d) {
-            return r_scale(d.ratio);
+            return color_scale(d.ratio);
           })
           .style('filter', 'url(#shadow)')
           .on('mouseover', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', '7')
+              .attr('r', 7)
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -874,7 +1421,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
           .on('mouseenter', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', '7')
+              .attr('r', 7)
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -891,7 +1438,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
           .on('mouseout', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', '5')
+              .attr('r', 5)
               .style('opacity', .8);
 
             that.tooltip.style('visibility', 'hidden');
@@ -902,11 +1449,14 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
           .enter()
           .append('svg:circle')
           .attr(circle_attr)
+          .style('fill', function(d) {
+            return color_scale(d.ratio);
+          })
           .style('filter', 'url(#shadow)')
           .on('mouseover', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', '7')
+              .attr('r', 7)
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -923,7 +1473,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
           .on('mouseenter', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', '7')
+              .attr('r', 7)
               .style('opacity', 1);
 
             var t = $(this).offset().top - 80,
@@ -940,7 +1490,7 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
           .on('mouseout', function() {
             d3.select(d3.event.target)
               .transition()
-              .attr('r', '5')
+              .attr('r', 5)
               .style('opacity', .8);
 
             that.tooltip.style('visibility', 'hidden');
@@ -1075,397 +1625,6 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
                 .style('visibility', 'hidden');
             });
         }
-      });
-    }
-  },
-
-  linearRegressionLine: function(svg, dataset, x_log_scale, y_log_scale) {
-    var that = this;
-
-    // linear regresion line
-    var lr_line = ss.linear_regression()
-      .data(dataset.rows.map(function(d) { return [d.loss, d.gain]; }))
-      .line();
-
-    var line = d3.svg.line()
-      .x(x_log_scale)
-      .y(function(d) { return that.y_log_scale(lr_line(d));} )
-
-    var x0 = x_log_scale.domain()[0];
-    var x1 = x_log_scale.domain()[1];
-    var lr = svg.selectAll('.linear_regression').data([0]);
-
-    var attrs = {
-       "x1": x_log_scale(x0),
-       "y1": y_log_scale(lr_line(x0)),
-       "x2": x_log_scale(x1),
-       "y2": y_log_scale(lr_line(x1)),
-       "stroke-width": 1.3,
-       "stroke": "white",
-       "stroke-dasharray": "7,5"
-    };
-
-    lr.enter()
-      .append("line")
-       .attr('class', 'linear_regression')
-       .attr(attrs);
-
-    lr.transition().attr(attrs);
-  }
-});
-
-
-gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
-  el: document.body,
-
-  events: {
-    'click .forma_dropdown-link': '_openDropdown',
-    'click .hansen_dropdown-link': '_openDropdown',
-    'click .hansen_dropdown-menu a': '_redrawCircle'
-  },
-
-  initialize: function() {
-    this.iso = this.options.iso;
-
-    this._initViews();
-    this._initHansenDropdown();
-  },
-
-  _initViews: function() {
-    this._drawCircle('forma', 'lines', { iso: this.iso });
-    this._drawCircle('forest_loss', 'bars', { iso: this.iso, dataset: 'loss' });
-  },
-
-  _initFormaDropdown: function() {
-    $('.forma_dropdown-link').qtip({
-      show: 'click',
-      hide: {
-        event: 'click unfocus'
-      },
-      content: {
-        text: $('.forma_dropdown-menu')
-      },
-      position: {
-        my: 'bottom right',
-        at: 'top right',
-        target: $('.forma_dropdown-link'),
-        adjust: {
-          x: -10
-        }
-      },
-      style: {
-        tip: {
-          corner: 'bottom right',
-          mimic: 'bottom center',
-          border: 1,
-          width: 10,
-          height: 6
-        }
-      }
-    });
-  },
-
-  _initHansenDropdown: function() {
-    this.dropdown = $('.hansen_dropdown-link').qtip({
-      show: 'click',
-      hide: {
-        event: 'click unfocus'
-      },
-      content: {
-        text: $('.hansen_dropdown-menu')
-      },
-      position: {
-        my: 'top right',
-        at: 'bottom right',
-        target: $('.hansen_dropdown-link'),
-        adjust: {
-          x: 10
-        }
-      },
-      style: {
-        tip: {
-          corner: 'top right',
-          mimic: 'top center',
-          border: 1,
-          width: 10,
-          height: 6
-        }
-      }
-    });
-  },
-
-  _openDropdown: function(e) {
-    e.preventDefault();
-  },
-
-  _redrawCircle: function(e) {
-    e.preventDefault();
-
-    var dataset = $(e.target).attr('data-slug'),
-        subtitle = $(e.target).text();
-
-    var api = this.dropdown.qtip('api');
-
-    api.hide();
-
-    $('.hansen_dropdown-link').html(subtitle);
-
-    if(dataset === 'countries_gain') {
-      this._drawCircle('forest_loss', 'comp', { iso: this.iso });
-    } else {
-      this._drawCircle('forest_loss', 'bars', { iso: this.iso, dataset: dataset });
-    }
-  },
-
-  _drawCircle: function(id, type, options) {
-    var that = this;
-
-    var $graph = $('.'+id),
-        $amount = $('.'+id+' .graph-amount'),
-        $date = $('.'+id+' .graph-date'),
-        $coming_soon = $('.'+id+' .coming_soon'),
-        $action = $('.'+id+' .action');
-
-    $('.graph.'+id+' .frame_bkg').empty();
-    $graph.addClass('ghost');
-    $amount.html('');
-    $date.html('');
-    $coming_soon.hide();
-
-    var width     = options.width     || 256,
-        height    = options.height    || width,
-        h         = 100, // maxHeight
-        radius    = width / 2;
-
-    var graph = d3.select('.graph.'+id+' .frame_bkg')
-      .append('svg:svg')
-      .attr('class', type)
-      .attr('width', width)
-      .attr('height', height);
-
-    var dashedLines = [
-      { x1:17, y:height/4, x2:239, color: '#ccc' },
-      { x1:0, y:height/2, x2:width, color: '#ccc' },
-      { x1:17, y:3*height/4, x2:239, color: '#ccc' }
-    ];
-
-    // Adds the dotted lines
-    _.each(dashedLines, function(line) {
-      graph.append('svg:line')
-      .attr('x1', line.x1)
-      .attr('y1', line.y)
-      .attr('x2', line.x2)
-      .attr('y2', line.y)
-      .style('stroke-dasharray', '2,2')
-      .style('stroke', line.color);
-    });
-
-    var sql = ["SELECT date_trunc('month', date) as date, COUNT(*) as alerts",
-               'FROM forma_api',
-               "WHERE iso = '"+options.iso+"'",
-               "GROUP BY date_trunc('month', date)",
-               "ORDER BY date_trunc('month', date) ASC"].join(' ');
-
-    if (type === 'lines') {
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
-        if(json && json.rows.length > 0) {
-          $graph.removeClass('ghost');
-          $action.removeClass('disabled');
-          that._initFormaDropdown();
-
-          var data = json.rows.slice(1, json.rows.length - 1);
-        } else {
-          $coming_soon.show();
-
-          return;
-        }
-
-        var x_scale = d3.scale.linear()
-          .domain([0, data.length - 1])
-          .range([0, width - 80]);
-
-        var max = d3.max(data, function(d) { return parseFloat(d.alerts); });
-
-        if (max === d3.min(data, function(d) { return parseFloat(d.alerts); })) {
-          h = h/2;
-        }
-
-        var y_scale = d3.scale.linear()
-          .domain([0, max])
-          .range([0, h]);
-
-        var line = d3.svg.line()
-          .x(function(d, i) { return x_scale(i); })
-          .y(function(d, i) { return h - y_scale(d.alerts); })
-          .interpolate('basis');
-
-        var marginLeft = 40,
-            marginTop = radius - h/2;
-
-        $amount.html('<span>'+formatNumber(data[data.length - 1].alerts)+'</span>');
-
-        var date = new Date(data[data.length - 1].date),
-            form_date = 'Alerts in ' + config.MONTHNAMES[date.getMonth()] + ' ' + date.getFullYear();
-
-        $date.html(form_date);
-
-        graph.append('svg:path')
-          .attr('transform', 'translate(' + marginLeft + ',' + marginTop + ')')
-          .attr('d', line(data))
-          .on('mousemove', function(d) {
-            var index = Math.round(x_scale.invert(d3.mouse(this)[0]));
-
-            if (data[index]) { // if there's data
-              $amount.html('<span>'+formatNumber(data[index].alerts)+'</span>');
-
-              var date = new Date(data[index].date),
-                  form_date = 'Alerts in ' + config.MONTHNAMES[date.getMonth()] + ' ' + date.getFullYear();
-
-              $date.html(form_date);
-
-              var cx = d3.mouse(this)[0] + marginLeft;
-              var cy = h - y_scale(data[index].alerts) + marginTop;
-
-              graph.select('.forma_marker')
-                .attr('cx', cx)
-                .attr('cy', cy);
-            }
-          });
-
-        graph.append('svg:circle')
-          .attr('class', 'forma_marker')
-          .attr('cx', -10000)
-          .attr('cy',100)
-          .attr('r', 5);
-      });
-    } else if (type === 'bars') {
-      var sql = "SELECT ";
-
-      if (options.dataset === 'loss') {
-        sql += "year, loss_gt_0 loss FROM umd WHERE iso='"+options.iso+"'";
-      } else if (options.dataset === 'extent') {
-        sql += "year, extent_gt_25 extent FROM umd WHERE iso='"+options.iso+"'";
-      }
-
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
-        if(json) {
-          $graph.removeClass('ghost');
-
-          var data = json.rows;
-        } else {
-          $coming_soon.show();
-
-          return;
-        }
-
-        var data_ = [];
-
-        _.each(data, function(val, key) {
-          if (val.year >= 2001) {
-            data_.push({
-              'year': val.year,
-              'value': eval('val.'+options.dataset)
-            });
-          }
-        });
-
-        $amount.html('<span>'+formatNumber(parseInt(data_[data_.length - 1].value, 10))+'</span>');
-        $date.html('Hectares in ' + data_[data_.length - 1].year);
-
-        var marginLeft = 40,
-            marginTop = radius - h/2 + 5;
-
-        var y_scale = d3.scale.linear()
-          .domain([0, d3.max(data_, function(d) { return parseFloat(d.value); })])
-          .range([height, marginTop*2]);
-
-        var barWidth = (width - 80) / data_.length;
-
-        var bar = graph.selectAll('g')
-          .data(data_)
-          .enter()
-          .append('g')
-          .attr('transform', function(d, i) { return 'translate(' + (marginLeft + i * barWidth) + ','+ -marginTop+')'; });
-
-        bar.append('svg:rect')
-          .attr('class', function(d, i) {
-            if(i === 11) { // last year index
-              return 'last bar'
-            } else {
-              return 'bar'
-            }
-          })
-          .attr('y', function(d) { return y_scale(d.value); })
-          .attr('height', function(d) { return height - y_scale(d.value); })
-          .attr('width', barWidth - 1)
-          .on('mouseover', function(d) {
-            d3.selectAll('.bar').style('opacity', '.5');
-            d3.select(this).style('opacity', '1');
-
-            $amount.html('<span>'+formatNumber(parseInt(d.value, 10))+'</span>');
-            $date.html('Hectares in ' + d.year);
-          });
-      });
-    } else if (type === 'comp') {
-      var sql = "SELECT iso, sum(umd.loss_gt_0) loss, max(umd.gain) gain FROM umd WHERE iso='"+options.iso+"' GROUP BY iso";
-
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
-        if(json) {
-          $graph.removeClass('ghost');
-
-          var data = json.rows[0];
-        } else {
-          $coming_soon.show();
-
-          return;
-        }
-
-        var data_ = [{
-                      'key': 'Tree cover gain',
-                      'value': data.gain
-                    }, {
-                      'key': 'Tree cover loss',
-                      'value': data.loss
-                    }];
-
-        $amount.html('<span>'+formatNumber(parseInt(data_[data_.length - 1].value, 10))+'</span>');
-        $date.html('Ha '+data_[data_.length - 1].key);
-
-        var barWidth = (width - 80) / 12;
-
-        var marginLeft = 40 + barWidth*5,
-            marginTop = radius - h/2 + 5;
-
-        var y_scale = d3.scale.linear()
-          .domain([0, d3.max(data_, function(d) { return parseFloat(d.value); })])
-          .range([height, marginTop*2]);
-
-        var bar = graph.selectAll('g')
-          .data(data_)
-          .enter()
-          .append('g')
-          .attr('transform', function(d, i) { return 'translate(' + (marginLeft + i * barWidth) + ',' + -marginTop + ')'; });
-
-        bar.append('svg:rect')
-          .attr('class', function(d, i) {
-            if (i === 1) { // last bar index
-              return 'last bar'
-            } else {
-              return 'bar'
-            }
-          })
-          .attr('y', function(d) { return y_scale(d.value); })
-          .attr('height', function(d) { return height - y_scale(d.value); })
-          .attr('width', barWidth - 1)
-          .style('fill', '#FFC926')
-          .style('shape-rendering', 'crispEdges')
-          .on('mouseover', function(d) {
-            d3.selectAll('.bar').style('opacity', '.5');
-            d3.select(this).style('opacity', '1');
-
-            $amount.html('<span>'+formatNumber(parseFloat(d.value).toFixed(1))+'</span>');
-            $date.html('Ha '+d.key);
-          });
       });
     }
   }
