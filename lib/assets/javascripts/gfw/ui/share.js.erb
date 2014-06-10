@@ -43,6 +43,15 @@ gfw.ui.view.Share = cdb.core.View.extend({
     e.preventDefault();
 
     this.share.show();
+    this._track();
+  },
+
+  _track: function() {
+    if ($('body').hasClass('home')) {
+      ga('send', 'event', 'Share', 'Map', config.BASELAYER);
+    } else {
+      ga('send', 'event', 'Share', 'Graphic', $('body').attr('class'));
+    }
   },
 
   _toggle: function() {
