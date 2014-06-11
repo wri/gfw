@@ -1471,7 +1471,7 @@ GFW.modules.maplayer = function(gfw) {
 
           if (!Analysis.model.get('area') || (Analysis.model.get('area') && Analysis.model.get('area') === '')) {
             Analysis.clearInfo();
-            Analysis.onClickCancel();
+            Analysis.onPreCancel();
           }
         }
 
