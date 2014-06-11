@@ -138,7 +138,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
   startAnalyzing: function(e) {
     e && e.preventDefault();
-
     if ($(this.$analysis_control).hasClass('disabled')) return;
 
     this.model.set('analyzing', true);
@@ -250,7 +249,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
   block_analysis: function() {
     this.$analysis_control.on('click',function(e){
-      e.stopPropagation();
+      //e.stopPropagation();
     }
     ).attr('data-tip', 'Please turn on the UMD tree cover loss layer to use the analysis tool')
      .addClass('analysis_blocked')
