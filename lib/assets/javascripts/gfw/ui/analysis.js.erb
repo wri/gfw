@@ -154,10 +154,14 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
   onClickCancel: function(e) {
     e && e.preventDefault();
+    
+    $map_coordinates.fadeOut();
+    this.onPreCancel();
+  },
 
+  onPreCancel: function() {
     this.model.set('analyzing', false);
     $viewfinder.removeClass('analysing');
-    $map_coordinates.fadeOut();
 
     this._clearAnalysis();
     this._deleteSelectedShape();
