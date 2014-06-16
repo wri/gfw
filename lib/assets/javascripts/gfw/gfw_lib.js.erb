@@ -1295,7 +1295,7 @@ GFW.modules.maplayer = function(gfw) {
 
         if (GFW.app.currentBaseLayer === slug) Legend.replace(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
       } else if (slug === 'umd_tree_loss_gain') {
-        if (umd_tree_loss_gain && GFW.app.currentBaseLayer === 'loss') umd_tree_loss_gain.set('visible', true);
+        if (umd_tree_loss_gain && GFW.app.currentBaseLayer.indexOf('loss') === 0) umd_tree_loss_gain.set('visible', true);
 
         var event = function() {
           that._toggleLayer();
@@ -1307,7 +1307,7 @@ GFW.modules.maplayer = function(gfw) {
 
         Filter.addForestLossFilters(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
 
-        if (GFW.app.currentBaseLayer === 'loss' || _.include(config.MAPOPTIONS.layers, 596)) Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
+        if (GFW.app.currentBaseLayer.indexOf('loss') === 0 || _.include(config.MAPOPTIONS.layers, 596)) Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
       } else if (slug === 'loss') {
         var event = function() {
           that._toggleLayer();
@@ -1315,7 +1315,7 @@ GFW.modules.maplayer = function(gfw) {
 
         Filter.addForestLossFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
 
-        if (GFW.app.currentBaseLayer === 'loss') {
+        if (GFW.app.currentBaseLayer.indexOf('loss') === 0) {
           if (filters && _.include(filters, this.layer.get('id'))) {
             if (GFW.app) {
               GFW.app.loadLayer(this.layer);
@@ -1550,7 +1550,7 @@ GFW.modules.maplayer = function(gfw) {
       } else {
         Analysis.show();
       }
-      if (slug === 'loss' || GFW.app.currentBaseLayer === 'loss') {
+      if (slug === 'loss' || GFW.app.currentBaseLayer.indexOf('loss') === 0) {
         UmdOptions.show();
       } else {
         UmdOptions.hide();
