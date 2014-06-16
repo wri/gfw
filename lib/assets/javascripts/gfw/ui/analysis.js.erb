@@ -891,7 +891,7 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
     var that = this;
 
     var options = _.extend(this.model.toJSON(), {
-      umd: config.BASELAYER === 'loss',
+      umd: config.BASELAYER.indexOf('loss') === 0,
       imazon: config.BASELAYER === 'imazon',
       modis: config.BASELAYER === 'modis'
     });
