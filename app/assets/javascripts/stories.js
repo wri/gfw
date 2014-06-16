@@ -16,6 +16,7 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
   },
 
   initialize: function() {
+    console.log('ey');
     _.bindAll(this, '_clickRemove');
 
     this.model = new cdb.core.Model();

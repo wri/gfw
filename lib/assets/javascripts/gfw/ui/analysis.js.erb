@@ -50,7 +50,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     subscribe('timeline:change_date_loss', _.bind(function(start_year, end_year, options) {
       if (options && options.publish) {
         this.range = '&begin='+start_year+'&end='+end_year;
-        this.info.model.set({ 'subtitle': 'Jan-'+start_year+' to Jan-'+parseInt(end_year, 10) });
+        this.info.model.set({ 'subtitle': 'Jan-'+start_year+' to Dec-'+parseInt(end_year - 1, 10) });
 
         if (this.info.model.get('hidden') && !url('?begin') && !url('?end')) return;
 
@@ -102,7 +102,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       var q1 = config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].slice(1).toLowerCase()
       var q2 = config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].slice(1).toLowerCase()
       
-      this.range = '&date='+year_+'-'+month_;
+      this.range = '&date='+year_+'-'+month_+'-15';
       this.info.model.set({ 'subtitle': q1+"-"+year_+' to '+q2+'-'+year_ });
 
       if (this.info.model.get('hidden')) return;
@@ -138,7 +138,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
   startAnalyzing: function(e) {
     e && e.preventDefault();
-
     if ($(this.$analysis_control).hasClass('disabled')) return;
 
     this.model.set('analyzing', true);
@@ -154,10 +153,14 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
   onClickCancel: function(e) {
     e && e.preventDefault();
+    
+    $map_coordinates.fadeOut();
+    this.onPreCancel();
+  },
 
+  onPreCancel: function() {
     this.model.set('analyzing', false);
     $viewfinder.removeClass('analysing');
-    $map_coordinates.fadeOut();
 
     this._clearAnalysis();
     this._deleteSelectedShape();
@@ -246,7 +249,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
   block_analysis: function() {
     this.$analysis_control.on('click',function(e){
-      e.stopPropagation();
+      //e.stopPropagation();
     }
     ).attr('data-tip', 'Please turn on the UMD tree cover loss layer to use the analysis tool')
      .addClass('analysis_blocked')
@@ -349,6 +352,9 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   },
 
   _getAlertCount: function() {
+    var $spinner = this.$el.find('.stats .spinner')
+    if (!$spinner.is('visible')) $spinner.fadeIn(250);
+    
     var that = this;
 
     var area = this.model.get('area'),
@@ -374,7 +380,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     if (!this.range && url('?begin') && url('?end')) {
       this.range = '&begin=' + url('?begin') + '&end=' + url('?end');
       this.info.model.set({ 'subtitle': 'Jan-' + parseInt( url('?begin'), 10) +
-                                    ' to Jan-' + parseInt( url('?end')  , 10)
+                                    ' to Dec-' + parseInt( url('?end')  , 10)
                           });
     }
 
@@ -431,6 +437,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         this.$el.find('.analysis_info').show();
       }
     }
+    
     executeAjax(this.alertsUrl, {}, {
       success: _.bind(function(data) {
         var baselayer = config.BASELAYER,
@@ -714,7 +721,7 @@ gfw.ui.model.AnalysisInfo = cdb.core.Model.extend({
     baselayer: config.BASELAYER,
     spinner: true,
     title: 'User defined area',
-    subtitle: 'Jan-2001 to Jan-2013',
+    subtitle: 'Jan-2001 to Dec-2012',
     subdisabled: true,
     alert_count: '',
     loss: '',

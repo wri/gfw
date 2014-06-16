@@ -198,7 +198,7 @@ body {
   font-weight: 300;
   font-size: 67px;
   @extend .serif;
-  color: #A1BA42;
+  color: #97Bd3d;
 }
 
 .fake_title {
@@ -799,7 +799,7 @@ body {
   padding: 0 0 6px;
   text-align: center;
 
-  .infowindow_content a { color: #A1BA42; }
+  .infowindow_content a { color: #97Bd3d; }
 
   .outer_top {
     width:$w - $pL - $pR;
@@ -965,6 +965,7 @@ body {
 // }
 
 .map_coordinates {
+  display: block;
   color:#333;
   text-shadow: 0px 0px 3px #fff;
   position: absolute;

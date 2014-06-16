@@ -411,20 +411,20 @@
     text-decoration:none;
 
     &.done {
-      background:#A1BA42;
+      background:#97Bd3d;
       color: #fff;
       border: 1px solid #839C26;
 
       &:hover {
-        background: darken(#A1BA42, 10%);
-        border-color:darken(#A1BA42, 10%);
+        background: darken(#97Bd3d, 10%);
+        border-color:darken(#97Bd3d, 10%);
       }
 
       &.disabled {
         opacity: .5;
 
         &:hover {
-          background:#A1BA42;
+          background:#97Bd3d;
           border-color: #839C26;
           cursor: default;
         }
