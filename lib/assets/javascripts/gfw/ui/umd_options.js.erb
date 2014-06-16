@@ -86,6 +86,7 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
     'click .apply':           '_onClickApply',
     'change #canopy_slider':  '_onChangeSlider',
     'input #canopy_slider':   '_onDragSlider',
+    'mouseup #canopy_slider': '_onDragEndSlider',
     'click .slider_option':   '_onClickOption'
   },
 
@@ -115,6 +116,9 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
     this._paintRange(document.getElementById('canopy_slider').value)
   },
 
+  _onDragEndSlider: function() {
+    this._onClickApply();
+  },
   _onClickOption: function(e) {
     switch($(e.target).data('option')) {
       case 0:
@@ -143,6 +147,7 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
         this._paintRange(75)
       break;
     }
+    this._onClickApply();
   },
 
   _paintRange: function(slider_val) {
@@ -184,7 +189,7 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
         $('.visible_range').css('width', 60);
       break;
     }
-      document.getElementById('canopy_slider').value = slider_val;
+    document.getElementById('canopy_slider').value = slider_val;
   },
 
   _onClickApply: function(e) {
@@ -192,7 +197,7 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
     config.BASELAYER = 'loss' + this.canopy;
     updateHash();
     GFW.app.updateBaseLayer(config.BASELAYER)
-    this.hide();
+    //this.hide();
   },
 
   show: function() {
