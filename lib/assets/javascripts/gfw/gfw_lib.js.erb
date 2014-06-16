@@ -1045,7 +1045,6 @@ GFW.modules.app = function(gfw) {
 
     _loadBaseLayer: function() {
       var table_name = null;
-      debugger;
       if (this.currentBaseLayer.indexOf('loss') === 0) {
         if (config.mapLoaded && !this.time_layer_loss) {
           this._loadTimeLayerLoss();
