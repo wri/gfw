@@ -30,7 +30,7 @@ define([
       this.views = {};
     },
 
-    layers: {
+    layersOpts: {
       loss: LossLayer
     },
 
@@ -47,9 +47,9 @@ define([
 
       // TODO: only gain and loss can be rendered together
       _.each(baseLayer, function(layer) {
-        if (self.layers[layer]) {
+        if (self.layersOpts[layer]) {
           if (!self.views[layer + 'Layer']) {
-            self.views[layer + 'Layer'] = new self.layers[layer]();
+            self.views[layer + 'Layer'] = new self.layersOpts[layer]();
           }
     
           // Render current Baselayer
