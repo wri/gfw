@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Global Forest Watch</title>
+  <meta name="description" content="Global Forest Watch (GFW) is a dynamic online forest monitoring and alert system that empowers people everywhere to better manage forests.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="Map,cartodb,Global,Forest,Watch,monitoring,real-time">
+  <meta name="author" content="CartoDB">
+  <meta name="DC.title" content="Global Forest Watch">
+  <meta property="og:title" content="Global Forest Watch"/>
+  <meta property="og:description" content="Global Forest Watch (GFW) is a dynamic online forest monitoring and alert system that empowers people everywhere to better manage forests."/>
+  <meta property="og:type" content="Visualization"/>
+  <meta property="og:url" content="http://www.globalforestwatch.org/"/>
+  <meta name="google-translate-customization" content="af2414ea962843fc-f48b15cdb6a3ab9b-gd8c738d3a7ff42de-1a"></meta>
+
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= controller_stylesheet_link_tag %>
+  <%= javascript_include_tag "modernizr-2.6.2.min" %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body class="<%= "#{controller_name} #{action_name}" %>">
+
+  <header class="header">
+    <div class="header-inner inner">
+      <a href="/" class="header-logo">Global Forest Watch</a>
+      <%= render 'shared/navbar' %>
+    </div>
+    <div class="header_separator"></div>
+    <div class="header-inner inner">
+      <%= yield :title %>
+      <%= yield :inner_header %>
+    </div>
+    <%= yield :filters %>
+  </header>
+
+  <div class="content">
+    <%= yield %>
+  </div>
+
+  <%= render 'shared/footer' %>
+
+  <%= requirejs_include_tag "home" %>
+  <%= yield :js %>
+  <%= render 'shared/js_templates' %>
+  <%= render 'shared/js_footer' %>
+
+</body>
+</html>

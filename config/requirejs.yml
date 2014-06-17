@@ -1,0 +1,8 @@
+modules:
+  - name: 'home'
+
+paths:
+  jquery: "jquery"
+  underscore: "underscore"
+  backbone: "backbone"
+  mps: "minpubsub"

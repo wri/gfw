@@ -184,6 +184,8 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.4)
       ffi (>= 0.5.0)
+    requirejs-rails (0.9.3)
+      railties (>= 3.1.1)
     rmagick (2.13.2)
     rspec-core (2.14.8)
     rspec-expectations (2.14.5)
@@ -280,6 +282,7 @@ DEPENDENCIES
   pg
   rails (= 4.0.4)
   rails_12factor
+  requirejs-rails
   rmagick
   rspec-rails (~> 2.0)
   sass-rails (~> 4.0.0)
