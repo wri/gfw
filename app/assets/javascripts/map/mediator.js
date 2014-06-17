@@ -30,32 +30,59 @@ define([
       this.views = {};
     },
 
-    layersOpts: {
-      loss: LossLayer
+    baselayersOpts: {
+      views: {
+        loss: LossLayer,
+        gain: LossLayer
+      },
+      together: [
+        ['loss', 'gain']
+      ]
+    },
+
+    validateBaselayers: function() {
+      var baseLayersArr = presenter.get('baseLayer'),
+          valid = false;
+
+      _.each(this.baselayersOpts.together, function(layersArr) {
+        if (baseLayersArr.length == 1 || $(baseLayersArr).not(layersArr).length == 0 && $(layersArr).not(baseLayersArr).length == 0) {
+          valid = true;
+        }
+      });
+
+      return valid;
     },
 
     checkBaselayers: function() {
       var self = this, 
-          baseLayer = presenter.get('baseLayer');
-          
-      // Remove baselayers
-      _.each(layers.getBaselayers(), function(layer) {
-        if (self.views[layer.slug + 'Layer']) {
-          self.views[layer.slug + 'Layer'].removeLayer();
-        }
-      });
+          baseLayersArr = presenter.get('baseLayer');
 
-      // TODO: only gain and loss can be rendered together
-      _.each(baseLayer, function(layer) {
-        if (self.layersOpts[layer]) {
-          if (!self.views[layer + 'Layer']) {
-            self.views[layer + 'Layer'] = new self.layersOpts[layer]();
+      if (this.validateBaselayers()) {
+
+        // render baselayers
+        _.each(baseLayersArr, function(layerName) {
+          if (!self.views[layerName + 'Layer']) {
+            console.log('rendering', layerName)
+            self.views[layerName + 'Layer'] = new self.baselayersOpts.views[layerName]();
           }
-    
-          // Render current Baselayer
-          self.views[layer + 'Layer'].render();
-        }
-      });
+          self.views[layerName + 'Layer'].render();
+
+        });
+
+        // remove baselayers
+        _.each(layers.getBaselayers(), function(layer) {
+          if (baseLayersArr.indexOf(layer.slug) == -1) {
+            if (self.views[layer.slug + 'Layer']) {
+              self.views[layer.slug + 'Layer'].removeLayer();
+            }
+          }
+        });
+
+      } else {
+        console.log('invalid baselayers.')
+        // wrong baselayers..
+      }
+
     },
 
     updateBaselayerTiles: function() {

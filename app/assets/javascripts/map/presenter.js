@@ -34,8 +34,14 @@ define([
 
     // TODO: Only router should call navigate via mps events.
     updateUrl: function() {
+      var attrs = {
+        baseLayer: this.get('baseLayer'),
+        zoom: this.get('zoom'),
+        mapType: this.get('mapType')
+      }
+
       var place = {
-        path: _.values(this.toJSON()).join('/'),
+        path: _.values(attrs).join('/'),
         trigger: false
       };
       mps.publish('navigate', [place]);
