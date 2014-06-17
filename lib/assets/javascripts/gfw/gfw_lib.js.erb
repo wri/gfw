@@ -760,7 +760,7 @@ GFW.modules.app = function(gfw) {
     },
 
     updateBaseLayer: function(baselayer) {
-      if (config.canopy_choice && baselayer.indexOf('loss') === 0) {
+      if (config.canopy_choice && baselayer && baselayer.indexOf('loss') === 0) {
         baselayer = 'loss' + config.canopy_choice;
         if (cover_extent.attributes['visible']) {
           GFW.app._removeForest2000Layer();
@@ -950,7 +950,7 @@ GFW.modules.app = function(gfw) {
     _toggleTimeLayer: function() {
       if (this.time_layer_loss && this.currentBaseLayer !== 'loss') {
         this.time_layer_loss.hide();
-        if (this.currentBaseLayer.indexOf('loss') === 0) {
+        if (this.currentBaseLayer && this.currentBaseLayer.indexOf('loss') === 0) {
           this.time_layer_loss.hide();
           setTimeout( function() { this.time_layer_loss.show(); }, 100);
         }
@@ -1060,7 +1060,7 @@ GFW.modules.app = function(gfw) {
 
     _loadBaseLayer: function() {
       var table_name = null;
-      if (this.currentBaseLayer.indexOf('loss') === 0) {
+      if (this.currentBaseLayer && this.currentBaseLayer.indexOf('loss') === 0) {
         if (config.mapLoaded && !this.time_layer_loss) {
           this._loadTimeLayerLoss();
         } else {

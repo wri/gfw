@@ -150,6 +150,36 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
     this._onClickApply();
   },
 
+  loadCanopyUrl: function() {
+    switch((config.BASELAYER === 'loss') ? 10 : parseInt(config.BASELAYER.slice(-2)) ) {
+      case 0:
+      case 100:
+        return true;
+      break;
+      case 10:
+        this._paintRange(15)
+      break;
+      case 15:
+        this._paintRange(25)
+      break;
+      case 20:
+        this._paintRange(35)
+      break;
+      case 25:
+        this._paintRange(45)
+      break;
+      case 30:
+        this._paintRange(55)
+      break;
+      case 50:
+        this._paintRange(65)
+      break;
+      case 75:
+        this._paintRange(75)
+      break;
+    }
+  },
+
   _paintRange: function(slider_val) {
     switch(true) {
       case slider_val >= 10 && slider_val < 18:
@@ -198,11 +228,11 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
     config.canopy_choice = this.canopy;
     updateHash();
     GFW.app.updateBaseLayer(config.BASELAYER)
-    //this.hide();
   },
 
   show: function() {
     this.$el.fadeIn(250);
+    this.loadCanopyUrl();
   },
 
   hide: function(e) {
