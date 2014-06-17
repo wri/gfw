@@ -1,5 +1,5 @@
 modules:
-  - name: 'home'
+  - name: 'map'
 
 paths:
   jquery: "jquery"
@@ -7,21 +7,21 @@ paths:
   backbone: "backbone"
   mps: "minpubsub"
   backbonequeryparams: "backbone.queryparams"
-  gmap: "app/gmap"
+  gmap: "map/gmap"
   d3: "d3"
   backbone_cartodb: "backbone.cartodb"
   cartodb: "cartodb"
   store: "store"
   text: "text"
   Class: "class"
-  app: "app/app"
+  app: "map/app"
   moment: "moment"
-  router: "app/router"
-  mediator: "app/mediator"
-  presenter: "app/presenter"
-  views: "app/views"
-  models: "app/models"
-  collections: "app/collections"
+  router: "map/router"
+  mediator: "map/mediator"
+  presenter: "map/presenter"
+  views: "map/views"
+  models: "map/models"
+  collections: "map/collections"
 
 shim: 
   underscore: 

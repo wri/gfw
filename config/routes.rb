@@ -20,9 +20,9 @@ Gfw::Application.routes.draw do
   get '/accept_terms' => 'static#accept_terms'
 
   # map
-  get '/map' => 'home#index'
-  get '/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
-  get '/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get '/map' => 'map#index'
+  get '/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get '/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
 
   # countries
   get '/countries' => 'countries#index'
