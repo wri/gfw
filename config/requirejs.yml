@@ -6,3 +6,48 @@ paths:
   underscore: "underscore"
   backbone: "backbone"
   mps: "minpubsub"
+  backbonequeryparams: "backbone.queryparams"
+  gmap: "app/gmap"
+  d3: "d3"
+  backbone_cartodb: "backbone.cartodb"
+  cartodb: "cartodb"
+  store: "store"
+  text: "text"
+  Class: "class"
+  app: "app/app"
+  moment: "moment"
+  router: "app/router"
+  mediator: "app/mediator"
+  presenter: "app/presenter"
+  views: "app/views"
+  models: "app/models"
+  collections: "app/collections"
+
+  shim: 
+    underscore: 
+      exports: "_"
+    backbone: 
+      deps: 
+        - "jquery"
+        - "underscore"
+      exports: "Backbone"
+    backbone_cartodb: 
+      deps: 
+        - "underscore"
+        - "backbone"
+      exports: "backbone_cartodb"
+    backbonequeryparams: 
+      deps: 
+        - "backbone"
+        - "underscore"
+      exports: "backbonequeryparams"
+    Class: 
+      exports: "Class"
+    app: 
+      deps: 
+        - "mps"
+        - "Class"
+      exports: "app"
+    user: 
+      deps: 
+        - "Class"
