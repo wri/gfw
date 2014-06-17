@@ -1542,7 +1542,8 @@ body {
   top: 205px;
   width: 400px;
   min-height: 250px;
-  padding: 20px;
+  padding: 20px 20px 0px 20px;
+  z-index: 1000;
   .close {
     display: block;
     position: absolute;
@@ -1684,6 +1685,7 @@ body {
     &:last-child {
       float: right;
       margin-bottom: 0;
+      display: none; /*hardcoded, change on click*/
     }
   }
   ul {
