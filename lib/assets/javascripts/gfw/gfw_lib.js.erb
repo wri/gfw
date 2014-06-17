@@ -950,6 +950,10 @@ GFW.modules.app = function(gfw) {
     _toggleTimeLayer: function() {
       if (this.time_layer_loss && this.currentBaseLayer !== 'loss') {
         this.time_layer_loss.hide();
+        if (this.currentBaseLayer.indexOf('loss') === 0) {
+          this.time_layer_loss.hide();
+          setTimeout( function() { this.time_layer_loss.show(); }, 100);
+        }
       }
 
       if (this.time_layer && this.currentBaseLayer !== 'forma') {
