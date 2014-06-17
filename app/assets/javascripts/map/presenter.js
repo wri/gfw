@@ -8,31 +8,28 @@
 define([
   'backbone',
   'mps',
-  'collections/layers',
-], function (Backbone, mps, layers) {
+], function (Backbone, mps) {
 
   var Presenter = Backbone.Model.extend({
-
-    defaults: {
-      baseLayer: '',
-      zoom: 0,
-      mapType: ''
-    },
 
     initialize: function() {
       this.on('change', this.updateUrl, this);
     },
 
-    setFromUrl: function(arr) {
-      var baseLayer = layers.getBaselayer(arr.baseLayer).slug;
+   /**
+    * Set the presenter object with the passed attributes.
+    * @param attrs Router params object.
+    */
+    setFromUrl: function(attrs) {
+      var baseLayer = (attrs.baseLayer) ? attrs.baseLayer.split(',') : null;
 
-      var attrs = {
-        baseLayer: baseLayer   || 'umd_tree_loss_gain',
-        zoom:      arr.zoom    || 3,
-        mapType:   arr.mapType || 'terrain'
+      var results = {
+        baseLayer: baseLayer     || ['loss', 'gain'],
+        zoom:      attrs.zoom    || 3,
+        mapType:   attrs.mapType || 'terrain'
       };
 
-      this.set(attrs);
+      this.set(results);
     },
 
     // TODO: Only router should call navigate via mps events.

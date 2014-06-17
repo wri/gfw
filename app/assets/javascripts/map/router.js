@@ -12,16 +12,14 @@ define([
   'mps',
   'gmap',
   'presenter',
-  'collections/layers',
   'views/map'
-], function ($, _, Backbone, mps, gmap, presenter, layers, map) {
+], function ($, _, Backbone, mps, gmap, presenter, map) {
   
   var Router = Backbone.Router.extend({
 
     routes: {
-      '': 'home',
       'map': 'map',
-      'map/:baseLayer/:zoom/:mapType/:sublayers': 'map',
+      'map/:baseLayer/:zoom/:mapType': 'map',
     },
 
     initialize: function() {
@@ -30,26 +28,18 @@ define([
       mps.subscribe('navigate', _.bind(function (place) {
         this.path = place.path;
         delete place.path;
-        this.navigate(this.path, place);
+        this.navigate('map/' + this.path, place);
       }, this));
     },
 
-    home: function() {
-      console.log('home')
-    },
-
-    map: function(baseLayer, zoom, mapType, sublayers) {
+    map: function(baseLayer, zoom, mapType) {
       console.log('map')
       gmap.init(_.bind(function() {  // Async Google Maps API loading
         map.render();
-        layers.fetch();
-        layers.bind('reset', function() {
-          presenter.setFromUrl({
-            baseLayer: baseLayer || 'umd_tree_loss_gain',
-            zoom: Number(zoom) || 3,
-            mapType: mapType || 'terrain',
-            sublayers: sublayers || ''
-          });
+        presenter.setFromUrl({
+          baseLayer: baseLayer,
+          zoom: Number(zoom),
+          mapType: mapType
         });
       }, this));
     }

@@ -30,22 +30,32 @@ define([
       this.views = {};
     },
 
+    layers: {
+      loss: LossLayer
+    },
+
     checkBaselayers: function() {
-      var baseLayer = presenter.get('baseLayer');
-
+      var self = this, 
+          baseLayer = presenter.get('baseLayer');
+          
       // Remove baselayers
-      _.each(layers.getBaselayers(), _.bind(function(layer) {
-        if (this.views[layer.slug + 'Layer']) {
-          this.views[layer.slug + 'Layer'].removeLayer();
+      _.each(layers.getBaselayers(), function(layer) {
+        if (self.views[layer.slug + 'Layer']) {
+          self.views[layer.slug + 'Layer'].removeLayer();
         }
-      }, this));
-      
-      if (!this.views[baseLayer + 'Layer']) {
-        this.views[baseLayer + 'Layer'] = new LossLayer();
-      }
+      });
 
-      // Render current Baselayer
-      this.views[baseLayer + 'Layer'].render();
+      // TODO: only gain and loss can be rendered together
+      _.each(baseLayer, function(layer) {
+        if (self.layers[layer]) {
+          if (!self.views[layer + 'Layer']) {
+            self.views[layer + 'Layer'] = new self.layers[layer]();
+          }
+    
+          // Render current Baselayer
+          self.views[layer + 'Layer'].render();
+        }
+      });
     },
 
     updateBaselayerTiles: function() {

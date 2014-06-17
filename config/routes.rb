@@ -21,6 +21,7 @@ Gfw::Application.routes.draw do
 
   # map
   get '/map' => 'map#index'
+  get '/map/:baselayer/:zoom/:mapType' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
   get '/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
   get '/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
 
