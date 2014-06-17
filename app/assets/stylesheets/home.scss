@@ -989,6 +989,22 @@ body {
   pointer-events:none;
 }
 
+.umdoptions {
+  display: none;
+  z-index: 10;
+
+  .umd_options_control {
+    position: absolute;
+    top: 168px;
+    left: 15px;
+    width: 37px;
+    height: 37px;
+    @include home-icons-sprite(icon_options);
+    &:hover { @include home-icons-sprite(icon_options_hover); }
+    &:active { @include home-icons-sprite(icon_options_active); }
+  }
+}
+
 .marker {
   position: absolute;
   height: 36px;
@@ -1519,6 +1535,206 @@ body {
   }
 }
 
+.umdoptions_dialog {
+  display: none;
+  position: absolute;
+  left: 20px;
+  top: 205px;
+  width: 400px;
+  min-height: 250px;
+  padding: 20px 20px 0px 20px;
+  z-index: 1000;
+  .close {
+    display: block;
+    position: absolute;
+    top: 15px; right: 15px;
+    width: 6px;
+    height: 6px;
+    @include home-icons-sprite(infowindow_close);
+  }
+  h2 {
+    color: #a1ba42;
+    border-bottom-color: #a1ba42;
+    border-bottom: 2px solid #ccc;
+    margin: 0 0 20px;
+    padding: 0 0 20px;
+    display: block;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+  p {
+    color: #666;
+    margin-bottom: 10px;
+    &.canopy {
+      position: relative;
+      width: 200px;
+      .source {
+        top: 4px;
+        right: 7px;
+        width: 10px;
+        padding: 0;
+      }
+    }
+    &.trees {
+      height: 60px;
+    }
+    &.slider_container{
+      position: relative;
+    }
+    span {
+      height: 60px;
+      float: left;
+      width: 91px;
+      &.forest_icon {
+        float: right;
+        background: image-url('backgrounds/map_options_tree-2.png') no-repeat;
+      }
+      &.tree_icon {
+        margin-top: 20px;
+        width: 25px;
+        height: 41px;
+        background: image-url('backgrounds/map_options_tree-1.png') no-repeat;
+      }
+    }
+    .slider {
+      background: image-url('/assets/icons/point.png') repeat-x 1px center;
+      top: -13px;
+      position: relative;
+      width: 395px;
+      #canopy_slider {
+        width: 295px;
+        margin-left: 45px;
+        -webkit-appearance: none;
+        background: image-url('/assets/icons/point.png') repeat-x -2px center;
+        position: relative;
+        top: 21px;
+        cursor: pointer;
+        &:focus {
+          outline: 0;
+        }
+        &::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          background-color: #666;
+          width: 14px;
+          height: 14px;
+          @include home-icons-sprite(timeline_handler);
+          cursor: col-resize;
+          border-radius: 3px;
+          z-index: 500;
+          position:relative;
+        }
+      }
+      /*#canopy_slider::-webkit-slider-thumb/*,
+      input[type="range"]::-moz-range-thumb,
+      input[type="range"]::-ms-thumb {
+        -webkit-appearance: none;
+        background-color: #666;
+        width: 14px;
+        height: 14px;
+        @include home-icons-sprite(timeline_handler);
+        cursor: col-resize;
+      }*/
+    }
+    .visible_range {
+      display: block;
+      position: absolute;
+      top: 14px;
+      background: #A2BC28;
+      height: 6px;
+      box-shadow: 1px 0 3px #cccccc;
+      right: 0;
+      width: 350px;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      pointer-events:none;
+    }
+    a {
+      @include inline-block();
+      width: 70px;
+      padding: 10px 0;
+      border: #666666;
+      @include border-radius(3px);
+      font-weight:bold;
+
+      text-align: center;
+      font-size:11px;
+      text-transform:uppercase;
+      text-decoration:none;
+
+      &.apply {
+        background:#A1BA42;
+        color: #fff;
+        border: 1px solid #839C26;
+
+        &:hover {
+          background: darken(#A1BA42, 10%);
+          border-color:darken(#A1BA42, 10%);
+        }
+      }
+
+      &.cancel {
+        background: #fff;
+        border: 1px solid #CCCCCC;
+        color: #666666;
+
+        &:hover { background:#f1f1f1; }
+
+      }
+    }
+    &:last-child {
+      float: right;
+      margin-bottom: 0;
+      display: none; /*hardcoded, change on click*/
+    }
+  }
+  ul {
+    width: 390px;
+    position: relative;
+    height: 12px;
+    li {
+      list-style: none;
+      display: inline;
+      color: #A2BE00;
+      font-size: 10px;
+      position: absolute;
+      cursor: pointer;
+      z-index: 5;
+      &.p0,
+      &.p100 {
+        color: #666;
+        left: 0;
+        cursor: default;
+      }
+      &.p10 {
+        left: calc(12% - 5px);
+      }
+      &.p15 {
+        left: calc(12*2% - 5px);
+      }
+      &.p20 {
+        left: calc(12*3% - 5px);
+      }
+      &.p25 {
+        left: calc(12*4% - 5px);
+      }
+      &.p30 {
+        left: calc(12*5% - 5px);
+      }
+      &.p50 {
+        left: calc(12*6% - 5px);
+      }
+      &.p75 {
+        left: calc(12*7% - 5px);
+      }
+      &.p100 {
+        left: calc(12*8% - 5px);
+      }
+    }
+  }
+
+}
+
 .analysis_control,
 .share_control {
   position: absolute;
@@ -1546,6 +1762,9 @@ body {
 
   &:hover { @include home-icons-sprite(share_button_hover); }
   &:active { @include home-icons-sprite(share_button_active); }
+  &.umd_options {
+    top: 168px;
+  }
 }
 
 .analysis_info {
@@ -1879,7 +2098,8 @@ body {
 }
 
 .landsat_layers,
-.layer_selector {
+.layer_selector,
+.umdoptions_dialog {
   border: 1px solid #666;
   background: #fff;
   @include border-radius(3px);

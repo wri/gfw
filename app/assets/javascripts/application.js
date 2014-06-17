@@ -3,6 +3,7 @@
 //= require gfw
 //= require geojson
 //= require gfw/helpers
+//= require d3.v3.min
 
 $(function() {
   try {

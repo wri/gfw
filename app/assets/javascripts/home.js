@@ -37,3 +37,4 @@
 //= require gfw/ui/timeline/timeline_imazon
 //= require gfw/ui/timeline/timeline_fires
 //= require gfw/map
+//= require gfw/ui/umd_options
