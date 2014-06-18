@@ -12,7 +12,7 @@ define([
      *   data: Object with parameters.
      *   callback: Object with a success and error function.
      */
-    spy: function(url, data, success, error) {
+    spy: function(url, data, successCb, errorCb) {
       var jqxhr = null;
       var key = null;
       var val = null;
@@ -22,13 +22,13 @@ define([
         type: "POST",
         data: JSON.stringify(data),
         success: function(response) {
-          if (success) {
-            success(response);
+          if (successCb) {
+            successCb(response);
           }
         },
-        error: function(status, msg) {
-          if (error) {
-            error(status, msg);
+        error: function(jqxhr, status, error) {
+          if (errorCb) {
+            errorCb(jqxhr.responseText, status, error);
           }
         },
         contentType: 'application/json', 

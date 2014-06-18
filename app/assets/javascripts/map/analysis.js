@@ -31,9 +31,9 @@ define([
      * @return {string} URI template for API
      */
     get_uritemplate: function(config) {
-      if (_.has(config, 'iso')) {
+      if (_.has(config, 'iso') && !_.has(config, 'id1')) {
         return this.apis.national;
-      } else if (_.has(config, 'id1')) {
+      } else if (_.has(config, 'iso') && _.has(config, 'id1')) {
         return this.apis.subnational;
       } else if (_.has(config, 'use')) {
         return this.apis.use;
@@ -81,7 +81,8 @@ define([
      *   geojson - GeoJSON Polygon or Multipolygon
      *   iso - 3 letter country ISO code (e.g., BRA)
      *   id1 - GADM subational id (e.g., 3445)
-     *   use - Concession name and polygon cartodb_id (e.g., logging,1)
+     *   use - Concession name (e.g., logging, mining, oilpalm, fiber)
+     *   useid - Concession polygon cartodb_id (e.g., 2)
      *   wdpa - WDPA polygon cartodb_id (e.g., 800)
      */
     execute: function(config) {
@@ -93,8 +94,8 @@ define([
         function(response) {
           mps.publish('analysis/get-results', [response]);
         },
-        function(status, msg) {
-          mps.publish('analysis/get-results-error', [status, msg]);
+        function(responseText, status, error) {
+          mps.publish('analysis/get-results-error', [responseText, status, error]);
         });
     }
   });
