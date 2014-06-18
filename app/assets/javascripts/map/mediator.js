@@ -56,8 +56,11 @@ define([
       var baselayersArr = presenter.get('baselayers'),
           valid = false;
 
-      _.each(this.baselayersOpts.allowedCombined, function(layersArr) {
-        if (baselayersArr.length == 1 || $(baselayersArr).not(layersArr).length == 0 && $(layersArr).not(baselayersArr).length == 0) {
+      _.each(this.baselayersOpts.allowedCombined, 
+        function(layersArr) {
+          if (baselayersArr.length == 1 || 
+              ($(baselayersArr).not(layersArr).length === 0 && 
+              $(layersArr).not(baselayersArr).length === 0)) {
           valid = true;
         }
       });

@@ -9,6 +9,7 @@ paths:
   backbonequeryparams: "backbone.queryparams"
   gmap: "map/gmap"
   d3: "d3"
+  uri: "uri"
   backbone_cartodb: "backbone.cartodb"
   cartodblayer: "cartodb.gmapsv3"
   cartodb: "cartodb"
@@ -24,6 +25,9 @@ paths:
   views: "map/views"
   models: "map/models"
   collections: "map/collections"
+  jasmine: "jasmine"
+  analysis: "map/analysis"
+  nsa: "map/nsa"
 
 shim: 
   underscore: 
@@ -49,6 +53,8 @@ shim:
     exports: "backbonequeryparams"
   Class: 
     exports: "Class"
+  uri: 
+    exports: "UriTemplate"    
   app: 
     deps: 
       - "mps"
