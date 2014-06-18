@@ -33,8 +33,9 @@ define([
 
       // After each lib is loaded, get the cartodb lib.
       var done = _.after(libs.length, function () {
-        require(['cartodb'], cb);
+        require(['cartodb', 'cartodblayer'], cb);
       });
+
 
       // Load the jsapi and then grab each lib.
       require(['https://www.google.com/jsapi?callback=?' + 

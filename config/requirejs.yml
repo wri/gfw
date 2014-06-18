@@ -10,7 +10,9 @@ paths:
   gmap: "map/gmap"
   d3: "d3"
   backbone_cartodb: "backbone.cartodb"
+  cartodblayer: "cartodb.gmapsv3"
   cartodb: "cartodb"
+  wax: "wax.g.min"
   store: "store"
   text: "text"
   Class: "class"
@@ -27,7 +29,7 @@ shim:
   underscore: 
     exports: "_"
   backbone: 
-    deps: 
+    deps:
       - "jquery"
       - "underscore"
     exports: "Backbone"
@@ -36,6 +38,10 @@ shim:
       - "underscore"
       - "backbone"
     exports: "backbone_cartodb"
+  cartodblayer:
+    deps:
+      - "gmap"
+    exports: "CartoDBLayer"
   backbonequeryparams: 
     deps: 
       - "backbone"
@@ -47,6 +53,7 @@ shim:
     deps: 
       - "mps"
       - "Class"
+      - "gmap"
     exports: "app"
   user: 
     deps: 

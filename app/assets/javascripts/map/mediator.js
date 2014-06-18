@@ -15,8 +15,9 @@ define([
   'collections/layers',
   'views/map',
   'views/layers/loss',
-  'views/layers/forest'
-], function (_, Backbone, mps, Class, presenter, layersCollection, map, LossLayer, ForestLayer) {
+  'views/layers/forest',
+  'views/layers/imazon'
+], function (_, Backbone, mps, Class, presenter, layersCollection, map, LossLayer, ForestLayer, ImazonLayer) {
 
   var Mediator = Class.extend({
     init: function() {
@@ -37,7 +38,8 @@ define([
     baselayersOpts: {
       views: {
         loss: LossLayer,
-        gain: LossLayer
+        gain: LossLayer,
+        imazon: ImazonLayer
       },
       allowedCombined: [
         ['loss', 'gain']

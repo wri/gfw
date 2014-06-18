@@ -7,9 +7,10 @@ define([
   'backbone',
   'mps',
   'presenter',
+  'moment',
   'views/layers/core/canvasLayer',
   'views/timeline'
-], function(Backbone, mps, presenter, CanvasLayer, Timeline) {
+], function(Backbone, mps, presenter, moment, CanvasLayer, Timeline) {
 
   var LossLayer = CanvasLayer.extend({
 
@@ -20,7 +21,7 @@ define([
       LossLayer.__super__.initialize.apply(this);
 
       this.timeline = new Timeline({
-        dateRange: [2001, 2013],
+        dateRange: [moment([2001]), moment([2013])],
         layerName: 'loss'
       });
   
@@ -30,6 +31,8 @@ define([
       var components = 4,
           z = presenter.get('zoom'),
           timelineDate = presenter.get('timelineDate') || this.timeline.opts.dateRange;
+
+      timelineDate = [timelineDate[0].year(), timelineDate[1].year()];
 
       for(var i = 0; i < w; ++i) {
         for(var j = 0; j < h; ++j) {

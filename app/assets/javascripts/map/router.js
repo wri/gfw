@@ -20,8 +20,7 @@ define([
 
     routes: {
       'map': 'map',
-      'map/:zoom/:lat/:lng/:iso/:maptype/:baselayers': 'map',
-      'map/:zoom/:lat/:lng/:iso/:maptype/:baselayers/:sublayers': 'map',
+      'map/:zoom/:lat/:lng/:iso/:maptype/:baselayers(/:sublayers)(/)': 'map',
     },
 
     initialize: function() {
@@ -63,8 +62,8 @@ define([
           hh   = $('.header').height(),
           $map = $('#map');
 
-      $map.height(dh - hh);
       $('html, body').scrollTop($map.offset().top - 67);
+      $map.height(dh - hh);
     }
 
   });
