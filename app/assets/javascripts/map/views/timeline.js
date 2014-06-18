@@ -50,7 +50,7 @@ define([
     render: function() {
       this.loadSlider();
       
-      $('body').append(this.$el);
+      $('.map-container').append(this.$el);
       return this.$el;
     },
 

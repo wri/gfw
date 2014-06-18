@@ -31,7 +31,7 @@ define([
       presenter.on('change:timelineDate', this.updateBaselayerTiles, this);
 
       this.collections = {};
-      this.views = {};
+      this.layerViews = {};
     },
 
     baselayersOpts: {
@@ -68,30 +68,24 @@ define([
           baselayersArr = presenter.get('baselayers');
 
       if (this.validateBaselayers()) {
-
         // render baselayers
         _.each(baselayersArr, function(layerName) {
-          if (!self.views[layerName + 'Layer']) {
-            self.views[layerName + 'Layer'] = new self.baselayersOpts.views[layerName]();
+          if (!self.layerViews[layerName]) {
+            self.layerViews[layerName] = new self.baselayersOpts.views[layerName]();
           }
-          self.views[layerName + 'Layer'].render();
-
+          self.layerViews[layerName].render();
         });
 
         // remove baselayers
         _.each(layersCollection.getBaselayers(), function(layer) {
           if (baselayersArr.indexOf(layer.slug) == -1) {
-            if (self.views[layer.slug + 'Layer']) {
-              self.views[layer.slug + 'Layer'].removeLayer();
+            if (self.layerViews[layer.slug]) {
+              self.layerViews[layer.slug].removeLayer();
             }
           }
         });
 
-      } else {
-        console.log('invalid baselayers.')
-        // wrong baselayers..
       }
-
     },
 
     updateSublayer: function() {
@@ -103,18 +97,18 @@ define([
         var layer = layersCollection.findWhere({id: Number(layerId)});
         if (layer) {
           var layerName = layer.get('slug');
-          if (!self.views[layerName + 'Layer']) {
-            self.views[layerName + 'Layer'] =  new self.sublayersOpts.views[layerName]();
+          if (!self.layerViews[layerName]) {
+            self.layerViews[layerName] =  new self.sublayersOpts.views[layerName]();
           }
-          self.views[layerName + 'Layer'].render();
+          self.layerViews[layerName].render();
         }
       });
 
       // remove sublayers
       _.each(layersCollection.getSublayers(), function(layer) {
         if (sublayersArr.indexOf(layer.id.toString()) == -1) {
-          if (self.views[layer.slug + 'Layer']) {
-            self.views[layer.slug + 'Layer'].removeLayer();
+          if (self.layerViews[layer.slug]) {
+            self.layerViews[layer.slug].removeLayer();
           }
         }
       });
@@ -125,7 +119,7 @@ define([
           baselayers = presenter.get('baselayers');
 
       _.each(baselayers, function(layerName) {
-        self.views[layerName + 'Layer'].updateTiles();
+        self.layerViews[layerName].updateTiles();
       });
     },
 
