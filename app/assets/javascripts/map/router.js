@@ -32,6 +32,8 @@ define([
     },
 
     map: function(zoom, lat, lng, iso, maptype, baselayers, sublayers) {
+      this.setMapSize();
+
       layersCollection.fetch();
       layersCollection.bind('reset', function() {
         // Async Google Maps API loading
@@ -54,8 +56,16 @@ define([
       this.path = place.path;
       delete place.path;
       this.navigate('map/' + this.path, place);
-    }
+    },
 
+    setMapSize: function() {
+      var dh   = $(window).height() + 67,
+          hh   = $('.header').height(),
+          $map = $('#map');
+
+      $map.height(dh - hh);
+      $('html, body').scrollTop($map.offset().top - 67);
+    }
 
   });
 
