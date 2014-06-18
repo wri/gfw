@@ -19,30 +19,39 @@ define([
 
     routes: {
       'map': 'map',
-      'map/:baseLayer/:zoom/:mapType': 'map',
+      'map/:zoom/:lat/:lng/:iso/:maptype/:baselayers': 'map',
+      'map/:zoom/:lat/:lng/:iso/:maptype/:baselayers/:sublayers': 'map',
     },
 
     initialize: function() {
       console.log('router.initialize()');
       Backbone.Router.prototype.initialize.call(this);
-      mps.subscribe('navigate', _.bind(function (place) {
-        this.path = place.path;
-        delete place.path;
-        this.navigate('map/' + this.path, place);
-      }, this));
+      _.bindAll(this, 'navigateTo');
+      mps.subscribe('navigate', this.navigateTo);
     },
 
-    map: function(baseLayer, zoom, mapType) {
-      console.log('map')
-      gmap.init(_.bind(function() {  // Async Google Maps API loading
+    map: function(zoom, lat, lng, iso, maptype, baselayers, sublayers) {
+      // Async Google Maps API loading
+      gmap.init(function() {
         map.render();
         presenter.setFromUrl({
-          baseLayer: baseLayer,
           zoom: Number(zoom),
-          mapType: mapType
+          lat: Number(lat),
+          lng: Number(lng),
+          iso: iso,
+          maptype: maptype,
+          baselayers: baselayers
         });
-      }, this));
+      });
+    },
+
+    navigateTo: function(place) {
+      this.path = place.path;
+      delete place.path;
+      this.navigate('map/' + this.path, place);
     }
+
+
   });
 
   var router = new Router();

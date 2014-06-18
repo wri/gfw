@@ -21,24 +21,34 @@ define([
     * @param attrs Router params object.
     */
     setFromUrl: function(attrs) {
-      var baseLayer = (attrs.baseLayer) ? attrs.baseLayer.split(',') : null;
+      var baselayers = (attrs.baselayers) ? attrs.baselayers.split(',') : null;
+
+      var latLng = (attrs.lat && attrs.lng) ? [attrs.lat, attrs.lng] : null;
 
       var results = {
-        baseLayer: baseLayer     || ['loss', 'gain'],
-        zoom:      attrs.zoom    || 3,
-        mapType:   attrs.mapType || 'terrain'
+        zoom:       attrs.zoom    || 3,
+        latLng:     latLng        || [15.00, 27.00],
+        iso:        attrs.iso     || 'ALL',
+        maptype:    attrs.maptype || 'terrain',
+        baselayers: baselayers    || ['loss', 'gain']
       };
 
       this.set(results);
     },
 
-    // TODO: Only router should call navigate via mps events.
+   /**
+    * Update location with the presenter status. Calls router navigate.
+    */
     updateUrl: function() {
       var attrs = {
-        baseLayer: this.get('baseLayer'),
         zoom: this.get('zoom'),
-        mapType: this.get('mapType')
-      }
+        lat: this.get('latLng')[0].toFixed(4),
+        lng: this.get('latLng')[1].toFixed(4),
+        iso: this.get('iso'),
+        maptype: this.get('maptype'),
+        baselayers: this.get('baselayers')
+      };
+
 
       var place = {
         path: _.values(attrs).join('/'),

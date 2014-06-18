@@ -7,7 +7,7 @@ App.Views.ImazonLayer = App.Views.CartodbLayer.extend({
     this.global_version = 6;
 
     App.Views.ImazonLayer.__super__.initialize.apply(this);
-    app.views.imazonTimeline = this.timeline = new App.Views.ImazonTimeline();
-  }
+ 	//[moment([2007, 1, 1]), moment([2011, 8, 1])]
+   }
 
 });

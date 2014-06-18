@@ -21,11 +21,13 @@ define([
   var Mediator = Class.extend({
     init: function() {
       
-    // Listen to presenter events
-      presenter.on('change:baseLayer', this.checkBaselayers, this);
+      // Listen to presenter events
+      presenter.on('change:zoom', this.updateZoom, this);
+      presenter.on('change:latLng', this.updateCenter, this);
+      // presenter.on('change:iso', this.mapChange, this);
+      // presenter.on('change:maptype', this.mapChange, this);
+      presenter.on('change:baselayers', this.checkBaselayers, this);
       presenter.on('change:timelineDate', this.updateBaselayerTiles, this);
-      presenter.on('change:zoom', this.mapChange, this);
-      presenter.on('change:mapType', this.mapChange, this);
 
       this.collections = {};
       this.views = {};
@@ -42,11 +44,11 @@ define([
     },
 
     validateBaselayers: function() {
-      var baseLayersArr = presenter.get('baseLayer'),
+      var baselayersArr = presenter.get('baselayers'),
           valid = false;
 
       _.each(this.baselayersOpts.allowedCombined, function(layersArr) {
-        if (baseLayersArr.length == 1 || $(baseLayersArr).not(layersArr).length == 0 && $(layersArr).not(baseLayersArr).length == 0) {
+        if (baselayersArr.length == 1 || $(baselayersArr).not(layersArr).length == 0 && $(layersArr).not(baselayersArr).length == 0) {
           valid = true;
         }
       });
@@ -56,12 +58,12 @@ define([
 
     checkBaselayers: function() {
       var self = this, 
-          baseLayersArr = presenter.get('baseLayer');
+          baselayersArr = presenter.get('baselayers');
 
       if (this.validateBaselayers()) {
 
         // render baselayers
-        _.each(baseLayersArr, function(layerName) {
+        _.each(baselayersArr, function(layerName) {
           if (!self.views[layerName + 'Layer']) {
             console.log('rendering', layerName)
             self.views[layerName + 'Layer'] = new self.baselayersOpts.views[layerName]();
@@ -72,7 +74,7 @@ define([
 
         // remove baselayers
         _.each(layers.getBaselayers(), function(layer) {
-          if (baseLayersArr.indexOf(layer.slug) == -1) {
+          if (baselayersArr.indexOf(layer.slug) == -1) {
             if (self.views[layer.slug + 'Layer']) {
               self.views[layer.slug + 'Layer'].removeLayer();
             }
@@ -87,13 +89,22 @@ define([
     },
 
     updateBaselayerTiles: function() {
-      var baseLayer = presenter.get('baseLayer');
-      this.views[baseLayer + 'Layer'].updateTiles();
+      var self = this, 
+          baselayers = presenter.get('baselayers');
+
+      _.each(baselayers, function(layerName) {
+        self.views[layerName + 'Layer'].updateTiles();
+      });
     },
 
-    mapChange: function() {
-      map.updateMap();
+    updateZoom: function() {
+      map.updateZoom(Number(presenter.get('zoom')));
+    },
+
+    updateCenter: function() {
+      map.updateCenter(presenter.get('latLng'));
     }
+
   });
 
   var mediator = new Mediator();

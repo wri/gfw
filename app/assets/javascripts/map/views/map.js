@@ -15,30 +15,33 @@ define([
 
   var Map = Backbone.View.extend({
     initialize: function() {
-      _.bindAll(this, 'onZoomChange');
+      _.bindAll(this, 'onZoomChange', 'onCenterChange', 'updateZoom', 'updateCenter');
+      var self = this;
 
       // Subscribe to add layer events
-      mps.subscribe('map/add-layer', _.bind(function(layer) {
-        this.addLayer(layer);
-      }, this));
+      mps.subscribe('map/add-layer', function(layer) {
+        self.addLayer(layer);
+      });
 
       // Subscribe to remove layer events
-      mps.subscribe('map/remove-layer', _.bind(function(layer) {
-        this.removeLayer(layer);
-      }, this));
+      mps.subscribe('map/remove-layer', function(layer) {
+        self.removeLayer(layer);
+      });
     },
 
     render: function() {
       console.log('MAP');
 
-      var options = _.extend(this.getMapOptions(), {
-        center: new google.maps.LatLng(40.412568, -3.711133),
-        minZoom: 3
-      });
+      var mapOptions = {
+        minZoom: 3,
+      };
 
-      this.map = new google.maps.Map(document.getElementById('map'), options);
-      google.maps.event.addListener(this.map, 'zoom_changed', this.onZoomChange);
+      this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
       this.resize();
+
+      // Listeners
+      google.maps.event.addListener(this.map, 'zoom_changed', this.onZoomChange);
+      google.maps.event.addListener(this.map, 'dragend', this.onCenterChange);
     },
 
     /**
@@ -61,19 +64,23 @@ define([
       }
     },
 
-    updateMap: function() {
-      this.map.setOptions(this.getMapOptions());
+    updateZoom: function(zoom) {
+      this.map.setZoom(zoom);
     },
 
-    getMapOptions: function() {
-      return {
-        zoom: presenter.get('zoom'),
-        mapTypeId: presenter.get('mapType')
-      };
+    updateCenter: function(latLngArr)  {
+      var center = new google.maps.LatLng(latLngArr[0], latLngArr[1]);
+      this.map.setCenter(center);
     },
 
     onZoomChange: function() {
       presenter.set('zoom', this.map.zoom, {silent: true});
+      presenter.updateUrl();
+    },
+
+    onCenterChange: function() {
+      var center = this.map.getCenter();
+      presenter.set('latLng', [center.lat(), center.lng()], {silent: true});
       presenter.updateUrl();
     },
 

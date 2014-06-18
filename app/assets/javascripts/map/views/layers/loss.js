@@ -8,7 +8,7 @@ define([
   'mps',
   'presenter',
   'views/layers/core/canvasLayer',
-  'views/timelines/core/timeline'
+  'views/timeline'
 ], function(Backbone, mps, presenter, CanvasLayer, Timeline) {
 
   var LossLayer = CanvasLayer.extend({
