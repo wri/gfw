@@ -43,7 +43,6 @@ define([
     },
 
     updateTiles: function() {
-      console.log(this.getQuery())
       this.layer.setQuery(this.getQuery());
     },
 
