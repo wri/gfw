@@ -17,18 +17,20 @@ define([
 
     className: 'timeline timeline-date-range',
 
-    opts: {
-      dateRange: [2001, moment().year()],
-      layerName: '',
-      xAxis: {
-        months: {
-          enabled: false,
-          steps: false
-        }
-      }
-    },
+    initialize: function(opts) {
+      _.bindAll(this, 'onAnimate', 'onBrush', 'onBrushEnd');
 
-    initialize: function() {
+      this.opts = _.extend({
+        dateRange: [2001, moment().year()],
+        layerName: '',
+        xAxis: {
+          months: {
+            enabled: false,
+            steps: false
+          }
+        }
+      }, opts);
+
       // Status
       this.playing = false;
 
@@ -45,10 +47,6 @@ define([
       this.render();
     },
 
-    setOpts: function(opts) {
-      this.opts = opts;
-    },
-
     render: function() {
       this.loadSlider();
       
@@ -57,6 +55,8 @@ define([
     },
 
     loadSlider: function() {
+      var self = this;
+
       var margin = {top: 0, right: 25, bottom: 0, left: 25},
           width = 900 - margin.left - margin.right,
           height = 40 - margin.bottom - margin.top;
@@ -69,8 +69,12 @@ define([
       this.brush = d3.svg.brush()
           .x(this.xscale)
           .extent([0, 0])
-          .on("brush", this.onBrush)
-          .on("brushend", this.onBrushEnd);
+          .on("brush", function() {
+            self.onBrush(this)
+          })
+          .on("brushend", function() {
+            self.onBrush(this, true);
+          });
 
       this.svg = d3.select(this.el).append("svg")
           .attr("width", width + margin.left + margin.right)
@@ -140,21 +144,21 @@ define([
     },
 
     onAnimate: function() {
-      var value = self.hiddenBrush.extent()[0];
+      var value = this.hiddenBrush.extent()[0];
       var timelineDate = presenter.get('timelineDate');
 
-      if (!self.playing) return;
+      if (!this.playing) return;
 
-      var leftHandlerYear = Math.round(self.xscale.invert(self.handlers.left.attr('cx')));
+      var leftHandlerYear = Math.round(this.xscale.invert(this.handlers.left.attr('cx')));
 
-      if (!(self.yearsArr.indexOf(Math.round(value)) > -1) && Math.round(value) > 0) {
-        self.trail
-          .attr('x1', self.xscale(Math.round(value)))
-          .attr('x2', self.xscale(Math.round(value)));
+      if (!(this.yearsArr.indexOf(Math.round(value)) > -1) && Math.round(value) > 0) {
+        this.trail
+          .attr('x1', this.xscale(Math.round(value)))
+          .attr('x2', this.xscale(Math.round(value)));
 
-        self.updateTimelineDate([leftHandlerYear, Math.round(value)]);
+        this.updateTimelineDate([leftHandlerYear, Math.round(value)]);
 
-        self.yearsArr.push(Math.round(value));
+        this.yearsArr.push(Math.round(value));
       }
     },
 
@@ -193,40 +197,40 @@ define([
         .attr('x2', this.handlers.left.attr('cx'));
     },
 
-    onBrush: function(brushend) {
-      var value = self.brush.extent()[0];
-      var timelineDate = presenter.get('timelineDate') || self.opts.dateRange;
+    onBrush: function(event, brushend) {
+      var value = this.brush.extent()[0];
+      var timelineDate = presenter.get('timelineDate') || this.opts.dateRange;
 
-      if (self.playing && brushend) self.stopAnimation();
-      if (self.playing) return;
-      self.stopAnimation();
+      if (this.playing && brushend) this.stopAnimation();
+      if (this.playing) return;
+      this.stopAnimation();
 
       if (d3.event.sourceEvent) { // not a programmatic event
-        value = self.xscale.invert(d3.mouse(this)[0]);
-        self.brush.extent([Math.round(value), Math.round(value)]);
+        value = this.xscale.invert(d3.mouse(event)[0]); // this should be event
+        this.brush.extent([Math.round(value), Math.round(value)]);
       }
 
-      var hl = self.handlers.left.attr("cx"),
-          hr = self.handlers.right.attr("cx");
+      var hl = this.handlers.left.attr("cx"),
+          hr = this.handlers.right.attr("cx");
 
-      if (Math.abs(self.xscale(value) - hr) < Math.abs(self.xscale(value) - hl)) {
-        self.handlers.right
+      if (Math.abs(this.xscale(value) - hr) < Math.abs(this.xscale(value) - hl)) {
+        this.handlers.right
           .transition()
           .duration(50)
           .ease('line')
-          .attr("cx", self.xscale(Math.round(value)));      
-        self.updateSelectedDomain(Math.round(value), 'right');
-        if (brushend) self.updateTimelineDate([timelineDate[0], Math.round(value)]);
+          .attr("cx", this.xscale(Math.round(value)));      
+        this.updateSelectedDomain(Math.round(value), 'right');
+        if (brushend) this.updateTimelineDate([timelineDate[0], Math.round(value)]);
       } else {
-        self.handlers.left
+        this.handlers.left
           .transition()
           .duration(50)
           .ease('line')
-          .attr("cx", self.xscale(Math.round(value)));
+          .attr("cx", this.xscale(Math.round(value)));
 
-        self.updateSelectedDomain(Math.round(value), 'left');
+        this.updateSelectedDomain(Math.round(value), 'left');
         if (brushend) {
-          self.updateTimelineDate([Math.round(value), timelineDate[1]]);
+          this.updateTimelineDate([Math.round(value), timelineDate[1]]);
         }
       }
     },
@@ -255,19 +259,11 @@ define([
           
     },
 
-    onBrushEnd: function() {
-      self.onBrush.call(this, true);
-    },
-
     updateTimelineDate: function(timelineDate) {
       presenter.set('timelineDate', timelineDate);
     }
   });
 
-  var timeline = new Timeline();
-
-  var self = timeline;
-
-  return timeline;
+  return Timeline;
 
 });

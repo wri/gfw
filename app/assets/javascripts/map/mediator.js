@@ -14,8 +14,9 @@ define([
   'presenter',
   'collections/layers',
   'views/map',
-  'views/layers/loss'
-], function (_, Backbone, mps, Class, presenter, layers, map, LossLayer) {
+  'views/layers/loss',
+  'views/layers/forest'
+], function (_, Backbone, mps, Class, presenter, layers, map, LossLayer, ForestLayer) {
 
   var Mediator = Class.extend({
     init: function() {
@@ -33,9 +34,9 @@ define([
     baselayersOpts: {
       views: {
         loss: LossLayer,
-        gain: LossLayer
+        gain: ForestLayer
       },
-      together: [
+      allowedCombined: [
         ['loss', 'gain']
       ]
     },
@@ -44,7 +45,7 @@ define([
       var baseLayersArr = presenter.get('baseLayer'),
           valid = false;
 
-      _.each(this.baselayersOpts.together, function(layersArr) {
+      _.each(this.baselayersOpts.allowedCombined, function(layersArr) {
         if (baseLayersArr.length == 1 || $(baseLayersArr).not(layersArr).length == 0 && $(layersArr).not(baseLayersArr).length == 0) {
           valid = true;
         }

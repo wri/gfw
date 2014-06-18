@@ -1,28 +1,43 @@
-App.Views.ForestLayer = App.Views.CanvasLayer.extend({
+/**
+ * The Forest2000 layer module for use on canvas.
+ *
+ * @return ForestLayer class (extends CanvasLayer)
+ */
+define([
+  'backbone',
+  'mps',
+  'presenter',
+  'views/layers/core/canvasLayer',
+], function(Backbone, mps, presenter, CanvasLayer) {
 
-  initialize: function() {
-    this.dataMaxZoom = 12;
-    this.name = "forest2000";
-    this.url = 'http://earthengine.google.org/static/hansen_2013/tree_alpha/%z/%x/%y.png';
-    App.Views.ForestLayer.__super__.initialize.apply(this);
-  },
+  var ForestLayer = CanvasLayer.extend({
 
-  filterCanvasImage: function(imageData, w, h) {
-    var components = 4,
-        pixelPos;
+    initialize: function() {
+      this.dataMaxZoom = 12;
+      this.name = "forest2000";
+      this.url = 'http://earthengine.google.org/static/hansen_2013/tree_alpha/%z/%x/%y.png';
+      ForestLayer.__super__.initialize.apply(this);
+    },
 
-    for(var i=0; i < w; ++i) {
-      for(var j=0; j < h; ++j) {
+    filterCanvasImage: function(imgdata, w, h) {
+      var components = 4,
+          pixelPos;
 
-        var pixelPos = (j*w + i) * components,
-            intensity = imageData[pixelPos + 3];
+      for(var i=0; i < w; ++i) {
+        for(var j=0; j < h; ++j) {
 
-          imageData[pixelPos] = 0;
-          imageData[pixelPos + 1] = intensity*0.7;
-          imageData[pixelPos + 2] = 0;
-          imageData[pixelPos+ 3]=intensity*0.7
+          var pixelPos = (j*w + i) * components,
+              intensity = imgdata[pixelPos + 3];
+
+            imgdata[pixelPos] = 0;
+            imgdata[pixelPos + 1] = intensity*0.7;
+            imgdata[pixelPos + 2] = 0;
+            imgdata[pixelPos+ 3]=intensity*0.7
+        }
       }
     }
-  }
+  });
+
+  return ForestLayer;
 
 });
