@@ -21,16 +21,17 @@ define([
     * @param attrs Router params object.
     */
     setFromUrl: function(attrs) {
-      var baselayers = (attrs.baselayers) ? attrs.baselayers.split(',') : null;
-
-      var latLng = (attrs.lat && attrs.lng) ? [attrs.lat, attrs.lng] : null;
+      var baselayers = (attrs.baselayers) ? attrs.baselayers.split(',') : null,
+          sublayers = (attrs.sublayers) ? attrs.sublayers.split(',') : null,
+          latLng = (attrs.lat && attrs.lng) ? [attrs.lat, attrs.lng] : null;
 
       var results = {
         zoom:       attrs.zoom    || 3,
         latLng:     latLng        || [15.00, 27.00],
         iso:        attrs.iso     || 'ALL',
         maptype:    attrs.maptype || 'terrain',
-        baselayers: baselayers    || ['loss', 'gain']
+        baselayers: baselayers    || ['loss', 'gain'],
+        sublayers:  sublayers     || []
       };
 
       this.set(results);
@@ -41,12 +42,13 @@ define([
     */
     updateUrl: function() {
       var attrs = {
-        zoom: this.get('zoom'),
-        lat: this.get('latLng')[0].toFixed(4),
-        lng: this.get('latLng')[1].toFixed(4),
-        iso: this.get('iso'),
-        maptype: this.get('maptype'),
-        baselayers: this.get('baselayers')
+        zoom:       this.get('zoom'),
+        lat:        this.get('latLng')[0].toFixed(2),
+        lng:        this.get('latLng')[1].toFixed(2),
+        iso:        this.get('iso'),
+        maptype:    this.get('maptype'),
+        baselayers: this.get('baselayers'),
+        sublayers:  this.get('sublayers')
       };
 
 

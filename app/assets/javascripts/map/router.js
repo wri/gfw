@@ -12,8 +12,9 @@ define([
   'mps',
   'gmap',
   'presenter',
-  'views/map'
-], function ($, _, Backbone, mps, gmap, presenter, map) {
+  'views/map',
+  'collections/layers'
+], function ($, _, Backbone, mps, gmap, presenter, map, layersCollection) {
   
   var Router = Backbone.Router.extend({
 
@@ -31,16 +32,20 @@ define([
     },
 
     map: function(zoom, lat, lng, iso, maptype, baselayers, sublayers) {
-      // Async Google Maps API loading
-      gmap.init(function() {
-        map.render();
-        presenter.setFromUrl({
-          zoom: Number(zoom),
-          lat: Number(lat),
-          lng: Number(lng),
-          iso: iso,
-          maptype: maptype,
-          baselayers: baselayers
+      layersCollection.fetch();
+      layersCollection.bind('reset', function() {
+        // Async Google Maps API loading
+        gmap.init(function() {
+          map.render();
+          presenter.setFromUrl({
+            zoom: Number(zoom),
+            lat: Number(lat),
+            lng: Number(lng),
+            iso: iso,
+            maptype: maptype,
+            baselayers: baselayers,
+            sublayers: sublayers
+          });
         });
       });
     },

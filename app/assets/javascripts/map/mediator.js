@@ -16,7 +16,7 @@ define([
   'views/map',
   'views/layers/loss',
   'views/layers/forest'
-], function (_, Backbone, mps, Class, presenter, layers, map, LossLayer, ForestLayer) {
+], function (_, Backbone, mps, Class, presenter, layersCollection, map, LossLayer, ForestLayer) {
 
   var Mediator = Class.extend({
     init: function() {
@@ -25,8 +25,9 @@ define([
       presenter.on('change:zoom', this.updateZoom, this);
       presenter.on('change:latLng', this.updateCenter, this);
       // presenter.on('change:iso', this.mapChange, this);
-      // presenter.on('change:maptype', this.mapChange, this);
-      presenter.on('change:baselayers', this.checkBaselayers, this);
+      presenter.on('change:maptype', this.updateMapType, this);
+      presenter.on('change:baselayers', this.updateBaselayers, this);
+      presenter.on('change:sublayers', this.updateSublayer, this);
       presenter.on('change:timelineDate', this.updateBaselayerTiles, this);
 
       this.collections = {};
@@ -36,11 +37,17 @@ define([
     baselayersOpts: {
       views: {
         loss: LossLayer,
-        gain: ForestLayer
+        gain: LossLayer
       },
       allowedCombined: [
         ['loss', 'gain']
       ]
+    },
+
+    sublayersOpts: {
+      views: {
+        forest2000: ForestLayer
+      }
     },
 
     validateBaselayers: function() {
@@ -56,7 +63,7 @@ define([
       return valid;
     },
 
-    checkBaselayers: function() {
+    updateBaselayers: function() {
       var self = this, 
           baselayersArr = presenter.get('baselayers');
 
@@ -65,7 +72,6 @@ define([
         // render baselayers
         _.each(baselayersArr, function(layerName) {
           if (!self.views[layerName + 'Layer']) {
-            console.log('rendering', layerName)
             self.views[layerName + 'Layer'] = new self.baselayersOpts.views[layerName]();
           }
           self.views[layerName + 'Layer'].render();
@@ -73,7 +79,7 @@ define([
         });
 
         // remove baselayers
-        _.each(layers.getBaselayers(), function(layer) {
+        _.each(layersCollection.getBaselayers(), function(layer) {
           if (baselayersArr.indexOf(layer.slug) == -1) {
             if (self.views[layer.slug + 'Layer']) {
               self.views[layer.slug + 'Layer'].removeLayer();
@@ -86,6 +92,32 @@ define([
         // wrong baselayers..
       }
 
+    },
+
+    updateSublayer: function() {
+      var self = this,
+          sublayersArr = presenter.get('sublayers');
+
+      // render sublayers
+      _.each(sublayersArr, function(layerId) {
+        var layer = layersCollection.findWhere({id: Number(layerId)});
+        if (layer) {
+          var layerName = layer.get('slug');
+          if (!self.views[layerName + 'Layer']) {
+            self.views[layerName + 'Layer'] =  new self.sublayersOpts.views[layerName]();
+          }
+          self.views[layerName + 'Layer'].render();
+        }
+      });
+
+      // remove sublayers
+      _.each(layersCollection.getSublayers(), function(layer) {
+        if (sublayersArr.indexOf(layer.id.toString()) == -1) {
+          if (self.views[layer.slug + 'Layer']) {
+            self.views[layer.slug + 'Layer'].removeLayer();
+          }
+        }
+      });
     },
 
     updateBaselayerTiles: function() {
@@ -103,6 +135,10 @@ define([
 
     updateCenter: function() {
       map.updateCenter(presenter.get('latLng'));
+    },
+
+    updateMapType: function() {
+      map.updateMapType(presenter.get('maptype'));
     }
 
   });

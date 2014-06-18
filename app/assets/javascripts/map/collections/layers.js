@@ -34,6 +34,12 @@ define([
        return layer[0];
       }
     },
+
+    getSublayers: function() {
+      return _.filter(this.toJSON(), function(layer) {
+        return layer.category_name != 'Forest change';
+      });
+    }
   });
 
   var layerCollection = new LayerCollection();

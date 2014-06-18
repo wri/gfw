@@ -48,7 +48,7 @@ define([
      * Add supplied layer to map.
      */
     addLayer: function(layer) {
-      this.map.overlayMapTypes.push(layer);
+      this.map.overlayMapTypes.insertAt(0, layer);
     },
 
     /**
@@ -64,13 +64,26 @@ define([
       }
     },
 
+    /**
+     * Update map zoom
+     */
     updateZoom: function(zoom) {
       this.map.setZoom(zoom);
     },
 
+    /**
+     * Update map center
+     */
     updateCenter: function(latLngArr)  {
       var center = new google.maps.LatLng(latLngArr[0], latLngArr[1]);
       this.map.setCenter(center);
+    },
+
+    /**
+     * Update map type
+     */
+    updateMapType: function(maptype) {
+      this.map.setMapTypeId(maptype)
     },
 
     onZoomChange: function() {
@@ -88,7 +101,7 @@ define([
       google.maps.event.trigger(this.map, 'resize');
       this.map.setZoom(this.map.getZoom());
       this.map.setCenter(this.map.getCenter());
-    },
+    }
   });
 
   var map = new Map();
