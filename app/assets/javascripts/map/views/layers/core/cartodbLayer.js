@@ -43,6 +43,7 @@ define([
     },
 
     updateTiles: function() {
+      console.log(this.getQuery())
       this.layer.setQuery(this.getQuery());
     },
 
@@ -54,12 +55,12 @@ define([
                 " WHERE date between '" +
                 timelineDate[0].year() +
                 "-" +
-                timelineDate[0].month() +
-                "-1' AND '" +
+                //timelineDate[0].month() +
+                "1-1' AND '" +
                 timelineDate[1].year() +
                 "-" +
-                timelineDate[1].month() +
-                "-1'";
+                //timelineDate[1].month() +
+                "1-1'";
 
       return sql;
      },
