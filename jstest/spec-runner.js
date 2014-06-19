@@ -81,7 +81,7 @@ require.config({
 });
 
 require(
-['spec/analysis_spec', 'mock_ajax'], 
+[/*'spec/analysis_spec',*/ 'spec/nsa_spec', 'mock_ajax'], 
 function(){
   // NOOP
 });

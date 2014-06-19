@@ -23,6 +23,7 @@ define([
       var val = null;
 
       if (cache && store.enabled) {
+        // TODO: Key should be made from url+data
         val = store.get(url);
         if (val) {
           successCb(val);
