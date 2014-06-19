@@ -88,8 +88,17 @@ $stories-color: rgb(242, 178, 87);
     .layers-list > li {
       font-size: 13px;
       color: #ccc;
-      padding: 9px 10px 10px;
+      padding: 9px 10px 10px 30px;
       border-bottom: 1px solid #e5e5e5;
+
+      .layer-title {
+        display: block;
+      }
+
+      .layer-info {
+        font-size: 11px;
+        margin-top: 3px;
+      }
     }
 
 
