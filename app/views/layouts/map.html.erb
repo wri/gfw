@@ -26,28 +26,11 @@
 
 <body class="<%= "#{controller_name} #{action_name}" %>">
 
-  <header class="header">
-    <div class="header-inner inner">
-      <a href="/" class="header-logo">Global Forest Watch</a>
-      <%= render 'shared/navbar' %>
-    </div>
-    <div class="header_separator"></div>
-    <div class="header-inner inner">
-      <%= yield :title %>
-      <%= yield :inner_header %>
-    </div>
-    <%= yield :filters %>
-  </header>
-
-  <div class="content">
-    <%= yield %>
-  </div>
-
-  <%= render 'shared/footer' %>
+  <%= render 'shared/header_nav' %>
+  <div class="content"><%= yield %></div>
+<!--   <%= render 'shared/footer' %> -->
 
   <%= requirejs_include_tag "map" %>
-  <%= render 'shared/js_templates' %>
-  <%= render 'shared/js_footer' %>
 
 </body>
 </html>

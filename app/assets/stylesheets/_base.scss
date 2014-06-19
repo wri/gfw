@@ -8,6 +8,7 @@ html {
 body {
   min-width: 980px;
   border-top: 5px solid #222;
+  background: image-url('backgrounds/bkg_header.png') repeat-x top center;
 
   &.embed {
     min-width: 0;
@@ -43,11 +44,8 @@ strong {
   font-weight: bold;
 }
 
-.inner {
-  margin: 0 auto;
-  width: 960px;
-  padding: 0 10px;
-}
+/* =Fonts
+----------------------------------------------- */
 
 .serif {
   font-family: "Georgia", serif;

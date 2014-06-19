@@ -1,0 +1,106 @@
+$forest-change-color: rgb(255, 102, 153);
+$forest-cover-color: rgb(178, 210, 110);
+$forest-use-color: rgb(201, 142, 108);
+$conservation-color: rgb(49, 130, 189);
+$people-color: rgb(112, 125, 146);
+$stories-color: rgb(242, 178, 87);
+
+.layers-menu {
+  height: 72px;
+  
+  .inner {
+    height: 100%;
+    position: relative;
+  }
+
+  .categories-list {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+
+  .categories-list > li {
+    position: relative;
+    height: 100%;
+    float: left;
+    display: inline-block;
+    padding: 14px 12px;
+    cursor: pointer;
+    border-bottom: 4px solid;
+    margin-left: 1px;
+
+    .category-name {
+      font-weight: bold;
+      font-size: 12px;
+      text-decoration: uppercase;
+    }
+
+    &:hover .layers-nav {
+      display: inline-block;
+    }
+  }
+
+  .categories-list > li {
+    &.forest-change .category-icon  { @include home-icons-sprite(icon_forest_clearing); }
+    &.forest-cover  .category-icon  { @include home-icons-sprite(icon_forest_cover); }
+    &.forest-use    .category-icon  { @include home-icons-sprite(icon_forest_use); }
+    &.conservation  .category-icon  { @include home-icons-sprite(icon_conservation); }
+    &.people        .category-icon  { @include home-icons-sprite(icon_regrowth); }
+    &.stories       .category-icon  { @include home-icons-sprite(marker_exclamation); }
+
+    &.forest-change { color: $forest-change-color; border-color: $forest-change-color; }
+    &.forest-cover { color: $forest-cover-color; border-color: $forest-cover-color; }
+    &.forest-use { color: $forest-use-color; border-color: $forest-use-color; }
+    &.conservation { color: $conservation-color; border-color: $conservation-color; }
+    &.people { color: $people-color; border-color: $people-color; }
+    &.stories { color: $stories-color; border-color: $stories-color; }
+  }
+
+  .layers-nav {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    left: -21px;
+    top: -28px;
+    width: 170px;
+    background: white;
+    @include box-shadow(0px 0px 5px 1px rgba(#000, .15));
+
+    .layers-nav-header {
+      height: 82px;
+      border-bottom: 4px solid;
+      text-align: center;
+
+      .category-icon {
+        display: inline-block;
+        margin: auto;
+        width: 16px;
+        height: 16px;
+        margin-top: 18px;
+      }
+
+      .category-name {
+        display: block;
+        padding: 8px 0;
+      }
+    }
+
+    .layers-list > li {
+      font-size: 13px;
+      color: #ccc;
+      padding: 9px 10px 10px 30px;
+      border-bottom: 1px solid #e5e5e5;
+
+      .layer-title {
+        display: block;
+      }
+
+      .layer-info {
+        font-size: 11px;
+        margin-top: 3px;
+      }
+    }
+
+
+  } // layers-nav
+}
