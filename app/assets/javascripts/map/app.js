@@ -27,6 +27,16 @@ define([
     };
   }
 
+  /**
+   * Returns true if string contains substring.
+   */
+  if (!String.prototype.contains) {
+    String.prototype.contains = function(substr) {
+      var args = arguments;
+      return this.indexOf(substr) > -1;
+    };
+  }
+
   _.mixin({
     capitalize: function(string) {
       return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();

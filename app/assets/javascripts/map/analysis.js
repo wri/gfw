@@ -1,3 +1,13 @@
+/**
+ * The analysis module.
+ *
+ * To get analysis results from this module, first subscribe to the
+ * 'analysis/get-results' topic
+ * To get analysis results, publish the 'analysis/get' event and pass in a
+ * config object with analysis parameters:
+ *
+ * 
+ */
 define([
   'jquery',
   'underscore',
@@ -19,8 +29,8 @@ define([
     },
 
     init: function() {
-      mps.subscribe('analysis/get', _.bind(function(config) {
-        this.execute(config);
+      mps.subscribe('analysis/get', _.bind(function(config, cache) {
+        this.execute(config, cache);
       }, this));
     },
 
@@ -85,18 +95,19 @@ define([
      *   useid - Concession polygon cartodb_id (e.g., 2)
      *   wdpa - WDPA polygon cartodb_id (e.g., 800)
      */
-    execute: function(config) {
+    execute: function(config, cache) {
       var url = this.get_url(config);
 
       nsa.spy(
         url, 
         {}, 
         function(response) {
-          mps.publish('analysis/get-results', [response]);
+          mps.publish('analysis/get-success', [response]);
         },
         function(responseText, status, error) {
-          mps.publish('analysis/get-results-error', [responseText, status, error]);
-        });
+          mps.publish('analysis/get-failure', [responseText, status, error]);
+        },
+        cache);
     }
   });
 
