@@ -16,12 +16,11 @@ define([
       this.rendered = false;
     },
 
-    // TODO: MPS so map adds layer
     render: function() {
       if (!this.rendered) {
         mps.publish('map/add-layer', [this]);
+        this.rendered = true;
       }
-      this.rendered = true;
     },
 
     getTile: function(coord, zoom, ownerDocument) {

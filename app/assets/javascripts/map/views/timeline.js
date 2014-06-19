@@ -1,8 +1,7 @@
 /**
  * The timeline module.
  *
- * Timeline for all layers configured by setting layer-specific options via
- * the setOpts() function.
+ * Timeline for all layers configured by setting layer-specific options.
  * 
  * @return singleton instance of Timeline class (extends Backbone.View).
  */
