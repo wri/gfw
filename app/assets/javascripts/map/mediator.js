@@ -17,10 +17,11 @@ define([
   'views/layers/loss',
   'views/layers/forest',
   'views/layers/imazon'
-], function (_, Backbone, mps, Class, presenter, layersCollection, map, LossLayer, ForestLayer, ImazonLayer) {
+], function (_, Backbone, mps, Class, presenter, layersCollection, map, LossLayer, ForestLayer, ImazonLayer, analysisTpl) {
 
   var Mediator = Class.extend({
     init: function() {
+      console.log(analysisTpl);
       
       // Listen to presenter events
       presenter.on('change:zoom', this.updateZoom, this);
