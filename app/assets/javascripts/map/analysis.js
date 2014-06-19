@@ -29,8 +29,8 @@ define([
     },
 
     init: function() {
-      mps.subscribe('analysis/get', _.bind(function(config) {
-        this.execute(config);
+      mps.subscribe('analysis/get', _.bind(function(config, cache) {
+        this.execute(config, cache);
       }, this));
     },
 
@@ -95,7 +95,7 @@ define([
      *   useid - Concession polygon cartodb_id (e.g., 2)
      *   wdpa - WDPA polygon cartodb_id (e.g., 800)
      */
-    execute: function(config) {
+    execute: function(config, cache) {
       var url = this.get_url(config);
 
       nsa.spy(
@@ -106,7 +106,8 @@ define([
         },
         function(responseText, status, error) {
           mps.publish('analysis/get-failure', [responseText, status, error]);
-        });
+        },
+        cache);
     }
   });
 
