@@ -84,5 +84,14 @@ $stories-color: rgb(242, 178, 87);
         padding: 8px 0;
       }
     }
-  }
+
+    .layers-list > li {
+      font-size: 13px;
+      color: #ccc;
+      padding: 9px 10px 10px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+
+  } // layers-nav
 }
