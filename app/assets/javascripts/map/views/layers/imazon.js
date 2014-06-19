@@ -1,13 +1,32 @@
-App.Views.ImazonLayer = App.Views.CartodbLayer.extend({
+/**
+ * The Imazon layer module for use on canvas.
+ *
+ * @return ImazonLayer class (extends CartodbLayer)
+ */
+define([
+  'backbone',
+  'views/layers/core/cartodbLayer',
+  'views/timeline',
+  'moment'
+], function(Backbone, CartodbLayer, Timeline, moment) {
 
-  initialize: function() {
-    this.layerName = "imazon";
-    this.url = 'dyynnn89u7nkm.cloudfront.net';
-    this.table = 'imazon_clean2';
-    this.global_version = 6;
+  var ImazonLayer = CartodbLayer.extend({
 
-    App.Views.ImazonLayer.__super__.initialize.apply(this);
- 	//[moment([2007, 1, 1]), moment([2011, 8, 1])]
-   }
+    initialize: function() {
+      this.layerName = "imazon";
+      this.url = 'dyynnn89u7nkm.cloudfront.net';
+      this.table = 'imazon_clean2';
+      this.global_version = 6;
+      ImazonLayer.__super__.initialize.apply(this);
+
+      this.timeline = new Timeline({
+        dateRange: [moment([2007, 1, 1]), moment([2011, 8, 1])],
+        layerName: 'imazon'
+      });
+    }
+
+  });
+
+  return ImazonLayer;
 
 });

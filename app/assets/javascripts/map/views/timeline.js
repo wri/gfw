@@ -1,8 +1,7 @@
 /**
  * The timeline module.
  *
- * Timeline for all layers configured by setting layer-specific options via
- * the setOpts() function.
+ * Timeline for all layers configured by setting layer-specific options.
  * 
  * @return singleton instance of Timeline class (extends Backbone.View).
  */
@@ -21,7 +20,7 @@ define([
       _.bindAll(this, 'onAnimate', 'onBrush', 'onBrushEnd');
 
       this.opts = _.extend({
-        dateRange: [2001, moment().year()],
+        dateRange: [moment([2001]), moment()],
         layerName: '',
         xAxis: {
           months: {
@@ -62,7 +61,7 @@ define([
           height = 40 - margin.bottom - margin.top;
 
       this.xscale = d3.scale.linear()
-          .domain(this.opts.dateRange)
+          .domain([this.opts.dateRange[0].year(), this.opts.dateRange[1].year()])
           .range([0, width])
           .clamp(true);
 
@@ -89,7 +88,7 @@ define([
           .call(d3.svg.axis()
             .scale(this.xscale)
             .orient("bottom")
-            .ticks(this.opts.dateRange[1] - this.opts.dateRange[0])
+            .ticks(this.opts.dateRange[1].year() - this.opts.dateRange[0].year())
             .tickFormat(function(d) { return String(d); })
             .tickSize(0)
             .tickPadding(12))
@@ -113,7 +112,7 @@ define([
 
       this.handlers.right = this.handlers.left
          .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-         .attr('cx', this.xscale(this.opts.dateRange[1]))
+         .attr('cx', this.xscale(this.opts.dateRange[1].year()))
          .style('fill', 'green');
 
       this.slider.selectAll(".extent,.resize")
@@ -145,7 +144,6 @@ define([
 
     onAnimate: function() {
       var value = this.hiddenBrush.extent()[0];
-      var timelineDate = presenter.get('timelineDate');
 
       if (!this.playing) return;
 
@@ -220,7 +218,7 @@ define([
           .ease('line')
           .attr("cx", this.xscale(Math.round(value)));      
         this.updateSelectedDomain(Math.round(value), 'right');
-        if (brushend) this.updateTimelineDate([timelineDate[0], Math.round(value)]);
+        if (brushend) this.updateTimelineDate([timelineDate[0], moment([Math.round(value)])]);
       } else {
         this.handlers.left
           .transition()
@@ -230,7 +228,7 @@ define([
 
         this.updateSelectedDomain(Math.round(value), 'left');
         if (brushend) {
-          this.updateTimelineDate([Math.round(value), timelineDate[1]]);
+          this.updateTimelineDate([moment([Math.round(value)]), timelineDate[1]]);
         }
       }
     },
