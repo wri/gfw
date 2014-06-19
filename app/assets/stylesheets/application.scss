@@ -2,6 +2,7 @@
 //= require jquery.jscrollpane
 //= require tipsy
 
+// Compass
 @import 'compass/reset';
 @import "compass";
 @import "compass/css3";
@@ -15,12 +16,14 @@
 @import 'compass/css3/background-size';
 @import 'compass/css3/images';
 
+// General
 @import '_settings';
 @import '_mixins';
 @import '_layout';
 @import '_grid';
 @import '_base';
 
+// Images
 @import 'icons/*.png';
 @import 'logos/*.png';
 @import 'home-icons/*.png';
@@ -29,6 +32,9 @@
 @import 'country-icons/*.png';
 @import 'stories-icons/*.png';
 
+// Modules
+@import 'modules/_mod-header-nav';
+@import 'modules/_mod-layers-menu';
 @import 'modules/_mod-form';
 @import 'modules/_mod-map';
 @import 'modules/countries';
