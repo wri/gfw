@@ -1,17 +1,3 @@
-@import 'compass/css3/border-radius';
-@import 'compass/css3/opacity';
-@import 'compass/css3/box-shadow';
-@import 'compass/css3/inline-block';
-
-@import 'fonts';
-@import 'helpers';
-
-@import 'static-icons/*.png';
-/**/
-@import 'static-logos/*.png';
-/**/
-
-
 .static-inner {
   @extend .clearfix;
   background: #F2F2F3;

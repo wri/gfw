@@ -51,7 +51,6 @@ define([
         sublayers:  this.get('sublayers')
       };
 
-
       var place = {
         path: _.values(attrs).join('/'),
         trigger: false
