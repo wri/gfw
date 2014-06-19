@@ -1,3 +1,13 @@
+/**
+ * The analysis module.
+ *
+ * To get analysis results from this module, first subscribe to the
+ * 'analysis/get-results' topic
+ * To get analysis results, publish the 'analysis/get' event and pass in a
+ * config object with analysis parameters:
+ *
+ * 
+ */
 define([
   'jquery',
   'underscore',
@@ -92,10 +102,10 @@ define([
         url, 
         {}, 
         function(response) {
-          mps.publish('analysis/get-results', [response]);
+          mps.publish('analysis/get-success', [response]);
         },
         function(responseText, status, error) {
-          mps.publish('analysis/get-results-error', [responseText, status, error]);
+          mps.publish('analysis/get-failure', [responseText, status, error]);
         });
     }
   });

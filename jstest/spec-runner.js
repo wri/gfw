@@ -26,6 +26,7 @@ require.config({
     views: ['app/assets/javascripts/map/views'],
     models: ['app/assets/javascripts/map/models'],
     collections: ['app/assets/javascripts/map/collections'],
+    itertools: ['vendor/assets/javascripts/itertools'],
     
     spec: ['../jstest/spec'],
     helpers: ['../jstest/helpers'],
