@@ -3,7 +3,7 @@ require.config({
   baseUrl: '..',
   
   paths: {
-    map: ['app/assets/javascripts/map'],
+    main: ['app/assets/javascripts/map/main'],
     jquery: ['vendor/assets/javascripts/jquery'],
     underscore: ['vendor/assets/javascripts/underscore'],
     backbone: ['vendor/assets/javascripts/backbone'],
@@ -90,7 +90,7 @@ require.config({
 
 require([
   'mock_ajax', 
-  'map', 
+  'main', 
   'spec/nsa_spec',
   'spec/analysis_spec'], 
 function (mock_ajax, main, nsa_spec){
