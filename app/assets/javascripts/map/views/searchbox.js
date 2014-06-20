@@ -8,10 +8,10 @@ define([
   'underscore',
   'presenter',
   'mps',
-  'text!legend.html'
+  'text!searchbox.html'
 ], function(Backbone, _, presenter, mps, template) {
 
-  var Legend = Backbone.View.extend({
+  var Searchbox = Backbone.View.extend({
 
     template: _.template(template),
 
@@ -25,8 +25,8 @@ define([
 
   });
 
-  var Legend = new Legend();
+  var Searchbox = new Searchbox();
 
-  return Legend;
+  return Searchbox;
 
 });

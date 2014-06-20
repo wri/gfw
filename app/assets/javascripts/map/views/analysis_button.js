@@ -8,12 +8,12 @@ define([
   'underscore',
   'presenter',
   'mps',
-  'text!legend.html'
-], function(Backbone, _, presenter, mps, template) {
+  'text!analysis_control_tpl.html'
+], function(Backbone, _, presenter, mps, analysisTpl) {
 
-  var Legend = Backbone.View.extend({
+  var AnalysisButton = Backbone.View.extend({
 
-    template: _.template(template),
+    template: _.template(analysisTpl),
 
     initialize: function() {
       this.render();
@@ -25,8 +25,8 @@ define([
 
   });
 
-  var Legend = new Legend();
+  var AnalysisButton = new AnalysisButton();
 
-  return Legend;
+  return AnalysisButton;
 
 });
