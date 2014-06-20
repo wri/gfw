@@ -28,7 +28,7 @@ define([
     },
 
     onClickLayer: function(event) {
-      var layerName = $(event.currentTarget).parent().data('layer');
+      var layerName = $(event.currentTarget).parents('li').data('layer');
 
       if (layerName) {
         mps.publish('presenter/toggle-layer', [layerName]);

@@ -3,6 +3,7 @@ modules:
 
 paths:
   jquery: "jquery"
+  jqueryui: "jquery-ui-1.10.4.custom.min"
   underscore: "underscore"
   backbone: "backbone"
   mps: "minpubsub"
@@ -46,6 +47,9 @@ shim:
     deps:
       - "gmap"
     exports: "CartoDBLayer"
+  jqueryui:
+    deps:
+      - "jquery"
   backbonequeryparams: 
     deps: 
       - "backbone"

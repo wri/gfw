@@ -1,32 +1,39 @@
 /**
- * The layers filter module.
+ * Legend module.
  *
- * @return singleton instance of layers fitler class (extends Backbone.View).
+ * @return singleton instance of the legend class (extends Widget).
  */
 define([
   'backbone',
   'underscore',
   'presenter',
   'mps',
+  'views/widget',
   'text!legend.html'
-], function(Backbone, _, presenter, mps, template) {
+], function(Backbone, _, presenter, mps, Widget, legendTpl) {
 
-  var Legend = Backbone.View.extend({
+  var Legend = Widget.extend({
 
-    template: _.template(template),
+    className: 'widget legend',
+    template: _.template(legendTpl),
 
     initialize: function() {
       this.render();
+      Legend.__super__.initialize.apply(this);
     },
 
     render: function() {
-      this.$el.append(this.template());
+      this.$el.html(this.template());
+      $('.map-container').append(this.el);
+    },
+
+    update: function() {
     }
 
   });
 
-  var Legend = new Legend();
+  var legend = new Legend();
 
-  return Legend;
+  return legend;
 
 });

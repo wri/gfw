@@ -58,12 +58,14 @@ define([
     },
 
     setMapSize: function() {
-      var dh   = $(window).height() + 67,
-          hh   = $('.header').height(),
+      var dh   = $(window).height(),
           $map = $('#map');
 
-      $('html, body').scrollTop($map.offset().top - 67);
-      $map.height(dh - hh);
+      $map.height(dh - 69);
+      $('.header-nav__logo').css({ position: 'absolute', top: 69 })
+      setTimeout(function() {
+        $('html, body').scrollTop(69);
+      }, 500);
     }
 
   });

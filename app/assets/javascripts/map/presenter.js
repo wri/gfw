@@ -29,24 +29,33 @@ define([
       });
     },
 
-   /**
+    /**
     * Set the presenter object with the passed attributes.
-    *
-    * @param attrs Router params object.
+    * TODO: Proper validation. Just validate attrs from the url, not on every
+    * change.
+    * @param {array} Router params object.
     */
     setFromUrl: function(attrs) {
       var baselayers = null,
-          sublayers = (attrs.sublayers) ? attrs.sublayers.split(',') : null,
-          latLng = (attrs.lat && attrs.lng) ? [attrs.lat, attrs.lng] : null;
+          sublayers  = (attrs.sublayers) ? attrs.sublayers.split(',') : null,
+          latLng     = (attrs.lat && attrs.lng) ? [attrs.lat, attrs.lng] : null;
 
       if (attrs.baselayers &&
         this.validateBaselayers(attrs.baselayers.split(','))) {
         baselayers = attrs.baselayers.split(',');
       }
 
-      _.each(sublayers, function(layerId, i) {
-        sublayers[i] = Number(layerId);
-      });
+      if (sublayers) {
+        for (var i = 0; i < sublayers.length; i++) {
+          sublayers[i] = Number(sublayers[i]);
+        };
+      }
+
+      if (attrs.zoom < 3) {
+        attrs.zoom = 6;
+      } else if (attrs.zoom > 17) {
+        attrs.zoom = 17;
+      }
 
       var results = {
         zoom:       attrs.zoom    || 3,
@@ -62,6 +71,7 @@ define([
 
    /**
     * Update location with the presenter status. Calls router navigate.
+    *
     */
     updateUrl: function() {
       var attrs = {
@@ -90,7 +100,7 @@ define([
       if (layersCollection.getBaselayer(layerName)) {
         this.toggleBaselayer(layerName);
       } else if (layersCollection.getSublayer(layerName)) {
-        this.toggleSublayer(layerName, layersCollection.getSublayer(layerName).id);
+        this.toggleSublayer(layerName,layersCollection.getSublayer(layerName).id);
       }
     },
 
@@ -133,16 +143,18 @@ define([
     * @param {array} Baselayers array.
     */
     validateBaselayers: function(baselayersArr) {
-      var valid = false;
+      var valid = false,
+          allowedCombined = this.baselayersOpts.allowedCombined;
 
-      _.each(this.baselayersOpts.allowedCombined, 
-        function(layersArr) {
-          if (baselayersArr.length == 1 || 
-              ($(baselayersArr).not(layersArr).length === 0 && 
-              $(layersArr).not(baselayersArr).length === 0)) {
+      for (var i = 0; i < allowedCombined.length; i++) {
+        var layersArr = allowedCombined[i];
+
+        if (baselayersArr.length === 1 || 
+            ($(baselayersArr).not(layersArr).length === 0 && 
+            $(layersArr).not(baselayersArr).length === 0)) {
           valid = true;
         }
-      });
+      };
 
       return valid;
     },
