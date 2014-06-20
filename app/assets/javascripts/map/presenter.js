@@ -51,12 +51,6 @@ define([
         };
       }
 
-      if (attrs.zoom < 3) {
-        attrs.zoom = 6;
-      } else if (attrs.zoom > 17) {
-        attrs.zoom = 17;
-      }
-
       var results = {
         zoom:       attrs.zoom    || 3,
         latLng:     latLng        || [15.00, 27.00],
