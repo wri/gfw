@@ -14,15 +14,17 @@ define([
   'presenter',
   'collections/layers',
   'views/map',
+  'views/layersMenu',
   'views/layers/loss',
   'views/layers/gain',
   'views/layers/forest',
   'views/layers/imazon'
-], function (_, Backbone, mps, Class, presenter, layersCollection, map, LossLayer, GainLayer, ForestLayer, ImazonLayer) {
+], function (_, Backbone, mps, Class, presenter, layersCollection, map, layersMenu, LossLayer, GainLayer, ForestLayer, ImazonLayer) {
 
   var Mediator = Class.extend({
     init: function() {
-      
+      var self = this;
+
       // Listen to presenter events
       presenter.on('change:zoom', this.updateZoom, this);
       presenter.on('change:latLng', this.updateCenter, this);
@@ -36,62 +38,37 @@ define([
       this.layerViews = {};
     },
 
-    baselayersOpts: {
-      views: {
-        loss: LossLayer,
-        gain: GainLayer,
-        imazon: ImazonLayer
-      },
-      allowedCombined: [
-        ['loss', 'gain']
-      ]
+    baselayersViews: {
+      loss: LossLayer,
+      umd_tree_loss_gain: GainLayer,
+      imazon: ImazonLayer
     },
 
-    sublayersOpts: {
-      views: {
-        forest2000: ForestLayer
-      }
-    },
-
-    validateBaselayers: function() {
-      var baselayersArr = presenter.get('baselayers'),
-          valid = false;
-
-      _.each(this.baselayersOpts.allowedCombined, 
-        function(layersArr) {
-          if (baselayersArr.length == 1 || 
-              ($(baselayersArr).not(layersArr).length === 0 && 
-              $(layersArr).not(baselayersArr).length === 0)) {
-          valid = true;
-        }
-      });
-
-      return valid;
+    sublayersViews: {
+      forest2000: ForestLayer
     },
 
     updateBaselayers: function() {
       var self = this, 
           baselayersArr = presenter.get('baselayers');
 
-      if (this.validateBaselayers()) {
-        // render baselayers
-        _.each(baselayersArr, function(layerName) {
-          if (!self.layerViews[layerName]) {
-            self.layerViews[layerName] = new self.baselayersOpts.views[layerName]();
-          }
-          self.layerViews[layerName].render();
-        });
+      // render baselayers
+      _.each(baselayersArr, function(layerName) {
+        if (!self.layerViews[layerName]) {
+          self.layerViews[layerName] = new self.baselayersViews[layerName]();
+        }
+        self.layerViews[layerName].render();
+      });
 
-        // remove baselayers
-        _.each(layersCollection.getBaselayers(), function(layer) {
-          if (baselayersArr.indexOf(layer.slug) == -1) {
-            if (self.layerViews[layer.slug]) {
-              self.layerViews[layer.slug].removeLayer();
-            }
+      // remove baselayers
+      _.each(layersCollection.getBaselayers(), function(layer) {
+        if (baselayersArr.indexOf(layer.slug) == -1) {
+          if (self.layerViews[layer.slug]) {
+            self.layerViews[layer.slug].removeLayer();
           }
-        });
+        }
+      });
 
-      }
     },
 
     updateSublayer: function() {
@@ -104,7 +81,7 @@ define([
         if (layer) {
           var layerName = layer.get('slug');
           if (!self.layerViews[layerName]) {
-            self.layerViews[layerName] =  new self.sublayersOpts.views[layerName]();
+            self.layerViews[layerName] =  new self.sublayersViews[layerName]();
           }
           self.layerViews[layerName].render();
         }
@@ -112,7 +89,7 @@ define([
 
       // remove sublayers
       _.each(layersCollection.getSublayers(), function(layer) {
-        if (sublayersArr.indexOf(layer.id.toString()) == -1) {
+        if (sublayersArr.indexOf(layer.id) == -1) {
           if (self.layerViews[layer.slug]) {
             self.layerViews[layer.slug].removeLayer();
           }

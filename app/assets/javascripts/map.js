@@ -4,12 +4,11 @@ require([
   'router',
   'presenter',
   'mediator',
-  'views/layersMenu',
   'backbone',
   'analysis',
   'mps',
   'jasmine',
-], function (app, router, presenter, mediator, layersMenu, Backbone, analysis, mps, jasmine) {
+], function (app, router, presenter, mediator, Backbone, analysis, mps, jasmine) {
   console.log('Main entry point...', app);
 
   if (!Backbone.History.started) {

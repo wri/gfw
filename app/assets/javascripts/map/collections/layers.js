@@ -27,9 +27,9 @@ define([
       return _.where(this.toJSON(), {category_name: 'Forest change'})
     },
 
-    getBaselayer: function(baselayer) {
+    getBaselayer: function(layerName) {
       var layer = _.where(this.toJSON(), {category_name: 'Forest change', 
-          slug: baselayer});
+          slug: layerName});
       if (layer) {
        return layer[0];
       }
@@ -39,6 +39,13 @@ define([
       return _.filter(this.toJSON(), function(layer) {
         return layer.category_name != 'Forest change';
       });
+    },
+
+    getSublayer: function(layerName) {
+      var layer = _.where(this.getSublayers(), {slug: layerName});
+      if (layer) {
+       return layer[0];
+      }
     }
   });
 
