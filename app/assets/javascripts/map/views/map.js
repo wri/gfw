@@ -10,8 +10,11 @@ define([
   'underscore',
   'presenter',
   'gmap',
-  'mps'
-], function(Backbone, _, presenter, gmap, mps) {
+  'mps',
+  'views/analysis_button',
+  'views/legend',
+  'views/searchbox'
+], function(Backbone, _, presenter, gmap, mps, analysis_button, legend, searchbox) {
 
   var Map = Backbone.View.extend({
     initialize: function() {
@@ -42,6 +45,11 @@ define([
       // Listeners
       google.maps.event.addListener(this.map, 'zoom_changed', this.onZoomChange);
       google.maps.event.addListener(this.map, 'dragend', this.onCenterChange);
+      
+      var mapDiv = $('#map');
+      mapDiv.append(analysis_button.$el);
+      mapDiv.append(legend.$el);
+      mapDiv.append(searchbox.$el);
     },
 
     /**
