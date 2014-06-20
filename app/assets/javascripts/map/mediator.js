@@ -52,25 +52,23 @@ define([
       var self = this, 
           baselayersArr = presenter.get('baselayers');
 
-      if (presenter.validateBaselayers(baselayersArr)) {
-        // render baselayers
-        _.each(baselayersArr, function(layerName) {
-          if (!self.layerViews[layerName]) {
-            self.layerViews[layerName] = new self.baselayersViews[layerName]();
-          }
-          self.layerViews[layerName].render();
-        });
+      // render baselayers
+      _.each(baselayersArr, function(layerName) {
+        if (!self.layerViews[layerName]) {
+          self.layerViews[layerName] = new self.baselayersViews[layerName]();
+        }
+        self.layerViews[layerName].render();
+      });
 
-        // remove baselayers
-        _.each(layersCollection.getBaselayers(), function(layer) {
-          if (baselayersArr.indexOf(layer.slug) == -1) {
-            if (self.layerViews[layer.slug]) {
-              self.layerViews[layer.slug].removeLayer();
-            }
+      // remove baselayers
+      _.each(layersCollection.getBaselayers(), function(layer) {
+        if (baselayersArr.indexOf(layer.slug) == -1) {
+          if (self.layerViews[layer.slug]) {
+            self.layerViews[layer.slug].removeLayer();
           }
-        });
+        }
+      });
 
-      }
     },
 
     updateSublayer: function() {

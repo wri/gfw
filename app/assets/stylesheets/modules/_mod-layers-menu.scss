@@ -54,6 +54,8 @@ $stories-color: rgb(242, 178, 87);
     &.conservation { color: $conservation-color; border-color: $conservation-color; }
     &.people { color: $people-color; border-color: $people-color; }
     &.stories { color: $stories-color; border-color: $stories-color; }
+
+    &.people .layers-nav { left: -50px; }
   }
 
   .layers-nav {

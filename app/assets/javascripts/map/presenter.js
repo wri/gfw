@@ -35,9 +35,14 @@ define([
     * @param attrs Router params object.
     */
     setFromUrl: function(attrs) {
-      var baselayers = (attrs.baselayers) ? attrs.baselayers.split(',') : null,
+      var baselayers = null,
           sublayers = (attrs.sublayers) ? attrs.sublayers.split(',') : null,
           latLng = (attrs.lat && attrs.lng) ? [attrs.lat, attrs.lng] : null;
+
+      if (attrs.baselayers &&
+        this.validateBaselayers(attrs.baselayers.split(','))) {
+        baselayers = attrs.baselayers.split(',');
+      }
 
       var results = {
         zoom:       attrs.zoom    || 3,
@@ -90,8 +95,10 @@ define([
          layerIndex = currentBaselayers.indexOf(layerName);
 
       if (layerIndex > -1) {
-        currentBaselayers.splice(layerIndex, 1);
-        presenter.set('baselayers', currentBaselayers);
+        if (currentBaselayers.length > 1) {
+          currentBaselayers.splice(layerIndex, 1);
+          presenter.set('baselayers', currentBaselayers);
+        }
       } else {
         var combined = presenter.get('baselayers').concat(layerName);
 
