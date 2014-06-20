@@ -1,10 +1,9 @@
 define([
-  'app',
   'analysis',
   'mps', 
   'underscore',
   'helpers/api_responses',
-], function(app, analysis, mps, _) {
+], function(analysis, mps, _) {
 
   var k_combinations = function(set, k) {
     var i, j, combs, head, tailcombs;
@@ -191,7 +190,7 @@ define([
       var cb = null;
       var url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts-foo/admin/bra?period=2001%2C2008';
 
-      beforeEach(function(done) {
+      beforeEach(function() {
         mps.publish(
           'analysis/get',
           [{layerName: 'forma-alerts-foo', iso: 'bra', period: '2001,2008'}]);
@@ -200,26 +199,20 @@ define([
         expect(request.url).toBe(url);
         expect(request.method).toBe('POST');
         expect(request.data()).toEqual({});
-        
-        cb = {
-          spy: function(responseText, status, error) {
-            done();
-          }
-        };
 
-        spyOn(cb, 'spy').and.callThrough();
-        mps.subscribe('analysis/get-failure', cb.spy);
+        spy = jasmine.createSpy('failure');
+        mps.subscribe('analysis/get-failure', spy);
         request.response(ApiResponse.forma_alerts.iso.notfound);
       });
 
       it("The analysis/get-results cb called with correct API response", function() {
-        var cbArgs = cb.spy.calls.mostRecent().args;
+        var cbArgs = spy.calls.mostRecent().args;
         var text = cbArgs[0];
         var status = cbArgs[1];
         var error = cbArgs[2];
         var expectedText = ApiResponse.forma_alerts.iso.notfound.responseText;
 
-        expect(cb.spy).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalled();
         expect(text).toEqual(expectedText);
         expect(status).toEqual('error');
         expect(error).toEqual('');

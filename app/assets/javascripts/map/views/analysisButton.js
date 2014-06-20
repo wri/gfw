@@ -8,12 +8,16 @@ define([
   'underscore',
   'presenter',
   'mps',
-  'text!analysis_control_tpl.html'
-], function(Backbone, _, presenter, mps, analysisTpl) {
+  'text!views/analysisButton.html'
+], function(Backbone, _, presenter, mps, template) {
 
   var AnalysisButton = Backbone.View.extend({
 
-    template: _.template(analysisTpl),
+    events: {
+      'click #analysis_control': 'onClick'
+    },
+
+    template: _.template(template),
 
     initialize: function() {
       this.render();
@@ -21,12 +25,16 @@ define([
 
     render: function() {
       this.$el.append(this.template());
+    },
+
+    onClick: function(e) {
+      mps.publish('analysisButton/click', [e]);
     }
 
   });
 
-  var AnalysisButton = new AnalysisButton();
+  var view = new AnalysisButton();
 
-  return AnalysisButton;
+  return view;
 
 });

@@ -9,7 +9,7 @@ define([
   'presenter',
   'mps',
   'views/widget',
-  'text!legend.html'
+  'text!views/legend.html'
 ], function(Backbone, _, presenter, mps, Widget, legendTpl) {
 
   var Legend = Widget.extend({

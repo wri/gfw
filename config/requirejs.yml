@@ -2,6 +2,7 @@ modules:
   - name: 'map'
 
 paths:
+  main: "map/main"
   jquery: "jquery"
   jqueryui: "jquery-ui-1.10.4.custom.min"
   underscore: "underscore"
@@ -31,6 +32,13 @@ paths:
   nsa: "map/nsa"
 
 shim: 
+  # main:
+  #   deps:
+  #     - "router"
+  #     - "mediator"
+  #     - "analysis"
+  #   exports:
+  #     "main"
   underscore: 
     exports: "_"
   backbone: 
@@ -59,12 +67,6 @@ shim:
     exports: "Class"
   uri: 
     exports: "UriTemplate"    
-  app: 
-    deps: 
-      - "mps"
-      - "Class"
-      - "gmap"
-    exports: "app"
   user: 
     deps: 
       - "Class"

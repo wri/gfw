@@ -3,10 +3,13 @@ require.config({
   baseUrl: '..',
   
   paths: {
+    map: ['app/assets/javascripts/map'],
     jquery: ['vendor/assets/javascripts/jquery'],
     underscore: ['vendor/assets/javascripts/underscore'],
     backbone: ['vendor/assets/javascripts/backbone'],
     mps: ['vendor/assets/javascripts/minpubsub'],
+    wax: ['vendor/assets/javascripts/wax.g.min'],
+    jqueryui: ['vendor/assets/javascripts/jquery-ui-1.10.4.custom.min'],
     backbonequeryparams: ['vendor/assets/javascripts/backbone.queryparams'],
     gmap: ['app/assets/javascripts/map/gmap'],
     d3: ['vendor/assets/javascripts/d3'],
@@ -24,6 +27,7 @@ require.config({
     mediator: ['app/assets/javascripts/map/mediator'],
     presenter: ['app/assets/javascripts/map/presenter'],
     views: ['app/assets/javascripts/map/views'],
+    templates: ['app/assets/templates'],
     models: ['app/assets/javascripts/map/models'],
     collections: ['app/assets/javascripts/map/collections'],
     itertools: ['vendor/assets/javascripts/itertools'],
@@ -37,6 +41,10 @@ require.config({
   },
   
   shim: {
+    jqueryui: {
+      deps: ['jquery'],
+      exports: 'jqueryui'
+    },
     underscore: {
       exports: '_'
     },
@@ -59,7 +67,7 @@ require.config({
       exports: 'Class',
     },    
     app: {
-      deps: ['mps', 'Class'],
+      deps: ['mps', 'Class', 'router'],
       exports: 'app'
     },
     user: {
@@ -80,8 +88,11 @@ require.config({
   }
 });
 
-require(
-[/*'spec/analysis_spec',*/ 'spec/nsa_spec', 'mock_ajax'], 
-function(){
-  // NOOP
+require([
+  'mock_ajax', 
+  'map', 
+  'spec/nsa_spec',
+  'spec/analysis_spec'], 
+function (mock_ajax, main, nsa_spec){
+  console.log('Setting up specs...');
 });

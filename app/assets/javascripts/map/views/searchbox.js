@@ -8,7 +8,7 @@ define([
   'underscore',
   'presenter',
   'mps',
-  'text!searchbox.html'
+  'text!views/searchbox.html'
 ], function(Backbone, _, presenter, mps, template) {
 
   var Searchbox = Backbone.View.extend({

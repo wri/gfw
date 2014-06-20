@@ -6,7 +6,7 @@
 define([
   'backbone',
   'underscore',
-  'text!layers_menu.html'
+  'text!views/layersMenu.html'
 ], function(Backbone, _, layersMenuTpl) {
 
   var LayersMenu = Backbone.View.extend({

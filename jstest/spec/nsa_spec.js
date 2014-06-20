@@ -1,14 +1,11 @@
 define([
-  'app',
   'nsa',
   'mps', 
   'underscore',
-  'helpers/api_responses',
-], function(app, nsa, mps, _) {
-
+  'helpers/api_responses'
+], function(nsa, mps, _) {
 
   describe("The nsa module", function() {
-    
     var request = null;
     var cache = null;
 
@@ -16,36 +13,33 @@ define([
       jasmine.Ajax.install();
     });
 
-    
-    describe("foo", function() {
-      
+    it("is not null", function() {
+      expect(nsa).not.toBe(null);
+    });
+
+    describe("success callback", function() {
       var cb = null;
+      var spy = null;
     
-      beforeEach(function(done) {
+      beforeEach(function() {
         cache = false;
-        cb = {
-          spy: function(response) {
-            done();
-          }
-        };
         
-        nsa.spy('/foo', {}, cb.spy);
+        spy = jasmine.createSpy('success');
+        nsa.spy('/foo', {}, spy, null, cache);
 
         request = jasmine.Ajax.requests.mostRecent();
         expect(request.url).toBe('/foo');
         expect(request.method).toBe('POST');
         expect(request.data()).toEqual({});
-
-        spyOn(cb, 'spy').and.callThrough();
         request.response(ApiResponse.forma_alerts.iso.success);
       });
 
-      it("", function() {
-        var cbArgs = cb.spy.calls.mostRecent().args;
-        var text = cbArgs[0];
-        var expectedText = 'foo';
+      it("was called with correct response", function() {
+        var cbArgs = spy.calls.mostRecent().args;
+        var text = JSON.stringify(cbArgs[0]);
+        var expectedText = '{"data":{}}';
 
-        expect(cb.spy).toHaveBeenCalled();
+        expect(spy).toHaveBeenCalled();
         expect(text).toEqual(expectedText);
       });
     });
