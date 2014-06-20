@@ -44,6 +44,10 @@ define([
         baselayers = attrs.baselayers.split(',');
       }
 
+      _.each(sublayers, function(layerId, i) {
+        sublayers[i] = Number(layerId);
+      });
+
       var results = {
         zoom:       attrs.zoom    || 3,
         latLng:     latLng        || [15.00, 27.00],

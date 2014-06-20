@@ -82,6 +82,7 @@ define([
           var layerName = layer.get('slug');
           if (!self.layerViews[layerName]) {
             self.layerViews[layerName] =  new self.sublayersViews[layerName]();
+            self.layerViews[layerName].render();
           }
           self.layerViews[layerName].render();
         }
@@ -89,7 +90,7 @@ define([
 
       // remove sublayers
       _.each(layersCollection.getSublayers(), function(layer) {
-        if (sublayersArr.indexOf(layer.id) == -1) {
+        if (sublayersArr.indexOf(layer.id) <= -1) {
           if (self.layerViews[layer.slug]) {
             self.layerViews[layer.slug].removeLayer();
           }
