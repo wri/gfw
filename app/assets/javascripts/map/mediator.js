@@ -14,119 +14,98 @@ define([
   'presenter',
   'collections/layers',
   'views/map',
+  'views/layersMenu',
+  'views/legend',
   'views/layers/loss',
   'views/layers/gain',
   'views/layers/forest',
   'views/layers/imazon'
-], function (_, Backbone, mps, Class, presenter, layersCollection, map, LossLayer, GainLayer, ForestLayer, ImazonLayer) {
+], function (_, Backbone, mps, Class, presenter, layersCollection, map, layersMenu, legend,
+    LossLayer, GainLayer, ForestLayer, ImazonLayer) {
 
   var Mediator = Class.extend({
     init: function() {
-      
+      var self = this;
+
       // Listen to presenter events
       presenter.on('change:zoom', this.updateZoom, this);
       presenter.on('change:latLng', this.updateCenter, this);
       // presenter.on('change:iso', this.mapChange, this);
       presenter.on('change:maptype', this.updateMapType, this);
       presenter.on('change:baselayers', this.updateBaselayers, this);
-      presenter.on('change:sublayers', this.updateSublayer, this);
-      presenter.on('change:timelineDate', this.updateBaselayerTiles, this);
+      presenter.on('change:sublayers', this.updateSublayers, this);
+      presenter.on('change:timelineDate', this.updateBaselayersTiles, this);
+      presenter.on('change:baselayers', legend.update, this);
+      presenter.on('change:sublayers', legend.update, this);
 
       this.collections = {};
-      this.layerViews = {};
+      this.layersInstances = {};
     },
 
-    baselayersOpts: {
-      views: {
-        loss: LossLayer,
-        gain: GainLayer,
-        imazon: ImazonLayer
-      },
-      allowedCombined: [
-        ['loss', 'gain']
-      ]
-    },
-
-    sublayersOpts: {
-      views: {
-        forest2000: ForestLayer
-      }
-    },
-
-    validateBaselayers: function() {
-      var baselayersArr = presenter.get('baselayers'),
-          valid = false;
-
-      _.each(this.baselayersOpts.allowedCombined, 
-        function(layersArr) {
-          if (baselayersArr.length == 1 || 
-              ($(baselayersArr).not(layersArr).length === 0 && 
-              $(layersArr).not(baselayersArr).length === 0)) {
-          valid = true;
-        }
-      });
-
-      return valid;
+    layersViews: {
+      loss: LossLayer,
+      umd_tree_loss_gain: GainLayer,
+      imazon: ImazonLayer,
+      forest2000: ForestLayer
     },
 
     updateBaselayers: function() {
-      var self = this, 
-          baselayersArr = presenter.get('baselayers');
+      var currentBaselayers = presenter.get('baselayers'),
+          allBaselayers = layersCollection.getBaselayers();
 
-      if (this.validateBaselayers()) {
-        // render baselayers
-        _.each(baselayersArr, function(layerName) {
-          if (!self.layerViews[layerName]) {
-            self.layerViews[layerName] = new self.baselayersOpts.views[layerName]();
-          }
-          self.layerViews[layerName].render();
-        });
+      // Render current baselayers
+      for (var i = 0; i < currentBaselayers.length; i++) {
+        var layerName = currentBaselayers[i];
+        this.createLayerView(layerName);
+      };
 
-        // remove baselayers
-        _.each(layersCollection.getBaselayers(), function(layer) {
-          if (baselayersArr.indexOf(layer.slug) == -1) {
-            if (self.layerViews[layer.slug]) {
-              self.layerViews[layer.slug].removeLayer();
-            }
-          }
-        });
+      // Remove baselayers
+      for (var i = 0; i < allBaselayers.length; i++) {
+        var layer = allBaselayers[i];
+        if (currentBaselayers.indexOf(layer.slug) < 0 &&
+            this.layersInstances[layer.slug]) {
+          this.layersInstances[layer.slug].removeLayer();
+        }
+      };
+    },
 
+    updateSublayers: function() {
+      var currentSublayers = presenter.get('sublayers'),
+          allSublayers = layersCollection.getSublayers();
+
+      // Render sublayers
+      for (var i = 0; i < currentSublayers.length; i++) {
+        var layerId = currentSublayers[i],
+            layer = layersCollection.findWhere({ id: layerId }),
+            layerName = layer.get('slug');
+
+        this.createLayerView(layerName);
+      };
+
+      // Remove sublayers
+      for (var i = 0; i < allSublayers.length; i++) {
+        var layer = allSublayers[i];
+        if (currentSublayers.indexOf(layer.id) < 0 &&
+            this.layersInstances[layer.slug]) {
+          this.layersInstances[layer.slug].removeLayer();
+        }
+      };
+    },
+
+    createLayerView: function(layerName) {
+      if (!this.layersInstances[layerName]) {
+        this.layersInstances[layerName] = new this.layersViews[layerName]();
       }
+      this.layersInstances[layerName].render();
     },
 
-    updateSublayer: function() {
-      var self = this,
-          sublayersArr = presenter.get('sublayers');
+    updateBaselayersTiles: function() {
+      var baselayers = presenter.get('baselayers');
 
-      // render sublayers
-      _.each(sublayersArr, function(layerId) {
-        var layer = layersCollection.findWhere({id: Number(layerId)});
-        if (layer) {
-          var layerName = layer.get('slug');
-          if (!self.layerViews[layerName]) {
-            self.layerViews[layerName] =  new self.sublayersOpts.views[layerName]();
-          }
-          self.layerViews[layerName].render();
-        }
-      });
-
-      // remove sublayers
-      _.each(layersCollection.getSublayers(), function(layer) {
-        if (sublayersArr.indexOf(layer.id.toString()) == -1) {
-          if (self.layerViews[layer.slug]) {
-            self.layerViews[layer.slug].removeLayer();
-          }
-        }
-      });
-    },
-
-    updateBaselayerTiles: function() {
-      var self = this, 
-          baselayers = presenter.get('baselayers');
-
-      _.each(baselayers, function(layerName) {
-        self.layerViews[layerName].updateTiles();
-      });
+      for (var i = 0; i < currentBaselayers.length; i++) {
+        var layerName = currentBaselayers[i];
+        this.layersInstances[layerName].updateTiles();
+      };
     },
 
     updateZoom: function() {
@@ -140,7 +119,6 @@ define([
     updateMapType: function() {
       map.updateMapType(presenter.get('maptype'));
     }
-
   });
 
   var mediator = new Mediator();

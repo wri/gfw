@@ -3,7 +3,7 @@
  *
  * Timeline for all layers configured by setting layer-specific options.
  * 
- * @return singleton instance of Timeline class (extends Backbone.View).
+ * @return Timeline class (extends Backbone.View).
  */
 define([
   'backbone',

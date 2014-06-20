@@ -10,10 +10,15 @@ define([
   'underscore',
   'presenter',
   'gmap',
-  'mps'
-], function(Backbone, _, presenter, gmap, mps) {
+  'mps',
+  'views/analysisButton',
+  'views/searchbox'
+], function(Backbone, _, presenter, gmap, mps, analysisButton, searchbox) {
 
   var Map = Backbone.View.extend({
+
+    el: '#map',
+
     initialize: function() {
       _.bindAll(this, 'onZoomChange', 'onCenterChange', 'updateZoom', 'updateCenter');
       var self = this;
@@ -30,18 +35,19 @@ define([
     },
 
     render: function() {
-      console.log('MAP');
-
       var mapOptions = {
         minZoom: 3,
       };
 
-      this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+      this.map = new google.maps.Map(this.el, mapOptions);
       this.resize();
 
       // Listeners
       google.maps.event.addListener(this.map, 'zoom_changed', this.onZoomChange);
       google.maps.event.addListener(this.map, 'dragend', this.onCenterChange);
+      
+      this.$el.append(analysisButton.$el);
+      this.$el.append(searchbox.$el);
     },
 
     /**

@@ -96,8 +96,10 @@ define([
     },
 
     removeLayer: function() {
-      mps.publish('map/remove-layer', [this.name]);
-      this.rendered = false;
+      if (this.rendered) {
+        mps.publish('map/remove-layer', [this.name]);
+        this.rendered = false;
+      }
     },
 
     filterCanvasImage: function() {
