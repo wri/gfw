@@ -10,7 +10,7 @@ define([
   'underscore',
   'presenter',
   'gmap',
-  'mps'
+  'mps',
 ], function(Backbone, _, presenter, gmap, mps) {
 
   var Map = Backbone.View.extend({

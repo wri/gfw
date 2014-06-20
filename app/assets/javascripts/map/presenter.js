@@ -8,16 +8,30 @@
 define([
   'backbone',
   'mps',
-], function (Backbone, mps) {
+  'collections/layers'
+], function (Backbone, mps, layersCollection) {
 
   var Presenter = Backbone.Model.extend({
 
+    baselayersOpts: {
+      allowedCombined: [
+        ['loss', 'umd_tree_loss_gain']
+      ]
+    },
+
     initialize: function() {
+      var self = this;
+
       this.on('change', this.updateUrl, this);
+
+      mps.subscribe('presenter/toggle-layer', function(layerName) {
+        self.toggleLayer(layerName);
+      });
     },
 
    /**
     * Set the presenter object with the passed attributes.
+    *
     * @param attrs Router params object.
     */
     setFromUrl: function(attrs) {
@@ -30,7 +44,7 @@ define([
         latLng:     latLng        || [15.00, 27.00],
         iso:        attrs.iso     || 'ALL',
         maptype:    attrs.maptype || 'terrain',
-        baselayers: baselayers    || ['loss', 'gain'],
+        baselayers: baselayers    || ['loss', 'umd_tree_loss_gain'],
         sublayers:  sublayers     || []
       };
 
@@ -56,7 +70,71 @@ define([
         trigger: false
       };
       mps.publish('navigate', [place]);
-    }
+    },
+
+   /**
+    * Toggle a layer on the presenter
+    *
+    * @param {string} LayerName.
+    */
+    toggleLayer: function(layerName) {
+      if (layersCollection.getBaselayer(layerName)) {
+        this.toggleBaselayer(layerName);
+      } else if (layersCollection.getSublayer(layerName)) {
+        this.toggleSublayer(layerName, layersCollection.getSublayer(layerName).id);
+      }
+    },
+
+    toggleBaselayer: function(layerName) {
+     var currentBaselayers = _.clone(presenter.get('baselayers')),
+         layerIndex = currentBaselayers.indexOf(layerName);
+
+      if (layerIndex > -1) {
+        currentBaselayers.splice(layerIndex, 1);
+        presenter.set('baselayers', currentBaselayers);
+      } else {
+        var combined = presenter.get('baselayers').concat(layerName);
+
+        if (this.validateBaselayers(combined)) {
+          presenter.set('baselayers', combined);
+        } else {
+          presenter.set('baselayers', [layerName]);
+        }
+      }
+    },
+
+    toggleSublayer: function(layerName, layerId) {
+      var currentSublayers = _.clone(presenter.get('sublayers'));
+          layerIndex = currentSublayers.indexOf(layerId);
+
+      if (layerIndex > -1) {
+        currentSublayers.splice(layerIndex, 1);
+        presenter.set('sublayers', currentSublayers);
+      } else {
+        var combined = presenter.get('sublayers').concat(layerId);
+        presenter.set('sublayers', combined);
+      }
+    },
+
+   /**
+    * Validates baselayers are valid.
+    *
+    * @param {array} Baselayers array.
+    */
+    validateBaselayers: function(baselayersArr) {
+      var valid = false;
+
+      _.each(this.baselayersOpts.allowedCombined, 
+        function(layersArr) {
+          if (baselayersArr.length == 1 || 
+              ($(baselayersArr).not(layersArr).length === 0 && 
+              $(layersArr).not(baselayersArr).length === 0)) {
+          valid = true;
+        }
+      });
+
+      return valid;
+    },
 
   });
 

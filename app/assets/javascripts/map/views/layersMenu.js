@@ -6,15 +6,18 @@
 define([
   'backbone',
   'underscore',
-  'presenter',
-  'mps',
   'text!layers_menu.html'
-], function(Backbone, _, presenter, mps, layersMenuTpl) {
+], function(Backbone, _, layersMenuTpl) {
 
   var LayersMenu = Backbone.View.extend({
 
-    el: $('.layers-menu'),
+    el: '.layers-menu',
     template: _.template(layersMenuTpl),
+
+    events: {
+      'click .layer-title': 'onClickLayer',
+      'click .radio': 'onClickLayer'
+    },
 
     initialize: function() {
       this.render();
@@ -22,7 +25,15 @@ define([
 
     render: function() {
       this.$el.append(this.template());
-    }
+    },
+
+    onClickLayer: function(event) {
+      var layerName = $(event.currentTarget).parent().data('layer');
+
+      if (layerName) {
+        mps.publish('presenter/toggle-layer', [layerName]);
+      }
+    },
 
   });
 

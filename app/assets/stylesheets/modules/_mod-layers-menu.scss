@@ -7,7 +7,7 @@ $stories-color: rgb(242, 178, 87);
 
 .layers-menu {
   height: 72px;
-  
+
   .inner {
     height: 100%;
     position: relative;
@@ -90,8 +90,10 @@ $stories-color: rgb(242, 178, 87);
       color: #ccc;
       padding: 9px 10px 10px 30px;
       border-bottom: 1px solid #e5e5e5;
+      cursor: default;
 
       .layer-title {
+        cursor: pointer;
         display: block;
       }
 
@@ -100,7 +102,6 @@ $stories-color: rgb(242, 178, 87);
         margin-top: 3px;
       }
     }
-
 
   } // layers-nav
 }
