@@ -12,7 +12,7 @@ define([
     {
       name: 'maps',
       version: '3',
-      options: { other_params: 'sensor=false' }
+      options: { other_params: 'libraries=places&sensor=false' }
     },
     {
       name: 'visualization',

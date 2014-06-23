@@ -1,31 +1,36 @@
 /**
- * The layers filter module.
+ * The Searchbox module.
  *
- * @return singleton instance of layers fitler class (extends Backbone.View).
+ * @return searchbox class (extends Backbone.View).
  */
 define([
   'backbone',
   'underscore',
-  'presenter',
   'mps',
+  'views/widget',
+  'views/googleSearch',
   'text!views/searchbox.html'
-], function(Backbone, _, presenter, mps, template) {
+], function(Backbone, _, mps, Widget, GoogleSearchView, searchboxTpl) {
 
-  var Searchbox = Backbone.View.extend({
+  var Searchbox = Widget.extend({
 
-    template: _.template(template),
+    className: 'widget searchbox',
+    template: _.template(searchboxTpl),
 
     initialize: function() {
-      this.render();
+      Searchbox.__super__.initialize.apply(this);
+
+      this.inputView = new GoogleSearchView({
+        input: this.$el.find('input'),
+        onSelected: this.onSelected
+      })
     },
 
-    render: function() {
-      this.$el.append(this.template());
+    onSelected: function(place) {
+      mps.publish('map/fit-bounds', [place.bounds]);
     }
 
   });
-
-  var Searchbox = new Searchbox();
 
   return Searchbox;
 

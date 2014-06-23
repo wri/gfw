@@ -9,11 +9,9 @@ define([
   'backbone',
   'underscore',
   'presenter',
-  'gmap',
   'mps',
-  'views/analysisButton',
   'views/searchbox'
-], function(Backbone, _, presenter, gmap, mps, analysisButton, searchbox) {
+], function(Backbone, _, presenter, mps, Searchbox) {
 
   var Map = Backbone.View.extend({
 
@@ -32,6 +30,11 @@ define([
       mps.subscribe('map/remove-layer', function(layer) {
         self.removeLayer(layer);
       });
+
+      // Subscribe to remove layer events
+      mps.subscribe('map/fit-bounds', function(bounds) {
+        self.fitBounds(bounds);
+      });
     },
 
     render: function() {
@@ -45,9 +48,11 @@ define([
       // Listeners
       google.maps.event.addListener(this.map, 'zoom_changed', this.onZoomChange);
       google.maps.event.addListener(this.map, 'dragend', this.onCenterChange);
-      
-      // this.$el.append(analysisButton.$el);
-      // this.$el.append(searchbox.$el);
+
+      // When gmap is initialized, map.render is called, so at this point
+      // google is avaiable.
+      // TODO: Wouldn't be better to load everything after gmaps init?
+      this.searchboxView = new Searchbox();
     },
 
     /**
@@ -107,6 +112,10 @@ define([
       google.maps.event.trigger(this.map, 'resize');
       this.map.setZoom(this.map.getZoom());
       this.map.setCenter(this.map.getCenter());
+    },
+
+    fitBounds: function(bounds) {
+      this.map.fitBounds(bounds);
     }
   });
 

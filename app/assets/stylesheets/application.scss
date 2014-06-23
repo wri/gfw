@@ -6,15 +6,6 @@
 @import 'compass/reset';
 @import "compass";
 @import "compass/css3";
-@import 'compass/css3/border-radius';
-@import 'compass/css3/box-shadow';
-@import 'compass/css3/opacity';
-@import 'compass/css3/user-interface';
-@import 'compass/css3/inline-block';
-@import 'compass/css3/text-shadow';
-@import 'compass/css3/transform';
-@import 'compass/css3/background-size';
-@import 'compass/css3/images';
 
 // General
 @import '_settings';
@@ -37,7 +28,8 @@
 @import 'modules/_mod-layers-menu';
 @import 'modules/_mod-form';
 @import 'modules/_mod-map';
-@import 'modules/_mod-legend';
 @import 'modules/_mod-widget';
+@import 'modules/_mod-widget-legend';
+@import 'modules/_mod-widget-searchbox';
 @import 'modules/countries';
 @import 'modules/home';

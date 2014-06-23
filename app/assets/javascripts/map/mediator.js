@@ -20,7 +20,7 @@ define([
   'views/layers/gain',
   'views/layers/forest',
   'views/layers/imazon'
-], function (_, Backbone, mps, Class, presenter, layersCollection, map, layersMenu, legend,
+], function (_, Backbone, mps, Class, presenter, layersCollection, map, layersMenu, legend, 
     LossLayer, GainLayer, ForestLayer, ImazonLayer) {
 
   var Mediator = Class.extend({
