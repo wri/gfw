@@ -198,7 +198,7 @@ body {
   font-weight: 300;
   font-size: 67px;
   @extend .serif;
-  color: #A1BA42;
+  color: #97Bd3d;
 }
 
 .fake_title {
@@ -799,7 +799,7 @@ body {
   padding: 0 0 6px;
   text-align: center;
 
-  .infowindow_content a { color: #A1BA42; }
+  .infowindow_content a { color: #97Bd3d; }
 
   .outer_top {
     width:$w - $pL - $pR;
@@ -965,6 +965,7 @@ body {
 // }
 
 .map_coordinates {
+  display: block;
   color:#333;
   text-shadow: 0px 0px 3px #fff;
   position: absolute;
@@ -994,7 +995,7 @@ body {
 
   .umd_options_control {
     position: absolute;
-    top: 130px;
+    top: 168px;
     left: 15px;
     width: 37px;
     height: 37px;
@@ -1541,7 +1542,8 @@ body {
   top: 205px;
   width: 400px;
   min-height: 250px;
-  padding: 20px;
+  padding: 20px 20px 0px 20px;
+  z-index: 1000;
   .close {
     display: block;
     position: absolute;
@@ -1565,10 +1567,12 @@ body {
     color: #666;
     margin-bottom: 10px;
     &.canopy {
+      font-size: 11px;
+      font-weight: bold;
       position: relative;
-      width: 200px;
+      width: 156px;
       .source {
-        top: 4px;
+        top: 1px;
         right: 7px;
         width: 10px;
         padding: 0;
@@ -1683,6 +1687,7 @@ body {
     &:last-child {
       float: right;
       margin-bottom: 0;
+      display: none; /*hardcoded, change on click*/
     }
   }
   ul {

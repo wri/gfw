@@ -99,6 +99,7 @@ GFW.modules.app = function(gfw) {
           lng = parseFloat(map.getCenter().lng()).toFixed(6);
 
       this.$map_coordinates.html('Lat/Long: '+lat + ',' + lng);
+
       publish('timeline:update_coordinates');
     },
 
@@ -212,7 +213,7 @@ GFW.modules.app = function(gfw) {
       });
 
       google.maps.event.addListener(map, 'center_changed', function() {
-        //that.updateCoordinates();
+        that.updateCoordinates();
       });
 
       google.maps.event.addListener(map, 'zoom_changed', function() {
@@ -226,8 +227,8 @@ GFW.modules.app = function(gfw) {
       });
 
       google.maps.event.addListener(map, 'dragend', function() {
-        //that.updateCoordinates();
-        //updateHash();
+        that.updateCoordinates();
+        updateHash();
       });
 
       google.maps.event.addDomListener(window, 'resize', function() {
@@ -236,32 +237,32 @@ GFW.modules.app = function(gfw) {
       });
 
       google.maps.event.addListener(map, 'click', function(event) {
-        // that.closeInfowindows();
+        that.closeInfowindows();
 
-        // if (!that.specialLayer) { return; }
+        if (!that.specialLayer) { return; }
 
-        // var // get click coordinates
-        // lat = event.latLng.lat(),
-        // lng = event.latLng.lng(),
-        // params = { lat: lat, lon: lng },
-        // url = "//<%= ENV['GFW_API_HOST'] %>/wdpa/sites";
+        var // get click coordinates
+        lat = event.latLng.lat(),
+        lng = event.latLng.lng(),
+        params = { lat: lat, lon: lng },
+        url = "//<%= ENV['GFW_API_HOST'] %>/wdpa/sites";
 
-        // executeAjax(url, params, {
-        //   success: function(sites) {
-        //     var site = null;
+        executeAjax(url, params, {
+          success: function(sites) {
+            var site = null;
 
-        //     if (sites && sites.length > 0) {
-        //       var site = sites[0];
+            if (sites && sites.length > 0) {
+              var site = sites[0];
 
-        //       that.protectedInfowindow.setContent(site);
-        //       that.protectedInfowindow.setPosition(event.latLng);
-        //       that.protectedInfowindow.open();
-        //     }
-        //   },
-        //   error: function(e) {
-        //     console.error('WDPA API call failed', e, url);
-        //   }
-        // });
+              that.protectedInfowindow.setContent(site);
+              that.protectedInfowindow.setPosition(event.latLng);
+              that.protectedInfowindow.open();
+            }
+          },
+          error: function(e) {
+            console.error('WDPA API call failed', e, url);
+          }
+        });
       });
 
       google.maps.event.addListener(map, 'tilesloaded', this._mapLoaded);
@@ -325,17 +326,18 @@ GFW.modules.app = function(gfw) {
 
     _removeForest2000Layer: function() {
       if (this.forest2000Layer) {
-        var layers = map.overlayMapTypes.getArray();
+        this.forest2000Layer.hide();
+        // var layers = map.overlayMapTypes.getArray();
 
-        for (var i = 0; i <= layers.length; i++) {
-          if (layers[i] == this.forest2000Layer) {
-            if (this.forest2000Layer) {
-              this.forest2000Layer.setOpacity(0);
-              this.forest2000Layer = null;
-              map.overlayMapTypes.setAt(i, null);
-            }
-          }
-        }
+        // for (var i = 0; i <= layers.length; i++) {
+        //   if (layers[i] == this.forest2000Layer) {
+        //     if (this.forest2000Layer) {
+        //       this.forest2000Layer.setOpacity(0);
+        //       this.forest2000Layer = null;
+        //       map.overlayMapTypes.setAt(i, null);
+        //     }
+        //   }
+        // }
       }
     },
 
@@ -480,73 +482,76 @@ GFW.modules.app = function(gfw) {
     
     _renderForest2000Layer: function() {
       if (this.forest2000Layer) {
-        this.forest2000Layer.setOpacity(1);
+        this.forest2000Layer.show();
+        // this.forest2000Layer.setOpacity(1);
       } else {
-        function CoordMapType() { }
+        this.forest2000Layer = Forest2000.init(map);
 
-        CoordMapType.prototype.tileSize = new google.maps.Size(256,256);
-        CoordMapType.prototype.maxZoom = 17;
-        CoordMapType.prototype.setOpacity = function(opacity) {
-          $('.tree_alpha').css('opacity', opacity);
-        };
+        // function CoordMapType() { }
 
-        CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
-          var x = coord.x;
-          var y = coord.y;
-          var z = zoom;
+        // CoordMapType.prototype.tileSize = new google.maps.Size(256,256);
+        // CoordMapType.prototype.maxZoom = 17;
+        // CoordMapType.prototype.setOpacity = function(opacity) {
+        //   $('.tree_alpha').css('opacity', opacity);
+        // };
 
-          var zsteps = zoom - 12;
+        // CoordMapType.prototype.getTile = function(coord, zoom, ownerDocument) {
+        //   var x = coord.x;
+        //   var y = coord.y;
+        //   var z = zoom;
 
-          if (zoom > 12) {
-            x = Math.floor(coord.x/(Math.pow(2, zoom - 12)));
-            y = Math.floor(coord.y/(Math.pow(2, zoom - 12)));
-            z = 12;
-          } else {
-            y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
+        //   var zsteps = zoom - 12;
+
+        //   if (zoom > 12) {
+        //     x = Math.floor(coord.x/(Math.pow(2, zoom - 12)));
+        //     y = Math.floor(coord.y/(Math.pow(2, zoom - 12)));
+        //     z = 12;
+        //   } else {
+        //     y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
             
-            if (x >= Math.pow(2,z)) {
-              x = x % Math.pow(2,z);
-            } else if (x < 0) {
-              x = Math.pow(2,z) - Math.abs(x);
-            }
-          }
+        //     if (x >= Math.pow(2,z)) {
+        //       x = x % Math.pow(2,z);
+        //     } else if (x < 0) {
+        //       x = Math.pow(2,z) - Math.abs(x);
+        //     }
+        //   }
 
-          var url = 'http://earthengine.google.org/static/hansen_2013/tree_alpha/' + z + '/' + x + '/' + y + '.png';
+        //   var url = 'http://earthengine.google.org/static/hansen_2013/tree_alpha/' + z + '/' + x + '/' + y + '.png';
 
-          var image = new Image();
-          image.src = url;
-          image.className += 'tree_alpha';
+        //   var image = new Image();
+        //   image.src = url;
+        //   image.className += 'tree_alpha';
 
-          if (zsteps <= 0) return image;
+        //   if (zsteps <= 0) return image;
 
-          image.width = 256 * Math.pow(2, zsteps);
-          image.height = 256 * Math.pow(2, zsteps);
+        //   image.width = 256 * Math.pow(2, zsteps);
+        //   image.height = 256 * Math.pow(2, zsteps);
 
-          if (zsteps > 0) {
-            var srcX = 256 * (coord.x % Math.pow(2, zsteps));
-            var srcY = 256 * (coord.y % Math.pow(2, zsteps));
+        //   if (zsteps > 0) {
+        //     var srcX = 256 * (coord.x % Math.pow(2, zsteps));
+        //     var srcY = 256 * (coord.y % Math.pow(2, zsteps));
 
-            image.style.position = 'absolute';
-            image.style.top      = -srcY + 'px';
-            image.style.left     = -srcX + 'px';
-          }
+        //     image.style.position = 'absolute';
+        //     image.style.top      = -srcY + 'px';
+        //     image.style.left     = -srcX + 'px';
+        //   }
 
-          var div = ownerDocument.createElement('div');
-          div.appendChild(image);
-          div.style.width = this.tileSize.width + 'px';
-          div.style.height = this.tileSize.height + 'px';
-          div.style.position = 'relative';
-          div.style.overflow = 'hidden';
-          div.className += 'tree_alpha';
+        //   var div = ownerDocument.createElement('div');
+        //   div.appendChild(image);
+        //   div.style.width = this.tileSize.width + 'px';
+        //   div.style.height = this.tileSize.height + 'px';
+        //   div.style.position = 'relative';
+        //   div.style.overflow = 'hidden';
+        //   div.className += 'tree_alpha';
 
-          return div;
-        };
+        //   return div;
+        // };
 
-        CoordMapType.prototype.name = 'Tile #s';
-        CoordMapType.prototype.alt = 'Tile Coordinate Map Type';
+        // CoordMapType.prototype.name = 'Tile #s';
+        // CoordMapType.prototype.alt = 'Tile Coordinate Map Type';
 
-        this.forest2000Layer = new CoordMapType();
-        map.overlayMapTypes.insertAt(0, this.forest2000Layer);
+        // this.forest2000Layer = new CoordMapType();
+        // map.overlayMapTypes.insertAt(0, this.forest2000Layer);
       }
     },
 
@@ -755,6 +760,13 @@ GFW.modules.app = function(gfw) {
     },
 
     updateBaseLayer: function(baselayer) {
+      if (config.canopy_choice && baselayer && baselayer.indexOf('loss') === 0) {
+        baselayer = 'loss' + config.canopy_choice;
+        if (cover_extent.attributes['visible']) {
+          GFW.app._removeForest2000Layer();
+          GFW.app._renderForest2000Layer();
+        }
+      }
       this.currentBaseLayer = config.BASELAYER = baselayer;
       this._toggleTimeLayer();
       this._loadBaseLayer();
@@ -938,6 +950,20 @@ GFW.modules.app = function(gfw) {
     _toggleTimeLayer: function() {
       if (this.time_layer_loss && this.currentBaseLayer !== 'loss') {
         this.time_layer_loss.hide();
+        if (this.currentBaseLayer && this.currentBaseLayer.indexOf('loss') === 0) {
+          this.time_layer_loss.hide();
+          that = this;
+          var vfdr = $('#viewfinder');
+          var spnr = $('#spinner_tiles');
+          vfdr.hide();
+          spnr.fadeIn();
+          setTimeout( function() {
+            if (config.MAPOPTIONS.layers.length > 0) that.time_layer_loss.hide();
+            that.time_layer_loss.show();
+            spnr.hide();
+            vfdr.fadeIn();
+          }, 100);
+        }
       }
 
       if (this.time_layer && this.currentBaseLayer !== 'forma') {
@@ -1038,13 +1064,13 @@ GFW.modules.app = function(gfw) {
     },
 
     _refreshForest2000Layer: function() {
-      GFW.app._removeForest2000Layer();
-      GFW.app._renderForest2000Layer();
+      // GFW.app._removeForest2000Layer();
+      // GFW.app._renderForest2000Layer();
     },
 
     _loadBaseLayer: function() {
       var table_name = null;
-      if (this.currentBaseLayer.indexOf('loss') === 0) {
+      if (this.currentBaseLayer && this.currentBaseLayer.indexOf('loss') === 0) {
         if (config.mapLoaded && !this.time_layer_loss) {
           this._loadTimeLayerLoss();
         } else {
@@ -1115,7 +1141,7 @@ GFW.modules.app = function(gfw) {
                 month = (end_day.getUTCMonth() + 1) < 10 ? '0' + parseInt(end_day.getUTCMonth() + 1, 10) : parseInt(end_day.getUTCMonth(), 10),
                 day   = end_day.getUTCDate() < 10 ? '0' + end_day.getUTCDate() : end_day.getUTCDate();
             var query = [
-              "SELECT * FROM global_7d where acq_date > '" + year + "-" + month + "-" + day + "'"
+              "SELECT * FROM global_7d where acq_date > '" + year + "-" + month + "-" + day + "' AND CAST(confidence AS INT)> 30"
             ].join(' ');
 
             this.baseLayer.setQuery(query);
@@ -1152,7 +1178,7 @@ GFW.modules.app = function(gfw) {
 
             if (content_data.hasOwnProperty(key)) {
               temp = content_data[key];
-              delete content_data[key];x
+              delete content_data[key];
               key = key.replace(/_/g,' '); //add spaces to key names
               content_data[key.charAt(0).toUpperCase() + key.substring(1)] = temp; //uppercase
             }
@@ -1290,7 +1316,7 @@ GFW.modules.maplayer = function(gfw) {
 
         if (GFW.app.currentBaseLayer === slug) Legend.replace(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
       } else if (slug === 'umd_tree_loss_gain') {
-        if (umd_tree_loss_gain && GFW.app.currentBaseLayer === 'loss') umd_tree_loss_gain.set('visible', true);
+        if (umd_tree_loss_gain && GFW.app.currentBaseLayer && GFW.app.currentBaseLayer.indexOf('loss') === 0) umd_tree_loss_gain.set('visible', true);
 
         var event = function() {
           that._toggleLayer();
@@ -1302,7 +1328,7 @@ GFW.modules.maplayer = function(gfw) {
 
         Filter.addForestLossFilters(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
 
-        if (GFW.app.currentBaseLayer === 'loss' || _.include(config.MAPOPTIONS.layers, 596)) Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
+        if (GFW.app.currentBaseLayer && GFW.app.currentBaseLayer.indexOf('loss') === 0 || _.include(config.MAPOPTIONS.layers, 596)) Legend.toggleItem(this.layer.get('id'), this.layer.get('category_slug'), this.layer.get('category_name'),  this.layer.get('title'), slug, this.layer.get('category_color'), this.layer.get('title_color'), subEvent);
       } else if (slug === 'loss') {
         var event = function() {
           that._toggleLayer();
@@ -1310,7 +1336,7 @@ GFW.modules.maplayer = function(gfw) {
 
         Filter.addForestLossFilter(this.layer.get('id'), slug, this.layer.get('category_name'), this.layer.get('title'), { clickEvent: event, source: this.layer.get('source'), category_color: this.layer.get('category_color'), color: this.layer.get('title_color'), subtitle: this.layer.get('subtitle') });
 
-        if (GFW.app.currentBaseLayer === 'loss') {
+        if (GFW.app.currentBaseLayer && GFW.app.currentBaseLayer.indexOf('loss') === 0) {
           if (filters && _.include(filters, this.layer.get('id'))) {
             if (GFW.app) {
               GFW.app.loadLayer(this.layer);
@@ -1443,8 +1469,6 @@ GFW.modules.maplayer = function(gfw) {
         if (visible) {
           GFW.app.addLayer(this.layer);
           ga('send', 'event', 'Filter', 'Toggle', slug);
-
-          if (cover_extent.attributes['visible']) GFW.app._refreshForest2000Layer();
         } else {
           GFW.app.removeLayer(this.layer);
         }
@@ -1456,7 +1480,6 @@ GFW.modules.maplayer = function(gfw) {
           GFW.app.updateBaseLayer(slug);
           ga('send', 'event', 'Filter', 'Toggle', slug);
 
-          if (cover_extent.attributes['visible']) GFW.app._refreshForest2000Layer();
         } else {
           GFW.app.updateBaseLayer(null);
 
@@ -1464,7 +1487,7 @@ GFW.modules.maplayer = function(gfw) {
 
           if (!Analysis.model.get('area') || (Analysis.model.get('area') && Analysis.model.get('area') === '')) {
             Analysis.clearInfo();
-            Analysis.onClickCancel();
+            Analysis.onPreCancel();
           }
         }
 
@@ -1545,7 +1568,7 @@ GFW.modules.maplayer = function(gfw) {
       } else {
         Analysis.show();
       }
-      if (slug === 'loss' || GFW.app.currentBaseLayer === 'loss') {
+      if (slug === 'loss' || (GFW.app.currentBaseLayer && GFW.app.currentBaseLayer.indexOf('loss') === 0)) {
         UmdOptions.show();
       } else {
         UmdOptions.hide();
