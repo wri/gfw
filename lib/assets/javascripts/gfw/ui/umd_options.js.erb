@@ -1,6 +1,6 @@
 gfw.ui.model.UmdOptions = cdb.core.Model.extend({  
   defaults: {
-    tooltip: "Options"
+    tooltip: "Settings"
   }
 });
 
@@ -70,7 +70,7 @@ gfw.ui.view.UmdOptions = cdb.core.View.extend({
 
 gfw.ui.model.umdoptionsDialog = Backbone.Model.extend({
   defaults: {
-    title: "Options"
+    title: "Settings"
   }
 
 });
@@ -85,7 +85,8 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
     'change #canopy_slider':  '_onChangeSlider',
     'input #canopy_slider':   '_onDragSlider',
     'mouseup #canopy_slider': '_onDragEndSlider',
-    'click .slider_option':   '_onClickOption'
+    'click .slider_option':   '_onClickOption',
+    'click .compression_option': '_onClickCompression'
   },
 
   initialize: function() {
@@ -147,6 +148,11 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
         this._paintRange(75)
       break;
     }
+    this._onClickApply();
+  },
+
+  _onClickCompression: function(){
+    config.compression = parseFloat( $('input[name=compression]:checked', '.form').val() );
     this._onClickApply();
   },
 
