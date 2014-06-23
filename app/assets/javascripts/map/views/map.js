@@ -48,11 +48,6 @@ define([
       // Listeners
       google.maps.event.addListener(this.map, 'zoom_changed', this.onZoomChange);
       google.maps.event.addListener(this.map, 'dragend', this.onCenterChange);
-
-      // When gmap is initialized, map.render is called, so at this point
-      // google is avaiable.
-      // TODO: Wouldn't be better to load everything after gmaps init?
-      this.searchboxView = new Searchbox();
     },
 
     /**
