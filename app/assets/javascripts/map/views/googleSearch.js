@@ -3,7 +3,6 @@
  * 
  * params {array} options object
  *   input - jquery input (e.g, $('input'))
- *   placeholder - string (e.g, "Type area or city")
  *   onSelect - on place selected callback (e.g, function(place) { console.log(place, 'selected')};)
  *
  * @return GoogleSearch class (extends Backbone.View).
