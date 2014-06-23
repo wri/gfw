@@ -46,8 +46,8 @@ define([
       google.maps.event.addListener(this.map, 'zoom_changed', this.onZoomChange);
       google.maps.event.addListener(this.map, 'dragend', this.onCenterChange);
       
-      this.$el.append(analysisButton.$el);
-      this.$el.append(searchbox.$el);
+      // this.$el.append(analysisButton.$el);
+      // this.$el.append(searchbox.$el);
     },
 
     /**
