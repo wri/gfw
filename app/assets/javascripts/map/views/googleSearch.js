@@ -1,7 +1,7 @@
 /**
  * The google search autocomplete module. Add google autocomplete to an input.
  * 
- * params {array} options object
+ * params {object} options object
  *   input - jquery input (e.g, $('input'))
  *   onSelect - on place selected callback (e.g, function(place) { console.log(place, 'selected')};)
  *
