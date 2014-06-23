@@ -13,6 +13,7 @@ gem 'carrierwave'
 gem 'fog'
 gem 'rmagick', :require => false
 gem 'unf'
+gem 'requirejs-rails'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'

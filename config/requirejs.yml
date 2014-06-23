@@ -1,0 +1,72 @@
+modules:
+  - name: 'map'
+
+paths:
+  main: "map/main"
+  jquery: "jquery"
+  jqueryui: "jquery-ui-1.10.4.custom.min"
+  underscore: "underscore"
+  backbone: "backbone"
+  mps: "minpubsub"
+  backbonequeryparams: "backbone.queryparams"
+  gmap: "map/gmap"
+  d3: "d3"
+  uri: "uri"
+  backbone_cartodb: "backbone.cartodb"
+  cartodblayer: "cartodb.gmapsv3"
+  cartodb: "cartodb"
+  wax: "wax.g.min"
+  store: "store"
+  text: "text"
+  Class: "class"
+  app: "map/app"
+  moment: "moment"
+  router: "map/router"
+  mediator: "map/mediator"
+  presenter: "map/presenter"
+  views: "map/views"
+  models: "map/models"
+  collections: "map/collections"
+  jasmine: "jasmine"
+  analysis: "map/analysis"
+  nsa: "map/nsa"
+
+shim: 
+  # main:
+  #   deps:
+  #     - "router"
+  #     - "mediator"
+  #     - "analysis"
+  #   exports:
+  #     "main"
+  underscore: 
+    exports: "_"
+  backbone: 
+    deps:
+      - "jquery"
+      - "underscore"
+    exports: "Backbone"
+  backbone_cartodb: 
+    deps: 
+      - "underscore"
+      - "backbone"
+    exports: "backbone_cartodb"
+  cartodblayer:
+    deps:
+      - "gmap"
+    exports: "CartoDBLayer"
+  jqueryui:
+    deps:
+      - "jquery"
+  backbonequeryparams: 
+    deps: 
+      - "backbone"
+      - "underscore"
+    exports: "backbonequeryparams"
+  Class: 
+    exports: "Class"
+  uri: 
+    exports: "UriTemplate"    
+  user: 
+    deps: 
+      - "Class"
