@@ -769,7 +769,8 @@ GFW.modules.app = function(gfw) {
       }
       this.currentBaseLayer = config.BASELAYER = baselayer;
       this._toggleTimeLayer();
-
+      if (baselayer && baselayer.indexOf('loss') !== 0) this._loadBaseLayer();
+      
       publish('timeline:change_baselayer', [this.currentBaseLayer]);
 
       Analysis.info.model.set({
