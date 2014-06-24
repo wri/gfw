@@ -100,7 +100,7 @@ define([
     },
 
     updateBaselayersTiles: function() {
-      var baselayers = presenter.get('baselayers');
+      var currentBaselayers = presenter.get('baselayers');
 
       for (var i = 0; i < currentBaselayers.length; i++) {
         var layerName = currentBaselayers[i];

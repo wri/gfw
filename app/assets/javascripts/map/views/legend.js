@@ -9,7 +9,7 @@ define([
   'presenter',
   'mps',
   'views/widget',
-  'text!views/legend.html'
+  'text!map/templates/legend.html'
 ], function(Backbone, _, presenter, mps, Widget, legendTpl) {
 
   var Legend = Widget.extend({
@@ -19,10 +19,7 @@ define([
 
     render: function() {
       Legend.__super__.render.apply(this);
-
-      this.$layersClosed = this.$el.find('.layers-closed');
       this.$layersCount = this.$el.find('.layers-count');
-      this.$layersDetails = this.$el.find('.layers-details');
     },
 
     update: function() {
@@ -33,18 +30,6 @@ define([
 
       // update layers-details
     },
-
-    open: function() {
-      Legend.__super__.open.apply(this);
-      this.$layersClosed.hide();
-      this.$layersDetails.show();
-    },
-
-    close: function() {
-      Legend.__super__.close.apply(this);
-      this.$layersClosed.show();
-      this.$layersDetails.hide();
-    }
 
   });
 

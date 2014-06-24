@@ -8,7 +8,7 @@ define([
   'underscore',
   'presenter',
   'mps',
-  'text!views/analysisButton.html'
+  'text!map/templates/analysisButton.html'
 ], function(Backbone, _, presenter, mps, template) {
 
   var AnalysisButton = Backbone.View.extend({

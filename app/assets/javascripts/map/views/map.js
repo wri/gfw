@@ -10,8 +10,9 @@ define([
   'underscore',
   'presenter',
   'mps',
-  'views/searchbox'
-], function(Backbone, _, presenter, mps, Searchbox) {
+  'views/searchbox',
+  'views/maptypeSelector'
+], function(Backbone, _, presenter, mps, searchbox, maptypeSelector) {
 
   var Map = Backbone.View.extend({
 

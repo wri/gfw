@@ -9,7 +9,7 @@ define([
   'mps',
   'gmap',
   'views/widget',
-  'text!views/searchbox.html'
+  'text!map/templates/searchbox.html'
 ], function(Backbone, _, mps, gmap, Widget, searchboxTpl) {
 
   var Searchbox = Widget.extend({

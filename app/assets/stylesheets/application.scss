@@ -22,14 +22,17 @@
 @import 'static-logos/*.png';
 @import 'country-icons/*.png';
 @import 'stories-icons/*.png';
+/**/
 
 // Modules
 @import 'modules/_mod-header-nav';
 @import 'modules/_mod-layers-menu';
 @import 'modules/_mod-form';
-@import 'modules/_mod-map';
+// @import 'modules/_mod-map';
 @import 'modules/_mod-widget';
 @import 'modules/_mod-widget-legend';
 @import 'modules/_mod-widget-searchbox';
-@import 'modules/countries';
-@import 'modules/home';
+@import 'modules/_mod-widget-maptype-selector';
+@import 'modules/_mod-timeline';
+// @import 'modules/countries';
+// @import 'modules/home';

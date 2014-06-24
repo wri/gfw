@@ -24,7 +24,6 @@ define([
         dateRange: [moment([2001]), moment([2013])],
         layerName: 'loss'
       });
-  
     },
 
     filterCanvasImage: function(imgdata, w, h) {

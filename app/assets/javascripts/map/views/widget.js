@@ -40,6 +40,9 @@ define([
     render: function() {
       this.$el.html(this.template());
       $('.map-container').append(this.el);
+
+      this.$widgetClosed = this.$el.find('.widget-closed');
+      this.$widgetOpened = this.$el.find('.widget-opened');
     },
 
     toggleDraggable: function() {
@@ -50,32 +53,26 @@ define([
       }
     },
 
-    toggleOpen: function(e) {
-      this.model.get('closed') ? this.open() : this.close();
+    toggleHidden: function(e) {
+      this.model.get('hidden') ? this.$el.hide() : this.$el.show();
     },
 
-    toggleHidden: function(e) {
-      this.model.get('hidden') ? this.hide() : this.show();
+    toggleOpen: function(e) {
+      this.model.get('closed') ? this.open() : this.close();
     },
 
     open: function() {
       this.model.set('closed', false, {silent: true});
       this.$el.removeClass('closed');
+      this.$widgetClosed.hide();
+      this.$widgetOpened.show();
     },
 
     close: function() {
       this.model.set('closed', true, {silent: true});
       this.$el.addClass('closed');
-    },
-
-    show: function() {
-      this.model.set('hidden', false, {silent: true});
-      this.$el.show();
-    },
-
-    hide: function() {
-      this.model.set('hidden', true, {silent: true});
-      this.$el.hide();
+      this.$widgetClosed.show();
+      this.$widgetOpened.hide();
     },
 
     update: function() {
