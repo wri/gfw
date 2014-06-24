@@ -767,9 +767,13 @@ GFW.modules.app = function(gfw) {
           GFW.app._renderForest2000Layer();
         }
       }
+      var previous_layer = config.BASELAYER;
       this.currentBaseLayer = config.BASELAYER = baselayer;
       this._toggleTimeLayer();
-      if (baselayer && baselayer.indexOf('loss') !== 0) this._loadBaseLayer();
+      
+      if ((previous_layer && previous_layer.indexOf('loss') === 0 && baselayer && baselayer.indexOf('loss') === 0) == false) {
+        this._loadBaseLayer();
+      }
       
       publish('timeline:change_baselayer', [this.currentBaseLayer]);
 
