@@ -27,21 +27,17 @@ define([
      * Subscribe to application events.
      */
     subscribe: function() {
-      mps.subscribe('AnalysisButton/disabled', _.bind(function(disabled) {
-        this.view.disabled(disabled);
+      mps.subscribe('AnalysisButton/setEnabled', _.bind(function(enabled) {
+        this.view.setEnabled(enabled);
       }, this));
     },
 
     /**
      * Handles an onClick UI event from the view by publishing a new
-     * 'AnalysisButton/enabled' event and setting updating the view.
+     * 'AnalysisButton/clicked'.
      */
     onClick: function() {
-      var enabled = this.view.isEnabled();
-
-      console.log('AnalysisButtonPresenter handling onClick event');
-      mps.publish('analysisButton/enabled', [enabled]);
-      this.view.setEnabled(enabled);
+        mps.publish('AnalysisButton/clicked', []);
     }
 
   });

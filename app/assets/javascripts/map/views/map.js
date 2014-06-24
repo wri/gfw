@@ -54,7 +54,6 @@ define([
 
        // Add analysis button to map
       this.$el.append(new AnalysisButtonView().$el);
-
     },
 
     /**

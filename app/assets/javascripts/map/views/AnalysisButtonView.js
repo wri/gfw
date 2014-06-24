@@ -38,8 +38,21 @@ define([
      * @param  {Event} e The click event
      */
     _onClick: function(e) {
-      console.log('AnalysisButtonView routing event to AnalysisButtonPresenter');
       this.presenter.onClick();
+    },
+
+    /**
+     * Returns jQuery object representing the #analysis_control DOM element.
+     * It's an optimization to avoid calling the jQuery selector multiple
+     * times.
+     * 
+     * @return {jQuery} The #analysis_control jQuery object
+     */
+    _getControl: function() {
+      if (!this.control) {
+        this.control = this.$('#analysis_control');
+      }
+      return this.control;
     },
 
     /**
@@ -48,10 +61,12 @@ define([
      * @param {Boolean} enable True to enable view, false to disable it.
      */
     setEnabled: function(enable) {
+      var control = this._getControl();
+
       if (enable) {
-        this.$el.removeClass('disabled');
+        control.removeClass('disabled');
       } else {
-        this.$el.addClass('disabled');
+        control.addClass('disabled');
       }
     },
 
@@ -61,7 +76,9 @@ define([
      * @return {Boolean} true if view enabled, otherwise false
      */
     isEnabled: function() {
-      return !this.$el.hasClass('disabled');
+      var control = this._getControl();
+
+      return !control.hasClass('disabled');
     }
 
   });
