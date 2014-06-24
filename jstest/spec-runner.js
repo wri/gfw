@@ -93,8 +93,8 @@ require.config({
 require([
   'mock_ajax', 
   'main', 
-  'spec/nsa_spec',
-  'spec/analysis_spec',
+  // 'spec/nsa_spec',
+  // 'spec/analysis_spec',
   'spec/AnalysisButtonPresenter_spec'], 
 function (mock_ajax, main, nsa_spec){
   console.log('Setting up specs...');
