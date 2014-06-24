@@ -15,6 +15,7 @@ require.config({
     d3: ['vendor/assets/javascripts/d3'],
     backbone_cartodb: ['vendor/assets/javascripts/backbone.cartodb'],
     cartodb: ['vendor/assets/javascripts/cartodb'],
+    cartodblayer: ['vendor/assets/javascripts/cartodb.gmapsv3'],
     store: ['vendor/assets/javascripts/store'],
     text: ['vendor/assets/javascripts/text'],
     Class: ['vendor/assets/javascripts/class'],
@@ -27,7 +28,8 @@ require.config({
     mediator: ['app/assets/javascripts/map/mediator'],
     presenter: ['app/assets/javascripts/map/presenter'],
     views: ['app/assets/javascripts/map/views'],
-    templates: ['app/assets/templates'],
+    templates: ['app/assets/javascripts/map/templates'],
+    presenters: ['app/assets/javascripts/map/presenters'],
     models: ['app/assets/javascripts/map/models'],
     collections: ['app/assets/javascripts/map/collections'],
     itertools: ['vendor/assets/javascripts/itertools'],
@@ -91,8 +93,9 @@ require.config({
 require([
   'mock_ajax', 
   'main', 
-  'spec/nsa_spec',
-  'spec/analysis_spec'], 
+  // 'spec/nsa_spec',
+  // 'spec/analysis_spec',
+  'spec/AnalysisButtonPresenter_spec'], 
 function (mock_ajax, main, nsa_spec){
   console.log('Setting up specs...');
 });

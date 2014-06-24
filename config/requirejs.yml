@@ -25,6 +25,8 @@ paths:
   mediator: "map/mediator"
   presenter: "map/presenter"
   views: "map/views"
+  templates: "map/templates"
+  presenters: "map/presenters"
   models: "map/models"
   collections: "map/collections"
   jasmine: "jasmine"
