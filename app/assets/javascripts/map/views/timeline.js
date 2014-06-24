@@ -9,12 +9,18 @@ define([
   'backbone',
   'presenter',
   'moment',
-  'd3'
-], function(Backbone, presenter, moment, d3) {
+  'd3',
+  'text!map/templates/timeline.html'
+], function(Backbone, presenter, moment, d3, timelineTpl) {
 
   var Timeline = Backbone.View.extend({
 
     className: 'timeline timeline-date-range',
+    template: _.template(timelineTpl),
+
+    events: {
+      'click .play': 'onClickPlay'
+    },
 
     initialize: function(opts) {
       _.bindAll(this, 'onAnimate', 'onBrush', 'onBrushEnd');
@@ -47,16 +53,39 @@ define([
     },
 
     render: function() {
+      this.$el.html(this.template());
+      this.$play = this.$el.find('.play');
+      this.$playIcon = this.$el.find('.play-icon');
+      this.$stopIcon = this.$el.find('.stop-icon');
+      this.$time = this.$el.find('.time');
+      $('.map-container').append(this.el);
       this.loadSlider();
-      $('.map-container').append(this.$el);
+    },
+
+    stopAnimation: function() {
+      this.$playIcon.show();
+      this.$stopIcon.hide();
+    },
+
+    animate: function() {
+      this.$playIcon.hide();
+      this.$stopIcon.show();
+
+      this.tipsy.style("visibility", 'visible');
+    },
+
+    onClickPlay: function() {
+      if (this.playing) {
+        this.stopAnimation();
+      } else {
+        this.animate();
+      }
     },
 
     loadSlider: function() {
       var self = this;
-
-      var margin = {top: 0, right: 25, bottom: 0, left: 25};
-      
-      var width = 1000 - margin.left - margin.right;
+      var margin = {top: 0, right: 30, bottom: 0, left: 30};
+      var width = 949 - margin.left - margin.right;
       var height = 50 - margin.bottom - margin.top;
 
       // Set xscale
@@ -77,7 +106,7 @@ define([
           });
 
       // Set top svg
-      this.svg = d3.select(this.el).append("svg")
+      this.svg = d3.select(this.$time[0]).append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
         .append("g")
@@ -86,7 +115,7 @@ define([
       // Bar, years
       this.svg.append("g")
           .attr("class", "xaxis")
-          .attr("transform", "translate(0," + (height / 2) + ")")
+          .attr("transform", "translate(0, " + (height / 2) + ")")
           .call(d3.svg.axis()
             .scale(this.xscale)
             .orient("top")
@@ -119,8 +148,40 @@ define([
           .remove();
 
       this.slider.select(".background")
-          .style('cursor', 'pointer')
+          .style("cursor", "pointer")
           .attr("height", height);
+
+      // Tipsy
+      this.tipsy = this.svg.append("g")
+        .attr("class", "tipsy")
+        .style("visibility", "visible");
+
+      this.trail = this.tipsy.append("svg:line")
+        .attr("class", "trail")
+        .attr("x1", this.handlers.left.attr("x"))
+        .attr("x2", this.handlers.left.attr("x"))
+        .attr("y1", 0)
+        .attr("y2", height)
+        .style("fill", 'red');
+
+      this.tooltip = this.tipsy.append("g")
+        .attr("class", "tooltip");
+
+      this.tooltip.append("rect")
+        .attr("width", 60)
+        .attr("height", 25)
+        .attr("x", -18)
+        .attr("y", -20)
+        .attr("rx", 2)
+        .attr("ry", 2);
+
+      this.tooltip.append("text")
+        .attr("x", 0)
+        .attr("y", -20)
+        .attr("dy", "1.6em")
+        .style("fill", 'white')
+        .text(this.opts.dateRange[0].year());
+
     },
 
     onBrush: function(event) {
@@ -155,8 +216,9 @@ define([
     onBrushEnd: function(event) {
       var startYear = Math.round(this.xscale.invert(this.handlers.left.attr("x")));
       var endYear = Math.round(this.xscale.invert(this.handlers.right.attr("x")));
-
-      this.updateTimelineDate([moment([startYear]), moment([endYear])]);
+      setTimeout(function() {
+        this.updateTimelineDate([moment([startYear]), moment([endYear])]);
+      }.bind(this), 20);
     },
 
     updateTimelineDate: function(timelineDate) {

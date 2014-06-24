@@ -18,12 +18,38 @@
   .play {
     float: left;
     width: 50px;
+    height: 100%;
     border-right: 1px solid #666;
+    cursor: pointer;
+    @include box-sizing(border-box);
+    padding: 20px;
+
+    &:hover {
+      .play-icon, .stop-icon {
+        opacity: 0.9;
+      }
+    }
+
+    .play-icon {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 6.5px 0 6.5px 10px;
+      border-color: transparent transparent transparent #444;
+    }
+
+    .stop-icon {
+      display: none;
+      width: 9px;
+      height: 9px;
+      background: #444;
+    }
   }
 
   .time {
     float: left;
-    width: 950px;
+    height: 100%;
+    width: 949px;
   }
 
   .xaxis {
@@ -31,25 +57,36 @@
     fill: #999;
   }
 
-  .xaxis .tick {
-    background: red;
+  // .xaxis .tick {
+  //   background: red;
+  // }
+
+  // .xaxis .halo {
+  //   fill: none;
+  //   stroke: #ddd;
+  //   stroke-width: 8px;
+  //   stroke-linecap: round;
+  // }
+
+  .tipsy {
+    .trail {
+      stroke: red;
+    }
   }
 
-  .xaxis .halo {
-    fill: none;
-    stroke: #ddd;
-    stroke-width: 8px;
-    stroke-linecap: round;
+  .tooltip {
+    rect {
+      fill: #333;
+    }
   }
 
   .slider .handle {
     fill: $cGreen1;
     stroke: darken($cGreen1, 20);
-    stroke-width: 0.3px;
     cursor: col-resize;
   }
 
-  .selected-domain {}
+  // .selected-domain {}
 }
 // .timeline_container {
 //   display: none;
