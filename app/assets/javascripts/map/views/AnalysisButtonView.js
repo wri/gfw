@@ -21,7 +21,7 @@ define([
     template: _.template(template),
 
     /**
-     * Constructs a new AnalysisButtonView.
+     * Constructs a new AnalysisButtonView and its presenter.
      */
     initialize: function() {
       this.presenter = new Presenter(this);
@@ -68,19 +68,7 @@ define([
       } else {
         control.addClass('disabled');
       }
-    },
-
-    /**
-     * Return true if view is enabled, otherwise return false.
-     * 
-     * @return {Boolean} true if view enabled, otherwise false
-     */
-    isEnabled: function() {
-      var control = this._getControl();
-
-      return !control.hasClass('disabled');
     }
-
   });
 
   return AnalysisButtonView;
