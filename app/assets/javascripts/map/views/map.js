@@ -11,8 +11,10 @@ define([
   'presenter',
   'mps',
   'views/searchbox',
-  'views/maptypeSelector'
-], function(Backbone, _, presenter, mps, searchbox, maptypeSelector) {
+  'views/maptypeSelector',
+  'views/AnalysisButtonView'
+], function(Backbone, _, presenter, mps, searchbox, maptypeSelector, 
+            AnalysisButtonView) {
 
   var Map = Backbone.View.extend({
 
@@ -49,6 +51,10 @@ define([
       // Listeners
       google.maps.event.addListener(this.map, 'zoom_changed', this.onZoomChange);
       google.maps.event.addListener(this.map, 'dragend', this.onCenterChange);
+
+       // Add analysis button to map
+      this.$el.append(new AnalysisButtonView().$el);
+
     },
 
     /**
@@ -90,7 +96,7 @@ define([
      * Update map type
      */
     updateMapType: function(maptype) {
-      this.map.setMapTypeId(maptype)
+      this.map.setMapTypeId(maptype);
     },
 
     onZoomChange: function() {
