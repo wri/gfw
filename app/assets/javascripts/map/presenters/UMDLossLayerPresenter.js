@@ -1,3 +1,8 @@
+/**
+ * The UMD loass layer presenter.
+ *
+ * @return UMDLossLayerPresenter class
+ */
 define([
   'Class',
   'underscore',

@@ -1,7 +1,7 @@
 /**
- * The loss layer module for use on canvas.
+ * The UMD loss map layer view.
  *
- * @return LossLayer class (extends CanvasLayer)
+ * @return UMDLossLayerView class (extends CanvasLayerView)
  */
 define([
   'moment',
