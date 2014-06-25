@@ -107,10 +107,20 @@ define([
             .scale(this.xscale)
             .orient("top")
             .ticks(this.opts.dateRange[1].year() - this.opts.dateRange[0].year())
-            .tickFormat(function(d) { return String(d); })
+            .tickFormat(function(d) {return String(d); })
             .tickSize(0)
             .tickPadding(-4))
         .select(".domain").remove();
+
+      this.svg.select(".xaxis").selectAll("g.line").remove();
+
+      this.svg.select(".xaxis").selectAll("g.tick")
+        .insert("rect", ":first-child")
+        .attr("width", 30)
+        .attr("height", 12)
+        .attr("x", -15)
+        .attr("y", -5)
+        .attr("fill", "white");
 
       // Handlers
       this.slider = this.svg.append("g")
@@ -130,9 +140,6 @@ define([
       this.handlers.right = this.handlers.left
          .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
          .attr('x', this.xscale(this.opts.dateRange[1].year()) - 30);
-
-      this.slider.selectAll(".extent,.resize")
-          .remove();
 
       this.slider.select(".background")
           .style("cursor", "pointer")
@@ -166,6 +173,17 @@ define([
           .on("brushend", function() {
             self.onAnimationBrushEnd(this);
           });
+
+      this.svg.selectAll(".extent,.resize")
+          .remove();
+
+      this.domain = this.svg.select(".xaxis")
+        .insert("svg:line", ":first-child")
+        .attr("class", "domain")
+        .attr("x1", this.handlers.left.attr("x"))
+        .attr("x2", this.handlers.right.attr("x"));
+
+      this.formatXaxis();
     },
 
     /**
@@ -215,7 +233,7 @@ define([
         .transition()
           .duration(speed)
           .ease("line")
-          .call(this.hiddenBrush.extent([trailTo, trailTo]))
+          .call(this.hiddenBrush.extent([trailFrom, trailTo]))
           .call(this.hiddenBrush.event);
     },
 
@@ -224,7 +242,7 @@ define([
      * Updates handlers positions and timeline date when reach a year.
      */
     onAnimationBrush: function(event) {
-      var value = this.hiddenBrush.extent()[0];
+      var value = this.hiddenBrush.extent()[1];
       var roundValue = Math.round(value); // current year
 
       // yearsArr keep track of the years already loaded.
@@ -233,9 +251,13 @@ define([
       // is in the right position.
       if (this.yearsArr.indexOf(roundValue) < 0 &&
         roundValue > 0) {
-        // Move right handler
-        this.handlers.right
-          .attr("x", this.xscale(roundValue) - 30);
+        // // Move right handler
+        // this.handlers.right
+        //   .attr("x", this.xscale(roundValue) - 30);
+
+        // Move domain right
+        this.domain
+          .attr("x2", this.xscale(roundValue) - 22);
 
         // Move trail
         this.trail
@@ -247,6 +269,8 @@ define([
           .text(roundValue)
           .style("left", this.xscale(roundValue) - 16 - 7 + "px");
 
+        this.formatXaxis();
+
         // Update timeline
         var startYear = Math.round(this.xscale.invert(this.handlers.left.attr("x")));
         this.updateTimelineDate([moment([startYear]), moment([roundValue])]);
@@ -257,7 +281,7 @@ define([
     },
 
     onAnimationBrushEnd: function (event){
-      var value = this.hiddenBrush.extent()[0];
+      var value = this.hiddenBrush.extent()[1];
       
       var hrl = this.handlers.left.attr("x");
       var trailFrom = Math.round(this.xscale.invert(hrl)) + 1; // +1 year left handler
@@ -276,7 +300,6 @@ define([
     onBrush: function(event) {
       var value = this.xscale.invert(d3.mouse(event)[0]);
       var roundValue = Math.round(value);
-      var timelineDate = presenter.get("timelineDate") || this.opts.dateRange;
       
       var xl = this.handlers.left.attr("x");
       var xr = this.handlers.right.attr("x");
@@ -285,10 +308,8 @@ define([
 
       if (this.playing) {
         this.stopAnimation();
+        // TODO: reset .domain here
       }
-
-      // is this needed?
-      this.brush.extent([roundValue, roundValue]);
 
       if (Math.abs(this.xscale(value) - xr - 30) <
         Math.abs(this.xscale(value) - xl + 16)) {
@@ -298,6 +319,14 @@ define([
           .duration(100)
           .ease('line')
           .attr("x", this.xscale(roundValue) - 30);
+
+      // Move domain right
+      this.domain
+        .transition()
+        .duration(100)
+        .ease("line")
+        .attr("x2", this.xscale(roundValue) - 30);
+
       } else {
       // Move left handler
         this.handlers.left
@@ -305,7 +334,34 @@ define([
           .duration(100)
           .ease('line')
           .attr("x", this.xscale(roundValue) + 16);
+
+      // Move domain left
+      this.domain
+        .transition()
+        // if it's already transitioning will broke. find a fix!
+        .duration(100)
+        .ease("line")
+        .attr("x1", this.xscale(roundValue) + 16);
       }
+
+      setTimeout(function() {
+        this.formatXaxis();
+      }.bind(this), 100);
+    },
+
+    formatXaxis: function() {
+      var self = this;
+
+      d3.select(".xaxis").selectAll("text").filter(function(d, i) {
+        // TODO: use where its going to move, not where it's already.
+        // so whe can remove timeout.
+        if (d > Math.round(self.xscale.invert(self.domain.attr("x1"))) &&
+          d < Math.round(self.xscale.invert(self.domain.attr("x2")))) {
+          d3.select(this).classed("selected", true);
+        } else {
+          d3.select(this).classed("selected", false);
+        }
+      });
     },
 
     /**
@@ -319,7 +375,6 @@ define([
       setTimeout(function() {
         this.updateTimelineDate([moment([startYear]), moment([endYear])]);
       }.bind(this), 100);
-
     },
 
     /**
