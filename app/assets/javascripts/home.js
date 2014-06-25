@@ -12,6 +12,7 @@
 //= require markerclusterer_compiled
 //= require url.min
 //= require gfw/deforestation_tile_layer
+//= require gfw/forest2000_tile_layer
 //= require gfw/canvas_tile_layer
 //= require gfw/static_grid_layer_imazon
 //= require gfw/static_grid_layer
@@ -36,3 +37,4 @@
 //= require gfw/ui/timeline/timeline_imazon
 //= require gfw/ui/timeline/timeline_fires
 //= require gfw/map
+//= require gfw/ui/umd_options

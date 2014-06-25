@@ -10,7 +10,9 @@ var config = {
   MONTHNAMES: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
   MONTHNAMES_SHORT: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
   QUARTERNAMES: ["JAN - MAR", "APR - JUN", "JUL - SEP", "OCT - DEC"],
-  mapLoaded: false
+  mapLoaded: false,
+  canopy_choice: false,
+  compression: 0.3
 };
 
 config.MAPOPTIONS = {
@@ -54,7 +56,7 @@ config.MAPSTYLES = {};
 
 config.MAPSTYLES.grayscale = {
   type: 'style',
-  style: [ { "featureType": "water" }, { "featureType": "transit", "stylers": [ { "saturation": -100 } ] }, { "featureType": "road", "stylers": [ { "saturation": -100 } ] }, { "featureType": "poi", "stylers": [ { "saturation": -100 } ] }, { "featureType": "landscape", "stylers": [ { "saturation": -100 } ] }, { "featureType": "administrative", "stylers": [ { "saturation": -100 } ] },{ "featureType": "poi.park", "elementType": "geometry", "stylers": [ { "visibility": 'off' } ] } ]
+  style: [ { "featureType": "water" }, { "featureType": "transit", "stylers": [ { "saturation": -100 } ] }, { "featureType": "road", "stylers": [ { "saturation": -100 } ] }, { "featureType": "poi", "stylers": [ { "saturation": -100 } ] }, { "featureType": "landscape", "stylers": [ { "saturation": -100 },{ "lightness": 90 } ] }, { "featureType": "administrative", "stylers": [ { "saturation": -100 } ] },{ "featureType": "poi", "elementType": "geometry", "stylers": [ { "visibility": 'off' } ] } ]
 }
 
 config.MAPSTYLES.terrain = {

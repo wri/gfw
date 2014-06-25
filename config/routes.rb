@@ -1,4 +1,6 @@
 Gfw::Application.routes.draw do
+
+  mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
   resources :stories
 
   # terms
@@ -25,6 +27,9 @@ Gfw::Application.routes.draw do
   # countries
   get '/countries' => 'countries#index'
   get '/country/:id' => 'countries#show', :as => 'country'
+  # todo => validate id
+  get '/country/:id/:area_id' => 'countries#show', :as => 'country_area'
+
   get '/countries/overview' => 'countries#overview'
 
   # media

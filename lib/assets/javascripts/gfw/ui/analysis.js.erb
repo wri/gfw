@@ -44,13 +44,14 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   _initViews: function() {
     this.info = new gfw.ui.view.AnalysisInfo();
     this.$el.append(this.info.render());
+    this.previous_layers = config.MAPOPTIONS.layers;
   },
 
   _initSubscribes: function() {
     subscribe('timeline:change_date_loss', _.bind(function(start_year, end_year, options) {
       if (options && options.publish) {
         this.range = '&begin='+start_year+'&end='+end_year;
-        this.info.model.set({ 'subtitle': 'Jan-'+start_year+' to Jan-'+parseInt(end_year, 10) });
+        this.info.model.set({ 'subtitle': 'Jan-'+start_year+' to Dec-'+parseInt(end_year - 1, 10) });
 
         if (this.info.model.get('hidden') && !url('?begin') && !url('?end')) return;
 
@@ -102,7 +103,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       var q1 = config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-3 >= 0) ? month_-3 : month_+9].slice(1).toLowerCase()
       var q2 = config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].charAt(0).toUpperCase() + config.MONTHNAMES_SHORT[(month_-1 >= 0) ? month_-1 : month_+11].slice(1).toLowerCase()
       
-      this.range = '&date='+year_+'-'+month_;
+      this.range = '&date='+year_+'-'+month_+'-15';
       this.info.model.set({ 'subtitle': q1+"-"+year_+' to '+q2+'-'+year_ });
 
       if (this.info.model.get('hidden')) return;
@@ -138,7 +139,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
   startAnalyzing: function(e) {
     e && e.preventDefault();
-
     if ($(this.$analysis_control).hasClass('disabled')) return;
 
     this.model.set('analyzing', true);
@@ -154,15 +154,19 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
   onClickCancel: function(e) {
     e && e.preventDefault();
+    
+    $map_coordinates.fadeOut();
+    this.onPreCancel();
+  },
 
+  onPreCancel: function() {
     this.model.set('analyzing', false);
     $viewfinder.removeClass('analysing');
-    $map_coordinates.fadeOut();
-
     this._clearAnalysis();
     this._deleteSelectedShape();
     this._disableDoneButton();
     this._enableAnalysisButton();
+    this._loadPreviousLayers();
   },
 
   _onClickDone: function(e) {
@@ -238,6 +242,22 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     updateHash();
   },
+  _loadPreviousLayers: function() {
+    layers = this.previous_layers;
+    for (var i=0; i<layers.length; i++) {
+      if (layers[i] !== 596) {
+        switch (layers[i]) {
+          case 574:
+            GFW.app._renderExternalLayer();
+          break;
+          case 574:
+            GFW.app._renderPantropicalLayer();
+          break;
+
+        }
+      }
+    }
+  },
 
   unblock_analysis: function() {
     this.$analysis_control.removeClass('analysis_blocked');
@@ -246,7 +266,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
   block_analysis: function() {
     this.$analysis_control.on('click',function(e){
-      e.stopPropagation();
+      //e.stopPropagation();
     }
     ).attr('data-tip', 'Please turn on the UMD tree cover loss layer to use the analysis tool')
      .addClass('analysis_blocked')
@@ -355,7 +375,10 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     map.fitBounds(bounds);
   },
 
-  _getAlertCount: function(elem) {
+  _getAlertCount: function(elem, no_data) {
+    var $spinner = this.$el.find('.stats .spinner')
+    if (!$spinner.is('visible')) $spinner.fadeIn(250);
+    
     var that = this;
 
     var area = this.model.get('area'),
@@ -376,12 +399,12 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     this.info.setDraggable(true);
 
-    var dataset = (baselayer === 'loss') ? 'umd' : baselayer;
+    var dataset = (baselayer.indexOf('loss') === 0 ) ? 'umd' : baselayer;
 
     if (!this.range && url('?begin') && url('?end')) {
       this.range = '&begin=' + url('?begin') + '&end=' + url('?end');
       this.info.model.set({ 'subtitle': 'Jan-' + parseInt( url('?begin'), 10) +
-                                    ' to Jan-' + parseInt( url('?end')  , 10)
+                                    ' to Dec-' + parseInt( url('?end')  , 10)
                           });
     }
 
@@ -409,8 +432,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
           iend   = '2013-0-10-01' || url('?end');
       range = this.range || '&begin=' + ibegin + '&end=' + iend;
 
-    } if (baselayer === 'loss') {
-      var lbegin = '2000' || url('?begin'),
+    } if (baselayer.indexOf('loss') === 0) {
+      var lbegin = '2001' || url('?begin'),
           lend   = '2013' || url('?end');
       range = this.range || '&begin=' + lbegin +'&end=' + lend;
 
@@ -427,8 +450,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       this.alertsUrl = baseurl+dataset+'?iso='+config.ISO+range;
       this.downloadUrl = baseurl+dataset+'.shp?iso='+config.ISO+range;
     }
-console.log(this.alertsUrl);
-    if (not_analyze) {
+    if (not_analyze && !no_data) {
       if (this.$el.find('.analysis_info').is(':visible')) {
         this.$el.find('.analysis_info').hide();
       }
@@ -438,53 +460,90 @@ console.log(this.alertsUrl);
         this.$el.find('.analysis_info').show();
       }
     }
-    executeAjax(this.alertsUrl, {}, {
-      success: _.bind(function(data) {
-        var baselayer = config.BASELAYER,
-            iso = (config.ISO && config.ISO !== 'ALL') ? config.ISO : 'GeoJSON';
+    
+    if (no_data) {
+      this.info.render();
+      this.$el.find('.stats .spinner').fadeOut(150, function() {
+        that.$el.find('.analysis_info .stats').append('<p>No data available</p>').fadeIn(150);
+      });
+      this.info.setDraggable(true);
+    } else {
+      executeAjax(this.alertsUrl, {}, {
+        success: _.bind(function(data) {
+          var baselayer = config.BASELAYER,
+              iso = (config.ISO && config.ISO !== 'ALL') ? config.ISO : 'GeoJSON';
 
-        ga('send', 'event', 'Analysis', 'Success', iso + ' - ' + baselayer);
+          ga('send', 'event', 'Analysis', 'Success', iso + ' - ' + baselayer);
 
-        if (baselayer === 'loss' && data) {
-          var loss  = formatNumber(Math.ceil((data.loss) * 10) / 10, true);
-          var gain  = formatNumber(Math.ceil((data.gain) * 10) / 10, true);
+          if (baselayer.indexOf('loss') === 0 && data) {
+            var loss  = formatNumber(Math.ceil((data.loss) * 10) / 10, true);
+            var gain  = formatNumber(Math.ceil((data.gain) * 10) / 10, true);
 
-          this.info.model.set({
-            'spinner': false,
-            'baselayer': baselayer,
-            'alert_count': false,
-            'loss': loss,
-            'gain': gain,
-            'begin': data.begin,
-            'end': data.end,
-            'units': data.units,
-            'subdisabled': true
-          });
-        } else if (baselayer === 'modis' && data && data.total) {
-          this.info.model.set({
-            'spinner': false,
-            'baselayer': baselayer,
-            'alert_count': formatNumber((data.total), true) + ' alerts',
-            'download': this.downloadUrl,
-            'subdisabled': true
-          });
-        } else if (baselayer === 'imazon' && data) {
-          var defor = null,
-              degrad = null;
+            this.info.model.set({
+              'spinner': false,
+              'baselayer': baselayer,
+              'alert_count': false,
+              'loss': loss,
+              'gain': gain,
+              'begin': data.begin,
+              'end': data.end,
+              'units': data.units,
+              'subdisabled': true
+            });
+          } else if (baselayer === 'modis' && data && data.total) {
+            this.info.model.set({
+              'spinner': false,
+              'baselayer': baselayer,
+              'alert_count': formatNumber((data.total), true) + ' alerts',
+              'download': this.downloadUrl,
+              'subdisabled': true
+            });
+          } else if (baselayer === 'imazon' && data) {
+            var defor = null,
+                degrad = null;
 
-          if (data[0]) defor = formatNumber(Math.ceil((data[0].value) * 10) / 10, true);
-          if (data[1]) degrad = formatNumber(Math.ceil((data[1].value) * 10) / 10, true);
+            if (data[0]) defor = formatNumber(Math.ceil((data[0].value) * 10) / 10, true);
+            if (data[1]) degrad = formatNumber(Math.ceil((data[1].value) * 10) / 10, true);
 
-          this.info.model.set({
-            'spinner': false,
-            'baselayer': baselayer,
-            'defor': defor,
-            'degrad': degrad,
-            'download': this.downloadUrl,
-            'subdisabled': true
-          });
+            this.info.model.set({
+              'spinner': false,
+              'baselayer': baselayer,
+              'defor': defor,
+              'degrad': degrad,
+              'download': this.downloadUrl,
+              'subdisabled': true
+            });
 
-          if (data[0] == null && data[1] == null) {
+            if (data[0] == null && data[1] == null) {
+              this.info.model.set({
+                'spinner': false,
+                'baselayer': baselayer,
+                'alert_count': 'No alerts',
+                'subdisabled': true
+              });
+            }
+          } else if (baselayer === "forma" && data) {
+            if (this.subscribecountry) this.info.subscribe.show();
+
+            if (data.value) {
+              this.info.model.set({
+                'spinner': false,
+                'baselayer': baselayer,
+                'alert_count': formatNumber(Math.ceil((data.value) * 10) / 10, true) + ' alerts',
+                'download': this.downloadUrl,
+                'subdisabled': false
+              });
+            } else {
+              this.info.model.set({
+                'spinner': false,
+                'baselayer': baselayer,
+                'alert_count': 'No alerts',
+                'subdisabled': false
+              });
+            }
+          } else {
+            var disabled = baselayer !== "forma";
+
             this.info.model.set({
               'spinner': false,
               'baselayer': baselayer,
@@ -492,53 +551,25 @@ console.log(this.alertsUrl);
               'subdisabled': true
             });
           }
-        } else if (baselayer === "forma" && data) {
-          if (this.subscribecountry) this.info.subscribe.show();
 
-          if (data.value) {
-            this.info.model.set({
-              'spinner': false,
-              'baselayer': baselayer,
-              'alert_count': formatNumber(Math.ceil((data.value) * 10) / 10, true) + ' alerts',
-              'download': this.downloadUrl,
-              'subdisabled': false
-            });
-          } else {
-            this.info.model.set({
-              'spinner': false,
-              'baselayer': baselayer,
-              'alert_count': 'No alerts',
-              'subdisabled': false
-            });
-          }
-        } else {
-          var disabled = baselayer !== "forma";
+          this.info.render();
+          this.info.setDraggable(true);
 
-          this.info.model.set({
-            'spinner': false,
-            'baselayer': baselayer,
-            'alert_count': 'No alerts',
-            'subdisabled': true
+          this.$el.find('.stats .error').fadeOut(150);
+
+          this.$el.find('.stats .spinner').fadeOut(250, function() {
+            that.$el.find('.stats .title, .stats ul').fadeIn(250);
           });
-        }
+        }, this),
+        error: _.bind(function(error) {
+          ga('send', 'event', 'Analysis', 'Error', (config.ISO && config.ISO !== 'ALL') ? config.ISO : '');
 
-        this.info.render();
-        this.info.setDraggable(true);
-
-        this.$el.find('.stats .error').fadeOut(150);
-
-        this.$el.find('.stats .spinner').fadeOut(250, function() {
-          that.$el.find('.stats .title, .stats ul').fadeIn(250);
-        });
-      }, this),
-      error: _.bind(function(error) {
-        ga('send', 'event', 'Analysis', 'Error', (config.ISO && config.ISO !== 'ALL') ? config.ISO : '');
-
-        this.$el.find('.stats .title, .stats ul, .stats .spinner').fadeOut(150, function() {
-          that.$el.find('.error').fadeIn(250);
-        });
-      }, this)
-    });
+          this.$el.find('.stats .title, .stats ul, .stats .spinner').fadeOut(150, function() {
+            that.$el.find('.error').fadeIn(250);
+          });
+        }, this)
+      });
+    }
   },
 
   loadCountry: function(ISO) {
@@ -570,15 +601,16 @@ console.log(this.alertsUrl);
       url: query,
       dataType: 'jsonp',
       success: function(area) {
-        if (area.rows[0].shape_area) {
+        if (area.total_rows > 0 && area.rows[0].shape_area !== undefined) {
           that.loadPolygon(the_geom, [area.rows[0].shape_area, 'protected_area=' + wdpaid]);
         }
         else{
-          return 0;
+          that._getAlertCount(null,true);
+          return 'API: No area data for ' + wdpaid;
         }
       },
-      error: function(){
-        return 'API: No area data';
+      error: function() {
+        return 'API: Error while retrieving data';
       }
     });
   },
@@ -722,6 +754,7 @@ console.log(this.alertsUrl);
   },
 
   _loadProtectedArea: function(the_geom,area_id){
+    this.previous_layers = config.MAPOPTIONS.layers;
     this.loadProtectedAreaByWpaid(area_id, the_geom);
   },
 
@@ -749,7 +782,7 @@ gfw.ui.model.AnalysisInfo = cdb.core.Model.extend({
     baselayer: config.BASELAYER,
     spinner: true,
     title: 'User defined area',
-    subtitle: 'Jan-2000 to Jan-2013',
+    subtitle: 'Jan-2001 to Dec-2012',
     subdisabled: true,
     alert_count: '',
     loss: '',
@@ -919,7 +952,7 @@ gfw.ui.view.AnalysisInfo = gfw.ui.view.Widget.extend({
     var that = this;
 
     var options = _.extend(this.model.toJSON(), {
-      umd: config.BASELAYER === 'loss',
+      umd: (config.BASELAYER && config.BASELAYER.indexOf('loss') === 0),
       imazon: config.BASELAYER === 'imazon',
       modis: config.BASELAYER === 'modis'
     });
@@ -1335,7 +1368,6 @@ gfw.ui.view.AnalysisReset = cdb.core.View.extend({
 
   _onClickDelete: function(e) {
     e.preventDefault();
-
     this._onClickCancel();
     Analysis.onClickCancel();
     Analysis.clearInfo();
