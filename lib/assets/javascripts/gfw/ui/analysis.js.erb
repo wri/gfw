@@ -460,11 +460,11 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         this.$el.find('.analysis_info').show();
       }
     }
-    
+    if (this.$el.find('.no_data_available').length > 0) this.$el.find('.no_data_available').remove();
     if (no_data) {
       this.info.render();
       this.$el.find('.stats .spinner').fadeOut(150, function() {
-        that.$el.find('.analysis_info .stats').append('<p>No data available</p>').fadeIn(150);
+        that.$el.find('.analysis_info .stats').append('<p class="no_data_available">No data available</p>').fadeIn(150);
       });
       this.info.setDraggable(true);
     } else {
