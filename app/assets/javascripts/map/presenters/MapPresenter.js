@@ -72,6 +72,7 @@ define([
       });
       var where = _.union(baseWhere, subWhere);
 
+      // Get layers from service and add them to the map view
       mapLayerService.getLayers(
         where,
         _.bind(function(layers) {

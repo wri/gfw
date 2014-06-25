@@ -9,6 +9,7 @@ define([
 ], function ($, mps, store) {
   return {  
 
+    // Added for Jasmine testing to bypass cache and use 'json' dataType
     test: false,
 
     /**
