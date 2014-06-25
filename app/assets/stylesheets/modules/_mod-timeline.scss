@@ -50,11 +50,44 @@
     float: left;
     height: 100%;
     width: 949px;
+    position: relative;
   }
 
   .xaxis {
     font-size: 11px;
     fill: #999;
+  }
+
+  .tooltip {
+    position: absolute;
+    top: -15px;
+    left: 0;
+    z-index: 2000;
+    background: #333;
+    color: white;
+    text-align: center;
+    font-size: 10px;
+    padding: 6px 8px;
+    border-radius: 2px;
+    min-width: 40px;
+    margin-left: 2px; // trail and triangle aligned
+
+    &:before {
+      content:'';
+      display:block;
+      width:0;
+      height:0;
+      position:absolute;
+      
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid #333;
+
+      right: 0;
+      left: 0;
+      margin: auto;
+      bottom: -5px;
+    }
   }
 
   // .xaxis .tick {
@@ -70,13 +103,9 @@
 
   .tipsy {
     .trail {
-      stroke: red;
-    }
-  }
-
-  .tooltip {
-    rect {
-      fill: #333;
+      stroke: $cGreen1;
+      stroke-width: 1;
+      shape-rendering: crispEdges;
     }
   }
 

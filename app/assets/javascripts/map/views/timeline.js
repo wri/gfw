@@ -28,6 +28,7 @@ define([
       this.opts = _.extend({
         dateRange: [moment([2001]), moment()],
         layerName: '',
+        playSpeed: 400,
         xAxis: {
           months: {
             enabled: false,
@@ -54,35 +55,21 @@ define([
 
     render: function() {
       this.$el.html(this.template());
+      $('.map-container').append(this.el);
+
+      // Cache
       this.$play = this.$el.find('.play');
       this.$playIcon = this.$el.find('.play-icon');
       this.$stopIcon = this.$el.find('.stop-icon');
       this.$time = this.$el.find('.time');
-      $('.map-container').append(this.el);
-      this.loadSlider();
+
+      this.renderSlider();
     },
 
-    stopAnimation: function() {
-      this.$playIcon.show();
-      this.$stopIcon.hide();
-    },
-
-    animate: function() {
-      this.$playIcon.hide();
-      this.$stopIcon.show();
-
-      this.tipsy.style("visibility", 'visible');
-    },
-
-    onClickPlay: function() {
-      if (this.playing) {
-        this.stopAnimation();
-      } else {
-        this.animate();
-      }
-    },
-
-    loadSlider: function() {
+    /**
+     * Render d3 timeline slider.
+     */
+    renderSlider: function() {
       var self = this;
       var margin = {top: 0, right: 30, bottom: 0, left: 30};
       var width = 949 - margin.left - margin.right;
@@ -154,43 +141,151 @@ define([
       // Tipsy
       this.tipsy = this.svg.append("g")
         .attr("class", "tipsy")
-        .style("visibility", "visible");
+        .style("visibility", "hidden");
 
       this.trail = this.tipsy.append("svg:line")
         .attr("class", "trail")
-        .attr("x1", this.handlers.left.attr("x"))
-        .attr("x2", this.handlers.left.attr("x"))
+        .attr("x1", this.handlers.right.attr("x"))
+        .attr("x2", this.handlers.right.attr("x"))
         .attr("y1", 0)
-        .attr("y2", height)
-        .style("fill", 'red');
+        .attr("y2", height);
 
-      this.tooltip = this.tipsy.append("g")
-        .attr("class", "tooltip");
-
-      this.tooltip.append("rect")
-        .attr("width", 60)
-        .attr("height", 25)
-        .attr("x", -18)
-        .attr("y", -20)
-        .attr("rx", 2)
-        .attr("ry", 2);
-
-      this.tooltip.append("text")
-        .attr("x", 0)
-        .attr("y", -20)
-        .attr("dy", "1.6em")
-        .style("fill", 'white')
+      this.tooltip = d3.select(this.$time[0]).append("div")
+        .attr("class", "tooltip")
+        .style("visibility", "hidden")
+        .style("left", this.handlers.right.attr("x") + 'px')
         .text(this.opts.dateRange[0].year());
+
+      // Hidden brush for the animation
+      this.hiddenBrush = d3.svg.brush()
+          .x(this.xscale)
+          .extent([0, 0])
+          .on("brush", function() {
+            self.onAnimationBrush(this)
+          })
+          .on("brushend", function() {
+            self.onAnimationBrushEnd(this);
+          });
+    },
+
+    /**
+     * Event fired when user clicks play/stop button.
+     */
+    onClickPlay: function(event) {
+      if (this.playing) {
+        this.stopAnimation();
+      } else {
+        this.animate();
+      }
+    },
+
+    stopAnimation: function() {
+      // End animation extent hiddenBrush
+      // this will call onAnimationBrushEnd
+      this.trail
+        .call(this.hiddenBrush.event)
+        .interrupt();
+    },
+
+    /**
+     * Play the timeline by extending hiddenBrush with d3 animation.
+     */
+    animate: function() {
+      var hlx = this.handlers.left.attr("x");
+      var hrx = this.handlers.right.attr("x");
+      var trailFrom = Math.round(this.xscale.invert(hlx)) + 1; // +1 year left handler
+      var trailTo = Math.round(this.xscale.invert(hrx));
+
+      if (trailTo == trailFrom) {
+        return;
+      }
+
+      var speed = (trailTo - trailFrom) * this.opts.playSpeed;
+
+      this.togglePlayIcon();
+      this.playing = true;
+      this.yearsArr = []; // clean years
+
+      this.showTipsy();
+      this.hiddenBrush.extent([trailFrom, trailFrom]);
+
+      // Animate extent hiddenBrush to trailTo
+      this.trail
+          .call(this.hiddenBrush.event)
+        .transition()
+          .duration(speed)
+          .ease("line")
+          .call(this.hiddenBrush.extent([trailTo, trailTo]))
+          .call(this.hiddenBrush.event);
+    },
+
+    /**
+     * Event fired when timeline is being played.
+     * Updates handlers positions and timeline date when reach a year.
+     */
+    onAnimationBrush: function(event) {
+      var value = this.hiddenBrush.extent()[0];
+      var roundValue = Math.round(value); // current year
+
+      // yearsArr keep track of the years already loaded.
+      // reason to do this is that value is never an
+      // absolute value so we don't know when the trail
+      // is in the right position.
+      if (this.yearsArr.indexOf(roundValue) < 0 &&
+        roundValue > 0) {
+        // Move right handler
+        this.handlers.right
+          .attr("x", this.xscale(roundValue) - 30);
+
+        // Move trail
+        this.trail
+          .attr("x1", this.xscale(roundValue) - 16 - 7)
+          .attr("x2", this.xscale(roundValue) - 16 - 7);
+
+        // Move && update tooltip
+        this.tooltip
+          .text(roundValue)
+          .style("left", this.xscale(roundValue) - 16 - 7 + "px");
+
+        // Update timeline
+        var startYear = Math.round(this.xscale.invert(this.handlers.left.attr("x")));
+        this.updateTimelineDate([moment([startYear]), moment([roundValue])]);
+
+        this.yearsArr.push(roundValue);
+      }
 
     },
 
+    onAnimationBrushEnd: function (event){
+      var value = this.hiddenBrush.extent()[0];
+      
+      var hrl = this.handlers.left.attr("x");
+      var trailFrom = Math.round(this.xscale.invert(hrl)) + 1; // +1 year left handler
+
+      if (value > 0 && value !==  trailFrom) {
+        this.togglePlayIcon();
+        this.playing = false;
+      }
+    },
+
+    /**
+     * Event fired when user click anywhere on the timeline
+     * and keep pressing.
+     * Updates just handlers positions.
+     */
     onBrush: function(event) {
       var value = this.xscale.invert(d3.mouse(event)[0]);
       var roundValue = Math.round(value);
-      var timelineDate = presenter.get('timelineDate') || this.opts.dateRange;
+      var timelineDate = presenter.get("timelineDate") || this.opts.dateRange;
       
       var xl = this.handlers.left.attr("x");
       var xr = this.handlers.right.attr("x");
+
+      this.hideTipsy();
+
+      if (this.playing) {
+        this.stopAnimation();
+      }
 
       // is this needed?
       this.brush.extent([roundValue, roundValue]);
@@ -213,16 +308,42 @@ define([
       }
     },
 
+    /**
+     * Event fired when user ends the click.
+     * Update the timeline date. (calls updateTimelineDate)
+     */
     onBrushEnd: function(event) {
       var startYear = Math.round(this.xscale.invert(this.handlers.left.attr("x")));
       var endYear = Math.round(this.xscale.invert(this.handlers.right.attr("x")));
+      
       setTimeout(function() {
         this.updateTimelineDate([moment([startYear]), moment([endYear])]);
-      }.bind(this), 20);
+      }.bind(this), 100);
+
     },
 
+    /**
+     * Update the timeline.
+     *
+     * @param  {array} Date range
+     */
     updateTimelineDate: function(timelineDate) {
       presenter.set('timelineDate', timelineDate);
+    },
+
+    togglePlayIcon: function() {
+      this.$playIcon.toggle();
+      this.$stopIcon.toggle();
+    },
+
+    showTipsy: function() {
+      this.tipsy.style("visibility", "visible");
+      this.tooltip.style("visibility", "visible");
+    },
+
+    hideTipsy: function() {
+      this.tipsy.style("visibility", "hidden");
+      this.tooltip.style("visibility", "hidden");
     }
   });
 
