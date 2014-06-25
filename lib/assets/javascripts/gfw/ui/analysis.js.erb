@@ -754,6 +754,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   },
 
   _loadProtectedArea: function(the_geom,area_id){
+    debugger;
     this.previous_layers = config.MAPOPTIONS.layers;
     this.loadProtectedAreaByWpaid(area_id, the_geom);
   },

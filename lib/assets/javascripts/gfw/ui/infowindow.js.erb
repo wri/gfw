@@ -50,19 +50,35 @@ CartoDBInfowindow.prototype.draw = function() {
       '<div class="shadow"></div>'+
       '<div class="bottom"></div>';
 
-    div.innerHTML = this.template || this.template_base;
+    div.innerHTML = this.template_image || this.template_base;
 
     var a = this.getElementsByClassName("close", div)[0];
-    var analyse = this.getElementsByClassName("analyse", div)[0];
+    var analyse = this.getElementsByClassName("analyse", div);
 
-    google.maps.event.addDomListener(div, 'touchstart', function (ev) {
-      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-    });
     google.maps.event.addDomListener(analyse, 'click', function (ev) {
       ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
       Analysis._loadProtectedArea(me.content.geom.the_geom, me.content.id, me.content.name);
       GFW.app._removeSpecialLayer();
       me._hide();
+    });
+
+    google.maps.event.addDomListener(a, 'click', function (ev) {
+      //ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+      //me._hide();
+    });
+
+    google.maps.event.addDomListener(div, 'click', function (ev) {
+      //ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+      //ev.stopPropagation ? ev.stopPropagation() : window.event.cancelBubble = true;
+    });
+
+    google.maps.event.addDomListener(a, 'touchend', function (ev) {
+      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+      //me._hide();
+    });
+
+    google.maps.event.addDomListener(div, 'touchstart', function (ev) {
+      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
     });
 
     google.maps.event.addDomListener(div, 'touchend', function (ev) {
@@ -72,20 +88,16 @@ CartoDBInfowindow.prototype.draw = function() {
     google.maps.event.addDomListener(div, 'dblclick', function (ev) {
       ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
     });
-
     google.maps.event.addDomListener(div, 'mousedown', function (ev) {
       ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
       ev.stopPropagation ? ev.stopPropagation() : window.event.cancelBubble = true;
     });
-
     google.maps.event.addDomListener(div, 'mouseup', function (ev) {
       ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
     });
-
     google.maps.event.addDomListener(div, 'mousewheel', function (ev) {
       ev.stopPropagation ? ev.stopPropagation() : window.event.cancelBubble = true;
     });
-
     google.maps.event.addDomListener(div, 'DOMMouseScroll', function (ev) {
       ev.stopPropagation ? ev.stopPropagation() : window.event.cancelBubble = true;
     });
@@ -284,6 +296,14 @@ CartoDBInfowindow.prototype._show = function() {
         that._createScroll()
       });
     });
+
+    $('#map').find('.protected-header .analyse').on('click', function(ev){
+      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+      debugger;
+      Analysis._loadProtectedArea(me.content.geom.the_geom, me.content.id, me.content.name);
+      GFW.app._removeSpecialLayer();
+      me._hide();
+    })
   }
 };
 
