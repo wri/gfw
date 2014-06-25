@@ -77,6 +77,7 @@ define([
         where,
         _.bind(function(layers) {
           this.view.initLayers(layers);
+          mps.publish('Map/layers-initialized', []);
         }, this),
         _.bind(function(error) {
           console.error(error);

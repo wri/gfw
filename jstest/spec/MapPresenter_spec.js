@@ -1,11 +1,12 @@
 /**
- * Unit tests for the AnalysisButtonPresenter class.
+ * Unit tests for the MapPresenter class.
  */
 define([
   'presenters/MapPresenter',
   'mps', 
-  'underscore'
-], function(MapPresenter, mps, _) {
+  'underscore',
+  'nsa'
+], function(MapPresenter, mps, _, nsa) {
 
   describe("The MapPresenter", function() {
     // The MapView mock
@@ -14,24 +15,12 @@ define([
     // The presenter to test
     var presenter = null;
 
-    beforeEach(function() {
-      viewSpy = {
-        initLayers: function(layers) {
-        },
-        setZoom: function(zoom) {
-        },
-        setCenter: function(lat, lng) {
-        },
-        setMapTypeId: function(maptype) {
-        }
-      };
-      presenter = new MapPresenter(viewSpy);
-    });
-
+    
     describe("Test responding to published events", function() {
       var place = {
         name: 'map',
         params: {
+          baselayers: 'loss',
           zoom: 8,
           maptype: 'terrain',
           lat: 1,
@@ -39,59 +28,45 @@ define([
         }
       };
       
-      beforeEach(function() {
-        _.each(['initLayers', 'setZoom', 'setCenter', 'setMapTypeId'], 
-          _.partial(spyOn, viewSpy));
-      });
-
-      it("Check Map/set-zoom handling", function() {
-        mps.publish('Map/set-zoom', [8]);        
-        expect(viewSpy.setZoom).toHaveBeenCalled();
-        expect(viewSpy.setZoom.calls.count()).toEqual(1);
-        expect(viewSpy.setZoom.calls.argsFor(0)).toEqual([8]);
+      beforeEach(function(done) {
+        jasmine.Ajax.install();
+        nsa.test = true;  
+        viewSpy = jasmine.createSpyObj(
+          'viewSpy',
+          ['initLayers', 'setZoom', 'setCenter', 'setMapTypeId']);
+        presenter = new MapPresenter(viewSpy);  
+        mps.subscribe('Map/layers-initialized', function() {
+          done();
+        });
+        mps.publish('Place/go', [place]);        
+        request = jasmine.Ajax.requests.mostRecent();
+        request.response(ApiResponse.layers.success);        
       });
 
       it("Check Place/go handling", function() {
-        mps.publish('Place/go', [place]);        
+        var layers = JSON.parse('[{"id":595,"slug":"loss","title":"Loss","title_color":"#F69","subtitle":"(annual, 30m, global)","sublayer":null,"table_name":"gfw_loss_year","source":null,"category_color":"#F69","category_slug":"forest_clearing","category_name":"Forest change","external":false,"zmin":0,"zmax":22,"xmax":null,"xmin":null,"ymax":null,"ymin":null,"tileurl":"http://earthengine.google.org/static/hansen_2013/gfw_loss_year/{Z}/{X}/{Y}.png","visible":true}]');
 
         // Zoom
         expect(viewSpy.setZoom).toHaveBeenCalled();
+        expect(viewSpy.setZoom).toHaveBeenCalledWith(8);
         expect(viewSpy.setZoom.calls.count()).toEqual(1);
-        expect(viewSpy.setZoom.calls.argsFor(0)).toEqual([8]);
 
         // Center
         expect(viewSpy.setCenter).toHaveBeenCalled();
+        expect(viewSpy.setCenter).toHaveBeenCalledWith(1, 2);
         expect(viewSpy.setCenter.calls.count()).toEqual(1);
-        expect(viewSpy.setCenter.calls.argsFor(0)).toEqual([1, 2]);
 
         // Maptype
         expect(viewSpy.setMapTypeId).toHaveBeenCalled();
+        expect(viewSpy.setMapTypeId).toHaveBeenCalledWith('terrain');        
         expect(viewSpy.setMapTypeId.calls.count()).toEqual(1);
-        expect(viewSpy.setMapTypeId.calls.argsFor(0)).toEqual(['terrain']);
-      });      
+
+        // TODO check initLayers
+        expect(viewSpy.initLayers).toHaveBeenCalled();
+        expect(viewSpy.initLayers).toHaveBeenCalledWith(layers);        
+        expect(viewSpy.initLayers.calls.count()).toEqual(1);
+
+      });
     });
-
-    
-    // describe("Test onClick event from view", function() {
-    //   var callbackSpy = null;
-
-    //   beforeEach(function() {
-    //     callbackSpy = {
-    //       callback: function(data) {
-    //       }
-    //     };
-    //     spyOn(callbackSpy, 'callback');
-    //     mps.subscribe('AnalysisButton/clicked', callbackSpy.callback);
-        
-    //     // Simulates the view calling onClick
-    //     presenter.onClick();
-    //   });
-
-    //   it("Test AnalysisButton/clicked event was published", function() {
-    //     expect(callbackSpy.callback).toHaveBeenCalled();
-    //     expect(callbackSpy.callback.calls.count()).toEqual(1);
-    //     expect(callbackSpy.callback.calls.argsFor(0)).toEqual([]);
-    //   });     
-    // });    
   });
 });
