@@ -57,6 +57,10 @@ define([
 
     setTimelineDate: function(timelineDate) {
       this.timelineDate = timelineDate;
+    },
+
+    geName: function() {
+      return this.name;
     }
   });
 

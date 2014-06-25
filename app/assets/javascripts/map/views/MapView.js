@@ -53,6 +53,21 @@ define([
       }, this));
     },
 
+    initLayers: function(layers) {
+      this.map.overlayMapTypes.clear();
+      _.map(layers, this.addLayer, this);
+    },
+
+    removeLayer: function(name) {
+      var overlays_length = this.map.overlayMapTypes.getLength();
+      if (overlays_length > 0) {
+        for (var i = 0; i< overlays_length; i++) {
+          var layer = this.map.overlayMapTypes.getAt(i);
+          if (layer && layer.name == name) this.map.overlayMapTypes.removeAt(i);
+        }
+      }
+    },
+    
     addLayer: function(layer) {
       var layerView = null;
 

@@ -21,6 +21,7 @@ require.config({
     Class: ['vendor/assets/javascripts/class'],
     uri: ['vendor/assets/javascripts/uri'],
     app: ['app/assets/javascripts/map/app'],
+    utils: ['app/assets/javascripts/map/utils'],
     nsa: ['app/assets/javascripts/map/nsa'],
     moment: ['vendor/assets/javascripts/moment'],
     analysis: ['app/assets/javascripts/map/analysis'],
@@ -95,8 +96,8 @@ require([
   'mock_ajax', 
   'main', 
   // 'spec/nsa_spec',
-  // 'spec/analysis_spec',
-  'spec/AnalysisButtonPresenter_spec',
+  // 'spec/AnalysisService_spec',
+  // 'spec/AnalysisButtonPresenter_spec',
   'spec/MapLayerService_spec'], 
 function (mock_ajax, main, nsa_spec){
   console.log('Setting up specs...');

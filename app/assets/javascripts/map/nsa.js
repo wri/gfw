@@ -9,6 +9,8 @@ define([
 ], function ($, mps, store) {
   return {  
 
+    test: false,
+
     /**
      * Async HTTP request to supplied URL and optional data.
      * 
@@ -23,7 +25,7 @@ define([
       var val = null;
       var dataType = url.contains('cartodb.com') ? 'jsonp' : 'json';
 
-      if (cache && store.enabled) {
+      if (!this.test && cache && store.enabled) {
         // TODO: Key should be made from url+data
         val = store.get(url);
         if (val) {
@@ -37,7 +39,7 @@ define([
         data: JSON.stringify(data),
         success: function(response) {
           if (successCb) {
-            if (cache && store.enabled) {
+            if (!this.test && cache && store.enabled) {
               store.set(url, response);
             }
             successCb(response);
@@ -49,7 +51,7 @@ define([
           }
         },
         contentType: 'application/json', 
-        dataType: dataType ? dataType : 'json'
+        dataType: this.test ? 'json' : dataType
       });
       return jqxhr;
     }

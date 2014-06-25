@@ -16,7 +16,7 @@ define([
      */
     subscribe: function() {
       mps.subscribe('Timeline/change', _.bind(function(name, dates) {
-        if (name === 'loss') {
+        if (this.view.getName() === name) {
           this.view.setTimelineDate(dates);
           this.view.updateTiles();
         }

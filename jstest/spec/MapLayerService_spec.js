@@ -4,51 +4,18 @@ define([
   'mps', 
   'underscore',
   'helpers/api_responses'  
-], function(MapLayerService, nsa, mps, _) {
+], function(service, nsa, mps, _) {
 
   describe("The MapLayerService", function() {
     var request = null;
-    var service = null;
 
     beforeEach(function() {
       jasmine.Ajax.install();
-      service = new MapLayerService();
+      nsa.test = true;
     });
 
-    describe("Test getForestChangeLayer()", function() {
-      var spy = null;
     
-      beforeEach(function(done) {  
-        spy = {
-          success: function(layer) {
-            done();
-          },
-          error: function(error) {
-
-          }
-        };      
-        spyOn(spy, 'success').and.callThrough();
-        service.getForestChangeLayer('loss', spy.success, spy.error);
-        
-        request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe(service._getUrl());
-        expect(request.method).toBe('POST');
-        expect(request.data()).toEqual({});
-        request.response(ApiResponse.layers.success);
-      });
-
-      it("Called success callback with correct layer", function() {
-        var expected = JSON.parse('{"id":595,"slug":"loss","title":"Loss","title_color":"#F69","subtitle":"(annual, 30m, global)","sublayer":null,"table_name":"gfw_loss_year","source":null,"category_color":"#F69","category_slug":"forest_clearing","category_name":"Forest change","external":false,"zmin":0,"zmax":22,"xmax":null,"xmin":null,"ymax":null,"ymin":null,"tileurl":"http://earthengine.google.org/static/hansen_2013/gfw_loss_year/{Z}/{X}/{Y}.png","visible":true}');
-        var layer = spy.success.calls.argsFor(0)[0];
-
-        expect(spy.success).toHaveBeenCalled();
-        expect(spy.success.calls.count()).toEqual(1);
-        expect(layer).toEqual(expected);
-      });
-    });
-
-
-    describe("Test getLayersById()", function() {
+    describe("Test getLayers", function() {
       var spy = null;
     
       beforeEach(function(done) {  
@@ -61,7 +28,7 @@ define([
           }
         };      
         spyOn(spy, 'success').and.callThrough();
-        service.getLayersById([591, 581], spy.success, spy.error);
+        service.getLayers([{id: 581}, {slug: 'forest2000'}], spy.success, spy.error);
         
         request = jasmine.Ajax.requests.mostRecent();
         expect(request.url).toBe(service._getUrl());
@@ -76,7 +43,8 @@ define([
 
         expect(spy.success).toHaveBeenCalled();
         expect(spy.success.calls.count()).toEqual(1);
-        expect(layers).toEqual(expected);
+        expect(layers).toContain(expected[0]);
+        expect(layers).toContain(expected[1]);
       });
     });
   });

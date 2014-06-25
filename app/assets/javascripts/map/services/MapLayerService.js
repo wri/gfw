@@ -17,33 +17,17 @@ define([
     },
 
     /**
-     * Asynchronously get the forest change layer metadata for supplied slug.
+     * Asynchronously get layers for supplied array of where specs.
      * 
-     * @param  {string} slug The layer slug (e.g., loss)
-     * @param  {function} successCb Function that takes the layer if found.
+     * @param  {array} where Where objects (e.g., [{id: 123}, {slug: 'loss'}])
+     * @param  {function} successCb Function that takes the layers if found.
      * @param  {function} errorCb Function that takes an error if on occurred.
      */
-    getForestChangeLayer: function(slug, successCb, errorCb) {
-      var category_slug = 'forest_clearing';
-
-      return this._getLayers(slug, category_slug, successCb, errorCb);
-    },
-
-    /**
-     * Asynchronously get map layers for supplied array of layer ids.
-     * 
-     * @param  {array} ids Array of integer layer ids.
-     * @param  {function} successCb Function that takes array of matching layers.
-     * @param  {function} errorCb Function that takes an error if one occurred.
-
-     */
-    getLayersById: function(ids, successCb, errorCb) {
+    getLayers: function(where, successCb, errorCb) {
       this._fetchLayers(
         _.bind(function(layers) {
-          var hits = _.filter(layers, function(x) {
-            return _.contains(ids, x.id);
-          });
-          successCb(hits);
+          var hits = _.map(where, _.partial(_.where, layers));
+          successCb(_.flatten(hits));
         }, this),
         _.bind(function(error) {
           errorCb(error);

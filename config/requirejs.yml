@@ -20,6 +20,7 @@ paths:
   text: "text"
   Class: "class"
   app: "map/app"
+  utils: "map/utils"
   moment: "moment"
   router: "map/router"
   mediator: "map/mediator"
