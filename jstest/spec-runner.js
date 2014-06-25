@@ -98,7 +98,8 @@ require([
   // 'spec/nsa_spec',
   // 'spec/AnalysisService_spec',
   // 'spec/AnalysisButtonPresenter_spec',
-  'spec/MapLayerService_spec'], 
-function (mock_ajax, main, nsa_spec){
+  'spec/MapLayerService_spec',
+  'spec/MapPresenter_spec'
+], function (mock_ajax, main, nsa_spec){
   console.log('Setting up specs...');
 });

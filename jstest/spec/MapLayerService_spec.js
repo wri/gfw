@@ -15,7 +15,7 @@ define([
     });
 
     
-    describe("Test getLayers", function() {
+    describe("Test getLayers()", function() {
       var spy = null;
     
       beforeEach(function(done) {  
