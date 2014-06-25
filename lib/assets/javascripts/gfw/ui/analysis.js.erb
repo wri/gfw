@@ -375,6 +375,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     map.fitBounds(bounds);
   },
 
+
   _getAlertCount: function(elem, no_data) {
     var $spinner = this.$el.find('.stats .spinner')
     if (!$spinner.is('visible')) $spinner.fadeIn(250);
@@ -478,7 +479,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
           if (baselayer.indexOf('loss') === 0 && data) {
             var loss  = formatNumber(Math.ceil((data.loss) * 10) / 10, true);
             var gain  = formatNumber(Math.ceil((data.gain) * 10) / 10, true);
-
             this.info.model.set({
               'spinner': false,
               'baselayer': baselayer,

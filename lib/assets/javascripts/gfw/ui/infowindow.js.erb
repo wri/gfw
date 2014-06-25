@@ -33,7 +33,7 @@ CartoDBInfowindow.prototype.draw = function() {
       '<div class="outer_top">'+
       '<div class="top">'+
       '<div class="protected-header">'+
-      '<h1></h1><div class="cover imgLiquidFill" style="width:295px; height:120px;"><img src="<%= image_path('backgrounds/cover.png') %>" /></div>'+
+      '<h1></h1><a href="#" class="analyse"></a><div class="cover imgLiquidFill" style="width:295px; height:120px;"><img src="<%= image_path('backgrounds/cover.png') %>" /></div>'+
       '</div>'+
       '<div class="infowindow_content"></div>'+
       '</div>'+
@@ -44,7 +44,7 @@ CartoDBInfowindow.prototype.draw = function() {
     this.template_base = '<a href="#close" class="close"></a>'+
       '<div class="outer_top">'+
       '<div class="top">'+
-      '<div class="infowindow_content"></div>'+
+      '<div class="infowindow_content"><a href="#" class="analyse"></div>'+
       '</div>'+
       '</div>'+
       '<div class="shadow"></div>'+
@@ -53,9 +53,16 @@ CartoDBInfowindow.prototype.draw = function() {
     div.innerHTML = this.template || this.template_base;
 
     var a = this.getElementsByClassName("close", div)[0];
+    var analyse = this.getElementsByClassName("analyse", div)[0];
 
     google.maps.event.addDomListener(div, 'touchstart', function (ev) {
       ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+    });
+    google.maps.event.addDomListener(analyse, 'click', function (ev) {
+      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+      Analysis._loadProtectedArea(me.content.geom.the_geom, me.content.id, me.content.name);
+      GFW.app._removeSpecialLayer();
+      me._hide();
     });
 
     google.maps.event.addDomListener(div, 'touchend', function (ev) {
