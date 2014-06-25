@@ -45,7 +45,7 @@ GFW.modules.app = function(gfw) {
 
       this.layers = [];
       this.cloudfront_url = 'dyynnn89u7nkm.cloudfront.net';
-      this.global_version = 6;
+      this.global_version = 7;
 
       gfw.log.enabled = options ? options.logging : false;
 
@@ -1119,7 +1119,7 @@ GFW.modules.app = function(gfw) {
             tiler_domain: 'dyynnn89u7nkm.cloudfront.net',
             sql_domain: 'dyynnn89u7nkm.cloudfront.net',
             tiler_path: '/tiles/',
-            extra_params: { v: this.global_version, cache_policy: "persist" }, // define a version number on requests
+            extra_params: { v: this.global_version}, // define a verison number on requests
             tiler_suffix: '.png',
             table_name: this._getTableName(this.currentBaseLayer),
             query: 'SELECT * FROM global_7d',
