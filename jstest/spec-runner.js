@@ -29,6 +29,7 @@ require.config({
     presenter: ['app/assets/javascripts/map/presenter'],
     views: ['app/assets/javascripts/map/views'],
     templates: ['app/assets/javascripts/map/templates'],
+    services: ['app/assets/javascripts/map/services'],
     presenters: ['app/assets/javascripts/map/presenters'],
     models: ['app/assets/javascripts/map/models'],
     collections: ['app/assets/javascripts/map/collections'],
@@ -95,7 +96,8 @@ require([
   'main', 
   // 'spec/nsa_spec',
   // 'spec/analysis_spec',
-  'spec/AnalysisButtonPresenter_spec'], 
+  'spec/AnalysisButtonPresenter_spec',
+  'spec/MapLayerService_spec'], 
 function (mock_ajax, main, nsa_spec){
   console.log('Setting up specs...');
 });

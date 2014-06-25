@@ -12,9 +12,9 @@ define([
   'mps',
   'gmap',
   'presenter',
-  'views/map',
-  'collections/layers'
-], function ($, _, Backbone, mps, gmap, presenter, map, layersCollection) {
+  'collections/layers',
+  'views/MapView'
+], function ($, _, Backbone, mps, gmap, presenter, layersCollection, MapView) {
   
   var Router = Backbone.Router.extend({
 
@@ -31,13 +31,29 @@ define([
     },
 
     map: function(zoom, lat, lng, iso, maptype, baselayers, sublayers) {
-      this.setMapSize();
+      var pathParams = {
+        zoom: zoom,
+        lat: lat,
+        lng: lng,
+        iso: iso,
+        maptype: maptype,
+        baselayers: baselayers,
+        sublayers: sublayers
+      };
+      var queryParams = _.parseUrl();
+      var place = {
+        name: 'map',
+        params: _.extend(pathParams, queryParams)
+      };
 
       layersCollection.fetch();
-      layersCollection.bind('reset', function() {
+      layersCollection.bind('reset', _.bind(function() {
         // Async Google Maps API loading
-        gmap.init(function() {
-          map.render();
+        gmap.init(_.bind(function() {
+          if (!this.mapView) {
+            this.mapView = new MapView();
+            this.mapView.render();
+          }
           presenter.setFromUrl({
             zoom: Number(zoom),
             lat: Number(lat),
@@ -47,8 +63,8 @@ define([
             baselayers: baselayers,
             sublayers: sublayers
           });
-        });
-      });
+        }, this));
+      }, this));
     },
 
     navigateTo: function(place) {

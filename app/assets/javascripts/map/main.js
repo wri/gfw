@@ -3,10 +3,9 @@ require([
   'backbone',
   'underscore',
   'router',
-  'mediator',
   'analysis',
   'mps'
-], function (Backbone, _, router, mediator, analysis, mps) {
+], function (Backbone, _, router, analysis, mps) {
   console.log('Main entry point...');
 
   if (!Backbone.History.started) {
@@ -59,4 +58,5 @@ require([
   // For dev
   window.analysis = analysis;
   window.mps = mps;
+  window.router = router;
 });

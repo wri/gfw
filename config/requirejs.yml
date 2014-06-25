@@ -26,6 +26,7 @@ paths:
   presenter: "map/presenter"
   views: "map/views"
   templates: "map/templates"
+  services: "map/services"
   presenters: "map/presenters"
   models: "map/models"
   collections: "map/collections"
