@@ -8,11 +8,6 @@ require([
 ], function (Backbone, _, router, analysis, mps) {
   console.log('Main entry point...');
 
-  if (!Backbone.History.started) {
-    console.log('Backbone.history.start');
-    Backbone.history.start({pushState: true});
-  }
-
   if (!String.prototype.format) {
     String.prototype.format = function() {
       var args = arguments;
@@ -54,6 +49,11 @@ require([
       return urlParams;
     }
   });
+
+  if (!Backbone.History.started) {
+    console.log('Backbone.history.start');
+    Backbone.history.start({pushState: true});
+  }
 
   // For dev
   window.analysis = analysis;

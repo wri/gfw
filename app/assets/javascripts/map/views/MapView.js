@@ -7,8 +7,9 @@ define([
   'backbone',
   'underscore',
   'presenters/MapPresenter',
-  'views/AnalysisButtonView'
-], function(Backbone, _, Presenter, AnalysisButtonView) {
+  'views/AnalysisButtonView',
+  'views/layers/UMDLossLayerView'
+], function(Backbone, _, Presenter, AnalysisButtonView, UMDLossLayerView) {
 
   var MapView = Backbone.View.extend({
 
@@ -19,6 +20,7 @@ define([
      */
     initialize: function() {      
       this.presenter = new Presenter(this);
+      this.layerViews = {};
     },
 
     render: function() {
@@ -51,8 +53,28 @@ define([
       }, this));
     },
 
+    addLayer: function(layer) {
+      var layerView = null;
+
+      if (layer.slug === 'loss') {
+        if (!_.has(this.layerViews, 'loss')) {
+          layerView = new UMDLossLayerView();
+          this.layerViews.loss = layerView;
+        }
+      }
+      this.map.overlayMapTypes.insertAt(0, layerView);
+    },
+
     setZoom: function(zoom) {
       this.map.setZoom(zoom);
+    },
+
+    setCenter: function(lat, lng) {
+      this.map.setCenter(new google.maps.LatLng(lat, lng));
+    },
+
+    setMapTypeId: function(maptype) {
+      this.map.setMapTypeId(maptype);
     },
 
     onZoomChange: function() {

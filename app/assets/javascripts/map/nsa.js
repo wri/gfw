@@ -21,6 +21,7 @@ define([
     spy: function(url, data, successCb, errorCb, cache) {
       var jqxhr = null;
       var val = null;
+      var dataType = url.contains('cartodb.com') ? 'jsonp' : 'json';
 
       if (cache && store.enabled) {
         // TODO: Key should be made from url+data
@@ -48,7 +49,7 @@ define([
           }
         },
         contentType: 'application/json', 
-        dataType: 'json'
+        dataType: dataType ? dataType : 'json'
       });
       return jqxhr;
     }

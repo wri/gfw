@@ -15,18 +15,16 @@ define([
      * Subscribe to application events.
      */
     subscribe: function() {
-      mps.subscribe('Place/go', _.bind(function(place) {
-        // TODO
-      }, this));  
       mps.subscribe('Timeline/change', _.bind(function(name, dates) {
         if (name === 'loss') {
           this.view.setTimelineDate(dates);
+          this.view.updateTiles();
         }
       }, this));      
     }
 
   });
 
-  return MapPresenter;
+  return UMDLossLayerPresenter;
 
 });

@@ -55,7 +55,7 @@ define([
       var sql = null;
 
       if (!this.url) {
-        template = 'http://wri-01.cartodb.com/api/v2{?sql}';
+        template = 'http://wri-01.cartodb.com/api/v2/sql{?q}';
         /*jshint multistr: true */
         sql = "SELECT \
                 cartodb_id AS id, \
@@ -118,5 +118,7 @@ define([
     }
   });
 
-  return MapLayerService;
+  var service = new MapLayerService();
+
+  return service;
 });

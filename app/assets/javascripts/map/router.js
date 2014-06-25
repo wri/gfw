@@ -45,25 +45,13 @@ define([
         name: 'map',
         params: _.extend(pathParams, queryParams)
       };
-
-      layersCollection.fetch();
-      layersCollection.bind('reset', _.bind(function() {
-        // Async Google Maps API loading
-        gmap.init(_.bind(function() {
-          if (!this.mapView) {
-            this.mapView = new MapView();
-            this.mapView.render();
-          }
-          presenter.setFromUrl({
-            zoom: Number(zoom),
-            lat: Number(lat),
-            lng: Number(lng),
-            iso: iso,
-            maptype: maptype,
-            baselayers: baselayers,
-            sublayers: sublayers
-          });
-        }, this));
+    
+      gmap.init(_.bind(function() {
+        if (!this.mapView) {
+          this.mapView = new MapView();
+          this.mapView.render();
+        }
+        mps.publish('Place/go', [place]);
       }, this));
     },
 
