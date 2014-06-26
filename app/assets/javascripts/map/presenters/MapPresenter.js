@@ -42,7 +42,7 @@ define([
     /**
      * Initialize map state from supplied place.
      * 
-     * @param  {object} place The router Place to go to
+     * @param  {PlaceService} The place to go to
      */
     _initMap: function(place) {
       var zoom = place.getMapZoom();
@@ -57,7 +57,7 @@ define([
     /**
      * Initialize map layer state from supplied place.
      * 
-     * @param  {object} place The router Place to go to
+     * @param  {PlaceService} The place to go to
      */
     _initLayers: function(place) {
       place.getMapLayers(_.bind(function(layers) {
