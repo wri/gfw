@@ -49,6 +49,16 @@ define([
         left:{},
         right:{}
       };
+      /**
+       * Current extent position.
+       * We use this because we need where the extent is going to be,
+       * we can't get the values from the handlers because they
+       * have animation.
+       */
+      this.ext = {
+        left: 0,
+        right: 0
+      };
 
       this.render();
     },
@@ -80,6 +90,8 @@ define([
           .domain([this.opts.dateRange[0].year(), this.opts.dateRange[1].year()])
           .range([0, width])
           .clamp(true);
+
+      this.ext.right = width;
 
       // Set brush and listeners
       this.brush = d3.svg.brush()
@@ -130,10 +142,10 @@ define([
       this.handlers.left = this.slider.append("rect")
           .attr("class", "handle")
           .attr("transform", "translate(0," + (height / 2 - 6) + ")")
-          .attr("width", 13)
-          .attr("height", 13)
+          .attr("width", 14)
+          .attr("height", 14)
           .attr("x", 16)
-          .attr("y", 0)
+          .attr("y", -1)
           .attr("rx", 2)
           .attr("ry", 2);
 
@@ -251,19 +263,20 @@ define([
       // is in the right position.
       if (this.yearsArr.indexOf(roundValue) < 0 &&
         roundValue > 0) {
+
         // Move domain right
         this.domain
-          .attr("x2", this.xscale(roundValue) - 22);
+          .attr("x2", this.xscale(roundValue) - 16 - 8);
 
         // Move trail
         this.trail
-          .attr("x1", this.xscale(roundValue) - 16 - 7)
-          .attr("x2", this.xscale(roundValue) - 16 - 7);
+          .attr("x1", this.xscale(roundValue) - 16 - 8)
+          .attr("x2", this.xscale(roundValue) - 16 - 8);
 
         // Move && update tooltip
         this.tooltip
           .text(roundValue)
-          .style("left", this.xscale(roundValue) - 16 - 7 + "px");
+          .style("left", this.xscale(roundValue) - 16 - 8 + "px");
 
         this.formatXaxis();
 
@@ -277,7 +290,7 @@ define([
 
     onAnimationBrushEnd: function (event){
       var value = this.hiddenBrush.extent()[1];
-      var hrl = this.handlers.left.attr("x");
+      var hrl = this.ext.left;
       var trailFrom = Math.round(this.xscale.invert(hrl)) + 1; // +1 year left handler
 
       if (value > 0 && value !==  trailFrom) {
@@ -306,6 +319,13 @@ define([
 
       if (Math.abs(this.xscale(value) - xr - 30) <
         Math.abs(this.xscale(value) - xl + 16)) {
+        if (this.ext.left > this.xscale(roundValue)) return;
+
+        this.ext.right = this.xscale(roundValue);
+
+        this.domain
+          .attr("x1", this.ext.left + 16);
+
         // Move right handler
         this.handlers.right
           .transition()
@@ -321,6 +341,12 @@ define([
           .attr("x2", this.xscale(roundValue) - 30);
 
       } else {
+        if (this.ext.right < this.xscale(roundValue)) return;
+        this.ext.left = this.xscale(roundValue);
+
+        this.domain
+          .attr("x2", this.ext.right - 30);
+
         // Move left handler
         this.handlers.left
           .transition()
@@ -331,25 +357,22 @@ define([
         // Move domain left
         this.domain
           .transition()
-          // if it's already transitioning will broke. find a fix!
           .duration(100)
           .ease("line")
           .attr("x1", this.xscale(roundValue) + 16);
       }
 
-      setTimeout(function() {
-        this.formatXaxis();
-      }.bind(this), 100);
+      this.formatXaxis();
     },
 
     formatXaxis: function() {
       var self = this;
 
       d3.select(".xaxis").selectAll("text").filter(function(d, i) {
-        // TODO: use where its going to move, not where it's already.
-        // so whe can remove timeout.
-        if (d > Math.round(self.xscale.invert(self.domain.attr("x1"))) &&
-          d < Math.round(self.xscale.invert(self.domain.attr("x2")))) {
+        var left = self.ext.left + 16;
+        var right = self.ext.right + 30;
+        if (d > Math.round(self.xscale.invert(left)) &&
+          d < Math.round(self.xscale.invert(right))) {
           d3.select(this).classed("selected", true);
         } else {
           d3.select(this).classed("selected", false);
