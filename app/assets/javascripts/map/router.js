@@ -2,7 +2,7 @@
  * The router module.
  *
  * Router handles app routing and URL parameters and updates Presenter.
- *
+ * 
  * @return singleton instance of Router class (extends Backbone.Router).
  */
 define([
@@ -11,16 +11,13 @@ define([
   'backbone',
   'mps',
   'gmap',
-  'presenter',
-  'collections/layers',
   'views/MapView',
   'services/PlaceService',
   'services/MapLayerService'
-], function($, _, Backbone, mps, gmap, presenter, layersCollection, MapView,
-  PlaceService, mapLayerService) {
+], function($, _, Backbone, mps, gmap, MapView, PlaceService, mapLayerService) {
 
   'use strict';
-
+  
   var Router = Backbone.Router.extend({
 
     routes: {
@@ -29,9 +26,13 @@ define([
     },
 
     initialize: function() {
-      _.bindAll(this, 'navigateTo');
-      mps.subscribe('navigate', this.navigateTo);
+      mps.subscribe('Place/go', _.bind(function(place) {
+        if (place.route) {
+          this.navigate('map/' + this.route, {silent: true});
+        }
+      }, this));
       this.setMapSize();
+      this.placeService = new PlaceService(mapLayerService, this);
     },
 
     map: function(zoom, lat, lng, iso, maptype, baselayers, sublayers) {
@@ -46,34 +47,22 @@ define([
       };
       var queryParams = _.parseUrl();
       var params = _.extend(pathParams, queryParams);
-      var place = new PlaceService('map', params, mapLayerService);
-
+    
       gmap.init(_.bind(function() {
         if (!this.mapView) {
           this.mapView = new MapView();
-          this.mapView.render();
         }
-        mps.publish('Place/go', [place]);
+        mps.publish(
+          'Place/update', [{go: true, name: 'map', params: params}]);
       }, this));
     },
 
-    navigateTo: function(place) {
-      this.path = place.path;
-      delete place.path;
-      this.navigate('map/' + this.path, place);
-    },
-
     setMapSize: function() {
-      var dh = $(window).height(),
-        $map = $('#map');
+      var dh   = $(window).height(),
+          $map = $('#map');
 
       $map.height(dh - 69);
-
-      $('.header-nav__logo').css({
-        position: 'absolute',
-        top: 69
-      });
-
+      $('.header-nav__logo').css({ position: 'absolute', top: 69 })
       setTimeout(function() {
         $('html, body').scrollTop(69);
       }, 500);

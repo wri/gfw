@@ -34,11 +34,14 @@ define([
       }, this));
 
       mps.subscribe('Place/go', _.bind(function(place) {
-        if (place.getName() === 'map') {
-          this._initMap(place);
-          this._initLayers(place);
+        if (place.name === 'map') {
+          this.layers = place.params.layers;
+          this._initMap(place.params);
+          this._initLayers(this.layers);
         }
-      }, this));
+      }, this));  
+
+      mps.publish('Place/register', [this]);
     },
 
     /**
@@ -46,14 +49,9 @@ define([
      *
      * @param  {PlaceService} The place to go to
      */
-    _initMap: function(place) {
-      var zoom = place.getMapZoom();
-      var center = place.getMapCenter();
-      var mapTypeId = place.getMapTypeId();
-
-      this.view.setZoom(zoom);
-      this.view.setCenter(center.lat, center.lng);
-      this.view.setMapTypeId(mapTypeId);
+    _initMap: function(params) {
+      this.view.initMap(params);
+      mps.publish('Map/initialized', []);
     },
 
     /**
@@ -61,11 +59,31 @@ define([
      *
      * @param  {PlaceService} The place to go to
      */
-    _initLayers: function(place) {
-      place.getMapLayers(_.bind(function(layers) {
-        this.view.initLayers(layers);
-        mps.publish('Map/layers-initialized', []);
-      }, this));
+    _initLayers: function(layers) {
+      this.view.initLayers(layers);
+      mps.publish('Map/layers-initialized', []);
+    },
+
+    getPlaceParams: function() {
+      var params = {};
+      var mapCenter = this.view.getCenter();
+      var baseLayers = _.where(this.layers, {category_slug: 'forest_clearing'});
+      var subLayers = _.filter(this.layers, function(layer) {
+        return layer.category_slug !== 'forest_clearing';
+      });
+
+      params.zoom = this.view.getZoom();
+      params.lat = mapCenter.lat;
+      params.lng = mapCenter.lng;
+      params.maptype = this.view.getMapTypeId();
+      params.baselayers = _.map(baseLayers, function(layer) {
+        return layer.slug;
+      });
+      params.sublayers = _.map(subLayers, function(layer) {
+        return layer.id;
+      });
+
+      return params;
     },
 
     /**
@@ -76,6 +94,7 @@ define([
      */
     onZoomChange: function(zoom) {
       mps.publish('Map/zoom-change', [zoom]);
+      mps.publish('Place/update', [{go: false}]);
     },
 
     /**
@@ -87,6 +106,7 @@ define([
      */
     onCenterChange: function(lat, lng) {
       mps.publish('Map/center-change', [lat, lng]);
+      mps.publish('Place/update', [{go: false}]);
     }
 
   });

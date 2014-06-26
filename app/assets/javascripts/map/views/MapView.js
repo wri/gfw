@@ -28,14 +28,7 @@ define([
     /**
      * Creates the Google Maps and attaches it to the DOM.
      */
-    render: function() {
-      var options = {
-        minZoom: 3,
-        zoom: 3,
-        mapTypeId: google.maps.MapTypeId.TERRAIN,
-        center: new google.maps.LatLng(15, 27)
-      };
-
+    render: function(options) {
       this.map = new google.maps.Map(this.el, options);
       this.resize();
       this._addCompositeViews();
@@ -65,6 +58,16 @@ define([
       }, this));
     },
 
+    initMap: function(params) {
+      var options = {
+        minZoom: 3,
+        zoom: params.zoom,
+        mapTypeId: params.maptype,
+        center: new google.maps.LatLng(params.lat, params.lng)
+      };
+      this.render(options);
+    },
+    
     /**
      * Used by MapPresenter to initialize the map view. This function clears
      * all layers from the map and then adds supplied layers in order.
@@ -103,7 +106,7 @@ define([
 
       if (layer.slug === 'loss') {
         if (!_.has(this.layerViews, 'loss')) {
-          layerView = new UMDLossLayerView();
+          layerView = new UMDLossLayerView(layer);
           this.layerViews.loss = layerView;
         }
       }
@@ -119,6 +122,10 @@ define([
       this.map.setZoom(zoom);
     },
 
+    getZoom: function() {
+      return this.map.getZoom();
+    },
+
     /**
      * Used by MapPresenter to set the map center.
      *
@@ -129,6 +136,12 @@ define([
       this.map.setCenter(new google.maps.LatLng(lat, lng));
     },
 
+    getCenter: function() {
+      var center = this.map.getCenter();
+
+      return {lat: center.lat(), lng: center.lng()};
+    },
+
     /**
      * Used by MapPresenter to set the map type.
      *
@@ -136,6 +149,10 @@ define([
      */
     setMapTypeId: function(maptype) {
       this.map.setMapTypeId(maptype);
+    },
+
+    getMapTypeId: function() {
+      return this.map.getMapTypeId();
     },
 
     /**
