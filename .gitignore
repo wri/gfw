@@ -25,6 +25,8 @@
 .rvmrc
 .env
 .idea/
+.grunt
+node_modules
 
 # Ingore Sublime project files:
 *.sublime-*
