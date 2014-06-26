@@ -1,3 +1,6 @@
+/**
+ * Unit test coverage for MapLayerService.
+ */
 define([
   'services/MapLayerService',
   'nsa',

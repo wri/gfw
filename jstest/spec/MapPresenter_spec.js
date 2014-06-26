@@ -5,12 +5,15 @@ define([
   'presenters/MapPresenter',
   'mps', 
   'underscore',
-  'nsa'
-], function(MapPresenter, mps, _, nsa) {
+  'nsa',
+  'services/PlaceService'
+], function(MapPresenter, mps, _, nsa, PlaceService) {
 
   describe("The MapPresenter", function() {
     // The MapView mock
     var viewSpy = null;
+
+    var placeService = null;
 
     // The presenter to test
     var presenter = null;
@@ -34,17 +37,29 @@ define([
         viewSpy = jasmine.createSpyObj(
           'viewSpy',
           ['initLayers', 'setZoom', 'setCenter', 'setMapTypeId']);
-        presenter = new MapPresenter(viewSpy);  
-        mps.subscribe('Map/layers-initialized', function() {
+        
+        placeService = jasmine.createSpyObj(
+          'placeService',
+          ['getBeginDate', 'getEndDate', 'getMapZoom', 'getMapCenter', 'getIso',
+           'getMapTypeId', 'getMapLayers', 'getName']);
+        placeService.getName.and.returnValue('map');
+        placeService.getMapZoom.and.returnValue(8);
+        placeService.getMapCenter.and.returnValue({lat: 1, lng: 2});
+        placeService.getMapTypeId.and.returnValue('terrain');
+        placeService.getMapLayers = function(callback) {
+          callback('layers');
           done();
-        });
-        mps.publish('Place/go', [place]);        
+        };
+        spyOn(placeService, 'getMapLayers').and.callThrough();
+        
+        presenter = new MapPresenter(viewSpy);  
+        mps.publish('Place/go', [placeService]);        
         request = jasmine.Ajax.requests.mostRecent();
         request.response(ApiResponse.layers.success);        
       });
 
       it("Check Place/go handling", function() {
-        var layers = JSON.parse('[{"id":595,"slug":"loss","title":"Loss","title_color":"#F69","subtitle":"(annual, 30m, global)","sublayer":null,"table_name":"gfw_loss_year","source":null,"category_color":"#F69","category_slug":"forest_clearing","category_name":"Forest change","external":false,"zmin":0,"zmax":22,"xmax":null,"xmin":null,"ymax":null,"ymin":null,"tileurl":"http://earthengine.google.org/static/hansen_2013/gfw_loss_year/{Z}/{X}/{Y}.png","visible":true}]');
+        var layers = 'layers';
 
         // Zoom
         expect(viewSpy.setZoom).toHaveBeenCalled();

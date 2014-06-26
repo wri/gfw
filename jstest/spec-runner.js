@@ -100,7 +100,8 @@ require([
   // 'spec/AnalysisButtonPresenter_spec',
   'spec/MapLayerService_spec',
   'spec/MapPresenter_spec',
-  'spec/UMDLossLayerPresenter_spec'
+  'spec/UMDLossLayerPresenter_spec',
+  'spec/PlaceService_spec'
 ], function (mock_ajax, main, nsa_spec){
   console.log('Setting up specs...');
 });

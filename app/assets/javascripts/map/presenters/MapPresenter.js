@@ -6,9 +6,8 @@
 define([
   'Class',
   'underscore',
-  'mps',
-  'services/MapLayerService'
-], function(Class, _, mps, mapLayerService) {
+  'mps'
+], function(Class, _, mps) {
 
   var MapPresenter = Class.extend({
 
@@ -33,7 +32,7 @@ define([
       }, this));
 
       mps.subscribe('Place/go', _.bind(function(place) {
-        if (place.name === 'map') {
+        if (place.getName() === 'map') {
           this._initMap(place);
           this._initLayers(place);
         }
@@ -46,13 +45,13 @@ define([
      * @param  {object} place The router Place to go to
      */
     _initMap: function(place) {
-      var zoom = Number(place.params.zoom);
-      var lat = Number(place.params.lat);
-      var lng = Number(place.params.lng);
+      var zoom = place.getMapZoom();
+      var center = place.getMapCenter();
+      var mapTypeId = place.getMapTypeId();
 
       this.view.setZoom(zoom);
-      this.view.setCenter(lat, lng);
-      this.view.setMapTypeId(place.params.maptype);
+      this.view.setCenter(center.lat, center.lng);
+      this.view.setMapTypeId(mapTypeId);
     },
 
     /**
@@ -61,27 +60,10 @@ define([
      * @param  {object} place The router Place to go to
      */
     _initLayers: function(place) {
-      var params = place.params;
-      var baselayers = params.baselayers ? params.baselayers.split(',') : [];
-      var baseWhere = _.map(baselayers, function (x) {
-        return {slug: x, category_slug: 'forest_clearing'};
-      });
-      var sublayers = params.sublayers ? params.sublayers.split(',') : [];
-      var subWhere = _.map(sublayers, function(x) {
-        return {id: x};
-      });
-      var where = _.union(baseWhere, subWhere);
-
-      // Get layers from service and add them to the map view
-      mapLayerService.getLayers(
-        where,
-        _.bind(function(layers) {
-          this.view.initLayers(layers);
-          mps.publish('Map/layers-initialized', []);
-        }, this),
-        _.bind(function(error) {
-          console.error(error);
-        }, this));
+      place.getMapLayers(_.bind(function(layers) {
+        this.view.initLayers(layers);
+        mps.publish('Map/layers-initialized', []);
+      }, this));
     },
 
     /**
