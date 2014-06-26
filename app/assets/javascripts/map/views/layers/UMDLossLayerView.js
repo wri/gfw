@@ -56,11 +56,19 @@ define([
       }
     },
 
+    /**
+     * Used by UMDLoassLayerPresenter to set the dates for the tile.
+     * 
+     * @param {Array} timelineDate 2D array of moment dates [begin, end]
+     */
     setTimelineDate: function(timelineDate) {
       this.timelineDate = timelineDate;
     },
 
-    geName: function() {
+    /**
+     * Return the view name
+     */
+    getName: function() {
       return this.name;
     }
   });
