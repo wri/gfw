@@ -9,6 +9,9 @@ define([
 ], function ($, mps, store) {
   return {  
 
+    // Added for Jasmine testing to bypass cache and use 'json' dataType
+    test: false,
+
     /**
      * Async HTTP request to supplied URL and optional data.
      * 
@@ -21,8 +24,9 @@ define([
     spy: function(url, data, successCb, errorCb, cache) {
       var jqxhr = null;
       var val = null;
+      var dataType = url.contains('cartodb.com') ? 'jsonp' : 'json';
 
-      if (cache && store.enabled) {
+      if (!this.test && cache && store.enabled) {
         // TODO: Key should be made from url+data
         val = store.get(url);
         if (val) {
@@ -36,7 +40,7 @@ define([
         data: JSON.stringify(data),
         success: function(response) {
           if (successCb) {
-            if (cache && store.enabled) {
+            if (!this.test && cache && store.enabled) {
               store.set(url, response);
             }
             successCb(response);
@@ -48,7 +52,7 @@ define([
           }
         },
         contentType: 'application/json', 
-        dataType: 'json'
+        dataType: this.test ? 'json' : dataType
       });
       return jqxhr;
     }

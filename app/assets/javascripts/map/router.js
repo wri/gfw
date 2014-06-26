@@ -12,9 +12,12 @@ define([
   'mps',
   'gmap',
   'presenter',
-  'views/map',
-  'collections/layers'
-], function ($, _, Backbone, mps, gmap, presenter, map, layersCollection) {
+  'collections/layers',
+  'views/MapView',
+  'services/PlaceService',
+  'services/MapLayerService'
+], function($, _, Backbone, mps, gmap, presenter, layersCollection, MapView,
+  PlaceService, mapLayerService) {
   
   var Router = Backbone.Router.extend({
 
@@ -31,24 +34,26 @@ define([
     },
 
     map: function(zoom, lat, lng, iso, maptype, baselayers, sublayers) {
-      this.setMapSize();
-
-      layersCollection.fetch();
-      layersCollection.bind('reset', function() {
-        // Async Google Maps API loading
-        gmap.init(function() {
-          map.render();
-          presenter.setFromUrl({
-            zoom: Number(zoom),
-            lat: Number(lat),
-            lng: Number(lng),
-            iso: iso,
-            maptype: maptype,
-            baselayers: baselayers,
-            sublayers: sublayers
-          });
-        });
-      });
+      var pathParams = {
+        zoom: zoom,
+        lat: lat,
+        lng: lng,
+        iso: iso,
+        maptype: maptype,
+        baselayers: baselayers,
+        sublayers: sublayers
+      };
+      var queryParams = _.parseUrl();
+      var params = _.extend(pathParams, queryParams);
+      var place = new PlaceService('map', params, mapLayerService);
+    
+      gmap.init(_.bind(function() {
+        if (!this.mapView) {
+          this.mapView = new MapView();
+          this.mapView.render();
+        }
+        mps.publish('Place/go', [place]);
+      }, this));
     },
 
     navigateTo: function(place) {

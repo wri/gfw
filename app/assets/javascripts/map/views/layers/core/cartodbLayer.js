@@ -6,10 +6,9 @@
 define([
   'backbone',
   'mps',
-  'views/map',
   'presenter',
   'wax'
-], function(Backbone, mps, map, presenter, wax) {
+], function(Backbone, mps, presenter, wax) {
 
   var CartodbLayer = Backbone.View.extend({
     initialize: function() {
@@ -22,7 +21,7 @@ define([
       if (this.rendered) return;
 
       this.layer = new CartoDBLayer({
-        map: map.map,
+        // map: map.map,
         user_name: '',
         tiler_domain: this.url,
         sql_domain: this.url,
