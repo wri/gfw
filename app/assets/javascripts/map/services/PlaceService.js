@@ -6,9 +6,10 @@
  */
 define([
   'Class',
-  'mps',
-  'uri'
-], function (Class, mps, UriTemplate) {
+  'underscore'
+], function (Class, _) {
+
+  'use strict';
 
   var PlaceService = Class.extend({
 
@@ -24,7 +25,7 @@ define([
       try {
         num = Number(val);
         if (isNaN(num)) {
-          throw "Not a number";
+          throw 'Not a number';
         }
         return num;
       } catch(err) {
@@ -35,7 +36,7 @@ define([
     getName: function() {
       return this.name;
     },
-    
+
     getBeginDate: function() {
       return this._toNumber(this.params.begin);
     },
@@ -82,11 +83,11 @@ define([
       }
 
       params = this.params;
-      
+
       // Create base layer filters
       baselayers = params.baselayers ? params.baselayers.split(',') : [];
       baseWhere = _.map(
-        baselayers, 
+        baselayers,
         function (name) {
           return {slug: name, category_slug: 'forest_clearing'};
       });
@@ -94,11 +95,11 @@ define([
       // Create sublayer filters
       sublayers = params.sublayers ? params.sublayers.split(',') : [];
       subWhere = _.map(
-        sublayers, 
+        sublayers,
         function(id) {
           return {id: id};
       });
-      
+
       // Combine layer filters with order preserved
       where = _.union(baseWhere, subWhere);
 
@@ -116,6 +117,6 @@ define([
         }, this));
     }
   });
-  
+
   return PlaceService;
 });

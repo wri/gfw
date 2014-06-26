@@ -6,7 +6,7 @@
  * To get analysis results, publish the 'analysis/get' event and pass in a
  * config object with analysis parameters:
  *
- * 
+ *
  */
 define([
   'jquery',
@@ -16,16 +16,18 @@ define([
   'Class',
   'uri'
 ], function ($, _, mps, nsa, Class, UriTemplate) {
-  
+
+  'use strict';
+
   var Analysis = Class.extend({
-    
+
     // URI templates for API
     apis: {
-      global: "http://{0}/forest-change/{1}{?period,geojson,download,bust,dev}",
-      national: "http://{0}/forest-change/{1}/admin{/iso}{?period,download,bust,dev}",
-      subnational: "http://{0}/forest-change/{1}/admin{/iso}{/id1}{?period,download,bust,dev}",
-      use: "http://{0}/forest-change/{1}/use/{/name}{/id}{?period,download,bust,dev}",
-      wdpa: "http://{0}/forest-change/{1}/wdpa/{/id}{?period,download,bust,dev}"
+      global: 'http://{0}/forest-change/{1}{?period,geojson,download,bust,dev}',
+      national: 'http://{0}/forest-change/{1}/admin{/iso}{?period,download,bust,dev}',
+      subnational: 'http://{0}/forest-change/{1}/admin{/iso}{/id1}{?period,download,bust,dev}',
+      use: 'http://{0}/forest-change/{1}/use/{/name}{/id}{?period,download,bust,dev}',
+      wdpa: 'http://{0}/forest-change/{1}/wdpa/{/id}{?period,download,bust,dev}'
     },
 
     init: function() {
@@ -36,7 +38,7 @@ define([
 
     /**
      * Return URI template for API based on supplied config object of parameters.
-     * 
+     *
      * @param  {object} API parameters
      * @return {string} URI template for API
      */
@@ -56,7 +58,7 @@ define([
 
     /**
      * Gets the API host.
-     * 
+     *
      * @return {string} the API host
      */
     get_api_host: function() {
@@ -66,7 +68,7 @@ define([
 
     /**
      * Returns API URL from supplied config object of API parameters.
-     * 
+     *
      * @param  {object} config API parameters
      * @return {string} API URL
      */
@@ -74,16 +76,16 @@ define([
       var template = this.get_uritemplate(config);
       var host = this.get_api_host();
       var url = null;
-      
+
       template = template.format(host, config.layerName);
       url = new UriTemplate(template).fillFromObject(config);
-      
+
       return url;
     },
 
     /**
      * Executes analysis.
-     * 
+     *
      * @param  {[type]} config object
      *   layerName - layer name (e.g., forma-alerts)
      *   period - beginyear,endyear (e.g., 2001,2002)
@@ -99,8 +101,8 @@ define([
       var url = this.get_url(config);
 
       nsa.spy(
-        url, 
-        {}, 
+        url,
+        {},
         function(response) {
           mps.publish('analysis/get-success', [response]);
         },

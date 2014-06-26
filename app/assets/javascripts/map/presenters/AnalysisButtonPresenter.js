@@ -9,13 +9,15 @@ define([
   'mps'
 ], function(Class, _, mps) {
 
+  'use strict';
+
   var AnalysisButtonPresenter = Class.extend({
 
     /**
      * Constructs new AnalysisButtonPresenter.
-     * 
+     *
      * @param  {AnalysisButtonView} view Instance of AnalysisButtonView
-     * 
+     *
      * @return {class} The AnalysisButtonPresenter class
      */
     init: function(view) {

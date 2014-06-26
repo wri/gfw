@@ -1,20 +1,23 @@
 /**
  * Module for executing async HTTP requests.
- * 
+ *
  */
 define([
   'jquery',
   'mps',
   'store'
 ], function ($, mps, store) {
-  return {  
+
+  'use strict';
+
+  return {
 
     // Added for Jasmine testing to bypass cache and use 'json' dataType
     test: false,
 
     /**
      * Async HTTP request to supplied URL and optional data.
-     * 
+     *
      * @param  {string} url The URL.
      * @param  {object} data The URL query parameters.
      * @param  {function} successCb The success callback function.
@@ -36,7 +39,7 @@ define([
 
       $.ajax({
         url: url,
-        type: "POST",
+        type: 'POST',
         data: JSON.stringify(data),
         success: function(response) {
           if (successCb) {
@@ -51,7 +54,7 @@ define([
             errorCb(jqxhr.responseText, status, error);
           }
         },
-        contentType: 'application/json', 
+        contentType: 'application/json',
         dataType: this.test ? 'json' : dataType
       });
       return jqxhr;

@@ -11,6 +11,8 @@ define([
   'views/layers/UMDLossLayerView'
 ], function(Backbone, _, Presenter, AnalysisButtonView, UMDLossLayerView) {
 
+  'use strict';
+
   var MapView = Backbone.View.extend({
 
      el: '#map',
@@ -18,7 +20,7 @@ define([
     /**
      * Constructs a new MapView and its presenter.
      */
-    initialize: function() {      
+    initialize: function() {
       this.presenter = new Presenter(this);
       this.layerViews = {};
     },
@@ -52,12 +54,12 @@ define([
      * events fired by the UI.
      */
     _addListeners: function() {
-      google.maps.event.addListener(this.map, 'zoom_changed', 
+      google.maps.event.addListener(this.map, 'zoom_changed',
         _.bind(function() {
           this.onZoomChange();
         }, this)
       );
-      google.maps.event.addListener(this.map, 'dragend', 
+      google.maps.event.addListener(this.map, 'dragend',
         _.bind(function() {
           this.onCenterChange();
       }, this));
@@ -66,7 +68,7 @@ define([
     /**
      * Used by MapPresenter to initialize the map view. This function clears
      * all layers from the map and then adds supplied layers in order.
-     * 
+     *
      * @param  {Array} layers Array of layer objects
      */
     initLayers: function(layers) {
@@ -76,7 +78,7 @@ define([
 
     /**
      * Used by MapPresenter to remove a layer by name.
-     * 
+     *
      * @param  {string} name The name of the layer to remove
      */
     removeLayer: function(name) {
@@ -84,14 +86,16 @@ define([
       if (overlays_length > 0) {
         for (var i = 0; i< overlays_length; i++) {
           var layer = this.map.overlayMapTypes.getAt(i);
-          if (layer && layer.name == name) this.map.overlayMapTypes.removeAt(i);
+          if (layer && layer.name === name) {
+            this.map.overlayMapTypes.removeAt(i);
+          }
         }
       }
     },
-  
+
     /**
      * Used by MapPresenter to add a layer to the map.
-     * 
+     *
      * @param {Object} layer The layer object
      */
     addLayer: function(layer) {
@@ -108,7 +112,7 @@ define([
 
     /**
      * Used by MapPresenter to set the map zoom.
-     * 
+     *
      * @param {integer} zoom The map zoom to set
      */
     setZoom: function(zoom) {
@@ -117,7 +121,7 @@ define([
 
     /**
      * Used by MapPresenter to set the map center.
-     * 
+     *
      * @param {Number} lat The center latitude
      * @param {Number} lng The center longitude
      */
@@ -127,7 +131,7 @@ define([
 
     /**
      * Used by MapPresenter to set the map type.
-     * 
+     *
      * @param {string} maptype The map type id.
      */
     setMapTypeId: function(maptype) {
@@ -160,7 +164,7 @@ define([
       this.map.setZoom(this.map.getZoom());
       this.map.setCenter(this.map.getCenter());
     }
-    
+
   });
 
   return MapView;

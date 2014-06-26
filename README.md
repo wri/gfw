@@ -25,6 +25,7 @@ We recommend managing your Ruby installation through [rbenv](https://github.com/
 ```bash
 $ brew update
 $ brew upgrade rbenv ruby-build
+$ brew install imagemagick
 ```
 
 Next clone the gfw repo:

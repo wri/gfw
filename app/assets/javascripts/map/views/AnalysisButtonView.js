@@ -10,6 +10,8 @@ define([
   'text!templates/AnalysisButtonTemplate.html'
 ], function(Backbone, _, Presenter, template) {
 
+  'use strict';
+
   var AnalysisButtonView = Backbone.View.extend({
 
     // UI event handlers.
@@ -34,10 +36,10 @@ define([
 
     /**
      * Click handler that delegates to the presenter.
-     * 
+     *
      * @param  {Event} e The click event
      */
-    _onClick: function(e) {
+    _onClick: function() {
       this.presenter.onClick();
     },
 
@@ -45,7 +47,7 @@ define([
      * Returns jQuery object representing the #analysis_control DOM element.
      * It's an optimization to avoid calling the jQuery selector multiple
      * times.
-     * 
+     *
      * @return {jQuery} The #analysis_control jQuery object
      */
     _getControl: function() {
@@ -57,7 +59,7 @@ define([
 
     /**
      * Enable or disable the view.
-     * 
+     *
      * @param {Boolean} enable True to enable view, false to disable it.
      */
     setEnabled: function(enable) {

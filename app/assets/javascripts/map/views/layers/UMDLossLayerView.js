@@ -9,13 +9,15 @@ define([
   'presenters/UMDLossLayerPresenter'
 ], function(moment, CanvasLayerView, Presenter) {
 
+  'use strict';
+
   var UMDLossLayerView = CanvasLayerView.extend({
 
     init: function(layer) {
       this._super();
       this.layer = layer;
       this.dataMaxZoom = 12;
-      this.name = "loss";
+      this.name = 'loss';
       this.url = 'http://earthengine.google.org/static/hansen_2013/gfw_loss_year/%z/%x/%y.png';
       this.timelineDate = [moment([2001]), moment([2013])];
       this.presenter = new Presenter(this);
@@ -23,7 +25,7 @@ define([
 
     /**
      * Implementation for CanvasLayerView.filterCanvasImage().
-     * 
+     *
      * @param  {[type]} imgdata [description]
      * @param  {[type]} w       [description]
      * @param  {[type]} h       [description]
@@ -33,7 +35,7 @@ define([
     filterCanvasImage: function(imgdata, w, h, z) {
       var components = 4;
 
-      timelineDate = [this.timelineDate[0].year(), this.timelineDate[1].year()];
+      var timelineDate = [this.timelineDate[0].year(), this.timelineDate[1].year()];
 
       for(var i = 0; i < w; ++i) {
         for(var j = 0; j < h; ++j) {
@@ -58,7 +60,7 @@ define([
 
     /**
      * Used by UMDLoassLayerPresenter to set the dates for the tile.
-     * 
+     *
      * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
     setTimelineDate: function(timelineDate) {

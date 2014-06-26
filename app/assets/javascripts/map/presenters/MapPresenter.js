@@ -9,13 +9,15 @@ define([
   'mps'
 ], function(Class, _, mps) {
 
+  'use strict';
+
   var MapPresenter = Class.extend({
 
     /**
      * Constructs new MapPresenter.
-     * 
+     *
      * @param  {MapView} Instance of MapView
-     * 
+     *
      * @return {class} The MapPresenter class
      */
     init: function(view) {
@@ -36,12 +38,12 @@ define([
           this._initMap(place);
           this._initLayers(place);
         }
-      }, this));  
+      }, this));
     },
 
     /**
      * Initialize map state from supplied place.
-     * 
+     *
      * @param  {PlaceService} The place to go to
      */
     _initMap: function(place) {
@@ -56,7 +58,7 @@ define([
 
     /**
      * Initialize map layer state from supplied place.
-     * 
+     *
      * @param  {PlaceService} The place to go to
      */
     _initLayers: function(place) {
@@ -69,7 +71,7 @@ define([
     /**
      * Used by MapView to delegate zoom change UI events. Results in the
      * Map/zoom-change event getting published with the new zoom.
-     * 
+     *
      * @param  {integer} zoom the new map zoom
      */
     onZoomChange: function(zoom) {
@@ -79,7 +81,7 @@ define([
     /**
      * Used by MapView to delegate map center change UI events. Results in
      * Map/center-change event getting published with the new map zoom.
-     * 
+     *
      * @param  {number} lat new map center latitude
      * @param  {number} lng new map center longitude
      */

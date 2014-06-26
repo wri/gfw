@@ -3,9 +3,9 @@
  */
 require([
   'utils',
-  'backbone',
-  'underscore'
-], function (utils, Backbone, _) {
+  'backbone'
+], function (utils, Backbone) {
+  'use strict';
 
   require(['router', 'services/AnalysisService', 'mps'],
     function(router, as, mps) {

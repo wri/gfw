@@ -9,6 +9,8 @@ define([
   'text!map/templates/layersMenu.html'
 ], function(Backbone, _, layersMenuTpl) {
 
+  'use strict';
+
   var LayersMenu = Backbone.View.extend({
 
     el: '.layers-menu',
@@ -31,7 +33,7 @@ define([
       var layerName = $(event.currentTarget).parents('li').data('layer');
 
       if (layerName) {
-        mps.publish('presenter/toggle-layer', [layerName]);
+        window.mps.publish('presenter/toggle-layer', [layerName]);
       }
     },
 
