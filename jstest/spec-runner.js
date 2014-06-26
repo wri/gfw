@@ -21,6 +21,7 @@ require.config({
     Class: ['vendor/assets/javascripts/class'],
     uri: ['vendor/assets/javascripts/uri'],
     app: ['app/assets/javascripts/map/app'],
+    utils: ['app/assets/javascripts/map/utils'],
     nsa: ['app/assets/javascripts/map/nsa'],
     moment: ['vendor/assets/javascripts/moment'],
     analysis: ['app/assets/javascripts/map/analysis'],
@@ -29,6 +30,7 @@ require.config({
     presenter: ['app/assets/javascripts/map/presenter'],
     views: ['app/assets/javascripts/map/views'],
     templates: ['app/assets/javascripts/map/templates'],
+    services: ['app/assets/javascripts/map/services'],
     presenters: ['app/assets/javascripts/map/presenters'],
     models: ['app/assets/javascripts/map/models'],
     collections: ['app/assets/javascripts/map/collections'],
@@ -94,8 +96,12 @@ require([
   'mock_ajax', 
   'main', 
   // 'spec/nsa_spec',
-  // 'spec/analysis_spec',
-  'spec/AnalysisButtonPresenter_spec'], 
-function (mock_ajax, main, nsa_spec){
+  // 'spec/AnalysisService_spec',
+  // 'spec/AnalysisButtonPresenter_spec',
+  'spec/MapLayerService_spec',
+  'spec/MapPresenter_spec',
+  'spec/UMDLossLayerPresenter_spec',
+  'spec/PlaceService_spec'
+], function (mock_ajax, main, nsa_spec){
   console.log('Setting up specs...');
 });

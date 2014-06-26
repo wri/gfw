@@ -1,5 +1,5 @@
 define([
-  'analysis',
+  'services/AnalysisService',
   'mps', 
   'underscore',
   'helpers/api_responses',
