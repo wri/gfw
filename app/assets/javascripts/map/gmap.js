@@ -8,6 +8,8 @@ define([
   'underscore'
 ], function ($, _) {
 
+  'use strict';
+
   var libs = [
     {
       name: 'maps',

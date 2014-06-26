@@ -12,6 +12,8 @@ define([
   'text!map/templates/searchbox.html'
 ], function(Backbone, _, mps, gmap, Widget, searchboxTpl) {
 
+  'use strict';
+
   var Searchbox = Widget.extend({
 
     className: 'widget searchbox',
@@ -26,7 +28,7 @@ define([
     setAutocomplete: function() {
       this.autocomplete = new google.maps.places.Autocomplete(
         this.$el.find('input')[0], {types: ['geocode']});
-      
+
       google.maps.event.addListener(
         this.autocomplete, 'place_changed', this.onPlaceSelected);
     },

@@ -6,12 +6,13 @@
  * @return Timeline class (extends Backbone.View).
  */
 define([
+  'underscore',
   'backbone',
   'presenter',
   'moment',
   'd3',
   'text!map/templates/timeline.html'
-], function(Backbone, presenter, moment, d3, timelineTpl) {
+], function(_, Backbone, presenter, moment, d3, timelineTpl) {
 
   'use strict';
 
@@ -51,6 +52,7 @@ define([
         left:{},
         right:{}
       };
+
       /**
        * Current extent position.
        * We use this because we need where the extent is going to be,
@@ -100,7 +102,7 @@ define([
           .x(this.xscale)
           .extent([0, 0])
           .on('brush', function() {
-            self.onBrush(this)
+            self.onBrush(this);
           })
           .on('brushend', function() {
             self.onBrushEnd(this);
@@ -182,7 +184,7 @@ define([
           .x(this.xscale)
           .extent([0, 0])
           .on('brush', function() {
-            self.onAnimationBrush(this)
+            self.onAnimationBrush(this);
           })
           .on('brushend', function() {
             self.onAnimationBrushEnd(this);
@@ -203,7 +205,7 @@ define([
     /**
      * Event fired when user clicks play/stop button.
      */
-    onClickPlay: function(event) {
+    onClickPlay: function() {
       if (this.playing) {
         this.stopAnimation();
       } else {
@@ -228,7 +230,7 @@ define([
       var trailFrom = Math.round(this.xscale.invert(hlx)) + 1; // +1 year left handler
       var trailTo = Math.round(this.xscale.invert(hrx));
 
-      if (trailTo == trailFrom) {
+      if (trailTo === trailFrom) {
         return;
       }
 
@@ -255,7 +257,7 @@ define([
      * Event fired when timeline is being played.
      * Updates handlers positions and timeline date when reach a year.
      */
-    onAnimationBrush: function(event) {
+    onAnimationBrush: function() {
       var value = this.hiddenBrush.extent()[1];
       var roundValue = Math.round(value); // current year
 
@@ -290,7 +292,7 @@ define([
       }
     },
 
-    onAnimationBrushEnd: function (event){
+    onAnimationBrushEnd: function (){
       var value = this.hiddenBrush.extent()[1];
       var hrl = this.ext.left;
       var trailFrom = Math.round(this.xscale.invert(hrl)) + 1; // +1 year left handler
@@ -321,8 +323,9 @@ define([
 
       if (Math.abs(this.xscale(value) - xr - 30) <
         Math.abs(this.xscale(value) - xl + 16)) {
-        if (this.ext.left > this.xscale(roundValue)) return;
-
+        if (this.ext.left > this.xscale(roundValue)) {
+          return;
+        }
         this.ext.right = this.xscale(roundValue);
 
         this.domain
@@ -343,7 +346,9 @@ define([
           .attr('x2', this.xscale(roundValue) - 30);
 
       } else {
-        if (this.ext.right < this.xscale(roundValue)) return;
+        if (this.ext.right < this.xscale(roundValue)) {
+          return;
+        }
         this.ext.left = this.xscale(roundValue);
 
         this.domain
@@ -370,7 +375,7 @@ define([
     formatXaxis: function() {
       var self = this;
 
-      d3.select('.xaxis').selectAll('text').filter(function(d, i) {
+      d3.select('.xaxis').selectAll('text').filter(function(d) {
         var left = self.ext.left + 16;
         var right = self.ext.right + 30;
         if (d > Math.round(self.xscale.invert(left)) &&
@@ -386,10 +391,10 @@ define([
      * Event fired when user ends the click.
      * Update the timeline date. (calls updateTimelineDate)
      */
-    onBrushEnd: function(event) {
+    onBrushEnd: function() {
       var startYear = Math.round(this.xscale.invert(this.handlers.left.attr('x')));
       var endYear = Math.round(this.xscale.invert(this.handlers.right.attr('x')));
-
+      // give time to finish animations.
       setTimeout(function() {
         this.updateTimelineDate([moment([startYear]), moment([endYear])]);
       }.bind(this), 100);

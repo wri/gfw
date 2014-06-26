@@ -11,6 +11,8 @@ define([
   'text!map/templates/maptype_selector.html'
 ], function(Backbone, _, mps, Widget, maptypeSelectorTpl) {
 
+  'use strict';
+
   var MaptypeSelector = Widget.extend({
 
     className: 'widget maptype-selector',

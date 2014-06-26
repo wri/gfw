@@ -7,7 +7,9 @@ define([
   'backbone',
   'underscore',
   'jqueryui'
-], function(Backbone, _, jqueryui) {
+], function(Backbone, _) {
+
+  'use strict';
 
   var Widget = Backbone.View.extend({
 
@@ -53,11 +55,11 @@ define([
       }
     },
 
-    toggleHidden: function(e) {
+    toggleHidden: function() {
       this.model.get('hidden') ? this.$el.hide() : this.$el.show();
     },
 
-    toggleOpen: function(e) {
+    toggleOpen: function() {
       this.model.get('closed') ? this.open() : this.close();
     },
 

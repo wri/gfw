@@ -2,7 +2,7 @@
  * The map module.
  *
  * View for the Google Map.
- * 
+ *
  * @return singleton instance of Map class (extends Backbone.View).
  */
 define([
@@ -13,8 +13,10 @@ define([
   'views/searchbox',
   'views/maptypeSelector',
   'views/AnalysisButtonView'
-], function(Backbone, _, presenter, mps, searchbox, maptypeSelector, 
+], function(Backbone, _, presenter, mps, searchbox, maptypeSelector,
             AnalysisButtonView) {
+
+  'use strict';
 
   var Map = Backbone.View.extend({
 
@@ -71,7 +73,9 @@ define([
       if (overlays_length > 0) {
         for (var i = 0; i< overlays_length; i++) {
           var layer = this.map.overlayMapTypes.getAt(i);
-          if (layer && layer.name == name) this.map.overlayMapTypes.removeAt(i);
+          if (layer && layer.name === name) {
+            this.map.overlayMapTypes.removeAt(i);
+          }
         }
       }
     },

@@ -9,6 +9,8 @@ define([
   'mps'
 ], function(Class, _, mps) {
 
+  'use strict';
+
   var UMDLossLayerPresenter = Class.extend({
 
     init: function(view) {
@@ -25,7 +27,7 @@ define([
           this.view.setTimelineDate(dates);
           this.view.updateTiles();
         }
-      }, this));      
+      }, this));
     }
 
   });

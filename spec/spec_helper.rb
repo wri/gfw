@@ -35,4 +35,4 @@ end
 
 Capybara.run_server     = false
 Capybara.app_host       = 'http://localhost:5000'
-Capybara.default_driver = :rack_test
+Capybara.default_driver = :selenium

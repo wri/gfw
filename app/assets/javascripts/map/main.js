@@ -1,16 +1,15 @@
-'use strict';
-
-// Application entry point
+/**
+ * Application entry point.
+ */
 require([
   'utils',
   'backbone'
 ], function (utils, Backbone) {
-  console.log('Main entry point...');
+  'use strict';
 
   require(['router', 'services/AnalysisService', 'mps'],
     function(router, as, mps) {
       if (!Backbone.History.started) {
-        console.log('Backbone.history.start');
         Backbone.history.start({pushState: true});
       }
       // For dev

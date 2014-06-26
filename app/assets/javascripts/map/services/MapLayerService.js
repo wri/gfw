@@ -1,14 +1,17 @@
 /**
  * Aysynchronous service for accessing map layer metadata.
- * 
+ *
  */
 define([
   'Class',
   'mps',
   'store',
   'nsa',
-  'uri'
-], function (Class, mps, store, nsa, UriTemplate) {
+  'uri',
+  'underscore'
+], function (Class, mps, store, nsa, UriTemplate, _) {
+
+  'use strict';
 
   var MapLayerService = Class.extend({
 
@@ -18,7 +21,7 @@ define([
 
     /**
      * Asynchronously get layers for supplied array of where specs.
-     * 
+     *
      * @param  {array} where Where objects (e.g., [{id: 123}, {slug: 'loss'}])
      * @param  {function} successCb Function that takes the layers if found.
      * @param  {function} errorCb Function that takes an error if on occurred.
@@ -41,7 +44,7 @@ define([
       if (!this.url) {
         template = 'http://wri-01.cartodb.com/api/v2/sql{?q}';
         /*jshint multistr: true */
-        sql = "SELECT \
+        sql = 'SELECT \
                 cartodb_id AS id, \
                 slug, \
                 title, \
@@ -68,10 +71,10 @@ define([
                 display = TRUE \
               ORDER BY \
                 displaylayer, \
-                title ASC";
+                title ASC';
         this.url = new UriTemplate(template).fillFromObject({q: sql});
       }
-      
+
       return this.url;
     },
 
@@ -84,7 +87,7 @@ define([
         }, this),
         _.bind(function(jqxhr, status, error) {
           console.error(status, error);
-          errorCb("MapLayerService unable to fetch layers from CartoDB");
+          errorCb('MapLayerService unable to fetch layers from CartoDB');
         }, this));
     },
 
