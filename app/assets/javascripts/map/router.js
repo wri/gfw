@@ -14,9 +14,10 @@ define([
   'presenter',
   'collections/layers',
   'views/MapView',
-  'services/PlaceService'
+  'services/PlaceService',
+  'services/MapLayerService'
 ], function($, _, Backbone, mps, gmap, presenter, layersCollection, MapView,
-  PlaceService) {
+  PlaceService, mapLayerService) {
   
   var Router = Backbone.Router.extend({
 
@@ -44,7 +45,7 @@ define([
       };
       var queryParams = _.parseUrl();
       var params = _.extend(pathParams, queryParams);
-      var place = new PlaceService('map', params);
+      var place = new PlaceService('map', params, mapLayerService);
     
       gmap.init(_.bind(function() {
         if (!this.mapView) {
