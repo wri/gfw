@@ -22,7 +22,13 @@ define([
 
       this.timeline = new Timeline({
         dateRange: [moment([2001]), moment([2013])],
-        layerName: 'loss'
+        layerName: 'loss',
+        xAxis: {
+          months: {
+            enabled: true,
+            steps: true
+          }
+        }
       });
     },
 

@@ -49,6 +49,7 @@ define([
         left:{},
         right:{}
       };
+
       /**
        * Current extent position.
        * We use this because we need where the extent is going to be,
@@ -320,7 +321,6 @@ define([
       if (Math.abs(this.xscale(value) - xr - 30) <
         Math.abs(this.xscale(value) - xl + 16)) {
         if (this.ext.left > this.xscale(roundValue)) return;
-
         this.ext.right = this.xscale(roundValue);
 
         this.domain
@@ -369,10 +369,10 @@ define([
       var self = this;
 
       d3.select(".xaxis").selectAll("text").filter(function(d, i) {
-        var left = self.ext.left + 16;
-        var right = self.ext.right + 30;
-        if (d > Math.round(self.xscale.invert(left)) &&
-          d < Math.round(self.xscale.invert(right))) {
+        var x1 = self.ext.left + 16;
+        var x2 = self.ext.right + 30;
+        if (d > Math.round(self.xscale.invert(x1)) &&
+          d < Math.round(self.xscale.invert(x2))) {
           d3.select(this).classed("selected", true);
         } else {
           d3.select(this).classed("selected", false);
@@ -387,7 +387,7 @@ define([
     onBrushEnd: function(event) {
       var startYear = Math.round(this.xscale.invert(this.handlers.left.attr("x")));
       var endYear = Math.round(this.xscale.invert(this.handlers.right.attr("x")));
-      
+      // give time to finish animations.
       setTimeout(function() {
         this.updateTimelineDate([moment([startYear]), moment([endYear])]);
       }.bind(this), 100);
