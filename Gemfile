@@ -22,12 +22,10 @@ group :development, :test do
   gem 'show_me_the_cookies'
   gem 'factory_girl_rails'
   gem 'shoulda-matchers'
-  gem 'jasmine-rails'
-  gem 'guard'
-  gem 'guard-jasmine-rails'
   gem 'database_cleaner'
   gem 'debugger'
 end
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
@@ -36,7 +34,6 @@ group :development do
 end
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
 end
 
