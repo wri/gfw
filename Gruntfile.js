@@ -44,8 +44,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     'jshint',
-    'testem',
-    'watch'
+    'testem'
   ]);
 
 };
