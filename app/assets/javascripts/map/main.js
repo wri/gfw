@@ -3,9 +3,8 @@
 // Application entry point
 require([
   'utils',
-  'backbone',
-  'underscore'
-], function (utils, Backbone, _) {
+  'backbone'
+], function (utils, Backbone) {
   console.log('Main entry point...');
 
   require(['router', 'services/AnalysisService', 'mps'],

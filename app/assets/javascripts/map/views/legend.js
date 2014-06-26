@@ -12,6 +12,8 @@ define([
   'text!map/templates/legend.html'
 ], function(Backbone, _, presenter, mps, Widget, legendTpl) {
 
+  'use strict';
+
   var Legend = Widget.extend({
 
     className: 'widget legend',
