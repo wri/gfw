@@ -150,9 +150,18 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
 
   _initViews: function() {
     var that = this;
+    var $searchInput = $('.map-search-input');
 
-    this.map = new google.maps.Map(document.getElementById('stories_map'), _.extend({}, config.MAPOPTIONS, { zoomControl: true }));
+    // Load map
+    this.map = new google.maps.Map(document.getElementById('stories_map'), 
+      _.extend({}, config.MAPOPTIONS, { zoomControl: true }));
 
+    // Listen to map loaded
+    google.maps.event.addListenerOnce(this.map, 'idle', function(){
+      $searchInput.show();
+    });
+
+    // Set drawingManager
     this.drawingManager = new google.maps.drawing.DrawingManager({
       drawingControl: true,
       drawingControlOptions: {
@@ -167,11 +176,31 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
     });
 
     this.drawingManager.setMap(this.map);
-
+    // Listen to drawing changes
     google.maps.event.addListener(this.drawingManager, 'markercomplete', function(marker) {
       that._onOverlayComplete(marker);
     });
-  },
+
+    // Set autocomplete search input
+    this.autocomplete = new google.maps.places.Autocomplete(
+      $searchInput[0], {types: ['geocode']});
+
+    // Listen to selected areas (search)
+    google.maps.event.addListener(
+      this.autocomplete, 'place_changed', function() {
+        var place = this.autocomplete.getPlace();
+
+        if (place && place.geometry) {
+          this.map.fitBounds(place.geometry.viewport)
+        }
+      }.bind(this));
+
+      google.maps.event.addDomListener($searchInput[0], 'keydown', function(e) {
+        if (e.keyCode == 13) {
+          e.preventDefault();
+        }
+      });
+    },
 
   _loadMarker: function(the_geom) {
     var that = this;
@@ -192,6 +221,7 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
   },
 
   _onOverlayComplete: function(marker) {
+    if (this.selectedMarker.visible) this.selectedMarker.setMap(null);
     var marker = this.selectedMarker = marker;
 
     var the_geom = JSON.stringify({
@@ -204,20 +234,16 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
 
   _clickRemove: function(e) {
     e.preventDefault();
-
     this.selectedMarker.setMap(null);
-
     this.model.set('the_geom', '');
   },
 
   _toggleButton: function() {
     if (this.model.get('the_geom') !== '') {
       this.$the_geom.val(this.model.get('the_geom'));
-      this.drawingManager.setOptions({ drawingControl: false });
       this.$remove.fadeIn(250);
     } else {
       this.$the_geom.val('');
-      this.drawingManager.setOptions({ drawingControl: true });
       this.$remove.fadeOut(250);
     }
   },

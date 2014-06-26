@@ -296,6 +296,17 @@
   overflow: hidden;
   width: 582px;
   padding-top: 5px;
+
+  .map-search-input {
+    position: absolute;
+    top: 10px;
+    right: 60px;
+    width: 150px;
+    padding: 5px 8px;
+    font-size: 12px;
+    display: none;
+    margin: 0;
+  }
 }
 
 .stories_map {
