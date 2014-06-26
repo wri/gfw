@@ -25,6 +25,7 @@
   "expr": true,
 
   "predef": [
-    "define"
+    "define",
+    "google"
 	]
 }
