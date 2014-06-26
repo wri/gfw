@@ -1,7 +1,7 @@
 /**
  * The layer collection module.
- * 
- * @return singleton instance of LayerCollection class (extends 
+ *
+ * @return singleton instance of LayerCollection class (extends
  * Backbone.CartoDB.CartoDBCollection).
  */
 define([
@@ -12,39 +12,49 @@ define([
   'mps',
   'gmap',
   'presenter'
-], function ($, _, Backbone, BackboneCartoDB, mps, gmap, presenter) {
+], function($, _, Backbone) {
+  'use strict';
 
-  var LayerCollection = Backbone.CartoDB({user: 'wri-01'}).CartoDBCollection.extend({
+  var LayerCollection = Backbone.CartoDB({
+    user: 'wri-01'
+  }).CartoDBCollection.extend({
 
     sql: function() {
-      return ['SELECT cartodb_id AS id, slug, title, title_color, subtitle, sublayer, table_name, source, category_color, category_slug, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax,',
+      return [
+        'SELECT cartodb_id AS id, slug, title, title_color, subtitle, sublayer, table_name, source, category_color, category_slug, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax,',
         'ST_XMIN(the_geom) AS xmin, ST_YMAX(the_geom) AS ymax, ST_YMIN(the_geom) AS ymin, tileurl, true AS visible',
         'FROM layerinfo_dev_copy',
         'WHERE display = TRUE ORDER BY displaylayer, title ASC'].join(' ');
     },
 
     getBaselayers: function() {
-      return _.where(this.toJSON(), {category_name: 'Forest change'})
+      return _.where(this.toJSON(), {
+        category_name: 'Forest change'
+      });
     },
 
     getBaselayer: function(layerName) {
-      var layer = _.where(this.toJSON(), {category_name: 'Forest change', 
-          slug: layerName});
+      var layer = _.where(this.toJSON(), {
+        category_name: 'Forest change',
+        slug: layerName
+      });
       if (layer) {
-       return layer[0];
+        return layer[0];
       }
     },
 
     getSublayers: function() {
       return _.filter(this.toJSON(), function(layer) {
-        return layer.category_name != 'Forest change';
+        return layer.category_name !== 'Forest change';
       });
     },
 
     getSublayer: function(layerName) {
-      var layer = _.where(this.getSublayers(), {slug: layerName});
+      var layer = _.where(this.getSublayers(), {
+        slug: layerName
+      });
       if (layer) {
-       return layer[0];
+        return layer[0];
       }
     }
   });

@@ -1,9 +1,12 @@
 class CountriesController < ApplicationController
-  before_filter :load_countries, :only => [:index]
+
+  def index
+    @countries = find_countries
+  end
 
   # GET /country/:id
   def show
-    country = Api::Country.find_by_iso(params[:id])['countries'][0]
+    country = find_by_iso(params[:id])
 
     not_found unless country.present?
 
@@ -17,9 +20,26 @@ class CountriesController < ApplicationController
   end
 
   private
+    def find_countries
+      response = Typhoeus.get("#{ENV['GFW_API_HOST']}/countries", headers: {"Accept" => "application/json"})
+      if response.success?
+        JSON.parse(response.body)['countries']
+      else
+        nil
+      end
+    end
 
-    def load_countries
-      @countries = Api::Country.all['countries']
+    def find_by_iso(iso)
+      response = Typhoeus.get(
+          "#{ENV['GFW_API_HOST']}/countries",
+          headers: {"Accept" => "application/json"},
+          params: {iso: iso}
+      )
+      if response.success?
+        JSON.parse(response.body)['countries'][0]
+      else
+        nil
+      end
     end
 
 end

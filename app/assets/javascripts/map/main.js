@@ -1,3 +1,5 @@
+'use strict';
+
 // Application entry point
 require([
   'utils',
