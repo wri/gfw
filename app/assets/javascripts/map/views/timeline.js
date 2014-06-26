@@ -251,10 +251,6 @@ define([
       // is in the right position.
       if (this.yearsArr.indexOf(roundValue) < 0 &&
         roundValue > 0) {
-        // // Move right handler
-        // this.handlers.right
-        //   .attr("x", this.xscale(roundValue) - 30);
-
         // Move domain right
         this.domain
           .attr("x2", this.xscale(roundValue) - 22);
@@ -277,12 +273,10 @@ define([
 
         this.yearsArr.push(roundValue);
       }
-
     },
 
     onAnimationBrushEnd: function (event){
       var value = this.hiddenBrush.extent()[1];
-      
       var hrl = this.handlers.left.attr("x");
       var trailFrom = Math.round(this.xscale.invert(hrl)) + 1; // +1 year left handler
 
@@ -308,40 +302,39 @@ define([
 
       if (this.playing) {
         this.stopAnimation();
-        // TODO: reset .domain here
       }
 
       if (Math.abs(this.xscale(value) - xr - 30) <
         Math.abs(this.xscale(value) - xl + 16)) {
-      // Move right handler
+        // Move right handler
         this.handlers.right
           .transition()
           .duration(100)
           .ease('line')
           .attr("x", this.xscale(roundValue) - 30);
 
-      // Move domain right
-      this.domain
-        .transition()
-        .duration(100)
-        .ease("line")
-        .attr("x2", this.xscale(roundValue) - 30);
+        // Move domain right
+        this.domain
+          .transition()
+          .duration(100)
+          .ease("line")
+          .attr("x2", this.xscale(roundValue) - 30);
 
       } else {
-      // Move left handler
+        // Move left handler
         this.handlers.left
           .transition()
           .duration(100)
           .ease('line')
           .attr("x", this.xscale(roundValue) + 16);
 
-      // Move domain left
-      this.domain
-        .transition()
-        // if it's already transitioning will broke. find a fix!
-        .duration(100)
-        .ease("line")
-        .attr("x1", this.xscale(roundValue) + 16);
+        // Move domain left
+        this.domain
+          .transition()
+          // if it's already transitioning will broke. find a fix!
+          .duration(100)
+          .ease("line")
+          .attr("x1", this.xscale(roundValue) + 16);
       }
 
       setTimeout(function() {
