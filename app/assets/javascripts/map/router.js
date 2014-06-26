@@ -27,10 +27,9 @@ define([
     },
 
     initialize: function() {
-      console.log('router.initialize()');
-      Backbone.Router.prototype.initialize.call(this);
       _.bindAll(this, 'navigateTo');
       mps.subscribe('navigate', this.navigateTo);
+      this.setMapSize();
     },
 
     map: function(zoom, lat, lng, iso, maptype, baselayers, sublayers) {

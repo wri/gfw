@@ -90,7 +90,7 @@ define([
         function (name) {
           return {slug: name, category_slug: 'forest_clearing'};
       });
-      
+
       // Create sublayer filters
       sublayers = params.sublayers ? params.sublayers.split(',') : [];
       subWhere = _.map(
@@ -100,12 +100,13 @@ define([
       });
       
       // Combine layer filters with order preserved
-      where = _.union(baseWhere, subWhere); 
+      where = _.union(baseWhere, subWhere);
 
       // Get layers from MapLayerService
       this.mapLayerService.getLayers(
         where,
         _.bind(function(layers) {
+          console.log(layers);
           this.mapLayers = layers;
           callback(this.mapLayers);
         }, this),
