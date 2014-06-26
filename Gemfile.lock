@@ -44,6 +44,9 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (~> 2.0)
       xpath (~> 1.0.0)
+    capybara-screenshot (0.3.19)
+      capybara (>= 1.0, < 3)
+      launchy
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -237,6 +240,7 @@ DEPENDENCIES
   binding_of_caller
   capistrano
   capybara (= 2.0.3)
+  capybara-screenshot
   carrierwave
   compass-rails (= 1.1.2)
   database_cleaner
