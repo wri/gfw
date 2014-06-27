@@ -30,5 +30,7 @@ module Gfw
     I18n.enforce_available_locales = false
     config.assets.paths << File.join(Rails.root, 'app', 'assets', 'templates')
     config.autoload_paths += %W(#{config.root}/lib)
+
+    config.generators.assets = false
   end
 end

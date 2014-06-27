@@ -5,16 +5,18 @@
  */
 define([
   'backbone',
-  'views/layers/core/imageLayer',
+  'views/layers/class/imageLayer',
   'views/timeline',
   'moment'
-], function(Backbone, ImageLayer, Timeline, moment) {
+], function(Backbone, ImageLayer) {
+
+  'use strict';
 
   var GainLayer = ImageLayer.extend({
 
     initialize: function() {
       this.dataMaxZoom = 19;
-      this.name = "gain";
+      this.name = 'gain';
       this.url = 'http://earthengine.google.org/static/hansen_2013/gain_alpha/%z/%x/%y.png';
       GainLayer.__super__.initialize.apply(this);
     }

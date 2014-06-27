@@ -1,2 +1,39 @@
 .widget {
+  position: absolute;
+  z-index: 1000;
+  top: 35px;
+  width: 245px;
+  min-height: 20px;
+  border: 1px solid #666;
+  padding: 10px 0;
+  font-size: 11px;
+  color: #999;
+  background: #fff;
+  cursor: move;
+
+  @extend .sans-serif;
+  @include border-radius(3px);
+  @include box-shadow(0px 0px 3px #666);
+
+  @include transition-property(height);
+  @include transition-duration(185ms);
+  @include transition-timing-function(ease-in-out);
+
+  .widget-toggle {
+    position: absolute;
+    top: 2px; right: -25px;
+    width: 25px;
+    height: 38px;
+    cursor: pointer;
+    @include home-icons-sprite(legend_toggle_close);
+  }
+
+  &.closed {
+    height: 20px;
+  }
+
+  &.closed .widget-toggle {
+    @include home-icons-sprite(legend_toggle_open);
+  }
+
 }

@@ -2,7 +2,7 @@
  * The router module.
  *
  * Router handles app routing and URL parameters and updates Presenter.
- * 
+ *
  * @return singleton instance of Router class (extends Backbone.Router).
  */
 define([
@@ -11,11 +11,14 @@ define([
   'backbone',
   'mps',
   'gmap',
-  'presenter',
-  'views/map',
-  'collections/layers'
-], function ($, _, Backbone, mps, gmap, presenter, map, layersCollection) {
-  
+  'views/layersNavView',
+  'views/MapView',
+  'services/PlaceService',
+  'services/MapLayerService'
+], function($, _, Backbone, mps, gmap, layersNavView, MapView, PlaceService, mapLayerService) {
+
+  'use strict';
+
   var Router = Backbone.Router.extend({
 
     routes: {
@@ -24,37 +27,35 @@ define([
     },
 
     initialize: function() {
-      console.log('router.initialize()');
-      Backbone.Router.prototype.initialize.call(this);
-      _.bindAll(this, 'navigateTo');
-      mps.subscribe('navigate', this.navigateTo);
+      mps.subscribe('Place/go', _.bind(function(place) {
+        if (place.route) {
+          this.navigate('map/' + this.route, {silent: true});
+        }
+      }, this));
+      this.setMapSize();
+      this.placeService = new PlaceService(mapLayerService, this);
     },
 
     map: function(zoom, lat, lng, iso, maptype, baselayers, sublayers) {
-      this.setMapSize();
+      var pathParams = {
+        zoom: zoom,
+        lat: lat,
+        lng: lng,
+        iso: iso,
+        maptype: maptype,
+        baselayers: baselayers,
+        sublayers: sublayers
+      };
+      var queryParams = _.parseUrl();
+      var params = _.extend(pathParams, queryParams);
 
-      layersCollection.fetch();
-      layersCollection.bind('reset', function() {
-        // Async Google Maps API loading
-        gmap.init(function() {
-          map.render();
-          presenter.setFromUrl({
-            zoom: Number(zoom),
-            lat: Number(lat),
-            lng: Number(lng),
-            iso: iso,
-            maptype: maptype,
-            baselayers: baselayers,
-            sublayers: sublayers
-          });
-        });
-      });
-    },
-
-    navigateTo: function(place) {
-      this.path = place.path;
-      delete place.path;
-      this.navigate('map/' + this.path, place);
+      gmap.init(_.bind(function() {
+        if (!this.mapView) {
+          this.mapView = new MapView();
+        }
+        mps.publish(
+          'Place/update', [{go: true, name: 'map', params: params}]);
+      }, this));
     },
 
     setMapSize: function() {
@@ -62,7 +63,7 @@ define([
           $map = $('#map');
 
       $map.height(dh - 69);
-      $('.header-nav__logo').css({ position: 'absolute', top: 69 })
+      $('.header-nav__logo').css({ position: 'absolute', top: 69 });
       setTimeout(function() {
         $('html, body').scrollTop(69);
       }, 500);

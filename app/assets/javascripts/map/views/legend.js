@@ -9,26 +9,29 @@ define([
   'presenter',
   'mps',
   'views/widget',
-  'text!views/legend.html'
+  'text!map/templates/legend.html'
 ], function(Backbone, _, presenter, mps, Widget, legendTpl) {
+
+  'use strict';
 
   var Legend = Widget.extend({
 
     className: 'widget legend',
     template: _.template(legendTpl),
 
-    initialize: function() {
-      this.render();
-      Legend.__super__.initialize.apply(this);
-    },
-
     render: function() {
-      this.$el.html(this.template());
-      $('.map-container').append(this.el);
+      Legend.__super__.render.apply(this);
+      this.$layersCount = this.$el.find('.layers-count');
     },
 
     update: function() {
-    }
+      var amountLayers = presenter.get('sublayers').length +
+        presenter.get('baselayers').length;
+
+      this.$layersCount.html(amountLayers);
+
+      // update layers-details
+    },
 
   });
 

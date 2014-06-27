@@ -1,32 +1,50 @@
 /**
- * The layers filter module.
+ * The Searchbox module.
  *
- * @return singleton instance of layers fitler class (extends Backbone.View).
+ * @return searchbox class (extends Backbone.View).
  */
 define([
   'backbone',
   'underscore',
-  'presenter',
   'mps',
-  'text!views/searchbox.html'
-], function(Backbone, _, presenter, mps, template) {
+  'gmap',
+  'views/widget',
+  'text!map/templates/searchbox.html'
+], function(Backbone, _, mps, gmap, Widget, searchboxTpl) {
 
-  var Searchbox = Backbone.View.extend({
+  'use strict';
 
-    template: _.template(template),
+  var Searchbox = Widget.extend({
+
+    className: 'widget searchbox',
+    template: _.template(searchboxTpl),
 
     initialize: function() {
-      this.render();
+      Searchbox.__super__.initialize.apply(this);
+      _.bindAll(this, 'setAutocomplete', 'onPlaceSelected');
+      gmap.init(this.setAutocomplete);
     },
 
-    render: function() {
-      this.$el.append(this.template());
+    setAutocomplete: function() {
+      this.autocomplete = new google.maps.places.Autocomplete(
+        this.$el.find('input')[0], {types: ['geocode']});
+
+      google.maps.event.addListener(
+        this.autocomplete, 'place_changed', this.onPlaceSelected);
+    },
+
+    onPlaceSelected: function() {
+      var place = this.autocomplete.getPlace();
+
+      if (place && place.geometry) {
+        mps.publish('map/fit-bounds', [place.geometry.viewport]);
+      }
     }
 
   });
 
-  var Searchbox = new Searchbox();
+  var searchbox = new Searchbox();
 
-  return Searchbox;
+  return searchbox;
 
 });
