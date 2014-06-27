@@ -299,9 +299,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     }
     var style = config.OVERLAYSTYLES;
     style.editable = false;
-
     var features = new GeoJSON(the_geom, style);
-
     if (Array.isArray(features)) { // countries
       for (var i in features) {
         if (features[i].length > 0) {
@@ -387,7 +385,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         baselayer = config.BASELAYER,
         baseurl = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
         range;
-    if (config.BASELAYER === null) return;
 
     if (!this.initStats) {
       this.$el.find('.stats .title, .stats ul').hide();
@@ -400,7 +397,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     this.info.setDraggable(true);
 
-    var dataset = (baselayer.indexOf('loss') === 0 ) ? 'umd' : baselayer;
+    var dataset = (baselayer && baselayer.indexOf('loss') === 0 ) ? 'umd' : baselayer;
 
     if (!this.range && url('?begin') && url('?end')) {
       this.range = '&begin=' + url('?begin') + '&end=' + url('?end');
@@ -433,13 +430,14 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
           iend   = '2013-0-10-01' || url('?end');
       range = this.range || '&begin=' + ibegin + '&end=' + iend;
 
-    } if (baselayer.indexOf('loss') === 0) {
+    } if (baselayer && baselayer.indexOf('loss') === 0) {
       var lbegin = '2001' || url('?begin'),
           lend   = '2013' || url('?end');
       range = this.range || '&begin=' + lbegin +'&end=' + lend;
 
+    } else {
+      range = '';
     }
-
     config.MAPOPTIONS.analysis = (not_analyze) ? '?'+range.substr(1) : ((elem) ? '?'+elem+range : '?geom='+encodeURI(area)+range);
 
     if (config.ISO === 'ALL') {
@@ -463,6 +461,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     }
     if (this.$el.find('.no_data_available').length > 0) this.$el.find('.no_data_available').remove();
     if (no_data) {
+      debugger;
       this.info.render();
       this.$el.find('.stats .spinner').fadeOut(150, function() {
         that.$el.find('.analysis_info .stats').append('<p class="no_data_available">No data available</p>').fadeIn(150);
@@ -592,21 +591,27 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     });
   },
 
-  loadProtectedAreaByWpaid: function(wdpaid,the_geom) {
+  loadProtectedAreaByWpaid: function(id,the_geom,table) {
     var that = this;
 
-    var query = "https://wri-01.cartodb.com/api/v2/sql?q=SELECT shape_area FROM wdpa_all WHERE wdpaid =" + wdpaid;
+    if (table === 'wdpa_all') {
+      var id_type = 'wdpaid',
+          query   = "https://wri-01.cartodb.com/api/v2/sql?q=SELECT shape_area FROM " + table + " WHERE " + id_type + " =" + id;
+    } else {
+      var id_type = 'cartodb_id',
+          query   = "https://wri-01.cartodb.com/api/v2/sql?q=SELECT ST_AsGeoJSON(the_geom) as the_geom FROM " + table + " WHERE " + id_type + " =" + id;
+    }
 
     $.ajax({
       url: query,
       dataType: 'jsonp',
       success: function(area) {
         if (area.total_rows > 0 && area.rows[0].shape_area !== undefined) {
-          that.loadPolygon(the_geom, [area.rows[0].shape_area, 'protected_area=' + wdpaid]);
+          that.loadPolygon(the_geom, [area.rows[0].shape_area, 'protected_area=' + id]);
         }
         else{
           that._getAlertCount(null,true);
-          return 'API: No area data for ' + wdpaid;
+          return 'API: No area data for ' + id;
         }
       },
       error: function() {
@@ -753,10 +758,9 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     }
   },
 
-  _loadProtectedArea: function(the_geom,area_id){
-    debugger;
+  _loadUseConservationAreas: function(the_geom,area_id,name,table){
     this.previous_layers = config.MAPOPTIONS.layers;
-    this.loadProtectedAreaByWpaid(area_id, the_geom);
+    this.loadProtectedAreaByWpaid(area_id, the_geom, table);
   },
 
   render: function() {

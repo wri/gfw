@@ -369,6 +369,19 @@
       }
     }
 
+    .template_base{
+      .analyse {
+        @include position(20px, 2px, false, false);
+        @include size(41px, 42px);
+        @include mixins-sprite(graph);
+
+        &.disabled {
+          @include opacity(.6);
+          @include pointer-events(none);
+        }
+      }
+    }
+
   }
 }
 

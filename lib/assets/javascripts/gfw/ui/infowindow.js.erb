@@ -1,4 +1,7 @@
 function CartoDBInfowindow(map, opts) {
+
+  this.content = {};
+
   this.latlng_ = null;
   this.offsetHorizontal_ = 0;
   this.offsetVertical_   = -10;
@@ -44,7 +47,8 @@ CartoDBInfowindow.prototype.draw = function() {
     this.template_base = '<a href="#close" class="close"></a>'+
       '<div class="outer_top">'+
       '<div class="top">'+
-      '<div class="infowindow_content"><a href="#" class="analyse"></div>'+
+      '<div class="protected-header template_base"><a href="#" class="analyse"></div>' +
+      '<div class="infowindow_content"></div>'+
       '</div>'+
       '</div>'+
       '<div class="shadow"></div>'+
@@ -53,14 +57,6 @@ CartoDBInfowindow.prototype.draw = function() {
     div.innerHTML = this.template_image || this.template_base;
 
     var a = this.getElementsByClassName("close", div)[0];
-    var analyse = this.getElementsByClassName("analyse", div);
-
-    google.maps.event.addDomListener(analyse, 'click', function (ev) {
-      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      Analysis._loadProtectedArea(me.content.geom.the_geom, me.content.id, me.content.name);
-      GFW.app._removeSpecialLayer();
-      me._hide();
-    });
 
     google.maps.event.addDomListener(a, 'click', function (ev) {
       //ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
@@ -145,7 +141,7 @@ CartoDBInfowindow.prototype.setOffset = function(offsetVertical, offsetHorizonta
 
 CartoDBInfowindow.prototype.setContent = function(content){
   if (this.div_) {
-
+    this.content = content;
     var div = this.div_,
         top = this.getElementsByClassName("infowindow_content", div)[0];
 
@@ -166,31 +162,33 @@ CartoDBInfowindow.prototype.setContent = function(content){
       }
 
       for(var column in content) {
-        if (show_column(column, content, this.visible_columns)) {
-          var column_ = column,
-              suffix  = '';
+        if (!(column == 'The geom' || column == 'Cartodb id')) {        
+          if (show_column(column, content, this.visible_columns)) {
+            var column_ = column,
+                suffix  = '';
 
-          switch(column){
-            case 'photo_credit':
-              column_ = 'Photo credit';
-              break;
-            case 'Brightness':
-              suffix = ' (Kelvin)';
-              break;
-            case 'Confidence':
-              suffix = ' (%)';
-              break;
-            case 'Acq time':
-              column_ = 'Acquisition time';
-              suffix   = ' (UTC)';
-              break;
-            case 'Acq date':
-              column_ = 'Acquisition date';
-              break;
+            switch(column){
+              case 'photo_credit':
+                column_ = 'Photo credit';
+                break;
+              case 'Brightness':
+                suffix = ' (Kelvin)';
+                break;
+              case 'Confidence':
+                suffix = ' (%)';
+                break;
+              case 'Acq time':
+                column_ = 'Acquisition time';
+                suffix   = ' (UTC)';
+                break;
+              case 'Acq date':
+                column_ = 'Acquisition date';
+                break;
+            }
+
+            html += '<label>' + column_ + '</label>';
+            html += '<p class="'+((content[column]!=null && content[column]!='')?'':'empty')+'">'+(content[column] || 'empty')+ suffix + '</p>';
           }
-
-          html += '<label>' + column_ + '</label>';
-          html += '<p class="'+((content[column]!=null && content[column]!='')?'':'empty')+'">'+(content[column] || 'empty')+ suffix + '</p>';
         }
       }
 
@@ -296,12 +294,14 @@ CartoDBInfowindow.prototype._show = function() {
         that._createScroll()
       });
     });
-
+    var me = this;
     $('#map').find('.protected-header .analyse').on('click', function(ev){
       ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      debugger;
-      Analysis._loadProtectedArea(me.content.geom.the_geom, me.content.id, me.content.name);
-      GFW.app._removeSpecialLayer();
+      Analysis._loadUseConservationAreas( $.parseJSON(me.content.the_geom) ? $.parseJSON(me.content.the_geom) : $.parseJSON(me.content['The geom']),
+                                          me.content.cartodb_id ? me.content.cartodb_id : me.content['Cartodb id'],
+                                          me.content.name ? me.content.name : me.content.Name,
+                                          me.content.table ? me.content.table : me.content.Table
+                                        );
       me._hide();
     })
   }
