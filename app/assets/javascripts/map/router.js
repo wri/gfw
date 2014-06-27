@@ -62,7 +62,7 @@ define([
           $map = $('#map');
 
       $map.height(dh - 69);
-      $('.header-nav__logo').css({ position: 'absolute', top: 69 })
+      $('.header-nav__logo').css({ position: 'absolute', top: 69 });
       setTimeout(function() {
         $('html, body').scrollTop(69);
       }, 500);

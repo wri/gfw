@@ -55,5 +55,5 @@ require([
         return Number(val);
       }
     }
-  })
+  });
 });
