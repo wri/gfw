@@ -1,17 +1,17 @@
 /**
  * The UMD loss map layer view.
  *
- * @return UMDLossLayerView class (extends CanvasLayerView)
+ * @return UMDLossLayerView class (extends CanvasLayer)
  */
 define([
   'moment',
-  'views/layers/class/CanvasLayerView',
+  'views/layers/class/CanvasLayer',
   'presenters/UMDLossLayerPresenter'
-], function(moment, CanvasLayerView, Presenter) {
+], function(moment, CanvasLayer, Presenter) {
 
   'use strict';
 
-  var UMDLossLayerView = CanvasLayerView.extend({
+  var UMDLossLayerView = CanvasLayer.extend({
 
     init: function(layer) {
       this._super();

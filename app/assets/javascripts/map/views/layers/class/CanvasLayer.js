@@ -1,6 +1,6 @@
 /**
  * The HTML5 Canvas map layer module.
- * 
+ *
  * @return CanvasLayer class (extends Class).
  */
 define([
@@ -16,9 +16,9 @@ define([
     },
 
     /**
-     * Called whenever the Google Maps API determines that the map needs to 
+     * Called whenever the Google Maps API determines that the map needs to
      * display new tiles for the given viewport.
-     * 
+     *
      * @param  {[type]} coord         [description]
      * @param  {[type]} zoom          [description]
      * @param  {[type]} ownerDocument [description]
@@ -36,7 +36,7 @@ define([
 
       var tileId = coord.x + '_' + coord.y + '_' + zoom;
       canvas.setAttribute('id', tileId);
-      
+
       if (tileId in this.tiles) {
         delete this.tiles[tileId];
       }
@@ -69,7 +69,7 @@ define([
         }
       }
 
-      var params = {z: z, x: x, y: y});
+      var params = {z: z, x: x, y: y};
       var url = new UriTemplate(this._urlTemplate).fillFromObject(urlParams);
 
       xhr.onload = function () {
@@ -99,7 +99,7 @@ define([
 
     /**
      * Filters the canvas image. Subclasses implement this.
-     * 
+     *
      * @param  {object} imgdata
      * @param  {integer} w width
      * @param  {integer} h height
@@ -120,7 +120,7 @@ define([
 
     /**
      * Filter canvas tile.
-     * 
+     *
      * @param  {canvas} canvas
      * @param  {integer} zoom
      */
@@ -161,7 +161,7 @@ define([
     getLayer: function() {
       return this.layer;
     },
-    
+
     /**
      * Return the view name
      */

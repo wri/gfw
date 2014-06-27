@@ -130,13 +130,13 @@ define([
      */
     _formatUrl: function(params) {
       return _.extend({}, params, {
-        lat: params.lat.toFixed(2);
-        lng: params.lng.toFixed(2);
+        lat: params.lat.toFixed(2),
+        lng: params.lng.toFixed(2)
       });
     },
 
     _getRoute: function(params) {
-      params = formatUrl(params);
+      params = this._formatUrl(params);
       return new UriTemplate(this._uriTemplate).fillFromObject(params);
     },
 
