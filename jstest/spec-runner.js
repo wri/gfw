@@ -101,7 +101,8 @@ require([
   'spec/MapLayerService_spec',
   'spec/MapPresenter_spec',
   'spec/UMDLossLayerPresenter_spec',
-  'spec/PlaceService_spec'
+  'spec/PlaceService_spec',
+  'spec/utils_spec'
 ], function (mock_ajax, main, nsa_spec){
   console.log('Setting up specs...');
 });

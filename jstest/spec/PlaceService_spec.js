@@ -75,8 +75,8 @@ define([
       });
 
       it('correctly returns route', function() {        
-        var r = 'map/8/1.1/2/idn/terrain/loss/1%2C2%2C3?begin=2014&end=3014';
-        expect(service._getRoute(params)).toEqual(r);
+        var r = 'map/8/1.10/2.00/idn/terrain/loss/1%2C2%2C3?begin=2014&end=3014';
+        expect(service._getRoute('map', params)).toEqual(r);
       });
     });
 
@@ -123,36 +123,43 @@ define([
       });
 
       it('correctly calls router.navigate when go is false', function() {
-        var r = 'map/8/1.1/2/idn/terrain/loss/1%2C2%2C3?begin=2014&end=3014';
+        var r = 'map/8/1.10/2.00/idn/terrain/loss/1%2C2%2C3?begin=2014&end=3014';
 
         service._handleNewPlace('map', params, false);
         expect(mockRouter.navigate).toHaveBeenCalledWith(r, {silent: true});
       });
     });
 
-    /**
-     * Spec for testing _toNumber().
+
+     /**
+     * Spec for testing _formatUrl().
      */
-    describe('_toNumber()', function() {
+    describe('_formatUrl()', function() {
 
       beforeEach(function() {
         service = new PlaceService({}, {});
       });
 
-      it('correctly returns numbers for numbers', function() {        
-        expect(service._toNumber('1')).toEqual(1);
-        expect(service._toNumber(1)).toEqual(1);
-        expect(service._toNumber('1.1')).toEqual(1.1);
+      it('correctly handles lat/lng strings', function() {        
+        expect(service._formatUrl('map', {lat: '1.234567', lng: '2.34567'})).
+          toEqual({lat: '1.23', lng: '2.35'});
       });
+      
+      it('correctly handles lat/lng decimals', function() {        
+        expect(service._formatUrl('map', {lat: 1.23456789, lng: 2.3456789})).
+          toEqual({lat: '1.23', lng: '2.35'});
+      });      
 
-      it('correctly returns undefined for non-numbers', function() {        
-        expect(service._toNumber('a')).toEqual(undefined);
-        expect(service._toNumber('')).toEqual(undefined);
-        expect(service._toNumber(undefined)).toEqual(undefined);
-        expect(service._toNumber(null)).toEqual(undefined);
-      });
+      it('correctly handles lat/lng integers', function() {        
+        expect(service._formatUrl('map', {lat: 1, lng: 2})).
+          toEqual({lat: '1.00', lng: '2.00'});
+      });      
+
+      it('correctly handles lat/lng with non-map route name', function() {
+        expect(service._formatUrl('foo', {lat: 1, lng: 2})).
+          toEqual({lat: 1, lng: 2});
+      });      
     });
-
 
    /**
      * Spec for testing _getBaselayerFilters().
