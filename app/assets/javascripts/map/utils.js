@@ -44,4 +44,16 @@ require([
       return urlParams;
     }
   });
+
+  _.mixin({
+    toNumber: function(val) {
+      if ((val === undefined || val === null || String(val).trim() === '')) {
+        return undefined;
+      } else if (isNaN(val)) {
+        return undefined;
+      } else {
+        return Number(val);
+      }
+    }
+  })
 });

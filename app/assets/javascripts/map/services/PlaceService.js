@@ -134,12 +134,12 @@ define([
      */
     _standardizeParams: function(params) {
       var p = _.clone(params);
-      p.zoom = this._toNumber(params.zoom);
-      p.lat = this._toNumber(params.lat);
-      p.lng = this._toNumber(params.lng);
+      p.zoom = _.toNumber(params.zoom);
+      p.lat = _.toNumber(params.lat);
+      p.lng = _.toNumber(params.lng);
       p.maptype = params.maptype;
-      p.begin = this._toNumber(params.begin);
-      p.end = this._toNumber(params.end);
+      p.begin = _.toNumber(params.begin);
+      p.end = _.toNumber(params.end);
       p.iso = params.iso || 'ALL';
       return p;
     },
@@ -159,23 +159,6 @@ define([
       }, this));
 
       return params;
-    },
-
-  
-    /**
-     * Returns supplied value as a Number or as undefined if it's not a number.
-     * 
-     * @param  {string} val The value to convert
-     * @return {Number|undefined} The converted Number or undefined
-     */
-    _toNumber: function(val) {
-      if ((val === undefined || val === null || String(val).trim() === '')) {
-        return undefined;
-      } else if (isNaN(val)) {
-        return undefined;
-      } else {
-        return Number(val);
-      }
     },
 
     /**
