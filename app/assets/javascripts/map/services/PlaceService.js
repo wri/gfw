@@ -1,13 +1,13 @@
 /**
  * The PlaceService class manages places in the application.
  *
- * A place is just the current state of the application which can be 
+ * A place is just the current state of the application which can be
  * represented as an Object or a URL. For example, the place associated with:
  *
  *   http://localhost:5000/map/6/2/17/ALL/terrain/loss
  *
  * Can also be represented like this:
- * 
+ *
  *  zoom - 6
  *  lat - 2
  *  lng - 17
@@ -18,28 +18,28 @@
  * The PlaceService class handles the following use cases:
  *
  * 1) New route updates views
- *   
+ *
  *   The Router receives a new URL and all application views need to be updated
- *   with the state encoded in the URL. 
- *   
- *   Here the router publishes the "Place/update" event passing in the route 
- *   name and route parameters. The PlaceService handles the event by 
- *   standardizing the route parameters and publishing them in a "Place/go" 
- *   event. Any presenters listening to the event receives the updated 
+ *   with the state encoded in the URL.
+ *
+ *   Here the router publishes the "Place/update" event passing in the route
+ *   name and route parameters. The PlaceService handles the event by
+ *   standardizing the route parameters and publishing them in a "Place/go"
+ *   event. Any presenters listening to the event receives the updated
  *   application state and can update their views.
  *
  * 2) Updated view updates URL
- *   
- *   A View state changes (e.g., a new map zoom) and the URL needs to be 
- *   updated, not only with its new state, but from the stae of all views in 
- *   the application that provide state for URLs. 
- * 
- *   Here presenters publishe the "Place/register" event passing in a 
- *   reference to themselves. The PlaceService subscribes to the 
- *   "Place/register" event so that it can keep references to all presenters 
+ *
+ *   A View state changes (e.g., a new map zoom) and the URL needs to be
+ *   updated, not only with its new state, but from the stae of all views in
+ *   the application that provide state for URLs.
+ *
+ *   Here presenters publishe the "Place/register" event passing in a
+ *   reference to themselves. The PlaceService subscribes to the
+ *   "Place/register" event so that it can keep references to all presenters
  *   that provide state. Then the view publishes the "Place/update" event
- *   passing in a "go" parameter. If "go" is false, the PlaceService will 
- *   update the URL. Otherwise it will publish the "Place/go" event which will 
+ *   passing in a "go" parameter. If "go" is false, the PlaceService will
+ *   update the URL. Otherwise it will publish the "Place/go" event which will
  *   notify all subscribed presenters.
  *
  * @return {PlaceService} The PlaceService class
@@ -58,9 +58,9 @@ define([
     _uriTemplate: 'map{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?begin,end}',
 
     /**
-     * Create new PlaceService with supplied MapLayerService and 
+     * Create new PlaceService with supplied MapLayerService and
      * Backbone.Router.
-     * 
+     *
      * @param  {MapLayerService} mapLayerService Instance of MapLayerService
      * @param  {Backbond.Router} router Instance of Backbone.Router
      * @return {PlaceService} Instance of PlaceService
@@ -88,10 +88,10 @@ define([
     /**
      * Handles a new place.
      *
-     * If go is true, fires a Place/go event passing in the place parameters 
-     * which will include layers retrieved from the MapLayerService. Otherwise 
+     * If go is true, fires a Place/go event passing in the place parameters
+     * which will include layers retrieved from the MapLayerService. Otherwise
      * the URL is silently updated with a new route.
-     * 
+     *
      * @param  {string} name The place name
      * @param  {Object} params The place parameters
      * @param  {[type]} go True to publish Place/go event, false to update URL
@@ -110,24 +110,39 @@ define([
       if (go) {
         this._getMapLayers(
           params.baselayers,
-          params.sublayers, 
+          params.sublayers,
           _.bind(function(layers) {
             newPlace.params.layers = layers;
-            mps.publish('Place/go', [newPlace]);            
+            mps.publish('Place/go', [newPlace]);
           }, this));
-      } else {
-        route = this._getRoute(newPlace.params);
-        this.router.navigate(route, {silent: true});
       }
+
+      route = this._getRoute(newPlace.params);
+      this.router.navigate(route, {silent: true});
+    },
+
+    /**
+     * Return formated url representation of supplied params object
+     * to keep a precise lat/lng in the application but not in url.
+     *
+     * @param  {Object} params The params to standardize
+     * @return {Object} The standardized params.
+     */
+    _formatUrl: function(params) {
+      return _.extend({}, params, {
+        lat: params.lat.toFixed(2);
+        lng: params.lng.toFixed(2);
+      });
     },
 
     _getRoute: function(params) {
+      params = formatUrl(params);
       return new UriTemplate(this._uriTemplate).fillFromObject(params);
     },
 
     /**
      * Return standardized representation of supplied params object.
-     * 
+     *
      * @param  {Object} params The params to standardize
      * @return {Object} The standardized params.
      */
@@ -144,11 +159,11 @@ define([
     },
 
     /**
-     * Return param object representing state from all registered presenters 
+     * Return param object representing state from all registered presenters
      * that implement getPlaceParams().
-     * 
+     *
      * @param  {Array} presenters The registered presenters
-     * @return {Object} Params representing state from all presenters 
+     * @return {Object} Params representing state from all presenters
      */
     _getPresenterParams: function(presenters) {
       var params = {};
@@ -162,37 +177,37 @@ define([
 
     /**
      * Return array of filter objects {slug:, category_slug:} for baselayers.
-     * 
+     *
      * @param  {string} layers CSV list of baselayer slug names
-     * @return {Array} Filter objects for baselayers  
+     * @return {Array} Filter objects for baselayers
      */
     _getBaselayerFilters: function(layers) {
       var baselayers = layers ? layers.split(',') : [];
       var filters = _.map(baselayers, function (name) {
         return {slug: name, category_slug: 'forest_clearing'};
       });
-      
+
       return filters;
     },
 
     /**
      * Return array of filter objects {id:} for sublayers.
-     * 
+     *
      * @param  {string} layers CSV list of sublayer ids
-     * @return {Array} Filter objects for sublayers  
+     * @return {Array} Filter objects for sublayers
      */
     _getSublayerFilters: function(layers) {
       var sublayers = layers ? layers.split(',') : [];
       var filters = _.map(sublayers, function(id) {
         return {id: id};
       });
-     
+
       return filters;
     },
 
     /**
      * Asynchronously get map layers objects from MapLayerService.
-     * 
+     *
      * @param  {string}   baselayers CSV list of baselayer slug names
      * @param  {string}   sublayers  CSV list of sublayer ids
      * @param  {Function} callback  Called with layers
@@ -214,6 +229,6 @@ define([
         }, this));
     }
   });
-    
+
   return PlaceService;
 });
