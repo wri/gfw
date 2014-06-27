@@ -169,19 +169,12 @@ define([
      * @return {Number|undefined} The converted Number or undefined
      */
     _toNumber: function(val) {
-      var num = null;
-
-      try {
-        if (val === undefined || val === null || val.trim() === '') {
-          throw "Not a number";
-        }
-        num = Number(val);
-        if (isNaN(num)) {
-          throw "Not a number";
-        }
-        return num;
-      } catch(err) {
+      if ((val === undefined || val === null || String(val).trim() === '')) {
         return undefined;
+      } else if (isNaN(val)) {
+        return undefined;
+      } else {
+        return Number(val);
       }
     },
 
