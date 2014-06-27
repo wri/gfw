@@ -64,6 +64,12 @@ define([
       mps.publish('Map/layers-initialized', []);
     },
 
+    /**
+     * Retuns place parameters representing the state of the MapView and 
+     * layers. Called by PlaceService.
+     * 
+     * @return {Object} Params representing the state of the MapView and layers
+     */
     getPlaceParams: function() {
       var params = {};
       var mapCenter = this.view.getCenter();
