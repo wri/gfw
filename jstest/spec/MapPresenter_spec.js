@@ -27,58 +27,26 @@ define([
           zoom: 8,
           maptype: 'terrain',
           lat: 1,
-          lng: 2
+          lng: 2,
+          layers: ['layers']
         }
       };
       
-      beforeEach(function(done) {
-        jasmine.Ajax.install();
-        nsa.test = true;  
+      beforeEach(function() {
         viewSpy = jasmine.createSpyObj(
           'viewSpy',
-          ['initLayers', 'setZoom', 'setCenter', 'setMapTypeId']);
-        
-        placeService = jasmine.createSpyObj(
-          'placeService',
-          ['getBeginDate', 'getEndDate', 'getMapZoom', 'getMapCenter', 'getIso',
-           'getMapTypeId', 'getMapLayers', 'getName']);
-        placeService.getName.and.returnValue('map');
-        placeService.getMapZoom.and.returnValue(8);
-        placeService.getMapCenter.and.returnValue({lat: 1, lng: 2});
-        placeService.getMapTypeId.and.returnValue('terrain');
-        placeService.getMapLayers = function(callback) {
-          callback('layers');
-          done();
-        };
-        spyOn(placeService, 'getMapLayers').and.callThrough();
-        
+          ['initLayers', 'initMap']);
         presenter = new MapPresenter(viewSpy);  
-        mps.publish('Place/go', [placeService]);        
-        request = jasmine.Ajax.requests.mostRecent();
-        request.response(ApiResponse.layers.success);        
+        mps.publish('Place/go', [place]);        
       });
 
       it("Check Place/go handling", function() {
-        var layers = 'layers';
+        expect(viewSpy.initMap).toHaveBeenCalled();
+        expect(viewSpy.initMap).toHaveBeenCalledWith(place.params);
+        expect(viewSpy.initMap.calls.count()).toEqual(1);
 
-        // Zoom
-        expect(viewSpy.setZoom).toHaveBeenCalled();
-        expect(viewSpy.setZoom).toHaveBeenCalledWith(8);
-        expect(viewSpy.setZoom.calls.count()).toEqual(1);
-
-        // Center
-        expect(viewSpy.setCenter).toHaveBeenCalled();
-        expect(viewSpy.setCenter).toHaveBeenCalledWith(1, 2);
-        expect(viewSpy.setCenter.calls.count()).toEqual(1);
-
-        // Maptype
-        expect(viewSpy.setMapTypeId).toHaveBeenCalled();
-        expect(viewSpy.setMapTypeId).toHaveBeenCalledWith('terrain');        
-        expect(viewSpy.setMapTypeId.calls.count()).toEqual(1);
-
-        // TODO check initLayers
         expect(viewSpy.initLayers).toHaveBeenCalled();
-        expect(viewSpy.initLayers).toHaveBeenCalledWith(layers);        
+        expect(viewSpy.initLayers).toHaveBeenCalledWith(place.params.layers);        
         expect(viewSpy.initLayers.calls.count()).toEqual(1);
 
       });
