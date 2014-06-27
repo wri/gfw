@@ -35,11 +35,10 @@ define([
      * Results in the Timeline/date-change evnet getting published with
      * the new lat/lng.
      *
-     * @param  {number} lat latitude
-     * @param  {number} lng longitude
+     * @param {Array} date 2D array of moment dates [begin, end]
      */
-    updateTimelineDate: function(lat, lng) {
-      mps.publish('Timeline/date-change', [lat, lng]);
+    updateTimelineDate: function(date) {
+      mps.publish('Timeline/date-change', [date]);
       mps.publish('Place/update', [{go: false}]);
     }
 

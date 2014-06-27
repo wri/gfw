@@ -5,7 +5,7 @@
  */
 define([
   'backbone',
-  'views/layers/core/cartodbLayer',
+  'views/layers/class/cartodbLayer',
   'views/timeline',
   'moment'
 ], function(Backbone, CartodbLayer, Timeline, moment) {

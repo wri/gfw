@@ -399,11 +399,10 @@ define([
      * Handles a timeline date change UI event by dispaching
      * to TimelinePresenter.
      *
-     * @param  {number} lat latitude
-     * @param  {number} lng longitude
+     * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
-    updateTimelineDate: function(lat, lng) {
-      this.presenter.updateTimelineDate(lat, lng);
+    updateTimelineDate: function(date) {
+      this.presenter.updateTimelineDate(date);
     },
 
     togglePlayIcon: function() {

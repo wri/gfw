@@ -143,6 +143,21 @@ define([
         this.filterCanvasImage(I.data, ctx.width, ctx.height, zoom);
         ctx.putImageData(I,0,0);
       }
+    },
+
+    getLayer: function() {
+      return this.layer;
+    },
+    
+    /**
+     * Return the view name
+     */
+    getName: function() {
+      return this.layer.name;
+    },
+
+    getCategory: function() {
+      return this.layer.category_slug;
     }
   });
 
