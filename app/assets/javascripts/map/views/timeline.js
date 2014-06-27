@@ -1,32 +1,33 @@
 /**
- * The timeline module.
+ * The Timeline view module.
  *
  * Timeline for all layers configured by setting layer-specific options.
  *
- * @return Timeline class (extends Backbone.View).
+ * @return Timeline view (extends Backbone.View).
  */
 define([
   'underscore',
   'backbone',
-  'presenter',
   'moment',
   'd3',
+  'presenters/TimelinePresenter',
   'text!map/templates/timeline.html'
-], function(_, Backbone, presenter, moment, d3, timelineTpl) {
+], function(_, Backbone, moment, d3, Presenter, timelineTpl) {
 
   'use strict';
 
-  var Timeline = Backbone.View.extend({
+  var TimelineView = Backbone.View.extend({
 
     className: 'timeline timeline-date-range',
     template: _.template(timelineTpl),
 
     events: {
-      'click .play': 'onClickPlay'
+      'click .play': 'togglePlay'
     },
 
     initialize: function(opts) {
       _.bindAll(this, 'onAnimate', 'onBrush', 'onBrushEnd');
+      this.presenter = new Presenter();
 
       this.opts = _.extend({
         dateRange: [moment([2001]), moment()],
@@ -67,7 +68,12 @@ define([
       this.render();
     },
 
+    /**
+     * Render d3 timeline slider.
+     */
     render: function() {
+      var self = this;
+
       this.$el.html(this.template());
       $('.map-container').append(this.el);
 
@@ -77,14 +83,7 @@ define([
       this.$stopIcon = this.$el.find('.stop-icon');
       this.$time = this.$el.find('.time');
 
-      this.renderSlider();
-    },
-
-    /**
-     * Render d3 timeline slider.
-     */
-    renderSlider: function() {
-      var self = this;
+      // SVG options
       var margin = {top: 0, right: 30, bottom: 0, left: 30};
       var width = 949 - margin.left - margin.right;
       var height = 50 - margin.bottom - margin.top;
@@ -108,14 +107,14 @@ define([
             self.onBrushEnd(this);
           });
 
-      // Set top svg
+      // Set SVG
       this.svg = d3.select(this.$time[0]).append('svg')
           .attr('width', width + margin.left + margin.right)
           .attr('height', height + margin.top + margin.bottom)
         .append('g')
           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-      // Bar, years
+      // xAxis
       this.svg.append('g')
           .attr('class', 'xaxis')
           .attr('transform', 'translate(0, ' + (height / 2) + ')')
@@ -205,12 +204,8 @@ define([
     /**
      * Event fired when user clicks play/stop button.
      */
-    onClickPlay: function() {
-      if (this.playing) {
-        this.stopAnimation();
-      } else {
-        this.animate();
-      }
+    togglePlay: function() {
+      (this.playing) ? this.stopAnimation() : this.animate();
     },
 
     stopAnimation: function() {
@@ -401,12 +396,14 @@ define([
     },
 
     /**
-     * Update the timeline.
+     * Handles a timeline date change UI event by dispaching
+     * to TimelinePresenter.
      *
-     * @param  {array} Date range
+     * @param  {number} lat latitude
+     * @param  {number} lng longitude
      */
-    updateTimelineDate: function(timelineDate) {
-      presenter.set('timelineDate', timelineDate);
+    updateTimelineDate: function(lat, lng) {
+      this.presenter.updateTimelineDate(lat, lng);
     },
 
     togglePlayIcon: function() {
@@ -425,6 +422,6 @@ define([
     }
   });
 
-  return Timeline;
+  return TimelineView;
 
 });
