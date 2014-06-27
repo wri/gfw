@@ -18,7 +18,7 @@ define([
       this.layer = layer;
       this.dataMaxZoom = 12;
       this.name = 'loss';
-      this.url = 'http://earthengine.google.org/static/hansen_2013/gfw_loss_year/%z/%x/%y.png';
+      this.urlTemplate = 'http://earthengine.google.org/static/hansen_2013/gfw_loss_year{/z}{/x}{/y}.png';
       this.presenter = new Presenter(this);
     },
 

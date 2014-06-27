@@ -55,7 +55,6 @@ define([
 
   var PlaceService = Class.extend({
 
-    /*jshint multistr: true */
     _uriTemplate: 'map{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?begin,end}',
 
     /**

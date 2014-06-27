@@ -5,7 +5,8 @@
  */
 define([
   'Class',
-], function(Class) {
+  'uri'
+], function(Class, UriTemplate) {
 
   var CanvasLayer = Class.extend({
 
@@ -68,7 +69,8 @@ define([
         }
       }
 
-      var url = this.url.replace('%z', z).replace('%x', x).replace('%y', y);
+      var params = {z: z, x: x, y: y});
+      var url = new UriTemplate(this._urlTemplate).fillFromObject(urlParams);
 
       xhr.onload = function () {
         var url = URL.createObjectURL(this.response),
@@ -98,22 +100,30 @@ define([
     /**
      * Filters the canvas image. Subclasses implement this.
      * 
-     * @param  {[type]} imgdata [description]
-     * @param  {[type]} w       [description]
-     * @param  {[type]} h       [description]
-     * @param  {[type]} zoom    [description]
-     * @return {[type]}         [description]
+     * @param  {object} imgdata
+     * @param  {integer} w width
+     * @param  {integer} h height
+     * @param  {integer} zoom
      */
     filterCanvasImage: function(imgdata, w, h, zoom) {
       // NOOP
     },
 
+    /**
+     * Update current tiles by calling this.filterTile().
+     */
     updateTiles: function() {
       for(var i in this.tiles) {
         this.filterTile(this.tiles[i]);
       }
     },
 
+    /**
+     * Filter canvas tile.
+     * 
+     * @param  {canvas} canvas
+     * @param  {integer} zoom
+     */
     filterTile: function(canvas, zoom) {
       var ctx = canvas.getContext('2d');
           coord = canvas.coord;
@@ -145,6 +155,9 @@ define([
       }
     },
 
+    /**
+     * Return the layer
+     */
     getLayer: function() {
       return this.layer;
     },
@@ -156,6 +169,9 @@ define([
       return this.layer.name;
     },
 
+    /**
+     * Return the layer category slug
+     */
     getCategory: function() {
       return this.layer.category_slug;
     }
