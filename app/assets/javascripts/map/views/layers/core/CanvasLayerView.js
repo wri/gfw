@@ -1,13 +1,11 @@
 /**
  * The HTML5 Canvas map layer module.
  * 
- * @return CanvasLayer class (extends Backbone.View).
+ * @return CanvasLayer class (extends Class).
  */
 define([
   'Class',
-  'backbone',
-  'mps'
-], function(Class, Backbone, mps) {
+], function(Class) {
 
   var CanvasLayer = Class.extend({
 

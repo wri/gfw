@@ -67,11 +67,19 @@ define([
       this.timelineDate = timelineDate;
     },
 
+    getLayer: function() {
+      return this.layer;
+    },
+    
     /**
      * Return the view name
      */
     getName: function() {
-      return this.name;
+      return this.layer.name;
+    },
+
+    getCategory: function() {
+      return this.layer.category_slug;
     }
   });
 

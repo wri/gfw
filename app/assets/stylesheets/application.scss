@@ -3,36 +3,35 @@
 //= require tipsy
 
 // Compass
-@import 'compass/reset';
+@import "compass/reset";
 @import "compass";
 @import "compass/css3";
 
 // General
-@import '_settings';
-@import '_mixins';
-@import '_layout';
-@import '_grid';
-@import '_base';
+@import "_settings";
+@import "_mixins";
+@import "_layout";
+@import "_grid";
+@import "_base";
 
 // Images
-@import 'icons/*.png';
-@import 'logos/*.png';
-@import 'home-icons/*.png';
-@import 'static-icons/*.png';
-@import 'static-logos/*.png';
-@import 'country-icons/*.png';
-@import 'stories-icons/*.png';
-/**/
+@import "icons/*.png";
+@import "logos/*.png";
+@import "home-icons/*.png";
+@import "static-icons/*.png";
+@import "static-logos/*.png";
+@import "country-icons/*.png";
+@import "stories-icons/*.png";
 
 // Modules
-@import 'modules/_mod-header-nav';
-@import 'modules/_mod-layers-menu';
-@import 'modules/_mod-form';
-// @import 'modules/_mod-map';
-@import 'modules/_mod-widget';
-@import 'modules/_mod-widget-legend';
-@import 'modules/_mod-widget-searchbox';
-@import 'modules/_mod-widget-maptype-selector';
-@import 'modules/_mod-timeline';
-// @import 'modules/countries';
-// @import 'modules/home';
+@import "modules/_mod-header-nav";
+@import "modules/_mod-layers-menu";
+@import "modules/_mod-form";
+// @import "modules/_mod-map";
+@import "modules/_mod-widget";
+@import "modules/_mod-widget-legend";
+@import "modules/_mod-widget-searchbox";
+@import "modules/_mod-widget-maptype-selector";
+@import "modules/_mod-timeline";
+// @import "modules/countries";
+// @import "modules/home";
