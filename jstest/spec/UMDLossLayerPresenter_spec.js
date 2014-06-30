@@ -31,7 +31,7 @@ define([
     });    
 
     it("Check Timeline/change event handling", function() {
-      mps.publish('Timeline/change', ['loss', [2001, 2002]]);        
+      mps.publish('Timeline/date-change', ['loss', [2001, 2002]]);        
       
       expect(viewSpy.setTimelineDate).toHaveBeenCalled();
       expect(viewSpy.setTimelineDate).toHaveBeenCalledWith([2001, 2002]);        
