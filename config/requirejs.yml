@@ -2,26 +2,28 @@ modules:
   - name: 'map'
 
 paths:
+  underscore: "underscore/underscore"
+  backbone: "backbone/backbone"
+  jquery: "jquery/dist/jquery"
+  d3: "d3/d3"
+  cartodb: "cartodb.js/dist/cartodb"
+  moment: "moment/moment"
+  text: "requirejs-text/text"
+  mps: "minpubsub/minpubsub"
+
   main: "map/main"
-  jquery: "jquery"
   jqueryui: "jquery-ui-1.10.4.custom.min"
-  underscore: "underscore"
-  backbone: "backbone"
-  mps: "minpubsub"
   backbonequeryparams: "backbone.queryparams"
   gmap: "map/gmap"
-  d3: "d3"
   uri: "uri"
   backbone_cartodb: "backbone.cartodb"
   cartodblayer: "cartodb.gmapsv3"
-  cartodb: "cartodb"
   wax: "wax.g.min"
   store: "store"
-  text: "text"
   Class: "class"
+
   app: "map/app"
   utils: "map/utils"
-  moment: "moment"
   router: "map/router"
   mediator: "map/mediator"
   presenter: "map/presenter"
@@ -35,7 +37,7 @@ paths:
   analysis: "map/analysis"
   nsa: "map/nsa"
 
-shim: 
+shim:
   # main:
   #   deps:
   #     - "router"
@@ -43,15 +45,15 @@ shim:
   #     - "analysis"
   #   exports:
   #     "main"
-  underscore: 
+  underscore:
     exports: "_"
-  backbone: 
+  backbone:
     deps:
       - "jquery"
       - "underscore"
     exports: "Backbone"
-  backbone_cartodb: 
-    deps: 
+  backbone_cartodb:
+    deps:
       - "underscore"
       - "backbone"
     exports: "backbone_cartodb"
@@ -62,15 +64,15 @@ shim:
   jqueryui:
     deps:
       - "jquery"
-  backbonequeryparams: 
-    deps: 
+  backbonequeryparams:
+    deps:
       - "backbone"
       - "underscore"
     exports: "backbonequeryparams"
-  Class: 
+  Class:
     exports: "Class"
-  uri: 
-    exports: "UriTemplate"    
-  user: 
-    deps: 
+  uri:
+    exports: "UriTemplate"
+  user:
+    deps:
       - "Class"
