@@ -3,7 +3,7 @@
  */
 define([
   'presenters/AnalysisButtonPresenter',
-  'mps',
+  'mps', 
   'underscore'
 ], function(AnalysisButtonPresenter, mps, _) {
 
@@ -25,27 +25,27 @@ define([
     });
 
     describe("Test AnalysisButton/setEnabled event", function() {
-
+      
       beforeEach(function() {
         spyOn(viewSpy, 'setEnabled');
       });
 
       it("Check view enabled", function() {
-        mps.publish('AnalysisButton/setEnabled', [true]);
+        mps.publish('AnalysisButton/setEnabled', [true]);        
         expect(viewSpy.setEnabled).toHaveBeenCalled();
         expect(viewSpy.setEnabled.calls.count()).toEqual(1);
         expect(viewSpy.setEnabled.calls.argsFor(0)).toEqual([true]);
       });
 
       it("Check view disabled", function() {
-        mps.publish('AnalysisButton/setEnabled', [false]);
+        mps.publish('AnalysisButton/setEnabled', [false]);        
         expect(viewSpy.setEnabled).toHaveBeenCalled();
         expect(viewSpy.setEnabled.calls.count()).toEqual(1);
         expect(viewSpy.setEnabled.calls.argsFor(0)).toEqual([false]);
-      });
+      });      
     });
 
-
+    
     describe("Test onClick event from view", function() {
       var callbackSpy = null;
 
@@ -56,7 +56,7 @@ define([
         };
         spyOn(callbackSpy, 'callback');
         mps.subscribe('AnalysisButton/clicked', callbackSpy.callback);
-
+        
         // Simulates the view calling onClick
         presenter.onClick();
       });
@@ -65,7 +65,7 @@ define([
         expect(callbackSpy.callback).toHaveBeenCalled();
         expect(callbackSpy.callback.calls.count()).toEqual(1);
         expect(callbackSpy.callback.calls.argsFor(0)).toEqual([]);
-      });
-    });
+      });     
+    });    
   });
 });

@@ -22,9 +22,9 @@ define([
      * Subscribe to application events.
      */
     subscribe: function() {
-      mps.subscribe('Timeline/date-change', _.bind(function(name, dates) {
+      mps.subscribe('Timeline/date-change', _.bind(function(name, date) {
         if (this.view.getName() === name) {
-          this.view.setTimelineDate(dates);
+          this.view.setTimelineDate(date);
           this.view.updateTiles();
         }
       }, this));

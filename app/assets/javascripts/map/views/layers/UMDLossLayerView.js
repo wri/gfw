@@ -1,25 +1,24 @@
 /**
  * The UMD loss map layer view.
  *
- * @return UMDLossLayerView class (extends CanvasLayerView)
+ * @return UMDLossLayerView class (extends CanvasLayer)
  */
 define([
   'moment',
-  'views/layers/core/CanvasLayerView',
+  'views/layers/class/CanvasLayer',
   'presenters/UMDLossLayerPresenter'
-], function(moment, CanvasLayerView, Presenter) {
+], function(moment, CanvasLayer, Presenter) {
 
   'use strict';
 
-  var UMDLossLayerView = CanvasLayerView.extend({
+  var UMDLossLayerView = CanvasLayer.extend({
 
     init: function(layer) {
       this._super();
       this.layer = layer;
       this.dataMaxZoom = 12;
       this.name = 'loss';
-      this.url = 'http://earthengine.google.org/static/hansen_2013/gfw_loss_year/%z/%x/%y.png';
-      this.timelineDate = [moment([2001]), moment([2013])];
+      this.urlTemplate = 'http://earthengine.google.org/static/hansen_2013/gfw_loss_year{/z}{/x}{/y}.png';
       this.presenter = new Presenter(this);
     },
 
@@ -61,25 +60,10 @@ define([
     /**
      * Used by UMDLoassLayerPresenter to set the dates for the tile.
      *
-     * @param {Array} timelineDate 2D array of moment dates [begin, end]
+     * @param {Array} date 2D array of moment dates [begin, end]
      */
-    setTimelineDate: function(timelineDate) {
-      this.timelineDate = timelineDate;
-    },
-
-    getLayer: function() {
-      return this.layer;
-    },
-    
-    /**
-     * Return the view name
-     */
-    getName: function() {
-      return this.layer.name;
-    },
-
-    getCategory: function() {
-      return this.layer.category_slug;
+    setTimelineDate: function(date) {
+      this.timelineDate = date;
     }
   });
 

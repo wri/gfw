@@ -7,7 +7,7 @@ define([
   'backbone',
   'mps',
   'presenter',
-  'views/layers/core/canvasLayer',
+  'views/layers/class/canvasLayer',
 ], function(Backbone, mps, presenter, CanvasLayer) {
 
   'use strict';

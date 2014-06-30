@@ -4,9 +4,9 @@
 define([
   'services/MapLayerService',
   'nsa',
-  'mps',
+  'mps', 
   'underscore',
-  // 'helpers/api_responses'
+  'helpers/api_responses'  
 ], function(service, nsa, mps, _) {
 
   describe("The MapLayerService", function() {
@@ -17,11 +17,11 @@ define([
       nsa.test = true;
     });
 
-
+    
     describe("Test getLayers()", function() {
       var spy = null;
-
-      beforeEach(function(done) {
+    
+      beforeEach(function(done) {  
         spy = {
           success: function(layers) {
             done();
@@ -29,10 +29,10 @@ define([
           error: function(error) {
 
           }
-        };
+        };      
         spyOn(spy, 'success').and.callThrough();
         service.getLayers([{id: 581}, {slug: 'forest2000'}], spy.success, spy.error);
-
+        
         request = jasmine.Ajax.requests.mostRecent();
         expect(request.url).toBe(service._getUrl());
         expect(request.method).toBe('POST');

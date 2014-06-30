@@ -5,7 +5,7 @@
  */
 define([
   'backbone',
-  'views/layers/core/imageLayer',
+  'views/layers/class/imageLayer',
   'views/timeline',
   'moment'
 ], function(Backbone, ImageLayer) {

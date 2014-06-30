@@ -2,7 +2,7 @@
  * The router module.
  *
  * Router handles app routing and URL parameters and updates Presenter.
- * 
+ *
  * @return singleton instance of Router class (extends Backbone.Router).
  */
 define([
@@ -11,13 +11,14 @@ define([
   'backbone',
   'mps',
   'gmap',
+  'views/layersNavView',
   'views/MapView',
   'services/PlaceService',
   'services/MapLayerService'
-], function($, _, Backbone, mps, gmap, MapView, PlaceService, mapLayerService) {
+], function($, _, Backbone, mps, gmap, layersNavView, MapView, PlaceService, mapLayerService) {
 
   'use strict';
-  
+
   var Router = Backbone.Router.extend({
 
     routes: {
@@ -47,7 +48,7 @@ define([
       };
       var queryParams = _.parseUrl();
       var params = _.extend(pathParams, queryParams);
-    
+
       gmap.init(_.bind(function() {
         if (!this.mapView) {
           this.mapView = new MapView();

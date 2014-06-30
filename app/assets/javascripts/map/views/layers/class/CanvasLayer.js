@@ -1,11 +1,12 @@
 /**
  * The HTML5 Canvas map layer module.
- * 
+ *
  * @return CanvasLayer class (extends Class).
  */
 define([
   'Class',
-], function(Class) {
+  'uri'
+], function(Class, UriTemplate) {
 
   var CanvasLayer = Class.extend({
 
@@ -15,9 +16,9 @@ define([
     },
 
     /**
-     * Called whenever the Google Maps API determines that the map needs to 
+     * Called whenever the Google Maps API determines that the map needs to
      * display new tiles for the given viewport.
-     * 
+     *
      * @param  {[type]} coord         [description]
      * @param  {[type]} zoom          [description]
      * @param  {[type]} ownerDocument [description]
@@ -35,7 +36,7 @@ define([
 
       var tileId = coord.x + '_' + coord.y + '_' + zoom;
       canvas.setAttribute('id', tileId);
-      
+
       if (tileId in this.tiles) {
         delete this.tiles[tileId];
       }
@@ -68,7 +69,8 @@ define([
         }
       }
 
-      var url = this.url.replace('%z', z).replace('%x', x).replace('%y', y);
+      var params = {z: z, x: x, y: y};
+      var url = new UriTemplate(this._urlTemplate).fillFromObject(urlParams);
 
       xhr.onload = function () {
         var url = URL.createObjectURL(this.response),
@@ -97,23 +99,31 @@ define([
 
     /**
      * Filters the canvas image. Subclasses implement this.
-     * 
-     * @param  {[type]} imgdata [description]
-     * @param  {[type]} w       [description]
-     * @param  {[type]} h       [description]
-     * @param  {[type]} zoom    [description]
-     * @return {[type]}         [description]
+     *
+     * @param  {object} imgdata
+     * @param  {integer} w width
+     * @param  {integer} h height
+     * @param  {integer} zoom
      */
     filterCanvasImage: function(imgdata, w, h, zoom) {
       // NOOP
     },
 
+    /**
+     * Update current tiles by calling this.filterTile().
+     */
     updateTiles: function() {
       for(var i in this.tiles) {
         this.filterTile(this.tiles[i]);
       }
     },
 
+    /**
+     * Filter canvas tile.
+     *
+     * @param  {canvas} canvas
+     * @param  {integer} zoom
+     */
     filterTile: function(canvas, zoom) {
       var ctx = canvas.getContext('2d');
           coord = canvas.coord;
@@ -143,6 +153,27 @@ define([
         this.filterCanvasImage(I.data, ctx.width, ctx.height, zoom);
         ctx.putImageData(I,0,0);
       }
+    },
+
+    /**
+     * Return the layer
+     */
+    getLayer: function() {
+      return this.layer;
+    },
+
+    /**
+     * Return the view name
+     */
+    getName: function() {
+      return this.layer.name;
+    },
+
+    /**
+     * Return the layer category slug
+     */
+    getCategory: function() {
+      return this.layer.category_slug;
     }
   });
 

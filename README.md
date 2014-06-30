@@ -54,6 +54,12 @@ Aaaaand now use [Bundler](http://bundler.io/), a rubygem manager, to install all
 $ bundle install
 ```
 
+Installing front end dependencies:
+
+```bash
+$ npm install -g grunt-cli bower phantomjs
+```
+
 Almost there! Final steps are to update your `.env` file:
 
 ```bash
