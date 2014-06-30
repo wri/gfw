@@ -58,6 +58,7 @@ Installing front end dependencies:
 
 ```bash
 $ npm install -g grunt-cli bower phantomjs
+$ npm install -d && bower install
 ```
 
 Almost there! Final steps are to update your `.env` file:
