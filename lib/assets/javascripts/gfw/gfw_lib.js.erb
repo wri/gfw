@@ -45,7 +45,7 @@ GFW.modules.app = function(gfw) {
 
       this.layers = [];
       this.cloudfront_url = 'dyynnn89u7nkm.cloudfront.net';
-      this.global_version = 6;
+      this.global_version = 7;
 
       gfw.log.enabled = options ? options.logging : false;
 
@@ -1110,8 +1110,10 @@ GFW.modules.app = function(gfw) {
         return;
 
       } else if (this.currentBaseLayer === 'fires') {
+        var current_date = new Date(),
+            current_hour = current_date.getUTCHours();
         if (this.baseLayer) {
-          this.baseLayer.setOptions({ opacity: 1 });
+          this.baseLayer.setOptions({ opacity: 1 , extra_params: { v: this.global_version, hour: current_hour }});
         } else {
           this.baseLayer = new CartoDBLayer({
             map: map,
@@ -1119,10 +1121,11 @@ GFW.modules.app = function(gfw) {
             tiler_domain: 'dyynnn89u7nkm.cloudfront.net',
             sql_domain: 'dyynnn89u7nkm.cloudfront.net',
             tiler_path: '/tiles/',
-            extra_params: { v: this.global_version, cache_policy: "persist" }, // define a verison number on requests
+            extra_params: { v: this.global_version, hour: current_hour }, // define a verison number on requests
             tiler_suffix: '.png',
             table_name: this._getTableName(this.currentBaseLayer),
             query: 'SELECT * FROM global_7d',
+            tile_style:'#global_7d{marker-fill: #FFCC00; marker-width: 2; marker-line-color: #FFF; marker-line-width: 1.5; marker-line-opacity: 1; marker-opacity: 0.9; marker-comp-op: multiply; marker-type: ellipse; marker-placement: point; marker-allow-overlap: true; marker-clip: false; marker-multi-policy: largest; } #global_7d[zoom>4]{ marker-width: 3; } #global_7d[zoom>6]{ marker-width: 5; } #global_7d[zoom>11]{ marker-width: 13; } #global_7d[zoom>12]{ marker-width: 25; } #global_7d[zoom>13]{ marker-width: 50; } #global_7d[zoom>14]{ marker-width: 100; } #global_7d[zoom>15]{ marker-width: 200; } ',
             layer_order: 1,
             interactivity: 'cartodb_id',
             featureClick: this._onFiresLayerClick,
@@ -1130,15 +1133,19 @@ GFW.modules.app = function(gfw) {
             featureOut: function() { map.setOptions({ draggableCursor: 'default' }); },
             auto_bound: false
           });
-
           subscribe('timeline:change_date_fires', _.bind(function(end_day, options) {
             var year  = end_day.getUTCFullYear(),
                 month = (end_day.getUTCMonth() + 1) < 10 ? '0' + parseInt(end_day.getUTCMonth() + 1, 10) : parseInt(end_day.getUTCMonth(), 10),
                 day   = end_day.getUTCDate() < 10 ? '0' + end_day.getUTCDate() : end_day.getUTCDate();
+            
+            /*
+            var query = [
+              "SELECT * FROM global_7d where acq_date > '" + year + "-" + month + "-" + day + "' and updated_at > ('" + this.baseLayer.options.extra_params.d.getUTCFullYear() + "-"  + ((this.baseLayer.options.extra_params.d.getUTCMonth() + 1) < 10 ? '0' + (this.baseLayer.options.extra_params.d.getUTCMonth() + 1) : (this.baseLayer.options.extra_params.d.getUTCMonth() + 1)) + "-"  + ((this.baseLayer.options.extra_params.d.getUTCDate() < 10) ? '0' + this.baseLayer.options.extra_params.d.getUTCDate() : this.baseLayer.options.extra_params.d.getUTCDate()) + "'::date)"
+            */
+
             var query = [
               "SELECT * FROM global_7d where acq_date > '" + year + "-" + month + "-" + day + "' AND CAST(confidence AS INT)> 30"
             ].join(' ');
-
             this.baseLayer.setQuery(query);
           }, this));
         }
