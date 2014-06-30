@@ -6,7 +6,7 @@ define([
   'nsa',
   'mps',
   'underscore',
-  // 'helpers/api_responses'
+  'helpers/api_responses'
 ], function(service, nsa, mps, _) {
 
   describe("The MapLayerService", function() {

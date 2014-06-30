@@ -2,7 +2,7 @@ define([
   'services/AnalysisService',
   'mps',
   'underscore',
-  // 'helpers/api_responses',
+  'helpers/api_responses',
 ], function(analysis, mps, _) {
 
   var k_combinations = function(set, k) {

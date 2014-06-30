@@ -1,7 +1,5 @@
 require.config({
 
-  baseUrl: '',
-
   paths: {
     jquery: '../vendor/assets/bower_components/jquery/dist/jquery',
     underscore: '../vendor/assets/bower_components/underscore/underscore',
@@ -37,7 +35,7 @@ require.config({
     // itertools: '../vendor/assets/javascripts/itertools',
 
     // spec: 'spec',
-    helpers: 'helpers',
+    helpers: '../jstest/helpers',
     // jasmine: 'lib/jasmine',
     // jasmine_html: 'lib/jasmine-html',
     // jasmine_boot: 'lib/boot',
