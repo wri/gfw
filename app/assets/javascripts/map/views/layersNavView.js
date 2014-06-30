@@ -6,7 +6,7 @@
 define([
   'backbone',
   'underscore',
-  'text!map/templates/layersNav.html'
+  'text!templates/layersNav.html'
 ], function(Backbone, _, layersNavTpl) {
 
   'use strict';

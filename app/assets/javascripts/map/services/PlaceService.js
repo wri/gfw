@@ -55,7 +55,7 @@ define([
 
   var PlaceService = Class.extend({
 
-    _uriTemplate: 'map{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?begin,end}',
+    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?begin,end}',
 
     /**
      * Create new PlaceService with supplied MapLayerService and
@@ -117,26 +117,38 @@ define([
           }, this));
       }
 
-      route = this._getRoute(newPlace.params);
+      route = this._getRoute(name, newPlace.params);
       this.router.navigate(route, {silent: true});
     },
 
     /**
-     * Return formated url representation of supplied params object
-     * to keep a precise lat/lng in the application but not in url.
+     * Return formated URL representation of supplied params object based on 
+     * a route name.
      *
-     * @param  {Object} params The params to standardize
-     * @return {Object} The standardized params.
+     * @param {string} name The route name
+     * @param  {Object} params Params to standardize
+     * @return {Object} Params ready for URL
      */
-    _formatUrl: function(params) {
-      return _.extend({}, params, {
-        lat: params.lat.toFixed(2),
-        lng: params.lng.toFixed(2)
-      });
+    _formatUrl: function(name, params) {
+      if (name === 'map') {
+        return _.extend({}, params, {
+          lat: String(_.toNumber(params.lat).toFixed(2)),
+          lng: String(_.toNumber(params.lng).toFixed(2))
+        });
+      } else {
+        return params;
+      }
     },
 
-    _getRoute: function(params) {
-      params = this._formatUrl(params);
+    /**
+     * Return route URL for supplied route name and route params.
+     * 
+     * @param  {string} name The route name (e.g. map)
+     * @param  {Object} params The route params
+     * @return {string} The route URL
+     */
+    _getRoute: function(name, params) {
+      params = _.extend(this._formatUrl(name, params), {name: name});
       return new UriTemplate(this._uriTemplate).fillFromObject(params);
     },
 
