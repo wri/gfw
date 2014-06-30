@@ -44,6 +44,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   _initViews: function() {
     this.info = new gfw.ui.view.AnalysisInfo();
     this.$el.append(this.info.render());
+    this.previous_layers = config.MAPOPTIONS.layers;
   },
 
   _initSubscribes: function() {
@@ -161,11 +162,11 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   onPreCancel: function() {
     this.model.set('analyzing', false);
     $viewfinder.removeClass('analysing');
-
     this._clearAnalysis();
     this._deleteSelectedShape();
     this._disableDoneButton();
     this._enableAnalysisButton();
+    this._loadPreviousLayers();
   },
 
   _onClickDone: function(e) {
@@ -241,6 +242,22 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     updateHash();
   },
+  _loadPreviousLayers: function() {
+    layers = this.previous_layers;
+    for (var i=0; i<layers.length; i++) {
+      if (layers[i] !== 596) {
+        switch (layers[i]) {
+          case 574:
+            GFW.app._renderExternalLayer();
+          break;
+          case 574:
+            GFW.app._renderPantropicalLayer();
+          break;
+
+        }
+      }
+    }
+  },
 
   unblock_analysis: function() {
     this.$analysis_control.removeClass('analysis_blocked');
@@ -272,14 +289,17 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   },
 
   loadPolygon: function(the_geom, options) {
-    var ha = 0,
-        title = "";
+    var ha         = 0,
+        title      = "",
+        element_id;
 
+    if (options && options[0] !== 0 && !isNaN(options[0])) {
+      ha = formatNumber(options[0]);
+      element_id = options[1];
+    }
     var style = config.OVERLAYSTYLES;
     style.editable = false;
-
     var features = new GeoJSON(the_geom, style);
-
     if (Array.isArray(features)) { // countries
       for (var i in features) {
         if (features[i].length > 0) {
@@ -305,11 +325,13 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     } else {
       title = "User defined area";
     }
-    ha = this._calcAreaPolygon(the_geom);
-    if (isNaN(ha)) {
-      ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']/10000) * 10) / 10, true);
-    } else {
-      ha = formatNumber(ha, true);
+    if (ha === 0) {
+      ha = this._calcAreaPolygon(the_geom);
+      if (isNaN(ha)) {
+        ha = formatNumber(Math.ceil((the_geom.features[0].properties['area']/10000) * 10) / 10, true);
+      } else {
+        ha = formatNumber(ha, true);
+      }
     }
     this.model.set('area', JSON.stringify(the_geom));
     this.info.model.set('ha', ha);
@@ -317,7 +339,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     this._fitBounds();
 
-    this._getAlertCount();
+    this._getAlertCount(element_id);
   },
 
   _fitBounds: function() {
@@ -351,7 +373,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     map.fitBounds(bounds);
   },
 
-  _getAlertCount: function() {
+
+  _getAlertCount: function(elem, no_data) {
     var $spinner = this.$el.find('.stats .spinner')
     if (!$spinner.is('visible')) $spinner.fadeIn(250);
     
@@ -362,7 +385,6 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         baselayer = config.BASELAYER,
         baseurl = "//<%= ENV['GFW_API_HOST'] %>/datasets/",
         range;
-    if (config.BASELAYER === 'fires' || config.BASELAYER === null) return;
 
     if (!this.initStats) {
       this.$el.find('.stats .title, .stats ul').hide();
@@ -375,7 +397,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
 
     this.info.setDraggable(true);
 
-    var dataset = (baselayer.indexOf('loss') === 0 ) ? 'umd' : baselayer;
+    var dataset = (baselayer && baselayer.indexOf('loss') === 0 ) ? 'umd' : baselayer;
 
     if (!this.range && url('?begin') && url('?end')) {
       this.range = '&begin=' + url('?begin') + '&end=' + url('?end');
@@ -408,14 +430,15 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
           iend   = '2013-0-10-01' || url('?end');
       range = this.range || '&begin=' + ibegin + '&end=' + iend;
 
-    } if (baselayer.indexOf('loss') === 0) {
+    } if (baselayer && baselayer.indexOf('loss') === 0) {
       var lbegin = '2001' || url('?begin'),
           lend   = '2013' || url('?end');
       range = this.range || '&begin=' + lbegin +'&end=' + lend;
 
+    } else {
+      range = '';
     }
-
-    config.MAPOPTIONS.analysis = (not_analyze) ? '?'+range.substr(1) : '?geom='+encodeURI(area)+range;
+    config.MAPOPTIONS.analysis = (not_analyze) ? '?'+range.substr(1) : ((elem) ? '?'+elem+range : '?geom='+encodeURI(area)+range);
 
     if (config.ISO === 'ALL') {
       this.alertsUrl = baseurl+dataset+config.MAPOPTIONS.analysis;
@@ -426,8 +449,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
       this.alertsUrl = baseurl+dataset+'?iso='+config.ISO+range;
       this.downloadUrl = baseurl+dataset+'.shp?iso='+config.ISO+range;
     }
-
-    if (not_analyze) {
+    if (not_analyze && !no_data) {
       if (this.$el.find('.analysis_info').is(':visible')) {
         this.$el.find('.analysis_info').hide();
       }
@@ -437,54 +459,93 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         this.$el.find('.analysis_info').show();
       }
     }
-    
-    executeAjax(this.alertsUrl, {}, {
-      success: _.bind(function(data) {
-        var baselayer = config.BASELAYER,
-            iso = (config.ISO && config.ISO !== 'ALL') ? config.ISO : 'GeoJSON';
+    if (this.$el.find('.no_data_available').length > 0) this.$el.find('.no_data_available').remove();
+    if (no_data) {
+      this.info.model.set({
+        'spinner': false
+      });
+      this.info.render();
+      this.$el.show();
+      this.$el.find('.stats .spinner').fadeOut(250, function() {
+        that.$el.find('.analysis_info .stats').append('<p class="no_data_available">No data available</p>').fadeIn(150);
+      });
+      this.info.setDraggable(true);
+    } else {
+      executeAjax(this.alertsUrl, {}, {
+        success: _.bind(function(data) {
+          var baselayer = config.BASELAYER,
+              iso = (config.ISO && config.ISO !== 'ALL') ? config.ISO : 'GeoJSON';
 
-        ga('send', 'event', 'Analysis', 'Success', iso + ' - ' + baselayer);
+          ga('send', 'event', 'Analysis', 'Success', iso + ' - ' + baselayer);
 
-        if (baselayer.indexOf('loss') === 0 && data) {
-          var loss  = formatNumber(Math.ceil((data.loss) * 10) / 10, true);
-          var gain  = formatNumber(Math.ceil((data.gain) * 10) / 10, true);
+          if (baselayer.indexOf('loss') === 0 && data) {
+            var loss  = formatNumber(Math.ceil((data.loss) * 10) / 10, true);
+            var gain  = formatNumber(Math.ceil((data.gain) * 10) / 10, true);
+            this.info.model.set({
+              'spinner': false,
+              'baselayer': baselayer,
+              'alert_count': false,
+              'loss': loss,
+              'gain': gain,
+              'begin': data.begin,
+              'end': data.end,
+              'units': data.units,
+              'subdisabled': true
+            });
+          } else if (baselayer === 'modis' && data && data.total) {
+            this.info.model.set({
+              'spinner': false,
+              'baselayer': baselayer,
+              'alert_count': formatNumber((data.total), true) + ' alerts',
+              'download': this.downloadUrl,
+              'subdisabled': true
+            });
+          } else if (baselayer === 'imazon' && data) {
+            var defor = null,
+                degrad = null;
 
-          this.info.model.set({
-            'spinner': false,
-            'baselayer': baselayer,
-            'alert_count': false,
-            'loss': loss,
-            'gain': gain,
-            'begin': data.begin,
-            'end': data.end,
-            'units': data.units,
-            'subdisabled': true
-          });
-        } else if (baselayer === 'modis' && data && data.total) {
-          this.info.model.set({
-            'spinner': false,
-            'baselayer': baselayer,
-            'alert_count': formatNumber((data.total), true) + ' alerts',
-            'download': this.downloadUrl,
-            'subdisabled': true
-          });
-        } else if (baselayer === 'imazon' && data) {
-          var defor = null,
-              degrad = null;
+            if (data[0]) defor = formatNumber(Math.ceil((data[0].value) * 10) / 10, true);
+            if (data[1]) degrad = formatNumber(Math.ceil((data[1].value) * 10) / 10, true);
 
-          if (data[0]) defor = formatNumber(Math.ceil((data[0].value) * 10) / 10, true);
-          if (data[1]) degrad = formatNumber(Math.ceil((data[1].value) * 10) / 10, true);
+            this.info.model.set({
+              'spinner': false,
+              'baselayer': baselayer,
+              'defor': defor,
+              'degrad': degrad,
+              'download': this.downloadUrl,
+              'subdisabled': true
+            });
 
-          this.info.model.set({
-            'spinner': false,
-            'baselayer': baselayer,
-            'defor': defor,
-            'degrad': degrad,
-            'download': this.downloadUrl,
-            'subdisabled': true
-          });
+            if (data[0] == null && data[1] == null) {
+              this.info.model.set({
+                'spinner': false,
+                'baselayer': baselayer,
+                'alert_count': 'No alerts',
+                'subdisabled': true
+              });
+            }
+          } else if (baselayer === "forma" && data) {
+            if (this.subscribecountry) this.info.subscribe.show();
 
-          if (data[0] == null && data[1] == null) {
+            if (data.value) {
+              this.info.model.set({
+                'spinner': false,
+                'baselayer': baselayer,
+                'alert_count': formatNumber(Math.ceil((data.value) * 10) / 10, true) + ' alerts',
+                'download': this.downloadUrl,
+                'subdisabled': false
+              });
+            } else {
+              this.info.model.set({
+                'spinner': false,
+                'baselayer': baselayer,
+                'alert_count': 'No alerts',
+                'subdisabled': false
+              });
+            }
+          } else {
+            var disabled = baselayer !== "forma";
+
             this.info.model.set({
               'spinner': false,
               'baselayer': baselayer,
@@ -492,53 +553,25 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
               'subdisabled': true
             });
           }
-        } else if (baselayer === "forma" && data) {
-          if (this.subscribecountry) this.info.subscribe.show();
 
-          if (data.value) {
-            this.info.model.set({
-              'spinner': false,
-              'baselayer': baselayer,
-              'alert_count': formatNumber(Math.ceil((data.value) * 10) / 10, true) + ' alerts',
-              'download': this.downloadUrl,
-              'subdisabled': false
-            });
-          } else {
-            this.info.model.set({
-              'spinner': false,
-              'baselayer': baselayer,
-              'alert_count': 'No alerts',
-              'subdisabled': false
-            });
-          }
-        } else {
-          var disabled = baselayer !== "forma";
+          this.info.render();
+          this.info.setDraggable(true);
 
-          this.info.model.set({
-            'spinner': false,
-            'baselayer': baselayer,
-            'alert_count': 'No alerts',
-            'subdisabled': true
+          this.$el.find('.stats .error').fadeOut(150);
+
+          this.$el.find('.stats .spinner').fadeOut(250, function() {
+            that.$el.find('.stats .title, .stats ul').fadeIn(250);
           });
-        }
+        }, this),
+        error: _.bind(function(error) {
+          ga('send', 'event', 'Analysis', 'Error', (config.ISO && config.ISO !== 'ALL') ? config.ISO : '');
 
-        this.info.render();
-        this.info.setDraggable(true);
-
-        this.$el.find('.stats .error').fadeOut(150);
-
-        this.$el.find('.stats .spinner').fadeOut(250, function() {
-          that.$el.find('.stats .title, .stats ul').fadeIn(250);
-        });
-      }, this),
-      error: _.bind(function(error) {
-        ga('send', 'event', 'Analysis', 'Error', (config.ISO && config.ISO !== 'ALL') ? config.ISO : '');
-
-        this.$el.find('.stats .title, .stats ul, .stats .spinner').fadeOut(150, function() {
-          that.$el.find('.error').fadeIn(250);
-        });
-      }, this)
-    });
+          this.$el.find('.stats .title, .stats ul, .stats .spinner').fadeOut(150, function() {
+            that.$el.find('.error').fadeIn(250);
+          });
+        }, this)
+      });
+    }
   },
 
   loadCountry: function(ISO) {
@@ -557,6 +590,35 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
           config.ISO = 'ALL';
           updateHash();
         }
+      }
+    });
+  },
+
+  loadProtectedAreaByWpaid: function(id,the_geom,table) {
+    var that = this;
+
+    if (table === 'wdpa_all') {
+      var id_type = 'wdpaid',
+          query   = "https://wri-01.cartodb.com/api/v2/sql?q=SELECT shape_area FROM " + table + " WHERE " + id_type + " =" + id;
+    } else {
+      var id_type = 'cartodb_id',
+          query   = "https://wri-01.cartodb.com/api/v2/sql?q=SELECT ST_AsGeoJSON(the_geom) as the_geom FROM " + table + " WHERE " + id_type + " =" + id;
+    }
+
+    $.ajax({
+      url: query,
+      dataType: 'jsonp',
+      success: function(area) {
+        if (area.total_rows > 0 && area.rows[0].shape_area !== undefined) {
+          that.loadPolygon(the_geom, [area.rows[0].shape_area, 'protected_area=' + id]);
+        }
+        else{
+          that._getAlertCount(null,true);
+          return 'API: No area data for ' + id;
+        }
+      },
+      error: function() {
+        return 'API: Error while retrieving data';
       }
     });
   },
@@ -638,6 +700,8 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
     // https://github.com/maxogden/geojson-js-utils
     var area = 0;
     var points = (typeof(polygon.features) !== 'undefined') ? polygon.features[0].geometry.coordinates[0] : polygon.coordinates[0];
+        points = (points.length === 1 && points[0].length > 1) ? points[0] : points;
+
     var j = points.length - 1;
     var p1, p2;
 
@@ -695,6 +759,11 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
         publish('timeline:show');
       }
     }
+  },
+
+  _loadUseConservationAreas: function(the_geom,area_id,name,table){
+    this.previous_layers = config.MAPOPTIONS.layers;
+    this.loadProtectedAreaByWpaid(area_id, the_geom, table);
   },
 
   render: function() {
@@ -1307,7 +1376,6 @@ gfw.ui.view.AnalysisReset = cdb.core.View.extend({
 
   _onClickDelete: function(e) {
     e.preventDefault();
-
     this._onClickCancel();
     Analysis.onClickCancel();
     Analysis.clearInfo();
