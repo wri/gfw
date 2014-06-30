@@ -34,7 +34,7 @@ define([
     filterCanvasImage: function(imgdata, w, h, z) {
       var components = 4;
 
-      var timelineDate = [this.timelineDate[0].year(), this.timelineDate[1].year()];
+      var timelineDate = [2001, 2004];
 
       for(var i = 0; i < w; ++i) {
         for(var j = 0; j < h; ++j) {

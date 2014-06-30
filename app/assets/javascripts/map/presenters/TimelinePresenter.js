@@ -25,7 +25,7 @@ define([
       mps.subscribe('Place/go', _.bind(function(place) {
         // if (place.name === 'map') {
         // }
-      }, this));  
+      }, this));
 
       mps.publish('Place/register', [this]);
     },
@@ -38,7 +38,7 @@ define([
      * @param {Array} date 2D array of moment dates [begin, end]
      */
     updateTimelineDate: function(date) {
-      mps.publish('Timeline/date-change', [date]);
+      mps.publish('Timeline/date-change', [this.view.getLayerName(), date]);
       mps.publish('Place/update', [{go: false}]);
     }
 

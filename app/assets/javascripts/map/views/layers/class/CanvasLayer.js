@@ -69,8 +69,8 @@ define([
         }
       }
 
-      var params = {z: z, x: x, y: y};
-      var url = new UriTemplate(this._urlTemplate).fillFromObject(urlParams);
+      var urlParams = {z: z, x: x, y: y};
+      var url = new UriTemplate(this.urlTemplate).fillFromObject(urlParams);
 
       xhr.onload = function () {
         var url = URL.createObjectURL(this.response),

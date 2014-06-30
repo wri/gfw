@@ -31,7 +31,7 @@
  * 2) Updated view updates URL
  *
  *   A View state changes (e.g., a new map zoom) and the URL needs to be
- *   updated, not only with its new state, but from the stae of all views in
+ *   updated, not only with its new state, but from the state of all views in
  *   the application that provide state for URLs.
  *
  *   Here presenters publishe the "Place/register" event passing in a
@@ -63,7 +63,7 @@ define([
      *
      * @param  {MapLayerService} mapLayerService Instance of MapLayerService
      * @param  {Backbond.Router} router Instance of Backbone.Router
-     * @return {PlaceService} Instance of PlaceService
+     * @return {PlaceService}    Instance of PlaceService
      */
     init: function(mapLayerService, router) {
       this.mapLayerService = mapLayerService;
@@ -92,9 +92,9 @@ define([
      * which will include layers retrieved from the MapLayerService. Otherwise
      * the URL is silently updated with a new route.
      *
-     * @param  {string} name The place name
-     * @param  {Object} params The place parameters
-     * @param  {[type]} go True to publish Place/go event, false to update URL
+     * @param  {string}  name   The place name
+     * @param  {Object}  params The place parameters
+     * @param  {boolean} go     True to publish Place/go event, false to update URL
      */
     _handleNewPlace: function(name, params, go) {
       var route = null;
@@ -122,10 +122,10 @@ define([
     },
 
     /**
-     * Return formated URL representation of supplied params object based on 
+     * Return formated URL representation of supplied params object based on
      * a route name.
      *
-     * @param {string} name The route name
+     * @param {string}  name   The route name
      * @param  {Object} params Params to standardize
      * @return {Object} Params ready for URL
      */
@@ -142,7 +142,7 @@ define([
 
     /**
      * Return route URL for supplied route name and route params.
-     * 
+     *
      * @param  {string} name The route name (e.g. map)
      * @param  {Object} params The route params
      * @return {string} The route URL

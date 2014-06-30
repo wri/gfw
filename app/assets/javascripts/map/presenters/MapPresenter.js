@@ -39,7 +39,7 @@ define([
           this._initMap(place.params);
           this._initLayers(this.layers);
         }
-      }, this));  
+      }, this));
 
       mps.publish('Place/register', [this]);
     },
@@ -65,9 +65,9 @@ define([
     },
 
     /**
-     * Retuns place parameters representing the state of the MapView and 
+     * Retuns place parameters representing the state of the MapView and
      * layers. Called by PlaceService.
-     * 
+     *
      * @return {Object} Params representing the state of the MapView and layers
      */
     getPlaceParams: function() {

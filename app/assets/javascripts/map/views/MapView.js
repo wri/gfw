@@ -67,7 +67,7 @@ define([
       };
       this.render(options);
     },
-    
+
     /**
      * Used by MapPresenter to initialize the map view. This function clears
      * all layers from the map and then adds supplied layers in order.
@@ -104,12 +104,13 @@ define([
     addLayer: function(layer) {
       var layerView = null;
 
-      if (layer.slug === 'loss') {
-        if (!_.has(this.layerViews, 'loss')) {
+      if (layer.slug === 'umd_tree_loss_gain') {
+        if (!_.has(this.layerViews, layer.slug)) {
           layerView = new UMDLossLayerView(layer);
-          this.layerViews.loss = layerView;
+          this.layerViews[layer.slug] = layerView;
         }
       }
+
       this.map.overlayMapTypes.insertAt(0, layerView);
     },
 

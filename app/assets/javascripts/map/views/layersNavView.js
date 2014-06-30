@@ -6,22 +6,24 @@
 define([
   'backbone',
   'underscore',
+  'presenters/LayersNavPresenter',
   'text!templates/layersNav.html'
-], function(Backbone, _, layersNavTpl) {
+], function(Backbone, _, Presenter, tpl) {
 
   'use strict';
 
   var LayersNavView = Backbone.View.extend({
 
     el: '.layers-menu',
-    template: _.template(layersNavTpl),
+    template: _.template(tpl),
 
     events: {
-      'click .layer-title': 'onClickLayer',
-      'click .radio': 'onClickLayer'
+      'click .layer-title': '_toggleLayer'
     },
 
     initialize: function() {
+      _.bindAll(this, '_toggleSelected');
+      this.presenter = new Presenter(this);
       this.render();
     },
 
@@ -29,11 +31,29 @@ define([
       this.$el.append(this.template());
     },
 
-    onClickLayer: function(event) {
-      var layerName = $(event.currentTarget).parents('li').data('layer');
+    /**
+     * Used by LayersNavPresenter to toggle the selected class name
+     * on a layer.
+     *
+     * @param  {string} layerName
+     */
+    _toggleSelected: function(layerName) {
+      this.$el.find('li[data-layer="' + layerName + '"]')
+        .toggleClass('selected');
+    },
+
+    /**
+     * Handles a toggle layer change UI event by dispatching
+     * to LayersNavPresenter.
+     *
+     * @param  {event} event Click event
+     */
+    _toggleLayer: function(event) {
+      var layerName = $(event.currentTarget).parents('li')
+        .data('layer');
 
       if (layerName) {
-        window.mps.publish('presenter/toggle-layer', [layerName]);
+        this.presenter.toggleLayer(layerName)
       }
     },
 

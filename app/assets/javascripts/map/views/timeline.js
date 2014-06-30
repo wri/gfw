@@ -418,6 +418,10 @@ define([
     hideTipsy: function() {
       this.tipsy.style('visibility', 'hidden');
       this.tooltip.style('visibility', 'hidden');
+    },
+
+    getLayerName: function() {
+      return this.opts.layerName;
     }
   });
 
