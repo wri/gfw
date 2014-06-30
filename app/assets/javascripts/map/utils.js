@@ -1,6 +1,7 @@
 require([
 	'underscore'
 ], function (_) {
+
 	'use strict';
 
 	if (!String.prototype.format) {
@@ -56,4 +57,5 @@ require([
       }
     }
   });
+
 });

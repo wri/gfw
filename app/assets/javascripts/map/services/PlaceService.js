@@ -122,7 +122,7 @@ define([
     },
 
     /**
-     * Return formated URL representation of supplied params object based on 
+     * Return formated URL representation of supplied params object based on
      * a route name.
      *
      * @param {string} name The route name
@@ -142,7 +142,7 @@ define([
 
     /**
      * Return route URL for supplied route name and route params.
-     * 
+     *
      * @param  {string} name The route name (e.g. map)
      * @param  {Object} params The route params
      * @return {string} The route URL

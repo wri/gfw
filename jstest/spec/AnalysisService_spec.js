@@ -1,21 +1,21 @@
 define([
   'services/AnalysisService',
-  'mps',
+  'mps', 
   'underscore',
   'helpers/api_responses',
 ], function(analysis, mps, _) {
 
   var k_combinations = function(set, k) {
     var i, j, combs, head, tailcombs;
-
+    
     if (k > set.length || k <= 0) {
       return [];
     }
-
+    
     if (k == set.length) {
       return [set];
     }
-
+    
     if (k == 1) {
       combs = [];
       for (i = 0; i < set.length; i++) {
@@ -23,7 +23,7 @@ define([
       }
       return combs;
     }
-
+    
     combs = [];
     for (i = 0; i < set.length - k + 1; i++) {
       head = set.slice(i, i+1);
@@ -34,11 +34,11 @@ define([
     }
     return combs;
   };
-
+   
   var combinations = function(set) {
     var k, i, combs, k_combs;
     combs = [];
-
+    
     // Calculate all non-empty k-combinations
     for (k = 1; k <= set.length; k++) {
       k_combs = k_combinations(set, k);
@@ -55,15 +55,15 @@ define([
    * > var params = [['a', 1], ['b', 2]];
    * > reduce_params(params);
    * {a: 1, b: 2}
-   *
+   * 
    * @param  {array} array of param arrays (e.g., [['a', 1], ['b', 2]])
    * @return {object} params as object (e.g., {a: 1, b:2})
    */
   var reduce_params = function(combo) {
     return _.reduceRight(
-      combo,
+      combo, 
       function(memo, pair) {
-        memo[pair[0]] = pair[1];
+        memo[pair[0]] = pair[1]; 
         return memo;
       },
       {});
@@ -80,7 +80,7 @@ define([
    *   { c: 3, a: 1 },
    *   { c: 3, b: 2 },
    *   { c: 3, b: 2, a: 1 } ]
-   *
+   * 
    * @param  {array} params array of params [key, value]
    * @return {array} array of param objects
    */
@@ -119,7 +119,7 @@ define([
       jasmine.Ajax.install();
     });
 
-
+    
     describe("FORMA Alerts by country - Test API URLs", function() {
       var params = [
         ['bust', 1],
@@ -163,7 +163,7 @@ define([
         expect(request.url).toBe(url);
         expect(request.method).toBe('POST');
         expect(request.data()).toEqual({});
-
+        
         cb = {
           spy: function(response) {
             done();
@@ -233,7 +233,7 @@ define([
         expect(request.url).toBe(url);
         expect(request.method).toBe('POST');
         expect(request.data()).toEqual({});
-
+        
         cb = {
           spy: function(responseText, status, error) {
             done();
