@@ -22,7 +22,7 @@ define([
       ForestLayer.__super__.initialize.apply(this);
     },
 
-    filterCanvasImage: function(imgdata, w, h) {
+    filterCanvasImgdata: function(imgdata, w, h) {
       var components = 4,
         pixelPos, intensity;
 

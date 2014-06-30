@@ -5,12 +5,15 @@
  */
 define([
   'Class',
-  'uri'
-], function(Class, UriTemplate) {
+  'underscore'
+], function(Class, _) {
+
+  'use strict';
 
   var CanvasLayer = Class.extend({
 
     init: function () {
+      _.bindAll(this, 'filterCanvasImgdata');
       this.tileSize = new google.maps.Size(256, 256);
       this.tiles = {};
     },
@@ -19,46 +22,118 @@ define([
      * Called whenever the Google Maps API determines that the map needs to
      * display new tiles for the given viewport.
      *
-     * @param  {[type]} coord         [description]
-     * @param  {[type]} zoom          [description]
-     * @param  {[type]} ownerDocument [description]
-     * @return {[type]}               [description]
+     * @param  {obj}     coord         coordenades {x ,y}
+     * @param  {integer} zoom          current map zoom
+     * @param  {object}  ownerDocument
+     *
+     * @return {canvas}  canvas        tile canvas
      */
     getTile: function(coord, zoom, ownerDocument) {
-      var canvas = ownerDocument.createElement('canvas');
-      canvas.style.border  = "none";
-      canvas.style.margin  = "0";
-      canvas.style.padding = "0";
+      var tileId = this._getTileId(coord.x, coord.y, zoom);
+      // Delete all tiles from others zooms;
+      var tilesKeys = Object.keys(this.tiles);
 
-      var ctx = canvas.getContext('2d');
-      ctx.width = canvas.width = this.tileSize.width;
-      ctx.height = canvas.height = this.tileSize.height;
+      for (var i = 0; i < tilesKeys.length; i++) {
+        if (this.tiles[tilesKeys[i]].z !== zoom) {
+          delete this.tiles[tilesKeys[i]];
+        }
+      };
 
-      var tileId = coord.x + '_' + coord.y + '_' + zoom;
-      canvas.setAttribute('id', tileId);
-
-      if (tileId in this.tiles) {
-        delete this.tiles[tileId];
+      // Return cached tile if loaded.
+      if (this.tiles[tileId]) {
+        return this.tiles[tileId].canvas;
       }
 
-      this.tiles[tileId] = canvas;
-      this.canvasSetup(canvas, coord, zoom);
+      var canvas = ownerDocument.createElement('canvas');
+      canvas.style.border = 'none';
+      canvas.style.margin = '0';
+      canvas.style.padding = '0';
+      canvas.width = this.tileSize.width;
+      canvas.height = this.tileSize.height;
+
+      var url = this._getUrl.apply(this,
+        this._getTileCoords(coord.x, coord.y, zoom));
+
+      this._getImage(url, _.bind(function(image) {
+        var canvasData = {
+          tileId: tileId,
+          canvas: canvas,
+          image: image,
+          x: coord.x,
+          y: coord.y,
+          z: zoom
+        };
+
+        this._cacheTile(canvasData);
+        this._drawCanvasImage(canvasData);
+      }, this));
 
       return canvas;
     },
 
-    canvasSetup: function(canvas, coord, zoom) {
-      var self = this,
-          xhr = new XMLHttpRequest(),
-          ctx = canvas.getContext('2d');
+    _drawCanvasImage: function(canvasData) {
+      var canvas = canvasData.canvas;
+      var image = canvasData.image;
+      var x = canvasData.x;
+      var y = canvasData.y;
+      var z = canvasData.z;
 
-      var x = coord.x,
-          y = coord.y,
-          z = zoom;
+      var ctx = canvas.getContext('2d');
+      var zsteps = this._getZoomSteps(z);
 
-      if (zoom > this.dataMaxZoom) {
-        x = Math.floor(coord.x / (Math.pow(2, zoom - this.dataMaxZoom)));
-        y = Math.floor(coord.y / (Math.pow(2, zoom - this.dataMaxZoom)));
+      if (zsteps < 0) {
+        ctx.drawImage(image, 0, 0);
+      } else {
+        ctx.imageSmoothingEnabled = false;
+        ctx.mozImageSmoothingEnabled = false;
+        ctx.webkitImageSmoothingEnabled = false;
+
+        var srcX = 256 / Math.pow(2, zsteps) * (x % Math.pow(2, zsteps));
+        var srcY = 256 / Math.pow(2, zsteps) * (y % Math.pow(2, zsteps));
+        var srcW = 256 / Math.pow(2, zsteps);
+        var srcH = 256 / Math.pow(2, zsteps);
+
+        ctx.clearRect(0, 0, 256, 256);
+        ctx.drawImage(image, srcX, srcY, srcW, srcH, 0, 0, 256, 256);
+      }
+
+      var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      this.filterCanvasImgdata(I.data, canvas.width, canvas.height, z);
+      ctx.putImageData(I, 0, 0);
+    },
+
+    _getZoomSteps: function(z) {
+      return z - this.dataMaxZoom;
+    },
+
+    _getImage: function(url, callback) {
+      var xhr = new XMLHttpRequest();
+
+      xhr.onload = function () {
+        var url = URL.createObjectURL(this.response);
+        var image = new Image();
+
+        image.onload = function () {
+          image.crossOrigin = '';
+          callback(image);
+          URL.revokeObjectURL(url);
+        };
+        image.src = url;
+      };
+
+      xhr.open('GET', url, true);
+      xhr.responseType = 'blob';
+      xhr.send();
+    },
+
+    _getUrl: function(x, y, z) {
+      return this.urlTemplate.replace('%z', z).replace('%x', x).replace('%y', y);
+    },
+
+    _getTileCoords: function(x, y, z) {
+      if (z > this.dataMaxZoom) {
+        x = Math.floor(x / (Math.pow(2, z - this.dataMaxZoom)));
+        y = Math.floor(y / (Math.pow(2, z - this.dataMaxZoom)));
         z = this.dataMaxZoom;
       } else {
         y = (y > Math.pow(2, z) ? y % Math.pow(2, z) : y);
@@ -69,113 +144,42 @@ define([
         }
       }
 
-      var params = {z: z, x: x, y: y};
-      var url = new UriTemplate(this._urlTemplate).fillFromObject(urlParams);
-
-      xhr.onload = function () {
-        var url = URL.createObjectURL(this.response),
-            image = new Image();
-
-        image.onload = function () {
-          image.crossOrigin = '';
-
-          canvas.image = image;
-          canvas.coord = coord;
-          canvas.coord.z = zoom;
-
-          ctx.drawImage(image, 0, 0);
-          self.filterTile(canvas, zoom);
-
-          URL.revokeObjectURL(url);
-        };
-
-        image.src = url;
-      };
-
-      xhr.open('GET', url, true);
-      xhr.responseType = 'blob';
-      xhr.send();
+      return [x, y, z];
     },
 
     /**
-     * Filters the canvas image. Subclasses implement this.
+     * Caches a tile so it can be re-rendered when
+     * calling this.updateTiles()
+     *
+     * @param  {object} canvasData Tile canvas data
+     */
+    _cacheTile: function(canvasData) {
+      canvasData.canvas.setAttribute('id', canvasData.tileId);
+      this.tiles[tileId] = canvasData;
+    },
+
+    _getTileId: function(x, y, z) {
+      return x + '_' + y + '_' + z;
+    },
+
+    updateTiles: function() {
+      for(var i in this.tiles) {
+        this._drawCanvasImage(this.tiles[i]);
+      }
+    },
+
+    /**
+     * Filters the canvas imagedata. Subclasses implement this.
      *
      * @param  {object} imgdata
      * @param  {integer} w width
      * @param  {integer} h height
      * @param  {integer} zoom
      */
-    filterCanvasImage: function(imgdata, w, h, zoom) {
-      // NOOP
-    },
-
-    /**
-     * Update current tiles by calling this.filterTile().
-     */
-    updateTiles: function() {
-      for(var i in this.tiles) {
-        this.filterTile(this.tiles[i]);
-      }
-    },
-
-    /**
-     * Filter canvas tile.
-     *
-     * @param  {canvas} canvas
-     * @param  {integer} zoom
-     */
-    filterTile: function(canvas, zoom) {
-      var ctx = canvas.getContext('2d');
-          coord = canvas.coord;
-
-      if (canvas.coord) {
-        var zsteps = coord.z - this.dataMaxZoom;
-
-        if (zsteps > 0) {
-          ctx.imageSmoothingEnabled = false;
-          ctx.mozImageSmoothingEnabled = false;
-          ctx.webkitImageSmoothingEnabled = false;
-
-          var srcX = 256 / Math.pow(2, zsteps) * (coord.x % Math.pow(2, zsteps)),
-              srcY = 256 / Math.pow(2, zsteps) * (coord.y % Math.pow(2, zsteps)),
-              srcW = 256 / Math.pow(2, zsteps),
-              srcH = 256 / Math.pow(2, zsteps);
-
-          ctx.clearRect(0, 0, 256, 256);
-          ctx.drawImage(canvas.image, srcX, srcY, srcW, srcH, 0, 0, 256, 256);
-        } else {
-          try {
-            ctx.drawImage(canvas.image, 0, 0);
-          } catch(err) { }
-        }
-
-        var I = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        this.filterCanvasImage(I.data, ctx.width, ctx.height, zoom);
-        ctx.putImageData(I,0,0);
-      }
-    },
-
-    /**
-     * Return the layer
-     */
-    getLayer: function() {
-      return this.layer;
-    },
-
-    /**
-     * Return the view name
-     */
-    getName: function() {
-      return this.layer.name;
-    },
-
-    /**
-     * Return the layer category slug
-     */
-    getCategory: function() {
-      return this.layer.category_slug;
+    filterCanvasImgdata: function(imgdata, w, h, zoom) {
     }
   });
 
   return CanvasLayer;
+
 });
