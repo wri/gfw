@@ -1,7 +1,8 @@
 define([
   'nsa',
-  'mps',
-  'underscore'
+  'mps', 
+  'underscore',
+  'helpers/api_responses'
 ], function(nsa, mps, _) {
 
   describe("Foo test", function() {
@@ -20,7 +21,7 @@ define([
         done();
       });
       it("dude", function() {
-        expect(1).not.toBe(null);
+        expect(1).not.toBe(null);        
       });
     });
   });
