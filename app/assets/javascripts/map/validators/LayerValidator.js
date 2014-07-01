@@ -40,6 +40,9 @@ define([
      */
     validate: function(layerName) {
       var result = true;
+
+      // validate here
+
       return result;
     }
   });

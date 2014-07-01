@@ -1,20 +1,20 @@
 /**
  * The Cartodb map layer module.
- * 
- * @return CartodbLayer class (extends Backbone.View).
+ *
+ * @return CartoDBLayerClass (extends Class).
  */
 define([
-  'backbone',
-  'mps',
-  'presenter',
+  'Class',
+  'underscore',
   'wax'
-], function(Backbone, mps, presenter, wax) {
+], function(Class, _, wax) {
 
-  var CartodbLayer = Backbone.View.extend({
-    initialize: function() {
+  var CartoDBLayerClass = Class.extend({
+
+    init: function(layer) {
       this.layer = {};
+      this.name = layer.slug;
       this.layerOrder = this.layerOrder || 1;
-      this.rendered = false;
     },
 
     render: function() {
@@ -46,29 +46,21 @@ define([
     },
 
     getQuery: function() {
-      var timelineDate = presenter.get('timelineDate') || this.timeline.opts.dateRange;
-
       var sql = "SELECT * FROM " +
                 this.table +
                 " WHERE date between '" +
-                timelineDate[0].year() +
+                //timelineDate[0].year() +
                 "-" +
                 //timelineDate[0].month() +
                 "1-1' AND '" +
-                timelineDate[1].year() +
+                //timelineDate[1].year() +
                 "-" +
                 //timelineDate[1].month() +
                 "1-1'";
 
       return sql;
-     },
-
-    removeLayer: function() {
-      mps.publish('map/remove-layer', [this.name]);
-      this.rendered = false;
-    }
-
+     }
   });
 
-  return CartodbLayer;
+  return CartoDBLayerClass;
 });

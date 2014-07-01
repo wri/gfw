@@ -11,11 +11,13 @@ define([
 
   'use strict';
 
-  var CanvasLayer = Class.extend({
+  var CanvasLayerClass = Class.extend({
 
-    init: function () {
+    init: function (layer) {
       _.bindAll(this, 'filterCanvasImgdata');
       this.tileSize = new google.maps.Size(256, 256);
+      this.layer = layer;
+      this.name = layer.slug;
       this.tiles = {};
     },
 
@@ -156,7 +158,7 @@ define([
      */
     _cacheTile: function(canvasData) {
       canvasData.canvas.setAttribute('id', canvasData.tileId);
-      this.tiles[tileId] = canvasData;
+      this.tiles[canvasData.tileId] = canvasData;
     },
 
     _getTileId: function(x, y, z) {
@@ -181,6 +183,6 @@ define([
     }
   });
 
-  return CanvasLayer;
+  return CanvasLayerClass;
 
 });

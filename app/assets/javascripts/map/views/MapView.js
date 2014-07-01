@@ -8,9 +8,10 @@ define([
   'underscore',
   'presenters/MapPresenter',
   'views/AnalysisButtonView',
-  'views/layers/UMDLossLayerView',
-  'views/layers/Forest2000'
-], function(Backbone, _, Presenter, AnalysisButtonView, UMDLossLayerView, Forest2000Layer) {
+  'views/layers/UMDLossLayer',
+  'views/layers/Forest2000Layer',
+  'views/layers/GainLayer'
+], function(Backbone, _, Presenter, AnalysisButtonView, UMDLossLayer, Forest2000Layer, GainLayer) {
 
   'use strict';
 
@@ -19,8 +20,9 @@ define([
      el: '#map',
 
      layersViews: {
-      umd_tree_loss_gain: UMDLossLayerView,
-      forest2000: Forest2000Layer
+      umd_tree_loss_gain: UMDLossLayer,
+      forest2000: Forest2000Layer,
+      gain: GainLayer
      },
 
     /**
