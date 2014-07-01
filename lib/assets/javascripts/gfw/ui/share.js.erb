@@ -17,8 +17,11 @@ gfw.ui.view.Share = cdb.core.View.extend({
     this.model = new gfw.ui.model.Share();
 
     this.model.on('change:hidden', this._toggle);
-
-    var template = $('#share-template').html();
+    if (this.options && this.options.template === 'country') {
+      var template = $('#share-country-template').html();
+    } else {
+      var template = $('#share-template').html();
+    }
 
     this.template = new cdb.core.Template({
       template: template,
