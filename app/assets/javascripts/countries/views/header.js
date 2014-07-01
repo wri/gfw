@@ -149,7 +149,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     'change #areaSelector': '_onSelectArea',
     'click .selector-remove': '_navigateCountry',
     'click .umd_options_control' : '_onClickUMDOptions',
-    'click .umdoptions_dialog .slider':  '_updateMapTreshold',
+    'click .umdoptions_dialog #canopy_slider':  '_updateMapTreshold',
     'click .umdoptions_dialog ul li':  '_updateMapTreshold'
   },
 
