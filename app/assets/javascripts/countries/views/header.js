@@ -4,25 +4,24 @@ gfw.ui.model.layersOptions = Backbone.Model.extend({
 
   initialize: function(options) {
     options = options || {};
-
+    var treshold = (config.canopy_choice) ? config.canopy_choice : 10; 
     var layers = {
       'forest2000': {
-        url: 'http://earthengine.google.org/static/hansen_2013/tree_alpha/%z/%x/%y.png',
+        url: 'http://earthengine.google.org/static/hansen_2013/gfw_tree_loss_year_' + treshold + '/%z/%x/%y.png',
         dataMaxZoom: 12,
         tileSize: [256, 256],
         _filterCanvasImage: function(imageData, w, h) {
-          var components = 4,
-              pixelPos;
+          var components = 4; //rgba
+          var pixel_pos;
 
-          for(var i = 0 ; i < w; ++i) {
-            for(var j = 0; j < h; ++j) {
-              var pixelPos = (j * w + i) * components,
-                  intensity = imageData[pixelPos + 3];
-
-              imageData[pixelPos] = 0;
-              imageData[pixelPos + 1] = intensity * 0.7;
-              imageData[pixelPos + 2] = 0;
-              imageData[pixelPos+ 3] = intensity * 0.7;
+          for(var i=0; i < w; ++i) {
+            for(var j=0; j < h; ++j) {
+              var pixel_pos = (j*w + i) * components;
+              var intensity = imageData[pixel_pos+1];
+              imageData[pixel_pos] = 151;
+              imageData[pixel_pos + 1] = 189;
+              imageData[pixel_pos + 2] = 61;
+              imageData[pixel_pos+ 3] = intensity*0.8;
             }
           }
         }
@@ -103,20 +102,6 @@ gfw.ui.view.leafletCanvasLayer = Backbone.View.extend({
   },
 
   _filterCanvasImage: function(imageData, w, h) {
-    var components = 4,
-        pixelPos;
-
-    for(var i = 0 ; i < w; ++i) {
-      for(var j = 0; j < h; ++j) {
-        var pixelPos = (j * w + i) * components,
-            intensity = imageData[pixelPos + 3];
-
-        imageData[pixelPos] = 0;
-        imageData[pixelPos + 1] = intensity * 0.7;
-        imageData[pixelPos + 2] = 255;
-        imageData[pixelPos+ 3] = intensity * 0.7;
-      }
-    }
   },
 
   _drawImageCanvas: function(canvas) {
@@ -163,7 +148,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
   events: {
     'change #areaSelector': '_onSelectArea',
     'click .selector-remove': '_navigateCountry',
-    'click .umd_options_control' : '_onClickUMDOptions'
+    'click .umd_options_control' : '_onClickUMDOptions',
+    'click .umdoptions_dialog .slider':  '_updateMapTreshold',
+    'click .umdoptions_dialog ul li':  '_updateMapTreshold'
   },
 
   initialize: function(options) {
@@ -234,13 +221,33 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       }
     });
   },
-  _onClickUMDOptions: function() {
-    UmdOptions = new gfw.ui.view.UmdOptions({ target: '.country-sidenav'});
+
+  _onClickUMDOptions: function(e) {
+    e && e.preventDefault();
+
     var $target = $('.umdoptions_dialog');
+    if ($target.length === 0) UmdOptions = new gfw.ui.view.UmdOptions({ target: '.country-sidenav'});
     if ($target.is(':visible') ) {
       UmdOptions.hide();
     } else {
       UmdOptions._openUMDoptions();
+    }
+  },
+
+  _updateMapTreshold: function(e) {
+    var path = location.pathname.split('/');
+    var id = path[path.length -1];
+    var self = this;
+    this.map.remove();
+    if (isNaN(id)) {
+      this._initMap(function() {
+        self._displayCountry();
+      });
+    } else {
+      var area = this.country.get('areas').where({ id_1: Number(id) })[0];
+      this._initMap(function() {
+        self._displayArea(area);
+      });
     }
   },
 
@@ -297,7 +304,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       }
     }).getLayer().addTo(this.map);
 
-    callback();
+    callback && callback();
   },
 
   _removeCartodblayer: function() {
