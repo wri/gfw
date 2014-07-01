@@ -25,7 +25,7 @@
     font-size: 14px;
     color: #464152;
     @include box-sizing(border-box);
-
+    
     .country-icons-share {
       height: 16px;
       width: 16px;
@@ -38,6 +38,16 @@
       border-color: #BAB8BE;
     }
   }
+  .country-share .share_control {
+      width: 95px;
+      left: 778px;
+      display: block;
+      background: none;
+      background-color: rgba(255,255,255,0.3);
+      &:hover {
+        background-color: rgba(255,255,255,0.4);
+      }
+    }
 
   .country-header {
     width: 100%;
