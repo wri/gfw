@@ -10,7 +10,14 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     root: {
-      app: 'app/assets'
+      app: 'app/assets',
+      test: 'jstest'
+    },
+
+    connect: {
+      test : {
+        port : 8000
+      }
     },
 
     jshint: {
@@ -24,9 +31,16 @@ module.exports = function(grunt) {
       ]
     },
 
-    testem: {
-      jasmine: {
-        src: '<%= root.app %>/javascripts/map/{,*/}{,*/}*.js'
+    jasmine: {
+      test: {
+        options: {
+          specs: '<%= root.test %>/spec/*_spec.js',
+          host: 'http://127.0.0.1:8000/',
+          template: require('grunt-template-jasmine-requirejs'),
+          templateOptions: {
+            requireConfigFile: '<%= root.test %>/config.js'
+          }
+        }
       }
     },
 
@@ -36,15 +50,20 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: '<%= jshint.all %>',
-        tasks: ['jshint', 'testem']
+        tasks: ['jshint', 'test']
       }
     }
 
   });
 
+  grunt.registerTask('test', [
+    'connect:test',
+    'jasmine'
+  ]);
+
   grunt.registerTask('default', [
     'jshint',
-    'testem'
+    'test'
   ]);
 
 };
