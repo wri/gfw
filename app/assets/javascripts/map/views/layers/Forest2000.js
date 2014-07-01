@@ -18,7 +18,7 @@ define([
       this.urlTemplate = 'http://earthengine.google.org/static/hansen_2013/tree_alpha{/z}{/x}{/y}.png';
     },
 
-    filterCanvasImage: function(imgdata, w, h) {
+    filterCanvasImgdata: function(imgdata, w, h) {
       var components = 4,
         pixelPos, intensity;
 
