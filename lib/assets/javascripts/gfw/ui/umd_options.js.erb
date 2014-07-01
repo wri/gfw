@@ -30,13 +30,15 @@ gfw.ui.view.UmdOptions = cdb.core.View.extend({
 
   _initViews: function() {
     this.umdoptions_dialog = new gfw.ui.view.umdoptionsDialog({});
-
-    $('#map').append(this.umdoptions_dialog.render());
+    if (this.options && this.options.target) {
+      $(this.options.target).append(this.umdoptions_dialog.render());
+    } else {
+      $('#map').append(this.umdoptions_dialog.render());
+    }
   },
 
   _openUMDoptions: function(e) {
-    e.preventDefault();
-
+    e && e.preventDefault();
     this.umdoptions_dialog.show();
   },
 
@@ -235,7 +237,9 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
     }
     config.canopy_choice = this.canopy;
     updateHash();
-    GFW.app.updateBaseLayer(config.BASELAYER)
+    if (typeof GFW !== 'undefined' && GFW.app) {
+      GFW.app.updateBaseLayer(config.BASELAYER)
+    }
   },
 
   show: function() {

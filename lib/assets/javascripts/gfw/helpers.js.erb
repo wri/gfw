@@ -339,9 +339,9 @@ function isLandsat(basemap) {
 }
 
 function updateHash(options) {
-  var zoom = map.getZoom(),
-      lat = map.getCenter().lat().toFixed(2),
-      lng = map.getCenter().lng().toFixed(2),
+  var zoom = (typeof map !== 'undefined') ? map.getZoom() : 3,
+      lat  = (typeof map !== 'undefined') ? map.getCenter().lat().toFixed(2) : 0,
+      lng  = (typeof map !== 'undefined') ? map.getCenter().lng().toFixed(2) : 0,
       baselayer = config.BASELAYER === null ? 'none' : config.BASELAYER,
       layers = (config.MAPOPTIONS.layers.length > 0) ? '/'+config.MAPOPTIONS.layers : '',
       analysis = (config.BASELAYER === null || config.ISO !== 'ALL') ? '' : config.MAPOPTIONS.analysis,
@@ -351,7 +351,7 @@ function updateHash(options) {
 
   if (options && options.replace) {
     window.router.navigate(hash, { replace: true });
-  } else {
+  } else if (window.router && window.router) {
     window.router.navigate(hash, { trigger: true });
   }
 }

@@ -7,3 +7,4 @@
 //= require gfw/ui/sourcewindow
 //= require gfw/ui/share
 //= require_tree ./countries
+//= require gfw/ui/umd_options

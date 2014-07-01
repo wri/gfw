@@ -315,8 +315,12 @@
               top: 17px; right: 20px;
               height: 18px;
               width: 18px;
+              &.country-icons-settings_engine {
+                height: 15px;
+                width: 15px;
+              }
             }
-
+            
             &:hover {
               background: #464254;
             }

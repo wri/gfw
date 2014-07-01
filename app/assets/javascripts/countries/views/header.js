@@ -162,7 +162,8 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
   events: {
     'change #areaSelector': '_onSelectArea',
-    'click .selector-remove': '_navigateCountry'
+    'click .selector-remove': '_navigateCountry',
+    'click .umd_options_control' : '_onClickUMDOptions'
   },
 
   initialize: function(options) {
@@ -232,6 +233,15 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         self.$areaSelector.append('<option value="' + area.get('name_1') + '">' + area.get('name_1') + '</option>')
       }
     });
+  },
+  _onClickUMDOptions: function() {
+    UmdOptions = new gfw.ui.view.UmdOptions({ target: '.country-sidenav'});
+    var $target = $('.umdoptions_dialog');
+    if ($target.is(':visible') ) {
+      UmdOptions.hide();
+    } else {
+      UmdOptions._openUMDoptions();
+    }
   },
 
   _onSelectArea: function() {
