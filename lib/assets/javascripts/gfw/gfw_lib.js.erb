@@ -1099,10 +1099,10 @@ GFW.modules.app = function(gfw) {
         } else {
           this.baseLayer = new CartoDBLayer({
             map: map,
-            user_name: '',
-            tiler_domain: 'dyynnn89u7nkm.cloudfront.net',
-            sql_domain: 'dyynnn89u7nkm.cloudfront.net',
-            tiler_path: '/tiles/',
+            user_name: 'wri-01',
+            // tiler_domain: 'dyynnn89u7nkm.cloudfront.net',
+            // sql_domain: 'dyynnn89u7nkm.cloudfront.net',
+            // tiler_path: '/tiles/',
             extra_params: { v: this.global_version, hour: current_hour }, // define a verison number on requests
             tiler_suffix: '.png',
             table_name: this._getTableName(this.currentBaseLayer),
