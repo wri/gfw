@@ -6,8 +6,9 @@
 define([
   'Class',
   'underscore',
-  'mps'
-], function(Class, _, mps) {
+  'mps',
+  'services/MapLayerService'
+], function(Class, _, mps, mapLayerService) {
 
   'use strict';
 
@@ -20,6 +21,7 @@ define([
      */
     init: function(view) {
       this.view = view;
+      this.mapLayerService = mapLayerService;
       this._subscribe();
     },
 
@@ -40,18 +42,19 @@ define([
 
     getPlaceParams: function() {
       var params = {};
-      var baseLayers = _.where(this.layers, {category_slug: 'forest_clearing'});
-      var subLayers = _.filter(this.layers, function(layer) {
-        return layer.category_slug !== 'forest_clearing';
-      });
 
-      params.baselayers = _.map(baseLayers, function(layer) {
-        return layer.slug;
-      });
+      // var baseLayers = _.where(this.layers, {category_slug: 'forest_clearing'});
+      // var subLayers = _.filter(this.layers, function(layer) {
+      //   return layer.category_slug !== 'forest_clearing';
+      // });
 
-      params.sublayers = _.map(subLayers, function(layer) {
-        return layer.id;
-      });
+      // params.baselayers = _.map(baseLayers, function(layer) {
+      //   return layer.slug;
+      // });
+
+      // params.sublayers = _.map(subLayers, function(layer) {
+      //   return layer.id;
+      // });
 
       return params;
     },
@@ -59,11 +62,13 @@ define([
     /**
      * Publish a a Map/toggle-layer.
      *
-     * @param  {string} layerName
+     * @param  {string} layerSlug
      */
-    toggleLayer: function(layerName) {
-      mps.publish('LayerNav/toggle-layer', [layerName]);
-      mps.publish('Place/update', [{go: false}]);
+    toggleLayer: function(layerSlug) {
+      this.mapLayerService.getLayers([{slug: layerSlug}], function(layers) {
+        mps.publish('LayerNav/toggle-layer', [layers[0]]);
+        mps.publish('Place/update', [{go: false}]);
+      });
     }
 
   });

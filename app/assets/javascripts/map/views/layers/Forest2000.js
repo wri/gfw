@@ -4,22 +4,18 @@
  * @return ForestLayer class (extends CanvasLayer)
  */
 define([
-  'backbone',
-  'mps',
-  'presenter',
-  'views/layers/class/canvasLayer',
-], function(Backbone, mps, presenter, CanvasLayer) {
+  'views/layers/class/CanvasLayer'
+], function(CanvasLayer) {
 
   'use strict';
 
-  var ForestLayer = CanvasLayer.extend({
+  var Forest2000Layer = CanvasLayer.extend({
 
-    initialize: function() {
+    init: function(layer) {
+      this._super();
       this.dataMaxZoom = 12;
-      this.name = 'forest2000';
-      this.url =
-        'http://earthengine.google.org/static/hansen_2013/tree_alpha/%z/%x/%y.png';
-      ForestLayer.__super__.initialize.apply(this);
+      this.name = layer.slug;
+      this.urlTemplate = 'http://earthengine.google.org/static/hansen_2013/tree_alpha{/z}{/x}{/y}.png';
     },
 
     filterCanvasImage: function(imgdata, w, h) {
@@ -41,6 +37,6 @@ define([
     }
   });
 
-  return ForestLayer;
+  return Forest2000Layer;
 
 });

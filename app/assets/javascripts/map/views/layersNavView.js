@@ -54,7 +54,7 @@ define([
       var layerName = $(event.currentTarget).parents('li')
         .data('layer');
 
-      if (layerName && layerValidator.validate(this.layers)) {
+      if (layerName && layerValidator.validate(layerName)) {
         this.presenter.toggleLayer(layerName)
       }
     },

@@ -8,8 +8,9 @@ define([
   'underscore',
   'presenters/MapPresenter',
   'views/AnalysisButtonView',
-  'views/layers/UMDLossLayerView'
-], function(Backbone, _, Presenter, AnalysisButtonView, UMDLossLayerView) {
+  'views/layers/UMDLossLayerView',
+  'views/layers/Forest2000'
+], function(Backbone, _, Presenter, AnalysisButtonView, UMDLossLayerView, Forest2000Layer) {
 
   'use strict';
 
@@ -17,12 +18,17 @@ define([
 
      el: '#map',
 
+     layersViews: {
+      umd_tree_loss_gain: UMDLossLayerView,
+      forest2000: Forest2000Layer
+     },
+
     /**
      * Constructs a new MapView and its presenter.
      */
     initialize: function() {
       this.presenter = new Presenter(this);
-      this.layerViews = {};
+      this.layerViewsInst = {};
     },
 
     /**
@@ -80,19 +86,15 @@ define([
     },
 
     /**
-     * Used by MapPresenter to remove a layer by name.
+     * Used by map presenter to toggle a layer.
      *
-     * @param  {string} name The name of the layer to remove
+     * @param  {object} layer The layer object
      */
-    removeLayer: function(name) {
-      var overlays_length = this.map.overlayMapTypes.getLength();
-      if (overlays_length > 0) {
-        for (var i = 0; i< overlays_length; i++) {
-          var layer = this.map.overlayMapTypes.getAt(i);
-          if (layer && layer.name === name) {
-            this.map.overlayMapTypes.removeAt(i);
-          }
-        }
+    toggleLayer: function(layer) {
+      if (this._isLayerRendered(layer.slug)) {
+        this.removeLayer(layer.slug);
+      } else {
+        this.addLayer(layer);
       }
     },
 
@@ -104,14 +106,49 @@ define([
     addLayer: function(layer) {
       var layerView = null;
 
-      if (layer.slug === 'umd_tree_loss_gain') {
-        if (!_.has(this.layerViews, layer.slug)) {
-          layerView = new UMDLossLayerView(layer);
-          this.layerViews[layer.slug] = layerView;
-        }
+      if (!_.has(this.layerViewsInst, layer.slug)) {
+        var LayerView = this.layersViews[layer.slug];
+        layerView = new LayerView(layer);
+        this.layerViewsInst[layer.slug] = layerView;
+      } else {
+        layerView = this.layerViewsInst[layer.slug]
       }
 
       this.map.overlayMapTypes.insertAt(0, layerView);
+    },
+
+    /**
+     * Used by MapPresenter to remove a layer by name.
+     *
+     * @param  {string} name The name of the layer to remove
+     */
+    removeLayer: function(name) {
+      var overlaysLength = this.map.overlayMapTypes.getLength();
+      if (overlaysLength > 0) {
+        for (var i = 0; i< overlaysLength; i++) {
+          var layer = this.map.overlayMapTypes.getAt(i);
+          if (layer && layer.name === name) {
+            this.map.overlayMapTypes.removeAt(i);
+          }
+        }
+      }
+    },
+
+    /**
+     * Check if a layer is already rendered by name.
+     *
+     * @param  {string} name The layer name
+     */
+    _isLayerRendered: function(name) {
+      var overlaysLength = this.map.overlayMapTypes.getLength();
+      if (overlaysLength > 0) {
+        for (var i = 0; i< overlaysLength; i++) {
+          var layer = this.map.overlayMapTypes.getAt(i);
+          if (layer && layer.name === name) {
+            return true
+          }
+        }
+      }
     },
 
     /**

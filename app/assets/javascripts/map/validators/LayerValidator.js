@@ -13,8 +13,14 @@ define([
 
   var LayerValidator = Class.extend({
 
+    baselayersOpts: {
+      allowCombined: [
+        ['loss', 'gain']
+      ]
+    },
+
     init: function() {
-      this.layers = [];
+      this.activeLayers = [];
       this._subscribe();
     },
 
@@ -23,7 +29,7 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
-        this.layers = place.params.layers;
+        this.activeLayers = place.params.layers;
       }, this));
     },
 
@@ -32,12 +38,10 @@ define([
      *
      * @return {boolean) True/false if validation passed.
      */
-    validate: function(layersArr) {
+    validate: function(layerName) {
       var result = true;
-
       return result;
     }
-
   });
 
   var layerValidator = new LayerValidator();
