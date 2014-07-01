@@ -27,7 +27,33 @@ define([
      * Subscribe to application events.
      */
     _subscribe: function() {
-      mps.subscribe('Map/toggle-layer', this.view._toggleSelected);
+      mps.subscribe('LayerNav/toggle-layer', this.view._toggleSelected);
+      mps.publish('place/register', [this]);
+    },
+
+    /**
+     * Retuns place parameters representing the state of the LayerNavView and
+     * layers. Called by PlaceService.
+     *
+     * @return {Object} Params representing the state of the LayerNavView and layers
+     */
+
+    getPlaceParams: function() {
+      var params = {};
+      var baseLayers = _.where(this.layers, {category_slug: 'forest_clearing'});
+      var subLayers = _.filter(this.layers, function(layer) {
+        return layer.category_slug !== 'forest_clearing';
+      });
+
+      params.baselayers = _.map(baseLayers, function(layer) {
+        return layer.slug;
+      });
+
+      params.sublayers = _.map(subLayers, function(layer) {
+        return layer.id;
+      });
+
+      return params;
     },
 
     /**
@@ -36,8 +62,10 @@ define([
      * @param  {string} layerName
      */
     toggleLayer: function(layerName) {
-      mps.publish('Map/toggle-layer', [layerName]);
+      mps.publish('LayerNav/toggle-layer', [layerName]);
+      mps.publish('Place/update', [{go: false}]);
     }
+
   });
 
   return LayersNavPresenter;

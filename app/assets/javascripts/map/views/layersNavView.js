@@ -7,8 +7,9 @@ define([
   'backbone',
   'underscore',
   'presenters/LayersNavPresenter',
+  'validators/LayerValidator',
   'text!templates/layersNav.html'
-], function(Backbone, _, Presenter, tpl) {
+], function(Backbone, _, Presenter, layerValidator, tpl) {
 
   'use strict';
 
@@ -24,6 +25,7 @@ define([
     initialize: function() {
       _.bindAll(this, '_toggleSelected');
       this.presenter = new Presenter(this);
+      this.layers = {};
       this.render();
     },
 
@@ -52,7 +54,7 @@ define([
       var layerName = $(event.currentTarget).parents('li')
         .data('layer');
 
-      if (layerName) {
+      if (layerName && layerValidator.validate(this.layers)) {
         this.presenter.toggleLayer(layerName)
       }
     },

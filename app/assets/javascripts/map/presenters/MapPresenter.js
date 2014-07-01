@@ -73,21 +73,21 @@ define([
     getPlaceParams: function() {
       var params = {};
       var mapCenter = this.view.getCenter();
-      var baseLayers = _.where(this.layers, {category_slug: 'forest_clearing'});
-      var subLayers = _.filter(this.layers, function(layer) {
-        return layer.category_slug !== 'forest_clearing';
-      });
+      // var baseLayers = _.where(this.layers, {category_slug: 'forest_clearing'});
+      // var subLayers = _.filter(this.layers, function(layer) {
+      //   return layer.category_slug !== 'forest_clearing';
+      // });
 
       params.zoom = this.view.getZoom();
       params.lat = mapCenter.lat;
       params.lng = mapCenter.lng;
       params.maptype = this.view.getMapTypeId();
-      params.baselayers = _.map(baseLayers, function(layer) {
-        return layer.slug;
-      });
-      params.sublayers = _.map(subLayers, function(layer) {
-        return layer.id;
-      });
+      // params.baselayers = _.map(baseLayers, function(layer) {
+      //   return layer.slug;
+      // });
+      // params.sublayers = _.map(subLayers, function(layer) {
+      //   return layer.id;
+      // });
 
       return params;
     },
