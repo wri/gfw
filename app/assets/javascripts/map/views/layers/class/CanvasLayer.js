@@ -177,7 +177,7 @@ define([
      * @param  {integer} h       tile height
      * @param  {integer} z       map zoom
      */
-    filterCanvasImgdata: function(imgdata, w, h, zoom) {
+    filterCanvasImgdata: function(imgdata, w, h, z) {
     }
   });
 
