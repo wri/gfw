@@ -95,6 +95,23 @@
   <div class='shadow'></div>
 </script>
 
+<script id='legend-idn-primary-template' type='text/x-underscore-template'>
+  <ul class='legend_category {{category}}{{#sublayer}} sublayer{{/sublayer}}'>
+    <li class='{{category}}'><strong style='color:{{category_color}};'>{{category_title}}</strong></li>
+
+    <li id='{{cat_id}}' class='{{category}}'>
+      <i style='background-color:{{title_color}};'></i>
+      {{title}} <a href='#' data-source='{{slug}}' class='source {{slug}}'></a>
+    </li>
+
+    <ul style="margin-bottom:10px">
+      <li id='{{cat_id}}' class='loss'> <i style='background-color:{{title_color}};'></i> Degraded</li>
+      <li id='{{cat_id}}' class='forestgain'> <i style='background-color:#97BD3D'></i> Intact</li>
+    </ul>
+
+  </ul>
+</script>
+
 <script id='legend-loss-template' type='text/x-underscore-template'>
   <ul class='legend_category {{category}}'>
     <li class='{{category}}'><strong style='color:{{category_color}};'>{{category_title}}</strong></li>

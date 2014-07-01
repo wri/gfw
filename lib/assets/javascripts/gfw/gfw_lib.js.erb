@@ -78,6 +78,7 @@ GFW.modules.app = function(gfw) {
       this.umdCoverageLayer   = null;
       this.forest2000Layer    = null;
       this.forestGainLayer    = null;
+      this.idnPrimaryLayer    = null;
 
       this.currentBaseLayer = config.BASELAYER;
     },
@@ -275,6 +276,7 @@ GFW.modules.app = function(gfw) {
         if (table_name == 'protected_areas') { this._removeSpecialLayer(); }
         if (table_name == 'pantropical') { this._removePantropicalLayer(); }
         if (table_name == 'forest2000') { this._removeForest2000Layer(); }
+        if (table_name == 'idn_primary') { this._removeIdnPrimaryLayer(); }
         if (table_name == 'forestgain') {
           this.layers = _.without(this.layers, layer.get('table_name'));
 
@@ -303,6 +305,7 @@ GFW.modules.app = function(gfw) {
         if (table_name == 'protected_areas') { this._renderExternalLayer(); }
         if (table_name == 'pantropical') { this._renderPantropicalLayer(); }
         if (table_name == 'forest2000') { this._renderForest2000Layer(); }
+        if (table_name == 'idn_primary') {this._renderIdnPrimaryLayer(); }
         if (table_name == 'forestgain') { this._renderForestGainLayer(); }
       } else {
         this.layers.push(layer.get('table_name'));
@@ -548,6 +551,21 @@ GFW.modules.app = function(gfw) {
 
         this.forest2000Layer = new CoordMapType();
         map.overlayMapTypes.insertAt(0, this.forest2000Layer);
+      }
+    },
+
+    _renderIdnPrimaryLayer: function() {
+      console.log('ey');
+      if (this.idnPrimaryLayer) {
+        this.idnPrimaryLayer.show();
+      } else {
+        this.idnPrimaryLayer = IdnPrimary.init(map);
+      }
+    },
+
+    _removeIdnPrimaryLayer: function() {
+      if (this.idnPrimaryLayer) {
+        this.idnPrimaryLayer.hide();
       }
     },
 
@@ -1535,6 +1553,15 @@ GFW.modules.maplayer = function(gfw) {
         }
 
         Filter.toggle(id);
+      } else if (slug === 'idn_primary') {
+        if (idnforest.attributes['visible']) {
+          GFW.app._renderIdnPrimaryLayer();
+          ga('send', 'event', 'Filter', 'Toggle', slug);
+        } else {
+          GFW.app._removeIdnPrimaryLayer();
+        }
+
+        Filter.toggle(id);
       } else {
         if (slug === 'biodiversity_hotspots') {
           GFW.app.closeInfowindows();
@@ -1598,6 +1625,18 @@ GFW.modules.datalayers = function(gfw) {
         forestgain         = GFW.app.datalayers.LayersObj.get(596);
         umd_tree_loss_gain = GFW.app.datalayers.LayersObj.get(597);
         cover_extent       = GFW.app.datalayers.LayersObj.get(591);
+
+        //// add idnforest manually
+        idnforest = cover_extent.toJSON();
+        idnforest.id = 600;
+        idnforest.title = 'Indonesia primary forest';
+        idnforest.slug = 'idn_primary';
+        idnforest.table_name = 'idn_primary';
+        idnforest.title_color = '#007A4D';
+        this.add([idnforest]);
+
+        idnforest = GFW.app.datalayers.LayersObj.get(600);
+        ////
 
         that.LayersObj.each(function(p) {
           if (p.get('slug') === 'user_stories') {
