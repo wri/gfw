@@ -5,8 +5,9 @@
  */
 define([
   'Class',
-  'underscore'
-], function(Class, _) {
+  'underscore',
+  'uri'
+], function(Class, _, UriTemplate) {
 
   'use strict';
 
@@ -127,7 +128,7 @@ define([
     },
 
     _getUrl: function(x, y, z) {
-      return this.urlTemplate.replace('%z', z).replace('%x', x).replace('%y', y);
+      return new UriTemplate(this._urlTemplate).fillFromObject({x: x, y: y, z: z});
     },
 
     _getTileCoords: function(x, y, z) {
@@ -159,7 +160,7 @@ define([
     },
 
     _getTileId: function(x, y, z) {
-      return x + '_' + y + '_' + z;
+      return '{0}_{1}_{2}'.format(x, y, z);
     },
 
     updateTiles: function() {
@@ -171,12 +172,12 @@ define([
     /**
      * Filters the canvas imagedata. Subclasses implement this.
      *
-     * @param  {object} imgdata
-     * @param  {integer} w width
-     * @param  {integer} h height
-     * @param  {integer} zoom
+     * @param  {object}  imgdata Canvas tile image data
+     * @param  {integer} w       tile width
+     * @param  {integer} h       tile height
+     * @param  {integer} z       map zoom
      */
-    filterCanvasImgdata: function(imgdata, w, h, zoom) {
+    filterCanvasImgdata: function(imgdata, w, h, z) {
     }
   });
 
