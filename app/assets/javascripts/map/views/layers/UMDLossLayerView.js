@@ -23,7 +23,7 @@ define([
     },
 
     /**
-     * Implementation for CanvasLayerView.filterCanvasImage().
+     * Implementation for CanvasLayerView.filterCanvasImgdata().
      *
      * @param  {[type]} imgdata [description]
      * @param  {[type]} w       [description]
@@ -31,7 +31,7 @@ define([
      * @param  {[type]} z       [description]
      * @return {[type]}         [description]
      */
-    filterCanvasImage: function(imgdata, w, h, z) {
+    filterCanvasImgdata: function(imgdata, w, h, z) {
       var components = 4;
 
       var timelineDate = [this.timelineDate[0].year(), this.timelineDate[1].year()];
