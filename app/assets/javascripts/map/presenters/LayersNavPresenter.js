@@ -7,8 +7,9 @@ define([
   'Class',
   'underscore',
   'mps',
-  'services/LayerValidatorService'
-], function(Class, _, mps, layerValidatorService) {
+  'services/LayerValidatorService',
+  'services/MapLayerService'
+], function(Class, _, mps, layerValidatorService, mapLayerService) {
 
   'use strict';
 
@@ -44,11 +45,12 @@ define([
      *
      * @return {object} layerSpec Return the layers spec or false.
      */
-    _layerSpec: function(category, layerSlug) {
-      if (category == null || layerSlug == null) {
+    _layerSpec: function(layerObj, category) {
+      if (layerObj == null || category == null) {
         return false;
       }
 
+      // Don't change current layerSpec before validation pass.
       var layerSpec = _.clone(this.layerSpec);
 
       // Create category is needed.
@@ -56,14 +58,11 @@ define([
         layerSpec[category] = {};
       }
 
-      // Set layer status
-      layerSpec[category][layerSlug] = !(layerSpec[category][layerSlug]);
+      if (!layerSpec[category][layerObj.slug]) {
+        layerSpec[category][layerObj.slug] = layerObj;
+      } else {
+        delete layerSpec[category][layerObj.slug];
 
-      // Remove layer status is false
-      if (!layerSpec[category][layerSlug]) {
-        delete layerSpec[category][layerSlug];
-
-        // Remove category is there are no layers on it.
         if (Object.keys(layerSpec[category]).length < 1) {
           delete layerSpec[category];
         }
@@ -75,6 +74,7 @@ define([
         return this.layerSpec;
       }
 
+      // Validation fails
       return false;
     },
 
@@ -133,12 +133,16 @@ define([
      * @param  {string} layerSlug
      */
     toggleLayer: function(category, layerSlug) {
-      var layerSpec = this._layerSpec(category, layerSlug);
+      mapLayerService.getLayers([{
+        slug: layerSlug
+      }], _.bind(function(layers) {
+        var layerSpec = this._layerSpec(layers[0], category);
 
-      if (layerSpec) {
-        mps.publish('LayerNav/change', [layerSpec]);
-        mps.publish('Place/update', [{go: false}]);
-      }
+        if (layerSpec) {
+          mps.publish('LayerNav/change', [layerSpec]);
+          mps.publish('Place/update', [{go: false}]);
+        }
+      }, this));
     }
 
   });

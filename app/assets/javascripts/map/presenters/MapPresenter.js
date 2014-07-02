@@ -6,8 +6,9 @@
 define([
   'Class',
   'underscore',
-  'mps'
-], function(Class, _, mps) {
+  'mps',
+  'services/MapLayerService'
+], function(Class, _, mps, mapLayerService) {
 
   'use strict';
 
@@ -42,7 +43,7 @@ define([
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this.view.setLayers(layerSpec);
+        this.view.setLayerSpec(layerSpec);
       },this));
 
       mps.publish('Place/register', [this]);

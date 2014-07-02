@@ -87,6 +87,28 @@ define([
       _.map(layers, this.addLayer, this);
     },
 
+    setLayerSpec: function(layerSpec) {
+      var self = this;
+      var activeLayers = {};
+
+      _.each(layerSpec, function(category, i) {
+        activeLayers = _.extend(activeLayers, category);
+      });
+
+      // Render layers
+      _.each(this.layerViewsInst, function(view, layerSlug) {
+        if (!activeLayers[layerSlug] && self._isLayerRendered(layerSlug)) {
+          self.removeLayer(layerSlug);
+        }
+      });
+
+      _.each(activeLayers, function(layer) {
+        if (!self._isLayerRendered(layer.slug)) {
+          self.addLayer(layer);
+        }
+      });
+    },
+
     /**
      * Used by map presenter to toggle a layer.
      *
@@ -98,15 +120,6 @@ define([
       } else {
         this.addLayer(layer);
       }
-    },
-
-    /**
-     * Set the map layers to the layerSpec status.
-     *
-     * @param {object} layerSpec Layers spec object.
-     */
-    setLayers: function(layerSpec) {
-      console.log(layerSpec);
     },
 
     /**
@@ -129,16 +142,16 @@ define([
     },
 
     /**
-     * Used by MapPresenter to remove a layer by name.
+     * Used by MapPresenter to remove a layer by layerSlug.
      *
-     * @param  {string} name The name of the layer to remove
+     * @param  {string} layerSlug The layerSlug of the layer to remove
      */
-    removeLayer: function(name) {
+    removeLayer: function(layerSlug) {
       var overlaysLength = this.map.overlayMapTypes.getLength();
       if (overlaysLength > 0) {
         for (var i = 0; i< overlaysLength; i++) {
           var layer = this.map.overlayMapTypes.getAt(i);
-          if (layer && layer.name === name) {
+          if (layer && layer.name === layerSlug) {
             this.map.overlayMapTypes.removeAt(i);
           }
         }
