@@ -35,7 +35,7 @@ define([
 
       // After each lib is loaded, get the cartodb lib.
       var done = _.after(libs.length, function () {
-        require(['cartodb', 'cartodblayer'], cb);
+        require(['cartodb'], cb);
       });
 
 

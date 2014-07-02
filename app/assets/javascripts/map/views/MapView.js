@@ -135,13 +135,15 @@ define([
 
       if (!_.has(this.layerViewsInst, layer.slug)) {
         var LayerView = this.layersViews[layer.slug];
-        layerView = new LayerView(layer, map);
+        layerView = new LayerView(layer, this.map);
         this.layerViewsInst[layer.slug] = layerView;
       } else {
         layerView = this.layerViewsInst[layer.slug]
       }
       if (layer.slug !== 'imazon') {
         this.map.overlayMapTypes.insertAt(0, layerView);
+      } else {
+        layerView.render();
       }
     },
 

@@ -5,7 +5,7 @@
 define([
   'Class',
   'underscore',
-  'text!../../../../cartocss/styles.cartocss'
+  'text!style.cartocss'
 ], function(Class, _, CARTOCSS) {
 
   var CartoDBLayerClass = Class.extend({
@@ -18,6 +18,7 @@ define([
     },
 
     render: function() {
+      console.log(this.map);
       cartodb.createLayer(this.map, {
         user_name: 'wri-01',
         type: 'cartodb',
@@ -42,17 +43,19 @@ define([
     },
 
     getQuery: function() {
+      // var sql = "SELECT * FROM " +
+      //           this.options.table +
+      //           " WHERE date between '" +
+      //           //timelineDate[0].year() +
+      //           "-" +
+      //           //timelineDate[0].month() +
+      //           "1-1' AND '" +
+      //           //timelineDate[1].year() +
+      //           "-" +
+      //           //timelineDate[1].month() +
+      //           "1-1'";
       var sql = "SELECT * FROM " +
-                this.options.table +
-                " WHERE date between '" +
-                //timelineDate[0].year() +
-                "-" +
-                //timelineDate[0].month() +
-                "1-1' AND '" +
-                //timelineDate[1].year() +
-                "-" +
-                //timelineDate[1].month() +
-                "1-1'";
+                this.options.table;
 
       return sql;
      }
