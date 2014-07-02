@@ -11,11 +11,8 @@ define([
 
   var ImazonLayer = CartoDBLayerClass.extend({
 
-    init: function(layer) {
-      this._super(layer);
-      this.url = 'dyynnn89u7nkm.cloudfront.net';
-      this.table = 'imazon_clean2';
-      this.global_version = 6;
+    options: {
+      table: 'imazon_clean2'
     }
 
   });
