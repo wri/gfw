@@ -7,7 +7,7 @@ define([
   'Class',
   'underscore',
   'mps',
-  'services/MapLayerService'
+  'validators/LayerValidator'
 ], function(Class, _, mps, mapLayerService) {
 
   'use strict';
@@ -21,8 +21,17 @@ define([
      */
     init: function(view) {
       this.view = view;
-      this.mapLayerService = mapLayerService;
+      this.layers = {};
       this._subscribe();
+    },
+
+    /**
+     * Get the layer spect object with the current
+     * layers
+     * @return {[type]} [description]
+     */
+    _getLayersSpec: function() {
+
     },
 
     /**
@@ -65,10 +74,10 @@ define([
      * @param  {string} layerSlug
      */
     toggleLayer: function(layerSlug) {
-      this.mapLayerService.getLayers([{slug: layerSlug}], function(layers) {
+      if (layerSlug && layerValidator.validate(layerSlug)) {
         mps.publish('LayerNav/toggle-layer', [layers[0]]);
         mps.publish('Place/update', [{go: false}]);
-      });
+      }
     }
 
   });

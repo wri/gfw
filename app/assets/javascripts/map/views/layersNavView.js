@@ -7,7 +7,6 @@ define([
   'backbone',
   'underscore',
   'presenters/LayersNavPresenter',
-  'validators/LayerValidator',
   'text!templates/layersNav.html'
 ], function(Backbone, _, Presenter, layerValidator, tpl) {
 
@@ -25,7 +24,6 @@ define([
     initialize: function() {
       _.bindAll(this, '_toggleSelected');
       this.presenter = new Presenter(this);
-      this.layers = {};
       this.render();
     },
 
@@ -37,10 +35,10 @@ define([
      * Used by LayersNavPresenter to toggle the selected class name
      * on a layer.
      *
-     * @param  {string} layerName
+     * @param  {string} layerSlug
      */
-    _toggleSelected: function(layerName) {
-      this.$el.find('li[data-layer="' + layerName + '"]')
+    _toggleSelected: function(layerSlug) {
+      this.$el.find('li[data-layer="' + layerSlug + '"]')
         .toggleClass('selected');
     },
 
@@ -51,12 +49,10 @@ define([
      * @param  {event} event Click event
      */
     _toggleLayer: function(event) {
-      var layerName = $(event.currentTarget).parents('li')
+      var layerSlug = $(event.currentTarget).parents('li')
         .data('layer');
 
-      if (layerName && layerValidator.validate(layerName)) {
-        this.presenter.toggleLayer(layerName)
-      }
+      this.presenter.toggleLayer(layerSlug);
     },
 
   });
