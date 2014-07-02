@@ -589,6 +589,58 @@
         </div>
       </div>
     </li>
+
+    <li id='idn_primary' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>Indonesia primary forest</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_download'>
+          <a href='http://www.earthenginepartners.appspot.com/science-2013-global-forest/download.html' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
+        </div>
+
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Displays the extent of tree cover as defined by percent tree cover canopy density</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Resolution/scale</dt>
+            <dd>30 × 30 meters</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Global land (excluding Antarctica and Arctic islands)</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd><a href='http://landsat.usgs.gov/' target='_blank'>Landsat 7 ETM+</a></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Date of content</dt>
+            <dd>2000</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd>For the purpose of this study, “tree cover” was defined as all vegetation taller than 5 meters in height. “Tree cover” is the biophysical presence of trees and may take the form of natural forests or plantations existing over a range of canopy densities.</dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>This data set displays tree cover over all global land (except for Antarctica and a number of Arctic islands) for the year 2000 at 30 × 30 meter resolution. “Percent tree cover” is defined as the density of tree canopy coverage of the land surface and is color-coded by density bracket (see legend).</p>
+          <p>Data in this layer were generated using multispectral satellite imagery from the <a href="http://landsat.usgs.gov/" target="_blank">Landsat 7 thematic mapper plus (ETM+)</a> sensor. The clear surface observations from over 600,000 images were analyzed using Google Earth Engine, a cloud platform for earth observation and data analysis, to determine per pixel tree cover using a supervised learning algorithm.</p>
+
+          <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” <em>Science</em> 342 (15 November): 850–53.</p>
+
+          <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Tree Cover Extent.” University of Maryland and Google. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
+
+          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "#{sources_path}#forest_cover" %></em></p>
+        </div>
+      </div>
+    </li>    
   </ul>
 </article>
 
