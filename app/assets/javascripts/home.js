@@ -13,6 +13,7 @@
 //= require url.min
 //= require gfw/deforestation_tile_layer
 //= require gfw/forest2000_tile_layer
+//= require gfw/idn_primary_tile_layer
 //= require gfw/canvas_tile_layer
 //= require gfw/static_grid_layer_imazon
 //= require gfw/static_grid_layer
