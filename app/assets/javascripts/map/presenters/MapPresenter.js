@@ -41,8 +41,8 @@ define([
         }
       }, this));
 
-      mps.subscribe('LayerNav/toggle-layer', _.bind(function(layer) {
-        this.view.toggleLayer(layer)
+      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
+        this.view.setLayers(layerSpec);
       },this));
 
       mps.publish('Place/register', [this]);

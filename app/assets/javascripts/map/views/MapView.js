@@ -101,6 +101,15 @@ define([
     },
 
     /**
+     * Set the map layers to the layerSpec status.
+     *
+     * @param {object} layerSpec Layers spec object.
+     */
+    setLayers: function(layerSpec) {
+      console.log(layerSpec);
+    },
+
+    /**
      * Used by MapPresenter to add a layer to the map.
      *
      * @param {Object} layer The layer object
