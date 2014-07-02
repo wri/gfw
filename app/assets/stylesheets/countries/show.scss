@@ -1,12 +1,13 @@
 .country-show {
   font-family: $font-regular;
   color: $default-color;
-  margin-top: -128px;
+  margin-top: -84px;
 
   .share {
     text-align: right;
-    margin-bottom: 12px;
+    height: 0;
     display: block;
+    float: left;
   }
 
   .share_control {
@@ -43,6 +44,7 @@
       left: 778px;
       display: block;
       background: none;
+      top: -35px;
       background-color: rgba(255,255,255,0.3);
       &:hover {
         background-color: rgba(255,255,255,0.4);
