@@ -1,13 +1,12 @@
 /**
  * The Cartodb map layer module.
- *
  * @return CartoDBLayerClass (extends Class).
  */
 define([
   'Class',
   'underscore',
-  'wax'
-], function(Class, _, wax) {
+  'text!cartocss/styles.cartocss'
+], function(Class, _, CARTOCSS) {
 
   var CartoDBLayerClass = Class.extend({
 
@@ -18,27 +17,25 @@ define([
     },
 
     render: function() {
-      if (this.rendered) return;
+      var map = window.map;
 
-      this.layer = new CartoDBLayer({
-        // map: map.map,
-        user_name: '',
-        tiler_domain: this.url,
-        sql_domain: this.url,
-        extra_params: { v: this.global_version},
-        tiler_path: '/tiles/',
-        tiler_suffix: '.png',
-        tiler_grid: '.grid.json',
-        table_name: this.table,
-        query: this.getQuery(),
-        layer_order: this.layerOrder,
-        opacity: 1,
-        interactivity: "cartodb_id",
-        debug: false,
-        auto_bound: false
-      });
-
-      this.rendered = true;
+      cartodb.createLayer(map, {
+        user_name: 'wri-01',
+        type: 'cartodb',
+        sublayers: [{
+          sql: this.getQuery(),
+          cartocss: CARTOCSS,
+          interactivity: 'cartodb_id'
+        }]
+      })
+        .addTo(map, this.layerOrder)
+        .done(
+          _.bind(function(layer) {
+            this.layer = layer;
+          }, this)
+        ).error(function(err) {
+          console.log(err);
+        });
     },
 
     updateTiles: function() {
@@ -47,7 +44,7 @@ define([
 
     getQuery: function() {
       var sql = "SELECT * FROM " +
-                this.table +
+                this.options.table +
                 " WHERE date between '" +
                 //timelineDate[0].year() +
                 "-" +
