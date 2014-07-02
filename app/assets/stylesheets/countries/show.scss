@@ -13,18 +13,18 @@
   .share_control {
     position: relative;
     width: auto;
-    height: 32px;
+    height: 39px;
     left: auto;
     right: auto;
     top: auto;
     display: inline-block;
     background: none;
-    border: 2px solid #C4C3C7;
-    padding: 6px 12px 0 12px;
+    border: 2px solid #73707F;
+    padding: 10px 12px 0 12px;
     text-transform: uppercase;
     border-radius: 20px;
     font-size: 14px;
-    color: #464152;
+    color: #BEBCC2;
     @include box-sizing(border-box);
     
     .country-icons-share {
@@ -34,9 +34,8 @@
       vertical-align: bottom;
       margin-left: 5px;
     }
-
     &:hover {
-      border-color: #BAB8BE;
+      border-color: lighten( #73707F, 6% );
     }
   }
   .country-share .share_control {
@@ -44,11 +43,8 @@
       left: 778px;
       display: block;
       background: none;
-      top: -35px;
-      background-color: rgba(255,255,255,0.3);
-      &:hover {
-        background-color: rgba(255,255,255,0.4);
-      }
+      top: -45px;
+      background-color: transparent;
     }
 
   .country-header {
@@ -469,6 +465,23 @@
       font-family: $font-medium;
       text-transform: uppercase;
       letter-spacing: -0.2px;
+      .icon-holder {
+        background-color: rgba(230, 230, 230, 0.1);
+        position: absolute;
+        margin-left: 10px;
+        border: 1px solid #eee;
+        border-radius: 15px;
+        padding: 4px;
+        background-position: 4px 4px;
+        width: 16px;
+        height: 16px;
+
+        .country-icons-share {
+          width: 16px;
+          height: 16px;
+          float: left;
+        }
+      }
 
       .info {
         margin-right: 6px;

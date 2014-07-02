@@ -29,8 +29,10 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   },
 
   _initShare: function() {
-    Share = new gfw.ui.view.Share({template: 'country'});
+    Share       = new gfw.ui.view.Share({template: 'country'});
+    Share_entry = new gfw.ui.view.Share({template: 'country-entry'});
     this.$el.find('.country-header .country-title').append(Share.render());
+    this.$el.find('.section-info .info').append(Share_entry.render());
   },
 
   _initSource: function() {
@@ -39,7 +41,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   },
 
   _openSource: function(e) {
-    e.preventDefault();
+    e && e.preventDefault();
 
     var source = $(e.target).closest('.info').attr('data-source');
 
