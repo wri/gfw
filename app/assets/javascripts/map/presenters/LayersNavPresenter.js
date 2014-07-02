@@ -8,7 +8,7 @@ define([
   'underscore',
   'mps',
   'services/LayerValidatorService'
-], function(Class, _, mps, mapLayerService, layerValidatorService) {
+], function(Class, _, mps, layerValidatorService) {
 
   'use strict';
 
@@ -21,38 +21,73 @@ define([
      */
     init: function(view) {
       this.view = view;
-      this.layers = {};
+      this.layerSpec = {};
       this._subscribe();
     },
 
-
     /**
-     * Getter/setter of Layers Spec.
+     * Validates and toggle a layer on layerSpec. If the validation fails
+     * it return false, else is returns the new layerSpec object.
      *
-     * @param  {string} category   Layer category
-     * @param  {string} layerSlug  Layer slug
+     * LayerSpec represent the current active layers.
      *
-     * @return {object} layersSpec Return the layers spec object if
-     *                             called withouts params.
+     *   forestChange: {
+     *     gain: true,
+     *     loss: true
+     *   },
+     *   forestCover: {
+     *     forest2000: true
+     *   }
+     *
+     * @param  {string} category  Layer category
+     * @param  {string} layerSlug Layer slug
+     *
+     * @return {object} layerSpec Return the layers spec or false.
      */
-    _layersSpec: function(category, layerSlug) {
+    _layerSpec: function(category, layerSlug) {
       if (category == null || layerSlug == null) {
-        return this.layers;
+        return false;
       }
 
-      if (typeof this.layers[category] === 'undefined') {
-        this.layers[category] = {};
+      var layerSpec = _.clone(this.layerSpec);
+
+      // Create category is needed.
+      if (typeof layerSpec[category] === 'undefined') {
+        layerSpec[category] = {};
       }
 
-      this.layers[category][layerSlug] = !(this.layers[category][layerSlug]);
+      // Set layer status
+      layerSpec[category][layerSlug] = !(layerSpec[category][layerSlug]);
+
+      // Remove layer status is false
+      if (!layerSpec[category][layerSlug]) {
+        delete layerSpec[category][layerSlug];
+
+        // Remove category is there are no layers on it.
+        if (Object.keys(layerSpec[category]).length < 1) {
+          delete layerSpec[category];
+        }
+      }
+
+      // Validate new layers spec
+      if (layerValidatorService.validate(layerSpec)) {
+        this.layerSpec = layerSpec;
+        return this.layerSpec;
+      }
+
+      return false;
+    },
+
+    _getLayerSpec: function() {
+      return this.layerSpec;
     },
 
     /**
      * Subscribe to application events.
      */
     _subscribe: function() {
-      mps.subscribe('LayerNav/toggle-layer', this.view._toggleSelected);
-      mps.publish('place/register', [this]);
+      mps.subscribe('LayerNav/change', this.view._toggleSelected);
+      mps.publish('Place/register', [this]);
     },
 
     /**
@@ -65,7 +100,18 @@ define([
     getPlaceParams: function() {
       var params = {};
 
-      // var baseLayers = _.where(this.layers, {category_slug: 'forest_clearing'});
+      var baseLayers = this.layerSpec['forestChange'] || {};
+
+      var sublayers = _.map(this.layerSpec, function(category, i) {
+        if (i !== 'forestChange') {
+          return category;
+        }
+      });
+
+      // params.baselayers = _.map(baselayers, function(layer) {
+      //   Return
+      // });
+
       // var subLayers = _.filter(this.layers, function(layer) {
       //   return layer.category_slug !== 'forest_clearing';
       // });
@@ -87,14 +133,13 @@ define([
      * @param  {string} layerSlug
      */
     toggleLayer: function(category, layerSlug) {
-      this._layersSpec(category, layerSlug);
+      console.log(category, layerSlug);
+      var layerSpec = this._layerSpec(category, layerSlug);
 
-      var layerSpec = this._layersSpec();
-
-      // if (layerSlug && layerValidatorService.validate(layerSpec)) {
-      //   mps.publish('LayerNav/toggle-layer', [layerSpec]);
-      //   mps.publish('Place/update', [{go: false}]);
-      // }
+      if (layerSpec) {
+        mps.publish('LayerNav/change', [layerSpec]);
+        mps.publish('Place/update', [{go: false}]);
+      }
     }
 
   });

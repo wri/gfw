@@ -1,4 +1,4 @@
-<div class="inner">
+<div class="inner disable-selection">
   <ul class="categories-list">
 
     <li class="forest-change">
@@ -10,31 +10,31 @@
           <span class="category-name">FOREST CHANGE</span>
         </div>
         <ul class="layers-list" data-category="forestChange">
-          <li data-layer="umd_tree_loss_gain">
+          <li class="layer" data-layer="umd_tree_loss_gain">
             <span class="layer-title">UMD tree cover loss</span>
           </li>
-          <li data-layer="gain">
+          <li class="layer" data-layer="gain">
             <span class="layer-title">UMD tree cover gain</span>
           </li>
-          <li>
+          <li class="layer">
             <span class="layer-title">FORMA alerts</span>
             <span class="layer-info">(monthly, 500m, humid tropics)</span>
           </li>
-          <li data-layer="imazon">
+          <li class="layer" data-layer="imazon">
             <div class="radio"></div>
             <span class="layer-title">Imazon SAD alerts</span>
             <span class="layer-info">(monthly, 250m, Brazilian Amazon)</span>
           </li>
-          <li>
+          <li class="layer">
             <span class="layer-title">QUICC alerts</span>
             <span class="layer-info">(quarterly, 5km, &lt;37 degrees north)</span>
           </li>
           </li>
-          <li>
+          <li class="layer">
             <span class="layer-title">NASA active fires</span>
             <span class="layer-info">(past 7 days, 1km, global))</span>
           </li>
-          <li>
+          <li class="layer">
             <span class="layer-title">None</span>
           </li>
         </ul>
@@ -50,13 +50,13 @@
           <span class="category-name">FOREST COVER</span>
         </div>
         <ul class="layers-list" data-category="forestCover">
-          <li data-layer="forest2000">
+          <li class="layer" data-layer="forest2000">
             <span class="layer-title">Tree cover extent</span>
           </li>
-          <li>
+          <li class="layer" data-layer="landscape">
             <span class="layer-title">Intact forest landscapes</span>
           </li>
-          <li>
+          <li class="layer" data-layer="carbonStock">
             <span class="layer-title">Tropical forest carbon stock</span>
           </li>
           </ul>
@@ -71,17 +71,17 @@
           <div class="category-icon"></div>
           <span class="category-name">FOREST USE</span>
         </div>
-        <ul class="layers-list">
-          <li>
+        <ul class="layers-list" data-category="forestUse">
+          <li class="layer" data-layer="logging">
             <span class="layer-title">Logging</span>
           </li>
-          <li>
+          <li class="layer" data-layer="mining">
             <span class="layer-title">Mining</span>
           </li>
-          <li>
+          <li class="layer" data-layer="oilPalm">
             <span class="layer-title">Oil palm</span>
           </li>
-          <li>
+          <li class="layer" data-layer="woodPlantations">
             <span class="layer-title">Wood fiber plantations</span>
           </li>
         </ul>
@@ -96,11 +96,11 @@
           <div class="category-icon"></div>
           <span class="category-name">CONSERVATION</span>
         </div>
-        <ul class="layers-list">
-          <li>
+        <ul class="layers-list" data-category="conservation">
+          <li class="layer">
             <span class="layer-title">Protected areas</span>
           </li>
-          <li>
+          <li class="layer">
             <span class="layer-title">Biodiversity hotspots</span>
           </li>
         </ul>
@@ -115,11 +115,11 @@
           <div class="category-icon"></div>
           <span class="category-name">PEOPLE</span>
         </div>
-        <ul class="layers-list">
-          <li>
+        <ul class="layers-list" data-category="people">
+          <li class="layer">
             <span class="layer-title">Resource Rights</span>
           </li>
-          <li>
+          <li class="layer">
             <span class="layer-title">Land Rights</span>
             <span class="layer-info">Coming soon…</span>
           </li>
@@ -135,11 +135,11 @@
           <div class="category-icon"></div>
           <span class="category-name">STORIES</span>
         </div>
-        <ul class="layers-list">
-          <li>
+        <ul class="layers-list" data-category="stories">
+          <li class="layer">
             <span class="layer-title">User stories</span>
           </li>
-          <li>
+          <li class="layer">
             <span class="layer-title">Mongabay stories</span>
           </li>
         </ul>

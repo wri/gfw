@@ -32,14 +32,27 @@ define([
     },
 
     /**
-     * Used by LayersNavPresenter to toggle the selected class name
-     * on a layer.
+     * Used by LayersNavPresenter to toggle the class
+     * name selected.
      *
-     * @param  {string} layerSlug
+     * @param  {object} layerSpec
      */
-    _toggleSelected: function(layerSlug) {
-      this.$el.find('li[data-layer="' + layerSlug + '"]')
-        .toggleClass('selected');
+    _toggleSelected: function(layerSpec) {
+      var activeLayers = [];
+
+      _.filter(layerSpec, function(category) {
+        activeLayers = activeLayers.concat(Object.keys(category));
+      });
+
+      _.each(this.$el.find('.layer'), function(li) {
+        var $li = $(li);
+
+        if (activeLayers.indexOf($li.data('layer')) > -1) {
+          $li.addClass('selected');
+        } else {
+          $li.removeClass('selected');
+        }
+      });
     },
 
     /**
@@ -58,8 +71,6 @@ define([
 
   });
 
-  var layersNavView = new LayersNavView();
-
-  return layersNavView;
+  return LayersNavView;
 
 });

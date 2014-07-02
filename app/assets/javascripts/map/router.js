@@ -11,11 +11,11 @@ define([
   'backbone',
   'mps',
   'gmap',
-  'views/layersNavView',
-  'views/MapView',
   'services/PlaceService',
+  'views/LayersNavView',
+  'views/MapView',
   'services/MapLayerService'
-], function($, _, Backbone, mps, gmap, layersNavView, MapView, PlaceService, mapLayerService) {
+], function($, _, Backbone, mps, gmap, PlaceService, LayersNavView, MapView, mapLayerService) {
 
   'use strict';
 
@@ -34,6 +34,7 @@ define([
       }, this));
       this.setMapSize();
       this.placeService = new PlaceService(mapLayerService, this);
+      this.layersNavView = new LayersNavView();
     },
 
     map: function(zoom, lat, lng, iso, maptype, baselayers, sublayers) {
