@@ -34,3 +34,5 @@ vendor/assets/bower_components
 
 # For testem without grunt
 testem.yml
+jstest/index.html
+jstest/spec-runner.js

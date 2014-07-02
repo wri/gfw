@@ -23,11 +23,8 @@ define([
 
     // URI templates for API
     apis: {
-      global: 'http://{0}/forest-change/{1}{?period,geojson,download,bust,dev}',
-      national: 'http://{0}/forest-change/{1}/admin{/iso}{?period,download,bust,dev,thresh}',
-      subnational: 'http://{0}/forest-change/{1}/admin{/iso}{/id1}{?period,download,bust,dev,thresh}',
-      use: 'http://{0}/forest-change/{1}/use/{/name}{/id}{?period,download,bust,dev}',
-      wdpa: 'http://{0}/forest-change/{1}/wdpa/{/id}{?period,download,bust,dev}'
+      national: 'http://{host}/forest-change/{dataset}/admin{/iso}{?period,download,bust,dev,thresh}',
+      subnational: 'http://{host}/forest-change/{dataset}/admin{/iso}{/id1}{?period,download,bust,dev,thresh}',
     },
 
     init: function() {
@@ -39,7 +36,7 @@ define([
      * @param  {object} API parameters
      * @return {string} URI template for API
      */
-    get_uritemplate: function(config) {
+    _getUriTemplate: function(config) {
       if (_.has(config, 'iso') && !_.has(config, 'id1')) {
         return this.apis.national;
       } else if (_.has(config, 'iso') && _.has(config, 'id1')) {
@@ -70,21 +67,21 @@ define([
      * @return {string} API URL
      */
     get_url: function(config) {
-      var template = this.get_uritemplate(config);
+      var template = this._getUriTemplate(config);
       var host = this.get_api_host();
       var url = null;
 
-      template = template.format(host, config.layerName);
+      config.host = host;
       url = new UriTemplate(template).fillFromObject(config);
 
       return url;
     },
 
     /**
-     * Executes analysis.
+     * Asynchronously execute analysis for supplied configuration.
      *
      * @param  {Object} config object
-     *   layerName - layer name (e.g., forma-alerts, umd-loss-gain)
+     *   dataset - layer name (e.g., forma-alerts, umd-loss-gain)
      *   period - beginyear,endyear (e.g., 2001,2002)
      *   download - filename.format (e.g., forma.shp)
      *   geojson - GeoJSON Polygon or Multipolygon
@@ -94,17 +91,17 @@ define([
      *   useid - Concession polygon cartodb_id (e.g., 2)
      *   wdpa - WDPA polygon cartodb_id (e.g., 800)
      */
-    execute: function(config, callback) {
+    execute: function(config, successCb, failureCb) {
       var url = this.get_url(config);
 
       nsa.spy(
         url,
         {},
         function(response) {
-          callback(response);
+          successCb(response);
         },
         function(responseText, status, error) {
-          callback(responseText, status, error);
+          failureCb(responseText, status, error);
         });
     }
   });
