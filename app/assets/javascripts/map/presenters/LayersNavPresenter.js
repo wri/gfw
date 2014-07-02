@@ -7,8 +7,8 @@ define([
   'Class',
   'underscore',
   'mps',
-  'validators/LayerValidator'
-], function(Class, _, mps, mapLayerService) {
+  'services/LayerValidatorService'
+], function(Class, _, mps, mapLayerService, layerValidatorService) {
 
   'use strict';
 
@@ -25,13 +25,26 @@ define([
       this._subscribe();
     },
 
-    /**
-     * Get the layer spect object with the current
-     * layers
-     * @return {[type]} [description]
-     */
-    _getLayersSpec: function() {
 
+    /**
+     * Getter/setter of Layers Spec.
+     *
+     * @param  {string} category   Layer category
+     * @param  {string} layerSlug  Layer slug
+     *
+     * @return {object} layersSpec Return the layers spec object if
+     *                             called withouts params.
+     */
+    _layersSpec: function(category, layerSlug) {
+      if (category == null || layerSlug == null) {
+        return this.layers;
+      }
+
+      if (typeof this.layers[category] === 'undefined') {
+        this.layers[category] = {};
+      }
+
+      this.layers[category][layerSlug] = !(this.layers[category][layerSlug]);
     },
 
     /**
@@ -73,11 +86,15 @@ define([
      *
      * @param  {string} layerSlug
      */
-    toggleLayer: function(layerSlug) {
-      if (layerSlug && layerValidator.validate(layerSlug)) {
-        mps.publish('LayerNav/toggle-layer', [layers[0]]);
-        mps.publish('Place/update', [{go: false}]);
-      }
+    toggleLayer: function(category, layerSlug) {
+      this._layersSpec(category, layerSlug);
+
+      var layerSpec = this._layersSpec();
+
+      // if (layerSlug && layerValidatorService.validate(layerSpec)) {
+      //   mps.publish('LayerNav/toggle-layer', [layerSpec]);
+      //   mps.publish('Place/update', [{go: false}]);
+      // }
     }
 
   });

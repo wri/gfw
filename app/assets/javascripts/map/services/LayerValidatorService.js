@@ -11,7 +11,7 @@ define([
 
   'use strict';
 
-  var LayerValidator = Class.extend({
+  var LayerValidatorService = Class.extend({
 
     baselayersOpts: {
       allowCombined: [
@@ -38,16 +38,14 @@ define([
      *
      * @return {boolean) True/false if validation passed.
      */
-    validate: function(layerName) {
+    validate: function(layerSpec) {
       var result = true;
-
       // validate here
-
       return result;
     }
   });
 
-  var layerValidator = new LayerValidator();
+  var layerValidatorService = new LayerValidatorService();
 
-  return layerValidator;
+  return layerValidatorService;
 });

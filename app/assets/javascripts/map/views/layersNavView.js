@@ -8,7 +8,7 @@ define([
   'underscore',
   'presenters/LayersNavPresenter',
   'text!templates/layersNav.html'
-], function(Backbone, _, Presenter, layerValidator, tpl) {
+], function(Backbone, _, Presenter, tpl) {
 
   'use strict';
 
@@ -49,10 +49,11 @@ define([
      * @param  {event} event Click event
      */
     _toggleLayer: function(event) {
-      var layerSlug = $(event.currentTarget).parents('li')
-        .data('layer');
+      var $currentTarget = $(event.currentTarget);
+      var layerSlug = $currentTarget.parents('li').data('layer');
+      var category = $currentTarget.parents('ul').data('category');
 
-      this.presenter.toggleLayer(layerSlug);
+      this.presenter.toggleLayer(category, layerSlug);
     },
 
   });
