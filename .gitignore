@@ -31,3 +31,6 @@ vendor/assets/bower_components
 
 # Ingore Sublime project files:
 *.sublime-*
+
+# For testem without grunt
+testem.yml

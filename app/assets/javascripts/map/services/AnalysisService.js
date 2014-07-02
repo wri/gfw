@@ -19,21 +19,18 @@ define([
 
   'use strict';
 
-  var Analysis = Class.extend({
+  var AnalysisService = Class.extend({
 
     // URI templates for API
     apis: {
       global: 'http://{0}/forest-change/{1}{?period,geojson,download,bust,dev}',
-      national: 'http://{0}/forest-change/{1}/admin{/iso}{?period,download,bust,dev}',
-      subnational: 'http://{0}/forest-change/{1}/admin{/iso}{/id1}{?period,download,bust,dev}',
+      national: 'http://{0}/forest-change/{1}/admin{/iso}{?period,download,bust,dev,thresh}',
+      subnational: 'http://{0}/forest-change/{1}/admin{/iso}{/id1}{?period,download,bust,dev,thresh}',
       use: 'http://{0}/forest-change/{1}/use/{/name}{/id}{?period,download,bust,dev}',
       wdpa: 'http://{0}/forest-change/{1}/wdpa/{/id}{?period,download,bust,dev}'
     },
 
     init: function() {
-      mps.subscribe('analysis/get', _.bind(function(config, cache) {
-        this.execute(config, cache);
-      }, this));
     },
 
     /**
@@ -86,8 +83,8 @@ define([
     /**
      * Executes analysis.
      *
-     * @param  {[type]} config object
-     *   layerName - layer name (e.g., forma-alerts)
+     * @param  {Object} config object
+     *   layerName - layer name (e.g., forma-alerts, umd-loss-gain)
      *   period - beginyear,endyear (e.g., 2001,2002)
      *   download - filename.format (e.g., forma.shp)
      *   geojson - GeoJSON Polygon or Multipolygon
@@ -97,23 +94,22 @@ define([
      *   useid - Concession polygon cartodb_id (e.g., 2)
      *   wdpa - WDPA polygon cartodb_id (e.g., 800)
      */
-    execute: function(config, cache) {
+    execute: function(config, callback) {
       var url = this.get_url(config);
 
       nsa.spy(
         url,
         {},
         function(response) {
-          mps.publish('analysis/get-success', [response]);
+          callback(response);
         },
         function(responseText, status, error) {
-          mps.publish('analysis/get-failure', [responseText, status, error]);
-        },
-        cache);
+          callback(responseText, status, error);
+        });
     }
   });
 
-  var analysis = new Analysis();
+  var service = new AnalysisService();
 
-  return analysis;
+  return service;
 });
