@@ -10,16 +10,15 @@ define([
 
   var CartoDBLayerClass = Class.extend({
 
-    init: function(layer) {
+    init: function(layer, map) {
       this.layer = {};
+      this.map = map;
       this.name = layer.slug;
       this.layerOrder = this.layerOrder || 1;
     },
 
     render: function() {
-      var map = window.map;
-
-      cartodb.createLayer(map, {
+      cartodb.createLayer(this.map, {
         user_name: 'wri-01',
         type: 'cartodb',
         sublayers: [{
@@ -28,7 +27,7 @@ define([
           interactivity: 'cartodb_id'
         }]
       })
-        .addTo(map, this.layerOrder)
+        .addTo(this.map, this.layerOrder)
         .done(
           _.bind(function(layer) {
             this.layer = layer;

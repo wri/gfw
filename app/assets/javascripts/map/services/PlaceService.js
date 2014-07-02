@@ -130,7 +130,7 @@ define([
      * @return {Object} Params ready for URL
      */
     _formatUrl: function(name, params) {
-      if (name === 'map') {
+      if (name === 'map' && params.lat && params.lng) {
         return _.extend({}, params, {
           lat: String(_.toNumber(params.lat).toFixed(2)),
           lng: String(_.toNumber(params.lng).toFixed(2))
