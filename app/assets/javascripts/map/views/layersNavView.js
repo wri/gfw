@@ -38,11 +38,9 @@ define([
      * @param  {object} layerSpec
      */
     _toggleSelected: function(layerSpec) {
-      var activeLayers = [];
-
-      _.filter(layerSpec, function(category) {
-        activeLayers = activeLayers.concat(Object.keys(category));
-      });
+      var activeLayers = _.flatten(_.map(layerSpec, function(value, key) {
+        return _.keys(value);
+      }));
 
       _.each(this.$el.find('.layer'), function(li) {
         var $li = $(li);

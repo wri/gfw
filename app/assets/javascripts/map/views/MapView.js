@@ -10,8 +10,9 @@ define([
   'views/AnalysisButtonView',
   'views/layers/UMDLossLayer',
   'views/layers/Forest2000Layer',
-  'views/layers/GainLayer'
-], function(Backbone, _, Presenter, AnalysisButtonView, UMDLossLayer, Forest2000Layer, GainLayer) {
+  'views/layers/GainLayer',
+  'views/layers/ImazonLayer'
+], function(Backbone, _, Presenter, AnalysisButtonView, UMDLossLayer, Forest2000Layer, GainLayer, ImazonLayer) {
 
   'use strict';
 
@@ -22,7 +23,8 @@ define([
      layersViews: {
       umd_tree_loss_gain: UMDLossLayer,
       forest2000: Forest2000Layer,
-      gain: GainLayer
+      gain: GainLayer,
+      imazon: ImazonLayer
      },
 
     /**
@@ -95,13 +97,14 @@ define([
         activeLayers = _.extend(activeLayers, category);
       });
 
-      // Render layers
+      // Remove layers
       _.each(this.layerViewsInst, function(view, layerSlug) {
         if (!activeLayers[layerSlug] && self._isLayerRendered(layerSlug)) {
           self.removeLayer(layerSlug);
         }
       });
 
+      // Render layers
       _.each(activeLayers, function(layer) {
         if (!self._isLayerRendered(layer.slug)) {
           self.addLayer(layer);
@@ -132,13 +135,14 @@ define([
 
       if (!_.has(this.layerViewsInst, layer.slug)) {
         var LayerView = this.layersViews[layer.slug];
-        layerView = new LayerView(layer);
+        layerView = new LayerView(layer, map);
         this.layerViewsInst[layer.slug] = layerView;
       } else {
         layerView = this.layerViewsInst[layer.slug]
       }
-
-      this.map.overlayMapTypes.insertAt(0, layerView);
+      if (layer.slug !== 'imazon') {
+        this.map.overlayMapTypes.insertAt(0, layerView);
+      }
     },
 
     /**
