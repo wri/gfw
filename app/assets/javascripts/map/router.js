@@ -23,6 +23,7 @@ define([
 
     routes: {
       'map': 'map',
+      'map/*path': 'map',
       'map/:zoom/:lat/:lng/:iso/:maptype/:baselayers(/:sublayers)(/)': 'map',
     },
 
