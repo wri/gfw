@@ -133,7 +133,6 @@ define([
      * @param  {string} layerSlug
      */
     toggleLayer: function(category, layerSlug) {
-      console.log(category, layerSlug);
       var layerSpec = this._layerSpec(category, layerSlug);
 
       if (layerSpec) {
