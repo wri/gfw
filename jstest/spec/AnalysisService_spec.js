@@ -2,8 +2,9 @@ define([
   'services/AnalysisService',
   'mps', 
   'underscore',
+  'nsa',
   'helpers/api_responses',
-], function(service, mps, _) {
+], function(service, mps, _, nsa) {
 
   'use strict';
 
@@ -104,10 +105,76 @@ define([
 
       it('correctly returns URI template for national API', function() {
         var config = {iso: 'bra', thresh: 10};
-        var uriTemplate =  'http://{host}/forest-change/{dataset}/admin{/iso}{?period,download,bust,dev,thresh}';
+        var uriTemplate = 'http://{host}/forest-change/{dataset}/admin{/iso}{?period,download,bust,dev,thresh}';
 
         expect(service._getUriTemplate(config)).toEqual(uriTemplate);
       });
+
+      it('correctly returns URI template for subnational API', function() {
+        var config = {iso: 'bra', id1: 1, thresh: 10};
+        var uriTemplate = 'http://{host}/forest-change/{dataset}/admin{/iso}{/id1}{?period,download,bust,dev,thresh}';
+
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+      });      
     });
+
+
+    /**
+     * Spec for testing _getUriTemplate().
+     */
+    describe('_getUrl()', function() {
+
+      beforeEach(function() {
+      });
+
+      it('correctly returns URL for UMD national API', function() {
+        var config = {dataset: 'umd-loss-gain', iso: 'bra', thresh: 10};
+        var url = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/bra?thresh=10';
+
+        expect(service._getUrl(config)).toEqual(url);
+      });
+
+     it('correctly returns URL for UMD subnational API', function() {
+        var config = {
+          dataset: 'umd-loss-gain', iso: 'bra', id1: 1, thresh: 10};
+        var url = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/bra/1?thresh=10';
+
+        expect(service._getUrl(config)).toEqual(url);
+      });           
+    });    
+
+
+    /**
+     * Spec for testing execute().
+     */
+    describe('execute()', function() {
+      var response = null;
+      var callback = null;
+      var config = {dataset: 'umd-loss-gain', iso: 'bra', thresh: 10};
+
+      beforeEach(function(done) {
+        jasmine.Ajax.install();
+        nsa.test = true;
+
+        // Mock MapServiceLayer and Router
+        callback = {
+          success: function(data) {
+            response = data;
+            done();
+          }
+        };
+        spyOn(callback, 'success').and.callThrough();
+        service.execute(config, callback.success);
+        jasmine.Ajax.requests.mostRecent().response({
+          "status": 200,
+          "responseText": '"boom"'
+        });
+      });
+
+      it('correctly executes callback with data', function() {
+        expect(response).toEqual('boom');
+      });
+    });
+
   });
 });

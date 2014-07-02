@@ -66,7 +66,7 @@ define([
      * @param  {object} config API parameters
      * @return {string} API URL
      */
-    get_url: function(config) {
+    _getUrl: function(config) {
       var template = this._getUriTemplate(config);
       var host = this.get_api_host();
       var url = null;
@@ -92,7 +92,7 @@ define([
      *   wdpa - WDPA polygon cartodb_id (e.g., 800)
      */
     execute: function(config, successCb, failureCb) {
-      var url = this.get_url(config);
+      var url = this._getUrl(config);
 
       nsa.spy(
         url,
