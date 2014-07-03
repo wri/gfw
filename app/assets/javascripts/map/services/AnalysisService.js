@@ -9,55 +9,62 @@
  *
  */
 define([
-  'jquery',
   'underscore',
-  'mps',
   'nsa',
   'Class',
   'uri'
-], function ($, _, mps, nsa, Class, UriTemplate) {
+], function (_, nsa, Class, UriTemplate) {
 
   'use strict';
 
   var AnalysisService = Class.extend({
 
-    // URI templates for API
+    // TODO: pull this from /forest-change endpoint and cache.
     apis: {
-      national: 'http://{host}/forest-change/{dataset}/admin{/iso}{?period,download,bust,dev,thresh}',
-      subnational: 'http://{host}/forest-change/{dataset}/admin{/iso}{/id1}{?period,download,bust,dev,thresh}',
+      'forma-alerts': {
+        'apis': {
+          'national': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}{?period,download,bust,dev}',
+          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}/{id1}{?period,download,bust,dev}',
+          'use': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/use/{use}/{useid}{?period,download,bust,dev}',
+          'wdpa': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/wdpa/{wdpaid}{?period,download,bust,dev}'
+        }
+      },
+      'umd-loss-gain':{
+        'apis':{
+          'national': 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}{?bust,dev,thresh}',
+          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}/{id1}{?bust,dev,thresh}'
+        }
+      }
     },
 
     init: function() {
     },
 
     /**
-     * Return URI template for API based on supplied config object of parameters.
+     * Return URI template for API based on supplied config object of 
+     * parameters. The dataset config property is required.
      *
      * @param  {object} API parameters
      * @return {string} URI template for API
      */
     _getUriTemplate: function(config) {
-      if (_.has(config, 'iso') && !_.has(config, 'id1')) {
-        return this.apis.national;
-      } else if (_.has(config, 'iso') && _.has(config, 'id1')) {
-        return this.apis.subnational;
-      } else if (_.has(config, 'use')) {
-        return this.apis.use;
-      } else if (_.has(config, 'wdpa')) {
-        return this.apis.wdpa;
-      } else {
-        return this.apis.global;
-      }
-    },
+      var dataset = config.dataset;
 
-    /**
-     * Gets the API host.
-     *
-     * @return {string} the API host
-     */
-    get_api_host: function() {
-      // return 'localhost:8080';
-      return 'beta.gfw-apis.appspot.com';
+      if (!dataset) {
+        return null;
+      }
+
+      if (_.has(config, 'iso') && !_.has(config, 'id1')) {
+        return this.apis[dataset].apis.national;
+      } else if (_.has(config, 'iso') && _.has(config, 'id1')) {
+        return this.apis[dataset].apis.subnational;
+      } else if (_.has(config, 'use')) {
+        return this.apis[dataset].apis.use;
+      } else if (_.has(config, 'wdpaid')) {
+        return this.apis[dataset].apis.wdpa;
+      } 
+
+      return null;
     },
 
     /**
@@ -68,10 +75,12 @@ define([
      */
     _getUrl: function(config) {
       var template = this._getUriTemplate(config);
-      var host = this.get_api_host();
       var url = null;
 
-      config.host = host;
+      if (!template) {
+        return null;
+      }
+
       url = new UriTemplate(template).fillFromObject(config);
 
       return url;
@@ -89,10 +98,15 @@ define([
      *   id1 - GADM subational id (e.g., 3445)
      *   use - Concession name (e.g., logging, mining, oilpalm, fiber)
      *   useid - Concession polygon cartodb_id (e.g., 2)
-     *   wdpa - WDPA polygon cartodb_id (e.g., 800)
+     *   wdpaid - WDPA polygon cartodb_id (e.g., 800)
      */
     execute: function(config, successCb, failureCb) {
       var url = this._getUrl(config);
+
+      if (!url) {
+        failureCb('Unable to find API endpoint for supplied config');
+        return;
+      }
 
       nsa.spy(
         url,
