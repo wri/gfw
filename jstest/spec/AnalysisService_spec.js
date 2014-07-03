@@ -104,15 +104,23 @@ define([
       });
 
       it('correctly returns URI template for national API', function() {
-        var config = {iso: 'bra', thresh: 10};
-        var uriTemplate = 'http://{host}/forest-change/{dataset}/admin{/iso}{?period,download,bust,dev,thresh}';
+        var config = {iso: 'bra', thresh: 10, dataset: 'umd-loss-gain'};
+        var uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}{?bust,dev,thresh}';
 
         expect(service._getUriTemplate(config)).toEqual(uriTemplate);
       });
 
       it('correctly returns URI template for subnational API', function() {
-        var config = {iso: 'bra', id1: 1, thresh: 10};
-        var uriTemplate = 'http://{host}/forest-change/{dataset}/admin{/iso}{/id1}{?period,download,bust,dev,thresh}';
+        var config = {iso: 'bra', id1: 1, thresh: 10,
+          dataset: 'umd-loss-gain'};
+        var uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}/{id1}{?bust,dev,thresh}';
+
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+      });   
+
+      it('correctly returns null template for invalid config', function() {
+        var config = {};
+        var uriTemplate = null;
 
         expect(service._getUriTemplate(config)).toEqual(uriTemplate);
       });      
@@ -140,7 +148,46 @@ define([
         var url = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/bra/1?thresh=10';
 
         expect(service._getUrl(config)).toEqual(url);
-      });           
+      });       
+
+      it('correctly returns URL for FORMA national API', function() {
+        var config = {
+          dataset: 'forma-alerts', iso: 'bra'};
+        var url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/bra';
+
+        expect(service._getUrl(config)).toEqual(url);
+      });        
+  
+      it('correctly returns URL for FORMA subnational API', function() {
+        var config = {
+          dataset: 'forma-alerts', iso: 'bra', id1: 1};
+        var url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/bra/1';
+
+        expect(service._getUrl(config)).toEqual(url);
+      });     
+
+      it('correctly returns URL for FORMA wdpa API', function() {
+        var config = {
+          dataset: 'forma-alerts', wdpaid: 1,};
+        var url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/wdpa/1';
+
+        expect(service._getUrl(config)).toEqual(url);
+      });            
+
+      it('correctly returns URL for FORMA use API', function() {
+        var config = {
+          dataset: 'forma-alerts', use: 'logging', useid: 1,};
+        var url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/use/logging/1';
+
+        expect(service._getUrl(config)).toEqual(url);
+      });            
+
+      it('correctly returns null URL for invalid config', function() {
+        var config = {};
+        var uriTemplate = null;
+
+        expect(service._getUrl(config)).toEqual(uriTemplate);
+      });        
     });    
 
 
