@@ -10,7 +10,7 @@
 <% end %>
 
 <% content_for :js do %>
-  <%= javascript_include_tag "embed_countries" %>
+  <%= javascript_include_tag "countries" %>
 
   <script>
     $(function() {
@@ -27,8 +27,8 @@
   <a href="/" class="header-logo">Global Forest Watch</a>
 
   <div class="header-inner inner">
-    <h1 class="header-title big"><%= @country['name'] %></h1>
+    <!-- <h1 class="header-title big"><%= @country['name'] %></h1> -->
   </div>
 <% end %>
 
-<%= render 'shared/circles' %>
+<%= render 'shared/country' %>

@@ -255,9 +255,6 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
           }
         });
 
-        $amount.html('<span>'+formatNumber(parseInt(data_[data_.length - 1].value, 10))+'</span>');
-        $date.html('Hectares in ' + data_[data_.length - 1].year);
-
         var marginLeft = 40,
             marginTop = radius - h/2 + 5;
 
