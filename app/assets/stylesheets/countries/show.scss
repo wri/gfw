@@ -7,7 +7,6 @@
     text-align: right;
     height: 0;
     display: block;
-    float: left;
   }
 
   .share_control {
@@ -465,20 +464,16 @@
       font-family: $font-medium;
       text-transform: uppercase;
       letter-spacing: -0.2px;
-      .icon-holder {
-        background-color: rgba(230, 230, 230, 0.1);
-        position: absolute;
-        margin-left: 10px;
-        border: 1px solid #eee;
-        border-radius: 15px;
-        padding: 4px;
-        background-position: 4px 4px;
-        width: 16px;
-        height: 16px;
 
-        .country-icons-share {
-          width: 16px;
-          height: 16px;
+      .icon-holder {
+        position: relative;
+        float: right;
+        top: -14px;
+        right: -24px;
+
+        .country-icons-share_circle_white {
+          width: 20px;
+          height: 20px;
           float: left;
         }
       }
