@@ -39,7 +39,7 @@
   }
   .country-share .share_control {
       width: 95px;
-      left: 778px;
+      left: 818px;
       display: block;
       background: none;
       top: -45px;
@@ -76,6 +76,7 @@
         height: 39px;
         width: 310px;
         position: relative;
+        right: -40px;
       }
 
       select {
@@ -484,7 +485,7 @@
     }
 
     .section-content {
-      padding-left: 30px;
+      padding-left: 22px;
       @extend .clearfix;
 
       .left-col,
