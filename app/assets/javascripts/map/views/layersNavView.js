@@ -38,7 +38,7 @@ define([
      * @param  {object} layerSpec
      */
     _toggleSelected: function(layerSpec) {
-      var activeLayers = _.flatten(_.map(layerSpec, function(value, key) {
+      var activeLayers = _.flatten(_.map(layerSpec, function(value) {
         return _.keys(value);
       }));
 

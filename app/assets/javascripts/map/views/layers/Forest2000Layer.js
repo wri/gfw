@@ -11,10 +11,13 @@ define([
 
   var Forest2000Layer = CanvasLayerClass.extend({
 
+    options: {
+      dataMaxZoom: 12,
+      urlTemplate: 'http://earthengine.google.org/static/hansen_2013/tree_alpha{/z}{/x}{/y}.png'
+    },
+
     init: function(layer) {
       this._super(layer);
-      this.dataMaxZoom = 12;
-      this._urlTemplate = 'http://earthengine.google.org/static/hansen_2013/tree_alpha{/z}{/x}{/y}.png';
     },
 
     filterCanvasImgdata: function(imgdata, w, h) {

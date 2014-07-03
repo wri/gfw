@@ -8,7 +8,7 @@ define([
   'underscore',
   'mps',
   'services/MapLayerService'
-], function(Class, _, mps, mapLayerService) {
+], function(Class, _, mps) {
 
   'use strict';
 

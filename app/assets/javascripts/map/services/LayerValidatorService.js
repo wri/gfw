@@ -38,7 +38,7 @@ define([
      *
      * @return {boolean) True/false if validation passed.
      */
-    validate: function(layerSpec) {
+    validate: function() {
       var result = true;
       // validate here
       return result;

@@ -93,7 +93,7 @@ define([
       var self = this;
       var activeLayers = {};
 
-      _.each(layerSpec, function(category, i) {
+      _.each(layerSpec, function(category) {
         activeLayers = _.extend(activeLayers, category);
       });
 
@@ -138,7 +138,7 @@ define([
         layerView = new LayerView(layer, this.map);
         this.layerViewsInst[layer.slug] = layerView;
       } else {
-        layerView = this.layerViewsInst[layer.slug]
+        layerView = this.layerViewsInst[layer.slug];
       }
       if (layer.slug !== 'imazon') {
         this.map.overlayMapTypes.insertAt(0, layerView);
@@ -175,7 +175,7 @@ define([
         for (var i = 0; i< overlaysLength; i++) {
           var layer = this.map.overlayMapTypes.getAt(i);
           if (layer && layer.name === name) {
-            return true
+            return true;
           }
         }
       }

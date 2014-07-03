@@ -22,7 +22,7 @@ define([
      * Subscribe to application events.
      */
     _subscribe: function() {
-      mps.subscribe('Place/go', _.bind(function(place) {
+      mps.subscribe('Place/go', _.bind(function() {
         // if (place.name === 'map') {
         // }
       }, this));

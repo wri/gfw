@@ -13,10 +13,13 @@ define([
 
   var UMDLossLayer = CanvasLayerClass.extend({
 
+    options: {
+      dataMaxZoom: 12,
+      urlTemplate: 'http://earthengine.google.org/static/hansen_2013/gfw_loss_year{/z}{/x}{/y}.png'
+    },
+
     init: function(layer) {
       this._super(layer);
-      this.dataMaxZoom = 12;
-      this._urlTemplate = 'http://earthengine.google.org/static/hansen_2013/gfw_loss_year{/z}{/x}{/y}.png';
       this.presenter = new Presenter(this);
     },
 

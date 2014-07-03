@@ -12,7 +12,7 @@ define([
   var ImazonLayer = CartoDBLayerClass.extend({
 
     options: {
-      table: 'imazon_clean2'
+      sql: 'SELECT cartodb_id, the_geom_webmercator, data_type AS name FROM imazon_clean2'
     }
 
   });

@@ -46,7 +46,7 @@ define([
      * @return {object} layerSpec Return the layers spec or false.
      */
     _layerSpec: function(layerObj, category) {
-      if (layerObj == null || category == null) {
+      if (layerObj === null || category === null) {
         return false;
       }
 
@@ -100,13 +100,13 @@ define([
     getPlaceParams: function() {
       var params = {};
 
-      var baseLayers = this.layerSpec['forestChange'] || {};
+      //var baseLayers = this.layerSpec.forestChange || {};
 
-      var sublayers = _.map(this.layerSpec, function(category, i) {
-        if (i !== 'forestChange') {
-          return category;
-        }
-      });
+      // var sublayers = _.map(this.layerSpec, function(category, i) {
+      //   if (i !== 'forestChange') {
+      //     return category;
+      //   }
+      // });
 
       // params.baselayers = _.map(baselayers, function(layer) {
       //   Return

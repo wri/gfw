@@ -11,10 +11,13 @@ define([
 
   var GainLayer = ImageLayerClass.extend({
 
+    options: {
+      dataMaxZoom: 19,
+      urlTemplate: 'http://earthengine.google.org/static/hansen_2013/gain_alpha{/z}{/x}{/y}.png'
+    },
+
     init: function(layer) {
       this._super(layer);
-      this.dataMaxZoom = 19;
-      this._urlTemplate = 'http://earthengine.google.org/static/hansen_2013/gain_alpha{/z}{/x}{/y}.png';
     }
   });
 
