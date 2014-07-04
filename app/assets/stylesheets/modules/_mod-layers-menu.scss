@@ -105,6 +105,10 @@ $stories-color: rgb(242, 178, 87);
         font-size: 11px;
         margin-top: 3px;
       }
+
+      &.selected {
+        color: green;
+      }
     }
 
   } // layers-nav

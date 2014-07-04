@@ -1,25 +1,23 @@
 /**
  * The Forest2000 layer module for use on canvas.
  *
- * @return ForestLayer class (extends CanvasLayer)
+ * @return ForestLayer class (extends CanvasLayerClass)
  */
 define([
-  'backbone',
-  'mps',
-  'presenter',
-  'views/layers/class/canvasLayer',
-], function(Backbone, mps, presenter, CanvasLayer) {
+  'views/layers/class/CanvasLayerClass'
+], function(CanvasLayerClass) {
 
   'use strict';
 
-  var ForestLayer = CanvasLayer.extend({
+  var Forest2000Layer = CanvasLayerClass.extend({
 
-    initialize: function() {
-      this.dataMaxZoom = 12;
-      this.name = 'forest2000';
-      this.url =
-        'http://earthengine.google.org/static/hansen_2013/tree_alpha/%z/%x/%y.png';
-      ForestLayer.__super__.initialize.apply(this);
+    options: {
+      dataMaxZoom: 12,
+      urlTemplate: 'http://earthengine.google.org/static/hansen_2013/tree_alpha{/z}{/x}{/y}.png'
+    },
+
+    init: function(layer) {
+      this._super(layer);
     },
 
     filterCanvasImgdata: function(imgdata, w, h) {
@@ -41,6 +39,6 @@ define([
     }
   });
 
-  return ForestLayer;
+  return Forest2000Layer;
 
 });

@@ -11,11 +11,13 @@ define([
 
   'use strict';
 
-  var CanvasLayer = Class.extend({
+  var CanvasLayerClass = Class.extend({
 
-    init: function () {
+    init: function (layer) {
       _.bindAll(this, 'filterCanvasImgdata');
       this.tileSize = new google.maps.Size(256, 256);
+      this.layer = layer;
+      this.name = layer.slug;
       this.tiles = {};
     },
 
@@ -104,7 +106,7 @@ define([
     },
 
     _getZoomSteps: function(z) {
-      return z - this.dataMaxZoom;
+      return z - this.options.dataMaxZoom;
     },
 
     _getImage: function(url, callback) {
@@ -128,14 +130,14 @@ define([
     },
 
     _getUrl: function(x, y, z) {
-      return new UriTemplate(this._urlTemplate).fillFromObject({x: x, y: y, z: z});
+      return new UriTemplate(this.options.urlTemplate).fillFromObject({x: x, y: y, z: z});
     },
 
     _getTileCoords: function(x, y, z) {
-      if (z > this.dataMaxZoom) {
-        x = Math.floor(x / (Math.pow(2, z - this.dataMaxZoom)));
-        y = Math.floor(y / (Math.pow(2, z - this.dataMaxZoom)));
-        z = this.dataMaxZoom;
+      if (z > this.options.dataMaxZoom) {
+        x = Math.floor(x / (Math.pow(2, z - this.options.dataMaxZoom)));
+        y = Math.floor(y / (Math.pow(2, z - this.options.dataMaxZoom)));
+        z = this.options.dataMaxZoom;
       } else {
         y = (y > Math.pow(2, z) ? y % Math.pow(2, z) : y);
         if (x >= Math.pow(2, z)) {
@@ -156,7 +158,7 @@ define([
      */
     _cacheTile: function(canvasData) {
       canvasData.canvas.setAttribute('id', canvasData.tileId);
-      this.tiles[tileId] = canvasData;
+      this.tiles[canvasData.tileId] = canvasData;
     },
 
     _getTileId: function(x, y, z) {
@@ -181,6 +183,6 @@ define([
     }
   });
 
-  return CanvasLayer;
+  return CanvasLayerClass;
 
 });

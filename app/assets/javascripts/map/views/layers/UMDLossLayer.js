@@ -1,24 +1,25 @@
 /**
  * The UMD loss map layer view.
  *
- * @return UMDLossLayerView class (extends CanvasLayer)
+ * @return UMDLossLayer class (extends CanvasLayerClass)
  */
 define([
   'moment',
-  'views/layers/class/CanvasLayer',
+  'views/layers/class/CanvasLayerClass',
   'presenters/UMDLossLayerPresenter'
-], function(moment, CanvasLayer, Presenter) {
+], function(moment, CanvasLayerClass, Presenter) {
 
   'use strict';
 
-  var UMDLossLayerView = CanvasLayer.extend({
+  var UMDLossLayer = CanvasLayerClass.extend({
+
+    options: {
+      dataMaxZoom: 12,
+      urlTemplate: 'http://earthengine.google.org/static/hansen_2013/gfw_loss_year{/z}{/x}{/y}.png'
+    },
 
     init: function(layer) {
-      this._super();
-      this.layer = layer;
-      this.dataMaxZoom = 12;
-      this.name = 'loss';
-      this.urlTemplate = 'http://earthengine.google.org/static/hansen_2013/gfw_loss_year{/z}{/x}{/y}.png';
+      this._super(layer);
       this.presenter = new Presenter(this);
     },
 
@@ -34,7 +35,7 @@ define([
     filterCanvasImgdata: function(imgdata, w, h, z) {
       var components = 4;
 
-      var timelineDate = [this.timelineDate[0].year(), this.timelineDate[1].year()];
+      var timelineDate = [2001, 2004];
 
       for(var i = 0; i < w; ++i) {
         for(var j = 0; j < h; ++j) {
@@ -67,6 +68,6 @@ define([
     }
   });
 
-  return UMDLossLayerView;
+  return UMDLossLayer;
 
 });

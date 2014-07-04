@@ -9,25 +9,22 @@ require.config({
     text: '../vendor/assets/bower_components/requirejs-text/text',
     moment: '../vendor/assets/bower_components/moment/moment',
     mps: '../vendor/assets/bower_components/minpubsub/minpubsub',
+    Class: '../vendor/assets/javascripts/class',
+    uri: '../vendor/assets/javascripts/uri',
 
     main: '../app/assets/javascripts/map/main',
     nsa: '../app/assets/javascripts/map/nsa',
     gmap: '../app/assets/javascripts/map/gmap',
     store: '../vendor/assets/javascripts/store',
-    Class: '../vendor/assets/javascripts/class',
-    uri: '../vendor/assets/javascripts/uri',
     utils: '../app/assets/javascripts/map/utils',
     router: '../app/assets/javascripts/map/router',
     presenters: '../app/assets/javascripts/map/presenters',
     views: '../app/assets/javascripts/map/views',
     templates: '../app/assets/javascripts/map/templates',
     services: '../app/assets/javascripts/map/services',
-    helpers: '../jstest/helpers',
+    cartocss: '../app/assets/javascripts/map/cartocss',
 
-    jasmine: '../jstest/lib/jasmine',
-    jasmine_html: '../jstest/lib/jasmine-html',
-    jasmine_boot: '../jstest/lib/boot',
-    mock_ajax: '../jstest/lib/mock-ajax'
+    helpers: '../jstest/helpers'
   },
 
   shim: {
@@ -49,4 +46,3 @@ require.config({
     }
   }
 });
-

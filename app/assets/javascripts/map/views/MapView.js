@@ -8,8 +8,11 @@ define([
   'underscore',
   'presenters/MapPresenter',
   'views/AnalysisButtonView',
-  'views/layers/UMDLossLayerView'
-], function(Backbone, _, Presenter, AnalysisButtonView, UMDLossLayerView) {
+  'views/layers/UMDLossLayer',
+  'views/layers/Forest2000Layer',
+  'views/layers/GainLayer',
+  'views/layers/ImazonLayer'
+], function(Backbone, _, Presenter, AnalysisButtonView, UMDLossLayer, Forest2000Layer, GainLayer, ImazonLayer) {
 
   'use strict';
 
@@ -17,12 +20,19 @@ define([
 
      el: '#map',
 
+     layersViews: {
+      umd_tree_loss_gain: UMDLossLayer,
+      forest2000: Forest2000Layer,
+      gain: GainLayer,
+      imazon: ImazonLayer
+     },
+
     /**
      * Constructs a new MapView and its presenter.
      */
     initialize: function() {
       this.presenter = new Presenter(this);
-      this.layerViews = {};
+      this.layerViewsInst = {};
     },
 
     /**
@@ -67,7 +77,7 @@ define([
       };
       this.render(options);
     },
-    
+
     /**
      * Used by MapPresenter to initialize the map view. This function clears
      * all layers from the map and then adds supplied layers in order.
@@ -79,20 +89,39 @@ define([
       _.map(layers, this.addLayer, this);
     },
 
-    /**
-     * Used by MapPresenter to remove a layer by name.
-     *
-     * @param  {string} name The name of the layer to remove
-     */
-    removeLayer: function(name) {
-      var overlays_length = this.map.overlayMapTypes.getLength();
-      if (overlays_length > 0) {
-        for (var i = 0; i< overlays_length; i++) {
-          var layer = this.map.overlayMapTypes.getAt(i);
-          if (layer && layer.name === name) {
-            this.map.overlayMapTypes.removeAt(i);
-          }
+    setLayerSpec: function(layerSpec) {
+      var self = this;
+      var activeLayers = {};
+
+      _.each(layerSpec, function(category) {
+        activeLayers = _.extend(activeLayers, category);
+      });
+
+      // Remove layers
+      _.each(this.layerViewsInst, function(view, layerSlug) {
+        if (!activeLayers[layerSlug] && self._isLayerRendered(layerSlug)) {
+          self.removeLayer(layerSlug);
         }
+      });
+
+      // Render layers
+      _.each(activeLayers, function(layer) {
+        if (!self._isLayerRendered(layer.slug)) {
+          self.addLayer(layer);
+        }
+      });
+    },
+
+    /**
+     * Used by map presenter to toggle a layer.
+     *
+     * @param  {object} layer The layer object
+     */
+    toggleLayer: function(layer) {
+      if (this._isLayerRendered(layer.slug)) {
+        this.removeLayer(layer.slug);
+      } else {
+        this.addLayer(layer);
       }
     },
 
@@ -104,13 +133,52 @@ define([
     addLayer: function(layer) {
       var layerView = null;
 
-      if (layer.slug === 'loss') {
-        if (!_.has(this.layerViews, 'loss')) {
-          layerView = new UMDLossLayerView(layer);
-          this.layerViews.loss = layerView;
+      if (!_.has(this.layerViewsInst, layer.slug)) {
+        var LayerView = this.layersViews[layer.slug];
+        layerView = new LayerView(layer, this.map);
+        this.layerViewsInst[layer.slug] = layerView;
+      } else {
+        layerView = this.layerViewsInst[layer.slug];
+      }
+      if (layer.slug !== 'imazon') {
+        this.map.overlayMapTypes.insertAt(0, layerView);
+      } else {
+        layerView.render();
+      }
+    },
+
+    /**
+     * Used by MapPresenter to remove a layer by layerSlug.
+     *
+     * @param  {string} layerSlug The layerSlug of the layer to remove
+     */
+    removeLayer: function(layerSlug) {
+      var overlaysLength = this.map.overlayMapTypes.getLength();
+      if (overlaysLength > 0) {
+        for (var i = 0; i< overlaysLength; i++) {
+          var layer = this.map.overlayMapTypes.getAt(i);
+          if (layer && layer.name === layerSlug) {
+            this.map.overlayMapTypes.removeAt(i);
+          }
         }
       }
-      this.map.overlayMapTypes.insertAt(0, layerView);
+    },
+
+    /**
+     * Check if a layer is already rendered by name.
+     *
+     * @param  {string} name The layer name
+     */
+    _isLayerRendered: function(name) {
+      var overlaysLength = this.map.overlayMapTypes.getLength();
+      if (overlaysLength > 0) {
+        for (var i = 0; i< overlaysLength; i++) {
+          var layer = this.map.overlayMapTypes.getAt(i);
+          if (layer && layer.name === name) {
+            return true;
+          }
+        }
+      }
     },
 
     /**

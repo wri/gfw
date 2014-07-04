@@ -6,7 +6,8 @@
 define([
   'Class',
   'underscore',
-  'mps'
+  'mps',
+  'services/MapLayerService'
 ], function(Class, _, mps) {
 
   'use strict';
@@ -39,7 +40,11 @@ define([
           this._initMap(place.params);
           this._initLayers(this.layers);
         }
-      }, this));  
+      }, this));
+
+      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
+        this.view.setLayerSpec(layerSpec);
+      },this));
 
       mps.publish('Place/register', [this]);
     },
@@ -65,29 +70,29 @@ define([
     },
 
     /**
-     * Retuns place parameters representing the state of the MapView and 
+     * Retuns place parameters representing the state of the MapView and
      * layers. Called by PlaceService.
-     * 
+     *
      * @return {Object} Params representing the state of the MapView and layers
      */
     getPlaceParams: function() {
       var params = {};
       var mapCenter = this.view.getCenter();
-      var baseLayers = _.where(this.layers, {category_slug: 'forest_clearing'});
-      var subLayers = _.filter(this.layers, function(layer) {
-        return layer.category_slug !== 'forest_clearing';
-      });
+      // var baseLayers = _.where(this.layers, {category_slug: 'forest_clearing'});
+      // var subLayers = _.filter(this.layers, function(layer) {
+      //   return layer.category_slug !== 'forest_clearing';
+      // });
 
       params.zoom = this.view.getZoom();
       params.lat = mapCenter.lat;
       params.lng = mapCenter.lng;
       params.maptype = this.view.getMapTypeId();
-      params.baselayers = _.map(baseLayers, function(layer) {
-        return layer.slug;
-      });
-      params.sublayers = _.map(subLayers, function(layer) {
-        return layer.id;
-      });
+      // params.baselayers = _.map(baseLayers, function(layer) {
+      //   return layer.slug;
+      // });
+      // params.sublayers = _.map(subLayers, function(layer) {
+      //   return layer.id;
+      // });
 
       return params;
     },

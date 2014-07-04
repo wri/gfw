@@ -36,10 +36,14 @@ module.exports = function(grunt) {
         options: {
           specs: '<%= root.test %>/spec/*_spec.js',
           host: 'http://127.0.0.1:8000/',
+          helpers: '<%= root.test %>/helpers/*.js',
           template: require('grunt-template-jasmine-requirejs'),
           templateOptions: {
             requireConfigFile: '<%= root.test %>/config.js'
-          }
+          },
+          vendor: [
+            '<%= root.test %>/lib/mock-ajax.js'
+          ]
         }
       }
     },
