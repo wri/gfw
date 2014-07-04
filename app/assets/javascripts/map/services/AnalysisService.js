@@ -9,61 +9,62 @@
  *
  */
 define([
-  'jquery',
   'underscore',
-  'mps',
   'nsa',
   'Class',
   'uri'
-], function ($, _, mps, nsa, Class, UriTemplate) {
+], function (_, nsa, Class, UriTemplate) {
 
   'use strict';
 
-  var Analysis = Class.extend({
+  var AnalysisService = Class.extend({
 
-    // URI templates for API
+    // TODO: pull this from /forest-change endpoint and cache.
     apis: {
-      global: 'http://{0}/forest-change/{1}{?period,geojson,download,bust,dev}',
-      national: 'http://{0}/forest-change/{1}/admin{/iso}{?period,download,bust,dev}',
-      subnational: 'http://{0}/forest-change/{1}/admin{/iso}{/id1}{?period,download,bust,dev}',
-      use: 'http://{0}/forest-change/{1}/use/{/name}{/id}{?period,download,bust,dev}',
-      wdpa: 'http://{0}/forest-change/{1}/wdpa/{/id}{?period,download,bust,dev}'
+      'forma-alerts': {
+        'apis': {
+          'national': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}{?period,download,bust,dev}',
+          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}/{id1}{?period,download,bust,dev}',
+          'use': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/use/{use}/{useid}{?period,download,bust,dev}',
+          'wdpa': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/wdpa/{wdpaid}{?period,download,bust,dev}'
+        }
+      },
+      'umd-loss-gain':{
+        'apis':{
+          'national': 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}{?bust,dev,thresh}',
+          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}/{id1}{?bust,dev,thresh}'
+        }
+      }
     },
 
     init: function() {
-      mps.subscribe('analysis/get', _.bind(function(config, cache) {
-        this.execute(config, cache);
-      }, this));
     },
 
     /**
-     * Return URI template for API based on supplied config object of parameters.
+     * Return URI template for API based on supplied config object of 
+     * parameters. The dataset config property is required.
      *
      * @param  {object} API parameters
      * @return {string} URI template for API
      */
-    get_uritemplate: function(config) {
-      if (_.has(config, 'iso') && !_.has(config, 'id1')) {
-        return this.apis.national;
-      } else if (_.has(config, 'iso') && _.has(config, 'id1')) {
-        return this.apis.subnational;
-      } else if (_.has(config, 'use')) {
-        return this.apis.use;
-      } else if (_.has(config, 'wdpa')) {
-        return this.apis.wdpa;
-      } else {
-        return this.apis.global;
-      }
-    },
+    _getUriTemplate: function(config) {
+      var dataset = config.dataset;
 
-    /**
-     * Gets the API host.
-     *
-     * @return {string} the API host
-     */
-    get_api_host: function() {
-      // return 'localhost:8080';
-      return 'beta.gfw-apis.appspot.com';
+      if (!dataset) {
+        return null;
+      }
+
+      if (_.has(config, 'iso') && !_.has(config, 'id1')) {
+        return this.apis[dataset].apis.national;
+      } else if (_.has(config, 'iso') && _.has(config, 'id1')) {
+        return this.apis[dataset].apis.subnational;
+      } else if (_.has(config, 'use')) {
+        return this.apis[dataset].apis.use;
+      } else if (_.has(config, 'wdpaid')) {
+        return this.apis[dataset].apis.wdpa;
+      } 
+
+      return null;
     },
 
     /**
@@ -72,22 +73,24 @@ define([
      * @param  {object} config API parameters
      * @return {string} API URL
      */
-    get_url: function(config) {
-      var template = this.get_uritemplate(config);
-      var host = this.get_api_host();
+    _getUrl: function(config) {
+      var template = this._getUriTemplate(config);
       var url = null;
 
-      template = template.format(host, config.layerName);
+      if (!template) {
+        return null;
+      }
+
       url = new UriTemplate(template).fillFromObject(config);
 
       return url;
     },
 
     /**
-     * Executes analysis.
+     * Asynchronously execute analysis for supplied configuration.
      *
-     * @param  {[type]} config object
-     *   layerName - layer name (e.g., forma-alerts)
+     * @param  {Object} config object
+     *   dataset - layer name (e.g., forma-alerts, umd-loss-gain)
      *   period - beginyear,endyear (e.g., 2001,2002)
      *   download - filename.format (e.g., forma.shp)
      *   geojson - GeoJSON Polygon or Multipolygon
@@ -95,25 +98,29 @@ define([
      *   id1 - GADM subational id (e.g., 3445)
      *   use - Concession name (e.g., logging, mining, oilpalm, fiber)
      *   useid - Concession polygon cartodb_id (e.g., 2)
-     *   wdpa - WDPA polygon cartodb_id (e.g., 800)
+     *   wdpaid - WDPA polygon cartodb_id (e.g., 800)
      */
-    execute: function(config, cache) {
-      var url = this.get_url(config);
+    execute: function(config, successCb, failureCb) {
+      var url = this._getUrl(config);
+
+      if (!url) {
+        failureCb('Unable to find API endpoint for supplied config');
+        return;
+      }
 
       nsa.spy(
         url,
         {},
         function(response) {
-          mps.publish('analysis/get-success', [response]);
+          successCb(response);
         },
         function(responseText, status, error) {
-          mps.publish('analysis/get-failure', [responseText, status, error]);
-        },
-        cache);
+          failureCb(responseText, status, error);
+        });
     }
   });
 
-  var analysis = new Analysis();
+  var service = new AnalysisService();
 
-  return analysis;
+  return service;
 });
