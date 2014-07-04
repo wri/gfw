@@ -80,7 +80,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
   _positionScroll: function() {
     if ($('.country-alerts').length < 1) return;
-    
+
     var h_min = $('.country-alerts').offset().top - 48,
         h_max = $('.country-conventions').offset().top - 46;
 

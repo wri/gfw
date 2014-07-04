@@ -211,7 +211,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         }
       });
       self.router = new Router();
-
+      //($('body').hasClass('embed')) ? this._onClickUMDOptions(null, '.country-title') : '';
     }
   },
 
@@ -227,11 +227,13 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     });
   },
 
-  _onClickUMDOptions: function(e) {
+  _onClickUMDOptions: function(e,tar_param) {
+    debugger;
     e && e.preventDefault();
 
-    var $target = $('.umdoptions_dialog');
-    if ($target.length === 0) UmdOptions = new gfw.ui.view.UmdOptions({ target: '.country-sidenav'});
+    var $target = $('.umdoptions_dialog'),
+        tar_param  = tar_param || '.country-sidenav';
+    if ($target.length === 0) UmdOptions = new gfw.ui.view.UmdOptions({ target: tar_param});
     if ($target.is(':visible') ) {
       UmdOptions.hide();
     } else {
