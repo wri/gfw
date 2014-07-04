@@ -7,6 +7,10 @@
       left: 10px;
     }
   </style>
+
+<% end %>
+<% content_for :css do %>
+  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
 <% end %>
 
 <% content_for :js do %>
@@ -15,7 +19,7 @@
   <script>
     $(function() {
       cdb.init(function() {
-        window.countries_show = new gfw.ui.view.CountriesEmbedShow({
+        window.countries_show = new gfw.ui.view.CountriesShow({
           iso: "<%= @country['iso'] %>"
         });
       });

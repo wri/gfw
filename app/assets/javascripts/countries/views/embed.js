@@ -9,7 +9,6 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
 
   initialize: function() {
     this.iso = this.options.iso;
-
     this._initViews();
     this._initHansenDropdown();
   },
@@ -252,8 +251,16 @@ gfw.ui.view.CountriesEmbedShow = cdb.core.View.extend({
               'year': val.year,
               'value': eval('val.'+options.dataset)
             });
+          } else if (!val.year && val) {
+            data_.push({
+              'year': val,
+              'value': options.dataset
+            });
           }
         });
+
+        $amount.html('<span>'+formatNumber(parseInt(data_[data_.length - 1].value, 10))+'</span>');
+        $date.html('Hectares in ' + data_[data_.length - 1].year);
 
         var marginLeft = 40,
             marginTop = radius - h/2 + 5;

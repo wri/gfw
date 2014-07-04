@@ -158,7 +158,6 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     var self = this;
 
     _.bindAll(this, '_cartodbLayerDone');
-
     // Cache
     this.$areaSelector = this.$('#areaSelector');
     this.$selectorRemove =  this.$('.selector-remove');
@@ -169,7 +168,11 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         'country/:id': 'loadCountry',
         'country/:id/': 'loadCountry',
         'country/:id/:areaId': 'loadArea',
-        'country/:id/:areaId/': 'loadArea'
+        'country/:id/:areaId/': 'loadArea',
+        'embed/country/:id': 'loadCountry',
+        'embed/country/:id/': 'loadCountry',
+        'embed/country/:id/:areaId': 'loadArea',
+        'embed/country/:id/:areaId/': 'loadArea'
       },
 
       initialize: function() {
@@ -201,13 +204,15 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       }
 
     });
+    if (this.country){
+      this.country.fetch({
+        success: function() {
+          Backbone.history.start({pushState: true});
+        }
+      });
+      self.router = new Router();
 
-    this.country.fetch({
-      success: function() {
-        self.router = new Router();
-        Backbone.history.start({pushState: true});
-      }
-    });
+    }
   },
 
   _setAreaSelector: function() {

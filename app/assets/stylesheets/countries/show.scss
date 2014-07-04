@@ -7,6 +7,9 @@
     text-align: right;
     height: 0;
     display: block;
+    .embed & {
+      display: none;
+    }
   }
 
   .share_control {
