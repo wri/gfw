@@ -210,6 +210,10 @@ define([
       return {lat: center.lat(), lng: center.lng()};
     },
 
+    fitBounds: function(bounds) {
+      this.map.fitBounds(bounds);
+    },
+
     /**
      * Used by MapPresenter to set the map type.
      *

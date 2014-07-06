@@ -18,7 +18,7 @@ define([
     template: _.template(tpl),
 
     events: {
-      'click .layer-title': '_toggleLayer'
+      'click .layer': '_toggleLayer'
     },
 
     initialize: function() {
@@ -38,17 +38,22 @@ define([
      * @param  {object} layerSpec
      */
     _toggleSelected: function(layerSpec) {
-      var activeLayers = _.flatten(_.map(layerSpec, function(value) {
-        return _.keys(value);
-      }));
+      var activeLayers = {};
+
+      _.each(layerSpec, function(category) {
+        _.extend(activeLayers, category);
+      });
 
       _.each(this.$el.find('.layer'), function(li) {
         var $li = $(li);
+        var layer = activeLayers[$li.data('layer')];
 
-        if (activeLayers.indexOf($li.data('layer')) > -1) {
-          $li.addClass('selected');
+        if (layer) {
+          $li.addClass('selected').css('color', layer.title_color);
+          $li.find('.onoffswitch').addClass('checked').css('background', layer.category_color);
         } else {
-          $li.removeClass('selected');
+          $li.removeClass('selected').css('color', '');
+          $li.find('.onoffswitch').removeClass('checked').css('background', '');
         }
       });
     },
@@ -61,7 +66,7 @@ define([
      */
     _toggleLayer: function(event) {
       var $currentTarget = $(event.currentTarget);
-      var layerSlug = $currentTarget.parents('li').data('layer');
+      var layerSlug = $currentTarget.data('layer');
       var category = $currentTarget.parents('ul').data('category');
 
       this.presenter.toggleLayer(category, layerSlug);

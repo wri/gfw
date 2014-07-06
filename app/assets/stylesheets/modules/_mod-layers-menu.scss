@@ -92,12 +92,17 @@ $stories-color: rgb(242, 178, 87);
     .layers-list > li {
       font-size: 13px;
       color: #ccc;
-      padding: 9px 10px 10px 30px;
+      padding: 9px 10px 10px;
       border-bottom: 1px solid #e5e5e5;
-      cursor: default;
+      cursor: pointer;
+      position: relative;
+
+
+      .onoffswitch {
+        margin: 2px 6px 0 0;
+      }
 
       .layer-title {
-        cursor: pointer;
         display: block;
       }
 
@@ -106,8 +111,16 @@ $stories-color: rgb(242, 178, 87);
         margin-top: 3px;
       }
 
+      .layer-title,
+      .layer-info {
+        padding-left: 24px;
+      }
+
       &.selected {
         color: green;
+        .onoffswitch {
+          background: green;
+        }
       }
     }
 

@@ -14,9 +14,10 @@
   @extend .sans-serif;
   @include border-radius(3px);
   @include box-shadow(0px 0px 3px #666);
+  @include box-sizing(border-box);
 
   @include transition-property(height);
-  @include transition-duration(185ms);
+  @include transition-duration(140ms);
   @include transition-timing-function(ease-in-out);
 
   .widget-toggle {
@@ -29,7 +30,7 @@
   }
 
   &.closed {
-    height: 20px;
+    height: 40px;
   }
 
   &.closed .widget-toggle {

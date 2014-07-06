@@ -1,236 +1,35 @@
 .legend {
   height: 200px;
   left: 60px;
+  font-size: 13px;
+
+  li.category {
+    padding: 15px 20px;
+    border-bottom: 1px solid #E5E5E5;
+    &:last-child {
+      border-bottom: none;
+    }   
+  }
+
+  .category-name {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 11px;
+  }
+
+  .layer-name,
+  .layer-details {
+    display: block;
+    margin-top: 8px;
+  }
+
+  .circle:before {
+    content: ' \25CF';
+    font-size: 16px;
+    margin-right: 2px;
+  }
+
+  .layer-details {
+    margin-left: 14px; 
+  }
 }
-
-// position: absolute;
-// z-index: 1000;
-// top: 35px; left: 60px;
-// width: 245px;
-// min-height: 20px;
-// border: 1px solid #666;
-// padding: 10px 0;
-// font-size: 11px;
-// @extend .sans-serif;
-// color: #999;
-// background: #fff;
-// @include border-radius(3px);
-// @include box-shadow(0px 0px 3px #666);
-// cursor: move;
-
-// .toggle {
-//   position: absolute;
-//   top: 2px; right: -25px;
-//   width: 25px;
-//   height: 38px;
-//   @include home-icons-sprite(legend_toggle_close);
-// }
-
-// &.closed .toggle { @include home-icons-sprite(legend_toggle_open); }
-
-// .shadow {
-//   display: none;
-//   position: absolute;
-//   z-index: 100;
-//   bottom: 1px;
-//   width: 100%;
-//   height: 20px;
-//   background: image-url('backgrounds/white_shadow.png') repeat-x;
-// }
-
-// .jspPane {
-//   width: 245px !important;
-// }
-
-// .jspVerticalBar {
-//   margin-right: 10px;
-// }
-
-// .content {
-//   width: 245px;
-//   max-height: 400px;
-//   height: 20px;
-//   overflow: auto;
-//   outline: none;
-// }
-
-// .checkbox {
-//   display: block;
-//   float: left;
-//   position: relative;
-//   width: auto;
-//   font-size: 13px;
-//   line-height: 17px;
-//   @extend .sans-serif;
-
-//   @extend .check_icon;
-
-//   .name {
-//     color: #ccc;
-//     width: auto;
-//   }
-// }
-
-// .source {
-//   top: 3px; right: 0;
-// }
-
-// .legend_category {
-//   border-top: 1px solid #E5E5E5;
-//   padding: 15px;
-
-//   &:first-child { border-top: none; }
-
-//   ul {
-//     padding: 0 0 0 10px;
-//     border: none;
-
-//     li {
-//       display: none;
-//       margin: 0 0 5px;
-//     }
-//   }
-
-//   &.double li {
-//     display: block;
-//     overflow: hidden;
-//   }
-
-//   &.sublayer {
-//     min-height: 73px;
-//   }
-
-//   li {
-//     display: none;
-//     clear: both;
-//     position: relative;
-//     width: 205px;
-//     margin: 0 0 10px;
-//     padding: 1px 0;
-//     font-size: 13px;
-
-//     &:last-child { margin: 0; }
-
-//     i {
-//       @include inline-block();
-//       float: left;
-//       margin: 3px 5px 0 0;
-//       width: 7px;
-//       height: 7px;
-//       background:#ccc;
-//       @include border-radius(100px);
-//     }
-
-//     div {
-//       float: left;
-//       width: 193px;
-//     }
-
-//     strong {
-//       font-weight: bold;
-//       font-size: 11px;
-//       text-transform: uppercase;
-//     }
-//   }
-
-//   .legend_info {
-//     @extend .clearfix;
-//     width: 195px;
-//     margin-top: 10px;
-
-//     strong {
-//       display: block;
-//       margin: 0 0 7px;
-//       font-size: 10px;
-//     }
-
-//     p { font-size: 11px; }
-
-//     .units {
-//       font-weight: normal;
-//       font-size: 10px;
-//       text-transform: none;
-//     }
-
-//     sup {
-//       position: relative;
-//       top: -3px;
-//       font-size: 80%;
-//     }
-
-//     &.tree {
-//       margin-left: 0;
-
-//       div { width: 193px; }
-
-//       .colors {
-//         border: 1px solid #ccc;
-
-//         div {
-//           width: 33%;
-
-//           &:last-child { width: 34%; }
-
-//           text-align: center;
-//           padding: 6px 0;
-//           font-size: 10px;
-//           line-height: 100%;
-//           color: #fff;
-//           @include text-shadow(0px 0px 2px #000);
-//         }
-//       }
-//     }
-
-//     .data {
-//       width: 193px;
-//       font-size: 10px;
-
-//       .min { width: auto; float: left; }
-//       .max { width: auto; float: right; }
-//     }
-
-//     .colors {
-//       display: table-row;
-//       margin: 3px 0 5px 0;
-//       border: 1px solid #FED98E;
-//       @include border-radius(3px);
-//       width: 193px;
-
-//       div {
-//         width: 25%;
-//         height: 10px;
-//         display: table-cell;
-
-//         &:first-child {
-//           @include border-radius(3px 0 0 3px);
-//         }
-
-//         &:last-child {
-//           @include border-radius(0 3px 3px 0px);
-//         }
-
-//         &.wide {
-//           width: 100%;
-//         }
-//       }
-//     }
-//   }
-// }
-
-// .coverage_category {
-//   position: relative;
-//   overflow: hidden;
-//   width: 195px;
-//   margin: 10px 0 0 10px;
-// }
-
-// .layer_count {
-//   display: none;
-//   height: 20px;
-//   line-height: 20px;
-//   padding: 0 15px;
-//   font-weight: bold;
-//   font-size: 11px;
-//   color: #bbb;
-//   text-transform: uppercase;
-// }

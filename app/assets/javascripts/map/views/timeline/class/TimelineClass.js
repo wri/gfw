@@ -10,24 +10,22 @@ define([
   'backbone',
   'moment',
   'd3',
-  'presenters/TimelinePresenter',
   'text!map/templates/timeline.html'
-], function(_, Backbone, moment, d3, Presenter, timelineTpl) {
+], function(_, Backbone, moment, d3, tpl) {
 
   'use strict';
 
-  var TimelineView = Backbone.View.extend({
+  var TimelineClass = Backbone.View.extend({
 
     className: 'timeline timeline-date-range',
-    template: _.template(timelineTpl),
+    template: _.template(tpl),
 
     events: {
       'click .play': 'togglePlay'
     },
 
     initialize: function(opts) {
-      _.bindAll(this, 'onAnimate', 'onBrush', 'onBrushEnd');
-      this.presenter = new Presenter();
+      _.bindAll(this, 'onAnimationBrush', 'onBrush', 'onBrushEnd');
 
       this.opts = _.extend({
         dateRange: [moment([2001]), moment()],
@@ -425,6 +423,6 @@ define([
     }
   });
 
-  return TimelineView;
+  return TimelineClass;
 
 });

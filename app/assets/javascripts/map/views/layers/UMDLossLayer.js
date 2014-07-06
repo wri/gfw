@@ -69,5 +69,4 @@ define([
   });
 
   return UMDLossLayer;
-
 });

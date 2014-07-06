@@ -1,0 +1,19 @@
+.maptype {
+  height: 230px;
+  right: 55px;
+  width: 150px;
+  padding: 0;
+
+  .maptype-list li {
+    width: 100%;
+    height: 100%;
+    padding: 13px 10px 14px;
+    cursor: pointer;
+    color: #666;
+    @include box-sizing(border-box);
+
+    &:hover {
+      color: #333;
+    }
+  }
+}

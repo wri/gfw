@@ -27,7 +27,11 @@ define([
         // }
       }, this));
 
-      mps.publish('Place/register', [this]);
+      // mps.publish('Place/register', [this]);
+
+      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
+        this.view.setTimeline(layerSpec);
+      }, this));
     },
 
     /**

@@ -6,23 +6,30 @@
 define([
   'backbone',
   'underscore',
-  'mps',
   'gmap',
-  'views/widget',
+  'views/Widget',
+  'presenters/SearchboxPresenter',
   'text!map/templates/searchbox.html'
-], function(Backbone, _, mps, gmap, Widget, searchboxTpl) {
+], function(Backbone, _, gmap, Widget, Presenter, tpl) {
 
   'use strict';
 
   var Searchbox = Widget.extend({
 
     className: 'widget searchbox',
-    template: _.template(searchboxTpl),
+    template: _.template(tpl),
 
     initialize: function() {
+      var self = this;
+
       Searchbox.__super__.initialize.apply(this);
+      this.presenter = new Presenter(this);
       _.bindAll(this, 'setAutocomplete', 'onPlaceSelected');
-      gmap.init(this.setAutocomplete);
+
+      // TODO: fix gmap so it accepts two inits at the same time.
+      setTimeout(function() {
+        gmap.init(self.setAutocomplete);        
+      }, 2000);
     },
 
     setAutocomplete: function() {
@@ -36,15 +43,13 @@ define([
     onPlaceSelected: function() {
       var place = this.autocomplete.getPlace();
 
-      if (place && place.geometry) {
-        mps.publish('map/fit-bounds', [place.geometry.viewport]);
+      // TODO: When there isn't viewport, and there is location...
+      if (place && place.geometry && place.geometry.viewport) {
+        this.presenter.fitBounds(place.geometry.viewport);
       }
     }
 
   });
 
-  var searchbox = new Searchbox();
-
-  return searchbox;
-
+  return Searchbox;
 });

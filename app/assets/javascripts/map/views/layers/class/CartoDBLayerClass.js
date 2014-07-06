@@ -5,7 +5,7 @@
 define([
   'Class',
   'underscore',
-  'text!cartocss/style.cartocss'
+  'text!map/cartocss/style.cartocss'
 ], function(Class, _, CARTOCSS) {
 
   var CartoDBLayerClass = Class.extend({
