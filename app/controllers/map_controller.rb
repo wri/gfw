@@ -4,10 +4,8 @@ class MapController < ApplicationController
   before_filter :load_circles, :validate_url, :only => [:index]
 
   def index
-=begin
     @visible = Api::Story.visible.first(3)
     @circles = load_circles
-=end
   end
 
   def accept_and_redirect
