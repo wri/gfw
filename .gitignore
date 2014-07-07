@@ -28,6 +28,7 @@
 .grunt
 node_modules
 vendor/assets/bower_components
+jstest/SpecRunner.html
 
 # Ingore Sublime project files:
 *.sublime-*

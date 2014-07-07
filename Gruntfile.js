@@ -15,8 +15,11 @@ module.exports = function(grunt) {
     },
 
     connect: {
-      test : {
-        port : 8000
+      server: {
+        options: {
+          livereload: true,
+          port : 8000
+        }
       }
     },
 
@@ -37,6 +40,8 @@ module.exports = function(grunt) {
           specs: '<%= root.test %>/spec/*_spec.js',
           host: 'http://127.0.0.1:8000/',
           helpers: '<%= root.test %>/helpers/*.js',
+          outfile: '<%= root.test %>/SpecRunner.html',
+          keepRunner: true,
           template: require('grunt-template-jasmine-requirejs'),
           templateOptions: {
             requireConfigFile: '<%= root.test %>/config.js'
@@ -50,24 +55,27 @@ module.exports = function(grunt) {
 
     watch: {
       options: {
-        nospawn: true
+        spawn: false
       },
       scripts: {
         files: '<%= jshint.all %>',
-        tasks: ['jshint', 'test']
+        tasks: ['jshint', 'jasmine']
       }
     }
 
   });
 
   grunt.registerTask('test', [
-    'connect:test',
-    'jasmine'
+    'connect:server',
+    'jasmine',
+    'watch:scripts'
   ]);
 
   grunt.registerTask('default', [
+    'connect:server',
     'jshint',
-    'test'
+    'jasmine',
+    'watch'
   ]);
 
 };

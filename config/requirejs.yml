@@ -35,6 +35,7 @@ paths:
   jasmine: "jasmine"
   analysis: "map/analysis"
   nsa: "map/nsa"
+  cartocss: "map/cartocss"
 
 shim:
   underscore:

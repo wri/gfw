@@ -132,8 +132,8 @@ define([
     _formatUrl: function(name, params) {
       if (name === 'map') {
         return _.extend({}, params, {
-          lat: String(_.toNumber(params.lat).toFixed(2)),
-          lng: String(_.toNumber(params.lng).toFixed(2))
+          lat: _.toNumber(params.lat).toFixed(2),
+          lng: _.toNumber(params.lng).toFixed(2)
         });
       } else {
         return params;
@@ -160,10 +160,10 @@ define([
      */
     _standardizeParams: function(params) {
       var p = _.clone(params);
-      p.zoom = _.toNumber(params.zoom);
-      p.lat = _.toNumber(params.lat);
-      p.lng = _.toNumber(params.lng);
-      p.maptype = params.maptype;
+      p.zoom = _.toNumber(params.zoom) || 3;
+      p.lat = _.toNumber(params.lat) || -28;
+      p.lng = _.toNumber(params.lng) || 27;
+      p.maptype = params.maptype || 'terrain';
       p.begin = _.toNumber(params.begin);
       p.end = _.toNumber(params.end);
       p.iso = params.iso || 'ALL';

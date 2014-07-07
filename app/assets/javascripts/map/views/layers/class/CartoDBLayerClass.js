@@ -8,6 +8,8 @@ define([
   'text!map/cartocss/style.cartocss'
 ], function(Class, _, CARTOCSS) {
 
+  'use strict';
+  
   var CartoDBLayerClass = Class.extend({
 
     init: function(layer, map) {

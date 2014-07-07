@@ -23,12 +23,28 @@ define([
     apis: {
       'forma-alerts': {
         'apis': {
-          'national': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}{?period,download,bust,dev}',
-          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}/{id1}{?period,download,bust,dev}',
-          'use': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/use/{use}/{useid}{?period,download,bust,dev}',
-          'wdpa': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/wdpa/{wdpaid}{?period,download,bust,dev}'
+          'national': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}{?period,bust,dev}',
+          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}/{id1}{?period,bust,dev}',
+          'use': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/use/{use}/{useid}{?period,bust,dev}',
+          'wdpa': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/wdpa/{wdpaid}{?period,bust,dev}'
         }
       },
+      'nasa-active-fires': {
+        'apis': {
+          'national': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/{iso}{?period,bust,dev}',
+          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/{iso}/{id1}{?period,bust,dev}',
+          'use': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/use/{use}/{useid}{?period,bust,dev}',
+          'wdpa': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/wdpa/{wdpaid}{?period,bust,dev}'
+        }
+      },
+      'quicc-alerts': {
+        'apis': {
+          'national': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/{iso}{?period,bust,dev}',
+          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/{iso}/{id1}{?period,bust,dev}',
+          'use': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/use/{use}/{useid}{?period,bust,dev}',
+          'wdpa': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/wdpa/{wdpaid}{?period,bust,dev}'
+        }
+      },      
       'umd-loss-gain':{
         'apis':{
           'national': 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}{?bust,dev,thresh}',
