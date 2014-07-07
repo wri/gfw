@@ -38,6 +38,7 @@ Gfw::Application.routes.draw do
 
   # embed
   get '/embed/country/:id' => 'embed#countries_show'
+  get '/embed/country/:id/:area_id' => 'embed#countries_show'
   get '/embed/countries/overview' => 'embed#countries_overview'
   get '/embed/map' => 'embed#map'
   get '/embed/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'embed#map', :lat => /[^\/]+/, :lng => /[^\/]+/

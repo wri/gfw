@@ -190,6 +190,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         } else {
           self._displayArea(area);
         }
+        if ($('body').hasClass('embed')) {
+          setTimeout(function(){ $('.country-title').find('h1').append(': '+self.$areaSelector.val()) },250);
+        }
       },
 
       loadCountry: function(countryId) {
