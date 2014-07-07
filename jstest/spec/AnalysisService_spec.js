@@ -109,6 +109,11 @@ define([
         var config = null;
         var uriTemplate = null;
 
+        // World
+        config = {geojson: 'foo', dataset: 'quicc-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts{?geojson,period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
         // National
         config = {iso: 'bra', dataset: 'quicc-alerts'};
         uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/{iso}{?period,bust,dev}';
@@ -135,6 +140,11 @@ define([
       it('correctly returns URI template for nasa-active-fires', function() {
         var config = null;
         var uriTemplate = null;
+        
+        // World
+        config = {geojson: 'foo', dataset: 'nasa-active-fires'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires{?geojson,period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
 
         // National
         config = {iso: 'bra', dataset: 'nasa-active-fires'};
@@ -161,6 +171,11 @@ define([
       it('correctly returns URI template for forma-alerts', function() {
         var config = null;
         var uriTemplate = null;
+
+        // World
+        config = {geojson: 'foo', dataset: 'forma-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts{?geojson,period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
 
         // National
         config = {iso: 'bra', dataset: 'forma-alerts'};
@@ -240,6 +255,11 @@ define([
         var config = null;
         var url = null;
 
+        // World
+        config = {dataset: 'forma-alerts', geojson: 'foo'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts?geojson=foo';
+        expect(service._getUrl(config)).toEqual(url);
+
         // National
         config = {dataset: 'forma-alerts', iso: 'bra'};
         url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/bra';
@@ -268,6 +288,11 @@ define([
         var config = null;
         var url = null;
 
+        // World
+        config = {dataset: 'quicc-alerts', geojson: 'foo'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts?geojson=foo';
+        expect(service._getUrl(config)).toEqual(url);
+
         // National
         config = {dataset: 'quicc-alerts', iso: 'bra'};
         url = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/bra';
@@ -295,6 +320,11 @@ define([
       it('correctly returns URL for nasa-active-fires', function() {
         var config = null;
         var url = null;
+
+        // World
+        config = {dataset: 'nasa-active-fires', geojson: 'foo'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires?geojson=foo';
+        expect(service._getUrl(config)).toEqual(url);
 
         // National
         config = {dataset: 'nasa-active-fires', iso: 'bra'};

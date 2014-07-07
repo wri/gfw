@@ -23,6 +23,7 @@ define([
     apis: {
       'forma-alerts': {
         'apis': {
+          'world': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts{?geojson,period,bust,dev}',
           'national': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}{?period,bust,dev}',
           'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}/{id1}{?period,bust,dev}',
           'use': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/use/{use}/{useid}{?period,bust,dev}',
@@ -31,6 +32,7 @@ define([
       },
       'nasa-active-fires': {
         'apis': {
+          'world': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires{?geojson,period,bust,dev}',          
           'national': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/{iso}{?period,bust,dev}',
           'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/{iso}/{id1}{?period,bust,dev}',
           'use': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/use/{use}/{useid}{?period,bust,dev}',
@@ -39,6 +41,7 @@ define([
       },
       'quicc-alerts': {
         'apis': {
+          'world': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts{?geojson,period,bust,dev}',
           'national': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/{iso}{?period,bust,dev}',
           'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/{iso}/{id1}{?period,bust,dev}',
           'use': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/use/{use}/{useid}{?period,bust,dev}',
@@ -78,7 +81,9 @@ define([
         return this.apis[dataset].apis.use;
       } else if (_.has(config, 'wdpaid')) {
         return this.apis[dataset].apis.wdpa;
-      } 
+      } else if (_.has(config, 'geojson')) {
+        return this.apis[dataset].apis.world;
+      }
 
       return null;
     },
