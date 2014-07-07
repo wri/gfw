@@ -8,7 +8,7 @@ define([
   'views/Widget',
   'presenters/MaptypePresenter',
   'handlebars',
-  'text!map/templates/maptype.handlebars'
+  'text!templates/maptype.handlebars'
 ], function(_, Widget, Presenter, Handlebars, tpl) {
 
   'use strict';

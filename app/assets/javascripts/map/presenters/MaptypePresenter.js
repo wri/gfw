@@ -1,6 +1,6 @@
-/**º
+/**
  * The MaptypePresenter class for the MaptypePresenter view.
- *º
+ *
  * @return MaptypePresenter class.
  */
 define([

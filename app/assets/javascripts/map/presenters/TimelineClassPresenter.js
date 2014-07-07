@@ -32,7 +32,7 @@ define([
      * @param {Array} date 2D array of moment dates [begin, end]
      */
     updateTimelineDate: function(date) {
-      mps.publish('Timeline/date-change', [this.view.getLayerSlug(), date]);
+      mps.publish('Timeline/date-change', [this.view.getName(), date]);
       mps.publish('Place/update', [{go: false}]);
     }
 

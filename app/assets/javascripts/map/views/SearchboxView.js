@@ -10,7 +10,7 @@ define([
   'views/Widget',
   'presenters/SearchboxPresenter',
   'handlebars',
-  'text!map/templates/searchbox.handlebars'
+  'text!templates/searchbox.handlebars'
 ], function(Backbone, _, gmap, Widget, Presenter, Handlebars, tpl) {
 
   'use strict';

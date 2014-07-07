@@ -2,6 +2,7 @@ require.config({
 
   paths: {
     jquery: '../vendor/assets/bower_components/jquery/dist/jquery',
+    jqueryui: '../vendor/assets/javascripts/jquery-ui-1.10.4.custom.min',
     underscore: '../vendor/assets/bower_components/underscore/underscore',
     backbone: '../vendor/assets/bower_components/backbone/backbone',
     d3: '../vendor/assets/bower_components/d3/d3',
@@ -11,7 +12,7 @@ require.config({
     mps: '../vendor/assets/bower_components/minpubsub/minpubsub',
     Class: '../vendor/assets/javascripts/class',
     uri: '../vendor/assets/javascripts/uri',
-
+    handlebars: '../vendor/assets/bower_components/handlebars/handlebars',
     main: '../app/assets/javascripts/map/main',
     nsa: '../app/assets/javascripts/map/nsa',
     gmap: '../app/assets/javascripts/map/gmap',
@@ -23,12 +24,15 @@ require.config({
     templates: '../app/assets/javascripts/map/templates',
     services: '../app/assets/javascripts/map/services',
     cartocss: '../app/assets/javascripts/map/cartocss',
-
     helpers: '../jstest/helpers'
   },
 
   shim: {
     jquery: {
+      exports: '$'
+    },
+    jqueryui: {
+      depts: ['jquery'],
       exports: '$'
     },
     underscore: {
@@ -43,6 +47,9 @@ require.config({
     },
     Class: {
       exports: 'Class',
+    },
+    handlebars: {
+      exports: 'Handlebars'
     }
   }
 });

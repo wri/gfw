@@ -7,7 +7,7 @@ define([
   'backbone',
   'underscore',
   'jqueryui'
-], function(Backbone, _) {
+], function(Backbone, _, $) {
 
   'use strict';
 

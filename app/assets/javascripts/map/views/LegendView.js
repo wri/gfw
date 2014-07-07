@@ -9,10 +9,10 @@ define([
   'views/Widget',
   'presenters/LegendPresenter',
   'handlebars',
-  'text!map/templates/legend/legend.handlebars',
-  'text!map/templates/legend/category.html',
-  'text!map/templates/legend/layer.html',
-  'text!map/templates/legend/umd_loss.html'
+  'text!templates/legend/legend.handlebars',
+  'text!templates/legend/category.html',
+  'text!templates/legend/layer.html',
+  'text!templates/legend/umd_loss.html'
 ], function(Backbone, _, Widget, Presenter, Handlebars, tpl, categoryTpl, layerTpl, lossTpl) {
 
   'use strict';

@@ -11,7 +11,7 @@ define([
   'moment',
   'd3',
   'handlebars',
-  'text!map/templates/timelineYear.handlebars'
+  'text!templates/timelineYear.handlebars'
 ], function(_, Backbone, moment, d3, Handlebars, tpl) {
 
   'use strict';
@@ -28,6 +28,7 @@ define([
     initialize: function(layer) {
       _.bindAll(this, 'onAnimationBrush', 'onBrush', 'onBrushEnd', 'updateTimelineDate');
       this.layer = layer;
+      this.name = layer.slug;
 
       this.opts = _.extend({
         dateRange: [moment([2001]), moment()],
@@ -413,8 +414,8 @@ define([
       this.tooltip.style('visibility', 'hidden');
     },
 
-    getLayerSlug: function() {
-      return this.layer.slug;
+    getName: function() {
+      return this.name;
     }
   });
 

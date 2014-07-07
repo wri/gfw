@@ -161,9 +161,9 @@ define([
     _standardizeParams: function(params) {
       var p = _.clone(params);
       p.zoom = _.toNumber(params.zoom) || 3;
-      p.lat = _.toNumber(params.lat) || -28;
+      p.lat = _.toNumber(params.lat) || 15;
       p.lng = _.toNumber(params.lng) || 27;
-      p.maptype = params.maptype || 'terrain';
+      p.maptype = params.maptype || 'grayscale';
       p.begin = _.toNumber(params.begin);
       p.end = _.toNumber(params.end);
       p.iso = params.iso || 'ALL';

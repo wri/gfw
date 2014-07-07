@@ -22,6 +22,7 @@ define([
 
     options: {
       minZoom: 3,
+      backgroundColor: '#99b3cc',
       disableDefaultUI: true,
       panControl: false,
       zoomControl: false,
@@ -29,10 +30,6 @@ define([
       scaleControl: true,
       streetViewControl: false,
       overviewMapControl: false
-    },
-
-    maptypes: {
-      grayscale: [{"featureType":"water"},{"featureType":"transit","stylers":[{"saturation":-100}]},{"featureType":"road","stylers":[{"saturation":-100}]},{"featureType":"poi","stylers":[{"saturation":-100}]},{"featureType":"landscape","stylers": [ { "saturation": -100 } ] }, { "featureType": "administrative", "stylers": [ { "saturation": -100 } ] },{ "featureType": "poi.park", "elementType": "geometry", "stylers": [ { "visibility": 'off' }]}]
     },
 
     layersViews: {
@@ -51,15 +48,63 @@ define([
     },
 
     _setMaptypes: function() {
-      var grayscale = new google.maps.StyledMapType(this.maptypes.grayscale, {name: 'grayscale'});
+      var grayscale = new google.maps.StyledMapType([{
+        "featureType": "water"
+      }, {
+        "featureType": "transit",
+        "stylers": [{
+          "saturation": -100
+        }]
+      }, {
+        "featureType": "road",
+        "stylers": [{
+          "saturation": -100
+        }]
+      }, {
+        "featureType": "poi",
+        "stylers": [{
+          "saturation": -100
+        }]
+      }, {
+        "featureType": "landscape",
+        "stylers": [{
+          "saturation": -100
+        }]
+      }, {
+        "featureType": "administrative",
+        "stylers": [{
+          "saturation": -100
+        }]
+      }, {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [{
+          "visibility": 'off'
+        }]
+      }], {
+        name: 'grayscale'
+      });
+
+      var treeheight = new google.maps.ImageMapType({
+        getTileUrl: function(ll, z) {
+          var X = Math.abs(ll.x % (1 << z)); // wrap
+          return "//gfw-apis.appspot.com/gee/simple_green_coverage/" + z + "/" + X + "/" + ll.y + ".png";
+        },
+        tileSize: new google.maps.Size(256, 256),
+        isPng: true,
+        maxZoom: 17,
+        name: "Forest Height",
+        alt: "Global forest height"
+      });
+
       this.map.mapTypes.set('grayscale', grayscale);
+      this.map.mapTypes.set('treeheight', treeheight);
     },
 
     /**
      * Creates the Google Maps and attaches it to the DOM.
      */
     render: function(params) {
-
       params = {
         zoom: params.zoom,
         mapTypeId: params.maptype,
@@ -179,7 +224,7 @@ define([
       if (overlaysLength > 0) {
         for (var i = 0; i< overlaysLength; i++) {
           var layer = this.map.overlayMapTypes.getAt(i);
-          if (layer && layer.slug === layerSlug) {
+          if (layer && layer.name === layerSlug) {
             this.map.overlayMapTypes.removeAt(i);
           }
         }
@@ -196,7 +241,7 @@ define([
       if (overlaysLength > 0) {
         for (var i = 0; i< overlaysLength; i++) {
           var layer = this.map.overlayMapTypes.getAt(i);
-          if (layer && layer.slug === name) {
+          if (layer && layer.name === name) {
             return true;
           }
         }

@@ -17,7 +17,7 @@ define([
       _.bindAll(this, 'filterCanvasImgdata');
       this.tileSize = new google.maps.Size(256, 256);
       this.layer = layer;
-      this.slug = layer.slug;
+      this.name = layer.slug;
       this.tiles = {};
     },
 
@@ -182,8 +182,8 @@ define([
     filterCanvasImgdata: function(imgdata, w, h, z) {
     },
 
-    getLayerSlug: function() {
-      return this.slug;
+    getName: function() {
+      return this.name;
     }
   });
 

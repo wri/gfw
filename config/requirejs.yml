@@ -48,6 +48,7 @@ shim:
   jqueryui:
     deps:
       - "jquery"
+    exports: "$"
   Class:
     exports: "Class"
   uri:
