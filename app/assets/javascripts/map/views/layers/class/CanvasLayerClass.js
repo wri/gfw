@@ -180,6 +180,10 @@ define([
      * @param  {integer} z       map zoom
      */
     filterCanvasImgdata: function(imgdata, w, h, z) {
+    },
+
+    getName: function() {
+      return this.name;
     }
   });
 

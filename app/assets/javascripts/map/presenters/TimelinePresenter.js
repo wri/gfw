@@ -27,21 +27,12 @@ define([
         // }
       }, this));
 
-      mps.publish('Place/register', [this]);
-    },
+      // mps.publish('Place/register', [this]);
 
-    /**
-     * Used by Timelineview to delegate timeline date UI events.
-     * Results in the Timeline/date-change evnet getting published with
-     * the new lat/lng.
-     *
-     * @param {Array} date 2D array of moment dates [begin, end]
-     */
-    updateTimelineDate: function(date) {
-      mps.publish('Timeline/date-change', [this.view.getLayerName(), date]);
-      mps.publish('Place/update', [{go: false}]);
+      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
+        this.view.setTimeline(layerSpec);
+      }, this));
     }
-
   });
 
   return TimelinePresenter;

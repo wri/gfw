@@ -14,8 +14,13 @@ define([
   'services/PlaceService',
   'views/LayersNavView',
   'views/MapView',
+  'views/LegendView',
+  'views/SearchboxView',
+  'views/MaptypeView',
+  'views/TimelineView',
   'services/MapLayerService'
-], function($, _, Backbone, mps, gmap, PlaceService, LayersNavView, MapView, mapLayerService) {
+], function($, _, Backbone, mps, gmap, PlaceService, LayersNavView, MapView,
+  LegendView, SearchboxView, MaptypeView, TimelineView, mapLayerService) {
 
   'use strict';
 
@@ -34,6 +39,10 @@ define([
       this.setMapSize();
       this.placeService = new PlaceService(mapLayerService, this);
       this.layersNavView = new LayersNavView();
+      this.legendView = new LegendView();
+      this.maptypeView = new MaptypeView();
+      this.searchboxView = new SearchboxView();
+      this.timelineView = new TimelineView();
     },
 
     map: function(zoom, lat, lng, iso, maptype, baselayers, sublayers) {

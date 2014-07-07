@@ -22,8 +22,8 @@ define([
      * Subscribe to application events.
      */
     subscribe: function() {
-      mps.subscribe('Timeline/date-change', _.bind(function(name, date) {
-        if (this.view.getName() === name) {
+      mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
+        if (this.view.getName() === layerSlug) {
           this.view.setTimelineDate(date);
           this.view.updateTiles();
         }

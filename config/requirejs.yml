@@ -16,6 +16,7 @@ paths:
   uri: "uri"
   backbone_cartodb: "backbone.cartodb"
   cartodblayer: "cartodb.gmapsv3"
+  handlebars: "handlebars/handlebars"
   wax: "wax.g.min"
   store: "store"
   Class: "class"
@@ -47,7 +48,10 @@ shim:
   jqueryui:
     deps:
       - "jquery"
+    exports: "$"
   Class:
     exports: "Class"
   uri:
     exports: "UriTemplate"
+  handlebars:
+    exports: "Handlebars"

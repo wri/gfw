@@ -18,14 +18,26 @@ define([
 
   var MapView = Backbone.View.extend({
 
-     el: '#map',
+    el: '#map',
 
-     layersViews: {
+    options: {
+      minZoom: 3,
+      backgroundColor: '#99b3cc',
+      disableDefaultUI: true,
+      panControl: false,
+      zoomControl: false,
+      mapTypeControl: false,
+      scaleControl: true,
+      streetViewControl: false,
+      overviewMapControl: false
+    },
+
+    layersViews: {
       umd_tree_loss_gain: UMDLossLayer,
       forest2000: Forest2000Layer,
       gain: GainLayer,
       imazon: ImazonLayer
-     },
+    },
 
     /**
      * Constructs a new MapView and its presenter.
@@ -35,12 +47,73 @@ define([
       this.layerViewsInst = {};
     },
 
+    _setMaptypes: function() {
+      var grayscale = new google.maps.StyledMapType([{
+        'featureType': 'water'
+      }, {
+        'featureType': 'transit',
+        'stylers': [{
+          'saturation': -100
+        }]
+      }, {
+        'featureType': 'road',
+        'stylers': [{
+          'saturation': -100
+        }]
+      }, {
+        'featureType': 'poi',
+        'stylers': [{
+          'saturation': -100
+        }]
+      }, {
+        'featureType': 'landscape',
+        'stylers': [{
+          'saturation': -100
+        }]
+      }, {
+        'featureType': 'administrative',
+        'stylers': [{
+          'saturation': -100
+        }]
+      }, {
+        'featureType': 'poi.park',
+        'elementType': 'geometry',
+        'stylers': [{
+          'visibility': 'off'
+        }]
+      }], {
+        name: 'grayscale'
+      });
+
+      var treeheight = new google.maps.ImageMapType({
+        getTileUrl: function(ll, z) {
+          var X = Math.abs(ll.x % (1 << z)); // jshint ignore:line
+          return '//gfw-apis.appspot.com/gee/simple_green_coverage/' + z + '/' + X + '/' + ll.y + '.png';
+        },
+        tileSize: new google.maps.Size(256, 256),
+        isPng: true,
+        maxZoom: 17,
+        name: 'Forest Height',
+        alt: 'Global forest height'
+      });
+
+      this.map.mapTypes.set('grayscale', grayscale);
+      this.map.mapTypes.set('treeheight', treeheight);
+    },
+
     /**
      * Creates the Google Maps and attaches it to the DOM.
      */
-    render: function(options) {
-      this.map = new google.maps.Map(this.el, options);
+    render: function(params) {
+      params = {
+        zoom: params.zoom,
+        mapTypeId: params.maptype,
+        center: new google.maps.LatLng(params.lat, params.lng),
+      };
+
+      this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
       this.resize();
+      this._setMaptypes();
       this._addCompositeViews();
       this._addListeners();
     },
@@ -69,13 +142,7 @@ define([
     },
 
     initMap: function(params) {
-      var options = {
-        minZoom: 3,
-        zoom: params.zoom,
-        mapTypeId: params.maptype,
-        center: new google.maps.LatLng(params.lat, params.lng)
-      };
-      this.render(options);
+      this.render(params);
     },
 
     /**
@@ -208,6 +275,10 @@ define([
       var center = this.map.getCenter();
 
       return {lat: center.lat(), lng: center.lng()};
+    },
+
+    fitBounds: function(bounds) {
+      this.map.fitBounds(bounds);
     },
 
     /**

@@ -14,13 +14,15 @@ define([
   var UMDLossLayer = CanvasLayerClass.extend({
 
     options: {
+      dateRange: [moment([2001]), moment()],
       dataMaxZoom: 12,
       urlTemplate: 'http://earthengine.google.org/static/hansen_2013/gfw_loss_year{/z}{/x}{/y}.png'
     },
 
     init: function(layer) {
-      this._super(layer);
+      this.timelineDate = this.options.dateRange;
       this.presenter = new Presenter(this);
+      this._super(layer);
     },
 
     /**
@@ -34,8 +36,7 @@ define([
      */
     filterCanvasImgdata: function(imgdata, w, h, z) {
       var components = 4;
-
-      var timelineDate = [2001, 2004];
+      var timelineDate = [this.timelineDate[0].year(), this.timelineDate[1].year()];
 
       for(var i = 0; i < w; ++i) {
         for(var j = 0; j < h; ++j) {
@@ -65,9 +66,9 @@ define([
      */
     setTimelineDate: function(date) {
       this.timelineDate = date;
+      this.updateTiles();
     }
   });
 
   return UMDLossLayer;
-
 });

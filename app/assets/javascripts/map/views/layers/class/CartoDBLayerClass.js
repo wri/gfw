@@ -9,7 +9,7 @@ define([
 ], function(Class, _, CARTOCSS) {
 
   'use strict';
-  
+
   var CartoDBLayerClass = Class.extend({
 
     init: function(layer, map) {

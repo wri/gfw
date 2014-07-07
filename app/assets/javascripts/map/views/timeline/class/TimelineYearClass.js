@@ -10,36 +10,30 @@ define([
   'backbone',
   'moment',
   'd3',
-  'presenters/TimelinePresenter',
-  'text!map/templates/timeline.html'
-], function(_, Backbone, moment, d3, Presenter, timelineTpl) {
+  'handlebars',
+  'text!templates/timelineYear.handlebars'
+], function(_, Backbone, moment, d3, Handlebars, tpl) {
 
   'use strict';
 
-  var TimelineView = Backbone.View.extend({
+  var TimelineYearClass = Backbone.View.extend({
 
-    className: 'timeline timeline-date-range',
-    template: _.template(timelineTpl),
+    className: 'timeline-date-range',
+    template: Handlebars.compile(tpl),
 
     events: {
       'click .play': 'togglePlay'
     },
 
-    initialize: function(opts) {
-      _.bindAll(this, 'onAnimate', 'onBrush', 'onBrushEnd');
-      this.presenter = new Presenter();
+    initialize: function(layer) {
+      _.bindAll(this, 'onAnimationBrush', 'onBrush', 'onBrushEnd', 'updateTimelineDate');
+      this.layer = layer;
+      this.name = layer.slug;
 
       this.opts = _.extend({
         dateRange: [moment([2001]), moment()],
-        layerName: '',
         playSpeed: 400,
-        xAxis: {
-          months: {
-            enabled: false,
-            steps: false
-          }
-        }
-      }, opts);
+      }, this.opts);
 
       // Status
       this.playing = false;
@@ -75,7 +69,7 @@ define([
       var self = this;
 
       this.$el.html(this.template());
-      $('.map-container').append(this.el);
+      $('.timeline').append(this.el);
 
       // Cache
       this.$play = this.$el.find('.play');
@@ -420,11 +414,11 @@ define([
       this.tooltip.style('visibility', 'hidden');
     },
 
-    getLayerName: function() {
-      return this.opts.layerName;
+    getName: function() {
+      return this.name;
     }
   });
 
-  return TimelineView;
+  return TimelineYearClass;
 
 });
