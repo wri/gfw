@@ -103,20 +103,102 @@ define([
       beforeEach(function() {
       });
 
-      it('correctly returns URI template for national API', function() {
-        var config = {iso: 'bra', thresh: 10, dataset: 'umd-loss-gain'};
-        var uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}{?bust,dev,thresh}';
+      
+      // quicc-alerts
+      it('correctly returns URI template for quicc-alerts', function() {
+        var config = null;
+        var uriTemplate = null;
 
+        // National
+        config = {iso: 'bra', dataset: 'quicc-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/{iso}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        // Subnational
+        config = {iso: 'bra', id1: '1', dataset: 'quicc-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/{iso}/{id1}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);    
+
+        // WDPA
+        config = {wdpaid: '1', dataset: 'quicc-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/wdpa/{wdpaid}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        // USE
+        config = {use: 'loggging', useid: '1', dataset: 'quicc-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/use/{use}/{useid}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);                        
+      });
+
+
+      // nasa-active-fires
+      it('correctly returns URI template for nasa-active-fires', function() {
+        var config = null;
+        var uriTemplate = null;
+
+        // National
+        config = {iso: 'bra', dataset: 'nasa-active-fires'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/{iso}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        // Subnational
+        config = {iso: 'bra', id1: '1', dataset: 'nasa-active-fires'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/{iso}/{id1}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);    
+
+        // WDPA
+        config = {wdpaid: '1', dataset: 'nasa-active-fires'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/wdpa/{wdpaid}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        // USE
+        config = {use: 'loggging', useid: '1', dataset: 'nasa-active-fires'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/use/{use}/{useid}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);                        
+      });
+
+      // forma-alerts
+      it('correctly returns URI template for forma-alerts', function() {
+        var config = null;
+        var uriTemplate = null;
+
+        // National
+        config = {iso: 'bra', dataset: 'forma-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        // Subnational
+        config = {iso: 'bra', id1: '1', dataset: 'forma-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}/{id1}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);    
+
+        // WDPA
+        config = {wdpaid: '1', dataset: 'forma-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/wdpa/{wdpaid}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        // USE
+        config = {use: 'loggging', useid: '1', dataset: 'forma-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/use/{use}/{useid}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);                        
+      });
+
+      // umd-loss-gain
+      it('correctly returns URI template for umd-loss-gain', function() {
+        var config = null;
+        var uriTemplate = null;
+
+        // National
+        config = {iso: 'bra', thresh: 10, dataset: 'umd-loss-gain'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}{?bust,dev,thresh}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        config = {iso: 'bra', id1: 1, thresh: 10, dataset: 'umd-loss-gain'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}/{id1}{?bust,dev,thresh}';
         expect(service._getUriTemplate(config)).toEqual(uriTemplate);
       });
 
-      it('correctly returns URI template for subnational API', function() {
-        var config = {iso: 'bra', id1: 1, thresh: 10,
-          dataset: 'umd-loss-gain'};
-        var uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}/{id1}{?bust,dev,thresh}';
 
-        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
-      });   
 
       it('correctly returns null template for invalid config', function() {
         var config = {};
@@ -135,52 +217,107 @@ define([
       beforeEach(function() {
       });
 
-      it('correctly returns URL for UMD national API', function() {
-        var config = {dataset: 'umd-loss-gain', iso: 'bra', thresh: 10};
-        var url = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/bra?thresh=10';
+      // umd-loss-gain
+      it('correctly returns URL for umd-loss-gain', function() {
+        var config = null;
+        var url = null;
 
+        // National
+        config = {dataset: 'umd-loss-gain', iso: 'bra', thresh: 10};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/bra?thresh=10';
+        expect(service._getUrl(config)).toEqual(url);
+
+        // Subnational
+        config = {
+          dataset: 'umd-loss-gain', iso: 'bra', id1: 1, thresh: 10};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/bra/1?thresh=10';
         expect(service._getUrl(config)).toEqual(url);
       });
 
-     it('correctly returns URL for UMD subnational API', function() {
-        var config = {
-          dataset: 'umd-loss-gain', iso: 'bra', id1: 1, thresh: 10};
-        var url = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/bra/1?thresh=10';
 
+      // forma-alerts
+      it('correctly returns URL for forma-alerts', function() {
+        var config = null;
+        var url = null;
+
+        // National
+        config = {dataset: 'forma-alerts', iso: 'bra'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/bra';
         expect(service._getUrl(config)).toEqual(url);
-      });       
 
-      it('correctly returns URL for FORMA national API', function() {
-        var config = {
-          dataset: 'forma-alerts', iso: 'bra'};
-        var url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/bra';
-
+        // Subnational
+        config = {dataset: 'forma-alerts', iso: 'bra', id1: 1};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/bra/1';
         expect(service._getUrl(config)).toEqual(url);
+
+
+        // Use
+        config = {dataset: 'forma-alerts', use: 'logging', useid: 1,};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/use/logging/1';
+        expect(service._getUrl(config)).toEqual(url);
+
+        // WDPA
+        config = {dataset: 'forma-alerts', wdpaid: '1'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/wdpa/1';
+        expect(service._getUrl(config)).toEqual(url);        
       });        
   
-      it('correctly returns URL for FORMA subnational API', function() {
-        var config = {
-          dataset: 'forma-alerts', iso: 'bra', id1: 1};
-        var url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/bra/1';
 
+      // quicc-alerts
+      it('correctly returns URL for quicc-alerts', function() {
+        var config = null;
+        var url = null;
+
+        // National
+        config = {dataset: 'quicc-alerts', iso: 'bra'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/bra';
         expect(service._getUrl(config)).toEqual(url);
-      });     
 
-      it('correctly returns URL for FORMA wdpa API', function() {
-        var config = {
-          dataset: 'forma-alerts', wdpaid: 1,};
-        var url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/wdpa/1';
-
+        // Subnational
+        config = {dataset: 'quicc-alerts', iso: 'bra', id1: 1};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/bra/1';
         expect(service._getUrl(config)).toEqual(url);
-      });            
 
-      it('correctly returns URL for FORMA use API', function() {
-        var config = {
-          dataset: 'forma-alerts', use: 'logging', useid: 1,};
-        var url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/use/logging/1';
 
+        // Use
+        config = {dataset: 'quicc-alerts', use: 'logging', useid: 1,};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/use/logging/1';
         expect(service._getUrl(config)).toEqual(url);
-      });            
+
+        // WDPA
+        config = {dataset: 'quicc-alerts', wdpaid: '1'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/wdpa/1';
+        expect(service._getUrl(config)).toEqual(url);        
+      });       
+
+
+      // nasa-active-fires
+      it('correctly returns URL for nasa-active-fires', function() {
+        var config = null;
+        var url = null;
+
+        // National
+        config = {dataset: 'nasa-active-fires', iso: 'bra'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/bra';
+        expect(service._getUrl(config)).toEqual(url);
+
+        // Subnational
+        config = {dataset: 'nasa-active-fires', iso: 'bra', id1: 1};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/bra/1';
+        expect(service._getUrl(config)).toEqual(url);
+
+
+        // Use
+        config = {dataset: 'nasa-active-fires', use: 'logging', useid: 1,};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/use/logging/1';
+        expect(service._getUrl(config)).toEqual(url);
+
+        // WDPA
+        config = {dataset: 'nasa-active-fires', wdpaid: '1'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/wdpa/1';
+        expect(service._getUrl(config)).toEqual(url);        
+      });       
+
 
       it('correctly returns null URL for invalid config', function() {
         var config = {};
