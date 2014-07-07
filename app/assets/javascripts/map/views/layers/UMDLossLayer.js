@@ -26,13 +26,8 @@ define([
     },
 
     /**
-     * Implementation for CanvasLayerView.filterCanvasImgdata().
-     *
-     * @param  {[type]} imgdata [description]
-     * @param  {[type]} w       [description]
-     * @param  {[type]} h       [description]
-     * @param  {[type]} z       [description]
-     * @return {[type]}         [description]
+     * Filters the canvas imagedata.
+     * @override
      */
     filterCanvasImgdata: function(imgdata, w, h, z) {
       var components = 4;

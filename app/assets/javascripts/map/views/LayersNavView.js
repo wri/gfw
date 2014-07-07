@@ -51,7 +51,7 @@ define([
 
         if (layer) {
           $li.addClass('selected').css('color', layer.title_color);
-          $li.find('.onoffswitch').addClass('checked').css('background', layer.category_color);
+          $li.find('.onoffswitch').addClass('checked').css('background', layer.title_color);
         } else {
           $li.removeClass('selected').css('color', '');
           $li.find('.onoffswitch').removeClass('checked').css('background', '');

@@ -16,6 +16,10 @@ define([
       urlTemplate: 'http://earthengine.google.org/static/hansen_2013/tree_alpha{/z}{/x}{/y}.png'
     },
 
+    /**
+     * Filters the canvas imagedata.
+     * @override
+     */
     filterCanvasImgdata: function(imgdata, w, h) {
       var components = 4,
         pixelPos, intensity;

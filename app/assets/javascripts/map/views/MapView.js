@@ -11,8 +11,9 @@ define([
   'views/layers/UMDLossLayer',
   'views/layers/Forest2000Layer',
   'views/layers/GainLayer',
-  'views/layers/ImazonLayer'
-], function(Backbone, _, Presenter, AnalysisButtonView, UMDLossLayer, Forest2000Layer, GainLayer, ImazonLayer) {
+  'views/layers/ImazonLayer',
+  'views/layers/PantropicalLayer'
+], function(Backbone, _, Presenter, AnalysisButtonView, UMDLossLayer, Forest2000Layer, GainLayer, ImazonLayer, PantropicalLayer) {
 
   'use strict';
 
@@ -36,7 +37,8 @@ define([
       umd_tree_loss_gain: UMDLossLayer,
       forest2000: Forest2000Layer,
       gain: GainLayer,
-      imazon: ImazonLayer
+      imazon: ImazonLayer,
+      pantropical: PantropicalLayer
     },
 
     /**

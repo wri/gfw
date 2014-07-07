@@ -13,11 +13,11 @@ define([
 
   var CanvasLayerClass = Class.extend({
 
+
     init: function (layer, map) {
       _.bindAll(this, 'filterCanvasImgdata');
       this.tileSize = new google.maps.Size(256, 256);
       this.map = map;
-      this.layer = layer;
       this.name = layer.slug;
       this.tiles = {};
     },
