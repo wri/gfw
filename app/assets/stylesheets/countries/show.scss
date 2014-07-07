@@ -11,7 +11,11 @@
       display: none;
     }
   }
-
+  .embed-country-title{
+    margin-top: 100px;
+    text-align: center;
+    font-size: 2em;
+  }
   .share_control {
     position: relative;
     width: auto;
@@ -469,6 +473,10 @@
     border-bottom: 1px solid #E5E5E5;
     width: 100%;
     padding: 45px 0;
+
+    .embed & {
+      border: 0;
+    }
 
     .section-info {
       margin-bottom: 12px;

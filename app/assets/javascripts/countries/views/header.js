@@ -172,7 +172,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         'embed/country/:id': 'loadCountry',
         'embed/country/:id/': 'loadCountry',
         'embed/country/:id/:areaId': 'loadArea',
-        'embed/country/:id/:areaId/': 'loadArea'
+        'embed/country/:id/:areaId/': 'loadArea',
+        'embed/country_info/:id/:box': 'loadBox',
+        'embed/country_info/:id/:box/': 'loadBox'
       },
 
       initialize: function() {
@@ -204,6 +206,13 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         } else {
           self._displayCountry();
         }
+      },
+
+      loadBox: function(countryId, box) {
+        var target = $('.country-' + box);
+        
+        target.find('.info').remove();
+        target.fadeIn()
       }
 
     });

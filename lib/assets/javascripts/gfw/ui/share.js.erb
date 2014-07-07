@@ -27,6 +27,8 @@ gfw.ui.view.Share = cdb.core.View.extend({
       template: template,
       type: 'mustache'
     });
+    
+    this.event_target = event.target;
 
     this._initViews();
   },
@@ -44,7 +46,7 @@ gfw.ui.view.Share = cdb.core.View.extend({
 
   _openShare: function(e) {
     e.preventDefault();
-
+    $(event.target).closest('section').addClass('current_share');
     this.share.show();
   },
 
@@ -187,7 +189,24 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
       dim_y = ($body.hasClass('show')) ? 480 : 600;
     }
 
-    this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname + window.location.search+'"></iframe>');
+    if ($('section').hasClass('current_share')) {
+      var $targ    = $('section.current_share'),
+          targ_val = '/alerts';//default value
+      
+      if ($targ.hasClass('country-forests-type')) {
+        targ_val = '/forests-type';
+      } else if ($targ.hasClass('country-production')) {
+        targ_val = '/production';
+      } else if ($targ.hasClass('country-employment')) {
+        targ_val = '/employment';
+      } else if ($targ.hasClass('country-tenure')) {
+        targ_val = '/tenure';
+      }
+      $targ.removeClass('current_share');
+      this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname.replace('country','country_info') + targ_val + '"></iframe>');
+    } else {
+      this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname + window.location.search+'"></iframe>');
+    }
   },
 
   _generateShortUrl: function(url, callback) {
