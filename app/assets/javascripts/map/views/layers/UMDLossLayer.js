@@ -19,10 +19,10 @@ define([
       urlTemplate: 'http://earthengine.google.org/static/hansen_2013/gfw_loss_year{/z}{/x}{/y}.png'
     },
 
-    init: function(layer) {
+    init: function(layer, map) {
       this.timelineDate = this.options.dateRange;
       this.presenter = new Presenter(this);
-      this._super(layer);
+      this._super(layer, map);
     },
 
     /**
