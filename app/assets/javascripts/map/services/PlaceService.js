@@ -104,8 +104,12 @@ define([
         params = this._getPresenterParams(this._presenters);
       }
 
+      if (name) {
+        this.currentName = name;
+      }
+
       newPlace.params = this._standardizeParams(params);
-      newPlace.name = name;
+      newPlace.name = this.currentName;
 
       if (go) {
         this._getMapLayers(
@@ -117,7 +121,7 @@ define([
           }, this));
       }
 
-      route = this._getRoute(name, newPlace.params);
+      route = this._getRoute(newPlace.name, newPlace.params);
       this.router.navigate(route, {silent: true});
     },
 
