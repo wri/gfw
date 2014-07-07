@@ -70,6 +70,28 @@ strong {
   padding: 0 10px;
   .embed & {
     width: 720px;
+    .country-icons-settings_engine {
+      width: 15px;
+      height: 15px;
+      float: left;
+      top: 415px;
+      position: relative;
+      z-index: 1;
+      left: 292px;
+      cursor: pointer;
+    }
+    .umdoptions_dialog {
+      height: 250px;
+      margin-top: 245px;
+      left: 320px;
+      &::after{
+        left: -27px;
+        top: -36px;
+      }
+      p.slider_container {
+        display: table;
+      }
+    }
   }
 }
 

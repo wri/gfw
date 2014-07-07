@@ -211,7 +211,11 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         }
       });
       self.router = new Router();
-      //($('body').hasClass('embed')) ? this._onClickUMDOptions(null, '.country-title') : '';
+      if ($('body').hasClass('embed')) {
+        $('.umd_options_control').on('click', function(){
+          self._onClickUMDOptions(null, '.country-preview');
+        })
+      }
     }
   },
 
@@ -228,7 +232,6 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
   },
 
   _onClickUMDOptions: function(e,tar_param) {
-    debugger;
     e && e.preventDefault();
 
     var $target = $('.umdoptions_dialog'),
