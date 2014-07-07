@@ -7,15 +7,16 @@ define([
   'backbone',
   'underscore',
   'presenters/LayersNavPresenter',
-  'text!templates/layersNav.html'
-], function(Backbone, _, Presenter, tpl) {
+  'handlebars',
+  'text!templates/layersNav.handlebars'
+], function(Backbone, _, Presenter, Handlebars, tpl) {
 
   'use strict';
 
   var LayersNavView = Backbone.View.extend({
 
     el: '.layers-menu',
-    template: _.template(tpl),
+    template: Handlebars.compile(tpl),
 
     events: {
       'click .layer': '_toggleLayer'

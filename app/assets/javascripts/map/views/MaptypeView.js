@@ -7,15 +7,16 @@ define([
   'underscore',
   'views/Widget',
   'presenters/MaptypePresenter',
-  'text!map/templates/maptype.html'
-], function(_, Widget, Presenter, tpl) {
+  'handlebars',
+  'text!map/templates/maptype.handlebars'
+], function(_, Widget, Presenter, Handlebars, tpl) {
 
   'use strict';
 
   var MaptypeView = Widget.extend({
 
     className: 'widget maptype',
-    template: _.template(tpl),
+    template: Handlebars.compile(tpl),
 
     events: function(){
       return _.extend({}, MaptypeView.__super__.events, {
@@ -42,7 +43,7 @@ define([
     /**
      * Add selected mapview to .maptype-selected
      * and close the widget.
-     * 
+     *
      * @param  {string} maptype
      */
     selectMaptype: function(maptype) {

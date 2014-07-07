@@ -7,45 +7,48 @@ define([
   'backbone',
   'underscore',
   'presenters/TimelinePresenter',
-  'views/timeline/class/TimelineClass'
-], function(Backbone, _, Presenter, TimelineClass) {
+  'views/timeline/UMDLossTimeline'
+], function(Backbone, _, Presenter, UMDLossTimeline) {
 
   'use strict';
 
   var TimelineView = Backbone.View.extend({
 
-    timelineOpts: {
-      umd_tree_loss_gain: {
+    className: 'timeline',
 
-      },
+    timelineViews: {
+      umd_tree_loss_gain: UMDLossTimeline
     },
 
     initialize: function() {
       this.presenter = new Presenter(this);
-      this.timelines = {};
+      this.currentTimeline = null;
+      this.render();
+    },
+
+    render: function() {
+      $('.map-container').append(this.el);
+      this.$el.hide();
     },
 
     setTimeline: function(layerSpec) {
-      var activeLayers = {};
+      if (this.currentTimeline) {
+        this.currentTimeline.remove();
+        this.currentTimeline = null;
+      }
 
-      _.each(layerSpec, function(category) {
-        activeLayers = _.extend(activeLayers, category);
-      });
+      var baselayers = layerSpec['forestChange'] || {};
 
-      // remove timelines
-      _.each(this.timelines, _.bind(function(timeline, name){
-        if (!activeLayers[name]) {
-          timeline.remove();
-          delete this.timelines[name];
+      _.each(this.timelineViews, _.bind(function(view, lName) {
+        if (baselayers[lName]) {
+          this.currentTimeline = new view(baselayers[lName]);
+          this.$el.show();
         }
       }, this));
 
-      // render timelines
-      _.each(this.timelineOpts, _.bind(function(opts, layer){
-        if (activeLayers[layer] && !this.timelines[layer]) {
-          this.timelines[layer] = new TimelineClass(opts);
-        }
-      }, this));
+      if (!this.currentTimeline) {
+        this.$el.hide();
+      }
     }
 
   });

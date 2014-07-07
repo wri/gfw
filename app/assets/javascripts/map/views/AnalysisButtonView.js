@@ -7,8 +7,9 @@ define([
   'backbone',
   'underscore',
   'presenters/AnalysisButtonPresenter',
-  'text!templates/AnalysisButtonTemplate.html'
-], function(Backbone, _, Presenter, template) {
+  'handlebars',
+  'text!templates/AnalysisButtonTemplate.handlebars'
+], function(Backbone, _, Presenter, Handlebars, tpl) {
 
   'use strict';
 
@@ -20,7 +21,7 @@ define([
     },
 
     // The view template.
-    template: _.template(template),
+    template: Handlebars.compile(tpl),
 
     /**
      * Constructs a new AnalysisButtonView and its presenter.

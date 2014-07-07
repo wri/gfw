@@ -54,6 +54,11 @@ define([
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this.view.setLayerSpec(layerSpec);
       },this));
+
+      mps.subscribe('Maptype/change', _.bind(function(maptype) {
+        this.view.setMapTypeId(maptype);
+      }, this));
+
     },
 
     /**

@@ -18,14 +18,29 @@ define([
 
   var MapView = Backbone.View.extend({
 
-     el: '#map',
+    el: '#map',
 
-     layersViews: {
+    options: {
+      minZoom: 3,
+      disableDefaultUI: true,
+      panControl: false,
+      zoomControl: false,
+      mapTypeControl: false,
+      scaleControl: true,
+      streetViewControl: false,
+      overviewMapControl: false
+    },
+
+    maptypes: {
+      grayscale: [{"featureType":"water"},{"featureType":"transit","stylers":[{"saturation":-100}]},{"featureType":"road","stylers":[{"saturation":-100}]},{"featureType":"poi","stylers":[{"saturation":-100}]},{"featureType":"landscape","stylers": [ { "saturation": -100 } ] }, { "featureType": "administrative", "stylers": [ { "saturation": -100 } ] },{ "featureType": "poi.park", "elementType": "geometry", "stylers": [ { "visibility": 'off' }]}]
+    },
+
+    layersViews: {
       umd_tree_loss_gain: UMDLossLayer,
       forest2000: Forest2000Layer,
       gain: GainLayer,
       imazon: ImazonLayer
-     },
+    },
 
     /**
      * Constructs a new MapView and its presenter.
@@ -35,12 +50,25 @@ define([
       this.layerViewsInst = {};
     },
 
+    _setMaptypes: function() {
+      var grayscale = new google.maps.StyledMapType(this.maptypes.grayscale, {name: 'grayscale'});
+      this.map.mapTypes.set('grayscale', grayscale);
+    },
+
     /**
      * Creates the Google Maps and attaches it to the DOM.
      */
-    render: function(options) {
-      this.map = new google.maps.Map(this.el, options);
+    render: function(params) {
+
+      params = {
+        zoom: params.zoom,
+        mapTypeId: params.maptype,
+        center: new google.maps.LatLng(params.lat, params.lng),
+      };
+
+      this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
       this.resize();
+      this._setMaptypes();
       this._addCompositeViews();
       this._addListeners();
     },
@@ -69,13 +97,7 @@ define([
     },
 
     initMap: function(params) {
-      var options = {
-        minZoom: 3,
-        zoom: params.zoom,
-        mapTypeId: params.maptype,
-        center: new google.maps.LatLng(params.lat, params.lng)
-      };
-      this.render(options);
+      this.render(params);
     },
 
     /**
@@ -157,7 +179,7 @@ define([
       if (overlaysLength > 0) {
         for (var i = 0; i< overlaysLength; i++) {
           var layer = this.map.overlayMapTypes.getAt(i);
-          if (layer && layer.name === layerSlug) {
+          if (layer && layer.slug === layerSlug) {
             this.map.overlayMapTypes.removeAt(i);
           }
         }
@@ -174,7 +196,7 @@ define([
       if (overlaysLength > 0) {
         for (var i = 0; i< overlaysLength; i++) {
           var layer = this.map.overlayMapTypes.getAt(i);
-          if (layer && layer.name === name) {
+          if (layer && layer.slug === name) {
             return true;
           }
         }

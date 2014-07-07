@@ -8,18 +8,19 @@ define([
   'underscore',
   'views/Widget',
   'presenters/LegendPresenter',
-  'text!map/templates/legend/legend.html',
+  'handlebars',
+  'text!map/templates/legend/legend.handlebars',
   'text!map/templates/legend/category.html',
   'text!map/templates/legend/layer.html',
   'text!map/templates/legend/umd_loss.html'
-], function(Backbone, _, Widget, Presenter, tpl, categoryTpl, layerTpl, lossTpl) {
+], function(Backbone, _, Widget, Presenter, Handlebars, tpl, categoryTpl, layerTpl, lossTpl) {
 
   'use strict';
 
   var Legend = Widget.extend({
 
     className: 'widget legend',
-    template: _.template(tpl),
+    template: Handlebars.compile(tpl),
     categoryTemplate: _.template(categoryTpl),
     layerTemplate: _.template(layerTpl),
 
@@ -56,7 +57,7 @@ define([
 
     /**
      * Used by this.update.
-     * 
+     *
      * @param  {[type]} categories [description]
      */
     _renderCategories: function(layerSpec) {
@@ -118,13 +119,13 @@ define([
 
             self.layerViews[lName] = $layer;
           }
-        }); 
+        });
       });
     },
 
     /**
      * Update the legend layers from a layerSpec.
-     * 
+     *
      * @param  {object} layerSpec The layer spect object
      */
     update: function(layerSpec) {

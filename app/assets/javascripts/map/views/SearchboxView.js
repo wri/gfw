@@ -9,15 +9,16 @@ define([
   'gmap',
   'views/Widget',
   'presenters/SearchboxPresenter',
-  'text!map/templates/searchbox.html'
-], function(Backbone, _, gmap, Widget, Presenter, tpl) {
+  'handlebars',
+  'text!map/templates/searchbox.handlebars'
+], function(Backbone, _, gmap, Widget, Presenter, Handlebars, tpl) {
 
   'use strict';
 
   var Searchbox = Widget.extend({
 
     className: 'widget searchbox',
-    template: _.template(tpl),
+    template: Handlebars.compile(tpl),
 
     initialize: function() {
       var self = this;
@@ -28,7 +29,7 @@ define([
 
       // TODO: fix gmap so it accepts two inits at the same time.
       setTimeout(function() {
-        gmap.init(self.setAutocomplete);        
+        gmap.init(self.setAutocomplete);
       }, 2000);
     },
 

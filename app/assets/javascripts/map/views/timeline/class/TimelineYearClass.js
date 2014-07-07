@@ -10,34 +10,29 @@ define([
   'backbone',
   'moment',
   'd3',
-  'text!map/templates/timeline.html'
-], function(_, Backbone, moment, d3, tpl) {
+  'handlebars',
+  'text!map/templates/timelineYear.handlebars'
+], function(_, Backbone, moment, d3, Handlebars, tpl) {
 
   'use strict';
 
-  var TimelineClass = Backbone.View.extend({
+  var TimelineYearClass = Backbone.View.extend({
 
-    className: 'timeline timeline-date-range',
-    template: _.template(tpl),
+    className: 'timeline-date-range',
+    template: Handlebars.compile(tpl),
 
     events: {
       'click .play': 'togglePlay'
     },
 
-    initialize: function(opts) {
-      _.bindAll(this, 'onAnimationBrush', 'onBrush', 'onBrushEnd');
+    initialize: function(layer) {
+      _.bindAll(this, 'onAnimationBrush', 'onBrush', 'onBrushEnd', 'updateTimelineDate');
+      this.layer = layer;
 
       this.opts = _.extend({
         dateRange: [moment([2001]), moment()],
-        layerName: '',
         playSpeed: 400,
-        xAxis: {
-          months: {
-            enabled: false,
-            steps: false
-          }
-        }
-      }, opts);
+      }, this.opts);
 
       // Status
       this.playing = false;
@@ -73,7 +68,7 @@ define([
       var self = this;
 
       this.$el.html(this.template());
-      $('.map-container').append(this.el);
+      $('.timeline').append(this.el);
 
       // Cache
       this.$play = this.$el.find('.play');
@@ -418,11 +413,11 @@ define([
       this.tooltip.style('visibility', 'hidden');
     },
 
-    getLayerName: function() {
-      return this.opts.layerName;
+    getLayerSlug: function() {
+      return this.layer.slug;
     }
   });
 
-  return TimelineClass;
+  return TimelineYearClass;
 
 });
