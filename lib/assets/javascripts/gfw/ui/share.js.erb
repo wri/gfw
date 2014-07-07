@@ -192,6 +192,7 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
     if ($('section').hasClass('current_share')) {
       var $targ    = $('section.current_share'),
           targ_val = '/alerts';//default value
+      dim_y = 360;
       
       if ($targ.hasClass('country-forests-type')) {
         targ_val = '/forests-type';
