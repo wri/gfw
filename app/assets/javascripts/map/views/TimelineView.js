@@ -37,11 +37,11 @@ define([
         this.currentTimeline = null;
       }
 
-      var baselayers = layerSpec['forestChange'] || {};
+      var baselayers = layerSpec.forestChange || {};
 
-      _.each(this.timelineViews, _.bind(function(view, lName) {
+      _.each(this.timelineViews, _.bind(function(View, lName) {
         if (baselayers[lName]) {
-          this.currentTimeline = new view(baselayers[lName]);
+          this.currentTimeline = new View(baselayers[lName]);
           this.$el.show();
         }
       }, this));
