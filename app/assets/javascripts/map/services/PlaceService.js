@@ -104,8 +104,12 @@ define([
         params = this._getPresenterParams(this._presenters);
       }
 
+      if (name) {
+        this.currentName = name;
+      }
+
       newPlace.params = this._standardizeParams(params);
-      newPlace.name = name;
+      newPlace.name = this.currentName;
 
       if (go) {
         this._getMapLayers(
@@ -117,7 +121,7 @@ define([
           }, this));
       }
 
-      route = this._getRoute(name, newPlace.params);
+      route = this._getRoute(newPlace.name, newPlace.params);
       this.router.navigate(route, {silent: true});
     },
 
@@ -163,7 +167,7 @@ define([
       p.zoom = _.toNumber(params.zoom) || 3;
       p.lat = _.toNumber(params.lat) || -28;
       p.lng = _.toNumber(params.lng) || 27;
-      p.maptype = params.maptype || 'terrain';
+      p.maptype = params.maptype || 'grayscale';
       p.begin = _.toNumber(params.begin);
       p.end = _.toNumber(params.end);
       p.iso = params.iso || 'ALL';
