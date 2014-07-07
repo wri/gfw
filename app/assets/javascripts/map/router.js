@@ -22,8 +22,7 @@ define([
   var Router = Backbone.Router.extend({
 
     routes: {
-      'map': 'map',
-      'map/:zoom/:lat/:lng/:iso/:maptype/:baselayers(/:sublayers)(/)': 'map',
+      'map(/:zoom)(/:lat)(/:lng)(/:iso)(/:maptype)(/:baselayers)(/:sublayers)(/)': 'map',
     },
 
     initialize: function() {
@@ -54,8 +53,7 @@ define([
         if (!this.mapView) {
           this.mapView = new MapView();
         }
-        mps.publish(
-          'Place/update', [{go: true, name: 'map', params: params}]);
+        mps.publish('Place/update', [{go: true, name: 'map', params: params}]);
       }, this));
     },
 
