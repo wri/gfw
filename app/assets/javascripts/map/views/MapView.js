@@ -10,7 +10,10 @@ define([
   'views/AnalysisButtonView',
   'views/layers/UMDLossLayer',
   'views/layers/ForestGainLayer',
+  'views/layers/FormaLayer',
   'views/layers/ImazonLayer',
+  'views/layers/ModisLayer',
+  'views/layers/FiresLayer',
   'views/layers/Forest2000Layer',
   'views/layers/IntactForestLayer',
   'views/layers/PantropicalLayer',
@@ -22,9 +25,9 @@ define([
   'views/layers/BiodiversityHotspotsLayer',
   'views/layers/ResourceRightsLayer'
 ], function(Backbone, _, Presenter, AnalysisButtonView,
-  UMDLossLayer, ForestGainLayer, ImazonLayer, Forest2000Layer, IntactForestLayer, PantropicalLayer,
-  LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer, ProtectedAreasLayer,
-  BiodiversityHotspotsLayer, ResourceRightsLayer) {
+  UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
+  IntactForestLayer, PantropicalLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
+  ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer) {
 
   'use strict';
 
@@ -50,7 +53,10 @@ define([
     layersViews: {
       umd_tree_loss_gain: UMDLossLayer,
       forestgain: ForestGainLayer,
+      forma: FormaLayer,
       imazon: ImazonLayer,
+      modis: ModisLayer,
+      fires: FiresLayer,
       forest2000: Forest2000Layer,
       intact_forest: IntactForestLayer,
       pantropical: PantropicalLayer,
