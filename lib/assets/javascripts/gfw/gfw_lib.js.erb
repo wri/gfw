@@ -784,6 +784,9 @@ GFW.modules.app = function(gfw) {
           GFW.app._removeForest2000Layer();
           GFW.app._renderForest2000Layer();
         }
+      } if (baselayer === null && cover_extent.attributes['visible']) {
+          GFW.app._removeForest2000Layer();
+          GFW.app._renderForest2000Layer();
       }
       var previous_layer = config.BASELAYER;
       this.currentBaseLayer = config.BASELAYER = baselayer;
