@@ -39,6 +39,12 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
       margin-bottom: 0;
     }
 
+    .anchor-country-info {
+      top: -45px;
+      position: relative;
+      float: left;
+    }
+
     .section {
       @extend .clearfix;
       border-bottom: 1px solid #ddd;
