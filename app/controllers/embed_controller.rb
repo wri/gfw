@@ -16,6 +16,7 @@ class EmbedController < ApplicationController
     not_found unless country.present?
 
     @country = country
+    @employees = @country['employment']
   end
 
 end
