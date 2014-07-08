@@ -99,30 +99,22 @@ define([
 
     getPlaceParams: function() {
       var params = {};
+      var baselayers = {};
+      var sublayers = {};
 
-      //var baseLayers = this.layerSpec.forestChange || {};
+      _.each(this.layerSpec, function(category, cName) {
+        if (cName !== 'forestChange') {
+          _.extend(sublayers, category);
+        } else {
+          _.extend(baselayers, category);
+        }
+      });
 
-      // var sublayers = _.map(this.layerSpec, function(category, i) {
-      //   if (i !== 'forestChange') {
-      //     return category;
-      //   }
-      // });
+      params.sublayers = _.map(sublayers, function(layer) {
+        return layer.id;
+      }).join(',');
 
-      // params.baselayers = _.map(baselayers, function(layer) {
-      //   Return
-      // });
-
-      // var subLayers = _.filter(this.layers, function(layer) {
-      //   return layer.category_slug !== 'forest_clearing';
-      // });
-
-      // params.baselayers = _.map(baseLayers, function(layer) {
-      //   return layer.slug;
-      // });
-
-      // params.sublayers = _.map(subLayers, function(layer) {
-      //   return layer.id;
-      // });
+      params.baselayers = _.keys(baselayers).join(',');
 
       return params;
     },

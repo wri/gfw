@@ -48,8 +48,9 @@ define([
   'Class',
   'mps',
   'uri',
-  'underscore'
-], function (Class, mps, UriTemplate, _) {
+  'underscore',
+  'services/LayerSpecService'
+], function (Class, mps, UriTemplate, _, layerSpecService) {
 
   'use strict';
 
@@ -104,21 +105,19 @@ define([
         params = this._getPresenterParams(this._presenters);
       }
 
-      if (name) {
-        this.currentName = name;
-      }
-
       newPlace.params = this._standardizeParams(params);
-      newPlace.name = this.currentName;
+      newPlace.name = this.name;
 
       if (go) {
-        this._getMapLayers(
-          params.baselayers,
-          params.sublayers,
-          _.bind(function(layers) {
-            newPlace.params.layers = layers;
-            mps.publish('Place/go', [newPlace]);
-          }, this));
+        layerSpecService.add({
+          slugs: (params.baselayers) ? params.baselayers.split(',') : [],
+          ids: (params.sublayers) ? params.sublayers.split(',') : []
+        })
+        .then(function(layerSpec, error) {
+          console.log(layerSpec)
+          newPlace.params.layerSpec = layerSpec;
+          mps.publish('Place/go', [newPlace]);
+        });
       }
 
       route = this._getRoute(newPlace.name, newPlace.params);
