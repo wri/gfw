@@ -9,11 +9,22 @@ define([
   'presenters/MapPresenter',
   'views/AnalysisButtonView',
   'views/layers/UMDLossLayer',
-  'views/layers/Forest2000Layer',
   'views/layers/GainLayer',
   'views/layers/ImazonLayer',
-  'views/layers/PantropicalLayer'
-], function(Backbone, _, Presenter, AnalysisButtonView, UMDLossLayer, Forest2000Layer, GainLayer, ImazonLayer, PantropicalLayer) {
+  'views/layers/Forest2000Layer',
+  'views/layers/IntactForestLayer',
+  'views/layers/PantropicalLayer',
+  'views/layers/LoggingLayer',
+  'views/layers/MiningLayer',
+  'views/layers/OilPalmLayer',
+  'views/layers/WoodFiberPlantationsLayer',
+  'views/layers/ProtectedAreasLayer',
+  'views/layers/BiodiversityHotspotsLayer',
+  'views/layers/ResourceRightsLayer'
+], function(Backbone, _, Presenter, AnalysisButtonView,
+  UMDLossLayer, GainLayer, ImazonLayer, Forest2000Layer, IntactForestLayer, PantropicalLayer,
+  LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer, ProtectedAreasLayer,
+  BiodiversityHotspotsLayer, ResourceRightsLayer) {
 
   'use strict';
 
@@ -33,12 +44,23 @@ define([
       overviewMapControl: false
     },
 
+    /**
+     * Map layer slug with layer views.
+     */
     layersViews: {
       umd_tree_loss_gain: UMDLossLayer,
-      forest2000: Forest2000Layer,
       gain: GainLayer,
       imazon: ImazonLayer,
-      pantropical: PantropicalLayer
+      forest2000: Forest2000Layer,
+      intact_forest: IntactForestLayer,
+      pantropical: PantropicalLayer,
+      logging: LoggingLayer,
+      mining: MiningLayer,
+      oil_palm: OilPalmLayer,
+      wood_fiber_plantations: WoodFiberPlantationsLayer,
+      protected_areas: ProtectedAreasLayer,
+      biodiversity_hotspots: BiodiversityHotspotsLayer,
+      resource_rights: ResourceRightsLayer
     },
 
     /**
@@ -120,16 +142,14 @@ define([
 
       // Remove layers
       _.each(this.layerInst, function(inst, layerSlug) {
-        if (!activeLayers[layerSlug] && self._isLayerRendered(layerSlug)) {
+        if (!activeLayers[layerSlug]) {
           self.removeLayer(layerSlug);
         }
       });
 
       // Render layers
       _.each(activeLayers, function(layer) {
-        if (!self._isLayerRendered(layer.slug)) {
-          self.addLayer(layer);
-        }
+        self.addLayer(layer);
       });
     },
 
@@ -139,10 +159,14 @@ define([
      * @param {Object} layer The layer object
      */
     addLayer: function(layer) {
-      this.layerInst[layer.slug] = this.layerInst[layer.slug] ||
-        new this.layersViews[layer.slug](layer, this.map);
+      if (!this.isLayerRendered(layer.slug)) {
+        var layerView = this.layerInst[layer.slug] =
+          new this.layersViews[layer.slug](layer, this.map);
 
-      this.layerInst[layer.slug].render();
+        layerView.getLayer().then(_.bind(function(layer) {
+          this.map.overlayMapTypes.insertAt(0, layer);
+        }, this));
+      }
     },
 
     /**
@@ -151,28 +175,26 @@ define([
      * @param  {string} layerSlug The layerSlug of the layer to remove
      */
     removeLayer: function(layerSlug) {
+      if (this.isLayerRendered(layerSlug) && this.layerInst[layerSlug]) {
+        var overlaysLength = this.map.overlayMapTypes.getLength();
+        if (overlaysLength > 0) {
+          for (var i = 0; i < overlaysLength; i++) {
+            var layer = this.map.overlayMapTypes.getAt(i);
+            if (layer && layer.name === layerSlug) {
+              this.map.overlayMapTypes.removeAt(i);
+            }
+          }
+        }
+        delete this.layerInst[layerSlug];
+      }
+    },
+
+    isLayerRendered: function(layerSlug) {
       var overlaysLength = this.map.overlayMapTypes.getLength();
       if (overlaysLength > 0) {
         for (var i = 0; i< overlaysLength; i++) {
           var layer = this.map.overlayMapTypes.getAt(i);
           if (layer && layer.name === layerSlug) {
-            this.map.overlayMapTypes.removeAt(i);
-          }
-        }
-      }
-    },
-
-    /**
-     * Check if a layer is already rendered by name.
-     *
-     * @param  {string} name The layer name
-     */
-    _isLayerRendered: function(name) {
-      var overlaysLength = this.map.overlayMapTypes.getLength();
-      if (overlaysLength > 0) {
-        for (var i = 0; i< overlaysLength; i++) {
-          var layer = this.map.overlayMapTypes.getAt(i);
-          if (layer && layer.name === name) {
             return true;
           }
         }

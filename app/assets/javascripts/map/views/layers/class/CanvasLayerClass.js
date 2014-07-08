@@ -13,7 +13,6 @@ define([
 
   var CanvasLayerClass = Class.extend({
 
-
     init: function (layer, map) {
       _.bindAll(this, 'filterCanvasImgdata');
       this.tileSize = new google.maps.Size(256, 256);
@@ -22,8 +21,10 @@ define([
       this.tiles = {};
     },
 
-    render: function() {
-      this.map.overlayMapTypes.insertAt(0, this);
+    getLayer: function() {
+      var deferred = new $.Deferred();
+      deferred.resolve(this);
+      return deferred.promise();
     },
 
     /**
