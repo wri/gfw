@@ -1,5 +1,5 @@
 /**
- * The Imazon layer module for use on canvas.
+ * The Imazon layer module.
  *
  * @return ImazonLayer class (extends CartoDBLayerClass)
  */

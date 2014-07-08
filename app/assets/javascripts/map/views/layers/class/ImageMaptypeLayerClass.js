@@ -32,8 +32,10 @@ define([
       });
     },
 
-    render: function() {
-      this.map.overlayMapTypes.insertAt(0, this._imageMaptype);
+    getLayer: function() {
+      var deferred = new $.Deferred();
+      deferred.resolve(this._imageMaptype);
+      return deferred.promise();
     },
 
     /**
