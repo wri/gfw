@@ -11,10 +11,9 @@ define([
 
   var ImageMaptypeLayerClass = Class.extend({
 
-    init: function(layer, map) {
+    init: function(layer) {
       _.bindAll(this, '_getUrl');
       this.tileSize = new google.maps.Size(256, 256);
-      this.map = map;
       this.name = layer.slug;
       this._setImageMaptype();
     },
