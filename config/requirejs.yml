@@ -1,0 +1,57 @@
+modules:
+  - name: "map"
+
+paths:
+  underscore: "underscore/underscore"
+  backbone: "backbone/backbone"
+  jquery: "jquery/dist/jquery"
+  d3: "d3/d3"
+  cartodb: "cartodb.js/dist/cartodb"
+  moment: "moment/moment"
+  text: "requirejs-text/text"
+  mps: "minpubsub/minpubsub"
+  _string: "underscore.string/dist/underscore.string.min"
+  jqueryui: "jquery-ui-1.10.4.custom.min"
+  gmap: "map/gmap"
+  uri: "uri"
+  backbone_cartodb: "backbone.cartodb"
+  cartodblayer: "cartodb.gmapsv3"
+  handlebars: "handlebars/handlebars"
+  wax: "wax.g.min"
+  store: "store"
+  Class: "class"
+  app: "map/app"
+  utils: "map/utils"
+  router: "map/router"
+  mediator: "map/mediator"
+  presenter: "map/presenter"
+  views: "map/views"
+  templates: "map/templates"
+  services: "map/services"
+  presenters: "map/presenters"
+  validators: "map/validators"
+  models: "map/models"
+  collections: "map/collections"
+  jasmine: "jasmine"
+  analysis: "map/analysis"
+  nsa: "map/nsa"
+  cartocss: "map/cartocss"
+
+shim:
+  underscore:
+    exports: "_"
+  backbone:
+    deps:
+      - "jquery"
+      - "underscore"
+    exports: "Backbone"
+  jqueryui:
+    deps:
+      - "jquery"
+    exports: "$"
+  Class:
+    exports: "Class"
+  uri:
+    exports: "UriTemplate"
+  handlebars:
+    exports: "Handlebars"

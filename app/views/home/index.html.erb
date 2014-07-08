@@ -69,8 +69,7 @@
 
     <ul class='columns'>
     <% @visible.each do |story| %>
-      <li class='column round three'
-      >
+      <li class='column round three'>
         <a href="<%= story_path(story['id']) %>">
           <img src="<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>" alt="<%= story['title'] %>" />
           <div class="frame"></div>

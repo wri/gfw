@@ -4,17 +4,6 @@ $font-light: "fira_sans_otlight", Georgia, sans-serif;
 $font-regular: "fira_sans_otregular", Georgia, sans-serif;
 $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
 
-// Compass
-@import "compass/css3/box-shadow",
-        "compass/css3/box-sizing",
-        "compass/css3/border-radius",
-        "compass/css3/opacity",
-        "compass/css3/background-size",
-        "compass/css3/images",
-        "compass/css3/text-shadow",
-        "compass/css3/inline-block",
-        "compass/utilities/sprites";
-
 // Global
 @import "fonts",
         "helpers";
@@ -28,6 +17,24 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
 @import "countries/index",
         "countries/show",
         "countries/overview";
+// Compass
+@import "compass/reset";
+@import "compass";
+@import "compass/css3";
+
+// General
+@import "_settings";
+@import "_mixins";
+@import "_layout";
+@import "_grid";
+@import "_base";
+
+// Images
+@import "icons/*.png";
+@import "logos/*.png";
+@import "static-icons/*.png";
+@import "static-logos/*.png";
+@import "stories-icons/*.png";
 
 .countries {
   &.index .content {
@@ -363,5 +370,4 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
       }
     }
   }
-
 }

@@ -4,11 +4,14 @@ feature 'Stories page' do
 
   background do
     visit '/accept_terms'
-    Capybara.current_session.driver.browser.manage.add_cookie(name: true, value: true)
+    Capybara.current_session.driver.browser.manage.add_cookie name: true, value: true
   end
 
   scenario 'Visit Stories page' do
     visit '/stories'
+    expect(page).to have_selector("h1", text: "Featured stories")
+    click_link 'Next stories'
+    page.current_url.should eq('http://localhost:5000/stories?page=2')
     expect(page).to have_selector("h1", text: "Featured stories")
   end
 

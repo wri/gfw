@@ -1,0 +1,35 @@
+.legend {
+  height: 200px;
+  left: 60px;
+  font-size: 13px;
+
+  li.category {
+    padding: 15px 20px;
+    border-bottom: 1px solid #E5E5E5;
+    &:last-child {
+      border-bottom: none;
+    }   
+  }
+
+  .category-name {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 11px;
+  }
+
+  .layer-name,
+  .layer-details {
+    display: block;
+    margin-top: 8px;
+  }
+
+  .circle:before {
+    content: ' \25CF';
+    font-size: 16px;
+    margin-right: 2px;
+  }
+
+  .layer-details {
+    margin-left: 14px; 
+  }
+}

@@ -1,0 +1,37 @@
+require 'spec_helper'
+
+feature 'Map page' do
+
+  background do
+    visit '/accept_terms'
+    Capybara.current_session.driver.browser.manage.add_cookie name: true, value: true
+  end
+
+  scenario 'analyze an area on the map', js: true do
+    visit '/map'
+    expect(page).to have_css(".filters", visible: true)
+    find('#analysis_control').click
+    page.driver.browser.action.move_to(page.find('#map').native).move_by( 300, 10 ).click.perform
+    page.driver.browser.action.move_to(page.find('#map').native).move_by( 300, 15 ).click.perform
+    page.driver.browser.action.move_to(page.find('#map').native).move_by( 350, 15 ).click.perform
+    page.driver.browser.action.move_to(page.find('#map').native).move_by( 350, 10 ).click.perform
+    page.driver.browser.action.move_to(page.find('#map').native).move_by( 300, 10 ).click.perform
+
+    --------
+    page.driver.browser.execute_script("$(document.elementFromPoint(300, 300)).click();")
+    page.driver.browser.execute_script("$(document.elementFromPoint(300, 350)).click();")
+    page.driver.browser.execute_script("$(document.elementFromPoint(350, 350)).click();")
+    page.driver.browser.execute_script("$(document.elementFromPoint(350, 300)).click();")
+    page.driver.browser.execute_script("$(document.elementFromPoint(300, 300)).click();")
+
+    ---------
+
+
+
+    find('.helper_bar').click_on('Done')
+    expect(page).to have_css(".info_content .stats")
+    expect(page).to have_content("Total selected area")
+    expect(page).to have_content("This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.")
+  end
+
+end

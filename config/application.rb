@@ -28,7 +28,10 @@ module Gfw
     # config.i18n.default_locale = :de
 
     I18n.enforce_available_locales = false
-
+    config.assets.paths << File.join(Rails.root, 'vendor', 'assets', 'bower_components')
+    # config.assets.paths << File.join(Rails.root, 'app', 'assets', 'cartocss')
     config.autoload_paths += %W(#{config.root}/lib)
+
+    config.generators.assets = false
   end
 end

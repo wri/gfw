@@ -16,6 +16,7 @@
 /tmp
 /media/upload
 /public/uploads
+/public/media
 
 .DS_Store
 
@@ -24,6 +25,10 @@
 .rvmrc
 .env
 .idea/
+.grunt
+node_modules
+vendor/assets/bower_components
+jstest/SpecRunner.html
 
 # Ingore Sublime project files:
 *.sublime-*

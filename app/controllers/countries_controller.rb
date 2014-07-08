@@ -2,9 +2,14 @@ class CountriesController < ApplicationController
   before_filter :load_countries, :only => [:index]
   include ActionView::Helpers::NumberHelper
 
+  def index
+    @countries = find_countries
+  end
+
   def show
     @country = Api::Country.find_by_iso(params[:id])['countries'][0]
     not_found unless @country.present?
+    country = find_by_iso(params[:id])
 
     if @country['gva'].present? && @country['gva'] > 0
       gva_precision = (@country['gva_percent'] < 0.1) ? 2 : 1
@@ -22,9 +27,26 @@ class CountriesController < ApplicationController
   end
 
   private
+    def find_countries
+      response = Typhoeus.get("#{ENV['GFW_API_HOST']}/countries", headers: {"Accept" => "application/json"})
+      if response.success?
+        JSON.parse(response.body)['countries']
+      else
+        nil
+      end
+    end
 
-    def load_countries
-      @countries = Api::Country.all['countries']
+    def find_by_iso(iso)
+      response = Typhoeus.get(
+          "#{ENV['GFW_API_HOST']}/countries",
+          headers: {"Accept" => "application/json"},
+          params: {iso: iso}
+      )
+      if response.success?
+        JSON.parse(response.body)['countries'][0]
+      else
+        nil
+      end
     end
 
 end
