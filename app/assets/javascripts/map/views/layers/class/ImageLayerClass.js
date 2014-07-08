@@ -11,10 +11,19 @@ define([
 
   var ImageLayerClass = Class.extend({
 
-    init: function (layer) {
+    init: function(layer) {
       this.tileSize = new google.maps.Size(256, 256);
-      this.tiles = {};
       this.name = layer.slug;
+      this.tiles = {};
+      this.options = _.extend({
+        dataMaxZoom: 17
+      }, this.options);
+    },
+
+    getLayer: function() {
+      var deferred = new $.Deferred();
+      deferred.resolve(this);
+      return deferred.promise();
     },
 
     /**
@@ -63,14 +72,18 @@ define([
     },
 
     _getZoomSteps: function(z) {
-      return z - this.dataMaxZoom;
+      return z - this.options.dataMaxZoom;
+    },
+
+    _getUrl: function(x, y, z) {
+      return new UriTemplate(this.options.urlTemplate).fillFromObject({x: x, y: y, z: z});
     },
 
     _getTileCoords: function(x, y, z) {
-      if (z > this.dataMaxZoom) {
-        x = Math.floor(x / (Math.pow(2, z - this.dataMaxZoom)));
-        y = Math.floor(y / (Math.pow(2, z - this.dataMaxZoom)));
-        z = this.dataMaxZoom;
+      if (z > this.options.dataMaxZoom) {
+        x = Math.floor(x / (Math.pow(2, z - this.options.dataMaxZoom)));
+        y = Math.floor(y / (Math.pow(2, z - this.options.dataMaxZoom)));
+        z = this.options.dataMaxZoom;
       } else {
         y = (y > Math.pow(2, z) ? y % Math.pow(2, z) : y);
         if (x >= Math.pow(2, z)) {

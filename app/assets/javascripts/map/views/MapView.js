@@ -9,7 +9,7 @@ define([
   'presenters/MapPresenter',
   'views/AnalysisButtonView',
   'views/layers/UMDLossLayer',
-  'views/layers/GainLayer',
+  'views/layers/ForestGainLayer',
   'views/layers/ImazonLayer',
   'views/layers/Forest2000Layer',
   'views/layers/IntactForestLayer',
@@ -22,7 +22,7 @@ define([
   'views/layers/BiodiversityHotspotsLayer',
   'views/layers/ResourceRightsLayer'
 ], function(Backbone, _, Presenter, AnalysisButtonView,
-  UMDLossLayer, GainLayer, ImazonLayer, Forest2000Layer, IntactForestLayer, PantropicalLayer,
+  UMDLossLayer, ForestGainLayer, ImazonLayer, Forest2000Layer, IntactForestLayer, PantropicalLayer,
   LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer, ProtectedAreasLayer,
   BiodiversityHotspotsLayer, ResourceRightsLayer) {
 
@@ -49,7 +49,7 @@ define([
      */
     layersViews: {
       umd_tree_loss_gain: UMDLossLayer,
-      gain: GainLayer,
+      forestgain: ForestGainLayer,
       imazon: ImazonLayer,
       forest2000: Forest2000Layer,
       intact_forest: IntactForestLayer,
