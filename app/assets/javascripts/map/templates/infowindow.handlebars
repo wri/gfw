@@ -17,6 +17,15 @@
         {{/if}}
       {{/unless}}
 
+      {{#if content.data.description}}
+        <h4>Description:</h4>
+        <p>{{content.data.description}}</p>
+      {{/if}}
+      {{#if content.data.photo_credit}}
+        <h4>Photo Credit:</h4>
+        <p>{{content.data.photo_credit}}</p>
+      {{/if}}
+
       {{#if content.data.type}}
         <h4>Type:</h4>
         <p>{{content.data.type}}</p>
@@ -41,6 +50,19 @@
       {{#if content.data.area_ha}}
         <h4>Area HA:</h4>
         <p>{{content.data.area_ha}}</p>
+      {{/if}}
+
+      {{#if content.data.area_hectares}}
+        <h4>Area hectares:</h4>
+        <p>{{content.data.area_hectares}}</p>
+      {{/if}}
+      {{#if content.data.national_legal_term}}
+        <h4>National Legal Term:</h4>
+        <p>{{content.data.national_legal_term}}</p>
+      {{/if}}
+      {{#if content.data.legal_recognition}}
+        <h4>Legal recognition:</h4>
+        <p>{{content.data.legal_recognition}}</p>
       {{/if}}
 
       {{#if content.data.latitude}}

@@ -15,7 +15,7 @@ define([
 
   var CartoDBLayerClass = Class.extend({
 
-    default: {
+    defaults: {
       user_name: 'wri-01',
       type: 'cartodb',
       sql: null,
@@ -31,7 +31,7 @@ define([
       this.layer = layer;
       this.map = map;
       this.name = layer.slug;
-      this.options = _.extend({}, this.default, this.options || {});
+      this.options = _.extend({}, this.defaults, this.options || {});
     },
 
     getLayer: function() {
