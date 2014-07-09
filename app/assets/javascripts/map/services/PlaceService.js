@@ -109,15 +109,14 @@ define([
       newPlace.name = this.name;
 
       if (go) {
-        layerSpecService.add({
-          slugs: (params.baselayers) ? params.baselayers.split(',') : [],
-          ids: (params.sublayers) ? params.sublayers.split(',') : []
-        })
-        .then(function(layerSpec, error) {
-          console.log(layerSpec)
+        var baseWhere = this._getBaselayerFilters(params.baselayers);
+        var subWhere = this._getSublayerFilters(params.sublayers);
+        var where = _.union(baseWhere, subWhere);  // Preserves order
+
+        layerSpecService.add(where, _.bind(function(layerSpec) {
           newPlace.params.layerSpec = layerSpec;
           mps.publish('Place/go', [newPlace]);
-        });
+        }, this));
       }
 
       route = this._getRoute(newPlace.name, newPlace.params);
@@ -214,34 +213,10 @@ define([
     _getSublayerFilters: function(layers) {
       var sublayers = layers ? layers.split(',') : [];
       var filters = _.map(sublayers, function(id) {
-        return {id: id};
+        return {id: Number(id)};
       });
 
       return filters;
-    },
-
-    /**
-     * Asynchronously get map layers objects from MapLayerService.
-     *
-     * @param  {string}   baselayers CSV list of baselayer slug names
-     * @param  {string}   sublayers  CSV list of sublayer ids
-     * @param  {Function} callback  Called with layers
-     */
-    _getMapLayers: function(baselayers, sublayers, callback) {
-      var baseWhere = this._getBaselayerFilters(baselayers);
-      var subWhere = this._getSublayerFilters(sublayers);
-      var where = _.union(baseWhere, subWhere);  // Preserves order
-
-      // Get layers from MapLayerService
-      this.mapLayerService.getLayers(
-        where,
-        _.bind(function(layers) {
-          callback(layers);
-        }, this),
-        _.bind(function(error) {
-          console.error(error);
-          callback(undefined);
-        }, this));
     }
   });
 

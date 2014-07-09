@@ -1,5 +1,5 @@
 /**
- * The LayerSpec class.
+ * The LayerSpecService class.
  *
  * @return LayerSpec instance.
  */
@@ -19,54 +19,80 @@ define([
       this.layers = {};
     },
 
-    // add layers to the layerSpec
-    // This acceps an object {slugs:[], ids:[]}, the easiest way to add layers to i can think of right
-    // now.
-    add: function(layers) {
-      var where = [];
-      var deferred = new $.Deferred();
+    /**
+     * Asynchronously set the LayerSpec object and validates it.
+     *
+     * @param {array}   where    Array of slugs and ids. [{id: 591}, {slug: 'forest2000'}]
+     * @param {callback} success Return valitaded layerSpec instance.
+     * @param {callback} error   Return error
+     */
+    add: function(where, success, error) {
+      // LayersSpec doesn't have state?
+      this.layers = {};
 
-      _.each(layers.slugs, function(slug) {
-        where.push({slug: slug});
-      });
+      mapLayerService.getLayers(
+        where,
+        _.bind(function(results) {
+          var layers = _.clone(this.layers);
 
-      _.each(layers.ids, function(id) {
-        where.push({id: Number(id)});
-      });
+          _.each(results, function(layer) {
+            layers[layer.category_slug] = layers[layer.category_slug] || {};
+            layers[layer.category_slug][layer.slug] = layer;
+          });
 
-      mapLayerService.getLayers(where, _.bind(function(results) {
-        // doesn't set the layerSpec until it's validated, so we layerSpec always is cool.
-        var layers = _.clone(this.layers);
-
-        _.each(results, _.bind(function(layer) {
-          layers[layer.category_slug] = layers[layer.category_slug] || {};
-          layers[layer.category_slug][layer.slug] = layer;
-        }, this));
-
-        // If validation pass return the new layer spec, else is return the old
-        // layerSpec and and error message
-        if (layerValidatorService.validate(layers)) {
-          this.layers = layers;
-          deferred.resolve(this);
-        } else {
-          deferred.resolve(this, 'Error validating');
-        }
-
-      }, this));
-
-      return deferred.promise();;
+          if (layerValidatorService.validate(layers)) {
+            this.layers = layers;
+            success(this);
+          } else {
+            error(this, 'Error validating');
+          }
+        }, this),
+        function(error) {
+          console.error(error);
+          callback(undefined);
+        });
     },
 
-    // remove layers to the layerSpec
-    remove: function(layers) {
-    },
-
+    /**
+     * Return baselayers object.
+     *
+     * @return {object} baselayers
+     */
     getBaselayers: function() {
-      return this.layers.forestChange;
+      return this.layers.forest_clearing || {};
     },
 
+    /**
+     * Return sublayers object.
+     *
+     * @return {object} sublayers
+     */
     getSublayers: function() {
-    }
+      var sublayers = {};
+
+      _.each(_.omit(this.layers, 'forest_clearing'),
+        function(layers) {
+          sublayers = _.extend(sublayers, layers);
+        });
+
+      return sublayers;
+    },
+
+    /**
+     * Get all the layers uncategorized.
+     * {forest2000: {}, gain:{}, ...}
+     *
+     * @return {object} layers
+     */
+    getLayers: function() {
+      var layers = {};
+
+      _.each(this.layers, function(category) {
+        _.extend(layers, category);
+      });
+
+      return layers;
+    },
   });
 
   var layerSpecService = new LayerSpecService();
