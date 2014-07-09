@@ -495,7 +495,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         h         = 90, // maxHeight
         radius    = width / 2;
 
-    d3.select("svg")
+    d3.select(".loss-gain-graph svg")
           .remove(); //clear the d3 object due to allow reprinting
     var graph = d3.select('.loss-gain-graph .graph')
       .append('svg:svg')
