@@ -2,12 +2,12 @@
  * Unit tests for the MapPresenter class.
  */
 define([
-  'presenters/MapPresenter',
-  'mps', 
   'underscore',
+  'mps',
   'nsa',
+  'presenters/MapPresenter',
   'services/PlaceService'
-], function(MapPresenter, mps, _, nsa, PlaceService) {
+], function(_, mps, nsa, MapPresenter, PlaceService) {
 
   describe("The MapPresenter", function() {
     // The MapView mock
@@ -18,26 +18,27 @@ define([
     // The presenter to test
     var presenter = null;
 
-    
     describe("Test responding to published events", function() {
       var place = {
-        name: 'map',
         params: {
+          name: 'map',
           baselayers: 'loss',
           zoom: 8,
           maptype: 'terrain',
           lat: 1,
           lng: 2,
-          layers: ['layers']
+          layerSpec: {
+            getLayers: function() {}
+          }
         }
       };
-      
+
       beforeEach(function() {
         viewSpy = jasmine.createSpyObj(
           'viewSpy',
-          ['initLayers', 'initMap']);
-        presenter = new MapPresenter(viewSpy);  
-        mps.publish('Place/go', [place]);        
+          ['setLayers', 'initMap']);
+        presenter = new MapPresenter(viewSpy);
+        mps.publish('Place/go', [place]);
       });
 
       it("Check Place/go handling", function() {
@@ -45,9 +46,9 @@ define([
         expect(viewSpy.initMap).toHaveBeenCalledWith(place.params);
         expect(viewSpy.initMap.calls.count()).toEqual(1);
 
-        expect(viewSpy.initLayers).toHaveBeenCalled();
-        expect(viewSpy.initLayers).toHaveBeenCalledWith(place.params.layers);        
-        expect(viewSpy.initLayers.calls.count()).toEqual(1);
+        expect(viewSpy.setLayers).toHaveBeenCalled();
+        expect(viewSpy.setLayers).toHaveBeenCalledWith(place.params.layers);
+        expect(viewSpy.setLayers.calls.count()).toEqual(1);
 
       });
     });
