@@ -26,7 +26,7 @@
 
 // Modules
 @import "modules/_mod-header-nav";
-@import "modules/_mod-layers-menu";
+@import "modules/_mod-layer-nav";
 @import "modules/_mod-form";
 // @import "modules/_mod-map";
 @import "modules/_mod-widget";
@@ -35,16 +35,11 @@
 @import "modules/_mod-widget-maptype";
 @import "modules/_mod-timeline";
 @import "modules/_mod-onoffswitch";
+@import "modules/_mod-onoffradio";
 // @import "modules/countries";
 // @import "modules/home";
 
 @import 'helpers';
-
-@import 'icons/*.png';
-/**/
-@import 'logos/*.png';
-/**/
-
 
 /* =Globals
 ----------------------------------------------- */
