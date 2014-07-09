@@ -1,6 +1,6 @@
 define([
   'nsa',
-  'mps', 
+  'mps',
   'underscore',
   'helpers/api_responses'
 ], function(nsa, mps, _) {
@@ -20,10 +20,10 @@ define([
     describe("success callback", function() {
       var cb = null;
       var spy = null;
-    
+
       beforeEach(function() {
         cache = false;
-        
+
         spy = jasmine.createSpy('success');
         nsa.spy('/foo', {}, spy, null, cache);
 

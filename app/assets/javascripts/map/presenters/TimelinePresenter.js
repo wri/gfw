@@ -22,26 +22,17 @@ define([
      * Subscribe to application events.
      */
     _subscribe: function() {
-      mps.subscribe('Place/go', _.bind(function(place) {
+      mps.subscribe('Place/go', _.bind(function() {
         // if (place.name === 'map') {
         // }
-      }, this));  
+      }, this));
 
-      mps.publish('Place/register', [this]);
-    },
+      // mps.publish('Place/register', [this]);
 
-    /**
-     * Used by Timelineview to delegate timeline date UI events.
-     * Results in the Timeline/date-change evnet getting published with
-     * the new lat/lng.
-     *
-     * @param {Array} date 2D array of moment dates [begin, end]
-     */
-    updateTimelineDate: function(date) {
-      mps.publish('Timeline/date-change', [date]);
-      mps.publish('Place/update', [{go: false}]);
+      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
+        this.view.setTimeline(layerSpec);
+      }, this));
     }
-
   });
 
   return TimelinePresenter;

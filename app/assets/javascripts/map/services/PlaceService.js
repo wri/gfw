@@ -31,7 +31,7 @@
  * 2) Updated view updates URL
  *
  *   A View state changes (e.g., a new map zoom) and the URL needs to be
- *   updated, not only with its new state, but from the stae of all views in
+ *   updated, not only with its new state, but from the state of all views in
  *   the application that provide state for URLs.
  *
  *   Here presenters publishe the "Place/register" event passing in a
@@ -55,7 +55,7 @@ define([
 
   var PlaceService = Class.extend({
 
-    _uriTemplate: 'map{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?begin,end}',
+    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?begin,end}',
 
     /**
      * Create new PlaceService with supplied MapLayerService and
@@ -63,7 +63,7 @@ define([
      *
      * @param  {MapLayerService} mapLayerService Instance of MapLayerService
      * @param  {Backbond.Router} router Instance of Backbone.Router
-     * @return {PlaceService} Instance of PlaceService
+     * @return {PlaceService}    Instance of PlaceService
      */
     init: function(mapLayerService, router) {
       this.mapLayerService = mapLayerService;
@@ -92,9 +92,9 @@ define([
      * which will include layers retrieved from the MapLayerService. Otherwise
      * the URL is silently updated with a new route.
      *
-     * @param  {string} name The place name
-     * @param  {Object} params The place parameters
-     * @param  {[type]} go True to publish Place/go event, false to update URL
+     * @param  {string}  name   The place name
+     * @param  {Object}  params The place parameters
+     * @param  {boolean} go     True to publish Place/go event, false to update URL
      */
     _handleNewPlace: function(name, params, go) {
       var route = null;
@@ -104,8 +104,12 @@ define([
         params = this._getPresenterParams(this._presenters);
       }
 
+      if (name) {
+        this.currentName = name;
+      }
+
       newPlace.params = this._standardizeParams(params);
-      newPlace.name = name;
+      newPlace.name = this.currentName;
 
       if (go) {
         this._getMapLayers(
@@ -117,26 +121,38 @@ define([
           }, this));
       }
 
-      route = this._getRoute(newPlace.params);
+      route = this._getRoute(newPlace.name, newPlace.params);
       this.router.navigate(route, {silent: true});
     },
 
     /**
-     * Return formated url representation of supplied params object
-     * to keep a precise lat/lng in the application but not in url.
+     * Return formated URL representation of supplied params object based on
+     * a route name.
      *
-     * @param  {Object} params The params to standardize
-     * @return {Object} The standardized params.
+     * @param {string}  name   The route name
+     * @param  {Object} params Params to standardize
+     * @return {Object} Params ready for URL
      */
-    _formatUrl: function(params) {
-      return _.extend({}, params, {
-        lat: params.lat.toFixed(2),
-        lng: params.lng.toFixed(2)
-      });
+    _formatUrl: function(name, params) {
+      if (name === 'map') {
+        return _.extend({}, params, {
+          lat: _.toNumber(params.lat).toFixed(2),
+          lng: _.toNumber(params.lng).toFixed(2)
+        });
+      } else {
+        return params;
+      }
     },
 
-    _getRoute: function(params) {
-      params = this._formatUrl(params);
+    /**
+     * Return route URL for supplied route name and route params.
+     *
+     * @param  {string} name The route name (e.g. map)
+     * @param  {Object} params The route params
+     * @return {string} The route URL
+     */
+    _getRoute: function(name, params) {
+      params = _.extend(this._formatUrl(name, params), {name: name});
       return new UriTemplate(this._uriTemplate).fillFromObject(params);
     },
 
@@ -148,10 +164,10 @@ define([
      */
     _standardizeParams: function(params) {
       var p = _.clone(params);
-      p.zoom = _.toNumber(params.zoom);
-      p.lat = _.toNumber(params.lat);
-      p.lng = _.toNumber(params.lng);
-      p.maptype = params.maptype;
+      p.zoom = _.toNumber(params.zoom) || 3;
+      p.lat = _.toNumber(params.lat) || 15;
+      p.lng = _.toNumber(params.lng) || 27;
+      p.maptype = params.maptype || 'grayscale';
       p.begin = _.toNumber(params.begin);
       p.end = _.toNumber(params.end);
       p.iso = params.iso || 'ALL';

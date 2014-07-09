@@ -3,17 +3,24 @@
  *
  */
 define([
-  'jquery',
+  'Class',
   'mps',
   'store'
-], function ($, mps, store) {
+], function (Class, mps, store) {
 
   'use strict';
 
-  return {
+  var NSA = Class.extend({
 
     // Added for Jasmine testing to bypass cache and use 'json' dataType
     test: false,
+
+    init: function() {
+      mps.subscribe('LocalStorage/clear', function() {
+        store.clear();
+        console.log('LocalStorage cleared');
+      });
+    },
 
     /**
      * Async HTTP request to supplied URL and optional data.
@@ -29,11 +36,14 @@ define([
       var val = null;
       var dataType = url.contains('cartodb.com') ? 'jsonp' : 'json';
 
+      cache = cache === undefined ? true : cache;
+
       if (!this.test && cache && store.enabled) {
         // TODO: Key should be made from url+data
         val = store.get(url);
         if (val) {
           successCb(val);
+          return;
         }
       }
 
@@ -59,5 +69,9 @@ define([
       });
       return jqxhr;
     }
-  };
+  });
+
+  var nsa = new NSA();
+
+  return nsa;
 });

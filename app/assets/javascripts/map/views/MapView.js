@@ -8,29 +8,83 @@ define([
   'underscore',
   'presenters/MapPresenter',
   'views/AnalysisButtonView',
-  'views/layers/UMDLossLayerView'
-], function(Backbone, _, Presenter, AnalysisButtonView, UMDLossLayerView) {
+  'views/layers/UMDLossLayer',
+  'views/layers/ForestGainLayer',
+  'views/layers/ImazonLayer',
+  'views/layers/Forest2000Layer',
+  'views/layers/IntactForestLayer',
+  'views/layers/PantropicalLayer',
+  'views/layers/LoggingLayer',
+  'views/layers/MiningLayer',
+  'views/layers/OilPalmLayer',
+  'views/layers/WoodFiberPlantationsLayer',
+  'views/layers/ProtectedAreasLayer',
+  'views/layers/BiodiversityHotspotsLayer',
+  'views/layers/ResourceRightsLayer'
+], function(Backbone, _, Presenter, AnalysisButtonView,
+  UMDLossLayer, ForestGainLayer, ImazonLayer, Forest2000Layer, IntactForestLayer, PantropicalLayer,
+  LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer, ProtectedAreasLayer,
+  BiodiversityHotspotsLayer, ResourceRightsLayer) {
 
   'use strict';
 
   var MapView = Backbone.View.extend({
 
-     el: '#map',
+    el: '#map',
+
+    options: {
+      minZoom: 3,
+      backgroundColor: '#99b3cc',
+      disableDefaultUI: true,
+      panControl: false,
+      zoomControl: false,
+      mapTypeControl: false,
+      scaleControl: true,
+      streetViewControl: false,
+      overviewMapControl: false
+    },
+
+    /**
+     * Map layer slug with layer views.
+     */
+    layersViews: {
+      umd_tree_loss_gain: UMDLossLayer,
+      forestgain: ForestGainLayer,
+      imazon: ImazonLayer,
+      forest2000: Forest2000Layer,
+      intact_forest: IntactForestLayer,
+      pantropical: PantropicalLayer,
+      logging: LoggingLayer,
+      mining: MiningLayer,
+      oil_palm: OilPalmLayer,
+      wood_fiber_plantations: WoodFiberPlantationsLayer,
+      protected_areas: ProtectedAreasLayer,
+      biodiversity_hotspots: BiodiversityHotspotsLayer,
+      resource_rights: ResourceRightsLayer
+    },
 
     /**
      * Constructs a new MapView and its presenter.
      */
     initialize: function() {
       this.presenter = new Presenter(this);
-      this.layerViews = {};
+      // Layer view instances
+      this.layerInst = {};
     },
 
     /**
      * Creates the Google Maps and attaches it to the DOM.
      */
-    render: function(options) {
-      this.map = new google.maps.Map(this.el, options);
+    render: function(params) {
+      params = {
+        zoom: params.zoom,
+        mapTypeId: params.maptype,
+        center: new google.maps.LatLng(params.lat, params.lng),
+      };
+
+      this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
       this.resize();
+      this._setMaptypes();
       this._addCompositeViews();
       this._addListeners();
     },
@@ -59,15 +113,9 @@ define([
     },
 
     initMap: function(params) {
-      var options = {
-        minZoom: 3,
-        zoom: params.zoom,
-        mapTypeId: params.maptype,
-        center: new google.maps.LatLng(params.lat, params.lng)
-      };
-      this.render(options);
+      this.render(params);
     },
-    
+
     /**
      * Used by MapPresenter to initialize the map view. This function clears
      * all layers from the map and then adds supplied layers in order.
@@ -80,20 +128,29 @@ define([
     },
 
     /**
-     * Used by MapPresenter to remove a layer by name.
+     * Used by MapPresenter to set the layerSpec layers.
      *
-     * @param  {string} name The name of the layer to remove
+     * @param {object} layerSpec
      */
-    removeLayer: function(name) {
-      var overlays_length = this.map.overlayMapTypes.getLength();
-      if (overlays_length > 0) {
-        for (var i = 0; i< overlays_length; i++) {
-          var layer = this.map.overlayMapTypes.getAt(i);
-          if (layer && layer.name === name) {
-            this.map.overlayMapTypes.removeAt(i);
-          }
+    setLayerSpec: function(layerSpec) {
+      var self = this;
+      var activeLayers = {};
+
+      _.each(layerSpec, function(category) {
+        _.extend(activeLayers, category);
+      });
+
+      // Remove layers
+      _.each(this.layerInst, function(inst, layerSlug) {
+        if (!activeLayers[layerSlug]) {
+          self.removeLayer(layerSlug);
         }
-      }
+      });
+
+      // Render layers
+      _.each(activeLayers, function(layer) {
+        self.addLayer(layer);
+      });
     },
 
     /**
@@ -102,15 +159,46 @@ define([
      * @param {Object} layer The layer object
      */
     addLayer: function(layer) {
-      var layerView = null;
+      if (!this.isLayerRendered(layer.slug)) {
+        var layerView = this.layerInst[layer.slug] =
+          new this.layersViews[layer.slug](layer, this.map);
 
-      if (layer.slug === 'loss') {
-        if (!_.has(this.layerViews, 'loss')) {
-          layerView = new UMDLossLayerView(layer);
-          this.layerViews.loss = layerView;
+        layerView.getLayer().then(_.bind(function(layer) {
+          this.map.overlayMapTypes.insertAt(0, layer);
+        }, this));
+      }
+    },
+
+    /**
+     * Used by MapPresenter to remove a layer by layerSlug.
+     *
+     * @param  {string} layerSlug The layerSlug of the layer to remove
+     */
+    removeLayer: function(layerSlug) {
+      if (this.isLayerRendered(layerSlug) && this.layerInst[layerSlug]) {
+        var overlaysLength = this.map.overlayMapTypes.getLength();
+        if (overlaysLength > 0) {
+          for (var i = 0; i < overlaysLength; i++) {
+            var layer = this.map.overlayMapTypes.getAt(i);
+            if (layer && layer.name === layerSlug) {
+              this.map.overlayMapTypes.removeAt(i);
+            }
+          }
+        }
+        delete this.layerInst[layerSlug];
+      }
+    },
+
+    isLayerRendered: function(layerSlug) {
+      var overlaysLength = this.map.overlayMapTypes.getLength();
+      if (overlaysLength > 0) {
+        for (var i = 0; i< overlaysLength; i++) {
+          var layer = this.map.overlayMapTypes.getAt(i);
+          if (layer && layer.name === layerSlug) {
+            return true;
+          }
         }
       }
-      this.map.overlayMapTypes.insertAt(0, layerView);
     },
 
     /**
@@ -140,6 +228,10 @@ define([
       var center = this.map.getCenter();
 
       return {lat: center.lat(), lng: center.lng()};
+    },
+
+    fitBounds: function(bounds) {
+      this.map.fitBounds(bounds);
     },
 
     /**
@@ -180,8 +272,64 @@ define([
       google.maps.event.trigger(this.map, 'resize');
       this.map.setZoom(this.map.getZoom());
       this.map.setCenter(this.map.getCenter());
-    }
+    },
 
+    /**
+     * Set additional maptypes to this.map.
+     */
+    _setMaptypes: function() {
+      var grayscale = new google.maps.StyledMapType([{
+        'featureType': 'water'
+      }, {
+        'featureType': 'transit',
+        'stylers': [{
+          'saturation': -100
+        }]
+      }, {
+        'featureType': 'road',
+        'stylers': [{
+          'saturation': -100
+        }]
+      }, {
+        'featureType': 'poi',
+        'stylers': [{
+          'saturation': -100
+        }]
+      }, {
+        'featureType': 'landscape',
+        'stylers': [{
+          'saturation': -100
+        }]
+      }, {
+        'featureType': 'administrative',
+        'stylers': [{
+          'saturation': -100
+        }]
+      }, {
+        'featureType': 'poi.park',
+        'elementType': 'geometry',
+        'stylers': [{
+          'visibility': 'off'
+        }]
+      }], {
+        name: 'grayscale'
+      });
+
+      var treeheight = new google.maps.ImageMapType({
+        getTileUrl: function(ll, z) {
+          var X = Math.abs(ll.x % (1 << z)); // jshint ignore:line
+          return '//gfw-apis.appspot.com/gee/simple_green_coverage/' + z + '/' + X + '/' + ll.y + '.png';
+        },
+        tileSize: new google.maps.Size(256, 256),
+        isPng: true,
+        maxZoom: 17,
+        name: 'Forest Height',
+        alt: 'Global forest height'
+      });
+
+      this.map.mapTypes.set('grayscale', grayscale);
+      this.map.mapTypes.set('treeheight', treeheight);
+    }
   });
 
   return MapView;

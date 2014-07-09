@@ -6,7 +6,8 @@
 define([
   'Class',
   'underscore',
-  'mps'
+  'mps',
+  'services/MapLayerService'
 ], function(Class, _, mps) {
 
   'use strict';
@@ -17,7 +18,6 @@ define([
      * Constructs new MapPresenter.
      *
      * @param  {MapView} Instance of MapView
-     *
      * @return {class} The MapPresenter class
      */
     init: function(view) {
@@ -29,19 +29,36 @@ define([
      * Subscribe to application events.
      */
     _subscribe: function() {
-      mps.subscribe('Map/set-zoom', _.bind(function(zoom) {
-        this.view.setZoom(zoom);
-      }, this));
-
       mps.subscribe('Place/go', _.bind(function(place) {
         if (place.name === 'map') {
           this.layers = place.params.layers;
           this._initMap(place.params);
           this._initLayers(this.layers);
         }
-      }, this));  
+      }, this));
 
       mps.publish('Place/register', [this]);
+
+      mps.subscribe('Map/set-zoom', _.bind(function(zoom) {
+        this.view.setZoom(zoom);
+      }, this));
+
+      mps.subscribe('Map/fit-bounds', _.bind(function(bounds) {
+        this.view.fitBounds(bounds);
+      }, this));
+
+      mps.subscribe('Map/set-center', _.bind(function(lat, lng) {
+        this.view.setCenter(lat, lng);
+      }, this));
+
+      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
+        this.view.setLayerSpec(layerSpec);
+      },this));
+
+      mps.subscribe('Maptype/change', _.bind(function(maptype) {
+        this.view.setMapTypeId(maptype);
+      }, this));
+
     },
 
     /**
@@ -65,29 +82,19 @@ define([
     },
 
     /**
-     * Retuns place parameters representing the state of the MapView and 
+     * Retuns place parameters representing the state of the MapView and
      * layers. Called by PlaceService.
-     * 
+     *
      * @return {Object} Params representing the state of the MapView and layers
      */
     getPlaceParams: function() {
       var params = {};
       var mapCenter = this.view.getCenter();
-      var baseLayers = _.where(this.layers, {category_slug: 'forest_clearing'});
-      var subLayers = _.filter(this.layers, function(layer) {
-        return layer.category_slug !== 'forest_clearing';
-      });
 
       params.zoom = this.view.getZoom();
       params.lat = mapCenter.lat;
       params.lng = mapCenter.lng;
       params.maptype = this.view.getMapTypeId();
-      params.baselayers = _.map(baseLayers, function(layer) {
-        return layer.slug;
-      });
-      params.sublayers = _.map(subLayers, function(layer) {
-        return layer.id;
-      });
 
       return params;
     },

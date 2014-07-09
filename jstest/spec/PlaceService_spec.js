@@ -5,7 +5,7 @@ define([
   'services/PlaceService',
   'mps',
   'nsa'
-], function(PlaceService, mps, nsa ) {
+], function(PlaceService, mps, nsa) {
 
   'use strict';
 
@@ -47,10 +47,10 @@ define([
       it('correctly gets params from 1 registered presenters', function() {
         var presenter = jasmine.createSpyObj('presenter', ['getPlaceParams']);
         var params = {boom: 'boom'};
-        
+
         presenter.getPlaceParams.and.returnValue(params);
         expect(service._getPresenterParams([presenter])).toEqual(params);
-      });     
+      });
 
       it('correctly gets params from 2 registered presenters', function() {
         var p1 = jasmine.createSpyObj('presenter', ['getPlaceParams']);
@@ -58,11 +58,11 @@ define([
         var params1 = {boom: 'boom'};
         var params2 = {bam: 'bam'};
         var params = _.extend(params1, params2);
-        
+
         p1.getPlaceParams.and.returnValue(params1);
         p2.getPlaceParams.and.returnValue(params2);
         expect(service._getPresenterParams([p1, p2])).toEqual(params);
-      });      
+      });
     });
 
     /**
@@ -74,9 +74,9 @@ define([
         service = new PlaceService({}, {});
       });
 
-      it('correctly returns route', function() {        
-        var r = 'map/8/1.1/2/idn/terrain/loss/1%2C2%2C3?begin=2014&end=3014';
-        expect(service._getRoute(params)).toEqual(r);
+      it('correctly returns route', function() {
+        var r = 'map/8/1.10/2.00/idn/terrain/loss/1%2C2%2C3?begin=2014&end=3014';
+        expect(service._getRoute('map', params)).toEqual(r);
       });
     });
 
@@ -92,7 +92,7 @@ define([
         // Mock Ajax since it will call MapServiceLayer
         jasmine.Ajax.install();
         nsa.test = true;
-        
+
         // Mock MapServiceLayer and Router
         mockLayerService = {
           getLayers: function(where, successCb, errorCb) {
@@ -101,7 +101,7 @@ define([
         };
         spyOn(mockLayerService, 'getLayers').and.callThrough();
         mockRouter = jasmine.createSpyObj('router', ['navigate']);
-        
+
         service = new PlaceService(mockLayerService, mockRouter);
       });
 
@@ -123,36 +123,43 @@ define([
       });
 
       it('correctly calls router.navigate when go is false', function() {
-        var r = 'map/8/1.1/2/idn/terrain/loss/1%2C2%2C3?begin=2014&end=3014';
+        var r = 'map/8/1.10/2.00/idn/terrain/loss/1%2C2%2C3?begin=2014&end=3014';
 
         service._handleNewPlace('map', params, false);
         expect(mockRouter.navigate).toHaveBeenCalledWith(r, {silent: true});
       });
     });
 
-    /**
-     * Spec for testing _toNumber().
+
+     /**
+     * Spec for testing _formatUrl().
      */
-    describe('_toNumber()', function() {
+    describe('_formatUrl()', function() {
 
       beforeEach(function() {
         service = new PlaceService({}, {});
       });
 
-      it('correctly returns numbers for numbers', function() {        
-        expect(service._toNumber('1')).toEqual(1);
-        expect(service._toNumber(1)).toEqual(1);
-        expect(service._toNumber('1.1')).toEqual(1.1);
+      it('correctly handles lat/lng strings', function() {
+        expect(service._formatUrl('map', {lat: '1.234567', lng: '2.34567'})).
+          toEqual({lat: '1.23', lng: '2.35'});
       });
 
-      it('correctly returns undefined for non-numbers', function() {        
-        expect(service._toNumber('a')).toEqual(undefined);
-        expect(service._toNumber('')).toEqual(undefined);
-        expect(service._toNumber(undefined)).toEqual(undefined);
-        expect(service._toNumber(null)).toEqual(undefined);
+      it('correctly handles lat/lng decimals', function() {
+        expect(service._formatUrl('map', {lat: 1.23456789, lng: 2.3456789})).
+          toEqual({lat: '1.23', lng: '2.35'});
+      });
+
+      it('correctly handles lat/lng integers', function() {
+        expect(service._formatUrl('map', {lat: 1, lng: 2})).
+          toEqual({lat: '1.00', lng: '2.00'});
+      });
+
+      it('correctly handles lat/lng with non-map route name', function() {
+        expect(service._formatUrl('foo', {lat: 1, lng: 2})).
+          toEqual({lat: 1, lng: 2});
       });
     });
-
 
    /**
      * Spec for testing _getBaselayerFilters().
@@ -163,10 +170,10 @@ define([
         service = new PlaceService({}, {});
       });
 
-      it('correctly returns filter for single layer', function() { 
-        var f1 = {slug: '1', category_slug: 'forest_clearing'};       
-        var f2 = {slug: '2', category_slug: 'forest_clearing'};       
-        
+      it('correctly returns filter for single layer', function() {
+        var f1 = {slug: '1', category_slug: 'forest_clearing'};
+        var f2 = {slug: '2', category_slug: 'forest_clearing'};
+
         expect(service._getBaselayerFilters('')).toEqual([]);
         expect(service._getBaselayerFilters('1')).toEqual([f1]);
         expect(service._getBaselayerFilters('1,2')).toEqual([f1, f2]);
@@ -183,10 +190,10 @@ define([
         service = new PlaceService({}, {});
       });
 
-      it('correctly returns filter for single layer', function() { 
-        var f1 = {id: '1'};       
+      it('correctly returns filter for single layer', function() {
+        var f1 = {id: '1'};
         var f2 = {id: '2'};
-        
+
         expect(service._getSublayerFilters('')).toEqual([]);
         expect(service._getSublayerFilters('1')).toEqual([f1]);
         expect(service._getSublayerFilters('1,2')).toEqual([f1, f2]);
@@ -203,7 +210,7 @@ define([
         service = new PlaceService({}, {});
       });
 
-      it('correctly standardizes input parameters', function() {        
+      it('correctly standardizes input parameters', function() {
         var resultParams = service._standardizeParams(params);
 
         expect(resultParams).toEqual(jasmine.objectContaining({
@@ -230,15 +237,15 @@ define([
           begin: 2014,
           end: 3014
         }));
-      });      
+      });
     });
 
 
 
-    describe('Test Place/register event', function() {    
+    describe('Test Place/register event', function() {
       var presenter = {name: 'presenter'};
 
-      beforeEach(function() {  
+      beforeEach(function() {
         service = new PlaceService({}, {});
         mps.publish('Place/register', [presenter]);
       });

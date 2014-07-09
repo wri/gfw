@@ -11,19 +11,23 @@ define([
   'backbone',
   'mps',
   'gmap',
-  'views/layersNavView',
-  'views/MapView',
   'services/PlaceService',
+  'views/LayersNavView',
+  'views/MapView',
+  'views/LegendView',
+  'views/SearchboxView',
+  'views/MaptypeView',
+  'views/TimelineView',
   'services/MapLayerService'
-], function($, _, Backbone, mps, gmap, layersNavView, MapView, PlaceService, mapLayerService) {
+], function($, _, Backbone, mps, gmap, PlaceService, LayersNavView, MapView,
+  LegendView, SearchboxView, MaptypeView, TimelineView, mapLayerService) {
 
   'use strict';
 
   var Router = Backbone.Router.extend({
 
     routes: {
-      'map': 'map',
-      'map/:zoom/:lat/:lng/:iso/:maptype/:baselayers(/:sublayers)(/)': 'map',
+      'map(/:zoom)(/:lat)(/:lng)(/:iso)(/:maptype)(/:baselayers)(/:sublayers)(/)': 'map',
     },
 
     initialize: function() {
@@ -34,6 +38,11 @@ define([
       }, this));
       this.setMapSize();
       this.placeService = new PlaceService(mapLayerService, this);
+      this.layersNavView = new LayersNavView();
+      this.legendView = new LegendView();
+      this.maptypeView = new MaptypeView();
+      this.searchboxView = new SearchboxView();
+      this.timelineView = new TimelineView();
     },
 
     map: function(zoom, lat, lng, iso, maptype, baselayers, sublayers) {
@@ -53,8 +62,7 @@ define([
         if (!this.mapView) {
           this.mapView = new MapView();
         }
-        mps.publish(
-          'Place/update', [{go: true, name: 'map', params: params}]);
+        mps.publish('Place/update', [{go: true, name: 'map', params: params}]);
       }, this));
     },
 

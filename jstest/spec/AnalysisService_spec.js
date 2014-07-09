@@ -2,8 +2,11 @@ define([
   'services/AnalysisService',
   'mps', 
   'underscore',
+  'nsa',
   'helpers/api_responses',
-], function(analysis, mps, _) {
+], function(service, mps, _, nsa) {
+
+  'use strict';
 
   var k_combinations = function(set, k) {
     var i, j, combs, head, tailcombs;
@@ -12,11 +15,11 @@ define([
       return [];
     }
     
-    if (k == set.length) {
+    if (k === set.length) {
       return [set];
     }
     
-    if (k == 1) {
+    if (k === 1) {
       combs = [];
       for (i = 0; i < set.length; i++) {
         combs.push([set[i]]);
@@ -89,174 +92,303 @@ define([
     return _.map(combos, reduce_params);
   };
 
-  describe("The analysis module", function() {
-    var apis = {
-      global: "http://{0}/forest-change/{1}{?period,geojson,download,bust,dev}",
-      national: "http://{0}/forest-change/{1}/admin{/iso}{?period,download,bust,dev}",
-      subnational: "http://{0}/forest-change/{1}/admin{/iso}{/id1}{?period,download,bust,dev}",
-      use: "http://{0}/forest-change/{1}/use/{/name}{/id}{?period,download,bust,dev}",
-      wdpa: "http://{0}/forest-change/{1}/wdpa/{/id}{?period,download,bust,dev}"
-    };
+  describe('AnalysisService Suite', function() {
 
-    it("is not null", function() {
-      expect(analysis).not.toBe(null);
+
+    /**
+     * Spec for testing _getUriTemplate().
+     */
+    describe('_getUriTemplate()', function() {
+
+      beforeEach(function() {
+      });
+
+      
+      // quicc-alerts
+      it('correctly returns URI template for quicc-alerts', function() {
+        var config = null;
+        var uriTemplate = null;
+
+        // World
+        config = {geojson: 'foo', dataset: 'quicc-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts{?geojson,period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        // National
+        config = {iso: 'bra', dataset: 'quicc-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/{iso}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        // Subnational
+        config = {iso: 'bra', id1: '1', dataset: 'quicc-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/{iso}/{id1}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);    
+
+        // WDPA
+        config = {wdpaid: '1', dataset: 'quicc-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/wdpa/{wdpaid}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        // USE
+        config = {use: 'loggging', useid: '1', dataset: 'quicc-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/use/{use}/{useid}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);                        
+      });
+
+
+      // nasa-active-fires
+      it('correctly returns URI template for nasa-active-fires', function() {
+        var config = null;
+        var uriTemplate = null;
+        
+        // World
+        config = {geojson: 'foo', dataset: 'nasa-active-fires'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires{?geojson,period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        // National
+        config = {iso: 'bra', dataset: 'nasa-active-fires'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/{iso}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        // Subnational
+        config = {iso: 'bra', id1: '1', dataset: 'nasa-active-fires'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/{iso}/{id1}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);    
+
+        // WDPA
+        config = {wdpaid: '1', dataset: 'nasa-active-fires'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/wdpa/{wdpaid}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        // USE
+        config = {use: 'loggging', useid: '1', dataset: 'nasa-active-fires'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/use/{use}/{useid}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);                        
+      });
+
+      // forma-alerts
+      it('correctly returns URI template for forma-alerts', function() {
+        var config = null;
+        var uriTemplate = null;
+
+        // World
+        config = {geojson: 'foo', dataset: 'forma-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts{?geojson,period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        // National
+        config = {iso: 'bra', dataset: 'forma-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        // Subnational
+        config = {iso: 'bra', id1: '1', dataset: 'forma-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}/{id1}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);    
+
+        // WDPA
+        config = {wdpaid: '1', dataset: 'forma-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/wdpa/{wdpaid}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        // USE
+        config = {use: 'loggging', useid: '1', dataset: 'forma-alerts'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/use/{use}/{useid}{?period,bust,dev}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);                        
+      });
+
+      // umd-loss-gain
+      it('correctly returns URI template for umd-loss-gain', function() {
+        var config = null;
+        var uriTemplate = null;
+
+        // National
+        config = {iso: 'bra', thresh: 10, dataset: 'umd-loss-gain'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}{?bust,dev,thresh}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+
+        config = {iso: 'bra', id1: 1, thresh: 10, dataset: 'umd-loss-gain'};
+        uriTemplate = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}/{id1}{?bust,dev,thresh}';
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+      });
+
+
+
+      it('correctly returns null template for invalid config', function() {
+        var config = {};
+        var uriTemplate = null;
+
+        expect(service._getUriTemplate(config)).toEqual(uriTemplate);
+      });      
     });
 
-    it("returns correct URI templates based on config", function() {
-      var template = analysis.get_uritemplate({iso: 'bra'});
-      var url = analysis.get_url({layerName: 'forma-alerts', iso: 'bra'});
-      expect(template).toBe(apis.national);
-      expect(url).toBe('http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/bra');
-    });
-  });
+
+    /**
+     * Spec for testing _getUriTemplate().
+     */
+    describe('_getUrl()', function() {
+
+      beforeEach(function() {
+      });
+
+      // umd-loss-gain
+      it('correctly returns URL for umd-loss-gain', function() {
+        var config = null;
+        var url = null;
+
+        // National
+        config = {dataset: 'umd-loss-gain', iso: 'bra', thresh: 10};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/bra?thresh=10';
+        expect(service._getUrl(config)).toEqual(url);
+
+        // Subnational
+        config = {
+          dataset: 'umd-loss-gain', iso: 'bra', id1: 1, thresh: 10};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/bra/1?thresh=10';
+        expect(service._getUrl(config)).toEqual(url);
+      });
 
 
-  describe("Analyze forest change layers", function() {
-    var request = null;
-    var originalTimeout;
+      // forma-alerts
+      it('correctly returns URL for forma-alerts', function() {
+        var config = null;
+        var url = null;
 
-    beforeEach(function() {
-      jasmine.Ajax.install();
-    });
+        // World
+        config = {dataset: 'forma-alerts', geojson: 'foo'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts?geojson=foo';
+        expect(service._getUrl(config)).toEqual(url);
 
-    
-    describe("FORMA Alerts by country - Test API URLs", function() {
-      var params = [
-        ['bust', 1],
-        ['period', '2008-01-01,2009-01-01']];
-      var combos = param_combos(params);
+        // National
+        config = {dataset: 'forma-alerts', iso: 'bra'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/bra';
+        expect(service._getUrl(config)).toEqual(url);
 
-      it("creates correct URLs via get_url()", function() {
+        // Subnational
+        config = {dataset: 'forma-alerts', iso: 'bra', id1: 1};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/bra/1';
+        expect(service._getUrl(config)).toEqual(url);
 
-        _.each(combos, function(combo) {
-          var url = null;
-          var path = 'forest-change/forma-alerts/admin/bra';
-          var kvp = null;
 
-          combo.layerName = 'forma-alerts';
-          combo.iso = 'bra';
-          url = analysis.get_url(combo);
-          expect(url.contains(path)).toBe(true);
-          for (var key in combo) {
-            if (key === 'iso' || key === 'layerName') {
-              continue;
-            }
-            kvp = '{0}={1}'.format(key, encodeURIComponent(combo[key]));
-            console.log(kvp, url);
-            expect(url.contains(kvp)).toBe(true);
+        // Use
+        config = {dataset: 'forma-alerts', use: 'logging', useid: 1,};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/use/logging/1';
+        expect(service._getUrl(config)).toEqual(url);
+
+        // WDPA
+        config = {dataset: 'forma-alerts', wdpaid: '1'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/wdpa/1';
+        expect(service._getUrl(config)).toEqual(url);        
+      });        
+  
+
+      // quicc-alerts
+      it('correctly returns URL for quicc-alerts', function() {
+        var config = null;
+        var url = null;
+
+        // World
+        config = {dataset: 'quicc-alerts', geojson: 'foo'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts?geojson=foo';
+        expect(service._getUrl(config)).toEqual(url);
+
+        // National
+        config = {dataset: 'quicc-alerts', iso: 'bra'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/bra';
+        expect(service._getUrl(config)).toEqual(url);
+
+        // Subnational
+        config = {dataset: 'quicc-alerts', iso: 'bra', id1: 1};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/bra/1';
+        expect(service._getUrl(config)).toEqual(url);
+
+
+        // Use
+        config = {dataset: 'quicc-alerts', use: 'logging', useid: 1,};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/use/logging/1';
+        expect(service._getUrl(config)).toEqual(url);
+
+        // WDPA
+        config = {dataset: 'quicc-alerts', wdpaid: '1'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/wdpa/1';
+        expect(service._getUrl(config)).toEqual(url);        
+      });       
+
+
+      // nasa-active-fires
+      it('correctly returns URL for nasa-active-fires', function() {
+        var config = null;
+        var url = null;
+
+        // World
+        config = {dataset: 'nasa-active-fires', geojson: 'foo'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires?geojson=foo';
+        expect(service._getUrl(config)).toEqual(url);
+
+        // National
+        config = {dataset: 'nasa-active-fires', iso: 'bra'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/bra';
+        expect(service._getUrl(config)).toEqual(url);
+
+        // Subnational
+        config = {dataset: 'nasa-active-fires', iso: 'bra', id1: 1};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/bra/1';
+        expect(service._getUrl(config)).toEqual(url);
+
+
+        // Use
+        config = {dataset: 'nasa-active-fires', use: 'logging', useid: 1,};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/use/logging/1';
+        expect(service._getUrl(config)).toEqual(url);
+
+        // WDPA
+        config = {dataset: 'nasa-active-fires', wdpaid: '1'};
+        url = 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/wdpa/1';
+        expect(service._getUrl(config)).toEqual(url);        
+      });       
+
+
+      it('correctly returns null URL for invalid config', function() {
+        var config = {};
+        var uriTemplate = null;
+
+        expect(service._getUrl(config)).toEqual(uriTemplate);
+      });        
+    });    
+
+
+    /**
+     * Spec for testing execute().
+     */
+    describe('execute()', function() {
+      var response = null;
+      var callback = null;
+      var config = {dataset: 'umd-loss-gain', iso: 'bra', thresh: 10};
+
+      beforeEach(function(done) {
+        jasmine.Ajax.install();
+        nsa.test = true;
+
+        // Mock MapServiceLayer and Router
+        callback = {
+          success: function(data) {
+            response = data;
+            done();
           }
+        };
+        spyOn(callback, 'success').and.callThrough();
+        service.execute(config, callback.success);
+        jasmine.Ajax.requests.mostRecent().response({
+          "status": 200,
+          "responseText": '"boom"'
         });
       });
 
-    });
-
-    describe("FORMA Alerts by country - Test Success", function() {
-      var cb = null;
-      var url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/bra?period=2001%2C2008';
-
-      beforeEach(function(done) {
-        mps.publish(
-          'analysis/get',
-          [{layerName: 'forma-alerts', iso: 'bra', period: '2001,2008'}]);
-
-        request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe(url);
-        expect(request.method).toBe('POST');
-        expect(request.data()).toEqual({});
-        
-        cb = {
-          spy: function(response) {
-            done();
-          }
-        };
-
-        spyOn(cb, 'spy').and.callThrough();
-        mps.subscribe('analysis/get-success', cb.spy);
-        request.response(ApiResponse.forma_alerts.iso.success);
-      });
-
-      it("The analysis/get-results cb called with correct API response", function() {
-        var cbArgs = cb.spy.calls.mostRecent().args;
-        var text = cbArgs[0];
-        var expectedText = ApiResponse.forma_alerts.iso.success.responseText;
-
-        expect(cb.spy).toHaveBeenCalled();
-        expect(text).toEqual(JSON.parse(expectedText));
+      it('correctly executes callback with data', function() {
+        expect(response).toEqual('boom');
       });
     });
 
-
-    describe("FORMA Alerts by country - Not found", function() {
-      var cb = null;
-      var url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts-foo/admin/bra?period=2001%2C2008';
-
-      beforeEach(function() {
-        mps.publish(
-          'analysis/get',
-          [{layerName: 'forma-alerts-foo', iso: 'bra', period: '2001,2008'}]);
-
-        request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe(url);
-        expect(request.method).toBe('POST');
-        expect(request.data()).toEqual({});
-
-        spy = jasmine.createSpy('failure');
-        mps.subscribe('analysis/get-failure', spy);
-        request.response(ApiResponse.forma_alerts.iso.notfound);
-      });
-
-      it("The analysis/get-results cb called with correct API response", function() {
-        var cbArgs = spy.calls.mostRecent().args;
-        var text = cbArgs[0];
-        var status = cbArgs[1];
-        var error = cbArgs[2];
-        var expectedText = ApiResponse.forma_alerts.iso.notfound.responseText;
-
-        expect(spy).toHaveBeenCalled();
-        expect(text).toEqual(expectedText);
-        expect(status).toEqual('error');
-        expect(error).toEqual('');
-      });
-    });
-
-
-    describe("FORMA Alerts by country - Failure", function() {
-      var cb = null;
-      var url = 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/bra?period=YYYY%2CYYYY';
-
-      beforeEach(function(done) {
-        mps.publish(
-          'analysis/get',
-          [{layerName: 'forma-alerts', iso: 'bra', period: 'YYYY,YYYY'}]);
-
-        request = jasmine.Ajax.requests.mostRecent();
-        expect(request.url).toBe(url);
-        expect(request.method).toBe('POST');
-        expect(request.data()).toEqual({});
-        
-        cb = {
-          spy: function(responseText, status, error) {
-            done();
-          }
-        };
-
-        spyOn(cb, 'spy').and.callThrough();
-        mps.subscribe('analysis/get-failure', cb.spy);
-        request.response(ApiResponse.forma_alerts.iso.failure);
-      });
-
-      it("The analysis/get-results cb called with correct API response", function() {
-        var cbArgs = cb.spy.calls.mostRecent().args;
-        var text = cbArgs[0];
-        var status = cbArgs[1];
-        var error = cbArgs[2];
-        var expectedText = ApiResponse.forma_alerts.iso.failure.responseText;
-
-        expect(cb.spy).toHaveBeenCalled();
-        expect(text).toEqual(expectedText);
-        expect(status).toEqual('error');
-        expect(error).toEqual('');
-      });
-    });
   });
 });
