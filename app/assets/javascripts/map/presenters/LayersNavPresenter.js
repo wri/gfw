@@ -31,6 +31,10 @@ define([
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this.view._toggleSelected(layerSpec.getLayers());
       }, this));
+
+      mps.subscribe('Place/go', _.bind(function(place) {
+        this.view._toggleSelected(place.params.layerSpec.getLayers());
+      }, this));
     },
 
     /**

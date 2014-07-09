@@ -71,7 +71,7 @@ define([
       this.router = router;
       this._presenters = [];
       this._subscribe();
-      layerSpecService._subscribe(); // quick fix
+      this._presenters.push(layerSpecService);
     },
 
     /**

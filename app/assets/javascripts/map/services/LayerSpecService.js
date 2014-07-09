@@ -6,10 +6,9 @@
 define([
   'Class',
   'underscore',
-  'mps',
   'services/MapLayerService',
   'services/LayerValidatorService'
-], function(Class, _, mps, mapLayerService, layerValidatorService) {
+], function(Class, _, mapLayerService, layerValidatorService) {
 
   'use strict';
 
@@ -17,11 +16,6 @@ define([
 
     init: function() {
       this.layers = {};
-      this._subscribe();
-    },
-
-    _subscribe: function() {
-      mps.publish('Place/register', [this]);
     },
 
     /**
@@ -60,7 +54,7 @@ define([
 
           if (_.findWhere(this.getLayers(), {slug: layer.slug})) {
             delete layers[layer.category_slug][layer.slug];
-            if (Object.keys(layers[layer.category_slug]) < 1) {
+            if (_.keys(layers[layer.category_slug]) < 1) {
               delete layers[layer.category_slug];
             }
           } else {
@@ -128,9 +122,7 @@ define([
       return {
         name: 'map',
         baselayers: _.keys(this.getBaselayers()).join(','),
-        sublayers: _.map(this.getSublayers(), function(layer) {
-          return layer.id;
-        }).join(',')
+        sublayers: _.pluck(this.getSublayers(), 'id').join(',')
       };
     }
   });

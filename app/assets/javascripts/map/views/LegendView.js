@@ -74,7 +74,7 @@ define([
       // Render categories
       _.each(categories, _.bind(function(category, cName) {
         if (!this.categoryViews[cName]) {
-          var layer = category[Object.keys(category)[0]];
+          var layer = category[_.keys(category)[0]];
           var $category = $(this.categoryTemplate({layer: layer}));
           this.$categories.append($category);
           this.categoryViews[cName] = $category;
@@ -117,7 +117,7 @@ define([
      * @param  {object} layerSpec The layer spect object
      */
     update: function(layers, categories) {
-      if (Object.keys(layers).length < 1) {
+      if (_.keys(layers).length < 1) {
         this.model.set('hidden', true);
       } else {
         this.model.set({
