@@ -13,36 +13,48 @@ define([
 
   var CartoDBLayerClass = Class.extend({
 
-    options: {
+    default: {
       user_name: 'wri-01',
-      type: 'cartodb'
+      type: 'cartodb',
+      sql: null,
+      cartocss: CARTOCSS,
+      interactivity: 'cartodb_id, name',
+      infowindow: false
     },
-
-    cartocss: CARTOCSS,
 
     queryTemplate: "SELECT cartodb_id||':' ||'{tableName}' as cartodb_id, the_geom_webmercator," +
       "'{tableName}' AS name FROM {tableName}",
 
     init: function(layer, map) {
-      this.cdbLayer = null;
       this.layer = layer;
       this.map = map;
       this.name = layer.slug;
-      this.layerOrder = this.layerOrder || null;
+      this.options = _.extend({}, this.default, this.options || {});
     },
 
     getLayer: function() {
       var deferred = new $.Deferred();
 
-      cartodb.createLayer(this.map, _.extend(this.options, {
+      var cartodbOptions = {
+        name: this.name,
+        type: this.options.type,
+        user_name: this.options.user_name,
         sublayers: [{
           sql: this.getQuery(),
-          cartocss: this.cartocss
+          cartocss: this.options.cartocss,
+          interactivity: this.options.interactivity
         }]
-      }))
+      };
+
+      cartodb.createLayer(this.map, cartodbOptions)
       .done(
         _.bind(function(layer) {
           this.cdbLayer = layer;
+
+          if (this.options.infowindow) {
+            this.setInfowindow();
+          }
+
           deferred.resolve(this.cdbLayer);
         }, this)
       ).error(function(err) {
@@ -54,6 +66,16 @@ define([
 
     updateTiles: function() {
       this.cdbLayer.setQuery(this.getQuery());
+    },
+
+    /**
+     * Create a CartodDB infowindow object
+     * and add to CartoDB layer
+     *
+     * @return {object}
+     */
+    setInfowindow: function() {
+      this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.cdbLayer.getSubLayer(0), this.options.interactivity);
     },
 
     /**

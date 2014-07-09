@@ -141,4 +141,20 @@
     line-opacity: 1;
   }
 
+  [name='defor'] {
+    polygon-fill:#F69;
+    polygon-opacity: 1;
+    line-opacity: 1;
+    line-color: #F69;
+    line-width: 2;
+  }
+
+  [name='degrad'] {
+    polygon-fill: #ffbfd5;
+    polygon-opacity: 1;
+    line-opacity: 1;
+    line-color: #ffbfd5;
+    line-width: 2;
+  }
+
 }

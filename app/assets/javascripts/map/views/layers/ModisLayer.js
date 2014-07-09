@@ -5,11 +5,17 @@
  */
 define([
   'views/layers/class/CartoDBLayerClass',
-], function(CartoDBLayerClass) {
+  'text!cartocss/modis.cartocss'
+], function(CartoDBLayerClass, modisCartoCSS) {
 
   'use strict';
 
   var ModisLayer = CartoDBLayerClass.extend({
+
+    options: {
+      cartocss: modisCartoCSS
+    }
+
   });
 
   return ModisLayer;
