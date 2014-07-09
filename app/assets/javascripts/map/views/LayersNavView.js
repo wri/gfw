@@ -38,16 +38,10 @@ define([
      *
      * @param  {object} layerSpec
      */
-    _toggleSelected: function(layerSpec) {
-      var activeLayers = {};
-
-      _.each(layerSpec, function(category) {
-        _.extend(activeLayers, category);
-      });
-
+    _toggleSelected: function(layers) {
       _.each(this.$el.find('.layer'), function(li) {
         var $li = $(li);
-        var layer = activeLayers[$li.data('layer')];
+        var layer = layers[$li.data('layer')];
 
         if (layer) {
           $li.addClass('selected').css('color', layer.title_color);
@@ -68,9 +62,8 @@ define([
     _toggleLayer: function(event) {
       var $currentTarget = $(event.currentTarget);
       var layerSlug = $currentTarget.data('layer');
-      var category = $currentTarget.parents('ul').data('category');
 
-      this.presenter.toggleLayer(category, layerSlug);
+      this.presenter.toggleLayer(layerSlug);
     },
 
   });

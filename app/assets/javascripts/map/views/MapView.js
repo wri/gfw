@@ -123,40 +123,19 @@ define([
     },
 
     /**
-     * Used by MapPresenter to initialize the map view. This function clears
-     * all layers from the map and then adds supplied layers in order.
+     * Add passed layers to the map and remove the rest.
      *
-     * @param  {Array} layers Array of layer objects
+     * @param {object} layers
      */
-    initLayers: function(layers) {
-      this.map.overlayMapTypes.clear();
+    setLayers: function(layers) {
+      _.each(this.layerInst,
+        _.bind(function(inst, layerSlug) {
+          if (!layers[layerSlug]) {
+            this.removeLayer(layerSlug);
+          }
+        }, this));
+
       _.map(layers, this.addLayer, this);
-    },
-
-    /**
-     * Used by MapPresenter to set the layerSpec layers.
-     *
-     * @param {object} layerSpec
-     */
-    setLayerSpec: function(layerSpec) {
-      var self = this;
-      var activeLayers = {};
-
-      _.each(layerSpec, function(category) {
-        _.extend(activeLayers, category);
-      });
-
-      // Remove layers
-      _.each(this.layerInst, function(inst, layerSlug) {
-        if (!activeLayers[layerSlug]) {
-          self.removeLayer(layerSlug);
-        }
-      });
-
-      // Render layers
-      _.each(activeLayers, function(layer) {
-        self.addLayer(layer);
-      });
     },
 
     /**

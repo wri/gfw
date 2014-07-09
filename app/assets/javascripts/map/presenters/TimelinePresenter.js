@@ -23,11 +23,7 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function() {
-        // if (place.name === 'map') {
-        // }
       }, this));
-
-      // mps.publish('Place/register', [this]);
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this.view.setTimeline(layerSpec);
