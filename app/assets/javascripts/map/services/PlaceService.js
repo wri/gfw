@@ -71,7 +71,7 @@ define([
       this.router = router;
       this._presenters = [];
       this._subscribe();
-      this._presenters.push(layerSpecService);
+      this._presenters.push(layerSpecService); // this makes the test fail
     },
 
     /**
