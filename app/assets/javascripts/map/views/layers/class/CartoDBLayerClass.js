@@ -13,7 +13,15 @@ define([
 
   var CartoDBLayerClass = Class.extend({
 
-    options: {},
+    options: {
+      user_name: 'wri-01',
+      type: 'cartodb'
+    },
+
+    cartocss: CARTOCSS,
+
+    queryTemplate: "SELECT cartodb_id||':' ||'{tableName}' as cartodb_id, the_geom_webmercator," +
+      "'{tableName}' AS name FROM {tableName}",
 
     init: function(layer, map) {
       this.cdbLayer = null;
@@ -21,23 +29,17 @@ define([
       this.map = map;
       this.name = layer.slug;
       this.layerOrder = this.layerOrder || null;
-      this._queryTemplate = "SELECT cartodb_id||':' ||'{tableName}' as cartodb_id, the_geom_webmercator," +
-        "'{tableName}' AS name FROM {tableName}";
     },
 
     getLayer: function() {
       var deferred = new $.Deferred();
 
-      cartodb.createLayer(this.map, {
-        user_name: 'wri-01',
-        name: this.name,
-        type: 'cartodb',
+      cartodb.createLayer(this.map, _.extend(this.options, {
         sublayers: [{
           sql: this.getQuery(),
-          cartocss: CARTOCSS,
-          interactivity: 'cartodb_id'
+          cartocss: this.cartocss
         }]
-      })
+      }))
       .done(
         _.bind(function(layer) {
           this.cdbLayer = layer;
@@ -62,7 +64,7 @@ define([
      */
     getQuery: function() {
       return this.options.sql ||
-        new UriTemplate(this._queryTemplate).fillFromObject({tableName: this.layer.table_name});
+        new UriTemplate(this.queryTemplate).fillFromObject({tableName: this.layer.table_name});
     }
 
   });

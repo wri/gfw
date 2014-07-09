@@ -10,6 +10,9 @@ define([
   'use strict';
 
   var FormaLayer = CanvasLayerClass.extend({
+
+    
+
   });
 
   return FormaLayer;

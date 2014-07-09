@@ -5,15 +5,17 @@
  */
 define([
   'views/layers/class/CartoDBLayerClass',
-], function(CartoDBLayerClass) {
+  'text!cartocss/global_7d.cartocss'
+], function(CartoDBLayerClass, global7dCartoCSS) {
 
   'use strict';
 
   var FiresLayer = CartoDBLayerClass.extend({
+
+    cartocss: global7dCartoCSS
+
   });
 
   return FiresLayer;
 
 });
-
-//  sql: "SELECT * FROM global_7d"// where acq_date > '2014-07-07' AND CAST(confidence AS INT)> 30"
