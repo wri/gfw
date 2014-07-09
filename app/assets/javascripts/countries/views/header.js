@@ -4,10 +4,10 @@ gfw.ui.model.layersOptions = Backbone.Model.extend({
 
   initialize: function(options) {
     options = options || {};
-    var treshold = (config.canopy_choice) ? config.canopy_choice : 10; 
+    var threshold = (config.canopy_choice) ? config.canopy_choice : 10; 
     var layers = {
       'forest2000': {
-        url: 'http://earthengine.google.org/static/hansen_2013/gfw_tree_loss_year_' + treshold + '/%z/%x/%y.png',
+        url: 'http://earthengine.google.org/static/hansen_2013/gfw_tree_loss_year_' + threshold + '/%z/%x/%y.png',
         dataMaxZoom: 12,
         tileSize: [256, 256],
         _filterCanvasImage: function(imageData, w, h) {
@@ -21,7 +21,7 @@ gfw.ui.model.layersOptions = Backbone.Model.extend({
               imageData[pixel_pos] = 151;
               imageData[pixel_pos + 1] = 189;
               imageData[pixel_pos + 2] = 61;
-              imageData[pixel_pos+ 3] = intensity*0.8;
+              imageData[pixel_pos + 3] = intensity*0.8;
             }
           }
         }
@@ -149,8 +149,8 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     'change #areaSelector': '_onSelectArea',
     'click .selector-remove': '_navigateCountry',
     'click .umd_options_control' : '_onClickUMDOptions',
-    'click .umdoptions_dialog #canopy_slider':  '_updateMapTreshold',
-    'click .umdoptions_dialog ul li':  '_updateMapTreshold'
+    'click .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
+    'click .umdoptions_dialog ul li':  '_updateMapThreshold'
   },
 
   initialize: function(options) {
@@ -256,7 +256,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     }
   },
 
-  _updateMapTreshold: function(e) {
+  _updateMapThreshold: function(e) {
     var path = location.pathname.split('/');
     var id = path[path.length -1];
     var self = this;
