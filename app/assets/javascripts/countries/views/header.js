@@ -4,10 +4,10 @@ gfw.ui.model.layersOptions = Backbone.Model.extend({
 
   initialize: function(options) {
     options = options || {};
-    var treshold = (config.canopy_choice) ? config.canopy_choice : 10; 
+    var threshold = (config.canopy_choice) ? config.canopy_choice : 10; 
     var layers = {
       'forest2000': {
-        url: 'http://earthengine.google.org/static/hansen_2013/gfw_tree_loss_year_' + treshold + '/%z/%x/%y.png',
+        url: 'http://earthengine.google.org/static/hansen_2013/gfw_tree_loss_year_' + threshold + '/%z/%x/%y.png',
         dataMaxZoom: 12,
         tileSize: [256, 256],
         _filterCanvasImage: function(imageData, w, h) {
@@ -21,7 +21,7 @@ gfw.ui.model.layersOptions = Backbone.Model.extend({
               imageData[pixel_pos] = 151;
               imageData[pixel_pos + 1] = 189;
               imageData[pixel_pos + 2] = 61;
-              imageData[pixel_pos+ 3] = intensity*0.8;
+              imageData[pixel_pos + 3] = intensity*0.8;
             }
           }
         }
@@ -149,8 +149,8 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     'change #areaSelector': '_onSelectArea',
     'click .selector-remove': '_navigateCountry',
     'click .umd_options_control' : '_onClickUMDOptions',
-    'click .umdoptions_dialog #canopy_slider':  '_updateMapTreshold',
-    'click .umdoptions_dialog ul li':  '_updateMapTreshold'
+    'click .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
+    'click .umdoptions_dialog ul li':  '_updateMapThreshold'
   },
 
   initialize: function(options) {
@@ -178,7 +178,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       },
 
       initialize: function() {
-        self._drawLossAndGain();
+        //self._drawLossAndGain(); //it's called from _updateData
       },
 
       loadArea: function(countryId, areaId) {
@@ -195,6 +195,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         if ($('body').hasClass('embed')) {
           setTimeout(function(){ $('.country-title').find('h1').append(': '+self.$areaSelector.val()) },250);
         }
+        self._updateData(areaId);
       },
 
       loadCountry: function(countryId) {
@@ -206,6 +207,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         } else {
           self._displayCountry();
         }
+        self._updateData();
       },
 
       loadBox: function(countryId, box) {
@@ -256,7 +258,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     }
   },
 
-  _updateMapTreshold: function(e) {
+  _updateMapThreshold: function(e) {
     var path = location.pathname.split('/');
     var id = path[path.length -1];
     var self = this;
@@ -265,12 +267,14 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       this._initMap(function() {
         self._displayCountry();
       });
+      id = false;
     } else {
       var area = this.country.get('areas').where({ id_1: Number(id) })[0];
       this._initMap(function() {
         self._displayArea(area);
       });
     }
+    this._updateData(id);
   },
 
   _onSelectArea: function() {
@@ -283,6 +287,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     } else {
       this._navigateCountry();
     }
+    this._updateData(  (area) ? area.get('id_1') : null )
   },
 
   _navigateCountry: function() {
@@ -301,6 +306,43 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         self.country.set('bounds', bounds);
         self._renderMap(callback);
       });
+  },
+
+  _updateData: function(area_id) {
+    var url     = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + this.country.get('iso'),
+        canopy  = config.canopy_choice || 10,
+        $target = $('.tree-numbers'),
+        that    = this;
+
+    if (area_id) {
+      url = url + '/' +area_id + '?thresh=' + canopy;
+    } else {
+      url = url + '?thresh=' + canopy;
+    }
+
+    $.ajax({
+      url: url,
+      dataType: 'json',
+      success: function(data) {
+        var amount = data.years[data.years.length -1].extent;
+        if (amount.toString().length >= 6) {
+          amount = ((amount /1000)/1000).toFixed(2)
+        } else {
+          amount = amount.toFixed(2)
+        }
+
+        $target.find('.tree-cover .amount').html( amount );
+        $target.find('.total-area .amount').html(data.years[data.years.length -1].extent_perc.toFixed(2));
+      
+        that._drawLossAndGain(data.years);
+      },
+      error: function(status, error) {
+        $target.find('.tree-cover .amount').html( 'N/A' );
+        $target.find('.total-area .amount').html( 'N/A' );
+        
+        that._drawLossAndGain();
+      }
+    });
   },
 
   _renderMap: function(callback) {
@@ -439,7 +481,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     });
   },
 
-  _drawLossAndGain: function() {
+  _drawLossAndGain: function(years_data) {
     var sql = "SELECT year, loss_gt_0 loss FROM umd WHERE iso='" + this.country.get('iso') + "' ORDER BY year ASC",
         that = this;
 
@@ -453,15 +495,16 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         h         = 90, // maxHeight
         radius    = width / 2;
 
+    d3.select("svg")
+          .remove(); //clear the d3 object due to allow reprinting
     var graph = d3.select('.loss-gain-graph .graph')
       .append('svg:svg')
       .attr('width', width)
       .attr('height', height);
-
     d3.json('https://wri-01.cartodb.com/api/v2/sql?q=' + sql, function(json) {
       if (json) {
         $graph.removeClass('ghost');
-        var data = json.rows;
+        var data = years_data || json.rows;
       } else {
         $comingSoon.show();
         return;
