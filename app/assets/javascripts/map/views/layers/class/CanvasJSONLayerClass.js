@@ -6,19 +6,30 @@
 define([
   'Class',
   'underscore',
+  '_string',
   'uri'
-], function(Class, _, UriTemplate) {
+], function(Class, _, _string, UriTemplate) {
 
   'use strict';
 
   var CanvasJSONLayerClass = Class.extend({
 
+    defaults: {
+      dataMaxZoom: 17,
+      size: 256
+    },
+
+    tiles: {},
+
     init: function (layer) {
-      this.tileSize = new google.maps.Size(256, 256);
       this.layer = layer;
       this.name = layer.slug;
-      this.options = _.extend({dataMaxZoom: 17}, this.options);
-      this.tiles = {};
+      this.options = _.extend({}, this.defaults, this.options || {});
+
+      this.tileSize = new google.maps.Size(this.options.size, this.options.size);
+      this.cartoSQL = new cartodb.SQL({
+        user: this.options.user_name
+      });
     },
 
     getLayer: function() {
@@ -39,15 +50,14 @@ define([
      */
     getTile: function(coord, zoom, ownerDocument) {
       var tileId = this._getTileId(coord.x, coord.y, zoom);
-
       var canvas = ownerDocument.createElement('canvas');
+      var sql = this._getSQL(coord.x, coord.y, zoom);
+
       canvas.style.border = 'none';
       canvas.style.margin = '0';
       canvas.style.padding = '0';
       canvas.width = this.tileSize.width;
       canvas.height = this.tileSize.height;
-
-      var sql = this._getSql(coord.x, coord.y, z);
 
       this._getJson(sql, _.bind(function(tile){
         var canvasData = {
@@ -66,52 +76,35 @@ define([
       return canvas;
     },
 
-    _getSql: function(x, y, z) {
+    _getSQL: function(x, y, z) {
+      // zoom + 8 is get because a tile in "zoom" zoom level is a pixel in "zoom + 8"
+      // level. Remember, it is a quadtree, 1^8 = 256 and tile size is 256px
+      var pixel_zoom = Math.min(z + 8, 16);
+      var zoom_diff = z + 8 - pixel_zoom;
+
       // get x, y for cells and sd, se for deforestation changes
       // sd contains the months
       // se contains the deforestation for each entry in sd
       // take se and sd as a matrix [se|sd]
-      var sql = "SELECT x, y, sd, se FROM {0} WHERE".format(this.layer.table_name);
+      var sql = _.str.sprintf('SELECT x, y, sd, se FROM %(tableName)s WHERE z = %(z)s  AND x >= %(cx)s AND x < %(cx1)s AND y >= %(cy)s AND y < %(cy1)s', {
+        tableName: this.layer.table_name,
+        cx: (x * 256) >> zoom_diff,
+        cx1: ((x + 1) * 256) >> zoom_diff,
+        cy: (y * 256) >> zoom_diff,
+        cy1: ((y + 1) * 256) >> zoom_diff,
+        z: pixel_zoom
+      });
 
-      // inside the country
-      //sql += " WHERE iso = '{0}'".format(self.country);
-
-      // for current zoom
-      // zoom + 8 is get because a tile in "zoom" zoom level is a pixel in "zoom + 8"
-      // level. Remember, it is a quadtree, 1^8 = 256 and tile size is 256px
-      var pixel_zoom = Math.min(z + 8, 16);
-      sql += " z = {0} ".format(pixel_zoom);
-
-      var zoom_diff = z + 8 - pixel_zoom;
-      var cx = (x * 256) >> zoom_diff;
-      var cy = (y * 256) >> zoom_diff;
-      var cx1 = ((x + 1) * 256) >> zoom_diff;
-      var cy1 = ((y + 1) * 256) >> zoom_diff;
-
-      // get cells inside the tile
-      sql += " AND x >= {0} AND x < {1}".format(cx, cx1);
-      sql += " AND y >= {0} AND y < {1}".format(cy, cy1);
+      return sql;
     },
 
     _getJson: function(sql, callback) {
-      var url = this.base_url + "?q=" + encodeURIComponent(sql) +
-        "&v=" + this._version;
+      var url = "http://dyynnn89u7nkm.cloudfront.net?q=" + sql +
+        "&v=6";
 
-      if ($.browser.msie) {
-        $.ajax({
-          url: url,
-          method: 'get',
-          dataType: 'jsonp',
-          error: function(e, t, ee) {},
-          success: function(data) {
-            callback(data);
-          }
-        });
-      } else {
-        $.getJSON(url ,function(data){
-          callback(data);
-        });
-      }
+      $.getJSON(url ,function(data){
+        callback(data);
+      });
     },
 
     _drawCanvasImage: function(canvasData) {
