@@ -6,8 +6,9 @@ define([
   'Class',
   'underscore',
   'uri',
-  'text!cartocss/style.cartocss'
-], function(Class, _, UriTemplate, CARTOCSS) {
+  'text!cartocss/style.cartocss',
+  'text!templates/infowindow.handlebars'
+], function(Class, _, UriTemplate, CARTOCSS, tpl) {
 
   'use strict';
 
@@ -75,7 +76,11 @@ define([
      * @return {object}
      */
     setInfowindow: function() {
-      this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.cdbLayer.getSubLayer(0), this.options.interactivity);
+      this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.cdbLayer.getSubLayer(0), this.options.interactivity, {
+        infowindowTemplate: tpl,
+        // cursorInteraction: false,
+        templateType: 'handlebars'
+      });
     },
 
     /**
