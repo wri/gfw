@@ -13,7 +13,7 @@ define([
   var FiresLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT * FROM global_7d',
+      sql: 'SELECT * FROM %(tableName)s',
       cartocss: global7dCartoCSS,
       interactivity: 'acq_time, acq_date, confidence, brightness, longitude, latitude',
       infowindow: true

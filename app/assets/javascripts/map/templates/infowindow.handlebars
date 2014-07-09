@@ -3,8 +3,8 @@
   <div class="cartodb-popup-content-wrapper">
     <div class="cartodb-popup-header">
       {{#if content.data.image}}
-        {{#if content.data.title}}
-          <h2>{{content.data.title}}</h2>
+        {{#if content.data.name}}
+          <h2>{{content.data.name}}</h2>
         {{/if}}
         <img style="width: 100%" src="{{content.data.image}}"></src>
       {{/if}}
@@ -16,6 +16,11 @@
           <p>{{content.data.name}}</p>
         {{/if}}
       {{/unless}}
+
+      {{#if content.data.type}}
+        <h4>Type:</h4>
+        <p>{{content.data.type}}</p>
+      {{/if}}
 
       {{#if content.data.company}}
         <h4>Company:</h4>

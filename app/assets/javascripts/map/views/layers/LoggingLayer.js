@@ -12,10 +12,10 @@ define([
   var LoggingLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT the_geom_webmercator, company, country, permit_num, nat_origin, area_ha, name AS title, \'logging_all_merged\' AS name' +
-        ' FROM logging_all_merged',
+      sql: 'SELECT the_geom_webmercator, company, country, permit_num, nat_origin, area_ha, name, \'%(tableName)s\' AS layer' +
+        ' FROM %(tableName)s',
       infowindow: true,
-      interactivity: 'title, company, country, permit_num, nat_origin, area_ha'
+      interactivity: 'name, company, country, permit_num, nat_origin, area_ha'
     }
 
   });

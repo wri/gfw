@@ -5,10 +5,11 @@
 define([
   'Class',
   'underscore',
+  '_string',
   'uri',
   'text!cartocss/style.cartocss',
   'text!templates/infowindow.handlebars'
-], function(Class, _, UriTemplate, CARTOCSS, tpl) {
+], function(Class, _, _string, UriTemplate, CARTOCSS, tpl) {
 
   'use strict';
 
@@ -24,7 +25,7 @@ define([
     },
 
     queryTemplate: "SELECT cartodb_id||':' ||'{tableName}' as cartodb_id, the_geom_webmercator," +
-      "'{tableName}' AS name FROM {tableName}",
+      "'{tableName}' AS layer, name FROM {tableName}",
 
     init: function(layer, map) {
       this.layer = layer;
@@ -78,7 +79,6 @@ define([
     setInfowindow: function() {
       this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.cdbLayer.getSubLayer(0), this.options.interactivity, {
         infowindowTemplate: tpl,
-        // cursorInteraction: false,
         templateType: 'handlebars'
       });
     },
@@ -90,7 +90,7 @@ define([
      * @return {string} CartoDB query
      */
     getQuery: function() {
-      return this.options.sql ||
+      return _.str.sprintf(this.options.sql, { tableName: this.layer.table_name }) ||
         new UriTemplate(this.queryTemplate).fillFromObject({tableName: this.layer.table_name});
     }
 
