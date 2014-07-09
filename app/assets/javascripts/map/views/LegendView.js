@@ -84,7 +84,7 @@ define([
 
     _renderLayers: function(layers) {
       var self = this;
-      var except = _.keys(layers)
+      var except = _.keys(layers);
 
       this.$layersCount.html(except.length);
 
