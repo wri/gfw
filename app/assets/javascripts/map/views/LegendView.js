@@ -60,14 +60,8 @@ define([
      *
      * @param  {[type]} categories [description]
      */
-    _renderCategories: function(layerSpec) {
-      /**
-       * Categories which aren't going to be deleted.
-       * @type {Array}
-       */
-      var except = _.map(layerSpec, function(category, cName) {
-        return cName;
-      });
+    _renderCategories: function(categories) {
+      var except = _.keys(categories);
 
       // Remove unactive categories
       _.each(this.categoryViews, _.bind(function(category, cName) {
@@ -78,7 +72,7 @@ define([
       }, this));
 
       // Render categories
-      _.each(layerSpec, _.bind(function(category, cName) {
+      _.each(categories, _.bind(function(category, cName) {
         if (!this.categoryViews[cName]) {
           var layer = category[Object.keys(category)[0]];
           var $category = $(this.categoryTemplate({layer: layer}));
@@ -88,12 +82,9 @@ define([
       }, this));
     },
 
-    _renderLayers: function(layerSpec) {
+    _renderLayers: function(layers) {
       var self = this;
-
-      var except = _.flatten(_.map(layerSpec, function(category) {
-        return _.keys(category);
-      }));
+      var except = _.keys(layers)
 
       this.$layersCount.html(except.length);
 
@@ -105,21 +96,18 @@ define([
         }
       });
 
-      // Render categories
-      _.each(layerSpec, function(category, cName) {
-        _.each(category, function(layer, lName) {
-          if (!self.layerViews[lName]) {
-            var $layer = $(self.layerTemplate({layer: layer}));
-            self.categoryViews[cName].find('.layers').append($layer);
+      _.each(layers, function(layer, lName) {
+        if (!self.layerViews[lName]) {
+          var $layer = $(self.layerTemplate({layer: layer}));
+          self.categoryViews[layer.category_slug].find('.layers').append($layer);
 
-            if (self.layerTpl[lName]){
-              var $layerDetails = $(self.layerTpl[lName]({layer: layer}));
-              $layer.append($layerDetails);
-            }
-
-            self.layerViews[lName] = $layer;
+          if (self.layerTpl[lName]){
+            var $layerDetails = $(self.layerTpl[lName]({layer: layer}));
+            $layer.append($layerDetails);
           }
-        });
+
+          self.layerViews[lName] = $layer;
+        }
       });
     },
 
@@ -128,16 +116,16 @@ define([
      *
      * @param  {object} layerSpec The layer spect object
      */
-    update: function(layerSpec) {
-      if (Object.keys(layerSpec).length < 1) {
+    update: function(layers, categories) {
+      if (Object.keys(layers).length < 1) {
         this.model.set('hidden', true);
       } else {
         this.model.set({
           'hidden': false,
           'closed': false
         });
-        this._renderCategories(layerSpec);
-        this._renderLayers(layerSpec);
+        this._renderCategories(categories);
+        this._renderLayers(layers);
       }
     },
   });

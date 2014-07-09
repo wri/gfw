@@ -17,19 +17,21 @@ define([
 
     init: function() {
       this.layers = {};
+      this._subscribe();
+    },
+
+    _subscribe: function() {
+      mps.publish('Place/register', [this]);
     },
 
     /**
      * Asynchronously set the LayerSpec object and validates it.
      *
-     * @param {array}   where    Array of slugs and ids. [{id: 591}, {slug: 'forest2000'}]
+     * @param {array}    where   Array of slugs and ids. [{id: 591}, {slug: 'forest2000'}]
      * @param {callback} success Return valitaded layerSpec instance.
      * @param {callback} error   Return error
      */
     add: function(where, success, error) {
-      // LayersSpec doesn't have state?
-      this.layers = {};
-
       mapLayerService.getLayers(
         where,
         _.bind(function(results) {
@@ -46,11 +48,33 @@ define([
           } else {
             error(this, 'Error validating');
           }
-        }, this),
-        function(error) {
-          console.error(error);
-          callback(undefined);
-        });
+        }, this));
+    },
+
+    toggleLayer: function(where, success, error) {
+      mapLayerService.getLayers(
+        where,
+        _.bind(function(results) {
+          var layer = results[0];
+          var layers = _.clone(this.layers);
+
+          if (_.findWhere(this.getLayers(), {slug: layer.slug})) {
+            delete layers[layer.category_slug][layer.slug];
+            if (Object.keys(layers[layer.category_slug]) < 1) {
+              delete layers[layer.category_slug];
+            }
+          } else {
+            layers[layer.category_slug] = layers[layer.category_slug] || {};
+            layers[layer.category_slug][layer.slug] = layer;
+          }
+
+          if (layerValidatorService.validate(layers)) {
+            this.layers = layers;
+            success(this);
+          } else {
+            error(this, 'Error validating');
+          }
+        }, this));
     },
 
     /**
@@ -93,6 +117,22 @@ define([
 
       return layers;
     },
+
+    /**
+     * Retuns place parameters representing the state of the LayerNavView and
+     * layers. Called by PlaceService.
+     *
+     * @return {Object} Params representing the state of the LayerNavView and layers
+     */
+    getPlaceParams: function() {
+      return {
+        name: 'map',
+        baselayers: _.keys(this.getBaselayers()).join(','),
+        sublayers: _.map(this.getSublayers(), function(layer) {
+          return layer.id;
+        }).join(',')
+      };
+    }
   });
 
   var layerSpecService = new LayerSpecService();

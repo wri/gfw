@@ -28,7 +28,7 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this.view.update(layerSpec);
+        this.view.update(layerSpec.getLayers(), layerSpec.layers);
       }, this));
     }
   });

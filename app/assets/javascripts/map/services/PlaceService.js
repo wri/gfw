@@ -71,6 +71,7 @@ define([
       this.router = router;
       this._presenters = [];
       this._subscribe();
+      layerSpecService._subscribe(); // quick fix
     },
 
     /**
@@ -106,20 +107,25 @@ define([
       }
 
       newPlace.params = this._standardizeParams(params);
-      newPlace.name = this.name;
+
+      if (!newPlace.params.name) {
+        newPlace.params.name = name;
+      }
 
       if (go) {
         var baseWhere = this._getBaselayerFilters(params.baselayers);
         var subWhere = this._getSublayerFilters(params.sublayers);
         var where = _.union(baseWhere, subWhere);  // Preserves order
 
-        layerSpecService.add(where, _.bind(function(layerSpec) {
-          newPlace.params.layerSpec = layerSpec;
-          mps.publish('Place/go', [newPlace]);
-        }, this));
+        layerSpecService.add(
+          where,
+          _.bind(function(layerSpec) {
+            newPlace.params.layerSpec = layerSpec;
+            mps.publish('Place/go', [newPlace]);
+          }, this));
       }
 
-      route = this._getRoute(newPlace.name, newPlace.params);
+      route = this._getRoute(newPlace.params.name, newPlace.params);
       this.router.navigate(route, {silent: true});
     },
 
@@ -151,7 +157,7 @@ define([
      */
     _getRoute: function(name, params) {
       params = _.extend(this._formatUrl(name, params), {name: name});
-      return new UriTemplate(this._uriTemplate).fillFromObject(params);
+      return decodeURIComponent(new UriTemplate(this._uriTemplate).fillFromObject(params));
     },
 
     /**
