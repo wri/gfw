@@ -538,6 +538,15 @@ strong {
   border-top: 1px solid #717D80;
   border-bottom: 1px solid #717D80;
   @include user-select(none);
+  .index &{
+    background-position: center center;
+    @media (max-width: 1200px) {
+      background-image: image-url('backgrounds/index_map_1200.png');
+    }
+    @media (min-width: 1200px) {
+      background-image: image-url('backgrounds/index_map.png');
+    }
+  }
 }
 
 
