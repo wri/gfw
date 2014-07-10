@@ -29,7 +29,7 @@ module.exports = function(grunt) {
       },
       all: [
         'Gruntfile.js',
-        '<%= root.app %>/javascripts/map/{,*/}{,*/}*.js'
+        '<%= root.app %>/javascripts/map/{,*/}{,*/}{,*/}*.js'
       ]
     },
 
@@ -56,9 +56,13 @@ module.exports = function(grunt) {
       options: {
         spawn: false
       },
-      scripts: {
+      test: {
         files: '<%= jshint.all %>',
-        tasks: ['jshint', 'jasmine']
+        tasks: ['jasmine']
+      },
+      jshint: {
+        files: '<%= jshint.all %>',
+        tasks: ['jshint']
       }
     }
 
