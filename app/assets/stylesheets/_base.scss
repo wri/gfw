@@ -541,10 +541,10 @@ strong {
   .index &{
     background-position: center center;
     @media (max-width: 1200px) {
-      background-image: image-url('backgrounds/index_map_1200.png');
+      background-image: image-url('backgrounds/index_map_1200_compress.png');
     }
     @media (min-width: 1200px) {
-      background-image: image-url('backgrounds/index_map.png');
+      background-image: image-url('backgrounds/index_map_compress.png');
     }
   }
 }
