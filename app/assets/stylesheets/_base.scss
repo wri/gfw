@@ -538,7 +538,7 @@ strong {
   border-top: 1px solid #717D80;
   border-bottom: 1px solid #717D80;
   @include user-select(none);
-  .index &{
+  .home &{
     cursor: url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default;
     background-position: center center;
     @media (max-width: 1200px) {

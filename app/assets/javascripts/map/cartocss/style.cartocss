@@ -1,4 +1,4 @@
-#table_name {
+#table_layer {
   polygon-fill: #FF6600;
   polygon-opacity: 0.7;
   line-width: 0.2;
@@ -33,63 +33,63 @@
     line-clip: false;
   }
 
-  [name='logging_all_merged'] {
+  [layer='logging_all_merged'] {
     polygon-fill: #fecc5c;
     line-color: #B38E3B;
     line-clip: false;
     polygon-clip: false;
   }
 
-  [name='gfw2_drc_conc'] {
+  [layer='gfw2_drc_conc'] {
     polygon-fill: #EC7014;
     line-color: #EC7014;
     line-clip: false;
     polygon-clip: false;
   }
 
-  [name='mining_permits_merge'] {
+  [layer='mining_permits_merge'] {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
     line-clip: false;
     polygon-clip: false;
   }
 
-  [name='oil_palm_permits_merge'] {
+  [layer='oil_palm_permits_merge'] {
     polygon-fill: #ee9587;
     line-color: #ee9587;
     line-clip: false;
     polygon-clip: false;
   }
 
-  [name='caf_lc_1'] {
+  [layer='caf_lc_1'] {
     polygon-fill: #fe9929;
     line-color: #fe9929;
     line-clip: false;
     polygon-clip: false;
   }
 
-  [name='idn_tc_1'] {
+  [layer='idn_tc_1'] {
     polygon-fill: #BDBDBD;
     line-color: #BDBDBD;
     line-clip: false;
     polygon-clip: false;
   }
 
-  [name='world_ifl'] {
+  [layer='world_ifl'] {
     polygon-fill: #BBD973;
     line-color: #BBD973;
     line-clip: false;
     polygon-clip: false;
   }
 
-  [name='fiber_all_merged'] {
+  [layer='fiber_all_merged'] {
     polygon-fill: #e6adb9;
     line-color: #e6adb9;
     line-clip: false;
     polygon-clip: false;
   }
 
-  [name='forma_extent'] {
+  [layer='forma_extent'] {
     polygon-fill: #f69;
     polygon-opacity: 0.3;
     line-width: 1;
@@ -97,7 +97,7 @@
     line-opacity: 0;
   }
 
-  [name='modis_forest_change_copy'] {
+  [layer='modis_forest_change_copy'] {
     marker-fill: black;
     marker-opacity: 0.9;
     marker-allow-overlap: true;
@@ -106,7 +106,7 @@
     marker-width: 3;
   }
 
-  [name='biodiversity_hotspots'] {
+  [layer='biodiversity_hotspots'] {
     polygon-fill: #49A39A;
     line-color: #49A39A;
     polygon-clip: false;
@@ -117,7 +117,7 @@
     line-opacity: 0.8;
   }
 
-  [name='quicc_bounding_box_extent'] {
+  [layer='quicc_bounding_box_extent'] {
     polygon-fill: #f69;
     polygon-opacity: 0.3;
     line-width: 0;
@@ -125,7 +125,7 @@
     line-opacity: 1;
   }
 
-  [name='imazon_sad_geografic_extent'] {
+  [layer='imazon_sad_geografic_extent'] {
     polygon-fill: #f69;
     polygon-opacity: 0.3;
     line-width: 0;
@@ -133,11 +133,28 @@
     line-opacity: 1;
   }
 
-  [name='cameroon_communityforests'] {
+  [layer='cameroon_communityforests'] {
     polygon-fill: #707d92;
     polygon-opacity: 0.9;
     line-width: 0;
     line-color: #FFF;
     line-opacity: 1;
   }
+
+  [layer='defor'] {
+    polygon-fill:#F69;
+    polygon-opacity: 1;
+    line-opacity: 1;
+    line-color: #F69;
+    line-width: 2;
+  }
+
+  [layer='degrad'] {
+    polygon-fill: #ffbfd5;
+    polygon-opacity: 1;
+    line-opacity: 1;
+    line-color: #ffbfd5;
+    line-width: 2;
+  }
+
 }

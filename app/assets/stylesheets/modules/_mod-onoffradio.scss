@@ -1,0 +1,33 @@
+.onoffradio {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border: 1px solid #ddd;
+  position: relative;
+
+  &.checked i {
+    background: #ddd;
+  }
+
+  @include border-radius(25px);
+}
+
+.onoffradio i {
+  display: inline-block;
+  vertical-align: top;
+  height: 4px;
+  width: 4px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+  background: white;
+
+  @include border-radius(25px);
+
+  @include transition-property(all);
+  @include transition-duration(100ms);
+  @include transition-timing-function(ease-in-out);
+}

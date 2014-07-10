@@ -1,5 +1,5 @@
 {
-  "bitwise": true,
+  "bitwise": false,
   "browser": true,
   "jquery": true,
   "camelcase": false,
@@ -26,6 +26,8 @@
 
   "predef": [
     "define",
-    "google"
+    "google",
+    "cdb",
+    "cartodb"
 	]
 }

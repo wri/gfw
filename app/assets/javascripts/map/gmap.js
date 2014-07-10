@@ -5,8 +5,9 @@
  */
 define([
   'jquery',
-  'underscore'
-], function ($, _) {
+  'underscore',
+  'handlebars'
+], function ($, _, Handlebars) {
 
   'use strict';
 
@@ -35,7 +36,13 @@ define([
 
       // After each lib is loaded, get the cartodb lib.
       var done = _.after(libs.length, function () {
-        require(['cartodb'], cb);
+        require(['cartodb'], function() {
+          // CARTODB Hack
+          cdb.core.Template.compilers = _.extend(cdb.core.Template.compilers, {
+            handlebars: typeof(Handlebars) === 'undefined' ? null : Handlebars.compile
+          });
+          cb();
+        });
       });
 
 

@@ -48,7 +48,7 @@ define([
         if (this.tiles[tilesKeys[i]].z !== zoom) {
           delete this.tiles[tilesKeys[i]];
         }
-      };
+      }
 
       // Return cached tile if loaded.
       if (this.tiles[tileId]) {
@@ -187,8 +187,8 @@ define([
      * @param  {integer} h       tile height
      * @param  {integer} z       map zoom
      */
-    filterCanvasImgdata: function(imgdata, w, h, z) {
-    },
+    // filterCanvasImgdata: function(imgdata, w, h, z) {
+    // },
 
     getName: function() {
       return this.name;

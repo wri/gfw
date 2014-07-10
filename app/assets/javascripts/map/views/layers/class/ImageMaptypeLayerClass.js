@@ -9,12 +9,19 @@ define([
   'uri'
 ], function(Class, _, UriTemplate) {
 
+  'use strict';
+
   var ImageMaptypeLayerClass = Class.extend({
+
+    defaults: {
+      urlTemplate: ''
+    },
 
     init: function(layer) {
       _.bindAll(this, '_getUrl');
       this.tileSize = new google.maps.Size(256, 256);
       this.name = layer.slug;
+      this.options = _.extend({}, this.defaults, this.options || {});
       this._setImageMaptype();
     },
 
@@ -54,7 +61,7 @@ define([
     },
 
     getName: function() {
-      return this.name
+      return this.name;
     }
   });
 

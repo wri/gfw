@@ -7,7 +7,6 @@ define([
   'Class',
   'underscore',
   'mps',
-  'services/MapLayerService'
 ], function(Class, _, mps) {
 
   'use strict';
@@ -30,10 +29,9 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
-        if (place.name === 'map') {
-          this.layers = place.params.layers;
+        if (place.params.name === 'map') {
           this._initMap(place.params);
-          this._initLayers(this.layers);
+          this._setLayerSpec(place.params.layerSpec);
         }
       }, this));
 
@@ -52,13 +50,17 @@ define([
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this.view.setLayerSpec(layerSpec);
+        this._setLayerSpec(layerSpec);
       },this));
 
       mps.subscribe('Maptype/change', _.bind(function(maptype) {
         this.view.setMapTypeId(maptype);
       }, this));
+    },
 
+    _setLayerSpec: function(layerSpec) {
+      this.view.setLayers(layerSpec.getLayers());
+      mps.publish('Map/layers-changed', []);
     },
 
     /**
@@ -72,16 +74,6 @@ define([
     },
 
     /**
-     * Initialize map layer state from supplied place.
-     *
-     * @param  {PlaceService} The place to go to
-     */
-    _initLayers: function(layers) {
-      this.view.initLayers(layers);
-      mps.publish('Map/layers-initialized', []);
-    },
-
-    /**
      * Retuns place parameters representing the state of the MapView and
      * layers. Called by PlaceService.
      *
@@ -91,6 +83,7 @@ define([
       var params = {};
       var mapCenter = this.view.getCenter();
 
+      params.name = 'map';
       params.zoom = this.view.getZoom();
       params.lat = mapCenter.lat;
       params.lng = mapCenter.lng;

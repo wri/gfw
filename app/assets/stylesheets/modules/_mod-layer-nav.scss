@@ -8,7 +8,6 @@ $stories-color: rgb(242, 178, 87);
 .layers-menu {
   height: 72px;
   position: relative;
-  z-index: 2000;
 
   .inner {
     height: 100%;
@@ -97,30 +96,28 @@ $stories-color: rgb(242, 178, 87);
       cursor: pointer;
       position: relative;
 
-
-      .onoffswitch {
-        margin: 2px 6px 0 0;
-      }
-
       .layer-title {
-        display: block;
+        display: inline;
       }
 
       .layer-info {
         font-size: 11px;
         margin-top: 3px;
+        padding-left: 23px;
+        display: block;
       }
 
-      .layer-title,
-      .layer-info {
-        padding-left: 24px;
-      }
+      .onoffradio {
+        margin: 0 7px 0 2px;
+        border-color: $forest-change-color;
 
-      &.selected {
-        color: green;
-        .onoffswitch {
-          background: green;
+        &.checked i {
+          background: $forest-change-color;
         }
+      }
+
+      .onoffswitch {
+        margin: 2px 6px 0 0;
       }
     }
 

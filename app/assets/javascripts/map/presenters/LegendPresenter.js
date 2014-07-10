@@ -28,7 +28,13 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this.view.update(layerSpec);
+        // legends are going to be rewrite a bit, this will be cooler.
+        this.view.update(layerSpec.getLayers(), layerSpec.layers);
+      }, this));
+
+      mps.subscribe('Place/go', _.bind(function(place) {
+        this.view.update(place.params.layerSpec.getLayers(),
+          place.params.layerSpec.layers);
       }, this));
     }
   });
