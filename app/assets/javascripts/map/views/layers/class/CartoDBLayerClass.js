@@ -24,8 +24,8 @@ define([
       infowindow: false
     },
 
-    queryTemplate: "SELECT cartodb_id||':' ||'{tableName}' as cartodb_id, the_geom_webmercator," +
-      "'{tableName}' AS layer, name FROM {tableName}",
+    queryTemplate: 'SELECT cartodb_id||\':\' ||\'{tableName}\' as cartodb_id, the_geom_webmercator,' +
+      '\'{tableName}\' AS layer, name FROM {tableName}',
 
     init: function(layer, map) {
       this.layer = layer;

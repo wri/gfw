@@ -9,6 +9,8 @@ define([
   'uri'
 ], function(Class, _, UriTemplate) {
 
+  'use strict';
+
   var ImageLayerClass = Class.extend({
 
     init: function(layer) {
