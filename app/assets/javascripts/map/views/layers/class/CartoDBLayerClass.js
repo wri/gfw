@@ -5,11 +5,10 @@
 define([
   'Class',
   'underscore',
-  '_string',
   'uri',
   'text!cartocss/style.cartocss',
   'text!templates/infowindow.handlebars'
-], function(Class, _, _string, UriTemplate, CARTOCSS, tpl) {
+], function(Class, _, UriTemplate, CARTOCSS, tpl) {
 
   'use strict';
 
@@ -90,8 +89,7 @@ define([
      * @return {string} CartoDB query
      */
     getQuery: function() {
-      return _.str.sprintf(this.options.sql, { tableName: this.layer.table_name }) ||
-        new UriTemplate(this.queryTemplate).fillFromObject({tableName: this.layer.table_name});
+      return new UriTemplate(this.options.sql || this.queryTemplate).fillFromObject({tableName: this.layer.table_name});
     }
 
   });
