@@ -22,11 +22,12 @@ define([
      * Subscribe to application events.
      */
     _subscribe: function() {
-      mps.subscribe('Place/go', _.bind(function() {
+      mps.subscribe('Place/go', _.bind(function(place) {
+        this.view.setTimeline(place.params.layerSpec.getBaselayers());
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this.view.setTimeline(layerSpec);
+        this.view.setTimeline(layerSpec.getBaselayers());
       }, this));
     }
   });

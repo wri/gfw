@@ -6,19 +6,20 @@ define([
   'mps',
   'nsa',
   'presenters/MapPresenter',
-  'services/PlaceService'
-], function(_, mps, nsa, MapPresenter, PlaceService) {
+], function(_, mps, nsa, MapPresenter) {
 
   describe("The MapPresenter", function() {
     // The MapView mock
     var viewSpy = null;
 
-    var placeService = null;
-
     // The presenter to test
     var presenter = null;
 
     describe("Test responding to published events", function() {
+      var layers = {
+        forest2000: {}
+      };
+
       var place = {
         params: {
           name: 'map',
@@ -28,7 +29,10 @@ define([
           lat: 1,
           lng: 2,
           layerSpec: {
-            getLayers: function() {}
+            getLayers: function() {
+              return layers;
+            },
+            getBaselayers: function() {}
           }
         }
       };
@@ -47,9 +51,8 @@ define([
         expect(viewSpy.initMap.calls.count()).toEqual(1);
 
         expect(viewSpy.setLayers).toHaveBeenCalled();
-        expect(viewSpy.setLayers).toHaveBeenCalledWith(place.params.layers);
+        expect(viewSpy.setLayers).toHaveBeenCalledWith(place.params.layerSpec.getLayers());
         expect(viewSpy.setLayers.calls.count()).toEqual(1);
-
       });
     });
   });
