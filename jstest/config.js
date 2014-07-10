@@ -6,6 +6,7 @@ require.config({
     underscore: '../vendor/assets/bower_components/underscore/underscore',
     backbone: '../vendor/assets/bower_components/backbone/backbone',
     d3: '../vendor/assets/bower_components/d3/d3',
+    _string: '../vendor/assets/bower_components/underscore.string/lib/underscore.string',
     cartodb: '../vendor/assets/bower_components/cartodb/dist/cartodb',
     text: '../vendor/assets/bower_components/requirejs-text/text',
     moment: '../vendor/assets/bower_components/moment/moment',

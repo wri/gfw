@@ -39,16 +39,28 @@ define([
      * @param  {object} layerSpec
      */
     _toggleSelected: function(layers) {
+      // Toggle sublayers
       _.each(this.$el.find('.layer'), function(li) {
         var $li = $(li);
+        var $toggle = $li.find('.onoffradio, .onoffswitch');
+        var $layerTitle = $li.find('.layer-title');
         var layer = layers[$li.data('layer')];
 
         if (layer) {
-          $li.addClass('selected').css('color', layer.title_color);
-          $li.find('.onoffswitch').addClass('checked').css('background', layer.title_color);
+          var isBaselayer = (layer.category_slug === 'forest_clearing');
+          var color = isBaselayer ? layer.category_color : layer.title_color;
+
+          $li.addClass('selected');
+          $toggle.addClass('checked');
+          $layerTitle.css('color', color);
+
+          if (!isBaselayer) {
+            $toggle.css('background', color);
+          }
         } else {
-          $li.removeClass('selected').css('color', '');
-          $li.find('.onoffswitch').removeClass('checked').css('background', '');
+          $li.removeClass('selected');
+          $toggle.removeClass('checked').css('background', '');
+          $layerTitle.css('color', '');
         }
       });
     },
@@ -60,8 +72,7 @@ define([
      * @param  {event} event Click event
      */
     _toggleLayer: function(event) {
-      var $currentTarget = $(event.currentTarget);
-      var layerSlug = $currentTarget.data('layer');
+      var layerSlug = $(event.currentTarget).data('layer');
 
       this.presenter.toggleLayer(layerSlug);
     },
