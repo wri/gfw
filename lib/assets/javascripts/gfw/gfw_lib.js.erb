@@ -433,7 +433,7 @@ GFW.modules.app = function(gfw) {
             z = 12;
           } else {
             y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
-            
+
             if (x >= Math.pow(2,z)) {
               x = x % Math.pow(2,z);
             } else if (x < 0) {
@@ -508,7 +508,7 @@ GFW.modules.app = function(gfw) {
         //     z = 12;
         //   } else {
         //     y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
-            
+
         //     if (x >= Math.pow(2,z)) {
         //       x = x % Math.pow(2,z);
         //     } else if (x < 0) {
@@ -580,7 +580,7 @@ GFW.modules.app = function(gfw) {
             z = 12;
           } else {
             y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
-            
+
             if (x >= Math.pow(2,z)) {
               x = x % Math.pow(2,z);
             } else if (x < 0) {
@@ -1431,7 +1431,7 @@ GFW.modules.maplayer = function(gfw) {
           disabled        = this.layer.get('disabled');
 
       if (disabled) return;
-      
+
       Analysis.unblock_analysis();
 
       GFW.app.closeInfowindows();

@@ -1,5 +1,4 @@
 .legend {
-  height: 200px;
   left: 60px;
   font-size: 13px;
 
@@ -8,7 +7,7 @@
     border-bottom: 1px solid #E5E5E5;
     &:last-child {
       border-bottom: none;
-    }   
+    }
   }
 
   .category-name {
@@ -30,6 +29,6 @@
   }
 
   .layer-details {
-    margin-left: 14px; 
+    margin-left: 14px;
   }
 }

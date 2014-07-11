@@ -3,9 +3,6 @@
   border-bottom: 1px solid #CFCFCF;
   width: 100%;
 
-  .header-nav__inner {
-  }
-
   .header-nav__logo {
     z-index: 1050;
     position: absolute;
@@ -13,6 +10,14 @@
     width: 207px;
     margin-left: -10px;
     @include logos-sprite(logo);
+
+    .map & {
+      position: fixed;
+      
+      &.is-fixed {
+        top: 0;
+      }
+    }
   }
 
   .nav {

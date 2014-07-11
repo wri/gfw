@@ -36,7 +36,7 @@ define([
           this.navigate('map/' + this.route, {silent: true});
         }
       }, this));
-      this.setMapSize();
+      this.setWrapper();
       this.placeService = new PlaceService(mapLayerService, this);
       this.layersNavView = new LayersNavView();
       this.legendView = new LegendView();
@@ -66,15 +66,19 @@ define([
       }, this));
     },
 
-    setMapSize: function() {
-      var dh   = $(window).height(),
-          $map = $('#map');
-
-      $map.height(dh - 69);
-      $('.header-nav__logo').css({ position: 'absolute', top: 69 });
-      setTimeout(function() {
-        $('html, body').scrollTop(69);
-      }, 500);
+    setWrapper: function() {
+      var $logo = $('.header-nav__logo');
+      var setScroll = function(e) {
+        var element = (e) ? e.currentTarget : window;
+        if (element.pageYOffset > 10) {
+          $logo.addClass('is-fixed');
+        } else {
+          $logo.removeClass('is-fixed');
+        }
+      };
+      setScroll();
+      $(window).on('scroll', setScroll);
+      $('html, body').scrollTop(70);
     }
 
   });
