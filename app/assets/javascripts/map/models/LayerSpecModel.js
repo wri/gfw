@@ -13,28 +13,19 @@ define([
   var LayerSpecModel = Backbone.Model.extend({
 
     layerOrder: [
-      'umd_tree_loss_gain',
       'forestgain',
-      'forest2000',
+      'umd_tree_loss_gain',
       'forma',
       'imazon',
       'modis',
       'fires'
     ],
 
-    sort: function(layers) {
-      var order = [];
+    positionizer: function(layers) {
+      var layerOrder = _.intersection(this.layerOrder, _.pluck(layers, 'slug'));
 
-      _.each(this.layerOrder, function(layer) {
-        if (layers[layer]) {
-          order.push(layer);
-        }
-      });
-
-      _.each(order, function(layer, i) {
-        if (layers[layer]) {
-          layers[layer].position = i;
-        }
+      _.each(layerOrder, function(slug, i) {
+        layers[slug].position = i;
       });
 
       return layers;
@@ -57,7 +48,7 @@ define([
         _.extend(layers, category);
       });
 
-      return this.sort(layers);
+      return this.positionizer(layers);
     },
 
     /**
@@ -66,7 +57,7 @@ define([
      * @return {object} baselayers
      */
     getBaselayers: function() {
-      return this.sort(this.get('forest_clearing') || {});
+      return this.positionizer(this.get('forest_clearing') || {});
     },
 
     /**
@@ -82,7 +73,7 @@ define([
           layers = _.extend(layers, layers);
         });
 
-      return this.sort(layers);
+      return this.positionizer(layers);
     }
   });
 
