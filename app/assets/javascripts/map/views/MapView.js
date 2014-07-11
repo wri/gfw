@@ -132,28 +132,38 @@ define([
      * @param {object} layers
      */
     setLayers: function(layers) {
-      _.each(this.layerInst,
-        _.bind(function(inst, layerSlug) {
+      // Remove layers if needed
+      _.each(this.layerInst, _.bind(function(inst, layerSlug) {
           if (!layers[layerSlug]) {
-            this.removeLayer(layerSlug);
+            this._removeLayer(layerSlug);
           }
         }, this));
 
-      _.map(layers, this.addLayer, this);
+      // Sort layers by position and call addLayer.
+      _.map(_.sortBy(_.values(layers), 'position'),
+        this._addLayer, this);
     },
 
     /**
-     * Used by MapPresenter to add a layer to the map.
+     * Used by MapView to add a layer to the map.
      *
      * @param {Object} layer The layer object
      */
-    addLayer: function(layer) {
-      if (!this.isLayerRendered(layer.slug)) {
+    _addLayer: function(layer) {
+      if (!this._isLayerRendered(layer.slug)) {
         var layerView = this.layerInst[layer.slug] =
           new this.layersViews[layer.slug](layer, this.map);
 
-        layerView.getLayer().then(_.bind(function(layer) {
-          this.map.overlayMapTypes.insertAt(0, layer);
+        layerView.getLayer().then(_.bind(function(layerView) {
+          ////// layer position
+          var position = 0;
+          var layersCount = this.map.overlayMapTypes.getLength();
+
+          if (typeof layer.position !== 'undefined' && layer.position <= layersCount) {
+            position = layersCount - layer.position;
+          }
+          //////
+          this.map.overlayMapTypes.insertAt(position, layerView);
         }, this));
       }
     },
@@ -163,8 +173,8 @@ define([
      *
      * @param  {string} layerSlug The layerSlug of the layer to remove
      */
-    removeLayer: function(layerSlug) {
-      if (this.isLayerRendered(layerSlug) && this.layerInst[layerSlug]) {
+    _removeLayer: function(layerSlug) {
+      if (this._isLayerRendered(layerSlug) && this.layerInst[layerSlug]) {
         var overlaysLength = this.map.overlayMapTypes.getLength();
         if (overlaysLength > 0) {
           for (var i = 0; i < overlaysLength; i++) {
@@ -178,7 +188,7 @@ define([
       }
     },
 
-    isLayerRendered: function(layerSlug) {
+    _isLayerRendered: function(layerSlug) {
       var overlaysLength = this.map.overlayMapTypes.getLength();
       if (overlaysLength > 0) {
         for (var i = 0; i< overlaysLength; i++) {

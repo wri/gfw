@@ -12,29 +12,36 @@ define([
 
   var LayerSpecModel = Backbone.Model.extend({
 
-    /**
-     * Return baselayers object.
-     *
-     * @return {object} baselayers
-     */
-    getBaselayers: function() {
-      return this.get('forest_clearing') || {};
+    layerOrder: [
+      'umd_tree_loss_gain',
+      'forestgain',
+      'forest2000',
+      'forma',
+      'imazon',
+      'modis',
+      'fires'
+    ],
+
+    sort: function(layers) {
+      var order = [];
+
+      _.each(this.layerOrder, function(layer) {
+        if (layers[layer]) {
+          order.push(layer);
+        }
+      });
+
+      _.each(order, function(layer, i) {
+        if (layers[layer]) {
+          layers[layer].position = i;
+        }
+      });
+
+      return layers;
     },
 
-    /**
-     * Return sublayers object.
-     *
-     * @return {object} sublayers
-     */
-    getSublayers: function() {
-      var sublayers = {};
-
-      _.each(_.omit(this.toJSON(), 'forest_clearing'),
-        function(layers) {
-          sublayers = _.extend(sublayers, layers);
-        });
-
-      return sublayers;
+    getLayer: function(where) {
+      return _.findWhere(this.getLayers(), where, this);
     },
 
     /**
@@ -50,11 +57,32 @@ define([
         _.extend(layers, category);
       });
 
-      return layers;
+      return this.sort(layers);
     },
 
-    getLayer: function(where) {
-      return _.findWhere(this.getLayers(), where, this);
+    /**
+     * Return baselayers object.
+     *
+     * @return {object} baselayers
+     */
+    getBaselayers: function() {
+      return this.sort(this.get('forest_clearing') || {});
+    },
+
+    /**
+     * Return sublayers object.
+     *
+     * @return {object} sublayers
+     */
+    getSublayers: function() {
+      var layers = {};
+
+      _.each(_.omit(this.toJSON(), 'forest_clearing'),
+        function(layers) {
+          layers = _.extend(layers, layers);
+        });
+
+      return this.sort(layers);
     }
   });
 

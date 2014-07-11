@@ -14,10 +14,6 @@ define([
 
   var LayerSpecService = Class.extend({
 
-    init: function() {
-      this.model = new LayerSpecModel();
-    },
-
     options: {
       forbidCombined: {
         forest_clearing: {
@@ -26,6 +22,10 @@ define([
           ]
         }
       }
+    },
+
+    init: function() {
+      this.model = new LayerSpecModel();
     },
 
     toggle: function(where, success, error) {
@@ -98,6 +98,7 @@ define([
         }
 
         if (!passException) {
+          // TODO => Don't delete all layers, just the ones which can't be togther
           _.map(this.model.get(layer.category_slug), this._removeLayer, this);
         }
       }
@@ -115,7 +116,9 @@ define([
         baselayers: _.keys(this.model.getBaselayers()).join(','),
         sublayers: _.pluck(this.model.getSublayers(), 'id').join(',')
       };
-    }
+    },
+
+
   });
 
   var layerSpecService = new LayerSpecService();
