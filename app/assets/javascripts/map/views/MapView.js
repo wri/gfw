@@ -91,6 +91,7 @@ define([
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
       this.resize();
       this._setMaptypes();
+      this._setZoomControl();
       this._addCompositeViews();
       this._addListeners();
 
@@ -318,7 +319,17 @@ define([
 
       this.map.mapTypes.set('grayscale', grayscale);
       this.map.mapTypes.set('treeheight', treeheight);
+    },
+
+    _setZoomControl: function() {
+      $('.zoom-in').on('click', _.bind(function() {
+        this.setZoom(this.getZoom() + 1);
+      }, this));
+      $('.zoom-out').on('click', _.bind(function() {
+        this.setZoom(this.getZoom() - 1);
+      }, this));
     }
+
   });
 
   return MapView;
