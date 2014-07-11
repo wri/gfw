@@ -82,7 +82,7 @@
       width:0;
       height:0;
       position:absolute;
-      
+
       border-left: 5px solid transparent;
       border-right: 5px solid transparent;
       border-top: 5px solid #333;
@@ -112,14 +112,5 @@
     fill: $cGreen1;
     stroke: darken($cGreen1, 20);
     cursor: col-resize;
-  }  
-}
-
-.timeline-btn {
-  .ticks > li {
-    display: inline-block;
-    vertical-align: top;
-    width: 10px;
-    background: pink;
   }
 }

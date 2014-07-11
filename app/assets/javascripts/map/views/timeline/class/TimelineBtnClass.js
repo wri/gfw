@@ -66,26 +66,31 @@ define([
       var data = this._getData();
 
       // Set SVG
-      this.ticks = d3.select(this.el)
-        .append('ul')
-        .attr('class', 'ticks')
-        .selectAll('li')
-        .data(data)
-        .enter()
-        .append('li')
-        .text(function(d) {
-          return d;
-        });
-
-      this.ticks.selectAll('li')
-        .on('click', this._onClick);
-
-/*          .attr('width', width + margin.left + margin.right)
+      this.svg = d3.select(this.el)
+        .append('svg')
+          .attr('width', width + margin.left + margin.right)
           .attr('height', height + margin.top + margin.bottom)
         .append('g')
-          .attr('class', 'a')
           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-*/ 
+          .selectAll('rect')
+          .data(data)
+          .enter()
+          .append('rect')
+          .attr('width', 40)
+          .attr('height', 20)
+          .attr('fill', 'pink')
+          .attr('class', 'tick')
+          .attr('x', function(d) {
+            // width 949
+            return d * 20;
+          })
+          .attr('y', 12)
+          .text(function(d) {
+            return d;
+          });
+
+      this.svg.selectAll('.tick')
+        .on('click', this._onClick);
     },
 
     _onClick: function(d, i) {

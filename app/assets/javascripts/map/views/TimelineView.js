@@ -33,6 +33,13 @@ define([
       this.$el.hide();
     },
 
+    /**
+     * Set multiple timelayers. Maybe we can pass just one baselayers.
+     * However, layer will be validated to , at this point, there will
+     * be just one baselayer.
+     *
+     * @param {object} baselasyer
+     */
     setTimeline: function(baselayers) {
       if (this.currentTimeline) {
         this.currentTimeline.remove();
