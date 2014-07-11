@@ -12,8 +12,7 @@ define([
   var BiodiversityHotspotsLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT the_geom_webmercator, image, description, name, photo_credit, \'%(tableName)s\' AS layer' +
-        ' FROM %(tableName)s',
+      sql: 'SELECT the_geom_webmercator, image, description, name, photo_credit, \'{tableName}\' AS layer FROM {tableName}',
       infowindow: true,
       interactivity: 'image, description, name, photo_credit'
     }

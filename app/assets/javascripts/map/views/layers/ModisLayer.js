@@ -13,7 +13,9 @@ define([
   var ModisLayer = CartoDBLayerClass.extend({
 
     options: {
-      cartocss: modisCartoCSS
+      sql: 'SELECT cartodb_id, the_geom_webmercator, \'{tableName}\' AS layer FROM {tableName}',
+      cartocss: modisCartoCSS,
+      interactivity: 'cartodb_id'
     }
 
   });

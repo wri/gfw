@@ -116,9 +116,9 @@ define([
             end: 3014,
             layers: 'layers'
           }));
-          done();
         });
         service._handleNewPlace('map', params, true);
+        done();
       });
 
       it('correctly calls router.navigate when go is false', function() {
@@ -248,7 +248,7 @@ define([
       });
 
       it('Presenter registered', function() {
-        expect(service._presenters).toEqual([presenter]);
+        expect(service._presenters[1]).toEqual(presenter);
       });
     });
   });
