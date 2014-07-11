@@ -112,6 +112,14 @@
     fill: $cGreen1;
     stroke: darken($cGreen1, 20);
     cursor: col-resize;
-  }
+  }  
+}
 
+.timeline-btn {
+  .ticks > li {
+    display: inline-block;
+    vertical-align: top;
+    width: 10px;
+    background: pink;
+  }
 }
