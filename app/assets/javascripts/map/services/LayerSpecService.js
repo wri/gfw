@@ -34,7 +34,8 @@ define([
         _.bind(function(layers) {
           _.map(layers, this._toggleLayer, this);
           success(this.model);
-        }, this));
+        }, this),
+        error);
     },
 
     _toggleLayer: function(layer) {
@@ -76,20 +77,21 @@ define([
     },
 
     _removeCategory: function(slug) {
-      delete this.model.unset(slug);
+      this.model.unset(slug);
     },
 
     _removeForbiddenLayers: function(layer) {
       var forbidden = this.options.forbidCombined[layer.category_slug];
 
       if (forbidden) {
+        var passException = false;
+
         if (forbidden.except) {
           var combination = _.pluck(this.model.get(layer.category_slug),
            'slug');
-
           combination.push(layer.slug);
-          var passException = true;
 
+          passException = true;
           _.each(forbidden.except, _.bind(function(exception) {
             passException = passException && (_.difference(combination, exception).length < 1);
           }, this));
