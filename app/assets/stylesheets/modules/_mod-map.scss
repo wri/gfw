@@ -1,7 +1,7 @@
 .map-container {
   position: absolute;
-  top: 142px;
-  bottom: -70px;
+  top: 141px;
+  bottom: -69px;
   left: 0;
   right: 0;
   border-top: 1px solid #717D80;
@@ -15,6 +15,7 @@
   width: 100%;
   height: 100%;
   opacity: 0;
+  cursor: url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default;
 
   @include user-select(none);
   @include transition(opacity 1s ease);
@@ -22,48 +23,64 @@
   &.is-loaded {
     opacity: 1;
   }
-
-  /* .home &{
-    cursor: url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default;
-    background-position: center center;
-    @media (max-width: 1200px) {
-      background-image: image-url('backgrounds/index_map_1200_compress.png');
-    }
-    @media (min-width: 1200px) {
-      background-image: image-url('backgrounds/index_map_compress.png');
-    }
-  } */
 }
 
+#viewfinder {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  height: 17px;
+  width: 19px;
+  margin: -10px 0 0 -8px;
+  pointer-events:none;
 
-/*
+  @include home-icons-sprite(viewfinder);
+}
+
 #zoom_controls,
 #zoom_controls_subscribe {
 
-  \$zoomWidth: 36px;
-  \$zoomHeight: 29px; // height of the top button + border line
+  $zoomWidth: 36px;
+  $zoomHeight: 29px; // height of the top button + border line
 
-  position:absolute;
+  position: absolute;
 
   left: 15px;
   top:  30px;
 
-  z-index: 1000;
+  z-index: 2000;
 
-  .zoom_in, .zoom_out { position:relative; width: \$zoomWidth; height: \$zoomHeight; cursor: pointer; }
-
-  .zoom_in {
-    background: transparent url(icons/map_zoom.png) no-repeat 0 0;
-    &:hover { background: transparent url(icons/map_zoom.png) no-repeat -1*\$zoomWidth 0; }
-    &:active { background: transparent url(icons/map_zoom.png) no-repeat -2*\$zoomWidth 0; }
+  .zoom-in,
+  .zoom-out {
+    position:relative;
+    width: $zoomWidth;
+    height: $zoomHeight;
+    cursor: pointer;
   }
 
-  .zoom_out {
-    background: transparent url(icons/map_zoom.png) no-repeat 0 -1*\$zoomHeight;
-    &:hover { background: transparent url(icons/map_zoom.png) no-repeat -1*\$zoomWidth -1*\$zoomHeight; }
-    &:active { background: transparent url(icons/map_zoom.png) no-repeat -2*\$zoomWidth -1*\$zoomHeight; }
+  .zoom-in {
+    background: transparent url(icons/map_zoom.png) no-repeat 0 0;
+    &:hover {
+      background-position: (-$zoomWidth) 0;
+    }
+    &:active {
+      background-position: -(2*$zoomWidth) 0;
+    }
+  }
+
+  .zoom-out {
+    background: transparent url(icons/map_zoom.png) no-repeat 0 (-$zoomHeight);
+    &:hover {
+      background-position: (-$zoomWidth) (-$zoomHeight);
+    }
+    &:active {
+      background-position: -(2*$zoomWidth) -$zoomHeight;
+    }
   }
 }
+
+/*
 
 #zoom_controls,
 #viewfinder,

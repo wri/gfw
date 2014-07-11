@@ -21,8 +21,5 @@
   height: 6px;
   background: #fff;
   @include border-radius(4px);
-
-  @include transition-property(all);
-  @include transition-duration(100ms);
-  @include transition-timing-function(ease-in-out);
+  @include transition(all .1s ease-in-out);
 }
