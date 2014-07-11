@@ -81,7 +81,6 @@ define([
           .attr('fill', 'pink')
           .attr('class', 'tick')
           .attr('x', function(d) {
-            // width 949
             return d * 20;
           })
           .attr('y', 12)
@@ -91,10 +90,6 @@ define([
 
       this.svg.selectAll('.tick')
         .on('click', this._onClick);
-    },
-
-    _onClick: function(d, i) {
-      console.log(d, i);
     },
 
     /**
