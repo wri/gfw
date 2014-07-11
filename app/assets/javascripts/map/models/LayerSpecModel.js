@@ -18,7 +18,7 @@ define([
      * @return {object} baselayers
      */
     getBaselayers: function() {
-      return this.get('forest_clearing');
+      return this.get('forest_clearing') || {};
     },
 
     /**
