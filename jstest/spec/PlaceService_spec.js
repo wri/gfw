@@ -28,7 +28,6 @@ define([
       };
     });
 
-
     /**
      * Spec for testing _getPresenterParams().
      */
@@ -75,7 +74,7 @@ define([
       });
 
       it('correctly returns route', function() {
-        var r = 'map/8/1.10/2.00/idn/terrain/loss/1%2C2%2C3?begin=2014&end=3014';
+        var r = 'map/8/1.10/2.00/idn/terrain/loss/1,2,3?begin=2014&end=3014';
         expect(service._getRoute('map', params)).toEqual(r);
       });
     });
@@ -117,13 +116,13 @@ define([
             end: 3014,
             layers: 'layers'
           }));
-          done();
         });
         service._handleNewPlace('map', params, true);
+        done();
       });
 
       it('correctly calls router.navigate when go is false', function() {
-        var r = 'map/8/1.10/2.00/idn/terrain/loss/1%2C2%2C3?begin=2014&end=3014';
+        var r = 'map/8/1.10/2.00/idn/terrain/loss/1,2,3?begin=2014&end=3014';
 
         service._handleNewPlace('map', params, false);
         expect(mockRouter.navigate).toHaveBeenCalledWith(r, {silent: true});
@@ -191,8 +190,8 @@ define([
       });
 
       it('correctly returns filter for single layer', function() {
-        var f1 = {id: '1'};
-        var f2 = {id: '2'};
+        var f1 = {id: 1};
+        var f2 = {id: 2};
 
         expect(service._getSublayerFilters('')).toEqual([]);
         expect(service._getSublayerFilters('1')).toEqual([f1]);
@@ -240,8 +239,6 @@ define([
       });
     });
 
-
-
     describe('Test Place/register event', function() {
       var presenter = {name: 'presenter'};
 
@@ -251,7 +248,7 @@ define([
       });
 
       it('Presenter registered', function() {
-        expect(service._presenters).toEqual([presenter]);
+        expect(service._presenters[1]).toEqual(presenter);
       });
     });
   });

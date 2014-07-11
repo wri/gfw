@@ -10,6 +10,13 @@ define([
   'use strict';
 
   var LoggingLayer = CartoDBLayerClass.extend({
+
+    options: {
+      sql: 'SELECT the_geom_webmercator, company, country, permit_num, nat_origin, area_ha, name, {tableName} AS layer FROM {tableName}',
+      infowindow: true,
+      interactivity: 'name, company, country, permit_num, nat_origin, area_ha'
+    }
+
   });
 
   return LoggingLayer;

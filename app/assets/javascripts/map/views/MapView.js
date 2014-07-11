@@ -10,7 +10,10 @@ define([
   'views/AnalysisButtonView',
   'views/layers/UMDLossLayer',
   'views/layers/ForestGainLayer',
+  'views/layers/FormaLayer',
   'views/layers/ImazonLayer',
+  'views/layers/ModisLayer',
+  'views/layers/FiresLayer',
   'views/layers/Forest2000Layer',
   'views/layers/IntactForestLayer',
   'views/layers/PantropicalLayer',
@@ -22,9 +25,9 @@ define([
   'views/layers/BiodiversityHotspotsLayer',
   'views/layers/ResourceRightsLayer'
 ], function(Backbone, _, Presenter, AnalysisButtonView,
-  UMDLossLayer, ForestGainLayer, ImazonLayer, Forest2000Layer, IntactForestLayer, PantropicalLayer,
-  LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer, ProtectedAreasLayer,
-  BiodiversityHotspotsLayer, ResourceRightsLayer) {
+  UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
+  IntactForestLayer, PantropicalLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
+  ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer) {
 
   'use strict';
 
@@ -50,7 +53,10 @@ define([
     layersViews: {
       umd_tree_loss_gain: UMDLossLayer,
       forestgain: ForestGainLayer,
+      forma: FormaLayer,
       imazon: ImazonLayer,
+      modis: ModisLayer,
+      fires: FiresLayer,
       forest2000: Forest2000Layer,
       intact_forest: IntactForestLayer,
       pantropical: PantropicalLayer,
@@ -87,6 +93,10 @@ define([
       this._setMaptypes();
       this._addCompositeViews();
       this._addListeners();
+
+      google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
+        this.$el.addClass('is-loaded');
+      }, this));
     },
 
     /**
@@ -117,40 +127,19 @@ define([
     },
 
     /**
-     * Used by MapPresenter to initialize the map view. This function clears
-     * all layers from the map and then adds supplied layers in order.
+     * Add passed layers to the map and remove the rest.
      *
-     * @param  {Array} layers Array of layer objects
+     * @param {object} layers
      */
-    initLayers: function(layers) {
-      this.map.overlayMapTypes.clear();
+    setLayers: function(layers) {
+      _.each(this.layerInst,
+        _.bind(function(inst, layerSlug) {
+          if (!layers[layerSlug]) {
+            this.removeLayer(layerSlug);
+          }
+        }, this));
+
       _.map(layers, this.addLayer, this);
-    },
-
-    /**
-     * Used by MapPresenter to set the layerSpec layers.
-     *
-     * @param {object} layerSpec
-     */
-    setLayerSpec: function(layerSpec) {
-      var self = this;
-      var activeLayers = {};
-
-      _.each(layerSpec, function(category) {
-        _.extend(activeLayers, category);
-      });
-
-      // Remove layers
-      _.each(this.layerInst, function(inst, layerSlug) {
-        if (!activeLayers[layerSlug]) {
-          self.removeLayer(layerSlug);
-        }
-      });
-
-      // Render layers
-      _.each(activeLayers, function(layer) {
-        self.addLayer(layer);
-      });
     },
 
     /**

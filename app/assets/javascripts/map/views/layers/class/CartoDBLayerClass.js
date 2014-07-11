@@ -6,41 +6,56 @@ define([
   'Class',
   'underscore',
   'uri',
-  'text!cartocss/style.cartocss'
-], function(Class, _, UriTemplate, CARTOCSS) {
+  'text!cartocss/style.cartocss',
+  'text!templates/infowindow.handlebars'
+], function(Class, _, UriTemplate, CARTOCSS, tpl) {
 
   'use strict';
 
   var CartoDBLayerClass = Class.extend({
 
-    options: {},
+    defaults: {
+      user_name: 'wri-01',
+      type: 'cartodb',
+      sql: null,
+      cartocss: CARTOCSS,
+      interactivity: 'cartodb_id, name',
+      infowindow: false
+    },
+
+    queryTemplate: 'SELECT cartodb_id||\':\' ||\'{tableName}\' as cartodb_id, the_geom_webmercator,' +
+      '\'{tableName}\' AS layer, name FROM {tableName}',
 
     init: function(layer, map) {
-      this.cdbLayer = null;
       this.layer = layer;
       this.map = map;
       this.name = layer.slug;
-      this.layerOrder = this.layerOrder || null;
-      this._queryTemplate = "SELECT cartodb_id||':' ||'{tableName}' as cartodb_id, the_geom_webmercator," +
-        "'{tableName}' AS name FROM {tableName}";
+      this.options = _.extend({}, this.defaults, this.options || {});
     },
 
     getLayer: function() {
       var deferred = new $.Deferred();
 
-      cartodb.createLayer(this.map, {
-        user_name: 'wri-01',
+      var cartodbOptions = {
         name: this.name,
-        type: 'cartodb',
+        type: this.options.type,
+        user_name: this.options.user_name,
         sublayers: [{
           sql: this.getQuery(),
-          cartocss: CARTOCSS,
-          interactivity: 'cartodb_id'
+          cartocss: this.options.cartocss,
+          interactivity: this.options.interactivity
         }]
-      })
+      };
+
+      cartodb.createLayer(this.map, cartodbOptions)
       .done(
         _.bind(function(layer) {
           this.cdbLayer = layer;
+
+          if (this.options.infowindow) {
+            this.setInfowindow();
+          }
+
           deferred.resolve(this.cdbLayer);
         }, this)
       ).error(function(err) {
@@ -55,14 +70,26 @@ define([
     },
 
     /**
+     * Create a CartodDB infowindow object
+     * and add to CartoDB layer
+     *
+     * @return {object}
+     */
+    setInfowindow: function() {
+      this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.cdbLayer.getSubLayer(0), this.options.interactivity, {
+        infowindowTemplate: tpl,
+        templateType: 'handlebars'
+      });
+    },
+
+    /**
      * Get the CartoDB query. If it isn't set on this.options,
      * it gets the default query from this._queryTemplate.
      *
      * @return {string} CartoDB query
      */
     getQuery: function() {
-      return this.options.sql ||
-        new UriTemplate(this._queryTemplate).fillFromObject({tableName: this.layer.table_name});
+      return new UriTemplate(this.options.sql || this.queryTemplate).fillFromObject({tableName: this.layer.table_name});
     }
 
   });

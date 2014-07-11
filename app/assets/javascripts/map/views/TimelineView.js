@@ -31,13 +31,11 @@ define([
       this.$el.hide();
     },
 
-    setTimeline: function(layerSpec) {
+    setTimeline: function(baselayers) {
       if (this.currentTimeline) {
         this.currentTimeline.remove();
         this.currentTimeline = null;
       }
-
-      var baselayers = layerSpec.forestChange || {};
 
       _.each(this.timelineViews, _.bind(function(View, lName) {
         if (baselayers[lName]) {
