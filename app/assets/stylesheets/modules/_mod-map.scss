@@ -1,8 +1,47 @@
+.map-container {
+  position: absolute;
+  top: 142px;
+  bottom: -70px;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #717D80;
+  border-bottom: 1px solid #717D80;
+  box-sizing: border-box;
+  background: $cGray6;
+}
+
+#map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+
+  @include user-select(none);
+  @include transition(opacity 1s ease);
+
+  &.is-loaded {
+    opacity: 1;
+  }
+
+  /* .home &{
+    cursor: url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default;
+    background-position: center center;
+    @media (max-width: 1200px) {
+      background-image: image-url('backgrounds/index_map_1200_compress.png');
+    }
+    @media (min-width: 1200px) {
+      background-image: image-url('backgrounds/index_map_compress.png');
+    }
+  } */
+}
+
+
+/*
 #zoom_controls,
 #zoom_controls_subscribe {
 
-  $zoomWidth: 36px;
-  $zoomHeight: 29px; // height of the top button + border line
+  \$zoomWidth: 36px;
+  \$zoomHeight: 29px; // height of the top button + border line
 
   position:absolute;
 
@@ -11,18 +50,18 @@
 
   z-index: 1000;
 
-  .zoom_in, .zoom_out { position:relative; width: $zoomWidth; height: $zoomHeight; cursor: pointer; }
+  .zoom_in, .zoom_out { position:relative; width: \$zoomWidth; height: \$zoomHeight; cursor: pointer; }
 
   .zoom_in {
     background: transparent url(icons/map_zoom.png) no-repeat 0 0;
-    &:hover { background: transparent url(icons/map_zoom.png) no-repeat -1*$zoomWidth 0; }
-    &:active { background: transparent url(icons/map_zoom.png) no-repeat -2*$zoomWidth 0; }
+    &:hover { background: transparent url(icons/map_zoom.png) no-repeat -1*\$zoomWidth 0; }
+    &:active { background: transparent url(icons/map_zoom.png) no-repeat -2*\$zoomWidth 0; }
   }
 
   .zoom_out {
-    background: transparent url(icons/map_zoom.png) no-repeat 0 -1*$zoomHeight;
-    &:hover { background: transparent url(icons/map_zoom.png) no-repeat -1*$zoomWidth -1*$zoomHeight; }
-    &:active { background: transparent url(icons/map_zoom.png) no-repeat -2*$zoomWidth -1*$zoomHeight; }
+    background: transparent url(icons/map_zoom.png) no-repeat 0 -1*\$zoomHeight;
+    &:hover { background: transparent url(icons/map_zoom.png) no-repeat -1*\$zoomWidth -1*\$zoomHeight; }
+    &:active { background: transparent url(icons/map_zoom.png) no-repeat -2*\$zoomWidth -1*\$zoomHeight; }
   }
 }
 
@@ -87,12 +126,12 @@
 }
 
 .cartodb_infowindow.with_image {
-  $width: 295px + 13;
+  \$width: 295px + 13;
 
   position:absolute;
   left: -999px;
   display:block;
-  width:$width;
+  width:\$width;
   max-height: 312px;
   padding:0 0 6px;
   text-align:center;
@@ -103,11 +142,11 @@
     @include mixins-sprite(infowindow_close);
   }
 
-  $pR: 25px;
-  $pL: 17px;
+  \$pR: 25px;
+  \$pL: 17px;
 
   .outer_top {
-    width:$width;
+    width:\$width;
     padding:25px 0 5px 0;
     background:url('icons/bkg_image_infowindow.png') no-repeat left top;
   }
@@ -161,7 +200,7 @@
 
   .bottom {
     @include position(false, false, -6px, -1px);
-    width:$width;
+    width:\$width;
     height:20px;
     background:url('icons/bkg_image_infowindow.png') no-repeat right top;
   }
@@ -203,7 +242,7 @@
       overflow-y:auto;
       overflow-x:hidden;
 
-      /*margin: 0 0 0 5px;*/
+      margin: 0 0 0 5px;
     }
 
     p {
@@ -246,11 +285,11 @@
   }
 }
 .cartodb_infowindow {
-  $width: 268px;
+  \$width: 268px;
 
   position:absolute;
   display:none;
-  width:$width;
+  width:\$width;
   max-height: 250px;
   padding:0 0 6px;
   text-align:center;
@@ -262,18 +301,18 @@
     @include mixins-sprite(infowindow_close);
   }
 
-  $pR: 25px;
-  $pL: 17px;
+  \$pR: 25px;
+  \$pL: 17px;
 
   .outer_top {
-    width:$width - $pL - $pR;
-    padding:25px $pR  5px $pL;
+    width:\$width - \$pL - \$pR;
+    padding:25px \$pR  5px \$pL;
     background:url('icons/bkg_infowindow.png') no-repeat left top;
   }
 
   .bottom {
     @include position(false, false, -6px, -1px);
-    width:$width;
+    width:\$width;
     height:20px;
     background:url('icons/bkg_infowindow.png') no-repeat right top;
   }
@@ -315,7 +354,7 @@
       width:100%;
       padding: 0 0 10px 0;
 
-      /*margin: 0 0 0 5px;*/
+      margin: 0 0 0 5px;
     }
 
     p {
@@ -366,13 +405,13 @@
   display: none;
   z-index: 1000;
 
-  $width: 476px;
+  \$width: 476px;
   bottom: 39px;
 
-  width: $width;
+  width: \$width;
   padding: 9px 13px;
 
-  @include absolute-landscape-center($width);
+  @include absolute-landscape-center(\$width);
   @include border-radius(5px);
 
   background:#fff;
@@ -548,7 +587,7 @@ label {
   color: #C12000;
   font-size:13px;
 
-  /*background:blue;*/
+  background:blue;
 
   label { float: left; }
 
@@ -625,21 +664,21 @@ label {
 
   &.textarea {
 
-    $width: 573px;
-    $height: 196px;
+    \$width: 573px;
+    \$height: 196px;
 
     @include inline-block();
-    @include size($width, $height);
+    @include size(\$width, \$height);
 
     background:url(backgrounds/bkg_form_textarea.png) no-repeat left 0;
 
     textarea {
-      @include size(100%, $height - 7*2);
+      @include size(100%, \$height - 7*2);
       margin: 0 0 0 5px;
       padding: 7px 5px;
 
       font-size: 14px;
-      background:url(backgrounds/bkg_form_textarea.png) repeat-x right -1*$height;
+      background:url(backgrounds/bkg_form_textarea.png) repeat-x right -1*\$height;
 
       border:none;
       outline:none;
@@ -669,7 +708,7 @@ label {
   @include inline-block();
   padding: 0 0 0 20px;
 
-  @include mixins-sprite(checkbox, $offset-y: 2px);
+  @include mixins-sprite(checkbox, \$offset-y: 2px);
 
   font-size: 15px;
   color: #666666;
@@ -681,11 +720,11 @@ label {
   @extend .sans-serif;
 
   &.hover {
-    @include mixins-sprite(checkbox_hover, $offset-y: 2px);
+    @include mixins-sprite(checkbox_hover, \$offset-y: 2px);
   }
 
   &.checked {
-    @include mixins-sprite(checkbox_checked, $offset-y: 2px);
+    @include mixins-sprite(checkbox_checked, \$offset-y: 2px);
   }
 
 }
@@ -704,7 +743,7 @@ label {
   color: #C12000;
   font-size:13px;
 
-  /*background:blue;*/
+  background:blue;
 
   label { float: left; }
 
@@ -780,21 +819,21 @@ label {
 
   &.textarea {
 
-    $width: 573px;
-    $height: 196px;
+    \$width: 573px;
+    \$height: 196px;
 
     @include inline-block();
-    @include size($width, $height);
+    @include size(\$width, \$height);
 
     background:url(backgrounds/bkg_form_textarea.png) no-repeat left 0;
 
     textarea {
-      @include size(100%, $height - 7*2);
+      @include size(100%, \$height - 7*2);
       margin: 0 0 0 5px;
       padding: 7px 5px;
 
       font-size: 14px;
-      background:url(backgrounds/bkg_form_textarea.png) repeat-x right -1*$height;
+      background:url(backgrounds/bkg_form_textarea.png) repeat-x right -1*\$height;
 
       border:none;
       outline:none;
@@ -810,7 +849,7 @@ body.stories {
 
   header {
     height: 205px;
-    border-bottom: 1px solid $cGray4;
+    border-bottom: 1px solid \$cGray4;
     z-index: 1000;
   }
 
@@ -858,7 +897,7 @@ body.stories {
 
   #content {
 
-    background: $cWhite;
+    background: \$cWhite;
 
     .inner {
       position:relative;
@@ -942,7 +981,7 @@ body.stories {
           @extend .sans-serif;
           font-size: 16px;
           line-height: 20px;
-          color: $cGray2;
+          color: \$cGray2;
         }
 
         a {
@@ -951,7 +990,7 @@ body.stories {
           @extend .sans-serif;
           font-size: 12px;
           font-weight: bold;
-          color: $cGreen1;
+          color: \$cGreen1;
           text-transform: uppercase;
           text-decoration: none;
         }
@@ -982,7 +1021,7 @@ body.stories {
 
   .more_stories {
 
-    background-color: $cGray5;
+    background-color: \$cGray5;
     padding: 45px 0;
     text-align: center;
 
@@ -1001,12 +1040,12 @@ body.stories {
         font-weight:400;
         line-height: 1.2em;
 
-        color: $cGray6;
+        color: \$cGray6;
 
         a {
           font-weight: bold;
           text-decoration: none;
-          color: $cLime;
+          color: \$cLime;
         }
       }
 
@@ -1092,14 +1131,14 @@ body.stories {
         width: 909px;
         height: 1px;
         margin: 0 0 40px 0;
-        background-color: $cGray8;
+        background-color: \$cGray8;
       }
 
       .submit {
         @include inline-block();
         margin-top: 45px;
         padding: 10px 20px;
-        background-color: $cGreen1;
+        background-color: \$cGreen1;
         @extend .sans-serif;
         font-size: 11px;
         font-weight: bold;
@@ -1147,7 +1186,7 @@ body.stories {
         margin: 0 0 50px;
       }
 
-      /*.field_title {
+      .field_title {
       clear:both;
       overflow:hidden;
       background:red;
@@ -1167,7 +1206,7 @@ body.stories {
       }
 
 
-      }*/
+      }
 
 &.media {
   clear:both;
@@ -1210,7 +1249,7 @@ body.stories {
       @include inline-block();
       @include size(132px, 76px);
       margin: 0 7px 10px 0;
-      border: 2px solid $cWhite;
+      border: 2px solid \$cWhite;
       background:#fff;
       cursor: move;
 
@@ -1240,7 +1279,7 @@ body.stories {
         @include position(false, false, 12px, 0);
         @extend .sans-serif;
         font-size: 13px;
-        color: $cGray2;
+        color: \$cGray2;
       }
       .spinner  { @include position(30px, false, false, 65px); }
 
@@ -1263,7 +1302,7 @@ body.stories {
   .map-help {
     @extend .sans-serif;
     font-size: 13px;
-    color: $cGray2;
+    color: \$cGray2;
     margin-left: 5px;
   }
 
@@ -1305,7 +1344,7 @@ body.stories {
   margin-left: 372px;
   @extend .sans-serif;
   font-size: 15px;
-  color: $cGray2;
+  color: \$cGray2;
   line-height: 1.2em;
   vertical-align: top;
 }
@@ -1319,7 +1358,7 @@ body.stories {
     float: right;
     @extend .sans-serif;
     font-size: 13px;
-    color: $cGray2;
+    color: \$cGray2;
   }
 
   &.short {
@@ -1357,11 +1396,11 @@ aside {
   h3 {
     padding: 0 0 20px;
     margin-bottom: 20px;
-    border-bottom: 1px solid $cGray4;
+    border-bottom: 1px solid \$cGray4;
     @extend .sans-serif;
     font-weight: bold;
     font-size:13px;
-    color: $cGray1;
+    color: \$cGray1;
     text-transform: uppercase;
   }
 
@@ -1370,7 +1409,7 @@ aside {
   ul {
     @extend .sans-serif;
     font-size: 15px;
-    color: $cGray2;
+    color: \$cGray2;
     line-height: 1.2em;
     padding-bottom: 20px;
   }
@@ -1390,7 +1429,7 @@ aside {
 
       .title {
         background:transparent;
-        border-bottom: 1px solid $cGray4;
+        border-bottom: 1px solid \$cGray4;
         margin-top: -168px;
 
         h2.compact {
@@ -1400,7 +1439,7 @@ aside {
             @extend .inner;
             @extend .serif;
             padding: 0;
-            color: $cGreen1;
+            color: \$cGreen1;
             font-size: 31px;
             text-align:center;
             text-decoration: none;
@@ -1423,7 +1462,7 @@ aside {
           .when-and-who {
             @extend .sans-serif;
             font-size: 15px;
-            color: $cGray3;
+            color: \$cGray3;
             text-align:center;
             margin-top: 10px;
             margin-bottom: 40px;
@@ -1434,10 +1473,10 @@ aside {
           position: relative;
           margin: 0 0 40px 0;
 
-          $width: 918px;
-          $height: 362px;
+          \$width: 918px;
+          \$height: 362px;
 
-          @include size($width, $height);
+          @include size(\$width, \$height);
 
           .frame {
 
@@ -1510,7 +1549,7 @@ aside {
             z-index: 10;
 
             &, img {
-              @include size($width, $height);
+              @include size(\$width, \$height);
             }
 
           }
@@ -1522,7 +1561,7 @@ aside {
             @extend .sans-serif;
             font-size: 16px;
             line-height: 20px;
-            color: $cGray2;
+            color: \$cGray2;
             margin-bottom: 10px;
 
             -moz-column-count: 2;
@@ -1565,4 +1604,4 @@ aside {
 
     }
 
-  }
+  } */

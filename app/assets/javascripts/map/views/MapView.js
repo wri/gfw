@@ -93,6 +93,10 @@ define([
       this._setMaptypes();
       this._addCompositeViews();
       this._addListeners();
+
+      google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
+        this.$el.addClass('is-loaded');
+      }, this));
     },
 
     /**
