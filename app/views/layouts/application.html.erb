@@ -20,10 +20,11 @@
   <meta name="google-translate-customization" content="af2414ea962843fc-f48b15cdb6a3ab9b-gd8c738d3a7ff42de-1a"></meta>
 
   <%= favicon_link_tag 'favicon.ico' %>
-  
+
   <%= stylesheet_link_tag "application", :media => "all" %>
-  <%= yield :css %>
   <%= controller_stylesheet_link_tag %>
+  <%= yield :css %>
+  <%# stylesheet_link_tag "home", :media => "all" %>
   <%= javascript_include_tag "modernizr-2.6.2.min" %>
   <%= csrf_meta_tags %>
 </head>

@@ -1,6 +1,5 @@
 //= require jquery.qtip.min
 //= require jquery.jscrollpane
-
 //= require tipsy
 
 // Compass
@@ -11,9 +10,10 @@
 // General
 @import "_settings";
 @import "_mixins";
-@import "_layout";
 @import "_grid";
 @import "_base";
+
+/* @import "layouts/map"; */
 
 // Images
 @import "icons/*.png";
@@ -27,7 +27,8 @@
 // Modules
 @import "modules/_mod-header-nav";
 @import "modules/_mod-layer-nav";
-@import "modules/_mod-form";
+/* @import "modules/_mod-form"; */
+@import "modules/_mod-map";
 @import "modules/_mod-widget";
 @import "modules/_mod-widget-legend";
 @import "modules/_mod-widget-searchbox";

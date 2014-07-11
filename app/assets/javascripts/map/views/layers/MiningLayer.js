@@ -12,8 +12,7 @@ define([
   var MiningLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT the_geom_webmercator, company, country, area_ha, name, \'%(tableName)s\' AS layer' +
-        ' FROM %(tableName)s',
+      sql: 'SELECT the_geom_webmercator, company, country, area_ha, name, \'{tableName}\' AS layer FROM {tableName}',
       infowindow: true,
       interactivity: 'name, company, country, area_ha'
     }

@@ -9,6 +9,8 @@ define([
   'uri'
 ], function(Class, _, UriTemplate) {
 
+  'use strict';
+
   var ImageMaptypeLayerClass = Class.extend({
 
     defaults: {
@@ -59,7 +61,7 @@ define([
     },
 
     getName: function() {
-      return this.name
+      return this.name;
     }
   });
 

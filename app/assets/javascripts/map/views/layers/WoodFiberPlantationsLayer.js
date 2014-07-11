@@ -12,8 +12,7 @@ define([
   var WoodFiberPlantationsLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT the_geom_webmercator, type, area_ha, \'%(tableName)s\' AS layer' +
-        ' FROM %(tableName)s',
+      sql: 'SELECT the_geom_webmercator, type, area_ha, \'{tableName}\' AS layer FROM {tableName}',
       infowindow: true,
       interactivity: 'type, area_ha'
     }

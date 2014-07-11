@@ -4,16 +4,12 @@
  * @return FormaLayer class (extends CanvasLayerClass)
  */
 define([
-  'views/layers/class/CanvasLayerClass',
-], function(CanvasLayerClass) {
+  'views/layers/class/CanvasJSONLayerClass',
+], function(CanvasJSONLayerClass) {
 
   'use strict';
 
-  var FormaLayer = CanvasLayerClass.extend({
-
-    
-
-  });
+  var FormaLayer = CanvasJSONLayerClass.extend({});
 
   return FormaLayer;
 
