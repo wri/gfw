@@ -33,11 +33,11 @@ $stories-color: rgb(242, 178, 87);
     .category-name {
       font-weight: bold;
       font-size: 12px;
-      text-decoration: uppercase;
     }
 
     &:hover .layers-nav {
-      display: inline-block;
+      opacity: 1;
+      max-height: 1000px;
     }
   }
 
@@ -55,19 +55,22 @@ $stories-color: rgb(242, 178, 87);
     &.conservation { color: $conservation-color; border-color: $conservation-color; }
     &.people { color: $people-color; border-color: $people-color; }
     &.stories { color: $stories-color; border-color: $stories-color; }
-
-    &.people .layers-nav { left: -50px; }
   }
 
   .layers-nav {
-    display: none;
+    display: inline-block;
     position: absolute;
-    z-index: 1000;
-    left: -21px;
-    top: -28px;
+    z-index: 2000;
+    left: 50%;
+    top: -29px;
     width: 170px;
+    margin-left: -85px;
+    max-height: 0;
     background: white;
+    overflow: hidden;
+    opacity: 0;
     @include box-shadow(0px 0px 5px 1px rgba(#000, .15));
+    @include transition(all .3s ease);
 
     .layers-nav-header {
       height: 82px;
@@ -85,6 +88,7 @@ $stories-color: rgb(242, 178, 87);
       .category-name {
         display: block;
         padding: 8px 0;
+        margin-top: 1px;
       }
     }
 
@@ -95,6 +99,11 @@ $stories-color: rgb(242, 178, 87);
       border-bottom: 1px solid #e5e5e5;
       cursor: pointer;
       position: relative;
+      @include transition(all .3s ease);
+
+      &:hover {
+        background-color: #f5f5f5;
+      }
 
       .layer-title {
         display: inline;
@@ -119,6 +128,7 @@ $stories-color: rgb(242, 178, 87);
       .onoffswitch {
         margin: 2px 6px 0 0;
       }
+
     }
 
   } // layers-nav

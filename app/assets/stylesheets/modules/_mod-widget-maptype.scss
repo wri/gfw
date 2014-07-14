@@ -1,5 +1,5 @@
 .maptype {
-  height: 235px;
+  /* height: 235px; */
   right: 55px;
   width: 150px;
   padding: 0;
@@ -8,38 +8,47 @@
     border: none;
   }
 
-  .maptype-list li {
-    width: 100%;
-    height: 100%;
-    font-size:13px;
-    padding: 9px 10px;
-    cursor: pointer;
-    color: #666;
-    border-bottom: 1px solid #ddd;
-    @include box-sizing(border-box);
+  .widget-opened .maptype-list {
+    max-height: 1000px;
+  }
 
-    &.grayscale   i { @include home-icons-sprite(map_grayscale); }
-    &.terrain     i { @include home-icons-sprite(map_terrain); }
-    &.satellite   i { @include home-icons-sprite(map_satellite); }
-    &.roads       i { @include home-icons-sprite(map_roads); }
-    &.treeheight  i { @include home-icons-sprite(map_treeheight); }
-    &.landsat     i { @include home-icons-sprite(map_landsat); }
+  .maptype-list {
+    max-height: 40px;
+    overflow: hidden;
 
-    i {
-      @include inline-block();
-      width: 24px;
-      height: 18px;
-      border: 1px solid rgba(#333, .5);
-      margin: 0 5px 0 0;
-      background: #ddd;
-    }
+    li {
+      width: 100%;
+      height: 100%;
+      font-size:13px;
+      padding: 9px 10px;
+      cursor: pointer;
+      color: #666;
+      border-bottom: 1px solid #ddd;
+      @include box-sizing(border-box);
 
-    &:last-child {
-      border: none;
-    }
+      &.grayscale   i { @include home-icons-sprite(map_grayscale); }
+      &.terrain     i { @include home-icons-sprite(map_terrain); }
+      &.satellite   i { @include home-icons-sprite(map_satellite); }
+      &.roads       i { @include home-icons-sprite(map_roads); }
+      &.treeheight  i { @include home-icons-sprite(map_treeheight); }
+      &.landsat     i { @include home-icons-sprite(map_landsat); }
 
-    &:hover {
-      color: #333;
+      i {
+        @include inline-block();
+        width: 24px;
+        height: 18px;
+        border: 1px solid rgba(#333, .5);
+        margin: 0 5px 0 0;
+        background: #ddd;
+      }
+
+      &:last-child {
+        border: none;
+      }
+
+      &:hover {
+        color: #333;
+      }
     }
   }
 }
