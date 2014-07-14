@@ -39,9 +39,10 @@ define([
      * 'AnalysisButton/clicked'.
      */
     onClick: function() {
-        mps.publish('AnalysisButton/clicked', []);
+        mps.publish('AnalysisButton/clicked', _.bind(function() {
+      }, this));
+        this.view.showHelperBar();
     }
-
   });
 
   return AnalysisButtonPresenter;

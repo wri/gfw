@@ -40,7 +40,11 @@ define([
      *
      * @param  {Event} e The click event
      */
-    _onClick: function() {
+    _onClick: function(e) {
+      e && e.preventDefault();
+      var $control = this._getControl();
+      if ($control.hasClass('disabled')) return;
+      
       this.presenter.onClick();
     },
 
@@ -64,14 +68,21 @@ define([
      * @param {Boolean} enable True to enable view, false to disable it.
      */
     setEnabled: function(enable) {
-      var control = this._getControl();
+      var $control = this._getControl();
 
       if (enable) {
-        control.removeClass('disabled');
+        $control.removeClass('disabled');
       } else {
-        control.addClass('disabled');
+        $control.addClass('disabled');
       }
-    }
+    },
+
+    showHelperBar: function() {
+      var self = this;
+      $('.timeline').fadeOut(function(){
+        self.$el.find('.helper_bar').fadeIn()
+      })
+    },
   });
 
   return AnalysisButtonView;
