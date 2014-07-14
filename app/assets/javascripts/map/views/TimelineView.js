@@ -56,8 +56,11 @@ define([
       if (!this.currentTimeline) {
         this.$el.hide();
       }
-    }
+    },
 
+    getCurrentDate: function() {
+      return this.currentTimeline.getCurrentDate();
+    }
   });
 
   return TimelineView;

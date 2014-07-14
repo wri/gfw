@@ -25,15 +25,18 @@ define([
       'click .play': 'togglePlay'
     },
 
+    defaults: {
+      dateRange: [moment([2001]), moment()],
+      playSpeed: 400
+    },
+
     initialize: function(layer) {
       _.bindAll(this, 'onAnimationBrush', 'onBrush', 'onBrushEnd', 'updateTimelineDate');
+
       this.layer = layer;
       this.name = layer.slug;
-
-      this.opts = _.extend({
-        dateRange: [moment([2001]), moment()],
-        playSpeed: 400,
-      }, this.opts);
+      this.options = _.extend({}, this.defaults, this.options || {});
+      this.currentDate = this.options.dateRange;
 
       // Status
       this.playing = false;
@@ -396,6 +399,7 @@ define([
      * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
     updateTimelineDate: function(date) {
+      this.currentDate = date;
       this.presenter.updateTimelineDate(date);
     },
 
@@ -416,6 +420,10 @@ define([
 
     getName: function() {
       return this.name;
+    },
+
+    getCurrentDate: function() {
+      return this.currentDate;
     }
   });
 

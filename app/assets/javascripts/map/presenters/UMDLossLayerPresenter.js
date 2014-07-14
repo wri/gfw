@@ -15,13 +15,13 @@ define([
 
     init: function(view) {
       this.view = view;
-      this.subscribe();
+      this._subscribe();
     },
 
     /**
      * Subscribe to application events.
      */
-    subscribe: function() {
+    _subscribe: function() {
       mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
         if (this.view.getName() === layerSlug) {
           this.view.setTimelineDate(date);
@@ -29,7 +29,6 @@ define([
         }
       }, this));
     }
-
   });
 
   return UMDLossLayerPresenter;

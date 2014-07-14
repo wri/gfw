@@ -29,7 +29,24 @@ define([
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this.view.setTimeline(layerSpec.getBaselayers());
       }, this));
+
+      mps.publish('Place/register', [this]);
+    },
+
+    /**
+     * Retuns place parameters representing the state of the LayerNavView and
+     * layers. Called by PlaceService.
+     *
+     * @return {Object} Params representing the state of the LayerNavView and layers
+     */
+    getPlaceParams: function() {
+      return {
+        name: 'map',
+        date: '{0}-{1}'.format(this.view.getCurrentDate()[0].format('X'),
+          this.view.getCurrentDate()[1].format('X')) 
+      };
     }
+
   });
 
   return TimelinePresenter;

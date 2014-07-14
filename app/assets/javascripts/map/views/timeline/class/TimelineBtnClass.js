@@ -22,15 +22,18 @@ define([
     defaults: {
       dateRange: [moment([2001]), moment()],
       playSpeed: 400,
+      width: 1000,
+      height: 50,
       tickWidth: 120
     },
 
     initialize: function(layer) {
-      _.bindAll(this, '_onClickTick', '_selectFirstTick');
+      _.bindAll(this, '_onClickTick', '_selectDate');
 
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
+      this.currentDate = null;
 
       // d3 slider objets
       this.svg = {};
@@ -49,8 +52,8 @@ define([
 
       // SVG options
       var margin = {top: 0, right: 15, bottom: 0, left: 15};
-      var width = 1000 - margin.left - margin.right;
-      var height = 50 - margin.bottom - margin.top;
+      var width = this.options.width - margin.left - margin.right;
+      var height = this.options.height - margin.bottom - margin.top;
 
       // Set xscale
       this.xscale = d3.scale.linear()
@@ -68,7 +71,25 @@ define([
         .append('g')
           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-      this.tickG = this.svg.selectAll('g')
+      // Set tipsy
+      this.tipsy = this.svg.append('g')
+        .attr('class', 'tipsy') 
+        .style('visibility', 'visible');
+
+      this.trail = this.tipsy.append('svg:line')
+        .attr('class', 'trail')
+        .attr('x1', 0)
+        .attr('x2', 0)
+        .attr('y1', 0)
+        .attr('y2', height);
+
+      this.tooltip = d3.select(this.el).append('div')
+        .attr('class', 'tooltip');
+
+      // Set ticks
+      this.tickG = this.svg.append('g')
+        .attr('class', 'ticks')
+        .selectAll('g')
         .data(data)
         .enter()
         .append('g')
@@ -96,22 +117,49 @@ define([
         .on('click', function(date, i) {
           self._onClickTick(this, date, i);
         });
-
-      // TODO => URL dateRange params
-      this._selectFirstTick();
     },
 
-    _onClickTick: function(el, date, i) {
+    _onClickTick: function(el, date) {
+      this._selectDate(el, date);
+      this._updateTimelineDate(date);
+    },
+
+
+    /**
+     * Add selected class to the tick and moves
+     * the tipsy to that position.
+     * 
+     * @param  {object} el   Tipsy element
+     * @param  {date}   date {start:{}, end:{}}
+     */
+    _selectDate: function(el, date) {
+      el = d3.select(el);
+      var x = d3.transform(el.attr("transform")).translate[0];
+      var trailX = x + (this.options.tickWidth / 2);
+
       this.svg.selectAll('.tick').filter(function(d) {
-        d3.select(this).classed('selected', false)
-      });
+        d3.select(this).classed('selected', false);});
 
-      d3.select(el).classed('selected', true)
-      this.updateTimelineDate(date);
+      el.classed('selected', true);
+
+      this.trail
+        .transition()
+        .duration(100)
+        .ease('line')
+        .attr('x1', trailX)
+        .attr('x2', trailX);
+
+      this.tooltip
+        .transition()
+        .duration(100)
+        .ease('line')
+        .text(this._getTooltipText(date))
+        .style('left', x + 'px');
     },
 
-    _selectFirstTick: function() {
-      d3.select(this.tickG.node()).classed('selected', true);
+    _getTooltipText: function(date) {
+      return '{0}-{1} {2}'.format(date.start.format('MMM'),
+          date.end.format('MMM'), date.end.year());
     },
 
     /**
@@ -120,15 +168,21 @@ define([
      *
      * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
-    updateTimelineDate: function(date) {
-      this.presenter.updateTimelineDate([date.start, date.end]);
+    _updateTimelineDate: function(date) {
+      var formatted = [date.start, date.end];
+      this.currentDate = formatted;
+      this.presenter.updateTimelineDate(formatted);
+    },
+
+    _getTickText: function() {
     },
 
     getName: function() {
       return this.name;
     },
 
-    _getTickText: function() {
+    getCurrentDate: function() {
+      return this.currentDate;
     }
   });
 

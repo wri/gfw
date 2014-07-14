@@ -56,7 +56,7 @@ define([
 
   var PlaceService = Class.extend({
 
-    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?begin,end}',
+    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?date}',
 
     /**
      * Create new PlaceService with supplied MapLayerService and
