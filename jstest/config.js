@@ -21,6 +21,7 @@ require.config({
     utils: '../app/assets/javascripts/map/utils',
     router: '../app/assets/javascripts/map/router',
     presenters: '../app/assets/javascripts/map/presenters',
+    models: '../app/assets/javascripts/map/models',
     views: '../app/assets/javascripts/map/views',
     templates: '../app/assets/javascripts/map/templates',
     services: '../app/assets/javascripts/map/services',
