@@ -10,7 +10,7 @@ class EmbedController < ApplicationController
     @country = country
   end
   def countries_show_info
-    country = Api::Country.find_by_iso(params[:id])['countries'][0]
+    country = find_by_iso(params[:id])
 
     not_found unless country.present?
 
