@@ -7,109 +7,107 @@ define([
   'Class',
   'underscore',
   'services/MapLayerService',
-  'services/LayerValidatorService'
-], function(Class, _, mapLayerService, layerValidatorService) {
+  'models/LayerSpecModel'
+], function(Class, _, mapLayerService, LayerSpecModel) {
 
   'use strict';
 
   var LayerSpecService = Class.extend({
 
+    options: {
+      forbidCombined: {
+        forest_clearing: {
+          except: [
+            ['umd_tree_loss_gain', 'forestgain']
+          ]
+        }
+      }
+    },
+
     init: function() {
-      this.layers = {};
+      this.model = new LayerSpecModel();
     },
 
-    /**
-     * Asynchronously set the LayerSpec object and validates it.
-     *
-     * @param {array}    where   Array of slugs and ids. [{id: 591}, {slug: 'forest2000'}]
-     * @param {callback} success Return valitaded layerSpec instance.
-     * @param {callback} error   Return error
-     */
-    add: function(where, success, error) {
+    toggle: function(where, success, error) {
       mapLayerService.getLayers(
         where,
-        _.bind(function(results) {
-          var layers = _.clone(this.layers);
-
-          _.each(results, function(layer) {
-            layers[layer.category_slug] = layers[layer.category_slug] || {};
-            layers[layer.category_slug][layer.slug] = layer;
-          });
-
-          if (layerValidatorService.validate(layers)) {
-            this.layers = layers;
-            success(this);
-          } else {
-            error(this, 'Error validating');
-          }
-        }, this));
+        _.bind(function(layers) {
+          _.map(layers, this._toggleLayer, this);
+          success(this.model);
+        }, this),
+        error);
     },
 
-    toggleLayer: function(where, success, error) {
-      mapLayerService.getLayers(
-        where,
-        _.bind(function(results) {
-          var layer = results[0];
-          var layers = _.clone(this.layers);
+    _toggleLayer: function(layer) {
+      var current = this.model.getLayer({slug: layer.slug});
 
-          if (_.findWhere(this.getLayers(), {slug: layer.slug})) {
-            delete layers[layer.category_slug][layer.slug];
-            if (_.keys(layers[layer.category_slug]) < 1) {
-              delete layers[layer.category_slug];
-            }
-          } else {
-            layers[layer.category_slug] = layers[layer.category_slug] || {};
-            layers[layer.category_slug][layer.slug] = layer;
-          }
+      // At least one baselayer selected.
+      if (current && current.category_slug === 'forest_clearing' &&
+        _.keys(this.model.getBaselayers()).length === 1) {
+        return;
+      }
 
-          if (layerValidatorService.validate(layers)) {
-            this.layers = layers;
-            success(this);
-          } else {
-            error(this, 'Error validating');
-          }
-        }, this));
+      if (current) {
+        this._removeLayer(current);
+
+        if (_.keys(this.model.get(layer.category_slug)).length < 1) {
+          this._removeCategory(layer.category_slug);
+        }
+      } else {
+        this._addLayer(layer);
+      }
     },
 
     /**
-     * Return baselayers object.
+     * Add a layer to the model.
+     * It destroys all the sibling models at the same category if
+     * forbidCombinated is set for that category.
      *
-     * @return {object} baselayers
+     * @param {object} layer
      */
-    getBaselayers: function() {
-      return this.layers.forest_clearing || {};
+    _addLayer: function(layer) {
+      this._addCategory(layer.category_slug);
+      var category =  this.model.get(layer.category_slug);
+      this._removeForbiddenLayers(layer);
+      category[layer.slug] = layer;
     },
 
-    /**
-     * Return sublayers object.
-     *
-     * @return {object} sublayers
-     */
-    getSublayers: function() {
-      var sublayers = {};
-
-      _.each(_.omit(this.layers, 'forest_clearing'),
-        function(layers) {
-          sublayers = _.extend(sublayers, layers);
-        });
-
-      return sublayers;
+    _removeLayer: function(layer) {
+      delete this.model.get(layer.category_slug)[layer.slug];
     },
 
-    /**
-     * Get all the layers uncategorized.
-     * {forest2000: {}, gain:{}, ...}
-     *
-     * @return {object} layers
-     */
-    getLayers: function() {
-      var layers = {};
+    _addCategory: function(slug) {
+      if (!this.model.get(slug)) {
+        this.model.set(slug, {});
+      }
+    },
 
-      _.each(this.layers, function(category) {
-        _.extend(layers, category);
-      });
+    _removeCategory: function(slug) {
+      this.model.unset(slug);
+    },
 
-      return layers;
+    _removeForbiddenLayers: function(layer) {
+      var forbidden = this.options.forbidCombined[layer.category_slug];
+
+      if (forbidden) {
+        var passException = false;
+
+        if (forbidden.except) {
+          var combination = _.pluck(this.model.get(layer.category_slug), 'slug');
+          combination.push(layer.slug);
+
+          passException = true;
+          _.each(forbidden.except, _.bind(function(exception) {
+            passException = passException &&
+              (_.difference(combination, exception).length < 1);
+          }, this));
+        }
+
+        if (!passException) {
+          // TODO => Don't delete all layers, just the ones which can't be togther
+          _.map(this.model.get(layer.category_slug), this._removeLayer, this);
+        }
+      }
     },
 
     /**
@@ -121,10 +119,12 @@ define([
     getPlaceParams: function() {
       return {
         name: 'map',
-        baselayers: _.keys(this.getBaselayers()).join(','),
-        sublayers: _.pluck(this.getSublayers(), 'id').join(',')
+        baselayers: _.keys(this.model.getBaselayers()).join(','),
+        sublayers: _.pluck(this.model.getSublayers(), 'id').join(',')
       };
-    }
+    },
+
+
   });
 
   var layerSpecService = new LayerSpecService();
