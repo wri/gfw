@@ -1,5 +1,5 @@
 class CountriesController < ApplicationController
-  before_filter :load_countries, :only => [:index]
+  #before_filter :load_countries, :only => [:index]
   include ActionView::Helpers::NumberHelper
 
   def index
@@ -32,6 +32,7 @@ class CountriesController < ApplicationController
       if response.success?
         JSON.parse(response.body)['countries']
       else
+        debugger
         nil
       end
     end
