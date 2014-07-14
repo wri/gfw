@@ -325,10 +325,11 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       dataType: 'json',
       success: function(data) {
         var amount = data.years[data.years.length -1].extent;
-        if (amount.toString().length >= 6) {
+        if (amount.toString().length >= 5) {
           amount = ((amount /1000)/1000).toFixed(2)
-        } else {
-          amount = amount.toFixed(2)
+        } else{
+          $target.find('.tree-cover .unit').html( 'KHa' );
+          if (amount % 1 != 0) amount = amount.toFixed(2)
         }
 
         $target.find('.tree-cover .amount').html( amount );
@@ -501,120 +502,99 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       .append('svg:svg')
       .attr('width', width)
       .attr('height', height);
-    d3.json('https://wri-01.cartodb.com/api/v2/sql?q=' + sql, function(json) {
-      if (json) {
-        $graph.removeClass('ghost');
-        var data = years_data || json.rows;
-      } else {
-        $comingSoon.show();
-        return;
+    
+    $graph.removeClass('ghost');
+    var data = years_data;
+    var data_ = [];
+
+    _.each(data, function(val, key) {
+      if (val.year >= 2001) {
+        data_.push({
+          'year': val.year,
+          'value': val.loss//eval('val.' + options.dataset)
+        });
       }
+    });
 
-      var data_ = [];
+    $amount.html('<span>' + formatNumber(parseInt(data_[data_.length - 1].value, 10)) + '</span>');
+    $date.html('Hectares lost in ' + data_[data_.length - 1].year);
 
-      _.each(data, function(val, key) {
-        if (val.year >= 2001) {
-          data_.push({
-            'year': val.year,
-            'value': val.loss//eval('val.' + options.dataset)
-          });
+    var marginLeft = 5,
+        marginTop = 0;
+
+    var y_scale = d3.scale.linear()
+      .domain([0, d3.max(data_, function(d) { return parseFloat(d.value); })])
+      .range([height, marginTop * 2]);
+
+    var barWidth = 16;
+
+    var bar = graph.selectAll('g')
+      .data(data_)
+      .enter()
+      .append('g')
+      .attr('transform', function(d, i) { return 'translate(' + (marginLeft + i * barWidth) + ',' + -marginTop + ')'; });
+
+    bar.append('svg:rect')
+      .attr('class', 'bar')
+      .attr('y', function(d) { return y_scale(d.value); })
+      .attr('height', function(d) { return height - y_scale(d.value); })
+      .attr('width', barWidth - 2)
+      .style('fill', function(d, i) {
+        if (i === 11) {
+          return '#9FBA2B';
+        } else {
+          return '#524F5C';
         }
+      })
+      .on('mouseover', function(d) {
+        d3.selectAll('.bar').style('fill', '#524F5C');
+        d3.select(this).style('fill', '#9FBA2B');
+
+        $amount.html('<span>' + formatNumber(parseInt(d.value, 10)) + '</span>');
+        $date.html('Hectares lost in ' + d.year);
       });
 
-      $amount.html('<span>' + formatNumber(parseInt(data_[data_.length - 1].value, 10)) + '</span>');
-      $date.html('Hectares lost in ' + data_[data_.length - 1].year);
+    // Draw gain line
+    var gainAverage = years_data[1].gain;
 
-      var marginLeft = 5,
-          marginTop = 0;
+    var tooltip = d3.select('.loss-gain-graph')
+      .append('div')
+      .attr('class', 'gain-tooltip')
+      .style('visibility', 'hidden')
+      .text(formatNumber(parseInt(gainAverage), 10));
 
-      var y_scale = d3.scale.linear()
-        .domain([0, d3.max(data_, function(d) { return parseFloat(d.value); })])
-        .range([height, marginTop * 2]);
+    tooltip
+      .append('span')
+      .text('Average Ha of gain/year');
 
-      var barWidth = 16;
+    var gainLine = graph.append('svg:rect')
+      .attr('class', 'gain-line')
+      .attr('x', 0)
+      .attr('y', Math.abs(y_scale(gainAverage)))
+      .attr('height', 1)
+      .attr('width', width)
+      .style('stroke', 'transparent')
+      .style("stroke-width", "5")
+      .style('fill', '#ccc');
 
-      var bar = graph.selectAll('g')
-        .data(data_)
-        .enter()
-        .append('g')
-        .attr('transform', function(d, i) { return 'translate(' + (marginLeft + i * barWidth) + ',' + -marginTop + ')'; });
-
-      bar.append('svg:rect')
-        .attr('class', 'bar')
-        .attr('y', function(d) { return y_scale(d.value); })
-        .attr('height', function(d) { return height - y_scale(d.value); })
-        .attr('width', barWidth - 2)
-        .style('fill', function(d, i) {
-          if (i === 11) {
-            return '#9FBA2B';
-          } else {
-            return '#524F5C';
-          }
-        })
-        .on('mouseover', function(d) {
-          d3.selectAll('.bar').style('fill', '#524F5C');
-          d3.select(this).style('fill', '#9FBA2B');
-
-          $amount.html('<span>' + formatNumber(parseInt(d.value, 10)) + '</span>');
-          $date.html('Hectares lost in ' + d.year);
-        });
-
-      // Draw gain line
-      var sql = 'SELECT y2001_y2012 as gain, (SELECT SUM(';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'y'+y+' + ';
-      }
-
-      sql += ['y2012) FROM countries_loss',
-              "WHERE iso = '" + that.country.get('iso') + "') as loss",
-              'FROM countries_gain',
-              "WHERE iso = '" + that.country.get('iso') + "'"].join(' ');
-
-      d3.json('https://wri-01.cartodb.com/api/v2/sql?q=' + encodeURIComponent(sql), function(json) {
-        var gainAverage = json.rows[0].gain / 12;
-
-        var tooltip = d3.select('.loss-gain-graph')
-          .append('div')
-          .attr('class', 'gain-tooltip')
-          .style('visibility', 'hidden')
-          .text(formatNumber(parseInt(gainAverage), 10));
+    gainLine
+      .on('mousemove', function() {
+        d3.select('.gain-line')
+          .style('height', 2)
+          .style('fill', 'white');
 
         tooltip
-          .append('span')
-          .text('Average Ha of gain/year');
-
-        var gainLine = graph.append('svg:rect')
-          .attr('class', 'gain-line')
-          .attr('x', 0)
-          .attr('y', Math.abs(y_scale(gainAverage)))
-          .attr('height', 1)
-          .attr('width', width)
-          .style('stroke', 'transparent')
-          .style("stroke-width", "5")
+          .style('visibility', 'visible')
+          .style("top", Math.abs(y_scale(gainAverage)) + "px")
+          .style("left", (d3.mouse(this)[0] - 58) + "px");
+      })
+      .on('mouseout', function() {
+        d3.select('.gain-line')
+          .style('height', 1)
           .style('fill', '#ccc');
 
-        gainLine
-          .on('mousemove', function() {
-            d3.select('.gain-line')
-              .style('height', 2)
-              .style('fill', 'white');
-
-            tooltip
-              .style('visibility', 'visible')
-              .style("top", Math.abs(y_scale(gainAverage)) + "px")
-              .style("left", (d3.mouse(this)[0] - 58) + "px");
-          })
-          .on('mouseout', function() {
-            d3.select('.gain-line')
-              .style('height', 1)
-              .style('fill', '#ccc');
-
-            tooltip.style('visibility', 'hidden');
-          })
-      });
-
-    });
+        tooltip.style('visibility', 'hidden');
+      })
   }
 
 });
