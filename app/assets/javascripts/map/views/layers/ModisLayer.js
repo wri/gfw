@@ -4,17 +4,18 @@
  * @return ModisLayer class (extends CartoDBLayerClass)
  */
 define([
+  'moment',
   'views/layers/class/CartoDBLayerClass',
   'presenters/ModisLayerPresenter',
   'text!cartocss/modis.cartocss'
-], function(CartoDBLayerClass, Presenter, modisCartoCSS) {
+], function(moment, CartoDBLayerClass, Presenter, modisCartoCSS) {
 
   'use strict';
 
   var ModisLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT cartodb_id, the_geom_webmercator, \'{tableName}\'  AS layer FROM {tableName} ' +
+      sql: 'SELECT cartodb_id, the_geom_webmercator, \'{tableName}\' AS layer FROM {tableName} ' +
         'WHERE EXTRACT(YEAR FROM DATE) = {endYear} ' +
         'AND EXTRACT(MONTH FROM DATE) = {endMonth}',
       cartocss: modisCartoCSS,
@@ -28,9 +29,6 @@ define([
     },
 
     /**
-     * [getQuery description].
-     *
-     * @return {[type]} [description]
      * @override
      */
     getQuery: function() {
@@ -41,11 +39,8 @@ define([
         endMonth: this.timelineDate[1].month() + 1
       });
 
-      console.log(query);
-
       return query;
     },
-
 
     /**
      * Used by ModisLayerPresenter to set the dates for the tile.

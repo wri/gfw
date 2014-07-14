@@ -19,15 +19,18 @@ define([
 
     className: 'timeline-btn',
 
+    defaults: {
+      dateRange: [moment([2001]), moment()],
+      playSpeed: 400,
+      tickWidth: 120
+    },
+
     initialize: function(layer) {
+      _.bindAll(this, '_onClickTick', '_selectFirstTick');
+
       this.layer = layer;
       this.name = layer.slug;
-
-      this.options = _.extend({
-        dateRange: [moment([2001]), moment()],
-        playSpeed: 400,
-        tickWidth: 120
-      }, this.options);
+      this.options = _.extend({}, this.defaults, this.options || {});
 
       // d3 slider objets
       this.svg = {};
@@ -65,27 +68,50 @@ define([
         .append('g')
           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-      this.svg.selectAll('rect')
+      this.tickG = this.svg.selectAll('g')
         .data(data)
         .enter()
-        .append('rect')
-        .attr('width', this.options.tickWidth)
-        .attr('height', 18)
-        .attr('fill', 'pink')
+        .append('g')
         .attr('class', 'tick')
-        .attr('x', _.bind(function(d, i) {
+        .attr('transform', _.bind(function(d, i) {
           i++;
           var slotWidth = (width / data.length);
-          return (i * slotWidth) + ((slotWidth - this.options.tickWidth) / 2) - slotWidth;
-        },this))
-        .attr('y', 15);
+          var x =  (i * slotWidth) +
+            ((slotWidth - this.options.tickWidth) / 2) - slotWidth;
 
-      this.svg.selectAll('.tick')
-        .on('click', _.bind(function(date) {
-          console.log(date.start.format('MMM YYYY'), '--',
-            date.end.format('MMM YYYY'));
-          this.updateTimelineDate(date);
+          return 'translate(' + x + ', 15)';
         }, this));
+
+      this.tickG.append('rect')
+        .attr('width', this.options.tickWidth)
+        .attr('height', 17)
+        .attr('ry', 2);
+
+      this.tickG.append('text')
+        .attr('y', 13)
+        .attr('x', 10)
+        .text(this._getTickText);
+
+      this.tickG
+        .on('click', function(date, i) {
+          self._onClickTick(this, date, i);
+        });
+
+      // TODO => URL dateRange params
+      this._selectFirstTick();
+    },
+
+    _onClickTick: function(el, date, i) {
+      this.svg.selectAll('.tick').filter(function(d) {
+        d3.select(this).classed('selected', false)
+      });
+
+      d3.select(el).classed('selected', true)
+      this.updateTimelineDate(date);
+    },
+
+    _selectFirstTick: function() {
+      d3.select(this.tickG.node()).classed('selected', true);
     },
 
     /**
@@ -100,6 +126,9 @@ define([
 
     getName: function() {
       return this.name;
+    },
+
+    _getTickText: function() {
     }
   });
 

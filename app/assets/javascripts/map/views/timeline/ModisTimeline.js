@@ -29,18 +29,15 @@ define([
      * @return {array} Array of quarterly.
      */
     _getData: function() {
-      // var monthsCount = this.options.dateRange[1]
-      //   .diff(this.options.dateRange[0], 'months', true);
+      var data = [];
 
-      // monthsCount = Math.round((months) / 3);
-      var results = [];
-
+      // First date
       var range = {
         start: this.options.dateRange[0].clone(),
-        end: this.options.dateRange[0].add(2, 'month').clone()
+        end: this.options.dateRange[0].clone().add(2, 'month')
       };
 
-      results.push(range);
+      data.push(range);
 
       while(1) {
         range = {
@@ -52,14 +49,18 @@ define([
           break;
         }
 
-        results.push(range);
+        data.push(range);
       }
 
-      return results;
+      return data;
     },
 
-    _getTickFormat: function(d) {
-      return '{0} Q{1}'.format(2013, d);
+    /**
+     * @override
+     */
+    _getTickText: function(d, i) {
+      var quarter = (d.end.month() + 1) / 3;
+      return '{0} Q{1}'.format(d.end.year(), quarter);
     }
   });
 
