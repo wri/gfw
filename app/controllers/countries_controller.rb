@@ -1,5 +1,4 @@
 class CountriesController < ApplicationController
-  #before_filter :load_countries, :only => [:index]
   include ActionView::Helpers::NumberHelper
 
   def index
@@ -7,9 +6,7 @@ class CountriesController < ApplicationController
   end
 
   def show
-    @country = Api::Country.find_by_iso(params[:id])['countries'][0]
-    not_found unless @country.present?
-    country = find_by_iso(params[:id])
+    @country = find_by_iso(params[:id])
 
     if @country['gva'].present? && @country['gva'] > 0
       gva_precision = (@country['gva_percent'] < 0.1) ? 2 : 1
