@@ -89,9 +89,13 @@ define([
      * @return {string} CartoDB query
      */
     getQuery: function() {
+      console.log(new UriTemplate(this.options.sql || this.queryTemplate).fillFromObject({tableName: this.layer.table_name}));
       return new UriTemplate(this.options.sql || this.queryTemplate).fillFromObject({tableName: this.layer.table_name});
-    }
+    },
 
+    getName: function() {
+      return this.name;
+    }
   });
 
   return CartoDBLayerClass;

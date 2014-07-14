@@ -14,44 +14,52 @@ define([
   var ModisTimeline = TimelineBtnClass.extend({
 
     options: {
-      dateRange: [moment([2012, 0, 1]), moment([2013, 11, 31])],
+      dateRange: [moment([2011, 9]), moment([2014, 2])],
+      tickWidth: 60
+    },
+
+    initialize: function(layer) {
+      this.presenter = new Presenter(this);
+      ModisTimeline.__super__.initialize.apply(this, [layer]);
     },
 
     /**
-     * Return array month tick values.
-     * 0 = jan
-     * [
-     *   {year: 2013, months:[0,2], q: 1}
-     * ]
-     * 
-     * @return {[type]} [description]
+     * Get array of quarterly dates.
+     *
+     * @return {array} Array of quarterly.
      */
     _getData: function() {
-      var dateRange = this.options.dateRange;
-      var months = this.options.dateRange[1]
-        .diff(this.options.dateRange[0], 'months', true);
-      
-      months = Math.round((months) / 3);
-      var result = [];
+      // var monthsCount = this.options.dateRange[1]
+      //   .diff(this.options.dateRange[0], 'months', true);
 
-      for (var i = 0; i < months; i++) {
-        result.push(i);
+      // monthsCount = Math.round((months) / 3);
+      var results = [];
+
+      var range = {
+        start: this.options.dateRange[0].clone(),
+        end: this.options.dateRange[0].add(2, 'month').clone()
       };
 
-      return result;
+      results.push(range);
+
+      while(1) {
+        range = {
+          start: range.end.clone().add(1, 'month'),
+          end: range.end.clone().add(3, 'month')
+        };
+
+        if (range.end.isAfter(this.options.dateRange[1])) {
+          break;
+        }
+
+        results.push(range);
+      }
+
+      return results;
     },
 
     _getTickFormat: function(d) {
       return '{0} Q{1}'.format(2013, d);
-    },
-
-    /**
-     * Get the layer spec
-     * @param  {object} layer The layer object
-     */
-    initialize: function(layer) {
-      this.presenter = new Presenter(this);
-      ModisTimeline.__super__.initialize.apply(this, [layer]);
     }
   });
 

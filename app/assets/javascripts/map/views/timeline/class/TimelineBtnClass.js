@@ -23,23 +23,15 @@ define([
       this.layer = layer;
       this.name = layer.slug;
 
-      this.opts = _.extend({
+      this.options = _.extend({
         dateRange: [moment([2001]), moment()],
         playSpeed: 400,
-      }, this.opts);
-
-      // Status
-      this.playing = false;
+        tickWidth: 120
+      }, this.options);
 
       // d3 slider objets
       this.svg = {};
       this.xscale = {};
-      this.brush = {};
-      this.slider = {};
-      this.handlers = {
-        left:{},
-        right:{}
-      };
 
       this.render();
     },
@@ -53,8 +45,8 @@ define([
       this.$timeline.append(this.el);
 
       // SVG options
-      var margin = {top: 0, right: 30, bottom: 0, left: 30};
-      var width = 949 - margin.left - margin.right;
+      var margin = {top: 0, right: 15, bottom: 0, left: 15};
+      var width = 1000 - margin.left - margin.right;
       var height = 50 - margin.bottom - margin.top;
 
       // Set xscale
@@ -71,25 +63,29 @@ define([
           .attr('width', width + margin.left + margin.right)
           .attr('height', height + margin.top + margin.bottom)
         .append('g')
-          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
-          .selectAll('rect')
-          .data(data)
-          .enter()
-          .append('rect')
-          .attr('width', 40)
-          .attr('height', 20)
-          .attr('fill', 'pink')
-          .attr('class', 'tick')
-          .attr('x', function(d) {
-            return d * 20;
-          })
-          .attr('y', 12)
-          .text(function(d) {
-            return d;
-          });
+          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+
+      this.svg.selectAll('rect')
+        .data(data)
+        .enter()
+        .append('rect')
+        .attr('width', this.options.tickWidth)
+        .attr('height', 18)
+        .attr('fill', 'pink')
+        .attr('class', 'tick')
+        .attr('x', _.bind(function(d, i) {
+          i++;
+          var slotWidth = (width / data.length);
+          return (i * slotWidth) + ((slotWidth - this.options.tickWidth) / 2) - slotWidth;
+        },this))
+        .attr('y', 15);
 
       this.svg.selectAll('.tick')
-        .on('click', this._onClick);
+        .on('click', _.bind(function(date) {
+          console.log(date.start.format('MMM YYYY'), '--',
+            date.end.format('MMM YYYY'));
+          this.updateTimelineDate(date);
+        }, this));
     },
 
     /**
@@ -99,7 +95,7 @@ define([
      * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
     updateTimelineDate: function(date) {
-      this.presenter.updateTimelineDate(date);
+      this.presenter.updateTimelineDate([date.start, date.end]);
     },
 
     getName: function() {
