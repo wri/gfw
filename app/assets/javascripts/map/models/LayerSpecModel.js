@@ -69,8 +69,8 @@ define([
       var layers = {};
 
       _.each(_.omit(this.toJSON(), 'forest_clearing'),
-        function(layers) {
-          layers = _.extend(layers, layers);
+        function(results) {
+          layers = _.extend(layers, results);
         });
 
       return this.positionizer(layers);

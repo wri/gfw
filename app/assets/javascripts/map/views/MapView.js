@@ -140,7 +140,10 @@ define([
           }
         }, this));
 
-      // Sort layers by position and call addLayer.
+      /**
+       * Sort layers by position before calling.
+       * This way layers are going to be rendered always on the right order.
+       */
       _.map(_.sortBy(_.values(layers), 'position'),
         this._addLayer, this);
     },
@@ -151,19 +154,19 @@ define([
      * @param {Object} layer The layer object
      */
     _addLayer: function(layer) {
-      if (!this._isLayerRendered(layer.slug)) {
+      if (!this._isLayerRendered(layer.slug) && this.layersViews[layer.slug]) {
         var layerView = this.layerInst[layer.slug] =
           new this.layersViews[layer.slug](layer, this.map);
 
         layerView.getLayer().then(_.bind(function(layerView) {
-          ////// layer position
+          // Calculate layer position
           var position = 0;
           var layersCount = this.map.overlayMapTypes.getLength();
 
           if (typeof layer.position !== 'undefined' && layer.position <= layersCount) {
             position = layersCount - layer.position;
           }
-          //////
+
           this.map.overlayMapTypes.insertAt(position, layerView);
         }, this));
       }

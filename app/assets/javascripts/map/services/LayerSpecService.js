@@ -41,6 +41,12 @@ define([
     _toggleLayer: function(layer) {
       var current = this.model.getLayer({slug: layer.slug});
 
+      // At least one baselayer selected.
+      if (current && current.category_slug === 'forest_clearing' &&
+        _.keys(this.model.getBaselayers()).length === 1) {
+        return;
+      }
+
       if (current) {
         this._removeLayer(current);
 
@@ -87,13 +93,13 @@ define([
         var passException = false;
 
         if (forbidden.except) {
-          var combination = _.pluck(this.model.get(layer.category_slug),
-           'slug');
+          var combination = _.pluck(this.model.get(layer.category_slug), 'slug');
           combination.push(layer.slug);
 
           passException = true;
           _.each(forbidden.except, _.bind(function(exception) {
-            passException = passException && (_.difference(combination, exception).length < 1);
+            passException = passException &&
+              (_.difference(combination, exception).length < 1);
           }, this));
         }
 
