@@ -117,7 +117,7 @@ define([
         var subWhere = this._getSublayerFilters(params.sublayers);
         var where = _.union(baseWhere, subWhere);  // Preserves order
 
-        layerSpecService.add(
+        layerSpecService.toggle(
           where,
           _.bind(function(layerSpec) {
             newPlace.params.layerSpec = layerSpec;
