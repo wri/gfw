@@ -12,61 +12,56 @@ define([
   'underscore',
   'nsa',
   'Class',
-  'uri'
-], function (_, nsa, Class, UriTemplate) {
+  'uri',
+  'services/DataService',
+  '_string'
+], function (_, nsa, Class, UriTemplate, ds) {
 
   'use strict';
 
+  var URL = 'http://beta.gfw-apis.appspot.com/forest-change';
+
   var AnalysisService = Class.extend({
 
-    // TODO: pull this from /forest-change endpoint and cache.
-    apis: {
-      'forma-alerts': {
-        'apis': {
-          'world': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts{?geojson,period,bust,dev}',
-          'national': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}{?period,bust,dev}',
-          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}/{id1}{?period,bust,dev}',
-          'use': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/use/{use}/{useid}{?period,bust,dev}',
-          'wdpa': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/wdpa/{wdpaid}{?period,bust,dev}'
-        }
-      },
-      'nasa-active-fires': {
-        'apis': {
-          'world': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires{?geojson,period,bust,dev}',          
-          'national': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/{iso}{?period,bust,dev}',
-          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/{iso}/{id1}{?period,bust,dev}',
-          'use': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/use/{use}/{useid}{?period,bust,dev}',
-          'wdpa': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/wdpa/{wdpaid}{?period,bust,dev}'
-        }
-      },
-      'quicc-alerts': {
-        'apis': {
-          'world': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts{?geojson,period,bust,dev}',
-          'national': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/{iso}{?period,bust,dev}',
-          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/{iso}/{id1}{?period,bust,dev}',
-          'use': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/use/{use}/{useid}{?period,bust,dev}',
-          'wdpa': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/wdpa/{wdpaid}{?period,bust,dev}'
-        }
-      },      
-      'umd-loss-gain':{
-        'apis':{
-          'national': 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}{?bust,dev,thresh}',
-          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}/{id1}{?bust,dev,thresh}'
-        }
-      }
+    _urls: function(dataset) {
+      var types = ['world', 'national', 'subnational', 'use', 'wdpa'];
+      var ids = _.map(types,
+        function(type) {
+          return  _.str.sprintf('%s:%s', dataset, type);
+        });
+      var urls = [
+        _.str.sprintf('%s/%s', URL, dataset),
+        _.str.sprintf('%s/%s/admin/{iso}', URL, dataset),
+        _.str.sprintf('%s/%s/admin/{iso}/{id1}', URL, dataset),
+        _.str.sprintf('%s/%s/use/{use}/{useid}', URL, dataset),
+        _.str.sprintf('%s/%s/wdpa/{wdpaid}', URL, dataset)
+      ];
+
+      return _.object(ids, urls);
     },
 
+  
     init: function() {
+      this._defineRequests();
     },
 
-    /**
-     * Return URI template for API based on supplied config object of 
-     * parameters. The dataset config property is required.
-     *
-     * @param  {object} API parameters
-     * @return {string} URI template for API
-     */
-    _getUriTemplate: function(config) {
+    _defineRequests: function() {
+      var datasets = [
+        'forma-alerts', 'umd-loss-gain', 'imazon-alerts', 'nasa-active-fires', 
+        'quicc-alerts'
+      ];
+
+      _.each(datasets, function(dataset) {
+        _.each(this._urls(dataset), function(url, id) {
+          var cache = {type: 'localStorage', duration: 1, unit: 'day'};
+          var config = {
+            cache: cache, url: url, type: 'POST', dataType: 'json'};
+          ds.define(id, config);
+        }, this);
+      }, this);
+    },
+
+    _getId: function(config) {
       var dataset = config.dataset;
 
       if (!dataset) {
@@ -74,39 +69,21 @@ define([
       }
 
       if (_.has(config, 'iso') && !_.has(config, 'id1')) {
-        return this.apis[dataset].apis.national;
+        return _.str.sprintf('%s:national', dataset)
       } else if (_.has(config, 'iso') && _.has(config, 'id1')) {
-        return this.apis[dataset].apis.subnational;
+        return _.str.sprintf('%s:subnational', dataset);
       } else if (_.has(config, 'use')) {
-        return this.apis[dataset].apis.use;
+        return _.str.sprintf('%s:use', dataset);
       } else if (_.has(config, 'wdpaid')) {
-        return this.apis[dataset].apis.wdpa;
+        return _.str.sprintf('%s:wdpa', dataset);
       } else if (_.has(config, 'geojson')) {
-        return this.apis[dataset].apis.world;
+        return _.str.sprintf('%s:world', dataset);
       }
 
       return null;
     },
 
-    /**
-     * Returns API URL from supplied config object of API parameters.
-     *
-     * @param  {object} config API parameters
-     * @return {string} API URL
-     */
-    _getUrl: function(config) {
-      var template = this._getUriTemplate(config);
-      var url = null;
-
-      if (!template) {
-        return null;
-      }
-
-      url = new UriTemplate(template).fillFromObject(config);
-
-      return url;
-    },
-
+    
     /**
      * Asynchronously execute analysis for supplied configuration.
      *
@@ -121,23 +98,12 @@ define([
      *   useid - Concession polygon cartodb_id (e.g., 2)
      *   wdpaid - WDPA polygon cartodb_id (e.g., 800)
      */
-    execute: function(config, successCb, failureCb) {
-      var url = this._getUrl(config);
+    execute: function(data, successCb, failureCb) {
+      var id = this._getId(data);
+      var config = {resourceId: id, data: data, success: successCb,
+        error: failureCb};
 
-      if (!url) {
-        failureCb('Unable to find API endpoint for supplied config');
-        return;
-      }
-
-      nsa.spy(
-        url,
-        {},
-        function(response) {
-          successCb(response);
-        },
-        function(responseText, status, error) {
-          failureCb(responseText, status, error);
-        });
+      ds.request(config);
     }
   });
 

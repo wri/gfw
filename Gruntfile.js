@@ -60,7 +60,7 @@ module.exports = function(grunt) {
         files: '<%= jshint.all %>',
         tasks: ['jasmine']
       },
-      jshint: {
+      scripts: {
         files: '<%= jshint.all %>',
         tasks: ['jshint']
       }

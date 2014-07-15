@@ -5,6 +5,8 @@ define([
   'helpers/api_responses'
 ], function(nsa, mps, _) {
 
+  'use strict';
+
   describe("The nsa module", function() {
     var request = null;
     var cache = null;

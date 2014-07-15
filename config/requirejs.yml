@@ -2,6 +2,7 @@ modules:
   - name: "map"
 
 paths:
+  amplify: "amplify/lib/amplify"
   underscore: "underscore/underscore"
   backbone: "backbone/backbone"
   jquery: "jquery/dist/jquery"
@@ -40,6 +41,10 @@ paths:
 shim:
   underscore:
     exports: "_"
+  amplify:
+    deps:
+      - "jquery"
+    exports: "amplify"  
   backbone:
     deps:
       - "jquery"

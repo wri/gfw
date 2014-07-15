@@ -7,21 +7,35 @@ define([
   'mps',
   'store',
   'moment',
-  'amplify'
-], function (Class, mps, store, moment, amplify) {
+  'amplify',
+  'underscore'
+], function (Class, mps, store, moment, amplify, _) {
 
   'use strict';
 
-  var NSA = Class.extend({
+  var DataService = Class.extend({
 
     // Added for Jasmine testing to bypass cache and use 'json' dataType
     test: false,
 
-    init: function() {
-      mps.subscribe('LocalStorage/clear', function() {
-        store.clear();
-        console.log('LocalStorage cleared');
-      });
+    init: function() {    
+    },
+
+    define: function(id, config) {
+      var cache = config.cache;
+      var duration = cache && cache.duration ? cache.duration : 1;
+      var unit = cache && cache.unit ? cache.unit : 'week';
+      var expires = this._getDuration(duration, unit);
+
+      if (cache) {
+        cache.expires = expires;
+      }
+
+      amplify.request.define(id, 'ajax', config);
+    },
+  
+    request: function(config) {
+      amplify.request(config);
     },
 
     /**
@@ -70,10 +84,33 @@ define([
         dataType: this.test ? 'json' : dataType
       });
       return jqxhr;
+    },
+
+    /**
+     * Get duration in milliseconds from supplied number and unit.
+     * 
+     * @param  {string} ttl The ttl string 'number:unit'.
+     * @return {moment.Duration} The duration object 
+     */
+    _getDuration: function(number, unit) {
+      var units = ['seconds', 'minutes', 'hours', 'days', 'weeks', 'months',
+        'years'];
+
+      // Check for valid unit
+      if (_.indexOf(units, unit) === -1) {
+        return null;
+      }
+
+      // Check valid number
+      if (!number) {
+        return null;
+      }
+
+      return moment.duration(number, unit).asMilliseconds();
     }
   });
 
-  var nsa = new NSA();
+  var service = new DataService();
 
-  return nsa;
+  return service;
 });
