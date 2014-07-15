@@ -26,7 +26,9 @@ define([
     /**
      * Constructs a new AnalysisButtonView and its presenter.
      */
-    initialize: function() {
+    initialize: function(options) {
+      _.bindAll(this, '_onOverlayComplete');
+      this.options   = options;
       this.presenter = new Presenter(this);
       this.render();
     },
@@ -85,82 +87,53 @@ define([
       })
     },
 
+    hideHelperBar: function() {
+      this.$el.find('.helper_bar').fadeOut();
+    },
+
     startDrawingManager: function() {
-      var self = this,
-          map = new google.maps.Map(document.getElementById('map'));
-
-      var style = {
-        strokeWeight: 2,
-        fillOpacity: 0.45,
-        fillColor: "#FFF",
-        strokeColor: "#A2BC28",
-        editable: true,
-        icon: new google.maps.MarkerImage(
-          '/assets/icons/marker_exclamation.png',
-          new google.maps.Size(36, 36), // size
-          new google.maps.Point(0, 0), // offset
-          new google.maps.Point(18, 18) // anchor
-        )
-      };
-
       var options = {
         drawingModes: [ google.maps.drawing.OverlayType.POLYGON ],
         drawingControl: false,
-        polygonOptions: style,
+        polygonOptions: {
+          strokeWeight: 2,
+          fillOpacity: 0.45,
+          fillColor: "#FFF",
+          strokeColor: "#A2BC28",
+          editable: true,
+          icon: new google.maps.MarkerImage(
+            '/assets/icons/marker_exclamation.png',
+            new google.maps.Size(36, 36), // size
+            new google.maps.Point(0, 0), // offset
+            new google.maps.Point(18, 18) // anchor
+          )
+        },
         panControl: false,
-        map: map
+        map: this.options.map
       };
 
-      // Create the drawing manager
       this.drawingManager = new google.maps.drawing.DrawingManager(options);
-
-      // Start drawing right away
       this.drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
-
-      // Event binding
-    console.log(google.maps.event)
-      google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this._onOverlayComplete());
+      google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this._onOverlayComplete);
     },
 
     _onOverlayComplete: function(e) {
       var polygon = {};
-      var c0 = [];
-      var area = null;
-
-      this.drawingManager.setDrawingMode(null);
-      this.drawingManager.path = e.overlay.getPath().getArray();
-      this.drawingManager.setOptions({ drawingControl: false });
-      //this._enableDoneButton();
-
-      var newShape = e.overlay;
-      newShape.type = e.type;
-
-      this._setSelection(newShape);
-
-      polygon = {
+      
+      polygon = JSON.stringify({
         'type': 'Polygon',
-        'coordinates': [
-          $.map(this.drawingManager.path, function(latlong, index) {
-            return [[latlong.lng(), latlong.lat()]];
-          })
-        ]
-      };
+        'coordinates': $.map(e.overlay.getPath().getArray(), function(latlng, index) {
+                            return [[latlng.lng().toFixed(4), latlng.lat().toFixed(4)]];
+                        })
+      });
 
-      if (typeof polygon === 'undefined' || polygon === '' || polygon.coordinates[0].length < 3) {
-        this.$('.cancel').click();
-
+      if (polygon) {
+        var config = {dataset: 'forma-alerts', geojson: polygon};
+        var callback = this.hideHelperBar();
+        //service.execute(config,callback);
+        
         return;
       }
-
-      // Close the polygon:
-      c0 = polygon.coordinates[0][0];
-      polygon.coordinates[0].push(c0);
-
-      //area = formatNumber(Math.ceil((google.maps.geometry.spherical.computeArea(this.drawingManager.path)/10000) * 10) / 10, true)
-
-      // this.model.set('area', JSON.stringify(polygon));
-      // this.info.model.set('ha', formatNumber(this._calcAreaPolygon(polygon), true));
-      // this.info.model.set('title', this.info.model.defaults.title);
     },
   });
 

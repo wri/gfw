@@ -104,7 +104,7 @@ define([
      * Adds any default composite views to the map.
      */
     _addCompositeViews: function() {
-      this.$el.append(new AnalysisButtonView().$el);
+      this.$el.append(new AnalysisButtonView({map:this.map}).$el);
     },
 
     /**
