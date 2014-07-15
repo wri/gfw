@@ -38,14 +38,14 @@ define([
 
       cache = cache === undefined ? true : cache;
 
-      if (!this.test && cache && store.enabled) {
-        // TODO: Key should be made from url+data
-        val = store.get(url);
-        if (val) {
-          successCb(val);
-          return;
-        }
-      }
+      // if (!this.test && cache && store.enabled) {
+      //   // TODO: Key should be made from url+data
+      //   val = store.get(url);
+      //   if (val) {
+      //     successCb(val);
+      //     return;
+      //   }
+      // }
 
       $.ajax({
         url: url,

@@ -1,7 +1,7 @@
 /**
- * The ModisLayerPresenter.
+ * The FiresLayerPresenter.
  *
- * @return ModisLayerPresenter class
+ * @return FiresLayerPresenter class
  */
 define([
   'Class',
@@ -11,7 +11,7 @@ define([
 
   'use strict';
 
-  var ModisLayerPresenter = Class.extend({
+  var FiresLayerPresenter = Class.extend({
 
     init: function(view) {
       this.view = view;
@@ -31,6 +31,6 @@ define([
     }
   });
 
-  return ModisLayerPresenter;
+  return FiresLayerPresenter;
 
 });

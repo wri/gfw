@@ -23,7 +23,8 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
-        this.view.setTimeline(place.params.layerSpec.getBaselayers());
+        this.view.setTimeline(place.params.layerSpec.getBaselayers(),
+          place.params.date);
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
@@ -40,11 +41,16 @@ define([
      * @return {Object} Params representing the state of the LayerNavView and layers
      */
     getPlaceParams: function() {
-      return {
-        name: 'map',
-        date: '{0}-{1}'.format(this.view.getCurrentDate()[0].format('X'),
-          this.view.getCurrentDate()[1].format('X')) 
-      };
+      var date =  this.view.getCurrentDate();
+      var p = {};
+      p.name = 'map';
+
+      if (date) {
+        p.date = '{0}{1}'.format(this.view.getCurrentDate()[0].format('X'),
+          this.view.getCurrentDate()[1].format('X'));
+      }
+
+      return p;
     }
 
   });

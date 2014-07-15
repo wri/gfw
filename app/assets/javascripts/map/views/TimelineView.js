@@ -8,8 +8,9 @@ define([
   'underscore',
   'presenters/TimelinePresenter',
   'views/timeline/UMDLossTimeline',
-  'views/timeline/ModisTimeline'
-], function(Backbone, _, Presenter, UMDLossTimeline, ModisTimeline) {
+  'views/timeline/ModisTimeline',
+  'views/timeline/FiresTimeline'
+], function(Backbone, _, Presenter, UMDLossTimeline, ModisTimeline, FiresTimeline) {
 
   'use strict';
 
@@ -19,7 +20,8 @@ define([
 
     timelineViews: {
       umd_tree_loss_gain: UMDLossTimeline,
-      modis: ModisTimeline
+      modis: ModisTimeline,
+      fires: FiresTimeline
     },
 
     initialize: function() {
@@ -40,15 +42,15 @@ define([
      *
      * @param {object} baselasyer
      */
-    setTimeline: function(baselayers) {
+    setTimeline: function(baselayers, date) {
       if (this.currentTimeline) {
         this.currentTimeline.remove();
         this.currentTimeline = null;
       }
 
-      _.each(this.timelineViews, _.bind(function(View, lName) {
-        if (baselayers[lName]) {
-          this.currentTimeline = new View(baselayers[lName]);
+      _.each(this.timelineViews, _.bind(function(View, layerSlug) {
+        if (baselayers[layerSlug]) {
+          this.currentTimeline = new View(baselayers[layerSlug], date);
           this.$el.show();
         }
       }, this));
@@ -59,7 +61,10 @@ define([
     },
 
     getCurrentDate: function() {
-      return this.currentTimeline.getCurrentDate();
+      if (this.currentTimeline) {
+        return this.currentTimeline.getCurrentDate();}
+
+      return;
     }
   });
 

@@ -6,9 +6,10 @@
 define([
   'Class',
   'underscore',
+  'moment',
   'services/MapLayerService',
   'models/LayerSpecModel'
-], function(Class, _, mapLayerService, LayerSpecModel) {
+], function(Class, _, moment, mapLayerService, LayerSpecModel) {
 
   'use strict';
 
@@ -29,16 +30,38 @@ define([
     },
 
     toggle: function(where, success, error) {
+      var self = this;
       mapLayerService.getLayers(
         where,
-        _.bind(function(layers) {
-          _.map(layers, this._toggleLayer, this);
-          success(this.model);
-        }, this),
+        function(layers) {
+          _.each(layers, function(layer) {
+            self._toggleLayer(self._standardizeAttrs(layer));
+          });
+          success(self.model);
+        },
         error);
     },
 
-    _toggleLayer: function(layer) {
+    /**
+     * Standarize layer attributes.
+     *
+     * @param  {obj} layer The layer object
+     * @param  {obj} opts  Layer extra parameters.
+     * @return {obj} layer The layer object
+     */
+    _standardizeAttrs: function(layer) {
+      if (layer.mindate) {
+        layer.mindate = moment(layer.mindate);
+      }
+
+      if (layer.maxdate) {
+        layer.maxdate = moment(layer.maxdate);
+      }
+
+      return layer;
+    },
+
+    _toggleLayer: function(layer, date) {
       var current = this.model.getLayer({slug: layer.slug});
 
       // At least one baselayer selected.
@@ -117,14 +140,14 @@ define([
      * @return {Object} Params representing the state of the LayerNavView and layers
      */
     getPlaceParams: function() {
-      return {
-        name: 'map',
-        baselayers: _.keys(this.model.getBaselayers()).join(','),
-        sublayers: _.pluck(this.model.getSublayers(), 'id').join(',')
-      };
+      var p = {};
+
+      p.name = 'map';
+      p.baselayers = _.keys(this.model.getBaselayers()).join(',');
+      p.sublayers = _.pluck(this.model.getSublayers(), 'id').join(',');
+
+      return p;
     },
-
-
   });
 
   var layerSpecService = new LayerSpecService();

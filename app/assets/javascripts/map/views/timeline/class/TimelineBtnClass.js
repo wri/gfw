@@ -21,25 +21,31 @@ define([
 
     defaults: {
       dateRange: [moment([2001]), moment()],
-      playSpeed: 400,
       width: 1000,
       height: 50,
-      tickWidth: 120
+      tickWidth: 120,
+      tipsy: true
     },
 
-    initialize: function(layer) {
+    initialize: function(name) {
       _.bindAll(this, '_onClickTick', '_selectDate');
-
-      this.layer = layer;
-      this.name = layer.slug;
+      this.name = name;
       this.options = _.extend({}, this.defaults, this.options || {});
-      this.currentDate = null;
+      this.data = this._getData();
+
+      this.currentDate = this.currentDate ||
+        [this.data[this.data.length-1].start, this.data[this.data.length-1].end];
 
       // d3 slider objets
       this.svg = {};
       this.xscale = {};
 
       this.render();
+
+      this._selectDate({
+        start: this.currentDate[0],
+        end: this.currentDate[1]
+      });
     },
 
     /**
@@ -72,19 +78,23 @@ define([
           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
       // Set tipsy
-      this.tipsy = this.svg.append('g')
-        .attr('class', 'tipsy') 
-        .style('visibility', 'visible');
+      if (this.options.tipsy) {
+        this.tipsy = this.svg.append('g')
+          .attr('class', 'tipsy')
+          .style('visibility', 'hidden');
 
-      this.trail = this.tipsy.append('svg:line')
-        .attr('class', 'trail')
-        .attr('x1', 0)
-        .attr('x2', 0)
-        .attr('y1', 0)
-        .attr('y2', height);
+        this.trail = this.tipsy.append('svg:line')
+          .attr('class', 'trail')
+          .attr('x1', width)
+          .attr('x2', width)
+          .attr('y1', 0)
+          .attr('y2', height);
 
-      this.tooltip = d3.select(this.el).append('div')
-        .attr('class', 'tooltip');
+        this.tooltip = d3.select(this.el).append('div')
+          .attr('class', 'tooltip')
+          .style('left', width + 'px')
+          .style('visibility', 'hidden');
+      }
 
       // Set ticks
       this.tickG = this.svg.append('g')
@@ -111,7 +121,9 @@ define([
       this.tickG.append('text')
         .attr('y', 13)
         .attr('x', 10)
-        .text(this._getTickText);
+        .text(function(d) {
+          return d.label;
+        });
 
       this.tickG
         .on('click', function(date, i) {
@@ -120,46 +132,62 @@ define([
     },
 
     _onClickTick: function(el, date) {
-      this._selectDate(el, date);
-      this._updateTimelineDate(date);
+      this._selectDate(date, el);
+      this._updateTimelineDate([date.start, date.end]);
     },
-
 
     /**
      * Add selected class to the tick and moves
      * the tipsy to that position.
-     * 
+     *
      * @param  {object} el   Tipsy element
      * @param  {date}   date {start:{}, end:{}}
      */
-    _selectDate: function(el, date) {
+    _selectDate: function(date, el) {
+      if (!el) {
+        el = this.tickG.filter(function(d, i) {
+          var dformat = 'DD-MM-YYYY';
+          return (d.start.format(dformat) === date.start.format(dformat) &&
+            d.end.format(dformat) === date.end.format(dformat));
+        }).node();
+      }
+
       el = d3.select(el);
+
       var x = d3.transform(el.attr("transform")).translate[0];
       var trailX = x + (this.options.tickWidth / 2);
 
       this.svg.selectAll('.tick').filter(function(d) {
-        d3.select(this).classed('selected', false);});
+        d3.select(this).classed('selected', false);
+      });
 
       el.classed('selected', true);
 
-      this.trail
-        .transition()
-        .duration(100)
-        .ease('line')
-        .attr('x1', trailX)
-        .attr('x2', trailX);
+      // Move tipsy
+      if (this.options.tipsy) {
+        this.tipsy
+          .style('visibility', 'visible');
 
-      this.tooltip
-        .transition()
-        .duration(100)
-        .ease('line')
-        .text(this._getTooltipText(date))
-        .style('left', x + 'px');
+        this.trail
+          .transition()
+          .duration(100)
+          .ease('line')
+          .attr('x1', trailX)
+          .attr('x2', trailX);
+
+        this.tooltip
+          .transition()
+          .duration(100)
+          .ease('line')
+          .text(this._getTooltipText(date))
+          .style('left', x + 'px')
+          .style('visibility', 'visible');
+      }
     },
 
     _getTooltipText: function(date) {
       return '{0}-{1} {2}'.format(date.start.format('MMM'),
-          date.end.format('MMM'), date.end.year());
+        date.end.format('MMM'), date.end.year());
     },
 
     /**
@@ -169,12 +197,8 @@ define([
      * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
     _updateTimelineDate: function(date) {
-      var formatted = [date.start, date.end];
-      this.currentDate = formatted;
-      this.presenter.updateTimelineDate(formatted);
-    },
-
-    _getTickText: function() {
+      this.currentDate = date;
+      this.presenter.updateTimelineDate(date);
     },
 
     getName: function() {

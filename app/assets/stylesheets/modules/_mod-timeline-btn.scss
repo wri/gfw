@@ -12,6 +12,7 @@
       pointer-events: none;
       font-size: 11px;
       fill: #666;
+      text-transform: uppercase;
     }
 
     &.selected rect {
@@ -23,6 +24,9 @@
       fill: white;
       font-weight: bold;
     }
+  }
 
+  .tooltip {
+    text-transform: uppercase;
   }
 }

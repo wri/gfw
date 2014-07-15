@@ -21,21 +21,21 @@ define([
     className: 'timeline-date-range',
     template: Handlebars.compile(tpl),
 
+    defaults: {
+      dateRange: [moment([2001]), moment()],
+      playSpeed: 400,
+      width: 949,
+      height: 50
+    },
+
     events: {
       'click .play': 'togglePlay'
     },
 
-    defaults: {
-      dateRange: [moment([2001]), moment()],
-      playSpeed: 400
-    },
-
-    initialize: function(layer) {
+    initialize: function(name) {
       _.bindAll(this, 'onAnimationBrush', 'onBrush', 'onBrushEnd', 'updateTimelineDate');
-
-      this.layer = layer;
-      this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
+      this.name = name;
       this.currentDate = this.options.dateRange;
 
       // Status
@@ -82,8 +82,8 @@ define([
 
       // SVG options
       var margin = {top: 0, right: 30, bottom: 0, left: 30};
-      var width = 949 - margin.left - margin.right;
-      var height = 50 - margin.bottom - margin.top;
+      var width = this.options.width - margin.left - margin.right;
+      var height = this.options.height - margin.bottom - margin.top;
 
       // Set xscale
       this.xscale = d3.scale.linear()

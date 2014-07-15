@@ -119,13 +119,14 @@ define([
 
         layerSpecService.toggle(
           where,
-          _.bind(function(layerSpec) {
+          function(layerSpec) {
             newPlace.params.layerSpec = layerSpec;
             mps.publish('Place/go', [newPlace]);
-          }, this));
+          },
+          function(error) {});
       }
 
-      route = this._getRoute(newPlace.params.name, newPlace.params);
+      route = this._getRoute(newPlace.params.name, _.clone(newPlace.params));
       this.router.navigate(route, {silent: true});
     },
 
@@ -139,13 +140,15 @@ define([
      */
     _formatUrl: function(name, params) {
       if (name === 'map') {
-        return _.extend({}, params, {
-          lat: _.toNumber(params.lat).toFixed(2),
-          lng: _.toNumber(params.lng).toFixed(2)
-        });
-      } else {
-        return params;
+        params.lat = _.toNumber(params.lat).toFixed(2)
+        params.lng = _.toNumber(params.lng).toFixed(2)
+
+        if (params.date) {
+          params.date = '{0}{1}'.format(params.date[0].format('X'),
+            params.date[1].format('X'))
+        }
       }
+      return params;
     },
 
     /**
@@ -168,13 +171,19 @@ define([
      */
     _standardizeParams: function(params) {
       var p = _.clone(params);
-      p.zoom = _.toNumber(params.zoom) || 3;
-      p.lat = _.toNumber(params.lat) || 15;
-      p.lng = _.toNumber(params.lng) || 27;
-      p.maptype = params.maptype || 'grayscale';
-      p.begin = _.toNumber(params.begin);
-      p.end = _.toNumber(params.end);
-      p.iso = params.iso || 'ALL';
+
+      p.zoom = _.toNumber(p.zoom) || 3;
+      p.lat = _.toNumber(p.lat) || 15;
+      p.lng = _.toNumber(p.lng) || 27;
+      p.maptype = p.maptype || 'grayscale';
+      p.iso = p.iso || 'ALL';
+
+      if (params.date) {
+        var start = moment(params.date.slice(0,10), 'X');
+        var end = moment(params.date.slice(10,20), 'X');
+        p.date = [start, end];
+      }
+
       return p;
     },
 

@@ -23,23 +23,28 @@ define([
     },
 
     init: function(layer, map) {
-      this._super(layer, map);
-      this.timelineDate = [moment([2011, 9]), moment([2011, 11])];
+      _.bindAll(this, 'setTimelineDate');
       this.presenter = new Presenter(this);
+      this._super(layer, map);
+      this._initTimelineDate();
     },
 
     /**
      * @override
      */
     getQuery: function() {
-      var query = new UriTemplate(this.options.sql || this.queryTemplate).fillFromObject({
+      var query = new UriTemplate(this.options.sql).fillFromObject({
         tableName: this.layer.table_name,
         endYear: this.timelineDate[1].year(),
-        // moment months index is 0 to 11. Add 1 so it match with the database.
         endMonth: this.timelineDate[1].month() + 1
       });
 
       return query;
+    },
+
+    _initTimelineDate: function() {
+      this.setTimelineDate([moment(this.layer.maxdate).subtract('months', 2),
+        moment(this.layer.maxdate)]);
     },
 
     /**
@@ -47,7 +52,7 @@ define([
      *
      * @param {Array} date 2D array of moment dates [begin, end]
      */
-    setTimelineDate: function(date) {
+    setTimelineDate: function(date, publish) {
       this.timelineDate = date;
     }
   });
