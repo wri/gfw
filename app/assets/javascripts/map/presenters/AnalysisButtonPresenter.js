@@ -32,6 +32,7 @@ define([
       mps.subscribe('AnalysisButton/setEnabled', _.bind(function(enabled) {
         this.view.setEnabled(enabled);
       }, this));
+      //mps.subscribe('Analysis/results', function(results){...});
     },
 
     /**
@@ -42,6 +43,9 @@ define([
         mps.publish('AnalysisButton/clicked', _.bind(function() {
       }, this));
         this.view.showHelperBar();
+    },
+    requestAnalysis: function(the_geom) {
+      mps.publish('Analysis/get', [{dataset: 'forma-alerts', geojson: the_geom}]);
     }
   });
 
