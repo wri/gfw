@@ -2,10 +2,10 @@
  * CountryService provides access to information about countries.
  */
 define([
-  'nsa',
   'Class',
-  'uri'
-], function (nsa, Class, UriTemplate) {
+  'uri',
+  'services/DataService'
+], function (Class, UriTemplate, ds) {
 
   'use strict';
 
@@ -13,25 +13,29 @@ define([
     
     _uriTemplate:'http://beta.gfw-apis.appspot.com/countries/{iso}',
 
+    /**
+     * Constructs a new instance of CountryService.
+     * 
+     * @return {CountryService} instance
+     */
     init: function() {
+      this._defineRequests();
     },
 
-    _getUrl: function(iso) {
-      return new UriTemplate(this._uriTemplate).fillFromObject({iso: iso});
+    /**
+     * Defines requests used by CountryService.
+     */
+    _defineRequests: function() {
+      var cache = {duration: 1, unit: 'days'};
+      var config = {cache: cache, url: this._uriTemplate};
+      ds.define(this.requestId, config);
     },
 
     execute: function(iso, successCb, failureCb) {
-      var url = this._getUrl(iso);
+      var config = {resourceId: this.requestId, data: {iso: iso}, 
+        success: successCb, error: failureCb};
 
-      nsa.spy(
-        url,
-        {},
-        function(response) {
-          successCb(response);
-        },
-        function(responseText, status, error) {
-          failureCb(responseText, status, error);
-        });
+      ds.request(config);
     }
   });
 
