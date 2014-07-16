@@ -1,8 +1,9 @@
 define([
   'services/CountryService',
-  'nsa', 
   'helpers/api_responses',
-], function(service, nsa) {
+], function(service) {
+
+  /* global describe, it, expect, beforeEach, jasmine, spyOn */
 
   'use strict';
 
@@ -14,22 +15,6 @@ define([
     });
 
     /**
-     * Spec for testing _getUriTemplate().
-     */
-    describe('_getUrl()', function() {
-
-      beforeEach(function() {
-      });
-
-      it('correctly returns URL for supplied ISO code', function() {
-        var url = 'http://beta.gfw-apis.appspot.com/countries/bra';
-
-        expect(service._getUrl('bra')).toEqual(url);
-      });
-    });    
-
-
-    /**
      * Spec for testing execute().
      */
     describe('execute()', function() {
@@ -38,7 +23,6 @@ define([
 
       beforeEach(function(done) {
         jasmine.Ajax.install();
-        nsa.test = true;
 
         // Mock MapServiceLayer and Router
         callback = {
@@ -50,8 +34,8 @@ define([
         spyOn(callback, 'success').and.callThrough();
         service.execute('bra', callback.success);
         jasmine.Ajax.requests.mostRecent().response({
-          "status": 200,
-          "responseText": '"boom"'
+          'status': 200,
+          'responseText': '"boom"'
         });
       });
 
