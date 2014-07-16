@@ -77,10 +77,84 @@
     }
   }
 }
+.helper_bar {
+  display: none;
+  z-index: 1000;
+
+  $width: 476px;
+  bottom: 39px;
+
+  width: $width;
+  padding: 9px 13px;
+
+  @include absolute-landscape-center($width);
+  @include border-radius(5px);
+
+  background:#fff;
+  border: 1px solid #666666;
+
+  font-family: "Helvetica Neue",Arial;
+  clear:both;
+  overflow:hidden;
+
+  p {
+    float:left;
+    @include inline-block();
+    margin: 10px 0 0 0;
+    padding: 0;
+    color: #666666;
+    font-size:13px;
+  }
+
+  .options { float:right; }
+  a  {
+    @include inline-block();
+    width: 70px;
+    padding: 10px 0;
+    border: #666666;
+    @include border-radius(3px);
+    font-weight:bold;
+
+    text-align: center;
+    font-size:11px;
+    text-transform:uppercase;
+    text-decoration:none;
+
+    &.done {
+      background:#A1BA42;
+      color: #fff;
+      border: 1px solid #839C26;
+
+      &:hover {
+        background: darken(#A1BA42, 10%);
+        border-color:darken(#A1BA42, 10%);
+      }
+
+      &.disabled {
+        opacity: .5;
+
+        &:hover {
+          background:#A1BA42;
+          border-color: #839C26;
+          cursor: default;
+        }
+      }
+    }
+
+    &.cancel {
+      background: #fff;
+      border: 1px solid #CCCCCC;
+      color: #666666;
+
+      &:hover { background:#f1f1f1; }
+
+    }
+  }
+}
 
 .umdoptions {
-  display: none;
-  z-index: 10;
+  position: absolute;
+  z-index: 10000;
 
   .umd_options_control {
     position: absolute;

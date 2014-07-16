@@ -15,7 +15,7 @@ define([
     {
       name: 'maps',
       version: '3',
-      options: { other_params: 'libraries=places&sensor=false' }
+      options: { other_params: 'libraries=places,drawing&sensor=false' }
     },
     {
       name: 'visualization',
