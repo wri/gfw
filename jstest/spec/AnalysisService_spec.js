@@ -137,10 +137,14 @@ define([
 
         spyOn(callback, 'success').and.callThrough();
         mps.publish('AnalysisService/get', [config]);
-        jasmine.Ajax.requests.mostRecent().response({
-          'status': 200,
-          'responseText': '"boom"'
-        });
+        
+        setTimeout(function() {
+          jasmine.Ajax.requests.mostRecent().response({
+            'status': 200,
+            'responseText': '"boom"'
+          }); 
+        }, 100);
+        
       });
 
       afterEach(function() {
