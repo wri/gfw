@@ -79,6 +79,10 @@ define([
       }
     },
 
+    /**
+     * Shows the bottom bar with the buttons and enable drawing.
+     *
+     */
     showHelperBar: function() {
       var self = this;
       $('.timeline').fadeOut(function(){
@@ -87,10 +91,20 @@ define([
       })
     },
 
+    /**
+     * Deletes the bottom bar with the buttons.
+     *
+     */
     hideHelperBar: function() {
       this.$el.find('.helper_bar').fadeOut();
     },
 
+    /**
+     * Allow draw a shape with Google Maps V3 Drawing Tools.
+     *
+     * @return {Google Maps} drawingManager object
+     * @callback _onOverlayComplete
+     */
     startDrawingManager: function() {
       var options = {
         drawingModes: [ google.maps.drawing.OverlayType.POLYGON ],
@@ -117,6 +131,11 @@ define([
       google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this._onOverlayComplete);
     },
 
+    /**
+     * Construct the query to analyze
+     *
+     * @param {Shape object} e with the drawn shape.
+     */
     _onOverlayComplete: function(e) {
       var polygon = {};
       
