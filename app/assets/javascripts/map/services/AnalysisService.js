@@ -1,25 +1,83 @@
 /**
- * The analysis module.
- *
- * To get analysis results from this module, first subscribe to the
- * 'analysis/get-results' topic
- * To get analysis results, publish the 'analysis/get' event and pass in a
- * config object with analysis parameters:
- *
- *
+ * The AnalysisService module for interacting with the GFW Analysis API.
  */
 define([
   'underscore',
   'Class',
   'services/DataService',
+  'mps',
   '_string'
-], function (_, Class, ds) {
+], function (_, Class, ds, mps) {
 
   'use strict';
 
   var URL = 'http://beta.gfw-apis.appspot.com/forest-change';
 
   var AnalysisService = Class.extend({
+
+    /**
+     * Constructs a new instance of AnalysisService.
+     * 
+     * @return {AnalysisService} instance
+     */
+    init: function() {
+      this._defineRequests();
+      this._subscribe();
+    },
+
+    /**
+     * Asynchronously execute analysis for supplied configuration.
+     *
+     * @param  {Object} config object
+     *   dataset - layer name (e.g., forma-alerts, umd-loss-gain)
+     *   period - beginyear,endyear (e.g., 2001,2002)
+     *   download - filename.format (e.g., forma.shp)
+     *   geojson - GeoJSON Polygon or Multipolygon
+     *   iso - 3 letter country ISO code (e.g., BRA)
+     *   id1 - GADM subational id (e.g., 3445)
+     *   use - Concession name (e.g., logging, mining, oilpalm, fiber)
+     *   useid - Concession polygon cartodb_id (e.g., 2)
+     *   wdpaid - WDPA polygon cartodb_id (e.g., 800)
+     */
+    execute: function(data, successCb, failureCb) {
+      var id = this._getId(data);
+      var success = _.bind(function(results) {
+        mps.publish('AnalysisService/results', [results]);
+        successCb(results);
+      }, this);
+      var config = {resourceId: id, data: data, success: success,
+        error: failureCb};
+
+      ds.request(config);
+    },
+
+    /**
+     * Defines all API requests used by AnalysisService.
+     */
+    _defineRequests: function() {
+      var datasets = [
+        'forma-alerts', 'umd-loss-gain', 'imazon-alerts', 'nasa-active-fires', 
+        'quicc-alerts'
+      ];
+
+      _.each(datasets, function(dataset) {
+        _.each(this._urls(dataset), function(url, id) {
+          var cache = {duration: 1, unit: 'days'};
+          var config = {
+            cache: cache, url: url, type: 'POST', dataType: 'json'};
+          ds.define(id, config);
+        }, this);
+      }, this);
+    },
+
+    /**
+     * Subscribes to the 'AnalysisService/get' topic.
+     */
+    _subscribe: function() {
+      mps.subscribe('Analysis/get', _.bind(function(config, success, failure) {
+        this.execute(config, success, failure);
+      }, this));
+    },
 
     /**
      * Returns analysis API urls for supplied dataset.
@@ -44,34 +102,7 @@ define([
       return _.object(ids, urls);
     },
 
-    /**
-     * Constructs a new instance of AnalysisService.
-     * 
-     * @return {AnalysisService} instance
-     */
-    init: function() {
-      this._defineRequests();
-    },
-
-    /**
-     * Defines all API requests used by AnalysisService.
-     */
-    _defineRequests: function() {
-      var datasets = [
-        'forma-alerts', 'umd-loss-gain', 'imazon-alerts', 'nasa-active-fires', 
-        'quicc-alerts'
-      ];
-
-      _.each(datasets, function(dataset) {
-        _.each(this._urls(dataset), function(url, id) {
-          var cache = {duration: 1, unit: 'days'};
-          var config = {
-            cache: cache, url: url, type: 'POST', dataType: 'json'};
-          ds.define(id, config);
-        }, this);
-      }, this);
-    },
-
+  
     /**
      * Returns the request id dataset:type for supplied request config.
      * 
@@ -98,28 +129,6 @@ define([
       }
 
       return null;
-    },
-
-    /**
-     * Asynchronously execute analysis for supplied configuration.
-     *
-     * @param  {Object} config object
-     *   dataset - layer name (e.g., forma-alerts, umd-loss-gain)
-     *   period - beginyear,endyear (e.g., 2001,2002)
-     *   download - filename.format (e.g., forma.shp)
-     *   geojson - GeoJSON Polygon or Multipolygon
-     *   iso - 3 letter country ISO code (e.g., BRA)
-     *   id1 - GADM subational id (e.g., 3445)
-     *   use - Concession name (e.g., logging, mining, oilpalm, fiber)
-     *   useid - Concession polygon cartodb_id (e.g., 2)
-     *   wdpaid - WDPA polygon cartodb_id (e.g., 800)
-     */
-    execute: function(data, successCb, failureCb) {
-      var id = this._getId(data);
-      var config = {resourceId: id, data: data, success: successCb,
-        error: failureCb};
-
-      ds.request(config);
     }
   });
 
