@@ -18,13 +18,35 @@ define([
     // Added for Jasmine testing to bypass cache and use 'json' dataType
     test: false,
 
+    /**
+     * Constructs a new instance of DataService.
+     * 
+     * @return {DataService} instance
+     */
     init: function() {    
     },
 
+    /**
+     * Define a data service with supplied id and config object.
+     *
+     * The config object has:
+     *   cache - The cache configuration object (optional)
+     *   url - The service URL (required)
+     *   type - The HTTP request method to use (default POST)
+     *   dataType - The return data type (default JSON)
+     *
+     * The config.cache object has:
+     *   type - The cache type (e.g., localStorage)
+     *   duration - The cache duration (e.g., 1)
+     *   unit - The cache duration unit (e.g., day)
+     * 
+     * @param  {string} id The service id
+     * @param  {object} config The service config object
+     */
     define: function(id, config) {
       var cache = config.cache;
       var duration = cache && cache.duration ? cache.duration : 1;
-      var unit = cache && cache.unit ? cache.unit : 'week';
+      var unit = cache && cache.unit ? cache.unit : 'weeks  ';
       var expires = this._getDuration(duration, unit);
 
       if (cache) {
@@ -34,56 +56,19 @@ define([
       amplify.request.define(id, 'ajax', config);
     },
   
+    /**
+     * Request asynchronously data from the service.
+     *
+     * The config object has:
+     *   resourceId - The service id that was defined.
+     *   data - The data object with service parameters.
+     *   success - The success callback function.
+     *   error - The error callback function.
+     * 
+     * @param  {object} config The service configuration.
+     */
     request: function(config) {
       amplify.request(config);
-    },
-
-    /**
-     * Async HTTP request to supplied URL and optional data.
-     *
-     * @param  {string} url The URL.
-     * @param  {object} data The URL query parameters.
-     * @param  {function} successCb The success callback function.
-     * @param  {function} errorCb The error callback function
-     * @return {object} The jqXHR object handle.
-     */
-    spy: function(url, data, successCb, errorCb, cache) {
-      var jqxhr = null;
-      var val = null;
-      var dataType = url.contains('cartodb.com') ? 'jsonp' : 'json';
-
-      cache = cache === undefined ? true : cache;
-
-      if (!this.test && cache && store.enabled) {
-        // TODO: Key should be made from url+data
-        val = store.get(url);
-        if (val) {
-          successCb(val);
-          return;
-        }
-      }
-
-      $.ajax({
-        url: url,
-        type: 'POST',
-        data: JSON.stringify(data),
-        success: function(response) {
-          if (successCb) {
-            if (!this.test && cache && store.enabled) {
-              store.set(url, response);
-            }
-            successCb(response);
-          }
-        },
-        error: function(jqxhr, status, error) {
-          if (errorCb) {
-            errorCb(jqxhr.responseText, status, error);
-          }
-        },
-        contentType: 'application/json',
-        dataType: this.test ? 'json' : dataType
-      });
-      return jqxhr;
     },
 
     /**

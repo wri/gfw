@@ -4,9 +4,8 @@
 define([
   'underscore',
   'mps',
-  'nsa',
   'presenters/MapPresenter',
-], function(_, mps, nsa, MapPresenter) {
+], function(_, mps, MapPresenter) {
 
   describe("The MapPresenter", function() {
     // The MapView mock

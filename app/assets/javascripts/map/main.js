@@ -7,7 +7,7 @@ require([
 ], function (utils, Backbone) {
   'use strict';
 
-  require(['router', 'services/AnalysisService', 'mps', 'services/CountryService', 'services/DataService', 'amplify'],
+  require(['router', 'services/AnalysisService', 'mps', 'services/CountryService', 'services/DataService', 'amplify', '_string'],
     function(router, as, mps, cs, ds, a) {
       if (!Backbone.History.started) {
         Backbone.history.start({pushState: true});

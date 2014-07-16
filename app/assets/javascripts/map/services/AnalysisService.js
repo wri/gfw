@@ -10,12 +10,10 @@
  */
 define([
   'underscore',
-  'nsa',
   'Class',
-  'uri',
   'services/DataService',
   '_string'
-], function (_, nsa, Class, UriTemplate, ds) {
+], function (_, Class, ds) {
 
   'use strict';
 
@@ -23,6 +21,12 @@ define([
 
   var AnalysisService = Class.extend({
 
+    /**
+     * Returns analysis API urls for supplied dataset.
+     * 
+     * @param  {string} dataset The dataset
+     * @return {object} Object with ids mapping to urls
+     */
     _urls: function(dataset) {
       var types = ['world', 'national', 'subnational', 'use', 'wdpa'];
       var ids = _.map(types,
@@ -40,11 +44,18 @@ define([
       return _.object(ids, urls);
     },
 
-  
+    /**
+     * Constructs a new instance of AnalysisService.
+     * 
+     * @return {AnalysisService} instance
+     */
     init: function() {
       this._defineRequests();
     },
 
+    /**
+     * Defines all API requests used by AnalysisService.
+     */
     _defineRequests: function() {
       var datasets = [
         'forma-alerts', 'umd-loss-gain', 'imazon-alerts', 'nasa-active-fires', 
@@ -53,7 +64,7 @@ define([
 
       _.each(datasets, function(dataset) {
         _.each(this._urls(dataset), function(url, id) {
-          var cache = {type: 'localStorage', duration: 1, unit: 'day'};
+          var cache = {duration: 1, unit: 'days'};
           var config = {
             cache: cache, url: url, type: 'POST', dataType: 'json'};
           ds.define(id, config);
@@ -61,6 +72,12 @@ define([
       }, this);
     },
 
+    /**
+     * Returns the request id dataset:type for supplied request config.
+     * 
+     * @param  {object} config The request config object.
+     * @return {[type]} The request id
+     */
     _getId: function(config) {
       var dataset = config.dataset;
 
@@ -69,7 +86,7 @@ define([
       }
 
       if (_.has(config, 'iso') && !_.has(config, 'id1')) {
-        return _.str.sprintf('%s:national', dataset)
+        return _.str.sprintf('%s:national', dataset);
       } else if (_.has(config, 'iso') && _.has(config, 'id1')) {
         return _.str.sprintf('%s:subnational', dataset);
       } else if (_.has(config, 'use')) {
@@ -83,7 +100,6 @@ define([
       return null;
     },
 
-    
     /**
      * Asynchronously execute analysis for supplied configuration.
      *

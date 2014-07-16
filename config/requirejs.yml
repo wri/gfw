@@ -35,12 +35,15 @@ paths:
   collections: "map/collections"
   jasmine: "jasmine"
   analysis: "map/analysis"
-  nsa: "map/nsa"
   cartocss: "map/cartocss"
 
 shim:
   underscore:
     exports: "_"
+  _string:
+    exports: "_string"
+    deps:
+      - "underscore"
   amplify:
     deps:
       - "jquery"

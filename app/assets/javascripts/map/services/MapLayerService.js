@@ -6,17 +6,35 @@ define([
   'Class',
   'mps',
   'store',
-  'nsa',
+  'services/DataService',
   'uri',
   'underscore'
-], function (Class, mps, store, nsa, UriTemplate, _) {
+], function (Class, mps, store, ds, UriTemplate, _) {
 
   'use strict';
 
   var MapLayerService = Class.extend({
 
+    requestId: 'MapLayerService:getLayers',
+
+    /**
+     * Constructs a new instance of MapLayerService.
+     * 
+     * @return {MapLayerService} instance
+     */
     init: function() {
       this.layers = null;
+      this._defineRequests();
+    },
+
+    /**
+     * Defines CartoDB requests used by MapLayerService.
+     */
+    _defineRequests: function() {
+      var cache = {duration: 1, unit: 'days'};
+      var url = this._getUrl();
+      var config = {cache: cache, url: url, type: 'POST', dataType: 'jsonp'};
+      ds.define(this.requestId, config);
     },
 
     /**
@@ -79,16 +97,10 @@ define([
     },
 
     _fetchLayers: function(successCb, errorCb) {
-      nsa.spy(
-        this._getUrl(),
-        {},
-        _.bind(function(layers) {
-          successCb(layers.rows);
-        }, this),
-        _.bind(function(jqxhr, status, error) {
-          console.error(status, error);
-          errorCb('MapLayerService unable to fetch layers from CartoDB');
-        }, this));
+      var config = {resourceId: this.requestId, success: successCb,
+        error: errorCb};
+
+      ds.request(config);
     },
 
     _getLayers: function(slug, category_slug, successCb, errorCb) {
