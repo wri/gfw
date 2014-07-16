@@ -58,7 +58,9 @@ define([
       var id = this._getId(data);
       var success = _.bind(function(results) {
         mps.publish('AnalysisService/results', [results]);
-        successCb(results);
+        if (successCb) {
+          successCb(results);
+        }
       }, this);
       var config = {resourceId: id, data: data, success: success,
         error: failureCb};
@@ -89,8 +91,8 @@ define([
      * Subscribes to the 'AnalysisService/get' topic.
      */
     _subscribe: function() {
-      mps.subscribe('Analysis/get', _.bind(function(config, success, failure) {
-        this.execute(config, success, failure);
+      mps.subscribe('AnalysisService/get', _.bind(function(config) {
+        this.execute(config);
       }, this));
     },
 

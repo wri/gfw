@@ -8,7 +8,7 @@ define([
   'helpers/api_responses',
 ], function(service, mps, _) {
 
-  /* global describe, it, expect, beforeEach, jasmine, spyOn */
+  /* global describe, it, expect, afterEach, beforeEach, jasmine, spyOn */
 
   'use strict';
 
@@ -117,31 +117,38 @@ define([
       });
     });
 
-    describe('execute()', function() {
-      var response = null;
+    describe('mps', function() {
+      var data = null;
       var callback = null;
       var config = {dataset: 'umd-loss-gain', iso: 'bra', thresh: 10};
+
 
       beforeEach(function(done) {
         jasmine.Ajax.install();
 
-        // Mock MapServiceLayer and Router
         callback = {
-          success: function(data) {
-            response = data;
+          success: function(results) {
+            data = results;
             done();
           }
         };
+
+        mps.subscribe('AnalysisService/results', callback.success);
+
         spyOn(callback, 'success').and.callThrough();
-        service.execute(config, callback.success);
+        mps.publish('AnalysisService/get', [config]);
         jasmine.Ajax.requests.mostRecent().response({
           'status': 200,
           'responseText': '"boom"'
         });
       });
 
+      afterEach(function() {
+        jasmine.Ajax.uninstall();
+      });
+
       it('correctly executes callback with data', function() {
-        expect(response).toEqual('boom');
+        expect(data).toEqual('boom');
       });
     });
   });

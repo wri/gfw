@@ -9,7 +9,7 @@ define([
 
   'use strict';
 
-  describe("The MapLayerService", function() {
+  describe('The MapLayerService', function() {
 
     describe('Test getLayers()', function() {
       var spy = null;
