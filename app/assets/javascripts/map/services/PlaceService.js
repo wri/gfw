@@ -63,7 +63,7 @@ define([
      * Defaults url params
      */
     defaults: {
-      baselayers: 'fires',
+      baselayers: 'umd_tree_loss_gain,forestgain',
       zoom: 3,
       lat: 15,
       lng: 27,

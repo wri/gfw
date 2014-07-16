@@ -18,7 +18,8 @@ define([
 
       this.options = {
         dateRange: [moment().subtract(8, 'days'), moment()],
-        tickWidth: 120,
+        width: 550,
+        tickWidth: 110,
         tipsy: false
       };
 

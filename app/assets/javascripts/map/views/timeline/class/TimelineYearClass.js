@@ -18,7 +18,7 @@ define([
 
   var TimelineYearClass = Backbone.View.extend({
 
-    className: 'timeline-date-range',
+    className: 'timeline-year',
     template: Handlebars.compile(tpl),
 
     defaults: {
@@ -71,9 +71,10 @@ define([
      */
     render: function() {
       var self = this;
-
+      this.$timeline = $('.timeline');
       this.$el.html(this.template());
-      $('.timeline').append(this.el);
+      this.$timeline.append(this.el);
+      this.$timeline.css('width', 1000);
 
       // Cache
       this.$play = this.$el.find('.play');

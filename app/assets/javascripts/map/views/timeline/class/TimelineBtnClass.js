@@ -55,6 +55,7 @@ define([
     render: function(callback) {
       var self = this;
       this.$timeline = $('.timeline');
+      this.$timeline.css('width', this.options.width);
       this.$timeline.append(this.el);
 
       // SVG options
