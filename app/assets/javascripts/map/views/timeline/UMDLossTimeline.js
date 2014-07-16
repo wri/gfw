@@ -25,7 +25,7 @@ define([
         dateRange: [moment(layer.mindate), moment(layer.maxdate)]
       };
 
-      UMDLossLayer.__super__.initialize.apply(this, [layer.slug]);
+      UMDLossLayer.__super__.initialize.apply(this, [layer]);
     }
   });
 

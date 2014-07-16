@@ -4,10 +4,13 @@
  * @return FiresLayer class (extends CartoDBLayerClass)
  */
 define([
+  'underscore',
+  'moment',
+  'uri',
   'views/layers/class/CartoDBLayerClass',
   'presenters/FiresLayerPresenter',
   'text!cartocss/global_7d.cartocss'
-], function(CartoDBLayerClass, Presenter, global7dCartoCSS) {
+], function(_, moment, UriTemplate, CartoDBLayerClass, Presenter, global7dCartoCSS) {
 
   'use strict';
 
@@ -43,7 +46,7 @@ define([
      *
      * @param {Array} date 2D array of moment dates [begin, end]
      */
-    setTimelineDate: function(date, publish) {
+    setTimelineDate: function(date) {
       this.timelineDate = date;
     }
   });

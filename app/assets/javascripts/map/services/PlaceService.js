@@ -49,14 +49,27 @@ define([
   'mps',
   'uri',
   'underscore',
+  'moment',
   'services/LayerSpecService'
-], function (Class, mps, UriTemplate, _, layerSpecService) {
+], function (Class, mps, UriTemplate, _, moment, layerSpecService) {
 
   'use strict';
 
   var PlaceService = Class.extend({
 
     _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?date}',
+
+    /**
+     * Defaults url params
+     */
+    defaults: {
+      baselayers: 'fires',
+      zoom: 3,
+      lat: 15,
+      lng: 27,
+      maptype: 'grayscale',
+      iso: 'ALL'
+    },
 
     /**
      * Create new PlaceService with supplied MapLayerService and
@@ -100,34 +113,62 @@ define([
      */
     _handleNewPlace: function(name, params, go) {
       var route = null;
-      var newPlace = {};
+      var place = {};
 
-      if (!params) {
-        params = this._getPresenterParams(this._presenters);
-      }
+      // Get place object with standarized params.
+      place.params = this._standardizeParams(params ||
+        this._getPresenterParams(this._presenters));
 
-      newPlace.params = this._standardizeParams(params);
-
-      if (!newPlace.params.name) {
-        newPlace.params.name = name;
-      }
+      place.params.name = place.params.name || name;
 
       if (go) {
-        var baseWhere = this._getBaselayerFilters(params.baselayers);
-        var subWhere = this._getSublayerFilters(params.sublayers);
-        var where = _.union(baseWhere, subWhere);  // Preserves order
+        var baselayers = this._getBaselayerFilters(params.baselayers);
+        var sublayers = this._getSublayerFilters(params.sublayers);
+        var where = _.union(baselayers, sublayers);
+        /**
+         * Extra params for the layerSpec, this params aren't associated
+         * to any layer yet because the url doesn't specify it. We pass
+         * it to the layerSpec and it will know where to append those layer params.
+         * For example, if we have active gain and loss, we don't know yet
+         * which layer the date correspond to.
+         */
+        var options = {};
+
+        if (params.date) {
+          var start = moment(place.params.date.slice(0, 10), 'X');
+          var end = moment(place.params.date.slice(10, 20), 'X');
+          options.date = [start, end];
+        }
 
         layerSpecService.toggle(
           where,
-          function(layerSpec) {
-            newPlace.params.layerSpec = layerSpec;
-            mps.publish('Place/go', [newPlace]);
-          },
-          function(error) {});
+          options,
+          _.bind(function(layerSpec) {
+            place.params.layerSpec = layerSpec;
+            mps.publish('Place/go', [place]);
+          }, this)
+        );
       }
 
-      route = this._getRoute(newPlace.params.name, _.clone(newPlace.params));
+      // Get route from place object
+      route = this._getRoute(place);
       this.router.navigate(route, {silent: true});
+    },
+
+    /**
+     * Return standardized representation of supplied params object.
+     *
+     * @param  {Object} params The params to standardize
+     * @return {Object} The standardized params.
+     */
+    _standardizeParams: function(params) {
+      var p = _.extendNonNull(this.defaults, params);
+      p.zoom = _.toNumber(p.zoom);
+      p.lat = _.toNumber(p.lat);
+      p.lng = _.toNumber(p.lng);
+      p.maptype = p.maptype;
+      p.iso = p.iso;
+      return p;
     },
 
     /**
@@ -138,17 +179,24 @@ define([
      * @param  {Object} params Params to standardize
      * @return {Object} Params ready for URL
      */
-    _formatUrl: function(name, params) {
-      if (name === 'map') {
-        params.lat = _.toNumber(params.lat).toFixed(2)
-        params.lng = _.toNumber(params.lng).toFixed(2)
+    _destandardizeParams: function(params) {
+      var p = params;
 
-        if (params.date) {
-          params.date = '{0}{1}'.format(params.date[0].format('X'),
-            params.date[1].format('X'))
+      if (params.name === 'map') {
+        p.lat = _.toNumber(p.lat).toFixed(2);
+        p.lng = _.toNumber(p.lng).toFixed(2);
+
+        if (p.layerSpec) {
+          p.date = _.map(p.layerSpec.getBaselayers(), function(layer) {
+            if (layer.currentDate) {
+              return '{0}{1}'.format(layer.currentDate[0].format('X'),
+                layer.currentDate[1].format('X'));
+            }
+          }).join(',');
         }
       }
-      return params;
+
+      return p;
     },
 
     /**
@@ -158,33 +206,9 @@ define([
      * @param  {Object} params The route params
      * @return {string} The route URL
      */
-    _getRoute: function(name, params) {
-      params = _.extend(this._formatUrl(name, params), {name: name});
+    _getRoute: function(place) {
+      var params = _.extend(this._destandardizeParams(_.clone(place.params)));
       return decodeURIComponent(new UriTemplate(this._uriTemplate).fillFromObject(params));
-    },
-
-    /**
-     * Return standardized representation of supplied params object.
-     *
-     * @param  {Object} params The params to standardize
-     * @return {Object} The standardized params.
-     */
-    _standardizeParams: function(params) {
-      var p = _.clone(params);
-
-      p.zoom = _.toNumber(p.zoom) || 3;
-      p.lat = _.toNumber(p.lat) || 15;
-      p.lng = _.toNumber(p.lng) || 27;
-      p.maptype = p.maptype || 'grayscale';
-      p.iso = p.iso || 'ALL';
-
-      if (params.date) {
-        var start = moment(params.date.slice(0,10), 'X');
-        var end = moment(params.date.slice(10,20), 'X');
-        p.date = [start, end];
-      }
-
-      return p;
     },
 
     /**
@@ -196,7 +220,6 @@ define([
      */
     _getPresenterParams: function(presenters) {
       var params = {};
-
       _.each(presenters, _.bind(function(presenter) {
         _.extend(params, presenter.getPlaceParams());
       }, this));

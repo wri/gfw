@@ -29,13 +29,14 @@ define([
       this.model = new LayerSpecModel();
     },
 
-    toggle: function(where, success, error) {
+    toggle: function(where, options, success, error) {
       var self = this;
+
       mapLayerService.getLayers(
         where,
         function(layers) {
           _.each(layers, function(layer) {
-            self._toggleLayer(self._standardizeAttrs(layer));
+            self._toggleLayer(self._standardizeAttrs(layer, options));
           });
           success(self.model);
         },
@@ -49,7 +50,7 @@ define([
      * @param  {obj} opts  Layer extra parameters.
      * @return {obj} layer The layer object
      */
-    _standardizeAttrs: function(layer) {
+    _standardizeAttrs: function(layer, options) {
       if (layer.mindate) {
         layer.mindate = moment(layer.mindate);
       }
@@ -58,10 +59,15 @@ define([
         layer.maxdate = moment(layer.maxdate);
       }
 
+      if (options.date && layer.category_slug === 'forest_clearing' &&
+        layer.slug !== 'forestgain') {
+        layer.currentDate = options.date;
+      }
+
       return layer;
     },
 
-    _toggleLayer: function(layer, date) {
+    _toggleLayer: function(layer) {
       var current = this.model.getLayer({slug: layer.slug});
 
       // At least one baselayer selected.
@@ -141,10 +147,15 @@ define([
      */
     getPlaceParams: function() {
       var p = {};
-
       p.name = 'map';
       p.baselayers = _.keys(this.model.getBaselayers()).join(',');
       p.sublayers = _.pluck(this.model.getSublayers(), 'id').join(',');
+      p.date = _.map(this.model.getBaselayers(), function(layer) {
+        if (layer.currentDate) {
+          return '{0}{1}'.format(layer.currentDate[0].format('X'),
+            layer.currentDate[1].format('X'));
+        }
+      }).join(',');
 
       return p;
     },

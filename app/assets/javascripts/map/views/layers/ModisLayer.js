@@ -4,11 +4,13 @@
  * @return ModisLayer class (extends CartoDBLayerClass)
  */
 define([
+  'underscore',
   'moment',
+  'uri',
   'views/layers/class/CartoDBLayerClass',
   'presenters/ModisLayerPresenter',
   'text!cartocss/modis.cartocss'
-], function(moment, CartoDBLayerClass, Presenter, modisCartoCSS) {
+], function(_, moment, UriTemplate, CartoDBLayerClass, Presenter, modisCartoCSS) {
 
   'use strict';
 
@@ -52,7 +54,7 @@ define([
      *
      * @param {Array} date 2D array of moment dates [begin, end]
      */
-    setTimelineDate: function(date, publish) {
+    setTimelineDate: function(date) {
       this.timelineDate = date;
     }
   });

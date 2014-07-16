@@ -181,17 +181,6 @@ define([
       }
     },
 
-    /**
-     * Filters the canvas imagedata. Subclasses implement this.
-     *
-     * @param  {object}  imgdata Canvas tile image data
-     * @param  {integer} w       tile width
-     * @param  {integer} h       tile height
-     * @param  {integer} z       map zoom
-     */
-    filterCanvasImgdata: function(imgdata, w, h, z) {
-    },
-
     getName: function() {
       return this.name;
     }

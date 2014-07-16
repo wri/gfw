@@ -32,11 +32,11 @@ define([
       'click .play': 'togglePlay'
     },
 
-    initialize: function(name) {
+    initialize: function(layer) {
       _.bindAll(this, 'onAnimationBrush', 'onBrush', 'onBrushEnd', 'updateTimelineDate');
+      this.layer = layer;
+      this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
-      this.name = name;
-      this.currentDate = this.options.dateRange;
 
       // Status
       this.playing = false;
@@ -87,7 +87,7 @@ define([
 
       // Set xscale
       this.xscale = d3.scale.linear()
-          .domain([this.opts.dateRange[0].year(), this.opts.dateRange[1].year()])
+          .domain([this.options.dateRange[0].year(), this.options.dateRange[1].year()])
           .range([0, width])
           .clamp(true);
 
@@ -118,7 +118,7 @@ define([
           .call(d3.svg.axis()
             .scale(this.xscale)
             .orient('top')
-            .ticks(this.opts.dateRange[1].year() - this.opts.dateRange[0].year())
+            .ticks(this.options.dateRange[1].year() - this.options.dateRange[0].year())
             .tickFormat(function(d) {return String(d); })
             .tickSize(0)
             .tickPadding(-4))
@@ -151,7 +151,7 @@ define([
 
       this.handlers.right = this.handlers.left
          .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-         .attr('x', this.xscale(this.opts.dateRange[1].year()) - 30);
+         .attr('x', this.xscale(this.options.dateRange[1].year()) - 30);
 
       this.slider.select('.background')
           .style('cursor', 'pointer')
@@ -173,7 +173,7 @@ define([
         .attr('class', 'tooltip')
         .style('visibility', 'hidden')
         .style('left', this.handlers.right.attr('x') + 'px')
-        .text(this.opts.dateRange[0].year());
+        .text(this.options.dateRange[0].year());
 
       // Hidden brush for the animation
       this.hiddenBrush = d3.svg.brush()
@@ -226,7 +226,7 @@ define([
         return;
       }
 
-      var speed = (trailTo - trailFrom) * this.opts.playSpeed;
+      var speed = (trailTo - trailFrom) * this.options.playSpeed;
 
       this.togglePlayIcon();
       this.playing = true;
@@ -399,7 +399,7 @@ define([
      * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
     updateTimelineDate: function(date) {
-      this.currentDate = date;
+      this.layer.currentDate = date;
       this.presenter.updateTimelineDate(date);
     },
 
@@ -423,7 +423,7 @@ define([
     },
 
     getCurrentDate: function() {
-      return this.currentDate;
+      return this.layer.currentDate;
     }
   });
 

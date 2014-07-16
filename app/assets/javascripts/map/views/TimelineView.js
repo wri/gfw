@@ -42,15 +42,20 @@ define([
      *
      * @param {object} baselasyer
      */
-    setTimeline: function(baselayers, date) {
+    setTimeline: function(baselayers) {
       if (this.currentTimeline) {
+        if (_.pluck(baselayers, 'slug').indexOf(
+          this.currentTimeline.getName()) > -1) {
+          return;
+        }
+
         this.currentTimeline.remove();
         this.currentTimeline = null;
       }
 
       _.each(this.timelineViews, _.bind(function(View, layerSlug) {
         if (baselayers[layerSlug]) {
-          this.currentTimeline = new View(baselayers[layerSlug], date);
+          this.currentTimeline = new View(baselayers[layerSlug]);
           this.$el.show();
         }
       }, this));

@@ -13,13 +13,8 @@ define([
 
   var FiresTimeline = TimelineBtnClass.extend({
 
-    initialize: function(layer, date) {
+    initialize: function(layer) {
       this.presenter = new Presenter(this);
-      this.layer = layer;
-
-      if (date) {
-        this.currentDate = date;
-      }
 
       this.options = {
         dateRange: [moment().subtract(8, 'days'), moment()],
@@ -27,7 +22,7 @@ define([
         tipsy: false
       };
 
-      FiresTimeline.__super__.initialize.apply(this, [layer.slug]);
+      FiresTimeline.__super__.initialize.apply(this, [layer]);
     },
 
     /**

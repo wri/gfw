@@ -4,29 +4,25 @@
  * @return ModisTimeline class (extends TimelineBtnClass)
  */
 define([
+  'underscore',
   'moment',
   'views/timeline/class/TimelineBtnClass',
   'presenters/TimelineClassPresenter'
-], function(moment, TimelineBtnClass, Presenter) {
+], function(_, moment, TimelineBtnClass, Presenter) {
 
   'use strict';
 
   var ModisTimeline = TimelineBtnClass.extend({
 
-    initialize: function(layer, date) {
+    initialize: function(layer) {
       this.presenter = new Presenter(this);
-      this.layer = layer;
-
-      if (date) {
-        this.currentDate = date;
-      }
 
       this.options = {
         dateRange: [layer.mindate, layer.maxdate],
         tickWidth: 60
       };
 
-      ModisTimeline.__super__.initialize.apply(this, [layer.slug]);
+      ModisTimeline.__super__.initialize.apply(this, [layer]);
     },
 
     /**

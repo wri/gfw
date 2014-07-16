@@ -10,8 +10,7 @@ define([
   'backbone',
   'moment',
   'd3',
-  'handlebars',
-], function(_, Backbone, moment, d3, Handlebars) {
+], function(_, Backbone, moment, d3) {
 
   'use strict';
 
@@ -27,31 +26,37 @@ define([
       tipsy: true
     },
 
-    initialize: function(name) {
+    initialize: function(layer) {
       _.bindAll(this, '_onClickTick', '_selectDate');
-      this.name = name;
+      this.layer = layer;
+      this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
       this.data = this._getData();
-
-      this.currentDate = this.currentDate ||
-        [this.data[this.data.length-1].start, this.data[this.data.length-1].end];
 
       // d3 slider objets
       this.svg = {};
       this.xscale = {};
 
-      this.render();
+      this.render(_.bind(function() {
+        // UpdateTimeline with default date if doesn't have one.
+        if (!this.layer.currentDate) {
+          this.layer.currentDate = [this.data[this.data.length-1].start,
+            this.data[this.data.length-1].end];
+        }
 
-      this._selectDate({
-        start: this.currentDate[0],
-        end: this.currentDate[1]
-      });
+        // Select currentDate
+        this._selectDate({
+          start: this.layer.currentDate[0],
+          end: this.layer.currentDate[1]
+        });
+      }, this));
+
     },
 
     /**
      * Render d3 timeline slider.
      */
-    render: function() {
+    render: function(callback) {
       var self = this;
       this.$timeline = $('.timeline');
       this.$timeline.append(this.el);
@@ -129,6 +134,8 @@ define([
         .on('click', function(date, i) {
           self._onClickTick(this, date, i);
         });
+
+      callback();
     },
 
     _onClickTick: function(el, date) {
@@ -145,7 +152,7 @@ define([
      */
     _selectDate: function(date, el) {
       if (!el) {
-        el = this.tickG.filter(function(d, i) {
+        el = this.tickG.filter(function(d) {
           var dformat = 'DD-MM-YYYY';
           return (d.start.format(dformat) === date.start.format(dformat) &&
             d.end.format(dformat) === date.end.format(dformat));
@@ -154,10 +161,10 @@ define([
 
       el = d3.select(el);
 
-      var x = d3.transform(el.attr("transform")).translate[0];
+      var x = d3.transform(el.attr('transform')).translate[0];
       var trailX = x + (this.options.tickWidth / 2);
 
-      this.svg.selectAll('.tick').filter(function(d) {
+      this.svg.selectAll('.tick').filter(function() {
         d3.select(this).classed('selected', false);
       });
 
@@ -197,7 +204,7 @@ define([
      * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
     _updateTimelineDate: function(date) {
-      this.currentDate = date;
+      this.layer.currentDate = date;
       this.presenter.updateTimelineDate(date);
     },
 
@@ -206,7 +213,7 @@ define([
     },
 
     getCurrentDate: function() {
-      return this.currentDate;
+      return this.layer.currentDate;
     }
   });
 
