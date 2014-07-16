@@ -1,5 +1,20 @@
 /**
  * The AnalysisService module for interacting with the GFW Analysis API.
+ *
+ * To use this service, you can inject it directly and call the execute() 
+ * function. The preferred way is to use events to keep the app decoupled 
+ * and testable. 
+ * 
+ * To do analysis with events, first subscribe:
+ *
+ *   mps.subscribe('AnalysisService/results', function(results) {...});
+ *
+ * Then you can do an analysis by publishing:
+ *
+ *   mps.publish('AnalysisService/get', [config, success, failure]);
+ *
+ *  See the execute() function docs for information about the config, 
+ *  success, and failure arguments.
  */
 define([
   'underscore',
