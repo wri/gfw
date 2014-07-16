@@ -60,14 +60,6 @@ define([
       return this.positionizer(this.get('forest_clearing') || {});
     },
 
-    getBaselayersString: function() {
-      return _.pluck(this.getBaselayers(), 'slug').join(',');
-    },
-
-    getSublayersString: function() {
-      return _.pluck(this.getSublayers(), 'id').join(',');
-    },
-
     /**
      * Return sublayers object.
      *

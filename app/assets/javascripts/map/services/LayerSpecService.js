@@ -152,7 +152,7 @@ define([
       p.sublayers = _.pluck(this.model.getSublayers(), 'id').join(',');
       p.date = _.map(this.model.getBaselayers(), function(layer) {
         if (layer.currentDate) {
-          return '{0}{1}'.format(layer.currentDate[0].format('X'),
+          return '{0},{1}'.format(layer.currentDate[0].format('X'),
             layer.currentDate[1].format('X'));
         }
       }).join(',');

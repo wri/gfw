@@ -26,8 +26,10 @@ define([
     init: function(layer, map) {
       _.bindAll(this, 'setTimelineDate');
       this.presenter = new Presenter(this);
+      // Default to 48 hours
+      this.setTimelineDate(layer.currentDate ||
+        [moment().subtract(48, 'hours'), moment()]);
       this._super(layer, map);
-      this.timelineDate = [moment(), moment()];
     },
 
     getQuery: function() {

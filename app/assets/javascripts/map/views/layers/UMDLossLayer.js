@@ -20,7 +20,7 @@ define([
     },
 
     init: function(layer, map) {
-      this.timelineDate = this.options.dateRange;
+      this.timelineDate = layer.currentDate || this.options.dateRange;
       this.presenter = new Presenter(this);
       this._super(layer, map);
     },

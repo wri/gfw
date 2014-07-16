@@ -37,6 +37,7 @@ define([
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
+      this.layer.currentDate = this.layer.currentDate || this.options.dateRange;
 
       // Status
       this.playing = false;
@@ -91,7 +92,8 @@ define([
           .range([0, width])
           .clamp(true);
 
-      this.ext.right = width;
+      this.ext.left = this.xscale(this.layer.currentDate[0].year());
+      this.ext.right = this.xscale(this.layer.currentDate[1].year());
 
       // Set brush and listeners
       this.brush = d3.svg.brush()
@@ -144,14 +146,14 @@ define([
           .attr('transform', 'translate(0,' + (height / 2 - 6) + ')')
           .attr('width', 14)
           .attr('height', 14)
-          .attr('x', 16)
+          .attr('x', this.xscale(this.layer.currentDate[0].year()) + 16)
           .attr('y', -1)
           .attr('rx', 2)
           .attr('ry', 2);
 
       this.handlers.right = this.handlers.left
          .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-         .attr('x', this.xscale(this.options.dateRange[1].year()) - 30);
+         .attr('x', this.xscale(this.layer.currentDate[1].year()) - 30);
 
       this.slider.select('.background')
           .style('cursor', 'pointer')

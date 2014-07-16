@@ -33,18 +33,14 @@ define([
       this.options = _.extend({}, this.defaults, this.options || {});
       this.data = this._getData();
 
+      this.layer.currentDate = this.layer.currentDate ||
+        [this.data[this.data.length-1].start, this.data[this.data.length-1].end];
+
       // d3 slider objets
       this.svg = {};
       this.xscale = {};
 
       this.render(_.bind(function() {
-        // UpdateTimeline with default date if doesn't have one.
-        if (!this.layer.currentDate) {
-          this.layer.currentDate = [this.data[this.data.length-1].start,
-            this.data[this.data.length-1].end];
-        }
-
-        // Select currentDate
         this._selectDate({
           start: this.layer.currentDate[0],
           end: this.layer.currentDate[1]
@@ -172,19 +168,21 @@ define([
 
       // Move tipsy
       if (this.options.tipsy) {
+        var duration = (this.tipsy.style('visibility') === 'visible') ? 100 : 0;
+
         this.tipsy
           .style('visibility', 'visible');
 
         this.trail
           .transition()
-          .duration(100)
+          .duration(duration)
           .ease('line')
           .attr('x1', trailX)
           .attr('x2', trailX);
 
         this.tooltip
           .transition()
-          .duration(100)
+          .duration(duration)
           .ease('line')
           .text(this._getTooltipText(date))
           .style('left', x + 'px')

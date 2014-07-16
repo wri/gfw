@@ -28,7 +28,8 @@ define([
       _.bindAll(this, 'setTimelineDate');
       this.presenter = new Presenter(this);
       this._super(layer, map);
-      this._initTimelineDate();
+      this.setTimelineDate(this.layer.currentDate || [moment(this.layer.maxdate).subtract('months', 2),
+        moment(this.layer.maxdate)]);
     },
 
     /**
@@ -42,11 +43,6 @@ define([
       });
 
       return query;
-    },
-
-    _initTimelineDate: function() {
-      this.setTimelineDate([moment(this.layer.maxdate).subtract('months', 2),
-        moment(this.layer.maxdate)]);
     },
 
     /**

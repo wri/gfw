@@ -135,8 +135,8 @@ define([
         var options = {};
 
         if (params.date) {
-          var start = moment(place.params.date.slice(0, 10), 'X');
-          var end = moment(place.params.date.slice(10, 20), 'X');
+          var start = moment(place.params.date.split(',')[0], 'X');
+          var end = moment(place.params.date.split(',')[1], 'X');
           options.date = [start, end];
         }
 
@@ -187,12 +187,20 @@ define([
         p.lng = _.toNumber(p.lng).toFixed(2);
 
         if (p.layerSpec) {
-          p.date = _.map(p.layerSpec.getBaselayers(), function(layer) {
+          var date = [];
+          _.each(p.layerSpec.getBaselayers(), function(layer) {
             if (layer.currentDate) {
-              return '{0}{1}'.format(layer.currentDate[0].format('X'),
-                layer.currentDate[1].format('X'));
-            }
-          }).join(',');
+              date.push('{0},{1}'.format(layer.currentDate[0].format('X'),
+                layer.currentDate[1].format('X')));
+            };
+          });
+          if (date.length > 0) {
+            p.date = date.join(',');
+          }
+        }
+
+        if (p.date.length < 1) {
+          delete p.date;
         }
       }
 
