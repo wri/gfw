@@ -1,5 +1,5 @@
 /**
- * Module for executing async HTTP requests.
+ * Module for executing async HTTP requests and caching responses.
  *
  */
 define([

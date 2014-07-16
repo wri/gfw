@@ -11,7 +11,7 @@
  *
  * Then you can do an analysis by publishing:
  *
- *   mps.publish('AnalysisService/get', [config, success, failure]);
+ *   mps.publish('AnalysisService/get', [config]);
  *
  *  See the execute() function docs for information about the config, 
  *  success, and failure arguments.
@@ -62,8 +62,12 @@ define([
           successCb(results);
         }
       }, this);
-      var config = {resourceId: id, data: data, success: success,
-        error: failureCb};
+      var config = {
+        resourceId: id, 
+        data: data, 
+        success: success,
+        error: failureCb
+      };
 
       ds.request(config);
     },
@@ -77,6 +81,8 @@ define([
         'quicc-alerts'
       ];
 
+      // Defines requests for each dataset (e.g., forma-alerts) and type (e.g. 
+      // national)
       _.each(datasets, function(dataset) {
         _.each(this._urls(dataset), function(url, id) {
           var cache = {duration: 1, unit: 'days'};
