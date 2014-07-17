@@ -35,14 +35,78 @@ define([
       AnalysisResultsView.__super__.initialize.apply(this);
     },
 
+    printResultsUmd: function(results) {
+      var ha    = this._calcAreaPolygon(results.params.geojson),
+          $tpl  = this.$el.find('.umd');
+
+      $tpl.find('.ha strong').html(ha);
+      $tpl.find('.subtitle').html(results.meta.timescale);
+      $tpl.find('.alerts-deg').html( results.value[0].value ? results.value[0].value.toLocaleString() : 0 );
+      $tpl.find('.alerts-def').html( results.value[1].value ? results.value[1].value.toLocaleString() : 0 );
+      $tpl.find('.svg-download').prop("href", results.download_urls.csv);
+      $tpl.find('.geo-download').prop("href", results.download_urls.geojson);
+      $tpl.find('.shp-download').prop("href", results.download_urls.shp);
+      $tpl.find('.kml-download').prop("href", results.download_urls.kml);
+      $tpl.find('.csv-download').prop("href", results.download_urls.csv);
+
+      $tpl.fadeIn();
+    },
+
+    printResultsForma: function(results) {
+      var ha    = this._calcAreaPolygon(results.params.geojson),
+          $tpl  = this.$el.find('.forma');
+
+      $tpl.find('.ha strong').html(ha);
+      $tpl.find('.subtitle').html(results.meta.timescale);
+      $tpl.find('#alerts-count').html( results.value : 0 );
+      $tpl.find('.svg-download').prop("href", results.download_urls.csv);
+      $tpl.find('.geo-download').prop("href", results.download_urls.geojson);
+      $tpl.find('.shp-download').prop("href", results.download_urls.shp);
+      $tpl.find('.kml-download').prop("href", results.download_urls.kml);
+      $tpl.find('.csv-download').prop("href", results.download_urls.csv);
+
+      $tpl.fadeIn();
+    },
+
     printResultsImazon: function(results) {
       var ha    = this._calcAreaPolygon(results.params.geojson),
           $tpl  = this.$el.find('.imazon');
 
       $tpl.find('.ha strong').html(ha);
       $tpl.find('.subtitle').html(results.meta.timescale);
-      $tpl.find('.alerts-deg').html( results.value[0].value ? results.value[0].value.toLocaleString() : 0 );
-      $tpl.find('.alerts-def').html( results.value[1].value ? results.value[1].value.toLocaleString() : 0 );
+      $tpl.find('#alerts-count').html( results.value : 0 );
+      $tpl.find('.svg-download').prop("href", results.download_urls.csv);
+      $tpl.find('.geo-download').prop("href", results.download_urls.geojson);
+      $tpl.find('.shp-download').prop("href", results.download_urls.shp);
+      $tpl.find('.kml-download').prop("href", results.download_urls.kml);
+      $tpl.find('.csv-download').prop("href", results.download_urls.csv);
+
+      $tpl.fadeIn();
+    },
+
+    printResultsNasa: function(results) {
+      var ha    = this._calcAreaPolygon(results.params.geojson),
+          $tpl  = this.$el.find('.fires');
+
+      $tpl.find('.ha strong').html(ha);
+      $tpl.find('.subtitle').html(results.meta.timescale);
+      $tpl.find('#alerts-count').html( results.value : 0 );
+      $tpl.find('.svg-download').prop("href", results.download_urls.csv);
+      $tpl.find('.geo-download').prop("href", results.download_urls.geojson);
+      $tpl.find('.shp-download').prop("href", results.download_urls.shp);
+      $tpl.find('.kml-download').prop("href", results.download_urls.kml);
+      $tpl.find('.csv-download').prop("href", results.download_urls.csv);
+
+      $tpl.fadeIn();
+    },
+
+    printResultsQuicc: function(results) {
+      var ha    = this._calcAreaPolygon(results.params.geojson),
+          $tpl  = this.$el.find('.quicc');
+
+      $tpl.find('.ha strong').html(ha);
+      $tpl.find('.subtitle').html(results.meta.timescale);
+      $tpl.find('#alerts-count').html( results.value : 0 );
       $tpl.find('.svg-download').prop("href", results.download_urls.csv);
       $tpl.find('.geo-download').prop("href", results.download_urls.geojson);
       $tpl.find('.shp-download').prop("href", results.download_urls.shp);

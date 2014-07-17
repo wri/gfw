@@ -31,9 +31,22 @@ define([
     subscribe: function() {
       mps.subscribe('AnalysisService/results', _.bind(function(results) {
         this.view.model.set({'hidden': false});
+
         switch (results.meta.id) {
+          case 'umd-loss-gain':
+            this.view.printResultsUmd(results);
+          break
+          case 'forma-alerts':
+            this.view.printResultsForma(results);
+          break
           case 'imazon-alerts':
             this.view.printResultsImazon(results);
+          break
+          case 'nasa-active-fires':
+            this.view.printResultsNasa(results);
+          break
+          case 'quicc-alerts':
+            this.view.printResultsQuicc(results);
           break
         }
       }, this));
