@@ -31,7 +31,7 @@ define([
      * Defines CartoDB requests used by MapLayerService.
      */
     _defineRequests: function() {
-      var cache = {duration: 1, unit: 'days'};
+      var cache = {type: 'persist', duration: 1, unit: 'days'};
       var url = this._getUrl();
       var config = {cache: cache, url: url, type: 'POST', dataType: 'jsonp'};
       ds.define(this.requestId, config);

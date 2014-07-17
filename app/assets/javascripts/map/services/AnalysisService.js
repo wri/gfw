@@ -73,6 +73,11 @@ define([
     },
 
     /**
+     * The configuration for client side caching of results.
+     */
+    _cacheConfig: {type: 'persist', duration: 1, unit: 'days'},
+
+    /**
      * Defines all API requests used by AnalysisService.
      */
     _defineRequests: function() {
@@ -85,9 +90,10 @@ define([
       // national)
       _.each(datasets, function(dataset) {
         _.each(this._urls(dataset), function(url, id) {
-          var cache = {duration: 1, unit: 'days'};
+          var cache = this._cacheConfig;
           var config = {
-            cache: cache, url: url, type: 'POST', dataType: 'json'};
+            cache: cache, url: url, type: 'POST',
+            dataType: 'json'};
           ds.define(id, config);
         }, this);
       }, this);
