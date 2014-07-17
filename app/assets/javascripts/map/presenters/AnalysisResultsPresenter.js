@@ -31,8 +31,16 @@ define([
     subscribe: function() {
       mps.subscribe('AnalysisService/results', _.bind(function(results) {
         this.view.model.set({'hidden': false});
-        console.log(results)
+        switch (results.meta.id) {
+          case 'imazon-alerts':
+            this.view.printResultsImazon(results);
+          break
+        }
       }, this));
+    },
+
+    deleteAnalysis: function() {
+      mps.publish('AnalysisButton/_deleteAnalysis', []);
     }
   });
 

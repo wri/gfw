@@ -113,7 +113,9 @@ define([
      * Throws analysis requests for thr chosen polygon through the presenter 
      * method and fades out the helper bar.
      */
-    onClickDone: function() {
+    onClickDone: function(e) {
+      e && e.preventDefault();
+      if (this.selectedShape) this.selectedShape.setEditable(false);
       this.presenter.requestAnalysis(this.polygon);
       this.hideHelperBar();
     },
@@ -183,6 +185,7 @@ define([
     * Destroy the selected shape permanently
     */
     deleteSelectedShape: function() {
+      debugger
       if (this.selectedShape) {
         this.selectedShape.setMap(null);
         this.selectedShape = false;

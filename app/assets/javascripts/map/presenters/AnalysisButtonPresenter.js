@@ -32,7 +32,9 @@ define([
       mps.subscribe('AnalysisButton/setEnabled', _.bind(function(enabled) {
         this.view.setEnabled(enabled);
       }, this));
-      // mps.subscribe('AnalysisService/results', function(results) {console.log(results)});
+      mps.subscribe('AnalysisButton/_deleteAnalysis', _.bind(function() {
+        this.view.deleteSelectedShape();
+      }, this));
     },
 
     /**
