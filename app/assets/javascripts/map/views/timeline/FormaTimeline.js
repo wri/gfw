@@ -1,7 +1,7 @@
 /**
- * The UMD loss timeline.
+ * The Forma timeline.
  *
- * @return UMDLossTimeline class (extends TimelineMonthClass)
+ * @return FormaTimeline class (extends TimelineMonthClass)
  */
 define([
   'moment',
@@ -13,20 +13,16 @@ define([
 
   var FormaTimeline = TimelineMonthClass.extend({
 
-    /**
-     * Get the layer spec.
-     *
-     * @param  {object} layer The layer object
-     */
     initialize: function(layer) {
       this.presenter = new Presenter(this);
-      console.log(layer);
+      this.layer = layer;
 
       this.options = {
-        dateRange: [moment(layer.mindate), moment(layer.maxdate)]
+        dateRange: [moment([2005,0]), moment([2015, 0])]
+        // dateRange: [layer.mindate, layer.maxdate]
       };
 
-      FormaTimeline.__super__.initialize.apply(this, [layer]);
+      FormaTimeline.__super__.initialize.apply(this, [layer.slug]);
     }
   });
 

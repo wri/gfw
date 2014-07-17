@@ -184,7 +184,7 @@ define([
             if (layer.currentDate) {
               date.push('{0}-{1}'.format(layer.currentDate[0].format('X'),
                 layer.currentDate[1].format('X')));
-            };
+            }
           });
           if (date.length > 0) {
             p.date = date.join(',');
