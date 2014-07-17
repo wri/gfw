@@ -47,7 +47,7 @@ define([
     getLayers: function(where, successCb, errorCb) {
       this._fetchLayers(
         _.bind(function(layers) {
-          var hits = _.map(where, _.partial(_.where, layers));
+          var hits = _.map(where, _.partial(_.where, layers.rows));
           successCb(_.flatten(hits));
         }, this),
         _.bind(function(error) {
