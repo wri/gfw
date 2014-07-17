@@ -1602,9 +1602,11 @@ GFW.modules.datalayers = function(gfw) {
           return ['SELECT cartodb_id AS id, slug, title, title_color, subtitle, sublayer, table_name, source, category_color, category_slug, category_name, external, zmin, zmax, ST_XMAX(the_geom) AS xmax,',
             'ST_XMIN(the_geom) AS xmin, ST_YMAX(the_geom) AS ymax, ST_YMIN(the_geom) AS ymin, tileurl, true AS visible',
             'FROM ' + layerTable,
-            'WHERE display = TRUE ORDER BY displaylayer, title ASC'].join(' ');
+            'ORDER BY displaylayer, title ASC'].join(' ');
+            //WHERE display = TRUE
         }
       });
+
 
       this.LayersObj = new LayersColl();
       this.LayersObj.fetch();
@@ -1633,14 +1635,13 @@ GFW.modules.datalayers = function(gfw) {
         idnforest.table_name = 'idn_primary';
         idnforest.title_color = '#007A4D';
         this.add([idnforest]);
-
         idnforest = GFW.app.datalayers.LayersObj.get(600);
         ////
 
         that.LayersObj.each(function(p) {
-          if (p.get('slug') === 'user_stories') {
-            Filter.addFilter(0, 'nothing', 'People', 'Land Rights', { disabled: true , category_color: '#707D92', color: '#707D92' });
-          }
+          // if (p.get('slug') === 'user_stories') {
+          //   Filter.addFilter(0, 'nothing', 'People', 'Land Rights', { disabled: true , category_color: '#707D92', color: '#707D92' });
+          // }
 
           that._addLayer(p);
         });
