@@ -32,6 +32,7 @@ define([
       mps.subscribe('AnalysisButton/setEnabled', _.bind(function(enabled) {
         this.view.setEnabled(enabled);
       }, this));
+      mps.subscribe('AnalysisService/results', function(results) {console.log(results)});
     },
 
     /**
@@ -42,6 +43,10 @@ define([
         mps.publish('AnalysisButton/clicked', _.bind(function() {
       }, this));
         this.view.showHelperBar();
+    },
+    requestAnalysis: function(the_geom) {
+      //mps.publish('AnalysisService/get', [{dataset: 'umd-loss-gain', iso: 'idn'}]);
+      mps.publish('AnalysisService/get', [{dataset: 'imazon-alerts', geojson: the_geom}]);
     }
   });
 

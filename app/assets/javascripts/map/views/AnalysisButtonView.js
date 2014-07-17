@@ -147,10 +147,9 @@ define([
       });
 
       if (polygon) {
-        var config = {dataset: 'forma-alerts', geojson: polygon};
+        console.log(polygon)
+        this.presenter.requestAnalysis(polygon);
         var callback = this.hideHelperBar();
-        //service.execute(config,callback);
-        
         return;
       }
     },

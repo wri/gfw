@@ -1,110 +1,43 @@
 /**
- * The analysis module.
+ * The AnalysisService module for interacting with the GFW Analysis API.
  *
- * To get analysis results from this module, first subscribe to the
- * 'analysis/get-results' topic
- * To get analysis results, publish the 'analysis/get' event and pass in a
- * config object with analysis parameters:
+ * To use this service, you can inject it directly and call the execute() 
+ * function. The preferred way is to use events to keep the app decoupled 
+ * and testable. 
+ * 
+ * To do analysis with events, first subscribe:
  *
+ *   mps.subscribe('AnalysisService/results', function(results) {...});
  *
+ * Then you can do an analysis by publishing:
+ *
+ *   mps.publish('AnalysisService/get', [config]);
+ *
+ *  See the execute() function docs for information about the config, 
+ *  success, and failure arguments.
  */
 define([
   'underscore',
-  'nsa',
   'Class',
-  'uri'
-], function (_, nsa, Class, UriTemplate) {
+  'services/DataService',
+  'mps',
+  '_string'
+], function (_, Class, ds, mps) {
 
   'use strict';
 
+  var URL = 'http://beta.gfw-apis.appspot.com/forest-change';
+
   var AnalysisService = Class.extend({
 
-    // TODO: pull this from /forest-change endpoint and cache.
-    apis: {
-      'forma-alerts': {
-        'apis': {
-          'world': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts{?geojson,period,bust,dev}',
-          'national': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}{?period,bust,dev}',
-          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/admin/{iso}/{id1}{?period,bust,dev}',
-          'use': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/use/{use}/{useid}{?period,bust,dev}',
-          'wdpa': 'http://beta.gfw-apis.appspot.com/forest-change/forma-alerts/wdpa/{wdpaid}{?period,bust,dev}'
-        }
-      },
-      'nasa-active-fires': {
-        'apis': {
-          'world': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires{?geojson,period,bust,dev}',          
-          'national': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/{iso}{?period,bust,dev}',
-          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/admin/{iso}/{id1}{?period,bust,dev}',
-          'use': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/use/{use}/{useid}{?period,bust,dev}',
-          'wdpa': 'http://beta.gfw-apis.appspot.com/forest-change/nasa-active-fires/wdpa/{wdpaid}{?period,bust,dev}'
-        }
-      },
-      'quicc-alerts': {
-        'apis': {
-          'world': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts{?geojson,period,bust,dev}',
-          'national': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/{iso}{?period,bust,dev}',
-          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/admin/{iso}/{id1}{?period,bust,dev}',
-          'use': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/use/{use}/{useid}{?period,bust,dev}',
-          'wdpa': 'http://beta.gfw-apis.appspot.com/forest-change/quicc-alerts/wdpa/{wdpaid}{?period,bust,dev}'
-        }
-      },      
-      'umd-loss-gain':{
-        'apis':{
-          'national': 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}{?bust,dev,thresh}',
-          'subnational': 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/{iso}/{id1}{?bust,dev,thresh}'
-        }
-      }
-    },
-
+    /**
+     * Constructs a new instance of AnalysisService.
+     * 
+     * @return {AnalysisService} instance
+     */
     init: function() {
-    },
-
-    /**
-     * Return URI template for API based on supplied config object of 
-     * parameters. The dataset config property is required.
-     *
-     * @param  {object} API parameters
-     * @return {string} URI template for API
-     */
-    _getUriTemplate: function(config) {
-      var dataset = config.dataset;
-
-      if (!dataset) {
-        return null;
-      }
-
-      if (_.has(config, 'iso') && !_.has(config, 'id1')) {
-        return this.apis[dataset].apis.national;
-      } else if (_.has(config, 'iso') && _.has(config, 'id1')) {
-        return this.apis[dataset].apis.subnational;
-      } else if (_.has(config, 'use')) {
-        return this.apis[dataset].apis.use;
-      } else if (_.has(config, 'wdpaid')) {
-        return this.apis[dataset].apis.wdpa;
-      } else if (_.has(config, 'geojson')) {
-        return this.apis[dataset].apis.world;
-      }
-
-      return null;
-    },
-
-    /**
-     * Returns API URL from supplied config object of API parameters.
-     *
-     * @param  {object} config API parameters
-     * @return {string} API URL
-     */
-    _getUrl: function(config) {
-      var template = this._getUriTemplate(config);
-      var url = null;
-
-      if (!template) {
-        return null;
-      }
-
-      url = new UriTemplate(template).fillFromObject(config);
-
-      return url;
+      this._defineRequests();
+      this._subscribe();
     },
 
     /**
@@ -121,23 +54,104 @@ define([
      *   useid - Concession polygon cartodb_id (e.g., 2)
      *   wdpaid - WDPA polygon cartodb_id (e.g., 800)
      */
-    execute: function(config, successCb, failureCb) {
-      var url = this._getUrl(config);
+    execute: function(data, successCb, failureCb) {
+      var id = this._getId(data);
+      var success = _.bind(function(results) {
+        mps.publish('AnalysisService/results', [results]);
+        if (successCb) {
+          successCb(results);
+        }
+      }, this);
+      var config = {
+        resourceId: id, 
+        data: data, 
+        success: success,
+        error: failureCb
+      };
 
-      if (!url) {
-        failureCb('Unable to find API endpoint for supplied config');
-        return;
+      ds.request(config);
+    },
+
+    /**
+     * Defines all API requests used by AnalysisService.
+     */
+    _defineRequests: function() {
+      var datasets = [
+        'forma-alerts', 'umd-loss-gain', 'imazon-alerts', 'nasa-active-fires', 
+        'quicc-alerts'
+      ];
+
+      // Defines requests for each dataset (e.g., forma-alerts) and type (e.g. 
+      // national)
+      _.each(datasets, function(dataset) {
+        _.each(this._urls(dataset), function(url, id) {
+          var cache = {duration: 1, unit: 'days'};
+          var config = {
+            cache: cache, url: url, type: 'POST', dataType: 'json'};
+          ds.define(id, config);
+        }, this);
+      }, this);
+    },
+
+    /**
+     * Subscribes to the 'AnalysisService/get' topic.
+     */
+    _subscribe: function() {
+      mps.subscribe('AnalysisService/get', _.bind(function(config) {
+        this.execute(config);
+      }, this));
+    },
+
+    /**
+     * Returns analysis API urls for supplied dataset.
+     * 
+     * @param  {string} dataset The dataset
+     * @return {object} Object with ids mapping to urls
+     */
+    _urls: function(dataset) {
+      var types = ['world', 'national', 'subnational', 'use', 'wdpa'];
+      var ids = _.map(types,
+        function(type) {
+          return  _.str.sprintf('%s:%s', dataset, type);
+        });
+      var urls = [
+        _.str.sprintf('%s/%s', URL, dataset),
+        _.str.sprintf('%s/%s/admin/{iso}', URL, dataset),
+        _.str.sprintf('%s/%s/admin/{iso}/{id1}', URL, dataset),
+        _.str.sprintf('%s/%s/use/{use}/{useid}', URL, dataset),
+        _.str.sprintf('%s/%s/wdpa/{wdpaid}', URL, dataset)
+      ];
+
+      return _.object(ids, urls);
+    },
+
+  
+    /**
+     * Returns the request id dataset:type for supplied request config.
+     * 
+     * @param  {object} config The request config object.
+     * @return {[type]} The request id
+     */
+    _getId: function(config) {
+      var dataset = config.dataset;
+
+      if (!dataset) {
+        return null;
       }
 
-      nsa.spy(
-        url,
-        {},
-        function(response) {
-          successCb(response);
-        },
-        function(responseText, status, error) {
-          failureCb(responseText, status, error);
-        });
+      if (_.has(config, 'iso') && !_.has(config, 'id1')) {
+        return _.str.sprintf('%s:national', dataset);
+      } else if (_.has(config, 'iso') && _.has(config, 'id1')) {
+        return _.str.sprintf('%s:subnational', dataset);
+      } else if (_.has(config, 'use')) {
+        return _.str.sprintf('%s:use', dataset);
+      } else if (_.has(config, 'wdpaid')) {
+        return _.str.sprintf('%s:wdpa', dataset);
+      } else if (_.has(config, 'geojson')) {
+        return _.str.sprintf('%s:world', dataset);
+      }
+
+      return null;
     }
   });
 
