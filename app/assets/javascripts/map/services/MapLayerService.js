@@ -77,6 +77,8 @@ define([
                 external, \
                 zmin, \
                 zmax, \
+                mindate, \
+                maxdate, \
                 ST_XMAX(the_geom) AS xmax, \
                 ST_XMIN(the_geom) AS xmin, \
                 ST_YMAX(the_geom) AS ymax, \
@@ -84,12 +86,11 @@ define([
                 tileurl, \
                 true AS visible \
               FROM \
-                layerinfo_dev_copy \
-              WHERE \
-                display = TRUE \
+                layerspec \
               ORDER BY \
                 displaylayer, \
                 title ASC';
+
         this.url = new UriTemplate(template).fillFromObject({q: sql});
       }
 

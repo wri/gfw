@@ -18,8 +18,15 @@ define([
 
   var TimelineYearClass = Backbone.View.extend({
 
-    className: 'timeline-date-range',
+    className: 'timeline-year',
     template: Handlebars.compile(tpl),
+
+    defaults: {
+      dateRange: [moment([2001]), moment()],
+      playSpeed: 400,
+      width: 949,
+      height: 50
+    },
 
     events: {
       'click .play': 'togglePlay'
@@ -29,11 +36,8 @@ define([
       _.bindAll(this, 'onAnimationBrush', 'onBrush', 'onBrushEnd', 'updateTimelineDate');
       this.layer = layer;
       this.name = layer.slug;
-
-      this.opts = _.extend({
-        dateRange: [moment([2001]), moment()],
-        playSpeed: 400,
-      }, this.opts);
+      this.options = _.extend({}, this.defaults, this.options || {});
+      this.layer.currentDate = this.layer.currentDate || this.options.dateRange;
 
       // Status
       this.playing = false;
@@ -67,9 +71,10 @@ define([
      */
     render: function() {
       var self = this;
-
+      this.$timeline = $('.timeline');
       this.$el.html(this.template());
-      $('.timeline').append(this.el);
+      this.$timeline.append(this.el);
+      this.$timeline.css('width', 1000);
 
       // Cache
       this.$play = this.$el.find('.play');
@@ -79,16 +84,17 @@ define([
 
       // SVG options
       var margin = {top: 0, right: 30, bottom: 0, left: 30};
-      var width = 949 - margin.left - margin.right;
-      var height = 50 - margin.bottom - margin.top;
+      var width = this.options.width - margin.left - margin.right;
+      var height = this.options.height - margin.bottom - margin.top;
 
       // Set xscale
       this.xscale = d3.scale.linear()
-          .domain([this.opts.dateRange[0].year(), this.opts.dateRange[1].year()])
+          .domain([this.options.dateRange[0].year(), this.options.dateRange[1].year()])
           .range([0, width])
           .clamp(true);
 
-      this.ext.right = width;
+      this.ext.left = this.xscale(this.layer.currentDate[0].year());
+      this.ext.right = this.xscale(this.layer.currentDate[1].year());
 
       // Set brush and listeners
       this.brush = d3.svg.brush()
@@ -115,7 +121,7 @@ define([
           .call(d3.svg.axis()
             .scale(this.xscale)
             .orient('top')
-            .ticks(this.opts.dateRange[1].year() - this.opts.dateRange[0].year())
+            .ticks(this.options.dateRange[1].year() - this.options.dateRange[0].year())
             .tickFormat(function(d) {return String(d); })
             .tickSize(0)
             .tickPadding(-4))
@@ -141,14 +147,14 @@ define([
           .attr('transform', 'translate(0,' + (height / 2 - 6) + ')')
           .attr('width', 14)
           .attr('height', 14)
-          .attr('x', 16)
+          .attr('x', this.xscale(this.layer.currentDate[0].year()) + 16)
           .attr('y', -1)
           .attr('rx', 2)
           .attr('ry', 2);
 
       this.handlers.right = this.handlers.left
          .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-         .attr('x', this.xscale(this.opts.dateRange[1].year()) - 30);
+         .attr('x', this.xscale(this.layer.currentDate[1].year()) - 30);
 
       this.slider.select('.background')
           .style('cursor', 'pointer')
@@ -170,7 +176,7 @@ define([
         .attr('class', 'tooltip')
         .style('visibility', 'hidden')
         .style('left', this.handlers.right.attr('x') + 'px')
-        .text(this.opts.dateRange[0].year());
+        .text(this.options.dateRange[0].year());
 
       // Hidden brush for the animation
       this.hiddenBrush = d3.svg.brush()
@@ -223,7 +229,7 @@ define([
         return;
       }
 
-      var speed = (trailTo - trailFrom) * this.opts.playSpeed;
+      var speed = (trailTo - trailFrom) * this.options.playSpeed;
 
       this.togglePlayIcon();
       this.playing = true;
@@ -396,6 +402,7 @@ define([
      * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
     updateTimelineDate: function(date) {
+      this.layer.currentDate = date;
       this.presenter.updateTimelineDate(date);
     },
 
@@ -416,6 +423,10 @@ define([
 
     getName: function() {
       return this.name;
+    },
+
+    getCurrentDate: function() {
+      return this.layer.currentDate;
     }
   });
 

@@ -1,0 +1,32 @@
+.timeline .timeline-btn {
+
+  .tick {
+    rect {
+      cursor: pointer;
+      fill: white;
+      stroke: #999;
+      shape-rendering: crispEdges;
+    }
+
+    text {
+      pointer-events: none;
+      font-size: 11px;
+      fill: #666;
+      text-transform: uppercase;
+    }
+
+    &.selected rect {
+      fill: $cGreen1;
+      stroke: #839C26;
+    }
+
+    &.selected text {
+      fill: white;
+      font-weight: bold;
+    }
+  }
+
+  .tooltip {
+    text-transform: uppercase;
+  }
+}
