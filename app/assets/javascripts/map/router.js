@@ -15,12 +15,13 @@ define([
   'views/LayersNavView',
   'views/MapView',
   'views/LegendView',
+  'views/AnalysisResultsView',
   'views/SearchboxView',
   'views/MaptypeView',
   'views/TimelineView',
   'services/MapLayerService'
 ], function($, _, Backbone, mps, gmap, PlaceService, LayersNavView, MapView,
-  LegendView, SearchboxView, MaptypeView, TimelineView, mapLayerService) {
+  LegendView, AnalysisResultsView, SearchboxView, MaptypeView, TimelineView, mapLayerService) {
 
   'use strict';
 
@@ -42,6 +43,7 @@ define([
       this.legendView = new LegendView();
       this.maptypeView = new MaptypeView();
       this.searchboxView = new SearchboxView();
+      this.analysisResultsView = new AnalysisResultsView();
       this.timelineView = new TimelineView();
     },
 
