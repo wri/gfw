@@ -8,9 +8,10 @@ define([
   'underscore',
   'presenters/TimelinePresenter',
   'views/timeline/UMDLossTimeline',
+  'views/timeline/FormaTimeline',
   'views/timeline/ModisTimeline',
   'views/timeline/FiresTimeline'
-], function(Backbone, _, Presenter, UMDLossTimeline, ModisTimeline, FiresTimeline) {
+], function(Backbone, _, Presenter, UMDLossTimeline, FormaTimeline, ModisTimeline, FiresTimeline) {
 
   'use strict';
 
@@ -20,6 +21,7 @@ define([
 
     timelineViews: {
       umd_tree_loss_gain: UMDLossTimeline,
+      forma: FormaTimeline,
       modis: ModisTimeline,
       fires: FiresTimeline
     },
