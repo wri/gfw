@@ -17,7 +17,9 @@ define([
 
     // UI event handlers.
     events: {
-      'click #analysis_control': '_onClick'
+      'click #analysis_control'  : '_onClick',
+      'click .helper_bar .done'  : 'onClickDone',
+      'click .helper_bar .cancel': 'onClickCancel'
     },
 
     // The view template.
@@ -30,6 +32,8 @@ define([
       _.bindAll(this, '_onOverlayComplete');
       this.options   = options;
       this.presenter = new Presenter(this);
+      this.polygon = false;
+      this.selectedShape = false;
       this.render();
     },
 
@@ -81,7 +85,6 @@ define([
 
     /**
      * Shows the bottom bar with the buttons and enable drawing.
-     *
      */
     showHelperBar: function() {
       var self = this;
@@ -92,11 +95,36 @@ define([
     },
 
     /**
-     * Deletes the bottom bar with the buttons.
-     *
+     * Fades out the bottom bar with the buttons.
      */
     hideHelperBar: function() {
       this.$el.find('.helper_bar').fadeOut();
+    },
+
+    /**
+     * Enables 'Done' button on helperbar.
+     */
+    enableDoneButton: function(e) {
+      e && e.preventDefault();
+      this.$el.find('.helper_bar .done').removeClass('disabled');
+    },
+
+    /**
+     * Throws analysis requests for thr chosen polygon through the presenter 
+     * method and fades out the helper bar.
+     */
+    onClickDone: function() {
+      this.presenter.requestAnalysis(this.polygon);
+      this.hideHelperBar();
+    },
+
+    /**
+     * Deletes the drawn shapes (if exist) and fades out the helper bar.
+     */
+    onClickCancel: function(e) {
+      e && e.preventDefault();
+      this.deleteSelectedShape();
+      this.hideHelperBar();
     },
 
     /**
@@ -131,25 +159,67 @@ define([
       google.maps.event.addListener(this.drawingManager, 'overlaycomplete', this._onOverlayComplete);
     },
 
+
+    /**
+    * Clears the selected dhape on the map
+    */
+    clearSelection: function() {
+      if (this.selectedShape) {
+        this.selectedShape.setEditable(false);
+        this.selectedShape = null;
+      }
+    },
+
+    /**
+    * Allows the seleceted object to be managed
+    */
+    setSelection: function(shape) {
+      this.clearSelection();
+      this.selectedShape = shape;
+      shape.setEditable(true);
+    },
+
+    /**
+    * Destroy the selected shape permanently
+    */
+    deleteSelectedShape: function() {
+      if (this.selectedShape) {
+        this.selectedShape.setMap(null);
+        this.selectedShape = false;
+      }
+    },
+
     /**
      * Construct the query to analyze
      *
      * @param {Shape object} e with the drawn shape.
      */
     _onOverlayComplete: function(e) {
-      var polygon = {};
-      
-      polygon = JSON.stringify({
+      self = this;
+      if (e.type != google.maps.drawing.OverlayType.MARKER) {
+
+        // Switch back to non-drawing mode after drawing a shape.
+        this.drawingManager.setDrawingMode(null);
+
+        // Add an event listener that selects the newly-drawn shape when the user
+        // mouses down on it.
+        var newShape = e.overlay;
+        newShape.type = e.type;
+        google.maps.event.addListener(newShape, 'click', function() {
+          self.setSelection(newShape);
+        });
+        this.setSelection(newShape);
+      }
+
+      this.polygon = JSON.stringify({
         'type': 'Polygon',
         'coordinates': $.map(e.overlay.getPath().getArray(), function(latlng, index) {
                             return [[latlng.lng().toFixed(4), latlng.lat().toFixed(4)]];
                         })
       });
 
-      if (polygon) {
-        console.log(polygon)
-        this.presenter.requestAnalysis(polygon);
-        var callback = this.hideHelperBar();
+      if (this.polygon) {
+        this.enableDoneButton();
         return;
       }
     },
