@@ -22,6 +22,7 @@ define([
      */
     init: function(view) {
       this.view = view;
+      this.layerSpec =  false;
       this.subscribe();
     },
 
@@ -29,6 +30,14 @@ define([
      * Subscribe to application events.
      */
     subscribe: function() {
+      mps.subscribe('PlaceNav/change', _.bind(function(layerSpec) {
+        this.layerSpec = layerSpec;
+      }, this));
+
+      mps.subscribe('Place/go', _.bind(function(place) {
+        this.layerSpec = place.params.layerSpec;
+      }, this));
+
       mps.subscribe('AnalysisButton/setEnabled', _.bind(function(enabled) {
         this.view.setEnabled(enabled);
       }, this));
@@ -51,7 +60,10 @@ define([
     * Asks the API for the analysis results given for a selected area
     */
     requestAnalysis: function(the_geom) {
-      mps.publish('AnalysisService/get', [{dataset: 'imazon-alerts', geojson: the_geom}]);
+      if (this.layerSpec) {
+        var baselayers = _.pluck(this.layerSpec.getBaselayers(), 'slug')[0];
+        mps.publish('AnalysisService/get', [{dataset: this.layerSpec, geojson: the_geom}]);
+      }
     }
   });
 

@@ -185,7 +185,6 @@ define([
     * Destroy the selected shape permanently
     */
     deleteSelectedShape: function() {
-      debugger
       if (this.selectedShape) {
         this.selectedShape.setMap(null);
         this.selectedShape = false;
