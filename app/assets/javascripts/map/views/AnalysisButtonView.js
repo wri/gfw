@@ -128,6 +128,7 @@ define([
       });
 
       if (polygon) {
+        console.log(polygon)
         this.presenter.requestAnalysis(polygon);
         var callback = this.hideHelperBar();
         return;
