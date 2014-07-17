@@ -122,21 +122,14 @@ define([
       place.params.name = place.params.name || name;
 
       if (go) {
-        var baselayers = this._getBaselayerFilters(params.baselayers);
-        var sublayers = this._getSublayerFilters(params.sublayers);
+        var baselayers = this._getBaselayerFilters(place.params.baselayers);
+        var sublayers = this._getSublayerFilters(place.params.sublayers);
         var where = _.union(baselayers, sublayers);
-        /**
-         * Extra params for the layerSpec, this params aren't associated
-         * to any layer yet because the url doesn't specify it. We pass
-         * it to the layerSpec and it will know where to append those layer params.
-         * For example, if we have active gain and loss, we don't know yet
-         * which layer the date correspond to.
-         */
         var options = {};
 
         if (params.date) {
-          var start = moment(place.params.date.split(',')[0], 'X');
-          var end = moment(place.params.date.split(',')[1], 'X');
+          var start = moment(place.params.date.split('-')[0], 'X');
+          var end = moment(place.params.date.split('-')[1], 'X');
           options.date = [start, end];
         }
 
@@ -150,7 +143,6 @@ define([
         );
       }
 
-      // Get route from place object
       route = this._getRoute(place);
       this.router.navigate(route, {silent: true});
     },
@@ -190,17 +182,15 @@ define([
           var date = [];
           _.each(p.layerSpec.getBaselayers(), function(layer) {
             if (layer.currentDate) {
-              date.push('{0},{1}'.format(layer.currentDate[0].format('X'),
+              date.push('{0}-{1}'.format(layer.currentDate[0].format('X'),
                 layer.currentDate[1].format('X')));
             };
           });
           if (date.length > 0) {
             p.date = date.join(',');
+          } else {
+            delete p.date;
           }
-        }
-
-        if (p.date.length < 1) {
-          delete p.date;
         }
       }
 

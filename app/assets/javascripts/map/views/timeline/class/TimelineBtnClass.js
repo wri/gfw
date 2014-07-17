@@ -34,7 +34,7 @@ define([
       this.data = this._getData();
 
       this.layer.currentDate = this.layer.currentDate ||
-        [this.data[this.data.length-1].start, this.data[this.data.length-1].end];
+        [this.data[this.data.length - 1].start, this.data[this.data.length - 1].end];
 
       // d3 slider objets
       this.svg = {};

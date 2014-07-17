@@ -67,7 +67,8 @@ define([
 
     getCurrentDate: function() {
       if (this.currentTimeline) {
-        return this.currentTimeline.getCurrentDate();}
+        return this.currentTimeline.getCurrentDate();
+      }
 
       return;
     }
