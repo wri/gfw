@@ -1,6 +1,7 @@
 require.config({
 
   paths: {
+    amplify: '../vendor/assets/bower_components/amplify/lib/amplify',
     jquery: '../vendor/assets/bower_components/jquery/dist/jquery',
     jqueryui: '../vendor/assets/javascripts/jquery-ui-1.10.4.custom.min',
     underscore: '../vendor/assets/bower_components/underscore/underscore',
@@ -15,7 +16,6 @@ require.config({
     uri: '../vendor/assets/javascripts/uri',
     handlebars: '../vendor/assets/bower_components/handlebars/handlebars',
     main: '../app/assets/javascripts/map/main',
-    nsa: '../app/assets/javascripts/map/nsa',
     gmap: '../app/assets/javascripts/map/gmap',
     store: '../vendor/assets/javascripts/store',
     utils: '../app/assets/javascripts/map/utils',
@@ -30,6 +30,10 @@ require.config({
   },
 
   shim: {
+    amplify: {
+      deps: ['jquery'],
+      exports: 'amplify'
+    },
     jquery: {
       exports: '$'
     },
@@ -39,6 +43,10 @@ require.config({
     },
     underscore: {
       exports: '_'
+    },
+    _string: {
+      deps: ['underscore'],
+      exports: '_string'
     },
     backbone: {
       deps: ['jquery', 'underscore'],
@@ -55,3 +63,4 @@ require.config({
     }
   }
 });
+

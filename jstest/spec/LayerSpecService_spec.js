@@ -3,9 +3,8 @@
  */
 define([
   'services/LayerSpecService',
-  'mps',
-  'nsa'
-], function(service, mps, nsa) {
+  'mps'
+], function(service, mps) {
 
   'use strict';
 
@@ -13,7 +12,6 @@ define([
 
     beforeEach(function() {
       jasmine.Ajax.install();
-      nsa.test = true;
     });
 
     it("is not null", function() {
