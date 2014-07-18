@@ -1,6 +1,6 @@
 /**
  * The Cartodb map layer module.
- * @return CartoDBLayerClass (extends Class).
+ * @return CartoDBLayerClass (extends LayerClass).
  */
 define([
   'underscore',
@@ -84,6 +84,7 @@ define([
     getQuery: function() {
       return new UriTemplate(this.options.sql || this.queryTemplate).fillFromObject({tableName: this.layer.table_name});
     }
+
   });
 
   return CartoDBLayerClass;

@@ -20,10 +20,10 @@ define([
 
     /**
      * Constructs a new instance of DataService.
-     * 
+     *
      * @return {DataService} instance
      */
-    init: function() {    
+    init: function() {
     },
 
     /**
@@ -39,7 +39,7 @@ define([
      *   type - The cache type (e.g., localStorage)
      *   duration - The cache duration (e.g., 1)
      *   unit - The cache duration unit (e.g., day)
-     * 
+     *
      * @param  {string} id The service id
      * @param  {object} config The service config object
      */
@@ -49,13 +49,13 @@ define([
       var unit = cache && cache.unit ? cache.unit : 'weeks';
       var expires = this._getDuration(duration, unit);
 
-      if (cache) {        
+      if (cache) {
         cache.expires = expires;
       }
 
       amplify.request.define(id, 'ajax', config);
     },
-  
+
     /**
      * Request asynchronously data from the service.
      *
@@ -64,7 +64,7 @@ define([
      *   data - The data object with service parameters.
      *   success - The success callback function.
      *   error - The error callback function.
-     * 
+     *
      * @param  {object} config The service configuration.
      */
     request: function(config) {
@@ -73,9 +73,9 @@ define([
 
     /**
      * Get duration in milliseconds from supplied number and unit.
-     * 
+     *
      * @param  {string} ttl The ttl string 'number:unit'.
-     * @return {moment.Duration} The duration object 
+     * @return {moment.Duration} The duration object
      */
     _getDuration: function(number, unit) {
       var units = ['seconds', 'minutes', 'hours', 'days', 'weeks', 'months',
