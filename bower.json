@@ -20,7 +20,7 @@
     "backbone": "~1.1.2",
     "minpubsub": "~0.0.2",
     "d3": "~3.4.8",
-    "cartodb.js": "~3.10.1",
+    "cartodb.js": "~3.10.2",
     "requirejs-text": "~2.0.12",
     "requirejs": "~2.1.14",
     "moment": "~2.7.0",
