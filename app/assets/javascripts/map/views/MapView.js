@@ -74,7 +74,6 @@ define([
      */
     initialize: function() {
       this.presenter = new Presenter(this);
-      // Layer view instances
       this.layerInst = {};
     },
 
@@ -154,21 +153,18 @@ define([
      * @param {Object} layer The layer object
      */
     _addLayer: function(layer) {
-      if (!this._isLayerRendered(layer.slug) && this.layersViews[layer.slug]) {
+      if (this.layersViews[layer.slug]) {
         var layerView = this.layerInst[layer.slug] =
           new this.layersViews[layer.slug](layer, this.map);
 
-        layerView.getLayer().then(_.bind(function(layerView) {
-          // Calculate layer position
-          var position = 0;
-          var layersCount = this.map.overlayMapTypes.getLength();
+        var position = 0;
+        var layersCount = this.map.overlayMapTypes.getLength();
 
-          if (typeof layer.position !== 'undefined' && layer.position <= layersCount) {
-            position = layersCount - layer.position;
-          }
+        if (typeof layer.position !== 'undefined' && layer.position <= layersCount) {
+          position = layersCount - layer.position;
+        }
 
-          this.map.overlayMapTypes.insertAt(position, layerView);
-        }, this));
+        layerView.addLayer({position: position});
       }
     },
 
@@ -178,30 +174,8 @@ define([
      * @param  {string} layerSlug The layerSlug of the layer to remove
      */
     _removeLayer: function(layerSlug) {
-      if (this._isLayerRendered(layerSlug) && this.layerInst[layerSlug]) {
-        var overlaysLength = this.map.overlayMapTypes.getLength();
-        if (overlaysLength > 0) {
-          for (var i = 0; i < overlaysLength; i++) {
-            var layer = this.map.overlayMapTypes.getAt(i);
-            if (layer && layer.name === layerSlug) {
-              this.map.overlayMapTypes.removeAt(i);
-            }
-          }
-        }
-        delete this.layerInst[layerSlug];
-      }
-    },
-
-    _isLayerRendered: function(layerSlug) {
-      var overlaysLength = this.map.overlayMapTypes.getLength();
-      if (overlaysLength > 0) {
-        for (var i = 0; i< overlaysLength; i++) {
-          var layer = this.map.overlayMapTypes.getAt(i);
-          if (layer && layer.name === layerSlug) {
-            return true;
-          }
-        }
-      }
+      var inst = this.layerInst[layerSlug];
+      inst && inst.removeLayer();
     },
 
     /**
