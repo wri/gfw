@@ -20,6 +20,7 @@ define([
     init: function(layer, map) {
       this.layer = layer;
       this.map = map;
+      this.options = _.extend({}, this.defaults, this.options);
     },
 
     _getLayer: function() {
@@ -33,7 +34,7 @@ define([
 
     _setMakers: function(stories) {
       this.makers = _.map(stories, _.bind(function(story) {
-        var markerOptions = _.extend({}, this.defaults, {
+        var markerOptions = _.extend({}, this.options, {
           position: new google.maps.LatLng(story.lat, story.lng),
           map: this.map
         });
