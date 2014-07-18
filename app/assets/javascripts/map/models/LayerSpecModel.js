@@ -21,6 +21,11 @@ define([
       'fires'
     ],
 
+    categoryOrder: [
+      'forest_clearing',
+      'forest_cover'
+    ],
+
     positionizer: function(layers) {
       var layerOrder = _.intersection(this.layerOrder, _.pluck(layers, 'slug'));
 
@@ -74,6 +79,28 @@ define([
         });
 
       return this.positionizer(layers);
+    },
+
+   /**
+     * Return an ordered array of layers. Order by layer position.
+     *
+     * @return {array} layers
+     */
+    getOrderedLayers: function() {
+      return _.sortBy(this.getLayers(), function(layer) {
+        return layer.position;
+      });
+    },
+
+    /**
+     * Return an ordered array of categories and layers.
+     *
+     * @return {array} categories
+     */
+    getLayersByCategory: function() {
+      return _.map(this.toJSON(), _.bind(function(layers, i) {
+        return this.positionizer(layers);
+      }, this));
     }
   });
 
