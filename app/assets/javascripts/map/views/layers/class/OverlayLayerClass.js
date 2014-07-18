@@ -6,17 +6,20 @@
 define([
   'Class',
   'underscore',
-  'uri'
-], function(Class, _, UriTemplate) {
+], function(Class, _) {
 
   'use strict';
 
   var OverlayLayerClass = Class.extend({
 
+    defaults: {
+    },
+
     init: function(layer, map) {
       this.map = map;
       this.layer = layer;
       this.name = layer.slug;
+      this.tileSize = new google.maps.Size(256, 256);
       this.options = _.extend({}, this.defaults, this.options || {});
     },
 
