@@ -1,7 +1,7 @@
 /**
- * The UMD loass layer presenter.
+ * The FiresLayerPresenter.
  *
- * @return UMDLossLayerPresenter class
+ * @return FiresLayerPresenter class
  */
 define([
   'Class',
@@ -11,7 +11,7 @@ define([
 
   'use strict';
 
-  var UMDLossLayerPresenter = Class.extend({
+  var FiresLayerPresenter = Class.extend({
 
     init: function(view) {
       this.view = view;
@@ -31,6 +31,6 @@ define([
     }
   });
 
-  return UMDLossLayerPresenter;
+  return FiresLayerPresenter;
 
 });

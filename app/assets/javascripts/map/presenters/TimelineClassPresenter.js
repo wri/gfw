@@ -35,7 +35,6 @@ define([
       mps.publish('Timeline/date-change', [this.view.getName(), date]);
       mps.publish('Place/update', [{go: false}]);
     }
-
   });
 
   return TimelineClassPresenter;

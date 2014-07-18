@@ -11,21 +11,23 @@ define([
 
   'use strict';
 
-  var UMDLossLayer = TimelineYearClass.extend({
-
-    opts: {
-      dateRange: [moment([2001]), moment()]
-    },
+  var UMDLossTimeline = TimelineYearClass.extend({
 
     /**
-     * Get the layer spec
+     * Get the layer spec.
+     *
      * @param  {object} layer The layer object
      */
     initialize: function(layer) {
       this.presenter = new Presenter(this);
-      UMDLossLayer.__super__.initialize.apply(this, [layer]);
+
+      this.options = {
+        dateRange: [moment(layer.mindate), moment(layer.maxdate)]
+      };
+
+      UMDLossTimeline.__super__.initialize.apply(this, [layer]);
     }
   });
 
-  return UMDLossLayer;
+  return UMDLossTimeline;
 });

@@ -31,7 +31,7 @@ define([
      * Defines CartoDB requests used by MapLayerService.
      */
     _defineRequests: function() {
-      var cache = {duration: 1, unit: 'days'};
+      var cache = {type: 'persist', duration: 1, unit: 'days'};
       var url = this._getUrl();
       var config = {cache: cache, url: url, type: 'POST', dataType: 'jsonp'};
       ds.define(this.requestId, config);
@@ -47,7 +47,7 @@ define([
     getLayers: function(where, successCb, errorCb) {
       this._fetchLayers(
         _.bind(function(layers) {
-          var hits = _.map(where, _.partial(_.where, layers));
+          var hits = _.map(where, _.partial(_.where, layers.rows));
           successCb(_.flatten(hits));
         }, this),
         _.bind(function(error) {
@@ -77,6 +77,8 @@ define([
                 external, \
                 zmin, \
                 zmax, \
+                mindate, \
+                maxdate, \
                 ST_XMAX(the_geom) AS xmax, \
                 ST_XMIN(the_geom) AS xmin, \
                 ST_YMAX(the_geom) AS ymax, \
@@ -84,12 +86,11 @@ define([
                 tileurl, \
                 true AS visible \
               FROM \
-                layerinfo_dev_copy \
-              WHERE \
-                display = TRUE \
+                layerspec \
               ORDER BY \
                 displaylayer, \
                 title ASC';
+
         this.url = new UriTemplate(template).fillFromObject({q: sql});
       }
 

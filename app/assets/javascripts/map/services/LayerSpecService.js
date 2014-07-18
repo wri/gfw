@@ -6,9 +6,10 @@
 define([
   'Class',
   'underscore',
+  'moment',
   'services/MapLayerService',
   'models/LayerSpecModel'
-], function(Class, _, mapLayerService, LayerSpecModel) {
+], function(Class, _, moment, mapLayerService, LayerSpecModel) {
 
   'use strict';
 
@@ -28,14 +29,41 @@ define([
       this.model = new LayerSpecModel();
     },
 
-    toggle: function(where, success, error) {
+    toggle: function(where, options, success, error) {
+      var self = this;
       mapLayerService.getLayers(
         where,
-        _.bind(function(layers) {
-          _.map(layers, this._toggleLayer, this);
-          success(this.model);
-        }, this),
+        function(layers) {
+          _.each(layers, function(layer) {
+            self._toggleLayer(self._standardizeAttrs(layer, options));
+          });
+          success(self.model);
+        },
         error);
+    },
+
+    /**
+     * Standarize layer attributes.
+     *
+     * @param  {obj} layer The layer object
+     * @param  {obj} opts  Layer extra parameters.
+     * @return {obj} layer The layer object
+     */
+    _standardizeAttrs: function(layer, options) {
+      if (layer.mindate) {
+        layer.mindate = moment(layer.mindate);
+      }
+
+      if (layer.maxdate) {
+        layer.maxdate = moment(layer.maxdate);
+      }
+
+      if (options.date && layer.category_slug === 'forest_clearing' &&
+        layer.slug !== 'forestgain') {
+        layer.currentDate = options.date;
+      }
+
+      return layer;
     },
 
     _toggleLayer: function(layer) {
@@ -117,14 +145,19 @@ define([
      * @return {Object} Params representing the state of the LayerNavView and layers
      */
     getPlaceParams: function() {
-      return {
-        name: 'map',
-        baselayers: _.keys(this.model.getBaselayers()).join(','),
-        sublayers: _.pluck(this.model.getSublayers(), 'id').join(',')
-      };
+      var p = {};
+      p.name = 'map';
+      p.baselayers = _.keys(this.model.getBaselayers()).join(',');
+      p.sublayers = _.pluck(this.model.getSublayers(), 'id').join(',');
+      p.date = _.map(this.model.getBaselayers(), function(layer) {
+        if (layer.currentDate) {
+          return '{0}-{1}'.format(layer.currentDate[0].format('X'),
+            layer.currentDate[1].format('X'));
+        }
+      }).join(',');
+
+      return p;
     },
-
-
   });
 
   var layerSpecService = new LayerSpecService();
