@@ -21,6 +21,10 @@ define([
       var response = null;
       var callback = null;
 
+      // Disable caching and redefine requests
+      service._cacheConfig = null;
+      service._defineRequests();
+
       beforeEach(function(done) {
         jasmine.Ajax.install();
 

@@ -23,10 +23,15 @@ define([
     },
 
     /**
+     * The configuration for client side caching of results.
+     */
+    _cacheConfig: {type: 'persist', duration: 1, unit: 'days'},
+
+    /**
      * Defines requests used by CountryService.
      */
     _defineRequests: function() {
-      var cache = {duration: 1, unit: 'days'};
+      var cache = this._cacheConfig;
       var config = {cache: cache, url: this._uriTemplate};
       ds.define(this.requestId, config);
     },

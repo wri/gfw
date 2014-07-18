@@ -46,10 +46,10 @@ define([
     define: function(id, config) {
       var cache = config.cache;
       var duration = cache && cache.duration ? cache.duration : 1;
-      var unit = cache && cache.unit ? cache.unit : 'weeks  ';
+      var unit = cache && cache.unit ? cache.unit : 'weeks';
       var expires = this._getDuration(duration, unit);
 
-      if (cache) {
+      if (cache) {        
         cache.expires = expires;
       }
 

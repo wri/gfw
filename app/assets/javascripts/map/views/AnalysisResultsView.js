@@ -58,7 +58,7 @@ define([
 
       $tpl.find('.ha strong').html(ha);
       $tpl.find('.subtitle').html(results.meta.timescale);
-      $tpl.find('#alerts-count').html( results.value : 0 );
+      $tpl.find('#alerts-count').html( results.value || 0 );
       $tpl.find('.svg-download').prop("href", results.download_urls.csv);
       $tpl.find('.geo-download').prop("href", results.download_urls.geojson);
       $tpl.find('.shp-download').prop("href", results.download_urls.shp);
@@ -74,7 +74,7 @@ define([
 
       $tpl.find('.ha strong').html(ha);
       $tpl.find('.subtitle').html(results.meta.timescale);
-      $tpl.find('#alerts-count').html( results.value : 0 );
+      $tpl.find('#alerts-count').html( results.value || 0 );
       $tpl.find('.svg-download').prop("href", results.download_urls.csv);
       $tpl.find('.geo-download').prop("href", results.download_urls.geojson);
       $tpl.find('.shp-download').prop("href", results.download_urls.shp);
@@ -90,7 +90,7 @@ define([
 
       $tpl.find('.ha strong').html(ha);
       $tpl.find('.subtitle').html(results.meta.timescale);
-      $tpl.find('#alerts-count').html( results.value : 0 );
+      $tpl.find('#alerts-count').html( results.value || 0 );
       $tpl.find('.svg-download').prop("href", results.download_urls.csv);
       $tpl.find('.geo-download').prop("href", results.download_urls.geojson);
       $tpl.find('.shp-download').prop("href", results.download_urls.shp);
@@ -106,7 +106,7 @@ define([
 
       $tpl.find('.ha strong').html(ha);
       $tpl.find('.subtitle').html(results.meta.timescale);
-      $tpl.find('#alerts-count').html( results.value : 0 );
+      $tpl.find('#alerts-count').html( results.value || 0 );
       $tpl.find('.svg-download').prop("href", results.download_urls.csv);
       $tpl.find('.geo-download').prop("href", results.download_urls.geojson);
       $tpl.find('.shp-download').prop("href", results.download_urls.shp);

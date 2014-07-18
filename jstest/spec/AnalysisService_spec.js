@@ -125,6 +125,10 @@ define([
 
       beforeEach(function(done) {
         jasmine.Ajax.install();
+        
+        // Disable caching and redefine requests
+        service._cacheConfig = null;
+        service._defineRequests();
 
         callback = {
           success: function(results) {

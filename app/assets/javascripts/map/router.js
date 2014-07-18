@@ -11,17 +11,16 @@ define([
   'backbone',
   'mps',
   'gmap',
+  'amplify',
   'services/PlaceService',
   'views/LayersNavView',
   'views/MapView',
   'views/LegendView',
-  'views/AnalysisResultsView',
   'views/SearchboxView',
   'views/MaptypeView',
   'views/TimelineView',
   'services/MapLayerService'
-], function($, _, Backbone, mps, gmap, PlaceService, LayersNavView, MapView,
-  LegendView, AnalysisResultsView, SearchboxView, MaptypeView, TimelineView, mapLayerService) {
+], function($, _, Backbone, mps, gmap, amplify, PlaceService, LayersNavView, MapView, LegendView, SearchboxView, MaptypeView, TimelineView, mapLayerService) {
 
   'use strict';
 
@@ -37,14 +36,29 @@ define([
           this.navigate('map/' + this.route, {silent: true});
         }
       }, this));
+      this.bind( 'all', this._checkForCacheBust());
       this.setWrapper();
       this.placeService = new PlaceService(mapLayerService, this);
       this.layersNavView = new LayersNavView();
       this.legendView = new LegendView();
       this.maptypeView = new MaptypeView();
       this.searchboxView = new SearchboxView();
-      this.analysisResultsView = new AnalysisResultsView();
       this.timelineView = new TimelineView();
+    },
+
+    /**
+     * If the URL contains the cache parameter (e.g., cache=bust), clear all 
+     * cached values in the browser (e.g., from memory, local storage, 
+     * session).
+     */
+    _checkForCacheBust: function() {
+      var params = _.parseUrl();
+
+      if (_.has(params, 'cache')) {
+        _.each(amplify.store(), function(value, key) {
+          amplify.store(key, null);
+        });
+      }
     },
 
     map: function(zoom, lat, lng, iso, maptype, baselayers, sublayers) {

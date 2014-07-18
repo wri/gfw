@@ -30,14 +30,12 @@ define([
      * Subscribe to application events.
      */
     subscribe: function() {
-      mps.subscribe('PlaceNav/change', _.bind(function(layerSpec) {
+      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this.layerSpec = layerSpec;
-      }, this));
-
+      },this));
       mps.subscribe('Place/go', _.bind(function(place) {
         this.layerSpec = place.params.layerSpec;
       }, this));
-
       mps.subscribe('AnalysisButton/setEnabled', _.bind(function(enabled) {
         this.view.setEnabled(enabled);
       }, this));
@@ -61,8 +59,35 @@ define([
     */
     requestAnalysis: function(the_geom) {
       if (this.layerSpec) {
-        var baselayers = _.pluck(this.layerSpec.getBaselayers(), 'slug')[0];
-        mps.publish('AnalysisService/get', [{dataset: this.layerSpec, geojson: the_geom}]);
+        var baselayer = _.pluck(this.layerSpec.getBaselayers(), 'slug')[0];
+        var dataset = null;
+        if (baselayer) {
+          switch (baselayer){
+            case 'umd_tree_loss_gain':
+              dataset = 'umd-loss-gain';
+            break
+
+            case 'forma':
+              dataset = 'forma-alerts';
+            break
+
+            case 'imazon':
+              dataset = 'imazon-alerts';
+            break
+
+            case 'fires':
+              dataset = 'nasa-active-fires';
+            break
+
+            case 'modis':
+              dataset = 'quicc-alerts';
+            break
+          }
+        
+        mps.publish('AnalysisService/get', [{dataset: dataset, geojson: the_geom}]);
+        }
+      } else {
+        mps.publish('AnalysisService/get', [{dataset: 'umd-loss-gain', geojson: the_geom}]);
       }
     }
   });

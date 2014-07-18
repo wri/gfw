@@ -24,6 +24,9 @@ define([
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
         this.view.setTimeline(place.params.layerSpec.getBaselayers());
+        if (!place.params.date) {
+          mps.publish('Place/update', [{go: false}]);
+        }
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {

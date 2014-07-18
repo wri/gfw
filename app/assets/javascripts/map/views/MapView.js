@@ -8,6 +8,7 @@ define([
   'underscore',
   'presenters/MapPresenter',
   'views/AnalysisButtonView',
+  'views/AnalysisResultsView',
   'views/UmdOptionsButtonView',
   'views/layers/UMDLossLayer',
   'views/layers/ForestGainLayer',
@@ -25,7 +26,7 @@ define([
   'views/layers/ProtectedAreasLayer',
   'views/layers/BiodiversityHotspotsLayer',
   'views/layers/ResourceRightsLayer'
-], function(Backbone, _, Presenter, AnalysisButtonView, UmdOptionsButtonView,
+], function(Backbone, _, Presenter, AnalysisButtonView, AnalysisResultsView, UmdOptionsButtonView,
   UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
   ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer) {
@@ -107,6 +108,7 @@ define([
      */
     _addCompositeViews: function() {
       this.$el.append(new AnalysisButtonView({map:this.map}).$el);
+      this.$el.append(new AnalysisResultsView({map:this.map}).$el);
       this.$el.append(new UmdOptionsButtonView().$el);
     },
 

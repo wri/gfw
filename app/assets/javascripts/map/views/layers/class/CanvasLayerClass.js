@@ -13,14 +13,16 @@ define([
 
   var CanvasLayerClass = Class.extend({
 
+    defaults: {
+      dataMaxZoom: 17
+    },
+
     init: function (layer) {
       _.bindAll(this, 'filterCanvasImgdata');
       this.tileSize = new google.maps.Size(256, 256);
       this.name = layer.slug;
       this.tiles = {};
-      this.options = _.extend({
-        dataMaxZoom: 17
-      }, this.options);
+      this.options = _.extend({}, this.defaults, this.options || {});
     },
 
     getLayer: function() {
@@ -178,17 +180,6 @@ define([
         this._drawCanvasImage(this.tiles[i]);
       }
     },
-
-    /**
-     * Filters the canvas imagedata. Subclasses implement this.
-     *
-     * @param  {object}  imgdata Canvas tile image data
-     * @param  {integer} w       tile width
-     * @param  {integer} h       tile height
-     * @param  {integer} z       map zoom
-     */
-    // filterCanvasImgdata: function(imgdata, w, h, z) {
-    // },
 
     getName: function() {
       return this.name;
