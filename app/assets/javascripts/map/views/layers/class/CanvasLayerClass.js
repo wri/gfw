@@ -4,28 +4,26 @@
  * @return CanvasLayer class (extends Class).
  */
 define([
-  'Class',
   'underscore',
-  'uri'
-], function(Class, _, UriTemplate) {
+  'uri',
+  'views/layers/class/OverlayLayerClass'
+], function(_, UriTemplate, OverlayLayerClass) {
 
   'use strict';
 
-  var CanvasLayerClass = Class.extend({
+  var CanvasLayerClass = OverlayLayerClass.extend({
 
     defaults: {
       dataMaxZoom: 17
     },
 
-    init: function (layer) {
+    init: function(layer, map) {
       _.bindAll(this, 'filterCanvasImgdata');
-      this.tileSize = new google.maps.Size(256, 256);
-      this.name = layer.slug;
       this.tiles = {};
-      this.options = _.extend({}, this.defaults, this.options || {});
+      this._super(layer, map);
     },
 
-    getLayer: function() {
+    _getLayer: function() {
       var deferred = new $.Deferred();
       deferred.resolve(this);
       return deferred.promise();
@@ -179,10 +177,6 @@ define([
       for(var i in this.tiles) {
         this._drawCanvasImage(this.tiles[i]);
       }
-    },
-
-    getName: function() {
-      return this.name;
     }
   });
 

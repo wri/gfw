@@ -4,25 +4,29 @@
  * @return ImageLayer class (extends Class).
  */
 define([
-  'Class',
   'underscore',
-  'uri'
-], function(Class, _, UriTemplate) {
+  'uri',
+  'views/layers/class/OverlayLayerClass',
+], function(_, UriTemplate, OverlayLayerClass) {
 
   'use strict';
 
-  var ImageMaptypeLayerClass = Class.extend({
+  var ImageMaptypeLayerClass = OverlayLayerClass.extend({
 
     defaults: {
       urlTemplate: ''
     },
 
-    init: function(layer) {
+    init: function(layer, map) {
       _.bindAll(this, '_getUrl');
-      this.tileSize = new google.maps.Size(256, 256);
-      this.name = layer.slug;
-      this.options = _.extend({}, this.defaults, this.options || {});
+      this._super(layer, map);
       this._setImageMaptype();
+    },
+
+    _getLayer: function() {
+      var deferred = new $.Deferred();
+      deferred.resolve(this._imageMaptype);
+      return deferred.promise();
     },
 
     /**
@@ -36,12 +40,6 @@ define([
         name: this.name,
         getTileUrl: this._getUrl
       });
-    },
-
-    getLayer: function() {
-      var deferred = new $.Deferred();
-      deferred.resolve(this._imageMaptype);
-      return deferred.promise();
     },
 
     /**
@@ -58,10 +56,6 @@ define([
         y: tile.y,
         z: zoom
       });
-    },
-
-    getName: function() {
-      return this.name;
     }
   });
 

@@ -1,6 +1,3 @@
-modules:
-  - name: "map"
-
 paths:
   amplify: "amplify/lib/amplify"
   underscore: "underscore/underscore"

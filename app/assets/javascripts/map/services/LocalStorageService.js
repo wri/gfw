@@ -6,8 +6,7 @@ define([
   'Class',
   'mps',
   'store',
-  'moment'
-], function (Class, mps, store, moment) {
+], function (Class, mps, store) {
 
   'use strict';
 
@@ -24,7 +23,7 @@ define([
     }
   });
 
-  var service = new LocalStorageService(); 
+  var service = new LocalStorageService();
 
   return service;
 });
