@@ -46,7 +46,7 @@ define([
     },
 
     addLayer: function() {
-      $.when(this._getLayer()).then(_.bind(function() {
+      this._getLayer().then(_.bind(function() {
         _.each(this.markers, function(marker) {
           marker.setVisible(true);
         });
