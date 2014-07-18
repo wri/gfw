@@ -7,7 +7,6 @@
 //= require jquery.qtip.min
 //= require imgLiquid.min
 //= require wax.g.min
-//= require cartodb-gmapsv3
 //= require minpubsub
 //= require markerclusterer_compiled
 //= require url.min
@@ -28,4 +27,3 @@
 //= require gfw/ui/analysis
 //= require gfw/ui/share
 //= require gfw/ui/filter
-//= require gfw/map

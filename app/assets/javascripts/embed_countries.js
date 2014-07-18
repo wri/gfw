@@ -1,4 +1,4 @@
-//= require d3.v3.min
+//= require d3/d3
 //= require jquery.qtip.min
 //= require simple_statistics
 

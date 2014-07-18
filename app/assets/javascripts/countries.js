@@ -1,4 +1,4 @@
-//= require d3.v3.min
+//= require d3/d3
 //= require topojson.v1.min
 //= require scrollIt.min
 //= require jquery.qtip.min
