@@ -7,6 +7,7 @@ paths:
   backbone: "backbone/backbone"
   jquery: "jquery/dist/jquery"
   d3: "d3/d3"
+  leaflet: "leaflet/leaflet"
   cartodb: "cartodb.js/dist/cartodb.full.uncompressed"
   moment: "moment/moment"
   text: "requirejs-text/text"
