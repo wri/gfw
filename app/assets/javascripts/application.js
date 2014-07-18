@@ -2,6 +2,7 @@
 //= require jquery_ujs
 //= require gfw
 //= require geojson
+//= require cdb
 //= require gfw/helpers
 //= require d3.v3.min
 
