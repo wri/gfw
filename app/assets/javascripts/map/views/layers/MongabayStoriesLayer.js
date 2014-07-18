@@ -5,13 +5,18 @@
  */
 define([
   'views/layers/class/MarkersLayerClass',
-], function(MarkersLayerClass) {
+  'services/MongabayStoryService'
+], function(MarkersLayerClass, MongabayStoryService) {
 
   'use strict';
 
   var MongabayStoriesLayer = MarkersLayerClass.extend({
 
-    url: 'https://wri-01.cartodb.com/api/v2/sql?q=SELECT * FROM mongabaydb WHERE published >= now() - INTERVAL \'12 Months\'&format=geojson'
+    service: MongabayStoryService,
+
+    options: {
+      icon: '/assets/icons/mongabay_exclamation.png'
+    }
 
   });
 

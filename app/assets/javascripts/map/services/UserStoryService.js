@@ -9,9 +9,9 @@ define([
 
   'use strict';
 
-  var StoryService = Class.extend({
+  var UserStoryService = Class.extend({
 
-    requestId: 'StoryService',
+    requestId: 'UserStoryService',
 
     url: '/stories.json?for_map=true',
 
@@ -21,7 +21,6 @@ define([
      * @return {StoryService} instance
      */
     init: function() {
-      this.layers = null;
       this._defineRequests();
     },
 
@@ -36,7 +35,11 @@ define([
     },
 
     fetchStories: function(successCb, errorCb) {
-      var config = {resourceId: this.requestId, success: successCb,
+      function _parseData(data) {
+        successCb(data);
+      }
+
+      var config = {resourceId: this.requestId, success: _parseData,
         error: errorCb};
 
       ds.request(config);
@@ -44,7 +47,7 @@ define([
 
   });
 
-  var service = new StoryService();
+  var service = new UserStoryService();
 
   return service;
 });

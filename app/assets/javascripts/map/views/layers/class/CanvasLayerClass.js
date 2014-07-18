@@ -4,11 +4,10 @@
  * @return CanvasLayer class (extends Class).
  */
 define([
-  'Class',
   'underscore',
   'uri',
   'views/layers/class/OverlayLayerClass'
-], function(Class, _, UriTemplate, OverlayLayerClass) {
+], function(_, UriTemplate, OverlayLayerClass) {
 
   'use strict';
 
@@ -20,7 +19,6 @@ define([
 
     init: function(layer, map) {
       _.bindAll(this, 'filterCanvasImgdata');
-      this.tileSize = new google.maps.Size(256, 256);
       this.tiles = {};
       this._super(layer, map);
     },

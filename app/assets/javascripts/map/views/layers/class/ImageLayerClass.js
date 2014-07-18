@@ -4,27 +4,25 @@
  * @return ImageLayer class (extends Class).
  */
 define([
-  'Class',
   'underscore',
-  'uri'
-], function(Class, _, UriTemplate) {
+  'uri',
+  'views/layers/class/OverlayLayerClass'
+], function(_, UriTemplate, OverlayLayerClass) {
 
   'use strict';
 
-  var ImageLayerClass = Class.extend({
+  var ImageLayerClass = OverlayLayerClass.extend({
 
     defaults: {
       dataMaxZoom: 17
     },
 
-    init: function(layer) {
-      this.tileSize = new google.maps.Size(256, 256);
-      this.name = layer.slug;
+    init: function(layer, map) {
       this.tiles = {};
-      this.options = _.extend({}, this.defaults, this.options);
+      this._super(layer, map);
     },
 
-    getLayer: function() {
+    _getLayer: function() {
       var deferred = new $.Deferred();
       deferred.resolve(this);
       return deferred.promise();

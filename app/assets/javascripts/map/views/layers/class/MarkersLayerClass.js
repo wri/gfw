@@ -5,41 +5,48 @@
 define([
   'Class',
   'underscore',
-  'uri',
-  'services/StoryService'
-], function(Class, _, UriTemplate, ss) {
+  'uri'
+], function(Class, _, UriTemplate) {
 
   'use strict';
 
   var MarkersLayerClass = Class.extend({
 
-    markers: [],
 
     defaults: {},
 
     init: function(layer, map) {
-      this.layer = layer;
+      this.markers = [];
       this.map = map;
-      this.options = _.extend({}, this.defaults, this.options);
+      this.options = _.extend({}, this.defaults, this.options || {});
     },
 
     _getLayer: function() {
       var deferred = new $.Deferred();
-      ss.fetchStories(_.bind(function() {
-        this._setMakers();
-        deferred.resolve();
-      }, this), this._handlerError);
-      return deferred.promise();
-    },
 
-    _setMakers: function(stories) {
-      this.makers = _.map(stories, _.bind(function(story) {
-        var markerOptions = _.extend({}, this.options, {
-          position: new google.maps.LatLng(story.lat, story.lng),
-          map: this.map
-        });
-        return new new google.maps.Marker(markerOptions);
-      }, this));
+      if (this.service) {
+        this.service.fetchStories(
+          _.bind(function(stories) {
+
+            this.markers = _.map(stories, function(story) {
+              var markerOption = _.extend({}, this.options, {
+                position: new google.maps.LatLng(story.lat, story.lng),
+                map: this.map
+              });
+              return new google.maps.Marker(markerOption);
+            }, this);
+
+            deferred.resolve(this.markers);
+
+          }, this),
+          this._handlerError
+        );
+      } else {
+        deferred.resolve(this.markers);
+        throw 'Service is required';
+      }
+
+      return deferred.promise();
     },
 
     _handlerError: function(xhr, textStatus) {
@@ -47,16 +54,12 @@ define([
     },
 
     addLayer: function() {
-      this._getLayer().then(_.bind(function() {
-        _.each(this.markers, function(marker) {
-          marker.setVisible(true);
-        });
-      }, this));
+      this._getLayer();
     },
 
     removeLayer: function() {
       _.each(this.markers, function(marker) {
-        marker.setVisible(false);
+        marker.setMap(null);
       });
     }
 

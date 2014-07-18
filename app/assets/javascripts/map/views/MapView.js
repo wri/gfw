@@ -180,6 +180,7 @@ define([
     _removeLayer: function(layerSlug) {
       var inst = this.layerInst[layerSlug];
       inst && inst.removeLayer();
+      delete this.layerInst[layerSlug];
     },
 
     /**
