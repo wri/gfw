@@ -4,10 +4,12 @@
  * @return UMDLossLayer class (extends CanvasLayerClass)
  */
 define([
+  'd3',
   'moment',
+  'uri',
   'views/layers/class/CanvasLayerClass',
   'presenters/UMDLossLayerPresenter'
-], function(moment, CanvasLayerClass, Presenter) {
+], function(d3, moment, UriTemplate, CanvasLayerClass, Presenter) {
 
   'use strict';
 

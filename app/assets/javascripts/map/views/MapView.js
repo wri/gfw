@@ -178,10 +178,11 @@ define([
      * @param  {string} layerSlug The layerSlug of the layer to remove
      */
     _removeLayer: function(layerSlug) {
-      if (this.layerInst[layerSlug]) {
-        this.layerInst[layerSlug].removeLayer();
-        this.layerInst[layerSlug] = null;
-      }
+      var inst = this.layerInst[layerSlug];
+      if (!inst) {return;}
+      inst.removeLayer();
+      inst.presenter && inst.presenter.unsubscribe && inst.presenter.unsubscribe();
+      this.layerInst[layerSlug] = null;
     },
 
     /**
@@ -263,39 +264,39 @@ define([
     _setMaptypes: function() {
 
       var grayscale = new google.maps.StyledMapType([{
-        "featureType": "water"
+        'featureType': 'water'
       }, {
-        "featureType": "transit",
-        "stylers": [{
-          "saturation": -100
+        'featureType': 'transit',
+        'stylers': [{
+          'saturation': -100
         }]
       }, {
-        "featureType": "road",
-        "stylers": [{
-          "saturation": -100
+        'featureType': 'road',
+        'stylers': [{
+          'saturation': -100
         }]
       }, {
-        "featureType": "poi",
-        "stylers": [{
-          "saturation": -100
+        'featureType': 'poi',
+        'stylers': [{
+          'saturation': -100
         }]
       }, {
-        "featureType": "landscape",
-        "stylers": [{
-          "saturation": -100
+        'featureType': 'landscape',
+        'stylers': [{
+          'saturation': -100
         }, {
-          "lightness": 90
+          'lightness': 90
         }]
       }, {
-        "featureType": "administrative",
-        "stylers": [{
-          "saturation": -100
+        'featureType': 'administrative',
+        'stylers': [{
+          'saturation': -100
         }]
       }, {
-        "featureType": "poi",
-        "elementType": "geometry",
-        "stylers": [{
-          "visibility": 'off'
+        'featureType': 'poi',
+        'elementType': 'geometry',
+        'stylers': [{
+          'visibility': 'off'
         }]
       }], {
         name: 'grayscale'
