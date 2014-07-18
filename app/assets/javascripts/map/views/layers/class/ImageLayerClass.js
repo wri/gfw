@@ -13,13 +13,15 @@ define([
 
   var ImageLayerClass = Class.extend({
 
+    defaults: {
+      dataMaxZoom: 17
+    },
+
     init: function(layer) {
       this.tileSize = new google.maps.Size(256, 256);
       this.name = layer.slug;
       this.tiles = {};
-      this.options = _.extend({
-        dataMaxZoom: 17
-      }, this.options);
+      this.options = _.extend({}, this.defaults, this.options);
     },
 
     getLayer: function() {

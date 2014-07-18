@@ -1,6 +1,6 @@
 /**
  * The Cartodb map layer module.
- * @return CartoDBLayerClass (extends Class).
+ * @return CartoDBLayerClass (extends LayerClass).
  */
 define([
   'Class',
@@ -27,7 +27,7 @@ define([
       '\'{tableName}\' AS layer, name FROM {tableName}',
 
     init: function(layer, map) {
-      this.layer = layer;
+      this.tableName = layer.table_name;
       this.map = map;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
@@ -89,12 +89,13 @@ define([
      * @return {string} CartoDB query
      */
     getQuery: function() {
-      return new UriTemplate(this.options.sql || this.queryTemplate).fillFromObject({tableName: this.layer.table_name});
+      return new UriTemplate(this.options.sql || this.queryTemplate).fillFromObject({tableName: this.tableName});
     },
 
     getName: function() {
       return this.name;
     }
+
   });
 
   return CartoDBLayerClass;
