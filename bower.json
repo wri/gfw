@@ -20,7 +20,6 @@
     "backbone": "~1.1.2",
     "minpubsub": "~0.0.2",
     "d3": "~3.4.8",
-    "cartodb.js": "https://github.com/CartoDB/cartodb.js/blob/master/dist/cartodb.full.uncompressed.js",
     "requirejs-text": "~2.0.12",
     "requirejs": "~2.1.14",
     "moment": "~2.7.0",
