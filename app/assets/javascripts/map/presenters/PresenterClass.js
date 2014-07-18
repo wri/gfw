@@ -22,7 +22,7 @@ define([
     unsubscribe: function() {
       for (var i = 0; i < this._subs.length; i++) {
         mps.unsubscribe(this._subs[i]);
-      };
+      }
     }
 
   });
