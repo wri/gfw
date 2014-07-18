@@ -4,7 +4,6 @@
 //= require geojson
 //= require gfw/helpers
 //= require d3.v3.min
-//= require cartodb
 
 $(function() {
   try {
