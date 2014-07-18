@@ -178,8 +178,11 @@ define([
      * @param  {string} layerSlug The layerSlug of the layer to remove
      */
     _removeLayer: function(layerSlug) {
-      if (this.layerInst[layerSlug]) {
-        this.layerInst[layerSlug].removeLayer();
+      var layerInst = this.layerInst[layerSlug];
+
+      if (layerInst) {
+        layerInst.removeLayer();
+        layerInst.presenter && layerInst.presenter.unsubscribe();
         this.layerInst[layerSlug] = null;
       }
     },
