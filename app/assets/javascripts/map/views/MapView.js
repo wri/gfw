@@ -260,38 +260,41 @@ define([
      * Set additional maptypes to this.map.
      */
     _setMaptypes: function() {
+
       var grayscale = new google.maps.StyledMapType([{
-        'featureType': 'water'
+        "featureType": "water"
       }, {
-        'featureType': 'transit',
-        'stylers': [{
-          'saturation': -100
+        "featureType": "transit",
+        "stylers": [{
+          "saturation": -100
         }]
       }, {
-        'featureType': 'road',
-        'stylers': [{
-          'saturation': -100
+        "featureType": "road",
+        "stylers": [{
+          "saturation": -100
         }]
       }, {
-        'featureType': 'poi',
-        'stylers': [{
-          'saturation': -100
+        "featureType": "poi",
+        "stylers": [{
+          "saturation": -100
         }]
       }, {
-        'featureType': 'landscape',
-        'stylers': [{
-          'saturation': -100
+        "featureType": "landscape",
+        "stylers": [{
+          "saturation": -100
+        }, {
+          "lightness": 90
         }]
       }, {
-        'featureType': 'administrative',
-        'stylers': [{
-          'saturation': -100
+        "featureType": "administrative",
+        "stylers": [{
+          "saturation": -100
         }]
       }, {
-        'featureType': 'poi.park',
-        'elementType': 'geometry',
-        'stylers': [{
-          'visibility': 'off'
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [{
+          "visibility": 'off'
         }]
       }], {
         name: 'grayscale'
