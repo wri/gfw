@@ -35,15 +35,3 @@ define([
   return UMDLossLayerPresenter;
 
 });
-
-Class.prototype.remove = function() {
-  if (this._subscriptions) {
-    for (var i = 0; i < this._subscriptions.length; i++) {
-      mps.unsubscribe(this._subscriptions[i]);
-    };
-  }
-}
-
-Backbone.View.prototype.remove = function() {
-  Backbone.View.prototype.remove.apply(this, [arguments]);
-}
