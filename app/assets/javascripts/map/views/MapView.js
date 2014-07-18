@@ -25,11 +25,13 @@ define([
   'views/layers/WoodFiberPlantationsLayer',
   'views/layers/ProtectedAreasLayer',
   'views/layers/BiodiversityHotspotsLayer',
-  'views/layers/ResourceRightsLayer'
-], function(Backbone, _, Presenter, AnalysisButtonView, AnalysisResultsView, UmdOptionsButtonView,
+  'views/layers/ResourceRightsLayer',
+  'views/layers/UserStoriesLayer',
+  'views/layers/MongabayStoriesLayer'
+], function(Backbone, _, Presenter, AnalysisButtonView,
   UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
-  ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer) {
+  ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
 
   'use strict';
 
@@ -68,7 +70,9 @@ define([
       wood_fiber_plantations: WoodFiberPlantationsLayer,
       protected_areas: ProtectedAreasLayer,
       biodiversity_hotspots: BiodiversityHotspotsLayer,
-      resource_rights: ResourceRightsLayer
+      resource_rights: ResourceRightsLayer,
+      user_stories: UserStoriesLayer,
+      mongabay: MongabayStoriesLayer
     },
 
     /**

@@ -5,7 +5,7 @@
 define([
   'Class',
   'mps',
-  'store',
+  'store'
 ], function (Class, mps, store) {
 
   'use strict';
