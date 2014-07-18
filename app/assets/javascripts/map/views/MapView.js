@@ -153,7 +153,7 @@ define([
      * @param {Object} layer The layer object
      */
     _addLayer: function(layer) {
-      if (this.layersViews[layer.slug]) {
+      if (this.layersViews[layer.slug] && !this.layerInst[layer.slug]) {
         var layerView = this.layerInst[layer.slug] =
           new this.layersViews[layer.slug](layer, this.map);
 
@@ -174,8 +174,10 @@ define([
      * @param  {string} layerSlug The layerSlug of the layer to remove
      */
     _removeLayer: function(layerSlug) {
-      var inst = this.layerInst[layerSlug];
-      inst && inst.removeLayer();
+      if (this.layerInst[layerSlug]) {
+        this.layerInst[layerSlug].removeLayer();
+        this.layerInst[layerSlug] = null;
+      }
     },
 
     /**
