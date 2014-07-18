@@ -16,7 +16,19 @@ define([
 
     options: {
       icon: '/assets/icons/mongabay_exclamation.png'
-    }
+    },
+
+    _setMarker: function(stories) {
+      this.markers = _.map(stories, function(story) {
+        var markerOption = _.extend({}, this.options, {
+          position: new google.maps.LatLng(story.lat, story.lng),
+          map: this.map,
+          thumbnail_url: story.thumbnail,
+          type: 'mongabay'
+        });
+        return new google.maps.Marker(markerOption);
+      }, this);
+    },
 
   });
 

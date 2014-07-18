@@ -22,35 +22,29 @@ define([
     },
 
     _getLayer: function() {
-      var deferred = new $.Deferred();
-
       if (this.service) {
         this.service.fetchStories(
-          _.bind(function(stories) {
-
-            this.markers = _.map(stories, function(story) {
-              var markerOption = _.extend({}, this.options, {
-                position: new google.maps.LatLng(story.lat, story.lng),
-                map: this.map
-              });
-              return new google.maps.Marker(markerOption);
-            }, this);
-
-            deferred.resolve(this.markers);
-
-          }, this),
+          _.bind(this._setMarker, this),
           this._handlerError
         );
       } else {
-        deferred.resolve(this.markers);
         throw 'Service is required';
       }
-
-      return deferred.promise();
     },
 
     _handlerError: function(xhr, textStatus) {
       throw textStatus;
+    },
+
+    _setMarker: function(stories) {
+      console.log(stories);
+      this.markers = _.map(stories, function(story) {
+        var markerOption = _.extend({}, this.options, {
+          position: new google.maps.LatLng(story.lat, story.lng),
+          map: this.map
+        });
+        return new google.maps.Marker(markerOption);
+      }, this);
     },
 
     addLayer: function() {
