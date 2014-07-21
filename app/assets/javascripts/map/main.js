@@ -2,6 +2,7 @@
  * Application entry point.
  */
 require([
+  'utils',
   'backbone'
 ], function (utils, Backbone) {
   'use strict';
