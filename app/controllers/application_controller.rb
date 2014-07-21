@@ -1,10 +1,10 @@
 class ApplicationController < ActionController::Base
-  helper_method :watch_cookie?
+  #helper_method :watch_cookie?
 
   protect_from_forgery with: :exception
 
   before_filter :check_browser
-  before_filter :check_terms
+  #before_filter :check_terms
 
   def not_found
     raise ActionController::RoutingError.new('Not Found')
@@ -31,11 +31,11 @@ class ApplicationController < ActionController::Base
     def check_terms
       session[:return_to] = request.fullpath
 
-      #redirect_to accept_terms_path unless watch_cookie?
+      redirect_to accept_terms_path unless watch_cookie?
     end
 
-    def watch_cookie?
-      cookies.permanent[ENV['TERMS_COOKIE'].to_sym] || controller_name == 'embed' || UserAgent.parse(request.user_agent).bot?
-    end
+    # def watch_cookie?
+    #   cookies.permanent[ENV['TERMS_COOKIE'].to_sym] || controller_name == 'embed' || UserAgent.parse(request.user_agent).bot?
+    # end
 
 end
