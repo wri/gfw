@@ -4,8 +4,9 @@
  */
 define([
   'Class',
+  'underscore',
   'services/DataService'
-], function (Class, ds) {
+], function (Class, _, ds) {
 
   'use strict';
 
