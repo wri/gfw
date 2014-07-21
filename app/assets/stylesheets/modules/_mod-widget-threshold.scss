@@ -4,60 +4,129 @@
 
   .widget-box {
     width: 400px;
+    padding: 20px;
   }
+
+  .widget-title {
+    color: $cGreen1;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+
+  .widget-description {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+
+    span {
+      display: block;
+      font-size: 11px;
+      margin-top: 5px;
+    }
+  }
+
+  .trees {
+    width: 100%;
+    margin-top: 20px;
+    height: 60px;
+
+    .tree-icon {
+      width: 25px;
+      height: 41px;
+      margin-top: 19px;
+      float: left;
+      background: image-url('backgrounds/map_options_tree-1.png') no-repeat;
+    }
+
+    .forest-icon {
+      float: right;
+      width: 91px;
+      height: 60px;
+      background: image-url('backgrounds/map_options_tree-2.png') no-repeat;
+    }
+  }
+
+
+  .slider-labels {
+    margin-top: 8px;
+    clear: both;
+
+    li {
+      cursor: pointer;
+      width: 11.11%;
+      color: $cGreen1;
+      font-size: 10px;
+      display: inline-block;
+      float: left;
+
+      &:first-child,
+      &:last-child {
+        color: #666;
+      }
+    }
+  }
+
 
   .slider-container {
+    margin-top: 10px;
     position: relative;
-  }
+    height: 20px;
+    width: calc(100% - 22.22%);
+    margin-left: 11.11%;
+    display: inline-block;
 
-  .slider {
-    width: 100%;
-    -webkit-appearance: none;
-    background: transparent;
-    cursor: pointer;
-    position: absolute;
-    z-index: 1;
-
-    &:focus {
-      outline: 0;
-    }
-
-    &::-webkit-slider-thumb {
+    .slider {
+      width: 100%;
       -webkit-appearance: none;
-      @include home-icons-sprite(timeline_handler);
-      background-color: $cGreen1;
-      width: 14px;
-      height: 14px;
-      cursor: col-resize;
-      border-radius: 3px;
+      background: transparent;
+      cursor: pointer;
+      position: absolute;
+      z-index: 1;
+
+      &:focus {
+        outline: 0;
+      }
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        @include home-icons-sprite(timeline_handler);
+        background-color: $cGreen1;
+        width: 14px;
+        height: 14px;
+        cursor: col-resize;
+        border-radius: 3px;
+      }
+
+      // &::-webkit-slider-thumb,
+      // input[type="range"]::-moz-range-thumb,
+      // input[type="range"]::-ms-thumb {
+      //   -webkit-appearance: none;
+      //   background: $cGreen1;
+      //   border: 1px solid darken($cGreen1, 20);
+      //   width: 14px;
+      //   height: 14px;
+      //   @include home-icons-sprite(timeline_handler);
+      //   cursor: col-resize;
+      // }
     }
 
-    // &::-webkit-slider-thumb,
-    // input[type="range"]::-moz-range-thumb,
-    // input[type="range"]::-ms-thumb {
-    //   -webkit-appearance: none;
-    //   background: $cGreen1;
-    //   border: 1px solid darken($cGreen1, 20);
-    //   width: 14px;
-    //   height: 14px;
-    //   @include home-icons-sprite(timeline_handler);
-    //   cursor: col-resize;
-    // }
-  }
+    .visible-range {
+      position: absolute;
+      right: 0;
+      top: 4px;
+      display: block;
+      background: #A2BC28;
+      width: 97%;
+      height: 6px;
+      pointer-events:none;
 
-  .visible-range {
-    position: absolute;
-    right: 0;
-    top: 4px;
-    display: block;
-    background: #A2BC28;
-    width: 97%;
-    height: 6px;
-    pointer-events:none;
-
-    box-shadow: 1px 0 3px #cccccc;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
+      box-shadow: 1px 0 3px #cccccc;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
   }
 }
 

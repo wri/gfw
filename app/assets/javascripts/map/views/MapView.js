@@ -188,7 +188,7 @@ define([
     },
 
     updateLayer: function(layerSlug) {
-      var layer = _.clone(this.layerInst[layerSlug].layer);
+      var layer = this.layerInst[layerSlug].layer;
       this._removeLayer(layerSlug);
       this._addLayer(layer);
     },

@@ -21,13 +21,15 @@ define([
 
     options: {
       hidden: true,
-      boxHidden: true
+      boxHidden: true,
+      boxClosed: false
     },
 
     events: function(){
       return _.extend({}, ThresholdView.__super__.events, {
         'change .slider': '_updateThreshold',
-        'input .slider': '_setVisibleRange'
+        'input .slider': '_setVisibleRange',
+        'click .slider-labels > li': '_onClickLabel'
       });
     },
 
@@ -47,20 +49,47 @@ define([
     initialize: function() {
       this.presenter = new Presenter(this);
       ThresholdView.__super__.initialize.apply(this);
+    },
+
+    _cacheSelector: function() {
+      ThresholdView.__super__._cacheSelector.apply(this);
       this.$slider = this.$el.find('.slider');
       this.$visibleRange = this.$el.find('.visible-range');
     },
 
     _updateThreshold: function() {
-      var threshold = this.valuesMap[this.$slider.val()];
-      this.presenter.changeThreshold(threshold);
+      this.presenter.changeThreshold(this.getThreshold());
       this._setVisibleRange();
+    },
+
+    getThreshold: function() {
+      return this.valuesMap[this.$slider.val()];
     },
 
     _setVisibleRange: function() {
       this.$visibleRange = this.$visibleRange.css('width', '{0}%'.format(
         (100/7) * ((80 - this.$slider.val() - 2.5) / 10)
       ));
+    },
+
+    _onClickLabel: function(e) {
+      var val = $(e.currentTarget).data('slider-value');
+      this.$slider.val(val);
+      this._updateThreshold();
+    },
+
+    update: function(layers) {
+      var html = this.template({
+        layers: layers,
+        valuesMap: this.valuesMap
+      });
+
+      this._update(html);
+
+      var val = _.invert(this.valuesMap)[layers[0].threshold] || _.keys(this.valuesMap)[0];
+
+      this.$slider.val(val);
+      this._setVisibleRange();
     }
   });
 

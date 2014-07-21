@@ -14,36 +14,41 @@ define([
   var Forest2000Layer = CanvasLayerClass.extend({
 
     options: {
+      threshold: 10,
       dataMaxZoom: 12,
-      urlTemplate: 'http://earthengine.google.org/static/hansen_2013/tree_alpha_{threshold}{/z}{/x}{/y}.png'
+      urlTemplate: 'http://earthengine.google.org/static/hansen_2013/gfw_tree_loss_year_{threshold}{/z}{/x}{/y}.png'
     },
 
     init: function(layer, map) {
       this.presenter = new Presenter(this);
       this._super(layer, map);
-      this.layer.threshold = this.layer.threshold || 10;
+      this.layer.threshold = this.layer.threshold || this.options.threshold;
     },
 
     /**
-     * Filters the canvas imagedata.
+     * Filters the canvas imgdata.
      * @override
      */
     filterCanvasImgdata: function(imgdata, w, h) {
-      var components = 4,
-        pixelPos, intensity;
+    var components = 4;
+    var zoom = this.map.getZoom();
 
-      for (var i = 0; i < w; ++i) {
-        for (var j = 0; j < h; ++j) {
+    for(var i=0; i < w; ++i) {
+      for(var j=0; j < h; ++j) {
+        var pixelPos = (j*w + i) * components;
+        var intensity = imgdata[pixelPos+1];
 
-          pixelPos = (j * w + i) * components,
-          intensity = imgdata[pixelPos + 3];
+        imgdata[pixelPos] = 151;
+        imgdata[pixelPos + 1] = 189;
+        imgdata[pixelPos + 2] = 61;
 
-          imgdata[pixelPos] = 0;
-          imgdata[pixelPos + 1] = intensity * 0.7;
-          imgdata[pixelPos + 2] = 0;
-          imgdata[pixelPos + 3] = intensity * 0.7;
+        if (zoom < 13) {
+          imgdata[pixelPos+ 3] = intensity*0.8;
+        } else {
+          imgdata[pixelPos+ 3] = intensity*0.8;
         }
       }
+    }
     },
 
     setThreshold: function(threshold) {

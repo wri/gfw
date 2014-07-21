@@ -2,9 +2,32 @@
 
 <div class="widget-box">
   <div class="widget-content">
-  <div class="slider-container">
-    <input class="slider" type="range" min="10" max="75" value="10" step="10">
+
+    <h3 class="widget-title">Settings</h3>
+
+    <div class="widget-description">
+      {{!-- Layer title could be dinamic --}}
+      UMD tree cover loss & extent.
+      <span>Change canopy threshold.</span>
     </div>
-    <span class="visible-range"></span>
+
+
+    <div class="trees">
+      <span class="tree-icon"></span>
+      <span class="forest-icon"></span>
+    </div>
+
+    <ul class="slider-labels">
+      <li data-slider-value="10">0%</li>
+      {{#each valuesMap}}
+        <li data-slider-value="{{@key}}">{{this}}%</li>
+      {{/each}}
+      <li data-slider-value="75">100%</li>
+    </ul>
+
+    <div class="slider-container">
+      <input class="slider" type="range" min="10" max="75" value="10" step="10">
+      <span class="visible-range"></span>
+    </div>
   </div>
 </div>

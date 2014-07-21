@@ -30,7 +30,6 @@ define([
      */
     init: function(view) {
       this.view = view;
-      this.layers = [];
       this._subscribe();
     },
 
@@ -40,9 +39,6 @@ define([
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
         this._setVisibility(place.params.layerSpec);
-        if (!place.params.threshold) {
-          mps.publish('Place/update', [{go: false}]);
-        }
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
@@ -59,13 +55,14 @@ define([
      * @param {object} layerSpec The layer spec object
      */
     _setVisibility: function(layerSpec) {
-      this.layers = _.filter(layerSpec.getLayers(), _.bind(function(layer) {
+      var layers = _.filter(layerSpec.getLayers(), _.bind(function(layer) {
         return _.intersection(this.thresholdLayers, [layer.slug]).length > 0;
       }, this));
 
-      if (this.layers.length > 0) {
+      // if layer have threshold, append that value!
+      if (layers.length > 0) {
         this.view.model.set('hidden', false);
-        this.view.update(this.layers);
+        this.view.update(layers);
       } else {
         this.view.model.set('hidden', true);
       }
@@ -78,11 +75,11 @@ define([
 
     getPlaceParams: function() {
       var params = {};
-
-      if (this.layers.length > 0) {
-        params.threshold = this.view.getThreshold();
+      var threshold = this.view.getThreshold();
+      console.log(threshold);
+      if (threshold) {
+        params.threshold = threshold;
       }
-
       return params;
     }
   });

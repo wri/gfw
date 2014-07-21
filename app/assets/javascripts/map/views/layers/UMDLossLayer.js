@@ -17,6 +17,7 @@ define([
 
     options: {
       dateRange: [moment([2001]), moment()],
+      threshold: 10,
       dataMaxZoom: 12,
       urlTemplate: 'http://earthengine.google.org/static/hansen_2013/gfw_tree_loss_year_{threshold}{/z}{/x}{/y}.png'
     },
@@ -25,7 +26,7 @@ define([
       this.presenter = new Presenter(this);
       this._super(layer, map);
       this.layer.currentDate = this.layer.currentDate || this.options.dateRange;
-      this.layer.threshold = this.layer.threshold || 10;
+      this.layer.threshold = this.layer.threshold || this.options.threshold;
     },
 
     /**

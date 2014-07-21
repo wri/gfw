@@ -80,7 +80,6 @@ define([
       };
       var queryParams = _.parseUrl();
       var params = _.extend(pathParams, queryParams);
-
       gmap.init(_.bind(function() {
         if (!this.mapView) {
           this.mapView = new MapView();
