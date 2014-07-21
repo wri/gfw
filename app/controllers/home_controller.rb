@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
 
-  skip_before_filter :check_terms, :only => [:accept_and_redirect]
+  #skip_before_filter :check_terms, :only => [:accept_and_redirect]
   before_filter :load_circles, :validate_url, :only => [:index]
 
   def index
