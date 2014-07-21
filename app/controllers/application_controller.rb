@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
     def check_terms
       session[:return_to] = request.fullpath
 
-      redirect_to accept_terms_path unless watch_cookie?
+      #redirect_to accept_terms_path unless watch_cookie?
     end
 
     def watch_cookie?
