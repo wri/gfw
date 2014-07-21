@@ -28,7 +28,7 @@ define([
   'views/layers/ResourceRightsLayer',
   'views/layers/UserStoriesLayer',
   'views/layers/MongabayStoriesLayer'
-], function(Backbone, _, Presenter, AnalysisButtonView,
+], function(Backbone, _, Presenter, AnalysisButtonView, AnalysisResultsView, UmdOptionsButtonView,
   UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
   ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
