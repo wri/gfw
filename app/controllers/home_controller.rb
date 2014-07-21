@@ -4,7 +4,6 @@ class HomeController < ApplicationController
   before_filter :load_circles, :validate_url, :only => [:index]
 
   def index
-    @visible = Api::Story.visible.first(3)
     @circles = load_circles
   end
 
