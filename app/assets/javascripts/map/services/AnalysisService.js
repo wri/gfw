@@ -1,10 +1,10 @@
 /**
  * The AnalysisService module for interacting with the GFW Analysis API.
  *
- * To use this service, you can inject it directly and call the execute() 
- * function. The preferred way is to use events to keep the app decoupled 
- * and testable. 
- * 
+ * To use this service, you can inject it directly and call the execute()
+ * function. The preferred way is to use events to keep the app decoupled
+ * and testable.
+ *
  * To do analysis with events, first subscribe:
  *
  *   mps.subscribe('AnalysisService/results', function(results) {...});
@@ -13,7 +13,7 @@
  *
  *   mps.publish('AnalysisService/get', [config]);
  *
- *  See the execute() function docs for information about the config, 
+ *  See the execute() function docs for information about the config,
  *  success, and failure arguments.
  */
 define([
@@ -32,7 +32,7 @@ define([
 
     /**
      * Constructs a new instance of AnalysisService.
-     * 
+     *
      * @return {AnalysisService} instance
      */
     init: function() {
@@ -63,8 +63,8 @@ define([
         }
       }, this);
       var config = {
-        resourceId: id, 
-        data: data, 
+        resourceId: id,
+        data: data,
         success: success,
         error: failureCb
       };
@@ -82,11 +82,11 @@ define([
      */
     _defineRequests: function() {
       var datasets = [
-        'forma-alerts', 'umd-loss-gain', 'imazon-alerts', 'nasa-active-fires', 
+        'forma-alerts', 'umd-loss-gain', 'imazon-alerts', 'nasa-active-fires',
         'quicc-alerts'
       ];
 
-      // Defines requests for each dataset (e.g., forma-alerts) and type (e.g. 
+      // Defines requests for each dataset (e.g., forma-alerts) and type (e.g.
       // national)
       _.each(datasets, function(dataset) {
         _.each(this._urls(dataset), function(url, id) {
@@ -110,7 +110,7 @@ define([
 
     /**
      * Returns analysis API urls for supplied dataset.
-     * 
+     *
      * @param  {string} dataset The dataset
      * @return {object} Object with ids mapping to urls
      */
@@ -131,10 +131,10 @@ define([
       return _.object(ids, urls);
     },
 
-  
+
     /**
      * Returns the request id dataset:type for supplied request config.
-     * 
+     *
      * @param  {object} config The request config object.
      * @return {[type]} The request id
      */

@@ -86,7 +86,8 @@ define([
 
       this._update(html);
 
-      var val = _.invert(this.valuesMap)[layers[0].threshold] || _.keys(this.valuesMap)[0];
+      var val = _.invert(this.valuesMap)[layers[0].threshold] ||
+        _.keys(this.valuesMap)[0];
 
       this.$slider.val(val);
       this._setVisibleRange();

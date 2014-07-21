@@ -7,9 +7,10 @@ define([
   'backbone',
   'underscore',
   'presenters/MapPresenter',
+  'views/AnalysisToolView',
+  'views/AnalysisResultsView',
   'views/maptypes/grayscaleMaptype',
   'views/maptypes/treeheightMaptype',
-  'views/AnalysisButtonView',
   'views/layers/UMDLossLayer',
   'views/layers/ForestGainLayer',
   'views/layers/FormaLayer',
@@ -28,7 +29,7 @@ define([
   'views/layers/ResourceRightsLayer',
   'views/layers/UserStoriesLayer',
   'views/layers/MongabayStoriesLayer'
-], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype, AnalysisButtonView,
+], function(Backbone, _, Presenter, AnalysisToolView, AnalysisResultsView, grayscaleMaptype, treeheightMaptype,
   UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
   ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
@@ -106,13 +107,6 @@ define([
     },
 
     /**
-     * Adds any default composite views to the map.
-     */
-    _addCompositeViews: function() {
-      this.$el.append(new AnalysisButtonView().$el);
-    },
-
-    /**
      * Wires up Google Maps API listeners so that the view can respond to user
      * events fired by the UI.
      */
@@ -126,6 +120,11 @@ define([
         _.bind(function() {
           this.onCenterChange();
       }, this));
+    },
+
+    _addCompositeViews: function() {
+      this.analysisToolView = new AnalysisToolView(this.map);
+      this.analysisResultsView = new AnalysisResultsView();
     },
 
     initMap: function(params) {
