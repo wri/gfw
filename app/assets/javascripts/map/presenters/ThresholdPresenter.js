@@ -38,13 +38,12 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
-        console.log('place go');
         this._setVisibility(place.params.layerSpec);
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this._setVisibility(layerSpec);
-      }, this))
+      }, this));
     },
 
     /**
@@ -54,10 +53,10 @@ define([
      * @param {object} layerSpec The layer spec object
      */
     _setVisibility: function(layerSpec) {
-      var baselayers = _.intersection(_.pluck(
-        layerSpec.getBaselayers(), 'slug'), this.thresholdLayers);
+      var layers = _.intersection(_.pluck(
+        layerSpec.getLayers(), 'slug'), this.thresholdLayers);
 
-      if (baselayers.length > 0) {
+      if (layers.length > 0) {
         this.view.model.set('hidden', false);
       } else {
         this.view.model.set('hidden', true);

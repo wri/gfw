@@ -4,9 +4,10 @@
  * @return MongabayStoriesLayer class (extends CartoDBLayerClass)
  */
 define([
+  'underscore',
   'views/layers/class/MarkersLayerClass',
   'services/MongabayStoryService'
-], function(MarkersLayerClass, MongabayStoryService) {
+], function(_, MarkersLayerClass, MongabayStoryService) {
 
   'use strict';
 

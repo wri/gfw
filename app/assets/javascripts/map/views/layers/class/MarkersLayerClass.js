@@ -4,9 +4,8 @@
  */
 define([
   'Class',
-  'underscore',
-  'uri'
-], function(Class, _, UriTemplate) {
+  'underscore'
+], function(Class, _) {
 
   'use strict';
 
@@ -37,7 +36,6 @@ define([
     },
 
     _setMarker: function(stories) {
-      console.log(stories);
       this.markers = _.map(stories, function(story) {
         var markerOption = _.extend({}, this.options, {
           position: new google.maps.LatLng(story.lat, story.lng),

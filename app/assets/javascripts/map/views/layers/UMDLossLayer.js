@@ -4,10 +4,12 @@
  * @return UMDLossLayer class (extends CanvasLayerClass)
  */
 define([
+  'd3',
   'moment',
+  'uri',
   'views/layers/class/CanvasLayerClass',
   'presenters/UMDLossLayerPresenter'
-], function(moment, CanvasLayerClass, Presenter) {
+], function(d3, moment, UriTemplate, CanvasLayerClass, Presenter) {
 
   'use strict';
 
@@ -20,9 +22,9 @@ define([
     },
 
     init: function(layer, map) {
-      this.timelineDate = layer.currentDate || this.options.dateRange;
       this.presenter = new Presenter(this);
       this._super(layer, map);
+      this.layer.currentDate = this.layer.currentDate || this.options.dateRange;
       this.layer.threshold = this.layer.threshold || 10;
     },
 
@@ -33,8 +35,8 @@ define([
     filterCanvasImgdata: function(imgdata, w, h, z) {
       var components = 4;
       var exp = z < 11 ? 0.3 + ((z - 3) / 20) : 1;
-      var yearStart = this.timelineDate[0].year();
-      var yearEnd = this.timelineDate[1].year();
+      var yearStart = this.layer.currentDate[0].year();
+      var yearEnd = this.layer.currentDate[1].year();
 
       var myscale = d3.scale.pow()
           .exponent(exp)
@@ -66,8 +68,13 @@ define([
      * @param {Array} date 2D array of moment dates [begin, end]
      */
     setTimelineDate: function(date) {
-      this.timelineDate = date;
+      this.layer.currentDate = date;
       this.updateTiles();
+    },
+
+    setThreshold: function(threshold) {
+      this.layer.threshold = threshold;
+      this.presenter.updateLayer();
     },
 
     _getUrl: function(x, y, z) {

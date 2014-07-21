@@ -180,10 +180,17 @@ define([
      * @param  {string} layerSlug The layerSlug of the layer to remove
      */
     _removeLayer: function(layerSlug) {
-      if (this.layerInst[layerSlug]) {
-        this.layerInst[layerSlug].removeLayer();
-        this.layerInst[layerSlug] = null;
-      }
+      var inst = this.layerInst[layerSlug];
+      if (!inst) {return;}
+      inst.removeLayer();
+      inst.presenter && inst.presenter.unsubscribe && inst.presenter.unsubscribe();
+      this.layerInst[layerSlug] = null;
+    },
+
+    updateLayer: function(layerSlug) {
+      var layer = _.clone(this.layerInst[layerSlug].layer);
+      this._removeLayer(layerSlug);
+      this._addLayer(layer);
     },
 
     /**

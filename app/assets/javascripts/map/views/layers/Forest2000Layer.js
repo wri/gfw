@@ -4,8 +4,10 @@
  * @return ForestLayer class (extends CanvasLayerClass)
  */
 define([
-  'views/layers/class/CanvasLayerClass'
-], function(CanvasLayerClass) {
+  'uri',
+  'views/layers/class/CanvasLayerClass',
+  'presenters/Forest2000LayerPresenter'
+], function(UriTemplate, CanvasLayerClass, Presenter) {
 
   'use strict';
 
@@ -13,7 +15,13 @@ define([
 
     options: {
       dataMaxZoom: 12,
-      urlTemplate: 'http://earthengine.google.org/static/hansen_2013/tree_alpha{/z}{/x}{/y}.png'
+      urlTemplate: 'http://earthengine.google.org/static/hansen_2013/tree_alpha_{threshold}{/z}{/x}{/y}.png'
+    },
+
+    init: function(layer, map) {
+      this.presenter = new Presenter(this);
+      this._super(layer, map);
+      this.layer.threshold = this.layer.threshold || 10;
     },
 
     /**
@@ -36,7 +44,18 @@ define([
           imgdata[pixelPos + 3] = intensity * 0.7;
         }
       }
+    },
+
+    setThreshold: function(threshold) {
+      this.layer.threshold = threshold;
+      this.presenter.updateLayer();
+    },
+
+    _getUrl: function(x, y, z) {
+      return new UriTemplate(this.options.urlTemplate)
+        .fillFromObject({x: x, y: y, z: z, threshold: this.layer.threshold});
     }
+
   });
 
   return Forest2000Layer;

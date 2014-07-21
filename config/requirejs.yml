@@ -44,7 +44,7 @@ shim:
   amplify:
     deps:
       - "jquery"
-    exports: "amplify"  
+    exports: "amplify"
   backbone:
     deps:
       - "jquery"

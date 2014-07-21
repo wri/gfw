@@ -56,6 +56,10 @@ define([
       mps.subscribe('Maptype/change', _.bind(function(maptype) {
         this.view.setMapTypeId(maptype);
       }, this));
+
+      mps.subscribe('Layer/update', _.bind(function(layerslug) {
+        this.view.updateLayer(layerslug);
+      }, this));
     },
 
     _setLayerSpec: function(layerSpec) {

@@ -16,7 +16,7 @@ define([
 
   var LegendView = Widget.extend({
 
-    className: 'widget legend',
+    className: 'widget widget-legend',
 
     template: Handlebars.compile(tpl),
 
@@ -33,7 +33,7 @@ define([
 
     events: function(){
       return _.extend({}, LegendView.__super__.events, {
-        'click .widget-closed': 'toggleClosed',
+        'click .widget-closed': '_toggleBoxClosed',
       });
     },
 
@@ -49,12 +49,19 @@ define([
      * @param  {array} layers
      */
     _renderLegend: function(layers) {
+      var layersLength = 0;
+
+      for (var i = 0; i < layers.length; i++) {
+        layersLength += _.keys(layers[i]).length;
+      }
+
       var html = this.template({
         layers: layers,
+        layersLength: layersLength,
         detailTemplates: this.detailTemplates
       });
 
-      this.$widgetOpened.html(html);
+      this._update(html);
     },
 
     /**
@@ -66,7 +73,7 @@ define([
       if (layers.length === 0) {
         this.model.set('hidden', true);
       } else {
-        this.model.set({'hidden': false, 'closed': false});
+        this.model.set({'hidden': false, 'boxClosed': false});
         this._renderLegend(layers);
       }
     }
