@@ -7,6 +7,8 @@ define([
   'backbone',
   'underscore',
   'presenters/MapPresenter',
+  'views/maptypes/grayscaleMaptype',
+  'views/maptypes/treeheightMaptype',
   'views/AnalysisButtonView',
   'views/layers/UMDLossLayer',
   'views/layers/ForestGainLayer',
@@ -26,7 +28,7 @@ define([
   'views/layers/ResourceRightsLayer',
   'views/layers/UserStoriesLayer',
   'views/layers/MongabayStoriesLayer'
-], function(Backbone, _, Presenter, AnalysisButtonView,
+], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype, AnalysisButtonView,
   UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
   ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
@@ -185,6 +187,12 @@ define([
       this.layerInst[layerSlug] = null;
     },
 
+    updateLayer: function(layerSlug) {
+      var layer = this.layerInst[layerSlug].layer;
+      this._removeLayer(layerSlug);
+      this._addLayer(layer);
+    },
+
     /**
      * Used by MapPresenter to set the map zoom.
      *
@@ -262,60 +270,8 @@ define([
      * Set additional maptypes to this.map.
      */
     _setMaptypes: function() {
-
-      var grayscale = new google.maps.StyledMapType([{
-        'featureType': 'water'
-      }, {
-        'featureType': 'transit',
-        'stylers': [{
-          'saturation': -100
-        }]
-      }, {
-        'featureType': 'road',
-        'stylers': [{
-          'saturation': -100
-        }]
-      }, {
-        'featureType': 'poi',
-        'stylers': [{
-          'saturation': -100
-        }]
-      }, {
-        'featureType': 'landscape',
-        'stylers': [{
-          'saturation': -100
-        }, {
-          'lightness': 90
-        }]
-      }, {
-        'featureType': 'administrative',
-        'stylers': [{
-          'saturation': -100
-        }]
-      }, {
-        'featureType': 'poi',
-        'elementType': 'geometry',
-        'stylers': [{
-          'visibility': 'off'
-        }]
-      }], {
-        name: 'grayscale'
-      });
-
-      var treeheight = new google.maps.ImageMapType({
-        getTileUrl: function(ll, z) {
-          var X = Math.abs(ll.x % (1 << z)); // jshint ignore:line
-          return '//gfw-apis.appspot.com/gee/simple_green_coverage/' + z + '/' + X + '/' + ll.y + '.png';
-        },
-        tileSize: new google.maps.Size(256, 256),
-        isPng: true,
-        maxZoom: 17,
-        name: 'Forest Height',
-        alt: 'Global forest height'
-      });
-
-      this.map.mapTypes.set('grayscale', grayscale);
-      this.map.mapTypes.set('treeheight', treeheight);
+      this.map.mapTypes.set('grayscale', grayscaleMaptype());
+      this.map.mapTypes.set('treeheight', treeheightMaptype());
     },
 
     _setZoomControl: function() {

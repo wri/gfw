@@ -1,6 +1,10 @@
-.searchbox {
-  width: 250px;
-  right: 220px;
+.widget-searchbox {
+  right: 445px;
+
+  .widget-box {
+    width: 250px;
+    padding: 10px 0;
+  }
 
   input {
     width: 100%;

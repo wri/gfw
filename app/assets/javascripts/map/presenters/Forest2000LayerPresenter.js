@@ -11,7 +11,7 @@ define([
 
   'use strict';
 
-  var UMDLossLayerPresenter = PresenterClass.extend({
+  var Forest2000LayerPresenter = PresenterClass.extend({
 
     init: function(view) {
       this._super();
@@ -24,13 +24,6 @@ define([
      */
     _subscribe: function() {
       this._subs.push(
-        mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
-          if (this.view.getName() === layerSlug) {
-            this.view.setTimelineDate(date);
-          }
-        }, this)));
-
-      this._subs.push(
         mps.subscribe('Threshold/changed', _.bind(function(threshold) {
           this.view.setThreshold(threshold);
         }, this)));
@@ -42,5 +35,5 @@ define([
 
   });
 
-  return UMDLossLayerPresenter;
+  return Forest2000LayerPresenter;
 });

@@ -35,11 +35,40 @@ define([
         where,
         function(layers) {
           _.each(layers, function(layer) {
-            self._toggleLayer(self._standardizeAttrs(layer, options));
+            layer = self._toggleLayer(layer);
+            if (layer) {
+              options = _.keys(options).length > 1 ? options : self._getOptionsFromLayers(layers);
+              self._standardizeAttrs(layer, options);
+            }
           });
           success(self.model);
         },
         error);
+    },
+
+    /**
+     * TODO => When we toggle a layer, we could get to the point where we are destroying a layer
+     * and later, when we want to toggle it back, we want some options from the url to append them
+     * to the layer. This happends on the PlaceService whenever we have a new route (go=true).
+     * But then, layerSpec object is moving around without passing any more options.
+     *
+     * Instead passing options to the LayerSpec.toggle, it would be better to inject PlaceService
+     * into this service and get the url params whenever we need it. This means we need to
+     * change the way this service is initialized. In the meantime, we can use this function, to
+     * get those params from other active layers.
+     *
+     * @return {object} options object
+     */
+    _getOptionsFromLayers: function() {
+      var options = {};
+
+      _.each(this.model.getLayers(), function(layer) {
+        if (layer.threshold) {
+          options.threshold = layer.threshold;
+        }
+      });
+
+      return options;
     },
 
     /**
@@ -63,6 +92,10 @@ define([
         layer.currentDate = options.date;
       }
 
+      if (options.threshold && (layer.slug === 'forest2000' || layer.slug === 'umd_tree_loss_gain')) {
+        layer.threshold = Number(options.threshold);
+      }
+
       return layer;
     },
 
@@ -72,7 +105,7 @@ define([
       // At least one baselayer selected.
       if (current && current.category_slug === 'forest_clearing' &&
         _.keys(this.model.getBaselayers()).length === 1) {
-        return;
+        return false;
       }
 
       if (current) {
@@ -81,8 +114,11 @@ define([
         if (_.keys(this.model.get(layer.category_slug)).length < 1) {
           this._removeCategory(layer.category_slug);
         }
+
+        return false;
       } else {
         this._addLayer(layer);
+        return layer;
       }
     },
 
@@ -149,12 +185,19 @@ define([
       p.name = 'map';
       p.baselayers = _.keys(this.model.getBaselayers()).join(',');
       p.sublayers = _.pluck(this.model.getSublayers(), 'id').join(',');
-      p.date = _.map(this.model.getBaselayers(), function(layer) {
+
+      var date = [];
+
+      _.each(this.model.getBaselayers(), function(layer) {
         if (layer.currentDate) {
-          return '{0}-{1}'.format(layer.currentDate[0].format('X'),
-            layer.currentDate[1].format('X'));
+          date.push('{0}-{1}'.format(layer.currentDate[0].format('X'),
+            layer.currentDate[1].format('X')));
         }
-      }).join(',');
+      });
+
+      if (date.length > 0) {
+        p.date = date.join(',');
+      }
 
       return p;
     },
