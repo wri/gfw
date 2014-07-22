@@ -100,7 +100,7 @@ define([
       this._setZoomControl();
       this._addCompositeViews();
       this._addListeners();
-      this._addLogos();
+      this._addLogos(750);
 
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
         this.$el.addClass('is-loaded');
