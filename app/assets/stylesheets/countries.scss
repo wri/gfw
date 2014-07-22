@@ -4,37 +4,10 @@ $font-light: "fira_sans_otlight", Georgia, sans-serif;
 $font-regular: "fira_sans_otregular", Georgia, sans-serif;
 $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
 
-// Global
-/*@import "fonts",*/
-@import "helpers";
-
-// Icons
-@import "country-icons/*.png";
-@import "home-icons/*.png";
-@include all-country-icons-sprites;
-
 // Countries
 @import "countries/index",
         "countries/show",
         "countries/overview";
-// Compass
-@import "compass/reset";
-@import "compass";
-@import "compass/css3";
-
-// General
-@import "_settings";
-@import "_mixins";
-@import "_layout";
-@import "_grid";
-@import "_base";
-
-// Images
-@import "icons/*.png";
-@import "logos/*.png";
-@import "static-icons/*.png";
-@import "static-logos/*.png";
-@import "stories-icons/*.png";
 
 .countries {
   &.index .content {
@@ -111,8 +84,8 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
     left: -30px;
   }
 
-  &.dark { 
-    @include country-icons-sprite(country_info_dark); 
+  &.dark {
+    @include country-icons-sprite(country_info_dark);
     height: 16px;
     width: 16px;
   }
@@ -159,7 +132,7 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
 }
 
 .umdoptions_dialog {
-  
+
   background: #fff;
   border: 1px solid #666;
   @include border-radius(3px);

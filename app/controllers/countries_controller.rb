@@ -29,7 +29,6 @@ class CountriesController < ApplicationController
       if response.success?
         JSON.parse(response.body)['countries']
       else
-        debugger
         nil
       end
     end
