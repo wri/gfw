@@ -17,20 +17,19 @@ define([
 
   var Searchbox = Widget.extend({
 
-    className: 'widget searchbox',
+    className: 'widget widget-searchbox',
+
     template: Handlebars.compile(tpl),
 
     initialize: function() {
-      var self = this;
-
-      Searchbox.__super__.initialize.apply(this);
-      this.presenter = new Presenter(this);
       _.bindAll(this, 'setAutocomplete', 'onPlaceSelected');
+      this.presenter = new Presenter(this);
+      Searchbox.__super__.initialize.apply(this);
 
       // TODO: fix gmap so it accepts two inits at the same time.
-      setTimeout(function() {
-        gmap.init(self.setAutocomplete);
-      }, 2000);
+      setTimeout(_.bind(function() {
+        gmap.init(this.setAutocomplete);
+      }, this), 2000);
     },
 
     setAutocomplete: function() {

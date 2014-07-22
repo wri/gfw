@@ -16,11 +16,13 @@ define([
   'views/LayersNavView',
   'views/MapView',
   'views/LegendView',
+  'views/ThresholdView',
   'views/SearchboxView',
   'views/MaptypeView',
   'views/TimelineView',
   'services/MapLayerService'
-], function($, _, Backbone, mps, gmap, amplify, PlaceService, LayersNavView, MapView, LegendView, SearchboxView, MaptypeView, TimelineView, mapLayerService) {
+], function($, _, Backbone, mps, gmap, amplify, PlaceService, LayersNavView, MapView, LegendView,
+    ThresholdView, SearchboxView, MaptypeView, TimelineView, mapLayerService) {
 
   'use strict';
 
@@ -38,17 +40,22 @@ define([
       }, this));
       this.bind( 'all', this._checkForCacheBust());
       this.setWrapper();
+
+      // Init general views
       this.placeService = new PlaceService(mapLayerService, this);
       this.layersNavView = new LayersNavView();
+
+      // Init widgets
       this.legendView = new LegendView();
       this.maptypeView = new MaptypeView();
       this.searchboxView = new SearchboxView();
+      this.ThresholdView = new ThresholdView();
       this.timelineView = new TimelineView();
     },
 
     /**
-     * If the URL contains the cache parameter (e.g., cache=bust), clear all 
-     * cached values in the browser (e.g., from memory, local storage, 
+     * If the URL contains the cache parameter (e.g., cache=bust), clear all
+     * cached values in the browser (e.g., from memory, local storage,
      * session).
      */
     _checkForCacheBust: function() {
@@ -73,7 +80,6 @@ define([
       };
       var queryParams = _.parseUrl();
       var params = _.extend(pathParams, queryParams);
-
       gmap.init(_.bind(function() {
         if (!this.mapView) {
           this.mapView = new MapView();

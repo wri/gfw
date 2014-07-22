@@ -7,9 +7,9 @@ define([
   'backbone',
   'underscore',
   'presenters/MapPresenter',
+  'views/maptypes/grayscaleMaptype',
+  'views/maptypes/treeheightMaptype',
   'views/AnalysisButtonView',
-  'views/AnalysisResultsView',
-  'views/UmdOptionsButtonView',
   'views/layers/UMDLossLayer',
   'views/layers/ForestGainLayer',
   'views/layers/FormaLayer',
@@ -28,7 +28,7 @@ define([
   'views/layers/ResourceRightsLayer',
   'views/layers/UserStoriesLayer',
   'views/layers/MongabayStoriesLayer'
-], function(Backbone, _, Presenter, AnalysisButtonView, AnalysisResultsView, UmdOptionsButtonView,
+], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype, AnalysisButtonView,
   UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
   ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
@@ -99,7 +99,6 @@ define([
       this._setZoomControl();
       this._addCompositeViews();
       this._addListeners();
-      this._addLogos();
 
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
         this.$el.addClass('is-loaded');
@@ -110,38 +109,7 @@ define([
      * Adds any default composite views to the map.
      */
     _addCompositeViews: function() {
-      this.$el.append(new AnalysisButtonView({map:this.map}).$el);
-      this.$el.append(new AnalysisResultsView({map:this.map}).$el);
-      this.$el.append(new UmdOptionsButtonView().$el);
-    },
-
-    /**
-     * Adds CartoDB and Google Earth Engine logos to the map.
-     *
-     * @param {Time} in miliseconds to wait.
-     */
-    _addLogos: function(mseconds) {
-      var self = this;
-      setTimeout(function(){
-        if (!document.getElementById('cartodb_logo')) {
-          var cartodb_link = document.createElement('a');
-          cartodb_link.setAttribute('id','cartodb_logo');
-          cartodb_link.setAttribute('style','position:absolute; bottom:3px; left:74px; display:block; border:none; z-index:100');
-          cartodb_link.setAttribute('href','http://www.cartodb.com');
-          cartodb_link.setAttribute('target','_blank');
-          cartodb_link.innerHTML = "<img src='http://cartodb.s3.amazonaws.com/static/new_logo.png' alt='CartoDB' title='CartoDB' style='border:none;' />";
-          self.map.getDiv().appendChild(cartodb_link)
-        }
-        if (!document.getElementById('gee_logo')) {
-          var gee_link = document.createElement('a');
-          gee_link.setAttribute('id','gee_logo');
-          gee_link.setAttribute('style','position:absolute; bottom: 0px; left:160px; display:block; border:none; z-index:100');
-          gee_link.setAttribute('href','https://earthengine.google.org');
-          gee_link.setAttribute('target','_blank');
-          gee_link.innerHTML = "<img src='/assets/logos/geengine.png' alt='Powered by Google Earth Engine' title='Powered by Google Earth Engine' style='border:none;' />";
-          self.map.getDiv().appendChild(gee_link)
-        }
-      }, mseconds);
+      this.$el.append(new AnalysisButtonView().$el);
     },
 
     /**
@@ -217,6 +185,12 @@ define([
       inst.removeLayer();
       inst.presenter && inst.presenter.unsubscribe && inst.presenter.unsubscribe();
       this.layerInst[layerSlug] = null;
+    },
+
+    updateLayer: function(layerSlug) {
+      var layer = this.layerInst[layerSlug].layer;
+      this._removeLayer(layerSlug);
+      this._addLayer(layer);
     },
 
     /**
@@ -296,60 +270,8 @@ define([
      * Set additional maptypes to this.map.
      */
     _setMaptypes: function() {
-
-      var grayscale = new google.maps.StyledMapType([{
-        'featureType': 'water'
-      }, {
-        'featureType': 'transit',
-        'stylers': [{
-          'saturation': -100
-        }]
-      }, {
-        'featureType': 'road',
-        'stylers': [{
-          'saturation': -100
-        }]
-      }, {
-        'featureType': 'poi',
-        'stylers': [{
-          'saturation': -100
-        }]
-      }, {
-        'featureType': 'landscape',
-        'stylers': [{
-          'saturation': -100
-        }, {
-          'lightness': 90
-        }]
-      }, {
-        'featureType': 'administrative',
-        'stylers': [{
-          'saturation': -100
-        }]
-      }, {
-        'featureType': 'poi',
-        'elementType': 'geometry',
-        'stylers': [{
-          'visibility': 'off'
-        }]
-      }], {
-        name: 'grayscale'
-      });
-
-      var treeheight = new google.maps.ImageMapType({
-        getTileUrl: function(ll, z) {
-          var X = Math.abs(ll.x % (1 << z)); // jshint ignore:line
-          return '//gfw-apis.appspot.com/gee/simple_green_coverage/' + z + '/' + X + '/' + ll.y + '.png';
-        },
-        tileSize: new google.maps.Size(256, 256),
-        isPng: true,
-        maxZoom: 17,
-        name: 'Forest Height',
-        alt: 'Global forest height'
-      });
-
-      this.map.mapTypes.set('grayscale', grayscale);
-      this.map.mapTypes.set('treeheight', treeheight);
+      this.map.mapTypes.set('grayscale', grayscaleMaptype());
+      this.map.mapTypes.set('treeheight', treeheightMaptype());
     },
 
     _setZoomControl: function() {

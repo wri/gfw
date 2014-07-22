@@ -1,12 +1,32 @@
-<div class="widget-toggle"></div>
-<div class="widget-content">
+<div class="widget-box">
+  <div class="widget-toggle"></div>
+  <div class="widget-content">
 
-  <div class="widget-closed">
-    <span class="layers-count">0</span> layers
-  </div>
-  
-  <div class="widget-opened">
-    <ul class="categories"></ul>
-  </div>
+    <div class="widget-closed">
+      <span class="layers-count">{{layersLength}}</span> layers
+    </div>
 
+    <div class="widget-opened">
+      <ul class="categories">
+        {{#each layers}}
+          <li class="category">
+            {{#each this}}
+              {{#if @first}}
+                <span class="category-name" style="color: {{this.category_color}};">{{this.category_name}}</span>
+              {{/if}}
+            {{/each}}
+            <ul class="layers">
+              {{#each this}}
+                <li class="layer">
+                  <span class="layer-name">
+                    <i class="circle" style="color:{{this.title_color}};"></i>{{this.title}}
+                  </span>
+                </li> {{!-- /layer --}}
+              {{/each}}
+            </ul>  {{!-- /layers --}}
+          </li> {{!-- /category --}}
+        {{/each}}
+      </ul> {{!-- /categories --}}
+    </div>
+  </div>
 </div>

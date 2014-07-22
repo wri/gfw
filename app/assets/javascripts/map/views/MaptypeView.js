@@ -15,12 +15,13 @@ define([
 
   var MaptypeView = Widget.extend({
 
-    className: 'widget maptype',
+    className: 'widget widget-maptype',
+
     template: Handlebars.compile(tpl),
 
     events: function(){
       return _.extend({}, MaptypeView.__super__.events, {
-        'click .maptype-selected li': 'toggleClosed',
+        'click .maptype-selected li': '_toggleBoxClosed',
         'click .widget-opened .maptype-list li': '_setMaptype'
       });
     },
@@ -50,7 +51,7 @@ define([
       this.$el.find('.maptype-selected').html(
         this.$widgetOpened.find('[data-maptype="' + maptype + '"]').clone());
 
-      this.model.set('closed', true);
+      this.model.set('boxClosed', true);
     }
   });
 
