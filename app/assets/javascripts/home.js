@@ -35,7 +35,7 @@ $(document).ready(function(){
 				}
 				content += '<li class="column round three">';
 			    content += '<a href="/stories/' + data[i].cartodb_id + '">';
-			    content += '<img src=" ' + _url(data[i].media.url ,geom.coordinates[0],geom.coordinates[1]) +  '" alt="' + data[i].title + '" />';
+			    content += '<img src=" ' + _url(data[i].media[1].preview_url ,geom.coordinates[0],geom.coordinates[1]) +  '" alt="' + data[i].title + '" />';
 			    content += '<div class="frame"></div>';
 			    content += '<div class="gradient"></div>';
 			    content += '<div class="title">';
