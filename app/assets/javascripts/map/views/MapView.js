@@ -89,7 +89,7 @@ define([
     render: function() {
       var params = {
         zoom: 3,
-        mapTypeId: google.maps.MapTypeId.TERRAIN,
+        mapTypeId: 'grayscale',
         center: new google.maps.LatLng(15, 27),
       };
 
