@@ -5,7 +5,7 @@ define([], function () {
 
   'use strict';
 
-  var grayscaleMaptype = function() {
+  var GrayscaleMaptype = function() {
     var config = {
       name: 'Forest Height',
       alt: 'Global forest height',
@@ -21,5 +21,5 @@ define([], function () {
     return new google.maps.ImageMapType(config);
   };
 
-  return grayscaleMaptype;
+  return GrayscaleMaptype;
 });

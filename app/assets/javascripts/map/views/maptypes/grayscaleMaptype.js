@@ -44,9 +44,9 @@ define([], function () {
     }]
   }];
 
-  var grayscaleMaptype = function() {
+  var GrayscaleMaptype = function() {
     return new google.maps.StyledMapType(style, {name: name});
   };
 
-  return grayscaleMaptype;
+  return GrayscaleMaptype;
 });

@@ -1,8 +1,11 @@
 .widget {
-  position: absolute;
-  z-index: 1000;
-  top: 38px;
   @include user-select(none);
+
+  .widget-box {
+    position: absolute;
+    z-index: 20;
+  }
+
 }
 
 /**
@@ -12,6 +15,7 @@
   color: #999;
   background-color: #fff;
   cursor: pointer;
+  position: absolute;
 
   @include border-radius(3px);
   @include box-shadow(0px 0px 3px #666);
@@ -19,6 +23,11 @@
 
   width: 25px;
   height: 25px;
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.7;
+  }
 }
 
 /**

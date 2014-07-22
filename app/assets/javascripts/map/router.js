@@ -20,9 +20,12 @@ define([
   'views/SearchboxView',
   'views/MaptypeView',
   'views/TimelineView',
+  'views/AnalysisToolView',
+  'views/AnalysisResultsView',
   'services/MapLayerService'
 ], function($, _, Backbone, mps, gmap, amplify, PlaceService, LayersNavView, MapView, LegendView,
-    ThresholdView, SearchboxView, MaptypeView, TimelineView, mapLayerService) {
+    ThresholdView, SearchboxView, MaptypeView, TimelineView, AnalysisToolView, AnalysisResultsView,
+    mapLayerService) {
 
   'use strict';
 
@@ -44,13 +47,6 @@ define([
       // Init general views
       this.placeService = new PlaceService(mapLayerService, this);
       this.layersNavView = new LayersNavView();
-
-      // Init widgets
-      this.legendView = new LegendView();
-      this.maptypeView = new MaptypeView();
-      this.searchboxView = new SearchboxView();
-      this.ThresholdView = new ThresholdView();
-      this.timelineView = new TimelineView();
     },
 
     /**
@@ -83,6 +79,13 @@ define([
       gmap.init(_.bind(function() {
         if (!this.mapView) {
           this.mapView = new MapView();
+          this.legendView = new LegendView();
+          this.maptypeView = new MaptypeView();
+          this.searchboxView = new SearchboxView();
+          this.thresholdView = new ThresholdView();
+          this.timelineView = new TimelineView();
+          this.analysisToolView = new AnalysisToolView(this.mapView.map);
+          this.analysisResultsView = new AnalysisResultsView();
         }
         mps.publish('Place/update', [{go: true, name: 'map', params: params}]);
       }, this));

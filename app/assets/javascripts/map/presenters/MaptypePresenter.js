@@ -30,6 +30,14 @@ define([
       mps.subscribe('Maptype/change', _.bind(function(maptype) {
         this.view.selectMaptype(maptype);
       }, this));
+
+      mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
+        this.view.model.set('hidden', false);
+      }, this));
+
+      mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
+        this.view.model.set('hidden', true);
+      }, this));
     },
 
     setMaptype: function(maptype) {

@@ -7,10 +7,8 @@ define([
   'backbone',
   'underscore',
   'presenters/MapPresenter',
-  'views/maptypes/grayscaleMaptype',
-  'views/maptypes/treeheightMaptype',
-  'views/AnalysisButtonView',
-  'views/AnalysisResultsView',
+  'views/maptypes/GrayscaleMaptype',
+  'views/maptypes/TreeheightMaptype',
   'views/layers/UMDLossLayer',
   'views/layers/ForestGainLayer',
   'views/layers/FormaLayer',
@@ -29,7 +27,7 @@ define([
   'views/layers/ResourceRightsLayer',
   'views/layers/UserStoriesLayer',
   'views/layers/MongabayStoriesLayer'
-], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype, AnalysisButtonView, AnalysisResultsView,
+], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype,
   UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
   ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
@@ -82,23 +80,23 @@ define([
     initialize: function() {
       this.presenter = new Presenter(this);
       this.layerInst = {};
+      this.render();
     },
 
     /**
      * Creates the Google Maps and attaches it to the DOM.
      */
-    render: function(params) {
-      params = {
-        zoom: params.zoom,
-        mapTypeId: params.maptype,
-        center: new google.maps.LatLng(params.lat, params.lng),
+    render: function() {
+      var params = {
+        zoom: 3,
+        mapTypeId: 'grayscale',
+        center: new google.maps.LatLng(15, 27),
       };
 
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
       this.resize();
       this._setMaptypes();
       this._setZoomControl();
-      this._addCompositeViews();
       this._addListeners();
       this._addLogos(750);
 
@@ -107,13 +105,6 @@ define([
       }, this));
     },
 
-    /**
-     * Adds any default composite views to the map.
-     */
-    _addCompositeViews: function() {
-      this.$el.append(new AnalysisButtonView({map:this.map}).$el);
-      this.$el.append(new AnalysisResultsView({map:this.map}).$el);
-    },
     /**
     * Adds CartoDB and Google Earth Engine logos to the map.
     *
@@ -159,8 +150,14 @@ define([
       }, this));
     },
 
-    initMap: function(params) {
-      this.render(params);
+    setOptions: function(params) {
+      params = {
+        zoom: params.zoom,
+        mapTypeId: params.maptype,
+        center: new google.maps.LatLng(params.lat, params.lng)
+      };
+
+      this.map.setOptions(params);
     },
 
     /**

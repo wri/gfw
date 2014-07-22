@@ -1,0 +1,31 @@
+.widget-analysis-tool {
+  .widget-btn {
+    left: 20px;
+    top: 130px;
+  }
+
+  .widget-box {
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+    width: 500px;
+  }
+
+  .description {
+    color: #666666;
+    font-size: 13px;
+    float: left;
+    display: inline-block;
+    margin: 8px 0 0 2px;
+  }
+
+  .buttons {
+    float: right;
+    button {
+      float: left;
+    }
+  }
+}

@@ -13,48 +13,46 @@ define([
 
   var AnalysisResultsPresenter = Class.extend({
 
-    /**
-     * Constructs new AnalysisResultsPresenter.
-     *
-     * @param  {AnalysisResultsView} view Instance of AnalysisResultsView
-     *
-     * @return {class} The AnalysisResultsPresenter class
-     */
-    init: function(view) {
-      this.view = view;
-      this.subscribe();
+    datasets: {
+      'umd-loss-gain': 'umd_tree_loss_gain',
+      'forma-alerts': 'forma',
+      'imazon-alerts': 'imazon',
+      'nasa-active-fires': 'fires',
+      'quicc-alerts': 'modis'
     },
 
-    /**
-     * Subscribe to application events.
-     */
-    subscribe: function() {
-      mps.subscribe('AnalysisService/results', _.bind(function(results) {
-        this.view.model.set({'hidden': false});
+    init: function(view) {
+      this.view = view;
+      this.layerSpec = null;
+      this._subscribe();
+    },
 
-        switch (results.meta.id) {
-          case 'umd-loss-gain':
-            this.view.printResultsUmd(results);
-          break
-          case 'forma-alerts':
-            this.view.printResultsForma(results);
-          break
-          case 'imazon-alerts':
-            this.view.printResultsImazon(results);
-          break
-          case 'nasa-active-fires':
-            this.view.printResultsNasa(results);
-          break
-          case 'quicc-alerts':
-            this.view.printResultsQuicc(results);
-          break
-        }
+    _subscribe: function() {
+      mps.subscribe('Place/go', _.bind(function(place) {
+        this.layerSpec = place.params.layerSpec;
+      }, this));
+
+      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
+        this.layerSpec = layerSpec;
+      }, this));
+
+      mps.subscribe('AnalysisService/results', _.bind(function(results) {
+        this._handleResults(results);
       }, this));
     },
 
+    _handleResults: function(results) {
+      var layerSlug = this.datasets[results.dataset];
+      var layer = this.layerSpec.getLayer(layerSlug);
+      this.view.renderAnalysis(results, layer);
+      mps.publish('Place/update', [{go: false}]);
+    },
+
     deleteAnalysis: function() {
-      mps.publish('AnalysisButton/_deleteAnalysis', []);
+      mps.publish('AnalysisResults/delete-analysis', []);
+      mps.publish('Place/update', [{go: false}]);
     }
+
   });
 
   return AnalysisResultsPresenter;

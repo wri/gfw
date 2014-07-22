@@ -59,59 +59,6 @@ strong {
   font-family: "Futura", sans-serif;
 }
 
-/* =Buttons
------------------------------------------------ */
-
-.btn {
-  @include inline-block();
-  border: 1px solid #839C26;
-  padding: 14px 34px;
-  color: #fff;
-  font-size: 11px;
-  font-weight: bold;
-  @extend .sans-serif;
-  text-decoration: none;
-  text-transform: uppercase;
-  background: #9bb251;
-  @include border-radius(2px);
-  cursor: pointer;
-  outline: none;
-
-  &.red {
-    background: #AC2E25;
-    border-color: #8B1F16;
-  }
-
-  &:hover {
-    color: #fff;
-  }
-
-  &.dark_glow:hover {
-    @include box-shadow(0 0 6px 1px rgba(#000, .4));
-  }
-
-  &.darker_glow:hover {
-    @include box-shadow(0 0 6px 1px rgba(#000, .8));
-  }
-
-  &.disabled {
-    @include opacity(.5);
-  }
-}
-
-.accept_btn,
-.cancel_btn {
-  margin: 0;
-  padding: 13px 0;
-  width: 180px;
-  text-align: center;
-}
-
-.cancel_btn {
-  margin-left: 20px;
-}
-
-
 /* =Sources
 ----------------------------------------------- */
 
