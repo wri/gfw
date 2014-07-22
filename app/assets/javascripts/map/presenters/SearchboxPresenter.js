@@ -27,11 +27,18 @@ define([
      * Subscribe to application events.
      */
     _subscribe: function() {
+      mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
+        this.view.model.set('hidden', false);
+      }, this));
+
+      mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
+        this.view.model.set('hidden', true);
+      }, this));
     },
 
     /**
      * Used by searchbox view to handle a fitbounds.
-     * 
+     *
      * @return {object} Map bounds
      */
     fitBounds: function(bounds) {

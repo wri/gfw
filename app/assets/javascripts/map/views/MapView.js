@@ -7,10 +7,8 @@ define([
   'backbone',
   'underscore',
   'presenters/MapPresenter',
-  'views/AnalysisToolView',
-  'views/AnalysisResultsView',
-  'views/maptypes/grayscaleMaptype',
-  'views/maptypes/treeheightMaptype',
+  'views/maptypes/GrayscaleMaptype',
+  'views/maptypes/TreeheightMaptype',
   'views/layers/UMDLossLayer',
   'views/layers/ForestGainLayer',
   'views/layers/FormaLayer',
@@ -29,7 +27,7 @@ define([
   'views/layers/ResourceRightsLayer',
   'views/layers/UserStoriesLayer',
   'views/layers/MongabayStoriesLayer'
-], function(Backbone, _, Presenter, AnalysisToolView, AnalysisResultsView, grayscaleMaptype, treeheightMaptype,
+], function(Backbone, _, Presenter, GrayscaleMaptype, TreeheightMaptype,
   UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
   ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
@@ -82,23 +80,23 @@ define([
     initialize: function() {
       this.presenter = new Presenter(this);
       this.layerInst = {};
+      this.render();
     },
 
     /**
      * Creates the Google Maps and attaches it to the DOM.
      */
-    render: function(params) {
-      params = {
-        zoom: params.zoom,
-        mapTypeId: params.maptype,
-        center: new google.maps.LatLng(params.lat, params.lng),
+    render: function() {
+      var params = {
+        zoom: 3,
+        mapTypeId: google.maps.MapTypeId.TERRAIN,
+        center: new google.maps.LatLng(15, 27),
       };
 
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
       this.resize();
       this._setMaptypes();
       this._setZoomControl();
-      this._addCompositeViews();
       this._addListeners();
 
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
@@ -122,13 +120,14 @@ define([
       }, this));
     },
 
-    _addCompositeViews: function() {
-      this.analysisToolView = new AnalysisToolView(this.map);
-      this.analysisResultsView = new AnalysisResultsView();
-    },
+    setOptions: function(params) {
+      params = {
+        zoom: params.zoom,
+        mapTypeId: params.maptype,
+        center: new google.maps.LatLng(params.lat, params.lng)
+      };
 
-    initMap: function(params) {
-      this.render(params);
+      this.map.setOptions(params);
     },
 
     /**
@@ -269,8 +268,8 @@ define([
      * Set additional maptypes to this.map.
      */
     _setMaptypes: function() {
-      this.map.mapTypes.set('grayscale', grayscaleMaptype());
-      this.map.mapTypes.set('treeheight', treeheightMaptype());
+      this.map.mapTypes.set('grayscale', GrayscaleMaptype());
+      this.map.mapTypes.set('treeheight', TreeheightMaptype());
     },
 
     _setZoomControl: function() {

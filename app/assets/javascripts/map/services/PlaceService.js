@@ -57,7 +57,7 @@ define([
 
   var PlaceService = Class.extend({
 
-    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?date,threshold}',
+    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geom,date,threshold}',
 
     /**
      * Defaults url params
@@ -166,6 +166,11 @@ define([
       p.lng = _.toNumber(p.lng);
       p.maptype = p.maptype;
       p.iso = p.iso;
+
+      if (p.geom) {
+        p.geom = decodeURIComponent(p.geom);
+      }
+
       return p;
     },
 
@@ -183,6 +188,10 @@ define([
       if (params.name === 'map') {
         p.lat = _.toNumber(p.lat).toFixed(2);
         p.lng = _.toNumber(p.lng).toFixed(2);
+
+        if (p.geom) {
+          p.geom = encodeURIComponent(p.geom);
+        }
 
         if (p.layerSpec) {
           var date = [];

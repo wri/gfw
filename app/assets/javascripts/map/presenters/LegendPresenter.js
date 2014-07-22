@@ -35,6 +35,14 @@ define([
         var layerSpec = place.params.layerSpec;
         this._updateLegend(layerSpec);
       }, this));
+
+      mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
+        this.view.model.set('hidden', false);
+      }, this));
+
+      mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
+        this.view.model.set('hidden', true);
+      }, this));
     },
 
     _updateLegend: function(layerSpec) {

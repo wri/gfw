@@ -1,8 +1,13 @@
 .widget-threshold {
-  left: 25px;
-  top: 100px;
+
+  .widget-btn {
+    left: 20px;
+    top: 90px;
+  }
 
   .widget-box {
+    left: 25px;
+    top: 100px;
     width: 400px;
     padding: 20px;
   }

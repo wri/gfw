@@ -47,6 +47,7 @@ define([
     },
 
     _startDrawing: function() {
+      this.presenter.startDrawing();
       this.drawingManager = new google.maps.drawing.DrawingManager({
         drawingControl: false,
         drawingMode: google.maps.drawing.OverlayType.POLYGON,
@@ -92,15 +93,15 @@ define([
           })
       });
 
-      console.log(this.polygon);
       this.polygon && this.$done.removeClass('disabled');
     },
 
-    _deleteSelection: function() {
+    deleteSelection: function() {
       if(this.selection) {
         this.selection.setMap(null);
         this.selection = null;
       }
+      this.$widgetBtn.removeClass('disabled');
     },
 
     _clearSelection: function() {
@@ -125,20 +126,53 @@ define([
 
     // Publish polygon
     _onClickDone: function() {
+      this.presenter.stopDrawing();
       this.presenter.publishAnalysis(this.polygon);
       this._stopDrawing();
       this.model.set({boxHidden: true});
     },
 
     _onClickCancel: function() {
+      this.presenter.stopDrawing();
       this._stopDrawing();
-      this._deleteSelection();
+      this.deleteSelection();
       this.model.set({boxHidden: true});
     },
 
     _onClickBtn: function(e) {
       this._startDrawing(e);
       this._toggleBoxHidden(e);
+      this.$widgetBtn.addClass('disabled');
+    },
+
+    /**
+     * Draw map from coordinates.
+     *
+     * @param  {object} geom The geom object
+     */
+    drawFromCoordinates: function(geom) {
+      geom = JSON.parse(geom).coordinates;
+
+      var paths = _.map(geom, function(g) {
+        return new google.maps.LatLng(g[1], g[0]);
+      });
+
+      this.selection = new google.maps.Polygon({
+        paths: paths,
+        strokeWeight: 2,
+        fillOpacity: 0.45,
+        fillColor: "#FFF",
+        strokeColor: "#A2BC28",
+        icon: new google.maps.MarkerImage(
+          '/assets/icons/marker_exclamation.png',
+          new google.maps.Size(36, 36), // size
+          new google.maps.Point(0, 0), // offset
+          new google.maps.Point(18, 18) // anchor
+        )
+      });
+
+      this.selection.setMap(this.map);
+      this.$widgetBtn.addClass('disabled');
     }
 
   });

@@ -1,5 +1,8 @@
 .widget-legend {
-  left: 60px;
+  .widget-box {
+    left: 60px;
+    top: 32px;
+  }
 
   .widget-content {
     font-size: 13px;

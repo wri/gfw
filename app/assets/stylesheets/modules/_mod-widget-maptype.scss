@@ -1,9 +1,10 @@
 .widget-maptype {
-  /* height: 235px; */
-  right: 185px;
 
   .widget-box {
+    right: 35px;
+    top: 32px;
     width: 150px;
+    z-index: 21;
   }
 
   .widget-closed .maptype-list li {

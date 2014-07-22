@@ -6,12 +6,11 @@
 define([
   'backbone',
   'underscore',
-  'gmap',
   'views/Widget',
   'presenters/SearchboxPresenter',
   'handlebars',
   'text!templates/searchbox.handlebars'
-], function(Backbone, _, gmap, Widget, Presenter, Handlebars, tpl) {
+], function(Backbone, _, Widget, Presenter, Handlebars, tpl) {
 
   'use strict';
 
@@ -25,11 +24,7 @@ define([
       _.bindAll(this, 'setAutocomplete', 'onPlaceSelected');
       this.presenter = new Presenter(this);
       Searchbox.__super__.initialize.apply(this);
-
-      // TODO: fix gmap so it accepts two inits at the same time.
-      setTimeout(_.bind(function() {
-        gmap.init(this.setAutocomplete);
-      }, this), 2000);
+      this.setAutocomplete();
     },
 
     setAutocomplete: function() {

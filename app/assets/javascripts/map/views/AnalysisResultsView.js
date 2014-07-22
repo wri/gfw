@@ -20,14 +20,14 @@ define([
     template: Handlebars.compile(tpl),
 
     options: {
-      hidden: true,
+      hidden: false,
       boxHidden: true,
       boxClosed: false
     },
 
     events: function(){
       return _.extend({}, AnalysisResultsView.__super__.events, {
-        'click .delete': '_deleteAnalysis'
+        'click .delete-analysis': '_deleteAnalysis'
       });
     },
 
@@ -40,21 +40,24 @@ define([
       AnalysisResultsView.__super__._cacheSelector.apply(this);
     },
 
-    renderAnalysis: function(results) {
-      var params = [];
+    renderAnalysis: function(results, layer) {
+      var p = {};
 
-      params.ha = this._calcAreaPolygon(results.params.geojson);
-      params.timescale = results.meta.timescale;
-      params.alertsCount = results.value || 0;
-      params.downloadUrls = results.download_urls;
-
-      this._update(this.template(params));
-      this.model.set('hidden', false);
+      p[layer.slug] = true;
+      p.totalAlerts = results.value || 0;
+      p.totalArea = this._calcAreaPolygon(results.params.geojson);
+      p.timescale = results.meta.timescale;
+      p.downloadUrls = results.download_urls;
+      p.layer = layer;
+      // p.dateRange = '{0} to {1}'.format(layer.mindate.format('MMM-YYYY'),
+      //   layer.maxdate.format('MMM-YYYY'));
+      this._update(this.template(p));
+      this.model.set('boxHidden', false);
     },
 
     _deleteAnalysis: function(e) {
       this.presenter.deleteAnalysis();
-      this.model.set('hidden', true);
+      this.model.set('boxHidden', true);
     },
 
     _calcAreaPolygon: function(polygon) {

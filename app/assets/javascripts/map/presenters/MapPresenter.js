@@ -30,7 +30,7 @@ define([
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
         if (place.params.name === 'map') {
-          this._initMap(place.params);
+          this._setOptions(place.params);
           this._setLayerSpec(place.params.layerSpec);
         }
       }, this));
@@ -68,13 +68,12 @@ define([
     },
 
     /**
-     * Initialize map state from supplied place.
+     * Set map options state from supplied place.params.
      *
      * @param  {PlaceService} The place to go to
      */
-    _initMap: function(params) {
-      this.view.initMap(params);
-      mps.publish('Map/initialized', []);
+    _setOptions: function(params) {
+      this.view.setOptions(params);
     },
 
     /**
