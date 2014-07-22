@@ -99,6 +99,7 @@ define([
       this._setZoomControl();
       this._addCompositeViews();
       this._addListeners();
+      this._addLogos();
 
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
         this.$el.addClass('is-loaded');
@@ -110,6 +111,35 @@ define([
      */
     _addCompositeViews: function() {
       this.$el.append(new AnalysisButtonView().$el);
+    },
+
+    /**
+    * Adds CartoDB and Google Earth Engine logos to the map.
+    *
+    * @param {Time} in miliseconds to wait.
+    */
+    _addLogos: function(mseconds) {
+      var self = this;
+      setTimeout(function(){
+        if (!document.getElementById('cartodb_logo')) {
+          var cartodb_link = document.createElement('a');
+          cartodb_link.setAttribute('id','cartodb_logo');
+          cartodb_link.setAttribute('style','position:absolute; bottom:3px; left:74px; display:block; border:none; z-index:100');
+          cartodb_link.setAttribute('href','http://www.cartodb.com');
+          cartodb_link.setAttribute('target','_blank');
+          cartodb_link.innerHTML = "<img src='http://cartodb.s3.amazonaws.com/static/new_logo.png' alt='CartoDB' title='CartoDB' style='border:none;' />";
+          self.map.getDiv().appendChild(cartodb_link)
+        }
+        if (!document.getElementById('gee_logo')) {
+          var gee_link = document.createElement('a');
+          gee_link.setAttribute('id','gee_logo');
+          gee_link.setAttribute('style','position:absolute; bottom: 0px; left:160px; display:block; border:none; z-index:100');
+          gee_link.setAttribute('href','https://earthengine.google.org');
+          gee_link.setAttribute('target','_blank');
+          gee_link.innerHTML = "<img src='/assets/logos/geengine.png' alt='Powered by Google Earth Engine' title='Powered by Google Earth Engine' style='border:none;' />";
+          self.map.getDiv().appendChild(gee_link)
+        }
+      }, mseconds);
     },
 
     /**
