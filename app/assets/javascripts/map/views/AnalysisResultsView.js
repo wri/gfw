@@ -55,7 +55,7 @@ define([
       this.model.set('boxHidden', false);
     },
 
-    _deleteAnalysis: function(e) {
+    _deleteAnalysis: function() {
       this.presenter.deleteAnalysis();
       this.model.set('boxHidden', true);
     },
@@ -69,11 +69,11 @@ define([
       var p1, p2;
 
       for (var i = 0; i < points.length; j = i++) {
-        var p1 = {
+        p1 = {
           x: points[i][1],
           y: points[i][0]
         };
-        var p2 = {
+        p2 = {
           x: points[j][1],
           y: points[j][0]
         };

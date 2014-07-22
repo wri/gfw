@@ -54,8 +54,8 @@ define([
         polygonOptions: {
           strokeWeight: 2,
           fillOpacity: 0.45,
-          fillColor: "#FFF",
-          strokeColor: "#A2BC28",
+          fillColor: '#FFF',
+          strokeColor: '#A2BC28',
           editable: true,
           icon: new google.maps.MarkerImage(
             '/assets/icons/marker_exclamation.png',
@@ -79,8 +79,7 @@ define([
     },
 
     _onOverlayComplete: function(e) {
-      self = this;
-      if (e.type != google.maps.drawing.OverlayType.MARKER) {
+      if (e.type !== google.maps.drawing.OverlayType.MARKER) {
         this._stopDrawing();
         this._setSelection(e.overlay, e.type);
       }
@@ -161,8 +160,8 @@ define([
         paths: paths,
         strokeWeight: 2,
         fillOpacity: 0.45,
-        fillColor: "#FFF",
-        strokeColor: "#A2BC28",
+        fillColor: '#FFF',
+        strokeColor: '#A2BC28',
         icon: new google.maps.MarkerImage(
           '/assets/icons/marker_exclamation.png',
           new google.maps.Size(36, 36), // size

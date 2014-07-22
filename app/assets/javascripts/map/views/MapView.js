@@ -27,7 +27,7 @@ define([
   'views/layers/ResourceRightsLayer',
   'views/layers/UserStoriesLayer',
   'views/layers/MongabayStoriesLayer'
-], function(Backbone, _, Presenter, GrayscaleMaptype, TreeheightMaptype,
+], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype,
   UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
   ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
@@ -268,8 +268,8 @@ define([
      * Set additional maptypes to this.map.
      */
     _setMaptypes: function() {
-      this.map.mapTypes.set('grayscale', GrayscaleMaptype());
-      this.map.mapTypes.set('treeheight', TreeheightMaptype());
+      this.map.mapTypes.set('grayscale', grayscaleMaptype());
+      this.map.mapTypes.set('treeheight', treeheightMaptype());
     },
 
     _setZoomControl: function() {
