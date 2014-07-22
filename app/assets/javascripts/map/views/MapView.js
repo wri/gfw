@@ -10,6 +10,7 @@ define([
   'views/maptypes/grayscaleMaptype',
   'views/maptypes/treeheightMaptype',
   'views/AnalysisButtonView',
+  'views/AnalysisResultsView',
   'views/layers/UMDLossLayer',
   'views/layers/ForestGainLayer',
   'views/layers/FormaLayer',
@@ -28,7 +29,7 @@ define([
   'views/layers/ResourceRightsLayer',
   'views/layers/UserStoriesLayer',
   'views/layers/MongabayStoriesLayer'
-], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype, AnalysisButtonView,
+], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype, AnalysisButtonView, AnalysisResultsView,
   UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
   ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
@@ -110,9 +111,9 @@ define([
      * Adds any default composite views to the map.
      */
     _addCompositeViews: function() {
-      this.$el.append(new AnalysisButtonView().$el);
+      this.$el.append(new AnalysisButtonView({map:this.map}).$el);
+      this.$el.append(new AnalysisResultsView({map:this.map}).$el);
     },
-
     /**
     * Adds CartoDB and Google Earth Engine logos to the map.
     *
