@@ -4,10 +4,11 @@
  * @return object used to async initialize Google Maps API
  */
 define([
+  'require',
   'jquery',
   'underscore',
   'handlebars'
-], function ($, _, Handlebars) {
+], function (require, $, _, Handlebars) {
 
   'use strict';
 
@@ -36,25 +37,38 @@ define([
 
       // After each lib is loaded, get the cartodb lib.
       var done = _.after(libs.length, function () {
-        require(['cartodb'], function() {
-          // CARTODB Hack
-          cdb.core.Template.compilers = _.extend(cdb.core.Template.compilers, {
-            handlebars: typeof(Handlebars) === 'undefined' ? null : Handlebars.compile
-          });
-          cb();
+        // CARTODB Hack
+        cdb.core.Template.compilers = _.extend(cdb.core.Template.compilers, {
+          handlebars: typeof(Handlebars) === 'undefined' ? null : Handlebars.compile
         });
+        cb();
       });
-
+      // var done = _.after(libs.length, function () {
+      //   require(['http://libs.cartocdn.com/cartodb.js/v3/cartodb.js'], function() {
+      //     // CARTODB Hack
+      //     cdb.core.Template.compilers = _.extend(cdb.core.Template.compilers, {
+      //       handlebars: typeof(Handlebars) === 'undefined' ? null : Handlebars.compile
+      //     });
+      //     cb();
+      //   });
+      // });
 
       // Load the jsapi and then grab each lib.
-      require(['https://www.google.com/jsapi?callback=?' +
-        '&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA'], function () {
-        _.each(libs, function (lib) {
-          google.load(lib.name, lib.version,
-                    _.extend(lib.options, { callback: done }));
-          google.maps.visualRefresh = true;
-        });
+      _.each(libs, function (lib) {
+        console.log(google);
+        google.load(lib.name, lib.version,
+                  _.extend(lib.options, { callback: done }));
+        google.maps.visualRefresh = true;
       });
+      // require(['https://www.google.com/jsapi?callback=?' +
+      //   '&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA'], function () {
+      //   _.each(libs, function (lib) {
+      //     google.load(lib.name, lib.version,
+      //               _.extend(lib.options, { callback: done }));
+      //     google.maps.visualRefresh = true;
+      //   });
+      // });
+
     }
   };
 });

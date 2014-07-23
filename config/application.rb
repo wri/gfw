@@ -47,6 +47,11 @@ module Gfw
       ]
     end)
 
+    # Require JS
+    config.requirejs.loader = :almond
+    config.requirejs.logical_asset_filter += [/\.handlebars$/]
+    config.requirejs.logical_asset_filter += [/\.cartocss$/]
+
   end
 end
 

@@ -3,10 +3,11 @@
  * @return CartoDBLayerClass (extends LayerClass).
  */
 define([
+  'require',
   'underscore',
   'uri',
   'views/layers/class/OverlayLayerClass'
-], function(_, UriTemplate, OverlayLayerClass) {
+], function(require, _, UriTemplate, OverlayLayerClass) {
 
   'use strict';
 
