@@ -1,0 +1,125 @@
+.mod-custom-infowindow {
+  $width: 268px;
+
+  position:absolute;
+  display:none;
+  width:$width;
+  max-height: 250px;
+  padding:0 0 6px;
+  text-align:center;
+
+
+  a.close {
+    @include position(20px, 5px, false, false);
+    @include size(6px);
+    @include mixins-sprite(infowindow_close);
+  }
+
+  $pR: 25px;
+  $pL: 17px;
+
+  .outer_top {
+    width:$width - $pL - $pR;
+    padding:25px $pR  5px $pL;
+    background:url('icons/bkg_infowindow.png') no-repeat left top;
+  }
+
+  .bottom {
+    @include position(false, false, -6px, -1px);
+    width:$width;
+    height:20px;
+    background:url('icons/bkg_infowindow.png') no-repeat right top;
+  }
+
+  .shadow {
+    @include position(false, false, 13px, 6px);
+    @include size(254px, 24px);
+    background:url(backgrounds/white_shadow.png) repeat-x;
+
+    z-index: 100;
+  }
+
+  .top {
+    width:245px;
+    height:200px;
+    margin:auto;
+    overflow-y:auto;
+    overflow-x:hidden;
+
+    text-align: left;
+
+    .jspTrack {background: none;}
+    .jspDrag {background: #EDEDED;}
+    .jspHover, .jspActive {background:#666666}
+    .jspVerticalBar {
+      margin-right: 3px;
+    }
+
+    label {
+      display:block;
+      width:auto; padding:0 0 0 5px;
+      @extend .sans-serif;
+      font-size:11px;
+      color:#CCCCCC;
+      text-shadow:0 1px white;
+    }
+
+    .infowindow_content {
+      width:100%;
+      padding: 0 0 10px 0;
+
+      /*margin: 0 0 0 5px;*/
+    }
+
+    p {
+      display:block;
+      width:220px;
+      max-height:20px;
+      padding:2px 4px;
+      margin:2px 0 10px 0;
+      @extend .sans-serif;
+      font-weight:normal;
+      font-size:13px;
+      color:#666666;
+      border:none;
+      background:none;
+      text-shadow:0 1px white;
+      text-overflow:ellipsis;
+      overflow:hidden;
+      white-space:nowrap;
+
+      &.empty {font-weight:normal; font-style:italic; color:#b7b7b7;}
+    }
+
+
+    .title {
+
+      padding:2px 0 20px 0px;
+      margin:2px 0 10px 5px;
+      border-bottom: 3px solid #ccc;
+
+      strong {
+        text-overflow:ellipsis;
+        display:block;
+        @extend .sans-serif;
+        font-weight:bold;
+        font-size:12px;
+        text-transform: uppercase;
+      }
+    }
+
+    .template_base{
+      .analyse {
+        @include position(20px, 2px, false, false);
+        @include size(41px, 42px);
+        @include mixins-sprite(graph);
+
+        &.disabled {
+          @include opacity(.6);
+          @include pointer-events(none);
+        }
+      }
+    }
+
+  }
+}
