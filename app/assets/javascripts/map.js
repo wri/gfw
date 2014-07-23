@@ -13,9 +13,15 @@ require([
 ], function (utils, Backbone, router, as, mps, cs, ds) {
   'use strict';
 
+  // CARTODB Hack
+  cdb.core.Template.compilers = _.extend(cdb.core.Template.compilers, {
+    handlebars: typeof(Handlebars) === 'undefined' ? null : Handlebars.compile
+  });
+
   if (!Backbone.History.started) {
     Backbone.history.start({pushState: true});
   }
+
   // For dev
   window.analysis = as;
   window.countryService = cs;
