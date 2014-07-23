@@ -106,7 +106,8 @@ $stories-color: rgb(242, 178, 87);
       }
 
       .layer-title {
-        display: inline;
+        width: 85px;
+        display: inline-block;
       }
 
       .layer-info {
