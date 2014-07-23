@@ -10,6 +10,11 @@ define([
   'use strict';
 
   var IntactForestLayer = CartoDBLayerClass.extend({
+
+    options: {
+      sql: 'SELECT *, \'{tableName}\' as layer, \'{tableName}\' as name FROM {tableName}'
+    },
+
   });
 
   return IntactForestLayer;
