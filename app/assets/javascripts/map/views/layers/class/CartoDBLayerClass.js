@@ -3,14 +3,16 @@
  * @return CartoDBLayerClass (extends LayerClass).
  */
 define([
+  'require',
   'underscore',
   'uri',
-  'views/layers/class/OverlayLayerClass',
-  'text!cartocss/style.cartocss',
-  'text!templates/infowindow.handlebars'
-], function(_, UriTemplate, OverlayLayerClass, CARTOCSS, tpl) {
+  'views/layers/class/OverlayLayerClass'
+], function(require, _, UriTemplate, OverlayLayerClass) {
 
   'use strict';
+
+  var CARTOCSS = require(['text!cartocss/style.cartocss']);
+  var TPL = require(['text!templates/infowindow.handlebars']);
 
   var CartoDBLayerClass = OverlayLayerClass.extend({
 
@@ -70,7 +72,7 @@ define([
      */
     setInfowindow: function() {
       this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.cdbLayer.getSubLayer(0), this.options.interactivity, {
-        infowindowTemplate: tpl,
+        infowindowTemplate: TPL,
         templateType: 'handlebars'
       });
     },

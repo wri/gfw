@@ -30,7 +30,7 @@ Gfw::Application.configure do
   # config.assets.compile = true
 
   # Generate digests for assets URLs.
-  config.assets.digest = false
+  config.assets.digest = true
 
   # Version of your assets, change this if you want to expire all your assets.
   config.assets.version = '1.0'
@@ -62,6 +62,11 @@ Gfw::Application.configure do
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
   config.assets.precompile += %w( modernizr-2.6.2.min.js home.js stories.js countries.js static.js old.js embed_countries.js embed_map.js home.css stories.css countries.css static.css )
+
+  # Require JS
+  config.requirejs.loader = :almond
+  config.requirejs.logical_asset_filter += [/\.handlebars$/]
+  config.requirejs.logical_asset_filter += [/\.cartocss$/]
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
