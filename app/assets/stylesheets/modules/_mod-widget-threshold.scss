@@ -148,4 +148,12 @@
       max-width: 330px;
     }
   }
+  .close {
+    display: block;
+    position: absolute;
+    top: 15px; right: 15px;
+    width: 6px;
+    height: 6px;
+    @include home-icons-sprite(infowindow_close);
+  }
 }
