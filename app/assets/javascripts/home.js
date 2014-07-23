@@ -24,8 +24,9 @@ $(document).ready(function(){
 			var UrlExists = function(url){
 			    jQuery.ajax({
 			        url:      url,
-			        dataType: 'text',
+			        dataType: 'jsonp',
 			        type:     'GET',
+			        contentType: 'image/jpeg',
 			        complete:  function(xhr){
 			            if(xhr.status !== 400)
 			            	return true

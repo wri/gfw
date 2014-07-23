@@ -1,7 +1,15 @@
 .widget-analysis-tool {
   .widget-btn {
-    left: 20px;
+    left: 15px;
     top: 130px;
+    background-color: transparent;
+    border: none;
+    box-shadow: 0 0 0;
+    width: 37px;
+    height: 37px;
+    @include home-icons-sprite(analysis_button);
+    &:hover  { @include home-icons-sprite(analysis_button_hover); }
+    &:active { @include home-icons-sprite(analysis_button_active); }
   }
 
   .widget-box {

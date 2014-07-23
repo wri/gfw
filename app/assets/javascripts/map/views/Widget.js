@@ -39,6 +39,7 @@ define([
       boxHidden: false,
       boxClosed: true,
       hidden: false,
+      forceHidden: false,
       containment: '.map-container'
     },
 
@@ -77,6 +78,7 @@ define([
       this.model.bind('change:boxHidden',    this._setBoxHidden, this);
       this.model.bind('change:boxDraggable', this._setBoxDraggable, this);
       this.model.bind('change:hidden', this._setHidden, this);
+      this.model.bind('change:forceHidden', this._setHidden, this);
       this.model.set(params || this.options);
     },
 
@@ -104,7 +106,13 @@ define([
     },
 
     _setHidden: function() {
-      this.model.get('hidden') ? this.$el.hide() : this.$el.show();
+      if (this.model.get('hidden')) {
+        this.$el.hide();
+      } else {
+        if(!this.model.get('forceHidden')) {
+          this.$el.show();
+        }
+      }
     },
 
     _toggleBoxClosed: function() {

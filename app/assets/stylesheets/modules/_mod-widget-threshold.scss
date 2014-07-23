@@ -1,24 +1,19 @@
 .widget-threshold {
-  .widget-btn {
-    left: 20px;
-    top: 90px;
-  }
-
   .widget-box {
-    left: 25px;
-    top: 100px;
+    left: 60px;
+    top: 90px;
     width: 440px;
     padding: 20px;
   }
 
   .widget-btn {
+    left: 15px;
+    top: 90px;
     background-color: transparent;
     border: none;
     box-shadow: 0 0 0;
     width: 37px;
     height: 37px;
-    margin-left: -7px;
-    margin-top: -3px;
     @include home-icons-sprite(icon_options);
     &:hover  { @include home-icons-sprite(icon_options_hover); }
     &:active { @include home-icons-sprite(icon_options_active); }

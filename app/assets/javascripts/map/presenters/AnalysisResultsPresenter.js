@@ -36,16 +36,28 @@ define([
         this.layerSpec = layerSpec;
       }, this));
 
+      mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
+        this.view.model.set('boxHidden', true);
+      }, this));
+
       mps.subscribe('AnalysisService/results', _.bind(function(results) {
-        this._handleResults(results);
+        if (!results.failure) {
+          this._renderResults(results);
+        } else {
+          this._renderAnalysisFailure(results);
+        }
       }, this));
     },
 
-    _handleResults: function(results) {
+    _renderResults: function(results) {
       var layerSlug = this.datasets[results.dataset];
       var layer = this.layerSpec.getLayer(layerSlug);
       this.view.renderAnalysis(results, layer);
       mps.publish('Place/update', [{go: false}]);
+    },
+
+    _renderAnalysisFailure: function() {
+      this.view.renderFailure();
     },
 
     deleteAnalysis: function() {

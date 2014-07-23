@@ -45,7 +45,7 @@ define([
 
       p[layer.slug] = true;
       p.totalAlerts = results.value || 0;
-      p.totalArea = this._calcAreaPolygon(results.params.geojson);
+      p.totalArea = (results.params.geojson) ? this._calcAreaPolygon(results.params.geojson) : 0;
       p.timescale = results.meta.timescale;
       p.downloadUrls = results.download_urls;
       p.layer = layer;
@@ -55,9 +55,18 @@ define([
       this.model.set('boxHidden', false);
     },
 
+    /**
+     * Render failure analysis request message.
+     */
+    renderFailure: function() {
+      var p = {};
+      p.failure = true;
+      this._update(this.template(p));
+      this.model.set('boxHidden', false);
+    },
+
     _deleteAnalysis: function() {
       this.presenter.deleteAnalysis();
-      this.model.set('boxHidden', true);
     },
 
     _calcAreaPolygon: function(polygon) {

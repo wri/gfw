@@ -1,11 +1,16 @@
+modules:
+  - name: 'map'
+
+wrap: false
+
 paths:
   amplify: "amplify/lib/amplify"
   underscore: "underscore/underscore"
   backbone: "backbone/backbone"
   jquery: "jquery/dist/jquery"
   d3: "d3/d3"
-  leaflet: "leaflet/leaflet"
-  cartodb: "cartodb.js/dist/cartodb.full.uncompressed"
+  topojson: "topojson/topojson"
+  cartodb: "cartodb.js/index"
   moment: "moment/moment"
   text: "requirejs-text/text"
   mps: "minpubsub/minpubsub"
@@ -13,8 +18,6 @@ paths:
   jqueryui: "jquery-ui-1.10.4.custom.min"
   gmap: "map/gmap"
   uri: "uri"
-  backbone_cartodb: "backbone.cartodb"
-  cartodblayer: "cartodb.gmapsv3"
   handlebars: "handlebars/handlebars"
   wax: "wax.g.min"
   store: "store"

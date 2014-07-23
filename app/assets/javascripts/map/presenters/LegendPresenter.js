@@ -37,11 +37,11 @@ define([
       }, this));
 
       mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
-        this.view.model.set('hidden', false);
+        this.view.model.set({hidden: false, forceHidden: false});
       }, this));
 
       mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
-        this.view.model.set('hidden', true);
+        this.view.model.set({hidden: true, forceHidden: true});
       }, this));
     },
 
