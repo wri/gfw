@@ -5,12 +5,13 @@
 define([
   'underscore',
   'uri',
-  'views/layers/class/OverlayLayerClass',
-  'text!cartocss/style.cartocss',
-  'text!templates/infowindow.handlebars'
-], function(_, UriTemplate, OverlayLayerClass, CARTOCSS, tpl) {
+  'views/layers/class/OverlayLayerClass'
+], function(_, UriTemplate, OverlayLayerClass) {
 
   'use strict';
+
+  var CARTOCSS = require(['text!cartocss/style.cartocss']);
+  var tpl = require(['text!templates/infowindow.handlebars']);
 
   var CartoDBLayerClass = OverlayLayerClass.extend({
 

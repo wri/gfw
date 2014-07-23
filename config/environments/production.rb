@@ -29,6 +29,11 @@ Gfw::Application.configure do
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   # config.assets.compile = true
 
+  # Require JS
+  config.requirejs.loader = :almond
+  config.requirejs.logical_asset_filter += [/\.handlebars$/]
+  config.requirejs.logical_asset_filter += [/\.cartocss$/]
+
   # Generate digests for assets URLs.
   config.assets.digest = true
 
