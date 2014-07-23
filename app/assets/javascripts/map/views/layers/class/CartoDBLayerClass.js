@@ -20,7 +20,8 @@ define([
       sql: null,
       cartocss: CARTOCSS,
       interactivity: 'cartodb_id, name',
-      infowindow: false
+      infowindow: false,
+      cartodb_logo: false
     },
 
     queryTemplate: 'SELECT cartodb_id||\':\' ||\'{tableName}\' as cartodb_id, the_geom_webmercator,' +
@@ -32,6 +33,7 @@ define([
       var cartodbOptions = {
         name: this.name,
         type: this.options.type,
+        cartodb_logo: this.options.cartodb_logo,
         user_name: this.options.user_name,
         sublayers: [{
           sql: this.getQuery(),
