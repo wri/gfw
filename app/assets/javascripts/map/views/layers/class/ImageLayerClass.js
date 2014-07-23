@@ -49,7 +49,7 @@ define([
       image.className += this.name;
       image.onerror = function() {
         this.style.display = 'none';
-      }
+      };
 
       if (zsteps <= 0) {
         return image;
