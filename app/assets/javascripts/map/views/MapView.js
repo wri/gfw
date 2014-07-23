@@ -119,8 +119,8 @@ define([
           cartodb_link.setAttribute('style','position:absolute; bottom:3px; left:74px; display:block; border:none; z-index:100');
           cartodb_link.setAttribute('href','http://www.cartodb.com');
           cartodb_link.setAttribute('target','_blank');
-          cartodb_link.innerHTML = "<img src='http://cartodb.s3.amazonaws.com/static/new_logo.png' alt='CartoDB' title='CartoDB' style='border:none;' />";
-          self.map.getDiv().appendChild(cartodb_link)
+          cartodb_link.innerHTML = '<img src="http://cartodb.s3.amazonaws.com/static/new_logo.png" alt="CartoDB" title="CartoDB" style="border:none;" />';
+          self.map.getDiv().appendChild(cartodb_link);
         }
         if (!document.getElementById('gee_logo')) {
           var gee_link = document.createElement('a');
@@ -128,8 +128,8 @@ define([
           gee_link.setAttribute('style','position:absolute; bottom: 0px; left:160px; display:block; border:none; z-index:100');
           gee_link.setAttribute('href','https://earthengine.google.org');
           gee_link.setAttribute('target','_blank');
-          gee_link.innerHTML = "<img src='/assets/logos/geengine.png' alt='Powered by Google Earth Engine' title='Powered by Google Earth Engine' style='border:none;' />";
-          self.map.getDiv().appendChild(gee_link)
+          gee_link.innerHTML = '<img src="/assets/logos/geengine.png" alt="Powered by Google Earth Engine" title="Powered by Google Earth Engine" style="border:none;" />';
+          self.map.getDiv().appendChild(gee_link);
         }
       }, mseconds);
     },

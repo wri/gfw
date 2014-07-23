@@ -34,11 +34,18 @@ define([
       }, this));
 
       mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
-        this.view.$el.show();
+        // TODO=> Add widget class to Timeline so we handle this necely.
+        if (this.view.currentTimeline) {
+          this.view.$el.show();
+          this.view.drawing = false;
+        }
       }, this));
 
       mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
-        this.view.$el.hide();
+        if (this.view.currentTimeline) {
+          this.view.drawing = true;
+          this.view.$el.hide();
+        }
       }, this));
     }
   });

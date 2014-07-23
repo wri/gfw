@@ -73,8 +73,10 @@ define([
     },
 
     _stopDrawing: function() {
-      this.drawingManager.setDrawingMode(null);
-      this.drawingManager.setMap(null);
+      if (this.drawingManager) {
+        this.drawingManager.setDrawingMode(null);
+        this.drawingManager.setMap(null);
+      }
       this.selection && this.selection.setEditable(false);
     },
 
@@ -87,7 +89,7 @@ define([
       this.polygon = JSON.stringify({
         'type': 'Polygon',
         'coordinates': _.map(e.overlay.getPath().getArray(),
-          function(latlng, index) {
+          function(latlng) {
             return [latlng.lng().toFixed(4), latlng.lat().toFixed(4)];
           })
       });

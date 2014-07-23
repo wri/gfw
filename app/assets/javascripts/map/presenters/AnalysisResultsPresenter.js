@@ -37,15 +37,23 @@ define([
       }, this));
 
       mps.subscribe('AnalysisService/results', _.bind(function(results) {
-        this._handleResults(results);
+        if (!results.failure) {
+          this._renderResults(results);
+        } else {
+          this._renderAnalysisFailure(results);
+        }
       }, this));
     },
 
-    _handleResults: function(results) {
+    _renderResults: function(results) {
       var layerSlug = this.datasets[results.dataset];
       var layer = this.layerSpec.getLayer(layerSlug);
       this.view.renderAnalysis(results, layer);
       mps.publish('Place/update', [{go: false}]);
+    },
+
+    _renderAnalysisFailure: function() {
+      this.view.renderFailure();
     },
 
     deleteAnalysis: function() {

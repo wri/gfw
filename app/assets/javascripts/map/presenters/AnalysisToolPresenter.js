@@ -65,6 +65,7 @@ define([
      */
     _setVisibility: function() {
       if (!this.baselayer) {
+        this.view._onClickCancel();
         this.view.model.set('hidden', true);
       } else {
         this.view.model.set('hidden', false);

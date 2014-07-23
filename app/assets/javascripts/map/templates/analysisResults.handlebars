@@ -6,6 +6,19 @@
       <span class="analysis-title">User defined area</span>
     </div>
 
+    {{#if failure}}
+    <div class="widget-opened">
+      <div class="analysis-info">
+        <span class="analysis-title">User defined area</span>
+        <span class="analysis-date-range">-</span>
+      </div>
+      <ul class="analysis-stats">
+          <li>
+            <div class="stats-notice">Error fetching analysis data.</div>
+          </li>
+      </ul>
+
+    {{else}}
     <div class="widget-opened">
       <div class="analysis-info">
         <span class="analysis-title">User defined area</span>
@@ -37,9 +50,11 @@
         {{/if}}
       </ul>
 
+    {{/if}}
       <div class="analysis-footer">
         <button href="#" class="delete-analysis">Delete</button>
       </div>
     </div>
+
   </div>
 </div>
