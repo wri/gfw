@@ -30,7 +30,9 @@
   <%= render 'shared/header_nav' %>
   <div class="content"><%= yield %></div>
 
-  <%= requirejs_include_tag "map/main" %>
+  <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA" %>
+  <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js" %>
+  <%= requirejs_include_tag "map" %>
   <!-- translate -->
   <script type="text/javascript">
     function googleTranslateElementInit() {

@@ -55,3 +55,36 @@
     }
   }
 }
+.landsat_years {
+  display: none;
+  position: absolute;
+  background: white;
+  padding: 5px;
+  border: 1px solid #666;
+  box-shadow: 0px 0px 3px #666666;
+  border-radius: 4px;
+  height: 145px;
+  width: 215px;
+  -webkit-column-count: 2;
+  -webkit-column-gap: 10px;
+  column-count: 2;
+  column-gap: 10px;
+  line-height: 20px;
+  right: 185px;
+  top: 170px;
+  li{
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+    cursor: pointer;
+  }
+
+  // &:after {
+  //   content: ' ';
+  //   height: 10px;
+  //   width: 10px;
+  //   transform: rotate(45deg);
+  //   background: white;
+  //   border: 1px solid #666;
+  // }
+}

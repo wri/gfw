@@ -1,3 +1,8 @@
+modules:
+  - name: 'map'
+
+wrap: false
+
 paths:
   amplify: "amplify/lib/amplify"
   underscore: "underscore/underscore"
@@ -13,8 +18,6 @@ paths:
   jqueryui: "jquery-ui-1.10.4.custom.min"
   gmap: "map/gmap"
   uri: "uri"
-  backbone_cartodb: "backbone.cartodb"
-  cartodblayer: "cartodb.gmapsv3"
   handlebars: "handlebars/handlebars"
   wax: "wax.g.min"
   store: "store"

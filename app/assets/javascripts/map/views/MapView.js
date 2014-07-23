@@ -3,6 +3,7 @@
  *
  * @return MapView class (extends Backbone.View)
  */
+
 define([
   'backbone',
   'underscore',
