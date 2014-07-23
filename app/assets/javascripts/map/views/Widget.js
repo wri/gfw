@@ -34,6 +34,8 @@ define([
       'click .widget-btn': '_toggleBoxHidden'
     },
 
+    renderParams: {},
+
     defaults: {
       boxDraggable: true,
       boxHidden: false,
@@ -49,7 +51,7 @@ define([
     },
 
     render: function() {
-      this.$el.html(this.template());
+      this.$el.html(this.template(this.renderParams));
       $(this.options.containment).append(this.el);
       this._cacheSelector();
       this._setModel();

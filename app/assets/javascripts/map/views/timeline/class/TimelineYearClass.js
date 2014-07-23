@@ -71,7 +71,7 @@ define([
      */
     render: function() {
       var self = this;
-      this.$timeline = $('.timeline');
+      this.$timeline = $('.timeline-container');
       this.$el.html(this.template());
       this.$timeline.append(this.el);
       this.$timeline.css('width', 1000);
