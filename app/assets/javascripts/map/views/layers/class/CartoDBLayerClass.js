@@ -12,7 +12,7 @@ define([
   'use strict';
 
   var CARTOCSS = require(['text!cartocss/style.cartocss']);
-  var tpl = require(['text!templates/infowindow.handlebars']);
+  var TPL = require(['text!templates/infowindow.handlebars']);
 
   var CartoDBLayerClass = OverlayLayerClass.extend({
 
@@ -72,7 +72,7 @@ define([
      */
     setInfowindow: function() {
       this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.cdbLayer.getSubLayer(0), this.options.interactivity, {
-        infowindowTemplate: tpl,
+        infowindowTemplate: TPL,
         templateType: 'handlebars'
       });
     },

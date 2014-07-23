@@ -3,7 +3,13 @@
  */
 require([
   'utils',
-  'backbone', 'router', 'services/AnalysisService', 'mps', 'services/CountryService', 'services/DataService', '_string'
+  'backbone',
+  'router',
+  'services/AnalysisService',
+  'mps',
+  'services/CountryService',
+  'services/DataService',
+  '_string'
 ], function (utils, Backbone, router, as, mps, cs, ds) {
   'use strict';
 
