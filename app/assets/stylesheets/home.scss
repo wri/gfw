@@ -49,33 +49,45 @@ body {
   }
 }
 
-.for_business {
+.gfw_sticker{
+  width: 110px;
+  max-height: 40px;
+  border-radius: 6px;
+  border: 2px solid #EF1731;
   position: relative;
   z-index: 1030;
   display: block;
   float: right;
-  margin-top: -10px;
-  height: 108px;
-  width: 108px;
-  font-weight: bold;
-  font-size: 11px;
+  margin-top: 10px;
+  margin-left: 26px;
   text-align: center;
   text-transform: uppercase;
-  background: $cGreen;
-  @include border-radius(55px);
+  font-size: 11px;
+  color: #7B7784;
+  padding: 8px;
+  font-weight: bold;
+  line-height: 15px;
+  background-color: rgba(254, 254, 254, 0.7);
+
+  &.for_business {
+    border-color: #EB8300;
+    span {
+      color: #EB8300;
+    }
+  }
 
   &:hover {
-    background: darken($cGreen, 5%);
+    background-color: rgba(251, 251, 251, 1);
+    color: #7B7784;
   }
 
   span {
     display: block;
-    position: relative;
-    top: 45px;
-    color: #fff;
-    @include rotate(30deg);
+    font-weight: bold;
+    color: #EF1731;
   }
 }
+
 
 // .analysis-link {
 //   margin: 5px;

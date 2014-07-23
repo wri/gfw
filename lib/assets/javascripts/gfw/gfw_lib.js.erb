@@ -45,7 +45,7 @@ GFW.modules.app = function(gfw) {
 
       this.layers = [];
       this.cloudfront_url = 'dyynnn89u7nkm.cloudfront.net';
-      this.global_version = 9;
+      this.global_version = 10;
 
       gfw.log.enabled = options ? options.logging : false;
 
@@ -1630,6 +1630,7 @@ GFW.modules.datalayers = function(gfw) {
         }
       });
 
+
       this.LayersObj = new LayersColl();
       this.LayersObj.fetch();
       this._loadLayers();
@@ -1657,14 +1658,13 @@ GFW.modules.datalayers = function(gfw) {
         idnforest.table_name = 'idn_primary';
         idnforest.title_color = '#007A4D';
         this.add([idnforest]);
-
         idnforest = GFW.app.datalayers.LayersObj.get(600);
         ////
 
         that.LayersObj.each(function(p) {
-          if (p.get('slug') === 'user_stories') {
-            Filter.addFilter(0, 'nothing', 'People', 'Land Rights', { disabled: true , category_color: '#707D92', color: '#707D92' });
-          }
+          // if (p.get('slug') === 'user_stories') {
+          //   Filter.addFilter(0, 'nothing', 'People', 'Land Rights', { disabled: true , category_color: '#707D92', color: '#707D92' });
+          // }
 
           that._addLayer(p);
         });
