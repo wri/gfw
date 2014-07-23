@@ -4,38 +4,32 @@
  * @return CanvasLayer class (extends Class).
  */
 define([
-  'Class',
   'underscore',
-  '_string'
-], function(Class, _) {
+  '_string',
+  'views/layers/class/OverlayLayerClass'
+], function(_, _string, OverlayLayerClass) {
 
   'use strict';
 
   var MAX_MONTHS = 200;
   var BASE_MONTH = 71;
 
-  var CanvasJSONLayerClass = Class.extend({
+  var CanvasJSONLayerClass = OverlayLayerClass.extend({
 
     defaults: {
       user_name: 'wri-01',
       dataMaxZoom: 17,
-      size: 256
     },
 
-    tiles: {},
-
-    init: function(layer) {
-      this.layer = layer;
-      this.name = layer.slug;
-      this.options = _.extend({}, this.defaults, this.options || {});
-
-      this.tileSize = new google.maps.Size(this.options.size, this.options.size);
+    init: function(layer, map) {
+      this.tiles = {};
+      this._super(layer, map);
       this.cartoSQL = new cartodb.SQL({
         user: this.options.user_name
       });
     },
 
-    getLayer: function() {
+    _getLayer: function() {
       var deferred = new $.Deferred();
       deferred.resolve(this);
       return deferred.promise();

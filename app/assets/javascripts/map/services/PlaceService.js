@@ -57,7 +57,7 @@ define([
 
   var PlaceService = Class.extend({
 
-    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?date}',
+    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geom,date,threshold}',
 
     /**
      * Defaults url params
@@ -125,12 +125,18 @@ define([
         var baselayers = this._getBaselayerFilters(place.params.baselayers);
         var sublayers = this._getSublayerFilters(place.params.sublayers);
         var where = _.union(baselayers, sublayers);
+
+        // instead passing options, it takes them from the PlaceService
         var options = {};
 
         if (params.date) {
           var start = moment(place.params.date.split('-')[0], 'X');
           var end = moment(place.params.date.split('-')[1], 'X');
           options.date = [start, end];
+        }
+
+        if (params.threshold) {
+          options.threshold = params.threshold;
         }
 
         layerSpecService.toggle(
@@ -154,12 +160,17 @@ define([
      * @return {Object} The standardized params.
      */
     _standardizeParams: function(params) {
-      var p = _.extendNonNull(this.defaults, params);
+      var p = _.extendNonNull(_.clone(this.defaults), params);
       p.zoom = _.toNumber(p.zoom);
       p.lat = _.toNumber(p.lat);
       p.lng = _.toNumber(p.lng);
       p.maptype = p.maptype;
       p.iso = p.iso;
+
+      if (p.geom) {
+        p.geom = decodeURIComponent(p.geom);
+      }
+
       return p;
     },
 
@@ -177,6 +188,10 @@ define([
       if (params.name === 'map') {
         p.lat = _.toNumber(p.lat).toFixed(2);
         p.lng = _.toNumber(p.lng).toFixed(2);
+
+        if (p.geom) {
+          p.geom = encodeURIComponent(p.geom);
+        }
 
         if (p.layerSpec) {
           var date = [];

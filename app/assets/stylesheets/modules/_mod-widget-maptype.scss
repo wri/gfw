@@ -1,8 +1,11 @@
-.maptype {
-  /* height: 235px; */
-  right: 55px;
-  width: 150px;
-  padding: 0;
+.widget-maptype {
+
+  .widget-box {
+    right: 35px;
+    top: 32px;
+    width: 150px;
+    z-index: 21;
+  }
 
   .widget-closed .maptype-list li {
     border: none;

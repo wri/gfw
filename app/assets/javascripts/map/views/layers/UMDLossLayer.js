@@ -4,10 +4,12 @@
  * @return UMDLossLayer class (extends CanvasLayerClass)
  */
 define([
+  'd3',
   'moment',
+  'uri',
   'views/layers/class/CanvasLayerClass',
   'presenters/UMDLossLayerPresenter'
-], function(moment, CanvasLayerClass, Presenter) {
+], function(d3, moment, UriTemplate, CanvasLayerClass, Presenter) {
 
   'use strict';
 
@@ -15,41 +17,48 @@ define([
 
     options: {
       dateRange: [moment([2001]), moment()],
+      threshold: 10,
       dataMaxZoom: 12,
-      urlTemplate: 'http://earthengine.google.org/static/hansen_2013/gfw_loss_year{/z}{/x}{/y}.png'
+      urlTemplate: 'http://earthengine.google.org/static/hansen_2013/gfw_tree_loss_year_{threshold}{/z}{/x}{/y}.png'
     },
 
     init: function(layer, map) {
-      this.timelineDate = layer.currentDate || this.options.dateRange;
       this.presenter = new Presenter(this);
       this._super(layer, map);
+      this.layer.currentDate = this.layer.currentDate || this.options.dateRange;
+      this.layer.threshold = this.layer.threshold || this.options.threshold;
     },
 
     /**
-     * Filters the canvas imagedata.
+     * Filters the canvas imgdata.
      * @override
      */
     filterCanvasImgdata: function(imgdata, w, h, z) {
       var components = 4;
-      var timelineDate = [this.timelineDate[0].year(), this.timelineDate[1].year()];
+      var exp = z < 11 ? 0.3 + ((z - 3) / 20) : 1;
+      var yearStart = this.layer.currentDate[0].year();
+      var yearEnd = this.layer.currentDate[1].year();
+
+      var myscale = d3.scale.pow()
+          .exponent(exp)
+          .domain([0,256])
+          .range([0,256]);
 
       for(var i = 0; i < w; ++i) {
         for(var j = 0; j < h; ++j) {
-          var pixelPos = (j * w + i) * components,
-              yearLoss = imgdata[pixelPos],
-              yearStart = timelineDate[0],
-              yearEnd = timelineDate[1];
+          var pixelPos = (j * w + i) * components;
+          var intensity = imgdata[pixelPos];
+          var yearLoss = 2000 + imgdata[pixelPos + 2];
 
-          yearLoss = 2000 + yearLoss;
-
-          if (imgdata[pixelPos + 1] > 10 && (yearLoss >= yearStart && yearLoss < yearEnd)) {
+          if (yearLoss >= yearStart && yearLoss < yearEnd) {
             imgdata[pixelPos] = 220;
-            imgdata[pixelPos + 1] = 102;
-            imgdata[pixelPos + 2] = 153;
-            imgdata[pixelPos + 3] = (z < 13) ? (12/z) * 255 : 255;
+            imgdata[pixelPos + 1] = (72 - z) + 102 - (3 * myscale(intensity) / z);
+            imgdata[pixelPos + 2] = (33 - z) + 153 - ((intensity) / z);
+            imgdata[pixelPos + 3] = z < 13 ? myscale(intensity) : intensity;
           } else {
             imgdata[pixelPos + 3] = 0;
           }
+
         }
       }
     },
@@ -60,9 +69,20 @@ define([
      * @param {Array} date 2D array of moment dates [begin, end]
      */
     setTimelineDate: function(date) {
-      this.timelineDate = date;
+      this.layer.currentDate = date;
       this.updateTiles();
+    },
+
+    setThreshold: function(threshold) {
+      this.layer.threshold = threshold;
+      this.presenter.updateLayer();
+    },
+
+    _getUrl: function(x, y, z) {
+      return new UriTemplate(this.options.urlTemplate)
+        .fillFromObject({x: x, y: y, z: z, threshold: this.layer.threshold});
     }
+
   });
 
   return UMDLossLayer;

@@ -32,6 +32,14 @@ define([
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this.view.setTimeline(layerSpec.getBaselayers());
       }, this));
+
+      mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
+        this.view.$el.show();
+      }, this));
+
+      mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
+        this.view.$el.hide();
+      }, this));
     }
   });
 

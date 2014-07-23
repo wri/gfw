@@ -1,0 +1,80 @@
+.widget-analysis-results {
+
+  .widget-box {
+    right: 35px;
+    top: 85px;
+    padding: 0px;
+    background: #F1F1F1;
+  }
+
+  .widget-closed,
+  .analysis-info,
+  .analysis-stats,
+  .analysis-footer, {
+    padding: 14px 20px;
+  }
+
+  .analysis-title {
+    color: #999;
+    font-weight: bold;
+    font-size: 11px;
+    text-transform: uppercase;
+    display: block;
+  }
+
+  .analysis-info {
+    border-bottom: 1px solid #ccc;
+
+    .analysis-date-range {
+      display: block;
+      color: #bababa;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+  }
+
+  .analysis-stats {
+    background: white;
+    font-size: 12px;
+
+    > li {
+      padding: 14px 0;
+      border-bottom: 1px solid #ddd;
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        border: none;
+        padding-bottom: 0;
+      }
+    }
+
+    .stats-title {
+      color: #999;
+      font-weight: bold;
+      font-size: 11px;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      display: block;
+    }
+
+    .stats-count {
+      font-weight: bold;
+      strong {
+        font-size: 18px;
+        color: #666;
+        display: inline-block;
+      }
+    }
+
+    .stats-notice {
+      font-size: 12px;
+    }
+  }
+
+  .analysis-footer {
+    border-top: 1px solid #ccc;
+  }
+}

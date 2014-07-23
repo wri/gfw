@@ -7,9 +7,8 @@ define([
   'backbone',
   'underscore',
   'presenters/MapPresenter',
-  'views/AnalysisButtonView',
-  'views/AnalysisResultsView',
-  'views/UmdOptionsButtonView',
+  'views/maptypes/grayscaleMaptype',
+  'views/maptypes/treeheightMaptype',
   'views/layers/UMDLossLayer',
   'views/layers/ForestGainLayer',
   'views/layers/FormaLayer',
@@ -25,11 +24,13 @@ define([
   'views/layers/WoodFiberPlantationsLayer',
   'views/layers/ProtectedAreasLayer',
   'views/layers/BiodiversityHotspotsLayer',
-  'views/layers/ResourceRightsLayer'
-], function(Backbone, _, Presenter, AnalysisButtonView, AnalysisResultsView, UmdOptionsButtonView,
+  'views/layers/ResourceRightsLayer',
+  'views/layers/UserStoriesLayer',
+  'views/layers/MongabayStoriesLayer'
+], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype,
   UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
-  ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer) {
+  ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
 
   'use strict';
 
@@ -68,7 +69,9 @@ define([
       wood_fiber_plantations: WoodFiberPlantationsLayer,
       protected_areas: ProtectedAreasLayer,
       biodiversity_hotspots: BiodiversityHotspotsLayer,
-      resource_rights: ResourceRightsLayer
+      resource_rights: ResourceRightsLayer,
+      user_stories: UserStoriesLayer,
+      mongabay: MongabayStoriesLayer
     },
 
     /**
@@ -76,27 +79,26 @@ define([
      */
     initialize: function() {
       this.presenter = new Presenter(this);
-      // Layer view instances
       this.layerInst = {};
+      this.render();
     },
 
     /**
      * Creates the Google Maps and attaches it to the DOM.
      */
-    render: function(params) {
-      params = {
-        zoom: params.zoom,
-        mapTypeId: params.maptype,
-        center: new google.maps.LatLng(params.lat, params.lng),
+    render: function() {
+      var params = {
+        zoom: 3,
+        mapTypeId: 'grayscale',
+        center: new google.maps.LatLng(15, 27),
       };
 
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
       this.resize();
       this._setMaptypes();
       this._setZoomControl();
-      this._addCompositeViews();
       this._addListeners();
-      this._addLogos();
+      this._addLogos(750);
 
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
         this.$el.addClass('is-loaded');
@@ -104,19 +106,10 @@ define([
     },
 
     /**
-     * Adds any default composite views to the map.
-     */
-    _addCompositeViews: function() {
-      this.$el.append(new AnalysisButtonView({map:this.map}).$el);
-      this.$el.append(new AnalysisResultsView({map:this.map}).$el);
-      this.$el.append(new UmdOptionsButtonView().$el);
-    },
-
-    /**
-     * Adds CartoDB and Google Earth Engine logos to the map.
-     *
-     * @param {Time} in miliseconds to wait.
-     */
+    * Adds CartoDB and Google Earth Engine logos to the map.
+    *
+    * @param {Time} in miliseconds to wait.
+    */
     _addLogos: function(mseconds) {
       var self = this;
       setTimeout(function(){
@@ -157,8 +150,14 @@ define([
       }, this));
     },
 
-    initMap: function(params) {
-      this.render(params);
+    setOptions: function(params) {
+      params = {
+        zoom: params.zoom,
+        mapTypeId: params.maptype,
+        center: new google.maps.LatLng(params.lat, params.lng)
+      };
+
+      this.map.setOptions(params);
     },
 
     /**
@@ -188,21 +187,18 @@ define([
      * @param {Object} layer The layer object
      */
     _addLayer: function(layer) {
-      if (!this._isLayerRendered(layer.slug) && this.layersViews[layer.slug]) {
+      if (this.layersViews[layer.slug] && !this.layerInst[layer.slug]) {
         var layerView = this.layerInst[layer.slug] =
           new this.layersViews[layer.slug](layer, this.map);
 
-        layerView.getLayer().then(_.bind(function(layerView) {
-          // Calculate layer position
-          var position = 0;
-          var layersCount = this.map.overlayMapTypes.getLength();
+        var position = 0;
+        var layersCount = this.map.overlayMapTypes.getLength();
 
-          if (typeof layer.position !== 'undefined' && layer.position <= layersCount) {
-            position = layersCount - layer.position;
-          }
+        if (typeof layer.position !== 'undefined' && layer.position <= layersCount) {
+          position = layersCount - layer.position;
+        }
 
-          this.map.overlayMapTypes.insertAt(position, layerView);
-        }, this));
+        layerView.addLayer({position: position});
       }
     },
 
@@ -212,30 +208,17 @@ define([
      * @param  {string} layerSlug The layerSlug of the layer to remove
      */
     _removeLayer: function(layerSlug) {
-      if (this._isLayerRendered(layerSlug) && this.layerInst[layerSlug]) {
-        var overlaysLength = this.map.overlayMapTypes.getLength();
-        if (overlaysLength > 0) {
-          for (var i = 0; i < overlaysLength; i++) {
-            var layer = this.map.overlayMapTypes.getAt(i);
-            if (layer && layer.name === layerSlug) {
-              this.map.overlayMapTypes.removeAt(i);
-            }
-          }
-        }
-        delete this.layerInst[layerSlug];
-      }
+      var inst = this.layerInst[layerSlug];
+      if (!inst) {return;}
+      inst.removeLayer();
+      inst.presenter && inst.presenter.unsubscribe && inst.presenter.unsubscribe();
+      this.layerInst[layerSlug] = null;
     },
 
-    _isLayerRendered: function(layerSlug) {
-      var overlaysLength = this.map.overlayMapTypes.getLength();
-      if (overlaysLength > 0) {
-        for (var i = 0; i< overlaysLength; i++) {
-          var layer = this.map.overlayMapTypes.getAt(i);
-          if (layer && layer.name === layerSlug) {
-            return true;
-          }
-        }
-      }
+    updateLayer: function(layerSlug) {
+      var layer = this.layerInst[layerSlug].layer;
+      this._removeLayer(layerSlug);
+      this._addLayer(layer);
     },
 
     /**
@@ -315,57 +298,8 @@ define([
      * Set additional maptypes to this.map.
      */
     _setMaptypes: function() {
-      var grayscale = new google.maps.StyledMapType([{
-        'featureType': 'water'
-      }, {
-        'featureType': 'transit',
-        'stylers': [{
-          'saturation': -100
-        }]
-      }, {
-        'featureType': 'road',
-        'stylers': [{
-          'saturation': -100
-        }]
-      }, {
-        'featureType': 'poi',
-        'stylers': [{
-          'saturation': -100
-        }]
-      }, {
-        'featureType': 'landscape',
-        'stylers': [{
-          'saturation': -100
-        }]
-      }, {
-        'featureType': 'administrative',
-        'stylers': [{
-          'saturation': -100
-        }]
-      }, {
-        'featureType': 'poi.park',
-        'elementType': 'geometry',
-        'stylers': [{
-          'visibility': 'off'
-        }]
-      }], {
-        name: 'grayscale'
-      });
-
-      var treeheight = new google.maps.ImageMapType({
-        getTileUrl: function(ll, z) {
-          var X = Math.abs(ll.x % (1 << z)); // jshint ignore:line
-          return '//gfw-apis.appspot.com/gee/simple_green_coverage/' + z + '/' + X + '/' + ll.y + '.png';
-        },
-        tileSize: new google.maps.Size(256, 256),
-        isPng: true,
-        maxZoom: 17,
-        name: 'Forest Height',
-        alt: 'Global forest height'
-      });
-
-      this.map.mapTypes.set('grayscale', grayscale);
-      this.map.mapTypes.set('treeheight', treeheight);
+      this.map.mapTypes.set('grayscale', grayscaleMaptype());
+      this.map.mapTypes.set('treeheight', treeheightMaptype());
     },
 
     _setZoomControl: function() {

@@ -28,14 +28,25 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        // legends are going to be rewrite a bit, this will be cooler.
-        this.view.update(layerSpec.getLayers(), layerSpec.toJSON());
+        this._updateLegend(layerSpec);
       }, this));
 
       mps.subscribe('Place/go', _.bind(function(place) {
-        this.view.update(place.params.layerSpec.getLayers(),
-          place.params.layerSpec.toJSON());
+        var layerSpec = place.params.layerSpec;
+        this._updateLegend(layerSpec);
       }, this));
+
+      mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
+        this.view.model.set('hidden', false);
+      }, this));
+
+      mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
+        this.view.model.set('hidden', true);
+      }, this));
+    },
+
+    _updateLegend: function(layerSpec) {
+      this.view.update(layerSpec.getLayersByCategory());
     }
   });
 

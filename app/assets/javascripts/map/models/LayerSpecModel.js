@@ -21,6 +21,21 @@ define([
       'fires'
     ],
 
+    categoryOrder: [
+      'forest_clearing',
+      'forest_cover',
+      'forest_use',
+      'conservation',
+      'people',
+      'stories'
+    ],
+
+    /**
+     * Add a position attribute to the provided layers.
+     *
+     * @param  {object} layers
+     * @return {object} layers
+     */
     positionizer: function(layers) {
       var layerOrder = _.intersection(this.layerOrder, _.pluck(layers, 'slug'));
 
@@ -74,7 +89,40 @@ define([
         });
 
       return this.positionizer(layers);
+    },
+
+   /**
+     * Return an ordered array of layers. Order by layer position.
+     *
+     * @return {array} layers
+     */
+    getOrderedLayers: function() {
+      return _.sortBy(this.getLayers(), function(layer) {
+        return layer.position;
+      });
+    },
+
+    /**
+     * Return an ordered array of categories and layers.
+     *
+     * @return {array} categories
+     */
+    getLayersByCategory: function() {
+      var categories = [];
+
+      _.each(this.categoryOrder, _.bind(function(categoryName) {
+        var category = this.get(categoryName);
+        if (category) {
+          categories.push(_.sortBy(this.positionizer(category),
+            function(layer) {
+              return layer.position;
+            }));
+        }
+      }, this));
+
+      return categories;
     }
+
   });
 
   return LayerSpecModel;

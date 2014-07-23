@@ -19,7 +19,7 @@ define([
 
     /**
      * Constructs a new instance of MapLayerService.
-     * 
+     *
      * @return {MapLayerService} instance
      */
     init: function() {

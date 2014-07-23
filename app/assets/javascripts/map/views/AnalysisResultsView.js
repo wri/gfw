@@ -1,32 +1,33 @@
 /**
- * The AnalysisResultsView selector view.
+ * The Analysis view.
  *
- * @return AnalysisResultsView instance (extends Widget).
+ * @return Analysis view (extends Widget.View)
  */
 define([
   'underscore',
+  'handlebars',
   'views/Widget',
   'presenters/AnalysisResultsPresenter',
-  'handlebars',
   'text!templates/analysisResults.handlebars'
-], function(_, Widget, Presenter, Handlebars, tpl) {
+], function(_, Handlebars, Widget, Presenter, tpl) {
 
   'use strict';
 
   var AnalysisResultsView = Widget.extend({
 
-    className: 'widget analysis-results',
+    className: 'widget widget-analysis-results',
+
     template: Handlebars.compile(tpl),
 
-    widgetOpts: {
-      hidden: true,
+    options: {
+      hidden: false,
+      boxHidden: true,
+      boxClosed: false
     },
 
     events: function(){
       return _.extend({}, AnalysisResultsView.__super__.events, {
-        // UI event handlers.
-        'click .reset_control' : '_deleteAnalysis',
-        'click .download'      : '_toggleDownload'
+        'click .delete-analysis': '_deleteAnalysis'
       });
     },
 
@@ -35,85 +36,28 @@ define([
       AnalysisResultsView.__super__.initialize.apply(this);
     },
 
-    printResultsUmd: function(results) {
-      var ha    = this._calcAreaPolygon(results.params.geojson),
-          $tpl  = this.$el.find('.umd');
-
-      $tpl.find('.ha strong').html(ha);
-      $tpl.find('.subtitle').html(results.meta.timescale);
-      $tpl.find('.alerts-deg').html( results.value[0].value ? results.value[0].value.toLocaleString() : 0 );
-      $tpl.find('.alerts-def').html( results.value[1].value ? results.value[1].value.toLocaleString() : 0 );
-      $tpl.find('.svg-download').prop("href", results.download_urls.csv);
-      $tpl.find('.geo-download').prop("href", results.download_urls.geojson);
-      $tpl.find('.shp-download').prop("href", results.download_urls.shp);
-      $tpl.find('.kml-download').prop("href", results.download_urls.kml);
-      $tpl.find('.csv-download').prop("href", results.download_urls.csv);
-
-      $tpl.fadeIn();
+    _cacheSelector: function() {
+      AnalysisResultsView.__super__._cacheSelector.apply(this);
     },
 
-    printResultsForma: function(results) {
-      var ha    = this._calcAreaPolygon(results.params.geojson),
-          $tpl  = this.$el.find('.forma');
+    renderAnalysis: function(results, layer) {
+      var p = {};
 
-      $tpl.find('.ha strong').html(ha);
-      $tpl.find('.subtitle').html(results.meta.timescale);
-      $tpl.find('#alerts-count').html( results.value || 0 );
-      $tpl.find('.svg-download').prop("href", results.download_urls.csv);
-      $tpl.find('.geo-download').prop("href", results.download_urls.geojson);
-      $tpl.find('.shp-download').prop("href", results.download_urls.shp);
-      $tpl.find('.kml-download').prop("href", results.download_urls.kml);
-      $tpl.find('.csv-download').prop("href", results.download_urls.csv);
-
-      $tpl.fadeIn();
+      p[layer.slug] = true;
+      p.totalAlerts = results.value || 0;
+      p.totalArea = this._calcAreaPolygon(results.params.geojson);
+      p.timescale = results.meta.timescale;
+      p.downloadUrls = results.download_urls;
+      p.layer = layer;
+      // p.dateRange = '{0} to {1}'.format(layer.mindate.format('MMM-YYYY'),
+      //   layer.maxdate.format('MMM-YYYY'));
+      this._update(this.template(p));
+      this.model.set('boxHidden', false);
     },
 
-    printResultsImazon: function(results) {
-      var ha    = this._calcAreaPolygon(results.params.geojson),
-          $tpl  = this.$el.find('.imazon');
-
-      $tpl.find('.ha strong').html(ha);
-      $tpl.find('.subtitle').html(results.meta.timescale);
-      $tpl.find('#alerts-count').html( results.value || 0 );
-      $tpl.find('.svg-download').prop("href", results.download_urls.csv);
-      $tpl.find('.geo-download').prop("href", results.download_urls.geojson);
-      $tpl.find('.shp-download').prop("href", results.download_urls.shp);
-      $tpl.find('.kml-download').prop("href", results.download_urls.kml);
-      $tpl.find('.csv-download').prop("href", results.download_urls.csv);
-
-      $tpl.fadeIn();
-    },
-
-    printResultsNasa: function(results) {
-      var ha    = this._calcAreaPolygon(results.params.geojson),
-          $tpl  = this.$el.find('.fires');
-
-      $tpl.find('.ha strong').html(ha);
-      $tpl.find('.subtitle').html(results.meta.timescale);
-      $tpl.find('#alerts-count').html( results.value || 0 );
-      $tpl.find('.svg-download').prop("href", results.download_urls.csv);
-      $tpl.find('.geo-download').prop("href", results.download_urls.geojson);
-      $tpl.find('.shp-download').prop("href", results.download_urls.shp);
-      $tpl.find('.kml-download').prop("href", results.download_urls.kml);
-      $tpl.find('.csv-download').prop("href", results.download_urls.csv);
-
-      $tpl.fadeIn();
-    },
-
-    printResultsQuicc: function(results) {
-      var ha    = this._calcAreaPolygon(results.params.geojson),
-          $tpl  = this.$el.find('.quicc');
-
-      $tpl.find('.ha strong').html(ha);
-      $tpl.find('.subtitle').html(results.meta.timescale);
-      $tpl.find('#alerts-count').html( results.value || 0 );
-      $tpl.find('.svg-download').prop("href", results.download_urls.csv);
-      $tpl.find('.geo-download').prop("href", results.download_urls.geojson);
-      $tpl.find('.shp-download').prop("href", results.download_urls.shp);
-      $tpl.find('.kml-download').prop("href", results.download_urls.kml);
-      $tpl.find('.csv-download').prop("href", results.download_urls.csv);
-
-      $tpl.fadeIn();
+    _deleteAnalysis: function() {
+      this.presenter.deleteAnalysis();
+      this.model.set('boxHidden', true);
     },
 
     _calcAreaPolygon: function(polygon) {
@@ -125,11 +69,11 @@ define([
       var p1, p2;
 
       for (var i = 0; i < points.length; j = i++) {
-        var p1 = {
+        p1 = {
           x: points[i][1],
           y: points[i][0]
         };
-        var p2 = {
+        p2 = {
           x: points[j][1],
           y: points[j][0]
         };
@@ -141,17 +85,6 @@ define([
       area = Math.abs(area);
 
       return (Math.ceil((area*1000000) * 10) / 10).toLocaleString();
-    },
-    
-    _deleteAnalysis: function(e) {
-      e && e.preventDefault();
-      this.presenter.deleteAnalysis();
-      this.$el.find('.analysis_info').fadeOut()
-    },
-    
-    _toggleDownload: function(e) {
-      e && e.preventDefault();
-      this.$el.find('.analysis_dropdown').toggleClass('hidden')
     }
   });
 

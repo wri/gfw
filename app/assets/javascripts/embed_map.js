@@ -7,12 +7,10 @@
 //= require jquery.qtip.min
 //= require imgLiquid.min
 //= require wax.g.min
-//= require cartodb-gmapsv3
 //= require minpubsub
 //= require markerclusterer_compiled
 //= require url.min
 //= require gfw/deforestation_tile_layer
-//= require gfw/idn_primary_tile_layer
 //= require gfw/canvas_tile_layer
 //= require gfw/static_grid_layer_imazon
 //= require gfw/static_grid_layer
@@ -29,5 +27,3 @@
 //= require gfw/ui/analysis
 //= require gfw/ui/share
 //= require gfw/ui/filter
-//= require gfw/map
-//= require gfw/ui/umd_options

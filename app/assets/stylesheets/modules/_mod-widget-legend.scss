@@ -1,6 +1,20 @@
-.legend {
-  left: 60px;
-  font-size: 13px;
+.widget-legend {
+  .widget-box {
+    left: 60px;
+    top: 32px;
+  }
+
+  .widget-content {
+    font-size: 13px;
+  }
+
+  .widget-closed {
+    padding: 14px 20px;
+    font-weight: bold;
+    font-size: 11px;
+    color: #bbb;
+    text-transform: uppercase;
+  }
 
   li.category {
     padding: 15px 20px;

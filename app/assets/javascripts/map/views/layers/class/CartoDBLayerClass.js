@@ -1,18 +1,18 @@
 /**
  * The Cartodb map layer module.
- * @return CartoDBLayerClass (extends Class).
+ * @return CartoDBLayerClass (extends LayerClass).
  */
 define([
-  'Class',
   'underscore',
   'uri',
+  'views/layers/class/OverlayLayerClass',
   'text!cartocss/style.cartocss',
   'text!templates/infowindow.handlebars'
-], function(Class, _, UriTemplate, CARTOCSS, tpl) {
+], function(_, UriTemplate, OverlayLayerClass, CARTOCSS, tpl) {
 
   'use strict';
 
-  var CartoDBLayerClass = Class.extend({
+  var CartoDBLayerClass = OverlayLayerClass.extend({
 
     defaults: {
       user_name: 'wri-01',
@@ -26,14 +26,7 @@ define([
     queryTemplate: 'SELECT cartodb_id||\':\' ||\'{tableName}\' as cartodb_id, the_geom_webmercator,' +
       '\'{tableName}\' AS layer, name FROM {tableName}',
 
-    init: function(layer, map) {
-      this.layer = layer;
-      this.map = map;
-      this.name = layer.slug;
-      this.options = _.extend({}, this.defaults, this.options || {});
-    },
-
-    getLayer: function() {
+    _getLayer: function() {
       var deferred = new $.Deferred();
 
       var cartodbOptions = {
@@ -90,11 +83,8 @@ define([
      */
     getQuery: function() {
       return new UriTemplate(this.options.sql || this.queryTemplate).fillFromObject({tableName: this.layer.table_name});
-    },
-
-    getName: function() {
-      return this.name;
     }
+
   });
 
   return CartoDBLayerClass;
