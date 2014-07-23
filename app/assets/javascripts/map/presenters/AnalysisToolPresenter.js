@@ -128,24 +128,24 @@ define([
     /**
      * Generates a GEOJSON form a path.
      *
-     * @param  {object} path
-     * @return {object} geojson
+     * @param  {Array} path Array of google.maps.LatLng objects
+     * @return {string} A GeoJSON string representing the path
      */
     createGeoJson: function(path) {
       var coordinates = null;
 
       coordinates = _.map(path, function(latlng) {
-        return [[
+        return [
           _.toNumber(latlng.lng().toFixed(4)),
-          _.toNumber(latlng.lat().toFixed(4))]];
+          _.toNumber(latlng.lat().toFixed(4))];
       });
 
       // First and last coordinate should be the same
-      coordinates = _.union(coordinates, _.first(coordinates));
+      coordinates.push(_.first(coordinates));
 
       return JSON.stringify({
         'type': 'Polygon',
-        'coordinates': coordinates
+        'coordinates': [coordinates]
       });
     },
 
