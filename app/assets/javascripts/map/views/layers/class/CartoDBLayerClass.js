@@ -3,16 +3,14 @@
  * @return CartoDBLayerClass (extends LayerClass).
  */
 define([
-  'require',
   'underscore',
   'uri',
-  'views/layers/class/OverlayLayerClass'
-], function(require, _, UriTemplate, OverlayLayerClass) {
+  'views/layers/class/OverlayLayerClass',
+  'text!cartocss/style.cartocss',
+  'text!templates/infowindow.handlebars'
+], function(_, UriTemplate, OverlayLayerClass, CARTOCSS, TPL) {
 
   'use strict';
-
-  var CARTOCSS = require(['text!cartocss/style.cartocss']);
-  var TPL = require(['text!templates/infowindow.handlebars']);
 
   var CartoDBLayerClass = OverlayLayerClass.extend({
 
@@ -22,7 +20,8 @@ define([
       sql: null,
       cartocss: CARTOCSS,
       interactivity: 'cartodb_id, name',
-      infowindow: false
+      infowindow: false,
+      cartodb_logo: false
     },
 
     queryTemplate: 'SELECT cartodb_id||\':\' ||\'{tableName}\' as cartodb_id, the_geom_webmercator,' +
@@ -34,6 +33,7 @@ define([
       var cartodbOptions = {
         name: this.name,
         type: this.options.type,
+        cartodb_logo: this.options.cartodb_logo,
         user_name: this.options.user_name,
         sublayers: [{
           sql: this.getQuery(),
@@ -43,19 +43,20 @@ define([
       };
 
       cartodb.createLayer(this.map, cartodbOptions)
-      .done(
-        _.bind(function(layer) {
-          this.cdbLayer = layer;
+        .on('done',
+          _.bind(function(layer) {
+            this.cdbLayer = layer;
 
-          if (this.options.infowindow) {
-            this.setInfowindow();
-          }
+            if (this.options.infowindow) {
+              this.setInfowindow();
+            }
 
-          deferred.resolve(this.cdbLayer);
-        }, this)
-      ).error(function(err) {
-        throw err;
-      });
+            deferred.resolve(this.cdbLayer);
+          }, this)
+        )
+        .on('error', function(x, err) {
+          throw err;
+        });
 
       return deferred.promise();
     },
