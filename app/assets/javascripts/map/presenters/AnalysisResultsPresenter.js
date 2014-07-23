@@ -36,6 +36,10 @@ define([
         this.layerSpec = layerSpec;
       }, this));
 
+      mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
+        this.view.model.set('boxHidden', true);
+      }, this));
+
       mps.subscribe('AnalysisService/results', _.bind(function(results) {
         if (!results.failure) {
           this._renderResults(results);
