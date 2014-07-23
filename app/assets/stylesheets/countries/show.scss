@@ -32,7 +32,7 @@
     font-size: 14px;
     color: #BEBCC2;
     @include box-sizing(border-box);
-    
+
     .country-icons-share {
       height: 16px;
       width: 16px;
@@ -40,6 +40,7 @@
       vertical-align: bottom;
       margin-left: 5px;
     }
+
     &:hover {
       border-color: lighten( #73707F, 6% );
     }
@@ -291,7 +292,7 @@
               width:0;
               height:0;
               position:absolute;
-              
+
               border-left: 8px solid transparent;
               border-right: 8px solid transparent;
               border-top: 8px solid white;
@@ -344,7 +345,7 @@
                 width: 15px;
               }
             }
-            
+
             &:hover {
               background: #464254;
             }
@@ -400,7 +401,7 @@
     width: 100%;
     position: relative;
     height: 49px;
-    
+
     .country-nav {
       width: 100%;
       border-bottom: 1px solid #CCCCCC;
@@ -631,7 +632,7 @@
         width:0;
         height:0;
         position:absolute;
-        
+
         border-top: 8px solid transparent;
         border-bottom: 8px solid transparent;
         border-left: 8px solid $primary-color;
