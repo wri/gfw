@@ -29,7 +29,8 @@ define([
       return _.extend({}, ThresholdView.__super__.events, {
         'change .slider': '_updateThreshold',
         'input .slider': '_setVisibleRange',
-        'click .slider-labels > li': '_onClickLabel'
+        'click .slider-labels > li': '_onClickLabel',
+        'click .close' : '_toggleBoxHidden'
       });
     },
 
