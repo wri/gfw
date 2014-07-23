@@ -1,6 +1,7 @@
 require.config({
 
   paths: {
+    topojson: '../vendor/assets/bower_components/topojson/topojson',
     amplify: '../vendor/assets/bower_components/amplify/lib/amplify',
     jquery: '../vendor/assets/bower_components/jquery/dist/jquery',
     jqueryui: '../vendor/assets/javascripts/jquery-ui-1.10.4.custom.min',
