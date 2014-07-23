@@ -37,7 +37,6 @@ define([
 
     onPlaceSelected: function() {
       var place = this.autocomplete.getPlace();
-
       // TODO: When there isn't viewport, and there is location...
       if (place && place.geometry && place.geometry.viewport) {
         this.presenter.fitBounds(place.geometry.viewport);

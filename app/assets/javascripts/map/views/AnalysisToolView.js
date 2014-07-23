@@ -4,12 +4,14 @@
  * @return Analysis view (extends Widget.View)
  */
 define([
+  'd3',
   'underscore',
   'handlebars',
+  'topojson',
   'views/Widget',
   'presenters/AnalysisToolPresenter',
   'text!templates/analysisTool.handlebars'
-], function(_, Handlebars, Widget, Presenter, tpl) {
+], function(d3, _, Handlebars, topojson, Widget, Presenter, tpl) {
 
   'use strict';
 
@@ -37,6 +39,7 @@ define([
       _.bindAll(this, '_onOverlayComplete');
       this.map = map;
       this.presenter = new Presenter(this);
+      this._setStyle();
       AnalysisToolView.__super__.initialize.apply(this);
     },
 
@@ -73,8 +76,10 @@ define([
     },
 
     _stopDrawing: function() {
-      this.drawingManager.setDrawingMode(null);
-      this.drawingManager.setMap(null);
+      if (this.drawingManager) {
+        this.drawingManager.setDrawingMode(null);
+        this.drawingManager.setMap(null);
+      }
       this.selection && this.selection.setEditable(false);
     },
 
@@ -84,23 +89,8 @@ define([
         this._setSelection(e.overlay, e.type);
       }
 
-      this.polygon = JSON.stringify({
-        'type': 'Polygon',
-        'coordinates': _.map(e.overlay.getPath().getArray(),
-          function(latlng, index) {
-            return [latlng.lng().toFixed(4), latlng.lat().toFixed(4)];
-          })
-      });
-
-      this.polygon && this.$done.removeClass('disabled');
-    },
-
-    deleteSelection: function() {
-      if(this.selection) {
-        this.selection.setMap(null);
-        this.selection = null;
-      }
-      this.$widgetBtn.removeClass('disabled');
+      this.polygon = this.presenter.createGeoJson(e.overlay.getPath().getArray());
+      this.$done.removeClass('disabled');
     },
 
     _clearSelection: function() {
@@ -123,10 +113,23 @@ define([
       // });
     },
 
+    deleteSelection: function() {
+      if(this.selection) {
+        this.selection.setMap(null);
+        this.selection = null;
+      }
+
+      if (this.country) {
+        this.map.data.remove(this.country);
+      }
+
+      this.$widgetBtn.removeClass('disabled');
+    },
+
     // Publish polygon
     _onClickDone: function() {
       this.presenter.stopDrawing();
-      this.presenter.publishAnalysis(this.polygon);
+      this.presenter.publishAnalysis({geom: this.polygon});
       this._stopDrawing();
       this.model.set({boxHidden: true});
     },
@@ -149,15 +152,33 @@ define([
      *
      * @param  {object} geom The geom object
      */
-    drawFromCoordinates: function(geom) {
-      geom = JSON.parse(geom).coordinates;
+    drawGeom: function(geom) {
+      var paths = this.presenter.geomToPath(geom);
 
-      var paths = _.map(geom, function(g) {
-        return new google.maps.LatLng(g[1], g[0]);
-      });
+      this.selection = new google.maps.Polygon(
+        _.extend({}, {paths: paths}, this.style));
 
-      this.selection = new google.maps.Polygon({
-        paths: paths,
+      this.selection.setMap(this.map);
+      this.$widgetBtn.addClass('disabled');
+    },
+
+    /**
+     * Draw country from multipolygon geojson.
+     *
+     * @param  {object} topojson
+     */
+    drawIso: function(tp) {
+      var geojson = topojson.feature(tp, tp.objects[0]);
+      this.country = this.map.data.addGeoJson(geojson)[0];
+      this.map.data.setStyle(this.style);
+      this.$widgetBtn.addClass('disabled');
+    },
+
+    /**
+     * Set polygon and multypoligon style.
+     */
+    _setStyle: function() {
+      this.style = {
         strokeWeight: 2,
         fillOpacity: 0.45,
         fillColor: '#FFF',
@@ -168,10 +189,7 @@ define([
           new google.maps.Point(0, 0), // offset
           new google.maps.Point(18, 18) // anchor
         )
-      });
-
-      this.selection.setMap(this.map);
-      this.$widgetBtn.addClass('disabled');
+      };
     }
 
   });
@@ -179,3 +197,4 @@ define([
   return AnalysisToolView;
 
 });
+

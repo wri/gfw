@@ -9,6 +9,8 @@ paths:
   backbone: "backbone/backbone"
   jquery: "jquery/dist/jquery"
   d3: "d3/d3"
+  topojson: "topojson/topojson"
+  cartodb: "cartodb.js/index"
   moment: "moment/moment"
   text: "requirejs-text/text"
   mps: "minpubsub/minpubsub"

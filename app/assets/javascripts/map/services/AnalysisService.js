@@ -62,11 +62,20 @@ define([
           successCb(results);
         }
       }, this);
+
+      var failure = _.bind(function(t, a) {
+        var results = {failure: a};
+        mps.publish('AnalysisService/results', [results]);
+        if (failureCb) {
+          failureCb(results);
+        }
+      }, this);
+
       var config = {
         resourceId: id,
         data: data,
         success: success,
-        error: failureCb
+        error: failure
       };
 
       ds.request(config);
