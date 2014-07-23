@@ -43,6 +43,10 @@ define([
       LegendView.__super__.initialize.apply(this);
     },
 
+    _setHidden: function() {
+      LegendView.__super__._setHidden.apply(this);
+    },
+
     /**
      * Render legends.
      *

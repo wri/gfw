@@ -29,6 +29,7 @@ define([
     initialize: function() {
       this.presenter = new Presenter(this);
       this.currentTimeline = null;
+      this.drawing = false;
       this.render();
     },
 
@@ -58,7 +59,7 @@ define([
       _.each(this.timelineViews, _.bind(function(View, layerSlug) {
         if (baselayers[layerSlug]) {
           this.currentTimeline = new View(baselayers[layerSlug]);
-          this.$el.show();
+          !this.drawing && this.$el.show();
         }
       }, this));
 
