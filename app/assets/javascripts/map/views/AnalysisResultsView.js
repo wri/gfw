@@ -72,11 +72,12 @@ define([
     _calcAreaPolygon: function(polygon) {
       // https://github.com/maxogden/geojson-js-utils
       var area = 0;
-      var points = polygon.coordinates;
+      var points = polygon.coordinates[0];
 
       var j = points.length - 1;
       var p1, p2;
 
+        debugger
       for (var i = 0; i < points.length; j = i++) {
         var pt = points[i]
         if (Array.isArray(pt[0])){
