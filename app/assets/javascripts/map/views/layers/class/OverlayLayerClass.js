@@ -6,7 +6,7 @@
 define([
   'Class',
   'underscore',
-  'views/helpers/CustomInfowindow'
+  'views/layers/CustomInfowindow'
 ], function(Class, _, CustomInfowindow) {
 
   'use strict';
@@ -14,6 +14,9 @@ define([
   var OverlayLayerClass = Class.extend({
 
     defaults: {
+      infowindow: false,
+      infowindowContent: null,
+      infowindowAPI: null
     },
 
     init: function(layer, map) {
@@ -30,7 +33,6 @@ define([
           this.map.overlayMapTypes.insertAt(options.position, layer);
           if (this.options.infowindow) {
             this.setInfowindow();
-            this.setMapEvents();
           }
         }, this));
       }
@@ -38,6 +40,7 @@ define([
 
     removeLayer: function() {
       var overlayIndex = this._getOverlayIndex();
+      this.removeInfowindow();
       if (overlayIndex > -1) {
         this.map.overlayMapTypes.removeAt(overlayIndex);
       }
@@ -50,7 +53,15 @@ define([
      * @return {object}
      */
     setInfowindow: function() {
-      this.infowindow = new CustomInfowindow(this.map);
+      if (!this.infowindow) {
+        this.infowindow = new CustomInfowindow(this.map, this.options);
+      }
+    },
+
+    removeInfowindow: function() {
+      if (this.infowindow) {
+        this.infowindow.destroy();
+      }
     },
 
     _getOverlayIndex: function() {

@@ -53,10 +53,7 @@ define([
 
             deferred.resolve(this.cdbLayer);
           }, this)
-        )
-        .on('error', function(x, err) {
-          throw err;
-        });
+        );
 
       return deferred.promise();
     },
