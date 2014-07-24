@@ -1,18 +1,32 @@
+/*global MarkerClusterer*/
 /**
  * The JSON map layer module.
  * @return JSONLayerClass (extends Class).
  */
 define([
   'Class',
-  'underscore'
-], function(Class, _) {
+  'underscore',
+  '_string',
+  'handlebars',
+  'markerclusterer',
+  'views/layers/CustomMarker',
+  'views/layers/CustomInfowindow',
+  'text!templates/storyInfowindow.handlebars'
+], function(Class, _, _string, Handlebars, MarkerClustererLib, CustomMarker, CustomInfowindow, tpl) {
 
   'use strict';
 
   var MarkersLayerClass = Class.extend({
 
 
-    defaults: {},
+    defaults: {
+      clusters: false,
+      clustersOptions: {
+        gridSize: 50
+      }
+    },
+
+    template: Handlebars.compile(tpl),
 
     init: function(layer, map) {
       this.markers = [];
@@ -36,13 +50,55 @@ define([
     },
 
     _setMarker: function(stories) {
+      this.infowindows = [];
+
       this.markers = _.map(stories, function(story) {
-        var markerOption = _.extend({}, this.options, {
-          position: new google.maps.LatLng(story.lat, story.lng),
-          map: this.map
+
+        story.title = _.str.truncate(story.title, 34);
+
+        var latlng = new google.maps.LatLng(story.lat, story.lng);
+
+        var infoWindow = new CustomInfowindow(this.map, {
+          className: 'story_infowindow',
+          infowindowContent: this.template(story),
+          latlng: latlng,
+          width: 215,
+          offset: [-30, 0],
         });
-        return new google.maps.Marker(markerOption);
+
+        console.log(story);
+
+        var thumb = (this.options.thumbnail && story.media[1] && story.media[1].preview_url !== '') ? '<div class="user-story-marker"><img src="//gfw2stories.s3.amazonaws.com/uploads/' + story.media[1].preview_url + '" alt ="" /></div>' : null;
+
+        var marker = new CustomMarker(latlng, this.map, _.extend({
+          offset: [-25, 25],
+          size: [50, 50],
+          customHTML: thumb
+        }, this.options));
+
+        // var marker = new google.maps.Marker(_.extend({}, this.options, {
+        //   position: latlng
+        // }));
+
+        google.maps.event.addListener(marker, 'click', _.bind(function() {
+          _.each(this.infowindows, function(infow) {
+            infow.hide();
+          });
+          infoWindow.open();
+        }, this));
+
+        this.infowindows.push(infoWindow);
+
+        return marker;
       }, this);
+
+      if (this.options.clusters) {
+        this.clusterMarkers = new MarkerClusterer(this.map, this.markers, this.options.clustersOptions);
+      } else {
+        _.each(this.markers, function(marker) {
+          marker.setMap(this.map);
+        }, this);
+      }
     },
 
     addLayer: function() {
@@ -50,6 +106,13 @@ define([
     },
 
     removeLayer: function() {
+      if (this.clusterMarkers) {
+        this.clusterMarkers.clearMarkers();
+      }
+
+      _.each(this.infowindows, function(infowindow) {
+        infowindow.destroy();
+      });
       _.each(this.markers, function(marker) {
         marker.setMap(null);
       });
