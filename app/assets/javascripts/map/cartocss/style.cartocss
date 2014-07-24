@@ -157,4 +157,12 @@
     line-width: 2;
   }
 
+  [layer='brazil_indigenouslands'] {
+    polygon-fill: #4d658f;
+    polygon-opacity: 0.7;
+    line-color: #4d658f;
+    line-width: 1;
+    line-opacity: 1;
+  }
+
 }
