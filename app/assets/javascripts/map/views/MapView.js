@@ -19,6 +19,7 @@ define([
   'views/layers/Forest2000Layer',
   'views/layers/IntactForestLayer',
   'views/layers/PantropicalLayer',
+  'views/layers/IdnPrimaryLayer',
   'views/layers/LoggingLayer',
   'views/layers/MiningLayer',
   'views/layers/OilPalmLayer',
@@ -26,12 +27,13 @@ define([
   'views/layers/ProtectedAreasLayer',
   'views/layers/BiodiversityHotspotsLayer',
   'views/layers/ResourceRightsLayer',
+  'views/layers/LandRightsLayer',
   'views/layers/UserStoriesLayer',
   'views/layers/MongabayStoriesLayer'
 ], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype,
   UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
-  IntactForestLayer, PantropicalLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
-  ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
+  IntactForestLayer, PantropicalLayer, IdnPrimaryLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
+  ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, LandRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
 
   'use strict';
 
@@ -64,6 +66,7 @@ define([
       forest2000: Forest2000Layer,
       intact_forest: IntactForestLayer,
       pantropical: PantropicalLayer,
+      idn_primary: IdnPrimaryLayer,
       logging: LoggingLayer,
       mining: MiningLayer,
       oil_palm: OilPalmLayer,
@@ -71,6 +74,7 @@ define([
       protected_areas: ProtectedAreasLayer,
       biodiversity_hotspots: BiodiversityHotspotsLayer,
       resource_rights: ResourceRightsLayer,
+      land_rights: LandRightsLayer,
       user_stories: UserStoriesLayer,
       mongabay: MongabayStoriesLayer
     },
