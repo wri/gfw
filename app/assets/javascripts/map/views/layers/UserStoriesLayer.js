@@ -15,7 +15,8 @@ define([
     service: UserStoryService,
 
     options: {
-      icon: '/assets/icons/marker_exclamation.png'
+      icon: '/assets/icons/marker_exclamation.png',
+      thumbnail: true
     }
 
   });

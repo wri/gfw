@@ -10,13 +10,15 @@ define([
   var CustomInfowindow = function(map, opts) {
     this.defauls = {
       template: tpl,
-      latlng: [],
-      offset: [0, -10],
-      width: 226
+      latlng: null,
+      offset: [-10, 85],
+      width: 226,
+      className: 'cartodb-infowindow'
     };
 
     this.options = _.extend({}, this.defauls, opts);
     this.map = map;
+    this.latlng = this.options.latlng;
     this.template = Handlebars.compile(this.options.template);
 
     this.setMap(this.map);
@@ -28,49 +30,11 @@ define([
     if (!this.el) {
       this.$el = $('<div></div>');
       this.el = this.$el[0];
-      this.$el.addClass('cartodb-infowindow');
+      this.$el.addClass(this.options.className);
 
       this.setTemplate();
+      this.setEvents();
       this.getPanes().floatPane.appendChild(this.el);
-
-      google.maps.event.addListener(this.map, 'click', _.bind(function(ev) {
-        this.latlng = ev.latLng;
-        this.open();
-      }, this));
-
-      google.maps.event.addDomListener(this.closeButton, 'click', _.bind(function(ev) {
-        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-        this.close();
-      }, this));
-
-      google.maps.event.addDomListener(this.closeButton, 'touchend', function (ev) {
-        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      });
-
-      google.maps.event.addDomListener(this.el, 'touchstart', function (ev) {
-        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      });
-
-      google.maps.event.addDomListener(this.el, 'touchend', function (ev) {
-        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      });
-
-      google.maps.event.addDomListener(this.el, 'dblclick', function (ev) {
-        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      });
-      google.maps.event.addDomListener(this.el, 'mousedown', function (ev) {
-        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-        ev.stopPropagation ? ev.stopPropagation() : window.event.cancelBubble = true;
-      });
-      google.maps.event.addDomListener(this.el, 'mouseup', function (ev) {
-        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      });
-      google.maps.event.addDomListener(this.el, 'mousewheel', function (ev) {
-        ev.stopPropagation ? ev.stopPropagation() : window.event.cancelBubble = true;
-      });
-      google.maps.event.addDomListener(this.el, 'DOMMouseScroll', function (ev) {
-        ev.stopPropagation ? ev.stopPropagation() : window.event.cancelBubble = true;
-      });
 
       this.hide();
     }
@@ -78,7 +42,10 @@ define([
     this.setPosition();
   };
 
-  CustomInfowindow.prototype.open = function() {
+  CustomInfowindow.prototype.open = function(latlng) {
+    if (latlng) {
+      this.latlng = latlng;
+    }
     this.close();
     this.getContent(_.bind(function() {
       this.show();
@@ -93,13 +60,13 @@ define([
 
   CustomInfowindow.prototype.show = function() {
     if (this.el) {
-      this.$el.show();
+      this.$el.stop().show();
     }
   };
 
   CustomInfowindow.prototype.hide = function() {
     if (this.el) {
-      this.$el.hide();
+      this.$el.stop().hide();
     }
   };
 
@@ -109,8 +76,8 @@ define([
       if (pixPosition) {
         this.$el.css({
           width: this.options.width + 'px',
-          left: (pixPosition.x - 25 + this.options.offset[0]) + 'px',
-          top: (pixPosition.y + (-this.el.clientHeight) + this.options.offset[1]) + 'px'
+          top: (pixPosition.y - this.el.clientHeight + this.options.offset[0]) + 'px',
+          left: (pixPosition.x - (this.options.width/2) + this.options.offset[1]) + 'px',
         });
       }
     }
@@ -139,12 +106,15 @@ define([
 
   CustomInfowindow.prototype.setTemplate = function() {
     var data = this.data || {};
-    this.$el.html(this.options.infowindowContent || this.template(data));
-    this.closeButton = this.$el.find('.close')[0];
+    if (this.el) {
+      this.$el.html(this.options.infowindowContent || this.template(data));
+      this.closeButton = this.$el.find('.close')[0];
+    }
   };
 
   CustomInfowindow.prototype.destroy = function() {
     if (this.el) {
+      this.removeEvents();
       this.$el.remove();
       this.el = null;
     }
@@ -173,6 +143,70 @@ define([
 
         this.map.panBy(left, top);
       }
+    }
+  };
+
+  CustomInfowindow.prototype.setEvents = function() {
+    if (this.options.infowindowAPI) {
+      google.maps.event.addListener(this.map, 'click', _.bind(function(ev) {
+        this.latlng = ev.latLng;
+        this.open();
+      }, this));
+    }
+
+    if (this.closeButton) {
+      google.maps.event.addDomListener(this.closeButton, 'click', _.bind(function(ev) {
+        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+        this.close();
+      }, this));
+
+      google.maps.event.addDomListener(this.closeButton, 'touchend', function (ev) {
+        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+      });
+    }
+
+    google.maps.event.addDomListener(this.el, 'touchstart', function (ev) {
+      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+    });
+
+    google.maps.event.addDomListener(this.el, 'touchend', function (ev) {
+      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+    });
+
+    google.maps.event.addDomListener(this.el, 'dblclick', function (ev) {
+      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+    });
+
+    google.maps.event.addDomListener(this.el, 'mousedown', function (ev) {
+      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+      ev.stopPropagation ? ev.stopPropagation() : window.event.cancelBubble = true;
+    });
+
+    google.maps.event.addDomListener(this.el, 'mouseup', function (ev) {
+      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+    });
+
+    google.maps.event.addDomListener(this.el, 'mousewheel', function (ev) {
+      ev.stopPropagation ? ev.stopPropagation() : window.event.cancelBubble = true;
+    });
+
+    google.maps.event.addDomListener(this.el, 'DOMMouseScroll', function (ev) {
+      ev.stopPropagation ? ev.stopPropagation() : window.event.cancelBubble = true;
+    });
+
+    // google.maps.event.addDomListener(this.map, 'click', _.bind(function(ev) {
+    //   ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+    //   this.hide();
+    // }, this));
+  };
+
+  CustomInfowindow.prototype.removeEvents = function() {
+    if (this.closeButton) {
+      google.maps.event.clearListeners(this.closeButton);
+    }
+    if (this.el) {
+      google.maps.event.clearListeners(this.map);
+      google.maps.event.clearListeners(this.el);
     }
   };
 

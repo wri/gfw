@@ -92,17 +92,23 @@ define([
 
     setWrapper: function() {
       var $logo = $('.header-nav__logo');
-      var setScroll = function(e) {
+
+      function setScroll(e) {
         var element = (e) ? e.currentTarget : window;
         if (element.pageYOffset > 10) {
           $logo.addClass('is-fixed');
         } else {
           $logo.removeClass('is-fixed');
         }
-      };
+      }
+
       setScroll();
+
       $(window).on('scroll', setScroll);
-      $('html, body').scrollTop(70);
+
+      setTimeout(function() {
+        $(window).scrollTop(75);
+      }, 100);
     }
 
   });
