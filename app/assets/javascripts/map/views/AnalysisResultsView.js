@@ -77,7 +77,6 @@ define([
       var j = points.length - 1;
       var p1, p2;
 
-        debugger
       for (var i = 0; i < points.length; j = i++) {
         var pt = points[i]
         if (Array.isArray(pt[0])){
