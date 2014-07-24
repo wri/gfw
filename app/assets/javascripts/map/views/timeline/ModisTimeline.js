@@ -34,7 +34,8 @@ define([
       var data = [];
 
       while(1) {
-        if (data.length > 0 && _.last(data).end.isAfter(this.options.dateRange[1])) {
+        if (data.length > 0 && _.last(data).end.clone().add(1,'month')
+          .isAfter(this.options.dateRange[1])) {
           break;
         }
         data.push(this._getDataItem(data));
