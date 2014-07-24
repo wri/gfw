@@ -78,9 +78,14 @@ define([
       var p1, p2;
 
       for (var i = 0; i < points.length; j = i++) {
+        var pt = points[i]
+        if (Array.isArray(pt[0])){
+          pt[1] = pt[0][1];
+          pt[0] = pt[0][0];
+        }
         p1 = {
-          x: points[i][1],
-          y: points[i][0]
+          x: pt[1],
+          y: pt[0]
         };
         p2 = {
           x: points[j][1],
