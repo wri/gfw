@@ -16,20 +16,19 @@ define([
     service: MongabayStoryService,
 
     options: {
-      icon: '/assets/icons/mongabay_exclamation.png'
-    },
-
-    _setMarker: function(stories) {
-      this.markers = _.map(stories, function(story) {
-        var markerOption = _.extend({}, this.options, {
-          position: new google.maps.LatLng(story.lat, story.lng),
-          map: this.map,
-          thumbnail_url: story.thumbnail,
-          type: 'mongabay'
-        });
-        return new google.maps.Marker(markerOption);
-      }, this);
-    },
+      icon: '/assets/icons/mongabay_exclamation.png',
+      clusters: true,
+      clustersOptions: {
+        gridSize: 50,
+        styles: [{
+          textColor: '#ffffff',
+          url: '/assets/icons/marker_cluster.png',
+          width: 36,
+          height: 36
+        }],
+        maxZoom: 15
+      }
+    }
 
   });
 

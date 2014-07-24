@@ -65,6 +65,20 @@
   }
 }
 
+.user-story-marker {
+  border: 5px solid #fff;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  @include box-shadow(0 0 1px 0 #000);
+
+  img {
+    width: auto;
+    height: 100%;
+  }
+}
+
 // #viewfinder {
 //   position: absolute;
 //   z-index: 10;
