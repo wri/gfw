@@ -17,7 +17,7 @@ define([
   var CanvasJSONLayerClass = OverlayLayerClass.extend({
 
     defaults: {
-      user_name: 'wri-01',
+      cartodbUserName: 'wri-01',
       dataMaxZoom: 17,
     },
 
@@ -25,7 +25,7 @@ define([
       this.tiles = {};
       this._super(layer, map);
       this.cartoSQL = new cartodb.SQL({
-        user: this.options.user_name
+        user: this.options.cartodbUserName
       });
     },
 
@@ -38,14 +38,14 @@ define([
     _getCanvas: function(coord, zoom, ownerDocument) {
       // create canvas and reset style
       var canvas = ownerDocument.createElement('canvas');
-      var hit_canvas = ownerDocument.createElement('canvas');
+      canvas.className = this.layer.slug;
+      canvas.style.border = 'none';
+      canvas.style.margin = '0';
+      canvas.style.padding = '0';
+      // var hit_canvas = ownerDocument.createElement('canvas');
 
-      canvas.className = 'time_layer';
-      hit_canvas.className = 'time_layer';
+      // hit_canvas.className = 'time_layer';
 
-      canvas.style.border = hit_canvas.style.border = 'none';
-      canvas.style.margin = hit_canvas.style.margin = '0';
-      canvas.style.padding = hit_canvas.style.padding = '0';
 
       // prepare canvas and context sizes
       var ctx = canvas.getContext('2d');
@@ -54,34 +54,32 @@ define([
 
       canvas.ctx = ctx;
 
-      var hit_ctx = hit_canvas.getContext('2d');
-      hit_canvas.width = hit_ctx.width = this.tileSize.width;
-      hit_canvas.height = hit_ctx.height = this.tileSize.height;
+      // var hit_ctx = hit_canvas.getContext('2d');
+      // hit_canvas.width = hit_ctx.width = this.tileSize.width;
+      // hit_canvas.height = hit_ctx.height = this.tileSize.height;
 
       //set unique id
-      var tile_id = coord.x + '_' + coord.y + '_' + zoom;
+      var tileId = '{0}_{1}_{2}'.format(coord.x, coord.y, zoom);
+      canvas.setAttribute('id', tileId);
+      // hit_canvas.setAttribute('id', tileId);
 
-      canvas.setAttribute('id', tile_id);
-      hit_canvas.setAttribute('id', tile_id);
-
-      if (tile_id in this.tiles) {
-        delete this.tiles[tile_id];
+      if (tileId in this.tiles) {
+        delete this.tiles[tileId];
       }
 
-      this.tiles[tile_id] = {
+      this.tiles[tileId] = {
         canvas: canvas,
         ctx: ctx,
-        hit_canvas: hit_canvas,
-        hit_ctx: hit_ctx,
         coord: coord,
         zoom: zoom,
-        primitives: null
+        // hit_canvas: hit_canvas
+        // hit_ctx: hit_ctx
       };
 
-      // custom setup
-      if (this.canvas_setup) {
-        this.canvas_setup(this.tiles[tile_id], coord, zoom);
-      }
+      // // custom setup
+      // if (this.canvas_setup) {
+      //   this.canvas_setup(this.tiles[tileId], coord, zoom);
+      // }
 
       return canvas;
     },
@@ -99,7 +97,7 @@ define([
     getTile: function(coord, zoom, ownerDocument) {
       var canvas = this._getCanvas(coord, zoom, ownerDocument);
       var sql = this._getSQL(coord.x, coord.y, zoom);
-      var zoom_diff = zoom + 8 - Math.min(zoom + 8, 16);
+      var zoomDiff = zoom + 8 - Math.min(zoom + 8, 16);
 
       this.cartoSQL.execute(sql, _.bind(function(data) {
         var tile = {
@@ -107,8 +105,8 @@ define([
           ctx: canvas.ctx,
           width: this.tileSize.width,
           height: this.tileSize.height,
-          cells: this.pre_cache_months(data.rows, coord, zoom,
-            zoom_diff)
+          cells: this.preCacheMonths(data.rows, coord, zoom,
+            zoomDiff)
         };
 
         this._render(tile);
@@ -154,7 +152,7 @@ define([
       //ctx.fillStyle = '#000';
       // clear canvas
       tile.canvas.width = w;
-      ctx.fillStyle = '#F13689';
+      ctx.fillStyle = 'rgb(255, 102, 153)';
 
       var xc = cells.xcoords;
       var yc = cells.ycoords;
@@ -176,7 +174,7 @@ define([
       }
     },
 
-    pre_cache_months: function(rows, coord, zoom, zoom_diff) {
+    preCacheMonths: function(rows, coord, zoom, zoom_diff) {
       var row;
       var xcoords;
       var ycoords;
@@ -227,6 +225,12 @@ define([
         deforestation: deforestation,
         size: 1 << zoom_diff
       };
+    },
+
+    updateTiles: function() {
+      _.each(this.tiles, _.bind(function(tile) {
+        this._render(tile);
+      }, this));
     }
 
   });

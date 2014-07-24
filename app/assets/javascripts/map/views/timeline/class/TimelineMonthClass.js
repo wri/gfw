@@ -19,23 +19,31 @@ define([
   var TimelineYearClass = Backbone.View.extend({
 
     className: 'timeline-month',
+
     template: Handlebars.compile(tpl),
 
     defaults: {
       dateRange: [moment([2001]), moment()],
-      playSpeed: 400,
       width: 949,
-      height: 50
+      height: 50,
+      playSpeed: 400,
+      effectsSpeed: 100
     },
 
     events: {
       'click .play': 'togglePlay'
     },
 
-    initialize: function(name) {
-      _.bindAll(this, '_getData');
-      this.name = name;
+    initialize: function(layer) {
+      console.log(layer);
+      this.layer = layer;
+      this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
+      console.log(_.clone(this.layer.currentDate));
+      this.layer.currentDate = this.layer.currentDate || this.options.dateRange;
+      // Transitions duration are 100 ms. Give time to them to finish.
+      this._updateCurrentDate = _.debounce(this._updateCurrentDate,
+        this.options.effectsSpeed);
 
       // Shortcouts
       this.dr = this.options.dateRange;
@@ -44,11 +52,15 @@ define([
       this.monthsCount = Math.floor(this.dr[1].diff(this.dr[0],
         'months', true));
 
+      console.log('months', this.monthsCount);
+
       this.render();
     },
 
     render: function() {
-      this.$timeline = $('.timeline');
+      _.bindAll(this, '_moveHandler');
+      var self = this;
+      this.$timeline = $('.timeline-container');
       this.$el.html(this.template());
       this.$timeline
           .css('width', 1000)
@@ -61,18 +73,14 @@ define([
       this.$time = this.$el.find('.time');
 
       // SVG options
-      var margin = {top: 30, right: 10, bottom: 0, left: 10};
+      var margin = {top: 30, right: 20, bottom: 0, left: 20};
       var width = this.options.width - margin.left - margin.right;
       var height = this.options.height - margin.bottom - margin.top;
-      this.width = width;
+
       // xscale
       this.xscale = d3.scale.linear()
           .domain([0, this.monthsCount])
           .range([0, width])
-          /**
-           * Clamp: The return value of the scale is always
-           * within the scale's output range.
-           */
           .clamp(true);
 
       // SVG
@@ -83,71 +91,113 @@ define([
           .append('g')
             .attr('transform', 'translate({0},{1})'.format(margin.left, margin.top));
 
-      var data = this._getData();
+      // xAxis
+      this.svg.append('g')
+          .attr('class', 'xaxis-months')
+          .attr('transform', 'translate(0,0)')
+          .call(d3.svg.axis()
+            .scale(this.xscale)
+            .orient('top')
+            .ticks(this.monthsCount)
+            .tickFormat(function(d) {return '▪'; })
+            .tickSize(0)
+            .tickPadding(0))
+          .select('.domain').remove();
 
-      // xaxis
-      this.xaxis = this.svg
-          .append('g')
-            .attr('class', 'xaxis')
-            .selectAll('g')
-            .data(data)
-            .enter()
-          .append('g')
-            .attr('class', 'tick')
-            .attr('transform', _.bind(function(d) {
-              return 'translate(' + d.x + ', 0)';
-            }, this));
+      this.svg.select('.xaxis-months').selectAll('g.line').remove();
 
-      this.xaxis.append('text')
-        .attr('x', 0)
-        .attr('y', 0)
-        .attr('width', 5)
-        .attr('height', 10)
-        .text(function(d) {
-          return d.label;
-        });
+      // Set brush and listeners.
+      this.brush = d3.svg.brush()
+          .x(this.xscale)
+          .extent([0, 0])
+          .on('brush', function() {
+            self._onBrush(this);
+          })
+          .on('brushend', function() {
+            self._onBrushEnd(this);
+          });
+
+      // Slider, brush zone, and handlers.
+      this.slider = this.svg.append('g')
+          .attr('class', 'slider')
+          .attr('transform', 'translate(0,0)')
+          .call(this.brush);
+
+      this.handlers = {};
+
+      this.handlers.left = this.slider.append('rect')
+          .attr('class', 'handle')
+          .attr('transform', 'translate(-7,0)')
+          .attr('width', 14)
+          .attr('height', 14)
+          .attr('x', this.xscale(this._dateToDomain(this.layer.currentDate[0])))
+          .attr('y', -1)
+          .attr('rx', 2)
+          .attr('ry', 2);
+
+      this.handlers.right = this.handlers.left
+         .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
+         .attr('x', this.xscale(this._dateToDomain(this.layer.currentDate[1])));
+
+      this.slider.select('.background')
+          .style('cursor', 'pointer')
+          .attr('height', height);
     },
 
-    _getData: function() {
-      var data = [];
+    _onBrush: function(event) {
+      var value = this.xscale.invert(d3.mouse(event)[0]);
+      var rounded = Math.round(value);
+      var date = this._domainToDate(rounded);
 
-      for (var i = 0; i < this.monthsCount; i++) {
-        var date = this._domainToDate(i);
-        var yearsCount = Math.ceil(this.monthsCount/12) + 1;
+      var xl = this.handlers.left.attr('x');
+      var xr = this.handlers.right.attr('x');
 
-        var slotWidth = (this.width - (yearsCount * 30)) / this.monthsCount;
-        var xmonth = (i * slotWidth) + ((date.year() - (this.dr[0].year()-1)) * 30);
-
-        if (date.month() === 0) {
-          data.push({
-            data: date,
-            x: (i * slotWidth) + ((date.year() - this.dr[0].year()) * 30) + 2,
-            label: date.year()
-          });
-        }
-
-        if (date.month() === 11 && date.year()+1 === this.dr[1].year()) {
-          data.push({
-            data: date,
-            x: (i * slotWidth) + ((date.year()+1 - this.dr[0].year()) * 30) + 6,
-            label: date.year()+1
-          });
-        }
-
-        data.push({
-          date: date,
-          x: xmonth,
-          label: '▪'
-        });
+      if (Math.abs(this.xscale(value) - xr) <
+        Math.abs(this.xscale(value) - xl)) {
+        this._moveHandler(rounded, 'right');
+      } else {
+        this._moveHandler(rounded, 'left');
       }
+    },
 
-      return data;
+    _moveHandler: function(x, side) {
+      this.handlers[side]
+        .transition()
+        .duration(this.options.effectsSpeed)
+        .ease('line')
+        .attr('x', this.xscale(x));
+    },
+
+    _onBrushEnd: function(event) {
+      var start = Math.floor(this.xscale.invert(this.handlers.left.attr('x')));
+      var end = Math.ceil(this.xscale.invert(this.handlers.right.attr('x')));
+
+      start = this._domainToDate(start);
+      end = this._domainToDate(end);
+      this._updateCurrentDate([start, end]);
     },
 
     _domainToDate: function(d) {
       var year = Math.floor(d/12) + this.dr[0].year();
       var month = (d >= 12) ? d - (Math.floor(d/12) * 12) : d;
       return moment([year, month]);
+    },
+
+    _dateToDomain: function(d) {
+      return Math.floor(d.diff(this.dr[0],
+        'months', true));
+    },
+
+    /**
+     * Handles a timeline date change UI event by dispaching
+     * to TimelinePresenter.
+     *
+     * @param {Array} timelineDate 2D array of moment dates [begin, end]
+     */
+    _updateCurrentDate: function(date) {
+      this.layer.currentDate = date;
+      this.presenter.updateTimelineDate(date);
+      console.log('setting', date[0].format('YYYY-MMM'), date[1].format('YYYY-MMM'));
     },
 
     getName: function() {
