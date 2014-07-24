@@ -16,6 +16,7 @@ paths:
   mps: "minpubsub/minpubsub"
   _string: "underscore.string/dist/underscore.string.min"
   jqueryui: "jquery-ui-1.10.4.custom.min"
+  markerclusterer: "gmaps-markerclusterer-plus/src/markerclusterer"
   gmap: "map/gmap"
   uri: "uri"
   handlebars: "handlebars/handlebars"
