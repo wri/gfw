@@ -46,11 +46,6 @@ define([
         .on('done',
           _.bind(function(layer) {
             this.cdbLayer = layer;
-
-            if (this.options.infowindow) {
-              this.setInfowindow();
-            }
-
             deferred.resolve(this.cdbLayer);
           }, this)
         );
@@ -73,6 +68,12 @@ define([
         infowindowTemplate: TPL,
         templateType: 'handlebars'
       });
+    },
+
+    removeInfowindow: function() {
+      if (this.infowindow) {
+        this.infowindow.remove();
+      }
     },
 
     /**
