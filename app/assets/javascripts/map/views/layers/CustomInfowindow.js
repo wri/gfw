@@ -33,9 +33,8 @@ define([
       this.$el.addClass(this.options.className);
 
       this.setTemplate();
-      this.getPanes().floatPane.appendChild(this.el);
-
       this.setEvents();
+      this.getPanes().floatPane.appendChild(this.el);
 
       this.hide();
     }
@@ -61,13 +60,13 @@ define([
 
   CustomInfowindow.prototype.show = function() {
     if (this.el) {
-      this.$el.show();
+      this.$el.stop().show();
     }
   };
 
   CustomInfowindow.prototype.hide = function() {
     if (this.el) {
-      this.$el.hide();
+      this.$el.stop().hide();
     }
   };
 
@@ -99,7 +98,7 @@ define([
       }, this));
     } else if (this.options.infowindowContent) {
       if (callback && typeof callback === 'function') {
-        this.setTemplate()
+        this.setTemplate();
         callback();
       }
     }
@@ -195,10 +194,10 @@ define([
       ev.stopPropagation ? ev.stopPropagation() : window.event.cancelBubble = true;
     });
 
-    google.maps.event.addDomListener(this.map, 'click', _.bind(function(ev) {
-      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      this.hide();
-    }, this));
+    // google.maps.event.addDomListener(this.map, 'click', _.bind(function(ev) {
+    //   ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+    //   this.hide();
+    // }, this));
   };
 
   CustomInfowindow.prototype.removeEvents = function() {

@@ -100,7 +100,7 @@ define([
         } else {
           $logo.removeClass('is-fixed');
         }
-      };
+      }
 
       setScroll();
 
