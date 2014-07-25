@@ -1,4 +1,11 @@
-.timeline .timeline-month {
+.widget-timeline .timeline-month {
+  height: 100%;
+
+  .tooltip {
+    margin-left: -8px;
+    text-transform: uppercase;
+  }
+
   .play {
     float: left;
     width: 50px;
@@ -33,7 +40,7 @@
   .time {
     float: left;
     height: 100%;
-    width: 949px;
+    width: 945px;
     position: relative;
   }
 
@@ -41,6 +48,21 @@
     fill: $cGreen1;
     stroke: darken($cGreen1, 20);
     cursor: col-resize;
+  }
+
+  .domain {
+    stroke: $cGreen1;
+    stroke-width: 6;
+    shape-rendering: crispEdges;
+  }
+
+  .xaxis-years text {
+    font-size: 11px;
+    fill: #999;
+
+    &.active {
+      fill: $cGreen1;
+    }
   }
 
   .xaxis {
@@ -51,9 +73,13 @@
     .tick {
       text {
         pointer-events: none;
-        font-size: 11px;
-        fill: #666;
+        font-size: 9px;
+        fill: #bbb;
         text-transform: uppercase;
+      }
+
+      &.highlight text {
+        fill: #111;
       }
     }
   }

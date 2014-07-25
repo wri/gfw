@@ -1,7 +1,7 @@
 /**
- * The Forma timeline.
+ * The Imazon timeline.
  *
- * @return FormaTimeline class (extends TimelineMonthClass)
+ * @return ImazonTimeline class (extends TimelineMonthClass)
  */
 define([
   'moment',
@@ -11,20 +11,20 @@ define([
 
   'use strict';
 
-  var FormaTimeline = TimelineMonthClass.extend({
+  var ImazonTimeline = TimelineMonthClass.extend({
 
     initialize: function(layer) {
       this.options = {
         dateRange: [moment(layer.mindate), moment(layer.maxdate)],
-        playSpeed: 50
+        playSpeed: 1200
       };
 
       this.presenter = new Presenter(this);
-      FormaTimeline.__super__.initialize.apply(this, [layer]);
+      ImazonTimeline.__super__.initialize.apply(this, [layer]);
     }
 
   });
 
-  return FormaTimeline;
+  return ImazonTimeline;
 
 });

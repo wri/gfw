@@ -6,8 +6,14 @@
 define([
   'Class',
   'underscore',
-  'mps'
-], function(Class, _, mps) {
+  'mps',
+  'views/timeline/UMDLossTimeline',
+  'views/timeline/FormaTimeline',
+  'views/timeline/ImazonTimeline',
+  'views/timeline/ModisTimeline',
+  'views/timeline/FiresTimeline',
+], function(Class, _, mps, UMDLossTimeline, FormaTimeline, ImazonTimeline, ModisTimeline,
+    FiresTimeline) {
 
   'use strict';
 
@@ -15,7 +21,17 @@ define([
 
     init: function(view) {
       this.view = view;
+      // Current timeline view
+      this.current = null;
       this._subscribe();
+    },
+
+    timelineViews: {
+      umd_tree_loss_gain: UMDLossTimeline,
+      forma: FormaTimeline,
+      imazon: ImazonTimeline,
+      modis: ModisTimeline,
+      fires: FiresTimeline
     },
 
     /**
@@ -23,30 +39,63 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
-        this.view.setTimeline(place.params.layerSpec.getBaselayers());
+        this._setTimeline(place.params.layerSpec);
+        this.view.updateLatlng(place.params.lat, place.params.lng);
+        // Update route with default timeline date.
         if (!place.params.date) {
           mps.publish('Place/update', [{go: false}]);
         }
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this.view.setTimeline(layerSpec.getBaselayers());
+        this._setTimeline(layerSpec);
       }, this));
 
+      mps.subscribe('Map/center-change', _.bind(function(lat, lng){
+        this.view.updateLatlng(lat, lng);
+      }, this));
+
+      // Show timeline when stop drawing analysis
       mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
-        // TODO=> Add widget class to Timeline so we handle this necely.
-        if (this.view.currentTimeline) {
-          this.view.$el.show();
-          this.view.drawing = false;
+        if (this.current) {
+          this.view.model.set({hidden: false, forceHidden: false});
         }
       }, this));
 
+      // Hide timeline when start drawding analysis
       mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
-        if (this.view.currentTimeline) {
-          this.view.drawing = true;
-          this.view.$el.hide();
+        if (this.current) {
+          this.view.model.set({hidden: true, forceHidden: true});
         }
       }, this));
+    },
+
+    _setTimeline: function(layerSpec) {
+      var baselayer = _.intersection(_.pluck(layerSpec.getBaselayers(),
+        'slug'), _.keys(this.timelineViews))[0];
+
+
+      if (this.current) {
+        if (this.current.getName() === baselayer) {return;}
+        this._removeTimeline();
+      }
+
+      if (!baselayer) {return;}
+      baselayer = layerSpec.getLayer({slug: baselayer});
+      this.view.update(baselayer.title);
+      this.current = new this.timelineViews[baselayer.slug](baselayer);
+      this.view.model.set('hidden', false);
+    },
+
+    /**
+     * Remove the current Timeline
+     */
+    _removeTimeline: function() {
+      if (!this.current) {return;}
+      this.current.remove();
+      this.current = null;
+      this.view.model.set('hidden', true);
+      return !!!this.current;
     }
   });
 

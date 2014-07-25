@@ -34,6 +34,8 @@ define([
       'click .widget-btn': '_toggleBoxHidden'
     },
 
+    renderParams: {},
+
     defaults: {
       boxDraggable: true,
       boxHidden: false,
@@ -49,7 +51,7 @@ define([
     },
 
     render: function() {
-      this.$el.html(this.template());
+      this.$el.html(this.template(this.renderParams));
       $(this.options.containment).append(this.el);
       this._cacheSelector();
       this._setModel();
@@ -91,18 +93,20 @@ define([
     },
 
     _setBoxDraggable: function() {
-      var params = {};
 
       if (this.model.get('boxDraggable')) {
+        var params = {};
         params.containment = this.model.get('containment');
         if (this.$widgetToggle.length) {
           params.cancel = this.$widgetToggle.selector;
         }
+        this.$widgetBox.draggable(params);
       } else {
-        params.disabled = true;
+        if (this.$widgetBox.hasClass('ui-dragabble')) {
+          this.$widgetBox.draggable('destroy');
+        }
       }
 
-      this.$widgetBox.draggable(params);
     },
 
     _setHidden: function() {
