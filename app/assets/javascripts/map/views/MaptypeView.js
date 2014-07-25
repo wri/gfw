@@ -22,7 +22,8 @@ define([
     events: function(){
       return _.extend({}, MaptypeView.__super__.events, {
         'click .maptype-selected li': '_toggleBoxClosed',
-        'click .widget-opened .maptype-list li': '_setMaptype'
+        'click .widget-opened .maptype-list li': '_setMaptype',
+        'click .landsat_years li': '_setMaptype'
       });
     },
 
@@ -33,9 +34,14 @@ define([
     },
 
     _setMaptype: function(event) {
+      var landsat_list = this.$el.find('.landsat_years');
       var $currentTarget = $(event.currentTarget);
+      if (landsat_list.is(':visible')) landsat_list.fadeOut();
+      if ($currentTarget.hasClass('landsatSelector')) {
+        landsat_list.fadeIn();
+        return;
+      }
       var maptype = $currentTarget.data('maptype');
-
       if (maptype) {
         this.presenter.setMaptype(maptype);
       }
@@ -48,6 +54,7 @@ define([
      * @param  {string} maptype
      */
     selectMaptype: function(maptype) {
+      if (maptype.indexOf('landsat') === 0) maptype = 'landsat';
       this.$el.find('.maptype-selected').html(
         this.$widgetOpened.find('[data-maptype="' + maptype + '"]').clone());
 
