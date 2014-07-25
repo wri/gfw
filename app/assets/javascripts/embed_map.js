@@ -1,6 +1,6 @@
 //= require jquery-migrate-1.2.1.min
 //= require jquery-ui-1.10.4.custom.min
-//= require class
+//= require Class.js/Class
 //= require backbone.cartodb
 //= require jquery.easing.1.3
 //= require jquery.tipsy
@@ -8,7 +8,7 @@
 //= require imgLiquid.min
 //= require wax.g.min
 //= require minpubsub
-//= require markerclusterer
+//= require gmaps-markerclusterer-plus/src/markerclusterer
 //= require url.min
 //= require gfw/deforestation_tile_layer
 //= require gfw/canvas_tile_layer

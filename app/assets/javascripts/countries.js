@@ -1,5 +1,5 @@
 //= require d3/d3
-//= require topojson.v1.min
+//= require topojson/topojson
 //= require scrollIt.min
 //= require jquery.qtip.min
 //= require simple_statistics
