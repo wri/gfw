@@ -16,7 +16,8 @@ define([
     defaults: {
       infowindow: false,
       infowindowContent: null,
-      infowindowAPI: null
+      infowindowAPI: null,
+      analysis: false
     },
 
     init: function(layer, map) {
