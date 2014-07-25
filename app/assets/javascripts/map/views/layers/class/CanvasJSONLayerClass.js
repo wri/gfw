@@ -219,9 +219,6 @@ define([
 
       this.startMonth = Math.floor(this.layer.currentDate[0].diff(
         this.layer.mindate, 'months', true)) + 1;
-
-      // this.startMonth = 71 + this.layer.currentDate[0].diff(BASE_DATE, 'months');
-      // this.endMonth = 71 + this.layer.currentDate[1].diff(BASE_DATE, 'months');
     }
 
   });
