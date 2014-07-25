@@ -9,7 +9,7 @@ define([
 
   'use strict';
 
-  var FormaCoverLayer = CartoDBLayerClass.extend({
+  var ModisCoverLayer = CartoDBLayerClass.extend({
 
     options: {
       sql: 'SELECT cartodb_id, the_geom AS the_geom_webmercator, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName}'
@@ -17,6 +17,6 @@ define([
 
   });
 
-  return FormaCoverLayer;
+  return ModisCoverLayer;
 
 });
