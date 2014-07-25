@@ -10,6 +10,7 @@ define([
   'presenters/MapPresenter',
   'views/maptypes/grayscaleMaptype',
   'views/maptypes/treeheightMaptype',
+  'views/maptypes/landsatMaptype',
   'views/layers/UMDLossLayer',
   'views/layers/ForestGainLayer',
   'views/layers/FormaLayer',
@@ -30,7 +31,7 @@ define([
   'views/layers/LandRightsLayer',
   'views/layers/UserStoriesLayer',
   'views/layers/MongabayStoriesLayer'
-], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype,
+], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype, landsatMaptype,
   UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, IdnPrimaryLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
   ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, LandRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
@@ -305,6 +306,9 @@ define([
     _setMaptypes: function() {
       this.map.mapTypes.set('grayscale', grayscaleMaptype());
       this.map.mapTypes.set('treeheight', treeheightMaptype());
+      for (var i = 1999; i < 2013; i++) {
+        this.map.mapTypes.set('landsat'+[i], landsatMaptype([i]));
+      }
     },
 
     _setZoomControl: function() {

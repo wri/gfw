@@ -63,20 +63,23 @@
   border: 1px solid #666;
   box-shadow: 0px 0px 3px #666666;
   border-radius: 4px;
-  height: 145px;
+  height: 210px;
   width: 215px;
   -webkit-column-count: 2;
   -webkit-column-gap: 10px;
   column-count: 2;
   column-gap: 10px;
-  line-height: 20px;
+  line-height: 30px;
   right: 185px;
-  top: 170px;
+  top: 140px;
   li{
     text-align: center;
     font-size: 0.9rem;
     color: #666;
     cursor: pointer;
+    &:hover {
+      color: #333;
+    }
   }
 
   // &:after {
