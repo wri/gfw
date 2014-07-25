@@ -8,7 +8,7 @@
 //= require imgLiquid.min
 //= require wax.g.min
 //= require minpubsub
-//= require markerclusterer_compiled
+//= require markerclusterer
 //= require url.min
 //= require gfw/deforestation_tile_layer
 //= require gfw/canvas_tile_layer
