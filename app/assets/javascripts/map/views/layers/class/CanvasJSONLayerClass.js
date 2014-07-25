@@ -11,9 +11,8 @@ define([
 
   'use strict';
 
-  var BASE_DATE = moment('2006-01-01');
   var MAX_MONTHS = 200;
-  var BASE_MONTH = 71; // 01-01-2006
+  var BASE_MONTH = 71;
 
   var CanvasJSONLayerClass = OverlayLayerClass.extend({
 

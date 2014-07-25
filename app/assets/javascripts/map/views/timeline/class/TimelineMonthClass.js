@@ -350,7 +350,7 @@ define([
 
       this._togglePlayIcon();
       this.playing = true;
-      this.domainsShown = []; // clean years
+      this.domainsShown = []; // clean domain already loaded
 
       this._showTipsy();
       this.hiddenBrush.extent([trailFrom, trailFrom]);
@@ -391,7 +391,15 @@ define([
         .text(end.format('MMM'))
         .style('left', '{0}px'.format(x));
 
-      this._updateCurrentDate([start, end]);
+      // domainsShown keep track of the years already loaded.
+      // reason to do this is that value is never an
+      // absolute value so we don't know when the trail
+      // is in the right position.
+      if (this.domainsShown.indexOf(rounded) < 0 &&
+        rounded > 0) {
+        this._updateCurrentDate([start, end]);
+        this.domainsShown.push(rounded);
+      }
     },
 
     _onAnimationBrushEnd: function() {

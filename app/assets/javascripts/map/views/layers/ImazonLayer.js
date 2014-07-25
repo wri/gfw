@@ -1,4 +1,4 @@
-/**
+  /**
  * The Imazon layer module.
  *
  * @return ImazonLayer class (extends CartoDBLayerClass)
@@ -31,6 +31,7 @@ define([
      */
     setTimelineDate: function(date) {
       this.layer.currentDate = date;
+      console.log('updating layer');
       this.updateTiles();
     },
 
