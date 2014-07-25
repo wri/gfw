@@ -11,8 +11,9 @@ define([
 
   'use strict';
 
+  var BASE_DATE = moment('2006-01-01');
   var MAX_MONTHS = 200;
-  var BASE_MONTH = 71;
+  var BASE_MONTH = 71; // 01-01-2006
 
   var CanvasJSONLayerClass = OverlayLayerClass.extend({
 
@@ -23,6 +24,10 @@ define([
 
     init: function(layer, map) {
       this.tiles = {};
+      this.layer = layer;
+
+      this.getDates();
+
       this._super(layer, map);
       this.cartoSQL = new cartodb.SQL({
         user: this.options.cartodbUserName
@@ -42,10 +47,6 @@ define([
       canvas.style.border = 'none';
       canvas.style.margin = '0';
       canvas.style.padding = '0';
-      // var hit_canvas = ownerDocument.createElement('canvas');
-
-      // hit_canvas.className = 'time_layer';
-
 
       // prepare canvas and context sizes
       var ctx = canvas.getContext('2d');
@@ -54,14 +55,9 @@ define([
 
       canvas.ctx = ctx;
 
-      // var hit_ctx = hit_canvas.getContext('2d');
-      // hit_canvas.width = hit_ctx.width = this.tileSize.width;
-      // hit_canvas.height = hit_ctx.height = this.tileSize.height;
-
       //set unique id
       var tileId = '{0}_{1}_{2}'.format(coord.x, coord.y, zoom);
       canvas.setAttribute('id', tileId);
-      // hit_canvas.setAttribute('id', tileId);
 
       if (tileId in this.tiles) {
         delete this.tiles[tileId];
@@ -71,15 +67,8 @@ define([
         canvas: canvas,
         ctx: ctx,
         coord: coord,
-        zoom: zoom,
-        // hit_canvas: hit_canvas
-        // hit_ctx: hit_ctx
+        zoom: zoom
       };
-
-      // // custom setup
-      // if (this.canvas_setup) {
-      //   this.canvas_setup(this.tiles[tileId], coord, zoom);
-      // }
 
       return canvas;
     },
@@ -149,7 +138,6 @@ define([
         return;
       }
 
-      //ctx.fillStyle = '#000';
       // clear canvas
       tile.canvas.width = w;
       ctx.fillStyle = 'rgb(255, 102, 153)';
@@ -158,8 +146,6 @@ define([
       var yc = cells.ycoords;
 
       // render cells
-      //var data = ctx.getImageData(0, 0, w, h);
-      //var pixels = data.data;
       var len = cells.length;
       var pixel_size = cells.size;
       var index, index0, mul;
@@ -205,7 +191,6 @@ define([
         xcoords[i] = (row.x - tile_base_x) << zoom_diff;
         ycoords[i] = (row.y - tile_base_y) << zoom_diff;
         var base_idx = i * MAX_MONTHS;
-        //def[row.sd[0]] = row.se[0];
 
         if (row.sd !== null) {
           for (var b = 0; b < row.sd.length; ++b) {
@@ -228,9 +213,15 @@ define([
     },
 
     updateTiles: function() {
+      this.getDates();
       _.each(this.tiles, _.bind(function(tile) {
         this._render(tile);
       }, this));
+    },
+
+    getDates: function() {
+      this.startMonth = 71 + this.layer.currentDate[0].diff(BASE_DATE, 'months');
+      this.endMonth = 71 + this.layer.currentDate[1].diff(BASE_DATE, 'months');
     }
 
   });
