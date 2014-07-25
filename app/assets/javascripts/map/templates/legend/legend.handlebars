@@ -1,4 +1,4 @@
-<div class="widget-box">
+<div class="widget-box mod-legend">
   <div class="widget-toggle"></div>
   <div class="widget-content">
 
@@ -21,6 +21,12 @@
                   <span class="layer-name">
                     <i class="circle" style="color:{{this.title_color}};"></i>{{this.title}}
                   </span>
+                  {{#if this.sublayer}}
+                    <div class="layer-sublayer" data-sublayer="{{this.sublayer}}">
+                      <span class="onoffswitch"><i></i></span>
+                      <div class="sublayer-title">Geographic coverage</div>
+                    </div>
+                  {{/if}}
                 </li> {{!-- /layer --}}
               {{/each}}
             </ul>  {{!-- /layers --}}
