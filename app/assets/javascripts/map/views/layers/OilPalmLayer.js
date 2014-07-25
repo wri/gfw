@@ -12,9 +12,10 @@ define([
   var OilPalmLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT the_geom_webmercator, type, country, area_ha, \'{tableName}\' AS layer FROM {tableName}',
+      sql: 'SELECT the_geom_webmercator, type, country, area_ha, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}',
       infowindow: true,
-      interactivity: 'country, type, area_ha'
+      interactivity: 'country, type, area_ha, analysis',
+      analysis: true
     }
 
   });

@@ -21,11 +21,12 @@ define([
       cartocss: CARTOCSS,
       interactivity: 'cartodb_id, name',
       infowindow: false,
-      cartodb_logo: false
+      cartodb_logo: false,
+      analysis: false
     },
 
     queryTemplate: 'SELECT cartodb_id||\':\' ||\'{tableName}\' as cartodb_id, the_geom_webmercator,' +
-      '\'{tableName}\' AS layer, name FROM {tableName}',
+      '\'{tableName}\' AS layer, {analysis} AS analysis, name FROM {tableName}',
 
     _getLayer: function() {
       var deferred = new $.Deferred();
@@ -83,7 +84,8 @@ define([
      * @return {string} CartoDB query
      */
     getQuery: function() {
-      return new UriTemplate(this.options.sql || this.queryTemplate).fillFromObject({tableName: this.layer.table_name});
+      return new UriTemplate(this.options.sql || this.queryTemplate)
+        .fillFromObject({tableName: this.layer.table_name, analysis: this.options.analysis});
     }
 
   });

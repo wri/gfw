@@ -77,3 +77,15 @@
     @extend .sans-serif;
   }
 }
+
+
+.analyse {
+  @include position(50px, 20px, false, false);
+  @include size(41px, 42px);
+  @include mixins-sprite(graph);
+
+  &.disabled {
+    @include opacity(.6);
+    @include pointer-events(none);
+  }
+}

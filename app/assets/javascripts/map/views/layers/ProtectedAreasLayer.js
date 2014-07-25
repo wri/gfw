@@ -16,7 +16,8 @@ define([
     options: {
       urlTemplate: '//184.73.201.235/blue{/z}{/x}{/y}',
       infowindow: true,
-      infowindowAPI: SitesService
+      infowindowAPI: SitesService,
+      analysis: true
     }
 
   });

@@ -90,11 +90,14 @@ define([
         lon: this.latlng.lng()
       };
       this.options.infowindowAPI.execute(params, _.bind(function(data) {
+        data[0].analysis = this.options.analysis;
         this.data = { content: { data: data[0] } };
         this.setTemplate();
         if (callback && typeof callback === 'function') {
           callback();
         }
+      }, this), _.bind(function() {
+        this.close();
       }, this));
     } else if (this.options.infowindowContent) {
       if (callback && typeof callback === 'function') {
@@ -106,10 +109,12 @@ define([
 
   CustomInfowindow.prototype.setTemplate = function() {
     var data = this.data || {};
+    this.removeEvents();
     if (this.el) {
       this.$el.html(this.options.infowindowContent || this.template(data));
       this.closeButton = this.$el.find('.close')[0];
     }
+    this.setEvents();
   };
 
   CustomInfowindow.prototype.destroy = function() {
@@ -165,6 +170,10 @@ define([
       });
     }
 
+    google.maps.event.addDomListener(this.el, 'click', function (ev) {
+      ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+    });
+
     google.maps.event.addDomListener(this.el, 'touchstart', function (ev) {
       ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
     });
@@ -193,21 +202,14 @@ define([
     google.maps.event.addDomListener(this.el, 'DOMMouseScroll', function (ev) {
       ev.stopPropagation ? ev.stopPropagation() : window.event.cancelBubble = true;
     });
-
-    // google.maps.event.addDomListener(this.map, 'click', _.bind(function(ev) {
-    //   ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-    //   this.hide();
-    // }, this));
   };
 
   CustomInfowindow.prototype.removeEvents = function() {
     if (this.closeButton) {
       google.maps.event.clearListeners(this.closeButton);
     }
-    if (this.el) {
-      google.maps.event.clearListeners(this.map);
-      google.maps.event.clearListeners(this.el);
-    }
+    google.maps.event.clearListeners(this.map, 'click');
+    google.maps.event.clearListeners(this.el);
   };
 
   return CustomInfowindow;
