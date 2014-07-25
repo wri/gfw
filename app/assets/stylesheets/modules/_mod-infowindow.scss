@@ -16,7 +16,9 @@
     position: relative;
     height: 122px;
     overflow: hidden;
+    background-size: cover;
     img {
+      display: none;
       width: 100%;
       height: auto;
     }
