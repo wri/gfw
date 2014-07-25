@@ -6,17 +6,16 @@
 @import "compass/reset";
 @import "compass/css3";
 
-@import "_mixins";
-@import "_grid";
-@import "_base";
+@import "settings";
+@import "mixins";
+@import "grid";
+@import "base";
 
 // Images
-@import "icons/*.png";
-@import "home-icons/*.png";
 @import "static-icons/*.png";
 @import "static-logos/*.png";
-@import "country-icons/*.png";
-@import "stories-icons/*.png";
+
+@import "helpers";
 
 .static-inner {
   @extend .clearfix;
