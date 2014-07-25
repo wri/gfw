@@ -31,8 +31,20 @@ define([
     setTimelineDate: function(date) {
       this.layer.currentDate = date;
       this.updateTiles();
-    }
+    },
 
+    /**
+     * Get the CartoDB query. If it isn't set on this.options,
+     * it gets the default query from this._queryTemplate.
+     *
+     * @return {string} CartoDB query
+     * @override
+     */
+    getQuery: function() {
+      return new UriTemplate(this.options.sql || this.queryTemplate).fillFromObject({
+        tableName: this.layer.table_name,
+      });
+    }
   });
 
   return ImazonLayer;
