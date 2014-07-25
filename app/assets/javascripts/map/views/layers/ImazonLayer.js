@@ -31,7 +31,7 @@ define([
      */
     setTimelineDate: function(date) {
       this.layer.currentDate = date;
-      console.log('updating layer');
+
       this.updateTiles();
     },
 
