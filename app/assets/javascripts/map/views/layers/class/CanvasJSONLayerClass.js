@@ -25,10 +25,8 @@ define([
     init: function(layer, map) {
       this.tiles = {};
       this.layer = layer;
-
-      this.getDates();
-
       this._super(layer, map);
+      this.getDates();
       this.cartoSQL = new cartodb.SQL({
         user: this.options.cartodbUserName
       });
@@ -54,22 +52,6 @@ define([
       ctx.height = canvas.height = this.tileSize.height;
 
       canvas.ctx = ctx;
-
-      //set unique id
-      var tileId = '{0}_{1}_{2}'.format(coord.x, coord.y, zoom);
-      canvas.setAttribute('id', tileId);
-
-      if (tileId in this.tiles) {
-        delete this.tiles[tileId];
-      }
-
-      this.tiles[tileId] = {
-        canvas: canvas,
-        ctx: ctx,
-        coord: coord,
-        zoom: zoom
-      };
-
       return canvas;
     },
 
@@ -93,10 +75,22 @@ define([
           canvas: canvas,
           ctx: canvas.ctx,
           width: this.tileSize.width,
+          coord: coord,
+          zoom: zoom,
           height: this.tileSize.height,
           cells: this.preCacheMonths(data.rows, coord, zoom,
             zoomDiff)
         };
+
+        //set unique id
+        var tileId = '{0}_{1}_{2}'.format(coord.x, coord.y, zoom);
+        canvas.setAttribute('id', tileId);
+
+        if (tileId in this.tiles) {
+          delete this.tiles[tileId];
+        }
+
+        this.tiles[tileId] = tile;
 
         this._render(tile);
       }, this));
@@ -128,8 +122,8 @@ define([
     },
 
     _render: function(tile) {
-      var month = -BASE_MONTH + MAX_MONTHS >> 0;
-      var month_start = -BASE_MONTH + BASE_MONTH >> 0;
+      var month = this.endMonth || -BASE_MONTH + MAX_MONTHS >> 0;
+      var month_start = this.startMonth || -BASE_MONTH + BASE_MONTH >> 0;
       var w = tile.canvas.width;
       var ctx = tile.ctx;
       var cells = tile.cells;
@@ -220,8 +214,14 @@ define([
     },
 
     getDates: function() {
-      this.startMonth = 71 + this.layer.currentDate[0].diff(BASE_DATE, 'months');
-      this.endMonth = 71 + this.layer.currentDate[1].diff(BASE_DATE, 'months');
+      this.endMonth = Math.floor(this.layer.currentDate[1].diff(
+        this.layer.currentDate[0], 'months', true)) + 1;
+
+      this.startMonth = Math.floor(this.layer.currentDate[0].diff(
+        this.layer.mindate, 'months', true)) + 1;
+
+      // this.startMonth = 71 + this.layer.currentDate[0].diff(BASE_DATE, 'months');
+      // this.endMonth = 71 + this.layer.currentDate[1].diff(BASE_DATE, 'months');
     }
 
   });
