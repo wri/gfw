@@ -29,12 +29,14 @@
       border-bottom: 1px solid #ddd;
       @include box-sizing(border-box);
 
-      &.grayscale   i { @include home-icons-sprite(map_grayscale); }
-      &.terrain     i { @include home-icons-sprite(map_terrain); }
-      &.satellite   i { @include home-icons-sprite(map_satellite); }
-      &.roads       i { @include home-icons-sprite(map_roads); }
-      &.treeheight  i { @include home-icons-sprite(map_treeheight); }
-      &.landsat     i { @include home-icons-sprite(map_landsat); }
+      &.grayscale         i { @include home-icons-sprite(map_grayscale); }
+      &.terrain           i { @include home-icons-sprite(map_terrain); }
+      &.satellite         i { @include home-icons-sprite(map_satellite); }
+      &.roads             i { @include home-icons-sprite(map_roads); }
+      &.hybrid            i { @include home-icons-sprite(map_roads); }
+      &.treeheight        i { @include home-icons-sprite(map_treeheight); }
+      &.landsat           i { @include home-icons-sprite(map_landsat); }
+      &.landsatSelector   i { @include home-icons-sprite(map_landsat); }
 
       i {
         @include inline-block();
