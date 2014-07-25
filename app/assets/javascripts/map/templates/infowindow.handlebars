@@ -10,6 +10,9 @@
           {{!-- <img src=""> --}}
         </div>
       {{/if}}
+      {{#if content.data.analysis}}
+        <a href="#analysis" class="analyse" data-layer="{{content.data.id}}"></a>
+      {{/if}}
     </div>
     <div class="cartodb-popup-content">
       {{#unless content.data.image}}
