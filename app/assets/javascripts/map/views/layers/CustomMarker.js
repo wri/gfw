@@ -9,7 +9,7 @@ define([
       className: 'custom-marker',
       offset: [-18, -18],
       size: [36, 36],
-      customHTML: null
+      content: null
     };
 
     this.options = _.extend({}, this.defaults, opts);
@@ -36,13 +36,15 @@ define([
       div.style.width = this.options.size[0] + 'px';
       div.style.height = this.options.size[1] + 'px';
 
-      if (this.options.customHTML) {
-        div.innerHTML = this.options.customHTML;
-      } else {
-        var img = document.createElement('img');
-        img.src = this.options.icon;
-        div.appendChild(img);
+      var img = document.createElement('img');
+      img.src = this.options.icon;
+      img.className = 'icon-custom-marker';
+
+      if (this.options.content) {
+        div.innerHTML = this.options.content;
       }
+
+      div.appendChild(img);
 
       // Trigger click event
       google.maps.event.addDomListener(div, 'click', _.bind(function() {
