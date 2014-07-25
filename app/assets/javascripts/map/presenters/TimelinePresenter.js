@@ -9,9 +9,11 @@ define([
   'mps',
   'views/timeline/UMDLossTimeline',
   'views/timeline/FormaTimeline',
+  'views/timeline/ImazonTimeline',
   'views/timeline/ModisTimeline',
   'views/timeline/FiresTimeline',
-], function(Class, _, mps, UMDLossTimeline, FormaTimeline, ModisTimeline, FiresTimeline) {
+], function(Class, _, mps, UMDLossTimeline, FormaTimeline, ImazonTimeline, ModisTimeline,
+    FiresTimeline) {
 
   'use strict';
 
@@ -27,6 +29,7 @@ define([
     timelineViews: {
       umd_tree_loss_gain: UMDLossTimeline,
       forma: FormaTimeline,
+      imazon: ImazonTimeline,
       modis: ModisTimeline,
       fires: FiresTimeline
     },
