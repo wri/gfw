@@ -93,18 +93,20 @@ define([
     },
 
     _setBoxDraggable: function() {
-      var params = {};
 
       if (this.model.get('boxDraggable')) {
+        var params = {};
         params.containment = this.model.get('containment');
         if (this.$widgetToggle.length) {
           params.cancel = this.$widgetToggle.selector;
         }
+        this.$widgetBox.draggable(params);
       } else {
-        params.disabled = true;
+        if (this.$widgetBox.hasClass('ui-dragabble')) {
+          this.$widgetBox.draggable('destroy');
+        }
       }
 
-      this.$widgetBox.draggable(params);
     },
 
     _setHidden: function() {

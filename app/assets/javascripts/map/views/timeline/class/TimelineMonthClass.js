@@ -27,7 +27,7 @@ define([
       width: 949,
       height: 50,
       playSpeed: 400,
-      effectsSpeed: 100
+      effectsSpeed: 15
     },
 
     events: {
@@ -35,24 +35,18 @@ define([
     },
 
     initialize: function(layer) {
-      console.log(layer);
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
-      console.log(_.clone(this.layer.currentDate));
       this.layer.currentDate = this.layer.currentDate || this.options.dateRange;
       // Transitions duration are 100 ms. Give time to them to finish.
       this._updateCurrentDate = _.debounce(this._updateCurrentDate,
         this.options.effectsSpeed);
-
-      // Shortcouts
       this.dr = this.options.dateRange;
 
       // Number months to display
       this.monthsCount = Math.floor(this.dr[1].diff(this.dr[0],
         'months', true));
-
-      console.log('months', this.monthsCount);
 
       this.render();
     },
@@ -73,7 +67,7 @@ define([
       this.$time = this.$el.find('.time');
 
       // SVG options
-      var margin = {top: 30, right: 20, bottom: 0, left: 20};
+      var margin = {top: 0, right: 20, bottom: 0, left: 20};
       var width = this.options.width - margin.left - margin.right;
       var height = this.options.height - margin.bottom - margin.top;
 
@@ -91,10 +85,10 @@ define([
           .append('g')
             .attr('transform', 'translate({0},{1})'.format(margin.left, margin.top));
 
-      // xAxis
+      // Dots xaxis
       this.svg.append('g')
-          .attr('class', 'xaxis-months')
-          .attr('transform', 'translate(0,0)')
+          .attr('class', 'xaxis')
+          .attr('transform', 'translate(0,{0})'.format(height/2 - 3))
           .call(d3.svg.axis()
             .scale(this.xscale)
             .orient('top')
@@ -104,7 +98,33 @@ define([
             .tickPadding(0))
           .select('.domain').remove();
 
-      this.svg.select('.xaxis-months').selectAll('g.line').remove();
+      this.svg.select('.xaxis').selectAll('g.line').remove();
+
+      // Years xscale
+      this.yearsXscale = d3.time.scale()
+          .domain([this.dr[0].toDate(), this.dr[1].toDate()])
+          .range([0, width]);
+
+      // Years xaxis
+      var xAxis = d3.svg.axis()
+          .scale(this.yearsXscale)
+          .orient('bottom')
+          .ticks(d3.time.years)
+          .tickSize(0)
+          .tickPadding(0)
+          .tickFormat(d3.time.format("%Y"));
+
+      this.svg.append('g')
+          .attr('class', 'xaxis-years')
+          .attr('transform', 'translate({0},{1})'.format(5, height/2 + 6))
+          .call(xAxis)
+        .select('.domain').remove();
+
+      this.svg.selectAll('.xaxis-years .tick:last-child text').attr('x', -8);
+      // .selectAll('.tick text')
+      //   .style('text-anchor', 'start')
+      //   .attr('x', 0)
+      //   .attr('y', 0);
 
       // Set brush and listeners.
       this.brush = d3.svg.brush()
@@ -127,7 +147,7 @@ define([
 
       this.handlers.left = this.slider.append('rect')
           .attr('class', 'handle')
-          .attr('transform', 'translate(-7,0)')
+          .attr('transform', 'translate(-7,{0})'.format(height/2 - 12))
           .attr('width', 14)
           .attr('height', 14)
           .attr('x', this.xscale(this._dateToDomain(this.layer.currentDate[0])))
@@ -142,6 +162,23 @@ define([
       this.slider.select('.background')
           .style('cursor', 'pointer')
           .attr('height', height);
+
+      // Selected domain.
+      this.domain = this.svg.select('.xaxis')
+        .append('svg:line')
+        .attr('class', 'domain')
+        .attr('transform', 'translate(0,{0})'.format(-3))
+        .attr('x1', this.handlers.left.attr('x'))
+        .attr('x2', this.handlers.right.attr('x'));
+
+      // Handler position. We keep position x here so we know the
+      // handler position without having to wait animations to finish.
+      this.ext = {
+        left: this.handlers.left.attr('x'),
+        right: this.handlers.right.attr('x')
+      };
+
+      this._updateYearsStyle();
     },
 
     _onBrush: function(event) {
@@ -154,8 +191,14 @@ define([
 
       if (Math.abs(this.xscale(value) - xr) <
         Math.abs(this.xscale(value) - xl)) {
+        if (this.ext.left > this.xscale(rounded)) {return;}
+        this.ext.right = this.xscale(rounded);
+        this.domain.attr('x1', this.ext.left);
         this._moveHandler(rounded, 'right');
       } else {
+        if (this.ext.right < this.xscale(rounded)) {return;}
+        this.ext.left = this.xscale(rounded);
+        this.domain.attr('x2', this.ext.right);
         this._moveHandler(rounded, 'left');
       }
     },
@@ -166,6 +209,16 @@ define([
         .duration(this.options.effectsSpeed)
         .ease('line')
         .attr('x', this.xscale(x));
+
+      var dx = (side === 'left') ? 'x1' : 'x2';
+
+      this.domain
+        .transition()
+        .duration(this.options.effectsSpeed)
+        .ease('line')
+        .attr(dx, this.xscale(x));
+
+      this._updateYearsStyle();
     },
 
     _onBrushEnd: function(event) {
@@ -198,6 +251,20 @@ define([
       this.layer.currentDate = date;
       this.presenter.updateTimelineDate(date);
       console.log('setting', date[0].format('YYYY-MMM'), date[1].format('YYYY-MMM'));
+    },
+
+    _updateYearsStyle: function() {
+      var self = this;
+
+      d3.select('.xaxis-years').selectAll('text').filter(function(d) {
+        d = self._dateToDomain(moment(d));
+        if (d >= Math.round(self.xscale.invert(self.ext.left)) &&
+          d <= Math.round(self.xscale.invert(self.ext.right))) {
+          d3.select(this).classed('active', true);
+        } else {
+          d3.select(this).classed('active', false);
+        }
+      });
     },
 
     getName: function() {

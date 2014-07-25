@@ -43,6 +43,21 @@
     cursor: col-resize;
   }
 
+  .domain {
+    stroke: $cGreen1;
+    stroke-width: 6;
+    shape-rendering: crispEdges;
+  }
+
+  .xaxis-years text {
+    font-size: 11px;
+    fill: #999;
+
+    &.active {
+      fill: $cGreen1;
+    }
+  }
+
   .xaxis {
     position: absolute;
     top: 0;
@@ -51,8 +66,8 @@
     .tick {
       text {
         pointer-events: none;
-        font-size: 11px;
-        fill: #666;
+        font-size: 9px;
+        fill: #999;
         text-transform: uppercase;
       }
     }
