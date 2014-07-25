@@ -31,7 +31,7 @@ define([
     },
 
     events: {
-      'click .play': 'togglePlay'
+      'click .play': '_togglePlay'
     },
 
     initialize: function(layer) {
@@ -42,6 +42,7 @@ define([
       // Transitions duration are 100 ms. Give time to them to finish.
       this._updateCurrentDate = _.debounce(this._updateCurrentDate,
         this.options.effectsSpeed);
+      this.playing = false;
 
       // dont let go after this range
       this.drMax = this.options.dateRange;
@@ -131,10 +132,6 @@ define([
         .select('.domain').remove();
 
       this.svg.selectAll('.xaxis-years .tick:last-child text').attr('x', -15);
-      // .selectAll('.tick text')
-      //   .style('text-anchor', 'start')
-      //   .attr('x', 0)
-      //   .attr('y', 0);
 
       // Set brush and listeners.
       this.brush = d3.svg.brush()
@@ -207,6 +204,20 @@ define([
         right: this.handlers.right.attr('x')
       };
 
+      // Hidden brush for the animation
+      this.hiddenBrush = d3.svg.brush()
+          .x(this.xscale)
+          .extent([0, 0])
+          .on('brush', function() {
+            self._onAnimationBrush(this);
+          })
+          .on('brushend', function() {
+            self._onAnimationBrushEnd(this);
+          });
+
+      this.svg.selectAll('.extent,.resize')
+          .remove();
+
       this._updateYearsStyle();
     },
 
@@ -218,6 +229,9 @@ define([
 
       var xl = this.handlers.left.attr('x');
       var xr = this.handlers.right.attr('x');
+
+      this._hideTipsy();
+      this.playing && this._stopAnimation();
 
       if (Math.abs(this.xscale(value) - xr) <
         Math.abs(this.xscale(value) - xl)) {
@@ -276,7 +290,7 @@ define([
       this._updateCurrentDate([start, end]);
 
       setTimeout(_.bind(function() {
-        this._hideTipsy();
+        !this.playing && this._hideTipsy();
       },this), 600);
     },
 
@@ -315,6 +329,82 @@ define([
       });
     },
 
+    /**
+     * Event fired when user clicks play/stop button.
+     */
+    _togglePlay: function() {
+      (this.playing) ? this._stopAnimation() : this._animate();
+    },
+
+    _animate: function() {
+      var hlx = this.handlers.left.attr('x');
+      var hrx = this.handlers.right.attr('x');
+      var trailFrom = Math.round(this.xscale.invert(hlx)) + 1;
+      var trailTo = Math.round(this.xscale.invert(hrx));
+
+      if (trailTo === trailFrom) {
+        return;
+      }
+
+      var speed = (trailTo - trailFrom) * this.options.playSpeed;
+
+      this._togglePlayIcon();
+      this.playing = true;
+      this.domainsShown = []; // clean years
+
+      this._showTipsy();
+      this.hiddenBrush.extent([trailFrom, trailFrom]);
+
+      // Animate extent hiddenBrush to trailTo
+      this.trail
+          .call(this.hiddenBrush.event)
+        .transition()
+          .duration(speed)
+          .ease('line')
+          .call(this.hiddenBrush.extent([trailFrom, trailTo]))
+          .call(this.hiddenBrush.event);
+    },
+
+    _stopAnimation: function() {
+      // End animation extent hiddenBrush
+      // this will call onAnimationBrushEnd
+      this.trail
+        .call(this.hiddenBrush.event)
+        .interrupt();
+    },
+
+    _onAnimationBrush: function() {
+      var value = this.hiddenBrush.extent()[1];
+      var rounded = Math.round(value);
+      var start = this._domainToDate(this.xscale.invert(this.handlers.left.attr('x')));
+      var end = this._domainToDate(rounded);
+      var x = this.xscale(rounded);
+
+      this.domain
+        .attr('x2', x);
+
+      this.trail
+        .attr('x1', x)
+        .attr('x2', x);
+
+      this.tooltip
+        .text(end.format('MMM'))
+        .style('left', '{0}px'.format(x));
+
+      this._updateCurrentDate([start, end]);
+    },
+
+    _onAnimationBrushEnd: function() {
+      var value = this.hiddenBrush.extent()[1];
+      var hrl = this.ext.left;
+      // Trail from left handler + 1.
+      var trailFrom = Math.round(this.xscale.invert(hrl)) + 1;
+
+      if (value > 0 && value !==  trailFrom) {
+        this._togglePlayIcon();
+        this.playing = false;
+      }
+    },
 
     _showTipsy: function() {
       this.tipsy.style('visibility', 'visible');
@@ -324,6 +414,11 @@ define([
     _hideTipsy: function() {
       this.tipsy.style('visibility', 'hidden');
       this.tooltip.style('visibility', 'hidden');
+    },
+
+    _togglePlayIcon: function() {
+      this.$playIcon.toggle();
+      this.$stopIcon.toggle();
     },
 
     getName: function() {
