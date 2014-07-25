@@ -32,6 +32,7 @@ define([
     _subscribe: function() {
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this._setBaselayer(layerSpec);
+        if ($('.analysis-info').is(':visible')) this.view._onClickDone();
       }, this));
 
       mps.subscribe('Place/go', _.bind(function(place) {

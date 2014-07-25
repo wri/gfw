@@ -13,8 +13,11 @@ define([
   'views/layers/UMDLossLayer',
   'views/layers/ForestGainLayer',
   'views/layers/FormaLayer',
+  'views/layers/FormaCoverLayer',
   'views/layers/ImazonLayer',
+  'views/layers/ImazonCoverLayer',
   'views/layers/ModisLayer',
+  'views/layers/ModisCoverLayer',
   'views/layers/FiresLayer',
   'views/layers/Forest2000Layer',
   'views/layers/IntactForestLayer',
@@ -31,7 +34,7 @@ define([
   'views/layers/UserStoriesLayer',
   'views/layers/MongabayStoriesLayer'
 ], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype,
-  UMDLossLayer, ForestGainLayer, FormaLayer, ImazonLayer, ModisLayer, FiresLayer, Forest2000Layer,
+  UMDLossLayer, ForestGainLayer, FormaLayer, FormaCoverLayer, ImazonLayer, ImazonCoverLayer, ModisLayer, ModisCoverLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, IdnPrimaryLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
   ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, LandRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
 
@@ -60,8 +63,11 @@ define([
       umd_tree_loss_gain: UMDLossLayer,
       forestgain: ForestGainLayer,
       forma: FormaLayer,
+      forma_cover: FormaCoverLayer,
       imazon: ImazonLayer,
+      imazon_cover: ImazonCoverLayer,
       modis: ModisLayer,
+      modis_cover: ModisCoverLayer,
       fires: FiresLayer,
       forest2000: Forest2000Layer,
       intact_forest: IntactForestLayer,
@@ -172,11 +178,11 @@ define([
      */
     setLayers: function(layers) {
       // Remove layers if needed
-      _.each(this.layerInst, _.bind(function(inst, layerSlug) {
-          if (!layers[layerSlug]) {
-            this._removeLayer(layerSlug);
-          }
-        }, this));
+      _.each(this.layerInst, function(inst, layerSlug) {
+        if (!layers[layerSlug]) {
+          this._removeLayer(layerSlug);
+        }
+      }, this);
 
       /**
        * Sort layers by position before calling.

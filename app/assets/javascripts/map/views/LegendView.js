@@ -59,6 +59,11 @@ define([
         layersLength += _.keys(layers[i]).length;
       }
 
+      layers = _.map(layers, function(layer) {
+        layer.sublayer = (layer.sublayer !== '') ? layer.sublayer : null;
+        return layer;
+      }, this);
+
       var html = this.template({
         layers: layers,
         layersLength: layersLength,
