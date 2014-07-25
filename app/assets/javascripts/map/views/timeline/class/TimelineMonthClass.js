@@ -24,10 +24,10 @@ define([
 
     defaults: {
       dateRange: [moment([2001]), moment()],
-      width: 949,
+      width: 945,
       height: 50,
       playSpeed: 400,
-      effectsSpeed: 15
+      effectsSpeed: 0
     },
 
     events: {
@@ -42,7 +42,10 @@ define([
       // Transitions duration are 100 ms. Give time to them to finish.
       this._updateCurrentDate = _.debounce(this._updateCurrentDate,
         this.options.effectsSpeed);
-      this.dr = this.options.dateRange;
+
+      // dont let go after this range
+      this.drMax = this.options.dateRange;
+      this.dr = [moment([this.drMax[0].year()]), moment([this.drMax[1].year() + 1])];
 
       // Number months to display
       this.monthsCount = Math.floor(this.dr[1].diff(this.dr[0],
@@ -56,9 +59,8 @@ define([
       var self = this;
       this.$timeline = $('.timeline-container');
       this.$el.html(this.template());
-      this.$timeline
-          .css('width', 1000)
-          .append(this.el);
+      this.$timeline.parents('.widget-box').css('width', 1000);
+      this.$timeline.append(this.el);
 
       // Cache
       this.$play = this.$el.find('.play');
@@ -93,10 +95,18 @@ define([
             .scale(this.xscale)
             .orient('top')
             .ticks(this.monthsCount)
-            .tickFormat(function(d) {return '▪'; })
+            .tickFormat(function() {
+              return '▪';
+            })
             .tickSize(0)
             .tickPadding(0))
           .select('.domain').remove();
+
+      this.svg.selectAll('.tick').filter(function(d) {
+        if (self._domainToDate(d).month() === 0) {
+          d3.select(this).classed('highlight', true);
+        }
+      });
 
       this.svg.select('.xaxis').selectAll('g.line').remove();
 
@@ -112,15 +122,15 @@ define([
           .ticks(d3.time.years)
           .tickSize(0)
           .tickPadding(0)
-          .tickFormat(d3.time.format("%Y"));
+          .tickFormat(d3.time.format('%Y'));
 
       this.svg.append('g')
           .attr('class', 'xaxis-years')
-          .attr('transform', 'translate({0},{1})'.format(5, height/2 + 6))
+          .attr('transform', 'translate({0},{1})'.format(8, height/2 + 6))
           .call(xAxis)
         .select('.domain').remove();
 
-      this.svg.selectAll('.xaxis-years .tick:last-child text').attr('x', -8);
+      this.svg.selectAll('.xaxis-years .tick:last-child text').attr('x', -15);
       // .selectAll('.tick text')
       //   .style('text-anchor', 'start')
       //   .attr('x', 0)
@@ -171,6 +181,25 @@ define([
         .attr('x1', this.handlers.left.attr('x'))
         .attr('x2', this.handlers.right.attr('x'));
 
+      // Tipsy
+      this.tipsy = this.svg
+        .insert('g', ':first-child')
+        .attr('class', 'tipsy')
+        .style('visibility', 'hidden');
+
+      this.trail = this.tipsy.append('svg:line')
+        .attr('class', 'trail')
+        .attr('x1', this.handlers.right.attr('x'))
+        .attr('x2', this.handlers.right.attr('x'))
+        .attr('y1', 0)
+        .attr('y2', height-2);
+
+      this.tooltip = d3.select(this.$time[0]).append('div')
+        .attr('class', 'tooltip')
+        .style('visibility', 'hidden')
+        .style('left', '{0}px'.format(this.handlers.right.attr('x')))
+        .text(this.options.dateRange[0].format('MMM'));
+
       // Handler position. We keep position x here so we know the
       // handler position without having to wait animations to finish.
       this.ext = {
@@ -184,6 +213,7 @@ define([
     _onBrush: function(event) {
       var value = this.xscale.invert(d3.mouse(event)[0]);
       var rounded = Math.round(value);
+      var x = this.xscale(rounded);
       var date = this._domainToDate(rounded);
 
       var xl = this.handlers.left.attr('x');
@@ -191,24 +221,31 @@ define([
 
       if (Math.abs(this.xscale(value) - xr) <
         Math.abs(this.xscale(value) - xl)) {
-        if (this.ext.left > this.xscale(rounded)) {return;}
-        this.ext.right = this.xscale(rounded);
+        if (this.ext.left > x) {return;}
         this.domain.attr('x1', this.ext.left);
+        // Set to max handler position when moving mouse fast to the right.
+        if (date.isAfter(this.drMax[1])) {
+          rounded = this._dateToDomain(this.drMax[1]);
+        }
+        this.ext.right = this.xscale(rounded);
         this._moveHandler(rounded, 'right');
       } else {
-        if (this.ext.right < this.xscale(rounded)) {return;}
-        this.ext.left = this.xscale(rounded);
+        if (this.ext.right < x) {return;}
+        this.ext.left = x;
         this.domain.attr('x2', this.ext.right);
         this._moveHandler(rounded, 'left');
       }
     },
 
-    _moveHandler: function(x, side) {
+    _moveHandler: function(rounded, side) {
+      var x = this.xscale(rounded);
+      var date = this._domainToDate(rounded);
+
       this.handlers[side]
         .transition()
         .duration(this.options.effectsSpeed)
         .ease('line')
-        .attr('x', this.xscale(x));
+        .attr('x', x);
 
       var dx = (side === 'left') ? 'x1' : 'x2';
 
@@ -216,7 +253,16 @@ define([
         .transition()
         .duration(this.options.effectsSpeed)
         .ease('line')
-        .attr(dx, this.xscale(x));
+        .attr(dx, x);
+
+      this._showTipsy();
+      this.tooltip
+        .text(date.format('MMM'))
+        .style('left', '{0}px'.format(x));
+
+      this.trail
+          .attr('x1', x)
+          .attr('x2', x);
 
       this._updateYearsStyle();
     },
@@ -228,6 +274,10 @@ define([
       start = this._domainToDate(start);
       end = this._domainToDate(end);
       this._updateCurrentDate([start, end]);
+
+      setTimeout(_.bind(function() {
+        this._hideTipsy();
+      },this), 600);
     },
 
     _domainToDate: function(d) {
@@ -255,7 +305,6 @@ define([
 
     _updateYearsStyle: function() {
       var self = this;
-
       d3.select('.xaxis-years').selectAll('text').filter(function(d) {
         d = self._dateToDomain(moment(d));
         if (d >= Math.round(self.xscale.invert(self.ext.left)) &&
@@ -265,6 +314,17 @@ define([
           d3.select(this).classed('active', false);
         }
       });
+    },
+
+
+    _showTipsy: function() {
+      this.tipsy.style('visibility', 'visible');
+      this.tooltip.style('visibility', 'visible');
+    },
+
+    _hideTipsy: function() {
+      this.tipsy.style('visibility', 'hidden');
+      this.tooltip.style('visibility', 'hidden');
     },
 
     getName: function() {

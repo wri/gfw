@@ -1,4 +1,6 @@
 .widget-timeline .timeline-year {
+  height: 100%;
+
   .play {
     float: left;
     width: 50px;
@@ -33,7 +35,7 @@
   .time {
     float: left;
     height: 100%;
-    width: 949px;
+    width: 945px;
     position: relative;
   }
 

@@ -24,7 +24,7 @@ define([
     defaults: {
       dateRange: [moment([2001]), moment()],
       playSpeed: 400,
-      width: 949,
+      width: 945,
       height: 50
     },
 
@@ -74,7 +74,7 @@ define([
       this.$timeline = $('.timeline-container');
       this.$el.html(this.template());
       this.$timeline.append(this.el);
-      this.$timeline.css('width', 1000);
+      this.$timeline.parents('.widget-box').css('width', 1000);
 
       // Cache
       this.$play = this.$el.find('.play');

@@ -13,11 +13,11 @@ define([
 
   var FormaTimeline = TimelineMonthClass.extend({
 
-    options: {
-      dateRange: [moment([2006, 0]), moment([2015, 0])]
-    },
-
     initialize: function(layer) {
+      this.options = {
+        dateRange: [moment(layer.mindate), moment(layer.maxdate)]
+      };
+
       this.presenter = new Presenter(this);
       FormaTimeline.__super__.initialize.apply(this, [layer]);
     }

@@ -1,4 +1,11 @@
 .widget-timeline .timeline-month {
+  height: 100%;
+
+  .tooltip {
+    margin-left: -8px;
+    text-transform: uppercase;
+  }
+
   .play {
     float: left;
     width: 50px;
@@ -33,7 +40,7 @@
   .time {
     float: left;
     height: 100%;
-    width: 949px;
+    width: 945px;
     position: relative;
   }
 
@@ -67,8 +74,12 @@
       text {
         pointer-events: none;
         font-size: 9px;
-        fill: #999;
+        fill: #bbb;
         text-transform: uppercase;
+      }
+
+      &.highlight text {
+        fill: #111;
       }
     }
   }

@@ -47,8 +47,8 @@ define([
     },
 
     updateLatlng: function(lat, lng) {
-      this.$timelineLatlng.html('Lat/Long: {0}, {1}'.format(
-        lat.toFixed(6), lng.toFixed(6)));
+      // this.$timelineLatlng.html('Lat/Long: {0}, {1}'.format(
+      //   lat.toFixed(6), lng.toFixed(6)));
     },
 
     getCurrentDate: function() {
