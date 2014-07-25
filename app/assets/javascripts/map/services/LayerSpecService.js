@@ -37,7 +37,7 @@ define([
           _.each(layers, function(layer) {
             layer = self._toggleLayer(layer);
             if (layer) {
-              options = _.keys(options).length > 1 ? options : self._getOptionsFromLayers(layers);
+              options = _.keys(options).length > 0 ? options : self._getOptionsFromLayers(layers);
               self._standardizeAttrs(layer, options);
             }
           });

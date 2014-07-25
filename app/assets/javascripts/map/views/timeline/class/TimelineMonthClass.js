@@ -300,7 +300,6 @@ define([
     _updateCurrentDate: function(date) {
       this.layer.currentDate = date;
       this.presenter.updateTimelineDate(date);
-      console.log('setting', date[0].format('YYYY-MMM'), date[1].format('YYYY-MMM'));
     },
 
     _updateYearsStyle: function() {
