@@ -66,8 +66,6 @@ define([
           offset: [-30, 0],
         });
 
-        console.log(story);
-
         var thumb = (this.options.thumbnail && story.media[1] && story.media[1].preview_url !== '') ? '<div class="user-story-marker"><img src="//gfw2stories.s3.amazonaws.com/uploads/' + story.media[1].preview_url + '" alt ="" /></div>' : null;
 
         var marker = new CustomMarker(latlng, this.map, _.extend({
