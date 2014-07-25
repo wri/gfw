@@ -6,11 +6,18 @@
     <div class="infowindow_content">
 
       <strong>
-        <a href="{{loc}}" target='_blank'>{{title}}</a>
+        {{#if loc}}
+          <a href="{{loc}}" target='_blank'>{{title}}</a>
+        {{else}}
+          <a href="/stories/{{id}}" target='_blank'>{{title}}</a>
+        {{/if}}
       </strong>
       <span>by {{autor}} &middot;</span>
-      <a href="{{loc}}" target='_blank'>read more</a>
-
+      {{#if loc}}
+        <a href="{{loc}}" target='_blank'>read more</a>
+      {{else}}
+        <a href="/stories/{{id}}" target='_blank'>read more</a>
+      {{/if}}
     </div>
   </div>
 </div>

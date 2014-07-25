@@ -56,27 +56,38 @@ define([
 
         story.title = _.str.truncate(story.title, 34);
 
+        var markerOptions, infoWindowOptions;
+
         var latlng = new google.maps.LatLng(story.lat, story.lng);
 
-        var infoWindow = new CustomInfowindow(this.map, {
-          className: 'story_infowindow',
+        var thumb = !!(this.options.template && story.media[1] && story.media[1].preview_url !== '');
+
+        infoWindowOptions = {
+          className: 'story-infowindow',
           infowindowContent: this.template(story),
           latlng: latlng,
-          width: 215,
-          offset: [-30, 0],
-        });
+          width: 215
+        };
 
-        var thumb = (this.options.thumbnail && story.media[1] && story.media[1].preview_url !== '') ? '<div class="user-story-marker"><img src="//gfw2stories.s3.amazonaws.com/uploads/' + story.media[1].preview_url + '" alt ="" /></div>' : null;
+        if (thumb) {
+          infoWindowOptions = _.extend({}, infoWindowOptions, {
+            offset: [-42, 57],
+          });
+          markerOptions = _.extend({}, this.options, {
+            offset: [-30, 30],
+            size: [60, 60],
+            className: 'thumb-marker',
+            content: (thumb) ? this.options.template({ image: story.media[1].preview_url }) : false
+          });
+        } else {
+          infoWindowOptions = _.extend({}, infoWindowOptions, {
+            offset: [-30, 0],
+          });
+          markerOptions = this.options;
+        }
 
-        var marker = new CustomMarker(latlng, this.map, _.extend({
-          offset: [-25, 25],
-          size: [50, 50],
-          customHTML: thumb
-        }, this.options));
-
-        // var marker = new google.maps.Marker(_.extend({}, this.options, {
-        //   position: latlng
-        // }));
+        var infoWindow = new CustomInfowindow(this.map, infoWindowOptions);
+        var marker = new CustomMarker(latlng, this.map, markerOptions);
 
         google.maps.event.addListener(marker, 'click', _.bind(function() {
           _.each(this.infowindows, function(infow) {

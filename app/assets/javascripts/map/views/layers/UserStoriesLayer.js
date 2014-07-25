@@ -4,9 +4,11 @@
  * @return UserStoriesLayer class (extends CartoDBLayerClass)
  */
 define([
+  'handlebars',
   'views/layers/class/MarkersLayerClass',
   'services/UserStoryService',
-], function(MarkersLayerClass, UserStoryService) {
+  'text!templates/thumbMarker.handlebars'
+], function(Handlebars , MarkersLayerClass, UserStoryService, markerTemplate) {
 
   'use strict';
 
@@ -16,7 +18,7 @@ define([
 
     options: {
       icon: '/assets/icons/marker_exclamation.png',
-      thumbnail: true
+      template: Handlebars.compile(markerTemplate)
     }
 
   });
