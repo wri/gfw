@@ -71,10 +71,10 @@ define([
 
         if (thumb) {
           infoWindowOptions = _.extend({}, infoWindowOptions, {
-            offset: [-42, 57],
+            offset: [-42, -3],
           });
           markerOptions = _.extend({}, this.options, {
-            offset: [-30, 30],
+            offset: [-30, -30],
             size: [60, 60],
             className: 'thumb-marker',
             content: (thumb) ? this.options.template({ image: story.media[1].preview_url }) : false
