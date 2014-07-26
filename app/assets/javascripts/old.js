@@ -1,7 +1,3 @@
-//= require gfw/ui/widget
-//= require gfw/ui/sourcewindow
-
-
 var map = null;
 
 gfw.ui.view.Terms = cdb.core.View.extend({
@@ -42,7 +38,7 @@ gfw.ui.view.Terms = cdb.core.View.extend({
       ga('send', 'event', 'Terms', 'Click', 'I do not agree (Dialog)');
     });
 
-    
+
   },
 
   _onClickCancel: function() {
