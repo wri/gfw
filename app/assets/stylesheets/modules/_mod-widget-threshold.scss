@@ -1,14 +1,14 @@
 .widget-threshold {
   .widget-box {
-    left: 60px;
-    top: 90px;
+    left: 22px;
+    top: 170px;
     width: 440px;
     padding: 20px;
   }
 
   .widget-btn {
     left: 15px;
-    top: 90px;
+    top: 130px;
     background-color: transparent;
     border: none;
     box-shadow: 0 0 0;
@@ -37,6 +37,16 @@
       display: block;
       font-size: 11px;
       margin-top: 5px;
+      .source {
+        display: block;
+        position: absolute;
+        top: 87px;
+        right: 170px;
+        width: 10px;
+        height: 10px;
+        @include home-icons-sprite(information);
+      }
+
     }
   }
 
