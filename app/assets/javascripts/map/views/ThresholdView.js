@@ -61,9 +61,15 @@ define([
     _updateThreshold: function() {
       this.presenter.changeThreshold(this.getThreshold());
       this._setVisibleRange();
-      $('p.canopy span').html(this.getThreshold())
+      this._updateCanopyCopy();
     },
 
+    _updateCanopyCopy: function() {
+      this.$canopy = this.$el.parent().find('p.canopy');
+      this.$canopy.find('span').html(this.getThreshold());
+      if (! this.$canopy.is('visible')) this.$canopy.fadeIn();
+    },
+    
     getThreshold: function() {
       return this.valuesMap[this.$slider.val()];
     },
