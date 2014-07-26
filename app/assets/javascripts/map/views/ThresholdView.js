@@ -61,6 +61,7 @@ define([
     _updateThreshold: function() {
       this.presenter.changeThreshold(this.getThreshold());
       this._setVisibleRange();
+      $('p.canopy span').html(this.getThreshold())
     },
 
     getThreshold: function() {
