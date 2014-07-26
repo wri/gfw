@@ -16,11 +16,11 @@ $(document).ready(function(){
 
 	var load_stories = function(){
 	    var $ul = $('.home_stories').find('.columns');
-	  //   $.ajax({
-	  //     url: "https://wri-01.cartodb.com/api/v2/sql?q=SELECT cartodb_id,title,media,ST_AsGeoJSON(the_geom) AS the_geom FROM community_stories LIMIT 3",
-	  //     success: function(data) {
-			// data = data.rows;
-			// var content = '';
+	    $.ajax({
+	      url: "https://wri-01.cartodb.com/api/v2/sql?q=SELECT cartodb_id,title,media,ST_AsGeoJSON(the_geom) AS the_geom FROM community_stories LIMIT 3",
+	      success: function(data) {
+			data = data.rows;
+			var content = '';
 			// var UrlExists = function(url){
 			//     jQuery.ajax({
 			//         url:      url,
@@ -41,7 +41,6 @@ $(document).ready(function(){
 				data[i].media = jQuery.parseJSON(data[i].media);
 				var geom = JSON.parse(data[i].the_geom);
 				var	_url = function(img, lat, lng) {
-					console.log(img)
 					var url = 'http://gfw2stories.s3.amazonaws.com/uploads/' +img;
 					if (! img) {
 						url = 'http://maps.google.com/maps/api/staticmap?center=' + lat.toFixed(3) + ',' + lng.toFixed(3)  +'&zoom=4&size=266x266&maptype=terrain&sensor=false'
