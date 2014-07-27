@@ -34,7 +34,7 @@
   position: absolute;
   left: 15px;
   top:  30px;
-  z-index: 2000;
+  z-index: 1040;
 
   .zoom-in,
   .zoom-out {
@@ -87,18 +87,18 @@
   }
 }
 
-// #viewfinder {
-//   position: absolute;
-//   z-index: 10;
-//   top: 50%;
-//   left: 50%;
-//   height: 17px;
-//   width: 19px;
-//   margin: -10px 0 0 -8px;
-//   pointer-events:none;
+#viewfinder {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  height: 17px;
+  width: 19px;
+  margin: -10px 0 0 -8px;
+  pointer-events:none;
 
-//   @include home-icons-sprite(viewfinder);
-// }
+  @include home-icons-sprite(viewfinder);
+}
 
 // .helper_bar {
 //   display: none;

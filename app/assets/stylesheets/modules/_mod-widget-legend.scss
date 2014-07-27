@@ -45,4 +45,13 @@
   .layer-details {
     margin-left: 14px;
   }
+  .canopy{
+    display: none;
+    font-size: 0.85em;
+    margin-top: 3px;
+    width: 210px;
+    span {
+      font-weight: bold
+    }
+  }
 }

@@ -106,8 +106,21 @@ $stories-color: rgb(242, 178, 87);
       }
 
       .layer-title {
-        width: 85px;
-        display: inline-block;
+        width: 115px;
+        display: inline-flex;
+        .source {
+          display: block;
+          position: absolute;
+          top: 13px;
+          right: 10px;
+          width: 10px;
+          height: 10px;
+          @include home-icons-sprite(information);
+
+          &.hidden {
+            display: none;
+          }
+        }
       }
 
       .layer-info {

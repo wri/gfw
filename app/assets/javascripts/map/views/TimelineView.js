@@ -6,74 +6,55 @@
 define([
   'backbone',
   'underscore',
+  'handlebars',
+  'views/Widget',
   'presenters/TimelinePresenter',
-  'views/timeline/UMDLossTimeline',
-  'views/timeline/FormaTimeline',
-  'views/timeline/ModisTimeline',
-  'views/timeline/FiresTimeline'
-], function(Backbone, _, Presenter, UMDLossTimeline, FormaTimeline, ModisTimeline, FiresTimeline) {
+  'text!templates/timeline.handlebars'
+], function(Backbone, _, Handlebars, Widget, Presenter, tpl) {
 
   'use strict';
 
-  var TimelineView = Backbone.View.extend({
+  var TimelineView = Widget.extend({
 
-    className: 'timeline',
+    className: 'widget widget-timeline',
 
-    timelineViews: {
-      umd_tree_loss_gain: UMDLossTimeline,
-      forma: FormaTimeline,
-      modis: ModisTimeline,
-      fires: FiresTimeline
+    template: Handlebars.compile(tpl),
+
+    options: {
+      hidden: true,
+      boxClosed: false,
+      boxDraggable: false
     },
 
     initialize: function() {
       this.presenter = new Presenter(this);
       this.currentTimeline = null;
-      this.drawing = false;
-      this.render();
+      TimelineView.__super__.initialize.apply(this);
     },
 
-    render: function() {
-      $('.map-container').append(this.el);
-      this.$el.hide();
+    _cacheSelector: function() {
+      TimelineView.__super__._cacheSelector.apply(this);
+      this.$timelineName = this.$el.find('.timeline-name');
+      this.$timelineLatlng = this.$el.find('.timeline-latlng');
     },
 
-    /**
-     * Set multiple timelayers. Maybe we can pass just one baselayers.
-     * However, layer will be validated to , at this point, there will
-     * be just one baselayer.
-     *
-     * @param {object} baselasyer
-     */
-    setTimeline: function(baselayers) {
-      if (this.currentTimeline) {
-        if (_.pluck(baselayers, 'slug').indexOf(
-          this.currentTimeline.getName()) > -1) {
-          return;
-        }
+    update: function(layerTitle) {
+      var html = this.template({
+        layerTitle: layerTitle
+      });
 
-        this.currentTimeline.remove();
-        this.currentTimeline = null;
-      }
+      this._update(html);
+    },
 
-      _.each(this.timelineViews, _.bind(function(View, layerSlug) {
-        if (baselayers[layerSlug]) {
-          this.currentTimeline = new View(baselayers[layerSlug]);
-          !this.drawing && this.$el.show();
-        }
-      }, this));
-
-      if (!this.currentTimeline) {
-        this.$el.hide();
-      }
+    updateLatlng: function(lat, lng) {
+      // this.$timelineLatlng.html('Lat/Long: {0}, {1}'.format(
+      //   lat.toFixed(6), lng.toFixed(6)));
     },
 
     getCurrentDate: function() {
       if (this.currentTimeline) {
         return this.currentTimeline.getCurrentDate();
       }
-
-      return;
     }
   });
 
