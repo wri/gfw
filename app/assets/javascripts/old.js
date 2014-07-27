@@ -1,7 +1,3 @@
-//= require gfw/ui/widget
-//= require gfw/ui/sourcewindow
-
-
 var map = null;
 
 gfw.ui.view.Terms = cdb.core.View.extend({
@@ -17,11 +13,13 @@ gfw.ui.view.Terms = cdb.core.View.extend({
     this.sourceWindow  = new gfw.ui.view.SourceWindow();
     this.$el.append(this.sourceWindow.render());
 
-    map = new google.maps.Map(document.getElementById('map'), config.MAPOPTIONS);
+    if (document.getElementById('map')) {
+      map = new google.maps.Map(document.getElementById('map'), config.MAPOPTIONS);
 
-    var styledMap = new google.maps.StyledMapType(config.MAPSTYLES.grayscale, { name: 'grayscale' });
-    map.mapTypes.set('grayscale', styledMap);
-    map.setMapTypeId('grayscale');
+      var styledMap = new google.maps.StyledMapType(config.MAPSTYLES.grayscale, { name: 'grayscale' });
+      map.mapTypes.set('grayscale', styledMap);
+      map.setMapTypeId('grayscale');
+    }
   },
 
   _onClickContinue: function(e) {
@@ -42,7 +40,7 @@ gfw.ui.view.Terms = cdb.core.View.extend({
       ga('send', 'event', 'Terms', 'Click', 'I do not agree (Dialog)');
     });
 
-    
+
   },
 
   _onClickCancel: function() {

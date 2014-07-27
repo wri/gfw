@@ -20,14 +20,23 @@ class CountriesController < ApplicationController
     @blog_story = blog_story.present? ? blog_story : nil
 
     response = Typhoeus.get("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20mongabaydb%20WHERE%20position('#{I18n.transliterate(@country['name']).downcase.gsub(" ", "_")}'%20in%20keywords)%20%3C%3E%200", headers: { "Accept" => "application/json" })
-    @mongabay_story = response.success? ? JSON.parse(response.body)['rows'][0] : nil
+
+    @mongabay_story = if response.success?
+                        Rails.cache.fetch 'mongabay_story', expires_in: 1.day do
+                          JSON.parse(response.body)['rows'][0]
+                        end
+                      else
+                        nil
+                      end
   end
 
   private
     def find_countries
       response = Typhoeus.get("#{ENV['GFW_API_HOST']}/countries", headers: {"Accept" => "application/json"})
       if response.success?
-        JSON.parse(response.body)['countries']
+        Rails.cache.fetch 'countries', expires_in: 1.day do
+          JSON.parse(response.body)['countries']
+        end
       else
         nil
       end
@@ -40,7 +49,9 @@ class CountriesController < ApplicationController
           params: {iso: iso}
       )
       if response.success?
-        JSON.parse(response.body)['countries'][0]
+        Rails.cache.fetch 'country_' + iso, expires_in: 1.day do
+          JSON.parse(response.body)['countries'][0]
+        end
       else
         nil
       end
