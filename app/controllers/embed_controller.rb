@@ -9,6 +9,7 @@ class EmbedController < ApplicationController
 
     @country = country
   end
+
   def countries_show_info
     country = find_by_iso(params[:id])
 
@@ -17,12 +18,15 @@ class EmbedController < ApplicationController
     @country = country
     @employees = @country['employment']
   end
+
   private
     def find_by_iso(iso)
       response = Typhoeus.get("#{ENV['GFW_API_HOST']}/countries", params: { iso: iso }, headers: {"Accept" => "application/json"})
 
       if response.success?
-        JSON.parse(response.body)['countries'][0]
+        Rails.cache.fetch 'country_' + iso, expires_in: 1.day do
+          JSON.parse(response.body)['countries'][0]
+        end
       else
         nil
       end
