@@ -29,7 +29,6 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        console.log(layerSpec);
         // toggle selected layers
         this._updateLegend(layerSpec);
       }, this));
