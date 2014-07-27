@@ -121,8 +121,11 @@ define([
     },
 
     _render: function(tile) {
-      var month = this.endMonth || -BASE_MONTH + MAX_MONTHS >> 0;
-      var month_start = this.startMonth || -BASE_MONTH + BASE_MONTH >> 0;
+      var startMonth = this.startMonth || 0;
+      var endMonth = this.endMonth || -BASE_MONTH + MAX_MONTHS;
+
+      var month = endMonth >> 0;
+      var month_start = startMonth >> 0;
       var w = tile.canvas.width;
       var ctx = tile.ctx;
       var cells = tile.cells;
@@ -133,7 +136,7 @@ define([
 
       // clear canvas
       tile.canvas.width = w;
-      ctx.fillStyle = 'rgb(255, 102, 153)';
+      ctx.fillStyle = '#f13689';
 
       var xc = cells.xcoords;
       var yc = cells.ycoords;
@@ -213,11 +216,8 @@ define([
     },
 
     getDates: function() {
-      this.endMonth = Math.floor(this.layer.currentDate[1].diff(
-        this.layer.currentDate[0], 'months', true)) + 1;
-
-      this.startMonth = Math.floor(this.layer.currentDate[0].diff(
-        this.layer.mindate, 'months', true)) + 1;
+      this.startMonth = Math.abs(this.layer.mindate.diff(this.layer.currentDate[0], 'months'));
+      this.endMonth = Math.abs(this.layer.mindate.diff(this.layer.currentDate[1], 'months'));
     }
 
   });
