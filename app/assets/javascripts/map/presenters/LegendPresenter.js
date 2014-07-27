@@ -29,8 +29,8 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        // toggle selected layers
         this._updateLegend(layerSpec);
+        this.view.toggleSelected(layerSpec.getLayers());
       }, this));
 
       mps.subscribe('Place/go', _.bind(function(place) {

@@ -70,6 +70,21 @@ define([
       this._update(html);
     },
 
+    toggleSelected: function(layers) {
+      _.each(this.$el.find('.layer-sublayer'), function(div) {
+        var $div = $(div);
+        var $toggle = $div.find('.onoffswitch');
+        var layer = layers[$div.data('sublayer')];
+
+        if (layer) {
+          $toggle.addClass('checked');
+          $toggle.css('background', layer.category_color);
+        } else {
+          $toggle.removeClass('checked').css('background', '');
+        }
+      }, this);
+    },
+
     /**
      * Set widget from layers object.
      *

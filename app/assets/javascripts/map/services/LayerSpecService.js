@@ -67,6 +67,7 @@ define([
         if (!this._combinationIsValid(layer)) {
           _.each(this.model.get(layer.category_slug), this._removeLayer);
         }
+
         this._addLayer(layer, options);
         return layer;
       }
@@ -89,7 +90,7 @@ define([
     },
 
     /**
-     * Remove a layer and its sublayers.
+     * Remove a layer and its sublayer.
      * If the category stays empty, it deletes it.
      * 
      * @param  {object} layer The layer object
