@@ -13,11 +13,13 @@ gfw.ui.view.Terms = cdb.core.View.extend({
     this.sourceWindow  = new gfw.ui.view.SourceWindow();
     this.$el.append(this.sourceWindow.render());
 
-    map = new google.maps.Map(document.getElementById('map'), config.MAPOPTIONS);
+    if (document.getElementById('map')) {
+      map = new google.maps.Map(document.getElementById('map'), config.MAPOPTIONS);
 
-    var styledMap = new google.maps.StyledMapType(config.MAPSTYLES.grayscale, { name: 'grayscale' });
-    map.mapTypes.set('grayscale', styledMap);
-    map.setMapTypeId('grayscale');
+      var styledMap = new google.maps.StyledMapType(config.MAPSTYLES.grayscale, { name: 'grayscale' });
+      map.mapTypes.set('grayscale', styledMap);
+      map.setMapTypeId('grayscale');
+    }
   },
 
   _onClickContinue: function(e) {

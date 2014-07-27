@@ -1,6 +1,7 @@
 <nav class="navbar">
   <div id="google_translate_element"></div>
 
+  <% if watch_cookie? %>
   <ul>
     <% paths = {
       "home" => root_path,
@@ -30,10 +31,12 @@
       <li><%= link_to (content_tag(:span, t('header.nav.' + option ))), path, :class => option_class, :target => option == 'blog' ? '_blank' : '' %></li>
     <% end %>
   </ul>
+  <% end %>
 </nav>
 <div class="backdrop"></div>
 
 <div id='sources' class='sources notranslate'>
   <%= render 'shared/sources' %>
 </div>
+
 <%= render 'shared/sources_infowindow' %>
