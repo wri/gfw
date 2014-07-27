@@ -16,7 +16,7 @@ define([
 
     options: {
       sql: 'SELECT cartodb_id, the_geom_webmercator, data_type AS layer, data_type AS name FROM {tableName} ' +
-      'WHERE (EXTRACT(YEAR FROM date) >= \'{startYear}\' AND EXTRACT(MONTH FROM date) >= \'{startMonth}\') AND (EXTRACT(YEAR FROM date) <= \'{endYear}\' AND EXTRACT(MONTH FROM date) <= \'{endMonth}\')'
+        'WHERE date BETWEEN to_date(\'{startYear}-{startMonth}\',\'YYYY-MM\') AND to_date(\'{endYear}-{endMonth}\',\'YYYY-MM\')'
     },
 
     init: function(layer, map) {
@@ -45,10 +45,10 @@ define([
     getQuery: function() {
       var query = new UriTemplate(this.options.sql).fillFromObject({
         tableName: this.layer.table_name,
-        startMonth: this.layer.currentDate[0].month() + 1,
-        startYear: this.layer.currentDate[0].year(),
-        endMonth: this.layer.currentDate[1].month() + 1,
-        endYear: this.layer.currentDate[1].year()
+        startMonth: this.layer.currentDate[0].format('MM'),
+        startYear: this.layer.currentDate[0].format('YYYY'),
+        endMonth: this.layer.currentDate[1].format('MM'),
+        endYear: this.layer.currentDate[1].format('YYYY')
       });
       return query;
     }
