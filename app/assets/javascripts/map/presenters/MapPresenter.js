@@ -35,8 +35,6 @@ define([
         }
       }, this));
 
-      mps.publish('Place/register', [this]);
-
       mps.subscribe('Map/set-zoom', _.bind(function(zoom) {
         this.view.setZoom(zoom);
       }, this));
@@ -60,6 +58,8 @@ define([
       mps.subscribe('Layer/update', _.bind(function(layerslug) {
         this.view.updateLayer(layerslug);
       }, this));
+
+      mps.publish('Place/register', [this]);
     },
 
     _setLayerSpec: function(layerSpec) {
@@ -93,6 +93,15 @@ define([
       params.maptype = this.view.getMapTypeId();
 
       return params;
+    },
+
+    onOptionsChange: function() {
+      mps.publish('Place/update', [{go: false}]);
+    },
+
+    onMaptypeChange: function(maptype) {
+      mps.publish('Map/maptype-change', [maptype]);
+      mps.publish('Place/update', [{go: false}]);
     },
 
     /**

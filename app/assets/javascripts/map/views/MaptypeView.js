@@ -22,8 +22,9 @@ define([
     events: function(){
       return _.extend({}, MaptypeView.__super__.events, {
         'click .maptype-selected li': '_toggleBoxClosed',
-        'click .widget-opened .maptype-list li': '_setMaptype',
-        'click .landsat_years li': '_setMaptype'
+        'click .widget-opened .maptype': '_setMaptype',
+        'click .landsatSelector': '_toggleLandsatDropdown',
+        'click .landsat-years li': '_setMaptype'
       });
     },
 
@@ -34,17 +35,26 @@ define([
     },
 
     _setMaptype: function(event) {
-      var landsat_list = this.$el.find('.landsat_years');
       var $currentTarget = $(event.currentTarget);
-      if (landsat_list.is(':visible')) {landsat_list.fadeOut();}
-      if ($currentTarget.hasClass('landsatSelector')) {
-        landsat_list.fadeIn();
-        return;
-      }
       var maptype = $currentTarget.data('maptype');
+
       if (maptype) {
         this.presenter.setMaptype(maptype);
       }
+    },
+
+    _cacheSelector: function() {
+      MaptypeView.__super__._cacheSelector.apply(this);
+      this.$landsatYears = this.$el.find('.landsat-years');
+    },
+
+    _toggleBoxClosed: function() {
+      MaptypeView.__super__._toggleBoxClosed.apply(this);
+      this.$landsatYears.addClass('hidden');
+    },
+
+    _toggleLandsatDropdown: function() {
+      this.$landsatYears.toggleClass('hidden');
     },
 
     /**
@@ -55,9 +65,8 @@ define([
      */
     selectMaptype: function(maptype) {
       if (maptype.indexOf('landsat') === 0) {maptype = 'landsat';}
-      this.$el.find('.maptype-selected').html(
-        this.$widgetOpened.find('[data-maptype="' + maptype + '"]').clone());
-
+      var html = this.$widgetOpened.find('[data-maptype="{0}"]'.format(maptype)).clone();
+      this.$el.find('.maptype-selected').html(html);
       this.model.set('boxClosed', true);
     }
   });
