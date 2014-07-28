@@ -36,7 +36,6 @@
       &.hybrid            i { @include home-icons-sprite(map_roads); }
       &.treeheight        i { @include home-icons-sprite(map_treeheight); }
       &.landsat           i { @include home-icons-sprite(map_landsat); }
-      &.landsatSelector   i { @include home-icons-sprite(map_landsat); }
 
       i {
         @include inline-block();
