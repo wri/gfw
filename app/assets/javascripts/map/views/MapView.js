@@ -111,10 +111,6 @@ define([
       this._setZoomControl();
       this._addListeners();
       this._addLogos(750);
-
-      google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
-        this.$el.addClass('is-loaded');
-      }, this));
     },
 
     /**
@@ -160,6 +156,10 @@ define([
         _.bind(function() {
           this.onCenterChange();
       }, this));
+
+      google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
+        this.$el.addClass('is-loaded');
+      }, this));
     },
 
     setOptions: function(params) {
@@ -170,6 +170,7 @@ define([
       };
 
       this.map.setOptions(params);
+      this.presenter.onMaptypeChange(params.mapTypeId);
     },
 
     /**
@@ -273,6 +274,7 @@ define([
      */
     setMapTypeId: function(maptype) {
       this.map.setMapTypeId(maptype);
+      this.presenter.onMaptypeChange(maptype);
     },
 
     getMapTypeId: function() {
@@ -313,7 +315,7 @@ define([
       this.map.mapTypes.set('grayscale', grayscaleMaptype());
       this.map.mapTypes.set('treeheight', treeheightMaptype());
       for (var i = 1999; i < 2013; i++) {
-        this.map.mapTypes.set('landsat'+[i], landsatMaptype([i]));
+        this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
       }
     },
 

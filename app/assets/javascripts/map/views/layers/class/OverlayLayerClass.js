@@ -43,6 +43,7 @@ define([
       var overlayIndex = this._getOverlayIndex();
       this.removeInfowindow();
       if (overlayIndex > -1) {
+        google.maps.event.clearListeners(this.map, 'click');
         this.map.overlayMapTypes.removeAt(overlayIndex);
       }
     },
@@ -54,14 +55,31 @@ define([
      * @return {object}
      */
     setInfowindow: function() {
-      if (!this.infowindow) {
-        this.infowindow = new CustomInfowindow(this.map, this.options);
+      if (!this.infowindow && this.options.infowindowAPI) {
+
+        google.maps.event.addListener(this.map, 'click', _.bind(function(ev) {
+
+          var params = {
+            lat: ev.latLng.lat(),
+            lon: ev.latLng.lng()
+          };
+
+          this.removeInfowindow();
+
+          this.options.infowindowAPI.execute(params, _.bind(function(data) {
+            data[0].analysis = this.options.analysis;
+            this.infowindow = new CustomInfowindow(ev.latLng, this.map, {
+              infowindowData: data[0]
+            });
+          }, this));
+
+        }, this));
       }
     },
 
     removeInfowindow: function() {
       if (this.infowindow) {
-        this.infowindow.destroy();
+        this.infowindow.remove();
       }
     },
 
