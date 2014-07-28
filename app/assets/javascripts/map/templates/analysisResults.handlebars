@@ -43,11 +43,25 @@
             <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
           </li>
         {{else}}
-          <li>
-            <span class="stats-title">Total alerts</span>
-            <span class="stats-count"><strong style="color: {{layer.category_color}};">{{totalAlerts}} alerts</strong> </span>
-          </li>
+          {{#if imazon}}
+            <li>
+              <span class="stats-title">Deforestation alerts</span>
+              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{deforestation}} alerts</strong> </span>
+            </li>
+            <li>
+              <span class="stats-title">Degradation alerts</span>
+              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{degradation}} alerts</strong> </span>
+            </li>
+          {{else}}
+            <li>
+              <span class="stats-title">Total alerts</span>
+              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{totalAlerts}} alerts</strong> </span>
+            </li>
+          {{/if}}
         {{/if}}
+        <li class="download_links">
+          <span>Download</span>
+        </li>
       </ul>
 
     {{/if}}
@@ -56,5 +70,14 @@
       </div>
     </div>
 
+  </div>
+  <div class="analysis_dropdown hidden qtip-content">
+    <ul>
+        <li><a href="{{svg}}" target="_blank">SVG</a></li>
+        <li><a href="{{geo}}" target="_blank">GeoJSON</a></li>
+        <li><a href="{{shp}}" target="_blank">SHP</a></li>
+        <li><a href="{{kml}}" target="_blank">KML</a></li>
+        <li><a href="{{csv}}" target="_blank">CSV</a></li>
+    </ul>
   </div>
 </div>

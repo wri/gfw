@@ -27,7 +27,7 @@ define([
      * Subscribe to application events.
      */
     _subscribe: function() {
-      mps.subscribe('Maptype/change', _.bind(function(maptype) {
+      mps.subscribe('Map/maptype-change', _.bind(function(maptype) {
         this.view.selectMaptype(maptype);
       }, this));
 

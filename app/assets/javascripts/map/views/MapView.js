@@ -170,6 +170,7 @@ define([
       };
 
       this.map.setOptions(params);
+      this.presenter.onMaptypeChange(params.mapTypeId);
     },
 
     /**
@@ -273,6 +274,7 @@ define([
      */
     setMapTypeId: function(maptype) {
       this.map.setMapTypeId(maptype);
+      this.presenter.onMaptypeChange(maptype);
     },
 
     getMapTypeId: function() {
@@ -313,7 +315,7 @@ define([
       this.map.mapTypes.set('grayscale', grayscaleMaptype());
       this.map.mapTypes.set('treeheight', treeheightMaptype());
       for (var i = 1999; i < 2013; i++) {
-        this.map.mapTypes.set('landsat'+[i], landsatMaptype([i]));
+        this.map.mapTypes.set('landsat{0}'.format(i), landsatMaptype([i]));
       }
     },
 
