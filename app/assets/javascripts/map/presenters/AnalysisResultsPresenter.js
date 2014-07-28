@@ -51,9 +51,8 @@ define([
         }
       }, this));
 
-      mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
-        // update timeline
-      }, this));
+      // mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
+      // }, this));
     },
 
     _updateLayer: function() {

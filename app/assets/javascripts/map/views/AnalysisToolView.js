@@ -88,7 +88,6 @@ define([
         this._stopDrawing();
         this._setSelection(e.overlay, e.type);
       }
-
       this.polygon = this.presenter.createGeoJson(e.overlay.getPath().getArray());
       this.$done.removeClass('disabled');
     },
@@ -157,6 +156,8 @@ define([
 
       this.selection = new google.maps.Polygon(
         _.extend({}, {paths: paths}, this.style));
+
+      this.polygon = this.presenter.createGeoJson(paths);
 
       this.selection.setMap(this.map);
       this.$widgetBtn.addClass('disabled');
