@@ -54,7 +54,6 @@ define([
       },this));
 
       mps.subscribe('Maptype/change', _.bind(function(maptype) {
-        console.log(maptype)
         this.view.setMapTypeId(maptype);
       }, this));
 

@@ -36,6 +36,7 @@ define([
       mps.subscribe('Place/go', _.bind(function(place) {
         var layerSpec = place.params.layerSpec;
         this._updateLegend(layerSpec);
+        this.view.toggleSelected(layerSpec.getLayers());
       }, this));
 
       mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {

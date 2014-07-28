@@ -36,7 +36,7 @@ define([
     _setMaptype: function(event) {
       var landsat_list = this.$el.find('.landsat_years');
       var $currentTarget = $(event.currentTarget);
-      if (landsat_list.is(':visible')) landsat_list.fadeOut();
+      if (landsat_list.is(':visible')) {landsat_list.fadeOut()};
       if ($currentTarget.hasClass('landsatSelector')) {
         landsat_list.fadeIn();
         return;
@@ -54,7 +54,7 @@ define([
      * @param  {string} maptype
      */
     selectMaptype: function(maptype) {
-      if (maptype.indexOf('landsat') === 0) maptype = 'landsat';
+      if (maptype.indexOf('landsat') === 0) {maptype = 'landsat'};
       this.$el.find('.maptype-selected').html(
         this.$widgetOpened.find('[data-maptype="' + maptype + '"]').clone());
 
