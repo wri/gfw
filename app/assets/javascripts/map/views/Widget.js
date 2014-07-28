@@ -123,7 +123,8 @@ define([
       this.model.set('boxClosed', !this.model.get('boxClosed'));
     },
 
-    _toggleBoxHidden: function() {
+    _toggleBoxHidden: function(e) {
+      e && e.preventDefault();
       this.model.set('boxHidden', !this.model.get('boxHidden'));
     },
 
