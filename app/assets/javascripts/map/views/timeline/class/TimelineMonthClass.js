@@ -26,6 +26,7 @@ define([
       dateRange: [moment([2001]), moment()],
       width: 945,
       height: 50,
+      player: true,
       playSpeed: 400,
       effectsSpeed: 0
     },
@@ -68,6 +69,13 @@ define([
       this.$playIcon = this.$el.find('.play-icon');
       this.$stopIcon = this.$el.find('.stop-icon');
       this.$time = this.$el.find('.time');
+
+      // Disable player if needed
+      if (!this.options.player) {
+        // 50 is the play div width.
+        this.options.width += 50;
+        this.$play.addClass('hidden');
+      }
 
       // SVG options
       var margin = {top: 0, right: 20, bottom: 0, left: 20};
@@ -205,15 +213,17 @@ define([
       };
 
       // Hidden brush for the animation
-      this.hiddenBrush = d3.svg.brush()
-          .x(this.xscale)
-          .extent([0, 0])
-          .on('brush', function() {
-            self._onAnimationBrush(this);
-          })
-          .on('brushend', function() {
-            self._onAnimationBrushEnd(this);
-          });
+      if (this.options.player) {
+        this.hiddenBrush = d3.svg.brush()
+            .x(this.xscale)
+            .extent([0, 0])
+            .on('brush', function() {
+              self._onAnimationBrush(this);
+            })
+            .on('brushend', function() {
+              self._onAnimationBrushEnd(this);
+            });
+      }
 
       this.svg.selectAll('.extent,.resize')
           .remove();
@@ -337,6 +347,7 @@ define([
     },
 
     _animate: function() {
+      if (!this.options.player) {return;}
       var hlx = this.handlers.left.attr('x');
       var hrx = this.handlers.right.attr('x');
       var trailFrom = Math.round(this.xscale.invert(hlx)) + 1;
@@ -366,6 +377,7 @@ define([
     },
 
     _stopAnimation: function() {
+      if (!this.options.player) {return;}
       // End animation extent hiddenBrush
       // this will call onAnimationBrushEnd
       this.trail
