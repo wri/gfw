@@ -35,19 +35,23 @@ define([
     _cacheSelector: function() {
       TimelineView.__super__._cacheSelector.apply(this);
       this.$timelineName = this.$el.find('.timeline-name');
-      this.$timelineLatlng = this.$el.find('.timeline-latlng');
+      this.$timelineLatLng = this.$el.find('.timeline-latlng');
     },
 
-    update: function(layerTitle) {
-      var html = this.template({
-        layerTitle: layerTitle
-      });
-
+    update: function(layer) {
+      var currentLatlng = this.$timelineLatLng.html();
+      var p = {};
+      p[layer.slug] = true;
+      p.layerTitle = layer.title;
+      var html = this.template(p);
       this._update(html);
+      this.$timelineLatLng.html(currentLatlng);
     },
 
-    // updateLatlng: function(lat, lng) {
-    // },
+    updateLatlng: function(lat, lng) {
+      var html = 'Lat/long: {0}, {1}'.format(lat.toFixed(6), lng.toFixed(6));
+      this.$timelineLatLng.html(html);
+    },
 
     getCurrentDate: function() {
       if (this.currentTimeline) {
