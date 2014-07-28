@@ -45,7 +45,7 @@ define([
 
       // Events
       google.maps.event.addDomListener(div, 'click', _.bind(function(ev) {
-        if (! ev.currentTarget.hasClass("story-infowindow"))
+        if (! $(ev.currentTarget).hasClass('story-infowindow'))
           ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
       }, this));
 
