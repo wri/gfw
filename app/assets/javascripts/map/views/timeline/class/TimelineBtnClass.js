@@ -122,7 +122,8 @@ define([
 
       this.tickG.append('text')
         .attr('y', 13)
-        .attr('x', 10)
+        .attr('x', this.options.tickWidth/2)
+        .attr('text-anchor', 'middle')
         .text(function(d) {
           return d.label;
         });
