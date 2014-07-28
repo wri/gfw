@@ -12,7 +12,7 @@ define([
   var ImazonCoverLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT cartodb_id, the_geom AS the_geom_webmercator, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName}'
+      sql: 'SELECT *, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName}'
     }
 
   });
