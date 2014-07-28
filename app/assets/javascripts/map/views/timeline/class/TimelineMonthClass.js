@@ -281,7 +281,7 @@ define([
       this._updateYearsStyle();
     },
 
-    _onBrushEnd: function(event) {
+    _onBrushEnd: function() {
       var start = Math.floor(this.xscale.invert(this.handlers.left.attr('x')));
       var end = Math.ceil(this.xscale.invert(this.handlers.right.attr('x')));
 

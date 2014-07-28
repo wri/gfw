@@ -25,14 +25,13 @@ define([
     init: function(view) {
       this.view = view;
       this.baselayer = null;
-      this.currentAnalysis = null;
+      this._currentAnalysis = null;
       this._subscribe();
     },
 
     _subscribe: function() {
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this._setBaselayer(layerSpec);
-        if ($('.analysis-info').is(':visible')) {this.view._onClickDone();}
       }, this));
 
       mps.subscribe('Place/go', _.bind(function(place) {
@@ -47,7 +46,19 @@ define([
 
       mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
         this.view.deleteSelection();
-        this.currentAnalysis = null;
+        this._currentAnalysis = null;
+      }, this));
+
+      mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
+        if (this._currentAnalysis) {
+          this.publishAnalysis({geom: this.view.polygon});
+        }
+      }, this));
+
+      mps.subscribe('Timeline/date-change', _.bind(function() {
+        if (this._currentAnalysis) {
+          this.publishAnalysis({geom: this.view.polygon});
+        }
       }, this));
 
       mps.publish('Place/register', [this]);
@@ -57,9 +68,11 @@ define([
      * Set current baselayer from any layer change.
      */
     _setBaselayer: function(layerSpec) {
-      this.baselayer = _.first(_.intersection(
-        _.pluck(layerSpec.getBaselayers(), 'slug'),
-        _.keys(this.datasets)));
+      var baselayers = layerSpec.getBaselayers();
+
+      this.baselayer = baselayers[_.first(_.intersection(
+        _.pluck(baselayers, 'slug'),
+        _.keys(this.datasets)))];
 
       this._setVisibility();
     },
@@ -114,7 +127,9 @@ define([
     publishAnalysis: function(resource) {
       var data = {};
 
-      data.dataset = this.datasets[this.baselayer];
+      data.dataset = this.datasets[this.baselayer.slug];
+      // data.period = '{0},{1}'.format(this.baselayer.currentDate[0].year(),
+      //   this.baselayer.currentDate[1].year());
 
       if (resource.geom) {
         data.geojson = resource.geom;
@@ -122,7 +137,7 @@ define([
         data.iso = resource.iso;
       }
 
-      this.currentAnalysis = resource;
+      this._currentAnalysis = resource;
       mps.publish('AnalysisService/get', [data]);
     },
 
@@ -157,10 +172,8 @@ define([
      * @return {array} paths
      */
     geomToPath: function(geom) {
-      var coords = JSON.parse(geom).coordinates;
-
+      var coords = JSON.parse(geom).coordinates[0];
       return _.map(coords, function(g) {
-        g = _.flatten(g);
         return new google.maps.LatLng(g[1], g[0]);
       });
     },
@@ -179,13 +192,13 @@ define([
      * @return {object} iso/geom params
      */
     getPlaceParams: function() {
-      if (!this.currentAnalysis) {return;}
+      if (!this._currentAnalysis) {return;}
       var p = {};
 
-      if (this.currentAnalysis.iso) {
-        p.iso = this.currentAnalysis.iso;
-      } else if (this.currentAnalysis.geom) {
-        p.geom = encodeURIComponent(this.currentAnalysis.geom);
+      if (this._currentAnalysis.iso) {
+        p.iso = this._currentAnalysis.iso;
+      } else if (this._currentAnalysis.geom) {
+        p.geom = encodeURIComponent(this._currentAnalysis.geom);
       }
 
       return p;

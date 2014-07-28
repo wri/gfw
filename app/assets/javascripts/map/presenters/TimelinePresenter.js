@@ -40,8 +40,7 @@ define([
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
         this._setTimeline(place.params.layerSpec);
-        this.view.updateLatlng(place.params.lat, place.params.lng);
-        // Update route with default timeline date.
+        // this.view.updateLatlng(place.params.lat, place.params.lng);
         if (!place.params.date) {
           mps.publish('Place/update', [{go: false}]);
         }
@@ -51,9 +50,9 @@ define([
         this._setTimeline(layerSpec);
       }, this));
 
-      mps.subscribe('Map/center-change', _.bind(function(lat, lng){
-        this.view.updateLatlng(lat, lng);
-      }, this));
+      // mps.subscribe('Map/center-change', _.bind(function(lat, lng){
+      //   this.view.updateLatlng(lat, lng);
+      // }, this));
 
       // Show timeline when stop drawing analysis
       mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
@@ -73,7 +72,6 @@ define([
     _setTimeline: function(layerSpec) {
       var baselayer = _.intersection(_.pluck(layerSpec.getBaselayers(),
         'slug'), _.keys(this.timelineViews))[0];
-
 
       if (this.current) {
         if (this.current.getName() === baselayer) {return;}
