@@ -44,6 +44,17 @@ strong {
   font-weight: bold;
 }
 
+h1 {
+  margin: .7em auto .5em auto;
+
+  font-family: "Georgia", serif;
+  font-size: 51px;
+  line-height: 1.1;
+  color: #333;
+  max-width: 80%;
+}
+
+
 /* =Fonts
 ----------------------------------------------- */
 
@@ -404,48 +415,48 @@ strong {
   text-indent: -99999px;
 }
 
-.navbar {
-  float: right;
-  margin-top: 18px;
+// .navbar {
+//   float: right;
+//   margin-top: 18px;
 
-  ul,
-  #google_translate_element {
-    float: right;
-    margin-left: 10px;
-  }
+//   ul,
+//   #google_translate_element {
+//     float: right;
+//     margin-left: 10px;
+//   }
 
-  li {
-    float: left;
-    margin-left: 5px;
+//   li {
+//     float: left;
+//     margin-left: 5px;
 
-    a {
-      display: block;
-      height: 26px;
-      padding: 0 10px;
-      font-weight: bold;
-      font-size: 12px;
-      line-height: 27px;
-      text-transform: uppercase;
-      color: #333;
-      @include border-radius(3px);
+//     a {
+//       display: block;
+//       height: 26px;
+//       padding: 0 10px;
+//       font-weight: bold;
+//       font-size: 12px;
+//       line-height: 27px;
+//       text-transform: uppercase;
+//       color: #333;
+//       @include border-radius(3px);
 
-      span { background:none; }
+//       span { background:none; }
 
-      &.selected {
-        background: $cGreen;
-        color: #fff;
+//       &.selected {
+//         background: $cGreen;
+//         color: #fff;
 
-        &:hover {
-          background: $cGreen;
-        }
-      }
+//         &:hover {
+//           background: $cGreen;
+//         }
+//       }
 
-      &:hover {
-        background: rgba($cGreen, .5);
-      }
-    }
-  }
-}
+//       &:hover {
+//         background: rgba($cGreen, .5);
+//       }
+//     }
+//   }
+// }
 
 .header-title {
   position: relative;

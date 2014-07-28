@@ -1,0 +1,32 @@
+.row {
+  max-width: $max-container-width;
+  min-width: $min-container-width;
+  margin: 0 auto;
+
+  .row {
+    margin: 0 ($grid-gutter-width * -1);
+  }
+
+  @include clearfix();
+}
+
+%grid {
+  position: relative;
+  display: block;
+  float: left;
+  min-height: 1px;
+  margin: 0 $grid-gutter-width;
+}
+
+@for $column from 1 through $grid-columns {
+  .grid-#{$column} {
+    @extend %grid;
+    @include grid($column);
+  }
+}
+
+@for $column from 1 through $grid-columns {
+  .offset-#{$column} {
+    margin-left: ((100%/$grid-columns)*$column + $grid-gutter-width);
+  }
+}

@@ -3,6 +3,7 @@ class CountriesController < ApplicationController
 
   def index
     @countries = find_countries
+    @title = I18n.translate 'countries.index.title'
   end
 
   def show

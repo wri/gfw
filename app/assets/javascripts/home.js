@@ -1,5 +1,7 @@
+//= require jquery
 //= require jquery-ui-1.10.4.custom.min
 //= require jquery.easing.1.3
+//= require gfw
 //= require gfw/ui/circle
 
 // Circle

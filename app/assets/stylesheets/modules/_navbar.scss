@@ -1,0 +1,46 @@
+.mod-navbar {
+  float: right;
+  margin: 18px 0;
+
+  #google_translate_element {
+    float: right;
+    margin-left: 10px;
+    min-width: 167px;
+  }
+
+  ul {
+    float: right;
+  }
+
+  li {
+    float: left;
+    margin-left: 5px;
+
+    a {
+      display: block;
+      height: 26px;
+      padding: 0 10px;
+      font-weight: bold;
+      font-size: 12px;
+      line-height: 27px;
+      text-transform: uppercase;
+      color: #333;
+      @include border-radius(3px);
+
+      span { background:none; }
+
+      &.selected {
+        background: $cGreen;
+        color: #fff;
+
+        &:hover {
+          background: $cGreen;
+        }
+      }
+
+      &:hover {
+        background: rgba($cGreen, .5);
+      }
+    }
+  }
+}

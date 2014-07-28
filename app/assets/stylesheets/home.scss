@@ -22,7 +22,13 @@
 @import "stories-icons/*.png";
 
 // Layout
-@import "layouts/home";
+@import
+  "layouts/grid",
+  "layouts/application",
+  "layouts/home";
 
 // Modules
-@import "modules/mod-buttons";
+@import
+  "modules/notice",
+  "modules/navbar",
+  "modules/mod-buttons";

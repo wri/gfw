@@ -25,6 +25,16 @@ $font-medium: "fira_sans_otmedium", Georgia, sans-serif;
         "countries/show",
         "countries/overview";
 
+// Layouts
+@import
+  "layouts/grid",
+  "layouts/application";
+
+// Modules
+@import
+  "modules/notice",
+  "modules/navbar";
+
 .countries {
   &.index .content {
     padding: 15px 0 56px;

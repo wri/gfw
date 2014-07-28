@@ -1,0 +1,25 @@
+.layout-header {
+  position: relative;
+  z-index: 1;
+
+  .brand {
+    position: absolute;
+    top: 0;
+    left: -$grid-gutter-width;
+  }
+
+  h1 {
+    text-align: center;
+
+    .is-home-page & {
+      text-align: left;
+      font-size: 36px;
+      max-width: 50%;
+      margin: 1.5em 0 1em 0;
+    }
+  }
+}
+
+.layout-header-top {
+  border-bottom: 1px solid #cfcfcf;
+}
