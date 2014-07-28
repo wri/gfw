@@ -1,7 +1,10 @@
+//= require jquery
 //= require gfw
 //= require gfw/helpers
 //= require gfw/ui/widget
 //= require gfw/ui/sourcewindow
+//= require gfw/ui/carrousel
+//= require jquery.qtip.min
 //= require old
 //= require jquery.qtip.min
 
