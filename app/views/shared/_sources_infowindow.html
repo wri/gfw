@@ -13,7 +13,8 @@
 			$content.append($(elem).html())
 			$wind.fadeIn();
 		});
-		$wind.find('.close').on('click',function(){
+		$wind.find('.close').on('click',function(e){
+			e && e.preventDefault();
 			$wind.fadeOut('fast',function(){$backdrop.fadeOut();});
 			$content.empty();
 		})

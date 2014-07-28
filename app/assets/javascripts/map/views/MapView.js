@@ -110,7 +110,6 @@ define([
       this._setMaptypes();
       this._setZoomControl();
       this._addListeners();
-
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
         this.$el.addClass('is-loaded');
       }, this));
@@ -129,6 +128,10 @@ define([
       google.maps.event.addListener(this.map, 'dragend',
         _.bind(function() {
           this.onCenterChange();
+      }, this));
+
+      google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
+        this.$el.addClass('is-loaded');
       }, this));
     },
 

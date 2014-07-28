@@ -44,7 +44,7 @@ define([
     renderAnalysis: function(results, layer) {
       var p = {};
       p[layer.slug] = true;
-      p.totalAlerts = (results.value || 0) + ' ' + layer.slug;
+      p.totalAlerts = (results.value.toLocaleString() || 0) + ' ' + layer.slug;
       if (layer.slug === 'imazon') {
         p.degradation   = (results.value[0].value.toLocaleString() || 0) + ' Imazon';
         p.deforestation = (results.value[1].value.toLocaleString() || 0) + ' Imazon';

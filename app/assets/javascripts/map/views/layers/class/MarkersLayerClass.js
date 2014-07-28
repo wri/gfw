@@ -71,7 +71,7 @@ define([
 
         if (thumb) {
           infoWindowOptions = _.extend({}, infoWindowOptions, {
-            offset: [-42, -3],
+            offset: [-42, -3]
           });
           markerOptions = _.extend({}, this.options, {
             offset: [-30, -30],
@@ -86,17 +86,14 @@ define([
           markerOptions = this.options;
         }
 
-        var infoWindow = new CustomInfowindow(this.map, infoWindowOptions);
         var marker = new CustomMarker(latlng, this.map, markerOptions);
 
-        google.maps.event.addListener(marker, 'click', _.bind(function() {
-          _.each(this.infowindows, function(infow) {
-            infow.hide();
-          });
-          infoWindow.open();
+        google.maps.event.addListener(marker, 'click', _.bind(function(ev) {
+          if (this.infowindow) {
+            this.infowindow.remove();
+          }
+          this.infowindow = new CustomInfowindow(latlng, this.map, infoWindowOptions);
         }, this));
-
-        this.infowindows.push(infoWindow);
 
         return marker;
       }, this);
@@ -119,9 +116,10 @@ define([
         this.clusterMarkers.clearMarkers();
       }
 
-      _.each(this.infowindows, function(infowindow) {
-        infowindow.destroy();
-      });
+      if (this.infowindow) {
+        this.infowindow.remove();
+      }
+
       _.each(this.markers, function(marker) {
         marker.setMap(null);
       });
