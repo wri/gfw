@@ -6,6 +6,7 @@
 //= require gfw/ui/carrousel
 //= require jquery.qtip.min
 //= require old
+//= require jquery.qtip.min
 
 gfw.ui.model.Static = cdb.core.Model.extend({
   defaults: {
