@@ -3,6 +3,7 @@
 //= require gfw/ui/widget
 //= require gfw/ui/sourcewindow
 //= require old
+//= require jquery.qtip.min
 
 gfw.ui.model.Static = cdb.core.Model.extend({
   defaults: {
