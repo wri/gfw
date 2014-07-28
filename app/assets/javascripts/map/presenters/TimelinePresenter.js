@@ -70,7 +70,7 @@ define([
       mps.publish('Timeline/disabled', []);
     },
 
-    timelineEnabled function(layerSlug) {
+    timelineEnabled: function(layerSlug) {
       mps.publish('Timeline/enabled', [layerSlug]);
     },
 
