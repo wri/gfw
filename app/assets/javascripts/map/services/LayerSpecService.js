@@ -21,11 +21,13 @@ define([
           except: [
             ['umd_tree_loss_gain', 'forestgain']
           ]
-        }
+        },
+        geographic_coverage: {}
       }
     },
 
     init: function() {
+      _.bindAll(this, '_removeLayer');
       this.model = new LayerSpecModel();
     },
 
@@ -35,15 +37,104 @@ define([
         where,
         function(layers) {
           _.each(layers, function(layer) {
-            layer = self._toggleLayer(layer);
-            if (layer) {
-              options = _.keys(options).length > 0 ? options : self._getOptionsFromLayers(layers);
-              self._standardizeAttrs(layer, options);
-            }
+            self._toggleLayer(layer, options);
           });
           success(self.model);
         },
         error);
+    },
+
+    /**
+     * Toggle a layer form LayerSpecModel.
+     * 
+     * @param  {object} layer
+     * @return {layer}  return layer or false.
+     */
+    _toggleLayer: function(layer, options) {
+      var current = this.model.getLayer({slug: layer.slug});
+      var baselayers = this.model.getBaselayers();
+
+      // At least one baselayer active.
+      if (current && current.category_slug === 'forest_clearing' &&
+        _.keys(baselayers).length === 1) {
+        return false;
+      }
+
+      if (current) {
+        this._removeLayer(current);
+        return false;
+      } else {
+        if (!this._combinationIsValid(layer)) {
+          _.each(this.model.get(layer.category_slug), this._removeLayer);
+        }
+
+        this._addLayer(layer, options);
+        return layer;
+      }
+    },
+
+    /**
+     * Add a layer to the model.
+     *
+     * @param {object} layer
+     */
+    _addLayer: function(layer, options) {
+      var category = this._getCategory(layer.category_slug);
+      options = !_.isEmpty(options) ? options : this._getOptionsFromLayers();
+      category[layer.slug] = this._standardizeAttrs(layer, options);
+    },
+
+    _getCategory: function(name) {
+      !this.model.get(name) && this.model.set(name, {});
+      return this.model.get(name);
+    },
+
+    /**
+     * Remove a layer and its sublayer.
+     * If the category stays empty, it deletes it.
+     * 
+     * @param  {object} layer The layer object
+     */
+    _removeLayer: function(layer) {
+      delete this.model.get(layer.category_slug)[layer.slug];
+
+      if (layer.sublayer) {
+        var sublayer = this.model.getLayer({slug: layer.sublayer});
+        sublayer && this._removeLayer(sublayer);
+      }
+
+      if (_.isEmpty(this.model.get(layer.category_slug))) {
+        this._removeCategory(layer.category_slug);
+      }
+    },
+
+    _removeCategory: function(categorySlug) {
+      this.model.unset(categorySlug);
+    },
+
+    /**
+     * Validate is current layer combination is valid or not.
+     * 
+     * @param  {[type]} layer [description]
+     * @return {[type]}       [description]
+     */
+    _combinationIsValid: function(layer) {
+      var currentLayers = this.model.get(layer.category_slug);
+      var forbidden = this.options.forbidCombined[layer.category_slug];
+      if (!forbidden) {return true;}
+      var validCombination = false;
+      
+      if (forbidden.except) {
+        var combination = _.union(_.pluck(currentLayers, 'slug'), [layer.slug]);
+        combination.push(layer.slug);
+        _.each(forbidden.except, function(exception) {
+          if (_.difference(combination, exception).length < 1) {
+            validCombination = true;
+          }
+        }, this);
+      }
+
+      return validCombination;
     },
 
     /**
@@ -99,81 +190,6 @@ define([
       return layer;
     },
 
-    _toggleLayer: function(layer) {
-      var current = this.model.getLayer({slug: layer.slug});
-
-      // At least one baselayer selected.
-      if (current && current.category_slug === 'forest_clearing' &&
-        _.keys(this.model.getBaselayers()).length === 1) {
-        return false;
-      }
-
-      if (current) {
-        this._removeLayer(current);
-
-        if (_.keys(this.model.get(layer.category_slug)).length < 1) {
-          this._removeCategory(layer.category_slug);
-        }
-
-        return false;
-      } else {
-        this._addLayer(layer);
-        return layer;
-      }
-    },
-
-    /**
-     * Add a layer to the model.
-     * It destroys all the sibling models at the same category if
-     * forbidCombinated is set for that category.
-     *
-     * @param {object} layer
-     */
-    _addLayer: function(layer) {
-      this._addCategory(layer.category_slug);
-      var category =  this.model.get(layer.category_slug);
-      this._removeForbiddenLayers(layer);
-      category[layer.slug] = layer;
-    },
-
-    _removeLayer: function(layer) {
-      delete this.model.get(layer.category_slug)[layer.slug];
-    },
-
-    _addCategory: function(slug) {
-      if (!this.model.get(slug)) {
-        this.model.set(slug, {});
-      }
-    },
-
-    _removeCategory: function(slug) {
-      this.model.unset(slug);
-    },
-
-    _removeForbiddenLayers: function(layer) {
-      var forbidden = this.options.forbidCombined[layer.category_slug];
-
-      if (forbidden) {
-        var passException = false;
-
-        if (forbidden.except) {
-          var combination = _.pluck(this.model.get(layer.category_slug), 'slug');
-          combination.push(layer.slug);
-
-          passException = true;
-          _.each(forbidden.except, _.bind(function(exception) {
-            passException = passException &&
-              (_.difference(combination, exception).length < 1);
-          }, this));
-        }
-
-        if (!passException) {
-          // TODO => Don't delete all layers, just the ones which can't be togther
-          _.map(this.model.get(layer.category_slug), this._removeLayer, this);
-        }
-      }
-    },
-
     /**
      * Retuns place parameters representing the state of the LayerNavView and
      * layers. Called by PlaceService.
@@ -203,7 +219,7 @@ define([
     },
   });
 
-  var layerSpecService = new LayerSpecService();
+  var service = new LayerSpecService();
 
-  return layerSpecService;
+  return service;
 });
