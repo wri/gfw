@@ -30,9 +30,14 @@
   <%= render 'shared/header_nav' %>
   <div class="content"><%= yield %></div>
 
+  <div id="sources" class='sources notranslate'>
+    <%= render 'shared/sources' %>
+  </div>
+  <%= render 'shared/sources_infowindow' %>
+
   <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA" %>
   <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js" %>
   <%= requirejs_include_tag "map" %>
-  <%= javascript_include_tag "shared/js_footer" %>
+  <%= render "shared/js_footer" %>
 </body>
 </html>
