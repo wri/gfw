@@ -23,7 +23,7 @@ define([
     /**
      * Optional layers detail templates.
      */
-    detailTemplates: {
+    detailsTemplates: {
       umd_tree_loss_gain : _.template(lossTpl)
     },
 
@@ -49,26 +49,28 @@ define([
      *
      * @param  {array} layers
      */
-    _renderLegend: function(layers) {
-      var layersLength = 0;
+    _renderLegend: function(categories) {
+      var layersLength = _.flatten(categories).length;
 
-      for (var i = 0; i < layers.length; i++) {
-        layersLength += _.keys(layers[i]).length;
-      }
-
-      layers = _.map(layers, function(layer) {
-        layer.sublayer = (layer.sublayer !== '') ? layer.sublayer : null;
-        return layer;
+      _.each(_.flatten(categories), function(layer) {
+        if (this.detailsTemplates[layer.slug]) {
+          layer.detailsTpl = this.detailsTemplates[layer.slug]();
+        }
       }, this);
+
       var html = this.template({
-        layers: layers,
-        layersLength: layersLength,
-        detailTemplates: this.detailTemplates
+        categories: categories,
+        layersLength: layersLength
       });
 
       this._update(html);
     },
 
+    /**
+     * Toggle selected sublayers on the legend widget.
+     *
+     * @param  {object} layers The layers object
+     */
     toggleSelected: function(layers) {
       _.each(this.$el.find('.layer-sublayer'), function(div) {
         var $div = $(div);
@@ -89,12 +91,12 @@ define([
      *
      * @param  {array} layers
      */
-    update: function(layers) {
-      if (layers.length === 0) {
+    update: function(categories) {
+      if (categories.length === 0) {
         this.model.set('hidden', true);
       } else {
         this.model.set({'hidden': false, 'boxClosed': false});
-        this._renderLegend(layers);
+        this._renderLegend(categories);
       }
     },
 

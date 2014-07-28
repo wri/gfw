@@ -8,7 +8,7 @@
 
     <div class="widget-opened">
       <ul class="categories">
-        {{#each layers}}
+        {{#each categories}}
           <li class="category">
             {{#each this}}
               {{#if @first}}
@@ -21,6 +21,9 @@
                   <span class="layer-name">
                     <i class="circle" style="color:{{this.title_color}};"></i>{{this.title}}<a href='#' data-source='{{this.slug}}' class='source'></a>
                   </span>
+                  {{#if this.detailsTpl}}
+                    <div class="layer-details">{{{this.detailsTpl}}}</div>
+                  {{/if}}
                   {{#if this.sublayer}}
                     <div class="layer-sublayer" data-sublayer="{{this.sublayer}}">
                       <span class="onoffswitch"><i></i></span>
