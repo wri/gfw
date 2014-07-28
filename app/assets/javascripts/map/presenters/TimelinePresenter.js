@@ -53,19 +53,25 @@ define([
         this.view.updateLatlng(lat, lng);
       }, this));
 
-      // Show timeline when stop drawing analysis
       mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
         if (this.current) {
           this.view.model.set({hidden: false, forceHidden: false});
         }
       }, this));
 
-      // Hide timeline when start drawding analysis
       mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
         if (this.current) {
           this.view.model.set({hidden: true, forceHidden: true});
         }
       }, this));
+    },
+
+    timelineDisabled: function() {
+      mps.publish('Timeline/disabled', []);
+    },
+
+    timelineEnabled function(layerSlug) {
+      mps.publish('Timeline/enabled', [layerSlug]);
     },
 
     _setTimeline: function(layerSpec) {
@@ -78,12 +84,12 @@ define([
       }
 
       if (!baselayer) {
-        mps.publish('Timeline/disabled', []);
+        this.timelineDisabled();
         return;
       }
 
       if (!this.current && baselayer) {
-        mps.publish('Timeline/enabled', []);
+        this.timelineEnabled(baselayer.slug);
       }
 
       baselayer = layerSpec.getLayer({slug: baselayer});
