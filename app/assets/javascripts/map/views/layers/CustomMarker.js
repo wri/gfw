@@ -69,6 +69,7 @@ define([
       this.div_.parentNode.removeChild(this.div_);
       this.div_ = null;
     }
+    this.setMap(null);
   };
 
   CustomMarker.prototype.getPosition = function() {
