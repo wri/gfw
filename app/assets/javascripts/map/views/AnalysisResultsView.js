@@ -27,7 +27,8 @@ define([
 
     events: function(){
       return _.extend({}, AnalysisResultsView.__super__.events, {
-        'click .delete-analysis': '_deleteAnalysis'
+        'click .delete-analysis': '_deleteAnalysis',
+        'click .download_links span' :'_toggleDownloads'
       });
     },
 
@@ -42,13 +43,21 @@ define([
 
     renderAnalysis: function(results, layer) {
       var p = {};
-
       p[layer.slug] = true;
-      p.totalAlerts = results.value || 0;
+      p.totalAlerts = (results.value || 0) + ' ' + layer.slug;
+      if (layer.slug == 'imazon') {
+        p.degradation   = (results.value[0].value.toLocaleString() || 0) + ' Imazon';
+        p.deforestation = (results.value[1].value.toLocaleString() || 0) + ' Imazon';
+      }
       p.totalArea = (results.params.geojson) ? this._calcAreaPolygon(results.params.geojson) : 0;
       p.timescale = results.meta.timescale;
-      p.downloadUrls = results.download_urls;
+      p.svg = results.download_urls.csv;
+      p.geo = results.download_urls.geojson;
+      p.shp = results.download_urls.shp;
+      p.kml = results.download_urls.kml;
+      p.csv = results.download_urls.csv;
       p.layer = layer;
+
       // p.dateRange = '{0} to {1}'.format(layer.mindate.format('MMM-YYYY'),
       //   layer.maxdate.format('MMM-YYYY'));
       this._update(this.template(p));
@@ -99,6 +108,10 @@ define([
       area = Math.abs(area);
 
       return (Math.ceil((area*1000000) * 10) / 10).toLocaleString();
+    },
+
+    _toggleDownloads: function() {
+      $('.analysis_dropdown').stop().fadeToggle();
     }
   });
 
