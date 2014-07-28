@@ -34,6 +34,19 @@
   .layer-details {
     display: block;
     margin-top: 8px;
+    .source {
+      display: block;
+      position: absolute;
+      top: 40px;
+      right: 10px;
+      width: 10px;
+      height: 10px;
+      @include home-icons-sprite(information);
+
+      &.hidden {
+        display: none;
+      }
+    }
   }
 
   .circle:before {

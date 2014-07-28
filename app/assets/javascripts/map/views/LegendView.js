@@ -60,7 +60,6 @@ define([
         layer.sublayer = (layer.sublayer !== '') ? layer.sublayer : null;
         return layer;
       }, this);
-
       var html = this.template({
         layers: layers,
         layersLength: layersLength,
