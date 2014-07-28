@@ -74,7 +74,6 @@ define([
       var baselayer = _.intersection(_.pluck(layerSpec.getBaselayers(),
         'slug'), _.keys(this.timelineViews))[0];
 
-
       if (this.current) {
         if (this.current.getName() === baselayer) {return;}
         this._removeTimeline();

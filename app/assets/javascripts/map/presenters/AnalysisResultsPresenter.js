@@ -34,6 +34,9 @@ define([
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this.layerSpec = layerSpec;
+        if (!this.view.model.get('boxHidden')) {
+          this._updateLayer();
+        }
       }, this));
 
       mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
@@ -47,6 +50,14 @@ define([
           this._renderAnalysisFailure(results);
         }
       }, this));
+
+      mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
+        // update timeline
+      }, this));
+    },
+
+    _updateLayer: function() {
+      mps.publish('AnalysisTool/update-analysis', []);
     },
 
     _renderResults: function(results) {

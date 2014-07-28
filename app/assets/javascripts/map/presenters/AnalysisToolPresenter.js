@@ -32,7 +32,6 @@ define([
     _subscribe: function() {
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this._setBaselayer(layerSpec);
-        if ($('.analysis-info').is(':visible')) {this.view._onClickDone();}
       }, this));
 
       mps.subscribe('Place/go', _.bind(function(place) {
@@ -48,6 +47,10 @@ define([
       mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
         this.view.deleteSelection();
         this.currentAnalysis = null;
+      }, this));
+
+      mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
+        this.publishAnalysis({geom: this.view.polygon});
       }, this));
 
       mps.publish('Place/register', [this]);
@@ -157,10 +160,8 @@ define([
      * @return {array} paths
      */
     geomToPath: function(geom) {
-      var coords = JSON.parse(geom).coordinates;
-
+      var coords = JSON.parse(geom).coordinates[0];
       return _.map(coords, function(g) {
-        g = _.flatten(g);
         return new google.maps.LatLng(g[1], g[0]);
       });
     },
