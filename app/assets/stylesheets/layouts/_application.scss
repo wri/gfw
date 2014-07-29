@@ -8,6 +8,7 @@
     display: block;
     top: 0;
     left: -$grid-gutter-width;
+    z-index: 1001;
 
     &.is-fixed {
       position: fixed;
