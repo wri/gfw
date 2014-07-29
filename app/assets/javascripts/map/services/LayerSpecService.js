@@ -46,7 +46,7 @@ define([
 
     /**
      * Toggle a layer form LayerSpecModel.
-     * 
+     *
      * @param  {object} layer
      * @return {layer}  return layer or false.
      */
@@ -92,7 +92,7 @@ define([
     /**
      * Remove a layer and its sublayer.
      * If the category stays empty, it deletes it.
-     * 
+     *
      * @param  {object} layer The layer object
      */
     _removeLayer: function(layer) {
@@ -114,7 +114,7 @@ define([
 
     /**
      * Validate is current layer combination is valid or not.
-     * 
+     *
      * @param  {[type]} layer [description]
      * @return {[type]}       [description]
      */
@@ -123,7 +123,7 @@ define([
       var forbidden = this.options.forbidCombined[layer.category_slug];
       if (!forbidden) {return true;}
       var validCombination = false;
-      
+
       if (forbidden.except) {
         var combination = _.union(_.pluck(currentLayers, 'slug'), [layer.slug]);
         combination.push(layer.slug);

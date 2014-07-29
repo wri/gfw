@@ -75,15 +75,15 @@ define([
      * Create new PlaceService with supplied MapLayerService and
      * Backbone.Router.
      *
-     * @param  {MapLayerService} mapLayerService Instance of MapLayerService
      * @param  {Backbond.Router} router Instance of Backbone.Router
      * @return {PlaceService}    Instance of PlaceService
      */
-    init: function(mapLayerService, router) {
-      this.mapLayerService = mapLayerService;
+    init: function(router) {
       this.router = router;
       this._presenters = [];
       this._subscribe();
+      this.layerSpecService = layerSpecService;
+      this.layerSpecService.placeService = this;
       this._presenters.push(layerSpecService); // this makes the test fail
     },
 
@@ -91,6 +91,10 @@ define([
      * Subscribe to application events.
      */
     _subscribe: function() {
+      mps.subscribe('Place/go', _.bind(function(place) {
+        place.route && this.router.navigateTo();
+      }, this));
+
       mps.subscribe('Place/register', _.bind(function(presenter) {
         this._presenters = _.union(this._presenters, [presenter]);
       }, this));
@@ -98,6 +102,19 @@ define([
       mps.subscribe('Place/update', _.bind(function(place) {
         this._handleNewPlace(place.name, place.params, place.go);
       }, this));
+    },
+
+    /**
+     * Used by the router view to publish a new url place.
+     *
+     * @param  {object} params
+     */
+    publishPlace: function(params) {
+      mps.publish('Place/update', [{
+        go: true,
+        name: 'map',
+        params: params
+      }]);
     },
 
     /**
