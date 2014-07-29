@@ -41,34 +41,52 @@ define([
 
     _onClickMode: function(e) {
        e && e.preventDefault();
+      var mode = $(e.currentTarget).data('embed'),
+          text = 'Click and paste link in email or IM';
 
-      var $target = $(e.target),
-          mode = $target.attr('data-embed');
-      if (mode != this.model.get('mode')) {
-        $('.mode_menu li').removeClass('selected');
-        $target.closest('li').addClass('selected');
-
-        this._setMode(mode);
+      if (mode === 'url') {
+        this._setLink();
+      } else if (mode === 'embed') {
+          text = 'Click and paste HTML to embed in website';
+        this._setEmbed();
       }
+      
+      $('.share_dialog').find('.help span').empty().append(text)
     },
 
     _show: function(e) {
-      var self = this;
       e && e.preventDefault();
       $('.backdrop').fadeIn(function(){
         $('.share_dialog').parent().fadeIn();
+      });
+      this._initBindings();
+      this._setLink();
+    },
+
+    _initBindings: function() {
+      var that = this;
+      $('.backdrop').on('click', function() {
+        that._hide();
+      });
+
+      $('.field').on('click',function(){
+        this.select()
       });
     },
 
     _hide: function(e) {
       e && e.preventDefault();
-      this.$el.find('.share_dialog').fadeOut(function(){
+      this.$el.find('.share_dialog').parent().fadeOut(function(){
         $('.backdrop').fadeOut();
       });
     },
-    
+
     _setLink: function() {
-      var that = this;
+      var that = this,
+          $dialog = $('.share_dialog');
+      this.$input = $dialog.find('.field');
+      this.$loading = $dialog.find('.share_loading');
+      this.$share = $dialog.find('.share_buttons');
 
       // Disable textarea
       this.$input.val('');
@@ -87,14 +105,9 @@ define([
     },
 
     _setEmbed: function() {
-      var $body  = $('body'),
-          dim_x = 640,
+      this.$input = $('.share_dialog').find('.field');
+      var dim_x = 640,
           dim_y = 530;
-
-      if (!$body.hasClass('home')) {
-        dim_x = 1000;
-        dim_y = ($body.hasClass('show')) ? 480 : 600;
-      }
 
       if ($('section').hasClass('current_share')) {
         var $targ    = $('section.current_share'),
@@ -123,7 +136,7 @@ define([
 
     _generateShortUrl: function(url, callback) {
       $.ajax({
-        url:"https://api-ssl.bitly.com/v3/shorten?longUrl=" + encodeURIComponent(url) + "&login=" + this.options.bitly.login + "&apiKey=" + this.options.bitly.key,
+        url:"https://api-ssl.bitly.com/v3/shorten?longUrl=" + encodeURIComponent(url) + "&loginvizzuality&apiKey=",
         type:"GET",
         async: false,
         dataType: 'jsonp',
