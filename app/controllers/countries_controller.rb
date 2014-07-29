@@ -29,6 +29,11 @@ class CountriesController < ApplicationController
                       else
                         nil
                       end
+    @title = @country['name']
+  end
+
+  def overview
+    @title =  I18n.translate 'countries.overview.title'
   end
 
   private

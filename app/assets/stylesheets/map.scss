@@ -1,18 +1,11 @@
-//= require jquery.qtip.min
-//= require jquery.jscrollpane
-//= require tipsy
+//# require jquery.qtip.min
+//# require jquery.jscrollpane
+//# require tipsy
 
 @import
   // Compass
   "compass/reset",
-  "compass",
   "compass/css3",
-
-  // General
-  "_settings",
-  "_mixins",
-  "_grid",
-  "_base",
 
   // Images
   "icons/*.png",
@@ -23,25 +16,39 @@
   "country-icons/*.png",
   "stories-icons/*.png",
 
+  // General
+  "_settings",
+  "_mixins",
+  "_base",
+
+  // Layouts
+  "layouts/grid",
+  "layouts/application",
+  "layouts/map",
+
   // Modules
-  "modules/_mod-header-nav",
-  "modules/_mod-layer-nav",
-  "modules/_mod-buttons",
-  "modules/_mod-form",
-  "modules/_mod-map",
-  "modules/_mod-widget",
-  "modules/_mod-widget-legend",
-  "modules/_mod-widget-searchbox",
-  "modules/_mod-widget-maptype",
-  "modules/_mod-widget-threshold",
-  "modules/_mod-analysis-tool",
-  "modules/_mod-analysis-results",
-  "modules/_mod-timeline",
-  "modules/_mod-timeline-btn",
-  "modules/_mod-timeline-year",
-  "modules/_mod-timeline-month",
-  "modules/_mod-onoffswitch",
-  "modules/_mod-onoffradio",
-  "modules/_mod-infowindow",
-  "modules/legend",
-  "modules/_mod-info-sources";
+  "modules/notice",
+  "modules/navbar",
+  "modules/feedback",
+  "modules/buttons",
+  "modules/form",
+
+  "modules/map/_mod-layer-nav",
+  "modules/map/_mod-widget",
+  "modules/map/_mod-widget-legend",
+  "modules/map/_mod-widget-searchbox",
+  "modules/map/_mod-widget-maptype",
+  "modules/map/_mod-widget-threshold",
+  "modules/map/_mod-analysis-tool",
+  "modules/map/_mod-analysis-results",
+  "modules/map/_mod-timeline",
+  "modules/map/_mod-timeline-btn",
+  "modules/map/_mod-timeline-year",
+  "modules/map/_mod-timeline-month",
+  "modules/map/_mod-onoffswitch",
+  "modules/map/_mod-onoffradio",
+  "modules/map/_mod-infowindow",
+  "modules/map/legend",
+  "modules/map/_mod-info-sources";
+
+@import "states";

@@ -14,7 +14,12 @@
   width: 100%/$grid-columns*$column - (2*$grid-gutter-width);
 }
 
-
+@mixin pointer-events($type: none) {
+  $type: unquote($type);
+  @include experimental(pointer-events, $type,
+    -moz, -webkit, not -o, not -ms, -khtml, official
+  );
+}
 
 
 
@@ -309,12 +314,6 @@ strong { font-weight: bold; } // This is sad, I know.
 }
 
 // Fonts
-.serif {
-  font-family: "Georgia", serif;
-}
-.sans-serif {
-  font-family: Helvetica, Arial, sans-serif;
-}
 
 .font-big {
   @extend .serif;
@@ -346,19 +345,4 @@ strong { font-weight: bold; } // This is sad, I know.
   @include experimental(pointer-events, $type,
     -moz, -webkit, not -o, not -ms, -khtml, official
   );
-}
-
-.clearfix {
-  zoom:1;
-
-  &:before, &:after {
-    content: "\0020";
-    display: block;
-    height: 0;
-    overflow: hidden;
-  }
-
-  &:after {
-    clear: both;
-  }
 }

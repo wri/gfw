@@ -11,33 +11,16 @@
     </div>
   </div>
 
-  <div class="layout-header-bottom">
-    <div class="row">
-      <div class="grid-12">
-        <h1><%= @title %></h1>
+  <% if content_for?(:header) %>
+    <div class="layout-header-bottom">
+      <div class="row">
+        <div class="grid-12">
 
-        <% if controller_name == 'home' %>
-          <div class="mod-filters" id="filters">
-            <div class='inner'>
-              <div class='filters hide'>
-                <ul class='filters-list'></ul>
-              </div>
+          <%= yield :header %>
 
-              <div id='layer'>
-                <a href='#' class='filter-title'></a>
-
-                <div class='filter-scroll'>
-                  <ul class='filter-links'></ul>
-                </div>
-
-                <div class='filter-icon'></div>
-                <div class='filter-line'></div>
-              </div>
-            </div>
-          </div>
-        <% end %>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 
 </header>

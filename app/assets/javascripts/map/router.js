@@ -91,11 +91,11 @@ define([
     },
 
     setWrapper: function() {
-      var $logo = $('.header-nav__logo');
+      var $logo = $('.brand');
 
       function setScroll(e) {
         var element = (e) ? e.currentTarget : window;
-        if (element.pageYOffset > 10) {
+        if (element.pageYOffset > 48) {
           $logo.addClass('is-fixed');
         } else {
           $logo.removeClass('is-fixed');
@@ -107,7 +107,7 @@ define([
       $(window).on('scroll', setScroll);
 
       setTimeout(function() {
-        $(window).scrollTop(75);
+        $(window).scrollTop(111);
       }, 100);
     }
 

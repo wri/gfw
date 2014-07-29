@@ -20,9 +20,10 @@
 
     <%= favicon_link_tag 'favicon.ico' %>
 
+    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
     <%# stylesheet_link_tag "application", :media => "all" %>
     <%= controller_stylesheet_link_tag %>
-    <%# yield :css %>
+    <%= yield :js %>
     <%= csrf_meta_tags %>
   </head>
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
@@ -30,47 +31,18 @@
     <%= render "shared/notice" %>
     <%= render "shared/header" %>
 
-    <div class="content">
+    <div class="layout-content">
       <%= yield %>
     </div>
 
-    <!--
-    <div id="sources" class='sources notranslate'>
-      <%# render 'shared/sources' %>
-    </div>
-    -->
-    <%# render 'shared/sources_infowindow' %>
-
     <%= render 'shared/footer' %>
+
+    <script src="//maps.googleapis.com/maps/api/js?libraries=drawing,places&sensor=false"></script>
+    <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
     <%# render 'shared/js_templates' %>
-
-    <!--<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=drawing,geometry,places&sensor=false"></script>
-    <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>-->
     <%# javascript_include_tag 'application' %>
-    <%# controller_javascript_include_tag %>
-    <%# yield :js %>
-    <%# render 'shared/js_footer' %>
-
-    <% if Rails.env.production? %>
-      <!-- Google analytics -->
-      <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-        ga('create', '<%= ENV["ANALYTICS_PROPERTY_ID"] %>', 'globalforestwatch.org');
-        ga('send', 'pageview');
-      </script>
-    <% end %>
-
-    <!-- Google translate -->
-    <script>
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ar,es,fr,id,pt,ru,zh-CN', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true, gaId: '<%= ENV["ANALYTICS_PROPERTY_ID"] %>'}, 'google_translate_element');
-      }
-    </script>
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <%= controller_javascript_include_tag %>
+    <%= render 'shared/js_footer' %>
 
   </body>
 </html>
