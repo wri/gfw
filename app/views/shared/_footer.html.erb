@@ -1,4 +1,4 @@
-<footer class="site-footer">
+<footer class="layout-footer">
   <div class="site-info inner">
     <div class='left'>
       <div class="footer-share">
@@ -11,10 +11,9 @@
         </div>
       </div>
       <a class="twitter-timeline" href="https://twitter.com/globalforests" data-widget-id="452107742602219521" data-chrome="nofooter noheader noscrollbar transparent" width="400" height="566">Tweets by @globalforests</a>
-      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
       <p class="tweet-to"><a href="https://twitter.com/intent/tweet?screen_name=globalforests">Tweet to @globalforests</a></p>
       <div class="footer-share keep-updated">
-        <p>Sign up to receive updates. 
+        <p>Sign up to receive updates.
             <a href="http://www.wri.org/global-forest-watch-stay-informed" title="Receive Global Forest Watch updates" target="_blank">
               <img src="/assets/icons/envelope-gray.png" class="subscribe"></a>
             <a href="https://twitter.com/globalforests" title="Follow @globalforests"  target="_blank">
@@ -59,32 +58,5 @@
   </div>
 </footer>
 
-<!-- wri -->
-<script src="http://wri.org/wri-global-nav/wri-nav.js"></script>
-
-<!-- social -->
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&status=0";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-<script type="text/javascript">
-  (function() {
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-  })();
-</script>
-
-<!-- translate -->
-<script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ar,es,fr,id,pt,ru,zh-CN,de,uk,ro,tr,it,hi,km', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true, gaId: '<%= ENV["ANALYTICS_PROPERTY_ID"] %>'}, 'google_translate_element');
-  }
-</script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<!-- Overlay for modals -->
+<div class="backdrop"></div>

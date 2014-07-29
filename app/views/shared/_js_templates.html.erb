@@ -19,16 +19,6 @@
   </div>
 </script>
 
-<script id='circle-template' type='text/x-underscore-template'>
-  <div class='circle-icon {{ icon }}'><i></i></div>
-
-  <div class='circle-inner'>
-    <div class='circle-counter'>{{ count }}</div>
-    <div class='circle-title'>{{ title }}</div>
-    <div class='circle-background'></div>
-    <div class='circle-explore'>Explore the map</div>
-  </div>
-</script>
 
 <!-- Filters -->
 <script id='filter-template' type='text/x-underscore-template'>
@@ -661,15 +651,15 @@
 <script id='umdoptions_dialog-template' type='text/x-underscore-template'>
   <a href='#' class='close'></a>
   <h2 class='source_category_title'>{{ title }}</h2>
-  
+
   <div class='form'>
     <p>UMD tree cover loss & extent.</p>
-    <!-- 
-    <p>Compression: 
-      <input type=radio value='0.3' name=compression class='compression_option' checked=checked>0.3</input> 
-      <input type=radio value='0.4' name=compression class='compression_option'>0.4</input> 
+    <!--
+    <p>Compression:
+      <input type=radio value='0.3' name=compression class='compression_option' checked=checked>0.3</input>
+      <input type=radio value='0.4' name=compression class='compression_option'>0.4</input>
       <input type=radio value='0.5' name=compression class='compression_option'>0.5</input>
-      <input type=radio value='0.6' name=compression class='compression_option'>0.6</input> 
+      <input type=radio value='0.6' name=compression class='compression_option'>0.6</input>
       <input type=radio value='0.7' name=compression class='compression_option'>0.7</input>
       <input type=radio value='1' name=compression class='compression_option'>1</input>
     </p>
@@ -696,4 +686,9 @@
       <a href='#' class='apply'>Apply</a>
     </p>
   </div>
+</script>
+
+<script id='window-template' type='text/x-underscore-template'>
+  <a href='#' class='close'></a>
+  <div class='content'></div>
 </script>

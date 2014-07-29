@@ -1,21 +1,21 @@
-.stories {
-  .header {
-    height: 205px;
-    border-bottom: 1px solid #e5e5e5;
+.is-stories-page {
+
+  .header-subtitle {
+    @extend .serif;
   }
 
-  &.index .header-subtitle {
+  &.is-index-action .header-subtitle {
     margin-bottom: 40px;
     font-size: 29px;
     color: #666;
   }
 
-  &.show .header-title {
+  &.is-show-action .header-title {
     font-size: 29px;
     line-height: 51px;
   }
 
-  &.edit .header-inner {
+  &.is-edit-action .header-inner {
     position: relative;
 
     .btn {
@@ -61,7 +61,8 @@
 
   img {
     position: absolute;
-    top: 5px; left: 5px;
+    top: 5px;
+    left: 5px;
     width: 256px;
     height: 256px;
     @include border-radius(129px);
@@ -91,18 +92,18 @@
       color: #666;
     }
   }
-}
 
-.right {
-  text-align: left;
+  &.right {
+    text-align: left;
 
-  .featured_story-content { text-align: right; }
-}
+    .featured_story-content { text-align: right; }
+  }
 
-.left {
-  text-align: right;
+  &.left {
+    text-align: right;
 
-  .featured_story-content { text-align:left; }
+    .featured_story-content { text-align:left; }
+  }
 }
 
 .pagination {

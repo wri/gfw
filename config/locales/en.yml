@@ -41,6 +41,8 @@ en:
       country_blog:
         title: "%{country} stories"
       ministry_link: "Governing agency"
+    overview:
+      title: Countries overview
   stories:
     index:
       title: Featured stories

@@ -1,28 +1,3 @@
-<% content_for :js do %>
-  <script>
-    $(function() {
-      var StaticRouter = Backbone.Router.extend({
-        routes: {
-          'sources/:section': 'change'
-        },
-
-        change: function(tab) {
-          var accordion = window.location.hash.replace('#','');
-
-          window.static_data._onNavChange(tab, accordion);
-        }
-      });
-
-      cdb.init(function() {
-        window.static_data = new gfw.ui.view.Static();
-
-        window.router = new StaticRouter();
-        Backbone.history.start({ pushState: true });
-      });
-    });
-  </script>
-<% end %>
-
 <div class='inner'>
   <div class='header_block'>
     <div class='header_block__body'>

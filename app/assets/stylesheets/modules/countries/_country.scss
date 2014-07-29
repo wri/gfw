@@ -1,24 +1,6 @@
-@import "compass/css3";
-
-.countries_block {
-  height: 120px;
-  margin-top: -10px;
-  background:
-    image-url('backgrounds/bkg_countries_block_up.png') no-repeat 0 center,
-    image-url('backgrounds/bkg_countries_block_down.png') repeat-x;
-  margin-bottom: 40px;
-
-  .header-title {
-    font-size: 29px;
-    line-height: 120px;
-    color: #fff;
-
-    a:hover {
-      text-decoration: underline;
-    }
-  }
-  span{
-    color: darken($cGreen, 5%);
+.is-show-action {
+  .layout-content {
+    margin-bottom: 0;
   }
 }
 

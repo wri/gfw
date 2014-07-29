@@ -1,5 +1,5 @@
 .overview_graph {
-  margin: -106px auto 0;
+  margin: 50px auto 0;
   height: 511px;
 
   @include background-image(linear-gradient(#464253, #383643));
@@ -362,6 +362,7 @@
   position: absolute;
   z-index: 500;
   visibility: hidden;
+  display: none;
   padding: 20px 10px;
   font-size: 19px;
   font-family: "fira_sans_otmedium";
@@ -493,17 +494,7 @@
   margin-bottom: 30px;
 }
 
-.countries_list {
-  @extend .clearfix;
-}
 
-.disclaimer {
-  margin-top: 40px;
-  font-style: italic;
-  line-height: 1.4;
-  @extend .serif;
-  color: #666;
-}
 .share_dialog {
   $width: 463px;
   $height: 170px;
