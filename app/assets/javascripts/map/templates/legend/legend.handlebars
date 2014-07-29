@@ -8,7 +8,7 @@
 
     <div class="widget-opened">
       <ul class="categories">
-        {{#each layers}}
+        {{#each categories}}
           <li class="category">
             {{#each this}}
               {{#if @first}}
@@ -21,6 +21,9 @@
                   <span class="layer-name">
                     <i class="circle" style="color:{{this.title_color}};"></i>{{this.title}}<a href='#' data-source='{{this.slug}}' class='source'></a>
                   </span>
+                  {{#if this.detailsTpl}}
+                    {{{this.detailsTpl}}}
+                  {{/if}}
                   {{#if this.sublayer}}
                     <div class="layer-sublayer" data-sublayer="{{this.sublayer}}">
                       <span class="onoffswitch"><i></i></span>
@@ -29,7 +32,6 @@
                   {{/if}}
                 </li> {{!-- /layer --}}
               {{/each}}
-              <li><p class="canopy">Displaying loss with ><span>10</span>% canopy density</p></li>
             </ul>  {{!-- /layers --}}
           </li> {{!-- /category --}}
         {{/each}}

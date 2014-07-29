@@ -21,6 +21,7 @@ define([
      */
     init: function(view) {
       this.view = view;
+      this._layerSpec = null;
       this._subscribe();
     },
 
@@ -28,13 +29,14 @@ define([
      * Subscribe to application events.
      */
     _subscribe: function() {
-      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this._updateLegend(layerSpec);
-        this.view.toggleSelected(layerSpec.getLayers());
+      mps.subscribe('Place/go', _.bind(function(place) {
+        this._layerSpec = place.params.layerSpec;
+        this._updateLegend(this._layerSpec);
+        this.view.toggleSelected(this._layerSpec.getLayers());
       }, this));
 
-      mps.subscribe('Place/go', _.bind(function(place) {
-        var layerSpec = place.params.layerSpec;
+      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
+        this._layerSpec = layerSpec;
         this._updateLegend(layerSpec);
         this.view.toggleSelected(layerSpec.getLayers());
       }, this));
@@ -45,6 +47,10 @@ define([
 
       mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
         this.view.model.set({hidden: true, forceHidden: true});
+      }, this));
+
+      mps.subscribe('Threshold/changed', _.bind(function() {
+        this._updateLegend(this._layerSpec);
       }, this));
     },
 

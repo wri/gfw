@@ -1,0 +1,15 @@
+<div class="layer-details layer-details-forest2000">
+  <div class="details-title">Percent tree cover</div>
+
+  <div class="quartiles">
+    <div class="quartile">25-50%</div>
+    <div class="quartile">50-75%</div>
+    <div class="quartile">75-100%</div>
+  </div>
+
+  {{#if threshold}}
+    <div class="layer-msg">
+      Displaying {{layerTitle}} with <strong>> {{threshold}}%</strong> canopy density.
+    </div>
+  {{/if}}
+</div>
