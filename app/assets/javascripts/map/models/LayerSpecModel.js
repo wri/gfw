@@ -18,7 +18,10 @@ define([
       'forma',
       'imazon',
       'modis',
-      'fires'
+      'fires',
+      'modis_cover',
+      'imazon_cover',
+      'forma_cover'
     ],
 
     categoryOrder: [

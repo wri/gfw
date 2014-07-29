@@ -40,7 +40,6 @@ define([
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
         this._setTimeline(place.params.layerSpec);
-        // this.view.updateLatlng(place.params.lat, place.params.lng);
         if (!place.params.date) {
           mps.publish('Place/update', [{go: false}]);
         }
@@ -50,23 +49,29 @@ define([
         this._setTimeline(layerSpec);
       }, this));
 
-      // mps.subscribe('Map/center-change', _.bind(function(lat, lng){
-      //   this.view.updateLatlng(lat, lng);
-      // }, this));
+      mps.subscribe('Map/center-change', _.bind(function(lat, lng){
+        this.view.updateLatlng(lat, lng);
+      }, this));
 
-      // Show timeline when stop drawing analysis
       mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
         if (this.current) {
           this.view.model.set({hidden: false, forceHidden: false});
         }
       }, this));
 
-      // Hide timeline when start drawding analysis
       mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
         if (this.current) {
           this.view.model.set({hidden: true, forceHidden: true});
         }
       }, this));
+    },
+
+    timelineDisabled: function() {
+      mps.publish('Timeline/disabled', []);
+    },
+
+    timelineEnabled: function(layerSlug) {
+      mps.publish('Timeline/enabled', [layerSlug]);
     },
 
     _setTimeline: function(layerSpec) {
@@ -78,9 +83,17 @@ define([
         this._removeTimeline();
       }
 
-      if (!baselayer) {return;}
+      if (!baselayer) {
+        this.timelineDisabled();
+        return;
+      }
+
+      if (!this.current && baselayer) {
+        this.timelineEnabled(baselayer.slug);
+      }
+
       baselayer = layerSpec.getLayer({slug: baselayer});
-      this.view.update(baselayer.title);
+      this.view.update(baselayer);
       this.current = new this.timelineViews[baselayer.slug](baselayer);
       this.view.model.set('hidden', false);
     },

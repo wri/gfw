@@ -21,9 +21,10 @@ define([
   'views/TimelineView',
   'views/AnalysisToolView',
   'views/AnalysisResultsView',
+  'views/ShareView',
   'services/MapLayerService'
 ], function($, _, Backbone, mps, amplify, PlaceService, LayersNavView, MapView, LegendView,
-    ThresholdView, SearchboxView, MaptypeView, TimelineView, AnalysisToolView, AnalysisResultsView,
+    ThresholdView, SearchboxView, MaptypeView, TimelineView, AnalysisToolView, AnalysisResultsView, ShareView,
     mapLayerService) {
 
   'use strict';
@@ -85,6 +86,7 @@ define([
         this.timelineView = new TimelineView();
         this.analysisToolView = new AnalysisToolView(this.mapView.map);
         this.analysisResultsView = new AnalysisResultsView();
+        this.shareView = new ShareView();
       }
 
       mps.publish('Place/update', [{go: true, name: 'map', params: params}]);

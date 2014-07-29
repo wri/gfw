@@ -59,6 +59,14 @@ define([
         this.view.updateLayer(layerslug);
       }, this));
 
+      mps.subscribe('Timeline/disabled', _.bind(function() {
+        this.view.$maplngLng.removeClass('hidden');
+      }, this));
+
+      mps.subscribe('Timeline/enabled', _.bind(function() {
+        this.view.$maplngLng.addClass('hidden');
+      }, this));
+
       mps.publish('Place/register', [this]);
     },
 

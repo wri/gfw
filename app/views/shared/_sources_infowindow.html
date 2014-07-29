@@ -5,7 +5,7 @@
 			$wind 	  = $('#window'),
 			$content  = $wind.find('.content');
 
-		$('a.source').on('click',function(e){
+		$('.widget, .layer').on('click','a.source',function(e){
 			e && e.preventDefault();
 			e.stopPropagation ? e.stopPropagation() : window.event.cancelBubble = true;
 			$backdrop.fadeIn();

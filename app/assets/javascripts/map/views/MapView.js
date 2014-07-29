@@ -92,6 +92,7 @@ define([
     initialize: function() {
       this.presenter = new Presenter(this);
       this.layerInst = {};
+      this.$maplngLng = $('.map-container .map-latlng');
       this.render();
     },
 
@@ -123,6 +124,7 @@ define([
       google.maps.event.addListener(this.map, 'zoom_changed',
         _.bind(function() {
           this.onZoomChange();
+          this.onCenterChange();
         }, this)
       );
       google.maps.event.addListener(this.map, 'dragend',
@@ -143,6 +145,7 @@ define([
       };
 
       this.map.setOptions(params);
+      this.onCenterChange();
       this.presenter.onMaptypeChange(params.mapTypeId);
     },
 
@@ -268,8 +271,8 @@ define([
       var center = this.map.getCenter();
       var lat = center.lat();
       var lng = center.lng();
-
       this.presenter.onCenterChange(lat, lng);
+      this.updateLatlngInfo(lat,lng);
     },
 
     /**
@@ -299,6 +302,14 @@ define([
       $('.zoom-out').on('click', _.bind(function() {
         this.setZoom(this.getZoom() - 1);
       }, this));
+    },
+
+    /**
+     * Updates
+     */
+    updateLatlngInfo: function(lat, lng) {
+      var html = 'Lat/long: {0}, {1}'.format(lat.toFixed(6), lng.toFixed(6));
+      this.$maplngLng.html(html);
     }
 
   });

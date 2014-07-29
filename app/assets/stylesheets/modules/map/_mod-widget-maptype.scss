@@ -53,6 +53,19 @@
       &:hover {
         color: #333;
       }
+      .source {
+        display: block;
+        position: relative;
+        top: -14px;
+        right: -115px;
+        width: 10px;
+        height: 10px;
+        @include home-icons-sprite(information);
+
+        &.hidden {
+          display: none;
+        }
+      }
     }
   }
 
