@@ -49,7 +49,7 @@ define([
         this.view.model.set({hidden: true, forceHidden: true});
       }, this));
 
-      mps.subscribe('Threshold/changed', _.bind(function(threshold) {
+      mps.subscribe('Threshold/changed', _.bind(function() {
         this._updateLegend(this._layerSpec);
       }, this));
     },
