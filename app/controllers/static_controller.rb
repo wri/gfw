@@ -5,4 +5,12 @@ class StaticController < ApplicationController
   def terms
     @title = 'Terms of Service'
   end
+
+  def about
+    @title = I18n.translate 'static.about.title'
+  end
+
+  def data
+    @title = I18n.translate 'static.nav.data'
+  end
 end
