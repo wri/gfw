@@ -22,7 +22,7 @@
                     <i class="circle" style="color:{{this.title_color}};"></i>{{this.title}}<a href='#' data-source='{{this.slug}}' class='source'></a>
                   </span>
                   {{#if this.detailsTpl}}
-                    <div class="layer-details">{{{this.detailsTpl}}}</div>
+                    {{{this.detailsTpl}}}
                   {{/if}}
                   {{#if this.sublayer}}
                     <div class="layer-sublayer" data-sublayer="{{this.sublayer}}">
@@ -32,7 +32,6 @@
                   {{/if}}
                 </li> {{!-- /layer --}}
               {{/each}}
-              <li><p class="canopy">Displaying loss with ><span>10</span>% canopy density</p></li>
             </ul>  {{!-- /layers --}}
           </li> {{!-- /category --}}
         {{/each}}
