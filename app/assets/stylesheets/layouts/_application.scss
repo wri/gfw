@@ -195,6 +195,7 @@
 // FOOTER
 .layout-footer {
   background-color: #464352;
+  @include clearfix;
 
   .right,
   .left{

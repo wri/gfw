@@ -11,6 +11,10 @@ class StaticController < ApplicationController
   end
 
   def data
-    @title = I18n.translate 'static.nav.data'
+    @title = 'Data'
+  end
+
+  def howto
+    @title = 'How to'
   end
 end
