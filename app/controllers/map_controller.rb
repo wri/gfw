@@ -4,7 +4,7 @@ class MapController < ApplicationController
   before_filter :validate_url, :only => [:index]
 
   def index
-
+    @title = 'Map'
   end
 
   private

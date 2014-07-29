@@ -39,7 +39,7 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
-        this._setVisibility(place.params.layerSpec);
+        this._setVisibility(place.layerSpec);
         if (!place.params.threshold) {
           mps.publish('Place/update', [{go: false}]);
         }
@@ -77,13 +77,9 @@ define([
     },
 
     getPlaceParams: function() {
-      var params = {};
-
-      if (this.layers.length > 0) {
-        params.threshold = this.view.getThreshold();
-      }
-
-      return params;
+      var p = {};
+      p.threshold = this.layers.length ? this.view.getThreshold() : null;
+      return p;
     }
   });
 

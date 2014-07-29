@@ -19,12 +19,19 @@ class StoriesController < ApplicationController
       @visible     = Api::Story.find_by_page(@page, stories_per_page)
     end
 
+    @title = I18n.translate 'stories.index.title'
+
     respond_with @stories
+  end
+
+  def show
+    @title = @story.title.capitalize
   end
 
   def new
     @url = stories_path
     @story = Api::Story.new
+    @title = I18n.translate 'stories.new.title'
   end
 
   def edit

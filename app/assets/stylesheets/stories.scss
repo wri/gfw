@@ -1,31 +1,28 @@
-//= require jquery.qtip.min
-//= require jquery.jscrollpane
-//= require tipsy
-
 // Compass
 @import "compass/reset";
-@import "compass";
 @import "compass/css3";
-
-// General
-@import "settings";
-@import "mixins";
-@import "grid";
-@import "base";
 
 // Images
 @import "icons/*.png";
 @import "home-icons/*.png";
-@import "static-icons/*.png";
-@import "static-logos/*.png";
-@import "country-icons/*.png";
 @import "stories-icons/*.png";
 
+// General
+@import
+  "settings",
+  "mixins",
+  "base";
+
 // Layouts
-@import "layouts/stories";
+@import
+  "layouts/grid",
+  "layouts/application",
+  "layouts/stories";
 
 // Modules
 @import
-  "modules/mod-buttons",
+  "modules/notice",
+  "modules/navbar",
+  "modules/buttons",
   "modules/carrousel",
-  "modules/mod-form";
+  "modules/form";

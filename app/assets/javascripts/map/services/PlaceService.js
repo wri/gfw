@@ -57,10 +57,10 @@ define([
 
   var PlaceService = Class.extend({
 
-    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geom,date,threshold}',
+    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geom,begin,end,threshold}',
 
     /**
-     * Defaults url params
+     * Defaults url params.
      */
     defaults: {
       baselayers: 'umd_tree_loss_gain,forestgain',
@@ -83,7 +83,7 @@ define([
       this._presenters = [];
       this._subscribe();
       this.layerSpecService = layerSpecService;
-      this.layerSpecService.placeService = this;
+      layerSpecService.placeService = this;
       this._presenters.push(layerSpecService); // this makes the test fail
     },
 
@@ -91,9 +91,9 @@ define([
      * Subscribe to application events.
      */
     _subscribe: function() {
-      mps.subscribe('Place/go', _.bind(function(place) {
-        place.route && this.router.navigateTo();
-      }, this));
+      // mps.subscribe('Place/go', _.bind(function(place) {
+      //   place.route && this.router.navigateTo();
+      // }, this));
 
       mps.subscribe('Place/register', _.bind(function(presenter) {
         this._presenters = _.union(this._presenters, [presenter]);
@@ -128,46 +128,41 @@ define([
      * @param  {Object}  params The place parameters
      * @param  {boolean} go     True to publish Place/go event, false to update URL
      */
-    _handleNewPlace: function(name, params, go) {
+    _handleNewPlace: function(name, urlParams, go) {
       var route = null;
       var place = {};
 
-      // Get place object with standarized params.
-      place.params = this._standardizeParams(params ||
-        this._getPresenterParams(this._presenters));
+      place.params = (urlParams) ? this._standardizeParams(urlParams) :
+        this._getPresenterParams(this._presenters);
 
       place.params.name = place.params.name || name;
 
       if (go) {
-        var baselayers = this._getBaselayerFilters(place.params.baselayers);
-        var sublayers = this._getSublayerFilters(place.params.sublayers);
+        var baselayers = this.layerSpecService.getBaselayerFilters(place.params.baselayers);
+        var sublayers = this.layerSpecService.getSublayerFilters(place.params.sublayers);
         var where = _.union(baselayers, sublayers);
 
-        // instead passing options, it takes them from the PlaceService
-        var options = {};
-
-        if (params.date) {
-          var start = moment(place.params.date.split('-')[0], 'X');
-          var end = moment(place.params.date.split('-')[1], 'X');
-          options.date = [start, end];
-        }
-
-        if (params.threshold) {
-          options.threshold = params.threshold;
-        }
-
-        layerSpecService.toggle(
+        this.layerSpecService.toggle(
           where,
-          options,
           _.bind(function(layerSpec) {
-            place.params.layerSpec = layerSpec;
+            place.layerSpec = layerSpec;
             mps.publish('Place/go', [place]);
           }, this)
         );
       }
 
-      route = this._getRoute(place);
+      route = this._getRoute(this._destandardizeParams(place.params));
       this.router.navigate(route, {silent: true});
+    },
+
+    /**
+     * Return route URL for supplied route name and route params.
+     *
+     * @param  {Object} params The route params
+     * @return {string} The route URL
+     */
+    _getRoute: function(urlParams) {
+      return decodeURIComponent(new UriTemplate(this._uriTemplate).fillFromObject(urlParams));
     },
 
     /**
@@ -177,16 +172,17 @@ define([
      * @return {Object} The standardized params.
      */
     _standardizeParams: function(params) {
-      var p = _.extendNonNull(_.clone(this.defaults), params);
+      var p = _.extendNonNull({}, this.defaults, params);
+
+      p.baselayers = p.baselayers.split(',');
+      p.sublayers = p.sublayers ? p.sublayers.split(',') : null;
       p.zoom = _.toNumber(p.zoom);
       p.lat = _.toNumber(p.lat);
       p.lng = _.toNumber(p.lng);
-      p.maptype = p.maptype;
-      p.iso = p.iso;
-
-      if (p.geom) {
-        p.geom = decodeURIComponent(p.geom);
-      }
+      p.begin = p.begin ? moment(p.begin) : null;
+      p.end = p.end ? moment(p.end) : null;
+      p.geom = p.geom ? decodeURIComponent(p.geom) : null;
+      p.threshold = p.threshold ? _.toNumber(p.threshold) : null;
 
       return p;
     },
@@ -195,50 +191,23 @@ define([
      * Return formated URL representation of supplied params object based on
      * a route name.
      *
-     * @param {string}  name   The route name
-     * @param  {Object} params Params to standardize
+     * @param  {Object} params Place to standardize
      * @return {Object} Params ready for URL
      */
     _destandardizeParams: function(params) {
-      var p = params;
+      var p = _.clone(params);
 
-      if (params.name === 'map') {
-        p.lat = _.toNumber(p.lat).toFixed(2);
-        p.lng = _.toNumber(p.lng).toFixed(2);
-
-        if (p.geom) {
-          p.geom = encodeURIComponent(p.geom);
-        }
-
-        if (p.layerSpec) {
-          var date = [];
-          _.each(p.layerSpec.getBaselayers(), function(layer) {
-            if (layer.currentDate) {
-              date.push('{0}-{1}'.format(layer.currentDate[0].format('X'),
-                layer.currentDate[1].format('X')));
-            }
-          });
-          if (date.length > 0) {
-            p.date = date.join(',');
-          } else {
-            delete p.date;
-          }
-        }
-      }
+      p.baselayers = p.baselayers.join(',');
+      p.sublayers = p.sublayers ? p.sublayers.join(',') : null;
+      p.zoom = String(p.zoom);
+      p.lat = p.lat.toFixed(2);
+      p.lng = p.lng.toFixed(2);
+      p.begin = p.begin ? p.begin.format('YYYY-MM-DD') : null;
+      p.end = p.end ? p.end.format('YYYY-MM-DD') : null;
+      p.geom = p.geom ? encodeURIComponent(p.geom) : null;
+      p.threshold = p.threshold ? String(p.threshold) : null;
 
       return p;
-    },
-
-    /**
-     * Return route URL for supplied route name and route params.
-     *
-     * @param  {string} name The route name (e.g. map)
-     * @param  {Object} params The route params
-     * @return {string} The route URL
-     */
-    _getRoute: function(place) {
-      var params = _.extend(this._destandardizeParams(_.clone(place.params)));
-      return decodeURIComponent(new UriTemplate(this._uriTemplate).fillFromObject(params));
     },
 
     /**
@@ -249,43 +218,15 @@ define([
      * @return {Object} Params representing state from all presenters
      */
     _getPresenterParams: function(presenters) {
-      var params = {};
-      _.each(presenters, _.bind(function(presenter) {
-        _.extend(params, presenter.getPlaceParams());
-      }, this));
+      var p = {};
 
-      return params;
-    },
+      _.each(presenters, function(presenter) {
+        _.extend(p, presenter.getPlaceParams());
+      }, this);
 
-    /**
-     * Return array of filter objects {slug:, category_slug:} for baselayers.
-     *
-     * @param  {string} layers CSV list of baselayer slug names
-     * @return {Array} Filter objects for baselayers
-     */
-    _getBaselayerFilters: function(layers) {
-      var baselayers = layers ? layers.split(',') : [];
-      var filters = _.map(baselayers, function (name) {
-        return {slug: name, category_slug: 'forest_clearing'};
-      });
-
-      return filters;
-    },
-
-    /**
-     * Return array of filter objects {id:} for sublayers.
-     *
-     * @param  {string} layers CSV list of sublayer ids
-     * @return {Array} Filter objects for sublayers
-     */
-    _getSublayerFilters: function(layers) {
-      var sublayers = layers ? layers.split(',') : [];
-      var filters = _.map(sublayers, function(id) {
-        return {id: Number(id)};
-      });
-
-      return filters;
+      return p;
     }
+
   });
 
   return PlaceService;

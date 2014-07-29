@@ -1,22 +1,10 @@
-<% content_for :js do %>
-  <script>
-    $(function() {
-      cdb.init(function() {
-        window.carrousel = new gfw.ui.view.Carrousel();
-      });
-    });
-  </script>
-<% end %>
-
-<% content_for :title do %>
+<% content_for :header do
+  if access_through_token?(@story.id)
+    link_to (content_tag :span, 'Edit story'), edit_story_path(@story.token), :class => "btn green edit"
+  end %>
   <h1 class="header-title big"><%= link_to t(".title"), stories_path %></h1>
 <% end %>
 
-<% content_for :inner_header do
-  if access_through_token?(@story.id)
-    link_to (content_tag :span, 'Edit story'), edit_story_path(@story.token), :class => "btn green edit"
-  end
-end %>
 
 <div class='section inner'>
   <div class='story-header'>
@@ -78,4 +66,4 @@ end %>
   </div>
 </div>
 
-<%= render 'shared/more_stories' %>
+<%= render 'more_stories' %>

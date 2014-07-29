@@ -39,7 +39,7 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
-        this._setTimeline(place.params.layerSpec);
+        this._setTimeline(place.layerSpec);
         if (!place.params.date) {
           mps.publish('Place/update', [{go: false}]);
         }

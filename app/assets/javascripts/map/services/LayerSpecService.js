@@ -31,16 +31,13 @@ define([
       this.model = new LayerSpecModel();
     },
 
-    toggle: function(where, options, success, error) {
-      var self = this;
+    toggle: function(where, success, error) {
       mapLayerService.getLayers(
         where,
-        function(layers) {
-          _.each(layers, function(layer) {
-            self._toggleLayer(layer, options);
-          });
-          success(self.model);
-        },
+        _.bind(function(layers) {
+          _.each(layers, this._toggleLayer, this);
+          success(this.model);
+        }, this),
         error);
     },
 
@@ -50,7 +47,7 @@ define([
      * @param  {object} layer
      * @return {layer}  return layer or false.
      */
-    _toggleLayer: function(layer, options) {
+    _toggleLayer: function(layer) {
       var current = this.model.getLayer({slug: layer.slug});
       var baselayers = this.model.getBaselayers();
 
@@ -68,7 +65,7 @@ define([
           _.each(this.model.get(layer.category_slug), this._removeLayer);
         }
 
-        this._addLayer(layer, options);
+        this._addLayer(layer);
         return layer;
       }
     },
@@ -78,10 +75,10 @@ define([
      *
      * @param {object} layer
      */
-    _addLayer: function(layer, options) {
+    _addLayer: function(layer) {
       var category = this._getCategory(layer.category_slug);
-      options = !_.isEmpty(options) ? options : this._getOptionsFromLayers();
-      category[layer.slug] = this._standardizeAttrs(layer, options);
+      // options = !_.isEmpty(options) ? options : this._getOptionsFromLayers();
+      category[layer.slug] = this._standardizeAttrs(layer);
     },
 
     _getCategory: function(name) {
@@ -169,7 +166,7 @@ define([
      * @param  {obj} opts  Layer extra parameters.
      * @return {obj} layer The layer object
      */
-    _standardizeAttrs: function(layer, options) {
+    _standardizeAttrs: function(layer) {
       if (layer.mindate) {
         layer.mindate = moment(layer.mindate);
       }
@@ -178,16 +175,44 @@ define([
         layer.maxdate = moment(layer.maxdate);
       }
 
-      if (options.date && layer.category_slug === 'forest_clearing' &&
-        layer.slug !== 'forestgain') {
-        layer.currentDate = options.date;
-      }
+      // if (options.date && layer.category_slug === 'forest_clearing' &&
+      //   layer.slug !== 'forestgain') {
+      //   layer.currentDate = options.date;
+      // }
 
-      if (options.threshold && (layer.slug === 'forest2000' || layer.slug === 'umd_tree_loss_gain')) {
-        layer.threshold = Number(options.threshold);
-      }
+      // if (options.threshold && (layer.slug === 'forest2000' || layer.slug === 'umd_tree_loss_gain')) {
+      //   layer.threshold = Number(options.threshold);
+      // }
 
       return layer;
+    },
+
+    /**
+     * Return array of filter objects {slug:, category_slug:} for baselayers.
+     *
+     * @param  {string} layers Array of baselayer slug names
+     * @return {Array} Filter  objects for baselayers
+     */
+    getBaselayerFilters: function(layers) {
+      var filters = _.map(layers, function (name) {
+        return {slug: name, category_slug: 'forest_clearing'};
+      });
+
+      return filters;
+    },
+
+    /**
+     * Return array of filter objects {id:} for sublayers.
+     *
+     * @param  {array} layers Array of sublayer ids
+     * @return {Array} Filter objects for sublayers
+     */
+    getSublayerFilters: function(layers) {
+      var filters = _.map(layers, function(id) {
+        return {id: Number(id)};
+      });
+
+      return filters;
     },
 
     /**
@@ -198,22 +223,11 @@ define([
      */
     getPlaceParams: function() {
       var p = {};
+      var sublayers = this.model.getSublayers();
+
       p.name = 'map';
-      p.baselayers = _.keys(this.model.getBaselayers()).join(',');
-      p.sublayers = _.pluck(this.model.getSublayers(), 'id').join(',');
-
-      var date = [];
-
-      _.each(this.model.getBaselayers(), function(layer) {
-        if (layer.currentDate) {
-          date.push('{0}-{1}'.format(layer.currentDate[0].format('X'),
-            layer.currentDate[1].format('X')));
-        }
-      });
-
-      if (date.length > 0) {
-        p.date = date.join(',');
-      }
+      p.baselayers = _.keys(this.model.getBaselayers());
+      p.sublayers = !_.isEmpty(sublayers) ? _.pluck(sublayers, 'id') : null;
 
       return p;
     },

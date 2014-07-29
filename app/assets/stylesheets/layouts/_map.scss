@@ -1,7 +1,20 @@
+.layout-header-bottom {
+  padding: 0;
+}
+
+.layout-content {
+  margin-bottom: 0;
+  position: absolute;
+  top: 183px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
 .map-container {
   position: absolute;
-  top: 141px;
-  bottom: -69px;
+  top: 0;
+  bottom: -111px;
   left: 0;
   right: 0;
   border-top: 1px solid #717D80;

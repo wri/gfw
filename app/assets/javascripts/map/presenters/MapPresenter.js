@@ -31,7 +31,7 @@ define([
       mps.subscribe('Place/go', _.bind(function(place) {
         if (place.params.name === 'map') {
           this._setOptions(place.params);
-          this._setLayerSpec(place.params.layerSpec);
+          this._setLayerSpec(place.layerSpec);
         }
       }, this));
 
@@ -91,16 +91,16 @@ define([
      * @return {Object} Params representing the state of the MapView and layers
      */
     getPlaceParams: function() {
-      var params = {};
+      var p = {};
       var mapCenter = this.view.getCenter();
 
-      params.name = 'map';
-      params.zoom = this.view.getZoom();
-      params.lat = mapCenter.lat;
-      params.lng = mapCenter.lng;
-      params.maptype = this.view.getMapTypeId();
+      p.name = 'map';
+      p.zoom = this.view.getZoom();
+      p.lat = mapCenter.lat;
+      p.lng = mapCenter.lng;
+      p.maptype = this.view.getMapTypeId();
 
-      return params;
+      return p;
     },
 
     onOptionsChange: function() {

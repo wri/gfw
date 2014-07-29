@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
 
   def accept_terms
     session[:return_to] = params[:return_to] unless params[:return_to].nil?
+    @title = 'Terms of Service'
   end
 
   private

@@ -1,4 +1,5 @@
 gfw.ui.view.CountriesOverview = cdb.core.View.extend({
+
   el: document.body,
 
   events: {

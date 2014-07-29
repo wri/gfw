@@ -35,7 +35,7 @@ define([
       }, this));
 
       mps.subscribe('Place/go', _.bind(function(place) {
-        this._setBaselayer(place.params.layerSpec);
+        this._setBaselayer(place.layerSpec);
 
         if (place.params.iso !== 'ALL') {
           this._drawIso(place.params.iso);
@@ -194,6 +194,9 @@ define([
     getPlaceParams: function() {
       if (!this._currentAnalysis) {return;}
       var p = {};
+
+      p.iso = null;
+      p.geom = null;
 
       if (this._currentAnalysis.iso) {
         p.iso = this._currentAnalysis.iso;
