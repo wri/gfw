@@ -75,12 +75,23 @@
       }
     }
 
-    .layer-msg {
-      font-size: 11px;
-      padding: 5px 8px;
-      border: 1px solid #E9E9E9;
-      line-height: 12px;
-      border-radius: 3px;
+    .canopy {
+      i {
+        background-color: transparent;
+        width: 12px;
+        height: 12px;
+        @include home-icons-sprite(icon_options_small);
+        float: left;
+        margin-right: 2px;
+        cursor: help;
+      }
+      margin-left: -13px;
+      font-size: 0.88em;
+      margin-top: 3px;
+      width: 180px;
+      span {
+        font-weight: bold;
+      }
     }
 
     sup {
