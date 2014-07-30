@@ -6,14 +6,14 @@ require([
   'underscore',
   'Class',
   'backbone',
-  'router',
   'utils',
+  'router',
   'mps',
   'services/AnalysisService',
   'services/CountryService',
   'services/DataService',
   '_string'
-], function ($, _, Class, Backbone, router, utils, mps, AnalysisService, CountryService, DataService) {
+], function ($, _, Class, Backbone, utils, router, mps, AnalysisService, CountryService, DataService) {
 
   'use strict';
 
