@@ -137,6 +137,12 @@ define([
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
         this.$el.addClass('is-loaded');
       }, this));
+
+      google.maps.event.addListener(this.map, 'click', _.bind(function(wdpa) {
+        if (! !!wdpa.wdpaid) return;
+
+        mps.publish('MapView/click-protected', [wdpa])
+      }, this));
     },
 
     setOptions: function(params) {
