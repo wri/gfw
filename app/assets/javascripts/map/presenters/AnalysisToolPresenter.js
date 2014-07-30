@@ -61,6 +61,10 @@ define([
         }
       }, this));
 
+      mps.subscribe('MapView/click-protected', _.bind(function(wdpa) {
+        this.publishAnalysis(wdpa);
+      }, this));
+
       mps.publish('Place/register', [this]);
     },
 
@@ -130,11 +134,12 @@ define([
       data.dataset = this.datasets[this.baselayer.slug];
       // data.period = '{0},{1}'.format(this.baselayer.currentDate[0].year(),
       //   this.baselayer.currentDate[1].year());
-
       if (resource.geom) {
         data.geojson = resource.geom;
       } else if (resource.iso) {
         data.iso = resource.iso;
+      } else if (resource.wdpaid) {
+        data.wdpaid = resource.wdpaid
       }
 
       this._currentAnalysis = resource;

@@ -57,8 +57,10 @@ define([
       }
 
       if (analyseButton) {
-        google.maps.event.addDomListener(closeButton, 'click', _.bind(function(ev) {
-          //
+        google.maps.event.addDomListener(analyseButton, 'click', _.bind(function(ev) {
+          ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+          var wdpaid = {wdpaid : $(analyseButton).data('layer')}
+          google.maps.event.trigger(this.map, 'click', wdpaid);
         }, this));
       }
 

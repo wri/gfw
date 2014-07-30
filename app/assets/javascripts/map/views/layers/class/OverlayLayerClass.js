@@ -58,7 +58,7 @@ define([
       if (!this.infowindow && this.options.infowindowAPI) {
 
         google.maps.event.addListener(this.map, 'click', _.bind(function(ev) {
-
+          if (! !! ev.latLng) return;
           var params = {
             lat: ev.latLng.lat(),
             lon: ev.latLng.lng()
