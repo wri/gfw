@@ -50,8 +50,8 @@ define([
           text = 'Click and paste HTML to embed in website';
         this._setEmbed();
       }
-      
-      $('.share_dialog').find('.help span').empty().append(text)
+
+      $('.share_dialog').find('.help span').empty().append(text);
     },
 
     _show: function(e) {
@@ -70,7 +70,7 @@ define([
       });
 
       $('.field').on('click',function(){
-        this.select()
+        this.select();
       });
     },
 
@@ -96,9 +96,9 @@ define([
       this._generateShortUrl(window.location.href, function(url) {
         that.$input.val(url);
 
-        that.$share.find('.twitter').attr('href', "https://twitter.com/share?url=" + url);
-        that.$share.find('.facebook').attr('href', "https://www.facebook.com/sharer.php?u=" + url);
-        that.$share.find('.google_plus').attr('href', "https://plus.google.com/share?url=" + url);
+        that.$share.find('.twitter').attr('href', 'https://twitter.com/share?url=' + url);
+        that.$share.find('.facebook').attr('href', 'https://www.facebook.com/sharer.php?u=' + url);
+        that.$share.find('.google_plus').attr('href', 'https://plus.google.com/share?url=' + url);
 
         that.$loading.hide();
       });
@@ -116,7 +116,9 @@ define([
 
         dim_y = 360;
         path = path.replace('country','country_info');
-        if (path.slice(-1) === "/") path = path.slice(0, -1);
+        if (path.slice(-1) === '/') {
+          path = path.slice(0, -1);
+        }
 
         if ($targ.hasClass('country-forests-type')) {
           targ_val = '/forests-type';
@@ -136,8 +138,8 @@ define([
 
     _generateShortUrl: function(url, callback) {
       $.ajax({
-        url:"https://api-ssl.bitly.com/v3/shorten?longUrl=" + encodeURIComponent(url) + "&loginvizzuality&apiKey=",
-        type:"GET",
+        url: 'https://api-ssl.bitly.com/v3/shorten?longUrl=' + encodeURIComponent(url) + '&loginvizzuality&apiKey=',
+        type: 'GET',
         async: false,
         dataType: 'jsonp',
         success: function(r) {
@@ -146,14 +148,16 @@ define([
 
             throw new Error('BITLY doesn\'t allow localhost alone as domain, use localhost.lan for example');
           } else {
-            callback && callback(r.data.url)
+            callback && callback(r.data.url);
           }
         },
-        error: function(e) { callback && callback(url) }
+        error: function() {
+          callback && callback(url);
+        }
       });
     },
   });
-  
+
   return ShareView;
 
 });

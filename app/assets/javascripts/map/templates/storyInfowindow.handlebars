@@ -12,7 +12,7 @@
           <a href="/stories/{{id}}" target='_blank'>{{title}}</a>
         {{/if}}
       </strong>
-      <span>by {{autor}} &middot;</span>
+      {{#if autor}}<span>by {{autor}} &middot;</span>{{/if}}
       {{#if loc}}
         <a href="{{loc}}" target='_blank'>read more</a>
       {{else}}

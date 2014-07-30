@@ -7,6 +7,7 @@
 define([
   'backbone',
   'underscore',
+  'mps',
   'presenters/MapPresenter',
   'views/maptypes/grayscaleMaptype',
   'views/maptypes/treeheightMaptype',
@@ -33,11 +34,12 @@ define([
   'views/layers/ResourceRightsLayer',
   'views/layers/LandRightsLayer',
   'views/layers/UserStoriesLayer',
-  'views/layers/MongabayStoriesLayer'
-], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype, landsatMaptype,
+  'views/layers/MongabayStoriesLayer',
+  'views/layers/InfoamazoniaStoriesLayer'
+], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, landsatMaptype,
   UMDLossLayer, ForestGainLayer, FormaLayer, FormaCoverLayer, ImazonLayer, ImazonCoverLayer, ModisLayer, ModisCoverLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, IdnPrimaryLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
-  ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, LandRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
+  ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, LandRightsLayer, UserStoriesLayer, MongabayStoriesLayer, InfoamazoniaStoriesLayer) {
 
   'use strict';
 
@@ -83,7 +85,8 @@ define([
       resource_rights: ResourceRightsLayer,
       land_rights: LandRightsLayer,
       user_stories: UserStoriesLayer,
-      mongabay: MongabayStoriesLayer
+      mongabay: MongabayStoriesLayer,
+      infoamazonia: InfoamazoniaStoriesLayer
     },
 
     /**
@@ -134,6 +137,13 @@ define([
 
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
         this.$el.addClass('is-loaded');
+      }, this));
+
+      google.maps.event.addListener(this.map, 'click', _.bind(function(wdpa) {
+        if (!(!!wdpa.wdpaid)) {
+          return;
+        }
+        mps.publish('MapView/click-protected', [wdpa]);
       }, this));
     },
 
