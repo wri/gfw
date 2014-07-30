@@ -4,10 +4,8 @@
  * @return SharePresenter class.
  */
 define([
-  'Class',
-  'underscore',
-  'mps'
-], function(Class, _, mps) {
+  'Class'
+], function(Class) {
 
   'use strict';
 

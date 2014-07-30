@@ -38,7 +38,7 @@ define([
     fetchStories: function(successCb, errorCb) {
       function _parseData(data) {
         var result = _.map(data.rows, function(d) {
-          d.marker = JSON.parse(d.marker)
+          d.marker = JSON.parse(d.marker);
           d.latlng = JSON.parse(d.latlng).coordinates;
           return d;
         });
