@@ -28,7 +28,7 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    init: function(layer, map) {
+    init: function(layer, options, map) {
       this.markers = [];
       this.map = map;
       this.options = _.extend({}, this.defaults, this.options || {});

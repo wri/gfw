@@ -16,17 +16,16 @@ define([
   var UMDLossLayer = CanvasLayerClass.extend({
 
     options: {
-      dateRange: [moment([2001]), moment()],
       threshold: 10,
       dataMaxZoom: 12,
       urlTemplate: 'http://earthengine.google.org/static/hansen_2013/gfw_tree_loss_year_{threshold}{/z}{/x}{/y}.png'
     },
 
-    init: function(layer, map) {
+    init: function(layer, options, map) {
       this.presenter = new Presenter(this);
-      this._super(layer, map);
-      this.layer.currentDate = this.layer.currentDate || this.options.dateRange;
-      this.layer.threshold = this.layer.threshold || this.options.threshold;
+      this.currentDate = options.currentDate || [moment(layer.mindate), moment(layer.maxdate)];
+      this.threshold = options.threshold || this.options.threshold;
+      this._super(layer, options, map);
     },
 
     /**
@@ -36,8 +35,8 @@ define([
     filterCanvasImgdata: function(imgdata, w, h, z) {
       var components = 4;
       var exp = z < 11 ? 0.3 + ((z - 3) / 20) : 1;
-      var yearStart = this.layer.currentDate[0].year();
-      var yearEnd = this.layer.currentDate[1].year();
+      var yearStart = this.currentDate[0].year();
+      var yearEnd = this.currentDate[1].year();
 
       var myscale = d3.scale.pow()
           .exponent(exp)
@@ -68,19 +67,19 @@ define([
      *
      * @param {Array} date 2D array of moment dates [begin, end]
      */
-    setTimelineDate: function(date) {
-      this.layer.currentDate = date;
+    setCurrentDate: function(date) {
+      this.currentDate = date;
       this.updateTiles();
     },
 
     setThreshold: function(threshold) {
-      this.layer.threshold = threshold;
+      this.threshold = threshold;
       this.presenter.updateLayer();
     },
 
     _getUrl: function(x, y, z) {
       return new UriTemplate(this.options.urlTemplate)
-        .fillFromObject({x: x, y: y, z: z, threshold: this.layer.threshold});
+        .fillFromObject({x: x, y: y, z: z, threshold: this.threshold});
     }
 
   });

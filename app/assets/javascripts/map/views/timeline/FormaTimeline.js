@@ -13,14 +13,14 @@ define([
 
   var FormaTimeline = TimelineMonthClass.extend({
 
-    initialize: function(layer) {
+    initialize: function(layer, currentDate) {
       this.options = {
         dateRange: [moment(layer.mindate), moment(layer.maxdate)],
         playSpeed: 50
       };
 
       this.presenter = new Presenter(this);
-      FormaTimeline.__super__.initialize.apply(this, [layer]);
+      FormaTimeline.__super__.initialize.apply(this, [layer, currentDate]);
     }
 
   });

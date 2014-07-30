@@ -23,21 +23,21 @@ define([
       infowindow: true
     },
 
-    init: function(layer, map) {
-      _.bindAll(this, 'setTimelineDate');
+    init: function(layer, options, map) {
+      _.bindAll(this, 'setCurrentDate');
       this.presenter = new Presenter(this);
       // Default to 48 hours
-      this.setTimelineDate(layer.currentDate ||
+      this.setCurrentDate(options.currentDate ||
         [moment().subtract(48, 'hours'), moment()]);
-      this._super(layer, map);
+      this._super(layer, options, map);
     },
 
     getQuery: function() {
       var query = new UriTemplate(this.options.sql).fillFromObject({
         tableName: this.layer.table_name,
-        year: this.timelineDate[0].year(),
-        month: this.timelineDate[0].format('MM'),
-        day: this.timelineDate[0].format('DD')
+        year: this.currentDate[0].year(),
+        month: this.currentDate[0].format('MM'),
+        day: this.currentDate[0].format('DD')
       });
 
       return query;
@@ -48,8 +48,8 @@ define([
      *
      * @param {Array} date 2D array of moment dates [begin, end]
      */
-    setTimelineDate: function(date) {
-      this.timelineDate = date;
+    setCurrentDate: function(date) {
+      this.currentDate = date;
     }
   });
 

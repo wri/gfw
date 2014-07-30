@@ -14,7 +14,7 @@ define([
 
   var ModisTimeline = TimelineBtnClass.extend({
 
-    initialize: function(layer) {
+    initialize: function(layer, currentDate) {
       this.presenter = new Presenter(this);
 
       this.options = {
@@ -22,7 +22,7 @@ define([
         tickWidth: 60
       };
 
-      ModisTimeline.__super__.initialize.apply(this, [layer]);
+      ModisTimeline.__super__.initialize.apply(this, [layer, currentDate]);
     },
 
     /**

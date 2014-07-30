@@ -26,14 +26,14 @@ define([
       tipsy: true
     },
 
-    initialize: function(layer) {
+    initialize: function(layer, currentDate) {
       _.bindAll(this, '_onClickTick', '_selectDate');
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
       this.data = this._getData();
 
-      this.layer.currentDate = this.layer.currentDate ||
+      this.currentDate = currentDate ||
         [this.data[this.data.length - 1].start, this.data[this.data.length - 1].end];
 
       // d3 slider objets
@@ -42,8 +42,8 @@ define([
 
       this.render(_.bind(function() {
         this._selectDate({
-          start: this.layer.currentDate[0],
-          end: this.layer.currentDate[1]
+          start: this.currentDate[0],
+          end: this.currentDate[1]
         });
       }, this));
 
@@ -138,7 +138,7 @@ define([
 
     _onClickTick: function(el, date) {
       this._selectDate(date, el);
-      this._updateTimelineDate([date.start, date.end]);
+      this._updateCurrentDate([date.start, date.end]);
     },
 
     /**
@@ -203,8 +203,8 @@ define([
      *
      * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
-    _updateTimelineDate: function(date) {
-      this.layer.currentDate = date;
+    _updateCurrentDate: function(date) {
+      this.currentDate = date;
       this.presenter.updateTimelineDate(date);
     },
 
@@ -213,7 +213,7 @@ define([
     },
 
     getCurrentDate: function() {
-      return this.layer.currentDate;
+      return this.currentDate;
     }
   });
 

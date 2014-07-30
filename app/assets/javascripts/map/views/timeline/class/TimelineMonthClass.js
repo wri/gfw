@@ -35,11 +35,11 @@ define([
       'click .play': '_togglePlay'
     },
 
-    initialize: function(layer) {
+    initialize: function(layer, currentDate) {
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
-      this.layer.currentDate = this.layer.currentDate || this.options.dateRange;
+      this.currentDate = currentDate || this.options.dateRange;
       // Transitions duration are 100 ms. Give time to them to finish.
       this._updateCurrentDate = _.debounce(this._updateCurrentDate,
         this.options.effectsSpeed);
@@ -165,14 +165,14 @@ define([
           .attr('transform', 'translate(-7,{0})'.format(height/2 - 12))
           .attr('width', 14)
           .attr('height', 14)
-          .attr('x', this.xscale(this._dateToDomain(this.layer.currentDate[0])))
+          .attr('x', this.xscale(this._dateToDomain(this.currentDate[0])))
           .attr('y', -1)
           .attr('rx', 2)
           .attr('ry', 2);
 
       this.handlers.right = this.handlers.left
          .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-         .attr('x', this.xscale(this._dateToDomain(this.layer.currentDate[1])));
+         .attr('x', this.xscale(this._dateToDomain(this.currentDate[1])));
 
       this.slider.select('.background')
           .style('cursor', 'pointer')
@@ -322,12 +322,12 @@ define([
      * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
     _updateCurrentDate: function(date) {
-      this.layer.currentDate = date;
+      this.currentDate = date;
       this.presenter.updateTimelineDate(date);
     },
 
     getCurrentDate: function() {
-      return this.layer.currentDate;
+      return this.currentDate;
     },
 
     _updateYearsStyle: function() {

@@ -21,10 +21,10 @@ define([
       dataMaxZoom: 17,
     },
 
-    init: function(layer, map) {
+    init: function(layer, options, map) {
       this.tiles = {};
       this.layer = layer;
-      this._super(layer, map);
+      this._super(layer, options, map);
       this.getDates();
       this.cartoSQL = new cartodb.SQL({
         user: this.options.cartodbUserName
@@ -216,8 +216,8 @@ define([
     },
 
     getDates: function() {
-      this.startMonth = Math.abs(this.layer.mindate.diff(this.layer.currentDate[0], 'months'));
-      this.endMonth = Math.abs(this.layer.mindate.diff(this.layer.currentDate[1], 'months'));
+      this.startMonth = Math.abs(this.layer.mindate.diff(this.currentDate[0], 'months'));
+      this.endMonth = Math.abs(this.layer.mindate.diff(this.currentDate[1], 'months'));
     }
 
   });

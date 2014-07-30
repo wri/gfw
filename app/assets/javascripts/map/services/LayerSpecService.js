@@ -26,7 +26,7 @@ define([
       }
     },
 
-    init: function(a) {
+    init: function() {
       _.bindAll(this, '_removeLayer');
       this.model = new LayerSpecModel();
     },
@@ -174,8 +174,8 @@ define([
     },
 
     /**
-     * Called by PlaceService. Returns place parameters representing the state of
-     * the layers.
+     * Called by PlaceService. Returns place parameters representing the
+     * state of the layers.
      *
      * @return {object} params
      */

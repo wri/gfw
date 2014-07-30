@@ -152,9 +152,10 @@ define([
     /**
      * Add passed layers to the map and remove the rest.
      *
-     * @param {object} layers
+     * @param {object} layers  Layers object
+     * @param {object} options Layers options from url
      */
-    setLayers: function(layers) {
+    setLayers: function(layers, options) {
       // Remove layers if needed
       _.each(this.layerInst, function(inst, layerSlug) {
         if (!layers[layerSlug]) {
@@ -166,19 +167,22 @@ define([
        * Sort layers by position before calling.
        * This way layers are going to be rendered always on the right order.
        */
-      _.map(_.sortBy(_.values(layers), 'position'),
-        this._addLayer, this);
+      layers = _.sortBy(_.values(layers), 'position');
+      _.each(layers, function(layer) {
+        this._addLayer(layer, options);
+      }, this);
     },
 
     /**
      * Used by MapView to add a layer to the map.
      *
      * @param {Object} layer The layer object
+     * @param {object} options Layers options from url
      */
-    _addLayer: function(layer) {
+    _addLayer: function(layer, options) {
       if (this.layersViews[layer.slug] && !this.layerInst[layer.slug]) {
         var layerView = this.layerInst[layer.slug] =
-          new this.layersViews[layer.slug](layer, this.map);
+          new this.layersViews[layer.slug](layer, options, this.map);
 
         var position = 0;
         var layersCount = this.map.overlayMapTypes.getLength();

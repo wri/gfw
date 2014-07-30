@@ -17,9 +17,9 @@ define([
       urlTemplate: ''
     },
 
-    init: function(layer, map) {
+    init: function(layer, options, map) {
       _.bindAll(this, '_getUrl');
-      this._super(layer, map);
+      this._super(layer, options, map);
       this._setImageMaptype();
     },
 

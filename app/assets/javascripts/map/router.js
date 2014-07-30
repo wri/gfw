@@ -51,16 +51,16 @@ define([
       }, _.parseUrl());
 
       if (!this.mapView) {
-        this.layersNavView = new LayersNavView();
-        this.mapView = new MapView();
-        this.legendView = new LegendView();
-        this.maptypeView = new MaptypeView();
-        this.searchboxView = new SearchboxView();
-        this.thresholdView = new ThresholdView();
-        this.timelineView = new TimelineView();
-        this.analysisToolView = new AnalysisToolView(this.mapView.map);
-        this.analysisResultsView = new AnalysisResultsView();
-        this.shareView = new ShareView();
+        var mapView = new MapView();
+        new LayersNavView();
+        new LegendView();
+        new MaptypeView();
+        new SearchboxView();
+        new ThresholdView();
+        new TimelineView();
+        new AnalysisToolView(mapView.map);
+        new AnalysisResultsView();
+        new ShareView();
       }
 
       this.placeService.publishPlace(params);

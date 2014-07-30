@@ -20,7 +20,7 @@ define([
       analysis: false
     },
 
-    init: function(layer, map) {
+    init: function(layer, options, map) {
       this.map = map;
       this.layer = layer;
       this.name = layer.slug;

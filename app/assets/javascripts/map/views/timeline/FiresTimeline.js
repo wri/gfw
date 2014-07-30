@@ -13,7 +13,7 @@ define([
 
   var FiresTimeline = TimelineBtnClass.extend({
 
-    initialize: function(layer) {
+    initialize: function(layer, currentDate) {
       this.presenter = new Presenter(this);
 
       this.options = {
@@ -23,7 +23,7 @@ define([
         tipsy: false
       };
 
-      FiresTimeline.__super__.initialize.apply(this, [layer]);
+      FiresTimeline.__super__.initialize.apply(this, [layer, currentDate]);
     },
 
     /**

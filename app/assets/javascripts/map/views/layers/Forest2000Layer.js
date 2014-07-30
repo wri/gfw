@@ -19,10 +19,10 @@ define([
       urlTemplate: 'http://earthengine.google.org/static/hansen_2013/gfw_tree_loss_year_{threshold}{/z}{/x}{/y}.png'
     },
 
-    init: function(layer, map) {
+    init: function(layer, options, map) {
       this.presenter = new Presenter(this);
-      this._super(layer, map);
-      this.layer.threshold = this.layer.threshold || this.options.threshold;
+      this._super(layer, options, map);
+      this.threshold = options.threshold || this.options.threshold;
     },
 
     /**
@@ -52,13 +52,13 @@ define([
     },
 
     setThreshold: function(threshold) {
-      this.layer.threshold = threshold;
+      this.threshold = threshold;
       this.presenter.updateLayer();
     },
 
     _getUrl: function(x, y, z) {
       return new UriTemplate(this.options.urlTemplate)
-        .fillFromObject({x: x, y: y, z: z, threshold: this.layer.threshold});
+        .fillFromObject({x: x, y: y, z: z, threshold: this.threshold});
     }
 
   });

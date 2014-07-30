@@ -31,9 +31,13 @@ define([
       mps.subscribe('Place/go', _.bind(function(place) {
         if (place.params.name === 'map') {
           this._setOptions(place.params);
-          this._setLayerSpec(place.layerSpec);
+          this._setLayerSpec(place.layerSpec, place.params);
         }
       }, this));
+
+      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
+        this._setLayerSpec(layerSpec);
+      },this));
 
       mps.subscribe('Map/set-zoom', _.bind(function(zoom) {
         this.view.setZoom(zoom);
@@ -46,10 +50,6 @@ define([
       mps.subscribe('Map/set-center', _.bind(function(lat, lng) {
         this.view.setCenter(lat, lng);
       }, this));
-
-      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this._setLayerSpec(layerSpec);
-      },this));
 
       mps.subscribe('Maptype/change', _.bind(function(maptype) {
         this.view.setMapTypeId(maptype);
@@ -70,9 +70,24 @@ define([
       mps.publish('Place/register', [this]);
     },
 
-    _setLayerSpec: function(layerSpec) {
-      this.view.setLayers(layerSpec.getLayers());
-      mps.publish('Map/layers-changed', []);
+    /**
+     * [_setLayerSpec description].
+     *
+     * @param {object} layerSpec
+     * @param {object} placeParams
+     */
+    _setLayerSpec: function(layerSpec, placeParams) {
+      var options = {};
+
+      if (placeParams && placeParams.begin && placeParams.end) {
+        options.currentDate = [placeParams.begin, placeParams.end];
+      }
+
+      if (placeParams && placeParams.threshold) {
+        options.threshold = placeParams.threshold;
+      }
+
+      this.view.setLayers(layerSpec.getLayers(), options);
     },
 
     /**
@@ -82,25 +97,6 @@ define([
      */
     _setOptions: function(params) {
       this.view.setOptions(params);
-    },
-
-    /**
-     * Retuns place parameters representing the state of the MapView and
-     * layers. Called by PlaceService.
-     *
-     * @return {Object} Params representing the state of the MapView and layers
-     */
-    getPlaceParams: function() {
-      var p = {};
-      var mapCenter = this.view.getCenter();
-
-      p.name = 'map';
-      p.zoom = this.view.getZoom();
-      p.lat = mapCenter.lat;
-      p.lng = mapCenter.lng;
-      p.maptype = this.view.getMapTypeId();
-
-      return p;
     },
 
     onOptionsChange: function() {
@@ -133,6 +129,25 @@ define([
     onCenterChange: function(lat, lng) {
       mps.publish('Map/center-change', [lat, lng]);
       mps.publish('Place/update', [{go: false}]);
+    },
+
+    /**
+     * Retuns place parameters representing the state of the MapView and
+     * layers. Called by PlaceService.
+     *
+     * @return {Object} Params representing the state of the MapView and layers
+     */
+    getPlaceParams: function() {
+      var p = {};
+      var mapCenter = this.view.getCenter();
+
+      p.name = 'map';
+      p.zoom = this.view.getZoom();
+      p.lat = mapCenter.lat;
+      p.lng = mapCenter.lng;
+      p.maptype = this.view.getMapTypeId();
+
+      return p;
     }
 
   });
