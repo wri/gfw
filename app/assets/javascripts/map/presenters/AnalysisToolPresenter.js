@@ -139,7 +139,7 @@ define([
       } else if (resource.iso) {
         data.iso = resource.iso;
       } else if (resource.wdpaid) {
-        data.wdpaid = resource.wdpaid
+        data.wdpaid = resource.wdpaid;
       }
 
       this._currentAnalysis = resource;

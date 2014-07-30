@@ -7,6 +7,7 @@
 define([
   'backbone',
   'underscore',
+  'mps',
   'presenters/MapPresenter',
   'views/maptypes/grayscaleMaptype',
   'views/maptypes/treeheightMaptype',
@@ -35,7 +36,7 @@ define([
   'views/layers/UserStoriesLayer',
   'views/layers/MongabayStoriesLayer',
   'views/layers/InfoamazoniaStoriesLayer'
-], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype, landsatMaptype,
+], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, landsatMaptype,
   UMDLossLayer, ForestGainLayer, FormaLayer, FormaCoverLayer, ImazonLayer, ImazonCoverLayer, ModisLayer, ModisCoverLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, IdnPrimaryLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
   ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, LandRightsLayer, UserStoriesLayer, MongabayStoriesLayer, InfoamazoniaStoriesLayer) {
@@ -139,9 +140,10 @@ define([
       }, this));
 
       google.maps.event.addListener(this.map, 'click', _.bind(function(wdpa) {
-        if (! !!wdpa.wdpaid) return;
-
-        mps.publish('MapView/click-protected', [wdpa])
+        if (!(!!wdpa.wdpaid)) {
+          return;
+        }
+        mps.publish('MapView/click-protected', [wdpa]);
       }, this));
     },
 
