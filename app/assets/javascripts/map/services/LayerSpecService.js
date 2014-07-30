@@ -26,11 +26,19 @@ define([
       }
     },
 
-    init: function() {
+    init: function(a) {
       _.bindAll(this, '_removeLayer');
       this.model = new LayerSpecModel();
     },
 
+    /**
+     * Call mapLayerService to get the requested layers, and
+     * then call _toggleLayer to toggle them.
+     *
+     * @param  {array}    where   layer slugs and ids
+     * @param  {function} success callback
+     * @param  {function} error   callback
+     */
     toggle: function(where, success, error) {
       mapLayerService.getLayers(
         where,
@@ -42,7 +50,7 @@ define([
     },
 
     /**
-     * Toggle a layer form LayerSpecModel.
+     * Add/delete a layer from the model.
      *
      * @param  {object} layer
      * @return {layer}  return layer or false.
@@ -77,13 +85,7 @@ define([
      */
     _addLayer: function(layer) {
       var category = this._getCategory(layer.category_slug);
-      // options = !_.isEmpty(options) ? options : this._getOptionsFromLayers();
       category[layer.slug] = this._standardizeAttrs(layer);
-    },
-
-    _getCategory: function(name) {
-      !this.model.get(name) && this.model.set(name, {});
-      return this.model.get(name);
     },
 
     /**
@@ -93,27 +95,46 @@ define([
      * @param  {object} layer The layer object
      */
     _removeLayer: function(layer) {
+      // delete layer
       delete this.model.get(layer.category_slug)[layer.slug];
 
+      // delete its sublayers
       if (layer.sublayer) {
         var sublayer = this.model.getLayer({slug: layer.sublayer});
         sublayer && this._removeLayer(sublayer);
       }
 
+      // delete category if empty
       if (_.isEmpty(this.model.get(layer.category_slug))) {
         this._removeCategory(layer.category_slug);
       }
     },
 
-    _removeCategory: function(categorySlug) {
-      this.model.unset(categorySlug);
+    /**
+     * Set/get a layer category from the model.
+     *
+     * @param  {string} slug category slug
+     * @return {object}      category
+     */
+    _getCategory: function(slug) {
+      !this.model.get(slug) && this.model.set(slug, {});
+      return this.model.get(slug);
+    },
+
+    /**
+     * Remove a layer category from the model.
+     *
+     * @param  {string} slug category slug
+     */
+    _removeCategory: function(slug) {
+      this.model.unset(slug);
     },
 
     /**
      * Validate is current layer combination is valid or not.
      *
-     * @param  {[type]} layer [description]
-     * @return {[type]}       [description]
+     * @param  {object}  layer layer object
+     * @return {boolean}       combination is valid
      */
     _combinationIsValid: function(layer) {
       var currentLayers = this.model.get(layer.category_slug);
@@ -135,36 +156,10 @@ define([
     },
 
     /**
-     * TODO => When we toggle a layer, we could get to the point where we are destroying a layer
-     * and later, when we want to toggle it back, we want some options from the url to append them
-     * to the layer. This happends on the PlaceService whenever we have a new route (go=true).
-     * But then, layerSpec object is moving around without passing any more options.
-     *
-     * Instead passing options to the LayerSpec.toggle, it would be better to inject PlaceService
-     * into this service and get the url params whenever we need it. This means we need to
-     * change the way this service is initialized. In the meantime, we can use this function, to
-     * get those params from other active layers.
-     *
-     * @return {object} options object
-     */
-    _getOptionsFromLayers: function() {
-      var options = {};
-
-      _.each(this.model.getLayers(), function(layer) {
-        if (layer.threshold) {
-          options.threshold = layer.threshold;
-        }
-      });
-
-      return options;
-    },
-
-    /**
      * Standarize layer attributes.
      *
-     * @param  {obj} layer The layer object
-     * @param  {obj} opts  Layer extra parameters.
-     * @return {obj} layer The layer object
+     * @param  {object} layer layer object
+     * @return {object} layer
      */
     _standardizeAttrs: function(layer) {
       if (layer.mindate) {
@@ -175,51 +170,14 @@ define([
         layer.maxdate = moment(layer.maxdate);
       }
 
-      // if (options.date && layer.category_slug === 'forest_clearing' &&
-      //   layer.slug !== 'forestgain') {
-      //   layer.currentDate = options.date;
-      // }
-
-      // if (options.threshold && (layer.slug === 'forest2000' || layer.slug === 'umd_tree_loss_gain')) {
-      //   layer.threshold = Number(options.threshold);
-      // }
-
       return layer;
     },
 
     /**
-     * Return array of filter objects {slug:, category_slug:} for baselayers.
+     * Called by PlaceService. Returns place parameters representing the state of
+     * the layers.
      *
-     * @param  {string} layers Array of baselayer slug names
-     * @return {Array} Filter  objects for baselayers
-     */
-    getBaselayerFilters: function(layers) {
-      var filters = _.map(layers, function (name) {
-        return {slug: name, category_slug: 'forest_clearing'};
-      });
-
-      return filters;
-    },
-
-    /**
-     * Return array of filter objects {id:} for sublayers.
-     *
-     * @param  {array} layers Array of sublayer ids
-     * @return {Array} Filter objects for sublayers
-     */
-    getSublayerFilters: function(layers) {
-      var filters = _.map(layers, function(id) {
-        return {id: Number(id)};
-      });
-
-      return filters;
-    },
-
-    /**
-     * Retuns place parameters representing the state of the LayerNavView and
-     * layers. Called by PlaceService.
-     *
-     * @return {Object} Params representing the state of the LayerNavView and layers
+     * @return {object} params
      */
     getPlaceParams: function() {
       var p = {};
@@ -236,4 +194,5 @@ define([
   var service = new LayerSpecService();
 
   return service;
+
 });

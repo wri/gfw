@@ -15,13 +15,6 @@ define([
 
     init: function(view) {
       this.view = view;
-      this._subscribe();
-    },
-
-    /**
-     * Subscribe to application events.
-     */
-    _subscribe: function() {
     },
 
     /**

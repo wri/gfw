@@ -40,9 +40,9 @@ define([
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
         this._setTimeline(place.layerSpec);
-        if (!place.params.date) {
-          mps.publish('Place/update', [{go: false}]);
-        }
+        // if (!place.params.date) {
+        //   mps.publish('Place/update', [{go: false}]);
+        // }
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
@@ -64,16 +64,23 @@ define([
           this.view.model.set({hidden: true, forceHidden: true});
         }
       }, this));
+
+      mps.publish('Place/register', [this]);
     },
 
-    timelineDisabled: function() {
+    _timelineDisabled: function() {
       mps.publish('Timeline/disabled', []);
     },
 
-    timelineEnabled: function(layerSlug) {
+    _timelineEnabled: function(layerSlug) {
       mps.publish('Timeline/enabled', [layerSlug]);
     },
 
+    /**
+     * Add/delete timeline depend on the current active layers.
+     *
+     * @param {object} layerSpec
+     */
     _setTimeline: function(layerSpec) {
       var baselayer = _.intersection(_.pluck(layerSpec.getBaselayers(),
         'slug'), _.keys(this.timelineViews))[0];
@@ -84,12 +91,12 @@ define([
       }
 
       if (!baselayer) {
-        this.timelineDisabled();
+        this._timelineDisabled();
         return;
       }
 
       if (!this.current && baselayer) {
-        this.timelineEnabled(baselayer.slug);
+        this._timelineEnabled(baselayer.slug);
       }
 
       baselayer = layerSpec.getLayer({slug: baselayer});
@@ -107,7 +114,16 @@ define([
       this.current = null;
       this.view.model.set('hidden', true);
       return !!!this.current;
+    },
+
+    getPlaceParams: function() {
+      var p = {};
+      var date = this.current ? this.current.getCurrentDate() : null;
+      p.begin = date[0] || null;
+      p.end = date[1] || null;
+      return p;
     }
+
   });
 
   return TimelinePresenter;

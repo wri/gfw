@@ -72,8 +72,7 @@ define([
     },
 
     /**
-     * Create new PlaceService with supplied MapLayerService and
-     * Backbone.Router.
+     * Create new PlaceService with supplied Backbone.Router.
      *
      * @param  {Backbond.Router} router Instance of Backbone.Router
      * @return {PlaceService}    Instance of PlaceService
@@ -82,8 +81,6 @@ define([
       this.router = router;
       this._presenters = [];
       this._subscribe();
-      this.layerSpecService = layerSpecService;
-      layerSpecService.placeService = this;
       this._presenters.push(layerSpecService); // this makes the test fail
     },
 
@@ -138,11 +135,9 @@ define([
       place.params.name = place.params.name || name;
 
       if (go) {
-        var baselayers = this.layerSpecService.getBaselayerFilters(place.params.baselayers);
-        var sublayers = this.layerSpecService.getSublayerFilters(place.params.sublayers);
-        var where = _.union(baselayers, sublayers);
+        var where = _.union(place.params.baselayers, place.params.sublayers);
 
-        this.layerSpecService.toggle(
+        layerSpecService.toggle(
           where,
           _.bind(function(layerSpec) {
             place.layerSpec = layerSpec;
@@ -162,7 +157,8 @@ define([
      * @return {string} The route URL
      */
     _getRoute: function(urlParams) {
-      return decodeURIComponent(new UriTemplate(this._uriTemplate).fillFromObject(urlParams));
+      var url = new UriTemplate(this._uriTemplate).fillFromObject(urlParams);
+      return decodeURIComponent(url);
     },
 
     /**
@@ -174,8 +170,14 @@ define([
     _standardizeParams: function(params) {
       var p = _.extendNonNull({}, this.defaults, params);
 
-      p.baselayers = p.baselayers.split(',');
-      p.sublayers = p.sublayers ? p.sublayers.split(',') : null;
+      p.baselayers = _.map(p.baselayers.split(','), function(slug) {
+        return {slug: slug};
+      });
+
+      p.sublayers = p.sublayers ? _.map(p.sublayers.split(','), function(id) {
+        return {id: id};
+      }) : [];
+
       p.zoom = _.toNumber(p.zoom);
       p.lat = _.toNumber(p.lat);
       p.lng = _.toNumber(p.lng);
@@ -195,7 +197,7 @@ define([
      * @return {Object} Params ready for URL
      */
     _destandardizeParams: function(params) {
-      var p = _.clone(params);
+      var p = _.extendNonNull({}, this.defaults, params);
 
       p.baselayers = p.baselayers.join(',');
       p.sublayers = p.sublayers ? p.sublayers.join(',') : null;

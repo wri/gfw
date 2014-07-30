@@ -326,6 +326,10 @@ define([
       this.presenter.updateTimelineDate(date);
     },
 
+    getCurrentDate: function() {
+      return this.layer.currentDate;
+    },
+
     _updateYearsStyle: function() {
       var self = this;
       d3.select('.xaxis-years').selectAll('text').filter(function(d) {
