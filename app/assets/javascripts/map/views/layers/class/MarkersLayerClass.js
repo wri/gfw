@@ -28,7 +28,7 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    init: function(layer, map) {
+    init: function(layer, options, map) {
       this.markers = [];
       this.map = map;
       this.options = _.extend({}, this.defaults, this.options || {});
@@ -88,7 +88,7 @@ define([
 
         var marker = new CustomMarker(latlng, this.map, markerOptions);
 
-        google.maps.event.addListener(marker, 'click', _.bind(function(ev) {
+        google.maps.event.addListener(marker, 'click', _.bind(function() {
           if (this.infowindow) {
             this.infowindow.remove();
           }

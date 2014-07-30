@@ -30,3 +30,34 @@
   font-weight: normal;
   font-style: normal;
 }
+
+
+// Grid
+$max-container-width: 980px;
+$min-container-width: 980px;
+$grid-columns: 12;
+$grid-gutter-width: 1%;
+
+$primary-color: #9FBA2B;
+$default-color: #463F52;
+
+$cGreen: #97Bd3d;
+
+$font-light: "fira_sans_otlight", Georgia, sans-serif;
+$font-medium: "fira_sans_otmedium", Georgia, sans-serif;
+$font-regular: "fira_sans_otregular", Georgia, sans-serif;
+
+
+/* =Fonts
+----------------------------------------------- */
+.serif {
+  font-family: "Georgia", serif;
+}
+
+.sans-serif {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.futura {
+  font-family: "Futura", sans-serif;
+}

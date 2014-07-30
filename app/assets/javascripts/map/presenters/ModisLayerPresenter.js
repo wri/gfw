@@ -26,7 +26,7 @@ define([
       this._subs.push(
         mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
           if (this.view.getName() === layerSlug) {
-            this.view.setTimelineDate(date);
+            this.view.setCurrentDate(date);
             this.view.updateTiles();
           }
         }, this)));

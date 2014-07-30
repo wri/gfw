@@ -35,7 +35,7 @@ define([
       }, this));
 
       mps.subscribe('Place/go', _.bind(function(place) {
-        this._setBaselayer(place.params.layerSpec);
+        this._setBaselayer(place.layerSpec);
 
         if (place.params.iso !== 'ALL') {
           this._drawIso(place.params.iso);
@@ -59,6 +59,10 @@ define([
         if (this._currentAnalysis) {
           this.publishAnalysis({geom: this.view.polygon});
         }
+      }, this));
+
+      mps.subscribe('MapView/click-protected', _.bind(function(wdpa) {
+        this.publishAnalysis(wdpa);
       }, this));
 
       mps.publish('Place/register', [this]);
@@ -130,11 +134,12 @@ define([
       data.dataset = this.datasets[this.baselayer.slug];
       // data.period = '{0},{1}'.format(this.baselayer.currentDate[0].year(),
       //   this.baselayer.currentDate[1].year());
-
       if (resource.geom) {
         data.geojson = resource.geom;
       } else if (resource.iso) {
         data.iso = resource.iso;
+      } else if (resource.wdpaid) {
+        data.wdpaid = resource.wdpaid;
       }
 
       this._currentAnalysis = resource;
@@ -194,6 +199,9 @@ define([
     getPlaceParams: function() {
       if (!this._currentAnalysis) {return;}
       var p = {};
+
+      p.iso = null;
+      p.geom = null;
 
       if (this._currentAnalysis.iso) {
         p.iso = this._currentAnalysis.iso;

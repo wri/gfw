@@ -1,16 +1,8 @@
-<% content_for :css do %>
-  <%= stylesheet_link_tag "countries" %>
-<% end %>
 <% content_for :js do %>
   <script>
-    $(function() {
-      cdb.init(function() {
-        window.countries_show = new gfw.ui.view.CountriesShow({
-          iso: "<%= @country['iso'] %>"
-        });
-      });
-    });
+    var ISO = '<%= @country['iso'] %>';
   </script>
+  <%= render "countries_templates" %>
 <% end %>
 
 <% content_for :css do %>
@@ -182,7 +174,7 @@
       </div>
     </div>
   </section>
-  
+
   <!-- tenure -->
   <a href="#" id="tenure" class="anchor-country-info"></a>
   <section class="country-section country-tenure" data-scroll-index='4'>
@@ -398,10 +390,10 @@
       <noscript>Please enable JavaScript to view the <a href='http://disqus.com/?ref_noscript'>comments powered by Disqus.</a></noscript>
     </div>
   </section>
+</div>
 
-  <div id='sources' class='sources notranslate'>
-    <%= render 'shared/countries' %>
-    <%= render 'shared/sources' %>
-  </div>
 
+<div id='sources' class='sources notranslate is-hidden'>
+  <%= render 'countries' %>
+  <%= render 'shared/sources' %>
 </div>

@@ -19,10 +19,10 @@ define([
         'WHERE date BETWEEN to_date(\'{startYear}-{startMonth}\',\'YYYY-MM\') AND to_date(\'{endYear}-{endMonth}\',\'YYYY-MM\')'
     },
 
-    init: function(layer, map) {
+    init: function(layer, options, map) {
       this.presenter = new Presenter(this);
-      this._super(layer, map);
-      this.layer.currentDate = this.layer.currentDate || this.options.dateRange;
+      this.currentDate = options.currentDate || [moment(layer.mindate), moment(layer.maxdate)];
+      this._super(layer, options, map);
     },
 
     /**
@@ -30,8 +30,8 @@ define([
      *
      * @param {Array} date 2D array of moment dates [begin, end]
      */
-    setTimelineDate: function(date) {
-      this.layer.currentDate = date;
+    setCurrentDate: function(date) {
+      this.currentDate = date;
       this.updateTiles();
     },
 
@@ -45,10 +45,10 @@ define([
     getQuery: function() {
       var query = new UriTemplate(this.options.sql).fillFromObject({
         tableName: this.layer.table_name,
-        startMonth: this.layer.currentDate[0].format('MM'),
-        startYear: this.layer.currentDate[0].format('YYYY'),
-        endMonth: this.layer.currentDate[1].format('MM'),
-        endYear: this.layer.currentDate[1].format('YYYY')
+        startMonth: this.currentDate[0].format('MM'),
+        startYear: this.currentDate[0].format('YYYY'),
+        endMonth: this.currentDate[1].format('MM'),
+        endYear: this.currentDate[1].format('YYYY')
       });
       return query;
     }

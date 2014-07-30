@@ -17,10 +17,10 @@ define([
       dataMaxZoom: 17
     },
 
-    init: function(layer, map) {
+    init: function(layer, options, map) {
       _.bindAll(this, 'filterCanvasImgdata');
       this.tiles = {};
-      this._super(layer, map);
+      this._super(layer, options, map);
     },
 
     _getLayer: function() {

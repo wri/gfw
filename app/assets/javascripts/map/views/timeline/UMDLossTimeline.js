@@ -18,14 +18,14 @@ define([
      *
      * @param  {object} layer The layer object
      */
-    initialize: function(layer) {
+    initialize: function(layer, currentDate) {
       this.presenter = new Presenter(this);
 
       this.options = {
         dateRange: [moment(layer.mindate), moment(layer.maxdate)]
       };
 
-      UMDLossTimeline.__super__.initialize.apply(this, [layer]);
+      UMDLossTimeline.__super__.initialize.apply(this, [layer, currentDate]);
     }
   });
 

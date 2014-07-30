@@ -33,7 +33,7 @@ define([
       }, this));
 
       mps.subscribe('Place/go', _.bind(function(place) {
-        this.view._toggleSelected(place.params.layerSpec.getLayers());
+        this.view._toggleSelected(place.layerSpec.getLayers());
       }, this));
     },
 
@@ -45,7 +45,7 @@ define([
     toggleLayer: function(layerSlug) {
       var where = [{slug: layerSlug}];
 
-      layerSpecService.toggle(where, {},
+      layerSpecService.toggle(where,
         _.bind(function(layerSpec) {
           mps.publish('LayerNav/change', [layerSpec]);
           mps.publish('Place/update', [{go: false}]);

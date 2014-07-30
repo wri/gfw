@@ -13,14 +13,14 @@ define([
 
   var ImazonTimeline = TimelineMonthClass.extend({
 
-    initialize: function(layer) {
+    initialize: function(layer, currentDate) {
       this.options = {
         dateRange: [moment(layer.mindate), moment(layer.maxdate)],
         player: false
       };
 
       this.presenter = new Presenter(this);
-      ImazonTimeline.__super__.initialize.apply(this, [layer]);
+      ImazonTimeline.__super__.initialize.apply(this, [layer, currentDate]);
     }
 
   });

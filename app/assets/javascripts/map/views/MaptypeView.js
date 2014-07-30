@@ -64,7 +64,6 @@ define([
      * @param  {string} maptype
      */
     selectMaptype: function(maptype) {
-      if (maptype.indexOf('landsat') === 0) {maptype = 'landsat';}
       var html = this.$widgetOpened.find('[data-maptype="{0}"]'.format(maptype)).clone();
       this.$el.find('.maptype-selected').html(html);
       this.model.set('boxClosed', true);

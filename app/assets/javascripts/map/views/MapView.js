@@ -7,6 +7,7 @@
 define([
   'backbone',
   'underscore',
+  'mps',
   'presenters/MapPresenter',
   'views/maptypes/grayscaleMaptype',
   'views/maptypes/treeheightMaptype',
@@ -33,11 +34,12 @@ define([
   'views/layers/ResourceRightsLayer',
   'views/layers/LandRightsLayer',
   'views/layers/UserStoriesLayer',
-  'views/layers/MongabayStoriesLayer'
-], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype, landsatMaptype,
+  'views/layers/MongabayStoriesLayer',
+  'views/layers/InfoamazoniaStoriesLayer'
+], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, landsatMaptype,
   UMDLossLayer, ForestGainLayer, FormaLayer, FormaCoverLayer, ImazonLayer, ImazonCoverLayer, ModisLayer, ModisCoverLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, IdnPrimaryLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
-  ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, LandRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
+  ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, LandRightsLayer, UserStoriesLayer, MongabayStoriesLayer, InfoamazoniaStoriesLayer) {
 
   'use strict';
 
@@ -83,7 +85,8 @@ define([
       resource_rights: ResourceRightsLayer,
       land_rights: LandRightsLayer,
       user_stories: UserStoriesLayer,
-      mongabay: MongabayStoriesLayer
+      mongabay: MongabayStoriesLayer,
+      infoamazonia: InfoamazoniaStoriesLayer
     },
 
     /**
@@ -92,6 +95,7 @@ define([
     initialize: function() {
       this.presenter = new Presenter(this);
       this.layerInst = {};
+      this.$maplngLng = $('.map-container .map-latlng');
       this.render();
     },
 
@@ -123,6 +127,7 @@ define([
       google.maps.event.addListener(this.map, 'zoom_changed',
         _.bind(function() {
           this.onZoomChange();
+          this.onCenterChange();
         }, this)
       );
       google.maps.event.addListener(this.map, 'dragend',
@@ -132,6 +137,13 @@ define([
 
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
         this.$el.addClass('is-loaded');
+      }, this));
+
+      google.maps.event.addListener(this.map, 'click', _.bind(function(wdpa) {
+        if (!(!!wdpa.wdpaid)) {
+          return;
+        }
+        mps.publish('MapView/click-protected', [wdpa]);
       }, this));
     },
 
@@ -143,15 +155,17 @@ define([
       };
 
       this.map.setOptions(params);
+      this.onCenterChange();
       this.presenter.onMaptypeChange(params.mapTypeId);
     },
 
     /**
      * Add passed layers to the map and remove the rest.
      *
-     * @param {object} layers
+     * @param {object} layers  Layers object
+     * @param {object} options Layers options from url
      */
-    setLayers: function(layers) {
+    setLayers: function(layers, options) {
       // Remove layers if needed
       _.each(this.layerInst, function(inst, layerSlug) {
         if (!layers[layerSlug]) {
@@ -163,19 +177,22 @@ define([
        * Sort layers by position before calling.
        * This way layers are going to be rendered always on the right order.
        */
-      _.map(_.sortBy(_.values(layers), 'position'),
-        this._addLayer, this);
+      layers = _.sortBy(_.values(layers), 'position');
+      _.each(layers, function(layer) {
+        this._addLayer(layer, options);
+      }, this);
     },
 
     /**
      * Used by MapView to add a layer to the map.
      *
      * @param {Object} layer The layer object
+     * @param {object} options Layers options from url
      */
-    _addLayer: function(layer) {
+    _addLayer: function(layer, options) {
       if (this.layersViews[layer.slug] && !this.layerInst[layer.slug]) {
         var layerView = this.layerInst[layer.slug] =
-          new this.layersViews[layer.slug](layer, this.map);
+          new this.layersViews[layer.slug](layer, options, this.map);
 
         var position = 0;
         var layersCount = this.map.overlayMapTypes.getLength();
@@ -202,9 +219,12 @@ define([
     },
 
     updateLayer: function(layerSlug) {
-      var layer = this.layerInst[layerSlug].layer;
+      var options = {};
+      var layer = this.layerInst[layerSlug];
+      options.currentDate = layer.currentDate ? layer.currentDate : null;
+      options.threshold = layer.threshold ? layer.threshold : null;
       this._removeLayer(layerSlug);
-      this._addLayer(layer);
+      this._addLayer(layer.layer, options);
     },
 
     /**
@@ -268,8 +288,8 @@ define([
       var center = this.map.getCenter();
       var lat = center.lat();
       var lng = center.lng();
-
       this.presenter.onCenterChange(lat, lng);
+      this.updateLatlngInfo(lat,lng);
     },
 
     /**
@@ -299,6 +319,14 @@ define([
       $('.zoom-out').on('click', _.bind(function() {
         this.setZoom(this.getZoom() - 1);
       }, this));
+    },
+
+    /**
+     * Updates
+     */
+    updateLatlngInfo: function(lat, lng) {
+      var html = 'Lat/long: {0}, {1}'.format(lat.toFixed(6), lng.toFixed(6));
+      this.$maplngLng.html(html);
     }
 
   });

@@ -9,8 +9,13 @@ define([
   'views/Widget',
   'presenters/LegendPresenter',
   'text!templates/legend/legend.handlebars',
-  'text!templates/legend/loss.handlebars'
-], function(_, Handlebars, Widget, Presenter, tpl, lossTpl) {
+  'text!templates/legend/lossLayerDetails.handlebars',
+  'text!templates/legend/imazonLayerDetails.handlebars',
+  'text!templates/legend/forest2000LayerDetails.handlebars',
+  'text!templates/legend/pantropicalLayerDetails.handlebars',
+  'text!templates/legend/idnPrimaryLayerDetails.handlebars'
+], function(_, Handlebars, Widget, Presenter, tpl, lossLayerDetailsTpl, imazonLayerDetailsTpl,
+    forest2000LayerDetailsTpl, pantropicalLayerDetailsTpl, idnPrimaryLayerDetailsTpl) {
 
   'use strict';
 
@@ -23,8 +28,12 @@ define([
     /**
      * Optional layers detail templates.
      */
-    detailTemplates: {
-      umd_tree_loss_gain : _.template(lossTpl)
+    detailsTemplates: {
+      umd_tree_loss_gain: Handlebars.compile(lossLayerDetailsTpl),
+      imazon: Handlebars.compile(imazonLayerDetailsTpl),
+      forest2000: Handlebars.compile(forest2000LayerDetailsTpl),
+      pantropical: Handlebars.compile(pantropicalLayerDetailsTpl),
+      idn_primary: Handlebars.compile(idnPrimaryLayerDetailsTpl)
     },
 
     options: {
@@ -45,30 +54,38 @@ define([
     },
 
     /**
-     * Render legends.
+     * Update legend widget by calling widget._update.
      *
-     * @param  {array} layers
+     * @param  {array}  categories layers ordered by category
+     * @param  {object} options    legend options
      */
-    _renderLegend: function(layers) {
-      var layersLength = 0;
+    _renderLegend: function(categories, options) {
+      var layers = _.flatten(categories);
+      var layersLength = layers.length;
 
-      for (var i = 0; i < layers.length; i++) {
-        layersLength += _.keys(layers[i]).length;
-      }
-
-      layers = _.map(layers, function(layer) {
-        layer.sublayer = (layer.sublayer !== '') ? layer.sublayer : null;
-        return layer;
+      // Append details template to layer.
+      _.each(layers, function(layer) {
+        if (this.detailsTemplates[layer.slug]) {
+          layer.detailsTpl = this.detailsTemplates[layer.slug]({
+            threshold: options.threshold || 10,
+            layerTitle: layer.title
+          });
+        }
       }, this);
+
       var html = this.template({
-        layers: layers,
-        layersLength: layersLength,
-        detailTemplates: this.detailTemplates
+        categories: categories,
+        layersLength: layersLength
       });
 
       this._update(html);
     },
 
+    /**
+     * Toggle selected sublayers on the legend widget.
+     *
+     * @param  {object} layers The layers object
+     */
     toggleSelected: function(layers) {
       _.each(this.$el.find('.layer-sublayer'), function(div) {
         var $div = $(div);
@@ -89,12 +106,12 @@ define([
      *
      * @param  {array} layers
      */
-    update: function(layers) {
-      if (layers.length === 0) {
+    update: function(categories, options) {
+      if (categories.length === 0) {
         this.model.set('hidden', true);
       } else {
         this.model.set({'hidden': false, 'boxClosed': false});
-        this._renderLegend(layers);
+        this._renderLegend(categories, options);
       }
     },
 

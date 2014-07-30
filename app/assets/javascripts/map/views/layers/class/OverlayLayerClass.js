@@ -20,7 +20,7 @@ define([
       analysis: false
     },
 
-    init: function(layer, map) {
+    init: function(layer, options, map) {
       this.map = map;
       this.layer = layer;
       this.name = layer.slug;
@@ -58,7 +58,9 @@ define([
       if (!this.infowindow && this.options.infowindowAPI) {
 
         google.maps.event.addListener(this.map, 'click', _.bind(function(ev) {
-
+          if (!(!! ev.latLng)) {
+            return;
+          }
           var params = {
             lat: ev.latLng.lat(),
             lon: ev.latLng.lng()
