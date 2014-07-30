@@ -56,12 +56,12 @@ require([
      * Set/unset fixed logo when scrolling bottom/top.
      */
     _setFixedLogo: function() {
-      var $logo = this.$el.find('.header-nav__logo');
+      var $logo = this.$el.find('.brand');
       var $window = $(window);
 
       function setScroll(e) {
         var element = (e) ? e.currentTarget : window;
-        if (element.pageYOffset > 10) {
+        if (element.pageYOffset > 48) {
           $logo.addClass('is-fixed');
         } else {
           $logo.removeClass('is-fixed');
@@ -72,7 +72,7 @@ require([
       $window.on('scroll', setScroll);
 
       setTimeout(function() {
-        $window.scrollTop(75);
+        $window.scrollTop(111);
       }, 100);
     }
 

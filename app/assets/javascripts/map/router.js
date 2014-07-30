@@ -63,7 +63,7 @@ define([
         new ShareView();
       }
 
-      this.placeService.publishPlace(params);
+      this.placeService.publishNewPlace(params);
     },
 
     /**

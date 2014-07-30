@@ -58,7 +58,7 @@ define([
 
       mps.subscribe('Threshold/changed', _.bind(function(threshold) {
         this.status.set('threshold', threshold);
-        this._updateLegend();
+        this.status.get('layerSpec') && this._updateLegend();
       }, this));
     },
 

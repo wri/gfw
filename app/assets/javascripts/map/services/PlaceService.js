@@ -88,10 +88,6 @@ define([
      * Subscribe to application events.
      */
     _subscribe: function() {
-      // mps.subscribe('Place/go', _.bind(function(place) {
-      //   place.route && this.router.navigateTo();
-      // }, this));
-
       mps.subscribe('Place/register', _.bind(function(presenter) {
         this._presenters = _.union(this._presenters, [presenter]);
       }, this));
@@ -106,7 +102,7 @@ define([
      *
      * @param  {object} params
      */
-    publishPlace: function(params) {
+    publishNewPlace: function(params) {
       mps.publish('Place/update', [{
         go: true,
         name: 'map',
