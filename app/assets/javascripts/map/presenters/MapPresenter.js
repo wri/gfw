@@ -21,6 +21,7 @@ define([
      */
     init: function(view) {
       this.view = view;
+      this.currentThreshold = null;
       this._subscribe();
     },
 
@@ -31,6 +32,9 @@ define([
       mps.subscribe('Place/go', _.bind(function(place) {
         if (place.params.name === 'map') {
           this._setOptions(place.params);
+          if (place.params && place.params.threshold) {
+            this.currentThreshold = place.params.threshold;
+          }
           this._setLayerSpec(place.layerSpec, place.params);
         }
       }, this));
@@ -67,6 +71,10 @@ define([
         this.view.$maplngLng.addClass('hidden');
       }, this));
 
+      mps.subscribe('Threshold/changed', _.bind(function(threshold) {
+        this.currentThreshold = threshold;
+      }, this));
+
       mps.publish('Place/register', [this]);
     },
 
@@ -83,8 +91,8 @@ define([
         options.currentDate = [placeParams.begin, placeParams.end];
       }
 
-      if (placeParams && placeParams.threshold) {
-        options.threshold = placeParams.threshold;
+      if (this.currentThreshold) {
+        options.threshold = this.currentThreshold;
       }
 
       this.view.setLayers(layerSpec.getLayers(), options);

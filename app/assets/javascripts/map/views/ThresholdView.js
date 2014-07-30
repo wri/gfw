@@ -59,12 +59,8 @@ define([
     },
 
     _updateThreshold: function() {
-      this.presenter.changeThreshold(this.getThreshold());
+      this.presenter.changeThreshold(this.valuesMap[this.$slider.val()]);
       this._setVisibleRange();
-    },
-
-    getThreshold: function() {
-      return this.valuesMap[this.$slider.val()];
     },
 
     _setVisibleRange: function() {
@@ -79,15 +75,20 @@ define([
       this._updateThreshold();
     },
 
-    update: function(layers) {
+    /**
+     * Used by ThresholdPresenter to update the threshold view.
+     *
+     * @param  {object}  layers    layers objects
+     * @param  {integer} threshold threshold value
+     */
+    update: function(threshold) {
       var html = this.template({
-        layers: layers,
         valuesMap: this.valuesMap
       });
 
       this._update(html);
 
-      var val = _.invert(this.valuesMap)[layers[0].threshold] ||
+      var val = _.invert(this.valuesMap)[threshold] ||
         _.keys(this.valuesMap)[0];
 
       this.$slider.val(val);

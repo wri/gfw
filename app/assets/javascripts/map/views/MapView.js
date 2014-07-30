@@ -219,9 +219,12 @@ define([
     },
 
     updateLayer: function(layerSlug) {
-      var layer = this.layerInst[layerSlug].layer;
+      var options = {};
+      var layer = this.layerInst[layerSlug];
+      options.currentDate = layer.currentDate ? layer.currentDate : null;
+      options.threshold = layer.threshold ? layer.threshold : null;
       this._removeLayer(layerSlug);
-      this._addLayer(layer);
+      this._addLayer(layer.layer, options);
     },
 
     /**

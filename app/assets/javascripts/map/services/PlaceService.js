@@ -175,7 +175,7 @@ define([
       });
 
       p.sublayers = p.sublayers ? _.map(p.sublayers.split(','), function(id) {
-        return {id: id};
+        return {id: _.toNumber(id)};
       }) : [];
 
       p.zoom = _.toNumber(p.zoom);
