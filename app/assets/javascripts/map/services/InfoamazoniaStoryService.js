@@ -3,9 +3,10 @@
  *
  */
 define([
+  'underscore',
   'Class',
   'services/DataService'
-], function (Class, ds) {
+], function (_, Class, ds) {
 
   'use strict';
 

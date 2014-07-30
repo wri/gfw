@@ -4,12 +4,13 @@
  * @return InfoamazoniaStoriesLayer class (extends CartoDBLayerClass)
  */
 define([
+  'underscore',
   'handlebars',
   'views/layers/class/MarkersLayerClass',
   'services/InfoamazoniaStoryService',
   'views/layers/CustomMarker',
   'views/layers/CustomInfowindow'
-], function(Handlebars , MarkersLayerClass, InfoamazoniaStoryService, CustomMarker, CustomInfowindow) {
+], function(_, Handlebars , MarkersLayerClass, InfoamazoniaStoryService, CustomMarker, CustomInfowindow) {
 
   'use strict';
 
@@ -49,7 +50,7 @@ define([
 
         var marker = new CustomMarker(latlng, this.map, markerOptions);
 
-        google.maps.event.addListener(marker, 'click', _.bind(function(ev) {
+        google.maps.event.addListener(marker, 'click', _.bind(function() {
           if (this.infowindow) {
             this.infowindow.remove();
           }
