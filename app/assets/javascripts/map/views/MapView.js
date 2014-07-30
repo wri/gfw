@@ -33,11 +33,12 @@ define([
   'views/layers/ResourceRightsLayer',
   'views/layers/LandRightsLayer',
   'views/layers/UserStoriesLayer',
-  'views/layers/MongabayStoriesLayer'
+  'views/layers/MongabayStoriesLayer',
+  'views/layers/InfoamazoniaStoriesLayer'
 ], function(Backbone, _, Presenter, grayscaleMaptype, treeheightMaptype, landsatMaptype,
   UMDLossLayer, ForestGainLayer, FormaLayer, FormaCoverLayer, ImazonLayer, ImazonCoverLayer, ModisLayer, ModisCoverLayer, FiresLayer, Forest2000Layer,
   IntactForestLayer, PantropicalLayer, IdnPrimaryLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
-  ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, LandRightsLayer, UserStoriesLayer, MongabayStoriesLayer) {
+  ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, LandRightsLayer, UserStoriesLayer, MongabayStoriesLayer, InfoamazoniaStoriesLayer) {
 
   'use strict';
 
@@ -83,7 +84,8 @@ define([
       resource_rights: ResourceRightsLayer,
       land_rights: LandRightsLayer,
       user_stories: UserStoriesLayer,
-      mongabay: MongabayStoriesLayer
+      mongabay: MongabayStoriesLayer,
+      infoamazonia: InfoamazoniaStoriesLayer
     },
 
     /**

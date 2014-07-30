@@ -29,7 +29,7 @@ define([
 
   CustomInfowindow.prototype.draw = function() {
     // Check if the div has been created.
-    var div = this.div_, closeButton;
+    var div = this.div_, closeButton, analyseButton;
 
     if (!div) {
       // Create a overlay text DIV
@@ -42,16 +42,23 @@ define([
       div.innerHTML = this.options.infowindowContent || this.template({content: {data: this.options.infowindowData}});
 
       closeButton = $(div).find('.close')[0];
+      analyseButton = $(div).find('.analyse')[0];
 
       // Events
-      google.maps.event.addDomListener(div, 'click', _.bind(function(ev) {
-        ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      }, this));
+      // google.maps.event.addDomListener(div, 'click', _.bind(function(ev) {
+      //   ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+      // }, this));
 
       if (closeButton) {
         google.maps.event.addDomListener(closeButton, 'click', _.bind(function(ev) {
           ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
           this.remove();
+        }, this));
+      }
+
+      if (analyseButton) {
+        google.maps.event.addDomListener(closeButton, 'click', _.bind(function(ev) {
+          //
         }, this));
       }
 
