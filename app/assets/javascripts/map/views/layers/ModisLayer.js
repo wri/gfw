@@ -24,12 +24,12 @@ define([
       interactivity: 'cartodb_id'
     },
 
-    init: function(layer, map) {
-      _.bindAll(this, 'setTimelineDate');
+    init: function(layer, options, map) {
+      _.bindAll(this, 'setCurrentDate');
       this.presenter = new Presenter(this);
-      this._super(layer, map);
-      this.setTimelineDate(this.layer.currentDate || [moment(this.layer.maxdate).subtract('months', 2),
-        moment(this.layer.maxdate)]);
+      this._super(layer, options, map);
+      this.setCurrentDate(options.currentDate ||
+        [moment(this.layer.maxdate).subtract('months', 2), moment(this.layer.maxdate)]);
     },
 
     /**
@@ -38,8 +38,8 @@ define([
     getQuery: function() {
       var query = new UriTemplate(this.options.sql).fillFromObject({
         tableName: this.layer.table_name,
-        endYear: this.timelineDate[1].year(),
-        endMonth: this.timelineDate[1].month() + 1
+        endYear: this.currentDate[1].year(),
+        endMonth: this.currentDate[1].month() + 1
       });
 
       return query;
@@ -50,8 +50,8 @@ define([
      *
      * @param {Array} date 2D array of moment dates [begin, end]
      */
-    setTimelineDate: function(date) {
-      this.timelineDate = date;
+    setCurrentDate: function(date) {
+      this.currentDate = date;
     }
   });
 

@@ -21,8 +21,7 @@ define([
 
     init: function(view) {
       this.view = view;
-      // Current timeline view
-      this.current = null;
+      this.currentTimeline = null;
       this._subscribe();
     },
 
@@ -39,10 +38,10 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
-        this._setTimeline(place.params.layerSpec);
-        if (!place.params.date) {
-          mps.publish('Place/update', [{go: false}]);
-        }
+        this._setTimeline(place.layerSpec, place.params);
+        // if (!place.params.date) {
+        //   mps.publish('Place/update', [{go: false}]);
+        // }
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
@@ -54,60 +53,86 @@ define([
       }, this));
 
       mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
-        if (this.current) {
+        if (this.currentTimeline) {
           this.view.model.set({hidden: false, forceHidden: false});
         }
       }, this));
 
       mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
-        if (this.current) {
+        if (this.currentTimeline) {
           this.view.model.set({hidden: true, forceHidden: true});
         }
       }, this));
+
+      mps.publish('Place/register', [this]);
     },
 
-    timelineDisabled: function() {
+    _timelineDisabled: function() {
       mps.publish('Timeline/disabled', []);
     },
 
-    timelineEnabled: function(layerSlug) {
+    _timelineEnabled: function(layerSlug) {
       mps.publish('Timeline/enabled', [layerSlug]);
     },
 
-    _setTimeline: function(layerSpec) {
+    /**
+     * Add/delete timeline depend on the current active layers.
+     *
+     * @param {object} layerSpec
+     */
+    _setTimeline: function(layerSpec, placeParams) {
+      var currentDate = null;
       var baselayer = _.intersection(_.pluck(layerSpec.getBaselayers(),
         'slug'), _.keys(this.timelineViews))[0];
 
-      if (this.current) {
-        if (this.current.getName() === baselayer) {return;}
+      if (this.currentTimeline) {
+        if (this.currentTimeline.getName() === baselayer) {return;}
         this._removeTimeline();
       }
 
       if (!baselayer) {
-        this.timelineDisabled();
+        this._timelineDisabled();
         return;
       }
 
-      if (!this.current && baselayer) {
-        this.timelineEnabled(baselayer.slug);
+      if (!this.currentTimeline && baselayer) {
+        this._timelineEnabled(baselayer.slug);
+      }
+
+      if (placeParams && placeParams.begin && placeParams.end) {
+        currentDate = [placeParams.begin, placeParams.end];
       }
 
       baselayer = layerSpec.getLayer({slug: baselayer});
       this.view.update(baselayer);
-      this.current = new this.timelineViews[baselayer.slug](baselayer);
+      this.currentTimeline = new this.timelineViews[baselayer.slug](baselayer, currentDate);
       this.view.model.set('hidden', false);
     },
 
     /**
-     * Remove the current Timeline
+     * Remove the current timeline view.
      */
     _removeTimeline: function() {
-      if (!this.current) {return;}
-      this.current.remove();
-      this.current = null;
+      if (!this.currentTimeline) {return;}
+      this.currentTimeline.remove();
+      this.currentTimeline = null;
       this.view.model.set('hidden', true);
-      return !!!this.current;
+    },
+
+    /**
+     * Called by PlaceService. Return place parameters representing the
+     * of the current timeline.
+     *
+     * @return {object} begin/end params
+     */
+    getPlaceParams: function() {
+      var p = {};
+      var date = this.currentTimeline ? this.currentTimeline.getCurrentDate() : [];
+      p.begin = date[0] || null;
+      p.end = date[1] || null;
+      return p;
     }
+
   });
 
   return TimelinePresenter;

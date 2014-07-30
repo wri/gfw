@@ -29,7 +29,7 @@ define([
 
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
-        this.layerSpec = place.params.layerSpec;
+        this.layerSpec = place.layerSpec;
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {

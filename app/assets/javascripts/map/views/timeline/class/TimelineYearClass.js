@@ -32,12 +32,12 @@ define([
       'click .play': 'togglePlay'
     },
 
-    initialize: function(layer) {
-      _.bindAll(this, 'onAnimationBrush', 'onBrush', 'onBrushEnd', 'updateTimelineDate');
+    initialize: function(layer, currentDate) {
+      _.bindAll(this, 'onAnimationBrush', 'onBrush', 'onBrushEnd', 'updateCurrentDate');
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
-      this.layer.currentDate = this.layer.currentDate || this.options.dateRange;
+      this.currentDate = currentDate || this.options.dateRange;
 
       // Status
       this.playing = false;
@@ -93,8 +93,8 @@ define([
           .range([0, width])
           .clamp(true);
 
-      this.ext.left = this.xscale(this.layer.currentDate[0].year());
-      this.ext.right = this.xscale(this.layer.currentDate[1].year());
+      this.ext.left = this.xscale(this.currentDate[0].year());
+      this.ext.right = this.xscale(this.currentDate[1].year());
 
       // Set brush and listeners
       this.brush = d3.svg.brush()
@@ -147,14 +147,14 @@ define([
           .attr('transform', 'translate(0,' + (height / 2 - 6) + ')')
           .attr('width', 14)
           .attr('height', 14)
-          .attr('x', this.xscale(this.layer.currentDate[0].year()) + 16)
+          .attr('x', this.xscale(this.currentDate[0].year()) + 16)
           .attr('y', -1)
           .attr('rx', 2)
           .attr('ry', 2);
 
       this.handlers.right = this.handlers.left
          .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-         .attr('x', this.xscale(this.layer.currentDate[1].year()) - 30);
+         .attr('x', this.xscale(this.currentDate[1].year()) - 30);
 
       this.slider.select('.background')
           .style('cursor', 'pointer')
@@ -281,7 +281,7 @@ define([
 
         // Update timeline
         var startYear = Math.round(this.xscale.invert(this.handlers.left.attr('x')));
-        this.updateTimelineDate([moment([startYear]), moment([roundValue])]);
+        this.updateCurrentDate([moment([startYear]), moment([roundValue])]);
 
         this.yearsArr.push(roundValue);
       }
@@ -384,14 +384,14 @@ define([
 
     /**
      * Event fired when user ends the click.
-     * Update the timeline date. (calls updateTimelineDate)
+     * Update the timeline date. (calls updateCurrentDate)
      */
     onBrushEnd: function() {
       var startYear = Math.round(this.xscale.invert(this.handlers.left.attr('x')));
       var endYear = Math.round(this.xscale.invert(this.handlers.right.attr('x')));
       // give time to finish animations.
       setTimeout(function() {
-        this.updateTimelineDate([moment([startYear]), moment([endYear])]);
+        this.updateCurrentDate([moment([startYear]), moment([endYear])]);
       }.bind(this), 100);
     },
 
@@ -401,8 +401,8 @@ define([
      *
      * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
-    updateTimelineDate: function(date) {
-      this.layer.currentDate = date;
+    updateCurrentDate: function(date) {
+      this.currentDate = date;
       this.presenter.updateTimelineDate(date);
     },
 
@@ -426,7 +426,7 @@ define([
     },
 
     getCurrentDate: function() {
-      return this.layer.currentDate;
+      return this.currentDate;
     }
   });
 

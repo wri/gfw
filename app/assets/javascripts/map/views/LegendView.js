@@ -54,11 +54,12 @@ define([
     },
 
     /**
-     * Render legends.
+     * Update legend widget by calling widget._update.
      *
-     * @param  {array} layers
+     * @param  {array}  categories layers ordered by category
+     * @param  {object} options    legend options
      */
-    _renderLegend: function(categories) {
+    _renderLegend: function(categories, options) {
       var layers = _.flatten(categories);
       var layersLength = layers.length;
 
@@ -66,7 +67,7 @@ define([
       _.each(layers, function(layer) {
         if (this.detailsTemplates[layer.slug]) {
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
-            threshold: layer.threshold || 10,
+            threshold: options.threshold || 10,
             layerTitle: layer.title
           });
         }

@@ -13,14 +13,10 @@ define([
 
   var FormaLayer = CanvasJSONLayerClass.extend({
 
-    options: {
-      dateRange: [moment([2006]), moment(2015)]
-    },
-
-    init: function(layer, map) {
+    init: function(layer, options, map) {
       this.presenter = new Presenter(this);
-      this._super(layer, map);
-      this.layer.currentDate = this.layer.currentDate || this.options.dateRange;
+      this.currentDate = options.currentDate || [moment(layer.mindate), moment(layer.maxdate)];
+      this._super(layer, options, map);
     },
 
     /**
@@ -29,7 +25,7 @@ define([
      * @param {Array} date 2D array of moment dates [begin, end]
      */
     setTimelineDate: function(date) {
-      this.layer.currentDate = date;
+      this.currentDate = date;
       this.updateTiles();
     }
 
