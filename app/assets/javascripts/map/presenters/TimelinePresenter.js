@@ -52,7 +52,7 @@ define([
         this.view.updateLatlng(lat, lng);
       }, this));
 
-      mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
+      mps.subscribe('AnalysisService/results', _.bind(function() {
         if (this.currentTimeline) {
           this.view.model.set({hidden: false, forceHidden: false});
         }
