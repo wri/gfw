@@ -166,43 +166,56 @@ define([
      * @param {object} options Layers options from url
      */
     setLayers: function(layers, options) {
-      // Remove layers if needed
       _.each(this.layerInst, function(inst, layerSlug) {
-        if (!layers[layerSlug]) {
-          this._removeLayer(layerSlug);
-        }
+        !layers[layerSlug] && this._removeLayer(layerSlug);
       }, this);
 
-      /**
-       * Sort layers by position before calling.
-       * This way layers are going to be rendered always on the right order.
-       */
       layers = _.sortBy(_.values(layers), 'position');
-      _.each(layers, function(layer) {
-        this._addLayer(layer, options);
-      }, this);
+      this._addLayers(layers, options);
     },
 
     /**
-     * Used by MapView to add a layer to the map.
+     * Add layers to the map one by one, waiting until the layer before
+     * is already rendered. This way we can get the layer order right.
      *
-     * @param {Object} layer The layer object
-     * @param {object} options Layers options from url
+     * @param {array}   layers  layers array
+     * @param {object}  options layers options eg: threshold, currentDate
+     * @param {integer} i       current layer index
      */
-    _addLayer: function(layer, options) {
-      if (this.layersViews[layer.slug] && !this.layerInst[layer.slug]) {
-        var layerView = this.layerInst[layer.slug] =
-          new this.layersViews[layer.slug](layer, options, this.map);
+    _addLayers: function(layers, options, i) {
+      i = i || 0;
+      var layer = layers[i];
 
-        var position = 0;
-        var layersCount = this.map.overlayMapTypes.getLength();
+      var _addNext = _.bind(function() {
+        i++
+        layers[i] && this._addLayers(layers, options, i);
+      }, this);
 
-        if (typeof layer.position !== 'undefined' && layer.position <= layersCount) {
-          position = layersCount - layer.position;
-        }
-
-        layerView.addLayer({position: position});
+      if (!this.layersViews[layer.slug] || this.layerInst[layer.slug]) {
+        _addNext();
+        return;
       }
+
+      var layerView = this.layerInst[layer.slug] =
+        new this.layersViews[layer.slug](layer, options, this.map);
+
+      layerView.addLayer(this._getOverlayPosition(layer), _addNext);
+    },
+
+    /**
+     * Get layer position. If layer.position doesn't exist,
+     * position is 0 (at the bottom), else it calculates the right position.
+     *
+     * @param  {object} layer
+     * @return {integer} position
+     */
+    _getOverlayPosition: function(layer) {
+      var position = 0;
+      var layersCount = this.map.overlayMapTypes.getLength();
+      if (typeof layer.position !== 'undefined' && layer.position <= layersCount) {
+        position = layersCount - layer.position;
+      }
+      return position;
     },
 
     /**
@@ -224,7 +237,7 @@ define([
       options.currentDate = layer.currentDate ? layer.currentDate : null;
       options.threshold = layer.threshold ? layer.threshold : null;
       this._removeLayer(layerSlug);
-      this._addLayer(layer.layer, options);
+      this._addLayers([layer.layer], options);
     },
 
     /**
