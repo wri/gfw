@@ -142,15 +142,14 @@ define([
           .attr('class', 'slider')
           .call(this.brush);
 
-      this.handlers.left = this.slider.append('rect')
+      this.handlers.left = this.slider.append('svg:image')
           .attr('class', 'handle')
           .attr('transform', 'translate(0,' + (height / 2 - 6) + ')')
           .attr('width', 14)
-          .attr('height', 14)
+          .attr('height', 18)
+          .attr('xlink:href', '/assets/svg/dragger.svg')
           .attr('x', this.xscale(this.currentDate[0].year()) + 16)
-          .attr('y', -1)
-          .attr('rx', 2)
-          .attr('ry', 2);
+          .attr('y', -3);
 
       this.handlers.right = this.handlers.left
          .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })

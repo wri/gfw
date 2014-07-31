@@ -22,9 +22,10 @@ require([
     $el: $('body'),
 
     init: function() {
+      _.bindAll(this, '_setWrapper', '_scrollBottom', '_setLogoPosition');
       this._cartodbHack();
-      this._setFixedLogo();
       this._initializeApp();
+      this._setWrapper();
 
       // For dev
       window.router = router;
@@ -52,28 +53,37 @@ require([
       });
     },
 
+    _setWrapper: function() {
+      this.$window = $(window);
+      this.$logo = this.$el.find('.brand');
+
+      this.$window.on('scroll', this._setLogoPosition);
+      this.$window.on('resize', this._scrollBottom);
+
+      _.debounce(this._scrollBottom, 100)();
+      _.debounce(this._scrollBottom, 1200)(); // for safety
+      this._setLogoPosition();
+    },
+
     /**
-     * Set/unset fixed logo when scrolling bottom/top.
+     * Scroll to bottom.
      */
-    _setFixedLogo: function() {
-      var $logo = this.$el.find('.brand');
-      var $window = $(window);
+    _scrollBottom: function() {
+      this.$window.scrollTop(116);
+    },
 
-      function setScroll(e) {
-        var element = (e) ? e.currentTarget : window;
-        if (element.pageYOffset > 48) {
-          $logo.addClass('is-fixed');
-        } else {
-          $logo.removeClass('is-fixed');
-        }
+    /**
+     * Toggle layer class is-fixed.
+     *
+     * @param {object} e Window event
+     */
+    _setLogoPosition: function(e) {
+      var element = (e) ? e.currentTarget : window;
+      if (element.pageYOffset > 48) {
+        this.$logo.addClass('is-fixed');
+      } else {
+        this.$logo.removeClass('is-fixed');
       }
-
-      setScroll();
-      $window.on('scroll', setScroll);
-
-      setTimeout(function() {
-        $window.scrollTop(111);
-      }, 100);
     }
 
   });
