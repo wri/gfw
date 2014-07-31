@@ -28,9 +28,6 @@ define([
       this.options = _.extend({}, this.defaults, this.options || {});
     },
 
-    // add layer call get layer, get the layer, then add it, could
-    // take time. So, how do we return something on this method, that
-    // obviously a promesis! ;D
     addLayer: function(position, success) {
       if (this._getOverlayIndex() < 0) {
         this._getLayer().then(_.bind(function(layer) {
