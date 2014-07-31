@@ -107,8 +107,9 @@ define([
       }
     },
 
-    addLayer: function() {
+    addLayer: function(position, success) {
       this._getLayer();
+      success();
     },
 
     removeLayer: function() {
