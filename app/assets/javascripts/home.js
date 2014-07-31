@@ -45,11 +45,14 @@ $(document).ready(function() {
           content += '</a>';
           content += '</li>';
         }
-
-        $ul.append(content);
+        $ul.find('.spinner').fadeOut(function(){
+          $ul.append(content);
+        })
       },
       error: function(status, error) {
-        $ul.append('<li class="column round three">No stories available</li>');
+        $ul.find('.spinner').fadeOut(function(){
+          $ul.append('<li class="column round three">No stories available</li>');
+        })
       }
     });
 
