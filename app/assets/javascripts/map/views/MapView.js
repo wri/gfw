@@ -187,7 +187,7 @@ define([
       var layer = layers[i];
 
       var _addNext = _.bind(function() {
-        i++
+        i++;
         layers[i] && this._addLayers(layers, options, i);
       }, this);
 
