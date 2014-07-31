@@ -127,10 +127,19 @@ define([
 
     // Publish polygon
     _onClickDone: function() {
+      var self = this;
       this.presenter.stopDrawing();
       this.presenter.publishAnalysis({geom: this.polygon});
       this._stopDrawing();
+      this.$done.find('.text').fadeOut(function(){
+        self.$done.find('.spinner').addClass('inline-block').fadeIn();
+      });
+    },
+
+    hideBox: function() {
       this.model.set({boxHidden: true});
+      this.$done.find('.text').show();
+      this.$done.find('.spinner').removeClass('inline-block').hide();
     },
 
     _onClickCancel: function() {
