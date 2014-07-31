@@ -160,15 +160,14 @@ define([
 
       this.handlers = {};
 
-      this.handlers.left = this.slider.append('rect')
+      this.handlers.left = this.slider.append('svg:image')
           .attr('class', 'handle')
           .attr('transform', 'translate(-7,{0})'.format(height/2 - 12))
           .attr('width', 14)
-          .attr('height', 14)
+          .attr('height', 18)
+          .attr('xlink:href', '/assets/svg/dragger.svg')
           .attr('x', this.xscale(this._dateToDomain(this.currentDate[0])))
-          .attr('y', -1)
-          .attr('rx', 2)
-          .attr('ry', 2);
+          .attr('y', -3);
 
       this.handlers.right = this.handlers.left
          .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })

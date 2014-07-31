@@ -16,7 +16,7 @@ define([
     initialize: function(layer, currentDate) {
       this.options = {
         dateRange: [moment(layer.mindate), moment(layer.maxdate)],
-        playSpeed: 50
+        playSpeed: 120
       };
 
       this.presenter = new Presenter(this);

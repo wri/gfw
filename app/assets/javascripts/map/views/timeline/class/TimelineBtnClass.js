@@ -85,13 +85,6 @@ define([
           .attr('class', 'tipsy')
           .style('visibility', 'hidden');
 
-        this.trail = this.tipsy.append('svg:line')
-          .attr('class', 'trail')
-          .attr('x1', width)
-          .attr('x2', width)
-          .attr('y1', 0)
-          .attr('y2', height);
-
         this.tooltip = d3.select(this.el).append('div')
           .attr('class', 'tooltip')
           .style('left', width + 'px')
@@ -160,7 +153,6 @@ define([
       el = d3.select(el);
 
       var x = d3.transform(el.attr('transform')).translate[0];
-      var trailX = x + (this.options.tickWidth / 2);
 
       this.svg.selectAll('.tick').filter(function() {
         d3.select(this).classed('selected', false);
@@ -174,13 +166,6 @@ define([
 
         this.tipsy
           .style('visibility', 'visible');
-
-        this.trail
-          .transition()
-          .duration(duration)
-          .ease('line')
-          .attr('x1', trailX)
-          .attr('x2', trailX);
 
         this.tooltip
           .transition()

@@ -90,6 +90,7 @@
       }
     }
   }
+
   .dots{
     width: 340px;
     height: 2px;
@@ -128,18 +129,6 @@
         cursor: col-resize;
         border-radius: 3px;
       }
-
-      // &::-webkit-slider-thumb,
-      // input[type="range"]::-moz-range-thumb,
-      // input[type="range"]::-ms-thumb {
-      //   -webkit-appearance: none;
-      //   background: $cGreen1;
-      //   border: 1px solid darken($cGreen1, 20);
-      //   width: 14px;
-      //   height: 14px;
-      //   @include home-icons-sprite(timeline_handler);
-      //   cursor: col-resize;
-      // }
     }
 
     .visible-range {
@@ -158,12 +147,19 @@
       max-width: 330px;
     }
   }
+
   .close {
-    display: block;
+    display: inline-block;
     position: absolute;
-    top: 15px; right: 15px;
-    width: 6px;
-    height: 6px;
-    @include home-icons-sprite(infowindow_close);
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 16px;
+    color: #bbb;
+
+    &:hover {
+      color: #999;
+    }
   }
 }
