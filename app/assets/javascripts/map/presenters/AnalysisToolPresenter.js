@@ -65,6 +65,10 @@ define([
         this.publishAnalysis(wdpa);
       }, this));
 
+      mps.subscribe('AnalysisService/results', _.bind(function(results) {
+        this.view.hideBox();
+      }, this));
+
       mps.publish('Place/register', [this]);
     },
 

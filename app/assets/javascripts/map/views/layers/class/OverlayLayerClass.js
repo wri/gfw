@@ -28,15 +28,17 @@ define([
       this.options = _.extend({}, this.defaults, this.options || {});
     },
 
-    addLayer: function(options) {
+    addLayer: function(position, success) {
       if (this._getOverlayIndex() < 0) {
         this._getLayer().then(_.bind(function(layer) {
-          this.map.overlayMapTypes.insertAt(options.position, layer);
+          this.map.overlayMapTypes.insertAt(position, layer);
           if (this.options.infowindow) {
             this.setInfowindow();
           }
+          success();
         }, this));
       }
+
     },
 
     removeLayer: function() {

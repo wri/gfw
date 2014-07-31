@@ -83,6 +83,17 @@
         font-weight: bold;
       }
     }
+    &.home_stories{
+      .columns{
+        height: calc(346px - (40px * 2));
+        .spinner {
+          display:block;
+          width: 24px; height: 24px;
+          background: image-url('icons/spinner.gif') no-repeat;
+          margin: 10px auto;
+        }
+      }
+    }
   }
 
   .section-footer {

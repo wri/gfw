@@ -56,6 +56,19 @@
 
 .btn-sm {
   padding: 8px 15px;
+  .spinner {
+    display: none;
+    width: 20px;
+    height: 10px;
+    background: url(/assets/icons/spinner.gif) no-repeat;
+    opacity: 0.7;
+    background-size: 64%;
+    right: -5px;
+    position: relative;
+    &.inline-block {
+      display: inline-block;
+    }
+  }
 }
 
 .btn-xs {
