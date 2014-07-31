@@ -20,6 +20,7 @@
     overflow: hidden;
 
     > li {
+      position: relative;
       width: 100%;
       height: 100%;
       font-size:13px;
@@ -53,18 +54,14 @@
       &:hover {
         color: #333;
       }
+
       .source {
-        display: block;
-        position: relative;
-        top: -14px;
-        right: -115px;
+        position: absolute;
+        right: 12px;
+        top: 14px;
         width: 10px;
         height: 10px;
         @include home-icons-sprite(information);
-
-        &.hidden {
-          display: none;
-        }
       }
     }
   }

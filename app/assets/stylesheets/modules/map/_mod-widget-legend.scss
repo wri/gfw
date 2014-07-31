@@ -52,7 +52,7 @@
   .circle:before {
     content: ' \25CF';
     font-size: 16px;
-    margin-right: 2px;
+    margin: 0 4px 0 -1px;
   }
 
   /*****************/
@@ -80,15 +80,16 @@
         background-color: transparent;
         width: 12px;
         height: 12px;
+        display: inline-block;
+        vertical-align: bottom;
         @include home-icons-sprite(icon_options_small);
-        float: left;
-        margin-right: 2px;
+        margin-right: 4px;
         cursor: help;
       }
-      margin-left: -13px;
-      font-size: 0.88em;
-      margin-top: 3px;
-      width: 180px;
+
+      width: 170px;
+      font-size: 11px;
+      line-height: 14px;
       span {
         font-weight: bold;
       }

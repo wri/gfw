@@ -7,13 +7,12 @@
     position: absolute;
     display: block;
     top: 0;
-    left: -$grid-gutter-width;
+    left: 0;
     z-index: 1001;
 
     &.is-fixed {
       position: fixed;
       left: auto;
-      margin-left: -1%;
     }
   }
 

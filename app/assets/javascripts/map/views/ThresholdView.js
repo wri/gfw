@@ -65,7 +65,7 @@ define([
 
     _setVisibleRange: function() {
       this.$visibleRange = this.$visibleRange.css('width', '{0}%'.format(
-        (100/7) * ((80 - this.$slider.val()) / 10)
+        ((100/7) * ((80 - this.$slider.val()) / 10) + 0.8)
       ));
     },
 
