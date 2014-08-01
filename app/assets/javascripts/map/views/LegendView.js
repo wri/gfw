@@ -65,6 +65,9 @@ define([
 
       // Append details template to layer.
       _.each(layers, function(layer) {
+          if (layer.slug === 'forestgain') {
+            layer.title = layer.title + ' (50%)';
+          }
         if (this.detailsTemplates[layer.slug]) {
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 10,
