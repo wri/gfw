@@ -9,16 +9,26 @@
     {{#if failure}}
     <div class="widget-opened">
       <div class="analysis-info">
-        <span class="analysis-title">User defined area</span>
-        <span class="analysis-date-range">-</span>
+        <span class="analysis-title">ERROR</span>
       </div>
-      <ul class="analysis-stats">
-          <li>
-            <div class="stats-notice">Error fetching analysis data.</div>
-          </li>
-      </ul>
+      <div class="analysis-error">
+        Couldn't fetch analysis data.
+      </div>
+    </div>
+    {{/if}}
 
-    {{else}}
+    {{#if loading}}
+    <div class="widget-opened">
+      <div class="analysis-info">
+        <span class="analysis-title">Loading</span>
+      </div>
+      <div class="analysis-loading">
+        <img src="/assets/gif/spinner.gif"/>
+      </div>
+    </div>
+    {{/if}}
+
+    {{#if layer}}
     <div class="widget-opened">
       <div class="analysis-info">
         <span class="analysis-title">User defined area</span>
@@ -63,8 +73,8 @@
           <span>Download</span>
         </li>
       </ul>
-
     {{/if}}
+
       <div class="analysis-footer">
         <button href="#" class="delete-analysis">Delete</button>
       </div>

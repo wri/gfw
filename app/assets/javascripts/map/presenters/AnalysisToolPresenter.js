@@ -16,6 +16,7 @@ define([
 
     datasets: {
       'umd_tree_loss_gain': 'umd-loss-gain',
+      'forestgain': 'umd-loss-gain',
       'forma': 'forma-alerts',
       'imazon': 'imazon-alerts',
       'fires': 'nasa-active-fires',
@@ -24,8 +25,12 @@ define([
 
     init: function(view) {
       this.view = view;
-      this.baselayer = null;
-      this._currentAnalysis = null;
+
+      this.status = new (Backbone.Model.extend())({
+        baselayer: null,
+        analysis: null
+      });
+
       this._subscribe();
     },
 
@@ -44,29 +49,19 @@ define([
         }
       }, this));
 
+      mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
+        if (this.status.get('analysis')) {
+          this.publishAnalysis({geom: this.view.polygon});
+        }
+      }, this));
+
       mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
         this.view.deleteSelection();
-        this._currentAnalysis = null;
+        this.status.set('analysis', null);
       }, this));
 
-      mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
-        if (this._currentAnalysis) {
-          this.publishAnalysis({geom: this.view.polygon});
-        }
-      }, this));
-
-      mps.subscribe('Timeline/date-change', _.bind(function() {
-        if (this._currentAnalysis) {
-          this.publishAnalysis({geom: this.view.polygon});
-        }
-      }, this));
-
-      mps.subscribe('MapView/click-protected', _.bind(function(wdpa) {
-        this.publishAnalysis(wdpa);
-      }, this));
-
-      mps.subscribe('AnalysisService/results', _.bind(function(results) {
-        this.view.hideBox();
+      mps.subscribe('MapView/click-protected', _.bind(function(wdpaid) {
+        this.publishAnalysis({wdpaid: wdpaid});
       }, this));
 
       mps.publish('Place/register', [this]);
@@ -78,9 +73,9 @@ define([
     _setBaselayer: function(layerSpec) {
       var baselayers = layerSpec.getBaselayers();
 
-      this.baselayer = baselayers[_.first(_.intersection(
+      this.status.set('baselayer', baselayers[_.first(_.intersection(
         _.pluck(baselayers, 'slug'),
-        _.keys(this.datasets)))];
+        _.keys(this.datasets)))]);
 
       this._setVisibility();
     },
@@ -89,7 +84,7 @@ define([
      * Toggle hidden depending on active layers.
      */
     _setVisibility: function() {
-      if (!this.baselayer) {
+      if (!this.status.get('baselayer')) {
         this._deleteAnalysis();
         this.view.model.set('hidden', true);
       } else {
@@ -124,7 +119,6 @@ define([
     _drawIso: function(iso) {
       countryService.execute(iso, _.bind(function(results) {
         this.view.drawIso(results.topojson);
-        // mps.publish('Map/fit-bounds', [bounds]);
         this.publishAnalysis({iso: iso});
       },this));
     },
@@ -135,9 +129,8 @@ define([
     publishAnalysis: function(resource) {
       var data = {};
 
-      data.dataset = this.datasets[this.baselayer.slug];
-      // data.period = '{0},{1}'.format(this.baselayer.currentDate[0].year(),
-      //   this.baselayer.currentDate[1].year());
+      data.dataset = this.datasets[this.status.get('baselayer').slug];
+
       if (resource.geom) {
         data.geojson = resource.geom;
       } else if (resource.iso) {
@@ -146,7 +139,7 @@ define([
         data.wdpaid = resource.wdpaid;
       }
 
-      this._currentAnalysis = resource;
+      this.status.set('analysis', resource);
       mps.publish('AnalysisService/get', [data]);
     },
 
@@ -201,16 +194,17 @@ define([
      * @return {object} iso/geom params
      */
     getPlaceParams: function() {
-      if (!this._currentAnalysis) {return;}
+      var analysis = this.status.get('analysis');
+      if (!analysis) {return;}
       var p = {};
 
       p.iso = null;
       p.geom = null;
 
-      if (this._currentAnalysis.iso) {
-        p.iso = this._currentAnalysis.iso;
-      } else if (this._currentAnalysis.geom) {
-        p.geom = encodeURIComponent(this._currentAnalysis.geom);
+      if (analysis.iso) {
+        p.iso = analysis.iso;
+      } else if (analysis.geom) {
+        p.geom = encodeURIComponent(analysis.geom);
       }
 
       return p;

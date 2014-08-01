@@ -33,6 +33,14 @@
     }
   }
 
+  .analysis-loading,
+  .analysis-error {
+    padding: 25px 0;
+    background: white;
+    text-align: center;
+    font-size: 12px;
+  }
+
   .analysis-stats {
     background: white;
     font-size: 12px;
@@ -88,21 +96,22 @@
     border-top: 1px solid #ccc;
   }
 }
-      .analysis_dropdown {
-        width: 90px;
-        margin-top: -55px;
-        position: absolute;
-        left: 151px;
-        border: 0;
-        ul {
-          background-color: #fff;
-          border-radius: 3px;
-          border: 1px solid #ccc;
-          display: block;
-          box-shadow: 0 0 3px rgba(0,0,0,0.2);
-          li a {
-            padding: 9px;
-            min-width: 70px;
-          }
-        }
-      }
+
+.analysis_dropdown {
+  width: 90px;
+  margin-top: -55px;
+  position: absolute;
+  left: 151px;
+  border: 0;
+  ul {
+    background-color: #fff;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    display: block;
+    box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    li a {
+      padding: 9px;
+      min-width: 70px;
+    }
+  }
+}

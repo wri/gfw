@@ -50,7 +50,9 @@ define([
     },
 
     getLayer: function(where) {
-      return _.findWhere(this.getLayers(), where, this);
+      if (!where) {return;}
+      var layer = _.findWhere(this.getLayers(), where, this);
+      return layer;
     },
 
     /**

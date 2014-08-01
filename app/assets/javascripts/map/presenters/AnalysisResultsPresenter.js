@@ -23,17 +23,22 @@ define([
 
     init: function(view) {
       this.view = view;
-      this.layerSpec = null;
+
+      this.status = new (Backbone.Model.extend())({
+        layerSpec: null
+      });
+
       this._subscribe();
     },
 
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
-        this.layerSpec = place.layerSpec;
+        this.status.set('layerSpec', place.layerSpec);
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this.layerSpec = layerSpec;
+        this.status.set('layerSpec', layerSpec);
+
         if (!this.view.model.get('boxHidden')) {
           this._updateLayer();
         }
@@ -43,31 +48,41 @@ define([
         this.view.model.set('boxHidden', true);
       }, this));
 
+      mps.subscribe('AnalysisService/get', _.bind(function(data) {
+        this._renderLoading();
+      }, this));
+
       mps.subscribe('AnalysisService/results', _.bind(function(results) {
         if (!results.failure) {
-          this._renderResults(results);
+          this._renderAnalysis(results);
         } else {
           this._renderAnalysisFailure(results);
         }
       }, this));
-
-      // mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
-      // }, this));
     },
 
-    _updateLayer: function() {
-      mps.publish('AnalysisTool/update-analysis', []);
-    },
-
-    _renderResults: function(results) {
-      var layerSlug = this.datasets[results.dataset];
-      var layer = this.layerSpec.getLayer(layerSlug);
+    /**
+     * Render an analysis from AnalysisService/results
+     * @param  {Object} results
+     */
+    _renderAnalysis: function(results) {
+      console.log(results);
+      var layerSlug = this.datasets[results.meta.id];
+      var layer = this.status.get('layerSpec').getLayer({slug: layerSlug});
       this.view.renderAnalysis(results, layer);
       mps.publish('Place/update', [{go: false}]);
     },
 
-    _renderAnalysisFailure: function() {
+    _renderAnalysisFailure: function(results) {
       this.view.renderFailure();
+    },
+
+    _renderLoading: function() {
+      this.view.renderLoading();
+    },
+
+    _updateLayer: function() {
+      mps.publish('AnalysisTool/update-analysis', []);
     },
 
     deleteAnalysis: function() {

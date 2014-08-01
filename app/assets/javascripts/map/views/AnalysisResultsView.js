@@ -44,11 +44,14 @@ define([
     renderAnalysis: function(results, layer) {
       var p = {};
       p[layer.slug] = true;
+
       p.totalAlerts = (results.value.toLocaleString() || 0) + ' ' + layer.slug;
+
       if (layer.slug === 'imazon') {
         p.degradation   = (results.value[0].value.toLocaleString() || 0) + ' Imazon';
         p.deforestation = (results.value[1].value.toLocaleString() || 0) + ' Imazon';
       }
+
       p.totalArea = (results.params.geojson) ? this._calcAreaPolygon(results.params.geojson) : 0;
       p.timescale = results.meta.timescale;
       p.svg = results.download_urls.csv;
@@ -65,11 +68,19 @@ define([
     },
 
     /**
+     * Render loading analysis message.
+     */
+    renderLoading: function() {
+      var p = {loading: true};
+      this._update(this.template(p));
+      this.model.set('boxHidden', false);
+    },
+
+    /**
      * Render failure analysis request message.
      */
     renderFailure: function() {
-      var p = {};
-      p.failure = true;
+      var p = {failure: true};
       this._update(this.template(p));
       this.model.set('boxHidden', false);
     },
