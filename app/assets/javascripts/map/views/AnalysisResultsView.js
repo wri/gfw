@@ -43,26 +43,27 @@ define([
     },
 
     renderAnalysis: function(results, layer) {
+      var p = this._getImazonParams();
       var p = {};
-
       p[layer.slug] = true;
-
       p.totalAlerts = (results.value.toLocaleString() || 0) + ' ' + layer.slug;
-
       if (layer.slug === 'imazon') {
         p.degradation   = (results.value[0].value.toLocaleString() || 0) + ' Imazon';
         p.deforestation = (results.value[1].value.toLocaleString() || 0) + ' Imazon';
       }
-
       p.totalArea = (results.params.geojson) ? this._calcAreaPolygon(results.params.geojson) : 0;
-
       p.timescale = results.meta.timescale;
       p.download = results.download_urls;
       p.layer = layer;
-
       this._update(this.template(p));
-
       this.model.set('boxHidden', false);
+    },
+
+    _getImazonParams: function() {
+      var p = {};
+
+
+      return p;
     },
 
     /**
