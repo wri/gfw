@@ -80,38 +80,79 @@
     .stats-notice {
       font-size: 12px;
     }
-    .download_links{
+
+    .download-links{
       text-align: right;
+      position: relative;
 
       span {
-        text-transform: lowercase;
-        color: #F13588;
+        color: #F69;
         font-weight: bold;
         cursor: pointer;
+      }
+
+      .download-dropdown {
+        text-align: left;
+        width: 90px;
+        top: 30px;
+        right: 0;
+        position: absolute;
+        z-index: 2000;
+        border: 0;
+        background-color: #fff;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 3px rgba(0,0,0,0.2);
+
+        > li a {
+          padding: 8px 10px;
+          display: block;
+          border-bottom: 1px solid #f2f2f2;
+        }
+
       }
     }
   }
 
   .analysis-footer {
     border-top: 1px solid #ccc;
-  }
-}
+    text-align: right;
 
-.analysis_dropdown {
-  width: 90px;
-  margin-top: -55px;
-  position: absolute;
-  left: 151px;
-  border: 0;
-  ul {
-    background-color: #fff;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    display: block;
-    box-shadow: 0 0 3px rgba(0,0,0,0.2);
-    li a {
-      padding: 9px;
-      min-width: 70px;
+    .analysis-control {
+      display: inline-block;
+    }
+
+    .analysis-control li {
+      float: left;
+      display: block;
+      cursor: pointer;
+      height: 29px;
+      width: 30px;
+
+      &.analysis-control-subscribe {
+        @include home-icons-sprite(control_buttons_subscribe);
+
+        &:hover {
+          position: relative;
+          width: 31px;
+          margin-right: -1px;
+          @include home-icons-sprite(control_buttons_subscribe_hover);
+        }
+
+        &:active {@include home-icons-sprite(control_buttons_subscribe_active);}
+
+        &.disabled {
+          @include opacity(.5);
+          @include pointer-events(none);
+        }
+      }
+
+      &.analysis-control-delete {
+        width: 31px;
+        @include home-icons-sprite(control_buttons_reset);
+        &:hover { @include home-icons-sprite(control_buttons_reset_hover); }
+        &:active { @include home-icons-sprite(control_buttons_reset_active); }
+      }
     }
   }
 }

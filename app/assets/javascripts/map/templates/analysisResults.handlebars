@@ -1,5 +1,5 @@
 <div class="widget-box">
-  <div class="widget-toggle"></div>
+  <div class="widget-toggle widget-toggle-grey"></div>
 
   <div class="widget-content">
     <div class="widget-closed">
@@ -69,25 +69,26 @@
             </li>
           {{/if}}
         {{/if}}
-        <li class="download_links">
-          <span>Download</span>
+        <li class="download-links">
+          <span>download</span>
+          <ul class="download-dropdown hidden">
+            <li><a href="{{download.csv}}" target="_blank">SVG</a></li>
+            <li><a href="{{download.geojson}}" target="_blank">GeoJSON</a></li>
+            <li><a href="{{download.shp}}" target="_blank">SHP</a></li>
+            <li><a href="{{download.kml}}" target="_blank">KML</a></li>
+            <li><a href="{{download.csv}}" target="_blank">CSV</a></li>
+          </ul>
         </li>
       </ul>
     {{/if}}
 
       <div class="analysis-footer">
-        <button href="#" class="delete-analysis">Delete</button>
+        <ul class="analysis-control">
+          <li class="analysis-control-subscribe disabled"></li>
+          <li class="analysis-control-delete"></li>
+          </ul>
       </div>
     </div>
 
-  </div>
-  <div class="analysis_dropdown hidden qtip-content">
-    <ul>
-        <li><a href="{{svg}}" target="_blank">SVG</a></li>
-        <li><a href="{{geo}}" target="_blank">GeoJSON</a></li>
-        <li><a href="{{shp}}" target="_blank">SHP</a></li>
-        <li><a href="{{kml}}" target="_blank">KML</a></li>
-        <li><a href="{{csv}}" target="_blank">CSV</a></li>
-    </ul>
   </div>
 </div>

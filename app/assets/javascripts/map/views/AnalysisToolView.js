@@ -127,7 +127,6 @@ define([
 
     // Publish polygon
     _onClickDone: function() {
-      var self = this;
       this.presenter.stopDrawing();
       this.presenter.publishAnalysis({geom: this.polygon});
       this._stopDrawing();

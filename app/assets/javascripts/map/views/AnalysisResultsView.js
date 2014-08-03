@@ -27,8 +27,8 @@ define([
 
     events: function(){
       return _.extend({}, AnalysisResultsView.__super__.events, {
-        'click .delete-analysis': '_deleteAnalysis',
-        'click .download_links span' :'_toggleDownloads'
+        'click .analysis-control-delete': '_deleteAnalysis',
+        'click .download-links span' :'_toggleDownloads'
       });
     },
 
@@ -39,10 +39,12 @@ define([
 
     _cacheSelector: function() {
       AnalysisResultsView.__super__._cacheSelector.apply(this);
+      this.$downloadDropdown = this.$('.download-dropdown');
     },
 
     renderAnalysis: function(results, layer) {
       var p = {};
+
       p[layer.slug] = true;
 
       p.totalAlerts = (results.value.toLocaleString() || 0) + ' ' + layer.slug;
@@ -53,17 +55,13 @@ define([
       }
 
       p.totalArea = (results.params.geojson) ? this._calcAreaPolygon(results.params.geojson) : 0;
+
       p.timescale = results.meta.timescale;
-      p.svg = results.download_urls.csv;
-      p.geo = results.download_urls.geojson;
-      p.shp = results.download_urls.shp;
-      p.kml = results.download_urls.kml;
-      p.csv = results.download_urls.csv;
+      p.download = results.download_urls;
       p.layer = layer;
 
-      // p.dateRange = '{0} to {1}'.format(layer.mindate.format('MMM-YYYY'),
-      //   layer.maxdate.format('MMM-YYYY'));
       this._update(this.template(p));
+
       this.model.set('boxHidden', false);
     },
 
@@ -122,7 +120,7 @@ define([
     },
 
     _toggleDownloads: function() {
-      $('.analysis_dropdown').stop().fadeToggle();
+      this.$downloadDropdown.toggleClass('hidden');
     }
   });
 

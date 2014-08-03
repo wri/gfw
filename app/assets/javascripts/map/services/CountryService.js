@@ -10,12 +10,14 @@ define([
   'use strict';
 
   var CountryService = Class.extend({
-    
+
+    requestId: 'CountryService',
+
     _uriTemplate:'http://beta.gfw-apis.appspot.com/countries/{iso}',
 
     /**
      * Constructs a new instance of CountryService.
-     * 
+     *
      * @return {CountryService} instance
      */
     init: function() {
@@ -33,11 +35,12 @@ define([
     _defineRequests: function() {
       var cache = this._cacheConfig;
       var config = {cache: cache, url: this._uriTemplate};
+
       ds.define(this.requestId, config);
     },
 
     execute: function(iso, successCb, failureCb) {
-      var config = {resourceId: this.requestId, data: {iso: iso}, 
+      var config = {resourceId: this.requestId, data: {iso: iso},
         success: successCb, error: failureCb};
 
       ds.request(config);

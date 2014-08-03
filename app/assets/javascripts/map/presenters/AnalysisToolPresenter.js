@@ -6,9 +6,10 @@
 define([
   'Class',
   'underscore',
+  'backbone',
   'mps',
   'services/CountryService'
-], function(Class, _, mps, countryService) {
+], function(Class, _, Backbone, mps, countryService) {
 
   'use strict';
 
@@ -51,7 +52,7 @@ define([
 
       mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
         if (this.status.get('analysis')) {
-          this.publishAnalysis({geom: this.view.polygon});
+          this.publishAnalysis(this.status.get('analysis'));
         }
       }, this));
 

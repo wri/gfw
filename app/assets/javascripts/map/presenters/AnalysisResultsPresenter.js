@@ -6,8 +6,9 @@
 define([
   'Class',
   'underscore',
+  'backbone',
   'mps'
-], function(Class, _, mps) {
+], function(Class, _, Backbone, mps) {
 
   'use strict';
 
@@ -48,7 +49,7 @@ define([
         this.view.model.set('boxHidden', true);
       }, this));
 
-      mps.subscribe('AnalysisService/get', _.bind(function(data) {
+      mps.subscribe('AnalysisService/get', _.bind(function() {
         this._renderLoading();
       }, this));
 
@@ -66,14 +67,13 @@ define([
      * @param  {Object} results
      */
     _renderAnalysis: function(results) {
-      console.log(results);
       var layerSlug = this.datasets[results.meta.id];
       var layer = this.status.get('layerSpec').getLayer({slug: layerSlug});
       this.view.renderAnalysis(results, layer);
       mps.publish('Place/update', [{go: false}]);
     },
 
-    _renderAnalysisFailure: function(results) {
+    _renderAnalysisFailure: function() {
       this.view.renderFailure();
     },
 
