@@ -39,6 +39,7 @@ define([
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
+      // should trigger timeline/date-change when this.options.dateRange
       this.currentDate = currentDate || this.options.dateRange;
       // Transitions duration are 100 ms. Give time to them to finish.
       this._updateCurrentDate = _.debounce(this._updateCurrentDate,
@@ -351,6 +352,7 @@ define([
 
     _animate: function() {
       if (!this.options.player) {return;}
+      this.presenter.startPlaying();
       var hlx = this.handlers.left.attr('x');
       var hrx = this.handlers.right.attr('x');
       var trailFrom = Math.round(this.xscale.invert(hlx)) + 1;
@@ -381,6 +383,8 @@ define([
 
     _stopAnimation: function() {
       if (!this.options.player) {return;}
+      this.presenter.stopPlaying();
+
       // End animation extent hiddenBrush
       // this will call onAnimationBrushEnd
       this.trail

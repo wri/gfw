@@ -39,9 +39,9 @@ define([
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
         this._setTimeline(place.layerSpec, place.params);
-        // if (!place.params.date) {
-        //   mps.publish('Place/update', [{go: false}]);
-        // }
+        if (!place.params.date) {
+          mps.publish('Place/update', [{go: false}]);
+        }
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {

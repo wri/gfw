@@ -128,7 +128,7 @@ define([
     // Publish polygon
     _onClickDone: function() {
       this.presenter.stopDrawing();
-      this.presenter.publishAnalysis({geom: this.polygon});
+      this.presenter.publishAnalysis({geojson: this.polygon});
       this._stopDrawing();
       this.model.set({boxHidden: true});
     },
@@ -151,8 +151,8 @@ define([
      *
      * @param  {object} geom The geom object
      */
-    drawGeom: function(geom) {
-      var paths = this.presenter.geomToPath(geom);
+    drawGeojson: function(geojson) {
+      var paths = this.presenter.geomToPath(geojson);
 
       this.selection = new google.maps.Polygon(
         _.extend({}, {paths: paths}, this.style));

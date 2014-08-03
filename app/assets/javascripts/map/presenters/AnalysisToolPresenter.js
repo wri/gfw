@@ -28,8 +28,10 @@ define([
       this.view = view;
 
       this.status = new (Backbone.Model.extend())({
+        currentDate: null,
         baselayer: null,
-        analysis: null
+        analysis: null,
+        disabled: false
       });
 
       this._subscribe();
@@ -43,10 +45,15 @@ define([
       mps.subscribe('Place/go', _.bind(function(place) {
         this._setBaselayer(place.layerSpec);
 
+        if (place.params.begin && place.params.end) {
+          this.status.set('currentDate', [place.params.begin,
+            place.params.end]);
+        }
+
         if (place.params.iso !== 'ALL') {
           this._drawIso(place.params.iso);
-        } else if (place.params.geom) {
-          this._drawGeom(place.params.geom);
+        } else if (place.params.geojson) {
+          this._drawGeojson(place.params.geojson);
         }
       }, this));
 
@@ -63,6 +70,24 @@ define([
 
       mps.subscribe('MapView/click-protected', _.bind(function(wdpaid) {
         this.publishAnalysis({wdpaid: wdpaid});
+      }, this));
+
+      mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
+        this.status.set('currentDate', date);
+        if (this.status.get('analysis') && !this.status.get('disabled')) {
+          this.publishAnalysis(this.status.get('analysis'));
+        }
+      }, this));
+
+      mps.subscribe('Timeline/start-playing', _.bind(function() {
+        this.status.set('disabled', true);
+      }, this));
+
+      mps.subscribe('Timeline/stop-playing', _.bind(function() {
+        this.status.set('disabled', false);
+        if (this.status.get('analysis')) {
+          this.publishAnalysis(this.status.get('analysis'));
+        }
       }, this));
 
       mps.publish('Place/register', [this]);
@@ -107,9 +132,9 @@ define([
      *
      * @param  {object} geom
      */
-    _drawGeom: function(geom) {
-      this.view.drawGeom(geom);
-      this.publishAnalysis({geom: geom});
+    _drawGeojson: function(geojson) {
+      this.view.drawGeojson(geojson);
+      this.publishAnalysis({geojson: geojson});
     },
 
     /**
@@ -128,18 +153,10 @@ define([
      * Publish an analysis and set the currentResource.
      */
     publishAnalysis: function(resource) {
-      var data = {};
-
+      var data = _.extend({}, resource);
+      var date = this.status.get('currentDate');
       data.dataset = this.datasets[this.status.get('baselayer').slug];
-
-      if (resource.geom) {
-        data.geojson = resource.geom;
-      } else if (resource.iso) {
-        data.iso = resource.iso;
-      } else if (resource.wdpaid) {
-        data.wdpaid = resource.wdpaid;
-      }
-
+      data.period = '{0},{1}'.format(date[0].format('YYYY-MM-DD'), date[1].format('YYYY-MM-DD'));
       this.status.set('analysis', resource);
       mps.publish('AnalysisService/get', [data]);
     },
@@ -200,12 +217,12 @@ define([
       var p = {};
 
       p.iso = null;
-      p.geom = null;
+      p.geojson = null;
 
       if (analysis.iso) {
         p.iso = analysis.iso;
-      } else if (analysis.geom) {
-        p.geom = encodeURIComponent(analysis.geom);
+      } else if (analysis.geojson) {
+        p.geojson = encodeURIComponent(analysis.geojson);
       }
 
       return p;
