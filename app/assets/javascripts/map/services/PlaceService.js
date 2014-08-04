@@ -195,7 +195,8 @@ define([
     _destandardizeParams: function(params) {
       var p = _.extendNonNull({}, this.defaults, params);
 
-      p.baselayers = p.baselayers.join(',');
+      console.log(_.pluck(p.baselayers, 'slug'));
+      p.baselayers = _.pluck(p.baselayers, 'slug');
       p.sublayers = p.sublayers ? p.sublayers.join(',') : null;
       p.zoom = String(p.zoom);
       p.lat = p.lat.toFixed(2);
