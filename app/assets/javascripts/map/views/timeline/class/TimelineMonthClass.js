@@ -51,8 +51,9 @@ define([
         this.options.effectsSpeed);
       this.playing = false;
 
-      // dont let go after this range
+      // Max date range
       this.drMax = this.options.dateRange;
+      // Date range
       this.dr = [moment([this.drMax[0].year()]), moment([this.drMax[1].year() + 1])];
 
       // Number months to display
@@ -297,8 +298,8 @@ define([
     },
 
     _onBrushEnd: function() {
-      var start = Math.floor(this.xscale.invert(this.handlers.left.attr('x')));
-      var end = Math.ceil(this.xscale.invert(this.handlers.right.attr('x')));
+      var start = Math.round(this.xscale.invert(this.handlers.left.attr('x')));
+      var end = Math.round(this.xscale.invert(_.toNumber(this.handlers.right.attr('x'))));
 
       start = this._domainToDate(start);
       end = this._domainToDate(end);
