@@ -32,7 +32,7 @@
     <div class="widget-opened">
       <div class="analysis-info">
         <span class="analysis-title">User defined area</span>
-        <span class="analysis-date-range">{{timescale}}</span>
+        <span class="analysis-date-range">{{dateRange}}</span>
       </div>
       <ul class="analysis-stats">
         <li>
@@ -56,16 +56,16 @@
           {{#if imazon}}
             <li>
               <span class="stats-title">Deforestation alerts</span>
-              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{deforestation}} alerts</strong> </span>
+              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{defor}} {{layer.slug}} alerts</strong> </span>
             </li>
             <li>
               <span class="stats-title">Degradation alerts</span>
-              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{degradation}} alerts</strong> </span>
+              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{degrad}} {{layer.slug}} alerts</strong> </span>
             </li>
           {{else}}
             <li>
               <span class="stats-title">Total alerts</span>
-              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{totalAlerts}} alerts</strong> </span>
+              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{totalAlerts}} {{layer.slug}} alerts</strong> </span>
             </li>
           {{/if}}
         {{/if}}

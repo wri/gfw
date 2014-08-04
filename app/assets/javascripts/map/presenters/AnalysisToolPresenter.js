@@ -38,15 +38,10 @@ define([
     },
 
     _subscribe: function() {
-      // when layer change, set new baselayer and visibility
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        console.log('set baselayer');
         this._setBaselayer(layerSpec);
       }, this));
 
-      // when new place go, set baselayer and vivbility
-      // set current date
-      // draw iso or geojson from place params
       mps.subscribe('Place/go', _.bind(function(place) {
         this._setBaselayer(place.layerSpec);
 
@@ -73,10 +68,8 @@ define([
 
       // update analysis when timeline date change
       mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
-        console.log('date changed', date[0].format('YYYY-MM-DD'), date[1].format('YYYY-MM-DD'));
         this.status.set('currentDate', date);
         if (this.status.get('analysis') && !this.status.get('disabled')) {
-          console.log('publish analysis again');
           this.publishAnalysis(this.status.get('analysis'));
         }
       }, this));
@@ -88,7 +81,6 @@ define([
       mps.subscribe('Timeline/stop-playing', _.bind(function() {
         this.status.set('disabled', false);
         if (this.status.get('analysis')) {
-          console.log('publish analysis when stop');
           this.publishAnalysis(this.status.get('analysis'));
         }
       }, this));

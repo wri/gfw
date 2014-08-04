@@ -42,20 +42,14 @@ define([
       this.$downloadDropdown = this.$('.download-dropdown');
     },
 
-    renderAnalysis: function(results, layer) {
-      console.log(results, layer.slug);
-      var p = {};
-      p[layer.slug] = true;
-      p.totalAlerts = (results.value.toLocaleString() || 0) + ' ' + layer.slug;
-      if (layer.slug === 'imazon') {
-        p.degradation   = (results.value[0].value.toLocaleString() || 0) + ' Imazon';
-        p.deforestation = (results.value[1].value.toLocaleString() || 0) + ' Imazon';
-      }
-      p.totalArea = (results.params.geojson) ? this._calcAreaPolygon(results.params.geojson) : 0;
-      p.timescale = results.meta.timescale;
-      p.download = results.download_urls;
-      p.layer = layer;
-      this._update(this.template(p));
+    /**
+     * [renderAnalysis description]
+     * @param  {[type]} results [description]
+     * @param  {[type]} layer   [description]
+     * @return {[type]}         [description]
+     */
+    renderAnalysis: function(params) {
+      this._update(this.template(params));
       this.model.set('boxHidden', false);
     },
 
@@ -79,38 +73,6 @@ define([
 
     _deleteAnalysis: function() {
       this.presenter.deleteAnalysis();
-    },
-
-    _calcAreaPolygon: function(polygon) {
-      // https://github.com/maxogden/geojson-js-utils
-      var area = 0;
-      var points = polygon.coordinates[0];
-
-      var j = points.length - 1;
-      var p1, p2;
-
-      for (var i = 0; i < points.length; j = i++) {
-        var pt = points[i];
-        if (Array.isArray(pt[0])){
-          pt[1] = pt[0][1];
-          pt[0] = pt[0][0];
-        }
-        p1 = {
-          x: pt[1],
-          y: pt[0]
-        };
-        p2 = {
-          x: points[j][1],
-          y: points[j][0]
-        };
-        area += p1.x * p2.y;
-        area -= p1.y * p2.x;
-      }
-
-      area /= 2;
-      area = Math.abs(area);
-
-      return (Math.ceil((area*1000000) * 10) / 10).toLocaleString();
     },
 
     _toggleDownloads: function() {
