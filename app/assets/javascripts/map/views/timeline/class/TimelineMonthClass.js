@@ -388,8 +388,6 @@ define([
 
     stopAnimation: function() {
       if (!this.options.player || !this.playing) {return;}
-      this.presenter.stopPlaying();
-
       // End animation extent hiddenBrush
       // this will call onAnimationBrushEnd
       this.trail
@@ -433,6 +431,7 @@ define([
       var trailFrom = Math.round(this.xscale.invert(hrl)) + 1;
 
       if (value > 0 && value !==  trailFrom) {
+        this.presenter.stopPlaying();
         this._togglePlayIcon();
         this.playing = false;
       }

@@ -214,7 +214,6 @@ define([
 
     stopAnimation: function() {
       if (!this.playing) {return;}
-      this.presenter.stopPlaying();
       // End animation extent hiddenBrush
       // this will call onAnimationBrushEnd
       this.trail
@@ -300,6 +299,7 @@ define([
       var trailFrom = Math.round(this.xscale.invert(hrl)) + 1; // +1 year left handler
 
       if (value > 0 && value !==  trailFrom) {
+        this.presenter.stopPlaying();
         this.togglePlayIcon();
         this.playing = false;
       }
