@@ -28,6 +28,17 @@
     </div>
     {{/if}}
 
+    {{#if unavailable}}
+    <div class="widget-opened">
+      <div class="analysis-info">
+        <span class="analysis-title">UNSUPPORTED</span>
+      </div>
+      <div class="analysis-error">
+        This layer doesn't support analysis.
+      </div>
+    </div>
+    {{/if}}
+
     {{#if layer}}
     <div class="widget-opened">
       <div class="analysis-info">

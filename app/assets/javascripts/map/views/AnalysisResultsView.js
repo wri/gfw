@@ -43,10 +43,9 @@ define([
     },
 
     /**
-     * [renderAnalysis description]
-     * @param  {[type]} results [description]
-     * @param  {[type]} layer   [description]
-     * @return {[type]}         [description]
+     * Render analysis results.
+     *
+     * @param  {Object} params Analysis html params
      */
     renderAnalysis: function(params) {
       this._update(this.template(params));
@@ -58,6 +57,12 @@ define([
      */
     renderLoading: function() {
       var p = {loading: true};
+      this._update(this.template(p));
+      this.model.set('boxHidden', false);
+    },
+
+    renderUnavailable: function() {
+      var p = {unavailable: true};
       this._update(this.template(p));
       this.model.set('boxHidden', false);
     },

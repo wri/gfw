@@ -17,7 +17,6 @@ define([
 
     datasets: {
       'umd_tree_loss_gain': 'umd-loss-gain',
-      'forestgain': 'umd-loss-gain',
       'forma': 'forma-alerts',
       'imazon': 'imazon-alerts',
       'fires': 'nasa-active-fires',
@@ -106,7 +105,7 @@ define([
      */
     _setVisibility: function() {
       if (!this.status.get('baselayer')) {
-        this._deleteAnalysis();
+        this.status.get('analysis') && mps.publish('AnalysisService/results', [{unavailable: true}]);
         this.view.model.set('hidden', true);
       } else {
         this.view.model.set('hidden', false);
@@ -118,7 +117,7 @@ define([
      * current baselayer doesn't support analysis.
      */
     _deleteAnalysis: function() {
-      mps.publish('AnalysisResults/delete-analysis', []);
+      mps.publish('AnalysisResults/no-analysis-msg', []);
       this.view._onClickCancel();
     },
 
@@ -148,6 +147,11 @@ define([
      * Publish an analysis and set the currentResource.
      */
     publishAnalysis: function(resource) {
+      if (!this.status.get('baselayer')) {
+        this._deleteAnalysis();
+        return;
+      }
+
       var data = _.extend({}, resource);
       var date = this.status.get('currentDate');
       data.dataset = this.datasets[this.status.get('baselayer').slug];

@@ -47,24 +47,18 @@ define([
       }, this));
 
       mps.subscribe('AnalysisService/get', _.bind(function() {
-        this._renderLoading();
+        this.view.renderLoading();
       }, this));
 
       mps.subscribe('AnalysisService/results', _.bind(function(results) {
         if (results.failure) {
-          this._renderAnalysisFailure(results);
+          this.view.renderFailure();
+        } else if (results.unavailable) {
+          this.view.renderUnavailable();
         } else {
           this._renderAnalysis(results);
         }
       }, this));
-    },
-
-    _renderAnalysisFailure: function() {
-      this.view.renderFailure();
-    },
-
-    _renderLoading: function() {
-      this.view.renderLoading();
     },
 
     deleteAnalysis: function() {
