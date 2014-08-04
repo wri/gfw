@@ -74,7 +74,6 @@ define([
     _renderAnalysis: function(results) {
       var layerSlug = this.datasets[results.meta.id];
       var layer = this.status.get('layerSpec').getLayer({slug: layerSlug});
-      console.log(results);
       // Unexpected results from successful request
       if (!layer) {
         this._renderAnalysisFailure();
@@ -96,10 +95,10 @@ define([
       }
 
       if (layer.slug === 'imazon') {
-        p.degrad = Number(results.value[0].value).toLocaleString();
-        p.defor = Number(results.value[1].value).toLocaleString();
+        p.degrad = (results.value[0]) ? Number(results.value[0].value).toLocaleString() : 0;
+        p.defor = (results.value[1]) ? Number(results.value[1].value).toLocaleString() : 0;
       } else {
-        p.totalAlerts = Number(results.value).toLocaleString();
+        p.totalAlerts = (results.value) ? Number(results.value).toLocaleString() : 0;
       }
 
       if (layer.slug === 'fires') {
