@@ -6,9 +6,10 @@
 define([
   'Class',
   'underscore',
+  'backbone',
   'mps',
   'services/CountryService'
-], function(Class, _, mps, countryService) {
+], function(Class, _, Backbone, mps, countryService) {
 
   'use strict';
 
@@ -24,8 +25,14 @@ define([
 
     init: function(view) {
       this.view = view;
-      this.baselayer = null;
-      this._currentAnalysis = null;
+
+      this.status = new (Backbone.Model.extend())({
+        currentDate: null,
+        baselayer: null,
+        analysis: null,
+        disabled: false
+      });
+
       this._subscribe();
     },
 
@@ -37,36 +44,44 @@ define([
       mps.subscribe('Place/go', _.bind(function(place) {
         this._setBaselayer(place.layerSpec);
 
+        if (place.params.begin && place.params.end) {
+          this.status.set('currentDate', [place.params.begin,
+            place.params.end]);
+        }
+
         if (place.params.iso !== 'ALL') {
           this._drawIso(place.params.iso);
-        } else if (place.params.geom) {
-          this._drawGeom(place.params.geom);
+        } else if (place.params.geojson) {
+          this._drawGeojson(place.params.geojson);
         }
       }, this));
 
       mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
         this.view.deleteSelection();
-        this._currentAnalysis = null;
+        this.status.set('analysis', null);
       }, this));
 
-      mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
-        if (this._currentAnalysis) {
-          this.publishAnalysis({geom: this.view.polygon});
+      mps.subscribe('MapView/click-protected', _.bind(function(wdpaid) {
+        this.publishAnalysis({wdpaid: wdpaid});
+      }, this));
+
+      // update analysis when timeline date change
+      mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
+        this.status.set('currentDate', date);
+        if (this.status.get('analysis') && !this.status.get('disabled')) {
+          this.publishAnalysis(this.status.get('analysis'));
         }
       }, this));
 
-      mps.subscribe('Timeline/date-change', _.bind(function() {
-        if (this._currentAnalysis) {
-          this.publishAnalysis({geom: this.view.polygon});
+      mps.subscribe('Timeline/start-playing', _.bind(function() {
+        this.status.set('disabled', true);
+      }, this));
+
+      mps.subscribe('Timeline/stop-playing', _.bind(function() {
+        this.status.set('disabled', false);
+        if (this.status.get('analysis')) {
+          this.publishAnalysis(this.status.get('analysis'));
         }
-      }, this));
-
-      mps.subscribe('MapView/click-protected', _.bind(function(wdpa) {
-        this.publishAnalysis(wdpa);
-      }, this));
-
-      mps.subscribe('AnalysisService/results', _.bind(function(results) {
-        this.view.hideBox();
       }, this));
 
       mps.publish('Place/register', [this]);
@@ -78,9 +93,9 @@ define([
     _setBaselayer: function(layerSpec) {
       var baselayers = layerSpec.getBaselayers();
 
-      this.baselayer = baselayers[_.first(_.intersection(
+      this.status.set('baselayer', baselayers[_.first(_.intersection(
         _.pluck(baselayers, 'slug'),
-        _.keys(this.datasets)))];
+        _.keys(this.datasets)))]);
 
       this._setVisibility();
     },
@@ -89,8 +104,8 @@ define([
      * Toggle hidden depending on active layers.
      */
     _setVisibility: function() {
-      if (!this.baselayer) {
-        this._deleteAnalysis();
+      if (!this.status.get('baselayer')) {
+        this.status.get('analysis') && mps.publish('AnalysisService/results', [{unavailable: true}]);
         this.view.model.set('hidden', true);
       } else {
         this.view.model.set('hidden', false);
@@ -102,7 +117,7 @@ define([
      * current baselayer doesn't support analysis.
      */
     _deleteAnalysis: function() {
-      mps.publish('AnalysisResults/delete-analysis', []);
+      mps.publish('AnalysisResults/no-analysis-msg', []);
       this.view._onClickCancel();
     },
 
@@ -111,9 +126,9 @@ define([
      *
      * @param  {object} geom
      */
-    _drawGeom: function(geom) {
-      this.view.drawGeom(geom);
-      this.publishAnalysis({geom: geom});
+    _drawGeojson: function(geojson) {
+      this.view.drawGeojson(geojson);
+      this.publishAnalysis({geojson: geojson});
     },
 
     /**
@@ -124,7 +139,6 @@ define([
     _drawIso: function(iso) {
       countryService.execute(iso, _.bind(function(results) {
         this.view.drawIso(results.topojson);
-        // mps.publish('Map/fit-bounds', [bounds]);
         this.publishAnalysis({iso: iso});
       },this));
     },
@@ -133,20 +147,16 @@ define([
      * Publish an analysis and set the currentResource.
      */
     publishAnalysis: function(resource) {
-      var data = {};
-
-      data.dataset = this.datasets[this.baselayer.slug];
-      // data.period = '{0},{1}'.format(this.baselayer.currentDate[0].year(),
-      //   this.baselayer.currentDate[1].year());
-      if (resource.geom) {
-        data.geojson = resource.geom;
-      } else if (resource.iso) {
-        data.iso = resource.iso;
-      } else if (resource.wdpaid) {
-        data.wdpaid = resource.wdpaid;
+      if (!this.status.get('baselayer')) {
+        this._deleteAnalysis();
+        return;
       }
 
-      this._currentAnalysis = resource;
+      var data = _.extend({}, resource);
+      var date = this.status.get('currentDate');
+      data.dataset = this.datasets[this.status.get('baselayer').slug];
+      data.period = '{0},{1}'.format(date[0].format('YYYY-MM-DD'), date[1].format('YYYY-MM-DD'));
+      this.status.set('analysis', resource);
       mps.publish('AnalysisService/get', [data]);
     },
 
@@ -201,16 +211,17 @@ define([
      * @return {object} iso/geom params
      */
     getPlaceParams: function() {
-      if (!this._currentAnalysis) {return;}
+      var analysis = this.status.get('analysis');
+      if (!analysis) {return;}
       var p = {};
 
       p.iso = null;
-      p.geom = null;
+      p.geojson = null;
 
-      if (this._currentAnalysis.iso) {
-        p.iso = this._currentAnalysis.iso;
-      } else if (this._currentAnalysis.geom) {
-        p.geom = encodeURIComponent(this._currentAnalysis.geom);
+      if (analysis.iso) {
+        p.iso = analysis.iso;
+      } else if (analysis.geojson) {
+        p.geojson = encodeURIComponent(analysis.geojson);
       }
 
       return p;

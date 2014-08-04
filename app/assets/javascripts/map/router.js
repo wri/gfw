@@ -58,8 +58,8 @@ define([
         new SearchboxView();
         new ThresholdView();
         new TimelineView();
-        new AnalysisToolView(mapView.map);
         new AnalysisResultsView();
+        new AnalysisToolView(mapView.map);
         new ShareView();
       }
 

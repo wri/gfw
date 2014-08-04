@@ -39,9 +39,9 @@ define([
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
         this._setTimeline(place.layerSpec, place.params);
-        // if (!place.params.date) {
-        //   mps.publish('Place/update', [{go: false}]);
-        // }
+        if (!place.params.date) {
+          mps.publish('Place/update', [{go: false}]);
+        }
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
@@ -52,7 +52,7 @@ define([
         this.view.updateLatlng(lat, lng);
       }, this));
 
-      mps.subscribe('AnalysisService/results', _.bind(function() {
+      mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
         if (this.currentTimeline) {
           this.view.model.set({hidden: false, forceHidden: false});
         }
@@ -114,6 +114,7 @@ define([
      */
     _removeTimeline: function() {
       if (!this.currentTimeline) {return;}
+      this.currentTimeline.stopAnimation && this.currentTimeline.stopAnimation();
       this.currentTimeline.remove();
       this.currentTimeline = null;
       this.view.model.set('hidden', true);

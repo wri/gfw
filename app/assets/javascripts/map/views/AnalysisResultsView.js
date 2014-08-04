@@ -27,8 +27,8 @@ define([
 
     events: function(){
       return _.extend({}, AnalysisResultsView.__super__.events, {
-        'click .delete-analysis': '_deleteAnalysis',
-        'click .download_links span' :'_toggleDownloads'
+        'click .analysis-control-delete': '_deleteAnalysis',
+        'click .download-links span' :'_toggleDownloads'
       });
     },
 
@@ -39,27 +39,30 @@ define([
 
     _cacheSelector: function() {
       AnalysisResultsView.__super__._cacheSelector.apply(this);
+      this.$downloadDropdown = this.$('.download-dropdown');
     },
 
-    renderAnalysis: function(results, layer) {
-      var p = {};
-      p[layer.slug] = true;
-      p.totalAlerts = (results.value.toLocaleString() || 0) + ' ' + layer.slug;
-      if (layer.slug === 'imazon') {
-        p.degradation   = (results.value[0].value.toLocaleString() || 0) + ' Imazon';
-        p.deforestation = (results.value[1].value.toLocaleString() || 0) + ' Imazon';
-      }
-      p.totalArea = (results.params.geojson) ? this._calcAreaPolygon(results.params.geojson) : 0;
-      p.timescale = results.meta.timescale;
-      p.svg = results.download_urls.csv;
-      p.geo = results.download_urls.geojson;
-      p.shp = results.download_urls.shp;
-      p.kml = results.download_urls.kml;
-      p.csv = results.download_urls.csv;
-      p.layer = layer;
+    /**
+     * Render analysis results.
+     *
+     * @param  {Object} params Analysis html params
+     */
+    renderAnalysis: function(params) {
+      this._update(this.template(params));
+      this.model.set('boxHidden', false);
+    },
 
-      // p.dateRange = '{0} to {1}'.format(layer.mindate.format('MMM-YYYY'),
-      //   layer.maxdate.format('MMM-YYYY'));
+    /**
+     * Render loading analysis message.
+     */
+    renderLoading: function() {
+      var p = {loading: true};
+      this._update(this.template(p));
+      this.model.set('boxHidden', false);
+    },
+
+    renderUnavailable: function() {
+      var p = {unavailable: true};
       this._update(this.template(p));
       this.model.set('boxHidden', false);
     },
@@ -68,8 +71,7 @@ define([
      * Render failure analysis request message.
      */
     renderFailure: function() {
-      var p = {};
-      p.failure = true;
+      var p = {failure: true};
       this._update(this.template(p));
       this.model.set('boxHidden', false);
     },
@@ -78,40 +80,8 @@ define([
       this.presenter.deleteAnalysis();
     },
 
-    _calcAreaPolygon: function(polygon) {
-      // https://github.com/maxogden/geojson-js-utils
-      var area = 0;
-      var points = polygon.coordinates[0];
-
-      var j = points.length - 1;
-      var p1, p2;
-
-      for (var i = 0; i < points.length; j = i++) {
-        var pt = points[i];
-        if (Array.isArray(pt[0])){
-          pt[1] = pt[0][1];
-          pt[0] = pt[0][0];
-        }
-        p1 = {
-          x: pt[1],
-          y: pt[0]
-        };
-        p2 = {
-          x: points[j][1],
-          y: points[j][0]
-        };
-        area += p1.x * p2.y;
-        area -= p1.y * p2.x;
-      }
-
-      area /= 2;
-      area = Math.abs(area);
-
-      return (Math.ceil((area*1000000) * 10) / 10).toLocaleString();
-    },
-
     _toggleDownloads: function() {
-      $('.analysis_dropdown').stop().fadeToggle();
+      this.$downloadDropdown.toggleClass('hidden');
     }
   });
 

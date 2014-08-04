@@ -1,5 +1,5 @@
 <div class="widget-box">
-  <div class="widget-toggle"></div>
+  <div class="widget-toggle widget-toggle-grey"></div>
 
   <div class="widget-content">
     <div class="widget-closed">
@@ -9,20 +9,41 @@
     {{#if failure}}
     <div class="widget-opened">
       <div class="analysis-info">
-        <span class="analysis-title">User defined area</span>
-        <span class="analysis-date-range">-</span>
+        <span class="analysis-title">ERROR</span>
       </div>
-      <ul class="analysis-stats">
-          <li>
-            <div class="stats-notice">Error fetching analysis data.</div>
-          </li>
-      </ul>
+      <div class="analysis-error">
+        Couldn't fetch analysis data.
+      </div>
+    </div>
+    {{/if}}
 
-    {{else}}
+    {{#if loading}}
+    <div class="widget-opened">
+      <div class="analysis-info">
+        <span class="analysis-title">Loading</span>
+      </div>
+      <div class="analysis-loading">
+        <img src="/assets/gif/spinner.gif"/>
+      </div>
+    </div>
+    {{/if}}
+
+    {{#if unavailable}}
+    <div class="widget-opened">
+      <div class="analysis-info">
+        <span class="analysis-title">UNSUPPORTED</span>
+      </div>
+      <div class="analysis-error">
+        This layer doesn't support analysis.
+      </div>
+    </div>
+    {{/if}}
+
+    {{#if layer}}
     <div class="widget-opened">
       <div class="analysis-info">
         <span class="analysis-title">User defined area</span>
-        <span class="analysis-date-range">{{timescale}}</span>
+        <span class="analysis-date-range">{{dateRange}}</span>
       </div>
       <ul class="analysis-stats">
         <li>
@@ -46,38 +67,39 @@
           {{#if imazon}}
             <li>
               <span class="stats-title">Deforestation alerts</span>
-              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{deforestation}} alerts</strong> </span>
+              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{defor}} {{layer.slug}} alerts</strong> </span>
             </li>
             <li>
               <span class="stats-title">Degradation alerts</span>
-              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{degradation}} alerts</strong> </span>
+              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{degrad}} {{layer.slug}} alerts</strong> </span>
             </li>
           {{else}}
             <li>
               <span class="stats-title">Total alerts</span>
-              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{totalAlerts}} alerts</strong> </span>
+              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{totalAlerts}} {{layer.slug}} alerts</strong> </span>
             </li>
           {{/if}}
         {{/if}}
-        <li class="download_links">
-          <span>Download</span>
+        <li class="download-links">
+          <span>download</span>
+          <ul class="download-dropdown hidden">
+            <li><a href="{{download.csv}}" target="_blank">SVG</a></li>
+            <li><a href="{{download.geojson}}" target="_blank">GeoJSON</a></li>
+            <li><a href="{{download.shp}}" target="_blank">SHP</a></li>
+            <li><a href="{{download.kml}}" target="_blank">KML</a></li>
+            <li><a href="{{download.csv}}" target="_blank">CSV</a></li>
+          </ul>
         </li>
       </ul>
-
     {{/if}}
+
       <div class="analysis-footer">
-        <button href="#" class="delete-analysis">Delete</button>
+        <ul class="analysis-control">
+          <li class="analysis-control-subscribe disabled"></li>
+          <li class="analysis-control-delete"></li>
+          </ul>
       </div>
     </div>
 
-  </div>
-  <div class="analysis_dropdown hidden qtip-content">
-    <ul>
-        <li><a href="{{svg}}" target="_blank">SVG</a></li>
-        <li><a href="{{geo}}" target="_blank">GeoJSON</a></li>
-        <li><a href="{{shp}}" target="_blank">SHP</a></li>
-        <li><a href="{{kml}}" target="_blank">KML</a></li>
-        <li><a href="{{csv}}" target="_blank">CSV</a></li>
-    </ul>
   </div>
 </div>

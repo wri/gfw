@@ -39,7 +39,13 @@ define([
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
-      this.currentDate = currentDate || this.options.dateRange;
+
+      if (currentDate) {
+        this.currentDate = currentDate;
+      } else {
+        this._updateCurrentDate(this.options.dateRange);
+      }
+
       // Transitions duration are 100 ms. Give time to them to finish.
       this._updateCurrentDate = _.debounce(this._updateCurrentDate,
         this.options.effectsSpeed);
@@ -240,7 +246,7 @@ define([
       var xr = this.handlers.right.attr('x');
 
       this._hideTipsy();
-      this.playing && this._stopAnimation();
+      this.playing && this.stopAnimation();
 
       if (Math.abs(this.xscale(value) - xr) <
         Math.abs(this.xscale(value) - xl)) {
@@ -346,11 +352,12 @@ define([
      * Event fired when user clicks play/stop button.
      */
     _togglePlay: function() {
-      (this.playing) ? this._stopAnimation() : this._animate();
+      (this.playing) ? this.stopAnimation() : this._animate();
     },
 
     _animate: function() {
       if (!this.options.player) {return;}
+      this.presenter.startPlaying();
       var hlx = this.handlers.left.attr('x');
       var hrx = this.handlers.right.attr('x');
       var trailFrom = Math.round(this.xscale.invert(hlx)) + 1;
@@ -379,8 +386,10 @@ define([
           .call(this.hiddenBrush.event);
     },
 
-    _stopAnimation: function() {
-      if (!this.options.player) {return;}
+    stopAnimation: function() {
+      if (!this.options.player || !this.playing) {return;}
+      this.presenter.stopPlaying();
+
       // End animation extent hiddenBrush
       // this will call onAnimationBrushEnd
       this.trail

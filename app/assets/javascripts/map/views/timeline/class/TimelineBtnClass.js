@@ -33,8 +33,12 @@ define([
       this.options = _.extend({}, this.defaults, this.options || {});
       this.data = this._getData();
 
-      this.currentDate = currentDate ||
-        [this.data[this.data.length - 1].start, this.data[this.data.length - 1].end];
+      if (currentDate) {
+        this.currentDate = currentDate;
+      } else {
+        this._updateCurrentDate([this.data[this.data.length - 1].start,
+          this.data[this.data.length - 1].end]);
+      }
 
       // d3 slider objets
       this.svg = {};
