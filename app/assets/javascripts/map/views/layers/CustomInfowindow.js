@@ -45,9 +45,10 @@ define([
       analyseButton = $(div).find('.analyse')[0];
 
       // Events
-      // google.maps.event.addDomListener(div, 'click', _.bind(function(ev) {
-      //   ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      // }, this));
+      google.maps.event.addDomListener(div, 'click', _.bind(function(ev) {
+        if (! $(ev.currentTarget).hasClass('story-infowindow'))
+          ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+      }, this));
 
       if (closeButton) {
         google.maps.event.addDomListener(closeButton, 'click', _.bind(function(ev) {
