@@ -1,3 +1,5 @@
+//= require jquery.qtip.min
+
 // Compass
 @import "compass/reset";
 @import "compass/css3";
@@ -22,7 +24,8 @@
   "modules/navbar",
   "modules/modal",
   "modules/buttons",
-  "modules/carrousel";
+  "modules/carrousel",
+  "modules/dropdowns";
 
 // States
 @import "states";
