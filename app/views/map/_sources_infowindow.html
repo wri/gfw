@@ -1,6 +1,5 @@
 <script>
-  setTimeout(function() {
-    $(document).ready(function(){
+	function infowindow(){
 		var $backdrop = $('.backdrop'),
 			$wind 	  = $('#window'),
 			$content  = $wind.find('.content');
@@ -18,8 +17,16 @@
 			$wind.fadeOut('fast',function(){$backdrop.fadeOut();});
 			$content.empty();
 		})
-	});
-  }, 7000);
+	}
+
+	function defer() {
+		if (window.$){
+			setTimeout(function() { infowindow() }, 1000);
+		}
+		else
+		    setTimeout(function() { defer() }, 50);
+	}
+	defer();
 </script>
 
 
