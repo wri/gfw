@@ -90,7 +90,8 @@
         height: 39px;
         width: 310px;
         position: relative;
-        right: -86px;
+        right: -4px;
+        float: right;
         .embed & {
           display: none;
         }
