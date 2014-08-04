@@ -13,9 +13,10 @@ define([
   'text!templates/legend/imazonLayerDetails.handlebars',
   'text!templates/legend/forest2000LayerDetails.handlebars',
   'text!templates/legend/pantropicalLayerDetails.handlebars',
-  'text!templates/legend/idnPrimaryLayerDetails.handlebars'
+  'text!templates/legend/idnPrimaryLayerDetails.handlebars',
+  'text!templates/legend/forestgain.handlebars'
 ], function(_, Handlebars, Widget, Presenter, tpl, lossLayerDetailsTpl, imazonLayerDetailsTpl,
-    forest2000LayerDetailsTpl, pantropicalLayerDetailsTpl, idnPrimaryLayerDetailsTpl) {
+    forest2000LayerDetailsTpl, pantropicalLayerDetailsTpl, idnPrimaryLayerDetailsTpl, forestgainTpl) {
 
   'use strict';
 
@@ -33,7 +34,8 @@ define([
       imazon: Handlebars.compile(imazonLayerDetailsTpl),
       forest2000: Handlebars.compile(forest2000LayerDetailsTpl),
       pantropical: Handlebars.compile(pantropicalLayerDetailsTpl),
-      idn_primary: Handlebars.compile(idnPrimaryLayerDetailsTpl)
+      idn_primary: Handlebars.compile(idnPrimaryLayerDetailsTpl),
+      forestgain: Handlebars.compile(forestgainTpl)
     },
 
     options: {
@@ -65,9 +67,6 @@ define([
 
       // Append details template to layer.
       _.each(layers, function(layer) {
-          if (layer.slug === 'forestgain') {
-            layer.title = layer.title + ' (50%)';
-          }
         if (this.detailsTemplates[layer.slug]) {
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 10,
