@@ -136,19 +136,18 @@ gfw.ui.view.Static = cdb.core.View.extend({
         }
       }
     });
-
-    this.dropdown_wood_fiber_plantations = $('.source_dropdown_header_land_rights').qtip({
+    this.dropdown_wood_people_resource = $('.source_dropdown_header_people_right').qtip({
       show: 'click',
       hide: {
         event: 'click unfocus'
       },
       content: {
-        text: $('.source_dropdown_menu_land_rights')
+        text: $('.source_dropdown_menu_header_people_right')
       },
       position: {
         my: 'top right',
         at: 'bottom right',
-        target: $('.source_dropdown_header_land_rights'),
+        target: $('.source_dropdown_header_people_right'),
         adjust: {
           x: -20
         }
@@ -163,6 +162,34 @@ gfw.ui.view.Static = cdb.core.View.extend({
         }
       }
     });
+
+    this.dropdown_wood_people_land = $('.source_dropdown_header_people_land_right').qtip({
+      show: 'click',
+      hide: {
+        event: 'click unfocus'
+      },
+      content: {
+        text: $('.source_dropdown_menu_header_people_land_right')
+      },
+      position: {
+        my: 'top right',
+        at: 'bottom right',
+        target: $('.source_dropdown_header_people_land_right'),
+        adjust: {
+          x: -20
+        }
+      },
+      style: {
+        tip: {
+          corner: 'top right',
+          mimic: 'top center',
+          border: 1,
+          width: 10,
+          height: 6
+        }
+      }
+    });
+
   },
 
   _openDropdowns: function(e) {

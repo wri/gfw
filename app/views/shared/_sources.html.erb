@@ -21,7 +21,6 @@
         </div>
       </div>
     </li>
-    
     <li id='umd_tree_loss_gain' class='source-item first'>
       <div class='source_header'>
         <strong class='source_title'>University of Maryland tree cover loss &amp; gain</strong>
@@ -659,7 +658,7 @@
           <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "#{sources_path}#forest_cover" %></em></p>
         </div>
       </div>
-    </li>    
+    </li>
   </ul>
 </article>
 
@@ -898,7 +897,6 @@
             </div>
 
             <div id="cameroon_mining_permits" class="source_dropdown_body">
-              <h3 class='overview_title'>Cameroon mining permits</h3>
               <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/Forest_Atlas/Cameroon/GIS_Data/CMR_mining_2013.zip' target='_blank'>Download</a></p>
 
               <p>This data set provides the boundaries of prospective mining permits for Cameroon, as well as the type of mineral resource. Map data were provided by the Cameroon Ministry of Mines and Technological Development and published in a collaboration with the World Resources Institute. For more information and data sets, see the <a href='http://www.wri.org/project/interactive-forest-atlas-cameroon' target='_blank'>Interactive Forest Atlas for Cameroon</a>.</p>
@@ -1343,67 +1341,46 @@
           <p class='first'>GFW currently includes land rights data for the following countries:</p>
 
           <div class="source_dropdown">
-            <a href="#" class="source_dropdown_header source_dropdown_header_land_rights">
-              <h3 class='overview_title' title="Select a country"><span>Brazil Indigenous Lands</span></h3>
+            <a href="#" class="source_dropdown_header source_dropdown_header_people_land_right">
+              <h3 class='overview_title' title="Select a country"><span>Select a country</span> <i class='dropdown_arrow'></i></h3>
             </a>
-            <div class="source_dropdown_body sinlge_active">
+
+            <div class='source_dropdown_menu source_dropdown_menu_header_people_land_right'>
+              <ul>
+                <li><a href='#' data-slug="brasil_indigenous_lands">Brazil Indigenous Lands</a></li>
+                <li><a href='#' data-slug="canada_aboriginal_lands">Canada Aboriginal Lands</a></li>
+                <li><a href='#' data-slug="panama_comarcas">Panama Comarcas</a></li>
+                <li><a href='#' data-slug="australia_native_title">Australia Native Title</a></li>
+                <li><a href='#' data-slug="new_zealand">New Zealand</a></li>
+              </ul>
+            </div>
+
+            <div id="brasil_indigenous_lands" class="source_dropdown_body">
               <p class='download'><a href='http://www.funai.gov.br/index.php/servicos/geoprocessamento'>Download</a></p>
 
               <p>This data set displays the boundaries of areas designated as Indigenous Lands in Brazil. Indigenous Lands legally recognize indigenous peoples’ perpetual rights of access, use, withdrawal, management, and exclusion over the land and associated resources. Alienation of the land is prohibited. However, commercial use of forest resources is permitted, but cutting trees for sale requires approval by the National Legislature. Rights to subsoil resources may be obtained only with the approval of the National Legislature and after consultation with the affected indigenous peoples. This data set includes Indigenous Lands that are officially registered and those at various stages of the registration process.</p>
 
               <p class='credits'><strong>Credit:</strong>Fundação Nacional do Índio (FUNAI)</p>
             </div>
-          </div>
-          <div class="source_dropdown">
-            <a href="#" class="source_dropdown_header source_dropdown_header_land_rights">
-              <h3 class='overview_title' title="Select a country"><span>Canada Aboriginal Lands</span></h3>
-            </a>
 
-            <div class="source_dropdown_body sinlge_active">
+            <div id="canada_aboriginal_lands" class="source_dropdown_body">
               <p class='download'><a href='http://www.geobase.ca/geobase/en/data/admin/alta/description.html'>Download</a></p>
 
               <p>The Aboriginal Lands dataset depicts the administrative boundaries (exterior limits) of lands where the title has been vested in specific Aboriginal Groups of Canada or lands which were set aside for their exclusive benefit. The Aboriginal Lands dataset includes, but is not limited to, Indian Reserves,Cree-Naskapi Category 1A and 1A-N Lands, Yukon First Nation Settlement Lands, Kanesatake Mohawk Interim Land Base, the Inuit Owned Lands, Tlicho Lands, Inuvialuit Lands, Gwich’in Lands and Sahtu Lands.</p>
 
               <p class='credits'><strong>Credit:</strong>Government of Canada, Natural Resources Canada, Earth Sciences Sector, Geomatics Canada, Surveyor General Branch. Available through the <a href="http://data.gc.ca/eng/open-government-licence-canada">Open Government License - Canada</a></p>
             </div>
-          </div>
 
-          <div class="source_dropdown">
-            <a href="#" class="source_dropdown_header source_dropdown_header_land_rights">
-              <h3 class='overview_title' title="Select a country"><span>Panama Comarcas</span></h3>
-            </a>
-
-            <div class="source_dropdown_body sinlge_active">
+            <div id="panama_comarcas" class="source_dropdown_body">
               <p class='download'>Download: (this data set was provided by a partner; not available online.)</p>
-
               <p>This data set displays the boundaries of areas designated as comarcas in Panama. Comarcas are legally recognized semi-autonomous areas where indigenous peoples own the land and resources with rights of access, use, withdrawal, management, and exclusion. Although the Government retains ownership of subsoil resources, the indigenous community must be consulted by government and private organizations for proposed developments on their lands. The government and mining concessionaire are required to guarantee benefits to the community and compliance with sustainable development practices.</p>
 
               <p class='credits'><strong>Credit:</strong>National Coordinating Body of Indigenous Peoples in Panama (COONAPIP)</p>
             </div>
-          </div>
-          <div class="source_dropdown">
-            <a href="#" class="source_dropdown_header source_dropdown_header_land_rights">
-              <h3 class='overview_title' title="Select a country"><span>Australia Native Title</span></h3>
-            </a>
 
-            <div class="source_dropdown_body sinlge_active">
-              <p class='download'><a href='http://www.nntt.gov.au/Mediation-and-agreement-making-services/Geospatial-services/Pages/Spatial-Data.aspx'>Download</a></p>
-
-              <p>This data set displays the boundaries of areas designated as Native Titles in Australia. Native Title is the legal recognition of the rights of indigenous groups to land and resources. The specific rights vary depending on whether the area is subject to competing legal rights, such as private ownership or leases, as well as the customary rights exercised over the area. Native title could grant rights of access, use, withdrawal for subsistence, and, in some cases, rights of management and exclusion.</p>
-
-              <p class='credits'><strong>Credit:</strong>National Native Title Tribunal, made available through a Creative Commons Attribution 3.0 <a href="http://creativecommons.org/licenses/by/3.0/au/deed.en">Australia license</a>.</p>
-            </div>
-          </div>
-          <div class="source_dropdown">
-            <a href="#" class="source_dropdown_header source_dropdown_header_land_rights">
-              <h3 class='overview_title' title="Select a country"><span>New Zealand</span></h3>
-            </a>
-
-            <div class="source_dropdown_body sinlge_active">
+            <div id="australia_native_title" class="source_dropdown_body">
               <p class='download'><a href='https://data.linz.govt.nz/'>Download</a></p>
-
               <p>This data set displays the boundaries of areas designated as Maori Lands. These areas include both Maori freehold lands and Maori customary lands. Maori customary lands belong to the Crown but are communally held by Maori in line with customary values and practices. Maori freehold lands are Maori customary lands that have been converted, through application to the Maori Land Court, to the titled, private possession of Maori individuals.</p>
-
               <p class='credits'><strong>Credit:</strong>Land Information New Zealand / Survey & Title.</p>
             </div>
           </div>
@@ -1516,64 +1493,41 @@
           <p class='first'>GFW currently includes resource rights data for the following countries:</p>
 
           <div class="source_dropdown">
-            <a href="#" class="source_dropdown_header source_dropdown_header_land_rights">
-              <h3 class='overview_title' title="Select a country"><span>Cameroon Community Forest</span></h3>
+            <a href="#" class="source_dropdown_header source_dropdown_header_people_right">
+              <h3 class='overview_title' title="Select a country"><span>Select a country</span> <i class='dropdown_arrow'></i></h3>
             </a>
 
-            <!-- div class='source_dropdown_menu source_dropdown_menu_resource_rights'>
+            <div class='source_dropdown_menu source_dropdown_menu_header_people_right'>
               <ul>
                 <li><a href='#' data-slug="cameroon_community_forest">Cameroon Community Forest</a></li>
-                <li><a href='#' data-slug="paraguay_indigenous_territories">Paraguay Indigenous Territories</a></li>
+                <li><a href='#' data-slug="equatorial_guinea_community_forests">Equatorial Guinea Community Forests</a></li>
+                <li><a href='#' data-slug="liberia_community_forests">Liberia Community Forests</a></li>
+                <li><a href='#' data-slug="namibia_community_forests">Namibia Community Forests</a></li>
               </ul>
-            </div -->
+            </div>
 
-            <div id="cameroon_community_forest" class="source_dropdown_body sinlge_active">
+            <div id="cameroon_community_forest" class="source_dropdown_body">
               <p class='download'><a href='http://www.wri.org/our-work/project/congo-basin-forests/cameroon#project-tabs'>Download</a></p>
-
               <p>This data set displays the boundaries of areas designated as Community Forests in Cameroon. Community Forests legally recognize a community’s ownership rights to forest resources, both timber and non-timber. It includes the right to access, use, withdraw for commercial purposes or subsistence, and exclude others from the forest. The land remains owned by the Cameroonian Government. The community’s rights to forest resources are renewed every five years as long as the community complies with the Community Forest Management Agreement. A community may also contract with a third party to commercially harvest timber</p>
 
               <p class='credits'><strong>Credit:</strong> WRI Congo Basin Forest Atlas</p>
             </div>
-          </div>
-
-          <div class="source_dropdown">
-            <a href="#" class="source_dropdown_header source_dropdown_header_land_rights">
-              <h3 class='overview_title' title="Select a country"><span>Equatorial Guinea Community Forests</span></h3>
-            </a>
-
-            <div id="cameroon_community_forest" class="source_dropdown_body sinlge_active">
+            <div id="equatorial_guinea_community_forests" class="source_dropdown_body">
               <p class='download'><a href="http://www.wri.org/resources/maps/forest-atlas-equatorial-guinea">Download</a></p>
 
               <p>This data set displays the boundaries of areas designated as Community Forests in Equatorial Guinea. Community Forests legally recognize a community’s right to access government owned land in order to use the forest for subsistence. The forest remains owned by the government, and must be adjacent to the community. Community Forests are of perpetual duration.</p>
-
-              <p class='credits'><strong>Credit: WRI Congo Basin Forest Atlas</strong>-</p>
+              <p class='credits'><strong>Credit:</strong> WRI Congo Basin Forest Atlas</p>
             </div>
-          </div>
 
-          <div class="source_dropdown">
-            <a href="#" class="source_dropdown_header source_dropdown_header_land_rights">
-              <h3 class='overview_title' title="Select a country"><span>Liberia Community Forests</span></h3>
-            </a>
-
-            <div id="cameroon_community_forest" class="source_dropdown_body sinlge_active">
+            <div id="liberia_community_forests" class="source_dropdown_body">
               <p class='download'>Download: -</p>
-
               <p>Coming soon</p>
-
               <p class='credits'><strong>Credit:</strong>-</p>
             </div>
-          </div>
 
-          <div class="source_dropdown">
-            <a href="#" class="source_dropdown_header source_dropdown_header_land_rights">
-              <h3 class='overview_title' title="Select a country"><span>Namibia Community Forests</span></h3>
-            </a>
-
-            <div id="cameroon_community_forest" class="source_dropdown_body sinlge_active">
+            <div id="namibia_community_forests" class="source_dropdown_body">
               <p class='download'><a href="http://www.nacso.org.na/coninfo.php">Download</a></p>
-
               <p>This data set displays the boundaries of areas registered as Community Forests in Namibia. Community Forests are recognized by the Minister of Environment and Tourism as communal lands subject to a management plan agreed upon by the Minister and a representative body of communal land members. In accordance with the agreement, the management plan grants communal land members the rights to manage and use natural resources, including the removal of forest produce for fuel, personal shelter, or livestock shelter; allows for agricultural activity; allows communal land members to authorize others to use the community forest’s natural resources; and allows communal land members to collect a fee and set conditions for the use of natural resources.</p>
-
               <p class='credits'><strong>Credit:</strong>Namibian Association of Community Based Natural Resource Management (CBNRM) Support Organisations (NACSO)</p>
             </div>
           </div>
@@ -1831,4 +1785,26 @@
       </div>
     </li>
   </ul>
+</article>
+
+<article id="accept_terms" class="sources">
+  <h2 class='source_category_title notranslate'>Please confirm</h2>
+  <div class='source_body'>
+    <p class="notranslate">You acknowledge that you have read and agree to the Global Forest Watch Terms of Service.</p>
+
+    <%= form_tag("/accept", { :class => 'terms_footer notranslate' }) do %>
+      <%= submit_tag "I agree", class: 'btn accept_btn dark_glow' %> <%= link_to 'I do not agree', root_path, class: 'btn cancel_btn dark_glow' %>
+    <% end %>
+  </div>
+</article>
+
+<article id='why_accept_terms'>
+  <h2 class='source_category_title notranslate'>Why accept?</h2>
+  <div class='source_body'>
+    <p class="notranslate">Why are we, the Global Forest Watch team, asking you, our user, to agree to a Terms of Service?</p>
+    <p class="notranslate">The answer is simple. This website and the open data within it is powerful. It exposes us to a huge risk.</p>
+    <p class="notranslate">Without the proper legal protection, Global Forest Watch and our supporters could be vulnerable to lawsuits or other legal actions. This could diminish our capabilities and distract us from showing the world exactly where and when forest loss is happening.</p>
+    <p class="notranslate">We seek to transform the way forests are managed and protected by governments, businesses, and communities around the world. We can’t do that if we’re sued and the website is taken down.</p>
+    <p class="notranslate">So thank you, truly, for understanding why we’re asking you to agree to a Terms of Service. Please join us in making Global Forest Watch a powerful tool for people everywhere.</p>
+  </div>
 </article>
