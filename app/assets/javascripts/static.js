@@ -192,18 +192,45 @@ $(document).ready(function() {
         }
       });
 
-      this.dropdown_wood_fiber_plantations = $('.source_dropdown_header_land_rights').qtip({
+      this.dropdown_wood_people_resource = $('.source_dropdown_header_people_right').qtip({
         show: 'click',
         hide: {
           event: 'click unfocus'
         },
         content: {
-          text: $('.source_dropdown_menu_land_rights')
+          text: $('.source_dropdown_menu_header_people_right')
         },
         position: {
           my: 'top right',
           at: 'bottom right',
-          target: $('.source_dropdown_header_land_rights'),
+          target: $('.source_dropdown_header_people_right'),
+          adjust: {
+            x: -20
+          }
+        },
+        style: {
+          tip: {
+            corner: 'top right',
+            mimic: 'top center',
+            border: 1,
+            width: 10,
+            height: 6
+          }
+        }
+      });
+
+      this.dropdown_wood_people_land = $('.source_dropdown_header_people_land_right').qtip({
+        show: 'click',
+        hide: {
+          event: 'click unfocus'
+        },
+        content: {
+          text: $('.source_dropdown_menu_header_people_land_right')
+        },
+        position: {
+          my: 'top right',
+          at: 'bottom right',
+          target: $('.source_dropdown_header_people_land_right'),
           adjust: {
             x: -20
           }
@@ -230,6 +257,8 @@ $(document).ready(function() {
       this.dropdown_mining.qtip('api').hide();
       this.dropdown_oil_palm.qtip('api').hide();
       this.dropdown_wood_fiber_plantations.qtip('api').hide();
+      this.dropdown_wood_people_resource.qtip('api').hide();
+      this.dropdown_wood_people_land.qtip('api').hide();
 
       if ($('.source_dropdown_body.active').attr('id') === dropdown) return;
 
