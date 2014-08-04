@@ -146,6 +146,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       }
 
       d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
+        console.log(sql)
         var self = that,
             markup_list = '';
 
@@ -158,7 +159,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           markup_list += '<li>\
                             <div class="countries_list__minioverview countries_list__minioverview_'+val.iso+'"></div>\
                             <div class="countries_list__num">'+ord+'</div>\
-                            <div class="countries_list__title">'+enabled+'</div>\
+                            <div class="countries_list__title">'+enabled+'1</div>\
                           </li>';
         });
 
@@ -205,7 +206,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           markup_list += '<li>\
                             <div class="countries_list__minioverview countries_list__minioverview_'+val.iso+'"></div>\
                             <div class="countries_list__num">'+ord+'</div>\
-                            <div class="countries_list__title">'+enabled+'</div>\
+                            <div class="countries_list__title">'+enabled+'2</div>\
                           </li>';
         });
 
@@ -262,7 +263,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           markup_list += '<li>\
                             <div class="countries_list__minioverview expanded countries_list__minioverview_'+val.iso+'"></div>\
                             <div class="countries_list__num">'+ord+'</div>\
-                            <div class="countries_list__title">'+enabled+'</div>\
+                            <div class="countries_list__title">'+enabled+'3</div>\
                           </li>';
         });
 
@@ -331,7 +332,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           markup_list += '<li>\
                             <div class="countries_list__minioverview medium countries_list__minioverview_'+val.iso+'">'+formatNumber(parseFloat(val.ratio).toFixed(2))+'</div>\
                             <div class="countries_list__num">'+ord+'</div>\
-                            <div class="countries_list__title">'+enabled+'</div>\
+                            <div class="countries_list__title">'+enabled+'4</div>\
                           </li>';
         });
 
@@ -376,7 +377,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                               '<div class="loss half last">'+formatNumber(parseFloat(val.total_gain/1000000).toFixed(1))+' Mha</div>',
                             '</div>',
                             '<div class="countries_list__num">'+(key+1)+'</div>',
-                            '<div class="countries_list__title">'+val.name+'</div>',
+                            '<div class="countries_list__title">'+val.name+'5</div>',
                           '</li>'].join('');
         });
 
