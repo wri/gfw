@@ -68,7 +68,7 @@ define([
      * @param  {object} config The service configuration.
      */
     request: function(config) {
-      amplify.request(config);
+      return amplify.request(config);
     },
 
     /**

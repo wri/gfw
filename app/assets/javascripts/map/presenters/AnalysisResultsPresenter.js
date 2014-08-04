@@ -39,10 +39,6 @@ define([
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this.status.set('layerSpec', layerSpec);
-
-        if (!this.view.model.get('boxHidden')) {
-          this._updateLayer();
-        }
       }, this));
 
       mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
@@ -54,10 +50,10 @@ define([
       }, this));
 
       mps.subscribe('AnalysisService/results', _.bind(function(results) {
-        if (!results.failure) {
-          this._renderAnalysis(results);
-        } else {
+        if (results.failure) {
           this._renderAnalysisFailure(results);
+        } else {
+          this._renderAnalysis(results);
         }
       }, this));
     },
@@ -79,10 +75,6 @@ define([
 
     _renderLoading: function() {
       this.view.renderLoading();
-    },
-
-    _updateLayer: function() {
-      mps.publish('AnalysisTool/update-analysis', []);
     },
 
     deleteAnalysis: function() {

@@ -114,6 +114,7 @@ define([
      */
     _removeTimeline: function() {
       if (!this.currentTimeline) {return;}
+      this.currentTimeline.stopAnimation && this.currentTimeline.stopAnimation();
       this.currentTimeline.remove();
       this.currentTimeline = null;
       this.view.model.set('hidden', true);

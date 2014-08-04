@@ -37,7 +37,12 @@ define([
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
-      this.currentDate = currentDate || this.options.dateRange;
+
+      if (currentDate) {
+        this.currentDate = currentDate;
+      } else {
+        this.updateCurrentDate(this.options.dateRange);
+      }
 
       // Status
       this.playing = false;
@@ -208,6 +213,7 @@ define([
     },
 
     stopAnimation: function() {
+      if (!this.playing) {return;}
       this.presenter.stopPlaying();
       // End animation extent hiddenBrush
       // this will call onAnimationBrushEnd

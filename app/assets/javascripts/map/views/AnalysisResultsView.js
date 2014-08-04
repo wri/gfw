@@ -43,7 +43,7 @@ define([
     },
 
     renderAnalysis: function(results, layer) {
-      var p = this._getImazonParams();
+      console.log(results, layer.slug);
       var p = {};
       p[layer.slug] = true;
       p.totalAlerts = (results.value.toLocaleString() || 0) + ' ' + layer.slug;
@@ -57,13 +57,6 @@ define([
       p.layer = layer;
       this._update(this.template(p));
       this.model.set('boxHidden', false);
-    },
-
-    _getImazonParams: function() {
-      var p = {};
-
-
-      return p;
     },
 
     /**
