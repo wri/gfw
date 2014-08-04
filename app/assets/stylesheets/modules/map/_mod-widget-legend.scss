@@ -189,4 +189,29 @@
       .degraded {color: #97BD3D;}
     }
   }
+
+  /****************************/
+  /* FiresLayer details */
+  /****************************/
+  .layer-details-fires {
+    margin-left: 0;
+    margin-top: 12px;
+    text-align: center;
+
+    .gfw-fires-link {
+      padding: 10px 0;
+      width: 100%;
+      border: 1px solid #ec1d38;
+      border-radius: 5px;
+      font-size: 12px;
+      text-transform: uppercase;
+      display: block;
+      color: #999;
+      font-weight: bold;
+
+      span {
+        color: #ec1d38;
+      }
+    }
+  }
 }

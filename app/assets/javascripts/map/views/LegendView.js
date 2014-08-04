@@ -9,14 +9,15 @@ define([
   'views/Widget',
   'presenters/LegendPresenter',
   'text!templates/legend/legend.handlebars',
-  'text!templates/legend/lossLayerDetails.handlebars',
-  'text!templates/legend/imazonLayerDetails.handlebars',
-  'text!templates/legend/forest2000LayerDetails.handlebars',
-  'text!templates/legend/pantropicalLayerDetails.handlebars',
-  'text!templates/legend/idnPrimaryLayerDetails.handlebars',
-  'text!templates/legend/forestgain.handlebars'
-], function(_, Handlebars, Widget, Presenter, tpl, lossLayerDetailsTpl, imazonLayerDetailsTpl,
-    forest2000LayerDetailsTpl, pantropicalLayerDetailsTpl, idnPrimaryLayerDetailsTpl, forestgainTpl) {
+  'text!templates/legend/loss.handlebars',
+  'text!templates/legend/gain.handlebars',
+  'text!templates/legend/imazon.handlebars',
+  'text!templates/legend/fires.handlebars',
+  'text!templates/legend/forest2000.handlebars',
+  'text!templates/legend/pantropical.handlebars',
+  'text!templates/legend/idnPrimary.handlebars'
+], function(_, Handlebars, Widget, Presenter, tpl, lossTpl, gainTpl, imazonTpl, firesTpl,
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl) {
 
   'use strict';
 
@@ -30,12 +31,13 @@ define([
      * Optional layers detail templates.
      */
     detailsTemplates: {
-      umd_tree_loss_gain: Handlebars.compile(lossLayerDetailsTpl),
-      imazon: Handlebars.compile(imazonLayerDetailsTpl),
-      forest2000: Handlebars.compile(forest2000LayerDetailsTpl),
-      pantropical: Handlebars.compile(pantropicalLayerDetailsTpl),
-      idn_primary: Handlebars.compile(idnPrimaryLayerDetailsTpl),
-      forestgain: Handlebars.compile(forestgainTpl)
+      umd_tree_loss_gain: Handlebars.compile(lossTpl),
+      forestgain: Handlebars.compile(gainTpl),
+      imazon: Handlebars.compile(imazonTpl),
+      fires: Handlebars.compile(firesTpl),
+      forest2000: Handlebars.compile(forest2000Tpl),
+      pantropical: Handlebars.compile(pantropicalTpl),
+      idn_primary: Handlebars.compile(idnPrimaryTpl)
     },
 
     options: {
