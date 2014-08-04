@@ -1,0 +1,39 @@
+/* =Dropdowns
+----------------------------------------------- */
+
+.qtip-default {
+  border: 1px solid #ccc;
+  background: #fff;
+  @include border-radius(3px);
+  @include box-shadow(0 0 3px rgba(#000, .2));
+}
+
+.qtip-content {
+  padding: 0;
+
+  li {
+    &:first-child a {
+      border-top: 0;
+      @include border-top-radius(2px);
+    }
+
+    &:last-child a {
+      @include border-bottom-radius(2px);
+    }
+
+    a {
+      display: block;
+      border-top: 1px solid #ddd;
+      padding: 10px;
+      min-width: 80px;
+      font-size: 13px;
+      @extend .serif;
+      color: #666;
+
+      &:hover {
+        background: #fafafa;
+        text-decoration: underline;
+      }
+    }
+  }
+}
