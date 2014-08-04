@@ -49,6 +49,21 @@
     }
   }
 
+  .layer-sublayer {
+    cursor: pointer;
+    padding: 7px 5px 5px 14px;
+
+    .onoffswitch {
+      margin-top: 1px;
+    }
+
+    .sublayer-title {
+      margin-left: 5px;
+      color: #ccc;
+      display: inline-block;
+    }
+  }
+
   .circle:before {
     content: ' \25CF';
     font-size: 16px;
