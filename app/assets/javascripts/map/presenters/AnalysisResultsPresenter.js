@@ -74,7 +74,7 @@ define([
     _renderAnalysis: function(results) {
       var layerSlug = this.datasets[results.meta.id];
       var layer = this.status.get('layerSpec').getLayer({slug: layerSlug});
-
+      console.log(results);
       // Unexpected results from successful request
       if (!layer) {
         this._renderAnalysisFailure();
@@ -88,6 +88,12 @@ define([
       p.layer = layer;
       p.download = results.download_urls;
       p.totalArea = (results.params.geojson) ? this._getAreaPolygon(results.params.geojson) : 0;
+
+      if (layer.slug === 'umd_tree_loss_gain') {
+        p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year());
+        p.lossAlerts = 0;
+        p.gainAlerts = 0;
+      }
 
       if (layer.slug === 'imazon') {
         p.degrad = Number(results.value[0].value).toLocaleString();
