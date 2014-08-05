@@ -46,11 +46,12 @@
         <span class="analysis-date-range">{{dateRange}}</span>
       </div>
       <ul class="analysis-stats">
-        <li>
-          <span class="stats-title">Total selected area</span>
-          <span class="stats-count"><strong>{{totalArea}}</strong> ha</span>
-        </li>
-
+        {{#if totalArea}}
+          <li>
+            <span class="stats-title">Total selected area</span>
+            <span class="stats-count"><strong>{{totalArea}}</strong> ha</span>
+          </li>
+        {{/if}}
         {{#if umd_tree_loss_gain}}
           <li>
             <span class="stats-title">Loss {{lossDateRange}}</span>

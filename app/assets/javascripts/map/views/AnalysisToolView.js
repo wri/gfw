@@ -167,7 +167,7 @@ define([
     drawTopojson: function(tp) {
       var geojson = topojson.feature(tp, tp.objects[0]);
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
-      this.presenter.setMultipolygon(multipolygon);
+      this.presenter.setMultipolygon(multipolygon, geojson);
       this.$widgetBtn.addClass('disabled');
     },
 

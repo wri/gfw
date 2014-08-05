@@ -65,9 +65,9 @@ define([
         this._setCurrentDate(date);
       }, this));
 
-      // mps.subscribe('MapView/click-protected', _.bind(function(wdpaid) {
-      //   this._publishAnalysis({wdpaid: wdpaid});
-      // }, this));
+      mps.subscribe('MapView/click-protected', _.bind(function(wdpaid) {
+        this._publishAnalysis({wdpaid: wdpaid});
+      }, this));
     },
 
     _setCurrentDate: function(date) {
@@ -112,31 +112,21 @@ define([
     },
 
     /**
-     * Used by this presenter to delete analysis when the
-     * current baselayer doesn't support analysis.
-     */
-    // _deleteAnalysis: function() {
-    //   mps.publish('AnalysisResults/no-analysis-msg', []);
-    //   this.view._onClickCancel();
-    // },
-    //
-
-    /**
      * Publish an analysis from a resource.
      * Resources should be stringified.
      *
      * @param  {Object} resource geojson/iso/wdpaid
      */
     _publishAnalysis: function(resource) {
-      // if there are no baselayer delete the analysis shit
-      // if (!this.status.get('baselayer')) {
-      //   this._deleteAnalysis();
-      //   return;
-      // }
-
       var date = this.status.get('currentDate');
       resource.dataset = this.datasets[this.status.get('baselayer').slug];
-      resource.period = '{0},{1}'.format(date[0].format('YYYY-MM-DD'), date[1].format('YYYY-MM-DD'));
+
+      if (!resource.wdpaid) {
+        resource.period = '{0},{1}'.format(date[0].format('YYYY-MM-DD'), date[1].format('YYYY-MM-DD'));
+      } else {
+        resource.wdpaid = resource.wdpaid.wdpaid;
+      }
+
       this.status.set('analysis', resource);
       mps.publish('AnalysisService/get', [resource]);
     },
@@ -151,8 +141,9 @@ define([
       this.status.set('overlay', overlay);
     },
 
-    setMultipolygon: function(multipolygon) {
+    setMultipolygon: function(multipolygon, geojson) {
       this.status.set('multipolygon', multipolygon);
+      mps.publish('AnalysisTool/iso-drawn', [geojson.geometry]);
     },
 
     startDrawing: function() {
@@ -253,3 +244,4 @@ define([
   return AnalysisToolPresenter;
 
 });
+
