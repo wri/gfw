@@ -155,11 +155,18 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         _.each(data, function(val, key) {
           var ord = e ? (key+11) : (key+1),
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
-
+              umd = {
+                loss : 34,
+                gain : 43
+              }
           markup_list += '<li>\
                             <div class="countries_list__minioverview countries_list__minioverview_'+val.iso+'"></div>\
                             <div class="countries_list__num">'+ord+'</div>\
-                            <div class="countries_list__title">'+enabled+'1</div>\
+                            <div class="countries_list__title">'+enabled+'</div>\
+                            <div class="countries_list__data">\
+                              <span>'+ umd.loss +' Mha of loss</span>\
+                              <span>'+ umd.gain +' Mha of gain</span>\
+                            </div>\
                           </li>';
         });
 
