@@ -24,12 +24,13 @@ define([
     options: {
       hidden: false,
       boxHidden: true,
-      boxClosed: false
+      boxClosed: false,
+      boxDraggable: false
     },
 
     events: function(){
       return _.extend({}, AnalysisToolView.__super__.events, {
-        'click .widget-btn': '_onClickBtn',
+        'click #analysis': '_onClickAnalysis',
         'click #done': '_onClickDone',
         'click #cancel': '_onClickCancel'
       });
@@ -49,24 +50,28 @@ define([
       this.$done = this.$el.find('#done');
     },
 
-    _startDrawing: function() {
+    /**
+     * Triggered when the user clicks on analysis.
+     */
+    _onClickAnalysis: function() {
+      this._startDrawingManager();
       this.presenter.startDrawing();
+      this.model.set('boxHidden', false);
+      this.$done.addClass('disabled');
+      this.$widgetBtn.addClass('disabled');
+    },
+
+    /**
+     * Star drawing manager and add an overlaycomplete
+     * listener.
+     */
+    _startDrawingManager: function() {
       this.drawingManager = new google.maps.drawing.DrawingManager({
         drawingControl: false,
         drawingMode: google.maps.drawing.OverlayType.POLYGON,
-        polygonOptions: {
-          strokeWeight: 2,
-          fillOpacity: 0.45,
-          fillColor: '#FFF',
-          strokeColor: '#A2BC28',
-          editable: true,
-          icon: new google.maps.MarkerImage(
-            '/assets/icons/marker_exclamation.png',
-            new google.maps.Size(36, 36), // size
-            new google.maps.Point(0, 0), // offset
-            new google.maps.Point(18, 18) // anchor
-          )
-        },
+        polygonOptions: _.extend({
+          editable: true
+        }, this.style),
         panControl: false,
         map: this.map
       });
@@ -75,108 +80,99 @@ define([
         'overlaycomplete', this._onOverlayComplete);
     },
 
+    /**
+     * Triggered when the user finished drawing a polygon.
+     *
+     * @param  {Object} e event
+     */
+    _onOverlayComplete: function(e) {
+      this.presenter.onOverlayComplete(e);
+      this.$done.removeClass('disabled');
+    },
+
+    /**
+     * Triggered when the user clicks on done
+     * to get the analysis of the new polygon.
+     */
+    _onClickDone: function() {
+      this._stopDrawing();
+      this.presenter.doneDrawing();
+    },
+
+
+    /**
+     * Triggered when the user clicks on cancel
+     * to stop drawing a polygon.
+     */
+    _onClickCancel: function() {
+      this._stopDrawing();
+      this.presenter.deleteGeom();
+    },
+
+    /**
+     * Stop drawing manager, set drawing box to hidden.
+     */
     _stopDrawing: function() {
       if (this.drawingManager) {
         this.drawingManager.setDrawingMode(null);
         this.drawingManager.setMap(null);
       }
-      this.selection && this.selection.setEditable(false);
+
+      this.model.set({boxHidden: true});
+      this.presenter.stopDrawing();
     },
 
-    _onOverlayComplete: function(e) {
-      if (e.type !== google.maps.drawing.OverlayType.MARKER) {
-        this._stopDrawing();
-        this._setSelection(e.overlay, e.type);
-      }
-      this.polygon = this.presenter.createGeoJson(e.overlay.getPath().getArray());
-      this.$done.removeClass('disabled');
-    },
-
-    _clearSelection: function() {
-      if(this.selection) {
-        this.selection.setEditable(false);
-        this.selection = null;
-      }
-    },
-
-    // Add an event listener that selects the newly-drawn shape when the user
-    // mouses down on it.
-    _setSelection: function(overlay, type) {
-      var shape = overlay;
-      shape.type = type;
-      this._clearSelection();
-      this.selection = shape;
-      shape.setEditable(true);
-      // google.maps.event.addListener(shape, 'click', function() {
-      //   self.setSelection(shape);
-      // });
-    },
-
-    deleteSelection: function() {
-      if(this.selection) {
-        this.selection.setMap(null);
-        this.selection = null;
+    /**
+     * Deletes a overlay from the map.
+     *
+     * @param  {object} resource overlay/multipolygon
+     */
+    deleteGeom: function(resource) {
+      if (resource.overlay) {
+        resource.overlay.setMap(null);
+        resource.overlay = null;
       }
 
-      if (this.country) {
-        this.map.data.remove(this.country);
+      if (resource.multipolygon) {
+        this.map.data.remove(resource.multipolygon);
       }
 
       this.$widgetBtn.removeClass('disabled');
     },
 
-    // Publish polygon
-    _onClickDone: function() {
-      this.presenter.stopDrawing();
-      this.presenter.publishAnalysis({geojson: this.polygon});
-      this._stopDrawing();
-      this.model.set({boxHidden: true});
-    },
-
-    _onClickCancel: function() {
-      this.presenter.stopDrawing();
-      this._stopDrawing();
-      this.deleteSelection();
-      this.model.set({boxHidden: true});
-    },
-
-    _onClickBtn: function(e) {
-      this._startDrawing(e);
-      this._toggleBoxHidden(e);
-      this.$widgetBtn.addClass('disabled');
+    setEditable: function(overlay, to) {
+      overlay.setEditable(to);
     },
 
     /**
-     * Draw map from coordinates.
+     * Draw Geojson polygon on the map.
      *
-     * @param  {object} geom The geom object
+     * @param  {String} geojson Geojson polygon as a string
      */
-    drawGeojson: function(geojson) {
-      var paths = this.presenter.geomToPath(geojson);
-
-      this.selection = new google.maps.Polygon(
+    drawPaths: function(paths) {
+      var overlay = new google.maps.Polygon(
         _.extend({}, {paths: paths}, this.style));
 
-      this.polygon = this.presenter.createGeoJson(paths);
-
-      this.selection.setMap(this.map);
+      overlay.setMap(this.map);
+      this.presenter.setOverlay(overlay);
       this.$widgetBtn.addClass('disabled');
     },
 
     /**
-     * Draw country from multipolygon geojson.
+     * Convert topojson into a geojson feature object and
+     * append it to the map.
      *
-     * @param  {object} topojson
+     * @param  {Object} topojson
      */
-    drawIso: function(tp) {
+    drawTopojson: function(tp) {
       var geojson = topojson.feature(tp, tp.objects[0]);
-      this.country = this.map.data.addGeoJson(geojson)[0];
-      this.map.data.setStyle(this.style);
+      var multipolygon = this.map.data.addGeoJson(geojson)[0];
+      this.presenter.setMultipolygon(multipolygon, geojson);
       this.$widgetBtn.addClass('disabled');
     },
 
     /**
-     * Set polygon and multypoligon style.
+     * Set geojson style.
      */
     _setStyle: function() {
       this.style = {
@@ -191,6 +187,8 @@ define([
           new google.maps.Point(18, 18) // anchor
         )
       };
+
+      this.map.data.setStyle(this.style);
     }
 
   });

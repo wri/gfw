@@ -18,6 +18,7 @@ paths:
   jqueryui: "jquery-ui-1.10.4.custom.min"
   markerclusterer: "gmaps-markerclusterer-plus/src/markerclusterer"
   gmap: "map/gmap"
+  geojsonArea: "geojson-area"
   uri: "uri-templates/uri-templates"
   handlebars: "handlebars/handlebars"
   wax: "wax.g.min"

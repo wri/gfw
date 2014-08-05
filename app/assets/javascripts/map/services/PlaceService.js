@@ -132,7 +132,6 @@ define([
 
       if (go) {
         var where = _.union(place.params.baselayers, place.params.sublayers);
-
         layerSpecService.toggle(
           where,
           _.bind(function(layerSpec) {
@@ -167,6 +166,11 @@ define([
       var p = _.extendNonNull({}, this.defaults, params);
 
       p.baselayers = _.map(p.baselayers.split(','), function(slug) {
+        // quick fix
+        if (slug === 'loss') {
+          slug = 'umd_tree_loss_gain';
+        }
+        //
         return {slug: slug};
       });
 
@@ -179,7 +183,7 @@ define([
       p.lng = _.toNumber(p.lng);
       p.begin = p.begin ? moment(p.begin) : null;
       p.end = p.end ? moment(p.end) : null;
-      p.geojson = p.geojson ? decodeURIComponent(p.geojson) : null;
+      p.geojson = p.geojson ? JSON.parse(decodeURIComponent(p.geojson)) : null;
       p.threshold = p.threshold ? _.toNumber(p.threshold) : null;
 
       return p;

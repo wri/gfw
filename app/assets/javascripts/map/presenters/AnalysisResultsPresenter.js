@@ -8,8 +8,9 @@ define([
   'underscore',
   'backbone',
   'moment',
-  'mps'
-], function(Class, _, Backbone, moment, mps) {
+  'mps',
+  'geojsonArea'
+], function(Class, _, Backbone, moment, mps, geojsonArea) {
 
   'use strict';
 
@@ -27,7 +28,10 @@ define([
       this.view = view;
 
       this.status = new (Backbone.Model.extend())({
-        layerSpec: null
+        layerSpec: null,
+        analysis: false,
+        isoGeojson: null,
+        disableUpdating: false
       });
 
       this._subscribe();
@@ -59,9 +63,31 @@ define([
           this._renderAnalysis(results);
         }
       }, this));
+
+      mps.subscribe('AnalysisTool/iso-drawn', _.bind(function(multipolygon) {
+        this.status.set('isoGeojson', multipolygon);
+      }, this));
+
+      mps.subscribe('Timeline/date-change', _.bind(function() {
+        if (this.status.get('analysis') && !this.status.get('disableUpdating')) {
+          mps.publish('AnalysisTool/update-analysis', []);
+        }
+      }, this));
+
+      mps.subscribe('Timeline/start-playing', _.bind(function() {
+        this.status.set('disableUpdating', true);
+      }, this));
+
+      mps.subscribe('Timeline/stop-playing', _.bind(function() {
+        this.status.set('disableUpdating', false);
+        if (this.status.get('analysis')) {
+          mps.publish('AnalysisTool/update-analysis', []);
+        }
+      }, this));
     },
 
     deleteAnalysis: function() {
+      this.status.set('analysis', false);
       mps.publish('AnalysisResults/delete-analysis', []);
       mps.publish('Place/update', [{go: false}]);
     },
@@ -76,7 +102,7 @@ define([
       var layer = this.status.get('layerSpec').getLayer({slug: layerSlug});
       // Unexpected results from successful request
       if (!layer) {
-        this._renderAnalysisFailure();
+        this.renderFailure();
         return;
       }
 
@@ -86,7 +112,12 @@ define([
       p[layerSlug] = true;
       p.layer = layer;
       p.download = results.download_urls;
-      p.totalArea = (results.params.geojson) ? this._getAreaPolygon(results.params.geojson) : 0;
+
+      if (results.params.geojson) {
+        p.totalArea = this._getAreaPolygon(results.params.geojson);
+      } else if (results.params.iso) {
+        p.totalArea = this.status.get('isoGeojson') ? this._getAreaMultipolygon(this.status.get('isoGeojson')) : 0;
+      }
 
       if (layer.slug === 'umd_tree_loss_gain') {
         p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year());
@@ -118,7 +149,26 @@ define([
       }
 
       this.view.renderAnalysis(p);
+      this.status.set('analysis', true);
       mps.publish('Place/update', [{go: false}]);
+    },
+
+    /**
+     * Generates a path from a Geojson.
+     *
+     * @param  {object} geojson
+     * @return {array} paths
+     */
+    _geojsonToPath: function(geojson) {
+      var coords = geojson.coordinates[0];
+      return _.map(coords, function(g) {
+        return new google.maps.LatLng(g[1], g[0]);
+      });
+    },
+
+
+    _getAreaMultipolygon: function(geojson) {
+      return (geometry(geojson) / 10000).toLocaleString();
     },
 
     /**
@@ -129,31 +179,7 @@ define([
      * @return {Integer} total area
      */
     _getAreaPolygon: function(polygon) {
-      var area = 0;
-      var points = polygon.coordinates[0];
-      var j = points.length - 1;
-      var p1, p2;
-
-      for (var i = 0; i < points.length; j = i++) {
-        var pt = points[i];
-        if (Array.isArray(pt[0])) {
-          pt[1] = pt[0][1];
-          pt[0] = pt[0][0];
-        }
-        p1 = {
-          x: pt[1],
-          y: pt[0]
-        };
-        p2 = {
-          x: points[j][1],
-          y: points[j][0]
-        };
-        area += p1.x * p2.y;
-        area -= p1.y * p2.x;
-      }
-      area /= 2;
-      area = Math.abs(area);
-      return Number(Math.ceil((area * 1000000) * 10) / 10).toLocaleString();
+      return (geometry(polygon) / 10000).toLocaleString();
     }
 
   });
