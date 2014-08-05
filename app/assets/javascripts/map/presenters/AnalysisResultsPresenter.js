@@ -62,6 +62,7 @@ define([
         } else {
           this._renderAnalysis(results);
         }
+        this.status.set('analysis', true);
       }, this));
 
       mps.subscribe('AnalysisTool/iso-drawn', _.bind(function(multipolygon) {
@@ -98,7 +99,6 @@ define([
      * @param  {Object} results
      */
     _renderAnalysis: function(results) {
-      console.log(results);
       var layerSlug = this.datasets[results.meta.id];
       var layer = this.status.get('layerSpec').getLayer({slug: layerSlug});
       // Unexpected results from successful request
@@ -163,7 +163,6 @@ define([
       }
 
       this.view.renderAnalysis(p);
-      this.status.set('analysis', true);
       mps.publish('Place/update', [{go: false}]);
     },
 
