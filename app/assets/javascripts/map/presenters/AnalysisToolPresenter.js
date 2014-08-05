@@ -29,62 +29,51 @@ define([
       this.status = new (Backbone.Model.extend())({
         currentDate: null,
         baselayer: null,
-        analysis: null,
-        disabled: false
+        analysis: null, // analysis resource
+        overlay: null, // google.maps.Polygon (user draw)
+        polygon: null, // geojson (user polygons)
+        multipolygon: null // geojson (countries and regions)
       });
 
       this._subscribe();
+      mps.publish('Place/register', [this]);
     },
 
     _subscribe: function() {
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this._setBaselayer(layerSpec);
+        this._checkUnavailable();
       }, this));
 
       mps.subscribe('Place/go', _.bind(function(place) {
         this._setBaselayer(place.layerSpec);
-
-        if (place.params.begin && place.params.end) {
-          this.status.set('currentDate', [place.params.begin,
-            place.params.end]);
-        }
-
-        if (place.params.iso !== 'ALL') {
-          this._drawIso(place.params.iso);
-        } else if (place.params.geojson) {
-          this._drawGeojson(place.params.geojson);
-        }
+        this._setCurrentDate([place.params.begin, place.params.end]);
+        this._drawFromUrl(place.params.iso, place.params.geojson);
       }, this));
+
+      mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
+        if (this.status.get('analysis')) {
+          this._publishAnalysis(this.status.get('analysis'));
+        }
+      }, this))
 
       mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
-        this.view.deleteSelection();
-        this.status.set('analysis', null);
+        this.deleteGeom();
       }, this));
 
-      mps.subscribe('MapView/click-protected', _.bind(function(wdpaid) {
-        this.publishAnalysis({wdpaid: wdpaid});
-      }, this));
-
-      // update analysis when timeline date change
       mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
+        this._setCurrentDate(date);
+      }, this));
+
+      // mps.subscribe('MapView/click-protected', _.bind(function(wdpaid) {
+      //   this._publishAnalysis({wdpaid: wdpaid});
+      // }, this));
+    },
+
+    _setCurrentDate: function(date) {
+      if (date[0] && date[1]) {
         this.status.set('currentDate', date);
-        if (this.status.get('analysis') && !this.status.get('disabled')) {
-          this.publishAnalysis(this.status.get('analysis'));
-        }
-      }, this));
-
-      mps.subscribe('Timeline/start-playing', _.bind(function() {
-        this.status.set('disabled', true);
-      }, this));
-
-      mps.subscribe('Timeline/stop-playing', _.bind(function() {
-        this.status.set('disabled', false);
-        if (this.status.get('analysis')) {
-          this.publishAnalysis(this.status.get('analysis'));
-        }
-      }, this));
-
-      mps.publish('Place/register', [this]);
+      }
     },
 
     /**
@@ -93,22 +82,32 @@ define([
     _setBaselayer: function(layerSpec) {
       var baselayers = layerSpec.getBaselayers();
 
-      this.status.set('baselayer', baselayers[_.first(_.intersection(
+      var baselayer = baselayers[_.first(_.intersection(
         _.pluck(baselayers, 'slug'),
-        _.keys(this.datasets)))]);
+        _.keys(this.datasets)))];
 
-      this._setVisibility();
+      this.status.set('baselayer', baselayer);
+      this.view.model.set('hidden', !!!baselayer)
     },
 
-    /**
-     * Toggle hidden depending on active layers.
-     */
-    _setVisibility: function() {
-      if (!this.status.get('baselayer')) {
-        this.status.get('analysis') && mps.publish('AnalysisService/results', [{unavailable: true}]);
-        this.view.model.set('hidden', true);
-      } else {
-        this.view.model.set('hidden', false);
+    _drawFromUrl: function(iso, geojson) {
+      // Draw country/regions
+      if (iso !== 'ALL') {
+        countryService.execute(iso, _.bind(function(results) {
+          this.view.drawTopojson(results.topojson);
+          this._publishAnalysis({iso: iso});
+        },this));
+      // Draw user drawn polygon
+      } else if (geojson) {
+        this.status.set('polygon', geojson);
+        this.view.drawPaths(this._geojsonToPath(geojson));
+        this._publishAnalysis({geojson: JSON.stringify(geojson)});
+      }
+    },
+
+    _checkUnavailable: function() {
+      if (!this.status.get('baselayer') && this.status.get('analysis')) {
+        mps.publish('AnalysisService/results', [{unavailable: true}]);
       }
     },
 
@@ -116,48 +115,78 @@ define([
      * Used by this presenter to delete analysis when the
      * current baselayer doesn't support analysis.
      */
-    _deleteAnalysis: function() {
-      mps.publish('AnalysisResults/no-analysis-msg', []);
-      this.view._onClickCancel();
-    },
+    // _deleteAnalysis: function() {
+    //   mps.publish('AnalysisResults/no-analysis-msg', []);
+    //   this.view._onClickCancel();
+    // },
+    //
 
     /**
-     * Draw geom on the map and publish analysis of that geom.
+     * Publish an analysis from a resource.
+     * Resources should be stringified.
      *
-     * @param  {object} geom
+     * @param  {Object} resource geojson/iso/wdpaid
      */
-    _drawGeojson: function(geojson) {
-      this.view.drawGeojson(geojson);
-      this.publishAnalysis({geojson: geojson});
-    },
+    _publishAnalysis: function(resource) {
+      // if there are no baselayer delete the analysis shit
+      // if (!this.status.get('baselayer')) {
+      //   this._deleteAnalysis();
+      //   return;
+      // }
 
-    /**
-     * Used by this presenter to draw a country and publish an analysis of that.
-     *
-     * @param  {string} iso Country iso
-     */
-    _drawIso: function(iso) {
-      countryService.execute(iso, _.bind(function(results) {
-        this.view.drawIso(results.topojson);
-        this.publishAnalysis({iso: iso});
-      },this));
-    },
-
-    /**
-     * Publish an analysis and set the currentResource.
-     */
-    publishAnalysis: function(resource) {
-      if (!this.status.get('baselayer')) {
-        this._deleteAnalysis();
-        return;
-      }
-
-      var data = _.extend({}, resource);
       var date = this.status.get('currentDate');
-      data.dataset = this.datasets[this.status.get('baselayer').slug];
-      data.period = '{0},{1}'.format(date[0].format('YYYY-MM-DD'), date[1].format('YYYY-MM-DD'));
+      resource.dataset = this.datasets[this.status.get('baselayer').slug];
+      resource.period = '{0},{1}'.format(date[0].format('YYYY-MM-DD'), date[1].format('YYYY-MM-DD'));
       this.status.set('analysis', resource);
-      mps.publish('AnalysisService/get', [data]);
+      mps.publish('AnalysisService/get', [resource]);
+    },
+
+    onOverlayComplete: function(e) {
+      e.overlay.type = e.type;
+      e.overlay.setEditable(true);
+      this.setOverlay(e.overlay);
+    },
+
+    setOverlay: function(overlay) {
+      this.status.set('overlay', overlay);
+    },
+
+    setMultipolygon: function(multipolygon) {
+      this.status.set('multipolygon', multipolygon);
+    },
+
+    startDrawing: function() {
+      mps.publish('AnalysisTool/start-drawing', []);
+    },
+
+    stopDrawing: function() {
+      mps.publish('AnalysisTool/stop-drawing', []);
+    },
+
+    doneDrawing: function() {
+      var overlay = this.status.get('overlay');
+      var paths = this.status.get('overlay').getPath().getArray();
+      var geojson = this._pathToGeojson(paths);
+      this.status.set('polygon', geojson);
+      this.view.setEditable(overlay, false);
+      this._publishAnalysis({geojson: JSON.stringify(geojson)});
+    },
+
+    /**
+     * Deletes the current geometry from the map. This is triggered
+     * when the users cancel a drawing or when a analysis is removed.
+     */
+    deleteGeom: function() {
+      this.view.deleteGeom({
+        overlay: this.status.get('overlay'),
+        multipolygon: this.status.get('multipolygon')
+      });
+
+      // Reset status
+      this.status.set('analysis', null);
+      this.status.set('overlay', null);
+      this.status.set('polygon', null);
+      this.status.set('multipolygon', null);
     },
 
     /**
@@ -166,7 +195,7 @@ define([
      * @param  {Array} path Array of google.maps.LatLng objects
      * @return {string} A GeoJSON string representing the path
      */
-    createGeoJson: function(path) {
+    _pathToGeojson: function(path) {
       var coordinates = null;
 
       coordinates = _.map(path, function(latlng) {
@@ -178,31 +207,23 @@ define([
       // First and last coordinate should be the same
       coordinates.push(_.first(coordinates));
 
-      return JSON.stringify({
+      return {
         'type': 'Polygon',
         'coordinates': [coordinates]
-      });
+      };
     },
 
     /**
-     * Convert a geojson into a path.
+     * Generates a path from a Geojson.
      *
      * @param  {object} geojson
      * @return {array} paths
      */
-    geomToPath: function(geom) {
-      var coords = JSON.parse(geom).coordinates[0];
+    _geojsonToPath: function(geojson) {
+      var coords = geojson.coordinates[0];
       return _.map(coords, function(g) {
         return new google.maps.LatLng(g[1], g[0]);
       });
-    },
-
-    startDrawing: function() {
-      mps.publish('AnalysisTool/start-drawing', []);
-    },
-
-    stopDrawing: function() {
-      mps.publish('AnalysisTool/stop-drawing', []);
     },
 
     /**

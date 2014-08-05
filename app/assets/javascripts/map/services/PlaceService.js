@@ -179,7 +179,7 @@ define([
       p.lng = _.toNumber(p.lng);
       p.begin = p.begin ? moment(p.begin) : null;
       p.end = p.end ? moment(p.end) : null;
-      p.geojson = p.geojson ? decodeURIComponent(p.geojson) : null;
+      p.geojson = p.geojson ? JSON.parse(decodeURIComponent(p.geojson)) : null;
       p.threshold = p.threshold ? _.toNumber(p.threshold) : null;
 
       return p;

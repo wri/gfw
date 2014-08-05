@@ -27,7 +27,9 @@ define([
       this.view = view;
 
       this.status = new (Backbone.Model.extend())({
-        layerSpec: null
+        layerSpec: null,
+        analysis: false,
+        disableUpdating: false
       });
 
       this._subscribe();
@@ -59,9 +61,27 @@ define([
           this._renderAnalysis(results);
         }
       }, this));
+
+      mps.subscribe('Timeline/date-change', _.bind(function() {
+        if (this.status.get('analysis') && !this.status.get('disableUpdating')) {
+          mps.publish('AnalysisTool/update-analysis', []);
+        }
+      }, this));
+
+      mps.subscribe('Timeline/start-playing', _.bind(function() {
+        this.status.set('disableUpdating', true);
+      }, this));
+
+      mps.subscribe('Timeline/stop-playing', _.bind(function() {
+        this.status.set('disableUpdating', false);
+        if (this.status.get('analysis')) {
+          mps.publish('AnalysisTool/update-analysis', []);
+        }
+      }, this));
     },
 
     deleteAnalysis: function() {
+      this.status.set('analysis', false);
       mps.publish('AnalysisResults/delete-analysis', []);
       mps.publish('Place/update', [{go: false}]);
     },
@@ -118,8 +138,22 @@ define([
       }
 
       this.view.renderAnalysis(p);
+      this.status.set('analysis', true);
       mps.publish('Place/update', [{go: false}]);
     },
+
+    /**
+     * Generates a path from a Geojson.
+     *
+     * @param  {object} geojson
+     * @return {array} paths
+     */
+    // _geojsonToPath: function(geojson) {
+    //   var coords = geojson.coordinates[0];
+    //   return _.map(coords, function(g) {
+    //     return new google.maps.LatLng(g[1], g[0]);
+    //   });
+    // },
 
     /**
      * Get total area form a geojson.
@@ -129,6 +163,10 @@ define([
      * @return {Integer} total area
      */
     _getAreaPolygon: function(polygon) {
+      // var paths = this._geojsonToPath(polygon);
+      // google maps return square meters
+      // var ha = google.maps.geometry.spherical.computeArea(paths) / 10000;
+      // return ha.toLocaleString();
       var area = 0;
       var points = polygon.coordinates[0];
       var j = points.length - 1;
