@@ -57,7 +57,7 @@ define([
 
   var PlaceService = Class.extend({
 
-    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geom,begin,end,threshold}',
+    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geojson,begin,end,threshold}',
 
     /**
      * Defaults url params.
@@ -179,7 +179,7 @@ define([
       p.lng = _.toNumber(p.lng);
       p.begin = p.begin ? moment(p.begin) : null;
       p.end = p.end ? moment(p.end) : null;
-      p.geom = p.geom ? decodeURIComponent(p.geom) : null;
+      p.geojson = p.geojson ? decodeURIComponent(p.geojson) : null;
       p.threshold = p.threshold ? _.toNumber(p.threshold) : null;
 
       return p;
@@ -195,14 +195,14 @@ define([
     _destandardizeParams: function(params) {
       var p = _.extendNonNull({}, this.defaults, params);
 
-      p.baselayers = p.baselayers.join(',');
+      p.baselayers = _.pluck(p.baselayers, 'slug');
       p.sublayers = p.sublayers ? p.sublayers.join(',') : null;
       p.zoom = String(p.zoom);
       p.lat = p.lat.toFixed(2);
       p.lng = p.lng.toFixed(2);
       p.begin = p.begin ? p.begin.format('YYYY-MM-DD') : null;
       p.end = p.end ? p.end.format('YYYY-MM-DD') : null;
-      p.geom = p.geom ? encodeURIComponent(p.geom) : null;
+      p.geojson = p.geojson ? encodeURIComponent(p.geojson) : null;
       p.threshold = p.threshold ? String(p.threshold) : null;
 
       return p;

@@ -38,6 +38,7 @@ define([
     init: function() {
       this._defineRequests();
       this._subscribe();
+      this._currentRequest = null;
     },
 
     /**
@@ -64,6 +65,7 @@ define([
       }, this);
 
       var failure = _.bind(function(t, a) {
+        if (a === 'abort') {return;}
         var results = {failure: a};
         mps.publish('AnalysisService/results', [results]);
         if (failureCb) {
@@ -78,7 +80,8 @@ define([
         error: failure
       };
 
-      ds.request(config);
+      this._currentRequest && this._currentRequest.abort();
+      this._currentRequest = ds.request(config);
     },
 
     /**

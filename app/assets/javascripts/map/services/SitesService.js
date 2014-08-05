@@ -11,6 +11,8 @@ define([
 
   var SitesServices = Class.extend({
 
+    requestId: 'SitesService',
+
     _uriTemplate:'//gfw-apis.appspot.com/wdpa/sites',
 
     /**

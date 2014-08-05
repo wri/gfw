@@ -37,7 +37,12 @@ define([
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
-      this.currentDate = currentDate || this.options.dateRange;
+
+      if (currentDate) {
+        this.currentDate = currentDate;
+      } else {
+        this.updateCurrentDate(this.options.dateRange);
+      }
 
       // Status
       this.playing = false;
@@ -208,6 +213,7 @@ define([
     },
 
     stopAnimation: function() {
+      if (!this.playing) {return;}
       // End animation extent hiddenBrush
       // this will call onAnimationBrushEnd
       this.trail
@@ -219,6 +225,7 @@ define([
      * Play the timeline by extending hiddenBrush with d3 animation.
      */
     animate: function() {
+      this.presenter.startPlaying();
       var hlx = this.handlers.left.attr('x');
       var hrx = this.handlers.right.attr('x');
       var trailFrom = Math.round(this.xscale.invert(hlx)) + 1; // +1 year left handler
@@ -292,6 +299,7 @@ define([
       var trailFrom = Math.round(this.xscale.invert(hrl)) + 1; // +1 year left handler
 
       if (value > 0 && value !==  trailFrom) {
+        this.presenter.stopPlaying();
         this.togglePlayIcon();
         this.playing = false;
       }

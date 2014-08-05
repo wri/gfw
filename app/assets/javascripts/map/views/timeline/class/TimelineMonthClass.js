@@ -39,14 +39,21 @@ define([
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
-      this.currentDate = currentDate || this.options.dateRange;
+
+      if (currentDate) {
+        this.currentDate = currentDate;
+      } else {
+        this._updateCurrentDate(this.options.dateRange);
+      }
+
       // Transitions duration are 100 ms. Give time to them to finish.
       this._updateCurrentDate = _.debounce(this._updateCurrentDate,
         this.options.effectsSpeed);
       this.playing = false;
 
-      // dont let go after this range
+      // Max date range
       this.drMax = this.options.dateRange;
+      // Date range
       this.dr = [moment([this.drMax[0].year()]), moment([this.drMax[1].year() + 1])];
 
       // Number months to display
@@ -240,7 +247,7 @@ define([
       var xr = this.handlers.right.attr('x');
 
       this._hideTipsy();
-      this.playing && this._stopAnimation();
+      this.playing && this.stopAnimation();
 
       if (Math.abs(this.xscale(value) - xr) <
         Math.abs(this.xscale(value) - xl)) {
@@ -291,8 +298,8 @@ define([
     },
 
     _onBrushEnd: function() {
-      var start = Math.floor(this.xscale.invert(this.handlers.left.attr('x')));
-      var end = Math.ceil(this.xscale.invert(this.handlers.right.attr('x')));
+      var start = Math.round(this.xscale.invert(this.handlers.left.attr('x')));
+      var end = Math.round(this.xscale.invert(_.toNumber(this.handlers.right.attr('x'))));
 
       start = this._domainToDate(start);
       end = this._domainToDate(end);
@@ -346,11 +353,12 @@ define([
      * Event fired when user clicks play/stop button.
      */
     _togglePlay: function() {
-      (this.playing) ? this._stopAnimation() : this._animate();
+      (this.playing) ? this.stopAnimation() : this._animate();
     },
 
     _animate: function() {
       if (!this.options.player) {return;}
+      this.presenter.startPlaying();
       var hlx = this.handlers.left.attr('x');
       var hrx = this.handlers.right.attr('x');
       var trailFrom = Math.round(this.xscale.invert(hlx)) + 1;
@@ -379,8 +387,8 @@ define([
           .call(this.hiddenBrush.event);
     },
 
-    _stopAnimation: function() {
-      if (!this.options.player) {return;}
+    stopAnimation: function() {
+      if (!this.options.player || !this.playing) {return;}
       // End animation extent hiddenBrush
       // this will call onAnimationBrushEnd
       this.trail
@@ -424,6 +432,7 @@ define([
       var trailFrom = Math.round(this.xscale.invert(hrl)) + 1;
 
       if (value > 0 && value !==  trailFrom) {
+        this.presenter.stopPlaying();
         this._togglePlayIcon();
         this.playing = false;
       }

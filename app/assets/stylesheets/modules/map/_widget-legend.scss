@@ -49,6 +49,21 @@
     }
   }
 
+  .layer-sublayer {
+    cursor: pointer;
+    padding: 7px 5px 5px 14px;
+
+    .onoffswitch {
+      margin-top: 1px;
+    }
+
+    .sublayer-title {
+      margin-left: 5px;
+      color: #ccc;
+      display: inline-block;
+    }
+  }
+
   .circle:before {
     content: ' \25CF';
     font-size: 16px;
@@ -187,6 +202,31 @@
     .layer-colors {
       .intact {color: #007A4D;}
       .degraded {color: #97BD3D;}
+    }
+  }
+
+  /****************************/
+  /* FiresLayer details */
+  /****************************/
+  .layer-details-fires {
+    margin-left: 0;
+    margin-top: 12px;
+    text-align: center;
+
+    .gfw-fires-link {
+      padding: 10px 0;
+      width: 100%;
+      border: 1px solid #ec1d38;
+      border-radius: 5px;
+      font-size: 12px;
+      text-transform: uppercase;
+      display: block;
+      color: #999;
+      font-weight: bold;
+
+      span {
+        color: #ec1d38;
+      }
     }
   }
 }

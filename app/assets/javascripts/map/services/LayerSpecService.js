@@ -184,7 +184,9 @@ define([
       var sublayers = this.model.getSublayers();
 
       p.name = 'map';
-      p.baselayers = _.keys(this.model.getBaselayers());
+      p.baselayers = _.map(_.keys(this.model.getBaselayers()), function(slug) {
+        return {slug: slug};
+      });
       p.sublayers = !_.isEmpty(sublayers) ? _.pluck(sublayers, 'id') : null;
 
       return p;

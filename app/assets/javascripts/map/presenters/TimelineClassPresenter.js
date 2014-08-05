@@ -27,7 +27,16 @@ define([
     updateTimelineDate: function(date) {
       mps.publish('Timeline/date-change', [this.view.getName(), date]);
       mps.publish('Place/update', [{go: false}]);
+    },
+
+    startPlaying: function() {
+      mps.publish('Timeline/start-playing', []);
+    },
+
+    stopPlaying: function() {
+      mps.publish('Timeline/stop-playing', []);
     }
+
   });
 
   return TimelineClassPresenter;
