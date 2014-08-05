@@ -60,7 +60,7 @@ define([
 
         var latlng = new google.maps.LatLng(story.lat, story.lng);
 
-        var thumb = !!(this.options.template && story.media[1] && story.media[1].preview_url !== '');
+        var thumb = !!(this.options.template && story.media && story.media[1] && story.media[1].preview_url !== '');
 
         infoWindowOptions = {
           className: 'story-infowindow',

@@ -12,7 +12,7 @@ define([
 
   var InfoamazoniaStoryService = Class.extend({
 
-    requestId: 'UserStoryService',
+    requestId: 'InfoamazoniaStoryService',
 
     url: '//wri-01.cartodb.com/api/v2/sql?q=SELECT *, ST_AsGeoJSON(the_geom) AS latlng FROM infoamazonia',
 
