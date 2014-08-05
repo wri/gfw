@@ -62,10 +62,11 @@ define([
         } else {
           this._renderAnalysis(results);
         }
+        this.status.set('analysis', true);
       }, this));
 
       mps.subscribe('AnalysisTool/iso-drawn', _.bind(function(multipolygon) {
-        this.status.set('isoGeojson', multipolygon);
+        this.status.set('isoTotalArea', this._getHectares(multipolygon));
       }, this));
 
       mps.subscribe('Timeline/date-change', _.bind(function() {
@@ -102,7 +103,7 @@ define([
       var layer = this.status.get('layerSpec').getLayer({slug: layerSlug});
       // Unexpected results from successful request
       if (!layer) {
-        this.renderFailure();
+        this.view.renderFailure();
         return;
       }
 
@@ -114,15 +115,28 @@ define([
       p.download = results.download_urls;
 
       if (results.params.geojson) {
-        p.totalArea = this._getAreaPolygon(results.params.geojson);
+        p.totalArea = this._getHectares(results.params.geojson);
       } else if (results.params.iso) {
-        p.totalArea = this.status.get('isoGeojson') ? this._getAreaMultipolygon(this.status.get('isoGeojson')) : 0;
+        p.totalArea = this.status.get('isoTotalArea') ? this.status.get('isoTotalArea') : 0;
       }
 
       if (layer.slug === 'umd_tree_loss_gain') {
         p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year());
         p.lossAlerts = 0;
         p.gainAlerts = 0;
+
+        if (results.years) {
+          var years = _.range(dateRange[1].diff(dateRange[0], 'years')+1);
+          _.each(years, function(i) {
+            var year = _.findWhere(results.years, {year: dateRange[0].year() + i});
+            if (!year) {return;}
+            p.lossAlerts += year.loss;
+            p.gainAlerts += year.gain;
+          });
+        }
+
+        p.lossAlerts = p.lossAlerts.toLocaleString();
+        p.gainAlerts = p.gainAlerts.toLocaleString();
       }
 
       if (layer.slug === 'imazon') {
@@ -149,7 +163,6 @@ define([
       }
 
       this.view.renderAnalysis(p);
-      this.status.set('analysis', true);
       mps.publish('Place/update', [{go: false}]);
     },
 
@@ -166,20 +179,14 @@ define([
       });
     },
 
-
-    _getAreaMultipolygon: function(geojson) {
-      return (geometry(geojson) / 10000).toLocaleString();
-    },
-
     /**
-     * Get total area form a geojson.
-     * https://github.com/maxogden/geojson-js-utils
+     * Get total hectares from a geojson.
      *
-     * @param  {Object}  geojson
-     * @return {Integer} total area
+     * @param  {Object} geojson  polygon/multipolygon
+     * @return {String} hectares
      */
-    _getAreaPolygon: function(polygon) {
-      return (geometry(polygon) / 10000).toLocaleString();
+    _getHectares: function(geojson) {
+      return (geojsonArea(geojson) / 10000).toLocaleString();
     }
 
   });

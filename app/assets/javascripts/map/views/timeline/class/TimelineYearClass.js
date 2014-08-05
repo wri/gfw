@@ -180,7 +180,7 @@ define([
         .attr('class', 'tooltip')
         .style('visibility', 'hidden')
         .style('left', this.handlers.right.attr('x') + 'px')
-        .text(this.options.dateRange[0].year());
+        .text(this.options.dateRange[0].year()-1);
 
       // Hidden brush for the animation
       this.hiddenBrush = d3.svg.brush()
@@ -280,7 +280,7 @@ define([
 
         // Move && update tooltip
         this.tooltip
-          .text(roundValue)
+          .text(roundValue -1)
           .style('left', this.xscale(roundValue) - 16 - 8 + 'px');
 
         this.formatXaxis();
@@ -394,8 +394,8 @@ define([
      * Update the timeline date. (calls updateCurrentDate)
      */
     onBrushEnd: function() {
-      var startYear = Math.round(this.xscale.invert(this.handlers.left.attr('x')));
-      var endYear = Math.round(this.xscale.invert(this.handlers.right.attr('x')));
+      var startYear = Math.floor(this.xscale.invert(this.handlers.left.attr('x')));
+      var endYear = Math.ceil(this.xscale.invert(this.handlers.right.attr('x')));
       // give time to finish animations.
       setTimeout(function() {
         this.updateCurrentDate([moment([startYear]), moment([endYear])]);
@@ -409,6 +409,7 @@ define([
      * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
     updateCurrentDate: function(date) {
+      date[1] = date[1].subtract('month',1);
       this.currentDate = date;
       this.presenter.updateTimelineDate(date);
     },
