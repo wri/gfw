@@ -55,7 +55,7 @@ define([
         if (this.status.get('analysis')) {
           this._publishAnalysis(this.status.get('analysis'));
         }
-      }, this))
+      }, this));
 
       mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
         this.deleteGeom();
@@ -87,7 +87,7 @@ define([
         _.keys(this.datasets)))];
 
       this.status.set('baselayer', baselayer);
-      this.view.model.set('hidden', !!!baselayer)
+      this.view.model.set('hidden', !!!baselayer);
     },
 
     _drawFromUrl: function(iso, geojson) {
