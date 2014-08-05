@@ -1,4 +1,10 @@
-  function geometry(geom) {
+// Geojson to area port from:
+// https://github.com/mapbox/geojson-area
+(function() {
+
+  'use strict'
+
+  function geojsonArea(geom) {
     if (geom.type === 'Polygon') return polygonArea(geom.coordinates);
     else if (geom.type === 'MultiPolygon') {
       var area = 0;
@@ -36,7 +42,6 @@
    * {float} The approximate signed geodesic area of the polygon in square
    *     meters.
    */
-
   function ringArea(coords) {
     var area = 0;
 
@@ -47,7 +52,7 @@
         p2 = coords[i + 1];
         area += rad(p2[0] - p1[0]) * (2 + Math.sin(rad(p1[1])) + Math.sin(rad(p2[1])));
       }
-
+      // wgs84 radius = 6378137
       area = area * 6378137 * 6378137 / 2;
     }
 
@@ -57,3 +62,13 @@
   function rad(_) {
     return _ * Math.PI / 180;
   }
+
+  if (typeof define === 'function' && define.amd) {
+    define('geojsonArea', [], function() {
+      return geojsonArea;
+    });
+  } else {
+    this.geojsonArea = geojsonArea;
+  }
+
+}).call(this);
