@@ -8,8 +8,10 @@ define([
   'underscore',
   'backbone',
   'mps',
-  'services/CountryService'
-], function(Class, _, Backbone, mps, countryService) {
+  'topojson',
+  'services/CountryService',
+  'services/RegionService'
+], function(Class, _, Backbone, mps, topojson, countryService, regionService) {
 
   'use strict';
 
@@ -91,18 +93,38 @@ define([
     },
 
     _drawFromUrl: function(iso, geojson) {
-      // Draw country/regions
-      if (iso !== 'ALL') {
-        countryService.execute(iso, _.bind(function(results) {
-          this.view.drawTopojson(results.topojson);
-          this._publishAnalysis({iso: iso});
+      var data = null;
+
+      // Draw country
+      if (iso.country !== 'ALL' && !iso.region) {
+        data = {iso: iso.country};
+        countryService.execute(iso.country, _.bind(function(results) {
+          var geojson = topojson.feature(results.topojson, results.topojson.objects[0]);
+          this.view.drawMultipolygon(geojson);
+          this._publishAnalysis(data);
         },this));
-      // Draw user drawn polygon
+      // Draw region
+      } else if (iso.country !== 'ALL' && iso.region) {
+        data = {iso: iso.country, id1: iso.region};
+        regionService.execute(data, _.bind(function(results) {
+          var geojson = results.features[0];
+          this.view.drawMultipolygon(geojson);
+          this._publishAnalysis(data);
+        },this));
+      // Draw user polygon
       } else if (geojson) {
+        data = {geojson: JSON.stringify(geojson)};
         this.status.set('polygon', geojson);
         this.view.drawPaths(this._geojsonToPath(geojson));
-        this._publishAnalysis({geojson: JSON.stringify(geojson)});
+        this._publishAnalysis(data);
       }
+
+      // BOUND TO SOMEWHERE!!
+
+      // append data to analysis before the analysis resource is
+      // created, this way the url doesnt blink until the topojsons
+      // are loaded. We can find another way of doing this on the PlaceService.
+      this.status.set('analysis', data);
     },
 
     _checkUnavailable: function() {
@@ -227,11 +249,10 @@ define([
       if (!analysis) {return;}
       var p = {};
 
-      p.iso = null;
-      p.geojson = null;
-
       if (analysis.iso) {
-        p.iso = analysis.iso;
+        p.iso = {};
+        p.iso.country = analysis.iso;
+        p.iso.region = analysis.id1 ? analysis.id1 : null;
       } else if (analysis.geojson) {
         p.geojson = encodeURIComponent(analysis.geojson);
       }

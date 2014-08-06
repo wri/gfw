@@ -60,7 +60,7 @@ define([
     _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geojson,begin,end,threshold}',
 
     /**
-     * Defaults url params.
+     * Defaults url params. (destandardize)
      */
     defaults: {
       baselayers: 'umd_tree_loss_gain,forestgain',
@@ -181,6 +181,7 @@ define([
       p.zoom = _.toNumber(p.zoom);
       p.lat = _.toNumber(p.lat);
       p.lng = _.toNumber(p.lng);
+      p.iso = _.object(['country', 'region'], p.iso.split('-'));
       p.begin = p.begin ? moment(p.begin) : null;
       p.end = p.end ? moment(p.end) : null;
       p.geojson = p.geojson ? JSON.parse(decodeURIComponent(p.geojson)) : null;
@@ -198,17 +199,16 @@ define([
      */
     _destandardizeParams: function(params) {
       var p = _.extendNonNull({}, this.defaults, params);
-
       p.baselayers = _.pluck(p.baselayers, 'slug');
       p.sublayers = p.sublayers ? p.sublayers.join(',') : null;
       p.zoom = String(p.zoom);
       p.lat = p.lat.toFixed(2);
       p.lng = p.lng.toFixed(2);
+      p.iso = _.compact(_.values(p.iso)).join('-') || 'ALL';
       p.begin = p.begin ? p.begin.format('YYYY-MM-DD') : null;
       p.end = p.end ? p.end.format('YYYY-MM-DD') : null;
       p.geojson = p.geojson ? encodeURIComponent(p.geojson) : null;
       p.threshold = p.threshold ? String(p.threshold) : null;
-
       return p;
     },
 
