@@ -66,6 +66,11 @@ define([
         this.view.model.set('boxHidden', true);
       }, this));
 
+      mps.subscribe('AnalysisResults/unavailable', _.bind(function() {
+        this.status.set('analysis', true);
+        this.view.renderUnavailable();
+      }, this));
+
       mps.subscribe('AnalysisTool/iso-drawn', _.bind(function(multipolygon) {
         this.status.set('isoTotalArea', this._getHectares(multipolygon));
       }, this));

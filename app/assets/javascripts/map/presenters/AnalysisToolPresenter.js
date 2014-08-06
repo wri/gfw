@@ -138,6 +138,12 @@ define([
      * @param  {Object} resource geojson/iso/wdpaid
      */
     _publishAnalysis: function(resource) {
+      // If there are no baselayer render unsupported layer msg.
+      if (!this.status.get('baselayer')) {
+        mps.publish('AnalysisResults/unavailable', []);
+        return;
+      }
+
       var date = this.status.get('currentDate');
       resource.dataset = this.datasets[this.status.get('baselayer').slug];
 
