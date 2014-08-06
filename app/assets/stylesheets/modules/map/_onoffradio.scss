@@ -5,14 +5,14 @@
   border: 1px solid #ddd;
   position: relative;
 
-  &.checked i {
+  &.checked span {
     background: #ddd;
   }
 
   @include border-radius(25px);
 }
 
-.onoffradio i {
+.onoffradio span {
   display: inline-block;
   vertical-align: top;
   height: 4px;
@@ -26,8 +26,4 @@
   background: white;
 
   @include border-radius(25px);
-
-  @include transition-property(all);
-  @include transition-duration(100ms);
-  @include transition-timing-function(ease-in-out);
 }

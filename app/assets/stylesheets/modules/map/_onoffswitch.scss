@@ -8,12 +8,12 @@
   background: #ddd;
   @include border-radius(5px);
 
-  &.checked i {
+  &.checked span {
     left: 9px;
   }
 }
 
-.onoffswitch i {
+.onoffswitch span {
   position: absolute;
   left: 2px;
   top: 2px;
@@ -21,5 +21,4 @@
   height: 6px;
   background: #fff;
   @include border-radius(4px);
-  // @include transition(all .1s ease-in-out);
 }

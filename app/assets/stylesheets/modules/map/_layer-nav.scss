@@ -132,9 +132,12 @@ $stories-color: rgb(242, 178, 87);
 
       .onoffradio {
         margin: 0 7px 0 2px;
-        border-color: $forest-change-color;
 
-        &.checked i {
+        &.checked {
+          border-color: $forest-change-color;
+        }
+
+        &.checked span {
           background: $forest-change-color;
         }
       }

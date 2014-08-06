@@ -136,7 +136,7 @@ define([
 
       // clear canvas
       tile.canvas.width = w;
-      ctx.fillStyle = '#f13689';
+      ctx.fillStyle = '#F69';
 
       var xc = cells.xcoords;
       var yc = cells.ycoords;
