@@ -1,8 +1,19 @@
 <% content_for :js do %>
   <%= render "countries_templates" %>
+  <%= render "shared/js_templates" %>
 <% end %>
 
 <div class='inner'>
+  <div class="overview_button_group">
+    <div class="info item ">
+      <span class='info' data-source='total_loss'><i class='light'></i><span>info</span></span>
+    </div>
+    <div class="settings item " data-target=".overview_graph">
+      <i></i>settings
+    </div>
+    <div class="share">
+    </div>
+  </div>
   <div class='overview_graph'>
     <div class='overview_graph__tabs'>
       <ul>
@@ -32,8 +43,6 @@
       </ul>
 
       <div class='overview_graph__legend'>
-        <a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>
-
         <p>Global tree cover loss per year with annualized tree cover gain</p>
       </div>
     </div>

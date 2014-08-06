@@ -1128,14 +1128,22 @@
   .and_share &{
     left: -30px;
   }
-
+  &.light {
+    @include country-icons-sprite(country_info);
+    height: 16px;
+    width: 16px;    
+  }
   &.dark {
     @include country-icons-sprite(country_info_dark);
     height: 16px;
     width: 16px;
   }
 }
-
+.settings i {
+  @include country-icons-sprite(icon_options_no_border);
+    height: 17px;
+    width: 17px;
+}
 .btn-rdn {
   padding: 8px 15px 5px 15px;
   border: 2px solid #D6E681;

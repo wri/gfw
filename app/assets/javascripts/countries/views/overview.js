@@ -10,7 +10,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
   initialize: function() {
     this.model = new gfw.ui.model.CountriesOverview();
-
+    this.headerView = new gfw.ui.view.CountryHeader({country: this.country});
     this.$graph = $('.overview_graph__area');
     this.$years = $('.overview_graph__years');
 
@@ -46,8 +46,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     this._drawGraph();
     this._drawList();
 
-    Share = new gfw.ui.view.Share();
-    this.$el.find('.overview_graph').append(Share.render());
+    Share = new gfw.ui.view.Share({template: 'country'});
+    this.$el.find('.overview_button_group .share').append(Share.render());
   },
 
   _openSource: function(e) {
