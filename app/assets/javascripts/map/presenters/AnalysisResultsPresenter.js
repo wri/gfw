@@ -78,7 +78,7 @@ define([
         this._updateAnalysis();
       }, this));
 
-      mps.subscribe('Threshold/changed', _.bind(function(threshold) {
+      mps.subscribe('Threshold/changed', _.bind(function() {
         this._updateAnalysis();
       }, this));
 

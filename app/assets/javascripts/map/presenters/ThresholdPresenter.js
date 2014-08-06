@@ -15,9 +15,9 @@ define([
   var ThresholdPresenter = Class.extend({
 
     /*
-     * Toggle threshold with this layers.
+     * Supported threshold layers.
      */
-    thresholdLayers: [
+    supportedLayers: [
       'umd_tree_loss_gain',
       'forest2000'
     ],
@@ -25,17 +25,26 @@ define([
     /**
      * Constructs new ThresholdPresenter.
      *
-     * @param  {ThresholdView} view Instance of ThresholdView
-     *
-     * @return {class} The ThresholdPresenter class
+     * @param  {Object} view Instance of ThresholdView
      */
     init: function(view) {
       this.view = view;
+
       this.status = new (Backbone.Model.extend())({
-        threshold: null
+        layers: false,
+        threshold: 10
       });
 
+      this._statusEvents();
       this._subscribe();
+      mps.publish('Place/register', [this]);
+    },
+
+    /**
+     * Subscribe to status model events.
+     */
+    _statusEvents: function() {
+      this.status.on('layers:change', this._setVisibility);
     },
 
     /**
@@ -43,47 +52,59 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
-        this._setVisibility(place.layerSpec, place.params);
-        if (!place.params.threshold) {
-          mps.publish('Place/update', [{go: false}]);
-        }
+        this._setLayers(place.layerSpec);
+        this._initThreshold(place.params);
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this._setVisibility(layerSpec);
+        this._setLayers(layerSpec);
       }, this));
-
-      mps.publish('Place/register', [this]);
     },
 
     /**
      * Set the threshold visible or hidden deppend on
      * the active layers.
      *
-     * @param {object} layerSpec The layer spec object
+     * @param {Object} layerSpec Place.layerSpec
+     * @param {Object} params    Place.params
      */
-    _setVisibility: function(layerSpec, placeParams) {
-      var layers = _.filter(layerSpec.getLayers(), _.bind(function(layer) {
-        return _.intersection(this.thresholdLayers, [layer.slug]).length > 0;
-      }, this));
+    _setLayers: function(layerSpec) {
+      var layers = _.compact(_.map(layerSpec.getLayers(), _.bind(function(layer) {
+        if (_.indexOf(this.supportedLayers, layer.slug) > -1) {
+          return layer.slug;
+        }
+      }, this)));
 
-      if (placeParams && placeParams.threshold) {
-        this.status.set('threshold', placeParams.threshold);
-      }
+      this.status.set('layers', layers);
+    },
 
-      if (layers.length > 0) {
-        this.view.model.set('hidden', false);
-        this.view.update(this.status.get('threshold'));
+    /**
+     * Toggle threshold widget if any supported layer active.
+     */
+    _setVisibility: function() {
+      this.view.model.set('hidden', this.status.get('layers').length === 0);
+    },
+
+    /**
+     * Triggered by 'Place/go' event. Initialize threshold value.
+     *
+     * @param  {Object} params Place.params
+     */
+    _initThreshold: function(params) {
+      if (params.threshold) {
+        this.status.set('threshold', params.threshold);
       } else {
-        this.changeThreshold(null);
-        this.view.model.set('hidden', true);
+        this.changeThreshold(this.status.get('threshold'));
       }
+      // render threshold
+      // Todo: Just move the handler don't update the whole thing.
+      this.view.update(this.status.get('threshold'));
     },
 
     /**
      * Used by ThresholdView to set and publish threshold changes.
      *
-     * @param  {integer} threshold [description]
+     * @param  {Integer} threshold
      */
     changeThreshold: function(threshold) {
       this.status.set('threshold', threshold);
@@ -93,7 +114,13 @@ define([
 
     getPlaceParams: function() {
       var p = {};
-      p.threshold = this.status.get('threshold');
+
+      if (this.status.get('layers').length > 0) {
+        p.threshold = this.status.get('threshold');
+      } else {
+        p.threshold = null;
+      }
+
       return p;
     }
   });
