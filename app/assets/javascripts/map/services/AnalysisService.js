@@ -80,7 +80,7 @@ define([
         error: failure
       };
 
-      this._currentRequest && this._currentRequest.abort();
+      this._abortRequest();
       this._currentRequest = ds.request(config);
     },
 
@@ -117,6 +117,10 @@ define([
     _subscribe: function() {
       mps.subscribe('AnalysisService/get', _.bind(function(config) {
         this.execute(config);
+      }, this));
+
+      mps.subscribe('AnalysisService/cancel', _.bind(function() {
+        this._abortRequest();
       }, this));
     },
 
@@ -170,6 +174,11 @@ define([
       }
 
       return null;
+    },
+
+    _abortRequest: function() {
+      this._currentRequest && this._currentRequest.abort();
+      this._currentRequest = null;
     }
   });
 
