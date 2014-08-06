@@ -143,15 +143,15 @@ gfw.ui.view.leafletCanvasLayer = Backbone.View.extend({
 
 gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
-  el: $('.country-header, .overview_button_group'),
+  el: $('.country-header, .country-overview-wrapper-coolio'),
 
   events: {
     'change #areaSelector': '_onSelectArea',
     'click .selector-remove': '_navigateCountry',
     'click .umd_options_control' : '_onClickUMDOptions',
     'click .item.settings' : '_onClickUMDOptions',
-    'click .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
-    'click .umdoptions_dialog ul li':  '_updateMapThreshold'
+    'click .country-header .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
+    'click .country-header .umdoptions_dialog ul li':  '_updateMapThreshold'
   },
 
   initialize: function(options) {
@@ -262,6 +262,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
   },
 
   _updateMapThreshold: function(e) {
+    debugger
     var path = location.pathname.split('/');
     var id = path[path.length -1];
     var self = this;
