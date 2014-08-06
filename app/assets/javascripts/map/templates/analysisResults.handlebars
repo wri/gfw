@@ -1,106 +1,101 @@
 <div class="widget-box">
   <div class="widget-toggle widget-toggle-grey"></div>
-
   <div class="widget-content">
+
     <div class="widget-closed">
       <span class="analysis-title">User defined area</span>
     </div>
 
-    {{#if failure}}
     <div class="widget-opened">
-      <div class="analysis-info">
-        <span class="analysis-title">ERROR</span>
-      </div>
-      <div class="analysis-error">
-        Couldn't fetch analysis data.
-      </div>
-    </div>
-    {{/if}}
-
-    {{#if loading}}
-    <div class="widget-opened">
-      <div class="analysis-info">
-        <span class="analysis-title">Loading</span>
-      </div>
-      <div class="analysis-loading">
-        <img src="/assets/gif/spinner.gif"/>
-      </div>
-    </div>
-    {{/if}}
-
-    {{#if unavailable}}
-    <div class="widget-opened">
-      <div class="analysis-info">
-        <span class="analysis-title">UNSUPPORTED</span>
-      </div>
-      <div class="analysis-error">
-        This layer doesn't support analysis.
-      </div>
-    </div>
-    {{/if}}
-
-    {{#if layer}}
-    <div class="widget-opened">
-      <div class="analysis-info">
-        <span class="analysis-title">User defined area</span>
-        <span class="analysis-date-range">{{dateRange}}</span>
-      </div>
-      <ul class="analysis-stats">
-        {{#if totalArea}}
-          <li>
-            <span class="stats-title">Total selected area</span>
-            <span class="stats-count"><strong>{{totalArea}}</strong> ha</span>
-          </li>
-        {{/if}}
-        {{#if umd_tree_loss_gain}}
-          <li>
-            <span class="stats-title">Loss {{lossDateRange}}</span>
-            <span class="stats-count"><strong style="color: {{layer.category_color}};">{{lossAlerts}} ha</strong></span>
-          </li>
-          <li>
-            <span class="stats-title">Gain 2000-2012</span>
-            <span class="stats-count"><strong style="color: #6D6DE5;">{{gainAlerts}} ha</strong></span>
-          </li>
-          <li>
-            <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
-          </li>
-        {{else}}
-          {{#if imazon}}
+      {{#if layer}}
+        <div class="analysis-info">
+          <span class="analysis-title">User defined area</span>
+          <span class="analysis-date-range">{{dateRange}}</span>
+        </div>
+        <ul class="analysis-stats">
+          {{#if totalArea}}
             <li>
-              <span class="stats-title">Deforestation alerts</span>
-              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{defor}} {{layer.slug}} alerts</strong> </span>
-            </li>
-            <li>
-              <span class="stats-title">Degradation alerts</span>
-              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{degrad}} {{layer.slug}} alerts</strong> </span>
-            </li>
-          {{else}}
-            <li>
-              <span class="stats-title">Total alerts</span>
-              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{totalAlerts}} {{layer.slug}} alerts</strong> </span>
+              <span class="stats-title">Total selected area</span>
+              <span class="stats-count"><strong>{{totalArea}}</strong> ha</span>
             </li>
           {{/if}}
-        {{/if}}
-        <li class="download-links">
-          <span>download</span>
-          <ul class="download-dropdown hidden">
-            <li><a href="{{download.csv}}" target="_blank">SVG</a></li>
-            <li><a href="{{download.geojson}}" target="_blank">GeoJSON</a></li>
-            <li><a href="{{download.shp}}" target="_blank">SHP</a></li>
-            <li><a href="{{download.kml}}" target="_blank">KML</a></li>
-            <li><a href="{{download.csv}}" target="_blank">CSV</a></li>
-          </ul>
-        </li>
-      </ul>
-    {{/if}}
+          {{#if umd_tree_loss_gain}}
+            <li>
+              <span class="stats-title">Loss {{lossDateRange}}</span>
+              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{lossAlerts}} ha</strong></span>
+            </li>
+            <li>
+              <span class="stats-title">Gain 2000-2012</span>
+              <span class="stats-count"><strong style="color: #6D6DE5;">{{gainAlerts}} ha</strong></span>
+            </li>
+            <li>
+              <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
+            </li>
+          {{else}}
+            {{#if imazon}}
+              <li>
+                <span class="stats-title">Deforestation alerts</span>
+                <span class="stats-count"><strong style="color: {{layer.category_color}};">{{defor}} {{layer.slug}} alerts</strong> </span>
+              </li>
+              <li>
+                <span class="stats-title">Degradation alerts</span>
+                <span class="stats-count"><strong style="color: {{layer.category_color}};">{{degrad}} {{layer.slug}} alerts</strong> </span>
+              </li>
+            {{else}}
+              <li>
+                <span class="stats-title">Total alerts</span>
+                <span class="stats-count"><strong style="color: {{layer.category_color}};">{{totalAlerts}} {{layer.slug}} alerts</strong> </span>
+              </li>
+            {{/if}}
+          {{/if}}
+          <li class="download-links">
+            <span>download</span>
+            <ul class="download-dropdown hidden">
+              <li><a href="{{download.csv}}" target="_blank">SVG</a></li>
+              <li><a href="{{download.geojson}}" target="_blank">GeoJSON</a></li>
+              <li><a href="{{download.shp}}" target="_blank">SHP</a></li>
+              <li><a href="{{download.kml}}" target="_blank">KML</a></li>
+              <li><a href="{{download.csv}}" target="_blank">CSV</a></li>
+            </ul>
+          </li>
+        </ul>
+      {{/if}}
+
+      {{#if failure}}
+        <div class="analysis-info">
+          <span class="analysis-title">ERROR</span>
+        </div>
+        <div class="analysis-error">
+          Couldn't fetch analysis data.
+        </div>
+      {{/if}}
+
+      {{#if loading}}
+        <div class="analysis-info">
+          <span class="analysis-title">Loading</span>
+        </div>
+        <div class="analysis-loading">
+          <img src="/assets/gif/spinner.gif"/>
+        </div>
+      {{/if}}
+
+      {{#if unavailable}}
+        <div class="analysis-info">
+          <span class="analysis-title">UNSUPPORTED</span>
+        </div>
+        <div class="analysis-error">
+          This layer doesn't support analysis.
+        </div>
+      {{/if}}
 
       <div class="analysis-footer">
         <ul class="analysis-control">
           <li class="analysis-control-subscribe disabled"></li>
           <li class="analysis-control-delete"></li>
-          </ul>
+        </ul>
       </div>
-    </div>
+
+    </div> {{!-- /widget-opened --}}
 
   </div>
 </div>
