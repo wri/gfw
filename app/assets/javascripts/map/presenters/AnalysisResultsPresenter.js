@@ -30,7 +30,7 @@ define([
       this.status = new (Backbone.Model.extend())({
         layerSpec: null,
         analysis: false,
-        isoGeojson: null,
+        isoTotalArea: null,
         disableUpdating: false
       });
 
@@ -46,15 +46,12 @@ define([
         this.status.set('layerSpec', layerSpec);
       }, this));
 
-      mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
-        this.view.model.set('boxHidden', true);
-      }, this));
-
       mps.subscribe('AnalysisService/get', _.bind(function() {
         this.view.renderLoading();
       }, this));
 
       mps.subscribe('AnalysisService/results', _.bind(function(results) {
+        this.status.set('analysis', true);
         if (results.failure) {
           this.view.renderFailure();
         } else if (results.unavailable) {
@@ -62,7 +59,11 @@ define([
         } else {
           this._renderAnalysis(results);
         }
-        this.status.set('analysis', true);
+      }, this));
+
+      mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
+        mps.publish('AnalysisService/cancel', []);
+        this.view.model.set('boxHidden', true);
       }, this));
 
       mps.subscribe('AnalysisTool/iso-drawn', _.bind(function(multipolygon) {
@@ -71,7 +72,7 @@ define([
 
       mps.subscribe('Timeline/date-change', _.bind(function() {
         if (this.status.get('analysis') && !this.status.get('disableUpdating')) {
-          mps.publish('AnalysisTool/update-analysis', []);
+          this._updateAnalysis();
         }
       }, this));
 
@@ -82,9 +83,13 @@ define([
       mps.subscribe('Timeline/stop-playing', _.bind(function() {
         this.status.set('disableUpdating', false);
         if (this.status.get('analysis')) {
-          mps.publish('AnalysisTool/update-analysis', []);
+          this._updateAnalysis();
         }
       }, this));
+    },
+
+    _updateAnalysis: function() {
+      mps.publish('AnalysisTool/update-analysis', []);
     },
 
     deleteAnalysis: function() {
@@ -164,19 +169,6 @@ define([
 
       this.view.renderAnalysis(p);
       mps.publish('Place/update', [{go: false}]);
-    },
-
-    /**
-     * Generates a path from a Geojson.
-     *
-     * @param  {object} geojson
-     * @return {array} paths
-     */
-    _geojsonToPath: function(geojson) {
-      var coords = geojson.coordinates[0];
-      return _.map(coords, function(g) {
-        return new google.maps.LatLng(g[1], g[0]);
-      });
     },
 
     /**
