@@ -43,23 +43,27 @@ define([
       _.each(this.$el.find('.layer'), function(li) {
         var $li = $(li);
         var $toggle = $li.find('.onoffradio, .onoffswitch');
+        var $toggleIcon = $toggle.find('span');
         var $layerTitle = $li.find('.layer-title');
         var layer = layers[$li.data('layer')];
 
         if (layer) {
           var isBaselayer = (layer.category_slug === 'forest_clearing');
-          var color = isBaselayer ? layer.category_color : layer.title_color;
 
           $li.addClass('selected');
           $toggle.addClass('checked');
-          $layerTitle.css('color', color);
+          $layerTitle.css('color', layer.title_color);
 
           if (!isBaselayer) {
-            $toggle.css('background', color);
+            $toggle.css('background', layer.title_color);
+          } else {
+            $toggle.css('border-color', layer.title_color);
+            $toggleIcon.css('background-color', layer.title_color);
           }
         } else {
           $li.removeClass('selected');
-          $toggle.removeClass('checked').css('background', '');
+          $toggle.removeClass('checked').css('background', '').css('border-color', '');
+          $toggleIcon.css('background-color', '');
           $layerTitle.css('color', '');
         }
       });

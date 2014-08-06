@@ -91,16 +91,16 @@
     }
 
     .canopy {
-      i {
-        background-color: transparent;
-        width: 12px;
-        height: 12px;
-        display: inline-block;
-        vertical-align: bottom;
-        @include home-icons-sprite(icon_options_small);
-        margin-right: 4px;
-        cursor: help;
-      }
+      // i {
+      //   background-color: transparent;
+      //   width: 12px;
+      //   height: 12px;
+      //   display: inline-block;
+      //   vertical-align: bottom;
+      //   @include home-icons-sprite(icon_options_small);
+      //   margin-right: 4px;
+      //   cursor: help;
+      // }
 
       width: 170px;
       font-size: 11px;
