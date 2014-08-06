@@ -132,16 +132,18 @@ define([
      */
     _urls: function(dataset) {
       var types = ['world', 'national', 'subnational', 'use', 'wdpa'];
+      var params = {'umd-loss-gain': '{thresh}'}[dataset] || '';
       var ids = _.map(types,
         function(type) {
           return  _.str.sprintf('%s:%s', dataset, type);
         });
+
       var urls = [
-        _.str.sprintf('%s/%s', URL, dataset),
-        _.str.sprintf('%s/%s/admin/{iso}', URL, dataset),
-        _.str.sprintf('%s/%s/admin/{iso}/{id1}', URL, dataset),
-        _.str.sprintf('%s/%s/use/{use}/{useid}', URL, dataset),
-        _.str.sprintf('%s/%s/wdpa/{wdpaid}', URL, dataset)
+        _.str.sprintf('%s/%s%s', URL, dataset, params),
+        _.str.sprintf('%s/%s/admin/{iso}%s', URL, dataset, params),
+        _.str.sprintf('%s/%s/admin/{iso}/{id1}%s', URL, dataset, params),
+        _.str.sprintf('%s/%s/use/{use}/{useid}%s', URL, dataset, params),
+        _.str.sprintf('%s/%s/wdpa/{wdpaid}%s', URL, dataset, params)
       ];
 
       return _.object(ids, urls);
@@ -176,6 +178,9 @@ define([
       return null;
     },
 
+    /**
+     * Abort the current request if it exists.
+     */
     _abortRequest: function() {
       this._currentRequest && this._currentRequest.abort();
       this._currentRequest = null;
