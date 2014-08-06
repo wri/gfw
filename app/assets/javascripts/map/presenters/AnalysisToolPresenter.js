@@ -29,9 +29,10 @@ define([
       this.view = view;
 
       this.status = new (Backbone.Model.extend())({
-        currentDate: null,
         baselayer: null,
         analysis: null, // analysis resource
+        currentDate: null,
+        threshold: null,
         overlay: null, // google.maps.Polygon (user draw)
         polygon: null, // geojson (user polygons)
         multipolygon: null // geojson (countries and regions)
@@ -41,6 +42,9 @@ define([
       mps.publish('Place/register', [this]);
     },
 
+    /**
+     * Subscribe to application events.
+     */
     _subscribe: function() {
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this._setBaselayer(layerSpec);
@@ -48,9 +52,11 @@ define([
       }, this));
 
       mps.subscribe('Place/go', _.bind(function(place) {
+        var p = place.params;
         this._setBaselayer(place.layerSpec);
-        this._setCurrentDate([place.params.begin, place.params.end]);
-        this._drawFromUrl(place.params.iso, place.params.geojson);
+        this._setCurrentDate([p.begin, p.end]);
+        this._drawFromUrl(p.iso, p.geojson);
+        this.status.set('threshold', p.threshold);
       }, this));
 
       mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
@@ -65,6 +71,10 @@ define([
 
       mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
         this._setCurrentDate(date);
+      }, this));
+
+      mps.subscribe('Threshold/changed', _.bind(function(threshold) {
+        this.status.set('threshold', threshold);
       }, this));
 
       mps.subscribe('MapView/click-protected', _.bind(function(wdpaid) {
@@ -142,6 +152,12 @@ define([
       if (!this.status.get('baselayer')) {
         mps.publish('AnalysisResults/unavailable', []);
         return;
+      }
+
+      if (this.status.get('baselayer').slug === 'umd_tree_loss_gain') {
+        resource.thresh = '?thresh=' + this.status.get('threshold');
+      } else {
+        delete resource.thresh;
       }
 
       var date = this.status.get('currentDate');

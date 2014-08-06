@@ -37,6 +37,9 @@ define([
       this._subscribe();
     },
 
+    /**
+     * Subscribe to application events.
+     */
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
         this.status.set('layerSpec', place.layerSpec);
@@ -71,14 +74,12 @@ define([
         this.view.renderUnavailable();
       }, this));
 
-      mps.subscribe('AnalysisTool/iso-drawn', _.bind(function(multipolygon) {
-        this.status.set('isoTotalArea', this._getHectares(multipolygon));
+      mps.subscribe('Timeline/date-change', _.bind(function() {
+        this._updateAnalysis();
       }, this));
 
-      mps.subscribe('Timeline/date-change', _.bind(function() {
-        if (this.status.get('analysis') && !this.status.get('disableUpdating')) {
-          this._updateAnalysis();
-        }
+      mps.subscribe('Threshold/changed', _.bind(function(threshold) {
+        this._updateAnalysis();
       }, this));
 
       mps.subscribe('Timeline/start-playing', _.bind(function() {
@@ -87,14 +88,18 @@ define([
 
       mps.subscribe('Timeline/stop-playing', _.bind(function() {
         this.status.set('disableUpdating', false);
-        if (this.status.get('analysis')) {
-          this._updateAnalysis();
-        }
+        this._updateAnalysis();
+      }, this));
+
+      mps.subscribe('AnalysisTool/iso-drawn', _.bind(function(multipolygon) {
+        this.status.set('isoTotalArea', this._getHectares(multipolygon));
       }, this));
     },
 
     _updateAnalysis: function() {
-      mps.publish('AnalysisTool/update-analysis', []);
+      if (this.status.get('analysis') && !this.status.get('disableUpdating')) {
+        mps.publish('AnalysisTool/update-analysis', []);
+      }
     },
 
     deleteAnalysis: function() {
