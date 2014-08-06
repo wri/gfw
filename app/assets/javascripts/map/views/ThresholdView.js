@@ -59,7 +59,7 @@ define([
     },
 
     _updateThreshold: function() {
-      this.presenter.changeThreshold(this.valuesMap[this.$slider.val()]);
+      this.presenter.setThreshold(this.valuesMap[this.$slider.val()]);
       this._setVisibleRange();
     },
 

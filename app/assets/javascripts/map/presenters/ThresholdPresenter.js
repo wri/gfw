@@ -44,7 +44,7 @@ define([
      * Subscribe to status model events.
      */
     _statusEvents: function() {
-      this.status.on('layers:change', this._setVisibility);
+      this.status.on('change:layers', this._setVisibility, this);
     },
 
     /**
@@ -86,7 +86,7 @@ define([
     },
 
     /**
-     * Triggered by 'Place/go' event. Initialize threshold value.
+     * Triggered by 'Place/go' event. Set initial threshold.
      *
      * @param  {Object} params Place.params
      */
@@ -94,21 +94,29 @@ define([
       if (params.threshold) {
         this.status.set('threshold', params.threshold);
       } else {
-        this.changeThreshold(this.status.get('threshold'));
+        this._publishThreshold();
       }
-      // render threshold
+      // render threshold slider position
       // Todo: Just move the handler don't update the whole thing.
       this.view.update(this.status.get('threshold'));
     },
 
     /**
-     * Used by ThresholdView to set and publish threshold changes.
+     * Set status threshold with the passed value.
      *
-     * @param  {Integer} threshold
+     * @param {Integer} value Threshold
      */
-    changeThreshold: function(threshold) {
-      this.status.set('threshold', threshold);
-      mps.publish('Threshold/changed', [threshold]);
+    setThreshold: function(value) {
+      this.status.set('threshold', value);
+      this._publishThreshold();
+    },
+
+    /**
+     * Publish 'Threshold/changed' event with the current threshold
+     * and call 'Place/update' to update the url.
+     */
+    _publishThreshold: function() {
+      mps.publish('Threshold/changed', [this.status.get('threshold')]);
       mps.publish('Place/update', [{go: false}]);
     },
 
