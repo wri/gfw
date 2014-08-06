@@ -7,11 +7,10 @@ define([
   'd3',
   'underscore',
   'handlebars',
-  'topojson',
   'views/Widget',
   'presenters/AnalysisToolPresenter',
   'text!templates/analysisTool.handlebars'
-], function(d3, _, Handlebars, topojson, Widget, Presenter, tpl) {
+], function(d3, _, Handlebars, Widget, Presenter, tpl) {
 
   'use strict';
 
@@ -159,13 +158,11 @@ define([
     },
 
     /**
-     * Convert topojson into a geojson feature object and
-     * append it to the map.
+     * Draw a multypoligon on the map.
      *
      * @param  {Object} topojson
      */
-    drawTopojson: function(tp) {
-      var geojson = topojson.feature(tp, tp.objects[0]);
+    drawMultipolygon: function(geojson) {
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
       this.presenter.setMultipolygon(multipolygon, geojson);
       this.$widgetBtn.addClass('disabled');
