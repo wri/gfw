@@ -1,8 +1,17 @@
 .overview_graph {
-  margin: 50px auto 0;
   height: 511px;
 
   @include background-image(linear-gradient(#464253, #383643));
+
+  .umdoptions_dialog {
+    left: 510px;
+    top: -520px;
+    display: inline-block;
+      &::after {
+        top: -272px;
+        left: 237px;
+      }
+  }
 }
 
 .overview_graph__area {
@@ -712,4 +721,56 @@
       span { display: none; }
     }
   }
+}
+.overview_button_group {
+  margin: 50px auto 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  .inner {
+    width: auto;
+    margin: 0;
+    padding: 0;
+  }
+  .share_control, .item {
+    min-width: 90px;
+    text-align: center;
+    height: 39px;
+    border: 2px solid #73707F;
+    padding: 10px 12px 0 12px;
+    text-transform: uppercase;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #BEBCC2;
+    margin-left: 15px;
+    cursor: pointer;
+    @include box-sizing(border-box);
+
+    .country-icons-share {
+      height: 16px;
+      width: 16px;
+      display: inline-block;
+      vertical-align: bottom;
+      margin-left: 5px;
+    }
+
+    &:hover {
+      border-color: lighten( #73707F, 15% );
+    }
+    &.settings i {
+      float: right;
+      position: relative;
+      top: -2px;
+      margin-left: 7px;
+    }
+  }
+  .country-share .share_control {
+      width: 105px;
+      display: block;
+      background: none;
+      background-color: transparent;
+    }
 }

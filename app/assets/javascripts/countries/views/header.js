@@ -143,14 +143,15 @@ gfw.ui.view.leafletCanvasLayer = Backbone.View.extend({
 
 gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
-  el: $('.country-header'),
+  el: $('.country-header, .country-overview-wrapper-coolio'),
 
   events: {
     'change #areaSelector': '_onSelectArea',
     'click .selector-remove': '_navigateCountry',
     'click .umd_options_control' : '_onClickUMDOptions',
-    'click .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
-    'click .umdoptions_dialog ul li':  '_updateMapThreshold'
+    'click .item.settings' : '_onClickUMDOptions',
+    'click .country-header .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
+    'click .country-header .umdoptions_dialog ul li':  '_updateMapThreshold'
   },
 
   initialize: function(options) {
@@ -247,7 +248,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
   _onClickUMDOptions: function(e,tar_param) {
     e && e.preventDefault();
-
+    if ($(e.currentTarget).data('target')) {
+      tar_param = $(e.currentTarget).data('target');
+    }
     var $target = $('.umdoptions_dialog'),
         tar_param  = tar_param || '.country-sidenav';
     if ($target.length === 0) UmdOptions = new gfw.ui.view.UmdOptions({ target: tar_param});
@@ -259,6 +262,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
   },
 
   _updateMapThreshold: function(e) {
+    debugger
     var path = location.pathname.split('/');
     var id = path[path.length -1];
     var self = this;

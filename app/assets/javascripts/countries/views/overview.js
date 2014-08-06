@@ -5,12 +5,14 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
   events: {
     'click .info': '_openSource',
     'click .graph_tab': '_updateGraph',
-    'click .countries_list__footer': '_drawList'
+    'click .countries_list__footer': '_drawList',
+    'click .country-overview-wrapper-coolio .umdoptions_dialog ul li':  '_updateGraphOverview',
+    'click .country-overview-wrapper-coolio .umdoptions_dialog ul li':  '_updateGraphOverview'
   },
 
   initialize: function() {
     this.model = new gfw.ui.model.CountriesOverview();
-
+    this.headerView = new gfw.ui.view.CountryHeader({country: this.country});
     this.$graph = $('.overview_graph__area');
     this.$years = $('.overview_graph__years');
 
@@ -46,8 +48,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     this._drawGraph();
     this._drawList();
 
-    Share = new gfw.ui.view.Share();
-    this.$el.find('.overview_graph').append(Share.render());
+    Share = new gfw.ui.view.Share({template: 'country'});
+    this.$el.find('.overview_button_group .share').append(Share.render());
   },
 
   _openSource: function(e) {
@@ -116,6 +118,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     this._drawGraph();
     this._drawList();
   },
+  _updateGraphOverview: function(e) {
+    this._drawYears();
+    this._drawGraph();
+    this._drawList();
+  },
 
   _drawList: function(e) {
     var that = this;
@@ -160,7 +167,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               }
 
           $.ajax({
-            url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso,
+            url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (config.canopy_choice || 10),
             dataType: 'json',
             success: function(data) {
               var loss = 0;
@@ -283,7 +290,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
 
           $.ajax({
-            url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso,
+            url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (config.canopy_choice || 10),
             dataType: 'json',
             success: function(data) {
               $('#ext_'+val.iso+'').append('<span class="loss line"><span>'+ ((data.years[data.years.length -1].extent /1000)/1000).toFixed(2) +' </span>Mha of extent</span><span class="gain line"><span>'+ ((data.years[data.years.length -1].loss /1000)/1000).toFixed(2) +' </span>Mha of loss</span>')
