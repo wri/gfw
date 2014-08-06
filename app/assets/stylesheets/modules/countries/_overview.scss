@@ -252,7 +252,34 @@
   padding-left: 10px;
   padding-right: 10px;
 }
-
+.countries_list__data {
+  float: right;
+  width: 160px;
+  text-align: right;
+  margin-top: 4px;
+  line-height: 20px;
+  .line {
+    float: left;
+    color: #88aa37;
+    span{
+      min-width: 50px;
+      text-align: right;
+      float: left;
+      margin-right: 4px;
+    }
+    &.loss {
+      color: #C443FF;
+    }
+    &.percent {
+      margin-right: 40px;
+      font-size: 1.3rem;
+      margin-top: 13px;
+    }
+  }
+  .perct {
+    float: right;
+  }
+}
 .countries_list__header__title,
 .countries_list__title {
   padding-left: 15px;

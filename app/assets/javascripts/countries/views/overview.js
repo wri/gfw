@@ -154,11 +154,31 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         _.each(data, function(val, key) {
           var ord = e ? (key+11) : (key+1),
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
+              umd = {
+                loss : 34,
+                gain : 43
+              }
 
+          $.ajax({
+            url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso,
+            dataType: 'json',
+            success: function(data) {
+              var loss = 0;
+              var gain = 0;
+              for (var i = 0; i<data.years.length; i ++) {
+                loss += data.years[i].loss
+                gain += data.years[i].gain
+              }
+              $('#umd_'+val.iso+'').append('<span class="loss line"><span>'+ ((loss /1000)/1000).toFixed(2) +' </span>Mha of loss</span><span class="gain line"><span>'+ ((gain /1000)/1000).toFixed(2) +' </span>Mha of gain</span>')
+            },
+          });
           markup_list += '<li>\
                             <div class="countries_list__minioverview countries_list__minioverview_'+val.iso+'"></div>\
                             <div class="countries_list__num">'+ord+'</div>\
                             <div class="countries_list__title">'+enabled+'</div>\
+                            <div class="countries_list__data">\
+                              <div id="umd_'+val.iso+'"></div>\
+                            </div>\
                           </li>';
         });
 
@@ -206,6 +226,9 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                             <div class="countries_list__minioverview countries_list__minioverview_'+val.iso+'"></div>\
                             <div class="countries_list__num">'+ord+'</div>\
                             <div class="countries_list__title">'+enabled+'</div>\
+                            <div class="countries_list__data">\
+                              <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss">'+ (val.ratio_loss*100).toFixed(2) +'%</span></div>\
+                            </div>\
                           </li>';
         });
 
@@ -259,10 +282,20 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           var ord = e ? (key+11) : (key+1),
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
 
+          $.ajax({
+            url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso,
+            dataType: 'json',
+            success: function(data) {
+              $('#ext_'+val.iso+'').append('<span class="loss line"><span>'+ ((data.years[data.years.length -1].extent /1000)/1000).toFixed(2) +' </span>Mha of extent</span><span class="gain line"><span>'+ ((data.years[data.years.length -1].loss /1000)/1000).toFixed(2) +' </span>Mha of loss</span>')
+            },
+          });
           markup_list += '<li>\
                             <div class="countries_list__minioverview expanded countries_list__minioverview_'+val.iso+'"></div>\
                             <div class="countries_list__num">'+ord+'</div>\
                             <div class="countries_list__title">'+enabled+'</div>\
+                            <div class="countries_list__data">\
+                              <div id="ext_'+val.iso+'"></div>\
+                            </div>\
                           </li>';
         });
 
