@@ -93,38 +93,36 @@ define([
     },
 
     _drawFromUrl: function(iso, geojson) {
-      var data = null;
+      var resource = null;
 
       // Draw country
       if (iso.country !== 'ALL' && !iso.region) {
-        data = {iso: iso.country};
+        resource = {iso: iso.country};
         countryService.execute(iso.country, _.bind(function(results) {
           var geojson = topojson.feature(results.topojson, results.topojson.objects[0]);
           this.view.drawMultipolygon(geojson);
-          this._publishAnalysis(data);
+          this._publishAnalysis(resource);
         },this));
       // Draw region
       } else if (iso.country !== 'ALL' && iso.region) {
-        data = {iso: iso.country, id1: iso.region};
-        regionService.execute(data, _.bind(function(results) {
+        resource = {iso: iso.country, id1: iso.region};
+        regionService.execute(resource, _.bind(function(results) {
           var geojson = results.features[0];
           this.view.drawMultipolygon(geojson);
-          this._publishAnalysis(data);
+          this._publishAnalysis(resource);
         },this));
       // Draw user polygon
       } else if (geojson) {
-        data = {geojson: JSON.stringify(geojson)};
+        resource = {geojson: JSON.stringify(geojson)};
         this.status.set('polygon', geojson);
         this.view.drawPaths(this._geojsonToPath(geojson));
-        this._publishAnalysis(data);
+        this._publishAnalysis(resource);
       }
 
-      // BOUND TO SOMEWHERE!!
-
-      // append data to analysis before the analysis resource is
+      // Append resource to analysis before the analysis resource is
       // created, this way the url doesnt blink until the topojsons
       // are loaded. We can find another way of doing this on the PlaceService.
-      this.status.set('analysis', data);
+      this.status.set('analysis', resource);
     },
 
     _checkUnavailable: function() {
@@ -150,6 +148,7 @@ define([
       }
 
       this.status.set('analysis', resource);
+      mps.publish('Place/update', [{go: false}]);
       mps.publish('AnalysisService/get', [resource]);
     },
 
