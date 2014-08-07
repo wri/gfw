@@ -710,6 +710,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         vertical_m = this.vertical_m,
         m = this.m,
         x_scale = this.x_scale;
+        
+        thresh = config.canopy_choice || 10;
 
     var grid_scale = d3.scale.linear()
       .range([vertical_m, h-vertical_m])
@@ -779,9 +781,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('transform', 'rotate(-90)');
 
       var sql = 'SELECT ';
-      var thresh = config.canopy_choice || 10;
       for(var y = 2001; y < 2012; y++) {
-        sql += '(SELECT sum(loss) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as y'+y+','
+        sql += '(SELECT sum(loss) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as y'+y+',';
       }
 
       sql += '(SELECT sum(loss) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as y2012, (SELECT SUM(y2001_y2012) FROM countries_gain) as gain';
@@ -1135,18 +1136,16 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       var sql = 'SELECT ';
 
       for(var y = 2001; y < 2012; y++) {
-        sql += 'SUM(loss.y'+y+') as loss_y'+y+', ';
+        sql += '(SELECT sum(loss) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as loss_y'+y+',';
       }
 
-      sql += 'SUM(loss.y2012) as loss_y2012, ';
+      sql += '(SELECT sum(loss) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as loss_y'+y+',';
 
       for(var y = 2001; y < 2012; y++) {
-        sql += 'SUM(extent.y'+y+') as extent_y'+y+', ';
+        sql += '(SELECT sum(extent) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as extent_y'+y+',';
       }
 
-      sql += 'SUM(extent.y2012) as extent_y2012\
-              FROM loss_gt_25 loss, extent_gt_25 extent\
-              WHERE loss.iso = extent.iso';
+      sql += '(SELECT sum(extent) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as extent_y'+y+' FROM umd_nat';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows[0];
