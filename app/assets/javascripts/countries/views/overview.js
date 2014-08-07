@@ -58,7 +58,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     var source = $(e.target).closest('.info').attr('data-source');
 
     ga('send', 'event', 'SourceWindow', 'Open', source);
-    this.sourceWindow.show(source).addScroll();
+    //this.sourceWindow.show(source).addScroll(); --> jspscrollpane thinks it's better to break the window
+    this.sourceWindow.show(source);
   },
 
   _toggleYears: function() {
@@ -105,10 +106,10 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
   _redrawGraph: function() {
     var graph = this.model.get('graph');
-
+    var $legend = $('.overview_graph__legend');
     $('.overview_graph__title').html(config.GRAPHS[graph].title);
-    $('.overview_graph__legend p').html(config.GRAPHS[graph].subtitle);
-    $('.overview_graph__legend .info').attr('data-source', graph);
+    $legend.find('p').html(config.GRAPHS[graph].subtitle);
+    $legend.find('.info').attr('data-source', graph);
 
     this.$graph.find('.'+graph);
 
