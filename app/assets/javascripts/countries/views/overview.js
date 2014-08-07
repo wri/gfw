@@ -938,19 +938,14 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       var sql = 'WITH loss as (SELECT ';
 
       for(var y = 2001; y < 2012; y++) {
-        sql += 'SUM(y'+y+') as sum_loss_y'+y+', ';
+        sql += '(SELECT sum(loss) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as sum_loss_y'+y+',';
       }
-
-      sql += 'SUM(y2012) as sum_loss_y2012\
-              FROM loss_gt_25), extent as (SELECT ';
+      sql += '(SELECT sum(loss) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as sum_loss_y2012), extent as (SELECT ';
 
       for(var y = 2001; y < 2012; y++) {
-        sql += 'SUM(y'+y+') as sum_extent_y'+y+', ';
+        sql += '(SELECT sum(extent) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as sum_extent_y'+y+',';
       }
-
-      sql += 'SUM(y2012) as sum_extent_y2012\
-              FROM extent_gt_25)\
-              SELECT ';
+      sql += '(SELECT sum(extent) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as sum_extent_y2012) SELECT ';
 
       for(var y = 2001; y < 2012; y++) {
         sql += 'sum_loss_y'+y+'/sum_extent_y'+y+' as percent_loss_'+y+', ';
