@@ -152,7 +152,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       } else {
         sql += 'LIMIT 10';
       }
-
       d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
         var self = that,
             markup_list = '';
@@ -780,15 +779,12 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('transform', 'rotate(-90)');
 
       var sql = 'SELECT ';
-
+      var thresh = config.canopy_choice || 10;
       for(var y = 2001; y < 2012; y++) {
-        sql += 'SUM(y'+y+') as y'+y+', '
+        sql += '(SELECT sum(loss) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as y'+y+','
       }
 
-      sql += 'SUM(y2012) as y2012, (SELECT SUM(y2001_y2012)\
-                                    FROM countries_gain) as gain\
-              FROM loss_gt_0';
-
+      sql += '(SELECT sum(loss) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as y2012, (SELECT SUM(y2001_y2012) FROM countries_gain) as gain';
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(error, json) {
         var data = json.rows[0];
 
