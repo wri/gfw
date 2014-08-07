@@ -58,7 +58,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     var source = $(e.target).closest('.info').attr('data-source');
 
     ga('send', 'event', 'SourceWindow', 'Open', source);
-    this.sourceWindow.show(source).addScroll();
+    //this.sourceWindow.show(source).addScroll(); --> jspscrollpane thinks it's better to break the window
+    this.sourceWindow.show(source);
   },
 
   _toggleYears: function() {
@@ -105,10 +106,10 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
   _redrawGraph: function() {
     var graph = this.model.get('graph');
-
+    var $legend = $('.overview_graph__legend');
     $('.overview_graph__title').html(config.GRAPHS[graph].title);
-    $('.overview_graph__legend p').html(config.GRAPHS[graph].subtitle);
-    $('.overview_graph__legend .info').attr('data-source', graph);
+    $legend.find('p').html(config.GRAPHS[graph].subtitle);
+    $legend.find('.info').attr('data-source', graph);
 
     this.$graph.find('.'+graph);
 
@@ -151,7 +152,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       } else {
         sql += 'LIMIT 10';
       }
-
       d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
         var self = that,
             markup_list = '';
@@ -710,6 +710,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         vertical_m = this.vertical_m,
         m = this.m,
         x_scale = this.x_scale;
+        
+        thresh = config.canopy_choice || 10;
 
     var grid_scale = d3.scale.linear()
       .range([vertical_m, h-vertical_m])
@@ -779,15 +781,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('transform', 'rotate(-90)');
 
       var sql = 'SELECT ';
-
       for(var y = 2001; y < 2012; y++) {
-        sql += 'SUM(y'+y+') as y'+y+', '
+        sql += '(SELECT sum(loss) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as y'+y+',';
       }
 
-      sql += 'SUM(y2012) as y2012, (SELECT SUM(y2001_y2012)\
-                                    FROM countries_gain) as gain\
-              FROM loss_gt_0';
-
+      sql += '(SELECT sum(loss) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as y2012, (SELECT SUM(y2001_y2012) FROM countries_gain) as gain';
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(error, json) {
         var data = json.rows[0];
 
@@ -940,19 +938,14 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       var sql = 'WITH loss as (SELECT ';
 
       for(var y = 2001; y < 2012; y++) {
-        sql += 'SUM(y'+y+') as sum_loss_y'+y+', ';
+        sql += '(SELECT sum(loss) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as sum_loss_y'+y+',';
       }
-
-      sql += 'SUM(y2012) as sum_loss_y2012\
-              FROM loss_gt_25), extent as (SELECT ';
+      sql += '(SELECT sum(loss) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as sum_loss_y2012), extent as (SELECT ';
 
       for(var y = 2001; y < 2012; y++) {
-        sql += 'SUM(y'+y+') as sum_extent_y'+y+', ';
+        sql += '(SELECT sum(extent) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as sum_extent_y'+y+',';
       }
-
-      sql += 'SUM(y2012) as sum_extent_y2012\
-              FROM extent_gt_25)\
-              SELECT ';
+      sql += '(SELECT sum(extent) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as sum_extent_y2012) SELECT ';
 
       for(var y = 2001; y < 2012; y++) {
         sql += 'sum_loss_y'+y+'/sum_extent_y'+y+' as percent_loss_'+y+', ';
@@ -1138,18 +1131,16 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       var sql = 'SELECT ';
 
       for(var y = 2001; y < 2012; y++) {
-        sql += 'SUM(loss.y'+y+') as loss_y'+y+', ';
+        sql += '(SELECT sum(loss) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as loss_y'+y+',';
       }
 
-      sql += 'SUM(loss.y2012) as loss_y2012, ';
+      sql += '(SELECT sum(loss) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as loss_y'+y+',';
 
       for(var y = 2001; y < 2012; y++) {
-        sql += 'SUM(extent.y'+y+') as extent_y'+y+', ';
+        sql += '(SELECT sum(extent) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as extent_y'+y+',';
       }
 
-      sql += 'SUM(extent.y2012) as extent_y2012\
-              FROM loss_gt_25 loss, extent_gt_25 extent\
-              WHERE loss.iso = extent.iso';
+      sql += '(SELECT sum(extent) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as extent_y'+y+' FROM umd_nat';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows[0];
