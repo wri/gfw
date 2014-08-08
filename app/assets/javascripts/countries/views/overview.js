@@ -293,7 +293,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (config.canopy_choice || 10),
             dataType: 'json',
             success: function(data) {
-              $('#ext_'+val.iso+'').append('<span class="loss line"><span>'+ ((data.years[data.years.length -1].extent /1000)/1000).toFixed(2) +' </span>Mha of extent</span><span class="gain line"><span>'+ ((data.years[data.years.length -1].loss /1000)/1000).toFixed(2) +' </span>Mha of loss</span>')
+              $('#ext_'+val.iso+'').append('<span class="gain line"><span>'+ ((data.years[data.years.length -1].extent /1000)/1000).toFixed(2) +' </span>Mha of extent</span><span class="loss line"><span>'+ ((data.years[data.years.length -1].loss /1000)/1000).toFixed(2) +' </span>Mha of loss</span>')
             },
           });
           markup_list += '<li>\
