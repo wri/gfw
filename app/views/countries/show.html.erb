@@ -310,7 +310,7 @@
         <% if @country['dataset_link'].present? %>
         <%= link_to 'Download relevant data sets', @country['dataset_link'], class: 'btn-rdn' %>
         <% else %>
-        <%= link_to 'Download relevant data sets','#', class: 'btn-rdn disabled' %>
+        <a href="https://wri-01.cartodb.com/api/v2/sql?q=SELECT iso,id1 as id_adm1, country,region, year, thresh as threshold, loss, loss_perc as loss_percent, extent, extent_perc as extent_percent, gain, gain_perc as gain_percent from umd_subnat where iso='<%=@country['iso']%>'&format=csv" class='btn-rdn'>Download relevant data sets</a>
         <% end %>
       </div>
     </div>
