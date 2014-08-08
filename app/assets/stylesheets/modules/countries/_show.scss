@@ -422,17 +422,15 @@
     .country-nav-items {
       width: 100%;
       text-align: center;
+      display: flex;
+      align-content: space-between;
 
       > li {
         float: left;
         margin-right: -1px;
         height: 50px;
-        width: 135px;
+        width: 100%;
         @include box-sizing(border-box);
-
-        &:first-child {
-          width: 156px;
-        }
 
         a {
           border: 1px solid #ccc;

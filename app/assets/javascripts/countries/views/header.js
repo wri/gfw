@@ -262,7 +262,6 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
   },
 
   _updateMapThreshold: function(e) {
-    debugger
     var path = location.pathname.split('/');
     var id = path[path.length -1];
     var self = this;
