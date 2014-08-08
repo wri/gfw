@@ -176,7 +176,32 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                 loss += data.years[i].loss
                 gain += data.years[i].gain
               }
-              $('#umd_'+val.iso+'').append('<span class="loss line"><span>'+ ((loss /1000)/1000).toFixed(2) +' </span>Mha of loss</span><span class="gain line"><span>'+ ((gain /1000)/1000).toFixed(2) +' </span>Mha of gain</span>')
+
+              var g_mha, l_mha,
+                  ga = gain,
+                  lo = loss;
+                  g_mha = l_mha = 'Mha';
+              
+              if (ga.toString().length >= 7) {
+                ga = ((ga /1000)/1000).toFixed(2)
+              } else if (ga.toString().length >= 4) {
+                g_mha = 'KHa';
+                ga = (ga /1000);
+              if (ga % 1 != 0) ga = ga.toFixed(2)
+              } else {
+                g_mha = 'Ha';
+              }
+
+              if (lo.toString().length >= 7) {
+                lo = ((lo /1000)/1000).toFixed(2)
+              } else if (lo.toString().length >= 4) {
+                l_mha = 'KHa';
+                lo = (lo /1000);
+              if (lo % 1 != 0) lo = lo.toFixed(2)
+              } else {
+                l_mha = 'Ha';
+              }
+              $('#umd_'+val.iso+'').append('<span class="loss line"><span>'+  parseInt(lo).toLocaleString() +' </span>'+g_mha+' of loss</span><span class="gain line"><span>'+ parseInt(ga).toLocaleString() +' </span>'+l_mha+' of gain</span>')
             },
           });
           markup_list += '<li>\
@@ -293,7 +318,31 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (config.canopy_choice || 10),
             dataType: 'json',
             success: function(data) {
-              $('#ext_'+val.iso+'').append('<span class="gain line"><span>'+ ((data.years[data.years.length -1].extent /1000)/1000).toFixed(2) +' </span>Mha of extent</span><span class="loss line"><span>'+ ((data.years[data.years.length -1].loss /1000)/1000).toFixed(2) +' </span>Mha of loss</span>')
+              var e_mha, l_mha,
+                  ex = data.years[data.years.length -1].extent,
+                  lo = data.years[data.years.length -1].loss;
+                  e_mha = l_mha = 'Mha';
+              
+              if (ex.toString().length >= 7) {
+                ex = ((ex /1000)/1000).toFixed(2)
+              } else if (ex.toString().length >= 4) {
+                e_mha = 'KHa';
+                ex = (ex /1000);
+              if (ex % 1 != 0) ex = ex.toFixed(2)
+              } else {
+                e_mha = 'Ha';
+              }
+
+              if (lo.toString().length >= 7) {
+                lo = ((lo /1000)/1000).toFixed(2)
+              } else if (lo.toString().length >= 4) {
+                l_mha = 'KHa';
+                lo = (lo /1000);
+              if (lo % 1 != 0) lo = lo.toFixed(2)
+              } else {
+                l_mha = 'Ha';
+              }
+              $('#ext_'+val.iso+'').append('<span class="gain line"><span>'+ parseInt(ex).toLocaleString() +' </span>'+ e_mha +' of extent</span><span class="loss line"><span>'+ parseInt(lo).toLocaleString() +' </span>'+ l_mha +'  of loss</span>')
             },
           });
           markup_list += '<li>\
