@@ -280,6 +280,9 @@
     &.loss {
       color: #C443FF;
     }
+    &.gain {
+      color: #6D6DE5;
+    }
     &.percent {
       margin-right: 40px;
       font-size: 1.3rem;
@@ -312,6 +315,10 @@
 
 .countries_list__title {
   border-left: 1px solid #ccc;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 450px;
+  white-space: nowrap;
 }
 
 .countries_list__minioverview {

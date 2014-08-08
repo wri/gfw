@@ -317,7 +317,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               } else {
                 l_mha = 'Ha';
               }
-              $('#ext_'+val.iso+'').append('<span class="gain line"><span>'+ parseInt(ex).toLocaleString() +' </span>'+ e_mha +' of extent</span><span class="loss line"><span>'+ parseInt(lo).toLocaleString() +' </span>'+ l_mha +'  of loss</span>')
+              $('#ext_'+val.iso+'').append('<span class="line"><span>'+ parseInt(ex).toLocaleString() +' </span>'+ e_mha +' of extent</span><span class="loss line"><span>'+ parseInt(lo).toLocaleString() +' </span>'+ l_mha +'  of loss</span>')
             },
           });
           markup_list += '<li>\
