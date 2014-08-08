@@ -176,32 +176,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                 loss += data.years[i].loss
                 gain += data.years[i].gain
               }
-
-              var g_mha, l_mha,
-                  ga = gain,
-                  lo = loss;
-                  g_mha = l_mha = 'Mha';
-              
-              if (ga.toString().length >= 7) {
-                ga = ((ga /1000)/1000).toFixed(2)
-              } else if (ga.toString().length >= 4) {
-                g_mha = 'KHa';
-                ga = (ga /1000);
-              if (ga % 1 != 0) ga = ga.toFixed(2)
-              } else {
-                g_mha = 'Ha';
-              }
-
-              if (lo.toString().length >= 7) {
-                lo = ((lo /1000)/1000).toFixed(2)
-              } else if (lo.toString().length >= 4) {
-                l_mha = 'KHa';
-                lo = (lo /1000);
-              if (lo % 1 != 0) lo = lo.toFixed(2)
-              } else {
-                l_mha = 'Ha';
-              }
-              $('#umd_'+val.iso+'').append('<span class="loss line"><span>'+  parseInt(lo).toLocaleString() +' </span>'+g_mha+' of loss</span><span class="gain line"><span>'+ parseInt(ga).toLocaleString() +' </span>'+l_mha+' of gain</span>')
+              $('#umd_'+val.iso+'').append('<span class="loss line"><span>'+ ((loss /1000)/1000).toFixed(2) +' </span>Mha of loss</span><span class="gain line"><span>'+ ((gain /1000)/1000).toFixed(2) +' </span>Mha of gain</span>')
             },
           });
           markup_list += '<li>\
