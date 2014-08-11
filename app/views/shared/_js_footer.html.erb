@@ -10,6 +10,7 @@
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
     ga('create', '<%= ENV["ANALYTICS_PROPERTY_ID"] %>', 'globalforestwatch.org');
+    ga('require', 'displayfeatures');
     ga('send', 'pageview');
   <% end %>
 
