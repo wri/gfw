@@ -6,7 +6,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     'click .info': '_openSource',
     'click .graph_tab': '_updateGraph',
     'click .countries_list__footer': '_drawList',
-    'click .country-overview-wrapper-coolio .umdoptions_dialog ul li':  '_updateGraphOverview',
+    'click .country-overview-wrapper-coolio .umdoptions_dialog #canopy_slider':  '_updateGraphOverview',
+    'mouseup .country-overview-wrapper-coolio .umdoptions_dialog #canopy_slider':  '_updateGraphOverview',
     'click .country-overview-wrapper-coolio .umdoptions_dialog ul li':  '_updateGraphOverview'
   },
 
@@ -172,11 +173,35 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             success: function(data) {
               var loss = 0;
               var gain = 0;
+              var g_mha, l_mha;
+              g_mha = l_mha = 'Mha';
+
               for (var i = 0; i<data.years.length; i ++) {
                 loss += data.years[i].loss
                 gain += data.years[i].gain
               }
-              $('#umd_'+val.iso+'').append('<span class="loss line"><span>'+ ((loss /1000)/1000).toFixed(2) +' </span>Mha of loss</span><span class="gain line"><span>'+ ((gain /1000)/1000).toFixed(2) +' </span>Mha of gain</span>')
+
+              if (loss.toString().length >= 7) {
+                loss = ((loss /1000)/1000).toFixed(2)
+              } else if (loss.toString().length >= 4) {
+                l_mha = 'KHa';
+                loss = (loss /1000);
+              if (loss % 1 != 0) loss = loss.toFixed(2)
+              } else {
+                l_mha = 'Ha';
+              }
+
+              if (gain.toString().length >= 7) {
+                gain = ((gain /1000)/1000).toFixed(2)
+              } else if (gain.toString().length >= 4) {
+                g_mha = 'KHa';
+                gain = (gain /1000);
+              if (gain % 1 != 0) gain = gain.toFixed(2)
+              } else {
+                g_mha = 'Ha';
+              }
+
+              $('#umd_'+val.iso+'').append('<span class="loss line"><span>'+ loss +' </span>'+ l_mha +' of loss</span><span class="gain line"><span>'+ gain+' </span>'+ g_mha +' of gain</span>')
             },
           });
           markup_list += '<li>\

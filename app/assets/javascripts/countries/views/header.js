@@ -151,6 +151,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     'click .umd_options_control' : '_onClickUMDOptions',
     'click .item.settings' : '_onClickUMDOptions',
     'click .country-header .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
+    'mouseup .country-header .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
     'click .country-header .umdoptions_dialog ul li':  '_updateMapThreshold'
   },
 

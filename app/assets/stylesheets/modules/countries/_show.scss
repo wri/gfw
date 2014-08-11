@@ -76,6 +76,7 @@
         margin-right: 20px;
         display: inline-block;
         font-family: $font-regular;
+        max-height: 50px;
         .embed & {
           max-width: 100%;
         }
@@ -1200,7 +1201,7 @@
   padding: 20px 20px 0px 20px;
   z-index: 1000;
 
-  &::after {
+  &::after, &::before {
     content: ' ';
     background-color: white;
     width: 15px;
@@ -1212,6 +1213,12 @@
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
     z-index: 0;
+  }
+
+  &::before {
+    background-color: black;
+    top: 185px;
+    left: 414px;
   }
 
   .close {

@@ -11,6 +11,11 @@
         top: -272px;
         left: 237px;
       }
+      &::before {
+        background-color: black;
+        top: -29px;
+        left: 237px;
+      }
   }
 }
 
@@ -54,14 +59,14 @@
   cursor: pointer;
 
   &.gain {
-    stroke: #98BD17;
+    stroke: #6D6DE5;
   }
 }
 
 .overview_line {
   @extend .tick;
   stroke-width: 3px;
-  stroke: #98BD17;
+  stroke: #6D6DE5;
 }
 
 .minioverview_line {
@@ -371,7 +376,7 @@
 }
 
 .countries_list__footer {
-  background: rgba(#98BD17, .15);
+  background: rgba(#6D6DE5, .15);
   text-align: center;
   padding: 30px 0;
 
@@ -426,7 +431,7 @@
 
   &.gain_tooltip,
   &.tropical_tooltip {
-    color: #98BD17;
+    color: #6D6DE5;
   }
 
   &.subtropical_tooltip {
@@ -489,7 +494,7 @@
       }
 
       &:last-child i {
-        background: #9ABF00;
+        background: #6D6DE5;
       }
 
       i {
@@ -515,7 +520,7 @@
 }
 
 .ball {
-  fill: #98BD17;
+  fill: #6D6DE5;
   @include opacity(.8);
 }
 
