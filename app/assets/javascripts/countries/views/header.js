@@ -186,6 +186,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       loadArea: function(countryId, areaId) {
         var area = self.country.get('areas').where({ id_1: Number(areaId) })[0];
         self.area = area;
+        
         if (!self.map) {
           self._setAreaSelector();
           self._initMap(function() {
@@ -288,6 +289,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
     if (area) {
       this.router.navigate('country/' + this.country.get('iso') + '/' + String(area.get('id_1')), {trigger: true});
+      this.$el.find('#url_analysis').attr('href', '/map/6/'+ area.attributes.bounds._northEast.lat + '/'+ area.attributes.bounds._northEast.lng + '/'+ area.attributes.iso + '-' + String(area.get('id_1')) +'/grayscale/loss/596');
     } else {
       this._navigateCountry();
     }
@@ -419,7 +421,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
   _displayArea: function(area) {
     var self = this;
-
+    this.$el.find('#url_analysis').attr('href', '/map/6/'+ area.attributes.bounds._northEast.lat + '/'+ area.attributes.bounds._northEast.lng + '/'+ area.attributes.iso + '-' + String(area.get('id_1')) +'/grayscale/loss/596');
     this.map.fitBounds(area.get('bounds'), {reset: true});
     this._removeCartodblayer();
 
