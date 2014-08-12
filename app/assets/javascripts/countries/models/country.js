@@ -4,7 +4,7 @@ gfw.ui.model.Country = cdb.core.Model.extend({
   },
 
   url: function() {
-    return "http://wri-01.cartodb.com/api/v2/sql?q=SELECT cartodb_id, iso, id_1, name_1, bounds FROM gadm_1_all where iso = '" + this.get('iso') + "' order by id_1 asc";
+    return "http://wri-01.cartodb.com/api/v2/sql?q=SELECT  gadm_1_all.cartodb_id,  gadm_1_all.iso,  gadm_1_all.bounds,  gadm2_provinces_simple.id_1, gadm2_provinces_simple.name_1 as name_1  FROM gadm_1_all, gadm2_provinces_simple where  gadm_1_all.iso = '" + this.get('iso') + "' AND  gadm2_provinces_simple.iso = '" + this.get('iso') + "' AND gadm2_provinces_simple.id_1 = gadm_1_all.id_1 order by id_1 asc";
   },
 
   parse: function(response, options) {
