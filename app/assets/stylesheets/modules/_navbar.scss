@@ -1,21 +1,27 @@
 .mod-navbar {
   float: right;
   margin: 18px 0;
+  display: flex;
+  width: 700px;
+  justify-content: space-between;
 
   #google_translate_element {
-    float: right;
+    float: left;
     margin-left: 10px;
-    min-width: 167px;
+    min-width: 155px;
     min-height: 24px;
+    order: 2;
   }
 
   ul {
-    float: right;
+    float: left;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
   }
 
   li {
     float: left;
-    margin-left: 5px;
 
     a {
       display: block;
