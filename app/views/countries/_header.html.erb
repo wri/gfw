@@ -52,6 +52,12 @@
               </a>
             </li>
             <li>
+              <a href="https://wri-01.cartodb.com/api/v2/sql?q=SELECT iso,id1 as id_adm1, country,region, year, thresh as threshold, loss, loss_perc as loss_percent, extent, extent_perc as extent_percent, gain, gain_perc as gain_percent from umd_subnat where iso='<%=@country['iso']%>'&format=csv&filename='<%=@country['iso']%>'">
+                country stats
+                <span class="sidenav-icon country-icons-download_grey"></span>
+              </a>
+            </li>
+            <li>
               <a href='<%= map_coords %>/grayscale/loss/596' class='action' title='Analyze forest change' target="<%= controller_name === 'embed' ? '_blank' : '' %>" id="url_analysis">
                 Analyze
                 <span class="sidenav-icon country-icons-chart_grey"></span>
