@@ -739,6 +739,8 @@
   width: 100%;
   height: 70px;
   display: flex;
+  display: -ms-flex;
+  display: -webkit-flex;
   align-items: center;
   justify-content: flex-end;
 
