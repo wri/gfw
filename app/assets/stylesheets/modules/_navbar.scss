@@ -2,6 +2,8 @@
   float: right;
   margin: 18px 0;
   display: flex;
+  display: -ms-flex;
+  display: -webkit-flex;
   width: 700px;
   justify-content: space-between;
 
@@ -16,6 +18,8 @@
   ul {
     float: left;
     display: flex;
+    display: -ms-flex;
+    display: -webkit-flex;
     justify-content: space-between;
     width: 100%;
   }

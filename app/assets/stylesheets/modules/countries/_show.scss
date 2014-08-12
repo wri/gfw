@@ -424,6 +424,8 @@
       width: 100%;
       text-align: center;
       display: flex;
+      display: -ms-flex;
+      display: -webkit-flex;
       align-content: space-between;
 
       > li {
