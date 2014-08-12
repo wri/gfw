@@ -171,13 +171,15 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (config.canopy_choice || 10),
             dataType: 'json',
             success: function(data) {
-              var loss = 0;
+              var loss = (config.canopy_choice == false || config.canopy_choice == 10) ? Math.round(val.sum_loss) : 0;
               var gain = 0;
               var g_mha, l_mha;
               g_mha = l_mha = 'Mha';
 
               for (var i = 0; i<data.years.length; i ++) {
-                loss += data.years[i].loss
+                if (config.canopy_choice != false && config.canopy_choice != 10){
+                  loss += data.years[i].loss
+                }
                 gain += data.years[i].gain
               }
 
