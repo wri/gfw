@@ -317,6 +317,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
   _updateData: function(area_id) {
     var url     = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + this.country.get('iso'),
         canopy  = config.canopy_choice || 10,
+        $cnp_op = $('.umd_options_control').find('.sidenav-icon'),
         $target = $('.tree-numbers'),
         that    = this;
 
@@ -325,6 +326,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     } else {
       url = url + '?thresh=' + canopy;
     }
+
+    if (canopy != 10) $cnp_op.addClass('no_def');
+    else $cnp_op.removeClass('no_def');
 
     $.ajax({
       url: url,
