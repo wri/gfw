@@ -121,6 +121,10 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     this._drawList();
   },
   _updateGraphOverview: function(e) {
+    var $cnp_op = this.$el.find('.overview_button_group .settings i')
+    if (config.canopy_choice != 10) $cnp_op.addClass('no_def');
+    else $cnp_op.removeClass('no_def');
+
     this._drawYears();
     this._drawGraph();
     this._drawList();
