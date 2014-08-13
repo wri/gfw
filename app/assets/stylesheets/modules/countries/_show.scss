@@ -72,11 +72,11 @@
       h1 {
         color: white;
         font-size: 47px;
-        max-width: 500px;
-        margin-right: 20px;
         display: inline-block;
-        font-family: $font-regular;
-        max-height: 50px;
+        font-family: "fira_sans_otregular", Georgia, sans-serif;
+        width: 100%;
+        margin-top: 0.1em;
+        margin-bottom: 0.2em;
         .embed & {
           max-width: 100%;
         }
@@ -92,7 +92,6 @@
         width: 310px;
         position: relative;
         right: -4px;
-        float: right;
         .embed & {
           display: none;
         }
