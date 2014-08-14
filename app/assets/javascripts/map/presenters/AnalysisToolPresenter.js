@@ -78,6 +78,7 @@ define([
       }, this));
 
       mps.subscribe('MapView/click-protected', _.bind(function(wdpaid) {
+        this._getProtectedAreaPolygon(wdpaid.wdpaid);
         this._publishAnalysis({wdpaid: wdpaid});
       }, this));
     },
@@ -102,14 +103,22 @@ define([
       this.view.model.set('hidden', !!!baselayer);
     },
 
+    _getProtectedAreaPolygon: function(id) {
+      var self = this;
+       $.getJSON('http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from wdpa_all where wdpaid ='+id, function(data) {
+          self._drawFromUrl('wdpa', JSON.parse(data.rows[0].st_asgeojson))
+        });
+    },
+
     _drawFromUrl: function(iso, geojson) {
       var resource = null;
 
       // Draw country
-      if (iso.country !== 'ALL' && !iso.region) {
+      if (iso.country && iso.country !== 'ALL' && !iso.region) {
         resource = {iso: iso.country};
         countryService.execute(iso.country, _.bind(function(results) {
           var geojson = topojson.feature(results.topojson, results.topojson.objects[0]);
+          console.log(geojson)
           this.view.drawMultipolygon(geojson);
           this._publishAnalysis(resource);
         },this));
@@ -118,9 +127,16 @@ define([
         resource = {iso: iso.country, id1: iso.region};
         regionService.execute(resource, _.bind(function(results) {
           var geojson = results.features[0];
+          console.log(geojson, resource)
           this.view.drawMultipolygon(geojson);
           this._publishAnalysis(resource);
         },this));
+      } else if (iso === 'wdpa') {
+          this.view.drawMultipolygon({
+            geometry: geojson,
+            properties: {},
+            type: 'Feature'
+          });
       // Draw user polygon
       } else if (geojson) {
         resource = {geojson: JSON.stringify(geojson)};
@@ -254,6 +270,7 @@ define([
      * @return {array} paths
      */
     _geojsonToPath: function(geojson) {
+      debugger
       var coords = geojson.coordinates[0];
       return _.map(coords, function(g) {
         return new google.maps.LatLng(g[1], g[0]);
