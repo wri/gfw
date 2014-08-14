@@ -270,7 +270,6 @@ define([
      * @return {array} paths
      */
     _geojsonToPath: function(geojson) {
-      debugger
       var coords = geojson.coordinates[0];
       return _.map(coords, function(g) {
         return new google.maps.LatLng(g[1], g[0]);
