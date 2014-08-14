@@ -28,7 +28,24 @@ module Gfw
     # config.i18n.default_locale = :de
 
     I18n.enforce_available_locales = false
-
+    config.assets.paths << File.join(Rails.root, 'vendor', 'assets', 'bower_components')
     config.autoload_paths += %W(#{config.root}/lib)
+
+    config.generators.assets = false
+
+    # via https://github.com/sstephenson/sprockets/issues/347#issuecomment-25543201
+
+    # We don't want the default of everything that isn't js or css, because it pulls too many things in
+    config.assets.precompile.shift
+
+    # Explicitly register the extensions we are interested in compiling
+    config.assets.precompile.push(Proc.new do |path|
+      File.extname(path).in? [
+        '.html', '.erb', '.haml',                 # Templates
+        '.png',  '.gif', '.jpg', '.jpeg', '.svg', # Images
+        '.eot',  '.otf', '.svc', '.woff', '.ttf', # Fonts
+      ]
+    end)
+
   end
 end

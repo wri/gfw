@@ -1,15 +1,19 @@
 gfw.ui.view.CountriesOverview = cdb.core.View.extend({
+
   el: document.body,
 
   events: {
     'click .info': '_openSource',
     'click .graph_tab': '_updateGraph',
-    'click .countries_list__footer': '_drawList'
+    'click .countries_list__footer': '_drawList',
+    'click .country-overview-wrapper-coolio .umdoptions_dialog #canopy_slider':  '_updateGraphOverview',
+    'mouseup .country-overview-wrapper-coolio .umdoptions_dialog #canopy_slider':  '_updateGraphOverview',
+    'click .country-overview-wrapper-coolio .umdoptions_dialog ul li':  '_updateGraphOverview'
   },
 
   initialize: function() {
     this.model = new gfw.ui.model.CountriesOverview();
-
+    this.headerView = new gfw.ui.view.CountryHeader({country: this.country});
     this.$graph = $('.overview_graph__area');
     this.$years = $('.overview_graph__years');
 
@@ -45,8 +49,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     this._drawGraph();
     this._drawList();
 
-    Share = new gfw.ui.view.Share();
-    this.$el.find('.overview_graph').append(Share.render());
+    Share = new gfw.ui.view.Share({template: 'country'});
+    this.$el.find('.overview_button_group .share').append(Share.render());
   },
 
   _openSource: function(e) {
@@ -55,7 +59,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     var source = $(e.target).closest('.info').attr('data-source');
 
     ga('send', 'event', 'SourceWindow', 'Open', source);
-    this.sourceWindow.show(source).addScroll();
+    //this.sourceWindow.show(source).addScroll(); --> jspscrollpane thinks it's better to break the window
+    this.sourceWindow.show(source);
   },
 
   _toggleYears: function() {
@@ -102,16 +107,25 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
   _redrawGraph: function() {
     var graph = this.model.get('graph');
-
+    var $legend = $('.overview_graph__legend');
     $('.overview_graph__title').html(config.GRAPHS[graph].title);
-    $('.overview_graph__legend p').html(config.GRAPHS[graph].subtitle);
-    $('.overview_graph__legend .info').attr('data-source', graph);
+    $legend.find('p').html(config.GRAPHS[graph].subtitle);
+    $legend.find('.info').attr('data-source', graph);
 
     this.$graph.find('.'+graph);
 
     this.$graph.find('.chart').hide();
     this.$graph.find('.'+graph).fadeIn();
 
+    this._drawGraph();
+    this._drawList();
+  },
+  _updateGraphOverview: function(e) {
+    var $cnp_op = this.$el.find('.overview_button_group .settings i')
+    if (config.canopy_choice != 10) $cnp_op.addClass('no_def');
+    else $cnp_op.removeClass('no_def');
+
+    this._drawYears();
     this._drawGraph();
     this._drawList();
   },
@@ -143,7 +157,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       } else {
         sql += 'LIMIT 10';
       }
-
       d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
         var self = that,
             markup_list = '';
@@ -153,11 +166,57 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         _.each(data, function(val, key) {
           var ord = e ? (key+11) : (key+1),
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
+              umd = {
+                loss : 34,
+                gain : 43
+              }
 
+          $.ajax({
+            url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (config.canopy_choice || 10),
+            dataType: 'json',
+            success: function(data) {
+              var loss = (config.canopy_choice == false || config.canopy_choice == 10) ? Math.round(val.sum_loss) : 0;
+              var gain = 0;
+              var g_mha, l_mha;
+              g_mha = l_mha = 'Mha';
+
+              for (var i = 0; i<data.years.length; i ++) {
+                if (config.canopy_choice != false && config.canopy_choice != 10){
+                  loss += data.years[i].loss
+                }
+                gain += data.years[i].gain
+              }
+
+              if (loss.toString().length >= 7) {
+                loss = ((loss /1000)/1000).toFixed(2)
+              } else if (loss.toString().length >= 4) {
+                l_mha = 'KHa';
+                loss = (loss /1000);
+              if (loss % 1 != 0) loss = loss.toFixed(2)
+              } else {
+                l_mha = 'Ha';
+              }
+
+              if (gain.toString().length >= 7) {
+                gain = ((gain /1000)/1000).toFixed(2)
+              } else if (gain.toString().length >= 4) {
+                g_mha = 'KHa';
+                gain = (gain /1000);
+              if (gain % 1 != 0) gain = gain.toFixed(2)
+              } else {
+                g_mha = 'Ha';
+              }
+
+              $('#umd_'+val.iso+'').append('<span class="loss line"><span>'+ loss +' </span>'+ l_mha +' of loss</span><span class="gain line"><span>'+ gain+' </span>'+ g_mha +' of gain</span>')
+            },
+          });
           markup_list += '<li>\
                             <div class="countries_list__minioverview countries_list__minioverview_'+val.iso+'"></div>\
                             <div class="countries_list__num">'+ord+'</div>\
                             <div class="countries_list__title">'+enabled+'</div>\
+                            <div class="countries_list__data">\
+                              <div id="umd_'+val.iso+'"></div>\
+                            </div>\
                           </li>';
         });
 
@@ -205,6 +264,9 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                             <div class="countries_list__minioverview countries_list__minioverview_'+val.iso+'"></div>\
                             <div class="countries_list__num">'+ord+'</div>\
                             <div class="countries_list__title">'+enabled+'</div>\
+                            <div class="countries_list__data">\
+                              <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss">'+ (val.ratio_loss*100).toFixed(2) +'%</span></div>\
+                            </div>\
                           </li>';
         });
 
@@ -258,10 +320,44 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           var ord = e ? (key+11) : (key+1),
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
 
+          $.ajax({
+            url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (config.canopy_choice || 10),
+            dataType: 'json',
+            success: function(data) {
+              var e_mha, l_mha,
+                  ex = data.years[data.years.length -1].extent,
+                  lo = data.years[data.years.length -1].loss;
+                  e_mha = l_mha = 'Mha';
+              
+              if (ex.toString().length >= 7) {
+                ex = ((ex /1000)/1000).toFixed(2)
+              } else if (ex.toString().length >= 4) {
+                e_mha = 'KHa';
+                ex = (ex /1000);
+              if (ex % 1 != 0) ex = ex.toFixed(2)
+              } else {
+                e_mha = 'Ha';
+              }
+
+              if (lo.toString().length >= 7) {
+                lo = ((lo /1000)/1000).toFixed(2)
+              } else if (lo.toString().length >= 4) {
+                l_mha = 'KHa';
+                lo = (lo /1000);
+              if (lo % 1 != 0) lo = lo.toFixed(2)
+              } else {
+                l_mha = 'Ha';
+              }
+              $('#ext_'+val.iso+'').append('<span class="line"><span>'+ parseInt(ex).toLocaleString() +' </span>'+ e_mha +' of extent</span><span class="loss line"><span>'+ parseInt(lo).toLocaleString() +' </span>'+ l_mha +'  of loss</span>')
+            },
+          });
           markup_list += '<li>\
                             <div class="countries_list__minioverview expanded countries_list__minioverview_'+val.iso+'"></div>\
                             <div class="countries_list__num">'+ord+'</div>\
                             <div class="countries_list__title">'+enabled+'</div>\
+                            <div class="countries_list__data">\
+                              <div id="ext_'+val.iso+'"></div>\
+                            </div>\
                           </li>';
         });
 
@@ -669,6 +765,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         vertical_m = this.vertical_m,
         m = this.m,
         x_scale = this.x_scale;
+        
+        thresh = config.canopy_choice || 10;
 
     var grid_scale = d3.scale.linear()
       .range([vertical_m, h-vertical_m])
@@ -738,15 +836,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('transform', 'rotate(-90)');
 
       var sql = 'SELECT ';
-
       for(var y = 2001; y < 2012; y++) {
-        sql += 'SUM(y'+y+') as y'+y+', '
+        sql += '(SELECT sum(loss) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as y'+y+',';
       }
 
-      sql += 'SUM(y2012) as y2012, (SELECT SUM(y2001_y2012)\
-                                    FROM countries_gain) as gain\
-              FROM loss_gt_0';
-
+      sql += '(SELECT sum(loss) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as y2012, (SELECT SUM(y2001_y2012) FROM countries_gain) as gain';
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(error, json) {
         var data = json.rows[0];
 
@@ -899,19 +993,14 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       var sql = 'WITH loss as (SELECT ';
 
       for(var y = 2001; y < 2012; y++) {
-        sql += 'SUM(y'+y+') as sum_loss_y'+y+', ';
+        sql += '(SELECT sum(loss) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as sum_loss_y'+y+',';
       }
-
-      sql += 'SUM(y2012) as sum_loss_y2012\
-              FROM loss_gt_25), extent as (SELECT ';
+      sql += '(SELECT sum(loss) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as sum_loss_y2012), extent as (SELECT ';
 
       for(var y = 2001; y < 2012; y++) {
-        sql += 'SUM(y'+y+') as sum_extent_y'+y+', ';
+        sql += '(SELECT sum(extent) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as sum_extent_y'+y+',';
       }
-
-      sql += 'SUM(y2012) as sum_extent_y2012\
-              FROM extent_gt_25)\
-              SELECT ';
+      sql += '(SELECT sum(extent) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as sum_extent_y2012) SELECT ';
 
       for(var y = 2001; y < 2012; y++) {
         sql += 'sum_loss_y'+y+'/sum_extent_y'+y+' as percent_loss_'+y+', ';
@@ -1097,18 +1186,16 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       var sql = 'SELECT ';
 
       for(var y = 2001; y < 2012; y++) {
-        sql += 'SUM(loss.y'+y+') as loss_y'+y+', ';
+        sql += '(SELECT sum(loss) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as loss_y'+y+',';
       }
 
-      sql += 'SUM(loss.y2012) as loss_y2012, ';
+      sql += '(SELECT sum(loss) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as loss_y'+y+',';
 
       for(var y = 2001; y < 2012; y++) {
-        sql += 'SUM(extent.y'+y+') as extent_y'+y+', ';
+        sql += '(SELECT sum(extent) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as extent_y'+y+',';
       }
 
-      sql += 'SUM(extent.y2012) as extent_y2012\
-              FROM loss_gt_25 loss, extent_gt_25 extent\
-              WHERE loss.iso = extent.iso';
+      sql += '(SELECT sum(extent) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as extent_y'+y+' FROM umd_nat';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows[0];

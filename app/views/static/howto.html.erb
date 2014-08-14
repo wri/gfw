@@ -1,36 +1,3 @@
-<% content_for :js do %>
-  <script>
-    var player1,
-        player2;
-
-    function onYouTubeIframeAPIReady() {
-      player1 = new YT.Player('player1');
-      player2 = new YT.Player('player2');
-    }
-
-    $(function() {
-      var StaticRouter = Backbone.Router.extend({
-        routes: {
-          'howto/:section': 'change'
-        },
-
-        change: function(tab) {
-          window.static_howto._onNavChange(tab);
-        }
-      });
-
-      cdb.init(function() {
-        window.carrousel = new gfw.ui.view.Carrousel({ el: $('.carrousel'), video: true });
-
-        window.static_howto = new gfw.ui.view.Static();
-
-        window.router = new StaticRouter();
-        Backbone.history.start({ pushState: true });
-      });
-    });
-  </script>
-<% end %>
-
 
 <div class='inner'>
   <div class='header_block header_block_howto'>

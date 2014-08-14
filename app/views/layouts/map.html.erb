@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title><%= @title %> | Global Forest Watch</title>
+    <meta name="description" content="<%= @desc %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Map,cartodb,Global,Forest,Watch,monitoring,real-time">
+    <meta name="author" content="Simbiótica">
+
+    <meta name="DC.title" content="<%= @title %> | Global Forest Watch">
+    <meta property="og:title" content="<%= @title %> | Global Forest Watch">
+    <meta property="og:description" content="<%= @desc %>">
+    <meta property="og:type" content="Visualization">
+    <meta property="og:url" content="http://www.globalforestwatch.org/">
+
+    <meta name="google-translate-customization" content="af2414ea962843fc-f48b15cdb6a3ab9b-gd8c738d3a7ff42de-1a">
+
+    <%= favicon_link_tag 'favicon.ico' %>
+
+    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
+    <%= stylesheet_link_tag "map", :media => "all" %>
+    <%# javascript_include_tag "modernizr-2.6.2.min" %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
+
+    <%= render "shared/notice" %>
+    <%= render "shared/header" %>
+
+    <div class="layout-content">
+      <%= yield %>
+    </div>
+
+    <!-- Overlay for modals -->
+    <div class="backdrop"></div>
+
+    <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA" %>
+    <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js" %>
+    <%= requirejs_include_tag "map" %>
+    <%= render "shared/js_footer" %>
+
+  </body>
+</html>

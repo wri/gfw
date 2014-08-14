@@ -1,35 +1,33 @@
 <% content_for :js do %>
-  <script>
-    $(function() {
-      cdb.init(function() {
-        window.accept_terms = new gfw.ui.view.Terms();
-      });
-    });
+  <script id='window-template' type='text/x-underscore-template'>
+    <a href='#' class='close'></a>
+    <div class='content'></div>
   </script>
 <% end %>
 
-<% content_for :title do %>
-  <h1 class='header-title'><%= '<span>Global Forest Watch</span> Terms of Service'.html_safe %></h1>
-  <p class='header-description'><i class='scroll-icon'></i> Please click "I Agree" to continue</p>
+<% content_for :header do %>
+  <h1 class="header-title"><%= '<span>Global Forest Watch</span> Terms of Service'.html_safe %></h1>
+  <p class="header-description"><i class='scroll-icon'></i> Please click "I Agree" to continue</p>
 <% end %>
 
-<div contenteditable='false' class='terms_field'>
-  <%= render 'shared/terms' %>
-</div>
-
-<div class="terms_footer notranslate">
-  <%= link_to 'I agree', root_path, class: 'btn accept_btn dark_glow continue', :'data-source' => "accept_terms" %> <%= link_to 'I do not agree', root_path, class: 'btn cancel_btn dark_glow cancel' %>
-</div>
-
-<section class="section">
-  <div class="section-footer">
-    <p><%= link_to 'Why do I have to agree to a Terms of Service?', root_path, class: 'why_terms', :'data-source' => "why_accept_terms" %></p>
-    <p class='last'>For additional information about GFW, please send an email to <a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>
+<div class='inner container-inner'>
+  <div contenteditable='false' class='terms_field'>
+    <%= render 'terms' %>
   </div>
-</section>
 
-<div id='sources' class='sources'>
+  <div class="terms_footer notranslate">
+    <%= link_to 'I agree', root_path, class: 'btn accept_btn dark_glow continue', :'data-source' => "accept_terms" %> <%= link_to 'I do not agree', root_path, class: 'btn cancel_btn dark_glow cancel' %>
+  </div>
 
+  <section class="section">
+    <div class="section-footer">
+      <p><%= link_to 'Why do I have to agree to a Terms of Service?', root_path, class: 'why_terms', :'data-source' => "why_accept_terms" %></p>
+      <p class='last'>For additional information about GFW, please send an email to <a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>
+    </div>
+  </section>
+</div>
+
+<div id="sources" class="sources is-hidden">
   <ul class='sources'>
     <li id='accept_terms'>
       <h2 class='source_category_title notranslate'>Please confirm</h2>
@@ -45,7 +43,7 @@
       <h2 class='source_category_title notranslate'>Why accept?</h2>
       <div class='source_body'>
         <p class="notranslate">Why are we, the Global Forest Watch team, asking you, our user, to agree to a Terms of Service?</p>
-        <p class="notranslate">The answer is simple. This website and the open data within it is powerful. It exposes us to a huge risk.</p> 
+        <p class="notranslate">The answer is simple. This website and the open data within it is powerful. It exposes us to a huge risk.</p>
         <p class="notranslate">Without the proper legal protection, Global Forest Watch and our supporters could be vulnerable to lawsuits or other legal actions. This could diminish our capabilities and distract us from showing the world exactly where and when forest loss is happening.</p>
         <p class="notranslate">We seek to transform the way forests are managed and protected by governments, businesses, and communities around the world. We can’t do that if we’re sued and the website is taken down.</p>
         <p class="notranslate">So thank you, truly, for understanding why we’re asking you to agree to a Terms of Service. Please join us in making Global Forest Watch a powerful tool for people everywhere.</p>

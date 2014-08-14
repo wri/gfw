@@ -1,0 +1,24 @@
+.onoffswitch {
+  z-index: 999;
+  display: inline-block;
+  position: relative;
+  float: left;
+  width: 17px;
+  height: 10px;
+  background: #ddd;
+  @include border-radius(5px);
+
+  &.checked span {
+    left: 9px;
+  }
+}
+
+.onoffswitch span {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  @include border-radius(4px);
+}

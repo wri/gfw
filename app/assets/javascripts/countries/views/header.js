@@ -143,14 +143,16 @@ gfw.ui.view.leafletCanvasLayer = Backbone.View.extend({
 
 gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
-  el: $('.country-header'),
+  el: $('.country-header, .country-overview-wrapper-coolio'),
 
   events: {
     'change #areaSelector': '_onSelectArea',
     'click .selector-remove': '_navigateCountry',
     'click .umd_options_control' : '_onClickUMDOptions',
-    'click .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
-    'click .umdoptions_dialog ul li':  '_updateMapThreshold'
+    'click .item.settings' : '_onClickUMDOptions',
+    'click .country-header .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
+    'mouseup .country-header .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
+    'click .country-header .umdoptions_dialog ul li':  '_updateMapThreshold'
   },
 
   initialize: function(options) {
@@ -184,6 +186,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       loadArea: function(countryId, areaId) {
         var area = self.country.get('areas').where({ id_1: Number(areaId) })[0];
         self.area = area;
+        
         if (!self.map) {
           self._setAreaSelector();
           self._initMap(function() {
@@ -247,7 +250,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
   _onClickUMDOptions: function(e,tar_param) {
     e && e.preventDefault();
-
+    if ($(e.currentTarget).data('target')) {
+      tar_param = $(e.currentTarget).data('target');
+    }
     var $target = $('.umdoptions_dialog'),
         tar_param  = tar_param || '.country-sidenav';
     if ($target.length === 0) UmdOptions = new gfw.ui.view.UmdOptions({ target: tar_param});
@@ -284,6 +289,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
     if (area) {
       this.router.navigate('country/' + this.country.get('iso') + '/' + String(area.get('id_1')), {trigger: true});
+      this.$el.find('#url_analysis').attr('href', '/map/6/'+ area.attributes.bounds._northEast.lat + '/'+ area.attributes.bounds._northEast.lng + '/'+ area.attributes.iso + '-' + String(area.get('id_1')) +'/grayscale/loss/596');
     } else {
       this._navigateCountry();
     }
@@ -311,6 +317,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
   _updateData: function(area_id) {
     var url     = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + this.country.get('iso'),
         canopy  = config.canopy_choice || 10,
+        $cnp_op = $('.umd_options_control').find('.sidenav-icon'),
         $target = $('.tree-numbers'),
         that    = this;
 
@@ -319,6 +326,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     } else {
       url = url + '?thresh=' + canopy;
     }
+
+    if (canopy != 10) $cnp_op.addClass('no_def');
+    else $cnp_op.removeClass('no_def');
 
     $.ajax({
       url: url,
@@ -415,7 +425,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
   _displayArea: function(area) {
     var self = this;
-
+    this.$el.find('#url_analysis').attr('href', '/map/6/'+ area.attributes.bounds._northEast.lat + '/'+ area.attributes.bounds._northEast.lng + '/'+ area.attributes.iso + '-' + String(area.get('id_1')) +'/grayscale/loss/596');
     this.map.fitBounds(area.get('bounds'), {reset: true});
     this._removeCartodblayer();
 

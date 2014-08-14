@@ -1,0 +1,87 @@
+.widget-timeline .timeline-month {
+  height: 100%;
+
+  .tooltip {
+    margin-left: -8px;
+    text-transform: uppercase;
+  }
+
+  .play {
+    float: left;
+    width: 50px;
+    height: 100%;
+    border-right: 1px solid #666;
+    cursor: pointer;
+    @include box-sizing(border-box);
+    padding: 20px;
+
+    &:hover {
+      .play-icon, .stop-icon {
+        opacity: 0.9;
+      }
+    }
+
+    .play-icon {
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 6.5px 0 6.5px 10px;
+      border-color: transparent transparent transparent #444;
+    }
+
+    .stop-icon {
+      display: none;
+      width: 9px;
+      height: 9px;
+      background: #444;
+    }
+  }
+
+  .time {
+    float: left;
+    height: 100%;
+    width: 945px;
+    position: relative;
+  }
+
+  .slider .handle {
+    // fill: $cGreen1;
+    // stroke: darken($cGreen1, 20);
+    cursor: col-resize;
+  }
+
+  .domain {
+    stroke: $cGreen1;
+    stroke-width: 6;
+    shape-rendering: crispEdges;
+  }
+
+  .xaxis-years text {
+    font-size: 11px;
+    fill: #999;
+
+    &.active {
+      fill: $cGreen1;
+    }
+  }
+
+  .xaxis {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    .tick {
+      text {
+        pointer-events: none;
+        font-size: 9px;
+        fill: #bbb;
+        text-transform: uppercase;
+      }
+
+      &.highlight text {
+        fill: #111;
+      }
+    }
+  }
+
+}
