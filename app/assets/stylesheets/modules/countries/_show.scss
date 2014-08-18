@@ -333,7 +333,7 @@
               text-transform: uppercase;
               font-size: 14px;
               cursor: pointer;
-    
+
               .sidenav-icon {
                 display: inline-block;
                 position: absolute;
@@ -344,10 +344,10 @@
                   height: 15px;
                   width: 15px;
                 }
-                
+
                 &.no_def {
                   background-color: rgba(129, 149, 21, 0.6);
-                  box-shadow: 0px 0px 15px rgba(159, 186, 43,0.6);
+                  box-shadow: 0px 0px 15px rgba(159, 186, 43,0.9);
                   border-radius: 3px;
                 }
               }
@@ -1139,7 +1139,7 @@
   &.light {
     @include country-icons-sprite(country_info);
     height: 16px;
-    width: 16px;    
+    width: 16px;
   }
   &.dark {
     @include country-icons-sprite(country_info_dark);
