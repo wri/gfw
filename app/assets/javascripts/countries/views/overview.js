@@ -207,7 +207,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                 g_mha = 'Ha';
               }
 
-              $('#umd_'+val.iso+'').append('<span class="loss line"><span>'+ loss +' </span>'+ l_mha +' of loss</span><span class="gain line"><span>'+ gain+' </span>'+ g_mha +' of gain</span>')
+              $('#umd_'+val.iso+'').empty().append('<span class="loss line"><span>'+ loss +' </span>'+ l_mha +' of loss</span><span class="gain line"><span>'+ gain+' </span>'+ g_mha +' of gain</span>')
             },
           });
           markup_list += '<li>\
@@ -279,7 +279,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           $('.countries_list__header__minioverview').html('% Loss');
         }
 
-        $('.countries_list ul').append(markup_list);
+        $('.countries_list ul').empty().append(markup_list);
 
         that.model.set('class', null);
 
@@ -328,7 +328,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                   ex = data.years[data.years.length -1].extent,
                   lo = data.years[data.years.length -1].loss;
                   e_mha = l_mha = 'Mha';
-              
+
               if (ex.toString().length >= 7) {
                 ex = ((ex /1000)/1000).toFixed(2)
               } else if (ex.toString().length >= 4) {
@@ -348,7 +348,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               } else {
                 l_mha = 'Ha';
               }
-              $('#ext_'+val.iso+'').append('<span class="line"><span>'+ parseInt(ex).toLocaleString() +' </span>'+ e_mha +' of extent</span><span class="loss line"><span>'+ parseInt(lo).toLocaleString() +' </span>'+ l_mha +'  of loss</span>')
+              $('#ext_'+val.iso+'').empty().append('<span class="line"><span>'+ parseInt(ex).toLocaleString() +' </span>'+ e_mha +' of extent</span><span class="loss line"><span>'+ parseInt(lo).toLocaleString() +' </span>'+ l_mha +'  of loss</span>')
             },
           });
           markup_list += '<li>\
@@ -765,7 +765,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         vertical_m = this.vertical_m,
         m = this.m,
         x_scale = this.x_scale;
-        
+
         thresh = config.canopy_choice || 10;
 
     var grid_scale = d3.scale.linear()
