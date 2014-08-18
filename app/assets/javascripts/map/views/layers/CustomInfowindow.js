@@ -63,7 +63,6 @@ define([
           ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
           var wdpaid = {wdpaid : $(analyseButton).data('layer')};
           google.maps.event.trigger(this.map, 'click', wdpaid);
-          this.map.setZoom(6);
           this.remove();
         }, this));
       }

@@ -132,11 +132,12 @@ define([
           this._publishAnalysis(resource);
         },this));
       } else if (iso === 'wdpa') {
-          this.view.drawMultipolygon({
-            geometry: geojson,
-            properties: {},
-            type: 'Feature'
-          });
+        this.view.drawMultipolygon({
+          geometry: geojson,
+          properties: {},
+          type: 'Feature'
+        });
+        this.view._fitBounds(geojson.coordinates[0][0]);
       // Draw user polygon
       } else if (geojson) {
         resource = {geojson: JSON.stringify(geojson)};
@@ -144,7 +145,6 @@ define([
         this.view.drawPaths(this._geojsonToPath(geojson));
         this._publishAnalysis(resource);
       }
-
       // Append resource to analysis before the analysis resource is
       // created, this way the url doesnt blink until the topojsons
       // are loaded. We can find another way of doing this on the PlaceService.
@@ -181,6 +181,7 @@ define([
 
       if (!resource.wdpaid) {
         resource.period = '{0},{1}'.format(date[0].format('YYYY-MM-DD'), date[1].format('YYYY-MM-DD'));
+        this.view._fitBounds(JSON.parse(resource.geojson).coordinates[0]);
       } else {
         resource.wdpaid = resource.wdpaid.wdpaid;
       }
@@ -221,6 +222,7 @@ define([
       this.view.setEditable(overlay, false);
       this._publishAnalysis({geojson: JSON.stringify(geojson)});
     },
+
 
     /**
      * Deletes the current geometry from the map. This is triggered
