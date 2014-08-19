@@ -118,7 +118,6 @@ define([
         resource = {iso: iso.country};
         countryService.execute(iso.country, _.bind(function(results) {
           var geojson = topojson.feature(results.topojson, results.topojson.objects[0]);
-          console.log(geojson)
           this.view.drawMultipolygon(geojson);
           this._publishAnalysis(resource);
         },this));
@@ -127,7 +126,6 @@ define([
         resource = {iso: iso.country, id1: iso.region};
         regionService.execute(resource, _.bind(function(results) {
           var geojson = results.features[0];
-          console.log(geojson, resource)
           this.view.drawMultipolygon(geojson);
           this._publishAnalysis(resource);
         },this));
