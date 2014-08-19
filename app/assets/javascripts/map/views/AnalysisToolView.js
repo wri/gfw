@@ -60,6 +60,22 @@ define([
       this.$widgetBtn.addClass('disabled');
     },
 
+    _fitBounds: function(paths) {
+      if (! paths) return;
+      var lat, lng, lat_, lng_;
+      lat = lng = lat_ = lng_ = 0;
+
+      for (var z = 0; z < paths.length; z++) {
+        lat += _.toNumber(paths[z][1].toFixed(4));
+        lng += _.toNumber(paths[z][0].toFixed(4));
+      }
+
+      lat_ = lat/paths.length;
+      lng_ = lng/paths.length;
+      this.map.panTo(new google.maps.LatLng(lat_, lng_));
+      this.map.setZoom(7);
+    },
+
     /**
      * Star drawing manager and add an overlaycomplete
      * listener.
