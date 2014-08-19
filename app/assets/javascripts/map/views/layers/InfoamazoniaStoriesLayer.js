@@ -45,7 +45,8 @@ define([
         markerOptions = _.extend(this.options, {
           size: story.marker.iconSize,
           offset: [-story.marker.iconAnchor[0], -story.marker.iconAnchor[1]],
-          icon: story.marker.iconUrl
+          /*icon: story.marker.iconUrl*/
+          icon: '/assets/icons/infoamazonia_exclamation.png'
         });
 
         var marker = new CustomMarker(latlng, this.map, markerOptions);
