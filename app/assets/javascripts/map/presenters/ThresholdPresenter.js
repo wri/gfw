@@ -31,7 +31,7 @@ define([
       this.view = view;
 
       this.status = new (Backbone.Model.extend())({
-        layers: false,
+        layers: [],
         threshold: 10
       });
 
@@ -79,7 +79,7 @@ define([
     },
 
     /**
-     * Toggle threshold widget if any supported layer active.
+     * Toggle threshold widget if any supported layer is active.
      */
     _setVisibility: function() {
       this.view.model.set('hidden', this.status.get('layers').length === 0);
@@ -120,6 +120,11 @@ define([
       mps.publish('Place/update', [{go: false}]);
     },
 
+    /**
+     * Used by PlaceService to get the current threshold value.
+     *
+     * @return {Object} threshold
+     */
     getPlaceParams: function() {
       var p = {};
 

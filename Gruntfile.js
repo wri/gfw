@@ -46,7 +46,8 @@ module.exports = function(grunt) {
             requireConfigFile: '<%= root.test %>/config.js'
           },
           vendor: [
-            '<%= root.test %>/lib/mock-ajax.js'
+            '<%= root.test %>/lib/mock-ajax.js',
+            'http://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA'
           ]
         }
       }
