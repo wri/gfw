@@ -66,8 +66,13 @@
       margin-bottom: 3px;
       text-transform: uppercase;
       display: block;
+      .stats-threshold {
+        text-transform: lowercase;
+        font-weight: normal;
+        font-size: 9px;
+        margin-left: 4px;
+      }
     }
-
     .stats-count {
       font-weight: bold;
       strong {
