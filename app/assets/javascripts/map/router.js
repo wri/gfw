@@ -87,8 +87,6 @@ define([
 
   });
 
-  var router = new Router();
-
-  return router;
+  return Router;
 
 });

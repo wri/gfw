@@ -13,7 +13,7 @@ require([
   'services/CountryService',
   'services/DataService',
   '_string'
-], function ($, _, Class, Backbone, utils, router, mps, AnalysisService, CountryService, DataService) {
+], function ($, _, Class, Backbone, utils, Router, mps, AnalysisService, CountryService, DataService) {
 
   'use strict';
 
@@ -28,7 +28,7 @@ require([
       this._setWrapper();
 
       // For dev
-      window.router = router;
+      window.router = new Router();
       window.mps = mps;
       window.analysis = AnalysisService;
       window.countryService = CountryService;

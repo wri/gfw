@@ -6,10 +6,13 @@
 define([
   'Class',
   'underscore',
-  'mps',
-], function(Class, _, mps) {
+  'backbone',
+  'mps'
+], function(Class, _, Backbone, mps) {
 
   'use strict';
+
+  var StatusModel = Backbone.Model.extend({});
 
   var MapPresenter = Class.extend({
 
@@ -21,7 +24,11 @@ define([
      */
     init: function(view) {
       this.view = view;
-      this.currentThreshold = null;
+
+      this.status = new StatusModel({
+        threshold: null
+      });
+
       this._subscribe();
     },
 
@@ -31,9 +38,9 @@ define([
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
         if (place.params.name === 'map') {
-          this._setOptions(place.params);
+          this._setMapOptions(place.params);
           if (place.params && place.params.threshold) {
-            this.currentThreshold = place.params.threshold;
+            this.status.set('threshold', place.params.threshold);
           }
           this._setLayerSpec(place.layerSpec, place.params);
         }
@@ -72,7 +79,7 @@ define([
       }, this));
 
       mps.subscribe('Threshold/changed', _.bind(function(threshold) {
-        this.currentThreshold = threshold;
+        this.status.set('threshold', threshold);
       }, this));
 
       mps.publish('Place/register', [this]);
@@ -91,8 +98,8 @@ define([
         options.currentDate = [placeParams.begin, placeParams.end];
       }
 
-      if (this.currentThreshold) {
-        options.threshold = this.currentThreshold;
+      if (this.status.get('threshold')) {
+        options.threshold = this.status.get('threshold');
       }
 
       this.view.setLayers(layerSpec.getLayers(), options);
@@ -103,7 +110,7 @@ define([
      *
      * @param  {PlaceService} The place to go to
      */
-    _setOptions: function(params) {
+    _setMapOptions: function(params) {
       this.view.setOptions(params);
     },
 

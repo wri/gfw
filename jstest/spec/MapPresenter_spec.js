@@ -7,52 +7,74 @@ define([
   'presenters/MapPresenter',
 ], function(_, mps, MapPresenter) {
 
-  describe("The MapPresenter", function() {
-    // The MapView mock
-    var viewSpy = null;
-
-    // The presenter to test
+  describe("presenters/MapPresenter", function() {
     var presenter = null;
+    var viewSpy = {};
 
-    describe("Test responding to published events", function() {
-      var layers = {
-        forest2000: {}
-      };
-
-      var place = {
-        params: {
-          name: 'map',
-          baselayers: 'loss',
-          zoom: 8,
-          maptype: 'terrain',
-          lat: 1,
-          lng: 2,
-          layerSpec: {
-            getLayers: function() {
-              return layers;
-            },
-            getBaselayers: function() {}
-          }
-        }
-      };
-
+    // Status model is set correctly
+    describe("Status model", function() {
       beforeEach(function() {
-        // viewSpy = jasmine.createSpyObj(
-        //   'viewSpy',
-        //   ['setLayers', 'initMap']);
-        // presenter = new MapPresenter(viewSpy);
-        // mps.publish('Place/go', [place]);
+        presenter = new MapPresenter(viewSpy);
       });
 
-      it("Check Place/go handling", function() {
-        // expect(viewSpy.initMap).toHaveBeenCalled();
-        // expect(viewSpy.initMap).toHaveBeenCalledWith(place.params);
-        // expect(viewSpy.initMap.calls.count()).toEqual(1);
+      it('is defined', function() {
+        expect(presenter.status).toBeDefined();
+      });
 
-        // expect(viewSpy.setLayers).toHaveBeenCalled();
-        // expect(viewSpy.setLayers).toHaveBeenCalledWith(place.params.layerSpec.getLayers());
-        // expect(viewSpy.setLayers.calls.count()).toEqual(1);
+      it('correct default values', function() {
+        expect(presenter.status.toJSON()).toEqual({threshold: null});
       });
     });
+
+    // describe("Responding to published events", function() {
+    //   var layers = {
+    //     forest2000: {}
+    //   };
+
+    //   var place = {
+    //     params: {
+    //       name: 'map',
+    //       baselayers: 'loss',
+    //       zoom: 8,
+    //       maptype: 'terrain',
+    //       lat: 1,
+    //       lng: 2,
+    //     },
+    //     layerSpec: {
+    //       getLayers: function() {
+    //         return layers;
+    //       },
+    //       getBaselayers: function() {}
+    //     }
+    //   };
+
+    //   beforeEach(function() {
+    //     viewSpy = jasmine.createSpyObj('viewSpy', ['setLayers', 'initMap']);
+    //     presenter = new MapPresenter(viewSpy);
+
+    //     // viewSpy = jasmine.createSpyObj(
+    //     //   'viewSpy',
+    //     //   ['setLayers', 'initMap']);
+    //     // presenter = new MapPresenter(viewSpy);
+    //   });
+
+    //   it("on Place/go", function() {
+    //     // mps.publish('Place/go', [place]);
+    //     // expect(viewSpy.initMap).toHaveBeenCalled();
+    //     // expect(viewSpy.initMap).toHaveBeenCalledWith(place.params);
+    //     // expect(viewSpy.initMap.calls.count()).toEqual(1);
+
+    //     // expect(viewSpy.setLayers).toHaveBeenCalled();
+    //     // expect(viewSpy.setLayers).toHaveBeenCalledWith(place.params.layerSpec.getLayers());
+    //     // expect(viewSpy.setLayers.calls.count()).toEqual(1);
+    //   });
+
+    //   it('LayerNav/change', function() {
+    //     mps.publish('LayerNav/change', [place.layerSpec]);
+    //     expect(presenter._setLayerSpec).toHaveBeenCalled();
+    //   })
+
+    // });
+
   });
 });
