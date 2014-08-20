@@ -25,7 +25,7 @@ define([
       boxClosed: false
     },
 
-    events: function(){
+    events: function() {
       return _.extend({}, AnalysisResultsView.__super__.events, {
         'click .analysis-control-delete': '_deleteAnalysis',
         'click .download-links span' :'_toggleDownloads'
