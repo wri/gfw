@@ -13,7 +13,7 @@ define([
         Backbone.history.stop();
       });
 
-      it('router.map called when it has to', function() {
+      it('router.map called when only it has to', function() {
         spyOn(Router.prototype, 'map');
 
         var router = new Router();

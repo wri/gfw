@@ -4,7 +4,7 @@
 define([
   'jquery',
   'presenters/AnalysisToolPresenter',
-  'mps', 
+  'mps',
   'underscore',
   'helpers/api_responses',
 ], function($, Presenter, mps, _) {
@@ -28,11 +28,11 @@ define([
     return path;
   };
 
-  describe('AnalysisToolPresenter Suite', function() {   
+  describe('presenters/AnalysisToolPresenter', function() {
 
     describe('createGeoJson()', function() {
       it('correctly returns request id for valid config', function() {
-        
+
       });
     });
 

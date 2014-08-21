@@ -7,7 +7,7 @@ define([
   'presenters/TimelinePresenter'
 ], function(_, mps, TimelinePresenter) {
 
-  describe("The TimelinePresenter", function() {
+  describe("presenters/TimelinePresenter", function() {
     // The TimelineView mock
     var viewSpy = null;
 
