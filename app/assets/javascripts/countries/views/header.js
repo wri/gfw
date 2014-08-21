@@ -4,7 +4,7 @@ gfw.ui.model.layersOptions = Backbone.Model.extend({
 
   initialize: function(options) {
     options = options || {};
-    var threshold = (config.canopy_choice) ? config.canopy_choice : 10; 
+    var threshold = (config.canopy_choice) ? config.canopy_choice : 10;
     var layers = {
       'forest2000': {
         url: 'http://earthengine.google.org/static/hansen_2013/gfw_tree_loss_year_' + threshold + '/%z/%x/%y.png',
@@ -73,7 +73,7 @@ gfw.ui.view.leafletCanvasLayer = Backbone.View.extend({
           x = Math.pow(2,z) - Math.abs(x);
         }
       }
-      
+
       var url = self.url.replace('%z', z).replace('%x', x).replace('%y', y);
 
       xhr.onload = function () {
@@ -122,7 +122,7 @@ gfw.ui.view.leafletCanvasLayer = Backbone.View.extend({
             srcH = 256 / Math.pow(2, zsteps);
         ctx.clearRect(0, 0, 256, 256);
         ctx.drawImage(canvas.image, srcX, srcY, srcW, srcH, 0, 0, 256, 256);
-      
+
       } else {
         try {
           ctx.drawImage(canvas.image, 0, 0);
@@ -186,7 +186,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       loadArea: function(countryId, areaId) {
         var area = self.country.get('areas').where({ id_1: Number(areaId) })[0];
         self.area = area;
-        
+
         if (!self.map) {
           self._setAreaSelector();
           self._initMap(function() {
@@ -215,7 +215,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
       loadBox: function(countryId, box) {
         var target = $('.country-' + box);
-        
+
         target.find('.info').remove();
         target.fadeIn()
       }
@@ -308,7 +308,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       .done(function(data) {
         var geojson = L.geoJson(JSON.parse(data.rows[0].bounds)),
             bounds = geojson.getBounds();
-        
+
         self.country.set('bounds', bounds);
         self._renderMap(callback);
       });
@@ -344,13 +344,13 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
         $target.find('.tree-cover .amount').html( amount );
         $target.find('.total-area .amount').html(data.years[data.years.length -1].extent_perc.toFixed(2));
-      
+
         that._drawLossAndGain(data.years);
       },
       error: function(status, error) {
         $target.find('.tree-cover .amount').html( 'N/A' );
         $target.find('.total-area .amount').html( 'N/A' );
-        
+
         that._drawLossAndGain();
       }
     });
@@ -450,7 +450,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
             line-color: #373442;\
             line-width: 1;\
             line-opacity: 1;\
-          }"      
+          }"
       }, {
         sql: "SELECT * FROM gadm_1_all",
         cartocss: "\
@@ -480,7 +480,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     var self = this;
 
     this.cartodbLayer = layer;
-    
+
     this.cartodbLayer.on('loading' , function() {
       self.$map.removeClass('loaded');
       self.forestLayer.setOpacity(0);
@@ -512,7 +512,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       .append('svg:svg')
       .attr('width', width)
       .attr('height', height);
-    
+
     $graph.removeClass('ghost');
     var data = years_data;
     var data_ = [];
@@ -584,7 +584,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       .attr('height', 1)
       .attr('width', width)
       .style('stroke', 'transparent')
-      .style("stroke-width", "5")
+      .style("stroke-width", "3")
       .style('fill', '#ccc');
 
     gainLine
