@@ -178,8 +178,11 @@ define([
       resource.dataset = this.datasets[this.status.get('baselayer').slug];
 
       if (!resource.wdpaid && !resource.iso) {
-        resource.period = '{0},{1}'.format(date[0].format('YYYY-MM-DD'), date[1].format('YYYY-MM-DD'));
         this.view._fitBounds(JSON.parse(resource.geojson).coordinates[0]);
+      }
+
+      if (!resource.wdpaid) {
+        resource.period = '{0},{1}'.format(date[0].format('YYYY-MM-DD'), date[1].format('YYYY-MM-DD'));
       } else if (resource.wdpaid) {
         resource.wdpaid = resource.wdpaid.wdpaid;
       }
