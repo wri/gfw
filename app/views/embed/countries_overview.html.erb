@@ -15,13 +15,13 @@
   <%= javascript_include_tag "countries" %>
 
   <script>
-    var countries = <%= @countries.to_json.html_safe %>;
+    // var countries = <%= @countries.to_json.html_safe %>;
 
-    $(function() {
-      cdb.init(function() {
-        window.countries_overview = new gfw.ui.view.CountriesEmbedOverview();
-      });
-    });
+    // $(function() {
+    //   cdb.init(function() {
+    //     window.countries_overview = new gfw.ui.view.CountriesEmbedOverview();
+    //   });
+    // });
   </script>
 <% end %>
 
