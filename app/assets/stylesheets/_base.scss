@@ -17,6 +17,9 @@ body {
   }
 
   &.embed {
+    #tpglt-nav-wrapper {
+      display: none
+    }
     background: none;
     h1 {
       font-size: 32px;
