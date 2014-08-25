@@ -1412,3 +1412,14 @@
   }
 
 }
+.embed .country-show {
+  font-family: $font-regular;
+  color: $default-color;
+  margin-top: -84px;
+
+  .embed-country-title{
+    margin-top: 100px;
+    text-align: center;
+    font-size: 2em;
+  }
+}
