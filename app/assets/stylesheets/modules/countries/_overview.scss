@@ -748,6 +748,9 @@
     width: auto;
     margin: 0;
     padding: 0;
+    .countries_show & {
+      width: 790px;
+    }
   }
   .share_control, .item {
     min-width: 90px;
