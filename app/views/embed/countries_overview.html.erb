@@ -12,7 +12,7 @@
 <% end %>
 
 <% content_for :js do %>
-  <%= javascript_include_tag "embed_countries" %>
+  <%= javascript_include_tag "countries" %>
 
   <script>
     var countries = <%= @countries.to_json.html_safe %>;
