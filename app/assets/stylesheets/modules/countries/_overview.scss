@@ -408,6 +408,7 @@
 }
 
 .tooltip {
+  visibility: hidden;
   position: absolute;
   z-index: 500;
   padding: 20px 10px;
