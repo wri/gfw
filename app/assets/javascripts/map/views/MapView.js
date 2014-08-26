@@ -75,7 +75,7 @@ define([
       forest2000: Forest2000Layer,
       intact_forest: IntactForestLayer,
       degradation_2000: IntactForestLayer,
-      degradation_2000_to_2013: IntactForestLayer,
+      ifl_2013_deg: IntactForestLayer,
       pantropical: PantropicalLayer,
       idn_primary: IdnPrimaryLayer,
       logging: LoggingLayer,
