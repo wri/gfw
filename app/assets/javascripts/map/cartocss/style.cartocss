@@ -164,9 +164,11 @@
     line-width: 1;
     line-opacity: 1;
   }
-  [layer='degradation_2000'] {
-     polygon-opacity: 0.7;
-     polygon-fill: #FF2900;
+  [layer='ifl_2000'] {
+    polygon-opacity: 0.7;
+    polygon-fill: #136400;
+    line-width: 0;
+    line-opacity: 1;
   }
 
   [layer='ifl_2013_deg'] {

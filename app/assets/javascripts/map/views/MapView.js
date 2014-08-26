@@ -74,7 +74,7 @@ define([
       fires: FiresLayer,
       forest2000: Forest2000Layer,
       intact_forest: IntactForestLayer,
-      degradation_2000: IntactForestLayer,
+      ifl_2000: IntactForestLayer,
       ifl_2013_deg: IntactForestLayer,
       pantropical: PantropicalLayer,
       idn_primary: IdnPrimaryLayer,
