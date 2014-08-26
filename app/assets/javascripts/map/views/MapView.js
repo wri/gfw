@@ -23,6 +23,8 @@ define([
   'views/layers/FiresLayer',
   'views/layers/Forest2000Layer',
   'views/layers/IntactForestLayer',
+  'views/layers/IntactForestLayer2000',
+  'views/layers/IntactForestLayer2013',
   'views/layers/PantropicalLayer',
   'views/layers/IdnPrimaryLayer',
   'views/layers/LoggingLayer',
@@ -38,7 +40,7 @@ define([
   'views/layers/InfoamazoniaStoriesLayer'
 ], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, landsatMaptype,
   UMDLossLayer, ForestGainLayer, FormaLayer, FormaCoverLayer, ImazonLayer, ImazonCoverLayer, ModisLayer, ModisCoverLayer, FiresLayer, Forest2000Layer,
-  IntactForestLayer, PantropicalLayer, IdnPrimaryLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
+  IntactForestLayer, IntactForestLayer2000, IntactForestLayer2013, PantropicalLayer, IdnPrimaryLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
   ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, LandRightsLayer, UserStoriesLayer, MongabayStoriesLayer, InfoamazoniaStoriesLayer) {
 
   'use strict';
@@ -74,6 +76,8 @@ define([
       fires: FiresLayer,
       forest2000: Forest2000Layer,
       intact_forest: IntactForestLayer,
+      ifl_2000: IntactForestLayer2000,
+      ifl_2013_deg: IntactForestLayer2013,
       pantropical: PantropicalLayer,
       idn_primary: IdnPrimaryLayer,
       logging: LoggingLayer,
