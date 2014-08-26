@@ -172,12 +172,4 @@
     line-opacity: 1;
   }
 
-  [layer='ifl_2013_deg'] {
-   polygon-opacity: 0.7;
-   polygon-fill: #FF2900;
-  }
-
-  [layer='ifl_2013_deg'][deg=1] {
-     polygon-fill: #136400;
-  }
 }

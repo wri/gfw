@@ -5,14 +5,16 @@
  */
 define([
   'views/layers/class/CartoDBLayerClass',
-], function(CartoDBLayerClass) {
+  'text!cartocss/intact2013.cartocss'
+], function(CartoDBLayerClass, intact2013CartoCSS) {
 
   'use strict';
 
   var IntactForestLayer2013 = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT *, \'{tableName}\' as layer, \'{tableName}\' as name FROM {tableName}'
+      sql: 'SELECT *, \'{tableName}\' as layer, \'{tableName}\' as name FROM {tableName}',
+      cartocss: intact2013CartoCSS
     },
 
   });
