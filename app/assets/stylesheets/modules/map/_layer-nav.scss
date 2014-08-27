@@ -128,6 +128,15 @@ $stories-color: rgb(242, 178, 87);
         margin-top: 3px;
         padding-left: 23px;
         display: block;
+        label {
+          float: none;
+          font-weight: normal;
+          color: #CCC;
+          cursor: pointer;
+          font-size: 11px;
+          margin: 5px 0px;
+          display: inline-block;
+        }
       }
 
       .onoffradio {
