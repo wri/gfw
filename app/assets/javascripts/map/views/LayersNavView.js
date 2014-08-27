@@ -78,6 +78,15 @@ define([
     _toggleLayer: function(event) {
       var layerSlug = $(event.currentTarget).data('layer');
 
+      if ($(event.currentTarget).hasClass('ifl')) {
+        event && event.stopPropagation();
+        var $elem = $(event.currentTarget);
+        for (var i=0;i < $elem.siblings().length; i++) {
+          if ($($elem.siblings()[i]).hasClass('selected'))
+            this.presenter.toggleLayer($($elem.siblings()[i]).data('layer'));
+        }
+        $elem.parents('li').addClass('selected').data('layer' , $elem.data('layer'))
+      }
       this.presenter.toggleLayer(layerSlug);
     },
 
