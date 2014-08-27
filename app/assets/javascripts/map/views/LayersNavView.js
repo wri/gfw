@@ -79,10 +79,13 @@ define([
       var layerSlug = $(event.currentTarget).data('layer');
 
       if ($(event.currentTarget).hasClass('ifl')) {
-        for (var i=0;i < $(event.currentTarget).siblings().length; i++){
-          if ($($(event.currentTarget).siblings()[i]).hasClass('selected'))
-            this.presenter.toggleLayer($($(event.currentTarget).siblings()[i]).data('layer'));
+        event && event.stopPropagation();
+        var $elem = $(event.currentTarget);
+        for (var i=0;i < $elem.siblings().length; i++) {
+          if ($($elem.siblings()[i]).hasClass('selected'))
+            this.presenter.toggleLayer($($elem.siblings()[i]).data('layer'));
         }
+        $elem.parents('li').addClass('selected').data('layer' , $elem.data('layer'))
       }
       this.presenter.toggleLayer(layerSlug);
     },

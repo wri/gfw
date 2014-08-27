@@ -136,6 +136,7 @@ $stories-color: rgb(242, 178, 87);
           font-size: 11px;
           margin: 5px 0px;
           display: inline-block;
+          &.selected { color: #777; }
         }
       }
 
