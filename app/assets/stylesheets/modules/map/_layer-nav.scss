@@ -135,7 +135,14 @@ $stories-color: rgb(242, 178, 87);
           font-size: 11px;
           margin: 5px 0px;
           display: inline-block;
-          &.selected { color: #777; }
+          width: 45px;
+          &.selected {
+            color: #666;
+            font-weight: 500;
+            input {
+              display: none;
+            }
+          }
           input {
             cursor: pointer;
           }
