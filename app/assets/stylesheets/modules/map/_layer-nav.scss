@@ -139,12 +139,10 @@ $stories-color: rgb(242, 178, 87);
           &.selected {
             color: #666;
             font-weight: 500;
-            input {
-              display: none;
-            }
           }
           input {
             cursor: pointer;
+            background-image: url('/assets/svg/dragger.svg');
           }
         }
       }

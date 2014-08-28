@@ -51,8 +51,10 @@ define([
           var isBaselayer = (layer.category_slug === 'forest_clearing');
 
           $li.addClass('selected');
-          $li.find('input').prop('checked', false);
-          $li.find('[data-layer=" '+ $li.data('layer') +' "] input').prop('checked', true);
+          if ($li.prop('tagName') === 'LI') {
+            $li.find('input').prop('checked', false);
+            $li.find('[data-layer="'+ $li.data('layer') +'"] input').prop('checked', true);
+          }
           $toggle.addClass('checked');
           $layerTitle.css('color', layer.title_color);
 
