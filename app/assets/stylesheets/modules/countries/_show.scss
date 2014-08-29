@@ -142,6 +142,21 @@
           color: lighten(#73707D, 10);
         }
       }
+      .country-indepth__bubble {
+        position: relative;
+        background: $cGreen;
+        width: 160px;
+        top: -82px;
+        display: inline-block;
+        left: 447px;
+        padding: 6px;
+        font-size: 14px;
+        text-align: center;
+        border-radius: 3px;
+        a {
+          color: #fff;
+        }
+      }
     } // country-title
 
     .country-details {
