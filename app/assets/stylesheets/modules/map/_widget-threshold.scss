@@ -1,0 +1,165 @@
+.widget-threshold {
+  .widget-box {
+    left: 22px;
+    top: 170px;
+    width: 440px;
+    padding: 20px;
+  }
+
+  .widget-btn {
+    left: 15px;
+    top: 130px;
+    background-color: transparent;
+    border: none;
+    box-shadow: 0 0 0;
+    width: 37px;
+    height: 37px;
+    @include home-icons-sprite(icon_options);
+    &:hover  { @include home-icons-sprite(icon_options_hover); }
+    &:active { @include home-icons-sprite(icon_options_active); }
+  }
+
+  .widget-title {
+    color: $cGreen1;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+
+  .widget-description {
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+
+    span {
+      display: block;
+      font-size: 11px;
+      margin-top: 5px;
+      .source {
+        display: block;
+        position: absolute;
+        top: 87px;
+        right: 22px;
+        width: 10px;
+        height: 10px;
+        @include home-icons-sprite(information);
+      }
+
+    }
+  }
+
+  .trees {
+    width: 100%;
+    margin-top: 20px;
+    height: 60px;
+
+    .tree-icon {
+      width: 25px;
+      height: 41px;
+      margin-top: 19px;
+      float: left;
+      background: image-url('backgrounds/map_options_tree-1.png') no-repeat;
+    }
+
+    .forest-icon {
+      float: right;
+      width: 91px;
+      height: 60px;
+      background: image-url('backgrounds/map_options_tree-2.png') no-repeat;
+    }
+  }
+
+
+  .slider-labels {
+    margin-top: 8px;
+    clear: both;
+
+    li {
+      cursor: pointer;
+      width: 11.11%;
+      color: $cGreen1;
+      font-size: 10px;
+      display: inline-block;
+      float: left;
+
+      &:first-child,
+      &:last-child {
+        color: #666;
+      }
+    }
+  }
+
+  .dots{
+    width: 340px;
+    height: 2px;
+    background: image-url('/assets/icons/point.png') repeat-x 1px center;
+    position: relative;
+    margin-top: 0;
+    float: left;
+    top: 18px;
+  }
+
+  .slider-container {
+    margin-top: 10px;
+    position: relative;
+    height: 20px;
+    width: 340px;
+    margin-left: 11.11%;
+    display: inline-block;
+    .slider {
+      width: 305px;
+      -webkit-appearance: none;
+      background: transparent;
+      cursor: pointer;
+      position: absolute;
+      z-index: 1;
+
+      &:focus {
+        outline: 0;
+      }
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        @include home-icons-sprite(timeline_handler);
+        background-color: $cGreen1;
+        width: 14px;
+        height: 14px;
+        cursor: col-resize;
+        border-radius: 3px;
+      }
+    }
+
+    .visible-range {
+      position: absolute;
+      right: 0;
+      top: 4px;
+      display: block;
+      background: #A2BC28;
+      width: 97%;
+      height: 6px;
+      pointer-events:none;
+      min-width: 60px;
+      box-shadow: 1px 0 3px #cccccc;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+      max-width: 330px;
+    }
+  }
+
+  .close {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 16px;
+    color: #bbb;
+
+    &:hover {
+      color: #999;
+    }
+  }
+}

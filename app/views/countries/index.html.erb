@@ -1,15 +1,9 @@
-<% content_for :title do %>
-  <h1 class="header-title big"><%= t('.title') %></h1>
+<% content_for :header do %>
+  <h1 class="header-title big"><%=t 'countries.index.title' %></h1>
 <% end %>
 
 <% content_for :js do %>
-  <script>
-    $(function() {
-      cdb.init(function() {
-        window.countries_index = new gfw.ui.view.CountriesIndex();
-      });
-    });
-  </script>
+  <%= render "countries_templates" %>
 <% end %>
 
 <div class="inner">

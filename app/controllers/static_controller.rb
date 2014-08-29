@@ -2,9 +2,19 @@ class StaticController < ApplicationController
   skip_before_filter :check_terms, :except => [:data]
   skip_before_filter :check_browser
 
-  layout 'old', :only => [:old, :terms, :accept_terms]
+  def terms
+    @title = 'Terms of Service'
+  end
 
-  def accept_terms
-    session[:return_to] = params[:return_to] unless params[:return_to].nil?
+  def about
+    @title = I18n.translate 'static.about.title'
+  end
+
+  def data
+    @title = 'Data'
+  end
+
+  def howto
+    @title = 'How to'
   end
 end

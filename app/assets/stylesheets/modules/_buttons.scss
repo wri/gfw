@@ -1,0 +1,94 @@
+.btn {
+  @include inline-block();
+  border: 1px solid #839C26;
+  padding: 14px 34px;
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  text-decoration: none;
+  text-transform: uppercase;
+  background: #9bb251;
+  cursor: pointer;
+  outline: none;
+  @extend .sans-serif;
+  @include border-radius(2px);
+
+  &:hover {
+    color: #fff;
+  }
+
+  &.red {
+    background: #AC2E25;
+    border-color: #8B1F16;
+  }
+
+  &.dark_glow:hover {
+    @include box-shadow(0 0 6px 1px rgba(#000, .4));
+  }
+
+  &.darker_glow:hover {
+    @include box-shadow(0 0 6px 1px rgba(#000, .8));
+  }
+
+  &.disabled {
+    @include opacity(.5);
+  }
+}
+
+// Styles
+.btn-default {
+  background: #fff;
+  border: 1px solid #CCCCCC;
+  color: #666666;
+
+  &:hover {
+    color: #666666;
+    background: #f2f2f2;
+  }
+}
+
+.btn-primary {
+}
+
+// Sizes
+.btn-lg {
+}
+
+.btn-sm {
+  padding: 8px 15px;
+  .spinner {
+    display: none;
+    width: 20px;
+    height: 10px;
+    background: url(/assets/icons/spinner.gif) no-repeat;
+    opacity: 0.7;
+    background-size: 64%;
+    right: -5px;
+    position: relative;
+    &.inline-block {
+      display: inline-block;
+    }
+  }
+}
+
+.btn-xs {
+}
+
+// Disabled
+.btn.disabled {
+  pointer-events: none;
+}
+
+
+//////
+.accept_btn,
+.cancel_btn {
+  margin: 0;
+  padding: 13px 0;
+  width: 180px;
+  text-align: center;
+}
+
+.cancel_btn {
+  margin-left: 20px;
+}

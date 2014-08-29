@@ -7,15 +7,19 @@
       left: 10px;
     }
   </style>
+
+<% end %>
+<% content_for :css do %>
+  <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
 <% end %>
 
 <% content_for :js do %>
-  <%= javascript_include_tag "embed_countries" %>
+  <%= javascript_include_tag "countries" %>
 
   <script>
     $(function() {
       cdb.init(function() {
-        window.countries_show = new gfw.ui.view.CountriesEmbedShow({
+        window.countries_show = new gfw.ui.view.CountriesShow({
           iso: "<%= @country['iso'] %>"
         });
       });
@@ -27,8 +31,9 @@
   <a href="/" class="header-logo">Global Forest Watch</a>
 
   <div class="header-inner inner">
-    <h1 class="header-title big"><%= @country['name'] %></h1>
+    <!-- <h1 class="header-title big"><%= @country['name'] %></h1> -->
+    <span title="Settings" class="country-icons-settings_engine umd_options_control" data-tip="Change UMD layer intensity"></span>
   </div>
 <% end %>
 
-<%= render 'shared/circles' %>
+<%= render 'country' %>

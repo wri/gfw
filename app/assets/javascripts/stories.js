@@ -1,3 +1,4 @@
+//= require jquery/dist/jquery
 //= require jquery-migrate-1.2.1.min
 //= require jquery-ui-1.10.4.custom.min
 //= require load-image.min
@@ -5,10 +6,14 @@
 //= require jquery.fileupload
 //= require jquery.fileupload-process
 //= require jquery.fileupload-image
+//= require geojson
+
+//= require gfw
+//= require gfw/helpers
 //= require gfw/ui/carrousel
 
-
 gfw.ui.view.StoriesEdit = cdb.core.View.extend({
+
   el: document.body,
 
   events: {
@@ -153,7 +158,7 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
     var $searchInput = $('.map-search-input');
 
     // Load map
-    this.map = new google.maps.Map(document.getElementById('stories_map'), 
+    this.map = new google.maps.Map(document.getElementById('stories_map'),
       _.extend({}, config.MAPOPTIONS, { zoomControl: true }));
 
     // Listen to map loaded
@@ -260,5 +265,15 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
     }
 
     return this;
+  }
+});
+
+$(document).ready(function() {
+
+  if ($('.is-show-action').length > 0) {
+    window.carrousel = new gfw.ui.view.Carrousel();
+  }
+  if ($('.is-new-action').length > 0 || $('.is-edit-action').length > 0) {
+    window.stories_edit = new gfw.ui.view.StoriesEdit();
   }
 });

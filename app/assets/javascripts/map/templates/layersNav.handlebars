@@ -1,0 +1,188 @@
+<div class="disable-selection">
+  <ul class="categories-list">
+
+    <li class="forest-change">
+      <span class="category-name">FOREST CHANGE</span>
+
+      <div class="layers-nav">
+        <div class="layers-nav-header">
+          <div class="category-icon"></div>
+          <span class="category-name">FOREST CHANGE</span>
+        </div>
+        <ul class="layers-list">
+          <li class="layer" data-layer="umd_tree_loss_gain">
+            <span class="onoffradio"><span></span></span>
+            <span class="layer-title">UMD tree cover loss<a href='#' data-source='umd_tree_loss_gain' class='source'></a></span>
+          </li>
+          <li class="layer" data-layer="forestgain">
+            <span class="onoffradio"><span></span></span>
+            <span class="layer-title">UMD tree cover gain<a href='#' data-source='umd_tree_loss_gain' class='source'></a></span>
+          </li>
+          <li class="layer" data-layer="forma">
+            <span class="onoffradio"><span></span></span>
+            <span class="layer-title">FORMA alerts<a href='#' data-source='forma' class='source'></a></span>
+            <span class="layer-info">(monthly, 500m, humid tropics)</span>
+          </li>
+          <li class="layer" data-layer="imazon">
+            <span class="onoffradio"><span></span></span>
+            <span class="layer-title">Imazon SAD alerts<a href='#' data-source='imazon' class='source'></a></span>
+            <span class="layer-info">(monthly, 250m, Brazilian Amazon)</span>
+          </li>
+          <li class="layer" data-layer="modis">
+            <span class="onoffradio"><span></span></span>
+            <span class="layer-title">QUICC alerts<a href='#' data-source='modis' class='source'></a></span>
+            <span class="layer-info">(quarterly, 5km, &lt;37 degrees north)</span>
+          </li>
+          </li>
+          <li class="layer" data-layer="fires">
+            <span class="onoffradio"><span></span></span>
+            <span class="layer-title">NASA active fires<a href='#' data-source='fires' class='source'></a></span>
+            <span class="layer-info">(past 7 days, 1km, global))</span>
+          </li>
+          <li class="layer" data-layer="nothing">
+            <span class="onoffradio"><span></span></span>
+            <span class="layer-title">None</span>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="forest-cover">
+      <span class="category-name">FOREST COVER</span>
+
+      <div class="layers-nav">
+        <div class="layers-nav-header">
+          <div class="category-icon"></div>
+          <span class="category-name">FOREST COVER</span>
+        </div>
+        <ul class="layers-list">
+          <li class="layer" data-layer="forest2000">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Tree cover extent<a href='#' data-source='forest2000' class='source'></a></span>
+          </li>
+          <li class="layer ifl" data-layer="ifl_2013_deg">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Intact forest landscapes<a href='#' data-source='intact_forest' class='source'></a></span>
+            <span class="layer-info">
+              <label data-layer="ifl_2000" class="layer ifl">
+                <input type="radio" name="intactType" />2000
+              </label>
+              <label data-layer="ifl_2013_deg" class="layer ifl">
+                <input type="radio" name="intactType" />2013
+              </label>
+            </span>
+          </li>
+          {{!-- <li class="layer ifl" data-layer="ifl_2013_deg">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Intact forest landscapes 2013<a href='#' data-source='intact_forest_2013' class='source'></a></span>
+          </li> --}}
+          <li class="layer" data-layer="pantropical">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Tropical forest carbon stock<a href='#' data-source='pantropical' class='source'></a></span>
+          </li>
+          <li class="layer" data-layer="idn_primary">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Indonesia primary forest<a href='#' data-source='idn_primary' class='source'></a></span>
+          </li>
+          </ul>
+      </div>
+    </li>
+
+    <li class="forest-use">
+      <span class="category-name">FOREST USE</span>
+
+      <div class="layers-nav">
+        <div class="layers-nav-header">
+          <div class="category-icon"></div>
+          <span class="category-name">FOREST USE</span>
+        </div>
+        <ul class="layers-list">
+          <li class="layer" data-layer="logging">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Logging<a href='#' data-source='logging' class='source'></a></span>
+          </li>
+          <li class="layer" data-layer="mining">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Mining<a href='#' data-source='mining' class='source'></a></span>
+          </li>
+          <li class="layer" data-layer="oil_palm">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Oil palm<a href='#' data-source='oil_palm' class='source'></a></span>
+          </li>
+          <li class="layer" data-layer="wood_fiber_plantations">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Wood fiber plantations<a href='#' data-source='wood_fiber_plantations' class='source'></a></span>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="conservation">
+      <span class="category-name">CONSERVATION</span>
+
+      <div class="layers-nav">
+        <div class="layers-nav-header">
+          <div class="category-icon"></div>
+          <span class="category-name">CONSERVATION</span>
+        </div>
+        <ul class="layers-list">
+          <li class="layer" data-layer="protected_areas">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Protected areas<a href='#' data-source='protected_areas' class='source'></a></span>
+          </li>
+          <li class="layer" data-layer="biodiversity_hotspots">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Biodiversity hotspots<a href='#' data-source='biodiversity_hotspots' class='source'></a></span>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="people">
+      <span class="category-name">PEOPLE</span>
+
+      <div class="layers-nav">
+        <div class="layers-nav-header">
+          <div class="category-icon"></div>
+          <span class="category-name">PEOPLE</span>
+        </div>
+        <ul class="layers-list">
+          <li class="layer" data-layer="resource_rights">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Resource Rights<a href='#' data-source='resource_rights' class='source'></a></span>
+          </li>
+          <li class="layer" data-layer="land_rights">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Land Rights<a href='#' data-source='land_rights' class='source'></a></span>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <li class="stories">
+      <span class="category-name">STORIES</span>
+
+      <div class="layers-nav">
+        <div class="layers-nav-header">
+          <div class="category-icon"></div>
+          <span class="category-name">STORIES</span>
+        </div>
+        <ul class="layers-list">
+          <li class="layer" data-layer="user_stories">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">User stories<a href='#' data-source='user_stories' class='source'></a></span>
+          </li>
+          <li class="layer" data-layer="mongabay">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Mongabay stories<a href='#' data-source='mongabay' class='source'></a></span>
+          </li>
+          <li class="layer" data-layer="infoamazonia">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Infoamazonia stories</span>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+  </ul>
+</div>

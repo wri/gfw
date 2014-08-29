@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+
   helper_method :watch_cookie?
 
   protect_from_forgery with: :exception
@@ -8,6 +9,11 @@ class ApplicationController < ActionController::Base
 
   def not_found
     raise ActionController::RoutingError.new('Not Found')
+  end
+
+  def accept_terms
+    session[:return_to] = params[:return_to] unless params[:return_to].nil?
+    @title = 'Terms of Service'
   end
 
   private
