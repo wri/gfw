@@ -6,5 +6,5 @@
 }
 
 #ifl_2013_deg[deg=1] {
-  polygon-fill:  #FF2900;
+  polygon-fill:  rgb(152, 155, 5);
 }
