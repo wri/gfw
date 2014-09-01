@@ -32,6 +32,16 @@ define([], function () {
       'lightness': 90
     }]
   }, {
+    'featureType': 'landscape',
+    'elementType': 'labels',
+    'stylers': [
+      { 'saturation': 50 },
+      { 'invert_lightness': true },
+      { 'lightness': 50 },
+      { 'color': '#555555' },
+      { 'weight': 1.2 }
+    ]
+  }, {
     'featureType': 'administrative',
     'stylers': [{
       'saturation': -100
