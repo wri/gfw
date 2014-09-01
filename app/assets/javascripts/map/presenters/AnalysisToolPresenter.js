@@ -57,8 +57,8 @@ define([
         var p = place.params;
         this._setBaselayer(place.layerSpec.getBaselayers());
         this._setCurrentDate([p.begin, p.end]);
-        this._drawFromUrl(p.iso, p.geojson);
         this.status.set('threshold', p.threshold);
+        this._drawFromUrl(p.iso, p.geojson);
       }, this));
 
       mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
@@ -147,6 +147,7 @@ define([
           properties: {},
           type: 'Feature'
         });
+        // TODO => these fit bounds should publish 'map/fitbounds'
         this.view._fitBounds(geojson.coordinates[0][0]);
       // Draw user polygon
       } else if (geojson) {
@@ -235,7 +236,6 @@ define([
       this.view.setEditable(overlay, false);
       this._publishAnalysis({geojson: JSON.stringify(geojson)});
     },
-
 
     /**
      * Deletes the current geometry from the map. This is triggered

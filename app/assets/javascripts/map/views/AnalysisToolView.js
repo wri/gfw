@@ -180,6 +180,7 @@ define([
      */
     drawMultipolygon: function(geojson) {
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
+      // TODO => multipolygon, and geoson? wtf
       this.presenter.setMultipolygon(multipolygon, geojson);
       this.$widgetBtn.addClass('disabled');
     },
