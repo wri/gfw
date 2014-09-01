@@ -11,6 +11,7 @@ define([
   'backbone',
   'mps',
   'amplify',
+  'utils',
   'services/PlaceService',
   'views/LayersNavView',
   'views/MapView',
@@ -22,7 +23,7 @@ define([
   'views/AnalysisToolView',
   'views/AnalysisResultsView',
   'views/ShareView',
-], function($, _, Backbone, mps, amplify, PlaceService, LayersNavView, MapView, LegendView,
+], function($, _, Backbone, mps, amplify, utils, PlaceService, LayersNavView, MapView, LegendView,
     ThresholdView, SearchboxView, MaptypeView, TimelineView, AnalysisToolView, AnalysisResultsView,
     ShareView) {
 
@@ -31,7 +32,7 @@ define([
   var Router = Backbone.Router.extend({
 
     routes: {
-      'map(/:zoom)(/:lat)(/:lng)(/:iso)(/:maptype)(/:baselayers)(/:sublayers)(/)': 'map',
+      'map(/:zoom)(/:lat)(/:lng)(/:iso)(/:maptype)(/:baselayers)(/:sublayers)(/)': 'map'
     },
 
     initialize: function() {

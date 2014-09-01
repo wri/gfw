@@ -7,12 +7,12 @@ define([
   'presenters/MapPresenter',
 ], function(_, mps, MapPresenter) {
 
-  describe("presenters/MapPresenter", function() {
+  describe("MapPresenter", function() {
     var presenter = null;
     var viewSpy = {};
 
     // Status model is set correctly
-    describe("Status model", function() {
+    describe("StatusModel", function() {
       beforeEach(function() {
         presenter = new MapPresenter(viewSpy);
       });

@@ -24,11 +24,13 @@ require([
     init: function() {
       _.bindAll(this, '_setWrapper', '_scrollBottom', '_setLogoPosition');
       this._cartodbHack();
+
+      window.router = new Router();
       this._initializeApp();
+
       this._setWrapper();
 
       // For dev
-      window.router = new Router();
       window.mps = mps;
       window.analysis = AnalysisService;
       window.countryService = CountryService;

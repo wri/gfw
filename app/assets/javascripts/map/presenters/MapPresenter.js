@@ -12,23 +12,17 @@ define([
 
   'use strict';
 
-  var StatusModel = Backbone.Model.extend({});
+  var StatusModel = Backbone.Model.extend({
+    defaults: {
+      threshold: null
+    }
+  });
 
   var MapPresenter = Class.extend({
 
-    /**
-     * Constructs new MapPresenter.
-     *
-     * @param  {MapView} Instance of MapView
-     * @return {class} The MapPresenter class
-     */
     init: function(view) {
       this.view = view;
-
-      this.status = new StatusModel({
-        threshold: null
-      });
-
+      this.status = new StatusModel();
       this._subscribe();
     },
 

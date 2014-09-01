@@ -9,11 +9,10 @@ define([
 
   'use strict';
 
-  describe('DataService Suite', function() {
+  describe('DataService', function() {
 
     describe('_getDuration()', function() {
-      
-      it('correctly returns URI template for quicc-alerts', function() {
+      it('correctly returns milliseconds of a day', function() {
         expect(service._getDuration(1, 'days')).toEqual(86400000);
       });
     });
