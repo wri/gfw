@@ -84,7 +84,7 @@
 
 
 .analyse {
-  @include position(50px, 20px, false, false);
+  @include position(3px, 12px, false, false);
   @include size(41px, 42px);
   @include mixins-sprite(graph);
 
