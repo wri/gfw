@@ -43,6 +43,10 @@ define([
         });
       });
 
+      afterEach(function() {
+        jasmine.Ajax.uninstall();
+      });
+
       it('correctly executes callback with data', function() {
         expect(response).toEqual('boom');
       });

@@ -37,14 +37,7 @@ module.exports = function(grunt) {
       test: {
         options: {
           specs: [
-            '<%= root.test %>/spec/router_spec.js',
-            '<%= root.test %>/spec/MapPresenter_spec.js',
-            '<%= root.test %>/spec/AnalysisToolPresenter_spec.js',
-            '<%= root.test %>/spec/DataService_spec.js',
-            '<%= root.test %>/spec/CountryService_spec.js',
-            '<%= root.test %>/spec/TimelinePresenter_spec.js',
-            '<%= root.test %>/spec/UmdLossLayerPresenter_spec.js',
-            '<%= root.test %>/spec/AnalysisService_spec.js'
+            '<%= root.test %>/spec/*_spec.js',
           ],
           host: 'http://127.0.0.1:8000/',
           helpers: '<%= root.test %>/helpers/*.js',
