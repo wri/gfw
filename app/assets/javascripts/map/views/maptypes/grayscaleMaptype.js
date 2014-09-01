@@ -38,8 +38,8 @@ define([], function () {
       { 'saturation': 50 },
       { 'invert_lightness': true },
       { 'lightness': 50 },
-      { 'color': '#555555' },
-      { 'weight': 1.2 }
+      { 'color': '#333333' },
+      { 'weight': 0.3 }
     ]
   }, {
     'featureType': 'administrative',

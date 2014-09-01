@@ -10,6 +10,7 @@
 
   .cartodb-popup-header {
     margin-bottom: 10px;
+    margin-top: 30px;
   }
 
   .thumb-mask {
@@ -87,6 +88,7 @@
   @include position(3px, 12px, false, false);
   @include size(41px, 42px);
   @include mixins-sprite(graph);
+  z-index: 1000;
 
   &.disabled {
     @include opacity(.6);
