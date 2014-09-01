@@ -61,7 +61,7 @@ define([
     },
 
     _fitBounds: function(paths) {
-      if (! paths) return;
+      if (!paths) {return;}
       var lat, lng, lat_, lng_;
       lat = lng = lat_ = lng_ = 0;
 

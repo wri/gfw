@@ -118,7 +118,7 @@ define([
     _getProtectedAreaPolygon: function(id) {
       var self = this;
        $.getJSON('http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from wdpa_all where wdpaid ='+id, function(data) {
-          self._drawFromUrl('wdpa', JSON.parse(data.rows[0].st_asgeojson))
+          self._drawFromUrl('wdpa', JSON.parse(data.rows[0].st_asgeojson));
         });
     },
 
