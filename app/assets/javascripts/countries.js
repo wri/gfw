@@ -24,7 +24,7 @@ $(document).ready(function() {
     if ($('.is-index-action').length > 0) {
       window.countries_index = new gfw.ui.view.CountriesIndex();
     }
-    if ($('.is-overview-action').length > 0) {
+    if ($('.is-overview-action').length > 0 || $('.countries_overview').length > 0) {
       window.countries_overview = new gfw.ui.view.CountriesOverview();
     }
     if ($('.is-show-action').length > 0) {

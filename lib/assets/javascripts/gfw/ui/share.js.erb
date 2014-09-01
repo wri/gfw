@@ -1,4 +1,4 @@
-gfw.ui.model.Share = cdb.core.Model.extend({  
+gfw.ui.model.Share = cdb.core.Model.extend({
   defaults: {
     tooltip: $('body').hasClass('home') ? "Share this map view" : "Share this graphic"
   }
@@ -27,7 +27,7 @@ gfw.ui.view.Share = cdb.core.View.extend({
       template: template,
       type: 'mustache'
     });
-    
+
     this._initViews();
   },
 
@@ -185,6 +185,7 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
     if (!$body.hasClass('home')) {
       dim_x = 1000;
       dim_y = ($body.hasClass('show')) ? 480 : 600;
+      dim_y = ($body.hasClass('is-overview-action')) ? 700 : dim_y;
     }
 
     if ($('section').hasClass('current_share')) {
@@ -258,7 +259,7 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
   _setMode: function(mode) {
     this.model.set({ mode: mode });
   },
-  
+
   _toggleMode: function() {
     var mode = this.model.get('mode');
 

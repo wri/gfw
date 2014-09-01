@@ -1,6 +1,5 @@
 <div class="country-header">
   <div class="inner">
-
     <!--  colored header -->
     <div class="country-header-inner">
       <div class="country-title">
@@ -12,6 +11,10 @@
           <div class="selector-remove">✕</div>
           <div class="selector-arrow"></div>
         </div>
+        <!--  indepth message -->
+        <% if @country['indepth'].present? %>
+            <p class="country-indepth__bubble"><a href="<%= @country['indepth'] %>">GFW's work in <%= @country['name'] %></a></p>
+        <% end %>
       </div>
 
       <div class="country-details">

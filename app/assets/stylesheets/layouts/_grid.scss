@@ -37,28 +37,17 @@
   width: 960px;
   padding: 0 10px;
   .embed & {
-    width: 720px;
     .country-icons-settings_engine {
-      width: 15px;
-      height: 15px;
-      float: left;
-      top: 183px;
-      position: relative;
-      z-index: 1;
-      left: 273px;
-      cursor: pointer;
-    }
-    .umdoptions_dialog {
-      height: 250px;
-      margin-top: 245px;
-      left: 305px;
-      &::after{
-        left: -27px;
-        top: -220px;
-      }
-      p.slider_container {
-        display: table;
-      }
+      display: none;
     }
   }
+  .countries_show & {
+    width: 720px;
+  }
+  .countries_overview & {
+    width: 960px;
+  }
+}
+.countries_show .header-logo {
+  display: none;
 }

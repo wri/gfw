@@ -335,14 +335,19 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       dataType: 'json',
       success: function(data) {
         var amount = data.years[data.years.length -1].extent;
-        if (amount.toString().length >= 5) {
+
+        if (amount.toString().length >= 7) {
           amount = ((amount /1000)/1000).toFixed(2)
-        } else{
+          $target.find('.tree-cover .unit').html( 'MHa' );
+        } else if (amount.toString().length >= 4) {
           $target.find('.tree-cover .unit').html( 'KHa' );
-          if (amount % 1 != 0) amount = amount.toFixed(2)
+          amount = (amount /1000);
+        if (amount % 1 != 0) amount = amount.toFixed(2)
+        } else {
+          $target.find('.tree-cover .unit').html( 'Ha' );
         }
 
-        $target.find('.tree-cover .amount').html( amount );
+        $target.find('.tree-cover .amount').html( amount.toLocaleString() );
         $target.find('.total-area .amount').html(data.years[data.years.length -1].extent_perc.toFixed(2));
 
         that._drawLossAndGain(data.years);

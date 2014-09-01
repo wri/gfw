@@ -74,7 +74,7 @@
   /* Layer details */
   /*****************/
   .layer-details {
-    margin: 8px 0 4px 13px;
+    margin: 0px 0px 0px 13px;
 
     .details-title {
       color: #999;
@@ -196,8 +196,18 @@
   }
 
   /****************************/
-  /* IdnPrimaryLayer details */
+  /* intactForestLayer2013 details */
   /****************************/
+  .layer-details-intact-2013 {
+    .layer-colors {
+      .intact {color: rgb(22, 133, 0);}
+      .degraded {color: rgb(152, 155, 5);}
+    }
+  }
+
+  /*********************************/
+  /* IdnPrimaryLayer details */
+  /*********************************/
   .layer-details-idn-primary {
     .layer-colors {
       .intact {color: #007A4D;}

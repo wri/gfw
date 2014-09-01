@@ -60,10 +60,22 @@
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Tree cover extent<a href='#' data-source='forest2000' class='source'></a></span>
           </li>
-          <li class="layer" data-layer="intact_forest">
+          <li class="layer ifl" data-layer="ifl_2013_deg">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Intact forest landscapes<a href='#' data-source='intact_forest' class='source'></a></span>
+            <span class="layer-info">
+              <label data-layer="ifl_2000" class="layer ifl">
+                <input type="radio" name="intactType" />2000
+              </label>
+              <label data-layer="ifl_2013_deg" class="layer ifl">
+                <input type="radio" name="intactType" />2013
+              </label>
+            </span>
           </li>
+          {{!-- <li class="layer ifl" data-layer="ifl_2013_deg">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">Intact forest landscapes 2013<a href='#' data-source='intact_forest_2013' class='source'></a></span>
+          </li> --}}
           <li class="layer" data-layer="pantropical">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Tropical forest carbon stock<a href='#' data-source='pantropical' class='source'></a></span>

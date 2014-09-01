@@ -128,6 +128,23 @@ $stories-color: rgb(242, 178, 87);
         margin-top: 3px;
         padding-left: 23px;
         display: block;
+        label {
+          float: none;
+          font-weight: normal;
+          color: #CCC;
+          font-size: 11px;
+          margin: 5px 0px;
+          display: inline-block;
+          width: 45px;
+          &.selected {
+            color: #666;
+            font-weight: 500;
+          }
+          input {
+            cursor: pointer;
+            background-image: url('/assets/svg/dragger.svg');
+          }
+        }
       }
 
       .onoffradio {

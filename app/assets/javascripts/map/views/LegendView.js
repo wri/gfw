@@ -15,9 +15,10 @@ define([
   'text!templates/legend/fires.handlebars',
   'text!templates/legend/forest2000.handlebars',
   'text!templates/legend/pantropical.handlebars',
-  'text!templates/legend/idnPrimary.handlebars'
+  'text!templates/legend/idnPrimary.handlebars',
+  'text!templates/legend/intact2013.handlebars'
 ], function(_, Handlebars, Widget, Presenter, tpl, lossTpl, gainTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl) {
 
   'use strict';
 
@@ -37,7 +38,8 @@ define([
       fires: Handlebars.compile(firesTpl),
       forest2000: Handlebars.compile(forest2000Tpl),
       pantropical: Handlebars.compile(pantropicalTpl),
-      idn_primary: Handlebars.compile(idnPrimaryTpl)
+      idn_primary: Handlebars.compile(idnPrimaryTpl),
+      ifl_2013_deg: Handlebars.compile(intact2013Tpl)
     },
 
     options: {
