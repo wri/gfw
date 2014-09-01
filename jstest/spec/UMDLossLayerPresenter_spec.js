@@ -7,7 +7,7 @@ define([
   'underscore'
 ], function(UMDLossLayerPresenter, mps, _) {
 
-  describe("presenters/UMDLossLayerPresenter", function() {
+  describe('UMDLossLayerPresenter', function() {
     // The view mock
     var viewSpy = null;
 
@@ -19,29 +19,25 @@ define([
         getName: function() {
           return 'loss';
         },
-        setTimelineDate: function(dates) {
+        setCurrentDate: function(dates) {
         },
         updateTiles: function() {
         }
       };
       spyOn(viewSpy, 'getName').and.callThrough();
-      spyOn(viewSpy, 'setTimelineDate');
-      spyOn(viewSpy, 'updateTiles');
+      spyOn(viewSpy, 'setCurrentDate');
       presenter = new UMDLossLayerPresenter(viewSpy);
     });
 
-    it("Check Timeline/change event handling", function() {
+    it('Check Timeline/change event handling', function() {
       mps.publish('Timeline/date-change', ['loss', [2001, 2002]]);
 
-      expect(viewSpy.setTimelineDate).toHaveBeenCalled();
-      expect(viewSpy.setTimelineDate).toHaveBeenCalledWith([2001, 2002]);
-      expect(viewSpy.setTimelineDate.calls.count()).toEqual(1);
+      expect(viewSpy.setCurrentDate).toHaveBeenCalled();
+      expect(viewSpy.setCurrentDate).toHaveBeenCalledWith([2001, 2002]);
+      expect(viewSpy.setCurrentDate.calls.count()).toEqual(1);
 
       expect(viewSpy.getName).toHaveBeenCalled();
       expect(viewSpy.getName.calls.count()).toEqual(1);
-
-      expect(viewSpy.updateTiles).toHaveBeenCalled();
-      expect(viewSpy.updateTiles.calls.count()).toEqual(1);
     });
   });
 });
