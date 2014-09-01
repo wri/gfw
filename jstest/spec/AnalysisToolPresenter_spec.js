@@ -5,8 +5,11 @@ define([
   'jquery',
   'underscore',
   'mps',
-  'presenters/AnalysisToolPresenter'
-], function($, _, mps, Presenter) {
+  'moment',
+  'presenters/AnalysisToolPresenter',
+  'helpers/baselayers',
+  'helpers/analysis_resource'
+], function($, _, mps, moment, Presenter) {
 
   /* global describe, it, expect, beforeEach, jasmine */
 
@@ -14,10 +17,23 @@ define([
 
   describe('AnalysisToolPresenter', function() {
     var presenter = null;
-    var viewSpy = {};
+    var viewSpy = null;
+    var layerSpec = null;
+
+    layerSpec = {
+      getBaselayers: function() {
+        return baselayers;
+      }
+    };
 
     beforeEach(function() {
-      presenter = new Presenter(this.viewSpy);
+      viewSpy = {
+        model: {
+          set: jasmine.createSpy()
+        },
+        _fitBounds: jasmine.createSpy()
+      };
+      presenter = new Presenter(viewSpy);
     });
 
     describe('StatusModel', function() {
@@ -38,20 +54,35 @@ define([
       });
     });
 
-    // describe('_publishAnalysis', function() {
-    //   it('analysis resource constructed correctly', function() {
+    describe('_setBaselayer', function() {
+      beforeEach(function() {
+        presenter._setBaselayer(baselayers);
+      });
 
-    //   });
+      it('correctly set hidden widget', function() {
+        expect(viewSpy.model.set).toHaveBeenCalled();
+        expect(viewSpy.model.set).toHaveBeenCalledWith('hidden', false);
+        expect(viewSpy.model.set.calls.count()).toEqual(1);
+      });
 
-    //   it('publish analysis correctly', function() {
+      it('correctly set baselayer', function() {
+        expect(presenter.status.get('baselayer').slug).toEqual('umd_tree_loss_gain');
+      });
+    });
 
-    //   });
+    describe('_publishAnalysis', function() {
+      beforeEach(function() {
+        presenter.status.set('baselayer', _.findWhere(baselayers, {slug: 'umd_tree_loss_gain'}));
+        presenter.status.set('threshold', 70);
+        presenter.status.set('currentDate', [moment(), moment()]);
+        presenter._publishAnalysis(AnalysisResource);
+      });
 
-    //   it("publish 'Place/update' to update the url with the current analysis", function() {
-
-    //   });
-    // });
-
+      it('must create valid resource', function() {
+        expect(presenter.status.get('analysis').thresh).toEqual('?thresh=70');
+        expect(presenter.status.get('analysis').period).toEqual(moment().format('YYYY-MM-DD') + ',' + moment().format('YYYY-MM-DD'));
+      });
+    });
   });
 
 });

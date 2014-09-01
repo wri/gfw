@@ -41,6 +41,8 @@ module.exports = function(grunt) {
             '<%= root.test %>/spec/MapPresenter_spec.js',
             '<%= root.test %>/spec/AnalysisToolPresenter_spec.js',
             '<%= root.test %>/spec/DataService_spec.js',
+            '<%= root.test %>/spec/CountryService_spec.js',
+            '<%= root.test %>/spec/TimelinePresenter_spec.js',
             '<%= root.test %>/spec/AnalysisService_spec.js'
           ],
           host: 'http://127.0.0.1:8000/',

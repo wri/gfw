@@ -4,46 +4,66 @@
 define([
   'underscore',
   'mps',
-  'presenters/TimelinePresenter'
-], function(_, mps, TimelinePresenter) {
+  'moment',
+  'presenters/TimelinePresenter',
+  'helpers/layerspec',
+  'helpers/place_params'
+], function(_, mps, moment, Presenter) {
 
-  describe("presenters/TimelinePresenter", function() {
-    // The TimelineView mock
+  describe("TimelinePresenter", function() {
     var viewSpy = null;
-
-    // The presenter to test
     var presenter = null;
+    layerSpec = _.clone(layerSpec);
+    placeParams = _.clone(placeParams);
 
-    describe("Test publishing events", function() {
-      var layers = {
-        forest_clearing: {}
-      };
+    placeParams.begin = moment();
+    placeParams.end = moment();
 
-      var place = {
-        params: {
-          layerSpec: {
-            layers: layers,
-            getBaselayers: function() {
-              return layers.forest_clearing;
-            },
-            getLayers: function(){}
-          }
+    layerSpec.getBaselayers = function() {
+      return layerSpec.forest_clearing;
+    };
+
+    layerSpec.getLayer = function(where) {
+      return _.findWhere(layerSpec.forest_clearing, where);
+    }
+
+    beforeEach(function() {
+      viewSpy = {
+        update: jasmine.createSpy(),
+        model: {
+          set: jasmine.createSpy()
         }
       };
 
-      beforeEach(function() {
-        // viewSpy = jasmine.createSpyObj(
-        //   'viewSpy',
-        //   ['setTimeline']);
-        // presenter = new TimelinePresenter(viewSpy);
-        // mps.publish('Place/go', [place]);
+      presenter = new Presenter(viewSpy);
+
+      presenter._timelineEnabled = jasmine.createSpy();
+      presenter._setTimeline(layerSpec, placeParams);
+    });
+
+    describe('_setTimeline', function() {
+      it('must set the correct timeline from layerSpec', function() {
+        expect(presenter.currentTimeline).toBeDefined();
+        expect(presenter.currentTimeline.getName()).toEqual('umd_tree_loss_gain');
+
+        expect(presenter._timelineEnabled).toHaveBeenCalled();
+
+        expect(viewSpy.model.set).toHaveBeenCalled();
+        expect(viewSpy.model.set).toHaveBeenCalledWith('hidden', false);
+        expect(viewSpy.model.set.calls.count()).toEqual(1);
+
+      });
+    });
+
+    describe('_removeTimeline', function() {
+      beforeEach(function() {
+        presenter._removeTimeline();
       });
 
-      it("Check Place/go handling", function() {
-        // expect(viewSpy.setTimeline).toHaveBeenCalled();
-        // expect(viewSpy.setTimeline).toHaveBeenCalledWith(place.params.layerSpec.layers.forest_clearing);
-        // expect(viewSpy.setTimeline.calls.count()).toEqual(1);
+      it('must remove timeline', function() {
+        expect(presenter.currentTimeline).toEqual(null);
       });
     });
   });
+
 });
