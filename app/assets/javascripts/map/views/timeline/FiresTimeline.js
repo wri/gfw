@@ -11,6 +11,28 @@ define([
 
   'use strict';
 
+  var data = [{
+    start: moment().subtract(8, 'days'),
+    end: moment().subtract(24, 'hours'),
+    label: 'Past week',
+    hoursDiff: 168
+  },{
+    start: moment().subtract(96, 'hours'),
+    end: moment().subtract(24, 'hours'),
+    label: 'Past 72 hours',
+    hoursDiff: 72
+  },{
+    start: moment().subtract(72, 'hours'),
+    end: moment().subtract(24, 'hours'),
+    label: 'Past 48 hours',
+    hoursDiff: 48
+  },{
+    start: moment().subtract(48, 'hours'),
+    end: moment().subtract(24, 'hours'),
+    label: 'Past 24 hours',
+    hoursDiff: 24
+  }];
+
   var FiresTimeline = TimelineBtnClass.extend({
 
     initialize: function(layer, currentDate) {
@@ -23,7 +45,26 @@ define([
         tipsy: false
       };
 
+      if (currentDate) {
+        currentDate = this.setCurrentDate(currentDate);
+      }
+
       FiresTimeline.__super__.initialize.apply(this, [layer, currentDate]);
+    },
+
+    /**
+     * To make fires layer bookmarkable we need to
+     * convert the url date to current valid dates.
+     * eg. last month day 29 to 30 should be last 24 hours.
+     *
+     *
+     * @param {Array} currentDate [moment, moment]
+     */
+    setCurrentDate: function(currentDate) {
+      var hoursDiff = currentDate[1].diff(currentDate[0], 'hours');
+      var dataItem = _.findWhere(data, {hoursDiff: hoursDiff});
+      currentDate = [dataItem.start, dataItem.end];
+      return currentDate;
     },
 
     /**
@@ -32,24 +73,6 @@ define([
      * @return {array} Array of quarterly.
      */
     _getData: function() {
-      var data = [{
-        start: moment().subtract(8, 'days'),
-        end: moment(),
-        label: 'Past week'
-      },{
-        start: moment().subtract(96, 'hours'),
-        end: moment(),
-        label: 'Past 72 hours'
-      },{
-        start: moment().subtract(72, 'hours'),
-        end: moment(),
-        label: 'Past 48 hours'
-      },{
-        start: moment().subtract(48, 'hours'),
-        end: moment(),
-        label: 'Past 24 hours'
-      }];
-
       return data;
     }
   });
