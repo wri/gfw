@@ -52,7 +52,7 @@ define([
       }, _.parseUrl());
 
       if (!this.mapView) {
-        var mapView = new MapView();
+        this.mapView = new MapView();
         new LayersNavView();
         new LegendView();
         new MaptypeView();
@@ -60,7 +60,7 @@ define([
         new ThresholdView();
         new TimelineView();
         new AnalysisResultsView();
-        new AnalysisToolView(mapView.map);
+        new AnalysisToolView(this.mapView.map);
         new ShareView();
       }
 
