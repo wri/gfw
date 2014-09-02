@@ -55,7 +55,7 @@
               </a>
             </li>
             <li>
-              <a href="https://wri-01.cartodb.com/api/v2/sql?q=SELECT iso,id1 as id_adm1, country,region, year, thresh as threshold, loss, loss_perc as loss_percent, extent, extent_perc as extent_percent, gain, gain_perc as gain_percent from umd_subnat where iso='<%=@country['iso']%>'&format=csv&filename='<%=@country['iso']%>'">
+              <a href="https://wri-01.cartodb.com/api/v2/sql?q=SELECT iso as country_code,id1 as region_code, country,region, year, thresh as min_percent_canopy_density, loss as loss_ha, loss_perc as loss_percent, extent as extent_ha, extent_perc as extent_percent, gain as gain_ha, gain_perc as gain_percent from umd_subnat where iso='<%=@country['iso']%>'&format=csv&filename='<%=@country['iso']%>'">
                 country stats
                 <span class="sidenav-icon country-icons-download_grey"></span>
               </a>
