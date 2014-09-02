@@ -1,29 +1,51 @@
 /**
  * The MapPresenter class for the MapView.
  *
+ * Requirements:
+ *   - On 'Place/go' should set the map options and layers from the layerSpec.
+ *   - On 'LayerNav/change' should set the map layers from the layerSpec.
+ *   - getPlaceParams should return:
+ *       * zoom
+ *       * lat
+ *       * long
+ *       * maptype
+ *
  * @return MapPresenter class.
  */
 define([
-  'Class',
   'underscore',
   'backbone',
+  'Class',
   'mps'
-], function(Class, _, Backbone, mps) {
+], function(_, Backbone, Class, mps) {
 
   'use strict';
 
+  /**
+   * StatusModel keeps the prensenter current status.
+   */
   var StatusModel = Backbone.Model.extend({
     defaults: {
-      threshold: null
+      threshold: null,
+      currentDate: null
     }
   });
 
+  /**
+   * The MapPresenter Class.
+   */
   var MapPresenter = Class.extend({
 
+    /**
+     * Initialize the MapPresenter.
+     *
+     * @param  {Object} view MapView
+     */
     init: function(view) {
       this.view = view;
       this.status = new StatusModel();
       this._subscribe();
+      mps.publish('Place/register', [this]);
     },
 
     /**
@@ -31,17 +53,11 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
-        if (place.params.name === 'map') {
-          this._setMapOptions(place.params);
-          if (place.params && place.params.threshold) {
-            this.status.set('threshold', place.params.threshold);
-          }
-          this._setLayerSpec(place.layerSpec, place.params);
-        }
+        this._onPlaceGo(place);
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this._setLayerSpec(layerSpec);
+        this._setLayers(layerSpec.getLayers());
       },this));
 
       mps.subscribe('Map/set-zoom', _.bind(function(zoom) {
@@ -73,39 +89,70 @@ define([
       }, this));
 
       mps.subscribe('Threshold/changed', _.bind(function(threshold) {
-        this.status.set('threshold', threshold);
+        this._updateStatusModel({
+          threshold: threshold
+        });
       }, this));
-
-      mps.publish('Place/register', [this]);
     },
 
     /**
-     * [_setLayerSpec description].
+     * Triggered from 'Place/Go' events.
      *
-     * @param {object} layerSpec
-     * @param {object} placeParams
+     * @param  {Object} place PlaceService's place object
      */
-    _setLayerSpec: function(layerSpec, placeParams) {
-      var options = {};
+    _onPlaceGo: function(place) {
+      if (place.params.name !== 'map') {return;}
 
-      if (placeParams && placeParams.begin && placeParams.end) {
-        options.currentDate = [placeParams.begin, placeParams.end];
-      }
+      this._setMapOptions(
+        _.pick(place.params,
+          'zoom', 'maptype', 'lat', 'lng'));
 
-      if (this.status.get('threshold')) {
-        options.threshold = this.status.get('threshold');
-      }
-
-      this.view.setLayers(layerSpec.getLayers(), options);
+      this._updateStatusModel(place.params);
+      this._setLayers(place.layerSpec.getLayers());
     },
 
     /**
-     * Set map options state from supplied place.params.
+     * Update the status model from the suplied params.
      *
-     * @param  {PlaceService} The place to go to
+     * @param  {Object} params
+     */
+    _updateStatusModel: function(params) {
+      if (params.threshold) {
+        this.status.set('threshold', params.threshold);
+      }
+
+      if (params.begin && params.end) {
+        this.status.set('currentDate', [params.begin, params.end]);
+      }
+    },
+
+    /**
+     * Set the map layers to match the suplied layers
+     * and the current layer options status.
+     *
+     * @param {object} layers Layers object
+     */
+    _setLayers: function(layers) {
+      var options = _.pick(this.status.toJSON(),
+        'threshold', 'currentDate');
+
+      this.view.setLayers(layers, options);
+    },
+
+    /**
+     * Construct the options object from the suplied params
+     * and dispache to the them to the view.
+     *
+     * @param {Object} params Map params from the place object.
      */
     _setMapOptions: function(params) {
-      this.view.setOptions(params);
+      var options = {
+        zoom: params.zoom,
+        mapTypeId: params.maptype,
+        center: new google.maps.LatLng(params.lat, params.lng)
+      };
+
+      this.view.setOptions(options);
     },
 
     onOptionsChange: function() {
@@ -144,7 +191,7 @@ define([
      * Retuns place parameters representing the state of the MapView and
      * layers. Called by PlaceService.
      *
-     * @return {Object} Params representing the state of the MapView and layers
+     * @return {Object} Params representing the state of the MapView
      */
     getPlaceParams: function() {
       var p = {};

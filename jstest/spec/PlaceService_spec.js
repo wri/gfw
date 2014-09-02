@@ -8,6 +8,32 @@ define([
 
   'use strict';
 
+  // describe('PlaceService', function() {
+  //   var params, service, name = 'map';
+
+  //   beforeEach(function() {
+  //     service = new PlaceService();
+  //   });
+
+  //   describe('_getPresenterParams', function() {
+
+  //     it('correctly get params from 0 registered presenters', function() {
+  //       var results = service._getPresenterParams([]);
+  //       expect(results).toEqual({});
+  //     });
+
+  //     it('correctly get params from 1 registered presenters', function() {
+  //       var presenter = jasmine.createSpyObj('presenter', ['getPlaceParams']);
+  //       var params = {boom: 'boom'};
+
+  //       presenter.getPlaceParams.and.returnValue(params);
+  //       expect(service._getPresenterParams([presenter])).toEqual(params);
+  //     });
+
+  //   });
+
+  // });
+
   // describe('PlaceService Suite', function() {
   //   var params = null;
   //   var name = 'map';

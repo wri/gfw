@@ -5,76 +5,104 @@ define([
   'underscore',
   'mps',
   'presenters/MapPresenter',
+  'helpers/baselayers'
 ], function(_, mps, MapPresenter) {
 
-  describe("MapPresenter", function() {
-    var presenter = null;
-    var viewSpy = {};
+  describe('MapPresenter', function() {
+    var presenter, viewSpy, place;
 
-    // Status model is set correctly
-    describe("StatusModel", function() {
-      beforeEach(function() {
-        presenter = new MapPresenter(viewSpy);
-      });
+    /**
+     * Set MockView,
+     * Set presenter, don't subscriber to events.
+     */
+    beforeEach(function() {
+      viewSpy = jasmine.createSpyObj(
+        'viewSpy', ['setLayers', 'setOptions']);
 
+      MapPresenter.prototype._subscribe = new Function();
+      presenter = new MapPresenter(viewSpy);
+    });
+
+    afterEach(function() {
+      presenter = null;
+    });
+
+    /**
+     * Test the MapPresenter StatusModel.
+     */
+    describe('StatusModel', function() {
       it('is defined', function() {
         expect(presenter.status).toBeDefined();
       });
 
       it('correct default values', function() {
-        expect(presenter.status.toJSON()).toEqual({threshold: null});
+        expect(presenter.status.toJSON()).toEqual({
+          threshold: null,
+          currentDate: null
+        });
       });
     });
 
-    // describe("Responding to published events", function() {
-    //   var layers = {
-    //     forest2000: {}
-    //   };
+    /**
+     * Test presenter response to 'Place/go' events.
+     */
+    describe('_onPlaceGo', function() {
+      beforeEach(function() {
+        place = {
+          params: {
+            name: 'map',
+            zoom: 3,
+            maptype: 'terrain',
+            lat: 24,
+            lng: 18,
+            threshold: 70,
+            begin: 2001,
+            end: 2002
+          },
+          layerSpec: {
+            getLayers: function() {
+              return baselayers;
+            }
+          }
+        };
 
-    //   var place = {
-    //     params: {
-    //       name: 'map',
-    //       baselayers: 'loss',
-    //       zoom: 8,
-    //       maptype: 'terrain',
-    //       lat: 1,
-    //       lng: 2,
-    //     },
-    //     layerSpec: {
-    //       getLayers: function() {
-    //         return layers;
-    //       },
-    //       getBaselayers: function() {}
-    //     }
-    //   };
+        spyOn(presenter, '_setMapOptions');
+        spyOn(presenter, '_updateStatusModel');
+        spyOn(presenter, '_setLayers');
+        presenter._onPlaceGo(place);
+      });
 
-    //   beforeEach(function() {
-    //     viewSpy = jasmine.createSpyObj('viewSpy', ['setLayers', 'initMap']);
-    //     presenter = new MapPresenter(viewSpy);
+      it('Should call _setMapOptions with correct params', function() {
+        expect(presenter._setMapOptions).toHaveBeenCalled();
+        expect(presenter._setMapOptions.calls.count()).toEqual(1);
+        expect(presenter._setMapOptions).toHaveBeenCalledWith(_.pick(place.params,
+          'zoom', 'maptype', 'lat', 'lng'));
+      });
 
-    //     // viewSpy = jasmine.createSpyObj(
-    //     //   'viewSpy',
-    //     //   ['setLayers', 'initMap']);
-    //     // presenter = new MapPresenter(viewSpy);
-    //   });
+      it('Should call _updateStatusModel with place params', function() {
+        expect(presenter._updateStatusModel).toHaveBeenCalled();
+        expect(presenter._updateStatusModel.calls.count()).toEqual(1);
+        expect(presenter._updateStatusModel).toHaveBeenCalledWith(place.params);
+      });
 
-    //   it("on Place/go", function() {
-    //     // mps.publish('Place/go', [place]);
-    //     // expect(viewSpy.initMap).toHaveBeenCalled();
-    //     // expect(viewSpy.initMap).toHaveBeenCalledWith(place.params);
-    //     // expect(viewSpy.initMap.calls.count()).toEqual(1);
+      it('Should call _setLayers with layers object', function() {
+        expect(presenter._setLayers).toHaveBeenCalled();
+        expect(presenter._setLayers.calls.count()).toEqual(1);
+        expect(presenter._setLayers).toHaveBeenCalledWith(baselayers);
+      });
+    });
 
-    //     // expect(viewSpy.setLayers).toHaveBeenCalled();
-    //     // expect(viewSpy.setLayers).toHaveBeenCalledWith(place.params.layerSpec.getLayers());
-    //     // expect(viewSpy.setLayers.calls.count()).toEqual(1);
-    //   });
+    describe('_updateStatusModel', function() {
+      it('Should set status params from suplied params, only those permitted', function() {
+        presenter._updateStatusModel(place.params);
 
-    //   it('LayerNav/change', function() {
-    //     mps.publish('LayerNav/change', [place.layerSpec]);
-    //     expect(presenter._setLayerSpec).toHaveBeenCalled();
-    //   })
+        expect(presenter.status.toJSON()).toEqual({
+          threshold: 70,
+          currentDate: [2001, 2002]
+        });
+      });
 
-    // });
+    });
 
   });
 });

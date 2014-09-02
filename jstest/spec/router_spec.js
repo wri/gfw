@@ -1,3 +1,6 @@
+/**
+ * Unit tests for the Router class.
+ */
 define([
   'router',
   'underscore',
@@ -13,7 +16,7 @@ define([
         Backbone.history.stop();
       });
 
-      it('router.map called when only it has to', function() {
+      it('router.map called only when it has to', function() {
         spyOn(Router.prototype, 'map');
 
         var router = new Router();
