@@ -9,7 +9,6 @@ define([
 
   describe('CountryService Suite', function() {
 
-
     it('the service is not null', function() {
       expect(service).not.toEqual(null);
     });

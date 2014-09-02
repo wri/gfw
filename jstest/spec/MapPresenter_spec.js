@@ -19,12 +19,26 @@ define([
       viewSpy = jasmine.createSpyObj(
         'viewSpy', ['setLayers', 'setOptions']);
 
+      place = {
+        params: {
+          name: 'map',
+          zoom: 3,
+          maptype: 'terrain',
+          lat: 24,
+          lng: 18,
+          threshold: 70,
+          begin: 2001,
+          end: 2002
+        },
+        layerSpec: {
+          getLayers: function() {
+            return baselayers;
+          }
+        }
+      };
+
       MapPresenter.prototype._subscribe = new Function();
       presenter = new MapPresenter(viewSpy);
-    });
-
-    afterEach(function() {
-      presenter = null;
     });
 
     /**
@@ -48,24 +62,6 @@ define([
      */
     describe('_onPlaceGo', function() {
       beforeEach(function() {
-        place = {
-          params: {
-            name: 'map',
-            zoom: 3,
-            maptype: 'terrain',
-            lat: 24,
-            lng: 18,
-            threshold: 70,
-            begin: 2001,
-            end: 2002
-          },
-          layerSpec: {
-            getLayers: function() {
-              return baselayers;
-            }
-          }
-        };
-
         spyOn(presenter, '_setMapOptions');
         spyOn(presenter, '_updateStatusModel');
         spyOn(presenter, '_setLayers');
@@ -101,7 +97,15 @@ define([
           currentDate: [2001, 2002]
         });
       });
+    });
 
+    describe('_setMapOptions', function() {
+      it('Should call view.setOptions', function() {
+        presenter._setMapOptions(_.pick(place.params,
+          'zoom', 'maptype', 'lat', 'lng'));
+        expect(presenter.view.setOptions).toHaveBeenCalled();
+        expect(presenter.view.setOptions.calls.count()).toEqual(1);
+      });
     });
 
   });

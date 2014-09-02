@@ -16,9 +16,7 @@ define([
   'use strict';
 
   describe('AnalysisToolPresenter', function() {
-    var presenter = null;
-    var viewSpy = null;
-    var layerSpec = null;
+    var presenter, viewSpy, layerSpec;
 
     layerSpec = {
       getBaselayers: function() {
