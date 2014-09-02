@@ -12,8 +12,20 @@ require([
   'services/AnalysisService',
   'services/CountryService',
   'services/DataService',
+  'views/LayersNavView',
+  'views/MapView',
+  'views/LegendView',
+  'views/ThresholdView',
+  'views/SearchboxView',
+  'views/MaptypeView',
+  'views/TimelineView',
+  'views/AnalysisToolView',
+  'views/AnalysisResultsView',
+  'views/ShareView',
   '_string'
-], function ($, _, Class, Backbone, utils, Router, mps, AnalysisService, CountryService, DataService) {
+], function($, _, Class, Backbone, utils, Router, mps, AnalysisService, CountryService, DataService,
+    LayersNavView, MapView, LegendView, ThresholdView, SearchboxView, MaptypeView, TimelineView,
+    AnalysisToolView, AnalysisResultsView, ShareView) {
 
   'use strict';
 
@@ -22,15 +34,16 @@ require([
     $el: $('body'),
 
     init: function() {
-      _.bindAll(this, '_setWrapper', '_scrollBottom', '_setLogoPosition');
+      _.bindAll(this, '_scrollBottom', '_setLogoPosition');
+
+      var router = new Router();
       this._cartodbHack();
-
-      window.router = new Router();
-      this._initializeApp();
-
+      this._initViews();
+      this._initApp();
       this._setWrapper();
 
       // For dev
+      window.router = router;
       window.mps = mps;
       window.analysis = AnalysisService;
       window.countryService = CountryService;
@@ -38,12 +51,28 @@ require([
     },
 
     /**
-     * Initialize the map by strating the history.
+     * Initialize the map by starting the history.
      */
-    _initializeApp: function() {
+    _initApp: function() {
       if (!Backbone.History.started) {
         Backbone.history.start({pushState: true});
       }
+    },
+
+    /**
+     * Initialize Application Views.
+     */
+    _initViews: function() {
+      var mapView = new MapView();
+      new LayersNavView();
+      new LegendView();
+      new MaptypeView();
+      new SearchboxView();
+      new ThresholdView();
+      new TimelineView();
+      new AnalysisResultsView();
+      new AnalysisToolView(mapView.map);
+      new ShareView();
     },
 
     /**

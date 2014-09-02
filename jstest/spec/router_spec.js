@@ -5,23 +5,25 @@ define([
   'router',
   'underscore',
   'backbone',
-  'mps'
-], function(Router, _, Backbone, mps) {
+], function(Router, _, Backbone) {
 
     'use strict';
 
     describe('Router', function() {
+      var router;
+
+      beforeEach(function() {
+        spyOn(Router.prototype, 'map');
+        spyOn(Router.prototype, '_checkForCacheBust');
+        router = new Router();
+        Backbone.history.start();
+      });
 
       afterEach(function() {
         Backbone.history.stop();
       });
 
       it('router.map called only when it has to', function() {
-        spyOn(Router.prototype, 'map');
-
-        var router = new Router();
-        Backbone.history.start();
-
         // Map should be call:
         router.navigate('/map', true);
         router.navigate('/map/3/15.00/27.00/ALL/grayscale/modis', true);
@@ -38,11 +40,8 @@ define([
       });
 
       it('cache burst has been called', function() {
-        spyOn(Router.prototype, '_checkForCacheBust');
-        var router = new Router();
         expect(Router.prototype._checkForCacheBust).toHaveBeenCalled();
       });
-
     });
 
-});
+})
