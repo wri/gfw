@@ -8,10 +8,11 @@ define([
   'underscore',
   'backbone',
   'mps',
+  'd3',
   'topojson',
   'services/CountryService',
   'services/RegionService'
-], function(Class, _, Backbone, mps, topojson, countryService, regionService) {
+], function(Class, _, Backbone, mps, d3, topojson, countryService, regionService) {
 
   'use strict';
 
@@ -130,6 +131,7 @@ define([
         resource = {iso: iso.country};
         countryService.execute(iso.country, _.bind(function(results) {
           var geojson = topojson.feature(results.topojson, results.topojson.objects[0]);
+          this._fitBoundsFromGeojson(geojson);
           this.view.drawMultipolygon(geojson);
           this._publishAnalysis(resource);
         },this));
@@ -138,17 +140,18 @@ define([
         resource = {iso: iso.country, id1: iso.region};
         regionService.execute(resource, _.bind(function(results) {
           var geojson = results.features[0];
+          this._fitBoundsFromGeojson(geojson);
           this.view.drawMultipolygon(geojson);
           this._publishAnalysis(resource);
         },this));
+      // Draw wdpa
       } else if (iso === 'wdpa') {
         this.view.drawMultipolygon({
           geometry: geojson,
           properties: {},
           type: 'Feature'
         });
-        // TODO => these fit bounds should publish 'map/fitbounds'
-        this.view._fitBounds(geojson.coordinates[0][0]);
+        this._fitBoundsFromGeojson(geojson);
       // Draw user polygon
       } else if (geojson) {
         resource = {geojson: JSON.stringify(geojson)};
@@ -189,10 +192,6 @@ define([
 
       var date = this.status.get('currentDate');
       resource.dataset = this.datasets[this.status.get('baselayer').slug];
-
-      if (!resource.wdpaid && !resource.iso) {
-        this.view._fitBounds(JSON.parse(resource.geojson).coordinates[0]);
-      }
 
       if (!resource.wdpaid) {
         resource.period = '{0},{1}'.format(date[0].format('YYYY-MM-DD'), date[1].format('YYYY-MM-DD'));
@@ -289,6 +288,21 @@ define([
       return _.map(coords, function(g) {
         return new google.maps.LatLng(g[1], g[0]);
       });
+    },
+
+    /**
+     * Get Bounds from the suplied geojson.
+     *
+     * @param  {Object} geojson Topojson object
+     * @return {Object} Returns google LatLngBounds object
+     */
+    _fitBoundsFromGeojson: function(geojson) {
+      var d3bounds = d3.geo.bounds(geojson);
+      var a = new google.maps.LatLng(d3bounds[0][1], d3bounds[0][0]);
+      var b = new google.maps.LatLng(d3bounds[1][1], d3bounds[1][0]);
+
+      var bounds = new google.maps.LatLngBounds(a, b);
+      mps.publish('Map/fit-bounds', [bounds]);
     },
 
     /**
