@@ -13,7 +13,7 @@ require([
   'services/CountryService',
   'services/DataService',
   '_string'
-], function ($, _, Class, Backbone, utils, router, mps, AnalysisService, CountryService, DataService) {
+], function ($, _, Class, Backbone, utils, Router, mps, AnalysisService, CountryService, DataService) {
 
   'use strict';
 
@@ -24,11 +24,13 @@ require([
     init: function() {
       _.bindAll(this, '_setWrapper', '_scrollBottom', '_setLogoPosition');
       this._cartodbHack();
+
+      window.router = new Router();
       this._initializeApp();
+
       this._setWrapper();
 
       // For dev
-      window.router = router;
       window.mps = mps;
       window.analysis = AnalysisService;
       window.countryService = CountryService;

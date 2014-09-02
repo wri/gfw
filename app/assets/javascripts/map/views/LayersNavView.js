@@ -85,12 +85,13 @@ define([
       if ($(event.currentTarget).hasClass('ifl')) {
         event && event.stopPropagation();
         var $elem = $(event.currentTarget);
-        if (! ($elem.prop('tagName') === 'LI')){
+        if ($elem.prop('tagName') !== 'LI'){
           for (var i=0;i < $elem.siblings().length; i++) {
-            if ($($elem.siblings()[i]).hasClass('selected'))
+            if ($($elem.siblings()[i]).hasClass('selected')) {
               this.presenter.toggleLayer($($elem.siblings()[i]).data('layer'));
+            }
           }
-          $elem.parents('li').data('layer' , $elem.data('layer')).addClass('selected')
+          $elem.parents('li').data('layer' , $elem.data('layer')).addClass('selected');
         }
       }
       this.presenter.toggleLayer(layerSlug);

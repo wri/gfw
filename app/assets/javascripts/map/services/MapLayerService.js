@@ -23,17 +23,27 @@ define([
      * @return {MapLayerService} instance
      */
     init: function() {
-      this.layers = null;
+      // this.layers = null;
       this._defineRequests();
     },
+
+    /**
+     * The configuration for client side caching of results.
+     */
+    _cacheConfig: {type: 'persist', duration: 1, unit: 'days'},
 
     /**
      * Defines CartoDB requests used by MapLayerService.
      */
     _defineRequests: function() {
-      var cache = {type: 'persist', duration: 1, unit: 'days'};
+      var cache = this._cacheConfig;
       var url = this._getUrl();
-      var config = {cache: cache, url: url, type: 'POST', dataType: 'jsonp'};
+      var config = {
+        cache: cache,
+        url: url,
+        type: 'POST',
+        dataType: 'jsonp'
+      };
       ds.define(this.requestId, config);
     },
 
@@ -98,24 +108,27 @@ define([
     },
 
     _fetchLayers: function(successCb, errorCb) {
-      var config = {resourceId: this.requestId, success: successCb,
-        error: errorCb};
+      var config = {
+        resourceId: this.requestId,
+        success: successCb,
+        error: errorCb
+      };
 
       ds.request(config);
     },
 
-    _getLayers: function(slug, category_slug, successCb, errorCb) {
-      this._fetchLayers(
-        _.bind(function(layers) {
-          var hits = _.filter(layers, function(x) {
-            return (x.category_slug === category_slug && x.slug === slug);
-          });
-          successCb(hits ? hits[0] : null);
-        }, this),
-        _.bind(function(error) {
-          errorCb(error);
-        }, this));
-    }
+    // _getLayers: function(slug, category_slug, successCb, errorCb) {
+    //   this._fetchLayers(
+    //     _.bind(function(layers) {
+    //       var hits = _.filter(layers, function(x) {
+    //         return (x.category_slug === category_slug && x.slug === slug);
+    //       });
+    //       successCb(hits ? hits[0] : null);
+    //     }, this),
+    //     _.bind(function(error) {
+    //       errorCb(error);
+    //     }, this));
+    // }
   });
 
   var service = new MapLayerService();

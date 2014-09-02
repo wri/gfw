@@ -15,6 +15,18 @@ define([
 
   'use strict';
 
+  var StatusModel = Backbone.Model.extend({
+    defaults: {
+      baselayer: null,
+      analysis: null, // analysis resource
+      currentDate: null,
+      threshold: null,
+      overlay: null, // google.maps.Polygon (user draw)
+      polygon: null, // geojson (user polygons)
+      multipolygon: null // geojson (countries and regions)
+    }
+  });
+
   var AnalysisToolPresenter = Class.extend({
 
     datasets: {
@@ -27,17 +39,7 @@ define([
 
     init: function(view) {
       this.view = view;
-
-      this.status = new (Backbone.Model.extend())({
-        baselayer: null,
-        analysis: null, // analysis resource
-        currentDate: null,
-        threshold: null,
-        overlay: null, // google.maps.Polygon (user draw)
-        polygon: null, // geojson (user polygons)
-        multipolygon: null // geojson (countries and regions)
-      });
-
+      this.status = new StatusModel();
       this._subscribe();
       mps.publish('Place/register', [this]);
     },
@@ -47,26 +49,24 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this._setBaselayer(layerSpec);
+        this._setBaselayer(layerSpec.getBaselayers());
         this._checkUnavailable();
       }, this));
 
       mps.subscribe('Place/go', _.bind(function(place) {
         var p = place.params;
-        this._setBaselayer(place.layerSpec);
+        this._setBaselayer(place.layerSpec.getBaselayers());
         this._setCurrentDate([p.begin, p.end]);
-        this._drawFromUrl(p.iso, p.geojson);
         this.status.set('threshold', p.threshold);
+        this._drawFromUrl(p.iso, p.geojson);
       }, this));
 
       mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
-        if (this.status.get('analysis')) {
-          this._publishAnalysis(this.status.get('analysis'));
-        }
+        this._updateAnalysis();
       }, this));
 
       mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
-        this.deleteGeom();
+        this._deleteAnalysis();
       }, this));
 
       mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
@@ -83,6 +83,18 @@ define([
       }, this));
     },
 
+    _updateAnalysis: function() {
+      if (this.status.get('analysis')) {
+        this._publishAnalysis(this.status.get('analysis'));
+      }
+    },
+
+    _deleteAnalysis: function() {
+      if (this.status.get('analysis')) {
+        this.deleteGeom();
+      }
+    },
+
     _setCurrentDate: function(date) {
       if (date[0] && date[1]) {
         this.status.set('currentDate', date);
@@ -90,11 +102,11 @@ define([
     },
 
     /**
-     * Set current baselayer from any layer change.
+     * Set the status.baselayer from layerSpec.
+     *
+     * @param {Object} baselayers Current active baselayers
      */
-    _setBaselayer: function(layerSpec) {
-      var baselayers = layerSpec.getBaselayers();
-
+    _setBaselayer: function(baselayers) {
       var baselayer = baselayers[_.first(_.intersection(
         _.pluck(baselayers, 'slug'),
         _.keys(this.datasets)))];
@@ -106,7 +118,7 @@ define([
     _getProtectedAreaPolygon: function(id) {
       var self = this;
        $.getJSON('http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from wdpa_all where wdpaid ='+id, function(data) {
-          self._drawFromUrl('wdpa', JSON.parse(data.rows[0].st_asgeojson))
+          self._drawFromUrl('wdpa', JSON.parse(data.rows[0].st_asgeojson));
         });
     },
 
@@ -135,6 +147,7 @@ define([
           properties: {},
           type: 'Feature'
         });
+        // TODO => these fit bounds should publish 'map/fitbounds'
         this.view._fitBounds(geojson.coordinates[0][0]);
       // Draw user polygon
       } else if (geojson) {
@@ -224,7 +237,6 @@ define([
       this._publishAnalysis({geojson: JSON.stringify(geojson)});
     },
 
-
     /**
      * Deletes the current geometry from the map. This is triggered
      * when the users cancel a drawing or when a analysis is removed.
@@ -305,4 +317,3 @@ define([
   return AnalysisToolPresenter;
 
 });
-

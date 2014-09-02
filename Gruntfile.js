@@ -36,7 +36,9 @@ module.exports = function(grunt) {
     jasmine: {
       test: {
         options: {
-          specs: '<%= root.test %>/spec/*_spec.js',
+          specs: [
+            '<%= root.test %>/spec/*_spec.js',
+          ],
           host: 'http://127.0.0.1:8000/',
           helpers: '<%= root.test %>/helpers/*.js',
           outfile: '<%= root.test %>/SpecRunner.html',
@@ -46,7 +48,8 @@ module.exports = function(grunt) {
             requireConfigFile: '<%= root.test %>/config.js'
           },
           vendor: [
-            '<%= root.test %>/lib/mock-ajax.js'
+            '<%= root.test %>/lib/mock-ajax.js',
+            'http://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA'
           ]
         }
       }
@@ -70,8 +73,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [
     'connect:server',
-    'jasmine',
-    'watch:scripts'
+    'jasmine'
   ]);
 
   grunt.registerTask('default', [

@@ -9,7 +9,6 @@ define([
 
   describe('CountryService Suite', function() {
 
-
     it('the service is not null', function() {
       expect(service).not.toEqual(null);
     });
@@ -41,6 +40,10 @@ define([
           'status': 200,
           'responseText': '"boom"'
         });
+      });
+
+      afterEach(function() {
+        jasmine.Ajax.uninstall();
       });
 
       it('correctly executes callback with data', function() {

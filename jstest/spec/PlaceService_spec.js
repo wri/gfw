@@ -8,246 +8,272 @@ define([
 
   'use strict';
 
-  describe('PlaceService Suite', function() {
-    var params = null;
-    var name = 'map';
-    var service = null;
+  // describe('PlaceService', function() {
+  //   var params, service, name = 'map';
 
-    beforeEach(function() {
-      params = {
-        zoom: '8',
-        lat: '1.1',
-        lng: '2',
-        iso: 'idn',
-        maptype: 'terrain',
-        baselayers: 'loss',
-        sublayers: '1,2,3',
-        begin: '2014',
-        end: '3014'
-      };
-    });
+  //   beforeEach(function() {
+  //     service = new PlaceService();
+  //   });
 
-    /**
-     * Spec for testing _getPresenterParams().
-     */
-    describe('_getPresenterParams()', function() {
+  //   describe('_getPresenterParams', function() {
 
-      beforeEach(function() {
-        service = new PlaceService({}, {});
-      });
+  //     it('correctly get params from 0 registered presenters', function() {
+  //       var results = service._getPresenterParams([]);
+  //       expect(results).toEqual({});
+  //     });
 
-      it('correctly gets params from 0 registered presenters', function() {
-        var resultParams = service._getPresenterParams([]);
+  //     it('correctly get params from 1 registered presenters', function() {
+  //       var presenter = jasmine.createSpyObj('presenter', ['getPlaceParams']);
+  //       var params = {boom: 'boom'};
 
-        expect(resultParams).toEqual({});
-      });
+  //       presenter.getPlaceParams.and.returnValue(params);
+  //       expect(service._getPresenterParams([presenter])).toEqual(params);
+  //     });
 
-      it('correctly gets params from 1 registered presenters', function() {
-        var presenter = jasmine.createSpyObj('presenter', ['getPlaceParams']);
-        var params = {boom: 'boom'};
+  //   });
 
-        presenter.getPlaceParams.and.returnValue(params);
-        expect(service._getPresenterParams([presenter])).toEqual(params);
-      });
+  // });
 
-      it('correctly gets params from 2 registered presenters', function() {
-        var p1 = jasmine.createSpyObj('presenter', ['getPlaceParams']);
-        var p2 = jasmine.createSpyObj('presenter', ['getPlaceParams']);
-        var params1 = {boom: 'boom'};
-        var params2 = {bam: 'bam'};
-        var params = _.extend(params1, params2);
+  // describe('PlaceService Suite', function() {
+  //   var params = null;
+  //   var name = 'map';
+  //   var service = null;
 
-        p1.getPlaceParams.and.returnValue(params1);
-        p2.getPlaceParams.and.returnValue(params2);
-        expect(service._getPresenterParams([p1, p2])).toEqual(params);
-      });
-    });
+  //   beforeEach(function() {
+  //     params = {
+  //       zoom: '8',
+  //       lat: '1.1',
+  //       lng: '2',
+  //       iso: 'idn',
+  //       maptype: 'terrain',
+  //       baselayers: 'loss',
+  //       sublayers: '1,2,3',
+  //       begin: '2014',
+  //       end: '3014'
+  //     };
+  //   });
 
-    /**
-     * Spec for testing _getRoute().
-     */
-    describe('_getRoute()', function() {
+  //   /**
+  //    * Spec for testing _getPresenterParams().
+  //    */
+  //   describe('_getPresenterParams()', function() {
 
-      beforeEach(function() {
-        service = new PlaceService({}, {});
-      });
+  //     beforeEach(function() {
+  //       service = new PlaceService({}, {});
+  //     });
 
-      it('correctly returns route', function() {
-        var r = 'map/8/1.10/2.00/idn/terrain/loss/1,2,3?begin=2014&end=3014';
-        expect(service._getRoute('map', params)).toEqual(r);
-      });
-    });
+  //     it('correctly gets params from 0 registered presenters', function() {
+  //       var resultParams = service._getPresenterParams([]);
 
+  //       expect(resultParams).toEqual({});
+  //     });
 
-    /**
-     * Spec for testing _handleNewPlace().
-     */
-    describe('_handleNewPlace()', function() {
-      var mockLayerService = null;
-      var mockRouter = null;
+  //     it('correctly gets params from 1 registered presenters', function() {
+  //       var presenter = jasmine.createSpyObj('presenter', ['getPlaceParams']);
+  //       var params = {boom: 'boom'};
 
-      beforeEach(function() {
-        // Mock Ajax since it will call MapServiceLayer
-        jasmine.Ajax.install();
+  //       presenter.getPlaceParams.and.returnValue(params);
+  //       expect(service._getPresenterParams([presenter])).toEqual(params);
+  //     });
 
-        // Mock MapServiceLayer and Router
-        mockLayerService = {
-          getLayers: function(where, successCb, errorCb) {
-            successCb('layers');
-          }
-        };
-        spyOn(mockLayerService, 'getLayers').and.callThrough();
-        mockRouter = jasmine.createSpyObj('router', ['navigate']);
+  //     it('correctly gets params from 2 registered presenters', function() {
+  //       var p1 = jasmine.createSpyObj('presenter', ['getPlaceParams']);
+  //       var p2 = jasmine.createSpyObj('presenter', ['getPlaceParams']);
+  //       var params1 = {boom: 'boom'};
+  //       var params2 = {bam: 'bam'};
+  //       var params = _.extend(params1, params2);
 
-        service = new PlaceService(mockLayerService, mockRouter);
-      });
+  //       p1.getPlaceParams.and.returnValue(params1);
+  //       p2.getPlaceParams.and.returnValue(params2);
+  //       expect(service._getPresenterParams([p1, p2])).toEqual(params);
+  //     });
+  //   });
 
-      // it('correctly publishes Place/go event when go is true', function(done) {
-      //   mps.subscribe('Place/go', function(place) {
-      //     expect(place.params).toEqual(jasmine.objectContaining({
-      //       zoom: 8,
-      //       lat: 1.1,
-      //       lng: 2,
-      //       iso: 'idn',
-      //       maptype: 'terrain',
-      //       begin: 2014,
-      //       end: 3014,
-      //       layers: 'layers'
-      //     }));
-      //   });
-      //   service._handleNewPlace('map', params, true);
-      //   done();
-      // });
+  //   /**
+  //    * Spec for testing _getRoute().
+  //    */
+  //   describe('_getRoute()', function() {
 
-      it('correctly calls router.navigate when go is false', function() {
-        var r = 'map/8/1.10/2.00/idn/terrain/loss/1,2,3?begin=2014&end=3014';
+  //     beforeEach(function() {
+  //       service = new PlaceService({}, {});
+  //     });
 
-        service._handleNewPlace('map', params, false);
-        expect(mockRouter.navigate).toHaveBeenCalledWith(r, {silent: true});
-      });
-    });
+  //     it('correctly returns route', function() {
+  //       var r = 'map/8/1.10/2.00/idn/terrain/loss/1,2,3?begin=2014&end=3014';
+  //       expect(service._getRoute('map', params)).toEqual(r);
+  //     });
+  //   });
 
 
-     /**
-     * Spec for testing _formatUrl().
-     */
-    describe('_formatUrl()', function() {
+  //   /**
+  //    * Spec for testing _handleNewPlace().
+  //    */
+  //   describe('_handleNewPlace()', function() {
+  //     var mockLayerService = null;
+  //     var mockRouter = null;
 
-      beforeEach(function() {
-        service = new PlaceService({}, {});
-      });
+  //     beforeEach(function() {
+  //       // Mock Ajax since it will call MapServiceLayer
+  //       jasmine.Ajax.install();
 
-      it('correctly handles lat/lng strings', function() {
-        expect(service._formatUrl('map', {lat: '1.234567', lng: '2.34567'})).
-          toEqual({lat: '1.23', lng: '2.35'});
-      });
+  //       // Mock MapServiceLayer and Router
+  //       mockLayerService = {
+  //         getLayers: function(where, successCb, errorCb) {
+  //           successCb('layers');
+  //         }
+  //       };
+  //       spyOn(mockLayerService, 'getLayers').and.callThrough();
+  //       mockRouter = jasmine.createSpyObj('router', ['navigate']);
 
-      it('correctly handles lat/lng decimals', function() {
-        expect(service._formatUrl('map', {lat: 1.23456789, lng: 2.3456789})).
-          toEqual({lat: '1.23', lng: '2.35'});
-      });
+  //       service = new PlaceService(mockLayerService, mockRouter);
+  //     });
 
-      it('correctly handles lat/lng integers', function() {
-        expect(service._formatUrl('map', {lat: 1, lng: 2})).
-          toEqual({lat: '1.00', lng: '2.00'});
-      });
+  //     // it('correctly publishes Place/go event when go is true', function(done) {
+  //     //   mps.subscribe('Place/go', function(place) {
+  //     //     expect(place.params).toEqual(jasmine.objectContaining({
+  //     //       zoom: 8,
+  //     //       lat: 1.1,
+  //     //       lng: 2,
+  //     //       iso: 'idn',
+  //     //       maptype: 'terrain',
+  //     //       begin: 2014,
+  //     //       end: 3014,
+  //     //       layers: 'layers'
+  //     //     }));
+  //     //   });
+  //     //   service._handleNewPlace('map', params, true);
+  //     //   done();
+  //     // });
 
-      it('correctly handles lat/lng with non-map route name', function() {
-        expect(service._formatUrl('foo', {lat: 1, lng: 2})).
-          toEqual({lat: 1, lng: 2});
-      });
-    });
+  //     it('correctly calls router.navigate when go is false', function() {
+  //       var r = 'map/8/1.10/2.00/idn/terrain/loss/1,2,3?begin=2014&end=3014';
 
-   /**
-     * Spec for testing _getBaselayerFilters().
-     */
-    describe('_getBaselayerFilters()', function() {
-
-      beforeEach(function() {
-        service = new PlaceService({}, {});
-      });
-
-      it('correctly returns filter for single layer', function() {
-        var f1 = {slug: '1', category_slug: 'forest_clearing'};
-        var f2 = {slug: '2', category_slug: 'forest_clearing'};
-
-        expect(service._getBaselayerFilters('')).toEqual([]);
-        expect(service._getBaselayerFilters('1')).toEqual([f1]);
-        expect(service._getBaselayerFilters('1,2')).toEqual([f1, f2]);
-      });
-    });
-
-
-   /**
-     * Spec for testing _getSublayerFilters().
-     */
-    describe('_getSublayerFilters()', function() {
-
-      beforeEach(function() {
-        service = new PlaceService({}, {});
-      });
-
-      it('correctly returns filter for single layer', function() {
-        var f1 = {id: 1};
-        var f2 = {id: 2};
-
-        expect(service._getSublayerFilters('')).toEqual([]);
-        expect(service._getSublayerFilters('1')).toEqual([f1]);
-        expect(service._getSublayerFilters('1,2')).toEqual([f1, f2]);
-      });
-    });
+  //       service._handleNewPlace('map', params, false);
+  //       expect(mockRouter.navigate).toHaveBeenCalledWith(r, {silent: true});
+  //     });
+  //   });
 
 
-    /**
-     * Spec for testing _standardizeParams().
-     */
-    describe('_standardizeParams()', function() {
+  //    /**
+  //    * Spec for testing _formatUrl().
+  //    */
+  //   describe('_formatUrl()', function() {
 
-      beforeEach(function() {
-        service = new PlaceService({}, {});
-      });
+  //     beforeEach(function() {
+  //       service = new PlaceService({}, {});
+  //     });
 
-      it('correctly standardizes input parameters', function() {
-        var resultParams = service._standardizeParams(params);
+  //     it('correctly handles lat/lng strings', function() {
+  //       expect(service._formatUrl('map', {lat: '1.234567', lng: '2.34567'})).
+  //         toEqual({lat: '1.23', lng: '2.35'});
+  //     });
 
-        expect(resultParams).toEqual(jasmine.objectContaining({
-          zoom: 8,
-          lat: 1.1,
-          lng: 2,
-          iso: 'idn',
-          maptype: 'terrain',
-          begin: 2014,
-          end: 3014
-        }));
-      });
+  //     it('correctly handles lat/lng decimals', function() {
+  //       expect(service._formatUrl('map', {lat: 1.23456789, lng: 2.3456789})).
+  //         toEqual({lat: '1.23', lng: '2.35'});
+  //     });
 
-      it('correctly adds a default ALL iso parameter', function() {
-        var testParams = _.omit(params, 'iso');
-        var resultParams = service._standardizeParams(testParams);
+  //     it('correctly handles lat/lng integers', function() {
+  //       expect(service._formatUrl('map', {lat: 1, lng: 2})).
+  //         toEqual({lat: '1.00', lng: '2.00'});
+  //     });
 
-        expect(resultParams).toEqual(jasmine.objectContaining({
-          zoom: 8,
-          lat: 1.1,
-          lng: 2,
-          iso: 'ALL',
-          maptype: 'terrain',
-          begin: 2014,
-          end: 3014
-        }));
-      });
-    });
+  //     it('correctly handles lat/lng with non-map route name', function() {
+  //       expect(service._formatUrl('foo', {lat: 1, lng: 2})).
+  //         toEqual({lat: 1, lng: 2});
+  //     });
+  //   });
 
-    describe('Test Place/register event', function() {
-      var presenter = {name: 'presenter'};
+  //  /**
+  //    * Spec for testing _getBaselayerFilters().
+  //    */
+  //   describe('_getBaselayerFilters()', function() {
 
-      beforeEach(function() {
-        service = new PlaceService({}, {});
-        mps.publish('Place/register', [presenter]);
-      });
+  //     beforeEach(function() {
+  //       service = new PlaceService({}, {});
+  //     });
 
-      it('Presenter registered', function() {
-        expect(service._presenters[1]).toEqual(presenter);
-      });
-    });
-  });
+  //     it('correctly returns filter for single layer', function() {
+  //       var f1 = {slug: '1', category_slug: 'forest_clearing'};
+  //       var f2 = {slug: '2', category_slug: 'forest_clearing'};
+
+  //       expect(service._getBaselayerFilters('')).toEqual([]);
+  //       expect(service._getBaselayerFilters('1')).toEqual([f1]);
+  //       expect(service._getBaselayerFilters('1,2')).toEqual([f1, f2]);
+  //     });
+  //   });
+
+
+  //  /**
+  //    * Spec for testing _getSublayerFilters().
+  //    */
+  //   describe('_getSublayerFilters()', function() {
+
+  //     beforeEach(function() {
+  //       service = new PlaceService({}, {});
+  //     });
+
+  //     it('correctly returns filter for single layer', function() {
+  //       var f1 = {id: 1};
+  //       var f2 = {id: 2};
+
+  //       expect(service._getSublayerFilters('')).toEqual([]);
+  //       expect(service._getSublayerFilters('1')).toEqual([f1]);
+  //       expect(service._getSublayerFilters('1,2')).toEqual([f1, f2]);
+  //     });
+  //   });
+
+
+  //   /**
+  //    * Spec for testing _standardizeParams().
+  //    */
+  //   describe('_standardizeParams()', function() {
+
+  //     beforeEach(function() {
+  //       service = new PlaceService({}, {});
+  //     });
+
+  //     it('correctly standardizes input parameters', function() {
+  //       var resultParams = service._standardizeParams(params);
+
+  //       expect(resultParams).toEqual(jasmine.objectContaining({
+  //         zoom: 8,
+  //         lat: 1.1,
+  //         lng: 2,
+  //         iso: 'idn',
+  //         maptype: 'terrain',
+  //         begin: 2014,
+  //         end: 3014
+  //       }));
+  //     });
+
+  //     it('correctly adds a default ALL iso parameter', function() {
+  //       var testParams = _.omit(params, 'iso');
+  //       var resultParams = service._standardizeParams(testParams);
+
+  //       expect(resultParams).toEqual(jasmine.objectContaining({
+  //         zoom: 8,
+  //         lat: 1.1,
+  //         lng: 2,
+  //         iso: 'ALL',
+  //         maptype: 'terrain',
+  //         begin: 2014,
+  //         end: 3014
+  //       }));
+  //     });
+  //   });
+
+  //   describe('Test Place/register event', function() {
+  //     var presenter = {name: 'presenter'};
+
+  //     beforeEach(function() {
+  //       service = new PlaceService({}, {});
+  //       mps.publish('Place/register', [presenter]);
+  //     });
+
+  //     it('Presenter registered', function() {
+  //       expect(service._presenters[1]).toEqual(presenter);
+  //     });
+  //   });
+  // });
 });
