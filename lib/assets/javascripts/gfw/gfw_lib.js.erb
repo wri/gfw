@@ -283,6 +283,11 @@ GFW.modules.app = function(gfw) {
           this._removeForestGainLayer();
         }
       } else {
+
+        if (layer.get('table_name') === 'ifl_2000' || layer.get('table_name') === 'ifl_2013_deg') {
+          $('.' + layer.get('table_name') + '').trigger('click');
+        }
+
         this.layers = _.without(this.layers, layer.get('table_name'));
         this.renderLayers();
       }
@@ -1566,6 +1571,16 @@ GFW.modules.maplayer = function(gfw) {
           GFW.app.closeInfowindows();
         }
 
+        if (slug === 'ifl_2000') {
+          if (ifl_2013.attributes['visible']) {
+            GFW.app.removeLayer(ifl_2013);
+          }
+        } else if (slug === 'ifl_2013_deg') {
+          if (ifl_2000.attributes['visible']) {
+            GFW.app.removeLayer(ifl_2000);
+          }
+        } 
+
         if (visible) {
           GFW.app.addLayer(this.layer);
           ga('send', 'event', 'Filter', 'Toggle', slug);
@@ -1625,6 +1640,8 @@ GFW.modules.datalayers = function(gfw) {
         forestgain         = GFW.app.datalayers.LayersObj.get(596);
         umd_tree_loss_gain = GFW.app.datalayers.LayersObj.get(597);
         cover_extent       = GFW.app.datalayers.LayersObj.get(591);
+        ifl_2013           = GFW.app.datalayers.LayersObj.get(603);
+        ifl_2000           = GFW.app.datalayers.LayersObj.get(602);
 
         //// add idnforest manually
         idnforest = cover_extent.toJSON();
