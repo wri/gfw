@@ -79,8 +79,6 @@ GFW.modules.app = function(gfw) {
       this.forest2000Layer    = null;
       this.forestGainLayer    = null;
       this.idnPrimaryLayer    = null;
-      this.ifl_2000Layer      = null;
-      this.ifl_2013Layer      = null;
 
       this.currentBaseLayer = config.BASELAYER;
     },
@@ -279,8 +277,6 @@ GFW.modules.app = function(gfw) {
         if (table_name == 'pantropical') { this._removePantropicalLayer(); }
         if (table_name == 'forest2000') { this._removeForest2000Layer(); }
         if (table_name == 'idn_primary') { this._removeIdnPrimaryLayer(); }
-        if (table_name == 'ifl_2000') { this._removeIfl_2000Layer(); }
-        if (table_name == 'ifl_2013_deg') { this._removeIfl_2013Layer(); }
         if (table_name == 'forestgain') {
           this.layers = _.without(this.layers, layer.get('table_name'));
 
@@ -310,8 +306,6 @@ GFW.modules.app = function(gfw) {
         if (table_name == 'pantropical') { this._renderPantropicalLayer(); }
         if (table_name == 'forest2000') { this._renderForest2000Layer(); }
         if (table_name == 'idn_primary') {this._renderIdnPrimaryLayer(); }
-        if (table_name == 'ifl_2000') { this._renderIfl_2000Layer(); }
-        if (table_name == 'ifl_2013_deg') { this._renderIfl_2013Layer(); }
         if (table_name == 'forestgain') { this._renderForestGainLayer(); }
       } else {
         this.layers.push(layer.get('table_name'));
@@ -573,34 +567,6 @@ GFW.modules.app = function(gfw) {
         this.idnPrimaryLayer.hide();
       }
     },
-
-    _renderIfl_2000Layer: function() {
-      if (this.ifl_2000Layer) {
-        this.ifl_2000Layer.show();
-      } else {
-        this.ifl_2000Layer = Ifl_2000.init(map);
-      }
-    },
-
-    _removeIfl_2000Layer: function() {
-      if (this.ifl_2000Layer) {
-        this.ifl_2000Layer.hide();
-      }
-    }, 
-
-    _renderIfl_2013Layer: function() {
-      if (this.ifl_2013Layer) {
-        this.ifl_2013Layer.show();
-      } else {
-        this.ifl_2013Layer = Ifl_2013.init(map);
-      }
-    },
-
-    _removeIfl_2013Layer: function() {
-      if (this.ifl_2013Layer) {
-        this.ifl_2013Layer.hide();
-      }
-    }, 
 
     _renderForestGainLayer: function() {
       if (this.forestGainLayer) {

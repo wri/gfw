@@ -112,6 +112,23 @@
   </ul>
 </script>
 
+<script id='legend-ifl_2013-template' type='text/x-underscore-template'>
+  <ul class='legend_category {{category}}{{#sublayer}} sublayer{{/sublayer}}'>
+    <li class='{{category}}'><strong style='color:{{category_color}};'>{{category_title}}</strong></li>
+
+    <li id='{{cat_id}}' class='{{category}}'>
+      <i style='background-color:{{title_color}};'></i>
+      Intact Forest Landscapes 2013 <a href='#' data-source='{{slug}}' class='source {{slug}}'></a>
+    </li>
+
+    <ul style="margin-bottom:10px">
+      <li id='{{cat_id}}' class='intact'> <i style='background-color:{{title_color}};'></i> Intact Forest Landscapes</li>
+      <li id='{{cat_id}}' class='degraded'> <i style='background-color:#97BD3D'></i> Degradation 2000-2013</li>
+    </ul>
+
+  </ul>
+</script>
+
 <script id='legend-loss-template' type='text/x-underscore-template'>
   <ul class='legend_category {{category}}'>
     <li class='{{category}}'><strong style='color:{{category_color}};'>{{category_title}}</strong></li>
