@@ -5,54 +5,108 @@ define([
   'underscore',
   'mps',
   'presenters/MapPresenter',
+  'helpers/baselayers'
 ], function(_, mps, MapPresenter) {
 
-  describe("The MapPresenter", function() {
-    // The MapView mock
-    var viewSpy = null;
+  describe('MapPresenter', function() {
+    var presenter, viewSpy, place;
 
-    // The presenter to test
-    var presenter = null;
+    /**
+     * Set MockView,
+     * Set presenter, don't subscriber to events.
+     */
+    beforeEach(function() {
+      viewSpy = jasmine.createSpyObj(
+        'viewSpy', ['setLayers', 'setOptions']);
 
-    describe("Test responding to published events", function() {
-      var layers = {
-        forest2000: {}
-      };
-
-      var place = {
+      place = {
         params: {
           name: 'map',
-          baselayers: 'loss',
-          zoom: 8,
+          zoom: 3,
           maptype: 'terrain',
-          lat: 1,
-          lng: 2,
-          layerSpec: {
-            getLayers: function() {
-              return layers;
-            },
-            getBaselayers: function() {}
+          lat: 24,
+          lng: 18,
+          threshold: 70,
+          begin: 2001,
+          end: 2002
+        },
+        layerSpec: {
+          getLayers: function() {
+            return baselayers;
           }
         }
       };
 
-      beforeEach(function() {
-        // viewSpy = jasmine.createSpyObj(
-        //   'viewSpy',
-        //   ['setLayers', 'initMap']);
-        // presenter = new MapPresenter(viewSpy);
-        // mps.publish('Place/go', [place]);
+      MapPresenter.prototype._subscribe = new Function();
+      presenter = new MapPresenter(viewSpy);
+    });
+
+    /**
+     * Test the MapPresenter StatusModel.
+     */
+    describe('StatusModel', function() {
+      it('is defined', function() {
+        expect(presenter.status).toBeDefined();
       });
 
-      it("Check Place/go handling", function() {
-        // expect(viewSpy.initMap).toHaveBeenCalled();
-        // expect(viewSpy.initMap).toHaveBeenCalledWith(place.params);
-        // expect(viewSpy.initMap.calls.count()).toEqual(1);
-
-        // expect(viewSpy.setLayers).toHaveBeenCalled();
-        // expect(viewSpy.setLayers).toHaveBeenCalledWith(place.params.layerSpec.getLayers());
-        // expect(viewSpy.setLayers.calls.count()).toEqual(1);
+      it('correct default values', function() {
+        expect(presenter.status.toJSON()).toEqual({
+          threshold: null,
+          currentDate: null
+        });
       });
     });
+
+    /**
+     * Test presenter response to 'Place/go' events.
+     */
+    describe('_onPlaceGo', function() {
+      beforeEach(function() {
+        spyOn(presenter, '_setMapOptions');
+        spyOn(presenter, '_updateStatusModel');
+        spyOn(presenter, '_setLayers');
+        presenter._onPlaceGo(place);
+      });
+
+      it('Should call _setMapOptions with correct params', function() {
+        expect(presenter._setMapOptions).toHaveBeenCalled();
+        expect(presenter._setMapOptions.calls.count()).toEqual(1);
+        expect(presenter._setMapOptions).toHaveBeenCalledWith(_.pick(place.params,
+          'zoom', 'maptype', 'lat', 'lng'));
+      });
+
+      it('Should call _updateStatusModel with place params', function() {
+        expect(presenter._updateStatusModel).toHaveBeenCalled();
+        expect(presenter._updateStatusModel.calls.count()).toEqual(1);
+        expect(presenter._updateStatusModel).toHaveBeenCalledWith(place.params);
+      });
+
+      it('Should call _setLayers with layers object', function() {
+        expect(presenter._setLayers).toHaveBeenCalled();
+        expect(presenter._setLayers.calls.count()).toEqual(1);
+        expect(presenter._setLayers).toHaveBeenCalledWith(baselayers);
+      });
+    });
+
+    describe('_updateStatusModel', function() {
+      it('Should set status params from suplied params, only those permitted', function() {
+        presenter._updateStatusModel(place.params);
+
+        expect(presenter.status.toJSON()).toEqual({
+          threshold: 70,
+          currentDate: [2001, 2002]
+        });
+      });
+    });
+
+    describe('_setMapOptions', function() {
+      it('Should call view.setOptions', function() {
+        presenter._setMapOptions(_.pick(place.params,
+          'zoom', 'maptype', 'lat', 'lng'));
+        expect(presenter.view.setOptions).toHaveBeenCalled();
+        expect(presenter.view.setOptions.calls.count()).toEqual(1);
+      });
+    });
+
   });
 });

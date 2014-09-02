@@ -4,10 +4,11 @@
  * @return FiresTimeline class (extends TimelineBtnClass)
  */
 define([
+  'underscore',
   'moment',
   'views/timeline/class/TimelineBtnClass',
   'presenters/TimelineClassPresenter'
-], function(moment, TimelineBtnClass, Presenter) {
+], function(_, moment, TimelineBtnClass, Presenter) {
 
   'use strict';
 

@@ -151,16 +151,15 @@ define([
       }, this));
     },
 
-    setOptions: function(params) {
-      params = {
-        zoom: params.zoom,
-        mapTypeId: params.maptype,
-        center: new google.maps.LatLng(params.lat, params.lng)
-      };
-
-      this.map.setOptions(params);
+    /**
+     * Set map options from the suplied options object.
+     *
+     * @param {Object} options
+     */
+    setOptions: function(options) {
+      this.map.setOptions(options);
       this.onCenterChange();
-      this.presenter.onMaptypeChange(params.mapTypeId);
+      this.presenter.onMaptypeChange(options.mapTypeId);
     },
 
     /**

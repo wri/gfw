@@ -12,6 +12,13 @@ define([
 
   'use strict';
 
+  var StatusModel = Backbone.Model.extend({
+    defaults: {
+      layers: [],
+      threshold: 10
+    }
+  });
+
   var ThresholdPresenter = Class.extend({
 
     /*
@@ -29,12 +36,7 @@ define([
      */
     init: function(view) {
       this.view = view;
-
-      this.status = new (Backbone.Model.extend())({
-        layers: false,
-        threshold: 10
-      });
-
+      this.status = new StatusModel();
       this._statusEvents();
       this._subscribe();
       mps.publish('Place/register', [this]);
@@ -52,12 +54,12 @@ define([
      */
     _subscribe: function() {
       mps.subscribe('Place/go', _.bind(function(place) {
-        this._setLayers(place.layerSpec);
+        this._setLayers(place.layerSpec.getLayers());
         this._initThreshold(place.params);
       }, this));
 
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this._setLayers(layerSpec);
+        this._setLayers(layerSpec.getLayers());
       }, this));
     },
 
@@ -65,11 +67,11 @@ define([
      * Set the threshold visible or hidden deppend on
      * the active layers.
      *
-     * @param {Object} layerSpec Place.layerSpec
-     * @param {Object} params    Place.params
+     * @param {Object} layers Layers object
+     * @param {Object} params Place.params
      */
-    _setLayers: function(layerSpec) {
-      var layers = _.compact(_.map(layerSpec.getLayers(), _.bind(function(layer) {
+    _setLayers: function(layers) {
+      layers = _.compact(_.map(layers, _.bind(function(layer) {
         if (_.indexOf(this.supportedLayers, layer.slug) > -1) {
           return layer.slug;
         }
@@ -79,7 +81,7 @@ define([
     },
 
     /**
-     * Toggle threshold widget if any supported layer active.
+     * Toggle threshold widget if any supported layer is active.
      */
     _setVisibility: function() {
       this.view.model.set('hidden', this.status.get('layers').length === 0);
@@ -120,6 +122,11 @@ define([
       mps.publish('Place/update', [{go: false}]);
     },
 
+    /**
+     * Used by PlaceService to get the current threshold value.
+     *
+     * @return {Object} threshold
+     */
     getPlaceParams: function() {
       var p = {};
 
