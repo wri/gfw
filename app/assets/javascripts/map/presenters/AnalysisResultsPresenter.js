@@ -228,8 +228,8 @@ define([
           });
         }
 
-        p.lossAlerts = p.lossAlerts.toLocaleString();
-        p.gainAlerts = p.gainAlerts.toLocaleString();
+        p.lossAlerts = results.loss.toLocaleString() || p.lossAlerts.toLocaleString();
+        p.gainAlerts = results.gain.toLocaleString() || p.gainAlerts.toLocaleString();
 
       }
 
