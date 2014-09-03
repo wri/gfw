@@ -106,15 +106,28 @@ define([
     },
 
     /**
+     * Get layer object from datasetId.
+     *
+     * @param  {String} datasetId
+     */
+    _getLayerFromDatasetId: function(datasetId) {
+      var layerSlug = this.datasets[datasetId];
+
+      var layer = this.status.get('layerSpec').getLayer({
+        slug: layerSlug
+      });
+
+      return layer;
+    },
+
+    /**
      * Render the analysis from the supplied AnalysisService
      * results object.
      *
      * @param  {Object} results Results object form the AnalysisService
      */
     _renderAnalysis: function(results) {
-      // Get layer object
-      var layerSlug = this.datasets[results.meta.id];
-      var layer = this.status.get('layerSpec').getLayer({slug: layerSlug});
+      var layer = this._getLayerFromDatasetId(results.meta.id);
 
       // Unexpected results from successful request
       if (!layer) {
@@ -162,6 +175,7 @@ define([
       p[layer.slug] = true;
       p.layer = layer;
       p.download = results.download_urls;
+      p.alertsName = results.meta.name;
 
       if (results.params.iso) {
         p.iso = results.params.iso;

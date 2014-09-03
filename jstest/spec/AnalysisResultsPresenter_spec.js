@@ -4,7 +4,8 @@
 define([
   'underscore',
   'presenters/AnalysisResultsPresenter',
-  'helpers/analysis_service_response'
+  'helpers/analysis_service_response',
+  'helpers/layers'
 ], function(_, Presenter) {
   'use strict';
 
@@ -16,6 +17,7 @@ define([
         model: {
           set: jasmine.createSpy()
         },
+        renderAnalysis: jasmine.createSpy(),
         renderFailure: jasmine.createSpy(),
         renderUnavailable: jasmine.createSpy()
       };
@@ -23,8 +25,7 @@ define([
       // Subscribe wont be called and events won't be triggered.
       spyOn(Presenter.prototype, '_subscribe');
       presenter = new Presenter(viewSpy);
-      spyOn(presenter, '_renderAnalysis');
-      spyOn(presenter.status, 'set')
+      spyOn(presenter.status, 'set');
     });
 
     describe('Initialization', function() {
@@ -46,45 +47,63 @@ define([
     // Should render the analysis, failure or unavailable message,
     // and set status.analysis to true and model.boxHidden to false.
     describe('_handleAnalysisResults()', function() {
+      beforeEach(function() {
+        spyOn(presenter, '_renderAnalysis');
+      });
+
       afterEach(function() {
-        expect(presenter.status.set).toHaveBeenCalled();
         expect(presenter.status.set).toHaveBeenCalledWith('analysis', true);
         expect(presenter.status.set.calls.count()).toEqual(1);
 
-        expect(viewSpy.model.set).toHaveBeenCalled();
         expect(viewSpy.model.set).toHaveBeenCalledWith('boxHidden', false);
         expect(viewSpy.model.set.calls.count()).toEqual(1);
       });
 
       it('should render analysis a valid supplied resource', function() {
         presenter._handleAnalysisResults(AnalysisServiceResponse.fires);
-        expect(presenter._renderAnalysis).toHaveBeenCalled();
         expect(presenter._renderAnalysis.calls.count()).toEqual(1);
       });
 
       it('should render failure message from a failure response', function() {
         presenter._handleAnalysisResults({failure: true});
-        expect(viewSpy.renderFailure).toHaveBeenCalled();
         expect(viewSpy.renderFailure.calls.count()).toEqual(1);
       });
 
       it('should render unavailable message from a unvalid resource', function() {
         presenter._handleAnalysisResults({unavailable: true});
-        expect(viewSpy.renderUnavailable).toHaveBeenCalled();
         expect(viewSpy.renderUnavailable.calls.count()).toEqual(1);
       });
     });
 
-    describe('_renderAnalysis()', function() {
+    describe('_renderAnalysis', function() {
+      beforeEach(function() {
+        spyOn(presenter, '_getLayerFromDatasetId').and.returnValue(layers.fires);
+        presenter._renderAnalysis(AnalysisServiceResponse.fires);
+      });
 
-    });
+      it('should get the layer object from status.layerSpec', function() {
+        expect(presenter._getLayerFromDatasetId).toHaveBeenCalledWith(
+          AnalysisServiceResponse.fires.meta.id);
+        expect(presenter._getLayerFromDatasetId.calls.count()).toEqual(1);
+      });
 
-    describe('_getAnalysisResource()', function() {
-
+      it('should call view.renderAnalysis after getting results html params succesfully', function() {
+        expect(viewSpy.renderAnalysis.calls.count()).toEqual(1);
+      });
     });
 
     describe('deleteAnalysis()', function() {
+      beforeEach(function() {
+        presenter.deleteAnalysis();
+      });
 
+      it('should set status.analysis to false and hide the widget', function() {
+        expect(presenter.status.set).toHaveBeenCalledWith('analysis', false);
+        expect(presenter.status.set.calls.count()).toEqual(1);
+
+        expect(viewSpy.model.set).toHaveBeenCalledWith('boxHidden', true);
+        expect(viewSpy.model.set.calls.count()).toEqual(1);
+      });
     });
   });
 
