@@ -75,7 +75,7 @@ define([
       });
     });
 
-    describe('_renderAnalysis', function() {
+    describe('_renderAnalysis()', function() {
       beforeEach(function() {
         spyOn(presenter, '_getLayerFromDatasetId').and.returnValue(layers.fires);
         presenter._renderAnalysis(AnalysisServiceResponse.fires);

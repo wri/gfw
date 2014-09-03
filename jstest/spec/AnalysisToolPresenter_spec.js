@@ -31,15 +31,18 @@ define([
         },
         _fitBounds: jasmine.createSpy()
       };
+
+      spyOn(Presenter.prototype, '_subscribe');
       presenter = new Presenter(viewSpy);
     });
 
-    describe('StatusModel', function() {
-      it('is defined', function() {
-        expect(presenter.status).toBeDefined();
+    describe('Initialization', function() {
+      it('subscribe to application events', function() {
+        expect(Presenter.prototype._subscribe).toHaveBeenCalled();
       });
 
-      it('correct default values', function() {
+      it('is defined', function() {
+        expect(presenter.status).toBeDefined();
         expect(presenter.status.toJSON()).toEqual({
           baselayer: null,
           analysis: null,
@@ -52,7 +55,7 @@ define([
       });
     });
 
-    describe('_setBaselayer', function() {
+    describe('_setBaselayer()', function() {
       beforeEach(function() {
         presenter._setBaselayer(baselayers);
       });
@@ -68,7 +71,7 @@ define([
       });
     });
 
-    describe('_publishAnalysis', function() {
+    describe('_publishAnalysis()', function() {
       beforeEach(function() {
         presenter.status.set('baselayer', _.findWhere(baselayers, {slug: 'umd_tree_loss_gain'}));
         presenter.status.set('threshold', 70);
