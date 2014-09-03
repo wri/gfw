@@ -39,7 +39,7 @@ define([
         expect(Router.prototype.map.calls.count()).toEqual(6);
       });
 
-      it('cache burst has been called', function() {
+      it('cache bust has been called', function() {
         expect(Router.prototype._checkForCacheBust).toHaveBeenCalled();
       });
     });

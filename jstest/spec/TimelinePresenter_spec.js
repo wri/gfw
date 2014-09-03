@@ -51,7 +51,6 @@ define([
         expect(viewSpy.model.set).toHaveBeenCalled();
         expect(viewSpy.model.set).toHaveBeenCalledWith('hidden', false);
         expect(viewSpy.model.set.calls.count()).toEqual(1);
-
       });
     });
 
@@ -65,5 +64,4 @@ define([
       });
     });
   });
-
 });
