@@ -30,11 +30,8 @@ define([
         expect(Presenter.prototype._subscribe).toHaveBeenCalled();
       });
 
-      it('presenter.status is defined', function() {
+      it('presenter.status is defined correctly', function() {
         expect(presenter.status).toBeDefined();
-      });
-
-      it('presenter.status has correct default attributes', function() {
         expect(presenter.status.toJSON()).toEqual({
           layers: [],
           threshold: 10
