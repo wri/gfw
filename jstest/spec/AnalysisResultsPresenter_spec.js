@@ -24,6 +24,7 @@ define([
       spyOn(Presenter.prototype, '_subscribe');
       presenter = new Presenter(viewSpy);
       spyOn(presenter, '_renderAnalysis');
+      spyOn(presenter.status, 'set')
     });
 
     describe('Initialization', function() {
@@ -42,8 +43,20 @@ define([
       });
     });
 
-    describe('_handleAnalysisResults', function() {
-      it('should call _renderAnalysis from a valid supplied resource', function() {
+    // Should render the analysis, failure or unavailable message,
+    // and set status.analysis to true and model.boxHidden to false.
+    describe('_handleAnalysisResults()', function() {
+      afterEach(function() {
+        expect(presenter.status.set).toHaveBeenCalled();
+        expect(presenter.status.set).toHaveBeenCalledWith('analysis', true);
+        expect(presenter.status.set.calls.count()).toEqual(1);
+
+        expect(viewSpy.model.set).toHaveBeenCalled();
+        expect(viewSpy.model.set).toHaveBeenCalledWith('boxHidden', false);
+        expect(viewSpy.model.set.calls.count()).toEqual(1);
+      });
+
+      it('should render analysis a valid supplied resource', function() {
         presenter._handleAnalysisResults(AnalysisServiceResponse.fires);
         expect(presenter._renderAnalysis).toHaveBeenCalled();
         expect(presenter._renderAnalysis.calls.count()).toEqual(1);
@@ -62,11 +75,15 @@ define([
       });
     });
 
-    describe('_renderAnalysis', function() {
+    describe('_renderAnalysis()', function() {
 
     });
 
-    describe('_getAnalysisResource', function() {
+    describe('_getAnalysisResource()', function() {
+
+    });
+
+    describe('deleteAnalysis()', function() {
 
     });
   });

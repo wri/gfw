@@ -3,13 +3,25 @@
   <div class="widget-content">
 
     <div class="widget-closed">
-      <span class="analysis-title">User defined area</span>
+      <span class="analysis-title">
+        {{#if iso}}
+          {{iso}}
+        {{else}}
+          User defined area
+        {{/if}}
+      </span>
     </div>
 
     <div class="widget-opened">
       {{#if layer}}
         <div class="analysis-info">
-          <span class="analysis-title">User defined area</span>
+          <span class="analysis-title">
+            {{#if iso}}
+              {{iso}}
+            {{else}}
+              User defined area
+            {{/if}}
+          </span>
           <span class="analysis-date-range">{{dateRange}}</span>
         </div>
         <ul class="analysis-stats">
@@ -59,33 +71,6 @@
             </ul>
           </li>
         </ul>
-      {{/if}}
-
-      {{#if failure}}
-        <div class="analysis-info">
-          <span class="analysis-title">ERROR</span>
-        </div>
-        <div class="analysis-error">
-          Couldn't fetch analysis data.
-        </div>
-      {{/if}}
-
-      {{#if loading}}
-        <div class="analysis-info">
-          <span class="analysis-title">Loading</span>
-        </div>
-        <div class="analysis-loading">
-          <img src="/assets/gif/spinner.gif"/>
-        </div>
-      {{/if}}
-
-      {{#if unavailable}}
-        <div class="analysis-info">
-          <span class="analysis-title">UNSUPPORTED</span>
-        </div>
-        <div class="analysis-error">
-          This layer doesn't support analysis.
-        </div>
       {{/if}}
 
       <div class="analysis-footer">

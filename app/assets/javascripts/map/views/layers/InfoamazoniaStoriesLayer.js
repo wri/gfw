@@ -43,8 +43,8 @@ define([
         };
 
         markerOptions = _.extend(this.options, {
-          size: story.marker.iconSize,
-          offset: [-story.marker.iconAnchor[0], -story.marker.iconAnchor[1]],
+          size: [10, 10],
+          offset: [-10, -10],
           /*icon: story.marker.iconUrl*/
           icon: '/assets/icons/infoamazonia_exclamation.png'
         });
