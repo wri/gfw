@@ -73,8 +73,6 @@ define([
           .range([0, width])
           .clamp(true);
 
-      var data = this._getData();
-
       // Set SVG
       this.svg = d3.select(this.el)
         .append('svg')
@@ -99,13 +97,13 @@ define([
       this.tickG = this.svg.append('g')
         .attr('class', 'ticks')
         .selectAll('g')
-        .data(data)
+        .data(this.data)
         .enter()
         .append('g')
         .attr('class', 'tick')
         .attr('transform', _.bind(function(d, i) {
           i++;
-          var slotWidth = (width / data.length);
+          var slotWidth = (width / this.data.length);
           var x =  (i * slotWidth) +
             ((slotWidth - this.options.tickWidth) / 2) - slotWidth;
 

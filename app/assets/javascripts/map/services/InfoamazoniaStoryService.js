@@ -14,7 +14,7 @@ define([
 
     requestId: 'InfoamazoniaStoryService',
 
-    url: '//wri-01.cartodb.com/api/v2/sql?q=SELECT *, ST_AsGeoJSON(the_geom) AS latlng FROM infoamazonia',
+    url: '//wri-01.cartodb.com/api/v2/sql?q=SELECT *, ST_AsGeoJSON(the_geom) AS latlng FROM table_6434519437',
 
     /**
      * Constructs a new instance of StoryService.
@@ -38,7 +38,6 @@ define([
     fetchStories: function(successCb, errorCb) {
       function _parseData(data) {
         var result = _.map(data.rows, function(d) {
-          d.marker = JSON.parse(d.marker);
           d.latlng = JSON.parse(d.latlng).coordinates;
           return d;
         });

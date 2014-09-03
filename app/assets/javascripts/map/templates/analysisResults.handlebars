@@ -3,13 +3,25 @@
   <div class="widget-content">
 
     <div class="widget-closed">
-      <span class="analysis-title">User defined area</span>
+      <span class="analysis-title">
+        {{#if iso}}
+          {{iso}}
+        {{else}}
+          User defined area
+        {{/if}}
+      </span>
     </div>
 
     <div class="widget-opened">
       {{#if layer}}
         <div class="analysis-info">
-          <span class="analysis-title">User defined area</span>
+          <span class="analysis-title">
+            {{#if iso}}
+              {{iso}}
+            {{else}}
+              User defined area
+            {{/if}}
+          </span>
           <span class="analysis-date-range">{{dateRange}}</span>
         </div>
         <ul class="analysis-stats">
@@ -22,11 +34,11 @@
           {{#if umd_tree_loss_gain}}
             <li>
               <span class="stats-title">Loss {{lossDateRange}}<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{threshold}}% canopy density</span></span>
-              <span class="stats-count"><strong style="color: {{layer.category_color}};">{{lossAlerts}} ha</strong></span>
+              <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{lossAlerts}}</strong> ha</span>
             </li>
             <li>
               <span class="stats-title">Gain 2000-2012</span>
-              <span class="stats-count"><strong style="color: #6D6DE5;">{{gainAlerts}} ha</strong></span>
+              <span class="stats-count" style="color: #6D6DE5;"><strong>{{gainAlerts}}</strong> ha</span>
             </li>
             <li>
               <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
@@ -35,16 +47,16 @@
             {{#if imazon}}
               <li>
                 <span class="stats-title">Deforestation alerts</span>
-                <span class="stats-count"><strong style="color: {{layer.category_color}};">{{defor}} {{layer.slug}} alerts</strong> </span>
+                <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{defor}}</strong> Ha</span>
               </li>
               <li>
                 <span class="stats-title">Degradation alerts</span>
-                <span class="stats-count"><strong style="color: {{layer.category_color}};">{{degrad}} {{layer.slug}} alerts</strong> </span>
+                <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{degrad}}</strong> Ha</span>
               </li>
             {{else}}
               <li>
                 <span class="stats-title">Total alerts</span>
-                <span class="stats-count"><strong style="color: {{layer.category_color}};">{{totalAlerts}} {{layer.slug}} alerts</strong> </span>
+                <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> {{alertsName}}</span>
               </li>
             {{/if}}
           {{/if}}
@@ -59,33 +71,6 @@
             </ul>
           </li>
         </ul>
-      {{/if}}
-
-      {{#if failure}}
-        <div class="analysis-info">
-          <span class="analysis-title">ERROR</span>
-        </div>
-        <div class="analysis-error">
-          Couldn't fetch analysis data.
-        </div>
-      {{/if}}
-
-      {{#if loading}}
-        <div class="analysis-info">
-          <span class="analysis-title">Loading</span>
-        </div>
-        <div class="analysis-loading">
-          <img src="/assets/gif/spinner.gif"/>
-        </div>
-      {{/if}}
-
-      {{#if unavailable}}
-        <div class="analysis-info">
-          <span class="analysis-title">UNSUPPORTED</span>
-        </div>
-        <div class="analysis-error">
-          This layer doesn't support analysis.
-        </div>
       {{/if}}
 
       <div class="analysis-footer">
