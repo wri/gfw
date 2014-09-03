@@ -41,7 +41,7 @@ define([
       presenter._setTimeline(layerSpec, placeParams);
     });
 
-    describe('_setTimeline', function() {
+    describe('_setTimeline()', function() {
       it('must set the correct timeline from layerSpec', function() {
         expect(presenter.currentTimeline).toBeDefined();
         expect(presenter.currentTimeline.getName()).toEqual('umd_tree_loss_gain');
@@ -51,11 +51,10 @@ define([
         expect(viewSpy.model.set).toHaveBeenCalled();
         expect(viewSpy.model.set).toHaveBeenCalledWith('hidden', false);
         expect(viewSpy.model.set.calls.count()).toEqual(1);
-
       });
     });
 
-    describe('_removeTimeline', function() {
+    describe('_removeTimeline()', function() {
       beforeEach(function() {
         presenter._removeTimeline();
       });
@@ -65,5 +64,4 @@ define([
       });
     });
   });
-
 });

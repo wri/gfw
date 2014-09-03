@@ -34,7 +34,7 @@ define([
       var data = [];
 
       while(1) {
-        if (data.length > 0 && _.last(data).end.clone().add(1,'month')
+        if (data.length > 0 && _.last(data).end.clone().add(1,'month').endOf('month')
           .isAfter(this.options.dateRange[1])) {
           break;
         }
@@ -50,10 +50,10 @@ define([
 
       if (data.length < 1) {
         d.start = date[0].clone();
-        d.end = date[0].clone().add(2, 'month');
+        d.end = date[0].clone().add(2, 'month').endOf('month');
       } else {
-        d.start = _.last(data).end.clone().add(1, 'month');
-        d.end = _.last(data).end.clone().add(3, 'month');
+        d.start = _.last(data).end.clone().add(1, 'month').startOf('month');
+        d.end = _.last(data).end.clone().add(3, 'month').endOf('month');
       }
 
       var quarter = (d.end.month() + 1) / 3;

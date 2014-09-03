@@ -26,9 +26,11 @@ define([
     init: function(layer, options, map) {
       _.bindAll(this, 'setCurrentDate');
       this.presenter = new Presenter(this);
+
       // Default to 48 hours
       this.setCurrentDate(options.currentDate ||
-        [moment().subtract(48, 'hours'), moment()]);
+        [moment().subtract(48, 'hours'), moment().subtract(24, 'hours')]);
+
       this._super(layer, options, map);
     },
 

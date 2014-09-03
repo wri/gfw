@@ -6,26 +6,13 @@
  * @return singleton instance of Router class (extends Backbone.Router).
  */
 define([
-  'jquery',
   'underscore',
   'backbone',
   'mps',
   'amplify',
   'utils',
-  'services/PlaceService',
-  'views/LayersNavView',
-  'views/MapView',
-  'views/LegendView',
-  'views/ThresholdView',
-  'views/SearchboxView',
-  'views/MaptypeView',
-  'views/TimelineView',
-  'views/AnalysisToolView',
-  'views/AnalysisResultsView',
-  'views/ShareView',
-], function($, _, Backbone, mps, amplify, utils, PlaceService, LayersNavView, MapView, LegendView,
-    ThresholdView, SearchboxView, MaptypeView, TimelineView, AnalysisToolView, AnalysisResultsView,
-    ShareView) {
+  'services/PlaceService'
+], function(_, Backbone, mps, amplify, utils, PlaceService) {
 
   'use strict';
 
@@ -50,19 +37,6 @@ define([
         baselayers: baselayers,
         sublayers: sublayers
       }, _.parseUrl());
-
-      if (!this.mapView) {
-        var mapView = new MapView();
-        new LayersNavView();
-        new LegendView();
-        new MaptypeView();
-        new SearchboxView();
-        new ThresholdView();
-        new TimelineView();
-        new AnalysisResultsView();
-        new AnalysisToolView(mapView.map);
-        new ShareView();
-      }
 
       this.placeService.publishNewPlace(params);
     },

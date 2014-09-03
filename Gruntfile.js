@@ -73,7 +73,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', [
     'connect:server',
-    'jasmine'
+    'jasmine',
+    'jshint'
   ]);
 
   grunt.registerTask('default', [

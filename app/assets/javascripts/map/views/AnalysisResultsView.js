@@ -8,8 +8,11 @@ define([
   'handlebars',
   'views/Widget',
   'presenters/AnalysisResultsPresenter',
-  'text!templates/analysisResults.handlebars'
-], function(_, Handlebars, Widget, Presenter, tpl) {
+  'text!templates/analysisResults.handlebars',
+  'text!templates/analysisResultsFailure.handlebars',
+  'text!templates/analysisResultsUnavailable.handlebars',
+  'text!templates/analysisResultsLoading.handlebars',
+], function(_, Handlebars, Widget, Presenter, tpl, failureTpl, unavailableTpl, loadingTpl) {
 
   'use strict';
 
@@ -18,6 +21,12 @@ define([
     className: 'widget widget-analysis-results',
 
     template: Handlebars.compile(tpl),
+
+    templates: {
+      failure: Handlebars.compile(failureTpl),
+      unavailable: Handlebars.compile(unavailableTpl),
+      loading: Handlebars.compile(loadingTpl)
+    },
 
     options: {
       hidden: false,
@@ -49,31 +58,24 @@ define([
      */
     renderAnalysis: function(params) {
       this._update(this.template(params));
-      this.model.set('boxHidden', false);
     },
 
     /**
      * Render loading analysis message.
      */
     renderLoading: function() {
-      var p = {loading: true};
-      this._update(this.template(p));
-      this.model.set('boxHidden', false);
+      this._update(this.templates.loading());
     },
 
     renderUnavailable: function() {
-      var p = {unavailable: true};
-      this._update(this.template(p));
-      this.model.set('boxHidden', false);
+      this._update(this.templates.unavailable());
     },
 
     /**
      * Render failure analysis request message.
      */
     renderFailure: function() {
-      var p = {failure: true};
-      this._update(this.template(p));
-      this.model.set('boxHidden', false);
+      this._update(this.templates.failure());
     },
 
     _deleteAnalysis: function() {

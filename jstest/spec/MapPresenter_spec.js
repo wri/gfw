@@ -6,7 +6,7 @@ define([
   'mps',
   'presenters/MapPresenter',
   'helpers/baselayers'
-], function(_, mps, MapPresenter) {
+], function(_, mps, Presenter) {
 
   describe('MapPresenter', function() {
     var presenter, viewSpy, place;
@@ -37,19 +37,20 @@ define([
         }
       };
 
-      MapPresenter.prototype._subscribe = new Function();
-      presenter = new MapPresenter(viewSpy);
+      spyOn(Presenter.prototype, '_subscribe');
+      presenter = new Presenter(viewSpy);
     });
 
     /**
      * Test the MapPresenter StatusModel.
      */
-    describe('StatusModel', function() {
-      it('is defined', function() {
-        expect(presenter.status).toBeDefined();
+    describe('Initialization', function() {
+      it('subscribe to application events', function() {
+        expect(Presenter.prototype._subscribe).toHaveBeenCalled();
       });
 
-      it('correct default values', function() {
+      it('presenter.status is defined correctly', function() {
+        expect(presenter.status).toBeDefined();
         expect(presenter.status.toJSON()).toEqual({
           threshold: null,
           currentDate: null
@@ -60,7 +61,7 @@ define([
     /**
      * Test presenter response to 'Place/go' events.
      */
-    describe('_onPlaceGo', function() {
+    describe('_onPlaceGo()', function() {
       beforeEach(function() {
         spyOn(presenter, '_setMapOptions');
         spyOn(presenter, '_updateStatusModel');
@@ -88,7 +89,7 @@ define([
       });
     });
 
-    describe('_updateStatusModel', function() {
+    describe('_updateStatusModel()', function() {
       it('Should set status params from suplied params, only those permitted', function() {
         presenter._updateStatusModel(place.params);
 
@@ -99,7 +100,7 @@ define([
       });
     });
 
-    describe('_setMapOptions', function() {
+    describe('_setMapOptions()', function() {
       it('Should call view.setOptions', function() {
         presenter._setMapOptions(_.pick(place.params,
           'zoom', 'maptype', 'lat', 'lng'));
