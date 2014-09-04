@@ -3,7 +3,7 @@
  */
 define([
   'underscore',
-  'presenters/ThresholdPresenter',
+  'map/presenters/ThresholdPresenter',
   'helpers/layers'
 ], function(_, Presenter) {
 

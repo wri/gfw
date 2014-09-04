@@ -2,7 +2,7 @@
  * Unit test coverage for DataService.
  */
 define([
-  'services/DataService',
+  'map/services/DataService',
 ], function(service) {
 
   /* global describe, it, expect */

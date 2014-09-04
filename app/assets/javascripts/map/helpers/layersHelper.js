@@ -64,7 +64,7 @@ define([
     fires: {
       view: FiresLayer
     },
-    Forest2000Layer: {
+    forest2000: {
       view: Forest2000Layer
     },
     intact_forest: {

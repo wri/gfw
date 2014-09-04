@@ -5,7 +5,7 @@ define([
   'underscore',
   'mps',
   'moment',
-  'presenters/TimelinePresenter',
+  'map/presenters/TimelinePresenter',
   'helpers/layerspec',
   'helpers/place_params'
 ], function(_, mps, moment, Presenter) {

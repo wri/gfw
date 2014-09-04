@@ -3,7 +3,7 @@
  */
 define([
   'underscore',
-  'utils'
+  'map/utils'
 ], function(_) {
 
   'use strict';

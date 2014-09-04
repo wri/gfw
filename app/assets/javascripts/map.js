@@ -6,7 +6,7 @@ require([
   'underscore',
   'Class',
   'backbone',
-  'utils',
+  'map/utils',
   'mps',
   'map/router',
   'map/services/AnalysisService',

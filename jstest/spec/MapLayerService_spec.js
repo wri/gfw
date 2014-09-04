@@ -2,7 +2,7 @@
  * Unit test coverage for MapLayerService.
  */
 define([
-  'services/MapLayerService'
+  'map/services/MapLayerService'
 ], function(service) {
 
   /* global describe, it, expect, beforeEach, jasmine, spyOn */

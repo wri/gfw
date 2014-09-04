@@ -4,7 +4,7 @@
 define([
   'underscore',
   'mps',
-  'presenters/MapPresenter',
+  'map/presenters/MapPresenter',
   'helpers/baselayers'
 ], function(_, mps, Presenter) {
 

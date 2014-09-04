@@ -81,8 +81,8 @@ define([
       if ($(event.currentTarget).hasClass('ifl')) {
         event && event.stopPropagation();
         var $elem = $(event.currentTarget);
-        if ($elem.hasClass('selected')) $elem.find('input').prop('checked',false);
-        else $elem.find('[data-layer="ifl_2013_deg"] input').prop('checked', true);
+        if ($elem.hasClass('selected')) {$elem.find('input').prop('checked',false);}
+        else {$elem.find('[data-layer="ifl_2013_deg"] input').prop('checked', true);}
         if ($elem.prop('tagName') !== 'LI'){
           for (var i=0;i < $elem.siblings().length; i++) {
             if ($($elem.siblings()[i]).hasClass('selected')) {

@@ -6,7 +6,7 @@ define([
   'underscore',
   'mps',
   'moment',
-  'presenters/AnalysisToolPresenter',
+  'map/presenters/AnalysisToolPresenter',
   'helpers/baselayers',
   'helpers/analysis_resource'
 ], function($, _, mps, moment, Presenter) {

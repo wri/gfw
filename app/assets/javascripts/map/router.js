@@ -9,7 +9,7 @@ define([
   'underscore',
   'backbone',
   'amplify',
-  'utils',
+  'map/utils',
   'map/services/PlaceService'
 ], function(_, Backbone, amplify, utils, PlaceService) {
 

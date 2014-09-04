@@ -3,7 +3,7 @@
  */
 define([
   'underscore',
-  'presenters/AnalysisResultsPresenter',
+  'map/presenters/AnalysisResultsPresenter',
   'helpers/analysis_service_response',
   'helpers/layers'
 ], function(_, Presenter) {

@@ -2,7 +2,7 @@
  * Unit test coverage for LayerSpecService.
  */
 define([
-  'services/LayerSpecService',
+  'map/services/LayerSpecService',
   'mps'
 ], function(service, mps) {
 

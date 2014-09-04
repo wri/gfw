@@ -2,7 +2,7 @@
  * Unit tests for the Router class.
  */
 define([
-  'router',
+  'map/router',
   'underscore',
   'backbone',
 ], function(Router, _, Backbone) {
