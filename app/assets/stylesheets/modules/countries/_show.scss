@@ -1329,6 +1329,9 @@
           z-index: 500;
           position:relative;
         }
+        &.white {
+          @include home-icons-sprite(timeline_handler_white);
+        }
       }
     }
     .visible_range {

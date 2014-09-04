@@ -1,4 +1,4 @@
-gfw.ui.model.UmdOptions = cdb.core.Model.extend({  
+gfw.ui.model.UmdOptions = cdb.core.Model.extend({
   defaults: {
     tooltip: "Settings"
   }
@@ -17,7 +17,7 @@ gfw.ui.view.UmdOptions = cdb.core.View.extend({
     this.model = new gfw.ui.model.UmdOptions();
 
     this.model.on('change:hidden', this._toggle);
-  
+
     var template = $('#umd_options-template').html();
 
     this.template = new cdb.core.Template({
@@ -189,11 +189,14 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
   },
 
   _paintRange: function(slider_val) {
+    var $slider = $('#canopy_slider');
+    $slider.removeClass('white');
     switch(true) {
       case slider_val >= 10 && slider_val < 18:
         slider_val = 10;
         this.canopy = 10;
         $('.visible_range').css('width', 60 + 281);
+        $slider.addClass('white');
       break;
       case slider_val >= 18 && slider_val < 28:
         slider_val = 21; //15
