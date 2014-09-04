@@ -1573,13 +1573,14 @@ GFW.modules.maplayer = function(gfw) {
               return;
             }
             $('li.ifl_2013_deg').find('a.forest_cover').addClass('ifl_layer_state').trigger('click');
+            GFW.app.removeLayer(ifl_2013);
         } else if (slug === 'ifl_2013_deg' && ifl_2000.attributes['visible']) {
             if ($('.ifl_layer_state').length > 0) {
               $('.ifl_layer_state').removeClass('ifl_layer_state');
               return;
             }
             $('li.ifl_2000').find('a.forest_cover').addClass('ifl_layer_state').trigger('click');
-          return;
+            GFW.app.removeLayer(ifl_2000);
         }
         if (visible) {
           GFW.app.addLayer(this.layer);
