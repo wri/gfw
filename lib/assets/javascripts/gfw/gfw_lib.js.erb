@@ -40,7 +40,7 @@ GFW.modules.app = function(gfw) {
 
       this.options = _.defaults(options, {
         user       : 'wri-01',
-        layerTable : 'layerinfo_dev_copy'
+        layerTable : 'layerinfo_dev_copy_copy_1_sept'
       });
 
       this.layers = [];
@@ -79,6 +79,8 @@ GFW.modules.app = function(gfw) {
       this.forest2000Layer    = null;
       this.forestGainLayer    = null;
       this.idnPrimaryLayer    = null;
+      this.ifl_2000Layer      = null;
+      this.ifl_2013Layer      = null;
 
       this.currentBaseLayer = config.BASELAYER;
     },
@@ -435,7 +437,7 @@ GFW.modules.app = function(gfw) {
             z = 12;
           } else {
             y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
-            
+
             if (x >= Math.pow(2,z)) {
               x = x % Math.pow(2,z);
             } else if (x < 0) {
@@ -507,7 +509,7 @@ GFW.modules.app = function(gfw) {
             z = 12;
           } else {
             y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
-            
+
             if (x >= Math.pow(2,z)) {
               x = x % Math.pow(2,z);
             } else if (x < 0) {
@@ -593,7 +595,7 @@ GFW.modules.app = function(gfw) {
             z = 12;
           } else {
             y = (y > Math.pow(2,z) ? y % Math.pow(2,z) : y);
-            
+
             if (x >= Math.pow(2,z)) {
               x = x % Math.pow(2,z);
             } else if (x < 0) {
@@ -1136,7 +1138,7 @@ GFW.modules.app = function(gfw) {
             var year  = end_day.getUTCFullYear(),
                 month = (end_day.getUTCMonth() + 1) < 10 ? '0' + parseInt(end_day.getUTCMonth() + 1, 10) : parseInt(end_day.getUTCMonth(), 10),
                 day   = end_day.getUTCDate() < 10 ? '0' + end_day.getUTCDate() : end_day.getUTCDate();
-            
+
             /*
             var query = [
               "SELECT * FROM global_7d where acq_date > '" + year + "-" + month + "-" + day + "' and updated_at > ('" + this.baseLayer.options.extra_params.d.getUTCFullYear() + "-"  + ((this.baseLayer.options.extra_params.d.getUTCMonth() + 1) < 10 ? '0' + (this.baseLayer.options.extra_params.d.getUTCMonth() + 1) : (this.baseLayer.options.extra_params.d.getUTCMonth() + 1)) + "-"  + ((this.baseLayer.options.extra_params.d.getUTCDate() < 10) ? '0' + this.baseLayer.options.extra_params.d.getUTCDate() : this.baseLayer.options.extra_params.d.getUTCDate()) + "'::date)"
@@ -1451,7 +1453,7 @@ GFW.modules.maplayer = function(gfw) {
           disabled        = this.layer.get('disabled');
 
       if (disabled) return;
-      
+
       Analysis.unblock_analysis();
 
       GFW.app.closeInfowindows();
@@ -1565,7 +1567,24 @@ GFW.modules.maplayer = function(gfw) {
         if (slug === 'biodiversity_hotspots') {
           GFW.app.closeInfowindows();
         }
-
+        if (slug === 'ifl_2000' && ifl_2013.attributes['visible']) {
+          setTimeout(function() {
+            if ($('.ifl_layer_state').length > 0) {
+              $('.ifl_layer_state').removeClass('ifl_layer_state');
+              return;
+            }
+            $('li.ifl_2013_deg').find('a.forest_cover').addClass('ifl_layer_state').trigger('click');
+          }, 100);
+        } else if (slug === 'ifl_2013_deg' && ifl_2000.attributes['visible']) {
+          setTimeout(function() {
+            if ($('.ifl_layer_state').length > 0) {
+              $('.ifl_layer_state').removeClass('ifl_layer_state');
+              return;
+            }
+            $('li.ifl_2000').find('a.forest_cover').addClass('ifl_layer_state').trigger('click');
+            }, 100);
+          return;
+        }
         if (visible) {
           GFW.app.addLayer(this.layer);
           ga('send', 'event', 'Filter', 'Toggle', slug);
@@ -1625,6 +1644,8 @@ GFW.modules.datalayers = function(gfw) {
         forestgain         = GFW.app.datalayers.LayersObj.get(596);
         umd_tree_loss_gain = GFW.app.datalayers.LayersObj.get(597);
         cover_extent       = GFW.app.datalayers.LayersObj.get(591);
+        ifl_2013           = GFW.app.datalayers.LayersObj.get(603);
+        ifl_2000           = GFW.app.datalayers.LayersObj.get(602);
 
         //// add idnforest manually
         idnforest = cover_extent.toJSON();

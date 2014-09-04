@@ -422,7 +422,8 @@ body {
 }
 
 .filter-links {
-  > li {
+  > li,
+  ul li {
     position: relative;
     overflow: hidden;
     border-bottom: 1px solid #e5e5e5;
@@ -433,9 +434,13 @@ body {
     line-height: 17px;
     @extend .sans-serif;
 
-    &.last { border: none; }
+    &.last,
+    &.ifl_2013_deg { border: none; } 
   }
-
+  ul li {
+    border: none;
+    &:last-child { border-bottom: 1px solid #e5e5e5; }
+  }
   .subtitle {
     margin-left: 17px;
     font-size: 11px;
