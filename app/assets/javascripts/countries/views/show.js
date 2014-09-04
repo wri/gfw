@@ -370,7 +370,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
       if (json && json.rows.length > 0) {
         var data = json.rows.slice(1, json.rows.length);
-
+        if (data.length == 0) data = json.rows;
         var lastMonth = data[data.length - 1];
         $formaAlertsTitle.find('.amount').text(formatNumber(lastMonth.alerts));
         $formaAlertsTitle.find('.month').text(config.MONTHNAMES[new Date(lastMonth.date).getUTCMonth()])
