@@ -52,8 +52,7 @@ define([
       it('presenter.status is defined correctly', function() {
         expect(presenter.status).toBeDefined();
         expect(presenter.status.toJSON()).toEqual({
-          threshold: null,
-          currentDate: null
+          threshold: null
         });
       });
     });
@@ -85,7 +84,7 @@ define([
       it('Should call _setLayers with layers object', function() {
         expect(presenter._setLayers).toHaveBeenCalled();
         expect(presenter._setLayers.calls.count()).toEqual(1);
-        expect(presenter._setLayers).toHaveBeenCalledWith(baselayers);
+        expect(presenter._setLayers).toHaveBeenCalledWith(baselayers, {currentDate: [2001, 2002]});
       });
     });
 
@@ -94,8 +93,7 @@ define([
         presenter._updateStatusModel(place.params);
 
         expect(presenter.status.toJSON()).toEqual({
-          threshold: 70,
-          currentDate: [2001, 2002]
+          threshold: 70
         });
       });
     });

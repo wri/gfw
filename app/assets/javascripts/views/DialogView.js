@@ -19,26 +19,10 @@ define([
     },
 
     render: function() {
-
     },
 
     remove: function() {
-
     },
-
-    // /**
-    //  * Show the modal.
-    //  */
-    // show: function() {
-    //   this.$el.fadeIn('fast');
-    // },
-
-    // /**
-    //  * Hide the modal.
-    //  */
-    // hide: function() {
-    //   this.$el.fadeOut('fast');
-    // },
 
     /**
      * Triggered by a keyup event. Hide the modal
