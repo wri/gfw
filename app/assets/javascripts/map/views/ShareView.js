@@ -6,9 +6,9 @@
 define([
   'underscore',
   'handlebars',
-  'views/Widget',
-  'presenters/SharePresenter',
-  'text!templates/share.handlebars'
+  'map/views/Widget',
+  'map/presenters/SharePresenter',
+  'text!map/templates/share.handlebars'
 ], function(_, Handlebars, Widget, Presenter, tpl) {
 
   'use strict';

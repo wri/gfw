@@ -8,7 +8,7 @@ define([
   'moment',
   'uri',
   'abstract/layer/CanvasLayerClass',
-  'presenters/UMDLossLayerPresenter'
+  'map/presenters/UMDLossLayerPresenter'
 ], function(d3, moment, UriTemplate, CanvasLayerClass, Presenter) {
 
   'use strict';

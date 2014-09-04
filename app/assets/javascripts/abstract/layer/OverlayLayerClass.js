@@ -6,7 +6,7 @@
 define([
   'Class',
   'underscore',
-  'views/layers/CustomInfowindow'
+  'map/views/layers/CustomInfowindow'
 ], function(Class, _, CustomInfowindow) {
 
   'use strict';

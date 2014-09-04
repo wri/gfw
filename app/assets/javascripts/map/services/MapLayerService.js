@@ -6,7 +6,7 @@ define([
   'Class',
   'mps',
   'store',
-  'services/DataService',
+  'map/services/DataService',
   'uri',
   'underscore'
 ], function (Class, mps, store, ds, UriTemplate, _) {

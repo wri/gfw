@@ -18,7 +18,6 @@ paths:
   _string: "underscore.string/dist/underscore.string.min"
   jqueryui: "jquery-ui-1.10.4.custom.min"
   markerclusterer: "gmaps-markerclusterer-plus/src/markerclusterer"
-  gmap: "map/gmap"
   geojsonArea: "geojson-area"
   uri: "uri-templates/uri-templates"
   handlebars: "handlebars/handlebars"
@@ -28,18 +27,19 @@ paths:
   jasmine: "jasmine"
 
   # Map
-  router: "map/router"
+  # router: "map/router"
   utils: "map/utils"
-  views: "map/views"
-  templates: "map/templates"
-  services: "map/services"
-  presenters: "map/presenters"
-  models: "map/models"
-  cartocss: "map/cartocss"
+  # views: "map/views"
+  # templates: "map/templates"
+  # services: "map/services"
+  # presenters: "map/presenters"
+  # models: "map/models"
+  # cartocss: "map/cartocss"
 
   # General
   abstract: "abstract"
   helpers: "helpers"
+  templates: "templates"
   views: "views"
 
 shim:

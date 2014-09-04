@@ -6,8 +6,8 @@ define([
   'underscore',
   'uri',
   'abstract/layer/OverlayLayerClass',
-  'text!cartocss/style.cartocss',
-  'text!templates/infowindow.handlebars'
+  'text!map/cartocss/style.cartocss',
+  'text!map/templates/infowindow.handlebars'
 ], function(_, UriTemplate, OverlayLayerClass, CARTOCSS, TPL) {
 
   'use strict';

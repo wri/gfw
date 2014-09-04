@@ -6,8 +6,8 @@
 define([
   'handlebars',
   'abstract/layer/MarkersLayerClass',
-  'services/UserStoryService',
-  'text!templates/thumbMarker.handlebars'
+  'map/services/UserStoryService',
+  'text!map/templates/thumbMarker.handlebars'
 ], function(Handlebars , MarkersLayerClass, UserStoryService, markerTemplate) {
 
   'use strict';

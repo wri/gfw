@@ -5,7 +5,7 @@
  */
 define([
   'abstract/layer/CartoDBLayerClass',
-  'text!cartocss/intact2013.cartocss'
+  'text!map/cartocss/intact2013.cartocss'
 ], function(CartoDBLayerClass, intact2013CartoCSS) {
 
   'use strict';

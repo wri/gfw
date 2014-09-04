@@ -6,9 +6,9 @@
 define([
   'backbone',
   'underscore',
-  'presenters/LayersNavPresenter',
+  'map/presenters/LayersNavPresenter',
   'handlebars',
-  'text!templates/layersNav.handlebars'
+  'text!map/templates/layersNav.handlebars'
 ], function(Backbone, _, Presenter, Handlebars, tpl) {
 
   'use strict';

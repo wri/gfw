@@ -8,11 +8,11 @@ define([
   'backbone',
   'underscore',
   'mps',
-  'presenters/MapPresenter',
-  'views/maptypes/grayscaleMaptype',
-  'views/maptypes/treeheightMaptype',
-  'views/maptypes/landsatMaptype',
-  'helpers/layersHelper'
+  'map/presenters/MapPresenter',
+  'map/views/maptypes/grayscaleMaptype',
+  'map/views/maptypes/treeheightMaptype',
+  'map/views/maptypes/landsatMaptype',
+  'map/helpers/layersHelper'
 ], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, landsatMaptype, layersHelper) {
 
   'use strict';
@@ -21,6 +21,9 @@ define([
 
     el: '#map',
 
+    /**
+     * Google Map Options.
+     */
     options: {
       minZoom: 3,
       backgroundColor: '#99b3cc',
@@ -87,6 +90,7 @@ define([
         if (!(!!wdpa.wdpaid)) {
           return;
         }
+        // TODO => No mps here!
         mps.publish('MapView/click-protected', [wdpa]);
       }, this));
     },

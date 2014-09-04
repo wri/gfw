@@ -6,7 +6,7 @@
 define([
   'underscore',
   'abstract/layer/ImageMaptypeLayerClass',
-  'services/SitesService'
+  'map/services/SitesService'
 ], function(_, ImageMaptypeLayerClass, SitesService) {
 
   'use strict';

@@ -6,9 +6,9 @@
 define([
   'underscore',
   'handlebars',
-  'views/Widget',
-  'presenters/ThresholdPresenter',
-  'text!templates/threshold.handlebars'
+  'map/views/Widget',
+  'map/presenters/ThresholdPresenter',
+  'text!map/templates/threshold.handlebars'
 ], function(_, Handlebars, Widget, Presenter, tpl) {
 
   'use strict';

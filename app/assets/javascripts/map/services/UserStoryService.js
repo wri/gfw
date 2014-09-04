@@ -4,7 +4,7 @@
  */
 define([
   'Class',
-  'services/DataService'
+  'map/services/DataService'
 ], function (Class, ds) {
 
   'use strict';

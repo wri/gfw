@@ -9,9 +9,9 @@ define([
   '_string',
   'handlebars',
   'markerclusterer',
-  'views/layers/CustomMarker',
-  'views/layers/CustomInfowindow',
-  'text!templates/storyInfowindow.handlebars'
+  'map/views/layers/CustomMarker',
+  'map/views/layers/CustomInfowindow',
+  'text!map/templates/storyInfowindow.handlebars'
 ], function(Class, _, _string, Handlebars, MarkerClustererLib, CustomMarker, CustomInfowindow, tpl) {
 
   'use strict';

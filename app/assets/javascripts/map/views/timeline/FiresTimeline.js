@@ -7,7 +7,7 @@ define([
   'underscore',
   'moment',
   'abstract/timeline/TimelineBtnClass',
-  'presenters/TimelineClassPresenter'
+  'map/presenters/TimelineClassPresenter'
 ], function(_, moment, TimelineBtnClass, Presenter) {
 
   'use strict';

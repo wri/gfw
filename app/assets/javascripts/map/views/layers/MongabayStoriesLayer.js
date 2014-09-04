@@ -6,7 +6,7 @@
 define([
   'underscore',
   'abstract/layer/MarkersLayerClass',
-  'services/MongabayStoryService'
+  'map/services/MongabayStoryService'
 ], function(_, MarkersLayerClass, MongabayStoryService) {
 
   'use strict';
