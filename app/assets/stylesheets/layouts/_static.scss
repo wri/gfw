@@ -575,6 +575,40 @@
   iframe + iframe { margin-left: 30px; }
 }
 
+.awards_logo_list {
+  width: 100%;
+  margin-top: -15px;
+
+  li {
+    display: inline-block;
+    padding: 0;
+
+    &:last-child {
+      margin-left: 30px;
+    }
+
+    a {
+      display: inline-block;
+    }
+  }
+
+  .bigdata_climate_change {
+    @include static-logos-sprite(awards_climate_change);
+    width: 215px;
+    height: 99px;
+  }
+
+  .esri {
+    @include static-logos-sprite(awards_esri);
+    width: 270px;
+    height: 57px;
+  }
+}
+
+.testimonials {
+
+}
+
 .logo_list {
   margin: 30px auto 0;
   padding: 0;
