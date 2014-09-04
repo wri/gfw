@@ -51,10 +51,6 @@ define([
           var isBaselayer = (layer.category_slug === 'forest_clearing');
 
           $li.addClass('selected');
-          if ($li.prop('tagName') === 'LI') {
-            $li.find('input').prop('checked', false);
-            $li.find('[data-layer="'+ $li.data('layer') +'"] input').prop('checked', true);
-          }
           $toggle.addClass('checked');
           $layerTitle.css('color', layer.title_color);
 
@@ -85,6 +81,8 @@ define([
       if ($(event.currentTarget).hasClass('ifl')) {
         event && event.stopPropagation();
         var $elem = $(event.currentTarget);
+        if ($elem.hasClass('selected')) $elem.find('input').prop('checked',false);
+        else $elem.find('[data-layer="ifl_2013_deg"] input').prop('checked', true);
         if ($elem.prop('tagName') !== 'LI'){
           for (var i=0;i < $elem.siblings().length; i++) {
             if ($($elem.siblings()[i]).hasClass('selected')) {
