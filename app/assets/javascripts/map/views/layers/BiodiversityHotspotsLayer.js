@@ -4,7 +4,7 @@
  * @return BiodiversityHotspotsLayer class (extends CartoDBLayerClass)
  */
 define([
-  'views/layers/class/CartoDBLayerClass',
+  'abstract/layer/CartoDBLayerClass',
 ], function(CartoDBLayerClass) {
 
   'use strict';

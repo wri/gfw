@@ -4,7 +4,7 @@
  * @return FormaCoverLayer class (extends CanvasLayerClass)
  */
 define([
-  'views/layers/class/CartoDBLayerClass',
+  'abstract/layer/CartoDBLayerClass',
 ], function(CartoDBLayerClass) {
 
   'use strict';

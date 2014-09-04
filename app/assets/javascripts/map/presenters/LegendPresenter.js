@@ -8,7 +8,7 @@ define([
   'underscore',
   'backbone',
   'mps',
-  'services/LayerSpecService'
+  'map/services/LayerSpecService'
 ], function(Class, _, Backbone, mps, layerSpecService) {
 
   'use strict';

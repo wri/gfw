@@ -6,10 +6,10 @@
 define([
   'underscore',
   'handlebars',
-  'views/layers/class/MarkersLayerClass',
-  'services/InfoamazoniaStoryService',
-  'views/layers/CustomMarker',
-  'views/layers/CustomInfowindow'
+  'abstract/layer/MarkersLayerClass',
+  'map/services/InfoamazoniaStoryService',
+  'map/views/layers/CustomMarker',
+  'map/views/layers/CustomInfowindow'
 ], function(_, Handlebars , MarkersLayerClass, InfoamazoniaStoryService, CustomMarker, CustomInfowindow) {
 
   'use strict';

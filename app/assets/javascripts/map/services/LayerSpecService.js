@@ -7,8 +7,8 @@ define([
   'Class',
   'underscore',
   'moment',
-  'services/MapLayerService',
-  'models/LayerSpecModel'
+  'map/services/MapLayerService',
+  'map/models/LayerSpecModel'
 ], function(Class, _, moment, mapLayerService, LayerSpecModel) {
 
   'use strict';

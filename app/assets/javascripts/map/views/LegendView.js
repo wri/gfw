@@ -6,17 +6,17 @@
 define([
   'underscore',
   'handlebars',
-  'views/Widget',
-  'presenters/LegendPresenter',
-  'text!templates/legend/legend.handlebars',
-  'text!templates/legend/loss.handlebars',
-  'text!templates/legend/gain.handlebars',
-  'text!templates/legend/imazon.handlebars',
-  'text!templates/legend/fires.handlebars',
-  'text!templates/legend/forest2000.handlebars',
-  'text!templates/legend/pantropical.handlebars',
-  'text!templates/legend/idnPrimary.handlebars',
-  'text!templates/legend/intact2013.handlebars'
+  'map/views/Widget',
+  'map/presenters/LegendPresenter',
+  'text!map/templates/legend/legend.handlebars',
+  'text!map/templates/legend/loss.handlebars',
+  'text!map/templates/legend/gain.handlebars',
+  'text!map/templates/legend/imazon.handlebars',
+  'text!map/templates/legend/fires.handlebars',
+  'text!map/templates/legend/forest2000.handlebars',
+  'text!map/templates/legend/pantropical.handlebars',
+  'text!map/templates/legend/idnPrimary.handlebars',
+  'text!map/templates/legend/intact2013.handlebars'
 ], function(_, Handlebars, Widget, Presenter, tpl, lossTpl, gainTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl) {
 

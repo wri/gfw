@@ -8,11 +8,10 @@
 define([
   'underscore',
   'backbone',
-  'mps',
   'amplify',
-  'utils',
-  'services/PlaceService'
-], function(_, Backbone, mps, amplify, utils, PlaceService) {
+  'map/utils',
+  'map/services/PlaceService'
+], function(_, Backbone, amplify, utils, PlaceService) {
 
   'use strict';
 

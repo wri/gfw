@@ -50,7 +50,7 @@ define([
   'uri',
   'underscore',
   'moment',
-  'services/LayerSpecService'
+  'map/services/LayerSpecService'
 ], function (Class, mps, UriTemplate, _, moment, layerSpecService) {
 
   'use strict';

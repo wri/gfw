@@ -5,8 +5,8 @@
  */
 define([
   'moment',
-  'views/timeline/class/TimelineYearClass',
-  'presenters/TimelineClassPresenter'
+  'abstract/timeline/TimelineYearClass',
+  'map/presenters/TimelineClassPresenter'
 ], function(moment, TimelineYearClass, Presenter) {
 
   'use strict';

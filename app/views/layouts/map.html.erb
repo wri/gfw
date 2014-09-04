@@ -22,7 +22,6 @@
 
     <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
     <%= stylesheet_link_tag "map", :media => "all" %>
-    <%# javascript_include_tag "modernizr-2.6.2.min" %>
     <%= csrf_meta_tags %>
   </head>
 
@@ -35,13 +34,9 @@
       <%= yield %>
     </div>
 
-    <!-- Overlay for modals -->
-    <div class="backdrop"></div>
-
     <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA" %>
     <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js" %>
     <%= requirejs_include_tag "map" %>
     <%= render "shared/js_footer" %>
-
   </body>
 </html>

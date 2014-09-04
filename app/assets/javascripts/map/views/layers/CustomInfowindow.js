@@ -2,7 +2,7 @@ define([
   'jquery',
   'underscore',
   'handlebars',
-  'text!templates/infowindow.handlebars'
+  'text!map/templates/infowindow.handlebars'
 ], function($, _, Handlebars, tpl) {
 
   'use strict';

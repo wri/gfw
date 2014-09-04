@@ -4,7 +4,7 @@
  * @return PantropicalLayer class (extends CartoDBLayerClass)
  */
 define([
-  'views/layers/class/ImageMaptypeLayerClass',
+  'abstract/layer/ImageMaptypeLayerClass',
 ], function(ImageMaptypeLayerClass) {
 
   'use strict';

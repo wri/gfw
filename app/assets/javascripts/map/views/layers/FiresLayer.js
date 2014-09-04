@@ -7,9 +7,9 @@ define([
   'underscore',
   'moment',
   'uri',
-  'views/layers/class/CartoDBLayerClass',
-  'presenters/FiresLayerPresenter',
-  'text!cartocss/global_7d.cartocss'
+  'abstract/layer/CartoDBLayerClass',
+  'map/presenters/FiresLayerPresenter',
+  'text!map/cartocss/global_7d.cartocss'
 ], function(_, moment, UriTemplate, CartoDBLayerClass, Presenter, global7dCartoCSS) {
 
   'use strict';

@@ -6,7 +6,7 @@
 define([
   'underscore',
   'uri',
-  'views/layers/class/OverlayLayerClass'
+  'abstract/layer/OverlayLayerClass'
 ], function(_, UriTemplate, OverlayLayerClass) {
 
   'use strict';

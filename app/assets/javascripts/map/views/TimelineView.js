@@ -7,9 +7,9 @@ define([
   'backbone',
   'underscore',
   'handlebars',
-  'views/Widget',
-  'presenters/TimelinePresenter',
-  'text!templates/timeline.handlebars'
+  'map/views/Widget',
+  'map/presenters/TimelinePresenter',
+  'text!map/templates/timeline.handlebars'
 ], function(Backbone, _, Handlebars, Widget, Presenter, tpl) {
 
   'use strict';

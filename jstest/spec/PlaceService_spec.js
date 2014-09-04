@@ -2,7 +2,7 @@
  * Unit test coverage for PlaceService.
  */
 define([
-  'services/PlaceService',
+  'map/services/PlaceService',
   'mps',
 ], function(PlaceService, mps) {
 

@@ -5,11 +5,11 @@
  */
 define([
   'underscore',
-  'views/Widget',
-  'presenters/MaptypePresenter',
   'handlebars',
-  'text!templates/maptype.handlebars'
-], function(_, Widget, Presenter, Handlebars, tpl) {
+  'map/views/Widget',
+  'map/presenters/MaptypePresenter',
+  'text!map/templates/maptype.handlebars'
+], function(_, Handlebars, Widget, Presenter, tpl) {
 
   'use strict';
 

@@ -4,13 +4,13 @@
  * @return searchbox class (extends Backbone.View).
  */
 define([
-  'backbone',
   'underscore',
-  'views/Widget',
-  'presenters/SearchboxPresenter',
+  'backbone',
   'handlebars',
-  'text!templates/searchbox.handlebars'
-], function(Backbone, _, Widget, Presenter, Handlebars, tpl) {
+  'map/views/Widget',
+  'map/presenters/SearchboxPresenter',
+  'text!map/templates/searchbox.handlebars'
+], function(_, Backbone, Handlebars, Widget, Presenter, tpl) {
 
   'use strict';
 
