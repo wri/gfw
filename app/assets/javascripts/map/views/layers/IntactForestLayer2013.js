@@ -4,7 +4,7 @@
  * @return IntactForestLayer2013 class (extends CartoDBLayerClass)
  */
 define([
-  'views/layers/class/CartoDBLayerClass',
+  'abstract/layer/CartoDBLayerClass',
   'text!cartocss/intact2013.cartocss'
 ], function(CartoDBLayerClass, intact2013CartoCSS) {
 

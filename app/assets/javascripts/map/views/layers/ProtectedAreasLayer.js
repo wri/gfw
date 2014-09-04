@@ -5,7 +5,7 @@
  */
 define([
   'underscore',
-  'views/layers/class/ImageMaptypeLayerClass',
+  'abstract/layer/ImageMaptypeLayerClass',
   'services/SitesService'
 ], function(_, ImageMaptypeLayerClass, SitesService) {
 

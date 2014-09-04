@@ -5,7 +5,7 @@
 define([
   'underscore',
   'uri',
-  'views/layers/class/OverlayLayerClass',
+  'abstract/layer/OverlayLayerClass',
   'text!cartocss/style.cartocss',
   'text!templates/infowindow.handlebars'
 ], function(_, UriTemplate, OverlayLayerClass, CARTOCSS, TPL) {

@@ -5,7 +5,7 @@
  */
 define([
   'handlebars',
-  'views/layers/class/MarkersLayerClass',
+  'abstract/layer/MarkersLayerClass',
   'services/UserStoryService',
   'text!templates/thumbMarker.handlebars'
 ], function(Handlebars , MarkersLayerClass, UserStoryService, markerTemplate) {

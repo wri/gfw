@@ -6,7 +6,7 @@
 define([
   'underscore',
   'handlebars',
-  'views/layers/class/MarkersLayerClass',
+  'abstract/layer/MarkersLayerClass',
   'services/InfoamazoniaStoryService',
   'views/layers/CustomMarker',
   'views/layers/CustomInfowindow'

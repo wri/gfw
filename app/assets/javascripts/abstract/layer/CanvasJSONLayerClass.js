@@ -6,7 +6,7 @@
 define([
   'underscore',
   '_string',
-  'views/layers/class/OverlayLayerClass'
+  'abstract/layer/OverlayLayerClass'
 ], function(_, _string, OverlayLayerClass) {
 
   'use strict';

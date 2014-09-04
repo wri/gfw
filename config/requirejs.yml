@@ -39,6 +39,8 @@ paths:
 
   # General
   abstract: "abstract"
+  helpers: "helpers"
+  views: "views"
 
 shim:
   underscore:

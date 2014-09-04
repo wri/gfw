@@ -5,7 +5,7 @@
  */
 define([
   'underscore',
-  'views/layers/class/MarkersLayerClass',
+  'abstract/layer/MarkersLayerClass',
   'services/MongabayStoryService'
 ], function(_, MarkersLayerClass, MongabayStoryService) {
 

@@ -12,36 +12,8 @@ define([
   'views/maptypes/grayscaleMaptype',
   'views/maptypes/treeheightMaptype',
   'views/maptypes/landsatMaptype',
-  'views/layers/UMDLossLayer',
-  'views/layers/ForestGainLayer',
-  'views/layers/FormaLayer',
-  'views/layers/FormaCoverLayer',
-  'views/layers/ImazonLayer',
-  'views/layers/ImazonCoverLayer',
-  'views/layers/ModisLayer',
-  'views/layers/ModisCoverLayer',
-  'views/layers/FiresLayer',
-  'views/layers/Forest2000Layer',
-  'views/layers/IntactForestLayer',
-  'views/layers/IntactForestLayer2000',
-  'views/layers/IntactForestLayer2013',
-  'views/layers/PantropicalLayer',
-  'views/layers/IdnPrimaryLayer',
-  'views/layers/LoggingLayer',
-  'views/layers/MiningLayer',
-  'views/layers/OilPalmLayer',
-  'views/layers/WoodFiberPlantationsLayer',
-  'views/layers/ProtectedAreasLayer',
-  'views/layers/BiodiversityHotspotsLayer',
-  'views/layers/ResourceRightsLayer',
-  'views/layers/LandRightsLayer',
-  'views/layers/UserStoriesLayer',
-  'views/layers/MongabayStoriesLayer',
-  'views/layers/InfoamazoniaStoriesLayer'
-], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, landsatMaptype,
-  UMDLossLayer, ForestGainLayer, FormaLayer, FormaCoverLayer, ImazonLayer, ImazonCoverLayer, ModisLayer, ModisCoverLayer, FiresLayer, Forest2000Layer,
-  IntactForestLayer, IntactForestLayer2000, IntactForestLayer2013, PantropicalLayer, IdnPrimaryLayer, LoggingLayer, MiningLayer, OilPalmLayer, WoodFiberPlantationsLayer,
-  ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer, LandRightsLayer, UserStoriesLayer, MongabayStoriesLayer, InfoamazoniaStoriesLayer) {
+  'helpers/layersHelper'
+], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, landsatMaptype, layersHelper) {
 
   'use strict';
 
@@ -59,38 +31,6 @@ define([
       scaleControl: true,
       streetViewControl: false,
       overviewMapControl: false
-    },
-
-    /**
-     * Map layer slug with layer views.
-     */
-    layersViews: {
-      umd_tree_loss_gain: UMDLossLayer,
-      forestgain: ForestGainLayer,
-      forma: FormaLayer,
-      forma_cover: FormaCoverLayer,
-      imazon: ImazonLayer,
-      imazon_cover: ImazonCoverLayer,
-      modis: ModisLayer,
-      modis_cover: ModisCoverLayer,
-      fires: FiresLayer,
-      forest2000: Forest2000Layer,
-      intact_forest: IntactForestLayer,
-      ifl_2000: IntactForestLayer2000,
-      ifl_2013_deg: IntactForestLayer2013,
-      pantropical: PantropicalLayer,
-      idn_primary: IdnPrimaryLayer,
-      logging: LoggingLayer,
-      mining: MiningLayer,
-      oil_palm: OilPalmLayer,
-      wood_fiber_plantations: WoodFiberPlantationsLayer,
-      protected_areas: ProtectedAreasLayer,
-      biodiversity_hotspots: BiodiversityHotspotsLayer,
-      resource_rights: ResourceRightsLayer,
-      land_rights: LandRightsLayer,
-      user_stories: UserStoriesLayer,
-      mongabay: MongabayStoriesLayer,
-      infoamazonia: InfoamazoniaStoriesLayer
     },
 
     /**
@@ -194,13 +134,13 @@ define([
         layers[i] && this._addLayers(layers, options, i);
       }, this);
 
-      if (!this.layersViews[layer.slug] || this.layerInst[layer.slug]) {
+      if (!layersHelper[layer.slug].view || this.layerInst[layer.slug]) {
         _addNext();
         return;
       }
 
       var layerView = this.layerInst[layer.slug] =
-        new this.layersViews[layer.slug](layer, options, this.map);
+        new layersHelper[layer.slug].view(layer, options, this.map);
 
       layerView.addLayer(this._getOverlayPosition(layer), _addNext);
     },

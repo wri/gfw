@@ -5,7 +5,7 @@
  */
 define([
   'moment',
-  'views/layers/class/CanvasJSONLayerClass',
+  'abstract/layer/CanvasJSONLayerClass',
   'presenters/FormaLayerPresenter'
 ], function(moment, CanvasJSONLayerClass, Presenter) {
 

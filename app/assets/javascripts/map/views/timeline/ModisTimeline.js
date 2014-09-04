@@ -6,7 +6,7 @@
 define([
   'underscore',
   'moment',
-  'views/timeline/class/TimelineBtnClass',
+  'abstract/timeline/TimelineBtnClass',
   'presenters/TimelineClassPresenter'
 ], function(_, moment, TimelineBtnClass, Presenter) {
 

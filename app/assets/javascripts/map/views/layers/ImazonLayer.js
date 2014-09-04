@@ -6,7 +6,7 @@
 define([
   'moment',
   'uri',
-  'views/layers/class/CartoDBLayerClass',
+  'abstract/layer/CartoDBLayerClass',
   'presenters/ImazonLayerPresenter'
 ], function(moment, UriTemplate, CartoDBLayerClass, Presenter) {
 

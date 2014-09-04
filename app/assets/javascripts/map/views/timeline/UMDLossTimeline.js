@@ -5,7 +5,7 @@
  */
 define([
   'moment',
-  'views/timeline/class/TimelineYearClass',
+  'abstract/timeline/TimelineYearClass',
   'presenters/TimelineClassPresenter'
 ], function(moment, TimelineYearClass, Presenter) {
 
