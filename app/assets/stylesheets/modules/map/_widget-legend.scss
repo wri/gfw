@@ -16,6 +16,7 @@
     text-transform: uppercase;
   }
 
+  // @li
   .category {
     padding: 15px 20px;
     border-bottom: 1px solid #E5E5E5;
@@ -24,34 +25,49 @@
       text-transform: uppercase;
       font-weight: bold;
       font-size: 11px;
+      margin-bottom: 8px;
+      display: block;
     }
 
     &:last-child {
       border-bottom: none;
     }
   }
+  // @ul
+  .layers {
+  }
 
-  .layer-name {
-    display: block;
-    margin-top: 8px;
-    .source {
+  // @li
+  .layer {
+    width: 100%;
+    margin-bottom: 6px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .layer-name {
       display: block;
-      position: relative;
-      top: -13px;
-      right: -200px;
-      width: 10px;
-      height: 10px;
-      @include home-icons-sprite(information);
+    }
+  }
 
-      &.hidden {
-        display: none;
-      }
+  // @div
+  .source {
+    display: block;
+    position: relative;
+    top: -13px;
+    right: -200px;
+    width: 10px;
+    height: 10px;
+    @include home-icons-sprite(information);
+
+    &.hidden {
+      display: none;
     }
   }
 
   .layer-sublayer {
     cursor: pointer;
-    padding: 7px 5px 5px 14px;
+    padding: 10px 5px 5px 14px;
 
     .onoffswitch {
       margin-top: 1px;
@@ -74,7 +90,7 @@
   /* Layer details */
   /*****************/
   .layer-details {
-    margin: 0px 0px 0px 13px;
+    margin: 8px 0 0 13px;
 
     .details-title {
       color: #999;
@@ -91,17 +107,6 @@
     }
 
     .canopy {
-      // i {
-      //   background-color: transparent;
-      //   width: 12px;
-      //   height: 12px;
-      //   display: inline-block;
-      //   vertical-align: bottom;
-      //   @include home-icons-sprite(icon_options_small);
-      //   margin-right: 4px;
-      //   cursor: help;
-      // }
-
       width: 170px;
       font-size: 11px;
       line-height: 14px;
@@ -123,7 +128,7 @@
     .quartiles {
       border: 1px solid #ccc;
       border-radius: 3px;
-      margin: 5px 0 8px 0;
+      margin: 7px 0 5px 0;
       width: 100%;
       height: 23px;
     }
@@ -220,7 +225,7 @@
   /****************************/
   .layer-details-fires {
     margin-left: 0;
-    margin-top: 6px;
+    margin-top: 12px;
     text-align: center;
 
     .gfw-fires-link {
