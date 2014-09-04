@@ -51,11 +51,6 @@ define([
           var isBaselayer = (layer.category_slug === 'forest_clearing');
 
           $li.addClass('selected');
-          // if ($li.prop('tagName') === 'LI' && ($li.data('layer') == 'ifl_2000' || $li.data('layer') == 'ifl_2013_deg')) {
-          //   debugger
-          //   $li.find('input').prop('checked', false);
-          //   $li.find('[data-layer="'+ $li.data('layer') +'"] input').prop('checked', true);
-          // }
           $toggle.addClass('checked');
           $layerTitle.css('color', layer.title_color);
 
