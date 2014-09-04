@@ -653,8 +653,13 @@ GFW.modules.app = function(gfw) {
         queryArray.push("(SELECT cartodb_id||':' ||'caf_lc_1' as cartodb_id, the_geom_webmercator, 'caf_lc_1' AS name FROM caf_lc_1 LIMIT 0)") //a hack for the stupid layer show hide discoloration thing I found
         var query = queryArray.join(' UNION ALL ');
         this.mainLayer && this.mainLayer.setMap(null);
-        var table_style = 'gfw2_layerstyles_v4'
-        if(this.layers[0] === 'ifl_2013_deg' ){  table_style = 'ifl_2013_deg'; query = 'SELECT * from ifl_2013_deg';}
+        var table_style = 'gfw2_layerstyles_v4';
+        for (var i = 0; i< this.layers.length; i++){
+          if(this.layers[i] === 'ifl_2013_deg' ){
+            table_style = 'ifl_2013_deg';
+            query = 'SELECT * from ifl_2013_deg';
+          }
+        }
 
         this.mainLayer = new CartoDBLayer({
           map: map,
