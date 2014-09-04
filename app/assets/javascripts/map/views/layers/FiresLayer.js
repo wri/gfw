@@ -15,7 +15,6 @@ define([
   'use strict';
 
   var FiresLayer = CartoDBLayerClass.extend({
-    // todo=> add hour so it doesn't caches
     options: {
       sql: 'SELECT * FROM {tableName} WHERE acq_date > \'{year}-{month}-{day}\' AND CAST(confidence AS INT) > 30',
       cartocss: global7dCartoCSS,
