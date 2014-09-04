@@ -15,12 +15,13 @@
   <div class='static-inner'>
     <div class='navigation_left'>
       <ul>
-        <li class='item_title'><i class='caret_down'></i></li>
+        <!-- <li class='item_title'><i class='caret_down'></i></li> -->
         <li><%= link_to 'About GFW', "#{about_path}/gfw", :"data-slug" => 'gfw', :class => 'nav-item selected' %></li>
         <li><%= link_to 'Partners', "#{about_path}/partners", :"data-slug" => 'partners', :class => 'nav-item' %></li>
         <li><%= link_to 'Users', "#{about_path}/users", :"data-slug" => 'users', :class => 'nav-item' %></li>
         <li><%= link_to 'Videos', "#{about_path}/videos", :"data-slug" => 'videos', :class => 'nav-item' %></li>
         <li><%= link_to 'Small Grants Fund', "#{about_path}/small_grants_fund", :"data-slug" => 'small_grants_fund', :class => 'nav-item' %></li>
+        <li><%= link_to 'Awards & Testimonals', "#{about_path}/awards_and_testimonials", :"data-slug" => 'awards_and_testimonials', :class => 'nav-item' %></li>
       </ul>
     </div>
 
@@ -178,6 +179,35 @@
           <p><strong>June, 30, 2014:</strong> Deadline to submit full application</p>
           <p><strong>December 31, 2014:</strong> Project completion deadline</p>
 
+        </div>
+      </article>
+
+      <article id='awards_and_testimonials'>
+        <div class='source_body'>
+          <h3 class='overview_title'>Awards</h3>
+          <ul class='awards_logo_list'>
+            <li><a class='esri'></a></li>
+            <li><a class='bigdata_climate_change'></a></li>
+          </ul>
+          <h3 class='overview_title'>Testimonials</h3>
+          <ul class="testimonials">
+            <li class="testimonial">
+              <span class="author"><strong>Achim steiner</strong>, UNEP Executive Director and Under-Secretary-General of the United Nations</span>
+              <div class="testimonial-quote">“Managing the world’s forest resources is both a local and global undertaking, and technology has provided Global Forest Watch with an unprecedented opportunity to connect not only information and data, but people – whether they are forest managers, businesses and private sector, or consumers across the globe. This is a great example of a community coming together and providing the world with a truly groundbreaking and pioneering product. Hopefully in a few years’ time we will be able to monitor the impact and the results in terms of what actually happens on the ground – that will be the greatest affirmation that the time for this idea had come.”</div>
+            </li>
+            <li class="testimonial">
+              <span class="author"><strong>Tine Sundtoft</strong>, Minister of Climate and Environment, Norway</span>
+              <div class="testimonial-quote">“Our common goal is to fight climate change, to promote green growth, and to preserve the livelihoods and homes of millions of people and species, but in order to succeed we need open, transparent, and timely information. In this sense, Global Forest Watch is a unique tool that hopefully will help change the way we manage our forests. Sometimes, ideas can change the world – we now have a wonderful new tool at our disposal, and it is up to us to put it to good use.”</div>
+            </li>
+            <li class="testimonial">
+              <span class="author"><strong>Lynne Featherstone</strong>, Parliamentary Under-Secretary of State for International Development, United Kingdom</span>
+              <div class="testimonial-quote">“Global Forest Watch has a hugely important role to play in bringing transparency into forest conservation. Using satellite imagery, new processing technology, and the power of human networks, it will allow rapid identification of deforestation in the hands of those who can best use it. That is transparency in action, and with transparency comes accountability.”</div>
+            </li>
+            <li class="testimonial">
+              <span class="author"><strong>Jane Goodall</strong>, Founder, Jane Goodall Institute</span>
+              <div class="testimonial-quote">“Wonderful advances in recent years in the use of satellite data and technology have empowered communities to monitor their own forests. Global Forest Watch connects the best of these systems, pulling all of this technology together on a single platform that provides access to high-quality data for the entire world. It will dramatically benefit all those working to protect our forests, and help us identify new threats to chimpanzees and prioritize our conservation efforts.”</div>
+            </li>
+          </ul>
         </div>
       </article>
     </div>
