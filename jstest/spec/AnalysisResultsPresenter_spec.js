@@ -19,7 +19,8 @@ define([
         },
         renderAnalysis: jasmine.createSpy(),
         renderFailure: jasmine.createSpy(),
-        renderUnavailable: jasmine.createSpy()
+        renderUnavailable: jasmine.createSpy(),
+        renderLoading: jasmine.createSpy()
       };
 
       // Subscribe wont be called and events won't be triggered.
@@ -46,7 +47,7 @@ define([
 
     // Should render the analysis, failure or unavailable message,
     // and set status.analysis to true and model.boxHidden to false.
-    describe('_handleAnalysisResults()', function() {
+    describe('_renderResults()', function() {
       beforeEach(function() {
         spyOn(presenter, '_renderAnalysis');
       });
@@ -60,18 +61,23 @@ define([
       });
 
       it('should render analysis a valid supplied resource', function() {
-        presenter._handleAnalysisResults(AnalysisServiceResponse.fires);
+        presenter._renderResults(AnalysisServiceResponse.fires);
         expect(presenter._renderAnalysis.calls.count()).toEqual(1);
       });
 
       it('should render failure message from a failure response', function() {
-        presenter._handleAnalysisResults({failure: true});
+        presenter._renderResults({failure: true});
         expect(viewSpy.renderFailure.calls.count()).toEqual(1);
       });
 
       it('should render unavailable message from a unvalid resource', function() {
-        presenter._handleAnalysisResults({unavailable: true});
+        presenter._renderResults({unavailable: true});
         expect(viewSpy.renderUnavailable.calls.count()).toEqual(1);
+      });
+
+      it('should render a spinning gif when loading', function() {
+        presenter._renderResults({loading: true});
+        expect(viewSpy.renderLoading.calls.count()).toEqual(1);
       });
     });
 

@@ -52,15 +52,15 @@ define([
       }, this));
 
       mps.subscribe('AnalysisService/get', _.bind(function() {
-        this.view.renderLoading();
+        this._renderResults({loading: true});
       }, this));
 
       mps.subscribe('AnalysisService/results', _.bind(function(results) {
-        this._handleAnalysisResults(results);
+        this._renderResults(results);
       }, this));
 
       mps.subscribe('AnalysisResults/unavailable', _.bind(function() {
-        this._handleAnalysisResults({unavailable: true});
+        this._renderResults({unavailable: true});
       }, this));
 
       mps.subscribe('Timeline/date-change', _.bind(function() {
@@ -90,13 +90,15 @@ define([
      *
      * @param  {Object} results [description]
      */
-    _handleAnalysisResults: function(results) {
+    _renderResults: function(results) {
       // Even if the result is a failure or unavailable message, we render
       // the widget results and keep the polygon.
       this.status.set('analysis', true);
       this.view.model.set('boxHidden', false);
 
-      if (results.unavailable) {
+      if (results.loading) {
+        this.view.renderLoading();
+      } else if (results.unavailable) {
         this.view.renderUnavailable();
       } else if (results.failure) {
         this.view.renderFailure();
@@ -131,7 +133,7 @@ define([
 
       // Unexpected results from successful request
       if (!layer) {
-        this._handleAnalysisResults({failure: true});
+        this._renderResults({failure: true});
         return;
       }
 
