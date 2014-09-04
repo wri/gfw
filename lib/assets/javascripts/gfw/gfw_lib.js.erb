@@ -482,7 +482,7 @@ GFW.modules.app = function(gfw) {
         map.overlayMapTypes.insertAt(0, this.umdCoverageLayer);
       }
     },
-    
+
     _renderForest2000Layer: function() {
       if (this.forest2000Layer) {
         this.forest2000Layer.show();
@@ -700,7 +700,7 @@ GFW.modules.app = function(gfw) {
       //nulling out the geoms to save payload
       var request_sql = 'SELECT *, ST_AsGeoJSON(the_geom) as the_geom, null as the_geom_webmercator, \'' + pair[1] + '\' as table FROM ' + pair[1] + ' WHERE cartodb_id = ' + pair[0];
       var url = 'http://dyynnn89u7nkm.cloudfront.net/api/v2/sql?q=' + encodeURIComponent(request_sql);
-      
+
       var makeSuccessCallback = function(pairs) {
         return function(json) {
 
@@ -791,11 +791,11 @@ GFW.modules.app = function(gfw) {
       var previous_layer = config.BASELAYER;
       this.currentBaseLayer = config.BASELAYER = baselayer;
       this._toggleTimeLayer();
-      
+
       if ((previous_layer && previous_layer.indexOf('loss') === 0 && baselayer && baselayer.indexOf('loss') === 0) == false) {
         this._loadBaseLayer();
       }
-      
+
       publish('timeline:change_baselayer', [this.currentBaseLayer]);
 
       Analysis.info.model.set({
@@ -974,7 +974,7 @@ GFW.modules.app = function(gfw) {
 
     _toggleTimeLayer: function() {
       if (this.time_layer_loss && this.currentBaseLayer !== 'loss') {
-        that = this;  
+        that = this;
         this.time_layer_loss.hide(true);
         if (this.currentBaseLayer && that.currentBaseLayer.indexOf('loss') === 0) {
           that = this;
@@ -1158,7 +1158,7 @@ GFW.modules.app = function(gfw) {
             var year  = end_day.getUTCFullYear(),
                 month = (end_day.getUTCMonth() + 1) < 10 ? '0' + parseInt(end_day.getUTCMonth() + 1, 10) : parseInt(end_day.getUTCMonth(), 10),
                 day   = end_day.getUTCDate() < 10 ? '0' + end_day.getUTCDate() : end_day.getUTCDate();
-            
+
             /*
             var query = [
               "SELECT * FROM global_7d where acq_date > '" + year + "-" + month + "-" + day + "' and updated_at > ('" + this.baseLayer.options.extra_params.d.getUTCFullYear() + "-"  + ((this.baseLayer.options.extra_params.d.getUTCMonth() + 1) < 10 ? '0' + (this.baseLayer.options.extra_params.d.getUTCMonth() + 1) : (this.baseLayer.options.extra_params.d.getUTCMonth() + 1)) + "-"  + ((this.baseLayer.options.extra_params.d.getUTCDate() < 10) ? '0' + this.baseLayer.options.extra_params.d.getUTCDate() : this.baseLayer.options.extra_params.d.getUTCDate()) + "'::date)"
