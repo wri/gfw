@@ -287,9 +287,9 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
       var width = 225,
           height = 225,
           radius = Math.min(width, height) / 2,
-          colors = ['#819515', '#A1BA42', '#DDDDDD'],
+          colors = ['#A1BA42', '#819515', '#DDDDDD'],
           labelColors = ['white', 'white', '#555'];
-   
+
       var pie = d3.layout.pie()
           .sort(null);
 
@@ -310,7 +310,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
       path.enter().append("path")
         .attr("fill", function(d, i) { return colors[i]; })
         .attr("d", arc);
-      
+
       path.enter().append('text')
         .attr('transform', function(d) { var c = arc.centroid(d); return 'translate(' + (c[0]-12) + ',' + (c[1]+8) + ')'})
         .text(function(d) {
