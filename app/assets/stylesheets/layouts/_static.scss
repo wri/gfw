@@ -605,8 +605,51 @@
   }
 }
 
-.testimonials {
+#awards_and_testimonials, #partners {
+  .overview_title:first-child{
+    margin-top: 0;
+  }
+}
 
+.testimonials {
+  .testimonial {
+    padding: 10px 0;
+    width: 100%;
+  }
+
+  .testimonial-quote:after, .testimonial-quote:before {
+    bottom: 100%;
+    left: 8%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .testimonial-quote:after {
+    border-color: rgba(136, 183, 213, 0);
+    border-bottom-color: #F2F2F3;
+    border-width: 12px;
+    margin-left: -30px;
+  }
+  .testimonial-quote:before {
+    border-color: rgba(194, 225, 245, 0);
+    border-bottom-color: #d7d7d7;
+    border-width: 13px;
+    margin-left: -31px;
+  }
+
+
+  .testimonial-quote {
+    margin-top: 20px;
+    background: #F2F2F3;
+    padding: 15px;
+    color: #777;
+    position: relative;
+    border-top: 1px solid #d6d6d6;
+  }
 }
 
 .logo_list {
