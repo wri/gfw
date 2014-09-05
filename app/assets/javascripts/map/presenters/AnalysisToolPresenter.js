@@ -66,16 +66,16 @@ define([
         }
       }, this));
 
-      mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
-        this._updateAnalysis();
+      mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
+        this._setCurrentDate(date);
       }, this));
 
       mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
         this._deleteAnalysis();
       }, this));
 
-      mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
-        this._setCurrentDate(date);
+      mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
+        this._updateAnalysis();
       }, this));
 
       mps.subscribe('Threshold/changed', _.bind(function(threshold) {
