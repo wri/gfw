@@ -143,6 +143,8 @@ define([
     },
     infoamazonia: {
       view: InfoamazoniaStoriesLayer
+    },
+    nothing: {
     }
   };
 

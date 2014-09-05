@@ -15,7 +15,7 @@ define([
       sql: 'SELECT the_geom_webmercator, image, description, name, photo_credit, {analysis} AS analysis, \'{tableName}\' AS layer FROM {tableName}',
       infowindow: true,
       interactivity: 'image, description, name, photo_credit, analysis',
-      analysis: true
+      analysis: false
     }
 
   });
