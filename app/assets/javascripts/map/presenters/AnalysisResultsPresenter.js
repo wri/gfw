@@ -191,21 +191,20 @@ define([
         p.lossAlerts = 0;
         p.gainAlerts = 0;
         p.threshold  = results.params.thresh || 10;
-
         // The api returns all the loss and gain alerts.
         if (results.years) {
+          p.gainAlerts = results.years[results.years.length-1].gain * 12;
+
           var years = _.range(dateRange[1].diff(dateRange[0], 'years')+1);
           _.each(years, function(i) {
             var year = _.findWhere(results.years, {year: dateRange[0].year() + i});
             if (!year) {return;}
             p.lossAlerts += year.loss;
-            p.gainAlerts += year.gain;
           });
         }
 
         p.lossAlerts = (results.loss) ? results.loss.toLocaleString() : p.lossAlerts.toLocaleString();
         p.gainAlerts = (results.gain) ? results.gain.toLocaleString() : p.gainAlerts.toLocaleString();
-
       }
 
       /**
