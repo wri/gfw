@@ -17,6 +17,10 @@
     @include home-icons-sprite(icon_options);
     &:hover  { @include home-icons-sprite(icon_options_hover); }
     &:active { @include home-icons-sprite(icon_options_active); }
+    &.disabled {
+      @include home-icons-sprite(icon_options_disable);
+      opacity: 1;
+    }
   }
 
   .widget-title {

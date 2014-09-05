@@ -20,7 +20,7 @@ define([
     template: Handlebars.compile(tpl),
 
     options: {
-      hidden: true,
+      hidden: false,
       boxHidden: true,
       boxClosed: false
     },
