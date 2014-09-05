@@ -21,6 +21,10 @@
   }
 }
 
+.jspScrollable {
+  overflow: auto !important;
+}
+
 .countries_list {
   @extend .clearfix;
 }
