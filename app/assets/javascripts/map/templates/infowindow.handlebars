@@ -6,9 +6,8 @@
         {{#if content.data.name}}
           <h2>{{content.data.name}}</h2>
         {{/if}}
-        <div class="thumb-mask" style="background-image: url({{content.data.image}})">
-          {{!-- <img src=""> --}}
-        </div>
+        {{!-- <div class="thumb-mask" style="background-image: url({{content.data.image}})"> --}}
+          <div class="thumb-mask"><img src="{{content.data.image}}" onerror="this.style.display='none';"></div>
       {{/if}}
       {{#if content.data.analysis}}
         <a href="#analysis" class="analyse" data-layer="{{content.data.id}}"></a>
