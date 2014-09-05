@@ -18,8 +18,7 @@ define([
     defaults: {
       layerSpec: null,
       analysis: false,
-      isoTotalArea: null,
-      disableUpdating: false
+      isoTotalArea: null
     }
   });
 
@@ -61,23 +60,6 @@ define([
 
       mps.subscribe('AnalysisResults/unavailable', _.bind(function() {
         this._renderResults({unavailable: true});
-      }, this));
-
-      mps.subscribe('Timeline/date-change', _.bind(function() {
-        this._updateAnalysis();
-      }, this));
-
-      mps.subscribe('Threshold/changed', _.bind(function() {
-        this._updateAnalysis();
-      }, this));
-
-      mps.subscribe('Timeline/start-playing', _.bind(function() {
-        this.status.set('disableUpdating', true);
-      }, this));
-
-      mps.subscribe('Timeline/stop-playing', _.bind(function() {
-        this.status.set('disableUpdating', false);
-        this._updateAnalysis();
       }, this));
 
       mps.subscribe('AnalysisTool/iso-drawn', _.bind(function(multipolygon) {
@@ -140,15 +122,6 @@ define([
       var params = this._getAnalysisResource(results, layer);
       this.view.renderAnalysis(params);
       mps.publish('Place/update', [{go: false}]);
-    },
-
-    /**
-     * Updates current analysis if it's permitted.
-     */
-    _updateAnalysis: function() {
-      if (this.status.get('analysis') && !this.status.get('disableUpdating')) {
-        mps.publish('AnalysisTool/update-analysis', []);
-      }
     },
 
     /**

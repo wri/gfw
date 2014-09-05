@@ -24,7 +24,8 @@ define([
       threshold: null,
       overlay: null, // google.maps.Polygon (user draw)
       polygon: null, // geojson (user polygons)
-      multipolygon: null // geojson (countries and regions)
+      multipolygon: null, // geojson (countries and regions)
+      disableUpdating: false
     }
   });
 
@@ -68,6 +69,20 @@ define([
 
       mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
         this._setCurrentDate(date);
+        this._updateAnalysis();
+      }, this));
+
+      mps.subscribe('Threshold/changed', _.bind(function() {
+        this._updateAnalysis();
+      }, this));
+
+      mps.subscribe('Timeline/start-playing', _.bind(function() {
+        this.status.set('disableUpdating', true);
+      }, this));
+
+      mps.subscribe('Timeline/stop-playing', _.bind(function() {
+        this.status.set('disableUpdating', false);
+        this._updateAnalysis();
       }, this));
 
       mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
@@ -88,8 +103,11 @@ define([
       }, this));
     },
 
+    /**
+     * Updates current analysis if it's permitted.
+     */
     _updateAnalysis: function() {
-      if (this.status.get('analysis')) {
+      if (this.status.get('analysis') && !this.status.get('disableUpdating')) {
         this._publishAnalysis(this.status.get('analysis'));
       }
     },
