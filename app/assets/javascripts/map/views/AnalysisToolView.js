@@ -7,9 +7,9 @@ define([
   'd3',
   'underscore',
   'handlebars',
-  'views/Widget',
-  'presenters/AnalysisToolPresenter',
-  'text!templates/analysisTool.handlebars'
+  'map/views/Widget',
+  'map/presenters/AnalysisToolPresenter',
+  'text!map/templates/analysisTool.handlebars'
 ], function(d3, _, Handlebars, Widget, Presenter, tpl) {
 
   'use strict';

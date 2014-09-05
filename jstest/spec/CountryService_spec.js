@@ -1,5 +1,5 @@
 define([
-  'services/CountryService',
+  'map/services/CountryService',
   'helpers/api_responses',
 ], function(service) {
 

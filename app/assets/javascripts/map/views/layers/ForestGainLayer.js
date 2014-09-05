@@ -4,7 +4,7 @@
  * @return ForestGainLayer class (extends ImageLayerClass)
  */
 define([
-  'views/layers/class/ImageLayerClass',
+  'abstract/layer//ImageLayerClass',
 ], function(ImageLayerClass) {
 
   'use strict';

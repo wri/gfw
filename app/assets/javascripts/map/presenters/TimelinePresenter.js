@@ -7,11 +7,11 @@ define([
   'Class',
   'underscore',
   'mps',
-  'views/timeline/UMDLossTimeline',
-  'views/timeline/FormaTimeline',
-  'views/timeline/ImazonTimeline',
-  'views/timeline/ModisTimeline',
-  'views/timeline/FiresTimeline',
+  'map/views/timeline/UMDLossTimeline',
+  'map/views/timeline/FormaTimeline',
+  'map/views/timeline/ImazonTimeline',
+  'map/views/timeline/ModisTimeline',
+  'map/views/timeline/FiresTimeline',
 ], function(Class, _, mps, UMDLossTimeline, FormaTimeline, ImazonTimeline, ModisTimeline,
     FiresTimeline) {
 

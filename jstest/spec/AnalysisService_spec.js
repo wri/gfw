@@ -2,11 +2,11 @@
  * Unit test coverage for AnalysisService.
  */
 define([
-  'services/AnalysisService',
-  'mps',
   'underscore',
+  'mps',
+  'map/services/AnalysisService',
   'helpers/api_responses',
-], function(service, mps, _) {
+], function(_, mps, service) {
 
   /* global describe, it, expect, afterEach, beforeEach, jasmine, spyOn */
 

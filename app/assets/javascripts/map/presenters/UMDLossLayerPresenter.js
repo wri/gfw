@@ -4,10 +4,10 @@
  * @return UMDLossLayerPresenter class
  */
 define([
-  'presenters/PresenterClass',
   'underscore',
-  'mps'
-], function(PresenterClass, _, mps) {
+  'mps',
+  'map/presenters/PresenterClass'
+], function(_, mps, PresenterClass) {
 
   'use strict';
 

@@ -4,7 +4,7 @@
 define([
   'Class',
   'uri',
-  'services/DataService'
+  'map/services/DataService'
 ], function (Class, UriTemplate, ds) {
 
   'use strict';

@@ -10,8 +10,8 @@ define([
   'mps',
   'd3',
   'topojson',
-  'services/CountryService',
-  'services/RegionService'
+  'map/services/CountryService',
+  'map/services/RegionService'
 ], function(Class, _, Backbone, mps, d3, topojson, countryService, regionService) {
 
   'use strict';

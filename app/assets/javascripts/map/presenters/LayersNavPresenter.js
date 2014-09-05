@@ -7,7 +7,7 @@ define([
   'Class',
   'underscore',
   'mps',
-  'services/LayerSpecService'
+  'map/services/LayerSpecService'
 ], function(Class, _, mps, layerSpecService) {
 
   'use strict';

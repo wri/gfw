@@ -19,7 +19,7 @@
 define([
   'underscore',
   'Class',
-  'services/DataService',
+  'map/services/DataService',
   'mps',
   '_string'
 ], function (_, Class, ds, mps) {

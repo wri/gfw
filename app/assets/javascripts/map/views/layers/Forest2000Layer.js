@@ -5,8 +5,8 @@
  */
 define([
   'uri',
-  'views/layers/class/CanvasLayerClass',
-  'presenters/Forest2000LayerPresenter'
+  'abstract/layer/CanvasLayerClass',
+  'map/presenters/Forest2000LayerPresenter'
 ], function(UriTemplate, CanvasLayerClass, Presenter) {
 
   'use strict';

@@ -4,6 +4,7 @@ modules:
 wrap: false
 
 paths:
+  # Libs
   amplify: "amplify/lib/amplify"
   underscore: "underscore/underscore"
   backbone: "backbone/backbone"
@@ -17,28 +18,29 @@ paths:
   _string: "underscore.string/dist/underscore.string.min"
   jqueryui: "jquery-ui-1.10.4.custom.min"
   markerclusterer: "gmaps-markerclusterer-plus/src/markerclusterer"
-  gmap: "map/gmap"
   geojsonArea: "geojson-area"
   uri: "uri-templates/uri-templates"
   handlebars: "handlebars/handlebars"
   wax: "wax.g.min"
   store: "store"
   Class: "Class.js/Class"
-  app: "map/app"
-  utils: "map/utils"
-  router: "map/router"
-  mediator: "map/mediator"
-  presenter: "map/presenter"
-  views: "map/views"
-  templates: "map/templates"
-  services: "map/services"
-  presenters: "map/presenters"
-  validators: "map/validators"
-  models: "map/models"
-  collections: "map/collections"
   jasmine: "jasmine"
-  analysis: "map/analysis"
-  cartocss: "map/cartocss"
+
+  # Map
+  # router: "map/router"
+  utils: "map/utils"
+  # views: "map/views"
+  # templates: "map/templates"
+  # services: "map/services"
+  # presenters: "map/presenters"
+  # models: "map/models"
+  # cartocss: "map/cartocss"
+
+  # General
+  abstract: "abstract"
+  helpers: "helpers"
+  templates: "templates"
+  views: "views"
 
 shim:
   underscore:

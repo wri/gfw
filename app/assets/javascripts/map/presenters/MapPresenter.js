@@ -26,8 +26,7 @@ define([
    */
   var StatusModel = Backbone.Model.extend({
     defaults: {
-      threshold: null,
-      currentDate: null
+      threshold: null
     }
   });
 
@@ -102,13 +101,18 @@ define([
      */
     _onPlaceGo: function(place) {
       if (place.params.name !== 'map') {return;}
+      var layerOptions = {};
 
       this._setMapOptions(
         _.pick(place.params,
           'zoom', 'maptype', 'lat', 'lng'));
 
+      if (place.params.begin && place.params.end) {
+        layerOptions.currentDate = [place.params.begin, place.params.end];
+      }
+
       this._updateStatusModel(place.params);
-      this._setLayers(place.layerSpec.getLayers());
+      this._setLayers(place.layerSpec.getLayers(), layerOptions);
     },
 
     /**
@@ -120,10 +124,6 @@ define([
       if (params.threshold) {
         this.status.set('threshold', params.threshold);
       }
-
-      if (params.begin && params.end) {
-        this.status.set('currentDate', [params.begin, params.end]);
-      }
     },
 
     /**
@@ -132,9 +132,12 @@ define([
      *
      * @param {object} layers Layers object
      */
-    _setLayers: function(layers) {
-      var options = _.pick(this.status.toJSON(),
-        'threshold', 'currentDate');
+    _setLayers: function(layers, layerOptions) {
+      // Get layer options. We need the currentDate just when loading
+      // a layer first time from url. When changing between layers
+      // there is no date so it will be set to the default layer date.
+      var options = _.extend(_.pick(this.status.toJSON(),
+        'threshold'), layerOptions);
 
       this.view.setLayers(layers, options);
     },
