@@ -18,7 +18,7 @@ define([
     template: Handlebars.compile(tpl),
 
     events: function() {
-      return {'click #analysis-subscribe close': '_close'}
+      return {'click .close': '_close'}
     },
 
 
@@ -36,7 +36,8 @@ define([
     },
 
     _close: function() {
-      $('.backdrop').fadeIn(function(){$el.empty()})
+      var self = this;
+      $('.backdrop').fadeOut(function(){self.$el.empty()})
     }
 
   });
