@@ -2,6 +2,7 @@
  * Map layers slug with layer files. (like views and dialog templates)
  */
 define([
+  // Layer views
   'map/views/layers/UMDLossLayer',
   'map/views/layers/ForestGainLayer',
   'map/views/layers/FormaLayer',
@@ -27,18 +28,46 @@ define([
   'map/views/layers/LandRightsLayer',
   'map/views/layers/UserStoriesLayer',
   'map/views/layers/MongabayStoriesLayer',
-  'map/views/layers/InfoamazoniaStoriesLayer'
-], function(UMDLossLayer, ForestGainLayer, FormaLayer, FormaCoverLayer, ImazonLayer, ImazonCoverLayer,
-  ModisLayer, ModisCoverLayer, FiresLayer, Forest2000Layer, IntactForestLayer, IntactForestLayer2000,
-  IntactForestLayer2013, PantropicalLayer, IdnPrimaryLayer, LoggingLayer, MiningLayer, OilPalmLayer,
-  WoodFiberPlantationsLayer, ProtectedAreasLayer, BiodiversityHotspotsLayer, ResourceRightsLayer,
-  LandRightsLayer, UserStoriesLayer, MongabayStoriesLayer, InfoamazoniaStoriesLayer) {
+  'map/views/layers/InfoamazoniaStoriesLayer',
+  // Layer dialog templates
+  'text!templates/dialogs/umd_tree_loss_gain_dialog.handlebars'
+], function(
+  // Layer Views
+  UMDLossLayer,
+  ForestGainLayer,
+  FormaLayer,
+  FormaCoverLayer,
+  ImazonLayer,
+  ImazonCoverLayer,
+  ModisLayer,
+  ModisCoverLayer,
+  FiresLayer,
+  Forest2000Layer,
+  IntactForestLayer,
+  IntactForestLayer2000,
+  IntactForestLayer2013,
+  PantropicalLayer,
+  IdnPrimaryLayer,
+  LoggingLayer,
+  MiningLayer,
+  OilPalmLayer,
+  WoodFiberPlantationsLayer,
+  ProtectedAreasLayer,
+  BiodiversityHotspotsLayer,
+  ResourceRightsLayer,
+  LandRightsLayer,
+  UserStoriesLayer,
+  MongabayStoriesLayer,
+  InfoamazoniaStoriesLayer,
+  // Layer dialog templates
+  umd_tree_loss_gain_dialog) {
 
   'use strict';
 
   var layersHelper = {
     umd_tree_loss_gain: {
-      view: UMDLossLayer
+      view: UMDLossLayer,
+      dialogTpl: umd_tree_loss_gain_dialog
     },
     forestgain: {
       view: ForestGainLayer

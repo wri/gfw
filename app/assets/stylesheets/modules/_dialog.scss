@@ -1,0 +1,86 @@
+/**
+ * Dialog module.
+ * @div
+ */
+.m-dialog {
+  // display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000001;
+}
+
+/**
+ * Dialog background.
+ * @div
+ */
+.m-dialog-background {
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000002;
+  padding: 50px 10px;
+  background: white;
+  opacity: .8;
+
+  * {
+    box-sizing: border-box;
+  }
+
+  overflow-x: auto;
+  overflow-y: scroll;
+}
+
+/**
+ * Dialog wrapper. The visible box of the dialog.
+ * @div
+ */
+.m-dialog-wrapper {
+  position: absolute;
+  z-index: 99999999;
+  top: 20%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  max-width: 550px;
+  padding: 40px 50px;
+  background: white;
+  border-radius: 3px;
+  color: #333;
+
+  input {
+    width: 100%;
+  }
+}
+
+/**
+ * Dialog header.
+ * @div
+ */
+.m-dialog-header {
+  display: block;
+  margin-bottom: 20px;
+
+  // @h2
+  .title {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+}
+
+/**
+ * Dialog content.
+ * @div
+ */
+.m-dialog-content {
+  padding: 0 0 30px 0;
+}
