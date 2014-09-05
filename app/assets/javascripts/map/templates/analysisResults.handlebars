@@ -22,7 +22,9 @@
               User defined area
             {{/if}}
           </span>
-          <span class="analysis-date-range">{{dateRange}}</span>
+          {{#unless umd_tree_loss_gain}}
+            <span class="analysis-date-range">{{dateRange}}</span>
+          {{/unless}}
         </div>
         <ul class="analysis-stats">
           {{#if totalArea}}
