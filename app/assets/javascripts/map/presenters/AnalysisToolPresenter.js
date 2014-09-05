@@ -136,7 +136,7 @@ define([
         _.keys(this.datasets)))];
 
       this.status.set('baselayer', baselayer);
-      this.view.model.set('hidden', !!!baselayer);
+      this.view.$widgetBtn.toggleClass('disabled', !!!baselayer);
     },
 
     _getProtectedAreaPolygon: function(id) {
