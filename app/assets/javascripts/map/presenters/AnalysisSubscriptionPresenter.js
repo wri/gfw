@@ -14,7 +14,6 @@ define([
   var AnalysisSubscriptionPresenter = Class.extend({
 
     init: function(view) {
-      this._super();
       this.view = view;
       this._subscribe();
     },

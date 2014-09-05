@@ -6,25 +6,37 @@
 define([
   'backbone',
   'underscore',
-  'presenters/AnalysisSubscriptionPresenter',
+  'map/presenters/AnalysisSubscriptionPresenter',
   'handlebars',
-  'text!templates/analysisSubscription.handlebars'
+  'text!map/templates/analysisSubscription.handlebars'
 ], function(Backbone, _, Presenter, Handlebars, tpl) {
 
   'use strict';
 
   var Subscription = Backbone.View.extend({
-
-    className: 'widget widget-subscription',
-
+    el: '#analysis-subscribe',
     template: Handlebars.compile(tpl),
+
+    events: function() {
+      return {'click #analysis-subscribe close': '_close'}
+    },
+
 
     initialize: function() {
       this.presenter = new Presenter(this);
     },
 
+    render: function() {
+      this.$el.empty().append(this.template());
+      $('.backdrop').fadeIn(function(){$('.analysis_subscribe').show()})
+    },
+
     subscribeAlerts: function() {
-      console.log('view subscribe alerts');
+      this.render();
+    },
+
+    _close: function() {
+      $('.backdrop').fadeIn(function(){$el.empty()})
     }
 
   });
