@@ -18,7 +18,10 @@ define([
     template: Handlebars.compile(tpl),
 
     events: function() {
-      return {'click .close': '_close'}
+      return {
+        'click .close': '_close',
+        'click .send': '_submit'
+      }
     },
 
 
@@ -38,7 +41,31 @@ define([
     _close: function() {
       var self = this;
       $('.backdrop').fadeOut(function(){self.$el.empty()})
-    }
+    },
+
+    _submit: function(e) {
+      e && e.preventDefault()
+      var self = this;
+      //callback handler for form submit
+      this.$el.find('form').submit(function(e)
+      {
+          var postData = $(this).serializeArray();
+          var formURL = $(this).attr("action");
+          $.ajax(
+          {
+              url : formURL,
+              type: "POST",
+              data : postData,
+              success:function(data, textStatus, jqXHR)
+              {
+                  self._close();
+              }
+          });
+          e.preventDefault(); //STOP default action
+      });
+      this.$el.find('form').submit(); //Submit  the FORM
+        this._close();
+      }
 
   });
 
