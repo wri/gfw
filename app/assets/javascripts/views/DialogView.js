@@ -1,43 +1,65 @@
 define([
   'jquery',
   'underscore',
-  'backbone'
-], function($, _, Backbone) {
+  'backbone',
+  'handlebars',
+  'presenters/DialogPresenter',
+  'text!templates/dialogs/dialog.handlebars'
+], function($, _, Backbone, Handlebars, Presenter, tpl) {
 
   'use strict';
 
-  var ModalView = Backbone.View.extend({
+  var DialogView = Backbone.View.extend({
 
-    events: {
-      'click #closeBtn': 'remove',
-      'click .m-modal-background': 'remove'
+    className: 'm-dialog',
+    template: Handlebars.compile(tpl),
+
+    events: function() {
+      // Events outside the context el
+      $(document).keyup(_.bind(this._onKeyup, this));
+
+      return {
+        'click #closeBtn': '_remove',
+        'click .m-dialog-background': '_remove'
+      };
     },
 
     initialize: function() {
-      _.bindAll(this, '_onKeyup');
-      $(document).keyup(this._onKeyup);
+      this.presenter = new Presenter(this);
+      this.$body = $('body');
     },
 
-    render: function() {
-    },
+    render: function(resourceTpl) {
+      resourceTpl = Handlebars.compile(resourceTpl);
 
-    remove: function() {
+      this.$el.html(this.template({
+        resourceTpl: resourceTpl
+      }));
+
+      this.delegateEvents();
+      this.$body.append(this.el);
     },
 
     /**
-     * Triggered by a keyup event. Hide the modal
+     * Remove the dialog $el.
+     */
+    _remove: function() {
+      this.$el.remove();
+    },
+
+    /**
+     * Triggered by a keyup event. Hide the dialog
      * if the user clicks esc.
      *
      * @param  {Object} e Event
      */
     _onKeyup: function(e) {
       if (e.keyCode === 27) {
-        this.remove();
+        this._remove();
       }
     },
 
   });
 
-  return ModalView;
-
+  return DialogView;
 });

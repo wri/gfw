@@ -73,6 +73,9 @@ require([
       new AnalysisResultsView();
       new AnalysisToolView(mapView.map);
       new ShareView();
+      // TODO => This is temporary!!! We will use the refactored
+      // and awesome DialogView later.
+      window.infowindow();
     },
 
     /**
