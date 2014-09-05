@@ -39,8 +39,7 @@ define([
         expect(presenter.status.toJSON()).toEqual({
           layerSpec: null,
           analysis: false,
-          isoTotalArea: null,
-          disableUpdating: false
+          isoTotalArea: null
         });
       });
     });

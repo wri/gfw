@@ -50,7 +50,8 @@ define([
           threshold: null,
           overlay: null,
           polygon: null,
-          multipolygon: null
+          multipolygon: null,
+          disableUpdating: false
         });
       });
     });

@@ -53,6 +53,7 @@ define([
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this._setBaselayer(layerSpec.getBaselayers());
         this._checkUnavailable();
+        this._updateAnalysis();
       }, this));
 
       mps.subscribe('Place/go', _.bind(function(place) {
