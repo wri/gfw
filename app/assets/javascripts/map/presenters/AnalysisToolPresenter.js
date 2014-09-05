@@ -60,6 +60,10 @@ define([
         this._setCurrentDate([p.begin, p.end]);
         this.status.set('threshold', p.threshold);
         this._drawFromUrl(p.iso, p.geojson);
+
+        if (place.params.analyze) {
+          this.view.onClickAnalysis();
+        }
       }, this));
 
       mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {

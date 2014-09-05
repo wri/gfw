@@ -61,6 +61,8 @@ require([
 
     /**
      * Initialize Application Views.
+     * CAUTION: Don't change the order of initanciations if
+     * you are not completely sure.
      */
     _initViews: function() {
       var mapView = new MapView();
@@ -69,9 +71,9 @@ require([
       new MaptypeView();
       new SearchboxView();
       new ThresholdView();
+      new AnalysisToolView(mapView.map);
       new TimelineView();
       new AnalysisResultsView();
-      new AnalysisToolView(mapView.map);
       new ShareView();
       // TODO => This is temporary!!! We will use the refactored
       // and awesome DialogView later.

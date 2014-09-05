@@ -29,7 +29,7 @@ define([
 
     events: function(){
       return _.extend({}, AnalysisToolView.__super__.events, {
-        'click #analysis': '_onClickAnalysis',
+        'click #analysis': 'onClickAnalysis',
         'click #done': '_onClickDone',
         'click #cancel': '_onClickCancel'
       });
@@ -52,7 +52,7 @@ define([
     /**
      * Triggered when the user clicks on analysis.
      */
-    _onClickAnalysis: function() {
+    onClickAnalysis: function() {
       this._startDrawingManager();
       this.presenter.startDrawing();
       this.model.set('boxHidden', false);
