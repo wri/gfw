@@ -37,7 +37,8 @@ define([
     events: function() {
       return _.extend({}, AnalysisResultsView.__super__.events, {
         'click .analysis-control-delete': '_deleteAnalysis',
-        'click .download-links span' :'_toggleDownloads'
+        'click .download-links span' :'_toggleDownloads',
+        'click .analysis-control-subscribe': '_subscribe'
       });
     },
 
@@ -80,6 +81,9 @@ define([
 
     _deleteAnalysis: function() {
       this.presenter.deleteAnalysis();
+    },
+    _subscribe: function() {
+      this.presenter.subscribeAnalysis();
     },
 
     _toggleDownloads: function() {

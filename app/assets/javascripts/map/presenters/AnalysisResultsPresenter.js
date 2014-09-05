@@ -151,6 +151,10 @@ define([
       }
     },
 
+    subscribeAnalysis: function() {
+      mps.publish('AnalysisSubscription/new', []);
+    },
+
     /**
      * Delete the current analysis and abort the current
      * AnalysisService request.
