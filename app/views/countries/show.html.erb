@@ -120,14 +120,14 @@
   <section class="country-section country-production" data-scroll-index='2'>
     <div class="inner">
       <div class="section-info">
-        Economic value of Brazil's forestry sector
+        Economic value of <%= @country['name'] %>'s forestry sector
         <a href="#" class="info" data-source="gross_value"><i></i></a>
       </div>
 
       <div class="section-content">
         <% if @country['gva'].present? && @country['gva'] > 0 %>
         <h3 class="section-title">
-          The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2006, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> of the GDP.</span>
+          The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2011, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> of the GDP.</span>
         </h3>
         <% else %>
         <div class="coming-soon">No data available</div>
@@ -149,9 +149,9 @@
         <% if @employees.present? && @employees > 0 %>
         <div class="left-col">
           <% if @employees < 1000 %>
-            <h3 class='section-title'><div><%= @employees %></div> <span>thousand people are directly employed by the forestry sector, according to 2006 FAO data.</span></h3>
+            <h3 class='section-title'><div><%= @employees %></div> <span>thousand people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
           <% else %>
-            <h3 class='section-title'><div><%= (@employees/1000.00).round(2) %></div> <span>million people are directly employed by the forestry sector, according to 2006 FAO data.</span></h3>
+            <h3 class='section-title'><div><%= (@employees/1000.00).round(2) %></div> <span>million people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
           <% end %>
 
           <ul class='employment <%= @employees < 25 ? 'short' : '' %>'>
