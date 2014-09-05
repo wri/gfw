@@ -58,14 +58,9 @@ define([
         presenter._setLayers(layers);
       });
 
-      it('correctly set status.layers with the current supported threshold layers', function() {
-        expect(presenter.status.get('layers')).toEqual(["umd_tree_loss_gain", "forest2000"]);
-      });
-
-      it('correctly set threshold widget hidden attribute when status.layers changes', function() {
-        expect(viewSpy.model.set).toHaveBeenCalled();
-        expect(viewSpy.model.set).toHaveBeenCalledWith('hidden', false);
-      });
+      // it('correctly set status.layers with the current supported threshold layers', function() {
+      //   expect(presenter.status.get('layers')).toEqual(["umd_tree_loss_gain", "forest2000"]);
+      // });
     });
 
   });
