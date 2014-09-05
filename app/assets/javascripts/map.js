@@ -22,11 +22,11 @@ require([
   'map/views/AnalysisToolView',
   'map/views/AnalysisResultsView',
   'map/views/ShareView',
-  'map/views/AnalysisSubscriptionView',
+  'views/DialogView',
   '_string'
 ], function($, _, Class, Backbone, utils, mps, Router, AnalysisService, CountryService, DataService,
     LayersNavView, MapView, LegendView, ThresholdView, SearchboxView, MaptypeView, TimelineView,
-    AnalysisToolView, AnalysisResultsView, ShareView, AnalysisSubscriptionView) {
+    AnalysisToolView, AnalysisResultsView, ShareView, DialogView) {
 
   'use strict';
 
@@ -62,6 +62,8 @@ require([
 
     /**
      * Initialize Application Views.
+     * CAUTION: Don't change the order of initanciations if
+     * you are not completely sure.
      */
     _initViews: function() {
       var mapView = new MapView();
@@ -70,11 +72,14 @@ require([
       new MaptypeView();
       new SearchboxView();
       new ThresholdView();
+      new AnalysisToolView(mapView.map);
       new TimelineView();
       new AnalysisResultsView();
-      new AnalysisToolView(mapView.map);
       new ShareView();
-      new AnalysisSubscriptionView();
+      new DialogView();
+      // TODO => This is temporary!!! We will use the refactored
+      // and awesome DialogView later.
+      window.infowindow();
     },
 
     /**

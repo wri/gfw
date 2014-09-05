@@ -10,14 +10,13 @@ define([
   'map/presenters/LegendPresenter',
   'text!map/templates/legend/legend.handlebars',
   'text!map/templates/legend/loss.handlebars',
-  'text!map/templates/legend/gain.handlebars',
   'text!map/templates/legend/imazon.handlebars',
   'text!map/templates/legend/fires.handlebars',
   'text!map/templates/legend/forest2000.handlebars',
   'text!map/templates/legend/pantropical.handlebars',
   'text!map/templates/legend/idnPrimary.handlebars',
   'text!map/templates/legend/intact2013.handlebars'
-], function(_, Handlebars, Widget, Presenter, tpl, lossTpl, gainTpl, imazonTpl, firesTpl,
+], function(_, Handlebars, Widget, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl) {
 
   'use strict';
@@ -33,7 +32,6 @@ define([
      */
     detailsTemplates: {
       umd_tree_loss_gain: Handlebars.compile(lossTpl),
-      forestgain: Handlebars.compile(gainTpl),
       imazon: Handlebars.compile(imazonTpl),
       fires: Handlebars.compile(firesTpl),
       forest2000: Handlebars.compile(forest2000Tpl),

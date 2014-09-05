@@ -19,7 +19,7 @@ define([
       layerSpec: null,
       analysis: false,
       isoTotalArea: null,
-      disableUpdating: false
+      analysisResource: analysis
     }
   });
 
@@ -51,7 +51,8 @@ define([
         this.status.set('layerSpec', layerSpec);
       }, this));
 
-      mps.subscribe('AnalysisService/get', _.bind(function() {
+      mps.subscribe('AnalysisService/get', _.bind(function(resource) {
+        this.status.set('analysisResource', resource);
         this._renderResults({loading: true});
       }, this));
 
@@ -60,29 +61,24 @@ define([
       }, this));
 
       mps.subscribe('AnalysisResults/unavailable', _.bind(function() {
+        this.status.set('analysisResource', false);
         this._renderResults({unavailable: true});
-      }, this));
-
-      mps.subscribe('Timeline/date-change', _.bind(function() {
-        this._updateAnalysis();
-      }, this));
-
-      mps.subscribe('Threshold/changed', _.bind(function() {
-        this._updateAnalysis();
-      }, this));
-
-      mps.subscribe('Timeline/start-playing', _.bind(function() {
-        this.status.set('disableUpdating', true);
-      }, this));
-
-      mps.subscribe('Timeline/stop-playing', _.bind(function() {
-        this.status.set('disableUpdating', false);
-        this._updateAnalysis();
       }, this));
 
       mps.subscribe('AnalysisTool/iso-drawn', _.bind(function(multipolygon) {
         this.status.set('isoTotalArea', this._getHectares(multipolygon));
       }, this));
+    },
+
+    /**
+     * Set the subscribe button to disabled
+     * if layer is not format and is not on a region.
+     */
+    _setSubscribeButton: function() {
+      this.view.toggleSubscribeButton(
+        !!!this.status.get('layerSpec').getLayer({
+          slug: 'forma'
+        }));
     },
 
     /**
@@ -105,6 +101,8 @@ define([
       } else {
         this._renderAnalysis(results);
       }
+
+      this._setSubscribeButton();
     },
 
     /**
@@ -151,8 +149,19 @@ define([
       }
     },
 
+    /**
+     * Render analysis subscribe dialog by publishing
+     * to DialogPresenter.
+     */
     subscribeAnalysis: function() {
-      mps.publish('AnalysisSubscription/new', []);
+      var params = {};
+
+      params.resource = this.status.get('analysisResource');
+
+      mps.publish('Dialog/new', [{
+        type: 'analysis',
+        id: 'subscribe'
+      }, params]);
     },
 
     /**
@@ -161,6 +170,7 @@ define([
      */
     deleteAnalysis: function() {
       this.status.set('analysis', false);
+      this.status.set('iso', null);
       this.view.model.set('boxHidden', true);
       mps.publish('AnalysisService/cancel', []);
       mps.publish('AnalysisResults/delete-analysis', []);

@@ -50,6 +50,7 @@ define([
     _cacheSelector: function() {
       AnalysisResultsView.__super__._cacheSelector.apply(this);
       this.$downloadDropdown = this.$('.download-dropdown');
+      this.$subscribeButton = this.$('#subscribeButton');
     },
 
     /**
@@ -70,6 +71,10 @@ define([
 
     renderUnavailable: function() {
       this._update(this.templates.unavailable());
+    },
+
+    toggleSubscribeButton: function(toggle) {
+      this.$subscribeButton.toggleClass('disabled', toggle);
     },
 
     /**

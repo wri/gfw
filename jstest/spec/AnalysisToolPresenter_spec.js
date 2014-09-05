@@ -27,8 +27,9 @@ define([
     beforeEach(function() {
       viewSpy = {
         model: {
-          set: jasmine.createSpy()
+          set: jasmine.createSpy(),
         },
+        $widgetBtn: jasmine.createSpyObj('$widgetBtn', ['toggleClass']),
         _fitBounds: jasmine.createSpy()
       };
 
@@ -50,7 +51,8 @@ define([
           threshold: null,
           overlay: null,
           polygon: null,
-          multipolygon: null
+          multipolygon: null,
+          disableUpdating: false
         });
       });
     });
@@ -60,10 +62,10 @@ define([
         presenter._setBaselayer(baselayers);
       });
 
-      it('correctly set hidden widget', function() {
-        expect(viewSpy.model.set).toHaveBeenCalled();
-        expect(viewSpy.model.set).toHaveBeenCalledWith('hidden', false);
-        expect(viewSpy.model.set.calls.count()).toEqual(1);
+      it('correctly set disabled widget button', function() {
+        expect(viewSpy.$widgetBtn.toggleClass).toHaveBeenCalled();
+        expect(viewSpy.$widgetBtn.toggleClass).toHaveBeenCalledWith('disabled', false);
+        expect(viewSpy.$widgetBtn.toggleClass.calls.count()).toEqual(1);
       });
 
       it('correctly set baselayer', function() {

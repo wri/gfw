@@ -10,6 +10,10 @@
     @include home-icons-sprite(analysis_button);
     &:hover  { @include home-icons-sprite(analysis_button_hover); }
     &:active { @include home-icons-sprite(analysis_button_active); }
+    &.disabled {
+      @include home-icons-sprite(analysis_button_disabled);
+      opacity: 1;
+    }
   }
 
   .widget-box {

@@ -24,7 +24,8 @@ define([
       threshold: null,
       overlay: null, // google.maps.Polygon (user draw)
       polygon: null, // geojson (user polygons)
-      multipolygon: null // geojson (countries and regions)
+      multipolygon: null, // geojson (countries and regions)
+      disableUpdating: false
     }
   });
 
@@ -52,6 +53,7 @@ define([
       mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
         this._setBaselayer(layerSpec.getBaselayers());
         this._checkUnavailable();
+        this._updateAnalysis();
       }, this));
 
       mps.subscribe('Place/go', _.bind(function(place) {
@@ -60,9 +62,27 @@ define([
         this._setCurrentDate([p.begin, p.end]);
         this.status.set('threshold', p.threshold);
         this._drawFromUrl(p.iso, p.geojson);
+
+        if (place.params.analyze) {
+          this.view.onClickAnalysis();
+        }
       }, this));
 
-      mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
+      mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
+        this._setCurrentDate(date);
+        this._updateAnalysis();
+      }, this));
+
+      mps.subscribe('Threshold/changed', _.bind(function() {
+        this._updateAnalysis();
+      }, this));
+
+      mps.subscribe('Timeline/start-playing', _.bind(function() {
+        this.status.set('disableUpdating', true);
+      }, this));
+
+      mps.subscribe('Timeline/stop-playing', _.bind(function() {
+        this.status.set('disableUpdating', false);
         this._updateAnalysis();
       }, this));
 
@@ -70,8 +90,8 @@ define([
         this._deleteAnalysis();
       }, this));
 
-      mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
-        this._setCurrentDate(date);
+      mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
+        this._updateAnalysis();
       }, this));
 
       mps.subscribe('Threshold/changed', _.bind(function(threshold) {
@@ -84,8 +104,11 @@ define([
       }, this));
     },
 
+    /**
+     * Updates current analysis if it's permitted.
+     */
     _updateAnalysis: function() {
-      if (this.status.get('analysis')) {
+      if (this.status.get('analysis') && !this.status.get('disableUpdating')) {
         this._publishAnalysis(this.status.get('analysis'));
       }
     },
@@ -113,7 +136,7 @@ define([
         _.keys(this.datasets)))];
 
       this.status.set('baselayer', baselayer);
-      this.view.model.set('hidden', !!!baselayer);
+      this.view.$widgetBtn.toggleClass('disabled', !!!baselayer);
     },
 
     _getProtectedAreaPolygon: function(id) {

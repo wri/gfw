@@ -24,7 +24,7 @@
 
     <li id='umd_tree_loss_gain' class='source-item first'>
       <div class='source_header'>
-        <strong class='source_title'>University of Maryland/Google tree cover loss &amp; gain</strong>
+        <strong class='source_title'>University of Maryland/Google tree cover loss</strong>
         <i class='expand_arrow'></i>
         <em class='source_description'>(annual &amp; 12 years, 30m, global)</em>
       </div>
@@ -37,7 +37,7 @@
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
-            <dd>Identifies areas of tree cover loss and gain</dd>
+            <dd>Identifies areas of tree cover loss</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Resolution/scale</dt>
@@ -53,33 +53,108 @@
           </dl>
           <dl class='sources_row'>
             <dt>Frequency of updates</dt>
-            <dd><strong>Loss:</strong> Annual<br /><strong>Gain:</strong> 12-year cumulative, updated annually</dd>
+            <dd>Annual</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Date of content</dt>
             <dd>January 2000–2012</dd>
           </dl>
           <dl class='sources_row'>
+            <dt>Tree cover canopy density</dt>
+            <dd>VARIES ACCORDING TO SELECTION (CLICK THE GEAR ICON ON THE MAP TO CHANGE THE MINIMUM TREE COVER CANOPY DENSITY THRESHOLD)</dd>
+          </dl>
+          <dl class='sources_row even'>
             <dt>Cautions</dt>
             <dd>
               <p>For the purpose of this study, “tree cover” was defined as all vegetation taller than 5 meters in height. “Tree cover” is the biophysical presence of trees and may take the form of natural forests or plantations existing over a range of canopy densities. “Loss” indicates the removal or mortality of tree canopy cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
 
-              <p>When zoomed out, it appears that all tree cover loss occurs in 2001, but in reality loss happened gradually over the study period. As you zoom out, adjacent pixels representing loss—which may have occurred in different years—must be combined into a single pixel to remain visible on a larger scale. Authors of the study decided to display these “aggregate pixels” according to the year loss first occurred in any of the constituent pixels (often 2001 for low zoom levels with very large aggregate pixels). Zoom in for greater detail of when and where loss has occurred for individual 30 × 30 meter pixels.</p>
+              <p>When zoomed out (< zoom level 13), pixels of loss are shaded according to the density of loss at the 30 x 30 meter scale. Pixels with darker shading represent areas with a higher concentration of tree cover loss, whereas pixels with lighter shading indicate a lower concentration of tree cover loss. There is no variation in pixel shading when the data is at full resolution (≥ zoom level 13).</p>
             </dd>
           </dl>
         </div>
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>This data set measures areas of tree cover loss and tree cover gain across all global land (except Antarctica and other Arctic islands) at 30 × 30 meter resolution. Loss is presented annually (2000 through 2012), while gain is displayed as a 12-year cumulative layer. Loss and gain are displayed differently due to the underlying dynamics of tree cover loss (rapid) versus tree cover gain (slow).</p>
+          <p>This data set measures areas of tree cover loss across all global land (except Antarctica and other Arctic islands) annually at 30 × 30 meter resolution. The data were generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a> sensor. Over 600,000 Landsat 7 images were compiled and analyzed using Google Earth Engine, a cloud platform for earth observation and data analysis. The clear land surface observations (30 × 30 meter pixels) in the satellite images were assembled chronologically and a supervised learning algorithm was then applied to identify per pixel tree cover loss or gain.</p>
 
-          <p>The data were generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a> sensor. Over 600,000 Landsat 7 images were compiled and analyzed using Google Earth Engine, a cloud platform for earth observation and data analysis. The clear land surface observations (30 × 30 meter pixels) in the satellite images were assembled chronologically and a supervised learning algorithm was then applied to identify per pixel tree cover loss or gain.</p>
 
-          <p>Tree cover loss is defined as “stand replacement disturbance,” or the complete removal of tree cover canopy at the Landsat pixel scale. Tree cover loss may indicate a number of potential activities, such as timber harvesting, fires or disease, the conversion of natural forest to other land uses, or the crop rotations cycle of tree plantations. Tree cover gain was defined as the inverse of loss, or the establishment of tree canopy in an area that previously had no tree cover.</p>
 
-          <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” <em>Science</em> 342 (15 November): 850–53.</p>
+          <p>Tree cover loss is defined as “stand replacement disturbance,” or the complete removal of tree cover canopy at the Landsat pixel scale. Tree cover loss may indicate a number of potential activities, such as timber harvesting, fires or disease, the conversion of natural forest to other land uses, or the crop rotations cycle of tree plantations. </p>
 
-          <p class='credits'><strong>Suggested citations for data as displayed on GFW:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain Area.” University of Maryland, Google, USGS, and NASA. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
+          <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Science 342 (15 November): 850–53.</p>
+
+          <p class='credits'><strong>Suggested citations for data as displayed on GFW:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain Area.” University of Maryland, Google, USGS, and NASA. Accessed through Global Forest Watch on  [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
+
+          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', sources_path %></em></p>
+        </div>
+      </div>
+    </li>
+    
+    
+    
+    
+     <li id='forestgain' class='source-item '>
+      <div class='source_header'>
+        <strong class='source_title'>University of Maryland/Google tree cover gain</strong>
+        <i class='expand_arrow'></i>
+        <em class='source_description'>(annual &amp; 12 years, 30m, global)</em>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_download'>
+          <a href='http://www.earthenginepartners.appspot.com/science-2013-global-forest/download.html' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
+        </div>
+
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Identifies areas of tree cover gain</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Resolution/scale</dt>
+            <dd>30 × 30 meters</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Global land area (excluding Antarctica and other Arctic islands)</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd><a href='http://landsat.usgs.gov/' target='_blank'>Landsat 7 ETM+</a></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Frequency of updates</dt>
+            <dd>12-year cumulative, updated annually</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd>January 2000–2012</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Tree cover canopy density</dt>
+            <dd>>50%</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Cautions</dt>
+            <dd>
+              <p>For the purpose of this study, “tree cover” was defined as all vegetation taller than 5 meters in height. “Tree cover” is the biophysical presence of trees and may take the form of natural forests or plantations existing over a range of canopy densities. “Loss” indicates the removal or mortality of tree canopy cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
+
+              <p>When zoomed out (< zoom level 13), pixels of gain are shaded according to the density of gain at the 30 x 30 meter scale. Pixels with darker shading represent areas with a higher concentration of tree cover gain, whereas pixels with lighter shading indicate a lower concentration of tree cover gain. There is no variation in pixel shading when the data is at full resolution (≥ zoom level 13).</p>
+            </dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>This data set measures areas of tree cover gain across all global land (except Antarctica and other Arctic islands) at 30 × 30 meter resolution, displayed as a 12-year cumulative layer. The data were generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a> sensor. Over 600,000 Landsat 7 images were compiled and analyzed using Google Earth Engine, a cloud platform for earth observation and data analysis. The clear land surface observations (30 × 30 meter pixels) in the satellite images were assembled and a supervised learning algorithm was then applied to identify per pixel tree cover gain..</p>
+          
+
+
+          <p>Tree cover gain was defined as the establishment of tree canopy at the Landsat pixel scale in an area that previously had no tree cover. Tree cover gain may indicate a number of potential activities, including natural forest growth or the crop rotation cycle of tree plantations. </p>
+
+          <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Science 342 (15 November): 850–53.</p>
+
+          <p class='credits'><strong>Suggested citations for data as displayed on GFW:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain Area.” University of Maryland, Google, USGS, and NASA. Accessed through Global Forest Watch on  [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
           <p class='read_more hidden'><em><%= link_to 'Learn more or download data', sources_path %></em></p>
         </div>
