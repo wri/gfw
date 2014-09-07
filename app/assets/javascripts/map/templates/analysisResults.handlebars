@@ -62,16 +62,18 @@
               </li>
             {{/if}}
           {{/if}}
-{{!--           <li class="download-links">
-            <span>download</span>
-            <ul class="download-dropdown hidden">
-              <li><a href="{{download.csv}}" target="_blank">SVG</a></li>
-              <li><a href="{{download.geojson}}" target="_blank">GeoJSON</a></li>
-              <li><a href="{{download.shp}}" target="_blank">SHP</a></li>
-              <li><a href="{{download.kml}}" target="_blank">KML</a></li>
-              <li><a href="{{download.csv}}" target="_blank">CSV</a></li>
-            </ul>
-          </li> --}}
+          {{#unless umd_tree_loss_gain}}
+            <li class="download-links">
+              <span>download</span>
+              <ul class="download-dropdown hidden">
+                <li><a href="{{download.csv}}" target="_blank">SVG</a></li>
+                <li><a href="{{download.geojson}}" target="_blank">GeoJSON</a></li>
+                <li><a href="{{download.shp}}" target="_blank">SHP</a></li>
+                <li><a href="{{download.kml}}" target="_blank">KML</a></li>
+                <li><a href="{{download.csv}}" target="_blank">CSV</a></li>
+              </ul>
+            </li>
+          {{/unless}}
         </ul>
       {{/if}}
 

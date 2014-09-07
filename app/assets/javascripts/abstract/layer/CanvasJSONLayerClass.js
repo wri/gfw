@@ -70,6 +70,8 @@ define([
       var zoomDiff = zoom + 8 - Math.min(zoom + 8, 16);
 
       this.cartoSQL.execute(sql, _.bind(function(data) {
+        if (!data) {return;}
+
         var tile = {
           canvas: canvas,
           ctx: canvas.ctx,

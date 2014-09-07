@@ -24,6 +24,13 @@
     padding: 10px;
     text-align: center;
     width: 500px;
+
+    .buttons button {
+      margin-left: 7px;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
   }
 
   .description {
