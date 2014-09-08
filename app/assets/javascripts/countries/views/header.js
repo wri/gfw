@@ -351,6 +351,15 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         $target.find('.total-area .amount').html(data.years[data.years.length -1].extent_perc.toFixed(2));
 
         that._drawLossAndGain(data.years);
+        var $link_target = [];
+            $link_target[0] = $('.analyze_from_country');
+            $link_target[1] = $link_target[0] .attr('href');
+        if (isNaN($link_target[1].slice(-2))) {
+          $link_target[1] = $link_target[1] + canopy;
+        } else {
+          $link_target[1] = $link_target[1].substring(0, $link_target[1].length - 2) + canopy;
+        }
+        $link_target[0].attr('href', $link_target[1]);
       },
       error: function(status, error) {
         $target.find('.tree-cover .amount').html( 'N/A' );
