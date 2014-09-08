@@ -57,7 +57,7 @@ define([
 
   var PlaceService = Class.extend({
 
-    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geojson,begin,end,threshold}',
+    _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geojson,wdpaid,begin,end,threshold}',
 
     /**
      * Defaults url params. (destandardize)
@@ -185,6 +185,7 @@ define([
       p.begin = p.begin ? moment(p.begin) : null;
       p.end = p.end ? moment(p.end) : null;
       p.geojson = p.geojson ? JSON.parse(decodeURIComponent(p.geojson)) : null;
+      p.wdpaid = p.wdpaid ? _.toNumber(p.wdpaid) : null;
       p.threshold = p.threshold ? _.toNumber(p.threshold) : null;
 
       return p;
@@ -208,6 +209,7 @@ define([
       p.begin = p.begin ? p.begin.format('YYYY-MM-DD') : null;
       p.end = p.end ? p.end.format('YYYY-MM-DD') : null;
       p.geojson = p.geojson ? encodeURIComponent(p.geojson) : null;
+      p.wdpaid = p.wdpaid ? String(p.wdpaid) : null;
       p.threshold = p.threshold ? String(p.threshold) : null;
       return p;
     },

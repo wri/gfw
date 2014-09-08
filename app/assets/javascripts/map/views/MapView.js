@@ -91,7 +91,7 @@ define([
           return;
         }
         // TODO => No mps here!
-        mps.publish('MapView/click-protected', [wdpa]);
+        mps.publish('AnalysisTool/analyze-wdpaid', [wdpa]);
       }, this));
     },
 

@@ -4,32 +4,31 @@
  * @return AnalysisToolPresenter class.
  */
 define([
-  'Class',
+  'map/presenters/PresenterClass',
   'underscore',
   'backbone',
   'mps',
-  'd3',
   'topojson',
+  'helpers/geojsonUtilsHelper',
   'map/services/CountryService',
   'map/services/RegionService'
-], function(Class, _, Backbone, mps, d3, topojson, countryService, regionService) {
+], function(PresenterClass, _, Backbone, mps, topojson, geojsonUtilsHelper, countryService, regionService) {
 
   'use strict';
 
   var StatusModel = Backbone.Model.extend({
     defaults: {
       baselayer: null,
-      analysis: null, // analysis resource
-      currentDate: null,
+      resource: null, // analysis resource
+      date: null,
       threshold: null,
-      overlay: null, // google.maps.Polygon (user draw)
-      polygon: null, // geojson (user polygons)
-      multipolygon: null, // geojson (countries and regions)
+      overlay: null, // google.maps.Polygon (user drawn polygon)
+      multipolygon: null, // geojson (countries and regions multypolygon)
       disableUpdating: false
     }
   });
 
-  var AnalysisToolPresenter = Class.extend({
+  var AnalysisToolPresenter = PresenterClass.extend({
 
     datasets: {
       'umd_tree_loss_gain': 'umd-loss-gain',
@@ -42,87 +41,251 @@ define([
     init: function(view) {
       this.view = view;
       this.status = new StatusModel();
-      this._subscribe();
+      this._super();
       mps.publish('Place/register', [this]);
     },
 
     /**
-     * Subscribe to application events.
+     * Application subscriptions.
      */
-    _subscribe: function() {
-      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this._setBaselayer(layerSpec.getBaselayers());
-        this._checkUnavailable();
-        this._updateAnalysis();
-      }, this));
-
-      mps.subscribe('Place/go', _.bind(function(place) {
-        var p = place.params;
+    _subscriptions: [{
+      'Place/go': function(place) {
         this._setBaselayer(place.layerSpec.getBaselayers());
-        this._setCurrentDate([p.begin, p.end]);
-        this.status.set('threshold', p.threshold);
-        this._drawFromUrl(p.iso, p.geojson);
-
-        if (place.params.analyze) {
-          this.view.onClickAnalysis();
-        }
-      }, this));
-
-      mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
-        this._setCurrentDate(date);
+        this.status.set('date', [place.params.begin, place.params.end]);
+        this.status.set('threshold', place.params.threshold);
+        this._handlePlaceGo(place.params);
+      }
+    }, {
+      'LayerNav/change': function(layerSpec) {
+        this._setBaselayer(layerSpec.getBaselayers());
         this._updateAnalysis();
-      }, this));
-
-      mps.subscribe('Threshold/changed', _.bind(function() {
+      }
+    }, {
+      'AnalysisTool/update-analysis': function() {
         this._updateAnalysis();
-      }, this));
-
-      mps.subscribe('Timeline/start-playing', _.bind(function() {
+      }
+    }, {
+      'AnalysisResults/delete-analysis': function() {
+        this.deleteAnalysis();
+      }
+    }, {
+      'AnalysisTool/analyze-wdpaid': function(wdpaid) {
+        this._analyzeWdpai(wdpaid.wdpaid);
+      }
+    }, {
+      'Timeline/date-change': function(layerSlug, date) {
+        this.status.set('date', date);
+        this._updateAnalysis();
+      }
+    }, {
+      'Timeline/start-playing': function() {
         this.status.set('disableUpdating', true);
-      }, this));
-
-      mps.subscribe('Timeline/stop-playing', _.bind(function() {
+      }
+    }, {
+      'Timeline/stop-playing': function() {
         this.status.set('disableUpdating', false);
         this._updateAnalysis();
-      }, this));
-
-      mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
-        this._deleteAnalysis();
-      }, this));
-
-      mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
-        this._updateAnalysis();
-      }, this));
-
-      mps.subscribe('Threshold/changed', _.bind(function(threshold) {
+      }
+    }, {
+      'Threshold/changed': function(threshold) {
         this.status.set('threshold', threshold);
-      }, this));
+        this._updateAnalysis();
+      }
+    }],
 
-      mps.subscribe('MapView/click-protected', _.bind(function(wdpaid) {
-        this._getProtectedAreaPolygon(wdpaid.wdpaid);
-        this._publishAnalysis({wdpaid: wdpaid});
+    /**
+     * Handles a Place/go.
+     *
+     * @param  {Object} params Place params
+     */
+    _handlePlaceGo: function(params) {
+      if (params.analyze) {
+        this.view.onClickAnalysis();
+      } else if (params.iso.country && params.iso.country !== 'ALL') {
+        this._analyzeIso(params.iso);
+      } else if (params.geojson) {
+        this._analyzeGeojson(params.geojson);
+      } else if (params.wdpaid) {
+        this._analyzeWdpai(params.wdpaid);
+      }
+    },
+
+    /**
+     * Analyzes a geojson object.
+     *
+     * @param  {[type]} geojson [description]
+     */
+    _analyzeGeojson: function(geojson, options) {
+      options = options || {draw: true};
+
+      // Build resource
+      var resource = this._buildResource({
+        geojson: JSON.stringify(geojson)
+      });
+
+      // Draw geojson if needed
+      if (options.draw) {
+        this.view.drawPaths(
+          geojsonUtilsHelper.geojsonToPath(geojson));
+      }
+
+      // Publish analysis
+      this._publishAnalysis(resource);
+    },
+
+    /**
+     * Analyze country/region by iso.
+     *
+     * @param  {Object} iso {country: {string}, id: {integer}}
+     */
+    _analyzeIso: function(iso) {
+      // Build resource
+      var resource = {iso: iso.country};
+      if (iso.region) {
+        resource.id1 = iso.region;
+      }
+      resource = this._buildResource(resource);
+
+      if (!iso.region) {
+        // Get geojson/fit bounds/draw geojson/publish analysis.
+        countryService.execute(resource.iso, _.bind(function(results) {
+          var geojson = topojson.feature(results.topojson,
+            results.topojson.objects[0]);
+
+          this._geojsonFitBounds(geojson);
+          this.view.drawMultipolygon(geojson);
+          this._publishAnalysis(resource);
+        },this));
+      } else {
+        regionService.execute(resource, _.bind(function(results) {
+          var geojson = results.features[0];
+
+          this._geojsonFitBounds(geojson);
+          this.view.drawMultipolygon(geojson);
+          this._publishAnalysis(resource);
+        },this));
+      }
+    },
+
+    _analyzeWdpai: function(wdpaid) {
+      // Build resource
+      var resource = this._buildResource({
+        wdpaid: wdpaid
+      });
+
+      // Get geojson/fit bounds/draw geojson/publish analysis
+      var url = 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from wdpa_all where wdpaid =' + wdpaid;
+      $.getJSON(url, _.bind(function(data) {
+        var geojson = {
+          geometry: JSON.parse(data.rows[0].st_asgeojson),
+          properties: {},
+          type: 'Feature'
+        };
+
+        this._geojsonFitBounds(geojson);
+        this.view.drawMultipolygon(geojson);
+        this._publishAnalysis(resource);
       }, this));
+    },
+
+    /**
+     * Get the geojson from the current and analyze
+     * that geojson without drawing again the geom.
+     */
+    doneDrawing: function() {
+      var overlay = this.status.get('overlay');
+      var paths = overlay.getPath().getArray();
+      var geojson = geojsonUtilsHelper.pathToGeojson(paths);
+
+      this.view.setEditable(overlay, false);
+      this._analyzeGeojson(geojson, {draw: false});
+    },
+
+    /**
+     * Build a resource, adding extra options
+     * from the current status.
+     */
+    _buildResource: function(resource) {
+      var date, dateFormat;
+      var baselayer = this.status.get('baselayer');
+
+      // Return resource if there isn't a baselayer
+      // so we can build the resource later
+      // and display a 'unsupported layer'
+      if (!baselayer) {
+        return resource;
+      }
+
+      // Append dataset string
+      resource.dataset = this.datasets[baselayer.slug];
+
+      // Append period
+      date = this.status.get('date');
+      dateFormat = 'YYYY-MM-DD';
+
+      // period format = 2012-12-23,2013-01-4
+      resource.period = '{0},{1}'.format(
+        date[0].format(dateFormat), date[1].format(dateFormat));
+
+      // this is super ugly
+      if (baselayer.slug === 'umd_tree_loss_gain') {
+        resource.thresh = '?thresh=' + this.status.get('threshold');
+      } else {
+        delete resource.thresh;
+      }
+
+      return resource;
+    },
+
+    /**
+     * Publish an analysis form a suplied resource.
+     *
+     * @param  {Object} resource The analysis resource
+     */
+    _publishAnalysis: function(resource) {
+      this.status.set('resource', resource);
+      this._setAnalysisBtnVisibility();
+      mps.publish('Place/update', [{go: false}]);
+
+      if (!this.status.get('baselayer')) {
+        mps.publish('AnalysisService/results', [{unavailable: true}]);
+      } else {
+        mps.publish('AnalysisService/get', [resource]);
+      }
     },
 
     /**
      * Updates current analysis if it's permitted.
      */
     _updateAnalysis: function() {
-      if (this.status.get('analysis') && !this.status.get('disableUpdating')) {
-        this._publishAnalysis(this.status.get('analysis'));
+      var resource = this.status.get('resource');
+
+      if (resource && !this.status.get('disableUpdating')) {
+        resource = this._buildResource(resource);
+        this._publishAnalysis(resource);
       }
     },
 
-    _deleteAnalysis: function() {
-      if (this.status.get('analysis')) {
-        this.deleteGeom();
-      }
-    },
+    /**
+     * Deletes the current analysis.
+     */
+    deleteAnalysis: function() {
+      // Delete overlay drawn or multipolygon.
+      this.view.deleteGeom({
+        overlay: this.status.get('overlay'),
+        multipolygon: this.status.get('multipolygon')
+      });
 
-    _setCurrentDate: function(date) {
-      if (date[0] && date[1]) {
-        this.status.set('currentDate', date);
-      }
+      // Reset status model
+      this.status.set({
+        resource: null,
+        overlay: null,
+        polygon: null,
+        multipolygon: null
+      });
+
+      this._setAnalysisBtnVisibility();
+      mps.publish('AnalysisTool/analysis-deleted', []);
     },
 
     /**
@@ -136,97 +299,46 @@ define([
         _.keys(this.datasets)))];
 
       this.status.set('baselayer', baselayer);
-      this.view.$widgetBtn.toggleClass('disabled', !!!baselayer);
+      this._setAnalysisBtnVisibility();
     },
 
-    _getProtectedAreaPolygon: function(id) {
-      var self = this;
-       $.getJSON('http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from wdpa_all where wdpaid ='+id, function(data) {
-          self._drawFromUrl('wdpa', JSON.parse(data.rows[0].st_asgeojson));
-        });
-    },
-
-    _drawFromUrl: function(iso, geojson) {
-      var resource = null;
-
-      // Draw country
-      if (iso.country && iso.country !== 'ALL' && !iso.region) {
-        resource = {iso: iso.country};
-        countryService.execute(iso.country, _.bind(function(results) {
-          var geojson = topojson.feature(results.topojson, results.topojson.objects[0]);
-          this._fitBoundsFromGeojson(geojson);
-          this.view.drawMultipolygon(geojson);
-          this._publishAnalysis(resource);
-        },this));
-      // Draw region
-      } else if (iso.country !== 'ALL' && iso.region) {
-        resource = {iso: iso.country, id1: iso.region};
-        regionService.execute(resource, _.bind(function(results) {
-          var geojson = results.features[0];
-          this._fitBoundsFromGeojson(geojson);
-          this.view.drawMultipolygon(geojson);
-          this._publishAnalysis(resource);
-        },this));
-      // Draw wdpa
-      } else if (iso === 'wdpa') {
-        this.view.drawMultipolygon({
-          geometry: geojson,
-          properties: {},
-          type: 'Feature'
-        });
-        this._fitBoundsFromGeojson(geojson);
-      // Draw user polygon
-      } else if (geojson) {
-        resource = {geojson: JSON.stringify(geojson)};
-        this.status.set('polygon', geojson);
-        this.view.drawPaths(this._geojsonToPath(geojson));
-        this._publishAnalysis(resource);
-      }
-      // Append resource to analysis before the analysis resource is
-      // created, this way the url doesnt blink until the topojsons
-      // are loaded. We can find another way of doing this on the PlaceService.
-      this.status.set('analysis', resource);
-    },
-
-    _checkUnavailable: function() {
-      if (!this.status.get('baselayer') && this.status.get('analysis')) {
-        mps.publish('AnalysisService/results', [{unavailable: true}]);
+    _setAnalysisBtnVisibility: function() {
+      if (!this.status.get('resource')) {
+        this.view.toggleWidgetBtn(!!!this.status.get('baselayer'));
+      } else {
+        this.view.toggleWidgetBtn(true);
       }
     },
 
     /**
-     * Publish an analysis from a resource.
-     * Resources should be stringified.
+     * Publish a 'Map/fit-bounds' with the bounds
+     * from the suplied geojson.
      *
-     * @param  {Object} resource geojson/iso/wdpaid
+     * @param  {Object} geojson
      */
-    _publishAnalysis: function(resource) {
-      // If there are no baselayer render unsupported layer msg.
-      if (!this.status.get('baselayer')) {
-        mps.publish('AnalysisResults/unavailable', []);
-        return;
-      }
-
-      if (this.status.get('baselayer').slug === 'umd_tree_loss_gain') {
-        resource.thresh = '?thresh=' + this.status.get('threshold');
-      } else {
-        delete resource.thresh;
-      }
-
-      var date = this.status.get('currentDate');
-      resource.dataset = this.datasets[this.status.get('baselayer').slug];
-
-      if (!resource.wdpaid) {
-        resource.period = '{0},{1}'.format(date[0].format('YYYY-MM-DD'), date[1].format('YYYY-MM-DD'));
-      } else if (resource.wdpaid) {
-        resource.wdpaid = resource.wdpaid.wdpaid;
-      }
-
-      this.status.set('analysis', resource);
-      mps.publish('Place/update', [{go: false}]);
-      mps.publish('AnalysisService/get', [resource]);
+    _geojsonFitBounds: function(geojson) {
+      var bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
+      mps.publish('Map/fit-bounds', [bounds]);
     },
 
+    /**
+     * Publish a start drawing mps event.
+     */
+    startDrawing: function() {
+      mps.publish('AnalysisTool/start-drawing', []);
+    },
+
+    /**
+     * Publish a stop drawing mps event.
+     */
+    stopDrawing: function() {
+      mps.publish('AnalysisTool/stop-drawing', []);
+    },
+
+    /**
+     * Triggered when user finish drawing a polygon.
+     * @param  {Object} e Event
+     */
     onOverlayComplete: function(e) {
       e.overlay.type = e.type;
       e.overlay.setEditable(true);
@@ -242,108 +354,24 @@ define([
       mps.publish('AnalysisTool/iso-drawn', [geojson.geometry]);
     },
 
-    startDrawing: function() {
-      mps.publish('AnalysisTool/start-drawing', []);
-    },
-
-    stopDrawing: function() {
-      mps.publish('AnalysisTool/stop-drawing', []);
-    },
-
-    doneDrawing: function() {
-      var overlay = this.status.get('overlay');
-      var paths = this.status.get('overlay').getPath().getArray();
-      var geojson = this._pathToGeojson(paths);
-      this.status.set('polygon', geojson);
-      this.view.setEditable(overlay, false);
-      this._publishAnalysis({geojson: JSON.stringify(geojson)});
-    },
-
-    /**
-     * Deletes the current geometry from the map. This is triggered
-     * when the users cancel a drawing or when a analysis is removed.
-     */
-    deleteGeom: function() {
-      this.view.deleteGeom({
-        overlay: this.status.get('overlay'),
-        multipolygon: this.status.get('multipolygon')
-      });
-
-      // Reset status
-      this.status.set('analysis', null);
-      this.status.set('overlay', null);
-      this.status.set('polygon', null);
-      this.status.set('multipolygon', null);
-    },
-
-    /**
-     * Generates a GEOJSON form a path.
-     *
-     * @param  {Array} path Array of google.maps.LatLng objects
-     * @return {string} A GeoJSON string representing the path
-     */
-    _pathToGeojson: function(path) {
-      var coordinates = null;
-
-      coordinates = _.map(path, function(latlng) {
-        return [
-          _.toNumber(latlng.lng().toFixed(4)),
-          _.toNumber(latlng.lat().toFixed(4))];
-      });
-
-      // First and last coordinate should be the same
-      coordinates.push(_.first(coordinates));
-
-      return {
-        'type': 'Polygon',
-        'coordinates': [coordinates]
-      };
-    },
-
-    /**
-     * Generates a path from a Geojson.
-     *
-     * @param  {object} geojson
-     * @return {array} paths
-     */
-    _geojsonToPath: function(geojson) {
-      var coords = geojson.coordinates[0];
-      return _.map(coords, function(g) {
-        return new google.maps.LatLng(g[1], g[0]);
-      });
-    },
-
-    /**
-     * Get Bounds from the suplied geojson.
-     *
-     * @param  {Object} geojson Topojson object
-     * @return {Object} Returns google LatLngBounds object
-     */
-    _fitBoundsFromGeojson: function(geojson) {
-      var d3bounds = d3.geo.bounds(geojson);
-      var a = new google.maps.LatLng(d3bounds[0][1], d3bounds[0][0]);
-      var b = new google.maps.LatLng(d3bounds[1][1], d3bounds[1][0]);
-
-      var bounds = new google.maps.LatLngBounds(a, b);
-      mps.publish('Map/fit-bounds', [bounds]);
-    },
-
     /**
      * Used by PlaceService to get the current iso/geom params.
      *
      * @return {object} iso/geom params
      */
     getPlaceParams: function() {
-      var analysis = this.status.get('analysis');
-      if (!analysis) {return;}
+      var resource = this.status.get('resource');
+      if (!resource) {return;}
       var p = {};
 
-      if (analysis.iso) {
+      if (resource.iso) {
         p.iso = {};
-        p.iso.country = analysis.iso;
-        p.iso.region = analysis.id1 ? analysis.id1 : null;
-      } else if (analysis.geojson) {
-        p.geojson = encodeURIComponent(analysis.geojson);
+        p.iso.country = resource.iso;
+        p.iso.region = resource.id1 ? resource.id1 : null;
+      } else if (resource.geojson) {
+        p.geojson = encodeURIComponent(resource.geojson);
+      } else if (resource.wdpaid) {
+        p.wdpaid = resource.wdpaid;
       }
 
       return p;

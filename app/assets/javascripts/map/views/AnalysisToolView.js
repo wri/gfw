@@ -50,14 +50,14 @@ define([
     },
 
     /**
-     * Triggered when the user clicks on analysis.
+     * Triggered when the user clicks on the analysis button.
      */
     onClickAnalysis: function() {
       this._startDrawingManager();
       this.presenter.startDrawing();
       this.model.set('boxHidden', false);
       this.$done.addClass('disabled');
-      this.$widgetBtn.addClass('disabled');
+      this.toggleWidgetBtn(true);
     },
 
     /**
@@ -98,14 +98,13 @@ define([
       this.presenter.doneDrawing();
     },
 
-
     /**
      * Triggered when the user clicks on cancel
      * to stop drawing a polygon.
      */
     _onClickCancel: function() {
       this._stopDrawing();
-      this.presenter.deleteGeom();
+      this.presenter.deleteAnalysis();
     },
 
     /**
@@ -135,8 +134,6 @@ define([
       if (resource.multipolygon) {
         this.map.data.remove(resource.multipolygon);
       }
-
-      this.$widgetBtn.removeClass('disabled');
     },
 
     setEditable: function(overlay, to) {
@@ -154,7 +151,6 @@ define([
 
       overlay.setMap(this.map);
       this.presenter.setOverlay(overlay);
-      this.$widgetBtn.addClass('disabled');
     },
 
     /**
@@ -164,9 +160,11 @@ define([
      */
     drawMultipolygon: function(geojson) {
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
-      // TODO => multipolygon, and geoson? wtf
       this.presenter.setMultipolygon(multipolygon, geojson);
-      this.$widgetBtn.addClass('disabled');
+    },
+
+    toggleWidgetBtn: function(to) {
+      this.$widgetBtn.toggleClass('disabled', to);
     },
 
     /**
