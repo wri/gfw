@@ -1276,9 +1276,12 @@
       width: 159px;
       .source {
         top: 1px;
-        right: 7px;
         width: 10px;
         padding: 0;
+        height: 10px;
+        position: absolute;
+        right: -240px;
+        @include home-icons-sprite(information);
       }
     }
     &.trees {
