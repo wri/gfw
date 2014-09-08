@@ -211,7 +211,7 @@ define([
 
       // Return resource if there isn't a baselayer
       // so we can build the resource later
-      // and display a 'unsupported layer'
+      // and display a 'unsupported layer' message.
       if (!baselayer) {
         return resource;
       }
