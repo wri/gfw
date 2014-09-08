@@ -439,7 +439,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
   _displayArea: function(area) {
     var self = this;
-    this.$el.find('#url_analysis').attr('href', '/map/6/'+ area.attributes.bounds._northEast.lat + '/'+ area.attributes.bounds._northEast.lng + '/'+ area.attributes.iso + '-' + String(area.get('id_1')) +'grayscale/umd_tree_loss_gain,forestgain?begin=&end=&threshold='+(config.canopy_choice || 10));
+    this.$el.find('#url_analysis').attr('href', '/map/6/'+ area.attributes.bounds._northEast.lat + '/'+ area.attributes.bounds._northEast.lng + '/'+ area.attributes.iso + '-' + String(area.get('id_1')) +'/grayscale/umd_tree_loss_gain,forestgain?begin=&end=&threshold='+(config.canopy_choice || 10));
     this.map.fitBounds(area.get('bounds'), {reset: true});
     this._removeCartodblayer();
 
