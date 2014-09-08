@@ -18,15 +18,34 @@ define([
   var Router = Backbone.Router.extend({
 
     routes: {
-      'map(/:zoom)(/:lat)(/:lng)(/:iso)(/:maptype)(/:baselayers)(/:sublayers)(/)': 'map'
+      'map(/:zoom)(/:lat)(/:lng)(/:iso)(/:maptype)(/:baselayers)(/:sublayers)(/)': 'map',
+      'embed/map(/:zoom)(/:lat)(/:lng)(/:iso)(/:maptype)(/:baselayers)(/:sublayers)(/)': 'embed'
     },
 
-    initialize: function() {
+    /**
+     * Boot file:
+     *
+     * @param  {[type]} boot [description]
+     */
+    initialize: function(mainView) {
       this.bind('all', this._checkForCacheBust());
+      this.name = null;
+      this.mainView = mainView;
       this.placeService = new PlaceService(this);
     },
 
-    map: function(zoom, lat, lng, iso, maptype, baselayers, sublayers) {
+    map: function() {
+      this.name = 'map';
+      this.mainView.setMapMode();
+      this.initMap.apply(this, arguments);
+    },
+
+    embed: function() {
+      this.name = 'embed/map';
+      this.initMap.apply(this, arguments);
+    },
+
+    initMap: function(zoom, lat, lng, iso, maptype, baselayers, sublayers) {
       var params = _.extend({
         zoom: zoom,
         lat: lat,
@@ -37,7 +56,7 @@ define([
         sublayers: sublayers
       }, _.parseUrl());
 
-      this.placeService.publishNewPlace(params);
+      this.placeService.initPlace(this.name, params);
     },
 
     /**
@@ -55,8 +74,8 @@ define([
       }
     },
 
-    navigateTo: function() {
-      this.navigate('map/{0}'.format(this.route), {silent: true});
+    navigateTo: function(route, options) {
+      this.navigate(route, options);
     }
 
   });

@@ -45,104 +45,100 @@
  * @return {PlaceService} The PlaceService class
  */
 define([
-  'Class',
+  'underscore',
   'mps',
   'uri',
-  'underscore',
   'moment',
+  'map/presenters/PresenterClass',
   'map/services/LayerSpecService'
-], function (Class, mps, UriTemplate, _, moment, layerSpecService) {
+], function (_, mps, UriTemplate, moment, PresenterClass, layerSpecService) {
 
   'use strict';
 
-  var PlaceService = Class.extend({
+  var urlDefaultsParams = {
+    baselayers: 'umd_tree_loss_gain,forestgain',
+    zoom: 3,
+    lat: 15,
+    lng: 27,
+    maptype: 'grayscale',
+    iso: 'ALL'
+  };
+
+  var PlaceService = PresenterClass.extend({
 
     _uriTemplate: '{name}{/zoom}{/lat}{/lng}{/iso}{/maptype}{/baselayers}{/sublayers}{?geojson,wdpaid,begin,end,threshold}',
-
-    /**
-     * Defaults url params. (destandardize)
-     */
-    defaults: {
-      baselayers: 'umd_tree_loss_gain,forestgain',
-      zoom: 3,
-      lat: 15,
-      lng: 27,
-      maptype: 'grayscale',
-      iso: 'ALL'
-    },
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
      *
      * @param  {Backbond.Router} router Instance of Backbone.Router
-     * @return {PlaceService}    Instance of PlaceService
      */
     init: function(router) {
       this.router = router;
       this._presenters = [];
-      this._subscribe();
+      this._name = null;
       this._presenters.push(layerSpecService); // this makes the test fail
+      this._super();
     },
 
     /**
      * Subscribe to application events.
      */
-    _subscribe: function() {
-      mps.subscribe('Place/register', _.bind(function(presenter) {
+    _subscriptions: [{
+      'Place/register': function(presenter) {
         this._presenters = _.union(this._presenters, [presenter]);
-      }, this));
+      }
+    }, {
+      'Place/update': function() {
+        this._updatePlace();
+      }
+    }],
 
-      mps.subscribe('Place/update', _.bind(function(place) {
-        this._handleNewPlace(place.name, place.params, place.go);
-      }, this));
+    /**
+     * Init by the router to set the name
+     * and publish the first place.
+     *
+     * @param  {String} name   Place name
+     * @param  {Object} params Url params
+     */
+    initPlace: function(name, params) {
+      this._name = name;
+      this._newPlace(params);
     },
 
     /**
-     * Used by the router view to publish a new url place.
-     *
-     * @param  {object} params
+     * Silently updates the url from the presenter params.
      */
-    publishNewPlace: function(params) {
-      mps.publish('Place/update', [{
-        go: true,
-        name: 'map',
-        params: params
-      }]);
+    _updatePlace: function() {
+      var route, params;
+
+      params = this._destandardizeParams(
+        this._getPresenterParams(this._presenters));
+
+      route = this._getRoute(params);
+      this.router.navigateTo(route, {silent: true});
     },
 
     /**
      * Handles a new place.
      *
-     * If go is true, fires a Place/go event passing in the place parameters
-     * which will include layers retrieved from the MapLayerService. Otherwise
-     * the URL is silently updated with a new route.
-     *
-     * @param  {string}  name   The place name
      * @param  {Object}  params The place parameters
-     * @param  {boolean} go     True to publish Place/go event, false to update URL
      */
-    _handleNewPlace: function(name, urlParams, go) {
-      var route = null;
-      var place = {};
+    _newPlace: function(params) {
+      var where, place = {};
 
-      place.params = (urlParams) ? this._standardizeParams(urlParams) :
-        this._getPresenterParams(this._presenters);
+      place.params = this._standardizeParams(params);
 
-      place.params.name = place.params.name || name;
+      where = _.union(place.params.baselayers,
+        place.params.sublayers);
 
-      if (go) {
-        var where = _.union(place.params.baselayers, place.params.sublayers);
-        layerSpecService.toggle(
-          where,
-          _.bind(function(layerSpec) {
-            place.layerSpec = layerSpec;
-            mps.publish('Place/go', [place]);
-          }, this)
-        );
-      }
-
-      route = this._getRoute(this._destandardizeParams(place.params));
-      this.router.navigate(route, {silent: true});
+      layerSpecService.toggle(
+        where,
+        _.bind(function(layerSpec) {
+          place.layerSpec = layerSpec;
+          mps.publish('Place/go', [place]);
+        }, this)
+      );
     },
 
     /**
@@ -151,8 +147,8 @@ define([
      * @param  {Object} params The route params
      * @return {string} The route URL
      */
-    _getRoute: function(urlParams) {
-      var url = new UriTemplate(this._uriTemplate).fillFromObject(urlParams);
+    _getRoute: function(param) {
+      var url = new UriTemplate(this._uriTemplate).fillFromObject(param);
       return decodeURIComponent(url);
     },
 
@@ -163,7 +159,9 @@ define([
      * @return {Object} The standardized params.
      */
     _standardizeParams: function(params) {
-      var p = _.extendNonNull({}, this.defaults, params);
+      var p = _.extendNonNull({}, urlDefaultsParams, params);
+
+      p.name = this._name;
 
       p.baselayers = _.map(p.baselayers.split(','), function(slug) {
         // quick fix
@@ -199,7 +197,8 @@ define([
      * @return {Object} Params ready for URL
      */
     _destandardizeParams: function(params) {
-      var p = _.extendNonNull({}, this.defaults, params);
+      var p = _.extendNonNull({}, urlDefaultsParams, params);
+      p.name = this._name;
       p.baselayers = _.pluck(p.baselayers, 'slug');
       p.sublayers = p.sublayers ? p.sublayers.join(',') : null;
       p.zoom = String(p.zoom);

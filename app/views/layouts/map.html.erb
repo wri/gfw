@@ -27,13 +27,9 @@
 
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
 
-    <%= render "shared/notice" %>
-    <%= render "shared/header" %>
-
-    <div class="layout-content">
-      <%= yield %>
-    </div>
+    <%= yield %>
     <div class="backdrop"></div>
+
     <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA" %>
     <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js" %>
     <%= requirejs_include_tag "map" %>

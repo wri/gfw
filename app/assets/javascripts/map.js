@@ -37,11 +37,10 @@ require([
     init: function() {
       _.bindAll(this, '_scrollBottom', '_setLogoPosition');
 
-      var router = new Router();
+      var router = new Router(this);
       this._cartodbHack();
       this._initViews();
       this._initApp();
-      this._setWrapper();
 
       // For dev
       window.router = router;
@@ -77,6 +76,7 @@ require([
       new AnalysisResultsView();
       new ShareView();
       new DialogView();
+
       // TODO => This is temporary!!! We will use the refactored
       // and awesome DialogView later.
       window.infowindow();
@@ -91,7 +91,7 @@ require([
       });
     },
 
-    _setWrapper: function() {
+    setMapMode: function() {
       this.$window = $(window);
       this.$logo = this.$el.find('.brand');
 
