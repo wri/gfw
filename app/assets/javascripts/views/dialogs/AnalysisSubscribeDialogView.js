@@ -55,13 +55,19 @@ define([
       }
 
       $.ajax({
-        url: '//gfw-apis.appspot.com/subscribe',
         type: 'POST',
-        dataType: 'json',
+        url: '//gfw-apis.appspot.com/subscribe',
         crossDomain: true,
         data: data,
-        success: _.bind(this._successSubscription, this)
-      })
+        dataType: 'json',
+        success: function(data, textStatus, jqXHR) {
+          console.log('success!');
+          console.log(data);
+        },
+        error: function(responseData, textStatus, errorThrown) {
+          console.log(responseData);
+        }
+      });
     },
 
     _successSubscription: function(data, textStatus, jqXHR) {
