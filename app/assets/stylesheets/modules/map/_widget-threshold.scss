@@ -133,6 +133,11 @@
         cursor: col-resize;
         border-radius: 3px;
       }
+      &.white {
+        &::-webkit-slider-thumb {
+          @include home-icons-sprite(timeline_handler_white);
+        }
+      }
     }
 
     .visible-range {
