@@ -62,7 +62,11 @@
               </li>
             {{/if}}
           {{/if}}
-          {{#unless umd_tree_loss_gain}}
+          {{#if umd_tree_loss_gain}}
+            <li class="download-links">
+              <span><a href="http://www.earthenginepartners.appspot.com/science-2013-global-forest/download.html" target="_blank">Download entire data set at project website</a></span>
+            </li>
+          {{else}}
             <li class="download-links">
               <span>download</span>
               <ul class="download-dropdown hidden">
@@ -73,7 +77,7 @@
                 <li><a href="{{download.csv}}" target="_blank">CSV</a></li>
               </ul>
             </li>
-          {{/unless}}
+          {{/if}}
         </ul>
       {{/if}}
 
