@@ -60,10 +60,7 @@ define([
         crossDomain: true,
         data: JSON.stringify(data),
         dataType: 'json',
-        success: function(data, textStatus, jqXHR) {
-          console.log('success!');
-          console.log(data);
-        },
+        success: _.bind(this._successSubscription, this),
         error: function(responseData, textStatus, errorThrown) {
           console.log(responseData);
         }
@@ -72,7 +69,6 @@ define([
 
     _successSubscription: function(data, textStatus, jqXHR) {
       this.parent.remove();
-      console.log(data);
     }
 
   });
