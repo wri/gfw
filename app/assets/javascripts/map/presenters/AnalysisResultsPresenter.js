@@ -105,12 +105,13 @@ define([
      * are not supported for the current layers.
      */
     _setSubscribeButton: function() {
-      var supported = _.indexOf(this._alertsSubscriptionLayers,
-        this.status.get('baselayer').slug) >= 0;
+      var supported = false;
+      var baselayer = this.status.get('baselayer');
 
       // Subscriptions not supported for regions yet.
-      if (this.status.get('resource').id1) {
-        supported = false;
+      if (baselayer && !this.status.get('resource').id1) {
+        supported = _.indexOf(this._alertsSubscriptionLayers,
+          baselayer.slug) >= 0;
       }
 
       this.view.toggleSubscribeButton(!supported);

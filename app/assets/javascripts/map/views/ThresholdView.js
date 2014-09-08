@@ -65,7 +65,11 @@ define([
 
     _setVisibleRange: function() {
       this.$slider.removeClass('white');
-      if (this.$slider.val() == 10) this.$slider.addClass('white');
+
+      if (this.$slider.val() === 10) {
+        this.$slider.addClass('white');
+      }
+
       this.$visibleRange = this.$visibleRange.css('width', '{0}%'.format(
         ((100/7) * ((80 - this.$slider.val()) / 10) + 0.8)
       ));

@@ -33,7 +33,7 @@ define([
       this.options = _.extend({}, this.defaults, this.options || {});
       this.data = this._getData();
 
-      if (currentDate) {
+      if (currentDate && currentDate[0]) {
         this.currentDate = currentDate;
       } else {
         this._updateCurrentDate([this.data[this.data.length - 1].start,

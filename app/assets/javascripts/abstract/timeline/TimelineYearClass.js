@@ -38,7 +38,7 @@ define([
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
 
-      if (currentDate) {
+      if (currentDate && currentDate[0]) {
         this.currentDate = currentDate;
       } else {
         this.updateCurrentDate(this.options.dateRange);

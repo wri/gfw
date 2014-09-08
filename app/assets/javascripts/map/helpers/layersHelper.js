@@ -30,7 +30,13 @@ define([
   'map/views/layers/MongabayStoriesLayer',
   'map/views/layers/InfoamazoniaStoriesLayer',
   // Layer dialog templates
-  'text!templates/dialogs/umd_tree_loss_gain_dialog.handlebars'
+  'text!templates/dialogs/umd_tree_loss_gain_dialog.handlebars',
+  // Layers timelines
+  'map/views/timeline/UMDLossTimeline',
+  'map/views/timeline/FormaTimeline',
+  'map/views/timeline/ImazonTimeline',
+  'map/views/timeline/ModisTimeline',
+  'map/views/timeline/FiresTimeline',
 ], function(
   // Layer Views
   UMDLossLayer,
@@ -60,38 +66,49 @@ define([
   MongabayStoriesLayer,
   InfoamazoniaStoriesLayer,
   // Layer dialog templates
-  umd_tree_loss_gain_dialog) {
+  umd_tree_loss_gain_dialog,
+  // Layer timelines
+  UMDLossTimeline,
+  FormaTimeline,
+  ImazonTimeline,
+  ModisTimeline,
+  FiresTimeline) {
 
   'use strict';
 
   var layersHelper = {
     umd_tree_loss_gain: {
       view: UMDLossLayer,
-      dialogTpl: umd_tree_loss_gain_dialog
+      dialogTpl: umd_tree_loss_gain_dialog,
+      timelineView: UMDLossTimeline
     },
     forestgain: {
       view: ForestGainLayer
     },
     forma: {
-      view: FormaLayer
+      view: FormaLayer,
+      timelineView: FormaTimeline
     },
     forma_cover: {
       view: FormaCoverLayer
     },
     imazon: {
-      view: ImazonLayer
+      view: ImazonLayer,
+      timelineView: ImazonTimeline
     },
     imazon_cover: {
       view: ImazonCoverLayer
     },
     modis: {
-      view: ModisLayer
+      view: ModisLayer,
+      timelineView: ModisTimeline
     },
     modis_cover: {
       view: ModisCoverLayer
     },
     fires: {
-      view: FiresLayer
+      view: FiresLayer,
+      timelineView: FiresTimeline
     },
     forest2000: {
       view: Forest2000Layer

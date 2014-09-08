@@ -4,67 +4,131 @@
  * @return TimelinePresenter class
  */
 define([
-  'Class',
   'underscore',
   'mps',
-  'map/views/timeline/UMDLossTimeline',
-  'map/views/timeline/FormaTimeline',
-  'map/views/timeline/ImazonTimeline',
-  'map/views/timeline/ModisTimeline',
-  'map/views/timeline/FiresTimeline',
-], function(Class, _, mps, UMDLossTimeline, FormaTimeline, ImazonTimeline, ModisTimeline,
-    FiresTimeline) {
+  'backbone',
+  'map/presenters/PresenterClass',
+  'map/helpers/layersHelper'
+], function(_, mps, Backbone, PresenterClass, layersHelper) {
 
   'use strict';
 
-  var TimelinePresenter = Class.extend({
+  var StatusModel = Backbone.Model.extend({
+    defaults: {
+      timeline: null // the current timeline view instance
+    }
+  });
+
+  var TimelinePresenter = PresenterClass.extend({
 
     init: function(view) {
       this.view = view;
-      this.currentTimeline = null;
-      this._subscribe();
+      this.status = new StatusModel();
+      this._super();
+      mps.publish('Place/register', [this]);
     },
 
-    timelineViews: {
-      umd_tree_loss_gain: UMDLossTimeline,
-      forma: FormaTimeline,
-      imazon: ImazonTimeline,
-      modis: ModisTimeline,
-      fires: FiresTimeline
+    _subscriptions: [{
+      'Place/go': function(place) {
+        this._handleNewLayers(place.layerSpec.getBaselayers(),
+          [place.params.begin, place.params.end]);
+
+        if (!place.params.begin) {
+          mps.publish('Place/update', [{go: false}]);
+        }
+      }
+    }, {
+      'LayerNav/change': function(layerSpec) {
+        this._handleNewLayers(layerSpec.getBaselayers());
+      }
+    }, {
+      'Map/center-change': function(lat, lng) {
+        this.view.updateLatlng(lat, lng);
+      }
+    }, {
+      'AnalysisTool/stop-drawing': function() {
+        if (this.status.get('timeline')) {
+          this.view.model.set({hidden: false});
+        }
+        this.view.model.set('forceHidden', false);
+      }
+    }, {
+      'AnalysisTool/start-drawing': function() {
+        if (this.status.get('timeline')) {
+          this.view.model.set({hidden: true});
+        }
+        this.view.model.set('forceHidden', true);
+      }
+    }],
+
+    /**
+     * Add/delete timeline depend on the current active layers.
+     *
+     * @param {object} layerSpec
+     */
+    _handleNewLayers: function(baselayers, date) {
+      var currentTimeline = this.status.get('timeline');
+
+      var baselayer = _.values(_.omit(
+        baselayers, 'forestgain'))[0];
+
+      if (currentTimeline) {
+        if (currentTimeline.getName() === baselayer) {
+          // Return if the timeline is already active.
+          return;
+        }
+        // Remove current timeline.
+        this._removeTimeline();
+      }
+
+      if (!baselayer) {
+        this._timelineDisabled();
+        return;
+      }
+
+      if (!currentTimeline && baselayer) {
+        this._timelineEnabled(baselayer.slug);
+      }
+
+      this._addTimeline(baselayer, date);
     },
 
     /**
-     * Subscribe to application events.
+     * Render a timeline view if it exists for
+     * the supplied layer.
+     *
+     * @param {Object} layer Layer object
+     * @param {Object} date  Date [begin, end]
      */
-    _subscribe: function() {
-      mps.subscribe('Place/go', _.bind(function(place) {
-        this._setTimeline(place.layerSpec, place.params);
-        if (!place.params.date) {
-          mps.publish('Place/update', [{go: false}]);
-        }
-      }, this));
+    _addTimeline: function(layer, date) {
+      var TimelineView = layersHelper[layer.slug].timelineView;
+      var timeline;
 
-      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this._setTimeline(layerSpec);
-      }, this));
+      if (!TimelineView) {
+        return;
+      }
 
-      mps.subscribe('Map/center-change', _.bind(function(lat, lng){
-        this.view.updateLatlng(lat, lng);
-      }, this));
+      this.view.update(layer);
+      timeline = new TimelineView(layer, date);
+      this.status.set('timeline', timeline);
 
-      mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
-        if (this.currentTimeline) {
-          this.view.model.set({hidden: false, forceHidden: false});
-        }
-      }, this));
+      this.view.model.set('hidden', false);
+    },
 
-      mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
-        if (this.currentTimeline) {
-          this.view.model.set({hidden: true, forceHidden: true});
-        }
-      }, this));
+    /**
+     * Remove the current timeline view.
+     */
+    _removeTimeline: function() {
+      var timeline = this.status.get('timeline');
+      if (!timeline) {return;}
 
-      mps.publish('Place/register', [this]);
+      if (timeline.stopAnimation) {
+        timeline.stopAnimation();
+      }
+
+      timeline.remove();
+      this.status.set('timeline', null);
+      this.view.model.set('hidden', true);
     },
 
     _timelineDisabled: function() {
@@ -76,51 +140,6 @@ define([
     },
 
     /**
-     * Add/delete timeline depend on the current active layers.
-     *
-     * @param {object} layerSpec
-     */
-    _setTimeline: function(layerSpec, placeParams) {
-      var currentDate = null;
-      var baselayer = _.intersection(_.pluck(layerSpec.getBaselayers(),
-        'slug'), _.keys(this.timelineViews))[0];
-
-      if (this.currentTimeline) {
-        if (this.currentTimeline.getName() === baselayer) {return;}
-        this._removeTimeline();
-      }
-
-      if (!baselayer) {
-        this._timelineDisabled();
-        return;
-      }
-
-      if (!this.currentTimeline && baselayer) {
-        this._timelineEnabled(baselayer.slug);
-      }
-
-      if (placeParams && placeParams.begin && placeParams.end) {
-        currentDate = [placeParams.begin, placeParams.end];
-      }
-
-      baselayer = layerSpec.getLayer({slug: baselayer});
-      this.view.update(baselayer);
-      this.currentTimeline = new this.timelineViews[baselayer.slug](baselayer, currentDate);
-      this.view.model.set('hidden', false);
-    },
-
-    /**
-     * Remove the current timeline view.
-     */
-    _removeTimeline: function() {
-      if (!this.currentTimeline) {return;}
-      this.currentTimeline.stopAnimation && this.currentTimeline.stopAnimation();
-      this.currentTimeline.remove();
-      this.currentTimeline = null;
-      this.view.model.set('hidden', true);
-    },
-
-    /**
      * Called by PlaceService. Return place parameters representing the
      * of the current timeline.
      *
@@ -128,9 +147,16 @@ define([
      */
     getPlaceParams: function() {
       var p = {};
-      var date = this.currentTimeline ? this.currentTimeline.getCurrentDate() : [];
-      p.begin = date[0] || null;
-      p.end = date[1] || null;
+      var timeline = this.status.get('timeline');
+      var date = [null, null];
+
+      if (timeline) {
+        date = timeline.getCurrentDate();
+      }
+
+      p.begin = date[0];
+      p.end = date[1];
+
       return p;
     }
 
