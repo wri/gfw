@@ -42,6 +42,7 @@ define([
       this.view = view;
       this.status = new StatusModel();
       this._super();
+      mps.publish('Place/register', [this]);
     },
 
     /**
@@ -57,7 +58,6 @@ define([
     }, {
       'LayerNav/change': function(layerSpec) {
         this._setBaselayer(layerSpec.getBaselayers());
-        this._checkUnavailable();
         this._updateAnalysis();
       }
     }, {
@@ -105,6 +105,8 @@ define([
         this._analyzeIso(params.iso);
       } else if (params.geojson) {
         this._analyzeGeojson(params.geojson);
+      } else if (params.wdpaid) {
+        this._analyzeWdpai(params.wdpaid);
       }
     },
 
@@ -165,14 +167,14 @@ define([
       }
     },
 
-    _analyzeWdpai: function(wpaid) {
+    _analyzeWdpai: function(wdpaid) {
       // Build resource
       var resource = this._buildResource({
-        wdpaid: wpaid
+        wdpaid: wdpaid
       });
 
       // Get geojson/fit bounds/draw geojson/publish analysis
-      var url = 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from wdpa_all where wdpaid =' + wpaid;
+      var url = 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from wdpa_all where wdpaid =' + wdpaid;
       $.getJSON(url, _.bind(function(data) {
         var geojson = {
           geometry: JSON.parse(data.rows[0].st_asgeojson),
@@ -207,6 +209,13 @@ define([
       var date, dateFormat;
       var baselayer = this.status.get('baselayer');
 
+      // Return resource if there isn't a baselayer
+      // so we can build the resource later
+      // and display a 'unsupported layer'
+      if (!baselayer) {
+        return resource;
+      }
+
       // Append dataset string
       resource.dataset = this.datasets[baselayer.slug];
 
@@ -235,8 +244,14 @@ define([
      */
     _publishAnalysis: function(resource) {
       this.status.set('resource', resource);
+      this._setAnalysisBtnVisibility();
       mps.publish('Place/update', [{go: false}]);
-      mps.publish('AnalysisService/get', [resource]);
+
+      if (!this.status.get('baselayer')) {
+        mps.publish('AnalysisService/results', [{unavailable: true}]);
+      } else {
+        mps.publish('AnalysisService/get', [resource]);
+      }
     },
 
     /**
@@ -245,7 +260,7 @@ define([
     _updateAnalysis: function() {
       var resource = this.status.get('resource');
 
-      if (resource && !this.status.get('disableUpdating') && this.status.get('baselayer')) {
+      if (resource && !this.status.get('disableUpdating')) {
         resource = this._buildResource(resource);
         this._publishAnalysis(resource);
       }
@@ -269,6 +284,7 @@ define([
         multipolygon: null
       });
 
+      this._setAnalysisBtnVisibility();
       mps.publish('AnalysisTool/analysis-deleted', []);
     },
 
@@ -283,12 +299,14 @@ define([
         _.keys(this.datasets)))];
 
       this.status.set('baselayer', baselayer);
-      this.view.toggleWidgetBtn(!!!baselayer);
+      this._setAnalysisBtnVisibility();
     },
 
-    _checkUnavailable: function() {
-      if (!this.status.get('baselayer') && this.status.get('resource')) {
-        mps.publish('AnalysisService/results', [{unavailable: true}]);
+    _setAnalysisBtnVisibility: function() {
+      if (!this.status.get('resource')) {
+        this.view.toggleWidgetBtn(!!!this.status.get('baselayer'));
+      } else {
+        this.view.toggleWidgetBtn(true);
       }
     },
 
@@ -352,6 +370,8 @@ define([
         p.iso.region = resource.id1 ? resource.id1 : null;
       } else if (resource.geojson) {
         p.geojson = encodeURIComponent(resource.geojson);
+      } else if (resource.wdpaid) {
+        p.wdpaid = resource.wdpaid;
       }
 
       return p;

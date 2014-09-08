@@ -57,7 +57,7 @@ define([
       this.presenter.startDrawing();
       this.model.set('boxHidden', false);
       this.$done.addClass('disabled');
-      this.$widgetBtn.addClass('disabled');
+      this.toggleWidgetBtn(true);
     },
 
     /**
@@ -134,8 +134,6 @@ define([
       if (resource.multipolygon) {
         this.map.data.remove(resource.multipolygon);
       }
-
-      this.$widgetBtn.removeClass('disabled');
     },
 
     setEditable: function(overlay, to) {
@@ -153,7 +151,6 @@ define([
 
       overlay.setMap(this.map);
       this.presenter.setOverlay(overlay);
-      this.$widgetBtn.addClass('disabled');
     },
 
     /**
@@ -163,9 +160,7 @@ define([
      */
     drawMultipolygon: function(geojson) {
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
-      // TODO => multipolygon, and geoson? wtf
       this.presenter.setMultipolygon(multipolygon, geojson);
-      this.$widgetBtn.addClass('disabled');
     },
 
     toggleWidgetBtn: function(to) {
