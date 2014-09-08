@@ -8,12 +8,11 @@ define([
   'underscore',
   'backbone',
   'mps',
-  'd3',
   'topojson',
   'helpers/geojsonUtilsHelper',
   'map/services/CountryService',
   'map/services/RegionService'
-], function(Class, _, Backbone, mps, d3, topojson, geojsonUtilsHelper, countryService, regionService) {
+], function(Class, _, Backbone, mps, topojson, geojsonUtilsHelper, countryService, regionService) {
 
   'use strict';
 
@@ -54,7 +53,7 @@ define([
         var p = place.params;
         // Set status
         this._setBaselayer(place.layerSpec.getBaselayers());
-        this.status.set('date', [p.begin, p.end])
+        this.status.set('date', [p.begin, p.end]);
         this.status.set('threshold', p.threshold);
 
         this._handlePlaceGo(_.pick(
@@ -68,7 +67,7 @@ define([
       }, this));
 
       mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
-        this.status.set('date', date)
+        this.status.set('date', date);
         this._updateAnalysis();
       }, this));
 
@@ -113,7 +112,7 @@ define([
       } else if (params.iso.country && params.iso.country !== 'ALL') {
         this._analyzeIso(params.iso);
       } else if (params.geojson) {
-        this._analyzeGeojson(params.geojson)
+        this._analyzeGeojson(params.geojson);
       }
     },
 
