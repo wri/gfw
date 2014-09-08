@@ -25,7 +25,13 @@ Gfw::Application.routes.draw do
   get '/map/:zoom/:lat/:lng/:iso/:maptype(/:baselayers)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
   get '/map/:zoom/:lat/:lng/:iso/:maptype(/:baselayers/:sublayers)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
   get '/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
-  get '/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
+
+  get '/embed/map' => 'map#embed'
+  get '/embed/map/*path' => 'map#embed'
+  get '/embed/map/:zoom/:lat/:lng/:iso/:maptype(/:baselayers)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get '/embed/map/:zoom/:lat/:lng/:iso/:maptype(/:baselayers/:sublayers)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get '/embed/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
 
   # countries
   get '/countries' => 'countries#index'
@@ -45,9 +51,6 @@ Gfw::Application.routes.draw do
   get '/embed/country_info/:id/:box' => 'embed#countries_show_info'
   get '/embed/country/:id/:area_id' => 'embed#countries_show'
   get '/embed/countries/overview' => 'embed#countries_overview'
-  get '/embed/map' => 'embed#map'
-  get '/embed/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'embed#map', :lat => /[^\/]+/, :lng => /[^\/]+/
-  get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'embed#map', :lat => /[^\/]+/, :lng => /[^\/]+/
 
   root 'home#index'
 end

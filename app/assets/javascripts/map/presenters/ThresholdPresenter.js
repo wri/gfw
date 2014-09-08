@@ -4,11 +4,11 @@
  * @return ThresholdPresenter class.
  */
 define([
-  'Class',
   'underscore',
   'backbone',
-  'mps'
-], function(Class, _, Backbone, mps) {
+  'mps',
+  'map/presenters/PresenterClass'
+], function(_, Backbone, mps, PresenterClass) {
 
   'use strict';
 
@@ -19,7 +19,7 @@ define([
     }
   });
 
-  var ThresholdPresenter = Class.extend({
+  var ThresholdPresenter = PresenterClass.extend({
 
     /*
      * Supported threshold layers.
@@ -38,7 +38,7 @@ define([
       this.view = view;
       this.status = new StatusModel();
       this._statusEvents();
-      this._subscribe();
+      this._super();
       mps.publish('Place/register', [this]);
     },
 
@@ -49,19 +49,16 @@ define([
       this.status.on('change:layers', this._setVisibility, this);
     },
 
-    /**
-     * Subscribe to application events.
-     */
-    _subscribe: function() {
-      mps.subscribe('Place/go', _.bind(function(place) {
+    _subscriptions: [{
+      'Place/go': function(place) {
         this._setLayers(place.layerSpec.getLayers());
         this._initThreshold(place.params);
-      }, this));
-
-      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
+      }
+    }, {
+      'LayerNav/change': function(layerSpec) {
         this._setLayers(layerSpec.getLayers());
-      }, this));
-    },
+      }
+    }],
 
     /**
      * Set the threshold visible or hidden deppend on
