@@ -4,13 +4,13 @@
  * @return AnalysisResultsPresenter class.
  */
 define([
-  'Class',
+  'map/presenters/PresenterClass',
   'underscore',
   'backbone',
   'moment',
   'mps',
   'geojsonArea'
-], function(Class, _, Backbone, moment, mps, geojsonArea) {
+], function(PresenterClass, _, Backbone, moment, mps, geojsonArea) {
 
   'use strict';
 
@@ -22,7 +22,7 @@ define([
     }
   });
 
-  var AnalysisResultsPresenter = Class.extend({
+  var AnalysisResultsPresenter = PresenterClass.extend({
 
     datasets: {
       'umd-loss-gain': 'umd_tree_loss_gain',
@@ -35,38 +35,38 @@ define([
     init: function(view) {
       this.view = view;
       this.status = new StatusModel();
-      this._subscribe();
+      this._super();
     },
 
     /**
-     * Subscribe to application events.
+     * Application subscriptions.
      */
-    _subscribe: function() {
-      mps.subscribe('Place/go', _.bind(function(place) {
+    _subscriptions: [{
+      'Place/go': function(place) {
         this.status.set('layerSpec', place.layerSpec);
-      }, this));
-
-      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
+      }
+    }, {
+      'LayerNav/change': function(layerSpec) {
         this.status.set('layerSpec', layerSpec);
-      }, this));
-
-      mps.subscribe('AnalysisService/get', _.bind(function() {
+      }
+    }, {
+      'AnalysisService/get': function() {
         this._renderResults({loading: true});
-      }, this));
-
-      mps.subscribe('AnalysisService/results', _.bind(function(results) {
+      }
+    }, {
+      'AnalysisService/results': function(results) {
         this._renderResults(results);
-      }, this));
-
-      mps.subscribe('AnalysisResults/unavailable', _.bind(function() {
+      }
+    }, {
+      'AnalysisResults/unavailable': function() {
         this._renderResults({unavailable: true});
-      }, this));
-
-      mps.subscribe('AnalysisTool/iso-drawn', _.bind(function(multipolygon) {
-        this.status.set('isoTotalArea', this._getHectares(multipolygon));
-      }, this));
-    },
-
+      }
+    }, {
+      'AnalysisTool/iso-drawn': function(multipolygon) {
+        var isoTotalArea = this._getHectares(multipolygon);
+        this.status.set('isoTotalArea', isoTotalArea);
+      }
+    }],
     /**
      * Handle analysis results from the supplied object.
      *
