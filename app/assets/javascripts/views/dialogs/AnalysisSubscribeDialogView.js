@@ -56,9 +56,9 @@ define([
 
       $.ajax({
         type: 'POST',
-        url: '//gfw-apis.appspot.com/subscribe',
+        url: 'http://gfw-apis.appspot.com/subscribe',
         crossDomain: true,
-        data: data,
+        data: JSON.stringify(data),
         dataType: 'json',
         success: function(data, textStatus, jqXHR) {
           console.log('success!');
