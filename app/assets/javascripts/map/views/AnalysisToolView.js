@@ -50,7 +50,7 @@ define([
     },
 
     /**
-     * Triggered when the user clicks on analysis.
+     * Triggered when the user clicks on the analysis button.
      */
     onClickAnalysis: function() {
       this._startDrawingManager();
@@ -98,14 +98,13 @@ define([
       this.presenter.doneDrawing();
     },
 
-
     /**
      * Triggered when the user clicks on cancel
      * to stop drawing a polygon.
      */
     _onClickCancel: function() {
       this._stopDrawing();
-      this.presenter.deleteGeom();
+      this.presenter.deleteAnalysis();
     },
 
     /**
