@@ -9,27 +9,35 @@ define([
   'backbone',
   'moment',
   'mps',
-  'geojsonArea'
-], function(PresenterClass, _, Backbone, moment, mps, geojsonArea) {
+  'helpers/geojsonUtilsHelper'
+], function(PresenterClass, _, Backbone, moment, mps, geojsonUtilsHelper) {
 
   'use strict';
 
   var StatusModel = Backbone.Model.extend({
     defaults: {
-      layerSpec: null,
+      baselayer: null,
       analysis: false,
-      isoTotalArea: null
+      isoTotalArea: null,
+      resource: null // analysis resource
     }
   });
 
   var AnalysisResultsPresenter = PresenterClass.extend({
 
+    /**
+     * Layers that support email subscriptions.
+     */
+    _alertsSubscriptionLayers: [
+      'forma'
+    ],
+
     datasets: {
-      'umd-loss-gain': 'umd_tree_loss_gain',
-      'forma-alerts': 'forma',
-      'imazon-alerts': 'imazon',
-      'nasa-active-fires': 'fires',
-      'quicc-alerts': 'modis'
+      'umd_tree_loss_gain': 'umd-loss-gain',
+      'forma': 'forma-alerts',
+      'imazon': 'imazon-alerts',
+      'fires': 'nasa-active-fires',
+      'modis': 'quicc-alerts'
     },
 
     init: function(view) {
@@ -43,11 +51,11 @@ define([
      */
     _subscriptions: [{
       'Place/go': function(place) {
-        this.status.set('layerSpec', place.layerSpec);
+        this._setBaselayer(place.layerSpec.getBaselayers());
       }
     }, {
       'LayerNav/change': function(layerSpec) {
-        this.status.set('layerSpec', layerSpec);
+        this._setBaselayer(layerSpec.getBaselayers());
       }
     }, {
       'AnalysisService/get': function() {
@@ -63,10 +71,51 @@ define([
       }
     }, {
       'AnalysisTool/iso-drawn': function(multipolygon) {
-        var isoTotalArea = this._getHectares(multipolygon);
+        var isoTotalArea = geojsonUtilsHelper.getHectares(
+          multipolygon);
         this.status.set('isoTotalArea', isoTotalArea);
       }
+    }, {
+      /**
+       * Get the analysis resource so we can
+       * get the data for the subscribe button.
+       *
+       * @param  {Object} resource Analysis resource
+       */
+      'AnalysisService/get': function(resource) {
+        this.status.set('resource', resource);
+      }
     }],
+
+    /**
+     * Set the status.baselayer from layerSpec.
+     *
+     * @param {Object} baselayers Current active baselayers
+     */
+    _setBaselayer: function(baselayers) {
+      var baselayer = baselayers[_.first(_.intersection(
+        _.pluck(baselayers, 'slug'),
+        _.keys(this.datasets)))];
+
+      this.status.set('baselayer', baselayer);
+    },
+
+    /**
+     * Set the subscribe button to disabled if alerts
+     * are not supported for the current layers.
+     */
+    _setSubscribeButton: function() {
+      var supported = _.indexOf(this._alertsSubscriptionLayers,
+        this.status.get('baselayer').slug) >= 0;
+
+      // Subscriptions not supported for regions yet.
+      if (this.status.get('resource').id1) {
+        supported = false;
+      }
+
+      this.view.toggleSubscribeButton(!supported);
+    },
+
     /**
      * Handle analysis results from the supplied object.
      *
@@ -86,22 +135,10 @@ define([
         this.view.renderFailure();
       } else {
         this._renderAnalysis(results);
+        // Subscribe button just should be activated
+        // when a analysis is succesfully rendered.
+        this._setSubscribeButton();
       }
-    },
-
-    /**
-     * Get layer object from datasetId.
-     *
-     * @param  {String} datasetId
-     */
-    _getLayerFromDatasetId: function(datasetId) {
-      var layerSlug = this.datasets[datasetId];
-
-      var layer = this.status.get('layerSpec').getLayer({
-        slug: layerSlug
-      });
-
-      return layer;
     },
 
     /**
@@ -111,7 +148,7 @@ define([
      * @param  {Object} results Results object form the AnalysisService
      */
     _renderAnalysis: function(results) {
-      var layer = this._getLayerFromDatasetId(results.meta.id);
+      var layer = this.status.get('baselayer');
 
       // Unexpected results from successful request
       if (!layer) {
@@ -125,11 +162,38 @@ define([
     },
 
     /**
+     * Updates current analysis if it's permitted.
+     */
+    _updateAnalysis: function() {
+      if (this.status.get('analysis') && !this.status.get('disableUpdating')) {
+        mps.publish('AnalysisTool/update-analysis', []);
+      }
+    },
+
+    /**
+     * Render analysis subscribe dialog by publishing
+     * to DialogPresenter.
+     */
+    subscribeAnalysis: function() {
+      var options = {
+        analysisResource: this.status.get('resource'),
+        layer: this.status.get('baselayer')
+      };
+
+      mps.publish('Dialog/new', [{
+        type: 'analysis',
+        id: 'subscribe'
+      }, options]);
+    },
+
+    /**
      * Delete the current analysis and abort the current
      * AnalysisService request.
      */
     deleteAnalysis: function() {
       this.status.set('analysis', false);
+      this.status.set('iso', null);
+      this.status.set('resource', null);
       this.view.model.set('boxHidden', true);
       mps.publish('AnalysisService/cancel', []);
       mps.publish('AnalysisResults/delete-analysis', []);
@@ -163,7 +227,7 @@ define([
         dateRange[1].format('MMM-YYYY'));
 
       if (results.params.geojson) {
-        p.totalArea = this._getHectares(results.params.geojson);
+        p.totalArea = geojsonUtilsHelper.getHectares(results.params.geojson);
       } else if (results.params.iso) {
         p.totalArea = this.status.get('isoTotalArea') ? this.status.get('isoTotalArea') : 0;
       }
@@ -220,15 +284,7 @@ define([
       return p;
     },
 
-    /**
-     * Get total hectares from a geojson.
-     *
-     * @param  {Object} geojson  polygon/multipolygon
-     * @return {String} hectares
-     */
-    _getHectares: function(geojson) {
-      return (geojsonArea(geojson) / 10000).toLocaleString();
-    }
+
 
   });
 

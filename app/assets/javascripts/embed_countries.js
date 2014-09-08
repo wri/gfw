@@ -19,7 +19,6 @@ gfw.ui.view.CountriesEmbedOverview = cdb.core.View.extend({
   },
 
   initialize: function() {
-    alert(1)
     this.model = new gfw.ui.model.CountriesEmbedOverview();
 
     this.$graph = $('.overview_graph__area');

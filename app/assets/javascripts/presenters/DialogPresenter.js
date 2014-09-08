@@ -1,50 +1,50 @@
 define([
+  'map/presenters/PresenterClass',
   'underscore',
-  'Class',
   'mps',
-  'map/helpers/layersHelper'
-], function(_, Class, mps, layersHelper) {
-
+  'helpers/dialogsHelper'
+], function(PresenterClass, _, mps, dialogsHelper) {
   'use strict';
 
-  var DialogPresenter = Class.extend({
+  var DialogPresenter = PresenterClass.extend({
 
     init: function(view) {
       this.view = view;
-      this._subscribe();
+      this._super();
     },
 
     /**
-     * Subscribe to application events.
+     * Application subscriptions.
      */
-    _subscribe: function() {
-      mps.subscribe('Dialog/new', _.bind(function(resource) {
-        if (!_.isObject(resource)) {
-          throw 'No resource found for the dialog';
+    _subscriptions: [{
+      'Dialog/new': function(data, options) {
+        if (!_.isObject(data)) {
+          throw 'No dialog found';
         }
 
-        this._newResource(resource);
-      }, this));
-    },
+        this._newResource(data, options);
+      }
+    }],
 
     /**
      * Dispaches to the view to render the dialog from a
      * suplied valid resource.
      * eg. resource:
-     *   {type: 'layer', slug: 'forestgain'}
+     *   {type: 'layer', id: 'forestgain'}
      *
      * @param  {Object} resource Resource identificator
      */
-    _newResource: function(resource) {
-      var resourceTpl;
+    _newResource: function(data, options) {
+      var resource = {};
+      var data;
 
-      if (resource.type == 'layer') {
-        resourceTpl = layersHelper[resource.slug].dialogTpl;
+      if (dialogsHelper[data.type] && dialogsHelper[data.type][data.id]) {
+        resource = dialogsHelper[data.type][data.id];
+      } else {
+        return;
       }
 
-      if (resourceTpl) {
-        this.view.render(resourceTpl);
-      }
+      this.view.render(resource, options);
     }
   });
 

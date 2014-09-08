@@ -1,6 +1,7 @@
 define([
-  'd3'
-], function(d3) {
+  'd3',
+  'geojsonArea'
+], function(d3, geojsonArea) {
 
   var geojsonUtilsHelper = {
     /**
@@ -53,7 +54,18 @@ define([
 
       var bounds = new google.maps.LatLngBounds(a, b);
       return bounds;
+    },
+
+    /**
+     * Get total hectares from a geojson.
+     *
+     * @param  {Object} geojson  polygon/multipolygon
+     * @return {String} hectares
+     */
+    getHectares: function(geojson) {
+      return (geojsonArea(geojson) / 10000).toLocaleString();
     }
+
   };
 
   return geojsonUtilsHelper;

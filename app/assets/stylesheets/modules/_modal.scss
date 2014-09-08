@@ -275,3 +275,116 @@
   background: #fff;
   @include opacity(.9);
 }
+
+
+.analysis_subscribe {
+  $width: 463px;
+  $height: 170px;
+
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  top: 50%; left: 50%;
+  margin-top: -$height/2;
+  margin-left: -$width/2;
+  height: $height;
+  width: $width;
+  padding: 30px;
+  border: 1px solid #757573;
+  background: #fff;
+  @include box-shadow(0 0 7px #666);
+  @include border-radius(3px);
+  text-align: center;
+
+  .form {
+    position: absolute;
+    bottom: 0; left: 0;
+    border-top: 1px solid #f1f1f1;
+    padding: 28px 10px 30px;
+    width: 498px;
+    input {
+      width: 290px;
+      height: 20px;
+      position: relative;
+      top: -6px;
+    }
+  }
+
+  .error_input_label {
+    display: none;
+    position: absolute;
+    right: -92px; bottom: 37px;
+    width: 190px;
+    height: 39px - 9px;
+    padding: 9px 0 0;
+    color: #fff;
+    font-size: 15px;
+    @extend .sans-serif;
+    text-align: center;
+    @include home-icons-sprite(error_input_label);
+  }
+
+  .btn {
+    width: 120px;
+    padding: 14px 0;
+  }
+
+  .input-field {
+    position: relative;
+    width: 300px;
+    margin: 0;
+    float: left;
+    margin-left: 25px;
+    &.error input { color: red;}
+
+    .icon.error {
+      display: none;
+      width: 21px;
+      height: 22px;
+      position:absolute;
+      right: -7px;
+      top: 10px;
+      @include home-icons-sprite(input_error);
+    }
+  }
+
+  .holder {
+    position: absolute;
+    top: 14px; left: 12px;
+    font-size: 15px;
+    @extend .sans-serif;
+    color: #ddd;
+  }
+
+  .subtitle {
+    margin: 0 0 20px 0;
+
+    a {
+      color: #A1BB27;
+      text-decoration: underline;
+    }
+  }
+
+  .close {
+    display: block;
+    position: absolute;
+    top: 15px; right: 15px;
+    width: 6px;
+    height: 6px;
+    @include home-icons-sprite(infowindow_close);
+  }
+
+  h1 {
+    font-size: 35px;
+    margin: 10px 0 5px;
+    @extend .serif;
+  }
+
+  p {
+    font-size: 15px;
+    @extend .sans_serif;
+    color: #999;
+
+    &.help { margin: 0 0 20px; }
+  }
+}
