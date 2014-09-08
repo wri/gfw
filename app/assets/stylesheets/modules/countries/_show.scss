@@ -1333,7 +1333,9 @@
           position:relative;
         }
         &.white {
-          @include home-icons-sprite(timeline_handler_white);
+          &::-webkit-slider-thumb {
+            @include home-icons-sprite(timeline_handler_white);
+          }
         }
       }
     }
