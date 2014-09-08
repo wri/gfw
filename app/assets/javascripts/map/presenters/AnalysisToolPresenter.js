@@ -123,7 +123,7 @@ define([
         geojson: JSON.stringify(geojson)
       });
 
-      // Draw geojson if needed
+      // Draw geojson if needed.
       if (options.draw) {
         this.view.drawPaths(
           geojsonUtilsHelper.geojsonToPath(geojson));

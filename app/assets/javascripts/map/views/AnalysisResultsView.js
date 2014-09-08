@@ -37,7 +37,8 @@ define([
     events: function() {
       return _.extend({}, AnalysisResultsView.__super__.events, {
         'click .analysis-control-delete': '_deleteAnalysis',
-        'click .download-links span' :'_toggleDownloads'
+        'click .download-links span' :'_toggleDownloads',
+        'click .analysis-control-subscribe': '_subscribe'
       });
     },
 
@@ -49,6 +50,7 @@ define([
     _cacheSelector: function() {
       AnalysisResultsView.__super__._cacheSelector.apply(this);
       this.$downloadDropdown = this.$('.download-dropdown');
+      this.$subscribeButton = this.$('#subscribeButton');
     },
 
     /**
@@ -71,6 +73,10 @@ define([
       this._update(this.templates.unavailable());
     },
 
+    toggleSubscribeButton: function(toggle) {
+      this.$subscribeButton.toggleClass('disabled', toggle);
+    },
+
     /**
      * Render failure analysis request message.
      */
@@ -80,6 +86,9 @@ define([
 
     _deleteAnalysis: function() {
       this.presenter.deleteAnalysis();
+    },
+    _subscribe: function() {
+      this.presenter.subscribeAnalysis();
     },
 
     _toggleDownloads: function() {

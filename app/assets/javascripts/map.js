@@ -22,10 +22,11 @@ require([
   'map/views/AnalysisToolView',
   'map/views/AnalysisResultsView',
   'map/views/ShareView',
+  'views/DialogView',
   '_string'
 ], function($, _, Class, Backbone, utils, mps, Router, AnalysisService, CountryService, DataService,
     LayersNavView, MapView, LegendView, ThresholdView, SearchboxView, MaptypeView, TimelineView,
-    AnalysisToolView, AnalysisResultsView, ShareView) {
+    AnalysisToolView, AnalysisResultsView, ShareView, DialogView) {
 
   'use strict';
 
@@ -75,6 +76,7 @@ require([
       new TimelineView();
       new AnalysisResultsView();
       new ShareView();
+      new DialogView();
       // TODO => This is temporary!!! We will use the refactored
       // and awesome DialogView later.
       window.infowindow();
