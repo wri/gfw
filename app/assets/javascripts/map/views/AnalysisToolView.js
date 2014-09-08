@@ -168,6 +168,10 @@ define([
       this.$widgetBtn.addClass('disabled');
     },
 
+    toggleWidgetBtn: function(to) {
+      this.$widgetBtn.toggleClass('disabled', to);
+    },
+
     /**
      * Set geojson style.
      */

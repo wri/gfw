@@ -4,7 +4,7 @@
  * @return AnalysisToolPresenter class.
  */
 define([
-  'Class',
+  'map/presenters/PresenterClass',
   'underscore',
   'backbone',
   'mps',
@@ -12,7 +12,7 @@ define([
   'helpers/geojsonUtilsHelper',
   'map/services/CountryService',
   'map/services/RegionService'
-], function(Class, _, Backbone, mps, topojson, geojsonUtilsHelper, countryService, regionService) {
+], function(PresenterClass, _, Backbone, mps, topojson, geojsonUtilsHelper, countryService, regionService) {
 
   'use strict';
 
@@ -28,7 +28,7 @@ define([
     }
   });
 
-  var AnalysisToolPresenter = Class.extend({
+  var AnalysisToolPresenter = PresenterClass.extend({
 
     datasets: {
       'umd_tree_loss_gain': 'umd-loss-gain',
@@ -41,70 +41,62 @@ define([
     init: function(view) {
       this.view = view;
       this.status = new StatusModel();
-      this._subscribe();
-      mps.publish('Place/register', [this]);
+      this._super();
     },
 
     /**
-     * Subscribe to application events.
+     * Application subscriptions.
      */
-    _subscribe: function() {
-      mps.subscribe('Place/go', _.bind(function(place) {
-        var p = place.params;
-        // Set status
+    _subscriptions: [{
+      'Place/go': function(place) {
         this._setBaselayer(place.layerSpec.getBaselayers());
-        this.status.set('date', [p.begin, p.end]);
-        this.status.set('threshold', p.threshold);
-
-        this._handlePlaceGo(_.pick(
-          place.params, 'iso', 'geojson', 'analyze'));
-      }, this));
-
-      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
+        this.status.set('date', [place.params.begin, place.params.end]);
+        this.status.set('threshold', place.params.threshold);
+        this._handlePlaceGo(place.params);
+      }
+    }, {
+      'LayerNav/change': function(layerSpec) {
         this._setBaselayer(layerSpec.getBaselayers());
         this._checkUnavailable();
         this._updateAnalysis();
-      }, this));
-
-      mps.subscribe('Timeline/date-change', _.bind(function(layerSlug, date) {
+      }
+    }, {
+      'AnalysisTool/update-analysis': function() {
+        this._updateAnalysis();
+      }
+    }, {
+      'AnalysisResults/delete-analysis': function() {
+        this.deleteAnalysis();
+      }
+    }, {
+      'AnalysisTool/analyze-wdpaid': function(wdpaid) {
+        this._analyzeWdpai(wdpaid.wdpaid);
+      }
+    }, {
+      'Timeline/date-change': function(layerSlug, date) {
         this.status.set('date', date);
         this._updateAnalysis();
-      }, this));
-
-      mps.subscribe('Threshold/changed', _.bind(function() {
-        this._updateAnalysis();
-      }, this));
-
-      mps.subscribe('Timeline/start-playing', _.bind(function() {
+      }
+    }, {
+      'Timeline/start-playing': function() {
         this.status.set('disableUpdating', true);
-      }, this));
-
-      mps.subscribe('Timeline/stop-playing', _.bind(function() {
+      }
+    }, {
+      'Timeline/stop-playing': function() {
         this.status.set('disableUpdating', false);
         this._updateAnalysis();
-      }, this));
-
-      mps.subscribe('AnalysisResults/delete-analysis', _.bind(function() {
-        this.deleteAnalysis();
-      }, this));
-
-      mps.subscribe('AnalysisTool/update-analysis', _.bind(function() {
-        this._updateAnalysis();
-      }, this));
-
-      mps.subscribe('Threshold/changed', _.bind(function(threshold) {
+      }
+    }, {
+      'Threshold/changed': function(threshold) {
         this.status.set('threshold', threshold);
-      }, this));
-
-      mps.subscribe('AnalysisTool/analyze-wdpaid', _.bind(function(wdpaid) {
-        this._analyzeWdpai(wdpaid.wdpaid);
-      }, this));
-    },
+        this._updateAnalysis();
+      }
+    }],
 
     /**
      * Handles a Place/go.
      *
-     * @param  {Object} params Place params (iso, geojson)
+     * @param  {Object} params Place params
      */
     _handlePlaceGo: function(params) {
       if (params.analyze) {
@@ -203,9 +195,6 @@ define([
       var paths = overlay.getPath().getArray();
       var geojson = geojsonUtilsHelper.pathToGeojson(paths);
 
-      // this.status.set('polygon', geojson);
-      // set editable to false
-
       this.view.setEditable(overlay, false);
       this._analyzeGeojson(geojson, {draw: false});
     },
@@ -294,7 +283,7 @@ define([
         _.keys(this.datasets)))];
 
       this.status.set('baselayer', baselayer);
-      this.view.$widgetBtn.toggleClass('disabled', !!!baselayer);
+      this.view.toggleWidgetBtn(!!!baselayer);
     },
 
     _checkUnavailable: function() {
