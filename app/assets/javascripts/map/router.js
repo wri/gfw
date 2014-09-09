@@ -66,11 +66,8 @@ define([
      */
     _checkForCacheBust: function() {
       var params = _.parseUrl();
-      var clientCacheVersion = localStorage.getItem('GLOBAL_CACHE_VERSION');
 
-      if (_.has(params, 'cache') || GLOBAL_CACHE_VERSION !== clientCacheVersion) {
-        console.log('Client cache deleted.');
-        localStorage.setItem('GLOBAL_CACHE_VERSION', GLOBAL_CACHE_VERSION);
+      if (_.has(params, 'cache')) {
         _.each(amplify.store(), function(value, key) {
           amplify.store(key, null);
         });
