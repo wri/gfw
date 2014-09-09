@@ -34,5 +34,8 @@
     <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js" %>
     <%= requirejs_include_tag "map" %>
     <%= render "shared/js_footer" %>
+    <script type="text/javascript">
+      window.GLOBAL_CACHE_VERSION = String(<%= ENV['GLOBAL_CACHE_VERSION'] %>);
+    </script>
   </body>
 </html>
