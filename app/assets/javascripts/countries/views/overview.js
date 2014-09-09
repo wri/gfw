@@ -133,6 +133,10 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
   _drawList: function(e) {
     var that = this;
 
+
+    $('.countries_list ul').fadeOut();
+
+
     e && e.preventDefault();
 
     if (this.model.get('graph') === 'total_loss') {
@@ -170,7 +174,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                 loss : 34,
                 gain : 43
               }
-
+          var max_trigger = data.length -1;
           $.ajax({
             url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (config.canopy_choice || 10),
             dataType: 'json',
@@ -186,6 +190,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                 }
                 gain += data.years[i].gain
               }
+              var orig = loss;
 
               if (loss.toString().length >= 7) {
                 loss = ((loss /1000)/1000).toFixed(2)
@@ -207,7 +212,27 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                 g_mha = 'Ha';
               }
 
-              $('#umd_'+val.iso+'').empty().append('<span class="loss line"><span>'+ loss +' </span>'+ l_mha +' of loss</span><span class="gain line"><span>'+ gain+' </span>'+ g_mha +' of gain</span>')
+              $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span><span class="gain line"><span>'+ gain+' </span>'+ g_mha +' of gain</span>');
+
+              if (key == max_trigger){
+                  var $ul = $('.countries_list ul'),
+                  $ul_li = $ul.children('li');
+
+                  $ul_li.sort(function(a,b){
+                  var an = parseFloat($(a).find('.loss').data('orig')),
+                      bn = parseFloat($(b).find('.loss').data('orig'));
+                    if(an > bn) {
+                      return -1;
+                    }
+                    if(an < bn) {
+                      return 1;
+                    }
+                    return 0;
+                  });
+
+                  $ul_li.detach().appendTo($ul);
+                  $ul.fadeIn();
+              }
             },
           });
           markup_list += '<li>\
