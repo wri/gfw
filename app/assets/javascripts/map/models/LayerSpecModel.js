@@ -14,7 +14,7 @@ define([
 
     layerOrder: [
       'forestgain',
-      'umd_tree_loss_gain',
+      'loss',
       'forma',
       'imazon',
       'modis',

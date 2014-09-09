@@ -31,7 +31,7 @@ define([
      * Optional layers detail templates.
      */
     detailsTemplates: {
-      umd_tree_loss_gain: Handlebars.compile(lossTpl),
+      loss: Handlebars.compile(lossTpl),
       imazon: Handlebars.compile(imazonTpl),
       fires: Handlebars.compile(firesTpl),
       forest2000: Handlebars.compile(forest2000Tpl),

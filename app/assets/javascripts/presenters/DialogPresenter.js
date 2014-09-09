@@ -1,9 +1,9 @@
 define([
-  'map/presenters/PresenterClass',
   'underscore',
   'mps',
+  'map/presenters/PresenterClass',
   'helpers/dialogsHelper'
-], function(PresenterClass, _, mps, dialogsHelper) {
+], function(_, mps, PresenterClass, dialogsHelper) {
   'use strict';
 
   var DialogPresenter = PresenterClass.extend({
@@ -17,12 +17,12 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Dialog/new': function(data, options) {
+      'Dialog/new': function(data, params) {
         if (!_.isObject(data)) {
           throw 'No dialog found';
         }
 
-        this._newResource(data, options);
+        this._newResource(data, params);
       }
     }],
 
@@ -34,7 +34,7 @@ define([
      *
      * @param  {Object} resource Resource identificator
      */
-    _newResource: function(data, options) {
+    _newResource: function(data, params) {
       var resource = {};
       var data;
 
@@ -44,7 +44,7 @@ define([
         return;
       }
 
-      this.view.render(resource, options);
+      this.view.render(resource, params);
     }
   });
 

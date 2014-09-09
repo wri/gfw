@@ -19,7 +19,7 @@ define([
       forbidCombined: {
         forest_clearing: {
           except: [
-            ['umd_tree_loss_gain', 'forestgain']
+            ['loss', 'forestgain']
           ]
         },
         geographic_coverage: {}

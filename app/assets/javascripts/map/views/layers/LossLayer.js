@@ -1,7 +1,7 @@
 /**
  * The UMD loss map layer view.
  *
- * @return UMDLossLayer class (extends CanvasLayerClass)
+ * @return LossLayer class (extends CanvasLayerClass)
  */
 define([
   'd3',
@@ -13,7 +13,7 @@ define([
 
   'use strict';
 
-  var UMDLossLayer = CanvasLayerClass.extend({
+  var LossLayer = CanvasLayerClass.extend({
 
     options: {
       threshold: 10,
@@ -84,5 +84,5 @@ define([
 
   });
 
-  return UMDLossLayer;
+  return LossLayer;
 });

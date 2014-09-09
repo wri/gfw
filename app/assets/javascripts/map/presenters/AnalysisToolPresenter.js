@@ -31,7 +31,7 @@ define([
   var AnalysisToolPresenter = PresenterClass.extend({
 
     datasets: {
-      'umd_tree_loss_gain': 'umd-loss-gain',
+      'loss': 'umd-loss-gain',
       'forma': 'forma-alerts',
       'imazon': 'imazon-alerts',
       'fires': 'nasa-active-fires',
@@ -228,7 +228,7 @@ define([
         date[0].format(dateFormat), date[1].format(dateFormat));
 
       // this is super ugly
-      if (baselayer.slug === 'umd_tree_loss_gain') {
+      if (baselayer.slug === 'loss') {
         resource.thresh = '?thresh=' + this.status.get('threshold');
       } else {
         delete resource.thresh;

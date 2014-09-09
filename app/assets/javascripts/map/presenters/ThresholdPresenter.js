@@ -25,7 +25,7 @@ define([
      * Supported threshold layers.
      */
     supportedLayers: [
-      'umd_tree_loss_gain',
+      'loss',
       'forest2000'
     ],
 

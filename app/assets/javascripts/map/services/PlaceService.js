@@ -56,7 +56,7 @@ define([
   'use strict';
 
   var urlDefaultsParams = {
-    baselayers: 'umd_tree_loss_gain,forestgain',
+    baselayers: 'loss,forestgain',
     zoom: 3,
     lat: 15,
     lng: 27,
@@ -164,11 +164,6 @@ define([
       p.name = this._name;
 
       p.baselayers = _.map(p.baselayers.split(','), function(slug) {
-        // quick fix
-        if (slug === 'loss') {
-          slug = 'umd_tree_loss_gain';
-        }
-        //
         return {slug: slug};
       });
 

@@ -22,7 +22,7 @@
               User defined area
             {{/if}}
           </span>
-          {{#unless umd_tree_loss_gain}}
+          {{#unless loss}}
             <span class="analysis-date-range">{{dateRange}}</span>
           {{/unless}}
         </div>
@@ -33,7 +33,7 @@
               <span class="stats-count"><strong>{{totalArea}}</strong> ha</span>
             </li>
           {{/if}}
-          {{#if umd_tree_loss_gain}}
+          {{#if loss}}
             <li>
               <span class="stats-title">Loss {{lossDateRange}}<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{threshold}}% canopy density</span></span>
               <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{lossAlerts}}</strong> ha</span>
@@ -62,7 +62,7 @@
               </li>
             {{/if}}
           {{/if}}
-          {{#if umd_tree_loss_gain}}
+          {{#if loss}}
             <li class="download-links">
               <span><a href="http://www.earthenginepartners.appspot.com/science-2013-global-forest/download.html" target="_blank">Download entire data set at project website</a></span>
             </li>

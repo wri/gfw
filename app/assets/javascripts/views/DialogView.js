@@ -1,3 +1,46 @@
+/**
+ * The DialogView removes boilerplate code and adds
+ * default behaviors and interactions.
+ *
+ * You can create a simple dialog modal or complex wizards.
+ * It works with the Presenter pattern.
+ *
+ * To create a dialog just follow this steps:
+ *
+ *  1. Go to helpers/dialogsHelper. Here is where all our dialogs
+ *  are defined. You can append a template or a view (with his own
+ *  template) to the dialog. Views are keep under views/dialogs, and
+ *  templates under templates/dialogs.
+ *
+ *  eg.
+ *
+ *    analysis: {
+ *      subscribe: {
+ *        view: AnalysisSubscribeDialogView
+ *      }
+ *    }
+ *
+ *  2. To call a dialog no you just have to call it with mps.
+ *  Params is an object you can pass to those dialogs with
+ *  views.
+ *
+ *     mps.publish('Dialog/new', [{
+ *       type: 'analysis',
+ *       id: 'subscribe'
+ *     }, params]);
+ *
+ *  --------
+ *
+ * Wizard feature:
+ *
+ * You can add steps to your dialog, so instead having to
+ * render another one, you can  just call nextStep() or
+ * previousStep() to move from differents states.
+ *
+ * TODOS =>
+ *   Add goToStep() method
+ *
+ */
 define([
   'jquery',
   'underscore',
@@ -6,7 +49,6 @@ define([
   'presenters/DialogPresenter',
   'text!templates/dialogs/dialog.handlebars'
 ], function($, _, Backbone, Handlebars, Presenter, tpl) {
-
   'use strict';
 
   var DialogView = Backbone.View.extend({
@@ -15,24 +57,33 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click #closeBtn': '_remove',
-      'click .m-dialog-background': '_remove'
+      'click #close': 'remove',
+      'click .close-icon': 'remove',
+      'click .m-dialog-background': 'remove'
     },
 
     initialize: function() {
-      _.bindAll(this, '_remove');
       this.presenter = new Presenter(this);
       this.$body = $('body');
       $(document).keyup(_.bind(this._onKeyup, this));
     },
 
-    render: function(resource ,options) {
+    /**
+     * Renders the dialog by appending to it the
+     * supplied view or template.
+     *
+     * @param  {Object} resource Resource identificator
+     * @param  {Object} params  Modal params
+     */
+    render: function(resource, params) {
       var $resourceEl, resourceView;
 
       if(resource.view) {
         resourceView = new resource.view({
-          remove: this._remove
-        }, options);
+          remove: _.bind(this.remove, this),
+          nextStep: _.bind(this.nextStep, this),
+          previousStep: _.bind(this.previousStep, this)
+        }, params);
         $resourceEl = resourceView.$el;
       } else if (resource.tpl) {
         $resourceEl = $(Handlebars.compile(resource.tpl));
@@ -40,6 +91,13 @@ define([
 
       this.$el.html(this.template());
       this.$el.find('#dialogWrapper').append($resourceEl);
+
+      this.$stepsArr = this.$el.find('[data-dialog-step]');
+
+      if (this.$stepsArr.length) {
+        this.$stepsArr.slice(1).addClass('is-hidden');
+      }
+
       this.$body.append(this.el);
 
       // Delegate events views
@@ -53,7 +111,7 @@ define([
     /**
      * Remove the dialog $el.
      */
-    _remove: function() {
+    remove: function() {
       this.$el.remove();
     },
 
@@ -65,8 +123,37 @@ define([
      */
     _onKeyup: function(e) {
       if (e.keyCode === 27) {
-        this._remove();
+        this.remove();
       }
+    },
+
+    nextStep: function() {
+      this._moveStep('next');
+    },
+
+    previousStep: function() {
+      this._moveStep('previous');
+    },
+
+    _moveStep: function(direction) {
+      this.$stepsArr.each(_.bind(function(i, el) {
+        var $el = $(el);
+
+        if (!$el.hasClass('is-hidden')) {
+          if (direction === 'next') {
+            direction = [i + 1, i + 2];
+          } else {
+            direction = [i - 1, i];
+          }
+
+          this.$stepsArr
+            .slice.apply(this.$stepsArr, direction)
+            .removeClass('is-hidden')
+            .siblings()
+            .addClass('is-hidden');
+          return false;
+        }
+      }, this));
     },
 
   });

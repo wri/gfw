@@ -1,7 +1,7 @@
 /**
  * The UMD loss timeline.
  *
- * @return UMDLossTimeline class (extends TimelineYearClass)
+ * @return LossTimeline class (extends TimelineYearClass)
  */
 define([
   'moment',
@@ -11,7 +11,7 @@ define([
 
   'use strict';
 
-  var UMDLossTimeline = TimelineYearClass.extend({
+  var LossTimeline = TimelineYearClass.extend({
 
     /**
      * Get the layer spec.
@@ -25,9 +25,9 @@ define([
         dateRange: [moment(layer.mindate), moment(layer.maxdate)]
       };
 
-      UMDLossTimeline.__super__.initialize.apply(this, [layer, currentDate]);
+      LossTimeline.__super__.initialize.apply(this, [layer, currentDate]);
     }
   });
 
-  return UMDLossTimeline;
+  return LossTimeline;
 });

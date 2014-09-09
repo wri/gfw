@@ -3,7 +3,7 @@
  */
 define([
   // Layer views
-  'map/views/layers/UMDLossLayer',
+  'map/views/layers/LossLayer',
   'map/views/layers/ForestGainLayer',
   'map/views/layers/FormaLayer',
   'map/views/layers/FormaCoverLayer',
@@ -30,16 +30,16 @@ define([
   'map/views/layers/MongabayStoriesLayer',
   'map/views/layers/InfoamazoniaStoriesLayer',
   // Layer dialog templates
-  'text!templates/dialogs/umd_tree_loss_gain_dialog.handlebars',
+  'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
-  'map/views/timeline/UMDLossTimeline',
+  'map/views/timeline/LossTimeline',
   'map/views/timeline/FormaTimeline',
   'map/views/timeline/ImazonTimeline',
   'map/views/timeline/ModisTimeline',
   'map/views/timeline/FiresTimeline',
 ], function(
   // Layer Views
-  UMDLossLayer,
+  LossLayer,
   ForestGainLayer,
   FormaLayer,
   FormaCoverLayer,
@@ -66,9 +66,9 @@ define([
   MongabayStoriesLayer,
   InfoamazoniaStoriesLayer,
   // Layer dialog templates
-  umd_tree_loss_gain_dialog,
+  loss_dialog,
   // Layer timelines
-  UMDLossTimeline,
+  LossTimeline,
   FormaTimeline,
   ImazonTimeline,
   ModisTimeline,
@@ -77,10 +77,10 @@ define([
   'use strict';
 
   var layersHelper = {
-    umd_tree_loss_gain: {
-      view: UMDLossLayer,
-      dialogTpl: umd_tree_loss_gain_dialog,
-      timelineView: UMDLossTimeline
+    loss: {
+      view: LossLayer,
+      dialogTpl: loss_dialog,
+      timelineView: LossTimeline
     },
     forestgain: {
       view: ForestGainLayer

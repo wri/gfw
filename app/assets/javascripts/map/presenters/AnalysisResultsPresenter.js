@@ -33,7 +33,7 @@ define([
     ],
 
     datasets: {
-      'umd_tree_loss_gain': 'umd-loss-gain',
+      'loss': 'umd-loss-gain',
       'forma': 'forma-alerts',
       'imazon': 'imazon-alerts',
       'fires': 'nasa-active-fires',
@@ -251,7 +251,7 @@ define([
        *   - lossAlerts
        *   - gainAlerts
        */
-      if (layer.slug === 'umd_tree_loss_gain') {
+      if (layer.slug === 'loss') {
         p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year());
         p.lossAlerts = 0;
         p.gainAlerts = 0;

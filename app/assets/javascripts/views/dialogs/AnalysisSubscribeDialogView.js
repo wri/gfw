@@ -23,7 +23,9 @@ define([
     },
 
     events: {
-      'click #subscribe': '_subscribeAlerts'
+      'click #subscribe': '_subscribeAlerts',
+      'click .next': 'nextStep',
+      'click .back': 'previousStep'
     },
 
     /**
@@ -33,7 +35,7 @@ define([
      * @param  {Object} analysisResource The analysis resource.
      */
     initialize: function(parent, options) {
-      this.parent = parent;
+      _.extend(this, parent);
       this.analysisResource = options.analysisResource;
       this.layer = options.layer;
       this.$el.html(this.template());
@@ -61,14 +63,14 @@ define([
         data: JSON.stringify(data),
         dataType: 'json',
         success: _.bind(this._successSubscription, this),
-        error: function(responseData, textStatus, errorThrown) {
-          console.log(responseData);
-        }
+        error: _.bind(function(responseData, textStatus, errorThrown) {
+          this.remove();
+        }, this)
       });
     },
 
     _successSubscription: function(data, textStatus, jqXHR) {
-      this.parent.remove();
+      this.nextStep();
     }
 
   });
