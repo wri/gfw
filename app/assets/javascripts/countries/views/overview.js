@@ -130,12 +130,28 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     this._drawList();
   },
 
+  _reorderRanking: function(e) {
+    var $ul = $('.countries_list ul'),
+    $ul_li = $ul.children('li');
+
+    $ul_li.sort(function(a,b){
+      var an = parseFloat($(a).find('.loss').data('orig')),
+          bn = parseFloat($(b).find('.loss').data('orig'));
+      if(an > bn) {
+        return -1;
+      }
+      if(an < bn) {
+        return 1;
+      }
+      return 0;
+    });
+
+    $ul_li.detach().appendTo($ul);
+    $ul_li.find('.countries_list__num').each(function(i, ele){ $(ele).empty().text(i+1) })
+  },
+
   _drawList: function(e) {
     var that = this;
-
-
-    $('.countries_list ul').fadeOut();
-
 
     e && e.preventDefault();
 
@@ -215,23 +231,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span><span class="gain line"><span>'+ gain+' </span>'+ g_mha +' of gain</span>');
 
               if (key == max_trigger){
-                  var $ul = $('.countries_list ul'),
-                  $ul_li = $ul.children('li');
-
-                  $ul_li.sort(function(a,b){
-                  var an = parseFloat($(a).find('.loss').data('orig')),
-                      bn = parseFloat($(b).find('.loss').data('orig'));
-                    if(an > bn) {
-                      return -1;
-                    }
-                    if(an < bn) {
-                      return 1;
-                    }
-                    return 0;
-                  });
-
-                  $ul_li.detach().appendTo($ul);
-                  $ul.fadeIn();
+                that._reorderRanking();
               }
             },
           });
@@ -280,7 +280,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             markup_list = '';
 
         var data = json.rows;
-
+        var max_trigger = data.length -1;
         _.each(data, function(val, key) {
           var ord = e ? (key+11) : (key+1),
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
@@ -290,9 +290,12 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                             <div class="countries_list__num">'+ord+'</div>\
                             <div class="countries_list__title">'+enabled+'</div>\
                             <div class="countries_list__data">\
-                              <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss">'+ (val.ratio_loss*100).toFixed(2) +'%</span></div>\
+                              <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss" data-orig="' + val.ratio_loss + '">'+ (val.ratio_loss*100).toFixed(2) +'%</span></div>\
                             </div>\
                           </li>';
+          if (key == max_trigger){
+            that._reorderRanking();
+          }
         });
 
         if (e) {
@@ -340,7 +343,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             markup_list = '';
 
         var data = json.rows;
-
+        var max_trigger = data.length -1;
         _.each(data, function(val, key) {
           var ord = e ? (key+11) : (key+1),
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
@@ -373,8 +376,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               } else {
                 l_mha = 'Ha';
               }
-              $('#ext_'+val.iso+'').empty().append('<span class="line"><span>'+ parseInt(ex).toLocaleString() +' </span>'+ e_mha +' of extent</span><span class="loss line"><span>'+ parseInt(lo).toLocaleString() +' </span>'+ l_mha +'  of loss</span>')
-            },
+              $('#ext_'+val.iso+'').empty().append('<span class="line"><span data-orig="' + data.years[data.years.length -1].extent + '" class="loss">'+ parseInt(ex).toLocaleString() +' </span>'+ e_mha +' of extent</span><span class="loss line"><span>'+ parseInt(lo).toLocaleString() +' </span>'+ l_mha +'  of loss</span>')
+              if (key == max_trigger){
+                that._reorderRanking();
+              }
+            }
           });
           markup_list += '<li>\
                             <div class="countries_list__minioverview expanded countries_list__minioverview_'+val.iso+'"></div>\
@@ -443,16 +449,19 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             markup_list = '';
 
         var data = json.rows;
-
+        var max_trigger = data.length -1;
         _.each(data, function(val, key) {
           var ord = e ? (key+11) : (key+1),
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
 
           markup_list += '<li>\
-                            <div class="countries_list__minioverview medium countries_list__minioverview_'+val.iso+'">'+formatNumber(parseFloat(val.ratio).toFixed(2))+'</div>\
+                            <div class="countries_list__minioverview medium countries_list__minioverview_'+val.iso+'" class="loss">'+formatNumber(parseFloat(val.ratio).toFixed(2))+'</div>\
                             <div class="countries_list__num">'+ord+'</div>\
                             <div class="countries_list__title">'+enabled+'</div>\
                           </li>';
+          if (key == max_trigger){
+            that._reorderRanking();
+          }
         });
 
         if (e) {
