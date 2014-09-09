@@ -190,13 +190,11 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
 
   _paintRange: function(slider_val) {
     var $slider = $('#canopy_slider');
-    $slider.removeClass('white');
     switch(true) {
       case slider_val >= 10 && slider_val < 18:
         slider_val = 10;
         this.canopy = 10;
         $('.visible_range').css('width', 60 + 281);
-        $slider.addClass('white');
       break;
       case slider_val >= 18 && slider_val < 28:
         slider_val = 21; //15
