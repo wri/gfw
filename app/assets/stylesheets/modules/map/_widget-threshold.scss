@@ -126,7 +126,7 @@
 
       &::-webkit-slider-thumb {
         -webkit-appearance: none;
-        @include home-icons-sprite(timeline_handler);
+        @include home-icons-sprite(timeline_handler_white);
         background-color: $cGreen1;
         width: 14px;
         height: 14px;
