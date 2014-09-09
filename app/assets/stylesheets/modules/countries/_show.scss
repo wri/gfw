@@ -1326,16 +1326,11 @@
           background-color: #666;
           width: 14px;
           height: 14px;
-          @include home-icons-sprite(timeline_handler);
+          @include home-icons-sprite(timeline_handler_white);
           cursor: col-resize;
           border-radius: 3px;
           z-index: 500;
           position:relative;
-        }
-        &.white {
-          &::-webkit-slider-thumb {
-            @include home-icons-sprite(timeline_handler_white);
-          }
         }
       }
     }
