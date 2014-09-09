@@ -4,37 +4,32 @@
  * @return SearchboxPresenter class.
  */
 define([
-  'Class',
   'underscore',
-  'mps'
-], function(Class, _, mps) {
+  'mps',
+  'map/presenters/PresenterClass'
+], function(_, mps, PresenterClass) {
 
   'use strict';
 
-  var SearchboxPresenter = Class.extend({
+  var SearchboxPresenter = PresenterClass.extend({
 
-    /**
-     * Initialize SearchboxPresenter.
-     *
-     * @param  {object} Instance of SearchboxPresenter view
-     */
     init: function(view) {
       this.view = view;
-      this._subscribe();
+      this._super();
     },
 
     /**
-     * Subscribe to application events.
+     * Application subscriptions.
      */
-    _subscribe: function() {
-      mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
+    _subscriptions: [{
+      'AnalysisTool/stop-drawing': function() {
         this.view.model.set('hidden', false);
-      }, this));
-
-      mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
+      }
+    }, {
+      'AnalysisTool/start-drawing': function() {
         this.view.model.set('hidden', true);
-      }, this));
-    },
+      }
+    }],
 
     /**
      * Used by searchbox view to handle a fitbounds.

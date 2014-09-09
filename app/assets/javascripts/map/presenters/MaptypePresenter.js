@@ -4,41 +4,36 @@
  * @return MaptypePresenter class.
  */
 define([
-  'Class',
   'underscore',
-  'mps'
-], function(Class, _, mps) {
+  'mps',
+  'map/presenters/PresenterClass',
+], function(_, mps, PresenterClass) {
 
   'use strict';
 
-  var MaptypePresenter = Class.extend({
+  var MaptypePresenter = PresenterClass.extend({
 
-    /**
-     * Initialize MaptypePresenter.
-     *
-     * @param  {object} Instance of MaptypePresenter view
-     */
     init: function(view) {
       this.view = view;
-      this._subscribe();
+      this._super();
     },
 
     /**
-     * Subscribe to application events.
+     * Application subscriptions.
      */
-    _subscribe: function() {
-      mps.subscribe('Map/maptype-change', _.bind(function(maptype) {
+    _subscriptions: [{
+      'Map/maptype-change': function(maptype) {
         this.view.selectMaptype(maptype);
-      }, this));
-
-      mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
+      }
+    }, {
+      'AnalysisTool/stop-drawing': function() {
         this.view.model.set('hidden', false);
-      }, this));
-
-      mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
+      }
+    }, {
+      'AnalysisTool/start-drawing': function() {
         this.view.model.set('hidden', true);
-      }, this));
-    },
+      }
+    }],
 
     setMaptype: function(maptype) {
       mps.publish('Maptype/change', [maptype]);

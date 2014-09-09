@@ -4,38 +4,33 @@
  * @return LayersNavPresenter class.
  */
 define([
-  'Class',
   'underscore',
   'mps',
+  'map/presenters/PresenterClass',
   'map/services/LayerSpecService'
-], function(Class, _, mps, layerSpecService) {
+], function(_, mps, PresenterClass, layerSpecService) {
 
   'use strict';
 
-  var LayersNavPresenter = Class.extend({
+  var LayersNavPresenter = PresenterClass.extend({
 
-    /**
-     * Initialize LayersNavPresenter.
-     *
-     * @param  {object} Instance of LayersNavView
-     */
     init: function(view) {
       this.view = view;
-      this._subscribe();
+      this._super();
     },
 
     /**
-     * Subscribe to application events.
+     * Application subscriptions.
      */
-    _subscribe: function() {
-      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
-        this.view._toggleSelected(layerSpec.getLayers());
-      }, this));
-
-      mps.subscribe('Place/go', _.bind(function(place) {
+    _subscriptions: [{
+      'Place/go': function(place) {
         this.view._toggleSelected(place.layerSpec.getLayers());
-      }, this));
-    },
+      }
+    }, {
+      'LayerNav/change': function(layerSpec) {
+        this.view._toggleSelected(layerSpec.getLayers());
+      }
+    }],
 
     /**
      * Publish a a Map/toggle-layer.

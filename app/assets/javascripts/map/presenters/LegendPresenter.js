@@ -4,63 +4,66 @@
  * @return LegendPresenter class.
  */
 define([
-  'Class',
   'underscore',
   'backbone',
   'mps',
+  'map/presenters/PresenterClass',
   'map/services/LayerSpecService'
-], function(Class, _, Backbone, mps, layerSpecService) {
+], function(_, Backbone, mps, PresenterClass, layerSpecService) {
 
   'use strict';
 
-  var LegendPresenter = Class.extend({
+  var StatusModel = Backbone.Model.extend({
+    defaults: {
+      layerSpec: null,
+      threshold: null
+    }
+  });
 
-    /**
-     * Initialize LegendPresenter.
-     *
-     * @param  {object} Instance of LegendPresenter view
-     */
+  var LegendPresenter = PresenterClass.extend({
+
     init: function(view) {
       this.view = view;
-
-      this.status = new (Backbone.Model.extend())({
-        layerSpec: null,
-        threshold: null
-      });
-
-      this._subscribe();
+      this.status = new StatusModel();
+      this._super();
     },
 
     /**
-     * Subscribe to application events.
+     * Application subscriptions.
      */
-    _subscribe: function() {
-      mps.subscribe('Place/go', _.bind(function(place) {
+    _subscriptions: [{
+      'Place/go': function(place) {
         this.status.set('layerSpec', place.layerSpec);
         this.status.set('threshold', place.params.threshold);
         this._updateLegend();
         this._toggleSelected();
-      }, this));
-
-      mps.subscribe('LayerNav/change', _.bind(function(layerSpec) {
+      }
+    }, {
+      'LayerNav/change': function(layerSpec) {
         this.status.set('layerSpec', layerSpec);
         this._updateLegend();
         this._toggleSelected();
-      }, this));
-
-      mps.subscribe('AnalysisTool/stop-drawing', _.bind(function() {
-        this.view.model.set({hidden: false, forceHidden: false});
-      }, this));
-
-      mps.subscribe('AnalysisTool/start-drawing', _.bind(function() {
-        this.view.model.set({hidden: true, forceHidden: true});
-      }, this));
-
-      mps.subscribe('Threshold/changed', _.bind(function(threshold) {
+      }
+    }, {
+      'AnalysisTool/stop-drawing': function() {
+        this.view.model.set({
+          hidden: false,
+          forceHidden: false
+        });
+      }
+    }, {
+      'AnalysisTool/start-drawing': function() {
+        this.view.model.set({
+          hidden: true,
+          forceHidden: true
+        });
+      }
+    }, {
+      'Threshold/changed': function(threshold) {
         this.status.set('threshold', threshold);
         this.status.get('layerSpec') && this._updateLegend();
-      }, this));
-    },
+      }
+    }],
 
     /**
      * Update legend by calling view.update.
