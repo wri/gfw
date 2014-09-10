@@ -1,28 +1,3 @@
-<% content_for :js do %>
-  <script>
-    $(function() {
-      var StaticRouter = Backbone.Router.extend({
-        routes: {
-          'sources/:section': 'change'
-        },
-
-        change: function(tab) {
-          var accordion = window.location.hash.replace('#','');
-
-          window.static_data._onNavChange(tab, accordion);
-        }
-      });
-
-      cdb.init(function() {
-        window.static_data = new gfw.ui.view.Static();
-
-        window.router = new StaticRouter();
-        Backbone.history.start({ pushState: true });
-      });
-    });
-  </script>
-<% end %>
-
 <div class='inner'>
   <div class='header_block'>
     <div class='header_block__body'>
@@ -50,7 +25,7 @@
   <div class='static-inner'>
     <div class='navigation_left'>
       <ul>
-        <li class='item_title'><i class='caret_down'></i></li>
+        <!-- <li class='item_title'><i class='caret_down'></i></li> -->
         <li><%= link_to 'Forest change', "#{sources_path}/forest_change", :"data-slug" => 'forest_change', :class => 'nav-item selected' %></li>
         <li><%= link_to 'Forest cover', "#{sources_path}/forest_cover", :"data-slug" => 'forest_cover', :class => 'nav-item' %></li>
         <li><%= link_to 'Forest use', "#{sources_path}/forest_use", :"data-slug" => 'forest_use', :class => 'nav-item' %></li>

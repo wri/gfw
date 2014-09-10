@@ -25,6 +25,7 @@ We recommend managing your Ruby installation through [rbenv](https://github.com/
 ```bash
 $ brew update
 $ brew upgrade rbenv ruby-build
+$ brew install imagemagick
 ```
 
 Next clone the gfw repo:
@@ -51,6 +52,13 @@ Aaaaand now use [Bundler](http://bundler.io/), a rubygem manager, to install all
 
 ```bash
 $ bundle install
+```
+
+Installing front end dependencies:
+
+```bash
+$ npm install -g grunt-cli bower phantomjs
+$ npm install -d && bower install
 ```
 
 Almost there! Final steps are to update your `.env` file:

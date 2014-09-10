@@ -1,0 +1,15 @@
+<% content_for :header do %>
+  <nav class="layers-menu"></nav>
+<% end %>
+
+<%= render "shared/notice" %>
+<%= render "shared/header" %>
+
+<div class="layout-content">
+  <%= render 'shared/map' %>
+</div>
+
+<div id="sources" class='sources notranslate is-hidden'>
+  <%= render 'shared/sources_map' %>
+</div>
+<%= render 'sources_infowindow' %>

@@ -1,0 +1,39 @@
+.countries_block {
+  height: 120px;
+  background:
+    image-url('backgrounds/bkg_countries_block_up.png') no-repeat 0 center,
+    image-url('backgrounds/bkg_countries_block_down.png') repeat-x;
+  margin: 40px 0;
+
+  .header-title {
+    font-size: 29px;
+    line-height: 120px;
+    color: #fff;
+    text-align: center;
+    @extend .serif;
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+  span{
+    color: darken($cGreen, 5%);
+  }
+}
+
+.jspScrollable {
+  overflow: auto !important;
+}
+
+.countries_list {
+  @extend .clearfix;
+}
+
+.disclaimer {
+  margin-top: 40px;
+  font-style: italic;
+  line-height: 1.4;
+  @extend .serif;
+  color: #666;
+  @include clearfix;
+}

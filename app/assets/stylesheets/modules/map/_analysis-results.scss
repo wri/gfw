@@ -1,0 +1,164 @@
+.widget-analysis-results {
+
+  .widget-box {
+    right: 35px;
+    top: 85px;
+    padding: 0px;
+    background: #F1F1F1;
+  }
+
+  .widget-closed,
+  .analysis-info,
+  .analysis-stats,
+  .analysis-footer, {
+    padding: 14px 20px;
+  }
+
+  .analysis-title {
+    color: #999;
+    font-weight: bold;
+    font-size: 11px;
+    text-transform: uppercase;
+    display: block;
+  }
+
+  .analysis-info {
+    border-bottom: 1px solid #ccc;
+
+    .analysis-date-range {
+      display: block;
+      color: #bababa;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+  }
+
+  .analysis-loading,
+  .analysis-error {
+    padding: 25px 0;
+    background: white;
+    text-align: center;
+    font-size: 12px;
+  }
+
+  .analysis-stats {
+    background: white;
+    font-size: 12px;
+
+    > li {
+      padding: 12px 0;
+      border-bottom: 1px solid #ddd;
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        border: none;
+        padding-bottom: 0;
+      }
+    }
+
+    .stats-title {
+      color: #999;
+      font-weight: bold;
+      font-size: 11px;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      display: block;
+      .stats-threshold {
+        text-transform: lowercase;
+        font-weight: normal;
+        font-size: 9px;
+        margin-left: 4px;
+      }
+    }
+    .stats-count {
+      font-weight: bold;
+      font-size: 15px;
+      color: #666;
+      strong {
+        font-size: 18px;
+        display: inline-block;
+      }
+    }
+
+    .stats-notice {
+      font-size: 12px;
+    }
+
+    .download-links{
+      text-align: right;
+      position: relative;
+
+      span {
+        color: #F69;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .download-dropdown {
+        text-align: left;
+        width: 90px;
+        top: 30px;
+        right: 0;
+        position: absolute;
+        z-index: 2000;
+        border: 0;
+        background-color: #fff;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 3px rgba(0,0,0,0.2);
+
+        > li a {
+          padding: 8px 10px;
+          display: block;
+          border-bottom: 1px solid #f2f2f2;
+        }
+
+      }
+    }
+  }
+
+  .analysis-footer {
+    border-top: 1px solid #ccc;
+    text-align: right;
+
+    .analysis-control {
+      display: inline-block;
+    }
+
+    .analysis-control li {
+      float: left;
+      display: block;
+      cursor: pointer;
+      height: 29px;
+      width: 30px;
+
+      &.analysis-control-subscribe {
+        @include home-icons-sprite(control_buttons_subscribe);
+
+        &:hover {
+          position: relative;
+          width: 31px;
+          margin-right: -1px;
+          @include home-icons-sprite(control_buttons_subscribe_hover);
+        }
+
+        &:active {@include home-icons-sprite(control_buttons_subscribe_active);}
+
+        &.disabled {
+          @include opacity(.5);
+          @include pointer-events(none);
+        }
+      }
+
+      &.analysis-control-delete {
+        width: 31px;
+        @include home-icons-sprite(control_buttons_reset);
+        &:hover { @include home-icons-sprite(control_buttons_reset_hover); }
+        &:active { @include home-icons-sprite(control_buttons_reset_active); }
+      }
+    }
+  }
+}

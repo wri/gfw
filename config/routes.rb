@@ -20,13 +20,26 @@ Gfw::Application.routes.draw do
   get '/accept_terms' => 'static#accept_terms'
 
   # map
-  get '/map' => 'home#index'
-  get '/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
-  get '/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'home#index', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get '/map' => 'map#index'
+  get '/map/*path' => 'map#index'
+  get '/map/:zoom/:lat/:lng/:iso/:maptype(/:baselayers)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get '/map/:zoom/:lat/:lng/:iso/:maptype(/:baselayers/:sublayers)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get '/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'map#index', :lat => /[^\/]+/, :lng => /[^\/]+/
+
+  get '/embed/map' => 'map#embed'
+  get '/embed/map/*path' => 'map#embed'
+  get '/embed/map/:zoom/:lat/:lng/:iso/:maptype(/:baselayers)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get '/embed/map/:zoom/:lat/:lng/:iso/:maptype(/:baselayers/:sublayers)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get '/embed/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
+  get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'map#embed', :lat => /[^\/]+/, :lng => /[^\/]+/
 
   # countries
   get '/countries' => 'countries#index'
   get '/country/:id' => 'countries#show', :as => 'country'
+  get '/country_info/:id/:box',to: redirect('/country/%{id}#%{box}')
+  # todo => validate id
+  get '/country/:id/:area_id' => 'countries#show', :as => 'country_area'
+
   get '/countries/overview' => 'countries#overview'
 
   # media
@@ -35,10 +48,9 @@ Gfw::Application.routes.draw do
 
   # embed
   get '/embed/country/:id' => 'embed#countries_show'
+  get '/embed/country_info/:id/:box' => 'embed#countries_show_info'
+  get '/embed/country/:id/:area_id' => 'embed#countries_show'
   get '/embed/countries/overview' => 'embed#countries_overview'
-  get '/embed/map' => 'embed#map'
-  get '/embed/map/:zoom/:lat/:lng/:iso(/:basemap/:baselayer)' => 'embed#map', :lat => /[^\/]+/, :lng => /[^\/]+/
-  get '/embed/map/:zoom/:lat/:lng/:iso/:basemap/:baselayer(/:filters)' => 'embed#map', :lat => /[^\/]+/, :lng => /[^\/]+/
 
   root 'home#index'
 end

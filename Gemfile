@@ -13,20 +13,20 @@ gem 'carrierwave'
 gem 'fog'
 gem 'rmagick', :require => false
 gem 'unf'
+gem 'requirejs-rails'
 
 group :development, :test do
   gem 'rspec-rails', '~> 2.0'
   gem 'launchy' # this lets us call save_and_open_page to see what's on a page for debugging capybara tests
   gem 'capybara', '2.0.3'  # capybara-webkit works with this version
+  gem 'capybara-screenshot'
   gem 'show_me_the_cookies'
   gem 'factory_girl_rails'
   gem 'shoulda-matchers'
-  gem 'jasmine-rails'
-  gem 'guard'
-  gem 'guard-jasmine-rails'
   gem 'database_cleaner'
   gem 'debugger'
 end
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
@@ -35,7 +35,6 @@ group :development do
 end
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
 end
 

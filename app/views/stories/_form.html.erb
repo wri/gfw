@@ -1,12 +1,3 @@
-<% content_for :js do %>
-  <script>
-    $(function() {
-      cdb.init(function() {
-        window.stories_edit = new gfw.ui.view.StoriesEdit();
-      });
-    });
-  </script>
-<% end %>
 
 <%= form_for :story, :url => @url, :method => (@method || :post) do |f| %>
   <% if @story.errors.present? %>

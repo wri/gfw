@@ -1,0 +1,158 @@
+.layout-header-bottom {
+  padding: 0;
+  border: 0;
+}
+
+.layout-content {
+  margin-bottom: 0;
+  position: absolute;
+  top: 183px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.map-container {
+  position: absolute;
+  top: 0;
+  bottom: -111px;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #717D80;
+  border-bottom: 1px solid #717D80;
+  box-sizing: border-box;
+  background: #B3D1FF;
+}
+
+#map {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: url(https://maps.gstatic.com/mapfiles/openhand_8_8.cur) 8 8, default;
+
+  @include user-select(none);
+  @include transition(opacity 1s ease);
+
+  &.is-loaded {
+    opacity: 1;
+  }
+}
+
+#zoom_controls,
+#zoom_controls_subscribe {
+
+  $zoomWidth: 36px;
+  $zoomHeight: 29px; // height of the top button + border line
+
+  position: absolute;
+  left: 15px;
+  top:  27px;
+  z-index: 1040;
+
+  .zoom-in,
+  .zoom-out {
+    position:relative;
+    width: $zoomWidth;
+    height: $zoomHeight;
+    cursor: pointer;
+  }
+
+  .zoom-in {
+    background: transparent url(icons/map_zoom.png) no-repeat 0 0;
+    &:hover {
+      background-position: (-$zoomWidth) 0;
+    }
+    &:active {
+      background-position: -(2*$zoomWidth) 0;
+    }
+  }
+
+  .zoom-out {
+    background: transparent url(icons/map_zoom.png) no-repeat 0 (-$zoomHeight);
+    &:hover {
+      background-position: (-$zoomWidth) (-$zoomHeight);
+    }
+    &:active {
+      background-position: -(2*$zoomWidth) -29px;
+    }
+  }
+}
+
+.user-story-marker {
+  border: 3px solid #fff;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  @include box-shadow(0 0 1px 0 #000);
+
+  img {
+    width: auto;
+    height: 100%;
+  }
+}
+
+.thumb-marker {
+  .icon-custom-marker {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+  }
+}
+
+#viewfinder {
+  position: absolute;
+  z-index: 10;
+  top: 50%;
+  left: 50%;
+  height: 17px;
+  width: 19px;
+  margin: -10px 0 0 -8px;
+  pointer-events:none;
+
+  @include home-icons-sprite(viewfinder);
+}
+
+.map-logos {
+  position: absolute;
+  bottom: 2px;
+  left: 70px;
+  z-index: 100;
+
+  .map-logo {
+    display: inline-block;
+    margin-left: 5px;
+  }
+
+  img {
+    border: none;
+  }
+}
+
+.map-latlng {
+  position: absolute;
+  bottom: 20px;
+  right: 12px;
+  color: #333;
+  font-size: 11px;
+  font-weight: bold;
+  text-shadow: 0px 0px 3px #fff;
+}
+
+.is-embed-action {
+  border-top: 0;
+  .layout-content {
+    top: 0;
+    .map-container {
+      bottom: 0;
+    }
+  }
+  .widget-timeline,
+  .widget-share,
+  .widget-analysis-tool,
+  .widget-threshold,
+  .widget-analysis-results .analysis-footer {
+    display: none !important;
+  }
+}

@@ -1,4 +1,4 @@
-gfw.ui.model.Share = cdb.core.Model.extend({  
+gfw.ui.model.Share = cdb.core.Model.extend({
   defaults: {
     tooltip: $('body').hasClass('home') ? "Share this map view" : "Share this graphic"
   }
@@ -8,7 +8,7 @@ gfw.ui.view.Share = cdb.core.View.extend({
   className: 'share',
 
   events: {
-    'click .share_control' : '_openShare'
+    'click .share a' : '_openShare'
   },
 
   initialize: function() {
@@ -17,8 +17,11 @@ gfw.ui.view.Share = cdb.core.View.extend({
     this.model = new gfw.ui.model.Share();
 
     this.model.on('change:hidden', this._toggle);
-
-    var template = $('#share-template').html();
+    if (this.options && this.options.template) {
+      var template = $('#share-' + this.options.template + '-template').html();
+    } else {
+      var template = $('#share-template').html();
+    }
 
     this.template = new cdb.core.Template({
       template: template,
@@ -41,17 +44,8 @@ gfw.ui.view.Share = cdb.core.View.extend({
 
   _openShare: function(e) {
     e.preventDefault();
-
+    $(event.target).closest('section').addClass('current_share');
     this.share.show();
-    this._track();
-  },
-
-  _track: function() {
-    if ($('body').hasClass('home')) {
-      ga('send', 'event', 'Share', 'Map', config.BASELAYER);
-    } else {
-      ga('send', 'event', 'Share', 'Graphic', $('body').attr('class'));
-    }
   },
 
   _toggle: function() {
@@ -72,7 +66,6 @@ gfw.ui.view.Share = cdb.core.View.extend({
 
   render: function() {
     var that = this;
-
     this.$el.append(this.template.render( this.model.toJSON() ));
     this.$analysis_control = (this.$el.find('.analysis_control').length > 0) ? this.$el.find('.analysis_control') : null;
     if (!!this.$analysis_control) {
@@ -192,9 +185,32 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
     if (!$body.hasClass('home')) {
       dim_x = 1000;
       dim_y = ($body.hasClass('show')) ? 480 : 600;
+      dim_y = ($body.hasClass('is-overview-action')) ? 700 : dim_y;
     }
 
-    this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname + window.location.search+'"></iframe>');
+    if ($('section').hasClass('current_share')) {
+      var $targ    = $('section.current_share'),
+          targ_val = '/alerts', //default value
+          path     = window.location.pathname;
+
+      dim_y = 360;
+      path = path.replace('country','country_info');
+      if (path.slice(-1) === "/") path = path.slice(0, -1);
+
+      if ($targ.hasClass('country-forests-type')) {
+        targ_val = '/forests-type';
+      } else if ($targ.hasClass('country-production')) {
+        targ_val = '/production';
+      } else if ($targ.hasClass('country-employment')) {
+        targ_val = '/employment';
+      } else if ($targ.hasClass('country-tenure')) {
+        targ_val = '/tenure';
+      }
+      $targ.removeClass('current_share');
+      this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + path + targ_val + '"></iframe>');
+    } else {
+      this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname + window.location.search+'"></iframe>');
+    }
   },
 
   _generateShortUrl: function(url, callback) {

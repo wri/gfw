@@ -1,0 +1,70 @@
+modules:
+  - name: 'map'
+
+wrap: false
+
+paths:
+  # Libs
+  amplify: "amplify/lib/amplify"
+  underscore: "underscore/underscore"
+  backbone: "backbone/backbone"
+  jquery: "jquery/dist/jquery"
+  d3: "d3/d3"
+  topojson: "topojson/topojson"
+  cartodb: "cartodb.js/index"
+  moment: "moment/moment"
+  text: "requirejs-text/text"
+  mps: "minpubsub/minpubsub.src"
+  _string: "underscore.string/dist/underscore.string.min"
+  jqueryui: "jquery-ui-1.10.4.custom.min"
+  markerclusterer: "gmaps-markerclusterer-plus/src/markerclusterer"
+  geojsonArea: "geojson-area"
+  uri: "uri-templates/uri-templates"
+  handlebars: "handlebars/handlebars"
+  wax: "wax.g.min"
+  store: "store"
+  Class: "Class.js/Class"
+  jasmine: "jasmine"
+
+  # Map
+  # router: "map/router"
+  utils: "map/utils"
+  # views: "map/views"
+  # templates: "map/templates"
+  # services: "map/services"
+  # presenters: "map/presenters"
+  # models: "map/models"
+  # cartocss: "map/cartocss"
+
+  # General
+  abstract: "abstract"
+  helpers: "helpers"
+  templates: "templates"
+  views: "views"
+
+shim:
+  underscore:
+    exports: "_"
+  _string:
+    exports: "_string"
+    deps:
+      - "underscore"
+  amplify:
+    deps:
+      - "jquery"
+    exports: "amplify"
+  backbone:
+    deps:
+      - "jquery"
+      - "underscore"
+    exports: "Backbone"
+  jqueryui:
+    deps:
+      - "jquery"
+    exports: "$"
+  Class:
+    exports: "Class"
+  uri:
+    exports: "UriTemplate"
+  handlebars:
+    exports: "Handlebars"

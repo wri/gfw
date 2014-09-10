@@ -1,0 +1,81 @@
+<div class="country-header">
+  <div class="inner">
+    <!--  colored header -->
+    <div class="country-header-inner">
+      <div class="country-title">
+        <h1><%= @country['name'] %></h1>
+        <div class="country-selector">
+          <select id="areaSelector">
+            <option>Select area</option>
+          </select>
+          <div class="selector-remove">✕</div>
+          <div class="selector-arrow"></div>
+        </div>
+        <!--  indepth message -->
+        <% if @country['indepth'].present? %>
+            <p class="country-indepth__bubble"><a href="<%= @country['indepth'] %>">GFW's work in <%= @country['name'] %></a></p>
+        <% end %>
+      </div>
+
+      <div class="country-details">
+        <div class="country-preview">
+          <div class="map" id="countryMap"></div>
+          <div class="tree-numbers">
+            <div class="tree-cover">
+              <h4>Tree cover (2012)</h4>
+                <span class="amount"><!--<%= extent_to_human(@country['extent'], format: '%n') %>--></span>
+                <span class="unit"><%= extent_to_human(@country['extent'], format: '%u', shortUnit: true) %></span>
+            </div>
+            <div class="total-area">
+              <h4>Percent Tree Cover (2012)</h4>
+              <span class="amount"></span>
+              <span class="unit">%</span>
+            </div>
+          </div>
+          <div class="loss-gain-graph ghost">
+            <h4>LOSS AND GAIN (2001 - 2012)</h4>
+            <div class='graph' id="lossGainGraph"></div>
+            <div class='graph-amount'></div>
+            <div class='graph-date'></div>
+            <div class='coming-soon'><span>Not yet available for this country</span></div>
+          </div>
+        </div>
+        <div class="country-sidenav">
+          <ul>
+            <li>
+              <a href="#" data-source="umd_tree_loss_gain" class="info">
+                Info
+                <span class="sidenav-icon country-icons-info_grey"></span>
+              </a>
+            </li>
+            <li>
+              <a href='http://www.earthenginepartners.appspot.com/science-2013-global-forest/download.html' target='_blank'>
+                Download data
+                <span class="sidenav-icon country-icons-download_grey"></span>
+              </a>
+            </li>
+            <li>
+              <a href="https://wri-01.cartodb.com/api/v2/sql?q=SELECT iso as country_code,id1 as region_code, country,region, year, thresh as min_percent_canopy_density, loss as loss_ha, loss_perc as loss_percent, extent as extent_ha, extent_perc as extent_percent, gain as gain_ha, gain_perc as gain_percent from umd_subnat where iso='<%=@country['iso']%>'&format=csv&filename='<%=@country['iso']%>'">
+                country stats
+                <span class="sidenav-icon country-icons-download_grey"></span>
+              </a>
+            </li>
+            <li>
+              <a href='<%= map_coords %>/grayscale/loss,forestgain?begin=2001-01-01&end=2012-12-30&threshold=' class='action analyze_from_country' target="<%= controller_name === 'embed' ? '_blank' : '' %>" id="url_analysis">
+                Analyze
+                <span class="sidenav-icon country-icons-chart_grey"></span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="umd_options_control" data-tip="Change UMD layer intensity">
+                Settings
+                <span class="sidenav-icon country-icons-settings_engine"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

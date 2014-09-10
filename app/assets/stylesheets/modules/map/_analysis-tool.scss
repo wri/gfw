@@ -1,0 +1,50 @@
+.widget-analysis-tool {
+  .widget-btn {
+    left: 15px;
+    top: 90px;
+    background-color: transparent;
+    border: none;
+    box-shadow: 0 0 0;
+    width: 37px;
+    height: 37px;
+    @include home-icons-sprite(analysis_button);
+    &:hover  { @include home-icons-sprite(analysis_button_hover); }
+    &:active { @include home-icons-sprite(analysis_button_active); }
+    &.disabled {
+      @include home-icons-sprite(analysis_button_disabled);
+      opacity: 1;
+    }
+  }
+
+  .widget-box {
+    bottom: 50px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+    width: 500px;
+
+    .buttons button {
+      margin-left: 7px;
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .description {
+    color: #666666;
+    font-size: 13px;
+    float: left;
+    display: inline-block;
+    margin: 8px 0 0 2px;
+  }
+
+  .buttons {
+    float: right;
+    button {
+      float: left;
+    }
+  }
+}
