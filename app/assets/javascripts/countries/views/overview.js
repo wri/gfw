@@ -263,7 +263,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
       });
     } else if (this.model.get('graph') === 'percent_loss') {
-      var sql = 'WITH e AS (SELECT iso, extent FROM umd_nat WHERE year = 2000 AND thresh = '+(config.canopy_choice || 10)+') SELECT c.iso, c.name, c.enabled, p.perc ratio_loss FROM (SELECT umd.iso, sum(umd.loss) / avg(e.extent) perc FROM umd_nat umd, e WHERE umd.thresh = 10 AND umd.iso = e.iso AND e.extent != 0 GROUP BY umd.iso, e.iso ORDER BY perc DESC) p, gfw2_countries c WHERE p.iso = c.iso AND c.enabled IS true AND not perc = 0 ORDER BY p.perc DESC ';
+      var sql = 'WITH e AS (SELECT iso, extent FROM umd_nat WHERE year = 2000 AND thresh = '+(config.canopy_choice || 10)+') SELECT c.iso, c.name, c.enabled, p.perc ratio_loss FROM (SELECT umd.iso, sum(umd.loss) / avg(e.extent) perc FROM umd_nat umd, e WHERE umd.thresh = '+(config.canopy_choice || 10)+' AND umd.iso = e.iso AND e.extent != 0 GROUP BY umd.iso, e.iso ORDER BY perc DESC) p, gfw2_countries c WHERE p.iso = c.iso AND c.enabled IS true AND not perc = 0 ORDER BY p.perc DESC ';
 
       if (e) {
         sql += 'OFFSET 10';
@@ -439,7 +439,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       } else {
         sql += 'LIMIT 10';
       }
-
+console.log(sql)
       d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
         var self = that,
             markup_list = '';
@@ -487,6 +487,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       sql += 'y2012) as max\
               FROM countries_domains\
               ORDER BY total_loss DESC ';
+console.log(sql)
 
       d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
         var self = that,
