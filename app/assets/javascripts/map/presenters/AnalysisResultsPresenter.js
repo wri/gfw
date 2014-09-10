@@ -252,7 +252,7 @@ define([
        *   - gainAlerts
        */
       if (layer.slug === 'loss') {
-        p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year());
+        p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), (dateRange[1].year()+1 === 2013) ? '2012' : dateRange[1].year()+1); // '+1' --> in case the user selects 2010, the analysis scope should end at beginning of 2011, HARDCODED
         p.lossAlerts = 0;
         p.gainAlerts = 0;
         p.threshold  = results.params.thresh || 10;
