@@ -263,7 +263,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
       });
     } else if (this.model.get('graph') === 'percent_loss') {
-      var sql = 'WITH e AS (SELECT iso, extent FROM umd_nat WHERE year = 2000 AND thresh = '+(config.canopy_choice || 10)+') SELECT c.iso, c.name, c.enabled, p.perc ratio_loss FROM (SELECT umd.iso, sum(umd.loss) / avg(e.extent) perc FROM umd_nat umd, e WHERE umd.thresh = 10 AND umd.iso = e.iso AND e.extent != 0 GROUP BY umd.iso, e.iso ORDER BY perc DESC) p, gfw2_countries c WHERE p.iso = c.iso AND c.enabled IS true AND not perc = 0 ORDER BY p.perc DESC ';
+      var sql = 'WITH e AS (SELECT iso, extent FROM umd_nat WHERE year = 2000 AND thresh = '+(config.canopy_choice || 10)+') SELECT c.iso, c.name, c.enabled, p.perc ratio_loss FROM (SELECT umd.iso, sum(umd.loss) / avg(e.extent) perc FROM umd_nat umd, e WHERE umd.thresh = '+(config.canopy_choice || 10)+' AND umd.iso = e.iso AND e.extent != 0 GROUP BY umd.iso, e.iso ORDER BY perc DESC) p, gfw2_countries c WHERE p.iso = c.iso AND c.enabled IS true AND not perc = 0 ORDER BY p.perc DESC ';
 
       if (e) {
         sql += 'OFFSET 10';
@@ -406,32 +406,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
       });
     } else if (this.model.get('graph') === 'ratio') {
-      var sql = 'WITH loss as (SELECT iso, SUM(';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'loss.y'+y+' + ';
-      }
-
-      sql += 'loss.y2012) as sum_loss\
-              FROM loss_gt_50 loss\
-              GROUP BY iso), gain as (SELECT g.iso, SUM(y2001_y2012) as sum_gain\
-                                      FROM countries_gain g, loss_gt_50 loss\
-                                      WHERE loss.iso = g.iso\
-                                      GROUP BY g.iso), ratio as (';
-
-      sql += 'SELECT c.iso, c.name, c.enabled, loss.sum_loss/gain.sum_gain as ratio\
-              FROM loss, gain, gfw2_countries c\
-              WHERE sum_gain IS NOT null\
-              AND NOT sum_gain = 0\
-              AND c.iso = gain.iso\
-              AND c.iso = loss.iso\
-              ORDER BY loss.sum_loss DESC\
-              LIMIT 50) ';
-
-      sql += 'SELECT *\
-              FROM ratio\
-              WHERE ratio IS NOT null\
-              ORDER BY ratio DESC ';
+      var sql = 'WITH loss as (SELECT iso, sum(loss) sum_loss FROM umd_nat WHERE thresh = ' + (config.canopy_choice || 10) + ' GROUP BY iso),gain as (SELECT iso, sum(gain) sum_gain FROM umd_nat WHERE thresh = ' + (config.canopy_choice || 10) + ' GROUP BY iso), ratio as (SELECT c.iso, c.name, c.enabled, loss.sum_loss/gain.sum_gain as ratio FROM loss, gain, gfw2_countries c WHERE sum_gain IS NOT null AND NOT sum_gain = 0 AND c.iso = gain.iso  AND c.iso = loss.iso ORDER BY loss.sum_loss DESC LIMIT 50) SELECT * FROM ratio WHERE ratio IS NOT null ORDER BY ratio DESC ';
 
       if (e) {
         sql += ['OFFSET 10',
