@@ -263,11 +263,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
       });
     } else if (this.model.get('graph') === 'percent_loss') {
-      var sql = 'SELECT c.iso, c.name, c.enabled, loss_y2001_y2012 as ratio_loss\
-                 FROM countries_percent percent, gfw2_countries c\
-                 WHERE percent.iso = c.iso AND c.enabled IS true\
-                 AND NOT loss_y2001_y2012 = 0\
-                 ORDER BY ratio_loss DESC ';
+      var sql = 'WITH e AS (SELECT iso, extent FROM umd_nat WHERE year = 2000 AND thresh = '+(config.canopy_choice || 10)+') SELECT c.iso, c.name, c.enabled, p.perc ratio_loss FROM (SELECT umd.iso, sum(umd.loss) / avg(e.extent) perc FROM umd_nat umd, e WHERE umd.thresh = 10 AND umd.iso = e.iso AND e.extent != 0 GROUP BY umd.iso, e.iso ORDER BY perc DESC) p, gfw2_countries c WHERE p.iso = c.iso AND c.enabled IS true AND not perc = 0 ORDER BY p.perc DESC ';
 
       if (e) {
         sql += 'OFFSET 10';
@@ -290,7 +286,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                             <div class="countries_list__num">'+ord+'</div>\
                             <div class="countries_list__title">'+enabled+'</div>\
                             <div class="countries_list__data">\
-                              <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss" data-orig="' + val.ratio_loss + '">'+ (val.ratio_loss*100).toFixed(2) +'%</span></div>\
+                              <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss" data-orig="' + val.ratio_loss + '">'+ (val.ratio_loss).toFixed(3) +'%</span></div>\
                             </div>\
                           </li>';
           if (key == max_trigger){
