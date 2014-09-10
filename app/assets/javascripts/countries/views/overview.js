@@ -288,7 +288,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                             <div class="countries_list__num">'+ord+'</div>\
                             <div class="countries_list__title">'+enabled+'</div>\
                             <div class="countries_list__data">\
-                              <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss" data-orig="' + val.ratio_loss + '">'+ (val.ratio_loss).toFixed(3) +'%</span></div>\
+                              <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss" data-orig="' + val.ratio_loss + '">'+ (val.ratio_loss*100).toFixed(2) +'%</span></div>\
                             </div>\
                           </li>';
           if (key == max_trigger){
