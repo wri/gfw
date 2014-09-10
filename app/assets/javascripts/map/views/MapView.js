@@ -87,6 +87,7 @@ define([
       }, this));
 
       google.maps.event.addListener(this.map, 'click', _.bind(function(wdpa) {
+        console.log(wdpa);
         if (!(!!wdpa.wdpaid)) {
           return;
         }
