@@ -354,7 +354,7 @@
                 </a>
               <% end %>
             </div>
-            <p class="see-more">See more on the <%= link_to 'map', "#{map_path}/3/15.00/27.00/ALL/grayscale/umd_tree_loss_gain,forestgain/580", :class => 'inline' %></p>
+            <p class="see-more">See more on the <%= link_to 'map', "#{map_path}/3/15.00/27.00/ALL/grayscale/loss,forestgain/580", :class => 'inline' %></p>
           </li>
 
           <li class='column three last'>
@@ -362,7 +362,7 @@
               <strong class='column-title'>Mongabay stories</strong>
               <h3 class='story-title'><%= truncate(@mongabay_story['title'], :length => 35) %></h3>
               <p class='story-content'><%= truncate(@mongabay_story['description'], :length => 300) %> <%= link_to('more', @mongabay_story['loc'], :target => '_blank') %></p>
-              <p>See more on the <%= link_to 'map', "#{map_path}/3/15.00/27.00/ALL/grayscale/umd_tree_loss_gain,forestgain/586" %></p>
+              <p>See more on the <%= link_to 'map', "#{map_path}/3/15.00/27.00/ALL/grayscale/loss,forestgain/586" %></p>
             <% end %>
           </li>
         </ul>

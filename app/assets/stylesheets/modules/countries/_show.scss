@@ -487,6 +487,9 @@
             background: white;
           }
         }
+      &:last-child {
+        width: 99%;
+      }
       }
     } // country-nav
   }
