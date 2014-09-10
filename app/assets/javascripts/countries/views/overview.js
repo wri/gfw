@@ -16,7 +16,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     this.headerView = new gfw.ui.view.CountryHeader({country: this.country});
     this.$graph = $('.overview_graph__area');
     this.$years = $('.overview_graph__years');
-
+    this.$settings = $('.settings');
     var m = this.m = 40,
         w = this.w = this.$graph.width()+(m*2),
         h = this.h = this.$graph.height(),
@@ -156,6 +156,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     e && e.preventDefault();
 
     if (this.model.get('graph') === 'total_loss') {
+      this.$settings.removeClass('disable');
       var sql = 'WITH loss as (SELECT iso, SUM(';
 
       for(var y = 2001; y < 2012; y++) {
@@ -263,6 +264,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
       });
     } else if (this.model.get('graph') === 'percent_loss') {
+      this.$settings.removeClass('disable');
       var sql = 'WITH e AS (SELECT iso, extent FROM umd_nat WHERE year = 2000 AND thresh = '+(config.canopy_choice || 10)+') SELECT c.iso, c.name, c.enabled, p.perc ratio_loss FROM (SELECT umd.iso, sum(umd.loss) / avg(e.extent) perc FROM umd_nat umd, e WHERE umd.thresh = '+(config.canopy_choice || 10)+' AND umd.iso = e.iso AND e.extent != 0 GROUP BY umd.iso, e.iso ORDER BY perc DESC) p, gfw2_countries c WHERE p.iso = c.iso AND c.enabled IS true AND not perc = 0 ORDER BY p.perc DESC ';
 
       if (e) {
@@ -312,6 +314,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
       });
     } else if (this.model.get('graph') === 'total_extent') {
+      this.$settings.removeClass('disable');
       var sql = 'WITH extent as (SELECT iso, SUM(';
 
       for(var y = 2001; y < 2012; y++) {
@@ -406,6 +409,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
       });
     } else if (this.model.get('graph') === 'ratio') {
+      this.$settings.removeClass('disable');
       var sql = 'WITH loss as (SELECT iso, sum(loss) sum_loss FROM umd_nat WHERE thresh = ' + (config.canopy_choice || 10) + ' GROUP BY iso),gain as (SELECT iso, sum(gain) sum_gain FROM umd_nat WHERE thresh = ' + (config.canopy_choice || 10) + ' GROUP BY iso), ratio as (SELECT c.iso, c.name, c.enabled, loss.sum_loss/gain.sum_gain as ratio FROM loss, gain, gfw2_countries c WHERE sum_gain IS NOT null AND NOT sum_gain = 0 AND c.iso = gain.iso  AND c.iso = loss.iso ORDER BY loss.sum_loss DESC LIMIT 50) SELECT * FROM ratio WHERE ratio IS NOT null ORDER BY ratio DESC ';
 
       if (e) {
@@ -453,6 +457,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
       });
     } else if (this.model.get('graph') === 'domains') {
+      $('.settings').addClass('disable');
       var sql = 'SELECT name, total_loss, total_gain, GREATEST('
 
       for(var y = 2001; y < 2012; y++) {
