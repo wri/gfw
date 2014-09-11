@@ -334,7 +334,7 @@
             <div class="circle-wrapper">
               <% if @country['story'].present? %>
                 <a href="<%= story_path(@country['story']['cartodb_id']) %>">
-                  <img src="<%= story_image_or_map(@country['story']['media'], "#{@country['story']['lat']}, #{@country['story']['lng']}") %>" alt="<%= @country['story']['title'] %>" />
+                  <%= image_tag static_map("#{@country['lat']}, #{@country['lng']}", '266x266', 4), :alt => @country['name'] %>
                   <div class="frame"></div>
                   <div class='gradient'></div>
                   <div class='frame'></div>
