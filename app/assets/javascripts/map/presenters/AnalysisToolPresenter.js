@@ -77,10 +77,14 @@ define([
       }
     }, {
       'AnalysisTool/analyze-wdpaid': function(wdpaid) {
+        this.view._stopDrawing();
+        this.deleteAnalysis();
         this._analyzeWdpai(wdpaid.wdpaid);
       }
     }, {
       'AnalysisTool/analyze-concession': function(useid, layerSlug) {
+        this.view._stopDrawing();
+        this.deleteAnalysis();
         this._analyzeConcession(useid, layerSlug);
       }
     }, {
@@ -328,7 +332,6 @@ define([
       });
 
       this._setAnalysisBtnVisibility();
-      mps.publish('AnalysisTool/analysis-deleted', []);
     },
 
     /**
