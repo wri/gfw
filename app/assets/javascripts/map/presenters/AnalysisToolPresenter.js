@@ -28,6 +28,13 @@ define([
     }
   });
 
+  var concessionsSql = {
+    'logging': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from logging_all_merged where cartodb_id ={0}',
+    'mining':'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from mining_permits_merge where cartodb_id ={0}',
+    'oilpalm': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from oil_palm_permits_merge where cartodb_id ={0}',
+    'fiber': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from fiber_all_merged where cartodb_id ={0}'
+  };
+
   var AnalysisToolPresenter = PresenterClass.extend({
 
     datasets: {
@@ -71,6 +78,10 @@ define([
     }, {
       'AnalysisTool/analyze-wdpaid': function(wdpaid) {
         this._analyzeWdpai(wdpaid.wdpaid);
+      }
+    }, {
+      'AnalysisTool/analyze-concession': function(useid, layerSlug) {
+        this._analyzeConcession(useid, layerSlug);
       }
     }, {
       'Timeline/date-change': function(layerSlug, date) {
@@ -149,8 +160,12 @@ define([
       if (!iso.region) {
         // Get geojson/fit bounds/draw geojson/publish analysis.
         countryService.execute(resource.iso, _.bind(function(results) {
+          var objects = _.findWhere(results.topojson.objects, {
+            type: 'MultiPolygon'
+          });
+
           var geojson = topojson.feature(results.topojson,
-            results.topojson.objects[0]);
+            objects);
 
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
@@ -175,6 +190,32 @@ define([
 
       // Get geojson/fit bounds/draw geojson/publish analysis
       var url = 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from wdpa_all where wdpaid =' + wdpaid;
+      $.getJSON(url, _.bind(function(data) {
+        var geojson = {
+          geometry: JSON.parse(data.rows[0].st_asgeojson),
+          properties: {},
+          type: 'Feature'
+        };
+
+        this._geojsonFitBounds(geojson);
+        this.view.drawMultipolygon(geojson);
+        this._publishAnalysis(resource);
+      }, this));
+    },
+
+    /**
+     * Analyze a concession.
+     *
+     * @param  {integer} useid Carto db id
+     */
+    _analyzeConcession: function(useid, layerSlug) {
+      var resource = this._buildResource({
+        useid: useid,
+        use: layerSlug
+      });
+
+      var url = concessionsSql[layerSlug].format(useid);
+
       $.getJSON(url, _.bind(function(data) {
         var geojson = {
           geometry: JSON.parse(data.rows[0].st_asgeojson),
@@ -320,7 +361,9 @@ define([
      */
     _geojsonFitBounds: function(geojson) {
       var bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
-      mps.publish('Map/fit-bounds', [bounds]);
+      if (bounds) {
+        mps.publish('Map/fit-bounds', [bounds]);
+      }
     },
 
     /**
