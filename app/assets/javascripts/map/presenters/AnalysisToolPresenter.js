@@ -174,12 +174,7 @@ define([
       } else {
         regionService.execute(resource, _.bind(function(results) {
           var geojson = results.features[0];
-          // quick fix, no geojson, don't do anything.
-          // eg. 'FRA' region
-          if (!geojson) {
-            return;
-          }
-          //
+
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
           this._publishAnalysis(resource);
@@ -366,7 +361,9 @@ define([
      */
     _geojsonFitBounds: function(geojson) {
       var bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
-      mps.publish('Map/fit-bounds', [bounds]);
+      if (bounds) {
+        mps.publish('Map/fit-bounds', [bounds]);
+      }
     },
 
     /**
