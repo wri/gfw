@@ -160,8 +160,12 @@ define([
       if (!iso.region) {
         // Get geojson/fit bounds/draw geojson/publish analysis.
         countryService.execute(resource.iso, _.bind(function(results) {
+          var objects = _.findWhere(results.topojson.objects, {
+            type: 'MultiPolygon'
+          });
+
           var geojson = topojson.feature(results.topojson,
-            results.topojson.objects[0]);
+            objects);
 
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
@@ -357,7 +361,9 @@ define([
      */
     _geojsonFitBounds: function(geojson) {
       var bounds = geojsonUtilsHelper.getBoundsFromGeojson(geojson);
-      mps.publish('Map/fit-bounds', [bounds]);
+      if (bounds) {
+        mps.publish('Map/fit-bounds', [bounds]);
+      }
     },
 
     /**

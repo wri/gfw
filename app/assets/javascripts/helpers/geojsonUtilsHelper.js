@@ -49,6 +49,12 @@ define([
      */
     getBoundsFromGeojson: function(geojson) {
       var d3bounds = d3.geo.bounds(geojson);
+
+      if (_.isNaN(d3bounds[0][1]) || _.isNaN(d3bounds[0][0]) ||
+        _.isNaN(d3bounds[1][1]) || _.isNaN(d3bounds[1][0])) {
+        return null;
+      }
+
       var a = new google.maps.LatLng(d3bounds[0][1], d3bounds[0][0]);
       var b = new google.maps.LatLng(d3bounds[1][1], d3bounds[1][0]);
 
