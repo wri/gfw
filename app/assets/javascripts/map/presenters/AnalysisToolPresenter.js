@@ -160,8 +160,12 @@ define([
       if (!iso.region) {
         // Get geojson/fit bounds/draw geojson/publish analysis.
         countryService.execute(resource.iso, _.bind(function(results) {
+          var objects = _.findWhere(results.topojson.objects, {
+            type: 'MultiPolygon'
+          });
+
           var geojson = topojson.feature(results.topojson,
-            results.topojson.objects[0]);
+            objects);
 
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
@@ -170,7 +174,12 @@ define([
       } else {
         regionService.execute(resource, _.bind(function(results) {
           var geojson = results.features[0];
-
+          // quick fix, no geojson, don't do anything.
+          // eg. 'FRA' region
+          if (!geojson) {
+            return;
+          }
+          //
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
           this._publishAnalysis(resource);
