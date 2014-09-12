@@ -97,6 +97,8 @@ define([
                 true AS visible \
               FROM \
                 layerspec \
+              WHERE \
+                display = \'true\' \
               ORDER BY \
                 displaylayer, \
                 title ASC';
