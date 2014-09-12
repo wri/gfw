@@ -94,12 +94,20 @@ $stories-color: rgb(242, 178, 87);
 
     .layers-list > li {
       font-size: 13px;
-      color: #ccc;
+      color: #c3c3c3;
       padding: 9px 10px 10px;
       border-bottom: 1px solid #e5e5e5;
       cursor: pointer;
       position: relative;
       @include transition(all .2s ease);
+
+      &.is-disabled {
+        pointer-events: none;
+        background: #f9f9f9;
+        .layer-title {
+          padding-left: 23px;
+        }
+      }
 
       &:hover {
         background-color: #f9f9f9;

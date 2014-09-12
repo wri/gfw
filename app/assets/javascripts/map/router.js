@@ -18,7 +18,7 @@ define([
   var Router = Backbone.Router.extend({
 
     // temporary, we will do it with env variables
-    _cacheVersion: 3,
+    _cacheVersion: 4,
 
     routes: {
       'map(/:zoom)(/:lat)(/:lng)(/:iso)(/:maptype)(/:baselayers)(/:sublayers)(/)': 'map',
@@ -73,7 +73,7 @@ define([
         localStorage.getItem('CACHE_VERSION'));
 
       if (_.has(params, 'cache') || localCacheVersion !== this._cacheVersion) {
-        console.log('Local cache deleted');
+        console.log('...');
         _.each(amplify.store(), function(value, key) {
           amplify.store(key, null);
         });
