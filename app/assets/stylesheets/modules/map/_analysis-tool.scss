@@ -7,11 +7,16 @@
     box-shadow: 0 0 0;
     width: 37px;
     height: 37px;
-    @include home-icons-sprite(analysis_button);
-    &:hover  { @include home-icons-sprite(analysis_button_hover); }
-    &:active { @include home-icons-sprite(analysis_button_active); }
+    background: transparent url(home-icons/analysis_button.png) no-repeat 0 0;
+
+    &:hover  {
+      background: transparent url(home-icons/analysis_button_hover.png) no-repeat 0 0;
+    }
+    &:active {
+      background: transparent url(home-icons/analysis_button_active.png) no-repeat 0 0;
+    }
     &.disabled {
-      @include home-icons-sprite(analysis_button_disabled);
+      background: transparent url(home-icons/analysis_button_disabled.png) no-repeat 0 0;
       opacity: 1;
     }
   }

@@ -14,11 +14,16 @@
     box-shadow: 0 0 0;
     width: 37px;
     height: 37px;
-    @include home-icons-sprite(icon_options);
-    &:hover  { @include home-icons-sprite(icon_options_hover); }
-    &:active { @include home-icons-sprite(icon_options_active); }
+    background: transparent url(home-icons/icon_options.png) no-repeat 0 0;
+
+    &:hover  {
+      background: transparent url(home-icons/icon_options_hover.png) no-repeat 0 0;
+    }
+    &:active {
+      background: transparent url(home-icons/icon_options_active.png) no-repeat 0 0;
+    }
     &.disabled {
-      @include home-icons-sprite(icon_options_disable);
+      background: transparent url(home-icons/icon_options_disable.png) no-repeat 0 0;
       opacity: 1;
     }
   }
