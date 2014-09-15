@@ -14,7 +14,7 @@ define([
   var ProtectedAreasLayer = ImageMaptypeLayerClass.extend({
 
     options: {
-      urlTemplate: '//184.73.201.235/blue{/z}{/x}{/y}',
+      urlTemplate: 'http://maps.protectedplanet.net/blue{/z}{/x}{/y}',
       infowindow: true,
       infowindowAPI: SitesService,
       analysis: true
