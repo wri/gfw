@@ -6,6 +6,7 @@
 //= require jquery.fileupload
 //= require jquery.fileupload-process
 //= require jquery.fileupload-image
+//= require jquery_ujs
 //= require geojson
 
 //= require gfw
