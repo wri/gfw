@@ -16,7 +16,8 @@ body {
     color: #333;
   }
 
-  &.embed {
+  &.is-embed-action {
+    max-width: 640px;
     #tpglt-nav-wrapper {
       display: none
     }
@@ -44,6 +45,22 @@ body {
     }
     .share {
       display: none;
+    }
+    .widget-searchbox,
+    .widget-maptype{
+      display: none;
+      visibility: hidden;
+    }
+  }
+  &.in-iframe {
+    min-width: 640px;
+    nav,
+    footer {
+      display: none;
+    }
+    .row {
+      min-width: 640px;
+      width: 640px;
     }
   }
 }
