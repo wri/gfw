@@ -54,13 +54,27 @@ body {
   }
   &.in-iframe {
     min-width: 640px;
-    nav,
-    footer {
+
+    .layout-header-top,
+    footer,
+    .mod-notice,
+    .header-description {
       display: none;
+    }
+    .layout-header-bottom {
+      padding: 0;
     }
     .row {
       min-width: 640px;
       width: 640px;
+    }
+    .inner {
+      width: 640px;
+      padding: 0;
+      margin: 0;
+    }
+    .layout-header .header-title {
+      margin: 0.5em auto 0.51em;
     }
   }
 }
