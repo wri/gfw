@@ -106,8 +106,14 @@ define([
 
     _setEmbed: function() {
       this.$input = $('.share_dialog').find('.field');
-      var dim_x = 640,
-          dim_y = 530;
+      var $body  = $('body'),
+          dim_x  = 640,
+          dim_y  = 530;
+      if (!$body.hasClass('home')) {
+        // dim_x = 1000;
+        dim_y = ($body.hasClass('show')) ? 480 : 600;
+        dim_y = ($body.hasClass('is-overview-action')) ? 700 : dim_y;
+      }
 
       if ($('section').hasClass('current_share')) {
         var $targ    = $('section.current_share'),
