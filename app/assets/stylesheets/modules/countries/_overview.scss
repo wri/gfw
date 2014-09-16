@@ -476,6 +476,9 @@
   &.total_extent {
     .legend {
       top: 40px;
+      li:last-child i {
+        background: #97bd3d;
+      }
     }
   }
 
