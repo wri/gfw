@@ -60,6 +60,9 @@
 
   &.gain {
     stroke: #6D6DE5;
+    &.extent {
+      stroke: #97bd3d;
+    }
   }
 }
 
@@ -434,7 +437,9 @@
   &.tropical_tooltip {
     color: #6D6DE5;
   }
-
+  &.gain_extent_tooltip {
+    color: #97bd3d;
+  }
   &.subtropical_tooltip {
     color: #FFFF73;
   }
@@ -476,6 +481,9 @@
   &.total_extent {
     .legend {
       top: 40px;
+      li:last-child i {
+        background: #97bd3d;
+      }
     }
   }
 
