@@ -1320,7 +1320,10 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .enter()
           .append('svg:circle')
           .attr('class', 'linedot gain')
-          .attr('cx', function(d) {
+          if ( $('.graph_tab.selected').data('slug') === 'total_extent' ) {
+            svg.selectAll('circle.gain').attr('class', 'linedot gain extent')
+          }
+          svg.selectAll('circle.gain').attr('cx', function(d) {
             return x_scale(d.year);
           })
           .attr('cy', function(d){
@@ -1335,7 +1338,12 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               .style('visibility', 'visible')
               .style('top', $(this).offset().top-100+'px')
               .style('left', $(this).offset().left-$('.tooltip').width()/2-4+'px')
-              .attr('class', 'tooltip gain_tooltip');
+              if ( $('.graph_tab.selected').data('slug') === 'total_extent' ) {
+                that.tooltip.html($(this).attr('name')).attr('class', 'tooltip gain_extent_tooltip');
+              } else {
+                $('.linedot.gain').removeClass('extent');
+                that.tooltip.html($(this).attr('name')).attr('class', 'tooltip gain_tooltip');
+              }
 
             d3.select(this)
               .transition()
