@@ -326,7 +326,7 @@
               <strong class='column-title'>Blog stories</strong>
               <h3 class='story-title'><%= truncate(@blog_story['title'], :length => 35) %></h3>
               <p class='story-content'><%= truncate(@blog_story['description'].gsub('[&#8230;]', ''), :length => 300) %> <%= link_to('more', @blog_story['link'], :target => '_blank') %></p>
-              <p>Read more blog stories <a href='<%= "http://blog.globalforestwatch.org/?tag=#{@country['name'].downcase.gsub(' ', '_')}" %>'>here</a></p>
+              <p>Read more blog stories <a href='<%= "http://blog.globalforestwatch.org/?tag=#{@country['name'].downcase.gsub(' ', '_')}" %>' target="_blank">here</a></p>
             <% end %>
           </li>
 
@@ -344,7 +344,7 @@
                   </div>
                 </a>
               <% else %>
-                <a href='<%= new_story_path %>' class='nostory'>
+                <a href='<%= new_story_path %>' class='nostory' target="_blank">
                   <div class='gradient'></div>
                   <div class='frame'></div>
                   <div class='title'>
@@ -354,7 +354,7 @@
                 </a>
               <% end %>
             </div>
-            <p class="see-more">See more on the <%= link_to 'map', "#{map_path}/3/15.00/27.00/ALL/grayscale/loss,forestgain/580", :class => 'inline' %></p>
+            <p class="see-more">See more on the <%= link_to 'map', "#{map_path}/3/15.00/27.00/ALL/grayscale/loss,forestgain/580", :class => 'inline', :target => '_blank' %></p>
           </li>
 
           <li class='column three last'>
@@ -362,7 +362,7 @@
               <strong class='column-title'>Mongabay stories</strong>
               <h3 class='story-title'><%= truncate(@mongabay_story['title'], :length => 35) %></h3>
               <p class='story-content'><%= truncate(@mongabay_story['description'], :length => 300) %> <%= link_to('more', @mongabay_story['loc'], :target => '_blank') %></p>
-              <p>See more on the <%= link_to 'map', "#{map_path}/3/15.00/27.00/ALL/grayscale/loss,forestgain/586" %></p>
+              <p>See more on the <%= link_to 'map', "#{map_path}/3/15.00/27.00/ALL/grayscale/loss,forestgain/586", :target => '_blank' %></p>
             <% end %>
           </li>
         </ul>
