@@ -390,8 +390,7 @@
 
 /*******MEDIA QUERIES*********/
 @media only screen and
-(max-width: 640px), handheld, (orientation: landscape),
-(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+(max-width: 640px) and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) {
   body {
     border: 0;
     background-image: none;
@@ -409,7 +408,9 @@
       max-width: 620px;
       width: 620px;
     }
-
+    .layout-header-top {
+      border: none;
+    }
     .layout-footer .footer-address {
       margin: 10px 5px 0 5px;
       width: 290px;
