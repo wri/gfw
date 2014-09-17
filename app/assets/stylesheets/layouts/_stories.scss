@@ -387,3 +387,37 @@
 #fileupload {
   display: none;
 }
+
+/*******MEDIA QUERIES*********/
+@media only screen and
+(max-width: 640px), handheld, (orientation: landscape),
+(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  body {
+    border: 0;
+    background-image: none;
+    min-width: 640px;
+    .mod-notice,
+    .mod-navbar,
+    .footer-logos,
+    .site-info iframe {
+      display: none;
+    }
+
+    .row,
+    .inner {
+      min-width: 620px;
+      max-width: 620px;
+      width: 620px;
+    }
+
+    .layout-footer .footer-address {
+      margin: 10px 5px 0 5px;
+      width: 290px;
+      display: inline;
+      padding-top: 25px;
+    }
+    .carrousel .frame {
+      right: 180px;
+    }
+  }
+}
