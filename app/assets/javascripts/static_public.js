@@ -417,9 +417,9 @@ window.JST = window.JST || {};
 var GeoJSON = function( geojson, options ){
 
 	var _geometryToGoogleMaps = function( geojsonGeometry, opts, geojsonProperties ){
-		
+
 		var googleObj;
-		
+
 		switch ( geojsonGeometry.type ){
 			case "Point":
 				opts.position = new google.maps.LatLng(geojsonGeometry.coordinates[1], geojsonGeometry.coordinates[0]);
@@ -428,7 +428,7 @@ var GeoJSON = function( geojson, options ){
 					googleObj.set("geojsonProperties", geojsonProperties);
 				}
 				break;
-				
+
 			case "MultiPoint":
 				googleObj = [];
 				for (var i = 0; i < geojsonGeometry.coordinates.length; i++){
@@ -441,7 +441,7 @@ var GeoJSON = function( geojson, options ){
 					}
 				}
 				break;
-				
+
 			case "LineString":
 				var path = [];
 				for (var i = 0; i < geojsonGeometry.coordinates.length; i++){
@@ -455,7 +455,7 @@ var GeoJSON = function( geojson, options ){
 					googleObj.set("geojsonProperties", geojsonProperties);
 				}
 				break;
-				
+
 			case "MultiLineString":
 				googleObj = [];
 				for (var i = 0; i < geojsonGeometry.coordinates.length; i++){
@@ -474,7 +474,7 @@ var GeoJSON = function( geojson, options ){
 					}
 				}
 				break;
-				
+
 			case "Polygon":
 				var paths = [];
 				var exteriorDirection;
@@ -509,7 +509,7 @@ var GeoJSON = function( geojson, options ){
 					googleObj.set("geojsonProperties", geojsonProperties);
 				}
 				break;
-				
+
 			case "MultiPolygon":
 				googleObj = [];
 				for (var i = 0; i < geojsonGeometry.coordinates.length; i++){
@@ -549,7 +549,7 @@ var GeoJSON = function( geojson, options ){
 					}
 				}
 				break;
-				
+
 			case "GeometryCollection":
 				googleObj = [];
 				if (!geojsonGeometry.geometries){
@@ -560,22 +560,22 @@ var GeoJSON = function( geojson, options ){
 					}
 				}
 				break;
-				
+
 			default:
 				googleObj = _error("Invalid GeoJSON object: Geometry object must be one of \"Point\", \"LineString\", \"Polygon\" or \"MultiPolygon\".");
 		}
-		
+
 		return googleObj;
-		
+
 	};
-	
+
 	var _error = function( message ){
-	
+
 		return {
 			type: "Error",
 			message: message
 		};
-	
+
 	};
 
 	var _ccw = function( path ){
@@ -592,13 +592,13 @@ var GeoJSON = function( geojson, options ){
 		}
 		return isCCW;
 	};
-		
+
 	var obj;
-	
+
 	var opts = options || {};
-	
+
 	switch ( geojson.type ){
-	
+
 		case "FeatureCollection":
 			if (!geojson.features){
 				obj = _error("Invalid GeoJSON object: FeatureCollection object missing \"features\" member.");
@@ -609,7 +609,7 @@ var GeoJSON = function( geojson, options ){
 				}
 			}
 			break;
-		
+
 		case "GeometryCollection":
 			if (!geojson.geometries){
 				obj = _error("Invalid GeoJSON object: GeometryCollection object missing \"geometries\" member.");
@@ -620,7 +620,7 @@ var GeoJSON = function( geojson, options ){
 				}
 			}
 			break;
-		
+
 		case "Feature":
 			if (!( geojson.properties && geojson.geometry )){
 				obj = _error("Invalid GeoJSON object: Feature object missing \"properties\" or \"geometry\" member.");
@@ -628,20 +628,20 @@ var GeoJSON = function( geojson, options ){
 				obj = _geometryToGoogleMaps(geojson.geometry, opts, geojson.properties);
 			}
 			break;
-		
+
 		case "Point": case "MultiPoint": case "LineString": case "MultiLineString": case "Polygon": case "MultiPolygon":
 			obj = geojson.coordinates
 				? obj = _geometryToGoogleMaps(geojson, opts)
 				: _error("Invalid GeoJSON object: Geometry object missing \"coordinates\" member.");
 			break;
-		
+
 		default:
 			obj = _error("Invalid GeoJSON object: GeoJSON object must be one of \"Point\", \"LineString\", \"Polygon\", \"MultiPolygon\", \"Feature\", \"FeatureCollection\" or \"GeometryCollection\".");
-	
+
 	}
-	
+
 	return obj;
-	
+
 };
 
 var config = {
@@ -1689,7 +1689,7 @@ gfw.ui.view.SourceWindow = gfw.ui.view.Widget.extend({
 
   show: function(data_slug, data_coverage) {
     var that = this;
-    
+
     this.$backdrop.show();
     this.model.set('hidden', false);
 
@@ -1776,7 +1776,7 @@ gfw.ui.view.Terms = cdb.core.View.extend({
       ga('send', 'event', 'Terms', 'Click', 'I do not agree (Dialog)');
     });
 
-    
+
   },
 
   _onClickCancel: function() {

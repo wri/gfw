@@ -48,7 +48,7 @@ define([
       this.initMap.apply(this, arguments);
     },
 
-    initMap: function(zoom, lat, lng, iso, maptype, baselayers, sublayers) {
+    initMap: function(zoom, lat, lng, iso, maptype, baselayers, sublayers, subscribe) {
       var params = _.extend({
         zoom: zoom,
         lat: lat,
@@ -56,9 +56,9 @@ define([
         iso: iso,
         maptype: maptype,
         baselayers: baselayers,
-        sublayers: sublayers
+        sublayers: sublayers,
+        subscribe_alerts: subscribe
       }, _.parseUrl());
-
       this.placeService.initPlace(this.name, params);
     },
 
