@@ -52,6 +52,7 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         this._setBaselayer(place.layerSpec.getBaselayers());
+        if ( place.params.subscribe_alerts ) this.subscribeAnalysis();
       }
     }, {
       'LayerNav/change': function(layerSpec) {

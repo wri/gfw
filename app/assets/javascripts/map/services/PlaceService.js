@@ -160,7 +160,6 @@ define([
      */
     _standardizeParams: function(params) {
       var p = _.extendNonNull({}, urlDefaultsParams, params);
-
       p.name = this._name;
 
       p.baselayers = _.map(p.baselayers.split(','), function(slug) {
@@ -180,6 +179,7 @@ define([
       p.geojson = p.geojson ? JSON.parse(decodeURIComponent(p.geojson)) : null;
       p.wdpaid = p.wdpaid ? _.toNumber(p.wdpaid) : null;
       p.threshold = p.threshold ? _.toNumber(p.threshold) : null;
+      p.subscribe_alerts = p.subscribe_alerts ? true : null;
 
       return p;
     },
