@@ -291,7 +291,7 @@
     &::after {
       content: '';
       float: left;
-      background-color: #C443FF;
+      background-color: #FF6699;
       width: 6px;
       height: 6px;
       border-radius: 6px;
@@ -512,7 +512,7 @@
       @include text-shadow(0 0 5px rgba(#000, .8));
 
       &:first-child i {
-        background: #C441FF;
+        background: #FF6699;
       }
 
       &:last-child i {
