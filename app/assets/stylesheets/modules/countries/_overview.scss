@@ -299,8 +299,20 @@
       top: 8px;
       right: -10px;
     }
+    &.percent::after {
+      display: none;
+    }
     &.gain::after {
       background-color: #6D6DE5;
+    }
+  }
+  div[id^="ext_"] {
+    .line::after {
+      background-color: #88aa37;
+    }
+    .loss::after {
+      right: -26px;
+      background-color: #FF6699;
     }
   }
   .perct {
