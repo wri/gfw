@@ -316,22 +316,35 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       });
     } else if (this.model.get('graph') === 'total_extent') {
       this.$settings.removeClass('disable');
-      var sql = 'WITH extent as (SELECT iso, SUM(';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'y'+y+' + ';
-      }
-
-      sql += 'y2012) as sum_extent\
-              FROM extent_gt_25\
-              GROUP BY iso)';
-
-      sql += 'SELECT c.iso, c.name, c.enabled, sum_extent\
-              FROM extent, gfw2_countries c\
-              WHERE extent.iso = c.iso\
-              AND NOT sum_extent = 0\
-              ORDER BY sum_extent DESC ';
-
+      var sql = 'WITH e AS \
+                ( \
+                       SELECT iso, \
+                              extent \
+                       FROM   umd_nat \
+                       WHERE  thresh = ' + (config.canopy_choice || 10) +' \
+                       AND    year = 2012), u AS \
+                ( \
+                         SELECT   iso, \
+                                  Sum(loss) sum_loss, \
+                                  Sum(gain) sum_gain \
+                         FROM     umd_nat \
+                         WHERE    thresh = ' + (config.canopy_choice || 10) +' \
+                         GROUP BY iso) \
+                SELECT   c.iso, \
+                         c.NAME, \
+                         c.enabled, \
+                         u.sum_loss, \
+                         u.sum_gain, \
+                         u.sum_loss / u.sum_gain ratio, \
+                         e.extent \
+                FROM     gfw2_countries c, \
+                         u, \
+                         e \
+                WHERE    u.sum_gain IS NOT NULL \
+                AND      NOT u.sum_gain = 0 \
+                AND      c.iso = u.iso \
+                AND      e.iso = u.iso \
+                ORDER BY u.sum_loss DESC ';
       if (e) {
         sql += 'OFFSET 10';
       } else {
@@ -347,14 +360,9 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         _.each(data, function(val, key) {
           var ord = e ? (key+11) : (key+1),
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
-
-          $.ajax({
-            url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (config.canopy_choice || 10),
-            dataType: 'json',
-            success: function(data) {
               var e_mha, l_mha,
-                  ex = data.years[data.years.length -1].extent,
-                  lo = data.years[data.years.length -1].loss;
+                  ex = val.extent,
+                  lo = val.sum_loss;
                   e_mha = l_mha = 'Mha';
 
               if (ex.toString().length >= 7) {
@@ -376,20 +384,17 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               } else {
                 l_mha = 'Ha';
               }
-              $('#ext_'+val.iso+'').empty().append('<span class="line"><span data-orig="' + data.years[data.years.length -1].extent + '" class="loss">'+ parseInt(ex).toLocaleString() +' </span>'+ e_mha +' of extent</span><span class="loss line"><span>'+ parseInt(lo).toLocaleString() +' </span>'+ l_mha +'  of loss</span>')
               if (key == max_trigger){
                 that._reorderRanking();
               }
-            }
-          });
-          markup_list += '<li>\
-                            <div class="countries_list__minioverview expanded countries_list__minioverview_'+val.iso+'"></div>\
-                            <div class="countries_list__num">'+ord+'</div>\
-                            <div class="countries_list__title">'+enabled+'</div>\
-                            <div class="countries_list__data">\
-                              <div id="ext_'+val.iso+'"></div>\
-                            </div>\
-                          </li>';
+              markup_list += '<li>\
+                              <div class="countries_list__minioverview expanded countries_list__minioverview_'+val.iso+'"></div>\
+                              <div class="countries_list__num">'+ord+'</div>\
+                              <div class="countries_list__title">'+enabled+'</div>\
+                              <div class="countries_list__data">\
+                                <div id="ext_'+val.iso+'"><span class="line"><span data-orig="' + val.extent + '" class="loss">'+ ex.toLocaleString() +' </span>'+ e_mha +' of extent</span><span class="loss line"><span>'+ lo.toLocaleString() +' </span>'+ l_mha +'  of loss</span></div>\
+                              </div>\
+                            </li>';
         });
 
         if (e) {
