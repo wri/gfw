@@ -33,10 +33,10 @@
 }
 
 .tick {
-  fill: none;
-  shape-rendering: crispEdges;
+  shape-rendering: optimizeSpeed;
   stroke-width: 1px;
-  stroke-dasharray: 8, 4;
+  stroke-dasharray: 16, 2;
+  background: red;
 }
 
 .grid_h {
@@ -65,7 +65,7 @@
 
 .overview_line {
   @extend .tick;
-  stroke-width: 3px;
+  stroke-width: 4px;
   stroke: #6D6DE5;
 }
 
