@@ -888,7 +888,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .datum(data_)
           .attr('class', 'area')
           .attr('d', area)
-          .style('fill', 'url(#gradient)');
+          .style('fill', 'rgba(239,66,147,0.5)');
 
         // circles
         svg.selectAll('circle')
@@ -1061,7 +1061,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .datum(data_)
           .attr('class', 'area')
           .attr('d', area)
-          .style('fill', 'url(#gradient)');
+          .style('fill', 'rgba(239,66,147,0.5)');
 
         // circles
         svg.selectAll('circle')
@@ -1272,13 +1272,14 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .datum(data_)
           .attr('class', 'area')
           .attr('d', area_loss)
-          .style('fill', 'url(#gradient)');
+          .style('fill', 'rgba(239,66,147,0.5)');
 
         svg.append('path')
           .datum(data_)
           .attr('class', 'area')
           .attr('d', area_extent)
-          .style('fill', 'url(#gradient_extent)');
+          .style('fill', 'url(#gradient_extent)')
+          .style('opacity', '0.35');
 
         // circles
         svg.selectAll('circle')
