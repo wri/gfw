@@ -1120,14 +1120,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             'x2': w-m,
             'y1': function(d) { return y_scale(gain*100); },
             'y2': function(d) { return y_scale(gain*100); }
-          });
-
-         // circles
-        svg.selectAll('circle.gain')
-          .data(data_gain_)
-          .enter()
-          .append('svg:circle')
-          .attr('class', 'linedot gain')
+          })
           .attr('cx', function(d) {
             return x_scale(d.year);
           })
@@ -1142,7 +1135,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             that.tooltip.html($(this).attr('name'))
               .style('visibility', 'visible')
               .style('top', $(this).offset().top-100+'px')
-              .style('left', $(this).offset().left-$('.tooltip').width()/2-4+'px')
+              .style('left', ($(this).offset().left + 436) +'px')
               .attr('class', 'tooltip gain_tooltip');
 
             d3.select(this)
