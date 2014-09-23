@@ -787,9 +787,12 @@
     &:hover { @include static-logos-sprite(sida_hover); }
   }
   .carto {
-
     @include static-logos-sprite(carto);
     &:hover { @include static-logos-sprite(carto_hover); }
+  }
+  .vizz {
+    @include static-logos-sprite(vizzuality);
+    &:hover { @include static-logos-sprite(vizzuality_hover); }
   }
 }
 
