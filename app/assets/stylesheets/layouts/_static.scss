@@ -795,6 +795,12 @@
     @include static-logos-sprite(vizzuality);
     &:hover { @include static-logos-sprite(vizzuality_hover); }
   }
+
+  .blue {
+    @include static-logos-sprite(blueraster);
+    opacity: 0.4;
+    &:hover { @include static-logos-sprite(blueraster_hover); opacity: 0.9;}
+  }
 }
 
 
