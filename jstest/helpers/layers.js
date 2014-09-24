@@ -73,7 +73,7 @@ var layers = {
     "tileurl": "https://wri-01.cartodb.com/tiles/global_7d/{Z}/{X}/{Y}.png",
     "visible": true,
     "position": 0,
-    "detailsTpl": "<div class=\"layer-details layer-details-fires\">\n  <a href=\"http://fires.globalforestwatch.org/\" target=\"_blank\" class=\"gfw-fires-link\">Check out <span>GFW-FIRES</span></a>\n</div>\n"
+    "detailsTpl": "<div class=\"layer-details layer-details-fires\">\n  <a href=\"http://fires.globalforestwatch.org/\" target=\"_blank\" class=\"gfw-fires-link\">Check out <span>GFW FIRES</span></a>\n</div>\n"
   },
   "forest2000": {
     "id": 591,
