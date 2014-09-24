@@ -298,13 +298,14 @@
       border-radius: 6px;
       position: absolute;
       top: 8px;
-      right: -10px;
+      right: -12px;
     }
     &.percent::after {
       display: none;
     }
     &.gain::after {
       background-color: #6D6DE5;
+      right: -10px;
     }
   }
   div[id^="ext_"] {
@@ -312,7 +313,7 @@
       background-color: #88aa37;
     }
     .loss::after {
-      right: -26px;
+      right: -28px;
       background-color: #FF6699;
     }
   }
