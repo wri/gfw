@@ -1448,7 +1448,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         var color_scale = d3.scale.linear()
           .domain([d3.min(data, function(d) { return d.ratio; }), 1, 10, d3.max(data, function(d) { return d.ratio; })])
-          .range(["#9ABF00", "#9ABF00", "#CA46FF", "#CA46FF"]);
+          //.range(["#9ABF00", "#9ABF00", "#CA46FF", "#CA46FF"]);
+          .range(["#6D6DE5", "#6D6DE5", "#FF6699", "#FF6699"]);
 
         // line
         svg.selectAll('line.linear_regression')
