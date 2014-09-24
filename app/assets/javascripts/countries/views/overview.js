@@ -158,21 +158,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
     if (this.model.get('graph') === 'total_loss') {
       this.$settings.removeClass('disable');
-      var sql = 'WITH loss as (SELECT iso, SUM(';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'y'+y+' + ';
-      }
-
-      sql += 'y2012) as sum_loss\
-              FROM countries_loss\
-              GROUP BY iso)';
-
-      sql += 'SELECT c.iso, c.name, c.enabled, sum_loss\
-              FROM loss, gfw2_countries c\
-              WHERE loss.iso = c.iso\
-              AND NOT sum_loss = 0\
-              ORDER BY sum_loss DESC ';
+      var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat umd, gfw2_countries c WHERE thresh = '+ (config.canopy_choice || 10) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
 
       if (e) {
         sql += 'OFFSET 10';
@@ -197,7 +183,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (config.canopy_choice || 10),
             dataType: 'json',
             success: function(data) {
-              var loss = (config.canopy_choice == false || config.canopy_choice == 10) ? Math.round(val.sum_loss) : 0;
+              var loss = (config.canopy_choice == false || config.canopy_choice == 10) ? Math.round(val.loss) : 0;
               var gain = 0;
               var g_mha, l_mha;
               g_mha = l_mha = 'Mha';
@@ -229,7 +215,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               } else {
                 g_mha = 'Ha';
               }
-
               $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span><span class="gain line"><span>'+ gain+' </span>'+ g_mha +' of gain</span>');
 
               if (key == max_trigger){
@@ -265,6 +250,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
       });
     } else if (this.model.get('graph') === 'percent_loss') {
+
       this.$settings.removeClass('disable');
       var sql = 'WITH e AS (SELECT iso, extent FROM umd_nat WHERE year = 2000 AND thresh = '+(config.canopy_choice || 10)+') SELECT c.iso, c.name, c.enabled, p.perc ratio_loss FROM (SELECT umd.iso, sum(umd.loss) / avg(e.extent) perc FROM umd_nat umd, e WHERE umd.thresh = '+(config.canopy_choice || 10)+' AND umd.iso = e.iso AND e.extent != 0 GROUP BY umd.iso, e.iso ORDER BY perc DESC) p, gfw2_countries c WHERE p.iso = c.iso AND c.enabled IS true AND not perc = 0 ORDER BY p.perc DESC ';
 
@@ -465,7 +451,37 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     } else if (this.model.get('graph') === 'domains') {
       $('.settings').addClass('disable');
       var sql = 'SELECT name, total_loss, total_gain, GREATEST('
+      /*
+      SELECT umd.iso,
+       c.name,
+       c.enabled,
+       Sum(umd.loss) loss,
+       Sum(umd.gain) gain
+    FROM   umd_nat umd,
+           gfw2_countries c
+    WHERE  thresh = 10
+           AND umd.iso = c.iso
+           AND NOT loss = 0
+           AND umd.year > 2000
+    GROUP  BY umd.iso,
+              c.name,
+              c.enabled
+    ORDER  BY loss DESC
+    LIMIT  10
 
+
+    SELECT year,
+           Sum(loss)   loss,
+           Sum(extent_offset) extent
+    FROM   umd_nat
+    WHERE  thresh = 10
+           AND year > 2000
+    GROUP  BY year
+    ORDER BY year
+
+
+
+      */
       for(var y = 2001; y < 2012; y++) {
         sql += 'y'+y+', '
       }
@@ -851,38 +867,41 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('y', 30)
         .attr('transform', 'rotate(-90)');
 
-      var sql = 'SELECT ';
-      for(var y = 2001; y < 2012; y++) {
-        sql += '(SELECT sum(loss) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as y'+y+',';
-      }
-
-      sql += '(SELECT sum(loss) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as y2012, (SELECT SUM(y2001_y2012) FROM countries_gain) as gain';
+      var sql = 'SELECT year, \
+           Sum(loss) loss, \
+           Sum(gain) gain \
+            FROM   umd_nat  \
+            WHERE  thresh = '+ (config.canopy_choice || 10) +'  \
+                    AND year > 2000 \
+            GROUP  BY year  \
+            ORDER  BY year ';
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(error, json) {
-        var data = json.rows[0];
+        var data = json.rows;
 
-        var data_ = [],
+        var data_ = data,
             gain = null;
 
-        _.each(data, function(val, key) {
-          if (key === 'gain') {
-            gain = val/12;
-          } else {
-            data_.push({
-              'year': key.replace('y',''),
-              'value': val
-            });
-          }
-        });
+        // _.each(data, function(val, key) {
+        //   debugger
+        //   if (key === 'gain') {
+        //     gain = val/12;
+        //   } else {
+        //     data_.push({
+        //       'year': key.replace('y',''),
+        //       'value': val
+        //     });
+        //   }
+        // });
 
         var y_scale = d3.scale.linear()
           .range([vertical_m, h-vertical_m])
-          .domain([d3.max(data_, function(d) { return d.value; }), 0]);
+          .domain([d3.max(data_, function(d) { return d.loss; }), 0]);
 
         // area
         var area = d3.svg.area()
           .x(function(d) { return x_scale(d.year); })
           .y0(h)
-          .y1(function(d) { return y_scale(d.value); });
+          .y1(function(d) { return y_scale(d.loss); });
 
         svg.append('path')
           .datum(data_)
@@ -900,11 +919,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             return x_scale(d.year);
           })
           .attr('cy', function(d){
-            return y_scale(d.value);
+            return y_scale(d.loss);
           })
           .attr('r', 6)
           .attr('name', function(d) {
-            return '<span>'+d.year+'</span>'+formatNumber(parseFloat(d.value/1000000).toFixed(1))+' Mha';
+            return '<span>'+d.year+'</span>'+formatNumber(parseFloat(d.loss/1000000).toFixed(1))+' Mha';
           })
           .on('mouseover', function(d) {
             that.tooltip.html($(this).attr('name'))
