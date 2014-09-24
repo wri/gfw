@@ -72,7 +72,7 @@
 .minioverview_line {
   @extend .tick;
   stroke: #444;
-
+  stroke-dasharray: 11px, 2px;
   @include opacity(.5);
 }
 
@@ -220,7 +220,8 @@
     }
 
     .minioverview_line {
-      @include opacity(1);
+      @include opacity(0.7);
+      stroke-width: 2px;
     }
 
     .countries_list__minioverview {
