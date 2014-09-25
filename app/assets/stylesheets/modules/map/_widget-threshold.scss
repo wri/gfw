@@ -7,23 +7,22 @@
   }
 
   .widget-btn {
-    left: 15px;
-    top: 130px;
+    right: 240px;
+    top: 32px;
     border: 1px solid #666;
     box-shadow: 0px 0px 3px #666666;
     width: 50px;
-    height: 37px;
+    height: 40px;
     background: #fff no-repeat;
-    background-image: url(home-icons/analysis_refactored.gif);
+    background-image: url(home-icons/settings_refactored.png);
     background-position: 50% 50%, center;
-
     &:hover  {
-      background-image:url(home-icons/analysis_refactored_hover.gif);
-      box-shadow: 1px 1px 7px #000;
+      background-image:url(home-icons/settings_refactored_hover.png);
+      box-shadow: 0px 0px 3px #777;
     }
     &.disabled {
-      background-image:url(home-icons/analysis_refactored.gif);
-      opacity: 0.5;
+      background-image:url(home-icons/settings_refactored_hover.png);
+      opacity: 0.8;
     }
   }
 
