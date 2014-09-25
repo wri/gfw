@@ -879,19 +879,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         var data = json.rows;
 
         var data_ = data,
-            gain = null;
-
-        // _.each(data, function(val, key) {
-        //   debugger
-        //   if (key === 'gain') {
-        //     gain = val/12;
-        //   } else {
-        //     data_.push({
-        //       'year': key.replace('y',''),
-        //       'value': val
-        //     });
-        //   }
-        // });
+            gain = data[0].gain;
 
         var y_scale = d3.scale.linear()
           .range([vertical_m, h-vertical_m])
