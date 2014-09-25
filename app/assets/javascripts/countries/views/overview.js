@@ -451,37 +451,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     } else if (this.model.get('graph') === 'domains') {
       $('.settings').addClass('disable');
       var sql = 'SELECT name, total_loss, total_gain, GREATEST('
-      /*
-      SELECT umd.iso,
-       c.name,
-       c.enabled,
-       Sum(umd.loss) loss,
-       Sum(umd.gain) gain
-    FROM   umd_nat umd,
-           gfw2_countries c
-    WHERE  thresh = 10
-           AND umd.iso = c.iso
-           AND NOT loss = 0
-           AND umd.year > 2000
-    GROUP  BY umd.iso,
-              c.name,
-              c.enabled
-    ORDER  BY loss DESC
-    LIMIT  10
 
-
-    SELECT year,
-           Sum(loss)   loss,
-           Sum(extent_offset) extent
-    FROM   umd_nat
-    WHERE  thresh = 10
-           AND year > 2000
-    GROUP  BY year
-    ORDER BY year
-
-
-
-      */
       for(var y = 2001; y < 2012; y++) {
         sql += 'y'+y+', '
       }
