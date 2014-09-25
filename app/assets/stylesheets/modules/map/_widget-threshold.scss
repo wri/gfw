@@ -9,22 +9,21 @@
   .widget-btn {
     left: 15px;
     top: 130px;
-    background-color: transparent;
-    border: none;
-    box-shadow: 0 0 0;
-    width: 37px;
+    border: 1px solid #666;
+    box-shadow: 0px 0px 3px #666666;
+    width: 50px;
     height: 37px;
-    background: transparent url(home-icons/icon_options.png) no-repeat 0 0;
+    background: #fff no-repeat;
+    background-image: url(home-icons/analysis_refactored.gif);
+    background-position: 50% 50%, center;
 
     &:hover  {
-      background: transparent url(home-icons/icon_options_hover.png) no-repeat 0 0;
-    }
-    &:active {
-      background: transparent url(home-icons/icon_options_active.png) no-repeat 0 0;
+      background-image:url(home-icons/analysis_refactored_hover.gif);
+      box-shadow: 1px 1px 7px #000;
     }
     &.disabled {
-      background: transparent url(home-icons/icon_options_disable.png) no-repeat 0 0;
-      opacity: 1;
+      background-image:url(home-icons/analysis_refactored.gif);
+      opacity: 0.5;
     }
   }
 
