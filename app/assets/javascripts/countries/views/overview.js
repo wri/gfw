@@ -978,7 +978,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('transform', 'rotate(-90)');
 
       var sql = 'SELECT year, \
-                  Sum(gain),  \
+                  Sum(gain) / Sum(extent_offset) ratio_gain,  \
                   Sum(loss) / Sum(extent_offset)  ratio_loss  \
                 FROM   umd_nat  \
                 WHERE  thresh = '+ (config.canopy_choice || 10) +' \
@@ -987,9 +987,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows;
-
         var data_ = data,
-            gain = data[0].sum/12;
+            gain = data[0].ratio_gain;
 
         var y_scale = grid_scale;
 
@@ -1073,11 +1072,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             return x_scale(d.year);
           })
           .attr('cy', function(d){
-            return y_scale(d.ratio_loss*100);
+            return y_scale(gain*100);
           })
           .attr('r', 6)
           .attr('name', function(d) {
-            return '<span>2001-2012</span>'+parseFloat(d.ratio_loss*100).toFixed(2)+' %';
+            return '<span>2001-2012</span>'+parseFloat(gain*100).toFixed(2)+' %';
           })
           .on('mouseover', function(d) {
             that.tooltip.html($(this).attr('name'))
