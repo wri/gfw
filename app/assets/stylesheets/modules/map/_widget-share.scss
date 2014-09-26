@@ -199,8 +199,9 @@
     }
 
     .share_buttons {
-      float: left;
-      width: 112px;
+      position: relative;
+      bottom: -15px;
+      left: 180px;
 
       a {
         display: block;
