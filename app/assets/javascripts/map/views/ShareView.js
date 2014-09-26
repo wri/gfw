@@ -50,9 +50,9 @@ define([
           text = 'Click and paste HTML to embed in website';
         this._setEmbed();
       }
-      $dialog_target = $('.share_dialog');
-      $dialog_target.find('.help span').empty().append(text);
-      $dialog_target.hide().show();
+
+      $('.share_dialog').find('.help span').empty().append(text);
+      $('.share_dialog').hide().show();
     },
 
     _show: function(e) {
