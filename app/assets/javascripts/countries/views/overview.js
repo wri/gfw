@@ -1272,39 +1272,35 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('in2', 'blurOut')
         .attr('mode', 'normal');
 
-      var sql = 'WITH loss as (SELECT iso, SUM(';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'loss.y'+y+' + ';
-      }
-
-      sql += ['loss.y2012) as sum_loss',
-              'FROM loss_gt_50 loss',
-              'GROUP BY iso), gain as ('].join(' ');
-
-      sql += ['SELECT g.iso, SUM(y2001_y2012) as sum_gain',
-              'FROM countries_gain g, loss_gt_50 loss',
-              'WHERE loss.iso = g.iso',
-              'GROUP BY g.iso), ratio as ('].join(' ');
-
-      sql += ['SELECT c.iso, c.name, c.enabled, loss.sum_loss as loss,',
-                     'gain.sum_gain as gain, loss.sum_loss/gain.sum_gain as ratio',
-              'FROM loss, gain, gfw2_countries c',
-              'WHERE sum_gain IS NOT null',
-              'AND NOT sum_gain = 0',
-              'AND c.iso = gain.iso',
-              'AND c.iso = loss.iso',
-              'ORDER BY loss.sum_loss DESC',
-              'LIMIT 50), extent as ('].join(' ');
-
-      sql += ['SELECT extent.iso, SUM(extent.y2012) as extent',
-              'FROM countries_extent extent',
-              'GROUP BY extent.iso) '].join(' ');
-
-      sql += ['SELECT *',
-              'FROM ratio, extent',
-              'WHERE ratio IS NOT null',
-              'AND extent.iso = ratio.iso'].join(' ');
+      var sql = 'WITH e AS \
+                  (  \
+                         SELECT iso,  \
+                                extent  \
+                         FROM   umd_nat  \
+                         WHERE  thresh = '+ (config.canopy_choice || 10) +'  \
+                         AND    year = 2012), u AS  \
+                  (  \
+                           SELECT   iso,  \
+                                    Sum(loss) sum_loss,  \
+                                    Sum(gain) sum_gain  \
+                           FROM     umd_nat  \
+                           WHERE    thresh = '+ (config.canopy_choice || 10) +'  \
+                           GROUP BY iso)  \
+                  SELECT   c.iso,  \
+                           c.NAME,  \
+                           c.enabled, \
+                           u.sum_loss,  \
+                           u.sum_gain,  \
+                           u.sum_loss / u.sum_gain ratio,  \
+                           e.extent  \
+                  FROM     gfw2_countries c,  \
+                           u,  \
+                           e  \
+                  WHERE    u.sum_gain IS NOT NULL  \
+                  AND      NOT u.sum_gain = 0  \
+                  AND      c.iso = u.iso  \
+                  AND      e.iso = u.iso  \
+                  ORDER BY u.sum_loss DESC limit 50';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows;
