@@ -595,47 +595,19 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           });
       });
     } else if (this.model.get('graph') === ('percent_loss')) {
-      var sql = 'WITH loss as (SELECT ';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'y'+y+' as loss_y'+y+', ';
-      }
-
-      sql += "y2012 as loss_y2012\
-              FROM loss_gt_25\
-              WHERE iso = '"+iso+"'), extent as (SELECT ";
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'y'+y+' as extent_y'+y+', ';
-      }
-
-      sql += "y2012 as extent_y2012\
-              FROM extent_gt_25\
-              WHERE iso = '"+iso+"')";
-
-      sql += 'SELECT ';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'loss_y'+y+'/extent_y'+y+' as percent_'+y+', ';
-      }
-
-      sql += 'loss_y2012/extent_y2012 as percent_2012\
-              FROM loss, extent';
+      var sql = 'SELECT year, \
+                       loss_perc \
+                FROM   umd_nat \
+                WHERE  thresh = '+ (config.canopy_choice || 10) +' \
+                       AND iso = \''+ iso +'\'';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
-        var data = json.rows[0];
+        var data = json.rows;
 
-        var data_ = [];
-
-        _.each(data, function(val, key) {
-          data_.push({
-            'year': key.replace('y',''),
-            'value': val*100
-          });
-        });
+        var data_ = data;
 
         var y_scale = d3.scale.linear()
-          .domain([0, d3.max(data_, function(d) { return d.value; })])
+          .domain([0, d3.max(data_, function(d) { return d.loss_perc; })])
           .range([height, 0]);
 
         var barWidth = width / data_.length;
@@ -647,28 +619,19 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         bar.append('svg:rect')
           .attr('class', 'bar')
-          .attr('y', function(d) { return y_scale(d.value); })
-          .attr('height', function(d) { return height - y_scale(d.value); })
+          .attr('y', function(d) { return y_scale(d.loss_perc); })
+          .attr('height', function(d) { return height - y_scale(d.loss_perc); })
           .attr('width', barWidth - 1);
 
       });
     } else if (this.model.get('graph') === ('total_extent')) {
-      var sql = 'SELECT ';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'loss.y'+y+' as loss_y'+y+', ';
-      }
-
-      sql += 'loss.y2012 as loss_y2012, ';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'extent.y'+y+' as extent_y'+y+', ';
-      }
-
-      sql += "extent.y2012 as extent_y2012\
-              FROM loss_gt_0 loss, extent_gt_25 extent\
-              WHERE loss.iso = extent.iso\
-              AND loss.iso = '"+iso+"'";
+      var sql = 'SELECT year, \
+                 loss,  \
+                 extent_offset extent  \
+                FROM   umd_nat  \
+                WHERE  thresh = '+ (config.canopy_choice || 10) +'  \
+                       AND iso = \''+ iso +'\' \
+                       AND year > 2000 ';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
 
@@ -678,34 +641,33 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .append('svg:svg')
           .attr('width', width)
           .attr('height', height);
+        var data = json.rows;
 
-        var data = json.rows[0];
-
-        var data_loss_ = [],
+        var data_loss_ = data,
             data_extent_ = [];
 
-        _.each(data, function(val, key) {
-          if (key.indexOf('loss_y') != -1) {
-            data_loss_.push({
-              'year': key.split('_y')[1],
-              'value': val
-            });
-          }
+        // _.each(data, function(val, key) {
+        //   if (key.indexOf('loss_y') != -1) {
+        //     data_loss_.push({
+        //       'year': key.split('_y')[1],
+        //       'value': val
+        //     });
+        //   }
 
-          if (key.indexOf('extent_y') != -1) {
-            data_extent_.push({
-              'year': key.split('extent_y')[1],
-              'value': val
-            });
-          }
-        });
+        //   if (key.indexOf('extent_y') != -1) {
+        //     data_extent_.push({
+        //       'year': key.split('extent_y')[1],
+        //       'value': val
+        //     });
+        //   }
+        // });
 
         var y_scale_loss = d3.scale.linear()
-          .domain([0, d3.max(data_loss_, function(d) { return d.value; })])
+          .domain([0, d3.max(data, function(d) { return d.loss; })])
           .range([height, 0]);
 
         var y_scale_extent = d3.scale.linear()
-          .domain([0, d3.max(data_extent_, function(d) { return d.value; })])
+          .domain([0, d3.max(data, function(d) { return d.extent; })])
           .range([height, 0]);
 
         var barWidth_loss = width / data_loss_.length;
@@ -718,11 +680,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         bar.append('svg:rect')
           .attr('class', 'bar')
-          .attr('y', function(d) { return y_scale_loss(d.value); })
-          .attr('height', function(d) { return height - y_scale_loss(d.value); })
+          .attr('y', function(d) { return y_scale_loss(d.loss); })
+          .attr('height', function(d) { return height - y_scale_loss(d.loss); })
           .attr('width', barWidth_loss - 1);
 
-        var barWidth_extent = width / data_extent_.length;
+        var barWidth_extent = width / data.length;
 
         var bar2 = graph2.selectAll('g')
           .data(data_extent_)
@@ -733,7 +695,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         bar2.append('svg:rect')
           .attr('class', 'bar extent')
           .attr('y', function(d) { return y_scale_extent(d.value); })
-          .attr('height', function(d) { return height - y_scale_extent(d.value); })
+          .attr('height', function(d) { return height - y_scale_extent(d.extent); })
           .attr('width', barWidth_extent - 1);
       });
     }
@@ -1310,39 +1272,35 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('in2', 'blurOut')
         .attr('mode', 'normal');
 
-      var sql = 'WITH loss as (SELECT iso, SUM(';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'loss.y'+y+' + ';
-      }
-
-      sql += ['loss.y2012) as sum_loss',
-              'FROM loss_gt_50 loss',
-              'GROUP BY iso), gain as ('].join(' ');
-
-      sql += ['SELECT g.iso, SUM(y2001_y2012) as sum_gain',
-              'FROM countries_gain g, loss_gt_50 loss',
-              'WHERE loss.iso = g.iso',
-              'GROUP BY g.iso), ratio as ('].join(' ');
-
-      sql += ['SELECT c.iso, c.name, c.enabled, loss.sum_loss as loss,',
-                     'gain.sum_gain as gain, loss.sum_loss/gain.sum_gain as ratio',
-              'FROM loss, gain, gfw2_countries c',
-              'WHERE sum_gain IS NOT null',
-              'AND NOT sum_gain = 0',
-              'AND c.iso = gain.iso',
-              'AND c.iso = loss.iso',
-              'ORDER BY loss.sum_loss DESC',
-              'LIMIT 50), extent as ('].join(' ');
-
-      sql += ['SELECT extent.iso, SUM(extent.y2012) as extent',
-              'FROM countries_extent extent',
-              'GROUP BY extent.iso) '].join(' ');
-
-      sql += ['SELECT *',
-              'FROM ratio, extent',
-              'WHERE ratio IS NOT null',
-              'AND extent.iso = ratio.iso'].join(' ');
+      var sql = 'WITH e AS \
+                  (  \
+                         SELECT iso,  \
+                                extent  \
+                         FROM   umd_nat  \
+                         WHERE  thresh = '+ (config.canopy_choice || 10) +'  \
+                         AND    year = 2012), u AS  \
+                  (  \
+                           SELECT   iso,  \
+                                    Sum(loss) sum_loss,  \
+                                    Sum(gain) sum_gain  \
+                           FROM     umd_nat  \
+                           WHERE    thresh = '+ (config.canopy_choice || 10) +'  \
+                           GROUP BY iso)  \
+                  SELECT   c.iso,  \
+                           c.NAME,  \
+                           c.enabled, \
+                           u.sum_loss,  \
+                           u.sum_gain,  \
+                           u.sum_loss / u.sum_gain ratio,  \
+                           e.extent  \
+                  FROM     gfw2_countries c,  \
+                           u,  \
+                           e  \
+                  WHERE    u.sum_gain IS NOT NULL  \
+                  AND      NOT u.sum_gain = 0  \
+                  AND      c.iso = u.iso  \
+                  AND      e.iso = u.iso  \
+                  ORDER BY u.sum_loss DESC limit 50';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows;
