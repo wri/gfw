@@ -641,7 +641,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .append('svg:svg')
           .attr('width', width)
           .attr('height', height);
-// debugger
         var data = json.rows;
 
         var data_loss_ = data,
