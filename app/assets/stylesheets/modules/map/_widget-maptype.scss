@@ -30,13 +30,13 @@
       border-bottom: 1px solid #ddd;
       @include box-sizing(border-box);
 
-      &.grayscale         i { @include home-icons-sprite(map_grayscale); }
-      &.terrain           i { @include home-icons-sprite(map_terrain); }
-      &.satellite         i { @include home-icons-sprite(map_satellite); }
-      &.roads             i { @include home-icons-sprite(map_roads); }
-      &.hybrid            i { @include home-icons-sprite(map_roads); }
-      &.treeheight        i { @include home-icons-sprite(map_treeheight); }
-      &.landsat           i { @include home-icons-sprite(map_landsat); }
+      &.grayscale         i { background: image-url('home-icons/map_grayscale.png') no-repeat center;}
+      &.terrain           i { background: image-url('home-icons/map_terrain.png') no-repeat center;}
+      &.satellite         i { background: image-url('home-icons/map_satellite.png') no-repeat center;}
+      &.roads             i { background: image-url('home-icons/map_roads.png') no-repeat center;}
+      &.hybrid            i { background: image-url('home-icons/map_roads.png') no-repeat center;}
+      &.treeheight        i { background: image-url('home-icons/map_treeheight.png') no-repeat center;}
+      &.landsat           i { background: image-url('home-icons/map_landsat.png') no-repeat center;}
 
       i {
         @include inline-block();
@@ -88,6 +88,7 @@
       font-size: 0.9rem;
       color: #666;
       cursor: pointer;
+      display: -moz-box;
       &:hover {
         color: #333;
       }
