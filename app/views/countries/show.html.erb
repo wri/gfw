@@ -201,7 +201,7 @@
       <div class="section-content">
         <% if @country['national_policy_link'].present? %>
         <div class="national-policy-links">
-          <%= link_to @country['national_policy_title'].present? ? @country['national_policy_title'] : 'National Forest Policy', @country['national_policy_link'] %>
+          <%= link_to @country['national_policy_title'].present? ? @country['national_policy_title'] : 'National Forest Policy', @country['national_policy_link'], :target => '_blank' %>
         </div>
         <% end %>
 
@@ -304,7 +304,7 @@
   <section class='country-section country-download-links'>
     <div class='inner'>
       <div class="section-content">
-        <%= link_to 'Subscribe to alerts for this country', "#{map_coords}/grayscale/forma?subscribe=true", class: 'btn-rdn', :target => '_blank' %>
+        <%= link_to 'Subscribe to alerts for this country', "#{map_coords}/grayscale/forma?subscribe", class: 'btn-rdn', :target => '_blank' %>
         <% if @country['dataset_link'].present? %>
         <%= link_to 'Download relevant data sets', @country['dataset_link'], class: 'btn-rdn' %>
         <% else %>

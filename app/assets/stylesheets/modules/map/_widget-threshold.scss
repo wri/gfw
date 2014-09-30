@@ -1,30 +1,31 @@
 .widget-threshold {
   .widget-box {
-    left: 22px;
-    top: 170px;
+    right: 240px;
+    top: 78px;
     width: 440px;
     padding: 20px;
   }
 
   .widget-btn {
-    left: 15px;
-    top: 130px;
-    background-color: transparent;
-    border: none;
-    box-shadow: 0 0 0;
-    width: 37px;
-    height: 37px;
-    background: transparent url(home-icons/icon_options.png) no-repeat 0 0;
-
+    right: 240px;
+    top: 32px;
+    border: 1px solid #666;
+    box-shadow: 0px 0px 3px #666666;
+    width: 50px;
+    height: 40px;
+    background: #fff no-repeat;
+    background-image: url(home-icons/settings_refactored.png);
+    background-position: 50% 50%, center;
     &:hover  {
-      background: transparent url(home-icons/icon_options_hover.png) no-repeat 0 0;
+      background-image:url(home-icons/settings_refactored_hover.png);
+      box-shadow: 0px 0px 3px #777;
     }
-    &:active {
-      background: transparent url(home-icons/icon_options_active.png) no-repeat 0 0;
+     &.changed {
+      background-image:url(home-icons/settings_refactored_changed.png);
     }
     &.disabled {
-      background: transparent url(home-icons/icon_options_disable.png) no-repeat 0 0;
-      opacity: 1;
+      opacity: 0.5;
+      border-color: #E4E4E4;
     }
   }
 

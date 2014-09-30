@@ -1,20 +1,21 @@
 .widget-share {
   .widget-btn {
-    top: 170px;
-    left: 15px;
-    background-color: transparent;
-    border: none;
-    box-shadow: 0 0 0;
-    width: 37px;
-    height: 37px;
-    background: transparent url(home-icons/share_button.png) no-repeat 0 0;
-
+    right: 350px;
+    top: 32px;
+    border: 1px solid #666;
+    box-shadow: 0px 0px 3px #666666;
+    width: 50px;
+    height: 40px;
+    background: #fff no-repeat;
+    background-image: url(home-icons/share_refactored.gif);
+    background-position: 50% 50%, center;
     &:hover  {
-      background: transparent url(home-icons/share_button_hover.png) no-repeat 0 0;
+      background-image:url(home-icons/share_refactored_hover.gif);
+      box-shadow: 0px 0px 3px #777;
     }
-
-    &:active {
-      background: transparent url(home-icons/share_button_active.png) no-repeat 0 0;
+    &.disabled {
+      opacity: 0.5;
+      border-color: #E4E4E4;
     }
   }
   .widget-box{
@@ -199,8 +200,9 @@
     }
 
     .share_buttons {
-      float: left;
-      width: 112px;
+      position: relative;
+      bottom: -15px;
+      left: 180px;
 
       a {
         display: block;

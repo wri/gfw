@@ -345,6 +345,9 @@
 
     &.selected {
       display: block;
+      .hide {
+        display: none;
+      }
     }
   }
 }
@@ -785,6 +788,21 @@
   .sida {
     @include static-logos-sprite(sida);
     &:hover { @include static-logos-sprite(sida_hover); }
+  }
+  .carto {
+    @include static-logos-sprite(carto);
+    &:hover { @include static-logos-sprite(carto_hover); }
+  }
+
+  .vizz {
+    @include static-logos-sprite(vizzuality);
+    &:hover { @include static-logos-sprite(vizzuality_hover); }
+  }
+
+  .blue {
+    @include static-logos-sprite(blueraster);
+    opacity: 0.4;
+    &:hover { @include static-logos-sprite(blueraster_hover); opacity: 0.9;}
   }
 }
 

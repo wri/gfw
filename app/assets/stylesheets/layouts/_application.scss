@@ -321,6 +321,8 @@
     &.tilia { height: 38px; @include logos-sprite(tilia); }
     &.goodall { height: 36px; width: 147px; @include logos-sprite(goodall); }
     &.cartodb { height: 45px; @include logos-sprite(cartodb); }
+    &.vizzuality { height: 51px; margin-right: 32px; @include logos-sprite(vizzuality); }
+    &.blueraster { height: 51px; width: 97px; @include logos-sprite(blueraster); }
     &.last { margin-right: 0; }
   }
 }
