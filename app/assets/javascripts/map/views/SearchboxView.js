@@ -41,6 +41,7 @@ define([
       if (place && place.geometry && place.geometry.viewport) {
         this.presenter.fitBounds(place.geometry.viewport);
       }
+      ga('send', 'event', 'Map', 'Searchbox', 'Find location');
     }
 
   });

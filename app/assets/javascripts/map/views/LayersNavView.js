@@ -93,7 +93,7 @@ define([
         }
       }
       this.presenter.toggleLayer(layerSlug);
-      ga('send', 'event', 'LayerNavView', 'Toggle', layerSlug);
+      ga('send', 'event', 'Map', 'Toggle', layerSlug);
     },
 
   });

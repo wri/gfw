@@ -61,6 +61,7 @@ define([
     _updateThreshold: function() {
       this.presenter.setThreshold(this.valuesMap[this.$slider.val()]);
       this._setVisibleRange();
+      ga('send', 'event', 'Map', 'Threshold', 'Updated threshold');
     },
 
     _setVisibleRange: function() {
