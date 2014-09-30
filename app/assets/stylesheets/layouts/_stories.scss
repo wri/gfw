@@ -1,7 +1,7 @@
 .is-stories-page {
 
   .header-subtitle {
-    @extend .serif;
+    @extend .fira_light;
   }
 
   &.is-index-action .header-subtitle {
@@ -49,7 +49,7 @@
       margin: 0 0 12px;
       font-weight: normal;
       font-size: 29px;
-      @extend .serif;
+      @extend .fira_medium;
       text-transform: capitalize;
       color: #333;
 
@@ -390,7 +390,7 @@
 
 /*******MEDIA QUERIES*********/
 @media only screen and
-(max-width: 640px) and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) {
+(max-width: 320px) and (-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi) {
   body {
     border: 0;
     background-image: none;
