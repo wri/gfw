@@ -86,13 +86,16 @@ define([
 
     _deleteAnalysis: function() {
       this.presenter.deleteAnalysis();
+      ga('send', 'event', 'Map', 'Analysis', 'Delete');
     },
     _subscribe: function() {
       this.presenter.subscribeAnalysis();
+      ga('send', 'event', 'Map', 'Analysis', 'Subscribe');
     },
 
     _toggleDownloads: function() {
       this.$downloadDropdown.toggleClass('hidden');
+      ga('send', 'event', 'Map', 'Analysis', 'Downloads');
     }
   });
 

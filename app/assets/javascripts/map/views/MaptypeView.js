@@ -40,6 +40,7 @@ define([
 
       if (maptype) {
         this.presenter.setMaptype(maptype);
+        ga('send', 'event', 'Map', 'Toggle', maptype);
       }
     },
 
