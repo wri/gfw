@@ -103,6 +103,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
       this.model.set('graph', graph);
     }
+    ga('send', 'event', 'Countries', 'Click', 'Overview graph'+graph);
   },
 
   _redrawGraph: function() {
