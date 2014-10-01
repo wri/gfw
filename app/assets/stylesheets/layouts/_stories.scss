@@ -395,8 +395,10 @@
     background-image: none;
     min-width: 320px;
     .mod-notice,
-    .mod-navbar,
     .footer-logos,
+    .mod-navbar ul,
+    #google_translate_element,
+    .layout-header-bottom,
     .site-info iframe {
       display: none;
     }
@@ -406,8 +408,22 @@
       max-width: 90%;
       min-width: 90%;
     }
+    .mod-navbar {
+      height: 60px;
+      margin: 0;
+      &:after {
+        content:" ";
+        background: image-url('/assets/icons/hamburger.png') no-repeat;
+        height: 20px;
+        width: 20px;
+        position: absolute;
+        right: 10px;
+        top: 20px;
+      }
+    }
     .layout-header-top {
-      border: none;
+      background-color: #F2F2F3;
+      border-bottom: 2px solid #CCCCCC;
     }
     .layout-footer .footer-address {
       margin: 10px 5px 0 5px;
@@ -415,8 +431,40 @@
       display: inline;
       padding-top: 25px;
     }
-    .carrousel .frame {
-      right: 180px;
+    .carrousel {
+      margin: 0;
+      height: 300px;
+      .frame {
+        background-color: transparent;
+        position: relative;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 90%;
+        img {
+          visibility: hidden;
+        }
+        &:after {
+          content: " ";
+          position: absolute;
+          background-image: url('http://maps.google.com/maps/api/staticmap?center=54.88292702,-114.58190918&zoom=4&markers=icon:/marker_exclamation.png%7C54.88292702,-114.58190918&maptype=terrain&sensor=false&size=768x190');
+          width: 100%;
+          height: 190px;
+          display: block;
+          background-position: 50% 50%;
+        }
+      }
+    }
+    .layout-content .section p {
+      @include column-count(1);
+      font-size: 20px;
+      font-family: "fira_sans_otlight", "Helvetica Neue", "Trebuchet MS", sans-serif;
+      .dropcap {
+        float: none;
+        margin: 0;
+        font-size: 100%;
+        font-family: "fira_sans_otlight", "Helvetica Neue", "Trebuchet MS", sans-serif;
+      }
     }
   }
 }
