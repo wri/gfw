@@ -399,12 +399,17 @@
     .mod-navbar ul,
     #google_translate_element,
     .layout-header-bottom,
+    .story-share_buttons,
     .site-info iframe {
       display: none;
     }
 
     .row,
     .inner {
+      max-width: 100%;
+      min-width: 100%;
+    }
+    .more_stories .inner {
       max-width: 90%;
       min-width: 90%;
     }
@@ -421,19 +426,35 @@
         top: 20px;
       }
     }
+    .section-title {
+      margin: 0 15px;
+      color: #463F52;
+    }
+    .when-and-who {
+      color: #999;
+    }
     .layout-header-top {
       background-color: #F2F2F3;
       border-bottom: 2px solid #CCCCCC;
     }
-    .layout-footer .footer-address {
-      margin: 10px 5px 0 5px;
-      width: 290px;
-      display: inline;
-      padding-top: 25px;
+    .layout-footer{
+      .left {
+        display: none;
+      }
+      .right {
+        float: left;
+        width: 90%;
+          .footer-address {
+          margin: 10px 5px 0 5px;
+          width: 100%;
+          display: inline;
+          padding-top: 25px;
+        }
+      }
     }
     .carrousel {
       margin: 0;
-      height: 300px;
+      height: 220px;
       .frame {
         background-color: transparent;
         position: relative;
@@ -447,17 +468,20 @@
         &:after {
           content: " ";
           position: absolute;
-          background-image: url('http://maps.google.com/maps/api/staticmap?center=54.88292702,-114.58190918&zoom=4&markers=icon:/marker_exclamation.png%7C54.88292702,-114.58190918&maptype=terrain&sensor=false&size=768x190');
+          background-image: url('http://maps.google.com/maps/api/staticmap?center=54.88292702,-114.58190918&zoom=4&markers=icon:/marker_exclamation.png%7C54.88292702,-114.58190918&maptype=terrain&sensor=false&size=768x190&scale=2');
           width: 100%;
           height: 190px;
           display: block;
           background-position: 50% 50%;
+          border-top: rgba(0,0,0,0.3) inset 1px;
+          border-bottom: rgba(0,0,0,0.3) inset 1px;
         }
       }
     }
     .layout-content .section p {
       @include column-count(1);
       font-size: 20px;
+      margin: 0 15px;
       font-family: "fira_sans_otlight", "Helvetica Neue", "Trebuchet MS", sans-serif;
       .dropcap {
         float: none;
