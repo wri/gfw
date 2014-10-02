@@ -426,12 +426,20 @@
         top: 20px;
       }
     }
-    .section-title {
-      margin: 0 15px;
-      color: #463F52;
-    }
-    .when-and-who {
-      color: #999;
+    .story-header {
+      .section-title {
+        margin: 3px 10px;
+        color: #463F52;
+        text-transform: none;
+        text-align: left;
+        font-size: 30px;
+        line-height: 37px;
+      }
+      .when-and-who {
+        color: #999;
+        text-align: left;
+        margin: 3px 10px;
+      }
     }
     .layout-header-top {
       background-color: #F2F2F3;
@@ -480,7 +488,7 @@
     }
     .layout-content .section p {
       @include column-count(1);
-      font-size: 20px;
+      font-size: 17px;
       margin: 0 15px;
       font-family: "fira_sans_otlight", "Helvetica Neue", "Trebuchet MS", sans-serif;
       .dropcap {
