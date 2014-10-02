@@ -409,9 +409,61 @@
       max-width: 100%;
       min-width: 100%;
     }
-    .more_stories .inner {
-      max-width: 90%;
-      min-width: 90%;
+    .more_stories {
+      .inner {
+        max-width: 90%;
+        min-width: 90%;
+      }
+      .btn {
+        border-radius: 25px;
+        span {
+          &:after {
+            content: '';
+            height: 8px;
+            width: 4px;
+            background: rgba(255, 255, 255, 0.9);
+            position: relative;
+            left: 10px;
+            display: inline-block;
+            top: 2px;
+          }
+          &:before {
+            content: '';
+            height: 0px;
+            width: 0px;
+            position: relative;
+            left: 135px;
+            display: inline-block;
+            top: -3px;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 5px solid rgba(255, 255, 255, 0.9);
+          }
+        }
+      }
+      .columns {
+        max-height: 110px;
+      }
+      .frame {
+        background-color: transparent;
+      }
+      li.column{
+        &:nth-child(-n+2) {
+          display: none;;
+        }
+        &:li:last-child {
+          position: absolute;
+        }
+        &:nth-last-child(2) {
+          position: absolute;
+          right: 0px;
+          width: 30px;
+        }
+        &:nth-last-child(3) {
+          position: absolute;
+          left: -80px;
+        }
+      }
     }
     .mod-navbar {
       height: 60px;
