@@ -332,7 +332,7 @@
     @include stories-icons-sprite(btn_remove);
   }
 }
-
+.show_mobile {display: none;}
 .thumbnail {
   position: relative;
   @include inline-block();
@@ -396,13 +396,13 @@
     min-width: 320px;
     .mod-notice,
     .footer-logos,
-    .mod-navbar ul,
     #google_translate_element,
     .layout-header-bottom,
     .story-share_buttons,
     .site-info iframe {
       display: none;
     }
+    .show_mobile {display: block;}
 
     .row,
     .inner {
@@ -417,27 +417,29 @@
       .btn {
         border-radius: 25px;
         span {
+          position: relative;
+          left: -10px;
           &:after {
             content: '';
             height: 8px;
             width: 4px;
-            background: rgba(255, 255, 255, 0.9);
+            background: white;
             position: relative;
-            left: 10px;
+            left: 7px;
             display: inline-block;
-            top: 2px;
+            top: 1px;
           }
           &:before {
             content: '';
             height: 0px;
             width: 0px;
             position: relative;
-            left: 135px;
+            left: 133px;
             display: inline-block;
             top: -3px;
             border-left: 5px solid transparent;
             border-right: 5px solid transparent;
-            border-bottom: 5px solid rgba(255, 255, 255, 0.9);
+            border-bottom: 6px solid white;
           }
         }
       }
@@ -448,16 +450,18 @@
         background-color: transparent;
       }
       li.column{
+        &.five {height: 120px;}
+        img {
+          border: #666 4px solid;
+        }
         &:nth-child(-n+2) {
           display: none;;
         }
-        &:li:last-child {
-          position: absolute;
-        }
         &:nth-last-child(2) {
           position: absolute;
-          right: 0px;
-          width: 30px;
+          right: -27px;
+          width: 65px;
+          overflow: hidden;
         }
         &:nth-last-child(3) {
           position: absolute;
@@ -465,9 +469,11 @@
         }
       }
     }
+    .grid-12 {width: 99%;}
     .mod-navbar {
-      height: 60px;
+      min-height: 60px;
       margin: 0;
+      width: 100%;
       &:after {
         content:" ";
         background: image-url('/assets/icons/hamburger.png') no-repeat;
@@ -476,6 +482,50 @@
         position: absolute;
         right: 10px;
         top: 20px;
+      }
+      ul {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        flex-direction: column;
+        -webkit-flex-direction: column;
+        li {
+          border-bottom: 1px solid #ccc;
+          height: 35px;
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          -webkit-justify-content: center;
+          -webkit-align-content: center;
+          -webkit-align-items: center;
+          justify-content: center;
+          align-content: center;
+          align-items: center;
+          a {
+            text-align: center;
+            font-family: "fira_sans_otmedium";
+            font-size: 17px;
+            letter-spacing: -1px;
+            &:hover{
+              background-color: transparent;
+                &:hover{
+                background-color: transparent;
+              }
+            }
+            &.selected {
+              background-color: transparent;
+              color: rgba(0,0,0,0.5);
+            }
+            span {
+              text-align: center;
+              width: 100%;
+            }
+          }
+        }
       }
     }
     .story-header {
@@ -515,6 +565,9 @@
     .carrousel {
       margin: 0;
       height: 220px;
+      img {
+        display: none;
+      }
       .frame {
         background-color: transparent;
         position: relative;
@@ -548,6 +601,14 @@
         margin: 0;
         font-size: 100%;
         font-family: "fira_sans_otlight", "Helvetica Neue", "Trebuchet MS", sans-serif;
+      }
+      &.show_mobile {
+        height: 250px;
+        width: 100%;
+        background-repeat: no-repeat;
+        margin: 10px 0;
+        padding: 0;
+        background-position: 50% 50%;
       }
     }
   }

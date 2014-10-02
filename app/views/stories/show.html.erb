@@ -56,6 +56,9 @@
 
   <div class='story-content'>
     <p><%= simple_format(raw("<span class='dropcap'>#{@story.details[0, 1]}</span>") + @story.details[1, @story.details.length - 1]).gsub("</p>\n\n<p>", "<br /><br />").html_safe %></p>
+    <% if (@story.media[1].present?) %>
+        <p class="show_mobile" style="background-image: url('<%= "#{ENV['AWS_HOST']}/big_#{@story.media[1]['url']}" %>')"></p>
+    <% end %>
   </div>
 
   <div class="story-share_buttons">
