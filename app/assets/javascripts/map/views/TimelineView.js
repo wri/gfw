@@ -30,6 +30,7 @@ define([
       this.presenter = new Presenter(this);
       this.currentTimeline = null;
       TimelineView.__super__.initialize.apply(this);
+      ga('send', 'event', 'Map', 'Timeline', 'Change' + layer.slug);
     },
 
     _cacheSelector: function() {
@@ -46,7 +47,6 @@ define([
       var html = this.template(p);
       this._update(html);
       this.$timelineLatLng.html(currentLatlng);
-      ga('send', 'event', 'Map', 'Timeline', 'Change' + layer.slug);
     },
 
     updateLatlng: function(lat, lng) {
