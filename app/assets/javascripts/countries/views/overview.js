@@ -525,37 +525,16 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       .attr('height', height);
 
     if (this.model.get('graph') === ('total_loss')) {
-      var sql = 'SELECT ';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'y'+y+', '
-      }
-
-      sql += "y2012, (SELECT y2001_y2012\
-                      FROM countries_gain\
-                      WHERE c.iso = iso) as gain\
-              FROM loss_gt_0 c \
-              WHERE iso = '"+iso+"'";
+      var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain) gain FROM umd_nat WHERE iso = \''+ iso +'\' AND thresh = '+ (config.canopy_choice || 10) +' AND year > 2000 GROUP BY iso, year ORDER BY year';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
-        var data = json.rows[0];
+        var data = json.rows;
 
-        var data_ = [],
-            gain = null;
-
-        _.each(data, function(val, key) {
-          if (key === 'gain') {
-            gain = val/12;
-          } else {
-            data_.push({
-              'year': key.replace('y',''),
-              'value': val
-            });
-          }
-        });
+        var data_ = data,
+            gain = data[0].gain;
 
         var y_scale = d3.scale.linear()
-          .domain([0, d3.max(data_, function(d) { return d.value; })])
+          .domain([0, d3.max(data_, function(d) { return d.loss; })])
           .range([height, 0]);
 
         var barWidth = width / data_.length;
@@ -567,8 +546,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         bar.append('svg:rect')
           .attr('class', 'bar')
-          .attr('y', function(d) { return y_scale(d.value); })
-          .attr('height', function(d) { return height - y_scale(d.value); })
+          .attr('y', function(d) { return y_scale(d.loss); })
+          .attr('height', function(d) { return height - y_scale(d.loss); })
           .attr('width', barWidth - 1);
 
         var data_gain_ = [
