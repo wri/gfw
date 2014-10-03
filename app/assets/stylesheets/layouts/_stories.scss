@@ -399,6 +399,7 @@
     #google_translate_element,
     .layout-header-bottom,
     .story-share_buttons,
+    aside,
     .site-info iframe {
       display: none;
     }
@@ -408,6 +409,11 @@
     .inner {
       max-width: 100%;
       min-width: 100%;
+    }
+    .featured_story {
+      .frame {
+        display: none;
+      }
     }
     .more_stories {
       .inner {
@@ -457,15 +463,34 @@
         &:nth-child(-n+2) {
           display: none;;
         }
-        &:nth-last-child(2) {
+        &:nth-last-child(2),
+        &:nth-last-child(3) {
           position: absolute;
           right: -27px;
           width: 65px;
           overflow: hidden;
+          a .frame {
+            opacity: 0.5;
+          }
+          &:after {
+            content: "⟩";
+            color: #fff;
+            font-size: 105px;
+            height: 50px;
+            width: 15px;
+            position: relative;
+            right: -15px;
+            text-shadow: 1px 1px 2px #666;
+          }
         }
         &:nth-last-child(3) {
-          position: absolute;
+          width: auto;
           left: -80px;
+          &:after{
+            content: "⟨";
+            left: 50px;
+            position: absolute;
+          }
         }
       }
     }
@@ -474,55 +499,35 @@
       min-height: 60px;
       margin: 0;
       width: 100%;
-      &:after {
-        content:" ";
-        background: image-url('/assets/icons/hamburger.png') no-repeat;
-        height: 20px;
-        width: 20px;
-        position: absolute;
-        right: 10px;
-        top: 20px;
-      }
       ul {
-        display: -webkit-box;
-        display: -moz-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        flex-direction: column;
-        -webkit-flex-direction: column;
-        li {
-          border-bottom: 1px solid #ccc;
-          height: 35px;
+        display: none;
+        &.show{
           display: -webkit-box;
           display: -moz-box;
           display: -ms-flexbox;
           display: -webkit-flex;
           display: flex;
-          -webkit-justify-content: center;
-          -webkit-align-content: center;
-          -webkit-align-items: center;
-          justify-content: center;
-          align-content: center;
-          align-items: center;
-          a {
-            text-align: center;
-            font-family: "fira_sans_otmedium";
-            font-size: 17px;
-            letter-spacing: -1px;
-            &:hover{
-              background-color: transparent;
-                &:hover{
-                background-color: transparent;
-              }
-            }
-            &.selected {
-              background-color: transparent;
-              color: rgba(0,0,0,0.5);
-            }
-            span {
+          li {
+            height: 35px;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-justify-content: center;
+            -webkit-align-content: center;
+            -webkit-align-items: center;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            a {
               text-align: center;
-              width: 100%;
+              font-family: "fira_sans_otmedium";
+              letter-spacing: -1px;
+              span {
+                text-align: center;
+                width: 100%;
+              }
             }
           }
         }
@@ -568,6 +573,12 @@
       img {
         display: none;
       }
+      .slide,
+      .next,
+      .previous,
+      iframe {
+        display: none;
+      }
       .frame {
         background-color: transparent;
         position: relative;
@@ -578,12 +589,10 @@
         img {
           visibility: hidden;
         }
-        &:after {
-          content: " ";
+        .mobile_map {
           position: absolute;
-          background-image: url('http://maps.google.com/maps/api/staticmap?center=54.88292702,-114.58190918&zoom=4&markers=icon:/marker_exclamation.png%7C54.88292702,-114.58190918&maptype=terrain&sensor=false&size=768x190&scale=2');
           width: 100%;
-          height: 190px;
+          height: 100%;
           display: block;
           background-position: 50% 50%;
           border-top: rgba(0,0,0,0.3) inset 1px;
@@ -612,4 +621,64 @@
       }
     }
   }
+}
+@media only screen and (max-width: 640px){
+  .mod-navbar {
+      ul {
+        &.show{
+          flex-direction: column;
+          -webkit-flex-direction: column;
+          li {
+            border-bottom: 1px solid #ccc;
+            &.hidden {
+              height: 100px;
+            }
+            a {
+              font-size: 17px;
+              &.selected {
+                background-color: transparent;
+                color: rgba(0,0,0,0.5);
+              }
+              &:hover {
+                background-color: transparent;
+                &:hover {
+                  background-color: transparent;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .brand.show {
+      top: 290px;
+    }
+}
+@media only screen and (max-width: 768px) and (min-width: 640px){
+  .mod-navbar {
+      ul {
+        &.show{
+          -webkit-flex-direction: row;
+          flex-direction: row;
+          -webkit-justify-content: space-between;
+          justify-content: space-between;
+          li {
+            border-bottom: 0px;
+            &.hidden {
+              height: 100px;
+            }
+            a {
+              font-size: 15px;
+              &.selected {
+                background-color: #97bd3d;
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+    }
+    .brand.show {
+      top: 50px;
+    }
 }

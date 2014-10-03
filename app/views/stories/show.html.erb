@@ -32,6 +32,7 @@
   <div class="carrousel">
     <div class="frame">
       <%= image_tag(static_map("#{@story.lat}, #{@story.lng}", '266x266', 4, true)) %>
+      <span class="mobile_map" style="background-image: url('http://maps.google.com/maps/api/staticmap?zoom=4&size=600x300&markers=icon:/marker_exclamation.png%7C<%=@story.lat %>,<%=@story.lng %>&maptype=terrain&sensor=false&scale=2')"></span>
     </div>
 
     <% if @story.media.size >= 3 %>
