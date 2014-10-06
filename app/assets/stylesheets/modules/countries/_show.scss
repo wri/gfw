@@ -450,11 +450,17 @@
 
     .country-nav-items {
       width: 100%;
+      @media screen and (min-width:0\0) {
+        /* IE9 and IE10 rule sets go here */
+        width: 16.79%;
+      }
       text-align: center;
       display: flex;
       display: -ms-flex;
+      display: -ms-flexbox;
       display: -webkit-flex;
       align-content: space-between;
+      -ms-flex-pack: justify;
 
       > li {
         float: left;
