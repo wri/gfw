@@ -106,6 +106,9 @@
         -webkit-appearance: none;
         padding: 10px 15px;
         width: 100%;
+        -moz-appearance: none;
+        text-indent: 0.01px;
+        text-overflow: '';
 
         option {
           color: #666;
@@ -1323,6 +1326,11 @@
         position: relative;
         top: 23px;
         cursor: pointer;
+        @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+          /* IE10+ specific styles go here */
+          top: 4px;
+          background: none;
+        }
         &:focus {
           outline: 0;
         }
@@ -1337,6 +1345,7 @@
           z-index: 500;
           position:relative;
         }
+
         &::-moz-range-thumb {
           background: image-url('home-icons/timeline_handler_white.png');
           background-color: $cGreen1;
@@ -1345,15 +1354,6 @@
           cursor: col-resize;
           border-radius: 3px;
         }
-        &::-ms-thumb {
-          background: image-url('home-icons/timeline_handler_white.png');
-          background-color: $cGreen1;
-          width: 14px;
-          height: 14px;
-          cursor: col-resize;
-          border-radius: 3px;
-        }
-
         &::-moz-range-track {
           display: none;
           background-color: transparent;
@@ -1367,6 +1367,37 @@
         }
         &::focus::-moz-range-track {
             outline: 0;
+        }
+
+        &::-ms-track {
+            top: 4px;
+            width: 300px;
+            height: 16px;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+
+            /* remove default tick marks */
+            color: transparent;
+        }
+        &::-ms-fill-lower {
+            outline: none;
+            background: transparent;
+            border-radius: 10px 0 0 10px;
+        }
+        &::-ms-thumb {
+          background: image-url('home-icons/timeline_handler_white.png');
+          background-color: $cGreen1;
+          width: 14px;
+          height: 14px;
+          cursor: col-resize;
+          border-radius: 3px;
+        }
+        &:focus::-ms-track {
+            background: transparent;
+        }
+        &:focus::-ms-fill-lower {
+            background: transparent;
         }
       }
     }
