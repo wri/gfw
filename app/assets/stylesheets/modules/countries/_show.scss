@@ -109,7 +109,9 @@
         -moz-appearance: none;
         text-indent: 0.01px;
         text-overflow: '';
-
+        &::-ms-expand {
+          display: none;
+        }
         option {
           color: #666;
         }
