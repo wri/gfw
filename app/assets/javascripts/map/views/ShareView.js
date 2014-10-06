@@ -46,8 +46,10 @@ define([
 
       if (mode === 'url') {
         this._setLink();
+        ga('send', 'event', 'Map', 'Share', 'Show dialog URL');
       } else if (mode === 'embed') {
           text = 'Click and paste HTML to embed in website';
+        ga('send', 'event', 'Map', 'Share', 'Show dialog EMBED');
         this._setEmbed();
       }
 
@@ -62,6 +64,7 @@ define([
       });
       this._initBindings();
       this._setLink();
+      ga('send', 'event', 'Map', 'Share', 'Show dialog');
     },
 
     _initBindings: function() {

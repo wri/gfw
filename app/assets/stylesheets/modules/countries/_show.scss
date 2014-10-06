@@ -106,9 +106,11 @@
         -webkit-appearance: none;
         padding: 10px 15px;
         width: 100%;
-
-        option {
-          color: #666;
+        -moz-appearance: none;
+        text-indent: 0.01px;
+        text-overflow: '';
+        &::-ms-expand {
+          display: none;
         }
 
         &:focus {
@@ -445,11 +447,17 @@
 
     .country-nav-items {
       width: 100%;
+      @media screen and (min-width:0\0) {
+        /* IE9 and IE10 rule sets go here */
+        width: 16.79%;
+      }
       text-align: center;
       display: flex;
       display: -ms-flex;
+      display: -ms-flexbox;
       display: -webkit-flex;
       align-content: space-between;
+      -ms-flex-pack: justify;
 
       > li {
         float: left;
@@ -1256,7 +1264,9 @@
     top: 15px; right: 15px;
     width: 6px;
     height: 6px;
-    @include home-icons-sprite(infowindow_close);
+    // @include home-icons-sprite(infowindow_close);
+    background: image-url('country-icons/infowindow_close.png');
+
   }
   h2 {
     color: #a1ba42;
@@ -1321,6 +1331,11 @@
         position: relative;
         top: 23px;
         cursor: pointer;
+        @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+          /* IE10+ specific styles go here */
+          top: 4px;
+          background: none;
+        }
         &:focus {
           outline: 0;
         }
@@ -1334,6 +1349,60 @@
           border-radius: 3px;
           z-index: 500;
           position:relative;
+        }
+
+        &::-moz-range-thumb {
+          background: image-url('home-icons/timeline_handler_white.png');
+          background-color: $cGreen1;
+          width: 14px;
+          height: 14px;
+          cursor: col-resize;
+          border-radius: 3px;
+        }
+        &::-moz-range-track {
+          display: none;
+          background-color: transparent;
+          z-index: 0;
+          border: none;
+        }
+
+        &::-moz-focusring{
+            outline: 1px solid white;
+            outline-offset: -1px;
+        }
+        &::focus::-moz-range-track {
+            outline: 0;
+        }
+
+        &::-ms-track {
+            top: 4px;
+            width: 300px;
+            height: 16px;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+
+            /* remove default tick marks */
+            color: transparent;
+        }
+        &::-ms-fill-lower {
+            outline: none;
+            background: transparent;
+            border-radius: 10px 0 0 10px;
+        }
+        &::-ms-thumb {
+          background: image-url('home-icons/timeline_handler_white.png');
+          background-color: $cGreen1;
+          width: 14px;
+          height: 14px;
+          cursor: col-resize;
+          border-radius: 3px;
+        }
+        &:focus::-ms-track {
+            background: transparent;
+        }
+        &:focus::-ms-fill-lower {
+            background: transparent;
         }
       }
     }

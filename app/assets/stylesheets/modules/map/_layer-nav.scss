@@ -151,6 +151,9 @@ $stories-color: rgb(242, 178, 87);
           input {
             cursor: pointer;
             background-image: url('/assets/svg/dragger.svg');
+            @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+              background-image: none;
+            }
           }
         }
       }
