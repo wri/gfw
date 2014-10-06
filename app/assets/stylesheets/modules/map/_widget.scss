@@ -62,11 +62,13 @@
   }
 
   &.closed .widget-toggle {
-    @include home-icons-sprite(legend_toggle_open);
+    // @include home-icons-sprite(legend_toggle_open);
+    background: image-url('home-icons/legend_toggle_open.png');
   }
 
   &.closed .widget-toggle-grey {
-    @include home-icons-sprite(info_bar_toggle_open);
+    // @include home-icons-sprite(info_bar_toggle_open);
+    background: image-url('home-icons/info_bar_toggle_open.png');
   }
 
   &.ui-draggable {
@@ -84,9 +86,11 @@
   width: 25px;
   height: 38px;
   cursor: pointer;
-  @include home-icons-sprite(legend_toggle_close);
+  // @include home-icons-sprite(legend_toggle_close);
+  background: image-url('home-icons/legend_toggle_close.png');
 
   &.widget-toggle-grey {
-    @include home-icons-sprite(info_bar_toggle_close);
+    // @include home-icons-sprite(info_bar_toggle_close);
+    background: image-url('home-icons/info_bar_toggle_close.png');
   }
 }

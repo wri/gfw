@@ -44,7 +44,7 @@ gfw.ui.view.Share = cdb.core.View.extend({
 
   _openShare: function(e) {
     e.preventDefault();
-    $(event.target).closest('section').addClass('current_share');
+    $(e.target).closest('section').addClass('current_share');
     this.share.show();
   },
 
