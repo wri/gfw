@@ -60,6 +60,7 @@ define([
             $toggle.css('border-color', layer.title_color);
             $toggleIcon.css('background-color', layer.title_color);
           }
+          ga('send', '  event', 'LayerNavView', 'Toggle', layer.slug);
         } else {
           $li.removeClass('selected');
           $toggle.removeClass('checked').css('background', '').css('border-color', '');
