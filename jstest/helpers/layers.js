@@ -106,7 +106,7 @@ var layers = {
     "title_color": "#fecc5c",
     "subtitle": "",
     "sublayer": "",
-    "table_name": "logging_all_merged",
+    "table_name": "logging_gcs_wgs84",
     "source": "",
     "category_color": "#c98e6c",
     "category_slug": "forest_use",
@@ -120,7 +120,7 @@ var layers = {
     "xmin": null,
     "ymax": null,
     "ymin": null,
-    "tileurl": "https://wri-01.cartodb.com/tiles/logging_all_merged/{Z}/{X}/{Y}.png",
+    "tileurl": "https://wri-01.cartodb.com/tiles/logging_gcs_wgs84/{Z}/{X}/{Y}.png",
     "visible": true
   },
   "mining": {

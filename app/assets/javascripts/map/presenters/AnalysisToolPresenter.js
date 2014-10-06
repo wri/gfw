@@ -29,7 +29,7 @@ define([
   });
 
   var concessionsSql = {
-    'logging': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from logging_all_merged where cartodb_id ={0}',
+    'logging': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from logging_gcs_wgs84 where cartodb_id ={0}',
     'mining':'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from mining_permits_merge where cartodb_id ={0}',
     'oilpalm': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from oil_palm_permits_merge where cartodb_id ={0}',
     'fiber': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from fiber_all_merged where cartodb_id ={0}'

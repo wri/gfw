@@ -33,7 +33,7 @@
     line-clip: false;
   }
 
-  [layer='logging_all_merged'] {
+  [layer='logging_gcs_wgs84'] {
     polygon-fill: #fecc5c;
     line-color: #B38E3B;
     line-clip: false;

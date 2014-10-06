@@ -13,6 +13,12 @@
     min-width: 155px;
     min-height: 24px;
     order: 2;
+    @media screen and (min-width:0\0) {
+        /* IE9 and IE10 rule sets go here */
+      position: absolute;
+      right: 30px;
+      top: 19px;
+    }
   }
 
   ul {
