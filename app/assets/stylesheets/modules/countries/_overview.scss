@@ -638,7 +638,8 @@
     top: 15px; right: 15px;
     width: 6px;
     height: 6px;
-    @include country-icons-sprite(infowindow_close);
+    // @include country-icons-sprite(infowindow_close);
+    background: image-url('country-icons/infowindow_close.png');
   }
 
   h1 {

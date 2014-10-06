@@ -1256,7 +1256,9 @@
     top: 15px; right: 15px;
     width: 6px;
     height: 6px;
-    @include home-icons-sprite(infowindow_close);
+    // @include home-icons-sprite(infowindow_close);
+    background: image-url('country-icons/infowindow_close.png');
+
   }
   h2 {
     color: #a1ba42;
