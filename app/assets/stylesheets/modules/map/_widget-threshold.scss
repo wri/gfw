@@ -135,6 +135,37 @@
         cursor: col-resize;
         border-radius: 3px;
       }
+      &::-moz-range-thumb {
+        background: image-url('home-icons/timeline_handler_white.png');
+        background-color: $cGreen1;
+        width: 14px;
+        height: 14px;
+        cursor: col-resize;
+        border-radius: 3px;
+      }
+      &::-ms-thumb {
+        background: image-url('home-icons/timeline_handler_white.png');
+        background-color: $cGreen1;
+        width: 14px;
+        height: 14px;
+        cursor: col-resize;
+        border-radius: 3px;
+      }
+
+      &::-moz-range-track {
+        display: none;
+        background-color: transparent;
+        z-index: 0;
+        border: none;
+      }
+
+      &::-moz-focusring{
+          outline: 1px solid white;
+          outline-offset: -1px;
+      }
+      &::focus::-moz-range-track {
+          outline: 0;
+      }
     }
 
     .visible-range {
