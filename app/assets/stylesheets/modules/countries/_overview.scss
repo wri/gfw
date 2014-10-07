@@ -23,6 +23,7 @@
   height: 371px;
   background: image-url('backgrounds/overview_graph.png');
   @include background-size(cover);
+  background-position: -220px center;
 
   svg {
     position: relative;
@@ -32,10 +33,10 @@
 }
 
 .tick {
-  fill: none;
-  shape-rendering: crispEdges;
+  shape-rendering: optimizeSpeed;
   stroke-width: 1px;
-  stroke-dasharray: 8, 4;
+  stroke-dasharray: 16, 2;
+  background: red;
 }
 
 .grid_h {
@@ -46,10 +47,6 @@
 .grid_v {
   @extend .tick;
   stroke: rgba(#fff, .3);
-}
-
-.area {
-  @include opacity(.35);
 }
 
 .linedot {
@@ -68,14 +65,14 @@
 
 .overview_line {
   @extend .tick;
-  stroke-width: 3px;
+  stroke-width: 7px;
   stroke: #6D6DE5;
 }
 
 .minioverview_line {
   @extend .tick;
   stroke: #444;
-
+  stroke-dasharray: 11px, 2px;
   @include opacity(.5);
 }
 
@@ -223,7 +220,8 @@
     }
 
     .minioverview_line {
-      @include opacity(1);
+      @include opacity(0.7);
+      stroke-width: 2px;
     }
 
     .countries_list__minioverview {
@@ -278,23 +276,45 @@
   line-height: 20px;
   .line {
     float: left;
-    color: #88aa37;
+    color: #A2A0A9;
+    position: relative;
     span{
       min-width: 50px;
       text-align: right;
       float: left;
       margin-right: 4px;
     }
-    &.loss {
-      color: #C443FF;
-    }
-    &.gain {
-      color: #6D6DE5;
-    }
     &.percent {
       margin-right: 40px;
       font-size: 1.3rem;
       margin-top: 13px;
+    }
+    &::after {
+      content: '';
+      float: left;
+      background-color: #FF6699;
+      width: 6px;
+      height: 6px;
+      border-radius: 6px;
+      position: absolute;
+      top: 8px;
+      right: -12px;
+    }
+    &.percent::after {
+      display: none;
+    }
+    &.gain::after {
+      background-color: #6D6DE5;
+      right: -10px;
+    }
+  }
+  div[id^="ext_"] {
+    .line::after {
+      background-color: #88aa37;
+    }
+    .loss::after {
+      right: -28px;
+      background-color: #FF6699;
     }
   }
   .perct {
@@ -327,6 +347,13 @@
   overflow: hidden;
   max-width: 450px;
   white-space: nowrap;
+  color: #A2A0A9;
+  a {
+    color: #463F52;
+    &:hover {
+      color: #88aa37;
+    }
+  }
 }
 
 .countries_list__minioverview {
@@ -345,7 +372,7 @@
   }
 
   .bar {
-    fill: #C443FF;
+    fill: #FF6699;
 
     &.extent {
       fill: $cGreen;
@@ -393,7 +420,7 @@
     font-family: "fira_sans_otmedium";
     text-align: left;
     text-transform: uppercase;
-    color: #464152;
+    color: #463F52;
     @include border-radius(21px);
 
     i {
@@ -499,7 +526,7 @@
       @include text-shadow(0 0 5px rgba(#000, .8));
 
       &:first-child i {
-        background: #C441FF;
+        background: #FF6699;
       }
 
       &:last-child i {
@@ -774,7 +801,7 @@
     }
     text-align: center;
     height: 39px;
-    border: 2px solid #73707F;
+    border: 2px solid rgba(54,51,64,0.25);
     padding: 10px 12px 0 12px;
     text-transform: uppercase;
     border-radius: 20px;
@@ -793,7 +820,7 @@
     }
 
     &:hover {
-      border-color: lighten( #73707F, 15% );
+      border-color: rgba(54,51,64,0.35);
     }
     &.settings {
       &.disable {

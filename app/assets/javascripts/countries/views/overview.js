@@ -122,6 +122,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     this._drawList();
   },
   _updateGraphOverview: function(e) {
+    if (typeof ga !== "undefined") ga('send', 'event', 'Country Overview', 'Change', 'Threshold');
     var $cnp_op = this.$el.find('.overview_button_group .settings i')
     if (config.canopy_choice != 10) $cnp_op.addClass('no_def');
     else $cnp_op.removeClass('no_def');
@@ -158,21 +159,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
     if (this.model.get('graph') === 'total_loss') {
       this.$settings.removeClass('disable');
-      var sql = 'WITH loss as (SELECT iso, SUM(';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'y'+y+' + ';
-      }
-
-      sql += 'y2012) as sum_loss\
-              FROM countries_loss\
-              GROUP BY iso)';
-
-      sql += 'SELECT c.iso, c.name, c.enabled, sum_loss\
-              FROM loss, gfw2_countries c\
-              WHERE loss.iso = c.iso\
-              AND NOT sum_loss = 0\
-              ORDER BY sum_loss DESC ';
+      var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat umd, gfw2_countries c WHERE thresh = '+ (config.canopy_choice || 10) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
 
       if (e) {
         sql += 'OFFSET 10';
@@ -197,7 +184,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (config.canopy_choice || 10),
             dataType: 'json',
             success: function(data) {
-              var loss = (config.canopy_choice == false || config.canopy_choice == 10) ? Math.round(val.sum_loss) : 0;
+              var loss = (config.canopy_choice == false || config.canopy_choice == 10) ? Math.round(val.loss) : 0;
               var gain = 0;
               var g_mha, l_mha;
               g_mha = l_mha = 'Mha';
@@ -229,7 +216,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               } else {
                 g_mha = 'Ha';
               }
-
               $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span><span class="gain line"><span>'+ gain+' </span>'+ g_mha +' of gain</span>');
 
               if (key == max_trigger){
@@ -265,6 +251,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
       });
     } else if (this.model.get('graph') === 'percent_loss') {
+
       this.$settings.removeClass('disable');
       var sql = 'WITH e AS (SELECT iso, extent FROM umd_nat WHERE year = 2000 AND thresh = '+(config.canopy_choice || 10)+') SELECT c.iso, c.name, c.enabled, p.perc ratio_loss FROM (SELECT umd.iso, sum(umd.loss) / avg(e.extent) perc FROM umd_nat umd, e WHERE umd.thresh = '+(config.canopy_choice || 10)+' AND umd.iso = e.iso AND e.extent != 0 GROUP BY umd.iso, e.iso ORDER BY perc DESC) p, gfw2_countries c WHERE p.iso = c.iso AND c.enabled IS true AND not perc = 0 ORDER BY p.perc DESC ';
 
@@ -316,22 +303,35 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       });
     } else if (this.model.get('graph') === 'total_extent') {
       this.$settings.removeClass('disable');
-      var sql = 'WITH extent as (SELECT iso, SUM(';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'y'+y+' + ';
-      }
-
-      sql += 'y2012) as sum_extent\
-              FROM extent_gt_25\
-              GROUP BY iso)';
-
-      sql += 'SELECT c.iso, c.name, c.enabled, sum_extent\
-              FROM extent, gfw2_countries c\
-              WHERE extent.iso = c.iso\
-              AND NOT sum_extent = 0\
-              ORDER BY sum_extent DESC ';
-
+      var sql = 'WITH e AS \
+                ( \
+                       SELECT iso, \
+                              extent \
+                       FROM   umd_nat \
+                       WHERE  thresh = ' + (config.canopy_choice || 10) +' \
+                       AND    year = 2012), u AS \
+                ( \
+                         SELECT   iso, \
+                                  Sum(loss) sum_loss, \
+                                  Sum(gain) sum_gain \
+                         FROM     umd_nat \
+                         WHERE    thresh = ' + (config.canopy_choice || 10) +' \
+                         GROUP BY iso) \
+                SELECT   c.iso, \
+                         c.NAME, \
+                         c.enabled, \
+                         u.sum_loss, \
+                         u.sum_gain, \
+                         u.sum_loss / u.sum_gain ratio, \
+                         e.extent \
+                FROM     gfw2_countries c, \
+                         u, \
+                         e \
+                WHERE    u.sum_gain IS NOT NULL \
+                AND      NOT u.sum_gain = 0 \
+                AND      c.iso = u.iso \
+                AND      e.iso = u.iso \
+                ORDER BY u.sum_loss DESC ';
       if (e) {
         sql += 'OFFSET 10';
       } else {
@@ -347,14 +347,9 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         _.each(data, function(val, key) {
           var ord = e ? (key+11) : (key+1),
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
-
-          $.ajax({
-            url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (config.canopy_choice || 10),
-            dataType: 'json',
-            success: function(data) {
               var e_mha, l_mha,
-                  ex = data.years[data.years.length -1].extent,
-                  lo = data.years[data.years.length -1].loss;
+                  ex = val.extent,
+                  lo = val.sum_loss;
                   e_mha = l_mha = 'Mha';
 
               if (ex.toString().length >= 7) {
@@ -376,20 +371,17 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               } else {
                 l_mha = 'Ha';
               }
-              $('#ext_'+val.iso+'').empty().append('<span class="line"><span data-orig="' + data.years[data.years.length -1].extent + '" class="loss">'+ parseInt(ex).toLocaleString() +' </span>'+ e_mha +' of extent</span><span class="loss line"><span>'+ parseInt(lo).toLocaleString() +' </span>'+ l_mha +'  of loss</span>')
               if (key == max_trigger){
                 that._reorderRanking();
               }
-            }
-          });
-          markup_list += '<li>\
-                            <div class="countries_list__minioverview expanded countries_list__minioverview_'+val.iso+'"></div>\
-                            <div class="countries_list__num">'+ord+'</div>\
-                            <div class="countries_list__title">'+enabled+'</div>\
-                            <div class="countries_list__data">\
-                              <div id="ext_'+val.iso+'"></div>\
-                            </div>\
-                          </li>';
+              markup_list += '<li>\
+                              <div class="countries_list__minioverview expanded countries_list__minioverview_'+val.iso+'"></div>\
+                              <div class="countries_list__num">'+ord+'</div>\
+                              <div class="countries_list__title">'+enabled+'</div>\
+                              <div class="countries_list__data">\
+                                <div id="ext_'+val.iso+'"><span class="line"><span data-orig="' + val.extent + '" class="loss">'+ ex.toLocaleString() +' </span>'+ e_mha +' of extent</span><span class="loss line"><span>'+ lo.toLocaleString() +' </span>'+ l_mha +'  of loss</span></div>\
+                              </div>\
+                            </li>';
         });
 
         if (e) {
@@ -534,37 +526,16 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       .attr('height', height);
 
     if (this.model.get('graph') === ('total_loss')) {
-      var sql = 'SELECT ';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'y'+y+', '
-      }
-
-      sql += "y2012, (SELECT y2001_y2012\
-                      FROM countries_gain\
-                      WHERE c.iso = iso) as gain\
-              FROM loss_gt_0 c \
-              WHERE iso = '"+iso+"'";
+      var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain) gain FROM umd_nat WHERE iso = \''+ iso +'\' AND thresh = '+ (config.canopy_choice || 10) +' AND year > 2000 GROUP BY iso, year ORDER BY year';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
-        var data = json.rows[0];
+        var data = json.rows;
 
-        var data_ = [],
-            gain = null;
-
-        _.each(data, function(val, key) {
-          if (key === 'gain') {
-            gain = val/12;
-          } else {
-            data_.push({
-              'year': key.replace('y',''),
-              'value': val
-            });
-          }
-        });
+        var data_ = data,
+            gain = data[0].gain;
 
         var y_scale = d3.scale.linear()
-          .domain([0, d3.max(data_, function(d) { return d.value; })])
+          .domain([0, d3.max(data_, function(d) { return d.loss; })])
           .range([height, 0]);
 
         var barWidth = width / data_.length;
@@ -576,8 +547,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         bar.append('svg:rect')
           .attr('class', 'bar')
-          .attr('y', function(d) { return y_scale(d.value); })
-          .attr('height', function(d) { return height - y_scale(d.value); })
+          .attr('y', function(d) { return y_scale(d.loss); })
+          .attr('height', function(d) { return height - y_scale(d.loss); })
           .attr('width', barWidth - 1);
 
         var data_gain_ = [
@@ -604,47 +575,19 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           });
       });
     } else if (this.model.get('graph') === ('percent_loss')) {
-      var sql = 'WITH loss as (SELECT ';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'y'+y+' as loss_y'+y+', ';
-      }
-
-      sql += "y2012 as loss_y2012\
-              FROM loss_gt_25\
-              WHERE iso = '"+iso+"'), extent as (SELECT ";
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'y'+y+' as extent_y'+y+', ';
-      }
-
-      sql += "y2012 as extent_y2012\
-              FROM extent_gt_25\
-              WHERE iso = '"+iso+"')";
-
-      sql += 'SELECT ';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'loss_y'+y+'/extent_y'+y+' as percent_'+y+', ';
-      }
-
-      sql += 'loss_y2012/extent_y2012 as percent_2012\
-              FROM loss, extent';
+      var sql = 'SELECT year, \
+                       loss_perc \
+                FROM   umd_nat \
+                WHERE  thresh = '+ (config.canopy_choice || 10) +' \
+                       AND iso = \''+ iso +'\'';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
-        var data = json.rows[0];
+        var data = json.rows;
 
-        var data_ = [];
-
-        _.each(data, function(val, key) {
-          data_.push({
-            'year': key.replace('y',''),
-            'value': val*100
-          });
-        });
+        var data_ = data;
 
         var y_scale = d3.scale.linear()
-          .domain([0, d3.max(data_, function(d) { return d.value; })])
+          .domain([0, d3.max(data_, function(d) { return d.loss_perc; })])
           .range([height, 0]);
 
         var barWidth = width / data_.length;
@@ -656,28 +599,19 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         bar.append('svg:rect')
           .attr('class', 'bar')
-          .attr('y', function(d) { return y_scale(d.value); })
-          .attr('height', function(d) { return height - y_scale(d.value); })
+          .attr('y', function(d) { return y_scale(d.loss_perc); })
+          .attr('height', function(d) { return height - y_scale(d.loss_perc); })
           .attr('width', barWidth - 1);
 
       });
     } else if (this.model.get('graph') === ('total_extent')) {
-      var sql = 'SELECT ';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'loss.y'+y+' as loss_y'+y+', ';
-      }
-
-      sql += 'loss.y2012 as loss_y2012, ';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'extent.y'+y+' as extent_y'+y+', ';
-      }
-
-      sql += "extent.y2012 as extent_y2012\
-              FROM loss_gt_0 loss, extent_gt_25 extent\
-              WHERE loss.iso = extent.iso\
-              AND loss.iso = '"+iso+"'";
+      var sql = 'SELECT year, \
+                 loss,  \
+                 extent_offset extent  \
+                FROM   umd_nat  \
+                WHERE  thresh = '+ (config.canopy_choice || 10) +'  \
+                       AND iso = \''+ iso +'\' \
+                       AND year > 2000 ';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
 
@@ -687,34 +621,33 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .append('svg:svg')
           .attr('width', width)
           .attr('height', height);
+        var data = json.rows;
 
-        var data = json.rows[0];
-
-        var data_loss_ = [],
+        var data_loss_ = data,
             data_extent_ = [];
 
-        _.each(data, function(val, key) {
-          if (key.indexOf('loss_y') != -1) {
-            data_loss_.push({
-              'year': key.split('_y')[1],
-              'value': val
-            });
-          }
+        // _.each(data, function(val, key) {
+        //   if (key.indexOf('loss_y') != -1) {
+        //     data_loss_.push({
+        //       'year': key.split('_y')[1],
+        //       'value': val
+        //     });
+        //   }
 
-          if (key.indexOf('extent_y') != -1) {
-            data_extent_.push({
-              'year': key.split('extent_y')[1],
-              'value': val
-            });
-          }
-        });
+        //   if (key.indexOf('extent_y') != -1) {
+        //     data_extent_.push({
+        //       'year': key.split('extent_y')[1],
+        //       'value': val
+        //     });
+        //   }
+        // });
 
         var y_scale_loss = d3.scale.linear()
-          .domain([0, d3.max(data_loss_, function(d) { return d.value; })])
+          .domain([0, d3.max(data, function(d) { return d.loss; })])
           .range([height, 0]);
 
         var y_scale_extent = d3.scale.linear()
-          .domain([0, d3.max(data_extent_, function(d) { return d.value; })])
+          .domain([0, d3.max(data, function(d) { return d.extent; })])
           .range([height, 0]);
 
         var barWidth_loss = width / data_loss_.length;
@@ -727,11 +660,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         bar.append('svg:rect')
           .attr('class', 'bar')
-          .attr('y', function(d) { return y_scale_loss(d.value); })
-          .attr('height', function(d) { return height - y_scale_loss(d.value); })
+          .attr('y', function(d) { return y_scale_loss(d.loss); })
+          .attr('height', function(d) { return height - y_scale_loss(d.loss); })
           .attr('width', barWidth_loss - 1);
 
-        var barWidth_extent = width / data_extent_.length;
+        var barWidth_extent = width / data.length;
 
         var bar2 = graph2.selectAll('g')
           .data(data_extent_)
@@ -742,7 +675,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         bar2.append('svg:rect')
           .attr('class', 'bar extent')
           .attr('y', function(d) { return y_scale_extent(d.value); })
-          .attr('height', function(d) { return height - y_scale_extent(d.value); })
+          .attr('height', function(d) { return height - y_scale_extent(d.extent); })
           .attr('width', barWidth_extent - 1);
       });
     }
@@ -846,44 +779,35 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('y', 30)
         .attr('transform', 'rotate(-90)');
 
-      var sql = 'SELECT ';
-      for(var y = 2001; y < 2012; y++) {
-        sql += '(SELECT sum(loss) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as y'+y+',';
-      }
-
-      sql += '(SELECT sum(loss) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as y2012, (SELECT SUM(y2001_y2012) FROM countries_gain) as gain';
+      var sql = 'SELECT year, \
+           Sum(loss) loss, \
+           Sum(gain) gain \
+            FROM   umd_nat  \
+            WHERE  thresh = '+ (config.canopy_choice || 10) +'  \
+                    AND year > 2000 \
+            GROUP  BY year  \
+            ORDER  BY year ';
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(error, json) {
-        var data = json.rows[0];
+        var data = json.rows;
 
-        var data_ = [],
-            gain = null;
-
-        _.each(data, function(val, key) {
-          if (key === 'gain') {
-            gain = val/12;
-          } else {
-            data_.push({
-              'year': key.replace('y',''),
-              'value': val
-            });
-          }
-        });
+        var data_ = data,
+            gain = data[0].gain;
 
         var y_scale = d3.scale.linear()
           .range([vertical_m, h-vertical_m])
-          .domain([d3.max(data_, function(d) { return d.value; }), 0]);
+          .domain([d3.max(data_, function(d) { return d.loss; }), 0]);
 
         // area
         var area = d3.svg.area()
           .x(function(d) { return x_scale(d.year); })
           .y0(h)
-          .y1(function(d) { return y_scale(d.value); });
+          .y1(function(d) { return y_scale(d.loss); });
 
         svg.append('path')
           .datum(data_)
           .attr('class', 'area')
           .attr('d', area)
-          .style('fill', 'url(#gradient)');
+          .style('fill', 'rgba(239,66,147,0.5)');
 
         // circles
         svg.selectAll('circle')
@@ -895,11 +819,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             return x_scale(d.year);
           })
           .attr('cy', function(d){
-            return y_scale(d.value);
+            return y_scale(d.loss);
           })
           .attr('r', 6)
           .attr('name', function(d) {
-            return '<span>'+d.year+'</span>'+formatNumber(parseFloat(d.value/1000000).toFixed(1))+' Mha';
+            return '<span>'+d.year+'</span>'+formatNumber(parseFloat(d.loss/1000000).toFixed(1))+' Mha';
           })
           .on('mouseover', function(d) {
             that.tooltip.html($(this).attr('name'))
@@ -948,14 +872,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             'x2': w-m,
             'y1': function(d) { return y_scale(gain); },
             'y2': function(d) { return y_scale(gain); }
-          });
-
-        svg.selectAll('circle.gain')
-          .data(data_gain_)
-          .enter()
-          .append('svg:circle')
-          .attr('class', 'linedot gain')
-          .attr('cx', function(d) {
+          })
+         .attr('cx', function(d) {
             return x_scale(d.year);
           })
           .attr('cy', function(d){
@@ -969,7 +887,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             that.tooltip.html($(this).attr('name'))
               .style('visibility', 'visible')
               .style('top', $(this).offset().top-100+'px')
-              .style('left', $(this).offset().left-$('.tooltip').width()/2-4+'px')
+              .style('left', ($(this).offset().left + 436) +'px')
               .attr('class', 'tooltip gain_tooltip');
 
             d3.select(this)
@@ -1001,48 +919,18 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('y', 30)
         .attr('transform', 'rotate(-90)');
 
-      var sql = 'WITH loss as (SELECT ';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += '(SELECT sum(loss) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as sum_loss_y'+y+',';
-      }
-      sql += '(SELECT sum(loss) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as sum_loss_y2012), extent as (SELECT ';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += '(SELECT sum(extent) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as sum_extent_y'+y+',';
-      }
-      sql += '(SELECT sum(extent) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as sum_extent_y2012) SELECT ';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'sum_loss_y'+y+'/sum_extent_y'+y+' as percent_loss_'+y+', ';
-      }
-
-      sql += 'sum_loss_y2012/sum_extent_y2012 as percent_loss_2012, (SELECT SUM(y2001_y2012)/(';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'sum_extent_y'+y+' + ';
-      }
-
-      sql += 'sum_extent_y2012)\
-              FROM countries_gain) as gain\
-              FROM loss, extent';
+      var sql = 'SELECT year, \
+                  Sum(gain) / Sum(extent_offset) ratio_gain,  \
+                  Sum(loss) / Sum(extent_offset)  ratio_loss  \
+                FROM   umd_nat  \
+                WHERE  thresh = '+ (config.canopy_choice || 10) +' \
+                       AND year > 2000  \
+                GROUP  BY year ORDER BY year ';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
-        var data = json.rows[0];
-
-        var data_ = [],
-            gain = null;
-
-        _.each(data, function(val, key) {
-          if (key === 'gain') {
-            gain = val/12;
-          } else {
-            data_.push({
-              'year': key.replace('percent_loss_',''),
-              'value': val
-            });
-          }
-        });
+        var data = json.rows;
+        var data_ = data,
+            gain = data[0].ratio_gain;
 
         var y_scale = grid_scale;
 
@@ -1050,13 +938,13 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         var area = d3.svg.area()
           .x(function(d) { return x_scale(d.year); })
           .y0(h)
-          .y1(function(d) { return y_scale(d.value*100); });
+          .y1(function(d) { return y_scale(d.ratio_loss*100); });
 
         svg.append('path')
           .datum(data_)
           .attr('class', 'area')
           .attr('d', area)
-          .style('fill', 'url(#gradient)');
+          .style('fill', 'rgba(239,66,147,0.5)');
 
         // circles
         svg.selectAll('circle')
@@ -1068,11 +956,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             return x_scale(d.year);
           })
           .attr('cy', function(d){
-            return y_scale(d.value*100);
+            return y_scale(d.ratio_loss*100);
           })
           .attr('r', 6)
           .attr('name', function(d) {
-            return '<span>'+d.year+'</span>'+parseFloat(d.value*100).toFixed(2)+' %';
+            return '<span>'+d.year+'</span>'+parseFloat(d.ratio_loss*100).toFixed(2)+' %';
           })
           .on('mouseover', function(d) {
             that.tooltip.html($(this).attr('name'))
@@ -1121,29 +1009,22 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             'x2': w-m,
             'y1': function(d) { return y_scale(gain*100); },
             'y2': function(d) { return y_scale(gain*100); }
-          });
-
-         // circles
-        svg.selectAll('circle.gain')
-          .data(data_gain_)
-          .enter()
-          .append('svg:circle')
-          .attr('class', 'linedot gain')
+          })
           .attr('cx', function(d) {
             return x_scale(d.year);
           })
           .attr('cy', function(d){
-            return y_scale(d.value*100);
+            return y_scale(gain*100);
           })
           .attr('r', 6)
           .attr('name', function(d) {
-            return '<span>2001-2012</span>'+parseFloat(d.value*100).toFixed(2)+' %';
+            return '<span>2001-2012</span>'+parseFloat(gain*100).toFixed(2)+' %';
           })
           .on('mouseover', function(d) {
             that.tooltip.html($(this).attr('name'))
               .style('visibility', 'visible')
               .style('top', $(this).offset().top-100+'px')
-              .style('left', $(this).offset().left-$('.tooltip').width()/2-4+'px')
+              .style('left', ($(this).offset().left + 436) +'px')
               .attr('class', 'tooltip gain_tooltip');
 
             d3.select(this)
@@ -1194,57 +1075,21 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('stop-color', '#98BD17')
         .attr('stop-opacity', 1);
 
-      var sql = 'SELECT ';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += '(SELECT sum(loss) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as loss_y'+y+',';
-      }
-
-      sql += '(SELECT sum(loss) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as loss_y'+y+',';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += '(SELECT sum(extent) FROM umd_nat WHERE year ='+y+' AND thresh ='+thresh+' ) as extent_y'+y+',';
-      }
-
-      sql += '(SELECT sum(extent) FROM umd_nat WHERE year = 2012 AND thresh ='+thresh+' ) as extent_y'+y+' FROM umd_nat';
+      var sql = 'SELECT year, \
+                  Sum(loss)   loss,  \
+                  Sum(extent_offset) extent  \
+                  FROM   umd_nat  \
+                  WHERE  thresh = '+ (config.canopy_choice || 10) +'  \
+                         AND year > 2000  \
+                  GROUP  BY year  \
+                  ORDER BY year';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
-        var data = json.rows[0];
+        var data = json.rows;
 
-        var data_ = [],
+        var data_ = data,
             data_loss_ = [],
             data_extent_ = [];
-
-        _.each(data, function(val, key) {
-          var year = key.split('_y')[1];
-
-          var obj = _.find(data_, function(obj) { return obj.year == year; });
-
-          if (obj === undefined) {
-            data_.push({ 'year': year });
-          }
-
-          if (key.indexOf('loss_y') != -1) {
-            data_loss_.push({
-              'year': key.split('_y')[1],
-              'value': val
-            });
-          }
-
-          if (key.indexOf('extent_y') != -1) {
-            data_extent_.push({
-              'year': key.split('extent_y')[1],
-              'value': val
-            });
-          }
-        });
-
-        _.each(data_, function(val) {
-          var loss = _.find(data_loss_, function(obj) { return obj.year == val.year; }),
-              extent = _.find(data_extent_, function(obj) { return obj.year == val.year; });
-
-          _.extend(val, { 'loss': loss.value, 'extent': extent.value });
-        });
 
         var domain = [d3.max(data_, function(d) { return d.extent; }), 0];
 
@@ -1267,17 +1112,18 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           .datum(data_)
           .attr('class', 'area')
           .attr('d', area_loss)
-          .style('fill', 'url(#gradient)');
+          .style('fill', 'rgba(239,66,147,0.5)');
 
         svg.append('path')
           .datum(data_)
           .attr('class', 'area')
           .attr('d', area_extent)
-          .style('fill', 'url(#gradient_extent)');
+          .style('fill', 'url(#gradient_extent)')
+          .style('opacity', '0.35');
 
         // circles
         svg.selectAll('circle')
-          .data(data_loss_)
+          .data(data_)
           .enter()
           .append('svg:circle')
           .attr('class', 'linedot')
@@ -1285,11 +1131,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             return x_scale(d.year);
           })
           .attr('cy', function(d){
-            return y_scale(d.value);
+            return y_scale(d.loss);
           })
           .attr('r', 6)
           .attr('name', function(d) {
-            return '<span>'+d.year+'</span>'+formatNumber(parseFloat(d.value/1000000).toFixed(1))+' Mha';
+            return '<span>'+d.year+'</span>'+formatNumber(parseFloat(d.loss/1000000).toFixed(1))+' Mha';
           })
           .on('mouseover', function(d) {
             that.tooltip.html($(this).attr('name'))
@@ -1317,7 +1163,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           });
 
         svg.selectAll('circle.gain')
-          .data(data_extent_)
+          .data(data_)
           .enter()
           .append('svg:circle')
           .attr('class', 'linedot gain')
@@ -1328,11 +1174,11 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             return x_scale(d.year);
           })
           .attr('cy', function(d){
-            return y_scale(d.value);
+            return y_scale(d.extent);
           })
           .attr('r', 6)
           .attr('name', function(d) {
-            return '<span>'+d.year+'</span>'+formatNumber(parseFloat(d.value/1000000).toFixed(1))+' Mha';
+            return '<span>'+d.year+'</span>'+formatNumber(parseFloat(d.extent/1000000).toFixed(1))+' Mha';
           })
           .on('mouseover', function(d) {
             that.tooltip.html($(this).attr('name'))
@@ -1406,39 +1252,35 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         .attr('in2', 'blurOut')
         .attr('mode', 'normal');
 
-      var sql = 'WITH loss as (SELECT iso, SUM(';
-
-      for(var y = 2001; y < 2012; y++) {
-        sql += 'loss.y'+y+' + ';
-      }
-
-      sql += ['loss.y2012) as sum_loss',
-              'FROM loss_gt_50 loss',
-              'GROUP BY iso), gain as ('].join(' ');
-
-      sql += ['SELECT g.iso, SUM(y2001_y2012) as sum_gain',
-              'FROM countries_gain g, loss_gt_50 loss',
-              'WHERE loss.iso = g.iso',
-              'GROUP BY g.iso), ratio as ('].join(' ');
-
-      sql += ['SELECT c.iso, c.name, c.enabled, loss.sum_loss as loss,',
-                     'gain.sum_gain as gain, loss.sum_loss/gain.sum_gain as ratio',
-              'FROM loss, gain, gfw2_countries c',
-              'WHERE sum_gain IS NOT null',
-              'AND NOT sum_gain = 0',
-              'AND c.iso = gain.iso',
-              'AND c.iso = loss.iso',
-              'ORDER BY loss.sum_loss DESC',
-              'LIMIT 50), extent as ('].join(' ');
-
-      sql += ['SELECT extent.iso, SUM(extent.y2012) as extent',
-              'FROM countries_extent extent',
-              'GROUP BY extent.iso) '].join(' ');
-
-      sql += ['SELECT *',
-              'FROM ratio, extent',
-              'WHERE ratio IS NOT null',
-              'AND extent.iso = ratio.iso'].join(' ');
+      var sql = 'WITH e AS \
+                  (  \
+                         SELECT iso,  \
+                                extent  \
+                         FROM   umd_nat  \
+                         WHERE  thresh = '+ (config.canopy_choice || 10) +'  \
+                         AND    year = 2012), u AS  \
+                  (  \
+                           SELECT   iso,  \
+                                    Sum(loss) sum_loss,  \
+                                    Sum(gain) sum_gain  \
+                           FROM     umd_nat  \
+                           WHERE    thresh = '+ (config.canopy_choice || 10) +'  \
+                           GROUP BY iso)  \
+                  SELECT   c.iso,  \
+                           c.NAME,  \
+                           c.enabled, \
+                           u.sum_loss,  \
+                           u.sum_gain,  \
+                           u.sum_loss / u.sum_gain ratio,  \
+                           e.extent  \
+                  FROM     gfw2_countries c,  \
+                           u,  \
+                           e  \
+                  WHERE    u.sum_gain IS NOT NULL  \
+                  AND      NOT u.sum_gain = 0  \
+                  AND      c.iso = u.iso  \
+                  AND      e.iso = u.iso  \
+                  ORDER BY u.sum_loss DESC limit 50';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
         var data = json.rows;
@@ -1455,7 +1297,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         var color_scale = d3.scale.linear()
           .domain([d3.min(data, function(d) { return d.ratio; }), 1, 10, d3.max(data, function(d) { return d.ratio; })])
-          .range(["#9ABF00", "#9ABF00", "#CA46FF", "#CA46FF"]);
+          //.range(["#9ABF00", "#9ABF00", "#CA46FF", "#CA46FF"]);
+          .range(["#6D6DE5", "#6D6DE5", "#FF6699", "#FF6699"]);
 
         // line
         svg.selectAll('line.linear_regression')

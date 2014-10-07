@@ -49,7 +49,7 @@ define([
           var intensity = imgdata[pixelPos];
           var yearLoss = 2000 + imgdata[pixelPos + 2];
 
-          if (yearLoss >= yearStart && yearLoss < yearEnd) {
+          if (yearLoss >= yearStart && yearLoss <= yearEnd) {
             imgdata[pixelPos] = 220;
             imgdata[pixelPos + 1] = (72 - z) + 102 - (3 * myscale(intensity) / z);
             imgdata[pixelPos + 2] = (33 - z) + 153 - ((intensity) / z);

@@ -20,8 +20,12 @@
       background-image:url(home-icons/settings_refactored_hover.png);
       box-shadow: 0px 0px 3px #777;
     }
+    &.changed {
+      background-image:url(home-icons/settings_refactored_changed.png);
+    }
     &.disabled {
-      opacity: 0.8;
+      opacity: 0.5;
+      border-color: #E4E4E4;
     }
   }
 

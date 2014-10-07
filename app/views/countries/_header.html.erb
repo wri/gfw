@@ -13,7 +13,7 @@
         </div>
         <!--  indepth message -->
         <% if @country['indepth'].present? %>
-            <p class="country-indepth__bubble"><a href="<%= @country['indepth'] %>">GFW's work in <%= @country['name'] %></a></p>
+            <p class="country-indepth__bubble"><a href="<%= @country['indepth'] %>" target="_blank">Learn more about GFW's work in <%= @country['name'] %></a></p>
         <% end %>
       </div>
 
@@ -43,7 +43,7 @@
         <div class="country-sidenav">
           <ul>
             <li>
-              <a href="#" data-source="umd_tree_loss_gain" class="info">
+              <a href="#" data-source="umd_tree_loss_gain_infographics" class="info">
                 Info
                 <span class="sidenav-icon country-icons-info_grey"></span>
               </a>

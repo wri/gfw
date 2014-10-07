@@ -56,12 +56,15 @@ define([
       ThresholdView.__super__._cacheSelector.apply(this);
       this.$slider = this.$el.find('.slider');
       this.$visibleRange = this.$el.find('.visible-range');
+      this.$button = $('.widget-threshold').find('.widget-btn');
     },
 
     _updateThreshold: function() {
       this.presenter.setThreshold(this.valuesMap[this.$slider.val()]);
       this._setVisibleRange();
-      ga('send', 'event', 'Map', 'Threshold', 'Updated threshold');
+      if (typeof ga !== "undefined") ga('send', 'event', 'Map', 'Change', 'Threshold');
+      if (this.valuesMap[this.$slider.val()] != 10) this.$button.addClass('changed');
+      else this.$button.removeClass('changed');
     },
 
     _setVisibleRange: function() {

@@ -54,6 +54,7 @@ define([
       }
 
       $('.share_dialog').find('.help span').empty().append(text);
+      $('.share_dialog').hide().show();
     },
 
     _show: function(e) {

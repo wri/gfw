@@ -195,15 +195,20 @@ define([
       // Get geojson/fit bounds/draw geojson/publish analysis
       var url = 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from wdpa_all where wdpaid =' + wdpaid;
       $.getJSON(url, _.bind(function(data) {
-        var geojson = {
-          geometry: JSON.parse(data.rows[0].st_asgeojson),
-          properties: {},
-          type: 'Feature'
-        };
+        if (data.rows.length > 0) {
+          var geojson = {
+            geometry: JSON.parse(data.rows[0].st_asgeojson),
+            properties: {},
+            type: 'Feature'
+          };
 
-        this._geojsonFitBounds(geojson);
-        this.view.drawMultipolygon(geojson);
-        this._publishAnalysis(resource);
+          this._geojsonFitBounds(geojson);
+          this.view.drawMultipolygon(geojson);
+          this._publishAnalysis(resource);
+
+        } else {
+          this._publishAnalysis(resource, true);
+        }
       }, this));
     },
 
@@ -221,15 +226,19 @@ define([
       var url = concessionsSql[layerSlug].format(useid);
 
       $.getJSON(url, _.bind(function(data) {
-        var geojson = {
-          geometry: JSON.parse(data.rows[0].st_asgeojson),
-          properties: {},
-          type: 'Feature'
-        };
+        if (data.rows.length > 0) {
+          var geojson = {
+            geometry: JSON.parse(data.rows[0].st_asgeojson),
+            properties: {},
+            type: 'Feature'
+          };
 
-        this._geojsonFitBounds(geojson);
-        this.view.drawMultipolygon(geojson);
-        this._publishAnalysis(resource);
+          this._geojsonFitBounds(geojson);
+          this.view.drawMultipolygon(geojson);
+          this._publishAnalysis(resource);
+        } else {
+          this._publishAnalysis(resource, true);
+        }
       }, this));
     },
 
@@ -289,12 +298,12 @@ define([
      *
      * @param  {Object} resource The analysis resource
      */
-    _publishAnalysis: function(resource) {
+    _publishAnalysis: function(resource, failed) {
       this.status.set('resource', resource);
       this._setAnalysisBtnVisibility();
       mps.publish('Place/update', [{go: false}]);
 
-      if (!this.status.get('baselayer')) {
+      if (!this.status.get('baselayer') || failed) {
         mps.publish('AnalysisService/results', [{unavailable: true}]);
       } else {
         mps.publish('AnalysisService/get', [resource]);
