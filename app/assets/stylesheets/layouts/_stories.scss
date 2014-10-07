@@ -391,9 +391,13 @@
 /*******MEDIA QUERIES*********/
 @media only screen and (max-width: 768px){
   body {
+    .skiptranslate {
+      display: none;
+    }
     border: 0;
     background-image: none;
     min-width: 320px;
+    margin-top: -40px;
     .mod-notice,
     .footer-logos,
     #google_translate_element,
