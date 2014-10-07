@@ -29,7 +29,9 @@ gfw.ui.view.CountriesIndex = cdb.core.View.extend({
         (text.indexOf(val) != -1) ? count.push($(this)) : null;
         return !~text.indexOf(val);
     }).hide();
-    
+
+    (count.length == 1) ? this.$searchBox.addClass('is-active') : this.$searchBox.removeClass('is-active');
+
     if (e) {
       if (e.keyCode == 13 && count.length == 1) {
         var href = $(count[0]).find('.country-href').attr('href');
