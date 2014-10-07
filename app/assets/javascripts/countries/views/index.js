@@ -1,9 +1,45 @@
 gfw.ui.view.CountriesIndex = cdb.core.View.extend({
   el: document.body,
 
-  initialize: function() {
-    this._drawCountries();
+  events : {
+    'keyup #searchCountry' : '_searchCountries'
   },
+
+  initialize: function() {
+    this._getCountries();
+    this._drawCountries();
+    this._searchCountries();
+  },
+
+  _getCountries : function(){
+    this.$searchBox = $('#searchCountry')
+    this.$countries = $('.country');
+    this.countries_list = _.map($('.country-name'),function(el){
+      return $(el).text();
+    });
+  },
+
+  _searchCountries : function(e){
+    var searchText = this.$searchBox.val(),
+        val = $.trim(searchText).replace(/ +/g, ' ').toLowerCase(),
+        count = [];
+
+    this.$countries.show().filter(function() {
+        var text = $(this).find('.country-name').text().replace(/\s+/g, ' ').toLowerCase();
+        (text.indexOf(val) != -1) ? count.push($(this)) : null;
+        return !~text.indexOf(val);
+    }).hide();
+
+    (count.length == 1) ? this.$searchBox.addClass('is-active') : this.$searchBox.removeClass('is-active');
+
+    if (e) {
+      if (e.keyCode == 13 && count.length == 1) {
+        var href = $(count[0]).find('.country-href').attr('href');
+        window.location = href;
+      };      
+    };
+  },
+
 
   _drawCountries: function() {
     var that = this;
