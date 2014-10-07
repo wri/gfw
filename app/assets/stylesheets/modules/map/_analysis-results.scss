@@ -136,16 +136,21 @@
       width: 30px;
 
       &.analysis-control-subscribe {
-        @include home-icons-sprite(control_buttons_subscribe);
+        // @include home-icons-sprite(control_buttons_subscribe);
+        background: image-url('home-icons/control_buttons_subscribe.png');
 
         &:hover {
           position: relative;
           width: 31px;
           margin-right: -1px;
-          @include home-icons-sprite(control_buttons_subscribe_hover);
+          // @include home-icons-sprite(control_buttons_subscribe_hover);
+          background: image-url('home-icons/control_buttons_subscribe_hover.png');
         }
 
-        &:active {@include home-icons-sprite(control_buttons_subscribe_active);}
+        &:active {
+          // @include home-icons-sprite(control_buttons_subscribe_active);
+          background: image-url('home-icons/control_buttons_subscribe_active.png');
+        }
 
         &.disabled {
           @include opacity(.5);
@@ -155,9 +160,16 @@
 
       &.analysis-control-delete {
         width: 31px;
-        @include home-icons-sprite(control_buttons_reset);
-        &:hover { @include home-icons-sprite(control_buttons_reset_hover); }
-        &:active { @include home-icons-sprite(control_buttons_reset_active); }
+        // @include home-icons-sprite(control_buttons_reset);
+        background: image-url('home-icons/control_buttons_reset.png');
+        &:hover {
+          // @include home-icons-sprite(control_buttons_reset_hover);
+          background: image-url('home-icons/control_buttons_reset_hover.png');
+        }
+        &:active {
+          // @include home-icons-sprite(control_buttons_reset_active);
+          background: image-url('home-icons/control_buttons_reset_active.png');
+        }
       }
     }
   }

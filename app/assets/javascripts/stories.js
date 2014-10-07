@@ -151,6 +151,7 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
       }
 
       $('#story_uploads_ids').val(that.uploadsIds.join(','));
+      ga('send', 'event', 'Stories', 'New story', 'submit');
     });
   },
 

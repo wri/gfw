@@ -20,7 +20,7 @@
       background-image:url(home-icons/settings_refactored_hover.png);
       box-shadow: 0px 0px 3px #777;
     }
-     &.changed {
+    &.changed {
       background-image:url(home-icons/settings_refactored_changed.png);
     }
     &.disabled {
@@ -125,7 +125,11 @@
       cursor: pointer;
       position: absolute;
       z-index: 1;
-
+      @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+        /* IE10+ specific styles go here */
+        top: -18px;
+        background: none;
+      }
       &:focus {
         outline: 0;
       }
@@ -138,6 +142,61 @@
         height: 14px;
         cursor: col-resize;
         border-radius: 3px;
+      }
+
+      &::-moz-range-thumb {
+        background: image-url('home-icons/timeline_handler_white.png');
+        background-color: $cGreen1;
+        width: 14px;
+        height: 14px;
+        cursor: col-resize;
+        border-radius: 3px;
+      }
+
+      &::-moz-range-track {
+        display: none;
+        background-color: transparent;
+        z-index: 0;
+        border: none;
+      }
+
+      &::-moz-focusring{
+          outline: 1px solid white;
+          outline-offset: -1px;
+      }
+      &::focus::-moz-range-track {
+          outline: 0;
+      }
+
+      &::-ms-track {
+          top: 4px;
+          width: 300px;
+          height: 16px;
+          background: transparent;
+          border: none;
+          border-radius: 10px;
+
+          /* remove default tick marks */
+          color: transparent;
+      }
+      &::-ms-fill-lower {
+          outline: none;
+          background: transparent;
+          border-radius: 10px 0 0 10px;
+      }
+      &::-ms-thumb {
+        background: image-url('home-icons/timeline_handler_white.png');
+        background-color: $cGreen1;
+        width: 14px;
+        height: 14px;
+        cursor: col-resize;
+        border-radius: 3px;
+      }
+      &:focus::-ms-track {
+          background: transparent;
+      }
+      &:focus::-ms-fill-lower {
+          background: transparent;
       }
     }
 

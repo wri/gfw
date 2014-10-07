@@ -58,6 +58,7 @@ define([
       this.model.set('boxHidden', false);
       this.$done.addClass('disabled');
       this.toggleWidgetBtn(true);
+      ga('send', 'event', 'Map', 'Analysis', 'Perform an analysis');
     },
 
     /**
