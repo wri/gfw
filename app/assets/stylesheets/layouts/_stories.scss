@@ -446,7 +446,7 @@
     .featured_story {
       .featured_story-content {
         box-sizing: border-box;
-        padding: 0 10px;
+        padding: 0 15px;
       }
       .frame {
         display: block;
@@ -474,6 +474,7 @@
           left: 0;
           background-size: cover;
           background-position: 50% 50%;
+          margin: 0;
         }
       }
       border-bottom: 1px #ccc solid;
