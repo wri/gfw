@@ -14,13 +14,19 @@
   </a>
 </div>
 
+<div class="inner">
+  <div class="search-countries-box">
+    <input id="searchCountry" type="text" placeholder="Type country name"/>    
+  </div>
+</div>
+
 <ul class="countries_list inner">
   <% @countries.each do |c| %>
     <% if c['enabled'] %>
       <li id="<%= c['iso'] %>" class="country">
-        <a href="<%= country_path(id: c['iso']) %>">
+        <a class="country-href" href="<%= country_path(id: c['iso']) %>">
           <span class="country-content">
-            <h3 class="<%= c['name'].length > 14 ? ' small' : '' %>"><%= c['name'] %></h3>
+            <h3 class="country-name <%= c['name'].length > 14 ? ' small' : '' %>"><%= c['name'] %></h3>
           </span>
         </a>
       </li>
