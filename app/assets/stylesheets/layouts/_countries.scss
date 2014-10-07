@@ -3,7 +3,7 @@
   background:
     image-url('backgrounds/bkg_countries_block_up.png') no-repeat 0 center,
     image-url('backgrounds/bkg_countries_block_down.png') repeat-x;
-  margin: 40px 0;
+  margin: 40px 0 0;
 
   .header-title {
     font-size: 29px;
@@ -34,6 +34,39 @@
   font-style: italic;
   line-height: 1.4;
   @extend .serif;
-  color: #666;
+  color: $cGray2;
   @include clearfix;
+}
+
+// SEARCH BOX
+.search-countries-box{
+  margin: 20px auto;
+  position: relative;
+  @extend .clearfix;
+  &:after{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    background: image-url('countries/search.svg') no-repeat center;
+    background-size: contain;
+    @include translate(0, -50%);
+  }
+  input{
+    box-sizing: border-box; 
+    display: block;
+    width: 100%;
+    padding: 10px;
+    padding-left: 50px;
+    margin: 0;
+    border-radius: 3px;
+    font-size: 22px;
+    color: #999;
+    border: 1px solid $cGray2;
+    min-height: 20px;
+    outline: none;
+  }
 }
