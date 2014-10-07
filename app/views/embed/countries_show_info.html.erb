@@ -49,11 +49,12 @@
 
           <div class="forma_dropdown-menu">
             <ul>
-              <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.svg?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>SVG</a></li>
-              <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.geojson?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>GeoJSON</a></li>
-              <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.shp?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>SHP</a></li>
-              <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.kml?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>KML</a></li>
-              <li><a href='//<%= "#{ENV['GFW_API_HOST']}/datasets/forma.csv?begin=2006-01-01&end=#{Time.now.strftime('%Y-%m-%d')}&iso=#{@country['iso']}" %>'>CSV</a></li>
+              <li> <ul>
+              <li><a href='http://wri-01.cartodb.com/api/v1/sql?q=SELECT+f.%2A+FROM+forma_api+f+WHERE+f.date+%3E%3D+%272014-01-01%27%3A%3Adate+AND+f.date+%3C%3D+%272015-01-01%27%3A%3Adate+AND+f.iso+%3D+UPPER%28%27<%= @country['iso'] %>%27%29&version=v1&format=SVG'>SVG</a></li>
+              <li><a href='http://wri-01.cartodb.com/api/v1/sql?q=SELECT+f.%2A+FROM+forma_api+f+WHERE+f.date+%3E%3D+%272014-01-01%27%3A%3Adate+AND+f.date+%3C%3D+%272015-01-01%27%3A%3Adate+AND+f.iso+%3D+UPPER%28%27<%= @country['iso'] %>%27%29&version=v1&format=geojson'>GeoJSON</a></li>
+              <li><a href='http://wri-01.cartodb.com/api/v1/sql?q=SELECT+f.%2A+FROM+forma_api+f+WHERE+f.date+%3E%3D+%272014-01-01%27%3A%3Adate+AND+f.date+%3C%3D+%272015-01-01%27%3A%3Adate+AND+f.iso+%3D+UPPER%28%27<%= @country['iso'] %>%27%29&version=v1&format=shp'>SHP</a></li>
+              <li><a href='http://wri-01.cartodb.com/api/v1/sql?q=SELECT+f.%2A+FROM+forma_api+f+WHERE+f.date+%3E%3D+%272014-01-01%27%3A%3Adate+AND+f.date+%3C%3D+%272015-01-01%27%3A%3Adate+AND+f.iso+%3D+UPPER%28%27<%= @country['iso'] %>%27%29&version=v1&format=kml'>KML</a></li>
+              <li><a href='http://wri-01.cartodb.com/api/v1/sql?q=SELECT+f.%2A+FROM+forma_api+f+WHERE+f.date+%3E%3D+%272014-01-01%27%3A%3Adate+AND+f.date+%3C%3D+%272015-01-01%27%3A%3Adate+AND+f.iso+%3D+UPPER%28%27<%= @country['iso'] %>%27%29&version=v1&format=csv'>CSV</a></li>
             </ul>
           </div>
           <a href="#" class="btn-rdn btn-rdn-primary forma_dropdown-link">Download data</a>
@@ -79,8 +80,8 @@
         <div class="left-col">
           <div class="forest-type-legends">
             <ul class="legends-list">
-              <li><span class="regenerated"></span>Regenerated</li>
               <li><span class="primary"></span>Primary</li>
+              <li><span class="regenerated"></span>Regenerated</li>
               <li><span class="planted"></span>Planted</li>
             </ul>
           </div>
@@ -109,7 +110,7 @@
       <div class="section-content">
         <% if @country['gva'].present? && @country['gva'] > 0 %>
         <h3 class="section-title">
-          The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2006, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> of the GDP.</span>
+          The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2011, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> of the GDP.</span>
         </h3>
         <% else %>
         <div class="coming-soon">No data available</div>
@@ -130,9 +131,9 @@
         <% if @employees.present? && @employees > 0 %>
         <div class="left-col">
           <% if @employees < 1000 %>
-            <h3 class='section-title'><div><%= @employees %></div> <span>thousand people are directly employed by the forestry sector, according to 2006 FAO data.</span></h3>
+            <h3 class='section-title'><div><%= @employees %></div> <span>thousand people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
           <% else %>
-            <h3 class='section-title'><div><%= (@employees/1000.00).round(2) %></div> <span>million people are directly employed by the forestry sector, according to 2006 FAO data.</span></h3>
+            <h3 class='section-title'><div><%= (@employees/1000.00).round(2) %></div> <span>million people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
           <% end %>
 
           <ul class='employment <%= @employees < 25 ? 'short' : '' %>'>
