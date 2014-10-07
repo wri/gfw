@@ -19,7 +19,9 @@
           </div>
 
           <a href="<%= story_path(story['id']) %>">
-            <div class="frame"><img src="<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>" alt="<%= story['title'] %>" /></div>
+            <div class="frame">
+              <img src="<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>" alt="<%= story['title'] %>" />
+              <p style="background-image: url('<%= story_image_or_map(story['media']) %>')"></p></div>
           </a>
         </li>
       <% end %>

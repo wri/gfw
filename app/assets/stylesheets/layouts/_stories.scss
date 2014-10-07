@@ -456,16 +456,24 @@
         @include border-radius(0px);
         width: 100%;
         img {
+          display: none;
           position: absolute;
-          width: 100%;
           height: 256px;
           left: 0;
-          @include border-radius(0px);
           &[src*="http://maps.google.com/"] {
+            display: block;
             width: 256px;
             @include border-radius(135px);
             margin-left: calc(50% - 128px);
           }
+        }
+        p {
+          position: absolute;
+          width: 100%;
+          height: 256px;
+          left: 0;
+          background-size: cover;
+          background-position: 50% 50%;
         }
       }
       border-bottom: 1px #ccc solid;
@@ -644,6 +652,7 @@
         margin: 10px 0;
         padding: 0;
         background-position: 50% 50%;
+        background-size: cover;
       }
     }
   }
