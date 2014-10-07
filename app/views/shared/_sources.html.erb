@@ -30,11 +30,11 @@
       </div>
 
       <div class='source_body'>
-        <div class='source_download'><!--
+        <div class='source_download'>
           <a href='http://www.earthenginepartners.appspot.com/science-2013-global-forest/download.html' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
-         --></div>
+        </div>
 
-        <div class='source_table'><!--
+        <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
             <dd>Identifies areas of tree cover loss</dd>
@@ -71,7 +71,39 @@
               <p>When zoomed out (< zoom level 13), pixels of loss are shaded according to the density of loss at the 30 x 30 meter scale. Pixels with darker shading represent areas with a higher concentration of tree cover loss, whereas pixels with lighter shading indicate a lower concentration of tree cover loss. There is no variation in pixel shading when the data is at full resolution (≥ zoom level 13).</p>
             </dd>
           </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>This data set measures areas of tree cover loss across all global land (except Antarctica and other Arctic islands) annually at 30 × 30 meter resolution. The data were generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a> sensor. Over 600,000 Landsat 7 images were compiled and analyzed using Google Earth Engine, a cloud platform for earth observation and data analysis. The clear land surface observations (30 × 30 meter pixels) in the satellite images were assembled chronologically and a supervised learning algorithm was then applied to identify per pixel tree cover loss or gain.</p>
+
+
+
+          <p>Tree cover loss is defined as “stand replacement disturbance,” or the complete removal of tree cover canopy at the Landsat pixel scale. Tree cover loss may indicate a number of potential activities, such as timber harvesting, fires or disease, the conversion of natural forest to other land uses, or the crop rotations cycle of tree plantations. </p>
+
+          <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Science 342 (15 November): 850–53.</p>
+
+          <p class='credits'><strong>Suggested citations for data as displayed on GFW:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain Area.” University of Maryland, Google, USGS, and NASA. Accessed through Global Forest Watch on  [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
+
+          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', sources_path %></em></p>
+        </div>
+      </div>
+    </li>
+
+
+    <li id='umd_tree_loss_gain_infographics' class='source-item first hide'>
+      <div class='source_header'>
+        <strong class='source_title'>University of Maryland/Google tree cover loss</strong>
+        <i class='expand_arrow'></i>
+        <em class='source_description'>(annual, 30m, global)</em>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_download'><!--
+          <a href='http://www.earthenginepartners.appspot.com/science-2013-global-forest/download.html' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
          --></div>
+
+        <div class='source_table'></div>
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
