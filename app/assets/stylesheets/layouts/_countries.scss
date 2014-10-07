@@ -56,17 +56,18 @@
     @include translate(0, -50%);
   }
   input{
-    box-sizing: border-box; 
+    box-sizing: border-box;
     display: block;
     width: 100%;
     padding: 10px;
     padding-left: 50px;
     margin: 0;
     border-radius: 3px;
-    font-size: 22px;
-    color: #999;
-    border: 1px solid $cGray2;
+    font-size: 29px;
+    color: $cGray2;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     min-height: 20px;
     outline: none;
+    font-family: Georgia;
   }
 }
