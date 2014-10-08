@@ -440,6 +440,16 @@
         }
       }
     }
+    .section-footer {
+      padding: 0;
+      width: 100%;
+      border-radius: 0;
+      display: flex;
+      align-content: center;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+    }
     .section-footer .btn {
       span{
         &:before {
@@ -470,9 +480,15 @@
       @media only screen and (max-width: 420px) {
         &.next_stories,
         &.previous_stories {
-          width: 22%;
-          height: 27px;
-          margin: 0;
+          border-radius: 0px;
+          width: 100%;
+          margin: 0 !important;
+          height: 60px;
+          padding: 0;
+          display: flex;
+          align-content: center;
+          flex-direction: column;
+          justify-content: center;
           span {
             left: 0;
             &:before,
