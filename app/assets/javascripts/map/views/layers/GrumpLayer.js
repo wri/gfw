@@ -12,7 +12,8 @@ define([
   var GrumpLayer = ImageMaptypeLayerClass.extend({
 
     options: {
-      urlTemplate: 'https://s3.amazonaws.com/grump-tiles/grump2000{/z}{/x}{/y}.png'
+      urlTemplate: 'https://s3.amazonaws.com/grump-tiles/grump2000{/z}{/x}{/y}.png',
+      dataMaxZoom: 8
     }
 
   });
