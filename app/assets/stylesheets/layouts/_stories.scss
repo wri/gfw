@@ -438,28 +438,37 @@
       }
     }
     &.is-index-action {
-      .btn {
-        width: 100%;
-        border: 0;
-        height: 50px;
-        margin: 0;
-        padding: 0;
-        border-radius: 0;
-        font-size: 14px;
-        letter-spacing: 1px;
-        display: flex;
-        align-content: center;
-        justify-content: center;
-        span {
-          position: relative;
-          left: 0;
-          align-self: center;
-          &:before {
-            left: 193px;
-            top: -5px;
-          }
-          &:after {
-            left: 17px;
+      :not(.section-footer) {
+        .btn {
+          width: 100%;
+          border: 0;
+          height: 50px;
+          margin: 0;
+          padding: 0;
+          border-radius: 0;
+          font-size: 14px;
+          letter-spacing: 1px;
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          display: flex;
+          align-content: center;
+          justify-content: center;
+          -webkit-align-content: center;
+          -webkit-justify-content: center;
+          span {
+            position: relative;
+            left: 0;
+            align-self: center;
+            -webkit-align-self: center;
+            &:before {
+              left: 193px;
+              top: -5px;
+            }
+            &:after {
+              left: 18px;
+            }
           }
         }
       }
