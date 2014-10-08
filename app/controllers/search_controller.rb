@@ -20,6 +20,13 @@ class SearchController < ApplicationController
         @prevlink = '/search/'+ request +'/'+ page.to_s
       end
 
+      #info
+      @info = {}
+      @info['totalView'] = @result['queries']['request'][0]['totalResults']
+      @info['startView'] = @result['queries']['request'][0]['startIndex'].to_i
+      @info['endView'] = @result['queries']['request'][0]['startIndex'].to_i + @result['queries']['request'][0]['count'] - 1
+
+
     end
   end
 

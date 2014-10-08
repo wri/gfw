@@ -1,10 +1,10 @@
 .search-list{
-	padding: 40px 0 0;
+	padding: 0px 0 0;
 	li{
-		margin: 20px 0 0;
-		&:first-child{
-			margin: 0;
-		}
+		padding: 20px 0; 
+		position: relative;
+		border-top: 1px solid rgba(0, 0, 0, 0.1);
+		&:first-child{ border-top: none;}
 	}
 	.search-article{
 		h2{
@@ -17,6 +17,8 @@
 			padding: 10px 0 0;
 			p{
 				font-size: 14px;
+				color: $cGray2;
+				line-height: 1.4;
 				b{ font-weight: 600;}	
 			}
 			
@@ -24,8 +26,62 @@
 	}
 }
 
+.search-list-footer {
+  background: rgba(#6D6DE5, .15);
+  text-align: center;
+  padding: 30px;
+
+  ul{
+  	@include clearfix();
+  	position: relative;
+  	li{
+  		&.prev-link{
+  			float: left;
+  		}
+  		&.center-link{
+  			font-size: 12px;
+  			line-height: 38px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				color: $cGray2;
+				@include transform(translate(-50%,-50%));
+				
+  		}
+  		&.next-link{
+  			float: right;
+  		}
+  	}
+  }
+
+  a {
+    display: block;
+    border: 2px solid rgba(#464253, .25);
+    padding: 0 20px;
+    font-size: 14px;
+    line-height: 38px;
+    font-family: "fira_sans_otmedium";
+    text-align: left;
+    text-transform: uppercase;
+    color: #463F52;
+    @include border-radius(21px);
+
+    i {
+      float: right;
+      display: block;
+      height: 38px;
+      width: 10px;
+    }
+
+    &:hover {
+      border: 2px solid rgba(#464253, .5);
+    }
+  }
+}
+
 // SEARCH BOX
 .search-box{
+  font-family: "fira_sans_otregular";
   margin: 20px auto;
   position: relative;
   @extend .clearfix;
@@ -49,13 +105,13 @@
     padding-left: 50px;
     margin: 0;
     border-radius: 3px;
-    font-size: 29px;
+    font-size: 24px;
     background: #FFF;
     color: $cGray2;
     border: 1px solid rgba(0, 0, 0, 0.1);
     min-height: 20px;
     outline: none;
-    font-family: Georgia;
+    font-family: inherit;
     &.is-active{
       background: rgba($cGreen1,0.3);
     }
