@@ -606,11 +606,15 @@
         min-width: 90%;
       }
       .columns {
-        max-height: 110px;
+        height: 200px;
         overflow-y: hidden;
         display: -webkit-box;
         .five {
           display: block;
+          margin: 0 15px;
+        }
+        li:first-child {
+          margin-left: -59px;
         }
       }
       .frame {
@@ -762,6 +766,19 @@
           text-align: left;
         }
       }
+    }
+  }
+  .infowindow {
+    bottom: -110px;
+    left: 75px;
+    display: block;
+    background: transparent;
+    span,
+    .tip {
+      display: none;
+    }
+    strong a {
+      font-family: fira_sans_otregular, 'Helvetica Neue', 'Trebuchet MS', sans-serif;
     }
   }
 }
