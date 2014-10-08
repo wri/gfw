@@ -1,0 +1,45 @@
+<% content_for :header do %>
+	<% if @query %>
+		<h1 class="header-title big">Results for search <%= @query %></h1>
+	<% else %>
+		<h1 class="header-title big">Search</h1>
+	<% end %>	
+<% end %>
+
+<div class="inner">
+  <div class="search-box">
+  	  <input id="search" type="text" placeholder="Type your search"/>	
+  </div>
+</div>
+
+<% if @result %>
+<div class="inner">
+	<ul class="search-list">
+	  <% @result['items'].each do |c| %>
+	  	<li>
+	  		<article class="search-article">
+		  		<h2><a href="<%= c['link'] %>"> <%= c['title']%></a></h2>
+		  		<h3><a href="<%= c['link'] %>"><%= c['formattedUrl'] %></a></h3>
+		  		<div class="search-snippet">
+		  			<p><%= c['htmlSnippet'].html_safe %></p>
+		  		</div>	  			
+	  		</article>
+	  	</li>
+	  <% end %>
+	</ul>
+	<nav>
+		<ul>
+			<% if @prevlink %>
+				<li class="prev-link"><a href="<%= @prevlink %>">Prev</a></li>
+			<% end %>
+			<% if @nextlink %>
+				<li class="next-link"><a href="<%= @nextlink %>">Next</a></li>
+			<% end %>
+		</ul>
+	</nav>	
+</div>	
+<% end %>	
+
+
+
+

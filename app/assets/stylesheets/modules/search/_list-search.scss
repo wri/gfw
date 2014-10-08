@@ -1,0 +1,63 @@
+.search-list{
+	padding: 40px 0 0;
+	li{
+		margin: 20px 0 0;
+		&:first-child{
+			margin: 0;
+		}
+	}
+	.search-article{
+		h2{
+			font-size: 24px;
+		}
+		h3{
+			font-size: 14px;
+		}
+		.search-snippet{
+			padding: 10px 0 0;
+			p{
+				font-size: 14px;
+				b{ font-weight: 600;}	
+			}
+			
+		}
+	}
+}
+
+// SEARCH BOX
+.search-box{
+  margin: 20px auto;
+  position: relative;
+  @extend .clearfix;
+  &:after{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+    background: image-url('countries/search.svg') no-repeat center;
+    background-size: contain;
+    @include translate(0, -50%);
+  }
+  input{
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    padding-left: 50px;
+    margin: 0;
+    border-radius: 3px;
+    font-size: 29px;
+    background: #FFF;
+    color: $cGray2;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    min-height: 20px;
+    outline: none;
+    font-family: Georgia;
+    &.is-active{
+      background: rgba($cGreen1,0.3);
+    }
+  }
+}
