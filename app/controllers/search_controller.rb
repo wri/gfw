@@ -22,7 +22,7 @@ class SearchController < ApplicationController
 
       #info
       @info = {}
-      @info['totalView'] = @result['queries']['request'][0]['totalResults']
+      @info['totalView'] = @result['queries']['request'][0]['totalResults'].to_i
       @info['startView'] = @result['queries']['request'][0]['startIndex'].to_i
       @info['endView'] = @result['queries']['request'][0]['startIndex'].to_i + @result['queries']['request'][0]['count'] - 1
 
@@ -36,7 +36,8 @@ class SearchController < ApplicationController
       cx = "006990932653323112931:qxwxtwbu7vg"
       query = _query
       page = _page ? 1+((_page.to_i-1)*10) : 1
-      response = Typhoeus.get("https://www.googleapis.com/customsearch/v1?", params: { key: apiKey , cx: cx, q: query , start: page}, headers: {"Accept" => "application/json"})
+      response = Typhoeus.get("https://www.googleapis.com/customsearch/v1?", params: { key: apiKey , cx: cx, q: query , start: page, filter: 0}, headers: {"Accept" => "application/json"})
+      puts response
 
       if response.success?
           JSON.parse(response.body)
