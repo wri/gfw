@@ -448,6 +448,13 @@
       align-content: center;
       align-items: center;
       justify-content: center;
+      display: -webkit-box;
+      display: -moz-box;
+      display: -ms-flexbox;
+      display: -webkit-flex;
+      -webkit-align-content: center;
+      -webkit-align-items: center;
+      -webkit-justify-content: center;
       border: 0;
     }
     .section-footer .btn {
@@ -489,6 +496,13 @@
           align-content: center;
           flex-direction: column;
           justify-content: center;
+          display: -webkit-box;
+          display: -moz-box;
+          display: -ms-flexbox;
+          display: -webkit-flex;
+          -webkit-align-content: center;
+          -webkit-flex-direction: column;
+          -webkit-justify-content: center;
           span {
             left: 0;
             &:before,
