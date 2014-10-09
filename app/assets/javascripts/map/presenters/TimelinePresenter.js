@@ -68,9 +68,10 @@ define([
      */
     _handleNewLayers: function(baselayers, date) {
       var currentTimeline = this.status.get('timeline');
+      console.log(baselayers);
 
       var baselayer = _.values(_.omit(
-        baselayers, 'forestgain'))[0];
+        baselayers, ['forestgain','nothing']))[0];
 
       if (currentTimeline) {
         if (currentTimeline.getName() === baselayer) {
