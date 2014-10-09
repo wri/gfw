@@ -18,6 +18,13 @@
 		<ul class="search-list">
 		  <% @result['items'].each do |c| %>
 		  	<li>
+		  		<% if c['pagemap']%>
+		  			<% if c['pagemap']['cse_thumbnail'] %>
+				  		<figure class="search-thumbnail">
+				  			<img src="<%= c['pagemap']['cse_thumbnail'][0]['src'] %>">
+				  		</figure>
+		  			<% end %>
+		  		<% end %>
 		  		<article class="search-article">
 			  		<h2><a class="overview_title" href="<%= c['link'] %>"> <%= c['title']%></a></h2>
 			  		<h3><a href="<%= c['link'] %>"><%= c['formattedUrl'] %></a></h3>
