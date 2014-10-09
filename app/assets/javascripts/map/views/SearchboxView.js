@@ -28,19 +28,23 @@ define([
     },
 
     setAutocomplete: function() {
-      this.autocomplete = new google.maps.places.Autocomplete(
-        this.$el.find('input')[0], {types: ['geocode']});
-
-      google.maps.event.addListener(
-        this.autocomplete, 'place_changed', this.onPlaceSelected);
+      this.autocomplete = new google.maps.places.SearchBox(this.$el.find('input')[0]);
+      google.maps.event.addListener(this.autocomplete, 'places_changed', this.onPlaceSelected);
     },
 
     onPlaceSelected: function() {
-      var place = this.autocomplete.getPlace();
-      // TODO: When there isn't viewport, and there is location...
-      if (place && place.geometry && place.geometry.viewport) {
-        this.presenter.fitBounds(place.geometry.viewport);
-      }
+      var place = this.autocomplete.getPlaces();
+      if (place.length == 1) {
+        place = place[0];
+        if (place && place.geometry && place.geometry.viewport) {
+          this.presenter.fitBounds(place.geometry.viewport);
+        }        
+        // TODO: When there isn't viewport, and there is location...
+        if (place && place.geometry && place.geometry.location && !place.geometry.viewport) {
+          console.log(place.geometry.location);
+          this.presenter.setCenter(place.geometry.location.k,place.geometry.location.B);
+        }        
+      };
       ga('send', 'event', 'Map', 'Searchbox', 'Find location');
     }
 
