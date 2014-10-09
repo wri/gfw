@@ -41,7 +41,6 @@ define([
         }        
         // TODO: When there isn't viewport, and there is location...
         if (place && place.geometry && place.geometry.location && !place.geometry.viewport) {
-          console.log(place.geometry.location);
           this.presenter.setCenter(place.geometry.location.k,place.geometry.location.B);
         }        
       };
