@@ -234,10 +234,6 @@ define([
         p.totalArea = this.status.get('isoTotalArea') ? this.status.get('isoTotalArea') : 0;
       }
 
-      if (layer.slug !== 'imazon') {
-        p.totalAlerts = (results.value) ? Number(results.value).toLocaleString() : 0;
-      }
-
       /**
        * Fires params
        *   - dateRange (get it from the results as string)
@@ -275,12 +271,16 @@ define([
 
       /**
        * Imazon params
+       *   - totalAlerts
        *   - degrad
        *   - defor
+       *   - color
        */
       if (layer.slug === 'imazon') {
+        p.totalAlerts = (results.value) ? Number(results.value).toLocaleString() : 0;
         p.degrad = (results.value[0]) ? Number(results.value[0].value).toLocaleString() : 0;
         p.defor = (results.value[1]) ? Number(results.value[1].value).toLocaleString() : 0;
+        p.layer.category_color = '#FFACC8';
       }
 
       return p;
