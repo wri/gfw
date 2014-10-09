@@ -2,11 +2,22 @@
 	padding: 0px 0 0;
 	li{
 		padding: 20px 0; 
+    clear: both;
+    overflow: hidden;
 		position: relative;
 		border-top: 1px solid rgba(0, 0, 0, 0.1);
 		&:first-child{ border-top: none;}
 	}
+  .search-thumbnail{
+    float: left;
+    max-width: 80px;
+    margin: 0 10px 0 0;
+    img{
+      width: 100%;
+    }
+  }
 	.search-article{
+    float: lefT;
 		h2{
 			font-size: 24px;
 		}
