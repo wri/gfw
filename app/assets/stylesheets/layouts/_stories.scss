@@ -862,7 +862,7 @@
             padding: 7px;
             top: 55px;
             position: relative;
-            z-index: 9999;
+            z-index: 1;
             right: -8px;
             border-radius: 7px;
             border: 1px solid rgba(0, 133, 255, 0.17);
@@ -895,6 +895,7 @@
           top: -20px;
           .map-search-input {
             width: 86%;
+            right: 65px;
           }
           .stories_map {
             height: 400px;
