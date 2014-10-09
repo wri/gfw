@@ -118,6 +118,9 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
 
   show: function() {
     this._setLink();
+    $('.mode_menu li').removeClass('selected');
+    $('.mode_menu li.first').addClass('selected');
+
     this.$el.fadeIn(250);
     this.$backdrop.show();
 
