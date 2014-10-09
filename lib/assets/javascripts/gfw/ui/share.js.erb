@@ -107,6 +107,7 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
     this.model.on('change:mode', this._toggleMode);
 
     this.$backdrop = $('.backdrop');
+    this.$modeMenu = $('.mode_menu');
 
     var template = $('#share_dialog-template').html();
 
@@ -118,8 +119,8 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
 
   show: function() {
     this._setLink();
-    $('.mode_menu li').removeClass('selected');
-    $('.mode_menu li.first').addClass('selected');
+    this.$modeMenu.find('li').removeClass('selected');
+    this.$modeMenu.find('.first').addClass('selected');
 
     this.$el.fadeIn(250);
     this.$backdrop.show();
