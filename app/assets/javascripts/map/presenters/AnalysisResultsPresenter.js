@@ -286,8 +286,11 @@ define([
        *   - defor
        *   - color
        */
+      if (layer.slug !== 'imazon') {
+        p.totalAlerts = (results.value) ? this.roundNumbers(Number(results.value).toLocaleString()) : 0;        
+      };
+
       if (layer.slug === 'imazon') {
-        p.totalAlerts = (results.value) ? this.roundNumbers(Number(results.value).toLocaleString()) : 0;
         p.degrad = (results.value[0]) ? this.roundNumbers(Number(results.value[0].value).toLocaleString()) : 0;
         p.defor = (results.value[1]) ? this.roundNumbers(Number(results.value[1].value).toLocaleString()) : 0;
         p.layer.category_color = '#FFACC8';
