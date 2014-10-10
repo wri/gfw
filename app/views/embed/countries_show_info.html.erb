@@ -110,7 +110,7 @@
       <div class="section-content">
         <% if @country['gva'].present? && @country['gva'] > 0 %>
         <h3 class="section-title">
-          The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2011, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> of the GDP.</span>
+          The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2011, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> % of the GDP.</span>
         </h3>
         <% else %>
         <div class="coming-soon">No data available</div>
