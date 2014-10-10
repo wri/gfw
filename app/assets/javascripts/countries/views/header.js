@@ -319,6 +319,11 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       });
   },
 
+  roundNumbers : function(number){
+    var num = parseInt(number.replace(/,/g , ''));
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
+  },
+
   _updateData: function(area_id) {
     var url     = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + this.country.get('iso'),
         canopy  = config.canopy_choice || 10,
@@ -342,18 +347,18 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         var amount = data.years[data.years.length -1].extent;
 
         if (amount.toString().length >= 7) {
-          amount = ((amount /1000)/1000).toFixed(2)
+          amount = Math.round((amount /1000)/1000)
           $target.find('.tree-cover .unit').html( 'MHa' );
         } else if (amount.toString().length >= 4) {
           $target.find('.tree-cover .unit').html( 'KHa' );
-          amount = (amount /1000);
-        if (amount % 1 != 0) amount = amount.toFixed(2)
+          amount = Math.round(amount /1000);
+        if (amount % 1 != 0) amount = Math.round(amount)
         } else {
           $target.find('.tree-cover .unit').html( 'Ha' );
         }
 
         $target.find('.tree-cover .amount').html( amount.toLocaleString() );
-        $target.find('.total-area .amount').html(data.years[data.years.length -1].extent_perc.toFixed(2));
+        $target.find('.total-area .amount').html(Math.round(data.years[data.years.length -1].extent_perc));
 
         that._drawLossAndGain(data.years);
         var $link_target = [];
