@@ -674,6 +674,17 @@
       .frame {
         background-color: transparent;
       }
+      .section-footer {
+        position: relative;
+        left: -36px;
+        width: 110.7%;
+        @media only screen and (max-width: 640px) {
+          width: 111.8%;
+        }
+        @media only screen and (max-width: 320px) {
+          width: 118%;
+        }
+      }
     }
     .grid-12 {width: 99%;}
     .mod-navbar {
@@ -855,17 +866,22 @@
         &.required span {
           color: #B20000;
           text-transform: uppercase;
+          margin-right: 2%;
           &.drop_pin {
-            background-color: rgba(0,0,255,0.4);
+            background-color: rgba(0, 0, 255, 0.25);
             text-transform: none;
             color: #fefefe;
-            padding: 7px;
-            top: 55px;
+            padding: 14px;
+            top: 66px;
             position: relative;
             z-index: 1;
             right: -8px;
-            border-radius: 7px;
+            border-radius: 0;
             border: 1px solid rgba(0, 133, 255, 0.17);
+            width: 100%;
+            margin: 0;
+            left: 13px;
+            text-align: center;
           }
         }
         .upload_picture {
@@ -874,7 +890,7 @@
           &:after {
             content: '+';
             color: rgba(161, 186, 66, 01);
-            width: 100%;
+            width: 97.7%;
             height: 50px;
             border: 1px dashed rgba(161, 186, 66, 1);
             font-size: 50px;
@@ -894,8 +910,12 @@
           margin-left: -16px;
           top: -20px;
           .map-search-input {
-            width: 86%;
+            width: 89%;
             right: 65px;
+            border-radius: 0;
+            height: 17px;
+            top: 11px;
+            left: 3px;
           }
           .stories_map {
             height: 400px;
@@ -909,13 +929,13 @@
           @media only screen and (max-width: 640px) {
             width: 105%;
             .map-search-input {
-              width: 83%;
+              width: 82%;
             }
           }
           @media only screen and (max-width: 320px) {
             width: 110%;
             .map-search-input {
-              width: 66%;
+              width: 73%;
             }
           }
         }
