@@ -213,8 +213,11 @@ define([
 
 
     roundNumbers : function(number){
+      console.log(number)
       var num = parseInt(number.replace(/,/g , ''));
-      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");;
+      console.log(num)
+      console.log(num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
 
     _getAnalysisResource: function(results, layer) {
@@ -236,7 +239,7 @@ define([
         dateRange[1].format('MMM-YYYY'));
 
       if (results.params.geojson) {
-        p.totalArea = this.roundNumbers(geojsonUtilsHelper.getHectares(results.params.geojson));
+        p.totalArea = geojsonUtilsHelper.getHectares(results.params.geojson);
       } else if (results.params.iso) {
         p.totalArea = this.status.get('isoTotalArea') ? this.status.get('isoTotalArea') : 0;
       }
@@ -272,10 +275,8 @@ define([
           });
         }
 
-        p.lossAlerts = (results.loss) ? results.loss.toLocaleString() : p.lossAlerts.toLocaleString();
-        p.gainAlerts = (results.gain) ? results.gain.toLocaleString() : p.gainAlerts.toLocaleString();
-        p.lossAlerts = this.roundNumbers(p.lossAlerts)
-        p.gainAlerts = this.roundNumbers(p.gainAlerts)
+        p.lossAlerts = (results.loss) ? Math.round(results.loss).toLocaleString() : Math.round(p.lossAlerts).toLocaleString();
+        p.gainAlerts = (results.gain) ? Math.round(results.gain).toLocaleString() : Math.round(p.gainAlerts).toLocaleString();
 
       }
 
@@ -287,12 +288,12 @@ define([
        *   - color
        */
       if (layer.slug !== 'imazon') {
-        p.totalAlerts = (results.value) ? this.roundNumbers(Number(results.value).toLocaleString()) : 0;        
+        p.totalAlerts = (results.value) ? Math.round(results.value).toLocaleString() : 0;        
       };
 
       if (layer.slug === 'imazon') {
-        p.degrad = (results.value[0]) ? this.roundNumbers(Number(results.value[0].value).toLocaleString()) : 0;
-        p.defor = (results.value[1]) ? this.roundNumbers(Number(results.value[1].value).toLocaleString()) : 0;
+        p.degrad = (results.value[0]) ? Math.round(results.value[0].value).toLocaleString() : 0;
+        p.defor = (results.value[1]) ? Math.round(results.value[1].value).toLocaleString() : 0;
         p.layer.category_color = '#FFACC8';
       }
 

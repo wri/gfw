@@ -69,7 +69,7 @@ define([
      * @return {String} hectares
      */
     getHectares: function(geojson) {
-      return (geojsonArea(geojson) / 10000).toLocaleString();
+      return Math.round((geojsonArea(geojson) / 10000)).toLocaleString();
     }
 
   };
