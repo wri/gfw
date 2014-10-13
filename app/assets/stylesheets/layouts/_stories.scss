@@ -398,22 +398,9 @@
       text-align: center;
       display: inline;
     }
-    border: 0;
-    background-image: none;
-    min-width: 320px;
-    margin-top: -40px;
-    .mod-notice,
-    #google_translate_element,
-    .layout-header-bottom,
-    .story-share_buttons,
-    aside,
-    .site-info iframe {
+    .story-share_buttons {
       display: none;
     }
-    .header-subtitle {
-      padding: 0 15px;
-    }
-    .show_mobile {display: block;}
     .btn,
     .more_stories .section-footer .btn {
         width: 100%;
@@ -685,45 +672,6 @@
         }
       }
     }
-    .grid-12 {width: 99%;}
-    .mod-navbar {
-      min-height: 60px;
-      margin: 0;
-      width: 100%;
-      ul {
-        display: none;
-        &.show{
-          display: -webkit-box;
-          display: -moz-box;
-          display: -ms-flexbox;
-          display: -webkit-flex;
-          display: flex;
-          li {
-            height: 35px;
-            display: -webkit-box;
-            display: -moz-box;
-            display: -ms-flexbox;
-            display: -webkit-flex;
-            display: flex;
-            -webkit-justify-content: center;
-            -webkit-align-content: center;
-            -webkit-align-items: center;
-            justify-content: center;
-            align-content: center;
-            align-items: center;
-            a {
-              text-align: center;
-              font-family: "fira_sans_otmedium";
-              letter-spacing: -1px;
-              span {
-                text-align: center;
-                width: 100%;
-              }
-            }
-          }
-        }
-      }
-    }
     .story-header {
       .section-title {
         margin: 3px 35px;
@@ -742,60 +690,6 @@
     .layout-header-top {
       background-color: #F2F2F3;
       border-bottom: 2px solid #CCCCCC;
-    }
-    .layout-footer{
-      .left {
-        display: none;
-      }
-      .right {
-        float: left;
-        width: 98%;
-        .footer-logos {
-          width: 100%;
-          text-align: center;
-          .hide_mobile {
-            display: none !important;
-          }
-          .show_mobile,
-          .less {
-            text-transform: uppercase;
-            padding: 7px;
-            border: 1px solid #ccc;
-            font-family: fira_sans_otmedium;
-            border-radius: 50px;
-            margin: 0 35px;
-            cursor: pointer;
-            &:after {
-              content: '+';
-              color: inherit;
-              display: inline-block;
-              font-size: 18px;
-              left: 20px;
-              position: relative;
-              top: 2px;
-              font-family: fira_sans_otlight, "Helvetica Neue", "Trebuchet MS", sans-serif;
-            }
-          }
-          .less {
-            &:after {
-              content: '-';
-            }
-          }
-          a {
-            display: none;
-          }
-        }
-        .footer-address {
-          margin: 10px 5px 0 5px;
-          width: 100%;
-          display: inline;
-          padding-top: 25px;
-          text-align: left;
-          a {
-            display: inline-block;
-          }
-        }
-      }
     }
     .carrousel {
       margin: 0;
@@ -1004,64 +898,4 @@
       }
     }
   }
-}
-@media only screen and (max-width: 640px){
-  .mod-navbar {
-      ul {
-        &.show{
-          flex-direction: column;
-          -webkit-flex-direction: column;
-          li {
-            border-bottom: 1px solid #ccc;
-            &.hidden {
-              height: 100px;
-            }
-            a {
-              font-size: 17px;
-              &.selected {
-                background-color: transparent;
-                color: rgba(0,0,0,0.5);
-              }
-              &:hover {
-                background-color: transparent;
-                &:hover {
-                  background-color: transparent;
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    .brand.show {
-      top: 290px;
-    }
-}
-@media only screen and (max-width: 768px) and (min-width: 640px){
-  .mod-navbar {
-      ul {
-        &.show{
-          -webkit-flex-direction: row;
-          flex-direction: row;
-          -webkit-justify-content: space-between;
-          justify-content: space-between;
-          li {
-            border-bottom: 0px;
-            &.hidden {
-              height: 100px;
-            }
-            a {
-              font-size: 15px;
-              &.selected {
-                background-color: #97bd3d;
-                color: #fff;
-              }
-            }
-          }
-        }
-      }
-    }
-    .brand.show {
-      top: 50px;
-    }
 }

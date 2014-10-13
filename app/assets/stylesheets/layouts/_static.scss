@@ -849,3 +849,50 @@ blockquote {
   font: italic 21px "Georgia", serif;
   color: #888;
 }
+
+@media only screen and (max-width: 768px) {
+  iframe {
+    width: calc(100% + 30px);
+    height: 100%;
+    position: relative;
+    min-height: 200px;
+    left: -15px;
+    display: table-column;
+  }
+  .is-about-action,
+  .is-data-action, .is-howto-action {
+    .header_block {
+      background: #444051;
+    }
+    .header_block__title {
+      margin: 0;
+      padding-top: 15px;
+    }
+    .layout-content {
+      margin: 0;
+      padding: 0;
+    }
+    .header_block__body {
+      padding: 30px 15px 0 15px;
+      p {
+        font-family: fira_sans_otlight, "Helvetica Neue", "Trebuchet MS", sans-serif;
+      }
+    }
+    .content_right {
+      margin: 0;
+      width: 100%;
+      border-left: 0px;
+      padding: 20px 15px 0px 15px;
+      min-height: 100%;
+      background: #fff;
+      box-sizing: border-box;
+    }
+    .navigation_left {
+      width: 100%;
+      .selected {
+        width: 100%;
+        box-sizing: border-box;
+      }
+    }
+  }
+}
