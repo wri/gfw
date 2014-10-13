@@ -40,6 +40,7 @@ define([
       this.map = map;
       this.presenter = new Presenter(this);
       this._setStyle();
+      this.$htmlbody = $('html,body');
       AnalysisToolView.__super__.initialize.apply(this);
     },
 
@@ -92,6 +93,7 @@ define([
     _onOverlayComplete: function(e) {
       this.presenter.onOverlayComplete(e);
       this.$done.removeClass('disabled');
+      this.$htmlbody.animate({ scrollTop: 200 },200);
     },
 
     /**
@@ -109,6 +111,7 @@ define([
      * to stop drawing a polygon.
      */
     _onClickCancel: function() {
+      this.$infowindows.hide(0).removeClass('hidden');
       this._stopDrawing();
       this.presenter.deleteAnalysis();
     },
