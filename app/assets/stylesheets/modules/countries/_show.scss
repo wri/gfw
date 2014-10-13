@@ -1295,6 +1295,7 @@
         position: absolute;
         right: -240px;
         @include home-icons-sprite(information);
+        background: image-url('home-icons/information.png');
       }
     }
     &.trees {
