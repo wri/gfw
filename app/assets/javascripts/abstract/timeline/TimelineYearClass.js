@@ -37,7 +37,6 @@ define([
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
-
       if (currentDate && currentDate[0]) {
         this.currentDate = currentDate;
       } else {
@@ -409,7 +408,7 @@ define([
      * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
     updateCurrentDate: function(date) {
-      date[1] = date[1].subtract('month',1);
+      // date[1] = date[1].subtract('month',1);
       this.currentDate = date;
       this.presenter.updateTimelineDate(date);
     },
