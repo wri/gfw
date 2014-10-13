@@ -77,6 +77,15 @@ define([
         }
       }, this);
 
+      // Search for layer 'nothing'
+      _.each(categories, function(category) {
+        if(category[0]['slug'] === 'nothing'){
+          category[0]['source'] = null;
+        }else{
+          category[0]['source'] = category[0]['slug'];
+        }
+      }, this);      
+      
       var html = this.template({
         categories: categories,
         layersLength: layersLength
