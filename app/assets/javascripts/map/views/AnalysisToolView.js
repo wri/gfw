@@ -75,6 +75,10 @@ define([
         panControl: false,
         map: this.map
       });
+      // cache cartodb infowindows
+      this.$infowindows = $('.cartodb-infowindow');
+      this.$infowindows.addClass('hidden');
+
 
       google.maps.event.addListener(this.drawingManager,
         'overlaycomplete', this._onOverlayComplete);
@@ -95,6 +99,7 @@ define([
      * to get the analysis of the new polygon.
      */
     _onClickDone: function() {
+      this.$infowindows.hide(0).removeClass('hidden');
       this._stopDrawing();
       this.presenter.doneDrawing();
     },
