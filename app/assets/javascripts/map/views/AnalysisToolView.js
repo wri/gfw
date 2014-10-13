@@ -118,7 +118,8 @@ define([
      * Stop drawing manager, set drawing box to hidden.
      */
     _stopDrawing: function() {
-      this.$infowindows.hide(0).removeClass('hidden');
+      if(this.$infowindows)
+        this.$infowindows.hide(0).removeClass('hidden');
       if (this.drawingManager) {
         this.drawingManager.setDrawingMode(null);
         this.drawingManager.setMap(null);
