@@ -62,6 +62,7 @@
         width: 10px;
         height: 10px;
         @include home-icons-sprite(information);
+        background: image-url('home-icons/information.png');
       }
     }
   }
