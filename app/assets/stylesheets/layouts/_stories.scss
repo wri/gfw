@@ -403,7 +403,6 @@
     min-width: 320px;
     margin-top: -40px;
     .mod-notice,
-    .footer-logos,
     #google_translate_element,
     .layout-header-bottom,
     .story-share_buttons,
@@ -750,12 +749,51 @@
       }
       .right {
         float: left;
-        width: 90%;
-          .footer-address {
+        width: 98%;
+        .footer-logos {
+          width: 100%;
+          text-align: center;
+          .hide_mobile {
+            display: none !important;
+          }
+          .show_mobile,
+          .less {
+            text-transform: uppercase;
+            padding: 7px;
+            border: 1px solid #ccc;
+            font-family: fira_sans_otmedium;
+            border-radius: 50px;
+            margin: 0 35px;
+            cursor: pointer;
+            &:after {
+              content: '+';
+              color: inherit;
+              display: inline-block;
+              font-size: 18px;
+              left: 20px;
+              position: relative;
+              top: 2px;
+              font-family: fira_sans_otlight, "Helvetica Neue", "Trebuchet MS", sans-serif;
+            }
+          }
+          .less {
+            &:after {
+              content: '-';
+            }
+          }
+          a {
+            display: none;
+          }
+        }
+        .footer-address {
           margin: 10px 5px 0 5px;
           width: 100%;
           display: inline;
           padding-top: 25px;
+          text-align: left;
+          a {
+            display: inline-block;
+          }
         }
       }
     }
