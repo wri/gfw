@@ -211,15 +211,6 @@ define([
      * @return {Object}         Returns resource params
      */
 
-
-    roundNumbers : function(number){
-      console.log(number)
-      var num = parseInt(number.replace(/,/g , ''));
-      console.log(num)
-      console.log(num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
-      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    },
-
     _getAnalysisResource: function(results, layer) {
       var p = {};
 
@@ -288,7 +279,7 @@ define([
        *   - color
        */
       if (layer.slug !== 'imazon') {
-        p.totalAlerts = (results.value) ? Math.round(results.value).toLocaleString() : 0;        
+        p.totalAlerts = (results.value) ? Math.round(results.value).toLocaleString() : 0;
       };
 
       if (layer.slug === 'imazon') {
