@@ -101,7 +101,6 @@ define([
      * to get the analysis of the new polygon.
      */
     _onClickDone: function() {
-      this.$infowindows.hide(0).removeClass('hidden');
       this._stopDrawing();
       this.presenter.doneDrawing();
     },
@@ -111,7 +110,6 @@ define([
      * to stop drawing a polygon.
      */
     _onClickCancel: function() {
-      this.$infowindows.hide(0).removeClass('hidden');
       this._stopDrawing();
       this.presenter.deleteAnalysis();
     },
@@ -120,6 +118,7 @@ define([
      * Stop drawing manager, set drawing box to hidden.
      */
     _stopDrawing: function() {
+      this.$infowindows.hide(0).removeClass('hidden');
       if (this.drawingManager) {
         this.drawingManager.setDrawingMode(null);
         this.drawingManager.setMap(null);
