@@ -42,6 +42,10 @@ Gfw::Application.routes.draw do
 
   get '/countries/overview' => 'countries#overview'
 
+  # search
+  get '/search(/:query)(/:page)' => 'search#index'
+
+
   # media
   post 'media/upload' => 'media#upload'
   get 'media/show' => 'media#show'
