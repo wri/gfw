@@ -20,7 +20,9 @@
                 <li class="layer">
                   <span class="layer-name">
                     <i class="circle" style="color:{{this.title_color}};"></i>{{this.title}}
-                    <a href='#' data-source='{{this.slug}}' class='source'></a>
+                    {{#if this.source}}
+                    <a href='#' data-source='{{this.source}}' class='source'></a>
+                    {{/if}}
                   </span>
                   {{#if this.detailsTpl}}
                     {{{this.detailsTpl}}}
