@@ -257,8 +257,7 @@ define([
         // The api returns all the loss and gain alerts.
         if (results.years) {
           p.gainAlerts = results.years[results.years.length-1].gain * 12;
-
-          var years = _.range(dateRange[1].diff(dateRange[0], 'years')+1);
+          var years = _.range(dateRange[1].diff(dateRange[0], 'years'));
           _.each(years, function(i) {
             var year = _.findWhere(results.years, {year: dateRange[0].year() + i});
             if (!year) {return;}
