@@ -1,0 +1,61 @@
+<% content_for :header do %>
+	<% if @query %>
+		<h1 class="header-title big source_category_title">Results for <%= @query %></h1>
+	<% else %>
+		<h1 class="header-title big source_category_title">Search</h1>
+	<% end %>	
+<% end %>
+
+<div class="inner">
+  <div class="search-box">
+  	  <input id="search" type="text" placeholder="Type your search"/>	
+  </div>
+</div>
+
+<% if @result %>
+	<% if @result['items'] %>
+	<div class="inner font-regular">
+		<ul class="search-list">
+		  <% @result['items'].each do |c| %>
+		  	<li>
+		  		<% if c['pagemap']%>
+		  			<% if c['pagemap']['cse_thumbnail'] %>
+				  		<figure class="search-thumbnail">
+				  			<img src="<%= c['pagemap']['cse_thumbnail'][0]['src'] %>">
+				  		</figure>
+		  			<% end %>
+		  		<% end %>
+		  		<article class="search-article">
+			  		<h2><a class="overview_title" href="<%= c['link'] %>"> <%= c['title']%></a></h2>
+			  		<h3><a href="<%= c['link'] %>"><%= c['formattedUrl'] %></a></h3>
+			  		<div class="search-snippet source_body">
+			  			<p><%= c['htmlSnippet'].html_safe %></p>
+			  		</div>	  			
+		  		</article>
+		  	</li>
+		  <% end %>
+		</ul>
+		<nav class="search-list-footer">
+			<ul>
+				<% if @prevlink %>
+					<li class="prev-link"><a href="<%= @prevlink %>">Prev</a></li>
+				<% end %>
+				<li class="center-link">
+					Showing <%= @info['startView'] %> to <%= @info['endView'] %> of <%= @info['totalView'] %> results
+				</li>
+				<% if @nextlink %>
+					<li class="next-link"><a href="<%= @nextlink %>">Next</a></li>
+				<% end %>
+			</ul>
+		</nav>	
+	</div>
+	<% else %>	
+	<div class="inner">
+		<h2>No results available</h2>
+	</div>
+	<% end %>	
+<% end %>	
+
+
+
+

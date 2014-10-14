@@ -210,6 +210,7 @@ define([
      * @param  {Object} layer   The layer object
      * @return {Object}         Returns resource params
      */
+
     _getAnalysisResource: function(results, layer) {
       var p = {};
 
@@ -234,10 +235,6 @@ define([
         p.totalArea = this.status.get('isoTotalArea') ? this.status.get('isoTotalArea') : 0;
       }
 
-      if (layer.slug !== 'imazon') {
-        p.totalAlerts = (results.value) ? Number(results.value).toLocaleString() : 0;
-      }
-
       /**
        * Fires params
        *   - dateRange (get it from the results as string)
@@ -260,8 +257,7 @@ define([
         // The api returns all the loss and gain alerts.
         if (results.years) {
           p.gainAlerts = results.years[results.years.length-1].gain * 12;
-
-          var years = _.range(dateRange[1].diff(dateRange[0], 'years')+1);
+          var years = _.range(dateRange[1].diff(dateRange[0], 'years'));
           _.each(years, function(i) {
             var year = _.findWhere(results.years, {year: dateRange[0].year() + i});
             if (!year) {return;}
@@ -269,18 +265,26 @@ define([
           });
         }
 
-        p.lossAlerts = (results.loss) ? results.loss.toLocaleString() : p.lossAlerts.toLocaleString();
-        p.gainAlerts = (results.gain) ? results.gain.toLocaleString() : p.gainAlerts.toLocaleString();
+        p.lossAlerts = (results.loss) ? Math.round(results.loss).toLocaleString() : Math.round(p.lossAlerts).toLocaleString();
+        p.gainAlerts = (results.gain) ? Math.round(results.gain).toLocaleString() : Math.round(p.gainAlerts).toLocaleString();
+
       }
 
       /**
        * Imazon params
+       *   - totalAlerts
        *   - degrad
        *   - defor
+       *   - color
        */
+      if (layer.slug !== 'imazon') {
+        p.totalAlerts = (results.value) ? Math.round(results.value).toLocaleString() : 0;
+      };
+
       if (layer.slug === 'imazon') {
-        p.degrad = (results.value[0]) ? Number(results.value[0].value).toLocaleString() : 0;
-        p.defor = (results.value[1]) ? Number(results.value[1].value).toLocaleString() : 0;
+        p.degrad = (results.value[0]) ? Math.round(results.value[0].value).toLocaleString() : 0;
+        p.defor = (results.value[1]) ? Math.round(results.value[1].value).toLocaleString() : 0;
+        p.layer.category_color = '#FFACC8';
       }
 
       return p;

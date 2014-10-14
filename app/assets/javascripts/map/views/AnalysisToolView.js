@@ -40,6 +40,7 @@ define([
       this.map = map;
       this.presenter = new Presenter(this);
       this._setStyle();
+      this.$htmlbody = $('html,body');
       AnalysisToolView.__super__.initialize.apply(this);
     },
 
@@ -75,6 +76,10 @@ define([
         panControl: false,
         map: this.map
       });
+      // cache cartodb infowindows
+      this.$infowindows = $('.cartodb-infowindow');
+      this.$infowindows.addClass('hidden');
+
 
       google.maps.event.addListener(this.drawingManager,
         'overlaycomplete', this._onOverlayComplete);
@@ -88,6 +93,7 @@ define([
     _onOverlayComplete: function(e) {
       this.presenter.onOverlayComplete(e);
       this.$done.removeClass('disabled');
+      this.$htmlbody.animate({ scrollTop: 200 },200);
     },
 
     /**
@@ -112,6 +118,8 @@ define([
      * Stop drawing manager, set drawing box to hidden.
      */
     _stopDrawing: function() {
+      if(this.$infowindows)
+        this.$infowindows.hide(0).removeClass('hidden');
       if (this.drawingManager) {
         this.drawingManager.setDrawingMode(null);
         this.drawingManager.setMap(null);
@@ -165,7 +173,7 @@ define([
     },
 
     toggleWidgetBtn: function(to) {
-      this.$widgetBtn.toggleClass('disabled', to);
+      this.$widgetBtn.toggleClass('disabled', to).toggleClass('in_use',to);
     },
 
     /**
