@@ -1,15 +1,15 @@
 /**
  * The Pantropical layer module for use on canvas.
  *
- * @return GrumpLayer class (extends CartoDBLayerClass)
+ * @return GrumpLayer class (extends ImageLayerClass)
  */
 define([
-  'abstract/layer/ImageMaptypeLayerClass',
-], function(ImageMaptypeLayerClass) {
+  'abstract/layer/ImageLayerClass',
+], function(ImageLayerClass) {
 
   'use strict';
 
-  var GrumpLayer = ImageMaptypeLayerClass.extend({
+  var GrumpLayer = ImageLayerClass.extend({
 
     options: {
       urlTemplate: 'https://s3.amazonaws.com/grump-tiles/grump2000{/z}{/x}{/y}.png',
