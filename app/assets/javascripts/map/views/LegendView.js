@@ -77,13 +77,14 @@ define([
             layerTitle: layer.title
           });
         }
+        if (layer.slug === 'loss') layer.source = 'loss';
       }, this);
 
       // Search for layer 'nothing'
       _.each(categories, function(category) {
         if(category[0]['slug'] === 'nothing'){
           category[0]['source'] = null;
-        }else{
+        } else {
           category[0]['source'] = category[0]['slug'];
         }
       }, this);
