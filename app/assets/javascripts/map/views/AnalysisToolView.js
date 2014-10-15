@@ -173,7 +173,7 @@ define([
     },
 
     toggleWidgetBtn: function(to) {
-      this.$widgetBtn.toggleClass('disabled', to);
+      this.$widgetBtn.toggleClass('disabled', to).toggleClass('in_use',to);
     },
 
     /**

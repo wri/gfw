@@ -15,9 +15,10 @@ define([
   'text!map/templates/legend/forest2000.handlebars',
   'text!map/templates/legend/pantropical.handlebars',
   'text!map/templates/legend/idnPrimary.handlebars',
-  'text!map/templates/legend/intact2013.handlebars'
+  'text!map/templates/legend/intact2013.handlebars',
+  'text!map/templates/legend/grump.handlebars'
 ], function(_, Handlebars, Widget, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl) {
 
   'use strict';
 
@@ -37,7 +38,8 @@ define([
       forest2000: Handlebars.compile(forest2000Tpl),
       pantropical: Handlebars.compile(pantropicalTpl),
       idn_primary: Handlebars.compile(idnPrimaryTpl),
-      ifl_2013_deg: Handlebars.compile(intact2013Tpl)
+      ifl_2013_deg: Handlebars.compile(intact2013Tpl),
+      grump2000: Handlebars.compile(grumpTpl)
     },
 
     options: {
@@ -75,17 +77,20 @@ define([
             layerTitle: layer.title
           });
         }
+        // if (layer.slug === 'loss') layer.source = 'loss';
       }, this);
 
       // Search for layer 'nothing'
       _.each(categories, function(category) {
-        if(category[0]['slug'] === 'nothing'){
-          category[0]['source'] = null;
-        }else{
-          category[0]['source'] = category[0]['slug'];
+        for (var i = 0; i< category.length; i++) {
+          if(category[i]['slug'] === 'nothing'){
+            category[i]['source'] = null;
+          } else {
+            category[i]['source'] = category[i]['slug'];
+          }
         }
-      }, this);      
-      
+      }, this);
+
       var html = this.template({
         categories: categories,
         layersLength: layersLength
