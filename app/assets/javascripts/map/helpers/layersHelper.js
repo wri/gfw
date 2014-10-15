@@ -30,6 +30,7 @@ define([
   'map/views/layers/MongabayStoriesLayer',
   'map/views/layers/InfoamazoniaStoriesLayer',
   'map/views/layers/GrumpLayer',
+  'map/views/layers/MangroveLayer',
   // Layer dialog templates
   'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -67,6 +68,7 @@ define([
   MongabayStoriesLayer,
   InfoamazoniaStoriesLayer,
   GrumpLayer,
+  MangroveLayer,
   // Layer dialog templates
   loss_dialog,
   // Layer timelines
@@ -165,7 +167,10 @@ define([
     },
     grump2000 :{
       view: GrumpLayer
-    }, 
+    },
+    mangrove :{
+      view: MangroveLayer
+    },
     nothing: {
     }
   };
