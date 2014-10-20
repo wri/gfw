@@ -21,15 +21,28 @@ define([
       'fires',
       'modis_cover',
       'imazon_cover',
-      'forma_cover'
+      'forma_cover',
+      'ifl_2000',
+      'ifl_2013_deg',
+      'pantropical',
+      'idn_primary',
+      'logging',
+      'mining',
+      'oil_palm',
+      'wood_fiber_plantations',
+      'protected_areas',
+      'biodiversity_hotspots',
+      'resource_rights',
+      'land_rights',
+      'forest2000'
     ],
 
     categoryOrder: [
       'forest_clearing',
       'forest_cover',
       'forest_use',
-      'conservation',
       'people',
+      'conservation',
       'stories'
     ],
 
