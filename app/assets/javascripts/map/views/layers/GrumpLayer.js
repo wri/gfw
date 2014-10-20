@@ -12,7 +12,7 @@ define([
   var GrumpLayer = ImageLayerClass.extend({
 
     options: {
-      urlTemplate: '//s3.amazonaws.com/grump-tiles/grump-base{/z}{/x}{/y}.png',
+      urlTemplate: 'https://s3.amazonaws.com/grump-tiles/grump-base{/z}{/x}{/y}.png',
       dataMaxZoom: 8
     }
 
