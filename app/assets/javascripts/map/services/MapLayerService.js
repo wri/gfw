@@ -102,7 +102,6 @@ define([
               ORDER BY \
                 displaylayer, \
                 title ASC';
-
         this.url = new UriTemplate(template).fillFromObject({q: sql});
       }
 
