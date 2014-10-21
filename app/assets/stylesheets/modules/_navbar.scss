@@ -60,33 +60,4 @@
       }
     }
   }
-  @media only screen and (max-width: 768px) {
-    .hamburger {
-      content:" ";
-      background: image-url('/assets/icons/hamburger.png') no-repeat;
-      height: 20px;
-      width: 20px;
-      position: absolute;
-      right: 10px;
-      top: 17px;
-      cursor: pointer;
-      &.show {
-        top: 310px;
-      }
-    }
-  }
-    @media only screen and (max-width: 640px) {
-    .hamburger {
-      &.show {
-        top: 330px;
-      }
-    }
-  }
-  @media only screen and (max-width: 768px) and (min-width: 640px) {
-    .hamburger {
-      &.show {
-        top: 60px;
-      }
-    }
-  }
 }
