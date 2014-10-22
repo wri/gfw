@@ -16,7 +16,8 @@ body {
     color: #333;
   }
 
-  &.is-embed-action {
+  &.is-embed-action,
+  &.embed {
     max-width: 640px;
     #tpglt-nav-wrapper {
       display: none
