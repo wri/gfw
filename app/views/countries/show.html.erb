@@ -65,11 +65,11 @@
 
           <div class="forma_dropdown-menu">
             <ul>
-              <li><a href="http://wri-01.cartodb.com/api/v1/sql?q=SELECT f.* FROM forma_api f WHERE f.date >= '2014-01-01'::date AND f.date <= NOW()::date AND f.iso = UPPER('<%= @country['iso'] %>')&version=v1&format=svg">SVG</a></li>
-              <li><a href="http://wri-01.cartodb.com/api/v1/sql?q=SELECT f.* FROM forma_api f WHERE f.date >= '2014-01-01'::date AND f.date <= NOW()::date AND f.iso = UPPER('<%= @country['iso'] %>')&version=v1&format=geojson">GeoJSON</a></li>
-              <li><a href="http://wri-01.cartodb.com/api/v1/sql?q=SELECT f.* FROM forma_api f WHERE f.date >= '2014-01-01'::date AND f.date <= NOW()::date AND f.iso = UPPER('<%= @country['iso'] %>')&version=v1&format=shp">SHP</a></li>
-              <li><a href="http://wri-01.cartodb.com/api/v1/sql?q=SELECT f.* FROM forma_api f WHERE f.date >= '2014-01-01'::date AND f.date <= NOW()::date AND f.iso = UPPER('<%= @country['iso'] %>')&version=v1&format=kml">KML</a></li>
-              <li><a href="http://wri-01.cartodb.com/api/v1/sql?q=SELECT f.* FROM forma_api f WHERE f.date >= '2014-01-01'::date AND f.date <= NOW()::date AND f.iso = UPPER('<%= @country['iso'] %>')&version=v1&format=csv">CSV</a></li>
+              <li><a href="http://wri-01.cartodb.com/api/v1/sql?q=SELECT f.* FROM forma_api f WHERE f.date >= '2006-01-01'::date AND f.date <= NOW()::date AND f.iso = UPPER('<%= @country['iso'] %>')&version=v1&format=svg">SVG</a></li>
+              <li><a href="http://wri-01.cartodb.com/api/v1/sql?q=SELECT f.* FROM forma_api f WHERE f.date >= '2006-01-01'::date AND f.date <= NOW()::date AND f.iso = UPPER('<%= @country['iso'] %>')&version=v1&format=geojson">GeoJSON</a></li>
+              <li><a href="http://wri-01.cartodb.com/api/v1/sql?q=SELECT f.* FROM forma_api f WHERE f.date >= '2006-01-01'::date AND f.date <= NOW()::date AND f.iso = UPPER('<%= @country['iso'] %>')&version=v1&format=shp">SHP</a></li>
+              <li><a href="http://wri-01.cartodb.com/api/v1/sql?q=SELECT f.* FROM forma_api f WHERE f.date >= '2006-01-01'::date AND f.date <= NOW()::date AND f.iso = UPPER('<%= @country['iso'] %>')&version=v1&format=kml">KML</a></li>
+              <li><a href="http://wri-01.cartodb.com/api/v1/sql?q=SELECT f.* FROM forma_api f WHERE f.date >= '2006-01-01'::date AND f.date <= NOW()::date AND f.iso = UPPER('<%= @country['iso'] %>')&version=v1&format=csv">CSV</a></li>
             </ul>
           </div>
           <a href="#" class="btn-rdn btn-rdn-primary forma_dropdown-link">Download data</a>
