@@ -211,15 +211,6 @@ define([
      * @return {Object}         Returns resource params
      */
 
-
-    roundNumbers : function(number){
-      console.log(number)
-      var num = parseInt(number.replace(/,/g , ''));
-      console.log(num)
-      console.log(num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
-      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    },
-
     _getAnalysisResource: function(results, layer) {
       var p = {};
 
@@ -266,8 +257,7 @@ define([
         // The api returns all the loss and gain alerts.
         if (results.years) {
           p.gainAlerts = results.years[results.years.length-1].gain * 12;
-
-          var years = _.range(dateRange[1].diff(dateRange[0], 'years')+1);
+          var years = _.range(dateRange[1].diff(dateRange[0], 'years'));
           _.each(years, function(i) {
             var year = _.findWhere(results.years, {year: dateRange[0].year() + i});
             if (!year) {return;}
@@ -288,7 +278,7 @@ define([
        *   - color
        */
       if (layer.slug !== 'imazon') {
-        p.totalAlerts = (results.value) ? Math.round(results.value).toLocaleString() : 0;        
+        p.totalAlerts = (results.value) ? Math.round(results.value).toLocaleString() : 0;
       };
 
       if (layer.slug === 'imazon') {

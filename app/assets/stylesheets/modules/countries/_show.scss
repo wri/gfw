@@ -12,7 +12,7 @@
     }
   }
   .embed-country-title{
-    margin-top: 100px;
+    margin-top: 50px;
     text-align: center;
     font-size: 2em;
   }
@@ -1295,6 +1295,7 @@
         position: absolute;
         right: -240px;
         @include home-icons-sprite(information);
+        background: image-url('home-icons/information.png');
       }
     }
     &.trees {
@@ -1510,7 +1511,7 @@
   margin-top: -84px;
 
   .embed-country-title{
-    margin-top: 100px;
+    margin-top: 50px;
     text-align: center;
     font-size: 2em;
   }

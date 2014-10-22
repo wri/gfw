@@ -16,6 +16,11 @@
     &.disabled {
       opacity: 0.5;
       border-color: #E4E4E4;
+      &.in_use {
+        opacity: 1;
+        background-image:url(home-icons/analysis_refactored_hover.gif);
+        box-shadow: 0px 0px 3px #777;
+      }
     }
   }
 

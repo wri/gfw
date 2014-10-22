@@ -10,18 +10,23 @@ body {
   h1 {
     margin: .7em auto .5em auto;
 
-    font-family: "Georgia", serif;
+    font-family:  "fira_sans_otregular", Georgia, serif;
     font-size: 51px;
     line-height: 1.1;
     color: #333;
   }
 
-  &.is-embed-action {
+  &.is-embed-action,
+  &.embed {
     max-width: 640px;
-    #tpglt-nav-wrapper {
+    background: none;
+    #tpglt-nav-wrapper,
+    .skiptranslate {
       display: none
     }
-    background: none;
+    .header-inner {
+      height: 0;
+    }
     h1 {
       font-size: 32px;
       display: inline-block;
@@ -97,3 +102,7 @@ strong {
 }
 
 
+input {
+    -webkit-appearance: none;
+    border-radius: 0;
+}

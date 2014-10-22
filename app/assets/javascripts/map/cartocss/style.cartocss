@@ -171,5 +171,12 @@
     line-width: 0;
     line-opacity: 1;
   }
+  [layer='wcmc_010_mangroveusgs2011'] {
+    polygon-fill: #055D00;
+    polygon-opacity: 0.7;
+    line-color: #055d00;
+    line-width: 1;
+    line-opacity: 1;
+  }
 
 }

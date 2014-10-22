@@ -10,7 +10,7 @@
           <div class="thumb-mask"><img src="{{content.data.image}}" onerror="this.style.display='none';"></div>
       {{/if}}
       {{#if content.data.analysis}}
-        <a style="cursor:pointer;" id="analyzeBtn" class="analyse" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}"></a>
+        <a style="cursor:pointer;" id="analyzeBtn" onclick="mps.publish('AnalysisTool/analyze-concession', [$(this).data('useid'), $(this).data('use')])" class="analyse" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}"></a>
       {{/if}}
     </div>
     <div class="cartodb-popup-content">
@@ -115,10 +115,3 @@
   <div class="cartodb-popup-tip-container"></div>
 </div>
 
-<script type="text/javascript">
-  $('#analyzeBtn').on('click', function(e) {
-    var useid = $(this).data('useid');
-    var layer = $(this).data('use');
-    mps.publish('AnalysisTool/analyze-concession', [useid, layer]);
-  });
-</script>
