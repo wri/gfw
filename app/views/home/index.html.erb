@@ -33,6 +33,9 @@
     <%= link_to (
       "Check out "+content_tag(:span, "GFW Fires")).html_safe,
       "http://fires.globalforestwatch.org/", class: "gfw_sticker fires", :target => "_blank" %>
+    <%= link_to (
+      content_tag(:span, "HELP IMPROVE GFW!")).html_safe,
+      "#{about_path}/testers", class: "gfw_testers", :target => "_blank" %>
   </div>
 <% end %>
 
