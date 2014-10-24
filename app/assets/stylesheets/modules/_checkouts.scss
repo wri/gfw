@@ -40,4 +40,23 @@
       color: #EF1731;
     }
   }
+  .gfw_testers {
+    height: 85px;
+    width: 85px;
+    position: relative;
+    float: left;
+    background: #97bd3d;
+    border-radius: 100%;
+    color: #fff;
+    text-align: center;
+    top: 140px;
+    padding-top: 0;
+    left: 322px;
+    span {
+      padding-top: 23px;
+      left: 0px;
+      position: absolute;
+      font-size: 13px;
+    }
+  }
 }
