@@ -23,13 +23,13 @@
     <div class="<%= 'field_with_errors' if @story.errors[:the_geom].present? %>">
       <%= label_tag 'Affected areas' %>
     </div>
-    <span>Drop a pin on the map near the affected area</span>
+    <span class='drop_pin'>Drop a pin on the map near the affected area</span>
 
     <div class="<%= 'field_with_errors' if @story.errors[:the_geom].present? %>">
       <div class="stories_map-container">
         <a href="/#remove" class="remove_story-link">Remove</a>
         <div id="stories_map" class="map stories_map"></div>
-        <input class="map-search-input" type="text" placeholder="Search an area"/>
+        <input class="map-search-input" type="text" placeholder="SEARCH..."/>
       </div>
     </div>
 
@@ -85,6 +85,7 @@
 
     <%= f.text_field :name %>
   </div>
+  <p class="hint_mobile hidden">If you share your name, it will be visible on the GFW website, but your email will not be published.</p>
 
   <p class="hint">In some areas, forest clearing information is considered to be highly sensitive—users are encouraged to be cautious when sharing their names.</p>
   <div class="field short required">
@@ -93,6 +94,7 @@
 
     <%= f.text_field :email %>
   </div>
+  <p class="hint_mobile hidden">In some areas, forest clearing information is considered to be highly sensitive—users are encouraged to be cautious when sharing their names.</p>
 
   <div class="field">
     <%= f.submit 'Submit story', class: 'btn dark_glow' %>

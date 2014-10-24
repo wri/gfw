@@ -26,7 +26,8 @@
     </div>
     <div class='right'>
       <div class="footer-logos">
-        <p>Core partners</p>
+        <p class="hide_mobile hidden">Core partners</p>
+        <p class="show_mobile hidden" onclick="$(this).siblings('a').css('display','inline-block').siblings('p').toggle()">Show all core partners</p>
         <a href="http://earthengine.google.org/" class="footer-logo google" target="_blank"></a>
         <a href="http://www.esri.com/gfw" class="footer-logo esri" target="_blank"></a>
         <a href="http://www.geog.umd.edu/" class="footer-logo universitymaryland" target="_blank"></a>
@@ -46,6 +47,7 @@
         <a href="http://www.thegef.org/gef/" class="footer-logo gef last" target="_blank"></a>
         <a href="http://www.gov.uk/government/organisations/department-for-international-development" class="footer-logo ukaid" target="_blank"></a>
         <a href="http://www.tiliafund.org/" class="footer-logo tilia" target="_blank"></a>
+        <p class="less hidden" onclick="$(this).siblings('a').css('display','none').siblings('p').toggle()">Hide all core partners</p>
       </div>
       <div class="footer-address">
         <p>A partnership convened by</p>
