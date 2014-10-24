@@ -53,7 +53,15 @@ $font-regular: "fira_sans_otregular", Georgia, sans-serif;
 .serif {
   font-family: "Georgia", serif;
 }
-
+.fira_light {
+  font-family: "fira_sans_otlight", "Helvetica Neue", "Trebuchet MS", sans-serif;
+}
+.fira_medium {
+  font-family: "fira_sans_otmedium", "Helvetica Neue", "Trebuchet MS", sans-serif;
+}
+.fira_regular {
+  font-family: "fira_sans_otregular", "Helvetica Neue", "Trebuchet MS", sans-serif;
+}
 .sans-serif {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
