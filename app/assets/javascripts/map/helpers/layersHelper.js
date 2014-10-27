@@ -23,6 +23,7 @@ define([
   'map/views/layers/OilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
   'map/views/layers/ProtectedAreasLayer',
+  'map/views/layers/ProtectedAreasCDBLayer',
   'map/views/layers/BiodiversityHotspotsLayer',
   'map/views/layers/ResourceRightsLayer',
   'map/views/layers/LandRightsLayer',
@@ -61,6 +62,7 @@ define([
   OilPalmLayer,
   WoodFiberPlantationsLayer,
   ProtectedAreasLayer,
+  ProtectedAreasCDBLayer,
   BiodiversityHotspotsLayer,
   ResourceRightsLayer,
   LandRightsLayer,
@@ -146,6 +148,9 @@ define([
     },
     protected_areas: {
       view: ProtectedAreasLayer
+    },
+    protected_areasCDB: {
+      view: ProtectedAreasCDBLayer
     },
     biodiversity_hotspots: {
       view: BiodiversityHotspotsLayer
