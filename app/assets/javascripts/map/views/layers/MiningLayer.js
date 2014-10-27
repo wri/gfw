@@ -12,11 +12,12 @@ define([
   var MiningLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT cartodb_id, \'mining\' as tablename, the_geom_webmercator, company, country, area_ha, name, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}',
+      sql: 'SELECT cartodb_id, \'mining\' as tablename, the_geom_webmercator, type, status,company, country, area_ha, name, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}',
       infowindow: true,
-      interactivity: 'cartodb_id, tablename, name, company, country, area_ha, analysis',
+      interactivity: 'cartodb_id, tablename, name, type, status,company, country, area_ha, analysis',
       analysis: true
     }
+
 
   });
 
