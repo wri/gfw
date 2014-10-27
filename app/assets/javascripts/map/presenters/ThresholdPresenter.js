@@ -15,7 +15,7 @@ define([
   var StatusModel = Backbone.Model.extend({
     defaults: {
       layers: [],
-      threshold: 10
+      threshold: 30
     }
   });
 
