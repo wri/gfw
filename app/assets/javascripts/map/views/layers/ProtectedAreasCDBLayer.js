@@ -12,9 +12,9 @@ define([
   var ProtectedAreasCDBLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT the_geom_webmercator, cartodb_id, the_geom, desig, desig_eng, desig_type, gis_area, iso3, orig_name, parent_iso, rep_area, shape_area, shape_leng, status_yr, wdpaid, wdpa_pid, \'{tableName}\' as layer, \'{tableName}\' as name FROM {tableName}',
+      sql: 'SELECT the_geom_webmercator, the_geom, desig_eng, iso3 as country, name, wdpaid as id, {analysis} AS analysis, \'{tableName}\' as layer FROM {tableName}',
       infowindow: true,
-      interactivity: 'orig_name',
+      interactivity: 'desig_eng, country, name, id',
       analysis: true
     },
 
