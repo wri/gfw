@@ -768,7 +768,7 @@ config.GRAPHS = {
     subtitle: "Percent global tree cover loss per year with annualized percent tree cover gain"
   },
   total_extent: {
-    title: "Countries with greatest tree cover extent <sup>(2001-2012)</sup>",
+    title: "Countries with greatest tree cover extent <sup>(2000)</sup>",
     subtitle: "Global tree cover extent per year with global tree cover loss"
   },
   ratio: {
