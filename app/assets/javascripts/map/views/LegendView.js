@@ -73,7 +73,7 @@ define([
       _.each(layers, function(layer) {
         if (this.detailsTemplates[layer.slug]) {
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
-            threshold: options.threshold || 10,
+            threshold: options.threshold || 30,
             layerTitle: layer.title
           });
         }
