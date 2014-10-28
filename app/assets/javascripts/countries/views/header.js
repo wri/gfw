@@ -4,7 +4,7 @@ gfw.ui.model.layersOptions = Backbone.Model.extend({
 
   initialize: function(options) {
     options = options || {};
-    var threshold = (config.canopy_choice) ? config.canopy_choice : 10;
+    var threshold = (config.canopy_choice) ? config.canopy_choice : 30;
     var layers = {
       'forest2000': {
         url: 'http://earthengine.google.org/static/hansen_2013/gfw_tree_loss_year_' + threshold + '/%z/%x/%y.png',
@@ -293,7 +293,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
     if (area) {
       this.router.navigate('country/' + this.country.get('iso') + '/' + String(area.get('id_1')), {trigger: true});
-      this.$el.find('#url_analysis').attr('href', '/map/6/'+ area.attributes.bounds._northEast.lat + '/'+ area.attributes.bounds._northEast.lng + '/'+ area.attributes.iso + '-' + String(area.get('id_1')) +'/grayscale/loss,forestgain?begin=2001-01-01&end=2013-12-30&threshold='+(config.canopy_choice || 10));
+      this.$el.find('#url_analysis').attr('href', '/map/6/'+ area.attributes.bounds._northEast.lat + '/'+ area.attributes.bounds._northEast.lng + '/'+ area.attributes.iso + '-' + String(area.get('id_1')) +'/grayscale/loss,forestgain?begin=2001-01-01&end=2013-12-30&threshold='+(config.canopy_choice || 30));
     } else {
       this._navigateCountry();
     }
@@ -302,7 +302,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
   _navigateCountry: function() {
     this.router.navigate('country/' + this.country.get('iso'), {trigger: true});
-    this.$el.find('#url_analysis').attr('href', '/map/5/0/0/'+ this.country.get('iso') +'/grayscale/loss,forestgain?begin=2001-01-01&end=2012-12-30&threshold='+(config.canopy_choice || 10));
+    this.$el.find('#url_analysis').attr('href', '/map/5/0/0/'+ this.country.get('iso') +'/grayscale/loss,forestgain?begin=2001-01-01&end=2012-12-30&threshold='+(config.canopy_choice || 30));
   },
 
   _initMap: function(callback) {
@@ -326,7 +326,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
   _updateData: function(area_id) {
     var url     = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + this.country.get('iso'),
-        canopy  = config.canopy_choice || 10,
+        canopy  = config.canopy_choice || 30,
         $cnp_op = $('.umd_options_control').find('.sidenav-icon'),
         $target = $('.tree-numbers'),
         that    = this;
@@ -337,7 +337,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       url = url + '?thresh=' + canopy;
     }
 
-    if (canopy != 10) $cnp_op.addClass('no_def');
+    if (canopy != 30) $cnp_op.addClass('no_def');
     else $cnp_op.removeClass('no_def');
 
     $.ajax({
@@ -449,7 +449,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
   _displayArea: function(area) {
     var self = this;
-    this.$el.find('#url_analysis').attr('href', '/map/6/'+ area.attributes.bounds._northEast.lat + '/'+ area.attributes.bounds._northEast.lng + '/'+ area.attributes.iso + '-' + String(area.get('id_1')) +'/grayscale/loss,forestgain?begin=2001-01-01&end=2013-12-30&threshold='+(config.canopy_choice || 10));
+    this.$el.find('#url_analysis').attr('href', '/map/6/'+ area.attributes.bounds._northEast.lat + '/'+ area.attributes.bounds._northEast.lng + '/'+ area.attributes.iso + '-' + String(area.get('id_1')) +'/grayscale/loss,forestgain?begin=2001-01-01&end=2013-12-30&threshold='+(config.canopy_choice || 30));
     this.map.fitBounds(area.get('bounds'), {reset: true});
     this._removeCartodblayer();
 

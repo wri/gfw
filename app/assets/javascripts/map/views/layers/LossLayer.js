@@ -16,7 +16,7 @@ define([
   var LossLayer = CanvasLayerClass.extend({
 
     options: {
-      threshold: 10,
+      threshold: 30,
       dataMaxZoom: 12,
       urlTemplate: 'http://earthengine.google.org/static/hansen_2013/gfw_tree_loss_year_{threshold}{/z}{/x}{/y}.png'
     },
