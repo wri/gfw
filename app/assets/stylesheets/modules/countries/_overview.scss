@@ -247,7 +247,7 @@
   }
 
   &.expanded {
-    width: 240px;
+    width: 161px;
   }
 
   &.medium {
@@ -270,7 +270,7 @@
 }
 .countries_list__data {
   float: right;
-  width: 180px;
+  width: 240px;
   text-align: right;
   margin-top: 4px;
   line-height: 20px;
@@ -310,10 +310,11 @@
   }
   div[id^="ext_"] {
     .line::after {
+      right: -44px;
       background-color: #88aa37;
     }
     .loss::after {
-      right: -28px;
+      right: -18px;
       background-color: #FF6699;
     }
   }
@@ -387,6 +388,7 @@
   .sibling {
     float: left;
     border-right: 1px solid #ccc;
+    width: 20px;
 
     svg {
       padding-right: 10px;
