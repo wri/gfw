@@ -69,6 +69,11 @@ define([
         infowindowTemplate: TPL,
         templateType: 'handlebars'
       });
+      this.infowindow.model.on('change:visibility', function(model) {
+        if (model.get('visibility')) {
+          $('.cartodb-popup').toggleClass('dont_analyze', $('#analysis').hasClass('disabled'));
+        }
+      });
     },
 
     removeInfowindow: function() {
