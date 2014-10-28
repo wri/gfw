@@ -113,6 +113,10 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     $legend.find('p').html(config.GRAPHS[graph].subtitle);
     $legend.find('.info').attr('data-source', graph);
 
+    this.$graph.removeClass('is-hidden');
+    this.$years.removeClass('is-hidden');
+    $legend.removeClass('is-hidden');
+
     this.$graph.find('.'+graph);
 
     this.$graph.find('.chart').hide();
@@ -120,6 +124,12 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
     this._drawGraph();
     this._drawList();
+
+    if (graph === 'total_extent') {
+      this.$graph.addClass('is-hidden');
+      this.$years.addClass('is-hidden');
+      $legend.addClass('is-hidden');
+    }
   },
   _updateGraphOverview: function(e) {
     if (typeof ga !== "undefined") ga('send', 'event', 'Country Overview', 'Change', 'Threshold');
@@ -272,7 +282,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
 
           markup_list += '<li>\
-                            <div class="countries_list__minioverview countries_list__minioverview_'+val.iso+'"></div>\
                             <div class="countries_list__num">'+ord+'</div>\
                             <div class="countries_list__title">'+enabled+'</div>\
                             <div class="countries_list__data">\
@@ -297,9 +306,9 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         that.model.set('class', null);
 
-        _.each(data, function(val, key) {
-          self._drawMiniOverview(val.iso);
-        });
+        // _.each(data, function(val, key) {
+        //   self._drawMiniOverview(val.iso);
+        // });
       });
     } else if (this.model.get('graph') === 'total_extent') {
       this.$settings.removeClass('disable');
