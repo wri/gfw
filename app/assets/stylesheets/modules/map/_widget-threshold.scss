@@ -135,6 +135,12 @@
         outline: 0;
       }
 
+      &::-ms-tooltip{ 
+        
+        display : none;
+        visibility: hidden;
+      }
+
       &::-webkit-slider-thumb {
         -webkit-appearance: none;
         @include home-icons-sprite(timeline_handler_white);
