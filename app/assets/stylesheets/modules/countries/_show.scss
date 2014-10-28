@@ -448,22 +448,20 @@
     .country-nav-items {
       width: 100%;
       text-align: center;
-      display: flex;
-      display: -ms-flex;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      align-content: space-between;
-      -ms-flex-pack: justify;
 
       > li {
         float: left;
-        margin-right: -1px;
         height: 50px;
-        width: 100%;
+        width: 16.66666%;
+        border: 1px solid #ccc;
+        border-left: none;
+        &:first-child{
+          border-left: 1px solid #ccc;
+        }
+
         @include box-sizing(border-box);
 
         a {
-          border: 1px solid #ccc;
           background: #F2F2F3;
           width: 100%;
           height: 100%;
@@ -491,9 +489,6 @@
             background: white;
           }
         }
-      &:last-child {
-        width: 99%;
-      }
       }
     } // country-nav
   }
