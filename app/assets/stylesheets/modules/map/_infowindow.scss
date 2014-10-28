@@ -10,6 +10,12 @@ div.cartodb-infowindow{
 .mod-custom-infowindow,
 .cartodb-popup {
 
+  &.dont_analyze {
+    #analyzeBtn {
+      display: none;
+    }
+  }
+
   h2 {
     font-size: 12px;
     font-weight: bold;
