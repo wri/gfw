@@ -113,6 +113,10 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     $legend.find('p').html(config.GRAPHS[graph].subtitle);
     $legend.find('.info').attr('data-source', graph);
 
+    this.$graph.removeClass('is-hidden');
+    this.$years.removeClass('is-hidden');
+    $legend.removeClass('is-hidden');
+
     this.$graph.find('.'+graph);
 
     this.$graph.find('.chart').hide();
@@ -120,6 +124,12 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
     this._drawGraph();
     this._drawList();
+
+    if (graph === 'total_extent') {
+      this.$graph.addClass('is-hidden');
+      this.$years.addClass('is-hidden');
+      $legend.addClass('is-hidden');
+    }
   },
   _updateGraphOverview: function(e) {
     if (typeof ga !== "undefined") ga('send', 'event', 'Country Overview', 'Change', 'Threshold');
