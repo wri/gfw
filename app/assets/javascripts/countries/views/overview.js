@@ -124,7 +124,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
   _updateGraphOverview: function(e) {
     if (typeof ga !== "undefined") ga('send', 'event', 'Country Overview', 'Change', 'Threshold');
     var $cnp_op = this.$el.find('.overview_button_group .settings i')
-    if (config.canopy_choice != 10) $cnp_op.addClass('no_def');
+    if (config.canopy_choice != 30) $cnp_op.addClass('no_def');
     else $cnp_op.removeClass('no_def');
 
     this._drawYears();
@@ -159,7 +159,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
     if (this.model.get('graph') === 'total_loss') {
       this.$settings.removeClass('disable');
-      var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat umd, gfw2_countries c WHERE thresh = '+ (config.canopy_choice || 10) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
+      var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat umd, gfw2_countries c WHERE thresh = '+ (config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
 
       if (e) {
         sql += 'OFFSET 10';
@@ -181,16 +181,16 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               }
           var max_trigger = data.length -1;
           $.ajax({
-            url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (config.canopy_choice || 10),
+            url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (config.canopy_choice || 30),
             dataType: 'json',
             success: function(data) {
-              var loss = (config.canopy_choice == false || config.canopy_choice == 10) ? Math.round(val.loss) : 0;
+              var loss = (config.canopy_choice == false || config.canopy_choice == 30) ? Math.round(val.loss) : 0;
               var gain = 0;
               var g_mha, l_mha;
               g_mha = l_mha = 'Mha';
 
               for (var i = 0; i<data.years.length; i ++) {
-                if (config.canopy_choice != false && config.canopy_choice != 10){
+                if (config.canopy_choice != false && config.canopy_choice != 30){
                   loss += data.years[i].loss
                 }
                 gain += data.years[i].gain
@@ -253,7 +253,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     } else if (this.model.get('graph') === 'percent_loss') {
 
       this.$settings.removeClass('disable');
-      var sql = 'WITH e AS (SELECT iso, extent FROM umd_nat WHERE year = 2000 AND thresh = '+(config.canopy_choice || 10)+') SELECT c.iso, c.name, c.enabled, p.perc ratio_loss FROM (SELECT umd.iso, sum(umd.loss) / avg(e.extent) perc FROM umd_nat umd, e WHERE umd.thresh = '+(config.canopy_choice || 10)+' AND umd.iso = e.iso AND e.extent != 0 GROUP BY umd.iso, e.iso ORDER BY perc DESC) p, gfw2_countries c WHERE p.iso = c.iso AND c.enabled IS true AND not perc = 0 ORDER BY p.perc DESC ';
+      var sql = 'WITH e AS (SELECT iso, extent FROM umd_nat WHERE year = 2000 AND thresh = '+(config.canopy_choice || 30)+') SELECT c.iso, c.name, c.enabled, p.perc ratio_loss FROM (SELECT umd.iso, sum(umd.loss) / avg(e.extent) perc FROM umd_nat umd, e WHERE umd.thresh = '+(config.canopy_choice || 30)+' AND umd.iso = e.iso AND e.extent != 0 GROUP BY umd.iso, e.iso ORDER BY perc DESC) p, gfw2_countries c WHERE p.iso = c.iso AND c.enabled IS true AND not perc = 0 ORDER BY p.perc DESC ';
 
       if (e) {
         sql += 'OFFSET 10';
@@ -308,14 +308,14 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                        SELECT iso, \
                               extent \
                        FROM   umd_nat \
-                       WHERE  thresh = ' + (config.canopy_choice || 10) +' \
-                       AND    year = 2012), u AS \
+                       WHERE  thresh = ' + (config.canopy_choice || 30) +' \
+                       AND    year = 2000), u AS \
                 ( \
                          SELECT   iso, \
                                   Sum(loss) sum_loss, \
                                   Sum(gain) sum_gain \
                          FROM     umd_nat \
-                         WHERE    thresh = ' + (config.canopy_choice || 10) +' \
+                         WHERE    thresh = ' + (config.canopy_choice || 30) +' \
                          GROUP BY iso) \
                 SELECT   c.iso, \
                          c.NAME, \
@@ -379,7 +379,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
                               <div class="countries_list__data">\
-                                <div id="ext_'+val.iso+'"><span class="line"><span data-orig="' + val.extent + '" class="loss">'+ ex.toLocaleString() +' </span>'+ e_mha +' of extent</span><span class="loss line"><span>'+ lo.toLocaleString() +' </span>'+ l_mha +'  of loss</span></div>\
+                                <div id="ext_'+val.iso+'"><span class="line"><span data-orig="' + val.extent + '" class="loss">'+ ex.toLocaleString() +' </span>'+ e_mha +' of extent(2000)</span><span class="loss line"><span>'+ lo.toLocaleString() +' </span>'+ l_mha +'  of loss(2001-2012)</span></div>\
                               </div>\
                             </li>';
         });
@@ -403,7 +403,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       });
     } else if (this.model.get('graph') === 'ratio') {
       this.$settings.removeClass('disable');
-      var sql = 'WITH loss as (SELECT iso, sum(loss) sum_loss FROM umd_nat WHERE thresh = ' + (config.canopy_choice || 10) + ' GROUP BY iso),gain as (SELECT iso, sum(gain) sum_gain FROM umd_nat WHERE thresh = ' + (config.canopy_choice || 10) + ' GROUP BY iso), ratio as (SELECT c.iso, c.name, c.enabled, loss.sum_loss/gain.sum_gain as ratio FROM loss, gain, gfw2_countries c WHERE sum_gain IS NOT null AND NOT sum_gain = 0 AND c.iso = gain.iso  AND c.iso = loss.iso ORDER BY loss.sum_loss DESC LIMIT 50) SELECT * FROM ratio WHERE ratio IS NOT null ORDER BY ratio DESC ';
+      var sql = 'WITH loss as (SELECT iso, sum(loss) sum_loss FROM umd_nat WHERE thresh = ' + (config.canopy_choice || 30) + ' GROUP BY iso),gain as (SELECT iso, sum(gain) sum_gain FROM umd_nat WHERE thresh = ' + (config.canopy_choice || 30) + ' GROUP BY iso), ratio as (SELECT c.iso, c.name, c.enabled, loss.sum_loss/gain.sum_gain as ratio FROM loss, gain, gfw2_countries c WHERE sum_gain IS NOT null AND NOT sum_gain = 0 AND c.iso = gain.iso  AND c.iso = loss.iso ORDER BY loss.sum_loss DESC LIMIT 50) SELECT * FROM ratio WHERE ratio IS NOT null ORDER BY ratio DESC ';
 
       if (e) {
         sql += ['OFFSET 10',
@@ -526,7 +526,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       .attr('height', height);
 
     if (this.model.get('graph') === ('total_loss')) {
-      var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain) gain FROM umd_nat WHERE iso = \''+ iso +'\' AND thresh = '+ (config.canopy_choice || 10) +' AND year > 2000 GROUP BY iso, year ORDER BY year';
+      var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain) gain FROM umd_nat WHERE iso = \''+ iso +'\' AND thresh = '+ (config.canopy_choice || 30) +' AND year > 2000 GROUP BY iso, year ORDER BY year';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
         var data = json.rows;
@@ -578,7 +578,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
       var sql = 'SELECT year, \
                        loss_perc \
                 FROM   umd_nat \
-                WHERE  thresh = '+ (config.canopy_choice || 10) +' \
+                WHERE  thresh = '+ (config.canopy_choice || 30) +' \
                        AND iso = \''+ iso +'\'';
 
       d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
@@ -609,7 +609,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                  loss,  \
                  extent_offset extent  \
                 FROM   umd_nat  \
-                WHERE  thresh = '+ (config.canopy_choice || 10) +'  \
+                WHERE  thresh = '+ (config.canopy_choice || 30) +'  \
                        AND iso = \''+ iso +'\' \
                        AND year > 2000 ';
 
@@ -710,7 +710,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         m = this.m,
         x_scale = this.x_scale;
 
-        thresh = config.canopy_choice || 10;
+        thresh = config.canopy_choice || 30;
 
     var grid_scale = d3.scale.linear()
       .range([vertical_m, h-vertical_m])
@@ -783,7 +783,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
            Sum(loss) loss, \
            Sum(gain) gain \
             FROM   umd_nat  \
-            WHERE  thresh = '+ (config.canopy_choice || 10) +'  \
+            WHERE  thresh = '+ (config.canopy_choice || 30) +'  \
                     AND year > 2000 \
             GROUP  BY year  \
             ORDER  BY year ';
@@ -923,7 +923,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                   Sum(gain) / Sum(extent_offset) ratio_gain,  \
                   Sum(loss) / Sum(extent_offset)  ratio_loss  \
                 FROM   umd_nat  \
-                WHERE  thresh = '+ (config.canopy_choice || 10) +' \
+                WHERE  thresh = '+ (config.canopy_choice || 30) +' \
                        AND year > 2000  \
                 GROUP  BY year ORDER BY year ';
 
@@ -1079,7 +1079,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                   Sum(loss)   loss,  \
                   Sum(extent_offset) extent  \
                   FROM   umd_nat  \
-                  WHERE  thresh = '+ (config.canopy_choice || 10) +'  \
+                  WHERE  thresh = '+ (config.canopy_choice || 30) +'  \
                          AND year > 2000  \
                   GROUP  BY year  \
                   ORDER BY year';
@@ -1257,14 +1257,14 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                          SELECT iso,  \
                                 extent  \
                          FROM   umd_nat  \
-                         WHERE  thresh = '+ (config.canopy_choice || 10) +'  \
+                         WHERE  thresh = '+ (config.canopy_choice || 30) +'  \
                          AND    year = 2012), u AS  \
                   (  \
                            SELECT   iso,  \
                                     Sum(loss) sum_loss,  \
                                     Sum(gain) sum_gain  \
                            FROM     umd_nat  \
-                           WHERE    thresh = '+ (config.canopy_choice || 10) +'  \
+                           WHERE    thresh = '+ (config.canopy_choice || 30) +'  \
                            GROUP BY iso)  \
                   SELECT   c.iso,  \
                            c.NAME,  \

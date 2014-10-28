@@ -253,7 +253,7 @@ define([
         p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), (dateRange[1].year() == 2013)?'2012':dateRange[1].year());
         p.lossAlerts = 0;
         p.gainAlerts = 0;
-        p.threshold  = results.params.thresh || 10;
+        p.threshold  = results.params.thresh || 30;
         // The api returns all the loss and gain alerts.
         if (results.years) {
           p.gainAlerts = results.years[results.years.length-1].gain * 12;
