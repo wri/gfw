@@ -379,7 +379,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
                               <div class="countries_list__data">\
-                                <div id="ext_'+val.iso+'"><span class="line"><span data-orig="' + val.extent + '" class="loss">'+ ex.toLocaleString() +' </span>'+ e_mha +' of extent(2000)</span><span class="loss line"><span>'+ lo.toLocaleString() +' </span>'+ l_mha +'  of loss(2001-2012)</span></div>\
+                                <div id="ext_'+val.iso+'"><span class="line"><span data-orig="' + val.extent + '" class="loss">'+ ex.toLocaleString() +' </span>'+ e_mha +' of extent (2000)</span><span class="loss line"><span>'+ lo.toLocaleString() +' </span>'+ l_mha +'  of loss (2001-2012)</span></div>\
                               </div>\
                             </li>';
         });
