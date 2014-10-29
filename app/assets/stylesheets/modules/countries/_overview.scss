@@ -1,3 +1,7 @@
+.country-overview-wrapper-coolio{
+  position: relative;
+}
+
 .overview_graph {
   // height: 511px;
   overflow: hidden;
@@ -5,9 +9,11 @@
   @include background-image(linear-gradient(#464253, #383643));
 
   .umdoptions_dialog {
-    left: 510px;
-    top: -520px;
-    display: inline-block;
+    left: auto;
+    right: 0;
+    top: 66px;
+    display: block;
+    position: absolute;
       &::after {
         top: -272px;
         left: 237px;
@@ -285,7 +291,7 @@
       margin-right: 4px;
     }
     &.percent {
-      margin-right: 40px;
+      margin-right: 20px;
       font-size: 1.3rem;
       margin-top: 13px;
     }

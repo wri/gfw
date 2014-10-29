@@ -282,7 +282,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
 
           markup_list += '<li>\
-                            <div class="countries_list__minioverview countries_list__minioverview_'+val.iso+'"></div>\
                             <div class="countries_list__num">'+ord+'</div>\
                             <div class="countries_list__title">'+enabled+'</div>\
                             <div class="countries_list__data">\
@@ -307,9 +306,9 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         that.model.set('class', null);
 
-        _.each(data, function(val, key) {
-          self._drawMiniOverview(val.iso);
-        });
+        // _.each(data, function(val, key) {
+        //   self._drawMiniOverview(val.iso);
+        // });
       });
     } else if (this.model.get('graph') === 'total_extent') {
       this.$settings.removeClass('disable');
