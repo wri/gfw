@@ -306,9 +306,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         that.model.set('class', null);
 
-        // _.each(data, function(val, key) {
-        //   self._drawMiniOverview(val.iso);
-        // });
       });
     } else if (this.model.get('graph') === 'total_extent') {
       this.$settings.removeClass('disable');
