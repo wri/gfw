@@ -58,7 +58,7 @@ define([
       this.presenter.startDrawing();
       this.model.set('boxHidden', false);
       this.$done.addClass('disabled');
-      this.toggleWidgetBtn(true);
+      this.toggleUseWidgetBtn(true);
       ga('send', 'event', 'Map', 'Analysis', 'Perform an analysis');
     },
 
@@ -124,7 +124,7 @@ define([
         this.drawingManager.setDrawingMode(null);
         this.drawingManager.setMap(null);
       }
-
+      this.toggleUseWidgetBtn(false);
       this.model.set({boxHidden: true});
       this.presenter.stopDrawing();
     },
@@ -173,7 +173,12 @@ define([
     },
 
     toggleWidgetBtn: function(to) {
-      this.$widgetBtn.toggleClass('disabled', to).toggleClass('in_use',to);
+      this.$widgetBtn.toggleClass('disabled', to).removeClass('in_use');
+      $('.cartodb-popup').toggleClass('dont_analyze', to);
+    },
+
+    toggleUseWidgetBtn: function(to){
+      this.$widgetBtn.toggleClass('in_use', to);
       $('.cartodb-popup').toggleClass('dont_analyze', to);
     },
 
