@@ -1,5 +1,6 @@
 .overview_graph {
-  height: 511px;
+  // height: 511px;
+  overflow: hidden;
 
   @include background-image(linear-gradient(#464253, #383643));
 
@@ -24,7 +25,6 @@
   background: image-url('backgrounds/overview_graph.png');
   @include background-size(cover);
   background-position: -220px center;
-
   svg {
     position: relative;
     z-index: 300;
@@ -247,7 +247,7 @@
   }
 
   &.expanded {
-    width: 161px;
+    width: 170px;
   }
 
   &.medium {
@@ -508,6 +508,8 @@
   }
 
   &.total_extent {
+    height: 0;
+    overflow: hidden;
     .legend {
       top: 40px;
       li:last-child i {
