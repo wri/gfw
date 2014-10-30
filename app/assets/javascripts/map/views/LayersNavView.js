@@ -30,6 +30,16 @@ define([
 
     render: function() {
       this.$el.append(this.template());
+      //Experiment
+      this.$source = this.$el.find('.source');
+      this._experimentGoogle();
+    },
+
+    _experimentGoogle : function(){
+      var variation = cxApi.chooseVariation();
+      if (variation) {
+        this.$source.addClass('info2');
+      }
     },
 
     /**
