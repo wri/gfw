@@ -165,6 +165,14 @@
     line-opacity: 1;
   }
 
+  [layer='gfw_land_rights_sync'] {
+    polygon-fill: #4d658f;
+    polygon-opacity: 0.7;
+    line-color: #4d658f;
+    line-width: 1;
+    line-opacity: 1;
+  }
+
   [layer='ifl_2000'] {
     polygon-opacity: 0.7;
     polygon-fill: #136400;
