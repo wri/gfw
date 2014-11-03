@@ -31,16 +31,9 @@ define([
     render: function() {
       this.$el.append(this.template());
       //Experiment
-      this.$source = this.$el.find('.source');
-      this._experimentGoogle();
+      this.presenter.initExperiment('source');
     },
 
-    _experimentGoogle : function(){
-      var variation = cxApi.chooseVariation();
-      if (variation) {
-        this.$source.addClass('info2');
-      }
-    },
 
     /**
      * Used by LayersNavPresenter to toggle the class

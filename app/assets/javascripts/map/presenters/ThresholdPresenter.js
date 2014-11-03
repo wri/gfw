@@ -135,7 +135,12 @@ define([
       }
 
       return p;
-    }
+    },
+
+    initExperiment: function(id){
+      mps.publish('Experiment/choose',[id]);
+    },
+
   });
 
   return ThresholdPresenter;

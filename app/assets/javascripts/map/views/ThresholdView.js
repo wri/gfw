@@ -50,6 +50,7 @@ define([
     initialize: function() {
       this.presenter = new Presenter(this);
       ThresholdView.__super__.initialize.apply(this);
+      this.presenter.initExperiment('source');      
     },
 
     _cacheSelector: function() {
