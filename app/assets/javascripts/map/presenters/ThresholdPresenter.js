@@ -81,8 +81,11 @@ define([
      * Toggle threshold widget if any supported layer is active.
      */
     _setVisibility: function() {
-      this.view.$widgetBtn.toggleClass('disabled',
-        !this.status.get('layers').length);
+      if (this.status.get('layers').length) {
+        this.view.toggleWidgetBtn(false);
+      } else {
+        this.view.toggleWidgetBtn(true);
+      }
     },
 
     /**
