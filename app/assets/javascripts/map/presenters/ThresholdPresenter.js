@@ -26,6 +26,7 @@ define([
      */
     supportedLayers: [
       'loss',
+      'forestgain',
       'forest2000'
     ],
 
