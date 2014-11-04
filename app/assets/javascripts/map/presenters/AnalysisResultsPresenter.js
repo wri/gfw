@@ -17,6 +17,7 @@ define([
   var StatusModel = Backbone.Model.extend({
     defaults: {
       baselayer: null,
+      both: false,
       analysis: false,
       isoTotalArea: null,
       resource: null // analysis resource
@@ -34,6 +35,7 @@ define([
 
     datasets: {
       'loss': 'umd-loss-gain',
+      'forestgain': 'umd-loss-gain',
       'forma': 'forma-alerts',
       'imazon': 'imazon-alerts',
       'fires': 'nasa-active-fires',
@@ -94,9 +96,18 @@ define([
      * @param {Object} baselayers Current active baselayers
      */
     _setBaselayer: function(baselayers) {
-      var baselayer = baselayers[_.first(_.intersection(
-        _.pluck(baselayers, 'slug'),
-        _.keys(this.datasets)))];
+      var baselayer;
+
+      if (baselayers['loss']) {
+        this.loss = true;
+        baselayer = baselayers['loss'];
+        this.status.set('both', (baselayers['forestgain']) ? true : false);        
+      }else{
+        this.loss = false;
+        baselayer = baselayers[_.first(_.intersection(
+          _.pluck(baselayers, 'slug'),
+          _.keys(this.datasets)))];
+      }
 
       this.status.set('baselayer', baselayer);
     },
@@ -249,11 +260,12 @@ define([
        *   - lossAlerts
        *   - gainAlerts
        */
-      if (layer.slug === 'loss') {
+      if (layer.slug === 'loss' || layer.slug === 'forestgain') {
         p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), (dateRange[1].year() == 2013)?'2012':dateRange[1].year());
         p.lossAlerts = 0;
         p.gainAlerts = 0;
         p.threshold  = results.params.thresh || 30;
+        p.both = this.status.get('both');
         // The api returns all the loss and gain alerts.
         if (results.years) {
           p.gainAlerts = results.years[results.years.length-1].gain * 12;
