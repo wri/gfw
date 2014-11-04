@@ -97,6 +97,7 @@ define([
       });
 
       this._update(html);
+      this.presenter.initExperiment('source');
     },
 
     /**

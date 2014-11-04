@@ -30,7 +30,10 @@ define([
 
     render: function() {
       this.$el.append(this.template());
+      //Experiment
+      this.presenter.initExperiment('source');
     },
+
 
     /**
      * Used by LayersNavPresenter to toggle the class
