@@ -56,5 +56,7 @@ Gfw::Application.routes.draw do
   get '/embed/country/:id/:area_id' => 'embed#countries_show'
   get '/embed/countries/overview' => 'embed#countries_overview'
 
+  get '/landing' => 'landing#index'
+
   root 'home#index'
 end
