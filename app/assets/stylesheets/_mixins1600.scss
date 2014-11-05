@@ -31,3 +31,18 @@
     clear: both;
   }
 }
+
+// Retina
+@mixin retina-image($file-1x, $file-2x) {
+  background-image: image-url($file-1x); 
+  background-size: contain;
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 1.5),
+  only screen and (   min--moz-device-pixel-ratio: 1.5),
+  only screen and (     -o-min-device-pixel-ratio: 1.5),
+  only screen and (        min-device-pixel-ratio: 1.5),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) {
+    background-image: image-url($file-2x);
+  }
+}
