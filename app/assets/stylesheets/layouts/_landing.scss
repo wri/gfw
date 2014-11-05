@@ -1,3 +1,39 @@
+// HEADER
+.layout-header{
+	position: relative;
+	z-index: 1000;
+
+	.layout-header-top{
+		background: #F7F7F7;
+		padding: 10px;
+		border-bottom: 2px solid #E5E5DF;
+		@include clearfix();
+		nav{
+			ul{
+				float: left;
+				li{
+					float: left;
+					margin: 0 0 0 20px;
+					&:first-child{
+						margin: 0;
+					}
+					a{
+						display: block;
+						width: 25px; height: 25px;
+						text-indent: -9999px;
+						overflow: hidden;
+						svg{
+							fill: #B6B6BA;
+							&:hover {
+								fill: $cGreen;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
 
 
 
