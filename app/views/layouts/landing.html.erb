@@ -39,7 +39,7 @@
 
     <script src="//maps.googleapis.com/maps/api/js?libraries=drawing,places&sensor=false"></script>
     <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
-    <%= controller_javascript_include_tag %>
+    <%= requirejs_include_tag "landing" %>
     <%= render "shared/js_footer" %>
 
   </body>

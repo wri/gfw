@@ -6,6 +6,8 @@
 	outline: none;
 	display: block;
 	position: absolute;
+	z-index: 1;
+	cursor: pointer;
 	top: 50%;
 	left: 50%;
 	height: 50px; 
