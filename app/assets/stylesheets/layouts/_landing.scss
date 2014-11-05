@@ -1,3 +1,4 @@
+// Main Slider
 .main-slider {
   width: 100%;
   height: 630px;
@@ -41,4 +42,46 @@
       margin: 0px 0 0 8px;
     }
   }
+}
+
+
+
+
+// Apps
+.apps {
+	background: #FFF;
+}
+.main-apps {
+	.row{
+		@include row(0em);	
+	}
+	.col6{
+		@include col(1,2,0em);
+		padding-top: 30px;
+		padding-bottom: 30px;
+		border-left: 1px solid #E5E5DF;
+		&:first-child { border-left: none; }
+		.icon {
+			margin: 0 auto;
+			width: 100px; 
+			height: 100px;
+			padding: 15px;
+			border-radius: 50%;
+			background: $cGreen;
+			svg{
+				width: 100%;
+				height: 100%;
+				fill: #FFF;
+			}
+		}
+		h3 {
+			text-align: center;
+			font-size: 24px;
+			padding: 20px 0 0;
+		}
+	}
+}
+
+.row-apps{
+
 }
