@@ -1,0 +1,33 @@
+// Grid
+@mixin rowContainer(){
+    padding: 0 20px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+@mixin row($gutters: 6em) {
+    @include clearfix();
+    margin-left: -$gutters;
+}
+@mixin col ($col: 6, $totalCol:12, $gutters: 6em) {
+    display: block;
+    float: left;
+    padding-left: $gutters;
+    width: percentage($col/$totalCol);
+    min-height: 1px;
+}
+
+
+// Clearfix
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+    visibility: hidden;
+    font-size: 0;
+    height: 0;
+  }
+  &:after {
+    clear: both;
+  }
+}

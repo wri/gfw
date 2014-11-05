@@ -1,0 +1,26 @@
+<header class="layout-header">
+
+  <div class="layout-header-top">
+    <div class="row">
+      <div class="grid-12">
+        <a href="/" class="brand"><%= image_tag "logo.png", :alt => "Logo Global Forest Watch" %></a>
+
+        <%= render 'shared/navbar' %>
+
+      </div>
+    </div>
+  </div>
+
+  <% if content_for?(:header) %>
+    <div class="layout-header-bottom">
+      <div class="row">
+        <div class="grid-12">
+
+          <%= yield :header %>
+
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+</header>
