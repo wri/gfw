@@ -4,13 +4,16 @@
 
 // General
 @import "settings1600";
-@import "mixins1600";
+@import "base1600";
 @import "fonts";
-@import "modules/icons";
+@import "mixins1600";
 
 // Layout
 @import "layouts/landing";
 @import "layouts/grid1600";
+
+// Modules
+@import "modules/icons";
 
 
 

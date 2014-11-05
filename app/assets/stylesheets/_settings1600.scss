@@ -8,3 +8,9 @@ $grid-gutter-width: 1%;
 $primary-color: #9FBA2B;
 $default-color: #463F52;
 $cGreen: #97Bd3d;
+
+//Animations
+// Cubic
+$easeInCubic:  cubic-bezier(0.550, 0.055, 0.675, 0.190);
+$easeOutCubic:  cubic-bezier(0.215, 0.610, 0.355, 1.000);
+$easeInOutCubic :  cubic-bezier(0.645, 0.045, 0.355, 1.000);
