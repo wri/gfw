@@ -40,6 +40,13 @@
     polygon-clip: false;
   }
 
+  [layer='logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
   [layer='gfw2_drc_conc'] {
     polygon-fill: #EC7014;
     line-color: #EC7014;
