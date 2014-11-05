@@ -10,7 +10,7 @@
 	cursor: pointer;
 	top: 50%;
 	left: 50%;
-	height: 50px; 
+	height: 50px;
 	width: 50px;
 	padding: 10px;
 	border-radius: 50%;
@@ -23,8 +23,14 @@
 	&:hover{
 		background: $cGreen;
 	}
-	
+
 }
+
+
+
+
+
+
 
 // Main Slider
 .main-slider {
@@ -75,6 +81,16 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
 // Apps
 .apps {
 	background: #FFF;
@@ -87,7 +103,10 @@
 }
 .main-apps {
 	.row{
-		@include row(0em);	
+		@include row(0em);
+	}
+	.col{
+		cursor: pointer;
 	}
 	.col6{
 		@include col(1,2,0em);
@@ -97,7 +116,7 @@
 		&:first-child { border-left: none; }
 		.icon {
 			margin: 0 auto;
-			width: 100px; 
+			width: 100px;
 			height: 100px;
 			padding: 15px;
 			border-radius: 50%;
@@ -142,6 +161,9 @@
 				border-left: 1px solid #E5E5DF;
 			}
 		}
+		.col{
+			cursor: pointer;
+		}
 
 		.col3{
 			@include col(1,4,0em);
@@ -151,7 +173,7 @@
 			&:first-child { border-left: none; }
 			.icon {
 				margin: 0 auto;
-				width: 60px; 
+				width: 60px;
 				height: 60px;
 				svg{
 					width: 100%;
@@ -166,5 +188,36 @@
 				padding: 14px 0 0;
 			}
 		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+// Various
+.buzz{
+	.row{
+		display: flex;
+		align-items: stretch;
+		justify-content: space-between
+	}
+	.col{
+		background: #FFF;
+	}
+	.col4{
+		@include col(27.5,100,0px);
+		display: flex;
+	}
+	.card{
+		width: 100%;
+    	box-shadow: 0 0px 5px rgba(#000,0.25);
+    	padding: 20px;
+    	position: relative;
 	}
 }
