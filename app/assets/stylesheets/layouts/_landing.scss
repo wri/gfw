@@ -103,7 +103,7 @@
 }
 .main-apps  {
 	.row {
-		@include row(0em);
+		@include row();
 	}
 	.col {
 		cursor: pointer;
@@ -140,7 +140,7 @@
 	border-top: 1px solid #E5E5DF;
 	border-bottom: 1px solid #E5E5DF;
 	.row {
-		@include row(0em);
+		@include row();
 		padding: 0 10%;
 		position: relative;
 
@@ -203,9 +203,7 @@
 // Various
 .buzz {
 	.row {
-		display: flex;
-		align-items: stretch;
-		justify-content: space-between
+		@include row();
 	}
 	.col {
 		background: #FFF;
