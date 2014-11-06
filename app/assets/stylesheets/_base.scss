@@ -36,23 +36,23 @@ body {
       margin: 0;
     }
     min-width: 0;
-    #analysis_control{
+    #analysis_control {
       display: none;
     }
-    .analysis_info{
+    .analysis_info {
       display: block;
-      .info_controls{
+      .info_controls {
         display: none;
       }
-      .spinner{
+      .spinner {
         display: none;
       }
     }
-    .share {
+    .share  {
       display: none;
     }
     .widget-searchbox,
-    .widget-maptype{
+    .widget-maptype {
       display: none;
       visibility: hidden;
     }
