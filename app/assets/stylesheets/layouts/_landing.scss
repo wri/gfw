@@ -1,5 +1,5 @@
 // Btn arrow
-.btn-arrow{
+.btn-arrow {
 	-webkit-appearance: none;
 	background: #E5E5DF;
 	border: none;
@@ -15,12 +15,12 @@
 	padding: 10px;
 	border-radius: 50%;
 	@include transform(translate(-50%,-50%));
-	svg{
+	svg {
 		fill: none;
 		stroke: #FFF;
 	}
 
-	&:hover{
+	&:hover {
 		background: $cGreen;
 	}
 
@@ -33,22 +33,22 @@
 
 
 // Main Slider
-.main-slider {
+.main-slider  {
   width: 100%;
   height: 630px;
   background-image: image-url('backgrounds/bg1600_630.png');
   background-position: center center;
   margin-top: -60px;
-  nav {
+  nav  {
     display: none;
-    ul {
+    ul  {
       background: rgba(#fff,0.95);
-      li {
+      li  {
 
       }
     }
   }
-  p {
+  p  {
     background: #fff;
     border-radius: 50px;
     width: 645px;
@@ -68,7 +68,7 @@
     color: rgba(71, 71, 71, 0.5);
     font-size: 20px;
     font-family: fira_sans_otlight;
-    span {
+    span  {
       background: #cbccc0;
       padding: 6px 13px;
       border-radius: 20px;
@@ -92,42 +92,42 @@
 
 
 // Apps
-.apps {
+.apps  {
 	background: #FFF;
 	position: relative;
-	.circle-marker{
+	.circle-marker {
 		@extend .btn-arrow;
 		top: 0;
 		box-shadow: 0 0 0 6px #FFF;
 	}
 }
-.main-apps {
-	.row{
+.main-apps  {
+	.row {
 		@include row(0em);
 	}
-	.col{
+	.col {
 		cursor: pointer;
 	}
-	.col6{
+	.col6 {
 		@include col(1,2,0em);
 		padding-top: 30px;
 		padding-bottom: 30px;
 		border-left: 1px solid #E5E5DF;
-		&:first-child { border-left: none; }
-		.icon {
+		&:first-child  { border-left: none; }
+		.icon  {
 			margin: 0 auto;
 			width: 100px;
 			height: 100px;
 			padding: 15px;
 			border-radius: 50%;
 			background: $cGreen;
-			svg{
+			svg {
 				width: 100%;
 				height: 100%;
 				fill: #FFF;
 			}
 		}
-		h3 {
+		h3  {
 			text-align: center;
 			text-transform: uppercase;
 			font-size: 24px;
@@ -136,52 +136,52 @@
 	}
 }
 
-.row-apps{
+.row-apps {
 	border-top: 1px solid #E5E5DF;
 	border-bottom: 1px solid #E5E5DF;
-	.row{
+	.row {
 		@include row(0em);
 		padding: 0 10%;
 		position: relative;
 
-		.btn-arrow-box{
+		.btn-arrow-box {
 			position: absolute;
 			top: 0;
 			width: 10%;
 			height: 100%;
-			button{
+			button {
 				@extend .btn-arrow;
 			}
-			&.left{
+			&.left {
 				left: 0;
 				border-right: 1px solid #E5E5DF;
 			}
-			&.right{
+			&.right {
 				right: 0;
 				border-left: 1px solid #E5E5DF;
 			}
 		}
-		.col{
+		.col {
 			cursor: pointer;
 		}
 
-		.col3{
+		.col3 {
 			@include col(1,4,0em);
 			padding-top: 30px;
 			padding-bottom: 30px;
 			border-left: 1px solid #E5E5DF;
-			&:first-child { border-left: none; }
-			.icon {
+			&:first-child  { border-left: none; }
+			.icon  {
 				margin: 0 auto;
 				width: 60px;
 				height: 60px;
-				svg{
+				svg {
 					width: 100%;
 					height: 100%;
 					fill: #555555;
 				}
 			}
-			h3 {
+			h3  {
 				text-align: center;
 				text-transform: uppercase;
 				font-size: 19px;
@@ -201,20 +201,20 @@
 
 
 // Various
-.buzz{
-	.row{
+.buzz {
+	.row {
 		display: flex;
 		align-items: stretch;
 		justify-content: space-between
 	}
-	.col{
+	.col {
 		background: #FFF;
 	}
-	.col4{
+	.col4 {
 		@include col(27.5,100,0px);
 		display: flex;
 	}
-	.card{
+	.card {
 		width: 100%;
     	box-shadow: 0 0px 5px rgba(#000,0.25);
     	padding: 20px;
