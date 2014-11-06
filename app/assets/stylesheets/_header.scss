@@ -152,6 +152,7 @@
 // Bottom HEADER
 .layout-header-bottom{
 	position: relative;
+	background: rgba(#FFF,0.8);
 	// Logo
 	h1{
 		width: 90px;
@@ -170,7 +171,6 @@
 	}
 	// Nav-right
 	nav{
-		background: rgba(#FFF,0.8);
 		border-bottom: 1px solid #EAECEF;
 		@include clearfix();
 		>ul{
