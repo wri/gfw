@@ -98,7 +98,12 @@ define([
           mps.publish('LayerNav/change', [layerSpec]);
           mps.publish('Place/update', [{go: false}]);
         }, this));
-    }
+    },
+
+    initExperiment: function(id){
+      mps.publish('Experiment/choose',[id]);
+    },
+
 
   });
 

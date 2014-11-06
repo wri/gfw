@@ -315,14 +315,13 @@
     }
   }
   div[id^="ext_"] {
-    .line::after {
-      right: -44px;
-      background-color: #88aa37;
+    .line{
+      float: right;
+      &:after {
+        display: none;
+      }      
     }
-    .loss::after {
-      right: -18px;
-      background-color: #FF6699;
-    }
+
   }
   .perct {
     float: right;

@@ -125,7 +125,10 @@ $stories-color: rgb(242, 178, 87);
           height: 10px;
           @include home-icons-sprite(information);
           background: image-url('home-icons/information.png');
-
+          &.info2{
+            background: image-url('home-icons/information2.png');
+            // background: #F00;
+          }
           &.hidden {
             display: none;
           }

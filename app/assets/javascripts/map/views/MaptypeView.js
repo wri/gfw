@@ -32,6 +32,8 @@ define([
       _.bindAll(this, 'selectMaptype');
       this.presenter = new Presenter(this);
       MaptypeView.__super__.initialize.apply(this);
+      this.presenter.initExperiment('source');
+
     },
 
     _setMaptype: function(event) {
