@@ -11,7 +11,6 @@ require([
   'views/DialogView',
   '_string'
 ], function($, _, Class, Backbone, mps, SlideView, DialogView) {
-
   'use strict';
 
   var LandingPage = Class.extend({
