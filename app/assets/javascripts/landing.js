@@ -8,7 +8,8 @@ require([
   'backbone',
   'mps',
   'views/DialogView',
-  '_string'
+  '_string',
+  'slick'
 ], function($, _, Class, Backbone, utils, mps, DialogView) {
 
   'use strict';

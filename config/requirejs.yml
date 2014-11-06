@@ -21,6 +21,7 @@ paths:
   geojsonArea: "geojson-area"
   uri: "uri-templates/uri-templates"
   handlebars: "handlebars/handlebars"
+  slick: "slick.js/slick/slick.min"
   wax: "wax.g.min"
   store: "store"
   Class: "Class.js/Class"
