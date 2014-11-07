@@ -10,11 +10,9 @@
     @include justify-content($content);
     @include align-items($items);
 }
-@mixin col ($col: 6, $totalCol:12, $gutters: 6em) {
+@mixin col ($per) {
     display: block;
-    float: left;
-    padding-left: $gutters;
-    width: percentage($col/$totalCol);
+    width: percentage($per/100);
     min-height: 1px;
 }
 
