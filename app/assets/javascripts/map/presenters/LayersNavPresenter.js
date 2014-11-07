@@ -32,6 +32,10 @@ define([
       }
     }],
 
+    initExperiment: function(id){
+      mps.publish('Experiment/choose',[id]);
+    },
+
     /**
      * Publish a a Map/toggle-layer.
      *

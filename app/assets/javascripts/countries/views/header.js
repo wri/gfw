@@ -344,7 +344,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
       url: url,
       dataType: 'json',
       success: function(data) {
-        var amount = data.years[data.years.length -1].extent;
+        var amount = data.years[0].extent;
 
         if (amount.toString().length >= 7) {
           amount = Math.round((amount /1000)/1000)
@@ -358,7 +358,7 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         }
 
         $target.find('.tree-cover .amount').html( amount.toLocaleString() );
-        $target.find('.total-area .amount').html(Math.round(data.years[data.years.length -1].extent_perc));
+        $target.find('.total-area .amount').html(Math.round(data.years[0].extent_perc));
 
         that._drawLossAndGain(data.years);
         var $link_target = [];

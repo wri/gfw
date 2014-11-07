@@ -9,6 +9,7 @@ require([
   'map/utils',
   'mps',
   'map/router',
+  'map/presenters/ExperimentsPresenter',
   'map/services/AnalysisService',
   'map/services/CountryService',
   'map/services/DataService',
@@ -24,7 +25,7 @@ require([
   'map/views/ShareView',
   'views/DialogView',
   '_string'
-], function($, _, Class, Backbone, utils, mps, Router, AnalysisService, CountryService, DataService,
+], function($, _, Class, Backbone, utils, mps, Router,ExperimentsPresenter, AnalysisService, CountryService, DataService,
     LayersNavView, MapView, LegendView, ThresholdView, SearchboxView, MaptypeView, TimelineView,
     AnalysisToolView, AnalysisResultsView, ShareView, DialogView) {
 
@@ -65,7 +66,12 @@ require([
      * you are not completely sure.
      */
     _initViews: function() {
+      // Google Experiments
+      new ExperimentsPresenter();
+
+
       var mapView = new MapView();
+
       new LayersNavView();
       new LegendView();
       new MaptypeView();
@@ -76,6 +82,7 @@ require([
       new AnalysisResultsView();
       new ShareView();
       new DialogView();
+
 
       // TODO => This is temporary!!! We will use the refactored
       // and awesome DialogView later.

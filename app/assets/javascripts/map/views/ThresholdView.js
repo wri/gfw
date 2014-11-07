@@ -50,6 +50,7 @@ define([
     initialize: function() {
       this.presenter = new Presenter(this);
       ThresholdView.__super__.initialize.apply(this);
+      this.presenter.initExperiment('source');      
     },
 
     _cacheSelector: function() {
@@ -57,6 +58,7 @@ define([
       this.$slider = this.$el.find('.slider');
       this.$visibleRange = this.$el.find('.visible-range');
       this.$button = $('.widget-threshold').find('.widget-btn');
+      this.presenter._setVisibility();
     },
 
     _updateThreshold: function() {
@@ -97,6 +99,15 @@ define([
 
       this.$slider.val(val);
       this._setVisibleRange();
+    },
+    
+    toggleWidgetBtn: function(to){
+      if (to) {
+        this.$widgetBtn.addClass('disabled');  
+      }else{
+        this.$widgetBtn.removeClass('disabled');  
+      }
+      
     }
   });
 
