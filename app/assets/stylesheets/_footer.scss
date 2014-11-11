@@ -1,3 +1,96 @@
 .layout-footer {
-    
+	background: #EDEDE8;
+    .apps-footer {
+    	padding: 20px 0;
+    	border-bottom: 1px solid #E5E5DF;
+    	ul {
+    		@include row(space-between);	
+    		li {
+    			width: 16.666666%;
+    			a {
+    				display: block;
+    				padding: 20px;
+    				text-decoration: none;
+	    			svg {
+	    				display: block;
+	    				height: 30px;
+	    				width: 30px; 
+	    				margin: 0 auto;
+	    				fill: #555555;
+	    			}
+	    			h3 {
+	    				text-transform: uppercase;
+	    				text-align: center;
+	    				font-size: 12px;
+	    				padding: 5px 0 0;
+	    				color: #555555;
+	    			} 
+	    			&:hover {
+	    				svg { fill: darken(#555555,10%);}
+	    				h3 { color: darken(#555555,10%);}
+	    			}   				
+    			}
+    		}
+    	}
+    }
+    .site-map {
+    	padding: 0 0 40px;    	
+    	.row {
+    		@include row(space-between);
+    		padding: 40px 0;
+    		border-bottom: 1px solid #E5E5DF;
+    		.col {
+    			width: 25%;
+    			a {
+    				text-decoration: none;
+    				color: #555555;
+    				&:hover{
+    					text-decoration: underline;
+    				}
+    			}
+    			h3 {
+    				font-size: 14px;
+    				color: #555555;
+    				text-transform: uppercase;
+    				padding: 0 0 15px;
+    				font-family: $font-medium;
+    			}
+    			ul {
+    				margin: -10px 0 0;
+    				li {
+    					font-size: 13px;
+    					padding: 5px 0;
+    				}
+    			}
+    		}
+    	}
+    }
+    .partner-box{
+    	padding: 0 0 40px;
+    	h4{ 
+    		font-size: 14px;
+    		color: #555555;
+    		padding: 0 0 15px;
+    	}
+    	.row{
+    		@include row(space-between,flex-start);
+	    	.wri-logo{
+	    		width: 200px;
+	    		height: 70px;
+	    		@include logos-sprite(wri-logo);
+	    	}
+	    	.adress{
+	    		text-align: right;
+	    		font-size: 14px;
+	    		font-family: $font-light;
+	    		strong,span{ display: block;}
+	    		strong {
+	    			font-family: $font-regular;
+	    		}
+	    	}
+    	}
+    }
+    .logo-box{
+    	
+    }
 }

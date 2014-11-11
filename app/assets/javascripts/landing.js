@@ -8,9 +8,10 @@ require([
   'backbone',
   'mps',
   'landing/views/SlideView',
+  'landing/views/FooterView',
   'views/DialogView',
   '_string'
-], function($, _, Class, Backbone, mps, SlideView, DialogView) {
+], function($, _, Class, Backbone, mps, SlideView, FooterView, DialogView) {
   'use strict';
 
   var LandingPage = Class.extend({
@@ -26,6 +27,7 @@ require([
      */
     _initViews: function() {
       new SlideView();
+      new FooterView();
     },
 
 

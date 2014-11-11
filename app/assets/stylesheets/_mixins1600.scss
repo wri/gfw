@@ -5,7 +5,6 @@
     margin: 0 auto;
 }
 @mixin row($content:space-between,$items:stretch) {
-    @include clearfix();
     @include display-flex();
     @include justify-content($content);
     @include align-items($items);
