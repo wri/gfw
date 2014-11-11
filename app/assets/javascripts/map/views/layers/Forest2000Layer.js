@@ -49,6 +49,10 @@ define([
         imgdata[pixelPos + 1] = 189;
         imgdata[pixelPos + 2] = 61;
 
+        // apply intensity-dependent saturation on R & B channels
+        //imgdata[pixelPos ] = (72 - zoom) + 151 - (3 * myscale(intensity) / zoom);
+        //imgdata[pixelPos + 2] = (33 - zoom) + 61 - ((intensity) / zoom);
+
         // if (zoom < 13) {
         //   imgdata[pixelPos+ 3] = intensity*0.8;
         // } else {
