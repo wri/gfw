@@ -64,6 +64,11 @@ define([
 
     el: '#main-slider',
 
+    events: {
+      'click #get-started' : 'getStarted',
+      'click #go-to-apps' : 'goToApps'
+    },
+
     initialize: function() {
       //Init
       this.$slides = $('.slide');
@@ -121,6 +126,17 @@ define([
       setTimeout(_.bind(function(){
         this.$slides.eq(this.position).siblings().removeClass('leave');
       },this),this.timeTimeout)
+    },
+
+
+    getStarted: function(e){
+      $(e.currentTarget).toggleClass('active');
+    },
+
+    goToApps: function(e){
+      e.preventDefault();
+      var posY = $($(e.currentTarget).attr('href')).offset().top;
+      $('html,body').animate({scrollTop: posY},500);
     }
 
   });

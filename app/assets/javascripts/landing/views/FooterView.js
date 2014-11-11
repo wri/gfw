@@ -17,8 +17,19 @@ define([
     el: '#footerView',
 
     initialize: function() {
-      console.log('init');
+      // CACHE
+      this.$logos = $('#footer-logos');
+      
+      this.$logos.slick({
+        infinite: true,
+        slidesToShow: 5,
+        slidesToScroll: 5,
+        speed: 500,
+        autoplay: true,
+        autoplaySpeed: 3000
+      });      
     },
+
 
   });
 

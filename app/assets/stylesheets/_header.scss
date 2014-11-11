@@ -7,7 +7,7 @@
 .layout-header-top {
   background: #F7F7F7;
   padding: 10px;
-  border-bottom: 2px solid #E5E5DF;
+  border-bottom: 2px solid $border;
   position: relative;
   z-index: 10;
   @include clearfix();
@@ -53,8 +53,8 @@
             .shape-house { fill: $cGreen; }
             .shape-world { fill: $cGreen; }
             .shape-country { fill: $cGreen; }
-            .shape-fire { fill: #ED1846; }
-            .shape-commodities { fill: #E98300; }
+            .shape-fire { fill: $red; }
+            .shape-commodities { fill: $orange; }
             .shape-blog { fill: $cGreen; }
             svg {
               fill: $cGreen;

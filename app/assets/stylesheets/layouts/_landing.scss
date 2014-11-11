@@ -1,7 +1,7 @@
 // Btn
 .btn {
   -webkit-appearance: none;
-  background: #E5E5DF;
+  background: $border;
   border: none;
   outline: none;
   position: relative;
@@ -37,35 +37,32 @@
 
   // Colors
   &.dark{
-    color: #FFF;
+    color: $white;
     background: #AAAAAA;
     &:hover {
       background: darken(#AAAAAA,5%);
     }
   }
   &.gray{
-    color: #555555;
+    color: $dark;
     background: #EEEEEE;
     &:hover {
       background: darken(#EEEEEE,5%);
     }
   }
   &.light{
-    color: #FFF;
+    color: $white;
     background: #CBCCBF;
     &:hover {
       background: darken(#CBCCBF,5%);
     }
   }
-
-
-
 }
 
 // Btn arrow
 .btn-arrow {
 	-webkit-appearance: none;
-	background: #E5E5DF;
+	background: $border;
 	border: none;
 	outline: none;
 	display: block;
@@ -81,7 +78,7 @@
 	@include transform(translate(-50%,-50%));
 	svg {
 		fill: none;
-		stroke: #FFF;
+		stroke: $white;
 	}
 
 	&:hover {
@@ -92,14 +89,14 @@
 
 .submenu-tooltip {
   position: absolute;
-  max-width: 250px;
   min-width: 150px;
-  background: rgba(#fff,0.95);
+  background: rgba($white,1);
   box-shadow: 0 2px 5px rgba(#000,0.25);
   z-index: 1;
   visibility: hidden;
   opacity: 0;
   text-transform: none;
+  -webkit-backface-visibility: hidden;
   &.top{
     top: 100%;
     left: 50%;    
@@ -108,8 +105,8 @@
       top: 0;
       left: 50%;
       @include transform(translate(-50%,-50%) rotate(45deg));
-      border-top: 1px solid #E5E5DF;
-      border-left: 1px solid #E5E5DF;
+      border-top: 1px solid $border;
+      border-left: 1px solid $border;
     }
   }
   &.bottom{
@@ -120,8 +117,8 @@
       bottom: 0;
       left: 50%;
       @include transform(translate(-50%,50%) rotate(45deg));
-      border-bottom: 1px solid #E5E5DF;
-      border-right: 1px solid #E5E5DF;
+      border-bottom: 1px solid $border;
+      border-right: 1px solid $border;
     }
   }
   @include transition(all 0.15s $easeInOutCubic);
@@ -131,24 +128,24 @@
     position: absolute;
     width: 16px;
     height: 16px;
-    background: #FFF;
+    background: $white;
     z-index: 2;
   }
   li {
     border-top: 1px solid #EAECEF;
     font-size: 15px;
+    white-space: nowrap;
     &:first-child { border-top: none;}
     a,.link {
       color: #444;
       font-family: "fira_sans_otregular", Georgia, serif;
-      padding: 10px;
+      padding: 10px 20px;
       text-decoration: none;
       text-align: center;
       display: block;
       &:hover {
-        background: darken(#FFF,2%);
+        background: darken($white,2%);
       }
-
     }
   }
 }
@@ -165,8 +162,8 @@
   height: 630px;
   background: #CCC;
   position: relative;
-  // background-image: image-url('backgrounds/bg1600_630.png');
   margin-top: -60px;
+  z-index: 3;
 
   .main-slider-viewport {
   	position: absolute;
@@ -185,7 +182,7 @@
     z-index: 2;
     @include transform(translate(-50%,0));
     h2{
-      background: #FFF;
+      background: $white;
       font-family: $font-light;
       text-transform: uppercase;
       font-size: 21px;
@@ -195,7 +192,7 @@
       .box-button{
         display: inline-block;
         position: relative;
-        &:hover{
+        &.active{
           .submenu-tooltip{ 
             opacity: 1;
             visibility: visible;
@@ -204,6 +201,14 @@
       }
     }
   }
+
+  .circle-marker {
+    @extend .btn-arrow;
+    top: auto;
+    bottom: 0;
+    box-shadow: 0 0 0 6px $white;
+    @include transform(translate(-50%,50%));
+  }    
 
   .main-slider-pagination {
     width: 100%;
@@ -284,7 +289,7 @@
       font-size: 61px;
       color: #333333;
       display: inline-block;
-      background: rgba(#FFF,0.75);
+      background: rgba($white,0.75);
       padding: 10px 5px 5px;
       font-weight: 700;
       text-transform: uppercase;
@@ -298,18 +303,21 @@
         display: inline-block;
         float: left;
         clear: both;
-        background: rgba(#FFF,0.75);
+        background: rgba($white,0.75);
         padding: 12px;
       }
     }
     a {
-      background: #555555;
-      color: #FFF;
+      background: $dark;
+      color: $white;
       font-size: 17px;
       padding: 8px 30px;
       display: inline-block;
       text-transform: uppercase;
       text-decoration: none;
+      &:hover{
+        background: $cGreen;
+      }
     }
   }
 }
@@ -327,14 +335,9 @@
 
 // Apps
 .apps  {
-	background: #FFF;
+	background: $white;
 	position: relative;
   z-index: 2;
-	.circle-marker {
-		@extend .btn-arrow;
-		top: 0;
-		box-shadow: 0 0 0 6px #FFF;
-	}
 }
 .main-apps  {
 	.row {
@@ -347,7 +350,7 @@
 		@include col(50);
 		padding-top: 30px;
 		padding-bottom: 30px;
-		border-left: 1px solid #E5E5DF;
+		border-left: 1px solid $border;
 		&:first-child  { border-left: none; }
 		.icon  {
 			margin: 0 auto;
@@ -359,7 +362,7 @@
 			svg {
 				width: 100%;
 				height: 100%;
-				fill: #FFF;
+				fill: $white;
 			}
 		}
 		h3  {
@@ -372,8 +375,8 @@
 }
 
 .row-apps {
-	border-top: 1px solid #E5E5DF;
-	border-bottom: 1px solid #E5E5DF;
+	border-top: 1px solid $border;
+	border-bottom: 1px solid $border;
 	.row {
 		@include row();
 		padding: 0 10%;
@@ -389,11 +392,11 @@
 			}
 			&.left {
 				left: 0;
-				border-right: 1px solid #E5E5DF;
+				border-right: 1px solid $border;
 			}
 			&.right {
 				right: 0;
-				border-left: 1px solid #E5E5DF;
+				border-left: 1px solid $border;
 			}
 		}
 		.col {
@@ -404,13 +407,19 @@
 			@include col(25);
 			padding-top: 30px;
 			padding-bottom: 30px;
-			border-left: 1px solid #E5E5DF;
+			border-left: 1px solid $border;
 			&:first-child  { border-left: none; }
 			.icon  {
 				margin: 0 auto;
 				width: 60px;
 				height: 60px;
-				fill: #555555;
+				fill: $dark;
+        &:hover{
+          fill: $cGreen;
+          &.fires{ fill: $red; }
+          &.commmodities{ fill: $orange; }
+
+        }
 			}
 			h3  {
 				text-align: center;
@@ -427,23 +436,26 @@
 
 // BLOG
 .blog {
-	background: #555555;
+	background: $dark;
   padding: 20px;
   @include display-flex();
   a{
     @include display-flex();
     @include align-self(center);
-    background: #FFF;
+    background: $white;
     margin: 0 auto;
     padding: 0px 100px;
     height: 60px;
     line-height: 68px;
     font-size: 25px;
-    color: #555555;
+    color: $dark;
     text-decoration: none;
     position: relative;
     border-radius: 50px;
     font-family: $font-light;
+    &:hover{
+      background: darken($white,5%);
+    }
 
     svg{
       display: inline-block;
@@ -470,7 +482,7 @@
 		@include row();
 	}
 	.col {
-		background: #FFF;
+		background: $white;
 	}
 	.col4 {
 		@include col(27.5);
@@ -492,7 +504,7 @@
       text-align: center;
       font-size: 21px;
       padding: 20px 0;
-      color: #555555;
+      color: $dark;
     }
 	}
 }
@@ -595,7 +607,7 @@
     li{
       @include row(space-between);
       padding: 20px 0;
-      border-top: 1px solid #E5E5DF;
+      border-top: 1px solid $border;
       &:first-child{ border-top: none;}
       figure{
         width: 40%;
