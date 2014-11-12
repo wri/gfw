@@ -1,0 +1,14 @@
+{{#if stories}}
+  {{#each stories}}
+    <li>
+      <a href="/stories/{{this.cartodb_id}}">
+        <figure><div class="bg" style="background-image: url({{this.url}})"></div></figure>
+        <article class="info">
+          <h4>{{this.title}}</h4>
+          <p>Cras juso dio, dapibus ac facilisis in, egestas eget quam.</p>
+          <button href="/stories/{{this.cartodb_id}}" class="btn gray medium">More</button>
+        </article>        
+      </a>
+    </li>    
+  {{/each}}
+{{/if}}

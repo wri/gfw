@@ -1,0 +1,17 @@
+// OPACITY
+@-webkit-keyframes loader {
+  from { @include transform(translate(-50%,-50%) rotate(0deg));}
+  to { @include transform(translate(-50%,-50%) rotate(360deg));}
+}
+@-moz-keyframes loader {
+  from { @include transform(translate(-50%,-50%) rotate(0deg));}
+  to { @include transform(translate(-50%,-50%) rotate(360deg));}
+}
+@-ms-keyframes loader {
+  from { @include transform(translate(-50%,-50%) rotate(0deg));}
+  to { @include transform(translate(-50%,-50%) rotate(360deg));}
+}
+@keyframes loader {
+  from { @include transform(translate(-50%,-50%) rotate(0deg));}
+  to { @include transform(translate(-50%,-50%) rotate(360deg));}
+}

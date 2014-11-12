@@ -1,3 +1,26 @@
+// Spinner
+.spinner {
+  position: absolute;
+  top: 50%; 
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  @include transform(translate(-50%,-50%));
+  // @mixin animation($name,$duration,$count: 1,$function: linear,$direction: normal,$fill : none,$delay : 0s, $play: running)
+  @include animation(loader,1s,infinite,$easeInOutCubic);
+  visibility: hidden;
+  opacity: 0;
+  svg{
+    fill: $cGreen;
+  }
+  &.start {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+
+
 // Btn
 .btn {
   -webkit-appearance: none;
@@ -505,9 +528,11 @@
       font-size: 21px;
       padding: 20px 0;
       color: $dark;
-    }
+    }    
 	}
 }
+
+
 
 // TWITTER
 
@@ -597,6 +622,7 @@
 
 // KEEP UPDATED
 .timeline-stories{
+  position: relative;
   .button-box{
     padding: 0 0 15px;
     @include row(space-between,center);
@@ -605,14 +631,18 @@
   ul{
     position: relative;
     li{
-      @include row(space-between);
       padding: 20px 0;
       border-top: 1px solid $border;
       &:first-child{ border-top: none;}
+      a{
+        text-decoration: none;
+        @include row(space-between);
+      }
       figure{
         width: 40%;
         .bg{
           background: #000;  
+          background-size: contain;
           width: 75%;
           padding-bottom: 75%;
           border-radius: 50%;
@@ -625,7 +655,9 @@
         font-size: 14px; 
         h4{
           font-family: $font-medium;
+          color: $dark;
           padding: 0 0 5px;
+          font-size: 15px;
         }
         p{
           color: #999999;

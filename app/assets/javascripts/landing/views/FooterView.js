@@ -1,5 +1,5 @@
 /**
- * The Slide view.
+ * The Footer view.
  */
 define([
   'jquery',
@@ -11,7 +11,6 @@ define([
 
   'use strict'; 
 
-  // SLIDER
   var FooterView = Backbone.View.extend({
 
     el: '#footerView',
