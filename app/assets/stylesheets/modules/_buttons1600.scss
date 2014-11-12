@@ -1,0 +1,100 @@
+// Btn
+.btn {
+  -webkit-appearance: none;
+  background: $border;
+  border: none;
+  outline: none;
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+  cursor: pointer;
+  padding: 0px 12px;
+  border-radius: 40px;
+  font-size: 14px;
+  text-decoration: none;
+  height: 30px;
+  line-height: 32px;
+  text-align: center;
+  font-family: $font-light;
+
+  &:hover {
+    background: $cGreen;
+  }
+
+  // Sizes
+  &.medium{
+    font-size: 18px;
+    text-transform: uppercase;    
+    padding: 0px 35px;
+  }
+  &.huge{
+    font-size: 21px;
+    text-transform: uppercase;
+    height: 38px;
+    line-height: 44px;
+    padding: 0px 20px;
+  }
+
+  // Colors
+  &.dark{
+    color: $white;
+    background: #AAAAAA;
+    &:hover {
+      background: darken(#AAAAAA,5%);
+    }
+  }
+  &.gray{
+    color: $dark;
+    background: #EEEEEE;
+    &:hover {
+      background: darken(#EEEEEE,5%);
+    }
+  }
+  &.light{
+    color: $white;
+    background: #CBCCBF;
+    &:hover {
+      background: darken(#CBCCBF,5%);
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Btn arrow
+.btn-arrow {
+  -webkit-appearance: none;
+  background: $border;
+  border: none;
+  outline: none;
+  display: block;
+  position: absolute;
+  z-index: 1;
+  cursor: pointer;
+  top: 50%;
+  left: 50%;
+  height: 50px;
+  width: 50px;
+  padding: 10px;
+  border-radius: 50%;
+  @include transform(translate(-50%,-50%));
+  svg {
+    fill: none;
+    stroke: $white;
+  }
+
+  &:hover {
+    background: $cGreen;
+  }
+}

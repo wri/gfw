@@ -33,7 +33,6 @@ require([
       //landing
       new SlideView();
       new StoriesView();
-
       //footer
       new FooterView();
     }
