@@ -24,10 +24,19 @@
 	    				font-size: 12px;
 	    				padding: 5px 0 0;
 	    				color: #555555;
+                        @include transition(all .25s $easeInOutCubic);
 	    			} 
 	    			&:hover {
-	    				svg { fill: darken(#555555,10%);}
-	    				h3 { color: darken(#555555,10%);}
+	    				svg { 
+                            fill: $cGreen;
+                            &.fire{ fill: $red; }
+                            &.commodities{ fill: $orange; }
+                        }
+	    				h3 { 
+                            color: $cGreen;
+                            &.fire{ color: $red; }
+                            &.commodities{ color: $orange; }
+                        }
 	    			}   				
     			}
     		}

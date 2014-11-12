@@ -88,6 +88,7 @@
   width: 50px;
   padding: 10px;
   border-radius: 50%;
+  @include transition(all .25s $easeInOutCubic);
   @include transform(translate(-50%,-50%));
   svg {
     fill: none;
