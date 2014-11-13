@@ -1,13 +1,20 @@
+.reset-btn{
+  -webkit-appearance: none;
+  border: none;
+  background: none;
+  outline: none;
+  box-shadow: none;
+  text-align: center;
+  cursor: pointer;
+}
+
 // Btn
 .btn {
-  -webkit-appearance: none;
+  @extend .reset-btn;
   background: $border;
-  border: none;
-  outline: none;
   position: relative;
   display: inline-block;
   z-index: 1;
-  cursor: pointer;
   padding: 0px 12px;
   border-radius: 40px;
   font-size: 14px;

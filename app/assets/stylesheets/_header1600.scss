@@ -1,7 +1,19 @@
 // HEADER
 .layout-header {
-  position: relative;
+  position: fixed;
+  z-index: 100;
+  overflow: auto;
+  width: 100%;
+  height: auto;
   z-index: 1000;
+  &.active{
+    height: 100%;
+  }
+  @media (min-width: $br-mobile){
+    position: relative;
+    overflow: visible;
+    height: auto;
+  }
 }
 // top HEADER
 .layout-header-top {
@@ -115,85 +127,140 @@
 // Bottom HEADER
 .layout-header-bottom {
 	position: relative;
-	background: rgba(#FFF,0.8);
+  background: #F2F2F3;
+  border-bottom: 2px solid $border;
+  @include clearfix();
+  @media (min-width: $br-mobile){
+    background: rgba(#FFF,0.8);
+    border-bottom: none;
+  }
 	// Logo
 	h1 {
-		width: 90px;
-		height: 90px;
-		position: absolute;
-		top: 0;
-		left: 0;
-		@include retina-image('logo-new.png','logo-new@2x.png');
+    width: 60px;
+    height: 60px; 
+    float: left;
 		text-indent: -9999px;
 		overflow: hidden;
+    @include retina-image('logo-new.png','logo-new@2x.png');
+    @media (min-width: $br-mobile){
+      width: 90px;
+      height: 90px; 
+      position: absolute;
+      top: 0;
+      left: 0;
+      float: none;
+    }
 		a {
 			display: block;
 			height: 100%;
 			width: 100%;
 		}
 	}
+
+  // Btn-menu
+  .btn-menu{
+    @extend .reset-btn;
+    width: 60px;
+    height: 60px;
+    float: right;
+    display: block;
+    .icon{ 
+      margin: 0 auto;
+    }
+  }
+
 	// Nav-right
 	nav {
 		border-bottom: 1px solid #EAECEF;
+    clear: both;
+    background: $white;
+    display: none;
+    &.active{
+      display: block;
+    }
+    @media (min-width: $br-mobile){
+      display: block !important;
+      clear: none;
+      background: none;
+    }
+
 		@include clearfix();
 		>ul {
-			float: right;
-			padding-right: 5px;
+      clear: both;
+      @media (min-width: $br-mobile){
+        clear: none;
+        float: right;
+        padding-right: 5px;
+      }
 			>li {
-				float: left;
-				margin: 0 0 0 10px;
-				position: relative;
-				&:first-child { margin: 0;}
-				&:hover {
-					ul {
-        		background: rgba(#fff,0.95);
-						visibility: visible;
-						opacity: 1;
-						@include transform(translate(-50%,0px));
-						&:before {
-							width: 100%;
-						}
-					}
-				}
+        position: relative;
+        border-top: 1px solid darken($border,10%);
+        @media (min-width: $br-mobile){
+          float: left;
+          margin: 0 0 0 10px;
+          border-top: none;
+          &:first-child { margin: 0;}
+          &:hover {
+            ul {
+              background: rgba(#fff,0.95);
+              visibility: visible;
+              opacity: 1;
+              @include transform(translate(-50%,0px));
+              &:before {
+                width: 100%;
+              }
+            }
+          }
+        }
 				>a {
 					display: block;
-
-          
 					text-transform: uppercase;
 					text-decoration: none;
 					color: #474747;
 					padding: 20px 40px;
 					position: relative;
 					z-index: 2;
+          text-align: center;
+          background: #F2F2F3;
+          @media (min-width: $br-mobile){
+            background: none;
+          }
 				}
 				//submenu
 				ul {
-					position: absolute;
-					top: 0;
-					left: 50%;
-					padding: 56px 0 0;
 					width: 100%;
-					// min-width: 150px;
-					box-shadow: 0 1px 3px rgba(#000,0.25);
-					z-index: 1;
-					visibility: hidden;
-					opacity: 0;
-					@include transform(translate(-50%,10px));
-					@include transition(all 0.15s $easeInOutCubic);
-					&:before {
-						content: "";
-						display: block;
-						width: 0%;
-						height: 5px;
-						background: rgba($cGreen,0.5);
-						position: absolute;
-						top: 52px; //padding-UL - height:before
-						left: 0;
-						@include transition(all 0.15s $easeInOutCubic 0.1s);
-					}
+          // min-width: 150px;
+          z-index: 1;
+          position: relative;
+          @media (min-width: $br-mobile){
+            position: absolute;
+            top: 0;
+            left: 50%;
+            padding: 56px 0 0;
+            box-shadow: 0 1px 3px rgba(#000,0.25);
+            visibility: hidden;
+            opacity: 0;
+            @include transform(translate(-50%,10px));
+            @include transition(all 0.15s $easeInOutCubic);
+            &:before {
+              content: "";
+              display: block;
+              width: 0%;
+              height: 5px;
+              background: rgba($cGreen,0.5);
+              position: absolute;
+              top: 52px; //padding-UL - height:before
+              left: 0;
+              @include transition(all 0.15s $easeInOutCubic 0.1s);
+            }            
+          }
+
 
 					li {
-						border-top: 1px solid #EAECEF;
+            @media (min-width: $br-mobile){
+              border-top: 1px solid #EAECEF;
+            }
+
 						a {
 							color: #444;
 							font-family: "fira_sans_otregular", Georgia, serif;

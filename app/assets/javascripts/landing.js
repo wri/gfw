@@ -10,10 +10,11 @@ require([
   'landing/views/SpinnerView',
   'landing/views/SlideView',
   'landing/views/StoriesView',
+  'landing/views/HeaderView',
   'landing/views/FooterView',
   'views/DialogView',
   '_string'
-], function($, _, Class, Backbone, mps, SpinnerView, SlideView, StoriesView, FooterView, DialogView) {
+], function($, _, Class, Backbone, mps, SpinnerView, SlideView, StoriesView, HeaderView, FooterView, DialogView) {
   'use strict';
 
   var LandingPage = Class.extend({
@@ -28,13 +29,14 @@ require([
      * Initialize Application Views.
      */
     _initViews: function() {
-      //spinner
+      //shared
+      new HeaderView();
+      new FooterView();
       new SpinnerView();
+      
       //landing
       new SlideView();
       new StoriesView();
-      //footer
-      new FooterView();
     }
   });
 
