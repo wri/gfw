@@ -47,6 +47,7 @@ define([
         success: _.bind(function(data) {
           data = data.rows;
           var dataTemplate = _.map(data,_.bind(function (story) {
+            story.title = story.title.replace(/^(.{40}[^\s]*).*/, "$1...");
             story.media = jQuery.parseJSON(story.media);
             story.the_geom = jQuery.parseJSON(story.the_geom);
             story.img = story.media[story.media.length -1].preview_url;
