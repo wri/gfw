@@ -310,7 +310,7 @@
 // BUZZ
 .buzz {
 	background: #F5F5F5;
-	padding: 50px 30px;
+	padding: 50px 0;
 	.row {
 		@include row();
 	}
@@ -318,7 +318,7 @@
 		background: $white;
 	}
 	.col4 {
-		@include col(27.5);
+		@include col(32);
 		display: flex;
 	}
   h2{

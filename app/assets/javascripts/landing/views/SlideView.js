@@ -144,7 +144,6 @@ define([
      * @param  {Object} e Event
      */
     _onHtmlClick: function(e) {
-      console.log(this.$getStarted.hasClass('active'));
       if (!$(e.target).hasClass('submenu-tooltip') && this.$getStarted.hasClass('active')) {
         this.$getStarted.removeClass('active');
       }
