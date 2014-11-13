@@ -19,6 +19,36 @@
   }
 }
 
+.tooltip{
+  position: absolute;
+  background: rgba($white,1);
+  box-shadow: 0 2px 5px rgba(#000,0.25);
+  z-index: 1;
+  margin: 0;
+  visibility: hidden;
+  opacity: 0;
+  text-transform: uppercase;
+  position: absolute;
+  top: 100%;
+  left: 50%;  
+  text-align: center;  
+  padding: 10px;
+  @include transform(translate(-50%,10px));
+  &:after{
+    content: "";
+    display: block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: $white;
+    z-index: 2;
+    top: 0;
+    left: 50%;
+    @include transform(translate(-50%,-50%) rotate(45deg));
+    border-top: 1px solid $border;
+    border-left: 1px solid $border;
+  }
+}
 
 .submenu-tooltip {
   position: absolute;
