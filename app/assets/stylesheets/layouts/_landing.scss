@@ -101,18 +101,10 @@
   &.current {
     opacity: 1;
     z-index: 2;
-    aside{
-      opacity: 1;
-      @include transform(translate(0,-50%));
-    }
   }
   &.leave {
     opacity: 1;
     z-index: 1;
-    aside {
-      opacity: 0;
-      @include transform(translate(0,-35%));
-    }
   }
   // SLIDES
   &.slide1 { background-image:image-url('backgrounds/home-slider/bg_slide1.png');}
@@ -125,9 +117,8 @@
     top: 50%;
     left: 0;
     z-index: 5;
-    opacity: 0.75;
-    @include transform(translate(0,-65%));
-    @include transition(all,1s,$easeInOutSine);
+    opacity: 1;
+    @include transform(translate(0,-50%));
     h2 {
       font-size: 61px;
       color: #333333;

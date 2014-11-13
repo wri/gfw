@@ -101,8 +101,8 @@
     &:first-child { border-top: none;}
     a,.link {
       color: #444;
-      font-family: "fira_sans_otregular", Georgia, serif;
-      padding: 10px 20px;
+      font-family: $font-light;
+      padding: 14px 20px;
       text-decoration: none;
       text-align: center;
       display: block;

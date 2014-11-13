@@ -72,6 +72,7 @@ define([
     initialize: function() {
       //Init
       this.$slides = $('.slide');
+      this.$getStarted = $('#get-started');
       this.len = this.$slides.length;
       this.position = 0;
       this.interval;
@@ -81,11 +82,12 @@ define([
       this.pagination = new PaginationView({ len: this.len });
 
       //Inits
-      this._setListeners()
-      this._autoSlider();
+      this._setListeners();
+      this._autoSlider();      
     },
 
     _setListeners: function(){
+      $('html').on('click',_.bind(this._onHtmlClick,this));
       mps.subscribe('slider:change', _.bind(function(index){
         this.stopAutoSlider();
         this.changePosition(index);
@@ -130,8 +132,24 @@ define([
 
 
     getStarted: function(e){
+      e.preventDefault();
+      e.stopPropagation();
       $(e.currentTarget).toggleClass('active');
     },
+
+    /**
+     * Closes submenu tooltip
+     * Check the click target is not the dialog itself.
+     *
+     * @param  {Object} e Event
+     */
+    _onHtmlClick: function(e) {
+      console.log(this.$getStarted.hasClass('active'));
+      if (!$(e.target).hasClass('submenu-tooltip') && this.$getStarted.hasClass('active')) {
+        this.$getStarted.removeClass('active');
+      }
+    },
+
 
     goToApps: function(e){
       e.preventDefault();
