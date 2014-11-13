@@ -100,11 +100,16 @@
     	}
     }
     .footer-logos{
+        .slick-slide{
+            height: 60px;
+        }
 		a{
 		    display: block;
 		    margin: 0 auto;
 		    width: 88px;
-
+            position: relative;
+            top: 50%;
+            @include transform(translate(0,-50%));
 		    &.wri { height: 31px; width: 269px; @include logos-sprite(wri); }
 		    &.google { height: 52px; @include logos-sprite(google); }
 		    &.esri { height: 28px; @include logos-sprite(esri); }
@@ -123,8 +128,8 @@
 		    &.tilia { height: 38px; @include logos-sprite(tilia); }
 		    &.goodall { height: 36px; width: 147px; @include logos-sprite(goodall); }
 		    &.cartodb { height: 45px; @include logos-sprite(cartodb); }
-		    &.vizzuality { height: 51px; @include logos-sprite(vizzuality); }
-		    &.blueraster { height: 51px; width: 97px; @include logos-sprite(blueraster); }
+		    &.vizzuality { height: 45px; @include logos-sprite(vizzuality); }
+		    &.blueraster { height: 45px; width: 97px; @include logos-sprite(blueraster); }
 		}
     }
 }

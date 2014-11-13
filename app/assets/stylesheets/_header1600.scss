@@ -149,6 +149,8 @@
 				}
 				>a {
 					display: block;
+
+          
 					text-transform: uppercase;
 					text-decoration: none;
 					color: #474747;
@@ -174,8 +176,8 @@
 						content: "";
 						display: block;
 						width: 0%;
-						height: 4px;
-						background: #97BD3D;
+						height: 5px;
+						background: rgba($cGreen,0.5);
 						position: absolute;
 						top: 52px; //padding-UL - height:before
 						left: 0;
