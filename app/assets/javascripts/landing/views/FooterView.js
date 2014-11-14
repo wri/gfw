@@ -3,9 +3,9 @@
  */
 define([
   'jquery',
-  'backbone'
-  // 'slick'
-], function($,Backbone) {
+  'backbone',
+  'slick'
+], function($,Backbone,slick) {
 
   'use strict';
 
@@ -17,14 +17,14 @@ define([
       // CACHE
       this.$logos = $('#footer-logos');
 
-      // this.$logos.slick({
-      //   infinite: true,
-      //   slidesToShow: 5,
-      //   slidesToScroll: 5,
-      //   speed: 500,
-      //   autoplay: true,
-      //   autoplaySpeed: 3000
-      // });
+      this.$logos.slick({
+        infinite: true,
+        slidesToShow: 5,
+        slidesToScroll: 5,
+        speed: 500,
+        autoplay: true,
+        autoplaySpeed: 3000
+      });
     },
 
 
