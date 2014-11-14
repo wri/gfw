@@ -135,6 +135,7 @@
     @media (min-width: $br-mobile){
       padding: 0;
       top: 50%;
+      bottom: auto;
       width: auto;
       background: none;
       @include transform(translate(0,-50%));

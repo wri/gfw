@@ -1,8 +1,14 @@
 <h1><a href="/">Global Forest Watch</a></h1>    
-<button class="btn-menu mobile-show" id="btn-menu">
-  <svg class="icon"><use xlink:href="#shape-hamburger"></use></svg>
+<button class="btn-menu" id="btn-menu">
+  <svg class="icon hamburguer"><use xlink:href="#shape-hamburger"></use></svg>
+  <svg class="icon close"><use xlink:href="#shape-close"></use></svg>
 </button>
+
 <nav id="nav-mobile">
+  <form class="mobile-show" action="/search">
+    <svg class="icon"><use xlink:href="#shape-search"></use></svg> 
+    <input type="text" name="query" id="search-input" placeholder="Search">  
+  </form>
   <ul>
     <li>
       <a href="#">Applications</a>

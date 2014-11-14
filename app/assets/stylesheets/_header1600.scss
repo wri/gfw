@@ -144,6 +144,7 @@
     float: left;
 		text-indent: -9999px;
 		overflow: hidden;
+    margin: 0 0 0 15px;
     @include retina-image('logo-new.png','logo-new@2x.png');
     @media (min-width: $br-mobile){
       width: 90px;
@@ -151,6 +152,7 @@
       position: absolute;
       top: 0;
       left: 0;
+      margin: 0;
       float: none;
     }
 		a {
@@ -170,10 +172,52 @@
     @media (min-width: $br-mobile){
       display: none;
     }
-    .icon{ 
+    .icon{
       margin: 0 auto;
+      &.hamburguer{ 
+        display: block;
+      }
+      &.close {
+        display: none;
+      }
+    }
+    &.active{
+      background: $white;
+      border-left: 1px solid #CCC;
+      box-shadow: 0 1px 0 $white;
+      .icon{
+        margin: 0 auto;
+        &.hamburguer{ 
+          display: none;
+        }
+        &.close {
+          display: block;
+        }
+      }
     }
   }
+
+  // Search Widget mobile
+  form{
+    padding: 15px 60px 15px 15px;
+    border-top: 1px solid #CCC;
+    >input {
+      border: none;
+      border-bottom: 2px solid #B6B6BA;
+      background: none;
+      box-shadow: none;
+      width: calc(100% - 25px);
+      height: 25px;
+      outline: none;
+      margin: 0;
+      padding: 0 5px;
+    }
+    svg {
+      float: left;
+      fill: #B6B6BA;
+    }           
+  }
+
 
 	// Nav-right
 	nav {
