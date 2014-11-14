@@ -12,7 +12,7 @@ module Api
                       format: { :with => /@/ }
 
     def self.visible
-      response = Typhoeus.get("http://localhost:8080/stories?bust=1", headers: { "Accept" => "application/json" })
+      response = Typhoeus.get("#{ENV['GFW_API_HOST']}/stories?bust=1", headers: { "Accept" => "application/json" })
 
       if response.success?
         JSON.parse(response.body).select { |r| r['visible'] }
