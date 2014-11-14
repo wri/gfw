@@ -309,13 +309,13 @@
 
 		.col3 {
 			@include col(50);
-			padding-top: 30px;
-			padding-bottom: 30px;
+			padding: 20px;
       border-top: 1px solid $border;
 			border-left: 1px solid $border;
       @media (min-width: $br-mobile){
         @include col(25);
         border-top: none;
+        padding: 30px 0;
       }
 			&:first-child  { border-left: none; }
       a{
