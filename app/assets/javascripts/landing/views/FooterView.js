@@ -9,7 +9,7 @@ define([
   'slick'
 ], function($,Backbone, _,mps, slick) {
 
-  'use strict'; 
+  'use strict';
 
   var FooterView = Backbone.View.extend({
 
@@ -18,15 +18,15 @@ define([
     initialize: function() {
       // CACHE
       this.$logos = $('#footer-logos');
-      
-      this.$logos.slick({
-        infinite: true,
-        slidesToShow: 5,
-        slidesToScroll: 5,
-        speed: 500,
-        autoplay: true,
-        autoplaySpeed: 3000
-      });      
+
+      // this.$logos.slick({
+      //   infinite: true,
+      //   slidesToShow: 5,
+      //   slidesToScroll: 5,
+      //   speed: 500,
+      //   autoplay: true,
+      //   autoplaySpeed: 3000
+      // });
     },
 
 

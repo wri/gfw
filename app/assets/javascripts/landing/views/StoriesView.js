@@ -34,7 +34,7 @@ define([
 
       //Init Fn
       this.model.on('change',this.render,this);
-      // this._loadStories();
+      this._loadStories();
     },
 
     render: function(){
