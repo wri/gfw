@@ -51,10 +51,14 @@
 
   .circle-marker {
     @extend .btn-arrow;
+    display: none;
     top: auto;
     bottom: 0;
     box-shadow: 0 0 0 6px $white;
     @include transform(translate(-50%,50%));
+    @media (min-width: $br-mobile){
+      display: block;
+    }
   }    
 
   .main-slider-pagination {
@@ -63,6 +67,10 @@
     bottom: 20px;
     right: 0;
     z-index: 2;
+    display: none;
+    @media (min-width: $br-mobile){
+      display: block;
+    }
     ul {
       float: right;
       li {
@@ -121,10 +129,11 @@
     width: 100%;
     bottom: 0%;
     left: 0;
-    padding: 10px;
+    padding: 15px 50px 15px 15px;
     z-index: 5;
     background: rgba($white,0.75);
     @media (min-width: $br-mobile){
+      padding: 0;
       top: 50%;
       width: auto;
       background: none;
@@ -162,14 +171,35 @@
     a {
       background: $dark;
       color: $white;
-      font-size: 17px;
-      padding: 8px 30px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 44px;
+      font-size: 40px;
       display: inline-block;
       text-transform: uppercase;
       text-decoration: none;
+      .mobile-show{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        @include transform(translate(-50%,-50%));
+
+      }
       &:hover{
         background: $cGreen;
       }
+      @media (min-width: $br-mobile){
+        top: auto;
+        right: auto;
+        height: auto;
+        width: auto;
+        position: relative;
+        font-size: 17px;
+        padding: 8px 30px;
+        display: inline-block;        
+      }      
     }
   }
 }

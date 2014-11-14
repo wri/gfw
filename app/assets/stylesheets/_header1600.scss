@@ -164,6 +164,9 @@
     height: 60px;
     float: right;
     display: block;
+    @media (min-width: $br-mobile){
+      display: none;
+    }
     .icon{ 
       margin: 0 auto;
     }
