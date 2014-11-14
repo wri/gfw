@@ -3,11 +3,9 @@
  */
 define([
   'jquery',
-  'backbone',
-  'underscore',
-  'mps',
-  'slick'
-], function($,Backbone, _,mps, slick) {
+  'backbone'
+  // 'slick'
+], function($,Backbone) {
 
   'use strict';
 
