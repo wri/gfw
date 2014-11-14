@@ -5,7 +5,6 @@
     @include align-items($items);
 }
 @mixin col ($per) {
-    display: block;
     width: percentage($per/100);
     min-height: 1px;
 }

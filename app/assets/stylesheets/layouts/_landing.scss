@@ -230,7 +230,7 @@
 	}
 	.col6 {
 		@include col(50);
-		padding: 15px;
+		padding: 20px;
     @media (min-width: $br-mobile){
       padding: 30px 0;
     }
@@ -358,13 +358,13 @@
   a{
     @include display-flex();
     @include align-self(center);
-    width: 300px;
+    width: 270px;
     background: $white;
     margin: 0 auto;
     padding: 0px 42px;
     height: 60px;
     line-height: 68px;
-    font-size: 25px;
+    font-size: 20px;
     color: $dark;
     text-decoration: none;
     position: relative;
@@ -400,25 +400,35 @@
 // BUZZ
 .buzz {
 	background: #F5F5F5;
-	padding: 50px 0;
+  @media (min-width: $br-mobile){
+    padding: 50px 0;
+  }    
 	.row {
 		@include row();
+    @include flex-wrap(wrap);
 	}
 	.col {
 		background: $white;
 	}
 	.col4 {
-		@include col(32);
-		display: flex;
+		@include col(100);
+    @include display-flex();
+    @media (min-width: $br-mobile){
+      @include col(32);
+    }    
 	}
   h2{
     text-align: center;
     font-size: 32px;
     font-family: $font-light;
-    padding: 0 0 20px;
+    padding: 20px 0;
+    @media (min-width: $br-mobile){
+      padding: 0 0 20px;
+    }    
   }
 	.card {
-		width: 100%;
+		@include display-flex();
+    width: 100%;
     box-shadow: 0 0px 5px rgba(#000,0.25);
     padding: 20px;
     position: relative;
@@ -438,133 +448,139 @@
 
 
 // GET INVOLVED
-.timeline-involved{
-  .button-box{
-    padding: 0 0 15px;
-    @include row(space-between,center);
-    .btn{ width: 45%; }
-  }
-  ul{
-    position: relative;
-    padding: 20px 0;
-    margin: 20px 0;
-    &:after{
-      content: "";
-      width: 4px;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 50%;
-      background: #94CCDB;
-      @include transform(translate(-50%,0));
+.feed{
+  width: 100%;
+  .timeline-involved{
+    .button-box{
+      padding: 0 0 15px;
+      @include row(space-between,center);
+      .btn{ width: 45%; }
     }
-    &:before{
-      content: "";
-      width: 10px;
-      height: 10px;
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      border-radius: 50%;
-      background: #94CCDB;
-      @include transform(translate(-50%,0));
-    }
-    li{
-      width: 100%;
-      height: 50px;
+    ul{
       position: relative;
-      margin: 20px 0 0;
-      &:first-child{ margin: 0;}
-      figure{
-        display: block;
-        margin: 0;
-        padding: 0;
-        width: 40px;
-        height: 40px;
-        border: 2px solid #EEF7FA;
-        background: image-url('landing-icons/avatar1.png');
-        border-radius: 50%;
+      padding: 20px 0;
+      margin: 20px 0;
+      &:after{
+        content: "";
+        width: 4px;
+        height: 100%;
         position: absolute;
-        top: 50%;
+        top: 0;
         left: 50%;
-        z-index: 2;
-        @include transform(translate(-40%,-50%));
+        background: #94CCDB;
+        @include transform(translate(-50%,0));
       }
-      .info{
+      &:before{
+        content: "";
+        width: 10px;
+        height: 10px;
         position: absolute;
-        top: 50%;
+        bottom: 0;
         left: 50%;
-        max-width: 40%;
-        @include transform(translate(28px,-50%));
-        font-size: 14px;
-        font-family: $font-light;
-        p{
-          span{
-            text-decoration: underline;
+        border-radius: 50%;
+        background: #94CCDB;
+        @include transform(translate(-50%,0));
+      }
+      li{
+        width: 100%;
+        height: 50px;
+        position: relative;
+        margin: 20px 0 0;
+        &:first-child{ margin: 0;}
+        figure{
+          display: block;
+          margin: 0;
+          padding: 0;
+          width: 40px;
+          height: 40px;
+          border: 2px solid #EEF7FA;
+          background: image-url('landing-icons/avatar1.png');
+          border-radius: 50%;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          z-index: 2;
+          @include transform(translate(-40%,-50%));
+        }
+        .info{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          max-width: 40%;
+          @include transform(translate(28px,-50%));
+          font-size: 14px;
+          font-family: $font-light;
+          p{
+            span{
+              text-decoration: underline;
+            }
+          }
+        }
+        &:nth-child(even){
+          figure{
+            @include transform(translate(-60%,-50%));
+            background: image-url('landing-icons/avatar3.png');
+          }
+          .info{
+            left: auto;
+            right: 50%;
+            @include transform(translate(-28px,-50%));
+            p{ text-align: right;}
           }
         }
       }
-      &:nth-child(even){
-        figure{
-          @include transform(translate(-60%,-50%));
-          background: image-url('landing-icons/avatar3.png');
-        }
-        .info{
-          left: auto;
-          right: 50%;
-          @include transform(translate(-28px,-50%));
-          p{ text-align: right;}
-        }
-      }
     }
-  }
-}
+  }}
+
 
 // KEEP UPDATED
-.timeline-stories{
-  position: relative;
-  .button-box{
-    padding: 0 0 15px;
-    @include row(space-between,center);
-    .btn{ width: 45%; }
-  }  
-  ul{
+.stories{
+  width: 100%;
+  .timeline-stories{
     position: relative;
-    li{
-      padding: 20px 0;
-      border-top: 1px solid $border;
-      &:first-child{ border-top: none;}
-      a{
-        text-decoration: none;
-        @include row(space-between);
-      }
-      figure{
-        width: 40%;
-        .bg{
-          background: #000;  
-          background-size: cover;
-          width: 75%;
-          padding-bottom: 75%;
-          border-radius: 50%;
-          margin: 0 auto;
+    .button-box{
+      padding: 0 0 15px;
+      @include row(space-between,center);
+      .btn{ width: 45%; }
+    }  
+    ul{
+      position: relative;
+      li{
+        padding: 20px 0;
+        border-top: 1px solid $border;
+        &:first-child{ border-top: none;}
+        a{
+          text-decoration: none;
+          @include row(space-between);
         }
-      }
-      .info{
-        width: 60%;
-        padding-left: 15px;
-        font-size: 14px; 
-        h4{
-          font-family: $font-medium;
-          color: $dark;
-          padding: 0 0 5px;
-          font-size: 15px;
+        figure{
+          width: 40%;
+          .bg{
+            background: #000;  
+            background-size: cover;
+            width: 75%;
+            padding-bottom: 75%;
+            border-radius: 50%;
+            margin: 0 auto;
+          }
         }
-        p{
-          color: #999999;
-          font-family: $font-light;
-        }
-        .btn{
-          margin: 20px 0 0;
+        .info{
+          width: 60%;
+          padding-left: 15px;
+          font-size: 14px; 
+          h4{
+            font-family: $font-medium;
+            color: $dark;
+            padding: 0 0 5px;
+            font-size: 15px;
+          }
+          p{
+            color: #999999;
+            font-family: $font-light;
+          }
+          .btn{
+            margin: 20px 0 0;
+          }
         }
       }
     }

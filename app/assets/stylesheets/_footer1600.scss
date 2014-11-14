@@ -75,23 +75,50 @@
     	}
     }
     .partner-box{
-    	padding: 0 0 40px;
+    	padding: 40px 20px;
+        @media (min-width: $br-mobile){
+            padding: 0 0 40px;
+        }
     	h4{ 
     		font-size: 14px;
     		color: #555555;
     		padding: 0 0 15px;
+            text-align: center;
+            font-family: $font-medium;
+            @media (min-width: $br-mobile){
+                text-align: left;
+                font-family: $font-regular;
+            }
     	}
     	.row{
     		@include row(space-between,flex-start);
+            @include flex-wrap(wrap);
 	    	.wri-logo{
 	    		width: 200px;
 	    		height: 70px;
+                margin: 0 auto;
 	    		@include logos-sprite(wri-logo);
+                @media (min-width: $br-mobile){
+                    margin: 0;
+                }
 	    	}
 	    	.address{
-	    		text-align: right;
+	    		text-align: center;
+                padding: 25px 20px 0;
+                max-width: 300px;
+                margin: 0 auto;
 	    		font-size: 14px;
 	    		font-family: $font-light;
+                @media (min-width: $br-mobile){
+                    text-align: right;
+                    max-width: none;
+                    margin: 0;
+                    padding: 0;
+                }
+                >*{
+                    margin: 8px 0 0;
+                    &:first-child{ margin: 0;}
+                }
 	    		strong,span{ display: block;}
 	    		strong {
 	    			font-family: $font-regular;
@@ -100,6 +127,10 @@
     	}
     }
     .footer-logos{
+        display: none;
+        @media (min-width: $br-mobile){
+            display: block;
+        }        
         .slick-slide{
             height: 60px;
         }
