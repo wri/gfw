@@ -53,19 +53,22 @@
             line-height: normal;        
           }
 
-          >input {
-            border: none;
-            border-bottom: 2px solid #B6B6BA;
-            background: none;
-            box-shadow: none;
-            height: 25px;
-            outline: none;
-            margin: 0;
-            padding: 0 5px;
+          form{
+            >input {
+              border: none;
+              border-bottom: 2px solid #B6B6BA;
+              background: none;
+              box-shadow: none;
+              height: 25px;
+              outline: none;
+              margin: 0;
+              padding: 0 5px;
+            }
           }
-          >svg {
+          svg {
             fill: #B6B6BA;
-          }
+          }           
+
           &:hover  {
             .shape-house { fill: $cGreen; }
             .shape-world { fill: $cGreen; }
