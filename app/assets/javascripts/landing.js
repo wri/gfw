@@ -30,8 +30,8 @@ require([
      */
     _initViews: function() {
       //shared
-      new HeaderView();
-      //new FooterView();
+      //new HeaderView();
+      new FooterView();
       new SpinnerView();
 
       //landing
