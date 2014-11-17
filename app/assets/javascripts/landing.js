@@ -29,15 +29,14 @@ require([
      * Initialize Application Views.
      */
     _initViews: function() {
-      console.log('test')
       //shared
-      //new HeaderView();
-      //new FooterView();
-      //new SpinnerView();
+      new HeaderView();
+      new FooterView();
+      new SpinnerView();
 
       //landing
-      //new SlideView();
-      //new StoriesView();
+      new SlideView();
+      new StoriesView();
     }
   });
 
