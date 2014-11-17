@@ -33,9 +33,9 @@ require([
       new HeaderView();
       new FooterView();
       new SpinnerView();
-      
+
       //landing
-      new SlideView();
+      //new SlideView();
       new StoriesView();
     }
   });
