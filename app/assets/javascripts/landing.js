@@ -30,13 +30,13 @@ require([
      */
     _initViews: function() {
       //shared
-      new HeaderView();
-      new FooterView();
-      new SpinnerView();
+      // new HeaderView();
+      // new FooterView();
+      // new SpinnerView();
 
-      //landing
-      new SlideView();
-      new StoriesView();
+      // //landing
+      // new SlideView();
+      // new StoriesView();
     }
   });
 
