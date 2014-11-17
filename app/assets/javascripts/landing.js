@@ -29,6 +29,7 @@ require([
      * Initialize Application Views.
      */
     _initViews: function() {
+      console.log('test')
       //shared
       //new HeaderView();
       //new FooterView();
