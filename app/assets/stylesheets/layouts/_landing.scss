@@ -430,9 +430,17 @@
 	.card {
 		@include display-flex();
     width: 100%;
-    box-shadow: 0 0px 5px rgba(#000,0.25);
+    border-top: 1px solid #CCC;
     padding: 20px;
     position: relative;
+    @media (min-width: $br-mobile){
+      border-top: none;
+      box-shadow: 0 0px 5px rgba(#000,0.25);
+      @include transition(all,0.5s,$easeInOutSine);
+      &:hover{
+        box-shadow: 0 0 20px rgba(#000,0.25);
+      }
+    }    
     h3{
       text-transform: uppercase;
       text-align: center;

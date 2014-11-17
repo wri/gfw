@@ -169,6 +169,8 @@
     height: 60px;
     float: right;
     display: block;
+    position: relative;
+    z-index: 2;
     @media (min-width: $br-mobile){
       display: none;
     }
@@ -199,7 +201,7 @@
 
   // Search Widget mobile
   form{
-    padding: 15px 60px 15px 15px;
+    padding: 17px 60px 17px 15px;
     border-top: 1px solid #CCC;
     >input {
       border: none;
@@ -225,6 +227,7 @@
     clear: both;
     background: $white;
     display: none;
+    position: relative;
     &.active{
       display: block;
     }
@@ -232,6 +235,7 @@
       display: block !important;
       clear: none;
       background: none;
+      border-bottom: none;
     }
 
 		@include clearfix();
@@ -333,6 +337,13 @@
 
 
 // Google Translate
+#google_translate_element_box2{
+  padding: 0 15px 10px;
+  @media (min-width: $br-mobile){
+    display: none;
+  }  
+}
+
 #google_translate_element {
   .goog-te-gadget {
     font-family: inherit;

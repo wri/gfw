@@ -27,15 +27,14 @@
     <%= csrf_meta_tags %>
   </head>
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
-
-    <%= render "shared/notice" %>
-    <%= render "shared/header" %>
-
-    <div class="layout-content">
-      <%= yield %>
+    <%= render 'layouts/svg_icons' %>
+    <div class="wrap">
+        <%= render "shared/header_landing" %>
+        <div class="layout-content">
+          <%= yield %>
+        </div>
+        <%= render 'shared/footer_landing' %>        
     </div>
-
-    <%= render 'shared/footer' %>
 
     <!-- Overlay for modals -->
     <div class="backdrop"></div>
@@ -44,6 +43,7 @@
     <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
     <%# render 'shared/js_templates' %>
     <%# javascript_include_tag 'application' %>
+    <%# requirejs_include_tag 'application' %>
     <%= controller_javascript_include_tag %>
     <%= render 'shared/js_footer' %>
   </body>

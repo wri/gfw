@@ -1,32 +1,66 @@
-//= require jquery.qtip.min
-
 // Compass
 @import "compass/reset";
 @import "compass/css3";
+@import 'flexbox';
+
+// General
+@import "settings1600";
+@import "fonts1600";
+@import "mixins1600";
+@import "animations1600";
+@import "base1600";
 
 // Images
-@import "static-icons/*.png";
-@import "static-logos/*.png";
-@import "home-icons/*.png";
+@import "logos/*.png";
 
-@import "settings";
-@import "mixins";
-@import "base";
-
-// Layouts
-@import
-  "layouts/grid",
-  "layouts/application",
-  "layouts/static";
+// Layout
+@import "header1600";
+@import "footer1600";
+@import "layouts/grid1600";
 
 // Modules
-@import
-  "modules/notice",
-  "modules/navbar",
-  "modules/modal",
-  "modules/buttons",
-  "modules/carrousel",
-  "modules/dropdowns";
+@import "modules/shared1600";
+@import "modules/buttons1600";
+@import "modules/icons1600";
+@import "modules/slick1600";
+@import "layouts/landing";
 
-// States
-@import "states";
+
+
+
+// // Common
+// @import "states";
+
+
+// //= require jquery.qtip.min
+
+// // Compass
+// @import "compass/reset";
+// @import "compass/css3";
+
+// // Images
+// @import "static-icons/*.png";
+// @import "static-logos/*.png";
+// @import "home-icons/*.png";
+
+// @import "settings";
+// @import "mixins";
+// @import "base";
+
+// // Layouts
+// @import
+//   "layouts/grid",
+//   "layouts/application",
+//   "layouts/static";
+
+// // Modules
+// @import
+//   "modules/notice",
+//   "modules/navbar",
+//   "modules/modal",
+//   "modules/buttons",
+//   "modules/carrousel",
+//   "modules/dropdowns";
+
+// // States
+// @import "states";
