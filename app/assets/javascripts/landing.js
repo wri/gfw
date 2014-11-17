@@ -31,11 +31,11 @@ require([
     _initViews: function() {
       //shared
       new HeaderView();
-      new FooterView();
+      //new FooterView();
       new SpinnerView();
 
       //landing
-      //new SlideView();
+      new SlideView();
       new StoriesView();
     }
   });
