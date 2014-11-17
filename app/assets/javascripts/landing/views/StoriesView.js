@@ -7,10 +7,10 @@ define([
   'underscore',
   'mps',
   'handlebars',
-  'text!landing/templates/stories.handlebars'  
+  'text!landing/templates/stories.handlebars'
 ], function($, Backbone, _, mps, Handlebars, tpl) {
 
-  'use strict'; 
+  'use strict';
 
   var StoriesModel = Backbone.Model.extend({
     defaults:{
@@ -31,7 +31,7 @@ define([
       this.url = 'https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20cartodb_id,title,media,ST_AsGeoJSON(the_geom)%20AS%20the_geom%20FROM%20community_stories%20WHERE%20visible=true%20order%20by%20created_at%20desc%20LIMIT%203';
       mps.publish('Spinner:start');
       this.model = new StoriesModel();
-      
+
       //Init Fn
       this.model.on('change',this.render,this);
       this._loadStories();
@@ -62,7 +62,7 @@ define([
         error: function(status, error) {
           mps.publish('Spinner:stop');
         }
-      });      
+      });
     }
   });
   return StoriesView;

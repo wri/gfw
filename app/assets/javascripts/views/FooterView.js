@@ -4,12 +4,10 @@
 define([
   'jquery',
   'backbone',
-  'underscore',
-  'mps',
   'slick'
-], function($,Backbone, _,mps, slick) {
+], function($,Backbone,slick) {
 
-  'use strict'; 
+  'use strict';
 
   var FooterView = Backbone.View.extend({
 
@@ -18,7 +16,7 @@ define([
     initialize: function() {
       // CACHE
       this.$logos = $('#footer-logos');
-      
+
       this.$logos.slick({
         infinite: true,
         slidesToShow: 5,
@@ -26,7 +24,7 @@ define([
         speed: 500,
         autoplay: true,
         autoplaySpeed: 3000
-      });      
+      });
     },
 
 
