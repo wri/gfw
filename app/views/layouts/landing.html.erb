@@ -22,7 +22,6 @@
 
     <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
     <%= controller_stylesheet_link_tag %>
-    <%= yield :js %>
     <%= csrf_meta_tags %>
   </head>
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
@@ -37,7 +36,8 @@
     <!-- Overlay for modals -->
     <div class="backdrop"></div>
 
-
+    <script src="//maps.googleapis.com/maps/api/js?libraries=drawing,places&sensor=false"></script>
+    <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
     <%= requirejs_include_tag "landing" %>
     <%= render "shared/js_footer" %>
   </body>
