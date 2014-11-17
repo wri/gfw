@@ -1,5 +1,7 @@
 modules:
   - name: 'map'
+  - name: 'landing'
+    exclude: 'map'
 
 wrap: false
 
