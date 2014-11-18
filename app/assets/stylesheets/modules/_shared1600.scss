@@ -84,6 +84,7 @@
       border-right: 1px solid $border;
     }
   }
+
   @include transition(all 0.15s $easeInOutCubic);
   &:after {
     content: "";
@@ -98,6 +99,8 @@
     border-top: 1px solid #EAECEF;
     font-size: 15px;
     white-space: nowrap;
+    position: relative;
+    z-index: 3;
     &:first-child { border-top: none;}
     a,.link {
       color: #444;
