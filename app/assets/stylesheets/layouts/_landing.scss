@@ -70,7 +70,7 @@
     background: #FFD24D;
     color: $dark;
     text-decoration: none;
-    padding: 10px;
+    padding: 8px;
     @include transform(rotate(90deg) translate(50%,0));
     @include transform-origin(100%,0);
     &:hover{

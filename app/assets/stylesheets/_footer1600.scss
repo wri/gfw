@@ -164,4 +164,16 @@
 		    &.blueraster { height: 45px; width: 97px; @include logos-sprite(blueraster); }
 		}
     }
+    .terms{
+        text-align: center;
+        padding: 1em 0;
+        a{
+            text-decoration: none;
+            color: $dark;
+            font-size: 12px;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
 }

@@ -112,7 +112,12 @@
           >a,.link {
             text-indent: 0;
             width: auto;
-            >span { display: inline-block;}
+            >span { 
+              display: none;
+              @media (min-width: $br-tablet){
+                display: inline-block;
+              }
+            }
             svg {
               float: left;
               display: inline-block;
@@ -254,10 +259,9 @@
         border-top: 1px solid darken($border,10%);
         @media (min-width: $br-mobile){
           float: left;
-          margin: 0 0 0 10px;
-          border-top: none;
-          &:first-child { margin: 0;}
+          border-top: none;          
           &:hover {
+            z-index: 5;
             ul {
               background: rgba(#fff,0.95);
               visibility: visible;
@@ -269,12 +273,17 @@
             }
           }
         }
+        @media (min-width: $br-tablet){
+          margin: 0 0 0 10px;
+          &:first-child { margin: 0;}
+        }
+
 				>a {
 					display: block;
 					text-transform: uppercase;
 					text-decoration: none;
 					color: #474747;
-					padding: 20px 40px;
+					padding: 20px;
 					position: relative;
 					z-index: 2;
           text-align: center;
@@ -282,17 +291,20 @@
           @media (min-width: $br-mobile){
             background: none;
           }
+          @media (min-width: $br-tablet){
+            padding: 20px 40px;
+          }
 				}
 				//submenu
 				ul {
 					width: 100%;
-          // min-width: 150px;
           z-index: 1;
           position: relative;
           @media (min-width: $br-mobile){
             position: absolute;
             top: 0;
             left: 50%;
+            min-width: 150px;
             padding: 56px 0 0;
             box-shadow: 0 1px 3px rgba(#000,0.25);
             visibility: hidden;
@@ -310,6 +322,9 @@
               left: 0;
               @include transition(all 0.15s $easeInOutCubic 0.1s);
             }            
+          }
+          @media (min-width: $br-tablet){
+            min-width: 0;
           }
 
 
