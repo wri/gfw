@@ -59,7 +59,24 @@
     @media (min-width: $br-mobile){
       display: block;
     }
-  }    
+  }  
+
+  .feedback-link{
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    z-index: 2;
+    background: #FFD24D;
+    color: $dark;
+    text-decoration: none;
+    padding: 8px;
+    @include transform(rotate(90deg) translate(50%,0));
+    @include transform-origin(100%,0);
+    &:hover{
+      background: darken(#FFD24D,5%);
+    }
+  }  
 
   .main-slider-pagination {
     width: 100%;
@@ -383,6 +400,7 @@
 
     svg{
       display: inline-block;
+      fill: $dark;
       @include display-flex();
       @include align-self(center);
       width: 50px;
@@ -430,9 +448,17 @@
 	.card {
 		@include display-flex();
     width: 100%;
-    box-shadow: 0 0px 5px rgba(#000,0.25);
+    border-top: 1px solid #CCC;
     padding: 20px;
     position: relative;
+    @media (min-width: $br-mobile){
+      border-top: none;
+      box-shadow: 0 0px 5px rgba(#000,0.25);
+      @include transition(all,0.5s,$easeInOutSine);
+      &:hover{
+        box-shadow: 0 0 20px rgba(#000,0.25);
+      }
+    }    
     h3{
       text-transform: uppercase;
       text-align: center;

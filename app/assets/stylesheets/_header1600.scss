@@ -6,6 +6,8 @@
   width: 100%;
   height: auto;
   z-index: 1000;
+  top: 0; 
+  left: 0;
   &.active{
     height: 100%;
   }
@@ -110,7 +112,12 @@
           >a,.link {
             text-indent: 0;
             width: auto;
-            >span { display: inline-block;}
+            >span { 
+              display: none;
+              @media (min-width: $br-tablet){
+                display: inline-block;
+              }
+            }
             svg {
               float: left;
               display: inline-block;
@@ -144,6 +151,7 @@
     float: left;
 		text-indent: -9999px;
 		overflow: hidden;
+    z-index: 2;
     margin: 0 0 0 15px;
     @include retina-image('logo-new.png','logo-new@2x.png');
     @media (min-width: $br-mobile){
@@ -169,6 +177,8 @@
     height: 60px;
     float: right;
     display: block;
+    position: relative;
+    z-index: 2;
     @media (min-width: $br-mobile){
       display: none;
     }
@@ -199,7 +209,7 @@
 
   // Search Widget mobile
   form{
-    padding: 15px 60px 15px 15px;
+    padding: 17px 60px 17px 15px;
     border-top: 1px solid #CCC;
     >input {
       border: none;
@@ -225,6 +235,7 @@
     clear: both;
     background: $white;
     display: none;
+    position: relative;
     &.active{
       display: block;
     }
@@ -232,6 +243,7 @@
       display: block !important;
       clear: none;
       background: none;
+      border-bottom: none;
     }
 
 		@include clearfix();
@@ -247,10 +259,9 @@
         border-top: 1px solid darken($border,10%);
         @media (min-width: $br-mobile){
           float: left;
-          margin: 0 0 0 10px;
-          border-top: none;
-          &:first-child { margin: 0;}
+          border-top: none;          
           &:hover {
+            z-index: 5;
             ul {
               background: rgba(#fff,0.95);
               visibility: visible;
@@ -262,12 +273,17 @@
             }
           }
         }
+        @media (min-width: $br-tablet){
+          margin: 0 0 0 10px;
+          &:first-child { margin: 0;}
+        }
+
 				>a {
 					display: block;
 					text-transform: uppercase;
 					text-decoration: none;
 					color: #474747;
-					padding: 20px 40px;
+					padding: 20px;
 					position: relative;
 					z-index: 2;
           text-align: center;
@@ -275,17 +291,20 @@
           @media (min-width: $br-mobile){
             background: none;
           }
+          @media (min-width: $br-tablet){
+            padding: 20px 40px;
+          }
 				}
 				//submenu
 				ul {
 					width: 100%;
-          // min-width: 150px;
           z-index: 1;
           position: relative;
           @media (min-width: $br-mobile){
             position: absolute;
             top: 0;
             left: 50%;
+            min-width: 150px;
             padding: 56px 0 0;
             box-shadow: 0 1px 3px rgba(#000,0.25);
             visibility: hidden;
@@ -303,6 +322,9 @@
               left: 0;
               @include transition(all 0.15s $easeInOutCubic 0.1s);
             }            
+          }
+          @media (min-width: $br-tablet){
+            min-width: 0;
           }
 
 
@@ -333,6 +355,13 @@
 
 
 // Google Translate
+#google_translate_element_box2{
+  padding: 0 15px 10px;
+  @media (min-width: $br-mobile){
+    display: none;
+  }  
+}
+
 #google_translate_element {
   .goog-te-gadget {
     font-family: inherit;
