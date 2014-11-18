@@ -29,7 +29,7 @@
         <p class="notranslate">You acknowledge that you have read and agree to the Global Forest Watch Terms of Service.</p>
         <%= form_tag("/accept", { :class => 'terms_footer notranslate' }) do %>
           <div class="row">
-            <%= submit_tag "I agree", class: 'btn accept_btn dark huge' %> <%= link_to 'I do not agree', '/accept_terms', class: 'btn cancel_btn dark huge' %>  
+            <%= button_tag "I agree", class: 'btn accept_btn dark huge' %> <%= link_to 'I do not agree', '/accept_terms', class: 'btn cancel_btn dark huge' %>  
           </div>
         <% end %>
       </div>

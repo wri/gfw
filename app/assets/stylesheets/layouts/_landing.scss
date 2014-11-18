@@ -400,6 +400,7 @@
 
     svg{
       display: inline-block;
+      fill: $dark;
       @include display-flex();
       @include align-self(center);
       width: 50px;

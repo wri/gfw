@@ -4,11 +4,12 @@
 }
 // HEADER
 .header-page{
-  padding: 40px 20px;
-  margin: 0 0 50px;
+  padding: 30px 20px;
+  margin: 0 0 30px;
   border-bottom: 1px solid $border;
   @media (min-width: $br-mobile){
     padding: 60px 20px;
+    margin: 0 0 50px;
   }
   h1{
     text-align: center;
@@ -68,13 +69,16 @@
   overflow-x: hidden;
   margin: 0 auto;
   max-width: 700px;
-  height: 300px;
+  height: 220px;
   padding: 20px;
   border: 1px solid #CCC;
   background: #fff;
   outline: none;
   @include box-shadow(0 1px 5px rgba(#000, .2) inset);
   @include border-radius(3px);
+  @media (min-width: $br-mobile){
+    height: 300px;
+  }
 }
 
 .terms-footer{

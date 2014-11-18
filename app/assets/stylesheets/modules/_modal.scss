@@ -80,9 +80,12 @@
       }
       form{
         .row{
-          @include row();
+          text-align: center;
           >*{
-            width: 47.5%;
+            @media (min-width: $br-mobile){
+              width: 47.5%;
+            }
+            
           }
         }
       }
