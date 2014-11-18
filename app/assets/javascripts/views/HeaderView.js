@@ -6,7 +6,7 @@ define([
   'backbone',
   'underscore',
   'mps'
-], function($,Backbone, _,mps, slick) {
+], function($,Backbone, _,mps) {
 
   'use strict'; 
 

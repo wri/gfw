@@ -45,9 +45,9 @@
   // Colors
   &.dark{
     color: $white;
-    background: #AAAAAA;
+    background: $dark;
     &:hover {
-      background: darken(#AAAAAA,5%);
+      background: darken($dark,5%);
     }
   }
   &.gray{

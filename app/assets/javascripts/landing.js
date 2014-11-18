@@ -12,7 +12,6 @@ require([
   'landing/views/SpinnerView',
   'landing/views/SlideView',
   'landing/views/StoriesView',
-
   'views/DialogView',
   '_string'
 ], function($, _, Class, Backbone, mps, HeaderView, FooterView, SpinnerView, SlideView, StoriesView, DialogView) {
@@ -32,7 +31,7 @@ require([
     _initViews: function() {
       //shared
       new HeaderView();
-      //new FooterView();
+      new FooterView();
       new SpinnerView();
 
       //landing

@@ -9,13 +9,10 @@ require([
   'mps',
   'views/HeaderView',
   'views/FooterView',
-  'landing/views/SpinnerView',
-  'landing/views/SlideView',
-  'landing/views/StoriesView',
-
+  'views/TermsView',
   'views/DialogView',
   '_string'
-], function($, _, Class, Backbone, mps, HeaderView, FooterView, SpinnerView, SlideView, StoriesView, DialogView) {
+], function($, _, Class, Backbone, mps, HeaderView, FooterView, TermsView, DialogView) {
   'use strict';
 
   var LandingPage = Class.extend({
@@ -33,11 +30,9 @@ require([
       //shared
       new HeaderView();
       new FooterView();
-      new SpinnerView();
-      
-      //landing
-      new SlideView();
-      new StoriesView();
+      new TermsView();
+      //static
+
     }
   });
 
