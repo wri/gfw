@@ -16,9 +16,10 @@ define([
   'text!map/templates/legend/pantropical.handlebars',
   'text!map/templates/legend/idnPrimary.handlebars',
   'text!map/templates/legend/intact2013.handlebars',
-  'text!map/templates/legend/grump.handlebars'
+  'text!map/templates/legend/grump.handlebars',
+  'text!map/templates/legend/terra_i.handlebars'
 ], function(_, Handlebars, Widget, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, terra_iTpl) {
 
   'use strict';
 
@@ -39,7 +40,8 @@ define([
       pantropical: Handlebars.compile(pantropicalTpl),
       idn_primary: Handlebars.compile(idnPrimaryTpl),
       ifl_2013_deg: Handlebars.compile(intact2013Tpl),
-      grump2000: Handlebars.compile(grumpTpl)
+      grump2000: Handlebars.compile(grumpTpl),
+      terra_i: Handlebars.compile(terra_iTpl)
     },
 
     options: {
