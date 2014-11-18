@@ -112,6 +112,7 @@ define([
 
       var url = this.url;
       url += "&bbox=" + lUL_Longitude + "," + lUL_Latitude + "," + lLR_Longitude + "," + lLR_Latitude; // set bounding box
+      console.log(url)
       return url;
     }
 
