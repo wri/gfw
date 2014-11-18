@@ -146,6 +146,7 @@
     float: left;
 		text-indent: -9999px;
 		overflow: hidden;
+    z-index: 2;
     margin: 0 0 0 15px;
     @include retina-image('logo-new.png','logo-new@2x.png');
     @media (min-width: $br-mobile){
