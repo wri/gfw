@@ -73,8 +73,9 @@ define([
   var WMSLayerClass = OverlayLayerClass.extend({
 
     init: function(layer, options, map) {
+      this.tiles = layer.tileurl;
       this._super(layer, options, map);
-      this._setImageMapType();
+      this._setImageMapType(layer);
     },
 
     _getLayer: function() {
@@ -83,11 +84,12 @@ define([
       return deferred.promise();
     },
 
-    _setImageMapType: function() {
+    _setImageMapType: function(layer) {
       this._imageMaptype = new google.maps.ImageMapType({
         getTileUrl: this._getTileUrl,
         tileSize: this.tileSize,
-        name: this.name
+        name: this.name,
+        url: this.tiles
       });
     },
 
@@ -108,19 +110,8 @@ define([
         lLR_Longitude = Math.abs(lLR_Longitude);
       }
 
-      var url = 'http://bancodedatosregional.com/geoserver/wms?';
-      url += 'REQUEST=GetMap'; //WMS operation
-      url += '&SERVICE=WMS'; //WMS service
-      url += '&VERSION=1.1.1'; //WMS version
-      url += '&LAYERS=' + 'integracion%3AHN_MAPA_TIPO_BOSQUE_2014'; //WMS layers
-      url += '&FORMAT=image/png'; //WMS format
-      url += '&STYLES=' + 'REGIONAL_TIPO_BOSQUE_2014&TILED=true'; //WMS styles
-      url += '&TRANSPARENT=true'; //WMS transparency
-      url += '&SRS=EPSG:900913'; //set WGS84
-      url += '&WIDTH=256'; //tile size in google
-      url += '&HEIGHT=256';
+      var url = this.url;
       url += "&bbox=" + lUL_Longitude + "," + lUL_Latitude + "," + lLR_Longitude + "," + lLR_Latitude; // set bounding box
-
       return url;
     }
 
