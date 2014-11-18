@@ -130,6 +130,7 @@
         display: none;
         @media (min-width: $br-mobile){
             display: block;
+            padding: 0px 0 40px;
         }        
         .slick-slide{
             height: 60px;
