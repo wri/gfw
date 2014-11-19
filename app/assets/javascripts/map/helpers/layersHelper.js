@@ -34,6 +34,7 @@ define([
   'map/views/layers/MangroveLayer',
   'map/views/layers/WMSLayer',
   'map/views/layers/Terra_iLayer',
+  'map/views/layers/TerraiCanvasLayer',
   // Layer dialog templates
   'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -75,6 +76,7 @@ define([
   MangroveLayer,
   WMSLayer,
   Terra_iLayer,
+  TerraiCanvasLayer,
   // Layer dialog templates
   loss_dialog,
   // Layer timelines
@@ -185,6 +187,9 @@ define([
     },
     terra_i :{
       view: Terra_iLayer
+    },
+    terraicanvas :{
+      view: TerraiCanvasLayer
     },
     nothing: {
     }
