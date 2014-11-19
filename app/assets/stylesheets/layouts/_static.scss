@@ -785,6 +785,11 @@
     &:hover { @include static-logos-sprite(goodall_hover); }
   }
 
+  .cgiar {
+    @include static-logos-sprite(cgiar);
+    &:hover { @include static-logos-sprite(cgiar_hover); }
+  }
+
   .sida {
     @include static-logos-sprite(sida);
     &:hover { @include static-logos-sprite(sida_hover); }
