@@ -33,8 +33,8 @@ define([
   'map/views/layers/GrumpLayer',
   'map/views/layers/MangroveLayer',
   'map/views/layers/WMSLayer',
-  'map/views/layers/Terra_iLayer',
   'map/views/layers/TerraiCanvasLayer',
+  'map/views/layers/TerraicanvasCoverageLayer',
   // Layer dialog templates
   'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -75,8 +75,8 @@ define([
   GrumpLayer,
   MangroveLayer,
   WMSLayer,
-  Terra_iLayer,
   TerraiCanvasLayer,
+  TerraicanvasCoverageLayer,
   // Layer dialog templates
   loss_dialog,
   // Layer timelines
@@ -185,11 +185,11 @@ define([
     WMSLayer :{
       view: WMSLayer
     },
-    terra_i :{
-      view: Terra_iLayer
-    },
     terraicanvas :{
       view: TerraiCanvasLayer
+    },
+    terraicanvas_cover :{
+      view: TerraicanvasCoverageLayer
     },
     nothing: {
     }
