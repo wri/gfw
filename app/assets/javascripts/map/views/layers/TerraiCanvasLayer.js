@@ -17,7 +17,7 @@ define([
     options: {
       threshold: 30,
       dataMaxZoom: 12,
-      urlTemplate: 'http://www.terra-i.org/latin-america/Z{z}/{y}/{x}.png'
+      urlTemplate: '/latin-america/Z{z}/{y}/{x}.png'
 
       //http://www.terra-i.org/latin-america/Z8/133/94.png
     },

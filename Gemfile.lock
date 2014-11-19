@@ -1,3 +1,9 @@
+PATH
+  remote: rack-reverse-proxy-0.4.4/
+  specs:
+    rack-reverse-proxy (0.4.4)
+      rack (>= 1.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -254,6 +260,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   newrelic_rpm
+  rack-reverse-proxy!
   rails (= 4.0.4)
   rails_12factor
   requirejs-rails
