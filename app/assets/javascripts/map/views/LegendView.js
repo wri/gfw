@@ -41,7 +41,7 @@ define([
       idn_primary: Handlebars.compile(idnPrimaryTpl),
       ifl_2013_deg: Handlebars.compile(intact2013Tpl),
       grump2000: Handlebars.compile(grumpTpl),
-      terra_i: Handlebars.compile(terra_iTpl)
+      terraicanvas: Handlebars.compile(terra_iTpl)
     },
 
     options: {
