@@ -45,11 +45,17 @@ define([
     for(var i=0; i < w; ++i) {
       for(var j=0; j < h; ++j) {
         var pixelPos = (j*w + i) * components;
-        var intensity = imgdata[pixelPos+1];
+        var r = imgdata[pixelPos];
+        var g = imgdata[pixelPos+1];
+        var b = imgdata[pixelPos+2];
+        if (r<1 && g<1 && b<1){
+          imgdata[pixelPos + 3] = 0;
 
-         imgdata[pixelPos] = 151;
-         imgdata[pixelPos + 1] = 189;
-         imgdata[pixelPos + 2] = 61;
+        }
+
+         // imgdata[pixelPos] = 151;
+         // imgdata[pixelPos + 1] = 189;
+         // imgdata[pixelPos + 2] = 61;
 
         // if (zoom < 13) {
         //   imgdata[pixelPos+ 3] = intensity*0.8;
