@@ -298,7 +298,7 @@
 	.row {
 		@include row();
     @include flex-wrap(wrap);
-    @media (min-width: $br-mobile){
+    @media (min-width: $br-tablet){
       padding: 0 10%;
     }
 		position: relative;
