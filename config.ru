@@ -12,12 +12,4 @@ use Rack::ReverseProxy do
 
   # Forward the path /test* to http://example.com/test*
   reverse_proxy '/latin-america/', 'http://www.terra-i.org/latin-america/'
-
-  # Forward the path /foo/* to http://example.com/bar/*
-  # reverse_proxy /^\/foo(\/.*)$/, 'http://example.com/bar$1', username: 'name', password: 'basic_auth_secret'
 end
-
-# app = proc do |env|
-#   [ 200, {'Content-Type' => 'text/plain'}, "b" ]
-# end
-# run app
