@@ -1,5 +1,6 @@
 .layout-footer {
 	background: #EDEDE8;
+    clear: both;
     .apps-footer {
     	padding: 20px 0;
     	border-bottom: 1px solid #E5E5DF;
@@ -16,6 +17,7 @@
 	    				height: 30px;
 	    				width: 30px; 
 	    				margin: 0 auto;
+                        float: none;
 	    				fill: #555555;
 	    			}
 	    			h3 {

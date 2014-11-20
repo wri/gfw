@@ -1,6 +1,6 @@
 .country-show {
   font-family: $font-regular;
-  color: $default-color;
+  color: $dark;
   margin-top: 50px;
 
   .share {
@@ -214,7 +214,7 @@
           .amount,
           .unit {
             margin-top: 6px;
-            color: $primary-color;
+            color: $cGreen;
             display: inline-block;
           }
 
@@ -248,7 +248,7 @@
             text-transform: uppercase;
             text-align: center;
             color: #999;
-            background: $default-color;
+            background: $dark;
 
             span {
               width: 90%;
@@ -278,7 +278,7 @@
 
           .graph-amount {
             font-size: 30px;
-            color: $primary-color;
+            color: $cGreen;
             margin-top: 10px;
           }
 
@@ -296,7 +296,7 @@
             text-align: center;
             border-radius: 5px;
             font-size: 22px;
-            color: $primary-color;
+            color: $cGreen;
 
             span {
               font-size: 13px;
@@ -417,7 +417,7 @@
         font-size: 14px;
         display: inline-block;
         vertical-align: top;
-        color: $primary-color;
+        color: $cGreen;
         font-family: $font-medium;
       }
     }
@@ -467,7 +467,7 @@
           height: 100%;
           display: inline-block;
           padding: 11px 15px;
-          color: $default-color;
+          color: $dark;
           font-size: 14px;
           text-transform: uppercase;
           cursor: pointer;
@@ -482,7 +482,7 @@
         }
 
         &:hover a {
-          color: $primary-color;
+          color: $cGreen;
           background: #F9F9F9;
 
           &.active {
@@ -494,7 +494,7 @@
   }
 
   .highlight {
-    color: $primary-color;
+    color: $cGreen;
   }
 
   .country-section {
@@ -509,7 +509,7 @@
     .section-info {
       margin-bottom: 12px;
       font-size: 14px;
-      color: $default-color;
+      color: $dark;
       font-family: $font-medium;
       text-transform: uppercase;
       letter-spacing: -0.2px;
@@ -558,7 +558,7 @@
         font-size: 29px;
         line-height: 36px;
         font-family: $font-medium;
-        color: $default-color;
+        color: $dark;
       }
     }
 
@@ -608,7 +608,7 @@
     }
 
     .forma-graph path {
-      stroke: $primary-color;
+      stroke: $cGreen;
       stroke-width: 4px;
       fill: none;
     }
@@ -620,14 +620,14 @@
     .forma-marker {
       stroke: white;
       stroke-width: 2px;
-      fill: $primary-color;
+      fill: $cGreen;
     }
 
     .graph-tooltip {
       position: absolute;
       width: 150px;
       height: 78px;
-      background: $primary-color;
+      background: $cGreen;
       @include box-sizing(border-box);
       padding: 12px 10px;
       border-radius: 5px;
@@ -663,7 +663,7 @@
 
         border-top: 8px solid transparent;
         border-bottom: 8px solid transparent;
-        border-left: 8px solid $primary-color;
+        border-left: 8px solid $cGreen;
 
         right: -8px;
         margin: auto;
@@ -683,7 +683,7 @@
       }
 
       .legend-title {
-        color: $primary-color;
+        color: $cGreen;
         font-size: 14px;
         font-family: $font-medium;
         margin-bottom: 3px;
@@ -694,7 +694,7 @@
       border-radius: 20px;
       border: none;
       padding: 10px 20px 8px;
-      background: $primary-color;
+      background: $cGreen;
       font-family: $font-regular;
       font-size: 13px;
     }
@@ -711,7 +711,7 @@
       margin-top: 10px;
 
       .legends-title {
-        color: $primary-color;
+        color: $cGreen;
         margin-bottom: 10px;
         display: block;
       }
@@ -1200,7 +1200,7 @@
     text-transform: uppercase;
 
     &:hover {
-      background: $primary-color
+      background: $cGreen
     }
   }
 
@@ -1345,7 +1345,7 @@
 
         &::-moz-range-thumb {
           background: image-url('home-icons/timeline_handler_white.png');
-          background-color: $cGreen1;
+          background-color: $cGreen;
           width: 14px;
           height: 14px;
           cursor: col-resize;
@@ -1384,7 +1384,7 @@
         }
         &::-ms-thumb {
           background: image-url('home-icons/timeline_handler_white.png');
-          background-color: $cGreen1;
+          background-color: $cGreen;
           width: 14px;
           height: 14px;
           cursor: col-resize;
@@ -1498,7 +1498,7 @@
 }
 .embed .country-show {
   font-family: $font-regular;
-  color: $default-color;
+  color: $dark;
   margin-top: -84px;
 
   .embed-country-title{

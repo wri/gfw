@@ -1,81 +1,86 @@
-.is-show-action {
-  .layout-content {
-    margin-bottom: 0;
-  }
-}
 
-.country {
-  float: left;
-  margin: 0 0 -1px -1px;
-  font-size: 15px;
-  line-height: 18px;
-  text-align: center;
-  color: #999;
 
-  a {
-    position: relative;
-    display: block;
-    width: 199px;
-    height: 230px;
-    padding: 20px;
-    border: 1px solid #E5E5E5;
-    background: #fff;
 
-    &:hover {
-      z-index: 1000;
-      margin: -10px;
-      padding: 30px;
-      @include box-shadow(0 0 5px rgba(#000, .1));
 
-      .country_main,
-      .country_alt {
-        fill: $cGreen;
-      }
 
-      .country-content {
-        position: absolute;
-        top: 200px; left: 30px; right: 30px;
-      }
+// .is-show-action {
+//   .layout-content {
+//     margin-bottom: 0;
+//   }
+// }
 
-      svg {
-        top: 30px;
-      }
-    }
-  }
+// .country {
+//   float: left;
+//   margin: 0 0 -1px -1px;
+//   font-size: 15px;
+//   line-height: 18px;
+//   text-align: center;
+//   color: #999;
 
-  .country-content {
-    position: absolute;
-    top: 190px; left: 20px;
-    right: 20px;
+//   a {
+//     position: relative;
+//     display: block;
+//     width: 199px;
+//     height: 230px;
+//     padding: 20px;
+//     border: 1px solid #E5E5E5;
+//     background: #fff;
 
-    span {
-      display: block;
-      color: #999;
-      font-size: 15px;
-      line-height: 1.1;
-    }
-  }
+//     &:hover {
+//       z-index: 1000;
+//       margin: -10px;
+//       padding: 30px;
+//       @include box-shadow(0 0 5px rgba(#000, .1));
 
-  h3 {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 29px;
-    line-height: 1.1;
-    @extend .serif;
-    color: #666;
+//       .country_main,
+//       .country_alt {
+//         fill: $cGreen;
+//       }
 
-    &.small {
-      font-size: 19px;
-    }
-  }
+//       .country-content {
+//         position: absolute;
+//         top: 200px; left: 30px; right: 30px;
+//       }
 
-  strong {
-    font-weight: bold;
-  }
+//       svg {
+//         top: 30px;
+//       }
+//     }
+//   }
 
-  svg {
-    position: absolute;
-    top: 20px; left: 50%;
-    margin-left: -75px;
-  }
-}
+//   .country-content {
+//     position: absolute;
+//     top: 190px; left: 20px;
+//     right: 20px;
+
+//     span {
+//       display: block;
+//       color: #999;
+//       font-size: 15px;
+//       line-height: 1.1;
+//     }
+//   }
+
+//   h3 {
+//     display: block;
+//     margin-bottom: 5px;
+//     font-size: 29px;
+//     line-height: 1.1;
+//     @extend .serif;
+//     color: #666;
+
+//     &.small {
+//       font-size: 19px;
+//     }
+//   }
+
+//   strong {
+//     font-weight: bold;
+//   }
+
+//   svg {
+//     position: absolute;
+//     top: 20px; left: 50%;
+//     margin-left: -75px;
+//   }
+// }

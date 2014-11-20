@@ -142,7 +142,7 @@
   @include clearfix();
   @media (min-width: $br-mobile){
     background: rgba(#FFF,0.8);
-    border-bottom: none;
+    border-bottom: 1px solid $border;
   }
 	// Logo
 	h1 {
