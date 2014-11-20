@@ -11,7 +11,7 @@ define([
   var TerraicanvasCoverageLayer = ImageLayerClass.extend({
 
     options: {
-      urlTemplate: 'https://s3.amazonaws.com/wri-tiles/terra_i_coverage/{z}/{y}/{x}.png',
+      urlTemplate: 'https://s3.amazonaws.com/wri-tiles/terra_i_coverage/{z}/{x}/{y}.png',
       dataMaxZoom: 8
     }
 
