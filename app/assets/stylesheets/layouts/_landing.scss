@@ -521,13 +521,27 @@
           width: 40px;
           height: 40px;
           border: 2px solid #EEF7FA;
-          background: image-url('landing-icons/avatar1.png');
           border-radius: 50%;
           position: absolute;
           top: 50%;
           left: 50%;
           z-index: 2;
           @include transform(translate(-40%,-50%));
+          &.blog{
+            background: $orange;
+          }
+          &.disqus{
+            background: $red;
+          }
+          &.story{
+            background: $cGreen;
+          }
+        }
+        a{
+          color: $dark;
+          &:hover{
+            color: $cGreen;
+          }
         }
         .info{
           position: absolute;
@@ -546,7 +560,6 @@
         &:nth-child(even){
           figure{
             @include transform(translate(-60%,-50%));
-            background: image-url('landing-icons/avatar3.png');
           }
           .info{
             left: auto;
