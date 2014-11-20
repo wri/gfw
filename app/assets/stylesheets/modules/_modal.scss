@@ -12,15 +12,15 @@
   position: fixed;
   z-index: 1002;
   overflow: auto;
-  left: 0%; 
+  left: 0%;
   top: 0%;
   background: #fff;
-  border: 1px solid $border;
+  border: 1px solid #E5E5DF;
   box-shadow: 0px 0px 7px rgba($dark,0.5);
   @include transition(all,0.5s,$easeInOutCubic);
   @include transform(translate(0%,-10%));
   @media (min-width: $br-mobile){
-    left: 50%; 
+    left: 50%;
     top: 50%;
     width: 500px;
     height: auto;
@@ -40,7 +40,7 @@
   .close {
     display: block;
     position: absolute;
-    top: 10px; 
+    top: 10px;
     right: 15px;
     width: 16px;
     height: 16px;
@@ -64,7 +64,7 @@
       padding: 15px 0 20px;
       font-size: 24px;
     }
-    
+
     //Body
     .source_body{
       >*{
@@ -85,11 +85,11 @@
             @media (min-width: $br-mobile){
               width: 47.5%;
             }
-            
+
           }
         }
       }
-    }    
+    }
   }
 }
 
