@@ -71,6 +71,22 @@
       border-top: 1px solid $border;
       border-left: 1px solid $border;
     }
+    li:first-child:hover{
+      &:after{
+        content: "";
+        display: block;
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: darken($white,2%);
+        z-index: 2;
+        top: 0;
+        left: 50%;
+        @include transform(translate(-50%,-50%) rotate(45deg));
+        border-top: 1px solid $border;
+        border-left: 1px solid $border;        
+      }
+    }
   }
   &.bottom{
     bottom: 100%;
@@ -83,6 +99,22 @@
       border-bottom: 1px solid $border;
       border-right: 1px solid $border;
     }
+    li:last-child:hover{
+      &:after{
+        content: "";
+        display: block;
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: darken($white,2%);
+        z-index: 2;
+        bottom: 0;
+        left: 50%;
+        @include transform(translate(-50%,50%) rotate(45deg));
+        border-bottom: 1px solid $border;
+        border-right: 1px solid $border;
+      }
+    }    
   }
 
   @include transition(all 0.15s $easeInOutCubic);
