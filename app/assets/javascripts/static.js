@@ -20,7 +20,9 @@ require([
     $el: $('body'),
 
     init: function() {
+      console.log(123)
       this._initViews();
+      console.log(456)
     },
 
     /**
