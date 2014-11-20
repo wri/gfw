@@ -16,7 +16,7 @@
   top: 0%;
   background: #fff;
   border: 1px solid #E5E5DF;
-  box-shadow: 0px 0px 7px rgba($dark,0.5);
+  box-shadow: 0px 0px 7px rgba(#555555,0.5);
   @include transition(all,0.5s,$easeInOutCubic);
   @include transform(translate(0%,-10%));
   @media (min-width: $br-mobile){
@@ -74,7 +74,7 @@
         }
       }
       p{
-        color: $dark;
+        color: #555555;
         font-size: 15px;
         line-height: 1.5;
       }
