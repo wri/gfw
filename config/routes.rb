@@ -58,5 +58,5 @@ Gfw::Application.routes.draw do
 
   get '/landing' => 'landing#index'
 
-  root 'home#index'
+  root 'landing#index'
 end
