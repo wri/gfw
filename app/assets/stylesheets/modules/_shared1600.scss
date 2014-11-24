@@ -1,7 +1,7 @@
 // Spinner
 .spinner {
   position: absolute;
-  top: 50%; 
+  top: 50%;
   left: 50%;
   width: 30px;
   height: 30px;
@@ -30,8 +30,8 @@
   text-transform: uppercase;
   position: absolute;
   top: 100%;
-  left: 50%;  
-  text-align: center;  
+  left: 50%;
+  text-align: center;
   padding: 10px;
   @include transform(translate(-50%,10px));
   &:after{
@@ -62,7 +62,7 @@
   -webkit-backface-visibility: hidden;
   &.top{
     top: 100%;
-    left: 50%;    
+    left: 50%;
     @include transform(translate(-50%,10px));
     &:after{
       top: 0;
@@ -84,14 +84,13 @@
         left: 50%;
         @include transform(translate(-50%,-50%) rotate(45deg));
         border-top: 1px solid $border;
-        border-left: 1px solid $border;        
+        border-left: 1px solid $border;
       }
     }
   }
   &.bottom{
-    bottom: 100%;
-    left: 50%;
-    @include transform(translate(-50%,-10px));
+    bottom: 130%;
+    left: -12%;
     &:after{
       bottom: 0;
       left: 50%;
@@ -114,7 +113,7 @@
         border-bottom: 1px solid $border;
         border-right: 1px solid $border;
       }
-    }    
+    }
   }
 
   @include transition(all 0.15s $easeInOutCubic);
@@ -141,6 +140,8 @@
       text-decoration: none;
       text-align: center;
       display: block;
+      -webkit-font-smoothing: subpixel-antialiased;
+      text-rendering: optimizeLegibility;
       &:hover {
         background: darken($white,2%);
       }
