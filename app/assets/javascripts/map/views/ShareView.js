@@ -74,9 +74,9 @@ define([
         that._hide();
       });
 
-      // $('.field').on('click',function(){
-      //   this.select();
-      // });
+      $('.field').on('click',function(){
+        this.select();
+      });
     },
 
     _hide: function(e) {
