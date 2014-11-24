@@ -29,16 +29,16 @@
                         @include transition(all .25s $easeInOutCubic);
 	    			} 
 	    			&:hover {
-	    				svg { 
-                            fill: $cGreen;
-                            &.fire{ fill: $red; }
-                            &.commodities{ fill: $orange; }
+                        &.fire{ 
+                            svg{ fill: $red; }
+                            h3{ color: $red; }
                         }
-	    				h3 { 
-                            color: $cGreen;
-                            &.fire{ color: $red; }
-                            &.commodities{ color: $orange; }
+                        &.commodities{ 
+                            svg{ fill: $orange; }
+                            h3{ color: $orange; }
                         }
+	    				svg { fill: $cGreen; }
+	    				h3 { color: $cGreen; }
 	    			}   				
     			}
     		}
