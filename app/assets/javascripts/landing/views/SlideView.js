@@ -11,7 +11,6 @@ define([
 ], function($,Backbone, _,mps, Handlebars, tpl) {
 
   'use strict';
-console.log(Handlebars)
   Handlebars.registerHelper('for', function(from, to, incr, block) {
     var accum = '';
     for(var i = from; i < to; i += incr)
