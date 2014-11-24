@@ -72,12 +72,12 @@
           }
 
           &:hover  {
-            .shape-house { fill: $cGreen; }
-            .shape-world { fill: $cGreen; }
-            .shape-country { fill: $cGreen; }
-            .shape-fire { fill: $red; }
-            .shape-commodities { fill: $orange; }
-            .shape-blog { fill: $cGreen; }
+            &.shape-house { svg{ fill: $cGreen;} }
+            &.shape-world { svg{ fill: $cGreen;} }
+            &.shape-country { svg{ fill: $cGreen;} }
+            &.shape-fire { svg{ fill: $red;} }
+            &.shape-commodities { svg{ fill: $orange;} }
+            &.shape-blog { svg{ fill: $cGreen;} }
             svg {
               fill: $cGreen;
             }
@@ -154,7 +154,7 @@
   @include clearfix();
   @media (min-width: $br-mobile){
     background: rgba(#FFF,0.8);
-    border-bottom: none;
+    border-bottom: 1px solid $border;
   }
 	// Logo
 	h1 {
