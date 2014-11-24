@@ -7,7 +7,6 @@ wrap: true
 
 paths:
   # Libs
-  handlebars: "handlebars/handlebars"
   amplify: "amplify/lib/amplify"
   underscore: "underscore/underscore"
   backbone: "backbone/backbone"
@@ -23,6 +22,7 @@ paths:
   markerclusterer: "gmaps-markerclusterer-plus/src/markerclusterer"
   geojsonArea: "geojson-area"
   uri: "uri-templates/uri-templates"
+  handlebars: "handlebars/handlebars"
   slick: "slick.js/slick/slick.min"
   wax: "wax.g.min"
   store: "store"
