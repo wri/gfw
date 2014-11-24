@@ -30,7 +30,7 @@ Gfw::Application.configure do
   # config.assets.compile = true
 
   # Generate digests for assets URLs.
-  config.assets.digest = true
+  config.assets.digest = false
 
   # Version of your assets, change this if you want to expire all your assets.
   config.assets.version = '1.0'
@@ -64,7 +64,7 @@ Gfw::Application.configure do
   config.assets.precompile += %w( modernizr-2.6.2.min.js home.js stories.js countries.js static.js old.js embed_countries.js embed_map.js home.css stories.css countries.css static.css )
 
   # Require JS
-  config.requirejs.loader = :almond
+  # config.requirejs.loader = :almond
   config.requirejs.logical_asset_filter += [/\.handlebars$/]
   config.requirejs.logical_asset_filter += [/\.cartocss$/]
 

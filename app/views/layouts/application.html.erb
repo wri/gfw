@@ -34,14 +34,14 @@
         <div class="layout-content">
           <%= yield %>
         </div>
-        <%= render 'shared/footer_landing' %>        
+        <%= render 'shared/footer_landing' %>
     </div>
     <!-- Javascript -->
     <script src="//maps.googleapis.com/maps/api/js?libraries=drawing,places&sensor=false"></script>
     <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+    <%= requirejs_include_tag 'static' %>
     <%# render 'shared/js_templates' %>
     <%# javascript_include_tag 'application' %>
-    <%= requirejs_include_tag 'static' %>
     <%= render 'shared/js_footer' %>
   </body>
 </html>
