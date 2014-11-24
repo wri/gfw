@@ -37,7 +37,7 @@ define([
       var zoom = this.map.getZoom();
       var yearStart = this.currentDate[0].year();
       var yearEnd = this.currentDate[1].year();
-      console.log(yearStart, yearEnd);
+      //console.log(yearStart, yearEnd);
       //var yearagg=[]
 
       for(var i=0; i < w; ++i) {
