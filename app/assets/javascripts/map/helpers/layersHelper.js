@@ -43,6 +43,7 @@ define([
   'map/views/timeline/ImazonTimeline',
   'map/views/timeline/ModisTimeline',
   'map/views/timeline/FiresTimeline',
+  'map/views/timeline/TerraiTimeline',
 ], function(
   // Layer Views
   LossLayer,
@@ -84,7 +85,8 @@ define([
   FormaTimeline,
   ImazonTimeline,
   ModisTimeline,
-  FiresTimeline) {
+  FiresTimeline,
+  TerraiTimeline) {
 
   'use strict';
 
@@ -186,7 +188,8 @@ define([
       view: WMSLayer
     },
     terraicanvas :{
-      view: TerraiCanvasLayer
+      view: TerraiCanvasLayer,
+      timelineView: TerraiTimeline
     },
     terraicanvas_cover :{
       view: TerraicanvasCoverageLayer

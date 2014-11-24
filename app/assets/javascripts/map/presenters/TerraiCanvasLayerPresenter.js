@@ -21,11 +21,15 @@ define([
     /**
      * Application subscriptions.
      */
-    // _subscriptions: [{
-    //   'Threshold/changed': function(threshold) {
-    //     this.view.setThreshold(threshold);
-    //   }
-    // }],
+    _subscriptions: [{
+      'Timeline/date-change': function(layerSlug, date) {
+        if (this.view.getName() !== layerSlug) {
+          return;
+        }
+        this.view.setCurrentDate(date);
+      }
+    }],
+
 
     updateLayer: function() {
       mps.publish('Layer/update', [this.view.getName()]);

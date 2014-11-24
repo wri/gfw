@@ -16,15 +16,16 @@ define([
 
     options: {
       threshold: 30,
-      dataMaxZoom: 12,
-      urlTemplate: '/latin-america/Z{z}/{y}/{x}.png'
+      dataMaxZoom: 10,
+      //urlTemplate: '/latin-america/Z{z}/{y}/{x}.png'
+      urlTemplate: 'http://wri-tiles.s3-website-us-east-1.amazonaws.com/terra_i_loss/{z}/{x}/{y}.png'
       //ATTENTION: check config.ru file to get the whole route, reverse proxying here
     },
 
     init: function(layer, options, map) {
       this.presenter = new Presenter(this);
+      this.currentDate = options.currentDate || [moment(layer.mindate), moment(layer.maxdate)];
       this._super(layer, options, map);
-      this.threshold = options.threshold || this.options.threshold;
     },
 
     /**
@@ -34,6 +35,10 @@ define([
     filterCanvasImgdata: function(imgdata, w, h) {
       var components = 4;
       var zoom = this.map.getZoom();
+      var yearStart = this.currentDate[0].year();
+      var yearEnd = this.currentDate[1].year();
+      console.log(yearStart, yearEnd);
+      //var yearagg=[]
 
       for(var i=0; i < w; ++i) {
         for(var j=0; j < h; ++j) {
@@ -41,12 +46,31 @@ define([
           var r = imgdata[pixelPos];
           var g = imgdata[pixelPos+1];
           var b = imgdata[pixelPos+2];
-          if (r<1 && g<1 && b<1){
-            imgdata[pixelPos + 3] = 0;
+          var yearLoss = 2003 + imgdata[pixelPos]%16;
+         // yearagg[yearLoss]+=1;
 
+
+          if (yearLoss >= yearStart && yearLoss < yearEnd) {
+            imgdata[pixelPos] = 220;
+            imgdata[pixelPos + 1] = 102 ;
+            imgdata[pixelPos + 2] = 153 ;
+            imgdata[pixelPos + 3] = 256;
+          } else {
+            imgdata[pixelPos + 3] = 0;
           }
+
         }
+
       }
+    },
+    /**
+     * Used by UMDLoassLayerPresenter to set the dates for the tile.
+     *
+     * @param {Array} date 2D array of moment dates [begin, end]
+     */
+    setCurrentDate: function(date) {
+      this.currentDate = date;
+      this.updateTiles();
     },
   });
 
