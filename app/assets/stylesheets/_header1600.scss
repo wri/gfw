@@ -6,7 +6,7 @@
   width: 100%;
   height: auto;
   z-index: 1000;
-  top: 0; 
+  top: 0;
   left: 0;
   &.active{
     height: 100%;
@@ -52,7 +52,7 @@
           }
           .tooltip{
             margin: 0;
-            line-height: normal;        
+            line-height: normal;
           }
 
           form{
@@ -69,7 +69,7 @@
           }
           svg {
             fill: #B6B6BA;
-          }           
+          }
 
           &:hover  {
             .shape-house { fill: $cGreen; }
@@ -109,10 +109,11 @@
           height: 25px;
           width: auto;
           position: relative;
-          >a,.link {
+          >a,
+          .link {
             text-indent: 0;
             width: auto;
-            >span { 
+            >span {
               display: none;
               @media (min-width: $br-tablet){
                 display: inline-block;
@@ -121,6 +122,17 @@
             svg {
               float: left;
               display: inline-block;
+            }
+          }
+          .home_data {
+            font-size: 12px;
+            border: 0;
+            text-decoration: none;
+            span {
+              line-height: 28px;
+            }
+            &:visited {
+              color: #000;
             }
           }
           &:hover {
@@ -147,7 +159,7 @@
 	// Logo
 	h1 {
     width: 60px;
-    height: 60px; 
+    height: 60px;
     float: left;
 		text-indent: -9999px;
 		overflow: hidden;
@@ -156,7 +168,7 @@
     @include retina-image('logo-new.png','logo-new@2x.png');
     @media (min-width: $br-mobile){
       width: 90px;
-      height: 90px; 
+      height: 90px;
       position: absolute;
       top: 0;
       left: 0;
@@ -184,7 +196,7 @@
     }
     .icon{
       margin: 0 auto;
-      &.hamburguer{ 
+      &.hamburguer{
         display: block;
       }
       &.close {
@@ -197,7 +209,7 @@
       box-shadow: 0 1px 0 $white;
       .icon{
         margin: 0 auto;
-        &.hamburguer{ 
+        &.hamburguer{
           display: none;
         }
         &.close {
@@ -225,7 +237,7 @@
     svg {
       float: left;
       fill: #B6B6BA;
-    }           
+    }
   }
 
 
@@ -259,7 +271,7 @@
         border-top: 1px solid darken($border,10%);
         @media (min-width: $br-mobile){
           float: left;
-          border-top: none;          
+          border-top: none;
           &:hover {
             z-index: 5;
             ul {
@@ -321,7 +333,7 @@
               top: 52px; //padding-UL - height:before
               left: 0;
               @include transition(all 0.15s $easeInOutCubic 0.1s);
-            }            
+            }
           }
           @media (min-width: $br-tablet){
             min-width: 0;
@@ -348,7 +360,7 @@
 					}
         }
       }
-    }    
+    }
   }
 }
 
@@ -359,7 +371,7 @@
   padding: 0 15px 10px;
   @media (min-width: $br-mobile){
     display: none;
-  }  
+  }
 }
 
 #google_translate_element {
