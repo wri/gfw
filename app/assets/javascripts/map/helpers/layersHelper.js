@@ -187,7 +187,7 @@ define([
     WMSLayer :{
       view: WMSLayer
     },
-    terraicanvas :{
+    terrailoss :{
       view: TerraiCanvasLayer,
       timelineView: TerraiTimeline
     },
