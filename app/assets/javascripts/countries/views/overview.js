@@ -381,7 +381,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                 that._reorderRanking();
               }
               markup_list += '<li>\
-                              <div class="countries_list__minioverview expanded countries_list__minioverview_'+val.iso+'"></div>\
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
                               <div class="countries_list__data">\
@@ -402,10 +401,6 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         $('.countries_list ul').append(markup_list);
 
         that.model.set('class', 'expanded');
-
-        _.each(data, function(val, key) {
-          self._drawMiniOverview(val.iso);
-        });
       });
     } else if (this.model.get('graph') === 'ratio') {
       this.$settings.removeClass('disable');

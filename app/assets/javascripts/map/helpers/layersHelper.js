@@ -32,6 +32,9 @@ define([
   'map/views/layers/InfoamazoniaStoriesLayer',
   'map/views/layers/GrumpLayer',
   'map/views/layers/MangroveLayer',
+  'map/views/layers/WMSLayer',
+  'map/views/layers/TerraiCanvasLayer',
+  'map/views/layers/TerraicanvasCoverageLayer',
   // Layer dialog templates
   'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -40,6 +43,7 @@ define([
   'map/views/timeline/ImazonTimeline',
   'map/views/timeline/ModisTimeline',
   'map/views/timeline/FiresTimeline',
+  'map/views/timeline/TerraiTimeline',
 ], function(
   // Layer Views
   LossLayer,
@@ -71,6 +75,9 @@ define([
   InfoamazoniaStoriesLayer,
   GrumpLayer,
   MangroveLayer,
+  WMSLayer,
+  TerraiCanvasLayer,
+  TerraicanvasCoverageLayer,
   // Layer dialog templates
   loss_dialog,
   // Layer timelines
@@ -78,7 +85,8 @@ define([
   FormaTimeline,
   ImazonTimeline,
   ModisTimeline,
-  FiresTimeline) {
+  FiresTimeline,
+  TerraiTimeline) {
 
   'use strict';
 
@@ -175,6 +183,16 @@ define([
     },
     mangrove :{
       view: MangroveLayer
+    },
+    WMSLayer :{
+      view: WMSLayer
+    },
+    terrailoss :{
+      view: TerraiCanvasLayer,
+      timelineView: TerraiTimeline
+    },
+    terraicanvas_cover :{
+      view: TerraicanvasCoverageLayer
     },
     nothing: {
     }

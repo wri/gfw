@@ -19,6 +19,7 @@ define([
   var StatusModel = Backbone.Model.extend({
     defaults: {
       baselayer: null,
+      both: false,
       resource: null, // analysis resource
       date: null,
       threshold: null,
@@ -39,6 +40,7 @@ define([
 
     datasets: {
       'loss': 'umd-loss-gain',
+      'forestgain': 'umd-loss-gain',
       'forma': 'forma-alerts',
       'imazon': 'imazon-alerts',
       'fires': 'nasa-active-fires',
@@ -275,27 +277,47 @@ define([
         return resource;
       }
 
-      // Append dataset string
-      resource.dataset = this.datasets[baselayer.slug];
+      if (baselayer.slug !== 'forestgain') {
+        // Append dataset string
+        resource.dataset = this.datasets[baselayer.slug];
 
-      // Append period
-      date = this.status.get('date');
-      dateFormat = 'YYYY-MM-DD';
+        // Append period
+        date = this.status.get('date');
+        dateFormat = 'YYYY-MM-DD';
 
-      // period format = 2012-12-23,2013-01-4
-      date[0] = (date[0] != null) ? date[0] : '2001-01-01';
-      date[1] = (date[1] != null) ? date[1] : '2013-12-31';
-      resource.period = '{0},{1}'.format(
-        date[0].format(dateFormat), date[1].format(dateFormat));
+        // period format = 2012-12-23,2013-01-4
+        date[0] = (date[0] != null) ? date[0] : '2001-01-01';
+        date[1] = (date[1] != null) ? date[1] : '2013-12-31';
+        resource.period = '{0},{1}'.format(
+          date[0].format(dateFormat), date[1].format(dateFormat));
 
-      // this is super ugly
-      if (baselayer.slug === 'loss') {
+        // this is super ugly
+        if (baselayer.slug === 'loss') {
+          resource.thresh = '?thresh=' + this.status.get('threshold');
+        } else {
+          delete resource.thresh;
+        }
+
+        return resource;
+      }else{
+        // Append dataset string
+        resource.dataset = this.datasets[baselayer.slug];
+
+        // Append period
+        date = ['2001-01-01','2013-12-31'];
+
+        // period format = 2012-12-23,2013-01-4
+        resource.period = '{0},{1}'.format(
+          date[0], date[1]);
+
+        // this is super ugly
         resource.thresh = '?thresh=' + this.status.get('threshold');
-      } else {
-        delete resource.thresh;
+
+        return resource;
+
       }
 
-      return resource;
+
     },
 
     /**
@@ -354,9 +376,16 @@ define([
      * @param {Object} baselayers Current active baselayers
      */
     _setBaselayer: function(baselayers) {
-      var baselayer = baselayers[_.first(_.intersection(
-        _.pluck(baselayers, 'slug'),
-        _.keys(this.datasets)))];
+      var baselayer;
+
+      if (baselayers['loss']) {
+        baselayer = baselayers['loss'];
+        this.status.set('both', (baselayers['forestgain']) ? true : false);
+      }else{
+        baselayer = baselayers[_.first(_.intersection(
+          _.pluck(baselayers, 'slug'),
+          _.keys(this.datasets)))];
+      }
 
       this.status.set('baselayer', baselayer);
       this._setAnalysisBtnVisibility();
