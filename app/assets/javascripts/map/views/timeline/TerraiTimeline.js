@@ -5,13 +5,13 @@
  */
 define([
   'moment',
-  'abstract/timeline/TimelineYearClass',
+  'abstract/timeline/TimelineMonthClass',
   'map/presenters/TimelineClassPresenter'
-], function(moment, TimelineYearClass, Presenter) {
+], function(moment, TimelineMonthClass, Presenter) {
 
   'use strict';
 
-  var TerraiTimeline = TimelineYearClass.extend({
+  var TerraiTimeline = TimelineMonthClass.extend({
 
     /**
      * Get the layer spec.
@@ -19,15 +19,17 @@ define([
      * @param  {object} layer The layer object
      */
     initialize: function(layer, currentDate) {
-      this.presenter = new Presenter(this);
-      console.log(layer);
       this.options = {
-        dateRange: [moment(layer.mindate), moment(layer.maxdate)]
+        dateRange: [moment(layer.mindate), moment(layer.maxdate)],
+        playSpeed: 120
       };
 
+      this.presenter = new Presenter(this);
       TerraiTimeline.__super__.initialize.apply(this, [layer, currentDate]);
     }
   });
 
   return TerraiTimeline;
 });
+
+

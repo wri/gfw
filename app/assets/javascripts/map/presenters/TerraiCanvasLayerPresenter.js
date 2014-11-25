@@ -26,7 +26,7 @@ define([
         if (this.view.getName() !== layerSlug) {
           return;
         }
-        this.view.setCurrentDate(date);
+        this.view.setTimelineDate(date);
       }
     }],
 

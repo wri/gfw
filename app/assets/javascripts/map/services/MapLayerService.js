@@ -70,7 +70,7 @@ define([
       var sql = null;
 
       if (!this.url) {
-        template = 'http://wri-01.cartodb.com/api/v1/sql{?q}';
+        template = 'http://wri-01.cartodb.com/api/v2/sql{?q}';
         /*jshint multistr: true */
         sql = 'SELECT \
                 cartodb_id AS id, \
