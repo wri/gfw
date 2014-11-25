@@ -30,10 +30,10 @@ Gfw::Application.configure do
   # config.assets.compile = true
 
   # Generate digests for assets URLs.
-  config.assets.digest = true
+  config.assets.digest = false
 
   # Version of your assets, change this if you want to expire all your assets.
-  config.assets.version = '2.0'
+  config.assets.version = '2.1'
 
   config.static_cache_control = 'public, max-age=31536000'
 
