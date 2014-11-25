@@ -61,7 +61,7 @@ Gfw::Application.configure do
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  config.assets.precompile += %w( modernizr-2.6.2.min.js home.js stories.js countries.js static.js old.js embed_countries.js embed_map.js home.css stories.css countries.css static.css )
+  config.assets.precompile += %w( modernizr-2.6.2.min.js home.js stories.js countries.js static.js landing.js map.js old.js embed_countries.js embed_map.js home.css stories.css countries.css static.css )
 
   # Require JS
   # config.requirejs.loader = :almond
