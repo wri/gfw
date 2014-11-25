@@ -9,7 +9,7 @@ require([
   'mps',
   'views/HeaderView',
   'views/FooterView',
-  'landing/views/FeedView',
+  'landing/views/SpinnerView',
   'views/DialogView',
   '_string',
   'handlebars'
