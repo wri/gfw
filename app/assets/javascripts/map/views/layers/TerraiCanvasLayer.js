@@ -35,7 +35,6 @@ define([
     filterCanvasImgdata: function(imgdata, w, h) {
       var components = 4;
       var zoom = this.map.getZoom();
-<<<<<<< HEAD
       // var yearStart = this.currentDate[0].year();
       // var yearEnd = this.currentDate[1].year();
       //hardcoded start, may want to get it from layerspec
@@ -44,10 +43,6 @@ define([
       var start=-Math.floor(mindate.diff(moment(this.currentDate[0]).add(1, 'day'), 'days')/16);
       var end=-Math.floor(mindate.diff(moment(this.currentDate[1]), 'days')/16);
       //console.log(start,end);
-=======
-      var yearStart = this.currentDate[0].year();
-      var yearEnd = this.currentDate[1].year();
->>>>>>> a6df12142723949ce969bec887709d6658613147
       //var yearagg=[]
 
       for(var i=0; i < w; ++i) {
@@ -75,6 +70,7 @@ define([
 
       }
     },
+
     /**
      * Used by TerraiCanvasLayerPresenter to set the dates for the tile.
      *
