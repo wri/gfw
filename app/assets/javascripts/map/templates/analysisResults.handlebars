@@ -38,28 +38,40 @@
               <span class="stats-title">Loss {{lossDateRange}}<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{threshold}}% canopy density</span></span>
               <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{lossAlerts}}</strong> ha</span>
             </li>
+            {{#if both}}
             <li>
               <span class="stats-title">Gain 2001-2012</span>
               <span class="stats-count" style="color: #6D6DE5;"><strong>{{gainAlerts}}</strong> ha</span>
             </li>
+            {{/if}}
             <li>
               <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
             </li>
           {{else}}
-            {{#if imazon}}
+            {{#if forestgain}}
               <li>
-                <span class="stats-title">Deforestation alerts</span>
-                <span class="stats-count" style="color: {{layer.title_color}};"><strong>{{defor}}</strong> Ha</span>
+                <span class="stats-title">Gain 2001-2012</span>
+                <span class="stats-count" style="color: #6D6DE5;"><strong>{{gainAlerts}}</strong> ha</span>
               </li>
               <li>
-                <span class="stats-title">Degradation alerts</span>
-                <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{degrad}}</strong> Ha</span>
+                <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
               </li>
             {{else}}
-              <li>
-                <span class="stats-title">Total alerts</span>
-                <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> {{alertsName}}</span>
-              </li>
+              {{#if imazon}}
+                <li>
+                  <span class="stats-title">Deforestation alerts</span>
+                  <span class="stats-count" style="color: {{layer.title_color}};"><strong>{{defor}}</strong> Ha</span>
+                </li>
+                <li>
+                  <span class="stats-title">Degradation alerts</span>
+                  <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{degrad}}</strong> Ha</span>
+                </li>
+              {{else}}
+                <li>
+                  <span class="stats-title">Total alerts</span>
+                  <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> {{alertsName}}</span>
+                </li>
+              {{/if}}
             {{/if}}
           {{/if}}
           {{#if loss}}

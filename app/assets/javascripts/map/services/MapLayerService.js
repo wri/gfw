@@ -96,13 +96,12 @@ define([
                 tileurl, \
                 true AS visible \
               FROM \
-                layerspec \
+                layerspec_adrian_dev \
               WHERE \
                 display = \'true\' \
               ORDER BY \
                 displaylayer, \
                 title ASC';
-
         this.url = new UriTemplate(template).fillFromObject({q: sql});
       }
 
