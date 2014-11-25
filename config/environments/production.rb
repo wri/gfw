@@ -33,7 +33,7 @@ Gfw::Application.configure do
   config.assets.digest = false
 
   # Version of your assets, change this if you want to expire all your assets.
-  config.assets.version = '3.0'
+  config.assets.version = '4'
 
   config.static_cache_control = 'public, max-age=31536000'
 
@@ -65,8 +65,8 @@ Gfw::Application.configure do
 
   # Require JS
   # config.requirejs.loader = :almond
-  # config.requirejs.logical_asset_filter += [/\.handlebars$/]
-  # config.requirejs.logical_asset_filter += [/\.cartocss$/]
+  config.requirejs.logical_asset_filter += [/\.handlebars$/]
+  config.requirejs.logical_asset_filter += [/\.cartocss$/]
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
