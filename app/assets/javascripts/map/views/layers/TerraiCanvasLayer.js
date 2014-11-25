@@ -38,7 +38,7 @@ define([
       // var yearStart = this.currentDate[0].year();
       // var yearEnd = this.currentDate[1].year();
       //hardcoded start, may want to get it from layerspec
-      var mindate= moment("2004-01-01T00:00:00");
+      var mindate= moment("2004-01-15T00:00:00");
       //get the time in steps of 16 days
       var start=-Math.floor(mindate.diff(moment(this.currentDate[0]).add(1, 'day'), 'days')/16);
       var end=-Math.floor(mindate.diff(moment(this.currentDate[1]), 'days')/16);
