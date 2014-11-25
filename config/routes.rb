@@ -15,6 +15,9 @@ Gfw::Application.routes.draw do
   get '/about' => redirect('about/video')
   get '/about(/:section)' => 'static#about'
 
+  get '/keepupdated' => redirect('keepupdated/intro')
+  get '/keepupdated(/:section)' => 'static#keep'
+
   get '/notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'
   get '/terms' => 'static#terms'
   get '/accept_terms' => 'static#accept_terms'

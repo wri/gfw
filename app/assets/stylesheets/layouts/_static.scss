@@ -1,6 +1,6 @@
 // LAYOUT
 .layout-content{
-  padding: 0 15px;
+  // padding: 0 15px;
 }
 // HEADER
 .header-page{
@@ -27,7 +27,133 @@
   }
 }
 
-// TERMS
+
+
+// STATIC PAGE
+// header
+.header-static{
+  background: $light;
+  color: $dark;
+  padding: 70px 0 50px;
+  header{
+    // max-width: 1024px;    
+  }
+  h2{
+    font-size: 47px;
+    padding: 0 0 15px;
+  }
+  h3{
+    font-size: 21px;
+    line-height: 1.25;
+    padding: 0 0 10px;
+  }
+  p{
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .inner{
+    padding: 0 15px;
+  }
+  .row{
+    @include row();
+    margin: 50px 0 0;
+    &.row3{
+      >*{ @include col(33.33333);}
+      a{
+        display: block;
+        width: 90%;
+        max-width: 230px;
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+// content
+.content-static{
+  background: $white;
+  padding: 40px 0;
+  .row{
+    @include row();
+  }
+  aside{
+    width: 260px;
+    ul{
+      li{
+        text-align: center;
+        text-transform: uppercase;
+        font-family: $font-medium;
+        font-size: 14px;
+        background: #FFF;
+        &:nth-child(even){
+          background: $light;
+        }
+        &:hover{
+          background: darken($white,5%);
+          &:nth-child(even){
+            background: darken($light,5%);
+          }
+        }
+        &.selected{
+          background: $cGreen;
+        }        
+        a{
+          color: $dark;
+          text-decoration: none;
+          line-height: 60px;
+          display: block;
+        }
+      }
+    }
+  }
+  .sources-box{
+    width: 100%;
+    .sources-content{
+      padding: 0 35px;
+    }
+  }
+}
+
+
+.source-article{
+  display: none;
+  &.selected{
+    display: block;
+  }
+  header{
+    color: $dark;
+    h2{
+      font-size: 35px;
+      padding: 0 0 15px;
+    }
+    h3{
+      font-size: 21px;
+      line-height: 1.25;
+      padding: 0 0 10px;
+    }
+    p{
+      font-size: 14px;
+      line-height: 1.5;
+    }  
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// TERMS PAGE
 .terms_inner {
   font-size: 15px;
   p {

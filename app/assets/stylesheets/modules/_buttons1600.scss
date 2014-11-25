@@ -19,14 +19,17 @@
   border-radius: 40px;
   font-size: 14px;
   text-decoration: none;
-  height: 30px;
-  line-height: 32px;
+  height: 36px;
+  line-height: 38px;
   text-align: center;
-  font-family: $font-regular;
+  font-family: $font-medium;
 
   &:hover {
     background: $cGreen;
   }
+
+  &.lowercase{ text-transform: lowercase;}
+  &.uppercase{ text-transform: uppercase;}
 
   // Sizes
   &.medium{
