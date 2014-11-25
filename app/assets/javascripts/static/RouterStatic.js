@@ -19,7 +19,8 @@ define([
     _cacheVersion: 5,
 
     routes: {
-      'keepupdated(/)(:section)': 'staticSection'
+      'keepupdated(/)(:section)': 'staticSection',
+      'howto(/)(:section)': 'staticSection'
     },
 
     initialize: function(mainView) {

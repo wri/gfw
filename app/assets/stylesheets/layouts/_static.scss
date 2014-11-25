@@ -55,16 +55,17 @@
     padding: 0 15px;
   }
   .row{
-    @include row();
+    @include row(center);
     margin: 50px 0 0;
-    &.row3{
-      >*{ @include col(33.33333);}
-      a{
-        display: block;
-        width: 90%;
-        max-width: 230px;
-        margin: 0 auto;
-      }
+    >*{
+      margin: 0 20px;
+    }
+    a{
+      display: block;
+      width: 90%;
+      min-width: 200px;
+      max-width: 270px;
+      margin: 0 auto;
     }
   }
 }
@@ -94,14 +95,15 @@
             background: darken($light,5%);
           }
         }
-        &.selected{
-          background: $cGreen;
-        }        
         a{
           color: $dark;
           text-decoration: none;
           line-height: 60px;
           display: block;
+          &.selected{
+            background: $cGreen;
+            color: $white;
+          }        
         }
       }
     }
@@ -124,17 +126,69 @@
     color: $dark;
     h2{
       font-size: 35px;
-      padding: 0 0 15px;
+      
     }
     h3{
       font-size: 21px;
       line-height: 1.25;
-      padding: 0 0 10px;
+      padding: 15px 0 0;
     }
     p{
       font-size: 14px;
       line-height: 1.5;
+      padding: 10px 0 0;
     }  
+  }
+  .content{
+    padding: 20px 0 0;
+    // LIST TYPES: pub-list, alerts-list
+    .publications-list{
+      li{
+        margin: 30px 0 0;
+        &:first-child{
+          margin: 0;
+        }
+        h3{
+          font-size: 14px;
+          color: $dark;
+          font-family: $font-medium;
+        }
+        p{
+          font-size: 14px;
+          color: $dark;
+          padding: 5px 0 0;
+          line-height: 1.25;
+          a{
+            color: $cGreen;
+            font-family: $font-medium;
+            text-decoration: none;
+            &:hover{
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+    .alert-list{
+      li{
+        margin: 20px 0 0;
+        padding: 20px 0 0;
+        border-top: 1px solid $border;
+        color: $dark;
+        h3{
+          font-size: 21px;
+          line-height: 1.25;
+        }
+        p{
+          font-size: 14px;
+          line-height: 1.5;
+          padding: 10px 0 0;
+        }  
+        .btn{
+          margin: 10px 0 0;
+        }
+      }
+    }
   }
 }
 

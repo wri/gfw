@@ -6,8 +6,8 @@
         <p>The data vary in accuracy, resolution, frequency of update, and geographic coverage. The summaries below include links to further information such as methods and technical documents. Full download of the data sets is available for most sources.</p>        
       </header>
       <ul class="row row3">
-        <li><a href="#" class="btn dark uppercase">GFW Blog</a></li>
-        <li><a href="#" class="btn dark uppercase">Discussion Forum</a></li>
+        <li><a href="http://blog.globalforestwatch.org/" target="_blank" class="btn dark uppercase">GFW Blog</a></li>
+        <li><a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank" class="btn dark uppercase">Discussion Forum</a></li>
         <li><a href="#" class="btn dark uppercase">Sign up for newsletter</a></li>
       </ul>
     </div>
@@ -18,28 +18,14 @@
     <div class="row">
       <aside>
         <ul>
-          <li><%= link_to 'Keep Updated', "#{keepupdated_path}/intro", :"data-slug" => 'intro', :class => 'nav-item' %></li>
-          <li><%= link_to 'Crowdsourced stories', "#{keepupdated_path}/crowdsourced-stories", :"data-slug" => 'crowdsourced-stories', :class => 'nav-item' %></li>
-          <li><%= link_to 'Receive Alerts', "#{keepupdated_path}/receive-alerts", :"data-slug" => 'receive-alerts', :class => 'nav-item' %></li>
-          <li><%= link_to 'Publications', "#{keepupdated_path}/publications", :"data-slug" => 'publications', :class => 'nav-item' %></li>
+          <li><%= link_to @title, "#{keepupdated_path}/intro", :class => 'nav-title' %></li>
+          <li><%= link_to 'Crowdsourced stories', "#{keepupdated_path}/crowdsourced-stories", :"data-slug" => 'crowdsourced-stories', :class => 'nav-item crowdsourced-stories' %></li>
+          <li><%= link_to 'Receive Alerts', "#{keepupdated_path}/receive-alerts", :"data-slug" => 'receive-alerts', :class => 'nav-item receive-alerts' %></li>
+          <li><%= link_to 'Publications', "#{keepupdated_path}/publications", :"data-slug" => 'publications', :class => 'nav-item publications' %></li>
         </ul>
       </aside>
       <div class="sources-box">
         <div class="sources-content">
-          <article id="intro" class="source-article">
-            <header>
-              <h2>Intro</h2>
-              <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </header>
-          </article>
           <article id="crowdsourced-stories" class="source-article">
             <header>
               <h2>Crowdsourced stories</h2>
@@ -63,10 +49,48 @@
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
               quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              consequat.</p>
             </header>
+            <div class="content">
+              <ul class="alert-list">
+                <li>
+                  <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <a href="#" class="btn light2 medium uppercase">Launch page</a>
+                </li>
+                <li>
+                  <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <a href="#" class="btn light2 medium uppercase">Launch page</a>
+                </li>
+                <li>
+                  <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  <a href="#" class="btn light2 medium uppercase">Launch page</a>
+                </li>
+              </ul>
+            </div>
           </article>
           <article id="publications" class="source-article">
             <header>
@@ -74,13 +98,56 @@
               <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
               quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </header>
+            <div class="content">
+              <ul class="publications-list">
+                <li>
+                  <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiu</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="#">Read more...</a></p>
+                </li>
+                <li>
+                  <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiu</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="#">Read more...</a></p>
+                </li>
+                <li>
+                  <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiu</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="#">Read more...</a></p>
+                </li>
+                <li>
+                  <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiu</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="#">Read more...</a></p>
+                </li>
+                <li>
+                  <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiu</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum. <a href="#">Read more...</a></p>
+                </li>
+              </ul>
+            </div>
           </article>
         </div>
       </div>      

@@ -67,6 +67,15 @@
       background: darken(#CBCCBF,5%);
     }
   }
+  &.light2{
+    color: $dark;
+    background: $border;
+    font-family: $font-regular;
+    &:hover {
+      background: darken($border,5%);
+    }
+  }
+
 }
 
 

@@ -15,25 +15,27 @@ define([
     el: '#sidebarNavView',
 
     events: {
-      'click .nav-item' : 'updateSource'
+      'click .nav-item' : 'updateSource',
+      'click .nav-title' : 'scrollTo'
     },
 
     initialize: function() {
       //CACHE
       this.$window = $(window);
-      this.$htmlbody = $('html,body');  
+      this.$htmlbody = $('html,body'); 
+
+      this.$navItem = $('.nav-item');
+      this.$sourceArticle = $('.source-article');
 
       this.setListeners();
     },
 
     setListeners: function(){
-      mps.subscribe('SourceStatic/change',this.changeSource);
+      mps.subscribe('SourceStatic/change',_.bind(this.changeSource,this));
     },
 
     updateSource: function(e){
       e && e.preventDefault();
-      console.log('click');
-      $(e.currentTarget).addClass('selected').siblings().removeClass('selected');
       
       var params = {
         section: $(e.currentTarget).data('slug')
@@ -43,7 +45,19 @@ define([
     },
 
     changeSource: function(section){
-      $('#'+section).addClass('selected').siblings().removeClass('selected');
+      //aside
+      this.$navItem.removeClass('selected');
+      $('.'+section).addClass('selected');
+      
+      //section
+      this.$sourceArticle.removeClass('selected');
+      $('#'+section).addClass('selected')
+
+    },
+
+    scrollTo: function(e){
+      e && e.preventDefault();
+      this.$htmlbody.animate({ scrollTop: 0},500);
     }
 
 
