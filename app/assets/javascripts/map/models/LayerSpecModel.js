@@ -19,7 +19,7 @@ define([
       'imazon',
       'modis',
       'fires',
-      'terraicanvas',
+      'terrailoss',
       'modis_cover',
       'imazon_cover',
       'forma_cover',
