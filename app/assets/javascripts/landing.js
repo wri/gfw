@@ -14,7 +14,8 @@ require([
   'landing/views/StoriesView',
   'landing/views/FeedView',
   'views/DialogView',
-  '_string'
+  '_string',
+  'handlebars'
 ], function($, _, Class, Backbone, mps, HeaderView, FooterView, SpinnerView, SlideView, StoriesView,FeedView, DialogView) {
   'use strict';
 
