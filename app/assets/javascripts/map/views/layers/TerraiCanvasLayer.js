@@ -40,8 +40,8 @@ define([
       //hardcoded start, may want to get it from layerspec
       var mindate= moment("2004-01-01T00:00:00");
       //get the time in steps of 16 days
-      var start=-Math.floor(mindate.diff(moment(this.currentDate[0]).add(1, 'day'), 'days')/16);
-      var end=-Math.floor(mindate.diff(moment(this.currentDate[1]), 'days')/16);
+      var start=Math.abs(Math.floor(mindate.diff(moment(this.currentDate[0]).add(1, 'day'), 'days')/16));
+      var end=Math.abs(Math.floor(mindate.diff(moment(this.currentDate[1]), 'days')/16));
       //console.log(start,end);
       //var yearagg=[]
 
@@ -57,7 +57,7 @@ define([
          // yearagg[yearLoss]+=1;
 
 
-          if (timeLoss >= start && timeLoss < end) {
+          if (timeLoss > start && timeLoss < end) {
             imgdata[pixelPos] = 220;
             imgdata[pixelPos + 1] = 102 ;
             imgdata[pixelPos + 2] = 153 ;
