@@ -14,7 +14,7 @@ define([
 
   var StoriesModel = Backbone.Model.extend({
     defaults:{
-      stories: null
+      stories: null,
     }
   });
 
@@ -27,10 +27,6 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function() {
-
-      if (!this.$el) {
-        return;
-      }
 
       //Init Vars
       this.model = new StoriesModel();

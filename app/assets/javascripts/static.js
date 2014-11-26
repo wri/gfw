@@ -13,9 +13,8 @@ require([
   'views/TermsView',
   'views/DialogView',
   'views/SidebarNavView',
-  'landing/views/StoriesView',
   '_string'
-], function($, _, Class, Backbone, mps, RouterStatic, HeaderView, FooterView, TermsView, DialogView, SidebarNavView, StoriesView) {
+], function($, _, Class, Backbone, mps, RouterStatic, HeaderView, FooterView, TermsView, DialogView, SidebarNavView) {
   'use strict';
 
   var LandingPage = Class.extend({
@@ -49,7 +48,6 @@ require([
       new TermsView();
       //static
       new SidebarNavView();
-      new StoriesView()
     }
   });
 

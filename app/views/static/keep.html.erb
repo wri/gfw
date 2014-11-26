@@ -35,11 +35,28 @@
             <header>
               <h2>Crowdsourced stories</h2>
               <h3>This stories are submitted by GFW users to report what is happening in forest in the ground</h3>
-              <a href="#" class="btn green medium uppercase">Submit your story</a>
+              <%= link_to 'Submit your story', new_story_path, :class => "btn green medium uppercase"%>
             </header>
             <div class="content">
               <div class="stories-box">
-                <ul id="storiesView" class="medium" data-limit="5" data-truncate="false"></ul>  
+                <ul>
+                  <% @visible.each do |story| %>
+                    <li>
+                      <a href="<%= story_path(story['id']) %>">
+                        <figure><div class="bg" style="background-image: url(<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>)"></div></figure>
+                        <article class="info">
+                          <h4><%= story['title'] %></h4>
+                          <p><%= truncate(story['details'], :length => 295) %></p>
+                          <button class="btn gray medium">More</button>
+                        </article>        
+                      </a>
+                    </li>                   
+                  <% end %>
+                </ul>
+                <div class="section-footer">
+                  <%= link_to content_tag(:span, t('.previous')), previous_page_keep(@page), :class => "btn light previous_stories" if @page > 1%>
+                  <%= link_to content_tag(:span, t('.next')), next_page_keep(@page), :class => "btn light next_stories" unless last_page?%>
+                </div>
               </div>
             </div>
           </article>
