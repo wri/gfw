@@ -85,24 +85,26 @@
         text-transform: uppercase;
         font-family: $font-medium;
         font-size: 14px;
-        background: #FFF;
-        &:nth-child(even){
-          background: $light;
-        }
+        background: #F7F7F7;
         &:hover{
-          background: darken($white,5%);
-          &:nth-child(even){
-            background: darken($light,5%);
-          }
+          background: $white;
         }
         a{
           color: $dark;
           text-decoration: none;
           line-height: 60px;
           display: block;
+          border-top: 1px solid $border;
           &.selected{
-            background: $cGreen;
-            color: $white;
+            background: $white;
+          }
+          &.nav-title{
+            background: $white; 
+            border-top: none;
+            svg{
+              width: 11px;
+              height: 12px;
+            }
           }        
         }
       }

@@ -24,8 +24,12 @@
     <div class="row">
       <aside>
         <ul>
-          <li><%= link_to @title, "#", :class => 'nav-title' %></li>
-          <li><%= link_to 'General FAQs', "#{howto_path}/general_questions", :"data-slug" => 'general_questions', :class => 'nav-item general_questions' %></li>
+          <li>
+            <a href="#" class="nav-title">
+              <svg><use xlink:href="#shape-fast-forward-up"></use></svg>
+              <%= @title %>
+            </a>
+          </li>          <li><%= link_to 'General FAQs', "#{howto_path}/general_questions", :"data-slug" => 'general_questions', :class => 'nav-item general_questions' %></li>
           <li><%= link_to 'Terminology FAQs', "#{howto_path}/terminology", :"data-slug" => 'terminology', :class => 'nav-item terminology' %></li>
           <li><%= link_to 'Data FAQs', "#{howto_path}/data", :"data-slug" => 'data', :class => 'nav-item data' %></li>
           <li><%= link_to 'Web Platform FAQs', "#{howto_path}/web_platform", :"data-slug" => 'web_platform', :class => 'nav-item web_platform' %></li>

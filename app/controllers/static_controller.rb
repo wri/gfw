@@ -22,4 +22,8 @@ class StaticController < ApplicationController
     @title = 'Keep Updated'
   end
 
+  def getinvolved
+    @title = 'Get Involved'
+  end
+
 end

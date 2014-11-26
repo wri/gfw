@@ -18,8 +18,12 @@
     <div class="row">
       <aside>
         <ul>
-          <li><%= link_to @title, "#", :class => 'nav-title' %></li>
-          <li><%= link_to 'Crowdsourced stories', "#{keepupdated_path}/crowdsourced-stories", :"data-slug" => 'crowdsourced-stories', :class => 'nav-item crowdsourced-stories' %></li>
+          <li>
+            <a href="#" class="nav-title">
+              <svg><use xlink:href="#shape-fast-forward-up"></use></svg>
+              <%= @title %>
+            </a>
+          </li>          <li><%= link_to 'Crowdsourced stories', "#{keepupdated_path}/crowdsourced-stories", :"data-slug" => 'crowdsourced-stories', :class => 'nav-item crowdsourced-stories' %></li>
           <li><%= link_to 'Receive Alerts', "#{keepupdated_path}/receive-alerts", :"data-slug" => 'receive-alerts', :class => 'nav-item receive-alerts' %></li>
           <li><%= link_to 'Publications', "#{keepupdated_path}/publications", :"data-slug" => 'publications', :class => 'nav-item publications' %></li>
         </ul>

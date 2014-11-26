@@ -20,8 +20,9 @@ define([
 
     routes: {
       'keepupdated(/)(:section)': 'staticSection',
+      'getinvolved(/)(:section)': 'staticSection',
       'about(/)(:section)': 'staticSection',
-      'howto(/)(:section)': 'staticSection'
+      'howto(/)(:section)': 'staticSection',
     },
 
     initialize: function(mainView) {
