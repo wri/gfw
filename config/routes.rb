@@ -10,7 +10,7 @@ Gfw::Application.routes.draw do
   get '/data' => redirect("sources/forest_change")
   get '/sources' => redirect('sources/forest_change')
   get '/sources(/:section)' => 'static#data'
-  
+
   get '/keepupdated' => redirect('keepupdated/crowdsourced-stories')
   get '/keepupdated(/:section)' => 'static#keep'
   get '/getinvolved' => redirect('getinvolved/small-grant-fund')
@@ -23,6 +23,8 @@ Gfw::Application.routes.draw do
   get '/notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'
   get '/terms' => 'static#terms'
   get '/accept_terms' => 'static#accept_terms'
+
+  get '/comingsoon' => 'static#coming'
 
   # map
   get '/map' => 'map#index'

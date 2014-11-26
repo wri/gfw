@@ -43,6 +43,10 @@ class StaticController < ApplicationController
     @title = 'Get Involved'
   end
 
+  def coming
+    @title = 'Coming soon'
+  end
+
   private
 
     def load_stories
@@ -72,6 +76,5 @@ class StaticController < ApplicationController
 
       @story = story
     end
-
 
 end
