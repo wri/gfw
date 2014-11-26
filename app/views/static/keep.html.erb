@@ -54,8 +54,8 @@
                   <% end %>
                 </ul>
                 <div class="section-footer">
-                  <%= link_to content_tag(:span, t('.previous')), previous_page_keep(@page), :class => "btn light previous_stories" if @page > 1%>
-                  <%= link_to content_tag(:span, t('.next')), next_page_keep(@page), :class => "btn light next_stories" unless last_page?%>
+                  <%= link_to 'Previous Stories', previous_page_keep(@page), :class => "btn light medium previous_stories" if @page > 1%>
+                  <%= link_to 'Next Stories', next_page_keep(@page), :class => "btn light medium next_stories" unless last_page?%>
                 </div>
               </div>
             </div>

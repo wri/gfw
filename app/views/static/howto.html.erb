@@ -4,18 +4,22 @@
         <h2><%= @title %></h2>
         <h3>Learn how to use the Global Forest Watch website here with our video tutorials, FAQs, and other materials.</h3>
       </header>
-      <div class="carrousel">
-        <div class='carrousel'>
+      <div class="carrousel" id="carrouselView">
+        <div class='carrousel-box'>
           <ul>
-            <li class='slide site_overview'><iframe id='player1' width='860' height='484' src='//www.youtube.com/embed/s4HhoSbOgUc?enablejsapi=1' frameborder='0' allowfullscreen></iframe></li>
-            <li class='slide map_tutorial'><iframe id='player2' width='860' height='484' src='//www.youtube.com/embed/VSn5N7cNiGg?enablejsapi=1' frameborder='0' allowfullscreen></iframe></li>
+            <li class='slide site_overview'>
+                <iframe id='player1' width='860' height='484' src='//www.youtube.com/embed/s4HhoSbOgUc?enablejsapi=1' frameborder='0' allowfullscreen></iframe>  
+            </li>
+            <li class='slide map_tutorial'>
+                <iframe id='player2' width='860' height='484' src='//www.youtube.com/embed/VSn5N7cNiGg?enablejsapi=1' frameborder='0' allowfullscreen></iframe>
+            </li>
           </ul>
         </div>        
+        <ul class="row row2">
+          <li><a href="#" class="btn dark uppercase">Gfw Tutorial | Overview</a></li>
+          <li><a href="#" class="btn dark uppercase">Gfw Tutorial | Map</a></li>
+        </ul>
       </div>
-      <ul class="row row2">
-        <li><a href="#" class="btn dark uppercase">Gfw Tutorial | Overview</a></li>
-        <li><a href="#" class="btn dark uppercase">Gfw Tutorial | Map</a></li>
-      </ul>
     </div>
 </section>
 
@@ -29,7 +33,8 @@
               <svg><use xlink:href="#shape-fast-forward-up"></use></svg>
               <%= @title %>
             </a>
-          </li>          <li><%= link_to 'General FAQs', "#{howto_path}/general_questions", :"data-slug" => 'general_questions', :class => 'nav-item general_questions' %></li>
+          </li>          
+          <li><%= link_to 'General FAQs', "#{howto_path}/general_questions", :"data-slug" => 'general_questions', :class => 'nav-item general_questions' %></li>
           <li><%= link_to 'Terminology FAQs', "#{howto_path}/terminology", :"data-slug" => 'terminology', :class => 'nav-item terminology' %></li>
           <li><%= link_to 'Data FAQs', "#{howto_path}/data", :"data-slug" => 'data', :class => 'nav-item data' %></li>
           <li><%= link_to 'Web Platform FAQs', "#{howto_path}/web_platform", :"data-slug" => 'web_platform', :class => 'nav-item web_platform' %></li>
