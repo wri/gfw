@@ -159,6 +159,7 @@
         line-height: 34px;
         text-transform: uppercase;
         background: #eee;
+        -webkit-backface-visibility:hidden;
       }
     }
     .input-field {
