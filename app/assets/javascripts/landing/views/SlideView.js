@@ -11,25 +11,24 @@ define([
 ], function($,Backbone, _,mps, Handlebars, tpl) {
 
   'use strict';
-
   Handlebars.registerHelper('for', function(from, to, incr, block) {
     var accum = '';
     for(var i = from; i < to; i += incr)
       accum += block.fn(i);
     return accum;
-  });      
+  });
 
   // PAGINATION
   var PaginationView = Backbone.View.extend({
-    
+
     el: '#paginationView',
-    
+
     template: Handlebars.compile(tpl),
 
     events: {
       'click li' : '_navigateTo'
     },
-    
+
     initialize: function(model){
       this.len = model.len;
       this.render();
@@ -83,7 +82,7 @@ define([
 
       //Inits
       this._setListeners();
-      this._autoSlider();      
+      this._autoSlider();
     },
 
     _setListeners: function(){
