@@ -40,9 +40,12 @@ define([
 
       this.step = 1;
 
-      this.options = _.extend(this.options, this.defaults);
+      
 
       this.model = new CarrouselModel();
+      console.log(this.model.attributes);
+
+      this.options = this.model.attributes;      
 
       if (this.options.video) {
         var tag = document.createElement('script');
@@ -51,8 +54,8 @@ define([
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
       }
 
-      // this.render();
-      // this._initBindings();
+      this.render();
+      this._initBindings();
     },
 
     _initBindings: function() {
@@ -67,17 +70,17 @@ define([
     onNext: function(e) {
       e.preventDefault();
 
-      this.$carrousel.find('li:nth-child(' + this.step + ')').fadeOut(this.defaults.speed);
+      this.$carrousel.find('li:nth-child(' + this.step + ')').fadeOut(this.options.speed);
       (this.step >= this.$images.length) ? this.step = 1 : this.step++;
-      this.$carrousel.find('li:nth-child(' + this.step + ')').fadeIn(this.defaults.speed);
+      this.$carrousel.find('li:nth-child(' + this.step + ')').fadeIn(this.options.speed);
     },
 
     onPrevious: function(e) {
       e.preventDefault();
 
-      this.$carrousel.find('li:nth-child(' + this.step + ')').fadeOut(this.defaults.speed);
+      this.$carrousel.find('li:nth-child(' + this.step + ')').fadeOut(this.options.speed);
       (this.step === 1) ? this.step = this.$images.length : this.step--;
-      this.$carrousel.find('li:nth-child(' + this.step + ')').fadeIn(this.defaults.speed);
+      this.$carrousel.find('li:nth-child(' + this.step + ')').fadeIn(this.options.speed);
     },
 
     onTab: function(e) {
@@ -92,7 +95,7 @@ define([
       this.$tab.removeClass('selected');
       $el.addClass('selected');
 
-      var active = $el.attr('data-tab');
+      var active = $el.attr('data-tab'),
           $active = this.$carrousel.find('li.' + active),
           $current = this.$carrousel.find('li:nth-child(' + this.step + ')');
 
@@ -103,8 +106,8 @@ define([
         eval(video+".stopVideo()");
       }
 
-      $current.fadeOut(this.defaults.speed);
-      $active.fadeIn(this.defaults.speed);
+      $current.fadeOut(this.options.speed);
+      $active.fadeIn(this.options.speed);
       this.step = $active.index()+1;
     },
 
@@ -116,9 +119,9 @@ define([
 
       this.$carrousel = this.$('ul');
       this.$images    = this.$('li');
-      this.$tab       = $('.header_block__link');
+      this.$tab       = $('.btn-tab');
 
-      this.$carrousel.find('li:nth-child(1)').fadeIn(this.defaults.speed);
+      this.$carrousel.find('li:nth-child(1)').fadeIn(this.options.speed);
 
       return this.$el;
     }
