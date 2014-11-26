@@ -27,13 +27,13 @@ Gfw::Application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = true
+  # config.assets.compile = true
 
   # Generate digests for assets URLs.
-  config.assets.digest = true
+  config.assets.digest = false
 
   # Version of your assets, change this if you want to expire all your assets.
-  config.assets.version = '4'
+  config.assets.version = '2.2'
 
   config.static_cache_control = 'public, max-age=31536000'
 
@@ -61,7 +61,7 @@ Gfw::Application.configure do
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  config.assets.precompile += %w( modernizr-2.6.2.min.js home.js stories.js countries.js static.js landing.js map.js old.js embed_countries.js embed_map.js home.css stories.css countries.css static.css landing.css map.css)
+  # config.assets.precompile += %w( modernizr-2.6.2.min.js home.js stories.js countries.js static.js landing.js map.js old.js embed_countries.js embed_map.js home.css stories.css countries.css static.css landing.css map.css)
 
   # Require JS
   # config.requirejs.loader = :almond
