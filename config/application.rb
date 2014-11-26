@@ -38,7 +38,7 @@ module Gfw
     # We don't want the default of everything that isn't js or css, because it pulls too many things in
     config.assets.precompile.shift
 
-    # config.assets.initialize_on_precompile = true
+    config.assets.initialize_on_precompile = true
 
     # Explicitly register the extensions we are interested in compiling
     config.assets.precompile.push(Proc.new do |path|
