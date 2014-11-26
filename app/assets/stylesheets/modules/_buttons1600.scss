@@ -1,6 +1,6 @@
 .reset-btn{
   -webkit-appearance: none;
-  border: none;
+  border: 1px solid transparent;
   background: none;
   outline: none;
   box-shadow: none;
@@ -33,7 +33,7 @@
 
   // Sizes
   &.medium{
-    font-size: 18px;
+    // font-size: 18px;
     text-transform: uppercase;    
     padding: 0px 35px;
   }
@@ -55,9 +55,18 @@
   }
   &.gray{
     color: $dark;
-    background: #EEEEEE;
+    background: $white;
+    border-color: $cGreen;
     &:hover {
-      background: darken(#EEEEEE,5%);
+      background: $cGreen;
+      color: $white;
+    }
+  }
+  &.green{
+    color: $white;
+    background: $cGreen;
+    &:hover {
+      background: darken($cGreen,5%);
     }
   }
   &.light{

@@ -23,7 +23,8 @@
               <svg><use xlink:href="#shape-fast-forward-up"></use></svg>
               <%= @title %>
             </a>
-          </li>          <li><%= link_to 'Crowdsourced stories', "#{keepupdated_path}/crowdsourced-stories", :"data-slug" => 'crowdsourced-stories', :class => 'nav-item crowdsourced-stories' %></li>
+          </li>
+          <li><%= link_to 'Crowdsourced stories', "#{keepupdated_path}/crowdsourced-stories", :"data-slug" => 'crowdsourced-stories', :class => 'nav-item crowdsourced-stories' %></li>
           <li><%= link_to 'Receive Alerts', "#{keepupdated_path}/receive-alerts", :"data-slug" => 'receive-alerts', :class => 'nav-item receive-alerts' %></li>
           <li><%= link_to 'Publications', "#{keepupdated_path}/publications", :"data-slug" => 'publications', :class => 'nav-item publications' %></li>
         </ul>
@@ -33,16 +34,14 @@
           <article id="crowdsourced-stories" class="source-article">
             <header>
               <h2>Crowdsourced stories</h2>
-              <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <h3>This stories are submitted by GFW users to report what is happening in forest in the ground</h3>
+              <a href="#" class="btn green medium uppercase">Submit your story</a>
             </header>
+            <div class="content">
+              <div class="stories-box">
+                <ul id="storiesView" class="medium" data-limit="5" data-truncate="false"></ul>  
+              </div>
+            </div>
           </article>
           <article id="receive-alerts" class="source-article">
             <header>
