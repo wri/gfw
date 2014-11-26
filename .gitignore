@@ -17,7 +17,7 @@
 /media/upload
 /public/uploads
 /public/media
-
+/install
 .DS_Store
 
 .gitignore

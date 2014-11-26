@@ -17,4 +17,9 @@ class StaticController < ApplicationController
   def howto
     @title = 'How to'
   end
+
+  def keep
+    @title = 'Keep Updated'
+  end
+
 end

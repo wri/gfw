@@ -1,52 +1,177 @@
-<div class='inner'>
-  <div class='header_block header_block_howto'>
-    <div class='header_block__body' id='video'>
-      <h1 class='header_block__title'>About</h1>
-      <p>Global Forest Watch (GFW) is a dynamic online forest monitoring and alert system that empowers people everywhere to better manage forests. For the first time, Global Forest Watch unites satellite technology, open data, and crowdsourcing to guarantee access to timely and reliable information about forests. GFW is free and follows an open data approach in putting decision-relevant information in the hands of governments, companies, NGOs, and the public.</p>
+<section class="header-static">
+    <div class="inner">
+      <header>
+        <h2><%= @title %></h2>
+        <h3>Global Forest Watch (GFW) is a dynamic online forest monitoring and alert system that empowers people everywhere to better manage forests. For the first time, Global Forest Watch unites satellite technology, open data, and crowdsourcing to guarantee access to timely and reliable information about forests. GFW is free and follows an open data approach in putting decision-relevant information in the hands of governments, companies, NGOs, and the public.</h3>
+        <p>GFW is supported by a diverse partnership of organizations that contribute data, technical capabilities, funding, and expertise. The partnership is convened by the World Resources Institute. See a full list of partners below.</p>
 
-      <p class='header_block__description'>GFW is supported by a diverse partnership of organizations that contribute data, technical capabilities, funding, and expertise. The partnership is convened by the World Resources Institute. See a full list of partners below.</p>
+      </header>
+      <div class="carrousel">
+        <div class='carrousel'>
+          <ul>
+            <li class='slide site_overview'><iframe width='860' height='484' src='http://www.youtube.com/embed/lTG-0brb98I' frameborder='0' allowfullscreen></iframe></li>
+          </ul>
+        </div>        
+      </div>
+      <ul class="row row2">
+        <li><a href="#" class="btn dark uppercase">About commodities</a></li>
+        <li><a href="#" class="btn dark uppercase">About fires</a></li>
+      </ul>
+    </div>
+</section>
 
-      <iframe width='860' height='484' src='http://www.youtube.com/embed/lTG-0brb98I' frameborder='0' allowfullscreen></iframe>
+<section id="sidebarNavView" class="content-static">
+  <div class="inner">
+    <div class="row">
+      <aside>
+        <ul>
+          <li><%= link_to @title, "#", :class => 'nav-title' %></li>
+          <li><%= link_to 'About GFW', "#{about_path}/gfw", :"data-slug" => 'gfw', :class => 'nav-item gfw' %></li>
+          <li><%= link_to 'Partners', "#{about_path}/partners", :"data-slug" => 'partners', :class => 'nav-item partners' %></li>
+          <li><%= link_to 'Users', "#{about_path}/users", :"data-slug" => 'users', :class => 'nav-item users' %></li>
+          <li><%= link_to 'Videos', "#{about_path}/videos", :"data-slug" => 'videos', :class => 'nav-item videos' %></li>
+          <li><%= link_to 'Small Grants Fund', "#{about_path}/small_grants_fund", :"data-slug" => 'small_grants_fund', :class => 'nav-item small_grants_fund' %></li>
+          <li><%= link_to 'Awards & Testimonals', "#{about_path}/awards_and_testimonials", :"data-slug" => 'awards_and_testimonials', :class => 'nav-item awards_and_testimonials' %></li>
+          <li><%= link_to 'Become a tester!', "#{about_path}/testers", :"data-slug" => 'testers', :class => 'nav-item testers' %></li>
+        </ul>
+      </aside>
+      <div class="sources-box">
+        <div class="sources-content">
+          <article id='gfw' class='source-article'>
+            <header>
+              <h2>About GFW</h2>
+            </header>
+            <div class="content">
+              <ul class='faq-list'>
+                <li>
+                  <h3>History</h3>
+                  <p>Global Forest Watch originally began in 1997 as an initiative to establish a global forest monitoring network around the world, convened by the World Resources Institute and partners. It began as part of WRI’s Forest Frontiers Initiative. The original GFW achieved many outcomes toward the conservation of large intact forest areas.</p>
+
+                  <p>WRI has continued the work that Global Forest Watch started, working to improve <a href='http://www.wri.org/our-work/topics/forests' target='_blank'>forest information</a> by merging the latest technology with on-the-ground partnerships. In the  <a href='http://www.wri.org/our-work/project/congo-basin-forest-atlases' target='_blank'>Congo Basin</a> countries, WRI has published Forest Atlases that help decision makers achieve sustainable management of forest resources through strengthened land-use planning and monitoring. These are now available for <a href='http://www.wri.org/our-work/project/congo-basin-forests/cameroon#project-tabs' target='_blank'>Cameroon</a>, <a href='http://www.wri.org/our-work/project/congo-basin-forests/central-african-republic#project-tabs' target='_blank'>Central African Republic</a>, <a href='http://www.wri.org/our-work/project/congo-basin-forests/congo#project-tabs' target='_blank'>Republic of the Congo</a>, <a href='http://www.wri.org/our-work/project/congo-basin-forests/democratic-republic-congo#project-tabs' target='_blank'>Democratic Republic of the Congo</a>, <a href='http://www.wri.org/our-work/project/congo-basin-forests/equatorial-guinea#project-tabs' target='_blank'>Equatorial Guinea</a>, and <a href='http://www.wri.org/our-work/project/congo-basin-forests/gabon#project-tabs' target='_blank'>Gabon</a>. The <a href='http://www.wri.org/our-work/project/forests-and-landscapes-indonesia' target='_blank'>Forest and Landscapes in Indonesia</a> project works to support government and civil society actions for effective and equitable land use in Indonesia. This work now continues as part of WRI’s work on forests and is integrated with Global Forest Watch. In addition to the countries listed above, GFW published state of the forest reports for <a href='http://www.wri.org/publication/canadas-large-intact-forest-landscapes-2006-update' target='_blank'>Canada</a>, <a href='http://www.wri.org/publication/chiles-frontier-forests' target='_blank'>Chile</a>, <a href='http://www.wri.org/publication/last-intact-forest-landscapes-northern-european-russia' target='_blank'>Russia</a>, and <a href='http://www.wri.org/publication/all-glitters-not-gold' target='_blank'>Venezuela</a> and related policy reports for <a href='http://www.wri.org/publication/profit-without-plunder' target='_blank'>Guyana</a> and <a href='http://www.wri.org/publication/backs-wall-suriname' target='_blank'>Suriname</a>.</p>
+
+                  <p>The GFW network also developed the methods for mapping <a href='http://www.intactforests.org' target='_blank'>Intact Forest Landscapes</a> by piloting this method in Russia and Canada and then expanding it to the global level for the year 2000. Monitoring of these areas continues, with an ongoing update for the year 2012 underway.</p>
+
+                  <p>Leveraging the advent of new technologies and increased global connectivity, work on the next generation Global Forest Watch began in 2011 with an expanded group of partners and powerful new monitoring capabilities. Help be part of GFW’s future by participating in and contributing to the GFW system.</p>          
+                </li>
+                <li>
+                  <h3>Staff</h3>
+                  <p>View a <a href='http://www.wri.org/our-work/project/global-forest-watch' target='_blank'>list of staff</a> who work on Global Forest Watch. </p>            
+                </li>
+
+                <li>
+                  <h3>Contact us</h3>
+                  <p><a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>            
+                </li>
+              </ul>          
+            </div>      
+          </article>
+          
+
+
+          <article id='partners' class="source-article">
+            <header>
+              <h2>The GFW Partnership</h2>
+            </header>
+            <div class="content">
+              <ul class="faq-list">
+                <li>
+                  <h3><%= t('static.about.partners')%></h3>
+                  <ul class='logo-list'>
+                    <li><a target='_blank' href='http://www.wri.org' class='wri'></a></li>
+                    <li><a target='_blank' href='http://earthengine.google.org/' class='google'></a></li>
+                    <li><a target='_blank' href='http://www.geog.umd.edu/' class='universitymaryland'></a></li>
+                    <li><a target='_blank' href='http://www.esri.com/gfw' class='esri'></a></li>
+                    <li><a target='_blank' href='http://www.unep.org/' class='unep'></a></li>
+                    <li><a target='_blank' href='http://www.imazon.org.br/pagina-inicial-en?set_language=en&cl=en' class='imazon'></a></li>
+                    <li><a target='_blank' href='http://osfac.net/index.php?lang=en' class='osfac'></a></li>
+                    <li><a target='_blank' href='http://www.cgdev.org/' class='centerglobaldevelopment'></a></li>
+                    <li><a target='_blank' href='http://globalforestwatch.ca/' class='gfwca'></a></li>
+                    <li><a target='_blank' href='http://www.scanex.ru/en/' class='scanex'></a></li>
+                    <li><a target='_blank' href='http://www.janegoodall.org/' class='goodall'></a></li>
+                    <li><a target='_blank' href='http://www.cartodb.com' class='carto'></a></li>
+                    <li><a target='_blank' href='http://www.vizzuality.com' class='vizz'></a></li>
+                    <li><a target='_blank' href='http://www.blueraster.com' class='blue'></a></li>
+                    <li><a target='_blank' href='http://www.transparentworld.ru/ru' class='twrus'></a></li>
+                  </ul>
+                </li>
+                <li>
+                  <h3>Funders</h3>
+                  <ul class='logo-list'>
+                    <li><a target='_blank' href='http://www.regjeringen.no/en/dep/kld/kampanjer/the-governments-climate-and-tree-project.html?id=733947' class='norwegian'></a></li>
+                    <li><a target='_blank' href='http://www.usaid.gov/' class='usaid'></a></li>
+                    <li><a target='_blank' href='http://www.thegef.org/gef/' class='gef'></a></li>
+                    <li><a target='_blank' href='https://www.gov.uk/government/organisations/department-for-international-development' class='ukaid'></a></li>
+                    <li><a target='_blank' href='http://tiliafund.org/' class='tilafund'></a></li>
+                    <li><a target='_blank' href='http://www.government.nl/ministries/bz' class='dutchforeign'></a></li>
+                    <li><a target='_blank' href='http://www.sida.se/english/' class='sida'></a></li>
+                    <!-- <li><span class='bobolink'></span></li> -->
+                    <li><a target='_blank' href='http://um.dk/en/danida-en/' class='danida'></a></li>
+                  </ul>
+                </li>
+                <li>
+                  <h3>Additional partners, collaborators, & data providers</h3>
+                  <ul class='bullets'>
+                    <li>Baker & McKenzie</li>
+                    <li>Climate and Land Use Alliance</li>
+                    <li>Conservation International</li>
+                    <li>Food and Agriculture Organization of the United Nations</li>
+                    <li>Global Witness</li>
+                    <li>Greenpeace</li>
+                    <li>International Union for Conservation of Nature</li>
+                    <li>NASA Ames Research Center</li>
+                    <li>NASA Fire Information for Resource Management System</li>
+                    <li>NASA Jet Propulsion Laboratory</li>
+                    <li>Mongabay</li>
+                    <li>Planet Labs</li>
+                    <li>Rainforest Foundation UK</li>
+                    <li>Tierra Minada</li>
+                    <li>UNEP World Conservation Monitoring Centre</li>
+                    <li>Winrock International</li>
+                  </ul>
+                </li>
+                <li>
+                  <h3>Website designed by</h3>
+                  <ul class='logo-list'>
+                    <li><a target='_blank' href='http://www.simbiotica.es' class='vizzuality'></a></li>
+                  </ul>
+                  <p>We welcome others to join our growing GFW partnership. <a href='mailto:mailto:gfw@wri.org'>Email us</a>.</p>            
+                </li>          
+              </ul>              
+            </div>
+          </article>
+    
+
+
+
+          <article id='videos' class="source-article">
+            <header>
+              <h2>Videos</h2>
+              <h3>Here’s a brief video introduction from the GFW team, presented in six of our key languages:</h3>
+            </header>
+
+            <div class='content'>
+              <p><iframe width='606' height='341' src='//www.youtube.com/embed/BZx2edin9do' frameborder='0' allowfullscreen></iframe></p>
+              <p><iframe width='606' height='341' src='//www.youtube.com/embed/L8jA8ush7d8' frameborder='0' allowfullscreen></iframe></p>
+              <p><iframe width='606' height='341' src='//www.youtube.com/embed/d3xUkSjlNjQ' frameborder='0' allowfullscreen></iframe></p>
+              <p><iframe width='606' height='341' src='//www.youtube.com/embed/0K684H-yKWQ' frameborder='0' allowfullscreen></iframe></p>
+              <p><iframe width='606' height='341' src='//www.youtube.com/embed/metb4Cm9Zh0' frameborder='0' allowfullscreen></iframe></p>
+              <p><iframe width='606' height='341' src='//www.youtube.com/embed/ayqMDX-672g' frameborder='0' allowfullscreen></iframe></p>
+              <p><iframe width='606' height='341' src='//www.youtube.com/embed/z5QNluSbMuU' frameborder='0' allowfullscreen></iframe></p>
+              <p><iframe width='606' height='341' src='//www.youtube.com/embed/BY4VUQRe9pU' frameborder='0' allowfullscreen></iframe></p>
+            </div>
+          </article>          
+        </div>
+      </div>      
     </div>
   </div>
-</div>
+</section>
+
 
 <div class='inner'>
   <div class='static-inner'>
-    <div class='navigation_left'>
-      <ul>
-        <!-- <li class='item_title'><i class='caret_down'></i></li> -->
-        <li><%= link_to 'About GFW', "#{about_path}/gfw", :"data-slug" => 'gfw', :class => 'nav-item selected' %></li>
-        <li><%= link_to 'Partners', "#{about_path}/partners", :"data-slug" => 'partners', :class => 'nav-item' %></li>
-        <li><%= link_to 'Users', "#{about_path}/users", :"data-slug" => 'users', :class => 'nav-item' %></li>
-        <li><%= link_to 'Videos', "#{about_path}/videos", :"data-slug" => 'videos', :class => 'nav-item' %></li>
-        <li><%= link_to 'Small Grants Fund', "#{about_path}/small_grants_fund", :"data-slug" => 'small_grants_fund', :class => 'nav-item' %></li>
-        <li><%= link_to 'Awards & Testimonals', "#{about_path}/awards_and_testimonials", :"data-slug" => 'awards_and_testimonials', :class => 'nav-item' %></li>
-        <li><%= link_to 'Become a tester!', "#{about_path}/testers", :"data-slug" => 'testers', :class => 'nav-item' %></li>
-      </ul>
-    </div>
+
 
     <div class='content_right'>
-      <article id='gfw' class='selected'>
-        <h2 class='source_category_title'>About GFW</h2>
-
-        <div class='source_body'>
-          <h3 class='overview_title'>History</h3>
-          <p>Global Forest Watch originally began in 1997 as an initiative to establish a global forest monitoring network around the world, convened by the World Resources Institute and partners. It began as part of WRI’s Forest Frontiers Initiative. The original GFW achieved many outcomes toward the conservation of large intact forest areas.</p>
-
-          <p>WRI has continued the work that Global Forest Watch started, working to improve <a href='http://www.wri.org/our-work/topics/forests' target='_blank'>forest information</a> by merging the latest technology with on-the-ground partnerships. In the  <a href='http://www.wri.org/our-work/project/congo-basin-forest-atlases' target='_blank'>Congo Basin</a> countries, WRI has published Forest Atlases that help decision makers achieve sustainable management of forest resources through strengthened land-use planning and monitoring. These are now available for <a href='http://www.wri.org/our-work/project/congo-basin-forests/cameroon#project-tabs' target='_blank'>Cameroon</a>, <a href='http://www.wri.org/our-work/project/congo-basin-forests/central-african-republic#project-tabs' target='_blank'>Central African Republic</a>, <a href='http://www.wri.org/our-work/project/congo-basin-forests/congo#project-tabs' target='_blank'>Republic of the Congo</a>, <a href='http://www.wri.org/our-work/project/congo-basin-forests/democratic-republic-congo#project-tabs' target='_blank'>Democratic Republic of the Congo</a>, <a href='http://www.wri.org/our-work/project/congo-basin-forests/equatorial-guinea#project-tabs' target='_blank'>Equatorial Guinea</a>, and <a href='http://www.wri.org/our-work/project/congo-basin-forests/gabon#project-tabs' target='_blank'>Gabon</a>. The <a href='http://www.wri.org/our-work/project/forests-and-landscapes-indonesia' target='_blank'>Forest and Landscapes in Indonesia</a> project works to support government and civil society actions for effective and equitable land use in Indonesia. This work now continues as part of WRI’s work on forests and is integrated with Global Forest Watch. In addition to the countries listed above, GFW published state of the forest reports for <a href='http://www.wri.org/publication/canadas-large-intact-forest-landscapes-2006-update' target='_blank'>Canada</a>, <a href='http://www.wri.org/publication/chiles-frontier-forests' target='_blank'>Chile</a>, <a href='http://www.wri.org/publication/last-intact-forest-landscapes-northern-european-russia' target='_blank'>Russia</a>, and <a href='http://www.wri.org/publication/all-glitters-not-gold' target='_blank'>Venezuela</a> and related policy reports for <a href='http://www.wri.org/publication/profit-without-plunder' target='_blank'>Guyana</a> and <a href='http://www.wri.org/publication/backs-wall-suriname' target='_blank'>Suriname</a>.</p>
-
-          <p>The GFW network also developed the methods for mapping <a href='http://www.intactforests.org' target='_blank'>Intact Forest Landscapes</a> by piloting this method in Russia and Canada and then expanding it to the global level for the year 2000. Monitoring of these areas continues, with an ongoing update for the year 2012 underway.</p>
-
-          <p>Leveraging the advent of new technologies and increased global connectivity, work on the next generation Global Forest Watch began in 2011 with an expanded group of partners and powerful new monitoring capabilities. Help be part of GFW’s future by participating in and contributing to the GFW system.</p>
-
-          <h3 class='overview_title'>Staff</h3>
-          <p>View a <a href='http://www.wri.org/our-work/project/global-forest-watch' target='_blank'>list of staff</a> who work on Global Forest Watch. </p>
-
-          <h3 class='overview_title'>Contact us</h3>
-          <p><a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>
-        </div>
-      </article>
 
       <article id='users'>
         <h2 class='source_category_title'>Users</h2>
@@ -64,86 +189,7 @@
         </div>
       </article>
 
-      <article id='partners'>
-        <h3 class='overview_title first center'><%= t('static.about.partners')%></h3>
-        <ul class='logo_list'>
-          <li><a target='_blank' href='http://www.wri.org' class='wri'></a></li>
-          <li><a target='_blank' href='http://earthengine.google.org/' class='google'></a></li>
-          <li class='last'><a target='_blank' href='http://www.geog.umd.edu/' class='universitymaryland'></a></li>
-          <li><a target='_blank' href='http://www.esri.com/gfw' class='esri'></a></li>
-          <li><a target='_blank' href='http://www.unep.org/' class='unep'></a></li>
-          <li class='last'><a target='_blank' href='http://www.imazon.org.br/pagina-inicial-en?set_language=en&cl=en' class='imazon'></a></li>
-          <li><a target='_blank' href='http://osfac.net/index.php?lang=en' class='osfac'></a></li>
-          <li><a target='_blank' href='http://www.cgdev.org/' class='centerglobaldevelopment'></a></li>
-          <li class='last'><a target='_blank' href='http://globalforestwatch.ca/' class='gfwca'></a></li>
-          <li><a target='_blank' href='http://www.scanex.ru/en/' class='scanex'></a></li>
-          <li><a target='_blank' href='http://www.janegoodall.org/' class='goodall'></a></li>
-          <li class='last'><a target='_blank' href='http://www.cartodb.com' class='carto'></a></li>
-          <li><a target='_blank' href='http://www.vizzuality.com' class='vizz'></a></li>
-          <li><a target='_blank' href='http://www.blueraster.com' class='blue'></a></li>
-          <li class="last"><a target='_blank' href='http://www.transparentworld.ru/ru' class='twrus'></a></li>
-        </ul>
 
-        <h3 class='overview_title center'>Funders</h3>
-        <ul class='logo_list'>
-          <li><a target='_blank' href='http://www.regjeringen.no/en/dep/kld/kampanjer/the-governments-climate-and-tree-project.html?id=733947' class='norwegian'></a></li>
-          <li><a target='_blank' href='http://www.usaid.gov/' class='usaid'></a></li>
-          <li class='last'><a target='_blank' href='http://www.thegef.org/gef/' class='gef'></a></li>
-          <li><a target='_blank' href='https://www.gov.uk/government/organisations/department-for-international-development' class='ukaid'></a></li>
-          <li><a target='_blank' href='http://tiliafund.org/' class='tilafund'></a></li>
-          <li class='last'><a target='_blank' href='http://www.government.nl/ministries/bz' class='dutchforeign'></a></li>
-          <li><a target='_blank' href='http://www.sida.se/english/' class='sida'></a></li>
-          <li><span class='bobolink'></span></li>
-          <li class='last'><a target='_blank' href='http://um.dk/en/danida-en/' class='danida'></a></li>
-        </ul>
-
-        <h3 class='overview_title center'>Additional partners, collaborators, & data providers</h3>
-        <div class='source_body'>
-          <ul class='bullets'>
-            <li>Baker & McKenzie</li>
-            <li>Climate and Land Use Alliance</li>
-            <li>Conservation International</li>
-            <li>Food and Agriculture Organization of the United Nations</li>
-            <li>Global Witness</li>
-            <li>Greenpeace</li>
-            <li>International Union for Conservation of Nature</li>
-            <li>NASA Ames Research Center</li>
-            <li>NASA Fire Information for Resource Management System</li>
-            <li>NASA Jet Propulsion Laboratory</li>
-            <li>Mongabay</li>
-            <li>Planet Labs</li>
-            <li>Rainforest Foundation UK</li>
-            <li>Tierra Minada</li>
-            <li>UNEP World Conservation Monitoring Centre</li>
-            <li>Winrock International</li>
-          </ul>
-        </div>
-
-        <h3 class='overview_title center'>Website designed by</h3>
-        <div class='source_body'>
-          <ul class='logo_list'>
-            <li class='last'><a target='_blank' href='http://www.simbiotica.es' class='simbiotica'></a></li>
-          </ul>
-
-          <p>We welcome others to join our growing GFW partnership. <a href='mailto:mailto:gfw@wri.org'>Email us</a>.</p>
-        </div>
-      </article>
-
-      <article id='videos'>
-        <h2 class='source_category_title'>Videos</h2>
-        <p class='source_category_description'>Here’s a brief video introduction from the GFW team, presented in six of our key languages:</p>
-
-        <div class='source_body videos_list'>
-          <p><iframe width='606' height='341' src='//www.youtube.com/embed/BZx2edin9do' frameborder='0' allowfullscreen></iframe></p>
-          <p><iframe width='606' height='341' src='//www.youtube.com/embed/L8jA8ush7d8' frameborder='0' allowfullscreen></iframe></p>
-          <p><iframe width='606' height='341' src='//www.youtube.com/embed/d3xUkSjlNjQ' frameborder='0' allowfullscreen></iframe></p>
-          <p><iframe width='606' height='341' src='//www.youtube.com/embed/0K684H-yKWQ' frameborder='0' allowfullscreen></iframe></p>
-          <p><iframe width='606' height='341' src='//www.youtube.com/embed/metb4Cm9Zh0' frameborder='0' allowfullscreen></iframe></p>
-          <p><iframe width='606' height='341' src='//www.youtube.com/embed/ayqMDX-672g' frameborder='0' allowfullscreen></iframe></p>
-          <p><iframe width='606' height='341' src='//www.youtube.com/embed/z5QNluSbMuU' frameborder='0' allowfullscreen></iframe></p>
-          <p><iframe width='606' height='341' src='//www.youtube.com/embed/BY4VUQRe9pU' frameborder='0' allowfullscreen></iframe></p>
-        </div>
-      </article>
 
       <article id='small_grants_fund'>
         <h2 class='source_category_title'>Small Grants Fund</h2>
@@ -189,7 +235,7 @@
       <article id='awards_and_testimonials'>
         <div class='source_body'>
           <h3 class='overview_title'>Awards</h3>
-          <ul class='awards_logo_list'>
+          <ul class='awards_logo-list'>
             <li><a target="_blank" href="http://events.esri.com/conference/sagList/" class='esri'></a></li>
             <li><a target="_blank" href=" http://www.unglobalpulse.org/big-data-climate-challenge-winners-announced" class='bigdata_climate_change'></a></li>
           </ul>
