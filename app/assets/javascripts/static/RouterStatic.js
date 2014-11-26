@@ -30,7 +30,6 @@ define([
     },
 
     staticSection: function(_section){
-      console.log(this.current());
       var fragment = this.current().fragment;
       var section = _section;
       this.presenter.initSection({

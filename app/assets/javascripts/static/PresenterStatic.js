@@ -52,7 +52,6 @@ define([
      */
     _updateSection: function(params) {
       params.name = (params.name) ? params.name : this._name;
-      console.log(params);
       var route = this._getRoute(params);
       this.router.navigateTo(route, {silent: true});
       mps.publish('SourceStatic/change', [params.section]);
