@@ -5,7 +5,7 @@
     	padding: 20px 0;
     	border-bottom: 1px solid #E5E5DF;
     	ul {
-    		@include row(space-between);	
+    		@include row(space-between);
     		li {
     			width: 16.666666%;
     			a {
@@ -15,7 +15,7 @@
 	    			svg {
 	    				display: block;
 	    				height: 30px;
-	    				width: 30px; 
+	    				width: 30px;
 	    				margin: 0 auto;
                         float: none;
 	    				fill: #555555;
@@ -27,25 +27,25 @@
 	    				padding: 5px 0 0;
 	    				color: #555555;
                         @include transition(all .25s $easeInOutCubic);
-	    			} 
+	    			}
 	    			&:hover {
-                        &.fire{ 
+                        &.fire{
                             svg{ fill: $red; }
                             h3{ color: $red; }
                         }
-                        &.commodities{ 
+                        &.commodities{
                             svg{ fill: $orange; }
                             h3{ color: $orange; }
                         }
 	    				svg { fill: $cGreen; }
 	    				h3 { color: $cGreen; }
-	    			}   				
+	    			}
     			}
     		}
     	}
     }
     .site-map {
-    	padding: 0 0 40px;    	
+    	padding: 0 0 40px;
     	.row {
     		@include row(space-between);
     		padding: 40px 0;
@@ -81,7 +81,7 @@
         @media (min-width: $br-mobile){
             padding: 0 0 40px;
         }
-    	h4{ 
+    	h4{
     		font-size: 14px;
     		color: #555555;
     		padding: 0 0 15px;
@@ -133,7 +133,7 @@
         @media (min-width: $br-mobile){
             display: block;
             padding: 0px 0 40px;
-        }        
+        }
         .slick-slide{
             height: 60px;
         }
@@ -176,6 +176,49 @@
             &:hover{
                 text-decoration: underline;
             }
+        }
+    }
+}
+
+.footer-share-container {
+    @include display-flex();
+    height: 155px;
+    justify-content: space-around;
+    @include align-items(center);
+    border-top: 1px solid $border;
+    border-bottom: 1px solid $border;
+    .footer-share {
+        color: #555;
+        @include display-flex();
+        @include flex-direction(column);
+        text-align: center;
+        height: 60px;
+        @include align-items(center);
+        @include justify-content(space-between);
+        p {
+            strong {
+                font-weight: bold;
+            }
+        }
+        svg {
+            height: 22px;
+            width: 22px;
+            fill: #464352;
+        }
+        .fb-like {
+            top: -4px;
+        }
+        &.keep-updated {
+            p:nth-child(2) {
+                a:nth-child(2) {
+                    margin: 0 30px;
+                    svg {
+                        transform: scale(1.3);
+                        top: -2px;
+                        position: relative;
+                    }
+                }
+             }
         }
     }
 }
