@@ -33,7 +33,7 @@ Gfw::Application.configure do
   config.assets.digest = false
 
   # Version of your assets, change this if you want to expire all your assets.
-  config.assets.version = '2.2'
+  config.assets.version = '6'
 
   config.static_cache_control = 'public, max-age=31536000'
 
