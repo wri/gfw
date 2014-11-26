@@ -23,6 +23,7 @@
   line-height: 38px;
   text-align: center;
   font-family: $font-medium;
+  font-family: inherit;
 
   &:hover {
     background: $cGreen;
