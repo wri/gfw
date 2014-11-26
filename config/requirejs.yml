@@ -1,7 +1,9 @@
 modules:
+  - name: 'map'
+  - name: 'static'
   - name: 'landing'
 
-wrap: false
+wrap: true
 
 paths:
   # Libs
