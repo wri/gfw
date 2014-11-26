@@ -12,7 +12,7 @@ Gfw::Application.routes.draw do
   get '/sources(/:section)' => 'static#data'
   get '/howto' => redirect('howto/general_questions')
   get '/howto(/:section)' => 'static#howto'
-  get '/about' => redirect('about/video')
+  get '/about' => redirect('about/gfw')
   get '/about(/:section)' => 'static#about'
 
   get '/keepupdated' => redirect('keepupdated/crowdsourced-stories')

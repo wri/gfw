@@ -20,6 +20,7 @@ define([
 
     routes: {
       'keepupdated(/)(:section)': 'staticSection',
+      'about(/)(:section)': 'staticSection',
       'howto(/)(:section)': 'staticSection'
     },
 
