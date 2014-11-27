@@ -15,9 +15,7 @@
 
 //= require_tree ./countries
 
-
 $(document).ready(function() {
-
   window.ga = window.ga || function() {};
 
   cdb.init(function() {

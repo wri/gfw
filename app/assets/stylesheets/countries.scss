@@ -30,45 +30,12 @@
 @import "modules/countries/overview";
 @import "modules/countries/show";
 
+// Global
+@import
+  "mixins";
 
+// Layouts
+  @import "layouts/countries";
 
-
-// Common
+// States
 @import "states";
-
-
-
-// // Compass
-// @import
-//   "compass/reset",
-//   "compass/css3",
-//   "compass/utilities/sprites";
-// // Icons
-// @import "country-icons/*.png";
-// @import "home-icons/*.png";
-// @include all-country-icons-sprites;
-
-// // Global
-// @import
-//   "settings",
-//   "mixins",
-//   "base";
-
-// // Layouts
-// @import
-//   "layouts/grid",
-//   "layouts/application",
-//   "layouts/countries";
-
-// // Modules
-// @import
-//   "modules/notice",
-//   "modules/navbar",
-//   "modules/modal",
-//   "modules/countries/country",
-//   "modules/countries/overview",
-//   "modules/countries/show",
-//   "modules/dropdowns";
-
-// // States
-// @import "states";

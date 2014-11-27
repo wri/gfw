@@ -1,5 +1,6 @@
 class CountriesController < ApplicationController
   include ActionView::Helpers::NumberHelper
+  layout 'countries'
 
   def index
     @countries = find_countries
