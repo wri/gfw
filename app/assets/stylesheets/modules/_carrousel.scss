@@ -27,6 +27,16 @@
       }
     }
   }
+  .button-box{
+    li{
+      a{
+        opacity: 0.75;
+        &.visible{
+          opacity: 1;
+        }
+      }
+    }
+  }
 }
 
 
