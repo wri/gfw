@@ -9,12 +9,12 @@
     <div class="carrousel" id="carrouselView">
       <div class='carrousel-box'>
         <ul>
-          <li class='slide site_overview'>
+          <li id="site_overview" class='slide visible'>
             <iframe width='860' height='484' src='http://www.youtube.com/embed/lTG-0brb98I' frameborder='0' allowfullscreen></iframe>
           </li>
         </ul>
       </div>        
-      <ul class="row row2">
+      <ul class="row">
         <li><a href="#" class="btn dark uppercase">About commodities</a></li>
         <li><a href="#" class="btn dark uppercase">About fires</a></li>
       </ul>
@@ -32,7 +32,8 @@
               <svg><use xlink:href="#shape-fast-forward-up"></use></svg>
               <%= @title %>
             </a>
-          </li>          <li><%= link_to 'About GFW', "#{about_path}/gfw", :"data-slug" => 'gfw', :class => 'nav-item gfw' %></li>
+          </li>          
+          <li><%= link_to 'About GFW', "#{about_path}/gfw", :"data-slug" => 'gfw', :class => 'nav-item gfw' %></li>
           <li><%= link_to 'Partners', "#{about_path}/partners", :"data-slug" => 'partners', :class => 'nav-item partners' %></li>
           <li><%= link_to 'Users', "#{about_path}/users", :"data-slug" => 'users', :class => 'nav-item users' %></li>
           <li><%= link_to 'Videos', "#{about_path}/videos", :"data-slug" => 'videos', :class => 'nav-item videos' %></li>
@@ -63,7 +64,6 @@
                   <h3>Staff</h3>
                   <p>View a <a href='http://www.wri.org/our-work/project/global-forest-watch' target='_blank'>list of staff</a> who work on Global Forest Watch. </p>            
                 </li>
-
                 <li>
                   <h3>Contact us</h3>
                   <p><a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>            

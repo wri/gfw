@@ -7,7 +7,7 @@
       </header>
       <ul class="row row2">
         <li><a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank" class="btn dark uppercase">Join the discussion</a></li>
-        <li><a href="http://blog.globalforestwatch.org/" target="_blank" class="btn dark uppercase">Submit a story</a></li>
+        <li><%= link_to 'Submit a story', new_story_path, :class => 'btn dark uppercase' %></li>
       </ul>
     </div>
 </section>
@@ -23,7 +23,7 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'Small Grant Fund', "#{getinvolved_path}/small-grant-fund", :"data-slug" => 'small-grant-fund', :class => 'nav-item small-grant-fund' %></li>
+          <li><%= link_to 'Small Grants Fund', "#{getinvolved_path}/small-grants-fund", :"data-slug" => 'small-grants-fund', :class => 'nav-item small-grants-fund' %></li>
           <li><%= link_to 'Developer tools', "#{getinvolved_path}/developer-tools", :"data-slug" => 'developer-tools', :class => 'nav-item developer-tools' %></li>
           <li><%= link_to 'Submit Story', "#{getinvolved_path}/submit-story", :"data-slug" => 'submit-story', :class => 'nav-item submit-story' %></li>
           <li><%= link_to 'Share your data', "#{getinvolved_path}/share-your-data", :"data-slug" => 'share-your-data', :class => 'nav-item share-your-data' %></li>
@@ -33,7 +33,7 @@
       </aside>
       <div class="sources-box">
         <div class="sources-content">
-          <article id="small-grant-fund" class="source-article">
+          <article id="small-grants-fund" class="source-article">
             <header>
               <h2>Small Grant Fund</h2>
               <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -101,10 +101,11 @@
           </article>
           <article id="submit-story" class="source-article">
             <header>
-              <h2>Publications</h2>
+              <h2>Submit story</h2>
               <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
               quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</h3>
+              <a href=""></a>
             </header>
             <div class="content">
               <ul class="publications-list">

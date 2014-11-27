@@ -13,7 +13,7 @@ class StaticController < ApplicationController
   end
 
   def about
-    @title = I18n.translate 'static.about.title'
+    @title = 'About'
   end
 
   def data
@@ -25,6 +25,8 @@ class StaticController < ApplicationController
   end
 
   def keep
+    @title = 'Keep Updated'
+
     stories_per_page = 5
 
     unless params['for_map']
@@ -32,9 +34,6 @@ class StaticController < ApplicationController
       @total_pages = (Api::Story.visible.count.to_f / stories_per_page.to_f).ceil
       @visible     = Api::Story.find_by_page(@page, stories_per_page)
     end
-
-    @title = 'Keep Updated'
-
     respond_with @stories
 
   end
