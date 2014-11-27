@@ -40,10 +40,10 @@
         display: inline-block;
         position: relative;
         &.active{
-          .submenu-tooltip{ 
+          .submenu-tooltip{
             opacity: 1;
             visibility: visible;
-          }          
+          }
         }
       }
     }
@@ -59,7 +59,7 @@
     @media (min-width: $br-mobile){
       display: block;
     }
-  }  
+  }
 
   .feedback-link{
     display: block;
@@ -76,7 +76,7 @@
     &:hover{
       background: darken(#FFD24D,5%);
     }
-  }  
+  }
 
   .main-slider-pagination {
     width: 100%;
@@ -95,7 +95,7 @@
         height: 16px;
         border-radius: 50%;
         cursor: pointer;
-        border: 1px solid #94A7C5; 
+        border: 1px solid #94A7C5;
         background: #CEE1FF;
         float: left;
         margin: 0 0 0 10px;
@@ -112,7 +112,7 @@
 }
 
 .slide {
-  position: absolute; 
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -123,7 +123,7 @@
   background-position: center;
   z-index: 0;
   @include transition(all,1s,$easeInOutSine);
-  .inner { 
+  .inner {
     height: 100%;
   }
   // Current
@@ -177,7 +177,7 @@
       @media (min-width: $br-mobile){
         font-size: 31px;
         line-height: 0.5;
-        span { 
+        span {
           display: inline-block;
           float: left;
           clear: both;
@@ -216,8 +216,8 @@
         position: relative;
         font-size: 17px;
         padding: 8px 30px;
-        display: inline-block;        
-      }      
+        display: inline-block;
+      }
     }
   }
 }
@@ -254,7 +254,7 @@
     }
 		border-left: 1px solid $border;
 		&:first-child  { border-left: none; }
-    a{ 
+    a{
       text-decoration: none;
       &:hover{
         .icon{
@@ -278,13 +278,13 @@
 		}
 		h3  {
 			text-align: center;
-			text-transform: uppercase;			
+			text-transform: uppercase;
       font-size: 17px;
 			padding: 20px 0 0;
       color: $dark;
       @media (min-width: $br-mobile){
         font-size: 24px;
-      }      
+      }
 		}
 	}
 }
@@ -341,7 +341,7 @@
           .icon{
             fill: $cGreen;
             &.fires{ fill: $red; }
-            &.commmodities{ fill: $orange; }            
+            &.commmodities{ fill: $orange; }
           }
         }
       }
@@ -421,7 +421,7 @@
 	background: #F5F5F5;
   @media (min-width: $br-mobile){
     padding: 50px 0;
-  }    
+  }
 	.row {
 		@include row();
     @include flex-wrap(wrap);
@@ -434,7 +434,7 @@
     @include display-flex();
     @media (min-width: $br-mobile){
       @include col(32);
-    }    
+    }
 	}
   h2{
     text-align: center;
@@ -443,7 +443,7 @@
     padding: 20px 0;
     @media (min-width: $br-mobile){
       padding: 0 0 20px;
-    }    
+    }
   }
 	.card {
 		@include display-flex();
@@ -458,14 +458,14 @@
       &:hover{
         box-shadow: 0 0 20px rgba(#000,0.25);
       }
-    }    
+    }
     h3{
       text-transform: uppercase;
       text-align: center;
       font-size: 21px;
       padding: 20px 0;
       color: $dark;
-    }    
+    }
 	}
 }
 
@@ -481,7 +481,21 @@
     .button-box{
       padding: 0 0 15px;
       @include row(space-between,center);
-      .btn{ width: 45%; }
+      .btn{
+        width: 49%;
+        text-transform: uppercase;
+        &:first-child {
+          letter-spacing: -0.6px;
+        }
+        @media (max-width: 1199px) {
+          &:first-child {
+            letter-spacing: 0px;
+          }
+          span {
+            display: none;
+          }
+        }
+      }
     }
     ul{
       position: relative;
@@ -581,8 +595,22 @@
     .button-box{
       padding: 0 0 15px;
       @include row(space-between,center);
-      .btn{ width: 45%; }
-    }  
+      .btn{
+        width: 49%;
+        text-transform: uppercase;
+        &:last-child {
+          letter-spacing:  -0.6px;;
+        }
+        @media (max-width: 1199px) {
+          &:first-child {
+            letter-spacing: 0px;
+          }
+          span {
+            display: none;
+          }
+        }
+      }
+    }
     ul{
       position: relative;
       li{
@@ -596,7 +624,7 @@
         figure{
           width: 40%;
           .bg{
-            background: #000;  
+            background: #000;
             background-size: cover;
             width: 75%;
             padding-bottom: 75%;
@@ -607,7 +635,7 @@
         .info{
           width: 60%;
           padding-left: 15px;
-          font-size: 14px; 
+          font-size: 14px;
           h4{
             font-family: $font-medium;
             color: $dark;
