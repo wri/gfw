@@ -410,55 +410,6 @@
 
 
 
-.interesting-section{
-  padding: 40px 0;
-  background: $light;
-  .section-title{
-    text-align: center;
-    font-size: 32px;
-    font-family: $font-light;
-    padding: 20px 0;
-    @media (min-width: $br-mobile){
-      padding: 0 0 20px;
-    }    
-  }
-  .row{
-    @include row(flex-start);
-    @include flex-wrap(wrap);
-    .col{
-      @include col(33.3333);
-      @include display-flex();
-      padding: 0 15px;
-      .card{
-        position: relative;
-        padding: 40px 25px 80px;
-        text-align: center;
-        border: 1px solid $border; 
-        overflow: hidden;
-        background: $white;       
-      }
-      h2{
-        text-transform: uppercase;
-        font-size: 21px;
-        padding: 0 0 15px;
-      }
-      .content{
-        p{
-          font-size: 14px;
-          color: $dark;
-          line-height: 1.25;
-        }
-      }
-      .btn{
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        @include transform(translate(-50%,0));
-
-      }
-    }
-  }  
-}
 
 
 

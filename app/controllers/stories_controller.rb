@@ -2,6 +2,7 @@ class StoriesController < ApplicationController
   helper_method :access_through_token?
 
   before_filter :load_stories
+  before_filter :load_more_stories
   before_filter :load_story, :only => [:show, :edit, :update, :destroy]
   before_filter :check_token, :only => [:edit]
 
@@ -73,6 +74,9 @@ class StoriesController < ApplicationController
                  else
                    Api::Story.visible.sample(5)
                  end
+    end
+    def load_more_stories
+      @more_stories = Api::Story.visible.sample(3)
     end
 
     def access_through_token?(story)

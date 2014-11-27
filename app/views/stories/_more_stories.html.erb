@@ -1,30 +1,24 @@
-<section class="section section_dark more_stories">
+<section class="more-stories-section">
   <div class="inner">
-    <h2 class="section-title"><%= t('stories.more_stories.title') %></h2>
-    <p><%= t("stories.more_stories.text_html", :browse => link_to(t('stories.more_stories.browse'), "#{map_path}/3/4.63/27.18/ALL/grayscale/loss/596,580"), :submit => link_to(t('stories.more_stories.submit'), new_story_path)) %></p>
-
-    <ul class='columns'>
-      <% @stories.each do |story| %>
-        <li class='column five'>
+    <h2 class="section-title">More crowdsourced stories</h2>
+    <ul class='row'>
+      <% @more_stories.each do |story| %>
+        <li class='col'>
           <a href="<%= story_path(story['id']) %>">
             <div class="frame">
               <img src="<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>" alt="" />
             </div>
+            <h3><%= story['title'] %></h3>
           </a>
-
-          <div class='infowindow'>
-            <strong><%= link_to truncate(story['title'], :length => 20), story_path(story['id']) %></strong>
-            <% if story['name'].present?  %>
-              <span><%= t("stories.more_stories.submitted_by", :name => story['name']) %></span>
-            <% end %>
-            <div class="tip"></div>
-          </div>
         </li>
       <% end %>
+      <li class="col">
+        <a class="new-story" href="stories/new">
+          <div class="frame">
+          </div>
+          <h3>New story</h3>
+        </a>
+      </li>
     </ul>
-
-    <div class="section-footer">
-      <%= link_to (content_tag :span, t('stories.more_stories.submit_your')), new_story_path, :class => "btn dark_glow" %>
-    </div>
   </div>
 </section>
