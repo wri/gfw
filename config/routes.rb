@@ -13,7 +13,7 @@ Gfw::Application.routes.draw do
 
   get '/keepupdated' => redirect('keepupdated/crowdsourced-stories')
   get '/keepupdated(/:section)' => 'static#keep'
-  get '/getinvolved' => redirect('getinvolved/small-grant-fund')
+  get '/getinvolved' => redirect('getinvolved/small-grants-fund')
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/howto' => redirect('howto/general_questions')
   get '/howto(/:section)' => 'static#howto'
