@@ -10,11 +10,6 @@
     </div>
 </section>
 
-
-<% content_for :header do %>
-  <h1 class="header-title big"><%=t 'countries.index.title' %></h1>
-<% end %>
-
 <% content_for :js do %>
   <%= render "countries_templates" %>
 <% end %>
@@ -29,7 +24,7 @@
 
 <div class="inner">
   <div class="search-countries-box">
-    <input id="searchCountry" type="text" placeholder="Type country name"/>    
+    <input id="searchCountry" type="text" placeholder="Type country name"/>
   </div>
 </div>
 

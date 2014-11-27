@@ -36,7 +36,7 @@ gfw.ui.view.CountriesIndex = cdb.core.View.extend({
       if (e.keyCode == 13 && count.length == 1) {
         var href = $(count[0]).find('.country-href').attr('href');
         window.location = href;
-      };      
+      };
     };
   },
 

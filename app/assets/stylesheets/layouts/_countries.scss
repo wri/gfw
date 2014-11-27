@@ -70,6 +70,10 @@
     min-height: 20px;
     outline: none;
     font-family: Georgia;
+    @media only screen and (max-width: 768px) {
+      font-family: "fira_sans_otlight", "Helvetica Neue", "Trebuchet MS", sans-serif;
+      font-size: 20px;
+    }
     &.is-active{
       background: rgba($cGreen1,0.3);
     }
