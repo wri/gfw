@@ -18,6 +18,10 @@
   }
 	.search-article{
     float: lefT;
+    a{
+      color: $cGreen;
+      text-decoration: none;
+    }
 		h2{
 			font-size: 24px;
 		}
@@ -28,7 +32,7 @@
 			padding: 10px 0 0;
 			p{
 				font-size: 14px;
-				color: $cGray2;
+				color: $dark;
 				line-height: 1.4;
 				b{ font-weight: 600;}	
 			}
@@ -55,7 +59,7 @@
 				position: absolute;
 				top: 50%;
 				left: 50%;
-				color: $cGray2;
+				color: $light;
 				@include transform(translate(-50%,-50%));
 				
   		}
@@ -67,6 +71,7 @@
 
   a {
     display: block;
+    text-decoration: none;
     border: 2px solid rgba(#464253, .25);
     padding: 0 20px;
     font-size: 14px;
@@ -118,7 +123,7 @@
     border-radius: 3px;
     font-size: 24px;
     background: #FFF;
-    color: $cGray2;
+    color: $dark;
     border: 1px solid rgba(0, 0, 0, 0.1);
     min-height: 20px;
     outline: none;
