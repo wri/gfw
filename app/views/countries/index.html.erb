@@ -1,25 +1,10 @@
-<section class="countries-section-switch">
-    <div class="inner">
-      <div class="btn-countries-switch">
-        <a href="/countries">Country Rankings</a>
-        <div class="switch">
-          <div class="track"></div>
-        </div>
-        <a href="/countries">Country Profiles</a>
-      </div>
-    </div>
-</section>
-
 <% content_for :js do %>
   <%= render "countries_templates" %>
 <% end %>
 
 <div class="inner">
-  <a href="<%= countries_overview_path %>" title="Explore worldwide data in the global overview">
-    <div class="countries_block">
-      <h2 class="header-title">Explore worldwide data in the <span>global overview</span></h2>
-    </div>
-  </a>
+  <h2>select a country</h2>
+  <span class="btn gray">country rankings</span>
 </div>
 
 <div class="inner">

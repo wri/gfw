@@ -72,3 +72,13 @@
     fill: #555;
   }
 }
+h2 {
+  font-size: 47px;
+  padding: 40px 0 15px;
+  text-transform: lowercase;
+  color: #555;
+  text-align: center;
+  &:first-letter {
+    text-transform: uppercase;
+  }
+}
