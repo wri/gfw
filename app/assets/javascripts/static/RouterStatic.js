@@ -24,7 +24,6 @@ define([
       'about(/)(:section)': 'staticSection',
       'howto(/)(:section)': 'staticSection',
       'sources(/)(:section)': 'staticSection',
-      
     },
 
     initialize: function(mainView) {
