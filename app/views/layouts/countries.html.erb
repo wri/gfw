@@ -40,5 +40,17 @@
     <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
     <%= javascript_include_tag 'countries' %>
     <%= render 'shared/js_footer' %>
+    <!-- Fixing! -->
+    <script src="/assets/slick.js/slick/slick.min.js"></script>
+    <script type="text/javascript">
+        $('#footer-logos').slick({
+            infinite: true,
+            slidesToShow: 5,
+            slidesToScroll: 5,
+            speed: 500,
+            autoplay: true,
+            autoplaySpeed: 3000
+      });
+    </script>
   </body>
 </html>
