@@ -1,68 +1,72 @@
-<h1><a href="/">Global Forest Watch</a></h1>
-<button class="btn-menu" id="btn-menu">
-  <svg class="icon hamburguer"><use xlink:href="#shape-hamburger"></use></svg>
-  <svg class="icon close"><use xlink:href="#shape-close"></use></svg>
-</button>
+<% if content_for?(:header) %>
+  <%= yield :header %>
+<% else %>
+  <h1><a href="/">Global Forest Watch</a></h1>
+  <button class="btn-menu" id="btn-menu">
+    <svg class="icon hamburguer"><use xlink:href="#shape-hamburger"></use></svg>
+    <svg class="icon close"><use xlink:href="#shape-close"></use></svg>
+  </button>
 
-<nav id="nav-mobile">
-  <form class="mobile-show" action="/search">
-    <svg class="icon"><use xlink:href="#shape-search"></use></svg>
-    <input type="text" name="query" id="search-input" placeholder="Search">
-  </form>
-  <div id="google_translate_element_box2"></div>
-  <ul>
-    <li>
-      <a href="/applications">Applications</a>
-      <ul class="submenu">
-        <li><a href="/map">Explore the map</a></li>
-        <li><a href="/countries">Countries profiles + rankings</a></li>
-        <li><a href="http://fires.globalforestwatch.org/"  target="_blank">Fires</a></li>
-        <li><a href="http://commodities.globalforestwatch.org/"  target="_blank">Commodities</a></li>
-        <li><a href="http://blog.globalforestwatch.org/" target="_blank">Blog</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="/keepupdated">Keep Updated</a>
-      <ul class="submenu">
-        <li><a href="http://blog.globalforestwatch.org/" target="_blank">GFW Blog</a></li>
-        <li><a href="/keepupdated/crowdsourced-stories">Crowdsourced Stories</a></li>
-        <li><a href="/keepupdated/receive-alerts">Receive Alerts</a></li>
-        <li><a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank">Discussion Forum</a></li>
-        <li><a href="/keepupdated/publications">Publications</a></li>
-        <li><a href="/keepupdated/newsletter">Sign up for Newsletter</a></li>
-      </ul>
+  <nav id="nav-mobile">
+    <form class="mobile-show" action="/search">
+      <svg class="icon"><use xlink:href="#shape-search"></use></svg>
+      <input type="text" name="query" id="search-input" placeholder="Search">
+    </form>
+    <div id="google_translate_element_box2"></div>
+    <ul>
+      <li>
+        <a href="/applications">Applications</a>
+        <ul class="submenu">
+          <li><a href="/map">Explore the map</a></li>
+          <li><a href="/countries">Countries profiles + rankings</a></li>
+          <li><a href="http://fires.globalforestwatch.org/"  target="_blank">Fires</a></li>
+          <li><a href="http://commodities.globalforestwatch.org/"  target="_blank">Commodities</a></li>
+          <li><a href="http://blog.globalforestwatch.org/" target="_blank">Blog</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="/keepupdated">Keep Updated</a>
+        <ul class="submenu">
+          <li><a href="http://blog.globalforestwatch.org/" target="_blank">GFW Blog</a></li>
+          <li><a href="/keepupdated/crowdsourced-stories">Crowdsourced Stories</a></li>
+          <li><a href="/keepupdated/receive-alerts">Receive Alerts</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank">Discussion Forum</a></li>
+          <li><a href="/keepupdated/publications">Publications</a></li>
+          <li><a href="/keepupdated/newsletter">Sign up for Newsletter</a></li>
+        </ul>
 
-    </li>
-    <li>
-      <a href="/getinvolved">Get involved</a>
-      <ul class="submenu">
-        <li><a href="/getinvolved/small-grants-fund">Small Grants Fund</a></li>
-        <li><a href="/getinvolved/developer-tools">Developer Tools</a></li>
-        <li><a href="/stories/new">Submit a Story</a></li>
-        <li><a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank">Join the Discussion</a></li>
-        <li><a href="/getinvolved/share-your-data">Share your Data</a></li>
-        <li><a href="/getinvolved/crowdsourcing-tools">Crowdsourcing Tools</a></li>
-        <li><a href="https://www.surveymonkey.com/s/S6B53DT" target="_blank">Provide Feedback</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="/howto">How to</a>
-      <ul class="submenu">
-        <li><a href="/howto/general_questions">General FAQS</a></li>
-        <li><a href="/howto/terminology">Terminology FAQS</a></li>
-        <li><a href="/howto/data">Data FAQS</a></li>
-        <li><a href="/howto/web_platform">Web platform FAQS</a></li>
-        <li><a href="/howto/for_business">GFW for businesses</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="/about">About</a>
-      <ul class="submenu">
-        <li><a href="/about/partners">The GFW Partnership</a></li>
-        <li><a href="/about/videos">Videos</a></li>
-        <li><a href="/about/awards_and_testimonials">Awards & Testimonials</a></li>
-        <li><a href="/about/gfw">Outcomes</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
+      </li>
+      <li>
+        <a href="/getinvolved">Get involved</a>
+        <ul class="submenu">
+          <li><a href="/getinvolved/small-grants-fund">Small Grants Fund</a></li>
+          <li><a href="/getinvolved/developer-tools">Developer Tools</a></li>
+          <li><a href="/stories/new">Submit a Story</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank">Join the Discussion</a></li>
+          <li><a href="/getinvolved/share-your-data">Share your Data</a></li>
+          <li><a href="/getinvolved/crowdsourcing-tools">Crowdsourcing Tools</a></li>
+          <li><a href="https://www.surveymonkey.com/s/S6B53DT" target="_blank">Provide Feedback</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="/howto">How to</a>
+        <ul class="submenu">
+          <li><a href="/howto/general_questions">General FAQS</a></li>
+          <li><a href="/howto/terminology">Terminology FAQS</a></li>
+          <li><a href="/howto/data">Data FAQS</a></li>
+          <li><a href="/howto/web_platform">Web platform FAQS</a></li>
+          <li><a href="/howto/for_business">GFW for businesses</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="/about">About</a>
+        <ul class="submenu">
+          <li><a href="/about/partners">The GFW Partnership</a></li>
+          <li><a href="/about/videos">Videos</a></li>
+          <li><a href="/about/awards_and_testimonials">Awards & Testimonials</a></li>
+          <li><a href="/about/gfw">Outcomes</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+<% end %>

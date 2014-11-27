@@ -1,4 +1,13 @@
 .widget-legend {
+  .countries-link{
+    display: block;
+    text-decoration: none;
+    padding: 10px 20px;
+    background: $light;
+    color: #555;
+    text-transform: uppercase;    
+  }
+
   .widget-box {
     left: 60px;
     top: 32px;

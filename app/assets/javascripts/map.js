@@ -114,7 +114,7 @@ require([
      * Scroll to bottom.
      */
     _scrollBottom: function() {
-      this.$window.scrollTop(116);
+      // this.$window.scrollTop(116);
     },
 
     /**
