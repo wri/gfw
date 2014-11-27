@@ -352,6 +352,7 @@
       @include display-flex();
       padding: 0 15px;
       margin: 40px 0 0;
+      overflow: hidden;       
       .card{
         position: relative;
         padding: 40px 25px 80px;
