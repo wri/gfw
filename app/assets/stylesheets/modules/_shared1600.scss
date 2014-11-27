@@ -33,6 +33,7 @@
   left: 50%;
   text-align: center;
   padding: 10px;
+  white-space: nowrap;
   @include transform(translate(-50%,10px));
   &:after{
     content: "";
