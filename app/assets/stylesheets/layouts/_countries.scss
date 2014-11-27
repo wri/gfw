@@ -27,6 +27,12 @@
 
 .countries_list {
   @extend .clearfix;
+
+  @include display-flex();
+  @include flex-wrap(wrap);
+  @include justify-content(center);
+  @include align-content(center);
+
 }
 
 .disclaimer {
@@ -34,7 +40,7 @@
   font-style: italic;
   line-height: 1.4;
   @extend .serif;
-  color: $cGray2;
+  color: #666666;
   @include clearfix;
 }
 
@@ -43,7 +49,7 @@
   margin: 20px auto;
   position: relative;
   @extend .clearfix;
-  &:after{
+  &:after {
     content: "";
     display: block;
     position: absolute;
@@ -54,8 +60,9 @@
     background: image-url('countries/search.svg') no-repeat center;
     background-size: contain;
     @include translate(0, -50%);
+    visibility: visible;
   }
-  input{
+  input {
     box-sizing: border-box;
     display: block;
     width: 100%;
@@ -65,17 +72,32 @@
     border-radius: 3px;
     font-size: 29px;
     background: #FFF;
-    color: $cGray2;
+    color: #666;
     border: 1px solid rgba(0, 0, 0, 0.1);
     min-height: 20px;
     outline: none;
-    font-family: Georgia;
+    font-family: "fira_sans_otlight", Georgia, sans-serif;
     @media only screen and (max-width: 768px) {
       font-family: "fira_sans_otlight", "Helvetica Neue", "Trebuchet MS", sans-serif;
       font-size: 20px;
     }
     &.is-active{
       background: rgba($cGreen1,0.3);
+    }
+    &::-webkit-input-placeholder {
+       color: #666;
+    }
+
+    &:-moz-placeholder { /* Firefox 18- */
+       color: #666;
+    }
+
+    &::-moz-placeholder {  /* Firefox 19+ */
+       color: #666;
+    }
+
+    &:-ms-input-placeholder {
+       color: #666;
     }
   }
 }

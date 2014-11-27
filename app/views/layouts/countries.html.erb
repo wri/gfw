@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title><%= @title %> | Global Forest Watch</title>
+    <meta name="description" content="<%= @desc %>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Map,cartodb,Global,Forest,Watch,monitoring,real-time">
+    <meta name="author" content="Simbiótica">
+
+    <meta name="DC.title" content="<%= @title %> | Global Forest Watch">
+    <meta property="og:title" content="<%= @title %> | Global Forest Watch">
+    <meta property="og:description" content="<%= @desc %>">
+    <meta property="og:type" content="Visualization">
+    <meta property="og:url" content="http://www.globalforestwatch.org/">
+
+    <meta name="google-translate-customization" content="af2414ea962843fc-f48b15cdb6a3ab9b-gd8c738d3a7ff42de-1a">
+    <meta name="google-site-verification" content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak" />
+    <%= favicon_link_tag 'favicon.ico' %>
+
+    <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
+    <%= controller_stylesheet_link_tag %>
+    <%= yield :js %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
+    <%= render 'layouts/svg_icons' %>
+    <%= render 'shared/modal' %>
+    <div class="wrap">
+        <%= render "shared/header_landing" %>
+        <div class="layout-content">
+          <%= yield %>
+        </div>
+        <%= render 'shared/footer_landing' %>
+    </div>
+    <!-- Javascript -->
+    <script src="//maps.googleapis.com/maps/api/js?libraries=drawing,places&sensor=false"></script>
+    <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
+    <%= javascript_include_tag 'countries' %>
+    <%= render 'shared/js_footer' %>
+    <!-- Fixing! -->
+    <script src="/assets/slick.js/slick/slick.min.js"></script>
+    <script type="text/javascript">
+        $('#footer-logos').slick({
+            infinite: true,
+            slidesToShow: 5,
+            slidesToScroll: 5,
+            speed: 500,
+            autoplay: true,
+            autoplaySpeed: 3000
+      });
+    </script>
+  </body>
+</html>

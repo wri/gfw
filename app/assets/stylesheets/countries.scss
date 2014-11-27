@@ -1,7 +1,7 @@
 // Compass
 @import "compass/reset";
 @import "compass/css3";
-@import "flexbox";
+@import 'flexbox';
 
 // General
 @import "settings1600";
@@ -14,7 +14,6 @@
 @import "logos/*.png";
 @import "country-icons/*.png";
 @import "home-icons/*.png";
-
 // Layout
 @import "header1600";
 @import "footer1600";
@@ -30,12 +29,10 @@
 @import "modules/countries/overview";
 @import "modules/countries/show";
 
-// Global
-@import
-  "mixins";
+
+
+// Common
+@import "states";
 
 // Layouts
   @import "layouts/countries";
-
-// States
-@import "states";
