@@ -24,7 +24,7 @@
             </a>
           </li>
           <li><%= link_to 'Small Grants Fund', "#{getinvolved_path}/small-grants-fund", :"data-slug" => 'small-grants-fund', :class => 'nav-item small-grants-fund' %></li>
-          <li><%= link_to 'Developer tools', "#{getinvolved_path}/developer-tools", :"data-slug" => 'developer-tools', :class => 'nav-item developer-tools' %></li>
+          <li><%= link_to 'Develop your own app', "#{getinvolved_path}/develop-your-own-app", :"data-slug" => 'develop-your-own-app', :class => 'nav-item develop-your-own-app' %></li>
           <li><%= link_to 'Submit Story', "#{getinvolved_path}/submit-story", :"data-slug" => 'submit-story', :class => 'nav-item submit-story' %></li>
           <li><%= link_to 'Share your data', "#{getinvolved_path}/share-your-data", :"data-slug" => 'share-your-data', :class => 'nav-item share-your-data' %></li>
           <li><%= link_to 'Crowdsourcing Tools', "#{getinvolved_path}/crowdsourcing-tools", :"data-slug" => 'crowdsourcing-tools', :class => 'nav-item crowdsourcing-tools' %></li>
@@ -33,6 +33,7 @@
       </aside>
       <div class="sources-box">
         <div class="sources-content">
+          <div id="sources-spinner" class="spinner start"><svg><use xlink:href="#shape-spinner"></use></svg></div>
           <article id="small-grants-fund" class="source-article">
             <header>
               <h2>Small Grants Fund</h2>
@@ -47,9 +48,9 @@
               proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </header>
           </article>
-          <article id="developer-tools" class="source-article">
+          <article id="develop-your-own-app" class="source-article">
             <header>
-              <h2>Developer tools</h2>
+              <h2>Develop your own app</h2>
               <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
               quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</h3>

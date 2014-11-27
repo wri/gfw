@@ -26,6 +26,7 @@ define([
 
       this.$navItem = $('.nav-item');
       this.$sourceArticle = $('.source-article');
+      this.$sourceSpinner = $('#sources-spinner');
 
       this.setListeners();
     },
@@ -45,6 +46,9 @@ define([
     },
 
     changeSource: function(section){
+      //spinner
+      this.$sourceSpinner.removeClass('start');
+
       //aside
       this.$navItem.removeClass('selected');
       $('.'+section).addClass('selected');

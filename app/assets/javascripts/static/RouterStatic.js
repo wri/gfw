@@ -23,6 +23,8 @@ define([
       'getinvolved(/)(:section)': 'staticSection',
       'about(/)(:section)': 'staticSection',
       'howto(/)(:section)': 'staticSection',
+      'sources(/)(:section)': 'staticSection',
+      
     },
 
     initialize: function(mainView) {
