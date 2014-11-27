@@ -46,6 +46,10 @@ class StaticController < ApplicationController
     @title = 'Coming soon'
   end
 
+  def applications
+    @title = 'Applications'
+  end
+
   private
 
     def load_stories

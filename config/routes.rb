@@ -19,6 +19,8 @@ Gfw::Application.routes.draw do
   get '/howto(/:section)' => 'static#howto'
   get '/about' => redirect('about/gfw')
   get '/about(/:section)' => 'static#about'
+  get '/applications' => 'static#applications'
+
 
   get '/notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'
   get '/terms' => 'static#terms'

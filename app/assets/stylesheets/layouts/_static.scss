@@ -339,7 +339,71 @@
 
 
 
+// APPLICATIONS
+.applications-section{
+  padding: 0 0 40px;
+  .row{
+    @include row(flex-start);
+    @include flex-wrap(wrap);
+    .col{
+      @include col(33.3333);
+      @include display-flex();
+      padding: 0 15px;
+      margin: 40px 0 0;
+      .card{
+        position: relative;
+        padding: 40px 25px 80px;
+        text-align: center;
+        border: 1px solid $border; 
+        overflow: hidden;       
+      }
 
+      .ribbon{
+        position: absolute;
+        top: 0px;
+        right: -70px;
+        background: $cGreen;
+        color: $white;
+        width: 140px;
+        font-size: 12px;
+        padding: 5px 0 2px;
+        text-transform: uppercase;
+        @include transform(rotate(45deg) translate(-8px,45px));
+        @include transform-origin(50% 50%);   
+        &.non-official{
+          background: #ccc;
+          
+        }     
+      }
+      h2{
+        text-transform: uppercase;
+        font-size: 21px;
+      }
+      .icon{
+        width: 75px;
+        height: 75px;
+        margin: 10px auto;
+        svg{
+          fill: $dark;
+        }
+      }
+      .content{
+        p{
+          font-size: 14px;
+          color: $dark;
+          line-height: 1.25;
+        }
+      }
+      .btn{
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        @include transform(translate(-50%,0));
+
+      }
+    }
+  }
+}
 
 
 
