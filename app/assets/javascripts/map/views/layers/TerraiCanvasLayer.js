@@ -17,9 +17,10 @@ define([
     options: {
       threshold: 30,
       dataMaxZoom: 10,
+      //ATTENTION: check config.ru file to get the whole route, reverse proxying here
       //urlTemplate: '/latin-america/Z{z}/{y}/{x}.png'
       urlTemplate: 'http://wri-tiles.s3-website-us-east-1.amazonaws.com/terra_i_loss_julian/{z}/{x}/{y}.png'
-      //ATTENTION: check config.ru file to get the whole route, reverse proxying here
+      
     },
 
     init: function(layer, options, map) {
@@ -35,15 +36,10 @@ define([
     filterCanvasImgdata: function(imgdata, w, h) {
       var components = 4;
       var zoom = this.map.getZoom();
-      // var yearStart = this.currentDate[0].year();
-      // var yearEnd = this.currentDate[1].year();
-      //hardcoded start, may want to get it from layerspec
-      var mindate= moment("2004-01-01T00:00:00");
-      //get the time in steps of 16 days
-      var start=Math.abs(Math.floor(mindate.diff(moment(this.currentDate[0]).add(1, 'day'), 'days')/16));
-      var end=Math.abs(Math.floor(mindate.diff(moment(this.currentDate[1]), 'days')/16));
-      //console.log(start,end);
-      //var yearagg=[]
+
+      var start= (moment(this.currentDate[0]).year()-2004)*23+Math.floor(moment(this.currentDate[0]).dayOfYear()/16);
+      var end= (moment(this.currentDate[1]).year()-2004)*23+Math.floor(moment(this.currentDate[1]).dayOfYear()/16);
+
 
       for(var i=0; i < w; ++i) {
         for(var j=0; j < h; ++j) {
