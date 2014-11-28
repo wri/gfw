@@ -58,9 +58,9 @@
     width: 100%;
 
     .country-header-inner {
-      $wall-background: "backgrounds/wall_background_alpha.png";
-      background: #464253;
-      background-image: image-url($wall-background); /* fallback */
+      // $wall-background: "backgrounds/wall_background_alpha.png";
+      background: #333;
+      // background-image: image-url($wall-background); /* fallback */
       .embed & {
         margin-top: 30px;
       }
@@ -86,8 +86,8 @@
         display: inline-block;
         vertical-align: top;
         margin-top: 2px;
-        border: 2px solid #73707D;
-        border-radius: 40px;
+        border: 1px solid #6B6B6B;
+        border-radius: 10px;
         height: 39px;
         width: 310px;
         position: relative;
@@ -163,7 +163,7 @@
     } // country-title
 
     .country-details {
-      background-color:rgba(0, 0, 0, 0.2);
+      // background-color:rgba(0, 0, 0, 0.2);
       height: 263px;
 
       .country-preview {
@@ -199,7 +199,7 @@
           cursor: default;
 
           &.loaded {
-            background: #464253;
+            background: #333;
           }
         }
 
