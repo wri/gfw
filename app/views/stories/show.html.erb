@@ -47,7 +47,7 @@ end %>
             <% end %>
 
             <% if media['url'].present? %>
-              <li class='slide'><img src="<%= "#{ENV['AWS_HOST']}/big_#{media['url']}" %>" alt="" /></li>
+              <li class='slide'><div class="bg" style="background-image: url(<%= "#{ENV['AWS_HOST']}/big_#{media['url']}" %>);"></div></li>
             <% end %>
           <% end %>
         </ul>
