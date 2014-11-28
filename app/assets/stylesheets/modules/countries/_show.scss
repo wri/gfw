@@ -4,9 +4,10 @@
   margin-top: 50px;
 
   .share {
-    text-align: right;
-    height: 0;
-    display: block;
+    // text-align: right;
+    // height: 0;
+    // display: block;
+    width: 100%;
     .embed & {
       display: none;
     }
@@ -24,14 +25,9 @@
     right: auto;
     top: auto;
     display: inline-block;
-    background: none;
-    border: 2px solid #73707F;
     padding: 10px 12px 0 12px;
     text-transform: uppercase;
     border-radius: 20px;
-    font-size: 14px;
-    color: #BEBCC2;
-    @include box-sizing(border-box);
 
     .country-icons-share {
       height: 16px;
@@ -330,37 +326,66 @@
         width: 215px;
         height: 100%;
         background: transparent;
-        border-left: 2px solid #464254;
 
         > ul {
           padding: 1px 0;
           width: 100%;
+          height: 407px;
+          top: -143px;
+          position: relative;
+          @include display-flex();
+          @include flex-direction(column);
+          @include justify-content(space-between);
+          box-sizing: border-box;
 
           > li {
             width: 100%;
             position: relative;
+            border: 1px solid #6B6B87;
+            height: 100%;
+            @include display-flex();
+            @include align-items(center);
 
             a {
               color: #BEBCC2;
               display: block;
               height: 51px;
               width: 100%;
-              padding: 20px 25px;
               @include box-sizing(border-box);
               font-family: $font-medium;
               text-transform: uppercase;
               font-size: 14px;
               cursor: pointer;
+              text-decoration: none;
+              @include display-flex();
+              @include align-items(center);
+              padding-left: 20px;
+
 
               .sidenav-icon {
                 display: inline-block;
                 position: absolute;
-                top: 17px; right: 20px;
+                top: 23px;
+                right: 20px;
                 height: 18px;
                 width: 18px;
+                &.country-icons-share {
+                  height: 16px;
+                  @include country-icons-sprite(share);
+                }
+                &.country-icons-info_grey {
+                  @include country-icons-sprite(info_grey);
+                }
+                &.country-icons-download_grey {
+                  @include country-icons-sprite(download_grey);
+                }
+                &.country-icons-chart_grey {
+                  @include country-icons-sprite(chart_grey);
+                }
                 &.country-icons-settings_engine {
                   height: 15px;
                   width: 15px;
+                  @include country-icons-sprite(settings_engine);
                 }
 
                 &.no_def {
@@ -374,7 +399,7 @@
 
 
             &:hover {
-              background: #464254;
+              background: #464646;
             }
           }
         }
@@ -432,7 +457,7 @@
     .country-nav {
       width: 100%;
       border-bottom: 1px solid #CCCCCC;
-      height: 49px;
+      height: 50px;
       position: absolute;
       top: 0;
       z-index: 100;
@@ -442,6 +467,7 @@
       background: #F2F2F3;
       .country-nav-items li a {
         border-top: none;
+        text-decoration: none;
       }
     }
 
@@ -524,6 +550,7 @@
           width: 20px;
           height: 20px;
           float: left;
+          @include country-icons-sprite(share_circle_white);
         }
       }
 
@@ -559,6 +586,10 @@
         line-height: 36px;
         font-family: $font-medium;
         color: $dark;
+      }
+      svg {
+        width: 225px;
+        height: 225px;
       }
     }
 
@@ -929,10 +960,9 @@
   } // external-links
 
   .country-download-links {
-    background-color: #F8FAF0;
+    background-color: #F5F5F5;
     text-align: center;
     padding: 50px 0;
-    border-bottom-color: #141414;
 
     a {
       text-transform: uppercase;
@@ -955,14 +985,14 @@
 
   .country-blog {
     text-align: center;
-    background: #141414;
+    background: #97BD3D;
     color: white;
 
     .section-content {
       padding: 0;
 
       .section-title {
-        color: #A0B941;
+        color: #fff;
         font-family: $font-regular;
         font-size: 36px;
         margin-bottom: 25px;
@@ -1003,7 +1033,7 @@
     }
 
     .column {
-      display: block;
+      display: inline;
       margin-top: 40px;
       min-height: 266px;
 

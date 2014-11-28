@@ -31,7 +31,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   _initShare: function() {
     Share       = new gfw.ui.view.Share({template: 'country'});
     Share_entry = new gfw.ui.view.Share({template: 'country-entry'});
-    this.$el.find('.country-header .country-title').append(Share.render());
+    this.$el.find('.country-sidenav .share-container').append(Share.render());
     this.$el.find('.section-info').slice(0,5).addClass('and_share').append(Share_entry.render());
   },
 
