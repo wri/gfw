@@ -1,25 +1,42 @@
-<% content_for :header do %>
-  <h1 class="header-title big"><%= t('.title') %></h1>
-<% end %>
+<!-- <section class="header-stories">
+  <div class="inner">
+    <header>
+      
+      <h2>New Story</h2>
+    </header>
+  </div>
+</section>
+ -->
 
-<div class='inner story_form'>
-  <%= render 'form' %>
+<section class="submit-section">
+  <div class="inner">
+    <aside>
+      <a class="back-btn" href="/keepupdated/crowdsourced-stories"><svg><use xlink:href="#shape-fast-forward-left"></use></svg>Back to stories</a>
+      <h3>Why submit stories?</h3>
+      <p>Your participation can greatly improve understanding of what is happening to forests around the world.</p>
 
-  <aside>
-    <h3>Why submit stories?</h3>
-    <p>Your participation can greatly improve understanding of what is happening to forests around the world.</p>
+      <h3>How your stories will be used</h3>
+      <p>Your stories will be immediately displayed as a layer on the GFW map and will be visible to all visitors to the site. WRI is not <%= link_to 'responsible', terms_path %> for how this information is used by these visitors, and it reserves the right to remove stories that are inappropriate or not related to forest issues.</p>
 
-    <h3>How your stories will be used</h3>
-    <p>Your stories will be immediately displayed as a layer on the GFW map and will be visible to all visitors to the site. WRI is not <%= link_to 'responsible', terms_path %> for how this information is used by these visitors, and it reserves the right to remove stories that are inappropriate or not related to forest issues.</p>
+      <p>You can submit a story by sharing text, image, video, or web links showing how forests are being managed, cleared, or protected in your area. Submit a story to:</p>
 
-    <p>You can submit a story by sharing text, image, video, or web links showing how forests are being managed, cleared, or protected in your area. Submit a story to:</p>
-
-    <ul>
-      <li>confirm or refute remotely sensed data;</li>
-      <li>report illegal activities;</li>
-      <li>call attention to a threat or conflict in your area;</li>
-      <li>tell a forest conservation sucess story; or</li>
-      <li>share your local expertise.</li>
-    </ul>
-  </aside>
-</div>
+      <ul>
+        <li>Confirm or refute remotely sensed data;</li>
+        <li>Report illegal activities;</li>
+        <li>Call attention to a threat or conflict in your area;</li>
+        <li>Tell a forest conservation sucess story; or</li>
+        <li>Share your local expertise.</li>
+      </ul>
+    </aside>
+    <div class="content">
+      <div class="story_form">
+        <header>
+          <h2>Submit a story</h2>
+        </header>
+        <div class="form-box">
+          <%= render 'form' %>          
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

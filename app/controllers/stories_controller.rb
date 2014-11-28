@@ -1,4 +1,5 @@
 class StoriesController < ApplicationController
+  layout 'stories'
   helper_method :access_through_token?
 
   before_filter :load_stories

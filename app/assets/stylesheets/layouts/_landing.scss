@@ -341,7 +341,7 @@
           .icon{
             fill: $cGreen;
             &.fires{ fill: $red; }
-            &.commmodities{ fill: $orange; }
+            &.commodities{ fill: $orange; }
           }
         }
       }
@@ -419,8 +419,15 @@
 // BUZZ
 .buzz {
 	background: #F5F5F5;
+  overflow: auto;
   @media (min-width: $br-mobile){
     padding: 50px 0;
+  }
+  .inner{
+    width: 95%;
+    @media (min-width: $br-mobile){
+      min-width: 1200px;
+    }
   }
 	.row {
 		@include row();
@@ -675,6 +682,7 @@
             height: 179px;
             background-image: url('backgrounds/graph.png');
             background-repeat: no-repeat;
+            margin: 0 0 40px;
         }
         .btn {
             margin: 30px 0;

@@ -348,8 +348,11 @@
     @include row(flex-start);
     @include flex-wrap(wrap);
     .col{
-      @include col(33.3333);
-      @include display-flex();
+      @include col(100);
+      @media (min-width: $br-mobile){
+        @include col(33.3333);
+        @include display-flex();
+      }    
       padding: 0 15px;
       margin: 40px 0 0;
       overflow: hidden;       
@@ -381,6 +384,7 @@
       h2{
         text-transform: uppercase;
         font-size: 21px;
+        padding: 0 10px;
       }
       .icon{
         width: 75px;

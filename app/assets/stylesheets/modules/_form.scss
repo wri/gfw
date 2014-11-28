@@ -1,5 +1,7 @@
 .field {
   margin: 0 0 25px;
+  position: relative;
+  clear: both;
 }
 
 .field_with_errors {
@@ -36,7 +38,7 @@ input[type="email"],
 textarea {
   border: 1px solid #ccc;
   padding: 10px;
-  width: 560px;
+  width: 100%;
   margin: 5px 0;
   font-size: 14px;
   @include border-radius(3px);
@@ -48,7 +50,7 @@ textarea {
 }
 
 .field {
-  @extend .clearfix;
+  @include clearfix();
   width: 582px;
 
   &.short {
@@ -57,7 +59,7 @@ textarea {
     input[type="text"],
     input[type="date"],
     input[type="email"] {
-      width: 282px;
+      width: 100%;
     }
   }
 
