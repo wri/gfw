@@ -167,8 +167,11 @@
     @include row(flex-start);
     @include flex-wrap(wrap);
     .col{
-      @include col(33.3333);
-      @include display-flex();
+      @include col(100);
+      @media (min-width: $br-mobile){
+        @include col(33.3333);
+        @include display-flex();
+      }    
       padding: 0 15px;
       .card{
         position: relative;

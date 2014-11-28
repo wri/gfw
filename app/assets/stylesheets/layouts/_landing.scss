@@ -419,8 +419,15 @@
 // BUZZ
 .buzz {
 	background: #F5F5F5;
+  overflow: auto;
   @media (min-width: $br-mobile){
     padding: 50px 0;
+  }
+  .inner{
+    width: 95%;
+    @media (min-width: $br-mobile){
+      min-width: 1200px;
+    }
   }
 	.row {
 		@include row();
