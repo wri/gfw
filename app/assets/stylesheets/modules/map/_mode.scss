@@ -23,7 +23,7 @@
       &:last-child{
         border-radius: 0 50px 50px 0;
       }
-      &.inactive{
+      &.active{
         background: darken($light,5%);
         &:first-child{
           box-shadow: -1px -1px 5px 0 rgba(#000,0.15) inset;

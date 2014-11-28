@@ -159,6 +159,18 @@ gfw.ui.view.StoriesEdit = cdb.core.View.extend({
     var that = this;
     var $searchInput = $('.map-search-input');
 
+    var success = function(position) {
+      center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      that.map.panTo(center);
+      that.map.setZoom(15);
+    }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(success);
+    } else {
+      error('not supported');
+    }
+
     // Load map
     this.map = new google.maps.Map(document.getElementById('stories_map'),
       _.extend({}, config.MAPOPTIONS, { zoomControl: true }));

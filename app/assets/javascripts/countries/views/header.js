@@ -429,9 +429,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         sql: "SELECT * FROM country_mask",
         cartocss: "\
           #country_mask {\
-            polygon-fill: #373442;\
+            polygon-fill: #333;\
             polygon-opacity: 1;\
-            line-color: #373442;\
+            line-color: #333;\
             line-width: 1;\
             line-opacity: 1;\
           }\

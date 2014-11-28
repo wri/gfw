@@ -14,7 +14,7 @@ define([
 
   var PlaceService = PresenterClass.extend({
 
-    _uriTemplate: '{name}{/section}',
+    _uriTemplate: '{name}{/section}{?page}',
 
     /**
      * Create new PlaceService with supplied Backbone.Router.
@@ -44,6 +44,7 @@ define([
      */
     initSection: function(params) {
       this._name = params.name;
+      this._page = params.page;
       this._updateSection(params);
     },
 
@@ -52,6 +53,7 @@ define([
      */
     _updateSection: function(params) {
       params.name = (params.name) ? params.name : this._name;
+      params.page = (params.page) ? params.page : this._page;
       var route = this._getRoute(params);
       this.router.navigateTo(route, {silent: true});
       mps.publish('SourceStatic/change', [params.section]);

@@ -46,8 +46,8 @@
     top: 0;
     left: 50%;
     @include transform(translate(-50%,-50%) rotate(45deg));
-    border-top: 1px solid $border;
-    border-left: 1px solid $border;
+    border-top: 1px solid lighten($border,5%);
+    border-left: 1px solid lighten($border,5%);
   }
 }
 
@@ -69,8 +69,8 @@
       top: 0;
       left: 50%;
       @include transform(translate(-50%,-50%) rotate(45deg));
-      border-top: 1px solid $border;
-      border-left: 1px solid $border;
+      border-top: 1px solid lighten($border,5%);
+      border-left: 1px solid lighten($border,5%);
     }
     li:first-child:hover{
       &:after{
@@ -84,8 +84,8 @@
         top: 0;
         left: 50%;
         @include transform(translate(-50%,-50%) rotate(45deg));
-        border-top: 1px solid $border;
-        border-left: 1px solid $border;
+        border-top: 1px solid lighten($border,5%);
+        border-left: 1px solid lighten($border,5%);
       }
     }
   }
@@ -167,8 +167,11 @@
     @include row(flex-start);
     @include flex-wrap(wrap);
     .col{
-      @include col(33.3333);
-      @include display-flex();
+      @include col(100);
+      @media (min-width: $br-mobile){
+        @include col(33.3333);
+        @include display-flex();
+      }    
       padding: 0 15px;
       .card{
         position: relative;
@@ -199,4 +202,19 @@
       }
     }
   }  
+}
+
+// BACK-BTN
+.back-btn{
+  color: $dark;
+  text-decoration: none;
+  margin: 0 0 20px;
+  display: inline-block;
+  font-family: $font-medium;
+  text-transform: uppercase;
+  svg{
+    margin: 0 5px 0 0;
+    width: 11px;
+    height: 12px;
+  }    
 }

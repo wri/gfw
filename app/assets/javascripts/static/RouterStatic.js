@@ -30,12 +30,14 @@ define([
       this.presenter = new PresenterStatic(this);
     },
 
-    staticSection: function(_section){
+    staticSection: function(_section, params){
       var fragment = this.current().fragment;
       var section = _section;
+      var page = (params) ? params.split('=')[1] : null;
       this.presenter.initSection({
         name: fragment,
-        section: section
+        section: section,
+        page: page
       });
     },
 
