@@ -1,4 +1,3 @@
-
 <%= form_for :story, :url => @url, :method => (@method || :post) do |f| %>
   <% if @story.errors.present? %>
     <div class="field field_with_errors">
@@ -61,8 +60,8 @@
     <%= f.text_field :video, :placeholder => 'http://www.youtube.com/watch?v=lTG-0brb98I' %>
   </div>
 
-  <p class="hint">Drag & drop images and videos to reorder them within the carrousel. The first one will be considered as the preferred one.</p>
   <div class="field">
+    <p class="hint">Drag & drop images and videos to reorder them within the carrousel. The first one will be considered as the preferred one.</p>
     <%= f.label :media %>
 
     <ul class="thumbnails">
@@ -79,25 +78,23 @@
     </ul>
   </div>
 
-  <p class="hint">If you share your name, it will be visible on the GFW website, but your email will not be published.</p>
   <div class="field short">
+    <p class="hint">If you share your name, it will be visible on the GFW website, but your email will not be published.</p>
     <%= f.label :name %>
 
     <%= f.text_field :name %>
   </div>
-  <p class="hint_mobile hidden">If you share your name, it will be visible on the GFW website, but your email will not be published.</p>
 
-  <p class="hint">In some areas, forest clearing information is considered to be highly sensitive—users are encouraged to be cautious when sharing their names.</p>
   <div class="field short required">
+    <p class="hint">In some areas, forest clearing information is considered to be highly sensitive—users are encouraged to be cautious when sharing their names.</p>
     <%= f.label :email %>
     <span>Required</span>
 
     <%= f.text_field :email %>
   </div>
-  <p class="hint_mobile hidden">In some areas, forest clearing information is considered to be highly sensitive—users are encouraged to be cautious when sharing their names.</p>
 
   <div class="field">
-    <%= f.submit 'Submit story', class: 'btn dark_glow' %>
+    <%= f.submit 'Submit story', class: 'btn green medium' %>
   </div>
 <% end %>
 

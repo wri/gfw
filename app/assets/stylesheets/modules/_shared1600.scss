@@ -200,3 +200,18 @@
     }
   }  
 }
+
+// BACK-BTN
+.back-btn{
+  color: $dark;
+  text-decoration: none;
+  margin: 0 0 20px;
+  display: inline-block;
+  font-family: $font-medium;
+  text-transform: uppercase;
+  svg{
+    margin: 0 5px 0 0;
+    width: 11px;
+    height: 12px;
+  }    
+}
