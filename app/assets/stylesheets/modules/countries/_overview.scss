@@ -1,12 +1,16 @@
 .country-overview-wrapper-coolio{
   position: relative;
+  background: #333;
+  margin-top: 36px;
+  top: -20px;
 }
 
 .overview_graph {
   // height: 511px;
   overflow: hidden;
-
-  @include background-image(linear-gradient(#464253, #383643));
+  width: 960px;
+  margin: 0 auto;
+  // @include background-image(linear-gradient(#464253, #383643));
 
   .umdoptions_dialog {
     left: auto;
@@ -28,13 +32,14 @@
 
 .overview_graph__area {
   height: 371px;
-  background: image-url('backgrounds/overview_graph.png');
-  @include background-size(cover);
-  background-position: -220px center;
+  // background: image-url('backgrounds/overview_graph.png');
+  // @include background-size(cover);
+  // background-position: -220px center;
   svg {
     position: relative;
     z-index: 300;
     margin-left: -40px;
+    width: 1000px;
   }
 }
 
@@ -89,18 +94,13 @@
     display: table;
     float: left;
 
-    &:first-child a {
-      border-left: 0;
-      padding-left: 1px;
-    }
-
     &.selected,
     &:hover {
       a {
         position: relative;
         border-bottom: 0;
         color: rgba(#fff, .75);
-        background: rgba(#000, .2);
+        background: #333;
       }
     }
 
@@ -110,7 +110,7 @@
       top: 0; left: 50%;
       margin-left: -3px;
       border: 6px solid transparent;
-      border-top-color: #fff;
+      border-top-color: #eee;
     }
 
     &.all_countries a {
@@ -128,15 +128,16 @@
 .overview_graph__link {
   display: table-cell;
   height: 99px;
-  width: 159px;
+  width: 160px;
   border-left: 1px solid #615D6C;
-  border-bottom: 1px solid #615D6C;
+  border-bottom: 2px solid #615D6C;
   font-size: 14px;
   font-family: "fira_sans_otmedium";
   vertical-align: middle;
   text-align: center;
   text-transform: uppercase;
   color: rgba(#fff, .75);
+  text-decoration: none;
 
   span {
     display: block;
@@ -155,7 +156,7 @@
   font-size: 13px;
   font-family: "fira_sans_otmedium";
   text-align: center;
-  background: rgba(#000, .2);
+  background: #333;
   color: #fff;
 
   .info {
@@ -177,6 +178,9 @@
   color: #9D9AA5;
   text-transform: uppercase;
   text-align: center;
+  max-width: 960px;
+  margin: 0 auto;
+  width: 100%;
 
   span {
     text-transform: lowercase;
@@ -212,31 +216,37 @@
     font-size: 23px;
   }
 }
+.countries_list {
+    margin:0 auto;
+    width: 960px;
+  ul  {
+    width: 100%;
+  }
+  li {
+    @extend .clearfix;
+    border-bottom: 1px solid #ccc;
+    padding: 18px 0;
 
-.countries_list ul li {
-  @extend .clearfix;
-  border-bottom: 1px solid #ccc;
-  padding: 18px 0;
+    &:hover {
+      background: rgba(#ddd, .3);
 
-  &:hover {
-    background: rgba(#ddd, .3);
-
-    .bar {
-      @include opacity(1);
-    }
-
-    .minioverview_line {
-      @include opacity(0.7);
-      stroke-width: 2px;
-    }
-
-    .countries_list__minioverview {
-      .loss {
-        color: #6D6DE5;
+      .bar {
+        @include opacity(1);
       }
 
-      .gain {
-        color: #C443FF;
+      .minioverview_line {
+        @include opacity(0.7);
+        stroke-width: 2px;
+      }
+
+      .countries_list__minioverview {
+        .loss {
+          color: #6D6DE5;
+        }
+
+        .gain {
+          color: #C443FF;
+        }
       }
     }
   }
@@ -319,7 +329,7 @@
       float: right;
       &:after {
         display: none;
-      }      
+      }
     }
 
   }
@@ -334,7 +344,7 @@
 
 .countries_list__num,
 .countries_list__title {
-  height: 30px;
+  height: 40px;
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: 29px;
@@ -356,6 +366,8 @@
   color: #A2A0A9;
   a {
     color: #463F52;
+    text-decoration: none;
+    font-family: "fira_sans_otlight", Georgia, sans-serif;
     &:hover {
       color: #88aa37;
     }
@@ -782,9 +794,9 @@
   }
 }
 .overview_button_group {
-  margin: 50px auto 0;
+  background: #EEEEEE;
   width: 100%;
-  height: 70px;
+  height: 40px;
   display: flex;
   display: -ms-flexbox;
   display: -ms-flex;
@@ -810,10 +822,8 @@
     }
     text-align: center;
     height: 39px;
-    border: 2px solid rgba(54,51,64,0.25);
     padding: 10px 12px 0 12px;
     text-transform: uppercase;
-    border-radius: 20px;
     font-size: 14px;
     color: #BEBCC2;
     margin-left: 15px;
@@ -826,6 +836,7 @@
       display: inline-block;
       vertical-align: bottom;
       margin-left: 5px;
+      @include country-icons-sprite(share);
     }
 
     &:hover {
@@ -856,5 +867,6 @@
       display: block;
       background: none;
       background-color: transparent;
+      text-decoration: none;
     }
 }

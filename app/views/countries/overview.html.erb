@@ -2,7 +2,10 @@
   <%= render "countries_templates" %>
   <%= render "shared/js_templates" %>
 <% end %>
-
+<div class="inner">
+  <h2>country rankings</h2>
+  <a href="/countries" class="btn gray">country profiles</a>
+</div>
 <div class='inner'>
   <div class="country-overview-wrapper-coolio">
     <div class="overview_button_group">
@@ -93,7 +96,7 @@
 
     <ul></ul>
 
-    <div class='countries_list__footer'>
+    <div class='btn green'>
       <%= link_to 'View all countries <i></i>'.html_safe, countries_path %>
     </div>
   </div>
