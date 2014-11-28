@@ -216,6 +216,12 @@
     font-size: 23px;
   }
 }
+.is-overview-action {
+  .countries_list ul li {
+    border-bottom: 1px solid #ccc;
+    padding: 18px 0;
+  }
+}
 .countries_list {
     margin:0 auto;
     width: 960px;
@@ -224,9 +230,6 @@
   }
   li {
     @extend .clearfix;
-    border-bottom: 1px solid #ccc;
-    padding: 18px 0;
-
     &:hover {
       background: rgba(#ddd, .3);
 
@@ -354,7 +357,7 @@
 }
 
 .countries_list__num {
-  width: 45px;
+  width: 60px;
 }
 
 .countries_list__title {
@@ -370,6 +373,7 @@
     font-family: "fira_sans_otlight", Georgia, sans-serif;
     &:hover {
       color: #88aa37;
+      font-family: "fira_sans_otregular", Georgia, sans-serif;
     }
   }
 }
@@ -869,4 +873,14 @@
       background-color: transparent;
       text-decoration: none;
     }
+}
+.show-more-countries {
+  display: flex;
+  height: 120px;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  .btn {
+    top: 0;
+  }
 }
