@@ -46,8 +46,8 @@
     top: 0;
     left: 50%;
     @include transform(translate(-50%,-50%) rotate(45deg));
-    border-top: 1px solid $border;
-    border-left: 1px solid $border;
+    border-top: 1px solid lighten($border,5%);
+    border-left: 1px solid lighten($border,5%);
   }
 }
 
@@ -69,8 +69,8 @@
       top: 0;
       left: 50%;
       @include transform(translate(-50%,-50%) rotate(45deg));
-      border-top: 1px solid $border;
-      border-left: 1px solid $border;
+      border-top: 1px solid lighten($border,5%);
+      border-left: 1px solid lighten($border,5%);
     }
     li:first-child:hover{
       &:after{
@@ -84,8 +84,8 @@
         top: 0;
         left: 50%;
         @include transform(translate(-50%,-50%) rotate(45deg));
-        border-top: 1px solid $border;
-        border-left: 1px solid $border;
+        border-top: 1px solid lighten($border,5%);
+        border-left: 1px solid lighten($border,5%);
       }
     }
   }

@@ -17,7 +17,7 @@ Gfw::Application.routes.draw do
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/howto' => redirect('howto/general_questions')
   get '/howto(/:section)' => 'static#howto'
-  get '/about' => redirect('about/gfw')
+  get '/about' => redirect('about/the-gfw-partnership')
   get '/about(/:section)' => 'static#about'
   get '/applications' => 'static#applications'
 
