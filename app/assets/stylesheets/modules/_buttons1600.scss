@@ -24,9 +24,11 @@
   text-align: center;
   font-family: $font-medium;
   font-family: inherit;
+  white-space: nowrap;
 
   &:hover {
     background: $cGreen;
+    text-decoration: none !important; 
   }
 
   &.lowercase{ text-transform: lowercase;}
@@ -48,37 +50,37 @@
 
   // Colors
   &.dark{
-    color: $white;
+    color: $white !important;
     background: $dark;
     &:hover {
       background: darken($dark,5%);
     }
   }
   &.gray{
-    color: $dark;
+    color: $dark !important;
     background: $white;
     border-color: $cGreen;
     &:hover {
       background: $cGreen;
-      color: $white;
+      color: $white !important;
     }
   }
   &.green{
-    color: $white;
+    color: $white !important;
     background: $cGreen;
     &:hover {
       background: darken($cGreen,5%);
     }
   }
   &.light{
-    color: $white;
+    color: $white !important;
     background: #CBCCBF;
     &:hover {
       background: darken(#CBCCBF,5%);
     }
   }
   &.light2{
-    color: $dark;
+    color: $dark !important;
     background: $border;
     font-family: $font-regular;
     &:hover {

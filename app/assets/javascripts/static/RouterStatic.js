@@ -35,7 +35,6 @@ define([
       var fragment = this.current().fragment;
       var section = _section;
       var page = (params) ? params.split('=')[1] : null;
-      console.log(params);
       this.presenter.initSection({
         name: fragment,
         section: section,
