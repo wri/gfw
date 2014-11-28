@@ -66,7 +66,7 @@ define([
           return {
             author: item.author,
             createDate: this.parseDate(item.pubDate),
-            description: 'add a new story',
+            description: 'added a new story',
             link: '/stories/'+item.cartodb_id,
             target: false,
             type: slug
@@ -76,7 +76,7 @@ define([
           return {
             author: item.author,
             createDate: this.parseDate(item.pubDate),
-            description: 'add a comment',
+            description: 'added a comment',
             link: item.link,
             target:true,
             type: slug
@@ -86,7 +86,7 @@ define([
           return{
             author: item['dc:creator'],
             createDate: this.parseDate(item.pubDate),
-            description: 'add a new post in blog',
+            description: 'added a new post in blog',
             link: item.link,
             target:true,
             type: slug
