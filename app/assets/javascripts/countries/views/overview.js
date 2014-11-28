@@ -5,7 +5,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
   events: {
     'click .info': '_openSource',
     'click .graph_tab': '_updateGraph',
-    'click .countries_list__footer': '_drawList',
+    'click .show-more-countries': '_drawList',
     'click .country-overview-wrapper-coolio .umdoptions_dialog #canopy_slider':  '_updateGraphOverview',
     'mouseup .country-overview-wrapper-coolio .umdoptions_dialog #canopy_slider':  '_updateGraphOverview',
     'click .country-overview-wrapper-coolio .umdoptions_dialog ul li':  '_updateGraphOverview'
@@ -173,8 +173,13 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
       if (e) {
         sql += 'OFFSET 10';
+        $('.show-more-countries').fadeOut();
       } else {
         sql += 'LIMIT 10';
+        $('.countries_list ul').html('');
+        $('.show-more-countries').show();
+
+        $('.countries_list__header__minioverview').html('Loss <span>vs</span> Gain');
       }
       d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
         var self = that,
@@ -244,10 +249,10 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
 
         if (e) {
-          $('.countries_list__footer').fadeOut();
+          $('.show-more-countries').fadeOut();
         } else {
           $('.countries_list ul').html('');
-          $('.countries_list__footer').show();
+          $('.show-more-countries').show();
 
           $('.countries_list__header__minioverview').html('Loss <span>vs</span> Gain');
         }
@@ -294,10 +299,10 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
 
         if (e) {
-          $('.countries_list__footer').fadeOut();
+          $('.show-more-countries').fadeOut();
         } else {
           $('.countries_list ul').html('');
-          $('.countries_list__footer').show();
+          $('.show-more-countries').show();
 
           $('.countries_list__header__minioverview').html('% Loss');
         }
@@ -390,10 +395,10 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
 
         if (e) {
-          $('.countries_list__footer').fadeOut();
+          $('.show-more-countries').fadeOut();
         } else {
           $('.countries_list ul').html('');
-          $('.countries_list__footer').show();
+          $('.show-more-countries').show();
 
           $('.countries_list__header__minioverview').html('Cover extent <span>vs</span> Cover loss');
         }
@@ -434,10 +439,10 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
 
         if (e) {
-          $('.countries_list__footer').fadeOut();
+          $('.show-more-countries').fadeOut();
         } else {
           $('.countries_list ul').html('');
-          $('.countries_list__footer').show();
+          $('.show-more-countries').show();
 
           $('.countries_list__header__minioverview').html('Ratio of Loss to Gain');
         }
@@ -479,7 +484,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                           '</li>'].join('');
         });
 
-        $('.countries_list__footer').hide();
+        $('.show-more-countries').hide();
         $('.countries_list__header__minioverview').html('Total loss <span>vs</span> Total gain');
         $('.countries_list ul').html(markup_list);
 
