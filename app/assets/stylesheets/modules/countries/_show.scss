@@ -491,6 +491,10 @@
 
         @include box-sizing(border-box);
 
+        &.active {
+          background: white;
+          border-bottom: 1px solid #fff;
+        }
         a {
           display: inline-block;
           padding: 11px 15px;
@@ -515,9 +519,6 @@
         &:hover {
           background: #F9F9F9;
 
-          &.active {
-            background: white;
-          }
         }
       }
     } // country-nav
