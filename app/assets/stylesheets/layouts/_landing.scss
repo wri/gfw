@@ -435,17 +435,17 @@
  }
 	.row {
 		@include row();
-  @include flex-wrap(wrap);
+    @include flex-wrap(wrap);
 	}
 	.col {
 		background: $white;
 	}
 	.col4 {
 		@include col(100);
-  @include display-flex();
-  @media (min-width: $br-mobile) {
-   @include col(32);
-  }
+    @include display-flex();
+    @media (min-width: $br-mobile) {
+     @include col(32);
+    }
 	}
  h2 {
   text-align: center;
@@ -458,25 +458,34 @@
  }
 	.card {
 		@include display-flex();
-  width: 100%;
-  border-top: 1px solid #CCC;
-  padding: 20px;
-  position: relative;
-  @media (min-width: $br-mobile) {
-   border-top: none;
-   box-shadow: 0 0px 5px rgba(#000,0.25);
-   @include transition(all,0.5s,$easeInOutSine);
-   &:hover {
-    box-shadow: 0 0 20px rgba(#000,0.25);
-   }
-  }
-  h3 {
-   text-transform: uppercase;
-   text-align: center;
-   font-size: 21px;
-   padding: 20px 0;
-   color: $dark;
-  }
+    width: 100%;
+    border-top: 1px solid #CCC;
+    padding: 20px;
+    position: relative;
+    @media (min-width: $br-mobile) {
+     border-top: none;
+     box-shadow: 0 0px 5px rgba(#000,0.25);
+     @include transition(all,0.5s,$easeInOutSine);
+     &:hover {
+      box-shadow: 0 0 20px rgba(#000,0.25);
+     }
+    }
+    h3 {
+     text-transform: uppercase;
+     text-align: center;
+     font-size: 21px;
+     padding: 20px 0;
+     color: $dark;
+    }
+
+    .button-box {
+      @include display-flex();
+      @include justify-content(center);
+      margin-top: 6px;
+      .btn {
+        text-transform: uppercase;
+      }
+    }
 	}
 }
 
