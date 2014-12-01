@@ -3,7 +3,7 @@
   color: $dark;
   padding: 70px 0 50px;
   header{
-    // max-width: 1024px;    
+    // max-width: 1024px;
   }
   h2{
     font-size: 47px;
@@ -22,7 +22,7 @@
     padding: 0 15px;
   }
 }
-.content-stories{ 
+.content-stories{
   padding: 0 0 20px;
   .inner{
     padding: 0 15px;
@@ -42,6 +42,7 @@
       height: 200px;
       width: 200px;
       overflow: hidden;
+      border: 1px solid #999;
       img{
         position: absolute;
         top: 50%;
@@ -172,7 +173,7 @@
   padding: 70px 0 50px;
   aside {
     position: absolute;
-    top: 0; 
+    top: 0;
     left: 0;
     width: 230px;
     font-size: 13px;
@@ -205,10 +206,10 @@
     ul {
       // list-style: disc;
       // margin-left: 15px;
-      li { 
+      li {
         position: relative;
         padding: 0 0 0 10px;
-        margin-bottom: 5px; 
+        margin-bottom: 5px;
         &:before{
           content: "";
           position: absolute;
@@ -523,7 +524,7 @@
   text-align: left;
   .fb_iframe_widget{
    top: -4px;
-  }  
+  }
 }
 
 
