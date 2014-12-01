@@ -481,6 +481,10 @@
         width: 16.66666%;
         border: 1px solid #ccc;
         border-left: none;
+        @include display-flex();
+        @include align-items(center);
+        @include justify-content(center);
+        background: #F2F2F3;
         &:first-child{
           border-left: 1px solid #ccc;
         }
@@ -488,9 +492,6 @@
         @include box-sizing(border-box);
 
         a {
-          background: #F2F2F3;
-          width: 100%;
-          height: 100%;
           display: inline-block;
           padding: 11px 15px;
           color: $dark;
@@ -499,16 +500,19 @@
           cursor: pointer;
           font-family: $font-medium;
           @include box-sizing(border-box);
+          text-decoration: none;
 
           &.active {
             background: white;
             border-bottom: 1px solid white;
             color: #999999;
           }
+          &:hover {
+            color: $cGreen;
+          }
         }
 
-        &:hover a {
-          color: $cGreen;
+        &:hover {
           background: #F9F9F9;
 
           &.active {
