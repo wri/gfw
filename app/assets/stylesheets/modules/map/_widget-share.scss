@@ -25,12 +25,12 @@
     box-shadow: none;
     border: none;
     .widget-content {
-      width: 463px;
+      width: 500px;
     }
   }
 
   .share_dialog {
-    $width: 463px;
+    $width: 500px;
     $height: 170px;
     position: fixed;
     z-index: 2000;
@@ -40,10 +40,8 @@
     height: $height;
     width: $width;
     padding: 30px;
-    border: 1px solid #757573;
+    border: 1px solid #eee;
     background: #fff;
-    @include box-shadow(0 0 7px #666);
-    @include border-radius(3px);
     text-align: center;
 
     .form {
@@ -120,7 +118,7 @@
     h1 {
       font-size: 35px;
       margin: 10px 0 5px;
-      @extend .serif;
+      font-family: "fira_sans_otlight", "Helvetica Neue", "Trebuchet MS", sans-serif;
     }
 
     p {
@@ -131,10 +129,10 @@
       &.help { margin: 0 0 20px; }
     }
     .mode_menu {
-    position: absolute;
-    top: 4px; right: -15px;
-    width: 120px;
-    background: #fff;
+      position: absolute;
+      top: 4px; right: -3px;
+      width: 120px;
+      background: #fff;
 
       li.first a {
         @include border-right-radius(3px);
@@ -150,6 +148,7 @@
       }
 
       a {
+        color: $cGreen;
         display: block;
         float: right;
         width: 55px;
@@ -159,6 +158,7 @@
         line-height: 34px;
         text-transform: uppercase;
         background: #eee;
+        text-decoration: none;
       }
     }
     .input-field {
@@ -192,7 +192,7 @@
     }
   }
   .share_dialog {
-    height: 210px;
+    height: 270px;
 
     .input-field {
       width: 444px;
