@@ -149,7 +149,7 @@
      text-decoration: underline;
     }
    }
-   
+
   }
   .btn {
    margin: 15px auto 0;
@@ -260,14 +260,29 @@
     display: inline-block;
     width: 33%;
     height: 60px;
-    margin: 15px 0 0;
+    margin: 25px 0 0;
     a {
       display: block;
       margin: 0 auto;
       width: 88px;
       position: relative;
       top: 50%;
+      color: $dark;
+      text-transform: uppercase;
       @include transform(translate(0,-50%));
+      &.app{
+        width: auto;
+        white-space: nowrap;
+        text-align: center;
+
+        .icon{
+          width: 60px;
+          height: 60px;
+          margin: 0 auto 10px;
+          fill: $dark;
+        }        
+      }
+      
       &.wri { height: 31px; width: 269px; @include logos-sprite(wri); }
       &.google { height: 52px; @include logos-sprite(google); }
       &.esri { height: 28px; @include logos-sprite(esri); }
@@ -288,8 +303,42 @@
       &.cartodb { height: 45px; @include logos-sprite(cartodb); }
       &.vizzuality { height: 45px; @include logos-sprite(vizzuality); }
       &.blueraster { height: 45px; width: 97px; @include logos-sprite(blueraster); }
+      &.sida { height: 70px; width: 122px; @include logos-sprite(sida); }
+      &.danida { height: 26px; width: 90px; @include logos-sprite(danida); }
+      &.bobolink { height: 53px; width: 105px; @include logos-sprite(bobolink); }
     }
    }
+  }
+  .app-list{
+   >li {
+    display: inline-block;
+    width: 33%;
+    margin: 25px 0 0;
+    a {
+      display: block;
+      margin: 0 auto;
+      position: relative;
+      color: $dark;
+      text-transform: uppercase;
+      width: auto;
+      white-space: nowrap;
+      text-align: center;
+      &:hover{
+        text-decoration: none;
+        .icon{
+          fill: $cGreen;
+        }
+      }
+
+      .icon{
+        width: 60px;
+        height: 60px;
+        margin: 0 auto 10px;
+        fill: $dark;
+      }              
+    }
+   }
+
   }
  }
 }
