@@ -114,9 +114,7 @@
   height: $height;
   padding: 20px 15px 20px 20px;
   background: #fff;
-  border: 1px solid #757573;
-  @include box-shadow(0px 0px 7px #666);
-  @include border-radius(3px);
+  border: 1px solid #eee;
   box-sizing: content-box;
 
   .close {

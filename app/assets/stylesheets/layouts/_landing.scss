@@ -529,6 +529,7 @@
     top: 0;
     left: 50%;
     background: #94CCDB;
+    background: #C0C0C0;
     @include transform(translate(-50%,0));
    }
    &:before {
@@ -540,6 +541,7 @@
     left: 50%;
     border-radius: 50%;
     background: #94CCDB;
+    background: #C0C0C0;
     @include transform(translate(-50%,0));
    }
    li {
@@ -549,6 +551,7 @@
     margin: 20px 0 0;
     &:first-child { margin: 0;}
     figure {
+      background: #999;
      display: block;
      margin: 0;
      padding: 0;
@@ -561,15 +564,15 @@
      left: 50%;
      z-index: 2;
      @include transform(translate(-40%,-50%));
-     &.blog {
-      background: $orange;
-     }
-     &.disqus {
-      background: $red;
-     }
-     &.story {
-      background: $cGreen;
-     }
+     // &.blog {
+     //  background: $orange;
+     // }
+     // &.disqus {
+     //  background: $red;
+     // }
+     // &.story {
+     //  background: $cGreen;
+     // }
     }
     a {
      color: $dark;
