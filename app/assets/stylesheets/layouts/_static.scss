@@ -149,7 +149,7 @@
      text-decoration: underline;
     }
    }
-   
+
   }
   .btn {
    margin: 15px auto 0;
@@ -372,7 +372,7 @@
    overflow: hidden;
    .card {
     position: relative;
-    padding: 40px 25px 80px;
+    padding: 40px 25px 100px;
     text-align: center;
     border: 1px solid $border;
     overflow: hidden;
@@ -417,7 +417,7 @@
    }
    .btn {
     position: absolute;
-    bottom: 20px;
+    bottom: 35px;
     left: 50%;
     @include transform(translate(-50%,0));
 
