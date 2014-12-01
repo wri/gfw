@@ -48,6 +48,7 @@
 .search-countries-box{
   margin: 20px auto;
   position: relative;
+  clear: both;
   @extend .clearfix;
   &:after {
     content: "";

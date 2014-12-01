@@ -50,7 +50,7 @@
             line-height: 28px;
             margin: 0 0 0 5px;
           }
-          .tooltip{
+          .tooltip1{
             margin: 0;
             line-height: normal;
           }
@@ -97,7 +97,7 @@
         >li {
           >a,.link {
             &:hover  {
-              .tooltip{
+              .tooltip1{
                 visibility: visible;
                 opacity: 1;
               }
