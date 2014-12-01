@@ -460,55 +460,55 @@
   }
 }
 
-.tooltip {
-  visibility: hidden;
-  position: absolute;
-  z-index: 500;
-  padding: 20px 10px;
-  font-size: 19px;
-  font-family: "fira_sans_otmedium";
-  text-align: center;
-  color: #C440FF;
-  background: #fff;
-  @include border-radius(5px);
-  @include box-shadow(0 0 3px #000);
+// .tooltip {
+//   visibility: hidden;
+//   position: absolute;
+//   z-index: 500;
+//   padding: 20px 10px;
+//   font-size: 19px;
+//   font-family: "fira_sans_otmedium";
+//   text-align: center;
+//   color: #C440FF;
+//   background: #fff;
+//   @include border-radius(5px);
+//   @include box-shadow(0 0 3px #000);
 
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: -6px; left: 50%;
-    border-color: #fff rgba(#fff, 0);
-    border-width: 6px 6px 0 6px;
-    border-style: solid;
-    margin-left: -6px;
-  }
+//   &:after {
+//     content: '';
+//     position: absolute;
+//     bottom: -6px; left: 50%;
+//     border-color: #fff rgba(#fff, 0);
+//     border-width: 6px 6px 0 6px;
+//     border-style: solid;
+//     margin-left: -6px;
+//   }
 
-  &.gain_tooltip,
-  &.tropical_tooltip {
-    color: #6D6DE5;
-  }
-  &.gain_extent_tooltip {
-    color: #97bd3d;
-  }
-  &.subtropical_tooltip {
-    color: #FFFF73;
-  }
+//   &.gain_tooltip,
+//   &.tropical_tooltip {
+//     color: #6D6DE5;
+//   }
+//   &.gain_extent_tooltip {
+//     color: #97bd3d;
+//   }
+//   &.subtropical_tooltip {
+//     color: #FFFF73;
+//   }
 
-  &.boreal_tooltip {
-    color: #FFB973;
-  }
+//   &.boreal_tooltip {
+//     color: #FFB973;
+//   }
 
-  &.temperature_tooltip {
-    color: #73DCFF;
-  }
+//   &.temperature_tooltip {
+//     color: #73DCFF;
+//   }
 
-  span {
-    display: block;
-    font-size: 15px;
-    line-height: 1.5;
-    color: rgba(#373343, .5);
-  }
-}
+//   span {
+//     display: block;
+//     font-size: 15px;
+//     line-height: 1.5;
+//     color: rgba(#373343, .5);
+//   }
+// }
 
 .chart {
   display: none;
