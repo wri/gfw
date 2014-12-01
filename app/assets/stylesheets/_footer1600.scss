@@ -28,6 +28,9 @@
 	    				color: #555555;
                         @include transition(all .25s $easeInOutCubic);
 	    			}
+                    &.shape-country{
+                        svg{ @include transform(scale(1.32));}
+                    }
 	    			&:hover {
                         &.fire{
                             svg{ fill: $red; }
