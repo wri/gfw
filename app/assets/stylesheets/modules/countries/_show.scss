@@ -593,8 +593,7 @@
         color: $dark;
       }
       svg {
-        width: 225px;
-        height: 225px;
+        max-height: 225px;
       }
     }
 
