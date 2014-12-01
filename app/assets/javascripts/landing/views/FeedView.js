@@ -11,7 +11,7 @@ define([
 
 ], function($, Backbone, _, mps, Handlebars, tpl) {
 
-  'use strict'; 
+  'use strict';
 
   var FeedView = Backbone.View.extend({
 
@@ -23,11 +23,11 @@ define([
       this.loadFeed();
     },
 
-    render: function(){
+    render: function() {
       this.$el.html(this.template({feed: this.feedlist}));
     },
 
-    loadFeed: function(){
+    loadFeed: function() {
       $.ajax({
         url: 'https://pipes.yahoo.com/pipes/pipe.run?_id=5bc0b70181e4954888ddc8fb05598fa2&_render=json',
         type:'GET',
@@ -38,7 +38,8 @@ define([
     },
 
 
-    parse: function(data){
+    parse: function(data) {
+      console.log(data)
       this.feedlist = _.map(data,_.bind(function(item){
         var result = null;
         if(item.cartodb_id){
@@ -60,7 +61,7 @@ define([
 
     },
 
-    parseItem: function(item,slug){
+    parseItem: function(item,slug) {
       switch(slug){
         case 'story':
           return {
@@ -95,7 +96,7 @@ define([
       }
     },
 
-    parseDate: function(date){
+    parseDate: function(date) {
       var moment = new Date(date);
       return moment.getTime();
     }
