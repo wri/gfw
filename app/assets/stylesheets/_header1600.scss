@@ -73,6 +73,9 @@
             fill: #B6B6BA;
           }
 
+          &.shape-world{ svg{ @include transform(scale(0.9));}}
+          &.shape-country{ svg{ @include transform(scale(1.3));}}
+
           &:hover  {
             &.shape-house { svg{ fill: $cGreen;} }
             &.shape-world { svg{ fill: $cGreen;} }
