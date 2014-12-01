@@ -25,7 +25,7 @@
           </li>
           <li><%= link_to 'Small Grants Fund', "#{getinvolved_path}/small-grants-fund", :"data-slug" => 'small-grants-fund', :class => 'nav-item small-grants-fund' %></li>
           <li><%= link_to 'Develop your own app', "#{getinvolved_path}/develop-your-own-app", :"data-slug" => 'develop-your-own-app', :class => 'nav-item develop-your-own-app' %></li>
-          <li><%= link_to 'Submit Story', "#{getinvolved_path}/submit-story", :"data-slug" => 'submit-story', :class => 'nav-item submit-story' %></li>
+          <li><%= link_to 'Submit a Story', "#{getinvolved_path}/submit-a-story", :"data-slug" => 'submit-a-story', :class => 'nav-item submit-a-story' %></li>
           <li><%= link_to 'Share your data', "#{getinvolved_path}/share-your-data", :"data-slug" => 'share-your-data', :class => 'nav-item share-your-data' %></li>
           <li><%= link_to 'Crowdsourcing Tools', "#{getinvolved_path}/crowdsourcing-tools", :"data-slug" => 'crowdsourcing-tools', :class => 'nav-item crowdsourcing-tools' %></li>
           <li><%= link_to 'Provide Feedback', "#{getinvolved_path}/provide-feedback", :"data-slug" => 'provide-feedback', :class => 'nav-item provide-feedback' %></li>
@@ -136,7 +136,7 @@
               </ul>
            </div>
           </article>
-          <article id="submit-story" class="source-article">
+          <article id="submit-a-story" class="source-article">
             <header>
               <h2>Submit a story</h2>
               <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -180,6 +180,7 @@
               proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
               <a class="btn gray uppercase medium" href="http://data.gfw.opendata.arcgis.com/" target="_blank">Landsat validation app</a>
               <a class="btn gray uppercase medium" href="https://opendatakit.org/" target="_blank">ODK tool</a>
+              <p>Sed consectetur pharetra vulputate. Praesent id orci nibh. Suspendisse hendrerit tellus ante, eget molestie justo cursus sit amet. Morbi ac mi ac elit vestibulum semper finibus quis ligula. Aliquam erat volutpat. Donec pretium libero et quam cursus, a <%= link_to 'Develop your own app', "#{getinvolved_path}/develop-your-own-app" %>.</p>
             </header>
           </article>
           <article id="provide-feedback" class="source-article">
@@ -272,20 +273,20 @@
       <div class="col">
         <div class="card">
           <header>
-            <h2>Develop your own app</h2>
+            <h2>Stories on the map</h2>
           </header>
           <div class="content">
             <p>Timely and reliable information about forests. GFW is free and follows an open data approach in putting decision-relevant information in the hands of governments, companies, NGOs, and the public</p>
           </div>
           <footer>
-            <a href="/getinvolved/develop-your-own-app" class="btn dark medium">Read More</a>
+            <a href="/map/3/15.00/27.00/ALL/grayscale/loss,forestgain/580" class="btn dark medium">Read More</a>
           </footer>
         </div>
       </div>
       <div class="col">
         <div class="card">
           <header>
-            <h2>Submit a story</h2>
+            <h2>Download data</h2>
           </header>
           <div class="content">
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -294,7 +295,7 @@
             consequat. Duis aute irure dolor in reprehenderit in voluptate velit ess.</p>
           </div>
           <footer>
-            <%= link_to 'Submit a story', new_story_path, :class => 'btn dark medium' %>
+            <a class="btn dark medium" href="http://data.gfw.opendata.arcgis.com/">Read More</a>
           </footer>
         </div>
       </div>

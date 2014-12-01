@@ -141,6 +141,15 @@
       font-size: 14px;
       line-height: 1.5;
       padding: 10px 0 0;
+      a{
+        color: $cGreen;
+        font-family: $font-medium;
+        text-decoration: none;
+        &:hover{
+          text-decoration: underline;
+        }
+      }
+      
     }  
     .btn{
       margin: 15px auto 0;
@@ -191,6 +200,14 @@
           font-size: 14px;
           line-height: 1.5;
           padding: 10px 0 0;
+          a{
+            color: $cGreen;
+            font-family: $font-medium;
+            text-decoration: none;
+            &:hover{
+              text-decoration: underline;
+            }
+          }
         }  
         .btn{
           margin: 10px 0 0;
@@ -209,13 +226,13 @@
           padding: 10px 0 0;
           line-height: 1.5;
           font-size: 14px;
-        }
-        a{
-          text-decoration: none;
-          color: $cGreen;
-          font-family: $font-medium;
-          &:hover{
-            text-decoration: underline;
+          a{
+            color: $cGreen;
+            font-family: $font-medium;
+            text-decoration: none;
+            &:hover{
+              text-decoration: underline;
+            }
           }
         }
         .btn{
@@ -253,32 +270,32 @@
         height: 60px;
         margin: 15px 0 0;
         a{
-            display: block;
-            margin: 0 auto;
-            width: 88px;
-            position: relative;
-            top: 50%;
-            @include transform(translate(0,-50%));
-            &.wri { height: 31px; width: 269px; @include logos-sprite(wri); }
-            &.google { height: 52px; @include logos-sprite(google); }
-            &.esri { height: 28px; @include logos-sprite(esri); }
-            &.universitymaryland { height: 52px; @include logos-sprite(universitymaryland); }
-            &.unep { height: 52px; @include logos-sprite(unep); }
-            &.imazon { height: 52px; @include logos-sprite(imazon); }
-            &.cfgd { height: 52px; @include logos-sprite(cfgd); }
-            &.osfac { height: 57px; @include logos-sprite(osfac); }
-            &.gfwca { height: 44px; @include logos-sprite(gfwca); }
-            &.scanex { height: 16px; @include logos-sprite(scannex); }
-            &.twrus { height: 36px; width: 147px; @include logos-sprite(twrus); }
-            &.norwegian { height: 55px; @include logos-sprite(norwegian); }
-            &.usaid { height: 64px; @include logos-sprite(usaid); }
-            &.gef { height: 59px; @include logos-sprite(gef); }
-            &.ukaid { height: 52px; @include logos-sprite(ukaid); }
-            &.tilia { height: 38px; @include logos-sprite(tilia); }
-            &.goodall { height: 36px; width: 147px; @include logos-sprite(goodall); }
-            &.cartodb { height: 45px; @include logos-sprite(cartodb); }
-            &.vizzuality { height: 45px; @include logos-sprite(vizzuality); }
-            &.blueraster { height: 45px; width: 97px; @include logos-sprite(blueraster); }
+          display: block;
+          margin: 0 auto;
+          width: 88px;
+          position: relative;
+          top: 50%;
+          @include transform(translate(0,-50%));
+          &.wri { height: 31px; width: 269px; @include logos-sprite(wri); }
+          &.google { height: 52px; @include logos-sprite(google); }
+          &.esri { height: 28px; @include logos-sprite(esri); }
+          &.universitymaryland { height: 52px; @include logos-sprite(universitymaryland); }
+          &.unep { height: 52px; @include logos-sprite(unep); }
+          &.imazon { height: 52px; @include logos-sprite(imazon); }
+          &.cfgd { height: 52px; @include logos-sprite(cfgd); }
+          &.osfac { height: 57px; @include logos-sprite(osfac); }
+          &.gfwca { height: 44px; @include logos-sprite(gfwca); }
+          &.scanex { height: 16px; @include logos-sprite(scannex); }
+          &.twrus { height: 36px; width: 147px; @include logos-sprite(twrus); }
+          &.norwegian { height: 55px; @include logos-sprite(norwegian); }
+          &.usaid { height: 64px; @include logos-sprite(usaid); }
+          &.gef { height: 59px; @include logos-sprite(gef); }
+          &.ukaid { height: 52px; @include logos-sprite(ukaid); }
+          &.tilia { height: 38px; @include logos-sprite(tilia); }
+          &.goodall { height: 36px; width: 147px; @include logos-sprite(goodall); }
+          &.cartodb { height: 45px; @include logos-sprite(cartodb); }
+          &.vizzuality { height: 45px; @include logos-sprite(vizzuality); }
+          &.blueraster { height: 45px; width: 97px; @include logos-sprite(blueraster); }
         }
       }
     }

@@ -1,4 +1,5 @@
 .carrousel{
+  padding: 30px 0 0;
   .carrousel-box{
     ul{
       padding-bottom: 56.2790%;
@@ -38,72 +39,3 @@
     }
   }
 }
-
-
-
-
-
-
-/* =Carrousel
------------------------------------------------ */
-
-// .carrousel {
-//   position: relative;
-//   margin: 0 0 40px;
-//   height: 362px;
-//   text-align: left;
-
-//   .frame {
-//     display:block;
-//     position: absolute;
-//     z-index: 20;
-//     bottom: 43px;
-//     right: 43px;
-//     width: 266px;
-//     height: 266px;
-//     @include border-radius(134px);
-//     background: #333;
-//     background: rgba(#000, .5);
-
-//     img {
-//       position: absolute;
-//       top: 5px; left: 5px;
-//       width: 256px;
-//       height: 256px;
-//       @include border-radius(129px);
-//     }
-//   }
-// }
-
-// .previous,
-// .next {
-//   position: absolute;
-//   display: block;
-//   width: 68px;
-//   height: 68px;
-// }
-
-// .previous {
-//   top: 30px;
-//   left: -34px;
-//   @include icons-sprite(button_story_gallery_left);
-//   z-index: 100;
-// }
-
-// .next {
-//   bottom: 30px;
-//   right: -25px;
-//   @include icons-sprite(button_story_gallery_right);
-//   z-index: 100;
-// }
-
-// .slide {
-//   display: none;
-//   overflow: hidden;
-//   position: absolute;
-//   z-index: 10;
-//   top: 0; left: 0;
-//   width: 100%;
-
-//   img { width: 100%; }
-// }
