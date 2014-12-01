@@ -6,7 +6,7 @@
 .layout-content {
   margin-bottom: 0;
   position: absolute;
-  top: 123px;
+  top: 112px;
   height: calc(100% -123px);
   overflow: hidden;
   bottom: 0;
@@ -50,7 +50,6 @@
   position: absolute;
   left: 15px;
   top:  27px;
-  z-index: 1040;
 
   .zoom-in,
   .zoom-out {

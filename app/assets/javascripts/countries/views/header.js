@@ -463,15 +463,15 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         sql: "SELECT * FROM country_mask",
         cartocss: "\
           #country_mask {\
-            polygon-fill: #373442;\
+            polygon-fill: #333;\
             polygon-opacity: 1;\
-            line-color: #373442;\
+            line-color: #333;\
             line-width: 1;\
             line-opacity: 1;\
           }\
           #country_mask[code='" + this.country.get('iso') + "'] {\
             polygon-opacity: 0;\
-            line-color: #373442;\
+            line-color: #333;\
             line-width: 1;\
             line-opacity: 1;\
           }"
@@ -479,9 +479,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         sql: "SELECT * FROM gadm_1_all",
         cartocss: "\
           #gadm_1_all {\
-            polygon-fill: #373442;\
+            polygon-fill: #333;\
             polygon-opacity: 1;\
-            line-color: #373442;\
+            line-color: #333;\
             line-width: 1;\
             line-opacity: 1;\
             [cartodb_id=" + area.get('cartodb_id') + "]{\
