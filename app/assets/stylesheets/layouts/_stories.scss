@@ -177,8 +177,13 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 230px;
+    width: 240px;
     font-size: 13px;
+    border-right: 1px solid #e5e5df;
+    padding-right: 20px;
+    top: -71px;
+    padding-top: 71px;
+    height: 111.1%;
 
     h3 {
       padding: 10px 0;
@@ -230,7 +235,7 @@
 
   }
   .content{
-    padding: 0 0 0 282px;
+    padding: 0 0 0 262px;
   }
 
 }
@@ -425,7 +430,7 @@
       font-size: 47px;
       padding: 0 0 15px;
       color: $dark;
-
+      font-family:  "fira_sans_otlight", Georgia, serif;
     }
   }
   .form-box{
@@ -483,19 +488,18 @@
       font-size: 14px;
       line-height: 1.2em;
       color: $dark;
-      border: 1px dotted $cGreen;
       padding: 8px;
       @include transform(translate(-52px,0));
-      &:after{
-        content: "";
-        width: 40px;
-        height: 1px;
-        border-top: 1px dotted $cGreen;
-        position: absolute;
-        top: 4px;
-        left: 100%;
-        @include transform(translate(1px,0));
-      }
+      // &:after{
+      //   content: "";
+      //   width: 40px;
+      //   height: 1px;
+      //   border-top: 1px dotted $cGreen;
+      //   position: absolute;
+      //   top: 4px;
+      //   left: 100%;
+      //   @include transform(translate(1px,0));
+      // }
     }
   }
 }
