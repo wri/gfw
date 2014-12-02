@@ -535,12 +535,17 @@
 
 // APPLICATIONS
 .applications-section {
- padding: 0 0 40px;
  h2 {
   font-size: 35px;
   color: #555555;
-  padding: 20px 0;
+  padding: 40px 0;
   text-align: center;
+  &:first-child {
+    border: 0;
+  }
+ }
+ &.partners {
+  border-top: 1px solid $border;
  }
  .row {
   @include row(flex-start);
@@ -552,7 +557,7 @@
     @include display-flex();
    }
    padding: 0 15px;
-   margin: 40px 0 0;
+   margin: 0px 0 25px;
    overflow: hidden;
    .card {
     position: relative;
@@ -560,9 +565,6 @@
     text-align: center;
     border: 1px solid $border;
     overflow: hidden;
-    &.soon {
-      background: #eee;
-    }
    }
 
    .ribbon {
@@ -577,9 +579,6 @@
     text-transform: uppercase;
     @include transform(rotate(45deg) translate(-8px,45px));
     @include transform-origin(50% 50%);
-    &.non-official {
-     background: #ccc;
-    }
    }
    h2 {
     text-transform: uppercase;
