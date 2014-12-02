@@ -17,9 +17,10 @@ define([
   'text!map/templates/legend/idnPrimary.handlebars',
   'text!map/templates/legend/intact2013.handlebars',
   'text!map/templates/legend/grump.handlebars',
+  'text!map/templates/legend/terra_i.handlebars',
   'text!map/templates/legend/concesiones_forestales.handlebars'
 ], function(_, Handlebars, Widget, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl,concesionesTpl) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, terra_iTpl,concesionesTpl) {
 
   'use strict';
 
@@ -41,7 +42,8 @@ define([
       idn_primary: Handlebars.compile(idnPrimaryTpl),
       ifl_2013_deg: Handlebars.compile(intact2013Tpl),
       grump2000: Handlebars.compile(grumpTpl),
-      concesiones_forestales: Handlebars.compile(concesionesTpl)
+      concesiones_forestales: Handlebars.compile(concesionesTpl),
+      terraicanvas: Handlebars.compile(terra_iTpl)
     },
 
     options: {
