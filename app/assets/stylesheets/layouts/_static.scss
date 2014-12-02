@@ -521,6 +521,8 @@
  h2 {
   font-size: 35px;
   color: #555555;
+  padding: 20px 0;
+  text-align: center;
  }
  .row {
   @include row(flex-start);
