@@ -401,7 +401,7 @@
  }
   .section-footer{
     border-top: 1px solid $border;
-    @include row();
+    @include row(flex-end);
     >a{
       @include col(50);
       display: block;
@@ -442,6 +442,7 @@
         }
       }
       &.next_stories{
+        float: right;
         .text{
           padding-right: 60px;          
           .icon{
