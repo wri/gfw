@@ -328,9 +328,9 @@
           height: 60px;
           margin: 0 auto 10px;
           fill: $dark;
-        }        
+        }
       }
-      
+
       &.wri { height: 31px; width: 269px; @include logos-sprite(wri); }
       &.google { height: 52px; @include logos-sprite(google); }
       &.esri { height: 28px; @include logos-sprite(esri); }
@@ -384,7 +384,7 @@
         height: 60px;
         margin: 0 auto 10px;
         fill: $dark;
-      }              
+      }
     }
    }
 
@@ -493,7 +493,7 @@
       &.next_stories{
         float: right;
         .text{
-          padding-right: 60px;          
+          padding-right: 60px;
           .icon{
             right: 0;
             background-image: image-url('svg-icons/arrow-right.svg')
@@ -518,6 +518,10 @@
 // APPLICATIONS
 .applications-section {
  padding: 0 0 40px;
+ h2 {
+  font-size: 35px;
+  color: #555555;
+ }
  .row {
   @include row(flex-start);
   @include flex-wrap(wrap);
@@ -536,6 +540,9 @@
     text-align: center;
     border: 1px solid $border;
     overflow: hidden;
+    &.soon {
+      background: #eee;
+    }
    }
 
    .ribbon {
@@ -552,7 +559,6 @@
     @include transform-origin(50% 50%);
     &.non-official {
      background: #ccc;
-
     }
    }
    h2 {
