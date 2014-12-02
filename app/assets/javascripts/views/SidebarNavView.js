@@ -41,7 +41,7 @@ define([
 
       //VARS
       this.padding = 40;
-      this.firstFixed = true;
+      this.first = true;
       
 
       //INIT
@@ -58,8 +58,7 @@ define([
     calculateOffsets: function(){
       this.$sideBarBox.css({'min-height': this.$sideBarAside.height() });
       this.offset = this.$sideBarAside.offset().top;
-      this.offsetBottom = this.$cut.offset().top - this.$sideBarAside.height() - this.padding;
-      this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },250);
+      this.offsetBottom = this.$cut.offset().top - this.$sideBarAside.height() - this.padding;        
     },
 
     scrollDocument: function(e){
@@ -93,6 +92,17 @@ define([
       //spinner
       this.$sourceSpinner.removeClass('start');
 
+      if(this.first){
+        this.changeHelper(section);
+        this.first = false;
+      }else{
+        this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0, _.bind(function(){
+          this.changeHelper(section);
+        },this));
+      }
+    },
+
+    changeHelper: function(section){
       //aside
       this.$navItem.removeClass('selected');
       $('.'+section).addClass('selected');
@@ -102,8 +112,8 @@ define([
       $('#'+section).addClass('selected');
 
       setTimeout(_.bind(function(){
-        this.calculateOffsets();
-      },this),50);
+        this.calculateOffsets();  
+      },this),50);      
     },
 
     scrollTo: function(e){
