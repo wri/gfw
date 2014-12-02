@@ -3,10 +3,10 @@
       <header>
         <h2><%= @title %></h2>
         <h3>Global Forest Watch hosts a wealth of data relating to forests. Some data have been developed by WRI or by GFW partner organizations. Other data are in the public domain and have been developed by governments, NGOs, and companies.</h3>
-        <p>The data vary in accuracy, resolution, frequency of update, and geographic coverage. The summaries below include links to further information such as methods and technical documents. Full download of the data sets is available for most sources.</p>        
+        <p>The data vary in accuracy, resolution, frequency of update, and geographic coverage. The summaries below include links to further information such as methods and technical documents. Full download of the data sets is available for most sources.</p>
       </header>
       <ul class="row row3">
-        <li><a href="http://blog.globalforestwatch.org/" target="_blank" class="btn dark uppercase">GFW Blog</a></li>
+        <li><a href="http://blog.globalforestwatch.org/" class="btn dark uppercase">GFW Blog</a></li>
         <li><a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank" class="btn dark uppercase">Discussion Forum</a></li>
         <li><a href="#" class="btn dark uppercase">Sign up for newsletter</a></li>
       </ul>
@@ -50,9 +50,9 @@
                           <h4><%= story['title'] %></h4>
                           <p><%= truncate(story['details'], :length => 295) %></p>
                           <button class="btn gray medium">More</button>
-                        </article>        
+                        </article>
                       </a>
-                    </li>                   
+                    </li>
                   <% end %>
                 </ul>
                 <div class="section-footer">
@@ -65,7 +65,7 @@
                     <% end %>
                   <% end %>
                   <% unless last_page? %>
-                    <%= link_to next_page_keep(@page), :class => "next_stories" do %>  
+                    <%= link_to next_page_keep(@page), :class => "next_stories" do %>
                       <span class="text">
                         Next Stories
                         <span class="icon"></span>
@@ -195,7 +195,7 @@
             </header>
           </article>
         </div>
-      </div>      
+      </div>
     </div>
   </div>
 </section>
@@ -204,7 +204,7 @@
     <h2 class="section-title">You may find this interesting</h2>
     <div class="row">
       <div class="col">
-        <div class="card">      
+        <div class="card">
           <header>
             <h2>Stories on the map</h2>
           </header>
@@ -218,7 +218,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="card">      
+        <div class="card">
           <header>
             <h2>Mongabay stories</h2>
           </header>
@@ -231,7 +231,7 @@
         </div>
       </div>
       <div class="col">
-        <div class="card">      
+        <div class="card">
           <header>
             <h2>Ejn stories</h2>
           </header>
