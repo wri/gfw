@@ -76,9 +76,20 @@
   padding: 40px 0;
   .row {
     @include row();
+    position: relative;
   }
   aside {
     width: 260px;
+    position: absolute;
+    top: 0;
+    &.fixed{
+      top: 0;
+      position: fixed;
+    }
+    &.bottom{
+      top: auto;
+      bottom: 0;
+    }
     ul {
       border-bottom: 1px solid $border;
       li {
@@ -128,11 +139,12 @@
     }
   }
   .sources-box {
-    width: 100%;
+    width: calc(100% - 260px);
     border-left: 1px solid $border;
+    margin-left: 260px;
+    min-height: 500px;
     .sources-content {
       padding: 0 35px;
-      min-height: 250px;
       position: relative;
     }
   }
