@@ -136,6 +136,7 @@
    font-size: 21px;
    line-height: 1.25;
    padding: 15px 0 0;
+
   }
   p {
    font-size: 14px;
@@ -195,6 +196,8 @@
     h3 {
      font-size: 21px;
      line-height: 1.25;
+     color: $dark;
+     font-family: $font-medium;
     }
     p {
      font-size: 14px;
@@ -207,12 +210,17 @@
    }
   }
   .faq-list {
+    &.double-margin{
+      >li{ margin: 45px 0 0;}
+    }
    >li {
     margin: 25px 0 0;
     &:first-child { margin: 0; }
     h3 {
      font-size: 21px;
      line-height: 1.25;
+     color: $dark;
+     font-family: $font-medium;
     }
     p {
      padding: 10px 0 0;
@@ -246,6 +254,7 @@
     }
     .bullets {
      list-style-type: disc;
+     color: $dark;
      >li {
       padding: 10px 0 0;
       font-size: 14px;
@@ -254,6 +263,45 @@
      }
     }
    }
+  }
+  .awards_logo-list{
+    @include row(flex-start);
+    >li{
+      margin: 0 0 0 20px;
+      &:first-child{ margin: 0;}
+    }
+  }
+  .testimonial-list{
+    margin: 20px 0 0;
+    >li{
+      margin: 30px 0 0;
+      font-size: 14px;
+      color: $dark;
+      line-height: 1.5;
+      &:first-child{
+        margin: 0;
+      }
+      .testimonial-quote{
+        position: relative;
+        padding: 10px 0 10px 25px;
+        &:before{
+          content: "“";
+          color: $cGreen;
+          position: absolute;
+          top: 0;
+          left: 0;
+          font-size: 40px;
+        }
+      }
+      .author{
+        display: block;
+        text-align: right;
+        strong{
+          display: block;
+          font-family: $font-medium;
+        }
+      }
+    }
   }
   .logo-list {
    >li {
@@ -306,6 +354,7 @@
       &.sida { height: 70px; width: 122px; @include logos-sprite(sida); }
       &.danida { height: 26px; width: 90px; @include logos-sprite(danida); }
       &.bobolink { height: 53px; width: 105px; @include logos-sprite(bobolink); }
+      &.vizzuality-big { height: 75px; width: 151px; @include logos-sprite(vizzuality-big); }
     }
    }
   }
