@@ -16,7 +16,7 @@
 <section id="sidebarNavView" class="content-static">
   <div class="inner">
     <div class="row">
-      <aside>
+      <aside id="sidebarAside">
         <ul>
           <li>
             <a href="#" class="nav-title">
@@ -31,7 +31,7 @@
           <li><%= link_to 'Coming Soon', "#{keepupdated_path}/coming-soon", :"data-slug" => 'coming-soon', :class => 'nav-item coming-soon'%></li>
         </ul>
       </aside>
-      <div class="sources-box">
+      <div id="sources-box" class="sources-box">
         <div class="sources-content">
           <div id="sources-spinner" class="spinner start"><svg><use xlink:href="#shape-spinner"></use></svg></div>
           <article id="crowdsourced-stories" class="source-article">
@@ -209,6 +209,7 @@
     </div>
   </div>
 </section>
+<div id="cut" style="height:1px;"></div>
 <section class="interesting-section">
   <div class="inner">
     <h2 class="section-title">You may find this interesting</h2>
