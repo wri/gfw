@@ -32,92 +32,110 @@
 // STATIC PAGE
 // header
 .header-static {
- background: $light;
- color: $dark;
- padding: 70px 0 50px;
- header {
+  background: $light;
+  color: $dark;
+  padding: 70px 0 50px;
+  header {
   // max-width: 1024px;
- }
- h2 {
-  font-size: 47px;
-  padding: 0 0 15px;
- }
- h3 {
-  font-size: 21px;
-  line-height: 1.25;
-  padding: 0 0 10px;
- }
- p {
-  font-size: 14px;
-  line-height: 1.5;
- }
- .inner {
-  padding: 0 15px;
- }
- .row {
-  @include row(center);
-  margin: 50px 0 0;
-  >* {
-   margin: 0 20px;
   }
-  a {
-   display: block;
-   width: 90%;
-   min-width: 200px;
-   max-width: 270px;
-   margin: 0 auto;
+  h2 {
+    font-size: 47px;
+    padding: 0 0 15px;
   }
- }
+  h3 {
+    font-size: 21px;
+    line-height: 1.25;
+    padding: 0 0 10px;
+  }
+  p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .inner {
+    padding: 0 15px;
+  }
+  .row {
+    @include row(center);
+    margin: 50px 0 0;
+    >* {
+      margin: 0 20px;
+    }
+    a {
+      display: block;
+      width: 90%;
+      min-width: 200px;
+      max-width: 270px;
+      margin: 0 auto;
+    }
+  }
 }
 
 // content
 .content-static {
- background: $white;
- padding: 40px 0;
- .row {
-  @include row();
- }
- aside {
-  width: 260px;
-  ul {
-   li {
-    text-align: center;
-    text-transform: uppercase;
-    font-family: $font-medium;
-    font-size: 14px;
-    background: #F7F7F7;
-    &:hover {
-     background: $white;
-    }
-    a {
-     color: $dark;
-     text-decoration: none;
-     line-height: 60px;
-     display: block;
-     border-top: 1px solid $border;
-     &.selected {
-      background: $white;
-     }
-     &.nav-title {
-      background: $white;
-      border-top: none;
-      svg {
-       width: 11px;
-       height: 12px;
+  background: $white;
+  padding: 40px 0;
+  .row {
+    @include row();
+  }
+  aside {
+    width: 260px;
+    ul {
+      border-bottom: 1px solid $border;
+      li {
+        text-align: center;
+        text-transform: uppercase;
+        font-family: $font-medium;
+        font-size: 14px;
+        background: #F7F7F7;
+        &:hover {
+          background: $white;
+        }
+        a {
+          color: $dark;
+          text-decoration: none;
+          line-height: 60px;
+          display: block;
+          position: relative;
+          border-top: 1px solid $border;
+          border-left: 1px solid $border;
+          &.selected {
+            background: $white;
+            // &:after{
+            //   content: "";
+            //   position: absolute;
+            //   display: block;
+            //   top: 50%;
+            //   right: -7px;
+            //   width: 14px;
+            //   height: 14px;
+            //   background: $white;
+            //   border-top: 1px solid $border;
+            //   border-left: 1px solid $border;
+            //   @include transform(translate(0,-50%) rotate(-45deg));
+            // }
+          }
+          &.nav-title {
+            background: $white;
+            border-top: none;
+            border-left: none;
+            svg {
+              width: 11px;
+              height: 12px;
+            }
+          }
+        }
       }
-     }
     }
-   }
   }
- }
- .sources-box {
-  width: 100%;
-  .sources-content {
-   padding: 0 35px;
-   min-height: 250px;
-   position: relative;
+  .sources-box {
+    width: 100%;
+    border-left: 1px solid $border;
+    .sources-content {
+      padding: 0 35px;
+      min-height: 250px;
+      position: relative;
+    }
   }
- }
 }
 
 

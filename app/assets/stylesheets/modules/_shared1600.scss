@@ -219,3 +219,20 @@
     height: 12px;
   }
 }
+
+.feedback-link {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  z-index: 2;
+  background: #FFD24D;
+  color: $dark;
+  text-decoration: none;
+  padding: 8px;
+  @include transform(rotate(90deg) translate(50%,0));
+  @include transform-origin(100%,0);
+  &:hover {
+    background: darken(#FFD24D,5%);
+  }
+}

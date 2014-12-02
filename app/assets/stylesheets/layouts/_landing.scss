@@ -1,118 +1,106 @@
 // Main Slider
 .main-slider {
- width: 100%;
- height: 320px;
- background: #CCC;
- position: relative;
- margin-top: -60px;
- z-index: 3;
- @media (min-width: $br-mobile) {
-  height: 630px;
- }
-
-
- .main-slider-viewport {
- 	position: absolute;
- 	top: 0;
- 	left: 0;
- 	width: 100%;
- 	height: 100%;
- 	overflow: hidden;
-  z-index: 1;
- }
-
- nav {
-  position: absolute;
-  bottom: 69px;
-  left: 50%;
-  z-index: 2;
-  @include transform(translate(-50%,0));
-  h2 {
-   background: $white;
-   font-family: $font-light;
-   text-transform: uppercase;
-   white-space: nowrap;
-   font-size: 21px;
-   padding: 15px 80px 15px;
-   border-radius: 50px;
-   box-shadow: 0 1px 3px rgba(#000,0.25);
-   .box-button {
-    display: inline-block;
-    position: relative;
-    .btn {
-     -webkit-backface-visibility: hidden;
-     backface-visibility: hidden;
-    }
-    &.active {
-     .submenu-tooltip {
-      opacity: 1;
-      visibility: visible;
-     }
-    }
-   }
-  }
- }
-
- .circle-marker {
-  @extend .btn-arrow;
-  display: none;
-  top: auto;
-  bottom: 0;
-  box-shadow: 0 0 0 6px $white;
-  @include transform(translate(-50%,50%));
-  @media (min-width: $br-mobile) {
-   display: block;
-  }
- }
-
- .feedback-link {
-  display: block;
-  position: absolute;
-  top: 50%;
-  right: 0;
-  z-index: 2;
-  background: #FFD24D;
-  color: $dark;
-  text-decoration: none;
-  padding: 8px;
-  @include transform(rotate(90deg) translate(50%,0));
-  @include transform-origin(100%,0);
-  &:hover {
-   background: darken(#FFD24D,5%);
-  }
- }
-
- .main-slider-pagination {
   width: 100%;
-  position: absolute;
-  bottom: 20px;
-  right: 0;
-  z-index: 2;
-  display: none;
+  height: 320px;
+  background: #CCC;
+  position: relative;
+  margin-top: -60px;
+  z-index: 3;
   @media (min-width: $br-mobile) {
-   display: block;
+    min-height: 500px;
+    padding-bottom: 40%;  
   }
-  ul {
-   float: right;
-   li {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: 1px solid #94A7C5;
-    background: #CEE1FF;
-    float: left;
-    margin: 0 0 0 10px;
-    &:first-child { margin: 0;}
-    &.current, &:hover {
-     background: #8493AA;
-     border: 1px solid #696F79;
+
+
+  .main-slider-viewport {
+  	position: absolute;
+  	top: 0;
+  	left: 0;
+  	width: 100%;
+  	height: 100%;
+  	overflow: hidden;
+    z-index: 1;
+  }
+
+  nav {
+    position: absolute;
+    bottom: 45px;
+    left: 50%;
+    z-index: 2;
+    @include transform(translate(-50%,0));
+    @media (min-width: 1350px) {
+      bottom: 69px;
     }
-
-   }
+    h2 {
+      background: $white;
+      font-family: $font-light;
+      text-transform: uppercase;
+      white-space: nowrap;
+      font-size: 21px;
+      padding: 10px 80px 10px;
+      border-radius: 50px;
+      box-shadow: 0 1px 3px rgba(#000,0.25);
+      @media (min-width: 1350px) {
+        padding: 15px 80px 15px;
+      }
+      .box-button {
+        display: inline-block;
+        position: relative;
+        .btn {
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+        }
+        &.active {
+         .submenu-tooltip {
+            opacity: 1;
+            visibility: visible;
+          }
+        }
+      }
+    }
   }
- }
 
+  .circle-marker {
+    @extend .btn-arrow;
+    display: none;
+    top: auto;
+    bottom: 0;
+    box-shadow: 0 0 0 6px $white;
+    @include transform(translate(-50%,50%));
+    @media (min-width: $br-mobile) {
+      display: block;
+    }
+  }
+
+  .main-slider-pagination {
+    width: 100%;
+    position: absolute;
+    bottom: 20px;
+    right: 0;
+    z-index: 2;
+    display: none;
+    @media (min-width: $br-mobile) {
+      display: block;
+    }
+    ul {
+      float: right;
+      li {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 1px solid #94A7C5;
+        background: #CEE1FF;
+        float: left;
+        margin: 0 0 0 10px;
+        &:first-child { margin: 0;}
+        &.current, &:hover {
+          background: #8493AA;
+          border: 1px solid #696F79;
+        }
+      }
+    }
+  }
 }
 
 .slide {

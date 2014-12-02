@@ -163,7 +163,7 @@
   }
   @media (min-width: $br-mobile){
     // Countries
-    .is-map-page &, .is-countries-page &{
+    .is-countries-page &{
       border-bottom: none;
       h1{
         position: relative;
