@@ -42,10 +42,6 @@ class StaticController < ApplicationController
     @title = 'Get Involved'
   end
 
-  def coming
-    @title = 'Coming soon'
-  end
-
   def applications
     @title = 'Applications'
   end

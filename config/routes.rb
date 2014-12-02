@@ -26,8 +26,6 @@ Gfw::Application.routes.draw do
   get '/terms' => 'static#terms'
   get '/accept_terms' => 'static#accept_terms'
 
-  get '/comingsoon' => 'static#coming'
-
   # map
   get '/map' => 'map#index'
   get '/map/*path' => 'map#index'
