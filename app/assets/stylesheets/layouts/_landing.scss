@@ -7,7 +7,8 @@
  margin-top: -60px;
  z-index: 3;
  @media (min-width: $br-mobile) {
-  height: 630px;
+  min-height: 500px;
+  padding-bottom: 40%;  
  }
 
 
@@ -23,19 +24,25 @@
 
  nav {
   position: absolute;
-  bottom: 69px;
+  bottom: 45px;
   left: 50%;
   z-index: 2;
   @include transform(translate(-50%,0));
+  @media (min-width: 1350px) {
+    bottom: 69px;
+  }
   h2 {
-   background: $white;
-   font-family: $font-light;
-   text-transform: uppercase;
-   white-space: nowrap;
-   font-size: 21px;
-   padding: 15px 80px 15px;
-   border-radius: 50px;
-   box-shadow: 0 1px 3px rgba(#000,0.25);
+    background: $white;
+    font-family: $font-light;
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-size: 21px;
+    padding: 10px 80px 10px;
+    border-radius: 50px;
+    box-shadow: 0 1px 3px rgba(#000,0.25);
+    @media (min-width: 1350px) {
+      padding: 15px 80px 15px;
+    }
    .box-button {
     display: inline-block;
     position: relative;
