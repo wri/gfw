@@ -1,23 +1,16 @@
 .feedback-link {
+  display: block;
   position: absolute;
-  z-index: 1;
-  top: 50%; right: 0;
-  margin-top: -40px;
-  width: 30px;
-  border: 1px solid #697E1D;
-  border-right: 0;
-  height: 80px;
-  font-weight: bold;
-  font-size: 11px;
-  text-align: center;
-  text-transform: uppercase;
-  background: $cGreen;
-
-  span {
-    display: block;
-    position: relative;
-    top: 20px;
-    color: #fff;
-    @include rotate(90deg);
+  top: 50%;
+  right: 0;
+  z-index: 2;
+  background: #FFD24D;
+  color: $dark;
+  text-decoration: none;
+  padding: 8px;
+  @include transform(rotate(90deg) translate(50%,0));
+  @include transform-origin(100%,0);
+  &:hover {
+    background: darken(#FFD24D,5%);
   }
 }
