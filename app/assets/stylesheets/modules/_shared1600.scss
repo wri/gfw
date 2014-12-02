@@ -161,7 +161,7 @@
     padding: 20px 0;
     @media (min-width: $br-mobile){
       padding: 0 0 20px;
-    }    
+    }
   }
   .row{
     @include row(flex-start);
@@ -171,15 +171,15 @@
       @media (min-width: $br-mobile){
         @include col(33.3333);
         @include display-flex();
-      }    
+      }
       padding: 0 15px;
       .card{
         position: relative;
-        padding: 40px 25px 80px;
+        padding: 40px 25px 100px;
         text-align: center;
-        border: 1px solid $border; 
+        border: 1px solid $border;
         overflow: hidden;
-        background: $white;       
+        background: $white;
       }
       h2{
         text-transform: uppercase;
@@ -195,13 +195,13 @@
       }
       .btn{
         position: absolute;
-        bottom: 20px;
+        bottom: 35px;
         left: 50%;
         @include transform(translate(-50%,0));
 
       }
     }
-  }  
+  }
 }
 
 // BACK-BTN
@@ -216,5 +216,5 @@
     margin: 0 5px 0 0;
     width: 11px;
     height: 12px;
-  }    
+  }
 }
