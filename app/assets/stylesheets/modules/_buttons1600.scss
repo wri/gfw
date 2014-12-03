@@ -52,7 +52,7 @@
     color: $white !important;
     background: $dark;
     &:hover {
-      background: darken($dark,5%);
+      background: darken($dark,25%);
     }
   }
   &.white{
@@ -67,15 +67,14 @@
     background: $white;
     border-color: $cGreen;
     &:hover {
-      background: $cGreen;
-      color: $white !important;
+      background: darken($white,5%);
     }
   }
   &.green{
     color: $white !important;
     background: $cGreen;
     &:hover {
-      background: darken($cGreen,5%);
+      background: darken($cGreen,10%);
     }
   }
   &.light{

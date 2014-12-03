@@ -451,55 +451,55 @@
 
 // KEEP UPDATED
 .stories-box {
- width: 100%;
- ul {
-  position: relative;
-  li {
-   padding: 40px 0;
-   border-top: 1px solid $border;
-   position: relative;
-   &:first-child { margin-top: 20px;}
-   a {
-    text-decoration: none;
+  width: 100%;
+  ul {
     position: relative;
-    @include row(space-between);
-   }
-   figure {
-    width: 200px;
-    position: absolute;
-    top: 50%;
-    right: 0;
-    @include transform(translate(0,-50%));
-    .bg {
-     // background: #000;
-     background-size: cover;
-     width: 75%;
-     padding-bottom: 75%;
-     border-radius: 50%;
-     margin: 0 auto;
-     border: 1px solid #999;
+    li {
+      padding: 40px 0;
+      border-top: 1px solid $border;
+      position: relative;
+      &:first-child { margin-top: 20px;}
+      a {
+        text-decoration: none;
+        position: relative;
+        @include row(flex-start);
+      }
+      figure {
+        width: 200px;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        @include transform(translate(0,-50%));
+        .bg {
+          // background: #000;
+          background-size: cover;
+          width: 75%;
+          padding-bottom: 75%;
+          border-radius: 50%;
+          margin: 0 auto;
+          border: 1px solid #999;
+        }
+      }
+      .info {
+        width: 60%;
+        font-size: 14px;
+        h4 {
+          color: $dark;
+          font-size: 21px;
+          line-height: 1.25;
+          padding: 0 0 5px;
+        }
+        p {
+          color: #999999;
+          font-family: $font-regular;
+          line-height: 1.25;
+        }
+        .btn {
+          margin: 20px 0 0;
+        }
+      }
     }
-   }
-   .info {
-    width: 60%;
-    font-size: 14px;
-    h4 {
-     color: $dark;
-     font-size: 21px;
-     line-height: 1.25;
-     padding: 0 0 5px;
-    }
-    p {
-     color: #999999;
-     font-family: $font-regular;
-     line-height: 1.25;
-    }
-    .btn {
-     margin: 20px 0 0;
-    }
-   }
   }
- }
   .section-footer{
     border-top: 1px solid $border;
     @include row(flex-end);
@@ -526,7 +526,7 @@
           position: absolute;
           top: 50%;
           display: inline-block;
-          background-color: $border;
+          background-color: $cGreen;;
           background-repeat: no-repeat;
           background-position: center;
           border-radius: 50%;
@@ -554,8 +554,9 @@
       }
       &:hover{
         .text{
+          color: darken($cGreen,10%);
           .icon{
-            background-color: $cGreen;
+            background-color: darken($cGreen,10%);
           }
         }
       }
