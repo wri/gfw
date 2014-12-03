@@ -228,11 +228,12 @@
 
 .feedback-link {
   display: block;
-  position: absolute;
+  position: fixed;
   top: 50%;
   right: 0;
   z-index: 2;
   background: #FFD24D;
+  text-transform: uppercase;
   color: $dark;
   text-decoration: none;
   padding: 8px;
