@@ -36,14 +36,15 @@
 
   // Google translate
   function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-      pageLanguage: '', 
-      includedLanguages: 'ar,es,en,fr,id,pt,ru,zh-CN,de,uk,ro,tr,it,hi,km', 
-      layout: google.translate.TranslateElement.InlineLayout.SIMPLE, 
-      gaTrack: true, 
-      gaId: '<%= ENV["ANALYTICS_PROPERTY_ID"] %>'
-    }, 'google_translate_element');
-  }
+    new google.translate.TranslateElement(
+      {
+        pageLanguage: '',
+        includedLanguages: 'ar,es,en,fr,id,pt,ru,zh-CN,de,uk,ro,tr,it,hi,km',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      },
+      'google_translate_element');
+}
 </script>
 <script src="/assets/wri-nav.js"></script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
