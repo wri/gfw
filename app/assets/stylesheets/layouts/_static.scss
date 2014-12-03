@@ -383,30 +383,144 @@
         }
       }
 
-      &.wri { height: 31px; width: 269px; @include logos-sprite(wri); }
-      &.google { height: 52px; @include logos-sprite(google); }
-      &.esri { height: 28px; @include logos-sprite(esri); }
-      &.universitymaryland { height: 52px; @include logos-sprite(universitymaryland); }
-      &.unep { height: 52px; @include logos-sprite(unep); }
-      &.imazon { height: 52px; @include logos-sprite(imazon); }
-      &.cfgd { height: 52px; @include logos-sprite(cfgd); }
-      &.osfac { height: 57px; @include logos-sprite(osfac); }
-      &.gfwca { height: 44px; @include logos-sprite(gfwca); }
-      &.scanex { height: 16px; @include logos-sprite(scannex); }
-      &.twrus { height: 36px; width: 147px; @include logos-sprite(twrus); }
-      &.norwegian { height: 55px; @include logos-sprite(norwegian); }
-      &.usaid { height: 64px; @include logos-sprite(usaid); }
-      &.gef { height: 59px; @include logos-sprite(gef); }
-      &.ukaid { height: 52px; @include logos-sprite(ukaid); }
-      &.tilia { height: 38px; @include logos-sprite(tilia); }
-      &.goodall { height: 36px; width: 147px; @include logos-sprite(goodall); }
-      &.cartodb { height: 45px; @include logos-sprite(cartodb); }
-      &.vizzuality { height: 45px; @include logos-sprite(vizzuality); }
-      &.blueraster { height: 45px; width: 97px; @include logos-sprite(blueraster); }
-      &.sida { height: 70px; width: 122px; @include logos-sprite(sida); }
-      &.danida { height: 26px; width: 90px; @include logos-sprite(danida); }
-      &.bobolink { height: 53px; width: 105px; @include logos-sprite(bobolink); }
-      &.vizzuality-big { height: 75px; width: 151px; @include logos-sprite(vizzuality-big); }
+      &.wri { 
+          height: 32px; width: 95px; @include logos-sprite(wri);
+          &:hover{
+            @include logos-sprite(wrihover);
+          }
+      }
+      &.google { 
+          height: 29px; width: 85px; @include logos-sprite(google);
+          &:hover{
+            @include logos-sprite(googlehover);
+          }
+      }
+      &.esri { 
+          height: 33px; width: 87px; @include logos-sprite(esri);
+          &:hover{
+            @include logos-sprite(esrihover);
+          }
+      }
+      &.universitymaryland { 
+          height: 51px; width: 56px; @include logos-sprite(universityofmaryland);
+          &:hover{
+            @include logos-sprite(universityofmarylandhover);
+          }
+      }
+      &.unep { 
+          height: 57px; width: 49px; @include logos-sprite(unep);
+          &:hover{
+            @include logos-sprite(unephover);
+          }
+      }
+      &.imazon { 
+          height: 24px; width: 79px; @include logos-sprite(imazon);
+          &:hover{
+            @include logos-sprite(imazonhover);
+          }
+      }
+      &.cfgd { 
+          height: 40px; width: 84px; @include logos-sprite(centerforglobaldevelopment);
+          &:hover{
+            @include logos-sprite(centerforglobaldevelopmenthover);
+          }
+      }
+      &.osfac { 
+          height: 56px; width: 44px; @include logos-sprite(osfac);
+          &:hover{
+            @include logos-sprite(osfachover);
+          }
+      }
+      &.gfwca { 
+          height: 44px; width: 42px; @include logos-sprite(globalforestwatchcanada);
+          &:hover{
+            @include logos-sprite(globalforestwatchcanadahover);
+          }
+      }
+      &.scanex { 
+          height: 20px; width: 110px; @include logos-sprite(scannex);
+          &:hover{
+            @include logos-sprite(scannexhover);
+          }
+      }
+      &.twrus { 
+          height: 28px; width: 110px; @include logos-sprite(tipos);
+          &:hover{
+            @include logos-sprite(tiposhover);
+          }
+      }
+      &.norwegian { 
+          height: 46px; width: 110px; @include logos-sprite(norwegianministri);
+          &:hover{
+            @include logos-sprite(norwegianministrihover);
+          }
+      }
+      &.usaid { 
+          height: 64px; width: 80px; @include logos-sprite(usaid);
+          &:hover{
+            @include logos-sprite(usaidhover);
+          }
+      }
+      &.gef { 
+          height: 59px; width: 51px; @include logos-sprite(gef);
+          &:hover{
+            @include logos-sprite(gefhover);
+          }
+      }
+      &.ukaid { 
+          height: 47px; width: 43px; @include logos-sprite(ukaid);
+          &:hover{
+            @include logos-sprite(ukaidhover);
+          }
+      }
+      &.tilia { 
+          height: 25px; width: 67px; @include logos-sprite(thetiliafund);
+          &:hover{
+            @include logos-sprite(thetiliafundhover);
+          }
+      }
+      &.goodall { 
+          height: 26px; width: 110px; @include logos-sprite(thejanegoodallinstitute);
+          &:hover{
+            @include logos-sprite(thejanegoodallinstitutehover);
+          }
+      }
+      &.cartodb { 
+          height: 39px; width: 110px; @include logos-sprite(cartodb);
+          &:hover{
+            @include logos-sprite(cartodbhover);
+          }
+      }
+      &.vizzuality { 
+          height: 58px; width: 109px; @include logos-sprite(vizzuality);
+          &:hover{
+            @include logos-sprite(vizzualityhover);
+          }
+      }
+      &.blueraster { 
+          height: 48px; width: 110px; @include logos-sprite(blueraster);
+          &:hover{
+            @include logos-sprite(bluerasterhover);
+          }
+      }
+      &.sida { 
+          height: 55px; width: 110px; @include logos-sprite(sida);
+          &:hover{
+            @include logos-sprite(sidahover);
+          }
+      }
+      &.danida { 
+          height: 15px; width: 82px; @include logos-sprite(danida);
+          &:hover{
+            @include logos-sprite(danidahover);
+          }
+      }
+      &.bobolink { 
+          height: 53px; width: 105px; @include logos-sprite(bobolink);
+      }
+      &.vizzuality-big { 
+          height: 75px; width: 151px; @include logos-sprite(vizzuality-big);
+      }
     }
    }
   }
