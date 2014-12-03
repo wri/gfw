@@ -1,4 +1,4 @@
-.reset-btn{
+.reset-btn {
   -webkit-appearance: none;
   border: 1px solid transparent;
   background: none;
@@ -27,19 +27,19 @@
 
   &:hover {
     background: $cGreen;
-    text-decoration: none !important; 
+    text-decoration: none !important;
   }
 
-  &.lowercase{ text-transform: lowercase;}
-  &.uppercase{ text-transform: uppercase;}
+  &.lowercase { text-transform: lowercase;}
+  &.uppercase { text-transform: uppercase;}
 
   // Sizes
-  &.medium{
+  &.medium {
     // font-size: 18px;
     text-transform: uppercase;
     padding: 0px 35px;
   }
-  &.huge{
+  &.huge {
     font-size: 21px;
     text-transform: uppercase;
     height: 38px;
@@ -48,21 +48,21 @@
   }
 
   // Colors
-  &.dark{
+  &.dark {
     color: $white !important;
     background: $dark;
     &:hover {
       background: darken($dark,5%);
     }
   }
-  &.white{
+  &.white {
     color: $dark !important;
     background: $white;
     &:hover {
       background: darken($white,5%);
     }
   }
-  &.gray{
+  &.gray {
     color: $dark !important;
     background: $white;
     border-color: $cGreen;
@@ -71,21 +71,21 @@
       color: $white !important;
     }
   }
-  &.green{
+  &.green {
     color: $white !important;
     background: $cGreen;
     &:hover {
       background: darken($cGreen,5%);
     }
   }
-  &.light{
+  &.light {
     color: $white !important;
     background: #CBCCBF;
     &:hover {
       background: darken(#CBCCBF,5%);
     }
   }
-  &.light2{
+  &.light2 {
     color: $dark !important;
     background: $border;
     font-family: $font-regular;
@@ -93,7 +93,13 @@
       background: darken($border,5%);
     }
   }
-
+  &.soon {
+    color: #ccc !important;
+    background: none;
+    font-family: $font-regular;
+    text-transform: uppercase;
+    cursor: default;
+  }
 }
 
 
