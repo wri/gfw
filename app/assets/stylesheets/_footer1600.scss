@@ -157,6 +157,10 @@
                     margin: 8px 0 0;
                     &:first-child{ margin: 0;}
                 }
+                a{
+                    color: $dark;
+                    font-family: $font-regular;
+                }
 	    		strong,span{ display: block;}
 	    		strong {
 	    			font-family: $font-regular;
