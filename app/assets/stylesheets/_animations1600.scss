@@ -1,4 +1,4 @@
-// OPACITY
+// LOADER
 @-webkit-keyframes loader {
   from { @include transform(translate(-50%,-50%) rotate(0deg));}
   to { @include transform(translate(-50%,-50%) rotate(360deg));}
@@ -14,4 +14,35 @@
 @keyframes loader {
   from { @include transform(translate(-50%,-50%) rotate(0deg));}
   to { @include transform(translate(-50%,-50%) rotate(360deg));}
+}
+
+
+// LOADER
+@-webkit-keyframes updown {
+  0%{ @include transform(translate(0%,0%));}
+  25%{ @include transform(translate(0%,-50%));}
+  50%{ @include transform(translate(0%,0%));}
+  75%{ @include transform(translate(0%,50%));}
+  100%{ @include transform(translate(0%,0%));}
+}
+@-moz-keyframes updown {
+  0%{ @include transform(translate(0%,0%));}
+  25%{ @include transform(translate(0%,-50%));}
+  50%{ @include transform(translate(0%,0%));}
+  75%{ @include transform(translate(0%,50%));}
+  100%{ @include transform(translate(0%,0%));}
+}
+@-ms-keyframes updown {
+  0%{ @include transform(translate(0%,0%));}
+  25%{ @include transform(translate(0%,-50%));}
+  50%{ @include transform(translate(0%,0%));}
+  75%{ @include transform(translate(0%,50%));}
+  100%{ @include transform(translate(0%,0%));}
+}
+@keyframes updown {
+  0%{ @include transform(translate(0%,0%));}
+  25%{ @include transform(translate(0%,-50%));}
+  50%{ @include transform(translate(0%,0%));}
+  75%{ @include transform(translate(0%,50%));}
+  100%{ @include transform(translate(0%,0%));}
 }
