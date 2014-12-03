@@ -1,3 +1,36 @@
+.footer-fixed{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1001;
+    background: #EDEDE8;
+    @include transform(translate(0,100%));
+    @include transition(all 0.5s $easeInOutCubic);
+    .footer-fixed-container{
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+    }
+    &.active{
+        @include transform(translate(0,0%));
+    }
+    .footer-toggle{
+        position: absolute;
+        left: 50%;
+        bottom: 100%;
+        padding: 10px;
+        z-index: 2; 
+        @include transform(translate(-50%,0)); 
+        @include transition(all 0.5s $easeInOutCubic);
+        &.active{
+            @include transform(translate(-50%,100%));
+        }
+
+    }
+
+}
 .layout-footer {
 	background: #EDEDE8;
     clear: both;
@@ -186,6 +219,7 @@
 .footer-share-container {
     @include display-flex();
     height: 155px;
+    background: $white;
     @include justify-content(space-around);
     @include align-items(center);
     border-top: 1px solid $border;

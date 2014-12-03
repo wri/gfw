@@ -4,27 +4,31 @@
 }
 // HEADER
 .header-page {
- padding: 30px 20px;
- margin: 0 0 30px;
- border-bottom: 1px solid $border;
- @media (min-width: $br-mobile) {
-  padding: 60px 20px;
-  margin: 0 0 50px;
- }
- h1 {
-  text-align: center;
-  color: $cGreen;
-  text-transform: uppercase;
-  font-size: 21px;
+  padding: 30px 20px;
   @media (min-width: $br-mobile) {
-   font-size: 47px;
+    padding: 60px 20px 40px;
   }
- }
- p {
-  text-align: center;
-  color: $dark;
-  text-transform: uppercase;
- }
+  h1 {
+    text-align: center;
+    color: $cGreen;
+    font-size: 21px;
+    span{
+      color: $dark;
+    }
+    @media (min-width: $br-mobile) {
+      font-size: 47px;
+    }
+  }
+  p {
+    font-size: 14px;
+    text-align: center;
+    color: $dark;
+    text-transform: uppercase;
+    padding: 10px 0 0; 
+    @media (min-width: $br-mobile) {
+      font-size: 20px;
+    }
+  }
 }
 
 
@@ -143,6 +147,22 @@
     border-left: 1px solid $border;
     margin-left: 260px;
     min-height: 500px;
+    position: relative;
+    &:before, &:after{
+      content: "";
+      position: absolute;
+      left: -1px;
+      height: 40px; 
+      width: 1px;
+      background: $border;
+
+    }
+    &:before{
+      top: 100%;
+    }
+    &:after{
+      bottom: 100%;
+    }
     .sources-content {
       padding: 0 35px;
       position: relative;
@@ -671,7 +691,7 @@
  overflow-y: scroll;
  overflow-x: hidden;
  margin: 0 auto;
- max-width: 700px;
+ max-width: 960px;
  height: 220px;
  padding: 20px;
  border: 1px solid #CCC;
