@@ -36,8 +36,8 @@
 // STATIC PAGE
 // header
 .header-static {
-  background: $light;
-  color: $dark;
+  background: $dark;
+  color: $white;
   padding: 70px 0 50px;
   header {
   // max-width: 1024px;
@@ -115,19 +115,16 @@
           border-left: 1px solid $border;
           &.selected {
             background: $white;
-            // &:after{
-            //   content: "";
-            //   position: absolute;
-            //   display: block;
-            //   top: 50%;
-            //   right: -7px;
-            //   width: 14px;
-            //   height: 14px;
-            //   background: $white;
-            //   border-top: 1px solid $border;
-            //   border-left: 1px solid $border;
-            //   @include transform(translate(0,-50%) rotate(-45deg));
-            // }
+            &:after{
+              content: "";
+              position: absolute;
+              display: block;
+              bottom: 0%;
+              left: 0px;
+              width: 100%;
+              height: 4px;
+              background: rgba($cGreen,0.5);
+            }
           }
           &.nav-title {
             background: $white;
@@ -136,6 +133,11 @@
             svg {
               width: 11px;
               height: 12px;
+            }
+            &:hover{
+              svg{
+                // @include animation(updown,1s,infinite,linear);
+              }
             }
           }
         }

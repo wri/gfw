@@ -23,7 +23,6 @@
   line-height: 36px;
   text-align: center;
   font-family: $font-medium;
-  font-family: inherit;
   white-space: nowrap;
 
   &:hover {
@@ -54,6 +53,13 @@
     background: $dark;
     &:hover {
       background: darken($dark,5%);
+    }
+  }
+  &.white{
+    color: $dark !important;
+    background: $white;
+    &:hover {
+      background: darken($white,5%);
     }
   }
   &.gray{

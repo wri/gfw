@@ -156,6 +156,7 @@
   padding: 70px 0;
   background: $light;
   .section-title{
+    color: $cGreen;
     text-align: center;
     font-size: 32px;
     font-family: $font-light;
@@ -168,23 +169,28 @@
     @include row(flex-start);
     @include flex-wrap(wrap);
     .col{
+      padding: 0 15px;
+      border-left: 1px solid $border;
       @include col(100);
+
       @media (min-width: $br-mobile){
         @include col(33.3333);
         @include display-flex();
       }
-      padding: 0 15px;
+      &:first-child{
+        border-left: none;
+      }
       .card{
         position: relative;
         padding: 40px 25px 100px;
         text-align: center;
-        border: 1px solid $border;
         overflow: hidden;
-        background: $white;
       }
       h2{
         text-transform: uppercase;
         font-size: 21px;
+        color: $dark;
+        font-family: $font-regular;
         padding: 0 0 15px;
       }
       .content{
