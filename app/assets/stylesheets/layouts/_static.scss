@@ -143,6 +143,22 @@
     border-left: 1px solid $border;
     margin-left: 260px;
     min-height: 500px;
+    position: relative;
+    &:before, &:after{
+      content: "";
+      position: absolute;
+      left: -1px;
+      height: 40px; 
+      width: 1px;
+      background: $border;
+
+    }
+    &:before{
+      top: 100%;
+    }
+    &:after{
+      bottom: 100%;
+    }
     .sources-content {
       padding: 0 35px;
       position: relative;
