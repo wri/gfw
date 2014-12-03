@@ -25,6 +25,18 @@
   overflow: auto !important;
 }
 
+.countries_list_index {
+  @extend .clearfix;
+
+  @include display-flex();
+  @include flex-wrap(wrap);
+  @include justify-content(center);
+  @include align-content(center);
+
+}
+
+
+
 .countries_list {
   @extend .clearfix;
 
