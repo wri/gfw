@@ -21,8 +21,8 @@
         left: 50%;
         bottom: 100%;
         padding: 10px;
-        z-index: 2; 
-        @include transform(translate(-50%,0)); 
+        z-index: 2;
+        @include transform(translate(-50%,0));
         @include transition(all 0.5s $easeInOutCubic);
         &.active{
             @include transform(translate(-50%,100%));
@@ -61,9 +61,6 @@
 	    				color: #555555;
                         @include transition(all .25s $easeInOutCubic);
 	    			}
-                    &.shape-country{
-                        svg{ @include transform(scale(1.32));}
-                    }
 	    			&:hover {
                         &.fire{
                             svg{ fill: $red; }
