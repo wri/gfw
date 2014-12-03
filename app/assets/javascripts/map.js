@@ -23,11 +23,12 @@ require([
   'map/views/AnalysisToolView',
   'map/views/AnalysisResultsView',
   'map/views/ShareView',
+  'views/FooterView',
   'views/DialogView',
   '_string'
 ], function($, _, Class, Backbone, utils, mps, Router,ExperimentsPresenter, AnalysisService, CountryService, DataService,
     LayersNavView, MapView, LegendView, ThresholdView, SearchboxView, MaptypeView, TimelineView,
-    AnalysisToolView, AnalysisResultsView, ShareView, DialogView) {
+    AnalysisToolView, AnalysisResultsView, ShareView, FooterView, DialogView) {
 
   'use strict';
 
@@ -81,6 +82,7 @@ require([
       new TimelineView();
       new AnalysisResultsView();
       new ShareView();
+      new FooterView();
       new DialogView();
 
 
