@@ -9,6 +9,13 @@
   &.active{
     height: 100%;
     overflow: auto;
+    .layout-header-bottom{
+      height: 100%;
+      .inner{
+        height: 100%;
+        overflow: auto;
+      }
+    }
   }
   @media (min-width: $br-mobile){
     position: relative;
@@ -37,14 +44,15 @@
     >div{
       width: 100%;
       overflow-y: hidden;
-      overflow-x: scroll; /* has to be scroll, not auto */
+      overflow-x: scroll;
       -webkit-overflow-scrolling: touch;
       @media (min-width: $br-mobile){
         width: auto;
         overflow: visible;
       }
       >ul {
-        width: 800px;
+        width: 600px;
+        padding: 0 5px;
         height: 55px;       
         @media (min-width: $br-mobile){
           width: auto;
@@ -316,20 +324,18 @@
 	h1 {
     width: 60px;
     height: 60px;
-    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
 		text-indent: -9999px;
 		overflow: hidden;
-    z-index: 2;
+    z-index: 11;
     margin: 0 0 0 15px;
     @include retina-image('logo-new.png','logo-new@2x.png');
     @media (min-width: $br-mobile){
       width: 90px;
       height: 90px;
-      position: absolute;
-      top: 0;
-      left: 0;
       margin: 0;
-      float: none;
     }
 		a {
 			display: block;
@@ -342,7 +348,7 @@
   // Search Widget mobile
   form{
     padding: 17px 60px 17px 15px;
-    border-top: 1px solid #CCC;
+    // border-top: 1px solid #CCC;
     >input {
       border: none;
       border-bottom: 2px solid #B6B6BA;
@@ -365,6 +371,7 @@
 	nav {
 		border-bottom: 1px solid #EAECEF;
     clear: both;
+    padding: 60px 0;
     background: $white;
     display: none;
     position: relative;
@@ -372,6 +379,7 @@
       display: block;
     }
     @media (min-width: $br-mobile){
+      padding: 0;
       display: block !important;
       clear: none;
       background: none;
