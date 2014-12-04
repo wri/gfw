@@ -14,6 +14,7 @@
       .inner{
         height: 100%;
         overflow: auto;
+        -webkit-overflow-scrolling: touch;
       }
     }
   }
@@ -51,7 +52,7 @@
         overflow: visible;
       }
       >ul {
-        width: 600px;
+        width: 580px;
         padding: 0 5px;
         height: 55px;       
         @media (min-width: $br-mobile){
@@ -102,6 +103,7 @@
             }
             .tooltip1{
               margin: 0;
+              color: $dark;
               line-height: normal;
               @media (max-width: $br-mobile - 1){
                 position: relative;
@@ -179,7 +181,7 @@
     // Btn-menu
     .btn-menu{
       // @extend .reset-btn;
-      width: 70px;
+      width: 55px;
       height: 100%;
       position: absolute;
       top: 50%;
@@ -187,10 +189,21 @@
       display: block;
       z-index: 5;
       box-shadow: none;
-      background: $light;
+      background-color: $light;
       border: none;
       outline: none;
       @include transform(translate(0,-50%));
+      &:after{
+        content: "";
+        width: 20px;
+        height: 100%;
+        right: 100%;
+        position: absolute;
+        top: 0;
+        z-index: 2;
+        // background: linear-gradient(to right, rgba(247,247,247,0) 0%,rgba(247,247,247,1) 23%,rgba(247,247,247,1) 100%);  
+        @include gradient(left,rgba(247,247,247,0),rgba(247,247,247,1));
+      }
       @media (min-width: $br-mobile){
         display: none;
       }
@@ -207,7 +220,7 @@
       &.active{
         background: $white;
         border-left: 1px solid #CCC;
-        box-shadow: 0 1px 0 $white;
+        box-shadow: 0 -2px 0 $white;
         .icon{
           margin: 0 auto;
           &.hamburguer{
@@ -347,7 +360,7 @@
 
   // Search Widget mobile
   form{
-    padding: 17px 60px 17px 15px;
+    padding: 17px 60px 17px 90px;
     // border-top: 1px solid #CCC;
     >input {
       border: none;
@@ -371,7 +384,7 @@
 	nav {
 		border-bottom: 1px solid #EAECEF;
     clear: both;
-    padding: 60px 0;
+    padding: 0 0 60px;
     background: $white;
     display: none;
     position: relative;
@@ -496,7 +509,7 @@
 
 // Google Translate
 #google_translate_element_box2{
-  padding: 0 15px 10px;
+  padding: 15px 15px 10px;
   @media (min-width: $br-mobile){
     display: none;
   }
