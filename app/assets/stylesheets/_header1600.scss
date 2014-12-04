@@ -37,8 +37,7 @@
     position: relative;
     padding: 4px 10px;
     border-top: none;
-    border-bottom: 2px solid $border;
-
+    border-bottom: 1px solid $border;
   }
   @include clearfix();
   nav {

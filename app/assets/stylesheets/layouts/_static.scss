@@ -277,9 +277,10 @@
      font-family: $font-medium;
     }
     p {
-     padding: 10px 0 0;
-     line-height: 1.5;
-     font-size: 14px;
+      color: $dark;
+      padding: 10px 0 0;
+      line-height: 1.5;
+      font-size: 14px;
     }
     a {
      text-decoration: none;
