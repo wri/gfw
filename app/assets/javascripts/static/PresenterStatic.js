@@ -45,6 +45,7 @@ define([
     initSection: function(params) {
       this._name = params.name;
       this._page = params.page;
+      params.interesting = $('.'+params.section).data('interesting');
       this._updateSection(params);
     },
 
@@ -56,7 +57,7 @@ define([
       params.page = (params.page) ? params.page : this._page;
       var route = this._getRoute(params);
       this.router.navigateTo(route, {silent: true});
-      mps.publish('SourceStatic/change', [params.section]);
+      mps.publish('SourceStatic/change', [params]);
     },
 
     _getRoute: function(param) {

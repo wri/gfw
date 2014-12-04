@@ -28,6 +28,9 @@ define([
     },
 
     initialize: function() {
+      if (!this.$el.length) {
+        return
+      }
       //CACHE
       this.$window = $(window);
       this.$document = $(document);
@@ -82,24 +85,26 @@ define([
       e && e.preventDefault();
       
       var params = {
-        section: $(e.currentTarget).data('slug')
+        section: $(e.currentTarget).data('slug'),
+        interesting: $(e.currentTarget).data('interesting')
       }
       
       mps.publish('SourceStatic/update',[params]);
     },
 
-    changeSource: function(section){
+    changeSource: function(params){
       //spinner
       this.$sourceSpinner.removeClass('start');
 
       if(this.first){
-        this.changeHelper(section);
+        this.changeHelper(params.section);
         this.first = false;
       }else{
         this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0, _.bind(function(){
-          this.changeHelper(section);
+          this.changeHelper(params.section);
         },this));
       }
+      mps.publish('Interesting/update',[params.interesting]);
     },
 
     changeHelper: function(section){

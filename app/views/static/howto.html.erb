@@ -34,10 +34,10 @@
               <%= @title %>
             </a>
           </li>          
-          <li><%= link_to 'General FAQs', "#{howto_path}/general_questions", :"data-slug" => 'general_questions', :class => 'nav-item general_questions' %></li>
-          <li><%= link_to 'Terminology FAQs', "#{howto_path}/terminology", :"data-slug" => 'terminology', :class => 'nav-item terminology' %></li>
-          <li><%= link_to 'Data FAQs', "#{howto_path}/data", :"data-slug" => 'data', :class => 'nav-item data' %></li>
-          <li><%= link_to 'Web Platform FAQs', "#{howto_path}/web_platform", :"data-slug" => 'web_platform', :class => 'nav-item web_platform' %></li>
+          <li><%= link_to 'General FAQs', "#{howto_path}/general_questions", :"data-slug" => 'general_questions', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item general_questions' %></li>
+          <li><%= link_to 'Terminology FAQs', "#{howto_path}/terminology", :"data-slug" => 'terminology', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item terminology' %></li>
+          <li><%= link_to 'Data FAQs', "#{howto_path}/data", :"data-slug" => 'data', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item data' %></li>
+          <li><%= link_to 'Web Platform FAQs', "#{howto_path}/web_platform", :"data-slug" => 'web_platform', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item web_platform' %></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
@@ -280,53 +280,4 @@
 </section>
 <div id="cut" style="height:1px;"></div>
 
-<section class="interesting-section">
-  <div class="inner">
-    <h2 class="section-title">You may find this interesting</h2>
-    <div class="row">
-      <div class="col">
-        <div class="card">      
-          <header>
-            <h2>Explore the map</h2>
-          </header>
-          <div class="content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.</p>
-          </div>
-          <footer>
-            <a href="/map" class="btn dark medium">Read More</a>
-          </footer>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">      
-          <header>
-            <h2>Keep Updated</h2>
-          </header>
-          <div class="content">
-            <p>Timely and reliable information about forests. GFW is free and follows an open data approach in putting decision-relevant information in the hands of governments, companies, NGOs, and the public</p>
-          </div>
-          <footer>
-            <a href="/keepupdated" class="btn dark medium">Read More</a>
-          </footer>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">      
-          <header>
-            <h2>Get Involved</h2>
-          </header>
-          <div class="content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit ess.</p>
-          </div>
-          <footer>
-            <a href="/getinvolved" class="btn dark medium">Read More</a>
-          </footer>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<section id="interestingView" class="interesting-section"></section>

@@ -24,11 +24,11 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'Crowdsourced stories', "#{keepupdated_path}/crowdsourced-stories", :"data-slug" => 'crowdsourced-stories', :class => 'nav-item crowdsourced-stories' %></li>
-          <li><%= link_to 'Receive Alerts', "#{keepupdated_path}/receive-alerts", :"data-slug" => 'receive-alerts', :class => 'nav-item receive-alerts' %></li>
-          <li><%= link_to 'Publications', "#{keepupdated_path}/publications", :"data-slug" => 'publications', :class => 'nav-item publications' %></li>
-          <li><%= link_to 'Sign up for newsletter', "#{keepupdated_path}/newsletter", :"data-slug" => 'newsletter', :class => 'nav-item newsletter' %></li>
-          <li><%= link_to 'Coming Soon', "#{keepupdated_path}/coming-soon", :"data-slug" => 'coming-soon', :class => 'nav-item coming-soon'%></li>
+          <li><%= link_to 'Crowdsourced stories', "#{keepupdated_path}/crowdsourced-stories", :"data-slug" => 'crowdsourced-stories', :"data-interesting" => 'stories_on_the_map, mongabay_stories, ejn_stories', :class => 'nav-item crowdsourced-stories' %></li>
+          <li><%= link_to 'Receive Alerts', "#{keepupdated_path}/receive-alerts", :"data-slug" => 'receive-alerts', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item receive-alerts' %></li>
+          <li><%= link_to 'Publications', "#{keepupdated_path}/publications", :"data-slug" => 'publications', :"data-interesting" => 'explore_the_map, download_the_data, get_involved', :class => 'nav-item publications' %></li>
+          <li><%= link_to 'Sign up for newsletter', "#{keepupdated_path}/newsletter", :"data-slug" => 'newsletter', :"data-interesting" => 'explore_the_map, download_the_data, get_involved', :class => 'nav-item newsletter' %></li>
+          <li><%= link_to 'Coming Soon', "#{keepupdated_path}/coming-soon", :"data-slug" => 'coming-soon', :"data-interesting" => 'explore_the_map, download_the_data, get_involved', :class => 'nav-item coming-soon'%></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
@@ -210,51 +210,4 @@
   </div>
 </section>
 <div id="cut" style="height:1px;"></div>
-<section class="interesting-section">
-  <div class="inner">
-    <h2 class="section-title">You may find this interesting</h2>
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <header>
-            <h2>Stories on the map</h2>
-          </header>
-          <div class="content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.</p>
-          </div>
-          <footer>
-            <a href="/map/3/15.00/27.00/ALL/grayscale/loss,forestgain/580" class="btn dark medium">Read More</a>
-          </footer>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <header>
-            <h2>Mongabay stories</h2>
-          </header>
-          <div class="content">
-            <p>Timely and reliable information about forests. GFW is free and follows an open data approach in putting decision-relevant information in the hands of governments, companies, NGOs, and the public</p>
-          </div>
-          <footer>
-            <a href="/map/3/15.00/27.00/ALL/grayscale/loss,forestgain/586" class="btn dark medium">Read More</a>
-          </footer>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <header>
-            <h2>Ejn stories</h2>
-          </header>
-          <div class="content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua.</p>
-          </div>
-          <footer>
-            <a href="#" class="btn dark medium">Read More</a>
-          </footer>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<section id="interestingView" class="interesting-section"></section>

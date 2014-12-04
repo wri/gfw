@@ -33,10 +33,10 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'The GFW Partnership', "#{about_path}/the-gfw-partnership", :"data-slug" => 'the-gfw-partnership', :class => 'nav-item the-gfw-partnership' %></li>
-          <li><%= link_to 'Videos', "#{about_path}/videos", :"data-slug" => 'videos', :class => 'nav-item videos' %></li>
-          <li><%= link_to 'Awards & Testimonals', "#{about_path}/awards_and_testimonials", :"data-slug" => 'awards_and_testimonials', :class => 'nav-item awards_and_testimonials' %></li>
-          <li><%= link_to 'Outcomes', "#{about_path}/outcomes", :"data-slug" => 'outcomes', :class => 'nav-item outcomes' %></li>
+          <li><%= link_to 'The GFW Partnership', "#{about_path}/the-gfw-partnership", :"data-slug" => 'the-gfw-partnership', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item the-gfw-partnership' %></li>
+          <li><%= link_to 'Videos', "#{about_path}/videos", :"data-slug" => 'videos', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item videos' %></li>
+          <li><%= link_to 'Awards & Testimonals', "#{about_path}/awards_and_testimonials", :"data-slug" => 'awards_and_testimonials', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item awards_and_testimonials' %></li>
+          <li><%= link_to 'Outcomes', "#{about_path}/outcomes", :"data-slug" => 'outcomes', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item outcomes' %></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
@@ -279,53 +279,4 @@
 </section>
 <div id="cut" style="height:1px;"></div>
 
-<section class="interesting-section">
-  <div class="inner">
-    <h2 class="section-title">You may find this interesting</h2>
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <header>
-            <h2>Explore the map</h2>
-          </header>
-          <div class="content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.</p>
-          </div>
-          <footer>
-            <a href="/map" class="btn dark medium">Read More</a>
-          </footer>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <header>
-            <h2>Keep Updated</h2>
-          </header>
-          <div class="content">
-            <p>Timely and reliable information about forests. GFW is free and follows an open data approach in putting decision-relevant information in the hands of governments, companies, NGOs, and the public</p>
-          </div>
-          <footer>
-            <a href="/keepupdated" class="btn dark medium">Read More</a>
-          </footer>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card">
-          <header>
-            <h2>Get Involved</h2>
-          </header>
-          <div class="content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit ess.</p>
-          </div>
-          <footer>
-            <a href="/getinvolved" class="btn dark medium">Read More</a>
-          </footer>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<section id="interestingView" class="interesting-section"></section>
