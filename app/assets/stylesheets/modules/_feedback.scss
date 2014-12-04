@@ -1,5 +1,5 @@
 .feedback-link {
-  display: block;
+  display: none;
   position: absolute;
   top: 50%;
   right: 0;
@@ -13,4 +13,8 @@
   &:hover {
     background: darken(#FFD24D,5%);
   }
+  @media (min-width: $br-mobile){
+    display: block;
+  }
+
 }

@@ -1,8 +1,6 @@
 // HEADER
 .layout-header {
-  position: fixed;
-  z-index: 100;
-  overflow: auto;
+  position: absolute;
   width: 100%;
   height: auto;
   z-index: 1000;
@@ -10,6 +8,7 @@
   left: 0;
   &.active{
     height: 100%;
+    overflow: auto;
   }
   @media (min-width: $br-mobile){
     position: relative;
@@ -20,143 +19,280 @@
 // top HEADER
 .layout-header-top {
   background: #F7F7F7;
-  padding: 4px 10px;
-  border-bottom: 2px solid $border;
-  position: relative;
-  z-index: 10;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  z-index: 11;
+  border-top: 1px solid $border;
+  @media (min-width: $br-mobile){
+    position: relative;
+    padding: 4px 10px;
+    border-top: none;
+    border-bottom: 2px solid $border;
+
+  }
   @include clearfix();
   nav {
-    >ul {
-      >li {
-        height: 25px;
-        width: 25px;
-        float: left;
-        margin: 0 0 0 20px;
-        &:first-child {
+    >div{
+      width: 100%;
+      overflow-y: hidden;
+      overflow-x: scroll; /* has to be scroll, not auto */
+      -webkit-overflow-scrolling: touch;
+      @media (min-width: $br-mobile){
+        width: auto;
+        overflow: visible;
+      }
+      >ul {
+        width: 800px;
+        height: 55px;       
+        @media (min-width: $br-mobile){
+          width: auto;
           margin: 0;
+          height: auto;
         }
-        >a,.link {
-          cursor: pointer;
-          display: inline-block;
-          width: 100%;
-          height: 100%;
-          position: relative;
-          text-decoration: none;
-          text-transform: uppercase;
-          @include transition(all 0.15s $easeInOutCubic);
-          >span {
-            font-size: 12px;
-            color: #000;
-            line-height: 28px;
-            margin: 0 0 0 5px;
-          }
-          .tooltip1{
-            margin: 0;
-            line-height: normal;
-          }
-
-          form{
-            >input {
-              border: none;
-              border-bottom: 2px solid #B6B6BA;
-              background: none;
-              box-shadow: none;
-              height: 25px;
-              outline: none;
-              width: auto;
-              font-family: inherit;
+        >li {
+          float: left; 
+          height: 55px;       
+          @media (min-width: $br-mobile){
+            height: 25px;
+            width: 25px;
+            margin: 0 0 0 20px;
+            &:first-child {
               margin: 0;
-              padding: 0 5px;
             }
           }
-          svg {
-            fill: #B6B6BA;
-          }
+          >a,.link {
+            cursor: pointer;
+            display: inline-block;
+            line-height: 55px;
+            padding: 0px 10px 0 35px;
+            position: relative;
+            text-decoration: none;
+            text-transform: uppercase;
+            @include transition(all 0.15s $easeInOutCubic);
+            @media (min-width: $br-mobile){
+              padding: 0;
+              width: 100%;
+              height: 100%;
+              line-height: normal;
+            }
 
-          &.shape-world{ svg{ @include transform(scale(0.9));}}
+            >span {
+              font-size: 12px;
+              color: #000;
+              line-height: 28px;
+              margin: 0 0 0 5px;
+              // display: none;
+              @media (min-width: $br-mobile){
+                display: block;
+                em{
+                  display: inline-block;
+                }
+              }
 
-          &:hover  {
-            &.shape-house { svg{ fill: $cGreen;} }
-            &.shape-world { svg{ fill: $cGreen;} }
-            &.shape-country { svg{ fill: $cGreen;} }
-            &.shape-fire { svg{ fill: $red;} }
-            &.shape-commodities { svg{ fill: $orange;} }
-            &.shape-blog { svg{ fill: $cGreen;} }
+            }
+            .tooltip1{
+              margin: 0;
+              line-height: normal;
+              @media (max-width: $br-mobile - 1){
+                position: relative;
+                background: none;
+                box-shadow: none;
+                z-index: 1;
+                visibility: visible;
+                opacity: 1;
+                top: auto;
+                left: auto;
+                text-align: left;
+                padding: 0;
+                @include transform(translate(0,0));
+                &:after{
+                  display: none;
+                }
+              }
+            }
+
+            form{
+              >input {
+                border: none;
+                border-bottom: 2px solid #B6B6BA;
+                background: none;
+                box-shadow: none;
+                height: 25px;
+                outline: none;
+                width: auto;
+                font-family: inherit;
+                margin: 0;
+                padding: 0 5px;
+              }
+            }
             svg {
-              fill: $cGreen;
+              fill: #B6B6BA;
+              position: absolute;
+              top: 48%;
+              left: 5px;
+              @include transform(translate(0,-50%));
+              @media (min-width: $br-mobile){
+                position: relative;
+                top: auto;
+                left: auto;
+                @include transform(translate(0,0));
+              }
+            }
+
+            &.shape-world{ 
+              svg{ 
+                @include transform(translate(0,-50%) scale(0.9));
+                @media (min-width: $br-mobile){
+                  position: relative;
+                  top: auto;
+                  left: auto;
+                  @include transform(scale(0.9));
+                }
+              }
+            }
+
+            &:hover  {
+              &.shape-house { svg{ fill: $cGreen;} }
+              &.shape-world { svg{ fill: $cGreen;} }
+              &.shape-country { svg{ fill: $cGreen;} }
+              &.shape-fire { svg{ fill: $red;} }
+              &.shape-commodities { svg{ fill: $orange;} }
+              &.shape-blog { svg{ fill: $cGreen;} }
+              svg {
+                fill: $cGreen;
+              }
             }
           }
-
+        }
+      }      
+    }
+    // Btn-menu
+    .btn-menu{
+      // @extend .reset-btn;
+      width: 70px;
+      height: 100%;
+      position: absolute;
+      top: 50%;
+      right: 0; 
+      display: block;
+      z-index: 5;
+      box-shadow: none;
+      background: $light;
+      border: none;
+      outline: none;
+      @include transform(translate(0,-50%));
+      @media (min-width: $br-mobile){
+        display: none;
+      }
+      .icon{
+        margin: 0 auto;
+        fill: #B6B6BA;
+        &.hamburguer{
+          display: block;
+        }
+        &.close {
+          display: none;
+        }
+      }
+      &.active{
+        background: $white;
+        border-left: 1px solid #CCC;
+        box-shadow: 0 1px 0 $white;
+        .icon{
+          margin: 0 auto;
+          &.hamburguer{
+            display: none;
+          }
+          &.close {
+            display: block;
+          }
         }
       }
     }
+
     &.first-nav {
       float: left;
-      >ul {
-        >li {
-          >a,.link {
-            &:hover  {
-              .tooltip1{
-                visibility: visible;
-                opacity: 1;
+      position: relative;
+      width: 100%;
+      @media (min-width: $br-mobile){
+        padding: 0;
+        width: auto;
+      }
+      >div{
+        >ul {
+          >li {
+            >a,.link {
+              &:hover  {
+                .tooltip1{
+                  visibility: visible;
+                  opacity: 1;
+                }
+                // @include transform(scale(1.25));
               }
-              // @include transform(scale(1.25));
             }
           }
-        }
+        }        
       }
     }
     &.second-nav {
       float: right;
-      >ul  {
-        >li  {
-          height: 25px;
-          width: auto;
-          position: relative;
-          >a,
-          .link {
-            text-indent: 0;
+      >div{
+        >ul  {
+          >li  {
+            height: 25px;
             width: auto;
-            >span {
-              display: none;
-              @media (min-width: $br-tablet){
+            position: relative;
+            >a,
+            .link {
+              text-indent: 0;
+              width: auto;
+              >span {
+                display: none;
+                @media (min-width: $br-tablet){
+                  display: inline-block;
+                }
+              }
+              svg {
+                height: 25px;
+                float: left;
                 display: inline-block;
               }
             }
-            svg {
-              float: left;
-              display: inline-block;
+            .home_data {
+              font-size: 12px;
+              border: 0;
+              text-decoration: none;
+              span {
+                line-height: 28px;
+              }
+              &:visited {
+                color: #000;
+              }
+            }
+            &:hover {
+              .submenu-tooltip {
+                visibility: visible;
+                opacity: 1;
+              }
             }
           }
-          .home_data {
-            font-size: 12px;
-            border: 0;
-            text-decoration: none;
-            span {
-              line-height: 28px;
-            }
-            &:visited {
-              color: #000;
-            }
-          }
-          &:hover {
-            .submenu-tooltip {
-              visibility: visible;
-              opacity: 1;
-            }
-          }
-        }
+        }        
       }
     }
   }
 }
 // Bottom HEADER
 .layout-header-bottom {
-	position: relative;
-  background: #F2F2F3;
-  border-bottom: 2px solid $border;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;  
+  width: 100%;
   @include clearfix();
   @media (min-width: $br-mobile){
+    position: relative;
     background: rgba(#FFF,0.8);
     border-bottom: 1px solid $border;
   }
@@ -202,42 +338,6 @@
 		}
 	}
 
-  // Btn-menu
-  .btn-menu{
-    @extend .reset-btn;
-    width: 60px;
-    height: 60px;
-    float: right;
-    display: block;
-    position: relative;
-    z-index: 2;
-    @media (min-width: $br-mobile){
-      display: none;
-    }
-    .icon{
-      margin: 0 auto;
-      &.hamburguer{
-        display: block;
-      }
-      &.close {
-        display: none;
-      }
-    }
-    &.active{
-      background: $white;
-      border-left: 1px solid #CCC;
-      box-shadow: 0 1px 0 $white;
-      .icon{
-        margin: 0 auto;
-        &.hamburguer{
-          display: none;
-        }
-        &.close {
-          display: block;
-        }
-      }
-    }
-  }
 
   // Search Widget mobile
   form{
