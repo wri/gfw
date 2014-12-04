@@ -3,6 +3,8 @@ modules:
   - name: 'static'
   - name: 'landing'
 
+waitSeconds: 200
+
 wrap: false
 
 paths:
