@@ -24,7 +24,8 @@ define([
 
     events: {
       'click .nav-item' : 'updateSource',
-      'click .nav-title' : 'scrollTo'
+      'click .nav-title' : 'scrollTo',
+      'click .source_header' : 'toggleSources'
     },
 
     initialize: function() {
@@ -39,6 +40,8 @@ define([
       this.$sideBarAside = $('#sidebarAside');
       this.$sideBarBox = $('#sources-box');
       this.$sourceArticle = $('.source-article');
+      this.$sourceHeader = $('.source_header');
+      this.$sourceBody = $('.source_body');
       this.$cut = $('#cut');
       this.$sourceSpinner = $('#sources-spinner');
 
@@ -56,7 +59,23 @@ define([
       this.$window.on('resize',_.bind(this.calculateOffsets,this));
       this.calculateOffsets();
       mps.subscribe('SourceStatic/change',_.bind(this.changeSource,this));
+      mps.subscribe('SubItem/change',_.bind(this.calculateOffsets,this));
     },
+
+    toggleSources: function(e){
+      this.$sourceBody.hide(0);
+      if(!$(e.currentTarget).hasClass('active')){
+        $(e.currentTarget).addClass('active');
+        $(e.currentTarget).parent().children('.source_body').show(0);
+      }else{
+        $(e.currentTarget).removeClass('active');
+      }
+      setTimeout(_.bind(function(){
+        this.calculateOffsets();  
+      },this),50);      
+    },
+
+
 
     calculateOffsets: function(){
       this.$sideBarBox.css({'min-height': this.$sideBarAside.height() });

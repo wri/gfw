@@ -856,3 +856,224 @@
  display: none;
 }
 
+
+.is-data-action{
+  .source_category_title {
+    margin-bottom: 10px;
+    font-size: 37px;
+    font-family: "fira_sans_otregular";
+    color: #464052;
+  }
+
+  .source_category_description {
+    font: 13px/1.2 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #999;
+
+    + .source_category_description { margin-top: 10px; }
+  }
+
+  .sources{
+    display: block;
+    padding: 25px 0 0;
+  }
+
+  .source-item {
+    &:hover,
+    &.selected {
+      .source_header {
+        color: #98BD17;
+      }
+    }
+
+    &.disabled {
+      @include opacity(.5);
+    }
+
+    &.disabled:hover .source_header {
+      color: #464052;
+    }
+
+    &.expanded {
+      + .source-item {
+        margin-top: 30px;
+      }
+
+      .expand_arrow {
+        @include static-icons-sprite(expand_arrow_up);
+      }
+
+      .source_header {
+        color: #98BD17;
+      }
+
+      .source_coverage,
+      .source_body,
+      .source_coverage_header {
+        display: block;
+      }
+
+      &.last {
+        padding-bottom: 30px;
+      }
+    }
+
+    &.last {
+      border-bottom: 1px solid #ccc;
+    }
+
+    .source_body,
+    .source_coverage_header,
+    .source_coverage {
+      display: none;
+      a{
+        text-decoration: none;
+        color: $cGreen;
+      }
+    }
+  }
+
+  .source_header {
+    border-top: 1px solid #ccc;
+    color: #464052;
+    cursor: pointer;
+
+    strong {
+      font: bold 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
+      line-height: 60px;
+      text-transform: uppercase;
+    }
+
+    em {
+      float: right;
+      color: #999;
+      font: italic 13px/60px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+  }
+
+  .expand_arrow,
+  .dropdown_arrow {
+    display: block;
+    float: right;
+    height: 60px;
+    width: 34px;
+    margin-left: 15px;
+    @include static-icons-sprite(expand_arrow_down);
+  }
+
+  .dropdown_arrow {
+    margin-right: 10px;
+  }
+
+
+
+  .source_download,
+  .source_coverage_download {
+    text-align: right;
+    background: #F0F5DC;
+    border-top: 1px solid #ccc;
+
+    a,
+    span {
+      display: inline-block;
+      margin: 20px;
+      padding: 0 15px;
+      font: 14px/30px "fira_sans_otmedium";
+      text-decoration: none;
+      color: #fff;
+      background: #A5B81A;
+      @include border-radius(16px);
+    }
+
+    a {
+      display: inline-block;
+      margin: 20px;
+      padding: 0 15px;
+      font: 14px/30px "fira_sans_otmedium";
+      text-decoration: none;
+      color: #fff;
+      background: #A5B81A;
+      @include border-radius(16px);
+
+      &.disabled {
+        @include opacity(.5);
+        cursor: default;
+      }
+    }
+  }
+
+  .source_coverage_download {
+    border-top: 0;
+    background: transparent;
+
+    .source_coverage_title {
+      float: left;
+    }
+
+    .source_download {
+      margin-right: 0;
+    }
+  }
+
+  .arrow_down {
+    display: inline-block;
+    height: 10px;
+    width: 8px;
+    margin-left: 15px;
+    @include static-icons-sprite(arrow_down);
+  }
+
+  .source_table {
+    border-top: 1px solid #ccc;
+    margin-bottom: 30px;
+
+    + .overview_title {
+      margin-top: 0;
+    }
+  }
+
+  .overview_title,
+  .source_coverage_title {
+    margin: 30px 0 10px;
+    font: 21px/1.1 "fira_sans_otmedium";
+    color: #463F52;
+  }
+
+  .source_dropdown {
+    background: #EEE;
+  }
+
+  .source_dropdown_header {
+    @extend .clearfix;
+    display: block;
+    margin-top: 20px;
+
+    .overview_title {
+      margin: 0;
+      padding: 0 10px;
+      line-height: 60px;
+    }
+
+    .expand_arrow {
+      margin-right: 10px;
+    }
+  }
+
+  .source_dropdown_menu,
+  .source_dropdown_body {
+    display: none;
+  }
+
+  .source_dropdown_body {
+    padding: 0 10px 10px;
+
+    &.active,
+    &.sinlge_active { display: block; }
+  }
+
+  .videos_list p {
+    margin-bottom: 30px;
+
+    iframe + iframe { margin-left: 30px; }
+  }
+}
+

@@ -1,222 +1,3 @@
-<style type="text/css">
-.source_category_title {
-  margin-bottom: 10px;
-  font-size: 37px;
-  font-family: "fira_sans_otregular";
-  color: #464052;
-}
-
-.source_category_description {
-  font: 13px/1.2 "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #999;
-
-  + .source_category_description { margin-top: 10px; }
-}
-
-.sources{
-  display: block;
-}
-
-.source-item {
-  &:hover,
-  &.selected {
-    .source_header {
-      color: #98BD17;
-    }
-  }
-
-  &.disabled {
-    @include opacity(.5);
-  }
-
-  &.disabled:hover .source_header {
-    color: #464052;
-  }
-
-  &.expanded {
-    + .source-item {
-      margin-top: 30px;
-    }
-
-    .expand_arrow {
-      @include static-icons-sprite(expand_arrow_up);
-    }
-
-    .source_header {
-      color: #98BD17;
-    }
-
-    .source_coverage,
-    .source_body,
-    .source_coverage_header {
-      display: block;
-    }
-
-    &.last {
-      padding-bottom: 30px;
-    }
-  }
-
-  &.first {
-    margin-top: 20px;
-  }
-
-  &.last {
-    border-bottom: 1px solid #ccc;
-  }
-
-  .source_body,
-  .source_coverage_header,
-  .source_coverage {
-    display: none;
-  }
-}
-
-.source_header {
-  border-top: 1px solid #ccc;
-  color: #464052;
-  cursor: pointer;
-
-  strong {
-    font: bold 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
-    line-height: 60px;
-    text-transform: uppercase;
-  }
-
-  em {
-    float: right;
-    color: #999;
-    font: italic 13px/60px "Helvetica Neue", Helvetica, Arial, sans-serif;
-  }
-}
-
-.expand_arrow,
-.dropdown_arrow {
-  display: block;
-  float: right;
-  height: 60px;
-  width: 34px;
-  margin-left: 15px;
-  @include static-icons-sprite(expand_arrow_down);
-}
-
-.dropdown_arrow {
-  margin-right: 10px;
-}
-
-
-
-.source_download,
-.source_coverage_download {
-  text-align: right;
-  background: #F0F5DC;
-  border-top: 1px solid #ccc;
-
-  a,
-  span {
-    display: inline-block;
-    margin: 20px;
-    padding: 0 15px;
-    font: 14px/30px "fira_sans_otmedium";
-    text-decoration: none;
-    color: #fff;
-    background: #A5B81A;
-    @include border-radius(16px);
-  }
-
-  a {
-    display: inline-block;
-    margin: 20px;
-    padding: 0 15px;
-    font: 14px/30px "fira_sans_otmedium";
-    text-decoration: none;
-    color: #fff;
-    background: #A5B81A;
-    @include border-radius(16px);
-
-    &.disabled {
-      @include opacity(.5);
-      cursor: default;
-    }
-  }
-}
-
-.source_coverage_download {
-  border-top: 0;
-  background: transparent;
-
-  .source_coverage_title {
-    float: left;
-  }
-
-  .source_download {
-    margin-right: 0;
-  }
-}
-
-.arrow_down {
-  display: inline-block;
-  height: 10px;
-  width: 8px;
-  margin-left: 15px;
-  @include static-icons-sprite(arrow_down);
-}
-
-.source_table {
-  border-top: 1px solid #ccc;
-  margin-bottom: 30px;
-
-  + .overview_title {
-    margin-top: 0;
-  }
-}
-
-.overview_title,
-.source_coverage_title {
-  margin: 30px 0 10px;
-  font: 21px/1.1 "fira_sans_otmedium";
-  color: #463F52;
-}
-
-.source_dropdown {
-  background: #EEE;
-}
-
-.source_dropdown_header {
-  @extend .clearfix;
-  display: block;
-  margin-top: 20px;
-
-  .overview_title {
-    margin: 0;
-    padding: 0 10px;
-    line-height: 60px;
-  }
-
-  .expand_arrow {
-    margin-right: 10px;
-  }
-}
-
-.source_dropdown_menu,
-.source_dropdown_body {
-  display: none;
-}
-
-.source_dropdown_body {
-  padding: 0 10px 10px;
-
-  &.active,
-  &.sinlge_active { display: block; }
-}
-
-.videos_list p {
-  margin-bottom: 30px;
-
-  iframe + iframe { margin-left: 30px; }
-}
-  
-</style>
 <section class="header-static">
     <div class="inner">
       <header>
@@ -224,9 +5,9 @@
         <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h3>
       </header>
       <ul class="row row3">
-        <li><%= link_to "Download by country", countries_path , :class => 'btn dark uppercase'%></li>
-        <li><a class="btn dark uppercase" href='mailto:gfw@wri.org'>Missing a data set?</a></li>
-        <li><a class="btn dark uppercase" href='https://groups.google.com/forum/#!forum/globalforestwatch' target='_blank'>Join the discussion</a></li>
+        <li><%= link_to "Download by country", countries_path , :class => 'btn white uppercase'%></li>
+        <li><a class="btn white uppercase" href='mailto:gfw@wri.org'>Missing a data set?</a></li>
+        <li><a class="btn white uppercase" href='https://groups.google.com/forum/#!forum/globalforestwatch' target='_blank'>Join the discussion</a></li>
       </ul>
     </div>
 </section>
@@ -234,7 +15,7 @@
 <section id="sidebarNavView" class="content-static">
   <div class="inner">
     <div class="row">
-      <aside>
+      <aside id="sidebarAside">
         <ul>
           <li>
             <a href="#" class="nav-title">
@@ -242,21 +23,21 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'Forest change', "#{sources_path}/forest_change", :"data-slug" => 'forest_change', :class => 'nav-item forest_change' %></li>
-          <li><%= link_to 'Forest cover', "#{sources_path}/forest_cover", :"data-slug" => 'forest_cover', :class => 'nav-item forest_cover' %></li>
-          <li><%= link_to 'Forest use', "#{sources_path}/forest_use", :"data-slug" => 'forest_use', :class => 'nav-item forest_use' %></li>
-          <li><%= link_to 'Conservation', "#{sources_path}/conservation", :"data-slug" => 'conservation', :class => 'nav-item conservation' %></li>
-          <li><%= link_to 'People', "#{sources_path}/people", :"data-slug" => 'people', :class => 'nav-item people' %></li>
-          <li><%= link_to 'Stories', "#{sources_path}/stories", :"data-slug" => 'stories', :class => 'nav-item stories' %></li>
-          <li><%= link_to 'Base maps', "#{sources_path}/base_maps", :"data-slug" => 'base_maps', :class => 'nav-item base_maps' %></li>
-          <li><%= link_to 'Countries', "#{sources_path}/countries", :"data-slug" => 'countries', :class => 'nav-item countries' %></li>
-          <li><%= link_to 'Code', "#{sources_path}/code", :"data-slug" => 'code', :class => 'nav-item code' %></li>
-          <li><%= link_to 'GFW on Google Earth Engine', "#{sources_path}/earth_engine", :"data-slug" => 'earth_engine', :class => 'nav-item earth_engine' %></li>
-          <li><%= link_to 'GFW on ArcGIS Online', "#{sources_path}/arcgis", :"data-slug" => 'arcgis', :class => 'nav-item arcgis' %></li>
-          <li><%= link_to 'Data policy', "#{sources_path}/data_policy", :"data-slug" => 'data_policy', :class => 'nav-item data_policy' %></li>
+          <li><%= link_to 'Forest change', "#{sources_path}/forest_change", :"data-slug" => 'forest_change', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item forest_change' %></li>
+          <li><%= link_to 'Forest cover', "#{sources_path}/forest_cover", :"data-slug" => 'forest_cover', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item forest_cover' %></li>
+          <li><%= link_to 'Forest use', "#{sources_path}/forest_use", :"data-slug" => 'forest_use', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item forest_use' %></li>
+          <li><%= link_to 'Conservation', "#{sources_path}/conservation", :"data-slug" => 'conservation', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item conservation' %></li>
+          <li><%= link_to 'People', "#{sources_path}/people", :"data-slug" => 'people', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item people' %></li>
+          <li><%= link_to 'Stories', "#{sources_path}/stories", :"data-slug" => 'stories', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item stories' %></li>
+          <li><%= link_to 'Base maps', "#{sources_path}/base_maps", :"data-slug" => 'base_maps', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item base_maps' %></li>
+          <li><%= link_to 'Countries', "#{sources_path}/countries", :"data-slug" => 'countries', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item countries' %></li>
+          <li><%= link_to 'Code', "#{sources_path}/code", :"data-slug" => 'code', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item code' %></li>
+          <li><%= link_to 'GFW on Google Earth Engine', "#{sources_path}/earth_engine", :"data-slug" => 'earth_engine', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item earth_engine' %></li>
+          <li><%= link_to 'GFW on ArcGIS Online', "#{sources_path}/arcgis", :"data-slug" => 'arcgis', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item arcgis' %></li>
+          <li><%= link_to 'Data policy', "#{sources_path}/data_policy", :"data-slug" => 'data_policy', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item data_policy' %></li>
         </ul>
       </aside>
-      <div class="sources-box">
+      <div id="sources-box" class="sources-box">
         <div class="sources-content">
           <div id="sources-spinner" class="spinner start"><svg><use xlink:href="#shape-spinner"></use></svg></div>
           <%= render 'shared/sources' %>
@@ -265,3 +46,6 @@
     </div>
   </div>
 </section>
+
+<div id="cut" style="height:1px;"></div>
+<section id="interestingView" class="interesting-section"></section>
