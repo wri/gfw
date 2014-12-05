@@ -18,6 +18,7 @@ define([
       this.$logos = $('#footer-logos');
       this.$footerFixed = $('#footerFixed');
       this.$footerToggle = $('#footerToggle');
+      this.$footerClose = $('#footerClose');
 
       //INIT
       this.$logos.slick({
@@ -35,11 +36,10 @@ define([
     setListeners: function(){
       if (this.$footerFixed.length) {
         this.$footerToggle.on('click',_.bind(function(e){
-          $(e.currentTarget).toggleClass('active');
-          this.$footerFixed.toggleClass('active');
-
-          ($(e.currentTarget).hasClass('active')) ? $(e.currentTarget).text('Hide footer') : $(e.currentTarget).text('Show footer');
-          
+          this.$footerFixed.addClass('active');        
+        }, this ));
+        this.$footerClose.on('click',_.bind(function(e){
+          this.$footerFixed.removeClass('active');        
         }, this ));
       }
     }
