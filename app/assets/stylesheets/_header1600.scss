@@ -200,7 +200,6 @@
         position: absolute;
         top: 0;
         z-index: 2;
-        // background: linear-gradient(to right, rgba(247,247,247,0) 0%,rgba(247,247,247,1) 23%,rgba(247,247,247,1) 100%);  
         @include gradient(left,rgba(247,247,247,0),rgba(247,247,247,1));
       }
       @media (min-width: $br-mobile){
@@ -218,7 +217,6 @@
       }
       &.active{
         background: $white;
-        border-left: 1px solid #CCC;
         box-shadow: 0 -2px 0 $white;
         .icon{
           margin: 0 auto;
@@ -228,6 +226,9 @@
           &.close {
             display: block;
           }
+        }
+        &:after{
+          border-right: 1px solid $border;
         }
       }
     }
@@ -517,6 +518,7 @@
 #google_translate_element {
   .goog-te-gadget {
     font-family: inherit;
+    text-align: center;
     .goog-te-gadget-simple {
       border: none;
       background: none;
