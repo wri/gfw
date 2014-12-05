@@ -22,6 +22,18 @@
     position: relative;
     overflow: visible;
     height: auto;
+    &.active{
+      height: auto;
+      overflow: visible;
+      .layout-header-bottom{
+        height: auto;
+        .inner{
+          height: auto;
+          overflow: visible;
+          -webkit-overflow-scrolling: touch;
+        }
+      }
+    }
   }
 }
 // top HEADER
