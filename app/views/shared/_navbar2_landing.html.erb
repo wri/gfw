@@ -10,7 +10,7 @@
     <div id="google_translate_element_box2"></div>
     <ul>
       <li>
-        <a href="/applications">Applications</a>
+        <a <% if controller?("static") && action?("applications") %>class="current"<% end %> href="/applications">Applications</a>
         <ul class="submenu">
           <li><a href="/map">Explore the map</a></li>
           <li><a href="/countries">Countries profiles & rankings</a></li>
@@ -19,7 +19,7 @@
         </ul>
       </li>
       <li>
-        <a href="/keepupdated">Keep Updated</a>
+        <a <% if controller?("static") && action?("keep") %>class="current"<% end %> href="/keepupdated">Keep Updated</a>
         <ul class="submenu">
           <li><a href="http://blog.globalforestwatch.org/">GFW Blog</a></li>
           <li><a href="/keepupdated/crowdsourced-stories">Crowdsourced Stories</a></li>
@@ -32,7 +32,7 @@
 
       </li>
       <li>
-        <a href="/getinvolved">Get involved</a>
+        <a <% if controller?("static") && action?("getinvolved") %>class="current"<% end %> href="/getinvolved">Get involved</a>
         <ul class="submenu">
           <li><a href="/getinvolved/small-grants-fund">Small Grants Fund</a></li>
           <li><a href="/getinvolved/develop-your-own-app">Develop your own app</a></li>
@@ -44,7 +44,7 @@
         </ul>
       </li>
       <li>
-        <a href="/howto">How to</a>
+        <a <% if controller?("static") && action?("howto") %>class="current"<% end %> href="/howto">How to</a>
         <ul class="submenu">
           <li><a href="/howto/general_questions">General FAQS</a></li>
           <li><a href="/howto/terminology">Terminology FAQS</a></li>
@@ -53,7 +53,7 @@
         </ul>
       </li>
       <li>
-        <a href="/about">About</a>
+        <a <% if controller?("static") && action?("about") %>class="current"<% end %> href="/about">About</a>
         <ul class="submenu">
           <li><a href="/about/the-gfw-partnership">The GFW Partnership</a></li>
           <li><a href="/about/videos">Videos</a></li>

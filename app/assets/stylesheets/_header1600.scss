@@ -36,6 +36,14 @@
     }
   }
 }
+
+
+
+
+
+
+
+
 // top HEADER
 .layout-header-top {
   background: #F7F7F7;
@@ -174,7 +182,7 @@
               }
             }
 
-            &:hover  {
+            &:hover, &.current  {
               &.shape-house { svg{ fill: $cGreen;} }
               &.shape-world { svg{ fill: $cGreen;} }
               &.shape-country { svg{ fill: $cGreen;} }
@@ -316,6 +324,22 @@
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Bottom HEADER
 .layout-header-bottom {
   position: fixed;
@@ -458,6 +482,23 @@
           }
           @media (min-width: $br-tablet){
             padding: 20px 40px;
+          }
+
+          &:after{
+            content: "";
+            display: none;
+            background-color: $cGreen;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+          }
+
+          &.current{
+            &:after{
+              display: block;
+            }
           }
 				}
 				//submenu

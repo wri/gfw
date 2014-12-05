@@ -1,5 +1,14 @@
 module ApplicationHelper
 
+
+  def controller?(*controller)
+    controller.include?(params[:controller])
+  end
+
+  def action?(*action)
+    action.include?(params[:action])
+  end
+
   # assets/stylesheets/countries.css
   def controller_stylesheet_link_tag
     stylesheet = "#{params[:controller]}.css"
