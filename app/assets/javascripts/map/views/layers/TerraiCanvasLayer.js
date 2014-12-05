@@ -16,7 +16,7 @@ define([
 
     options: {
       threshold: 30,
-      dataMaxZoom: 10,
+      dataMaxZoom: 12,
       //ATTENTION: check config.ru file to get the whole route, reverse proxying here
       //urlTemplate: '/latin-america/Z{z}/{y}/{x}.png'
       urlTemplate: 'http://wri-tiles.s3-website-us-east-1.amazonaws.com/terra_i_loss_julian/{z}/{x}/{y}.png'
