@@ -208,7 +208,7 @@
       display: block;
       z-index: 5;
       box-shadow: none;
-      background-color: $light;
+      background-color: darken($light,10%);
       border: none;
       outline: none;
       @include transform(translate(0,-50%));
@@ -228,7 +228,7 @@
       }
       .icon{
         margin: 0 auto;
-        fill: #B6B6BA;
+        fill: $dark;
         &.hamburguer{
           display: block;
         }
@@ -238,7 +238,8 @@
       }
       &.active{
         background: $white;
-        box-shadow: 0 -2px 0 $white;
+        border-left: 1px solid $border;
+        box-shadow: 1px -2px 0 $white;
         .icon{
           margin: 0 auto;
           &.hamburguer{
@@ -425,12 +426,14 @@
     background: $white;
     display: none;
     position: relative;
+    min-height: 100%;
     &.active{
       display: block;
     }
     @media (min-width: $br-mobile){
       padding: 0;
       display: block !important;
+      min-height: 0;
       clear: none;
       background: none;
       border-bottom: none;
