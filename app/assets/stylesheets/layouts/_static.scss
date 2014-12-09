@@ -212,6 +212,10 @@
  }
  .content {
   padding: 20px 0 0;
+  .inner{
+    width: 100%;
+    margin: 0;
+  }
   // LIST TYPES: pub-list, alerts-list
   .publications-list {
    li {
@@ -528,6 +532,12 @@
           height: 80px; width: 106px; @include logos-sprite(ministryofforeignaffairs);
           &:hover{
             @include logos-sprite(ministryofforeignaffairshover);
+          }
+      }
+      &.moore { 
+          height: 37px; width: 96px; @include logos-sprite(moore);
+          &:hover{
+            @include logos-sprite(moorehover);
           }
       }
 
