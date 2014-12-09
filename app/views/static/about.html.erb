@@ -3,7 +3,7 @@
     <header>
       <h2><%= @title %></h2>
       <h3>Global Forest Watch (GFW) is a dynamic online forest monitoring and alert system that empowers people everywhere to better manage forests. For the first time, Global Forest Watch unites satellite technology, open data, and crowdsourcing to guarantee access to timely and reliable information about forests. GFW is free and follows an open data approach in putting decision-relevant information in the hands of governments, companies, NGOs, and the public.</h3>
-      <p>GFW is supported by a diverse partnership of organizations that contribute data, technical capabilities, funding, and expertise. The partnership is convened by the World Resources Institute. See a full list of partners below.</p>
+      <h3>GFW is supported by a diverse partnership of organizations that contribute data, technical capabilities, funding, and expertise. The partnership is convened by the World Resources Institute. See a full list of partners below.</h3>
 
     </header>
     <div class="carrousel" id="carrouselView">
@@ -33,16 +33,18 @@
               <%= @title %>
             </a>
           </li>
+          <li><%= link_to 'About GFW', "#{about_path}/about-gfw", :"data-slug" => 'about-gfw', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item about-gfw' %></li>
           <li><%= link_to 'The GFW Partnership', "#{about_path}/the-gfw-partnership", :"data-slug" => 'the-gfw-partnership', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item the-gfw-partnership' %></li>
           <li><%= link_to 'Videos', "#{about_path}/videos", :"data-slug" => 'videos', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item videos' %></li>
           <li><%= link_to 'Awards & Testimonals', "#{about_path}/awards_and_testimonials", :"data-slug" => 'awards_and_testimonials', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item awards_and_testimonials' %></li>
           <li><%= link_to 'Outcomes', "#{about_path}/outcomes", :"data-slug" => 'outcomes', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item outcomes' %></li>
+          <li><%= link_to 'Contact us', "#{about_path}/contact-us", :"data-slug" => 'contact-us', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item contact-us' %></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
         <div class="sources-content">
           <div id="sources-spinner" class="spinner start"><svg><use xlink:href="#shape-spinner"></use></svg></div>
-          <article id='gfw' class='source-article'>
+          <article id='about-gfw' class='source-article'>
             <header>
               <h2>About GFW</h2>
             </header>
@@ -244,6 +246,20 @@
                   <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                   <a href="#" class="btn gray medium">Outcomes fires</a>
                   <a href="#" class="btn gray medium">Outcomes communities</a>
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article id='contact-us' class="source-article">
+            <header>
+              <h2>Contact Us</h2>
+            </header>
+            <div class='content'>
+              <ul class="faq-list">
+                <li>
+                  <h3>Contact us</h3>
+                  <p><a href="mailto:gfw@wri.org">gfw@wri.org</a></p>
                 </li>
               </ul>
             </div>
