@@ -877,6 +877,8 @@
     padding: 25px 0 0;
   }
 
+
+
   .source-item {
     &:hover,
     &.selected {
@@ -924,10 +926,48 @@
     .source_body,
     .source_coverage_header,
     .source_coverage {
+      padding: 0 0px 25px 0;
       display: none;
+      p{
+        font-size: 14px;
+      }
       a{
         text-decoration: none;
         color: $cGreen;
+      }
+    }
+    .source_download,
+    .source_coverage_download {
+      text-align: right;
+      background: #F0F5DC;
+      border-top: 1px solid #ccc;
+
+      a,
+      span {
+        display: inline-block;
+        margin: 20px;
+        padding: 0 15px;
+        font: 14px/30px "fira_sans_otmedium";
+        text-decoration: none;
+        color: #fff;
+        background: #A5B81A;
+        @include border-radius(16px);
+      }
+
+      a {
+        display: inline-block;
+        margin: 20px;
+        padding: 0 15px;
+        font: 14px/30px "fira_sans_otmedium";
+        text-decoration: none;
+        color: #fff;
+        background: #A5B81A;
+        @include border-radius(16px);
+
+        &.disabled {
+          @include opacity(.5);
+          cursor: default;
+        }
       }
     }
   }
@@ -948,58 +988,36 @@
       color: #999;
       font: italic 13px/60px "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
-  }
-
-  .expand_arrow,
-  .dropdown_arrow {
-    display: block;
-    float: right;
-    height: 60px;
-    width: 34px;
-    margin-left: 15px;
-    @include static-icons-sprite(expand_arrow_down);
-  }
-
-  .dropdown_arrow {
-    margin-right: 10px;
-  }
-
-
-
-  .source_download,
-  .source_coverage_download {
-    text-align: right;
-    background: #F0F5DC;
-    border-top: 1px solid #ccc;
-
-    a,
-    span {
-      display: inline-block;
-      margin: 20px;
-      padding: 0 15px;
-      font: 14px/30px "fira_sans_otmedium";
-      text-decoration: none;
-      color: #fff;
-      background: #A5B81A;
-      @include border-radius(16px);
-    }
-
-    a {
-      display: inline-block;
-      margin: 20px;
-      padding: 0 15px;
-      font: 14px/30px "fira_sans_otmedium";
-      text-decoration: none;
-      color: #fff;
-      background: #A5B81A;
-      @include border-radius(16px);
-
-      &.disabled {
-        @include opacity(.5);
-        cursor: default;
+    .expand_arrow,
+    .dropdown_arrow {
+      display: block;
+      position: relative;
+      float: right;
+      height: 60px;
+      width: 60px;
+      margin-left: 15px;
+      background-image: image-url("svg-icons/arrow-down.svg");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: 15px;
+      &:after{
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 1px;
+        height: 50%;
+        @include transform(translate(0,-50%));
+        background-color: #ccc;
       }
     }
+    .dropdown_arrow {
+      // margin-right: 10px;
+    }
   }
+
+
+
 
   .source_coverage_download {
     border-top: 0;
