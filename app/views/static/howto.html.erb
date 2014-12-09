@@ -2,7 +2,7 @@
     <div class="inner">
       <header>
         <h2><%= @title %></h2>
-        <h3>Not sure how to use Global Forest Watch? Watch the overview video and click through the tabs of information below to learn more.</h3>
+        <h3>Not sure how to use Global Forest Watch? Use the information on this page to learn more.</h3>
       </header>
       <div class="carrousel" id="carrouselView">
         <div class='carrousel-box'>
@@ -70,7 +70,7 @@
             <div class="content">
               <ul class="faq-list">
                 <li>
-                  <h3>Viewing Data</h3>
+                  <h3>Viewing data</h3>
                   <p>When you enter the GFW interactive map, UMD/Google tree cover loss and gain data layers are displayed by default. Using the tabs across the top of the map, you can view the range of available data, categorized by type, and find more information for each by clicking the “?” icon. Simply select a data layer to turn it on or off in the map. You can view currently displayed data layers in the summary window on the left-hand side of the page. For data layers restricted to a particular geographic region (e.g., FORMA alerts), this window also provides the option to turn on the “Geographic coverage.” This feature allows you to view the geographic extent of the particular data layer on the map.</p>
 
                   <p><strong>Try it out!</strong> Under the “FOREST CHANGE” tab, select “FORMA alerts.” In the data window, turn on the geographic coverage. Now overlay the alerts with protected areas, which can be turned on in the “CONSERVATION” tab.</p>
@@ -80,6 +80,36 @@
                   <p><strong>Try it out!</strong> With UMD/Google tree cover loss turned on (the default data layer), press the “play” icon located on the time slider at the bottom of the map. Now try viewing data only since 2004 (hint: drag the handles of the time slider).</p>
 
                   <p>Some data layers are more interactive on the map; you can click on individual shapes to see additional information. This feature applies to “NASA active fires,” and to data within “FOREST USE,” “CONSERVATION,” and “PEOPLE” tabs. Within some of these layers, you can also analyze data found under the “FOREST CHANGE” by individual data layer shapes. See below for more information.</p>
+                  <p>[Insert screencast]</p>
+                </li>
+                <li>
+                  <h3>Analyzing data</h3>
+                  <p>The GFW interactive map enables basic analysis of data found under the “FOREST CHANGE” tab. There are two ways by which you can analyze these data layers on the map:</p>
+                  <ul class='bullets'>
+                    <li><strong>Hand drawn area.</strong> Once you have turned on a “FOREST CHANGE” layer you wish to analyze, select the “analysis” icon (which resembles a chart) located at the top of the map. You are now in draw mode and can create a polygon using your mouse. Connect the dots to make a shape, and then scroll to the bottom of the map and select “DONE” to analyze the area.</li>
+                    <li><strong>Land concessions and protected areas.</strong> You can also analyze data layers under the “OREST CHANGE” tab by theboundaries of land-use concessions (e.g., logging concessions) and protected areas. To do so, turn on “FOREST CHANGE” layer you wish to analyze, and then activate the concession layer (concession are located under “FOREST USE”) or protected area layer, depending on what analysis you would like to conduct. Next, identify and select the particular hape of interest, which might be a specific lgging concession, oil palm plantation, or protected area. Once selected, a window will appear that contains the “analysis” icon in the top right corner. Click the icon to perform the analysis.</li>
+                  </ul>
+                  <p>When your area of interest is analyzed, a window displaying the results will appear on the right-hand side of the map. Depending on the type of data under “FOREST CHANGE” that you are analyzing, different information will appear, such as hectares of tree cover loss, number of alerts, or number of active fires. The window also indicates the time interval of the analysis, which can be adjusted using the time slider. As you adjust the time interval, the analysis results will update. The window also features a link to download the full data set. Once you are finished with the analysis, press the “trash” icon to discard it.</p>
+                  <p>The near real-time FORMA alerts have an additional feature available through analysis: subscription. With this feature, you can subscribe to alerts for an area of interest and receive an email when a new tree clearing has been detected, on a monthly-basis. Once you have analyzed an area for the number of FORMA alerts, navigate to the “mail” icon in the analysis window (located next to the “trash” icon). Select the icon and enter your email address to subscribe to alerts. Please note: FORMA alerts are only available for the humid tropical forest biome (turn on “Geographic coverage” for more detail).</p>
+
+                  <p><strong>Try it out!</strong> Navigate to the “FOREST CHANGE” tab and turn on the FORMA alerts data layer. Next, click the analysis icon located at the top of the map and draw a shape within the humid tropical forest biome (Not sure where that is? Turn on the “Geographic coverage” feature, located in the window on the left-hand side of the map). Once you have drawn a shape, click “DONE” to view the results.</p>
+                  <p>Additional analysis functionality is available in other areas of the website. To analyze FOREST CHANGE data layers by country or subnational boundaries, please visit COUNTRY PROFILES AND RANKINGS. For more comprehensive analysis related to commodities or fires, please visit GFW Commodities or GFW Fires.</p>
+                  <p>[Insert screencast]</p>
+                </li>
+                <li>
+                  <h3>Sharing map views</h3>
+                  <p>Maps can tell powerful stories. Through GFW, we make it possible to share compelling visuals and analyses for news articles, blog posts, and other outside sources. There are two options to share your current view (and analysis results, if applicable):</p>
+                  <ul class='bullets'>
+                  <li>Select the “share” icon located at the top of the map (near the “search” box). Next, choose whether you would like to share the map view by embedding HTML (ideal for websites) or by URL.</li>
+                  <li>Simply copy and paste the URL from your browser, which will always take you to your current map view.</li>
+                  </ul>
+                </li>
+                <li>
+                  <h3>Adjusting map settings</h3>
+                  <p>The interactive map offers simple settings to meet user needs.</p>
+                  <p>By default, data is displayed on a basic black and white map which includes political boundaries, major geological features, and other key areas of interest. To change the base map, navigate to the “map” icon at the top of the map (near the “search” box). Once selected, you will see the range of base maps available, including those comprised of satellite imagery. Click “?” to find out more about each base map.</p>
+                  <p>For two of GFW’s key data sets, UMD/Google tree cover extent and loss, we provide a setting that allows users to adjust the canopy density of tree cover data displayed on the map. You can adjust the canopy density depending on the national standards or ecosystem type in your area of interest. To access this feature (ONLY available for UMD/Google tree cover extent and loss) select the “settings” icon at the top of the map (near the “search” box). Using the slider at the bottom of the window, you can select to view data (and perform analysis) at canopy densities: >10%, >15%, >20%, >25%, >30%, >50%, and >75%.  The default tree cover canopy density is >30%. The canopy density selected will appear in the data window on the left-hand side of the map, and within the analysis window if you perform an analysis. If you select a canopy density other than the default, the “settings” icon will be highlighted green. For more information, click the “?” icon.</p>
+                  <p><strong>Try it out!</strong> Enter the interactive map and turn off the UMD/Google tree cover gain layer. The map should now only show UMD/Google tree cover loss. Select the “settings” icon and adjust the canopy density to >70%. Notice how the data changes, especially in drier parts of the world.</p>
                   <p>[Insert screencast]</p>
                 </li>
               </ul>
