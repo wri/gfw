@@ -157,6 +157,16 @@
 	    	}
     	}
     }
+
+    .footer-logos-btn{
+      a{
+        margin: 0 auto 30px;
+        max-width: 200px;
+        display: block;
+        background-color: transparent;        
+      }
+    }
+
     .footer-logos{
         display: none;
         @media (min-width: $br-mobile){
