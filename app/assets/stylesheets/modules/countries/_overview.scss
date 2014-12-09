@@ -14,10 +14,11 @@
 
   .umdoptions_dialog {
     left: auto;
-    right: 0;
-    top: 66px;
+    right: -9px;
+    top: 44px;
     display: block;
     position: absolute;
+    width: 442px;
       &::after {
         top: -272px;
         left: 237px;
