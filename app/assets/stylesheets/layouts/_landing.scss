@@ -8,7 +8,7 @@
   z-index: 3;
   @media (min-width: $br-mobile) {
     min-height: 500px;
-    padding-bottom: 40%;  
+    padding-bottom: 40%;
   }
 
 
@@ -488,7 +488,8 @@
  .timeline-involved {
   .button-box {
    padding: 0 0 15px;
-   @include row(space-between,center);
+   // @include row(space-between,center);
+   @include row(center,center);
    .btn {
     width: 49%;
     text-transform: uppercase;
