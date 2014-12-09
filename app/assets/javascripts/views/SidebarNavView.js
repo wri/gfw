@@ -58,18 +58,24 @@ define([
       this.$document.on('scroll',_.bind(this.scrollDocument,this));
       this.$window.on('resize',_.bind(this.calculateOffsets,this));
       this.calculateOffsets();
+
       mps.subscribe('SourceStatic/change',_.bind(this.changeSource,this));
       mps.subscribe('SubItem/change',_.bind(this.calculateOffsets,this));
     },
 
+
+
     toggleSources: function(e){
       this.$sourceBody.hide(0);
+      this.$sourceHeader.removeClass('active');
+
       if(!$(e.currentTarget).hasClass('active')){
         $(e.currentTarget).addClass('active');
         $(e.currentTarget).parent().children('.source_body').show(0);
-      }else{
-        $(e.currentTarget).removeClass('active');
       }
+
+      this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0);
+
       setTimeout(_.bind(function(){
         this.calculateOffsets();  
       },this),50);      
@@ -142,7 +148,7 @@ define([
 
     scrollTo: function(e){
       e && e.preventDefault();
-      this.$htmlbody.animate({ scrollTop: 0},500);
+      this.$htmlbody.animate({ scrollTop: 0 },500);
     }
 
 

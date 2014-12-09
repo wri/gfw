@@ -1,3 +1,30 @@
+
+<% content_for :header do %>
+  <h1><a href="/">Global Forest Watch</a></h1>
+  <nav id="nav-mobile">
+    <form class="mobile-show" action="/search">
+      <svg class="icon"><use xlink:href="#shape-search"></use></svg>
+      <input type="text" name="query" id="search-input" placeholder="Search">
+    </form>
+    <div id="google_translate_element_box2"></div>
+    <ul>
+      <li>
+        <a href="/sources/forest_change">Data policy</a>
+      </li>
+      <li>
+        <a href="http://data.gfw.opendata.arcgis.com/datasets">GFW on arcgis online</a>
+      </li>
+      <li>
+        <a href="/sources/earth_engine">GFW on GEE</a>
+      </li>
+    </ul>
+  </nav>
+
+  
+<% end %>
+
+
+
 <section class="header-static">
     <div class="inner">
       <header>
