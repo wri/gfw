@@ -29,7 +29,7 @@ define([
     events: function(){
       return _.extend({}, ShareView.__super__.events, {
         'click .widget-btn': '_show',
-        'click .mode_menu a': '_onClickMode',
+        'click .mode_menu li': '_onClickMode',
         'click .close' : '_hide'
       });
     },
@@ -40,17 +40,18 @@ define([
     },
 
     _onClickMode: function(e) {
-       e && e.preventDefault();
-      var mode = $(e.currentTarget).data('embed'),
-          text = 'Click and paste link in email or IM';
+      e && e.preventDefault();
+      var mode = $(e.currentTarget).data('embed'), text;
+      $(e.currentTarget).addClass('selected').siblings().removeClass('selected');
 
       if (mode === 'url') {
         this._setLink();
+        text = 'Click and paste link in email or IM';
         ga('send', 'event', 'Map', 'Share', 'Show dialog URL');
       } else if (mode === 'embed') {
-          text = 'Click and paste HTML to embed in website';
-        ga('send', 'event', 'Map', 'Share', 'Show dialog EMBED');
         this._setEmbed();
+        text = 'Click and paste HTML to embed in website';
+        ga('send', 'event', 'Map', 'Share', 'Show dialog EMBED');
       }
 
       $('.share_dialog').find('.help span').empty().append(text);
@@ -87,14 +88,13 @@ define([
 
     _setLink: function() {
       var that = this,
-          $dialog = $('.share_dialog');
+      $dialog = $('.share_dialog');
       this.$input = $dialog.find('.field');
       this.$loading = $dialog.find('.share_loading');
       this.$share = $dialog.find('.share_buttons');
 
       // Disable textarea
       this.$input.val('');
-      this.$loading.show();
 
       // Get link short
       this._generateShortUrl(window.location.href, function(url) {
@@ -148,7 +148,7 @@ define([
 
     _generateShortUrl: function(url, callback) {
       $.ajax({
-        url: 'https://api-ssl.bitly.com/v3/shorten?longUrl=' + encodeURIComponent(url) + '&loginvizzuality&apiKey=',
+        url: 'https://api-ssl.bitly.com/v3/shorten?longUrl=' + encodeURIComponent(url) + '&login=vizzuality&apiKey=R_de188fd61320cb55d359b2fecd3dad4b',
         type: 'GET',
         async: false,
         dataType: 'jsonp',

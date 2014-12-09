@@ -27,6 +27,8 @@ define([
   'use strict';
 
   var URL = 'http://beta.gfw-apis.appspot.com/forest-change';
+  //var URL = 'http://localhost:8080/forest-change';
+  
 
   var AnalysisService = Class.extend({
 
@@ -95,7 +97,7 @@ define([
     _defineRequests: function() {
       var datasets = [
         'forma-alerts', 'umd-loss-gain', 'imazon-alerts', 'nasa-active-fires',
-        'quicc-alerts'
+        'quicc-alerts', 'terrai-alerts'
       ];
 
       // Defines requests for each dataset (e.g., forma-alerts) and type (e.g.

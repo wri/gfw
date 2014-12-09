@@ -13,13 +13,14 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
+/install
 /tmp
 /media/upload
 /public/uploads
 /public/media
 
 .DS_Store
-
+/install
 .gitignore
 .ruby-version
 .rvmrc

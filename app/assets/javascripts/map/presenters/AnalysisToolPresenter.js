@@ -44,7 +44,8 @@ define([
       'forma': 'forma-alerts',
       'imazon': 'imazon-alerts',
       'fires': 'nasa-active-fires',
-      'modis': 'quicc-alerts'
+      'modis': 'quicc-alerts',
+      'terrailoss': 'terrai-alerts'
     },
 
     init: function(view) {
