@@ -23,23 +23,23 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'Small Grants Fund', "#{getinvolved_path}/small-grants-fund", :"data-slug" => 'small-grants-fund', :"data-interesting" => 'explore_the_map, stories_on_the_map, download_the_data', :class => 'nav-item small-grants-fund' %></li>
           <li><%= link_to 'Develop your own app', "#{getinvolved_path}/develop-your-own-app", :"data-slug" => 'develop-your-own-app', :"data-interesting" => 'explore_the_map, keep_updated, download_the_data', :class => 'nav-item develop-your-own-app' %></li>
-          <li><%= link_to 'Submit a Story', "#{getinvolved_path}/submit-a-story", :"data-slug" => 'submit-a-story', :"data-interesting" => 'explore_the_map, keep_updated, download_the_data', :class => 'nav-item submit-a-story' %></li>
           <li><%= link_to 'Share your data', "#{getinvolved_path}/share-your-data", :"data-slug" => 'share-your-data', :"data-interesting" => 'explore_the_map, keep_updated, download_the_data', :class => 'nav-item share-your-data' %></li>
-          <li><%= link_to 'Crowdsourcing Tools', "#{getinvolved_path}/crowdsourcing-tools", :"data-slug" => 'crowdsourcing-tools', :"data-interesting" => 'explore_the_map, keep_updated, download_the_data', :class => 'nav-item crowdsourcing-tools' %></li>
+          <li><%= link_to 'Validate data', "#{getinvolved_path}/validate-data", :"data-slug" => 'validate-data', :"data-interesting" => 'explore_the_map, keep_updated, download_the_data', :class => 'nav-item validate-data' %></li>
+          <li><%= link_to 'Apply to the Small Grants Fund', "#{getinvolved_path}/apply-to-the-small-grants-fund", :"data-slug" => 'apply-to-the-small-grants-fund', :"data-interesting" => 'explore_the_map, stories_on_the_map, download_the_data', :class => 'nav-item apply-to-the-small-grants-fund' %></li>
           <li><%= link_to 'Provide Feedback', "#{getinvolved_path}/provide-feedback", :"data-slug" => 'provide-feedback', :"data-interesting" => 'explore_the_map, keep_updated, download_the_data', :class => 'nav-item provide-feedback' %></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
         <div class="sources-content">
           <div id="sources-spinner" class="spinner start"><svg><use xlink:href="#shape-spinner"></use></svg></div>
-          <article id='small-grants-fund' class="source-article">
+          <article id='apply-to-the-small-grants-fund' class="source-article">
             <header>
-              <h2>Small Grants Fund</h2>
+              <h2>Apply to the Small Grants Fund</h2>
               <h3>Welcome to the Global Forest Watch Small Grants Fund!</h3>
               <p>Established in 2014, the Small Grants Fund seeks to promote broad uptake and innovative use of Global Forest Watch by civil society around the world. The SGF provides financial and technical support to empower civil society organizations to apply Global Forest Watch data and technology in support of their work to strengthen local forest management and conservation practices, conduct evidence-based advocacy and campaigning, and promote greater transparency in the forest sector.</p>
               <p><strong>The 2015 application period is now open. Please read below for information on how to apply.</strong></p>
+              <p><%= image_tag('logos/sgfhover.jpg')%></p>
             </header>
             <div class='content'>
               <ul class="faq-list">
@@ -124,7 +124,7 @@
                 <li>
                   <h3>Code</h3>
                   <p>The Global Forest Watch website and Global Forest Watch API are both collaborative and open-source projects hosted on GitHub. If you would like to contribute source code, please send pull requests to our website repository or API repository. All Global Forest Watch source code is released under The MIT License (MIT).</p>
-                  <a class="btn green uppercase medium" href="#">Download</a>
+                  <a class="btn gray uppercase medium" href="https://github.com/Vizzuality/gfw">Website Repository</a>
                 </li>
                 <li>
                   <h3>Data</h3>
@@ -133,15 +133,14 @@
                   <li>
                     <h3>Coming soon</h3>
                     <ul class='bullets'>
-                    <li>Client library</li>
-                    <li>Style guide</li>
-                    <li>Seed fund</li>
-                  </ul>
+                      <li>Client library</li>
+                      <li>Style guide</li>
+                      <li>Seed fund</li>
+                    </ul>
                 </li>
                 <li>
                   <h3>Useful links</h3>
-            
-                  <a class="btn green uppercase medium" href="https://github.com/Vizzuality/gfw" target="_blank">Website Repository</a>
+                  <a class="btn gray uppercase medium" href="/applications">View existing applications</a>
                   <a class="btn gray uppercase medium" href="https://earthengine.google.org/" target="_blank">Google Earth Engine</a>
                   <a class="btn gray uppercase medium" href="#">ESRI's api info</a>
                 </li>
@@ -160,17 +159,154 @@
               <h2>Share your data</h2>
               <h3>[Text coming soon]</p>
               <a class="btn gray uppercase medium" href="http://data.gfw.opendata.arcgis.com/">Open data portal</a>
+              <a class="btn gray uppercase medium" href="mailto:gfw@wri.org">Email us</a>
             </header>
           </article>
-          <article id="crowdsourcing-tools" class="source-article">
+          <article id="validate-data" class="source-article">
             <header>
-              <h2>Crowdsourcing Tools</h2>
+              <h2>Validate data</h2>
               <h3>[Text coming soon]</h3>
               <p>[Text coming soon]</p>
               <a class="btn gray uppercase medium" href="http://data.gfw.opendata.arcgis.com/">Landsat validation app</a>
               <a class="btn gray uppercase medium" href="https://opendatakit.org/" target="_blank">ODK tool</a>
               <p>[Text coming soon] <%= link_to 'Develop your own app', "#{getinvolved_path}/develop-your-own-app" %>.</p>
             </header>
+            <div class="content">
+              <section class="applications-section">
+                <div class="inner">
+                  <h2 class="section-title">Applications developed by GFW</h2>
+                  <div class="row">
+                    <div class="col">
+                      <div class="card">
+                        <div class="ribbon">new</div>
+                        <header>
+                          <h2>Explore the map</h2>
+                          <div class="icon"><svg class="icon"><use xlink:href="#shape-world"></use></svg></div>
+                        </header>
+                        <div class="content">
+                          <p>View and analyze GFW data in an interactive map</p>
+                        </div>
+                        <footer>
+                          <a href="/map" class="btn green medium">Launch App</a>
+                        </footer>
+                      </div>
+                    </div>
+
+
+                    <div class="col">
+                      <div class="card">
+                        <header>
+                          <h2>Country profiles & rankings</h2>
+                          <div class="icon"><svg class="icon"><use xlink:href="#shape-country"></use></svg></div>
+                        </header>
+                        <div class="content">
+                          <p>View country data and rankings and analyze national and subnational forest statistics</p>
+                        </div>
+                        <footer>
+                          <a href="/countries" class="btn green medium">Launch App</a>
+                        </footer>
+                      </div>
+                    </div>
+
+
+                    <div class="col">
+                      <div class="card">
+                        <header>
+                          <h2>Fires</h2>
+                          <div class="icon"><svg class="icon"><use xlink:href="#shape-fire"></use></svg></div>
+                        </header>
+                        <div class="content">
+                          <p>Track forest fires and haze in the ASEAN region</p>
+                        </div>
+                        <footer>
+                          <a href="http://staging.blueraster.com/wri/gfw-fires/#v=home&x=&y=&l=&lyrs=&dirty=true" class="btn green medium">Launch App</a>
+                        </footer>
+                      </div>
+                    </div>
+
+
+                    <div class="col">
+                      <div class="card">
+                        <header>
+                          <h2>Commodities</h2>
+                          <div class="icon"><svg class="icon"><use xlink:href="#shape-commodities"></use></svg></div>
+                        </header>
+                        <div class="content">
+                          <p>Identify deforestation risk in commodity supply chains</p>
+                        </div>
+                        <footer>
+                          <a href="http://staging.blueraster.com/wri/gfw-commodities/#v=home" class="btn green medium">Launch App</a>
+                        </footer>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card">
+                        <header>
+                          <h2>Climate</h2>
+                          <div class="icon"><svg class="icon"><use xlink:href="#shape-carbon"></use></svg></div>
+                        </header>
+                        <div class="content">
+                          <p>Track carbon emissions and removal from forest change</p>
+                        </div>
+                        <footer>
+                          <span class="btn soon">coming soon</span>
+                        </footer>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card">
+                        <header>
+                          <h2>Biodiversity</h2>
+                          <div class="icon"><svg class="icon"><use xlink:href="#shape-biodiversity"></use></svg></div>
+                        </header>
+                        <div class="content">
+                          <p>Monitor forest change in critical habitats and landscapes</p>
+                        </div>
+                        <footer>
+                          <span class="btn soon">coming soon</span>
+                        </footer>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="card">
+                        <header>
+                          <h2>Develop your own app</h2>
+                          <div class="icon"><svg class="icon"><use xlink:href="#shape-develop"></use></svg></div>
+                        </header>
+                        <div class="content">
+                          <p>Build your own application using GFW's API and open source code</p>
+                        </div>
+                        <footer>
+                          <a href="/getinvolved/develop-your-own-app" class="btn gray medium">More</a>
+                        </footer>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              <section class="applications-section partners">
+                <div class="inner">
+                  <h2 class="section-title">Applications developed by partners & collaborators</h2>
+                  <div class="row">
+                    <div class="col">
+                      <div class="card">
+                        <div class="ribbon official">new</div>
+                        <header>
+                          <h2>Example app</h2>
+                          <div class="icon"><svg class="icon"><use xlink:href="#shape-lorem"></use></svg></div>
+                        </header>
+                        <div class="content">
+                          <p>Timely and reliable information about forests. GFW is free and follows an open data approach in putting decision-relevant information in the hands of governments, companies, NGOs, and the public</p>
+                        </div>
+                        <footer>
+                          <a href="#" class="btn green medium">Launch App</a>
+                        </footer>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>              
+            </div>
           </article>
           <article id="provide-feedback" class="source-article">
             <header>
