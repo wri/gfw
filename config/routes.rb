@@ -11,7 +11,8 @@ Gfw::Application.routes.draw do
   get '/sources' => redirect('sources/forest_change')
   get '/sources(/:section)' => 'static#data'
 
-  get '/keepupdated' => redirect('keepupdated/crowdsourced-stories')
+  # get '/keepupdated' => redirect('keepupdated/crowdsourced-stories')
+  get '/keepupdated' => redirect('keepupdated/receive-alerts')
   get '/keepupdated(/:section)' => 'static#keep'
   get '/getinvolved' => redirect('getinvolved/small-grants-fund')
   get '/getinvolved(/:section)' => 'static#getinvolved'
