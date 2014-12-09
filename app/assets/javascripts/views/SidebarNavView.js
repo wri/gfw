@@ -67,12 +67,13 @@ define([
 
     toggleSources: function(e){
       this.$sourceBody.hide(0);
+      this.$sourceHeader.removeClass('active');
+
       if(!$(e.currentTarget).hasClass('active')){
         $(e.currentTarget).addClass('active');
         $(e.currentTarget).parent().children('.source_body').show(0);
-      }else{
-        $(e.currentTarget).removeClass('active');
       }
+
       this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0);
 
       setTimeout(_.bind(function(){
