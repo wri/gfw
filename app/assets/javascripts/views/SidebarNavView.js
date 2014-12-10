@@ -55,10 +55,12 @@ define([
       this.setListeners();
     },
 
-    setListeners: function(){
+    setListeners: function(){  
+      this.calculateOffsets();
+      this.scrollDocument();
+     
       this.$document.on('scroll',_.bind(this.scrollDocument,this));
       this.$window.on('resize',_.bind(this.calculateOffsets,this));
-      this.calculateOffsets();
 
       mps.subscribe('SourceStatic/change',_.bind(this.changeSource,this));
       mps.subscribe('SubItem/change',_.bind(this.calculateOffsets,this));
@@ -90,7 +92,7 @@ define([
 
     calculateOffsets: function(){
       this.$sideBarBox.css({'min-height': this.$sideBarAside.height() });
-      this.offset = this.$sideBarAside.offset().top;
+      this.offset = this.$el.offset().top + parseInt(this.$el.css('paddingTop'), 10);
       this.offsetBottom = this.$cut.offset().top - this.$sideBarAside.height() - this.padding;        
     },
 
@@ -134,6 +136,7 @@ define([
           this.changeHelper(params.section);
         },this));
       }
+
       mps.publish('Interesting/update',[params.interesting]);
     },
 
