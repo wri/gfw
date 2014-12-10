@@ -39,7 +39,6 @@ define([
 
 
     parse: function(data) {
-      console.log(data)
       this.feedlist = _.map(data,_.bind(function(item){
         var result = null;
         if(item.cartodb_id){
