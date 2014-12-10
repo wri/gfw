@@ -348,7 +348,7 @@
               <strong class='column-title'>Blog stories</strong>
               <h3 class='story-title'><%= truncate(@blog_story['title'], :length => 35) %></h3>
               <p class='story-content'><%= truncate(@blog_story['description'].gsub('[&#8230;]', ''), :length => 300) %> <%= link_to('more', @blog_story['link'], :target => '_blank') %></p>
-              <p>Read more blog stories <a href='<%= "http://blog.globalforestwatch.org/?tag=#{@country['name'].downcase.gsub(' ', '_')}" %>'>here</a></p>
+              <p>Read more blog stories <a href='<%= "http://wp-wri-staging.herokuapp.com/?tag=#{@country['name'].downcase.gsub(' ', '_')}" %>'>here</a></p>
             <% end %>
           </li>
 

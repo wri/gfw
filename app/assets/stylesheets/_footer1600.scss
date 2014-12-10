@@ -99,7 +99,7 @@
     				margin: -10px 0 0;
     				li {
     					font-size: 13px;
-    					padding: 5px 0;
+    					padding: 5px 10px 5px 0;
     				}
     			}
     		}
@@ -163,11 +163,17 @@
     }
 
     .footer-logos-btn{
+      padding: 20px 0;
+      .inner{
+        @include row(space-between);
+      }
       a{
-        margin: 0 auto 30px;
-        max-width: 200px;
-        display: block;
+        color: $cGreen;
         background-color: transparent;        
+        text-decoration: none;
+        &:hover{
+          text-decoration: underline;
+        }
       }
     }
 
@@ -331,6 +337,13 @@
                 @include logos-sprite(ministryofforeignaffairshover);
               }
           }
+          &.moore {
+              height: 37px; width: 96px; @include logos-sprite(moore);
+              &:hover{
+                @include logos-sprite(moorehover);
+              }
+          }
+
 
           &.bobolink { 
               height: 53px; width: 105px; @include logos-sprite(bobolink);
