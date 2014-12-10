@@ -41,7 +41,7 @@
               <%= link_to 'Submit your story', new_story_path, :class => "btn green medium uppercase"%>
             </header>
             <div class="content">
-              <div class="stories-box">
+              <div id="storiesKeepView" class="stories-box">
                 <ul>
                   <% @visible.each do |story| %>
                     <li>
@@ -57,23 +57,7 @@
                   <% end %>
                 </ul>
                 <div class="section-footer">
-                  <% if @page  > 1 %>
-                    <%= link_to previous_page_keep(@page), :class => "previous_stories" do %>
-                      <span class="text">
-                        <span class="icon"></span>
-                        Previous Stories
-                      </span>
-                    <% end %>
-                  <% end %>
-                  <% unless last_page? %>
-                    <%= link_to next_page_keep(@page), :class => "next_stories" do %>
-                      <span class="text">
-                        Next Stories
-                        <span class="icon"></span>
-                      </span>
-                    <% end %>
-                  <% end %>
-
+                  <div id="pagination-container" data-page="<%= @page %>" data-perpage="<%= @stories_per_page %>" data-total="<%= @total_stories %>"></div>
                 </div>
               </div>
             </div>

@@ -29,11 +29,11 @@ class StaticController < ApplicationController
 
     stories_per_page = 5
 
-    unless params['for_map']
-      @page        = (params[:page] || 1).to_i
-      @total_pages = (Api::Story.visible.count.to_f / stories_per_page.to_f).ceil
-      @visible     = Api::Story.find_by_page(@page, stories_per_page)
-    end
+    @page        = (params[:page] || 1).to_i
+    @total_stories = Api::Story.visible.count
+    @stories_per_page = stories_per_page
+    @visible     = Api::Story.find_by_page(@page, stories_per_page)
+
     respond_with @stories
 
   end
@@ -49,11 +49,7 @@ class StaticController < ApplicationController
   private
 
     def load_stories
-      @stories = if params['for_map'].present?
-                   Api::Story.visible
-                 else
-                   Api::Story.visible.sample(5)
-                 end
+      @stories = Api::Story.visible.sample(5)
     end
 
     def access_through_token?(story)
