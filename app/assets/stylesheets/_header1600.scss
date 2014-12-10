@@ -355,21 +355,21 @@
     background: rgba(#FFF,0.8);
     border-bottom: 1px solid $border;
   }
-  @media (min-width: $br-mobile){
-    // Countries
-    .is-countries-page &{
-      border-bottom: none;
-      h1{
-        position: relative;
-      }
-      nav{
-        visibility: hidden;
-        opacity: 0;
-        height: 0;
-        overflow: hidden;
-      }
-    }
-  }
+  // @media (min-width: $br-mobile){
+  //   // Countries
+  //   .is-countries-page &{
+  //     border-bottom: none;
+  //     h1{
+  //       position: relative;
+  //     }
+  //     nav{
+  //       visibility: hidden;
+  //       opacity: 0;
+  //       height: 0;
+  //       overflow: hidden;
+  //     }
+  //   }
+  // }
 
 	// Logo
 	h1 {
