@@ -480,7 +480,9 @@
 
 
 // TWITTER
-
+.twitter-timeline {
+  height: 489px;
+}
 
 // GET INVOLVED
 .feed {
@@ -510,6 +512,7 @@
    position: relative;
    padding: 20px 0;
    margin: 20px 0;
+   height: 459px;
    &:after {
     content: "";
     width: 4px;
