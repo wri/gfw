@@ -25,7 +25,8 @@ define([
     events: {
       'click .nav-item' : 'updateSource',
       'click .nav-title' : 'scrollTo',
-      'click .source_header' : 'toggleSources'
+      'click .source_header' : 'toggleSources',
+      'click .source_dropdown_header' : 'toggleDropdown'
     },
 
     initialize: function() {
@@ -63,6 +64,10 @@ define([
       mps.subscribe('SubItem/change',_.bind(this.calculateOffsets,this));
     },
 
+
+    toggleDropdown: function(e){
+
+    },
 
 
     toggleSources: function(e){

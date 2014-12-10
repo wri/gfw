@@ -50,7 +50,7 @@
     padding: 0 0 15px;
   }
   h3 {
-    font-size: 21px;
+    font-size: 19px;
     line-height: 1.25;
     padding: 0 0 10px;
   }
@@ -1206,6 +1206,15 @@
   .source_dropdown {
     background: #EEE;
   }
+
+  .source_dropdown_menu{
+    display: block !important;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+  }
+
 
   .source_dropdown_header {
     @extend .clearfix;
