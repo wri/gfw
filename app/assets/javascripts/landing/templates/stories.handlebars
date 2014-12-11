@@ -1,14 +1,18 @@
 {{#if stories}}
   {{#each stories}}
     <li>
-      <a href="/stories/{{this.cartodb_id}}">
-        <figure><div class="bg" style="background-image: url({{this.url}})"></div></figure>
+      <a href="{{this.link}}">
+        {{#if this.map}}
+          <figure><div class="bg" style="background-image: url({{this.map}})"></div></figure>
+        {{else}}
+          <figure><div class="bg {{this.avatar}}"></div></figure>
+        {{/if}}
         <article class="info">
           <h4>{{this.title}}</h4>
-          <p>{{this.details}}</p>
+          <p>{{this.description}}</p>
           <button class="btn gray medium">More</button>
-        </article>        
+        </article>
       </a>
-    </li>    
+    </li>
   {{/each}}
 {{/if}}
