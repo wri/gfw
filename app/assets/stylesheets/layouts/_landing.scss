@@ -673,6 +673,18 @@
       margin: 0 auto;
       border: 2px solid #999;
      }
+     .Feature-posts {
+      background-image: url(blog-categories/feature.png);
+     }
+     .Updae {
+      background-image: url(blog-categories/update.png);
+     }
+     .News {
+      background-image: url(blog-categories/news.png);
+     }
+     .Mapoftheday {
+      background-image: url(blog-categories/mapoftheday.png);
+     }
     }
     .info {
      width: 60%;
@@ -682,11 +694,37 @@
       font-family: $font-medium;
       color: $dark;
       padding: 0 0 5px;
-      font-size: 15px;
+      $font-size: 15px;
+      $line-height: 1.4;
+      $lines-to-show: 2;
+      font-size: $font-size;
+      display: block; /* Fallback for non-webkit */
+      display: -webkit-box;
+      max-width: 200px;
+      height: 28px; /* Fallback for non-webkit */
+      margin: 0 auto 7px;
+      -webkit-line-clamp: $lines-to-show;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
      }
      p {
       color: #999999;
       font-family: $font-light;
+
+      $font-size: 15px;
+      $line-height: 1.4;
+      $lines-to-show: 2;
+      font-size: $font-size;
+      display: block; /* Fallback for non-webkit */
+      display: -webkit-box;
+      max-width: 200px;
+      height: 26px; /* Fallback for non-webkit */
+      margin: 0 auto 7px;
+      -webkit-line-clamp: $lines-to-show;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
      }
      .btn {
       margin: 20px 0 0;

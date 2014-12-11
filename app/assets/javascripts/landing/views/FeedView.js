@@ -50,7 +50,6 @@ define([
         } else if(item.guid) {
           result = this.parseItem(item,'blog');
         } else {
-          debugger;
           result = item;
         }
         return result;
@@ -66,7 +65,6 @@ define([
     parseItem: function(item,slug) {
       switch(slug){
         case 'story':
-        console.log(item)
           return {
             author: item.author,
             createDate: this.parseDate(item.pubDate),

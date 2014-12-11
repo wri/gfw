@@ -29,45 +29,66 @@ define([
     initialize: function() {
 
       //Init Vars
-      this.model = new StoriesModel();
-      this.limit = this.$el.data('limit');
-      this.truncate = Boolean(this.$el.data('truncate'));
-      this.url = 'https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20cartodb_id,title,details,media,ST_AsGeoJSON(the_geom)%20AS%20the_geom%20FROM%20community_stories%20WHERE%20visible=true%20order%20by%20created_at%20desc%20LIMIT%20'+this.limit;
-
+      this.url = 'https://pipes.yahoo.com/pipes/pipe.run?_id=7157ffabdeb1eefc621e8306f56039b9&_render=json';
+      this.items = {};
       mps.publish('Spinner:start');
 
       //Init Fn
-      this.model.on('change',this.render,this);
       this._loadStories();
     },
 
     render: function(){
-      this.$el.html(this.template(this.model.attributes));
+      this.$el.html(this.template({stories: this.items}));
     },
 
     _loadStories: function(){
       $.ajax({
         url: this.url,
         success: _.bind(function(data) {
-          data = data.rows;
-          var dataTemplate = _.map(data,_.bind(function (story) {
-            story.title = (this.truncate) ? story.title.replace(/^(.{40}[^\s]*).*/, "$1...") : story.title;
-            story.details = (this.truncate) ? story.details.replace(/^(.{40}[^\s]*).*/, "$1...").split('...')[0]+'...' : story.details.replace(/^(.{250}[^\s]*).*/, "$1...").split('...')[0]+'...';
-            story.media = jQuery.parseJSON(story.media);
-            story.the_geom = jQuery.parseJSON(story.the_geom);
-            story.img = story.media[story.media.length -1].preview_url;
-            story.url = (story.img) ? 'http://gfw2stories.s3.amazonaws.com/uploads/' + story.img : 'http://maps.google.com/maps/api/staticmap?center=' + story.the_geom.coordinates[1].toFixed(3) + ',' + story.the_geom.coordinates[0].toFixed(3) + '&zoom=4&size=266x266&maptype=terrain&sensor=false';
-            return story;
-          },this));
-
-          this.model.set('stories',dataTemplate);
-          mps.publish('Spinner:stop');
-
+          this.parse(data.value.items);
         },this),
         error: function(status, error) {
           mps.publish('Spinner:stop');
         }
       });
+    },
+    parse: function(data) {
+      var self = this;
+      this.items = _.map(data,_.bind(function(item) {
+        var result = null;
+        if (item.link) {
+          //check if it's a blog post
+          result = self.parseItem(item,'post');
+        } else {
+          // user story here
+          result = self.parseItem(item,'story');
+        }
+        return result;
+      },this));
+      self.render(this.items);
+      mps.publish('Spinner:stop');
+    },
+
+    parseItem: function(item, slug) {
+      if (slug === 'story') {
+        return {
+          title: item.title,
+          description: item.details,
+          link: '/stories/'+item.cartodb_id,
+          target: false,
+          map: 'https://maps.googleapis.com/maps/api/staticmap?center=' + item.the_geom.coordinates[0] + ',' + item.the_geom.coordinates[1] + '&zoom=2&size=80x80',
+          type: slug
+        }
+      } else {
+        return {
+          title: item.title,
+          description: item.description,
+          link: item.link,
+          target:true,
+          avatar: item.category[0].replace(' ','-'),
+          type: slug
+        }
+      }
     }
   });
   return StoriesView;
