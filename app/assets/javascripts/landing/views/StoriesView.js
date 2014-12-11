@@ -41,7 +41,7 @@ define([
       this.$el.html(this.template({stories: this.items}));
     },
 
-    _loadStories: function(){
+    _loadStories: function() {
       $.ajax({
         url: this.url,
         success: _.bind(function(data) {
