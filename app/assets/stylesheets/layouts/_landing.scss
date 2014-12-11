@@ -719,7 +719,7 @@
       display: block; /* Fallback for non-webkit */
       display: -webkit-box;
       max-width: 200px;
-      height: 26px; /* Fallback for non-webkit */
+      height: 30px; /* Fallback for non-webkit */
       margin: 0 auto 7px;
       -webkit-line-clamp: $lines-to-show;
       -webkit-box-orient: vertical;
@@ -727,7 +727,7 @@
       text-overflow: ellipsis;
      }
      .btn {
-      margin: 20px 0 0;
+      margin: 215px 0 0;
      }
     }
    }
