@@ -16,7 +16,7 @@ Gfw::Application.routes.draw do
   get '/keepupdated(/:section)' => 'static#keep'
   get '/getinvolved' => redirect('getinvolved/develop-your-own-app')
   get '/getinvolved(/:section)' => 'static#getinvolved'
-  get '/howto' => redirect('howto/general_questions')
+  get '/howto' => redirect('howto/overview')
   get '/howto(/:section)' => 'static#howto'
   get '/about' => redirect('about/about-gfw')
   get '/about(/:section)' => 'static#about'
