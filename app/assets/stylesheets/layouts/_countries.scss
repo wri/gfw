@@ -47,46 +47,48 @@
         margin: 0;
         padding: 0;
         height: 80px;
+      }
 
-        &:hover {
-          svg {
-            top: 0;
-          }
-          .country-content {
-            top: 0;
-            left: 20px;
-            right: 0;
-          }
-        }
-
-        .country-content, svg {
-          top: 0;
-          margin-left: 20px;
-          right: 0;
-          display: table;
-          max-width: 60%;
-          height: 100%;
-          path {
-            transform: scale(0.4);
-            -webkit-transform: scale(0.4);
-          }
-          h3 {
-            font-size: 20px;
-            text-align: left;
-            position: relative;
-            left: -18px;
-            color: #333;
-            display: table-cell;
-            vertical-align: middle;
-            height: 100%;
-          }
-        }
-
+      a:hover {
         svg {
-          margin-top: 10px;
-          left: 68%;
-          width: 84px;
+          top: 0;
         }
+        .country-content {
+          top: 0;
+          left: 20px;
+          right: 0;
+        }
+      }
+
+      .country-content, svg {
+        top: 0;
+        margin-left: 20px;
+        right: 0;
+        display: table;
+        max-width: 60%;
+        height: 100%;
+
+        path {
+          transform: scale(0.4);
+          -webkit-transform: scale(0.4);
+        }
+
+        h3 {
+          font-size: 20px;
+          text-align: left;
+          position: relative;
+          left: -18px;
+          color: #333;
+          display: table-cell;
+          vertical-align: middle;
+          height: 100%;
+        }
+      }
+
+      a svg {
+        margin-top: 10px;
+        left: 68%;
+        width: 84px;
       }
     }
   }
