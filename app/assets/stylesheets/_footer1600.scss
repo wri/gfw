@@ -383,6 +383,7 @@
     background: $white;
     @include justify-content(space-around);
     @include align-items(center);
+    border-top: 1px solid $border;
     border-bottom: 1px solid $border;
     position: relative;
     .footer-close{
