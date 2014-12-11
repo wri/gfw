@@ -12,13 +12,13 @@ Gfw::Application.routes.draw do
   get '/sources(/:section)' => 'static#data'
 
   # get '/keepupdated' => redirect('keepupdated/crowdsourced-stories')
-  get '/keepupdated' => redirect('keepupdated/monitor-an-area-of-interest')
+  get '/keepupdated' => 'static#keep'
   get '/keepupdated(/:section)' => 'static#keep'
-  get '/getinvolved' => redirect('getinvolved/develop-your-own-app')
+  get '/getinvolved' => 'static#getinvolved'
   get '/getinvolved(/:section)' => 'static#getinvolved'
-  get '/howto' => redirect('howto/overview')
+  get '/howto' => 'static#howto'
   get '/howto(/:section)' => 'static#howto'
-  get '/about' => redirect('about/about-gfw')
+  get '/about' => 'static#about'
   get '/about(/:section)' => 'static#about'
   get '/applications' => 'static#applications'
 
