@@ -49,21 +49,21 @@
 
   // Colors
   &.dark {
-    color: $white !important;
+    color: $white;
     background: $dark;
     &:hover {
       background: darken($dark,25%);
     }
   }
   &.white {
-    color: $dark !important;
+    color: $dark;
     background: $white;
     &:hover {
-      background: darken($white,5%);
+      background: darken($white,10%);
     }
   }
   &.gray {
-    color: $dark !important;
+    color: $dark;
     background: $white;
     border-color: $cGreen;
     &:hover {
@@ -71,21 +71,21 @@
     }
   }
   &.green {
-    color: $white !important;
+    color: $white;
     background: $cGreen;
     &:hover {
       background: darken($cGreen,10%);
     }
   }
   &.light {
-    color: $white !important;
+    color: $white;
     background: #CBCCBF;
     &:hover {
       background: darken(#CBCCBF,5%);
     }
   }
   &.light2 {
-    color: $dark !important;
+    color: $dark;
     background: $border;
     font-family: $font-regular;
     &:hover {
@@ -93,7 +93,7 @@
     }
   }
   &.soon {
-    color: #ccc !important;
+    color: #ccc;
     background: none;
     font-family: $font-regular;
     text-transform: uppercase;

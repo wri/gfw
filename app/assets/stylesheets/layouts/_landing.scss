@@ -479,7 +479,7 @@
      box-shadow: 0 0px 5px rgba(#000,0.25);
      @include transition(all,0.5s,$easeInOutSine);
      &:hover {
-      box-shadow: 0 0 20px rgba(#000,0.25);
+      box-shadow: 0 0 50px rgba(#000,0.25);
      }
     }
     h3 {
@@ -497,6 +497,9 @@
       .btn {
         text-transform: uppercase;
       }
+    }
+    .twitter{
+      width: 100%;
     }
 	}
 }
