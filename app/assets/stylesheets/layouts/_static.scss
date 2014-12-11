@@ -583,8 +583,11 @@
       text-align: center;
       &:hover{
         text-decoration: none;
-        .icon{
-          fill: $cGreen;
+        .fire{
+          fill: $red;
+        }
+        .commodities{
+          fill: $orange; 
         }
       }
 
