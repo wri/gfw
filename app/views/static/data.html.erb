@@ -1,7 +1,7 @@
 
 <% content_for :header do %>
   <h1><a href="/">Global Forest Watch</a></h1>
-  <nav id="nav-mobile">
+  <nav id="nav-mobile" style="visibility:hidden">
     <form class="mobile-show" action="/search">
       <svg class="icon"><use xlink:href="#shape-search"></use></svg>
       <input type="text" name="query" id="search-input" placeholder="Search">
@@ -23,7 +23,7 @@
     </ul>
   </nav>
 
-  
+
 <% end %>
 
 
@@ -34,7 +34,7 @@
         <h2><%= @title %></h2>
         <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</h3>
       </header>
-      <ul class="row row3">        
+      <ul class="row row3">
         <li><a class="btn white uppercase" href='mailto:gfw@wri.org'>Missing a data set?</a></li>
         <li><a class="btn white uppercase" href='https://groups.google.com/forum/#!forum/globalforestwatch' target='_blank'>Join the discussion</a></li>
       </ul>
