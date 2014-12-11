@@ -299,14 +299,14 @@
       padding: 10px 0 0;
       line-height: 1.5;
       font-size: 14px;
-    }
-    a {
-     text-decoration: none;
-     color: $cGreen;
-     font-family: $font-medium;
-     &:hover {
-      text-decoration: underline;
-     }
+      a {
+       text-decoration: none;
+       color: $cGreen;
+       font-family: $font-medium;
+       &:hover {
+        text-decoration: underline;
+       }
+      }
     }
     .btn {
      margin: 10px 0 0;
