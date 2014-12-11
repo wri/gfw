@@ -217,9 +217,18 @@
  }
  .content {
   padding: 20px 0 0;
-  .inner{
-    width: 100%;
-    margin: 0;
+  .applications-section{
+    .inner{
+      width: 100%;
+      margin: 0;
+    }
+    .row{
+      @include row(space-between);
+      .col{
+        @include col(48.4);
+        padding: 0;
+      }
+    }    
   }
   // LIST TYPES: pub-list, alerts-list
   .publications-list {
@@ -743,6 +752,7 @@
    margin: 0px 0 25px;
    overflow: hidden;
    .card {
+    width: 100%;
     position: relative;
     padding: 40px 25px 100px;
     text-align: center;
