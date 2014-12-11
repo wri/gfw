@@ -1,7 +1,11 @@
 {{#each feed}}
   <li>
     <a href="{{this.link}}" {{#if target}}target="_blank"{{/if}}>
-      <figure class="{{this.type}}"></figure>
+      {{#if this.avatar}}
+        <figure class="{{this.type}}" style="background-image:url('{{this.avatar}}');"></figure>
+      {{else}}
+        <figure class="{{this.type}}"></figure>
+      {{/if}}
       <div class="info">
         <p><span>{{this.author}}</span> {{this.description}}</p>
       </div>

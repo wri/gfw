@@ -564,15 +564,18 @@
      left: 50%;
      z-index: 2;
      @include transform(translate(-40%,-50%));
-     // &.blog {
-     //  background: $orange;
-     // }
-     // &.disqus {
-     //  background: $red;
-     // }
-     // &.story {
-     //  background: $cGreen;
-     // }
+     background-size: contain;
+     &.google {
+      background-image: url('logos/google.svg');
+     }
+     &.disqus {
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-color: #e2e7ea;
+     }
+     &.story {
+      background: $cGreen;
+     }
     }
     a {
      color: $dark;

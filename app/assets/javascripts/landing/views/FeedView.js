@@ -29,7 +29,7 @@ define([
 
     loadFeed: function() {
       $.ajax({
-        url: 'https://pipes.yahoo.com/pipes/pipe.run?_id=5bc0b70181e4954888ddc8fb05598fa2&_render=json',
+        url: 'https://pipes.yahoo.com/pipes/pipe.run?_id=d79b5dd252a71b6930d4756e801468c4&_render=json',
         type:'GET',
         success: _.bind(function(data){
           this.parse(data.value.items);
@@ -39,15 +39,18 @@ define([
 
 
     parse: function(data) {
-      this.feedlist = _.map(data,_.bind(function(item){
+      this.feedlist = _.map(data,_.bind(function(item) {
         var result = null;
-        if(item.cartodb_id){
+        if(item.cartodb_id) {
           result = this.parseItem(item,'story');
-        }else if(item.feed){
+        } else if(item.disqus) {
           result = this.parseItem(item,'disqus');
-        }else if(item.guid){
+        } else if(item.google) {
+          result = this.parseItem(item,'google');
+        } else if(item.guid) {
           result = this.parseItem(item,'blog');
-        }else{
+        } else {
+          debugger;
           result = item;
         }
         return result;
@@ -63,30 +66,43 @@ define([
     parseItem: function(item,slug) {
       switch(slug){
         case 'story':
+        console.log(item)
           return {
             author: item.author,
             createDate: this.parseDate(item.pubDate),
             description: 'added a new story',
             link: '/stories/'+item.cartodb_id,
             target: false,
+            avatar: 'https://maps.googleapis.com/maps/api/staticmap?center=' + item.the_geom.coordinates[0] + ',' + item.the_geom.coordinates[1] + '&zoom=2&size=80x80',
             type: slug
           }
         break;
         case 'disqus':
           return {
-            author: item.author,
+            author: item.author.name,
             createDate: this.parseDate(item.pubDate),
             description: 'added a comment',
+            link: 'https://disqus.com/home/forum/gfw20/recent/',
+            target:true,
+            avatar: item.author.avatar.small.permalink,
+            type: slug
+          }
+        break;
+        case 'blog':
+          return {
+            author: item['dc:creator'],
+            createDate: this.parseDate(item.pubDate),
+            description: 'added a new post in blog',
             link: item.link,
             target:true,
             type: slug
           }
         break;
-        case 'blog':
-          return{
-            author: item['dc:creator'],
+        case 'google':
+          return {
+            author: item.author,
             createDate: this.parseDate(item.pubDate),
-            description: 'added a new post in blog',
+            description: 'commented on Google Groups',
             link: item.link,
             target:true,
             type: slug
