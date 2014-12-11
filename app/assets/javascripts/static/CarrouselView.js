@@ -29,18 +29,20 @@ define([
 
     onTab: function(e) {
       e && e.preventDefault();
-      // Pause video before changing slides
-      this.pauseVideo();
-      
-      // Vars
-      this.tab = $(e.currentTarget).data('tab');
-      this.current = $(e.currentTarget).parent().index();
+      if (!$(e.currentTarget).hasClass('disabled')) {
+        // Pause video before changing slides
+        this.pauseVideo();
+        
+        // Vars
+        this.tab = $(e.currentTarget).data('tab');
+        this.current = $(e.currentTarget).parent().index();
 
-      //Toogle
-      this.$btnTab.removeClass('visible');
-      $(e.currentTarget).addClass('visible');
+        //Toogle
+        this.$btnTab.removeClass('visible');
+        $(e.currentTarget).addClass('visible');
 
-      $(this.tab).addClass('visible').siblings().removeClass('visible');
+        $(this.tab).addClass('visible').siblings().removeClass('visible');
+      }
     },
 
     pauseVideo: function(){

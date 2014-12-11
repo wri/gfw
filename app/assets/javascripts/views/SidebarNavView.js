@@ -136,8 +136,6 @@ define([
       }else{
         var section = this.$navItem.eq(0).data('slug');
         var interesting = this.$navItem.eq(0).data('interesting');
-        console.log(section);
-        console.log(interesting);
         this.changeHelper(section);
         mps.publish('Interesting/update',[interesting]);
       }
