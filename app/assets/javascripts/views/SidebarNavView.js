@@ -37,7 +37,7 @@ define([
       this.$window = $(window);
       this.$document = $(document);
       this.$htmlbody = $('html,body'); 
-      this.$navItem = $('.nav-item');
+      this.$navItem = this.$el.find('.nav-item');
       this.$sideBarAside = $('#sidebarAside');
       this.$sideBarBox = $('#sources-box');
       this.$sourceArticle = $('.source-article');
@@ -128,16 +128,20 @@ define([
       //spinner
       this.$sourceSpinner.removeClass('start');
 
-      if(this.first){
-        this.changeHelper(params.section);
-        this.first = false;
-      }else{
+      if (params.section) {
         this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0, _.bind(function(){
-          this.changeHelper(params.section);
-        },this));
+            this.changeHelper(params.section);
+        },this));      
+        mps.publish('Interesting/update',[params.interesting]);
+      }else{
+        var section = this.$navItem.eq(0).data('slug');
+        var interesting = this.$navItem.eq(0).data('interesting');
+        console.log(section);
+        console.log(interesting);
+        this.changeHelper(section);
+        mps.publish('Interesting/update',[interesting]);
       }
 
-      mps.publish('Interesting/update',[params.interesting]);
     },
 
     changeHelper: function(section){
