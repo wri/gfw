@@ -47,15 +47,6 @@
   padding: 20px 0;
 }
 
-@media only screen and (max-width: 480px) {
-  body {
-    .layout-header-bottom .header-title {
-      margin: 1.5em 20px 0.5em 20px !important;
-      max-width: none !important;
-    }
-  }
-}
-
 // CONTENT
 .layout-content {
   margin-bottom: 40px;
