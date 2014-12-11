@@ -333,6 +333,14 @@
       font-size: 14px;
       margin-left: 20px;
       line-height: 1.5;
+      a {
+       text-decoration: none;
+       color: $cGreen;
+       font-family: $font-medium;
+       &:hover {
+        text-decoration: underline;
+       }
+      }      
      }
     }
    }
