@@ -12,7 +12,7 @@ Gfw::Application.routes.draw do
   get '/sources(/:section)' => 'static#data'
 
   # get '/keepupdated' => redirect('keepupdated/crowdsourced-stories')
-  get '/keepupdated' => redirect('keepupdated/receive-tree-cover-change-alerts')
+  get '/keepupdated' => redirect('keepupdated/monitor-an-area-of-interest')
   get '/keepupdated(/:section)' => 'static#keep'
   get '/getinvolved' => redirect('getinvolved/develop-your-own-app')
   get '/getinvolved(/:section)' => 'static#getinvolved'
