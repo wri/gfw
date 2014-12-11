@@ -1238,6 +1238,19 @@
     }
   }
 
+  &.btn-rdn-dark {
+    border-color: #555;
+    background: #555;
+    color: #fff;
+    @include transition(background-color 0.2s ease);
+
+    &:hover {
+      @include transition(background-color 0.2s ease);
+      background-color: transparent;
+      color: #555;
+    }
+  }
+
   &.disabled {
     @include opacity(.4);
     pointer-events: none;
