@@ -34,6 +34,9 @@
     li{
       a{
         opacity: 0.75;
+        &.disabled{
+          opacity: 0.25;          
+        }        
         &.visible{
           opacity: 1;
         }

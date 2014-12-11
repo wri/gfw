@@ -99,6 +99,9 @@
     text-transform: uppercase;
     cursor: default;
   }
+  &.disabled{
+    opacity: 0.25;
+  }
 }
 
 
