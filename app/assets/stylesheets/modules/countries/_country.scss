@@ -118,3 +118,75 @@ h3 {
   position: relative;
   top: -55px;
 }
+
+.section.interesting {
+  background-color: #F7F7F7;
+  margin: 50px 0 0;
+  border-top: 1px solid #e5e5df;
+  border-bottom: 1px solid #e5e5df;
+
+  .section-title {
+    font-weight: normal;
+    color: #98BE3A;
+  }
+}
+
+.country-interesting-links {
+  margin: 40px 0;
+  height: 175px;
+
+  li:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
+  li {
+    color: #8A8A8A;
+    width: 29%;
+    padding: 0 20px;
+    border-right: 1px solid #E4E4E4;
+    display: inline-block;
+    text-align: center;
+    margin: auto;
+    font-size: 16px;
+    line-height: 28px;
+    float: left;
+    height: 163px;
+
+    &:last-child { border-right: none; }
+  }
+
+  h3 {
+    text-transform: uppercase;
+    color: #424242;
+    font-size: 20px;
+    padding-top: 0;
+    margin-bottom: 10px;
+  }
+
+  .btn-rdn {
+    text-transform: uppercase;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .layout-content .section {
+    padding-bottom: 0;
+  }
+
+  .section .section-title {
+    font-size: 28px;
+  }
+
+  .country-interesting-links {
+    height: auto;
+
+    li {
+      width: auto;
+      border-right: 0;
+      border-bottom: 1px solid #E4E4E4;
+      float: none;
+    }
+  }
+}
