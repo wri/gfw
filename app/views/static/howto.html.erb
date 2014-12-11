@@ -34,16 +34,16 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'General FAQs', "#{howto_path}/general_questions", :"data-slug" => 'general_questions', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item general_questions' %></li>
-          <li><%= link_to 'Terminology FAQs', "#{howto_path}/terminology", :"data-slug" => 'terminology', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item terminology' %></li>
-          <li><%= link_to 'Data FAQs', "#{howto_path}/data", :"data-slug" => 'data', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item data' %></li>
-          <li><%= link_to 'Web Platform FAQs', "#{howto_path}/web_platform", :"data-slug" => 'web_platform', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item web_platform' %></li>
+          <li><%= link_to 'Overview', "#{howto_path}/overview", :"data-slug" => 'overview', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item overview' %></li>
+          <li><%= link_to 'Interactive Map', "#{howto_path}/interactive-map", :"data-slug" => 'interactive-map', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item interactive-map' %></li>
+          <li><%= link_to 'Country Profiles and Rankings', "#{howto_path}/country-profiles-rankings", :"data-slug" => 'country-profiles-rankings', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item country-profiles-rankings' %></li>
+          <li><%= link_to 'FAQs', "#{howto_path}/faqs", :"data-slug" => 'faqs', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item faqs' %></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
         <div class="sources-content">
           <div id="sources-spinner" class="spinner start"><svg><use xlink:href="#shape-spinner"></use></svg></div>
-          <article id="general_questions" class="source-article">
+          <article id="overview" class="source-article">
             <header>
               <h2>Getting started</h2>
             </header>
@@ -64,7 +64,7 @@
             </div>
           </article>
 
-          <article id="terminology" class="source-article">
+          <article id="interactive-map" class="source-article">
             <header>
               <h2>Interactive Map</h2>
             </header>
@@ -114,7 +114,7 @@
             </div>
           </article>
 
-          <article id="data" class="source-article">
+          <article id="country-profiles-rankings" class="source-article">
             <header>
               <h2>Country Profiles and Rankings</h2>
             </header>
@@ -149,7 +149,7 @@
             </div>
           </article>
 
-          <article id="web_platform" class="source-article">
+          <article id="faqs" class="source-article">
             <header>
               <h2>Frequently asked questions</h2>
             </header>
@@ -202,9 +202,9 @@
                     <li>And much more...</li>
                   </ul>                  
                 </li>
-<li>
-<h3>How does GFW define key terms?</h3>
-<p><strong>Forest</strong></p>
+                <li>
+                  <h3>How does GFW define key terms?</h3>
+                  <p><strong>Forest</strong></p>
                   <p>Various definitions exist for the term “forest,” and GFW does not aim to provide a consensus definition. Data sets hosted on GFW may define “forest” differently or pertain to different types of forest (primary, secondary, tree plantations, etc.). Through information found on the <%= link_to 'Data page', sources_path %>, we aim to be transparent about the assumptions and definitions feeding into each data set.</p>
                   <p>In our general writing, including the GFW blog, “forest” refers to a landscape with a high density of trees and value for biodiversity, carbon storage, and human use.</p>
 
@@ -243,7 +243,7 @@
                 </li>
                 
                 <li>
-<h3>What kinds of data are available on Global Forest Watch?</h3>
+                  <h3>What kinds of data are available on Global Forest Watch?</h3>
                   <p>GFW seeks to bring together the most current, reliable, and robust data to monitor forest change around the world. GFW incorporates and integrates a wide range of data sets that can be overlaid and compared, including:</p>
 
                   <ul clasS='bullets'>
