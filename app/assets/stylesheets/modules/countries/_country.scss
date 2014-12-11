@@ -171,22 +171,34 @@ h3 {
 }
 
 @media only screen and (max-width: 480px) {
-  .layout-content .section {
-    padding-bottom: 0;
+  .countries-list-title {
+    margin-left: 20px;
+    margin-right: 20px;
   }
 
-  .section .section-title {
+  .interesting .section-title {
     font-size: 28px;
+  }
+
+  .section.interesting {
+    margin-top: 0;
   }
 
   .country-interesting-links {
     height: auto;
+    margin-top: 0;
 
     li {
       width: auto;
       border-right: 0;
       border-bottom: 1px solid #E4E4E4;
       float: none;
+      height: 195px;
+      padding-top: 20px;
+    }
+
+    li:last-child {
+      border-bottom: 0;
     }
   }
 }
