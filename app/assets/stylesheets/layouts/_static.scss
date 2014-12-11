@@ -228,7 +228,7 @@
         @include col(48.4);
         padding: 0;
       }
-    }    
+    }
   }
   // LIST TYPES: pub-list, alerts-list
   .publications-list {
@@ -595,7 +595,7 @@
           fill: $red;
         }
         .commodities{
-          fill: $orange; 
+          fill: $orange;
         }
       }
 
@@ -770,7 +770,7 @@
         border: 1px solid $border;
         overflow: hidden;
         &:hover{
-          .description{          
+          .description{
             visibility: visible;
             opacity: 1;
           }
@@ -952,7 +952,7 @@
 }
 
 
-.is-data-action{
+.is-data-action {
   .source_category_title {
     margin-bottom: 10px;
     font-size: 37px;
@@ -1309,6 +1309,9 @@
     margin-bottom: 30px;
 
     iframe + iframe { margin-left: 30px; }
+  }
+  .hide {
+    display: none;
   }
 }
 
