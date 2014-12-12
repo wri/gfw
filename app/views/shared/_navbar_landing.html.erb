@@ -18,7 +18,7 @@
   <div>  
     <ul>
       <li class="nav-item">
-        <a href="/howto" class="link">
+        <a href="/howto" class="link <% if controller?("static") && action?("howto") %>current<% end %>">
           <svg class="icon"><use xlink:href="#shape-help"></use></svg>
           <span>How to</span>
         </a>
