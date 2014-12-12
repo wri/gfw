@@ -7,8 +7,8 @@ Gfw::Application.routes.draw do
   post '/accept' => 'home#accept_and_redirect'
 
   # static
-  get '/data' => redirect("sources/forest_change")
-  get '/sources' => redirect('sources/forest_change')
+  get '/data' => redirect("sources")
+  get '/sources' => 'static#data'
   get '/sources(/:section)' => 'static#data'
 
   # get '/keepupdated' => redirect('keepupdated/crowdsourced-stories')
