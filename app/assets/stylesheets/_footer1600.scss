@@ -189,6 +189,15 @@
           display: block;
           padding: 0px 0 40px;
         }
+
+        .inner{
+          width: 80%;
+          @media (min-width: 1400px){
+            width: 75%;
+          }          
+        }
+
+
         .slick-slide{
             height: 60px;
         }

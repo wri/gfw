@@ -24,7 +24,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a href="/data" class="link">
+        <a href="/data" class="link <% if controller?("static") && action?("data") %>current<% end %>">
           <div class="home_data link">
             <svg class="icon"><use xlink:href="#shape-download"></use></svg>
             <span>Download data</span>
