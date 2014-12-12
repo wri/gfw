@@ -1,5 +1,5 @@
 .country-show {
-  font-family: $font-regular;
+  font-weight: 400;
   color: $dark;
   margin-top: 50px;
 
@@ -69,7 +69,7 @@
         color: white;
         font-size: 47px;
         display: inline-block;
-        font-family: "fira_sans_otregular", Georgia, sans-serif;
+        font-weight: 400;
         width: 100%;
         margin-top: 0.1em;
         margin-bottom: 0.2em;
@@ -352,7 +352,7 @@
               height: 51px;
               width: 100%;
               @include box-sizing(border-box);
-              font-family: $font-medium;
+              font-weight: 500;
               text-transform: uppercase;
               font-size: 14px;
               cursor: pointer;
@@ -415,7 +415,7 @@
     height: 185px;
     width: 100%;
     padding: 35px 20px;
-    font-family: $font-medium;
+    font-weight: 500;
     @include box-sizing(border-box);
     background-image: image-url('backgrounds/country-indepth.png');
     background-repeat: no-repeat;
@@ -428,14 +428,14 @@
     .country-indepth__body {
       text-transform: uppercase;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 500;
       margin-top: 20px;
     }
 
     .country-indepth__links {
       margin-top: 25px;
       color: #bbb;
-      font-family: $font-light;
+      font-weight: 300;
       font-size: 13px;
 
       a {
@@ -443,7 +443,7 @@
         display: inline-block;
         vertical-align: top;
         color: $cGreen;
-        font-family: $font-medium;
+        font-weight: 500;
       }
     }
 
@@ -502,7 +502,7 @@
           font-size: 14px;
           text-transform: uppercase;
           cursor: pointer;
-          font-family: $font-medium;
+          font-weight: 500;
           @include box-sizing(border-box);
           text-decoration: none;
 
@@ -541,7 +541,7 @@
       margin-bottom: 12px;
       font-size: 14px;
       color: $dark;
-      font-family: $font-medium;
+      font-weight: 500;
       text-transform: uppercase;
       letter-spacing: -0.2px;
 
@@ -589,7 +589,7 @@
       .section-title {
         font-size: 29px;
         line-height: 36px;
-        font-family: $font-medium;
+        font-weight: 500;
         color: $dark;
       }
       svg {
@@ -713,14 +713,14 @@
       span {
         color: #666666;
         font-size: 13px;
-        font-family: $font-light;
+        font-weight: 300;
         display: block;
       }
 
       .legend-title {
         color: $cGreen;
         font-size: 14px;
-        font-family: $font-medium;
+        font-weight: 500;
         margin-bottom: 3px;
       }
     }
@@ -730,7 +730,7 @@
       border: none;
       padding: 10px 20px 8px;
       background: $cGreen;
-      font-family: $font-regular;
+      font-weight: 400;
       font-size: 13px;
     }
   }
@@ -756,7 +756,7 @@
           display: block;
           margin-bottom: 5px;
           color: #777;
-          font-family: $font-light;
+          font-weight: 300;
           vertical-align: top;
 
           span {
@@ -973,7 +973,7 @@
       padding: 14px 30px 12px 30px;
       font-size: 13px;
       color: #393939;
-      font-family: $font-medium;
+      font-weight: 500;
       border-color: #E0E9C1;
       margin-top: 0;
 
@@ -997,7 +997,7 @@
 
       .section-title {
         color: #fff;
-        font-family: $font-regular;
+        font-weight: 400;
         font-size: 36px;
         margin-bottom: 25px;
       }
@@ -1013,7 +1013,7 @@
       font-size: 14px;
       text-transform: uppercase;
       color: #444;
-      font-family: $font-medium;
+      font-weight: 500;
       margin-bottom: 20px;
       display: inline-block;
     }
@@ -1065,7 +1065,7 @@
 
         .title strong,
         .title span {
-          font-family: $font-medium;
+          font-weight: 500;
           font-weight: normal;
           font-size: 21;
         }
@@ -1104,7 +1104,7 @@
         text-transform: uppercase;
         font-size: 14px;
         color: #797979;
-        font-family: $font-medium;
+        font-weight: 500;
       }
     }
   } // country-blog
@@ -1549,7 +1549,7 @@
   }
 }
 .embed .country-show {
-  font-family: $font-regular;
+  font-weight: 400;
   color: $dark;
   margin-top: -84px;
 

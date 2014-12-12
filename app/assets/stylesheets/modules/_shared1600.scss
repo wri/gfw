@@ -137,12 +137,12 @@
     &:first-child { border-top: none;}
     a,.link {
       color: #444;
-      font-family: $font-light;
+      font-weight: 300;
       padding: 14px 20px;
       text-decoration: none;
       text-align: center;
       display: block;
-      -webkit-font-smoothing: subpixel-antialiased;
+      // -webkit-font-smoothing: subpixel-antialiased;
       text-rendering: optimizeLegibility;
       &:hover {
         background: darken($white,2%);
@@ -159,7 +159,7 @@
     color: $cGreen;
     text-align: center;
     font-size: 32px;
-    font-family: $font-light;
+    font-weight: 300;
     padding: 20px 0;
     @media (min-width: $br-mobile){
       padding: 0 0 20px;
@@ -190,7 +190,7 @@
         text-transform: uppercase;
         font-size: 21px;
         color: $dark;
-        font-family: $font-regular;
+        font-weight: 400;
         padding: 0 0 15px;
       }
       .content{
@@ -217,7 +217,7 @@
   text-decoration: none;
   margin: 0 0 20px;
   display: inline-block;
-  font-family: $font-medium;
+  font-weight: 500;
   text-transform: uppercase;
   svg{
     margin: 0 5px 0 0;

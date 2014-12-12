@@ -243,7 +243,7 @@
     display: block;
     padding: 16px 0;
     font-size: 17px;
-    font-family: "fira_sans_otregular";
+    font-weight: 400;
     color: #fff;
     @include clearfix;
 
@@ -252,7 +252,7 @@
       line-height: 45px;
 
       strong {
-        font-family: "fira_sans_otmedium";
+        font-weight: 500;
       }
       .subscribe{
         vertical-align: sub;

@@ -33,7 +33,8 @@
     }
     h2 {
       background: $white;
-      font-family: $font-light;
+      font-weight: 300;
+      color: $dark;
       text-transform: uppercase;
       white-space: nowrap;
       font-size: 21px;
@@ -159,9 +160,9 @@
 
   h2 {
    font-size: 35px;
-   color: #333333;
+   color: #444;
    display: inline-block;
-   font-weight: 700;
+   font-weight: 400;
    text-transform: uppercase;
    @media (min-width: $br-mobile) {
     background: rgba($white,0.75);
@@ -173,7 +174,7 @@
    font-size: 15px;
    color: #333;
    text-transform: uppercase;
-   font-family: $font-light;
+   font-weight: 300;
    @media (min-width: $br-mobile) {
     font-size: 31px;
     line-height: 0.5;
@@ -403,7 +404,7 @@
   text-decoration: none;
   position: relative;
   border-radius: 50px;
-  font-family: $font-light;
+  font-weight: 300;
   &:hover {
    background: darken($white,5%);
   }
@@ -462,7 +463,8 @@
  h2 {
   text-align: center;
   font-size: 32px;
-  font-family: $font-light;
+  color: $dark;
+  font-weight: 300;
   padding: 20px 0;
   @media (min-width: $br-mobile) {
    padding: 0 0 20px;
@@ -609,7 +611,7 @@
      max-width: 40%;
      @include transform(translate(28px,-50%));
      font-size: 14px;
-     font-family: $font-light;
+     font-weight: 300;
      p {
       span {
        text-decoration: underline;
@@ -694,7 +696,7 @@
      padding-left: 15px;
      font-size: 14px;
      h4 {
-      font-family: $font-medium;
+      font-weight: 500;
       color: $dark;
       padding: 0 0 5px;
       $font-size: 15px;
@@ -713,7 +715,7 @@
      }
      p {
       color: #999999;
-      font-family: $font-light;
+      font-weight: 300;
 
       $font-size: 15px;
       $line-height: 1.4;
@@ -747,7 +749,7 @@
     h2 {
       text-align: center;
       font-size: 32px;
-      font-family: "fira_sans_otlight", Georgia, sans-serif;
+      font-weight: 300;
       padding: 40px 0px 30px;
       &:first-letter {
         text-transform: uppercase;

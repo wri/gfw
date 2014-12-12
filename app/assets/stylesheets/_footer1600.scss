@@ -93,7 +93,7 @@
     				color: #555555;
     				text-transform: uppercase;
     				padding: 0 0 15px;
-    				font-family: $font-medium;
+    				font-weight: 500;
     			}
     			ul {
     				margin: -10px 0 0;
@@ -115,10 +115,10 @@
     		color: #555555;
     		padding: 0 0 15px;
         text-align: center;
-        font-family: $font-medium;
+        font-weight: 500;
         @media (min-width: $br-mobile){
             text-align: left;
-            font-family: $font-regular;
+            font-weight: 400;
         }
     	}
     	.row{
@@ -139,7 +139,7 @@
           max-width: 300px;
           margin: 0 auto;
 	    		font-size: 14px;
-	    		font-family: $font-light;
+	    		font-weight: 300;
           color: $dark;
           @media (min-width: $br-mobile){
               text-align: right;
@@ -153,11 +153,11 @@
           }
           a{
             color: $dark;
-            font-family: $font-regular;
+            font-weight: 400;
           }
 	    		strong,span{ display: block;}
 	    		strong {
-	    			font-family: $font-regular;
+	    			font-weight: 400;
 	    		}
 	    	}
     	}
@@ -414,7 +414,7 @@
         @include justify-content(space-between);
         p {
             strong {
-                font-weight: bold;
+                font-weight: 500;
             }
         }
         svg {

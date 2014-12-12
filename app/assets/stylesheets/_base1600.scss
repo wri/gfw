@@ -14,7 +14,7 @@ html,body {
 }
 
 body {
-  font-family: "fira_sans_otregular", Georgia, serif;
+  font-family: "Fira Sans", Georgia, serif;
   background: #EEE;
   -webkit-font-smoothing: antialiased;
 }
@@ -25,7 +25,7 @@ svg {
   @include transition(all .15s $easeInOutSine);
 }
 h1,h2 {
-  font-family: $font-light;
+  font-weight: 300;
 }
 
 .mobile-hide{

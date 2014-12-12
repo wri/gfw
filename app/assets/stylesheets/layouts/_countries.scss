@@ -147,9 +147,9 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
     min-height: 20px;
     outline: none;
-    font-family: "fira_sans_otlight", Georgia, sans-serif;
+    font-weight: 300;
     @media only screen and (max-width: 768px) {
-      font-family: "fira_sans_otlight", "Helvetica Neue", "Trebuchet MS", sans-serif;
+      font-family: "Fira Sans", "Helvetica Neue", "Trebuchet MS", sans-serif;
       font-size: 20px;
     }
     &.is-active{

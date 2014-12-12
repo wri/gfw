@@ -22,7 +22,7 @@
   height: 36px;
   line-height: 36px;
   text-align: center;
-  font-family: $font-medium;
+  font-weight: 500;
   white-space: nowrap;
 
   &:hover {
@@ -87,7 +87,7 @@
   &.light2 {
     color: $dark;
     background: $border;
-    font-family: $font-regular;
+    font-weight: 400;
     &:hover {
       background: darken($border,5%);
     }
@@ -95,7 +95,7 @@
   &.soon {
     color: #ccc;
     background: none;
-    font-family: $font-regular;
+    font-weight: 400;
     text-transform: uppercase;
     cursor: default;
   }

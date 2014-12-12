@@ -76,7 +76,7 @@
     padding: 0 20px;
     font-size: 14px;
     line-height: 38px;
-    font-family: "fira_sans_otmedium";
+    font-weight: 500;
     text-align: left;
     text-transform: uppercase;
     color: #463F52;
@@ -97,7 +97,7 @@
 
 // SEARCH BOX
 .search-box{
-  font-family: "fira_sans_otregular";
+  font-weight: 400;
   margin: 20px auto;
   position: relative;
   @extend .clearfix;

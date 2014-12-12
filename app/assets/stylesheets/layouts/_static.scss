@@ -40,7 +40,7 @@
   color: $white;
   padding: 70px 0 50px;
   header {
-    font-family: $font-light;
+    font-weight: 300;
   }
   h2,h3,p{
     max-width: 1024px;
@@ -106,7 +106,7 @@
       li {
         text-align: center;
         text-transform: uppercase;
-        font-family: $font-medium;
+        font-weight: 500;
         font-size: 14px;
         background: #F7F7F7;
         &:hover {
@@ -203,7 +203,7 @@
    padding: 10px 0 0;
    a {
     color: $cGreen;
-    font-family: $font-medium;
+    font-weight: 500;
     text-decoration: none;
     &:hover {
      text-decoration: underline;
@@ -240,7 +240,7 @@
     h3 {
      font-size: 14px;
      color: $dark;
-     font-family: $font-medium;
+     font-weight: 500;
     }
     p {
      font-size: 14px;
@@ -249,7 +249,7 @@
      line-height: 1.25;
      a {
       color: $cGreen;
-      font-family: $font-medium;
+      font-weight: 500;
       text-decoration: none;
       &:hover {
        text-decoration: underline;
@@ -269,7 +269,7 @@
      font-size: 21px;
      line-height: 1.25;
      color: $dark;
-     font-family: $font-medium;
+     font-weight: 500;
     }
     p {
      font-size: 14px;
@@ -292,7 +292,7 @@
      font-size: 21px;
      line-height: 1.25;
      color: $dark;
-     font-family: $font-medium;
+     font-weight: 500;
     }
     p {
       color: $dark;
@@ -302,7 +302,7 @@
       a {
        text-decoration: none;
        color: $cGreen;
-       font-family: $font-medium;
+       font-weight: 500;
        &:hover {
         text-decoration: underline;
        }
@@ -312,7 +312,7 @@
      margin: 10px 0 0;
     }
     strong {
-     font-family: $font-medium;
+     font-weight: 500;
     }
     small {
      font-size: 10px;
@@ -336,7 +336,7 @@
       a {
        text-decoration: none;
        color: $cGreen;
-       font-family: $font-medium;
+       font-weight: 500;
        &:hover {
         text-decoration: underline;
        }
@@ -379,7 +379,7 @@
         text-align: right;
         strong{
           display: block;
-          font-family: $font-medium;
+          font-weight: 500;
         }
       }
     }
@@ -659,7 +659,7 @@
         }
         p {
           color: #999999;
-          font-family: $font-regular;
+          font-weight: 400;
           line-height: 1.25;
         }
         .btn {
@@ -956,7 +956,6 @@
   .source_category_title {
     margin-bottom: 10px;
     font-size: 37px;
-    font-family: "fira_sans_otregular";
     color: #464052;
   }
 
@@ -1144,7 +1143,8 @@
         display: inline-block;
         margin: 20px;
         padding: 0 15px;
-        font: 14px/30px "fira_sans_otmedium";
+        font: 14px/30px "Fira Sans";
+        font-weight: 500;
         text-decoration: none;
         color: #fff;
         background: #A5B81A;
@@ -1155,7 +1155,8 @@
         display: inline-block;
         margin: 20px;
         padding: 0 15px;
-        font: 14px/30px "fira_sans_otmedium";
+        font: 14px/30px "Fira Sans";
+        font-weight: 500;
         text-decoration: none;
         color: #fff;
         background: #A5B81A;
@@ -1260,7 +1261,8 @@
   .overview_title,
   .source_coverage_title {
     margin: 30px 0 10px;
-    font: 21px/1.1 "fira_sans_otmedium";
+    font: 21px/1.1 "Fira Sans";
+    font-weight: 500;
     color: #463F52;
   }
 
