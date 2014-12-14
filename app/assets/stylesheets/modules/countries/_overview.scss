@@ -884,3 +884,55 @@
     top: 0;
   }
 }
+
+@media only screen and (max-width: 480px) {
+  .countries_list {
+    max-width: 480px;
+    width: 100%;
+  }
+
+  .countries_list__header,
+  .countries_list__minioverview {
+    display: none;
+  }
+
+  .countries_list__num {
+    width: 45px;
+  }
+
+  .countries_list__num,
+  .countries_list__title {
+    font-size: 22px;
+  }
+
+  .countries_list__title {
+    width: 120px;
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .countries_list__data {
+    font-size: 12px;
+    width: 130px;
+
+    .line.gain::after {
+      right: -12px;
+      top: 7px;
+    }
+  }
+
+  .is-overview-action .countries_list ul li {
+    padding: 18px 10px 18px 15px;
+  }
+
+  .overview_graph__title {
+    font-size: 26px;
+
+    sup {
+      display: block;
+      top: 0;
+      margin-top: 5px;
+      font-size: 15px;
+    }
+  }
+}
