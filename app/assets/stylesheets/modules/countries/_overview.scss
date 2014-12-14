@@ -988,6 +988,7 @@
   .overview_graph__link {
     height: 50px;
     width: 135px;
+    border-bottom-width: 1px;
 
     span {
       display: inline;
@@ -1008,6 +1009,30 @@
     .year:first-child,
     .year:last-child {
       display: inherit;
+    }
+  }
+
+  .share_dialog {
+    top: 0;
+    margin: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding-top: 150px;
+
+    .form {
+      border-top: 0;
+      padding-left: 0;
+      width: 100%;
+      top: 230px;
+    }
+
+    .input-field {
+      width: 90%;
+    }
+
+    .share_buttons {
+      left: 85px;
     }
   }
 }
