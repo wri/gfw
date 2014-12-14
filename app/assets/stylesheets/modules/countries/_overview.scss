@@ -161,11 +161,16 @@
   text-align: center;
   background: #333;
   color: #fff;
+  position: relative;
+
+  p {
+    width: 95%;
+  }
 
   .info {
-    float: right;
-    margin-right: 20px;
-    margin-top: 10px;
+    position: absolute;
+    top: 11px;
+    right: 20px;
   }
 }
 
@@ -944,6 +949,17 @@
     padding: 10px;
     font-size: 16px;
     line-height: 25px;
+
+    p {
+      width: 77%;
+      display: inline-block;
+      margin-left: -30px;
+    }
+
+    .info {
+      display: inline-block;
+      top: 27px;
+    }
   }
 
   .overview_graph__title {
@@ -965,7 +981,7 @@
     }
 
     .legend {
-      left: 50px;
+      left: 40px;
     }
 
     .legend li {
@@ -988,7 +1004,6 @@
   .overview_graph__link {
     height: 50px;
     width: 135px;
-    border-bottom-width: 1px;
 
     span {
       display: inline;
