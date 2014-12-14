@@ -1035,4 +1035,25 @@
       left: 85px;
     }
   }
+
+  .overview_graph .umdoptions_dialog {
+    position: fixed;
+    top: 0;
+    right: auto;
+    width: 100%;
+    height: 100%;
+
+    ul {
+      width: 95%;
+    }
+
+    .slider {
+      width: 100%;
+    }
+
+    p .slider #canopy_slider {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
 }
