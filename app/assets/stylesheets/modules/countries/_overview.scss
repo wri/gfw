@@ -37,6 +37,7 @@
   // @include background-size(cover);
   // background-position: -220px center;
   svg {
+    border-top: 1px solid #615D6C;
     position: relative;
     z-index: 300;
     margin-left: -40px;
@@ -141,6 +142,9 @@
   text-decoration: none;
 
   span {
+    &:before { content: "— " }
+    &:after { content: " —" }
+
     display: block;
     font-size: 12px;
     line-height: 1.5;
@@ -149,9 +153,7 @@
 }
 
 .overview_graph__legend {
-  float: left;
   width: 100%;
-  border-bottom: 1px solid #615D6C;
   margin-top: -1px;
   line-height: 40px;
   font-size: 13px;
@@ -925,6 +927,25 @@
     padding: 18px 10px 18px 15px;
   }
 
+  .overview_graph {
+    width: 100%;
+  }
+
+  .overview_graph__tabs {
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    ul {
+      width: 960px;
+    }
+  }
+
+  .overview_graph__legend {
+    padding: 10px;
+    font-size: 16px;
+    line-height: 25px;
+  }
+
   .overview_graph__title {
     font-size: 26px;
 
@@ -933,6 +954,54 @@
       top: 0;
       margin-top: 5px;
       font-size: 15px;
+    }
+  }
+
+  .overview_graph__area {
+    height: 400px;
+
+    .chart {
+      width: 100%;
+    }
+
+    .legend {
+      left: 50px;
+    }
+
+    .legend li {
+      display: inline-block;
+      font-size: 13px;
+      margin-right: 20px;
+    }
+
+    .disclaimer {
+      bottom: 0;
+      margin: 0 10px;
+    }
+
+    svg {
+      height: 360px;
+      top: 40px;
+    }
+  }
+
+  .overview_graph__link {
+    height: 50px;
+    width: 135px;
+
+    span {
+      display: inline;
+
+      &:before { content: " " }
+      &:after { content: " " }
+    }
+  }
+
+  .overview_graph__years {
+    .year { display: none; }
+    .year:first-child,
+    .year:last-child {
+      display: inherit;
     }
   }
 }
