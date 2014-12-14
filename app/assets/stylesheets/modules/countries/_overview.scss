@@ -997,7 +997,13 @@
     }
   }
 
+  .country-overview-wrapper-coolio {
+    top: 0;
+  }
+
   .overview_graph__years {
+    border-bottom: 0;
+
     .year { display: none; }
     .year:first-child,
     .year:last-child {
