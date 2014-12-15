@@ -903,6 +903,27 @@
     display: none;
   }
 
+  .countries_list__minioverview_number {
+    text-align: right;
+
+    &.medium, &.huge, .half {
+      display: block;
+      width: 95px;
+    }
+
+    .half:first-child {
+      margin-top: 5px;
+    }
+
+    .half, .half.last {
+      margin-left: 0;
+      float: none;
+      font-size: 20px;
+      line-height: 1em;
+      border: 0;
+    }
+  }
+
   .countries_list__num {
     width: 45px;
   }
