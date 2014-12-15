@@ -448,3 +448,15 @@
         }
     }
 }
+
+
+@media only screen and (max-width: 480px) {
+  .footer-share-container {
+    @include flex-direction(column);
+    height: 250px;
+
+    .share_buttons {
+      margin-top: 40px;
+    }
+  }
+}
