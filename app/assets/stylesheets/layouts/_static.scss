@@ -38,7 +38,10 @@
 .header-static {
   background: #333;
   color: $white;
-  padding: 70px 0 50px;
+  padding: 85px 0 50px;
+  @media (min-width: $br-mobile) {
+    padding: 70px 0 50px;
+  }
   header {
     font-weight: 300;
   }
@@ -84,15 +87,22 @@
 // content
 .content-static {
   background: $white;
-  padding: 40px 0;
+  @media (min-width: $br-mobile) {
+    padding: 40px 0;
+  }
+
   .row {
     @include row();
+    @include flex-wrap(wrap);
     position: relative;
   }
   aside {
-    width: 260px;
-    position: absolute;
-    top: 0;
+    width: 100%;
+    @media (min-width: $br-mobile) {
+      width: 260px;
+      position: absolute;
+      top: 0;      
+    }
     &.fixed{
       top: 0;
       position: fixed;
@@ -152,11 +162,16 @@
     }
   }
   .sources-box {
-    width: calc(100% - 260px);
-    border-left: 1px solid $border;
-    margin-left: 260px;
+    width: 100%;
     min-height: 500px;
     position: relative;
+    padding: 40px 0;
+    @media (min-width: $br-mobile) {
+      width: calc(100% - 260px);
+      border-left: 1px solid $border;
+      margin-left: 260px;
+      padding: 0;
+    }
     &:before, &:after{
       content: "";
       position: absolute;
@@ -173,8 +188,11 @@
       bottom: 100%;
     }
     .sources-content {
-      padding: 0 35px;
+      padding: 0 25px;
       position: relative;
+      @media (min-width: $br-mobile) {
+        padding: 0 35px;
+      }
     }
   }
 }
