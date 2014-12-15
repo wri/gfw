@@ -58,10 +58,8 @@ define([
 
     setListeners: function(){  
       this.calculateOffsets();
-      if (this.$window >= 850) {
-        this.scrollDocument();     
-        this.$document.on('scroll',_.bind(this.scrollDocument,this));
-      }
+      this.scrollDocument();     
+      this.$document.on('scroll',_.bind(this.scrollDocument,this));
       this.$window.on('resize',_.bind(this.calculateOffsets,this));
 
       mps.subscribe('SourceStatic/change',_.bind(this.changeSource,this));
