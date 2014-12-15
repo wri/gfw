@@ -894,21 +894,21 @@
 }
 
 .terms_field {
- @extend .terms_inner;
- overflow-y: scroll;
- overflow-x: hidden;
- margin: 0 auto;
- max-width: 960px;
- height: 220px;
- padding: 20px;
- border: 1px solid #CCC;
- background: #fff;
- outline: none;
- @include box-shadow(0 1px 5px rgba(#000, .2) inset);
- @include border-radius(3px);
- @media (min-width: $br-mobile) {
-  height: 300px;
- }
+  @extend .terms_inner;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  margin: 0 auto;
+  max-width: 960px;
+  height: 220px;
+  padding: 20px;
+  border: 1px solid #CCC;
+  background: #fff;
+  outline: none;
+  @include box-shadow(0 1px 5px rgba(#000, .2) inset);
+  @include border-radius(3px);
+  @media (min-width: $br-mobile) {
+    height: 300px;
+  }
 }
 
 .terms-footer {
@@ -916,12 +916,12 @@
   padding: 40px 0;
   border-bottom: 1px solid $border;
   @media (max-width: $br-mobile + 1) {
-   position: fixed;
-   width: 100%;
-   bottom: 0;
-   left: 0;
-   z-index: 1000;
-   background: $white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    background: $white;
   }
   a {
     margin: 0 5px;
@@ -1032,10 +1032,10 @@
       display: none;
       p, .bullets {
         font-size: 14px;
-      }
-      a{
-        text-decoration: none;
-        color: $cGreen;
+        a{
+          text-decoration: none;
+          color: $cGreen;
+        }
       }
     }
 
@@ -1065,6 +1065,9 @@
         border-bottom: 1px solid #ccc;
         font-size: 13px;
         @extend .sans-serif;
+        a{
+          color: $cGreen;
+        }
 
         p {
           margin-bottom: 10px;
@@ -1081,99 +1084,109 @@
         }
       }
     }
+  }
 
-    .single-source-item {
-      font-size: 15px;
-      line-height: 1.4;
-      color: #666;
 
-      p {
+
+  .single-source-item {
+    font-size: 15px;
+    line-height: 1.4;
+    color: #666;
+
+    p {
+      font-size: 14px;
+      margin-bottom: 10px;
+      margin-top: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+      a{
+        color: $cGreen;
+        text-decoration: none;
+        &:hover{
+          text-decoration: underline;
+        }
+      }
+
+      &.credits {
         margin-bottom: 10px;
-        margin-top: 10px;
+        font-size: 12px;
+        color: #aaa;
 
-        &:last-child {
-          margin-bottom: 0;
+        strong {
+          display: block;
+          font-weight: bold;
         }
 
-        &.credits {
-          margin-bottom: 10px;
-          font-size: 12px;
+        a {
           color: #aaa;
+          text-decoration: underline;
 
-          strong {
-            display: block;
-            font-weight: bold;
-          }
-
-          a {
+          &:hover {
             color: #aaa;
-            text-decoration: underline;
-
-            &:hover {
-              color: #aaa;
-            }
           }
         }
       }
     }
+  }
 
-    .source_body,
-    .source_coverage {
-      @extend .single-source-item;
 
-      .bullets li {
-        margin: 0 0 10px 20px;
-        padding: 0 0 0 20px;
-        background: image-url('icons/bullet.png') no-repeat 0 8px;
-      }
+  .source_body,
+  .source_coverage {
+    @extend .single-source-item;
 
-      .read_more {
-        padding: 10px 0;
-        font-size: 14px;
-        text-align: center;
-      }
-
-      .hidden {
-        display: none;
-      }
+    .bullets li {
+      margin: 0 0 10px 20px;
+      padding: 0 0 0 20px;
+      background: image-url('icons/bullet.png') no-repeat 0 8px;
     }
 
+    .read_more {
+      padding: 10px 0;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+  }
 
 
-    .source_download,
-    .source_coverage_download {
-      text-align: right;
-      background: #F0F5DC;
-      border-top: 1px solid #ccc;
+  .source_download,
+  .source_coverage_download {
+    text-align: right;
+    background: #F0F5DC;
+    border-top: 1px solid #ccc;
 
-      a,
-      span {
-        display: inline-block;
-        margin: 20px;
-        padding: 0 15px;
-        font: 14px/30px "Fira Sans";
-        font-weight: 500;
-        text-decoration: none;
-        color: #fff;
-        background: #A5B81A;
-        @include border-radius(16px);
-      }
+    a,
+    span {
+      display: inline-block;
+      margin: 20px;
+      padding: 0 15px;
+      font: 14px/30px "Fira Sans";
+      font-weight: 500;
+      text-decoration: none;
+      color: #fff;
+      background: #A5B81A;
+      @include border-radius(16px);
+    }
 
-      a {
-        display: inline-block;
-        margin: 20px;
-        padding: 0 15px;
-        font: 14px/30px "Fira Sans";
-        font-weight: 500;
-        text-decoration: none;
-        color: #fff;
-        background: #A5B81A;
-        @include border-radius(16px);
+    a {
+      display: inline-block;
+      margin: 20px;
+      padding: 0 15px;
+      font: 14px/30px "Fira Sans";
+      font-weight: 500;
+      text-decoration: none;
+      color: #fff;
+      background: #A5B81A;
+      @include border-radius(16px);
 
-        &.disabled {
-          @include opacity(.5);
-          cursor: default;
-        }
+      &.disabled {
+        @include opacity(.5);
+        cursor: default;
       }
     }
   }
@@ -1226,6 +1239,7 @@
         background-color: #ccc;
       }
     }
+
     &.active{
       .expand_arrow:before{
         @include transform(translate(-50%,-50%) rotate(180deg));
@@ -1276,14 +1290,33 @@
 
   .source_dropdown {
     background: #EEE;
+    position: relative;
   }
 
   .source_dropdown_menu{
-    display: block !important;
+    display: block;
     position: absolute;
+    display: none;
     top: 0;
     right: 0;
+    z-index: 5;
+    ul{
+      background: $white;
 
+      li{
+        border-top: 1px solid $light;
+        &:first-child{
+          border-top: none;
+        }
+        a{
+          display: block;
+          padding: 10px;
+          font-size: 13px;
+          color: $dark;
+          text-decoration: none;
+        }
+      }
+    }
   }
 
 
@@ -1291,12 +1324,48 @@
     @extend .clearfix;
     display: block;
     margin-top: 20px;
+    text-decoration: none;
+    color: $dark;
 
     .overview_title {
       margin: 0;
       padding: 0 10px;
       line-height: 60px;
     }
+
+    .dropdown_arrow{
+      display: block;
+      position: relative;
+      float: right;
+      height: 60px;
+      width: 60px;
+      margin-left: 15px;
+      &:before{
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background-image: image-url("svg-icons/arrow-down.svg");
+        width: 14px;
+        height: 14px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        @include transform(translate(-50%,-50%));
+      }
+
+      &:after{
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 1px;
+        height: 50%;
+        @include transform(translate(0,-50%));
+        background-color: #ccc;
+      }
+    }
+
 
     .expand_arrow {
       margin-right: 10px;

@@ -26,7 +26,8 @@ define([
       'click .nav-item' : 'updateSource',
       'click .nav-title' : 'scrollTo',
       'click .source_header' : 'toggleSources',
-      'click .source_dropdown_header' : 'toggleDropdown'
+      'click .source_dropdown_header' : 'toggleDropdown',
+      'click .source_dropdown_menu a' : 'showSubContent'
     },
 
     initialize: function() {
@@ -68,6 +69,22 @@ define([
 
 
     toggleDropdown: function(e){
+      e && e.preventDefault();
+      $(e.currentTarget).parents('.source_dropdown').find('.source_dropdown_menu').toggle(0);
+    },
+
+    showSubContent:function(e){
+      e && e.preventDefault();
+      $(e.currentTarget).parents('.source_dropdown').find('.source_dropdown_menu').hide(0);
+      
+      var text = $(e.currentTarget).text();
+      var id = $(e.currentTarget).data('slug');
+      $(e.currentTarget).parents('.source_dropdown').find('.source_dropdown_header').find('.overview_title').children('span').text(text);
+      
+      $('.source_dropdown_body').hide(0);
+      $('#'+id).show(0);
+
+      this.calculateOffsets();
 
     },
 
