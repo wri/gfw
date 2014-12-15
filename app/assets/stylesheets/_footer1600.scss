@@ -27,6 +27,11 @@
     }
 
 }
+.is-accept_terms-action .layout-footer,
+.is-accept_terms-action .footer-share-container{
+  display: none;
+}
+
 .layout-footer {
     background: #EDEDE8;
     clear: both;
@@ -175,7 +180,7 @@
       }
       a{
         text-decoration: none;
-        font-size: 14px;
+        font-size: 13px;
         &:hover{
           text-decoration: underline;
         }
@@ -427,6 +432,9 @@
         @include align-items(center);
         @include justify-content(space-between);
         margin: 40px 0 0;
+        @media (min-width: $br-mobile){
+          margin: 0;
+        }
 
         p {
             strong {

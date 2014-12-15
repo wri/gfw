@@ -13,11 +13,11 @@
     </div>    
     <div class="terms-footer notranslate">
       <%= link_to 'I agree', root_path, class: 'btn accept_btn dark huge continue', :'data-source' => "accept_terms" %> <%= link_to 'I do not agree', root_path, class: 'btn cancel_btn dark huge cancel' %>
+      <div class="terms-footer-more">
+        <p><%= link_to 'Why do I have to agree to a Terms of Service?', root_path, class: 'why_terms', :'data-source' => "why_accept_terms" %></p>
+        <p class='last'>For additional information about GFW, please send an email to <a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>      
+      </div>    
     </div>
-    <div class="terms-footer-more">
-      <p><%= link_to 'Why do I have to agree to a Terms of Service?', root_path, class: 'why_terms', :'data-source' => "why_accept_terms" %></p>
-      <p class='last'>For additional information about GFW, please send an email to <a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>      
-    </div>    
   </div>
 </section>
 
