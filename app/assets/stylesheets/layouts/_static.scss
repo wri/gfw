@@ -912,30 +912,38 @@
 }
 
 .terms-footer {
- text-align: center;
- padding: 40px 0;
- border-bottom: 1px solid $border;
- a {
-  margin: 0 5px;
-  @media (min-width: $br-mobile) {
-   min-width: 200px;
+  text-align: center;
+  padding: 40px 0;
+  border-bottom: 1px solid $border;
+  @media (max-width: $br-mobile + 1) {
+   position: fixed;
+   width: 100%;
+   bottom: 0;
+   left: 0;
+   z-index: 1000;
+   background: $white;
   }
- }
+  a {
+    margin: 0 5px;
+    @media (min-width: $br-mobile) {
+      min-width: 200px;
+    }
+  }
 }
 .terms-footer-more {
- padding: 40px 0;
- text-align: center;
- p {
-  margin: 10px 0 0;
-  &:first-child {
-   margin: 0;
+  padding: 40px 0;
+  text-align: center;
+  p {
+    margin: 10px 0 0;
+    &:first-child {
+      margin: 0;
+    }
   }
- }
- a {
-  color: $cGreen;
-  text-decoration: none;
-  &:hover { text-decoration: underline;}
- }
+  a {
+    color: $cGreen;
+    text-decoration: none;
+    &:hover { text-decoration: underline;}
+  }
 }
 
 

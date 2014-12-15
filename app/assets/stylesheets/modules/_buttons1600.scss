@@ -41,11 +41,14 @@
     padding: 0px 35px;
   }
   &.huge {
-    font-size: 21px;
+    font-size: 18px;
     text-transform: uppercase;
     height: 38px;
     line-height: 40px;
     padding: 0px 20px;
+    @media (min-width: $br-mobile) {
+      font-size: 21px;
+    }
   }
 
   // Colors
