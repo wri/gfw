@@ -30,14 +30,14 @@ end %>
 </section>
 <section class="content-stories">
   <div class="inner"> 
-    <div class="story-carrousel">
+    <div id="carrousel-stories" class="story-carrousel">
       <div class="frame">
         <%= image_tag(static_map("#{@story.lat}, #{@story.lng}", '266x266', 4, true)) %>
         <span class="mobile_map" style="background-image: url('http://maps.google.com/maps/api/staticmap?zoom=4&size=600x300&markers=icon:/marker_exclamation.png%7C<%=@story.lat %>,<%=@story.lng %>&maptype=terrain&sensor=false&scale=2')"></span>
       </div>
       <% if @story.media.size >= 3 %>
-        <a href='#' class='previous'></a>
-        <a href='#' class='next'></a>
+        <a href='#' data-direction="prev" class='btn-nav previous'></a>
+        <a href='#' data-direction="next" class='btn-nav next'></a>
       <% end %>
       <% if (@story.media[1].present? || @story.media[0]['embed_url'].present?)  %>
         <ul>
