@@ -46,6 +46,10 @@ class StaticController < ApplicationController
     @title = 'Applications'
   end
 
+  def feedback
+    YourMailer.feedback.deliver
+  end
+
   private
 
     def load_stories
