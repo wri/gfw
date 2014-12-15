@@ -5,7 +5,7 @@
   margin: 0 auto;
   position: relative;
   left: 50%;
-  transform: translate(-50%,0);
+  @include transform(translate(-50%,0));
 } 
 
 
