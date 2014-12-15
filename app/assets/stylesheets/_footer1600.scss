@@ -27,6 +27,11 @@
     }
 
 }
+.is-accept_terms-action .layout-footer,
+.is-accept_terms-action .footer-share-container{
+  display: none;
+}
+
 .layout-footer {
     background: #EDEDE8;
     clear: both;
@@ -168,15 +173,14 @@
       .inner{
         @include row(space-between);
       }
-      span{
-
-      }
       a, span { color: $dark; }
       span{
         font-size: 19px;
+        font-weight: 500;
       }
       a{
         text-decoration: none;
+        font-size: 13px;
         &:hover{
           text-decoration: underline;
         }
@@ -428,6 +432,9 @@
         @include align-items(center);
         @include justify-content(space-between);
         margin: 40px 0 0;
+        @media (min-width: $br-mobile){
+          margin: 0;
+        }
 
         p {
             strong {

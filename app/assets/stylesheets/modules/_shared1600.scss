@@ -173,20 +173,24 @@
     @include row(flex-start);
     @include flex-wrap(wrap);
     .col{
-      padding: 0 15px;
-      border-left: 1px solid $border;
+      margin: 0 15px;
+      border-top: 1px solid $border;
       @include col(100);
 
       @media (min-width: $br-mobile){
+        padding: 0 15px;
+        margin: 0;
+        border-left: 1px solid $border;
+        border-top: none;
         @include col(33.3333);
         @include display-flex();
       }
       &:first-child{
-        border-left: none;
+        border: none;
       }
       .card{
         position: relative;
-        padding: 40px 25px 100px;
+        padding: 35px 25px 100px;
         text-align: center;
         overflow: hidden;
       }
