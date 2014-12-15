@@ -108,7 +108,7 @@
     .partner-box{
     	padding: 40px 20px;
       @media (min-width: $br-mobile){
-          padding: 0 0 40px;
+        padding: 0 0 40px;
       }
     	h4{
     		font-size: 14px;
@@ -117,8 +117,8 @@
         text-align: center;
         font-weight: 500;
         @media (min-width: $br-mobile){
-            text-align: left;
-            font-weight: 400;
+          text-align: left;
+          font-weight: 400;
         }
     	}
     	.row{
@@ -388,13 +388,19 @@
 
 .footer-share-container {
     @include display-flex();
-    height: 155px;
+    padding: 0 0 40px 0;
     background: $white;
     @include justify-content(space-around);
     @include align-items(center);
+    @include flex-wrap(wrap);
     border-top: 1px solid $border;
     border-bottom: 1px solid $border;
     position: relative;
+    @media (min-width: $br-mobile){
+      padding: 0;
+      height: 155px;
+      @include flex-wrap(nowrap);
+    }
     .footer-close{
       display: none;
       position: absolute;
@@ -421,6 +427,8 @@
         height: 60px;
         @include align-items(center);
         @include justify-content(space-between);
+        margin: 40px 0 0;
+
         p {
             strong {
                 font-weight: 500;

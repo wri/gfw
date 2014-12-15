@@ -58,8 +58,7 @@ define([
 
     setListeners: function(){  
       this.calculateOffsets();
-      this.scrollDocument();
-     
+      this.scrollDocument();     
       this.$document.on('scroll',_.bind(this.scrollDocument,this));
       this.$window.on('resize',_.bind(this.calculateOffsets,this));
 

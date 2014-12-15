@@ -1,7 +1,6 @@
 .simple-pagination{
   float: left;
   display: block;
-  overflow: hidden;
   padding: 40px 0 0;
   margin: 0 auto;
   position: relative;
@@ -14,6 +13,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  @include clearfix();
 } 
 
 
@@ -56,12 +56,18 @@
 
 .simple-pagination.light-theme .next, .simple-pagination.light-theme .prev {  
   
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
   background: $cGreen;
-  position: relative;
-  top: -10px;
+  position: absolute;
+  width: 50%;
+  height: 40px;
+  width: 40px;
+  top: 50%;
+  border-radius: 50%;
+  @media (min-width: $br-mobile){
+    position: relative;
+    top: -10px;
+  }
+
   
   &.current{
     display: none;
@@ -78,14 +84,24 @@
 }
 
 .simple-pagination.light-theme .prev {
-  margin: 0 40px 0 0;
+  left: -40px;
+  margin: 0;
+  @media (min-width: $br-mobile){
+    margin: 0 40px 0 0;
+    left: auto;
+  }
   &:before {
     background: image-url('svg-icons/arrow-left.svg') center no-repeat;
     @include transform(translate(-2px,0));
   }
 }
 .simple-pagination.light-theme .next {
-  margin: 0 0 0 40px;
+  right: -40px;
+  margin: 0;
+  @media (min-width: $br-mobile){
+    margin: 0 0 0 40px;
+    right: auto;
+  }
   &:before {
     background: image-url('svg-icons/arrow-right.svg') center no-repeat;
     @include transform(translate(0px,0));

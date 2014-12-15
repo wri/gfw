@@ -153,8 +153,12 @@
 
 // INTERESTING SECTION
 .interesting-section{
-  padding: 70px 0;
+  padding: 20px 0;
   background: $light;
+  @media (min-width: $br-mobile){
+    padding: 70px 0;
+  }
+
   .section-title{
     color: $cGreen;
     text-align: center;
