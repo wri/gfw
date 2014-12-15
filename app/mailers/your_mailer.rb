@@ -1,7 +1,7 @@
 class YourMailer < ActionMailer::Base
-  def email_name
-    mail :subject => "Mandrill rides the Rails!",
-         :to      => "recipient@example.com",
-         :from    => "you@yourdomain.com"
+  def feedback
+    mail :subject => "GFW Feedback",
+         :to      => "adrian@simbiotica.es",
+         :from    => "adrian@simbiotica.es"
   end
 end

@@ -229,7 +229,25 @@
             <header>
               <h2>Provide Feedback</h2>
               <h3>Global Forest Watch is a user driven platform and your input is critical. Help us improve the website by completing the feedback form below or by signing up to become a official GFW tester.</p>
-              <p>[Insert form and space to enter email address to become a user tester]</p>
+              <p>
+                <%= form_tag({controller: "static", action: "feedback"}, method: "get", class: "nifty_form") do %>
+                  <p>
+                    <%= label_tag(:name, "Name") %>
+                    <%= text_field_tag(:name) %>
+                  </p>
+                  <p>
+                    <%= label_tag(:email, "Email") %>
+                    <%= text_field_tag(:email) %>
+                  </p>
+                  <p>
+                    <%= label_tag(:feedback, "Feedback") %>
+                    <%= text_field_tag(:feedback) %>
+                  </p>
+                  <p>
+                    <%= submit_tag "Send Email "%>
+                  </p>
+                <% end %>
+              </p>
             </header>
           </article>
         </div>
