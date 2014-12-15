@@ -47,6 +47,7 @@ class StaticController < ApplicationController
   end
 
   def feedback
+    puts params
     YourMailer.feedback.deliver
   end
 
