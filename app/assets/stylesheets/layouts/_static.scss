@@ -82,6 +82,7 @@
       width: 100%;
       @media (min-width: $br-mobile) {
         margin: 0 20px;
+        width: auto;
       }
     }
     a {
@@ -253,8 +254,11 @@
       .row{
         @include row(space-between);
         .col{
-          @include col(48.4);
           padding: 0;
+          @include col(100);
+          @media (min-width: $br-mobile) {
+            @include col(48.4);
+          }
         }
       }
     }

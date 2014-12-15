@@ -168,15 +168,14 @@
       .inner{
         @include row(space-between);
       }
-      span{
-
-      }
       a, span { color: $dark; }
       span{
         font-size: 19px;
+        font-weight: 500;
       }
       a{
         text-decoration: none;
+        font-size: 14px;
         &:hover{
           text-decoration: underline;
         }
