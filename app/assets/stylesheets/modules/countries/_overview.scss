@@ -922,6 +922,10 @@
     font-size: 12px;
     width: 130px;
 
+    .line span.loss {
+      margin-right: 5px;
+    }
+
     .line.gain::after {
       right: -12px;
       top: 7px;
@@ -964,6 +968,8 @@
 
   .overview_graph__title {
     font-size: 26px;
+    padding-left: 15px;
+    padding-right: 15px;
 
     sup {
       display: block;
@@ -980,6 +986,10 @@
       width: 100%;
     }
 
+    .chart.domains {
+      height: 200px;
+    }
+
     .legend {
       left: 40px;
     }
@@ -991,6 +1001,7 @@
     }
 
     .disclaimer {
+      font-size: 11px;
       bottom: 0;
       margin: 0 10px;
     }
@@ -1069,5 +1080,10 @@
       width: 100%;
       margin-left: 0;
     }
+  }
+
+  .source_window {
+    top: 0;
+    bottom: 0;
   }
 }
