@@ -38,11 +38,12 @@ define([
     setListeners: function(){
       if (this.$footerFixed.length) {
         this.$footerToggle.on('click',_.bind(function(e){
-          this.$footerFixed.addClass('active');        
+          this.$footerFixed.toggleClass('active'); 
+          (this.$footerFixed.hasClass('active')) ? this.$footerToggle.text('Hide footer') : this.$footerToggle.text('Show footer');
         }, this ));
-        this.$footerClose.on('click',_.bind(function(e){
-          this.$footerFixed.removeClass('active');        
-        }, this ));
+        // this.$footerClose.on('click',_.bind(function(e){
+        //   this.$footerFixed.removeClass('active');        
+        // }, this ));
       }
     }
 
