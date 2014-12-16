@@ -22,15 +22,16 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'Develop your own app', "#{getinvolved_path}/develop-your-own-app", :"data-slug" => 'develop-your-own-app', :"data-interesting" => 'explore_the_map, keep_updated, download_the_data', :class => 'nav-item develop-your-own-app' %></li>
-          <li><%= link_to 'Share data', "#{getinvolved_path}/share-data", :"data-slug" => 'share-data', :"data-interesting" => 'explore_the_map, keep_updated, download_the_data', :class => 'nav-item share-data' %></li>
-          <li><%= link_to 'Validate data', "#{getinvolved_path}/validate-data", :"data-slug" => 'validate-data', :"data-interesting" => 'explore_the_map, keep_updated, download_the_data', :class => 'nav-item validate-data' %></li>
-          <li><%= link_to 'Apply to the Small Grants Fund', "#{getinvolved_path}/apply-to-the-small-grants-fund", :"data-slug" => 'apply-to-the-small-grants-fund', :"data-interesting" => 'explore_the_map, stories_on_the_map, download_the_data', :class => 'nav-item apply-to-the-small-grants-fund' %></li>
-          <li><%= link_to 'Provide Feedback', "#{getinvolved_path}/provide-feedback", :"data-slug" => 'provide-feedback', :"data-interesting" => 'explore_the_map, keep_updated, download_the_data', :class => 'nav-item provide-feedback' %></li>
+          <li><%= link_to 'Develop your own app', "#{getinvolved_path}/develop-your-own-app", :"data-slug" => 'develop-your-own-app', :"data-interesting" => 'explore_the_map, keep_updated, download_the_data', :class => 'nav-item develop-your-own-app' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Share data', "#{getinvolved_path}/share-data", :"data-slug" => 'share-data', :"data-interesting" => 'explore_the_map, keep_updated, download_the_data', :class => 'nav-item share-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Validate data', "#{getinvolved_path}/validate-data", :"data-slug" => 'validate-data', :"data-interesting" => 'explore_the_map, keep_updated, download_the_data', :class => 'nav-item validate-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Apply to the Small Grants Fund', "#{getinvolved_path}/apply-to-the-small-grants-fund", :"data-slug" => 'apply-to-the-small-grants-fund', :"data-interesting" => 'explore_the_map, stories_on_the_map, download_the_data', :class => 'nav-item apply-to-the-small-grants-fund' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Provide Feedback', "#{getinvolved_path}/provide-feedback", :"data-slug" => 'provide-feedback', :"data-interesting" => 'explore_the_map, keep_updated, download_the_data', :class => 'nav-item provide-feedback' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
         <div class="sources-content">
+          <a id="back-btn" class="back-btn mobile-show" href="#"><svg><use xlink:href="#shape-fast-forward-left"></use></svg>Back</a>
           <div id="sources-spinner" class="spinner start"><svg><use xlink:href="#shape-spinner"></use></svg></div>
           <article id='apply-to-the-small-grants-fund' class="source-article">
             <header>

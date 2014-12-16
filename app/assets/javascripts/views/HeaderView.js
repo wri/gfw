@@ -31,9 +31,15 @@ define([
 
     toggleMenu: function(e){
       $(e.currentTarget).toggleClass('active');
-      this.$htmlbody.toggleClass('active');
-      this.$el.toggleClass('active');
-      this.$navMobile.toggleClass('active');
+      if ($(e.currentTarget).hasClass('active')) {
+        this.$htmlbody.addClass('active');
+        this.$el.addClass('active');
+        this.$navMobile.addClass('active');        
+      }else{
+        this.$htmlbody.removeClass('active');
+        this.$el.removeClass('active');
+        this.$navMobile.removeClass('active');                
+      }
     },
 
     positionTranslate: function(){

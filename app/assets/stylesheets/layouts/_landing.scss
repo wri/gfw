@@ -105,122 +105,122 @@
 }
 
 .slide {
- position: absolute;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- z-index: 0;
- opacity: 0;
- background-size: cover;
- background-position: center;
- z-index: 0;
- @include transition(all,1s,$easeInOutSine);
- >a{
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
- }
- .inner {
-  height: 100%;
- }
- // Current
- &.current {
-  opacity: 1;
-  z-index: 2;
- }
- &.leave {
-  opacity: 1;
-  z-index: 1;
- }
- // SLIDES
- &.slide1 { background-image:image-url('backgrounds/home-slider/bg_slide1.png');}
- &.slide2 { background-image:image-url('backgrounds/home-slider/bg_slide2.jpg');}
- &.slide3 { background-image:image-url('backgrounds/home-slider/bg_slide1.png');}
- &.slide4 { background-image:image-url('backgrounds/home-slider/bg_slide2.jpg');}
- aside {
-  position: absolute;
-  display: block;
-  width: 100%;
-  bottom: 0%;
-  left: 0;
-  padding: 15px 50px 15px 15px;
-  z-index: 5;
-  background: rgba($white,0.75);
-  @media (min-width: $br-mobile) {
-   padding: 0;
-   top: 50%;
-   bottom: auto;
-   width: auto;
-   background: none;
-   @include transform(translate(0,-50%));
-  }
-
-  h2 {
-   font-size: 35px;
-   color: #444;
-   display: inline-block;
-   font-weight: 400;
-   text-transform: uppercase;
-   @media (min-width: $br-mobile) {
-    background: rgba($white,0.75);
-    font-size: 61px;
-    padding: 10px 5px 5px;
-   }
-  }
-  h3 {
-   font-size: 15px;
-   color: #333;
-   text-transform: uppercase;
-   font-weight: 300;
-   @media (min-width: $br-mobile) {
-    font-size: 31px;
-    line-height: 0.5;
-    span {
-     display: inline-block;
-     float: left;
-     clear: both;
-     background: rgba($white,0.75);
-     padding: 12px;
-    }
-   }
-  }
-  .link {
-   background: $dark;
-   color: $white;
-   position: absolute;
-   top: 0;
-   right: 0;
-   height: 100%;
-   width: 44px;
-   font-size: 30px;
-   display: inline-block;
-   text-transform: uppercase;
-   text-decoration: none;
-   .mobile-show {
+  z-index: 0;
+  opacity: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  @include transition(all,1s,$easeInOutSine);
+  >a{
     position: absolute;
-    top: 50%;
-    left: 50%;
-    @include transform(translate(-50%,-50%));
-
-   }
-   &:hover {
-    background: $cGreen;
-   }
-   @media (min-width: $br-mobile) {
-    top: auto;
-    right: auto;
-    height: auto;
-    width: auto;
-    position: relative;
-    font-size: 17px;
-    padding: 8px 30px;
-    display: inline-block;
-   }
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
- }
+  .inner {
+    height: 100%;
+  }
+  // Current
+  &.current {
+    opacity: 1;
+    z-index: 2;
+  }
+  &.leave {
+    opacity: 1;
+    z-index: 1;
+  }
+  // SLIDES
+  &.slide1 { background-image:image-url('backgrounds/home-slider/bg_slide1.png');}
+  &.slide2 { background-image:image-url('backgrounds/home-slider/bg_slide2.jpg');}
+  &.slide3 { background-image:image-url('backgrounds/home-slider/bg_slide1.png');}
+  &.slide4 { background-image:image-url('backgrounds/home-slider/bg_slide2.jpg');}
+  aside {
+    position: absolute;
+    display: block;
+    width: 100%;
+    bottom: 0%;
+    left: 0;
+    padding: 15px 50px 15px 15px;
+    z-index: 5;
+    background: rgba($white,0.75);
+    @media (min-width: $br-mobile) {
+      padding: 0;
+      top: 50%;
+      bottom: auto;
+      width: auto;
+      background: none;
+      @include transform(translate(0,-50%));
+    }
+
+    h2 {
+      font-size: 35px;
+      color: #444;
+      display: inline-block;
+      font-weight: 400;
+      text-transform: uppercase;
+      @media (min-width: $br-mobile) {
+        background: rgba($white,0.75);
+        font-size: 61px;
+        padding: 10px 5px 5px;
+      }
+    }
+    h3 {
+      font-size: 15px;
+      color: #333;
+      text-transform: uppercase;
+      font-weight: 300;
+      @media (min-width: $br-mobile) {
+        font-size: 31px;
+        line-height: 0.5;
+        overflow: hidden;
+        span {
+          display: inline-block;
+          float: left;
+          clear: both;
+          background: rgba($white,0.75);
+          padding: 12px;
+        }
+      }
+    }
+    .link {
+      background: $dark;
+      color: $white;
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 44px;
+      font-size: 30px;
+      display: inline-block;
+      text-transform: uppercase;
+      text-decoration: none;
+      .mobile-show {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        @include transform(translate(-50%,-50%));
+      }
+      &:hover {
+        background: $cGreen;
+      }
+      @media (min-width: $br-mobile) {
+        top: auto;
+        right: auto;
+        height: auto;
+        width: auto;
+        position: relative;
+        font-size: 17px;
+        padding: 8px 30px;
+        display: inline-block;
+      }
+    }
+  }
 }
 
 
