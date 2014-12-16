@@ -77,7 +77,9 @@
           width: 100%;
           height: 100%;
           background-image: url('backgrounds/index_map.png');
-          background-size: cover;
+          background-position: center center;
+          background-size: contain;
+          background-repeat: no-repeat;
         }
       }
     }
@@ -95,7 +97,7 @@
       border-radius: 50%;
       @include transform(translate(0,-50%));
 
-      
+
       &.current{
         display: none;
       }
