@@ -43,7 +43,7 @@
       height: 200px;
       width: 200px;
       overflow: hidden;
-      border: 1px solid #999;
+      border: 2px solid #999;
       img{
         position: absolute;
         top: 50%;
@@ -64,7 +64,12 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: #000;
+        opacity: 0;
+        visibility: hidden;
+        &.current{
+          opacity: 1;
+          visibility: visible;
+        }
         .bg{
           position: absolute;
           top: 0;
@@ -77,13 +82,49 @@
       }
     }
 
-    .previous{
 
+    .next, .previous {
+      background: $cGreen;
+      position: absolute;
+      z-index: 5;
+      width: 50%;
+      height: 50px;
+      width: 50px;
+      border: 3px solid $white;
+      top: 50%;
+      border-radius: 50%;
+      @include transform(translate(0,-50%));
+
+      
+      &.current{
+        display: none;
+      }
+      &:before{
+        content: "";
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+
+    .previous{
+      left: -20px;
+      margin: 0;
+      &:before {
+        background: image-url('svg-icons/arrow-left.svg') center no-repeat;
+        @include transform(translate(-2px,0));
+      }
     }
     .next{
-
+      right: -20px;
+      margin: 0;
+      &:before {
+        background: image-url('svg-icons/arrow-right.svg') center no-repeat;
+        @include transform(translate(0px,0));
+      }
     }
-
   }
 
   .story-content {
@@ -132,7 +173,7 @@
           border-radius: 50%;
           overflow: hidden;
           position: relative;
-          border: 1px solid #999;
+          border: 2px solid #999;
           img{
             position: absolute;
             top: 50%;
