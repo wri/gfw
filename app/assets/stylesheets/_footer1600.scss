@@ -172,10 +172,41 @@
       span{
         font-size: 19px;
         font-weight: 500;
+        display: none;
+        @media (min-width: $br-mobile){
+          display: inline-block;
+        }          
       }
       a{
         text-decoration: none;
         font-size: 13px;
+        @media (max-width: $br-mobile - 1){
+          -webkit-appearance: none;
+          border: 1px solid transparent;
+          background: none;
+          outline: none;
+          box-shadow: none;
+          text-align: center;
+          cursor: pointer;
+          font-family: "Fira Sans";
+          background: $border;
+          position: relative;
+          display: inline-block;
+          z-index: 1;
+          padding: 0px 12px;
+          border-radius: 40px;
+          font-size: 14px;
+          text-decoration: none;
+          height: 36px;
+          line-height: 36px;
+          text-align: center;
+          font-weight: 500;
+          white-space: nowrap;
+          color: $dark;
+          background: $white;
+          border-color: $cGreen;
+          margin: 0 auto;
+        }          
         &:hover{
           text-decoration: underline;
         }
