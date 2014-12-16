@@ -9,6 +9,8 @@ class MediaUploader < CarrierWave::Uploader::Base
   # Choose what kind of storage to use for this uploader:
   # storage :file
 
+  $name_time = DateTime.now.strftime('%Q')
+
   def cache_dir
     "#{Rails.root}/tmp/uploads"
   end
@@ -82,7 +84,7 @@ class MediaUploader < CarrierWave::Uploader::Base
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.
   def filename
-    DateTime.now.strftime('%Q')+original_filename if original_filename
+    $name_time+original_filename if original_filename
   end
 
 end
