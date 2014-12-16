@@ -202,7 +202,7 @@
       bottom: 100%;
     }
     .sources-content {
-      padding: 0 25px;
+      padding: 0 15px;
       position: relative;
       @media (min-width: $br-mobile) {
         padding: 0 35px;
@@ -262,108 +262,82 @@
         }
       }
     }
-  // LIST TYPES: pub-list, alerts-list
-  .publications-list {
-    li {
-      margin: 30px 0 0;
-      &:first-child {
-        margin: 0;
-      }
-      h3 {
-        font-size: 14px;
-        color: $dark;
-        font-weight: 500;
-      }
-      p {
-        font-size: 14px;
-        color: $dark;
-        padding: 5px 0 0;
-        line-height: 1.25;
-        a {
-          color: $cGreen;
-          font-weight: 500;
-          text-decoration: none;
-          &:hover {
-            text-decoration: underline;
-          }
+    // LIST TYPES
+    .publications-list {
+      li {
+        margin: 30px 0 0;
+        &:first-child {
+          margin: 0;
         }
-      }
-    }
-  }
-  .alert-list {
-    li {
-      margin: 20px 0 0;
-      padding: 20px 0 0;
-      border-top: 1px solid $border;
-      color: $dark;
-      h3 {
-        font-size: 21px;
-        line-height: 1.25;
-        color: $dark;
-        font-weight: 500;
-      }
-      p {
-        font-size: 14px;
-        line-height: 1.5;
-        padding: 10px 0 0;
-      }
-      .btn {
-        margin: 10px 0 0;
-      }
-    }
-  }
-  .faq-list {
-    &.double-margin{
-      >li{ margin: 45px 0 0;}
-    }
-    >li {
-      margin: 25px 0 0;
-      &:first-child { margin: 0; }
-      h3 {
-        font-size: 21px;
-        line-height: 1.25;
-        color: $dark;
-        font-weight: 500;
-      }
-      p {
-        color: $dark;
-        padding: 10px 0 0;
-        line-height: 1.5;
-        font-size: 14px;
-        a {
-          text-decoration: none;
-          color: $cGreen;
-          font-weight: 500;
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
-      .btn {
-        margin: 10px 0 0;
-      }
-      strong {
-        font-weight: 500;
-      }
-      small {
-        font-size: 10px;
-      }
-      blockquote {
-        color: lighten($dark,10%);
-        font-size: 18px;
-        font-style: italic;
-        line-height: 1.25;
-        &:before {content:'"'}
-        &:after {content:'"'}
-      }
-      .bullets {
-        list-style-type: disc;
-        color: $dark;
-        >li {
-          padding: 10px 0 0;
+        h3 {
           font-size: 14px;
-          margin-left: 20px;
+          color: $dark;
+          font-weight: 500;
+        }
+        p {
+          font-size: 14px;
+          color: $dark;
+          padding: 5px 0 0;
+          line-height: 1.25;
+          a {
+            color: $cGreen;
+            font-weight: 500;
+            text-decoration: none;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+    .alert-list {
+      li {
+        margin: 20px 0 0;
+        padding: 20px 0 0;
+        border-top: 1px solid $border;
+        color: $dark;
+        h3 {
+          font-size: 21px;
+          line-height: 1.25;
+          color: $dark;
+          font-weight: 500;
+        }
+        p {
+          font-size: 14px;
           line-height: 1.5;
+          padding: 10px 0 0;
+          a {
+            color: $cGreen;
+            font-weight: 500;
+            text-decoration: none;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+        .btn {
+          margin: 10px 0 0;
+        }
+      }
+    }
+    .faq-list {
+      &.double-margin{
+        >li{ margin: 45px 0 0;}
+      }
+      >li {
+        margin: 25px 0 0;
+        &:first-child { margin: 0; }
+        h3 {
+          font-size: 21px;
+          line-height: 1.25;
+          color: $dark;
+          font-weight: 500;
+        }
+        p {
+          color: $dark;
+          padding: 10px 0 0;
+          line-height: 1.5;
+          font-size: 14px;
           a {
             text-decoration: none;
             color: $cGreen;
@@ -371,275 +345,320 @@
             &:hover {
               text-decoration: underline;
             }
-          }      
+          }
         }
-      }
-    }
-  }
-  .awards_logo-list{
-    @include row(flex-start);
-    >li{
-      margin: 0 0 0 20px;
-      &:first-child{ margin: 0;}
-    }
-  }
-  .testimonial-list{
-    margin: 20px 0 0;
-    >li{
-      margin: 30px 0 0;
-      font-size: 14px;
-      color: $dark;
-      line-height: 1.5;
-      &:first-child{
-        margin: 0;
-      }
-      .testimonial-quote{
-        position: relative;
-        padding: 10px 0 10px 25px;
-        &:before{
-          content: "“";
-          color: $cGreen;
-          position: absolute;
-          top: 0;
-          left: 0;
-          font-size: 40px;
+        .btn {
+          margin: 10px 0 0;
         }
-      }
-      .author{
-        display: block;
-        text-align: right;
-        strong{
-          display: block;
+        strong {
           font-weight: 500;
         }
+        small {
+          font-size: 10px;
+        }
+        blockquote {
+          color: lighten($dark,10%);
+          font-size: 18px;
+          font-style: italic;
+          line-height: 1.25;
+          &:before {content:'"'}
+          &:after {content:'"'}
+        }
+        .bullets {
+          list-style-type: disc;
+          color: $dark;
+          >li {
+            padding: 10px 0 0;
+            font-size: 14px;
+            margin-left: 20px;
+            line-height: 1.5;
+            a {
+              text-decoration: none;
+              color: $cGreen;
+              font-weight: 500;
+              &:hover {
+                text-decoration: underline;
+              }
+            }      
+          }
+        }
       }
     }
-  }
-  .logo-list {
-   >li {
-    display: inline-block;
-    width: 33%;
-    height: 60px;
-    margin: 25px 0 0;
-    a {
-      display: block;
-      margin: 0 auto;
-      width: 88px;
-      position: relative;
-      top: 50%;
-      color: $dark;
-      text-transform: uppercase;
-      @include transform(translate(0,-50%));
-      &.app{
-        width: auto;
-        white-space: nowrap;
-        text-align: center;
-
-        .icon{
-          width: 60px;
-          height: 60px;
-          margin: 0 auto 10px;
-          fill: $dark;
-        }
-      }
-
-      &.wri {
-          height: 32px; width: 95px; @include logos-sprite(wri);
-          &:hover{
-            @include logos-sprite(wrihover);
-          }
-      }
-      &.google {
-          height: 29px; width: 85px; @include logos-sprite(google);
-          &:hover{
-            @include logos-sprite(googlehover);
-          }
-      }
-      &.esri {
-          height: 33px; width: 87px; @include logos-sprite(esri);
-          &:hover{
-            @include logos-sprite(esrihover);
-          }
-      }
-      &.universitymaryland {
-          height: 51px; width: 56px; @include logos-sprite(universityofmaryland);
-          &:hover{
-            @include logos-sprite(universityofmarylandhover);
-          }
-      }
-      &.unep {
-          height: 57px; width: 49px; @include logos-sprite(unep);
-          &:hover{
-            @include logos-sprite(unephover);
-          }
-      }
-      &.imazon {
-          height: 24px; width: 79px; @include logos-sprite(imazon);
-          &:hover{
-            @include logos-sprite(imazonhover);
-          }
-      }
-      &.cfgd {
-          height: 40px; width: 84px; @include logos-sprite(centerforglobaldevelopment);
-          &:hover{
-            @include logos-sprite(centerforglobaldevelopmenthover);
-          }
-      }
-      &.osfac {
-          height: 56px; width: 44px; @include logos-sprite(osfac);
-          &:hover{
-            @include logos-sprite(osfachover);
-          }
-      }
-      &.gfwca {
-          height: 44px; width: 42px; @include logos-sprite(globalforestwatchcanada);
-          &:hover{
-            @include logos-sprite(globalforestwatchcanadahover);
-          }
-      }
-      &.scanex {
-          height: 20px; width: 110px; @include logos-sprite(scannex);
-          &:hover{
-            @include logos-sprite(scannexhover);
-          }
-      }
-      &.twrus {
-          height: 28px; width: 110px; @include logos-sprite(tipos);
-          &:hover{
-            @include logos-sprite(tiposhover);
-          }
-      }
-      &.norwegian {
-          height: 46px; width: 110px; @include logos-sprite(norwegianministri);
-          &:hover{
-            @include logos-sprite(norwegianministrihover);
-          }
-      }
-      &.usaid {
-          height: 64px; width: 80px; @include logos-sprite(usaid);
-          &:hover{
-            @include logos-sprite(usaidhover);
-          }
-      }
-      &.gef {
-          height: 59px; width: 51px; @include logos-sprite(gef);
-          &:hover{
-            @include logos-sprite(gefhover);
-          }
-      }
-      &.ukaid {
-          height: 47px; width: 43px; @include logos-sprite(ukaid);
-          &:hover{
-            @include logos-sprite(ukaidhover);
-          }
-      }
-      &.tilia {
-          height: 25px; width: 67px; @include logos-sprite(thetiliafund);
-          &:hover{
-            @include logos-sprite(thetiliafundhover);
-          }
-      }
-      &.goodall {
-          height: 26px; width: 110px; @include logos-sprite(thejanegoodallinstitute);
-          &:hover{
-            @include logos-sprite(thejanegoodallinstitutehover);
-          }
-      }
-      &.cartodb {
-          height: 39px; width: 110px; @include logos-sprite(cartodb);
-          &:hover{
-            @include logos-sprite(cartodbhover);
-          }
-      }
-      &.vizzuality {
-          height: 58px; width: 109px; @include logos-sprite(vizzuality);
-          &:hover{
-            @include logos-sprite(vizzualityhover);
-          }
-      }
-      &.blueraster {
-          height: 48px; width: 110px; @include logos-sprite(blueraster);
-          &:hover{
-            @include logos-sprite(bluerasterhover);
-          }
-      }
-      &.sida {
-          height: 55px; width: 110px; @include logos-sprite(sida);
-          &:hover{
-            @include logos-sprite(sidahover);
-          }
-      }
-      &.danida {
-          height: 15px; width: 82px; @include logos-sprite(danida);
-          &:hover{
-            @include logos-sprite(danidahover);
-          }
-      }
-      &.cgiar {
-          height: 43px; width: 124px; @include logos-sprite(cgiar);
-          &:hover{
-            @include logos-sprite(cgiarhover);
-          }
-      }
-      &.dutchforeign {
-          height: 80px; width: 106px; @include logos-sprite(ministryofforeignaffairs);
-          &:hover{
-            @include logos-sprite(ministryofforeignaffairshover);
-          }
-      }
-      &.moore {
-          height: 37px; width: 96px; @include logos-sprite(moore);
-          &:hover{
-            @include logos-sprite(moorehover);
-          }
-      }
-
-      &.bobolink {
-          height: 53px; width: 105px; @include logos-sprite(bobolink);
-      }
-      &.vizzuality-big {
-          height: 58px; width: 109px; @include logos-sprite(vizzuality);
-          &:hover{
-            @include logos-sprite(vizzualityhover);
-          }
+    .awards_logo-list{
+      @include row(flex-start);
+      >li{
+        margin: 0 0 0 20px;
+        &:first-child{ margin: 0;}
       }
     }
-   }
-  }
-  .app-list{
-   >li {
-    display: inline-block;
-    width: 33%;
-    margin: 25px 0 0;
-    a {
-      display: block;
-      margin: 0 auto;
-      position: relative;
-      color: $dark;
-      text-transform: uppercase;
-      width: auto;
-      white-space: nowrap;
-      text-align: center;
-      &:hover{
-        text-decoration: none;
-        .fire{
-          fill: $red;
+    .testimonial-list{
+      margin: 20px 0 0;
+      >li{
+        margin: 30px 0 0;
+        font-size: 14px;
+        color: $dark;
+        line-height: 1.5;
+        &:first-child{
+          margin: 0;
         }
-        .commodities{
-          fill: $orange;
+        .testimonial-quote{
+          position: relative;
+          padding: 10px 0 10px 25px;
+          &:before{
+            content: "“";
+            color: $cGreen;
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 40px;
+          }
+        }
+        .author{
+          display: block;
+          text-align: right;
+          strong{
+            display: block;
+            font-weight: 500;
+          }
         }
       }
+    }
+    .logo-list {
+      margin: 0 0 20px;
+      @include clearfix();
+      @media (min-width: $br-mobile) {
+        margin: 0;
+      }
 
-      .icon{
-        width: 60px;
+      >li {
+        display: inline-block;
+        width: 50%;
+        float: left;
         height: 60px;
-        margin: 0 auto 10px;
-        fill: $dark;
+        margin: 25px 0 0;
+        @media (min-width: $br-mobile) {
+          width: 33%;
+        }
+
+        a {
+          display: block;
+          margin: 0 auto;
+          width: 88px;
+          position: relative;
+          top: 50%;
+          color: $dark;
+          text-transform: uppercase;
+          @include transform(translate(0,-50%));
+          &.app{
+            width: auto;
+            white-space: nowrap;
+            text-align: center;
+
+            .icon{
+              width: 60px;
+              height: 60px;
+              margin: 0 auto 10px;
+              fill: $dark;
+            }
+          }
+
+          &.wri {
+            height: 32px; width: 95px; @include logos-sprite(wri);
+            &:hover{
+              @include logos-sprite(wrihover);
+            }
+          }
+          &.google {
+            height: 29px; width: 85px; @include logos-sprite(google);
+            &:hover{
+              @include logos-sprite(googlehover);
+            }
+          }
+          &.esri {
+            height: 33px; width: 87px; @include logos-sprite(esri);
+            &:hover{
+              @include logos-sprite(esrihover);
+            }
+          }
+          &.universitymaryland {
+            height: 51px; width: 56px; @include logos-sprite(universityofmaryland);
+            &:hover{
+              @include logos-sprite(universityofmarylandhover);
+            }
+          }
+          &.unep {
+            height: 57px; width: 49px; @include logos-sprite(unep);
+            &:hover{
+              @include logos-sprite(unephover);
+            }
+          }
+          &.imazon {
+            height: 24px; width: 79px; @include logos-sprite(imazon);
+            &:hover{
+              @include logos-sprite(imazonhover);
+            }
+          }
+          &.cfgd {
+            height: 40px; width: 84px; @include logos-sprite(centerforglobaldevelopment);
+            &:hover{
+              @include logos-sprite(centerforglobaldevelopmenthover);
+            }
+          }
+          &.osfac {
+            height: 56px; width: 44px; @include logos-sprite(osfac);
+            &:hover{
+              @include logos-sprite(osfachover);
+            }
+          }
+          &.gfwca {
+            height: 44px; width: 42px; @include logos-sprite(globalforestwatchcanada);
+            &:hover{
+              @include logos-sprite(globalforestwatchcanadahover);
+            }
+          }
+          &.scanex {
+            height: 20px; width: 110px; @include logos-sprite(scannex);
+            &:hover{
+              @include logos-sprite(scannexhover);
+            }
+          }
+          &.twrus {
+            height: 28px; width: 110px; @include logos-sprite(tipos);
+            &:hover{
+              @include logos-sprite(tiposhover);
+            }
+          }
+          &.norwegian {
+            height: 46px; width: 110px; @include logos-sprite(norwegianministri);
+            &:hover{
+              @include logos-sprite(norwegianministrihover);
+            }
+          }
+          &.usaid {
+            height: 64px; width: 80px; @include logos-sprite(usaid);
+            &:hover{
+              @include logos-sprite(usaidhover);
+            }
+          }
+          &.gef {
+            height: 59px; width: 51px; @include logos-sprite(gef);
+            &:hover{
+              @include logos-sprite(gefhover);
+            }
+          }
+          &.ukaid {
+            height: 47px; width: 43px; @include logos-sprite(ukaid);
+            &:hover{
+              @include logos-sprite(ukaidhover);
+            }
+          }
+          &.tilia {
+            height: 25px; width: 67px; @include logos-sprite(thetiliafund);
+            &:hover{
+              @include logos-sprite(thetiliafundhover);
+            }
+          }
+          &.goodall {
+            height: 26px; width: 110px; @include logos-sprite(thejanegoodallinstitute);
+            &:hover{
+              @include logos-sprite(thejanegoodallinstitutehover);
+            }
+          }
+          &.cartodb {
+            height: 39px; width: 110px; @include logos-sprite(cartodb);
+            &:hover{
+              @include logos-sprite(cartodbhover);
+            }
+          }
+          &.vizzuality {
+            height: 58px; width: 109px; @include logos-sprite(vizzuality);
+            &:hover{
+              @include logos-sprite(vizzualityhover);
+            }
+          }
+          &.blueraster {
+            height: 48px; width: 110px; @include logos-sprite(blueraster);
+            &:hover{
+              @include logos-sprite(bluerasterhover);
+            }
+          }
+          &.sida {
+            height: 55px; width: 110px; @include logos-sprite(sida);
+            &:hover{
+              @include logos-sprite(sidahover);
+            }
+          }
+          &.danida {
+            height: 15px; width: 82px; @include logos-sprite(danida);
+            &:hover{
+              @include logos-sprite(danidahover);
+            }
+          }
+          &.cgiar {
+            height: 43px; width: 124px; @include logos-sprite(cgiar);
+            &:hover{
+              @include logos-sprite(cgiarhover);
+            }
+          }
+          &.dutchforeign {
+            height: 80px; width: 106px; @include logos-sprite(ministryofforeignaffairs);
+            &:hover{
+              @include logos-sprite(ministryofforeignaffairshover);
+            }
+          }
+          &.moore {
+            height: 37px; width: 96px; @include logos-sprite(moore);
+            &:hover{
+              @include logos-sprite(moorehover);
+            }
+          }
+
+          &.bobolink {
+              height: 53px; width: 105px; @include logos-sprite(bobolink);
+          }
+          &.vizzuality-big {
+            height: 58px; width: 109px; @include logos-sprite(vizzuality);
+            &:hover{
+              @include logos-sprite(vizzualityhover);
+            }
+          }
+        }
+      }
+    }
+    .app-list{
+       >li {
+        display: inline-block;
+        width: 33%;
+        margin: 25px 0 0;
+        a {
+          display: block;
+          margin: 0 auto;
+          position: relative;
+          color: $dark;
+          text-transform: uppercase;
+          width: auto;
+          text-decoration: none;
+          white-space: nowrap;
+          text-align: center;
+          &:hover{
+            text-decoration: none;
+            .fire{
+              fill: $red;
+            }
+            .commodities{
+              fill: $orange;
+            }
+          }
+          .icon{
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 10px;
+            fill: $dark;
+          }
+        }
       }
     }
   }
-  }
- }
 }
 
 
