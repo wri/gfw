@@ -25,6 +25,7 @@ define([
     events: {
       'click .nav-item' : 'updateSource',
       'click .nav-title' : 'scrollTo',
+      'click #back-btn' : 'returnBack',
       'click .source_header' : 'toggleSources',
       'click .source_dropdown_header' : 'toggleDropdown',
       'click .source_dropdown_menu a' : 'showSubContent'
@@ -37,7 +38,9 @@ define([
       //CACHE
       this.$window = $(window);
       this.$document = $(document);
+      this.mobile = (this.$window.width() > 850) ? false : true;
       this.$htmlbody = $('html,body'); 
+      this.$headerH1 = $('#headerView').find('h1');
       this.$navItem = this.$el.find('.nav-item');
       this.$sideBarAside = $('#sidebarAside');
       this.$sideBarBox = $('#sources-box');
@@ -145,20 +148,24 @@ define([
       this.$sourceSpinner.removeClass('start');
 
       if (params.section) {
-        this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0, _.bind(function(){
+        var posY = (this.mobile) ? this.$document.scrollTop() : this.$sideBarBox.offset().top - this.padding;
+        this.$htmlbody.animate({ scrollTop: posY },0, _.bind(function(){
             this.changeHelper(params.section);
         },this));      
         mps.publish('Interesting/update',[params.interesting]);
       }else{
-        var section = this.$navItem.eq(0).data('slug');
+        if (!this.mobile) {
+          var section = this.$navItem.eq(0).data('slug');
+          this.changeHelper(section);          
+        }
         var interesting = this.$navItem.eq(0).data('interesting');
-        this.changeHelper(section);
         mps.publish('Interesting/update',[interesting]);
       }
 
     },
 
     changeHelper: function(section){
+      this.$sideBarBox.addClass('active');
       //aside
       this.$navItem.removeClass('selected');
       $('.'+section).addClass('selected');
@@ -167,9 +174,31 @@ define([
       this.$sourceArticle.removeClass('selected');
       $('#'+section).addClass('selected');
 
+      if(this.mobile) {
+        this.$headerH1.addClass('active');
+      }
+
       setTimeout(_.bind(function(){
         this.calculateOffsets();  
       },this),50);      
+      
+      setTimeout(_.bind(function(){
+        //htmlbody
+        if(this.mobile) {
+          this.$htmlbody.addClass('active');
+        } 
+      },this),500);      
+    },
+
+    returnBack: function(e){
+      e && e.preventDefault();
+
+      this.$headerH1.removeClass('active');
+      this.$sideBarBox.removeClass('active');
+      this.$navItem.removeClass('selected');
+
+      this.$htmlbody.removeClass('active').animate({ scrollTop: this.$sideBarAside.offset().top },0);
+
     },
 
     scrollTo: function(e){

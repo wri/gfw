@@ -221,12 +221,21 @@
 
 // BACK-BTN
 .back-btn{
+  position: fixed;
+  background: $white;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  padding: 15px;
   color: $dark;
   text-decoration: none;
   margin: 0 0 20px;
-  display: inline-block;
   font-weight: 500;
   text-transform: uppercase;
+  @media (min-width: $br-mobile){
+    
+  }
   svg{
     margin: 0 5px 0 0;
     width: 11px;

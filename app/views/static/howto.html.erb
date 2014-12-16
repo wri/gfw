@@ -35,14 +35,15 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'Overview', "#{howto_path}/overview", :"data-slug" => 'overview', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item overview' %></li>
-          <li><%= link_to 'Interactive Map', "#{howto_path}/interactive-map", :"data-slug" => 'interactive-map', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item interactive-map' %></li>
-          <li><%= link_to 'Country Profiles & Rankings', "#{howto_path}/country-profiles-rankings", :"data-slug" => 'country-profiles-rankings', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item country-profiles-rankings' %></li>
-          <li><%= link_to 'FAQs', "#{howto_path}/faqs", :"data-slug" => 'faqs', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item faqs' %></li>
+          <li><%= link_to 'Overview', "#{howto_path}/overview", :"data-slug" => 'overview', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item overview' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Interactive Map', "#{howto_path}/interactive-map", :"data-slug" => 'interactive-map', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item interactive-map' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Country Profiles & Rankings', "#{howto_path}/country-profiles-rankings", :"data-slug" => 'country-profiles-rankings', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item country-profiles-rankings' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'FAQs', "#{howto_path}/faqs", :"data-slug" => 'faqs', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item faqs' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
         <div class="sources-content">
+          <a id="back-btn" class="back-btn mobile-show" href="#"><svg><use xlink:href="#shape-fast-forward-left"></use></svg>Back</a>        
           <div id="sources-spinner" class="spinner start"><svg><use xlink:href="#shape-spinner"></use></svg></div>
           <article id="overview" class="source-article">
             <header>

@@ -33,16 +33,17 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'About GFW', "#{about_path}/about-gfw", :"data-slug" => 'about-gfw', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item about-gfw' %></li>
-          <li><%= link_to 'The GFW partnership', "#{about_path}/the-gfw-partnership", :"data-slug" => 'the-gfw-partnership', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item the-gfw-partnership' %></li>
-          <li><%= link_to 'Videos', "#{about_path}/videos", :"data-slug" => 'videos', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item videos' %></li>
-          <li><%= link_to 'Awards & testimonals', "#{about_path}/awards_and_testimonials", :"data-slug" => 'awards_and_testimonials', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item awards_and_testimonials' %></li>
-          <li><%= link_to 'Outcomes', "#{about_path}/outcomes", :"data-slug" => 'outcomes', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item outcomes' %></li>
-          <li><%= link_to 'Contact us', "#{about_path}/contact-us", :"data-slug" => 'contact-us', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item contact-us' %></li>
+          <li><%= link_to 'About GFW', "#{about_path}/about-gfw", :"data-slug" => 'about-gfw', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item about-gfw' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'The GFW partnership', "#{about_path}/the-gfw-partnership", :"data-slug" => 'the-gfw-partnership', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item the-gfw-partnership' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Videos', "#{about_path}/videos", :"data-slug" => 'videos', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item videos' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Awards & testimonals', "#{about_path}/awards_and_testimonials", :"data-slug" => 'awards_and_testimonials', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item awards_and_testimonials' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Outcomes', "#{about_path}/outcomes", :"data-slug" => 'outcomes', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item outcomes' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Contact us', "#{about_path}/contact-us", :"data-slug" => 'contact-us', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item contact-us' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
         <div class="sources-content">
+          <a id="back-btn" class="back-btn mobile-show" href="#"><svg><use xlink:href="#shape-fast-forward-left"></use></svg>Back</a>        
           <div id="sources-spinner" class="spinner start"><svg><use xlink:href="#shape-spinner"></use></svg></div>
           <article id='about-gfw' class='source-article'>
             <header>

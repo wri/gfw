@@ -148,12 +148,13 @@
                 border-bottom: 2px solid #B6B6BA;
                 background: none;
                 box-shadow: none;
+                font-size: 11px;
                 height: 25px;
                 outline: none;
                 width: auto;
-                font-family: inherit;
+                // font-family: inherit;
                 margin: 0;
-                padding: 0 5px;
+                padding: 5px 5px 0px;
                 position: relative;
                 top: -2px;
               }
@@ -346,7 +347,7 @@
 
 // Bottom HEADER
 .layout-header-bottom {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   z-index: 10;
@@ -357,21 +358,6 @@
     background: rgba(#FFF,0.8);
     border-bottom: 1px solid $border;
   }
-  // @media (min-width: $br-mobile){
-  //   // Countries
-  //   .is-countries-page &{
-  //     border-bottom: none;
-  //     h1{
-  //       position: relative;
-  //     }
-  //     nav{
-  //       visibility: hidden;
-  //       opacity: 0;
-  //       height: 0;
-  //       overflow: hidden;
-  //     }
-  //   }
-  // }
 
 	// Logo
 	h1 {
@@ -385,10 +371,19 @@
     z-index: 11;
     margin: 0 0 0 15px;
     @include retina-image('logo-new.png','logo-new@2x.png');
+    @include transition(all 0.25s linear);
+    &.active{
+      opacity: 0;
+      visibility: hidden;
+    }
     @media (min-width: $br-mobile){
       width: 90px;
       height: 90px;
       margin: 0;
+      &.active{
+        opacity: 1;
+        visibility: visible;
+      }
     }
 		a {
 			display: block;

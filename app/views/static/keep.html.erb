@@ -23,15 +23,14 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'Monitor an area of interest', "#{keepupdated_path}/monitor-an-area-of-interest", :"data-slug" => 'monitor-an-area-of-interest', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item monitor-an-area-of-interest' %></li>
-          <li><%= link_to 'Crowdsourced stories', "#{keepupdated_path}/crowdsourced-stories", :"data-slug" => 'crowdsourced-stories', :"data-interesting" => 'stories_on_the_map, mongabay_stories, ejn_stories', :class => 'nav-item crowdsourced-stories' %></li>
-          <li><%= link_to 'Publications', "#{keepupdated_path}/publications", :"data-slug" => 'publications', :"data-interesting" => 'explore_the_map, download_the_data, get_involved', :class => 'nav-item publications' %></li>
-<!--           <li><%= link_to 'Sign up for newsletter', "#{keepupdated_path}/newsletter", :"data-slug" => 'newsletter', :"data-interesting" => 'explore_the_map, download_the_data, get_involved', :class => 'nav-item newsletter' %></li>
-          <li><%= link_to 'Coming Soon', "#{keepupdated_path}/coming-soon", :"data-slug" => 'coming-soon', :"data-interesting" => 'explore_the_map, download_the_data, get_involved', :class => 'nav-item coming-soon'%></li> -->
+          <li><%= link_to 'Monitor an area of interest', "#{keepupdated_path}/monitor-an-area-of-interest", :"data-slug" => 'monitor-an-area-of-interest', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item monitor-an-area-of-interest' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Crowdsourced stories', "#{keepupdated_path}/crowdsourced-stories", :"data-slug" => 'crowdsourced-stories', :"data-interesting" => 'stories_on_the_map, mongabay_stories, ejn_stories', :class => 'nav-item crowdsourced-stories' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Publications', "#{keepupdated_path}/publications", :"data-slug" => 'publications', :"data-interesting" => 'explore_the_map, download_the_data, get_involved', :class => 'nav-item publications' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
         <div class="sources-content">
+          <a id="back-btn" class="back-btn mobile-show" href="#"><svg><use xlink:href="#shape-fast-forward-left"></use></svg>Back</a>
           <div id="sources-spinner" class="spinner start"><svg><use xlink:href="#shape-spinner"></use></svg></div>
           <article id="crowdsourced-stories" class="source-article">
             <header>
