@@ -73,15 +73,15 @@
       >ul {
         width: 580px;
         padding: 0 5px;
-        height: 55px;       
+        height: 55px;
         @media (min-width: $br-mobile){
           width: auto;
           margin: 0;
           height: auto;
         }
         >li {
-          float: left; 
-          height: 55px;       
+          float: left;
+          height: 55px;
           @media (min-width: $br-mobile){
             height: 25px;
             width: 25px;
@@ -172,8 +172,8 @@
               }
             }
 
-            &.shape-world{ 
-              svg{ 
+            &.shape-world{
+              svg{
                 @include transform(translate(0,-50%) scale(0.9));
                 @media (min-width: $br-mobile){
                   position: relative;
@@ -197,7 +197,7 @@
             }
           }
         }
-      }      
+      }
     }
     // Btn-menu
     .btn-menu{
@@ -206,7 +206,7 @@
       height: 100%;
       position: absolute;
       top: 50%;
-      right: 0; 
+      right: 0;
       display: block;
       z-index: 5;
       box-shadow: none;
@@ -278,7 +278,7 @@
               }
             }
           }
-        }        
+        }
       }
     }
     &.second-nav {
@@ -323,7 +323,7 @@
               }
             }
           }
-        }        
+        }
       }
     }
   }
@@ -349,7 +349,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 10;  
+  z-index: 10;
   width: 100%;
   @include clearfix();
   @media (min-width: $br-mobile){
@@ -455,6 +455,7 @@
         @media (min-width: $br-mobile){
           float: left;
           border-top: none;
+          top: 1px;
           &:hover {
             z-index: 5;
             ul {
@@ -547,7 +548,7 @@
 
 						a {
 							color: #444;
-							
+
 							padding: 10px;
 							font-size: 15px;
 							text-decoration: none;
