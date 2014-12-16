@@ -258,6 +258,7 @@
         border-radius: 3px;
         box-shadow: 0px 0px 1px #999;
         border-color: transparent;
+        font-size: 1rem;
       }
       textarea {
         min-height: 70px;
@@ -265,7 +266,10 @@
       .btn {
         border-radius: 40px;
         padding: 0;
+        width: 170px;
         box-shadow: none;
+        font-size: 14px;
+        font-weight: 300;
       }
     }
   }
