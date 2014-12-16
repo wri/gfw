@@ -35,10 +35,11 @@ module Api
 
         if uploads_ids.length >= 1
           params['uploads_ids'].split(',').each_with_index do |id, index|
+            idtime = id + Time.now.getutc
             uploads << {
-              url: id,
+              url: idtime,
               embed_url: "",
-              preview_url: id,
+              preview_url: idtime,
               mime_type: "image/jpeg",
               order: params['video'].present? ? index+1 : index+2
             }

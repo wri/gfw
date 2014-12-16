@@ -46,6 +46,16 @@ class StaticController < ApplicationController
     @title = 'Applications'
   end
 
+  def feedback
+    @title = 'Feedback'
+
+    name     = params["name"]
+    email    = params["email"]
+    feedback = params["feedback"]
+    body =  name + ' (' + email +') sent this feedback from GFW: ' + feedback
+    YourMailer.feedback(body,email).deliver
+  end
+
   private
 
     def load_stories
