@@ -429,7 +429,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
 
           markup_list += '<li>\
-                            <div class="countries_list__minioverview medium countries_list__minioverview_'+val.iso+'" class="loss">'+formatNumber(parseFloat(val.ratio).toFixed(2))+'</div>\
+                            <div class="countries_list__minioverview_number countries_list__minioverview medium countries_list__minioverview_'+val.iso+'" class="loss">'+formatNumber(parseFloat(val.ratio).toFixed(2))+'</div>\
                             <div class="countries_list__num">'+ord+'</div>\
                             <div class="countries_list__title">'+enabled+'</div>\
                           </li>';
@@ -475,7 +475,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         _.each(data, function(val, key) {
           markup_list += ['<li>',
-                            '<div class="countries_list__minioverview huge">',
+                            '<div class="countries_list__minioverview_number countries_list__minioverview huge">',
                               '<div class="gain half">'+formatNumber(parseFloat(val.total_loss/1000000).toFixed(1))+' Mha</div>',
                               '<div class="loss half last">'+formatNumber(parseFloat(val.total_gain/1000000).toFixed(1))+' Mha</div>',
                             '</div>',

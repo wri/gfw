@@ -61,7 +61,7 @@
   opacity: 0;
   text-transform: none;
   -webkit-backface-visibility: hidden;
-  @include transform(translate(-49%,0%));
+  @include transform(translate(-50%,0%));
   &.top{
     top: 100%;
     left: 49%;
@@ -92,7 +92,7 @@
   }
   &.bottom{
     bottom: 130%;
-    left: 51%;
+    left: 48%;
     &:after{
       bottom: 0;
       left: 50%;

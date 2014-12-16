@@ -37,6 +37,7 @@
   // @include background-size(cover);
   // background-position: -220px center;
   svg {
+    border-top: 1px solid #615D6C;
     position: relative;
     z-index: 300;
     margin-left: -40px;
@@ -99,7 +100,7 @@
     &:hover {
       a {
         position: relative;
-        border-bottom: 0;
+        border-bottom-color: transparent;
         color: rgba(#fff, .75);
         background: #333;
       }
@@ -141,6 +142,9 @@
   text-decoration: none;
 
   span {
+    &:before { content: "— " }
+    &:after { content: " —" }
+
     display: block;
     font-size: 12px;
     line-height: 1.5;
@@ -149,9 +153,7 @@
 }
 
 .overview_graph__legend {
-  float: left;
   width: 100%;
-  border-bottom: 1px solid #615D6C;
   margin-top: -1px;
   line-height: 40px;
   font-size: 13px;
@@ -159,11 +161,16 @@
   text-align: center;
   background: #333;
   color: #fff;
+  position: relative;
+
+  p {
+    width: 95%;
+  }
 
   .info {
-    float: right;
-    margin-right: 20px;
-    margin-top: 10px;
+    position: absolute;
+    top: 11px;
+    right: 20px;
   }
 }
 
@@ -882,5 +889,222 @@
   align-items: center;
   .btn {
     top: 0;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .countries_list {
+    max-width: 480px;
+    width: 100%;
+  }
+
+  .countries_list__header,
+  .countries_list__minioverview {
+    display: none;
+  }
+
+  .countries_list__minioverview_number {
+    text-align: right;
+
+    &.medium, &.huge, .half {
+      display: block;
+      width: 95px;
+    }
+
+    .half:first-child {
+      margin-top: 5px;
+    }
+
+    .half, .half.last {
+      margin-left: 0;
+      float: none;
+      font-size: 20px;
+      line-height: 1em;
+      border: 0;
+    }
+  }
+
+  .countries_list__num {
+    width: 45px;
+  }
+
+  .countries_list__num,
+  .countries_list__title {
+    font-size: 22px;
+  }
+
+  .countries_list__title {
+    width: 40%;
+    border-left: 0;
+    padding-left: 0;
+  }
+
+  .countries_list__data {
+    font-size: 12px;
+    width: 130px;
+
+    .line span.loss {
+      margin-right: 5px;
+    }
+
+    .line.gain::after {
+      right: -12px;
+      top: 7px;
+    }
+  }
+
+  .is-overview-action .countries_list ul li {
+    padding: 18px 10px 18px 15px;
+  }
+
+  .overview_graph {
+    width: 100%;
+  }
+
+  .overview_graph__tabs {
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    ul {
+      width: 960px;
+    }
+  }
+
+  .overview_graph__legend {
+    padding: 10px;
+    font-size: 16px;
+    line-height: 25px;
+
+    p {
+      width: 77%;
+      display: inline-block;
+      margin-left: -30px;
+    }
+
+    .info {
+      display: inline-block;
+      top: 27px;
+    }
+  }
+
+  .overview_graph__title {
+    font-size: 26px;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    sup {
+      display: block;
+      top: 0;
+      margin-top: 5px;
+      font-size: 15px;
+    }
+  }
+
+  .overview_graph__area {
+    height: 200px;
+
+    .chart {
+      width: 100%;
+    }
+
+    .chart.domains {
+      height: 200px;
+    }
+
+    .legend {
+      left: 40px;
+    }
+
+    .legend li {
+      display: inline-block;
+      font-size: 13px;
+      margin-right: 20px;
+    }
+
+    .disclaimer {
+      font-size: 11px;
+      bottom: 0;
+      margin: 0 10px;
+    }
+
+    svg {
+      top: 40px;
+    }
+  }
+
+  .overview_graph__link {
+    height: 50px;
+    width: 135px;
+
+    span {
+      display: inline;
+
+      &:before { content: " " }
+      &:after { content: " " }
+    }
+  }
+
+  .country-overview-wrapper-coolio {
+    top: 0;
+  }
+
+  .overview_graph__years {
+    border-bottom: 0;
+
+    .year { display: none; }
+    .year:first-child,
+    .year:last-child {
+      display: inherit;
+    }
+  }
+
+  .share_dialog {
+    top: 0;
+    margin: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding-top: 150px;
+
+    .form {
+      border-top: 0;
+      padding-left: 0;
+      width: 100%;
+      top: 230px;
+    }
+
+    .input-field {
+      width: 90%;
+    }
+
+    .share_buttons {
+      left: 85px;
+    }
+  }
+
+  .overview_graph .umdoptions_dialog {
+    position: fixed;
+    top: 0;
+    right: auto;
+    width: 100%;
+    height: 100%;
+
+    ul {
+      width: 95%;
+    }
+
+    .slider {
+      width: 100%;
+    }
+
+    p .slider #canopy_slider {
+      width: 100%;
+      margin-left: 0;
+    }
+  }
+
+  .source_window {
+    top: 0;
+    bottom: 0;
   }
 }

@@ -30,7 +30,7 @@
 
   .story-carrousel{
     width: 100%;
-    height: 364px;
+    height: 500px;
     margin: 0 0 30px;
     position: relative;
     .frame{
@@ -77,6 +77,8 @@
           width: 100%;
           height: 100%;
           background-image: url('backgrounds/index_map.png');
+          background-position: center center;
+          background-repeat: no-repeat;
           background-size: cover;
         }
       }
@@ -95,7 +97,7 @@
       border-radius: 50%;
       @include transform(translate(0,-50%));
 
-      
+
       &.current{
         display: none;
       }

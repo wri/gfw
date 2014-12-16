@@ -105,6 +105,12 @@
   margin-bottom: 50px;
 }
 
+@media only screen and (max-width: 480px) {
+  .countries_list {
+    margin-bottom: 0;
+  }
+}
+
 .disclaimer {
   margin-top: 40px;
   font-style: italic;
