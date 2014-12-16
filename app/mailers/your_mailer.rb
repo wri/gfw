@@ -1,8 +1,8 @@
 class YourMailer < ActionMailer::Base
-  def feedback(body)
+  def feedback(body, email)
     mail :subject => "GFW Feedback",
-         :to      => "adrian@simbiotica.es",
-         :from    => "adrian@simbiotica.es",
+         :to      => "abarrett@wri.org",
+         :from    => email,
          :body    => body
   end
 end
