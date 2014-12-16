@@ -1,4 +1,4 @@
-.reset-btn {
+%reset-btn {
   -webkit-appearance: none;
   border: 1px solid transparent;
   background: none;
@@ -6,12 +6,13 @@
   box-shadow: none;
   text-align: center;
   cursor: pointer;
+  text-decoration: none;
   font-family: "Fira Sans";
 }
 
 // Btn
 .btn {
-  @extend .reset-btn;
+  @extend %reset-btn;
   background: $border;
   position: relative;
   display: inline-block;

@@ -902,7 +902,7 @@
   text-align: center;
   padding: 40px 0;
   border-bottom: 1px solid $border;
-  @media (max-width: $br-mobile + 1) {
+  @media (max-width: $br-mobile - 1) {
     
     padding: 20px 0;
     position: fixed;
