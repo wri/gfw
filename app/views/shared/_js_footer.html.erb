@@ -89,7 +89,7 @@ gapi.analytics.ready(function() {
    */
   gapi.analytics.auth.authorize({
     container: 'embed-api-auth-container',
-    clientid: ga_id,
+    clientid: ga.getAll()[0].get('clientId')
   });
 
 
