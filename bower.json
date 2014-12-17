@@ -31,6 +31,12 @@
     "Class.js": "~1.0.0",
     "uri-templates": "~0.1.5",
     "slick.js": "~1.3.13",
-    "jquery.simplePagination": "*"
+    "jquery.simplePagination": "*",
+    "jquery-migrate": "~1.2.1",
+    "jquery.iframe-transport": "~1.0.0",
+    "jquery-file-upload": "~9.8.1",
+    "geojson-google-maps": "*",
+    "blueimp-load-image": "~1.13.0",
+    "jqueryui": "~1.10.4"
   }
 }

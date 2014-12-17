@@ -2,6 +2,7 @@ modules:
   - name: 'map'
   - name: 'static'
   - name: 'landing'
+  - name: 'stories'
 
 waitSeconds: 200
 
@@ -20,13 +21,17 @@ paths:
   text: "requirejs-text/text"
   mps: "minpubsub/minpubsub.src"
   _string: "underscore.string/dist/underscore.string.min"
-  jqueryui: "jquery-ui-1.10.4.custom.min"
+  jqueryui: "jqueryui/ui/jquery.ui.widget"
   markerclusterer: "gmaps-markerclusterer-plus/src/markerclusterer"
   geojsonArea: "geojson-area"
   uri: "uri-templates/uri-templates"
   handlebars: "handlebars/handlebars"
   slick: "slick.js/slick/slick.min"
   simplePagination: "jquery.simplePagination/jquery.simplePagination"
+  # stories
+  jquery_fileupload: "jquery-file-upload/js/jquery.fileupload"
+  jquery_migrate: "jquery-migrate/jquery-migrate"
+  geojson: "geojson-google-maps/GeoJSON"
 
   wax: "wax.g.min"
   store: "store"
@@ -79,3 +84,16 @@ shim:
     exports: "UriTemplate"
   handlebars:
     exports: "Handlebars"
+
+
+  geojson:
+    exports: "geojson"
+
+  jquery_migrate: 
+    deps:
+      - "jquery"
+    exports: "jquery_migrate"
+  jquery_fileupload: 
+    deps:
+      - "jquery"
+    exports: "jquery_fileupload"
