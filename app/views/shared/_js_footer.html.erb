@@ -6,7 +6,7 @@
   //Google Analytics
   var ga_id, domain = null;
   if (location.hostname === "www.globalforestwatch.org" ) {
-    ga_id  = <%= ENV["ANALYTICS_PROPERTY_ID"] %>;
+    ga_id  = '<%= ENV["ANALYTICS_PROPERTY_ID"] %>';
     domain = 'globalforestwatch.org';
   } else {
     ga_id = "UA-57762578-1";
