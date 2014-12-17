@@ -1561,88 +1561,95 @@
 }
 
 @media only screen and (max-width: 480px) {
-  .country-show .country-header {
-    .country-title {
-      padding: 20px 11px;
+  .country-show {
+    .country-header {
+      .country-title {
+        padding: 20px 11px;
 
-      .country-selector {
-        right: 0;
-        width: 100%;
+        .country-selector {
+          right: 0;
+          width: 100%;
+        }
+      }
+
+      .country-details {
+        height: auto;
+
+        .country-preview {
+          width: 100%;
+          float: none;
+
+          .map {
+            height: 260px;
+            width: 100%;
+          }
+
+          .tree-numbers,
+          .loss-gain-graph {
+            padding-top: 0;
+            width: 100%;
+          }
+
+          .tree-numbers div {
+            display: inline-block;
+          }
+
+          .tree-cover {
+            width: 180px;
+          }
+
+          .total-area {
+            width: 95px;
+            h4 { width: 100%; }
+          }
+
+          .map,
+          .tree-numbers,
+          .loss-gain-graph {
+            float: none;
+          }
+
+          .loss-gain-graph {
+            text-align: center;
+
+            .graph {
+              height: 100px;
+            }
+
+            .graph svg {
+              width: auto;
+            }
+
+            .graph-amount,
+            .graph-date {
+              max-width: 100%;
+            }
+          }
+        }
+
+        .country-sidenav {
+          float: none;
+          width: 100%;
+
+          ul {
+            top: 0;
+            padding: 0;
+          }
+
+          ul li {
+            border: 0;
+            border-top: 1px solid #6B6B87;
+
+            &:last-child {
+              border-bottom: 1px solid #6B6B87;
+            }
+          }
+        }
       }
     }
 
-    .country-details {
-      height: auto;
-
-      .country-preview {
-        width: 100%;
-        float: none;
-
-        .map {
-          height: 260px;
-          width: 100%;
-        }
-
-        .tree-numbers,
-        .loss-gain-graph {
-          padding-top: 0;
-          width: 100%;
-        }
-
-        .tree-numbers div {
-          display: inline-block;
-        }
-
-        .tree-cover {
-          width: 180px;
-        }
-
-        .total-area {
-          width: 95px;
-          h4 { width: 100%; }
-        }
-
-        .map,
-        .tree-numbers,
-        .loss-gain-graph {
-          float: none;
-        }
-
-        .loss-gain-graph {
-          text-align: center;
-
-          .graph {
-            height: 100px;
-          }
-
-          .graph svg {
-            width: auto;
-          }
-
-          .graph-amount,
-          .graph-date {
-            max-width: 100%;
-          }
-        }
-      }
-
-      .country-sidenav {
-        float: none;
-        width: 100%;
-
-        ul {
-          top: 0;
-        }
-
-        ul li {
-          border: 0;
-          border-top: 1px solid #6B6B87;
-
-          &:last-child {
-            border-bottom: 1px solid #6B6B87;
-          }
-        }
-      }
+    .country-nav-container {
+      display: none;
     }
   }
 }
