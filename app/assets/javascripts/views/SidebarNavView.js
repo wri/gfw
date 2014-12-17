@@ -41,6 +41,7 @@ define([
       this.mobile = (this.$window.width() > 850) ? false : true;
       this.$htmlbody = $('html,body'); 
       this.$headerH1 = $('#headerView').find('h1');
+      this.$backBtn = $('#back-btn');
       this.$navItem = this.$el.find('.nav-item');
       this.$sideBarAside = $('#sidebarAside');
       this.$sideBarBox = $('#sources-box');
@@ -166,6 +167,7 @@ define([
 
     changeHelper: function(section){
       this.$sideBarBox.addClass('active');
+      this.$backBtn.addClass('active');
       //aside
       this.$navItem.removeClass('selected');
       $('.'+section).addClass('selected');
@@ -195,6 +197,7 @@ define([
 
       this.$headerH1.removeClass('active');
       this.$sideBarBox.removeClass('active');
+      this.$backBtn.removeClass('active');
       this.$navItem.removeClass('selected');
 
       this.$htmlbody.removeClass('active').animate({ scrollTop: this.$sideBarAside.offset().top },0);

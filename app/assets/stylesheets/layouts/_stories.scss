@@ -1,13 +1,19 @@
 // SHOW
 .header-stories{
   color: $dark;
-  padding: 70px 0 50px;
+  padding: 75px 0 20px;
+  @media (min-width: $br-mobile) {
+    padding: 70px 0 50px;
+  }
   header{
     // max-width: 1024px;
   }
   h2{
-    font-size: 47px;
+    font-size: 32px;
     padding: 0 0 15px;
+    @media (min-width: $br-mobile) {
+      font-size: 47px;
+    }
   }
   h3{
     font-size: 21px;
@@ -30,34 +36,54 @@
 
   .story-carrousel{
     width: 100%;
-    height: 500px;
-    margin: 0 0 30px;
+    height: 150px;
+    margin: 0 0 20px;
     position: relative;
+    @media (min-width: $br-mobile) {
+      height: 500px;
+      margin: 0 0 30px;
+    }
     .frame{
       position: absolute;
-      top: 50%;
-      right: 50px;
+      top: 0%;
+      left: 50%;
       z-index: 2;
-      @include transform(translate(0,-50%));
-      border-radius: 50%;
-      height: 200px;
-      width: 200px;
+      @include transform(translate(-50%,0));
+      height: 100%;
+      width: calc(100% + 30px);
       overflow: hidden;
-      border: 2px solid #999;
+      @media (min-width: $br-mobile) {
+        top: 50%;
+        right: 50px;
+        left: auto;
+        border-radius: 50%;
+        @include transform(translate(0,-50%));
+        height: 200px;
+        width: 200px;
+        border: 2px solid #999;
+      }      
       img{
+        width: 100%;
         position: absolute;
         top: 50%;
         left: 50%;
         @include transform(translate(-50%,-50%));
+        @media (min-width: $br-mobile) {
+          width: auto;
+        }      
       }
     }
     ul{
+      display: none;
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: 1;
+      @media (min-width: $br-mobile) {
+        display: block;
+      }      
       li{
         position: absolute;
         top: 0;
@@ -86,6 +112,7 @@
 
 
     .next, .previous {
+      display: none;
       background: $cGreen;
       position: absolute;
       z-index: 5;
@@ -96,6 +123,9 @@
       top: 50%;
       border-radius: 50%;
       @include transform(translate(0,-50%));
+      @media (min-width: $br-mobile) {
+        display: block;
+      }
 
 
       &.current{
@@ -136,8 +166,11 @@
       line-height: 20px;
       text-align: left;
       color: #666;
-      @include column-count(2);
-      @include column-gap(40px);
+      @include column-count(1);
+      @media (min-width: $br-mobile) {
+        @include column-count(2);
+        @include column-gap(40px);
+      }
     }
   }
 }
@@ -152,30 +185,53 @@
   }
   .row{
     @include row(flex-start);
+    @include flex-wrap(wrap);
     .col{
-      @include col(25);
+      @include col(100);
+      margin-top: 20px;
+      &:first-child{
+        margin-top: 0;
+      }
+      @media (min-width: $br-mobile) {
+        @include col(25);
+        margin-top: 0;
+      }
       a{
-        width: 80%;
-        max-width: 175px;
         margin: 0 auto;
         display: block;
         color: $dark;
         text-decoration: none;
-        text-align: center;
+        @include row();
+        @include align-items(center);
+        @include flex-wrap(wrap);
+        @media (min-width: $br-mobile) {
+          text-align: center;
+          width: 80%;
+          max-width: 175px;
+        }
 
         h3{
           font-size: 14px;
-          padding: 15px 0 0;
+          padding: 0 10px;
+          width: calc(100% - 70px);
+          @media (min-width: $br-mobile) {
+            padding: 15px 0 0;
+            width: auto;
+          }
         }
 
         .frame{
-          width: 100%;
-          padding-bottom: 100%;
+          width: 70px;
+          padding-bottom: 70px;
           background: #000;
           border-radius: 50%;
           overflow: hidden;
           position: relative;
           border: 2px solid #999;
+          @media (min-width: $br-mobile) {
+            width: 100%;
+            padding-bottom: 100%;
+          }
           img{
             position: absolute;
             top: 50%;
@@ -217,6 +273,7 @@
 .submit-section{
   padding: 70px 0 50px;
   aside {
+    display: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -227,6 +284,9 @@
     top: -71px;
     padding-top: 71px;
     height: 111.1%;
+    @media (min-width: $br-mobile) {
+      display: block;
+    }
 
     h3 {
       padding: 10px 0;
@@ -278,193 +338,15 @@
 
   }
   .content{
-    padding: 0 0 0 262px;
+    padding: 0 15px;
+    @media (min-width: $br-mobile) {
+      padding: 0 0 0 262px;
+    }
   }
 
 }
 
 
-
-
-// .is-stories-page {
-
-//   .header-subtitle {
-//     @extend .fira_light;
-//   }
-
-//   &.is-index-action .header-subtitle {
-//     margin-bottom: 40px;
-//     font-size: 29px;
-//     color: #666;
-//   }
-
-//   &.is-show-action .header-title {
-//     font-size: 29px;
-//     line-height: 51px;
-//   }
-
-//   &.is-edit-action .header-inner {
-//     position: relative;
-
-//     .btn {
-//       position: absolute;
-//       top: -6px; right: 10px;
-//     }
-//   }
-// }
-
-
-// /* =Index
-// ----------------------------------------------- */
-// .featured_stories {
-//   margin-top: 40px;
-// }
-
-// .featured_story {
-//   position: relative;
-//   margin-bottom: 30px;
-//   height: 174px;
-//   padding: 50px 0;
-
-//   a {
-//     display: block;
-//     margin: 10px 0;
-//     font-weight: bold;
-//     font-size: 12px;
-//     text-transform: uppercase;
-
-//     &.featured_story-title {
-//       margin: 0 0 12px;
-//       font-weight: normal;
-//       font-size: 29px;
-//       @extend .fira_medium;
-//       text-transform: capitalize;
-//       color: #333;
-
-//       &:hover {
-//         text-decoration: underline;
-//       }
-//     }
-//   }
-
-//   img {
-//     position: absolute;
-//     top: 5px;
-//     left: 5px;
-//     width: 256px;
-//     height: 256px;
-//     @include border-radius(129px);
-//   }
-
-//   &.left  .frame { left: 0px; }
-//   &.right .frame { right: 0px; }
-
-//   .frame {
-//     display: block;
-//     position: absolute;
-//     z-index: 10;
-//     top: 0px;
-//     width: 266px;
-//     height: 266px;
-//     @include border-radius(134px);
-//     background: #ccc;
-//   }
-
-//   .featured_story-content {
-//     display: inline-block;
-//     width: 640px;
-
-//     p {
-//       font-size: 16px;
-//       line-height: 20px;
-//       color: #666;
-//     }
-//   }
-
-//   &.right {
-//     text-align: left;
-
-//     .featured_story-content { text-align: right; }
-//   }
-
-//   &.left {
-//     text-align: right;
-
-//     .featured_story-content { text-align:left; }
-//   }
-// }
-
-// .pagination {
-//   margin-top: 50px;
-//   padding-top: 30px;
-//   border-top: 1px solid #E5E5E5;
-//   text-align: center;
-
-//   a + a { margin-left: 10px; }
-// }
-
-// .column {
-//   &:hover .infowindow {
-//     display: block;
-//   }
-
-//   .frame {
-//     position: absolute;
-//     top: 0; left: 0;
-//     height: 100%;
-//     width: 100%;
-//     background: #666;
-//     @include border-radius(59px);
-//   }
-
-//   img {
-//     position: absolute;
-//     top: 5px; left: 5px;
-//     height: 107px;
-//     width: 107px;
-//     @include border-radius(54px);
-//   }
-// }
-
-// .infowindow {
-//   display: none;
-//   position: absolute;
-//   z-index: 200;
-//   bottom: 125px; left: 50%;
-//   margin-left: -90px;
-//   padding: 12px;
-//   width: 156px;
-//   background: #111;
-//   font-size: 12px;
-//   text-align: left;
-//   color: #666;
-//   @include border-radius(3px);
-
-//   .tip {
-//     position: absolute;
-//     bottom: -6px; left: 50%;
-//     height: 6px;
-//     width: 13px;
-//     margin-left: -6px;
-//     @include stories-icons-sprite(infowindow_tip);
-//   }
-
-//   strong a {
-//     display: block;
-//     margin: 0 0 5px;
-//     width: 140px;
-//     font-size: 17px;
-//     @extend .serif;
-//     text-align: left;
-//     color: #f5f5f5;
-
-//     &:hover { text-decoration: underline; }
-//   }
-// }
-
-
-// /* =Show
-// ----------------------------------------------- */
 
 
 .story_form{
@@ -482,8 +364,11 @@
     .stories_map-container {
       position: relative;
       overflow: hidden;
-      width: 582px;
+      width: 100%;
       padding-top: 5px;
+      @media (min-width: $br-mobile) {
+        width: 582px;
+      }
 
       .map-search-input {
         position: absolute;

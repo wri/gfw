@@ -758,10 +758,14 @@
   >ul {
     position: relative;
     >li {
-      padding: 40px 0;
-      border-top: 1px solid $border;
+      padding: 0 0 40px 0;
       position: relative;
       &:first-child { margin-top: 20px;}
+      @media (min-width: $br-mobile) {
+        padding: 40px 0;
+        border-top: 1px solid $border;
+      }
+
       a {
         text-decoration: none;
         position: relative;
@@ -770,25 +774,26 @@
       }
       figure {
         width: 100%;
-        margin: 0 0 20px;
+        margin: 0 0 20px -15px;
         @media (min-width: $br-mobile) {
           width: 200px;
           position: absolute;
           top: 50%;
           right: 0;
+          margin: 0 0 20px;
           @include transform(translate(0,-50%));
         }
         .bg {
           // background: #000;
           background-size: cover;
           padding-bottom: 40%;
-          width: 100%;
+          width: calc(100% + 30px);
           margin: 0 auto;
-          border: 1px solid #999;
           @media (min-width: $br-mobile) {
             width: 75%;
             border-radius: 50%;
             padding-bottom: 75%;
+            border: 1px solid #999;
           }
         }
       }

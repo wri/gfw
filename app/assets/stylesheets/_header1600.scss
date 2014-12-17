@@ -53,6 +53,8 @@
   left: 0;
   z-index: 11;
   border-top: 1px solid $border;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   @media (min-width: $br-mobile){
     position: relative;
     padding: 4px 10px;
