@@ -47,7 +47,7 @@ end %>
             <% end %>
 
             <% if media['url'].present? %>
-              <li class='slide'><div class="bg" style="background-image: url(<%= "#{ENV['AWS_HOST']}http://gfw2stories.s3.amazonaws.com/uploads/#{media['url']}" %>);"></div></li>
+              <li class='slide'><div class="bg" style="background-image: url(<%= "#{ENV['AWS_HOST']}/#{media['url']}" %>);"></div></li>
             <% end %>
           <% end %>
         </ul>
