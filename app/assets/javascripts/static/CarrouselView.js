@@ -4,8 +4,8 @@
 define([
   'jquery',
   'backbone',
-  'slick'
-], function($,Backbone,slick) {
+  'mps'
+], function($,Backbone,mps) {
 
   'use strict';
 
@@ -14,41 +14,47 @@ define([
     el: '#carrouselView',
 
     events: {
-      'click .btn-tab' : 'onTab',
+      'click .btn-video' : 'onChange',
     },
 
     initialize: function() {
       if (!this.$el.length) {
         return
       }
-      this.current = 0;
-      this.tab = null;
-      this.$btnTab = this.$el.find('.btn-tab'); 
-      this.$slide = this.$el.find('.slide');
+      this.$player = $('#playerCarrousel');
+
+      // INITS
+      this.loadYoutubeAPI();
     },
 
-    onTab: function(e) {
+    loadYoutubeAPI: function(){
+      mps.subscribe('YoutubeAPI/ready', _.bind(function(){
+        this.loadPlayer(this.$player.data('default'));
+      },this));
+    },
+
+    loadPlayer: function(id) {
+      this.player = new YT.Player('playerCarrousel', {
+        videoId: id,
+        width: 356,
+        height: 200,
+        playerVars: {
+          autoplay: 0,
+          controls: 1,
+          modestbranding: 1,
+          rel: 0,
+          showInfo: 0
+        }
+      });
+    },
+
+    onChange: function(e) {
       e && e.preventDefault();
-      if (!$(e.currentTarget).hasClass('disabled')) {
-        // Pause video before changing slides
-        this.pauseVideo();
-        
-        // Vars
-        this.tab = $(e.currentTarget).data('tab');
-        this.current = $(e.currentTarget).parent().index();
+      var id = $(e.currentTarget).data('video');
 
-        //Toogle
-        this.$btnTab.removeClass('visible');
-        $(e.currentTarget).addClass('visible');
-
-        $(this.tab).addClass('visible').siblings().removeClass('visible');
-      }
+      $(e.currentTarget).addClass('current').siblings().removeClass('current');
+      this.player.loadVideoById(id);
     },
-
-    pauseVideo: function(){
-      var $video = this.$slide.eq(this.current).find('iframe').attr('id');
-      document.getElementById($video).contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');      
-    }
 
   });
 
