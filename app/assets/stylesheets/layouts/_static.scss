@@ -354,8 +354,11 @@
 /**/
 #small_grants_fund {
   .intro {
-    @include display-flex();
-    @include align-items(stretch);
+    display: flex;
+    display: -ms-flexbox;
+    display: -ms-flex;
+    display: -webkit-flex;
+    align-items: stretch;
     .img-cont {
       display: inline-table;
       margin-right: 1rem;
