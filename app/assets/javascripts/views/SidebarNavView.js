@@ -177,6 +177,7 @@ define([
       $('#'+section).addClass('selected');
 
       if(this.mobile) {
+        this.$sideBarBox.animate({ scrollTop: 0 },0);
         this.$headerH1.addClass('active');
       }
 

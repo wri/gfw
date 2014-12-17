@@ -348,6 +348,36 @@
         }
       }
     }
+    .video-box{
+      width: 100%;
+      margin-bottom: 40px;
+      .player{
+        padding-bottom: 56.2790%;
+        position: relative;
+        overflow: hidden;
+        iframe{
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .video-list{
+        padding: 20px 0 0;
+        li{
+          margin-top: 10px;
+          cursor: pointer;
+          &:first-child{
+            margin-top: 0;
+          }
+
+          &.current, &:hover{
+            color: $cGreen;
+          }
+        }
+      }
+    }
     // LIST TYPES
     .publications-list {
       li {

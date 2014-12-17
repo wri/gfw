@@ -10,6 +10,7 @@ require([
   'static/RouterStatic',
   'static/CarrouselView',
   'static/StoriesKeepView',
+  'static/VideoView',
   'views/HeaderView',
   'views/FooterView',
   'views/TermsView',
@@ -17,7 +18,7 @@ require([
   'views/SidebarNavView',
   'views/InterestingView',
   '_string'
-], function($, _, Class, Backbone, mps, RouterStatic, CarrouselView, StoriesKeepView, HeaderView, FooterView, TermsView, DialogView, SidebarNavView, InterestingView) {
+], function($, _, Class, Backbone, mps, RouterStatic, CarrouselView, StoriesKeepView, VideoView, HeaderView, FooterView, TermsView, DialogView, SidebarNavView, InterestingView) {
   'use strict';
 
   var LandingPage = Class.extend({
@@ -28,7 +29,18 @@ require([
       var router = new RouterStatic();
 
       this._initViews();
-      this._initApp();      
+      this._initApp(); 
+      this._youtubeApi();     
+    },
+
+    _youtubeApi: function(){
+      var tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      window.onYouTubeIframeAPIReady = _.bind(function(){
+        mps.publish('YoutubeAPI/ready');
+      },this)            
     },
 
     /**
@@ -54,6 +66,7 @@ require([
       new CarrouselView();
       new InterestingView();
       new StoriesKeepView();
+      new VideoView();
     }
   });
 
