@@ -176,7 +176,7 @@
           <article id="validate-data" class="source-article">
             <header>
               <h2>Validate data</h2>
-              <h3>Global Forest Watch is an international effort to monitor forest change, and everyone can participate. You can help improve the accuracy of data by contributing to validation from the field or from your computer or smartphone. 
+              <h3>Global Forest Watch is an international effort to monitor forest change, and everyone can participate. You can help improve the accuracy of data by contributing to validation from the field or from your computer or smartphone.
 The applications below allow users to validate forest change data from the Global Forest Watch platform.</h3>
             </header>
             <div class="content">
@@ -236,15 +236,19 @@ The applications below allow users to validate forest change data from the Globa
               <h2>Provide Feedback</h2>
               <h3>Global Forest Watch is a user driven platform and your input is critical. Help us improve the website by completing the feedback form below or by signing up to become a official GFW tester.</p>
             </header>
+            <p>All fields are <strong>required</strong>.</p>
               <%= form_tag({controller: "static", action: "feedback"}, method: "get", class: "feedback_form") do %>
                 <p>
-                  <%= text_field_tag :name, nil, :required => true, :placeholder => "Your name" %>
+                  <%= label_tag :name %>
+                  <%= text_field_tag :name, nil, :required => true %>
                 </p>
                 <p>
-                  <%= text_field_tag :email, nil, :required => true, :placeholder => "Your email address"%>
+                  <%= label_tag :email %>
+                  <%= email_field_tag :email, nil, :required => true %>
                 </p>
                 <p>
-                  <%= text_area_tag :feedback, nil, :required => true, :placeholder => "Help us improve GFW" %>
+                  <%= label_tag :feedback %>
+                  <%= text_area_tag :feedback, nil, :required => true  %>
                 </p>
                 <p>
                   <%= submit_tag "Send feedback", :class=> "btn green medium" %>

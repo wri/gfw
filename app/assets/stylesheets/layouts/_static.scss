@@ -163,7 +163,7 @@
           border-top: 1px solid $border;
           @media (min-width: $br-mobile) {
             padding: 0;
-            border-left: 1px solid $border;            
+            border-left: 1px solid $border;
             line-height: 60px;
           }
 
@@ -292,7 +292,11 @@
   .feedback_form {
     margin-top: 30px;
     p {
-      text-align: center;
+      text-align: left;
+      margin-bottom: 25px;
+      &:last-child {
+        margin-bottom: 0;
+      }
       input,
       textarea {
         width: 90%;
@@ -306,7 +310,7 @@
         font-size: 1rem;
       }
       textarea {
-        min-height: 70px;
+        min-height: 150px;
       }
       .btn {
         border-radius: 40px;
@@ -315,6 +319,14 @@
         box-shadow: none;
         font-size: 14px;
         font-weight: 300;
+      }
+      label {
+        float: left;
+        color: #333;
+        font-weight: bold;
+        font-size: 12px;
+        text-transform: uppercase;
+        width: 100%;
       }
     }
   }
