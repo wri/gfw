@@ -71,7 +71,11 @@ define([
 
     parseItem: function(item, slug) {
       if (slug === 'story') {
-        var img = item.media[item.media.length -1].preview_url;
+        if (! item.media.length) {
+          var img = null;
+        } else {
+          var img = item.media[item.media.length -1].preview_url;
+        }
         return {
           title: item.title,
           description: item.details,
