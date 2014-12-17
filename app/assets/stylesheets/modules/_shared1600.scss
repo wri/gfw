@@ -233,6 +233,11 @@
   margin: 0 0 20px;
   font-weight: 500;
   text-transform: uppercase;
+  @include transform(translate(0,-100%));
+  @include transition(all 0.5s $easeInOutCubic);
+  &.active{
+    @include transform(translate(0,0%));
+  }
   @media (min-width: $br-mobile){
     
   }

@@ -51,10 +51,15 @@ textarea {
 
 .field {
   @include clearfix();
-  width: 582px;
+  @media (min-width: $br-mobile) {
+    min-width: 582px;
+  }
+
 
   &.short {
-    width: 304px;
+    @media (min-width: $br-mobile) {
+      min-width: 304px;
+    }
 
     input[type="text"],
     input[type="date"],
