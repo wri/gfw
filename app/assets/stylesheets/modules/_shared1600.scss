@@ -234,9 +234,10 @@
   font-weight: 500;
   text-transform: uppercase;
   @include transform(translate(0,-100%));
-  @include transition(all 0.5s $easeInOutCubic);
+  @include transition(all 0s $easeOutSine 0s);
   &.active{
     @include transform(translate(0,0%));
+    @include transition(all 0.3s $easeOutSine 0.3s);
   }
   @media (min-width: $br-mobile){
     

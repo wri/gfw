@@ -38,7 +38,6 @@ define([
       //CACHE
       this.$window = $(window);
       this.$document = $(document);
-      this.mobile = (this.$window.width() > 850) ? false : true;
       this.$htmlbody = $('html,body'); 
       this.$headerH1 = $('#headerView').find('h1');
       this.$backBtn = $('#back-btn');
@@ -54,6 +53,7 @@ define([
       //VARS
       this.padding = 40;
       this.first = true;
+      this.mobile = (this.$window.width() > 850) ? false : true;
       
 
       //INIT
@@ -186,8 +186,10 @@ define([
       },this),50);      
       
       setTimeout(_.bind(function(){
+        
         //htmlbody
         if(this.mobile) {
+          this.$sideBarBox.addClass('animate');
           this.$htmlbody.addClass('active');
         } 
       },this),500);      

@@ -213,10 +213,13 @@
     overflow-x: hidden;
     overflow-y: auto;
     @include transform(translate(100%,0));
-    @include transition(all 0.5s $easeInOutCubic);
+    @include transition(all 0s $easeOutSine);
     -webkit-overflow-scrolling: touch;
     &.active{
       @include transform(translate(0%,0));
+    }
+    &.animate{
+      @include transition(all 0.3s $easeOutSine);
     }
 
 
