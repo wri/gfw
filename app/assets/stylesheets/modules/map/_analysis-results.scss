@@ -102,7 +102,7 @@
         width: 90px;
         top: 30px;
         right: 0;
-        position: absolute;
+        // position: absolute;
         z-index: 2000;
         border: 0;
         background-color: #fff;
@@ -164,6 +164,7 @@
         background: image-url('home-icons/control_buttons_reset.png');
         &:hover {
           // @include home-icons-sprite(control_buttons_reset_hover);
+          position: relative;
           background: image-url('home-icons/control_buttons_reset_hover.png');
         }
         &:active {
