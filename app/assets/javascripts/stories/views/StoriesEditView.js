@@ -125,13 +125,17 @@ define([
 
   var StoriesEditView = Backbone.View.extend({
 
-    el: document.body,
+    el: '#storiesEditView',
 
     events: {
       'click .remove_story-link': '_clickRemove'
     },
 
     initialize: function() {
+      if (!this.$el.length) {
+        return
+      }
+
       _.bindAll(this, '_clickRemove');
 
       this.model = new cdb.core.Model();
