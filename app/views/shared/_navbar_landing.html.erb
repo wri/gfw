@@ -2,20 +2,20 @@
   <div>
     <ul>
       <li class="nav-item"><a class="shape-house <% if controller?("landing") %>current<% end %>" href="/"><svg class="icon shape-house"><use xlink:href="#shape-house"></use></svg><span class="tooltip1">Home</span></a></li>
-      <li class="nav-item"><a class="shape-world <% if controller?("map") %>current<% end %>" href="/map"><svg class="icon shape-world"><use xlink:href="#shape-world"></use></svg><span class="tooltip1"><em class="mobile-hide">Explore the</em> map</span></a></li>
+      <li class="nav-item"><a class="shape-world <% if controller?("map") %>current<% end %>" href="/map"><svg class="icon shape-world"><use xlink:href="#shape-world"></use></svg><span class="tooltip1"><em class="mobile-hide">GFW Interactive</em> Map</span></a></li>
       <li class="nav-item"><a class="shape-country <% if controller?("countries") %>current<% end %>" href="/countries"><svg class="icon shape-country"><use xlink:href="#shape-country"></use></svg><span class="tooltip1">Country <em class="mobile-hide">profiles & rankings</em></span></a></li>
       <li class="nav-item"><a class="shape-fire" href="http://staging.blueraster.com/wri/gfw-fires/#v=home&x=&y=&l=&lyrs=&dirty=true" ><svg class="icon shape-fire"><use xlink:href="#shape-fire"></use></svg><span class="tooltip1">Fires</span></a></li>
       <li class="nav-item"><a class="shape-commodities" href="http://staging.blueraster.com/wri/gfw-commodities/#v=home" ><svg class="icon shape-commodities"><use xlink:href="#shape-commodities"></use></svg><span class="tooltip1">Commodities</span></a></li>
       <li class="nav-item"><a class="shape-blog" href="http://wp-wri-staging.herokuapp.com/"><svg class="icon shape-blog"><use xlink:href="#shape-blog"></use></svg><span class="tooltip1">Blog</span></a></li>
-    </ul>    
+    </ul>
   </div>
   <button class="btn-menu mobile-show" id="btn-menu">
     <svg class="icon hamburguer"><use xlink:href="#shape-hamburger"></use></svg>
     <svg class="icon close"><use xlink:href="#shape-close"></use></svg>
-  </button>      
+  </button>
 </nav>
 <nav class="second-nav mobile-hide">
-  <div>  
+  <div>
     <ul>
       <li class="nav-item">
         <a href="/howto" class="link <% if controller?("static") && action?("howto") %>current<% end %>">
