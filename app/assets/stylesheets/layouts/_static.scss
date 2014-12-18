@@ -60,7 +60,9 @@
   h4{
     text-align: center;
     position: relative;
-    top: 30px;
+    @media (min-width: $br-mobile) {
+      top: 30px;
+    }
   }
   p {
     font-size: 14px;
