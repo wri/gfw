@@ -5,6 +5,7 @@
         <h3>Global Forest Watch is a rapidly evolving platform that provides the most up-to-date information available on forests. Use this page to stay updated on changes to the GFW platform and on what is happening in forests around the world.</h3>
       </header>
       <ul class="row row3">
+        <li><a href="/howto/analyze-and-monitor-data" class="btn white uppercase">Monitor an area of interest</a></li>
         <li><a href="http://wp-wri-staging.herokuapp.com/" class="btn white uppercase">Read the Blog</a></li>
         <li><a href="http://www.wri.org/global-forest-watch-stay-informed" class="btn white uppercase">Sign up for newsletter</a></li>
       </ul>
@@ -23,9 +24,8 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'Monitor an area of interest', "#{keepupdated_path}/monitor-an-area-of-interest", :"data-slug" => 'monitor-an-area-of-interest', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item monitor-an-area-of-interest' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Crowdsourced stories', "#{keepupdated_path}/crowdsourced-stories", :"data-slug" => 'crowdsourced-stories', :"data-interesting" => 'stories_on_the_map, mongabay_stories, ejn_stories', :class => 'nav-item crowdsourced-stories' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Publications', "#{keepupdated_path}/publications", :"data-slug" => 'publications', :"data-interesting" => 'explore_the_map, download_the_data, get_involved', :class => 'nav-item publications' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Publications', "#{keepupdated_path}/publications", :"data-slug" => 'publications', :"data-interesting" => 'explore_the_map, download_the_data, discussion_forum', :class => 'nav-item publications' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
@@ -57,43 +57,6 @@
                   <div id="pagination-container" data-page="<%= @page %>" data-perpage="<%= @stories_per_page %>" data-total="<%= @total_stories %>"></div>
                 </div>
               </div>
-            </div>
-          </article>
-          <article id="monitor-an-area-of-interest" class="source-article">
-            <header>
-              <h2>Monitor an area of interest</h2>
-              <p>Sign up to receive tree clearing alerts for the humid tropical forest biome. Tree clearing alerts indicate areas where tree cover loss is likely to have recently occurred, based off of an analysis of satellite imagery and complimentary data on forest fires and weather events. To learn more about this data set and where it applies, please visit the data page.</p>
-              <p>When you sign up to receive alerts for an area of interest, you will be notified when a new tree clearing has been detected, as often as every 30 days. Once you identify the area you would like to monitor, simply enter your email address to subscribe to alerts.</p>
-              <p><strong>Interested in monitoring tree clearing alerts in commodities? Visit <a href='http://www.commodities.globalforestwatch.org' target='_blank'>GFW Commodities</a>.</p>
-            </header>
-            <div class="content">
-              <ul class="alert-list">
-                <li>
-                  <h3>Subscribe to alerts for a hand-drawn area on the map</h3>
-                  <p>1. Click the button below to enter the map with the analysis tool activated.
-                  <p>2. Draw a shape within the humid tropical forest biome (the area shaded in pink) and click “Analyze.”</p> 
-                  <p>3. Once the results window appears, click the “mail” icon located at the bottom.</p>
-                  <a href="/map/3/15.00/27.00/ALL/grayscale/forma?begin=2006-01-01&end=2014-10-31" class="btn light2 medium uppercase">Draw an area</a>
-                </li>
-                <li>
-                  <h3>Subscribe to alerts for a land use concession or protected area.</h3>
-                  <p>1. Click the button below to enter the global map.
-                  <p>2. Turn on land use concessions (located under the "FOREST CHANGE" tab) or protected areas. 
-                  <p>3. Click on the individual concession or protected area you would like to analyze.</p>
-                  <p>4. When the info window pops open, click the “analyze” icon.
-                  <p>5. Once the results window appears, click the “mail” icon located at the bottom.</p>
-                  <a href="/map/3/15.00/27.00/ALL/grayscale/forma?begin=2006-01-01&end=2014-10-31" class="btn light2 medium uppercase">Select a concession or protected area</a>
-                  <p>For more advanced concession analysis, visit <a href='http://www.commodities.globalforestwatch.org' target='_blank'>GFW Commodities</a>.</p>
-                </li>
-                <li>
-                  <h3>Subscribe to alerts in a country or subnational region.</h3>
-                  <p>1. Click the button below to access the country profiles and select your country of interest.</p> 
-                  <p>2. If desired, select a subnational region using the dropdown menu under the country name.</p>
-                  <p>3. Click “Analyze on map.” You will then be directed to the map to perform an analysis. 
-                  <p>5. Once the results window appears, click the “mail” icon located at the bottom.</p>
-                  <a href="/countries" class="btn light2 medium uppercase">Select a country or subnational region</a>
-                </li>
-              </ul>
             </div>
           </article>
           <article id="publications" class="source-article">
