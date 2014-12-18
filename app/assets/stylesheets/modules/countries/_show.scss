@@ -545,11 +545,15 @@
       text-transform: uppercase;
       letter-spacing: -0.2px;
 
-      .icon-holder {
+      .share {
+        width: auto;
         position: relative;
+        left: 20px;
         float: right;
-        top: -14px;
-        right: -24px;
+      }
+
+      .icon-holder {
+        float: none;
 
         .country-icons-share_circle_white {
           width: 20px;
@@ -1650,6 +1654,129 @@
 
     .country-nav-container {
       display: none;
+    }
+
+    .country-section {
+      padding: 20px;
+
+      .section-content {
+        &, .section-title {
+          padding: 0;
+        }
+
+        .left-col,
+        .right-col {
+          padding: 0;
+          width: 100%;
+        }
+      }
+
+      .forma-alerts-legend {
+        margin-bottom: 10px;
+      }
+
+      .forma-graph {
+        margin-top: 30px;
+        height: 160px;
+      }
+
+      .forests-type-graph {
+        margin-top: 0;
+
+        svg {
+          width: 225px;
+          margin: 0 auto;
+          display: block;
+        }
+      }
+
+      .section-info {
+        h6 {
+          display: inline-block;
+          width: 75%;
+        }
+      }
+    }
+
+    .country-carbon-stocks {
+      .carbon-text,
+      .emissions-text {
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .emissions-text {
+        text-align: left;
+      }
+    }
+
+    .country-external-links {
+      a {
+        color: #AAC221;
+      }
+
+      li {
+        border: 0;
+        margin-left: 0;
+        padding-left: 0;
+      }
+    }
+
+    .country-download-links {
+      a:first-child {
+        margin: 0;
+      }
+
+      a {
+        margin-top: 20px;
+        width: 280px;
+      }
+    }
+
+    .country-blog {
+      h3 {
+        padding-top: 0;
+      }
+
+      a {
+        color: white;
+      }
+
+      .column.round .title span {
+        margin-top: 10px;
+        display: block;
+      }
+    }
+
+    .country-employment {
+      .section-content .left-col .section-title span {
+        font-size: 13px;
+        margin: 0;
+      }
+    }
+  }
+
+  .country-sidenav .umdoptions_dialog,
+  .umdoptions_dialog {
+    position: fixed;
+    top: 0;
+    right: auto;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    ul {
+      width: 95%;
+    }
+
+    .slider {
+      width: 100%;
+    }
+
+    p .slider #canopy_slider {
+      width: 100%;
+      margin-left: 0;
     }
   }
 }
