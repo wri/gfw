@@ -22,6 +22,7 @@ paths:
   mps: "minpubsub/minpubsub.src"
   _string: "underscore.string/dist/underscore.string.min"
   jqueryui: "jqueryui/ui/jquery.ui.widget"
+  jqueryujs: "jquery-ujs/src/rails"
   markerclusterer: "gmaps-markerclusterer-plus/src/markerclusterer"
   geojsonArea: "geojson-area"
   uri: "uri-templates/uri-templates"
@@ -29,6 +30,7 @@ paths:
   slick: "slick.js/slick/slick.min"
   simplePagination: "jquery.simplePagination/jquery.simplePagination"
   # stories
+
   jquery_fileupload: "jquery-file-upload/js/jquery.fileupload"
   jquery_migrate: "jquery-migrate/jquery-migrate"
   geojson: "geojson-google-maps/GeoJSON"
@@ -89,10 +91,16 @@ shim:
   geojson:
     exports: "geojson"
 
+  jqueryujs:
+    deps:
+      - "jquery"
+    exports: "jqueryujs"
+
   jquery_migrate: 
     deps:
       - "jquery"
     exports: "jquery_migrate"
+
   jquery_fileupload: 
     deps:
       - "jquery"

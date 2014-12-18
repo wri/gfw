@@ -173,9 +173,6 @@ define([
           previewMaxHeight: 76,
           previewCrop: true
       }).on('fileuploadadd', function (e, data) {
-        console.log(e);
-        console.log(data);
-        debugger;
         data.context = $('<div/>').appendTo('#files');
 
         that.filesAdded += _.size(data.files);
@@ -213,20 +210,14 @@ define([
         $("form input[type='submit']").addClass('disabled');
         $("form input[type='submit']").attr('disabled', 'disabled');
         $("form input[type='submit']").val('Please wait...');
-
         // data.submit();
       }).on('fileuploadprocessalways', function (e, data) {
-        console.log(data);
-        debugger;
         var index = data.index,
             file = data.files[index],
             node = $(data.context.children()[index]);
 
         var $thumb = $("<li class='thumbnail'><div class='inner_box'><img src='"+file.preview.toDataURL()+"' /></div><a href='#' class='destroy'></a></li>");
       }).on('fileuploaddone', function (e, data) {
-        console.log(data);
-        debugger;
-
         var files = [data.result]
 
         $.each(files, function (index, file) {

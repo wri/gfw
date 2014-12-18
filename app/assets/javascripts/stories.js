@@ -7,8 +7,9 @@ require([
   'Class',
   'backbone',
   'mps',
+  'jqueryujs',
   'jqueryui',
-  'jquery_migrate', 
+  'jquery_migrate',
   'jquery_fileupload',
   'geojson',
   'views/HeaderView',
@@ -16,7 +17,7 @@ require([
   'stories/views/StoriesEditView',
   'handlebars',
   '_string',
-], function($, _, Class, Backbone, mps, jqueryui, jquery_migrate, jquery_fileupload, geojson, HeaderView, FooterView, StoriesEditView, Handlebars) {
+], function($, _, Class, Backbone, mps, jqueryujs, jqueryui, jquery_migrate, jquery_fileupload, geojson, HeaderView, FooterView, StoriesEditView, Handlebars) {
   'use strict';
 
   var StoriesPage = Class.extend({
