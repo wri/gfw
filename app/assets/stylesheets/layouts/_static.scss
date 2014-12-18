@@ -137,6 +137,9 @@
           text-align: center;
           background: #F7F7F7;
         }
+        &.no-transform{
+          text-transform: none;
+        }
         &:hover {
           background: $white;
         }
