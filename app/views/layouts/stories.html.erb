@@ -41,10 +41,11 @@
     <!-- Javascript -->
     <script src="//maps.googleapis.com/maps/api/js?libraries=drawing,places&sensor=false"></script>
     <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
-    <%= javascript_include_tag 'stories' %>
+    <%#= javascript_include_tag 'stories' %>
+    <%= requirejs_include_tag "stories" %>
     <%= render 'shared/js_footer' %>
     <!-- Fixing! -->
-    <script src="/assets/slick.js/slick/slick.min.js"></script>
+    <!-- <script src="/assets/slick.js/slick/slick.min.js"></script>
     <script type="text/javascript">
         $('#footer-logos').slick({
             infinite: true,
@@ -54,6 +55,6 @@
             autoplay: true,
             autoplaySpeed: 3000
       });
-    </script>
+    </script>-->
   </body>
 </html>
