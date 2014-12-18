@@ -9,6 +9,120 @@ define([
 
   'use strict';
 
+
+  var config = {
+    ZOOM: 3,
+    MINZOOM: 3,
+    MAXZOOM: 17,
+    LAT: 15,
+    LNG: 27,
+    ISO: 'ALL',
+    BASEMAP: 'grayscale',
+    BASELAYER: 'loss',
+    MONTHNAMES: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    MONTHNAMES_SHORT: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
+    QUARTERNAMES: ["JAN - MAR", "APR - JUN", "JUL - SEP", "OCT - DEC"],
+    mapLoaded: false
+  };
+
+  config.MAPOPTIONS = {
+    zoom: config.ZOOM,
+    minZoom: config.MINZOOM,
+    maxZoom: config.MAXZOOM,
+    center: new google.maps.LatLng(config.LAT, config.LNG),
+    mapTypeId: google.maps.MapTypeId.HYBRID,
+    backgroundColor: '#99b3cc',
+    disableDefaultUI: true,
+    panControl: false,
+    zoomControl: false,
+    mapTypeControl: false,
+    scaleControl: true,
+    scaleControlOptions: {
+        position: google.maps.ControlPosition.TOP_LEFT,
+    },
+    streetViewControl: false,
+    overviewMapControl: false,
+    scrollwheel: false,
+    layers: [596],
+    analysis: ''
+  };
+
+  config.OVERLAYSTYLES = {
+    strokeWeight: 2,
+    fillOpacity: 0.45,
+    fillColor: "#FFF",
+    strokeColor: "#A2BC28",
+    editable: true,
+    icon: new google.maps.MarkerImage(
+      '/assets/icons/marker_exclamation.png',
+      new google.maps.Size(36, 36), // size
+      new google.maps.Point(0, 0), // offset
+      new google.maps.Point(18, 18) // anchor
+    )
+  };
+
+  config.MAPSTYLES = {};
+
+  config.MAPSTYLES.grayscale = {
+    type: 'style',
+    style: [ { "featureType": "water" }, { "featureType": "transit", "stylers": [ { "saturation": -100 } ] }, { "featureType": "road", "stylers": [ { "saturation": -100 } ] }, { "featureType": "poi", "stylers": [ { "saturation": -100 } ] }, { "featureType": "landscape", "stylers": [ { "saturation": -100 } ] }, { "featureType": "administrative", "stylers": [ { "saturation": -100 } ] },{ "featureType": "poi.park", "elementType": "geometry", "stylers": [ { "visibility": 'off' } ] } ]
+  }
+
+  config.MAPSTYLES.terrain = {
+    type: 'mapType',
+    style: google.maps.MapTypeId.TERRAIN,
+    title: "Terrain"
+  }
+
+  config.MAPSTYLES.satellite = {
+    type: 'mapType',
+    style: google.maps.MapTypeId.SATELLITE,
+    title: "Satellite"
+  }
+
+  config.MAPSTYLES.roads = {
+    type: 'mapType',
+    style: google.maps.MapTypeId.HYBRID,
+    title: "Roads"
+  }
+
+  config.MAPSTYLES.treeheight = {
+    type: 'customMapType',
+    style: new google.maps.ImageMapType({
+      getTileUrl: function(ll, z) {
+        var X = Math.abs(ll.x % (1 << z)); // wrap
+        return "//gfw-apis.appspot.com/gee/simple_green_coverage/" + z + "/" + X + "/" + ll.y + ".png";
+      },
+      tileSize: new google.maps.Size(256, 256),
+      isPng: true,
+      maxZoom: 17,
+      name: "Forest Height",
+      alt: "Global forest height"
+    })
+  }
+
+  config.MAPSTYLES.landsat = [];
+
+  for(var i = 1999; i < 2013; i++) {
+    (function(year) {
+      config.MAPSTYLES.landsat[i] = new google.maps.ImageMapType({
+        getTileUrl: function(ll, z) {
+          var X = Math.abs(ll.x % (1 << z));  // wrap
+          return "//gfw-apis.appspot.com/gee/landsat_composites/" + z + "/" + X + "/" + ll.y + ".png?year="+year;
+        },
+        tileSize: new google.maps.Size(256, 256),
+        isPng: true,
+        maxZoom: 17,
+        name: "Landsat "+i
+      });
+    })(i);
+  }
+
+
+
+
+
+
   var StoriesEditView = Backbone.View.extend({
 
     el: document.body,
@@ -59,13 +173,16 @@ define([
           previewMaxHeight: 76,
           previewCrop: true
       }).on('fileuploadadd', function (e, data) {
+        console.log(e);
+        console.log(data);
+        debugger;
         data.context = $('<div/>').appendTo('#files');
 
         that.filesAdded += _.size(data.files);
 
         _.each(data.files, function(file) {
-          var filename = prettifyFilename(file.name);
-          var $thumbnail = $("<li class='thumbnail preview' data-name='"+prettifyFilename(filename)+"' />");
+          var filename = that.prettifyFilename(file.name);
+          var $thumbnail = $("<li class='thumbnail preview' data-name='"+that.prettifyFilename(filename)+"' />");
 
           $('.thumbnails').append($thumbnail);
           $thumbnail.fadeIn(250);
@@ -99,12 +216,17 @@ define([
 
         // data.submit();
       }).on('fileuploadprocessalways', function (e, data) {
+        console.log(data);
+        debugger;
         var index = data.index,
             file = data.files[index],
             node = $(data.context.children()[index]);
 
         var $thumb = $("<li class='thumbnail'><div class='inner_box'><img src='"+file.preview.toDataURL()+"' /></div><a href='#' class='destroy'></a></li>");
       }).on('fileuploaddone', function (e, data) {
+        console.log(data);
+        debugger;
+
         var files = [data.result]
 
         $.each(files, function (index, file) {
@@ -115,7 +237,7 @@ define([
           var url = file.url.replace('https', 'http');
           var $thumb = $("<li class='sortable thumbnail'><div class='inner_box'><img src='"+url+"' /></div><a href='#' class='destroy'></a></li>");
 
-          var filename = prettifyFilename(file.basename);
+          var filename = that.prettifyFilename(file.basename);
 
           $(".thumbnail[data-name='"+filename+"']").fadeOut(250, function() {
             $(this).remove();
@@ -156,7 +278,7 @@ define([
       var $searchInput = $('.map-search-input');
 
       var success = function(position) {
-        center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         that.map.panTo(center);
         that.map.setZoom(15);
       }
@@ -262,6 +384,9 @@ define([
         this.$remove.fadeOut(250);
       }
     },
+    prettifyFilename: function (filename) {
+      return filename.toLowerCase().replace(/ /g,"_");
+    },    
 
     render: function() {
       this.$the_geom = this.$('#story_the_geom');
