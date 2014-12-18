@@ -1755,6 +1755,17 @@
         margin: 0;
       }
     }
+
+    .country-tenure {
+      .line-graph text {
+        font-size: 10px;
+      }
+
+      svg {
+        width: 280px;
+        height: 140px;
+      }
+    }
   }
 
   .country-sidenav .umdoptions_dialog,
