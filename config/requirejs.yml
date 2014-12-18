@@ -21,7 +21,7 @@ paths:
   text: "requirejs-text/text"
   mps: "minpubsub/minpubsub.src"
   _string: "underscore.string/dist/underscore.string.min"
-  jqueryui: "jqueryui/ui/jquery.ui.widget"
+  jqueryui: "jquery-ui-1.10.4.custom.min"
   jqueryujs: "jquery-ujs/src/rails"
   markerclusterer: "gmaps-markerclusterer-plus/src/markerclusterer"
   geojsonArea: "geojson-area"

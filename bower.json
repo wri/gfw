@@ -37,7 +37,6 @@
     "jquery-file-upload": "~9.8.1",
     "geojson-google-maps": "*",
     "blueimp-load-image": "~1.13.0",
-    "jqueryui": "~1.10.4",
     "jquery-ujs": "~1.0.2"
   }
 }
