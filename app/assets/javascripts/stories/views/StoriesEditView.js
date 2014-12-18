@@ -247,8 +247,8 @@ define([
             var confirmation = confirm('Are you sure?')
 
             if (confirmation == true) {
-              uploadsIds = _.without(that.uploadsIds, file.basename);
-              $("#story_uploads_ids").val(uploadsIds.join(","));
+              that.uploadsIds = _.without(that.uploadsIds, file.basename);
+              $("#story_uploads_ids").val(that.uploadsIds.join(","));
 
               $thumb.fadeOut(250, function() {
                 $thumb.remove();
