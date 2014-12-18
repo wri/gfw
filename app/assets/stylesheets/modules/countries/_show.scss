@@ -1743,6 +1743,10 @@
         color: white;
       }
 
+      .columns {
+        min-height: 0;
+      }
+
       .column.round .title span {
         margin-top: 10px;
         display: block;
