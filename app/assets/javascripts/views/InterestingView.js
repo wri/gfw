@@ -20,57 +20,57 @@ define([
     mongabay_stories: {
       title: 'MONGABAY STORIES',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: 'http://0.0.0.0:5000/map/3/15.00/27.00/ALL/grayscale/loss,forestgain/586'      
+      link: 'http://0.0.0.0:5000/map/3/15.00/27.00/ALL/grayscale/loss,forestgain/586'
     },
     ejn_stories: {
       title: 'EJN STORIES',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: '#'            
+      link: '#'
     },
     explore_the_map: {
-      title: 'Explore the map',
+      title: 'GFW Interactive Map',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: '/map'                  
+      link: '/map'
     },
     develop_your_own_app: {
       title: 'Develop your own app',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: '/getinvolved/develop-your-own-app'                        
+      link: '/getinvolved/develop-your-own-app'
     },
     submit_a_story: {
       title: 'Submit a story',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: '/getinvolved/submit-a-story'                        
+      link: '/getinvolved/submit-a-story'
     },
     download_the_data: {
       title: 'Download the data',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: 'http://data.gfw.opendata.arcgis.com/'                        
+      link: 'http://data.gfw.opendata.arcgis.com/'
     },
     get_involved: {
       title: 'Get Involved',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: '/getinvolved'                        
+      link: '/getinvolved'
     },
     keep_updated: {
       title: 'Keep Updated',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: '/keepupdated'                        
+      link: '/keepupdated'
     },
     fires_howto: {
       title: 'Fires how to',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: '#'                        
+      link: '#'
     },
     commodities_howto: {
       title: 'Commodities how to',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: '#'                        
+      link: '#'
     },
     coming_soon: {
       title: 'Coming soon',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: '/keepupdated/coming-soon'                        
+      link: '/keepupdated/coming-soon'
     },
 
   }
@@ -93,7 +93,7 @@ define([
         return
       }
       //helper
-      this.helper = interestingHelper;  
+      this.helper = interestingHelper;
       this.model = new InterestingModel();
 
       //init
@@ -110,7 +110,7 @@ define([
       this.arr = _.map(interesting, _.bind(function(box){
         return this.helper[$.trim(box)];
       }, this));
-      this.model.set('interesting',this.arr);           
+      this.model.set('interesting',this.arr);
     },
 
     render: function(){
