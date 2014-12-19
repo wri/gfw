@@ -216,7 +216,7 @@
           width: calc(100% - 70px);
           @media (min-width: $br-mobile) {
             padding: 15px 0 0;
-            width: auto;
+            width: 100%;
           }
         }
 
