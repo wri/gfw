@@ -930,7 +930,8 @@
         padding: 0 25px;
       }
       .icon {
-        width: 75px;
+        min-width: 75px;
+        width: auto;
         height: 75px;
         margin: 10px auto;
         svg {
