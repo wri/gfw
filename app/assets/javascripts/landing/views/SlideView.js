@@ -82,7 +82,7 @@ define([
 
       //Inits
       this._setListeners();
-      // this._autoSlider();
+      this._autoSlider();
     },
 
     _setListeners: function(){
