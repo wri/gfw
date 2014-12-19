@@ -92,7 +92,7 @@
   }
   &.bottom{
     bottom: 130%;
-    left: 48%;
+    left: 50%;
     &:after{
       bottom: 0;
       left: 50%;
@@ -241,7 +241,7 @@
     @include transition(all 0.3s $easeOutSine 0.3s);
   }
   @media (min-width: $br-mobile){
-    
+
   }
   svg{
     margin: 0 5px 0 0;
