@@ -247,24 +247,30 @@ The applications below allow users to validate forest change data from the Globa
               <h2>Provide Feedback</h2>
               <h3>Global Forest Watch is a user driven platform and your input is critical. Help us improve the website by completing the feedback form below or by signing up to become a official GFW tester.</p>
             </header>
-            <p>All fields are <strong>required</strong>.</p>
-              <%= form_tag({controller: "static", action: "feedback"}, method: "get", class: "feedback_form") do %>
-                <p>
-                  <%= label_tag :name %>
-                  <%= text_field_tag :name, nil, :required => true %>
-                </p>
-                <p>
-                  <%= label_tag :email %>
-                  <%= email_field_tag :email, nil, :required => true %>
-                </p>
-                <p>
-                  <%= label_tag :feedback %>
-                  <%= text_area_tag :feedback, nil, :required => true  %>
-                </p>
-                <p>
-                  <%= submit_tag "Send feedback", :class=> "btn green medium" %>
-                </p>
-              <% end %>
+            <div class="content">
+              <ul class="faq-list">
+                <li>
+                  <p>All fields are <strong>required</strong>.</p>
+                  <%= form_tag({controller: "static", action: "feedback"}, method: "get", class: "feedback_form") do %>
+                    <p>
+                      <%= label_tag :name %>
+                      <%= text_field_tag :name, nil, :required => true %>
+                    </p>
+                    <p>
+                      <%= label_tag :email %>
+                      <%= email_field_tag :email, nil, :required => true %>
+                    </p>
+                    <p>
+                      <%= label_tag :feedback %>
+                      <%= text_area_tag :feedback, nil, :required => true  %>
+                    </p>
+                    <p>
+                      <%= submit_tag "Send feedback", :class=> "btn green medium" %>
+                    </p>
+                  <% end %>
+                </li>
+              </ul>
+            </div>
           </article>
         </div>
       </div>

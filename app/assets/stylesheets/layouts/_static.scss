@@ -117,6 +117,7 @@
       width: 260px;
       position: absolute;
       top: 0;
+      z-index: 3;
       &.fixed{
         top: 0;
         position: fixed;
@@ -163,6 +164,7 @@
           text-decoration: none;
           line-height: 60px;
           display: block;
+          z-index: 2;
           padding: 0 15px;
           position: relative;
           border-top: 1px solid $border;
@@ -175,6 +177,7 @@
 
           &.selected {
             background: $white;
+            box-shadow: 2px 0 0 0px #FFF;
             &:after{
               content: "";
               position: absolute;
@@ -298,7 +301,7 @@
     }
   }
   .feedback_form {
-    margin-top: 30px;
+    margin-top: 20px;
     p {
       text-align: left;
       margin-bottom: 25px;
@@ -326,7 +329,7 @@
         width: 170px;
         box-shadow: none;
         font-size: 14px;
-        font-weight: 300;
+        font-weight: 500;
       }
       label {
         float: left;
@@ -1109,8 +1112,10 @@
   }
 
   .source_category_description {
-    font: 13px/1.2 "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #999;
+    color: $dark;
+    padding: 10px 0 0;
+    line-height: 1.5;
+    font-size: 16px;
 
     + .source_category_description { margin-top: 10px; }
   }
