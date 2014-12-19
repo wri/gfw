@@ -183,8 +183,10 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
       var svg = d3.select('.country-tenure .line-graph')
         .append('svg')
-        .attr('width', 600)
         .attr('height', h);
+
+      var svgWidth = $(svg[0]).outerWidth();
+      var svgMaxWidth = svgWidth - 80;
 
       // add lines
       svg.selectAll('rect')
@@ -201,7 +203,8 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           return 25 + (50 * i);
         })
         .attr('width', function(d) {
-          return x_scale(d['percent']);
+          var width = x_scale(d['percent']);
+          return width > svgMaxWidth ? svgMaxWidth : width;
         })
         .attr('height', 4)
         .attr('rx', 2)
@@ -216,7 +219,8 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           return klass[i];
         })
         .attr('cx', function(d, i) {
-          return x_scale(d['percent']);
+          var x = x_scale(d['percent']);
+          return x > svgMaxWidth ? svgMaxWidth : x;
         })
         .attr('cy', function(d, i) {
           return 27 + (50 * i);
@@ -235,7 +239,8 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           return 'units ' + klass[i];
         })
         .attr('x', function(d, i) {
-          return x_scale(d['percent'])+10;
+          var x = x_scale(d['percent'])+10;
+          return x > (svgMaxWidth + 10) ? (svgMaxWidth + 10) : x;
         })
         .attr('y', function(d, i) {
           return 31 + (50 * i);

@@ -65,7 +65,7 @@
   <section class="country-section country-alerts" data-scroll-index='0'>
     <div class="inner">
       <div class="section-info">
-        FORMA alerts
+        <h6>FORMA alerts</h6>
         <a href="#" class="info" data-source="forma"><i></i></a>
       </div>
 
@@ -106,7 +106,7 @@
   <section class="country-section country-forests-type" data-scroll-index='1'>
     <div class="inner">
       <div class="section-info">
-        Type of forests in <%= @country['name'] %>
+        <h6>Type of forests in <%= @country['name'] %></h6>
         <a href="#" class="info" data-source="forest_type"><i></i></a>
       </div>
 
@@ -139,7 +139,7 @@
   <section class="country-section country-production" data-scroll-index='2'>
     <div class="inner">
       <div class="section-info">
-        Economic value of <%= @country['name'] %>'s forestry sector
+        <h6>Economic value of <%= @country['name'] %>'s forestry sector</h6>
         <a href="#" class="info" data-source="gross_value"><i></i></a>
       </div>
 
@@ -160,7 +160,7 @@
   <section class="country-section country-employment" data-scroll-index='3'>
     <div class="inner">
       <div class="section-info">
-        Employment
+        <h6>Employment</h6>
         <a href="#" class="info" data-source="employment"><i></i></a>
       </div>
 
@@ -198,7 +198,7 @@
   <section class="country-section country-tenure" data-scroll-index='4'>
     <div class="inner">
       <div class="section-info">
-        Forest tenure
+        <h6>Forest tenure</h6>
         <a href="#" class="info" data-source="forest_tenure"><i></i></a>
       </div>
 
@@ -213,7 +213,7 @@
   <section class="country-section country-legislation">
     <div class="inner">
       <div class="section-info">
-        Forest policy and legislation
+        <h6>Forest policy and legislation</h6>
         <a href="#" class="info" data-source="forest_legislation"><i></i></a>
       </div>
 
@@ -237,7 +237,7 @@
       <% if @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>
       <div class="carbon-text <%= 'wide' unless @country['emissions'].present? && @country['emissions'] != 0 %>">
         <div class="section-info">
-          Carbon stocks
+          <h6>Carbon stocks</h6>
           <a href="#" class="info" data-source="carbon_stocks"><i></i></a>
         </div>
 
@@ -252,7 +252,7 @@
       <div class="emissions-text <%= 'wide' unless @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>">
 
         <div class="section-info">
-          CO2 emissions
+          <h6>CO2 emissions</h6>
           <a href="#" class="info" data-source="emissions"><i class="dark"></i></a>
         </div>
 
@@ -275,7 +275,7 @@
   <section class='country-section country-conventions' data-scroll-index='6'>
     <div class='inner'>
       <div class="section-info">
-        Conventions
+        <h6>Conventions</h6>
         <a href="#" class="info" data-source="conventions"><i></i></a>
       </div>
 
@@ -299,7 +299,7 @@
   <section class='country-section country-external-links'>
     <div class='inner'>
       <div class="section-info">
-        External links
+        <h6>External links</h6>
       </div>
 
       <div class="section-content">
