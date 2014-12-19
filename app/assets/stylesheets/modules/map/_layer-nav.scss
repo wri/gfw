@@ -31,8 +31,9 @@ $stories-color: rgb(242, 178, 87);
     margin-left: 1px;
 
     .category-name {
-      font-weight: bold;
+      // font-weight: bold;
       font-size: 12px;
+      letter-spacing: 0.05rem;
     }
 
     &:hover .layers-nav {
