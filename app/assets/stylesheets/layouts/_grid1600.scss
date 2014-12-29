@@ -13,6 +13,7 @@
   width: 100%;
   @media (min-width: $br-mobile){
     width: 95%;
+    max-width: 1024px;
   }
 
   @media (min-width: 1400px){

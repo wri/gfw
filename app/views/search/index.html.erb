@@ -21,40 +21,32 @@
 
 	<% if @result %>
 		<% if @result['items'] %>
-		<div class="inner font-regular">
-			<ul class="search-list">
-			  <% @result['items'].each do |c| %>
-			  	<li>
-			  		<% if c['pagemap']%>
-			  			<% if c['pagemap']['cse_thumbnail'] %>
-					  		<figure class="search-thumbnail">
-					  			<img src="<%= c['pagemap']['cse_thumbnail'][0]['src'] %>">
-					  		</figure>
-			  			<% end %>
-			  		<% end %>
-			  		<article class="search-article">
-				  		<h2><a class="overview_title" href="<%= c['link'] %>"> <%= c['title']%></a></h2>
-				  		<h3><a href="<%= c['link'] %>"><%= c['formattedUrl'] %></a></h3>
-				  		<div class="search-snippet source_body">
-				  			<p><%= c['htmlSnippet'].html_safe %></p>
-				  		</div>	  			
-			  		</article>
-			  	</li>
-			  <% end %>
-			</ul>
-			<nav class="search-list-footer">
-				<ul>
-					<% if @prevlink %>
-						<li class="prev-link"><a href="<%= @prevlink %>">Prev</a></li>
-					<% end %>
-					<li class="center-link">
-						Showing <%= @info['startView'] %> to <%= @info['endView'] %> of <%= @info['totalView'] %> results
-					</li>
-					<% if @nextlink %>
-						<li class="next-link"><a href="<%= @nextlink %>">Next</a></li>
-					<% end %>
-				</ul>
-			</nav>	
+		<div class="inner">
+      <div id="searchView" class="stories-box">
+        <ul>
+          <% @result['items'].each do |c| %>
+            <li>
+              <a href="<%= c['link'] %>">
+					  		<% if c['pagemap']%>
+					  			<% if c['pagemap']['cse_thumbnail'] %>
+							  		<figure class="search-thumbnail">
+		                	<div class="bg" style="background-image: url(<%= c['pagemap']['cse_thumbnail'][0]['src'] %>)"></div>
+							  		</figure>
+					  			<% end %>
+					  		<% end %>
+                <article class="info">
+                  <h4><%= c['title'] %></h4>
+                  <p><%= c['htmlSnippet'].html_safe %></p>
+                  <button class="btn gray medium">More</button>
+                </article>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+        <div class="section-footer">
+          <div id="pagination-container" data-query="<%= @query %>" data-page="<%= @page %>" data-perpage="10" data-total="<%= @total %>"></div>
+        </div>      
+ 			</div>
 		</div>
 		<% else %>	
 		<div class="inner">

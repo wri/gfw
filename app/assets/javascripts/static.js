@@ -11,6 +11,7 @@ require([
   'static/CarrouselView',
   'static/StoriesKeepView',
   'static/VideoView',
+  'static/SearchView',
   'views/HeaderView',
   'views/FooterView',
   'views/TermsView',
@@ -18,7 +19,7 @@ require([
   'views/SidebarNavView',
   'views/InterestingView',
   '_string'
-], function($, _, Class, Backbone, mps, RouterStatic, CarrouselView, StoriesKeepView, VideoView, HeaderView, FooterView, TermsView, DialogView, SidebarNavView, InterestingView) {
+], function($, _, Class, Backbone, mps, RouterStatic, CarrouselView, StoriesKeepView, VideoView, SearchView, HeaderView, FooterView, TermsView, DialogView, SidebarNavView, InterestingView) {
   'use strict';
 
   var LandingPage = Class.extend({
@@ -30,7 +31,7 @@ require([
 
       this._initViews();
       this._initApp(); 
-      this._youtubeApi();     
+      this._youtubeApi(); 
     },
 
     _youtubeApi: function(){
@@ -67,6 +68,7 @@ require([
       new InterestingView();
       new StoriesKeepView();
       new VideoView();
+      new SearchView();
     }
   });
 

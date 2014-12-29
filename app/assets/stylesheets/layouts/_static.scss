@@ -820,12 +820,13 @@
           width: 200px;
           position: absolute;
           top: 50%;
-          right: 0;
+          left: 65%;
           margin: 0 0 20px;
           @include transform(translate(0,-50%));
         }
         .bg {
           // background: #000;
+          background-position: center;
           background-size: cover;
           padding-bottom: 40%;
           width: calc(100% + 30px);
@@ -863,6 +864,7 @@
   }
   .section-footer{
     border-top: 1px solid $border;
+    @include clearfix();
   }
 }
 
