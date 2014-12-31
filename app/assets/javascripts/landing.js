@@ -13,9 +13,10 @@ require([
   'landing/views/SlideView',
   'landing/views/StoriesView',
   'landing/views/FeedView',
+  'landing/views/TwitterStyleView',
   'handlebars',
   '_string',
-], function($, _, Class, Backbone, mps, HeaderView, FooterView, SpinnerView, SlideView, StoriesView, FeedView, Handlebars) {
+], function($, _, Class, Backbone, mps, HeaderView, FooterView, SpinnerView, SlideView, StoriesView, FeedView, TwitterStyleView, Handlebars) {
   'use strict';
 
   var LandingPage = Class.extend({
@@ -39,6 +40,7 @@ require([
       new SlideView();
       new StoriesView();
       new FeedView();
+      new TwitterStyleView();
     }
   });
 

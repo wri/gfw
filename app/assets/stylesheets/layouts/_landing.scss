@@ -603,9 +603,10 @@
           left: 50%;
           z-index: 2;
           @include transform(translate(-40%,-50%));
-          background-size: contain;
           &.google {
-            background-image: url('logos/google.svg');
+            >div{
+              background-image: url('logos/google.svg');  
+            }
           }
           &.disqus {
             background-position: center center;
@@ -615,12 +616,40 @@
           &.story {
             background: $cGreen;
           }
+          >div{
+            content: "";
+            position: absolute;
+            top: 0%;
+            z-index: 2;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-size: contain;
+          }
+          &:after{
+            content: "";
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: $dark;
+            border-radius: 50%;
+            opacity: 0.5;
+            @include transition(all 0.1s $easeInOutSine);
+            @include transform(scale(0));
+          }
         }
         a {
           color: $dark;
-          // &:hover {
-          //   color: $cGreen;
-          // }
+          &:hover {
+            figure{
+              &:after{
+                @include transform(scale(1.2));
+              }
+            }
+          }
         }
         .info {
           position: absolute;

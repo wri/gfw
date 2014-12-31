@@ -54,6 +54,7 @@ define([
         }
         return result;
       },this));
+      
       this.feedlist = _.first(this.feedlist.sort(_.bind(function(a,b){
         return b.createDate - a.createDate;
       },this)),6);
