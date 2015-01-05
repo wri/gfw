@@ -96,8 +96,10 @@ define([
       this.$sourceBody.hide(0);
 
       if ($(e.currentTarget).hasClass('active')) {
-        this.$sourceHeader.removeClass('active');
+        this.$sourceBody.removeClass('active');
+        $(e.currentTarget).removeClass('active');
       } else {
+        this.$sourceHeader.removeClass('active');
         $(e.currentTarget).addClass('active');
         $(e.currentTarget).parent().children('.source_body').show(0);
       }
