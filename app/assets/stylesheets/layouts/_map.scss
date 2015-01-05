@@ -34,7 +34,7 @@
       height: 38px;
       background: rgba($dark,0.5);
       z-index: 0;
-    }    
+    }
   }
   .footer-toggle{
     position: absolute;
@@ -129,6 +129,8 @@
 }
 
 .map-viewfinder {
+  // @include home-icons-sprite(viewfinder);
+  background-image: url(home-icons/viewfinder.png);
   position: absolute;
   z-index: 10;
   top: 50%;
@@ -138,7 +140,6 @@
   margin: -10px 0 0 -8px;
   pointer-events:none;
 
-  @include home-icons-sprite(viewfinder);
 }
 
 .map-logos {
