@@ -8,7 +8,7 @@ define([
   'mps'
 ], function($,Backbone, _,mps) {
 
-  'use strict'; 
+  'use strict';
 
   var SidebarNavModel = Backbone.Model.extend({
     defaults: {
@@ -38,7 +38,7 @@ define([
       //CACHE
       this.$window = $(window);
       this.$document = $(document);
-      this.$htmlbody = $('html,body'); 
+      this.$htmlbody = $('html,body');
       this.$headerH1 = $('#headerView').find('h1');
       this.$backBtn = $('#back-btn');
       this.$navItem = this.$el.find('.nav-item');
@@ -54,15 +54,15 @@ define([
       this.padding = 40;
       this.first = true;
       this.mobile = (this.$window.width() > 850) ? false : true;
-      
+
 
       //INIT
       this.setListeners();
     },
 
-    setListeners: function(){  
+    setListeners: function(){
       this.calculateOffsets();
-      this.scrollDocument();     
+      this.scrollDocument();
       this.$document.on('scroll',_.bind(this.scrollDocument,this));
       this.$window.on('resize',_.bind(this.calculateOffsets,this));
 
@@ -79,11 +79,11 @@ define([
     showSubContent:function(e){
       e && e.preventDefault();
       $(e.currentTarget).parents('.source_dropdown').find('.source_dropdown_menu').hide(0);
-      
+
       var text = $(e.currentTarget).text();
       var id = $(e.currentTarget).data('slug');
       $(e.currentTarget).parents('.source_dropdown').find('.source_dropdown_header').find('.overview_title').children('span').text(text);
-      
+
       $('.source_dropdown_body').hide(0);
       $('#'+id).show(0);
 
@@ -94,9 +94,10 @@ define([
 
     toggleSources: function(e){
       this.$sourceBody.hide(0);
-      this.$sourceHeader.removeClass('active');
 
-      if(!$(e.currentTarget).hasClass('active')){
+      if ($(e.currentTarget).hasClass('active')) {
+        this.$sourceHeader.removeClass('active');
+      } else {
         $(e.currentTarget).addClass('active');
         $(e.currentTarget).parent().children('.source_body').show(0);
       }
@@ -104,8 +105,8 @@ define([
       this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0);
 
       setTimeout(_.bind(function(){
-        this.calculateOffsets();  
-      },this),50);      
+        this.calculateOffsets();
+      },this),50);
     },
 
 
@@ -113,7 +114,7 @@ define([
     calculateOffsets: function(){
       this.$sideBarBox.css({'min-height': this.$sideBarAside.height() });
       this.offset = this.$el.offset().top + parseInt(this.$el.css('paddingTop'), 10);
-      this.offsetBottom = this.$cut.offset().top - this.$sideBarAside.height() - this.padding;        
+      this.offsetBottom = this.$cut.offset().top - this.$sideBarAside.height() - this.padding;
     },
 
     scrollDocument: function(e){
@@ -125,7 +126,7 @@ define([
           this.$sideBarAside.removeClass('bottom').addClass('fixed');
         }else{
           this.$sideBarAside.removeClass('fixed').addClass('bottom');
-        } 
+        }
       }else{
         this.$sideBarAside.removeClass('fixed bottom');
         this.$sideBarBox.removeClass('fixed');
@@ -135,12 +136,12 @@ define([
 
     updateSource: function(e){
       e && e.preventDefault();
-      
+
       var params = {
         section: $(e.currentTarget).data('slug'),
         interesting: $(e.currentTarget).data('interesting')
       }
-      
+
       mps.publish('SourceStatic/update',[params]);
     },
 
@@ -152,12 +153,12 @@ define([
         var posY = (this.mobile) ? this.$document.scrollTop() : this.$sideBarBox.offset().top - this.padding;
         this.$htmlbody.animate({ scrollTop: posY },0, _.bind(function(){
             this.changeHelper(params.section);
-        },this));      
+        },this));
         mps.publish('Interesting/update',[params.interesting]);
       }else{
         if (!this.mobile) {
           var section = this.$navItem.eq(0).data('slug');
-          this.changeHelper(section);          
+          this.changeHelper(section);
         }
         var interesting = this.$navItem.eq(0).data('interesting');
         mps.publish('Interesting/update',[interesting]);
@@ -171,7 +172,7 @@ define([
       //aside
       this.$navItem.removeClass('selected');
       $('.'+section).addClass('selected');
-      
+
       //section
       this.$sourceArticle.removeClass('selected');
       $('#'+section).addClass('selected');
@@ -182,17 +183,17 @@ define([
       }
 
       setTimeout(_.bind(function(){
-        this.calculateOffsets();  
-      },this),50);      
-      
+        this.calculateOffsets();
+      },this),50);
+
       setTimeout(_.bind(function(){
-        
+
         //htmlbody
         if(this.mobile) {
           this.$sideBarBox.addClass('animate');
           this.$htmlbody.addClass('active');
-        } 
-      },this),500);      
+        }
+      },this),500);
     },
 
     returnBack: function(e){
