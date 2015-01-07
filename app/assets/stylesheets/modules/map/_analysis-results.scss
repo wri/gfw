@@ -102,18 +102,24 @@
         width: 90px;
         top: 30px;
         right: 0;
-        // position: absolute;
+        position: absolute;
         z-index: 2000;
         border: 0;
         background-color: #fff;
         border-radius: 3px;
         border: 1px solid #ccc;
         box-shadow: 0 0 3px rgba(0,0,0,0.2);
-
+        &.hidden{
+          display: none;
+        }
         > li a {
           padding: 8px 10px;
           display: block;
           border-bottom: 1px solid #f2f2f2;
+          color: $cGreen;
+          &:hover{
+            background-color: darken($white,2.5%);
+          }
         }
 
       }
