@@ -36,9 +36,15 @@ class ApplicationController < ActionController::Base
 
     def check_terms
       session[:return_to] = request.fullpath
-
-      redirect_to accept_terms_path unless watch_cookie?
+      @whitelist = [
+        '80.74.134.135',
+        # '127.0.0.1'
+      ]
+      if not @whitelist.include? request.remote_ip
+        redirect_to accept_terms_path unless watch_cookie?
+      end
     end
+
 
     def watch_cookie?
       cookies.permanent[ENV['TERMS_COOKIE'].to_sym] || controller_name == 'embed' || UserAgent.parse(request.user_agent).bot?
