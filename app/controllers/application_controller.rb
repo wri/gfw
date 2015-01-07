@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
       session[:return_to] = request.fullpath
       @whitelist = [
         '80.74.134.135',
-        '127.0.0.1'
+        # '127.0.0.1'
       ]
       if not @whitelist.include? request.remote_ip
         redirect_to accept_terms_path unless watch_cookie?
