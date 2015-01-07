@@ -913,9 +913,8 @@
       position: relative;
       float: left;
       margin: 0 10px 10px 0;
-      padding-top: 25px;
       width: 120px;
-      height: 67px;
+      height: 95px;
       border: 2px solid #CCCCCC;
       font-weight: bold;
       font-size: 12px;
@@ -923,6 +922,15 @@
       text-align: center;
       color: #AAAAAA;
       @include border-radius(2px);
+
+      .name-container {
+        display: flex;
+        height: calc(100% - 23px);
+        align-items: center;
+        .name {
+          width: 100%;
+        }
+      }
 
       span {
         position: absolute;
