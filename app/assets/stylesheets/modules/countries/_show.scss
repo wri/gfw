@@ -460,6 +460,7 @@
       height: 50px;
       position: absolute;
       top: 0;
+      left: 0;
       z-index: 100;
     }
 
@@ -525,6 +526,7 @@
   }
 
   .highlight {
+    font-weight: 500;
     color: $cGreen;
   }
 
@@ -548,7 +550,6 @@
       .share {
         width: auto;
         position: relative;
-        left: 20px;
         float: right;
       }
 
@@ -568,7 +569,22 @@
       }
     }
 
+    .section-share {
+      position: relative;
+      h6 {
+        float: left;
+      }
+      .info, .share {
+        transform: translate(0, -4px);
+      }
+      .info {
+        position: absolute;
+        right: 20px;
+      }
+    }
+
     .section-content {
+      clear: both;
       padding-left: 22px;
       @extend .clearfix;
 
@@ -593,7 +609,7 @@
       .section-title {
         font-size: 29px;
         line-height: 36px;
-        font-weight: 500;
+        font-weight: 300;
         color: $dark;
       }
       svg {
@@ -641,6 +657,13 @@
     #comingSoonContent {
       display: none;
     }
+
+    #formaAlertsContent {
+      h3 {
+        text-transform: none;
+      }
+    }
+
 
     .forma_dropdown-menu {
       display: none;
@@ -852,8 +875,8 @@
     .emissions-text {
       width: 52%;
       background: #444050;
-      text-align: right;
-      padding-right: 20px;
+      text-align: left;
+      padding: 50px;
 
       .section-info {
         color: #908E97;
@@ -863,9 +886,13 @@
         }
       }
 
-      .section-content h3 {
-        color: white;
-        padding-right: 28px;
+      .section-content{
+        padding: 0;
+        h3 {
+          padding: 0;
+          color: white;
+          text-transform: none;
+        }
       }
     }
   } // country-carbon-stocks
@@ -904,8 +931,13 @@
   } // country-employment
 
   .country-conventions {
+    border: 0;
     ul {
       margin-right: -15px;
+    }
+
+    .section-content {
+      padding: 0;
     }
 
     li {
@@ -947,54 +979,69 @@
     }
   } // country-conventions
 
-  .country-external-links {
-    color: #ddd;
-    font-size: 14px;
 
-    .section-content {
-      padding-left: 0;
-      padding-bottom: 10px;
+  .container-external-links {
+    section {
+      display: block;
+      float: left;
+      width: 49%;
     }
 
-    li {
-      @include inline-block();
-      border-left: 1px solid #ddd;
-      padding-left: 8px;
-      margin: 0 0 10px 5px;
-      line-height: 14px;
-
-      &:first-child {
-        border: 0;
-        margin-left: 0;
-        padding-left: 0;
+    .country-section {
+      border: 0;
+      .section-content {
+        padding: 0;
+        .btn-rdn {
+          margin: 0;
+        }
       }
     }
 
-    a {
-      text-decoration: underline;
+    .country-external-links, {
+      color: #ddd;
+      font-size: 14px;
+
+      .section-content {
+        padding-left: 0;
+        padding-bottom: 10px;
+      }
+
+      li {
+        @include inline-block();
+        border-left: 1px solid #ddd;
+        padding-left: 8px;
+        margin: 0 0 10px 5px;
+        line-height: 14px;
+
+        &:first-child {
+          border: 0;
+          margin-left: 0;
+          padding-left: 0;
+        }
+      }
+
+      a {
+        color: $cGreen;
+        text-decoration: none;
+      }
     }
   } // external-links
 
+
   .country-download-links {
+    clear: both;
     background-color: #F5F5F5;
     text-align: center;
     padding: 50px 0;
 
     a {
-      text-transform: uppercase;
-      padding: 14px 30px 12px 30px;
-      font-size: 13px;
-      color: #393939;
-      font-weight: 500;
-      border-color: #E0E9C1;
       margin-top: 0;
-
       &:first-child {
         margin-right: 10px;
       }
 
       &:hover {
-        border: 2px solid #ACCD00;
+        background: darken(#EEE, 10%);
       }
     }
   } // download-links
@@ -1218,22 +1265,24 @@
     width: 16px;
 }
 .btn-rdn {
-  padding: 8px 15px 5px 15px;
-  border: 2px solid #D6E681;
+  padding: 9px 25px;
+  border: 1px solid #999;
+  background: #EEE;
   color: #545454;
-  font-size: 15px;
+  font-size: 17px;
   display: inline-block;
   text-decoration: none;
+  text-transform: uppercase;
   margin-top: 10px;
-  -webkit-border-radius: 18px;
-  -moz-border-radius: 18px;
-  -ms-border-radius: 18px;
-  -o-border-radius: 18px;
-  border-radius: 18px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  -ms-border-radius: 25px;
+  -o-border-radius: 25px;
+  border-radius: 25px;
+  line-height: normal;
 
   &:hover {
-    border: 2px solid #ACCD00;
-    color: #444;
+    background: darken(#EEE, 10%);
   }
 
   &.btn-default {
@@ -1707,14 +1756,14 @@
     }
 
     .country-external-links {
-      a {
-        color: #AAC221;
-      }
 
       li {
         border: 0;
         margin-left: 0;
         padding-left: 0;
+      a {
+        color: #AAC221;
+      }
       }
     }
 
