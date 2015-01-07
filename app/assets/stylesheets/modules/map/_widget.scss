@@ -28,13 +28,6 @@
     pointer-events: none;
     opacity: 0.7;
   }
-}
-
-.widget .analysis-control li {
-  &.disabled {
-    pointer-events: none;
-    opacity: 0.7;
-  }
   &:hover  {
     .tooltip1 {
       margin: 0;
@@ -44,6 +37,13 @@
       visibility: visible;
       opacity: 1;
     }
+  }
+}
+
+.widget .analysis-control li {
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.7;
   }
 }
 
