@@ -521,6 +521,11 @@
     }
     .twitter{
       width: 100%;
+      >a{
+        text-align: center;
+        color: $cGreen;
+        display: block;
+      }
     }
 	}
 }
