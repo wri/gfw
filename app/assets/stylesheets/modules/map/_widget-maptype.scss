@@ -65,7 +65,7 @@
         background: image-url('home-icons/information.png');
         &.info2{
           @include home-icons-sprite(information2);
-          background: image-url('home-icons/information2.png');          
+          background: image-url('home-icons/information2.png');
         }
       }
     }
@@ -87,6 +87,10 @@
     line-height: 30px;
     right: 152px;
     top: 140px;
+    display: block;
+    &.hidden{
+      display: none;
+    }
 
     li {
       text-align: center;
