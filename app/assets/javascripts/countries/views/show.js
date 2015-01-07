@@ -32,7 +32,7 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
     Share       = new gfw.ui.view.Share({template: 'country'});
     Share_entry = new gfw.ui.view.Share({template: 'country-entry'});
     this.$el.find('.country-sidenav .share-container').append(Share.render());
-    this.$el.find('.section-info').slice(0,5).addClass('and_share').append(Share_entry.render());
+    this.$el.find('.section-share').find('.section-btn').prepend(Share_entry.render());
   },
 
   _initSource: function() {
