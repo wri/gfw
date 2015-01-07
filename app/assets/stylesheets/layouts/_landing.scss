@@ -50,6 +50,7 @@
         .btn {
           -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
+          margin-left: 1px;
         }
         &.active {
          .submenu-tooltip {
@@ -605,7 +606,7 @@
           @include transform(translate(-40%,-50%));
           &.google {
             >div{
-              background-image: url('logos/google.svg');  
+              background-image: url('logos/google.svg');
             }
           }
           &.disqus {
