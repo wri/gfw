@@ -64,9 +64,11 @@
   <a href="#" id="alerts" class="anchor-country-info"></a>
   <section class="country-section country-alerts" data-scroll-index='0'>
     <div class="inner">
-      <div class="section-info">
+      <div class="section-info section-share">
         <h6>FORMA alerts</h6>
-        <a href="#" class="info" data-source="forma"><i></i></a>
+        <div class="section-btn">
+          <a href="#" class="info" data-source="forma"><i></i></a>
+        </div>
       </div>
 
       <div class="section-content" id="comingSoonContent">
@@ -105,9 +107,11 @@
   <a href="#" id="forests-type" class="anchor-country-info"></a>
   <section class="country-section country-forests-type" data-scroll-index='1'>
     <div class="inner">
-      <div class="section-info">
+      <div class="section-info section-share">
         <h6>Type of forests in <%= @country['name'] %></h6>
-        <a href="#" class="info" data-source="forest_type"><i></i></a>
+        <div class="section-btn">
+          <a href="#" class="info" data-source="forest_type"><i></i></a>
+        </div>
       </div>
 
       <div class="section-content">
@@ -138,9 +142,11 @@
   <a href="#" id="production" class="anchor-country-info"></a>
   <section class="country-section country-production" data-scroll-index='2'>
     <div class="inner">
-      <div class="section-info">
+      <div class="section-info section-share">
         <h6>Economic value of <%= @country['name'] %>'s forestry sector</h6>
-        <a href="#" class="info" data-source="gross_value"><i></i></a>
+        <div class="section-btn">
+          <a href="#" class="info" data-source="gross_value"><i></i></a>
+        </div>
       </div>
 
       <div class="section-content">
@@ -159,9 +165,11 @@
   <a href="#" id="employment" class="anchor-country-info"></a>
   <section class="country-section country-employment" data-scroll-index='3'>
     <div class="inner">
-      <div class="section-info">
+      <div class="section-info section-share">
         <h6>Employment</h6>
-        <a href="#" class="info" data-source="employment"><i></i></a>
+        <div class="section-btn">
+          <a href="#" class="info" data-source="employment"><i></i></a>
+        </div>
       </div>
 
       <div class="section-content">
@@ -197,9 +205,11 @@
   <a href="#" id="tenure" class="anchor-country-info"></a>
   <section class="country-section country-tenure" data-scroll-index='4'>
     <div class="inner">
-      <div class="section-info">
+      <div class="section-info section-share">
         <h6>Forest tenure</h6>
-        <a href="#" class="info" data-source="forest_tenure"><i></i></a>
+        <div class="section-btn">
+          <a href="#" class="info" data-source="forest_tenure"><i></i></a>
+        </div>
       </div>
 
       <div class="section-content">
@@ -210,7 +220,7 @@
   </section>
 
   <!-- legislation -->
-  <section class="country-section country-legislation">
+  <!-- <section class="country-section country-legislation">
     <div class="inner">
       <div class="section-info">
         <h6>Forest policy and legislation</h6>
@@ -227,7 +237,7 @@
         <a href='mailto:gfw@wri.org' class='btn-rdn'>Are we missing a link?</a>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- carbon stocks -->
   <section class="country-section country-carbon-stocks" data-scroll-index='5' style="padding: 0; display: table;">
@@ -236,9 +246,11 @@
       <!-- left col -->
       <% if @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>
       <div class="carbon-text <%= 'wide' unless @country['emissions'].present? && @country['emissions'] != 0 %>">
-        <div class="section-info">
+        <div class="section-info section-share">
           <h6>Carbon stocks</h6>
-          <a href="#" class="info" data-source="carbon_stocks"><i></i></a>
+          <div class="section-btn">
+            <a href="#" class="info" data-source="carbon_stocks"><i></i></a>
+          </div>
         </div>
 
         <div class="section-content">
@@ -251,9 +263,11 @@
       <% if @country['emissions'].present? && @country['emissions'] != 0 %>
       <div class="emissions-text <%= 'wide' unless @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>">
 
-        <div class="section-info">
+        <div class="section-info section-share">
           <h6>CO2 emissions</h6>
-          <a href="#" class="info" data-source="emissions"><i class="dark"></i></a>
+          <div class="section-btn">
+            <a href="#" class="info" data-source="emissions"><i></i></a>
+          </div>
         </div>
 
          <% precission = (@country['emissions'].abs.to_i < 0.1) ? 2 : 1 %>
@@ -274,9 +288,11 @@
   <!-- conventions -->
   <section class='country-section country-conventions' data-scroll-index='6'>
     <div class='inner'>
-      <div class="section-info">
+      <div class="section-info section-share">
         <h6>Conventions</h6>
-        <a href="#" class="info" data-source="conventions"><i></i></a>
+        <div class="section-btn">
+          <a href="#" class="info" data-source="conventions"><i></i></a>
+        </div>
       </div>
 
       <div class="section-content">
@@ -296,30 +312,47 @@
     </div>
   </section>
 
-  <!-- useful links -->
-  <% if @country['ministry_link'].present? || @country['external_links'].present? %>
-  <section class='country-section country-external-links'>
-    <div class='inner'>
-      <div class="section-info">
-        <h6>External links</h6>
-      </div>
+  <div class="container-external-links">
+    <div class="inner">
+      <section class="country-section missing-link">
+        <div class="section-info section-share">
+          <h6>Forest policy and legislation</h6>
+          <div class="section-btn">
+            <a href="#" class="info" data-source="forest_legislation"><i></i></a>
+          </div>
+        </div>
+        <div class="section-content">
+          <%= link_to 'Are we missing a link?', '#', class: 'btn-rdn' %>
+        </div>
+      </section>
 
-      <div class="section-content">
-        <ul>
-          <% if @country['ministry_link'].present? %>
-            <li><a href='<%= @country['ministry_link'] %>' target='_blank'><%= t('.ministry_link') %></a></li>
-          <% end %>
+      <!-- useful links -->
+      <% if @country['ministry_link'].present? || @country['external_links'].present? %>
+      <section class='country-section country-external-links'>
+        <div class='inner'>
+          <div class="section-info">
+            <h6>External links</h6>
+          </div>
 
-          <% if @country['external_links'].present? %>
-            <% JSON.parse(@country['external_links']).each do |link| %>
-              <li><%= link_to link['title'], link['url'], :target => '_blank' %></li>
-            <% end %>
-          <% end %>
-        </ul>
-      </div>
+          <div class="section-content">
+            <ul>
+              <% if @country['ministry_link'].present? %>
+                <li><a href='<%= @country['ministry_link'] %>' target='_blank'><%= t('.ministry_link') %></a></li>
+              <% end %>
+
+              <% if @country['external_links'].present? %>
+                <% JSON.parse(@country['external_links']).each do |link| %>
+                  <li><%= link_to link['title'], link['url'], :target => '_blank' %></li>
+                <% end %>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <% end %>
     </div>
-  </section>
-  <% end %>
+  </div>
+
 
   <!-- download links -->
   <section class='country-section country-download-links'>
@@ -327,9 +360,9 @@
       <div class="section-content">
         <%= link_to 'Subscribe to alerts for this country', "#{map_coords}/grayscale/forma?subscribe", class: 'btn-rdn', :target => '_blank' %>
         <% if @country['dataset_link'].present? %>
-        <%= link_to 'Download relevant data sets', @country['dataset_link'], class: 'btn-rdn' %>
-        <% else %>
-        <%= link_to 'Download relevant data sets','#', class: 'btn-rdn disabled' %>
+        <% link_to 'Download relevant data sets', @country['dataset_link'], class: 'btn-rdn' %>
+        <%# else %>
+         <%#= link_to 'Download relevant data sets','#', class: 'btn-rdn disabled' %>
         <% end %>
       </div>
     </div>
