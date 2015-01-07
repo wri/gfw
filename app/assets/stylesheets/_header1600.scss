@@ -98,7 +98,6 @@
             line-height: 55px;
             padding: 0px 10px 0 35px;
             position: relative;
-            text-decoration: none;
             text-transform: uppercase;
             @include transition(all 0.15s $easeInOutCubic);
             @media (min-width: $br-mobile){
@@ -311,7 +310,6 @@
             .home_data {
               font-size: 12px;
               border: 0;
-              text-decoration: none;
               span {
                 line-height: 28px;
               }
@@ -474,7 +472,6 @@
 				>a {
 					display: block;
 					text-transform: uppercase;
-					text-decoration: none;
 					color: #474747;
 					padding: 20px;
 					position: relative;
@@ -544,11 +541,9 @@
             }
 
 						a {
-							color: #444;
-
+							color: $dark;
 							padding: 10px;
 							font-size: 15px;
-							text-decoration: none;
 							text-align: center;
 							display: block;
 							&:hover {

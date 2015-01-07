@@ -25,6 +25,11 @@ svg {
   height: 100%;
   @include transition(all .15s $easeInOutSine);
 }
+
+a{
+  text-decoration: none;
+}
+
 h1,h2 {
   font-weight: 300;
 }
