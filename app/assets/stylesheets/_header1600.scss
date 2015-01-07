@@ -453,14 +453,16 @@
           top: 1px;
           &:hover {
             z-index: 5;
+            >a{
+              &:after{
+                width: 100%;
+              }
+            }
             ul {
               background: rgba(#fff,0.95);
               visibility: visible;
               opacity: 1;
               @include transform(translate(-50%,0px));
-              &:before {
-                width: 100%;
-              }
             }
           }
         }
@@ -487,18 +489,18 @@
 
           &:after{
             content: "";
-            display: none;
             background-color: $cGreen;
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 100%;
+            width: 0%;
             height: 5px;
+            @include transition(all 0.15s $easeInOutCubic 0.1s);
           }
 
-          &.current{
+          &.current, &:hover{
             &:after{
-              display: block;
+              width: 100%;
             }
           }
 				}
@@ -518,17 +520,6 @@
             opacity: 0;
             @include transform(translate(-50%,10px));
             @include transition(all 0.15s $easeInOutCubic);
-            &:before {
-              content: "";
-              display: block;
-              width: 0%;
-              height: 5px;
-              background: rgba($cGreen,0.5);
-              position: absolute;
-              top: 52px; //padding-UL - height:before
-              left: 0;
-              @include transition(all 0.15s $easeInOutCubic 0.1s);
-            }
           }
           @media (min-width: $br-tablet){
             min-width: 0;
