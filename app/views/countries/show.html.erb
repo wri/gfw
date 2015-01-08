@@ -323,7 +323,7 @@
           </div>
         </div>
         <div class="section-content">
-          <%= link_to 'Are we missing a link?', '#', class: 'btn-rdn' %>
+          <%= link_to 'Are we missing a link?', 'mailto:gfw@wri.org', class: 'btn-rdn' %>
         </div>
       </section>
 
@@ -331,10 +331,9 @@
       <% if @country['ministry_link'].present? || @country['external_links'].present? %>
       <section class='country-section country-external-links'>
         <div class='inner'>
-          <div class="section-info">
+          <div class="section-info section-share">
             <h6>External links</h6>
           </div>
-
           <div class="section-content">
             <ul>
               <% if @country['ministry_link'].present? %>

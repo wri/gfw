@@ -52,6 +52,7 @@
 
   .country-header {
     width: 100%;
+    background: #333;
 
     .country-header-inner {
       // $wall-background: "backgrounds/wall_background_alpha.png";
@@ -69,7 +70,7 @@
         color: white;
         font-size: 47px;
         display: inline-block;
-        font-weight: 400;
+        font-weight: 300;
         width: 100%;
         margin-top: 0.1em;
         margin-bottom: 0.2em;
@@ -83,7 +84,7 @@
         vertical-align: top;
         margin-top: 2px;
         border: 1px solid #6B6B6B;
-        border-radius: 20px;
+        border-radius: 9px;
         height: 39px;
         width: 310px;
         position: relative;
@@ -98,7 +99,7 @@
         font-size: 13px;
         text-transform: uppercase;
         background: transparent;
-        color: #BEBCC2;
+        color: #FFF;
         -webkit-appearance: none;
         padding: 10px 15px;
         width: 100%;
@@ -170,9 +171,10 @@
 
         h4 {
           text-transform: uppercase;
-          color: white;
-          line-height: 18px;
           font-size: 14px;
+          line-height: 18px;
+          color: #FEFEFE;
+          opacity: .5;
         }
 
         .map,
@@ -274,12 +276,13 @@
 
           .graph-amount {
             font-size: 30px;
+            font-weight: 500;
             color: $cGreen;
-            margin-top: 10px;
           }
 
           .graph-date {
-            color: white;
+            color: #FEFEFE;
+            opacity: .5;
             margin-top: 2px;
             font-size: 13px;
           }
@@ -341,8 +344,9 @@
           > li {
             width: 100%;
             position: relative;
-            border: 1px solid #6B6B87;
+            border: 1px solid #525358;
             height: 100%;
+            border-bottom: none;
             @include display-flex();
             @include align-items(center);
 
@@ -352,7 +356,7 @@
               height: 51px;
               width: 100%;
               @include box-sizing(border-box);
-              font-weight: 500;
+              font-weight: 400;
               text-transform: uppercase;
               font-size: 14px;
               cursor: pointer;
@@ -394,12 +398,18 @@
                   border-radius: 3px;
                 }
               }
+              &:hover {
+
+              }
 
             }
 
 
             &:hover {
               background: #464646;
+              a {
+                font-weight: 500;
+              }
             }
           }
         }
@@ -456,7 +466,7 @@
 
     .country-nav {
       width: 100%;
-      border-bottom: 1px solid #CCCCCC;
+      border-bottom: 1px solid #E5E5E5;
       height: 50px;
       position: absolute;
       top: 0;
@@ -480,14 +490,16 @@
         float: left;
         height: 50px;
         width: 16.66666%;
-        border: 1px solid #ccc;
         border-left: none;
         @include display-flex();
         @include align-items(center);
         @include justify-content(center);
         background: #F2F2F3;
-        &:first-child{
-          border-left: 1px solid #ccc;
+        &:first-child {
+          border-left: 1px solid #E5E5E5;
+        }
+        &:last-child {
+          border-right: 1px solid #E5E5E5;
         }
 
         @include box-sizing(border-box);
@@ -495,15 +507,21 @@
         &.active {
           background: white;
           border-bottom: 1px solid #fff;
+
+          a {
+            font-weight: 400;
+            opacity: 1;
+          }
         }
         a {
           display: inline-block;
           padding: 11px 15px;
-          color: $dark;
+          color: #000;
           font-size: 14px;
           text-transform: uppercase;
           cursor: pointer;
-          font-weight: 500;
+          font-weight: 400;
+          opacity: .5;
           @include box-sizing(border-box);
           text-decoration: none;
 
@@ -512,14 +530,14 @@
             border-bottom: 1px solid white;
             color: #999999;
           }
-          &:hover {
-            color: $cGreen;
-          }
         }
 
         &:hover {
-          background: #F9F9F9;
-
+          background: darken(#F2F2F3, 5%);
+          a {
+            color: #000;
+            opacity: 1;
+          }
         }
       }
     } // country-nav
@@ -906,6 +924,12 @@
           text-transform: none;
         }
       }
+      &::after {
+        content: '';
+        width: 30%;
+        height: 100%;
+        background: #000;
+      }
     }
   } // country-carbon-stocks
 
@@ -980,7 +1004,7 @@
         left: 0; right: 0; bottom: 0;
         padding: 5px;
         border-top: 1px solid #E2E2E2;
-        font-weight: normal;
+        font-weight: 500;
         font-style: italic;
         line-height: 12px;
         font-size: 11px;
@@ -1055,7 +1079,7 @@
       }
 
       &:hover {
-        background: darken(#EEE, 10%);
+        background: darken(#EEE, 5%);
       }
     }
   } // download-links
@@ -1296,7 +1320,7 @@
   line-height: normal;
 
   &:hover {
-    background: darken(#EEE, 10%);
+    background: darken(#EEE, 5%);
   }
 
   &.btn-default {
