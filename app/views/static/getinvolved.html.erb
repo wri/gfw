@@ -249,29 +249,57 @@ The applications below allow users to validate forest change data from the Globa
           <article id="provide-feedback" class="source-article">
             <header>
               <h2>Provide Feedback</h2>
-              <h3>Global Forest Watch is a user driven platform and your input is critical. Help us improve the website by completing the feedback form below or by signing up to become a official GFW tester.</p>
+              <h3><strong>We want to hear from you!</strong> Global Forest Watch is a user driven platform and your input is critical. Help us improve the website by completing the feedback form below or by signing up to become an official GFW tester.</h3>
             </header>
             <div class="content">
               <ul class="faq-list">
                 <li>
-                  <p>All fields are <strong>required</strong>.</p>
                   <%= form_tag({controller: "static", action: "feedback"}, method: "get", class: "feedback_form") do %>
+                    <h3><strong>We’re interested in hearing:</strong></h3>
+                    <ul class="bullets">
+                      <li>Why you visited GFW</li>
+                      <li>How you use GFW</li>
+                      <li>If and how the information provided by GFW is useful for your work</li>
+                      <li>If there are any additional features and/or data that would be useful</li>
+                      <li>If anything was confusing or difficult to use</li>
+                      <li>If you encountered any bugs or problems while using GFW</li>
+                      <li>Anything else you would like to tell us!</li>
+                    </ul>
                     <p>
-                      <%= label_tag :name %>
-                      <%= text_field_tag :name, nil, :required => true %>
+                      <%#= label_tag :feedback %>
+                      <%= text_area_tag :feedback, nil, :required => true  %>
                     </p>
+                    <p>Interested in testing new features and helping to improve the website?  Sign up to <strong>become an official GFW tester!</strong></p>
+                    <div class="radio-box">
+                      <div class="custom-radio">
+                        <%= radio_button_tag(:signup, true) %>
+                        <%= label_tag(:signup_true, "Yes, sign me up.") %>
+                      </div>
+                      <div class="custom-radio">
+                        <%= radio_button_tag(:signup, false, checked = true) %>
+                        <%= label_tag(:signup_false, "No thanks.") %>
+                      </div>
+                    </div>
                     <p>
                       <%= label_tag :email %>
                       <%= email_field_tag :email, nil, :required => true %>
                     </p>
                     <p>
-                      <%= label_tag :feedback %>
-                      <%= text_area_tag :feedback, nil, :required => true  %>
-                    </p>
-                    <p>
                       <%= submit_tag "Send feedback", :class=> "btn green medium" %>
                     </p>
                   <% end %>
+                </li>
+                <li>
+                  <h3>Users have spoken and we’ve listened!</h3>
+                  <p>Below are examples of changes and additions we’ve made to the website in response to feedback from users like you:</p>
+                  <ul class="bullets">
+                    <li>Threshold settings for the UMD/Google tree cover loss data (read more <a href="/">here</a>)</li>
+                    <li>Enhanced analysis functionality (i.e., for protected areas, subnational areas, and forest use concessions) (read more <a href="/">here</a>)</li>
+                    <li>Time slider for the NASA active fires data and information about each fire</li>
+                    <li>“Share this map view” feature (read more <a href="/">here</a>)</li>
+                    <li>A new home page that better directs users to what they are looking for and communicates a clearer purpose</li>
+                  </ul>
+                  <p>Do you have questions about how to use GFW?  Be sure to visit the <a href="/howto">HOW TO</a> page or <a href="mailto:gfw@wri.org">send us an email</a>. You can also reach us on <a href="">Twitter</a> or the <a href="">GFW Discussion Forum</a>.</p>
                 </li>
               </ul>
             </div>
