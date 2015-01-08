@@ -1111,7 +1111,7 @@
   .source_category_title {
     margin-bottom: 10px;
     font-size: 37px;
-    color: #464052;
+    color: $dark;
   }
 
   .source_category_description {
@@ -1143,7 +1143,7 @@
     }
 
     &.disabled:hover .source_header {
-      color: #464052;
+      color: $dark;
     }
 
     &.expanded {
@@ -1342,7 +1342,7 @@
 
   .source_header {
     border-top: 1px solid #ccc;
-    color: #464052;
+    color: $dark;
     cursor: pointer;
 
     strong {
@@ -1434,7 +1434,7 @@
     margin: 30px 0 10px;
     font: 21px/1.1 "Fira Sans";
     font-weight: 500;
-    color: #463F52;
+    color: $dark;
   }
 
   .source_dropdown {
@@ -1569,7 +1569,7 @@
   @include align-items(center);
   h1 {
     font-size: 39px;
-    color: #555;
+    color: $dark;
   }
   p {
     display: block;
