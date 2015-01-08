@@ -254,7 +254,7 @@ The applications below allow users to validate forest change data from the Globa
             <div class="content">
               <ul class="faq-list">
                 <li>
-                  <%= form_tag({controller: "static", action: "feedback"}, method: "get", class: "feedback_form") do %>
+                  <%= form_tag({controller: "static", action: "feedback"}, method: "get", class: "feedback_form", id: "feedbackView") do %>
                     <h3><strong>We’re interested in hearing:</strong></h3>
                     <ul class="bullets">
                       <li>Why you visited GFW</li>
@@ -282,7 +282,7 @@ The applications below allow users to validate forest change data from the Globa
                     </div>
                     <p>
                       <%#= label_tag :email %>
-                      <%= email_field_tag :email, nil, :required => true, :placeholder => "Email" %>
+                      <%= email_field_tag :email, nil, :placeholder => "Email", :id => "feedback-email" %>
                     </p>
                     <p>
                       <%= submit_tag "Send feedback", :class=> "btn green medium" %>
