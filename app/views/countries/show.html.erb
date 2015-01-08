@@ -103,63 +103,64 @@
     </div>
   </section>
 
-  <!-- forest type -->
-  <a href="#" id="forests-type" class="anchor-country-info"></a>
-  <section class="country-section country-forests-type" data-scroll-index='1'>
+  <div class="container-forest-type">
     <div class="inner">
-      <div class="section-info section-share">
-        <h6>Type of forests in <%= @country['name'] %></h6>
-        <div class="section-btn">
-          <a href="#" class="info" data-source="forest_type"><i></i></a>
-        </div>
-      </div>
-
-      <div class="section-content">
-        <div class="coming-soon">No data available</div>
-        <div class="left-col">
-          <div class="forest-type-legends">
-            <ul class="legends-list">
-              <li><span class="primary"></span>Primary</li>
-              <li><span class="regenerated"></span>Regenerated</li>
-              <li><span class="planted"></span>Planted</li>
-            </ul>
+      <!-- forest type -->
+      <a href="#" id="forests-type" class="anchor-country-info"></a>
+      <section class="country-section country-forests-type" data-scroll-index='1'>
+          <div class="section-info section-share">
+            <h6>Type of forests in <%= @country['name'] %></h6>
+            <div class="section-btn">
+              <a href="#" class="info" data-source="forest_type"><i></i></a>
+            </div>
           </div>
-        </div>
-        <div class="right-col">
-          <div class="forests-type-graph"></div>
-        </div>
 
-        <% if @country['country_alt'].present? %>
-        <div class="country-alt">
-          <p><%= @country['country_alt'].html_safe %></p>
-        </div>
-        <% end %>
-      </div>
+          <div class="section-content">
+            <div class="coming-soon">No data available</div>
+            <div class="left-col">
+              <div class="forest-type-legends">
+                <ul class="legends-list">
+                  <li><span class="primary"></span>Primary</li>
+                  <li><span class="regenerated"></span>Regenerated</li>
+                  <li><span class="planted"></span>Planted</li>
+                </ul>
+              </div>
+            </div>
+            <div class="right-col">
+              <div class="forests-type-graph"></div>
+            </div>
+
+            <% if @country['country_alt'].present? %>
+            <div class="country-alt">
+              <p><%= @country['country_alt'].html_safe %></p>
+            </div>
+            <% end %>
+          </div>
+      </section>
+
+      <!-- forest production -->
+      <a href="#" id="production" class="anchor-country-info"></a>
+      <section class="country-section country-production" data-scroll-index='2'>
+          <div class="section-info section-share">
+            <h6>Economic value of <%= @country['name'] %>'s forestry sector</h6>
+            <div class="section-btn">
+              <a href="#" class="info" data-source="gross_value"><i></i></a>
+            </div>
+          </div>
+
+          <div class="section-content">
+            <% if @country['gva'].present? && @country['gva'] > 0 %>
+            <h3 class="section-title">
+              The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2011, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> of the GDP.</span>
+            </h3>
+            <% else %>
+            <div class="coming-soon">No data available</div>
+            <% end %>
+          </div>
+      </section>
     </div>
-  </section>
+  </div>
 
-  <!-- forest produnction -->
-  <a href="#" id="production" class="anchor-country-info"></a>
-  <section class="country-section country-production" data-scroll-index='2'>
-    <div class="inner">
-      <div class="section-info section-share">
-        <h6>Economic value of <%= @country['name'] %>'s forestry sector</h6>
-        <div class="section-btn">
-          <a href="#" class="info" data-source="gross_value"><i></i></a>
-        </div>
-      </div>
-
-      <div class="section-content">
-        <% if @country['gva'].present? && @country['gva'] > 0 %>
-        <h3 class="section-title">
-          The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2011, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> of the GDP.</span>
-        </h3>
-        <% else %>
-        <div class="coming-soon">No data available</div>
-        <% end %>
-      </div>
-    </div>
-  </section>
 
   <!-- employment -->
   <a href="#" id="employment" class="anchor-country-info"></a>

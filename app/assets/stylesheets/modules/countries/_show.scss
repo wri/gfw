@@ -578,6 +578,8 @@
       position: relative;
       h6 {
         float: left;
+        color: #000 ;
+        opacity: .5;
       }
       .info, .share {
         transform: translate(0, -4px);
@@ -613,7 +615,7 @@
 
       .section-title {
         padding: 0;
-        font-size: 29px;
+        font-size: 32px;
         line-height: 36px;
         font-weight: 300;
         color: $dark;
@@ -984,18 +986,19 @@
     }
   } // country-conventions
 
-
-  .container-external-links {
+  .container-external-links,
+  .container-forest-type {
+    overflow: hidden;
     section {
       display: block;
       float: left;
-      width: 49%;
+      width: 50%;
     }
 
     .country-section {
       border: 0;
       .section-content {
-        padding: 0;
+        padding: 10px 0 0;
       }
     }
 
@@ -1029,6 +1032,9 @@
     }
   } // external-links
 
+  .container-forest-type {
+    border-bottom: 1px solid #E5E5E5;
+  }
 
   .country-download-links {
     clear: both;
