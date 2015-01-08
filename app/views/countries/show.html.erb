@@ -389,9 +389,7 @@
               <% if @country['story'].present? && @country['visible'] %>
                 <a href="<%= story_path(@country['story']['cartodb_id']) %>">
                   <%= image_tag static_map("#{@country['lat']}, #{@country['lng']}", '266x266', 4), :alt => @country['name'] %>
-                  <div class="frame"></div>
-                  <div class='gradient'></div>
-                  <div class='frame'></div>
+                  <div class='veil'></div>
                   <div class='title'>
                     <strong><%= @country['story']['title'] %></strong>
                     <span><%= t('.home_stories.featured.read_more') %></span>
@@ -399,8 +397,6 @@
                 </a>
               <% else %>
                 <a href='<%= new_story_path %>' class='nostory' target="_blank">
-                  <div class='gradient'></div>
-                  <div class='frame'></div>
                   <div class='title'>
                     <strong>No stories for this country yet.</strong>
                     <span>Add one</span>
