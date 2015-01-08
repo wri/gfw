@@ -872,11 +872,9 @@
       float: left;
       padding: 50px 0;
       @include box-sizing(border-box);
-
       .section-info {
         margin-bottom: 25px;
       }
-
       &.wide {
         width: 100%;
       }
@@ -894,7 +892,10 @@
       padding: 50px;
 
       .section-info {
-        color: #908E97;
+        h6 {
+          color: #FEFEFE;
+          opacity: .5;
+        }
       }
 
       .section-content{
@@ -947,10 +948,6 @@
     border: 0;
     ul {
       margin-right: -15px;
-    }
-
-    .section-content {
-      padding: 0;
     }
 
     li {
