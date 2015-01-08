@@ -49,7 +49,7 @@ class StaticController < ApplicationController
   def feedback
     @title = 'Feedback'
 
-    name     = params["name"]
+    name     = params["signup"]
     email    = params["email"]
     feedback = params["feedback"]
     body =  name + ' (' + email +') sent this feedback from GFW: ' + feedback

@@ -281,8 +281,8 @@ The applications below allow users to validate forest change data from the Globa
                       </div>
                     </div>
                     <p>
-                      <%= label_tag :email %>
-                      <%= email_field_tag :email, nil, :required => true %>
+                      <%#= label_tag :email %>
+                      <%= email_field_tag :email, nil, :required => true, :placeholder => "Email" %>
                     </p>
                     <p>
                       <%= submit_tag "Send feedback", :class=> "btn green medium" %>
