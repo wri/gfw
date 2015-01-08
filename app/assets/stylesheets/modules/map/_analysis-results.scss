@@ -140,6 +140,14 @@
       cursor: pointer;
       height: 29px;
       width: 30px;
+      position: relative;
+
+      &:hover{
+        .tooltip1{
+          visibility: visible;
+          opacity: 1;
+        }
+      }
 
       &.analysis-control-subscribe {
         // @include home-icons-sprite(control_buttons_subscribe);
