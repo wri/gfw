@@ -1,6 +1,7 @@
 class MapController < ApplicationController
   skip_before_filter :check_terms, :only => [:accept_and_redirect]
 
+  before_filter :check_terms
   before_filter :validate_url, :only => [:index, :embed]
 
   def index

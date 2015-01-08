@@ -1,4 +1,5 @@
 class CountriesController < ApplicationController
+  before_filter :check_terms
   include ActionView::Helpers::NumberHelper
   layout 'countries'
 
