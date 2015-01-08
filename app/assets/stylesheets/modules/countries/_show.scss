@@ -823,7 +823,7 @@
 
   .country-tenure {
     .line-graph {
-      font-weight: bold;
+      font-weight: normal;
       text-transform: uppercase;
 
       circle {
@@ -834,6 +834,10 @@
       text {
         @extend .sans-serif;
         font-size: 12px;
+      }
+
+      .units {
+        font-weight: 500;
       }
 
       .one {
@@ -885,7 +889,7 @@
 
     .emissions-text {
       width: 52%;
-      background: #444050;
+      background: #333;
       text-align: left;
       padding: 50px;
 
@@ -917,14 +921,16 @@
 
       div,
       span {
-        margin-top: 8px;
         float: left;
+        margin-top: 8px;
+        font-weight: 500;
       }
 
       span {
-        width: 250px;
+        width: 80%;
         margin: 4px 0 0 10px;
-        font-size: 11px;
+        font-size: 12px;
+        font-weight: 500;
         line-height: 1.2;
         @extend .sans-serif;
         text-transform: uppercase;
@@ -986,8 +992,10 @@
     }
   } // country-conventions
 
-  .container-external-links,
-  .container-forest-type {
+
+  .container-forest-type,
+  .container-employment,
+  .container-external-links {
     overflow: hidden;
     section {
       display: block;
@@ -1032,7 +1040,8 @@
     }
   } // external-links
 
-  .container-forest-type {
+  .container-forest-type,
+  .container-employment {
     border-bottom: 1px solid #E5E5E5;
   }
 

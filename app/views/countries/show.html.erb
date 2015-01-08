@@ -161,64 +161,64 @@
     </div>
   </div>
 
-
-  <!-- employment -->
-  <a href="#" id="employment" class="anchor-country-info"></a>
-  <section class="country-section country-employment" data-scroll-index='3'>
+  <div class="container-employment">
     <div class="inner">
-      <div class="section-info section-share">
-        <h6>Employment</h6>
-        <div class="section-btn">
-          <a href="#" class="info" data-source="employment"><i></i></a>
+      <!-- employment -->
+      <a href="#" id="employment" class="anchor-country-info"></a>
+      <section class="country-section country-employment" data-scroll-index='3'>
+        <div class="section-info section-share">
+          <h6>Employment</h6>
+          <div class="section-btn">
+            <a href="#" class="info" data-source="employment"><i></i></a>
+          </div>
+        </div>
+
+        <div class="section-content">
+          <% if @employees.present? && @employees > 0 %>
+          <div class="left-col">
+            <% if @employees < 1000 %>
+              <h3 class='section-title'><div><%= @employees %></div> <span>thousand people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
+            <% else %>
+              <h3 class='section-title'><div><%= (@employees/1000.00).round(2) %></div> <span>million people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
+            <% end %>
+
+            <ul class='employment <%= @employees < 25 ? 'short' : '' %>'>
+              <li>
+                <% @employees = @employees < 100 ? @employees : 100 %>
+                <div class='man-list'>
+                  <% @employees.times do |i| %>
+                    <%= image_tag 'countries/man.png' %>
+                  <% end %>
+
+                  <%= '...' if @employees == 100 %>
+                </div>
+              </li>
+            </ul>
+          </div>
+        <% else %>
+        <div class="coming-soon">No data available</div>
+        <% end %>
+        </div>
+      </section>
+
+      <!-- tenure -->
+      <a href="#" id="tenure" class="anchor-country-info"></a>
+      <section class="country-section country-tenure" data-scroll-index='4'>
+        <div class="section-info section-share">
+          <h6>Forest tenure</h6>
+          <div class="section-btn">
+            <a href="#" class="info" data-source="forest_tenure"><i></i></a>
+          </div>
+        </div>
+
+        <div class="section-content">
+          <div class='coming-soon'><span>No data available</span></div>
+          <div class='line-graph'></div>
         </div>
       </div>
+    </section>
+  </div>
 
-      <div class="section-content">
-        <% if @employees.present? && @employees > 0 %>
-        <div class="left-col">
-          <% if @employees < 1000 %>
-            <h3 class='section-title'><div><%= @employees %></div> <span>thousand people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
-          <% else %>
-            <h3 class='section-title'><div><%= (@employees/1000.00).round(2) %></div> <span>million people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
-          <% end %>
-
-          <ul class='employment <%= @employees < 25 ? 'short' : '' %>'>
-            <li>
-              <% @employees = @employees < 100 ? @employees : 100 %>
-              <div class='man-list'>
-                <% @employees.times do |i| %>
-                  <%= image_tag 'countries/man.png' %>
-                <% end %>
-
-                <%= '...' if @employees == 100 %>
-              </div>
-            </li>
-          </ul>
-        </div>
-      <% else %>
-      <div class="coming-soon">No data available</div>
-      <% end %>
-      </div>
-    </div>
-  </section>
-
-  <!-- tenure -->
-  <a href="#" id="tenure" class="anchor-country-info"></a>
-  <section class="country-section country-tenure" data-scroll-index='4'>
-    <div class="inner">
-      <div class="section-info section-share">
-        <h6>Forest tenure</h6>
-        <div class="section-btn">
-          <a href="#" class="info" data-source="forest_tenure"><i></i></a>
-        </div>
-      </div>
-
-      <div class="section-content">
-        <div class='coming-soon'><span>No data available</span></div>
-        <div class='line-graph'></div>
-      </div>
-    </div>
-  </section>
 
   <!-- legislation -->
   <!-- <section class="country-section country-legislation">
