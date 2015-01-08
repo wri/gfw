@@ -1107,7 +1107,7 @@
 }
 
 
-.is-data-action {
+.is-data-action, .is-howto-action {
   .source_category_title {
     margin-bottom: 10px;
     font-size: 37px;
@@ -1126,6 +1126,10 @@
   .sources{
     display: block;
     padding: 25px 0 0;
+  }
+
+  strong{
+    font-weight: 500;
   }
 
 
@@ -1285,10 +1289,20 @@
   .source_coverage {
     @extend .single-source-item;
 
-    .bullets li {
-      margin: 0 0 10px 20px;
-      padding: 0 0 0 20px;
-      background: image-url('icons/bullet.png') no-repeat 0 8px;
+
+    .bullets  {
+      list-style-type: disc;
+      color: $dark;
+      margin: 0 0 0 10px;
+      > li{
+        padding: 10px 0 0;
+        font-size: 14px;
+        margin-left: 20px;
+        line-height: 1.5;
+        &:first-child{
+          padding: 0;
+        }
+      }
     }
 
     .read_more {
@@ -1344,22 +1358,29 @@
     border-top: 1px solid #ccc;
     color: $dark;
     cursor: pointer;
+    position: relative;
 
     strong {
-      font: bold 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
-      line-height: 60px;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.5;
+      display: inline-block;
       text-transform: uppercase;
+      padding: 20px 75px 20px 0;
     }
 
     em {
       float: right;
+      position: relative;
+      right: 85px;
       color: #999;
       font: italic 13px/60px "Helvetica Neue", Helvetica, Arial, sans-serif;
     }
     .expand_arrow{
       display: block;
-      position: relative;
-      float: right;
+      position: absolute;
+      top: 0;
+      right: 0;
       height: 60px;
       width: 60px;
       margin-left: 15px;

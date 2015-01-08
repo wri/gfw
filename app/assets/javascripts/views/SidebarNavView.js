@@ -93,30 +93,32 @@ define([
 
 
     toggleSources: function(e){
+      var top;
       this.$sourceBody.hide(0);
+
 
       if ($(e.currentTarget).hasClass('active')) {
         this.$sourceBody.removeClass('active');
         $(e.currentTarget).removeClass('active');
       } else {
         this.$sourceHeader.removeClass('active');
+        top = $(e.currentTarget).offset().top;
         $(e.currentTarget).addClass('active');
         $(e.currentTarget).parent().children('.source_body').show(0);
       }
 
-      this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0);
-
       setTimeout(_.bind(function(){
-        this.calculateOffsets();
+        this.calculateOffsets(top);
       },this),50);
     },
 
 
 
-    calculateOffsets: function(){
+    calculateOffsets: function(top){
       this.$sideBarBox.css({'min-height': this.$sideBarAside.height() });
       this.offset = this.$el.offset().top + parseInt(this.$el.css('paddingTop'), 10);
       this.offsetBottom = this.$cut.offset().top - this.$sideBarAside.height() - this.padding;
+      (top) ? this.$htmlbody.animate({ scrollTop: top },250) : this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0);
     },
 
     scrollDocument: function(e){
