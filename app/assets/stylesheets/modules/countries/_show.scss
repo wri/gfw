@@ -547,6 +547,11 @@
       text-transform: uppercase;
       letter-spacing: -0.2px;
 
+      .section-btn {
+        position: absolute;
+        right: 20px;
+      }
+
       .share {
         width: auto;
         position: relative;
@@ -565,7 +570,7 @@
       }
 
       .info {
-        margin-right: 6px;
+        margin: 0 2px 0 0;
       }
     }
 
@@ -584,8 +589,8 @@
     }
 
     .section-content {
+      padding: 10px 0 0;
       clear: both;
-      padding-left: 22px;
       @extend .clearfix;
 
       .left-col,
@@ -607,6 +612,7 @@
       }
 
       .section-title {
+        padding: 0;
         font-size: 29px;
         line-height: 36px;
         font-weight: 300;
@@ -661,6 +667,9 @@
     #formaAlertsContent {
       h3 {
         text-transform: none;
+      }
+      .btn-rdn-primary {
+        margin: 0;
       }
     }
 
@@ -987,9 +996,6 @@
       border: 0;
       .section-content {
         padding: 0;
-        .btn-rdn {
-          margin: 0;
-        }
       }
     }
 
@@ -1285,13 +1291,13 @@
   }
 
   &.btn-rdn-primary {
-    background: #A1BB38;
-    border: none;
-    color: white;
+    background: #ECECEC;
+    border: 1px solid #B8B6BD;
+    color: #464353;
     text-transform: uppercase;
 
     &:hover {
-      background: $cGreen
+      background: darken(#ECECEC, 10%);
     }
   }
 
