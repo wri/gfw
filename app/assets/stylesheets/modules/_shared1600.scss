@@ -23,12 +23,16 @@
   position: absolute;
   background: rgba($white,1);
   box-shadow: 0 2px 5px rgba(#000,0.25);
-  z-index: 1;
+  z-index: 1000;
   margin: 0;
   visibility: hidden;
   opacity: 0;
   text-transform: uppercase;
   position: absolute;
+  color: $dark;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: normal;
   top: 100%;
   left: 50%;
   text-align: center;

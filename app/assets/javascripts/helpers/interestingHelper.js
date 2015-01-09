@@ -18,13 +18,13 @@ define([], function() {
     },
     explore_the_map: {
       title: 'GFW Interactive Map',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
+      description: 'View and analyze data in the GFW Interactive Map',
       link: '/map'
     },
     develop_your_own_app: {
       title: 'Develop your own app',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: '/getinvolved/develop-your-own-app'
+      link: '/applications#develop-your-own-app'
     },
     discussion_forum: {
       title: 'Global Forest Watch Discussion Forum',
@@ -33,7 +33,7 @@ define([], function() {
     },
     submit_a_story: {
       title: 'Submit a story',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
+      description: 'Add a story to the GFW Interactive Map',
       link: '/getinvolved/submit-a-story'
     },
     download_the_data: {
@@ -50,6 +50,11 @@ define([], function() {
       title: 'Keep Updated',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
       link: '/keepupdated'
+    },
+    how_to: {
+      title: 'Need help?',
+      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
+      link: '/howto'
     },
     fires_howto: {
       title: 'Fires how to',
