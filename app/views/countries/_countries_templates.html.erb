@@ -8,11 +8,17 @@
 <script id='share-country-template' type='text/x-underscore-template'>
     <a href="#" id="share_control" title="Share this graphic " class="share_control" data-tip="Share">
       Share
-      <span class="sidenav-icon country-icons-share"></span>
+      <svg class="sidenav-icon share">
+        <use xlink:href="#shape-share"></use>
+      </svg>
     </a>
 </script>
 <script id='share-country-entry-template' type='text/x-underscore-template'>
-  <a href="#" class="icon-holder"><span class="country-icons-share_circle_white"></span></a>
+  <a href="#" class="icon circle">
+    <svg class="icon-share">
+      <use xlink:href="#shape-share"></use>
+    </svg>
+  </a>
 </script>
 <script id='share_dialog-template' type='text/x-underscore-template'>
   <a href='#' class='close'></a>
