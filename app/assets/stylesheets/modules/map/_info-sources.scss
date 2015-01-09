@@ -12,15 +12,6 @@
   background: #fff;
   border: 1px solid #eee;
 
-  .close {
-    display: block;
-    position: absolute;
-    top: 10px; right: 15px;
-    width: 6px;
-    height: 6px;
-    @include icons-sprite(infowindow_close);
-  }
-
   .content {
     height: $height;
     width: 100%;

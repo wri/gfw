@@ -875,6 +875,9 @@
 .applications-section {
   &#develop-your-own-app{
     padding-bottom: 80px;
+    .source-article{
+      padding: 0 20px;
+    }
   }
   h2 {
     font-size: 35px;
@@ -897,7 +900,7 @@
         @include col(33.3333);
         @include display-flex();
       }
-      padding: 0 15px;
+      padding: 0 20px;
       margin: 0px 0 25px;
       overflow: hidden;
       .card {
@@ -938,7 +941,7 @@
         min-width: 75px;
         width: auto;
         height: 75px;
-        margin: 10px auto;
+        margin: 16px auto;
         svg {
           fill: $dark;
         }

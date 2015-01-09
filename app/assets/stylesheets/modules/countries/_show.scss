@@ -1499,12 +1499,23 @@
     display: block;
     position: absolute;
     top: 15px; right: 15px;
-    width: 6px;
-    height: 6px;
-    // @include home-icons-sprite(infowindow_close);
-    background: image-url('country-icons/infowindow_close.png');
-
+    width: 16px;
+    height: 16px;
+    svg{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      fill: $dark;
+    }
+    &:hover{
+      svg{
+        fill: darken($dark,10%);
+      }
+    }
   }
+
   h2 {
     color: #a1ba42;
     border-bottom-color: #a1ba42;

@@ -692,10 +692,21 @@
     display: block;
     position: absolute;
     top: 15px; right: 15px;
-    width: 6px;
-    height: 6px;
-    // @include country-icons-sprite(infowindow_close);
-    background: image-url('country-icons/infowindow_close.png');
+    width: 16px;
+    height: 16px;
+    svg{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      fill: $dark;
+    }
+    &:hover{
+      svg{
+        fill: darken($dark,10%);
+      }
+    }
   }
 
   h1 {
@@ -808,6 +819,7 @@
   background: #EEEEEE;
   width: 100%;
   height: 40px;
+  padding: 0 20px;
   display: flex;
   display: -ms-flexbox;
   display: -ms-flex;
@@ -832,8 +844,9 @@
       max-width: 130px;
     }
     text-align: center;
-    height: 39px;
-    padding: 10px 12px 0 12px;
+    // height: 39px;
+    // padding: 0 0 0 12px;
+    line-height: normal;
     text-transform: uppercase;
     font-size: 14px;
     color: #BEBCC2;
@@ -847,6 +860,8 @@
       display: inline-block;
       vertical-align: bottom;
       margin-left: 5px;
+      position: relative;
+      top: -4px;
       @include country-icons-sprite(share);
     }
 
@@ -862,7 +877,7 @@
         i {
         float: right;
         position: relative;
-        top: -2px;
+        top: 2px;
         margin-left: 7px;
 
         &.no_def {
