@@ -67,7 +67,11 @@
       <div class="section-info section-share">
         <h6>FORMA alerts</h6>
         <div class="section-btn">
-          <a href="#" class="info" data-source="forma"><i></i></a>
+          <a href="#" class="info icon circle" data-source="forma">
+            <svg>
+              <use xlink:href="#shape-info"></use>
+            </svg>
+          </a>
         </div>
       </div>
 
@@ -93,7 +97,12 @@
               <li><a href="http://wri-01.cartodb.com/api/v1/sql?q=SELECT f.* FROM forma_api f WHERE f.date >= '2006-01-01'::date AND f.date <= NOW()::date AND f.iso = UPPER('<%= @country['iso'] %>')&version=v1&format=csv">CSV</a></li>
             </ul>
           </div>
-          <a href="#" class="btn-rdn btn-rdn-primary forma_dropdown-link">Download data</a>
+          <a href="#" class="btn-rdn btn-rdn-primary forma_dropdown-link">
+          Download data
+          <svg>
+            <use xlink:href="#shape-arrow-down"></use>
+          </svg>
+          </a>
         </div>
 
         <div class="right-col">
@@ -111,7 +120,11 @@
           <div class="section-info section-share">
             <h6>Type of forests in <%= @country['name'] %></h6>
             <div class="section-btn">
-              <a href="#" class="info" data-source="forest_type"><i></i></a>
+              <a href="#" class="info icon circle" data-source="forest_type">
+                <svg>
+                  <use xlink:href="#shape-info"></use>
+                </svg>
+              </a>
             </div>
           </div>
 
@@ -144,7 +157,11 @@
           <div class="section-info section-share">
             <h6>Economic value of <%= @country['name'] %>'s forestry sector</h6>
             <div class="section-btn">
-              <a href="#" class="info" data-source="gross_value"><i></i></a>
+              <a href="#" class="info icon circle" data-source="gross_value">
+                <svg>
+                  <use xlink:href="#shape-info"></use>
+                </svg>
+              </a>
             </div>
           </div>
 
@@ -169,7 +186,11 @@
         <div class="section-info section-share">
           <h6>Employment</h6>
           <div class="section-btn">
-            <a href="#" class="info" data-source="employment"><i></i></a>
+            <a href="#" class="info icon circle" data-source="employment">
+              <svg>
+                <use xlink:href="#shape-info"></use>
+              </svg>
+            </a>
           </div>
         </div>
 
@@ -207,7 +228,11 @@
         <div class="section-info section-share">
           <h6>Forest tenure</h6>
           <div class="section-btn">
-            <a href="#" class="info" data-source="forest_tenure"><i></i></a>
+            <a href="#" class="info icon circle" data-source="forest_tenure">
+              <svg>
+                <use xlink:href="#shape-info"></use>
+              </svg>
+            </a>
           </div>
         </div>
 
@@ -219,27 +244,6 @@
     </section>
   </div>
 
-
-  <!-- legislation -->
-  <!-- <section class="country-section country-legislation">
-    <div class="inner">
-      <div class="section-info">
-        <h6>Forest policy and legislation</h6>
-        <a href="#" class="info" data-source="forest_legislation"><i></i></a>
-      </div>
-
-      <div class="section-content">
-        <% if @country['national_policy_link'].present? %>
-        <div class="national-policy-links">
-          <%= link_to @country['national_policy_title'].present? ? @country['national_policy_title'] : 'National Forest Policy', @country['national_policy_link'], :target => '_blank' %>
-        </div>
-        <% end %>
-
-        <a href='mailto:gfw@wri.org' class='btn-rdn'>Are we missing a link?</a>
-      </div>
-    </div>
-  </section> -->
-
   <!-- carbon stocks -->
   <section class="country-section country-carbon-stocks" data-scroll-index='5' style="padding: 0; display: table;">
     <div class="inner">
@@ -250,7 +254,11 @@
         <div class="section-info section-share">
           <h6>Carbon stocks</h6>
           <div class="section-btn">
-            <a href="#" class="info" data-source="carbon_stocks"><i></i></a>
+            <a href="#" class="info icon circle" data-source="carbon_stocks">
+              <svg>
+                <use xlink:href="#shape-info"></use>
+              </svg>
+            </a>
           </div>
         </div>
 
@@ -267,7 +275,11 @@
         <div class="section-info section-share">
           <h6>CO2 emissions</h6>
           <div class="section-btn">
-            <a href="#" class="info" data-source="emissions"><i></i></a>
+            <a href="#" class="info icon circle" data-source="emissions">
+              <svg>
+                <use xlink:href="#shape-info"></use>
+              </svg>
+            </a>
           </div>
         </div>
 
@@ -292,7 +304,11 @@
       <div class="section-info section-share">
         <h6>Conventions</h6>
         <div class="section-btn">
-          <a href="#" class="info" data-source="conventions"><i></i></a>
+          <a href="#" class="info icon circle" data-source="conventions">
+            <svg>
+              <use xlink:href="#shape-info"></use>
+            </svg>
+          </a>
         </div>
       </div>
 
@@ -319,7 +335,11 @@
         <div class="section-info section-share">
           <h6>Forest policy and legislation</h6>
           <div class="section-btn">
-            <a href="#" class="info" data-source="forest_legislation"><i></i></a>
+            <a href="#" class="info icon circle" data-source="forest_legislation">
+              <svg>
+                <use xlink:href="#shape-info"></use>
+              </svg>
+            </a>
           </div>
         </div>
         <div class="section-content">
@@ -446,3 +466,5 @@
   <%= render 'countries' %>
   <%= render 'shared/sources' %>
 </div>
+
+<%= render 'shared/svg_icons_countries' %>
