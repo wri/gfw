@@ -108,17 +108,17 @@ define([
       }
 
       setTimeout(_.bind(function(){
-        this.calculateOffsets(top);
+        this.calculateOffsets();
+        (top) ? this.$htmlbody.animate({ scrollTop: top },250) : this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0);
       },this),50);
     },
 
 
 
-    calculateOffsets: function(top){
+    calculateOffsets: function(){
       this.$sideBarBox.css({'min-height': this.$sideBarAside.height() });
       this.offset = this.$el.offset().top + parseInt(this.$el.css('paddingTop'), 10);
       this.offsetBottom = this.$cut.offset().top - this.$sideBarAside.height() - this.padding;
-      (top) ? this.$htmlbody.animate({ scrollTop: top },250) : this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0);
     },
 
     scrollDocument: function(e){
