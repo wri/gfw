@@ -593,7 +593,7 @@
     <%= form_for :area, :url => "//#{ENV['GFW_API_HOST']}/subscribe", :html => { :method => :post, :class => 'save-area' } do |f| %>
       <%= f.hidden_field :the_geom %>
 
-      <a href='#' class='close'></a>
+      <a href='#' class='close'><svg><use xlink:href='#shape-close'></use></svg></a>
       <h1 class='title'>{{ title }}</h1>
 
       <div class='form'>
@@ -637,7 +637,7 @@
   <a href="#" class="icon-holder"><span class="country-icons-share_circle_white"></span></a>
 </script>
 <script id='share_dialog-template' type='text/x-underscore-template'>
-  <a href='#' class='close'></a>
+  <a href='#' class='close'><svg><use xlink:href='#shape-close'></use></svg></a>
   <h1 class='title'>{{ title }}</h1>
 
   <div class='form'>
@@ -666,7 +666,7 @@
 </script>
 
 <script id='umdoptions_dialog-template' type='text/x-underscore-template'>
-  <a href='#' class='close'></a>
+  <a href='#' class='close'><svg><use xlink:href='#shape-close'></use></svg></a>
   <h2 class='source_category_title'>{{ title }}</h2>
 
   <div class='form'>
@@ -706,6 +706,6 @@
 </script>
 
 <script id='window-template' type='text/x-underscore-template'>
-  <a href='#' class='close'></a>
+  <a href='#' class='close'><svg><use xlink:href='#shape-close'></use></svg></a>
   <div class='content'></div>
 </script>
