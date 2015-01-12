@@ -81,7 +81,7 @@ define([
           description: item.details,
           link: '/stories/'+item.cartodb_id,
           target: false,
-          map: (img) ? 'http://gfw2stories.s3.amazonaws.com/uploads/' + img : 'https://maps.googleapis.com/maps/api/staticmap?center=' + item.the_geom.coordinates[0] + ',' + item.the_geom.coordinates[1] + '&zoom=2&size=80x80',
+          map: (img) ? 'http://gfw2stories.s3.amazonaws.com/uploads/' + img : 'https://maps.googleapis.com/maps/api/staticmap?center=' + item.the_geom.coordinates[1] + ',' + item.the_geom.coordinates[0] + '&zoom=2&size=80x80',
           type: slug
         }
       } else {

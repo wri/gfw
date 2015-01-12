@@ -838,20 +838,27 @@
     }
   }
   .share_control, .item {
-    min-width: 90px;
-    @media screen and (min-width:0\0) {
-        /* IE9 and IE10 rule sets go here */
-      max-width: 130px;
-    }
     text-align: center;
     // height: 39px;
     // padding: 0 0 0 12px;
+    position: relative;
     line-height: normal;
     text-transform: uppercase;
     font-size: 14px;
     color: #BEBCC2;
-    margin-left: 15px;
     cursor: pointer;
+    display: inline-block;
+    padding-right: 24px;
+    svg{
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      @include transform(translate(0,-50%));
+      right: 0px;
+      height: 18px;
+      width: 18px;
+      fill: #bebcc2;
+    }
     @include box-sizing(border-box);
 
     .country-icons-share {

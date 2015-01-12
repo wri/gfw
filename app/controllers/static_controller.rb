@@ -1,7 +1,7 @@
 class StaticController < ApplicationController
   before_filter :load_stories
 
-  skip_before_filter :check_terms, :except => [:data]
+  # skip_before_filter :check_terms, :except => [:data]
   skip_before_filter :check_browser
 
   respond_to :html
@@ -49,7 +49,7 @@ class StaticController < ApplicationController
   def feedback
     @title = 'Feedback'
 
-    name     = params["name"]
+    name     = params["signup"]
     email    = params["email"]
     feedback = params["feedback"]
     body =  name + ' (' + email +') sent this feedback from GFW: ' + feedback

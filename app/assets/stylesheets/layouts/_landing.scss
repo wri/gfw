@@ -87,18 +87,20 @@
     ul {
       float: right;
       li {
-        width: 16px;
-        height: 16px;
+        box-shadow:0px 1px 3px rgba(0,0,0,0.25);
+        width: 6px;
+        height: 6px;
+        opacity: 0.8;
         border-radius: 50%;
         cursor: pointer;
-        border: 1px solid #94A7C5;
-        background: #CEE1FF;
+        background: $white;
         float: left;
-        margin: 0 0 0 10px;
+        margin: 0 0 0 15px;
+        @include transition(all,.5s,$easeInOutSine);
         &:first-child { margin: 0;}
         &.current, &:hover {
-          background: #8493AA;
-          border: 1px solid #696F79;
+          opacity: 1;
+          @include transform(scale(2));
         }
       }
     }
@@ -139,8 +141,8 @@
   // SLIDES
   &.slide1 { background-image:image-url('backgrounds/home-slider/bg_slide1.png');}
   &.slide2 { background-image:image-url('backgrounds/home-slider/bg_slide2.jpg');}
-  &.slide3 { background-image:image-url('backgrounds/home-slider/bg_slide1.png');}
-  &.slide4 { background-image:image-url('backgrounds/home-slider/bg_slide2.jpg');}
+  &.slide3 { background-image:image-url('backgrounds/home-slider/bg_slide3.png');}
+  &.slide4 { background-image:image-url('backgrounds/home-slider/bg_slide4.jpg');}
   aside {
     position: absolute;
     display: block;
@@ -736,7 +738,7 @@
      .Feature-posts {
       background-image: url(blog-categories/feature.png);
      }
-     .Updae {
+     .Update {
       background-image: url(blog-categories/update.png);
      }
      .News {
