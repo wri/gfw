@@ -17,11 +17,19 @@ define([
     initialize: function(layer, currentDate) {
       this.presenter = new Presenter(this);
 
+
+      /*
+      * HOTFIX: https://basecamp.com/1756858/projects/472471/todos/142597657
+      */
+      if (layer.mindate < moment("20121001","YYYYMMDD")){
+        layer.mindate = moment("20121001","YYYYMMDD");
+        currentDate[0] = layer.mindate;
+      }
+
       this.options = {
         dateRange: [layer.mindate, layer.maxdate],
         tickWidth: 60
       };
-
       ModisTimeline.__super__.initialize.apply(this, [layer, currentDate]);
     },
 
