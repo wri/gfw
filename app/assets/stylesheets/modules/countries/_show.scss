@@ -619,6 +619,10 @@
       }
     }
 
+    .no-cols {
+      right: 20px !important;
+    }
+
     .section-content {
       clear: both;
       @extend .clearfix;
@@ -632,16 +636,16 @@
         }
       }
 
-      .left-col {
-        width: 40%;
+      .left-col,
+      .right-col {
+        width: 50%;
       }
 
       .right-col {
-        width: 60%;
         padding-left: 5%;
 
         .section-btn {
-          right: 21px;
+          right: 20px;
         }
       }
 
@@ -696,10 +700,6 @@
     #formaAlertsContent,
     #comingSoonContent {
       display: none;
-    }
-
-    .section-btn {
-      right: 21px !important;
     }
 
     #formaAlertsContent {
@@ -937,6 +937,10 @@
       background: #333;
       text-align: left;
 
+      .section-btn {
+        right: 0;
+      }
+
       .section-info {
         h6 {
           color: #FEFEFE;
@@ -996,10 +1000,6 @@
 
   .country-conventions-section {
     border: 0;
-
-    .section-btn {
-      right: 21px !important;
-    }
     ul {
       margin-right: -15px;
     }

@@ -37,3 +37,6 @@ Vagrantfile
 
 # Ingore Sublime project files:
 *.sublime-*
+
+#todo
+todo.todo
