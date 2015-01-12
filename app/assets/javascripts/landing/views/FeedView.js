@@ -54,7 +54,7 @@ define([
         }
         return result;
       },this));
-      
+
       this.feedlist = _.first(this.feedlist.sort(_.bind(function(a,b){
         return b.createDate - a.createDate;
       },this)),6);
@@ -72,7 +72,7 @@ define([
             description: 'added a new story',
             link: '/stories/'+item.cartodb_id,
             target: false,
-            avatar: 'https://maps.googleapis.com/maps/api/staticmap?center=' + item.the_geom.coordinates[0] + ',' + item.the_geom.coordinates[1] + '&zoom=2&size=80x80',
+            avatar: 'https://maps.googleapis.com/maps/api/staticmap?center=' + item.the_geom.coordinates[1] + ',' + item.the_geom.coordinates[0] + '&zoom=2&size=80x80',
             type: slug
           }
         break;
