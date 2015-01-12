@@ -68,6 +68,9 @@
     font-size: 14px;
     line-height: 1.5;
   }
+  strong{
+    font-weight: 500;
+  }
   .inner {
     padding: 0 15px;
   }
@@ -111,6 +114,10 @@
     @include flex-wrap(wrap);
     position: relative;
   }
+  strong{
+    font-weight: 500;
+  }
+
   aside {
     width: 100%;
     @media (min-width: $br-mobile) {
@@ -304,10 +311,6 @@
     margin-top: 20px;
     p {
       text-align: left;
-      margin-bottom: 25px;
-      &:last-child {
-        margin-bottom: 0;
-      }
       input,
       textarea {
         width: 90%;
@@ -318,7 +321,8 @@
         border-radius: 3px;
         box-shadow: 0px 0px 1px #999;
         border-color: transparent;
-        font-size: 1rem;
+        font-size: 0.875rem;
+        font-family: inherit;
       }
       textarea {
         min-height: 150px;
@@ -338,6 +342,17 @@
         font-size: 12px;
         text-transform: uppercase;
         width: 100%;
+      }
+    }
+    .radio-box {
+      margin-top: 10px;
+      .custom-radio{
+        font-size: 14px;
+        color: $dark;
+        margin: 5px 0 0;
+        &:first-child{
+          margin: 0;
+        }
       }
     }
   }
