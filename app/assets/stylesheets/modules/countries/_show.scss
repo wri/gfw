@@ -580,6 +580,7 @@
 
     .section-info {
       margin-bottom: 12px;
+      padding-bottom: 15px;
       font-size: 14px;
       color: $dark;
       font-weight: 500;
@@ -630,7 +631,6 @@
     }
 
     .section-content {
-      padding: 10px 0 0;
       clear: both;
       @extend .clearfix;
 
@@ -919,6 +919,8 @@
   } // country-legislation
 
   .country-carbon-stocks {
+    display: table;
+    padding: 0;
     .carbon-text,
     .emissions-text {
       float: left;
@@ -933,15 +935,15 @@
     }
 
     .carbon-text {
-      width: 44%;
+      // width: 44%;
       margin-right: 4%;
     }
 
     .emissions-text {
-      width: 52%;
+      // width: 52%;
+      padding: 50px;
       background: #333;
       text-align: left;
-      padding: 50px;
 
       .section-info {
         h6 {
