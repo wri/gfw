@@ -5,7 +5,7 @@
     padding: 10px 20px;
     background: $light;
     color: #555;
-    text-transform: uppercase;    
+    text-transform: uppercase;
   }
 
   .widget-box {
@@ -73,7 +73,7 @@
 
     &.info2{
       @include home-icons-sprite(information2);
-      background: image-url('home-icons/information2.png');      
+      background: image-url('home-icons/information2.png');
     }
 
     &.hidden {
@@ -233,6 +233,20 @@
     .layer-colors {
       .intact {color: #007A4D;}
       .degraded {color: #97BD3D;}
+    }
+  }
+
+  /*********************************/
+  /* UserStoriesLayer details */
+  /*********************************/
+  .layer-details-stories {
+    .canopy{
+      a{
+        color: #f3830a;
+        &:hover{
+          color: lighten(#f3830a, 10%);
+        }
+      }
     }
   }
 

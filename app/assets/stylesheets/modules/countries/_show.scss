@@ -580,6 +580,7 @@
 
     .section-info {
       margin-bottom: 12px;
+      padding-bottom: 15px;
       font-size: 14px;
       color: $dark;
       font-weight: 500;
@@ -588,7 +589,7 @@
 
       .section-btn {
         position: absolute;
-        right: 20px;
+        right: 0px;
       }
 
       .share {
@@ -596,17 +597,6 @@
         position: relative;
         float: right;
       }
-
-      // .icon-holder {
-      //   float: none;
-
-      //   .country-icons-share_circle_white {
-      //     width: 20px;
-      //     height: 20px;
-      //     float: left;
-      //     @include country-icons-sprite(share_circle_white);
-      //   }
-      // }
 
       .info {
         margin: 0 2px 0 0;
@@ -630,7 +620,6 @@
     }
 
     .section-content {
-      padding: 10px 0 0;
       clear: both;
       @extend .clearfix;
 
@@ -648,8 +637,12 @@
       }
 
       .right-col {
-        width: 55%;
+        width: 60%;
         padding-left: 5%;
+
+        .section-btn {
+          right: 21px;
+        }
       }
 
       .section-title {
@@ -699,10 +692,14 @@
     }
   }
 
-  .country-alerts {
+  .country-alerts-section {
     #formaAlertsContent,
     #comingSoonContent {
       display: none;
+    }
+
+    .section-btn {
+      right: 21px !important;
     }
 
     #formaAlertsContent {
@@ -918,7 +915,10 @@
     }
   } // country-legislation
 
-  .country-carbon-stocks {
+  .country-carbon-stocks-section {
+    display: table;
+    padding: 0;
+
     .carbon-text,
     .emissions-text {
       float: left;
@@ -932,24 +932,15 @@
       }
     }
 
-    .carbon-text {
-      width: 44%;
-      margin-right: 4%;
-    }
-
     .emissions-text {
-      width: 52%;
+      padding: 50px 0 50px 50px;
       background: #333;
       text-align: left;
-      padding: 50px;
 
       .section-info {
         h6 {
           color: #FEFEFE;
           opacity: .5;
-        }
-        .section-btn {
-          right: 0;
         }
       }
 
@@ -970,10 +961,8 @@
     }
   } // country-carbon-stocks
 
-  .country-employment {
-    .section-content .left-col {
-      width: 460px;
-    }
+  .country-employment-section {
+
 
     .section-content .left-col .section-title {
       @extend .clearfix;
@@ -1005,8 +994,12 @@
     }
   } // country-employment
 
-  .country-conventions {
+  .country-conventions-section {
     border: 0;
+
+    .section-btn {
+      right: 21px !important;
+    }
     ul {
       margin-right: -15px;
     }
@@ -1050,17 +1043,8 @@
     }
   } // country-conventions
 
-
-  .container-forest-type,
-  .container-employment,
-  .container-external-links {
+  .country-policy-section {
     overflow: hidden;
-    section {
-      display: block;
-      float: left;
-      width: 50%;
-    }
-
     .country-section {
       border: 0;
       .section-content {
@@ -1102,7 +1086,7 @@
     border-bottom: 1px solid #E5E5E5;
   }
 
-  .country-download-links {
+  .country-download-links-section {
     clear: both;
     background-color: #F5F5F5;
     text-align: center;
@@ -1120,7 +1104,7 @@
     }
   } // download-links
 
-  .country-blog {
+  .country-blog-section {
     text-align: center;
     background: #97BD3D;
 
@@ -1306,7 +1290,7 @@
     }
   } // country-blog
 
-  .country-comments {
+  .country-comments-section {
     background-color: #F5F5F5;
   } // country-comments
 }
@@ -1891,7 +1875,7 @@
       }
     }
 
-    .country-carbon-stocks {
+    .country-carbon-stocks-section {
       .carbon-text,
       .emissions-text {
         width: 100%;
@@ -1900,6 +1884,7 @@
       }
 
       .emissions-text {
+        padding-right: 0;
         text-align: left;
       }
     }
@@ -1916,7 +1901,7 @@
       }
     }
 
-    .country-download-links {
+    .country-download-links-section {
       a:first-child {
         margin: 0;
       }
@@ -1949,7 +1934,8 @@
 
 @media only screen and (max-width: 768px) {
   .country-show {
-    .country-blog {
+
+    .country-blog-section {
       h3 {
         padding-top: 0;
       }
@@ -1983,6 +1969,12 @@
           width: 75%;
         }
       }
+    }
+
+    .country-carbon-stocks-section {
+
+      padding: 0 20px;
+
     }
   }
 
@@ -2023,12 +2015,12 @@
       }
     }
 
-    .country-carbon-stocks .carbon-text,
-    .country-carbon-stocks .emissions-text {
-      padding: 20px;
+    .country-carbon-stocks-section .carbon-text,
+    .country-carbon-stocks-section .emissions-text {
+      // padding: 20px;
     }
 
-    .country-carbon-stocks .emissions-text .section-content h3 {
+    .country-carbon-stocks-section .emissions-text .section-content h3 {
       padding: 0;
     }
 

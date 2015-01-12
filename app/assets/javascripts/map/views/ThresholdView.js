@@ -50,7 +50,7 @@ define([
     initialize: function() {
       this.presenter = new Presenter(this);
       ThresholdView.__super__.initialize.apply(this);
-      this.presenter.initExperiment('source');      
+      this.presenter.initExperiment('source');
     },
 
     _cacheSelector: function() {
@@ -98,16 +98,16 @@ define([
         _.keys(this.valuesMap)[0];
 
       this.$slider.val(val);
-      this._setVisibleRange();
+      this._updateThreshold();
     },
-    
+
     toggleWidgetBtn: function(to){
       if (to) {
-        this.$widgetBtn.addClass('disabled');  
+        this.$widgetBtn.addClass('disabled');
       }else{
-        this.$widgetBtn.removeClass('disabled');  
+        this.$widgetBtn.removeClass('disabled');
       }
-      
+
     }
   });
 

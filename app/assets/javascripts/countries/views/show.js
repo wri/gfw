@@ -79,10 +79,10 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   },
 
   _positionScroll: function() {
-    if ($('.country-alerts').length < 1 || $('.country-conventions').length < 1 ) return;
+    if ($('.country-alerts-section').length < 1 || $('.country-conventions-section').length < 1 ) return;
 
-    var h_min = $('.country-alerts').offset().top - 48,
-        h_max = $('.country-conventions').offset().top - 46;
+    var h_min = $('.country-alerts-section').offset().top - 48,
+        h_max = $('.country-conventions-section').offset().top - 46;
 
     if ($(window).scrollTop() > (h_min) && $(window).scrollTop() < h_max) {
       // fixed
