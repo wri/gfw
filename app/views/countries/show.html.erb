@@ -62,7 +62,7 @@
 
   <!-- forma alerts -->
   <a href="#" id="alerts" class="anchor-country-info"></a>
-  <section class="country-section country-alerts" data-scroll-index='0'>
+  <section class="country-section country-alerts-section" data-scroll-index='0'>
     <div class="inner">
       <div class="section-info section-share">
         <h6>FORMA alerts</h6>
@@ -100,7 +100,7 @@
           <a href="#" class="btn-rdn btn-rdn-primary forma_dropdown-link">
           Download data
           <svg>
-            <use xlink:href="#shape-arrow-down"></use>
+            <use xlink:href="#shape-download-arrow"></use>
           </svg>
           </a>
         </div>
@@ -255,7 +255,7 @@
   </section>
 
   <!-- carbon stocks -->
-  <section class="country-section country-carbon-stocks" data-scroll-index='5'>
+  <section class="country-section country-carbon-stocks-section" data-scroll-index='5'>
     <div class="inner">
 
       <section class="section-content">
@@ -323,7 +323,7 @@
   </section>
 
   <!-- conventions -->
-  <section class='country-section country-conventions' data-scroll-index='6'>
+  <section class='country-section country-conventions-section' data-scroll-index='6'>
     <div class='inner'>
       <div class="section-info section-share">
         <h6>Conventions</h6>
@@ -380,48 +380,34 @@
         </div>
 
         <div class="right-col">
-
           <!-- useful links -->
           <% if @country['ministry_link'].present? || @country['external_links'].present? %>
           <section class='country-external-links'>
-            <!-- <div class='inner'> -->
-              <div class="section-info section-share">
-                <h6>External links</h6>
-              </div>
-              <div class="section-content">
-                <ul>
-                  <% if @country['ministry_link'].present? %>
-                    <li><a href='<%= @country['ministry_link'] %>' target='_blank'><%= t('.ministry_link') %></a></li>
-                  <% end %>
+            <div class="section-info section-share">
+              <h6>External links</h6>
+            </div>
+            <div class="section-content">
+              <ul>
+                <% if @country['ministry_link'].present? %>
+                  <li><a href='<%= @country['ministry_link'] %>' target='_blank'><%= t('.ministry_link') %></a></li>
+                <% end %>
 
-                  <% if @country['external_links'].present? %>
-                    <% JSON.parse(@country['external_links']).each do |link| %>
-                      <li><%= link_to link['title'], link['url'], :target => '_blank' %></li>
-                    <% end %>
+                <% if @country['external_links'].present? %>
+                  <% JSON.parse(@country['external_links']).each do |link| %>
+                    <li><%= link_to link['title'], link['url'], :target => '_blank' %></li>
                   <% end %>
-                </ul>
-              </div>
-            <!-- </div> -->
+                <% end %>
+              </ul>
+            </div>
           </section>
           <% end %>
-
         </div>
-
       </section>
     </div>
-
   </section>
-<!--
 
-  <div class="container-external-links">
-    <div class="inner">
-
-    </div>
-  </div>
-
- -->
   <!-- download links -->
-  <section class='country-section country-download-links'>
+  <section class='country-section country-download-links-section'>
     <div class='inner'>
       <div class="section-content">
         <%= link_to 'Subscribe to alerts for this country', "#{map_coords}/grayscale/forma?subscribe", class: 'btn-rdn', :target => '_blank' %>
@@ -435,7 +421,7 @@
   </section>
 
   <!-- blog -->
-  <section class='country-section country-blog'>
+  <section class='country-section country-blog-section'>
     <div class='inner'>
       <div class='section-content'>
         <h3 class='section-title'><%= t('.country_blog.title', :country => @country['name'].titleize) %></h3>
@@ -488,7 +474,7 @@
   </section>
 
   <!-- disqus -->
-  <section class='country-section country-comments'>
+  <section class='country-section country-comments-section'>
     <div class='inner'>
       <div id='disqus_thread'></div>
       <script type='text/javascript'>
