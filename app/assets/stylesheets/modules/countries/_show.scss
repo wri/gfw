@@ -633,11 +633,11 @@
       }
 
       .left-col {
-        width: 47.5%;
+        width: 40%;
       }
 
       .right-col {
-        width: 47.5%;
+        width: 60%;
         padding-left: 5%;
 
         .section-btn {
@@ -933,13 +933,9 @@
     }
 
     .emissions-text {
-      width: 109.7%;
-      padding: 50px;
+      padding: 50px 0 50px 50px;
       background: #333;
       text-align: left;
-      &::after {
-        content: '';
-      }
 
       .section-info {
         h6 {
@@ -1976,7 +1972,9 @@
     }
 
     .country-carbon-stocks-section {
+
       padding: 0 20px;
+
     }
   }
 
