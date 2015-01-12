@@ -170,7 +170,7 @@
         }
 
         &.disabled {
-          @include opacity(.5);
+          @include opacity(0);
           @include pointer-events(none);
         }
       }
