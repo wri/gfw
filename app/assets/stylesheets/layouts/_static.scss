@@ -313,7 +313,7 @@
       text-align: left;
       input,
       textarea {
-        width: 90%;
+        width: 100%;
         margin: 4px 0;
         min-height: 25px;
         padding: 6px;
@@ -897,7 +897,7 @@
   h2 {
     font-size: 35px;
     color: $dark;
-    padding: 40px 0;
+    padding: 40px 20px;
     text-align: center;
     &:first-child {
       border: 0;
