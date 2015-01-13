@@ -14,6 +14,7 @@ define([
     el: '#feedbackView',
 
     events: {
+      'submit' : 'onSubmit',
       'change .radio-box input' : 'onChange',
     },
 
@@ -21,7 +22,16 @@ define([
       if (!this.$el.length) {
         return
       }
+      this.$textarea = $('#feedback-textarea');
       this.$email = $('#feedback-email');
+    },
+
+    onSubmit: function(e){
+      e && e.preventDefault();
+      //Check if any input are filled.
+      if (this.$textarea.val() || this.$email.val()) {
+        e.currentTarget.submit();
+      }
     },
 
     onChange: function(e) {
