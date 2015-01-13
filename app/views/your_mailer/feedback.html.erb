@@ -1,1 +1,14 @@
-<h2><%= @email %></h2>
+<% if @email %>
+  <% if @signup %>
+    <h1>Become a tester</h1>
+  <% else %>
+    <h1>Don't want to be a tester</h1>
+  <% end %>
+  <h2><%= @email %></h2>
+<% end %>
+
+<% if @feedback %>
+  <h1>Feedback provided</h1>
+  <h2><%= @feedback %></h2>
+<% end %>
+
