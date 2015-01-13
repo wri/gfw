@@ -96,7 +96,7 @@
   }
   &.bottom{
     bottom: 130%;
-    left: 50%;
+    left: 51%;
     &:after{
       bottom: 0;
       left: 50%;
@@ -150,6 +150,9 @@
       text-rendering: optimizeLegibility;
       &:hover {
         background: darken($white,2%);
+      }
+      strong {
+        font-weight: 400;
       }
     }
   }
