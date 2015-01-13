@@ -1,14 +1,13 @@
+<h2>Become a tester</h2>
 <% if @email %>
-  <% if @signup %>
-    <h1>Become a tester</h1>
-  <% else %>
-    <h1>Don't want to be a tester</h1>
-  <% end %>
-  <h2><%= @email %></h2>
+  <p><%= @email %><% if @signup %> wants to become an official GFW tester <% else %> doesn't want to become a tester <% end %></p>
 <% end %>
 
+
+
+<h2>Feedback</h2>
 <% if @feedback %>
-  <h1>Feedback provided</h1>
-  <h2><%= @feedback %></h2>
+  <p><%= @feedback %></p>
+<% else %>
+  <p>No feedback provided</p>
 <% end %>
-
