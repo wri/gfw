@@ -73,6 +73,10 @@ define([
         this._renderResults({unavailable: true});
       }
     }, {
+      'AnalysisResults/totalArea': function(area) {
+        this._setTotalArea(area);
+      }
+    }, {
       'AnalysisTool/iso-drawn': function(multipolygon) {
         var isoTotalArea = geojsonUtilsHelper.getHectares(
           multipolygon);
@@ -101,7 +105,7 @@ define([
       if (baselayers['loss']) {
         this.loss = true;
         baselayer = baselayers['loss'];
-        this.status.set('both', (baselayers['forestgain']) ? true : false);        
+        this.status.set('both', (baselayers['forestgain']) ? true : false);
       }else{
         this.loss = false;
         baselayer = baselayers[_.first(_.intersection(
@@ -213,6 +217,19 @@ define([
       mps.publish('Place/update', [{go: false}]);
     },
 
+
+    /**
+     * Set total area for countries, protected areas or forest use layers
+     */
+    _setTotalArea: function(area){
+      this.totalArea = area.hectares;
+    },
+
+    _getTotalArea: function(){
+      return this.totalArea;
+    },
+
+
     /**
      * Get analysis resource params which are going to be
      * pass to the html to render the analysis results.
@@ -298,6 +315,14 @@ define([
         p.defor = (results.value[1]) ? Math.round(results.value[1].value).toLocaleString() : 0;
         p.layer.category_color = '#FFACC8';
       }
+      /**
+       * WDPA, FOREST USE params
+       *   - totalArea
+       */
+      if (results.params.wdpaid || results.params.useid) {
+        p.totalArea = this._getTotalArea();
+      }
+
 
       return p;
     },
