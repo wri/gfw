@@ -19,8 +19,19 @@ Gfw::Application.routes.draw do
   get '/feedback' => 'static#feedback'
   get '/howto' => 'static#howto'
   get '/howto(/:section)' => 'static#howto'
+
+  # about
   get '/about' => 'static#about'
+    # legacy
+    get '/about/video' => redirect("/about")
+    get '/about/gfw' => redirect("/about/about-gfw")
+    get '/about/partners' => redirect("/about/the-gfw-partnership")
+    get '/about/users' => redirect("/about")
+    get '/about/small_grants_fund' => redirect("/getinvolved/apply-to-the-small-grants-fund")
+    get '/about/testers' => redirect("/about")
+
   get '/about(/:section)' => 'static#about'
+
   get '/applications' => 'static#applications'
 
 
@@ -68,4 +79,8 @@ Gfw::Application.routes.draw do
   get '/landing' => 'landing#index'
 
   root 'landing#index'
+
+
+
+
 end
