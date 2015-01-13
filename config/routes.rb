@@ -1,6 +1,26 @@
 Gfw::Application.routes.draw do
 
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
+
+  #legacy
+    # stories
+    get '/stories' => redirect("/keepupdated/crowdsourced-stories")
+
+    # howto
+    get '/howto/video' => redirect("/howto")
+    get '/howto/general_questions' => redirect("/howto/faqs")
+    get '/howto/terminology' => redirect("/howto/faqs")
+    get '/howto/data' => redirect("/howto/faqs")
+    get '/howto/web_platform' => redirect("/howto/faqs")
+    get '/howto/for_business' => redirect("/howto/faqs")
+    # about
+    get '/about/video' => redirect("/about")
+    get '/about/gfw' => redirect("/about/about-gfw")
+    get '/about/partners' => redirect("/about/the-gfw-partnership")
+    get '/about/users' => redirect("/about")
+    get '/about/small_grants_fund' => redirect("/getinvolved/apply-to-the-small-grants-fund")
+    get '/about/testers' => redirect("/about")
+
   resources :stories
 
   # terms
@@ -17,18 +37,13 @@ Gfw::Application.routes.draw do
   get '/getinvolved' => 'static#getinvolved'
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'
+
+  # howto
   get '/howto' => 'static#howto'
   get '/howto(/:section)' => 'static#howto'
 
   # about
   get '/about' => 'static#about'
-    # legacy
-    get '/about/video' => redirect("/about")
-    get '/about/gfw' => redirect("/about/about-gfw")
-    get '/about/partners' => redirect("/about/the-gfw-partnership")
-    get '/about/users' => redirect("/about")
-    get '/about/small_grants_fund' => redirect("/getinvolved/apply-to-the-small-grants-fund")
-    get '/about/testers' => redirect("/about")
 
   get '/about(/:section)' => 'static#about'
 
