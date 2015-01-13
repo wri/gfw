@@ -6,6 +6,7 @@
   .icon {
     width: 18px;
     height: 18px;
+    fill: #bfbcc3;
 
     .icon-share {
       position: absolute;
@@ -380,11 +381,21 @@
               .sidenav-icon {
                 display: inline-block;
                 position: absolute;
-                top: 23px;
+                top: 50%;
                 right: 20px;
-                height: 18px;
+                transform: translate(0,-50%);
                 width: 18px;
+                height: 18px;
                 fill: #bebcc2;
+              }
+              &:hover {
+                .circle {
+                  border: 1px solid #97bd3d;
+                }
+
+                .sidenav-icon {
+                  fill: #97bd3d;
+                }
               }
             }
 
@@ -959,9 +970,9 @@
       float: left;
       padding: 50px 0;
       @include box-sizing(border-box);
-      .section-info {
-        margin-bottom: 25px;
-      }
+      // .section-info {
+      //   margin-bottom: 25px;
+      // }
       &.wide {
         width: 100%;
       }
@@ -1706,8 +1717,9 @@
 
           .tree-numbers,
           .loss-gain-graph {
-            padding-top: 0;
             width: 100%;
+            padding-top: 0;
+            text-align: center;
           }
 
           .tree-numbers div {
@@ -1773,11 +1785,23 @@
     }
 
     .country-section {
+
+      .section-info {
+        .section-btn {
+          right: 0 !important;
+        }
+      }
       .section-content {
         .left-col,
         .right-col {
           padding: 0;
           width: 100%;
+        }
+
+        .right-col {
+          .section-btn {
+            right: 0;
+          }
         }
       }
 
@@ -1790,42 +1814,89 @@
         height: 160px;
       }
 
+
       .forests-type-graph {
-        margin-top: 0;
+        margin: 0 0 25px 0;
 
         svg {
           display: block;
-          margin: 0 auto;
           width: 225px;
+          margin: 0 auto;
         }
       }
     }
 
+    .country-employment-section {
+      .section-info {
+        svg {
+          // width: 100%;
+          height: 100%;
+        }
+      }
+
+      .section-content {
+        .left-col {
+          .section-title {
+            span {
+              width: 77%;
+            }
+          }
+          .employment {
+            margin-bottom: 25px;
+          }
+        }
+
+        .right-col {
+          .country-tenure {
+            .line-graph text {
+              font-size: 10px;
+            }
+          }
+        }
+      }
+    } // country-employment-section
+
     .country-carbon-stocks-section {
+      padding: 0 !important;
       .carbon-text,
       .emissions-text {
         width: 100%;
         margin: 0;
         padding: 20px;
+        .section-title {
+          text-align: right;
+        }
+      }
+
+      .carbon-text {
+
       }
 
       .emissions-text {
-        padding-right: 0;
-        text-align: left;
+        .section-btn {
+          right: 0 !important;
+        }
       }
-    }
+    } // country-carbon-stocks-section
 
-    .country-external-links {
-
+    .country-policy-section {
       li {
         border: 0;
         margin-left: 0;
         padding-left: 0;
-      a {
-        color: #AAC221;
+        a {
+          color: #AAC221;
+        }
       }
+      .missing-link {
+        .section-content {
+          text-align: center;
+          .btn-rdn {
+            margin-bottom: 25px;
+          }
+        }
       }
-    }
+    } //country-policy-section
 
     .country-download-links-section {
       a:first-child {
@@ -1836,25 +1907,43 @@
         margin-top: 20px;
         width: 280px;
       }
-    }
+    } // country-download-links-section
 
-    .country-employment {
-      .section-content .left-col .section-title span {
-        font-size: 13px;
-        margin: 0;
+    .country-download-links-section {
+      a {
+        width: auto;
       }
-    }
+    } // country-download-links-section
 
-    .country-tenure {
-      .line-graph text {
-        font-size: 10px;
+    .country-blog-section {
+      text-align: left;
+
+      .section-title {
+        text-align: center;
       }
 
-      svg {
-        width: 280px;
-        height: 140px;
+      .columns {
+        .column {
+          float: none;
+
+          .story-title,
+          .story-content,
+          p {
+            text-align: left;
+          }
+
+          &.round {
+            .circle-wrapper {
+              text-align: center;
+              margin: 25px auto 100px;
+            }
+            .see-more {
+              bottom: 25%;
+            }
+          }
+        }
       }
-    }
+    } // country-blog-section
   }
 }
 
