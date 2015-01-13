@@ -6,7 +6,7 @@ class YourMailer < ActionMailer::Base
 
     mail :subject => "GFW Feedback",
          :to      => ENV["FEEDBACK_MAIL"],
-         :from    => email,
+         :from    => 'feedback@wri.com',
          :template_path => 'your_mailer',
          :template_name => 'feedback'
   end
