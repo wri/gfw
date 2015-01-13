@@ -65,7 +65,8 @@ define([
 
     events: {
       'click #get-started' : 'getStarted',
-      'click #go-to-apps' : 'goToApps'
+      'click #go-to-apps' : 'goToApps',
+      'click .gotomap' : 'gotoMap'
     },
 
     initialize: function() {
@@ -152,6 +153,30 @@ define([
       e.preventDefault();
       var posY = $($(e.currentTarget).attr('href')).offset().top;
       $('html,body').animate({scrollTop: posY},500);
+    },
+
+    gotoMap: function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      var $target = $(e.target);
+      var dialog_type = 1; //by default it will display the DRAW A POLYGON dialog
+      if (!$(e.target).hasClass('gotomap')) {
+        $target = $(e.target).parent();
+      }
+
+      //Check if we want to show RECEIVE ALERTS dialog
+      if ($target.hasClass('alerts')) dialog_type = 2;
+
+      var dialog = JSON.stringify(
+      {
+        "display": true,
+        "type" : dialog_type
+      });
+
+      sessionStorage.setItem('DIALOG', dialog);
+      location.assign($target.data('href'));
+
     }
 
   });
