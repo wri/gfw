@@ -1,7 +1,7 @@
 .country-show {
+  margin-top: 50px;
   font-weight: 400;
   color: $dark;
-  margin-top: 50px;
 
   .icon {
     width: 18px;
@@ -15,7 +15,6 @@
       width: 12px;
       height: 12px;
     }
-
   } // global svg size
 
   .circle {
@@ -24,9 +23,6 @@
   }
 
   .share {
-    // text-align: right;
-    // height: 0;
-    // display: block;
     width: 100%;
     .embed & {
       display: none;
@@ -69,15 +65,12 @@
       top: -45px;
       background-color: transparent;
     }
-
   .country-header {
     width: 100%;
     background: #333;
 
     .country-header-inner {
-      // $wall-background: "backgrounds/wall_background_alpha.png";
       background: #333;
-      // background-image: image-url($wall-background); /* fallback */
       .embed & {
         margin-top: 30px;
       }
@@ -180,7 +173,6 @@
     } // country-title
 
     .country-details {
-      // background-color:rgba(0, 0, 0, 0.2);
       height: 263px;
 
       .country-preview {
@@ -342,7 +334,7 @@
             }
           }
         } // loss-gain-graph
-      }
+      } // country-preview
 
       .country-sidenav {
         float: right;
@@ -385,7 +377,6 @@
               @include align-items(center);
               padding-left: 20px;
 
-
               .sidenav-icon {
                 display: inline-block;
                 position: absolute;
@@ -394,37 +385,8 @@
                 height: 18px;
                 width: 18px;
                 fill: #bebcc2;
-                // &.country-icons-share {
-                //   height: 16px;
-                //   @include country-icons-sprite(share);
-                // }
-                // &.country-icons-info_grey {
-                //   @include country-icons-sprite(info_grey);
-                // }
-                // &.country-icons-download_grey {
-                //   @include country-icons-sprite(download_grey);
-                // }
-                // &.country-icons-chart_grey {
-                //   @include country-icons-sprite(chart_grey);
-                // }
-                // &.country-icons-settings_engine {
-                //   height: 15px;
-                //   width: 15px;
-                //   @include country-icons-sprite(settings_engine);
-                // }
-
-                // &.no_def {
-                //   background-color: rgba(129, 149, 21, 0.6);
-                //   box-shadow: 0px 0px 15px rgba(159, 186, 43,0.9);
-                //   border-radius: 3px;
-                // }
               }
-              &:hover {
-
-              }
-
             }
-
 
             &:hover {
               background: #464646;
@@ -434,8 +396,11 @@
             }
           }
         }
-      }
 
+        .umdoptions_dialog {
+
+        }
+      } // country-sidenav
     } // country-details
   } // country-header
 
@@ -477,7 +442,6 @@
         font-weight: 500;
       }
     }
-
   } // country-indepth
 
   .country-nav-container {
@@ -593,9 +557,9 @@
       }
 
       .share {
-        width: auto;
         position: relative;
         float: right;
+        width: auto;
       }
 
       .info {
@@ -657,7 +621,38 @@
         color: $dark;
       }
       svg {
-        max-height: 225px;
+        height: inherit;
+      }
+    }
+
+    .country-alerts,
+    .country-production,
+    .country-tenure,
+    .country-employment,
+    .country-forests-type {
+      .coming-soon {
+        width: 100%;
+        font-size: 16px;
+        text-transform: uppercase;
+        text-align: center;
+        padding: 10px 0;
+        background: #f2f2f2;
+        color: #666;
+        font-style: italic;
+      }
+    }
+
+    .country-tenure,
+    .country-forests-type {
+      .coming-soon {
+        display: none;
+      }
+      .left-col, .right-col {
+        width: auto;
+      }
+
+      .right-col {
+        float: right;
       }
     }
 
@@ -670,31 +665,7 @@
       line-height: 1.4;
       font-size: 14px;
     }
-  }
-
-  .country-alerts,
-  .country-production,
-  .country-tenure,
-  .country-employment,
-  .country-forests-type {
-    .coming-soon {
-      width: 100%;
-      font-size: 16px;
-      text-transform: uppercase;
-      text-align: center;
-      padding: 10px 0;
-      background: #f2f2f2;
-      color: #666;
-      font-style: italic;
-    }
-  }
-
-  .country-tenure,
-  .country-forests-type {
-    .coming-soon {
-      display: none;
-    }
-  }
+  } // global sections
 
   .country-alerts-section {
     #formaAlertsContent,
@@ -710,7 +681,6 @@
         margin: 0;
       }
     }
-
 
     .forma_dropdown-menu {
       display: none;
@@ -820,100 +790,165 @@
       font-weight: 400;
       font-size: 13px;
     }
-  }
+  } // country-alerts-section
 
-  .country-forests-type {
-    .forests-type-graph {
-      margin-top: -25px;
-    }
+  .country-graph-section {
+    .country-forests-type {
+      .forest-type-legends {
+        font-size: 14px;
+        display: none;
+        margin-top: 10px;
 
-    .forest-type-legends {
-      font-size: 14px;
-      display: none;
-      margin-top: 10px;
-
-      .legends-title {
-        color: $cGreen;
-        margin-bottom: 10px;
-        display: block;
-      }
-
-      .legends-list {
-        li {
+        .legends-title {
+          color: $cGreen;
+          margin-bottom: 10px;
           display: block;
-          margin-bottom: 5px;
-          color: #777;
-          font-weight: 300;
-          vertical-align: top;
+        }
 
-          span {
-            height: 14px;
-            width: 14px;
-            border-radius: 100px;
-            display: inline-block;
-            margin-right: 4px;
-          }
+        .legends-list {
+          li {
+            display: block;
+            margin-bottom: 5px;
+            color: #777;
+            font-weight: 300;
+            vertical-align: top;
 
-          .regenerated {
-            background: #A1BA42;
-          }
+            span {
+              height: 14px;
+              width: 14px;
+              border-radius: 100px;
+              display: inline-block;
+              margin-right: 4px;
+            }
 
-          .primary {
-            background: #819515;
-          }
+            .regenerated {
+              background: #A1BA42;
+            }
 
-          .planted {
-            background: #DDDDDD;
+            .primary {
+              background: #819515;
+            }
+
+            .planted {
+              background: #DDDDDD;
+            }
           }
         }
       }
     }
-  }
+  } //country-graph-section
 
-  .country-tenure {
-    .line-graph {
-      font-weight: normal;
-      text-transform: uppercase;
+  .country-employment-section {
+    .section-content .left-col .section-title {
+      @extend .clearfix;
+      margin-bottom: 10px;
+      font-size: 47px;
+      display: inline-block;
 
-      circle {
-        stroke-width: 2px;
-        stroke: #f5f5f5;
-      }
-
-      text {
-        @extend .sans-serif;
-        font-size: 12px;
-      }
-
-      .units {
+      div,
+      span {
+        float: left;
+        margin-top: 8px;
         font-weight: 500;
       }
 
-      .one {
-        fill: #75B22E;
-      }
-
-      .two {
-        fill: #AAC700;
-      }
-
-      .three {
-        fill: #AC0;
-      }
-
-      .four {
-        fill: #FFD24D;
+      span {
+        width: 80%;
+        margin: 4px 0 0 10px;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 1.2;
+        @extend .sans-serif;
+        text-transform: uppercase;
+        color: #444;
       }
     }
-  } // country-tenure
 
-  .country-legislation {
-    .national-policy-links {
-      margin: 5px 0 4px 0;
+    .man-list {
+      color: #919191;
+    }
+
+    .country-tenure {
+      .line-graph {
+        font-weight: normal;
+        text-transform: uppercase;
+
+        circle {
+          stroke-width: 2px;
+          stroke: #f5f5f5;
+        }
+
+        text {
+          @extend .sans-serif;
+          font-size: 12px;
+        }
+
+        .units {
+          font-weight: 500;
+        }
+
+        .one {
+          fill: #75B22E;
+        }
+
+        .two {
+          fill: #AAC700;
+        }
+
+        .three {
+          fill: #AC0;
+        }
+
+        .four {
+          fill: #FFD24D;
+        }
+      }
+    }
+  } // country-employment-section
+
+  .country-policy-section {
+    overflow: hidden;
+    .country-section {
+      border: 0;
+      .section-content {
+        padding: 10px 0 0;
+      }
+    }
+    .country-legislation {
+      .national-policy-links {
+        margin: 5px 0 4px 0;
+        font-size: 14px;
+        text-decoration: underline;
+      }
+    }
+    .country-external-links, {
       font-size: 14px;
-      text-decoration: underline;
+
+      .section-content {
+        padding-left: 0;
+        padding-bottom: 10px;
+      }
+
+      li {
+        @include inline-block();
+        border-left: 1px solid #ddd;
+        padding-left: 8px;
+        margin: 0 0 10px 5px;
+        line-height: 14px;
+
+        &:first-child {
+          border: 0;
+          margin-left: 0;
+          padding-left: 0;
+        }
+      }
+
+      a {
+        color: $cGreen;
+        text-decoration: none;
+      }
     }
-  } // country-legislation
+  } // country-policy-section
 
   .country-carbon-stocks-section {
     display: table;
@@ -963,40 +998,7 @@
         background: #000;
       }
     }
-  } // country-carbon-stocks
-
-  .country-employment-section {
-
-
-    .section-content .left-col .section-title {
-      @extend .clearfix;
-      margin-bottom: 10px;
-      font-size: 47px;
-      display: inline-block;
-
-      div,
-      span {
-        float: left;
-        margin-top: 8px;
-        font-weight: 500;
-      }
-
-      span {
-        width: 80%;
-        margin: 4px 0 0 10px;
-        font-size: 12px;
-        font-weight: 500;
-        line-height: 1.2;
-        @extend .sans-serif;
-        text-transform: uppercase;
-        color: #444;
-      }
-    }
-
-    .man-list {
-      color: #919191;
-    }
-  } // country-employment
+  } // country-carbon-stocks-section
 
   .country-conventions-section {
     border: 0;
@@ -1041,56 +1043,13 @@
         text-transform: uppercase;
       }
     }
-  } // country-conventions
-
-  .country-policy-section {
-    overflow: hidden;
-    .country-section {
-      border: 0;
-      .section-content {
-        padding: 10px 0 0;
-      }
-    }
-
-    .country-external-links, {
-      font-size: 14px;
-
-      .section-content {
-        padding-left: 0;
-        padding-bottom: 10px;
-      }
-
-      li {
-        @include inline-block();
-        border-left: 1px solid #ddd;
-        padding-left: 8px;
-        margin: 0 0 10px 5px;
-        line-height: 14px;
-
-        &:first-child {
-          border: 0;
-          margin-left: 0;
-          padding-left: 0;
-        }
-      }
-
-      a {
-        color: $cGreen;
-        text-decoration: none;
-      }
-    }
-  } // external-links
-
-  .container-forest-type,
-  .container-employment {
-    border-bottom: 1px solid #E5E5E5;
-  }
+  } // country-conventions-section
 
   .country-download-links-section {
-    clear: both;
+    padding: 50px 0;
     background-color: #F5F5F5;
     text-align: center;
-    padding: 50px 0;
+    clear: both;
 
     a {
       margin-top: 0;
@@ -1102,7 +1061,7 @@
         background: darken(#EEE, 5%);
       }
     }
-  } // download-links
+  } // country-download-links-section
 
   .country-blog-section {
     text-align: center;
@@ -1288,13 +1247,12 @@
     .column {
 
     }
-  } // country-blog
+  } // country-blog-section
 
   .country-comments-section {
     background-color: #F5F5F5;
-  } // country-comments
-}
-
+  } // country-comments-section
+} // countries-sections
 
 .countries {
   &.index .content {
@@ -1358,50 +1316,22 @@
   }
 }
 
-.info i {
-  display: inline-block;
-  position: relative;
-  margin-left: 3px;
-  height: 20px;
-  width: 20px;
-  float: right;
-  @include country-icons-sprite(info_circle_white);
-
-  .and_share &{
-    left: -30px;
-  }
-  &.light {
-    @include country-icons-sprite(country_info);
-    height: 16px;
-    width: 16px;
-  }
-  &.dark {
-    @include country-icons-sprite(country_info_dark);
-    height: 16px;
-    width: 16px;
-  }
-}
-.settings i {
-  @include country-icons-sprite(settings_engine);
-    height: 16px;
-    width: 16px;
-}
 .btn-rdn {
+  display: inline-block;
+  margin-top: 10px;
   padding: 9px 25px;
   border: 1px solid #999;
   background: #EEE;
-  color: #545454;
   font-size: 17px;
-  display: inline-block;
-  text-decoration: none;
+  line-height: normal;
+  color: #545454;
   text-transform: uppercase;
-  margin-top: 10px;
+  text-decoration: none;
   -webkit-border-radius: 25px;
   -moz-border-radius: 25px;
   -ms-border-radius: 25px;
   -o-border-radius: 25px;
   border-radius: 25px;
-  line-height: normal;
 
   &:hover {
     background: darken(#EEE, 5%);
@@ -1415,7 +1345,6 @@
     border: 1px solid #B8B6BD;
     color: #464353;
     text-transform: uppercase;
-
     &:hover {
       background: darken(#ECECEC, 10%);
     }
@@ -1439,24 +1368,23 @@
     pointer-events: none;
     cursor: default;
   }
-}
+} // Buttons
 
 .umdoptions_dialog {
-
+  display: none;
+  position: relative;
+  top: -395px;
+  left: -444px;
+  float: none;
+  width: 442px;
+  min-height: 250px;
+  padding: 20px 20px 0px 20px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
   background: #fff;
   border: 1px solid #666;
   @include border-radius(3px);
   @include box-shadow(0px 0px 3px #666);
-  display: none;
-  float: none;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  position: relative;
-  left: -444px;
-  top: -250px;
-  width: 400px;
-  min-height: 250px;
-  padding: 20px 20px 0px 20px;
   z-index: 1000;
 
   &::after, &::before {
@@ -1736,12 +1664,7 @@
     }
   }
 }
-.country-sidenav {
-  .umdoptions_dialog {
-    width: 442px;
-    top: -393px;
-  }
-}
+
 .embed .country-show {
   font-weight: 400;
   color: $dark;
@@ -1752,8 +1675,11 @@
     text-align: center;
     font-size: 2em;
   }
-}
+} // embed
 
+// --- MEDIA QUERIES --- //
+
+// maxsize <= 480
 @media only screen and (max-width: 480px) {
   .country-show {
     .country-header {
@@ -1868,9 +1794,9 @@
         margin-top: 0;
 
         svg {
-          width: 225px;
-          margin: 0 auto;
           display: block;
+          margin: 0 auto;
+          width: 225px;
         }
       }
     }
@@ -1932,6 +1858,7 @@
   }
 }
 
+// maxsize <= 768
 @media only screen and (max-width: 768px) {
   .country-show {
 
@@ -1972,9 +1899,7 @@
     }
 
     .country-carbon-stocks-section {
-
       padding: 0 20px;
-
     }
   }
 
@@ -2004,7 +1929,7 @@
   }
 }
 
-
+// size > 481 & < 768
 @media only screen and (min-width: 481px) and (max-width: 768px) {
   .country-show {
     .country-section {
