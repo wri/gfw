@@ -303,7 +303,8 @@ define([
         switch(dialog.type) {
           case 2: var type = "alerts_dialog";
           break;
-
+          case 3: var type = "country_dialog";
+          break;
           case 1:
           default: var type = "regular_dialog";
         }

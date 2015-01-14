@@ -160,13 +160,19 @@ define([
       e.stopPropagation();
 
       var $target = $(e.target);
-      var dialog_type = 1; //by default it will display the DRAW A POLYGON dialog
+
+      //by default it will display the DRAW A POLYGON dialog
+      var dialog_type = 1;
+
       if (!$(e.target).hasClass('gotomap')) {
         $target = $(e.target).parent();
       }
 
       //Check if we want to show RECEIVE ALERTS dialog
       if ($target.hasClass('alerts')) dialog_type = 2;
+
+      //Check if we want to show CUNTRY PAGE dialog
+      if ($target.hasClass('country')) dialog_type = 3;
 
       var dialog = JSON.stringify(
       {

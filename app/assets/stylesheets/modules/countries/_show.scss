@@ -1132,11 +1132,12 @@
               @include transform-translate(-50%, -50%);
               // transform: translate;
               color: #FDFDFD;
+              width: 200px;
               strong, span {
                 font-weight: 500;
               }
               strong {
-                font-size: 21px;
+                font-size: 19px;
                 text-align: center;
               }
               span {
