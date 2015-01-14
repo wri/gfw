@@ -1338,6 +1338,10 @@
       text-align: center;
     }
 
+    .btn{
+      margin: 5px 0 0;
+    }
+
     .hidden {
       display: none;
     }
@@ -1480,9 +1484,12 @@
   .overview_title,
   .source_coverage_title {
     margin: 30px 0 10px;
-    font: 21px/1.1 "Fira Sans";
+    font: 18px;
     font-weight: 500;
     color: $dark;
+    &:first-child{
+      margin: 0 0 10px;
+    }
   }
 
   .source_dropdown {
