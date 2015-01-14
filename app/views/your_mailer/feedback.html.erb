@@ -1,5 +1,5 @@
 <h2>Become a tester</h2>
-<% if @email !== '' %>
+<% if @email? %>
   <p><%= @email %><% if @signup == 'true' %> wants to become an official GFW tester <% else %> doesn't want to become an official GFW tester<% end %></p>
 <% else %>
   <p>No email provided</p>
@@ -8,7 +8,7 @@
 
 
 <h2>Feedback</h2>
-<% if @feedback !== '' %>
+<% if @feedback? %>
   <p><%= @feedback %></p>
 <% else %>
   <p>No feedback provided</p>
