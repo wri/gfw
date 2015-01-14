@@ -1038,9 +1038,9 @@
       @include border-radius(2px);
 
       .name-container {
-        display: flex;
+        @include display-flex;
         height: calc(100% - 23px);
-        align-items: center;
+        @include align-items(center);
         .name {
           width: 100%;
         }
