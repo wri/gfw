@@ -96,7 +96,7 @@
   }
   &.bottom{
     bottom: 130%;
-    left: 51%;
+    left: 49%;
     &:after{
       bottom: 0;
       left: 50%;
@@ -134,25 +134,26 @@
   }
   li {
     border-top: 1px solid #EAECEF;
-    font-size: 15px;
+    font-size: 13px;
     white-space: nowrap;
     position: relative;
     z-index: 3;
     &:first-child { border-top: none;}
     a,.link {
       color: #444;
-      font-weight: 300;
+      font-weight: 400;
       padding: 14px 20px;
       text-decoration: none;
       text-align: center;
       display: block;
       // -webkit-font-smoothing: subpixel-antialiased;
       text-rendering: optimizeLegibility;
+      text-transform: uppercase;
       &:hover {
         background: darken($white,2%);
       }
       strong {
-        font-weight: 400;
+        color: $cGreen;
       }
     }
   }
