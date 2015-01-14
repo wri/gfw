@@ -1,6 +1,7 @@
 <h2>Become a tester</h2>
 <% if @email %>
-  <p><%= @email %><% if @signup == 'true' %> wants to become an official GFW tester <% else %> doesn't want to become an official GFW tester<% end %></p>
+  <p><%= @email %></p>
+  <p>Become an official GFW tester: <% if @signup == 'true' %>Yes<% else %>No<% end %></p>
 <% else %>
   <p>No email provided</p>
 <% end %>
