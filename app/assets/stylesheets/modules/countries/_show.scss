@@ -158,17 +158,16 @@
       }
 
       .country-indepth__bubble {
-        position: relative;
-        background: $cGreen;
-        width: 160px;
-        top: -82px;
+
         display: inline-block;
-        left: 447px;
-        padding: 6px;
-        font-size: 14px;
+        margin: 2px 0 0 15px;
+        background: $cGreen;
         text-align: center;
-        border-radius: 3px;
+        border-radius: 9px;
         a {
+          display: inline-block;
+          width: 160px;
+          padding: 11px 0 12px 0;
           color: #fff;
         }
       }
