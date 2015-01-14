@@ -12,7 +12,8 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      @include transform-translate(-50%, -50%);
+      // transform: translate(-50%, -50%);
       width: 12px;
       height: 12px;
     }
@@ -376,7 +377,7 @@
               text-decoration: none;
               @include display-flex();
               @include align-items(center);
-              padding-left: 20px;
+              padding: 0 30px 0 20px;
 
               .sidenav-icon {
                 display: inline-block;
@@ -387,6 +388,10 @@
                 width: 18px;
                 height: 18px;
                 fill: #bebcc2;
+              }
+
+              .no_def {
+                fill: #97bd3d;
               }
               &:hover {
                 .circle {
@@ -1124,7 +1129,8 @@
               position: absolute;
               top: 50%;
               left: 50%;
-              transform: translate(-50%, -50%);
+              @include transform-translate(-50%, -50%);
+              // transform: translate;
               color: #FDFDFD;
               strong, span {
                 font-weight: 500;
@@ -1202,7 +1208,8 @@
           position: absolute;
           left: 50%;
           bottom: 0;
-          transform: translate(-50%, 0);
+          @include transform-translate(-50%,0);
+          // transform: translate(-50%, 0);
           text-transform: uppercase;
           font-size: 14px;
           color: #FDFDFD;
@@ -1252,11 +1259,6 @@
           }
         }
       } // column
-    }
-
-
-    .column {
-
     }
   } // country-blog-section
 
@@ -1935,90 +1937,8 @@
 }
 
 // maxsize <= 768
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 999px) {
   .country-show {
-
-    .country-blog-section {
-      h3 {
-        padding-top: 0;
-      }
-
-      a {
-        color: white;
-      }
-
-      .columns {
-        min-height: 0;
-      }
-
-      .column.round .title span {
-        margin-top: 10px;
-        display: block;
-      }
-    }
-
-    .country-section {
-      padding: 20px;
-
-      .section-content {
-        &, .section-title {
-          padding: 0;
-        }
-      }
-
-      .section-info {
-        h6 {
-          display: inline-block;
-          width: 75%;
-        }
-      }
-    }
-
-    .country-carbon-stocks-section {
-      padding: 0 20px;
-    }
-  }
-
-  .country-header .country-details {
-    .country-sidenav .umdoptions_dialog,
-    .umdoptions_dialog {
-      position: fixed;
-      top: 0;
-      right: auto;
-      left: 0;
-      width: 100%;
-      height: 100%;
-
-      ul {
-        width: 95%;
-      }
-
-      .slider {
-        width: 100%;
-      }
-
-      p .slider #canopy_slider {
-        width: 100%;
-        margin-left: 0;
-      }
-    }
-  }
-}
-
-// size > 481 & < 768
-@media only screen and (min-width: 481px) and (max-width: 999px) {
-  .country-show {
-    .country-section {
-      .section-content {
-        .forma-graph svg {
-          height: 160px;
-        }
-      }
-    }
-
-    .country-carbon-stocks-section .emissions-text .section-content h3 {
-      padding: 0;
-    }
 
     .country-header {
       .country-details {
@@ -2051,16 +1971,142 @@
 
           a {
             display: flex;
-            padding: 0 10px;
-            align-items: inherit;
-            text-align: center;
-          }
+            padding: 0;
 
-          a .sidenav-icon {
-            display: none;
+            .sidenav-icon {
+              display: none;
+            }
+          }
+          .umd_options_control {
+            width: 100%;
           }
         }
       }
     }
+    .country-section {
+      padding: 45px 20px;
+
+      .section-content {
+        &, .section-title {
+          padding: 0;
+        }
+      }
+
+      .section-info {
+        h6 {
+          display: inline-block;
+          width: 75%;
+        }
+      }
+    }
+
+    .country-employment-section {
+
+      .left-col {
+        .section-title {
+          span {
+            width: 79%;
+          }
+        }
+
+      }
+
+      .right-col {
+        .country-tenure {
+          .line-graph text {
+            font-size: 9px;
+          }
+        }
+      }
+    }
+
+    .country-carbon-stocks-section {
+      padding: 0 20px;
+    } // country-carbon-stocks-section
+
+    .country-blog-section {
+      h3 {
+        padding-top: 0;
+      }
+
+      a {
+        color: white;
+      }
+
+      .columns {
+        min-height: 0;
+      }
+
+      .column.round .title span {
+        margin-top: 10px;
+        display: block;
+      }
+    } // country-blog-section
+  }
+
+  .country-header .country-details {
+    .country-sidenav .umdoptions_dialog,
+    .umdoptions_dialog {
+      position: fixed;
+      top: 0;
+      right: auto;
+      left: 0;
+      width: 100%;
+      height: 100%;
+
+      ul {
+        width: 95%;
+      }
+
+      .slider {
+        width: 100%;
+      }
+
+      p .slider #canopy_slider {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
   }
 }
+
+// // size > 481 & < 768
+// @media only screen and (min-width: 481px) and (max-width: 999px) {
+//   .country-show {
+//     .country-section {
+//       .section-content {
+//         // padding: 0 20px;
+
+//         .left-col, .right-col {
+//           .section-content {
+//             padding: 0;
+//           }
+//         }
+
+//         .forma-graph svg {
+//           height: 160px;
+//         }
+//       }
+//     }
+
+//     .country-alerts-section {
+//       .section-info {
+//         // padding-left: 20px;
+//       }
+//     } // country-alerts-section
+
+//     .country-graph-section {
+//       .section-info {
+//         h6 {
+//           width: 50%;
+//         }
+//       }
+//     } // country-graph-section
+
+//     .country-carbon-stocks-section .emissions-text .section-content h3 {
+//       padding: 0;
+//     }
+
+
+//   }
+// }
