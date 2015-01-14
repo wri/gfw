@@ -438,7 +438,7 @@
 
           <li class='column three round <%= @country['story'].present? ? '' : 'no_story' %>'>
             <div class="circle-wrapper">
-              <% if @country['story'].present? && @country['visible'] %>
+              <% if @country['story'].present? %>
                 <a href="<%= story_path(@country['story']['cartodb_id']) %>">
                   <%= image_tag static_map("#{@country['lat']}, #{@country['lng']}", '266x266', 4), :alt => @country['name'] %>
                   <div class='veil'></div>
