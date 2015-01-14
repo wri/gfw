@@ -158,27 +158,26 @@
       }
 
       .country-indepth__bubble {
-        position: relative;
-        background: $cGreen;
-        width: 160px;
-        top: -82px;
+
         display: inline-block;
-        left: 447px;
-        padding: 6px;
-        font-size: 14px;
+        margin: 2px 0 0 15px;
+        background: $cGreen;
         text-align: center;
-        border-radius: 3px;
+        border-radius: 9px;
         a {
+          display: inline-block;
+          width: 160px;
+          padding: 11px 0 12px 0;
           color: #fff;
         }
       }
     } // country-title
 
     .country-details {
-      height: 263px;
+      height: 300px;
 
       .country-preview {
-        width: 735px;
+        width: calc(100% - 215px);
         height: 100%;
         float: left;
         @include box-sizing(border-box);
@@ -341,15 +340,15 @@
       .country-sidenav {
         float: right;
         width: 215px;
-        height: 100%;
+        height: calc(100% + 142px);
         background: transparent;
 
         > ul {
-          padding: 1px 0;
-          width: 100%;
-          height: 407px;
-          top: -143px;
           position: relative;
+          top: -143px;
+          width: 100%;
+          height: 100%;
+          padding: 1px 0;
           @include display-flex();
           @include flex-direction(column);
           @include justify-content(space-between);
@@ -384,31 +383,32 @@
                 position: absolute;
                 top: 50%;
                 right: 20px;
-                transform: translate(0,-50%);
+                @include transform-translate(0,-50%);
                 width: 18px;
                 height: 18px;
-                fill: #bebcc2;
+                svg{
+                  fill: #bebcc2;
+                }
               }
 
               .no_def {
-                fill: #97bd3d;
+                svg{
+                  fill: #97bd3d;
+                }
               }
               &:hover {
                 .circle {
                   border: 1px solid #97bd3d;
                 }
-
                 .sidenav-icon {
-                  fill: #97bd3d;
+                  svg{
+                    fill: #97bd3d;
+                  }
                 }
               }
             }
-
             &:hover {
               background: #464646;
-              a {
-                font-weight: 500;
-              }
             }
           }
         }
@@ -1038,9 +1038,9 @@
       @include border-radius(2px);
 
       .name-container {
-        display: flex;
+        @include display-flex;
         height: calc(100% - 23px);
-        align-items: center;
+        @include align-items(center);
         .name {
           width: 100%;
         }
@@ -1693,12 +1693,156 @@
 
 // --- MEDIA QUERIES --- //
 
-// maxsize <= 480
-@media only screen and (max-width: 480px) {
+
+// maxsize <= 999
+@media only screen and (max-width: 999px) {
+  .country-show {
+
+    .country-header {
+      .country-details {
+        height: auto;
+      }
+
+      .country-details .country-preview {
+        // height: 263px;
+        padding: 20px;
+        float: none;
+        width: 100%;
+        height: 300px;
+      }
+
+      .country-details .country-sidenav {
+        float: none;
+        height: auto;
+        width: 100%;
+        display: table;
+
+        & > ul {
+          top: auto;
+          float: none;
+          width: auto;
+          height: auto;
+          display: table-row;
+        }
+
+        & > ul > li {
+          width: auto;
+          display: table-cell;
+
+          a {
+            display: flex;
+            padding: 0 10px;
+            text-align: center;
+
+            .sidenav-icon {
+              display: none;
+            }
+          }
+          .umd_options_control {
+            width: 100%;
+          }
+        }
+      }
+    }
+    .country-section {
+      padding: 45px 20px;
+
+      .section-content {
+        &, .section-title {
+          padding: 0;
+        }
+      }
+
+      .section-info {
+        h6 {
+          display: inline-block;
+          width: 75%;
+        }
+      }
+    }
+
+    .country-employment-section {
+
+      .left-col {
+        .section-title {
+          span {
+            width: 79%;
+          }
+        }
+
+      }
+
+      .right-col {
+        .country-tenure {
+          .line-graph text {
+            font-size: 9px;
+          }
+        }
+      }
+    }
+
+    .country-carbon-stocks-section {
+      padding: 0 20px;
+    } // country-carbon-stocks-section
+
+    .country-blog-section {
+      h3 {
+        padding-top: 0;
+      }
+
+      a {
+        color: white;
+      }
+
+      .columns {
+        min-height: 0;
+      }
+
+      .column.round .title span {
+        margin-top: 10px;
+        display: block;
+      }
+    } // country-blog-section
+  }
+
+  .country-header .country-details {
+    .country-sidenav .umdoptions_dialog,
+    .umdoptions_dialog {
+      position: fixed;
+      top: 0;
+      right: auto;
+      left: 0;
+      width: 100%;
+      height: 100%;
+
+      ul {
+        width: 95%;
+      }
+
+      .slider {
+        width: 100%;
+      }
+
+      p .slider #canopy_slider {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+
+// maxsize <= 750
+@media only screen and (max-width: 750px) {
   .country-show {
     .country-header {
       .country-title {
         padding: 20px 11px;
+
+        .country-indepth__bubble {
+          width: 100%;
+          margin: 15px 0 0;
+        }
 
         .country-selector {
           right: 0;
@@ -1710,8 +1854,9 @@
         height: auto;
 
         .country-preview {
-          width: 100%;
           float: none;
+          width: 100%;
+          height: 100%;
 
           .map {
             height: 260px;
@@ -1769,6 +1914,7 @@
           ul {
             top: 0;
             padding: 0;
+            display: flex !important;
           }
 
           ul li {
@@ -1778,6 +1924,13 @@
             &:last-child {
               border-bottom: 1px solid #6B6B87;
             }
+
+            a {
+              .sidenav-icon {
+                display: inline-block !important;
+              }
+            }
+
           }
         }
       }
@@ -1937,177 +2090,37 @@
   }
 }
 
-// maxsize <= 768
-@media only screen and (max-width: 999px) {
+// size > 481 & < 768
+@media only screen and (min-width: 751px) and (max-width: 999px) {
   .country-show {
+    .country-section {
+      .section-content {
 
-    .country-header {
-      .country-details {
-        height: 317px;
-      }
-
-      .country-details .country-preview {
-        height: 263px;
-        padding: 20px;
-        float: none;
-      }
-
-      .country-details .country-sidenav {
-        float: none;
-        height: auto;
-        width: 100%;
-        display: table;
-
-        & > ul {
-          top: auto;
-          float: none;
-          width: auto;
-          height: auto;
-          display: table-row;
+        .left-col, .right-col {
+          .section-content {
+            padding: 0;
+          }
         }
 
-        & > ul > li {
-          width: auto;
-          display: table-cell;
-
-          a {
-            display: flex;
-            padding: 0;
-
-            .sidenav-icon {
-              display: none;
-            }
-          }
-          .umd_options_control {
-            width: 100%;
-          }
+        .forma-graph svg {
+          height: 160px;
         }
       }
     }
-    .country-section {
-      padding: 45px 20px;
 
-      .section-content {
-        &, .section-title {
-          padding: 0;
-        }
-      }
-
+    .country-graph-section {
       .section-info {
         h6 {
-          display: inline-block;
-          width: 75%;
+          width: 50%;
         }
       }
+    } // country-graph-section
+
+    .country-carbon-stocks-section .emissions-text .section-content h3 {
+      padding: 0;
     }
 
-    .country-employment-section {
 
-      .left-col {
-        .section-title {
-          span {
-            width: 79%;
-          }
-        }
-
-      }
-
-      .right-col {
-        .country-tenure {
-          .line-graph text {
-            font-size: 9px;
-          }
-        }
-      }
-    }
-
-    .country-carbon-stocks-section {
-      padding: 0 20px;
-    } // country-carbon-stocks-section
-
-    .country-blog-section {
-      h3 {
-        padding-top: 0;
-      }
-
-      a {
-        color: white;
-      }
-
-      .columns {
-        min-height: 0;
-      }
-
-      .column.round .title span {
-        margin-top: 10px;
-        display: block;
-      }
-    } // country-blog-section
-  }
-
-  .country-header .country-details {
-    .country-sidenav .umdoptions_dialog,
-    .umdoptions_dialog {
-      position: fixed;
-      top: 0;
-      right: auto;
-      left: 0;
-      width: 100%;
-      height: 100%;
-
-      ul {
-        width: 95%;
-      }
-
-      .slider {
-        width: 100%;
-      }
-
-      p .slider #canopy_slider {
-        width: 100%;
-        margin-left: 0;
-      }
-    }
   }
 }
 
-// // size > 481 & < 768
-// @media only screen and (min-width: 481px) and (max-width: 999px) {
-//   .country-show {
-//     .country-section {
-//       .section-content {
-//         // padding: 0 20px;
-
-//         .left-col, .right-col {
-//           .section-content {
-//             padding: 0;
-//           }
-//         }
-
-//         .forma-graph svg {
-//           height: 160px;
-//         }
-//       }
-//     }
-
-//     .country-alerts-section {
-//       .section-info {
-//         // padding-left: 20px;
-//       }
-//     } // country-alerts-section
-
-//     .country-graph-section {
-//       .section-info {
-//         h6 {
-//           width: 50%;
-//         }
-//       }
-//     } // country-graph-section
-
-//     .country-carbon-stocks-section .emissions-text .section-content h3 {
-//       padding: 0;
-//     }
-
-
-//   }
-// }
