@@ -2,7 +2,7 @@
     <div class="inner">
       <header>
         <h2><%= @title %></h2>
-        <h3>Global Forest Watch offers a wide range of capabilities that are designed to be both useful and user-friendly. Whether you arrive at GFW with a clear purpose or are simply exploring different features, this page contains information to help you learn how to use the platform.</h3>
+        <h3>Global Forest Watch offers a wide range of content and capabilities to serve a variety of users and purposes. Whether you arrive at GFW with a clear purpose or are simply exploring different features, we can help you learn to use the platform.</h3>
       </header>
       <div class="carrousel" id="carrouselView">
         <div class='carrousel-box'>
@@ -46,16 +46,51 @@
             <header>
               <h2 class='source_category_title'>Visualize data</h2>
             </header>
+            <p><i>This information pertains only to the GFW Interactive Map and Country profiles and rankings. For more advanced forest fire and commodity visualizations, please visit <a href="http://fires.globalforestwatch.org/" target="_blank">GFW Fires</a> and <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities</a>.</i></p>
             <ul class='sources'>
               <li class='source-item first'>
                 <div class='source_header'>
-                  <strong class='source_title'>How do I navigate the homepage?</strong>
+                  <strong class='source_title'>View global data</strong>
                   <i class='expand_arrow'></i>
                 </div>
                 <div class='source_body'>
                   <div class='source_summary'>
-                    <p>When you first navigate to the homepage you will see many ways to get started and links to important pages. To begin, you can explore and analyze data on the GFW interactive map by clicking "EXPLORE THE MAP" or view simple country statistics and rankings by clicking "COUNTRY PROFILES + RANKINGS." You can also start by visiting one of the GFW Applications, GFW Fires or GFW Commodities, find out how to develop your own application, or view the forthcoming applications.</p>
-                    <p>From the homepage, you can also view recent activity—user submitted stories and blogposts, recent stories, and social media—and find out how you can keep updated and get involved. The homepage also features links to the data portal and the GFW blog, and a list of our core partners.</p>
+                    <h3>Visualize data on the map</h3>
+                    
+                    <p>1.  Navigate to the <a href="/map" target="_blank">GFW Interactive Map</a></p>
+                    <p>2.  Using the tabs across the top of the map, select the data layers you want to display. UMD/Google tree cover loss and gain is displayed by default.</p>
+                    <p>[INSERT SCREENSHOT 1]</p>
+                    <p>3.  Click the information icon in the drop down menu to learn more about each data layer. This includes information such as the origin of the data, resolution, frequency, cautions, and where you can download the original data set.</p>
+                    <p>[INSERT SCREENSHOT 2]</p>
+                    <p>4.  View selected layers in the data summary window. For data layers restricted to a particular geographic region, you can turn on “Geographic coverage” in the data summary window to see the geographic extent of the particular data layer on the map.</p>
+                    <p>[INSERT SCREENSHOT 3]</p>
+                    <p>5.  Share your map view, analyze data (see the Analyze and monitor data tab), or adjust the data settings using the buttons on the map.</p>
+                    <p>[INSERT SCREENSHOT 4]</p>
+                    <p>6.  Change the base map to view data with a different map background.</p>
+                    <p>[INSERT SCREENSHOT 5]</p>
+                    <a class="btn green medium" href='/map' target='_blank'>GFW Interactive Map</a>
+                    <a class="btn green medium" href='http://fires.globalforestwatch.org/' target='_blank'>GFW Fires</a>
+                    <a class="btn green medium" href='http://commodities.globalforestwatch.org/' target='_blank'>GFW Commodities</a>
+                    <h3>Visualize data as a time series</h3>
+                    <p>For most data layers under the Forest Change tab, the default view shows cumulative data points over the entire study period. However, most of these layers can also be viewed as a time series. The specific time intervals (e.g., annual, monthly, daily) vary for each data layer.</p>
+                    <p>1.  Select the Forest Change data layer you want to view as a time series.</p>
+                    <p>2.  On the bottom of the map, locate the timeline.</p>
+                    <p>3.  Some timelines allow you to animate the data over time or select a time interval. Press the play button on the left to view an animation of the entire time series or drag the ends of the timeline to select a specific period of time.</p>
+                    <p>[INSERT SCREENSHOT 6]</p>
+                    <p>4.  For data layers with a simple timeline, select the period for which you would like to view data.</p>
+                    <p>[INSERT SCREENSHOT 7]</p>
+                    <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/loss?begin=2001-01-01&end=2013-12-31&threshold=30' target='_blank'>View UMD/Google Data</a>
+                    <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/forma?begin=2006-01-01&end=2014-11-29' target='_blank'>View FORMA data</a>
+                    <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/imazon?begin=2008-01-01&end=2014-10-31' target='_blank'>View Imazon Data</a>
+                    <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/modis?begin=2014-07-01&end=2014-09-30' target='_blank'>View QUICC Data</a>
+                    <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/fires?begin=2015-01-11&end=2015-01-12' target='_blank'>View Active Fires</a>
+                    <h3>Learn more about individual data points and polygons</h3>
+                    <p>Some data layers allow you to click on individual data points and polygons (i.e., shapes) to view additional information. This feature applies to NASA active fires (within the Forest Change tab) and/or data within the Forest Use, Conservation, People, and Stories tabs.</p>
+                    <p>1.  Select a data layer, noting that this feature only applies to certain layers (see above).</p>
+                    <p>2.  Click on the data point or polygon you want to learn more about and an information window will appear. <i>Note: You can analyze Forest Change data within individual land-use concessions and protected areas by selecting the analysis icon in the information window. Click the Analyze and monitor tab on this page for step-by-step guidance.</i></p>
+                    <p>[INSERT SCREENSHOT 8]</p>
+                    <a class="btn green medium" href='/map' target='_blank'>GFW Interactive Map</a>
+                    <p>Interested in conducting more detailed analyses of concessions related to specific commodities? Visit <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities</a>.</p>
                   </div>
                 </div>
               </li>
