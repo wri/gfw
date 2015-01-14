@@ -155,18 +155,29 @@
       &.analysis-control-subscribe {
         // @include home-icons-sprite(control_buttons_subscribe);
         background: image-url('home-icons/control_buttons_subscribe.png');
-
+        svg{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 60%;
+          height: 60%;
+          padding: 2px;
+          fill: #999;
+          background: #F1F1F1;
+          @include transform(translate(-50%,-50%));
+        }
         &:hover {
           position: relative;
-          width: 31px;
-          margin-right: -1px;
           // @include home-icons-sprite(control_buttons_subscribe_hover);
           background: image-url('home-icons/control_buttons_subscribe_hover.png');
+          svg{
+            fill: #555;
+          }
         }
 
         &:active {
           // @include home-icons-sprite(control_buttons_subscribe_active);
-          background: image-url('home-icons/control_buttons_subscribe_active.png');
+          // background: image-url('home-icons/control_buttons_subscribe_active.png');
         }
 
         &.disabled {
