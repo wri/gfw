@@ -49,7 +49,7 @@ class StaticController < ApplicationController
   def feedback
     @title = 'Feedback'
 
-    signup     = params["signup"]
+    signup   = params["signup"]
     email    = params["email"]
     feedback = params["feedback"]
     YourMailer.feedback(feedback,signup,email).deliver

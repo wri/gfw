@@ -263,7 +263,7 @@
   position: fixed;
   top: 50%;
   right: 0;
-  z-index: 3;
+  z-index: 250;
   background: #FFD24D;
   text-transform: uppercase;
   color: $dark;
@@ -278,15 +278,4 @@
     display: block;
   }
 
-}
-.goog-tooltip {
-    display: none !important;
-}
-.goog-tooltip:hover {
-    display: none !important;
-}
-.goog-text-highlight {
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
 }

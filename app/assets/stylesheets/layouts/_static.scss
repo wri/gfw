@@ -169,16 +169,16 @@
         a {
           color: $dark;
           text-decoration: none;
-          line-height: 60px;
+          line-height: 1.25;
           display: block;
           z-index: 2;
-          padding: 0 15px;
+          padding: 21px 30px 21px 15px;
           position: relative;
           border-top: 1px solid $border;
           @media (min-width: $br-mobile) {
             padding: 0;
             border-left: 1px solid $border;
-            line-height: 60px;
+            padding: 21px 10px;
           }
 
 
@@ -1337,6 +1337,12 @@
       font-size: 14px;
       text-align: center;
     }
+
+    .btn{
+      margin: 5px 0 0;
+    }
+
+
 
     .hidden {
       display: none;

@@ -1,7 +1,7 @@
 class YourMailer < ActionMailer::Base
   def feedback(feedback,signup,email)
-    @feedback = feedback
-    @email = email
+    @feedback = feedback.present? ? feedback : nil
+    @email = email.present? ? email : nil
     @signup = signup
 
     mail :subject => "GFW Feedback",

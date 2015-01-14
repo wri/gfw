@@ -49,24 +49,24 @@
       <div class="inner">
         <ul class="country-nav-items">
           <li data-scroll-nav='0'><a href="#" >Forma<br>clearing alerts</a></li>
-          <li data-scroll-nav='1'><a href="#">Forest<br>type</a></li>
+          <li data-scroll-nav='2'><a href="#">Forest<br>type</a></li>
           <!--<li><a href="#" data-scroll-nav='2'>State of the forest</a></li>-->
-          <li data-scroll-nav='2'><a href="#">People<br>& Economy</a></li>
+          <li data-scroll-nav='3'><a href="#">People<br>& Economy</a></li>
           <li data-scroll-nav='3'><a href="#">Tenure<br>& Laws</a></li>
-          <li data-scroll-nav='4'><a href="#">Climate Change</a></li>
-          <li data-scroll-nav='5'><a href="#">International agreements</a></li>
+          <li data-scroll-nav='5'><a href="#">Climate Change</a></li>
+          <li data-scroll-nav='6'><a href="#">International agreements</a></li>
         </ul>
       </div>
     </div>
   </div>
 
   <!-- forma alerts -->
-  <a href="#" id="alerts" class="anchor-country-info"></a>
   <section class="country-section country-alerts-section" data-scroll-index='0'>
     <div class="inner">
       <div class="section-info section-share">
+        <a href="#" id="alerts" class="anchor-country-info"></a>
         <h6>FORMA alerts</h6>
-        <div class="section-btn">
+        <div class="section-btn no-cols">
           <a href="#" class="info icon circle" data-source="forma">
             <svg>
               <use xlink:href="#shape-info"></use>
@@ -112,13 +112,14 @@
     </div>
   </section>
 
-  <section class="country-section country-graph-section" data-scroll-index='1'>
+  <!-- graph -->
+  <section class="country-section country-graph-section" data-scroll-index='2'>
     <div class="inner">
       <section class="section-content">
         <div class="left-col">
           <!-- forest type -->
           <a href="#" id="forests-type" class="anchor-country-info"></a>
-          <section class="country-forests-type" data-scroll-index='1'>
+          <section class="country-forests-type" data-scroll-index='2'>
               <div class="section-info section-share">
                 <h6>Type of forests in <%= @country['name'] %></h6>
                 <div class="section-btn">
@@ -183,6 +184,7 @@
     </div>
   </section>
 
+  <!-- employment -->
   <section class="country-section country-employment-section" data-scroll-index='3'>
     <div class="inner">
       <section class="section-content">
@@ -327,7 +329,7 @@
     <div class='inner'>
       <div class="section-info section-share">
         <h6>Conventions</h6>
-        <div class="section-btn">
+        <div class="section-btn no-cols">
           <a href="#" class="info icon circle" data-source="conventions">
             <svg>
               <use xlink:href="#shape-info"></use>
@@ -355,17 +357,15 @@
 
   <!-- policy -->
   <section class="country-section country-policy-section">
-
     <div class="inner">
       <section class="section-content">
 
         <div class="left-col">
-
           <section class="missing-link">
             <div class="section-info section-share">
               <h6>Forest policy and legislation</h6>
               <div class="section-btn">
-                <a href="#" class="info icon circle" data-source="forest_legislation">
+                <a href="#" class="info icon circle" data-source="">
                   <svg>
                     <use xlink:href="#shape-info"></use>
                   </svg>
@@ -376,7 +376,6 @@
               <%= link_to 'Are we missing a link?', 'mailto:gfw@wri.org', class: 'btn-rdn' %>
             </div>
           </section>
-
         </div>
 
         <div class="right-col">
@@ -391,7 +390,6 @@
                 <% if @country['ministry_link'].present? %>
                   <li><a href='<%= @country['ministry_link'] %>' target='_blank'><%= t('.ministry_link') %></a></li>
                 <% end %>
-
                 <% if @country['external_links'].present? %>
                   <% JSON.parse(@country['external_links']).each do |link| %>
                     <li><%= link_to link['title'], link['url'], :target => '_blank' %></li>

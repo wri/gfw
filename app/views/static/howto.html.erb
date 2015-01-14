@@ -33,20 +33,20 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'Visualize data', "#{howto_path}/visualize-data", :"data-slug" => 'visualize-data', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item visualize-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Analyze & monitor data', "#{howto_path}/analyze-and-monitor-data", :"data-slug" => 'analyze-and-monitor-data', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item analyze-and-monitor-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Add a story to the map', "#{howto_path}/add-a-story-to-the-map", :"data-slug" => 'add-a-story-to-the-map', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item add-a-story-to-the-map' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'View data', "#{howto_path}/view-data", :"data-slug" => 'view-data', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item view-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Conduct analysis and subscribe to alerts', "#{howto_path}/conduct-analysis-and-subscribe-to-alerts", :"data-slug" => 'conduct-analysis-and-subscribe-to-alerts', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item conduct-analysis-and-subscribe-to-alerts' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Submit a story', "#{howto_path}/submit-a-story", :"data-slug" => 'submit-a-story', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item submit-a-story' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li class="no-transform"><%= link_to 'FAQs', "#{howto_path}/faqs", :"data-slug" => 'faqs', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item faqs' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
         <div class="sources-content">
           <div id="sources-spinner" class="spinner start"><svg><use xlink:href="#shape-spinner"></use></svg></div>
-          <article id="visualize-data" class="source-article">
+          <article id="view-data" class="source-article">
             <header>
-              <h2 class='source_category_title'>Visualize data</h2>
+              <h2 class='source_category_title'>View data</h2>
+              <p>This information pertains only to the GFW Interactive Map and Country profiles and rankings. For more advanced forest fire and commodity visualizations, please visit <a href="http://fires.globalforestwatch.org/" target="_blank">GFW Fires</a> and <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities</a>.</p>
             </header>
-            <p><i>This information pertains only to the GFW Interactive Map and Country profiles and rankings. For more advanced forest fire and commodity visualizations, please visit <a href="http://fires.globalforestwatch.org/" target="_blank">GFW Fires</a> and <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities</a>.</i></p>
             <ul class='sources'>
               <li class='source-item first'>
                 <div class='source_header'>
@@ -55,8 +55,8 @@
                 </div>
                 <div class='source_body'>
                   <div class='source_summary'>
-                    <h3>Visualize data on the map</h3>
-                    
+                    <h3 class="overview_title">Visualize data on the map</h3>
+
                     <p>1.  Navigate to the <a href="/map" target="_blank">GFW Interactive Map</a></p>
                     <p>2.  Using the tabs across the top of the map, select the data layers you want to display. UMD/Google tree cover loss and gain is displayed by default.</p>
                     <p>[INSERT SCREENSHOT 1]</p>
@@ -71,7 +71,7 @@
                     <a class="btn green medium" href='/map' target='_blank'>GFW Interactive Map</a>
                     <a class="btn green medium" href='http://fires.globalforestwatch.org/' target='_blank'>GFW Fires</a>
                     <a class="btn green medium" href='http://commodities.globalforestwatch.org/' target='_blank'>GFW Commodities</a>
-                    <h3>Visualize data as a time series</h3>
+                    <h3 class="overview_title">Visualize data as a time series</h3>
                     <p>For most data layers under the Forest Change tab, the default view shows cumulative data points over the entire study period. However, most of these layers can also be viewed as a time series. The specific time intervals (e.g., annual, monthly, daily) vary for each data layer.</p>
                     <p>1.  Select the Forest Change data layer you want to view as a time series.</p>
                     <p>2.  On the bottom of the map, locate the timeline.</p>
@@ -84,7 +84,7 @@
                     <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/imazon?begin=2008-01-01&end=2014-10-31' target='_blank'>View Imazon Data</a>
                     <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/modis?begin=2014-07-01&end=2014-09-30' target='_blank'>View QUICC Data</a>
                     <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/fires?begin=2015-01-11&end=2015-01-12' target='_blank'>View Active Fires</a>
-                    <h3>Learn more about individual data points and polygons</h3>
+                    <h3 class="overview_title">Learn more about individual data points and polygons</h3>
                     <p>Some data layers allow you to click on individual data points and polygons (i.e., shapes) to view additional information. This feature applies to NASA active fires (within the Forest Change tab) and/or data within the Forest Use, Conservation, People, and Stories tabs.</p>
                     <p>1.  Select a data layer, noting that this feature only applies to certain layers (see above).</p>
                     <p>2.  Click on the data point or polygon you want to learn more about and an information window will appear. <i>Note: You can analyze Forest Change data within individual land-use concessions and protected areas by selecting the analysis icon in the information window. Click the Analyze and monitor tab on this page for step-by-step guidance.</i></p>
@@ -101,7 +101,7 @@
                 </div>
                 <div class='source_body'>
                   <div class='source_summary'>
-                  <h3>View and download national and subnational statistics</h3>
+                    <h3 class="overview_title">View and download national and subnational statistics</h3>
                     <p>1.  Navigate to the <a href="/countries" target="_blank">Country profiles</a>.</p>
                     <p>2.  Select a country or search for a country to view statistics and graphs related to tree cover loss and gain, forest type, economy, land tenure, and more.</p>
                     <p>3.  See statistics and graphs for a subnational jurisdiction using the “Select Area” button located under the country name. <i>Note: Only the statistics and graphs presented on the top portion of the country profile can be refined to subnational jurisdictions.</i></p>
@@ -111,7 +111,7 @@
                     <p>5.  Learn more about or share each statistic and graph by selecting the information or share icons, when available.</p>
                     <p>[INSERT SCREENSHOT 11]</p>
                     <a class="btn green medium" href='/countries' target='_blank'>Country profiles</a>
-                    <h3>View country rankings for tree cover, loss, and gain</h3>
+                    <h3 class="overview_title">View country rankings for tree cover, loss, and gain</h3>
                     <p>1.  Navigate to <a href="/countries/overview" target="_blank">Country rankings</a>.</p>
                     <p>2.  Use the tabs to navigate through different ranking categories.</p>
                     <p>3.  Click on a country name in the ranking list to access the country profile.</p>
@@ -125,9 +125,9 @@
               </li>
             </ul>
           </article>
-          <article id="analyze-and-monitor-data" class="source-article">
+          <article id="conduct-analysis-and-subscribe-to-alerts" class="source-article">
             <header>
-              <h2>Analyze & monitor data</h2>
+              <h2>Conduct analysis and subscribe to alerts</h2>
               <p>Sign up to receive tree clearing alerts for the humid tropical forest biome. Tree clearing alerts indicate areas where tree cover loss is likely to have recently occurred, based off of an analysis of satellite imagery and complimentary data on forest fires and weather events. To learn more about this data set and where it applies, please visit the data page.</p>
               <p>When you sign up to receive alerts for an area of interest, you will be notified when a new tree clearing has been detected, as often as every 30 days. Once you identify the area you would like to monitor, simply enter your email address to subscribe to alerts.</p>
               <p><strong>Interested in monitoring tree clearing alerts in commodities? Visit <a href='http://www.commodities.globalforestwatch.org' target='_blank'>GFW Commodities</a></strong>.</p>
@@ -164,7 +164,7 @@
                   </div>
                 </div>
               </li>
-              <li class='source-item last'>
+              <li class='source-item'>
                 <div class='source_header'>
                   <strong class='source_title'>Subscribe to alerts in a country or subnational region.</strong>
                   <i class='expand_arrow'></i>
@@ -179,52 +179,58 @@
                   </div>
                 </div>
               </li>
+              <li class='source-item last'>
+                <div class='source_header'>
+                  <strong class='source_title'>Advanced analysis</strong>
+                  <i class='expand_arrow'></i>
+                </div>
+                <div class='source_body'>
+                  <div class='source_summary'>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                  </div>
+                </div>
+              </li>
+              <li></li>
             </ul>
           </article>
 
-          <article id="add-a-story-to-the-map" class="source-article">
+          <article id="submit-a-story" class="source-article">
             <header>
-              <h2>Add a story to the map</h2>
+              <h2>Submit a story</h2>
               <p>When you enter the country profiles and rankings, you can search for and select a country, or navigate to the rankings. By selecting a country, you can view national and subnational statistics and infographics, conduct analysis, and download data. The rankings include global graphs and country rankings for key factors, such as total tree cover loss 2001-2012.</p>
             </header>
-            <ul class='sources'>
-              <li class='source-item first'>
-                <div class='source_header'>
-                  <strong class='source_title'>Country profiles</strong>
-                  <i class='expand_arrow'></i>
-                </div>
-                <div class='source_body'>
-                  <div class='source_summary'>
-                    <p>Country profiles include national and subnational information from UMD/Google, a graph of FORMA alerts (where applicable), information from FAO’s Forest Resources Assessment, and other relevant data. They are also a portal for national and subnational data analysis and download and a place to upload stories and join a discussion.</p>
-                    <p>At the top of the page, you will find a country overview of tree cover. To view this information at the subnational level, click “SELECT AREA” and define your area of interest. The tree cover statistics and infographic will change according to your selection. Using the menu available on the right-hand side, you can learn more, download the Raster data or a table of country statistics, analyze tree cover in this country (by national or subnational boundary), and adjust the tree cover canopy density setting.</p>
-                    <ul class='bullets'>
-                      <li><strong>Country Stats.</strong> Select “COUNTRY STATS” to download a CSV file containing UMD/Google tree cover extent, loss, and gain data for all subnational regions of the country. The data is listed for all years and tree cover canopy densities. </li>
-                      <li><strong>Analyze.</strong> Once you determine your area of interest (entire country, the default, or a subnational region) select “ANALYZE” to calculate tree cover extent, loss, and gain statistics. This feature will take you to the map, where you can select a specific time period and make other adjustments to your analysis. See “Analyzing Data” under the “Interactive Map” tab on the left.</li>
-                      <li><strong>Settings.</strong> For the UMD/Google statistics and infographic presented in the country pages, you can adjust the tree cover canopy density of the data to meet the national standard or ecosystem type in your area of interest. Once you select “SETTINGS,” use the slider at the bottom of the window to adjust the canopy density to one of the following densities: >10%, >15%, >20%, >25%, >30%, >50%, and >75%.  The default tree cover canopy density is >30%. If you select a canopy density other than the default, the “settings” icon will be highlighted green. For more information, click the “?” icon within the settings window. Please note: the analysis feature, accessed through the country pages, will reflect the canopy density you select.</li>
-                    </ul>
-                    <p><strong>Try it out!</strong> Visit a country and select a subnational region from the available dropdown menu. See how the statistics and infographic adjust when you define a new area. Next, adjust the tree cover canopy density setting to >70% by selecting “SETTINGS.” Again, notice how the figures change. Finally, click “ANALYZE,” which will take you to the map.</p>
-                    <p>Other country information can be accessed by clicking on the categories of data (e.g., PEOPLE & ECONOMY) or by scrolling down. Click the “?” icon next to each infographic for more information. Select the “share” icon to share the infographic by embedding HTML or copying the URL.</p>
-                    <p>For countries with coverage of FORMA alerts (visit the data page  for more information), you can scroll down the country profile and select “SUBSCRIBE TO ALERTS FOR THIS COUNTRY.” Once you enter your email address, you will receive an email when a new tree clearing has been detected, on a monthly-basis.</p>
-                    <p>Some GFW data is relevant only to certain countries, such as land-use concession. Select “DOWNLOAD RELEVANT DATA SETS” within the country profile to view and download country-specific data from the Data Portal.</p>
-                    <p>The bottom of the country profile features both blog and user stories and a discussion forum for the country. You can click to view user stories on the map, submit your own story, or read the relevant stories and blog posts. Below the stories, you can join the discussion by adding, replying or sharing a comment.</p>
-                  </div>
-                </div>
-              </li>
-              <li class='source-item last'>
-                <div class='source_header'>
-                  <strong class='source_title'>Rankings</strong>
-                  <i class='expand_arrow'></i>
-                </div>
-                <div class='source_body'>
-                  <div class='source_summary'>
-                    <p>The rankings page features interactive graphs of global tree cover loss and gain and country rankings. The graphs and rankings are based on UMG/Google tree cover data and are organized according to five tabs: loss vs. gain, % loss vs. % gain, extent, loss relative to gain, and loss by climate domain. The graphs and ranks correspond to the selected tab. Drag your mouse over points in each graph to learn more information.</p>
-                    <p>Similar to within the country profiles, you can use the “SETTINGS” feature located at the top of the page to adjust the tree cover canopy density of the data presented in the graphs and rankings. Once selected, use the slider at the bottom of the window to adjust the canopy density to one of the following densities: >10%, >15%, >20%, >25%, >30%, >50%, and >75%.  The default tree cover canopy density is >30%. If you select a canopy density other than the default, the “settings” icon will be highlighted green. For more information, click the “?” icon within the “settings” window.</p>
-                    <p>For more information about each graph and list of rankings select the “?” near the top of the page. Select the “share” icon to share the infographic by embedding HTML or copying the URL.</p>
-                    <p>Select “ALL COUNTRIES” to return to the country profile menu. You can also access individual country profiles by clicking on the name of a country within the rankings. Please note: the tree cover canopy density setting selected in this page will not be reflected in the country profiles.</p>
-                  </div>
-                </div>
-              </li>
-            </ul>
+            <div class="content">
+              <ul class='faq-list'>
+                <li>
+                  <h3>How to submit a story</h3>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                  <a class="btn green medium" href='/stories/new' target='_blank'>Submit a story</a>
+
+                </li>
+                <li>
+                  <h3>Additional info</h3>
+                  <p>View a list of <a href='http://www.wri.org/our-work/project/global-forest-watch' target='_blank'>staff</a> who work on Global Forest Watch. </p>
+                </li>
+              </ul>
+            </div>
           </article>
 
           <article id="faqs" class="source-article">
