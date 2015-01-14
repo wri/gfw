@@ -1791,6 +1791,7 @@
           right: 0 !important;
         }
       }
+
       .section-content {
         .left-col,
         .right-col {
@@ -1804,7 +1805,9 @@
           }
         }
       }
+    }
 
+    .country-alerts-section {
       .forma-alerts-legend {
         margin-bottom: 10px;
       }
@@ -1814,6 +1817,9 @@
         height: 160px;
       }
 
+      .forma_dropdown-link {
+        display: none;
+      }
 
       .forests-type-graph {
         margin: 0 0 25px 0;
@@ -1824,12 +1830,11 @@
           margin: 0 auto;
         }
       }
-    }
+    } // country-alerts-section
 
     .country-employment-section {
       .section-info {
         svg {
-          // width: 100%;
           height: 100%;
         }
       }
@@ -1880,18 +1885,11 @@
     } // country-carbon-stocks-section
 
     .country-policy-section {
-      li {
-        border: 0;
-        margin-left: 0;
-        padding-left: 0;
-        a {
-          color: #AAC221;
-        }
-      }
       .missing-link {
         .section-content {
           text-align: center;
           .btn-rdn {
+            width: 100%;
             margin-bottom: 25px;
           }
         }
@@ -1899,20 +1897,6 @@
     } //country-policy-section
 
     .country-download-links-section {
-      a:first-child {
-        margin: 0;
-      }
-
-      a {
-        margin-top: 20px;
-        width: 280px;
-      }
-    } // country-download-links-section
-
-    .country-download-links-section {
-      a {
-        width: auto;
-      }
     } // country-download-links-section
 
     .country-blog-section {
@@ -2019,7 +2003,7 @@
 }
 
 // size > 481 & < 768
-@media only screen and (min-width: 481px) and (max-width: 768px) {
+@media only screen and (min-width: 481px) and (max-width: 999px) {
   .country-show {
     .country-section {
       .section-content {
@@ -2027,11 +2011,6 @@
           height: 160px;
         }
       }
-    }
-
-    .country-carbon-stocks-section .carbon-text,
-    .country-carbon-stocks-section .emissions-text {
-      // padding: 20px;
     }
 
     .country-carbon-stocks-section .emissions-text .section-content h3 {
@@ -2068,9 +2047,9 @@
           display: table-cell;
 
           a {
-            padding-left: 0;
-            padding-top: 20px;
-            display: inline-block;
+            display: flex;
+            padding: 0 10px;
+            align-items: inherit;
             text-align: center;
           }
 
