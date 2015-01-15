@@ -186,3 +186,8 @@
   display: flex;
   display: -webkit-flex;
 }
+
+@mixin align-items($align) {
+  align-items: $align;
+  -webkit-align-items: $align;
+}

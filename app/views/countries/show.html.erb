@@ -1,3 +1,4 @@
+<%= render 'shared/svg_icons_countries' %>
 <% content_for :header do %>
   <h1><a href="/">Global Forest Watch</a></h1>
   <nav id="nav-mobile">
@@ -343,10 +344,12 @@
           <% @conventions.each do |convention| %>
             <% if @country["convention_#{convention}"].present? %>
               <li class='<%= convention %>'>
-                <div class="name-container">
-                  <p class="name"><%= t('.conventions.' + convention + '_title_html') %></p>
+                <div class="convention-box">
+                  <div class="name-container">
+                    <p class="name"><%= t('.conventions.' + convention + '_title_html') %></p>
+                  </div>
+                  <span><%= @country["convention_#{convention}"] %></span>
                 </div>
-                <span><%= @country["convention_#{convention}"] %></span>
               </li>
             <% end %>
           <% end %>
@@ -496,5 +499,3 @@
   <%= render 'countries' %>
   <%= render 'shared/sources' %>
 </div>
-
-<%= render 'shared/svg_icons_countries' %>
