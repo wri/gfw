@@ -13,7 +13,6 @@
       top: 50%;
       left: 50%;
       @include transform-translate(-50%, -50%);
-      // transform: translate(-50%, -50%);
       width: 12px;
       height: 12px;
     }
@@ -1937,26 +1936,25 @@
           width: 100%;
 
           ul {
+            display: flex !important;
             top: 0;
             padding: 0;
-            display: flex !important;
-          }
 
-          ul li {
-            height: auto;
-            border: 0;
-            border-top: 1px solid #6B6B87;
+            li {
+              height: auto;
+              border: 0;
+              border-top: 1px solid #6B6B87;
 
-            &:last-child {
-              border-bottom: 1px solid #6B6B87;
-            }
+              &:last-child {
+                border-bottom: 1px solid #6B6B87;
+              }
 
-            a {
-              .sidenav-icon {
-                display: inline-block !important;
+              a {
+                .sidenav-icon {
+                  display: inline-block !important;
+                }
               }
             }
-
           }
         }
       }
@@ -2077,9 +2075,6 @@
         }
       }
     } //country-policy-section
-
-    .country-download-links-section {
-    } // country-download-links-section
 
     .country-blog-section {
       text-align: left;
