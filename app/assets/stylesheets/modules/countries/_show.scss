@@ -19,6 +19,10 @@
     }
   } // global svg size
 
+  .circle {
+    border: 1px solid #bebcc2;
+    border-radius: 50%;
+  }
 
   .share {
     width: 100%;
@@ -384,11 +388,6 @@
                 height: 18px;
                 svg{
                   fill: #bebcc2;
-                }
-                .circle {
-                  background: #bebcc2;
-                  fill: $dark;
-                  border-radius: 50%;
                 }
               }
 
