@@ -23,7 +23,7 @@
 <% end %>
 
 <div class="inner">
-  <h2>country profiles</h2>
+  <h2 class="title-section">country profiles</h2>
   <!-- <a href="/countries/overview" class="btn gray countries-rankings-btn">country rankings</a> -->
 </div>
 <div class="inner countries-list-title">
@@ -49,44 +49,49 @@
   <% end %>
 </ul>
 
-<section class="section interesting">
+<section class="interesting-section">
   <div class="inner">
     <h2 class="section-title">You may find this interesting</h2>
-
-    <ul class="country-interesting-links">
-      <li>
-        <h3>Data Page</h3>
-        <p>
-          Learn about and download all GFW data
-        </p>
-        <p>
-          <a href="#" class="btn-rdn btn-rdn-dark">Read More</a>
-        </p>
-      </li>
-
-      <li>
-        <h3>GFW Interactive Map</h3>
-        <p>
-          View and analyze data in the GFW Interactive Map
-        </p>
-        <p>
-          <a href="#" class="btn-rdn btn-rdn-dark">Read More</a>
-        </p>
-      </li>
-
-      <li>
-        <h3>Get Involved</h3>
-        <p>
-          Find out how you can get involved with GFW
-        </p>
-        <p>
-          <a href="#" class="btn-rdn btn-rdn-dark">Read More</a>
-        </p>
-      </li>
-    </ul>
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <header>
+            <h2>GFW Interactive Map</h2>
+          </header>
+          <div class="content">
+            <p>View and analyze data in the GFW Interactive Map</p>
+          </div>
+          <footer>
+            <a href="/map" class="btn dark medium">Explore</a>
+          </footer>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <header>
+            <h2>Data Page</h2>
+          </header>
+          <div class="content">
+            <p>Learn about and download all GFW data</p>
+          </div>
+          <footer>
+            <a href="/data" class="btn dark medium">Read More</a>
+          </footer>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <header>
+            <h2>Get Involved</h2>
+          </header>
+          <div class="content">
+            <p>Find out how you can get involved with GFW</p>
+          </div>
+          <footer>
+            <a href="/getinvolved" class="btn dark medium">Read More</a>
+          </footer>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
-
-<!-- <p class="disclaimer inner">The Global Forest Watch country pages include only countries and territories that meet a minimum threshold of tree cover extent. Country lists and map boundaries do not imply any opinion on the part of Global Forest Watch or partners concerning the legal status or delineation of any country or territory.
-</p>
- -->

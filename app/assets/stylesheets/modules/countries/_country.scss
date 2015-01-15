@@ -91,15 +91,19 @@
     fill: #555;
   }
 }
-h2 {
+.title-section {
   font-size: 47px;
-  padding: 40px 0 15px;
+  padding: 75px 20px 15px;
   text-transform: lowercase;
   color: #555;
-  text-align: center;
   &:first-letter {
     text-transform: uppercase;
   }
+  @media (min-width: 480px){
+    padding: 40px 0 15px;
+    text-align: center;
+  }
+
 }
 
 h3 {
@@ -112,63 +116,7 @@ h3 {
   }
 }
 
-.btn {
-  float: right;
-  text-transform: uppercase;
-  position: relative;
-  top: -55px;
-}
 
-.section.interesting {
-  background-color: #F7F7F7;
-  margin: 50px 0 0;
-  border-top: 1px solid #e5e5df;
-  border-bottom: 1px solid transparent;
-
-  .section-title {
-    font-weight: normal;
-    color: #98BE3A;
-  }
-}
-
-.country-interesting-links {
-  margin: 40px 0;
-  height: 175px;
-
-  li:after {
-    content: "";
-    display: block;
-    clear: both;
-  }
-
-  li {
-    color: #8A8A8A;
-    width: 29%;
-    padding: 0 20px;
-    border-right: 1px solid #E4E4E4;
-    display: inline-block;
-    text-align: center;
-    margin: auto;
-    font-size: 16px;
-    line-height: 28px;
-    float: left;
-    height: 163px;
-
-    &:last-child { border-right: none; }
-  }
-
-  h3 {
-    text-transform: uppercase;
-    color: #424242;
-    font-size: 20px;
-    padding-top: 0;
-    margin-bottom: 10px;
-  }
-
-  .btn-rdn {
-    text-transform: uppercase;
-  }
-}
 
 @media only screen and (max-width: 480px) {
   .countries-list-title {
@@ -178,27 +126,5 @@ h3 {
 
   .interesting .section-title {
     font-size: 28px;
-  }
-
-  .section.interesting {
-    margin-top: 0;
-  }
-
-  .country-interesting-links {
-    height: auto;
-    margin-top: 0;
-
-    li {
-      width: auto;
-      border-right: 0;
-      border-bottom: 1px solid #E4E4E4;
-      float: none;
-      height: 195px;
-      padding-top: 20px;
-    }
-
-    li:last-child {
-      border-bottom: 0;
-    }
   }
 }
