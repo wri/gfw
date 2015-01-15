@@ -1757,20 +1757,21 @@
         h6 {
           display: inline-block;
           width: 75%;
+          box-sizing: border-box;
+          padding: 0 0 10px;
         }
       }
     }
 
     .country-employment-section {
 
-      .left-col {
-        .section-title {
-          span {
-            width: 79%;
-          }
-        }
-
-      }
+      // .left-col {
+      //   .section-title {
+      //     span {
+      //       width: 79%;
+      //     }
+      //   }
+      // }
 
       .right-col {
         .country-tenure {
@@ -2109,11 +2110,11 @@
     }
 
     .country-graph-section {
-      .section-info {
-        h6 {
-          width: 50%;
-        }
-      }
+      // .section-info {
+      //   h6 {
+      //     width: 50%;
+      //   }
+      // }
     } // country-graph-section
 
     .country-carbon-stocks-section .emissions-text .section-content h3 {
