@@ -548,9 +548,10 @@
 							font-size: 15px;
 							text-align: center;
 							display: block;
-              opacity: 0.5;
-              @include transform(translate(-5%,0px));
-
+              @media (min-width: $br-mobile){
+                opacity: 0.5;
+                @include transform(translate(-5%,0px));
+              }
 							&:hover {
 								background: darken(#FFF,2%);
 							}
