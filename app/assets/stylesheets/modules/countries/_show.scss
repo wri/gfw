@@ -20,8 +20,9 @@
   } // global svg size
 
   .circle {
-    border: 1px solid #bebcc2;
+    fill: #bebcc2;
     border-radius: 50%;
+    border: 1px solid #bebcc2;
   }
 
   .share {
@@ -214,6 +215,10 @@
           }
         }
 
+        .mobile-scroll{
+          display: none;
+        }
+
         .tree-numbers {
           width: 25%;
           padding-left: 20px;
@@ -390,6 +395,7 @@
                   fill: #bebcc2;
                 }
               }
+
 
               .no_def {
                 svg{
@@ -587,11 +593,14 @@
       position: relative;
       h6 {
         float: left;
+        width: 75%;
         color: #000 ;
         opacity: .5;
+        box-sizing: content-box;
+        padding: 0 0 10px 0;
       }
       .info, .share {
-        transform: translate(0, -4px);
+        @include transform-translate(0, -4px);
       }
       .info {
         position: absolute;
@@ -723,6 +732,7 @@
 
     .forma-graph {
       position: relative;
+      height: 160px;
     }
 
     .forma-marker {
@@ -864,13 +874,13 @@
       div,
       span {
         float: left;
-        margin-top: 8px;
         font-weight: 500;
       }
 
       span {
-        width: 80%;
-        margin: 4px 0 0 10px;
+        box-sizing: border-box;
+        width: 75%;
+        padding: 0 0 0 10px;
         font-size: 12px;
         font-weight: 500;
         line-height: 1.2;
@@ -992,9 +1002,6 @@
       float: left;
       padding: 50px 0;
       @include box-sizing(border-box);
-      // .section-info {
-      //   margin-bottom: 25px;
-      // }
       &.wide {
         width: 100%;
       }
@@ -1163,7 +1170,6 @@
               top: 50%;
               left: 50%;
               @include transform-translate(-50%, -50%);
-              // transform: translate;
               color: #FDFDFD;
               width: 200px;
               strong, span {
@@ -1239,14 +1245,12 @@
         }
 
         .see-more {
-          position: absolute;
-          left: 50%;
-          bottom: 0;
-          @include transform-translate(-50%,0);
-          // transform: translate(-50%, 0);
+          display: block;
+          margin: 25px 0;
           text-transform: uppercase;
           font-size: 14px;
           color: #FDFDFD;
+          text-align: center;
           font-weight: 500;
           a {
             color: inherit;
@@ -1728,7 +1732,7 @@
 
 
 // maxsize <= 999
-@media only screen and (max-width: 999px) {
+@media only screen and (min-width: 751px) and (max-width: 999px) {
   .country-show {
 
     .country-header {
@@ -1737,7 +1741,6 @@
       }
 
       .country-details .country-preview {
-        // height: 263px;
         padding: 20px;
         float: none;
         width: 100%;
@@ -1763,9 +1766,10 @@
           display: table-cell;
 
           a {
-            display: flex;
+            display: inline-block;
             padding: 0 10px;
             text-align: center;
+            line-height: 51px;
 
             .sidenav-icon {
               display: none;
@@ -1790,26 +1794,8 @@
         h6 {
           display: inline-block;
           width: 75%;
-        }
-      }
-    }
-
-    .country-employment-section {
-
-      .left-col {
-        .section-title {
-          span {
-            width: 79%;
-          }
-        }
-
-      }
-
-      .right-col {
-        .country-tenure {
-          .line-graph text {
-            font-size: 9px;
-          }
+          box-sizing: border-box;
+          padding: 0 0 10px;
         }
       }
     }
@@ -1864,7 +1850,6 @@
   }
 }
 
-
 // maxsize <= 750
 @media only screen and (max-width: 750px) {
   .country-show {
@@ -1890,10 +1875,20 @@
           float: none;
           width: 100%;
           height: 100%;
+          position: relative;
 
           .map {
             height: 260px;
             width: 100%;
+          }
+          .mobile-scroll{
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 260px;
+            width: 100%;
+            z-index: 200;
           }
 
           .tree-numbers,
@@ -1951,6 +1946,7 @@
           }
 
           ul li {
+            height: auto;
             border: 0;
             border-top: 1px solid #6B6B87;
 
@@ -1974,6 +1970,7 @@
     }
 
     .country-section {
+      padding: 45px 20px;
 
       .section-info {
         .section-btn {
@@ -2003,7 +2000,6 @@
 
       .forma-graph {
         margin-top: 30px;
-        height: 160px;
       }
 
       .forma_dropdown-link {
@@ -2033,11 +2029,6 @@
 
       .section-content {
         .left-col {
-          .section-title {
-            span {
-              width: 77%;
-            }
-          }
           .employment {
             margin-bottom: 25px;
           }
@@ -2046,7 +2037,7 @@
         .right-col {
           .country-tenure {
             .line-graph text {
-              font-size: 10px;
+              font-size: 13px;
             }
           }
         }
@@ -2060,13 +2051,6 @@
         width: 100%;
         margin: 0;
         padding: 20px;
-        .section-title {
-          text-align: right;
-        }
-      }
-
-      .carbon-text {
-
       }
 
       .emissions-text {
@@ -2083,6 +2067,15 @@
           .btn-rdn {
             width: 100%;
             margin-bottom: 25px;
+          }
+        }
+      }
+
+      .country-external-links {
+        ul > li {
+          display: block;
+          &::after {
+            display: none;
           }
         }
       }
@@ -2111,10 +2104,7 @@
           &.round {
             .circle-wrapper {
               text-align: center;
-              margin: 25px auto 100px;
-            }
-            .see-more {
-              bottom: 25%;
+              margin: 25px auto;
             }
           }
         }
@@ -2122,38 +2112,3 @@
     } // country-blog-section
   }
 }
-
-// size > 481 & < 768
-@media only screen and (min-width: 751px) and (max-width: 999px) {
-  .country-show {
-    .country-section {
-      .section-content {
-
-        .left-col, .right-col {
-          .section-content {
-            padding: 0;
-          }
-        }
-
-        .forma-graph svg {
-          height: 160px;
-        }
-      }
-    }
-
-    .country-graph-section {
-      .section-info {
-        h6 {
-          width: 50%;
-        }
-      }
-    } // country-graph-section
-
-    .country-carbon-stocks-section .emissions-text .section-content h3 {
-      padding: 0;
-    }
-
-
-  }
-}
-
