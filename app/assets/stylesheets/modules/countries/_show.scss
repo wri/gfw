@@ -20,7 +20,6 @@
   } // global svg size
 
   .circle {
-
     fill: #bebcc2;
     border-radius: 50%;
     border: 1px solid #bebcc2;
@@ -598,7 +597,6 @@
       }
       .info, .share {
         @include transform-translate(0, -4px);
-        // transform: translate(0, -4px);
       }
       .info {
         position: absolute;
@@ -1168,7 +1166,6 @@
               top: 50%;
               left: 50%;
               @include transform-translate(-50%, -50%);
-              // transform: translate;
               color: #FDFDFD;
               width: 200px;
               strong, span {
@@ -1799,16 +1796,6 @@
       }
     }
 
-    .country-employment-section {
-      .right-col {
-        .country-tenure {
-          .line-graph text {
-            font-size: 9px;
-          }
-        }
-      }
-    } //country-employment-section;
-
     .country-carbon-stocks-section {
       padding: 0 20px;
     } // country-carbon-stocks-section
@@ -2061,10 +2048,6 @@
         width: 100%;
         margin: 0;
         padding: 20px;
-      }
-
-      .carbon-text {
-
       }
 
       .emissions-text {
