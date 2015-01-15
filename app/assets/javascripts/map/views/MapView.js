@@ -304,8 +304,8 @@ define([
         var $container = $('.map-container').find('.widget')[0],
             $trigger   = $( "<a data-source='" + dialog.type +"' class='source hidden hide' style='display: none'></a>" )
         $trigger.appendTo($container).trigger('click');
-        sessionStorage.removeItem('DIALOG')
-        $('.backdrop').hide();
+        sessionStorage.removeItem('DIALOG');
+        window.setTimeout(function(){$('.backdrop').css('opacity', '0.3');},500);
       });
     }
 
