@@ -117,7 +117,7 @@
 
         strong {
           display: block;
-          font-weight: bold;
+          font-weight: 500;
         }
 
         a {
@@ -177,7 +177,7 @@
   .source_category_title,
   .source_coverage_title {
     display: block;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 13px;
     @extend .sans-serif;
     text-transform: uppercase;

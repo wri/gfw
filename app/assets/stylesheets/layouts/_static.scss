@@ -338,7 +338,7 @@
       label {
         float: left;
         color: #333;
-        font-weight: bold;
+        font-weight: 500;
         font-size: 12px;
         text-transform: uppercase;
         width: 100%;
@@ -1031,7 +1031,7 @@
 
   &.terms_header {
    text-align: center;
-   font-weight: bold;
+   font-weight: 500;
    margin: 30px 0;
    strong { text-decoration: underline; }
   }
@@ -1054,7 +1054,7 @@
  .rom { list-style-type: lower-roman; }
  .bullets { list-style-type: disc; }
  .num_title {
-  font-weight: bold;
+  font-weight: 500;
   margin-bottom: 10px;
  }
 }
@@ -1296,7 +1296,7 @@
 
         strong {
           display: block;
-          font-weight: bold;
+          font-weight: 500;
         }
 
         a {

@@ -19,7 +19,7 @@
 
   .widget-closed {
     padding: 14px 20px;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 11px;
     color: #bbb;
     text-transform: uppercase;
@@ -32,7 +32,7 @@
 
     .category-name {
       text-transform: uppercase;
-      font-weight: bold;
+      font-weight: 500;
       font-size: 11px;
       margin-bottom: 8px;
       display: block;
@@ -112,7 +112,7 @@
       color: #999;
       font-size: 10px;
       text-transform: uppercase;
-      font-weight: bold;
+      font-weight: 500;
     }
 
     .layer-colors li {
@@ -127,7 +127,7 @@
       font-size: 11px;
       line-height: 14px;
       span {
-        font-weight: bold;
+        font-weight: 500;
       }
     }
 
@@ -267,7 +267,7 @@
       text-transform: uppercase;
       display: block;
       color: #999;
-      font-weight: bold;
+      font-weight: 500;
 
       span {
         color: #ec1d38;
