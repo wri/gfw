@@ -723,6 +723,7 @@
 
     .forma-graph {
       position: relative;
+      height: 160px;
     }
 
     .forma-marker {
@@ -1728,7 +1729,7 @@
 
 
 // maxsize <= 999
-@media only screen and (max-width: 999px) {
+@media only screen and (min-width: 751px) and (max-width: 999px) {
   .country-show {
 
     .country-header {
@@ -1737,7 +1738,6 @@
       }
 
       .country-details .country-preview {
-        // height: 263px;
         padding: 20px;
         float: none;
         width: 100%;
@@ -1763,9 +1763,10 @@
           display: table-cell;
 
           a {
-            display: flex;
+            display: inline-block;
             padding: 0 10px;
             text-align: center;
+            line-height: 51px;
 
             .sidenav-icon {
               display: none;
@@ -1797,15 +1798,6 @@
     }
 
     .country-employment-section {
-
-      // .left-col {
-      //   .section-title {
-      //     span {
-      //       width: 79%;
-      //     }
-      //   }
-      // }
-
       .right-col {
         .country-tenure {
           .line-graph text {
@@ -1865,7 +1857,6 @@
   }
 }
 
-
 // maxsize <= 750
 @media only screen and (max-width: 750px) {
   .country-show {
@@ -1895,6 +1886,13 @@
           .map {
             height: 260px;
             width: 100%;
+            &::after {
+              content: '';
+              display: inline-block;
+              width: 100%;
+              height: 100%;
+              z-index: 250;
+            }
           }
 
           .tree-numbers,
@@ -1975,6 +1973,7 @@
     }
 
     .country-section {
+      padding: 45px 20px;
 
       .section-info {
         .section-btn {
@@ -2004,7 +2003,6 @@
 
       .forma-graph {
         margin-top: 30px;
-        height: 160px;
       }
 
       .forma_dropdown-link {
@@ -2034,11 +2032,6 @@
 
       .section-content {
         .left-col {
-          .section-title {
-            span {
-              width: 77%;
-            }
-          }
           .employment {
             margin-bottom: 25px;
           }
@@ -2047,7 +2040,7 @@
         .right-col {
           .country-tenure {
             .line-graph text {
-              font-size: 10px;
+              font-size: 13px;
             }
           }
         }
@@ -2061,9 +2054,6 @@
         width: 100%;
         margin: 0;
         padding: 20px;
-        .section-title {
-          text-align: right;
-        }
       }
 
       .carbon-text {
@@ -2084,6 +2074,15 @@
           .btn-rdn {
             width: 100%;
             margin-bottom: 25px;
+          }
+        }
+      }
+
+      .country-external-links {
+        ul > li {
+          display: block;
+          &::after {
+            display: none;
           }
         }
       }
@@ -2125,36 +2124,36 @@
 }
 
 // size > 481 & < 768
-@media only screen and (min-width: 751px) and (max-width: 999px) {
-  .country-show {
-    .country-section {
-      .section-content {
+// @media only screen and (min-width: 751px) and (max-width: 999px) {
+//   .country-show {
+//     .country-section {
+//       .section-content {
 
-        .left-col, .right-col {
-          .section-content {
-            padding: 0;
-          }
-        }
+//         .left-col, .right-col {
+//           .section-content {
+//             padding: 0;
+//           }
+//         }
 
-        .forma-graph svg {
-          height: 160px;
-        }
-      }
-    }
+//         .forma-graph svg {
+//           height: 160px;
+//         }
+//       }
+//     }
 
-    .country-graph-section {
-      // .section-info {
-      //   h6 {
-      //     width: 50%;
-      //   }
-      // }
-    } // country-graph-section
+//     .country-graph-section {
+//       // .section-info {
+//       //   h6 {
+//       //     width: 50%;
+//       //   }
+//       // }
+//     } // country-graph-section
 
-    .country-carbon-stocks-section .emissions-text .section-content h3 {
-      padding: 0;
-    }
+//     .country-carbon-stocks-section .emissions-text .section-content h3 {
+//       padding: 0;
+//     }
 
 
-  }
-}
+//   }
+// }
 
