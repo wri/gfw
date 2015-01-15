@@ -864,13 +864,13 @@
       div,
       span {
         float: left;
-        margin-top: 8px;
         font-weight: 500;
       }
 
       span {
-        width: 80%;
-        margin: 4px 0 0 10px;
+        box-sizing: border-box;
+        width: 75%;
+        padding: 0 0 0 10px;
         font-size: 12px;
         font-weight: 500;
         line-height: 1.2;
