@@ -8,7 +8,7 @@ define([
   'mps'
 ], function($,Backbone, _,mps) {
 
-  'use strict'; 
+  'use strict';
 
   var HeaderView = Backbone.View.extend({
 
@@ -34,11 +34,11 @@ define([
       if ($(e.currentTarget).hasClass('active')) {
         this.$htmlbody.addClass('active');
         this.$el.addClass('active');
-        this.$navMobile.addClass('active');        
+        this.$navMobile.addClass('active');
       }else{
         this.$htmlbody.removeClass('active');
         this.$el.removeClass('active');
-        this.$navMobile.removeClass('active');                
+        this.$navMobile.removeClass('active');
       }
     },
 
