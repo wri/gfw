@@ -34,10 +34,6 @@ h1,h2 {
   font-weight: 300;
 }
 
-img{
-  max-width: 100%;
-}
-
 .mobile-hide{
   @media (min-width: $br-mobile){
     display: block;
