@@ -50,7 +50,9 @@
       .country_alt {
         fill: $cGreen;
       }
-      @include transform(scale(1.1));
+      @media (min-width: 480px){
+        @include transform(scale(1.1));
+      }
     }
   }
 

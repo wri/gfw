@@ -215,6 +215,10 @@
           }
         }
 
+        .mobile-scroll{
+          display: none;
+        }
+
         .tree-numbers {
           width: 25%;
           padding-left: 20px;
@@ -1883,21 +1887,20 @@
           float: none;
           width: 100%;
           height: 100%;
+          position: relative;
 
           .map {
             height: 260px;
             width: 100%;
-            &::after {
-              content: '';
-              position: absolute;
-              top: 0;
-              left: 0;
-              display: inline-block;
-              width: 100%;
-              height: 100%;
-              z-index: 250;
-
-            }
+          }
+          .mobile-scroll{
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 260px;
+            width: 100%;
+            z-index: 200;
           }
 
           .tree-numbers,
