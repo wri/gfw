@@ -1,3 +1,5 @@
+<%= render 'shared/svg_icons_countries' %>
+
 <% content_for :header do %>
   <h1><a href="/">Global Forest Watch</a></h1>
   <nav id="nav-mobile">
@@ -27,10 +29,11 @@
 <div class='inner'>
   <div class="country-overview-wrapper-coolio">
     <div class="overview_button_group">
-      <div class="settings item " data-target=".overview_graph">
-        <svg><use xlink:href="#shape-settings"></use></svg>tree cover canopy settings
-      </div>
-      <div class="share">
+      <div class="inner">
+        <div class="share"></div>
+        <div class="settings item " data-target=".overview_graph">
+          <svg><use xlink:href="#shape-settings"></use></svg>tree cover canopy settings
+        </div>
       </div>
     </div>
     <div class='overview_graph'>
@@ -113,9 +116,9 @@
     <div class='countries_list__header'>
       <div class='countries_list__header__minioverview'>Gain <span>vs</span> Loss</div>
 
-      <div class='countries_list__header__num'>Rank</div>
+      <!-- <div class='countries_list__header__num'>Rank</div>
 
-      <div class='countries_list__header__title'>Country</div>
+      <div class='countries_list__header__title'>Country</div> -->
     </div>
 
     <ul></ul>
@@ -220,4 +223,3 @@
     </li>
   </ul>
 </div>
-<%= render 'shared/svg_icons_countries' %>

@@ -6,11 +6,18 @@
 }
 
 .overview_graph {
-  // height: 511px;
   overflow: hidden;
   width: 960px;
   margin: 0 auto;
-  // @include background-image(linear-gradient(#464253, #383643));
+
+  @media only screen and (min-width: 481px) and (max-width: 1010px) {
+    width: 100%;
+  }
+  .graph_tab, .all_countries {
+    @media only screen and (min-width: 481px) and (max-width: 1010px) {
+      width: 16.6666%;
+    }
+  }
 
   .umdoptions_dialog {
     left: auto;
@@ -178,7 +185,10 @@
 .overview_graph__axis,
 .countries_list__header {
   position: relative;
+  // max-width: 960px;
+  width: 100%;
   height: 28px;
+  margin: 0 auto;
   border-bottom: 1px solid #CCC;
   line-height: 28px;
   font-size: 12px;
@@ -186,9 +196,6 @@
   color: #9D9AA5;
   text-transform: uppercase;
   text-align: center;
-  max-width: 960px;
-  margin: 0 auto;
-  width: 100%;
 
   span {
     text-transform: lowercase;
@@ -209,7 +216,6 @@
 }
 
 .overview_graph__title {
-  border-bottom: 1px solid #ccc;
   padding: 30px 0;
   font-size: 37px;
   line-height: 1.1;
@@ -221,21 +227,31 @@
     position: relative;
     top: -14px;
     font-size: 23px;
+    @media only screen and (min-width: 481px) and (max-width: 1010px) {
+      display: block;
+      top: 0;
+    }
   }
 }
 .is-overview-action {
   .countries_list ul li {
     border-bottom: 1px solid #ccc;
-    padding: 18px 0;
+    padding: 18px 0 18px 40px;
   }
 }
 .countries_list {
   margin:0 auto;
-  width: 960px;
+  width: 100%;
+
+  @media only screen and (min-width: 481px) and (max-width: 1010px) {
+    padding: 0 35px;
+  }
+
   ul  {
     width: 100%;
   }
   li {
+    position: relative;
     @extend .clearfix;
     &:hover {
       background: rgba(#ddd, .3);
@@ -250,6 +266,7 @@
       }
 
       .countries_list__minioverview {
+
         .loss {
           color: #6D6DE5;
         }
@@ -266,7 +283,8 @@
 .countries_list__minioverview {
   float: right;
   width: 110px;
-  text-align: center;
+  font-size: 17px;
+  color: $dark;
 
   &.huge {
     width: 330px;
@@ -279,6 +297,12 @@
   &.medium {
     width: 150px;
   }
+}
+
+.countries_list__header__minioverview {
+  float: none;
+  position: absolute;
+  right: 120px;
 }
 
 .countries_list__header__num,
@@ -295,15 +319,33 @@
   padding-right: 10px;
 }
 .countries_list__data {
+  position: absolute;
+  top: 50%;
+  right: 60px;
+  @include transform-translate(0, -50%);
   float: right;
   width: 240px;
   text-align: right;
   margin-top: 4px;
   line-height: 20px;
+
+  @media only screen and (min-width: 481px) and (max-width: 650px) {
+    width: 190px;
+    right: 0;
+  }
+
+  @media only screen and (max-width: 480px) {
+    right: 25px;
+  }
+
   .line {
     float: left;
     color: #A2A0A9;
     position: relative;
+    box-sizing: content-box;
+    min-width: 140px;
+    padding: 0 10px 0 0;
+    text-align: left;
     span{
       min-width: 50px;
       text-align: right;
@@ -317,21 +359,21 @@
     }
     &::after {
       content: '';
-      float: left;
-      background-color: #FF6699;
+      position: absolute;
+      top: 50%;
+      @include transform-translate(0, -50%);
+      right: -11px;
       width: 6px;
       height: 6px;
+      background-color: #FF6699;
       border-radius: 6px;
-      position: absolute;
-      top: 8px;
-      right: -12px;
     }
     &.percent::after {
       display: none;
     }
     &.gain::after {
+      // right: -8px;
       background-color: #6D6DE5;
-      right: -10px;
     }
   }
   div[id^="ext_"] {
@@ -354,16 +396,20 @@
 
 .countries_list__num,
 .countries_list__title {
-  height: 40px;
+  // height: 40px;
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: 29px;
   line-height: 30px;
-  font-weight: 500;
+  font-weight: 300;
   color: #464152;
 }
 
 .countries_list__num {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  @include transform-translate(0, -50%);
   width: 60px;
 }
 
@@ -374,23 +420,38 @@
   max-width: 450px;
   white-space: nowrap;
   color: #A2A0A9;
+  margin-left: 15px;
+
+  @media only screen and (min-width: 481px) and (max-width: 1010px) {
+    max-width: 40%;
+    height: 100%;
+    overflow: visible;
+    white-space: normal;
+  }
   a {
     color: #463F52;
     text-decoration: none;
     font-weight: 300;
     &:hover {
       color: #88aa37;
-      font-weight: 400;
     }
   }
 }
 
 .countries_list__minioverview {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  @include transform-translate(0, -50%);
   height: 50px;
   font-size: 29px;
   line-height: 50px;
   font-weight: 500;
   color: #A2A0A9;
+
+  @media only screen and (max-width: 650px) {
+    display: none;
+  }
 
   .loss {
     color: rgba(#6D6DE5, .5);
@@ -816,10 +877,10 @@
   }
 }
 .overview_button_group {
+  position: relative;
   background: #EEEEEE;
   width: 100%;
   height: 40px;
-  padding: 0 20px;
   display: flex;
   display: -ms-flexbox;
   display: -ms-flex;
@@ -830,26 +891,26 @@
   justify-content: flex-end;
 
   .inner {
-    width: auto;
-    margin: 0;
+    width: 960px;
+    margin: 0 auto;
     padding: 0;
     .countries_show & {
       width: 790px;
     }
   }
   .share_control, .item {
-    text-align: center;
-    // height: 39px;
-    // padding: 0 0 0 12px;
     position: relative;
+    box-sizing: content-box;
+    float: right;
+    display: inline-block;
+    padding: 0 24px 0 0;
+    margin: 0 0 0 20px;
+    font-size: 14px;
     line-height: normal;
     text-transform: uppercase;
-    font-size: 14px;
-    color: #BEBCC2;
+    color: $dark;
     cursor: pointer;
-    display: inline-block;
-    padding-right: 24px;
-    margin-left: 20px;
+
     svg{
       display: inline-block;
       position: absolute;
@@ -858,8 +919,9 @@
       right: 0px;
       height: 18px;
       width: 18px;
-      fill: #bebcc2;
+      fill: $dark;
     }
+
     @include box-sizing(border-box);
 
     .country-icons-share {
@@ -888,7 +950,32 @@
         }
       }
     }
+    @media only screen and (max-width: 480px) {
+      margin: 0 20px 0 20px;
+    }
   }
+
+  .share_control {
+
+    @media only screen and (max-width: 480px) {
+      margin: 0 20px 0 20px;
+    }
+    .share {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        @include transform-translate(0, -50%);
+    }
+  }
+
+
+  .item {
+    position: absolute;
+    top: 50%;
+    right: 75px;
+    transform: translate(0, -50%);
+  }
+
   .country-share .share_control {
       width: 105px;
       display: block;
@@ -898,15 +985,18 @@
     }
 }
 .show-more-countries {
-  display: flex;
+  display: block;
   height: 120px;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
+  margin: 0 auto;
   .btn {
-    top: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include transform-translate(-50%, -50%);
   }
 }
+
+
 
 @media only screen and (max-width: 480px) {
   .countries_list {
@@ -914,8 +1004,7 @@
     width: 100%;
   }
 
-  .countries_list__header,
-  .countries_list__minioverview {
+  .countries_list__header {
     display: none;
   }
 
@@ -942,35 +1031,34 @@
 
   .countries_list__num {
     width: 45px;
+
   }
 
   .countries_list__num,
   .countries_list__title {
     font-size: 22px;
+    border-left: 1px solid #ccc;
   }
 
   .countries_list__title {
     width: 40%;
-    border-left: 0;
-    padding-left: 0;
+    padding-left: 15px;
+    white-space: normal;
   }
 
   .countries_list__data {
     font-size: 12px;
     width: 130px;
 
-    .line span.loss {
-      margin-right: 5px;
+    .line {
+      min-width: 120px;
+      &::after {
+        right: 0;
+      }
+      .gain::after {
+        right: 0;
+      }
     }
-
-    .line.gain::after {
-      right: -12px;
-      top: 7px;
-    }
-  }
-
-  .is-overview-action .countries_list ul li {
-    padding: 18px 10px 18px 15px;
   }
 
   .overview_graph {
@@ -1013,6 +1101,8 @@
       top: 0;
       margin-top: 5px;
       font-size: 15px;
+
+
     }
   }
 
@@ -1071,6 +1161,7 @@
     .year:first-child,
     .year:last-child {
       display: inherit;
+      right: 0;
     }
   }
 
