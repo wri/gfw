@@ -19,6 +19,12 @@
     }
   } // global svg size
 
+  .circle {
+    fill: #bebcc2;
+    border-radius: 50%;
+    border: 1px solid #bebcc2;
+  }
+
 
   .share {
     width: 100%;
@@ -385,12 +391,8 @@
                 svg{
                   fill: #bebcc2;
                 }
-                .circle {
-                  background: #bebcc2;
-                  fill: $dark;
-                  border-radius: 50%;
-                }
               }
+
 
               .no_def {
                 svg{
@@ -1951,6 +1953,7 @@
           }
 
           ul li {
+            height: auto;
             border: 0;
             border-top: 1px solid #6B6B87;
 
