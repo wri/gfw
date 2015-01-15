@@ -56,7 +56,8 @@ gfw.ui.view.CountriesIndex = cdb.core.View.extend({
         if (!dialog.display) return;
         ga('send', 'event', 'SourceWindow', 'Open', dialog.type);
         selfo.sourceWindow.show(dialog.type);
-        sessionStorage.removeItem('DIALOG')
+        $('.backdrop').hide();
+        sessionStorage.removeItem('DIALOG');
       }
     }
 

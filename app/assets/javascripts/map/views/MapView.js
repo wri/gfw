@@ -305,6 +305,7 @@ define([
             $trigger   = $( "<a data-source='" + dialog.type +"' class='source hidden hide' style='display: none'></a>" )
         $trigger.appendTo($container).trigger('click');
         sessionStorage.removeItem('DIALOG')
+        $('.backdrop').hide();
       });
     }
 
