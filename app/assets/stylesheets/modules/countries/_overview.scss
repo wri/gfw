@@ -185,7 +185,6 @@
 .overview_graph__axis,
 .countries_list__header {
   position: relative;
-  // max-width: 960px;
   width: 100%;
   height: 28px;
   margin: 0 auto;
@@ -240,7 +239,7 @@
   }
 }
 .countries_list {
-  margin:0 auto;
+  margin:0 auto !important;
   width: 100%;
 
   @media only screen and (min-width: 481px) and (max-width: 1010px) {
@@ -315,8 +314,7 @@
 .countries_list__header__num,
 .countries_list__num {
   width: 45px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 0 10px;
 }
 .countries_list__data {
   position: absolute;
@@ -396,7 +394,6 @@
 
 .countries_list__num,
 .countries_list__title {
-  // height: 40px;
   padding-top: 10px;
   padding-bottom: 10px;
   font-size: 29px;
