@@ -458,16 +458,16 @@
 // BUZZ
 .buzz {
 	background: #F5F5F5;
- overflow: auto;
- @media (min-width: $br-mobile) {
-  padding: 50px 0;
- }
- .inner {
-  width: 95%;
+  overflow: auto;
   @media (min-width: $br-mobile) {
-   min-width: 1200px;
+    padding: 50px 0;
   }
- }
+ .inner {
+    width: 95%;
+    @media (min-width: $br-mobile) {
+      min-width: 1200px;
+    }
+  }
 	.row {
 		@include row();
     @include flex-wrap(wrap);
@@ -479,19 +479,19 @@
 		@include col(100);
     @include display-flex();
     @media (min-width: $br-mobile) {
-     @include col(32);
+      @include col(32);
     }
 	}
- h2 {
-  text-align: center;
-  font-size: 32px;
-  color: $dark;
-  font-weight: 300;
-  padding: 20px 0;
-  @media (min-width: $br-mobile) {
-   padding: 0 0 20px;
+  h2 {
+    text-align: center;
+    font-size: 32px;
+    color: $dark;
+    font-weight: 300;
+    padding: 40px 0;
+    @media (min-width: $br-mobile) {
+      padding: 0 0 20px;
+    }
   }
- }
 	.card {
 		@include display-flex();
     width: 100%;
