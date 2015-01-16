@@ -38,13 +38,16 @@
     padding: 20px;
     border: 1px solid #E5E5E5;
     background: #fff;
+    @include transition(all 0.1s $easeInOutCubic);
+
+    .country_main,
+    .country_alt {
+      @include transition(all 0.1s $easeInOutCubic);
+    }
 
     &:hover {
       z-index: 1000;
-      // margin: -10px;
-      // padding: 30px;
       @include box-shadow(0 0 1px rgba(#000, .1));
-      border-color: #cacaca;
 
       .country_main,
       .country_alt {
