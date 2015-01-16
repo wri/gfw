@@ -87,7 +87,6 @@ require([
       new DialogView();
       new ToggleWidgetsView();
 
-
       // TODO => This is temporary!!! We will use the refactored
       // and awesome DialogView later.
       window.infowindow();
