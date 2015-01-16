@@ -1,3 +1,11 @@
+.section-title {
+
+  @media only screen and (max-width: 480px) {
+    padding: 85px 0 0;
+  }
+
+}
+
 .country-overview-wrapper-coolio{
   position: relative;
   background: #333;
@@ -40,9 +48,6 @@
 
 .overview_graph__area {
   height: 371px;
-  // background: image-url('backgrounds/overview_graph.png');
-  // @include background-size(cover);
-  // background-position: -220px center;
   svg {
     border-top: 1px solid #615D6C;
     position: relative;
