@@ -26,6 +26,7 @@
   text-align: center;
   font-weight: 500;
   white-space: nowrap;
+  @include transition(background .15s linear);
 
   &:hover {
     background: $cGreen;

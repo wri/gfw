@@ -347,9 +347,9 @@
         .row{
           text-align: center;
           >*{
+            color: $white;
             @media (min-width: 750px){
               width: 47.5%;
-              color: $white;
             }
 
           }
