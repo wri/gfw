@@ -546,6 +546,7 @@
         .testimonial-quote{
           position: relative;
           padding: 10px 0 10px 25px;
+          font-style: italic;
           &:before{
             content: "“";
             color: $cGreen;
