@@ -24,8 +24,8 @@
     </div>
     <span class='drop_pin'>Drop a pin on the map near the affected area</span>
 
-    <div class="<%= 'field_with_errors' if @story.errors[:the_geom].present? %>">
-      <div class="stories_map-container">
+    <div class="<%= 'field_with_errors' if @story.errors[:the_geom].present? %> stories_map-container" >
+      <div>
         <a href="/#remove" class="remove_story-link">Remove</a>
         <div id="stories_map" class="map stories_map"></div>
         <input class="map-search-input" type="text" placeholder="SEARCH..."/>

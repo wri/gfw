@@ -300,21 +300,13 @@ define([
         var dialog = JSON.parse(sessionStorage.getItem('DIALOG'));
 
         if (!dialog.display) return;
-        switch(dialog.type) {
-          case 2: var type = "alerts_dialog";
-          break;
-          case 3: var type = "country_dialog";
-          break;
-          case 1:
-          default: var type = "regular_dialog";
-        }
+
         var $container = $('.map-container').find('.widget')[0],
-            $trigger   = $( "<a data-source='" + type +"' class='source hidden hide' style='display: none'></a>" )
+            $trigger   = $( "<a data-source='" + dialog.type +"' class='source hidden hide' style='display: none'></a>" )
         $trigger.appendTo($container).trigger('click');
-        sessionStorage.removeItem('DIALOG')
+        sessionStorage.removeItem('DIALOG');
+        window.setTimeout(function(){$('.backdrop').css('opacity', '0.3');},500);
       });
-
-
     }
 
   });

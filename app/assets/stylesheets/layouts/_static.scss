@@ -117,6 +117,10 @@
   strong{
     font-weight: 500;
   }
+  img{
+    max-width: 100%;
+  }
+
 
   aside {
     width: 100%;
@@ -338,7 +342,7 @@
       label {
         float: left;
         color: #333;
-        font-weight: bold;
+        font-weight: 500;
         font-size: 12px;
         text-transform: uppercase;
         width: 100%;
@@ -394,6 +398,7 @@
         li{
           margin-top: 10px;
           cursor: pointer;
+          color: $dark;
           &:first-child{
             margin-top: 0;
           }
@@ -922,7 +927,7 @@
       .card {
         width: 100%;
         position: relative;
-        padding: 40px 25px 100px;
+        padding: 40px 25px 125px;
         text-align: center;
         border: 1px solid $border;
         overflow: hidden;
@@ -1032,7 +1037,7 @@
 
   &.terms_header {
    text-align: center;
-   font-weight: bold;
+   font-weight: 500;
    margin: 30px 0;
    strong { text-decoration: underline; }
   }
@@ -1055,7 +1060,7 @@
  .rom { list-style-type: lower-roman; }
  .bullets { list-style-type: disc; }
  .num_title {
-  font-weight: bold;
+  font-weight: 500;
   margin-bottom: 10px;
  }
 }
@@ -1297,7 +1302,7 @@
 
         strong {
           display: block;
-          font-weight: bold;
+          font-weight: 500;
         }
 
         a {

@@ -79,7 +79,7 @@
       @extend .fira_regular;
 
       a {
-        font-weight: bold;
+        font-weight: 500;
       }
     }
     &.home_stories{
@@ -195,7 +195,7 @@
 
         span {
           display: block;
-          font-weight: bold;
+          font-weight: 500;
           font-size: 12px;
           text-transform: uppercase;
           color: $cGreen;

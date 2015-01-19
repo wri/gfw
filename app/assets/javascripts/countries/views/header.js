@@ -577,11 +577,11 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         if (i === 11) {
           return '#9FBA2B';
         } else {
-          return '#524F5C';
+          return '#555';
         }
       })
       .on('mouseover', function(d) {
-        d3.selectAll('.bar').style('fill', '#524F5C');
+        d3.selectAll('.bar').style('fill', '#555');
         d3.select(this).style('fill', '#9FBA2B');
 
         $amount.html('<span>' + formatNumber(parseInt(d.value, 10)) + '</span>');
