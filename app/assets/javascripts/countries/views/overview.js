@@ -179,7 +179,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         $('.countries_list ul').html('');
         $('.show-more-countries').show();
 
-        $('.countries_list__header__minioverview').html('Loss <span>vs</span> Gain');
+        $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('loss-vs-gain').html('Loss <span>vs</span> Gain');
       }
       d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
         var self = that,
@@ -254,7 +254,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           $('.countries_list ul').html('');
           $('.show-more-countries').show();
 
-          $('.countries_list__header__minioverview').html('Loss <span>vs</span> Gain');
+          $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('loss-vs-gain').html('Loss <span>vs</span> Gain');
         }
 
         $('.countries_list ul').append(markup_list);
@@ -304,7 +304,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           $('.countries_list ul').html('');
           $('.show-more-countries').show();
 
-          $('.countries_list__header__minioverview').html('% Loss');
+          $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('per-loss').html('% Loss');
         }
 
         $('.countries_list ul').empty().append(markup_list);
@@ -400,7 +400,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           $('.countries_list ul').html('');
           $('.show-more-countries').show();
 
-          $('.countries_list__header__minioverview').html('Cover extent <span>vs</span> Cover loss');
+          $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('cover-extent').html('Cover extent <span>vs</span> Cover loss');
         }
 
         $('.countries_list ul').append(markup_list);
@@ -444,7 +444,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
           $('.countries_list ul').html('');
           $('.show-more-countries').show();
 
-          $('.countries_list__header__minioverview').html('Ratio of Loss to Gain');
+          $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('ratio-loss-gain').html('Ratio of Loss to Gain');
         }
 
         $('.countries_list ul').append(markup_list);
@@ -485,7 +485,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
 
         $('.show-more-countries').hide();
-        $('.countries_list__header__minioverview').html('Total loss <span>vs</span> Total gain');
+        $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('total-loss').html('Total loss <span>vs</span> Total gain');
         $('.countries_list ul').html(markup_list);
 
         that.model.set('class', 'huge');
@@ -499,25 +499,15 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
   _toggleClass: function() {
     if (this.model.get('class') === 'expanded') {
-      $('.countries_list__header__minioverview').addClass('expanded');
       $('.countries_list__minioverview').addClass('expanded');
-
-      $('.countries_list__header__minioverview').removeClass('medium huge');
       $('.countries_list__minioverview').removeClass('medium huge');
     } else if (this.model.get('class') === 'medium') {
-      $('.countries_list__header__minioverview').addClass('medium');
       $('.countries_list__minioverview').addClass('medium');
-
-      $('.countries_list__header__minioverview').removeClass('expanded huge');
       $('.countries_list__minioverview').removeClass('expanded huge');
     } else if (this.model.get('class') === 'huge') {
-      $('.countries_list__header__minioverview').addClass('huge');
       $('.countries_list__minioverview').addClass('huge');
-
-      $('.countries_list__header__minioverview').removeClass('expanded medium');
       $('.countries_list__minioverview').removeClass('expanded medium');
     } else {
-      $('.countries_list__header__minioverview').removeClass('expanded medium huge');
       $('.countries_list__minioverview').removeClass('expanded medium huge');
     }
   },
