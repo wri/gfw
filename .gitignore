@@ -19,7 +19,7 @@
 /public/media
 /install
 .DS_Store
-
+/install
 .gitignore
 .ruby-version
 .rvmrc

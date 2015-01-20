@@ -22,7 +22,7 @@ define([], function () {
   }, {
     'featureType': 'poi',
     'stylers': [{
-      'saturation': -100
+      'visibility': 'off'
     }]
   }, {
     'featureType': 'landscape',
