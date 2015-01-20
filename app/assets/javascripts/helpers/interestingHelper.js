@@ -2,18 +2,18 @@ define([], function() {
 
   var interestingHelper = {
     stories_on_the_map: {
-      title: 'Stories on the map',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
+      title: 'User stories on the map',
+      description: 'View stories submitted by users on the GFW Interactive Map',
       link: 'http://0.0.0.0:5000/map/3/15.00/27.00/ALL/grayscale/loss,forestgain/580'
     },
     mongabay_stories: {
       title: 'MONGABAY STORIES',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
+      description: 'View stories from Mongabay on the GFW Interactive Map',
       link: 'http://0.0.0.0:5000/map/3/15.00/27.00/ALL/grayscale/loss,forestgain/586'
     },
     ejn_stories: {
       title: 'EJN STORIES',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
+      description: 'View geo-tagged journalism from InfoAmazonia and other EJN platforms on the GFW Interactive Map',
       link: '#'
     },
     explore_the_map: {
@@ -23,12 +23,12 @@ define([], function() {
     },
     develop_your_own_app: {
       title: 'Develop your own app',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
+      description: 'Learn how to develop your own application with Global Forest Watch data',
       link: '/applications#develop-your-own-app'
     },
     discussion_forum: {
       title: 'Global Forest Watch Discussion Forum',
-      description: 'Read conversations about forest change data, learn about interesting applications of GFW, and view others data-related questions.',
+      description: 'Read conversations about forest change data, learn about interesting applications of GFW, and view other data-related questions.',
       link: 'https://groups.google.com/forum/#!forum/globalforestwatch'
     },
     submit_a_story: {
@@ -37,39 +37,39 @@ define([], function() {
       link: '/getinvolved/submit-a-story'
     },
     download_the_data: {
-      title: 'Download the data',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: 'http://data.gfw.opendata.arcgis.com/'
+      title: 'Download data',
+      description: 'Learn about and download all GFW data',
+      link: '/sources'
     },
     get_involved: {
       title: 'Get Involved',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
+      description: 'Join GFW’s growing community of contributing users by providing data, helping us improve existing data, developing your own ”app” or project using the GFW platform, or by simply joining the discussion about GFW',
       link: '/getinvolved'
     },
     keep_updated: {
       title: 'Keep Updated',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
+      description: 'Learn what is currently happening in forests on the ground, read more about data, sign up to receive updates, and learn how the GFW platform continues to evolve to meet user needs',
       link: '/stayinformed'
     },
     how_to: {
       title: 'Need help?',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
+      description: 'Learn how to get the most out of the Global Forest Watch platform',
       link: '/howto'
     },
-    fires_howto: {
-      title: 'Fires how to',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: '#'
+    About_GFW: {
+      title: 'About GFW',
+      description: 'Learn more about the GFW platform',
+      link: '/about'
     },
-    commodities_howto: {
-      title: 'Commodities how to',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: '#'
+    Provide_feedback: {
+      title: 'Provide feedback',
+      description: 'Help us improve the website by submitting feedback or by signing up to become an official GFW tester',
+      link: '/getinvolved/provide-feedback'
     },
-    coming_soon: {
-      title: 'Coming soon',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: '/stayinformed/coming-soon'
+    Contact_us: {
+      title: 'Contact us',
+      description: 'Contact the Global Forest Watch team with questions, comments, and feedback',
+      link: '/about/contact-us'
     },
 
   }
