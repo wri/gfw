@@ -19,7 +19,7 @@ define([
     _cacheVersion: 5,
 
     routes: {
-      'keepupdated(/)(:section)': 'staticSection',
+      'stayinformed(/)(:section)': 'staticSection',
       'getinvolved(/)(:section)': 'staticSection',
       'about(/)(:section)': 'staticSection',
       'howto(/)(:section)': 'staticSection',
@@ -60,13 +60,13 @@ define([
         params = Router._extractParameters(route, fragment);
         route = matched[1];
       }
-      
+
       return {
         route : route,
         fragment : fragment.split('/')[0],
         params : params
       };
-    }    
+    }
 
   });
 

@@ -49,7 +49,7 @@ define([], function() {
     keep_updated: {
       title: 'Keep Updated',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: '/keepupdated'
+      link: '/stayinformed'
     },
     how_to: {
       title: 'Need help?',
@@ -69,7 +69,7 @@ define([], function() {
     coming_soon: {
       title: 'Coming soon',
       description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim.',
-      link: '/keepupdated/coming-soon'
+      link: '/stayinformed/coming-soon'
     },
 
   }

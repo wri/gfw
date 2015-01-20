@@ -32,8 +32,8 @@ Gfw::Application.routes.draw do
   get '/sources(/:section)' => 'static#data'
 
   # get '/keepupdated' => redirect('keepupdated/crowdsourced-stories')
-  get '/keepupdated' => 'static#keep'
-  get '/keepupdated(/:section)' => 'static#keep'
+  get '/stayinformed' => 'static#keep'
+  get '/stayinformed(/:section)' => 'static#keep'
   get '/getinvolved' => 'static#getinvolved'
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'

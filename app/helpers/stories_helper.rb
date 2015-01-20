@@ -12,12 +12,12 @@ module StoriesHelper
 
   def previous_page_keep(page)
     page -= 1
-    return "/keepupdated/crowdsourced-stories?page=#{page}"
+    return "/stayinformed/crowdsourced-stories?page=#{page}"
   end
 
   def next_page_keep(page)
     page += 1
-    return "/keepupdated/crowdsourced-stories?page=#{page}"
+    return "/stayinformed/crowdsourced-stories?page=#{page}"
   end
 
   def last_page?

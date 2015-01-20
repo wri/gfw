@@ -13,7 +13,7 @@
 </section>
 
 <section id="sidebarNavView" class="content-static">
-  <a id="back-btn" class="back-btn mobile-show" href="#"><svg><use xlink:href="#shape-fast-forward-left"></use></svg>Keep updated</a>
+  <a id="back-btn" class="back-btn mobile-show" href="#"><svg><use xlink:href="#shape-fast-forward-left"></use></svg><%= @title %></a>
   <div class="inner">
     <div class="row">
       <aside id="sidebarAside">
@@ -24,8 +24,8 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'Crowdsourced stories', "#{keepupdated_path}/crowdsourced-stories", :"data-slug" => 'crowdsourced-stories', :"data-interesting" => 'stories_on_the_map, mongabay_stories, ejn_stories', :class => 'nav-item crowdsourced-stories' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Publications', "#{keepupdated_path}/publications", :"data-slug" => 'publications', :"data-interesting" => 'explore_the_map, download_the_data, discussion_forum', :class => 'nav-item publications' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Crowdsourced stories', "#{stayinformed_path}/crowdsourced-stories", :"data-slug" => 'crowdsourced-stories', :"data-interesting" => 'stories_on_the_map, mongabay_stories, ejn_stories', :class => 'nav-item crowdsourced-stories' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Publications', "#{stayinformed_path}/publications", :"data-slug" => 'publications', :"data-interesting" => 'explore_the_map, download_the_data, discussion_forum', :class => 'nav-item publications' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">

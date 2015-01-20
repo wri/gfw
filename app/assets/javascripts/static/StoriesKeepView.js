@@ -20,9 +20,9 @@ define([
       }
       //CACHE
       this.paginationContainer = $('#pagination-container');
-      
+
       //VARS
-      this.url = '/keepupdated/crowdsourced-stories'
+      this.url = '/stayinformed/crowdsourced-stories'
 
       this.initPaginate();
     },
@@ -35,7 +35,7 @@ define([
       this.paginationContainer.pagination({
         items: total,
         itemsOnPage : perpage,
-        currentPage : page, 
+        currentPage : page,
         displayedPages: 3,
         selectOnClick: false,
         prevText: ' ',
@@ -44,7 +44,7 @@ define([
           event.preventDefault();
           window.location = this.url + '?page=' + pageNumber;
         }, this )
-      });      
+      });
     }
 
 
