@@ -367,7 +367,6 @@
     top: 0;
     left: 0;
 		text-indent: -9999px;
-		overflow: hidden;
     z-index: 11;
     margin: 0 0 0 15px;
     @include retina-image('logo-new.png','logo-new@2x.png');
@@ -375,6 +374,19 @@
     &.active{
       opacity: 0;
       visibility: hidden;
+    }
+    &:after{
+      content: "";
+      display: block;
+      width: 30px;
+      height: 18px;
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      background: image-url('beta.png');
+    }
+    .beta-box{
+      display: none;
     }
     @media (min-width: $br-mobile){
       width: 90px;
