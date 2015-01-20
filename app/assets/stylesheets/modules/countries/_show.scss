@@ -107,6 +107,12 @@
         .embed & {
           display: none;
         }
+        .white{
+          color: $white;
+        }
+        .dark{
+          color: $dark;
+        }
       }
 
       select {
