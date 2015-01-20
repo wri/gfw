@@ -19,6 +19,12 @@ $(document).ready(function() {
   window.ga = window.ga || function() {};
 
   cdb.init(function() {
+
+    // mobile-menu
+    window.countries_header = new gfw.ui.view.CountriesHeader();
+
+    console.log(gfw);
+
     if ($('.is-index-action').length > 0) {
       window.countries_index = new gfw.ui.view.CountriesIndex();
     }
