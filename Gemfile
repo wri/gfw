@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.1.0'
 
-gem 'rails', '4.2'
+gem 'rails', '4.0.4'
 gem 'jquery-rails'
 gem 'sass-rails', '~> 4.0.0'
 gem 'compass-rails', '1.1.2'
