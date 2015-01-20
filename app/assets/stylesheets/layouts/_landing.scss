@@ -534,10 +534,19 @@
 }
 
 
+.buzz .twitter-timeline,
+.buzz .timeline-involved,
+.buzz .stories {
+  max-width: 400px;
+  margin: 0 auto;
+  display: block;
+}
 
 // TWITTER
 .twitter-timeline {
   height: 489px;
+  display: block;
+  margin: 0 auto;
 }
 
 // GET INVOLVED

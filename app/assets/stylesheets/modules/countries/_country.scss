@@ -119,6 +119,12 @@ h3 {
   &:first-letter {
     text-transform: uppercase;
   }
+  a{
+    color: $cGreen;
+    &:hover{
+      color: darken($cGreen, 5%);
+    }
+  }
 }
 
 
