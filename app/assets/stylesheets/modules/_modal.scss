@@ -317,14 +317,14 @@
     outline: none;
     font-size: 15px;
     padding: 20px;
-    color: #666;
+    color: $dark;
     .center{
       text-align: center;
     }
 
     //Title
     .source_title{
-      color: #97Bd3d;
+      color: $cGreen;
       text-transform: uppercase;
       padding: 15px 0 20px;
       font-size: 24px;
@@ -347,7 +347,9 @@
         .row{
           text-align: center;
           >*{
-            color: $white;
+            &.cancel_btn{
+              color: $dark;
+            }
             @media (min-width: 750px){
               width: 47.5%;
             }
