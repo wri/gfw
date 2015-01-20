@@ -1007,8 +1007,10 @@
     }
 
     .emissions-text {
+      margin-left: -6%;
       padding: 50px 0 50px 50px;
       background: #333;
+      box-shadow: 50px 0px 0 #333;
       text-align: left;
 
       .section-btn {
@@ -1102,7 +1104,6 @@
 
   .country-download-links-section {
     padding: 50px 0;
-    background-color: #F5F5F5;
     text-align: center;
     clear: both;
 
@@ -1112,9 +1113,9 @@
         margin-right: 10px;
       }
 
-      &:hover {
-        background: darken(#EEE, 5%);
-      }
+      // &:hover {
+      //   background: darken(#EEE, 5%);
+      // }
     }
   } // country-download-links-section
 
@@ -1391,12 +1392,12 @@
   }
 
   &.btn-rdn-primary {
-    background: #ECECEC;
-    border: 1px solid #B8B6BD;
+    background: #fff;
+    border: 1px solid #97bd3d;
     color: #464353;
     text-transform: uppercase;
     &:hover {
-      background: darken(#ECECEC, 10%);
+      background: #f7f7f7;
     }
   }
 
@@ -1408,8 +1409,8 @@
 
     &:hover {
       @include transition(background-color 0.2s ease);
-      background-color: transparent;
-      color: #555;
+      background-color: #000;
+      color: #fff;
     }
   }
 
@@ -2044,6 +2045,13 @@
 
     .country-carbon-stocks-section {
       padding: 0 !important;
+
+      .section-content {
+        .right-col {
+          margin: 0;
+        }
+      }
+
       .carbon-text,
       .emissions-text {
         width: 100%;
