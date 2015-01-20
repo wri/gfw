@@ -25,7 +25,7 @@ define([
         return
       }
       this.current = 0;
-      this.$btnNav = this.$el.find('.btn-nav'); 
+      this.$btnNav = this.$el.find('.btn-nav');
       this.$slide = this.$el.find('.slide');
       this.len = this.$slide.length;
 
@@ -35,8 +35,7 @@ define([
 
     setCurrent: function(){
       this.$slide.removeClass('current');
-      this.$slide.eq(this.current).addClass('current');    
-      console.log('hola');
+      this.$slide.eq(this.current).addClass('current');
     },
 
     onChange: function(e) {
