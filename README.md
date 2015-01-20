@@ -4,7 +4,7 @@
 
 This repository contains the GFW web app.
 
-![](http://i.imgur.com/JnVtiHU.png)
+![](http://f.cl.ly/items/1F3S083Z0n3D3l3x293Q/Captura%20de%20pantalla%202015-01-20%20a%20las%2016.52.42.png)
 
 # Developing
 
