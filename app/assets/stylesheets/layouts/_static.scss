@@ -909,6 +909,11 @@
       border: 0;
     }
   }
+  .subsection-title{
+    color: $dark;
+    margin: -20px 0 20px;
+    text-align: center;
+  }
   &.partners {
     border-top: 1px solid $border;
   }
