@@ -56,17 +56,17 @@ define([], function() {
       description: 'Learn how to get the most out of the Global Forest Watch platform',
       link: '/howto'
     },
-    About_GFW: {
+    about_GFW: {
       title: 'About GFW',
       description: 'Learn more about the GFW platform',
       link: '/about'
     },
-    Provide_feedback: {
+    provide_feedback: {
       title: 'Provide feedback',
       description: 'Help us improve the website by submitting feedback or by signing up to become an official GFW tester',
       link: '/getinvolved/provide-feedback'
     },
-    Contact_us: {
+    contact_us: {
       title: 'Contact us',
       description: 'Contact the Global Forest Watch team with questions, comments, and feedback',
       link: '/about/contact-us'
