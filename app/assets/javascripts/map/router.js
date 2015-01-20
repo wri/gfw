@@ -18,7 +18,7 @@ define([
   var Router = Backbone.Router.extend({
 
     // temporary, we will do it with env variables
-    _cacheVersion: 6,
+    _cacheVersion: 10,
 
     routes: {
       'map(/:zoom)(/:lat)(/:lng)(/:iso)(/:maptype)(/:baselayers)(/:sublayers)(/)': 'map',

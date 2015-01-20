@@ -53,7 +53,7 @@ define([
       if (this.analysisResource.iso) {
         data.iso = this.analysisResource.iso;
       } else if (this.analysisResource.geojson) {
-        data.geom = this.analysisResource.geojson;
+        data.geom = JSON.parse(this.analysisResource.geojson);
       }
 
       $.ajax({

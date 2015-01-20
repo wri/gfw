@@ -440,7 +440,7 @@
           <h3 class='overview_title'>Overview</h3>
           <p>The Deforestation Alert System (Sistema de Alerta de Desmatamento—SAD) is a monthly alert that monitors forest cover loss and forest degradation in the Brazilian Amazon. The system generates information that is published monthly by <a href='http://www.imazon.org.br/' target='_blank'>Imazon</a>, a Brazilian NGO, through its <em>Forest Transparency Bulletin</em>. The monthly alerts are derived from a temporal mosaic of <a href='http://modis.gsfc.nasa.gov/about/' target='_blank'>MODIS</a> daily images that are scaled down from 500 × 500 meter to 250 × 250 meter resolution. The monthly results are then validated using medium resolution images from the China-Brazil Earth Resources Satellite (<a href='http://www.cbers.inpe.br/ingles/' target='_blank'>CBERS</a>) and NASA <a href='http://landsat.usgs.gov/' target='_blank'>Landsat</a> data in order to “ground-truth” the results being reported.</p>
 
-          <p class='credits'><strong>Citation:</strong> Souza, C. M., S. Hayashi, and A. Veríssimo. 2009. “Near Real-Time Deforestation Detection for Enforcement of Forest Reserves in Mato Grosso.” <em>FIG—Land Governance in Support of the MDGS: Responding to New Challenges.</em><a href='http://www.fig.net/pub/fig_wb_2009/papers/trn/trn_2_souza.pdf' target='_blank'>www.fig.net/pub/fig_wb_2009/papers/trn/trn_2_souza.pdf</a>.</p>
+          <p class='credits'><strong>Citation:</strong> Souza, C. M., S. Hayashi, and A. Veríssimo. 2009. “Near Real-Time Deforestation Detection for Enforcement of Forest Reserves in Mato Grosso.” <em>FIG—Land Governance in Support of the MDGS: Responding to New Challenges.</em> <a href='http://www.fig.net/pub/fig_wb_2009/papers/trn/trn_2_souza.pdf' target='_blank'>www.fig.net/pub/fig_wb_2009/papers/trn/trn_2_souza.pdf</a>.</p>
 
           <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> “SAD Alerts.” Imazon. Accessed through Global Forest Watch on [date].<a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
@@ -531,7 +531,7 @@
       </div>
     </li>
 
-    <li id='fires' class='source-item last'>
+    <li id='fires' class='source-item'>
       <div class='source_header'>
         <strong class='source_title'>NASA active fires</strong>
         <i class='expand_arrow'></i>
@@ -592,6 +592,67 @@
           <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> “NASA Active Fires.” NASA FIRMS. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
           <p class='read_more hidden'><em>Learn more or download data at the <a href='https://earthdata.nasa.gov/data/near-real-time-data/firms' target='_blank'>NASA FIRMS website</a></em></p>
+        </div>
+      </div>
+    </li>
+    <li id='terrailoss' class='source-item last'>
+      <div class='source_header'>
+        <strong class='source_title'>Terra-i Alerts</strong>
+        <i class='expand_arrow'></i>
+        <em class='source_description'>(monthly, 250m, Latin America)</em>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_download'>
+          <a href='http://www.terra-i.org/terra-i/data.html' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
+        </div>
+
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Detects areas in Latin American where tree cover loss is likely to have recently occurred</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Resolution/scale</dt>
+            <dd>250 × 250 meters</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Latin America</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd>Moderate Resolution Imaging Spectroradiometer (MODIS) vegetation indices and water body’ presence data; Tropical Rainfall Measuring Mission (TRMM) precipitation data</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Frequency of updates</dt>
+            <dd>Monthly</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd> 2004 – present</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd>
+              <p>Given the lack of ground-based data, the methodology was validated using data from other forest monitoring systems such as PRODES (<a href="http://www.obt.inpe.br/prodes/index.php" target="_blank">http://www.obt.inpe.br/prodes/index.php</a>) which have been validated separately.</p>
+              <p>All clouds, water, and mist were masked based on MODIS Quality Assessment and MOD35 products and their values changed to “No Data”.</p>
+              <p>The Terra-i algorithm for change detection does not automatically identify events that occurred because of wild fires or within secondary forests or oil palm plantations. Furthermore, the moderate resolution of the MODIS sensor does not detect small scale events (<5ha). Terra-i is intended to be used to quickly identify deforestation hotspots which should then be more thoroughly investigated with higher resolution imagery or field validation.</p>
+            </dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+
+          <p>Terra-i is a near real-time monitoring system that detects land cover changes in Latin America. It uses satellite data from MODIS vegetation indices (MOD13Q1 and NDVI) and products related to presence of water bodies (MOD35) as well as Tropical Rainfall Measuring Mission (TRMM) precipitation data to detect anthropogenic changes in vegetation cover every 16 days. Terra-i is a collaboration between the International Center for Tropical Agriculture (CIAT - DAPA), CGIAR’s Research Program on Forestry, Trees and Agroforestry (FTA), The Nature Conservancy (TNC), the University of Applied Sciences Western Switzerland (HEIG-VD), and King’s College London (KCL).</p>
+
+          <p>The system, which uses a computational algorithm similar to FORMA (<a href="http://www.globalforestwatch.org/sources/forest_change#forma">http://www.globalforestwatch.org/sources/forest_change#forma</a>), is based on the premise that natural vegetation follows a predictable pattern of change in greenness from one date to the next, brought about by site-specific land and climatic conditions over the same period. The model is trained to understand the normal pattern of changes in vegetation greenness in relation to terrain and rainfall for a site, which allows for prediction of what the next vegetation response should be based on the historical data. If the prediction is significantly different from the historical responses in relation to pattern of rainfall and lasts for two 16-day periods in a row, the pixel is marked as potentially having changed by anthropogenic means.</p>
+
+
+          <p class="credits"><strong>Citation:</strong>Reymondin, Louis, Andrew Jarvis, Andres Perez-Uribe, Jerry Touval, Karolina Argote, Julien Rebetez, Edward Guevara, and Mark Mulligan. 2012. “Terra-i: A methodology for near real-time monitoring of habitat change at continental scales using MODIS-NDVI and TRMM.” CIAT-Terra-i. <a href='http://terra-i.org/dms/docs/reports/Terra-i-Method/Terra-i%20Method.pdf' target='_blank'>http://terra-i.org/dms/docs/reports/Terra-i-Method/Terra-i%20Method.pdf</a>.</p>
+
+          <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> Reymondin, Louis, Andrew Jarvis, Andres Perez-Uribe, Jerry Touval, Karolina Argote, Julien Rebetez, Edward Guevara, and Mark Mulligan. 2012. “Terra-i alerts." CIAT-Terra-i. Accessed through Global Forest Watch on [date].<a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
         </div>
       </div>
     </li>
@@ -923,7 +984,7 @@
 
       <div class='source_body'>
         <div class='source_download'>
-          <a href='http://data.unep-wcmc.org/datasets/21' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
+          <a href='http://data.unep-wcmc.org/datasets/4' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
         </div>
 
         <div class='source_table'>
@@ -945,11 +1006,11 @@
           </dl>
           <dl class='sources_row'>
             <dt>Frecuency of updates</dt>
-            <dd>None planned</dd>
+            <dd>2014 update; 2011 original publication</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Date of content</dt>
-            <dd>1997-2000</dd>
+            <dd>2011</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Cautions</dt>
@@ -987,7 +1048,7 @@
 
       <div class='source_body'>
         <div class='source_download'>
-          <a href='http://wri-public-data.s3.amazonaws.com/gfw2/GFW_logging_20131023.zip' target='_blank' title='Download'>Download<i class='arrow_down'></i></a>
+          <a href='https://gfw2_download.s3.amazonaws.com/logging.zip' target='_blank' title='Download'>Download<i class='arrow_down'></i></a>
         </div>
 
         <div class='source_table'>
@@ -1920,7 +1981,7 @@
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
-            <dd>This raster dataset shows estimated human population density per square km, derived from a proportional allocation gridding algorithm that used more than 1,000,000 national and sub-national geographic units to assign population values to grid cells. The population count grids are divided by the land area grid to produce population density estimates.</dd>
+            <dd>The Population Density layer measures human population per square km.</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE</dt>
@@ -1934,11 +1995,11 @@
             <dt>Source data</dt>
             <dd><a href="http://sedac.ciesin.columbia.edu/data/set/grump-v1-population-density" target="_blank">Columbia University Center for International Earth Science Information Network (CIESIN)</a></dd>
           </dl>
-          <dl class='sources_row'>
+          <!-- <dl class='sources_row'>
             <dt>Frequency of updates</dt>
             <dd>10 years</dd>
-          </dl>
-          <dl class='sources_row even'>
+          </dl> -->
+          <dl class='sources_row'>
             <dt>Date of content</dt>
             <dd>2000</dd>
           </dl>

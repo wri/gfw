@@ -409,7 +409,7 @@
           <h3 class='overview_title'>Overview</h3>
           <p>The Deforestation Alert System (Sistema de Alerta de Desmatamento—SAD) is a monthly alert that monitors forest cover loss and forest degradation in the Brazilian Amazon. The system generates information that is published monthly by <a href='http://www.imazon.org.br/' target='_blank'>Imazon</a>, a Brazilian NGO, through its <em>Forest Transparency Bulletin</em>. The monthly alerts are derived from a temporal mosaic of <a href='http://modis.gsfc.nasa.gov/about/' target='_blank'>MODIS</a> daily images that are scaled down from 500 × 500 meter to 250 × 250 meter resolution. The monthly results are then validated using medium resolution images from the China-Brazil Earth Resources Satellite (<a href='http://www.cbers.inpe.br/ingles/' target='_blank'>CBERS</a>) and NASA <a href='http://landsat.usgs.gov/' target='_blank'>Landsat</a> data in order to “ground-truth” the results being reported.</p>
 
-          <p class='credits'><strong>Citation:</strong> Souza, C. M., S. Hayashi, and A. Veríssimo. 2009. “Near Real-Time Deforestation Detection for Enforcement of Forest Reserves in Mato Grosso.” <em>FIG—Land Governance in Support of the MDGS: Responding to New Challenges.</em><a href='http://www.fig.net/pub/fig_wb_2009/papers/trn/trn_2_souza.pdf' target='_blank'>www.fig.net/pub/fig_wb_2009/papers/trn/trn_2_souza.pdf</a>.</p>
+          <p class='credits'><strong>Citation:</strong> Souza, C. M., S. Hayashi, and A. Veríssimo. 2009. “Near Real-Time Deforestation Detection for Enforcement of Forest Reserves in Mato Grosso.” <em>FIG—Land Governance in Support of the MDGS: Responding to New Challenges.</em> <a href='http://www.fig.net/pub/fig_wb_2009/papers/trn/trn_2_souza.pdf' target='_blank'>www.fig.net/pub/fig_wb_2009/papers/trn/trn_2_souza.pdf</a>.</p>
 
           <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> “SAD Alerts.” Imazon. Accessed through Global Forest Watch on [date].<a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
@@ -500,7 +500,7 @@
       </div>
     </li>
 
-    <li id='fires' class='source-item last'>
+    <li id='fires' class='source-item'>
       <div class='source_header'>
         <strong class='source_title'>NASA active fires</strong>
         <i class='expand_arrow'></i>
@@ -540,7 +540,7 @@
           <dl class='sources_row'>
             <dt>Cautions</dt>
             <dd>
-              <p>Not all fires are detected. There are several reasons why MODIS may not have detected a certain fire. The fire may have started and ended between satellite overpasses. The fire may have been too small or too cool to be detected in the (approximately) 1 km<sup>2</sup> pixel. Cloud cover, heavy smoke, or tree canopy may completely obscure a fire.</p>
+              <p>Not all fires are detected. There are several reasons why MODIS may not have detected a certain fire. The fire may have started and ended between satellite overpasses. The fire may have been too small or too cool to be detected in the (approximately) 1 square kilometer pixel. Cloud cover, heavy smoke, or tree canopy may completely obscure a fire.</p>
               <p>It is not recommended to use active fire locations to estimate burned area due to spatial and temporal sampling issues.</p>
               <p>When zoomed out, this data layer displays some degree of inaccuracy because the data points must be collapsed to be visible on a larger scale. Zoom in for greater detail.</p>
             </dd>
@@ -561,6 +561,68 @@
           <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> “NASA Active Fires.” NASA FIRMS. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
           <p class='read_more hidden'><em>Learn more or download data at the <a href='https://earthdata.nasa.gov/data/near-real-time-data/firms' target='_blank'>NASA FIRMS website</a></em></p>
+        </div>
+      </div>
+    </li>
+
+    <li id='terrailoss' class='source-item last'>
+      <div class='source_header'>
+        <strong class='source_title'>Terra-i Alerts</strong>
+        <i class='expand_arrow'></i>
+        <em class='source_description'>(monthly, 250m, Latin America)</em>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_download'>
+          <a href='http://www.terra-i.org/terra-i/data.html' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
+        </div>
+
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Detects areas in Latin American where tree cover loss is likely to have recently occurred</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Resolution/scale</dt>
+            <dd>250 × 250 meters</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Latin America</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd>Moderate Resolution Imaging Spectroradiometer (MODIS) vegetation indices and water body’ presence data; Tropical Rainfall Measuring Mission (TRMM) precipitation data</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Frequency of updates</dt>
+            <dd>Monthly</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd> 2004 – present</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd>
+              <p>Given the lack of ground-based data, the methodology was validated using data from other forest monitoring systems such as PRODES (<a href="http://www.obt.inpe.br/prodes/index.php" target="_blank">http://www.obt.inpe.br/prodes/index.php</a>) which have been validated separately.</p>
+              <p>All clouds, water, and mist were masked based on MODIS Quality Assessment and MOD35 products and their values changed to “No Data”.</p>
+              <p>The Terra-i algorithm for change detection does not automatically identify events that occurred because of wild fires or within secondary forests or oil palm plantations. Furthermore, the moderate resolution of the MODIS sensor does not detect small scale events (<5ha). Terra-i is intended to be used to quickly identify deforestation hotspots which should then be more thoroughly investigated with higher resolution imagery or field validation.</p>
+            </dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+
+          <p>Terra-i is a near real-time monitoring system that detects land cover changes in Latin America. It uses satellite data from MODIS vegetation indices (MOD13Q1 and NDVI) and products related to presence of water bodies (MOD35) as well as Tropical Rainfall Measuring Mission (TRMM) precipitation data to detect anthropogenic changes in vegetation cover every 16 days. Terra-i is a collaboration between the International Center for Tropical Agriculture (CIAT - DAPA), CGIAR’s Research Program on Forestry, Trees and Agroforestry (FTA), The Nature Conservancy (TNC), the University of Applied Sciences Western Switzerland (HEIG-VD), and King’s College London (KCL).</p>
+
+          <p>The system, which uses a computational algorithm similar to FORMA (<a href="http://www.globalforestwatch.org/sources/forest_change#forma">http://www.globalforestwatch.org/sources/forest_change#forma</a>), is based on the premise that natural vegetation follows a predictable pattern of change in greenness from one date to the next, brought about by site-specific land and climatic conditions over the same period. The model is trained to understand the normal pattern of changes in vegetation greenness in relation to terrain and rainfall for a site, which allows for prediction of what the next vegetation response should be based on the historical data. If the prediction is significantly different from the historical responses in relation to pattern of rainfall and lasts for two 16-day periods in a row, the pixel is marked as potentially having changed by anthropogenic means.</p>
+
+
+          <p class="credits"><strong>Citation:</strong>Reymondin, Louis, Andrew Jarvis, Andres Perez-Uribe, Jerry Touval, Karolina Argote, Julien Rebetez, Edward Guevara, and Mark Mulligan. 2012. “Terra-i: A methodology for near real-time monitoring of habitat change at continental scales using MODIS-NDVI and TRMM.” CIAT-Terra-i. <a href='http://terra-i.org/dms/docs/reports/Terra-i-Method/Terra-i%20Method.pdf' target='_blank'>http://terra-i.org/dms/docs/reports/Terra-i-Method/Terra-i%20Method.pdf</a>.</p>
+
+          <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> Reymondin, Louis, Andrew Jarvis, Andres Perez-Uribe, Jerry Touval, Karolina Argote, Julien Rebetez, Edward Guevara, and Mark Mulligan. 2012. “Terra-i alerts." CIAT-Terra-i. Accessed through Global Forest Watch on [date].<a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
         </div>
       </div>
     </li>
@@ -601,14 +663,18 @@
             <dd><a href='http://landsat.usgs.gov/' target='_blank'>Landsat 7 ETM+</a></dd>
           </dl>
           <dl class='sources_row'>
+            <dt>Frequency of updates</dt>
+            <dd>Update coming in 2015</dd>
+          </dl>
+          <dl class='sources_row even'>
             <dt>Date of content</dt>
             <dd>2000</dd>
           </dl>
-          <dl class='sources_row even'>
+          <dl class='sources_row'>
             <dt>Tree cover canopy density</dt>
             <dd>Varies according to selection (click the gear icon on the map to change the minimum tree cover canopy density threshold)</dd>
           </dl>
-          <dl class='sources_row'>
+          <dl class='sources_row even'>
             <dt>Cautions</dt>
             <dd>For the purpose of this study, “tree cover” was defined as all vegetation taller than 5 meters in height. “Tree cover” is the biophysical presence of trees and may take the form of natural forests or plantations existing over a range of canopy densities.</dd>
           </dl>
@@ -627,61 +693,6 @@
         </div>
       </div>
     </li>
-
-    <!-- <li id='intact_forest' class='source-item'>
-      <div class='source_header'>
-        <strong class='source_title'>Intact Forest Landscapes 2000</strong>
-        <i class='expand_arrow'></i>
-      </div>
-
-      <div class='source_body'>
-        <div class='source_download'>
-          <a href='http://intactforests.org/' target='_blank' title='Download and project website'>Download at project website<i class='arrow_down'></i></a>
-        </div>
-
-        <div class='source_table'>
-          <dl class='sources_row'>
-            <dt>Function</dt>
-            <dd>Identifies unbroken expanses of natural forest ecosystems within forests around the world as of the year 2000</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>RESOLUTION / SCALE</dt>
-            <dd>30 × 30 meters</dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>Geographic coverage</dt>
-            <dd>Global</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>Source data</dt>
-            <dd><a href='http://landsat.usgs.gov/' target='_blank'>Landsat</a></dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>Frequency of updates</dt>
-            <dd>2014 update; 2006 original publication</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>Date of content</dt>
-            <dd>2000</dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>Cautions</dt>
-            <dd>In the IFL global data set burned areas may be considered nonintact, whereas in certain countries (e.g., Canada), fires are viewed as a primary source of natural disturbance, meaning that burned areas would still be considered “intact.”</dd>
-          </dl>
-        </div>
-
-        <div class='source_summary'>
-          <h3 class='overview_title'>Overview</h3>
-          <p>The <a href='http://intactforests.org/' target='_blank'>Intact Forest Landscapes</a> (IFL) data set identifies unbroken expanses of natural ecosystems within the zone of forest extent, areas that show no signs of significant human activity and are large enough that all native biodiversity, including viable populations of wide-ranging species, could be maintained. To map IFL areas, a set of criteria was developed and designed to be globally applicable and easily replicable to allow for repeated assessments over time as well for verification. The criteria were separated into two groups to assess the spatial extent of developed areas and the fragmentation of these areas. These were then mapped and identified from <a href='http://landsat.usgs.gov/' target='_blank'>Landsat</a> satellite imagery for the year 2000. The landscapes identified as unfragmented were at least 50,000 hectares in size with a minimum width of 10 kilometers. This data can be used to assess forest intactness, alteration, and degradation at global and regional scales. </p>
-
-          <p class='credits'><strong>Citation:</strong> Potapov, P., A. Yaroshenko, S. Turubanova, M. Dubinin, L. Laestadius, C. Thies, D. Aksenov, A. Egorov, Y. Yesipova, I. Glushkov, M. Karpachevski, A. Kostickova, A. Manisha, E. Tsybikova, and I. Zhuravleva. 2008. “Mapping the World’s Intact Forest Landscapes by Remote Sensing.” <em>Ecology and Society</em> 13, no. 2: Art. 51. <a href='http://www.ecologyandsociety.org/vol13/iss2/art51' target='_blank'>www.ecologyandsociety.org/vol13/iss2/art51</a>.</p>
-
-          <p class='read_more hidden'><em>Learn more or download data at the <a href='http://intactforests.org/' target='_blank'>Intact Forest Landscapes website</a></em></p>
-        </div>
-      </div>
-    </li> -->
-
-
     <li id='pantropical' class='source-item'>
       <div class='source_header'>
         <strong class='source_title'>Tropical forest carbon stocks</strong>
@@ -772,7 +783,7 @@
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>The Intact Forest Landscapes (IFL) data set identifies unbroken expanses of natural ecosystems within the zone of forest extent that show no signs of significant human activity and are large enough that all native biodiversity, including viable populations of wide-ranging species, could be maintained. To map IFL areas, a set of criteria was developed and designed to be globally applicable and easily replicable to allow for repeated assessments over time as well for verification. The criteria were separated into two groups to assess the spatial extent of developed areas and the degradation of these areas. These were then mapped and identified from Landsat satellite imagery for the year 2013. Degraded areas were identified as areas that had changed from 2000-2013 based on comparison with the 2000 IFL data – either through tree cover loss or fragmentation by roads or other infrastructure. The landscapes identified as unfragmented were at least 50,000 hectares in size with a minimum width of 10 kilometers. This data can be used to assess forest intactness, alteration, and degradation at global and regional scales. More information about the dataset and methodology is available on <a href="www.intactforests.org">www.intactforests.org</a></p>
+          <p>The Intact Forest Landscapes (IFL) data set identifies unbroken expanses of natural ecosystems within the zone of forest extent that show no signs of significant human activity and are large enough that all native biodiversity, including viable populations of wide-ranging species, could be maintained. To map IFL areas, a set of criteria was developed and designed to be globally applicable and easily replicable to allow for repeated assessments over time as well for verification. The criteria were separated into two groups to assess the spatial extent of developed areas and the degradation of these areas. These were then mapped and identified from Landsat satellite imagery for the year 2013. Degraded areas were identified as areas that had changed from 2000-2013 based on comparison with the 2000 IFL data – either through tree cover loss or fragmentation by roads or other infrastructure. The landscapes identified as unfragmented were at least 50,000 hectares in size with a minimum width of 10 kilometers. This data can be used to assess forest intactness, alteration, and degradation at global and regional scales. More information about the data set and methodology is available on <a href="www.intactforests.org">www.intactforests.org</a></p>
           <p class='credits'><strong>Citation:</strong> Potapov P., Yaroshenko A., Turubanova S., Dubinin M., Laestadius L., Thies C., Aksenov D., Egorov A., Yesipova Y., Glushkov I., Karpachevskiy M., Kostikova A., Manisha A., Tsybikova E., Zhuravleva I. 2008. Mapping the World's Intact Forest Landscapes by Remote Sensing. Ecology and Society, 13 (2) http://www.ecologyandsociety.org/vol13/iss2/art51/ </p>
 
           <p class='credits'><strong>Suggested citations for data as displayed on GFW:</strong> Greenpeace, University of Maryland, World Resources Institute and Transparent World. 2014. Intact Forest Landscapes: update and degradation from 2000-2013. Accessed through Global Forest Watch on [date]. www.globalforestwatch.org</p>
@@ -840,13 +851,13 @@
 
       <div class='source_body'>
         <div class='source_download'>
-          <a href='http://data.unep-wcmc.org/datasets/21' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
+          <a href='http://data.unep-wcmc.org/datasets/4' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
         </div>
 
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
-            <dd>This dataset shows the global distribution of mangrove forests, derived from earth observation satellite imagery</dd>
+            <dd>Shows the global distribution of mangrove forests, derived from earth observation satellite imagery</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE</dt>
@@ -861,7 +872,7 @@
             <dd>Landsat Global Land Survey Collection</dd>
           </dl>
           <dl class='sources_row'>
-            <dt>Frecuency of updates</dt>
+            <dt>Frequency of updates</dt>
             <dd>None planned</dd>
           </dl>
           <dl class='sources_row'>
@@ -870,18 +881,17 @@
           </dl>
           <dl class='sources_row'>
             <dt>Cautions</dt>
-            <dd><p>Results were validated using existing distribution data and published literature.</p><p>Note that small patches (< 900-2,700 sq-m) of mangrove forests cannot be identified using this approach. This methodological approach had a number of challenges, such as cloud cover and noise. There may also be areas where land cover was misclassified.</p><p>As the dataset may still contain overlapping polygons, a dissolve operation (within a GIS) might be needed before surface area calculations are carried out.</p></dd>
+            <dd><p>Results were validated using existing distribution data and published literature.</p><p>Note that small patches (< 900-2,700 m<sup>2</sup>) of mangrove forests cannot be identified using this approach. This methodological approach had a number of challenges, such as cloud cover and noise. There may also be areas where land cover was misclassified.</p><p>As the data set may still contain overlapping polygons, a dissolve operation (within a GIS) might be needed before surface area calculations are carried out.</p></dd>
           </dl>
         </div>
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>To improve scientific understanding of the extent and distribution of mangrove forests of the world ihe status and distribution of global mangroves were mapped using recently available Global Land Survey (GLS) data and the Landsat archive.The project interpreted approximately 1000 Landsat scenes using hybrid supervised and unsupervised digital image classification techniques. Results were validated using existing GIS data and the published literature to map ‘true mangroves’.</p>
-          <p>The total area of mangroves in the year 2000 was 137,760 km2 in 118 countries and territories in the tropical and subtropical regions of the world. Approximately 75% of world's mangroves are found in just 15 countries, and only 6.9% are protected under the existing protected areas network (IUCN I-IV). Our study confirms earlier findings that the biogeographic distribution of mangroves is generally confined to the tropical and subtropical regions and the largest percentage of mangroves is found between 5° N and 5° S latitude.</p>
-          <p>The remaining area of mangrove forest in the world is less than previously thought; the estimate provided in this study is 12.3% smaller than the most recent estimate by the Food and Agriculture Organization (FAO) of the United Nations. This dataset presents the most comprehensive, globally consistent and highest resolution (30 m) global mangrove database ever created</p>
+          <p>To improve scientific understanding of the extent and distribution of mangrove forests of the world ihe status and distribution of global mangroves were mapped using recently available Global Land Survey (GLS) data and the Landsat archive.The project interpreted approximately 1,000 Landsat scenes using hybrid supervised and unsupervised digital image classification techniques. Results were validated using existing GIS data and the published literature to map ‘true mangroves’.</p>
+          <p>The total area of mangroves in the year 2000 was 137,760 square kilometers in 118 countries and territories in the tropical and subtropical regions of the world. Approximately 75% of world's mangroves are found in just 15 countries, and only 6.9% are protected under the existing protected areas network (IUCN I-IV). Our study confirms earlier findings that the biogeographic distribution of mangroves is generally confined to the tropical and subtropical regions and the largest percentage of mangroves is found between 5° N and 5° S latitude.</p>
+          <p>The remaining area of mangrove forest in the world is less than previously thought; the estimate provided in this study is 12.3% smaller than the most recent estimate by the Food and Agriculture Organization (FAO) of the United Nations. This data set presents the most comprehensive, globally consistent and highest resolution (30 m) global mangrove database ever created</p>
 
-          <p class='credits'><strong>Citation:</strong> Giri C, Ochieng E, Tieszen LL, Zhu Z, Singh A, Loveland T, Masek J, Duke N (2011a). Global distribution of mangroves forests of the world using earth observation satellite data. In Supplement to: Giri et al. (2011b). Cambridge (UK): UNEP World Conservation Monitoring Centre. Giri C, Ochieng E, Tieszen LL, Zhu Z, Singh A, Loveland T, Masek J, Duke N (2011b). Status and distribution of mangrove forests of the world using earth observation satellite data. Global Ecology and Biogeography 20: 154-159</p>
-
+          <p class='credits'><strong>Citation:</strong> Giri C, Ochieng E, Tieszen LL, Zhu Z, Singh A, Loveland T, Masek J, Duke N (2011). Status and distribution of mangrove forests of the world using earth observation satellite data. Global Ecology and Biogeography 20: 154-159. URL: http://onlinelibrary.wiley.com/doi/10.1111/j.1466-8238.2010.00584.x/abstract  ; http://data.unep-wcmc.org/datasets/4
           <!--<p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Tree Cover Extent.” University of Maryland, Google, USGS, and NASA. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>-->
 
           <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "#{sources_path}#forest_cover" %></em></p>
@@ -904,7 +914,7 @@
 
       <div class='source_body'>
         <div class='source_download'>
-          <a href='http://wri-public-data.s3.amazonaws.com/gfw2/GFW_logging_20131023.zip' target='_blank' title='Download'>Download<i class='arrow_down'></i></a>
+          <a href='https://gfw2_download.s3.amazonaws.com/logging.zip' target='_blank' title='Download'>Download<i class='arrow_down'></i></a>
         </div>
 
         <div class='source_table'>
@@ -1593,7 +1603,7 @@
             <div id="canada_aboriginal_lands" class="source_dropdown_body">
               <p class='download'><a href='http://www.geobase.ca/geobase/en/data/admin/alta/description.html'>Download</a></p>
 
-              <p>The Aboriginal Lands dataset depicts the administrative boundaries (exterior limits) of lands where the title has been vested in specific Aboriginal Groups of Canada or lands which were set aside for their exclusive benefit. The Aboriginal Lands dataset includes, but is not limited to, Indian Reserves,Cree-Naskapi Category 1A and 1A-N Lands, Yukon First Nation Settlement Lands, Kanesatake Mohawk Interim Land Base, the Inuit Owned Lands, Tlicho Lands, Inuvialuit Lands, Gwich’in Lands and Sahtu Lands.</p>
+              <p>The Aboriginal Lands data set depicts the administrative boundaries (exterior limits) of lands where the title has been vested in specific Aboriginal Groups of Canada or lands which were set aside for their exclusive benefit. The Aboriginal Lands data set includes, but is not limited to, Indian Reserves,Cree-Naskapi Category 1A and 1A-N Lands, Yukon First Nation Settlement Lands, Kanesatake Mohawk Interim Land Base, the Inuit Owned Lands, Tlicho Lands, Inuvialuit Lands, Gwich’in Lands and Sahtu Lands.</p>
 
               <p class='credits'><strong>Credit:</strong>Government of Canada, Natural Resources Canada, Earth Sciences Sector, Geomatics Canada, Surveyor General Branch. Available through the <a href="http://data.gc.ca/eng/open-government-licence-canada">Open Government License - Canada</a></p>
             </div>
@@ -1762,10 +1772,13 @@
         <i class='expand_arrow'></i>
       </div>
       <div class='source_body'>
+        <div class='source_download'>
+          <a href='http://sedac.ciesin.columbia.edu/data/set/grump-v1-population-density/data-download' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
+        </div>
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
-            <dd>This raster dataset shows estimated human population density per square km, derived from a proportional allocation gridding algorithm that used more than 1,000,000 national and sub-national geographic units to assign population values to grid cells. The population count grids are divided by the land area grid to produce population density estimates.</dd>
+            <dd>Measures human population per square kilometer</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE</dt>
@@ -1781,7 +1794,7 @@
           </dl>
           <dl class='sources_row'>
             <dt>Frequency of updates</dt>
-            <dd>10 years</dd>
+            <dd>None planned</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>Date of content</dt>
@@ -1792,9 +1805,9 @@
       <div class='source_body'>
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>“The Global Rural-Urban Mapping Project, Version 1 (GRUMPv1) consists of estimates of human population for the years 1990, 1995, and 2000 in a 1km global grid. The population density grids measure population per square km.</p>
+          <p>“The Global Rural-Urban Mapping Project, Version 1 (GRUMPv1) consists of estimates of human population for the years 1990, 1995, and 2000 in a 1 kilometer global grid. The population density grids measure population per square kilometer.</p>
 
-          <p>A proportional allocation gridding algorithm, utilizing more than 1,000,000 national and sub-national geographic units, is used to assign population values to grid cells. The population count grids are divided by the land area grid to produce population densities. This data set is produced by the Columbia University Center for International Earth Science Information Network (CIESIN) in collaboration with the International Food Policy Research Institute (IFPRI), The World Bank, and Centro Internacional de Agricultura Tropical (CIAT).</p>
+          <p>A proportional allocation gridding algorithm, utilizing more than 1,000,000 national and sub-national geographic units, is used to assign population values to grid cells. The population count grids are divided by the land area grid to produce population densities. This data set is produced by the Columbia University Center for International Earth Science Information Network (CIESIN) in collaboration with the International Food Policy Research Institute (IFPRI), the World Bank, and Centro Internacional de Agricultura Tropical (CIAT).</p>
 
           <p class='credits'><strong>Citation:</strong> Global Rural-Urban Mapping Project, Version 1 (GRUMPv1) D.L. Balk, U. Deichmann, G. Yetman, F. Pozzi, S.I. Hay and A. Nelson. Determining Global Population Distribution: Methods, Applications and Data., Advances in Parasitology 62: 119-156, 2006. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
@@ -2075,7 +2088,7 @@
     <p class="notranslate">So thank you, truly, for understanding why we’re asking you to agree to a Terms of Service. Please join us in making Global Forest Watch a powerful tool for people everywhere.</p>
   </div>
 </article>
-<article id='country_dialog' class="sources">
+<article id='country_dialog' class="source-article">
   <div class='source_header'>
     <strong class='source_title'>Country mode</strong>
     <i class='expand_arrow'></i>

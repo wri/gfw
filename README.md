@@ -4,20 +4,20 @@
 
 This repository contains the GFW web app.
 
-![](http://i.imgur.com/JnVtiHU.png)
+![](http://f.cl.ly/items/1F3S083Z0n3D3l3x293Q/Captura%20de%20pantalla%202015-01-20%20a%20las%2016.52.42.png)
 
 # Developing
 
 The GFW web app rides on [Ruby on Rails](http://rubyonrails.org).
 
-## OS X Mavericks Setup
+## OS X Yosemite (10.10) Setup
 
 First make sure you have [Xcode](https://developer.apple.com/xcode) and [Command Line Tools](https://developer.apple.com/downloads/index.action) installed.
 
 Next install [Homebrew](http://brew.sh), the OS X package manager:
 
 ```bash
-$ ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 ```
 
 We recommend managing your Ruby installation through [rbenv](https://github.com/sstephenson/rbenv). It's just an easy way to run multiple Ruby versions for different applications:
@@ -34,12 +34,12 @@ Next clone the gfw repo:
 $ git clone https://github.com/Vizzuality/gfw.git
 ```
 
-Using rbenv, install and set Ruby 2.1.1 in the main app directory:
+Using rbenv, install and set Ruby 2.2.0 in the main app directory:
 
 ```bash
 $ cd gfw
-$ rbenv install 2.1.1
-$ rbenv local 2.1.1
+$ rbenv install 2.2.0
+$ rbenv local 2.2.0
 ```
 
 Now let's install Ruby on Rails:
@@ -68,7 +68,7 @@ RACK_ENV=development
 GFW_API_HOST=gfw-apis.appspot.com
 BLOG_HOST=http://blog.globalforestwatch.org
 AWS_HOST=
-TERMS_COOKIE=
+TERMS_COOKIE=true
 S3_BUCKET_NAME=
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
@@ -86,7 +86,7 @@ Oh, and you should probably launch the [gfw-api](https://github.com/wri/gfw-api)
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Vizzuality
+Copyright (c) 2015 Vizzuality
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
