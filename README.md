@@ -38,8 +38,8 @@ Using rbenv, install and set Ruby 2.2.0 in the main app directory:
 
 ```bash
 $ cd gfw
-$ rbenv install 2.2.0
-$ rbenv local 2.2.0
+$ rbenv install 2.2.0-dev
+$ rbenv local 2.2.0-dev
 ```
 
 Now let's install Ruby on Rails:
