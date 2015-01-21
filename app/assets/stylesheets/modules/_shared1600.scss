@@ -55,6 +55,39 @@
   }
 }
 
+.tooltip2{
+  position: absolute;
+  z-index: 500;
+  padding: 20px 10px;
+  font-size: 19px;
+  font-weight: 500;
+  text-align: center;
+  color: #C440FF;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 3px black;
+
+  span{
+    display: block;
+    font-size: 15px;
+    line-height: 1.5;
+    color: rgba(55,51,67,0.5);
+  }
+
+  &:after{
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    border-color: #fff rgba(255,255,255,0);
+    border-width: 6px 6px 0 6px;
+    border-style: solid;
+    margin-left: -6px;
+  }
+}
+
+
+
 .submenu-tooltip {
   position: absolute;
   min-width: 150px;
