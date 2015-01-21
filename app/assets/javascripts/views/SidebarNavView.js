@@ -12,8 +12,9 @@ define([
 
   var SidebarNavModel = Backbone.Model.extend({
     defaults: {
-      offset: null,
-      height: null
+      section: null,
+      t: null,
+      interesting: null
     }
   });
 
@@ -23,7 +24,7 @@ define([
     el: '#sidebarNavView',
 
     events: {
-      'click .nav-item' : 'updateSource',
+      'click .nav-item' : 'changeSourceNav',
       'click .nav-title' : 'scrollTo',
       'click #back-btn' : 'returnBack',
       'click .source_header' : 'toggleSources',
@@ -35,6 +36,9 @@ define([
       if (!this.$el.length) {
         return
       }
+
+      this.model = new SidebarNavModel();
+
       //CACHE
       this.$window = $(window);
       this.$document = $(document);
@@ -95,22 +99,18 @@ define([
     toggleSources: function(e){
       var top;
       this.$sourceBody.hide(0);
-
-
       if ($(e.currentTarget).hasClass('active')) {
         this.$sourceBody.removeClass('active');
         $(e.currentTarget).removeClass('active');
+        this.model.set('t', null);
       } else {
         this.$sourceHeader.removeClass('active');
-        top = $(e.currentTarget).offset().top;
         $(e.currentTarget).addClass('active');
         $(e.currentTarget).parent().children('.source_body').show(0);
+        this.model.set('t', $(e.currentTarget).parent().attr('id'));
       }
 
-      setTimeout(_.bind(function(){
-        this.calculateOffsets();
-        (top) ? this.$htmlbody.animate({ scrollTop: top },250) : this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0);
-      },this),50);
+      this.updateSource();
     },
 
 
@@ -138,39 +138,61 @@ define([
       }
     },
 
-    updateSource: function(e){
+    changeSourceNav: function(e){
       e && e.preventDefault();
+      this.model.set('section',$(e.currentTarget).data('slug'));
+      this.model.set('interesting', $(e.currentTarget).data('interesting'));
+      this.model.set('t',null);
 
+      this.updateSource()
+    },
+
+    updateSource: function(){
       var params = {
-        section: $(e.currentTarget).data('slug'),
-        interesting: $(e.currentTarget).data('interesting')
+        section: this.model.get('section'),
+        interesting: this.model.get('interesting'),
+        t: this.model.get('t')
       }
 
       mps.publish('SourceStatic/update',[params]);
     },
 
+
     changeSource: function(params){
       //spinner
       this.$sourceSpinner.removeClass('start');
-
       if (params.section) {
+        this.model.set('section', params.section);
+        this.model.set('interesting', params.interesting);
         var posY = (this.mobile) ? this.$document.scrollTop() : this.$sideBarBox.offset().top - this.padding;
-        this.$htmlbody.animate({ scrollTop: posY },0, _.bind(function(){
-            this.changeHelper(params.section);
-        },this));
+        if (params.t) {
+          this.model.set('t', params.t)
+          posY = $('#'+this.model.get('t')).offset().top;
+          this.$htmlbody.animate({ scrollTop: posY },0, _.bind(function(){
+            this.changeHelper(params.section, this.model.get('t'));
+          },this));
+
+        }else{
+          this.$htmlbody.animate({ scrollTop: posY },0, _.bind(function(){
+            this.changeHelper(params.section, this.model.get('t'));
+          },this));
+        }
         mps.publish('Interesting/update',[params.interesting]);
       }else{
         if (!this.mobile) {
           var section = this.$navItem.eq(0).data('slug');
           this.changeHelper(section);
+          this.model.set('section', section);
+
         }
         var interesting = this.$navItem.eq(0).data('interesting');
+        this.model.set('interesting', interesting);
         mps.publish('Interesting/update',[interesting]);
       }
 
     },
 
-    changeHelper: function(section){
+    changeHelper: function(section,tab){
       this.$sideBarBox.addClass('active');
       this.$backBtn.addClass('active');
       //aside
@@ -180,6 +202,11 @@ define([
       //section
       this.$sourceArticle.removeClass('selected');
       $('#'+section).addClass('selected');
+
+      //tab
+      if (tab) {
+        (!$('#'+tab).find('.source_header').hasClass('active')) ? $('#'+tab).find('.source_header').trigger('click') : null;
+      }
 
       if(this.mobile) {
         this.$sideBarBox.animate({ scrollTop: 0 },0);
@@ -191,7 +218,6 @@ define([
       },this),50);
 
       setTimeout(_.bind(function(){
-
         //htmlbody
         if(this.mobile) {
           this.$sideBarBox.addClass('animate');
