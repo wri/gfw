@@ -15,11 +15,65 @@
     </header>
   </div>
 </section>
+
+<section class="applications-section" id="gfw-applications">
+  <div class="inner">
+    <h2 class="section-title">Maps + data</h2>
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <header>
+            <h2>GFW Interactive map</h2>
+            <div class="icon"><svg><use xlink:href="#shape-map"></use></svg></div>
+          </header>
+          <div class="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          </div>
+          <footer>
+            <a href="/map" class="btn green medium">Launch App</a>
+            <small>Source: World Resources Institute</small>
+          </footer>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <header>
+            <h2>Country profiles & rankings</h2>
+            <div class="icon"><svg><use xlink:href="#shape-country"></use></svg></div>
+          </header>
+          <div class="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          </div>
+          <footer>
+            <a href="/countries" class="btn green medium">Launch App</a>
+            <small>Source: World Resources Institute</small>
+          </footer>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <header>
+            <h2>Download data</h2>
+            <div class="icon"><svg><use xlink:href="#shape-download"></use></svg></div>
+          </header>
+          <div class="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+          </div>
+          <footer>
+            <a href="/sources" class="btn green medium">Launch App</a>
+            <small>Source: World Resources Institute</small>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <section class="applications-section" id="gfw-applications">
   <div class="inner">
     <h2 class="section-title">Applications</h2>
     <div class="row">
-
       <div class="col">
         <div class="card">
           <header>
@@ -107,7 +161,7 @@
             <p>View an interactive map with land-use data for Cameroon.</p>
           </div>
           <footer>
-            <a href="http://www.wri.org/applications/maps/forestatlas/cmr/index.htm#v=atlas&l=fr&init=y" target="_blank" class="btn green medium">Launch App</a>
+            <a href="http://www.wri.org/explore/maps/forestatlas/cmr/index.htm#v=atlas&l=fr&init=y" target="_blank" class="btn green medium">Launch App</a>
             <small>Source: World Resources Institute and Ministry of Forest and Wildlife of Cameroon</small>
           </footer>
         </div>
@@ -152,7 +206,7 @@
             <p>View an interactive map with land-use data for the Democratic Republic of the Congo.</p>
           </div>
           <footer>
-            <a href="http://www.wri.org/applications/maps/forestatlas/cod/index.htm#v=atlas&l=fr&init=y" target="_blank" class="btn green medium">Launch App</a>
+            <a href="http://www.wri.org/explore/maps/forestatlas/cod/index.htm#v=atlas&l=fr&init=y" target="_blank" class="btn green medium">Launch App</a>
             <small>Source: World Resources Institute and Ministry of Environment, Nature Conservation, and Tourism of the Democratic Republic of the Congo</small>
           </footer>
         </div>
@@ -167,7 +221,7 @@
             <p>View an interactive map with land-use data for Equatorial Guinea.</p>
           </div>
           <footer>
-            <a href="http://www.wri.org/applications/maps/forestatlas/gnq/index.htm#v=atlas&l=es&init=y" target="_blank" class="btn green medium">Launch App</a>
+            <a href="http://www.wri.org/explore/maps/forestatlas/gnq/index.htm#v=atlas&l=es&init=y" target="_blank" class="btn green medium">Launch App</a>
             <small>Source: World Resources Institute and Ministry of Agriculture and Forestry of Equatorial Guinea</small>
           </footer>
         </div>
@@ -182,8 +236,22 @@
             <p>View an interactive map with land-use data for Gabon.</p>
           </div>
           <footer>
-            <a href="http://www.wri.org/applications/maps/forestatlas/gab/index.htm#v=atlas&l=fr" target="_blank" class="btn green medium">Launch App</a>
+            <a href="http://www.wri.org/explore/maps/forestatlas/gab/index.htm#v=atlas&l=fr" target="_blank" class="btn green medium">Launch App</a>
             <small>Source: World Resources Institute and Ministry of the Forest, Environment, and Protection of Natural Resources of Gabon</small>
+          </footer>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <header>
+            <h2>Develop your own app</h2>
+            <div class="icon"><svg><use xlink:href="#shape-develop"></use></svg></div>
+          </header>
+          <div class="content">
+            <p>Learn how to develop your own application with Global Forest Watch data</p>
+          </div>
+          <footer>
+            <a href="/getinvolved/develop-your-own-app" class="btn gray medium">Read more</a>
           </footer>
         </div>
       </div>
@@ -284,55 +352,12 @@
   </div>
 </section>
 
-<section class="applications-section" id="develop-your-own-app">
+<!-- <section class="applications-section" id="develop-your-own-app">
   <div class="inner">
     <h2 class="section-title">Develop your own app</h2>
-    <article class="source-article selected">
-      <header>
-        <h3>This section contains the tools and information you need to develop applications that harness Global Forest Watch data and technology.</p>
-            </header>
-            <div class="content">
-              <ul class="faq-list">
-                <li>
-                  <h3>Public API</h3>
-                  <p>The Global Forest Watch public Application Programming Interface (API) is currently in beta. The API enables any website to easily access GFW data. The following forest change data are now available through the API:
-                  <ul class='bullets'>
-                    <li>University of Maryland (UMD)/Google tree cover loss & gain</li>
-                    <li>FORMA tree clearing alerts</li>
-                    <li>IMAZON SAD alerts</li>
-                    <li>QUICC alerts</li>
-                    <li>Terra-i alerts</li>
-                    <li>NASA active fires</li>
-                  </ul>
-                  </p>
-                  <a class="btn gray uppercase medium" href="https://github.com/wri/gfw-api" target="_blank">API Repository</a>
-                </li>
-                <li>
-                  <h3>Code</h3>
-                  <p>The Global Forest Watch website and public API are both collaborative and open-source projects hosted on <a href="https://github.com/" target="_blank">GitHub</a>. If you would like to access or contribute to our source code, please visit <a href="https://github.com/Vizzuality/gfw" target="_blank">GFW on GitHub</a>, where you can send pull requests to our website repository or API repository. All Global Forest Watch source code is released under the MIT License (MIT).</p>
-                  <a class="btn gray uppercase medium" href="https://github.com/Vizzuality/gfw">Website Repository</a>
-                </li>
-                  <li>
-                    <h3>Coming soon</h3>
-                    <ul class='bullets'>
-                      <li><strong>Client libraries</strong> for accessing the Global Forest Watch API from JavaScript and Python</li>
-                      <li><strong>Style guide</strong> for branding Global Forest Watch applications and tools</li>
-                      <li><strong>The Seed Fund</strong> for supporting developers in their building of applications using Global Forest Watch data</li>
-              </ul>
-          </li>
-          <li>
-            <h3>Useful links</h3>
-            <a class="btn gray uppercase medium" href="/data">Download data</a>
-            <a class="btn gray uppercase medium" href="https://earthengine.google.org/" target="_blank">Google Earth Engine</a>
-            <a class="btn gray uppercase medium" href="#">ESRI's api info</a>
-            <a class="btn gray uppercase medium" href="mailto:datalab@wri.org">App Development Support</a>
-          </li>
-        </ul>
-     </div>
-    </article>
   </div>
 </section>
-
+ -->
 <section class="interesting-section">
   <div class="inner">
     <h2 class="section-title">You may find this interesting</h2>

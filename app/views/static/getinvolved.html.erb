@@ -23,6 +23,7 @@
               <%= @title %>
             </a>
           </li>
+          <li><%= link_to 'Develop your own app', "#{getinvolved_path}/develop-your-own-app", :"data-slug" => 'develop-your-own-app', :"data-interesting" => 'explore_the_map, keep_updated, develop_your_own_app', :class => 'nav-item develop-your-own-app' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Share data', "#{getinvolved_path}/share-data", :"data-slug" => 'share-data', :"data-interesting" => 'explore_the_map, keep_updated, develop_your_own_app', :class => 'nav-item share-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Help improve data', "#{getinvolved_path}/help-improve-data", :"data-slug" => 'help-improve-data', :"data-interesting" => 'explore_the_map, keep_updated, develop_your_own_app', :class => 'nav-item help-improve-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Apply to the Small Grants Fund', "#{getinvolved_path}/apply-to-the-small-grants-fund", :"data-slug" => 'apply-to-the-small-grants-fund', :"data-interesting" => 'explore_the_map, stories_on_the_map, develop_your_own_app', :class => 'nav-item apply-to-the-small-grants-fund' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
@@ -32,6 +33,51 @@
       <div id="sources-box" class="sources-box">
         <div class="sources-content">
           <div id="sources-spinner" class="spinner start"><svg><use xlink:href="#shape-spinner"></use></svg></div>
+          <article id="develop-your-own-app" class="source-article">
+            <header>
+              <h2>Develop your own app</h2>
+              <h3>This section contains the tools and information you need to develop applications that harness Global Forest Watch data and technology.</p>
+            </header>
+              <div class="content">
+                <ul class="faq-list">
+                  <li>
+                    <h3>Public API</h3>
+                    <p>The Global Forest Watch public Application Programming Interface (API) is currently in beta. The API enables any website to easily access GFW data. The following forest change data are now available through the API:
+                    <ul class='bullets'>
+                      <li>University of Maryland (UMD)/Google tree cover loss & gain</li>
+                      <li>FORMA tree clearing alerts</li>
+                      <li>IMAZON SAD alerts</li>
+                      <li>QUICC alerts</li>
+                      <li>Terra-i alerts</li>
+                      <li>NASA active fires</li>
+                    </ul>
+                    </p>
+                    <a class="btn gray uppercase medium" href="https://github.com/wri/gfw-api" target="_blank">API Repository</a>
+                  </li>
+                  <li>
+                    <h3>Code</h3>
+                    <p>The Global Forest Watch website and public API are both collaborative and open-source projects hosted on <a href="https://github.com/" target="_blank">GitHub</a>. If you would like to access or contribute to our source code, please visit <a href="https://github.com/Vizzuality/gfw" target="_blank">GFW on GitHub</a>, where you can send pull requests to our website repository or API repository. All Global Forest Watch source code is released under the MIT License (MIT).</p>
+                    <a class="btn gray uppercase medium" href="https://github.com/Vizzuality/gfw">Website Repository</a>
+                  </li>
+                  <li>
+                    <h3>Coming soon</h3>
+                    <ul class='bullets'>
+                      <li><strong>Client libraries</strong> for accessing the Global Forest Watch API from JavaScript and Python</li>
+                      <li><strong>Style guide</strong> for branding Global Forest Watch applications and tools</li>
+                      <li><strong>The Seed Fund</strong> for supporting developers in their building of applications using Global Forest Watch data</li>
+                    </ul>
+                  </li>
+                <li>
+                  <h3>Useful links</h3>
+                  <a class="btn gray uppercase medium" href="/data">Download data</a>
+                  <a class="btn gray uppercase medium" href="https://earthengine.google.org/" target="_blank">Google Earth Engine</a>
+                  <a class="btn gray uppercase medium" href="#">ESRI's api info</a>
+                  <a class="btn gray uppercase medium" href="mailto:datalab@wri.org">App Development Support</a>
+                </li>
+              </ul>
+           </div>
+          </article>
+
           <article id='apply-to-the-small-grants-fund' class="source-article">
             <header>
               <h2>Apply to the Small Grants Fund</h2>
@@ -153,7 +199,7 @@
                 </li>
                 <li>
                   <h3>Useful links</h3>
-                  <a class="btn gray uppercase medium" href="/applications">View existing applications</a>
+                  <a class="btn gray uppercase medium" href="/explore">View existing applications</a>
                   <a class="btn gray uppercase medium" href="https://earthengine.google.org/" target="_blank">Google Earth Engine</a>
                   <a class="btn gray uppercase medium" href="#">ESRI's api info</a>
                   <a class="btn gray uppercase medium" href="mailto:datalab@wri.org">App Development Support</a>

@@ -24,7 +24,7 @@ define([], function() {
     develop_your_own_app: {
       title: 'Develop your own app',
       description: 'Learn how to develop your own application with Global Forest Watch data',
-      link: '/applications#develop-your-own-app'
+      link: '/getinvolved/develop-your-own-app'
     },
     discussion_forum: {
       title: 'Global Forest Watch Discussion Forum',

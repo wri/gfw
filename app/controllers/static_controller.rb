@@ -42,8 +42,8 @@ class StaticController < ApplicationController
     @title = 'Get Involved'
   end
 
-  def applications
-    @title = 'Applications'
+  def explore
+    @title = 'Explore'
   end
 
   def feedback
