@@ -893,6 +893,49 @@
 
 
 // APPLICATIONS
+#wrap-applications{ position: relative;}
+.aplications-fixed-nav{
+  width: 100%;
+  &.fixed{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+  }
+  &.bottom{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+  }
+  .max-1600{
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1600px;
+    background: $light;
+    ul{
+      @include row();
+      li{
+        @include col(33.33333);
+        a{
+          text-align: center;
+          display: block;
+          padding: 30px;
+          color: $dark;
+          font-size: 14px;
+          text-transform: uppercase;
+          cursor: pointer;
+          text-decoration: none;
+          background: $light;
+          &:hover, &.current{
+            background: $white;
+          }
+        }
+      }
+    }
+  }
+}
+
 .applications-section {
   &#develop-your-own-app{
     padding-bottom: 80px;
