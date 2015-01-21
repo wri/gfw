@@ -2,7 +2,7 @@ Gfw::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
-  config.cache_classes = false
+  config.cache_classes = true
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both thread web servers
@@ -30,7 +30,7 @@ Gfw::Application.configure do
   # config.assets.compile = true
 
   # Generate digests for assets URLs.
-  config.assets.digest = false
+  config.assets.digest = true
 
   # Version of your assets, change this if you want to expire all your assets.
   config.assets.version = '7'
