@@ -893,6 +893,58 @@
 
 
 // APPLICATIONS
+#wrap-applications{ position: relative;}
+.aplications-fixed-nav{
+  display: none;
+  width: 100%;
+  @media (min-width: $br-mobile) {
+    display: block;
+  }
+  &.fixed{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+  }
+  &.bottom{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+  }
+  .max-1600{
+    width: 100%;
+    margin: 0 auto;
+    max-width: 1600px;
+    background: #F2F2F3;
+    ul{
+      @include row();
+      li{
+        @include col(33.33333);
+        a{
+          text-align: center;
+          display: block;
+          padding: 15px 30px;
+          color: $dark;
+          font-size: 14px;
+          text-transform: uppercase;
+          cursor: pointer;
+          text-decoration: none;
+          background: #F2F2F3;
+          &:hover{
+            background: #e5e5e7;
+            color: darken($dark,10%);
+          }
+          &.current {
+            background: $white;
+            color: $dark;
+          }
+        }
+      }
+    }
+  }
+}
+
 .applications-section {
   &#develop-your-own-app{
     padding-bottom: 80px;
@@ -1224,7 +1276,7 @@
       padding: 0 0px 25px 0;
       display: none;
       p, .bullets {
-        font-size: 14px;
+        font-size: 13px;
         a{
           text-decoration: none;
           color: $cGreen;

@@ -180,13 +180,21 @@
   }
 
   .info {
-    float: right;
-    margin-right: 20px;
-    margin-top: 10px;
-    .dark {
-      @include country-icons-sprite(country_info_dark);
-      height: 16px;
-      width: 16px;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    @include transform(translate(0,-50%));
+    border-radius: 50%;
+    background: $light;
+    width: 16px;
+    height: 16px;
+    svg{
+      width: 100%;
+      height: 100%;
+      fill: $dark;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
   }
 }

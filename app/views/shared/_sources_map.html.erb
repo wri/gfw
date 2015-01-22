@@ -274,7 +274,7 @@
 
               <p>The GFW team has clipped out some data in regions where data quality is suspected to be low because of persistent cloud cover over identified ecoregions. This covers parts of Liberia, Venezuela, Guyana, Vietnam, Laos, and Burma/Myanmar. The current extent of the FORMA alerts is available for viewing here—<a href='http://wri-01.cartodb.com/viz/3cc0f4c2-56d3-11e3-80bb-c8600054c0d1/embed_map?title=true&description=true&search=false&shareable=false&cartodb_logo=false&layer_selector=false&legends=false&scrollwheel=true&sublayer_options=1&sql=&zoom=3&center_lat=-1.845383988573187&center_lon=16.34765625' target='_blank'>FORMA geographic extent</a>.</p>
 
-              <p>The <a href='https://github.com/wri/forma-clj' target='_blank'>algorithm</a> behind the FORMA alerts is constantly evolving to fix bugs and improve accuracy. As a result, what appears on the site and the results of analyses conducted on the site may change over time. It is important to always include the access date when citing FORMA. Analysis of FORMA alerts on the map should be considered definitive, as analysis is based on raw FORMA data, whereas the data on the map are optimized for visual display. For questions, please join the <a href='https://groups.google.com/forum/#!forum/globalforestwatch' target='_blank'>GFW discussion forum</a> or <a href='mailto:gfw@wri.org'>email us</a>.</p>
+              <p>The algorithm behind the FORMA alerts is constantly evolving to fix bugs and improve accuracy. As a result, what appears on the site and the results of analyses conducted on the site may change over time. It is important to always include the access date when citing FORMA. Analysis of FORMA alerts on the map should be considered definitive, as analysis is based on raw FORMA data, whereas the data on the map are optimized for visual display. For questions, please join the <a href='https://groups.google.com/forum/#!forum/globalforestwatch' target='_blank'>GFW discussion forum</a> or <a href='mailto:gfw@wri.org'>email us</a>.</p>
 
               <p>For the purpose of this study, “tree cover” was defined as areas with greater than 25% canopy cover (as determined by the <a href='http://journals.ametsoc.org/doi/abs/10.1175/1087-3562(2003)007%3C0001%3AGPTCAA%3E2.0.CO%3B2' target='_blank'>Vegetation Continuous Fields data set</a>), and change was measured without regard to forest land use. Tree cover assemblages that meet the 25% threshold include intact forests, plantations, and forest regrowth.</p>
 
@@ -285,7 +285,7 @@
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>FORMA is a near real-time tree cover loss alert system. It uses a cloud computing <a href="https://github.com/reddmetrics/forma-clj" target="_blank">algorithm</a> to analyze frequently updated satellite imagery along with complementary information on factors that affect tree cover loss, such as fires and precipitation. The system generates twice-monthly “alerts” for the world’s <a href="http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf" target="_blank">humid tropical forests</a> that identify 500 × 500 meter areas where new, large-scale loss is likely to have occurred.</p>
+          <p>FORMA is a near real-time tree cover loss alert system. It uses a cloud computing algorithm to analyze frequently updated satellite imagery along with complementary information on factors that affect tree cover loss, such as fires and precipitation. The system generates twice-monthly “alerts” for the world’s <a href="http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf" target="_blank">humid tropical forests</a> that identify 500 × 500 meter areas where new, large-scale loss is likely to have occurred.</p>
 
           <p>FORMA is designed for quick identification of new areas of tree cover loss. The system analyzes data gathered daily by the <a href="http://modis.gsfc.nasa.gov/about/" target="_blank">MODIS</a> sensor, which operates on NASA’s Terra and Aqua satellites. The FORMA alerts system then detects pronounced changes in vegetation cover over time, as measured by the <a href="http://earthobservatory.nasa.gov/Features/MeasuringVegetation/measuring_vegetation_2.php" target="_blank">Normalized Difference Vegetation Index (NDVI)</a>, a measure of vegetation greenness. These pronounced changes in vegetation cover are likely to indicate forest being cleared, burned, or defoliated.</p>
 
@@ -2301,19 +2301,29 @@
 
   <div class='source_body'>
     <div class='source_summary'>
-      <p class='first'>Lorem ipsum</p>
+      <p class='first'>Use the colored tabs above the map to view different categories of data. Select a data layer to activate it in the map, or click the information icon (<%= image_tag('tutorial-screenshots/screenshot-2.png') %>) located next to each data layer to learn more.</p>
+      <p>As you turn on data layers, they will appear in the legend on the left-hand side of the map. Multiple data layers can be turned on at once.</p>
+      <p>Most data layers under the Forest Change tab have a timeline located at the bottom of the map. Press the play button to view an animation of the entire time series of data or drag the ends of the timeline to select a specific period of time.</p>
+      <p><%= image_tag('tutorial-screenshots/screenshot-1.png') %></p>
+      <p>Some data layers allow you to click on individual data points and polygons (i.e., shapes) to view additional information. This feature applies to NASA active fires (within the Forest Change tab) and/or data within the Forest Use, Conservation, People, and Stories tabs.</p>
+      <p>Learn more about exploring forest data on the <a href="/howto">How To page</a>.</p>
     </div>
   </div>
 </article>
+
 <article id='alerts_dialog' class="sources">
   <div class='source_header'>
-    <strong class='source_title'>Receive alerts</strong>
+    <strong class='source_title'>Subscribe to alerts</strong>
     <i class='expand_arrow'></i>
   </div>
 
   <div class='source_body'>
     <div class='source_summary'>
-      <p class='first'>Lorem ipsum</p>
+      <p class='first'>The shaded blue regions on the map are protected areas.</p>
+      <p>1. Click on a protected area and select the “analysis” icon (<%= image_tag('tutorial-screenshots/screenshot-5.png') %>) located within the info window that appears.</p>
+      <p>2. Click “subscribe” located at the bottom of the window with analysis results and enter your email address.</p>
+      <p><%= image_tag('tutorial-screenshots/screenshot-6.png') %></p>
+      <p>Learn more about subscribing to alerts on the <a href="/howto">How To page</a>.</p>
     </div>
   </div>
 </article>

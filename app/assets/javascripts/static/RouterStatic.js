@@ -19,6 +19,7 @@ define([
     _cacheVersion: 5,
 
     routes: {
+      'explore(/)(:section)': 'staticSection',
       'stayinformed(/)(:section)': 'staticSection',
       'getinvolved(/)(:section)': 'staticSection',
       'about(/)(:section)': 'staticSection',

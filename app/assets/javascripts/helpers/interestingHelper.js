@@ -24,7 +24,7 @@ define([], function() {
     develop_your_own_app: {
       title: 'Develop your own app',
       description: 'Learn how to develop your own application with Global Forest Watch data',
-      link: '/applications#develop-your-own-app'
+      link: '/getinvolved/develop-your-own-app'
     },
     discussion_forum: {
       title: 'Global Forest Watch Discussion Forum',
@@ -61,6 +61,21 @@ define([], function() {
       description: 'Learn more about the GFW platform',
       link: '/about'
     },
+    about_fires: {
+      title: 'About GFW Fires',
+      description: 'Learn about a new tool to monitor emerging fires, identify potential causes, and analyze impacts of fires on forests and people.',
+      link: 'http://fires.globalforestwatch.org/#v=about&x=115&y=0&l=5&lyrs=Active_Fires'
+    },
+    about_commodities: {
+      title: 'About GFW Commodities',
+      description: 'Learn more about the GFW platform',
+      link: 'http://commodities.globalforestwatch.org/#v=about&n=GFW'
+    },
+    faqs: {
+      title: 'FAQs',
+      description: 'Read through answers to the most frequently asked questions about GFW',
+      link: '/howto/faqs'
+    },
     provide_feedback: {
       title: 'Provide feedback',
       description: 'Help us improve the website by submitting feedback or by signing up to become an official GFW tester',
@@ -71,7 +86,6 @@ define([], function() {
       description: 'Contact the Global Forest Watch team with questions, comments, and feedback',
       link: '/about/contact-us'
     },
-
   }
   return interestingHelper;
 
