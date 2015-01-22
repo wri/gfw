@@ -4,7 +4,7 @@ Gfw::Application.routes.draw do
 
   #legacy
     # stories
-    get '/stories' => redirect("/keepupdated/crowdsourced-stories")
+    # get '/stories' => redirect("/stayinformed/crowdsourced-stories")
 
     # howto
     get '/howto/video' => redirect("/howto")
@@ -31,7 +31,7 @@ Gfw::Application.routes.draw do
   get '/sources' => 'static#data'
   get '/sources(/:section)' => 'static#data'
 
-  # get '/keepupdated' => redirect('keepupdated/crowdsourced-stories')
+  # get '/stayinformed' => redirect('stayinformed/crowdsourced-stories')
   get '/stayinformed' => 'static#keep'
   get '/stayinformed(/:section)' => 'static#keep'
   get '/getinvolved' => 'static#getinvolved'
