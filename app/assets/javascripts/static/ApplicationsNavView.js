@@ -34,7 +34,10 @@ define([
       this.offsetsIndex = 0;
       this.lastScroll = 0;
 
-      this.setListeners();
+      if (this.$window.width() >= 850) {
+        this.setListeners();
+      }
+
     },
 
     setListeners: function(){

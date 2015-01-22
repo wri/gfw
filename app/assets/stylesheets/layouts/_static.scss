@@ -895,7 +895,11 @@
 // APPLICATIONS
 #wrap-applications{ position: relative;}
 .aplications-fixed-nav{
+  display: none;
   width: 100%;
+  @media (min-width: $br-mobile) {
+    display: block;
+  }
   &.fixed{
     position: fixed;
     top: 0;
@@ -920,15 +924,20 @@
         a{
           text-align: center;
           display: block;
-          padding: 30px;
+          padding: 15px 30px;
           color: $dark;
           font-size: 14px;
           text-transform: uppercase;
           cursor: pointer;
           text-decoration: none;
           background: $light;
-          &:hover, &.current{
+          &:hover{
+            background: #e5e5e7;
+            color: darken($dark,10%);
+          }
+          &.current {
             background: $white;
+            color: $dark;
           }
         }
       }
