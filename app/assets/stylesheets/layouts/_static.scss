@@ -98,6 +98,9 @@
       @media (min-width: $br-mobile) {
         width: auto;
       }
+      &.btn-video{
+        min-width: 0;
+      }
     }
   }
 }
