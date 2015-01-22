@@ -4,19 +4,23 @@
 
 .mod-modal-window, .source_window {
   $width: 497px;
-  $height: 300px;
+  $height: auto;
 
   display: none;
   position: fixed;
   z-index: 1060;
-  padding: 20px 15px 20px 20px;
-  background: #fff;
-  border: 1px solid #eee;
-  box-sizing: content-box;
+  padding: 20px 20px 0;
+  background: $white;
+  border: none;
+  border-bottom: 20px solid $white;
+  box-shadow: 0 0 0 1px #CCC;
+  overflow: auto;
+  height: 100%;
   @media (min-width: 750px){
     left: 50%; top: 50%;
     width: $width;
     height: $height;
+    max-height: 55%;
     @include transform(translate(-50%,-50%));
   }
 
@@ -51,6 +55,9 @@
     color: #666;
     a{
       color: $cGreen;
+      &:hover{
+        color: darken($cGreen,5%);
+      }
     }
   }
 
@@ -103,6 +110,7 @@
     color: #666;
 
     p {
+      font-size: 13px;
       margin-bottom: 10px;
       margin-top: 10px;
 
@@ -136,15 +144,24 @@
   .source_coverage {
     @extend .single-source-item;
 
-    .bullets li {
-      margin: 0 0 10px 20px;
-      padding: 0 0 0 20px;
-      background: image-url('icons/bullet.png') no-repeat 0 8px;
+    .bullets  {
+      list-style-type: disc;
+      color: $dark;
+      margin: 0 0 0 10px;
+      > li{
+        padding: 10px 0 0;
+        font-size: 13px;
+        margin-left: 20px;
+        line-height: 1.5;
+        &:first-child{
+          padding: 0;
+        }
+      }
     }
 
     .read_more {
       padding: 10px 0;
-      font-size: 14px;
+      font-size: 13px;
       text-align: center;
     }
 
@@ -178,10 +195,9 @@
   .source_coverage_title {
     display: block;
     font-weight: 500;
-    font-size: 13px;
-    @extend .sans-serif;
+    font-size: 16px;
     text-transform: uppercase;
-    color: #aaa;
+    color: $dark;
 
     span {
       text-transform: none;
@@ -368,7 +384,7 @@
   top: 0; left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255,255,255,.9);
+  background: rgba(255,255,255,.5);
   &.active{
     display: block;
   }
