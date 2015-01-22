@@ -45,6 +45,9 @@ define([
       this.scrollDocument();
       this.$document.on('scroll',_.bind(this.scrollDocument,this));
       this.$window.on('resize',_.bind(this.calculateOffsets,this));
+
+      mps.subscribe('SourceStatic/change',_.bind(this.scrollTo,this));
+
     },
 
     calculateOffsets: function(){
@@ -58,7 +61,7 @@ define([
 
     scrollDocument: function(e){
       var scrollTop = this.$document.scrollTop();
-
+      var index = this.offsetsIndex;
       if (scrollTop > this.offset) {
         this.$sideBarBox.addClass('fixed');
         this.firstFixed = false;
@@ -85,7 +88,7 @@ define([
           (this.offsetsIndex === 0) ? this.offsetsIndex = 0 : this.offsetsIndex--;
         }
       }
-
+      this.updateRoute()
       this.$links.removeClass('current');
       this.$linksparents.eq(this.offsetsIndex).children('a').addClass('current');
       this.lastScroll = scrollTop;
@@ -96,6 +99,17 @@ define([
       var id = $(e.currentTarget).attr('href');
       this.$htmlbody.animate({ scrollTop: $(id).offset().top - this.$el.height() }, 500);
     },
+
+    scrollTo: function(href){
+      var id = '#'+href.section;
+      this.$htmlbody.animate({ scrollTop: $(id).offset().top - this.$el.height() }, 500);
+    },
+
+    updateRoute: function(){
+      var section = this.$linksparents.eq(this.offsetsIndex).children('a').attr('href').replace('#','');
+      mps.publish('SourceStatic/Silentupdate', [{ section:section }]);
+    }
+
   });
 
   return ApplicationsNavView;

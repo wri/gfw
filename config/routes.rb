@@ -44,10 +44,11 @@ Gfw::Application.routes.draw do
 
   # about
   get '/about' => 'static#about'
-
   get '/about(/:section)' => 'static#about'
 
+  # explore
   get '/explore' => 'static#explore'
+  get '/explore(/:section)' => 'static#explore'
 
 
   get '/notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'
