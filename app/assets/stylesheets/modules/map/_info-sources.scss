@@ -32,6 +32,8 @@
     font-size: 15px;
     @extend .sans-serif;
     color: #666;
+    z-index: 1061;
+    position: relative;
   }
 
   .source_category_description,
