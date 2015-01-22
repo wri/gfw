@@ -32,6 +32,7 @@ class CountriesController < ApplicationController
                         nil
                       end
     @title = @country['name']
+    @desc = 'Data about forest change, tenure, forest related employment and land use in ' + @title
   end
 
   def overview
