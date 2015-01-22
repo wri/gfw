@@ -23,11 +23,11 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'Develop your own app', "#{getinvolved_path}/develop-your-own-app", :"data-slug" => 'develop-your-own-app', :"data-interesting" => 'explore_the_map, keep_updated, develop_your_own_app', :class => 'nav-item develop-your-own-app' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Share data', "#{getinvolved_path}/share-data", :"data-slug" => 'share-data', :"data-interesting" => 'explore_the_map, keep_updated, develop_your_own_app', :class => 'nav-item share-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Help improve data', "#{getinvolved_path}/help-improve-data", :"data-slug" => 'help-improve-data', :"data-interesting" => 'explore_the_map, keep_updated, develop_your_own_app', :class => 'nav-item help-improve-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Apply to the Small Grants Fund', "#{getinvolved_path}/apply-to-the-small-grants-fund", :"data-slug" => 'apply-to-the-small-grants-fund', :"data-interesting" => 'explore_the_map, stories_on_the_map, develop_your_own_app', :class => 'nav-item apply-to-the-small-grants-fund' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Provide Feedback', "#{getinvolved_path}/provide-feedback", :"data-slug" => 'provide-feedback', :"data-interesting" => 'explore_the_map, keep_updated, develop_your_own_app', :class => 'nav-item provide-feedback' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Develop your own app', "#{getinvolved_path}/develop-your-own-app", :"data-slug" => 'develop-your-own-app', :"data-interesting" => 'explore_the_map, keep_updated, how_to', :class => 'nav-item develop-your-own-app' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Share data', "#{getinvolved_path}/share-data", :"data-slug" => 'share-data', :"data-interesting" => 'explore_the_map, keep_updated, contact_us', :class => 'nav-item share-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Help improve data', "#{getinvolved_path}/help-improve-data", :"data-slug" => 'help-improve-data', :"data-interesting" => 'explore_the_map, submit_a_story, contact_us', :class => 'nav-item help-improve-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Apply to the Small Grants Fund', "#{getinvolved_path}/apply-to-the-small-grants-fund", :"data-slug" => 'apply-to-the-small-grants-fund', :"data-interesting" => 'explore_the_map, stories_on_the_map, about_GFW', :class => 'nav-item apply-to-the-small-grants-fund' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Provide Feedback', "#{getinvolved_path}/provide-feedback", :"data-slug" => 'provide-feedback', :"data-interesting" => 'explore_the_map, keep_updated, how_to', :class => 'nav-item provide-feedback' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
@@ -45,7 +45,7 @@
                     <p>The Global Forest Watch public Application Programming Interface (API) is currently in beta. The API enables any website to easily access GFW data. The following forest change data are now available through the API:
                     <ul class='bullets'>
                       <li>University of Maryland (UMD)/Google tree cover loss & gain</li>
-                      <li>FORMA tree clearing alerts</li>
+                      <li>FORMA alerts</li>
                       <li>IMAZON SAD alerts</li>
                       <li>QUICC alerts</li>
                       <li>Terra-i alerts</li>
@@ -57,21 +57,21 @@
                   <li>
                     <h3>Code</h3>
                     <p>The Global Forest Watch website and public API are both collaborative and open-source projects hosted on <a href="https://github.com/" target="_blank">GitHub</a>. If you would like to access or contribute to our source code, please visit <a href="https://github.com/Vizzuality/gfw" target="_blank">GFW on GitHub</a>, where you can send pull requests to our website repository or API repository. All Global Forest Watch source code is released under the MIT License (MIT).</p>
-                    <a class="btn gray uppercase medium" href="https://github.com/Vizzuality/gfw">Website Repository</a>
+                    <a class="btn gray uppercase medium" href="https://github.com/Vizzuality/gfw" target="_blank">Website Repository</a>
                   </li>
                   <li>
                     <h3>Coming soon</h3>
                     <ul class='bullets'>
                       <li><strong>Client libraries</strong> for accessing the Global Forest Watch API from JavaScript and Python</li>
                       <li><strong>Style guide</strong> for branding Global Forest Watch applications and tools</li>
-                      <li><strong>The Seed Fund</strong> for supporting developers in their building of applications using Global Forest Watch data</li>
+                      <li><strong>The Seed Fund</strong> for supporting developers to build applications using Global Forest Watch data</li>
                     </ul>
                   </li>
                 <li>
                   <h3>Useful links</h3>
                   <a class="btn gray uppercase medium" href="/data">Download data</a>
                   <a class="btn gray uppercase medium" href="https://earthengine.google.org/" target="_blank">Google Earth Engine</a>
-                  <a class="btn gray uppercase medium" href="#">ESRI's api info</a>
+                  <a class="btn gray uppercase medium" href="https://developers.arcgis.com/en/">ESRI's api info</a>
                   <a class="btn gray uppercase medium" href="mailto:datalab@wri.org">App Development Support</a>
                 </li>
               </ul>
@@ -217,9 +217,9 @@
           <article id="share-data" class="source-article">
             <header>
               <h2>Share data</h2>
-             <p>Are we missing important data? Global Forest Watch compiles data from many different sources, and we are always excited to work with new data providers. Contact us at <a href="mailto:gfw@wri.org" target="_blank">gfw@wri.org</a> to share your data or point us to open data we may have missed.</p>
+             <p>Are we missing important data? Global Forest Watch compiles data from many different sources, and we are always excited to work with new data providers. Contact us at <a href="mailto:gfw@wri.org">gfw@wri.org</a> to share your data or point us to open data we may have missed.</p>
              <p>Global Forest Watch has an <a href="/sources/data_policy">open data policy</a> and seeks to make data open, discoverable, downloadable, and usable. We believe that open data and transparency support efforts to better manage and sustain the world’s forests by promoting innovation and enabling informed, participatory, and accountable decision-making.</p>
-             <p>Use the links below to view our existing data and contact us at <a href="mailto:gfw@wri.org" target="_blank">gfw@wri.org</a> if you know of data that should be on Global Forest Watch.</p>
+             <p>Use the links below to view our existing data and contact us at <a href="mailto:gfw@wri.org">gfw@wri.org</a> if you know of data that should be on Global Forest Watch.</p>
               <a class="btn gray uppercase medium" href="/sources/data_policy">View & download existing data</a>
               <a class="btn gray uppercase medium" href="mailto:gfw@wri.org">Email us</a>
             </header>
@@ -346,7 +346,7 @@
                     <li>“Share this map view” feature (read more <a href="http://blog.globalforestwatch.org/2014/09/four-ways-gfw-just-became-more-useful/">here</a>)</li>
                     <li>A new home page that better directs users to what they are looking for and communicates a clearer purpose</li>
                   </ul>
-                  <p>Do you have questions about how to use GFW?  Be sure to visit the <a href="/howto">How To</a> page, and if you still need help email <a href="mailto:gfw@wri.org">gfw@wri.org</a>. You can also connect with us on social media or by posting a comment to the <a href="https://groups.google.com/forum/#!forum/globalforestwatch">GFW Discussion Forum</a>.</p>
+                  <p>Do you have questions about how to use GFW? Be sure to visit the <a href="/howto">How to</a> page, and if you still need help email <a href="mailto:gfw@wri.org">gfw@wri.org</a>. You can also connect with us on social media or by posting a comment to the <a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank">GFW Discussion Forum</a>.</p>
                 </li>
               </ul>
             </div>
