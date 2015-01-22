@@ -916,7 +916,7 @@
     width: 100%;
     margin: 0 auto;
     max-width: 1600px;
-    background: $light;
+    background: #F2F2F3;
     ul{
       @include row();
       li{
@@ -930,7 +930,7 @@
           text-transform: uppercase;
           cursor: pointer;
           text-decoration: none;
-          background: $light;
+          background: #F2F2F3;
           &:hover{
             background: #e5e5e7;
             color: darken($dark,10%);
