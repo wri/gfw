@@ -23,8 +23,6 @@ $(document).ready(function() {
     // mobile-menu
     window.countries_header = new gfw.ui.view.CountriesHeader();
 
-    console.log(gfw);
-
     if ($('.is-index-action').length > 0) {
       window.countries_index = new gfw.ui.view.CountriesIndex();
     }
