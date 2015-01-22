@@ -199,6 +199,7 @@
   }
 }
 
+
 .overview_graph__years,
 .overview_graph__axis,
 .countries_list__header {
@@ -217,6 +218,9 @@
   span {
     text-transform: lowercase;
   }
+}
+.overview_graph__years{
+  width: 960px;
 }
 
 .overview_graph__axis {
