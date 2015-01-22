@@ -181,8 +181,21 @@
 
   .info {
     position: absolute;
-    top: 11px;
+    top: 50%;
     right: 20px;
+    @include transform(translate(0,-50%));
+    border-radius: 50%;
+    background: $light;
+    width: 16px;
+    height: 16px;
+    svg{
+      width: 100%;
+      height: 100%;
+      fill: $dark;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
   }
 }
 
