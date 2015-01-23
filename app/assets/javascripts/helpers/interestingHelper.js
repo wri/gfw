@@ -53,7 +53,7 @@ define([], function() {
       link: '/getinvolved',
     },
     stay_informed: {
-      title: 'Keep Updated',
+      title: 'Stay Informed',
       description: 'Learn what is currently happening in forests on the ground, read more about data, sign up to receive updates, and learn how the GFW platform continues to evolve to meet user needs.',
       link: '/stayinformed',
     },
