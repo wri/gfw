@@ -100,6 +100,11 @@
       }
       &.btn-video{
         min-width: 0;
+        margin: 5px 0;
+        font-size: 12px;
+        @media (min-width: $br-tablet) {
+          font-size: 14px;
+        }
       }
     }
   }

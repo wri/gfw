@@ -1,7 +1,7 @@
 .carrousel{
   padding: 30px 0 0;
   .carrousel-box{
-    max-width: 800px; 
+    max-width: 800px;
     margin: 0 auto;
     ul{
       padding-bottom: 56.2790%;
@@ -32,11 +32,12 @@
   }
   .button-box{
     li{
+      margin: 0 5px;
       a{
         opacity: 0.75;
         &.disabled{
-          opacity: 0.25;          
-        }        
+          opacity: 0.25;
+        }
         &.visible{
           opacity: 1;
         }
