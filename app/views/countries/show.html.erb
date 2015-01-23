@@ -376,6 +376,11 @@
               </div> -->
             </div>
             <div class="section-content">
+              <% if @country['national_policy_link'].present? %>
+                <div class="national-policy-links">
+                  <%= link_to @country['national_policy_title'].present? ? @country['national_policy_title'] : 'National Forest Policy', @country['national_policy_link'] %>
+                </div>
+              <% end %>
               <%= link_to 'Are we missing a link?', 'mailto:gfw@wri.org', class: 'btn-rdn btn-rdn-primary' %>
             </div>
           </section>
