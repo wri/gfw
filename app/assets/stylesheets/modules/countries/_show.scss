@@ -624,6 +624,7 @@
       .left-col,
       .right-col {
         float: left;
+        min-height: 1px;
 
         &.wide {
           width: 100%;

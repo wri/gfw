@@ -24,10 +24,13 @@ define([
       if (!this.$el.length) {
         return
       }
+      mps.publish('Interesting/update',['discussion_forum, how_to, submit_a_story']);
+
       this.current = 0;
       this.$btnNav = this.$el.find('.btn-nav');
       this.$slide = this.$el.find('.slide');
       this.len = this.$slide.length;
+
 
       // inits
       this.setCurrent();
