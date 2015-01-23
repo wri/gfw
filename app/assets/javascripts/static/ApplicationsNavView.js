@@ -38,6 +38,9 @@ define([
         this.setListeners();
       }
 
+      //INITS
+      mps.publish('Interesting/update',['discussion_forum, how_to, submit_a_story']);
+
     },
 
     setListeners: function(){

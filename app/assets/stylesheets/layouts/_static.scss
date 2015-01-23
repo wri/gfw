@@ -764,8 +764,27 @@
             }
           }
 
+          &.bnpb {
+            height: 64px; width: 50px; @include logos-sprite(bnpb);
+            &:hover{
+              @include logos-sprite(bnpbhover);
+            }
+          }
+          &.redd {
+            height: 62px; width: 95px; @include logos-sprite(redd);
+            &:hover{
+              @include logos-sprite(reddhover);
+            }
+          }
+          &.digitalglobe{
+            height: 38px; width: 120px; @include logos-sprite(digitalglobe);
+            &:hover{
+              @include logos-sprite(digitalglobehover);
+            }
+          }
+
           &.bobolink {
-              height: 53px; width: 105px; @include logos-sprite(bobolink);
+            height: 53px; width: 105px; @include logos-sprite(bobolink);
           }
           &.vizzuality-big {
             height: 58px; width: 109px; @include logos-sprite(vizzuality);
