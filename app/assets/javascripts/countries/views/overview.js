@@ -128,7 +128,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     if (graph === 'total_extent') {
       this.$graph.addClass('is-hidden');
       this.$years.addClass('is-hidden');
-      $legend.addClass('is-hidden');
+      //$legend.addClass('is-hidden');
     }
   },
   _updateGraphOverview: function(e) {
