@@ -952,7 +952,8 @@
         text-decoration: underline;
       }
     }
-    .country-external-links, {
+    .country-external-links,
+    .national-policy-links {
       font-size: 14px;
 
       .section-content {
@@ -2083,7 +2084,8 @@
         }
       }
 
-      .country-external-links {
+      .country-external-links,
+      .national-policy-links {
         ul > li {
           display: block;
           &::after {
