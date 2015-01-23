@@ -208,10 +208,10 @@ define([
           }else{
             if(!tab) {
               posY = this.$sideBarBox.offset().top - this.padding
-              time = 250;
+              time = 125;
             }else{
               posY = $('#'+tab).offset().top;
-              time = 250;
+              time = 125;
             }
           }
           this.$htmlbody.animate({ scrollTop: posY },time);
