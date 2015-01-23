@@ -214,6 +214,11 @@
             opacity: 0;
           }
         }
+        &:first-child {
+          span {
+            margin: 0;
+          }
+        }
       }
     }
   }
