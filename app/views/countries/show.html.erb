@@ -1,3 +1,23 @@
+<%= render 'shared/svg_icons_countries' %>
+<% content_for :header do %>
+  <h1><a href="/">Global Forest Watch</a></h1>
+  <nav id="nav-mobile">
+    <form class="mobile-show" action="/search">
+      <svg class="icon"><use xlink:href="#shape-search"></use></svg>
+      <input type="text" name="query" id="search-input" placeholder="Search GFW website">
+    </form>
+    <div id="google_translate_element_box2"></div>
+    <ul>
+      <li>
+        <a <% if controller?("countries") && action?("show") %>class="current"<% end %> href="/countries">Country Profiles</a>
+      </li>
+      <li>
+        <a <% if controller?("countries") && action?("overview") %>class="current"<% end %> href="/countries/overview">Country Rankings</a>
+      </li>
+    </ul>
+  </nav>
+<% end %>
+
 <% content_for :js do %>
   <script>
     var ISO = '<%= @country['iso'] %>';
@@ -29,25 +49,31 @@
     <div class="country-nav">
       <div class="inner">
         <ul class="country-nav-items">
-          <li><a href="#" data-scroll-nav='0'>Forma<br>clearing alerts</a></li>
-          <li><a href="#" data-scroll-nav='1'>Forest<br>type</a></li>
+          <li data-scroll-nav='0'><a href="#" >Forma<br>clearing alerts</a></li>
+          <li data-scroll-nav='2'><a href="#">Forest<br>type</a></li>
           <!--<li><a href="#" data-scroll-nav='2'>State of the forest</a></li>-->
-          <li><a href="#" data-scroll-nav='2'>People<br>& Economy</a></li>
-          <li><a href="#" data-scroll-nav='4'>Tenure<br>& Laws</a></li>
-          <li><a href="#" data-scroll-nav='5'>Climate Change</a></li>
-          <li><a href="#" data-scroll-nav='6'>International agreements</a></li>
+          <li data-scroll-nav='3'><a href="#">People<br>& Economy</a></li>
+          <li data-scroll-nav='3'><a href="#">Tenure<br>& Laws</a></li>
+          <li data-scroll-nav='5'><a href="#">Climate Change</a></li>
+          <li data-scroll-nav='6'><a href="#">International agreements</a></li>
         </ul>
       </div>
     </div>
   </div>
 
   <!-- forma alerts -->
-  <a href="#" id="alerts" class="anchor-country-info"></a>
-  <section class="country-section country-alerts" data-scroll-index='0'>
+  <section class="country-section country-alerts-section" data-scroll-index='0'>
     <div class="inner">
-      <div class="section-info">
-        FORMA alerts
-        <a href="#" class="info" data-source="forma"><i></i></a>
+      <div class="section-info section-share">
+        <a href="#" id="alerts" class="anchor-country-info"></a>
+        <h6>FORMA alerts</h6>
+        <div class="section-btn no-cols">
+          <a href="#" class="info icon circle" data-source="forma">
+            <svg>
+              <use xlink:href="#shape-info"></use>
+            </svg>
+          </a>
+        </div>
       </div>
 
       <div class="section-content" id="comingSoonContent">
@@ -56,7 +82,7 @@
 
       <div class="section-content" id="formaAlertsContent">
         <div class="left-col">
-          <h3 class="section-title" id="formaAlertsTitle">There were <span class="highlight amount"></span> FORMA alerts in <span class="highlight month"></span></h3>
+          <h3 class="section-title" id="formaAlertsTitle">There were <span class="highlight amount"></span><br> FORMA alerts in <span class="highlight month"></span></h3>
 
           <div class="forma-alerts-legend">
             <span class="legend-title">Forest Clearing Alerts</span>
@@ -72,7 +98,12 @@
               <li><a href="http://wri-01.cartodb.com/api/v1/sql?q=SELECT f.* FROM forma_api f WHERE f.date >= '2006-01-01'::date AND f.date <= NOW()::date AND f.iso = UPPER('<%= @country['iso'] %>')&version=v1&format=csv">CSV</a></li>
             </ul>
           </div>
-          <a href="#" class="btn-rdn btn-rdn-primary forma_dropdown-link">Download data</a>
+          <a href="#" class="btn-rdn btn-rdn-primary forma_dropdown-link">
+          Download data
+          <svg>
+            <use xlink:href="#shape-download-arrow"></use>
+          </svg>
+          </a>
         </div>
 
         <div class="right-col">
@@ -82,182 +113,230 @@
     </div>
   </section>
 
-  <!-- forest type -->
-  <a href="#" id="forests-type" class="anchor-country-info"></a>
-  <section class="country-section country-forests-type" data-scroll-index='1'>
+  <!-- graph -->
+  <section class="country-section country-graph-section" data-scroll-index='2'>
     <div class="inner">
-      <div class="section-info">
-        Type of forests in <%= @country['name'] %>
-        <a href="#" class="info" data-source="forest_type"><i></i></a>
-      </div>
-
-      <div class="section-content">
-        <div class="coming-soon">No data available</div>
+      <section class="section-content">
         <div class="left-col">
-          <div class="forest-type-legends">
-            <ul class="legends-list">
-              <li><span class="primary"></span>Primary</li>
-              <li><span class="regenerated"></span>Regenerated</li>
-              <li><span class="planted"></span>Planted</li>
-            </ul>
-          </div>
+          <!-- forest type -->
+          <a href="#" id="forests-type" class="anchor-country-info"></a>
+          <section class="country-forests-type" data-scroll-index='2'>
+              <div class="section-info section-share">
+                <h6>Type of forests in <%= @country['name'] %></h6>
+                <div class="section-btn">
+                  <a href="#" class="info icon circle" data-source="forest_type">
+                    <svg>
+                      <use xlink:href="#shape-info"></use>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <div class="section-content">
+                <div class="coming-soon">No data available</div>
+                <div class="left-col">
+                  <div class="forest-type-legends">
+                    <ul class="legends-list">
+                      <li><span class="primary"></span>Primary</li>
+                      <li><span class="regenerated"></span>Regenerated</li>
+                      <li><span class="planted"></span>Planted</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="right-col">
+                  <div class="forests-type-graph"></div>
+                </div>
+
+                <% if @country['country_alt'].present? %>
+                <div class="country-alt">
+                  <p><%= @country['country_alt'].html_safe %></p>
+                </div>
+                <% end %>
+              </div>
+          </section>
         </div>
         <div class="right-col">
-          <div class="forests-type-graph"></div>
+          <!-- forest production -->
+          <a href="#" id="production" class="anchor-country-info"></a>
+          <section class="country-production" data-scroll-index='2'>
+              <div class="section-info section-share">
+                <h6>Economic value of <%= @country['name'] %>'s forestry sector</h6>
+                <div class="section-btn">
+                  <a href="#" class="info icon circle" data-source="gross_value">
+                    <svg>
+                      <use xlink:href="#shape-info"></use>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <div class="section-content">
+                <% if @country['gva'].present? && @country['gva'] > 0 %>
+                <h3 class="section-title">
+                  The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2011, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> of the GDP.</span>
+                </h3>
+                <% else %>
+                <div class="coming-soon">No data available</div>
+                <% end %>
+              </div>
+          </section>
         </div>
-
-        <% if @country['country_alt'].present? %>
-        <div class="country-alt">
-          <p><%= @country['country_alt'].html_safe %></p>
-        </div>
-        <% end %>
-      </div>
-    </div>
-  </section>
-
-  <!-- forest produnction -->
-  <a href="#" id="production" class="anchor-country-info"></a>
-  <section class="country-section country-production" data-scroll-index='2'>
-    <div class="inner">
-      <div class="section-info">
-        Economic value of <%= @country['name'] %>'s forestry sector
-        <a href="#" class="info" data-source="gross_value"><i></i></a>
-      </div>
-
-      <div class="section-content">
-        <% if @country['gva'].present? && @country['gva'] > 0 %>
-        <h3 class="section-title">
-          The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2011, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> of the GDP.</span>
-        </h3>
-        <% else %>
-        <div class="coming-soon">No data available</div>
-        <% end %>
-      </div>
+      </section>
     </div>
   </section>
 
   <!-- employment -->
-  <a href="#" id="employment" class="anchor-country-info"></a>
-  <section class="country-section country-employment" data-scroll-index='3'>
+  <section class="country-section country-employment-section" data-scroll-index='3'>
     <div class="inner">
-      <div class="section-info">
-        Employment
-        <a href="#" class="info" data-source="employment"><i></i></a>
-      </div>
-
-      <div class="section-content">
-        <% if @employees.present? && @employees > 0 %>
+      <section class="section-content">
         <div class="left-col">
-          <% if @employees < 1000 %>
-            <h3 class='section-title'><div><%= @employees %></div> <span>thousand people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
-          <% else %>
-            <h3 class='section-title'><div><%= (@employees/1000.00).round(2) %></div> <span>million people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
-          <% end %>
+          <!-- employment -->
+          <a href="#" id="employment" class="anchor-country-info"></a>
+          <section class="country-employment-section" data-scroll-index='3'>
+            <div class="section-info section-share">
+              <h6>Employment</h6>
+              <div class="section-btn">
+                <a href="#" class="info icon circle" data-source="employment">
+                  <svg>
+                    <use xlink:href="#shape-info"></use>
+                  </svg>
+                </a>
+              </div>
+            </div>
 
-          <ul class='employment <%= @employees < 25 ? 'short' : '' %>'>
-            <li>
-              <% @employees = @employees < 100 ? @employees : 100 %>
-              <div class='man-list'>
-                <% @employees.times do |i| %>
-                  <%= image_tag 'countries/man.png' %>
+            <div class="section-content">
+              <% if @employees.present? && @employees > 0 %>
+              <!-- <div class="left-col"> -->
+                <% if @employees < 1000 %>
+                  <h3 class='section-title'><div><%= @employees %></div> <span>thousand people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
+                <% else %>
+                  <h3 class='section-title'><div><%= (@employees/1000.00).round(2) %></div> <span>million people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
                 <% end %>
 
-                <%= '...' if @employees == 100 %>
+                <ul class='employment <%= @employees < 25 ? 'short' : '' %>'>
+                  <li>
+                    <% @employees = @employees < 100 ? @employees : 100 %>
+                    <div class='man-list'>
+                      <% @employees.times do |i| %>
+                        <%= image_tag 'countries/man.png' %>
+                      <% end %>
+
+                      <%= '...' if @employees == 100 %>
+                    </div>
+                  </li>
+                </ul>
+              <!-- </div> -->
+            <% else %>
+            <div class="coming-soon">No data available</div>
+            <% end %>
+            </div>
+          </section>
+        </div>
+        <div class="right-col">
+          <!-- tenure -->
+          <a href="#" id="tenure" class="anchor-country-info"></a>
+          <section class="country-tenure" data-scroll-index='4'>
+            <div class="section-info section-share">
+              <h6>Forest tenure</h6>
+              <div class="section-btn">
+                <a href="#" class="info icon circle" data-source="forest_tenure">
+                  <svg>
+                    <use xlink:href="#shape-info"></use>
+                  </svg>
+                </a>
               </div>
-            </li>
-          </ul>
+            </div>
+
+            <div class="section-content">
+              <div class='coming-soon'><span>No data available</span></div>
+              <div class='line-graph'></div>
+            </div>
+          </section>
         </div>
-      <% else %>
-      <div class="coming-soon">No data available</div>
-      <% end %>
-      </div>
-    </div>
-  </section>
-
-  <!-- tenure -->
-  <a href="#" id="tenure" class="anchor-country-info"></a>
-  <section class="country-section country-tenure" data-scroll-index='4'>
-    <div class="inner">
-      <div class="section-info">
-        Forest tenure
-        <a href="#" class="info" data-source="forest_tenure"><i></i></a>
-      </div>
-
-      <div class="section-content">
-        <div class='coming-soon'><span>No data available</span></div>
-        <div class='line-graph'></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- legislation -->
-  <section class="country-section country-legislation">
-    <div class="inner">
-      <div class="section-info">
-        Forest policy and legislation
-        <a href="#" class="info" data-source="forest_legislation"><i></i></a>
-      </div>
-
-      <div class="section-content">
-        <% if @country['national_policy_link'].present? %>
-        <div class="national-policy-links">
-          <%= link_to @country['national_policy_title'].present? ? @country['national_policy_title'] : 'National Forest Policy', @country['national_policy_link'], :target => '_blank' %>
-        </div>
-        <% end %>
-
-        <a href='mailto:gfw@wri.org' class='btn-rdn'>Are we missing a link?</a>
-      </div>
+      </section>
     </div>
   </section>
 
   <!-- carbon stocks -->
-  <section class="country-section country-carbon-stocks" data-scroll-index='5' style="padding: 0; display: table;">
+  <section class="country-section country-carbon-stocks-section" data-scroll-index='5'>
     <div class="inner">
 
-      <!-- left col -->
-      <% if @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>
-      <div class="carbon-text <%= 'wide' unless @country['emissions'].present? && @country['emissions'] != 0 %>">
-        <div class="section-info">
-          Carbon stocks
-          <a href="#" class="info" data-source="carbon_stocks"><i></i></a>
-        </div>
+      <section class="section-content">
 
-        <div class="section-content">
-          <h3 class='section-title'>This country has <span class="highlight"><%= number_with_delimiter(@country['carbon_stocks']) %> million metric tons of carbon stocks</span> in living forest biomass.</h3>
-        </div>
-      </div>
-      <% end %>
+        <div class="left-col">
 
-      <!-- right col -->
-      <% if @country['emissions'].present? && @country['emissions'] != 0 %>
-      <div class="emissions-text <%= 'wide' unless @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>">
+          <!-- left col -->
+          <% if @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>
+          <div class="carbon-text <%= 'wide' unless @country['emissions'].present? && @country['emissions'] != 0 %>">
+            <div class="section-info section-share">
+              <h6>Carbon stocks</h6>
+              <div class="section-btn">
+                <a href="#" class="info icon circle" data-source="carbon_stocks">
+                  <svg>
+                    <use xlink:href="#shape-info"></use>
+                  </svg>
+                </a>
+              </div>
+            </div>
 
-        <div class="section-info">
-          CO2 emissions
-          <a href="#" class="info" data-source="emissions"><i class="dark"></i></a>
-        </div>
-
-         <% precission = (@country['emissions'].abs.to_i < 0.1) ? 2 : 1 %>
-
-        <div class="section-content">
-          <% if @country['emissions'] > 0 %>
-            <h3 class='section-title'>According to FAO data, <span class="highlight"><%= number_to_percentage(@country['emissions'], precision: precission) %> of GHG emissions</span> in this country came from land-use change and forestry in 2011.</h3>
-          <% else %>
-            <h3 class='section-title'>According to FAO data, land-use change and forestry sequestered <span class="highlight"><%= number_to_percentage(@country['emissions'].abs, precision: precission) %> of this country’s GHG emissions</span> in 2011.</h3>
+            <div class="section-content">
+              <h3 class='section-title'>This country has <span class="highlight"><%= number_with_delimiter(@country['carbon_stocks']) %> million metric tons of carbon stocks</span> in living forest biomass.</h3>
+            </div>
+          </div>
           <% end %>
+
         </div>
-      </div>
-      <% end %>
+
+        <div class="right-col">
+
+          <!-- right col -->
+          <% if @country['emissions'].present? && @country['emissions'] != 0 %>
+          <div class="emissions-text <%= 'wide' unless @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>">
+
+            <div class="section-info section-share">
+              <h6>CO2 emissions</h6>
+              <div class="section-btn">
+                <a href="#" class="info icon circle" data-source="emissions">
+                  <svg>
+                    <use xlink:href="#shape-info"></use>
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+             <% precission = (@country['emissions'].abs.to_i < 0.1) ? 2 : 1 %>
+
+            <div class="section-content">
+              <% if @country['emissions'] > 0 %>
+                <h3 class='section-title'>According to FAO data, <span class="highlight"><%= number_to_percentage(@country['emissions'], precision: precission) %> of GHG emissions</span> in this country came from land-use change and forestry in 2011.</h3>
+              <% else %>
+                <h3 class='section-title'>According to FAO data, land-use change and forestry sequestered <span class="highlight"><%= number_to_percentage(@country['emissions'].abs, precision: precission) %> of this country’s GHG emissions</span> in 2011.</h3>
+              <% end %>
+            </div>
+          </div>
+          <% end %>
+
+        </div>
+
+      </section>
+
+
 
     </div>
   </section>
 
   <!-- conventions -->
-  <section class='country-section country-conventions' data-scroll-index='6'>
+  <section class='country-section country-conventions-section' data-scroll-index='6'>
     <div class='inner'>
-      <div class="section-info">
-        Conventions
-        <a href="#" class="info" data-source="conventions"><i></i></a>
+      <div class="section-info section-share">
+        <h6>Conventions</h6>
+        <div class="section-btn no-cols">
+          <a href="#" class="info icon circle" data-source="conventions">
+            <svg>
+              <use xlink:href="#shape-info"></use>
+            </svg>
+          </a>
+        </div>
       </div>
 
       <div class="section-content">
@@ -265,8 +344,12 @@
           <% @conventions.each do |convention| %>
             <% if @country["convention_#{convention}"].present? %>
               <li class='<%= convention %>'>
-                <%= t('.conventions.' + convention + '_title_html') %>
-                <span><%= @country["convention_#{convention}"] %></span>
+                <div class="convention-box">
+                  <div class="name-container">
+                    <p class="name"><%= t('.conventions.' + convention + '_title_html') %></p>
+                  </div>
+                  <span><%= @country["convention_#{convention}"] %></span>
+                </div>
               </li>
             <% end %>
           <% end %>
@@ -275,47 +358,76 @@
     </div>
   </section>
 
-  <!-- useful links -->
-  <% if @country['ministry_link'].present? || @country['external_links'].present? %>
-  <section class='country-section country-external-links'>
-    <div class='inner'>
-      <div class="section-info">
-        External links
-      </div>
+  <!-- policy -->
+  <section class="country-section country-policy-section">
+    <div class="inner">
+      <section class="section-content">
 
-      <div class="section-content">
-        <ul>
-          <% if @country['ministry_link'].present? %>
-            <li><a href='<%= @country['ministry_link'] %>' target='_blank'><%= t('.ministry_link') %></a></li>
-          <% end %>
+        <div class="left-col">
+          <section class="missing-link">
+            <div class="section-info section-share">
+              <h6>Forest policy and legislation</h6>
+              <div class="section-btn">
+                <a href="#" class="info icon circle" data-source="forest_legislation">
+                  <svg>
+                    <use xlink:href="#shape-info"></use>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            <div class="section-content">
+              <% if @country['national_policy_link'].present? %>
+                <div class="national-policy-links">
+                  <%= link_to @country['national_policy_title'].present? ? @country['national_policy_title'] : 'National Forest Policy', @country['national_policy_link'] %>
+                </div>
+              <% end %>
+              <%= link_to 'Are we missing a link?', 'mailto:gfw@wri.org', class: 'btn-rdn btn-rdn-primary' %>
+            </div>
+          </section>
+        </div>
 
-          <% if @country['external_links'].present? %>
-            <% JSON.parse(@country['external_links']).each do |link| %>
-              <li><%= link_to link['title'], link['url'], :target => '_blank' %></li>
-            <% end %>
+        <div class="right-col">
+          <!-- useful links -->
+          <% if @country['ministry_link'].present? || @country['external_links'].present? %>
+          <section class='country-external-links'>
+            <div class="section-info section-share">
+              <h6>External links</h6>
+            </div>
+            <div class="section-content">
+              <ul>
+                <% if @country['ministry_link'].present? %>
+                  <li><a href='<%= @country['ministry_link'] %>' target='_blank'><%= t('.ministry_link') %></a></li>
+                <% end %>
+                <% if @country['external_links'].present? %>
+                  <% JSON.parse(@country['external_links']).each do |link| %>
+                    <li><%= link_to link['title'], link['url'], :target => '_blank' %></li>
+                  <% end %>
+                <% end %>
+              </ul>
+            </div>
+          </section>
           <% end %>
-        </ul>
-      </div>
+        </div>
+      </section>
     </div>
   </section>
-  <% end %>
 
   <!-- download links -->
-  <section class='country-section country-download-links'>
+  <section class='country-section country-download-links-section'>
     <div class='inner'>
       <div class="section-content">
-        <%= link_to 'Subscribe to alerts for this country', "#{map_coords}/grayscale/forma?subscribe", class: 'btn-rdn', :target => '_blank' %>
+        <%= link_to 'Subscribe to alerts for this country', "#{map_coords}/grayscale/forma?subscribe", class: 'btn-rdn btn-rdn-dark', :target => '_blank' %>
         <% if @country['dataset_link'].present? %>
-        <%= link_to 'Download relevant data sets', @country['dataset_link'], class: 'btn-rdn' %>
-        <% else %>
-        <%= link_to 'Download relevant data sets','#', class: 'btn-rdn disabled' %>
+        <% link_to 'Download relevant data sets', @country['dataset_link'], class: 'btn-rdn' %>
+        <%# else %>
+         <%#= link_to 'Download relevant data sets','#', class: 'btn-rdn disabled' %>
         <% end %>
       </div>
     </div>
   </section>
 
   <!-- blog -->
-  <section class='country-section country-blog'>
+  <section class='country-section country-blog-section'>
     <div class='inner'>
       <div class='section-content'>
         <h3 class='section-title'><%= t('.country_blog.title', :country => @country['name'].titleize) %></h3>
@@ -326,7 +438,7 @@
               <strong class='column-title'>Blog stories</strong>
               <h3 class='story-title'><%= truncate(@blog_story['title'], :length => 35) %></h3>
               <p class='story-content'><%= truncate(@blog_story['description'].gsub('[&#8230;]', ''), :length => 300) %> <%= link_to('more', @blog_story['link'], :target => '_blank') %></p>
-              <p>Read more blog stories <a href='<%= "http://blog.globalforestwatch.org/?tag=#{@country['name'].downcase.gsub(' ', '_')}" %>' target="_blank">here</a></p>
+              <p>Read more blog stories <a href='<%= "http://blog.globalforestwatch.org/?tag=#{@country['name'].downcase.gsub(' ', '_')}" %>'>here</a></p>
             <% end %>
           </li>
 
@@ -335,9 +447,7 @@
               <% if @country['story'].present? %>
                 <a href="<%= story_path(@country['story']['cartodb_id']) %>">
                   <%= image_tag static_map("#{@country['lat']}, #{@country['lng']}", '266x266', 4), :alt => @country['name'] %>
-                  <div class="frame"></div>
-                  <div class='gradient'></div>
-                  <div class='frame'></div>
+                  <div class='veil'></div>
                   <div class='title'>
                     <strong><%= @country['story']['title'] %></strong>
                     <span><%= t('.home_stories.featured.read_more') %></span>
@@ -345,8 +455,6 @@
                 </a>
               <% else %>
                 <a href='<%= new_story_path %>' class='nostory' target="_blank">
-                  <div class='gradient'></div>
-                  <div class='frame'></div>
                   <div class='title'>
                     <strong>No stories for this country yet.</strong>
                     <span>Add one</span>
@@ -372,7 +480,7 @@
   </section>
 
   <!-- disqus -->
-  <section class='country-section country-comments'>
+  <section class='country-section country-comments-section'>
     <div class='inner'>
       <div id='disqus_thread'></div>
       <script type='text/javascript'>

@@ -15,12 +15,14 @@
 
 //= require_tree ./countries
 
-
 $(document).ready(function() {
-
   window.ga = window.ga || function() {};
 
   cdb.init(function() {
+
+    // mobile-menu
+    window.countries_header = new gfw.ui.view.CountriesHeader();
+
     if ($('.is-index-action').length > 0) {
       window.countries_index = new gfw.ui.view.CountriesIndex();
     }
@@ -33,5 +35,4 @@ $(document).ready(function() {
       });
     }
   });
-
 });

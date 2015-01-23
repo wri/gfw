@@ -10,6 +10,16 @@ module StoriesHelper
     stories_path(:page => page)
   end
 
+  def previous_page_keep(page)
+    page -= 1
+    return "/stayinformed/crowdsourced-stories?page=#{page}"
+  end
+
+  def next_page_keep(page)
+    page += 1
+    return "/stayinformed/crowdsourced-stories?page=#{page}"
+  end
+
   def last_page?
     @page == @total_pages
   end

@@ -1,34 +1,38 @@
 // Compass
-@import
-  "compass/reset",
-  "compass/css3",
-  "compass/utilities/sprites";
-// Icons
+@import "compass/reset";
+@import "compass/css3";
+@import 'flexbox';
+
+// General
+@import "settings1600";
+@import "fonts1600";
+@import "mixins1600";
+@import "animations1600";
+@import "base1600";
+
+// Images
+@import "logos/*.png";
 @import "country-icons/*.png";
 @import "home-icons/*.png";
-@include all-country-icons-sprites;
-
-// Global
-@import
-  "settings",
-  "mixins",
-  "base";
-
-// Layouts
-@import
-  "layouts/grid",
-  "layouts/application",
-  "layouts/countries";
+// Layout
+@import "header1600";
+@import "footer1600";
+@import "layouts/grid1600";
 
 // Modules
-@import
-  "modules/notice",
-  "modules/navbar",
-  "modules/modal",
-  "modules/countries/country",
-  "modules/countries/overview",
-  "modules/countries/show",
-  "modules/dropdowns";
+@import "modules/modal";
+@import "modules/shared1600";
+@import "modules/buttons1600";
+@import "modules/icons1600";
+@import "modules/slick1600";
+@import "modules/countries/country";
+@import "modules/countries/overview";
+@import "modules/countries/show";
+@import "modules/dropdowns";
 
-// States
+
+// Common
 @import "states";
+
+// Layouts
+  @import "layouts/countries";

@@ -47,8 +47,15 @@ define([], function () {
       'saturation': -100
     }]
   }, {
-    'featureType': 'poi',
+    'featureType': 'poi.park',
     'elementType': 'geometry',
+    'stylers': [{
+      'visibility': 'off'
+    }]
+  },
+  {
+    'featureType': 'poi.park',
+    'elementType': 'labels',
     'stylers': [{
       'visibility': 'off'
     }]

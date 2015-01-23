@@ -16,12 +16,10 @@ define([
 
     initialize: function(layer, currentDate) {
       this.presenter = new Presenter(this);
-
       this.options = {
         dateRange: [layer.mindate, layer.maxdate],
         tickWidth: 60
       };
-
       ModisTimeline.__super__.initialize.apply(this, [layer, currentDate]);
     },
 

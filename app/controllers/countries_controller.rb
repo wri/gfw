@@ -1,5 +1,7 @@
 class CountriesController < ApplicationController
+  before_filter :check_terms
   include ActionView::Helpers::NumberHelper
+  layout 'countries'
 
   def index
     @countries = find_countries
@@ -30,6 +32,7 @@ class CountriesController < ApplicationController
                         nil
                       end
     @title = @country['name']
+    @desc = 'Data about forest change, tenure, forest related employment and land use in ' + @title
   end
 
   def overview

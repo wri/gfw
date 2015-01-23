@@ -1,0 +1,16 @@
+<h2>Become a tester</h2>
+<% if @email %>
+  <p><%= @email %></p>
+  <p>Become an official GFW tester: <% if @signup == 'true' %>Yes<% else %>No<% end %></p>
+<% else %>
+  <p>No email provided</p>
+<% end %>
+
+
+
+<h2>Feedback</h2>
+<% if @feedback %>
+  <p><%= @feedback %></p>
+<% else %>
+  <p>No feedback provided</p>
+<% end %>

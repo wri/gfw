@@ -1,31 +1,32 @@
-//= require jquery/dist/jquery
-//= require geojson
-//= require d3/d3
-//= require topojson/topojson
-//= require scrollIt.min
-//= require jquery.qtip.min
-//= require simple_statistics
+/**
+ * Application entry point.
+ */
+require([
+  'jquery',
+  'underscore',
+  'Class',
+  'backbone',
+  'mps',
+  '_string'
+], function($, _, Class, Backbone, mps) {
 
-//= require gfw
-//= require gfw/helpers
-//= require gfw/ui/widget
-//= require gfw/ui/sourcewindow
-//= require gfw/ui/share
-//= require gfw/ui/umd_options
+  'use strict';
 
-//= require_tree ./search
+  var SearchPage = Class.extend({
 
+    $el: $('body'),
 
-$(document).ready(function() {
+    init: function() {
+      this._initViews();
+    },
 
-  window.ga = window.ga || function() {};
-
-  cdb.init(function() {
-
-    if ($('.is-index-action').length > 0) {
-      window.search_index = new gfw.ui.view.SearchIndex();
+    /**
+     * Initialize Application Views.
+     */
+    _initViews: function() {
     }
-
   });
+
+  new SearchPage();
 
 });

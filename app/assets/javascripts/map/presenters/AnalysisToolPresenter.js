@@ -209,6 +209,8 @@ define([
             type: 'Feature'
           };
 
+          mps.publish('AnalysisResults/totalArea', [{hectares: geojsonUtilsHelper.getHectares(geojson.geometry)}]);
+
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
           this._publishAnalysis(resource);
@@ -240,9 +242,12 @@ define([
             type: 'Feature'
           };
 
+          mps.publish('AnalysisResults/totalArea', [{hectares: geojsonUtilsHelper.getHectares(geojson.geometry)}]);
+
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
           this._publishAnalysis(resource);
+
         } else {
           this._publishAnalysis(resource, true);
         }

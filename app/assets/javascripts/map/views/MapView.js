@@ -64,6 +64,7 @@ define([
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
         this.$el.addClass('is-loaded');
       }, this));
+      this._checkDialogs();
     },
 
     /**
@@ -287,6 +288,25 @@ define([
     updateLatlngInfo: function(lat, lng) {
       var html = 'Lat/long: {0}, {1}'.format(lat.toFixed(6), lng.toFixed(6));
       this.$maplngLng.html(html);
+    },
+
+
+    /**
+    *
+    */
+    _checkDialogs: function() {
+      $(document).ready(function(type){
+        if (!sessionStorage.getItem('DIALOG')) return;
+        var dialog = JSON.parse(sessionStorage.getItem('DIALOG'));
+
+        if (!dialog.display) return;
+
+        var $container = $('.map-container').find('.widget')[0],
+            $trigger   = $( "<a data-source='" + dialog.type +"' class='source hidden hide' style='display: none'></a>" )
+        $trigger.appendTo($container).trigger('click');
+        sessionStorage.removeItem('DIALOG');
+        window.setTimeout(function(){$('.backdrop').css('opacity', '0.3');},500);
+      });
     }
 
   });

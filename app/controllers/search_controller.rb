@@ -5,27 +5,10 @@ class SearchController < ApplicationController
     @title = "Search"
     if params[:query]
       result = search_by(params[:query],params[:page])
-      @query = params[:query]
       @result = result 
-
-      # links
-      if @result['queries']['nextPage']
-        request = @result['queries']['nextPage'][0]['searchTerms']
-        page = (@result['queries']['nextPage'][0]['startIndex'].to_i/10).floor + 1
-        @nextlink = '/search/'+ request +'/'+ page.to_s
-      end
-      if @result['queries']['previousPage']
-        request = @result['queries']['previousPage'][0]['searchTerms']
-        page = (@result['queries']['previousPage'][0]['startIndex'].to_i/10).floor + 1
-        @prevlink = '/search/'+ request +'/'+ page.to_s
-      end
-
-      #info
-      @info = {}
-      @info['totalView'] = @result['queries']['request'][0]['totalResults'].to_i
-      @info['startView'] = @result['queries']['request'][0]['startIndex'].to_i
-      @info['endView'] = @result['queries']['request'][0]['startIndex'].to_i + @result['queries']['request'][0]['count'] - 1
-
+      @query = params[:query]
+      @page = params[:page]
+      @total = @result['queries']['request'][0]['totalResults'].to_i
 
     end
   end

@@ -1,0 +1,193 @@
+// Grid
+@mixin row($content:space-between,$items:stretch) {
+    @include display-flex();
+    @include justify-content($content);
+    @include align-items($items);
+}
+@mixin col ($per) {
+    width: percentage($per/100);
+    min-height: 1px;
+}
+
+
+// Clearfix
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+    visibility: hidden;
+    font-size: 0;
+    height: 0;
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+
+// Retina
+@mixin retina-image($file-1x, $file-2x) {
+  background-image: image-url($file-1x);
+  background-size: contain;
+  @media
+  only screen and (-webkit-min-device-pixel-ratio: 1.5),
+  only screen and (   min--moz-device-pixel-ratio: 1.5),
+  only screen and (     -o-min-device-pixel-ratio: 1.5),
+  only screen and (        min-device-pixel-ratio: 1.5),
+  only screen and (                min-resolution: 192dpi),
+  only screen and (                min-resolution: 2dppx) {
+    background-image: image-url($file-2x);
+  }
+}
+
+// Animation
+@mixin animation($name,$duration,$count: 1,$function: linear,$direction: normal,$fill : none,$delay : 0s, $play: running){
+  -webkit-animation-name: $name;
+  -webkit-animation-duration: $duration;
+  -webkit-animation-iteration-count: $count;
+  -webkit-animation-timing-function: $function;
+  -webkit-animation-direction: $direction;
+  -webkit-animation-fill-mode:$fill;
+  -webkit-animation-delay:$delay;
+  -webkit-animation-play-state: $play;
+  -moz-animation-name: $name;
+  -moz-animation-duration: $duration;
+  -moz-animation-iteration-count: $count;
+  -moz-animation-timing-function: $function;
+  -moz-animation-direction: $direction;
+  -moz-animation-fill-mode:$fill;
+  -moz-animation-delay:$delay;
+  -moz-animation-play-state: $play;
+  -ms-animation-name: $name;
+  -ms-animation-duration: $duration;
+  -ms-animation-iteration-count: $count;
+  -ms-animation-timing-function: $function;
+  -ms-animation-direction: $direction;
+  -ms-animation-fill-mode:$fill;
+  -ms-animation-delay:$delay;
+  -ms-animation-play-state: $play;
+  animation-name: $name;
+  animation-duration: $duration;
+  animation-iteration-count: $count;
+  animation-timing-function: $function;
+  animation-direction: $direction;
+  animation-fill-mode:$fill;
+  animation-delay:$delay;
+  animation-play-state: $play;
+}
+
+
+// Degradado
+@mixin gradient($origin: left, $start: #ffffff, $stop: #000000) {
+    // background-color: $start;
+    background-image: -webkit-linear-gradient($origin, $start, $stop);
+    background-image: -moz-linear-gradient($origin, $start, $stop);
+    background-image: -o-linear-gradient($origin, $start, $stop);
+    background-image: -ms-linear-gradient($origin, $start, $stop);
+    background-image: linear-gradient($origin, $start, $stop);
+}
+
+
+
+
+//
+// OLD
+//
+@import "mixins/*.png"; /**/
+
+// Pointer-Events
+@mixin pointer-events($type: none) {
+  $type: unquote($type);
+  @include experimental(pointer-events, $type,
+    -moz, -webkit, not -o, not -ms, -khtml, official
+  );
+}
+
+@mixin button($url, $height, $mL, $pT, $pR, $pB, $pL, $offset-y) {
+  @include inline-block();
+
+  position:relative;
+
+  height:$height;
+  background: url($url) no-repeat left -1*($offset-y + $height);
+  color:#fff;
+  text-decoration:none;
+  text-transform: uppercase;
+
+  @extend .shadow-transition;
+
+  & > span {
+    @include inline-block();
+    height: $height - $pT - $pB;
+    margin-left: $mL;
+    padding: $pT $pR $pB $pL;
+    background: url($url) repeat-x right -1*$offset-y;
+    white-space:nowrap;
+  }
+}
+
+@mixin size($width, $height:$width) {
+
+  @if $width  != false { width:  $width; }
+  @if $height != false { height: $height; }
+
+}
+
+@mixin position($top, $right, $bottom, $left) {
+
+  position: absolute;
+
+  @if $top    != false { top:    $top; }
+  @if $right  != false { right:  $right; }
+  @if $bottom != false { bottom: $bottom; }
+  @if $left   != false { left:   $left; }
+
+}
+
+@mixin absolute-portrait-center($height) {
+  position:absolute;
+  top:50%;
+  height: $height;
+  margin-top: -1*$height/2;
+}
+
+@mixin absolute-landscape-center($width) {
+  @include absolute-left-center($width);
+}
+
+@mixin absolute-left-center($width) {
+  position:absolute;
+  left:50%;
+  width: $width;
+  margin-left: -1*$width/2;
+}
+
+@mixin absolute-center($width, $height:$width) {
+
+  position:absolute;
+  left:50%;
+  top: 50%;
+
+  margin-left: -1*$width/2;
+  margin-top:  -1*$height/2;
+
+  @if $width  != false { width:  $width; }
+  @if $height != false { height: $height; }
+
+}
+
+@mixin transform-translate($x, $y) {
+  transform: translate($x, $y);
+  -webkit-transform: translate($x, $y);
+}
+
+@mixin display-flex {
+  display: flex;
+  display: -webkit-flex;
+}
+
+@mixin align-items($align) {
+  align-items: $align;
+  -webkit-align-items: $align;
+}

@@ -1,46 +1,41 @@
-<% content_for :js do %>
-  <script id='window-template' type='text/x-underscore-template'>
-    <a href='#' class='close'></a>
-    <div class='content'></div>
-  </script>
-<% end %>
-
-<% content_for :header do %>
-  <h1 class="header-title"><%= '<span>Global Forest Watch</span> Terms of Service'.html_safe %></h1>
-  <p class="header-description"><i class='scroll-icon'></i> Please click "I Agree" to continue</p>
-<% end %>
-
-<div class='inner container-inner'>
-  <div contenteditable='false' class='terms_field'>
-    <%= render 'terms' %>
+<section class="header-page">
+  <div class="inner">
+    <h1 class="header-title"><%= 'Global Forest Watch <span>Terms of Service</span>'.html_safe %></h1>
+    <p class="header-description">Please click "I Agree" to continue</p>
   </div>
+</section>
 
-  <div class="terms_footer notranslate">
-    <%= link_to 'I agree', root_path, class: 'btn accept_btn dark_glow continue', :'data-source' => "accept_terms" %> <%= link_to 'I do not agree', root_path, class: 'btn cancel_btn dark_glow cancel' %>
-  </div>
-
-  <section class="section">
-    <div class="section-footer">
-      <p><%= link_to 'Why do I have to agree to a Terms of Service?', root_path, class: 'why_terms', :'data-source' => "why_accept_terms" %></p>
-      <p class='last'>For additional information about GFW, please send an email to <a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>
+<!-- TERMS -->
+<section class="terms-section">
+  <div class="inner">
+    <div contenteditable='false' class='terms_field'>
+      <%= render 'terms' %>
     </div>
-  </section>
-</div>
+    <div class="terms-footer notranslate">
+      <%= link_to 'I agree', root_path, class: 'btn accept_btn green huge continue', :'data-source' => "accept_terms" %> <%= link_to 'I do not agree', root_path, class: 'btn cancel_btn gray huge cancel' %>
+      <div class="terms-footer-more">
+        <p><%= link_to 'Why do I have to agree to a Terms of Service?', root_path, class: 'why_terms', :'data-source' => "why_accept_terms" %></p>
+        <p class='last'>For additional information about GFW, please send an email to <a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- TERMS DIALOG -->
 <div id="sources" class="sources is-hidden">
-  <ul class='sources'>
-    <li id='accept_terms'>
-      <h2 class='source_category_title notranslate'>Please confirm</h2>
+    <div id='accept_terms' class="center">
+      <h2 class='source_title notranslate'>Please confirm</h2>
       <div class='source_body'>
         <p class="notranslate">You acknowledge that you have read and agree to the Global Forest Watch Terms of Service.</p>
-
         <%= form_tag("/accept", { :class => 'terms_footer notranslate' }) do %>
-          <%= submit_tag "I agree", class: 'btn accept_btn dark_glow' %> <%= link_to 'I do not agree', '/accept_terms', class: 'btn cancel_btn dark_glow' %>
+          <div class="row">
+            <%= button_tag "I agree", class: 'btn accept_btn green huge' %> <%= link_to 'I do not agree', '/accept_terms', class: 'btn cancel_btn gray huge' %>
+          </div>
         <% end %>
       </div>
-    </li>
-    <li id='why_accept_terms'>
-      <h2 class='source_category_title notranslate'>Why accept?</h2>
+    </div>
+    <div id='why_accept_terms'>
+      <h2 class='source_title notranslate'>Why accept?</h2>
       <div class='source_body'>
         <p class="notranslate">Why are we, the Global Forest Watch team, asking you, our user, to agree to a Terms of Service?</p>
         <p class="notranslate">The answer is simple. This website and the open data within it is powerful. It exposes us to a huge risk.</p>
@@ -48,12 +43,12 @@
         <p class="notranslate">We seek to transform the way forests are managed and protected by governments, businesses, and communities around the world. We can’t do that if we’re sued and the website is taken down.</p>
         <p class="notranslate">So thank you, truly, for understanding why we’re asking you to agree to a Terms of Service. Please join us in making Global Forest Watch a powerful tool for people everywhere.</p>
       </div>
-    </li>
-  </ul>
+    </div>
 </div>
+
 <script type="text/javascript">
-  if (window.top!=window.self)
-  {
-    document.getElementsByTagName('body')[0].className += " in-iframe";
-  }
+  // if (window.top!=window.self)
+  // {
+  //   document.getElementsByTagName('body')[0].className += " in-iframe";
+  // }
 </script>

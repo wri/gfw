@@ -1,0 +1,499 @@
+.footer-fixed{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 38px);
+    z-index: 1001;
+    background: #EDEDE8;
+    @include transform(translate(0,100%));
+    @include transition(all 0.5s $easeInOutCubic);
+    .footer-fixed-container{
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+    }
+    &.active{
+        @include transform(translate(0,-38px));
+    }
+    .footer-logos-btn{
+      text-align: center;
+      a, span { color: $dark; }
+    }
+
+}
+.is-accept_terms-action .layout-footer,
+.is-accept_terms-action .footer-share-container{
+  display: none;
+}
+
+.layout-footer {
+    background: #EDEDE8;
+    clear: both;
+    .apps-footer {
+    	padding: 20px 0;
+    	border-bottom: 1px solid #E5E5DF;
+    	ul {
+    		@include row(space-between);
+    		li {
+    			width: 16.666666%;
+    			a {
+    				display: block;
+    				padding: 20px;
+    				text-decoration: none;
+	    			svg {
+	    				display: block;
+	    				height: 30px;
+	    				width: 30px;
+	    				margin: 0 auto;
+              float: none;
+	    				fill: #555555;
+	    			}
+	    			h3 {
+	    				text-transform: uppercase;
+	    				text-align: center;
+	    				font-size: 12px;
+	    				padding: 5px 0 0;
+	    				color: #555555;
+              @include transition(all .25s $easeInOutCubic);
+	    			}
+	    			&:hover {
+              &.fire{
+                svg{ fill: $red; }
+                h3{ color: $red; }
+              }
+              &.commodities{
+                svg{ fill: $orange; }
+                h3{ color: $orange; }
+              }
+	    				svg { fill: $cGreen; }
+	    				h3 { color: $cGreen; }
+	    			}
+    			}
+    		}
+    	}
+    }
+    .site-map {
+    	padding: 0 0 40px;
+    	.row {
+    		@include row(space-between);
+    		padding: 40px 0;
+    		border-bottom: 1px solid #E5E5DF;
+    		.col {
+    			width: 25%;
+    			a {
+    				color: #555555;
+    				&:hover{
+    					text-decoration: underline;
+    				}
+    			}
+    			h3 {
+    				font-size: 14px;
+    				color: #555555;
+    				text-transform: uppercase;
+    				padding: 0 0 15px;
+    				font-weight: 500;
+    			}
+    			ul {
+    				margin: -10px 0 0;
+    				li {
+    					font-size: 13px;
+    					padding: 5px 10px 5px 0;
+    				}
+    			}
+    		}
+    	}
+    }
+    .partner-box{
+    	padding: 40px 20px;
+      @media (min-width: $br-mobile){
+        padding: 0 0 40px;
+      }
+    	h4{
+    		font-size: 14px;
+    		color: #555555;
+    		padding: 0 0 15px;
+        text-align: center;
+        font-weight: 500;
+        @media (min-width: $br-mobile){
+          text-align: left;
+          font-weight: 400;
+        }
+    	}
+    	.row{
+    		@include row(space-between,flex-start);
+        @include flex-wrap(wrap);
+	    	.wri-logo{
+	    		width: 200px;
+	    		height: 70px;
+          margin: 0 auto;
+	    		@include logos-sprite(wri-logo);
+          @media (min-width: $br-mobile){
+              margin: 0;
+          }
+	    	}
+	    	.address{
+	    		text-align: center;
+          padding: 25px 20px 0;
+          max-width: 300px;
+          margin: 0 auto;
+	    		font-size: 14px;
+	    		font-weight: 300;
+          color: $dark;
+          @media (min-width: $br-mobile){
+              text-align: right;
+              max-width: none;
+              margin: 0;
+              padding: 0;
+          }
+          >*{
+            margin: 8px 0 0;
+            &:first-child{ margin: 0;}
+          }
+          a{
+            color: $dark;
+            font-weight: 400;
+          }
+	    		strong,span{ display: block;}
+	    		strong {
+	    			font-weight: 400;
+	    		}
+	    	}
+    	}
+    }
+
+    .footer-logos-btn{
+      padding: 20px 0;
+      .inner{
+        @include row(space-between);
+      }
+      a, span { color: $dark; }
+      span{
+        font-size: 19px;
+        font-weight: 500;
+        display: none;
+        @media (min-width: $br-mobile){
+          display: inline-block;
+        }
+      }
+      a{
+        font-size: 13px;
+        @media (max-width: $br-mobile - 1){
+          -webkit-appearance: none;
+          border: 1px solid transparent;
+          background: none;
+          outline: none;
+          box-shadow: none;
+          text-align: center;
+          cursor: pointer;
+          font-family: "Fira Sans";
+          background: $border;
+          position: relative;
+          display: inline-block;
+          z-index: 1;
+          padding: 0px 12px;
+          border-radius: 40px;
+          font-size: 14px;
+          text-decoration: none;
+          height: 36px;
+          line-height: 36px;
+          text-align: center;
+          font-weight: 500;
+          white-space: nowrap;
+          color: $dark;
+          background: $white;
+          border-color: $cGreen;
+          margin: 0 auto;
+        }
+        &:hover{
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .footer-logos{
+        display: none;
+        @media (min-width: $br-mobile){
+          display: block;
+          padding: 0px 0 40px;
+        }
+
+        .inner{
+          width: 80%;
+          @media (min-width: 1400px){
+            width: 75%;
+          }
+        }
+
+
+        .slick-slide{
+            height: 60px;
+        }
+		    a{
+  		    display: block;
+  		    margin: 0 auto;
+  		    width: 88px;
+          position: relative;
+          top: 50%;
+          @include transform(translate(0,-50%));
+          &.wri {
+            height: 32px; width: 95px; @include logos-sprite(wri);
+            &:hover{
+              @include logos-sprite(wrihover);
+            }
+          }
+          &.google {
+            height: 29px; width: 85px; @include logos-sprite(google);
+            &:hover{
+              @include logos-sprite(googlehover);
+            }
+          }
+          &.esri {
+            height: 33px; width: 87px; @include logos-sprite(esri);
+            &:hover{
+              @include logos-sprite(esrihover);
+            }
+          }
+          &.universitymaryland {
+            height: 51px; width: 56px; @include logos-sprite(universityofmaryland);
+            &:hover{
+              @include logos-sprite(universityofmarylandhover);
+            }
+          }
+          &.unep {
+            height: 57px; width: 49px; @include logos-sprite(unep);
+            &:hover{
+              @include logos-sprite(unephover);
+            }
+          }
+          &.imazon {
+            height: 24px; width: 79px; @include logos-sprite(imazon);
+            &:hover{
+              @include logos-sprite(imazonhover);
+            }
+          }
+          &.cfgd {
+            height: 40px; width: 84px; @include logos-sprite(centerforglobaldevelopment);
+            &:hover{
+              @include logos-sprite(centerforglobaldevelopmenthover);
+            }
+          }
+          &.osfac {
+            height: 56px; width: 44px; @include logos-sprite(osfac);
+            &:hover{
+              @include logos-sprite(osfachover);
+            }
+          }
+          &.gfwca {
+            height: 44px; width: 42px; @include logos-sprite(globalforestwatchcanada);
+            &:hover{
+              @include logos-sprite(globalforestwatchcanadahover);
+            }
+          }
+          &.scanex {
+            height: 20px; width: 110px; @include logos-sprite(scannex);
+            &:hover{
+              @include logos-sprite(scannexhover);
+            }
+          }
+          &.twrus {
+            height: 28px; width: 110px; @include logos-sprite(tipos);
+            &:hover{
+              @include logos-sprite(tiposhover);
+            }
+          }
+          &.norwegian {
+            height: 46px; width: 110px; @include logos-sprite(norwegianministri);
+            &:hover{
+              @include logos-sprite(norwegianministrihover);
+            }
+          }
+          &.usaid {
+            height: 64px; width: 80px; @include logos-sprite(usaid);
+            &:hover{
+              @include logos-sprite(usaidhover);
+            }
+          }
+          &.gef {
+            height: 59px; width: 51px; @include logos-sprite(gef);
+            &:hover{
+              @include logos-sprite(gefhover);
+            }
+          }
+          &.ukaid {
+            height: 47px; width: 43px; @include logos-sprite(ukaid);
+            &:hover{
+              @include logos-sprite(ukaidhover);
+            }
+          }
+          &.tilia {
+            height: 25px; width: 67px; @include logos-sprite(thetiliafund);
+            &:hover{
+              @include logos-sprite(thetiliafundhover);
+            }
+          }
+          &.goodall {
+            height: 26px; width: 110px; @include logos-sprite(thejanegoodallinstitute);
+            &:hover{
+              @include logos-sprite(thejanegoodallinstitutehover);
+            }
+          }
+          &.cartodb {
+            height: 39px; width: 110px; @include logos-sprite(cartodb);
+            &:hover{
+              @include logos-sprite(cartodbhover);
+            }
+          }
+          &.vizzuality {
+            height: 58px; width: 109px; @include logos-sprite(vizzuality);
+            &:hover{
+              @include logos-sprite(vizzualityhover);
+            }
+          }
+          &.blueraster {
+            height: 48px; width: 110px; @include logos-sprite(blueraster);
+            &:hover{
+              @include logos-sprite(bluerasterhover);
+            }
+          }
+          &.sida {
+            height: 55px; width: 110px; @include logos-sprite(sida);
+            &:hover{
+              @include logos-sprite(sidahover);
+            }
+          }
+          &.danida {
+            height: 15px; width: 82px; @include logos-sprite(danida);
+            &:hover{
+              @include logos-sprite(danidahover);
+            }
+          }
+          &.cgiar {
+            height: 43px; width: 124px; @include logos-sprite(cgiar);
+            &:hover{
+              @include logos-sprite(cgiarhover);
+            }
+          }
+          &.dutchforeign {
+            height: 80px; width: 106px; @include logos-sprite(ministryofforeignaffairs);
+            &:hover{
+              @include logos-sprite(ministryofforeignaffairshover);
+            }
+          }
+          &.moore {
+            height: 37px; width: 96px; @include logos-sprite(moore);
+            &:hover{
+              @include logos-sprite(moorehover);
+            }
+          }
+
+          &.bnpb {
+            height: 64px; width: 50px; @include logos-sprite(bnpb);
+            &:hover{
+              @include logos-sprite(bnpbhover);
+            }
+          }
+          &.redd {
+            height: 62px; width: 95px; @include logos-sprite(redd);
+            &:hover{
+              @include logos-sprite(reddhover);
+            }
+          }
+          &.digitalglobe{
+            height: 38px; width: 120px; @include logos-sprite(digitalglobe);
+            &:hover{
+              @include logos-sprite(digitalglobehover);
+            }
+          }
+
+          &.bobolink {
+            height: 53px; width: 105px; @include logos-sprite(bobolink);
+          }
+          &.vizzuality-big {
+            height: 58px; width: 109px; @include logos-sprite(vizzuality);
+            &:hover{
+              @include logos-sprite(vizzualityhover);
+            }
+          }
+		    }
+    }
+    .terms{
+        text-align: center;
+        padding: 1em 0;
+        a{
+            color: $dark;
+            font-size: 12px;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.footer-share-container {
+    @include display-flex();
+    padding: 0 0 40px 0;
+    background: $white;
+    @include justify-content(space-around);
+    @include align-items(center);
+    @include flex-wrap(wrap);
+    border-top: 1px solid $border;
+    border-bottom: 1px solid $border;
+    position: relative;
+    @media (min-width: $br-mobile){
+      padding: 0;
+      height: 155px;
+      @include flex-wrap(nowrap);
+    }
+    .footer-share {
+        color: #555;
+        @include display-flex();
+        @include flex-direction(column);
+        text-align: center;
+        height: 60px;
+        @include align-items(center);
+        @include justify-content(space-between);
+        margin: 40px 0 0;
+        @media (min-width: $br-mobile){
+          margin: 0;
+        }
+
+        p {
+            strong {
+                font-weight: 500;
+            }
+        }
+        svg {
+            height: 22px;
+            width: 22px;
+            fill: #464352;
+        }
+        .fb-like {
+            top: -4px;
+        }
+        &.keep-updated {
+            p:nth-child(2) {
+                a:nth-child(2) {
+                    margin: 0 30px;
+                    svg {
+                        transform: scale(1.1);
+                        top: -2px;
+                        position: relative;
+                    }
+                }
+             }
+        }
+    }
+}
+
+
+@media only screen and (max-width: 480px) {
+  .footer-share-container {
+    @include flex-direction(column);
+    height: 250px;
+
+    .share_buttons {
+      margin-top: 40px;
+    }
+  }
+}

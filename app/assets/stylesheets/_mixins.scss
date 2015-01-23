@@ -161,7 +161,7 @@ $icons-country_bolivia_disabled-spacing: 20px;
 
 $countries-spacing: 20px;
 
-strong { font-weight: bold; } // This is sad, I know.
+strong { font-weight: 500; } // This is sad, I know.
 
 .hidden { display:none; }
 
@@ -307,9 +307,7 @@ strong { font-weight: bold; } // This is sad, I know.
 @mixin disabled($url) {
   @include inline-block();
   @include icons-sprite(disabled);
-
   padding-left: 22px;
-
   text-decoration:none;
 }
 
@@ -320,6 +318,7 @@ strong { font-weight: bold; } // This is sad, I know.
   font-size: 37px;
   color: $cWhite;
 }
+
 
 .font-regular {
   @extend .sans-serif;

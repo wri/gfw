@@ -17,7 +17,7 @@
 /media/upload
 /public/uploads
 /public/media
-
+/install
 .DS_Store
 /install
 .gitignore
@@ -37,3 +37,6 @@ Vagrantfile
 
 # Ingore Sublime project files:
 *.sublime-*
+
+#todo
+todo.todo

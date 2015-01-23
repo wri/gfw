@@ -1,48 +1,81 @@
-<div class='inner'>
-  <div class='header_block'>
-    <div class='header_block__body'>
-      <h1 class='header_block__title'>Data sources</h1>
-      <p class='header_block__description'>Global Forest Watch hosts a wealth of data relating to forests. Some data have been developed by WRI or by GFW partner organizations. Other data are in the public domain and have been developed by governments, NGOs, and companies. The data vary in accuracy, resolution, frequency of update, and geographic coverage. The summaries below include links to further information such as methods and technical documents.  Full download of the data sets is available for most sources.</p>
-    </div>
 
-    <ul class='header_block__footer'>
-      <li class='header_block__tab three'>
-        <%= link_to "Download by country #{content_tag(:i)}".html_safe, countries_path %>
+<% content_for :header do %>
+  <h1><a href="/">Global Forest Watch</a></h1>
+  <nav id="nav-mobile" style="visibility:hidden">
+    <form class="mobile-show" action="/search">
+      <svg class="icon"><use xlink:href="#shape-search"></use></svg>
+      <input type="text" name="query" id="search-input" placeholder="Search GFW website">
+    </form>
+    <div id="google_translate_element_box2"></div>
+    <ul>
+      <li>
+        <a href="http://data.gfw.opendata.arcgis.com">Home</a>
       </li>
-
-      <li class='header_block__tab three'>
-        <a href='mailto:gfw@wri.org'>Missing a data set?<i></i></a>
+      <li>
+        <a href="/sources/forest_change">Data policy</a>
       </li>
-
-      <li class='header_block__tab three last'>
-        <a href='https://groups.google.com/forum/#!forum/globalforestwatch' target='_blank'>Join the discussion<i></i></a>
+      <li>
+        <a href="http://data.gfw.opendata.arcgis.com/datasets">GFW on arcgis online</a>
+      </li>
+      <li>
+        <a href="/sources/earth_engine">GFW on GEE</a>
       </li>
     </ul>
-  </div>
-</div>
+  </nav>
 
-<div class='inner'>
-  <div class='static-inner'>
-    <div class='navigation_left'>
-      <ul>
-        <!-- <li class='item_title'><i class='caret_down'></i></li> -->
-        <li><%= link_to 'Forest change', "#{sources_path}/forest_change", :"data-slug" => 'forest_change', :class => 'nav-item selected' %></li>
-        <li><%= link_to 'Forest cover', "#{sources_path}/forest_cover", :"data-slug" => 'forest_cover', :class => 'nav-item' %></li>
-        <li><%= link_to 'Forest use', "#{sources_path}/forest_use", :"data-slug" => 'forest_use', :class => 'nav-item' %></li>
-        <li><%= link_to 'Conservation', "#{sources_path}/conservation", :"data-slug" => 'conservation', :class => 'nav-item' %></li>
-        <li><%= link_to 'People', "#{sources_path}/people", :"data-slug" => 'people', :class => 'nav-item' %></li>
-        <li><%= link_to 'Stories', "#{sources_path}/stories", :"data-slug" => 'stories', :class => 'nav-item' %></li>
-        <li><%= link_to 'Base maps', "#{sources_path}/base_maps", :"data-slug" => 'base_maps', :class => 'nav-item' %></li>
-        <li><%= link_to 'Countries', "#{sources_path}/countries", :"data-slug" => 'countries', :class => 'nav-item' %></li>
-        <li><%= link_to 'Code', "#{sources_path}/code", :"data-slug" => 'code', :class => 'nav-item' %></li>
-        <li><%= link_to 'GFW on Google Earth Engine', "#{sources_path}/earth_engine", :"data-slug" => 'earth_engine', :class => 'nav-item' %></li>
-        <li><%= link_to 'GFW on ArcGIS Online', "#{sources_path}/arcgis", :"data-slug" => 'arcgis', :class => 'nav-item' %></li>
-        <li><%= link_to 'Data policy', "#{sources_path}/data_policy", :"data-slug" => 'data_policy', :class => 'nav-item' %></li>
+
+<% end %>
+
+
+
+<section class="header-static">
+    <div class="inner">
+      <header>
+        <h2><%= @title %></h2>
+        <h3>Global Forest Watch hosts a wealth of data relating to forests. Some data have been developed by WRI or by GFW partner organizations. Other data are in the public domain and have been developed by governments, NGOs, and companies. The data vary in accuracy, resolution, frequency of update, and geographic coverage. The summaries below include links to further information such as methods and technical documents. Full download of the data sets is available for most sources.</h3>
+      </header>
+      <ul class="row row3">
+        <li><a class="btn white uppercase" href='mailto:gfw@wri.org'>Missing a data set?</a></li>
+        <li><a class="btn white uppercase" href='https://groups.google.com/forum/#!forum/globalforestwatch' target='_blank'>Join the discussion</a></li>
       </ul>
     </div>
+</section>
 
-    <div class='content_right'>
-      <%= render 'shared/sources' %>
+<section id="sidebarNavView" class="content-static">
+  <a id="back-btn" class="back-btn mobile-show" href="#"><svg><use xlink:href="#shape-fast-forward-left"></use></svg><%= @title %></a>
+  <div class="inner">
+    <div class="row">
+      <aside id="sidebarAside">
+        <ul>
+          <li>
+            <a href="#" class="nav-title">
+              <svg><use xlink:href="#shape-fast-forward-up"></use></svg>
+              <%= @title %>
+            </a>
+          </li>
+          <li><%= link_to 'Forest change', "#{sources_path}/forest_change", :"data-slug" => 'forest_change', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item forest_change' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Forest cover', "#{sources_path}/forest_cover", :"data-slug" => 'forest_cover', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item forest_cover' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Forest use', "#{sources_path}/forest_use", :"data-slug" => 'forest_use', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item forest_use' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Conservation', "#{sources_path}/conservation", :"data-slug" => 'conservation', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item conservation' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'People', "#{sources_path}/people", :"data-slug" => 'people', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item people' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Stories', "#{sources_path}/stories", :"data-slug" => 'stories', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item stories' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Base maps', "#{sources_path}/base_maps", :"data-slug" => 'base_maps', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item base_maps' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Countries', "#{sources_path}/countries", :"data-slug" => 'countries', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item countries' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Code', "#{sources_path}/code", :"data-slug" => 'code', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item code' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'GFW on Google Earth Engine', "#{sources_path}/earth_engine", :"data-slug" => 'earth_engine', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item earth_engine' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'GFW on ArcGIS Online', "#{sources_path}/arcgis", :"data-slug" => 'arcgis', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item arcgis' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Data policy', "#{sources_path}/data_policy", :"data-slug" => 'data_policy', :"data-interesting" => 'explore_the_map, develop_your_own_app, submit_a_story', :class => 'nav-item data_policy' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+        </ul>
+      </aside>
+      <div id="sources-box" class="sources-box">
+        <div class="sources-content">
+          <div id="sources-spinner" class="spinner start"><svg><use xlink:href="#shape-spinner"></use></svg></div>
+          <%= render 'shared/sources' %>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</section>
+
+<div id="cut" style="height:1px;"></div>
+<section id="interestingView" class="interesting-section"></section>

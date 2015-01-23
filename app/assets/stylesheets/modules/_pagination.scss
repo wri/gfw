@@ -1,0 +1,126 @@
+.simple-pagination{
+  float: left;
+  display: block;
+  padding: 40px 0 0;
+  margin: 0 auto;
+  position: relative;
+  left: 50%;
+  @include transform(translate(-50%,0));
+} 
+
+
+.simple-pagination ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  @include clearfix();
+} 
+
+
+.simple-pagination ul li{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  float: left;
+}
+
+
+/*------------------------------------*\
+  Light Theme Styles
+\*------------------------------------*/
+
+.simple-pagination.light-theme a, .simple-pagination.light-theme span{
+  float: left;
+  color: $dark;
+  font-size:16px;
+  line-height:24px;
+  font-weight: 500;
+  text-align: center;
+  min-width: 24px;
+  margin: 0 10px 0 0;
+  background: none;
+  text-decoration: none;
+} 
+
+
+.simple-pagination.light-theme a:hover{
+  text-decoration: none;
+  color: $cGreen;
+} 
+
+
+.simple-pagination.light-theme .current{
+  cursor: default;
+  border-bottom: 2px solid $cGreen;
+} 
+
+.simple-pagination.light-theme .next, .simple-pagination.light-theme .prev {  
+  
+  background: $cGreen;
+  position: absolute;
+  width: 50%;
+  height: 40px;
+  width: 40px;
+  top: 50%;
+  border-radius: 50%;
+  @media (min-width: $br-mobile){
+    position: relative;
+    top: -10px;
+  }
+
+  
+  &.current{
+    display: none;
+  }
+  &:before{
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+  }
+}
+
+.simple-pagination.light-theme .prev {
+  left: -40px;
+  margin: 0;
+  @media (min-width: $br-mobile){
+    margin: 0 40px 0 0;
+    left: auto;
+  }
+  &:before {
+    background: image-url('svg-icons/arrow-left.svg') center no-repeat;
+    @include transform(translate(-2px,0));
+  }
+}
+.simple-pagination.light-theme .next {
+  right: -40px;
+  margin: 0;
+  @media (min-width: $br-mobile){
+    margin: 0 0 0 40px;
+    right: auto;
+  }
+  &:before {
+    background: image-url('svg-icons/arrow-right.svg') center no-repeat;
+    @include transform(translate(0px,0));
+  }
+}
+
+
+
+.simple-pagination.light-theme .ellipse{
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  font-weight: 500;
+  cursor: default;
+} 
+
+
+
+
+
+

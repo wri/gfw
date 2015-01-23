@@ -6,7 +6,9 @@
 .layout-content {
   margin-bottom: 0;
   position: absolute;
-  top: 183px;
+  top: 112px;
+  height: calc(100% -123px);
+  overflow: hidden;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -15,13 +17,39 @@
 .map-container {
   position: absolute;
   top: 0;
-  bottom: -111px;
+  bottom: 0;
   left: 0;
   right: 0;
   border-top: 1px solid #717D80;
   border-bottom: 1px solid #717D80;
   box-sizing: border-box;
   background: #B3D1FF;
+  .gm-style{
+    &:after{
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 38px;
+      background: rgba($dark,0.5);
+      z-index: 0;
+    }
+  }
+  .footer-toggle{
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    @include transform(translate(-50%,0));
+    margin-left: 15px;
+    height: 38px;
+    border: none;
+    border-radius: 0;
+    padding: 0 20px;
+    z-index: 2;
+    white-space: nowrap;
+  }
+
 }
 
 #map {
@@ -48,7 +76,6 @@
   position: absolute;
   left: 15px;
   top:  27px;
-  z-index: 1040;
 
   .zoom-in,
   .zoom-out {
@@ -102,6 +129,8 @@
 }
 
 .map-viewfinder {
+  // @include home-icons-sprite(viewfinder);
+  background-image: url(home-icons/viewfinder.png);
   position: absolute;
   z-index: 10;
   top: 50%;
@@ -111,18 +140,20 @@
   margin: -10px 0 0 -8px;
   pointer-events:none;
 
-  @include home-icons-sprite(viewfinder);
 }
 
 .map-logos {
   position: absolute;
-  bottom: 2px;
+  bottom: 0px;
   left: 70px;
+  height: 38px;
   z-index: 100;
 
   .map-logo {
     display: inline-block;
-    margin-left: 5px;
+    margin-left: 15px;
+    position: relative;
+    top: 3px;
   }
 
   img {
@@ -130,14 +161,19 @@
   }
 }
 
+
+
 .map-latlng {
   position: absolute;
   bottom: 20px;
   right: 12px;
-  color: #333;
+  color: #FFF;
   font-size: 11px;
-  font-weight: bold;
-  text-shadow: 0px 0px 3px #fff;
+  font-weight: 500;
+  text-shadow: 0px 0px 3px #000;
+  &.hidden{
+    display: none;
+  }
 }
 
 .is-embed-action {
@@ -156,3 +192,4 @@
     display: none !important;
   }
 }
+

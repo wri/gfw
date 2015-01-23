@@ -16,7 +16,7 @@
 
   .analysis-title {
     color: #999;
-    font-weight: bold;
+    font-weight: 500;
     font-size: 11px;
     text-transform: uppercase;
     display: block;
@@ -61,7 +61,7 @@
 
     .stats-title {
       color: #999;
-      font-weight: bold;
+      font-weight: 500;
       font-size: 11px;
       margin-bottom: 3px;
       text-transform: uppercase;
@@ -74,7 +74,7 @@
       }
     }
     .stats-count {
-      font-weight: bold;
+      font-weight: 500;
       font-size: 15px;
       color: #666;
       strong {
@@ -93,8 +93,11 @@
 
       span {
         color: #F69;
-        font-weight: bold;
+        font-weight: 500;
         cursor: pointer;
+        a{
+          color: #F69;
+        }
       }
 
       .download-dropdown {
@@ -109,11 +112,17 @@
         border-radius: 3px;
         border: 1px solid #ccc;
         box-shadow: 0 0 3px rgba(0,0,0,0.2);
-
+        &.hidden{
+          display: none;
+        }
         > li a {
           padding: 8px 10px;
           display: block;
           border-bottom: 1px solid #f2f2f2;
+          color: $cGreen;
+          &:hover{
+            background-color: darken($white,2.5%);
+          }
         }
 
       }
@@ -134,26 +143,45 @@
       cursor: pointer;
       height: 29px;
       width: 30px;
+      position: relative;
+
+      &:hover{
+        .tooltip1{
+          visibility: visible;
+          opacity: 1;
+        }
+      }
 
       &.analysis-control-subscribe {
         // @include home-icons-sprite(control_buttons_subscribe);
         background: image-url('home-icons/control_buttons_subscribe.png');
-
+        svg{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 60%;
+          height: 60%;
+          padding: 2px;
+          fill: #999;
+          background: #F1F1F1;
+          @include transform(translate(-50%,-50%));
+        }
         &:hover {
           position: relative;
-          width: 31px;
-          margin-right: -1px;
           // @include home-icons-sprite(control_buttons_subscribe_hover);
           background: image-url('home-icons/control_buttons_subscribe_hover.png');
+          svg{
+            fill: #555;
+          }
         }
 
         &:active {
           // @include home-icons-sprite(control_buttons_subscribe_active);
-          background: image-url('home-icons/control_buttons_subscribe_active.png');
+          // background: image-url('home-icons/control_buttons_subscribe_active.png');
         }
 
         &.disabled {
-          @include opacity(.5);
+          @include opacity(0);
           @include pointer-events(none);
         }
       }
@@ -164,11 +192,32 @@
         background: image-url('home-icons/control_buttons_reset.png');
         &:hover {
           // @include home-icons-sprite(control_buttons_reset_hover);
+          position: relative;
           background: image-url('home-icons/control_buttons_reset_hover.png');
         }
         &:active {
           // @include home-icons-sprite(control_buttons_reset_active);
           background: image-url('home-icons/control_buttons_reset_active.png');
+        }
+      }
+    }
+    .analysis-control-names {
+      font-size: 9px;
+      position: relative;
+      left: 3px;
+      li {
+        display: inline;
+        span {
+          position: relative;
+          margin: 0 3px;
+          &.disabled {
+            opacity: 0;
+          }
+        }
+        &:first-child {
+          span {
+            margin: 0;
+          }
         }
       }
     }

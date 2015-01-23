@@ -8,7 +8,13 @@ div.cartodb-infowindow{
 
 
 .mod-custom-infowindow,
-.cartodb-popup {
+div.cartodb-popup {
+
+  div.cartodb-popup-content-wrapper{
+    width: 100%;
+    max-width: none;
+  }
+
 
   &.dont_analyze {
     #analyzeBtn {
@@ -18,7 +24,7 @@ div.cartodb-infowindow{
 
   h2 {
     font-size: 12px;
-    font-weight: bold;
+    font-weight: 500;
     text-transform: uppercase;
     padding: 0 0 10px 0;
   }
@@ -43,7 +49,7 @@ div.cartodb-infowindow{
 }
 
 .story-infowindow {
-  $pR: 18px;
+  $pR: 25px;
   $pL: 10px;
   $w: 215px;
 
@@ -56,8 +62,19 @@ div.cartodb-infowindow{
 
   .infowindow_content a { color: #97Bd3d; }
 
+  .close{
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 16px;
+    height: 16px;
+    svg{
+      fill: $white;
+    }
+  }
+
   .outer_top {
-    width:$w - $pL - $pR;
+    width:100%;
     padding: 10px $pR  5px $pL;
     background: image-url('icons/bkg_infowindow_story.png') no-repeat;
   }

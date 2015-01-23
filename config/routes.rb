@@ -1,19 +1,55 @@
 Gfw::Application.routes.draw do
 
   mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)
+
+  #legacy
+    # stories
+    # get '/stories' => redirect("/stayinformed/crowdsourced-stories")
+
+    # howto
+    get '/howto/video' => redirect("/howto")
+    get '/howto/general_questions' => redirect("/howto/faqs")
+    get '/howto/terminology' => redirect("/howto/faqs")
+    get '/howto/data' => redirect("/howto/faqs")
+    get '/howto/web_platform' => redirect("/howto/faqs")
+    get '/howto/for_business' => redirect("/howto/faqs")
+    # about
+    get '/about/video' => redirect("/about")
+    get '/about/gfw' => redirect("/about/about-gfw")
+    get '/about/partners' => redirect("/about/the-gfw-partnership")
+    get '/about/users' => redirect("/about")
+    get '/about/small_grants_fund' => redirect("/getinvolved/apply-to-the-small-grants-fund")
+    get '/about/testers' => redirect("/about")
+
   resources :stories
 
   # terms
   post '/accept' => 'home#accept_and_redirect'
 
   # static
-  get '/data' => redirect("sources/forest_change")
-  get '/sources' => redirect('sources/forest_change')
+  get '/data' => redirect("sources")
+  get '/sources' => 'static#data'
   get '/sources(/:section)' => 'static#data'
-  get '/howto' => redirect('howto/video')
+
+  # get '/stayinformed' => redirect('stayinformed/crowdsourced-stories')
+  get '/stayinformed' => 'static#keep'
+  get '/stayinformed(/:section)' => 'static#keep'
+  get '/getinvolved' => 'static#getinvolved'
+  get '/getinvolved(/:section)' => 'static#getinvolved'
+  get '/feedback' => 'static#feedback'
+
+  # howto
+  get '/howto' => 'static#howto'
   get '/howto(/:section)' => 'static#howto'
-  get '/about' => redirect('about/video')
+
+  # about
+  get '/about' => 'static#about'
   get '/about(/:section)' => 'static#about'
+
+  # explore
+  get '/explore' => 'static#explore'
+  get '/explore(/:section)' => 'static#explore'
+
 
   get '/notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'
   get '/terms' => 'static#terms'
@@ -56,5 +92,11 @@ Gfw::Application.routes.draw do
   get '/embed/country/:id/:area_id' => 'embed#countries_show'
   get '/embed/countries/overview' => 'embed#countries_overview'
 
-  root 'home#index'
+  get '/landing' => 'landing#index'
+
+  root 'landing#index'
+
+
+
+
 end

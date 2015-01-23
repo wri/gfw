@@ -1,16 +1,14 @@
-<% content_for :header do
-  if access_through_token?(@story.id)
-    link_to (content_tag :span, 'Edit story'), edit_story_path(@story.token), :class => "btn green edit"
-  end %>
-  <h1 class="header-title big"><%= link_to t(".title"), stories_path %></h1>
-<% end %>
+<%if access_through_token?(@story.id)
+  link_to (content_tag :span, 'Edit story'), edit_story_path(@story.token), :class => "btn green edit"
+end %>
+<!-- <h1 class="header-title big"><%= link_to t(".title"), stories_path %></h1> -->
 
-
-<div class='section inner'>
-  <div class='story-header'>
-    <h1 class='section-title'><%= @story.title %></h1>
-
-    <div class="when-and-who">
+<section class="header-stories">
+  <div class="inner">
+    <header>
+      <a class="back-btn" href="/stayinformed/crowdsourced-stories"><svg><use xlink:href="#shape-fast-forward-left"></use></svg>Back to stories</a>
+      <h2><%= @story.title %></h2>
+      <p>
       <% if @story.location.present?  %>
         <span><%= @story.location %></span>
       <% end %>
@@ -26,48 +24,53 @@
       <% if @story.name.present?  %>
         <span>Submitted by <%= @story.name %></span>
       <% end %>
+      </p>
+    </header>
+  </div>
+</section>
+<section class="content-stories">
+  <div class="inner">
+    <div id="carrousel-stories" class="story-carrousel">
+      <div class="frame">
+        <%= image_tag(static_map("#{@story.lat}, #{@story.lng}", '266x266', 4, true)) %>
+        <span class="mobile_map" style="background-image: url('http://maps.google.com/maps/api/staticmap?zoom=4&size=600x300&markers=icon:/marker_exclamation.png%7C<%=@story.lat %>,<%=@story.lng %>&maptype=terrain&sensor=false&scale=2')"></span>
+      </div>
+      <% if @story.media.size >= 3 %>
+        <a href='#' data-direction="prev" class='btn-nav previous'></a>
+        <a href='#' data-direction="next" class='btn-nav next'></a>
+      <% end %>
+      <% if (@story.media[1].present? || @story.media[0]['embed_url'].present?)  %>
+        <ul>
+          <% @story.media.each do |media| %>
+            <% if media['embed_url'].present? %>
+              <li class='slide'><%= youtube_embed(media['embed_url']).html_safe %></li>
+            <% end %>
+
+            <% if media['url'].present? %>
+              <li class='slide'><div class="bg" style="background-image: url(<%= "#{ENV['AWS_HOST']}/#{media['url']}" %>);"></div></li>
+            <% end %>
+          <% end %>
+        </ul>
+      <% end %>
+
+    </div>
+    <div class='story-content'>
+      <p><%= simple_format(raw("<span class='dropcap'>#{@story.details[0, 1]}</span>") + @story.details[1, @story.details.length - 1]).gsub("</p>\n\n<p>", "<br /><br />").html_safe %></p>
+      <% if (@story.media[1].present?) %>
+          <p class="show_mobile" style="background-image: url('<%= "#{ENV['AWS_HOST']}/#{@story.media[1]['url']}" %>')"></p>
+      <% end %>
+    </div>
+    <div class="story-share_buttons">
+      <div id="fb-root"></div>
+      <a href="http://twitter.com/share" target="_blank" class="twitter-share-button" data-url="http://www.globalforestwatch.org<%=request.fullpath %>" data-text="Global Forest Watch">Tweet</a>
+      <div class="g-plusone" data-size="medium" data-href="http://www.globalforestwatch.org<%=request.fullpath %>"></div>
+      <div class="fb-like" data-href="http://www.globalforestwatch.org<%=request.fullpath %>" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
     </div>
   </div>
-
-  <div class="carrousel">
-    <div class="frame">
-      <%= image_tag(static_map("#{@story.lat}, #{@story.lng}", '266x266', 4, true)) %>
-      <span class="mobile_map" style="background-image: url('http://maps.google.com/maps/api/staticmap?zoom=4&size=600x300&markers=icon:/marker_exclamation.png%7C<%=@story.lat %>,<%=@story.lng %>&maptype=terrain&sensor=false&scale=2')"></span>
-    </div>
-
-    <% if @story.media.size >= 3 %>
-      <a href='#' class='previous'></a>
-      <a href='#' class='next'></a>
-    <% end %>
-
-    <% if (@story.media[1].present? || @story.media[0]['embed_url'].present?)  %>
-      <ul>
-        <% @story.media.each do |media| %>
-          <% if media['embed_url'].present? %>
-            <li class='slide'><%= youtube_embed(media['embed_url']).html_safe %></li>
-          <% end %>
-
-          <% if media['url'].present? %>
-            <li class='slide'><img src="<%= "#{ENV['AWS_HOST']}/big_#{media['url']}" %>" alt="" /></li>
-          <% end %>
-        <% end %>
-      </ul>
-    <% end %>
-  </div>
-
-  <div class='story-content'>
-    <p><%= simple_format(raw("<span class='dropcap'>#{@story.details[0, 1]}</span>") + @story.details[1, @story.details.length - 1]).gsub("</p>\n\n<p>", "<br /><br />").html_safe %></p>
-    <% if (@story.media[1].present?) %>
-        <p class="show_mobile" style="background-image: url('<%= "#{ENV['AWS_HOST']}/big_#{@story.media[1]['url']}" %>')"></p>
-    <% end %>
-  </div>
-
-  <div class="story-share_buttons">
-    <div id="fb-root"></div>
-    <a href="http://twitter.com/share" target="_blank" class="twitter-share-button" data-url="http://www.globalforestwatch.org<%=request.fullpath %>" data-text="Global Forest Watch">Tweet</a>
-    <div class="g-plusone" data-size="medium" data-href="http://www.globalforestwatch.org<%=request.fullpath %>"></div>
-    <div class="fb-like" data-href="http://www.globalforestwatch.org<%=request.fullpath %>" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
-  </div>
-</div>
+</section>
 
 <%= render 'more_stories' %>
+
+
+
+<section id="interestingView" class="interesting-section"></section>

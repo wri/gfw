@@ -25,7 +25,10 @@
 
   // Twitter
   !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-
+  window.setTimeout(
+    function(){
+      $(".twitter-timeline").contents().find('.stream').attr("style", "overflow-y: visible !important; height: 100%");
+    },5000);
   // Google Plus
   (function() {
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -35,7 +38,24 @@
 
   // Google translate
   function googleTranslateElementInit() {
-    new google.translate.TranslateElement({pageLanguage: '', includedLanguages: 'ar,es,en,fr,id,pt,ru,zh-CN,de,uk,ro,tr,it,hi,km', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, gaTrack: true, gaId: '<%= ENV["ANALYTICS_PROPERTY_ID"] %>'}, 'google_translate_element');
+    new google.translate.TranslateElement(
+      {
+        pageLanguage: '',
+        includedLanguages: 'ar,es,en,fr,id,pt,ru,zh-CN,de,uk,ro,tr,it,hi,km',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      },
+      'google_translate_element');
+  }
+  // Crazy Egg (only on PRO)
+  if (location.hostname === "www.globalforestwatch.org") {
+    setTimeout(
+      function(){
+        var a=document.createElement("script");
+        var b=document.getElementsByTagName("script")[0];
+        a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0027/6897.js?"+Math.floor(new Date().getTime()/3600000);
+      a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)
+    }, 1);
   }
 
   // Crazy Egg (only on PRO)

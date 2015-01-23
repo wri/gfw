@@ -1,5 +1,10 @@
 modules:
   - name: 'map'
+  - name: 'static'
+  - name: 'landing'
+  - name: 'stories'
+
+waitSeconds: 200
 
 wrap: false
 
@@ -17,10 +22,19 @@ paths:
   mps: "minpubsub/minpubsub.src"
   _string: "underscore.string/dist/underscore.string.min"
   jqueryui: "jquery-ui-1.10.4.custom.min"
+  jqueryujs: "jquery-ujs/src/rails"
   markerclusterer: "gmaps-markerclusterer-plus/src/markerclusterer"
   geojsonArea: "geojson-area"
   uri: "uri-templates/uri-templates"
   handlebars: "handlebars/handlebars"
+  slick: "slick.js/slick/slick.min"
+  simplePagination: "jquery.simplePagination/jquery.simplePagination"
+  # stories
+
+  jquery_fileupload: "jquery-file-upload/js/jquery.fileupload"
+  jquery_migrate: "jquery-migrate/jquery-migrate"
+  geojson: "geojson-google-maps/GeoJSON"
+
   wax: "wax.g.min"
   store: "store"
   Class: "Class.js/Class"
@@ -62,9 +76,32 @@ shim:
     deps:
       - "jquery"
     exports: "$"
+  pagination:
+    deps:
+      - "jquery"
+    exports: 'simplePagination'
   Class:
     exports: "Class"
   uri:
     exports: "UriTemplate"
   handlebars:
     exports: "Handlebars"
+
+
+  geojson:
+    exports: "geojson"
+
+  jqueryujs:
+    deps:
+      - "jquery"
+    exports: "jqueryujs"
+
+  jquery_migrate: 
+    deps:
+      - "jquery"
+    exports: "jquery_migrate"
+
+  jquery_fileupload: 
+    deps:
+      - "jquery"
+    exports: "jquery_fileupload"

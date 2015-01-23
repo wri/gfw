@@ -38,6 +38,8 @@ module Gfw
     # We don't want the default of everything that isn't js or css, because it pulls too many things in
     config.assets.precompile.shift
 
+    config.assets.initialize_on_precompile = true
+
     # Explicitly register the extensions we are interested in compiling
     config.assets.precompile.push(Proc.new do |path|
       File.extname(path).in? [
@@ -46,6 +48,16 @@ module Gfw
         '.eot',  '.otf', '.svc', '.woff', '.ttf', # Fonts
       ]
     end)
+
+    config.action_mailer.smtp_settings = {
+      :address   => "smtp.mandrillapp.com",
+      :port      => 25, # ports 587 and 2525 are also supported with STARTTLS
+      :enable_starttls_auto => true, # detects and uses STARTTLS
+      :user_name => ENV["MANDRILL_USERNAME"],
+      :password  => ENV["MANDRILL_APIKEY"], # SMTP password is any valid API key
+      :authentication => 'login', # Mandrill supports 'plain' or 'login'
+      :domain => 'globalforestwatch.org', # your domain to identify your server when connecting
+    }
 
   end
 end

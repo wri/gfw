@@ -17,7 +17,7 @@
         <div class='source_table'>
           <p>Drag the handle to adjust the minimum tree cover canopy (TCC) density for the visualization and analysis of UMD tree cover loss and extent. TCC density represents the estimated percent of a UMD pixel that was covered by tree canopy in the year 2000, as determined from the analysis of satellite imagery. For the tree cover loss data, TCC density therefore corresponds to the density of tree cover <u>before</u> loss occurred. For example, if you select 25% as the minimum TCC density, you will only see tree cover loss pixels for which the original tree cover density was greater than 25%.</p>
           <p>Adjustments to the minimum TCC density only affect UMD tree cover loss and extent data layers. This feature does not pertain to UMD tree cover gain or to other GFW data layers or statistics. UMD tree cover gain is displayed with a set minimum TCC density greater than 50%. The minimum TCC density cannot be changed independently for loss and extent. A change made to one data layer will immediately take effect in the other.</p>
-          <p>This feature is also available for statistics within the country and global overview pages. However, the adjustment made to the visualization and analysis through the map view will not be automatically reflected in other areas of the website. To adjust the minimum TCC density within the country and global overview pages, click on the settings icon.</p>
+          <p>This feature is also available for statistics within the country and global overview pages. However, the adjustment made to the visualization and analysis through the map view will not be automatically reflected in other areas of the website. To adjust the minimum TCC density within the country and country rankings pages, click on the settings icon.</p>
         </div>
       </div>
     </li>
@@ -40,7 +40,7 @@
             <dd>Identifies areas of tree cover loss</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>30 × 30 meters</dd>
           </dl>
           <dl class='sources_row'>
@@ -108,7 +108,7 @@
             <dd>Identifies areas of tree cover loss</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>30 × 30 meters</dd>
           </dl>
           <dl class='sources_row'>
@@ -179,7 +179,7 @@
             <dd>Identifies areas of tree cover gain</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>30 × 30 meters</dd>
           </dl>
           <dl class='sources_row'>
@@ -248,7 +248,7 @@
             <dd>Detects areas where tree cover loss is likely to have recently occurred</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>500 × 500 meters</dd>
           </dl>
           <dl class='sources_row'>
@@ -274,7 +274,7 @@
 
               <p>The GFW team has clipped out some data in regions where data quality is suspected to be low because of persistent cloud cover over identified ecoregions. This covers parts of Liberia, Venezuela, Guyana, Vietnam, Laos, and Burma/Myanmar. The current extent of the FORMA alerts is available for viewing here—<a href='http://wri-01.cartodb.com/viz/3cc0f4c2-56d3-11e3-80bb-c8600054c0d1/embed_map?title=true&description=true&search=false&shareable=false&cartodb_logo=false&layer_selector=false&legends=false&scrollwheel=true&sublayer_options=1&sql=&zoom=3&center_lat=-1.845383988573187&center_lon=16.34765625' target='_blank'>FORMA geographic extent</a>.</p>
 
-              <p>The <a href='https://github.com/wri/forma-clj' target='_blank'>algorithm</a> behind the FORMA alerts is constantly evolving to fix bugs and improve accuracy. As a result, what appears on the site and the results of analyses conducted on the site may change over time. It is important to always include the access date when citing FORMA. Analysis of FORMA alerts on the map should be considered definitive, as analysis is based on raw FORMA data, whereas the data on the map are optimized for visual display. For questions, please join the <a href='https://groups.google.com/forum/#!forum/globalforestwatch' target='_blank'>GFW discussion forum</a> or <a href='mailto:gfw@wri.org'>email us</a>.</p>
+              <p>The algorithm behind the FORMA alerts is constantly evolving to fix bugs and improve accuracy. As a result, what appears on the site and the results of analyses conducted on the site may change over time. It is important to always include the access date when citing FORMA. Analysis of FORMA alerts on the map should be considered definitive, as analysis is based on raw FORMA data, whereas the data on the map are optimized for visual display. For questions, please join the <a href='https://groups.google.com/forum/#!forum/globalforestwatch' target='_blank'>GFW discussion forum</a> or <a href='mailto:gfw@wri.org'>email us</a>.</p>
 
               <p>For the purpose of this study, “tree cover” was defined as areas with greater than 25% canopy cover (as determined by the <a href='http://journals.ametsoc.org/doi/abs/10.1175/1087-3562(2003)007%3C0001%3AGPTCAA%3E2.0.CO%3B2' target='_blank'>Vegetation Continuous Fields data set</a>), and change was measured without regard to forest land use. Tree cover assemblages that meet the 25% threshold include intact forests, plantations, and forest regrowth.</p>
 
@@ -285,7 +285,7 @@
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>FORMA is a near real-time tree cover loss alert system. It uses a cloud computing <a href="https://github.com/reddmetrics/forma-clj" target="_blank">algorithm</a> to analyze frequently updated satellite imagery along with complementary information on factors that affect tree cover loss, such as fires and precipitation. The system generates twice-monthly “alerts” for the world’s <a href="http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf" target="_blank">humid tropical forests</a> that identify 500 × 500 meter areas where new, large-scale loss is likely to have occurred.</p>
+          <p>FORMA is a near real-time tree cover loss alert system. It uses a cloud computing algorithm to analyze frequently updated satellite imagery along with complementary information on factors that affect tree cover loss, such as fires and precipitation. The system generates twice-monthly “alerts” for the world’s <a href="http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf" target="_blank">humid tropical forests</a> that identify 500 × 500 meter areas where new, large-scale loss is likely to have occurred.</p>
 
           <p>FORMA is designed for quick identification of new areas of tree cover loss. The system analyzes data gathered daily by the <a href="http://modis.gsfc.nasa.gov/about/" target="_blank">MODIS</a> sensor, which operates on NASA’s Terra and Aqua satellites. The FORMA alerts system then detects pronounced changes in vegetation cover over time, as measured by the <a href="http://earthobservatory.nasa.gov/Features/MeasuringVegetation/measuring_vegetation_2.php" target="_blank">Normalized Difference Vegetation Index (NDVI)</a>, a measure of vegetation greenness. These pronounced changes in vegetation cover are likely to indicate forest being cleared, burned, or defoliated.</p>
 
@@ -368,7 +368,7 @@
             <dd>Displays the geographic coverage of FORMA alerts</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>Regional</dd>
           </dl>
           <dl class='sources_row'>
@@ -411,7 +411,7 @@
             <dd>Deforestation alert system that monitors forest cover loss and forest degradation</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>250 × 250 meters</dd>
           </dl>
           <dl class='sources_row'>
@@ -479,7 +479,7 @@
             <dd>Identifies areas of land that have lost at least 40% of their green vegetation cover from the previous quarterly product</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>5 × 5 kilometers</dd>
           </dl>
           <dl class='sources_row'>
@@ -549,7 +549,7 @@
             <dd>Displays fire alert data for the past 7 days</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>1 × 1 kilometer</dd>
           </dl>
           <dl class='sources_row'>
@@ -681,7 +681,7 @@
             <dd>Identifies areas of tree cover</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>30 × 30 meters</dd>
           </dl>
           <dl class='sources_row'>
@@ -737,7 +737,7 @@
             <dd>Identifies unbroken expanses of natural forest ecosystems within forests around the world as of the year 2000</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>30 × 30 meters</dd>
           </dl>
           <dl class='sources_row'>
@@ -790,7 +790,7 @@
             <dd>Identifies the world’s last remaining undisturbed forest areas, large enough to retain all native biodiversity and showing no signs of human activity as of the year 2013 and their degradation from 2000-2013.</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>Approximately 1:100,000</dd>
           </dl>
           <dl class='sources_row'>
@@ -839,7 +839,7 @@
             <dd>Shows total carbon stock values in live biomass across the tropics</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>1 × 1 kilometer (100 ha)</dd>
           </dl>
           <dl class='sources_row'>
@@ -887,7 +887,7 @@
             <dd>Identifies the world’s last remaining undisturbed forest areas, large enough to retain all native biodiversity and showing no signs of human activity as of the year 2013 and their degradation from 2000-2013.</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>Approximately 1:100,000</dd>
           </dl>
           <dl class='sources_row'>
@@ -942,7 +942,7 @@
             <dd> Identifies the location of intact and degraded primary forests across Indonesia as of the year 2000</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>30 × 30 meters</dd>
           </dl>
           <dl class='sources_row'>
@@ -993,7 +993,7 @@
             <dd>This dataset shows the global distribution of mangrove forests, derived from earth observation satellite imagery</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>Mapped from 30m Landsat imagery</dd>
           </dl>
           <dl class='sources_row'>
@@ -1057,7 +1057,7 @@
             <dd>Displays boundaries of areas allocated by governments to companies for logging</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>Varies by country</dd>
           </dl>
           <dl class='sources_row'>
@@ -1211,7 +1211,7 @@
             <dd>Displays boundaries of areas allocated by governments to companies for extraction of minerals</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>Varies by country</dd>
           </dl>
           <dl class='sources_row'>
@@ -1328,7 +1328,7 @@
             <dd>Displays boundaries of areas allocated by governments to companies for oil palm plantations</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>Varies by country</dd>
           </dl>
           <dl class='sources_row'>
@@ -1437,7 +1437,7 @@
             <dd>Displays boundaries of areas allocated by governments to private companies for tree plantations for production of timber and wood pulp for paper and paper products</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>Varies by country</dd>
           </dl>
           <dl class='sources_row'>
@@ -1742,7 +1742,7 @@
             <dd>Displays boundaries of areas over which indigenous peoples or local communities enjoy rights to the land and certain resources</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>Varies by country</dd>
           </dl>
           <dl class='sources_row'>
@@ -1884,7 +1884,7 @@
             <dd>Displays boundaries of areas over which indigenous peoples or local communities enjoy rights to certain resources and a limited right to access the land</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>Varies by country</dd>
           </dl>
           <dl class='sources_row'>
@@ -1984,7 +1984,7 @@
             <dd>The Population Density layer measures human population per square km.</dd>
           </dl>
           <dl class='sources_row even'>
-            <dt>Resolution/scale</dt>
+            <dt>RESOLUTION / SCALE</dt>
             <dd>Square Km Grid (30 Arc Seconds)</dd>
           </dl>
           <dl class='sources_row'>
@@ -2292,3 +2292,39 @@
     <p class="notranslate">So thank you, truly, for understanding why we’re asking you to agree to a Terms of Service. Please join us in making Global Forest Watch a powerful tool for people everywhere.</p>
   </div>
 </article>
+
+<article id='regular_dialog' class="sources">
+  <div class='source_header'>
+    <strong class='source_title'>Explore the map</strong>
+    <i class='expand_arrow'></i>
+  </div>
+
+  <div class='source_body'>
+    <div class='source_summary'>
+      <p class='first'>Use the colored tabs above the map to view different categories of data. Select a data layer to activate it in the map, or click the information icon (<%= image_tag('tutorial-screenshots/screenshot-2.png') %>) located next to each data layer to learn more.</p>
+      <p>As you turn on data layers, they will appear in the legend on the left-hand side of the map. Multiple data layers can be turned on at once.</p>
+      <p>Most data layers under the Forest Change tab have a timeline located at the bottom of the map. Press the play button to view an animation of the entire time series of data or drag the ends of the timeline to select a specific period of time.</p>
+      <p><%= image_tag('tutorial-screenshots/screenshot-1.png') %></p>
+      <p>Some data layers allow you to click on individual data points and polygons (i.e., shapes) to view additional information. This feature applies to NASA active fires (within the Forest Change tab) and/or data within the Forest Use, Conservation, People, and Stories tabs.</p>
+      <p>Learn more about exploring forest data on the <a href="/howto">How To page</a>.</p>
+    </div>
+  </div>
+</article>
+
+<article id='alerts_dialog' class="sources">
+  <div class='source_header'>
+    <strong class='source_title'>Subscribe to alerts</strong>
+    <i class='expand_arrow'></i>
+  </div>
+
+  <div class='source_body'>
+    <div class='source_summary'>
+      <p class='first'>The shaded blue regions on the map are protected areas.</p>
+      <p>1. Click on a protected area and select the “analysis” icon (<%= image_tag('tutorial-screenshots/screenshot-5.png') %>) located within the info window that appears.</p>
+      <p>2. Click “subscribe” located at the bottom of the window with analysis results and enter your email address.</p>
+      <p><%= image_tag('tutorial-screenshots/screenshot-6.png') %></p>
+      <p>Learn more about subscribing to alerts on the <a href="/howto">How To page</a>.</p>
+    </div>
+  </div>
+</article>
+

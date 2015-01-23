@@ -1,0 +1,66 @@
+<% if content_for?(:header) %>
+  <%= yield :header %>
+<% else %>
+  <h1><a href="/">Global Forest Watch</a></h1>
+  <nav id="nav-mobile">
+    <form class="mobile-show" action="/search">
+      <svg class="icon"><use xlink:href="#shape-search"></use></svg>
+      <input type="text" name="query" id="search-input" placeholder="Search GFW website">
+    </form>
+    <div id="google_translate_element_box2"></div>
+    <ul>
+      <li>
+        <a <% if controller?("static") && action?("explore") %>class="current"<% end %> href="/explore">Explore</a>
+        <ul class="submenu">
+          <li><a href="/map">GFW Interactive Map</a></li>
+          <li><a href="/countries">Country profiles & rankings</a></li>
+          <li><a href="http://commodities.globalforestwatch.org/#v=map&x=114&y=-2.58&l=5&lyrs=tcc%2Closs">Commodities</a></li>
+          <li><a href="http://fires.globalforestwatch.org/#v=map&x=115&y=0&l=5&lyrs=Active_Fires">Fires</a></li>
+          <li><a href="/explore">All applications</a></li>
+          <li><a href="/data">Download data</a></li>
+        </ul>
+      </li>
+      <li>
+        <a <% if controller?("static") && action?("keep") || controller?("stories") && action?("show") %>class="current"<% end %> href="/stayinformed">Stay informed</a>
+        <ul class="submenu">
+          <li><a href="http://blog.globalforestwatch.org/">Blog</a></li>
+          <li><a href="/stayinformed/crowdsourced-stories">Crowdsourced stories</a></li>
+          <li><a href="http://www.wri.org/global-forest-watch-stay-informed" target="_blank">Newsletter</a></li>
+          <li><a href="/stayinformed/publications">Publications</a></li>
+        </ul>
+
+      </li>
+      <li>
+        <a <% if controller?("static") && action?("getinvolved") || controller?("stories") && action?("new") %>class="current"<% end %> href="/getinvolved">Get involved</a>
+        <ul class="submenu">
+          <li><a href="/getinvolved/develop-your-own-app">Develop your own app</a></li>
+          <li><a href="/stories/new">Submit a story</a></li>
+          <li><a href="/getinvolved/share-data">Share data</a></li>
+          <li><a href="/getinvolved/help-improve-data">Help improve data</a></li>
+          <li><a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank">Join the discussion</a></li>
+          <li><a href="/getinvolved/apply-to-the-small-grants-fund">Apply to the Small Grants Fund</a></li>
+          <li><a href="/getinvolved/provide-feedback">Provide feedback</a></li>
+        </ul>
+      </li>
+      <li>
+        <a <% if controller?("static") && action?("howto") %>class="current"<% end %> href="/howto">How to</a>
+        <ul class="submenu">
+          <li><a href="/howto/view-data">View data</a></li>
+          <li><a href="/howto/conduct-analysis-and-subscribe-to-alerts">Conduct analysis & subscribe to alerts</a></li>
+          <li><a href="/howto/submit-a-story">Submit a story</a></li>
+          <li><a href="/howto/faqs">FAQs</a></li>
+        </ul>
+      </li>
+      <li>
+        <a <% if controller?("static") && action?("about") %>class="current"<% end %> href="/about">About</a>
+        <ul class="submenu">
+          <li><a href="/about/about-gfw">About GFW</a></li>
+          <li><a href="/about/the-gfw-partnership">The GFW partnership</a></li>
+          <li><a href="/about/videos">Videos</a></li>
+          <li><a href="/about/awards_and_testimonials">Awards & testimonials</a></li>
+          <li><a href="/about/contact-us">Contact us</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+<% end %>

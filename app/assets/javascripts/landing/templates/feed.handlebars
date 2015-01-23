@@ -1,0 +1,15 @@
+{{#each feed}}
+  <li>
+    <a href="{{this.link}}" {{#if target}}target="_blank"{{/if}}>
+      {{#if this.avatar}}
+        <figure class="{{this.type}}"><div style="background-image:url('{{this.avatar}}');"></div></figure>
+      {{else}}
+        <figure class="{{this.type}}"><div></div></figure>
+      {{/if}}
+      <div class="info">
+        <p><span>{{this.author}}</span> {{this.description}}</p>
+      </div>
+    </a>
+  </li>
+{{/each}}
+

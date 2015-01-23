@@ -51,6 +51,7 @@ define([
       AnalysisResultsView.__super__._cacheSelector.apply(this);
       this.$downloadDropdown = this.$('.download-dropdown');
       this.$subscribeButton = this.$('#subscribeButton');
+      this.$subscribeButton_title = this.$('#subscribeButton-title');
     },
 
     /**
@@ -75,6 +76,7 @@ define([
 
     toggleSubscribeButton: function(toggle) {
       this.$subscribeButton.toggleClass('disabled', toggle);
+      this.$subscribeButton_title.toggleClass('disabled', toggle);
     },
 
     /**

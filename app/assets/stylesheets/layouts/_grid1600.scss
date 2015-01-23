@@ -1,0 +1,23 @@
+.wrap {
+  max-width: $max-container-width;
+  width: 100%;
+  margin: 0 auto;
+  overflow-x: hidden;
+  @include clearfix();
+  background: $white;
+}
+
+.inner {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  @media (min-width: $br-mobile){
+    width: 95%;
+    max-width: 1024px;
+  }
+
+  @media (min-width: 1400px){
+    width: 75%;
+    max-width: 1200px;
+  }
+}

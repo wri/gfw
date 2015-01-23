@@ -2,12 +2,13 @@
 //# require jquery.jscrollpane
 //# require tipsy
 
-@import
-  // Compass
-  "compass/reset",
-  "compass/css3",
+// Compass
+@import "compass/reset";
+@import "compass/css3";
+@import 'flexbox';
 
   // Images
+@import
   "icons/*.png",
   "logos/*.png",
   "home-icons/*.png",
@@ -16,15 +17,30 @@
   "country-icons/*.png",
   "stories-icons/*.png";
 
+// General
+@import "settings1600";
+@import "fonts1600";
+@import "mixins1600";
+@import "animations1600";
+@import "base1600";
+
+
+// Layout
+@import "header1600";
+@import "footer1600";
+@import "layouts/grid1600";
+
+//modules
+@import "modules/shared1600";
+// @import "modules/buttons1600";
+@import "modules/icons1600";
+@import "modules/slick1600";
+
+
 @import
-  // General
-  "_settings",
-  "_mixins",
-  "_base",
 
   // Layouts
-  "layouts/grid",
-  "layouts/application",
+
   "layouts/map",
 
   // Modules
@@ -37,6 +53,7 @@
   "modules/dialog",
 
   "modules/map/layer-nav",
+  "modules/map/mode",
   "modules/map/widget",
   "modules/map/widget-legend",
   "modules/map/widget-searchbox",
@@ -52,6 +69,7 @@
   "modules/map/onoffradio",
   "modules/map/infowindow",
   "modules/map/info-sources",
+  "modules/map/widget-togglewidget",
   "modules/map/widget-share";
 
 @import "states";

@@ -1,38 +1,39 @@
 .source_window {
   $width: 497px;
-  $height: 300px;
+  $height: auto;
 
   display: none;
   position: fixed;
   z-index: 1060;
   left: 50%; top: 50%;
-  margin-left: -1*$width/2;
-  margin-top: -1*$height/2;
   width: $width;
   height: $height;
-  padding: 20px 15px 20px 20px;
-  background: #fff;
-  border: 1px solid #757573;
-  @include box-shadow(0px 0px 7px #666);
-  @include border-radius(3px);
+  max-height: 55%;
+  padding: 20px 20px 0;
+  background: $white;
+  border: none;
+  border-bottom: 20px solid $white;
+  box-shadow: 0 0 0 1px #CCC;
+  overflow: auto;
 
-  .close {
-    display: block;
+  &:after{
+    content: "";
     position: absolute;
-    top: 10px; right: 15px;
-    width: 6px;
-    height: 6px;
-    @include icons-sprite(infowindow_close);
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
   }
 
   .content {
     height: $height;
     width: 100%;
-    overflow: auto;
     outline: none;
     font-size: 15px;
     @extend .sans-serif;
     color: #666;
+    z-index: 1061;
+    position: relative;
   }
 
   .source_category_description,
@@ -58,11 +59,10 @@
   .source_category_title,
   .source_coverage_title {
     display: block;
-    font-weight: bold;
-    font-size: 13px;
-    @extend .sans-serif;
+    font-weight: 500;
+    font-size: 16px;
     text-transform: uppercase;
-    color: #aaa;
+    color: $dark;
 
     span {
       text-transform: none;
@@ -78,7 +78,7 @@
   .source_header,
   .source_category_title,
   .source_coverage_header {
-    padding: 0 0 20px;
+    padding: 0 0 5px;
   }
 
   .source_category_title {

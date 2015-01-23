@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-	xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<urlset 
+	xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
@@ -38,7 +38,7 @@
 	   	</url>
 			<url>
   			 	<loc>http://fires.globalforestwatch.org/</loc>
-  				<changefreq>daily</changefreq>
+  				<changefreq>dayly</changefreq>
  		   	 	<priority>0.90</priority>
 	   	</url>
 			<url>
@@ -57,38 +57,8 @@
  		   	 	<priority>0.80</priority>
 	   	</url>
 			<url>
- 			 	<loc>http://www.globalforestwatch.org/map/3/15.00/27.00/ALL/grayscale/loss,forestgain?begin=2001-01-01&end=2013-12-31&threshold=30</loc>
-  				<changefreq>yearly</changefreq>
-  				<priority>0.60</priority>
-		</url>
-			<url>
- 			 	<loc>http://www.globalforestwatch.org/map/3/15.00/27.00/ALL/grayscale/forma?begin=2006-01-01&end=2014-10-31</loc>
-  				<changefreq>monthly</changefreq>
-  				<priority>0.60</priority>
-		</url>
-			<url>
- 			 	<loc>http://www.globalforestwatch.org/map/3/15.00/27.00/ALL/grayscale/imazon?begin=2008-01-01&end=2014-09-30</loc>
-  				<changefreq>monthly</changefreq>
-  				<priority>0.60</priority>
-		</url>
-			<url>
- 			 	<loc>http://www.globalforestwatch.org/map/3/15.00/27.00/ALL/grayscale/modis?begin=2014-07-01&end=2014-09-30</loc>
-  				<changefreq>quaterly</changefreq>
-  				<priority>0.60</priority>
-		</url>
-			<url>
- 			 	<loc>http://www.globalforestwatch.org/map/3/19.39/-24.21/ALL/grayscale/fires?begin=2014-12-07&end=2014-12-08</loc>
-  				<changefreq>dayly</changefreq>
-  				<priority>0.60</priority>
-		</url>
-			<url>
- 			 	<loc>http://www.globalforestwatch.org/map/3/-0.79/-48.29/ALL/grayscale/terrailoss?begin=2004-01-17&end=2014-10-31</loc>
-  				<changefreq>monthly</changefreq>
-  				<priority>0.60</priority>
-		</url>
-			<url>
- 			 	<loc>http://www.globalforestwatch.org/terms</loc>
+ 			 		<loc>http://www.globalforestwatch.org/terms</loc>
   				<changefreq>monthly</changefreq>
   				<priority>0.20</priority>
-		</url>
+			</url>
 </urlset>

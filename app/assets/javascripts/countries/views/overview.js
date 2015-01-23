@@ -5,7 +5,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
   events: {
     'click .info': '_openSource',
     'click .graph_tab': '_updateGraph',
-    'click .countries_list__footer': '_drawList',
+    'click .show-more-countries': '_drawList',
     'click .country-overview-wrapper-coolio .umdoptions_dialog #canopy_slider':  '_updateGraphOverview',
     'mouseup .country-overview-wrapper-coolio .umdoptions_dialog #canopy_slider':  '_updateGraphOverview',
     'click .country-overview-wrapper-coolio .umdoptions_dialog ul li':  '_updateGraphOverview'
@@ -43,7 +43,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
     this.tooltip = d3.select('body')
       .append('div')
-      .attr('class', 'tooltip');
+      .attr('class', 'tooltip2');
 
     this._drawYears();
     this._drawGraph();
@@ -128,12 +128,12 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
     if (graph === 'total_extent') {
       this.$graph.addClass('is-hidden');
       this.$years.addClass('is-hidden');
-      $legend.addClass('is-hidden');
+      //$legend.addClass('is-hidden');
     }
   },
   _updateGraphOverview: function(e) {
     if (typeof ga !== "undefined") ga('send', 'event', 'Country Overview', 'Change', 'Threshold');
-    var $cnp_op = this.$el.find('.overview_button_group .settings i')
+    var $cnp_op = this.$el.find('.overview_button_group .settings')
     if (config.canopy_choice != 30) $cnp_op.addClass('no_def');
     else $cnp_op.removeClass('no_def');
 
@@ -173,8 +173,13 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
       if (e) {
         sql += 'OFFSET 10';
+        $('.show-more-countries').fadeOut();
       } else {
         sql += 'LIMIT 10';
+        $('.countries_list ul').html('');
+        $('.show-more-countries').show();
+
+        $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('loss-vs-gain').html('Loss <span>vs</span> Gain');
       }
       d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), function(json) {
         var self = that,
@@ -244,12 +249,12 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
 
         if (e) {
-          $('.countries_list__footer').fadeOut();
+          $('.show-more-countries').fadeOut();
         } else {
           $('.countries_list ul').html('');
-          $('.countries_list__footer').show();
+          $('.show-more-countries').show();
 
-          $('.countries_list__header__minioverview').html('Loss <span>vs</span> Gain');
+          $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('loss-vs-gain').html('Loss <span>vs</span> Gain');
         }
 
         $('.countries_list ul').append(markup_list);
@@ -294,12 +299,12 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
 
         if (e) {
-          $('.countries_list__footer').fadeOut();
+          $('.show-more-countries').fadeOut();
         } else {
           $('.countries_list ul').html('');
-          $('.countries_list__footer').show();
+          $('.show-more-countries').show();
 
-          $('.countries_list__header__minioverview').html('% Loss');
+          $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('per-loss').html('% Loss');
         }
 
         $('.countries_list ul').empty().append(markup_list);
@@ -390,12 +395,12 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
 
         if (e) {
-          $('.countries_list__footer').fadeOut();
+          $('.show-more-countries').fadeOut();
         } else {
           $('.countries_list ul').html('');
-          $('.countries_list__footer').show();
+          $('.show-more-countries').show();
 
-          $('.countries_list__header__minioverview').html('Cover extent <span>vs</span> Cover loss');
+          $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('cover-extent').html('Cover extent <span>vs</span> Cover loss');
         }
 
         $('.countries_list ul').append(markup_list);
@@ -424,7 +429,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
 
           markup_list += '<li>\
-                            <div class="countries_list__minioverview medium countries_list__minioverview_'+val.iso+'" class="loss">'+formatNumber(parseFloat(val.ratio).toFixed(2))+'</div>\
+                            <div class="countries_list__minioverview_number countries_list__minioverview medium countries_list__minioverview_'+val.iso+'" class="loss">'+formatNumber(parseFloat(val.ratio).toFixed(2))+'</div>\
                             <div class="countries_list__num">'+ord+'</div>\
                             <div class="countries_list__title">'+enabled+'</div>\
                           </li>';
@@ -434,12 +439,12 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
         });
 
         if (e) {
-          $('.countries_list__footer').fadeOut();
+          $('.show-more-countries').fadeOut();
         } else {
           $('.countries_list ul').html('');
-          $('.countries_list__footer').show();
+          $('.show-more-countries').show();
 
-          $('.countries_list__header__minioverview').html('Ratio of Loss to Gain');
+          $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('ratio-loss-gain').html('Ratio of Loss to Gain');
         }
 
         $('.countries_list ul').append(markup_list);
@@ -470,7 +475,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
         _.each(data, function(val, key) {
           markup_list += ['<li>',
-                            '<div class="countries_list__minioverview huge">',
+                            '<div class="countries_list__minioverview_number countries_list__minioverview huge">',
                               '<div class="gain half">'+formatNumber(parseFloat(val.total_loss/1000000).toFixed(1))+' Mha</div>',
                               '<div class="loss half last">'+formatNumber(parseFloat(val.total_gain/1000000).toFixed(1))+' Mha</div>',
                             '</div>',
@@ -479,8 +484,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
                           '</li>'].join('');
         });
 
-        $('.countries_list__footer').hide();
-        $('.countries_list__header__minioverview').html('Total loss <span>vs</span> Total gain');
+        $('.show-more-countries').hide();
+        $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('total-loss').html('Total loss <span>vs</span> Total gain');
         $('.countries_list ul').html(markup_list);
 
         that.model.set('class', 'huge');
@@ -494,25 +499,15 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
   _toggleClass: function() {
     if (this.model.get('class') === 'expanded') {
-      $('.countries_list__header__minioverview').addClass('expanded');
       $('.countries_list__minioverview').addClass('expanded');
-
-      $('.countries_list__header__minioverview').removeClass('medium huge');
       $('.countries_list__minioverview').removeClass('medium huge');
     } else if (this.model.get('class') === 'medium') {
-      $('.countries_list__header__minioverview').addClass('medium');
       $('.countries_list__minioverview').addClass('medium');
-
-      $('.countries_list__header__minioverview').removeClass('expanded huge');
       $('.countries_list__minioverview').removeClass('expanded huge');
     } else if (this.model.get('class') === 'huge') {
-      $('.countries_list__header__minioverview').addClass('huge');
       $('.countries_list__minioverview').addClass('huge');
-
-      $('.countries_list__header__minioverview').removeClass('expanded medium');
       $('.countries_list__minioverview').removeClass('expanded medium');
     } else {
-      $('.countries_list__header__minioverview').removeClass('expanded medium huge');
       $('.countries_list__minioverview').removeClass('expanded medium huge');
     }
   },
@@ -830,8 +825,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             that.tooltip.html($(this).attr('name'))
               .style('visibility', 'visible')
               .style('top', $(this).offset().top-100+'px')
-              .style('left', $(this).offset().left-$('.tooltip').width()/2-4+'px')
-              .attr('class', 'tooltip');
+              .style('left', $(this).offset().left-$('.tooltip2').width()/2-4+'px')
+              .attr('class', 'tooltip2');
 
             d3.select(this)
               .transition()
@@ -889,7 +884,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               .style('visibility', 'visible')
               .style('top', $(this).offset().top-100+'px')
               .style('left', ($(this).offset().left + 436) +'px')
-              .attr('class', 'tooltip gain_tooltip');
+              .attr('class', 'tooltip2 gain_tooltip');
 
             d3.select(this)
               .transition()
@@ -967,8 +962,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             that.tooltip.html($(this).attr('name'))
               .style('visibility', 'visible')
               .style('top', $(this).offset().top-100+'px')
-              .style('left', $(this).offset().left-$('.tooltip').width()/2-4+'px')
-              .attr('class', 'tooltip');
+              .style('left', $(this).offset().left-$('.tooltip2').width()/2-4+'px')
+              .attr('class', 'tooltip2');
 
             d3.select(this)
               .transition()
@@ -1026,7 +1021,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               .style('visibility', 'visible')
               .style('top', $(this).offset().top-100+'px')
               .style('left', ($(this).offset().left + 436) +'px')
-              .attr('class', 'tooltip gain_tooltip');
+              .attr('class', 'tooltip2 gain_tooltip');
 
             d3.select(this)
               .transition()
@@ -1142,8 +1137,8 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             that.tooltip.html($(this).attr('name'))
               .style('visibility', 'visible')
               .style('top', $(this).offset().top-100+'px')
-              .style('left', $(this).offset().left-$('.tooltip').width()/2-4+'px')
-              .attr('class', 'tooltip');
+              .style('left', $(this).offset().left-$('.tooltip2').width()/2-4+'px')
+              .attr('class', 'tooltip2');
 
             d3.select(this)
               .transition()
@@ -1185,12 +1180,12 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             that.tooltip.html($(this).attr('name'))
               .style('visibility', 'visible')
               .style('top', $(this).offset().top-100+'px')
-              .style('left', $(this).offset().left-$('.tooltip').width()/2-4+'px')
+              .style('left', $(this).offset().left-$('.tooltip2').width()/2-4+'px')
               if ( $('.graph_tab.selected').data('slug') === 'total_extent' ) {
-                that.tooltip.html($(this).attr('name')).attr('class', 'tooltip gain_extent_tooltip');
+                that.tooltip.html($(this).attr('name')).attr('class', 'tooltip2 gain_extent_tooltip');
               } else {
                 $('.linedot.gain').removeClass('extent');
-                that.tooltip.html($(this).attr('name')).attr('class', 'tooltip gain_tooltip');
+                that.tooltip.html($(this).attr('name')).attr('class', 'tooltip2 gain_tooltip');
               }
 
             d3.select(this)
@@ -1360,13 +1355,13 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             var t = $(this).offset().top - 80,
                 l = $(this).offset().left,
                 r = $(this).attr('r'),
-                tip = $('.tooltip').width()/2;
+                tip = $('.tooltip2').width()/2;
 
             that.tooltip.html($(this).attr('name'))
               .style('visibility', 'visible')
               .style('top', parseInt(t, 10)+'px')
               .style('left', parseInt(l, 10)+parseInt(r, 10)-parseInt(tip, 10)-10+'px')
-              .attr('class', 'tooltip gain_tooltip');
+              .attr('class', 'tooltip2 gain_tooltip');
           })
           .on('mouseenter', function() {
             d3.select(d3.event.target)
@@ -1377,13 +1372,13 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             var t = $(this).offset().top - 80,
                 l = $(this).offset().left,
                 r = $(this).attr('r'),
-                tip = $('.tooltip').width()/2;
+                tip = $('.tooltip2').width()/2;
 
             that.tooltip.html($(this).attr('name'))
               .style('visibility', 'visible')
               .style('top', parseInt(t, 10)+'px')
               .style('left', parseInt(l, 10)+parseInt(r, 10)-parseInt(tip, 10)+'px')
-              .attr('class', 'tooltip gain_tooltip');
+              .attr('class', 'tooltip2 gain_tooltip');
           })
           .on('mouseout', function() {
             d3.select(d3.event.target)
@@ -1412,13 +1407,13 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             var t = $(this).offset().top - 80,
                 l = $(this).offset().left,
                 r = $(this).attr('r'),
-                tip = $('.tooltip').width()/2;
+                tip = $('.tooltip2').width()/2;
 
             that.tooltip.html($(this).attr('name'))
               .style('visibility', 'visible')
               .style('top', parseInt(t, 10)+'px')
               .style('left', parseInt(l, 10)+parseInt(r, 10)-parseInt(tip, 10)-10+'px')
-              .attr('class', 'tooltip gain_tooltip');
+              .attr('class', 'tooltip2 gain_tooltip');
           })
           .on('mouseenter', function() {
             d3.select(d3.event.target)
@@ -1429,13 +1424,13 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
             var t = $(this).offset().top - 80,
                 l = $(this).offset().left,
                 r = $(this).attr('r'),
-                tip = $('.tooltip').width()/2;
+                tip = $('.tooltip2').width()/2;
 
             that.tooltip.html($(this).attr('name'))
               .style('visibility', 'visible')
               .style('top', parseInt(t, 10)+'px')
               .style('left', parseInt(l, 10)+parseInt(r, 10)-parseInt(tip, 10)+'px')
-              .attr('class', 'tooltip gain_tooltip');
+              .attr('class', 'tooltip2 gain_tooltip');
           })
           .on('mouseout', function() {
             d3.select(d3.event.target)
@@ -1525,15 +1520,15 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               var t = $(this).offset().top - 100,
                   l = $(this).offset().left,
                   r = $(this).attr('r'),
-                  tip = $('.tooltip').width()/2,
+                  tip = $('.tooltip2').width()/2,
                   slug = $(this).attr('data-slug');
 
               that.tooltip.html($(this).attr('name'))
                 .style('visibility', 'visible')
                 .style('top', parseInt(t, 10)+'px')
                 .style('left', parseInt(l, 10)+parseInt(r, 10)-parseInt(tip, 10)-10+'px')
-                .attr('class', 'tooltip')
-                .attr('data-slug', 'tooltip')
+                .attr('class', 'tooltip2')
+                .attr('data-slug', 'tooltip2')
                 .style('color', function() {
                   if (slug === 'subtropical') {
                     return '#FFC926'
@@ -1551,15 +1546,15 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
               var t = $(this).offset().top - 80,
                   l = $(this).offset().left,
                   r = $(this).attr('r'),
-                  tip = $('.tooltip').width()/2,
+                  tip = $('.tooltip2').width()/2,
                   slug = $(this).attr('data-slug');
 
               that.tooltip.html($(this).attr('name'))
                 .style('visibility', 'visible')
                 .style('top', parseInt(t, 10)+'px')
                 .style('left', parseInt(l, 10)+parseInt(r, 10)-parseInt(tip, 10)-10+'px')
-                .attr('class', 'tooltip')
-                .attr('data-slug', 'tooltip')
+                .attr('class', 'tooltip2')
+                .attr('data-slug', 'tooltip2')
                 .style('color', function() {
                   if (domain === 'subtropical') { return config.GRAPHCOLORS[domain]; }
                 });

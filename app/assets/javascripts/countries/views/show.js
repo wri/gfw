@@ -31,8 +31,8 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   _initShare: function() {
     Share       = new gfw.ui.view.Share({template: 'country'});
     Share_entry = new gfw.ui.view.Share({template: 'country-entry'});
-    this.$el.find('.country-header .country-title').append(Share.render());
-    this.$el.find('.section-info').slice(0,5).addClass('and_share').append(Share_entry.render());
+    this.$el.find('.country-sidenav .share-container').append(Share.render());
+    this.$el.find('.section-share').find('.section-btn').prepend(Share_entry.render());
   },
 
   _initSource: function() {
@@ -79,10 +79,10 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
   },
 
   _positionScroll: function() {
-    if ($('.country-alerts').length < 1 || $('.country-conventions').length < 1 ) return;
+    if ($('.country-alerts-section').length < 1 || $('.country-conventions-section').length < 1 ) return;
 
-    var h_min = $('.country-alerts').offset().top - 48,
-        h_max = $('.country-conventions').offset().top - 46;
+    var h_min = $('.country-alerts-section').offset().top - 48,
+        h_max = $('.country-conventions-section').offset().top - 46;
 
     if ($(window).scrollTop() > (h_min) && $(window).scrollTop() < h_max) {
       // fixed
@@ -183,8 +183,10 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
 
       var svg = d3.select('.country-tenure .line-graph')
         .append('svg')
-        .attr('width', 600)
         .attr('height', h);
+
+      var svgWidth = $(svg[0]).outerWidth();
+      var svgMaxWidth = svgWidth - 80;
 
       // add lines
       svg.selectAll('rect')
@@ -201,7 +203,8 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           return 25 + (50 * i);
         })
         .attr('width', function(d) {
-          return x_scale(d['percent']);
+          var width = x_scale(d['percent']);
+          return width > svgMaxWidth ? svgMaxWidth : width;
         })
         .attr('height', 4)
         .attr('rx', 2)
@@ -216,7 +219,8 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           return klass[i];
         })
         .attr('cx', function(d, i) {
-          return x_scale(d['percent']);
+          var x = x_scale(d['percent']);
+          return x > svgMaxWidth ? svgMaxWidth : x;
         })
         .attr('cy', function(d, i) {
           return 27 + (50 * i);
@@ -235,7 +239,8 @@ gfw.ui.view.CountriesShow = cdb.core.View.extend({
           return 'units ' + klass[i];
         })
         .attr('x', function(d, i) {
-          return x_scale(d['percent'])+10;
+          var x = x_scale(d['percent'])+10;
+          return x > (svgMaxWidth + 10) ? (svgMaxWidth + 10) : x;
         })
         .attr('y', function(d, i) {
           return 31 + (50 * i);

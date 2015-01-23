@@ -2,130 +2,47 @@
   display: none;
 }
 
-.sources_row {
-  display: table;
-  width: 100%;
-
-  &.even {
-    background: #F2F2F3;
-  }
-
-  dt {
-    display: table-cell;
-    width: 120px;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    font-weight: 500;
-    font-size: 11px;
-    @extend .sans-serif;
-    text-transform: uppercase;
-  }
-
-  dd {
-    display: table-cell;
-    padding: 10px 10px 10px 15px;
-    border-left: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    font-size: 13px;
-    @extend .sans-serif;
-
-    p {
-      margin-bottom: 10px;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-
-      sup {
-        position: relative;
-        top: -3px;
-        font-size: 80%;
-      }
-    }
-  }
-}
-
-.single-source-item {
-  font-size: 15px;
-  line-height: 1.4;
-  color: #666;
-
-  p {
-    margin-bottom: 10px;
-    margin-top: 10px;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    &.credits {
-      margin-bottom: 10px;
-      font-size: 12px;
-      color: #aaa;
-
-      strong {
-        display: block;
-        font-weight: bold;
-      }
-
-      a {
-        color: #aaa;
-        text-decoration: underline;
-
-        &:hover {
-          color: #aaa;
-        }
-      }
-    }
-  }
-}
-
-.source_body,
-.source_coverage {
-  @extend .single-source-item;
-
-  .bullets li {
-    margin: 0 0 10px 20px;
-    padding: 0 0 0 20px;
-    background: image-url('icons/bullet.png') no-repeat 0 8px;
-  }
-
-  .read_more {
-    padding: 10px 0;
-    font-size: 14px;
-    text-align: center;
-  }
-
-  .hidden {
-    display: none;
-  }
-}
-
 .mod-modal-window, .source_window {
   $width: 497px;
-  $height: 300px;
+  $height: auto;
 
   display: none;
   position: fixed;
   z-index: 1060;
-  left: 50%; top: 50%;
-  margin-left: -1*$width/2;
-  margin-top: -1*$height/2;
-  width: $width;
-  height: $height;
-  padding: 20px 15px 20px 20px;
-  background: #fff;
-  border: 1px solid #757573;
-  @include box-shadow(0px 0px 7px #666);
-  @include border-radius(3px);
+  padding: 20px 20px 0;
+  background: $white;
+  border: none;
+  border-bottom: 20px solid $white;
+  box-shadow: 0 0 0 1px #CCC;
+  overflow: auto;
+  height: 100%;
+  @media (min-width: 750px){
+    left: 50%; top: 50%;
+    width: $width;
+    height: $height;
+    max-height: 55%;
+    @include transform(translate(-50%,-50%));
+  }
 
   .close {
     display: block;
     position: absolute;
     top: 10px; right: 15px;
-    width: 6px;
-    height: 6px;
-    @include icons-sprite(infowindow_close);
+    width: 16px;
+    height: 16px;
+    svg{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      fill: $dark;
+    }
+    &:hover{
+      svg{
+        fill: darken($dark,10%);
+      }
+    }
   }
 
   .content {
@@ -134,9 +51,126 @@
     overflow: auto;
     outline: none;
     font-size: 15px;
+    z-index: 1061;
     @extend .sans-serif;
     color: #666;
+    a{
+      color: $cGreen;
+      &:hover{
+        color: darken($cGreen,5%);
+      }
+    }
   }
+
+  .sources_row {
+    display: table;
+    width: 100%;
+
+    &.even {
+      background: #F2F2F3;
+    }
+
+    dt {
+      display: table-cell;
+      width: 120px;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      font-weight: 500;
+      font-size: 11px;
+      @extend .sans-serif;
+      text-transform: uppercase;
+    }
+
+    dd {
+      display: table-cell;
+      padding: 10px 10px 10px 15px;
+      border-left: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      font-size: 13px;
+      @extend .sans-serif;
+
+      p {
+        margin-bottom: 10px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        sup {
+          position: relative;
+          top: -3px;
+          font-size: 80%;
+        }
+      }
+    }
+  }
+
+  .single-source-item {
+    font-size: 15px;
+    line-height: 1.4;
+    color: #666;
+
+    p {
+      font-size: 13px;
+      margin-bottom: 10px;
+      margin-top: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &.credits {
+        margin-bottom: 10px;
+        font-size: 12px;
+        color: #aaa;
+
+        strong {
+          display: block;
+          font-weight: 500;
+        }
+
+        a {
+          color: #aaa;
+          text-decoration: underline;
+
+          &:hover {
+            color: #aaa;
+          }
+        }
+      }
+    }
+  }
+
+  .source_body,
+  .source_coverage {
+    @extend .single-source-item;
+
+    .bullets  {
+      list-style-type: disc;
+      color: $dark;
+      margin: 0 0 0 10px;
+      > li{
+        padding: 10px 0 0;
+        font-size: 13px;
+        margin-left: 20px;
+        line-height: 1.5;
+        &:first-child{
+          padding: 0;
+        }
+      }
+    }
+
+    .read_more {
+      padding: 10px 0;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+  }
+
 
   .source_category_description,
   .overview_title,
@@ -161,11 +195,10 @@
   .source_category_title,
   .source_coverage_title {
     display: block;
-    font-weight: bold;
-    font-size: 13px;
-    @extend .sans-serif;
+    font-weight: 500;
+    font-size: 16px;
     text-transform: uppercase;
-    color: #aaa;
+    color: $dark;
 
     span {
       text-transform: none;
@@ -181,7 +214,7 @@
   .source_header,
   .source_category_title,
   .source_coverage_header {
-    padding: 0 0 20px;
+    padding: 0 0 5px;
   }
 
   .source_category_title {
@@ -245,39 +278,118 @@
     margin-bottom: 30px;
   }
 }
+// Modal
+#source-window-modal {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  display: block;
+  visibility: hidden;
+  position: fixed;
+  z-index: 1002;
+  overflow: auto;
+  left: 0%;
+  top: 0%;
+  background: #fff;
+  border: 1px solid #E5E5DF;
+  box-shadow: 0px 0px 7px rgba(#555555,0.5);
+  @include transition(all,0.5s,cubic-bezier(0.645, 0.045, 0.355, 1.000));
+  @media (min-width: 750px){
+    left: 50%;
+    top: 50%;
+    width: 500px;
+    height: auto;
+  }
 
-.jspDrag {
-  background: #EDEDED;
-  @include border-radius(3px);
-}
+  &.active{
+    opacity: 1;
+    visibility: visible;
+  }
+  // Btn close
+  .close {
+    display: block;
+    position: absolute;
+    top: 15px; right: 15px;
+    width: 16px;
+    height: 16px;
+    svg{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      fill: $dark;
+    }
+    &:hover{
+      svg{
+        fill: darken($dark,10%);
+      }
+    }
+  }
+  // Content
+  .content {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    font-size: 15px;
+    padding: 20px;
+    color: $dark;
+    .center{
+      text-align: center;
+    }
 
-.jspHover,
-.jspActive {
-  background: #ccc;
-}
+    //Title
+    .source_title{
+      color: $cGreen;
+      text-transform: uppercase;
+      padding: 15px 0 20px;
+      font-size: 24px;
+    }
 
-.jspTrack,
-.jspVerticalBar {
-  background: transparent;
-}
+    //Body
+    .source_body{
+      >*{
+        padding: 15px 0 0;
+        &:first-child{
+          padding: 0;
+        }
+      }
+      p{
+        color: #555555;
+        font-size: 15px;
+        line-height: 1.5;
+      }
+      form{
+        .row{
+          text-align: center;
+          >*{
+            &.cancel_btn{
+              color: $dark;
+            }
+            @media (min-width: 750px){
+              width: 47.5%;
+            }
 
-.jspTrack {
-  float: right;
-  width: 5px;
+          }
+        }
+      }
+    }
+  }
 }
 
 .backdrop {
   display: none;
   position: fixed;
-  z-index: 1050;
+  z-index: 1001;
   top: 0; left: 0;
   width: 100%;
   height: 100%;
-  background: #fff;
-  @include opacity(.9);
+  background: rgba(255,255,255,.5);
+  &.active{
+    display: block;
+  }
 }
-
-
 .analysis_subscribe {
   $width: 463px;
   $height: 170px;
@@ -322,7 +434,6 @@
     font-size: 15px;
     @extend .sans-serif;
     text-align: center;
-    @include home-icons-sprite(error_input_label);
   }
 
   .btn {
@@ -345,7 +456,6 @@
       position:absolute;
       right: -7px;
       top: 10px;
-      @include home-icons-sprite(input_error);
     }
   }
 
@@ -370,9 +480,21 @@
     display: block;
     position: absolute;
     top: 15px; right: 15px;
-    width: 6px;
-    height: 6px;
-    @include home-icons-sprite(infowindow_close);
+    width: 16px;
+    height: 16px;
+    svg{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      fill: $dark;
+    }
+    &:hover{
+      svg{
+        fill: darken($dark,10%);
+      }
+    }
   }
 
   h1 {

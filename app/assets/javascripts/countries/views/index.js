@@ -9,6 +9,7 @@ gfw.ui.view.CountriesIndex = cdb.core.View.extend({
     this._getCountries();
     this._drawCountries();
     this._searchCountries();
+    this._checkDialogs();
   },
 
   _getCountries : function(){
@@ -36,10 +37,33 @@ gfw.ui.view.CountriesIndex = cdb.core.View.extend({
       if (e.keyCode == 13 && count.length == 1) {
         var href = $(count[0]).find('.country-href').attr('href');
         window.location = href;
-      };      
+      };
     };
   },
 
+  _checkDialogs: function() {
+    this.sourceWindow = new gfw.ui.view.SourceWindow();
+    this.$el.append(this.sourceWindow.render());
+    var selfo = this;
+
+    function start(parameter)
+    {
+      return function()
+      {
+        if (!sessionStorage.getItem('DIALOG')) return;
+        var dialog = JSON.parse(sessionStorage.getItem('DIALOG'));
+
+        if (!dialog.display) return;
+        ga('send', 'event', 'SourceWindow', 'Open', dialog.type);
+        selfo.sourceWindow.show(dialog.type);
+        $('.backdrop').css('opacity', '0.3');
+        sessionStorage.removeItem('DIALOG');
+      }
+    }
+
+    $(document).ready(start(selfo));
+
+  },
 
   _drawCountries: function() {
     var that = this;
@@ -69,5 +93,5 @@ gfw.ui.view.CountriesIndex = cdb.core.View.extend({
         }
       }
     });
-  }
+  },
 });

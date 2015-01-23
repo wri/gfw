@@ -23,11 +23,13 @@ require([
   'map/views/AnalysisToolView',
   'map/views/AnalysisResultsView',
   'map/views/ShareView',
+  'map/views/ToggleWidgetsView',
+  'views/FooterView',
   'views/DialogView',
   '_string'
 ], function($, _, Class, Backbone, utils, mps, Router,ExperimentsPresenter, AnalysisService, CountryService, DataService,
     LayersNavView, MapView, LegendView, ThresholdView, SearchboxView, MaptypeView, TimelineView,
-    AnalysisToolView, AnalysisResultsView, ShareView, DialogView) {
+    AnalysisToolView, AnalysisResultsView, ShareView, ToggleWidgetsView, FooterView, DialogView) {
 
   'use strict';
 
@@ -81,8 +83,9 @@ require([
       new TimelineView();
       new AnalysisResultsView();
       new ShareView();
+      new FooterView();
       new DialogView();
-
+      new ToggleWidgetsView();
 
       // TODO => This is temporary!!! We will use the refactored
       // and awesome DialogView later.
@@ -114,7 +117,7 @@ require([
      * Scroll to bottom.
      */
     _scrollBottom: function() {
-      this.$window.scrollTop(116);
+      // this.$window.scrollTop(116);
     },
 
     /**

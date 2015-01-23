@@ -1,23 +1,29 @@
 <script id='window-template' type='text/x-underscore-template'>
-  <a href='#' class='close'></a>
+  <a href='#' class='close'><svg><use xlink:href='#shape-close'></use></svg></a>
   <div class='content'></div>
 </script>
 <script id='share-template' type='text/x-underscore-template'>
   <a href='#' id='share_control' title=" {{ tooltip }} " class='share_control' data-tip='Share'></a>
 </script>
 <script id='share-country-template' type='text/x-underscore-template'>
-  <div class="country-share share inner">
     <a href="#" id="share_control" title="Share this graphic " class="share_control" data-tip="Share">
       Share
-      <span class="country-icons-share"></span>
+    <span class="sidenav-icon">
+      <svg class="share">
+        <use xlink:href="#shape-share"></use>
+      </svg>
+    </span>
     </a>
-  </div>
 </script>
 <script id='share-country-entry-template' type='text/x-underscore-template'>
-  <a href="#" class="icon-holder"><span class="country-icons-share_circle_white"></span></a>
+  <a href="#" class="icon circle">
+      <svg class="icon-share">
+        <use xlink:href="#shape-share"></use>
+      </svg>
+  </a>
 </script>
 <script id='share_dialog-template' type='text/x-underscore-template'>
-  <a href='#' class='close'></a>
+  <a href='#' class='close'><svg><use xlink:href='#shape-close'></use></svg></a>
   <h1 class='title'>{{ title }}</h1>
 
   <div class='form'>

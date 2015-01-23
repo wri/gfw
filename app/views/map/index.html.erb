@@ -1,9 +1,13 @@
 <% content_for :header do %>
-  <nav class="layers-menu"></nav>
+  <h1><a href="/">Global Forest Watch</a></h1>
+
+  <nav id="nav-mobile" class="layers-menu"></nav>
 <% end %>
 
-<%= render "shared/notice" %>
-<%= render "shared/header" %>
+<%= render 'layouts/svg_icons' %>
+
+<%#= render "shared/notice" %>
+<%= render "shared/header_landing" %>
 
 <div class="layout-content">
   <%= render 'shared/map' %>
@@ -13,3 +17,10 @@
   <%= render 'shared/sources_map' %>
 </div>
 <%= render 'sources_infowindow' %>
+
+<div id="footerFixed" class="footer-fixed">
+  <div class="footer-fixed-container">
+    <%= render "shared/footer_landing" %>
+  </div>
+</div>
+

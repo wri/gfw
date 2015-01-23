@@ -16,6 +16,8 @@
     <meta property="og:type" content="Visualization">
     <meta property="og:url" content="http://www.globalforestwatch.org/">
 
+    <link href='http://fonts.googleapis.com/css?family=Fira+Sans:400,500,300' rel='stylesheet' type='text/css'>
+
     <meta name="google-translate-customization" content="af2414ea962843fc-f48b15cdb6a3ab9b-gd8c738d3a7ff42de-1a">
     <meta name="google-site-verification" content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak" />
     <%= favicon_link_tag 'favicon.ico' %>
@@ -30,6 +32,7 @@
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
 
     <%= yield %>
+    <a class="feedback-link" href="/getinvolved/provide-feedback"><span>Feedback</span></a>
     <div class="backdrop"></div>
 
     <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA" %>

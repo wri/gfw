@@ -241,9 +241,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
     _.each(this.country.get('areas').models, function(area) {
       if (self.area == area) {
-        self.$areaSelector.append('<option value="' + area.get('name_1') + '" selected>' + area.get('name_1') + '</option>')
+        self.$areaSelector.append('<option class="dark" value="' + area.get('name_1') + '" selected>' + area.get('name_1') + '</option>')
       } else {
-        self.$areaSelector.append('<option value="' + area.get('name_1') + '">' + area.get('name_1') + '</option>')
+        self.$areaSelector.append('<option class="dark" value="' + area.get('name_1') + '">' + area.get('name_1') + '</option>')
       }
     });
     ga('send', 'event', 'Countries', 'Click', 'Change Area');
@@ -429,9 +429,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         sql: "SELECT * FROM country_mask",
         cartocss: "\
           #country_mask {\
-            polygon-fill: #373442;\
+            polygon-fill: #333;\
             polygon-opacity: 1;\
-            line-color: #373442;\
+            line-color: #333;\
             line-width: 1;\
             line-opacity: 1;\
           }\
@@ -463,15 +463,15 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         sql: "SELECT * FROM country_mask",
         cartocss: "\
           #country_mask {\
-            polygon-fill: #373442;\
+            polygon-fill: #333;\
             polygon-opacity: 1;\
-            line-color: #373442;\
+            line-color: #333;\
             line-width: 1;\
             line-opacity: 1;\
           }\
           #country_mask[code='" + this.country.get('iso') + "'] {\
             polygon-opacity: 0;\
-            line-color: #373442;\
+            line-color: #333;\
             line-width: 1;\
             line-opacity: 1;\
           }"
@@ -479,9 +479,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         sql: "SELECT * FROM gadm_1_all",
         cartocss: "\
           #gadm_1_all {\
-            polygon-fill: #373442;\
+            polygon-fill: #333;\
             polygon-opacity: 1;\
-            line-color: #373442;\
+            line-color: #333;\
             line-width: 1;\
             line-opacity: 1;\
             [cartodb_id=" + area.get('cartodb_id') + "]{\
@@ -577,11 +577,11 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         if (i === 11) {
           return '#9FBA2B';
         } else {
-          return '#524F5C';
+          return '#555';
         }
       })
       .on('mouseover', function(d) {
-        d3.selectAll('.bar').style('fill', '#524F5C');
+        d3.selectAll('.bar').style('fill', '#555');
         d3.select(this).style('fill', '#9FBA2B');
 
         $amount.html('<span>' + formatNumber(parseInt(d.value, 10)) + '</span>');

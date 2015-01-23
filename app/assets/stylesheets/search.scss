@@ -1,29 +1,31 @@
 // Compass
 @import "compass/reset";
 @import "compass/css3";
-
-// Images
-@import "static-icons/*.png";
-@import "static-logos/*.png";
-@import "home-icons/*.png";
+@import 'flexbox';
 
 // General
-@import "settings";
-@import "mixins";
-@import "base";
+@import "settings1600";
+@import "fonts1600";
+@import "mixins1600";
+@import "animations1600";
+@import "base1600";
 
+// Images
+@import "logos/*.png";
+@import "static-icons/*.png";
 
-// Layouts
-@import
-  "layouts/grid",
-  "layouts/application",
-  "layouts/static";
+// Layout
+@import "header1600";
+@import "footer1600";
+@import "layouts/grid1600";
 
 // Modules
-@import
-  "modules/notice",
-  "modules/navbar",
-  "modules/buttons",
-  "modules/carrousel",
-  "modules/form",
-  "modules/search/list-search";
+@import "modules/modal";
+@import "modules/shared1600";
+@import "modules/buttons1600";
+@import "modules/icons1600";
+@import "modules/slick1600";
+@import "modules/carrousel";
+@import "layouts/static";
+@import "modules/pagination";
+@import "modules/search/list-search";

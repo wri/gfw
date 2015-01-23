@@ -1,0 +1,152 @@
+%reset-btn {
+  -webkit-appearance: none;
+  border: 1px solid transparent;
+  background: none;
+  outline: none;
+  box-shadow: none;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: "Fira Sans";
+}
+
+// Btn
+.btn {
+  @extend %reset-btn;
+  background: $border;
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+  padding: 0px 12px;
+  border-radius: 40px;
+  font-size: 14px;
+  text-decoration: none;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  font-weight: 500;
+  white-space: nowrap;
+  @include transition(background .15s linear);
+
+  &:hover {
+    background: $cGreen;
+    text-decoration: none !important;
+  }
+
+  &.lowercase { text-transform: lowercase;}
+  &.uppercase { text-transform: uppercase;}
+
+  // Sizes
+  &.medium {
+    // font-size: 18px;
+    text-transform: uppercase;
+    padding: 0px 35px;
+  }
+  &.huge {
+    font-size: 18px;
+    text-transform: uppercase;
+    height: 38px;
+    line-height: 40px;
+    padding: 0px 20px;
+    @media (min-width: $br-mobile) {
+      font-size: 21px;
+    }
+  }
+
+  // Colors
+  &.dark {
+    color: $white;
+    background: $dark;
+    &:hover {
+      background: darken($dark,25%);
+    }
+  }
+  &.white {
+    color: $dark;
+    background: $white;
+    &:hover {
+      background: darken($white,10%);
+    }
+  }
+  &.gray {
+    color: $dark;
+    background: $white;
+    border-color: $cGreen;
+    &:hover {
+      background: darken($white,5%);
+    }
+  }
+  &.green {
+    color: $white;
+    background: $cGreen;
+    &:hover {
+      background: darken($cGreen,10%);
+    }
+  }
+  &.light {
+    color: $white;
+    background: #CBCCBF;
+    &:hover {
+      background: darken(#CBCCBF,5%);
+    }
+  }
+  &.light2 {
+    color: $dark;
+    background: $border;
+    font-weight: 400;
+    &:hover {
+      background: darken($border,5%);
+    }
+  }
+  &.soon {
+    color: #ccc;
+    background: none;
+    font-weight: 400;
+    text-transform: uppercase;
+    cursor: default;
+  }
+  &.disabled{
+    opacity: 0.25;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Btn arrow
+.btn-arrow {
+  -webkit-appearance: none;
+  background: $border;
+  border: none;
+  outline: none;
+  display: block;
+  position: absolute;
+  z-index: 1;
+  cursor: pointer;
+  top: 50%;
+  left: 50%;
+  height: 50px;
+  width: 50px;
+  padding: 10px;
+  border-radius: 50%;
+  @include transition(all .25s $easeInOutCubic);
+  @include transform(translate(-50%,-50%));
+  svg {
+    fill: none;
+    stroke: $white;
+  }
+
+  &:hover {
+    background: $cGreen;
+  }
+}
