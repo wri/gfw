@@ -15,7 +15,6 @@ define([], function() {
     ejn_stories: {
       title: 'EJN STORIES',
       description: 'View geo-tagged journalism from InfoAmazonia and other EJN platforms on the GFW Interactive Map',
-      link: '#',
     },
     explore_the_map: {
       title: 'GFW Interactive Map',
@@ -87,11 +86,6 @@ define([], function() {
       title: 'Contact us',
       description: 'Contact the Global Forest Watch team with questions, comments, and feedback',
       link: '/about/contact-us',
-    },
-    coming_soon: {
-      title: 'Coming soon',
-      description: 'Explore our upcoming apps',
-      link: '/explore/coming-soon',
     },
   }
   return interestingHelper;
