@@ -101,7 +101,7 @@ define([], function() {
       button_text: 'Explore apps',
     },
       coming_soon: {
-      title: 'Coming soon to GFW,
+      title: 'Coming soon to GFW',
       description: 'Learn about applications that are under development and coming soon to GFW.',
       link: '/explore#coming-soon',
     },
