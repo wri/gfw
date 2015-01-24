@@ -31,8 +31,17 @@
     }
   }
   .button-box{
+    max-width: 500px;
+    @media (min-width: $br-mobile) {
+      max-width: none;
+    }
+
     li{
       margin: 0 5px;
+      width: 100%;
+      @media (min-width: $br-mobile-portrait) {
+        width: auto;
+      }
       a{
         opacity: 0.75;
         &.disabled{
