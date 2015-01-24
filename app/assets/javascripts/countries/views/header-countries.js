@@ -10,10 +10,13 @@ gfw.ui.view.CountriesHeader = cdb.core.View.extend({
     this.$htmlbody = $('html,body');
     this.$window = $(window);
     this.$navMobile = $('#nav-mobile');
+    this.$footer = $('#footerMenu');
+    this.$siteMap = $('#siteMap');
+    this.$mobileMenu = $('#mobileMenu');
     this.$translate = $('#google_translate_element');
 
-    this.positionTranslate();
-    this.$window.on('resize',_.bind(this.positionTranslate,this))
+    this.createMenu();
+    this.$window.on('resize',_.bind(this.createMenu,this))
   },
 
   toggleMenu: function(e){
@@ -29,11 +32,15 @@ gfw.ui.view.CountriesHeader = cdb.core.View.extend({
     }
   },
 
-  positionTranslate: function(){
+  createMenu: function(){
     if (this.$window.width() > 700) {
+      this.$footer.appendTo(this.$siteMap);
       this.$translate.appendTo($('#google_translate_element_box1'));
     }else{
+      this.$footer.appendTo(this.$mobileMenu);
       this.$translate.appendTo($('#google_translate_element_box2'));
     }
   }
+
+
 });
