@@ -317,6 +317,10 @@
     }
     .btn {
       margin: 15px auto 0;
+      width: 100%;
+      @media (min-width: $br-mobile) {
+        width: auto;
+      }
     }
   }
   .feedback_form {
@@ -504,6 +508,10 @@
         }
         .btn {
           margin: 10px 0 0;
+          width: 100%;
+          @media (min-width: $br-mobile) {
+            width: auto;
+          }
         }
         strong {
           font-weight: 500;
@@ -1432,6 +1440,11 @@
 
     .btn{
       margin: 2px 0;
+      width: 100%;
+      @media (min-width: $br-mobile) {
+        width: auto;
+      }
+
     }
 
     img{
