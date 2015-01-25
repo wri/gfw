@@ -251,15 +251,24 @@
               width: 65%;
               height: 2px;
               background: $dark;
+              @include transition(all 0.15s $easeInOutSine);
               @include transform-origin(50% 50%);
             }
 
             &:before{
-              @include transform(translate(-50%,-50%));
+              @include transform(translate(-50%,-50%) rotate(0deg));
             }
 
             &:after{
               @include transform(translate(-50%,-50%) rotate(90deg));
+            }
+            &:hover{
+              &:before{
+                @include transform(translate(-50%,-50%) rotate(90deg) scale(0.75));
+              }
+              &:after{
+                @include transform(translate(-50%,-50%) rotate(180deg) scale(0.75));
+              }
             }
           }
         }

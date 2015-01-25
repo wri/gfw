@@ -1550,11 +1550,15 @@
     }
 
     em {
+      display: none;
       float: right;
       position: relative;
       right: 85px;
       color: #999;
       font: italic 13px/60px "Helvetica Neue", Helvetica, Arial, sans-serif;
+      @media (min-width: $br-tablet){
+        display: block;
+      }
     }
     .expand_arrow{
       display: block;
