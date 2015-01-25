@@ -473,8 +473,9 @@
             li{
               a{
                 @include transform(translate(0%,0px));
+                visibility: visible;
                 opacity: 1;
-              }
+             }
             }
           }
         }
@@ -484,7 +485,7 @@
 				>a {
 					display: block;
 					text-transform: uppercase;
-					color: #474747;
+					color: $dark;
 					position: relative;
 					z-index: 2;
           text-align: center;
@@ -527,7 +528,7 @@
             border-top: 1px solid rgba(0,0,0,0.07);
             @for $i from 1 through 10 {
               &:nth-child(#{$i}) a{
-                @include transition(all 0.2s $easeInOutSine $i*0.05s);
+                @include transition(all 0.2s $easeInOutSine $i*0.04s);
               }
             }
 
@@ -537,7 +538,9 @@
 							font-size: 15px;
 							text-align: center;
 							display: block;
-              opacity: 0.5;
+              opacity: 0;
+              visibility: hidden;
+              position: relative;
               @include transform(translate(-5%,0px));
 							&:hover {
 								background: darken(#FFF,2%);
