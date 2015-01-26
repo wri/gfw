@@ -77,13 +77,14 @@
   .row {
     @include row(center);
     @include flex-wrap(wrap);
-    margin: 20px 0 0;
+    margin: 20px auto 0;
+
     @media (min-width: $br-mobile) {
       margin: 50px 0 0;
     }
 
     >* {
-      margin: 5px 20px;
+      margin: 5px 0px;
       width: 100%;
       @media (min-width: $br-mobile) {
         margin: 0 20px;
@@ -91,12 +92,17 @@
       }
     }
     a {
-      display: block;
       width: 100%;
-      min-width: 200px;
       margin: 0 auto;
-      @media (min-width: $br-mobile) {
+      @media (min-width: $br-mobile-portrait) {
         width: auto;
+        text-align: left;
+        padding: 0 15px;
+        display: inline-block;
+      }
+      @media (min-width: $br-mobile) {
+        min-width: 200px;
+        text-align: center;
       }
       &.btn-video{
         min-width: 0;
@@ -317,6 +323,10 @@
     }
     .btn {
       margin: 15px auto 0;
+      width: 100%;
+      @media (min-width: $br-mobile-portrait) {
+        width: auto;
+      }
     }
   }
   .feedback_form {
@@ -341,8 +351,6 @@
       }
       .btn {
         border-radius: 40px;
-        padding: 0;
-        width: 170px;
         box-shadow: none;
         font-size: 14px;
         font-weight: 500;
@@ -380,7 +388,13 @@
         .col{
           padding: 0;
           @include col(100);
+          @media (min-width: $br-mobile-portrait) {
+            @include col(48.4);
+          }
           @media (min-width: $br-mobile) {
+            @include col(100);
+          }
+          @media (min-width: 1000px) {
             @include col(48.4);
           }
         }
@@ -504,6 +518,10 @@
         }
         .btn {
           margin: 10px 0 0;
+          width: 100%;
+          @media (min-width: $br-mobile-portrait) {
+            width: auto;
+          }
         }
         strong {
           font-weight: 500;
@@ -846,13 +864,26 @@
   width: 100%;
   >ul {
     position: relative;
+    @include display-flex();
+    @include flex-wrap(wrap);
+    @include justify-content(space-between);
     >li {
       padding: 0 0 40px 0;
       position: relative;
       &:first-child { margin-top: 20px;}
+      width: 100%;
+
+      @media (min-width: $br-mobile-portrait) {
+        width: 47.5%;
+        padding: 0 0px 40px;
+        &:first-child { margin-top: 0px;}
+      }
+
       @media (min-width: $br-mobile) {
+        width: 100%;
         padding: 40px 0;
         border-top: 1px solid $border;
+        &:first-child { margin-top: 20px;}
       }
 
       a {
@@ -864,6 +895,10 @@
       figure {
         width: 100%;
         margin: 0 0 20px -15px;
+        @media (min-width: $br-mobile-portrait) {
+          overflow: hidden;
+          margin: 0 0 20px;
+        }
         @media (min-width: $br-mobile) {
           width: 200px;
           position: absolute;
@@ -992,6 +1027,12 @@
     color: $dark;
     margin: -20px 0 20px;
     text-align: center;
+    a{
+      margin: 10px auto 0;
+       @media (min-width: $br-mobile-portrait) {
+        margin: 0;
+      }
+    }
   }
   &.partners {
     border-top: 1px solid $border;
@@ -1001,6 +1042,10 @@
     @include flex-wrap(wrap);
     .col {
       @include col(100);
+      @media (min-width: $br-mobile-portrait) {
+        @include col(50);
+        @include display-flex();
+      }
       @media (min-width: $br-mobile) {
         @include col(33.3333);
         @include display-flex();
@@ -1040,7 +1085,7 @@
       h2 {
         text-transform: uppercase;
         font-size: 21px;
-        padding: 0 25px;
+        padding: 0 10px;
       }
       .icon {
         min-width: 75px;
@@ -1049,6 +1094,7 @@
         margin: 16px auto;
         svg {
           fill: $dark;
+          width: 100%;
         }
       }
       .content {
@@ -1056,6 +1102,8 @@
           font-size: 14px;
           color: $dark;
           line-height: 1.25;
+          max-width: 300px;
+          margin: 0 auto;
         }
       }
       footer {
@@ -1432,6 +1480,11 @@
 
     .btn{
       margin: 2px 0;
+      width: 100%;
+      @media (min-width: $br-mobile-portrait) {
+        width: auto;
+      }
+
     }
 
     img{
@@ -1497,11 +1550,15 @@
     }
 
     em {
+      display: none;
       float: right;
       position: relative;
       right: 85px;
       color: #999;
       font: italic 13px/60px "Helvetica Neue", Helvetica, Arial, sans-serif;
+      @media (min-width: $br-tablet){
+        display: block;
+      }
     }
     .expand_arrow{
       display: block;
