@@ -1,13 +1,14 @@
-<div class='inner'>
+
+<div class="country-overview-wrapper-coolio">
   <div class='overview_graph'>
     <div class='overview_graph__tabs'>
       <ul>
         <li class='graph_tab selected' data-slug='total_loss'>
-          <a href='#' class='overview_graph__link'>Loss<span>— vs —</span>Gain</a>
+          <a href='#' class='overview_graph__link'>Loss<span>vs</span>Gain</a>
         </li>
 
         <li class='graph_tab' data-slug='percent_loss'>
-          <a href='#' class='overview_graph__link'>% Loss<span>— vs —</span>% Gain</a>
+          <a href='#' class='overview_graph__link'>% Loss<span>vs</span>% Gain</a>
         </li>
 
         <li class='graph_tab' data-slug='total_extent'>
@@ -15,23 +16,24 @@
         </li>
 
         <li class='graph_tab' data-slug='ratio'>
-          <a href='#' class='overview_graph__link'>Loss<span>— relative to —</span>Gain</a>
+          <a href='#' class='overview_graph__link'>Loss<span>relative to</span>Gain</a>
         </li>
 
         <li class='graph_tab' data-slug='domains'>
-          <a href='#' class='overview_graph__link'>Loss<span>— by —</span>Climate domain</a>
+          <a href='#' class='overview_graph__link'>Loss<span>by</span>Climate domain</a>
         </li>
 
         <li class='all_countries'>
           <%= link_to 'All countries', countries_path, :class => 'overview_graph__link', :target => controller_name == 'embed' ? '_blank' : '' %>
         </li>
       </ul>
+    </div>
 
-      <div class='overview_graph__legend'>
-        <a href='#' class='info' data-source='total_loss'><svg class="icon"><use xlink:href="#shape-info"></use></svg></a>
-
-        <p>Global tree cover loss per year with annualized tree cover gain</p>
-      </div>
+    <div class='overview_graph__legend'>
+      <p>
+        Global tree cover loss per year with annualized tree cover gain
+      </p>
+      <a href='#' class='info' data-source='total_loss'><svg><use xlink:href="#shape-info"></use></svg></a>
     </div>
 
     <div class='overview_graph__area'>
@@ -63,27 +65,6 @@
       <div class='chart domains'>
         <p class='disclaimer'>* Bubble size represents magnitude of tree cover loss</p>
       </div>
-    </div>
-  </div>
-
-  <div class='overview_graph__years'></div>
-  <div class='overview_graph__axis'>Tree cover extent 2000</div>
-
-  <h1 class='overview_graph__title'>Countries with greatest tree cover loss <sup>(2001-2012)</sup></h1>
-
-  <div class='countries_list'>
-    <div class='countries_list__header'>
-      <div class='countries_list__header__minioverview'>Gain <span>vs</span> Loss</div>
-
-      <div class='countries_list__header__num'>Rank</div>
-
-      <div class='countries_list__header__title'>Country</div>
-    </div>
-
-    <ul></ul>
-
-    <div class='countries_list__footer'>
-      <%= link_to 'View all countries <i></i>'.html_safe, countries_path %>
     </div>
   </div>
 </div>

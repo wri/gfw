@@ -11,6 +11,9 @@
   background: #333;
   margin-top: 36px;
   top: -20px;
+  .embed & {
+    width: 960px;
+  }
 }
 
 .overview_graph {
