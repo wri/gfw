@@ -1052,14 +1052,12 @@
       }
       padding: 0 20px;
       margin: 0px 0 25px;
-      overflow: hidden;
       .card {
         width: 100%;
         position: relative;
         padding: 40px 25px 125px;
         text-align: center;
-        border: 1px solid $border;
-        overflow: hidden;
+        box-shadow: 0 0 0 1px $border;
         &:hover{
           .description{
             visibility: visible;
@@ -1512,24 +1510,14 @@
       font-weight: 500;
       text-decoration: none;
       color: #fff;
-      background: #A5B81A;
+      background: $cGreen;
       @include border-radius(16px);
-    }
-
-    a {
-      display: inline-block;
-      margin: 20px;
-      padding: 0 15px;
-      font: 14px/30px "Fira Sans";
-      font-weight: 500;
-      text-decoration: none;
-      color: #fff;
-      background: #A5B81A;
-      @include border-radius(16px);
-
       &.disabled {
         @include opacity(.5);
         cursor: default;
+      }
+      &:hover{
+        background: darken($cGreen, 5%);
       }
     }
   }
