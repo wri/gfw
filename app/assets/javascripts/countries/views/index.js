@@ -13,7 +13,8 @@ gfw.ui.view.CountriesIndex = cdb.core.View.extend({
   },
 
   _getCountries : function(){
-    this.$searchBox = $('#searchCountry')
+    this.$searchBox = $('#searchCountry');
+    this.$searchBox.focus();
     this.$countries = $('.country');
     this.countries_list = _.map($('.country-name'),function(el){
       return $(el).text();
