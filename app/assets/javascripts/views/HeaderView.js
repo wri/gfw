@@ -46,7 +46,7 @@ define([
     },
 
     createMenu: function(){
-      if (this.$window.width() > 700) {
+      if (this.$window.width() > 850) {
         this.$footer.appendTo(this.$siteMap);
         this.$translate.appendTo($('#google_translate_element_box1'));
       }else{
