@@ -33,6 +33,7 @@ define([
   'map/views/layers/GrumpLayer',
   'map/views/layers/MangroveLayer',
   'map/views/layers/WMSLayer',
+  'map/views/layers/ConcesionesForestalesLayer',
   'map/views/layers/TerraiCanvasLayer',
   'map/views/layers/TerraicanvasCoverageLayer',
   // Layer dialog templates
@@ -76,6 +77,7 @@ define([
   GrumpLayer,
   MangroveLayer,
   WMSLayer,
+  ConcesionesForestalesLayer,
   TerraiCanvasLayer,
   TerraicanvasCoverageLayer,
   // Layer dialog templates
@@ -186,6 +188,9 @@ define([
     },
     WMSLayer :{
       view: WMSLayer
+    },
+    concesiones_forestales :{
+      view: ConcesionesForestalesLayer
     },
     terrailoss :{
       view: TerraiCanvasLayer,
