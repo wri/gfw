@@ -7,9 +7,10 @@
       <input type="text" name="query" id="search-input" placeholder="Search GFW website">
     </form>
     <div id="google_translate_element_box2"></div>
-    <ul>
+    <div id="mobileMenu"></div>
+    <ul class="mobile-hide">
       <li>
-        <a <% if controller?("countries") && action?("index") %>class="current"<% end %> href="/countries">Country Profiles</a>
+        <a <% if controller?("countries") && action?("show") %>class="current"<% end %> href="/countries">Country Profiles</a>
       </li>
       <li>
         <a <% if controller?("countries") && action?("overview") %>class="current"<% end %> href="/countries/overview">Country Rankings</a>
@@ -192,7 +193,7 @@
         <div class="left-col">
           <!-- employment -->
           <a href="#" id="employment" class="anchor-country-info"></a>
-          <section class="country-employment-section" data-scroll-index='3'>
+          <section class="country-employment" data-scroll-index='3'>
             <div class="section-info section-share">
               <h6>Employment</h6>
               <div class="section-btn">
@@ -368,7 +369,7 @@
             <div class="section-info section-share">
               <h6>Forest policy and legislation</h6>
               <div class="section-btn">
-                <a href="#" class="info icon circle" data-source="">
+                <a href="#" class="info icon circle" data-source="forest_legislation">
                   <svg>
                     <use xlink:href="#shape-info"></use>
                   </svg>
@@ -376,7 +377,12 @@
               </div>
             </div>
             <div class="section-content">
-              <%= link_to 'Are we missing a link?', 'mailto:gfw@wri.org', class: 'btn-rdn' %>
+              <% if @country['national_policy_link'].present? %>
+                <div class="national-policy-links">
+                  <%= link_to @country['national_policy_title'].present? ? @country['national_policy_title'] : 'National Forest Policy', @country['national_policy_link'] %>
+                </div>
+              <% end %>
+              <%= link_to 'Are we missing a link?', 'mailto:gfw@wri.org', class: 'btn-rdn btn-rdn-primary' %>
             </div>
           </section>
         </div>
@@ -411,7 +417,7 @@
   <section class='country-section country-download-links-section'>
     <div class='inner'>
       <div class="section-content">
-        <%= link_to 'Subscribe to alerts for this country', "#{map_coords}/grayscale/forma?subscribe", class: 'btn-rdn', :target => '_blank' %>
+        <%= link_to 'Subscribe to alerts for this country', "#{map_coords}/grayscale/forma?subscribe", class: 'btn-rdn btn-rdn-dark', :target => '_blank' %>
         <% if @country['dataset_link'].present? %>
         <% link_to 'Download relevant data sets', @country['dataset_link'], class: 'btn-rdn' %>
         <%# else %>
@@ -433,7 +439,7 @@
               <strong class='column-title'>Blog stories</strong>
               <h3 class='story-title'><%= truncate(@blog_story['title'], :length => 35) %></h3>
               <p class='story-content'><%= truncate(@blog_story['description'].gsub('[&#8230;]', ''), :length => 300) %> <%= link_to('more', @blog_story['link'], :target => '_blank') %></p>
-              <p>Read more blog stories <a href='<%= "http://wp-wri-staging.herokuapp.com/?tag=#{@country['name'].downcase.gsub(' ', '_')}" %>'>here</a></p>
+              <p>Read more blog stories <a href='<%= "http://blog.globalforestwatch.org/?tag=#{@country['name'].downcase.gsub(' ', '_')}" %>'>here</a></p>
             <% end %>
           </li>
 

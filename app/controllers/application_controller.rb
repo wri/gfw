@@ -44,6 +44,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
+
     def watch_cookie?
       cookies.permanent[ENV['TERMS_COOKIE'].to_sym] || controller_name == 'embed' || UserAgent.parse(request.user_agent).bot?
     end

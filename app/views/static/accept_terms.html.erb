@@ -1,8 +1,8 @@
 <section class="header-page">
   <div class="inner">
     <h1 class="header-title"><%= 'Global Forest Watch <span>Terms of Service</span>'.html_safe %></h1>
-    <p class="header-description">Please click "I Agree" to continue</p>  
-  </div>    
+    <p class="header-description">Please click "I Agree" to continue</p>
+  </div>
 </section>
 
 <!-- TERMS -->
@@ -10,13 +10,13 @@
   <div class="inner">
     <div contenteditable='false' class='terms_field'>
       <%= render 'terms' %>
-    </div>    
+    </div>
     <div class="terms-footer notranslate">
-      <%= link_to 'I agree', root_path, class: 'btn accept_btn dark huge continue', :'data-source' => "accept_terms" %> <%= link_to 'I do not agree', root_path, class: 'btn cancel_btn dark huge cancel' %>
+      <%= button_tag 'I agree', class: 'btn accept_btn green huge continue', :'data-source' => "accept_terms" %> <%= link_to 'I do not agree', root_path, class: 'btn cancel_btn gray huge cancel' %>
       <div class="terms-footer-more">
         <p><%= link_to 'Why do I have to agree to a Terms of Service?', root_path, class: 'why_terms', :'data-source' => "why_accept_terms" %></p>
-        <p class='last'>For additional information about GFW, please send an email to <a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>      
-      </div>    
+        <p class='last'>For additional information about GFW, please send an email to <a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>
+      </div>
     </div>
   </div>
 </section>
@@ -29,7 +29,7 @@
         <p class="notranslate">You acknowledge that you have read and agree to the Global Forest Watch Terms of Service.</p>
         <%= form_tag("/accept", { :class => 'terms_footer notranslate' }) do %>
           <div class="row">
-            <%= button_tag "I agree", class: 'btn accept_btn dark huge' %> <%= link_to 'I do not agree', '/accept_terms', class: 'btn cancel_btn dark huge' %>  
+            <%= button_tag "I agree", class: 'btn accept_btn green huge' %> <%= link_to 'I do not agree', '/accept_terms', class: 'btn cancel_btn gray huge' %>
           </div>
         <% end %>
       </div>

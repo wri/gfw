@@ -12,7 +12,7 @@
 </section>
 
 <section id="sidebarNavView" class="content-static">
-  <a id="back-btn" class="back-btn mobile-show" href="#"><svg><use xlink:href="#shape-fast-forward-left"></use></svg>Back</a>
+  <a id="back-btn" class="back-btn mobile-show" href="#"><svg><use xlink:href="#shape-fast-forward-left"></use></svg>Get involved</a>
   <div class="inner">
     <div class="row">
       <aside id="sidebarAside">
@@ -23,15 +23,61 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'Share data', "#{getinvolved_path}/share-data", :"data-slug" => 'share-data', :"data-interesting" => 'explore_the_map, keep_updated, develop_your_own_app', :class => 'nav-item share-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Help improve data', "#{getinvolved_path}/help-improve-data", :"data-slug" => 'help-improve-data', :"data-interesting" => 'explore_the_map, keep_updated, develop_your_own_app', :class => 'nav-item help-improve-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Apply to the Small Grants Fund', "#{getinvolved_path}/apply-to-the-small-grants-fund", :"data-slug" => 'apply-to-the-small-grants-fund', :"data-interesting" => 'explore_the_map, stories_on_the_map, develop_your_own_app', :class => 'nav-item apply-to-the-small-grants-fund' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Provide Feedback', "#{getinvolved_path}/provide-feedback", :"data-slug" => 'provide-feedback', :"data-interesting" => 'explore_the_map, keep_updated, develop_your_own_app', :class => 'nav-item provide-feedback' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Develop your own app', "#{getinvolved_path}/develop-your-own-app", :"data-slug" => 'develop-your-own-app', :"data-interesting" => 'explore_applications, stay_informed, how_to', :class => 'nav-item develop-your-own-app' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Share data', "#{getinvolved_path}/share-data", :"data-slug" => 'share-data', :"data-interesting" => 'explore_the_map, stay_informed, contact_us', :class => 'nav-item share-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Help improve data', "#{getinvolved_path}/help-improve-data", :"data-slug" => 'help-improve-data', :"data-interesting" => 'explore_the_map, explore_applications, contact_us', :class => 'nav-item help-improve-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Apply to the Small Grants Fund', "#{getinvolved_path}/apply-to-the-small-grants-fund", :"data-slug" => 'apply-to-the-small-grants-fund', :"data-interesting" => 'explore_applications, stories_on_the_map, about_GFW', :class => 'nav-item apply-to-the-small-grants-fund' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Provide Feedback', "#{getinvolved_path}/provide-feedback", :"data-slug" => 'provide-feedback', :"data-interesting" => 'explore_the_map, stay_informed, how_to', :class => 'nav-item provide-feedback' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
         <div class="sources-content">
           <div id="sources-spinner" class="spinner start"><svg><use xlink:href="#shape-spinner"></use></svg></div>
+          <article id="develop-your-own-app" class="source-article">
+            <header>
+              <h2>Develop your own app</h2>
+              <p>Do you ever wish that Global Forest Watch could be customized for your geography or issue of interest? Do you have a great idea for how GFW data could help solve a specific problem? Using GFW’s public Application Programming Interface (API) and open source code, anyone can build on GFW data and technology to create customized web-based or mobile applications (“apps”). This section contains the tools and information you need to develop applications that harness Global Forest Watch data and technology.</p>
+            </header>
+              <div class="content">
+                <ul class="faq-list">
+                  <li>
+                    <h3>Public API</h3>
+                    <p>The Global Forest Watch public Application Programming Interface (API) is currently in beta. The API enables any website to easily access GFW data. The following forest change data are now available through the API:
+                    <ul class='bullets'>
+                      <li>University of Maryland (UMD)/Google tree cover loss & gain</li>
+                      <li>FORMA alerts</li>
+                      <li>IMAZON SAD alerts</li>
+                      <li>QUICC alerts</li>
+                      <li>Terra-i alerts</li>
+                      <li>NASA active fires</li>
+                    </ul>
+                    </p>
+                    <a class="btn gray uppercase medium" href="https://github.com/wri/gfw-api" target="_blank">API Repository</a>
+                  </li>
+                  <li>
+                    <h3>Code</h3>
+                    <p>The Global Forest Watch website and public API are both collaborative and open-source projects hosted on <a href="https://github.com/" target="_blank">GitHub</a>. If you would like to access or contribute to our source code, please visit <a href="https://github.com/Vizzuality/gfw" target="_blank">GFW on GitHub</a>, where you can send pull requests to our website repository or API repository. All Global Forest Watch source code is released under the MIT License (MIT).</p>
+                    <a class="btn gray uppercase medium" href="https://github.com/Vizzuality/gfw" target="_blank">Website Repository</a>
+                  </li>
+                  <li>
+                    <h3>Coming soon</h3>
+                    <ul class='bullets'>
+                      <li><strong>Client libraries</strong> for accessing the Global Forest Watch API from JavaScript and Python</li>
+                      <li><strong>Style guide</strong> for branding Global Forest Watch applications and tools</li>
+                      <li><strong>The Seed Fund</strong> for supporting developers to build applications using Global Forest Watch data</li>
+                    </ul>
+                  </li>
+                <li>
+                  <h3>Useful links</h3>
+                  <a class="btn gray uppercase medium" href="/data">Download data</a>
+                  <a class="btn gray uppercase medium" href="https://earthengine.google.org/" target="_blank">Google Earth Engine</a>
+                  <a class="btn gray uppercase medium" href="https://developers.arcgis.com/en/">ESRI's api info</a>
+                  <a class="btn gray uppercase medium" href="mailto:datalab@wri.org">App Development Support</a>
+                </li>
+              </ul>
+           </div>
+          </article>
+
           <article id='apply-to-the-small-grants-fund' class="source-article">
             <header>
               <h2>Apply to the Small Grants Fund</h2>
@@ -39,7 +85,7 @@
               <div class="intro">
                 <p class="img-cont"><%= image_tag('logos/sgflogo.jpg')%></p>
                 <div class="text-cont">
-                  <p>Established in 2014, the Small Grants Fund seeks to promote broad uptake and innovative use of Global Forest Watch by civil society. The Small Grants Fund provides financial and technical support to civil society organizations that want to use Global Forest Watch in their research, advocacy, and fieldwork. The fund provides grants between US$10,000 and $US40,000.</p>
+                  <p>Established in 2014, the Small Grants Fund seeks to promote broad uptake and innovative use of Global Forest Watch by civil society. The Small Grants Fund provides financial and technical support to civil society organizations that want to use Global Forest Watch in their research, advocacy, and fieldwork. The fund provides grants between US$10,000 and US$40,000.</p>
                   <p>See the work done by our 2014 Small grant recipients (coming soon).</p>
                   <p><strong>The 2015 application period is now open. Please read below for information on how to apply.</strong></p>
                 </div>
@@ -105,7 +151,7 @@
                   <p><strong>I applied to the SGF last year, but was not accepted. Will my application be given special consideration?</strong></p>
                   <p>No. All applications will be reviewed against the same criteria. However, we encourage previous applicants to apply.</p>
                   <p><strong>I’m not sure what Global Forest Watch is. How can I determine whether this platform can be used for my project?</strong></p>
-                  <p>All applications must describe how GFW will play a critical role in the project. To find out more information about GFW, visit the <a href="/about" target="_blank">About</a> or <a href="/howto" target="_blank">How to</a> pages. You can also view a summary of previous projects in the <a href="https://gfw.fluidreview.com/pm/resource/eyJoZnJlIjogYWh5eSwgInZxIjogODk1M30/" target="_blank">Guidelines for Applicants</a>.</p>
+                  <p>All applications must describe how GFW will play a critical role in the project. To find out more information about GFW, visit the <a href="/about">About</a> or <a href="/howto">How To</a> page. You can also view a summary of previous projects in the <a href="https://gfw.fluidreview.com/pm/resource/eyJoZnJlIjogYWh5eSwgInZxIjogODk1M30/" target="_blank">Guidelines for Applicants</a>.</p>
                   <p><strong>Can I apply as an individual, not as an organization?</strong></p>
                   <p>No. Unfortunately, only organizations are eligible to apply. Please see the <a href="https://gfw.fluidreview.com/pm/resource/eyJoZnJlIjogYWh5eSwgInZxIjogODk1M30/" target="_blank">Guidelines for Applicants</a> for more information.</p>
                   <p><strong>I work for a large, international organization, but we’re implementing a project with a local partner. Can I still apply?</strong></p>
@@ -153,7 +199,7 @@
                 </li>
                 <li>
                   <h3>Useful links</h3>
-                  <a class="btn gray uppercase medium" href="/applications">View existing applications</a>
+                  <a class="btn gray uppercase medium" href="/explore">View existing applications</a>
                   <a class="btn gray uppercase medium" href="https://earthengine.google.org/" target="_blank">Google Earth Engine</a>
                   <a class="btn gray uppercase medium" href="#">ESRI's api info</a>
                   <a class="btn gray uppercase medium" href="mailto:datalab@wri.org">App Development Support</a>
@@ -171,17 +217,17 @@
           <article id="share-data" class="source-article">
             <header>
               <h2>Share data</h2>
-             <p>Are we missing important data? Global Forest Watch compiles data from many different sources, and we are always excited to work with new data providers. Contact us at <a href="mailto:gfw@wri.org" target="_blank">gfw@wri.org</a> to share your data or point us to open data we may have missed.</p>
-             <p>Global Forest Watch has an open data policy and seeks to make data open, discoverable, downloadable, and usable. We believe that open data and transparency support efforts to better manage and sustain the world’s forests by promoting innovation and enabling informed, participatory, and accountable decision-making.</p>
-             <p>Use the links below to view our existing data and contact us at <a href="mailto:gfw@wri.org" target="_blank">gfw@wri.org</a> if you know of data that should be on Global Forest Watch.</p>
-              <a class="btn gray uppercase medium" href="/sources">View & download existing data</a>
+             <p>Are we missing important data? Global Forest Watch compiles data from many different sources, and we are always excited to work with new data providers. Contact us at <a href="mailto:gfw@wri.org">gfw@wri.org</a> to share your data or point us to open data we may have missed.</p>
+             <p>Global Forest Watch has an <a href="/sources/data_policy?t=open_data">open data policy</a> and seeks to make data open, discoverable, downloadable, and usable. We believe that open data and transparency support efforts to better manage and sustain the world’s forests by promoting innovation and enabling informed, participatory, and accountable decision-making.</p>
+             <p>Use the links below to view our existing data and contact us at <a href="mailto:gfw@wri.org">gfw@wri.org</a> if you know of data that should be on Global Forest Watch.</p>
+              <a class="btn gray uppercase medium" href="/sources/data_policy">View & download existing data</a>
               <a class="btn gray uppercase medium" href="mailto:gfw@wri.org">Email us</a>
             </header>
           </article>
           <article id="help-improve-data" class="source-article">
             <header>
               <h2>Help improve data</h2>
-              <h3>Global Forest Watch is a global effort to monitor forest landscapes, and anyone can contribute. From your computer or smartphone, you can help make GFW data better. Use these applications to contribute your own data from the ground, compare GFW alerts against the latest satellite imagery, and provide feedback about GFW data.</h3>
+              <p>Global Forest Watch is a global effort to monitor forest landscapes, and anyone can contribute. From your computer or smartphone, you can help make GFW data better. Use these applications to contribute your own data from the ground, compare GFW alerts against the latest satellite imagery, and provide feedback about GFW data.</p>
             <a class="btn gray uppercase medium" href="mailto:gfw@wri.org">Email GFW about incorrect data</a>
             </header>
             <div class="content">
@@ -191,19 +237,20 @@
                     <div class="col">
                       <div class="card">
                         <header>
-                          <h2>Landsat Imagery Validation Application</h2>
+                          <h2>Deforestation Finder App</h2>
                           <div class="icon"><svg class="icon"><use xlink:href="#shape-landsat"></use></svg></div>
                         </header>
                         <div class="content">
-                          <p>Help make GFW forest alerts more reliable by identifying changes in Landsat imagery</p>
+                          <p>Help make GFW’s tree cover loss alerts more reliable by analyzing satellite images and telling the world what you see.</p>
                         </div>
                         <footer>
                           <span class="btn soon">coming soon</span>
+                          <small>Source: World Resources Institute</small>
                         </footer>
                         <div class="description">
                           <div class="additional-info">
-                            <h2>Landsat Imagery Validation Application</h2>
-                            <p>Sometimes the human eye is more powerful than computer algorithms at spotting forest loss. This simple app displays recent satellite images of forest change alerts and asks users to classify what they see. User contributions help improve our alerting systems, flagging areas where data may be inaccurate. Become part of the GFW crowdsourcing community by identifying forest changes in satellite images.</p>
+                            <h2>Deforestation Finder App</h2>
+                            <p>Sometimes the human eye is more powerful at spotting deforestation than computer algorithms. This simple app displays recent satellite images from areas with recent tree cover loss alerts and asks users to tell us what they see. User contributions can help us figure out which alerts are most concerning and require action on the ground.</p>
                           </div>
                         </div>
                       </div>
@@ -211,19 +258,20 @@
                     <div class="col">
                       <div class="card">
                         <header>
-                          <h2>GFW Mobile Data Application </h2>
+                          <h2>Forest Watcher Mobile App</h2>
                           <div class="icon"><svg class="icon"><use xlink:href="#shape-globe-mobile"></use></svg></div>
                         </header>
                         <div class="content">
-                          <p>Access GFW forest change data and collect information from your mobile device</p>
+                          <p>Use your mobile device to access and collect data about what's happening to forests near you.</p>
                         </div>
                         <footer>
                           <span class="btn soon">coming soon</span>
+                          <small>Source: Jane Goodall Institute, Google, TouchLab, and World Resources Institute</small>
                         </footer>
                         <div class="description">
                           <div class="additional-info">
-                            <h2>GFW Mobile Data Application </h2>
-                            <p>This easy-to-use app enables local stakeholders with limited or occasional internet connectivity to use and contribute data to the GFW platform using mobile and cloud technologies. With this app, users can find forest clearing alerts on the ground in their area of interest and collect and report information from the field. Global Forest Watch is currently developing this tool with Google and the Jane Goodall Institute.</p>
+                            <h2>Forest Watcher Mobile App</h2>
+                            <p>This easy-to-use app enables anyone with limited Internet connectivity to find GFW alerts in their forests and upload observations like photos and other data from the field.  The Jane Goodall Institute, in partnership with Global Forest Watch, Google, and TouchLab, is currently piloting this app in Uganda to improve local forest monitoring.</p>
                           </div>
                         </div>
                       </div>
@@ -239,6 +287,7 @@
                         </div>
                         <footer>
                           <a href="http://www.tomnod.com/campaign/gfw2_2014/map/2qwx1oy6u" target="_blank" class="btn green medium">Launch App</a>
+                          <small>Source: Digital Globe</small>
                         </footer>
                       </div>
                     </div>
@@ -256,7 +305,7 @@
               <ul class="faq-list">
                 <li>
                   <%= form_tag({controller: "static", action: "feedback"}, method: "get", class: "feedback_form", id: "feedbackView") do %>
-                    <h3><strong>We’re interested in hearing:</strong></h3>
+                    <h3><strong>We are interested in hearing:</strong></h3>
                     <ul class="bullets">
                       <li>Why you visited GFW</li>
                       <li>How you use GFW</li>
@@ -286,21 +335,21 @@
                       <%= email_field_tag :email, nil, :placeholder => "Email", :id => "feedback-email" %>
                     </p>
                     <p>
-                      <%= submit_tag "Send", :class=> "btn green medium" %>
+                      <%= button_tag "Send", :class=> "btn green medium" %>
                     </p>
                   <% end %>
                 </li>
                 <li>
-                  <h3><strong>Users have spoken and we've listened!</strong></h3>
+                  <h3><strong>Users have spoken and we have listened!</strong></h3>
                   <p>Below are examples of changes and additions we’ve made to the website in response to feedback from users like you:</p>
                   <ul class="bullets">
                     <li>Threshold settings for the UMD/Google tree cover loss data (read more <a href="http://blog.globalforestwatch.org/2014/09/four-ways-gfw-just-became-more-useful/">here</a>)</li>
-                    <li>Enhanced analysis functionality (i.e., for protected areas, subnational areas, and forest use concessions) (read more <a href="http://blog.globalforestwatch.org/2014/09/four-ways-gfw-just-became-more-useful/">here</a>)</li>
+                    <li>Enhanced analysis functionality (i.e., for protected areas, subnational jurisdictions, and forest use concessions) (read more <a href="http://blog.globalforestwatch.org/2014/09/four-ways-gfw-just-became-more-useful/">here</a>)</li>
                     <li>Time slider for the NASA active fires data and information about each fire</li>
-                    <li>“Share this map view” feature (read more <a href="http://blog.globalforestwatch.org/2014/09/four-ways-gfw-just-became-more-useful/">here</a>)</li>
-                    <li>A new home page that better directs users to what they are looking for and communicates a clearer purpose</li>
+                    <li>“Share this map view” feature (read more <a href="http://blog.globalforestwatch.org/2014/05/five-gfw-site-updates/">here</a>)</li>
+                    <li>A new homepage that better directs users to what they are looking for and communicates a clearer purpose</li>
                   </ul>
-                  <p>Do you have questions about how to use GFW?  Be sure to visit the <a href="/howto">HOW TO</a> page or <a href="mailto:gfw@wri.org">send us an email</a>. You can also reach us on <a href="https://twitter.com/intent/tweet?screen_name=globalforests&original_referer=http://www.globalforestwatch.org/">Twitter</a> or the <a href="https://groups.google.com/forum/#!forum/globalforestwatch">GFW Discussion Forum</a>.</p>
+                  <p>Do you have questions about how to use GFW? Be sure to visit the <a href="/howto">How To</a> page, and if you still need help email <a href="mailto:gfw@wri.org">gfw@wri.org</a>. You can also connect with us on social media or by posting a comment to the <a href="https://groups.google.com/forum/#!forum/globalforestwatch" target="_blank">GFW Discussion Forum</a>.</p>
                 </li>
               </ul>
             </div>

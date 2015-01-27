@@ -73,13 +73,13 @@
 
     .country-header-inner {
       background: #333;
-      .embed & {
-        margin-top: 30px;
-      }
     }
 
     .country-title {
       padding: 20px;
+      .embed & {
+        padding: 20px 20px 5px;
+      }
 
       h1 {
         color: white;
@@ -91,6 +91,7 @@
         margin-bottom: 0.2em;
         .embed & {
           max-width: 100%;
+          font-size: 32px;
         }
       }
 
@@ -106,6 +107,12 @@
         right: -4px;
         .embed & {
           display: none;
+        }
+        .white{
+          color: $white;
+        }
+        .dark{
+          color: $dark;
         }
       }
 
@@ -175,12 +182,19 @@
 
     .country-details {
       height: 300px;
+      .embed & {
+        height: 230px;
+      }
 
       .country-preview {
         width: calc(100% - 215px);
         height: 100%;
         float: left;
         @include box-sizing(border-box);
+        .embed & {
+          width: 100%;
+        }
+
 
         h4 {
           text-transform: uppercase;
@@ -201,6 +215,9 @@
         .tree-numbers,
         .loss-gain-graph {
           padding: 30px 10px;
+          .embed & {
+            padding: 10px 0;
+          }
         }
 
         .map {
@@ -208,6 +225,9 @@
           height: 100%;
           background: transparent;
           cursor: default;
+          .embed & {
+            width: 33.33333%;
+          }
 
           &.loaded {
             background: #333;
@@ -221,6 +241,9 @@
         .tree-numbers {
           width: 25%;
           padding-left: 20px;
+          .embed & {
+            width: 28.33333%;
+          }
 
           h4 {
             width: 150px;
@@ -250,6 +273,9 @@
         .loss-gain-graph {
           width: 35%;
           position: relative;
+          .embed & {
+            width: 33.33333%;
+          }
 
           .coming-soon {
             display: none;
@@ -553,6 +579,36 @@
     font-weight: 500;
     color: $cGreen;
   }
+  .country-alerts,
+  .country-production,
+  .country-tenure,
+  .country-employment,
+  .country-forests-type {
+    .coming-soon {
+      width: 100%;
+      font-size: 16px;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 10px 0;
+      background: #f2f2f2;
+      color: #666;
+      font-style: italic;
+    }
+  }
+  .country-tenure,
+  .country-forests-type {
+    .coming-soon {
+      display: none;
+    }
+    .left-col, .right-col {
+      width: auto;
+    }
+
+    .right-col {
+      float: right;
+    }
+  }
+
 
   .country-section {
     border-bottom: 1px solid #E5E5E5;
@@ -561,6 +617,7 @@
 
     .embed & {
       border: 0;
+      padding: 20px 0;
     }
 
     .section-info {
@@ -618,6 +675,7 @@
       .left-col,
       .right-col {
         float: left;
+        min-height: 1px;
 
         &.wide {
           width: 100%;
@@ -626,11 +684,11 @@
 
       .left-col,
       .right-col {
-        width: 50%;
+        width: 45%;
       }
 
       .right-col {
-        padding-left: 5%;
+        margin-left: 10%;
 
         .section-btn {
           right: 20px;
@@ -642,6 +700,7 @@
         font-size: 32px;
         line-height: 36px;
         font-weight: 300;
+        margin: 0 0 10px;
         color: $dark;
       }
       svg {
@@ -649,36 +708,7 @@
       }
     }
 
-    .country-alerts,
-    .country-production,
-    .country-tenure,
-    .country-employment,
-    .country-forests-type {
-      .coming-soon {
-        width: 100%;
-        font-size: 16px;
-        text-transform: uppercase;
-        text-align: center;
-        padding: 10px 0;
-        background: #f2f2f2;
-        color: #666;
-        font-style: italic;
-      }
-    }
 
-    .country-tenure,
-    .country-forests-type {
-      .coming-soon {
-        display: none;
-      }
-      .left-col, .right-col {
-        width: auto;
-      }
-
-      .right-col {
-        float: right;
-      }
-    }
 
     .country-alt {
       display: inline-block;
@@ -690,6 +720,94 @@
       font-size: 14px;
     }
   } // global sections
+
+  .forma-graph path {
+    stroke: $cGreen;
+    stroke-width: 4px;
+    fill: none;
+  }
+  .forma_dropdown-menu {
+    display: none;
+  }
+
+
+  .forma-graph {
+    position: relative;
+    height: 160px;
+  }
+
+  .forma-marker {
+    stroke: white;
+    stroke-width: 2px;
+    fill: $cGreen;
+  }
+
+  .graph-tooltip {
+    position: absolute;
+    width: 150px;
+    height: 78px;
+    background: $cGreen;
+    @include box-sizing(border-box);
+    padding: 12px 10px;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 10;
+    pointer-events: none;
+
+    .graph-amount {
+      font-size: 26px;
+      color: white;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .graph-date {
+      font-size: 12px;
+      color: #60644D;
+      .date {
+        margin-top: 2px;
+        display: block;
+        font-size: 14px;
+      }
+    }
+
+    @include box-shadow(#ddd 2px 2px 10px);
+
+    &:before {
+      content:'';
+      display:block;
+      width:0;
+      height:0;
+      position:absolute;
+
+      border-top: 8px solid transparent;
+      border-bottom: 8px solid transparent;
+      border-left: 8px solid $cGreen;
+
+      right: -8px;
+      margin: auto;
+      top: 0;
+      bottom: 0;
+    }
+  }
+
+  .forma-alerts-legend {
+    margin: 5px 0 25px 0;
+
+    span {
+      color: #666666;
+      font-size: 13px;
+      font-weight: 300;
+      display: block;
+    }
+
+    .legend-title {
+      color: $cGreen;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+  }
 
   .country-alerts-section {
     #formaAlertsContent,
@@ -705,11 +823,14 @@
         margin: 0;
       }
     }
-
-    .forma_dropdown-menu {
-      display: none;
+    .btn {
+      border-radius: 20px;
+      border: none;
+      padding: 10px 20px 8px;
+      background: $cGreen;
+      font-weight: 400;
+      font-size: 13px;
     }
-
     .forma_dropdown-link {
       position: relative;
       padding-right: 55px;
@@ -722,146 +843,49 @@
         height: 13px;
       }
     }
-
-    .forma-graph path {
-      stroke: $cGreen;
-      stroke-width: 4px;
-      fill: none;
-    }
-
-    .forma-graph {
-      position: relative;
-      height: 160px;
-    }
-
-    .forma-marker {
-      stroke: white;
-      stroke-width: 2px;
-      fill: $cGreen;
-    }
-
-    .graph-tooltip {
-      position: absolute;
-      width: 150px;
-      height: 78px;
-      background: $cGreen;
-      @include box-sizing(border-box);
-      padding: 12px 10px;
-      border-radius: 5px;
-      text-align: center;
-      z-index: 10;
-      pointer-events: none;
-
-      .graph-amount {
-        font-size: 26px;
-        color: white;
-        margin-bottom: 4px;
-        display: block;
-      }
-
-      .graph-date {
-        font-size: 12px;
-        color: #60644D;
-        .date {
-          margin-top: 2px;
-          display: block;
-          font-size: 14px;
-        }
-      }
-
-      @include box-shadow(#ddd 2px 2px 10px);
-
-      &:before {
-        content:'';
-        display:block;
-        width:0;
-        height:0;
-        position:absolute;
-
-        border-top: 8px solid transparent;
-        border-bottom: 8px solid transparent;
-        border-left: 8px solid $cGreen;
-
-        right: -8px;
-        margin: auto;
-        top: 0;
-        bottom: 0;
-      }
-    }
-
-    .forma-alerts-legend {
-      margin: 5px 0 25px 0;
-
-      span {
-        color: #666666;
-        font-size: 13px;
-        font-weight: 300;
-        display: block;
-      }
-
-      .legend-title {
-        color: $cGreen;
-        font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 3px;
-      }
-    }
-
-    .btn {
-      border-radius: 20px;
-      border: none;
-      padding: 10px 20px 8px;
-      background: $cGreen;
-      font-weight: 400;
-      font-size: 13px;
-    }
   } // country-alerts-section
 
-  .country-graph-section {
-    .country-forests-type {
-      .forest-type-legends {
-        font-size: 14px;
-        display: none;
-        margin-top: 10px;
+  .forest-type-legends {
+    font-size: 14px;
+    display: none;
+    margin-top: 10px;
 
-        .legends-title {
-          color: $cGreen;
-          margin-bottom: 10px;
-          display: block;
+    .legends-title {
+      color: $cGreen;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .legends-list {
+      li {
+        display: block;
+        margin-bottom: 5px;
+        color: #777;
+        font-weight: 300;
+        vertical-align: top;
+
+        span {
+          height: 14px;
+          width: 14px;
+          border-radius: 100px;
+          display: inline-block;
+          margin-right: 4px;
         }
 
-        .legends-list {
-          li {
-            display: block;
-            margin-bottom: 5px;
-            color: #777;
-            font-weight: 300;
-            vertical-align: top;
+        .regenerated {
+          background: #A1BA42;
+        }
 
-            span {
-              height: 14px;
-              width: 14px;
-              border-radius: 100px;
-              display: inline-block;
-              margin-right: 4px;
-            }
+        .primary {
+          background: #819515;
+        }
 
-            .regenerated {
-              background: #A1BA42;
-            }
-
-            .primary {
-              background: #819515;
-            }
-
-            .planted {
-              background: #DDDDDD;
-            }
-          }
+        .planted {
+          background: #DDDDDD;
         }
       }
     }
-  } //country-graph-section
+  }
 
   .country-employment-section {
     .section-content .left-col .section-title {
@@ -893,43 +917,43 @@
       color: #919191;
     }
 
-    .country-tenure {
-      .line-graph {
-        font-weight: normal;
-        text-transform: uppercase;
+  } // country-employment
+  .country-tenure {
+    .line-graph {
+      font-weight: normal;
+      text-transform: uppercase;
 
-        circle {
-          stroke-width: 2px;
-          stroke: #f5f5f5;
-        }
+      circle {
+        stroke-width: 2px;
+        stroke: #f5f5f5;
+      }
 
-        text {
-          @extend .sans-serif;
-          font-size: 12px;
-        }
+      text {
+        @extend .sans-serif;
+        font-size: 12px;
+      }
 
-        .units {
-          font-weight: 500;
-        }
+      .units {
+        font-weight: 500;
+      }
 
-        .one {
-          fill: #75B22E;
-        }
+      .one {
+        fill: #75B22E;
+      }
 
-        .two {
-          fill: #AAC700;
-        }
+      .two {
+        fill: #AAC700;
+      }
 
-        .three {
-          fill: #AC0;
-        }
+      .three {
+        fill: #AC0;
+      }
 
-        .four {
-          fill: #FFD24D;
-        }
+      .four {
+        fill: #FFD24D;
       }
     }
-  } // country-employment-section
+  }
 
   .country-policy-section {
     overflow: hidden;
@@ -946,7 +970,8 @@
         text-decoration: underline;
       }
     }
-    .country-external-links, {
+    .country-external-links,
+    .national-policy-links {
       font-size: 14px;
 
       .section-content {
@@ -990,7 +1015,7 @@
         text-decoration: none;
       }
     }
-  } // country-policy-section
+  }
 
   .country-carbon-stocks-section {
     display: table;
@@ -1007,8 +1032,10 @@
     }
 
     .emissions-text {
+      margin-left: -6%;
       padding: 50px 0 50px 50px;
       background: #333;
+      box-shadow: 50px 0px 0 #333;
       text-align: left;
 
       .section-btn {
@@ -1102,7 +1129,6 @@
 
   .country-download-links-section {
     padding: 50px 0;
-    background-color: #F5F5F5;
     text-align: center;
     clear: both;
 
@@ -1112,9 +1138,9 @@
         margin-right: 10px;
       }
 
-      &:hover {
-        background: darken(#EEE, 5%);
-      }
+      // &:hover {
+      //   background: darken(#EEE, 5%);
+      // }
     }
   } // country-download-links-section
 
@@ -1391,12 +1417,12 @@
   }
 
   &.btn-rdn-primary {
-    background: #ECECEC;
-    border: 1px solid #B8B6BD;
+    background: #fff;
+    border: 1px solid #97bd3d;
     color: #464353;
     text-transform: uppercase;
     &:hover {
-      background: darken(#ECECEC, 10%);
+      background: #f7f7f7;
     }
   }
 
@@ -1408,8 +1434,8 @@
 
     &:hover {
       @include transition(background-color 0.2s ease);
-      background-color: transparent;
-      color: #555;
+      background-color: #000;
+      color: #fff;
     }
   }
 
@@ -1718,12 +1744,12 @@
 .embed .country-show {
   font-weight: 400;
   color: $dark;
-  margin-top: -84px;
-
+  margin: 0;
+  padding: 20px;
   .embed-country-title{
-    margin-top: 50px;
     text-align: center;
     font-size: 2em;
+    margin: 0;
   }
 } // embed
 
@@ -2018,7 +2044,7 @@
       }
     } // country-graph-section
 
-    .country-employment-section {
+    .country-employment {
       .section-info {
         svg {
           height: 100%;
@@ -2040,10 +2066,17 @@
           }
         }
       }
-    } // country-employment-section
+    } // country-employment
 
     .country-carbon-stocks-section {
       padding: 0 !important;
+
+      .section-content {
+        .right-col {
+          margin: 0;
+        }
+      }
+
       .carbon-text,
       .emissions-text {
         width: 100%;
@@ -2069,7 +2102,8 @@
         }
       }
 
-      .country-external-links {
+      .country-external-links,
+      .national-policy-links {
         ul > li {
           display: block;
           &::after {

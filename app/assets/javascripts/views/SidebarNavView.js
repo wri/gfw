@@ -12,8 +12,9 @@ define([
 
   var SidebarNavModel = Backbone.Model.extend({
     defaults: {
-      offset: null,
-      height: null
+      section: null,
+      t: null,
+      interesting: null
     }
   });
 
@@ -23,7 +24,7 @@ define([
     el: '#sidebarNavView',
 
     events: {
-      'click .nav-item' : 'updateSource',
+      'click .nav-item' : 'changeSourceNav',
       'click .nav-title' : 'scrollTo',
       'click #back-btn' : 'returnBack',
       'click .source_header' : 'toggleSources',
@@ -35,6 +36,9 @@ define([
       if (!this.$el.length) {
         return
       }
+
+      this.model = new SidebarNavModel();
+
       //CACHE
       this.$window = $(window);
       this.$document = $(document);
@@ -71,49 +75,6 @@ define([
     },
 
 
-    toggleDropdown: function(e){
-      e && e.preventDefault();
-      $(e.currentTarget).parents('.source_dropdown').find('.source_dropdown_menu').toggle(0);
-    },
-
-    showSubContent:function(e){
-      e && e.preventDefault();
-      $(e.currentTarget).parents('.source_dropdown').find('.source_dropdown_menu').hide(0);
-
-      var text = $(e.currentTarget).text();
-      var id = $(e.currentTarget).data('slug');
-      $(e.currentTarget).parents('.source_dropdown').find('.source_dropdown_header').find('.overview_title').children('span').text(text);
-
-      $('.source_dropdown_body').hide(0);
-      $('#'+id).show(0);
-
-      this.calculateOffsets();
-
-    },
-
-
-    toggleSources: function(e){
-      var top;
-      this.$sourceBody.hide(0);
-
-
-      if ($(e.currentTarget).hasClass('active')) {
-        this.$sourceBody.removeClass('active');
-        $(e.currentTarget).removeClass('active');
-      } else {
-        this.$sourceHeader.removeClass('active');
-        top = $(e.currentTarget).offset().top;
-        $(e.currentTarget).addClass('active');
-        $(e.currentTarget).parent().children('.source_body').show(0);
-      }
-
-      setTimeout(_.bind(function(){
-        this.calculateOffsets();
-        (top) ? this.$htmlbody.animate({ scrollTop: top },250) : this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0);
-      },this),50);
-    },
-
-
 
     calculateOffsets: function(){
       this.$sideBarBox.css({'min-height': this.$sideBarAside.height() });
@@ -138,39 +99,85 @@ define([
       }
     },
 
-    updateSource: function(e){
+    changeSourceNav: function(e){
       e && e.preventDefault();
+      this.model.set('section',$(e.currentTarget).data('slug'));
+      this.model.set('interesting', $(e.currentTarget).data('interesting'));
+      this.model.set('t',null);
 
-      var params = {
-        section: $(e.currentTarget).data('slug'),
-        interesting: $(e.currentTarget).data('interesting')
+      this.updateSource()
+    },
+    toggleSources: function(e){
+      this.$sourceBody.hide(0);
+      if ($(e.currentTarget).hasClass('active')) {
+        this.$sourceBody.removeClass('active');
+        $(e.currentTarget).removeClass('active');
+        this.model.set('t', null);
+      } else {
+        this.$sourceHeader.removeClass('active');
+        $(e.currentTarget).addClass('active');
+        $(e.currentTarget).parent().children('.source_body').show(0);
+        this.model.set('t', $(e.currentTarget).parent().attr('id'));
       }
+      this.updateSource();
+    },
+    toggleDropdown: function(e){
+      e && e.preventDefault();
+      $(e.currentTarget).parents('.source_dropdown').find('.source_dropdown_menu').toggle(0);
+    },
 
+    showSubContent:function(e){
+      e && e.preventDefault();
+      $(e.currentTarget).parents('.source_dropdown').find('.source_dropdown_menu').hide(0);
+
+      var text = $(e.currentTarget).text();
+      var id = $(e.currentTarget).data('slug');
+      $(e.currentTarget).parents('.source_dropdown').find('.source_dropdown_header').find('.overview_title').children('span').text(text);
+
+      $('.source_dropdown_body').hide(0);
+      $('#'+id).show(0);
+
+      this.calculateOffsets();
+
+    },
+
+
+    updateSource: function(){
+      var params = {
+        section: this.model.get('section'),
+        interesting: this.model.get('interesting'),
+        t: this.model.get('t')
+      }
       mps.publish('SourceStatic/update',[params]);
     },
+
 
     changeSource: function(params){
       //spinner
       this.$sourceSpinner.removeClass('start');
-
       if (params.section) {
-        var posY = (this.mobile) ? this.$document.scrollTop() : this.$sideBarBox.offset().top - this.padding;
-        this.$htmlbody.animate({ scrollTop: posY },0, _.bind(function(){
-            this.changeHelper(params.section);
-        },this));
-        mps.publish('Interesting/update',[params.interesting]);
+        this.model.set('section', params.section);
+        this.model.set('interesting', params.interesting);
+        (params.t) ? this.model.set('t', params.t) : null;
+        this.changeHelper();
+        mps.publish('Interesting/update',[this.model.get('interesting')]);
       }else{
         if (!this.mobile) {
           var section = this.$navItem.eq(0).data('slug');
-          this.changeHelper(section);
+          this.first = false;
+          this.model.set('section', section);
+          this.changeHelper();
         }
         var interesting = this.$navItem.eq(0).data('interesting');
+        this.model.set('interesting', interesting);
         mps.publish('Interesting/update',[interesting]);
       }
 
     },
 
-    changeHelper: function(section){
+    changeHelper: function(){
+      var section = this.model.get('section');
+      var tab = this.model.get('t');
       this.$sideBarBox.addClass('active');
       this.$backBtn.addClass('active');
       //aside
@@ -181,6 +188,11 @@ define([
       this.$sourceArticle.removeClass('selected');
       $('#'+section).addClass('selected');
 
+      //tab
+      if (tab) {
+        (!$('#'+tab).find('.source_header').hasClass('active')) ? $('#'+tab).find('.source_header').trigger('click') : null;
+      }
+
       if(this.mobile) {
         this.$sideBarBox.animate({ scrollTop: 0 },0);
         this.$headerH1.addClass('active');
@@ -188,10 +200,27 @@ define([
 
       setTimeout(_.bind(function(){
         this.calculateOffsets();
-      },this),50);
+        var posY, time;
+        if (this.first) {
+          if(this.mobile) {
+            posY = this.$document.scrollTop();
+            time = 0;
+          }else{
+            if(!tab) {
+              posY = this.$sideBarBox.offset().top - this.padding
+              time = 250;
+            }else{
+              posY = $('#'+tab).offset().top;
+              time = 250;
+            }
+          }
+          this.$htmlbody.animate({ scrollTop: posY },time);
+        }else{
+          this.first = true;
+        }
+      },this),100);
 
       setTimeout(_.bind(function(){
-
         //htmlbody
         if(this.mobile) {
           this.$sideBarBox.addClass('animate');

@@ -43,7 +43,7 @@ define([
     },
 
     getBoxes: function(_interesting){
-      var interesting = (_interesting) ? _interesting.split(',') : ['explore_the_map','get_involved','keep_updated'];
+      var interesting = (_interesting) ? _interesting.split(',') : ['explore_the_map','get_involved','stay_informed'];
       this.arr = _.map(interesting, _.bind(function(box){
         return this.helper[$.trim(box)];
       }, this));

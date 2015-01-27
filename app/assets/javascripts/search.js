@@ -9,9 +9,9 @@ require([
   'mps',
   '_string'
 ], function($, _, Class, Backbone, mps) {
-  
+
   'use strict';
-  
+
   var SearchPage = Class.extend({
 
     $el: $('body'),
@@ -24,8 +24,6 @@ require([
      * Initialize Application Views.
      */
     _initViews: function() {
-      console.log('hloa');
-
     }
   });
 

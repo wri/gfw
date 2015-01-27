@@ -110,7 +110,9 @@
   }
 
 }
-
+.countries-list-title{
+  text-align: center;
+}
 h3 {
   font-size: 25px;
   padding: 40px 0 0 0;
@@ -118,6 +120,12 @@ h3 {
   color: #555;
   &:first-letter {
     text-transform: uppercase;
+  }
+  a{
+    color: $cGreen;
+    &:hover{
+      color: darken($cGreen, 5%);
+    }
   }
 }
 

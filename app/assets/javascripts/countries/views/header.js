@@ -241,9 +241,9 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
 
     _.each(this.country.get('areas').models, function(area) {
       if (self.area == area) {
-        self.$areaSelector.append('<option value="' + area.get('name_1') + '" selected>' + area.get('name_1') + '</option>')
+        self.$areaSelector.append('<option class="dark" value="' + area.get('name_1') + '" selected>' + area.get('name_1') + '</option>')
       } else {
-        self.$areaSelector.append('<option value="' + area.get('name_1') + '">' + area.get('name_1') + '</option>')
+        self.$areaSelector.append('<option class="dark" value="' + area.get('name_1') + '">' + area.get('name_1') + '</option>')
       }
     });
     ga('send', 'event', 'Countries', 'Click', 'Change Area');

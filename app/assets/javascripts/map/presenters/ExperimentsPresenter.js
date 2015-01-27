@@ -25,9 +25,11 @@ define([
      */
     _source: function(){
       var $source = $('.source');
-      var variation = cxApi.chooseVariation();
-      if (variation) {
-        $source.addClass('info2');
+      if (cxApi) {
+        var variation = cxApi.chooseVariation();
+        if (variation) {
+          $source.addClass('info2');
+        }
       }
     },
 

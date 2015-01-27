@@ -1,8 +1,19 @@
+.section-title {
+
+  @media only screen and (max-width: 480px) {
+    padding: 85px 0 0;
+  }
+
+}
+
 .country-overview-wrapper-coolio{
   position: relative;
   background: #333;
   margin-top: 36px;
   top: -20px;
+  .embed & {
+    width: 960px;
+  }
 }
 
 .overview_graph {
@@ -40,9 +51,6 @@
 
 .overview_graph__area {
   height: 371px;
-  // background: image-url('backgrounds/overview_graph.png');
-  // @include background-size(cover);
-  // background-position: -220px center;
   svg {
     border-top: 1px solid #615D6C;
     position: relative;
@@ -176,10 +184,24 @@
 
   .info {
     position: absolute;
-    top: 11px;
+    top: 50%;
     right: 20px;
+    @include transform(translate(0,-50%));
+    border-radius: 50%;
+    background: $light;
+    width: 16px;
+    height: 16px;
+    svg{
+      width: 100%;
+      height: 100%;
+      fill: $dark;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
   }
 }
+
 
 .overview_graph__years,
 .overview_graph__axis,
@@ -199,6 +221,9 @@
   span {
     text-transform: lowercase;
   }
+}
+.overview_graph__years{
+  width: 960px;
 }
 
 .overview_graph__axis {
@@ -285,6 +310,26 @@
   font-size: 17px;
   color: $dark;
 
+  &.loss-vs-gain{
+    width: auto;
+    right: 92px;
+  }
+  &.per-loss{
+    width: auto;
+    right: 171px;
+  }
+  &.total-loss{
+    width: auto;
+    right: 67px;
+  }
+  &.ratio-loss-gain{
+    width: auto;
+    right: 25px;
+  }
+  &.cover-extent{
+    width: auto;
+    right: 57px;
+  }
   &.huge {
     width: 330px;
   }

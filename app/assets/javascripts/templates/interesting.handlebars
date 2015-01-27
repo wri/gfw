@@ -11,10 +11,14 @@
               <p>{{this.description}}</p>
             </div>
             <footer>
-              <a href="{{this.link}}" class="btn dark medium">Read More</a>
+              {{#if this.link}}
+                <a {{#if this.new_browser_tab}}target="_blank"{{/if}} href="{{this.link}}" class="btn dark medium">{{#if this.button_text}}{{this.button_text}}{{else}}Read More{{/if}}</a>
+              {{else}}
+                <span class="btn soon">coming soon</span>
+              {{/if}}
             </footer>
           </div>
-        </div>        
+        </div>
       {{/each}}
     </div>
   </div>

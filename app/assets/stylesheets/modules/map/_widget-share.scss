@@ -171,6 +171,7 @@
         text-transform: uppercase;
         background: #eee;
         text-decoration: none;
+        -webkit-backface-visibility:hidden;
       }
     }
     .input-field {

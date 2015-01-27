@@ -8,21 +8,23 @@
         <div class='carrousel-box'>
           <ul>
             <li id="site_overview" class='slide visible'>
-              <div id="playerCarrousel" data-default="s4HhoSbOgUc" class="player"></div>
+              <div id="playerCarrousel" data-default="1tWmLmwNDWM" class="player"></div>
             </li>
           </ul>
         </div>
         <ul class="row button-box">
-          <li><a href="#" class="btn white uppercase btn-video visible" data-video="s4HhoSbOgUc">Gfw Tutorial | Overview</a></li>
-          <li><a href="#" class="btn white uppercase btn-video" data-video="VSn5N7cNiGg">Gfw Tutorial | Map</a></li>
-          <li><a href="#" class="btn white uppercase btn-video disabled" data-video="#map_tutorial">Country profiles & rankings</a></li>
+          <li><a href="#" class="btn white uppercase btn-video visible" data-video="1tWmLmwNDWM">Overview</a></li>
+          <li><a href="#" class="btn white uppercase btn-video" data-video="E2-r1e04Dvo">Viewing Global Data</a></li>
+          <li><a href="#" class="btn white uppercase btn-video" data-video="jASoC9pZhVQ">Viewing Country Data</a></li>
+          <li><a href="#" class="btn white uppercase btn-video" data-video="gr6Wl_kOMOU">Conducting Analysis</a></li>
+          <li><a href="#" class="btn white uppercase btn-video" data-video="xFp0_q-_e0o">Subscribing to Alerts</a></li>
         </ul>
       </div>
     </div>
 </section>
 
 <section id="sidebarNavView" class="content-static">
-  <a id="back-btn" class="back-btn mobile-show" href="#"><svg><use xlink:href="#shape-fast-forward-left"></use></svg>Back</a>
+  <a id="back-btn" class="back-btn mobile-show" href="#"><svg><use xlink:href="#shape-fast-forward-left"></use></svg>How To</a>
   <div class="inner">
     <div class="row">
       <aside id="sidebarAside">
@@ -33,10 +35,10 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'View data', "#{howto_path}/view-data", :"data-slug" => 'view-data', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item view-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Conduct analysis & subscribe to alerts', "#{howto_path}/conduct-analysis-and-subscribe-to-alerts", :"data-slug" => 'conduct-analysis-and-subscribe-to-alerts', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item conduct-analysis-and-subscribe-to-alerts' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Submit a story', "#{howto_path}/submit-a-story", :"data-slug" => 'submit-a-story', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item submit-a-story' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li class="no-transform"><%= link_to 'FAQs', "#{howto_path}/faqs", :"data-slug" => 'faqs', :"data-interesting" => 'fires_howto, commodities_howto, coming_soon', :class => 'nav-item faqs' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'View data', "#{howto_path}/view-data", :"data-slug" => 'view-data', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item view-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Conduct analysis & subscribe to alerts', "#{howto_path}/conduct-analysis-and-subscribe-to-alerts", :"data-slug" => 'conduct-analysis-and-subscribe-to-alerts', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item conduct-analysis-and-subscribe-to-alerts' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Submit a story', "#{howto_path}/submit-a-story", :"data-slug" => 'submit-a-story', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item submit-a-story' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li class="no-transform"><%= link_to 'FAQs', "#{howto_path}/faqs", :"data-slug" => 'faqs', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item faqs' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
@@ -48,7 +50,7 @@
               <p>This information pertains only to the GFW Interactive Map and country profiles and rankings. For more advanced forest fire and commodity visualizations, please visit <a href="http://fires.globalforestwatch.org/" target="_blank">GFW Fires</a> and <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities</a>.</p>
             </header>
             <ul class='sources'>
-              <li class='source-item first'>
+              <li id="view-global-data" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>View global data</strong>
                   <i class='expand_arrow'></i>
@@ -64,7 +66,7 @@
                     <p><%= image_tag('howto-screenshots/Screenshot-2.png') %></p>
                     <p><strong>4.</strong>  View selected layers in the data legend. For data layers restricted to a particular geographic region, you can turn on “Geographic coverage” in the data legend to see the geographic extent of the particular data layer on the map.</p>
                     <p><%= image_tag('howto-screenshots/Screenshot-3.png') %></p>
-                    <p><strong>5.</strong>  Share your map view, analyze data (see the Analyze and monitor data tab), or adjust the data settings using the buttons on the map.</p>
+                    <p><strong>5.</strong>  Share your map view, analyze data (see <a href="/howto/conduct-analysis-and-subscribe-to-alerts" target='_blank'>Conduct Analysis and Subscribe to Alerts</a>), or adjust the data settings using the buttons on the map.</p>
                     <p><%= image_tag('howto-screenshots/Screenshot-4.png') %></p>
                     <p><strong>6.</strong>  Change the base map to view data with a different map background.</p>
                     <p><%= image_tag('howto-screenshots/Screenshot-5.png') %></p>
@@ -79,21 +81,21 @@
                     <p><%= image_tag('howto-screenshots/Screenshot-6.png') %></p>
                     <p><strong>4.</strong>  For data layers with a simple timeline, select the period for which you would like to view data.</p>
                     <p><%= image_tag('howto-screenshots/Screenshot-7.png') %></p>
-                    <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/loss?begin=2001-01-01&end=2013-12-31&threshold=30' target='_blank'>View UMD/Google Data</a>
-                    <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/forma?begin=2006-01-01&end=2014-11-29' target='_blank'>View FORMA data</a>
-                    <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/imazon?begin=2008-01-01&end=2014-10-31' target='_blank'>View Imazon Data</a>
-                    <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/modis?begin=2014-07-01&end=2014-09-30' target='_blank'>View QUICC Data</a>
+                    <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/loss' target='_blank'>View UMD/Google Data</a>
+                    <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/forma' target='_blank'>View FORMA data</a>
+                    <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/imazon' target='_blank'>View Imazon Data</a>
+                    <a class="btn green medium" href='/map/3/15.00/27.00/ALL/grayscale/modis' target='_blank'>View QUICC Data</a>
                     <h3 class="overview_title">Learn more about individual data points and polygons</h3>
                     <p>Some data layers allow you to click on individual data points and polygons (i.e., shapes) to view additional information. This feature applies to NASA active fires (within the Forest Change tab) and/or data within the Forest Use, Conservation, People, and Stories tabs.</p>
                     <p><strong>1.</strong>  Select a data layer, noting that this feature only applies to certain layers (see above).</p>
-                    <p><strong>2.</strong>  Click on the data point or polygon you want to learn more about and an information window will appear. <i>Note: You can analyze Forest Change data within individual land-use concessions and protected areas by selecting the analysis icon in the information window. Click the Analyze and monitor tab on this page for step-by-step guidance.</i></p>
+                    <p><strong>2.</strong>  Click on the data point or polygon you want to learn more about and an information window will appear. <i>Note: You can analyze Forest Change data within individual land-use concessions and protected areas by selecting the analysis icon in the information window. Click the <a href="/howto/conduct-analysis-and-subscribe-to-alerts" target='_blank'>Conduct Analysis and Subscribe to Alerts</a> tab on this page for step-by-step guidance.</i></p>
                     <p><%= image_tag('howto-screenshots/Screenshot-8.png') %></p>
                     <a class="btn green medium" href='/map' target='_blank'>GFW Interactive Map</a>
                     <p>Interested in conducting more detailed analyses of concessions related to specific commodities? Visit <a href="http://commodities.globalforestwatch.org/" target="_blank">GFW Commodities</a>.</p>
                   </div>
                 </div>
               </li>
-              <li class='source-item last'>
+              <li id="view-country-data" class='source-item last'>
                 <div class='source_header'>
                   <strong class='source_title'>View country data</strong>
                   <i class='expand_arrow'></i>
@@ -103,9 +105,9 @@
                     <h3 class="overview_title">View and download national and subnational statistics</h3>
                     <p><strong>1.</strong>  Navigate to the <a href="/countries" target="_blank">country profiles</a>.</p>
                     <p><strong>2.</strong>  Select a country or search for a country to view statistics and graphs related to tree cover loss and gain, forest type, economy, land tenure, and more.</p>
-                    <p><strong>3.</strong>  See statistics and graphs for a subnational jurisdiction using the “Select Area” button located under the country name. <i>Note: Only the statistics and graphs presented on the top portion of the country profile can be refined to subnational jurisdictions.</i></p>
+                    <p><strong>3.</strong>  See statistics and graphs for a subnational jurisdiction using the “Select Jurisdiction” button located under the country name. <i>Note: Only the statistics and graphs presented on the top portion of the country profile can be refined to subnational jurisdictions.</i></p>
                     <p><%= image_tag('howto-screenshots/Screenshot-9.png') %></p>
-                    <p><strong>4.</strong>  For statistics and graphs presented in the top portion of the country profile, use the options menu on the right to download the original data, download a table with country statistics, or adjust the minimum tree cover canopy density.</p>
+                    <p><strong>4.</strong>  For statistics and graphs presented in the top portion of the country profile, use the options menu on the right to download the original data, download a table with country statistics, or adjust the minimum <a href="/howto/faqs?t=what-is-tree-cover-canopy-density-and-what-layers-allow-me-to-adjust-it" target="_blank">tree cover canopy density</a>.</p>
                     <p><%= image_tag('howto-screenshots/Screenshot-10.png') %></p>
                     <p><strong>5.</strong>  Learn more about or share each statistic and graph by selecting the information or share icons, when available.</p>
                     <p><%= image_tag('howto-screenshots/Screenshot-11.png') %></p>
@@ -116,7 +118,7 @@
                     <p><strong>2.</strong>  Use the tabs to navigate through different ranking categories.</p>
                     <p><strong>3.</strong>  Click on a country name in the ranking list to access the country profile.</p>
                     <p><%= image_tag('howto-screenshots/Screenshot-12.png') %></p>
-                    <p><strong>4.</strong>  Select the Settings button to adjust the minimum tree cover canopy density.</p>
+                    <p><strong>4.</strong>  Select the Settings button to adjust the minimum <a href="/howto/faqs?t=what-is-tree-cover-canopy-density-and-what-layers-allow-me-to-adjust-it" target="_blank">tree cover canopy density</a>.</p>
                     <p<strong>5.</strong>  Learn more about or share each graph by selecting the information or share icons.</p>
                     <p><%= image_tag('howto-screenshots/Screenshot-13.png') %></p>
                     <a class="btn green medium" href='/countries/overview' target='_blank'>Country profiles</a>
@@ -129,11 +131,11 @@
             <header>
               <h2>Conduct analysis & subscribe to alerts</h2>
               <p>Choose a category below to learn how to conduct analysis or subscribe to alerts for an area of interest.</p>
-              <p>You can define an area of interest on the map by using the drawing tool or selecting an existing polygon (such as a protected area).  Once you have defined an area of interest, you can calculate statistics about the area or subscribe to alerts. If you subscribe to alerts, you will be notified via email when a new tree cover loss alert has been detected, as often as every 30 days. Tree cover loss alerts come from the Forest Monitoring for Action (FORMA) system, which monitors and detects possible tree cover disturbance within 500 × 500 meter pixels in the humid tropical forest biome. To learn more about FORMA, please visit the <a href="/sources" target='_blank'>Data page</a>.</p>
+              <p>You can define an area of interest on the map by using the drawing tool or selecting an existing polygon (such as a protected area).  Once you have defined an area of interest, you can calculate statistics about the area or subscribe to alerts. If you subscribe to alerts, you will be notified via email when a new tree cover loss alert has been detected, as often as every 30 days. Tree cover loss alerts come from the <a href="/sources/forest_change?t=forma" target="_blank">Forest Monitoring for Action (FORMA)</a> system, which monitors and detects possible tree cover disturbance within 500 × 500 meter pixels in the humid tropical forest biome.</p>
               <p>This information pertains only to the GFW Interactive Map and country profiles. Visit <a href='http://www.commodities.globalforestwatch.org' target='_blank'>GFW Commodities</a> or <a href='http://www.fires.globalforestwatch.org' target='_blank'>GFW Fires</a> for more advanced analysis of areas affected by fires or commodity production.</p>
             </header>
             <ul class='sources'>
-              <li class='source-item first'>
+              <li id="analyze-or-subscribe-to-alerts-for-a-user-defined-area" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>ANALYZE OR SUBSCRIBE TO ALERTS FOR A USER-DEFINED AREA</strong>
                   <i class='expand_arrow'></i>
@@ -142,55 +144,54 @@
                   <div class='source_summary'>
                     <p><strong>1.</strong>  Enter the <a href="/map" target='_blank'>GFW Interactive Map</a>.
                     <p><strong>2.</strong>  Turn on the Forest Change data layer you wish to analyze. If you are interested in subscribing to alerts, turn on the FORMA Alerts data layer (located under the Forest Change tab).</p>
-                    <p><strong>3.</strong>  Define the time period you wish to analyze by dragging the handles of the time slider or by selecting the time interval. Disregard this step if you want to subscribe to alerts.</p>
-                    <p>[INSERT SCREENSHOT 14]</p>
+                    <p><strong>3.</strong>  Define the time period you wish to analyze by dragging the handles of the timeline or by selecting a time interval. Disregard this step if you want to subscribe to alerts.</p>
+                    <p><%= image_tag('howto-screenshots/Screenshot-14.png') %> </p>
                     <p><strong>4.</strong>  Select the analysis icon at the top of the map.</p>
-                    <p>[INSERT SCREENSHOT 15]</p>
+                    <p><%= image_tag('howto-screenshots/Screenshot-15.png') %> </p>
                     <p><strong>5.</strong>  Draw a shape on the map and click “Done,” and the results will appear.</p>
-                    <p>[INSERT SCREENSHOT 16 AND 17]</p>
-                    <p><strong>6.</strong>Want to adjust the time period or type of data you are analyzing? Simply drag the handles on the timeline or select a different time interval, and choose a different data layer under the Forest Use tab. Your results will update immediately based on your selection.</p>
-                    <p>Note: FORMA alerts only apply to the humid tropical forest biome. You will not receive alerts for any area outside this biome. Turn on “Geographic coverage” to see the extent of the humid tropical forest biome.</p>
-                    <p>[INSERT SCREENSHOT 18]</p>
-                    <p>Interested in learning when new alerts occur? Follow the final steps below.</p>
+                    <p><%= image_tag('howto-screenshots/Screenshot-16-AND-17.png') %> </p>
+                    <p><strong>6.</strong> If you want to adjust the time period or type of data you are analyzing simply drag the handles on the timeline or select a different time interval, or choose a different data layer under the Forest Use tab. Your results will update immediately based on your selection. Note: FORMA alerts only apply to the humid tropical forest biome. You will not receive alerts for any area outside this biome. Turn on “Geographic coverage” to see the extent of the humid tropical forest biome.</p>
+                    <p><%= image_tag('howto-screenshots/Screenshot-18.png') %> </p>
+                    <p><strong>Interested in learning when new alerts occur? Follow the final steps below.</strong></p>
                     <p><strong>7.</strong>  Click the “mail” icon located at the bottom of the window. Not working? Be sure you have turned on the FORMA Alerts data layer (located under the Forest Change tab).</p>
-                    <p>[INSERT SCREENSHOT 19]</p>
+                    <p><%= image_tag('howto-screenshots/Screenshot-19.png') %> </p>
                     <p><strong>8.</strong>  Enter your email address to receive tree cover loss alerts for your user-defined area within the humid tropical forest biome.</p>
-                    <p><strong>9.</strong>  Click the “X” icon to discard your analysis.</p>
-                    <p>[INSERT SCREENSHOT 20]</p>
+                    <p><strong>9.</strong>  Click the “trash” icon to discard your analysis.</p>
+                    <p><%= image_tag('howto-screenshots/Screenshot-20.png') %> </p>
                     <a class="btn green medium" href="/map" target='_blank'>GFW Interactive Map</a>
                   </div>
                 </div>
               </li>
-              <li class='source-item'>
+              <li id="analyze-or-subscribe-to-alerts-for-a-land-use-concession-or-protected-area" class='source-item'>
                 <div class='source_header'>
-                  <strong class='source_title'>Subscribe to alerts for a land use concession or protected area</strong>
+                  <strong class='source_title'>Analyze or Subscribe to alerts for a land use concession or protected area</strong>
                   <i class='expand_arrow'></i>
                 </div>
                 <div class='source_body'>
                   <div class='source_summary'>
                     <p><strong>1.</strong>  Enter the <a href="/map" target='_blank'>GFW Interactive Map</a>. If you are interested in conducting a more in-depth analysis of specific commodities, visit <a href='http://www.commodities.globalforestwatch.org' target='_blank'>GFW Commodities</a> and follow the instructions provided.
                     <p><strong>2.</strong>  Turn on the protected area layer or a forest use concession layer you want to analyze. The protected area layer is located under the Conservation tab, and the forest use concessions are located under the Forest Use tab.</p>
-                    <p>[INSERT SCREENSHOT 21 AND 22]</p>
+                    <p><%= image_tag('howto-screenshots/Screenshot-21-AND-22.png') %> </p>
                     <p><strong>3.</strong>  Turn on the Forest Change data layer you wish to analyze. If you are interested in subscribing to alerts, turn on the FORMA Alerts data layer (located under the Forest Change tab).</p>
-                    <p><strong>4.</strong>  Define the time period of your analysis by dragging the handles of the time slider or by selecting the time interval. Disregard this step if you want to subscribe to alerts.</p>
-                    <p>[INSERT SCREENSHOT 23]</p>
+                    <p><strong>4.</strong>  Define the time period of your analysis by dragging the handles of the timeline or by selecting a time interval. Disregard this step if you want to subscribe to alerts.</p>
+                    <p><%= image_tag('howto-screenshots/Screenshot-23.png') %> </p>
                     <p><strong>5.</strong>  Click on the individual protected area or concession you want to analyze, and select the analysis icon. The results will appear. </p>
-                    <p>[INSERT SCREENSHOT 24 AND 25]</p>
+                    <p><%= image_tag('howto-screenshots/Screenshot-24-AND-25.png') %> </p>
                     <p>Note: FORMA alerts only apply to the humid tropical forest biome. You will not receive alerts for any protected area or concession outside this biome.  Turn on “Geographic coverage” to see the extent of this biome.</p>
-                    <p>[INSERT SCREENSHOT 26]</p>
-                    <p>Interested in learning when new alerts occur? Follow the final steps below.</p>
+                    <p><%= image_tag('howto-screenshots/Screenshot-26.png') %> </p>
+                    <p><strong>Interested in learning when new alerts occur? Follow the final steps below.</strong></p>
                     <p><strong>6.</strong>  Click the “mail” icon located at the bottom of the window. Not working? Be sure you have turned on the FORMA Alerts data set.</p>
-                    <p>[INSERT SCREENSHOT 27]</p>
+                    <p><%= image_tag('howto-screenshots/Screenshot-27.png') %> </p>
                     <p><strong>7.</strong>  Enter your email address to receive tree cover loss alerts for the selected protected area or concession within the humid tropical forest biome.</p>
-                    <p><strong>8.</strong>  Click the “X” icon to discard your analysis.</p>
-                    <p>[INSERT SCREENSHOT 28]</p>
+                    <p><strong>8.</strong>  Click the “trash” icon to discard your analysis.</p>
+                    <p><%= image_tag('howto-screenshots/Screenshot-28.png') %> </p>
                     <a class="btn green medium" href="/map" target='_blank'>GFW Interactive Map</a>
                   </div>
                 </div>
               </li>
-              <li class='source-item'>
+              <li id="analyze-or-subscribe-to-alerts-for-a-country-or-subnational-jurisdiction" class='source-item'>
                 <div class='source_header'>
-                  <strong class='source_title'>ANALYZE OR MONITOR A COUNTRY OR SUBNATIONAL JURISDICTION</strong>
+                  <strong class='source_title'>ANALYZE OR SUBSCRIBE TO ALERTS FOR A COUNTRY OR SUBNATIONAL JURISDICTION</strong>
                   <i class='expand_arrow'></i>
                 </div>
                 <div class='source_body'>
@@ -199,11 +200,12 @@
                     <p><strong>2.</strong>  If desired, select a subnational jurisdiction (e.g., state, county, province) using the dropdown menu under the country name.</p>
                     <p><%= image_tag('howto-screenshots/Screenshot-29.png') %></p>
                     <p><strong>3.</strong>  Click “analyze on map.” You will then be directed to the map to perform an analysis using UMD/Google tree cover loss and gain.</p>
+                    <p><%= image_tag('howto-screenshots/Screenshot-34.png') %></p>
                     <p><strong>4.</strong>  If you want to analyze a different data layer, select a new layer under the Forest Change tab. If you are interested in monitoring the area for tree clearings, turn on the FORMA Alerts data layer (located under Forest Change).  Note: Monitoring only applies to the humid tropical forest biome. You will not receive alerts for any country or region outside this area.  Turn on “Geographic coverage” to see the area you can monitor.</p>
                     <p><%= image_tag('howto-screenshots/Screenshot-30.png') %></p>
-                    <p><strong>5.</strong>  Adjust the time period of your analysis by dragging the handles of the time slider or by selecting the time interval. Disregard this step if you want to monitor an area.</p>
+                    <p><strong>5.</strong>  Adjust the time period of your analysis by dragging the handles of the timeline or by selecting a time interval. Disregard this step if you want to monitor an area.</p>
                     <p><%= image_tag('howto-screenshots/Screenshot-31.png') %></p>
-                    <p>Interested in monitoring? Follow the final steps below.</p>
+                    <p><strong>Interested in learning when new alerts occur? Follow the final steps below.</strong></p>
                     <p><strong>6.</strong>  Click the “mail” icon located at the bottom of the window. Not working? Be sure you have turned on the FORMA Alerts data set.</p>
                     <p><%= image_tag('howto-screenshots/Screenshot-32.png') %></p>
                     <p><strong>7.</strong>  Enter your email address to receive tree clearing alerts for the selected country or region.</p>
@@ -213,7 +215,7 @@
                   </div>
                 </div>
               </li>
-              <li class='source-item last'>
+              <li id="advanced-analysis-for-commodities-and-forest-fires" class='source-item last'>
                 <div class='source_header'>
                   <strong class='source_title'>Advanced analysis for commodities and forest fires</strong>
                   <i class='expand_arrow'></i>
@@ -257,7 +259,7 @@
               <h2>Frequently asked questions</h2>
             </header>
             <ul class='sources'>
-              <li class='source-item first'>
+              <li id="who-can-use-global-forest-watch" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>Who can use Global Forest Watch?</strong>
                   <i class='expand_arrow'></i>
@@ -278,7 +280,7 @@
                   </div>
                 </div>
               </li>
-              <li class='source-item first'>
+              <li id="who-is-behind-global-forest-watch" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>Who is behind Global Forest Watch?</strong>
                   <i class='expand_arrow'></i>
@@ -291,7 +293,7 @@
                   </div>
                 </div>
               </li>
-              <li class='source-item first'>
+              <li id="why-do-forests-matter" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>Why do forests matter?</strong>
                   <i class='expand_arrow'></i>
@@ -306,7 +308,7 @@
                   </div>
                 </div>
               </li>
-              <li class='source-item first'>
+              <li id="what-updates-are-coming-down-the-road-for-gfw" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>What updates are coming down the road for GFW?</strong>
                   <i class='expand_arrow'></i>
@@ -320,7 +322,7 @@
                       <li>A plantations map for tropical regions</li>
                       <li>A new homepage that allows users to more easily access relevant GFW features and data</li>
                       <li>An expanded analysis and subscription tool that enables on-the-fly analysis of additional data layers and subscription to stories and other forest change data layers</li>
-                      <li>Updated country pages that include additional climate, carbon, and forest data</li>
+                      <li>Updated country profiles that include additional climate, carbon, and forest data</li>
                       <li>A new portal that allows users to easily navigate, search, and download all GFW data</li>
                       <li>Better language translation and low-bandwith capabilities</li>
                       <li>Updated carbon density maps and estimates of emissions for forest loss and land-use change</li>
@@ -331,7 +333,7 @@
                   </div>
                 </div>
               </li>
-              <li class='source-item first'>
+              <li id="how-does-gfw-define-key-terms" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>How does GFW define key terms?</strong>
                   <i class='expand_arrow'></i>
@@ -361,7 +363,7 @@
                   </div>
                 </div>
               </li>
-              <li class='source-item first'>
+              <li id="does-gfw-distinguish-tree-plantations-from-natural-forests" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>Does GFW distinguish tree plantations from natural forests?</strong>
                   <i class='expand_arrow'></i>
@@ -374,7 +376,7 @@
                   </div>
                 </div>
               </li>
-              <li class='source-item first'>
+              <li id="do-gfw-data-reveal-the-quality-of-forest-management" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>Do GFW data reveal the quality of forest management (e.g., sustainable versus unsustainable)? What about forest change from natural versus human causes?</strong>
                   <i class='expand_arrow'></i>
@@ -387,7 +389,7 @@
                   </div>
                 </div>
               </li>
-              <li class='source-item first'>
+              <li id="what-kinds-of-data-are-available-on-global-forest-watch" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>What kinds of data are available on Global Forest Watch?</strong>
                   <i class='expand_arrow'></i>
@@ -412,7 +414,7 @@
                   </div>
                 </div>
               </li>
-              <li class='source-item first'>
+              <li id="where-do-the-data-come-from" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>Where do the data come from?</strong>
                   <i class='expand_arrow'></i>
@@ -425,7 +427,7 @@
                   </div>
                 </div>
               </li>
-              <li class='source-item first'>
+              <li id="do-you-have-these-data-sets-available-for-every-country" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>Do you have these data sets available for every country?</strong>
                   <i class='expand_arrow'></i>
@@ -438,7 +440,7 @@
                   </div>
                 </div>
               </li>
-              <li class='source-item first'>
+              <li id="how-accurate-are-the-data-displayed-on-global-forest-watch" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>How accurate are the data displayed on Global Forest Watch?</strong>
                   <i class='expand_arrow'></i>
@@ -451,7 +453,7 @@
                   </div>
                 </div>
               </li>
-              <li class='source-item first'>
+              <li id="why-do-different-data-layers-contradict-each-other-or-not-overlap-exactly" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>Why do different data layers contradict each other or not overlap exactly?</strong>
                   <i class='expand_arrow'></i>
@@ -461,14 +463,14 @@
                     <p>Different data sets measure different things and are derived using different methodologies. Such differences can lead to results that may manifest as contradictory layers on the GFW platform. In some cases, a lack of available high-quality data may cause a greater margin of error for certain data sets.</p>
 
                     <ul class='bullets'>
-                      <li><p><strong>Intact Forest Landscapes vs. tree cover extent:</strong> These data sets measure different things. “Tree cover extent” shows all 30 × 30 meter areas that meet a minimum threshold of tree cover (25% canopy cover), whereas “Intact Forest Landscapes” only shows forests that show no significant signs of human activity (see the <%= link_to 'Data page', "#{sources_path}#forest_cover" %> for specifics).</p>
+                      <li><p><strong>Intact Forest Landscapes vs. tree cover extent:</strong> These data sets measure different things. “Tree cover extent” shows all 30 × 30 meter areas that meet a minimum threshold of tree cover (25% canopy cover), whereas “Intact Forest Landscapes” only shows forests that show no significant signs of human activity (see the <a href="/sources/forest_cover" target="_blank">data page</a> for specifics).</p>
 
                       <p>Users may find instances where tree cover extent does not fall within the boundaries of intact forest landscapes. This is because the Intact Forest Landscapes layer is based on MODIS (250 meter resolution satellite imagery), which is known to overestimate low tree cover densities, whereas the tree cover extent layer is based on Landsat (30 meter resolution satellite imagery). As a result, the tree cover extent layer may not show tree cover in an area that is covered by an intact forest landscape polygon.</p></li>
                     </ul>
                   </div>
                 </div>
               </li>
-              <li class='source-item first'>
+              <li id="what-is-tree-cover-canopy-density-and-what-layers-allow-me-to-adjust-it" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>What is tree cover canopy (TCC) density and what layers allow me to adjust it?</strong>
                   <i class='expand_arrow'></i>
@@ -476,16 +478,16 @@
                 <div class='source_body'>
                   <div class='source_summary'>
                     <p>Not all forests have the same footprint. Some forests are dense, like the tropical Amazon, with canopies that blanket almost every inch of ground for miles. Others forests are sparse, such as the savannah woodlands of North Africa where the canopies do not close or interlace. There are many shades in between. As a result, there is no global consensus on how much tree cover is needed to constitute a forest and it is important to be able to adjust the tree cover canopy density according to different user or country definitions of “forest.”</p>
-                    
-                   <p>The minimum tree cover canopy density can only be adjusted within the UMD/Google tree cover extent and loss data sets. When these layers are activated in the map, you can adjust the minimum percentage of canopy density through the settings icon. This adjustment can also be made in other areas of the website where UMD/Google forest statistics are used, such as within the country profiles and rankings.</p> 
-                   
+
+                   <p>The minimum tree cover canopy density can only be adjusted within the UMD/Google tree cover extent and loss data sets. When these layers are activated in the map, you can adjust the minimum percentage of canopy density through the settings icon. This adjustment can also be made in other areas of the website where UMD/Google forest statistics are used, such as within the country profiles and rankings.</p>
+
                    <p>What do these percentages mean? Technically speaking, tree cover canopy density represents the estimated percent of a pixel that was covered by tree canopy in the year 2000, as determined from the analysis of satellite imagery. For the tree cover loss data, tree cover canopy density therefore corresponds to the density of tree cover before loss occurred. For example, if you select 25% as the minimum tree cover canopy density, you will only see tree cover loss pixels for which the original tree cover density was greater than 25%.</p>
-                   
+
                    <p>Note: Adjustments to the minimum TCC density only affect UMD tree cover loss and extent data layers. This feature does not pertain to UMD tree cover gain or to other GFW data layers or statistics. UMD tree cover gain is displayed with a set minimum TCC density greater than 50%. The minimum TCC density cannot be changed independently for loss and extent. A change made to one data layer will immediately take effect in the other.</p>
-              
-                </div>  
+
+                </div>
               </li>
-              <li class='source-item first'>
+              <li id="i-am-familiar-with-a-particular-geographic-area-and-believe-your-data-set-is-inaccurate-what-can-i-do" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>I am familiar with a particular geographic area and believe your data set is inaccurate. What can I do?</strong>
                   <i class='expand_arrow'></i>
@@ -497,7 +499,7 @@
                     <p>If you still believe our data are inaccurate, please <a href='mailto:gfw@wri.com'>contact us</a> with a brief description of the location, data set in question, and observed issue. You can also <%= link_to 'submit a story', new_story_path %>, with photos or other details. Our team will flag the area for further investigation.</p>                  </div>
                 </div>
               </li>
-              <li class='source-item first'>
+              <li id="how-do-i-cite-global-forest-watch-as-a-data-source" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>How do I cite Global Forest Watch as a data source?</strong>
                   <i class='expand_arrow'></i>
@@ -511,7 +513,7 @@
                   </div>
                 </div>
               </li>
-              <li class='source-item first'>
+              <li id="how-was-the-global-forest-watch-website-built" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>How was the Global Forest Watch website built?</strong>
                   <i class='expand_arrow'></i>
@@ -523,7 +525,7 @@
                   </div>
                 </div>
               </li>
-              <li class='source-item first'>
+              <li id="what-does-it-mean-that-global-forest-watch-is-in-beta" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>What does it mean that Global Forest Watch is in “beta”?</strong>
                   <i class='expand_arrow'></i>
@@ -532,11 +534,12 @@
                   <div class='source_summary'>
                     <p>While GFW is fully functional, we are still collecting user feedback to improve website features and functionality.</p>
 
-                    <p>Establishing an effective web-based tool requires an iterative process of feedback and refinement. This is why your feedback is important to us. Please take our online <a href='https://www.surveymonkey.com/s/S6B53DT' target='_blank'>User Survey</a> to help us improve the site.</p>
+                    <p>Establishing an effective web-based tool requires an iterative process of feedback and refinement. This is why your feedback is important to us. Please submit your feedback on the <a href="/getinvolved/provide-feedback" target='_blank'>Feedback page</a> to help us improve the site.</p>
                   </div>
                 </div>
               </li>
-              <li class='source-item first'>
+
+              <li id="i-am-experiencing-difficulties-with-the-site-what-should-i-do" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>I am experiencing difficulties with the site. What should I do?</strong>
                   <i class='expand_arrow'></i>
@@ -547,18 +550,18 @@
 
                     <p>If errors persist when using a recommended browser, please contact us at <a href='mailto:gfw@wri.org'>gfw@wri.org</a> or <a href='https://github.com/vizzuality/gfw/issues?state=open' target='_blank'>submit an issue on GitHub</a>.</p>
 
-                    <p>GFW is still in “beta,” which means that there may still be some minor issues and errors within the site. We are usually able to fix them in a timely manner. It is helpful if you send us a link to the page or data set you had open when you encountered the problem, and if you tell us which browser you are using. You can also view the <a href='http://stats.pingdom.com/me0q72oj01nt' target='_blank'>Global Forest Watch System Status</a> page to see if there are any portions of the website that are not working properly. If you want to give us general feedback or suggestions about new data or functionality, please use the <a href='https://www.surveymonkey.com/s/S6B53DT' target='_blank'>User Survey</a>.</p>
+                    <p>GFW is still in “beta,” which means that there may still be some minor issues and errors within the site. We are usually able to fix them in a timely manner. It is helpful if you send us a link to the page or data set you had open when you encountered the problem, and if you tell us which browser you are using. You can also view the <a href='http://stats.pingdom.com/me0q72oj01nt' target='_blank'>Global Forest Watch System Status</a> page to see if there are any portions of the website that are not working properly. If you want to give us general feedback or suggestions about new data or functionality, please visit the <a href="/getinvolved/provide-feedback" target='_blank'>Feedback page</a>.</p>
                   </div>
                 </div>
               </li>
-              <li class='source-item last'>
+              <li id="whom-do-i-contact-with-questions-about-the-site" class='source-item last'>
                 <div class='source_header'>
                   <strong class='source_title'>Whom do I contact with questions about the site?</strong>
                   <i class='expand_arrow'></i>
                 </div>
                 <div class='source_body'>
                   <div class='source_summary'>
-                    <p>Please email general inquiries to <a href='mailto:gfw@wri.org'>gfw@wri.org</a>.</p>
+                    <p>Please email general inquiries to <a href='mailto:gfw@wri.org'>gfw@wri.org</a>, or visit the <a href="/about/contact-us" target='_blank'>Contact Us page</a> for other ways to get in touch.</p>
 
                     <p>For media inquiries, please contact James Anderson, Communications Officer, World Resources Institute (<a href='mailto:janderson@wri.org'>janderson@wri.org</a>, +1 (202) 729-7608).</p>
 

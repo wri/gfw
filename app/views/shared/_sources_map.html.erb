@@ -17,7 +17,7 @@
         <div class='source_table'>
           <p>Drag the handle to adjust the minimum tree cover canopy (TCC) density for the visualization and analysis of UMD tree cover loss and extent. TCC density represents the estimated percent of a UMD pixel that was covered by tree canopy in the year 2000, as determined from the analysis of satellite imagery. For the tree cover loss data, TCC density therefore corresponds to the density of tree cover <u>before</u> loss occurred. For example, if you select 25% as the minimum TCC density, you will only see tree cover loss pixels for which the original tree cover density was greater than 25%.</p>
           <p>Adjustments to the minimum TCC density only affect UMD tree cover loss and extent data layers. This feature does not pertain to UMD tree cover gain or to other GFW data layers or statistics. UMD tree cover gain is displayed with a set minimum TCC density greater than 50%. The minimum TCC density cannot be changed independently for loss and extent. A change made to one data layer will immediately take effect in the other.</p>
-          <p>This feature is also available for statistics within the country and global overview pages. However, the adjustment made to the visualization and analysis through the map view will not be automatically reflected in other areas of the website. To adjust the minimum TCC density within the country and global overview pages, click on the settings icon.</p>
+          <p>This feature is also available for statistics within the country and global overview pages. However, the adjustment made to the visualization and analysis through the map view will not be automatically reflected in other areas of the website. To adjust the minimum TCC density within the country and country rankings pages, click on the settings icon.</p>
         </div>
       </div>
     </li>
@@ -274,7 +274,7 @@
 
               <p>The GFW team has clipped out some data in regions where data quality is suspected to be low because of persistent cloud cover over identified ecoregions. This covers parts of Liberia, Venezuela, Guyana, Vietnam, Laos, and Burma/Myanmar. The current extent of the FORMA alerts is available for viewing here—<a href='http://wri-01.cartodb.com/viz/3cc0f4c2-56d3-11e3-80bb-c8600054c0d1/embed_map?title=true&description=true&search=false&shareable=false&cartodb_logo=false&layer_selector=false&legends=false&scrollwheel=true&sublayer_options=1&sql=&zoom=3&center_lat=-1.845383988573187&center_lon=16.34765625' target='_blank'>FORMA geographic extent</a>.</p>
 
-              <p>The <a href='https://github.com/wri/forma-clj' target='_blank'>algorithm</a> behind the FORMA alerts is constantly evolving to fix bugs and improve accuracy. As a result, what appears on the site and the results of analyses conducted on the site may change over time. It is important to always include the access date when citing FORMA. Analysis of FORMA alerts on the map should be considered definitive, as analysis is based on raw FORMA data, whereas the data on the map are optimized for visual display. For questions, please join the <a href='https://groups.google.com/forum/#!forum/globalforestwatch' target='_blank'>GFW discussion forum</a> or <a href='mailto:gfw@wri.org'>email us</a>.</p>
+              <p>The algorithm behind the FORMA alerts is constantly evolving to fix bugs and improve accuracy. As a result, what appears on the site and the results of analyses conducted on the site may change over time. It is important to always include the access date when citing FORMA. Analysis of FORMA alerts on the map should be considered definitive, as analysis is based on raw FORMA data, whereas the data on the map are optimized for visual display. For questions, please join the <a href='https://groups.google.com/forum/#!forum/globalforestwatch' target='_blank'>GFW discussion forum</a> or <a href='mailto:gfw@wri.org'>email us</a>.</p>
 
               <p>For the purpose of this study, “tree cover” was defined as areas with greater than 25% canopy cover (as determined by the <a href='http://journals.ametsoc.org/doi/abs/10.1175/1087-3562(2003)007%3C0001%3AGPTCAA%3E2.0.CO%3B2' target='_blank'>Vegetation Continuous Fields data set</a>), and change was measured without regard to forest land use. Tree cover assemblages that meet the 25% threshold include intact forests, plantations, and forest regrowth.</p>
 
@@ -285,7 +285,7 @@
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>FORMA is a near real-time tree cover loss alert system. It uses a cloud computing <a href="https://github.com/reddmetrics/forma-clj" target="_blank">algorithm</a> to analyze frequently updated satellite imagery along with complementary information on factors that affect tree cover loss, such as fires and precipitation. The system generates twice-monthly “alerts” for the world’s <a href="http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf" target="_blank">humid tropical forests</a> that identify 500 × 500 meter areas where new, large-scale loss is likely to have occurred.</p>
+          <p>FORMA is a near real-time tree cover loss alert system. It uses a cloud computing algorithm to analyze frequently updated satellite imagery along with complementary information on factors that affect tree cover loss, such as fires and precipitation. The system generates twice-monthly “alerts” for the world’s <a href="http://wolfweb.unr.edu/~ldyer/classes/396/olsonetal.pdf" target="_blank">humid tropical forests</a> that identify 500 × 500 meter areas where new, large-scale loss is likely to have occurred.</p>
 
           <p>FORMA is designed for quick identification of new areas of tree cover loss. The system analyzes data gathered daily by the <a href="http://modis.gsfc.nasa.gov/about/" target="_blank">MODIS</a> sensor, which operates on NASA’s Terra and Aqua satellites. The FORMA alerts system then detects pronounced changes in vegetation cover over time, as measured by the <a href="http://earthobservatory.nasa.gov/Features/MeasuringVegetation/measuring_vegetation_2.php" target="_blank">Normalized Difference Vegetation Index (NDVI)</a>, a measure of vegetation greenness. These pronounced changes in vegetation cover are likely to indicate forest being cleared, burned, or defoliated.</p>
 
@@ -440,7 +440,7 @@
           <h3 class='overview_title'>Overview</h3>
           <p>The Deforestation Alert System (Sistema de Alerta de Desmatamento—SAD) is a monthly alert that monitors forest cover loss and forest degradation in the Brazilian Amazon. The system generates information that is published monthly by <a href='http://www.imazon.org.br/' target='_blank'>Imazon</a>, a Brazilian NGO, through its <em>Forest Transparency Bulletin</em>. The monthly alerts are derived from a temporal mosaic of <a href='http://modis.gsfc.nasa.gov/about/' target='_blank'>MODIS</a> daily images that are scaled down from 500 × 500 meter to 250 × 250 meter resolution. The monthly results are then validated using medium resolution images from the China-Brazil Earth Resources Satellite (<a href='http://www.cbers.inpe.br/ingles/' target='_blank'>CBERS</a>) and NASA <a href='http://landsat.usgs.gov/' target='_blank'>Landsat</a> data in order to “ground-truth” the results being reported.</p>
 
-          <p class='credits'><strong>Citation:</strong> Souza, C. M., S. Hayashi, and A. Veríssimo. 2009. “Near Real-Time Deforestation Detection for Enforcement of Forest Reserves in Mato Grosso.” <em>FIG—Land Governance in Support of the MDGS: Responding to New Challenges.</em><a href='http://www.fig.net/pub/fig_wb_2009/papers/trn/trn_2_souza.pdf' target='_blank'>www.fig.net/pub/fig_wb_2009/papers/trn/trn_2_souza.pdf</a>.</p>
+          <p class='credits'><strong>Citation:</strong> Souza, C. M., S. Hayashi, and A. Veríssimo. 2009. “Near Real-Time Deforestation Detection for Enforcement of Forest Reserves in Mato Grosso.” <em>FIG—Land Governance in Support of the MDGS: Responding to New Challenges.</em> <a href='http://www.fig.net/pub/fig_wb_2009/papers/trn/trn_2_souza.pdf' target='_blank'>www.fig.net/pub/fig_wb_2009/papers/trn/trn_2_souza.pdf</a>.</p>
 
           <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> “SAD Alerts.” Imazon. Accessed through Global Forest Watch on [date].<a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
@@ -531,7 +531,7 @@
       </div>
     </li>
 
-    <li id='fires' class='source-item last'>
+    <li id='fires' class='source-item'>
       <div class='source_header'>
         <strong class='source_title'>NASA active fires</strong>
         <i class='expand_arrow'></i>
@@ -592,6 +592,67 @@
           <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> “NASA Active Fires.” NASA FIRMS. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
           <p class='read_more hidden'><em>Learn more or download data at the <a href='https://earthdata.nasa.gov/data/near-real-time-data/firms' target='_blank'>NASA FIRMS website</a></em></p>
+        </div>
+      </div>
+    </li>
+    <li id='terrailoss' class='source-item last'>
+      <div class='source_header'>
+        <strong class='source_title'>Terra-i Alerts</strong>
+        <i class='expand_arrow'></i>
+        <em class='source_description'>(monthly, 250m, Latin America)</em>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_download'>
+          <a href='http://www.terra-i.org/terra-i/data.html' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
+        </div>
+
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Detects areas in Latin American where tree cover loss is likely to have recently occurred</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Resolution/scale</dt>
+            <dd>250 × 250 meters</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Latin America</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd>Moderate Resolution Imaging Spectroradiometer (MODIS) vegetation indices and water body’ presence data; Tropical Rainfall Measuring Mission (TRMM) precipitation data</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Frequency of updates</dt>
+            <dd>Monthly</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd> 2004 – present</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd>
+              <p>Given the lack of ground-based data, the methodology was validated using data from other forest monitoring systems such as PRODES (<a href="http://www.obt.inpe.br/prodes/index.php" target="_blank">http://www.obt.inpe.br/prodes/index.php</a>) which have been validated separately.</p>
+              <p>All clouds, water, and mist were masked based on MODIS Quality Assessment and MOD35 products and their values changed to “No Data”.</p>
+              <p>The Terra-i algorithm for change detection does not automatically identify events that occurred because of wild fires or within secondary forests or oil palm plantations. Furthermore, the moderate resolution of the MODIS sensor does not detect small scale events (<5ha). Terra-i is intended to be used to quickly identify deforestation hotspots which should then be more thoroughly investigated with higher resolution imagery or field validation.</p>
+            </dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+
+          <p>Terra-i is a near real-time monitoring system that detects land cover changes in Latin America. It uses satellite data from MODIS vegetation indices (MOD13Q1 and NDVI) and products related to presence of water bodies (MOD35) as well as Tropical Rainfall Measuring Mission (TRMM) precipitation data to detect anthropogenic changes in vegetation cover every 16 days. Terra-i is a collaboration between the International Center for Tropical Agriculture (CIAT - DAPA), CGIAR’s Research Program on Forestry, Trees and Agroforestry (FTA), The Nature Conservancy (TNC), the University of Applied Sciences Western Switzerland (HEIG-VD), and King’s College London (KCL).</p>
+
+          <p>The system, which uses a computational algorithm similar to FORMA (<a href="http://www.globalforestwatch.org/sources/forest_change#forma">http://www.globalforestwatch.org/sources/forest_change#forma</a>), is based on the premise that natural vegetation follows a predictable pattern of change in greenness from one date to the next, brought about by site-specific land and climatic conditions over the same period. The model is trained to understand the normal pattern of changes in vegetation greenness in relation to terrain and rainfall for a site, which allows for prediction of what the next vegetation response should be based on the historical data. If the prediction is significantly different from the historical responses in relation to pattern of rainfall and lasts for two 16-day periods in a row, the pixel is marked as potentially having changed by anthropogenic means.</p>
+
+
+          <p class="credits"><strong>Citation:</strong>Reymondin, Louis, Andrew Jarvis, Andres Perez-Uribe, Jerry Touval, Karolina Argote, Julien Rebetez, Edward Guevara, and Mark Mulligan. 2012. “Terra-i: A methodology for near real-time monitoring of habitat change at continental scales using MODIS-NDVI and TRMM.” CIAT-Terra-i. <a href='http://terra-i.org/dms/docs/reports/Terra-i-Method/Terra-i%20Method.pdf' target='_blank'>http://terra-i.org/dms/docs/reports/Terra-i-Method/Terra-i%20Method.pdf</a>.</p>
+
+          <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> Reymondin, Louis, Andrew Jarvis, Andres Perez-Uribe, Jerry Touval, Karolina Argote, Julien Rebetez, Edward Guevara, and Mark Mulligan. 2012. “Terra-i alerts." CIAT-Terra-i. Accessed through Global Forest Watch on [date].<a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
         </div>
       </div>
     </li>
@@ -923,7 +984,7 @@
 
       <div class='source_body'>
         <div class='source_download'>
-          <a href='http://data.unep-wcmc.org/datasets/21' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
+          <a href='http://data.unep-wcmc.org/datasets/4' target='_blank' title='Download at project website'>Download at project website<i class='arrow_down'></i></a>
         </div>
 
         <div class='source_table'>
@@ -945,11 +1006,11 @@
           </dl>
           <dl class='sources_row'>
             <dt>Frecuency of updates</dt>
-            <dd>None planned</dd>
+            <dd>2014 update; 2011 original publication</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Date of content</dt>
-            <dd>1997-2000</dd>
+            <dd>2011</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Cautions</dt>
@@ -987,7 +1048,7 @@
 
       <div class='source_body'>
         <div class='source_download'>
-          <a href='http://wri-public-data.s3.amazonaws.com/gfw2/GFW_logging_20131023.zip' target='_blank' title='Download'>Download<i class='arrow_down'></i></a>
+          <a href='https://gfw2_download.s3.amazonaws.com/logging.zip' target='_blank' title='Download'>Download<i class='arrow_down'></i></a>
         </div>
 
         <div class='source_table'>
@@ -1920,7 +1981,7 @@
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
-            <dd>This raster dataset shows estimated human population density per square km, derived from a proportional allocation gridding algorithm that used more than 1,000,000 national and sub-national geographic units to assign population values to grid cells. The population count grids are divided by the land area grid to produce population density estimates.</dd>
+            <dd>The Population Density layer measures human population per square km.</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE</dt>
@@ -1934,11 +1995,11 @@
             <dt>Source data</dt>
             <dd><a href="http://sedac.ciesin.columbia.edu/data/set/grump-v1-population-density" target="_blank">Columbia University Center for International Earth Science Information Network (CIESIN)</a></dd>
           </dl>
-          <dl class='sources_row'>
+          <!-- <dl class='sources_row'>
             <dt>Frequency of updates</dt>
             <dd>10 years</dd>
-          </dl>
-          <dl class='sources_row even'>
+          </dl> -->
+          <dl class='sources_row'>
             <dt>Date of content</dt>
             <dd>2000</dd>
           </dl>
@@ -2240,19 +2301,29 @@
 
   <div class='source_body'>
     <div class='source_summary'>
-      <p class='first'>Lorem ipsum</p>
+      <p class='first'>Use the colored tabs above the map to view different categories of data. Select a data layer to activate it in the map, or click the information icon (<%= image_tag('tutorial-screenshots/screenshot-2.png') %>) located next to each data layer to learn more.</p>
+      <p>As you turn on data layers, they will appear in the legend on the left-hand side of the map. Multiple data layers can be turned on at once.</p>
+      <p>Most data layers under the Forest Change tab have a timeline located at the bottom of the map. Press the play button to view an animation of the entire time series of data or drag the ends of the timeline to select a specific period of time.</p>
+      <p><%= image_tag('tutorial-screenshots/screenshot-1.png') %></p>
+      <p>Some data layers allow you to click on individual data points and polygons (i.e., shapes) to view additional information. This feature applies to NASA active fires (within the Forest Change tab) and/or data within the Forest Use, Conservation, People, and Stories tabs.</p>
+      <p>Learn more about exploring forest data on the <a href="/howto">How To page</a>.</p>
     </div>
   </div>
 </article>
+
 <article id='alerts_dialog' class="sources">
   <div class='source_header'>
-    <strong class='source_title'>Receive alerts</strong>
+    <strong class='source_title'>Subscribe to alerts</strong>
     <i class='expand_arrow'></i>
   </div>
 
   <div class='source_body'>
     <div class='source_summary'>
-      <p class='first'>Lorem ipsum</p>
+      <p class='first'>The shaded blue regions on the map are protected areas.</p>
+      <p>1. Click on a protected area and select the “analysis” icon (<%= image_tag('tutorial-screenshots/screenshot-5.png') %>) located within the info window that appears.</p>
+      <p>2. Click “subscribe” located at the bottom of the window with analysis results and enter your email address.</p>
+      <p><%= image_tag('tutorial-screenshots/screenshot-6.png') %></p>
+      <p>Learn more about subscribing to alerts on the <a href="/howto">How To page</a>.</p>
     </div>
   </div>
 </article>

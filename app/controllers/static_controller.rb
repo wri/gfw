@@ -25,7 +25,7 @@ class StaticController < ApplicationController
   end
 
   def keep
-    @title = 'Keep Updated'
+    @title = 'Stay informed'
 
     stories_per_page = 5
 
@@ -42,8 +42,8 @@ class StaticController < ApplicationController
     @title = 'Get Involved'
   end
 
-  def applications
-    @title = 'Applications'
+  def explore
+    @title = 'Explore'
   end
 
   def feedback

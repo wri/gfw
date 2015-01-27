@@ -21,6 +21,7 @@ define([
       if (!this.$el.length) {
         return
       }
+      this.$btnVideo = $('.btn-video');
       this.$player = $('#playerCarrousel');
 
       // INITS
@@ -52,7 +53,9 @@ define([
       e && e.preventDefault();
       var id = $(e.currentTarget).data('video');
 
-      $(e.currentTarget).addClass('current').siblings().removeClass('current');
+      this.$btnVideo.removeClass('visible');
+      $(e.currentTarget).addClass('visible');
+
       this.player.loadVideoById(id);
     },
 

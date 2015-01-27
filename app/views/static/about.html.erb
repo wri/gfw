@@ -15,15 +15,15 @@
         </ul>
       </div>
       <ul class="row">
-        <li><a href="#" class="btn white uppercase">About commodities</a></li>
-        <li><a href="http://staging.blueraster.com/wri/gfw-fires/#v=about&x=&y=&l=&lyrs="class="btn white uppercase">About fires</a></li>
+        <li><a href="http://commodities.globalforestwatch.org/#v=about&n=GFW&x=114.37&y=-4.14&l=5&lyrs=tcc%2Closs" class="btn white uppercase">About GFW commodities</a></li>
+        <li><a href="http://fires.globalforestwatch.org/#v=about&x=&y=&l=&lyrs="class="btn white uppercase">About GFW fires</a></li>
       </ul>
     </div>
   </div>
 </section>
 
 <section id="sidebarNavView" class="content-static">
-  <a id="back-btn" class="back-btn mobile-show" href="#"><svg><use xlink:href="#shape-fast-forward-left"></use></svg>Back</a>
+  <a id="back-btn" class="back-btn mobile-show" href="#"><svg><use xlink:href="#shape-fast-forward-left"></use></svg><ABBR>About</ABBR></a>
   <div class="inner">
     <div class="row">
       <aside id="sidebarAside">
@@ -34,12 +34,11 @@
               <%= @title %>
             </a>
           </li>
-          <li><%= link_to 'About GFW', "#{about_path}/about-gfw", :"data-slug" => 'about-gfw', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item about-gfw' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'The GFW partnership', "#{about_path}/the-gfw-partnership", :"data-slug" => 'the-gfw-partnership', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item the-gfw-partnership' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Videos', "#{about_path}/videos", :"data-slug" => 'videos', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item videos' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Awards & Testimonials', "#{about_path}/awards_and_testimonials", :"data-slug" => 'awards_and_testimonials', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item awards_and_testimonials' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Outcomes', "#{about_path}/outcomes", :"data-slug" => 'outcomes', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item outcomes' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Contact us', "#{about_path}/contact-us", :"data-slug" => 'contact-us', :"data-interesting" => 'explore_the_map, keep_updated, get_involved', :class => 'nav-item contact-us' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'About GFW', "#{about_path}/about-gfw", :"data-slug" => 'about-gfw', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item about-gfw' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'The GFW partnership', "#{about_path}/the-gfw-partnership", :"data-slug" => 'the-gfw-partnership', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item the-gfw-partnership' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Videos', "#{about_path}/videos", :"data-slug" => 'videos', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item videos' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Awards & Testimonials', "#{about_path}/awards_and_testimonials", :"data-slug" => 'awards_and_testimonials', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item awards_and_testimonials' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Contact us', "#{about_path}/contact-us", :"data-slug" => 'contact-us', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item contact-us' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
@@ -78,50 +77,88 @@
             <div class="content">
               <ul class="faq-list double-margin">
                 <li>
-                  <h3><%= t('static.about.partners')%></h3>
+                  <h3>Partners & collaborators</h3>
                   <ul class='logo-list'>
-                    <li><a target='_blank' href='http://www.wri.org' class='wri'></a></li>
-                    <li><a target='_blank' href='http://earthengine.google.org/' class='google'></a></li>
-                    <li><a target='_blank' href='http://www.esri.com/gfw' class='esri'></a></li>
-                    <li><a target='_blank' href='http://www.geog.umd.edu/' class='universitymaryland'></a></li>
-                    <li><a target='_blank' href='http://www.unep.org/' class='unep'></a></li>
-                    <li><a target='_blank' href='http://www.imazon.org.br/pagina-inicial-en?set_language=en&cl=en' class='imazon'></a></li>
+                    <li><a target='_blank' href='http://bnpb.go.id/' class="bnpb"></a></li>
+                    <li><a target='_blank' href='http://www.blueraster.com' class='blueraster'></a></li>
+                    <li><a target='_blank' href='http://www.cartodb.com' class='cartodb'></a></li>
                     <li><a target='_blank' href='http://www.cgdev.org/' class='cfgd'></a></li>
-                    <li><a target='_blank' href='http://osfac.net/index.php?lang=en' class='osfac'></a></li>
+                    <li><a target='_blank' href='http://foreststreesagroforestry.org/' class='cgiar'></a></li>
+                    <li><a target='_blank' href='https://www.digitalglobe.com/' class="digitalglobe"></a></li>
+                    <li><a target='_blank' href='http://www.esri.com/gfw' class='esri'></a></li>
                     <li><a target='_blank' href='http://globalforestwatch.ca/' class='gfwca'></a></li>
+                    <li><a target='_blank' href='http://earthengine.google.org/' class='google'></a></li>
+                    <li><a target='_blank' href='http://www.imazon.org.br/pagina-inicial-en?set_language=en&cl=en' class='imazon'></a></li>
+                    <li><a target='_blank' href='http://www.janegoodall.org/' class='goodall'></a></li>
+                    <li><a target='_blank' href='http://osfac.net/index.php?lang=en' class='osfac'></a></li>
+                    <li><a target='_blank' href='http://www.redd-indonesia.org/' class="redd"></a></li>
                     <li><a target='_blank' href='http://www.scanex.ru/en/' class='scanex'></a></li>
                     <li><a target='_blank' href='http://www.transparentworld.ru/ru' class='twrus'></a></li>
-                    <li><a target='_blank' href='http://www.janegoodall.org/' class='goodall'></a></li>
-                    <li><a target='_blank' href='http://foreststreesagroforestry.org/' class='cgiar'></a></li>
-                    <li><a target='_blank' href='http://www.cartodb.com' class='cartodb'></a></li>
+                    <li><a target='_blank' href='http://www.unep.org/' class='unep'></a></li>
+                    <li><a target='_blank' href='http://www.geog.umd.edu/' class='universitymaryland'></a></li>
                     <li><a target='_blank' href='http://www.vizzuality.com' class='vizzuality'></a></li>
-                    <li><a target='_blank' href='http://www.blueraster.com' class='blueraster'></a></li>
+                    <li><a target='_blank' href='http://www.wri.org' class='wri'></a></li>
                   </ul>
-                </li>
-                <li>
-                  <h3>Funders</h3>
-                  <ul class='logo-list'>
-                    <li><a target='_blank' href='https://www.regjeringen.no/en/topics/climate-and-environment/climate/klima--og-skogprosjektet/id2000712/' class='norwegian'></a></li>
-                    <li><a target='_blank' href='http://www.usaid.gov/' class='usaid'></a></li>
-                    <li><a target='_blank' href='http://www.thegef.org/gef/' class='gef'></a></li>
-                    <li><a target='_blank' href='https://www.gov.uk/government/organisations/department-for-international-development' class='ukaid'></a></li>
-                    <li><a target='_blank' href='http://www.moore.org/' class='moore'></a></li>
-                    <li><a target='_blank' href='http://tiliafund.org/' class='tilia'></a></li>
-                    <li class='last'><a target='_blank' href='http://www.government.nl/ministries/bz' class='dutchforeign'></a></li>
-                    <li><a target='_blank' href='http://www.sida.se/english/' class='sida'></a></li>
-                    <li><a target='_blank' href='#' class='bobolink'></a></li>
-                    <li><a target='_blank' href='http://um.dk/en/danida-en/' class='danida'></a></li>
-                  </ul>
-                </li>
-                <li>
-                  <h3>Additional partners & collaborators</h3>
                   <ul class='bullets'>
                     <li>Baker & McKenzie</li>
                     <li>Climate and Land Use Alliance</li>
                     <li>Conservation International</li>
+                    <li>Earth Journalism Network</li>
+                    <li>Food and Agriculture Organization of the United Nations</li>
+                    <li>CIAT</li>
+                    <li>IUCN</li>
+                    <li><a href='http://northamerica.croklaan.com/' target='_blank'>IOI Loders Croklaan</a></li>
+                    <li>Mongabay</li>
+                    <li>Muyissi</li>
+                    <li>OSINFOR</li>
+                    <li>Planet Labs</li>
+                    <li>Rainforest Foundation UK</li>
+                    <li>Reforestamos México</li>
+                    <li>RESOLVE</li>
+                    <li>RSPO</li>
+                    <li><a href='http://www.sarvision.nl/' target='_blank'>SarVision</a></li>
+                    <li><a href='http://www.unilever.com/' target='_blank'>Unilever</a></li>
+                    <li>UNEP-WCMC</li>
+                    <li>Woods Hole Research Center</li>
+                    <li><a href='http://www.puter.or.id' target='_blank'>Yayasan Puter Indonesia</a></li>
+                    <li><a href='http://www.zsl.org/' target='_blank'>ZSL</a></li>
+                  </ul>
+                </li>
+                <li>
+                  <h3>Funders</h3>
+                  <p><strong>Current Funders</strong></p>
+                  <ul class='logo-list'>
+                    <li><a target='_blank' href='http://um.dk/en/danida-en/' class='danida'></a></li>
+                    <li><a target='_blank' href='http://www.thegef.org/gef/' class='gef'></a></li>
+                    <li><a target='_blank' href='http://www.moore.org/' class='moore'></a></li>
+                    <li class='last'><a target='_blank' href='http://www.government.nl/ministries/bz' class='dutchforeign'></a></li>
+                    <li><a target='_blank' href='https://www.regjeringen.no/en/topics/climate-and-environment/climate/klima--og-skogprosjektet/id2000712/' class='norwegian'></a></li>
+                    <li><a target='_blank' href='http://www.sida.se/english/' class='sida'></a></li>
+                    <li><a target='_blank' href='https://www.gov.uk/government/organisations/department-for-international-development' class='ukaid'></a></li>
+                    <li><a target='_blank' href='http://www.usaid.gov/' class='usaid'></a></li>
+                  </ul>
+                  <p><strong>Past Funders</strong></p>
+                  <ul class='bullets'>
+                    <li>Bobolink Foundation</li>
+                    <li><a href='http://www.ifc.org/wps/wcm/connect/regprojects_ext_content/ifc_external_corporate_site/bacp/projects/projsummary_wri' target='_blank'>International Finance Corporation</a></li>
+                    <li><a href='http://www.jnj.com/' target='_blank'>Johnson & Johnson</a> (funded GFW Commodities)</li>
+                    <li><a href='http://lander.versoco.com/' target='_blank'>NewPage</a> (funded GFW Commodities)</li>
+                    <li><a href='http://www.rainforest-alliance.org/' target='_blank'>Rainforest Alliance</a></li>
+                    <li><a href='http://tiliafund.org/' target='_blank'>The Tilia Fund</a></li>
+                    <li><a href='http://foundation.walmart.com/' target='_blank'>Walmart Foundation</a> (funded GFW Commodities)</li>
+                  </ul>
+                </li>
+                <li>
+                  <h3>Data providers</h3>
+                  <ul class='bullets'>
+                    <li>CGIAR</li>
+                    <li>Conservation International</li>
+                    <li>Digital Globe</li>
                     <li>Food and Agriculture Organization of the United Nations</li>
                     <li>Global Witness</li>
+                    <li>Google</li>
                     <li>Greenpeace</li>
+                    <li>Imazon</li>
                     <li>International Center for Tropical Agriculture (CIAT)</li>
                     <li>International Union for Conservation of Nature (IUCN)</li>
                     <li>Mongabay</li>
@@ -129,23 +166,16 @@
                     <li>NASA Fire Information for Resource Management System</li>
                     <li>NASA Jet Propulsion Laboratory</li>
                     <li>Organismo de Supervisión de los Recursos Forestales y de Fauna Silvestre (OSINFOR)</li>
-                    <li>Planet Labs</li>
-                    <li>Rainforest Foundation UK</li>
-                    <li>Reforestamos Mexico</li>
-                    <li>RESOLVE</li>
+                    <li>SarVision</li>
+                    <li>Tierra Minada</li>
+                    <li>Transparent World</li>
                     <li>UNEP World Conservation Monitoring Centre</li>
-                    <li>University of Minnesota</li>
+                    <li>University of Maryland</li>
+                    <li>U.S. Geological Survey</li>
                     <li>Winrock International</li>
                     <li>Woods Hole Research Center</li>
-                  </ul>
-                </li>
-                <li>
-                  <h3>View partners, funders, & collaborators of GFW applications</h3>
-                  <ul class='app-list'>
-                    <li><a class="app" href="http://staging.blueraster.com/wri/gfw-fires/#v=about&x=&y=&l=&lyrs="><svg class="icon fire"><use xlink:href="#shape-fire"></use></svg>Fires</a></li>
-                    <li><a class="app" href="http://staging.blueraster.com/wri/gfw-commodities/#v=about&n=Partners"><svg class="icon commodities"><use xlink:href="#shape-commodities"></use></svg>Commodities</a></li>
-                    <!-- <li><a class="app" href="/map"><svg class="icon"><use xlink:href="#shape-biodiversity"></use></svg>Biodiversity</a></li>
-                    <li><a class="app" href="/map"><svg class="icon"><use xlink:href="#shape-carbon"></use></svg>Carbon</a></li> -->
+                    <li>World Resources Institute</li>
+                    <li>Yayasan Puter Indonesia</li>
                   </ul>
                 </li>
                 <li>
@@ -255,19 +285,25 @@
           <article id='contact-us' class="source-article">
             <header>
               <h2>Contact Us</h2>
+              <h3><strong>Questions or comments?</strong> Here's how you can get in touch:</h3>
             </header>
             <div class='content'>
               <ul class="faq-list">
                 <li>
-                  <h3>Questions or comments? Send us an email, contact us at the adress below, or visit the feedback page.</h3>
-                  <p><strong>Mailing Address:</strong></p>
-                  <p>Global Forest Watch</p>
-                  <p>World Resources Institute</p>
-                  <p>10 G St. NE, Washington, DC 20002</p>
-                  <p>USA</p>
-                
+                  <ul class='bullets'>
+                    <li>Email us at <a href='mailto:gfw@wri.org'>gfw@wri.org</a></li>
+                    <li>Contact us at the mailing address below:
+                      <p>Global Forest Watch</p>
+                      <p>World Resources Institute</p>
+                      <p>10 G St. NE, Washington, DC 20002</p>
+                      <p>USA</p></li>
+                    <li>Visit the <a href="/getinvolved/provide-feedback">Feedback page</a></li>
+                    <li>Connect with us on <a href='https://twitter.com/globalforests' target='_blank'>Twitter</a>, <a href='https://www.facebook.com/globalforests' target='_blank'>Facebook</a>, or <a href='http://instagram.com/globalforests' target='_blank'>Instagram</a></li>
+                    <li>Join the <a href='https://groups.google.com/forum/#!forum/globalforestwatch' target='_blank'>GFW Discussion Forum</a> and post a comment</li>
+                    <li>Post a comment on a <a href="/countries">Country Profile page</a> for a specific country</li>
+                  </ul>
                   <a class="btn gray medium" href="mailto:gfw@wri.org">email us</a>
-                  <a class="btn gray medium" href="http://gfw-nav.herokuapp.com/getinvolved/provide-feedback">feedback</a>
+                  <a class="btn gray medium" href="/getinvolved/provide-feedback">provide feedback</a>
                 </li>
               </ul>
             </div>

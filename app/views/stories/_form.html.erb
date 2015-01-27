@@ -61,8 +61,8 @@
   </div>
 
   <div class="field">
-    <p class="hint">Drag & drop images and videos to reorder them within the carrousel. The first one will be considered as the preferred one.</p>
     <%= f.label :media %>
+    <p class="hint">Drag & drop images and videos to reorder them within the carrousel. The first one will be considered as the preferred one.</p>
 
     <ul class="thumbnails">
       <li><a href='#' class='upload_picture'></a></li>
@@ -79,14 +79,13 @@
   </div>
 
   <div class="field short">
-    <p class="hint">If you share your name, it will be visible on the GFW website, but your email will not be published.</p>
     <%= f.label :name %>
+    <p class="hint">If you share your name, it will be visible on the GFW website, but your email will not be published. In some areas, forest clearing information is considered to be highly sensitive—users are encouraged to be cautious when sharing their names.</p>
 
     <%= f.text_field :name %>
   </div>
 
   <div class="field short required">
-    <p class="hint">In some areas, forest clearing information is considered to be highly sensitive—users are encouraged to be cautious when sharing their names.</p>
     <%= f.label :email %>
     <span>Required</span>
 

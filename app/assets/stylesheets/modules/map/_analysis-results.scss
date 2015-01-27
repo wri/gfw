@@ -201,5 +201,25 @@
         }
       }
     }
+    .analysis-control-names {
+      font-size: 9px;
+      position: relative;
+      left: 3px;
+      li {
+        display: inline;
+        span {
+          position: relative;
+          margin: 0 3px;
+          &.disabled {
+            opacity: 0;
+          }
+        }
+        &:first-child {
+          span {
+            margin: 0;
+          }
+        }
+      }
+    }
   }
 }

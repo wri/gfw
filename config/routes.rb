@@ -4,7 +4,7 @@ Gfw::Application.routes.draw do
 
   #legacy
     # stories
-    get '/stories' => redirect("/keepupdated/crowdsourced-stories")
+    # get '/stories' => redirect("/stayinformed/crowdsourced-stories")
 
     # howto
     get '/howto/video' => redirect("/howto")
@@ -31,9 +31,9 @@ Gfw::Application.routes.draw do
   get '/sources' => 'static#data'
   get '/sources(/:section)' => 'static#data'
 
-  # get '/keepupdated' => redirect('keepupdated/crowdsourced-stories')
-  get '/keepupdated' => 'static#keep'
-  get '/keepupdated(/:section)' => 'static#keep'
+  # get '/stayinformed' => redirect('stayinformed/crowdsourced-stories')
+  get '/stayinformed' => 'static#keep'
+  get '/stayinformed(/:section)' => 'static#keep'
   get '/getinvolved' => 'static#getinvolved'
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'
@@ -44,10 +44,11 @@ Gfw::Application.routes.draw do
 
   # about
   get '/about' => 'static#about'
-
   get '/about(/:section)' => 'static#about'
 
-  get '/applications' => 'static#applications'
+  # explore
+  get '/explore' => 'static#explore'
+  get '/explore(/:section)' => 'static#explore'
 
 
   get '/notsupportedbrowser' => 'static#old', :as => 'notsupportedbrowser'
