@@ -1,13 +1,14 @@
 
 <% content_for :header do %>
   <h1><a href="/">Global Forest Watch</a></h1>
-  <nav id="nav-mobile" style="visibility:hidden">
+  <nav id="nav-mobile">
     <form class="mobile-show" action="/search">
       <svg class="icon"><use xlink:href="#shape-search"></use></svg>
       <input type="text" name="query" id="search-input" placeholder="Search GFW website">
     </form>
     <div id="google_translate_element_box2"></div>
-    <ul>
+    <div id="mobileMenu"></div>
+    <ul class="mobile-hide" style="visibility: hidden;">
       <li>
         <a href="http://data.gfw.opendata.arcgis.com">Home</a>
       </li>
