@@ -96,7 +96,7 @@ define([
                 tileurl, \
                 true AS visible \
               FROM \
-                layerspec \
+                layerspec_adrian_dev \
               WHERE \
                 display = \'true\' \
               ORDER BY \
@@ -116,20 +116,7 @@ define([
       };
 
       ds.request(config);
-    },
-
-    // _getLayers: function(slug, category_slug, successCb, errorCb) {
-    //   this._fetchLayers(
-    //     _.bind(function(layers) {
-    //       var hits = _.filter(layers, function(x) {
-    //         return (x.category_slug === category_slug && x.slug === slug);
-    //       });
-    //       successCb(hits ? hits[0] : null);
-    //     }, this),
-    //     _.bind(function(error) {
-    //       errorCb(error);
-    //     }, this));
-    // }
+    }
   });
 
   var service = new MapLayerService();
