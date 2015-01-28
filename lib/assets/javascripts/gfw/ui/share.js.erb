@@ -212,6 +212,10 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
         targ_val = '/employment';
       } else if ($targ.hasClass('country-tenure')) {
         targ_val = '/tenure';
+      } else if ($targ.hasClass('country-carbon_stocks')) {
+        targ_val = '/carbon_stocks';
+      } else if ($targ.hasClass('emissions-text')) {
+        targ_val = '/emissions';
       }
       $targ.removeClass('current_share');
       this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + path + targ_val + '"></iframe>');

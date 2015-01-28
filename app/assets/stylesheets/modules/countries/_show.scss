@@ -676,6 +676,7 @@
       .right-col {
         float: left;
         min-height: 1px;
+        position: relative;
 
         &.wide {
           width: 100%;
@@ -887,12 +888,19 @@
     }
   }
 
-  .country-employment-section {
+  .country-employment {
+    .section-content .left-col,
+    .section-content .right-col{
+      .embed &{
+        width: 100%;
+      }
+    }
     .section-content .left-col .section-title {
       @extend .clearfix;
       margin-bottom: 10px;
       font-size: 47px;
       display: inline-block;
+
 
       div,
       span {
@@ -1017,7 +1025,7 @@
     }
   }
 
-  .country-carbon-stocks-section {
+  .country-carbon_stocks {
     display: table;
     padding: 0;
 
