@@ -91,7 +91,7 @@ define([
           (this.offsetsIndex === 0) ? this.offsetsIndex = 0 : this.offsetsIndex--;
         }
       }
-      this.updateRoute()
+      this.updateRoute();
       this.$links.removeClass('current');
       this.$linksparents.eq(this.offsetsIndex).children('a').addClass('current');
       this.lastScroll = scrollTop;
@@ -100,12 +100,14 @@ define([
     onChange: function(e) {
       e && e.preventDefault();
       var id = $(e.currentTarget).attr('href');
-      this.$htmlbody.animate({ scrollTop: $(id).offset().top - this.$el.height() }, 500);
+      var time = Math.abs(this.$document.scrollTop() - ($(id).offset().top - this.$el.height()))/2;
+      this.$htmlbody.animate({ scrollTop: $(id).offset().top - this.$el.height() }, time);
     },
 
     scrollTo: function(href){
       var id = '#'+href.section;
-      this.$htmlbody.animate({ scrollTop: $(id).offset().top - this.$el.height() }, 500);
+      var time = Math.abs(this.$document.scrollTop() - ($(id).offset().top - this.$el.height()))/2;
+      this.$htmlbody.animate({ scrollTop: $(id).offset().top - this.$el.height() }, time);
     },
 
     updateRoute: function(){
