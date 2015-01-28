@@ -689,7 +689,10 @@
       }
 
       .right-col {
-        margin-left: 10%;
+        margin: 10% 0 0 0;
+        @media (min-width: $br-mobile){
+          margin: 0 0 0 10%;
+        }
 
         .section-btn {
           right: 20px;
@@ -1095,8 +1098,12 @@
         width: 25%;
       }
       @media (min-width: 1000px){
+        width: 12.5%;
+      }
+      @media (min-width: 1600px){
         width: 10%;
       }
+
       .convention-box{
         display: block;
         position: relative;
