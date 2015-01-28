@@ -108,6 +108,21 @@
   &.disabled{
     opacity: 0.25;
   }
+  &.with-icon{
+    min-width: 0;
+    @media (min-width: $br-mobile) {
+      padding-right: 36px;
+    }
+    svg{
+      width: 26px;
+      height: 26px;
+      position: absolute;
+      top: 50%;
+      right: 5px;
+      fill: $dark;
+      @include transform(translate(0,-50%));
+    }
+  }
 }
 
 
