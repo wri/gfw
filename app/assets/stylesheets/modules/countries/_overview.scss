@@ -747,7 +747,7 @@
     padding: 9px 0 0;
     color: #fff;
     font-size: 15px;
-    @extend .sans-serif;
+
     text-align: center;
     @include country-icons-sprite(error_input_label);
   }
@@ -779,7 +779,7 @@
     position: absolute;
     top: 14px; left: 12px;
     font-size: 15px;
-    @extend .sans-serif;
+
     color: #ddd;
   }
 

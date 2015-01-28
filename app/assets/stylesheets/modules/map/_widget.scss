@@ -56,7 +56,7 @@
 
   width: 245px;
   min-height: 20px;
-  @extend .sans-serif;
+
 
   @include transition-property(height);
   @include transition-duration(140ms);
