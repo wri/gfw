@@ -20,6 +20,7 @@
   overflow: hidden;
   width: 960px;
   margin: 0 auto;
+  position: relative;
 
   @media only screen and (min-width: 481px) and (max-width: 1010px) {
     width: 100%;
@@ -32,8 +33,8 @@
 
   .umdoptions_dialog {
     left: auto;
-    right: -9px;
-    top: 44px;
+    right: 0px;
+    top: 11px;
     display: block;
     position: absolute;
     width: 442px;
@@ -922,20 +923,11 @@
   position: relative;
   background: #EEEEEE;
   width: 100%;
-  height: 40px;
-  display: flex;
-  display: -ms-flexbox;
-  display: -ms-flex;
-  display: -webkit-flex;
-  align-items: center;
-  -ms-flex-pack: end;
-  -webkit-justify-content: flex-end;
-  justify-content: flex-end;
-
   .inner {
-    width: 960px;
-    margin: 0 auto;
-    padding: 0;
+    width: 100%;
+    max-width: 960px;
+    overflow: hidden;
+    padding: 8px;
     .countries_show & {
       width: 790px;
     }
@@ -1008,14 +1000,6 @@
         right: 0;
         @include transform-translate(0, -50%);
     }
-  }
-
-
-  .item {
-    position: absolute;
-    top: 50%;
-    right: 75px;
-    transform: translate(0, -50%);
   }
 
   .country-share .share_control {
