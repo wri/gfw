@@ -69,6 +69,14 @@ define([
           threshold: threshold
         });
       }
+    }, {
+      'AnalysisTool/start-drawing': function() {
+        this.view.crosshairs();
+      }
+    }, {
+      'AnalysisTool/stop-drawing': function() {
+        this.view.centerPositionCrosshairs();
+      }
     }],
 
     /**
