@@ -290,6 +290,7 @@ define([
     crosshairs: function(){
       this.$viewFinder.addClass('hidden');
       this.$maplngLng.removeClass('hidden');
+      this.$analysislatlng = $('#analysisLatlng');
 
       this.$el.on('mousemove', _.bind(this.updatePositionCrosshairs, this ))
     },
@@ -302,10 +303,16 @@ define([
       point.y += event.offsetY / ( 1<<this.map.getZoom() );
 
       var latlong = this.map.getProjection().fromPointToLatLng( point );
-      this.updateLatlngInfo(latlong.lat(), latlong.lng());
+      this.updateLatlngAnalysis(latlong.lat(), latlong.lng());
 
     },
-
+    /**
+     * Updates
+     */
+    updateLatlngAnalysis: function(lat, lng) {
+      var html = 'Lat/long: {0}, {1}'.format(lat.toFixed(6), lng.toFixed(6));
+      this.$analysislatlng.html(html);
+    },
 
     centerPositionCrosshairs: function(){
       this.$viewFinder.removeClass('hidden');
