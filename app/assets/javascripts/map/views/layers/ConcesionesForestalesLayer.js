@@ -13,7 +13,7 @@ define([
   var concesiones_forestales = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT *, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName}',
+      sql: 'SELECT *, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName} WHERE supervision=\'SUPERVISED BY OSINFOR\' ',
       cartocss: concesiones_forestalesCartoCSS
     }
 
