@@ -891,7 +891,8 @@
     }
   }
 
-  .country-employment {
+  .country-employment,
+  .country-employment-section {
     .section-content .left-col,
     .section-content .right-col{
       .embed &{
@@ -918,7 +919,7 @@
         font-size: 12px;
         font-weight: 500;
         line-height: 1.2;
-        @extend .sans-serif;
+
         text-transform: uppercase;
         color: #444;
       }
@@ -940,7 +941,7 @@
       }
 
       text {
-        @extend .sans-serif;
+
         font-size: 12px;
       }
 
@@ -1112,7 +1113,7 @@
         border: 2px solid #CCCCCC;
         font-weight: 500;
         font-size: 12px;
-        @extend .sans-serif;
+
         text-align: center;
         color: #AAAAAA;
         @include border-radius(2px);
