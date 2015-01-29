@@ -10,7 +10,7 @@
           <div class="thumb-mask"><img src="{{content.data.image}}" onerror="this.style.display='none';"></div>
       {{/if}}
       {{#if content.data.analysis}}
-        <a style="cursor:pointer;" id="analyzeBtn" onclick="mps.publish('AnalysisTool/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')])" class="analyse" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid= "{{content.data.id}}"></a>
+        <a style="cursor:pointer;" id="analyzeBtn" onclick="mps.publish('AnalysisTool/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]); ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area');" class="analyse" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid= "{{content.data.id}}"></a>
       {{/if}}
     </div>
     <div class="cartodb-popup-content">
