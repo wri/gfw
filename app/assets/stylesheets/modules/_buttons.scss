@@ -10,7 +10,7 @@
   background: #9bb251;
   cursor: pointer;
   outline: none;
-  @extend .sans-serif;
+
   @include border-radius(2px);
 
   &:hover {

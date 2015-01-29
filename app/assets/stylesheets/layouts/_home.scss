@@ -160,7 +160,7 @@
 //     margin: 0 0 18px 0;
 //     font-weight: 500;
 //     font-size: 12px;
-//     @extend .sans-serif;
+//
 //     text-transform: uppercase;
 //     text-decoration: none;
 //   }
@@ -220,7 +220,7 @@
 //   margin: 0 0 10px;
 //   font-weight: 500;
 //   font-size: 12px;
-//   @extend .sans-serif;
+//
 //   text-align: center;
 //   text-transform: uppercase;
 //   text-decoration: none;
@@ -287,7 +287,7 @@
 //     list-style: none;
 //     font-size: 13px;
 //     line-height: 17px;
-//     @extend .sans-serif;
+//
 
 //     &.last { border: none; }
 //   }
@@ -295,7 +295,7 @@
 //   .subtitle {
 //     margin-left: 17px;
 //     font-size: 11px;
-//     @extend .sans-serif;
+//
 //     color: #ccc;
 //   }
 
@@ -426,7 +426,7 @@
 
 //     color: #999;
 //     font-size: 12px;
-//     @extend .sans-serif;
+//
 //   }
 // }
 
@@ -439,7 +439,7 @@
 //   bottom: 20px; right: 10px;
 //   font-weight: 500;
 //   font-size: 11px;
-//   @extend .sans-serif;
+//
 //   text-align: right;
 //   @include user-select(text);
 // }
@@ -527,7 +527,7 @@
 //     padding: 9px 0 0;
 //     color: #fff;
 //     font-size: 15px;
-//     @extend .sans-serif;
+//
 //     text-align: center;
 //     @include home-icons-sprite(error_input_label);
 //   }
@@ -559,7 +559,7 @@
 //     position: absolute;
 //     top: 14px; left: 12px;
 //     font-size: 15px;
-//     @extend .sans-serif;
+//
 //     color: #ddd;
 //   }
 
@@ -867,7 +867,7 @@
 //   min-height: 40px;
 //   border: 1px solid #666;
 //   font-size: 11px;
-//   @extend .sans-serif;
+//
 //   background: #F1F1F1;
 //   color: #999;
 //   @include border-radius(3px);
@@ -1154,7 +1154,7 @@
 //     a {
 //       display: block;
 //       font-size: 13px;
-//       @extend .sans-serif;
+//
 //       text-decoration: none;
 //       color: #666;
 

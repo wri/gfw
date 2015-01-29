@@ -1379,7 +1379,7 @@
         border-bottom: 1px solid #ccc;
         font-weight: 500;
         font-size: 11px;
-        @extend .sans-serif;
+
         text-transform: uppercase;
       }
 
@@ -1389,7 +1389,7 @@
         border-left: 1px solid #ccc;
         border-bottom: 1px solid #ccc;
         font-size: 13px;
-        @extend .sans-serif;
+
         a{
           color: $cGreen;
         }
