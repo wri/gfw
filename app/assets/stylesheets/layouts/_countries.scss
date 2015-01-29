@@ -10,7 +10,7 @@
     line-height: 120px;
     color: #fff;
     text-align: center;
-    @extend .serif;
+
 
     a:hover {
       text-decoration: underline;
@@ -115,7 +115,7 @@
   margin-top: 40px;
   font-style: italic;
   line-height: 1.4;
-  @extend .serif;
+
   color: #666666;
   @include clearfix;
 }
