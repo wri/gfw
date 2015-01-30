@@ -41,6 +41,7 @@ define([
           d.latlng = JSON.parse(d.st_asgeojson).coordinates;
           d.lat = d.latlng[1];
           d.lng = d.latlng[0];
+          d.loc = d.permalink;
           return d;
         });
         successCb(result);
