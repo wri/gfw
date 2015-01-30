@@ -130,6 +130,12 @@ define([
     _stopDrawing: function() {
       this.model.set({boxHidden: true});
       this.presenter.stopDrawing();
+      if(this.$infowindows)
+        this.$infowindows.hide(0).removeClass('hidden');
+      if (this.drawingManager) {
+        this.drawingManager.setDrawingMode(null);
+        this.drawingManager.setMap(null);
+      }
     },
 
     /**
