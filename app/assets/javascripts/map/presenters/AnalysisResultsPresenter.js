@@ -294,9 +294,8 @@ define([
             p.lossAlerts += year.loss;
           });
         }
-
-        p.lossAlerts = (results.loss) ? Math.round(results.loss).toLocaleString() : Math.round(p.lossAlerts).toLocaleString();
-        p.gainAlerts = (results.gain) ? Math.round(results.gain).toLocaleString() : Math.round(p.gainAlerts).toLocaleString();
+        p.lossAlerts = (results.loss) ? this.roundNumber(results.loss) : this.roundNumber(p.lossAlerts);
+        p.gainAlerts = (results.gain) ? this.roundNumber(results.gain) : this.roundNumber(p.gainAlerts);
 
       }
 
@@ -327,6 +326,10 @@ define([
 
       return p;
     },
+
+    roundNumber: function(value){
+      return (value < 10) ? value.toFixed(2).toLocaleString() : Math.round(value).toLocaleString();
+    }
 
 
 
