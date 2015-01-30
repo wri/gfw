@@ -33,8 +33,6 @@ define([
           className: 'story-infowindow',
           infowindowContent: this.template({
             loc: story.permalink,
-            autor: story.source,
-            id: story.id,
             title: story.title
           }),
           offset: [-30, -16],
