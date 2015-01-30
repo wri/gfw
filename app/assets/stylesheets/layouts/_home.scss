@@ -30,7 +30,7 @@
 
   h3 {
     margin: 0 0 20px;
-    @extend .serif;
+
     font-size: 29px;
     color: #fff;
   }
@@ -418,7 +418,7 @@
 //       width: 180px;
 //       color: #F3F2F0;
 //       font-size: 17px;
-//       @extend .serif;
+//
 //       text-decoration :none;
 
 //       &:hover { text-decoration: underline; }
@@ -584,12 +584,12 @@
 //   h1 {
 //     font-size: 35px;
 //     margin: 10px 0 5px;
-//     @extend .serif;
+//
 //   }
 
 //   p {
 //     font-size: 15px;
-//     @extend .sans_serif;
+//
 //     color: #999;
 
 //     &.help { margin: 0 0 20px; }
@@ -962,7 +962,7 @@
 // .info_content {
 //   position: relative;
 //   width: 248px;
-//   @extend .sans_serif;
+//
 //   @include border-radius(3px);
 
 //   .info {

@@ -54,12 +54,15 @@ define([
      * Triggered when the user clicks on the analysis button.
      */
     onClickAnalysis: function() {
-      this._startDrawingManager();
-      this.presenter.startDrawing();
-      this.model.set('boxHidden', false);
-      this.$done.addClass('disabled');
-      this.toggleUseWidgetBtn(true);
-      ga('send', 'event', 'Map', 'Analysis', 'Perform an analysis');
+      if (!this.$widgetBtn.hasClass('in_use')) {
+        this._startDrawingManager();
+        this.toggleUseWidgetBtn(true);
+        this.presenter.startDrawing();
+        this.model.set('boxHidden', false);
+        this.$done.addClass('disabled');
+        this.toggleUseWidgetBtn(true);
+        ga('send', 'event', 'Map', 'Analysis', 'Perform an analysis');
+      }
     },
 
     /**
@@ -94,6 +97,13 @@ define([
       this.presenter.onOverlayComplete(e);
       this.$done.removeClass('disabled');
       this.$htmlbody.animate({ scrollTop: 200 },200);
+      if(this.$infowindows)
+        this.$infowindows.hide(0).removeClass('hidden');
+      if (this.drawingManager) {
+        this.drawingManager.setDrawingMode(null);
+        this.drawingManager.setMap(null);
+      }
+
     },
 
     /**
@@ -118,13 +128,6 @@ define([
      * Stop drawing manager, set drawing box to hidden.
      */
     _stopDrawing: function() {
-      if(this.$infowindows)
-        this.$infowindows.hide(0).removeClass('hidden');
-      if (this.drawingManager) {
-        this.drawingManager.setDrawingMode(null);
-        this.drawingManager.setMap(null);
-      }
-      this.toggleUseWidgetBtn(false);
       this.model.set({boxHidden: true});
       this.presenter.stopDrawing();
     },

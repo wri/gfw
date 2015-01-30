@@ -500,12 +500,12 @@
   h1 {
     font-size: 35px;
     margin: 10px 0 5px;
-    @extend .serif;
+
   }
 
   p {
     font-size: 15px;
-    @extend .sans_serif;
+
     color: #999;
 
     &.help { margin: 0 0 20px; }
