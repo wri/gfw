@@ -39,6 +39,8 @@ define([
       function _parseData(data) {
         var result = _.map(data.rows, function(d) {
           d.latlng = JSON.parse(d.st_asgeojson).coordinates;
+          d.lat = d.latlng[1];
+          d.lng = d.latlng[0];
           return d;
         });
         successCb(result);
