@@ -150,8 +150,7 @@ $stories-color: rgb(242, 178, 87);
           display: inline-block;
           width: 45px;
           &.selected {
-            color: #666;
-            font-weight: 500;
+            color: $dark;
           }
           input {
             cursor: pointer;
