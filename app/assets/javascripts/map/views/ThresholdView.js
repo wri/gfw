@@ -64,7 +64,7 @@ define([
     _updateThreshold: function() {
       this.presenter.setThreshold(this.valuesMap[this.$slider.val()]);
       this._setVisibleRange();
-      if (typeof ga !== "undefined") ga('send', 'event', 'Map', 'Change', 'Threshold');
+      if (typeof ga !== "undefined") ga('send', 'event', 'Map', 'Settings', 'Threshold: ' + this.valuesMap[this.$slider.val()]);
       if (this.valuesMap[this.$slider.val()] != 30) this.$button.addClass('changed');
       else this.$button.removeClass('changed');
     },

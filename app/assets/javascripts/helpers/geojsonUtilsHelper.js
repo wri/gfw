@@ -83,9 +83,8 @@ define([
       //             },
       //    async:   false,
       //    method: 'POST'
-      // });  
-      // console.log(Math.round((geojsonArea(geojson) / 10000)).toLocaleString(), area);
-      // return area; 
+      // });
+      // return area;
     }
 
   };

@@ -55,7 +55,7 @@ gfw.ui.view.CountriesIndex = cdb.core.View.extend({
         var dialog = JSON.parse(sessionStorage.getItem('DIALOG'));
 
         if (!dialog.display) return;
-        ga('send', 'event', 'SourceWindow', 'Open', dialog.type);
+        ga('send', 'event', 'Countries', 'Info', 'Open '+dialog.type);
         selfo.sourceWindow.show(dialog.type);
         $('.backdrop').css('opacity', '0.3');
         sessionStorage.removeItem('DIALOG');

@@ -1479,7 +1479,7 @@
   @include box-shadow(0px 0px 3px #666);
   z-index: 1000;
 
-  &::after, &::before {
+  &::before {
     content: ' ';
     background-color: white;
     width: 15px;
@@ -1494,9 +1494,8 @@
   }
 
   &::before {
-    background-color: black;
     top: 185px;
-    left: 414px;
+    left: 412px;
   }
 
   .close {

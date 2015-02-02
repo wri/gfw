@@ -246,11 +246,10 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         self.$areaSelector.append('<option class="dark" value="' + area.get('name_1') + '">' + area.get('name_1') + '</option>')
       }
     });
-    ga('send', 'event', 'Countries', 'Click', 'Change Area');
+    ga('send', 'event', 'Country show', 'Click', 'Change Area');
   },
 
   _onClickUMDOptions: function(e,tar_param) {
-    if (typeof ga !== "undefined") ga('send', 'event', 'Country Page', 'Change', 'Threshold');
     e && e.preventDefault();
 
     if ($(e.currentTarget).data('target')) {
@@ -264,7 +263,6 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     } else {
       UmdOptions._openUMDoptions();
     }
-    ga('send', 'event', 'Countries', 'Click', 'Threshold');
   },
 
   _updateMapThreshold: function(e) {

@@ -60,7 +60,10 @@ define([
      * @param  {Object} params Analysis html params
      */
     renderAnalysis: function(params) {
+      this.params = params;
       this._update(this.template(params));
+      ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + this.params.layer.title);
+
     },
 
     /**
@@ -88,16 +91,16 @@ define([
 
     _deleteAnalysis: function() {
       this.presenter.deleteAnalysis();
-      ga('send', 'event', 'Map', 'Analysis', 'Delete');
+      ga('send', 'event', 'Map', 'Delete-Analysis', 'Layer: ' + this.params.layer.title);
     },
     _subscribe: function() {
       this.presenter.subscribeAnalysis();
-      ga('send', 'event', 'Map', 'Analysis', 'Subscribe');
+      ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + this.params.layer.title);
     },
 
     _toggleDownloads: function() {
       this.$downloadDropdown.toggleClass('hidden');
-      ga('send', 'event', 'Map', 'Analysis', 'Downloads');
+      ga('send', 'event', 'Map', 'Download', 'Downloads-' + 'Layer: ' + this.params.layer.title);
     }
   });
 
