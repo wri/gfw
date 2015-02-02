@@ -37,6 +37,9 @@ define([
   'map/views/layers/ConcesionesForestalesNotSupervisedLayer',
   'map/views/layers/TerraiCanvasLayer',
   'map/views/layers/TerraicanvasCoverageLayer',
+  'map/views/layers/WWFLayer',
+  'map/views/layers/BirdlifeLayer',
+  'map/views/layers/AzepolyLayer',
   // Layer dialog templates
   'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -82,6 +85,9 @@ define([
   ConcesionesForestalesNotSupervisedLayer,
   TerraiCanvasLayer,
   TerraicanvasCoverageLayer,
+  WWFLayer,
+  BirdlifeLayer,
+  AzepolyLayer,
   // Layer dialog templates
   loss_dialog,
   // Layer timelines
@@ -203,6 +209,15 @@ define([
     },
     terraicanvas_cover :{
       view: TerraicanvasCoverageLayer
+    },
+    wwf: {
+      view: WWFLayer
+    },
+    birdlife: {
+      view: BirdlifeLayer
+    },
+    azepoly: {
+      view: AzepolyLayer
     },
     nothing: {
     }
