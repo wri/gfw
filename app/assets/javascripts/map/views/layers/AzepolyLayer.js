@@ -12,7 +12,9 @@ define([
   var AzepolyLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT *, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName}'
+      sql: 'SELECT the_geom_webmercator, sitenamefi as name, country, source, aze_id, \'{tableName}\' AS layer FROM {tableName}',
+      infowindow: true,
+      interactivity: 'name, country, source, aze_id'
     }
 
   });
