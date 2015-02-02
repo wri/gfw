@@ -53,6 +53,7 @@ gfw.ui.view.Share = cdb.core.View.extend({
       this.$el.hide();
     } else {
       this.$el.show();
+      ga('send', 'event', 'Country show', 'Info', 'Open Share');
     }
   },
 
@@ -281,9 +282,10 @@ gfw.ui.view.ShareDialog = gfw.ui.view.Widget.extend({
         help: this.model.defaults.help,
         button_title: this.model.defaults.button_title
       });
-
+      ga('send', 'event', 'Country show', 'Share', 'Show dialog URL');
       this._setLink();
     } else if (mode === 'embed') {
+      ga('send', 'event', 'Country show', 'Share', 'Show dialog EMBED');
       this.model.set({
         help: 'Click and paste HTML to embed in website',
         button_title: 'Copy code'

@@ -12,7 +12,8 @@
       var elem = '#' + $(e.currentTarget).data('source');
       $content.append($(elem).html())
       $wind.fadeIn();
-      ga('send', 'event', 'Map', 'Source infowindow', 'Open '+elem);
+
+      ga('send', 'event', 'Map', 'Info', 'Open '+elem);
     });
 
     $wind.find('.close').on('click', function(e) {

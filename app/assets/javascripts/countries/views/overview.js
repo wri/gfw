@@ -58,7 +58,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
     var source = $(e.target).closest('.info').attr('data-source');
 
-    ga('send', 'event', 'SourceWindow', 'Open', source);
+    ga('send', 'event', 'Country overview', 'Info', 'Open: ' + source);
     //this.sourceWindow.show(source).addScroll(); --> jspscrollpane thinks it's better to break the window
     this.sourceWindow.show(source);
   },
@@ -103,7 +103,7 @@ gfw.ui.view.CountriesOverview = cdb.core.View.extend({
 
       this.model.set('graph', graph);
     }
-    ga('send', 'event', 'Countries', 'Click', 'Overview graph'+graph);
+    ga('send', 'event', 'Country overview', 'Click', 'Overview graph: ' + graph);
   },
 
   _redrawGraph: function() {

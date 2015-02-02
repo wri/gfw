@@ -63,7 +63,7 @@ define([
             $toggle.css('border-color', layer.title_color);
             $toggleIcon.css('background-color', layer.title_color);
           }
-          ga('send', '  event', 'LayerNavView', 'Toggle', layer.slug);
+          ga('send', 'event', 'Map', 'Toogle', 'Layer: ' + layer.slug);
         } else {
           $li.removeClass('selected');
           $toggle.removeClass('checked').css('background', '').css('border-color', '');
@@ -113,7 +113,7 @@ define([
         $('#c_f_ns_peru').find('input').prop('checked', false);
       }
       this.presenter.toggleLayer(layerSlug);
-      ga('send', 'event', 'Map', 'Toggle', layerSlug);
+      ga('send', 'event', 'Map', 'Toogle', 'Layer: ' + layerSlug);
     },
 
   });

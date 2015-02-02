@@ -39,7 +39,7 @@ define([
     },
 
     update: function(layer) {
-      ga('send', 'event', 'Map', 'Timeline', 'Change' + layer.slug);
+      ga('send', 'event', 'Map', 'Settings', 'Timeline: ' + layer.slug);
       var currentLatlng = this.$timelineLatLng.html();
       var p = {};
       p[layer.slug] = true;

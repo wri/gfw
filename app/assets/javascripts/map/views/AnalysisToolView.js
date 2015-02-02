@@ -61,7 +61,7 @@ define([
         this.model.set('boxHidden', false);
         this.$done.addClass('disabled');
         this.toggleUseWidgetBtn(true);
-        ga('send', 'event', 'Map', 'Analysis', 'Perform an analysis');
+        ga('send', 'event', 'Map', 'Analysis', 'Click: start');
       }
     },
 
@@ -97,6 +97,7 @@ define([
       this.presenter.onOverlayComplete(e);
       this.$done.removeClass('disabled');
       this.$htmlbody.animate({ scrollTop: 200 },200);
+      ga('send', 'event', 'Map', 'Analysis', 'Polygon: complete');
       if(this.$infowindows)
         this.$infowindows.hide(0).removeClass('hidden');
       if (this.drawingManager) {
@@ -112,6 +113,7 @@ define([
      */
     _onClickDone: function() {
       this._stopDrawing();
+      ga('send', 'event', 'Map', 'Analysis', 'Click: done');
       this.presenter.doneDrawing();
     },
 
@@ -121,6 +123,7 @@ define([
      */
     _onClickCancel: function() {
       this._stopDrawing();
+      ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
       this.presenter.deleteAnalysis();
     },
 

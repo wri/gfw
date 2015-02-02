@@ -47,7 +47,7 @@ define([
 
       this.$widget_elements = (this.$widget_elements) ? this.$widget_elements : $('.widget:visible').not('.widget-timeline, .widget-togglewidgets');
       this.$map_elements = $('#viewfinder, .timeline-latlng');
-      ga('send', 'event', 'Map', 'ToggleBoxes', this.$el);
+      ga('send', 'event', 'Map', 'Toggle', this.$el);
 
       if($(this.$widget_elements[0]).is(':visible')) {
         this.$widget_elements.fadeOut();

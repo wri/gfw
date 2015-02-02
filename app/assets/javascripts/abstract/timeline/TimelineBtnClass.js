@@ -31,7 +31,7 @@ define([
       this.layer = layer;
       this.name = layer.slug;
 
-      ga('send', 'event', 'Map', 'Timeline', layer.slug);
+      ga('send', 'event', 'Map', 'Settings', 'Timeline: ' + layer.slug);
       this.options = _.extend({}, this.defaults, this.options || {});
       this.data = this._getData();
 
@@ -136,7 +136,7 @@ define([
     _onClickTick: function(el, date) {
       this._selectDate(date, el);
       this._updateCurrentDate([date.start, date.end]);
-      ga('send', 'event', 'Map', 'Timeline', el);
+      ga('send', 'event', 'Map', 'Settings', 'Timeline: '+ el);
     },
 
     /**
@@ -180,7 +180,7 @@ define([
           .style('left', x + 'px')
           .style('visibility', 'visible');
       }
-      ga('send', 'event', 'Map', 'Timeline', el);
+      ga('send', 'event', 'Map', 'Settings', 'Timeline: ' + el);
     },
 
     _getTooltipText: function(date) {
