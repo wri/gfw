@@ -112,6 +112,7 @@
 }
 .countries-list-title{
   text-align: center;
+  padding: 0 20px;
 }
 h3 {
   font-size: 25px;
@@ -132,11 +133,6 @@ h3 {
 
 
 @media only screen and (max-width: 480px) {
-  .countries-list-title {
-    margin-left: 20px;
-    margin-right: 20px;
-  }
-
   .interesting .section-title {
     font-size: 28px;
   }
