@@ -153,7 +153,6 @@ define([
       }
 
       // Publish analysis
-      console.log(resource);
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Polygon: true');
       this._publishAnalysis(resource);
     },

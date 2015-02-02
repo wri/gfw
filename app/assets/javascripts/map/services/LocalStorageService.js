@@ -18,7 +18,6 @@ define([
     init: function() {
       mps.subscribe('LocalStorage/clear', function() {
         store.clear();
-        console.log('LocalStorage cleared');
       });
     }
   });
