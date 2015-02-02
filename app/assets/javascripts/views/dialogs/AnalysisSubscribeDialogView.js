@@ -50,6 +50,8 @@ define([
         email: email
       };
 
+      ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + data.topic + ', Email: ' + data.email);
+
       if (this.analysisResource.iso) {
         data.iso = this.analysisResource.iso;
       } else if (this.analysisResource.geojson) {
