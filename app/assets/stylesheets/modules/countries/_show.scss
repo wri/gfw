@@ -240,7 +240,7 @@
 
         .tree-numbers {
           width: 25%;
-          padding-left: 20px;
+          // padding-left: 20px;
           .embed & {
             width: 28.33333%;
           }
@@ -387,7 +387,7 @@
           > li {
             width: 100%;
             position: relative;
-            border: 1px solid #525358;
+            border: 1px solid $dark;
             height: 100%;
             border-bottom: none;
             @include display-flex();
@@ -1465,19 +1465,22 @@
 .umdoptions_dialog {
   display: none;
   position: relative;
-  top: -395px;
-  left: -444px;
   float: none;
-  width: 442px;
+  width: 100%;
   min-height: 250px;
   padding: 20px 20px 0px 20px;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 16px;
-  background: #fff;
-  border: 1px solid #666;
-  @include border-radius(3px);
-  @include box-shadow(0px 0px 3px #666);
+  background: $white;
   z-index: 1000;
+
+  @media (min-width: $br-mobile) {
+    width: 442px;
+    top: -395px;
+    left: -444px;
+    border: 1px solid #666;
+    @include border-radius(3px);
+    @include box-shadow(0px 0px 3px #666);
+  }
 
   &::before {
     content: ' ';
@@ -1533,6 +1536,7 @@
   p {
     color: #666;
     margin-bottom: 10px;
+    clear: both;
     &.canopy {
       font-size: 11px;
       font-weight: 500;
@@ -1987,10 +1991,10 @@
             li {
               height: auto;
               border: 0;
-              border-top: 1px solid #6B6B87;
+              border-top: 1px solid $dark;
 
               &:last-child {
-                border-bottom: 1px solid #6B6B87;
+                border-bottom: 1px solid $dark;
               }
 
               a {
