@@ -73,7 +73,6 @@ define([
         localStorage.getItem('CACHE_VERSION'));
 
       if (_.has(params, 'cache') || localCacheVersion !== this._cacheVersion) {
-        console.log('...');
         _.each(amplify.store(), function(value, key) {
           amplify.store(key, null);
         });

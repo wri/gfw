@@ -375,7 +375,6 @@ define([
 
     formatXaxis: function() {
       var self = this;
-
       d3.select('.xaxis').selectAll('text').filter(function(d) {
         var left = self.ext.left + 16;
         var right = self.ext.right + 30;
@@ -393,10 +392,12 @@ define([
      * Update the timeline date. (calls updateCurrentDate)
      */
     onBrushEnd: function() {
-      var startYear = Math.floor(this.xscale.invert(this.handlers.left.attr('x')));
-      var endYear = Math.ceil(this.xscale.invert(this.handlers.right.attr('x')));
+
       // give time to finish animations.
       setTimeout(function() {
+        var startYear = Math.floor(this.xscale.invert(this.handlers.left.attr('x')));
+        var endYear = Math.ceil(this.xscale.invert(this.handlers.right.attr('x')));
+
         this.updateCurrentDate([moment([startYear]), moment([endYear])]);
       }.bind(this), 100);
     },
