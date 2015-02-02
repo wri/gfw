@@ -398,8 +398,6 @@ define([
         var startYear = Math.floor(this.xscale.invert(this.handlers.left.attr('x')));
         var endYear = Math.ceil(this.xscale.invert(this.handlers.right.attr('x')));
 
-        console.log(startYear);
-        console.log(endYear);
         this.updateCurrentDate([moment([startYear]), moment([endYear])]);
       }.bind(this), 100);
     },
