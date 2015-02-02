@@ -1,0 +1,42 @@
+/** category visualization */
+
+#honduras_forest_type {
+   polygon-opacity: 0.7;
+   line-color: #FFF;
+   line-width: 0;
+   line-opacity: 1;
+}
+
+#honduras_forest_type[classname="Pastos y/o Cultivos"] {
+   polygon-fill: #A6CEE3;
+}
+#honduras_forest_type[classname="VegetaciÃ³n Secundaria HÃºmeda"] {
+   polygon-fill: #1F78B4;
+}
+#honduras_forest_type[classname="Bosque Latifoliado HÃºmedo"] {
+   polygon-fill: #B2DF8A;
+}
+#honduras_forest_type[classname="Pino Denso"] {
+   polygon-fill: #33A02C;
+}
+#honduras_forest_type[classname="VegetaciÃ³n Secuandaria Seca"] {
+   polygon-fill: #FB9A99;
+}
+#honduras_forest_type[classname="Pino Ralo"] {
+   polygon-fill: #E31A1C;
+}
+#honduras_forest_type[classname="Ãrboles Dispersos"] {
+   polygon-fill: #FDBF6F;
+}
+#honduras_forest_type[classname="Bosque Latifoliado Seco"] {
+   polygon-fill: #FF7F00;
+}
+#honduras_forest_type[classname="Bosque Mixto"] {
+   polygon-fill: #CAB2D6;
+}
+#honduras_forest_type[classname="CafÃ©"] {
+   polygon-fill: #6A3D9A;
+}
+#honduras_forest_type {
+   polygon-fill: #DDDDDD;
+}
