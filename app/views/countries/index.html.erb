@@ -22,33 +22,34 @@
 <% content_for :js do %>
   <%= render "countries_templates" %>
 <% end %>
-
-<div class="inner">
-  <h2 class="title-section">country profiles</h2><a href="#" id="lolailo"></a>
-  <!-- <a href="/countries/overview" class="btn gray countries-rankings-btn">country rankings</a> -->
-</div>
-<div class="inner countries-list-title">
-  <h3>select a country or view <a href="/countries/overview">country rankings</a></h3>
-</div>
-<div class="inner">
-  <div class="search-countries-box">
-    <input id="searchCountry" type="text" placeholder="Type country name"/>
+<section id="countriesListView" class="section country-profiles">
+  <div class="inner">
+    <h2 class="title-section">country profiles</h2><a href="#" id="lolailo"></a>
+    <!-- <a href="/countries/overview" class="btn gray countries-rankings-btn">country rankings</a> -->
   </div>
-</div>
+  <div class="inner countries-list-title">
+    <h3>select a country or view <a href="/countries/overview">country rankings</a></h3>
+  </div>
+  <div class="inner">
+    <div class="search-countries-box">
+      <input id="searchCountry" type="text" placeholder="Type country name"/>
+    </div>
+  </div>
 
-<ul class="countries_list_index inner">
-  <% @countries.each do |c| %>
-    <% if c['enabled'] %>
-      <li id="<%= c['iso'] %>" class="country">
-        <a class="country-href" href="<%= country_path(id: c['iso']) %>">
-          <span class="country-content">
-            <h3 class="country-name <%= c['name'].length > 14 ? ' small' : '' %>"><%= c['name'] %></h3>
-          </span>
-        </a>
-      </li>
+  <ul class="countries_list_index inner">
+    <% @countries.each do |c| %>
+      <% if c['enabled'] %>
+        <li id="<%= c['iso'] %>" class="country">
+          <a class="country-href" href="<%= country_path(id: c['iso']) %>">
+            <span class="country-content">
+              <h3 class="country-name <%= c['name'].length > 14 ? ' small' : '' %>"><%= c['name'] %></h3>
+            </span>
+          </a>
+        </li>
+      <% end %>
     <% end %>
-  <% end %>
-</ul>
+  </ul>
+</section>
 
 <section class="interesting-section">
   <div class="inner">

@@ -1,3 +1,48 @@
+/**
+ * Application entry point.
+ */
+require([
+  'jquery',
+  'underscore',
+  'Class',
+  'backbone',
+  'handlebars',
+  'mps',
+  'topojson',
+  'views/HeaderView',
+  'views/FooterView',
+  'countries/views/CountriesListView',
+  '_string',
+], function($, _, Class, Backbone, Handlebars, mps, topojson, HeaderView, FooterView, CountriesListView) {
+  'use strict';
+
+  var CountryPage = Class.extend({
+
+    $el: $('body'),
+
+    init: function() {
+      this._initViews();
+    },
+
+    /**
+     * Initialize Landing Views.
+     */
+    _initViews: function() {
+      //shared
+      new HeaderView();
+      new FooterView();
+
+      //countries
+      new CountriesListView();
+    }
+  });
+
+  new CountryPage();
+
+});
+
+
+
 //= require jquery/dist/jquery
 //= require geojson
 //= require d3/d3
@@ -15,24 +60,24 @@
 
 //= require_tree ./countries
 
-$(document).ready(function() {
-  window.ga = window.ga || function() {};
+// $(document).ready(function() {
+//   window.ga = window.ga || function() {};
 
-  cdb.init(function() {
+//   cdb.init(function() {
 
-    // mobile-menu
-    window.countries_header = new gfw.ui.view.CountriesHeader();
+//     // mobile-menu
+//     window.countries_header = new gfw.ui.view.CountriesHeader();
 
-    if ($('.is-index-action').length > 0) {
-      window.countries_index = new gfw.ui.view.CountriesIndex();
-    }
-    if ($('.is-overview-action').length > 0 || $('.countries_overview').length > 0) {
-      window.countries_overview = new gfw.ui.view.CountriesOverview();
-    }
-    if ($('.is-show-action').length > 0) {
-      window.countries_show = new gfw.ui.view.CountriesShow({
-        iso: ISO
-      });
-    }
-  });
-});
+//     if ($('.is-index-action').length > 0) {
+//       window.countries_index = new gfw.ui.view.CountriesIndex();
+//     }
+//     if ($('.is-overview-action').length > 0 || $('.countries_overview').length > 0) {
+//       window.countries_overview = new gfw.ui.view.CountriesOverview();
+//     }
+//     if ($('.is-show-action').length > 0) {
+//       window.countries_show = new gfw.ui.view.CountriesShow({
+//         iso: ISO
+//       });
+//     }
+//   });
+// });
