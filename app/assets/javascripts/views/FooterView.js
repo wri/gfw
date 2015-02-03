@@ -21,16 +21,14 @@ define([
       this.$footerClose = $('#footerClose');
 
       //INIT
-      if ($(window).width() >= 850) {
-        this.$logos.slick({
-          infinite: true,
-          slidesToShow: 5,
-          slidesToScroll: 5,
-          speed: 500,
-          autoplay: true,
-          autoplaySpeed: 3000
-        });
-      }
+      this.$logos.slick({
+        infinite: true,
+        slidesToShow: 5,
+        slidesToScroll: 5,
+        speed: 500,
+        autoplay: true,
+        autoplaySpeed: 3000
+      });
 
       this.setListeners();
     },
