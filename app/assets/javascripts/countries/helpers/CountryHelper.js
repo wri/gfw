@@ -6,9 +6,6 @@ define([
 
   var CountryHelper = {
     draw: function(topology, c, iso, options) {
-      // c is index for country but RUS
-      // if (iso === 'RUS') c = 1; /*Commented: 08 Oct. 2014, It just work without this.*/
-
       var country = topojson.feature(topology, topology.objects[c]);
 
       var width = 300,
@@ -70,8 +67,6 @@ define([
 
       return country;
     }
-
-
   };
 
   return CountryHelper;

@@ -3,6 +3,7 @@ modules:
   - name: 'static'
   - name: 'landing'
   - name: 'stories'
+  - name: 'countries'
 
 waitSeconds: 200
 
@@ -96,12 +97,12 @@ shim:
       - "jquery"
     exports: "jqueryujs"
 
-  jquery_migrate: 
+  jquery_migrate:
     deps:
       - "jquery"
     exports: "jquery_migrate"
 
-  jquery_fileupload: 
+  jquery_fileupload:
     deps:
       - "jquery"
     exports: "jquery_fileupload"
