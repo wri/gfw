@@ -135,26 +135,22 @@ define([
       //spinner
       this.$sourceSpinner.removeClass('start');
       if (params.section) {
+        this.section = true;
         this.model.set('section', params.section);
         this.model.set('interesting', params.interesting);
         (params.t) ? this.model.set('t', params.t) : null;
-        mps.publish('Interesting/update',[this.model.get('interesting')]);
-        this.changeHelper();
       }else{
-        if (!this.mobile) {
-          var section = this.$navItem.eq(0).data('slug');
-          this.model.set('section', section);
-        }
-        var interesting = this.$navItem.eq(0).data('interesting');
-        this.model.set('interesting', interesting);
-        mps.publish('Interesting/update',[interesting]);
-        this.changeHelper();
+        this.section = false;
+        (!this.mobile) ? this.model.set('section', this.$navItem.eq(0).data('slug')) : null;
+        this.model.set('interesting', this.$navItem.eq(0).data('interesting'));
       }
-
+      mps.publish('Interesting/update',[this.model.get('interesting')]);
+      this.changeHelper();
     },
 
     changeHelper: function(){
       var section = this.model.get('section'), tab = this.model.get('t'), $tab = $('#'+tab);
+      var time = (this.first) ? 250 : 0;
       // mobile
       if (this.mobile) {
         if (section) {
@@ -170,7 +166,6 @@ define([
         this.$headerH1.removeClass('active');
         this.$sideBarBox.addClass('active');
       }
-
 
       //aside
       this.$navItem.removeClass('selected');
@@ -196,10 +191,14 @@ define([
           }, this ));
         }
       }else{
-        this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0, _.bind(function(){
-          this.calculateOffsets();
-        }, this ));
+        if (this.section) {
+          this.$htmlbody.delay(time).animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },time, _.bind(function(){
+            this.calculateOffsets();
+          }, this ));
+        }
       }
+      this.section = true;
+      this.first = false;
     },
 
     showSubContent:function(e){
