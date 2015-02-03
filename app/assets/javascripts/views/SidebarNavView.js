@@ -155,6 +155,7 @@ define([
 
     changeHelper: function(){
       var section = this.model.get('section'), tab = this.model.get('t'), $tab = $('#'+tab);
+      var time = (this.first) ? 250 : 0;
       // mobile
       if (this.mobile) {
         if (section) {
@@ -170,7 +171,6 @@ define([
         this.$headerH1.removeClass('active');
         this.$sideBarBox.addClass('active');
       }
-
 
       //aside
       this.$navItem.removeClass('selected');
@@ -196,10 +196,11 @@ define([
           }, this ));
         }
       }else{
-        this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0, _.bind(function(){
+        this.$htmlbody.delay(time).animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },time, _.bind(function(){
           this.calculateOffsets();
         }, this ));
       }
+      this.first = false;
     },
 
     showSubContent:function(e){
