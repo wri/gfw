@@ -1,0 +1,30 @@
+/** category visualization */
+
+#peru_forest_concessions {
+   polygon-opacity: 0.7;
+   line-color: #FFF;
+   line-width: 1;
+   line-opacity: 1;
+}
+
+#peru_forest_concessions[type="NONTIMBER FOREST PRODUCTS_NUTS"] {
+   polygon-fill: red;
+}
+#peru_forest_concessions[type="TIMBER CONCESSION"] {
+   polygon-fill: red;
+}
+#peru_forest_concessions[type="REFORESTATION"] {
+   polygon-fill: red;
+}
+#peru_forest_concessions[type="CONSERVATION"] {
+   polygon-fill: red;
+}
+#peru_forest_concessions[type="ECOTOURISM"] {
+   polygon-fill: red;
+}
+#peru_forest_concessions[type="NONTIMBER FOREST PRODUCTS_SHIRINGA"] {
+   polygon-fill: red;
+}
+#peru_forest_concessions[type="WILDLIFE"] {
+   polygon-fill: red;
+}
