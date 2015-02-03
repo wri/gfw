@@ -77,9 +77,13 @@ define([
 
 
     calculateOffsets: function(){
+      this.mobile = (this.$window.width() > 850) ? false : true;
       this.$sideBarBox.css({'min-height': this.$sideBarAside.height() });
       this.offset = this.$el.offset().top + parseInt(this.$el.css('paddingTop'), 10);
       this.offsetBottom = this.$cut.offset().top - this.$sideBarAside.height() - this.padding;
+      if (!this.mobile) {
+        this.$htmlbody.removeClass('active');
+      }
     },
 
     scrollDocument: function(e){
@@ -124,7 +128,6 @@ define([
         interesting: this.model.get('interesting'),
         t: this.model.get('t')
       }
-      console.log(params);
       mps.publish('SourceStatic/update',[params]);
     },
 
@@ -152,9 +155,22 @@ define([
 
     changeHelper: function(){
       var section = this.model.get('section'), tab = this.model.get('t'), $tab = $('#'+tab);
+      // mobile
+      if (this.mobile) {
+        if (section) {
+          this.padding = 0;
+          this.$backBtn.addClass('active');
+          this.$htmlbody.addClass('active');
+          this.$headerH1.addClass('active');
+          this.$sideBarBox.addClass('active')
+        }
+      }else{
+        this.padding = 40;
+        this.$htmlbody.removeClass('active');
+        this.$headerH1.removeClass('active');
+        this.$sideBarBox.addClass('active');
+      }
 
-      this.$sideBarBox.addClass('active');
-      this.$backBtn.addClass('active');
 
       //aside
       this.$navItem.removeClass('selected');
@@ -166,47 +182,24 @@ define([
 
       //tab
       if (tab) {
-        this.$htmlbody.animate({ scrollTop: $tab.offset().top },0, _.bind(function(){
-          $tab.find('.source_header').addClass('active');
-          $tab.find('.source_body').show(0);
-          this.calculateOffsets();
-        }, this ));
+        if (this.mobile) {
+          this.$sideBarBox.animate({ scrollTop: $tab.offset().top - this.$backBtn.innerHeight() },0, _.bind(function(){
+            $tab.find('.source_header').addClass('active');
+            $tab.find('.source_body').show(0);
+            this.calculateOffsets();
+          }, this ));
+        }else{
+          this.$htmlbody.animate({ scrollTop: $tab.offset().top },0, _.bind(function(){
+            $tab.find('.source_header').addClass('active');
+            $tab.find('.source_body').show(0);
+            this.calculateOffsets();
+          }, this ));
+        }
       }else{
         this.$htmlbody.animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },0, _.bind(function(){
-          $tab.find('.source_header').addClass('active');
-          $tab.find('.source_body').show(0);
           this.calculateOffsets();
         }, this ));
       }
-
-
-      setTimeout(_.bind(function(){
-        this.calculateOffsets();
-      },this),200);
-
-
-      // if(this.mobile && !tab) {
-      //   // this.$sideBarBox.animate({ scrollTop: 0 },0);
-      //   this.$headerH1.addClass('active');
-      // }
-
-      // setTimeout(_.bind(function(){
-      //   this.calculateOffsets();
-      //   var posY, time;
-      //   if(this.mobile) {
-      //     posY = this.$document.scrollTop();
-      //     time = 0;
-      //   }
-
-      // },this),100);
-
-      // setTimeout(_.bind(function(){
-      //   //htmlbody
-      //   if(this.mobile) {
-      //     this.$sideBarBox.addClass('animate');
-      //     this.$htmlbody.addClass('active');
-      //   }
-      // },this),500);
     },
 
     showSubContent:function(e){
