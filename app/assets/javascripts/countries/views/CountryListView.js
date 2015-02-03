@@ -13,15 +13,19 @@ define([
 
   'use strict';
 
-  var CountriesListView = Backbone.View.extend({
+  var CountryListView = Backbone.View.extend({
 
-    el: '#countriesListView',
+    el: '#countryListView',
 
     events : {
       'keyup #searchCountry' : '_searchCountries'
     },
 
     initialize: function() {
+      if (!this.$el.length) {
+        return
+      }
+
       this.helper = CountryHelper;
       this._getCountries();
       this._drawCountries();
@@ -90,6 +94,6 @@ define([
 
 
   });
-  return CountriesListView;
+  return CountryListView;
 
 });

@@ -11,9 +11,11 @@ require([
   'topojson',
   'views/HeaderView',
   'views/FooterView',
-  'countries/views/CountriesListView',
+  'views/DialogView',
+  'countries/views/CountryListView',
+  'countries/views/CountryOverviewView',
   '_string',
-], function($, _, Class, Backbone, Handlebars, mps, topojson, HeaderView, FooterView, CountriesListView) {
+], function($, _, Class, Backbone, Handlebars, mps, topojson, HeaderView, FooterView, DialogView, CountryListView, CountryOverviewView) {
   'use strict';
 
   var CountryPage = Class.extend({
@@ -31,9 +33,11 @@ require([
       //shared
       new HeaderView();
       new FooterView();
+      new DialogView();
 
       //countries
-      new CountriesListView();
+      new CountryListView();
+      new CountryOverviewView();
     }
   });
 
