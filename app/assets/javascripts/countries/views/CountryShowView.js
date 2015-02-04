@@ -54,8 +54,8 @@ define([
     },
 
     _initShare: function() {
-      var Share = new CountryShareView({template: 'country'});
-      var Share_entry = new CountryShareView({template: 'country-entry'});
+      var Share = new CountryShareView({ template: 'templateShare' });
+      var Share_entry = new CountryShareView({ template: 'templateShareLittle' });
       this.$el.find('.country-sidenav .share-container').append(Share.render());
       this.$el.find('.section-share').find('.section-btn').prepend(Share_entry.render());
     },

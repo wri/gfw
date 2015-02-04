@@ -1,5 +1,5 @@
 /**
- * The Feed view.
+ * The Country Header view.
  */
 define([
   'jquery',
