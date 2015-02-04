@@ -13,7 +13,8 @@ gfw.ui.view.CountriesIndex = cdb.core.View.extend({
   },
 
   _getCountries : function(){
-    this.$searchBox = $('#searchCountry')
+    this.$searchBox = $('#searchCountry');
+    this.$searchBox.focus();
     this.$countries = $('.country');
     this.countries_list = _.map($('.country-name'),function(el){
       return $(el).text();
@@ -54,7 +55,7 @@ gfw.ui.view.CountriesIndex = cdb.core.View.extend({
         var dialog = JSON.parse(sessionStorage.getItem('DIALOG'));
 
         if (!dialog.display) return;
-        ga('send', 'event', 'SourceWindow', 'Open', dialog.type);
+        ga('send', 'event', 'Countries', 'Info', 'Open '+dialog.type);
         selfo.sourceWindow.show(dialog.type);
         $('.backdrop').css('opacity', '0.3');
         sessionStorage.removeItem('DIALOG');

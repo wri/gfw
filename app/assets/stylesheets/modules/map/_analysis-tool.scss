@@ -1,4 +1,16 @@
 .widget-analysis-tool {
+  .analysis-latlng {
+    height: 20px;
+    position: absolute;
+    top: -18px;
+    color: #333;
+    font-weight: 500;
+    text-shadow: 0px 0px 3px #fff;
+    font-size: 11px;
+    margin-right: 10px;
+    right: 0;
+  }
+
   .widget-btn {
     right: 395px;
     top: 32px;

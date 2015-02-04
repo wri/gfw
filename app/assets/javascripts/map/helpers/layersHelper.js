@@ -33,8 +33,13 @@ define([
   'map/views/layers/GrumpLayer',
   'map/views/layers/MangroveLayer',
   'map/views/layers/WMSLayer',
+  'map/views/layers/ConcesionesForestalesLayer',
+  'map/views/layers/ConcesionesForestalesNotSupervisedLayer',
   'map/views/layers/TerraiCanvasLayer',
   'map/views/layers/TerraicanvasCoverageLayer',
+  'map/views/layers/WWFLayer',
+  'map/views/layers/BirdlifeLayer',
+  'map/views/layers/AzepolyLayer',
   // Layer dialog templates
   'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -76,8 +81,13 @@ define([
   GrumpLayer,
   MangroveLayer,
   WMSLayer,
+  ConcesionesForestalesLayer,
+  ConcesionesForestalesNotSupervisedLayer,
   TerraiCanvasLayer,
   TerraicanvasCoverageLayer,
+  WWFLayer,
+  BirdlifeLayer,
+  AzepolyLayer,
   // Layer dialog templates
   loss_dialog,
   // Layer timelines
@@ -187,12 +197,27 @@ define([
     WMSLayer :{
       view: WMSLayer
     },
+    concesiones_forestales :{
+      view: ConcesionesForestalesLayer
+    },
+    concesiones_forestalesNS :{
+      view: ConcesionesForestalesNotSupervisedLayer
+    },
     terrailoss :{
       view: TerraiCanvasLayer,
       timelineView: TerraiTimeline
     },
     terraicanvas_cover :{
       view: TerraicanvasCoverageLayer
+    },
+    wwf: {
+      view: WWFLayer
+    },
+    birdlife: {
+      view: BirdlifeLayer
+    },
+    azepoly: {
+      view: AzepolyLayer
     },
     nothing: {
     }

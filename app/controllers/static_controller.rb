@@ -55,6 +55,10 @@ class StaticController < ApplicationController
     YourMailer.feedback(feedback,signup,email).deliver
   end
 
+  def old
+    @title = "Oops, your browser isn't supported."
+  end
+
   private
 
     def load_stories

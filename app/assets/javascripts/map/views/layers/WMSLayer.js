@@ -1,22 +1,24 @@
 /**
- * The Forma Coverage layer module for use on canvas.
+ * The WMSLayer layer module.
  *
- * @return WMSLayer class (extends CanvasLayerClass)
+ * @return WMSLayerLayer class (extends CartoDBLayerClass)
  */
 define([
-  'abstract/layer/WMSLayerClass',
-], function(WMSLayerClass) {
+  'abstract/layer/CartoDBLayerClass',
+  'text!map/cartocss/honduras_forest.cartocss'
+], function(CartoDBLayerClass, honduras_forestCartoCSS) {
 
   'use strict';
 
-  var WMSLayer = WMSLayerClass.extend({
+  var WMSLayerLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT *, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName}'
+      sql: 'SELECT *, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName}',
+      cartocss: honduras_forestCartoCSS
     }
 
   });
 
-  return WMSLayer;
+  return WMSLayerLayer;
 
 });

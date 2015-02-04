@@ -237,6 +237,7 @@ gfw.ui.view.umdoptionsDialog = gfw.ui.view.Widget.extend({
       config.BASELAYER = 'loss' + this.canopy;
     }
     config.canopy_choice = this.canopy;
+    ga('send', 'event', 'Country show', 'Settings', 'Threshold: ' + this.canopy);
     if (typeof GFW !== 'undefined' && GFW.app) {
       updateHash();
       GFW.app.updateBaseLayer(config.BASELAYER)

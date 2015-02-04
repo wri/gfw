@@ -54,12 +54,15 @@ define([
      * Triggered when the user clicks on the analysis button.
      */
     onClickAnalysis: function() {
-      this._startDrawingManager();
-      this.presenter.startDrawing();
-      this.model.set('boxHidden', false);
-      this.$done.addClass('disabled');
-      this.toggleUseWidgetBtn(true);
-      ga('send', 'event', 'Map', 'Analysis', 'Perform an analysis');
+      if (!this.$widgetBtn.hasClass('in_use')) {
+        this._startDrawingManager();
+        this.toggleUseWidgetBtn(true);
+        this.presenter.startDrawing();
+        this.model.set('boxHidden', false);
+        this.$done.addClass('disabled');
+        this.toggleUseWidgetBtn(true);
+        ga('send', 'event', 'Map', 'Analysis', 'Click: start');
+      }
     },
 
     /**
@@ -94,6 +97,14 @@ define([
       this.presenter.onOverlayComplete(e);
       this.$done.removeClass('disabled');
       this.$htmlbody.animate({ scrollTop: 200 },200);
+      ga('send', 'event', 'Map', 'Analysis', 'Polygon: complete');
+      if(this.$infowindows)
+        this.$infowindows.hide(0).removeClass('hidden');
+      if (this.drawingManager) {
+        this.drawingManager.setDrawingMode(null);
+        this.drawingManager.setMap(null);
+      }
+
     },
 
     /**
@@ -102,6 +113,7 @@ define([
      */
     _onClickDone: function() {
       this._stopDrawing();
+      ga('send', 'event', 'Map', 'Analysis', 'Click: done');
       this.presenter.doneDrawing();
     },
 
@@ -111,6 +123,7 @@ define([
      */
     _onClickCancel: function() {
       this._stopDrawing();
+      ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
       this.presenter.deleteAnalysis();
     },
 
@@ -118,15 +131,14 @@ define([
      * Stop drawing manager, set drawing box to hidden.
      */
     _stopDrawing: function() {
+      this.model.set({boxHidden: true});
+      this.presenter.stopDrawing();
       if(this.$infowindows)
         this.$infowindows.hide(0).removeClass('hidden');
       if (this.drawingManager) {
         this.drawingManager.setDrawingMode(null);
         this.drawingManager.setMap(null);
       }
-      this.toggleUseWidgetBtn(false);
-      this.model.set({boxHidden: true});
-      this.presenter.stopDrawing();
     },
 
     /**

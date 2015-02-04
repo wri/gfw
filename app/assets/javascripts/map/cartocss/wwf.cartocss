@@ -1,0 +1,24 @@
+#wwf_terr_ecos[realm="NT"] {
+   polygon-fill: #A6CEE3;
+}
+#wwf_terr_ecos[realm="PA"] {
+   polygon-fill: #1F78B4;
+}
+#wwf_terr_ecos[realm="NA"] {
+   polygon-fill: #FDBF6F;
+}
+#wwf_terr_ecos[realm="AN"] {
+   polygon-fill: #B2DF8A;
+}
+#wwf_terr_ecos[realm="AA"] {
+   polygon-fill: #33A02C;
+}
+#wwf_terr_ecos[realm="AT"] {
+   polygon-fill: #FB9A99;
+}
+#wwf_terr_ecos[realm="OC"] {
+   polygon-fill: #E31A1C;
+}
+#wwf_terr_ecos[realm="IM"] {
+   polygon-fill: #FFCC00;
+}

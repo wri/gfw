@@ -43,6 +43,7 @@ define([
       this.presenter = new Presenter(this);
       this.layerInst = {};
       this.$maplngLng = $('.map-container .map-latlng');
+      this.$viewFinder = $('#viewfinder');
       this.render();
     },
 
@@ -64,6 +65,7 @@ define([
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
         this.$el.addClass('is-loaded');
       }, this));
+
       this._checkDialogs();
     },
 
@@ -281,6 +283,44 @@ define([
         this.setZoom(this.getZoom() - 1);
       }, this));
     },
+
+    /**
+     * Crosshairs when analysis is activated
+     */
+    crosshairs: function(){
+      this.$viewFinder.addClass('hidden');
+      this.$maplngLng.removeClass('hidden');
+      this.$analysislatlng = $('#analysisLatlng');
+
+      this.$el.on('mousemove', _.bind(this.updatePositionCrosshairs, this ))
+    },
+
+    updatePositionCrosshairs: function(event){
+      var currentBounds = this.map.getBounds();
+      var topLeftLatLng = new google.maps.LatLng( currentBounds.getNorthEast().lat(), currentBounds.getSouthWest().lng());
+      var point = this.map.getProjection().fromLatLngToPoint( topLeftLatLng );
+      point.x += event.offsetX / ( 1<<this.map.getZoom() );
+      point.y += event.offsetY / ( 1<<this.map.getZoom() );
+
+      var latlong = this.map.getProjection().fromPointToLatLng( point );
+      this.updateLatlngAnalysis(latlong.lat(), latlong.lng());
+
+    },
+    /**
+     * Updates
+     */
+    updateLatlngAnalysis: function(lat, lng) {
+      var html = 'Lat/long: {0}, {1}'.format(lat.toFixed(6), lng.toFixed(6));
+      this.$analysislatlng.html(html);
+    },
+
+    centerPositionCrosshairs: function(){
+      this.$viewFinder.removeClass('hidden');
+      this.$maplngLng.addClass('hidden');
+      this.$el.off('mousemove');
+      this.onCenterChange();
+    },
+
 
     /**
      * Updates

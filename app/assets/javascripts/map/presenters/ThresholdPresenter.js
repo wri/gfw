@@ -112,6 +112,7 @@ define([
      */
     setThreshold: function(value) {
       this.status.set('threshold', value);
+      ga('send', 'event', 'Map', 'Settings', 'Threshold: ' + value);
       this._publishThreshold();
     },
 

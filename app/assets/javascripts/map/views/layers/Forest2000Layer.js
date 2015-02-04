@@ -17,7 +17,7 @@ define([
     options: {
       threshold: 30,
       dataMaxZoom: 12,
-      urlTemplate: 'http://earthengine.google.org/static/hansen_2013/gfw_tree_loss_year_{threshold}{/z}{/x}{/y}.png'
+      urlTemplate: 'http://earthengine.google.org/static/hansen_2014/gfw_loss_tree_year_{threshold}_2014{/z}{/x}{/y}.png'
     },
 
     init: function(layer, options, map) {

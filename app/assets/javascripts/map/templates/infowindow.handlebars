@@ -10,7 +10,7 @@
           <div class="thumb-mask"><img src="{{content.data.image}}" onerror="this.style.display='none';"></div>
       {{/if}}
       {{#if content.data.analysis}}
-        <a style="cursor:pointer;" id="analyzeBtn" onclick="mps.publish('AnalysisTool/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')])" class="analyse" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid= "{{content.data.id}}"></a>
+        <a style="cursor:pointer;" id="analyzeBtn" onclick="mps.publish('AnalysisTool/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]); ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area');" class="analyse" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid= "{{content.data.id}}"></a>
       {{/if}}
     </div>
     <div class="cartodb-popup-content">
@@ -114,6 +114,22 @@
       {{#if content.data.acq_time}}
         <h4>Acquisition time:</h4>
         <p>{{content.data.acq_time}}</p>
+      {{/if}}
+      {{#if content.data.realm}}
+        <h4>Biogeographical Realm:</h4>
+        <p>{{content.data.realm}}</p>
+      {{/if}}
+      {{#if content.data.biome}}
+        <h4>Biome:</h4>
+        <p>{{content.data.biome}}</p>
+      {{/if}}
+      {{#if content.data.source}}
+        <h4>Source:</h4>
+        <p>{{content.data.source}}</p>
+      {{/if}}
+      {{#if content.data.aze_id}}
+        <h4>Azepoly Index:</h4>
+        <p>{{content.data.aze_id}}</p>
       {{/if}}
     </div>
   </div>

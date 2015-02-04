@@ -240,7 +240,7 @@
 
         .tree-numbers {
           width: 25%;
-          padding-left: 20px;
+          // padding-left: 20px;
           .embed & {
             width: 28.33333%;
           }
@@ -387,7 +387,7 @@
           > li {
             width: 100%;
             position: relative;
-            border: 1px solid #525358;
+            border: 1px solid $dark;
             height: 100%;
             border-bottom: none;
             @include display-flex();
@@ -676,6 +676,7 @@
       .right-col {
         float: left;
         min-height: 1px;
+        position: relative;
 
         &.wide {
           width: 100%;
@@ -688,7 +689,10 @@
       }
 
       .right-col {
-        margin-left: 10%;
+        margin: 10% 0 0 0;
+        @media (min-width: $br-mobile){
+          margin: 0 0 0 10%;
+        }
 
         .section-btn {
           right: 20px;
@@ -887,12 +891,20 @@
     }
   }
 
+  .country-employment,
   .country-employment-section {
+    .section-content .left-col,
+    .section-content .right-col{
+      .embed &{
+        width: 100%;
+      }
+    }
     .section-content .left-col .section-title {
       @extend .clearfix;
       margin-bottom: 10px;
       font-size: 47px;
       display: inline-block;
+
 
       div,
       span {
@@ -907,7 +919,7 @@
         font-size: 12px;
         font-weight: 500;
         line-height: 1.2;
-        @extend .sans-serif;
+
         text-transform: uppercase;
         color: #444;
       }
@@ -929,7 +941,7 @@
       }
 
       text {
-        @extend .sans-serif;
+
         font-size: 12px;
       }
 
@@ -1017,7 +1029,7 @@
     }
   }
 
-  .country-carbon-stocks-section {
+  .country-carbon_stocks {
     display: table;
     padding: 0;
 
@@ -1087,8 +1099,12 @@
         width: 25%;
       }
       @media (min-width: 1000px){
+        width: 12.5%;
+      }
+      @media (min-width: 1600px){
         width: 10%;
       }
+
       .convention-box{
         display: block;
         position: relative;
@@ -1097,7 +1113,7 @@
         border: 2px solid #CCCCCC;
         font-weight: 500;
         font-size: 12px;
-        @extend .sans-serif;
+
         text-align: center;
         color: #AAAAAA;
         @include border-radius(2px);
@@ -1449,21 +1465,24 @@
 .umdoptions_dialog {
   display: none;
   position: relative;
-  top: -395px;
-  left: -444px;
   float: none;
-  width: 442px;
+  width: 100%;
   min-height: 250px;
   padding: 20px 20px 0px 20px;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 16px;
-  background: #fff;
-  border: 1px solid #666;
-  @include border-radius(3px);
-  @include box-shadow(0px 0px 3px #666);
+  background: $white;
   z-index: 1000;
 
-  &::after, &::before {
+  @media (min-width: $br-mobile) {
+    width: 442px;
+    top: -395px;
+    left: -444px;
+    border: 1px solid #666;
+    @include border-radius(3px);
+    @include box-shadow(0px 0px 3px #666);
+  }
+
+  &::before {
     content: ' ';
     background-color: white;
     width: 15px;
@@ -1478,9 +1497,8 @@
   }
 
   &::before {
-    background-color: black;
     top: 185px;
-    left: 414px;
+    left: 412px;
   }
 
   .close {
@@ -1518,6 +1536,7 @@
   p {
     color: #666;
     margin-bottom: 10px;
+    clear: both;
     &.canopy {
       font-size: 11px;
       font-weight: 500;
@@ -1972,10 +1991,10 @@
             li {
               height: auto;
               border: 0;
-              border-top: 1px solid #6B6B87;
+              border-top: 1px solid $dark;
 
               &:last-child {
-                border-bottom: 1px solid #6B6B87;
+                border-bottom: 1px solid $dark;
               }
 
               a {
@@ -2140,4 +2159,9 @@
       }
     } // country-blog-section
   }
+}
+
+
+.source_category_title{
+  display: none !important;
 }

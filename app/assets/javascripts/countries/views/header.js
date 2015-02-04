@@ -7,7 +7,7 @@ gfw.ui.model.layersOptions = Backbone.Model.extend({
     var threshold = (config.canopy_choice) ? config.canopy_choice : 30;
     var layers = {
       'forest2000': {
-        url: 'http://earthengine.google.org/static/hansen_2013/gfw_tree_loss_year_' + threshold + '/%z/%x/%y.png',
+        url: 'http://earthengine.google.org/static/hansen_2014/gfw_loss_tree_year_' + threshold + '_2014/%z/%x/%y.png',
         dataMaxZoom: 12,
         tileSize: [256, 256],
         _filterCanvasImage: function(imageData, w, h) {
@@ -246,11 +246,10 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
         self.$areaSelector.append('<option class="dark" value="' + area.get('name_1') + '">' + area.get('name_1') + '</option>')
       }
     });
-    ga('send', 'event', 'Countries', 'Click', 'Change Area');
+    ga('send', 'event', 'Country show', 'Click', 'Change Area');
   },
 
   _onClickUMDOptions: function(e,tar_param) {
-    if (typeof ga !== "undefined") ga('send', 'event', 'Country Page', 'Change', 'Threshold');
     e && e.preventDefault();
 
     if ($(e.currentTarget).data('target')) {
@@ -264,7 +263,6 @@ gfw.ui.view.CountryHeader = cdb.core.View.extend({
     } else {
       UmdOptions._openUMDoptions();
     }
-    ga('send', 'event', 'Countries', 'Click', 'Threshold');
   },
 
   _updateMapThreshold: function(e) {

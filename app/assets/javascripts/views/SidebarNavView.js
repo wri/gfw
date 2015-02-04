@@ -26,10 +26,10 @@ define([
     events: {
       'click .nav-item' : 'changeSourceNav',
       'click .nav-title' : 'scrollTo',
-      'click #back-btn' : 'returnBack',
       'click .source_header' : 'toggleSources',
       'click .source_dropdown_header' : 'toggleDropdown',
-      'click .source_dropdown_menu a' : 'showSubContent'
+      'click .source_dropdown_menu a' : 'showSubContent',
+      'click #back-btn' : 'returnBack'
     },
 
     initialize: function() {
@@ -77,9 +77,13 @@ define([
 
 
     calculateOffsets: function(){
+      this.mobile = (this.$window.width() > 850) ? false : true;
       this.$sideBarBox.css({'min-height': this.$sideBarAside.height() });
       this.offset = this.$el.offset().top + parseInt(this.$el.css('paddingTop'), 10);
       this.offsetBottom = this.$cut.offset().top - this.$sideBarAside.height() - this.padding;
+      if (!this.mobile) {
+        this.$htmlbody.removeClass('active');
+      }
     },
 
     scrollDocument: function(e){
@@ -104,26 +108,97 @@ define([
       this.model.set('section',$(e.currentTarget).data('slug'));
       this.model.set('interesting', $(e.currentTarget).data('interesting'));
       this.model.set('t',null);
-
-      this.updateSource()
-    },
-    toggleSources: function(e){
-      this.$sourceBody.hide(0);
-      if ($(e.currentTarget).hasClass('active')) {
-        this.$sourceBody.removeClass('active');
-        $(e.currentTarget).removeClass('active');
-        this.model.set('t', null);
-      } else {
-        this.$sourceHeader.removeClass('active');
-        $(e.currentTarget).addClass('active');
-        $(e.currentTarget).parent().children('.source_body').show(0);
-        this.model.set('t', $(e.currentTarget).parent().attr('id'));
-      }
       this.updateSource();
     },
+    toggleSources: function(e){
+      ($(e.currentTarget).hasClass('active')) ? this.model.set('t', null) : this.model.set('t', $(e.currentTarget).parent().attr('id'));
+      this.$sourceHeader.removeClass('active');
+      this.$sourceBody.hide(0);
+      this.updateSource();
+    },
+
     toggleDropdown: function(e){
       e && e.preventDefault();
       $(e.currentTarget).parents('.source_dropdown').find('.source_dropdown_menu').toggle(0);
+    },
+
+    updateSource: function(){
+      var params = {
+        section: this.model.get('section'),
+        interesting: this.model.get('interesting'),
+        t: this.model.get('t')
+      }
+      mps.publish('SourceStatic/update',[params]);
+    },
+
+    changeSource: function(params){
+      //spinner
+      this.$sourceSpinner.removeClass('start');
+      if (params.section) {
+        this.section = true;
+        this.model.set('section', params.section);
+        this.model.set('interesting', params.interesting);
+        (params.t) ? this.model.set('t', params.t) : null;
+      }else{
+        this.section = false;
+        (!this.mobile) ? this.model.set('section', this.$navItem.eq(0).data('slug')) : null;
+        this.model.set('interesting', this.$navItem.eq(0).data('interesting'));
+      }
+      mps.publish('Interesting/update',[this.model.get('interesting')]);
+      this.changeHelper();
+    },
+
+    changeHelper: function(){
+      var section = this.model.get('section'), tab = this.model.get('t'), $tab = $('#'+tab);
+      var time = (this.first) ? 250 : 0;
+      // mobile
+      if (this.mobile) {
+        if (section) {
+          this.padding = 0;
+          this.$backBtn.addClass('active');
+          this.$htmlbody.addClass('active');
+          this.$headerH1.addClass('active');
+          this.$sideBarBox.addClass('active')
+        }
+      }else{
+        this.padding = 40;
+        this.$htmlbody.removeClass('active');
+        this.$headerH1.removeClass('active');
+        this.$sideBarBox.addClass('active');
+      }
+
+      //aside
+      this.$navItem.removeClass('selected');
+      $('.'+section).addClass('selected');
+
+      //section
+      this.$sourceArticle.removeClass('selected');
+      $('#'+section).addClass('selected');
+
+      //tab
+      if (tab) {
+        if (this.mobile) {
+          this.$sideBarBox.animate({ scrollTop: $tab.offset().top - this.$backBtn.innerHeight() },0, _.bind(function(){
+            $tab.find('.source_header').addClass('active');
+            $tab.find('.source_body').show(0);
+            this.calculateOffsets();
+          }, this ));
+        }else{
+          this.$htmlbody.animate({ scrollTop: $tab.offset().top },0, _.bind(function(){
+            $tab.find('.source_header').addClass('active');
+            $tab.find('.source_body').show(0);
+            this.calculateOffsets();
+          }, this ));
+        }
+      }else{
+        if (this.section) {
+          this.$htmlbody.delay(time).animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },time, _.bind(function(){
+            this.calculateOffsets();
+          }, this ));
+        }
+      }
+      this.section = true;
+      this.first = false;
     },
 
     showSubContent:function(e){
@@ -138,96 +213,8 @@ define([
       $('#'+id).show(0);
 
       this.calculateOffsets();
-
     },
 
-
-    updateSource: function(){
-      var params = {
-        section: this.model.get('section'),
-        interesting: this.model.get('interesting'),
-        t: this.model.get('t')
-      }
-      mps.publish('SourceStatic/update',[params]);
-    },
-
-
-    changeSource: function(params){
-      //spinner
-      this.$sourceSpinner.removeClass('start');
-      if (params.section) {
-        this.model.set('section', params.section);
-        this.model.set('interesting', params.interesting);
-        (params.t) ? this.model.set('t', params.t) : null;
-        this.changeHelper();
-        mps.publish('Interesting/update',[this.model.get('interesting')]);
-      }else{
-        if (!this.mobile) {
-          var section = this.$navItem.eq(0).data('slug');
-          this.first = false;
-          this.model.set('section', section);
-          this.changeHelper();
-        }
-        var interesting = this.$navItem.eq(0).data('interesting');
-        this.model.set('interesting', interesting);
-        mps.publish('Interesting/update',[interesting]);
-      }
-
-    },
-
-    changeHelper: function(){
-      var section = this.model.get('section');
-      var tab = this.model.get('t');
-      this.$sideBarBox.addClass('active');
-      this.$backBtn.addClass('active');
-      //aside
-      this.$navItem.removeClass('selected');
-      $('.'+section).addClass('selected');
-
-      //section
-      this.$sourceArticle.removeClass('selected');
-      $('#'+section).addClass('selected');
-
-      //tab
-      if (tab) {
-        (!$('#'+tab).find('.source_header').hasClass('active')) ? $('#'+tab).find('.source_header').trigger('click') : null;
-      }
-
-      if(this.mobile) {
-        this.$sideBarBox.animate({ scrollTop: 0 },0);
-        this.$headerH1.addClass('active');
-      }
-
-      setTimeout(_.bind(function(){
-        this.calculateOffsets();
-        var posY, time;
-        if (this.first) {
-          if(this.mobile) {
-            posY = this.$document.scrollTop();
-            time = 0;
-          }else{
-            if(!tab) {
-              posY = this.$sideBarBox.offset().top - this.padding
-              time = 250;
-            }else{
-              posY = $('#'+tab).offset().top;
-              time = 250;
-            }
-          }
-          this.$htmlbody.animate({ scrollTop: posY },time);
-        }else{
-          this.first = true;
-        }
-      },this),100);
-
-      setTimeout(_.bind(function(){
-        //htmlbody
-        if(this.mobile) {
-          this.$sideBarBox.addClass('animate');
-          this.$htmlbody.addClass('active');
-        }
-      },this),500);
-    },
 
     returnBack: function(e){
       e && e.preventDefault();

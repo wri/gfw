@@ -155,7 +155,7 @@
       </div>
     </div>
   </section>
-  
+
   <!-- tenure -->
   <section class="country-section country-tenure" data-scroll-index='4' style="display:none">
     <div class="inner">
@@ -170,4 +170,40 @@
       </div>
     </div>
   </section>
+
+
+  <!-- carbon -->
+  <% if @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>
+  <section class="country-carbon_stocks country-section carbon-text <%= 'wide' unless @country['emissions'].present? && @country['emissions'] != 0 %>" style="display:none">
+    <div class="section-info">
+      Carbon stocks
+    </div>
+
+    <div class="section-content">
+      <h3 class='section-title'>This country has <span class="highlight"><%= number_with_delimiter(@country['carbon_stocks']) %> million metric tons of carbon stocks</span> in living forest biomass.</h3>
+    </div>
+  </section>
+  <% end %>
+
+
+  <!-- emissions -->
+  <% if @country['emissions'].present? && @country['emissions'] != 0 %>
+  <section class="country-emissions country-section emissions-text <%= 'wide' unless @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>" style="display:none">
+    <div class="section-info">
+      CO2 emissions
+    </div>
+     <% precission = (@country['emissions'].abs.to_i < 0.1) ? 2 : 1 %>
+
+    <div class="section-content">
+      <% if @country['emissions'] > 0 %>
+        <h3 class='section-title'>According to FAO data, <span class="highlight"><%= number_to_percentage(@country['emissions'], precision: precission) %> of GHG emissions</span> in this country came from land-use change and forestry in 2011.</h3>
+      <% else %>
+        <h3 class='section-title'>According to FAO data, land-use change and forestry sequestered <span class="highlight"><%= number_to_percentage(@country['emissions'].abs, precision: precission) %> of this country’s GHG emissions</span> in 2011.</h3>
+      <% end %>
+    </div>
+  </section>
+  <% end %>
+
+
+
 </div>

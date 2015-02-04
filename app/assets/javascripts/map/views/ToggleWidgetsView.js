@@ -39,18 +39,23 @@ define([
     _cacheSelector: function() {
       ToggleWidgetsView.__super__._cacheSelector.apply(this);
       this.$widget_elements = false;
+      this.$map_elements = false;
       this.$status_button = this.$el.find('span');
     },
 
     toggle: function() {
 
       this.$widget_elements = (this.$widget_elements) ? this.$widget_elements : $('.widget:visible').not('.widget-timeline, .widget-togglewidgets');
-      ga('send', 'event', 'Map', 'ToggleBoxes', this.$el);
+      this.$map_elements = $('#viewfinder, .timeline-latlng');
+      ga('send', 'event', 'Map', 'Toggle', this.$el);
+
       if($(this.$widget_elements[0]).is(':visible')) {
         this.$widget_elements.fadeOut();
+        this.$map_elements.fadeOut();
         this.$status_button.removeClass('visible');
       } else {
         this.$widget_elements.fadeIn();
+        this.$map_elements.fadeIn();
         this.$status_button.addClass('visible');
       }
     }

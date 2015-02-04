@@ -66,7 +66,7 @@
   width: 195px;
   font-size: 15px;
   line-height: 18px;
-  @extend .sans-serif;
+
   color: #fff;
 }
 
@@ -74,7 +74,7 @@
   text-align: center;
   font-weight: 300;
   font-size: 67px;
-  @extend .serif;
+
   color: #97Bd3d;
 }
 
@@ -100,7 +100,7 @@
   top: -58px;
   font-weight: 500;
   font-size: 13px;
-  @extend .sans-serif;
+
   text-transform: uppercase;
   text-align: center;
   color: #fff;

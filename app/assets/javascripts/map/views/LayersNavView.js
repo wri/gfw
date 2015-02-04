@@ -63,7 +63,7 @@ define([
             $toggle.css('border-color', layer.title_color);
             $toggleIcon.css('background-color', layer.title_color);
           }
-          ga('send', '  event', 'LayerNavView', 'Toggle', layer.slug);
+          ga('send', 'event', 'Map', 'Toogle', 'Layer: ' + layer.slug);
         } else {
           $li.removeClass('selected');
           $toggle.removeClass('checked').css('background', '').css('border-color', '');
@@ -81,7 +81,6 @@ define([
      */
     _toggleLayer: function(event) {
       var layerSlug = $(event.currentTarget).data('layer');
-
       if ($(event.currentTarget).hasClass('ifl')) {
         event && event.stopPropagation();
         var $elem = $(event.currentTarget);
@@ -97,7 +96,7 @@ define([
         }
       }
       this.presenter.toggleLayer(layerSlug);
-      ga('send', 'event', 'Map', 'Toggle', layerSlug);
+      ga('send', 'event', 'Map', 'Toogle', 'Layer: ' + layerSlug);
     },
 
   });

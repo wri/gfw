@@ -189,7 +189,7 @@
           margin: 0 30px 30px;
           font-weight: 500;
           font-size: 21px;
-          @extend .serif;
+
           color: #fff;
         }
 
@@ -288,7 +288,7 @@
   .footer-address {
     margin: 60px 0 40px;
     @extend .footer-logos;
-    @extend .sans-serif;
+
 
     p,
     address,

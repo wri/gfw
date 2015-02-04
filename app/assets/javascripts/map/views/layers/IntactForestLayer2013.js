@@ -15,7 +15,7 @@ define([
     options: {
       sql: 'SELECT *, \'{tableName}\' as layer, \'{tableName}\' as name FROM {tableName}',
       cartocss: intact2013CartoCSS
-    },
+    }
 
   });
 

@@ -104,6 +104,13 @@
         min-width: 200px;
         text-align: center;
       }
+      &.with-icon{
+        min-width: 0;
+        @media (min-width: $br-mobile-portrait) {
+          padding-right: 36px;
+        }
+      }
+
       &.btn-video{
         min-width: 0;
         margin: 5px 0;
@@ -1339,7 +1346,7 @@
       }
     }
 
-    &.last {
+    &:last-child {
       border-bottom: 1px solid #ccc;
     }
 
@@ -1361,7 +1368,7 @@
       display: table;
       width: 100%;
 
-      &.even {
+      &:nth-child(even) {
         background: #F2F2F3;
       }
 
@@ -1372,7 +1379,7 @@
         border-bottom: 1px solid #ccc;
         font-weight: 500;
         font-size: 11px;
-        @extend .sans-serif;
+
         text-transform: uppercase;
       }
 
@@ -1382,7 +1389,7 @@
         border-left: 1px solid #ccc;
         border-bottom: 1px solid #ccc;
         font-size: 13px;
-        @extend .sans-serif;
+
         a{
           color: $cGreen;
         }
@@ -1461,7 +1468,6 @@
       margin: 0 0 0 10px;
       > li{
         padding: 10px 0 0;
-        font-size: 14px;
         margin-left: 20px;
         line-height: 1.5;
         &:first-child{
@@ -1505,8 +1511,7 @@
     span {
       display: inline-block;
       margin: 20px;
-      padding: 0 15px;
-      font: 14px/30px "Fira Sans";
+      padding: 4px 15px 2px;
       font-weight: 500;
       text-decoration: none;
       color: #fff;
@@ -1625,7 +1630,7 @@
   .overview_title,
   .source_coverage_title {
     margin: 30px 0 10px;
-    font: 21px/1.1 "Fira Sans";
+    font: 16px/1.1 "Fira Sans";
     font-weight: 500;
     color: $dark;
   }

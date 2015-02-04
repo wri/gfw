@@ -36,7 +36,7 @@ c479bb90f5ebe65a08d78aeeda4154383c99f43c
 
   h3 {
     margin: 0 0 20px;
-    @extend .serif;
+
     font-size: 29px;
     color: #fff;
   }
@@ -166,7 +166,7 @@ c479bb90f5ebe65a08d78aeeda4154383c99f43c
 //     margin: 0 0 18px 0;
 //     font-weight: 500;
 //     font-size: 12px;
-//     @extend .sans-serif;
+//
 //     text-transform: uppercase;
 //     text-decoration: none;
 //   }
@@ -226,7 +226,7 @@ c479bb90f5ebe65a08d78aeeda4154383c99f43c
 //   margin: 0 0 10px;
 //   font-weight: 500;
 //   font-size: 12px;
-//   @extend .sans-serif;
+//
 //   text-align: center;
 //   text-transform: uppercase;
 //   text-decoration: none;
@@ -293,7 +293,7 @@ c479bb90f5ebe65a08d78aeeda4154383c99f43c
 //     list-style: none;
 //     font-size: 13px;
 //     line-height: 17px;
-//     @extend .sans-serif;
+//
 
 //     &.last { border: none; }
 //   }
@@ -301,7 +301,7 @@ c479bb90f5ebe65a08d78aeeda4154383c99f43c
 //   .subtitle {
 //     margin-left: 17px;
 //     font-size: 11px;
-//     @extend .sans-serif;
+//
 //     color: #ccc;
 //   }
 
@@ -424,7 +424,7 @@ c479bb90f5ebe65a08d78aeeda4154383c99f43c
 //       width: 180px;
 //       color: #F3F2F0;
 //       font-size: 17px;
-//       @extend .serif;
+//
 //       text-decoration :none;
 
 //       &:hover { text-decoration: underline; }
@@ -432,7 +432,7 @@ c479bb90f5ebe65a08d78aeeda4154383c99f43c
 
 //     color: #999;
 //     font-size: 12px;
-//     @extend .sans-serif;
+//
 //   }
 // }
 
@@ -445,7 +445,7 @@ c479bb90f5ebe65a08d78aeeda4154383c99f43c
 //   bottom: 20px; right: 10px;
 //   font-weight: 500;
 //   font-size: 11px;
-//   @extend .sans-serif;
+//
 //   text-align: right;
 //   @include user-select(text);
 // }
@@ -533,7 +533,7 @@ c479bb90f5ebe65a08d78aeeda4154383c99f43c
 //     padding: 9px 0 0;
 //     color: #fff;
 //     font-size: 15px;
-//     @extend .sans-serif;
+//
 //     text-align: center;
 //     @include home-icons-sprite(error_input_label);
 //   }
@@ -565,7 +565,7 @@ c479bb90f5ebe65a08d78aeeda4154383c99f43c
 //     position: absolute;
 //     top: 14px; left: 12px;
 //     font-size: 15px;
-//     @extend .sans-serif;
+//
 //     color: #ddd;
 //   }
 
@@ -590,12 +590,12 @@ c479bb90f5ebe65a08d78aeeda4154383c99f43c
 //   h1 {
 //     font-size: 35px;
 //     margin: 10px 0 5px;
-//     @extend .serif;
+//
 //   }
 
 //   p {
 //     font-size: 15px;
-//     @extend .sans_serif;
+//
 //     color: #999;
 
 //     &.help { margin: 0 0 20px; }
@@ -873,7 +873,7 @@ c479bb90f5ebe65a08d78aeeda4154383c99f43c
 //   min-height: 40px;
 //   border: 1px solid #666;
 //   font-size: 11px;
-//   @extend .sans-serif;
+//
 //   background: #F1F1F1;
 //   color: #999;
 //   @include border-radius(3px);
@@ -968,7 +968,7 @@ c479bb90f5ebe65a08d78aeeda4154383c99f43c
 // .info_content {
 //   position: relative;
 //   width: 248px;
-//   @extend .sans_serif;
+//
 //   @include border-radius(3px);
 
 //   .info {
@@ -1160,7 +1160,7 @@ c479bb90f5ebe65a08d78aeeda4154383c99f43c
 //     a {
 //       display: block;
 //       font-size: 13px;
-//       @extend .sans-serif;
+//
 //       text-decoration: none;
 //       color: #666;
 
