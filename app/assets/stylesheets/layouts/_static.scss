@@ -1346,7 +1346,7 @@
       }
     }
 
-    &.last {
+    &:last-child {
       border-bottom: 1px solid #ccc;
     }
 
@@ -1368,7 +1368,7 @@
       display: table;
       width: 100%;
 
-      &.even {
+      &:nth-child(even) {
         background: #F2F2F3;
       }
 
@@ -1468,7 +1468,6 @@
       margin: 0 0 0 10px;
       > li{
         padding: 10px 0 0;
-        font-size: 14px;
         margin-left: 20px;
         line-height: 1.5;
         &:first-child{
@@ -1631,7 +1630,7 @@
   .overview_title,
   .source_coverage_title {
     margin: 30px 0 10px;
-    font: 21px/1.1 "Fira Sans";
+    font: 16px/1.1 "Fira Sans";
     font-weight: 500;
     color: $dark;
   }
