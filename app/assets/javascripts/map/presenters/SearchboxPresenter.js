@@ -42,6 +42,7 @@ define([
 
     setCenter: function(lat, lng) {
       mps.publish('Map/set-center', [lat, lng]);
+      mps.publish('Map/set-zoom', [12]);
     }
   });
 
