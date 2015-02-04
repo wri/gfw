@@ -14,8 +14,9 @@ require([
   'views/DialogView',
   'countries/views/CountryListView',
   'countries/views/CountryOverviewView',
+  'countries/views/CountryShowView',
   '_string',
-], function($, _, Class, Backbone, Handlebars, mps, topojson, HeaderView, FooterView, DialogView, CountryListView, CountryOverviewView) {
+], function($, _, Class, Backbone, Handlebars, mps, topojson, HeaderView, FooterView, DialogView, CountryListView, CountryOverviewView, CountryShowView) {
   'use strict';
 
   var CountryPage = Class.extend({
@@ -38,6 +39,7 @@ require([
       //countries
       new CountryListView();
       new CountryOverviewView();
+      new CountryShowView({ iso: ISO });
     }
   });
 
