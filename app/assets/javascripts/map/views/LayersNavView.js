@@ -95,23 +95,6 @@ define([
           $elem.parents('li').data('layer' , $elem.data('layer')).addClass('selected');
         }
       }
-      if ($(event)[0].toElement.localName === "input" || $(event)[0].toElement.localName === "label") {
-        var $c_f_peru = $('#c_f_peru');
-        var $c_f_ns_peru = $('#c_f_ns_peru');
-        if (($c_f_ns_peru.find('input').is(':checked')) && ($c_f_peru.attr('data-layer') === "concesiones_forestales")) {
-          if (! $c_f_peru.hasClass('selected')) this.presenter.toggleLayer(layerSlug);
-          layerSlug = 'concesiones_forestalesNS';
-          $c_f_peru.attr('data-layer','concesiones_forestalesNS');
-        }
-        else if ( !($c_f_ns_peru.find('input').is(':checked')) && ($c_f_peru.attr('data-layer') === "concesiones_forestalesNS")) {
-          layerSlug = 'concesiones_forestalesNS';
-          $c_f_peru.attr('data-layer','concesiones_forestales')
-        }
-      }
-      else if (($('#c_f_ns_peru').find('input').is(':checked')) && ($('#c_f_peru').attr('data-layer') === "concesiones_forestalesNS")) {
-        this.presenter.toggleLayer('concesiones_forestalesNS');
-        $('#c_f_ns_peru').find('input').prop('checked', false);
-      }
       this.presenter.toggleLayer(layerSlug);
       ga('send', 'event', 'Map', 'Toogle', 'Layer: ' + layerSlug);
     },
