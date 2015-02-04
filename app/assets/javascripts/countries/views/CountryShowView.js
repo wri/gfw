@@ -7,12 +7,13 @@ define([
   'underscore',
   'd3',
   'mps',
+  'countries/views/CountryHeaderView',
+  'countries/views/CountryShareView',
   'countries/views/CountryInfoWindow',
   'countries/helpers/CountryHelper',
   'countries/models/CountryShowModel',
-  'countries/views/CountryHeaderView',
 
-], function($, Backbone, _, d3, mps, CountryInfoWindow, CountryHelper, CountryShowModel, CountryHeaderView) {
+], function($, Backbone, _, d3, mps, CountryHeaderView, CountryShareView, CountryInfoWindow, CountryHelper, CountryShowModel ) {
 
   'use strict';
 
@@ -53,10 +54,10 @@ define([
     },
 
     _initShare: function() {
-      // Share       = new gfw.ui.view.Share({template: 'country'});
-      // Share_entry = new gfw.ui.view.Share({template: 'country-entry'});
-      // this.$el.find('.country-sidenav .share-container').append(Share.render());
-      // this.$el.find('.section-share').find('.section-btn').prepend(Share_entry.render());
+      var Share = new CountryShareView({template: 'country'});
+      var Share_entry = new CountryShareView({template: 'country-entry'});
+      this.$el.find('.country-sidenav .share-container').append(Share.render());
+      this.$el.find('.section-share').find('.section-btn').prepend(Share_entry.render());
     },
 
     _initSource: function() {
