@@ -7,9 +7,10 @@ define([
   'underscore',
   'd3',
   'mps',
+  'countries/views/CountryInfoWindow',
   'countries/helpers/CountryHelper'
 
-], function($, Backbone, _, d3, mps, CountryHelper) {
+], function($, Backbone, _, d3, mps, CountryInfoWindow, CountryHelper) {
 
   'use strict';
 
@@ -28,6 +29,7 @@ define([
     el: '#countryOverviewView',
 
     events: {
+      'click .info' : 'showInfo',
       'click .graph_tab': '_updateGraph',
       'click .show-more-countries': '_drawList',
       'click .country-overview-wrapper-coolio .umdoptions_dialog #canopy_slider':  '_updateGraphOverview',
@@ -65,8 +67,8 @@ define([
     },
 
     _initViews: function() {
-      // this.sourceWindow = new gfw.ui.view.SourceWindow();
-      // this.$el.append(this.sourceWindow.render());
+      this.sourceWindow = new CountryInfoWindow();
+      this.$el.append(this.sourceWindow.render());
 
       this.tooltip = d3.select('body')
         .append('div')
@@ -78,6 +80,11 @@ define([
 
       // Share = new gfw.ui.view.Share({template: 'country'});
       // this.$el.find('.overview_button_group .share').append(Share.render());
+    },
+
+    showInfo: function(e){
+      var source = $(e.currentTarget).attr('data-source');
+      this.sourceWindow.show(source);
     },
 
     _toggleYears: function() {
