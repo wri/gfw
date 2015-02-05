@@ -80,6 +80,13 @@
     &.hidden {
       display: none;
     }
+
+    &.text{
+      position: static;
+      width: auto;
+      height: auto;
+      background: none;
+    }
   }
 
   .layer-sublayer {
@@ -137,6 +144,22 @@
       font-size: 0.8em;
     }
   }
+
+
+  /*****************/
+  /* Layer details */
+  /*****************/
+  .layer-details-loss {
+    .canopy{
+      a{
+        color: #F69;
+        &:hover{
+          color: lighten(#F69, 10%);
+        }
+      }
+    }
+  }
+
 
   /***************************/
   /* Forest2000Layer details */

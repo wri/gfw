@@ -7,8 +7,9 @@ define([
   'underscore',
   'backbone',
   'mps',
-  'map/presenters/PresenterClass'
-], function(_, Backbone, mps, PresenterClass) {
+  'map/presenters/PresenterClass',
+  'helpers/geojsonUtilsHelper'
+], function(_, Backbone, mps, PresenterClass, geojsonUtilsHelper) {
 
   'use strict';
 
@@ -86,10 +87,9 @@ define([
      */
     _onPlaceGo: function(place) {
       var layerOptions = {};
-
       this._setMapOptions(
         _.pick(place.params,
-          'zoom', 'maptype', 'lat', 'lng'));
+          'zoom', 'maptype', 'lat', 'lng', 'fitbounds', 'geojson'));
 
       if (place.params.begin && place.params.end) {
         layerOptions.currentDate = [place.params.begin, place.params.end];
@@ -133,6 +133,10 @@ define([
      * @param {Object} params Map params from the place object.
      */
     _setMapOptions: function(params) {
+
+      if (params.fitbounds) {
+        this.view.fitBounds(geojsonUtilsHelper.getBoundsFromGeojson(params.geojson))
+      }
       var options = {
         zoom: params.zoom,
         mapTypeId: params.maptype,
