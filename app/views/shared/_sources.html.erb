@@ -2704,35 +2704,41 @@
 
     <li id='noaa-18-fires' class='source-item'>
       <div class='source_header'>
-        <strong class='source_title'>NOAA-18 FIRES - COMING SOON</strong>
+        <strong class='source_title'>NOAA-18 FIRES</strong>
         <i class='expand_arrow'></i>
       </div>
       <div class='source_body'>
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
-            <dd>Provides an estimate of the extent of land burned by fire</dd>
+            <dd>Identifies coordinate locations of fire hotspots</dd>
           </dl>
           <dl class='sources_row'>
             <dt>RESOLUTION / SCALE</dt>
-            <dd>30 meters</dd>
+            <dd>1.1 x 1.1 kilometers</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Geographic coverage</dt>
-            <dd>Sumatra, Indonesia</dd>
+            <dd>Southeast Asia</dd></dd>
           </dl>
           <dl class='sources_row'>
             <dt>Source data</dt>
-            <dd>Landsat</dd>
+            <dd>NOAA-18</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Date of content</dt>
-            <dd>May 1, 2014 to present</dd>
+            <dd>October 22, 2014 to present</dd>
           </dl>
+          <d1 class='sources_row'>
+            <dt>Frequency of Updates</dt>
+            <dd>Daily</dd>
+          </d1>
           <dl class='sources_row'>
             <dt>Cautions</dt>
             <dd>
-              <p>This data layer is provided as a beta analysis product and should be used for visual purposes only.</p>
+              <p>Not all fires are detected. Fire hotspots can go undetected when an area is not covered in the NOAA-18 satellite pass, or under cloudy and overcast conditions. Limitations with the fire detection algorithm may also cause fires to go undetected.</p>
+              <p>It is not recommended to use fire locations to estimate burned are due to spatial and temporal sampling issues. A detected fire does not necessarily mean that the entire area represented by the 1.1 km2 pixel is on fire.</p>
+              <p>When zoomed out, this data layer displays some degree of inaccuracy because the data points must be collapsed to be visible on a larger scale. Zoom in for greater detail.</p>
             </dd>
           </dl>
         </div>
@@ -2740,14 +2746,11 @@
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
 
-          <p>This data layer provides the extent of burn land area, or burn scars, mapped from Landsat satellite imagery, using Google Earth Engine. This analysis was conducted by the Data Lab team (Robin Kraft, Dan Hammer, and Aaron Steele) of the World Resources Institute using Google Earth Engine. This analysis will be updated regularly as additional Landsat imagery becomes available.</p>
+          <p>The Meteorological Service of Singapore derives coordinate locations for fire hotspots using satellite imagery provided by the National Oceanic and Atmospheric Administration satellite 18 (NOAA-18). The hotspot locations represent the center of a 1.1 km2 pixel that was determined to have fires in that pixel. The presence of fires is determined by a computer algorithm that interprets infrared satellite imagery to identify high temperature bodies on the ground such as land and forest fires.</p>
 
-          <p>This analysis was conducted as an open source project; code is available here: <a href="https://gist.github.com/robinkraft/077c14d35a50a8b31581" target="_blank">https://gist.github.com/robinkraft/077c14d35a50a8b31581</a></p>
-
-          <p class="credits"><strong>Credit:</strong>Elvidge, Christopher D. and Kimberly Baugh. 2014. Burn scar mapping from Landsat 8. Presentation at APAN meeting in Bandung, Indonesia. January 20.</p>
-
-          <p class='credits'><strong>URL:</strong><a href='http://www.apan.net/meetings/Bandung2014/Sessions/EM/Elvidge_L8_burnscar_20140120.pdf' target='_blank'>http://www.apan.net/meetings/Bandung2014/Sessions/EM/Elvidge_L8_burnscar_20140120.pdf</a>.</p>
-
+          <p>Data is archived from October 22, 2014 to present on Global Forest Watch, and is available for download in 30 day intervals.</p>
+          
+          <p class="credits"><strong>Citation:</strong>Suggested citation for data as displayed on GFW:“ NASA FIRMS.” Meteorological Service Singapore.  Accessed through Global Forest Watch on [date].<a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
         </div>
       </div>
     </li>
