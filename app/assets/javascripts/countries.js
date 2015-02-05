@@ -9,6 +9,7 @@ require([
   'handlebars',
   'mps',
   'topojson',
+  'qtip',
   'views/HeaderView',
   'views/FooterView',
   'views/DialogView',
@@ -16,7 +17,7 @@ require([
   'countries/views/CountryOverviewView',
   'countries/views/CountryShowView',
   '_string',
-], function($, _, Class, Backbone, Handlebars, mps, topojson, HeaderView, FooterView, DialogView, CountryListView, CountryOverviewView, CountryShowView) {
+], function($, _, Class, Backbone, Handlebars, mps, topojson, qtip, HeaderView, FooterView, DialogView, CountryListView, CountryOverviewView, CountryShowView) {
   'use strict';
 
   var CountryPage = Class.extend({

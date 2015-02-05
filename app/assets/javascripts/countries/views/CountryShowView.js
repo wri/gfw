@@ -75,32 +75,32 @@ define([
     },
 
     _initFormaDropdown: function() {
-      // $('.forma_dropdown-link').qtip({
-      //   show: 'click',
-      //   hide: {
-      //     event: 'click unfocus'
-      //   },
-      //   content: {
-      //     text: $('.forma_dropdown-menu')
-      //   },
-      //   position: {
-      //     my: 'bottom right',
-      //     at: 'top right',
-      //     target: $('.forma_dropdown-link'),
-      //     adjust: {
-      //       x: -10
-      //     }
-      //   },
-      //   style: {
-      //     tip: {
-      //       corner: 'bottom right',
-      //       mimic: 'bottom center',
-      //       border: 1,
-      //       width: 10,
-      //       height: 6
-      //     }
-      //   }
-      // });
+      $('.forma_dropdown-link').qtip({
+        show: 'click',
+        hide: {
+          event: 'click unfocus'
+        },
+        content: {
+          text: $('.forma_dropdown-menu')
+        },
+        position: {
+          my: 'bottom right',
+          at: 'top right',
+          target: $('.forma_dropdown-link'),
+          adjust: {
+            x: -10
+          }
+        },
+        style: {
+          tip: {
+            corner: 'bottom right',
+            mimic: 'bottom center',
+            border: 1,
+            width: 10,
+            height: 6
+          }
+        }
+      });
     },
 
     _positionScroll: function() {

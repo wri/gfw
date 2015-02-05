@@ -64,8 +64,6 @@ define([
         }
       });
 
-      console.log(this.share);
-
       $('body').append(this.share.render());
     },
 
