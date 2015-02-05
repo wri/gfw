@@ -214,12 +214,21 @@
       line-width: 1;
       line-opacity: 1;
   }
-  [layer='protected_areas']{
+  [layer='protected_areas'] {
     polygon-fill: #2167AB;
     polygon-opacity: 0.5;
     line-color: #2167AB;
     line-width: 1;
     line-opacity: 1;
+  }
+
+  [layer='ebamapglobal']{
+  polygon-fill: #055D00;
+  polygon-opacity: 1;
+  polygon-comp-op: lighten;
+  line-color: #FF9900;
+  line-width: 1.5;
+  line-opacity: 0.3;
 }
 
 }
