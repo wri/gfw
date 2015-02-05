@@ -10,6 +10,18 @@ define([
 
   'use strict';
 
+  var StoriesKeepModel = Backbone.Model.extend({
+    defaults: {
+      total: null,
+      perpage: null,
+      page: null
+    },
+    initialize: function(options){
+
+    }
+  })
+
+
   var StoriesKeepView = Backbone.View.extend({
 
     el: '#storiesKeepView',
@@ -22,6 +34,7 @@ define([
       this.paginationContainer = $('#pagination-container');
 
       //VARS
+      this.model = new StoriesKeepModel();
       this.url = '/stayinformed/crowdsourced-stories'
 
       this.initPaginate();
@@ -42,12 +55,32 @@ define([
         nextText: ' ',
         onPageClick: _.bind(function(pageNumber, event){
           event.preventDefault();
-          window.location = this.url + '?page=' + pageNumber;
+          // window.location = this.url + '?page=' + pageNumber;
+          this.paginationContainer.pagination('drawPage', pageNumber);
+          this.loadAjaxStories(pageNumber)
+
         }, this )
       });
+    },
+
+    loadAjaxStories: function(page){
+      $.ajax({
+        url: '/stayinformed-stories.json',
+        type: 'GET',
+        dataType: 'json',
+        data: {
+          for_stay: true,
+          page: page,
+          perpage: 5
+        },
+        success: function(data){
+          console.log(data);
+        },
+        error: function(){
+          console.log('adios');
+        }
+      })
     }
-
-
 
   });
 
