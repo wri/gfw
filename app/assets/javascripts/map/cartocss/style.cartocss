@@ -222,13 +222,21 @@
     line-opacity: 1;
   }
 
-  [layer='ebamapglobal']{
-  polygon-fill: #055D00;
-  polygon-opacity: 1;
-  polygon-comp-op: lighten;
-  line-color: #FF9900;
-  line-width: 1.5;
-  line-opacity: 0.3;
-}
+  [layer='ebamapglobal'] {
+    polygon-fill: #055D00;
+    polygon-opacity: 1;
+    polygon-comp-op: lighten;
+    line-color: #FF9900;
+    line-width: 1.5;
+    line-opacity: 0.3;
+  }
+
+  [layer='azepoly_2010_16march2012'] {
+    polygon-fill: #3B007F;
+    polygon-opacity: 0.7;
+    line-color: #A53ED5;
+    line-width: 0.5;
+    line-opacity: 0.5;
+  }
 
 }
