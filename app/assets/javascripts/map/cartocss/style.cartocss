@@ -232,9 +232,9 @@
   }
 
   [layer='azepoly_2010_16march2012'] {
-    polygon-fill: #3B007F;
+    polygon-fill: #FF9900;
     polygon-opacity: 0.7;
-    line-color: #A53ED5;
+    line-color: #FFCC00;
     line-width: 0.5;
     line-opacity: 0.5;
   }
