@@ -2,6 +2,25 @@
 .layout-content {
  // padding: 0 15px;
 }
+
+.loader-mobile{
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #FFF;
+  z-index: 99999999;
+  &.loaded{
+    display: none;
+  }
+  @media (min-width: $br-mobile) {
+    display: none;
+  }
+}
+
+
 // HEADER
 .header-page {
   padding: 85px 20px 30px;
