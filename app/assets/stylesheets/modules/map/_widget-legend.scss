@@ -151,6 +151,10 @@
   /*****************/
   .layer-details-loss {
     .canopy{
+      margin: 7px 0 0;
+      &:first-child{
+        margin: 0;
+      }
       a{
         color: #F69;
         &:hover{
