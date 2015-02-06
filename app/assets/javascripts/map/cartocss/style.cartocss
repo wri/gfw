@@ -33,6 +33,7 @@
     line-clip: false;
   }
 
+//deprecated
   [layer='logging_gcs_wgs84'] {
     polygon-fill: #fecc5c;
     line-color: #B38E3B;
@@ -40,12 +41,21 @@
     polygon-clip: false;
   }
 
+//deprecated
   [layer='logging'] {
     polygon-fill: #fecc5c;
     line-color: #B38E3B;
     line-clip: false;
     polygon-clip: false;
   }
+
+  [layer='gfw_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
 
   [layer='gfw2_drc_conc'] {
     polygon-fill: #EC7014;
