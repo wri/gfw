@@ -192,6 +192,7 @@
     line-opacity: 1;
   }
 
+  //deprecated
   [layer='resource_rights'] {
     polygon-fill: #707d92;
     polygon-opacity: 0.9;
@@ -199,6 +200,15 @@
     line-color: #FFF;
     line-opacity: 1;
   }
+
+  [layer='gfw_resource_rights'] {
+    polygon-fill: #707d92;
+    polygon-opacity: 0.9;
+    line-width: 0;
+    line-color: #FFF;
+    line-opacity: 1;
+  }
+
 
   [layer='defor'] {
     polygon-fill:#F69;
