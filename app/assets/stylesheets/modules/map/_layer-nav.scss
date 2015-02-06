@@ -118,18 +118,11 @@ $stories-color: rgb(242, 178, 87);
         width: 115px;
         display: inline-flex;
         .source {
+          @extend .info-icon;
           display: block;
           position: absolute;
-          top: 13px;
+          top: 9px;
           right: 10px;
-          width: 10px;
-          height: 10px;
-          @include home-icons-sprite(information);
-          background: image-url('home-icons/information.png');
-          &.info2{
-            background: image-url('home-icons/information2.png');
-            // background: #F00;
-          }
           &.hidden {
             display: none;
           }
