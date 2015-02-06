@@ -1,0 +1,25 @@
+{{!-- <% @visible.each do |story| %>
+  <li>
+    <a href="<%= story_path(story['id']) %>">
+      <figure><div class="bg" style="background-image: url(<%= story_image_or_map(story['media'], "#{story['lat']}, #{story['lng']}") %>)"></div></figure>
+      <article class="info">
+        <h4><%= story['title'] %></h4>
+        <p><%= truncate(story['details'], :length => 295) %></p>
+        <button class="btn gray medium">More</button>
+      </article>
+    </a>
+  </li>
+<% end %> --}}
+{{#each stories}}
+  <li>
+    <a href="/stories/{{this.id}}">
+      <figure><div class="bg" style="background-image: url({{this.map}})"></div></figure>
+      <article class="info">
+        <h4>{{this.title}}</h4>
+        <p>{{this.details}}</p>
+        <button class="btn gray medium">More</button>
+      </article>
+    </a>
+  </li>
+
+{{/each}}

@@ -43,7 +43,7 @@
             </header>
             <div class="content">
               <div id="storiesKeepView" class="stories-box">
-                <ul>
+                <ul id="storiesKeepList">
                   <% @visible.each do |story| %>
                     <li>
                       <a href="<%= story_path(story['id']) %>">
