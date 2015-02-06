@@ -202,6 +202,8 @@ define([
           this.$htmlbody.delay(time).animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },time, _.bind(function(){
             this.calculateOffsets();
           }, this ));
+        }else{
+          this.calculateOffsets();
         }
       }
       this.section = true;
