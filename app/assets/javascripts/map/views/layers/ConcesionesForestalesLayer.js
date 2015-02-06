@@ -5,15 +5,10 @@
  */
 define([
   'abstract/layer/CartoDBLayerClass',
-  'text!map/cartocss/concesiones_peru.cartocss',
-  'text!map/cartocss/concesiones_peruTypes.cartocss'
-], function(CartoDBLayerClass,concesiones_forestalesCartoCSS, concesiones_forestalesTypesCartoCSS) {
+  'text!map/cartocss/concesiones_peru.cartocss'
+], function(CartoDBLayerClass,concesiones_forestalesCartoCSS) {
 
   'use strict';
-
-  if ($('#map').hasClass('peru_forest_type')) {
-    concesiones_forestalesCartoCSS = concesiones_forestalesTypesCartoCSS;
-  }
   var concesiones_forestales = CartoDBLayerClass.extend({
 
     options: {
