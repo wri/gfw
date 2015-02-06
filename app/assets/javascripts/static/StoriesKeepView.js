@@ -6,9 +6,10 @@ define([
   'backbone',
   'underscore',
   'handlebars',
+  'mps',
   'simplePagination',
   'text!static/templates/storiesKeep.handlebars',
-], function($,Backbone,underscore,Handlebars,simplePagination, storiesTPL) {
+], function($,Backbone,underscore,Handlebars,mps,simplePagination, storiesTPL) {
 
   'use strict';
 
@@ -67,6 +68,7 @@ define([
           this.$container.addClass('start');
           ($(window).width() >= 850 ) ? this.$htmlbody.animate({ scrollTop: this.$sideBar.offset().top }, 500) : this.$sourcesBox.animate({ scrollTop: 0 }, 500);
           this.loadAjaxStories(pageNumber);
+          mps.publish('SourceStatic/Silentupdate',[{section: 'crowdsourced-stories', page: pageNumber}]);
 
         }, this )
       });
