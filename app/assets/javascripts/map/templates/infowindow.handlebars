@@ -127,9 +127,22 @@
         <h4>Source:</h4>
         <p>{{content.data.source}}</p>
       {{/if}}
-      {{#if content.data.aze_id}}
-        <h4>Azepoly Index:</h4>
-        <p>{{content.data.aze_id}}</p>
+      {{#if content.data.mapid}}
+        <h4>Azepoly ID:</h4>
+        <p>{{content.data.mapid}}</p>
+      {{/if}}
+      {{#if content.data.ebaname}}
+        <h4>Name:</h4>
+        <p>{{content.data.ebaname}}</p>
+        <p><a href="/sources/conservation?t=birdlife" target="_blank">Learn more</a></p>
+      {{/if}}
+      {{#if content.data.eco_num}}
+        <h4>ECO Number:</h4>
+        <p>{{content.data.eco_num}}</p>
+      {{/if}}
+      {{#if content.data.eco_id}}
+        <h4>ECO ID:</h4>
+        <p>{{content.data.eco_id}}</p>
       {{/if}}
     </div>
   </div>
