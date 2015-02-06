@@ -5,7 +5,7 @@ class StaticController < ApplicationController
   skip_before_filter :check_browser
 
   respond_to :html
-  respond_to :json, :only => :index
+  respond_to :json, :only => :keepstories
 
 
   def terms
@@ -35,6 +35,18 @@ class StaticController < ApplicationController
     @visible     = Api::Story.find_by_page(@page, stories_per_page)
 
     respond_with @stories
+
+  end
+
+  def keepstories
+    stories_per_page = 5
+
+    @page        = (params[:page] || 1).to_i
+    @total_stories = Api::Story.visible.count
+    @stories_per_page = stories_per_page
+    @visible     = Api::Story.find_by_page(@page, stories_per_page)
+
+    respond_with @visible
 
   end
 

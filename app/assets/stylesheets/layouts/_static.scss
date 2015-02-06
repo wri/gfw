@@ -321,8 +321,26 @@
 
 .source-article {
   display: none;
+  &:before{
+    content: "";
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    background: rgba($white,0.75);
+    width: 100%;
+    height: 100%;
+  }
   &.selected {
     display: block;
+  }
+  &.start{
+    &:before{
+      opacity: 1;
+      visibility: visible;
+    }
   }
   header {
     color: $dark;
