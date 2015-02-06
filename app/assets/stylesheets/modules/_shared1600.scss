@@ -1,3 +1,18 @@
+// Information icon
+.info-icon{
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: image-url('svg-icons/info.svg') center no-repeat;
+  background-size: 60% 60%;
+  border: 1px solid #999;
+
+  &:hover{
+    background-color: rgba($cGreen,0.25);
+  }
+}
+
+
 // Spinner
 .spinner {
   position: absolute;
