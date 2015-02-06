@@ -13,18 +13,16 @@ class StoriesController < ApplicationController
   respond_to :json, :only => :index
 
   def index
-    stories_per_page = 5
 
-    unless params['for_map']
-      redirect_to '/stayinformed/crowdsourced-stories'
-      @page        = (params[:page] || 1).to_i
-      @total_pages = (Api::Story.visible.count.to_f / stories_per_page.to_f).ceil
-      @visible     = Api::Story.find_by_page(@page, stories_per_page)
+    if params['for_stay']
+      @visible = Api::Story.find_by_page(params['page'], params['perpage'])
+      respond_with @visible
       return
     end
 
-    @title = I18n.translate 'stories.index.title'
-
+    # unless params['for_map']
+    #   redirect_to '/stayinformed/crowdsourced-stories'
+    # end
     respond_with @stories
   end
 

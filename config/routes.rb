@@ -34,6 +34,8 @@ Gfw::Application.routes.draw do
   # get '/stayinformed' => redirect('stayinformed/crowdsourced-stories')
   get '/stayinformed' => 'static#keep'
   get '/stayinformed(/:section)' => 'static#keep'
+  get '/stayinformed-stories' => 'static#keepstories'
+
   get '/getinvolved' => 'static#getinvolved'
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'

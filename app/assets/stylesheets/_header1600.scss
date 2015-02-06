@@ -528,7 +528,7 @@
             border-top: 1px solid rgba(0,0,0,0.07);
             @for $i from 1 through 10 {
               &:nth-child(#{$i}) a{
-                @include transition(all 0.2s $easeInOutSine $i*0.04s);
+                // @include transition(all 0.2s $easeInOutSine $i*0.04s);
               }
             }
 
@@ -538,10 +538,10 @@
 							font-size: 15px;
 							text-align: center;
 							display: block;
-              opacity: 0;
-              visibility: hidden;
+              // opacity: 0;
+              // visibility: hidden;
+              // @include transform(translate(-5%,0px));
               position: relative;
-              @include transform(translate(-5%,0px));
 							&:hover {
 								background: darken(#FFF,2%);
 							}

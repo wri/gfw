@@ -33,6 +33,7 @@
     line-clip: false;
   }
 
+//deprecated
   [layer='logging_gcs_wgs84'] {
     polygon-fill: #fecc5c;
     line-color: #B38E3B;
@@ -40,6 +41,7 @@
     polygon-clip: false;
   }
 
+//deprecated
   [layer='logging'] {
     polygon-fill: #fecc5c;
     line-color: #B38E3B;
@@ -47,13 +49,21 @@
     polygon-clip: false;
   }
 
+  [layer='gfw_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+
   [layer='gfw2_drc_conc'] {
     polygon-fill: #EC7014;
     line-color: #EC7014;
     line-clip: false;
     polygon-clip: false;
   }
-
+//deprecated
   [layer='mining_permits_merge'] {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
@@ -67,7 +77,7 @@
     line-clip: false;
     polygon-clip: false;
   }
-
+//deprecated
   [layer='mining'] {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
@@ -75,7 +85,21 @@
     polygon-clip: false;
   }
 
+  [layer='gfw_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+//deprecated
   [layer='oilpalm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='gfw_oil_palm'] {
     polygon-fill: #ee9587;
     line-color: #ee9587;
     line-clip: false;
@@ -109,8 +133,15 @@
     line-clip: false;
     polygon-clip: false;
   }
-
+//deprecated
   [layer='woodfiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='gfw_wood_fiber'] {
     polygon-fill: #e6adb9;
     line-color: #e6adb9;
     line-clip: false;
@@ -161,6 +192,7 @@
     line-opacity: 1;
   }
 
+  //deprecated
   [layer='resource_rights'] {
     polygon-fill: #707d92;
     polygon-opacity: 0.9;
@@ -168,6 +200,15 @@
     line-color: #FFF;
     line-opacity: 1;
   }
+
+  [layer='gfw_resource_rights'] {
+    polygon-fill: #707d92;
+    polygon-opacity: 0.9;
+    line-width: 0;
+    line-color: #FFF;
+    line-opacity: 1;
+  }
+
 
   [layer='defor'] {
     polygon-fill:#F69;
@@ -185,6 +226,7 @@
     line-width: 2;
   }
 
+  //deprecated
   [layer='land_rights'] {
     polygon-fill: #4d658f;
     polygon-opacity: 0.7;
@@ -192,6 +234,17 @@
     line-width: 1;
     line-opacity: 1;
   }
+
+  [layer='gfw_land_rights'] {
+    polygon-fill: #4d658f;
+    polygon-opacity: 0.7;
+    line-color: #4d658f;
+    line-width: 1;
+    line-opacity: 1;
+  }
+
+
+  
 
   [layer='gfw_land_rights_sync'] {
     polygon-fill: #4d658f;
@@ -214,12 +267,39 @@
       line-width: 1;
       line-opacity: 1;
   }
-  [layer='protected_areas']{
+  [layer='protected_areas'] {
     polygon-fill: #2167AB;
     polygon-opacity: 0.5;
     line-color: #2167AB;
     line-width: 1;
     line-opacity: 1;
-}
+  }
 
+  [layer='ebamapglobal'] {
+    polygon-fill: #055D00;
+    polygon-opacity: 1;
+    polygon-comp-op: lighten;
+    line-color: #FF9900;
+    line-width: 1.5;
+    line-opacity: 0.3;
+  }
+
+  [layer='azepoly_2010_16march2012'] {
+    polygon-fill: #FF9900;
+    polygon-opacity: 0.7;
+    line-color: #FFCC00;
+    line-width: 0.5;
+    line-opacity: 0.5;
+  }
+  [layer='tcl'] {
+    polygon-fill: #FFCC00;
+    polygon-opacity: 0.7;
+    line-color: #FF5C00;
+    line-width: 0.7;
+    line-opacity: 0.5;
+  }
+ [layer='tal_corridor'] {
+    polygon-fill: #229A00;
+    polygon-opacity: 0.7;
+  }
 }

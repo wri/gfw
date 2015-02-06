@@ -19,7 +19,16 @@
   } // global svg size
 
   .circle {
-    fill: #bebcc2;
+    svg{
+      fill: #bebcc2;
+      width: auto;
+      height: 65%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include transform(translate(-50%,-50%));
+    }
+    position: relative;
     border-radius: 50%;
     border: 1px solid #bebcc2;
   }
@@ -706,9 +715,6 @@
         font-weight: 300;
         margin: 0 0 10px;
         color: $dark;
-      }
-      svg {
-        height: inherit;
       }
     }
 

@@ -12,9 +12,9 @@ define([
   var ResourceRightsLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT the_geom_webmercator, name, country, area_hectares, national_legal_term, legal_recognition, \'{tableName}\' AS layer FROM {tableName}',
+      sql: 'SELECT the_geom_webmercator, name, country, round(area_ha::float) as area_ha, legal_term, legal_reco as legal_recognition, \'{tableName}\' AS layer FROM {tableName}',
       infowindow: true,
-      interactivity: 'country, name, area_hectares, national_legal_term, legal_recognition'
+      interactivity: 'country, name, area_ha, legal_term, legal_recognition'
     }
 
   });
