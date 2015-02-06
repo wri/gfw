@@ -5,7 +5,7 @@
  */
 define([
   'abstract/layer/CartoDBLayerClass',
-  'text!map/cartocss/concesiones_peru.cartocss'
+  'text!map/cartocss/concesiones_peruTypes.cartocss'
 ], function(CartoDBLayerClass,concesiones_forestalesCartoCSS) {
 
   'use strict';
@@ -13,7 +13,7 @@ define([
   var ConcesionesForestalesNotSupervised = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT *, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM peru_forest_concessions',
+      sql: 'SELECT *, \'{tableName}\' AS layer, \'{tableName}\' AS name FROM {tableName}',
       cartocss: concesiones_forestalesCartoCSS
     }
 
