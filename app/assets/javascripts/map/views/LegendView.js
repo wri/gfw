@@ -20,9 +20,10 @@ define([
   'text!map/templates/legend/stories.handlebars',
   'text!map/templates/legend/terra_i.handlebars',
   'text!map/templates/legend/concesiones_forestales.handlebars',
+  'text!map/templates/legend/concesiones_forestalesType.handlebars',
   'text!map/templates/legend/hondurasForest.handlebars'
 ], function(_, Handlebars, Widget, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, hondurasForestTPL) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL) {
 
   'use strict';
 
@@ -47,6 +48,7 @@ define([
       user_stories:  Handlebars.compile(storiesTpl),
       terraicanvas: Handlebars.compile(terra_iTpl),
       concesiones_forestales: Handlebars.compile(concesionesTpl),
+      concesiones_forestalesNS: Handlebars.compile(concesionesTypeTpl),
       WMSLayer: Handlebars.compile(hondurasForestTPL)
     },
 
