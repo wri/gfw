@@ -124,11 +124,16 @@
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Honduras forest use<a href='#' data-source='WMSLayer' class='source'></a></span>
           </li>
-          <li class="layer" data-layer="concesiones_forestales" class="c_f_peru">
+          <li class="layer c_f_peru" data-layer="concesiones_forestalesNS">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Concesiones forestales<a href='#' data-source='concesiones_forestales' class='source'></a></span>
+            <span class="layer-title">Concesiones forestales<a href='#' data-source='concesiones_forestalesNS' class='source'></a></span>
             <span class="layer-info">
-              <input type="checkbox" name="intactType" id="c_f_ns_peru" />Types
+              <label data-layer="concesiones_forestales" class="layer c_f_peru"  style="width:100px">
+                <input type="radio" name="intactType" />supervision
+              </label>
+              <label data-layer="concesiones_forestalesNS" class="layer c_f_peru">
+                <input type="radio" name="intactType" />type
+              </label>
             </span>
           </li>
         </ul>

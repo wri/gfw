@@ -96,8 +96,18 @@ define([
         }
       }
       if ($(event.currentTarget).hasClass('c_f_peru')) {
-        debugger
-        if ($('#c_f_ns_peru').is(':checked')) $('#map').toggleClass('peru_forest_type')
+        event && event.stopPropagation();
+        var $elem = $(event.currentTarget);
+        if ($elem.hasClass('selected')) {$elem.find('input').prop('checked',false);}
+        else {$elem.find('[data-layer="concesiones_forestalesNS"] input').prop('checked', true);}
+        if ($elem.prop('tagName') !== 'LI'){
+          for (var i=0;i < $elem.siblings().length; i++) {
+            if ($($elem.siblings()[i]).hasClass('selected')) {
+              this.presenter.toggleLayer($($elem.siblings()[i]).data('layer'));
+            }
+          }
+          $elem.parents('li').data('layer' , $elem.data('layer')).addClass('selected');
+        }
       }
       this.presenter.toggleLayer(layerSlug);
       ga('send', 'event', 'Map', 'Toogle', 'Layer: ' + layerSlug);
