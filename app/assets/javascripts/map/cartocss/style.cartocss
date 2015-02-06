@@ -33,6 +33,7 @@
     line-clip: false;
   }
 
+//deprecated
   [layer='logging_gcs_wgs84'] {
     polygon-fill: #fecc5c;
     line-color: #B38E3B;
@@ -40,6 +41,7 @@
     polygon-clip: false;
   }
 
+//deprecated
   [layer='logging'] {
     polygon-fill: #fecc5c;
     line-color: #B38E3B;
@@ -47,13 +49,21 @@
     polygon-clip: false;
   }
 
+  [layer='gfw_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+
   [layer='gfw2_drc_conc'] {
     polygon-fill: #EC7014;
     line-color: #EC7014;
     line-clip: false;
     polygon-clip: false;
   }
-
+//deprecated
   [layer='mining_permits_merge'] {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
@@ -67,7 +77,7 @@
     line-clip: false;
     polygon-clip: false;
   }
-
+//deprecated
   [layer='mining'] {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
@@ -75,7 +85,21 @@
     polygon-clip: false;
   }
 
+  [layer='gfw_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+//deprecated
   [layer='oilpalm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='gfw_oil_palm'] {
     polygon-fill: #ee9587;
     line-color: #ee9587;
     line-clip: false;
@@ -109,8 +133,15 @@
     line-clip: false;
     polygon-clip: false;
   }
-
+//deprecated
   [layer='woodfiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='gfw_wood_fiber'] {
     polygon-fill: #e6adb9;
     line-color: #e6adb9;
     line-clip: false;
