@@ -74,8 +74,14 @@
     line-clip: false;
     polygon-clip: false;
   }
-
+//deprecated
   [layer='oilpalm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='gfw_oil_palm'] {
     polygon-fill: #ee9587;
     line-color: #ee9587;
     line-clip: false;
