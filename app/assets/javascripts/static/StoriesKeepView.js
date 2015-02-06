@@ -34,6 +34,7 @@ define([
       //CACHE
       this.$htmlbody = $('html, body');
       this.$sideBar = $('#sidebarNavView');
+      this.$sourcesBox = $('#sources-box');
       this.$container = $('#crowdsourced-stories');
       this.$spinner = $('#sources-spinner');
       this.$listContainer = $('#storiesKeepList');
@@ -64,7 +65,7 @@ define([
           this.$paginationContainer.pagination('drawPage', pageNumber);
           this.$spinner.addClass('start');
           this.$container.addClass('start');
-          this.$htmlbody.animate({ scrollTop: this.$sideBar.offset().top }, 500);
+          ($(window).width() >= 850 ) ? this.$htmlbody.animate({ scrollTop: this.$sideBar.offset().top }, 500) : this.$sourcesBox.animate({ scrollTop: 0 }, 500);
           this.loadAjaxStories(pageNumber);
 
         }, this )
@@ -106,7 +107,6 @@ define([
     },
 
     render: function(){
-      // console.log(this.data);
       this.$spinner.removeClass('start');
       this.$container.removeClass('start');
 
