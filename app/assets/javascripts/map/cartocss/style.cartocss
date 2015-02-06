@@ -115,8 +115,15 @@
     line-clip: false;
     polygon-clip: false;
   }
-
+//deprecated
   [layer='woodfiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='gfw_wood_fiber'] {
     polygon-fill: #e6adb9;
     line-color: #e6adb9;
     line-clip: false;
