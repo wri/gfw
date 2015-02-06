@@ -112,7 +112,8 @@ define([
       this.$spinner.removeClass('start');
       this.$container.removeClass('start');
 
-      this.$listContainer.html(this.template({ stories : this.data }))
+      this.$listContainer.html(this.template({ stories : this.data }));
+      mps.publish('SubItem/change');
     }
 
   });
