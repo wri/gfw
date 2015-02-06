@@ -53,7 +53,7 @@
     line-clip: false;
     polygon-clip: false;
   }
-
+//deprecated
   [layer='mining_permits_merge'] {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
@@ -67,13 +67,21 @@
     line-clip: false;
     polygon-clip: false;
   }
-
+//deprecated
   [layer='mining'] {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
     line-clip: false;
     polygon-clip: false;
   }
+
+  [layer='gfw_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
 //deprecated
   [layer='oilpalm'] {
     polygon-fill: #ee9587;
