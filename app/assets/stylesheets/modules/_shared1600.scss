@@ -10,6 +10,7 @@
   @include animation(loader,1s,infinite,$easeInOutCubic);
   visibility: hidden;
   opacity: 0;
+  z-index: 11;
   svg{
     fill: $cGreen;
   }
