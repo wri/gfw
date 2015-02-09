@@ -271,14 +271,14 @@ define([
 
     _setAreaSelector: function() {
       var self = this;
-
-      _.each(this.country.get('areas').models, function(area) {
+      _.each(this.country.get('areas').models, function(area, i) {
         if (self.area == area) {
           self.$areaSelector.append('<option class="dark" value="' + area.get('name_1') + '" selected>' + area.get('name_1') + '</option>')
         } else {
           self.$areaSelector.append('<option class="dark" value="' + area.get('name_1') + '">' + area.get('name_1') + '</option>')
         }
       });
+
       ga('send', 'event', 'Country show', 'Click', 'Change Area');
     },
 
@@ -450,7 +450,7 @@ define([
       this._removeCartodblayer();
 
       this.$selectorRemove.hide();
-      this.$areaSelector.val('');
+      this.$areaSelector.val('default');
 
       cartodb.createLayer(this.map, {
         user_name: 'wri-01',

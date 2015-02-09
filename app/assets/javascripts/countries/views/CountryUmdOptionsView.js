@@ -85,7 +85,6 @@ define([
     },
 
     render: function() {
-      console.log(this.$el);
       this.$el.append(this.template.render( this.model.toJSON() ));
       this.$umd_options_control = (this.$el.find('.umd_options-control').length > 0) ? this.$el.find('.umd_options-control') : null;
       if (!!this.$umd_options_control) {
@@ -261,8 +260,6 @@ define([
       }
       this.helper.config.canopy_choice = this.canopy;
       ga('send', 'event', 'Country show', 'Settings', 'Threshold: ' + this.canopy);
-
-      console.log(this.helper.config.canopy_choice);
 
       mps.publish('Threshold:change', [this.helper.config.canopy_choice]);
 
