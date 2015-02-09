@@ -8,10 +8,11 @@ define([
   'd3',
   'mps',
   'countries/views/CountryInfoWindow',
+  'countries/views/CountryUmdOptionsView',
   'countries/helpers/CountryHelper',
   'countries/models/CountryShowModel',
 
-], function($, Backbone, _, d3, mps, CountryInfoWindow, CountryHelper, CountryShowModel) {
+], function($, Backbone, _, d3, mps, CountryInfoWindow, CountryUmdOptionsView, CountryHelper, CountryShowModel) {
 
   'use strict';
 
@@ -184,6 +185,7 @@ define([
       this.$areaSelector = this.$('#areaSelector');
       this.$selectorRemove =  this.$('.selector-remove');
       this.$map = this.$('.map');
+      this.UmdOptions;
 
       var Router = Backbone.Router.extend({
         routes: {
@@ -277,11 +279,11 @@ define([
       }
       var $target = $('.umdoptions_dialog'),
           tar_param  = tar_param || '.country-sidenav';
-      if ($target.length === 0) UmdOptions = new UmdOptions({ target: tar_param});
+      if ($target.length === 0) this.UmdOptions = new CountryUmdOptionsView({ target: tar_param});
       if ($target.is(':visible') ) {
-        UmdOptions.hide();
+        this.UmdOptions.hide();
       } else {
-        UmdOptions._openUMDoptions();
+        this.UmdOptions._openUMDoptions();
       }
     },
 
