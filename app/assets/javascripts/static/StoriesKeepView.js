@@ -98,6 +98,7 @@ define([
         var img = (! item.media.length) ? null : item.media[item.media.length -1].preview_url;
         var detail = (item.details.length > 295) ? item.details.substr(0, 295)+'...' : item.details;
         return {
+          id: item.id,
           title: item.title,
           details: detail,
           link: '/stories/'+item.id,
@@ -111,7 +112,6 @@ define([
     render: function(){
       this.$spinner.removeClass('start');
       this.$container.removeClass('start');
-
       this.$listContainer.html(this.template({ stories : this.data }));
       mps.publish('SubItem/change');
     }
