@@ -156,6 +156,10 @@ define([
 
     getLayer: function() {
       return this.layer;
+    },
+
+    reload: function(){
+
     }
 
   });
@@ -186,6 +190,7 @@ define([
       this.$selectorRemove =  this.$('.selector-remove');
       this.$map = this.$('.map');
       this.UmdOptions;
+      this.setListeners();
 
       var Router = Backbone.Router.extend({
         routes: {
@@ -256,6 +261,12 @@ define([
           })
         }
       }
+    },
+    setListeners: function(){
+      mps.subscribe('Threshold:change', _.bind(function(threshold){
+        this.helper.config.canopy_choice = threshold;
+        this._updateMapThreshold();
+      }, this ));
     },
 
     _setAreaSelector: function() {

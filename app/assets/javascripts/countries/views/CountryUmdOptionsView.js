@@ -261,6 +261,11 @@ define([
       }
       this.helper.config.canopy_choice = this.canopy;
       ga('send', 'event', 'Country show', 'Settings', 'Threshold: ' + this.canopy);
+
+      console.log(this.helper.config.canopy_choice);
+
+      mps.publish('Threshold:change', [this.helper.config.canopy_choice]);
+
       if (typeof GFW !== 'undefined' && GFW.app) {
         this.helper.updateHash();
         GFW.app.updateBaseLayer(this.helper.config.BASELAYER)
