@@ -14,7 +14,7 @@ paths:
   amplify: "amplify/lib/amplify"
   underscore: "underscore/underscore"
   backbone: "backbone/backbone"
-  jquery: "jquery/jquery"
+  jquery: "jquery/dist/jquery"
   d3: "d3/d3"
   topojson: "topojson/topojson"
   cartodb: "cartodb.js/index"
@@ -30,6 +30,8 @@ paths:
   handlebars: "handlebars/handlebars"
   slick: "slick.js/slick/slick.min"
   simplePagination: "jquery.simplePagination/jquery.simplePagination"
+  #countries
+  scrollit: "ScrollIt.js/scrollIt"
   qtip: "qtip2/jquery.qtip.min"
   # stories
 
@@ -97,6 +99,11 @@ shim:
     deps:
       - "jquery"
     exports: "jqueryujs"
+
+  scrollit:
+    deps:
+      - "jquery"
+    exports: "scrollit"
 
   jquery_migrate:
     deps:

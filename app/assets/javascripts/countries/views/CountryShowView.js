@@ -7,13 +7,14 @@ define([
   'underscore',
   'd3',
   'mps',
+  'scrollit',
   'countries/views/CountryHeaderView',
   'countries/views/CountryShareView',
   'countries/views/CountryInfoWindow',
   'countries/helpers/CountryHelper',
   'countries/models/CountryShowModel',
 
-], function($, Backbone, _, d3, mps, CountryHeaderView, CountryShareView, CountryInfoWindow, CountryHelper, CountryShowModel ) {
+], function($, Backbone, _, d3, mps, scrollit, CountryHeaderView, CountryShareView, CountryInfoWindow, CountryHelper, CountryShowModel ) {
 
   'use strict';
 
@@ -133,19 +134,19 @@ define([
     },
 
     _stickynav: function() {
-      // this._positionScroll();
+      this._positionScroll();
 
-      // $.scrollIt({
-      //   upKey: null,
-      //   downKey: null,
-      //   easing: 'linear',
-      //   scrollTime: 400,
-      //   activeClass: 'active',
-      //   onPageChange: null,
-      //   topOffset: - 48
-      // });
+      $.scrollIt({
+        upKey: null,
+        downKey: null,
+        easing: 'linear',
+        scrollTime: 400,
+        activeClass: 'active',
+        onPageChange: null,
+        topOffset: - 48
+      });
 
-      // $(window).scroll(this._positionScroll);
+      $(window).scroll(this._positionScroll);
     },
 
     _drawTenure: function() {
