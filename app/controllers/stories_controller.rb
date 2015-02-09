@@ -14,16 +14,13 @@ class StoriesController < ApplicationController
 
   def index
 
-    if params['for_stay']
-      @visible = Api::Story.find_by_page(params['page'], params['perpage'])
-      respond_with @visible
+    if params['for_map']
+      respond_with @stories
+      return
+    else
+      redirect_to '/stayinformed/crowdsourced-stories'
       return
     end
-
-    # unless params['for_map']
-    #   redirect_to '/stayinformed/crowdsourced-stories'
-    # end
-    respond_with @stories
   end
 
   def show
