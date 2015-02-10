@@ -13,7 +13,7 @@
    polygon-fill: #1F78B4;
 }
 #peru_forest_concessions[type="REFORESTATION"] {
-   polygon-fill: #60A6E7;
+   polygon-fill: #F9FF00;
 }
 #peru_forest_concessions[type="CONSERVATION"] {
    polygon-fill: #33A02C;
