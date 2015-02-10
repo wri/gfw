@@ -134,7 +134,6 @@ define([
         var $targ    = $('section.current_share'),
             targ_val = '/alerts', //default value
             path     = window.location.pathname;
-        console.log($targ);
         dim_y = 360;
         path = path.replace('country','country_info');
         if (path.slice(-1) === "/") path = path.slice(0, -1);
