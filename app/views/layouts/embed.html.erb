@@ -82,8 +82,7 @@
 
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=drawing,geometry&sensor=false"></script>
   <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
-  <%= javascript_include_tag "countries" %>
-  <%= yield :js %>
+  <%= requirejs_include_tag "countries" %>
   <%= render 'shared/js_footer' %>
 </body>
 </html>

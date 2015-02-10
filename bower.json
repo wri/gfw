@@ -37,6 +37,11 @@
     "jquery-file-upload": "~9.8.1",
     "geojson-google-maps": "*",
     "blueimp-load-image": "~1.13.0",
-    "jquery-ujs": "~1.0.2"
+    "jquery-ujs": "~1.0.2",
+    "qtip2": "~2.2.1",
+    "ScrollIt.js": "*"
+  },
+  "resolutions": {
+    "jquery": "1.11.1"
   }
 }
