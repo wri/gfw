@@ -85,10 +85,10 @@ define([
 
     calculateOffsets: function(){
       this.mobile = (this.$window.width() > 850) ? false : true;
-      this.$sideBarBox.css({'min-height': this.$sideBarAside.height() });
       this.offset = this.$el.offset().top + parseInt(this.$el.css('paddingTop'), 10);
       this.offsetBottom = this.$cut.offset().top - this.$sideBarAside.height() - this.padding;
       if (!this.mobile) {
+        this.$sideBarBox.css({'min-height': this.$sideBarAside.height() });
         this.$htmlbody.removeClass('active');
       }
     },
