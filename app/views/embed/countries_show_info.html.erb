@@ -8,202 +8,193 @@
     }
   </style>
 <% end %>
-<% content_for :js do %>
-  <%= javascript_include_tag "countries" %>
-  <script>
-    $(function() {
-      cdb.init(function() {
-        window.countries_show = new gfw.ui.view.CountriesShow({
-          iso: "<%= @country['iso'] %>"
-        });
-      });
-    });
-  </script>
-<% end %>
 
 <% content_for :css do %>
   <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
 <% end %>
 
-<div class="country-show">
-  <!-- header -->
-  <div class="country-title embed-country-title">
-    <h1><%= @country['name'] %></h1>
-  </div>
-  <!-- forma alerts -->
-  <section class="country-section country-alerts" data-scroll-index='0' style="display:none">
-    <div class="inner">
-      <div class="section-info">
-        FORMA alerts
-        <a href="#" class="info" data-source="forma"><i></i></a>
-      </div>
+<section id="countryShowView" data-iso="<%= @country['iso'] %>">
 
-      <div class="section-content" id="formaAlertsContent">
-        <div class="left-col">
-          <h3 class="section-title" id="formaAlertsTitle">There were <span class="highlight amount"></span> FORMA alerts in <span class="highlight month"></span></h3>
+  <div class="country-show">
+    <!-- header -->
+    <div class="country-title embed-country-title">
+      <h1><%= @country['name'] %></h1>
+    </div>
+    <!-- forma alerts -->
+    <section class="country-section country-alerts" data-scroll-index='0' style="display:none">
+      <div class="inner">
+        <div class="section-info">
+          FORMA alerts
+          <a href="#" class="info" data-source="forma"><i></i></a>
+        </div>
 
-          <div class="forma-alerts-legend">
-            <span class="legend-title">Forest Clearing Alerts</span>
-            <span>Humid Tropics</span>
+        <div class="section-content" id="formaAlertsContent">
+          <div class="left-col">
+            <h3 class="section-title" id="formaAlertsTitle">There were <span class="highlight amount"></span> FORMA alerts in <span class="highlight month"></span></h3>
+
+            <div class="forma-alerts-legend">
+              <span class="legend-title">Forest Clearing Alerts</span>
+              <span>Humid Tropics</span>
+            </div>
+
+            <div class="forma_dropdown-menu">
+              <ul>
+                <li> <ul>
+                <li><a href='http://wri-01.cartodb.com/api/v1/sql?q=SELECT+f.%2A+FROM+forma_api+f+WHERE+f.date+%3E%3D+%272006-01-01%27%3A%3Adate+AND+f.date+%3C%3D+%272015-01-01%27%3A%3Adate+AND+f.iso+%3D+UPPER%28%27<%= @country['iso'] %>%27%29&version=v1&format=SVG'>SVG</a></li>
+                <li><a href='http://wri-01.cartodb.com/api/v1/sql?q=SELECT+f.%2A+FROM+forma_api+f+WHERE+f.date+%3E%3D+%272006-01-01%27%3A%3Adate+AND+f.date+%3C%3D+%272015-01-01%27%3A%3Adate+AND+f.iso+%3D+UPPER%28%27<%= @country['iso'] %>%27%29&version=v1&format=geojson'>GeoJSON</a></li>
+                <li><a href='http://wri-01.cartodb.com/api/v1/sql?q=SELECT+f.%2A+FROM+forma_api+f+WHERE+f.date+%3E%3D+%272006-01-01%27%3A%3Adate+AND+f.date+%3C%3D+%272015-01-01%27%3A%3Adate+AND+f.iso+%3D+UPPER%28%27<%= @country['iso'] %>%27%29&version=v1&format=shp'>SHP</a></li>
+                <li><a href='http://wri-01.cartodb.com/api/v1/sql?q=SELECT+f.%2A+FROM+forma_api+f+WHERE+f.date+%3E%3D+%272006-01-01%27%3A%3Adate+AND+f.date+%3C%3D+%272015-01-01%27%3A%3Adate+AND+f.iso+%3D+UPPER%28%27<%= @country['iso'] %>%27%29&version=v1&format=kml'>KML</a></li>
+                <li><a href='http://wri-01.cartodb.com/api/v1/sql?q=SELECT+f.%2A+FROM+forma_api+f+WHERE+f.date+%3E%3D+%272006-01-01%27%3A%3Adate+AND+f.date+%3C%3D+%272015-01-01%27%3A%3Adate+AND+f.iso+%3D+UPPER%28%27<%= @country['iso'] %>%27%29&version=v1&format=csv'>CSV</a></li>
+              </ul>
+            </div>
+            <a href="#" class="btn-rdn btn-rdn-primary forma_dropdown-link">Download data</a>
           </div>
 
-          <div class="forma_dropdown-menu">
-            <ul>
-              <li> <ul>
-              <li><a href='http://wri-01.cartodb.com/api/v1/sql?q=SELECT+f.%2A+FROM+forma_api+f+WHERE+f.date+%3E%3D+%272006-01-01%27%3A%3Adate+AND+f.date+%3C%3D+%272015-01-01%27%3A%3Adate+AND+f.iso+%3D+UPPER%28%27<%= @country['iso'] %>%27%29&version=v1&format=SVG'>SVG</a></li>
-              <li><a href='http://wri-01.cartodb.com/api/v1/sql?q=SELECT+f.%2A+FROM+forma_api+f+WHERE+f.date+%3E%3D+%272006-01-01%27%3A%3Adate+AND+f.date+%3C%3D+%272015-01-01%27%3A%3Adate+AND+f.iso+%3D+UPPER%28%27<%= @country['iso'] %>%27%29&version=v1&format=geojson'>GeoJSON</a></li>
-              <li><a href='http://wri-01.cartodb.com/api/v1/sql?q=SELECT+f.%2A+FROM+forma_api+f+WHERE+f.date+%3E%3D+%272006-01-01%27%3A%3Adate+AND+f.date+%3C%3D+%272015-01-01%27%3A%3Adate+AND+f.iso+%3D+UPPER%28%27<%= @country['iso'] %>%27%29&version=v1&format=shp'>SHP</a></li>
-              <li><a href='http://wri-01.cartodb.com/api/v1/sql?q=SELECT+f.%2A+FROM+forma_api+f+WHERE+f.date+%3E%3D+%272006-01-01%27%3A%3Adate+AND+f.date+%3C%3D+%272015-01-01%27%3A%3Adate+AND+f.iso+%3D+UPPER%28%27<%= @country['iso'] %>%27%29&version=v1&format=kml'>KML</a></li>
-              <li><a href='http://wri-01.cartodb.com/api/v1/sql?q=SELECT+f.%2A+FROM+forma_api+f+WHERE+f.date+%3E%3D+%272006-01-01%27%3A%3Adate+AND+f.date+%3C%3D+%272015-01-01%27%3A%3Adate+AND+f.iso+%3D+UPPER%28%27<%= @country['iso'] %>%27%29&version=v1&format=csv'>CSV</a></li>
+          <div class="right-col">
+            <div class="forma-graph"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- forest type -->
+    <section class="country-section country-forests-type" data-scroll-index='1' style="display:none">
+      <div class="inner">
+        <div class="section-info">
+          Type of forests in <%= @country['name'] %>
+          <a href="#" class="info" data-source="forest_type"><i></i></a>
+        </div>
+
+        <div class="section-content">
+          <div class="coming-soon">No data available</div>
+          <div class="left-col">
+            <div class="forest-type-legends">
+              <ul class="legends-list">
+                <li><span class="primary"></span>Primary</li>
+                <li><span class="regenerated"></span>Regenerated</li>
+                <li><span class="planted"></span>Planted</li>
+              </ul>
+            </div>
+          </div>
+          <div class="right-col">
+            <div class="forests-type-graph"></div>
+          </div>
+
+          <% if @country['country_alt'].present? %>
+          <div class="country-alt">
+            <p><%= @country['country_alt'].html_safe %></p>
+          </div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <!-- forest produnction -->
+    <section class="country-section country-production" data-scroll-index='2' style="display:none">
+      <div class="inner">
+        <div class="section-info">
+          Gross production value for forests
+          <a href="#" class="info" data-source="gross_value"><i></i></a>
+        </div>
+
+        <div class="section-content">
+          <% if @country['gva'].present? && @country['gva'] > 0 %>
+          <h3 class="section-title">
+            The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2011, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> % of the GDP.</span>
+          </h3>
+          <% else %>
+          <div class="coming-soon">No data available</div>
+          <% end %>
+        </div>
+      </div>
+    </section>
+
+    <!-- employment -->
+    <section class="country-section country-employment" data-scroll-index='3' style="display:none">
+      <div class="inner">
+        <div class="section-info">
+          Employment in forest sector
+          <a href="#" class="info" data-source="employment"><i></i></a>
+        </div>
+
+        <div class="section-content">
+          <% if @employees.present? && @employees > 0 %>
+          <div class="left-col">
+            <% if @employees < 1000 %>
+              <h3 class='section-title'><div><%= @employees %></div> <span>thousand people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
+            <% else %>
+              <h3 class='section-title'><div><%= (@employees/1000.00).round(2) %></div> <span>million people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
+            <% end %>
+
+            <ul class='employment <%= @employees < 25 ? 'short' : '' %>'>
+              <li>
+                <% @employees = @employees < 100 ? @employees : 100 %>
+                <div class='man-list'>
+                  <% @employees.times do |i| %>
+                    <%= image_tag 'countries/man.png' %>
+                  <% end %>
+
+                  <%= '...' if @employees == 100 %>
+                </div>
+              </li>
             </ul>
           </div>
-          <a href="#" class="btn-rdn btn-rdn-primary forma_dropdown-link">Download data</a>
-        </div>
-
-        <div class="right-col">
-          <div class="forma-graph"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- forest type -->
-  <section class="country-section country-forests-type" data-scroll-index='1' style="display:none">
-    <div class="inner">
-      <div class="section-info">
-        Type of forests in <%= @country['name'] %>
-        <a href="#" class="info" data-source="forest_type"><i></i></a>
-      </div>
-
-      <div class="section-content">
-        <div class="coming-soon">No data available</div>
-        <div class="left-col">
-          <div class="forest-type-legends">
-            <ul class="legends-list">
-              <li><span class="primary"></span>Primary</li>
-              <li><span class="regenerated"></span>Regenerated</li>
-              <li><span class="planted"></span>Planted</li>
-            </ul>
-          </div>
-        </div>
-        <div class="right-col">
-          <div class="forests-type-graph"></div>
-        </div>
-
-        <% if @country['country_alt'].present? %>
-        <div class="country-alt">
-          <p><%= @country['country_alt'].html_safe %></p>
-        </div>
-        <% end %>
-      </div>
-    </div>
-  </section>
-
-  <!-- forest produnction -->
-  <section class="country-section country-production" data-scroll-index='2' style="display:none">
-    <div class="inner">
-      <div class="section-info">
-        Gross production value for forests
-        <a href="#" class="info" data-source="gross_value"><i></i></a>
-      </div>
-
-      <div class="section-content">
-        <% if @country['gva'].present? && @country['gva'] > 0 %>
-        <h3 class="section-title">
-          The forestry sector contributed <span class="highlight">USD <%= gva_to_human(@country['gva'])%></span> to the economy in 2011, which is appoximately <span class="highlight"><%= @country['gva_percent'] %> % of the GDP.</span>
-        </h3>
         <% else %>
         <div class="coming-soon">No data available</div>
         <% end %>
-      </div>
-    </div>
-  </section>
-
-  <!-- employment -->
-  <section class="country-section country-employment" data-scroll-index='3' style="display:none">
-    <div class="inner">
-      <div class="section-info">
-        Employment in forest sector
-        <a href="#" class="info" data-source="employment"><i></i></a>
-      </div>
-
-      <div class="section-content">
-        <% if @employees.present? && @employees > 0 %>
-        <div class="left-col">
-          <% if @employees < 1000 %>
-            <h3 class='section-title'><div><%= @employees %></div> <span>thousand people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
-          <% else %>
-            <h3 class='section-title'><div><%= (@employees/1000.00).round(2) %></div> <span>million people are directly employed by the forestry sector, according to 2011 FAO data.</span></h3>
-          <% end %>
-
-          <ul class='employment <%= @employees < 25 ? 'short' : '' %>'>
-            <li>
-              <% @employees = @employees < 100 ? @employees : 100 %>
-              <div class='man-list'>
-                <% @employees.times do |i| %>
-                  <%= image_tag 'countries/man.png' %>
-                <% end %>
-
-                <%= '...' if @employees == 100 %>
-              </div>
-            </li>
-          </ul>
         </div>
-      <% else %>
-      <div class="coming-soon">No data available</div>
-      <% end %>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- tenure -->
-  <section class="country-section country-tenure" data-scroll-index='4' style="display:none">
-    <div class="inner">
+    <!-- tenure -->
+    <section class="country-section country-tenure" data-scroll-index='4' style="display:none">
+      <div class="inner">
+        <div class="section-info">
+          Forest tenure
+          <a href="#" class="info" data-source="forest_tenure"><i></i></a>
+        </div>
+
+        <div class="section-content">
+          <div class='coming-soon'><span>No data available</span></div>
+          <div class='line-graph'></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- carbon -->
+    <% if @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>
+    <section class="country-carbon_stocks country-section carbon-text <%= 'wide' unless @country['emissions'].present? && @country['emissions'] != 0 %>" style="display:none">
       <div class="section-info">
-        Forest tenure
-        <a href="#" class="info" data-source="forest_tenure"><i></i></a>
+        Carbon stocks
       </div>
 
       <div class="section-content">
-        <div class='coming-soon'><span>No data available</span></div>
-        <div class='line-graph'></div>
+        <h3 class='section-title'>This country has <span class="highlight"><%= number_with_delimiter(@country['carbon_stocks']) %> million metric tons of carbon stocks</span> in living forest biomass.</h3>
       </div>
-    </div>
-  </section>
+    </section>
+    <% end %>
 
 
-  <!-- carbon -->
-  <% if @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>
-  <section class="country-carbon_stocks country-section carbon-text <%= 'wide' unless @country['emissions'].present? && @country['emissions'] != 0 %>" style="display:none">
-    <div class="section-info">
-      Carbon stocks
-    </div>
+    <!-- emissions -->
+    <% if @country['emissions'].present? && @country['emissions'] != 0 %>
+    <section class="country-emissions country-section emissions-text <%= 'wide' unless @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>" style="display:none">
+      <div class="section-info">
+        CO2 emissions
+      </div>
+       <% precission = (@country['emissions'].abs.to_i < 0.1) ? 2 : 1 %>
 
-    <div class="section-content">
-      <h3 class='section-title'>This country has <span class="highlight"><%= number_with_delimiter(@country['carbon_stocks']) %> million metric tons of carbon stocks</span> in living forest biomass.</h3>
-    </div>
-  </section>
-  <% end %>
-
-
-  <!-- emissions -->
-  <% if @country['emissions'].present? && @country['emissions'] != 0 %>
-  <section class="country-emissions country-section emissions-text <%= 'wide' unless @country['carbon_stocks'].present? && @country['carbon_stocks'] != 0 %>" style="display:none">
-    <div class="section-info">
-      CO2 emissions
-    </div>
-     <% precission = (@country['emissions'].abs.to_i < 0.1) ? 2 : 1 %>
-
-    <div class="section-content">
-      <% if @country['emissions'] > 0 %>
-        <h3 class='section-title'>According to FAO data, <span class="highlight"><%= number_to_percentage(@country['emissions'], precision: precission) %> of GHG emissions</span> in this country came from land-use change and forestry in 2011.</h3>
-      <% else %>
-        <h3 class='section-title'>According to FAO data, land-use change and forestry sequestered <span class="highlight"><%= number_to_percentage(@country['emissions'].abs, precision: precission) %> of this country’s GHG emissions</span> in 2011.</h3>
-      <% end %>
-    </div>
-  </section>
-  <% end %>
+      <div class="section-content">
+        <% if @country['emissions'] > 0 %>
+          <h3 class='section-title'>According to FAO data, <span class="highlight"><%= number_to_percentage(@country['emissions'], precision: precission) %> of GHG emissions</span> in this country came from land-use change and forestry in 2011.</h3>
+        <% else %>
+          <h3 class='section-title'>According to FAO data, land-use change and forestry sequestered <span class="highlight"><%= number_to_percentage(@country['emissions'].abs, precision: precission) %> of this country’s GHG emissions</span> in 2011.</h3>
+        <% end %>
+      </div>
+    </section>
+    <% end %>
 
 
 
-</div>
+  </div>
+</section>

@@ -3,6 +3,7 @@ modules:
   - name: 'static'
   - name: 'landing'
   - name: 'stories'
+  - name: 'countries'
 
 waitSeconds: 200
 
@@ -29,6 +30,9 @@ paths:
   handlebars: "handlebars/handlebars"
   slick: "slick.js/slick/slick.min"
   simplePagination: "jquery.simplePagination/jquery.simplePagination"
+  #countries
+  scrollit: "ScrollIt.js/scrollIt"
+  qtip: "qtip2/jquery.qtip.min"
   # stories
 
   jquery_fileupload: "jquery-file-upload/js/jquery.fileupload"
@@ -96,12 +100,17 @@ shim:
       - "jquery"
     exports: "jqueryujs"
 
-  jquery_migrate: 
+  scrollit:
+    deps:
+      - "jquery"
+    exports: "scrollit"
+
+  jquery_migrate:
     deps:
       - "jquery"
     exports: "jquery_migrate"
 
-  jquery_fileupload: 
+  jquery_fileupload:
     deps:
       - "jquery"
     exports: "jquery_fileupload"
