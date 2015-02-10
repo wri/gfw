@@ -14,27 +14,17 @@
   <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
 <% end %>
 
-<% content_for :js do %>
-  <%= javascript_include_tag "countries" %>
 
-  <script>
-    $(function() {
-      cdb.init(function() {
-        window.countries_show = new gfw.ui.view.CountriesShow({
-          iso: "<%= @country['iso'] %>"
-        });
-      });
-    });
-  </script>
-<% end %>
+<section id="countryShowView" data-iso="<%= @country['iso'] %>">
+  <% content_for :title do %>
+    <a href="/" class="header-logo">Global Forest Watch</a>
 
-<% content_for :title do %>
-  <a href="/" class="header-logo">Global Forest Watch</a>
+    <div class="header-inner inner">
+      <!-- <h1 class="header-title big"><%= @country['name'] %></h1> -->
+      <span title="Settings" class="country-icons-settings_engine umd_options_control" data-tip="Change UMD layer intensity"></span>
+    </div>
+  <% end %>
+  <%= render 'country' %>
+</section>
 
-  <div class="header-inner inner">
-    <!-- <h1 class="header-title big"><%= @country['name'] %></h1> -->
-    <span title="Settings" class="country-icons-settings_engine umd_options_control" data-tip="Change UMD layer intensity"></span>
-  </div>
-<% end %>
 
-<%= render 'country' %>

@@ -382,7 +382,7 @@ define([
           var self = that,
               markup_list = '';
 
-          var data = json.rows;
+          var data = _.sortBy(json.rows, function(item){ return item.sum_loss });
           var max_trigger = data.length -1;
           _.each(data, function(val, key) {
             var ord = e ? (key+11) : (key+1),
@@ -411,9 +411,9 @@ define([
                 } else {
                   l_mha = 'Ha';
                 }
-                if (key == max_trigger){
-                  that._reorderRanking();
-                }
+                // if (key == max_trigger){
+                //   that._reorderRanking();
+                // }
                 markup_list += '<li>\
                                 <div class="countries_list__num">'+ord+'</div>\
                                 <div class="countries_list__title">'+enabled+'</div>\
