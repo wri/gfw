@@ -617,6 +617,14 @@
       float: right;
     }
   }
+  .country-forests-type {
+    @media (min-width: 750px) {
+      .right-col {
+        position: relative;
+        left: -60px;
+      }
+    }
+  }
 
 
   .country-section {
@@ -699,7 +707,7 @@
 
       .right-col {
         margin: 10% 0 0 0;
-        @media (min-width: $br-mobile){
+        @media (min-width: $br-mobile) {
           margin: 0 0 0 10%;
         }
 
