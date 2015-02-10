@@ -332,6 +332,7 @@ define([
             .append("svg")
             .attr("width", width)
             .attr("height", height)
+            .attr("style", 'min-width:' + width + ';min-height:' + height)
             .append("g")
             .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
