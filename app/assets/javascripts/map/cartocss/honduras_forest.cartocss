@@ -2,6 +2,7 @@
 
 #honduras_forest_type {
    polygon-opacity: 0.7;
+   polygon-fill: transparent;
    line-color: #FFF;
    line-width: 0;
    line-opacity: 1;
@@ -36,7 +37,4 @@
 }
 #honduras_forest_type[classname="CafÃ©"] {
    polygon-fill: #6A3D9A;
-}
-#honduras_forest_type {
-   polygon-fill: #DDDDDD;
 }
