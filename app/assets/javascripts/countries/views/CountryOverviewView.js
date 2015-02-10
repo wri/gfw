@@ -382,7 +382,7 @@ define([
           var self = that,
               markup_list = '';
 
-          var data = _.sortBy(json.rows, function(item){ return item.sum_loss });
+          var data = _.sortBy(json.rows, function(item){ return -item.sum_loss });
           var max_trigger = data.length -1;
           _.each(data, function(val, key) {
             var ord = e ? (key+11) : (key+1),
