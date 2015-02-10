@@ -8,9 +8,11 @@ define([
   'd3',
   'mps',
   'countries/views/CountryInfoWindow',
+  'countries/views/CountryHeaderView',
+  'countries/views/CountryShareView',
   'countries/helpers/CountryHelper'
 
-], function($, Backbone, _, d3, mps, CountryInfoWindow, CountryHelper) {
+], function($, Backbone, _, d3, mps, CountryInfoWindow, CountryHeaderView, CountryShareView, CountryHelper) {
 
   'use strict';
 
@@ -43,6 +45,9 @@ define([
       }
       this.helper = CountryHelper;
       this.model = new CountryOverviewModel();
+      this.headerView = new CountryHeaderView();
+
+
       this.$graph = $('.overview_graph__area');
       this.$years = $('.overview_graph__years');
       this.$settings = $('.settings');
@@ -78,8 +83,8 @@ define([
       this._drawGraph();
       this._drawList();
 
-      // Share = new gfw.ui.view.Share({template: 'country'});
-      // this.$el.find('.overview_button_group .share').append(Share.render());
+      var Share = new CountryShareView({ template: 'templateShare' });
+      this.$el.find('.overview_button_group .share').append(Share.render());
     },
 
     showInfo: function(e){

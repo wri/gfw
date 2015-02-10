@@ -134,13 +134,15 @@ define([
         var $targ    = $('section.current_share'),
             targ_val = '/alerts', //default value
             path     = window.location.pathname;
-
+        console.log($targ);
         dim_y = 360;
         path = path.replace('country','country_info');
         if (path.slice(-1) === "/") path = path.slice(0, -1);
 
         if ($targ.hasClass('country-forests-type')) {
           targ_val = '/forests-type';
+        } else if($targ.hasClass('country-alerts-section')) {
+          targ_val = '/alerts';
         } else if ($targ.hasClass('country-production')) {
           targ_val = '/production';
         } else if ($targ.hasClass('country-employment')) {
@@ -151,11 +153,14 @@ define([
           targ_val = '/carbon_stocks';
         } else if ($targ.hasClass('emissions-text')) {
           targ_val = '/emissions';
+        }else{
+          path = '';
+          targ_val = window.location.pathname + window.location.search;
         }
         $targ.removeClass('current_share');
         this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + path + targ_val + '"></iframe>');
       } else {
-        this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname + window.location.search+'"></iframe>');
+        this.$input.val('<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + targ_val+'"></iframe>');
       }
     },
 

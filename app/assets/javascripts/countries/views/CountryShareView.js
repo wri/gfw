@@ -68,7 +68,6 @@ define([
     },
 
     _openShare: function(e) {
-      console.log('this.share');
       e.preventDefault();
       $(e.target).closest('section').addClass('current_share');
       this.share.show();

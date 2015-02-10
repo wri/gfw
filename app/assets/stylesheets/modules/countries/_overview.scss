@@ -17,7 +17,6 @@
 }
 
 .overview_graph {
-  overflow: hidden;
   width: 960px;
   margin: 0 auto;
   position: relative;
@@ -52,11 +51,11 @@
 .overview_graph__area {
   height: 371px;
   svg {
-    border-top: 1px solid #615D6C;
+    border-top: 1px solid $dark;
     position: relative;
     z-index: 300;
     margin-left: -40px;
-    width: 1000px;
+    width: 1040px;
   }
 }
 
@@ -110,6 +109,7 @@
   li {
     display: table;
     float: left;
+    background: lighten(#333, 2.5%);
 
     &.selected,
     &:hover {
@@ -136,7 +136,7 @@
 
       &:hover {
         background: darken(#95BC3B, 5%);
-        border-bottom: 1px solid #615D6C;
+        border-bottom: 1px solid $dark;
       }
     }
   }
@@ -146,8 +146,8 @@
   display: table-cell;
   height: 99px;
   width: 160px;
-  border-left: 1px solid #615D6C;
-  border-bottom: 2px solid #615D6C;
+  border-left: 1px solid $dark;
+  border-bottom: 2px solid $dark;
   font-size: 14px;
   font-weight: 500;
   vertical-align: middle;
@@ -179,7 +179,8 @@
   position: relative;
 
   p {
-    width: 95%;
+    // border-left: 1px solid $dark;
+    // border-left: 1px solid $dark;
   }
 
   .info {

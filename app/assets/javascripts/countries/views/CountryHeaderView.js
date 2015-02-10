@@ -302,19 +302,21 @@ define([
       var path = location.pathname.split('/');
       var id = path[path.length -1];
       var self = this;
-      this.map.remove();
-      if (isNaN(id)) {
-        this._initMap(function() {
-          self._displayCountry();
-        });
-        id = false;
-      } else {
-        var area = this.country.get('areas').where({ id_1: Number(id) })[0];
-        this._initMap(function() {
-          self._displayArea(area);
-        });
+      if(this.map){
+        this.map.remove()
+        if (isNaN(id)) {
+          this._initMap(function() {
+            self._displayCountry();
+          });
+          id = false;
+        } else {
+          var area = this.country.get('areas').where({ id_1: Number(id) })[0];
+          this._initMap(function() {
+            self._displayArea(area);
+          });
+        }
+        this._updateData(id);
       }
-      this._updateData(id);
     },
 
     _onSelectArea: function() {
