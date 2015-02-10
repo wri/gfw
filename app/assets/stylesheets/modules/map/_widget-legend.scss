@@ -58,27 +58,29 @@
     .layer-name {
       display: block;
       position: relative;
+      padding-right: 17px;
     }
   }
 
   // @div
   .source {
+    @extend .info-icon;
     display: inline-block;
     position: absolute;
-    top: 4px;
+    top: 1px;
     right: 0;
-    width: 10px;
-    height: 10px;
-    @include home-icons-sprite(information);
-    background: image-url('home-icons/information.png');
-
-    &.info2{
-      @include home-icons-sprite(information2);
-      background: image-url('home-icons/information2.png');
-    }
 
     &.hidden {
       display: none;
+    }
+
+    &.text{
+      position: static;
+      width: auto;
+      height: auto;
+      background: none;
+      border: none;
+      border-radius: 0;
     }
   }
 
@@ -137,6 +139,26 @@
       font-size: 0.8em;
     }
   }
+
+
+  /*****************/
+  /* Layer details */
+  /*****************/
+  .layer-details-loss {
+    .canopy{
+      margin: 7px 0 0;
+      &:first-child{
+        margin: 0;
+      }
+      a{
+        color: #F69;
+        &:hover{
+          color: lighten(#F69, 10%);
+        }
+      }
+    }
+  }
+
 
   /***************************/
   /* Forest2000Layer details */

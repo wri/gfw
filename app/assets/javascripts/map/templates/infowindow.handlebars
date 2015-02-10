@@ -1,7 +1,7 @@
 <div class="cartodb-popup">
   <a href="#close" class="cartodb-popup-close-button close"><svg><use xlink:href="#shape-close"></use></svg></a>
   <div class="cartodb-popup-content-wrapper">
-    <div class="cartodb-popup-header">
+    <div class="cartodb-popup-header {{#if content.data.analysis}}cartodb-popup-header-analysis{{/if}}">
       {{#if content.data.image}}
         {{#if content.data.name}}
           <h2>{{content.data.name}}</h2>
@@ -37,10 +37,6 @@
       {{#if content.data.description}}
         <h4>Description:</h4>
         <p>{{content.data.description}}</p>
-      {{/if}}
-      {{#if content.data.photo_credit}}
-        <h4>Photo Credit:</h4>
-        <p>{{content.data.photo_credit}}</p>
       {{/if}}
 
       {{#if content.data.type}}
@@ -127,9 +123,38 @@
         <h4>Source:</h4>
         <p>{{content.data.source}}</p>
       {{/if}}
-      {{#if content.data.aze_id}}
-        <h4>Azepoly Index:</h4>
-        <p>{{content.data.aze_id}}</p>
+      {{#if content.data.mapid}}
+        <h4>Azepoly ID:</h4>
+        <p>{{content.data.mapid}}</p>
+      {{/if}}
+      {{#if content.data.ebaname}}
+        <h4>Name:</h4>
+        <p>{{content.data.ebaname}}</p>
+        <p><a href="http://www.birdlife.org/datazone/ebafactsheet.php?id={{content.data.id}}" target="_blank">Learn more</a></p>
+      {{/if}}
+      {{#if content.data.eco_num}}
+        <h4>ECO Number:</h4>
+        <p>{{content.data.eco_num}}</p>
+      {{/if}}
+      {{#if content.data.eco_id}}
+        <h4>ECO ID:</h4>
+        <p>{{content.data.eco_id}}</p>
+      {{/if}}
+      {{#if content.data.title_holder}}
+        <h4>Title Holder:</h4>
+        <p>{{content.data.title_holder}}</p>
+      {{/if}}
+      {{#if content.data.province}}
+        <h4>Province:</h4>
+        <p>{{content.data.province}}</p>
+      {{/if}}
+      {{#if content.data.department}}
+        <h4>Department:</h4>
+        <p>{{content.data.department}}</p>
+      {{/if}}
+      {{#if content.data.supervision}}
+        <h4>Supervision:</h4supervision>
+        <p>{{content.data.supervision}}</p>
       {{/if}}
     </div>
   </div>

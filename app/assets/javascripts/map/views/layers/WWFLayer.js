@@ -13,9 +13,9 @@ define([
   var WWFLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT the_geom_webmercator, eco_name as name, realm, biome, \'{tableName}\' AS layer FROM {tableName}',
+      sql: 'SELECT the_geom_webmercator, eco_name as name, realm, biome, eco_num, eco_id, \'{tableName}\' AS layer FROM {tableName}',
       infowindow: true,
-      interactivity: 'name, realm, biome',
+      interactivity: 'name, realm, biome, eco_num, eco_id',
       cartocss: wwfCartoCSS
     }
 

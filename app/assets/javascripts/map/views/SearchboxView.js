@@ -39,9 +39,12 @@ define([
         if (place && place.geometry && place.geometry.viewport) {
           this.presenter.fitBounds(place.geometry.viewport);
         }
-        // TODO: When there isn't viewport, and there is location...
         if (place && place.geometry && place.geometry.location && !place.geometry.viewport) {
-          this.presenter.setCenter(place.geometry.location.k,place.geometry.location.B);
+          var index = [];
+          for (var x in place.geometry.location) {
+             index.push(x);
+          }
+          this.presenter.setCenter(place.geometry.location[index[0]],place.geometry.location[index[1]]);
         }
       };
       ga('send', 'event', 'Map', 'Searchbox', 'Find location');

@@ -80,12 +80,17 @@ define([
      * @param  {event} event Click event
      */
     _toggleLayer: function(event) {
-      var layerSlug = $(event.currentTarget).data('layer');
-      if ($(event.currentTarget).hasClass('ifl')) {
+      var layerSlug = $(event.currentTarget).data('layer'),
+          fil_type = 'ifl_2013_deg';
+
+      if ($(event.currentTarget).hasClass('ifl') || $(event.currentTarget).hasClass('c_f_peru')) {
+        if ($(event.currentTarget).hasClass('c_f_peru')) {
+          fil_type = 'concesiones_forestalesNS';
+        }
         event && event.stopPropagation();
         var $elem = $(event.currentTarget);
         if ($elem.hasClass('selected')) {$elem.find('input').prop('checked',false);}
-        else {$elem.find('[data-layer="ifl_2013_deg"] input').prop('checked', true);}
+        else {$elem.find('[data-layer="' + fil_type + '"] input').prop('checked', true);}
         if ($elem.prop('tagName') !== 'LI'){
           for (var i=0;i < $elem.siblings().length; i++) {
             if ($($elem.siblings()[i]).hasClass('selected')) {
@@ -94,23 +99,6 @@ define([
           }
           $elem.parents('li').data('layer' , $elem.data('layer')).addClass('selected');
         }
-      }
-      if ($(event)[0].toElement.localName === "input" || $(event)[0].toElement.localName === "label") {
-        var $c_f_peru = $('#c_f_peru');
-        var $c_f_ns_peru = $('#c_f_ns_peru');
-        if (($c_f_ns_peru.find('input').is(':checked')) && ($c_f_peru.attr('data-layer') === "concesiones_forestales")) {
-          if (! $c_f_peru.hasClass('selected')) this.presenter.toggleLayer(layerSlug);
-          layerSlug = 'concesiones_forestalesNS';
-          $c_f_peru.attr('data-layer','concesiones_forestalesNS');
-        }
-        else if ( !($c_f_ns_peru.find('input').is(':checked')) && ($c_f_peru.attr('data-layer') === "concesiones_forestalesNS")) {
-          layerSlug = 'concesiones_forestalesNS';
-          $c_f_peru.attr('data-layer','concesiones_forestales')
-        }
-      }
-      else if (($('#c_f_ns_peru').find('input').is(':checked')) && ($('#c_f_peru').attr('data-layer') === "concesiones_forestalesNS")) {
-        this.presenter.toggleLayer('concesiones_forestalesNS');
-        $('#c_f_ns_peru').find('input').prop('checked', false);
       }
       this.presenter.toggleLayer(layerSlug);
       ga('send', 'event', 'Map', 'Toogle', 'Layer: ' + layerSlug);

@@ -43,14 +43,25 @@
         </div>
         <div class="country-sidenav">
           <ul>
+            <li>
+              <a href='<%= map_coords %>/grayscale/loss,forestgain?begin=2001-01-01&end=2013-12-30&threshold=' class='action analyze_from_country' target="_blank" id="url_analysis">
+                <strong>Analyze on map</strong>
+                <!-- <span class="sidenav-icon country-icons-chart_grey"></span> -->
+                <span class="sidenav-icon">
+                  <svg>
+                    <use xlink:href="#shape-graph"></use>
+                  </svg>
+                </span>
+              </a>
+            </li>
             <li class="share-container">
             </li>
             <li>
               <a href="#" data-source="umd_tree_loss_gain_infographics" class="info">
                 Info
                 <!-- <span class="sidenav-icon country-icons-info_grey"></span> -->
-                <span class="sidenav-icon">
-                  <svg class="circle">
+                <span class="sidenav-icon circle">
+                  <svg>
                     <use xlink:href="#shape-info"></use>
                   </svg>
                 </span>
@@ -58,7 +69,7 @@
             </li>
             <li>
               <a href='http://www.earthenginepartners.appspot.com/science-2013-global-forest/download.html' target='_blank'>
-                Download data
+                Download spatial data
                 <!-- <span class="sidenav-icon country-icons-download_grey"></span> -->
                 <span class="sidenav-icon">
                   <svg>
@@ -69,7 +80,7 @@
             </li>
             <li>
               <a href="https://wri-01.cartodb.com/api/v2/sql?q=SELECT iso as country_code,id1 as region_code, country,region, year, thresh as min_percent_canopy_density, loss as loss_ha, loss_perc as loss_percent, extent as extent_ha, extent_perc as extent_percent, gain as gain_ha, gain_perc as gain_percent from umd_subnat where iso='<%=@country['iso']%>'&format=csv&filename='<%=@country['iso']%>'">
-                country stats
+                Download country stats
                 <!-- <span class="sidenav-icon country-icons-download_grey"></span> -->
                 <span class="sidenav-icon">
                   <svg>
@@ -78,17 +89,7 @@
                 </span>
               </a>
             </li>
-            <li>
-              <a href='<%= map_coords %>/grayscale/loss,forestgain?begin=2001-01-01&end=2013-12-30&threshold=' class='action analyze_from_country' target="_blank" id="url_analysis">
-                Analyze on map
-                <!-- <span class="sidenav-icon country-icons-chart_grey"></span> -->
-                <span class="sidenav-icon">
-                  <svg>
-                    <use xlink:href="#shape-graph"></use>
-                  </svg>
-                </span>
-              </a>
-            </li>
+
             <li>
               <a href="#" class="umd_options_control" data-tip="Change UMD layer intensity">
                 tree cover canopy settings

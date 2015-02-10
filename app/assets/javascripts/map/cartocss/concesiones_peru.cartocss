@@ -7,24 +7,9 @@
    line-opacity: 1;
 }
 
-#peru_forest_concessions[type="NONTIMBER FOREST PRODUCTS_NUTS"] {
-   polygon-fill: #A6CEE3;
-}
-#peru_forest_concessions[type="TIMBER CONCESSION"] {
+#peru_forest_concessions[supervision="SUPERVISED BY OSINFOR"] {
    polygon-fill: #1F78B4;
 }
-#peru_forest_concessions[type="REFORESTATION"] {
-   polygon-fill: #B2DF8A;
-}
-#peru_forest_concessions[type="CONSERVATION"] {
-   polygon-fill: #33A02C;
-}
-#peru_forest_concessions[type="ECOTOURISM"] {
-   polygon-fill: #FB9A99;
-}
-#peru_forest_concessions[type="NONTIMBER FOREST PRODUCTS_SHIRINGA"] {
-   polygon-fill: #E31A1C;
-}
-#peru_forest_concessions[type="WILDLIFE"] {
-   polygon-fill: #FDBF6F;
+#peru_forest_concessions[supervision="UNSUPERVISED"] {
+   polygon-fill: #A6CEE3;
 }

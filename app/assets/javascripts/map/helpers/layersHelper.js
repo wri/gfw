@@ -40,6 +40,7 @@ define([
   'map/views/layers/WWFLayer',
   'map/views/layers/BirdlifeLayer',
   'map/views/layers/AzepolyLayer',
+  'map/views/layers/TigersLayer',
   // Layer dialog templates
   'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -88,6 +89,7 @@ define([
   WWFLayer,
   BirdlifeLayer,
   AzepolyLayer,
+  TigersLayer,
   // Layer dialog templates
   loss_dialog,
   // Layer timelines
@@ -218,6 +220,9 @@ define([
     },
     azepoly: {
       view: AzepolyLayer
+    },
+    tigers: {
+      view: TigersLayer
     },
     nothing: {
     }
