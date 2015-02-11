@@ -28,6 +28,7 @@ define([
       'ifl_2013_deg',
       'pantropical',
       'idn_primary',
+      'colombia_forest_change',
       'logging',
       'mining',
       'oil_palm',
