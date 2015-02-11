@@ -41,6 +41,7 @@ define([
   'map/views/layers/BirdlifeLayer',
   'map/views/layers/AzepolyLayer',
   'map/views/layers/TigersLayer',
+  'map/views/layers/ColombiaForestChangeLayer',
   // Layer dialog templates
   'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -90,6 +91,7 @@ define([
   BirdlifeLayer,
   AzepolyLayer,
   TigersLayer,
+  ColombiaForestChangeLayer,
   // Layer dialog templates
   loss_dialog,
   // Layer timelines
@@ -223,6 +225,9 @@ define([
     },
     tigers: {
       view: TigersLayer
+    },
+    colombia_forest_change: {
+      view: ColombiaForestChangeLayer
     },
     nothing: {
     }

@@ -21,9 +21,10 @@ define([
   'text!map/templates/legend/terra_i.handlebars',
   'text!map/templates/legend/concesiones_forestales.handlebars',
   'text!map/templates/legend/concesiones_forestalesType.handlebars',
-  'text!map/templates/legend/hondurasForest.handlebars'
+  'text!map/templates/legend/hondurasForest.handlebars',
+  'text!map/templates/legend/colombiaForestChange.handlebars'
 ], function(_, Handlebars, Widget, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChange) {
 
   'use strict';
 

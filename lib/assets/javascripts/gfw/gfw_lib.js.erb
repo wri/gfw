@@ -79,6 +79,7 @@ GFW.modules.app = function(gfw) {
       this.forest2000Layer    = null;
       this.forestGainLayer    = null;
       this.idnPrimaryLayer    = null;
+      this.colombiaForestChangeLayer    = null;
 
       this.currentBaseLayer = config.BASELAYER;
     },
@@ -277,6 +278,7 @@ GFW.modules.app = function(gfw) {
         if (table_name == 'pantropical') { this._removePantropicalLayer(); }
         if (table_name == 'forest2000') { this._removeForest2000Layer(); }
         if (table_name == 'idn_primary') { this._removeIdnPrimaryLayer(); }
+        if (table_name == 'colombia_forest_change') { this._removeColombiaForestChangeLayer(); }
         if (table_name == 'forestgain') {
           this.layers = _.without(this.layers, layer.get('table_name'));
 
@@ -306,6 +308,7 @@ GFW.modules.app = function(gfw) {
         if (table_name == 'pantropical') { this._renderPantropicalLayer(); }
         if (table_name == 'forest2000') { this._renderForest2000Layer(); }
         if (table_name == 'idn_primary') {this._renderIdnPrimaryLayer(); }
+        if (table_name == 'idn_primary') {this._renderColombiaForestChangeLayer(); }
         if (table_name == 'forestgain') { this._renderForestGainLayer(); }
       } else {
         this.layers.push(layer.get('table_name'));
@@ -569,6 +572,20 @@ GFW.modules.app = function(gfw) {
     _removeIdnPrimaryLayer: function() {
       if (this.idnPrimaryLayer) {
         this.idnPrimaryLayer.hide();
+      }
+    },
+
+    _renderColombiaForestChangeLayer: function() {
+      if (this.colombiaForestChangeLayer) {
+        this.colombiaForestChangeLayer.show();
+      } else {
+        this.colombiaForestChangeLayer = ColombiaForestChange.init(map);
+      }
+    },
+
+    _removeColombiaForestChangeLayer: function() {
+      if (this.colombiaForestChangeLayer) {
+        this.colombiaForestChangeLayer.hide();
       }
     },
 
@@ -1585,6 +1602,15 @@ GFW.modules.maplayer = function(gfw) {
           ga('send', 'event', 'Filter', 'Toggle', slug);
         } else {
           GFW.app._removeIdnPrimaryLayer();
+        }
+
+        Filter.toggle(id);
+      } else if (slug === 'colombia_forest_change') {
+        if (idnforest.attributes['visible']) {
+          GFW.app._renderColombiaForestChangeLayer();
+          ga('send', 'event', 'Filter', 'Toggle', slug);
+        } else {
+          GFW.app._removeColombiaForestChangeLayer();
         }
 
         Filter.toggle(id);
