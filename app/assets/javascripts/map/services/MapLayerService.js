@@ -85,6 +85,7 @@ define([
                 category_slug, \
                 category_name, \
                 external, \
+                iso, \
                 zmin, \
                 zmax, \
                 mindate, \
@@ -96,7 +97,7 @@ define([
                 tileurl, \
                 true AS visible \
               FROM \
-                layerspec_adrian_dev \
+                layerspec_nuclear_hazard \
               WHERE \
                 display = \'true\' \
               ORDER BY \
