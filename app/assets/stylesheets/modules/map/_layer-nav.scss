@@ -41,6 +41,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     border-bottom: 5px solid;
     margin-left: 1px;
     color: $dark;
+    text-rendering: optimizeLegibility;
 
     .category-name {
       font-weight: 500;

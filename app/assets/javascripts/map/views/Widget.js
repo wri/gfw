@@ -42,7 +42,7 @@ define([
       boxClosed: true,
       hidden: false,
       forceHidden: false,
-      containment: '.widget-map-container'
+      containment: '.map-container'
     },
 
     initialize: function() {
