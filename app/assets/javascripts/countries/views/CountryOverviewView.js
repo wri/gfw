@@ -336,7 +336,7 @@ define([
             $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('per-loss').html('% Loss');
           }
 
-          $('.countries_list ul').empty().append(markup_list);
+          $('.countries_list ul').append(markup_list);
 
           that.model.set('class', null);
 

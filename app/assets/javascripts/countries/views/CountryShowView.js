@@ -11,10 +11,10 @@ define([
   'countries/views/CountryHeaderView',
   'countries/views/CountryShareView',
   'countries/views/CountryInfoWindow',
-  'countries/helpers/CountryHelper',
   'countries/models/CountryShowModel',
+  'countries/helpers/CountryHelper',
 
-], function($, Backbone, _, d3, mps, scrollit, CountryHeaderView, CountryShareView, CountryInfoWindow, CountryHelper, CountryShowModel ) {
+], function($, Backbone, _, d3, mps, scrollit, CountryHeaderView, CountryShareView, CountryInfoWindow, CountryShowModel, CountryHelper ) {
 
   'use strict';
 

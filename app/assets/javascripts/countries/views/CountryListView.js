@@ -27,13 +27,13 @@ define([
       }
 
       this.helper = CountryHelper;
+      this.$searchBox = $('#searchCountry');
       this._getCountries();
       this._drawCountries();
       this._searchCountries();
     },
 
     _getCountries : function(){
-      this.$searchBox = $('#searchCountry');
       this.$searchBox.focus();
       this.$countries = $('.country');
       this.countries_list = _.map($('.country-name'),function(el){
@@ -58,8 +58,8 @@ define([
         if (e.keyCode == 13 && count.length == 1) {
           var href = $(count[0]).find('.country-href').attr('href');
           window.location = href;
-        };
-      };
+        }
+      }
     },
 
     _drawCountries: function() {
