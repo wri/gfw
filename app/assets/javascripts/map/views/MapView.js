@@ -59,9 +59,6 @@ define([
       };
 
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
-      google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
-        this.$el.addClass('is-loaded');
-      }, this));
       new MapControlsView(this.map);
 
 
