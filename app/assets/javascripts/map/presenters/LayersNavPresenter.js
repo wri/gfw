@@ -30,6 +30,10 @@ define([
       'LayerNav/change': function(layerSpec) {
         this.view._toggleSelected(layerSpec.getLayers());
       }
+    }, {
+      'Layers/isos': function(layers_iso) {
+        this.view._isoCode(layers_iso);
+      }
     }],
 
     initExperiment: function(id){
