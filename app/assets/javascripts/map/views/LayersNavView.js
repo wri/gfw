@@ -167,8 +167,11 @@ define([
     // Select change iso
     changeIso: function(e){
       this.iso = $(e.currentTarget).val();
-
+      _.each(this.$layersCountry.find('.layer'), _.bind(function(el){
+        ($(el).hasClass('selected')) ? $(el).trigger('click') : null;
+      }, this ));
       this.setIsoLayers();
+
     },
 
     /**
