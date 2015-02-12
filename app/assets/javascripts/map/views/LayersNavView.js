@@ -104,6 +104,23 @@ define([
       ga('send', 'event', 'Map', 'Toogle', 'Layer: ' + layerSlug);
     },
 
+    /**
+     * Handles a toggle layer change UI event by dispatching
+     * to LayersNavPresenter.
+     *
+     * @param  {event} event Click event
+     */
+    _isoCode: function(layers) {
+      var list = "<ul id='lolailo'>";
+      for(var i = 0; i<layers.length; i++) {
+        list += '<li class="layer" data-layer="' + layers[i].slug + '" data-layeriso="' + layers[i].iso +'">';
+        list += '<span class="onoffswitch"><span></span></span>';
+        list += '<span class="layer-title">' + layers[i].name + '<a href="#" data-source="' + layers[i].slug + '" class="source"></a></span>';
+        list += '</li>';
+      }
+      list += '</ul>';
+      $('body').append(list);
+    }
   });
 
   return LayersNavView;
