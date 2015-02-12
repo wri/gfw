@@ -22,12 +22,8 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'AnalysisTool/stop-drawing': function() {
-        this.view.model.set('hidden', false);
-      }
-    }, {
-      'AnalysisTool/start-drawing': function() {
-        this.view.model.set('hidden', true);
+      'MapControls/show': function() {
+        this.view.toggleSearch();
       }
     }],
 

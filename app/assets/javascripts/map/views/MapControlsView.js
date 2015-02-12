@@ -1,6 +1,5 @@
 /**
  * The MapControlsView view.
- * Hides and shows the widgets displayed on the map
  *
  * @return MapControlsView view (extends Backbone.View)
  */
@@ -8,20 +7,23 @@ define([
   'underscore',
   'handlebars',
   'map/presenters/MapControlsPresenter',
+  'map/views/controls/SearchboxView',
   'text!map/templates/mapcontrols.handlebars'
-], function(_, Handlebars, Presenter, tpl) {
+], function(_, Handlebars, Presenter, Searchbox, tpl) {
 
   'use strict';
 
   var MapControlsView = Backbone.View.extend({
 
-    el: '#widget-map-controls',
+    el: '#module-map-controls',
 
     events: {
       'click .zoom-in' : 'zoomIn',
       'click .zoom-out' : 'zoomOut',
       'click .reset-map' : 'resetMap',
-      'click .search' : 'showSearch'
+      'click .search' : 'showSearch',
+      'click .fullScreen' : 'fullScreen',
+      'click .tooglewidgets' : 'toogleWidgets',
     },
 
     template: Handlebars.compile(tpl),
@@ -37,13 +39,17 @@ define([
       google.maps.event.addListener(this.map, 'zoom_changed',
         _.bind(function() {
           this.onZoomChange();
-          // this.onCenterChange();
         }, this)
       );
     },
 
     render: function(){
       this.$el.html(this.template());
+      this.initCustomViews();
+    },
+
+    initCustomViews: function(){
+      new Searchbox();
     },
     /**
      * Events.
@@ -72,9 +78,18 @@ define([
 
     //SEARCH
     showSearch: function(){
-      console.log('hello search');
-    }
+      mps.publish('MapControls/show');
+    },
 
+    //FULL SCREEN
+    fullScreen: function(){
+
+    },
+
+    //TOGGLE
+    toogleWidgets: function(){
+
+    },
 
 
   });
