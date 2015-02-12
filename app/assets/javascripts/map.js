@@ -6,6 +6,7 @@ require([
   'underscore',
   'Class',
   'backbone',
+  'chosen',
   'map/utils',
   'mps',
   'map/router',
@@ -28,7 +29,7 @@ require([
   'views/FooterView',
   'views/DialogView',
   '_string'
-], function($, _, Class, Backbone, utils, mps, Router,ExperimentsPresenter, AnalysisService, CountryService, DataService,
+], function($, _, Class, Backbone, chosen, utils, mps, Router,ExperimentsPresenter, AnalysisService, CountryService, DataService,
     LayersNavView, MapView, LegendView, ThresholdView, SearchboxView, MaptypeView, TimelineView,
     AnalysisToolView, AnalysisResultsView, ShareView, ToggleWidgetsView,HeaderView, FooterView, DialogView) {
 
@@ -39,8 +40,6 @@ require([
     $el: $('body'),
 
     init: function() {
-      _.bindAll(this, '_scrollBottom', '_setLogoPosition');
-
       var router = new Router(this);
       this._cartodbHack();
       this._initViews();
@@ -102,39 +101,6 @@ require([
         handlebars: typeof(Handlebars) === 'undefined' ? null : Handlebars.compile
       });
     },
-
-    setMapMode: function() {
-      this.$window = $(window);
-      this.$logo = this.$el.find('.brand');
-
-      this.$window.on('scroll', this._setLogoPosition);
-      this.$window.on('resize', this._scrollBottom);
-
-      _.debounce(this._scrollBottom, 100)();
-      _.debounce(this._scrollBottom, 1200)(); // for safety
-      this._setLogoPosition();
-    },
-
-    /**
-     * Scroll to bottom.
-     */
-    _scrollBottom: function() {
-      // this.$window.scrollTop(116);
-    },
-
-    /**
-     * Toggle layer class is-fixed.
-     *
-     * @param {object} e Window event
-     */
-    _setLogoPosition: function(e) {
-      var element = (e) ? e.currentTarget : window;
-      if (element.pageYOffset > 48) {
-        this.$logo.addClass('is-fixed');
-      } else {
-        this.$logo.removeClass('is-fixed');
-      }
-    }
 
   });
 

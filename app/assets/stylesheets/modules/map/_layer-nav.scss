@@ -36,12 +36,12 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     backface-visibility: hidden;
     position: relative;
     float: left;
-    padding: 20px 20px 8px;
+    padding: 15px 20px 10px;
     cursor: pointer;
     border-bottom: 5px solid;
     margin-left: 1px;
     color: $dark;
-    text-rendering: optimizeLegibility;
+    // text-rendering: optimizeLegibility;
 
     .category-name {
       font-weight: 500;
@@ -187,4 +187,13 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     }
 
   } // layers-nav
+
+  .categories-list .country-data{
+    padding: 0;
+    border-bottom: none;
+    // height: 46px;
+    .country-select-box{
+      min-width: 130px;
+    }
+  }
 }

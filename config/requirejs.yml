@@ -28,6 +28,7 @@ paths:
   geojsonArea: "geojson-area"
   uri: "uri-templates/uri-templates"
   handlebars: "handlebars/handlebars"
+  chosen: "chosen/chosen.jquery"
   slick: "slick.js/slick/slick.min"
   simplePagination: "jquery.simplePagination/jquery.simplePagination"
   #countries
@@ -80,6 +81,10 @@ shim:
     deps:
       - "jquery"
     exports: "$"
+  chosen:
+    deps:
+      - "jquery"
+    exports: 'chosen'
   pagination:
     deps:
       - "jquery"
