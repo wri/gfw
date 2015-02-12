@@ -57,6 +57,7 @@ define([
     getLayers: function(where, successCb, errorCb) {
       this._fetchLayers(
         _.bind(function(layers) {
+          mps.publish('Layers/isos', [_.filter(layers.rows,function(lay) {return lay.iso != null;})] );
           var hits = _.map(where, _.partial(_.where, layers.rows));
           successCb(_.flatten(hits));
         }, this),
