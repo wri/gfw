@@ -24,7 +24,7 @@ define([
   'text!map/templates/legend/hondurasForest.handlebars',
   'text!map/templates/legend/colombiaForestChange.handlebars'
 ], function(_, Handlebars, Widget, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChange) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL) {
 
   'use strict';
 
@@ -50,7 +50,8 @@ define([
       terraicanvas: Handlebars.compile(terra_iTpl),
       concesiones_forestales: Handlebars.compile(concesionesTpl),
       concesiones_forestalesNS: Handlebars.compile(concesionesTypeTpl),
-      WMSLayer: Handlebars.compile(hondurasForestTPL)
+      WMSLayer: Handlebars.compile(hondurasForestTPL),
+      colombia_forest_change: Handlebars.compile(colombiaForestChangeTPL)
     },
 
     options: {
