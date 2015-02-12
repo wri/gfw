@@ -6,10 +6,9 @@
 .layout-content {
   margin-bottom: 0;
   position: absolute;
-  top: 112px;
-  height: calc(100% -123px);
+  height: calc(100% - 34px);
   overflow: hidden;
-  bottom: 0;
+  top: 34px;
   left: 0;
   width: 100%;
 }
@@ -24,6 +23,8 @@
   border-bottom: 1px solid #717D80;
   box-sizing: border-box;
   background: #B3D1FF;
+
+  // Footer
   .gm-style{
     &:after{
       content: "";

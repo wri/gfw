@@ -9,11 +9,12 @@ define([
   'underscore',
   'mps',
   'map/presenters/MapPresenter',
+  'map/views/MapControlsView',
   'map/views/maptypes/grayscaleMaptype',
   'map/views/maptypes/treeheightMaptype',
   'map/views/maptypes/landsatMaptype',
   'map/helpers/layersHelper'
-], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, landsatMaptype, layersHelper) {
+], function(Backbone, _, mps, Presenter, MapControlsView, grayscaleMaptype, treeheightMaptype, landsatMaptype, layersHelper) {
 
   'use strict';
 
@@ -58,13 +59,15 @@ define([
       };
 
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
-      this.resize();
-      this._setMaptypes();
-      this._setZoomControl();
-      this._addListeners();
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
         this.$el.addClass('is-loaded');
       }, this));
+      new MapControlsView(this.map);
+
+
+      this.resize();
+      this._setMaptypes();
+      this._addListeners();
 
       this._checkDialogs();
     },
@@ -76,7 +79,6 @@ define([
     _addListeners: function() {
       google.maps.event.addListener(this.map, 'zoom_changed',
         _.bind(function() {
-          this.onZoomChange();
           this.onCenterChange();
         }, this)
       );
@@ -190,18 +192,7 @@ define([
       this._addLayers([layer.layer], options);
     },
 
-    /**
-     * Used by MapPresenter to set the map zoom.
-     *
-     * @param {integer} zoom The map zoom to set
-     */
-    setZoom: function(zoom) {
-      this.map.setZoom(zoom);
-    },
 
-    getZoom: function() {
-      return this.map.getZoom();
-    },
 
     /**
      * Used by MapPresenter to set the map center.
@@ -237,12 +228,6 @@ define([
       return this.map.getMapTypeId();
     },
 
-    /**
-     * Handles a map zoom change UI event by dispatching to MapPresenter.
-     */
-    onZoomChange: function() {
-      this.presenter.onZoomChange(this.map.zoom);
-    },
 
     /**
      * Handles a map center change UI event by dispatching to MapPresenter.
@@ -275,14 +260,6 @@ define([
       }
     },
 
-    _setZoomControl: function() {
-      $('.zoom-in').on('click', _.bind(function() {
-        this.setZoom(this.getZoom() + 1);
-      }, this));
-      $('.zoom-out').on('click', _.bind(function() {
-        this.setZoom(this.getZoom() - 1);
-      }, this));
-    },
 
     /**
      * Crosshairs when analysis is activated

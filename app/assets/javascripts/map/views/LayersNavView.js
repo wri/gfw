@@ -6,10 +6,12 @@
 define([
   'backbone',
   'underscore',
+  'amplify',
+  'chosen',
   'map/presenters/LayersNavPresenter',
   'handlebars',
   'text!map/templates/layersNav.handlebars'
-], function(Backbone, _, Presenter, Handlebars, tpl) {
+], function(Backbone, _, amplify, chosen, Presenter, Handlebars, tpl) {
 
   'use strict';
 
@@ -32,6 +34,7 @@ define([
       this.$el.append(this.template());
       //Experiment
       this.presenter.initExperiment('source');
+      this.getCountries();
     },
 
 
@@ -105,6 +108,52 @@ define([
     },
 
     /**
+     * Ajax for getting countries.
+     */
+    getCountries: function(){
+      if (!amplify.store('countries')) {
+        var sql = ['SELECT c.iso, c.name FROM gfw2_countries c WHERE c.enabled = true'];
+        $.ajax({
+          url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
+          dataType: 'json',
+          success: _.bind(function(data){
+            amplify.store('countries', data.rows);
+            this.printCountries();
+          }, this ),
+          error: function(error){
+            console.log(error);
+          }
+        });
+      }else{
+        this.printCountries()
+      }
+    },
+
+    /**
+     * Print countries.
+     */
+    printCountries: function(){
+      //Country select
+      this.$countrySelect = $('#country-select');
+      this.countries = amplify.store('countries');
+
+      //Loop for print options
+      var options = "";
+      _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
+        options += '<option value="'+ country.iso +'">'+ country.name + '</option>';
+      }, this ));
+      this.$countrySelect.append(options);
+      this.$countrySelect.chosen({
+        width: '100%',
+        allow_single_deselect: true,
+        inherit_select_classes: true,
+        no_results_text: "Oops, nothing found!"
+      });
+
+    },
+
+
+     /*
      * Handles a toggle layer change UI event by dispatching
      * to LayersNavPresenter.
      *
@@ -121,6 +170,7 @@ define([
       list += '</ul>';
       $('body').append(list);
     }
+
   });
 
   return LayersNavView;
