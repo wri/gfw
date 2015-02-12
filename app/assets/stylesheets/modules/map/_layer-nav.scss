@@ -191,9 +191,28 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
   .categories-list .country-data{
     padding: 0;
     border-bottom: none;
-    // height: 46px;
+    height: 46px;
     .country-select-box{
-      min-width: 130px;
+      width: 130px;
+      float: left;
+    }
+    .country-sublayer-box{
+      float: left;
+      margin-left: 1px;
+      > button{
+        width: 45px;
+        height: 46px;
+        border: none;
+        background: #B7B8B9;
+        svg{
+          margin: 0 auto;
+          fill: $white;
+        }
+      }
+      .layers-country-nav{
+        display: none;
+      }
+
     }
   }
 }
