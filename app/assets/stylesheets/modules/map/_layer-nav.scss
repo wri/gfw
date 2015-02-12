@@ -48,7 +48,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       font-size: 12px;
     }
 
-    &:hover .layers-nav {
+    &:not(.country-data):hover .layers-nav {
       opacity: 1;
       max-height: 1000px;
     }
@@ -199,20 +199,37 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     .country-sublayer-box{
       float: left;
       margin-left: 1px;
+      &.active{
+        &:hover{
+          .layers-nav{
+            opacity: 1;
+            visibility: visible;
+            max-height: 1000px;
+          }
+        }
+        button{
+          svg {
+            opacity: 1;
+          }
+        }
+      }
       > button{
         width: 45px;
         height: 46px;
         border: none;
         background: #B7B8B9;
         svg{
+          opacity: 0.5;
           margin: 0 auto;
           fill: $white;
         }
       }
       .layers-country-nav{
-        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 190px;
       }
-
     }
   }
 }

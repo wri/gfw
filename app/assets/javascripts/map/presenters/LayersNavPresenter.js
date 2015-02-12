@@ -32,7 +32,7 @@ define([
       }
     }, {
       'Layers/isos': function(layers_iso) {
-        this.view._isoCode(layers_iso);
+        this.view._getIsoLayers(layers_iso);
       }
     }],
 

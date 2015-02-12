@@ -10,18 +10,22 @@ define([
   'chosen',
   'map/presenters/LayersNavPresenter',
   'handlebars',
-  'text!map/templates/layersNav.handlebars'
-], function(Backbone, _, amplify, chosen, Presenter, Handlebars, tpl) {
+  'text!map/templates/layersNav.handlebars',
+  'text!map/templates/layersNavByCountry.handlebars'
+], function(Backbone, _, amplify, chosen, Presenter, Handlebars, tpl, tplCountry) {
 
   'use strict';
 
   var LayersNavView = Backbone.View.extend({
 
     el: '.layers-menu',
+
     template: Handlebars.compile(tpl),
+    templateCountry: Handlebars.compile(tplCountry),
 
     events: {
-      'click .layer': '_toggleLayer'
+      'click .layer': '_toggleLayer',
+      'change #country-select' : 'changeIso'
     },
 
     initialize: function() {
@@ -34,6 +38,10 @@ define([
       this.$el.append(this.template());
       //Experiment
       this.presenter.initExperiment('source');
+
+      //Init
+      this.$layersCountry = $('#layers-country-nav');
+      this.$countrySublayer = $('.country-sublayer-box')
       this.getCountries();
     },
 
@@ -107,6 +115,10 @@ define([
       ga('send', 'event', 'Map', 'Toogle', 'Layer: ' + layerSlug);
     },
 
+    _getIsoLayers: function(layers) {
+      this.layersIso = layers;
+    },
+
     /**
      * Ajax for getting countries.
      */
@@ -152,23 +164,33 @@ define([
 
     },
 
+    // Select change iso
+    changeIso: function(e){
+      this.iso = $(e.currentTarget).val();
 
-     /*
-     * Handles a toggle layer change UI event by dispatching
-     * to LayersNavPresenter.
-     *
-     * @param  {event} event Click event
+      this.setIsoLayers();
+    },
+
+    /**
+     * Render Iso Layers.
      */
-    _isoCode: function(layers) {
-      var list = "<ul id='lolailo'>";
-      for(var i = 0; i<layers.length; i++) {
-        list += '<li class="layer" data-layer="' + layers[i].slug + '" data-layeriso="' + layers[i].iso +'">';
-        list += '<span class="onoffswitch"><span></span></span>';
-        list += '<span class="layer-title">' + layers[i].name + '<a href="#" data-source="' + layers[i].slug + '" class="source"></a></span>';
-        list += '</li>';
+    setIsoLayers: function(e){
+      var layersToRender = [];
+      _.each(this.layersIso, _.bind(function(layer){
+        if (layer.iso === this.iso) {
+          layersToRender.push(layer);
+        }
+      }, this ));
+      if (layersToRender.length > 0) {
+        this.$countrySublayer.addClass('active');
+      }else{
+        this.$countrySublayer.removeClass('active');
       }
-      list += '</ul>';
-      $('body').append(list);
+      this.renderIsoLayers(layersToRender);
+    },
+
+    renderIsoLayers: function(layers){
+      this.$layersCountry.html(this.templateCountry({layers: layers }));
     }
 
   });
