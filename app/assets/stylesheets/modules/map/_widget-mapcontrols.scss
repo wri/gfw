@@ -1,0 +1,40 @@
+$w-control: 44px;
+.widget-mapcontrols {
+  position: absolute;
+  bottom: 50px;
+  right: 35px;
+  box-shadow: 0 2px 3px 1px rgba($dark, 0.25);
+  ul{
+    width: $w-control * 2;
+    @include display-flex();
+    @include flex-wrap(wrap);
+    li{
+      @include display-flex();
+      @include justify-content(center);
+      @include align-items(center);
+      background: $white;
+      width: $w-control;
+      height: $w-control;
+      position: relative;
+      cursor: pointer;
+      svg{
+        fill: $dark;
+      }
+      &:nth-child(even){
+        border-left: 1px solid $border;
+      }
+      &:nth-child(n+2){
+        border-top: 1px solid $border;
+      }
+      &:hover{
+        .tooltipmap{
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+      &:active{
+        background: darken($white,5%);
+      }
+    }
+  }
+}

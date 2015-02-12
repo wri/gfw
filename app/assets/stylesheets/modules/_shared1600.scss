@@ -71,6 +71,41 @@
   }
 }
 
+.tooltipmap{
+  position: absolute;
+  background: #FFFEE2;
+  box-shadow: 0 1px 3px rgba($dark,0.25);
+  z-index: 1000;
+  margin: 0;
+  visibility: hidden;
+  opacity: 0;
+  text-transform: uppercase;
+  color: $dark;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: normal;
+  bottom: 100%;
+  left: 50%;
+  text-align: center;
+  padding: 4px 8px;
+  white-space: nowrap;
+  @include transform(translate(-50%,10px));
+  &:after{
+    content: "";
+    display: block;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #FFFEE2;
+    z-index: 2;
+    bottom: 0;
+    left: 50%;
+    @include transform(translate(-50%,50%) rotate(45deg));
+    border-top: 1px solid lighten($border,5%);
+    border-left: 1px solid lighten($border,5%);
+  }
+}
+
 .tooltip2{
   position: absolute;
   top: -9999px;

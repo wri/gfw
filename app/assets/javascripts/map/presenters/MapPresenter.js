@@ -37,10 +37,6 @@ define([
         this._setLayers(layerSpec.getLayers());
       }
     }, {
-      'Map/set-zoom': function(zoom) {
-        this.view.setZoom(zoom);
-      }
-    }, {
       'Map/fit-bounds': function(bounds) {
         this.view.fitBounds(bounds);
       }
@@ -156,17 +152,6 @@ define([
     },
 
     /**
-     * Used by MapView to delegate zoom change UI events. Results in the
-     * Map/zoom-change event getting published with the new zoom.
-     *
-     * @param  {integer} zoom the new map zoom
-     */
-    onZoomChange: function(zoom) {
-      mps.publish('Map/zoom-change', [zoom]);
-      mps.publish('Place/update', [{go: false}]);
-    },
-
-    /**
      * Used by MapView to delegate map center change UI events. Results in
      * Map/center-change event getting published with the new map zoom.
      *
@@ -189,7 +174,7 @@ define([
       var mapCenter = this.view.getCenter();
 
       p.name = 'map';
-      p.zoom = this.view.getZoom();
+      p.zoom = this.view.map.getZoom();
       p.lat = mapCenter.lat;
       p.lng = mapCenter.lng;
       p.maptype = this.view.getMapTypeId();
