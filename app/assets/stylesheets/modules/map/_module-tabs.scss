@@ -1,0 +1,23 @@
+$w-control: 44px;
+.module-tabs {
+  top: 100px;
+  right: 35px;
+  header{
+    nav{
+      ul{
+        @include display-flex();
+        li{
+          cursor: pointer;
+          padding: 0.5em 1.5em;
+          border-left: 1px solid $border;
+          &:first-child{
+            border-left: none;
+          }
+          svg{
+            fill: $dark;
+          }
+        }
+      }
+    }
+  }
+}

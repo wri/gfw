@@ -14,22 +14,18 @@ require([
   'map/services/AnalysisService',
   'map/services/CountryService',
   'map/services/DataService',
-  'map/views/LayersNavView',
   'map/views/MapView',
+  'map/views/MapControlsView',
+  'map/views/TabsView',
+  'map/views/LayersNavView',
   'map/views/LegendView',
-  'map/views/ThresholdView',
-  'map/views/MaptypeView',
   'map/views/TimelineView',
-  'map/views/AnalysisToolView',
-  'map/views/AnalysisResultsView',
-  'map/views/ShareView',
   'views/HeaderView',
   'views/FooterView',
   'views/DialogView',
   '_string'
-], function($, _, Class, Backbone, chosen, utils, mps, Router,ExperimentsPresenter, AnalysisService, CountryService, DataService,
-    LayersNavView, MapView, LegendView, ThresholdView, MaptypeView, TimelineView,
-    AnalysisToolView, AnalysisResultsView, ShareView,HeaderView, FooterView, DialogView) {
+], function($, _, Class, Backbone, chosen, utils, mps, Router, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
+    MapControlsView, TabsView, LayersNavView, LegendView, TimelineView, HeaderView, FooterView, DialogView) {
 
   'use strict';
 
@@ -72,14 +68,11 @@ require([
 
       var mapView = new MapView();
 
+      new MapControlsView(mapView.map);
+      new TabsView();
       new LayersNavView();
       new LegendView();
-      new MaptypeView();
-      new ThresholdView();
-      new AnalysisToolView(mapView.map);
       new TimelineView();
-      new AnalysisResultsView();
-      new ShareView();
       new FooterView();
       new HeaderView();
       new DialogView();

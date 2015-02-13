@@ -9,12 +9,11 @@ define([
   'underscore',
   'mps',
   'map/presenters/MapPresenter',
-  'map/views/MapControlsView',
   'map/views/maptypes/grayscaleMaptype',
   'map/views/maptypes/treeheightMaptype',
   'map/views/maptypes/landsatMaptype',
   'map/helpers/layersHelper'
-], function(Backbone, _, mps, Presenter, MapControlsView, grayscaleMaptype, treeheightMaptype, landsatMaptype, layersHelper) {
+], function(Backbone, _, mps, Presenter, grayscaleMaptype, treeheightMaptype, landsatMaptype, layersHelper) {
 
   'use strict';
 
@@ -59,8 +58,6 @@ define([
       };
 
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
-      new MapControlsView(this.map);
-
 
       this.resize();
       this._setMaptypes();
