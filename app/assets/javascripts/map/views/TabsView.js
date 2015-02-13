@@ -17,7 +17,9 @@ define([
 
     el: '#module-tabs',
 
-    className: 'module',
+    events: {
+      'click .tab' : 'toggleTabs'
+    },
 
     template: Handlebars.compile(tpl),
 
@@ -39,6 +41,10 @@ define([
     initCustomViews: function(){
 
     },
+
+    toggleTabs: function(e){
+      console.log($(e.currentTarget).data('tab'));
+    }
 
 
   });

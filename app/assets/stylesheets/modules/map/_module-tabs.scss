@@ -13,8 +13,14 @@ $w-control: 44px;
           &:first-child{
             border-left: none;
           }
+          &:hover{ background: $light;}
+          &:active{ background: darken($light,5%);}
+          &.active{ background: $white;}
+          &.inactive{ background: $light;}
           svg{
             fill: $dark;
+            width: 22px;
+            height: 22px;
           }
         }
       }
