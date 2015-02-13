@@ -7,9 +7,10 @@ define([
   'underscore',
   'handlebars',
   'map/presenters/TabsPresenter',
+  'map/views/tabs/BasemapsView',
   'text!map/templates/tabs.handlebars'
 
-], function(_, Handlebars, Presenter, tpl) {
+], function(_, Handlebars, Presenter, BasemapsView, tpl) {
 
   'use strict';
 
@@ -26,6 +27,9 @@ define([
     initialize: function() {
       this.presenter = new Presenter(this);
       this.render();
+      this.$tabs = this.$el.find('.tab');
+      this.$tabsContent = this.$el.find('.tab-content');
+      this.$container = this.$el.find('.content')
       this.setListeners();
     },
 
@@ -39,14 +43,26 @@ define([
     },
 
     initCustomViews: function(){
-
+      new BasemapsView();
     },
 
     toggleTabs: function(e){
-      console.log($(e.currentTarget).data('tab'));
+      if ($(e.currentTarget).hasClass('active')) {
+        this.$container.removeClass('active')
+        this.$tabs.removeClass('inactive active');
+        this.$tabsContent.removeClass('selected');
+      }else{
+        var id = $(e.currentTarget).data('tab');
+        this.$container.addClass('active');
+        // tabs
+        this.$tabs.removeClass('active').addClass('inactive');
+        $(e.currentTarget).removeClass('inactive').addClass('active');
+
+        // tabs content
+        this.$tabsContent.removeClass('selected');
+        $('#'+ id).addClass('selected');
+      }
     }
-
-
   });
 
   return MapControlsView;

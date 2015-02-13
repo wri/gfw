@@ -7,6 +7,7 @@
 @import
   "icons/*.png",
   "logos/*.png",
+  "basemaps/*.png",
   "home-icons/*.png",
   "static-icons/*.png",
   "static-logos/*.png",
@@ -55,14 +56,15 @@
   // Real Modules
   "modules/map/module",
   "modules/map/module-mapcontrols",
+  // tabs
   "modules/map/module-tabs",
+  "modules/map/tab-basemaps",
 
 
 
   "modules/map/widget",
   "modules/map/widget-legend",
   "modules/map/widget-searchbox",
-  "modules/map/widget-maptype",
   "modules/map/widget-threshold",
   "modules/map/analysis-tool",
   "modules/map/analysis-results",

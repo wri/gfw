@@ -1,7 +1,7 @@
 /**
- * The MaptypePresenter class for the MaptypePresenter view.
+ * The BasemapsPresenter class for the BasemapsPresenter view.
  *
- * @return MaptypePresenter class.
+ * @return BasemapsPresenter class.
  */
 define([
   'underscore',
@@ -11,7 +11,7 @@ define([
 
   'use strict';
 
-  var MaptypePresenter = PresenterClass.extend({
+  var BasemapsPresenter = PresenterClass.extend({
 
     init: function(view) {
       this.view = view;
@@ -35,14 +35,10 @@ define([
       }
     }],
 
-    initExperiment: function(id){
-      mps.publish('Experiment/choose',[id]);
-    },
-
     setMaptype: function(maptype) {
       mps.publish('Maptype/change', [maptype]);
     }
   });
 
-  return MaptypePresenter;
+  return BasemapsPresenter;
 });
