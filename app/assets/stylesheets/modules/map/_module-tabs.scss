@@ -37,6 +37,15 @@ $w-control: 44px;
         &.selected{
           display: block;
         }
+        header{
+          text-align: center;
+          font-size: 13px;
+          h2{
+            font-size: 21px;
+            padding: 0 0 10px;
+            text-align: center;
+          }
+        }
       }
     }
   }

@@ -51,7 +51,6 @@ define([
      * @param  {string} maptype
      */
     selectMaptype: function(maptype) {
-      console.log(maptype);
       this.$maptypes.removeClass('selected');
       this.$maptypeslist.find('.' + maptype).addClass('selected');
     }

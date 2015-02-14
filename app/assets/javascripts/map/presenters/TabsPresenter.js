@@ -23,6 +23,10 @@ define([
     //  */
     _subscriptions: [],
 
+    onTabOpen: function(id){
+      mps.publish('Tab/open', [id]);
+    }
+
   });
 
   return MapControlsPresenter;

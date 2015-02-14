@@ -1,0 +1,51 @@
+.tab-share{
+  padding: 20px;
+  .share-input{
+    padding: 15px 0 0;
+    input{
+      width: 100%;
+      border-radius: 0;
+      font-size: 13px;
+      text-align: center;
+      padding: 8px 10px;
+    }
+    ul{
+      margin: 10px 0 0;
+      @include display-flex();
+      @include justify-content(space-between);
+      li{
+        width: 48%;
+        .btn{
+          width: 100%;
+        }
+      }
+    }
+  }
+  .share-sozial{
+    padding: 50px 0 0;
+    ul{
+      @include display-flex();
+      @include justify-content(space-between);
+      li{
+        width: 44px;
+        height: 44px;
+        a{
+          display: block;
+          width: 100%;
+          height: 100%;
+          position: relative;
+          &.google_plus{ background: red; }
+          &.twitter{ background: blue; }
+          &.facebook{ background: green; }
+        }
+        svg{
+          fill: $white;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          @include transform(translate(-50%,-50%));
+        }
+      }
+    }
+  }
+}

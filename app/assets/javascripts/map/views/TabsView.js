@@ -8,9 +8,10 @@ define([
   'handlebars',
   'map/presenters/TabsPresenter',
   'map/views/tabs/BasemapsView',
+  'map/views/tabs/ShareView',
   'text!map/templates/tabs.handlebars'
 
-], function(_, Handlebars, Presenter, BasemapsView, tpl) {
+], function(_, Handlebars, Presenter, BasemapsView, ShareView, tpl) {
 
   'use strict';
 
@@ -44,14 +45,17 @@ define([
 
     initCustomViews: function(){
       new BasemapsView();
+      new ShareView();
     },
 
     toggleTabs: function(e){
       if ($(e.currentTarget).hasClass('active')) {
+        // Close all tabs and reset tabs styles
         this.$container.removeClass('active')
         this.$tabs.removeClass('inactive active');
         this.$tabsContent.removeClass('selected');
       }else{
+        // Open current tab
         var id = $(e.currentTarget).data('tab');
         this.$container.addClass('active');
         // tabs
@@ -61,6 +65,9 @@ define([
         // tabs content
         this.$tabsContent.removeClass('selected');
         $('#'+ id).addClass('selected');
+
+        //publish open tab
+        this.presenter.onTabOpen(id);
       }
     }
   });

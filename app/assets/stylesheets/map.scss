@@ -29,7 +29,7 @@
 
 //modules
 @import "modules/shared1600";
-// @import "modules/buttons1600";
+@import "modules/buttons1600";
 @import "modules/icons1600";
 @import "modules/slick1600";
 
@@ -44,7 +44,6 @@
   "modules/notice",
   "modules/navbar",
   "modules/feedback",
-  "modules/buttons",
   "modules/form",
   "modules/modal",
   "modules/dialog",
@@ -59,6 +58,7 @@
   // tabs
   "modules/map/module-tabs",
   "modules/map/tab-basemaps",
+  "modules/map/tab-share",
 
 
 
