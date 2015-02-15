@@ -1,5 +1,6 @@
 $w-control: 44px;
 .module-tabs {
+  max-width: 283px;
   top: 100px;
   right: 35px;
   header{
@@ -44,6 +45,12 @@ $w-control: 44px;
             font-size: 21px;
             padding: 0 0 10px;
             text-align: center;
+          }
+          p{
+            button{
+              margin: 7px auto 0;
+              display: block;
+            }
           }
         }
       }

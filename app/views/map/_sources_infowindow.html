@@ -5,10 +5,11 @@
       $wind = $('#window'),
       $content = $wind.find('.content');
 
-    $('.widget, .layer').on('click', 'a.source', function(e) {
+    $('.widget, .layer, .module').on('click', '.source', function(e) {
       e && e.preventDefault();
       e.stopPropagation ? e.stopPropagation() : window.event.cancelBubble = true;
       $backdrop.fadeIn();
+      console.log('hola');
       var elem = '#' + $(e.currentTarget).data('source');
       $content.append($(elem).html())
       $wind.fadeIn();
@@ -18,18 +19,18 @@
 
     $wind.find('.close').on('click', function(e) {
       e && e.preventDefault();
-      $wind.fadeOut('fast', function() {
-        $backdrop.fadeOut();
+      $wind.fadeOut(0, function() {
+        $content.empty();
+        $backdrop.fadeOut(0);
       });
-      $content.empty();
     });
 
    $('.backdrop').on('click', function(e) {
       e && e.preventDefault();
-      $wind.fadeOut('fast', function() {
-        $backdrop.fadeOut();
+      $wind.fadeOut(0, function() {
+        $content.empty();
+        $backdrop.fadeOut(0);
       });
-      $content.empty();
    });
   };
 </script>

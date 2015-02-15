@@ -14,7 +14,9 @@ define([
 
   var ShareModel = Backbone.Model.extend({
     defaults: {
-      type: null
+      type: null,
+      link: null,
+      iframe: null
     }
   });
 
@@ -27,7 +29,8 @@ define([
 
     events: {
       'click #share_field' : 'focusInput',
-      'click .change-type' : 'changeBtn'
+      'click .change-type' : 'changeBtn',
+      'click #preview' : 'showPreview'
     },
 
     initialize: function() {
@@ -39,7 +42,9 @@ define([
 
     cacheVars: function(){
       this.$changeType = $('.change-type');
+      this.$shareinfo = $('#share-info');
       this.$input = $('#share_field');
+      this.$iframe = $('#preview-iframe');
       this.$twitterLink = this.$el.find('.twitter');
       this.$facebookLink = this.$el.find('.facebook');
       this.$google_plusLink = this.$el.find('.google_plus');
@@ -56,20 +61,30 @@ define([
 
     // Click button
     changeBtn: function(e){
+      e && e.preventDefault();
+
+      // change classes of buttons
       var type = $(e.currentTarget).data('type');
       this.$changeType.removeClass('green').addClass('gray');
       $(e.currentTarget).removeClass('gray').addClass('green');
+
+      // Trigger model's type change
       this.changeType(type);
     },
-    // Click input
+    // Select all text of input
     focusInput: function(e){
       $(e.currentTarget).select();
     },
-
+    // click preview
+    showPreview: function(){
+      this.$iframe.attr('src' , this.model.get('iframe'));
+      // this.$iframeContainer.addClass('active');
+    },
 
 
     // Set Urls
     changeType: function(type){
+      // This will trigger model's type change (setUrls())
       var type = type || this.model.get('type') || 'link';
       this.model.set('type', type);
     },
@@ -88,17 +103,23 @@ define([
     setLink: function(){
       // Get link short
       this.generateLinkUrl(window.location.href, _.bind(function(url) {
+        this.model.set('url', url);
         this.$input.val(url);
+        this.$shareinfo.html('<p>Click and paste link in email or IM</p>');
         this.$twitterLink.attr('href', 'https://twitter.com/share?url=' + url);
         this.$facebookLink.attr('href', 'https://www.facebook.com/sharer.php?u=' + url);
         this.$google_plusLink.attr('href', 'https://plus.google.com/share?url=' + url);
       }, this ));
+      ga('send', 'event', 'Map', 'Share', 'Share Link clicked');
     },
 
     setEmbed: function(){
-      this.generateEmbedUrl(window.location.href, _.bind(function(url) {
+      this.generateEmbedUrl(window.location.href, _.bind(function(url,src) {
+        this.model.set('iframe', src);
         this.$input.val(url);
+        this.$shareinfo.html('<p>Click and paste HTML to embed in website.<button id="preview" class="btn gray little uppercase source" data-source="preview-iframe-container">Preview</button></p>');
       }, this ));
+      ga('send', 'event', 'Map', 'Share', 'Share Embed clicked');
     },
 
     generateLinkUrl: function(url, callback) {
@@ -124,8 +145,9 @@ define([
 
     generateEmbedUrl: function(url, callback){
       var dim_x = 600, dim_y = 530;
+      var src = window.location.origin + '/embed' + window.location.pathname + window.location.search;
       var url = '<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname + window.location.search+'"></iframe>';
-      callback && callback(url);
+      callback && callback(url,src);
     }
 
 

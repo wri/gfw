@@ -36,6 +36,7 @@ define([
     },
 
     _setMaptype: function(event) {
+      event && event.preventDefault();
       var $currentTarget = $(event.currentTarget);
       var maptype = $currentTarget.data('maptype');
       if (maptype) {
