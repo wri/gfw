@@ -9,11 +9,12 @@ define([
   'd3',
   'map/presenters/TabsPresenter',
   'map/views/tabs/BasemapsView',
+  'map/views/tabs/ThresholdView',
   'map/views/tabs/ShareView',
   'map/views/tabs/SpinnerView',
   'text!map/templates/tabs.handlebars'
 
-], function(_, Handlebars, d3, Presenter, BasemapsView, ShareView, SpinnerView, tpl) {
+], function(_, Handlebars, d3, Presenter, BasemapsView, ThresholdView, ShareView, SpinnerView, tpl) {
 
   'use strict';
 
@@ -48,6 +49,7 @@ define([
     initCustomViews: function(){
       new SpinnerView();
       new BasemapsView();
+      new ThresholdView();
       new ShareView();
     },
 

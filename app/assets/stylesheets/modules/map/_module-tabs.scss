@@ -62,6 +62,7 @@ $w-control: 44px;
         header{
           text-align: center;
           font-size: 13px;
+          @include clearfix();
           h2{
             font-size: 21px;
             padding: 0 0 10px;
@@ -71,6 +72,20 @@ $w-control: 44px;
             button{
               margin: 7px auto 0;
               display: block;
+            }
+          }
+          ol{
+            text-align: left;
+            list-style-type: decimal;
+            list-style-position: inside;
+            position: relative;
+            float: left;
+            left: 50%;
+            @include transform(translate(-50%,0));
+            li{
+              padding: 5px 0 0;
+              white-space: nowrap;
+              &:first-child{ margin: 0;}
             }
           }
         }
