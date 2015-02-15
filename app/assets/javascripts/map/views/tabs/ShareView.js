@@ -30,7 +30,8 @@ define([
     events: {
       'click #share_field' : 'focusInput',
       'click .change-type' : 'changeBtn',
-      'click #preview' : 'showPreview'
+      'click #preview' : 'showPreview',
+      'click .popup' : 'openPopUp'
     },
 
     initialize: function() {
@@ -80,7 +81,21 @@ define([
       this.$iframe.attr('src' , this.model.get('iframe'));
       // this.$iframeContainer.addClass('active');
     },
-
+    // Open popup social share
+    openPopUp: function(e){
+      e && e.preventDefault();
+      var width  = 575,
+          height = 400,
+          left   = ($(window).width()  - width)  / 2,
+          top    = ($(window).height() - height) / 2,
+          url    = $(e.currentTarget).attr('href'),
+          opts   = 'status=1' +
+                   ',width='  + width  +
+                   ',height=' + height +
+                   ',top='    + top    +
+                   ',left='   + left;
+      window.open(url, 'Share this map view', opts);
+    },
 
     // Set Urls
     changeType: function(type){
