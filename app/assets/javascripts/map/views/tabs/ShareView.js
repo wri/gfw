@@ -34,7 +34,8 @@ define([
       'click .popup' : 'openPopUp'
     },
 
-    initialize: function() {
+    initialize: function(parent) {
+      this.parent = parent;
       this.presenter = new Presenter(this);
       this.model = new ShareModel();
       this.render();
@@ -116,6 +117,7 @@ define([
     },
 
     setLink: function(){
+      this.presenter.startSpinner();
       // Get link short
       this.generateLinkUrl(window.location.href, _.bind(function(url) {
         this.model.set('url', url);
@@ -124,6 +126,7 @@ define([
         this.$twitterLink.attr('href', 'https://twitter.com/share?url=' + url);
         this.$facebookLink.attr('href', 'https://www.facebook.com/sharer.php?u=' + url);
         this.$google_plusLink.attr('href', 'https://plus.google.com/share?url=' + url);
+        this.presenter.stopSpinner();
       }, this ));
       ga('send', 'event', 'Map', 'Share', 'Share Link clicked');
     },

@@ -91,6 +91,19 @@
     margin-bottom: 20px;
   }
 
+  .object-box{
+    padding-bottom: 88.333333%;
+    position: relative;
+    width: 100%;
+    iframe{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+
   .forest_change .source_category_title {
     color: #F69;
     border-bottom-color: #F69;

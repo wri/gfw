@@ -29,6 +29,15 @@ define([
       }
     }],
 
+    startSpinner: function(){
+      mps.publish('Spinner/start');
+    },
+
+    stopSpinner: function(){
+      mps.publish('Spinner/stop');
+    }
+
+
   });
 
   return SharePresenter;

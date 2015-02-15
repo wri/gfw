@@ -1,21 +1,23 @@
 /**
  * The TabsView view.
  *
- * @return MapControlsView view (extends Backbone.View)
+ * @return TabsView view (extends Backbone.View)
  */
 define([
   'underscore',
   'handlebars',
+  'd3',
   'map/presenters/TabsPresenter',
   'map/views/tabs/BasemapsView',
   'map/views/tabs/ShareView',
+  'map/views/tabs/SpinnerView',
   'text!map/templates/tabs.handlebars'
 
-], function(_, Handlebars, Presenter, BasemapsView, ShareView, tpl) {
+], function(_, Handlebars, d3, Presenter, BasemapsView, ShareView, SpinnerView, tpl) {
 
   'use strict';
 
-  var MapControlsView = Backbone.View.extend({
+  var TabsView = Backbone.View.extend({
 
     el: '#module-tabs',
 
@@ -44,6 +46,7 @@ define([
     },
 
     initCustomViews: function(){
+      new SpinnerView();
       new BasemapsView();
       new ShareView();
     },
@@ -72,6 +75,6 @@ define([
     }
   });
 
-  return MapControlsView;
+  return TabsView;
 
 });

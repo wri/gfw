@@ -32,6 +32,27 @@ $w-control: 44px;
     &.active{
       display: block;
     }
+    .spinner2-box{
+      position: absolute;
+      z-index: 5;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba($white,0.5);
+      display: none;
+      &.active{
+        display: block;
+      }
+      .spinner2{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 50px;
+        height: 50px;
+        @include transform(translate(-50%,-50%));
+      }
+    }
     ul{
       .tab-content{
         display: none;
