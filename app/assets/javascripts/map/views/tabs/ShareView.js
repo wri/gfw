@@ -108,10 +108,10 @@ define([
     setUrls: function(){
       switch(this.model.get('type')){
         case 'link':
-          this.setLink();
+          setTimeout(_.bind(this.setLink, this),100);
         break;
         case 'embed':
-          this.setEmbed();
+          setTimeout(_.bind(this.setEmbed, this),100);
         break;
       }
     },

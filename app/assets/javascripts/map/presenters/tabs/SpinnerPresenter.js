@@ -23,7 +23,6 @@ define([
      */
     _subscriptions: [{
       'Spinner/start': function() {
-        console.log('start2')
         this.view.start();
       }
     }, {

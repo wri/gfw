@@ -24,7 +24,16 @@ define([
     _subscriptions: [{
       'Tab/open': function(id) {
         if (id === 'share-tab') {
+          this.view.model.set('hidden',false);
           this.view.changeType();
+        }else{
+          this.view.model.set('hidden',true);
+        }
+      },
+    },{
+      'Place/update': function(place) {
+        if (!this.view.model.get('hidden')) {
+          this.view.setUrls();
         }
       }
     }],
