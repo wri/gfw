@@ -1,3 +1,30 @@
 .tab-threshold{
   padding: 20px;
+  .slider-container{
+    width: 100%;
+    ul{
+      width: calc(100% - 12px);
+      height: 11px;
+      position: relative;
+      margin: 0 auto;
+      li{
+        position: absolute;
+        text-align: center;
+        color: $cGreen;
+        font-size: 10px;
+        font-weight: 500;
+        width: 16.666%;
+        @include transform(translate(-50%,0));
+        @for $i from 0 through 6 {
+          &:nth-child(#{$i + 1}){
+            left: $i * 16.666666%;
+          }
+        }
+
+      }
+    }
+    input{
+      width: 100%;
+    }
+  }
 }

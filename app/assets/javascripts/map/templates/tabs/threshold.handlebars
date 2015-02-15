@@ -6,4 +6,12 @@
       <li>Change canopy threshold <a href="#" class="source" data-source="canopy"></a></li>
     </ol>
   </header>
+  <div class="slider-container">
+    <ul>
+      {{#each values}}
+        <li data-slider-value="{{@key}}">{{this}}%</li>
+      {{/each}}
+    </ul>
+    <input class="slider white" type="range" min="0" max="60" value="20" step="10">
+  </div>
 </div>

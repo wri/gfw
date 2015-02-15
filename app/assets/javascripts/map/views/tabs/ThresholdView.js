@@ -18,6 +18,16 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    valuesMap: {
+      0: 10,
+      1: 15,
+      2: 20,
+      3: 25,
+      4: 30,
+      5: 50,
+      6: 75
+    },
+
     initialize: function(parent) {
       this.parent = parent;
       this.presenter = new Presenter(this);
@@ -32,7 +42,7 @@ define([
     },
 
     render: function(){
-      this.$el.html(this.template());
+      this.$el.html(this.template({values: this.valuesMap }));
       this.cacheVars();
     },
 
