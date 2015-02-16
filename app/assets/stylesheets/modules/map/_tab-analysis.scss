@@ -1,0 +1,38 @@
+.tab-analysis{
+  padding: 0 15px 20px;
+  nav{
+    ul{
+      @include display-flex();
+      li{
+        width: 33.333333%;
+        padding: 8px 6px;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 12px;
+        color: $dark;
+        cursor: pointer;
+        &:hover{
+          svg{
+            fill: $cGreen;
+          }
+        }
+        &.active{
+          background: $light;
+          svg{
+            fill: $cGreen;
+          }
+        }
+        svg{
+          display: block;
+          width: 40px;
+          height: 40px;
+          margin: 0 auto 7px;
+          fill: $dark;
+        }
+      }
+    }
+  }
+  .analysis-content{
+
+  }
+}

@@ -1,3 +1,15 @@
 <div class="tab-analysis">
-  <header>Analysis</header>
+  <nav id="analysis-nav" class="analysis-nav">
+    <ul>
+      <li data-analysis="draw-tab"><svg><use xlink:href="#icon-analysis-draw"></use></svg>Draw shape</li>
+      <li data-analysis="country-tab"><svg><use xlink:href="#icon-analysis-country"></use></svg>Country or region</li>
+      <li data-analysis="data-tab"><svg><use xlink:href="#icon-analysis-data"></use></svg>Other data layers</li>
+    </ul>
+  </nav>
+  <div id="analysis-content" class="analysis-content">
+    <div id="default" class="default"></div>
+    <div id="draw-tab" class="draw-tab"></div>
+    <div id="country-tab" class="country-tab"></div>
+    <div id="data-tab" class="data-tab"></div>
+  </div>
 </div>

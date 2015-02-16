@@ -49,10 +49,10 @@ define([
 
     initCustomViews: function(){
       new SpinnerView();
+      new AnalysisView();
       new BasemapsView();
       new ThresholdView();
       new ShareView();
-      new AnalysisView();
     },
 
     toggleTabs: function(e){
