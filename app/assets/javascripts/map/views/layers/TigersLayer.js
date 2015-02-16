@@ -17,6 +17,9 @@ define([
            'UNION ' +
            'SELECT the_geom_webmercator, cartodb_id, the_geom, name,  area_ha, 2 as type, \'tal_corridor\' as layer ' +
            'FROM tal_corridor ',
+      infowindow: true,
+      interactivity: 'name, area_ha',
+      analysis: true
     }
   });
 
