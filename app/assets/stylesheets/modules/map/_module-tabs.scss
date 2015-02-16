@@ -21,7 +21,9 @@ $w-control: 44px;
           &.disabled{
             pointer-events: none;
             cursor: default;
-            opacity: 0.5;
+            svg{
+              opacity: 0.5;
+            }
           }
           &.changed{
             svg{
