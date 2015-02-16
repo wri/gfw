@@ -60,19 +60,22 @@ define([
         this.$tabs.removeClass('inactive active');
         this.$tabsContent.removeClass('selected');
       }else{
-        // Open current tab
-        var id = $(e.currentTarget).data('tab');
-        this.$container.addClass('active');
-        // tabs
-        this.$tabs.removeClass('active').addClass('inactive');
-        $(e.currentTarget).removeClass('inactive').addClass('active');
+        if (!$(e.currentTarget).hasClass('disabled')) {
+          // Open current tab
+          var id = $(e.currentTarget).data('tab');
+          this.$container.addClass('active');
 
-        // tabs content
-        this.$tabsContent.removeClass('selected');
-        $('#'+ id).addClass('selected');
+          // tabs
+          this.$tabs.removeClass('active').addClass('inactive');
+          $(e.currentTarget).removeClass('inactive').addClass('active');
 
-        //publish open tab
-        this.presenter.onTabOpen(id);
+          // tabs content
+          this.$tabsContent.removeClass('selected');
+          $('#'+ id).addClass('selected');
+
+          //publish open tab
+          this.presenter.onTabOpen(id);
+        }
       }
     }
   });

@@ -59,6 +59,14 @@ define([
       'LayerNav/change': function(layerSpec) {
         this._setLayers(layerSpec.getLayers());
       }
+    },{
+      'Tab/open': function(id) {
+        if (id === 'threshold-tab') {
+          this.view.model.set('hidden',false);
+        }else{
+          this.view.model.set('hidden',true);
+        }
+      },
     }],
 
     /**
@@ -82,10 +90,10 @@ define([
      * Toggle threshold widget if any supported layer is active.
      */
     _setVisibility: function() {
-      if (this.status.get('layers').length) {
-        this.view.toggleWidgetBtn(false);
+      if (this.status.get('layers').length > 0) {
+        this.view.toggleVisibility(false);
       } else {
-        this.view.toggleWidgetBtn(true);
+        this.view.toggleVisibility(true);
       }
     },
 
@@ -101,11 +109,7 @@ define([
         this._publishThreshold();
       }
       // render threshold slider position
-      // Todo: Just move the handler don't update the whole thing.
-      
-
-
-      // this.view.update(this.status.get('threshold'));
+      this.view.updatePresenter(this.status.get('threshold'));
     },
 
     /**

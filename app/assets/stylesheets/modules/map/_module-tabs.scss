@@ -18,6 +18,16 @@ $w-control: 44px;
           &:active{ background: darken($light,5%);}
           &.active{ background: $white;}
           &.inactive{ background: #EEEEEE;}
+          &.disabled{
+            pointer-events: none;
+            cursor: default;
+            opacity: 0.5;
+          }
+          &.changed{
+            svg{
+              fill: $cGreen;
+            }
+          }
           svg{
             fill: $dark;
             width: 22px;
@@ -86,6 +96,12 @@ $w-control: 44px;
               padding: 5px 0 0;
               white-space: nowrap;
               &:first-child{ margin: 0;}
+              .source{
+                @extend .info-icon;
+                display: inline-block;
+                top: 2px;
+                position: relative;
+              }
             }
           }
         }

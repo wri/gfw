@@ -6,12 +6,20 @@
       <li>Change canopy threshold <a href="#" class="source" data-source="canopy"></a></li>
     </ol>
   </header>
+  <div class="trees">
+    <span class="tree-icon"></span>
+    <span class="forest-icon"></span>
+  </div>
   <div class="slider-container">
-    <ul>
+    <ul id="labels-threshold">
       {{#each values}}
-        <li data-slider-value="{{@key}}">{{this}}%</li>
+        <li data-slider-value="{{@index}}">{{this}}%</li>
       {{/each}}
     </ul>
-    <input class="slider white" type="range" min="0" max="60" value="20" step="10">
+    <div class="range-box">
+      <div class="dots"></div>
+      <div id="progress-threshold" class="progress"></div>
+      <input id="range-threshold" type="range" min="0" max="6" value="4" step="1">
+    </div>
   </div>
 </div>
