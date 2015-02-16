@@ -108,7 +108,7 @@ $w-control: 44px;
             }
           }
         }
-        .button-contanier{
+        .button-container{
           margin: 10px 0 0;
           @include display-flex();
           @include justify-content(space-between);
