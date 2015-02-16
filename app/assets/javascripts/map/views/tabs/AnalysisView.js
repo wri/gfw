@@ -35,6 +35,8 @@ define([
     },
 
     cacheVars: function(){
+      this.$tabs = $('#analysis-nav li');
+      this.$tabsContent = $('.analysis-tab-content');
     },
 
     setListeners: function(){
@@ -43,14 +45,22 @@ define([
 
     render: function(){
       this.$el.html(this.template());
-      // new AnalysisContent();
       this.cacheVars();
     },
 
     // navigat between tabs
     toggleTabs: function(e){
       var tab = $(e.currentTarget).data('analysis');
-      console.log(tab);
+
+      // Current tab
+      this.$tabs.removeClass('active');
+      $(e.currentTarget).addClass('active');
+
+      // Current content tab
+      this.$tabsContent.removeClass('active');
+      $('#'+tab).addClass('active');
+
+
     }
 
 

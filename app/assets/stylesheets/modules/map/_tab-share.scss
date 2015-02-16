@@ -9,17 +9,6 @@
       text-align: center;
       padding: 8px 10px;
     }
-    ul{
-      margin: 10px 0 0;
-      @include display-flex();
-      @include justify-content(space-between);
-      li{
-        width: 48%;
-        .btn{
-          width: 100%;
-        }
-      }
-    }
   }
   .share-sozial{
     padding: 50px 0 0;

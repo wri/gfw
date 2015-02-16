@@ -7,9 +7,28 @@
     </ul>
   </nav>
   <div id="analysis-content" class="analysis-content">
-    <div id="default" class="default"></div>
-    <div id="draw-tab" class="draw-tab"></div>
-    <div id="country-tab" class="country-tab"></div>
-    <div id="data-tab" class="data-tab"></div>
+    <div id="default" class="analysis-tab-content default active">
+      <div class="arrow"></div>
+      <header>
+        <h2>Choose the analysis you want to do</h2>
+      </header>
+    </div>
+    <div id="draw-tab" class="analysis-tab-content draw-tab">
+      <header>
+        <h2>Draw in the map the area you want to analyze</h2>
+        <p>Learn more <a href="#" data-source="regular_dialog" class="source btn gray uppercase little">Click here</a></p>
+      </header>
+      <div class="image"><div><svg><use xlink:href="#icon-analysis-draw"></use></svg></div></div>
+      <ul class="button-contanier">
+        <li><button id="start-analysis" class="btn green uppercase">Analyze</button></li>
+        <li><button id="done-analysis" class="btn gray uppercase disabled">Done</button></li>
+      </ul>
+    </div>
+    <div id="country-tab" class="analysis-tab-content country-tab">
+      COUNTRY
+    </div>
+    <div id="data-tab" class="analysis-tab-content data-tab">
+      OTHER
+    </div>
   </div>
 </div>

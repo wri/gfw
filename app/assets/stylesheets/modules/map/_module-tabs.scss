@@ -108,6 +108,17 @@ $w-control: 44px;
             }
           }
         }
+        .button-contanier{
+          margin: 10px 0 0;
+          @include display-flex();
+          @include justify-content(space-between);
+          li{
+            width: 48%;
+            .btn{
+              width: 100%;
+            }
+          }
+        }
       }
     }
   }

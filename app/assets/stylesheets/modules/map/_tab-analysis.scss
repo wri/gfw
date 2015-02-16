@@ -1,5 +1,4 @@
 .tab-analysis{
-  padding: 0 15px 20px;
   nav{
     ul{
       @include display-flex();
@@ -33,6 +32,54 @@
     }
   }
   .analysis-content{
+    padding: 20px;
+    .analysis-tab-content{
+      display: none;
+      &.active{
+        display: block;
+      }
+    }
+  }
+}
 
+//DEFAULT
+.analysis-tab-content.default{
+  .arrow{
+    position: relative;
+    width: 100%;
+    padding-bottom: 75.454545454545%;
+    &:before{
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: image-url('backgrounds/explanation-arrow.png');
+      background-size: contain;
+    }
+  }
+}
+
+//DRAW TAB
+.analysis-tab-content.draw-tab{
+  .image{
+    position: relative;
+    max-width: 50%;
+    margin: 20px auto;
+
+    div{
+      position: relative;
+      padding-bottom: 82.417582417582%;
+    }
+
+    svg{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      fill: $cGreen;
+    }
   }
 }
