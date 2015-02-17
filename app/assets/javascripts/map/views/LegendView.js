@@ -6,7 +6,6 @@
 define([
   'underscore',
   'handlebars',
-  'map/views/Widget',
   'map/presenters/LegendPresenter',
   'text!map/templates/legend/legend.handlebars',
   'text!map/templates/legend/loss.handlebars',
@@ -23,14 +22,20 @@ define([
   'text!map/templates/legend/concesiones_forestalesType.handlebars',
   'text!map/templates/legend/hondurasForest.handlebars',
   'text!map/templates/legend/colombiaForestChange.handlebars'
-], function(_, Handlebars, Widget, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
+], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL) {
 
   'use strict';
 
-  var LegendView = Widget.extend({
+  var LegendModel = Backbone.Model.extend({
+    hidden: true
+  });
 
-    className: 'widget widget-legend',
+
+
+  var LegendView = Backbone.View.extend({
+
+    el: '#module-legend',
 
     template: Handlebars.compile(tpl),
 
@@ -58,21 +63,19 @@ define([
       hidden: true
     },
 
-    events: function(){
-      return _.extend({}, LegendView.__super__.events, {
-        'click .widget-closed': '_toggleBoxClosed',
-        'click .layer-sublayer': '_toggleLayer'
-      });
+    events: {
+      'click .category-name' : '_toogleCategory',
+      'click .layer-sublayer': '_toggleLayer'
     },
 
     initialize: function() {
       _.bindAll(this, 'update');
       this.presenter = new Presenter(this);
-      LegendView.__super__.initialize.apply(this);
+      this.model = new LegendModel();
+      this._renderLegend();
     },
 
     /**
-     * Update legend widget by calling widget._update.
      *
      * @param  {array}  categories layers ordered by category
      * @param  {object} options    legend options
@@ -108,7 +111,7 @@ define([
         layersLength: layersLength
       });
 
-      this._update(html);
+      this.render(html);
       this.presenter.initExperiment('source');
     },
 
@@ -130,6 +133,10 @@ define([
           $toggle.removeClass('checked').css('background', '');
         }
       }, this);
+    },
+
+    render: function(html){
+      this.$el.html(html);
     },
 
     /**
@@ -155,7 +162,13 @@ define([
     _toggleLayer: function(event) {
       var layerSlug = $(event.currentTarget).data('sublayer');
       this.presenter.toggleLayer(layerSlug);
+    },
+
+    _toogleCategory: function(e){
+      $(e.currentTarget).parent().children('.layers').addClass('hidden');
     }
+
+
 
   });
 
