@@ -174,7 +174,6 @@ define([
 
         sessionStorage.setItem('DIALOG', dialog);
       }
-      console.log($target.data('ga'))
       ga('send', 'event', 'Home', 'Click', $target.data('ga'))
       location.assign($target.attr('href'));
     }
