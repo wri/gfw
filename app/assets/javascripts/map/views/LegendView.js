@@ -165,7 +165,8 @@ define([
     },
 
     _toogleCategory: function(e){
-      $(e.currentTarget).parent().children('.layers').addClass('hidden');
+      $(e.currentTarget).parent().toggleClass('closed');
+      $(e.currentTarget).parent().children('.layers').toggleClass('hidden');
     }
 
 
