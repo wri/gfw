@@ -6,6 +6,25 @@ Gfw::Application.routes.draw do
     # stories
     # get '/stories' => redirect("/stayinformed/crowdsourced-stories")
 
+    # 2004-2009 era
+    get '/english' => redirect('/')
+    get '/french' => redirect('/')
+    get '/bahasa' => redirect('/')
+    get '/english/index.htm' => redirect('/')
+    get '/french/index.htm' => redirect('/')
+    get '/bahasa/index.htm' => redirect('/')
+    get '/english/about' => redirect('/about')
+    get '/french/about' => redirect('/about')
+    get '/bahasa/about' => redirect('/about')
+    get '/english/pdfs(/:section)' => redirect("sources")
+    get '/french/pdfs(/:section)' => redirect("sources")
+    get '/bahasa/pdfs(/:section)' => redirect("sources")
+    get '/english(/:id)' => redirect('/countries')
+    get '/french(/:id)' => redirect('/countries')
+    get '/bahasa(/:id)' => redirect('/countries')
+    get '/common(/:section)' => redirect("sources")
+    get '/assets(/:content)' => redirect('/')
+
     # howto
     get '/howto/video' => redirect("/howto")
     get '/howto/general_questions' => redirect("/howto/faqs")
@@ -20,16 +39,6 @@ Gfw::Application.routes.draw do
     get '/about/users' => redirect("/about")
     get '/about/small_grants_fund' => redirect("/getinvolved/apply-to-the-small-grants-fund")
     get '/about/testers' => redirect("/about")
-    get '/english' => redirect('/')
-    get '/french' => redirect('/')
-    get '/english/index.htm' => redirect('/')
-    get '/french/index.htm' => redirect('/')
-    get '/english/about' => redirect('/about')
-    get '/french/about' => redirect('/about')
-    get '/english/pdfs(/:section)' => redirect("sources")
-    get '/french/pdfs(/:section)' => redirect("sources")
-    get '/english(/:id)' => redirect('/countries')
-    get '/french(/:id)' => redirect('/countries')
 
   resources :stories
 
