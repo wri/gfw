@@ -8,7 +8,10 @@ define([], function () {
   var name = 'grayscale';
 
   var style = [{
-    'featureType': 'water'
+    'featureType': 'water',
+    'stylers': [{
+      'hue': '#B3E2FF'
+    }]
   }, {
     'featureType': 'transit',
     'stylers': [{

@@ -215,6 +215,17 @@ define([
      */
     setMapTypeId: function(maptype) {
       this.map.setMapTypeId(maptype);
+      if (maptype === 'terrain') {
+        var styles = [
+          {
+            featureType: 'water',
+            stylers: [{
+              hue: '#B3E2FF'
+            }]
+          }
+        ];
+        this.map.setOptions({styles: styles});
+      }
       this.presenter.onMaptypeChange(maptype);
     },
 
