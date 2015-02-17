@@ -5,7 +5,7 @@ class SearchController < ApplicationController
     @title = "Search"
     if params[:query]
       result = search_by(params[:query],params[:page])
-      @result = result 
+      @result = result
       @query = params[:query]
       @page = params[:page]
       @total = @result['queries']['request'][0]['totalResults'].to_i
@@ -20,7 +20,6 @@ class SearchController < ApplicationController
       query = _query
       page = _page ? 1+((_page.to_i-1)*10) : 1
       response = Typhoeus.get("https://www.googleapis.com/customsearch/v1?", params: { key: apiKey , cx: cx, q: query , start: page, filter: 0}, headers: {"Accept" => "application/json"})
-      puts response
 
       if response.success?
           JSON.parse(response.body)
