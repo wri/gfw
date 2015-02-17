@@ -20,6 +20,16 @@ Gfw::Application.routes.draw do
     get '/about/users' => redirect("/about")
     get '/about/small_grants_fund' => redirect("/getinvolved/apply-to-the-small-grants-fund")
     get '/about/testers' => redirect("/about")
+    get '/english' => redirect('/')
+    get '/french' => redirect('/')
+    get '/english/index.htm' => redirect('/')
+    get '/french/index.htm' => redirect('/')
+    get '/english/about' => redirect('/about')
+    get '/french/about' => redirect('/about')
+    get '/english/pdfs(/:section)' => redirect("sources")
+    get '/french/pdfs(/:section)' => redirect("sources")
+    get '/english(/:id)' => redirect('/countries')
+    get '/french(/:id)' => redirect('/countries')
 
   resources :stories
 
