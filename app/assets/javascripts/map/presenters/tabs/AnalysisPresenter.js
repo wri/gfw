@@ -23,6 +23,7 @@ define([
       resource: null, // analysis resource
       date: null,
       threshold: null,
+      iso: null,
       overlay: null, // google.maps.Polygon (user drawn polygon)
       multipolygon: null, // geojson (countries and regions multypolygon)
       disableUpdating: false
@@ -114,6 +115,16 @@ define([
         this.status.set('threshold', threshold);
         this._updateAnalysis();
       }
+    },{
+      'Tab/open': function(id) {
+        if (id === 'analysis-tab') {
+          this.view.model.set('hidden',false);
+        }else{
+          this.view._stopDrawing();
+          this.deleteAnalysis();
+          this.view.model.set('hidden',true);
+        }
+      },
     }],
 
     /**
@@ -338,7 +349,7 @@ define([
      */
     _publishAnalysis: function(resource, failed) {
       this.status.set('resource', resource);
-      this._setAnalysisBtnVisibility();
+      // this._setAnalysisBtnVisibility();
       mps.publish('Place/update', [{go: false}]);
 
       if (!this.status.get('baselayer') || failed) {
@@ -404,9 +415,9 @@ define([
 
     _setAnalysisBtnVisibility: function() {
       if (!this.status.get('resource')) {
-        this.view.toggleWidgetBtn(!!!this.status.get('baselayer'));
+        this.view.toggleBtn(!!!this.status.get('baselayer'));
       } else {
-        this.view.toggleWidgetBtn(true);
+        this.view.toggleBtn(true);
       }
     },
 

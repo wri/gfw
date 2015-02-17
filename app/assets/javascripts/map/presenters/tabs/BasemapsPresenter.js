@@ -25,14 +25,6 @@ define([
       'Map/maptype-change': function(maptype) {
         this.view.selectMaptype(maptype);
       }
-    }, {
-      'AnalysisTool/stop-drawing': function() {
-        this.view.model.set('hidden', false);
-      }
-    }, {
-      'AnalysisTool/start-drawing': function() {
-        this.view.model.set('hidden', true);
-      }
     }],
 
     setMaptype: function(maptype) {
