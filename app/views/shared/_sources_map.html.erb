@@ -37,11 +37,11 @@
         <div class='source_table'>
           <dl class='sources_row'>
             <dt>Function</dt>
-            <dd>Identifies areas of tree cover loss</dd>
+            <dd>Identifies areas of gross tree cover loss</dd>
           </dl>
           <dl class='sources_row even'>
             <dt>RESOLUTION / SCALE</dt>
-            <dd>30 × 30 meters</dd>
+            <dd>0.00025 decimal degrees or approximately 27.8 x 27.8 meters at the equator</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Geographic coverage</dt>
@@ -49,7 +49,7 @@
           </dl>
           <dl class='sources_row even'>
             <dt>Source data</dt>
-            <dd><a href='http://landsat.usgs.gov/' target='_blank'>Landsat 7 ETM+</a></dd>
+            <dd>Landsat 5 TM, <a href='http://landsat.usgs.gov/' target='_blank'>Landsat 7 ETM+, and Landsat 8 OLI</a></dd>
           </dl>
           <dl class='sources_row'>
             <dt>Frequency of updates</dt>
@@ -57,7 +57,7 @@
           </dl>
           <dl class='sources_row even'>
             <dt>Date of content</dt>
-            <dd>2001–2012</dd>
+            <dd>2001–2013</dd>
           </dl>
           <dl class='sources_row'>
             <dt>Tree cover canopy density</dt>
@@ -66,8 +66,9 @@
           <dl class='sources_row even'>
             <dt>Cautions</dt>
             <dd>
-              <p>For the purpose of this study, “tree cover” was defined as all vegetation taller than 5 meters in height. “Tree cover” is the biophysical presence of trees and may take the form of natural forests or plantations existing over a range of canopy densities. “Loss” indicates the removal or mortality of tree canopy cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
+              <p>This data layer was updated in January 2015 to extend the tree cover loss analysis to 2013. The 2013 data update included new Landsat 8 data (launched in February 2013) as well as re-processed 2010-2012 data from Landsat TM and ETM+, which increased the amount of change that could be detected, resulting in some changes in calculated tree cover loss for 2011 (global increase of 6%) and 2012 (increase of 22%). Calculated tree cover loss for 2001-2010 remains unchanged. The integrated use of the original 2001-2012 (Version 1.0) data and the updated 2011–2013 data (Version 1.1) should be performed with caution.</p>
 
+              <p>For the purpose of this study, “tree cover” was defined as all vegetation taller than 5 meters in height. “Tree cover” is the biophysical presence of trees and may take the form of natural forests or plantations existing over a range of canopy densities. “Loss” indicates the removal or mortality of tree canopy cover and can be due to a variety of factors, including mechanical harvesting, fire, disease, or storm damage. As such, “loss” does not equate to deforestation.</p>
               <p>When zoomed out (< zoom level 13), pixels of loss are shaded according to the density of loss at the 30 x 30 meter scale. Pixels with darker shading represent areas with a higher concentration of tree cover loss, whereas pixels with lighter shading indicate a lower concentration of tree cover loss. There is no variation in pixel shading when the data is at full resolution (≥ zoom level 13).</p>
             </dd>
           </dl>
@@ -75,15 +76,32 @@
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>This data set measures areas of tree cover loss across all global land (except Antarctica and other Arctic islands) annually at 30 × 30 meter resolution. The data were generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a> sensor. Over 600,000 Landsat 7 images were compiled and analyzed using Google Earth Engine, a cloud platform for earth observation and data analysis. The clear land surface observations (30 × 30 meter pixels) in the satellite images were assembled chronologically and a supervised learning algorithm was then applied to identify per pixel tree cover loss or gain.</p>
+          <p>This data set measures areas of tree cover loss across all global land (except Antarctica and other Arctic islands) at approximately 30 × 30 meter resolution. The data were generated using multispectral satellite imagery from the <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a>, and <a href='http://landsat.usgs.gov/science_L7_cpf.php' target='_blank'>Landsat 7 thematic mapper plus (ETM+)</a>, and <a href='http://landsat.usgs.gov/landsat8.php' target='_blank'>Landsat 8</a> Operational Land Imager (OLI) sensors. Over 1 million satellite images were processed and analyzed, including over 600,000 Landsat 7 images for the 2000-2012 interval, and approximately 400,000 Landsat 5,7 and 8 images for the 2010-2013 interval . The clear land surface observations in the satellite images were assembled and a supervised learning algorithm was applied to identify per pixel tree cover loss.</p>
 
 
 
-          <p>Tree cover loss is defined as “stand replacement disturbance,” or the complete removal of tree cover canopy at the Landsat pixel scale. Tree cover loss may indicate a number of potential activities, such as timber harvesting, fires or disease, the conversion of natural forest to other land uses, or the crop rotations cycle of tree plantations. </p>
+          <p>Tree cover loss is defined as “stand replacement disturbance,” or the complete removal of tree cover canopy at the Landsat pixel scale. Tree cover loss may be the result of human activities, including forestry practices such as timber harvesting or deforestation (the conversion of natural forest to other land uses), as well as natural causes such as disease or storm damage.  Fire is another widespread cause of tree cover loss, and can be either natural or human-induced.</p>
+          <p><strong>2015 Update (Version 1.1)</strong></p>
+          <p>This data set was recently updated and now includes a 2013 loss layer and revised layers for 2011 and 2012. The analysis method has been modified in numerous ways, and the update should be seen as part of a transition to a future “version 2.0” of this data set that is more consistent over the entire 2001 and onward period. Key changes include:</p>
+          <ul>
+                <li>The use of Landsat 8 data for 2013 and Landsat 5 data for 2010-2011</li>
+                <li>The reprocessing of data from 2011 to 2012 in measuring loss</li>
+                <li>Improved training data for calibrating the loss model</li>
+                <li>Improved per sensor quality assessment models to filter input data</li>
+                <li>Improved input spectral features for building and applying the loss model</li>
+              </ul>
+<p>These changes lead to a different and improved detection of global tree cover loss. However, the years preceding 2011 have not yet been reprocessed with the revised analysis methods, and users will notice inconsistencies between versions 1.0 (2001-2012) and 1.1 (2001-2013) as a result. It must also be noted that a full validation of the results incorporating Landsat 8 has not been undertaken. Such an analysis may reveal a more sensitive ability to detect and map forest disturbance using Landsat 8 data. If this is the case then there will be a more fundamental limitation to the consistency of this data set before and after the inclusion of Landsat 8 data. Validation of Landsat 8-incorporated loss detection is planned.</p>
+<p>Some examples of improved change detection in the 2011–2013 update include the following:</p>
+<ul>
+                <li>Improved detection of boreal forest loss due to fire</li>
+                <li>Improved detection of smallholder rotation agricultural clearing in dry and humid tropical forests</li>
+                <li>Improved detection of selective logging</li>
+                </ul>
+                <p>These are examples of dynamics that may be differentially mapped over the 2001-2013 period in Version 1.1. A version 2.0 reprocessing of the 2001 and onward record is planned, but no delivery date is yet confirmed.</p>
+                <p>The original version 1.0 data remains available for download <a href='http://earthenginepartners.appspot.com/science-2013-global-forest/download_v1.0.html' target='_blank'>here</a>.</p>
+          <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Science 342 (15 November): 850–53. Data available on-line from:<a href='http://earthenginepartners.appspot.com/science-2013-global-forest' target='_blank'>http://earthenginepartners.appspot.com/science-2013-global-forest</a>.</p>
 
-          <p class='credits'><strong>Citation:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “High-Resolution Global Maps of 21st-Century Forest Cover Change.” Science 342 (15 November): 850–53.</p>
-
-          <p class='credits'><strong>Suggested citations for data as displayed on GFW:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain Area.” University of Maryland, Google, USGS, and NASA. Accessed through Global Forest Watch on  [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
+          <p class='credits'><strong>Suggested citations for data as displayed on GFW:</strong>Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Hansen/UMD/Google/USGS/NASA Tree Cover Loss and Gain Area.” University of Maryland, Google, USGS, and NASA. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>
 
           <p class='read_more hidden'><em><%= link_to 'Learn more or download data', sources_path %></em></p>
         </div>
