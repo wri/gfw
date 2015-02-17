@@ -69,7 +69,7 @@ require([
       var mapView = new MapView();
 
       new MapControlsView(mapView.map);
-      new TabsView();
+      new TabsView(mapView.map);
       new LayersNavView();
       new LegendView();
       new TimelineView();

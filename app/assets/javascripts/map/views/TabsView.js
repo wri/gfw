@@ -29,7 +29,8 @@ define([
 
     template: Handlebars.compile(tpl),
 
-    initialize: function() {
+    initialize: function(map) {
+      this.map = map;
       this.presenter = new Presenter(this);
       this.render();
       this.$tabs = this.$el.find('.tab');
@@ -49,7 +50,7 @@ define([
 
     initCustomViews: function(){
       new SpinnerView();
-      new AnalysisView();
+      new AnalysisView(this.map);
       new BasemapsView();
       new ThresholdView();
       new ShareView();

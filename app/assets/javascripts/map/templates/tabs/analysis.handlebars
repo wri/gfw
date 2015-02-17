@@ -25,10 +25,17 @@
       </ul>
     </div>
     <div id="country-tab" class="analysis-tab-content country-tab">
-      COUNTRY
+      <select data-placeholder="Select country" class="chosen-select default" id="analysis-country-select"><option></option></select>
+      <select data-placeholder="Select jurisdiction" disabled="true" class="chosen-select default" id="analysis-region-select"><option></option></select>
+      <ul class="button-container">
+        <li><button id="analysis-country-button" class="btn green uppercase">Analyze</button></li>
+      </ul>
     </div>
     <div id="data-tab" class="analysis-tab-content data-tab">
-      OTHER
+      <header>
+        <h2>Concession & PA analysis</h2>
+        <p>Select a concession you’d like to analyze, and click the ‘analyze area’ button in the window that appears.</p>
+      </header>
     </div>
   </div>
 </div>
