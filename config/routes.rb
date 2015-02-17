@@ -19,9 +19,9 @@ Gfw::Application.routes.draw do
     get '/english/pdfs(/:section)' => redirect("sources")
     get '/french/pdfs(/:section)' => redirect("sources")
     get '/bahasa/pdfs(/:section)' => redirect("sources")
-    get '/english(/:id)' => redirect('/countries')
-    get '/french(/:id)' => redirect('/countries')
-    get '/bahasa(/:id)' => redirect('/countries')
+    get '/english(/:id)(/:id2)(/:id3)' => redirect('/countries')
+    get '/french(/:id)(/:id2)(/:id3)' => redirect('/countries')
+    get '/bahasa(/:id)(/:id2)(/:id3)' => redirect('/countries')
     get '/common(/:section)' => redirect("sources")
     get '/assets(/:content)' => redirect('/')
 
