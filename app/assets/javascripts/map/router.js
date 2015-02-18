@@ -39,7 +39,6 @@ define([
 
     map: function() {
       this.name = 'map';
-      this.mainView.setMapMode();
       this.initMap.apply(this, arguments);
     },
 

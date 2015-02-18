@@ -6,7 +6,6 @@
 define([
   'underscore',
   'handlebars',
-  'map/views/Widget',
   'map/presenters/LegendPresenter',
   'text!map/templates/legend/legend.handlebars',
   'text!map/templates/legend/loss.handlebars',
@@ -24,14 +23,24 @@ define([
   'text!map/templates/legend/hondurasForest.handlebars',
   'text!map/templates/legend/colombiaForestChange.handlebars',
   'text!map/templates/legend/tigers.handlebars'
-], function(_, Handlebars, Widget, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
+
+], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
     forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL) {
 
   'use strict';
 
-  var LegendView = Widget.extend({
+  var LegendModel = Backbone.Model.extend({
+    defaults:{
+      hidden: true,
+      categories_status: []
+    }
+  });
 
-    className: 'widget widget-legend',
+
+
+  var LegendView = Backbone.View.extend({
+
+    el: '#module-legend',
 
     template: Handlebars.compile(tpl),
 
@@ -60,26 +69,24 @@ define([
       hidden: true
     },
 
-    events: function(){
-      return _.extend({}, LegendView.__super__.events, {
-        'click .widget-closed': '_toggleBoxClosed',
-        'click .layer-sublayer': '_toggleLayer'
-      });
+    events: {
+      'click .category-name' : '_toogleCategory',
+      'click .layer-sublayer': '_toggleLayer'
     },
 
     initialize: function() {
       _.bindAll(this, 'update');
       this.presenter = new Presenter(this);
-      LegendView.__super__.initialize.apply(this);
+      this.model = new LegendModel();
     },
 
     /**
-     * Update legend widget by calling widget._update.
      *
      * @param  {array}  categories layers ordered by category
      * @param  {object} options    legend options
      */
     _renderLegend: function(categories, options) {
+      var categories_status = this.model.get('categories_status');
       var layers = _.flatten(categories);
       var layersLength = layers.length;
 
@@ -91,7 +98,6 @@ define([
             layerTitle: layer.title
           });
         }
-        // if (layer.slug === 'loss') layer.source = 'loss';
       }, this);
 
       // Search for layer 'nothing'
@@ -102,6 +108,10 @@ define([
           } else {
             category[i]['source'] = category[i]['slug'];
           }
+          // Mantain categories closed in rendering
+          (categories_status.indexOf(category[i]['category_slug']) != -1) ? category['closed'] = true : category['closed'] = false;
+          // Get layer's length of each category
+          category['layers_length'] = i + 1;
         }
       }, this);
 
@@ -110,7 +120,7 @@ define([
         layersLength: layersLength
       });
 
-      this._update(html);
+      this.render(html);
       this.presenter.initExperiment('source');
     },
 
@@ -132,6 +142,10 @@ define([
           $toggle.removeClass('checked').css('background', '');
         }
       }, this);
+    },
+
+    render: function(html){
+      this.$el.html(html);
     },
 
     /**
@@ -157,7 +171,22 @@ define([
     _toggleLayer: function(event) {
       var layerSlug = $(event.currentTarget).data('sublayer');
       this.presenter.toggleLayer(layerSlug);
+    },
+
+    _toogleCategory: function(e){
+      // Save category status in an array
+      var categories_status = this.model.get('categories_status');
+      var slug = $(e.currentTarget).data('category_slug');
+      var index = categories_status.indexOf(slug);
+      (index != -1) ? categories_status.splice(index, 1) : categories_status.push(slug);
+      this.model.set('categories_status',categories_status);
+
+      $(e.currentTarget).parent().toggleClass('closed');
+      $(e.currentTarget).parent().children('.layers').toggleClass('closed');
+
     }
+
+
 
   });
 
