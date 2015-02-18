@@ -67,7 +67,7 @@ define([
     setInfowindow: function() {
       this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.cdbLayer.getSubLayer(0), this.options.interactivity, {
         infowindowTemplate: TPL,
-        templateType: 'handlebars'
+        templateType: 'handlebars',
       });
       this.infowindow.model.on('change:visibility', function(model) {
         if (model.get('visibility')) {
