@@ -170,6 +170,7 @@ define([
       _.each(this.$layersCountry.find('.layer'), _.bind(function(el){
         ($(el).hasClass('selected')) ? $(el).trigger('click') : null;
       }, this ));
+      this.presenter._analizeIso(this.iso);
       this.setIsoLayers();
 
     },
