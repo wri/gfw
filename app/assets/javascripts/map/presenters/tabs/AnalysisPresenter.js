@@ -178,7 +178,6 @@ define([
      * @param  {Object} iso {country: {string}, id: {integer}}
      */
     _analyzeIso: function(iso) {
-      debugger
       // Build resource
       var resource = {iso: iso.country};
       if (iso.region) {
