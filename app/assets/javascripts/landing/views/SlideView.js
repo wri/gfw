@@ -165,14 +165,17 @@ define([
         $target = $(e.target).parent();
       }
 
-      var dialog = JSON.stringify(
-      {
-        "display": true,
-        "type" : $target.data('dialog')
-      });
+      if ($target.data('dialog') === true) {
+        var dialog = JSON.stringify(
+        {
+          "display": true,
+          "type" : $target.data('dialog')
+        });
 
-      sessionStorage.setItem('DIALOG', dialog);
-      location.assign($target.data('href'));
+        sessionStorage.setItem('DIALOG', dialog);
+      }
+      ga('send', 'event', 'Get Started', 'Click', $target.data('ga'))
+      location.assign($target.attr('href'));
     }
 
   });

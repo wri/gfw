@@ -168,6 +168,9 @@
 
     .hidden {
       display: none;
+      &.read_more {
+        display: block;
+      }
     }
   }
 

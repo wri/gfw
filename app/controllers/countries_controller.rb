@@ -1,5 +1,6 @@
 class CountriesController < ApplicationController
   before_filter :check_terms
+  before_action :check_country_iso, only: :show
   include ActionView::Helpers::NumberHelper
   layout 'countries'
 
@@ -9,7 +10,6 @@ class CountriesController < ApplicationController
   end
 
   def show
-    @country = find_by_iso(params[:id])
 
     if @country['gva'].present? && @country['gva'] > 0
       gva_precision = (@country['gva_percent'] < 0.1) ? 2 : 1
@@ -65,5 +65,25 @@ class CountriesController < ApplicationController
         nil
       end
     end
-
+    def find_by_name(country_name)
+      country_name, *rest = country_name.split(/_/)
+      country_name = country_name.capitalize!
+      response = Typhoeus.get("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20gfw2_countries%20where%20name%20like%20'#{country_name}%25'",
+        headers: {"Accept" => "application/json"}
+        )
+      if response.success?
+        JSON.parse(response.body)['rows'][0]
+      else
+        nil
+      end
+    end
+    def check_country_iso
+      @country = find_by_iso(params[:id])
+      unless @country.nil?
+        @country
+      else
+        @country = find_by_name(params[:id])
+      end
+        @country
+    end
 end
