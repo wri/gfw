@@ -7,15 +7,15 @@ define([
   'underscore',
   'backbone',
   'handlebars',
-  'map/presenters/SearchboxPresenter',
-  'text!map/templates/searchbox.handlebars'
+  'map/presenters/controls/SearchboxPresenter',
+  'text!map/templates/controls/searchbox.handlebars'
 ], function(_, Backbone, Handlebars, Presenter, tpl) {
 
   'use strict';
 
   var Searchbox = Backbone.View.extend({
 
-    el: '#widget-searchbox',
+    el: '#control-searchbox',
 
     template: Handlebars.compile(tpl),
 
@@ -25,15 +25,11 @@ define([
       _.bindAll(this, 'setAutocomplete', 'onPlaceSelected');
 
       this.render();
-      this.$overlay = $('.backdrop');
       this.setListeners();
       this.setAutocomplete();
     },
 
     setListeners: function(){
-      this.$overlay.on('click', _.bind(function(){
-        this.toggleSearch();
-      }, this ));
     },
 
     render: function(){
@@ -42,7 +38,7 @@ define([
 
     toggleSearch: function(){
       this.$el.toggle(0);
-      this.$overlay.toggle(0);
+      this.$el.find('input').focus();
     },
 
     setAutocomplete: function() {
@@ -64,6 +60,7 @@ define([
           }
           this.presenter.setCenter(place.geometry.location[index[0]],place.geometry.location[index[1]]);
         }
+        this.$el.toggle(0);
       };
       ga('send', 'event', 'Map', 'Searchbox', 'Find location');
     }
