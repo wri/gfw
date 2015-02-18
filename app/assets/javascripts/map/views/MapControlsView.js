@@ -8,8 +8,9 @@ define([
   'handlebars',
   'map/presenters/MapControlsPresenter',
   'map/views/controls/SearchboxView',
+  'map/views/controls/ToggleModulesView',
   'text!map/templates/mapcontrols.handlebars'
-], function(_, Handlebars, Presenter, Searchbox, tpl) {
+], function(_, Handlebars, Presenter, Searchbox, ToggleModulesView, tpl) {
 
   'use strict';
 
@@ -22,8 +23,8 @@ define([
       'click .zoom-out' : 'zoomOut',
       'click .reset-map' : 'resetMap',
       'click .search' : 'showSearch',
-      'click .fullScreen' : 'fullScreen',
-      'click .tooglewidgets' : 'toogleWidgets',
+      'click .reset-zoom' : 'resetZoom',
+      'click .toggle-modules' : 'toggleModules',
     },
 
     template: Handlebars.compile(tpl),
@@ -50,6 +51,7 @@ define([
 
     initCustomViews: function(){
       new Searchbox();
+      new ToggleModulesView();
     },
     /**
      * Events.
@@ -78,17 +80,18 @@ define([
 
     //SEARCH
     showSearch: function(){
-      mps.publish('MapControls/show');
+      mps.publish('MapControlsSearch/show');
     },
 
-    //FULL SCREEN
-    fullScreen: function(){
-
+    //RESET ZOOM
+    resetZoom: function(){
+      this.setZoom(3);
     },
 
     //TOGGLE
-    toogleWidgets: function(){
-
+    toggleModules: function(e){
+      $(e.currentTarget).toggleClass('active');
+      mps.publish('MapControlsToggleModules/toggle');
     },
 
 

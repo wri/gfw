@@ -17,6 +17,9 @@ $w-control: 44px;
       cursor: pointer;
       svg{
         fill: $dark;
+        &.hidden{
+          display: none;
+        }
       }
       &:nth-child(even){
         border-left: 1px solid $border;
@@ -32,6 +35,14 @@ $w-control: 44px;
       }
       &:active{
         background: darken($white,5%);
+      }
+      &.toggle-modules{
+        .toggle-on { display: block;}
+        .toggle-off { display: none;}
+        &.active{
+          .toggle-on { display: none;}
+          .toggle-off { display: block;}
+        }
       }
     }
   }

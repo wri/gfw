@@ -22,24 +22,10 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'MapControlsSearch/show': function() {
-        this.view.toggleSearch();
+      'MapControlsToggleModules/toggle': function() {
+        this.view.toggleModules();
       }
     }],
-
-    /**
-     * Used by searchbox view to handle a fitbounds.
-     *
-     * @return {object} Map bounds
-     */
-    fitBounds: function(bounds) {
-      mps.publish('Map/fit-bounds', [bounds]);
-    },
-
-    setCenter: function(lat, lng) {
-      mps.publish('Map/set-center', [lat, lng]);
-      mps.publish('Map/set-zoom', [12]);
-    }
   });
 
   return SearchboxPresenter;
