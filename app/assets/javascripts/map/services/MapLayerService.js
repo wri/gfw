@@ -96,7 +96,7 @@ define([
                 tileurl, \
                 true AS visible \
               FROM \
-                layerspec_nuclear_hazard \
+                layerspec_adrian_dev \
               WHERE \
                 display = \'true\' \
               ORDER BY \
