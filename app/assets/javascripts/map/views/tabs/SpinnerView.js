@@ -53,14 +53,15 @@ define([
       // Add the background arc, from 0 to 100% (τ).
       var background = svg.append("path")
           .datum({endAngle: τ})
-          .style("fill", "#ccc")
+          .style("fill", "#fff")
+          .style("stroke", "#ccc")
           .attr("d", this.arc);
 
       // Add the foreground arc in orange, currently showing 12.7%.
       var foreground = svg.append("path")
           .attr('class', 'foreground')
-          .datum({endAngle: 0.33 * τ})
-          .style("fill", "#97Bd3d")
+          .datum({endAngle: 0.25 * τ})
+          .style("fill", "#555")
           .attr("d", this.arc);
     },
 
