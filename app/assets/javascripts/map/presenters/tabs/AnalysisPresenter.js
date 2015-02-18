@@ -22,7 +22,7 @@ define([
       both: false,
       resource: null, // analysis resource
       date: null,
-      threshold: null,
+      threshold: 30, // by default
       iso: null,
       overlay: null, // google.maps.Polygon (user drawn polygon)
       multipolygon: null, // geojson (countries and regions multypolygon)
