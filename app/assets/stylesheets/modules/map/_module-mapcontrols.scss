@@ -37,11 +37,11 @@ $w-control: 44px;
         background: darken($white,5%);
       }
       &.toggle-modules{
-        .toggle-on { display: block;}
-        .toggle-off { display: none;}
+        .toggle-on { display: none;}
+        .toggle-off { display: block;}
         &.active{
-          .toggle-on { display: none;}
-          .toggle-off { display: block;}
+          .toggle-on { display: block;}
+          .toggle-off { display: none;}
         }
       }
     }
