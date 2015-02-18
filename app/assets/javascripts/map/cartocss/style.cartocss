@@ -296,10 +296,10 @@
 
   [layer='azepoly_2010_16march2012'] {
     polygon-fill: #b2d26e;
-    polygon-opacity: 0.7;
-    line-color: #798167;
-    line-width: 0.5;
-    line-opacity: 0.5;
+    polygon-opacity: 0.9;
+    line-color: #b2d26e;
+    line-width: 1.5;
+    line-opacity: 1;
   }
   [layer='tcl'] {
     polygon-fill: #FFCC00;
