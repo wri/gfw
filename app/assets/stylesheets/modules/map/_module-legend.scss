@@ -5,6 +5,8 @@
   color: $dark;
   font-size: 13px;
   padding: 20px;
+  max-height: calc(100% - 275px);
+  overflow: auto;
 
   // @ul
   .categories{
@@ -14,9 +16,8 @@
       &.closed{
         padding: 0 0 10px;
         .category-name {
-          &:after{
-            @include transform(translate(0,-100%) rotate(180deg));
-          }
+          &:after{ @include transform(translate(0,-100%) rotate(180deg));}
+          em{ display: inline-block;}
         }
       }
       &:last-child{
@@ -44,11 +45,18 @@
           border-right: 3px solid transparent;
           border-top: 5px solid;
         }
+        em{
+          display: none;
+          font-size: 11px;
+        }
       }
     }
   }
   // @ul
   .layers {
+    &.closed{
+      display: none;
+    }
     // @li
     .layer {
       width: 100%;

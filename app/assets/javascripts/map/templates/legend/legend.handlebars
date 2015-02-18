@@ -1,12 +1,15 @@
 <ul class="categories">
   {{#each categories}}
-    <li class="category">
+    <li class="category {{#if this.closed}}closed{{/if}}">
       {{#each this}}
         {{#if @first}}
-          <span class="category-name" style="color: {{this.category_color}}; border-color: {{this.category_color}};">{{this.category_name}}</span>
+          <span data-category_slug="{{this.category_slug}}" class="category-name" style="color: {{this.category_color}}; border-color: {{this.category_color}};">
+            {{this.category_name}}
+            <em>({{../../layers_length}})</em>
+          </span>
         {{/if}}
       {{/each}}
-      <ul class="layers">
+      <ul class="layers {{#if this.closed}}closed{{/if}}">
         {{#each this}}
           <li class="layer">
             <span class="layer-name">

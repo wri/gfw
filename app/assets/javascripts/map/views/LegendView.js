@@ -28,7 +28,10 @@ define([
   'use strict';
 
   var LegendModel = Backbone.Model.extend({
-    hidden: true
+    defaults:{
+      hidden: true,
+      categories_status: []
+    }
   });
 
 
@@ -72,7 +75,6 @@ define([
       _.bindAll(this, 'update');
       this.presenter = new Presenter(this);
       this.model = new LegendModel();
-      this._renderLegend();
     },
 
     /**
@@ -81,6 +83,7 @@ define([
      * @param  {object} options    legend options
      */
     _renderLegend: function(categories, options) {
+      var categories_status = this.model.get('categories_status');
       var layers = _.flatten(categories);
       var layersLength = layers.length;
 
@@ -92,7 +95,6 @@ define([
             layerTitle: layer.title
           });
         }
-        // if (layer.slug === 'loss') layer.source = 'loss';
       }, this);
 
       // Search for layer 'nothing'
@@ -103,6 +105,10 @@ define([
           } else {
             category[i]['source'] = category[i]['slug'];
           }
+          // Mantain categories closed in rendering
+          (categories_status.indexOf(category[i]['category_slug']) != -1) ? category['closed'] = true : category['closed'] = false;
+          // Get layer's length of each category
+          category['layers_length'] = i + 1;
         }
       }, this);
 
@@ -165,8 +171,16 @@ define([
     },
 
     _toogleCategory: function(e){
+      // Save category status in an array
+      var categories_status = this.model.get('categories_status');
+      var slug = $(e.currentTarget).data('category_slug');
+      var index = categories_status.indexOf(slug);
+      (index != -1) ? categories_status.splice(index, 1) : categories_status.push(slug);
+      this.model.set('categories_status',categories_status);
+
       $(e.currentTarget).parent().toggleClass('closed');
-      $(e.currentTarget).parent().children('.layers').toggleClass('hidden');
+      $(e.currentTarget).parent().children('.layers').toggleClass('closed');
+
     }
 
 
