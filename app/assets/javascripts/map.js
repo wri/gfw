@@ -17,6 +17,7 @@ require([
   'map/views/MapView',
   'map/views/MapControlsView',
   'map/views/TabsView',
+  'map/views/AnalysisResultsView',
   'map/views/LayersNavView',
   'map/views/LegendView',
   'map/views/TimelineView',
@@ -25,7 +26,7 @@ require([
   'views/DialogView',
   '_string'
 ], function($, _, Class, Backbone, chosen, utils, mps, Router, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
-    MapControlsView, TabsView, LayersNavView, LegendView, TimelineView, HeaderView, FooterView, DialogView) {
+    MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, HeaderView, FooterView, DialogView) {
 
   'use strict';
 
@@ -70,6 +71,7 @@ require([
 
       new MapControlsView(mapView.map);
       new TabsView(mapView.map);
+      new AnalysisResultsView();
       new LayersNavView();
       new LegendView();
       new TimelineView();
