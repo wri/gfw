@@ -183,12 +183,13 @@ define([
     },
 
     printSubareas: function(subareas){
+      console.log(12)
       var subareas = subareas;
       var options = "";
       _.each(_.sortBy(subareas, function(area){ return area.name_1 }), _.bind(function(area, i){
         options += '<option value="'+ area.id_1 +'">'+ area.name_1 + '</option>';
       }, this ));
-      this.$regionSelect.append(options).removeAttr('disabled');
+      this.$regionSelect.empty().append(options).removeAttr('disabled');
       this.$regionSelect.trigger("liszt:updated");
     },
 
