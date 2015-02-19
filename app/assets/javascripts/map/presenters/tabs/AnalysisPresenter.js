@@ -320,7 +320,7 @@ define([
 
         // this is super ugly
         if (baselayer.slug === 'loss') {
-          resource.thresh = '?thresh=' + this.status.get('threshold');
+          resource.thresh = '?thresh=' + ((this.status.get('threshold') === null) ? 30 :  this.status.get('threshold'));
         } else {
           delete resource.thresh;
         }
