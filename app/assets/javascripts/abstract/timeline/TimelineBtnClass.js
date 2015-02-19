@@ -109,16 +109,17 @@ define([
           var x =  (i * slotWidth) +
             ((slotWidth - this.options.tickWidth) / 2) - slotWidth;
 
-          return 'translate(' + x + ', 15)';
+          return 'translate(' + x + ', 13)';
         }, this));
 
       this.tickG.append('rect')
         .attr('width', this.options.tickWidth)
-        .attr('height', 17)
-        .attr('ry', 2);
+        .attr('height', 24)
+        .attr('ry', 12);
+
 
       this.tickG.append('text')
-        .attr('y', 13)
+        .attr('y', 16)
         .attr('x', this.options.tickWidth/2)
         .attr('text-anchor', 'middle')
         .text(function(d) {
