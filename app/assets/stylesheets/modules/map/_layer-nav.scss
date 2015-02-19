@@ -24,11 +24,14 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
   .categories-list {
     position: relative;
     display: inline-block;
-    float: left;
-    left: 50%;
-    @include transform(translate(-50%,0));
+    float: right;
     // bottom: 0;
     // right: 0;
+    @media (min-width: 1500px){
+      float: left;
+      left: 50%;
+      @include transform(translate(-50%,0));
+    }
   }
 
   .categories-list > li {
