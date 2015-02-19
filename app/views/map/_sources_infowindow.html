@@ -9,7 +9,6 @@
       e && e.preventDefault();
       e.stopPropagation ? e.stopPropagation() : window.event.cancelBubble = true;
       $backdrop.fadeIn();
-      console.log('hola');
       var elem = '#' + $(e.currentTarget).data('source');
       $content.append($(elem).html())
       $wind.fadeIn();
