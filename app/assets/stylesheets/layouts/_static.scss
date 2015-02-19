@@ -1025,6 +1025,7 @@
     background: #F2F2F3;
     ul{
       @include row();
+      border-bottom: 1px solid $border;
       li{
         @include col(33.33333);
         a{
