@@ -183,7 +183,6 @@ define([
     },
 
     printSubareas: function(subareas){
-      console.log(12)
       var subareas = subareas;
       var options = "";
       _.each(_.sortBy(subareas, function(area){ return area.name_1 }), _.bind(function(area, i){
