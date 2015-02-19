@@ -22,7 +22,7 @@ define([
       both: false,
       resource: null, // analysis resource
       date: null,
-      threshold: null,
+      threshold: 30,
       overlay: null, // google.maps.Polygon (user drawn polygon)
       multipolygon: null, // geojson (countries and regions multypolygon)
       disableUpdating: false
@@ -163,6 +163,7 @@ define([
      * @param  {Object} iso {country: {string}, id: {integer}}
      */
     _analyzeIso: function(iso) {
+      this.deleteAnalysis();
       // Build resource
       var resource = {iso: iso.country};
       if (iso.region) {
