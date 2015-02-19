@@ -33,6 +33,7 @@ define([
       this.map = map;
       this.presenter = new Presenter(this);
       this.render();
+      this.$el.removeClass('hide');
       this.$tabs = this.$el.find('.tab');
       this.$tabsContent = this.$el.find('.tab-content');
       this.$container = this.$el.find('.content')

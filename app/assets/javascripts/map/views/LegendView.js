@@ -78,6 +78,7 @@ define([
       _.bindAll(this, 'update');
       this.presenter = new Presenter(this);
       this.model = new LegendModel();
+      this.$el.removeClass('hide');
     },
 
     /**
