@@ -50,7 +50,7 @@ define([
     },
 
     initCustomViews: function(){
-      new Searchbox();
+      new Searchbox(this.map);
       new ToggleModulesView();
     },
     /**

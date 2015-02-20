@@ -13,15 +13,25 @@ define([
 
   'use strict';
 
+  var SearchboxModel = Backbone.Model.extend({
+    defaults:{
+      hidden: true
+    }
+  });
+
+
+
+
   var Searchbox = Backbone.View.extend({
 
     el: '#control-searchbox',
 
     template: Handlebars.compile(tpl),
 
-    initialize: function() {
+    initialize: function(map) {
+      this.map = map;
+      this.model = new SearchboxModel();
       this.presenter = new Presenter(this);
-
       _.bindAll(this, 'setAutocomplete', 'onPlaceSelected');
 
       this.render();
@@ -30,6 +40,12 @@ define([
     },
 
     setListeners: function(){
+      google.maps.event.addListener(this.map, 'click',
+        _.bind(function() {
+          this.model.set('hidden', false);
+          this.toggleSearch();
+        }, this)
+      );
     },
 
     render: function(){
@@ -37,8 +53,15 @@ define([
     },
 
     toggleSearch: function(){
-      this.$el.toggle(0);
-      this.$el.find('input').focus();
+      var hidden = this.model.get('hidden');
+      if (hidden) {
+        this.$el.show(0);
+        this.$el.find('input').focus();
+        this.model.set('hidden', false);
+      }else{
+        this.$el.hide(0);
+        this.model.set('hidden', true);
+      }
     },
 
     setAutocomplete: function() {
@@ -60,7 +83,8 @@ define([
           }
           this.presenter.setCenter(place.geometry.location[index[0]],place.geometry.location[index[1]]);
         }
-        this.$el.toggle(0);
+        this.model.set('hidden', false);
+        this.toggleSearch();
       };
       ga('send', 'event', 'Map', 'Searchbox', 'Find location');
     }

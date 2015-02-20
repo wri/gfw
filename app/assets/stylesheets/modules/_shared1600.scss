@@ -338,3 +338,46 @@
   }
 
 }
+
+
+.scroll-light{
+  -webkit-overflow-scrolling: touch;
+  /* Let's get this party started */
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background: $dark;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0px;
+    background: rgba($light,0.8);
+  }
+}
+
+.scroll-dark{
+  -webkit-overflow-scrolling: touch;
+  /* Let's get this party started */
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background: $light;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0px;
+    background: rgba($dark,0.8);
+  }
+}
