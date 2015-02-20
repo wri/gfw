@@ -143,7 +143,6 @@ define([
       // Even if the result is a failure or unavailable message, we render
       // the widget results and keep the polygon.
       this.status.set('analysis', true);
-      this.view.model.set('boxHidden', false);
 
       if (results.loading) {
         this.view.renderLoading();

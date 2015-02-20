@@ -1,24 +1,23 @@
 /**
  * The Analysis view.
  *
- * @return Analysis view (extends Widget.View)
+ * @return Analysis view
  */
 define([
   'underscore',
   'handlebars',
-  'map/views/Widget',
   'map/presenters/AnalysisResultsPresenter',
   'text!map/templates/analysisResults.handlebars',
   'text!map/templates/analysisResultsFailure.handlebars',
   'text!map/templates/analysisResultsUnavailable.handlebars',
   'text!map/templates/analysisResultsLoading.handlebars',
-], function(_, Handlebars, Widget, Presenter, tpl, failureTpl, unavailableTpl, loadingTpl) {
+], function(_, Handlebars, Presenter, tpl, failureTpl, unavailableTpl, loadingTpl) {
 
   'use strict';
 
-  var AnalysisResultsView = Widget.extend({
+  var AnalysisResultsView = Backbone.View.extend({
 
-    className: 'widget widget-analysis-results',
+    el: '#analysis-result',
 
     template: Handlebars.compile(tpl),
 
@@ -44,11 +43,12 @@ define([
 
     initialize: function() {
       this.presenter = new Presenter(this);
+      this._cacheSelector();
+
       AnalysisResultsView.__super__.initialize.apply(this);
     },
 
     _cacheSelector: function() {
-      AnalysisResultsView.__super__._cacheSelector.apply(this);
       this.$downloadDropdown = this.$('.download-dropdown');
       this.$subscribeButton = this.$('#subscribeButton');
       this.$subscribeButton_title = this.$('#subscribeButton-title');
@@ -61,7 +61,7 @@ define([
      */
     renderAnalysis: function(params) {
       this.params = params;
-      this._update(this.template(params));
+      this.$el.html(this.template(params));
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + this.params.layer.title);
 
     },
@@ -70,11 +70,11 @@ define([
      * Render loading analysis message.
      */
     renderLoading: function() {
-      this._update(this.templates.loading());
+      //this._update(this.templates.loading());
     },
 
     renderUnavailable: function() {
-      this._update(this.templates.unavailable());
+      //this._update(this.templates.unavailable());
     },
 
     toggleSubscribeButton: function(toggle) {
