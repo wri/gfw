@@ -32,11 +32,14 @@
     }
   }
   .analysis-content{
-    padding: 20px;
     .analysis-tab-content{
       display: none;
+      padding: 20px;
       &.active{
         display: block;
+      }
+      &.hidden{
+        display: none;
       }
     }
   }
@@ -84,10 +87,145 @@
   }
 }
 
-//DRAW TAB
+//COUNTRY TAB
 .analysis-tab-content.country-tab{
   .chzn-container-single{
     margin: 0 0 5px;
   }
 }
+
+
+
+.analysis-result{
+  padding: 20px;
+
+
+  .analysis-stats {
+    background: white;
+    font-size: 12px;
+
+    > li {
+      padding: 12px 0;
+      border-bottom: 1px solid #ddd;
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        border: none;
+        padding-bottom: 0;
+      }
+    }
+
+    .stats-title {
+      color: #999;
+      font-weight: 500;
+      font-size: 11px;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      display: block;
+      .stats-threshold {
+        text-transform: lowercase;
+        font-weight: normal;
+        font-size: 9px;
+        margin-left: 4px;
+      }
+    }
+    .stats-count {
+      font-weight: 500;
+      font-size: 15px;
+      color: #666;
+      strong {
+        font-size: 18px;
+        display: inline-block;
+      }
+    }
+
+    .stats-notice {
+      font-size: 12px;
+    }
+
+    // .download-links{
+    //   text-align: right;
+    //   position: relative;
+
+    //   span {
+    //     color: #F69;
+    //     font-weight: 500;
+    //     cursor: pointer;
+    //     a{
+    //       color: #F69;
+    //     }
+    //   }
+
+    //   .download-dropdown {
+    //     text-align: left;
+    //     width: 90px;
+    //     top: 30px;
+    //     right: 0;
+    //     position: absolute;
+    //     z-index: 2000;
+    //     border: 0;
+    //     background-color: #fff;
+    //     border-radius: 3px;
+    //     border: 1px solid #ccc;
+    //     box-shadow: 0 0 3px rgba(0,0,0,0.2);
+    //     &.hidden{
+    //       display: none;
+    //     }
+    //     > li a {
+    //       padding: 8px 10px;
+    //       display: block;
+    //       border-bottom: 1px solid #f2f2f2;
+    //       color: $cGreen;
+    //       &:hover{
+    //         background-color: darken($white,2.5%);
+    //       }
+    //     }
+
+    //   }
+    // }
+  }
+
+
+  // FOOTER ANALYSIS
+  .analysis-footer{
+    border-top: 1px solid $border;
+    ul{
+      @include row();
+      li{
+        width: 33.333333%;
+        position: relative;
+        padding: 10px 0;
+        cursor: pointer;
+
+        &:after{
+          content: "";
+          height: 50%;
+          width: 1px;
+          background: $border;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          @include transform(translate(0,-50%));
+        }
+
+        &:first-child{
+          &:after{
+            display: none;
+          }
+        }
+        svg{
+          fill: $dark;
+          width: 18px;
+          height: 18px;
+          margin: 0 auto;
+        }
+      }
+    }
+  }
+}
+
+
 

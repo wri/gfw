@@ -7,13 +7,13 @@
     </ul>
   </nav>
   <div id="analysis-content" class="analysis-content">
-    <div id="default" class="analysis-tab-content default active">
+    <div id="default" class="analysis-tab-content default results-hide active">
       <div class="arrow"></div>
       <header>
         <h2>Choose the analysis you want to do</h2>
       </header>
     </div>
-    <div id="draw-tab" class="analysis-tab-content draw-tab">
+    <div id="draw-tab" class="analysis-tab-content draw-tab results-hide">
       <header>
         <h2>Draw in the map the area you want to analyze</h2>
         <p>Learn more <a href="#" data-source="regular_dialog" class="source btn gray uppercase little">Click here</a></p>
@@ -27,16 +27,16 @@
     <div id="country-tab" class="analysis-tab-content country-tab">
       <select data-placeholder="Select country" class="chosen-select default" id="analysis-country-select"><option></option></select>
       <select data-placeholder="Select jurisdiction" disabled="true" class="chosen-select default" id="analysis-region-select"><option></option></select>
-      <ul class="button-container">
+      <ul class="button-container one">
         <li><button id="analysis-country-button" class="btn green uppercase">Analyze</button></li>
       </ul>
     </div>
-    <div id="data-tab" class="analysis-tab-content data-tab">
+    <div id="data-tab" class="analysis-tab-content data-tab results-hide">
       <header>
         <h2>Concession & PA analysis</h2>
         <p>Select a concession you’d like to analyze, and click the ‘analyze area’ button in the window that appears.</p>
       </header>
     </div>
   </div>
-  <div id="analysis-result"></div>
+  <div id="analysis-result" class="analysis-result hidden"></div>
 </div>

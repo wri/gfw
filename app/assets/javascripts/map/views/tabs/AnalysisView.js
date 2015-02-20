@@ -92,8 +92,10 @@ define([
       $('#'+tab).addClass('active');
 
       // prevent changes between tabs without reset drawing
-      this._stopDrawing();
-      this.presenter.deleteAnalysis();
+      if (this.model.get('is_drawing')) {
+        this._stopDrawing();
+        this.presenter.deleteAnalysis();
+      }
     },
 
     /**
@@ -169,7 +171,7 @@ define([
       this.countries = amplify.store('countries');
 
       //Loop for print options
-      var options = "";
+      var options = "<option></option>";
       _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
         options += '<option value="'+ country.iso +'">'+ country.name + '</option>';
       }, this ));
@@ -183,8 +185,9 @@ define([
     },
 
     printSubareas: function(subareas){
+      this.area = null;
       var subareas = subareas;
-      var options = "";
+      var options = "<option></option>";
       _.each(_.sortBy(subareas, function(area){ return area.name_1 }), _.bind(function(area, i){
         options += '<option value="'+ area.id_1 +'">'+ area.name_1 + '</option>';
       }, this ));
@@ -253,6 +256,7 @@ define([
      * listener.
      */
     _startDrawingManager: function() {
+      this.model.set('is_drawing', true);
       this.drawingManager = new google.maps.drawing.DrawingManager({
         drawingControl: false,
         drawingMode: google.maps.drawing.OverlayType.POLYGON,
@@ -296,6 +300,7 @@ define([
     },
 
     _resetDrawing: function(){
+      this.model.set('is_drawing', false);
       if(this.$infowindows)
         this.$infowindows.hide(0).removeClass('hidden');
       if (this.drawingManager) {

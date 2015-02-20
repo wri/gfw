@@ -15,6 +15,13 @@ define([
 
   'use strict';
 
+  var AnalysisResultsModel = Backbone.Model.extend({
+    defaults: {
+      boxHidden: true
+    }
+  });
+
+
   var AnalysisResultsView = Backbone.View.extend({
 
     el: '#analysis-result',
@@ -27,28 +34,20 @@ define([
       loading: Handlebars.compile(loadingTpl)
     },
 
-    options: {
-      hidden: false,
-      boxHidden: true,
-      boxClosed: false
-    },
-
-    events: function() {
-      return _.extend({}, AnalysisResultsView.__super__.events, {
-        'click .analysis-control-delete': '_deleteAnalysis',
-        'click .download-links span' :'_toggleDownloads',
-        'click .analysis-control-subscribe': '_subscribe'
-      });
+    events:{
+      'click #analysis-delete': '_deleteAnalysis',
+      'click #analysis-subscribe': '_subscribe',
+      'click .download-links span' :'_toggleDownloads',
     },
 
     initialize: function() {
+      this.model = new AnalysisResultsModel();
       this.presenter = new Presenter(this);
       this._cacheSelector();
-
-      AnalysisResultsView.__super__.initialize.apply(this);
     },
 
     _cacheSelector: function() {
+      this.$resultsHide = $('.results-hide');
       this.$downloadDropdown = this.$('.download-dropdown');
       this.$subscribeButton = this.$('#subscribeButton');
       this.$subscribeButton_title = this.$('#subscribeButton-title');
@@ -61,7 +60,8 @@ define([
      */
     renderAnalysis: function(params) {
       this.params = params;
-      this.$el.html(this.template(params));
+      this.$resultsHide.addClass('hidden');
+      this.$el.html(this.template(params)).removeClass('hidden');
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + this.params.layer.title);
 
     },
@@ -90,6 +90,8 @@ define([
     },
 
     _deleteAnalysis: function() {
+      this.$resultsHide.removeClass('hidden');
+      this.$el.addClass('hidden');
       this.presenter.deleteAnalysis();
       ga('send', 'event', 'Map', 'Delete-Analysis', 'Layer: ' + this.params.layer.title);
     },
