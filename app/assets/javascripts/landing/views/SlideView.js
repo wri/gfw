@@ -165,7 +165,7 @@ define([
         $target = $(e.target).parent();
       }
 
-      if ($target.data('dialog') === true) {
+      if ($target.data('dialog')) {
         var dialog = JSON.stringify(
         {
           "display": true,
@@ -174,8 +174,8 @@ define([
 
         sessionStorage.setItem('DIALOG', dialog);
       }
-      ga('send', 'event', 'Get Started', 'Click', $target.data('ga'))
-      location.assign($target.attr('href'));
+      ga('send', 'event', 'Get Started', 'Click', $target.data('ga'));
+      window.setTimeout(function(){location.assign($target.attr('href'));20});
     }
 
   });
