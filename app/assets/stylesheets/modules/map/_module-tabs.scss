@@ -18,7 +18,10 @@ $w-control: 44px;
           &:hover{ background: $light;}
           &:active{ background: darken($light,5%);}
           &.active{ background: $white;}
-          &.inactive{ background: #EEEEEE;}
+          &.inactive{
+            background: #EEEEEE;
+            &:hover{ background: lighten(#EEEEEE, 5%);}
+          }
           &.disabled{
             pointer-events: none;
             cursor: default;
