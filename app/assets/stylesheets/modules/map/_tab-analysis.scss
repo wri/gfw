@@ -191,6 +191,7 @@
 
   // FOOTER ANALYSIS
   .analysis-footer{
+    margin: 10px 0 0;
     border-top: 1px solid $border;
     ul{
       @include row();
@@ -199,6 +200,13 @@
         position: relative;
         padding: 10px 0;
         cursor: pointer;
+
+        &:hover{
+          .tooltip1{
+            opacity: 1;
+            visibility: visible;
+          }
+        }
 
         &:after{
           content: "";

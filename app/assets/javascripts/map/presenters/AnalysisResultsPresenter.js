@@ -154,6 +154,7 @@ define([
         this._renderAnalysis(results);
         // Subscribe button just should be activated
         // when a analysis is succesfully rendered.
+        mps.publish('Spinner/stop');
         this._setSubscribeButton();
       }
     },

@@ -294,6 +294,7 @@ define([
      * from the current status.
      */
     _buildResource: function(resource) {
+      mps.publish('Spinner/start');
       var date, dateFormat;
       var baselayer = this.status.get('baselayer');
 
