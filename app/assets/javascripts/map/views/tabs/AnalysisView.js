@@ -81,35 +81,48 @@ define([
 
     // navigate between tabs
     toggleTabs: function(e){
-      var tab = $(e.currentTarget).data('analysis');
+      if (!$(e.currentTarget).hasClass('disabled')) {
+        var tab = $(e.currentTarget).data('analysis');
 
-      // Current tab
-      this.$tabs.removeClass('active');
-      $(e.currentTarget).addClass('active');
+        // Current tab
+        this.$tabs.removeClass('active');
+        $(e.currentTarget).addClass('active');
 
-      // Current content tab
-      this.$tabsContent.removeClass('active');
-      $('#'+tab).addClass('active');
+        // Current content tab
+        this.$tabsContent.removeClass('active');
+        $('#'+tab).addClass('active');
 
-      // prevent changes between tabs without reset drawing
-      if (this.model.get('is_drawing')) {
-        this._stopDrawing();
-        this.presenter.deleteAnalysis();
+        // prevent changes between tabs without reset drawing
+        if (this.model.get('is_drawing')) {
+          this._stopDrawing();
+          this.presenter.deleteAnalysis();
+        }
       }
     },
 
     openTab: function(type){
+      var current;
       switch(type){
         case 'geojson':
-          $('#draw-tab-button').trigger('click');
+          current = '#draw-tab-button';
+          $('#draw-tab-button').removeClass('disabled').trigger('click');
         break;
         case 'iso':
-          $('#country-tab-button').trigger('click');
+          current = '#country-tab-button';
+          $('#country-tab-button').removeClass('disabled').trigger('click');
         break;
         case 'other':
-          $('#data-tab-button').trigger('click');
+          current = '#data-tab-button';
+          $('#data-tab-button').removeClass('disabled').trigger('click');
         break;
       }
+      this.fixTab(current);
+    },
+
+    fixTab: function(current){
+      // function to fix current tab and prevent user for changing tab with an analysis rendered
+      this.$tabs.addClass('disabled');
+      $(current).removeClass('disabled');
     },
 
 
@@ -338,6 +351,8 @@ define([
       if (resource.multipolygon) {
         this.map.data.remove(resource.multipolygon);
       }
+
+      this.$tabs.removeClass('disabled');
     },
 
     setEditable: function(overlay, to) {

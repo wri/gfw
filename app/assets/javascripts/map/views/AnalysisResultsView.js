@@ -49,11 +49,8 @@ define([
       this.$tab = $('#analysis-tab');
       this.$resultsHide = $('.results-hide');
       this.$downloadDropdown = $('.download-dropdown');
-
-
-
-      this.$subscribeButton = this.$('#subscribeButton');
-      this.$subscribeButton_title = this.$('#subscribeButton-title');
+      this.$subscribeButton = $('#subscribeButton');
+      this.$subscribeButton_title = $('#subscribeButton-title');
     },
 
     /**

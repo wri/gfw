@@ -22,6 +22,11 @@
             fill: $cGreen;
           }
         }
+        &.disabled{
+          opacity: 0.5;
+          pointer-events: none;
+          cursor: default;
+        }
         svg{
           display: block;
           width: 40px;
