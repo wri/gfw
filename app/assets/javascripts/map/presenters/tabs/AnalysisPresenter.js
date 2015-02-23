@@ -183,6 +183,7 @@ define([
      */
     _analyzeIso: function(iso) {
       this.deleteAnalysis();
+      this.view.setSelects(iso);
       // Build resource
       var resource = {
         iso: iso.country,

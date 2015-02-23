@@ -213,23 +213,32 @@ define([
     },
 
     printSubareas: function(subareas){
-      this.area = null;
       var subareas = subareas;
       var options = "<option></option>";
       _.each(_.sortBy(subareas, function(area){ return area.name_1 }), _.bind(function(area, i){
         options += '<option value="'+ area.id_1 +'">'+ area.name_1 + '</option>';
       }, this ));
       this.$regionSelect.empty().append(options).removeAttr('disabled');
-      this.$regionSelect.trigger("liszt:updated");
+      this.$regionSelect.val(this.area).trigger("liszt:updated");
     },
 
     // Select change iso
     changeIso: function(e){
       this.iso = $(e.currentTarget).val();
+      this.area = null;
       this.getSubCountries();
     },
     changeArea: function(e){
       this.area = $(e.currentTarget).val();
+    },
+
+    // For autoselect country and region when youn reload page
+    setSelects: function(iso){
+      this.iso = iso.country;
+      this.area = iso.region;
+
+      this.$countrySelect.val(this.iso).trigger("liszt:updated");
+      this.getSubCountries();
     },
 
     analysisCountry: function(){

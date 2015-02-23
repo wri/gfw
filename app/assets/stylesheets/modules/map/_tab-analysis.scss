@@ -183,6 +183,12 @@
           }
         }
 
+        &.disabled{
+          opacity: 0.5;
+          pointer-events: none;
+          cursor: default;
+        }
+
         &:after{
           content: "";
           height: 50%;

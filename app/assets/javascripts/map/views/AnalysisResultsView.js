@@ -49,8 +49,7 @@ define([
       this.$tab = $('#analysis-tab');
       this.$resultsHide = $('.results-hide');
       this.$downloadDropdown = $('.download-dropdown');
-      this.$subscribeButton = $('#subscribeButton');
-      this.$subscribeButton_title = $('#subscribeButton-title');
+      this.$subscribeButton = $('#analysis-subscribe');
     },
 
     /**
@@ -79,7 +78,6 @@ define([
 
     toggleSubscribeButton: function(toggle) {
       this.$subscribeButton.toggleClass('disabled', toggle);
-      this.$subscribeButton_title.toggleClass('disabled', toggle);
     },
 
     /**
