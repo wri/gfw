@@ -52,7 +52,7 @@ define([
       this.$years = $('.overview_graph__years');
       this.$settings = $('.settings');
       var m = this.m = 40,
-          w = this.w = this.$graph.width()+(m*2),
+          w = this.w = this.$graph.width(),
           h = this.h = this.$graph.height(),
           vertical_m = this.vertical_m = 20;
 
@@ -546,7 +546,7 @@ define([
           height  = 30;
 
       var graph = d3.select('.countries_list__minioverview_'+iso)
-        .append('svg:svg')
+        .append('º:svg')
         .attr('width', width)
         .attr('height', height);
 
@@ -712,12 +712,10 @@ define([
       for (var y = 2001; y<=2012; y += 1) {
         var y_ = this.x_scale(y);
 
-        if (y === 2001) {
-          y_ -= 25;
-        } else if (y === 2012) {
-          y_ -= 55;
+        if (y === 2001 || y === 2012) {
+          y_ -= 5;
         } else {
-          y_ -= 40;
+          y_ -= 0;
         }
 
         markup_years += '<span class="year" style="left:'+y_+'px">'+y+'</span>';
@@ -796,9 +794,9 @@ define([
         this._showYears();
 
         svg.append('text')
-          .attr('class', 'axis')
+          .attr('class', 'axis notranslate')
           .attr('id', 'axis_y')
-          .text('Mha')
+          .text('Tree cover loss (Mha)')
           .attr('x', -h/2)
           .attr('y', 30)
           .attr('transform', 'rotate(-90)');
@@ -886,51 +884,51 @@ define([
           ];
 
           // line
-          svg.selectAll('line.overview_line')
-            .data([data_gain_[0]])
-            .enter()
-            .append('line')
-            .attr({
-              'class': 'overview_line',
-              'x1': m,
-              'x2': w-m,
-              'y1': function(d) { return y_scale(gain); },
-              'y2': function(d) { return y_scale(gain); }
-            })
-           .attr('cx', function(d) {
-              return x_scale(d.year);
-            })
-            .attr('cy', function(d){
-              return y_scale(d.value);
-            })
-            .attr('r', 6)
-            .attr('name', _.bind(function(d) {
-              return '<span>2001-2012</span>'+this.helper.formatNumber(parseFloat(d.value/1000000).toFixed(1))+' Mha';
-            }, this ))
-            .on('mouseover', function(d) {
-              that.tooltip.html($(this).attr('name'))
-                .style('visibility', 'visible')
-                .style('top', $(this).offset().top-100+'px')
-                .style('left', ($(this).offset().left + 436) +'px')
-                .attr('class', 'tooltip2 gain_tooltip');
+          // svg.selectAll('line.overview_line')
+          //   .data([data_gain_[0]])
+          //   .enter()
+          //   .append('line')
+          //   .attr({
+          //     'class': 'overview_line',
+          //     'x1': m,
+          //     'x2': w-m,
+          //     'y1': function(d) { return y_scale(gain); },
+          //     'y2': function(d) { return y_scale(gain); }
+          //   })
+          //  .attr('cx', function(d) {
+          //     return x_scale(d.year);
+          //   })
+          //   .attr('cy', function(d){
+          //     return y_scale(d.value);
+          //   })
+          //   .attr('r', 6)
+          //   .attr('name', _.bind(function(d) {
+          //     return '<span>2001-2012</span>'+this.helper.formatNumber(parseFloat(d.value/1000000).toFixed(1))+' Mha';
+          //   }, this ))
+          //   .on('mouseover', function(d) {
+          //     that.tooltip.html($(this).attr('name'))
+          //       .style('visibility', 'visible')
+          //       .style('top', $(this).offset().top-100+'px')
+          //       .style('left', ($(this).offset().left + 436) +'px')
+          //       .attr('class', 'tooltip2 gain_tooltip');
 
-              d3.select(this)
-                .transition()
-                .duration(100)
-                .attr('r', 7);
+          //     d3.select(this)
+          //       .transition()
+          //       .duration(100)
+          //       .attr('r', 7);
 
-              // TODO: highlighting the legend
-            })
-            .on('mouseout', function(d) {
-              that.tooltip.style('visibility', 'hidden');
+          //     // TODO: highlighting the legend
+          //   })
+          //   .on('mouseout', function(d) {
+          //     that.tooltip.style('visibility', 'hidden');
 
-              d3.select(this)
-                .transition()
-                .duration(100)
-                .attr('r', 6);
+          //     d3.select(this)
+          //       .transition()
+          //       .duration(100)
+          //       .attr('r', 6);
 
-              // TODO: highlighting the legend
-            });
+          //     // TODO: highlighting the legend
+          //   });
         }, this ));
       } else if (this.model.get('graph') === 'percent_loss') {
         this._showYears();
