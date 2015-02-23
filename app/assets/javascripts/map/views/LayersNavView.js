@@ -165,19 +165,23 @@ define([
     },
 
     // Select change iso
-    changeIso: function(e){
-      this.iso = $(e.currentTarget).val();
+    changeIso: function(){
+      this.iso = this.$countrySelect.val();
       _.each(this.$layersCountry.find('.layer'), _.bind(function(el){
         ($(el).hasClass('selected')) ? $(el).trigger('click') : null;
       }, this ));
-      this.presenter._analizeIso(this.iso);
       this.setIsoLayers();
-
+      this.presenter._analizeIso(this.iso);
     },
 
     // For autoselect country and region when youn reload page
     setSelect: function(iso){
-      this.$countrySelect.val(iso).trigger("liszt:updated");
+      this.$countrySelect.val(iso.country).trigger("liszt:updated");
+      this.iso = this.$countrySelect.val();
+      _.each(this.$layersCountry.find('.layer'), _.bind(function(el){
+        ($(el).hasClass('selected')) ? $(el).trigger('click') : null;
+      }, this ));
+      this.setIsoLayers();
     },
 
 

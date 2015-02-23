@@ -184,6 +184,8 @@ define([
     _analyzeIso: function(iso) {
       this.deleteAnalysis();
       this.view.setSelects(iso);
+      mps.publish('LocalMode/updateIso', [iso]);
+
       // Build resource
       var resource = {
         iso: iso.country,
@@ -429,7 +431,6 @@ define([
       }
 
       this.status.set('baselayer', baselayer);
-      console.log(baselayer);
       this._setAnalysisBtnVisibility();
     },
 
