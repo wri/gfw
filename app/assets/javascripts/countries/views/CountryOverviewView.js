@@ -52,7 +52,7 @@ define([
       this.$years = $('.overview_graph__years');
       this.$settings = $('.settings');
       var m = this.m = 40,
-          w = this.w = this.$graph.width()+(m*2),
+          w = this.w = this.$graph.width(),
           h = this.h = this.$graph.height(),
           vertical_m = this.vertical_m = 20;
 
@@ -546,7 +546,7 @@ define([
           height  = 30;
 
       var graph = d3.select('.countries_list__minioverview_'+iso)
-        .append('svg:svg')
+        .append('º:svg')
         .attr('width', width)
         .attr('height', height);
 
@@ -712,12 +712,10 @@ define([
       for (var y = 2001; y<=2012; y += 1) {
         var y_ = this.x_scale(y);
 
-        if (y === 2001) {
-          y_ -= 25;
-        } else if (y === 2012) {
-          y_ -= 55;
+        if (y === 2001 || y === 2012) {
+          y_ -= 5;
         } else {
-          y_ -= 40;
+          y_ -= 0;
         }
 
         markup_years += '<span class="year" style="left:'+y_+'px">'+y+'</span>';
