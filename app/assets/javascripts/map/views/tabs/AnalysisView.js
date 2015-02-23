@@ -178,6 +178,7 @@ define([
     },
 
     getSubCountries: function(){
+      this.$regionSelect.attr('disabled', true).trigger("liszt:updated");;
       var sql = ["SELECT gadm_1_all.cartodb_id, gadm_1_all.iso, gadm2_provinces_simple.id_1, gadm2_provinces_simple.name_1 as name_1 FROM gadm_1_all, gadm2_provinces_simple where gadm_1_all.iso = '"+this.iso+"' AND gadm2_provinces_simple.iso = '"+this.iso+"' AND gadm2_provinces_simple.id_1 = gadm_1_all.id_1 order by id_1 asc"];
       $.ajax({
         url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,

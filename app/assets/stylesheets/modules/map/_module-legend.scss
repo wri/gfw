@@ -61,6 +61,7 @@
     .layer {
       width: 100%;
       margin-bottom: 6px;
+      @include clearfix();
       &:last-child {
         margin-bottom: 0;
       }
@@ -68,8 +69,13 @@
       .layer-name {
         display: block;
         position: relative;
-        padding-right: 17px;
+        padding: 0 17px 0 13px;
         font-size: 13px;
+        .circle{
+          position: absolute;
+          top: -2px;
+          left: 0;
+        }
       }
       .layer-sublayer {
         cursor: pointer;
