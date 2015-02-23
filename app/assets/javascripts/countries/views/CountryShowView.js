@@ -349,6 +349,7 @@ define([
             if (d.data > 0) return d.data + '%'
           })
           .attr('fill', function(d, i) { return labelColors[i]; } )
+          .attr('class', 'notranslate')
           .style('font-size', '13px');
       });
     },
