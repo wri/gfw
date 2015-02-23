@@ -1,11 +1,15 @@
 .widget-timeline {
   .widget-box {
     bottom: 50px;
-    left: 0;
-    right: 0;
-    margin: auto;
+    left: 35px;
     width: 1000px;
     height: 50px;
+    @media (min-width: 1500px){
+      bottom: 50px;
+      left: 0;
+      right: 0;
+      margin: auto;
+    }
   }
 
   .timeline-legend {
