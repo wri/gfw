@@ -90,7 +90,7 @@ define([
         if (wdpaid && wdpaid != "") {
           wdpaid = {wdpaid : wdpaid}
           mps.publish('AnalysisTool/analyze-wdpaid', [wdpaid]);
-         return;
+          return;
         }
         this.view._stopDrawing();
         this.deleteAnalysis();

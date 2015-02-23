@@ -14,6 +14,14 @@ define([
 
   'use strict';
 
+  var MapControlsModel = Backbone.Model.extend({
+    defaults: {
+      bounds: null
+    }
+  });
+
+
+
   var MapControlsView = Backbone.View.extend({
 
     el: '#module-map-controls',
@@ -23,13 +31,14 @@ define([
       'click .zoom-out' : 'zoomOut',
       'click .reset-map' : 'resetMap',
       'click .search' : 'showSearch',
-      'click .reset-zoom' : 'resetZoom',
+      'click .fit-bounds' : 'fitBounds',
       'click .toggle-modules' : 'toggleModules',
     },
 
     template: Handlebars.compile(tpl),
 
     initialize: function(map) {
+      this.model = new MapControlsModel();
       this.presenter = new Presenter(this);
       this.map = map;
       this.render();
@@ -84,8 +93,16 @@ define([
     },
 
     //RESET ZOOM
-    resetZoom: function(){
-      this.setZoom(3);
+    fitBounds: function(){
+      if(this.model.get('bounds')){
+        this.presenter.fitBounds(this.model.get('bounds'));
+      }else{
+        this.setZoom(3);
+      }
+    },
+
+    saveBounds: function(bounds){
+      this.model.set('bounds', bounds);
     },
 
     //TOGGLE

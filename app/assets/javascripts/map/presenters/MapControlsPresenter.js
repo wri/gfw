@@ -25,6 +25,14 @@ define([
       'Map/set-zoom': function(zoom) {
         this.view.setZoom(zoom);
       }
+    },{
+      'Map/fit-bounds': function(bounds) {
+        this.view.saveBounds(bounds);
+      }
+    },{
+      'AnalysisResults/delete-analysis': function() {
+        this.view.saveBounds(null);
+      }
     }],
 
     // *
@@ -49,6 +57,14 @@ define([
     onZoomChange: function(zoom) {
       mps.publish('Map/zoom-change', [zoom]);
       mps.publish('Place/update', [{go: false}]);
+    },
+    /**
+     * Used by searchbox view to handle a fitbounds.
+     *
+     * @return {object} Map bounds
+     */
+    fitBounds: function(bounds) {
+      mps.publish('Map/fit-bounds', [bounds]);
     },
 
 
