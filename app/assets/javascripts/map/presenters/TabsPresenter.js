@@ -21,10 +21,14 @@ define([
     // /**
     //  * Application subscriptions.
     //  */
-    _subscriptions: [],
+    _subscriptions: [{
+      'Tab/open': function(id) {
+        this.view.openTab(id);
+      }
+    }],
 
     onTabOpen: function(id){
-      mps.publish('Tab/open', [id]);
+      mps.publish('Tab/opened', [id]);
     }
 
   });

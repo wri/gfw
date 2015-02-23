@@ -116,7 +116,7 @@ define([
         this._updateAnalysis();
       }
     },{
-      'Tab/open': function(id) {
+      'Tab/opened': function(id) {
         if (id === 'analysis-tab') {
           this.view.model.set('hidden',false);
         }else{
@@ -131,8 +131,11 @@ define([
       'LocalMode/changeIso': function(iso) {
         this._analyzeIso(iso)
       }
+    },{
+      'TabAnalysis/open': function(type) {
+        this.view.openTab(type);
+      }
     }],
-
     /**
      * Handles a Place/go.
      *
@@ -159,9 +162,12 @@ define([
       options = options || {draw: true};
 
       // Build resource
-      var resource = this._buildResource({
-        geojson: JSON.stringify(geojson)
-      });
+      var resource = {
+        geojson: JSON.stringify(geojson),
+        type: 'geojson'
+      };
+      resource = this._buildResource(resource);
+
 
       // Draw geojson if needed.
       if (options.draw) {
@@ -182,12 +188,15 @@ define([
     _analyzeIso: function(iso) {
       this.deleteAnalysis();
       // Build resource
-      var resource = {iso: iso.country};
+      var resource = {
+        iso: iso.country,
+        type: 'iso'
+      };
       if (iso.region) {
         resource.id1 = iso.region;
       }
       resource = this._buildResource(resource);
-      ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Iso: ' + resource.iso);
+      ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Iso: ' + resource.iso.country);
 
       if (!iso.region) {
         // Get geojson/fit bounds/draw geojson/publish analysis.
@@ -217,7 +226,8 @@ define([
     _analyzeWdpai: function(wdpaid) {
       // Build resource
       var resource = this._buildResource({
-        wdpaid: wdpaid
+        wdpaid: wdpaid,
+        type: 'other'
       });
 
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Wdpaid: ' + resource.wdpaid);
@@ -251,7 +261,8 @@ define([
     _analyzeConcession: function(useid, layerSlug) {
       var resource = this._buildResource({
         useid: useid,
-        use: layerSlug
+        use: layerSlug,
+        type: 'other'
       });
 
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', ConcessionLayer: ' + resource.use + ', ConcessionId: ' + resource.useid);
@@ -346,8 +357,6 @@ define([
         return resource;
 
       }
-
-
     },
 
     /**
@@ -359,6 +368,8 @@ define([
       this.status.set('resource', resource);
       // this._setAnalysisBtnVisibility();
       mps.publish('Place/update', [{go: false}]);
+      //Open tab of analysis
+      mps.publish('Tab/open', ['#analysis-tab-button']);
 
       if (!this.status.get('baselayer') || failed) {
         mps.publish('AnalysisService/results', [{unavailable: true}]);
@@ -419,7 +430,7 @@ define([
       }
 
       this.status.set('baselayer', baselayer);
-      this._setAnalysisBtnVisibility();
+      // this._setAnalysisBtnVisibility();
     },
 
     _setAnalysisBtnVisibility: function() {

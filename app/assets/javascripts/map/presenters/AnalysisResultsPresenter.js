@@ -66,8 +66,8 @@ define([
         this._renderResults({loading: true});
       }
     }, {
-      'AnalysisService/results': function(results) {
-        this._renderResults(results);
+      'AnalysisService/results': function(results, type) {
+        this._renderResults(results, type);
       }
     }, {
       'AnalysisResults/unavailable': function() {
@@ -139,7 +139,7 @@ define([
      *
      * @param  {Object} results [description]
      */
-    _renderResults: function(results) {
+    _renderResults: function(results,type) {
       // Even if the result is a failure or unavailable message, we render
       // the widget results and keep the polygon.
       this.status.set('analysis', true);
@@ -154,9 +154,10 @@ define([
         this._renderAnalysis(results);
         // Subscribe button just should be activated
         // when a analysis is succesfully rendered.
-        mps.publish('Spinner/stop');
         this.view.$tab.addClass('is-analysis');
         this._setSubscribeButton();
+        mps.publish('Spinner/stop');
+        mps.publish('TabAnalysis/open', [type]);
       }
     },
 

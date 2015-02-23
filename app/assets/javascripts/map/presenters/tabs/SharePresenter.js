@@ -22,7 +22,7 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Tab/open': function(id) {
+      'Tab/opened': function(id) {
         if (id === 'share-tab') {
           this.view.model.set('hidden',false);
           this.view.changeType();

@@ -28,7 +28,7 @@ define([
 
   var URL = 'http://beta.gfw-apis.appspot.com/forest-change';
   //var URL = 'http://localhost:8080/forest-change';
-  
+
 
   var AnalysisService = Class.extend({
 
@@ -60,7 +60,7 @@ define([
     execute: function(data, successCb, failureCb) {
       var id = this._getId(data);
       var success = _.bind(function(results) {
-        mps.publish('AnalysisService/results', [results]);
+        mps.publish('AnalysisService/results', [results, data.type]);
         if (successCb) {
           successCb(results);
         }
@@ -69,7 +69,7 @@ define([
       var failure = _.bind(function(t, a) {
         if (a === 'abort') {return;}
         var results = {failure: a};
-        mps.publish('AnalysisService/results', [results]);
+        mps.publish('AnalysisService/results', [results, data.type]);
         if (failureCb) {
           failureCb(results);
         }

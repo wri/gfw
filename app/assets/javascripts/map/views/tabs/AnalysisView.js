@@ -98,6 +98,21 @@ define([
       }
     },
 
+    openTab: function(type){
+      switch(type){
+        case 'geojson':
+          $('#draw-tab-button').trigger('click');
+        break;
+        case 'iso':
+          $('#country-tab-button').trigger('click');
+        break;
+        case 'other':
+          $('#data-tab-button').trigger('click');
+        break;
+      }
+    },
+
+
     /**
      * Set geojson style.
      */

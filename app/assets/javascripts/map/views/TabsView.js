@@ -81,6 +81,11 @@ define([
           this.presenter.onTabOpen(id);
         }
       }
+    },
+    openTab: function(id){
+      if (!$(id).hasClass('active')) {
+        $(id).trigger('click');
+      }
     }
   });
 
