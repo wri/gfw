@@ -120,9 +120,11 @@ define([
         if (id === 'analysis-tab') {
           this.view.model.set('hidden',false);
         }else{
-          this.view._stopDrawing();
-          this.deleteAnalysis();
-          this.view.model.set('hidden',true);
+          if (this.view.model.get('is_drawing')) {
+            this.view._stopDrawing();
+            this.deleteAnalysis();
+            this.view.model.set('hidden',true);
+          }
         }
       },
     },{
@@ -381,6 +383,7 @@ define([
      * Deletes the current analysis.
      */
     deleteAnalysis: function() {
+      this.view.$el.removeClass('is-analysis');
       // Delete overlay drawn or multipolygon.
       this.view.deleteGeom({
         overlay: this.status.get('overlay'),

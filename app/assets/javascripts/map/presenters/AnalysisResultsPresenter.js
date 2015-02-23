@@ -155,6 +155,7 @@ define([
         // Subscribe button just should be activated
         // when a analysis is succesfully rendered.
         mps.publish('Spinner/stop');
+        this.view.$tab.addClass('is-analysis');
         this._setSubscribeButton();
       }
     },

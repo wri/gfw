@@ -47,6 +47,7 @@ define([
     },
 
     _cacheSelector: function() {
+      this.$tab = $('#analysis-tab');
       this.$resultsHide = $('.results-hide');
       this.$downloadDropdown = this.$('.download-dropdown');
       this.$subscribeButton = this.$('#subscribeButton');

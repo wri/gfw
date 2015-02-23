@@ -1,5 +1,6 @@
 .tab-analysis{
   nav{
+    display: block;
     ul{
       @include display-flex();
       li{
@@ -40,6 +41,16 @@
       }
       &.hidden{
         display: none;
+      }
+    }
+  }
+  .is-analysis &{
+    nav{
+      // display: none;
+    }
+    .analysis-content{
+      .analysis-tab-content{
+        padding: 20px 20px 0;
       }
     }
   }
@@ -97,7 +108,7 @@
 
 
 .analysis-result{
-  padding: 20px;
+  padding: 20px 20px 10px;
 
 
   .analysis-stats {
@@ -202,7 +213,7 @@
         cursor: pointer;
 
         &:hover{
-          .tooltip1{
+          .tooltipmap{
             opacity: 1;
             visibility: visible;
           }
