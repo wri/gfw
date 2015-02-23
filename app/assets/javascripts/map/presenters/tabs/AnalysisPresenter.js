@@ -131,10 +131,6 @@ define([
       'LocalMode/changeIso': function(iso) {
         this._analyzeIso(iso)
       }
-    },{
-      'TabAnalysis/open': function(type) {
-        this.view.openTab(type);
-      }
     }],
     /**
      * Handles a Place/go.
@@ -370,6 +366,8 @@ define([
       mps.publish('Place/update', [{go: false}]);
       //Open tab of analysis
       mps.publish('Tab/open', ['#analysis-tab-button']);
+      this.view.openTab(resource.type);
+
 
       if (!this.status.get('baselayer') || failed) {
         mps.publish('AnalysisService/results', [{unavailable: true}]);

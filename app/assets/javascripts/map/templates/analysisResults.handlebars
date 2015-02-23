@@ -72,12 +72,12 @@
     <li>
       {{#if loss}}
         <a href="http://www.earthenginepartners.appspot.com/science-2013-global-forest/download.html" target="_blank">
-          <span class="tooltipmap">Download data</span>
+          <span class="tooltipmap bottom">Download data</span>
           <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
         </a>
       {{else}}
-        <a href="#">
-          <span class="tooltipmap">Download data</span>
+        <div class="dropdown-button" href="#">
+          <span class="tooltipmap bottom">Download data</span>
           <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
           <ul class="download-dropdown hidden">
             <li><a href="{{download.csv}}" target="_blank">SVG</a></li>
@@ -86,11 +86,11 @@
             <li><a href="{{download.kml}}" target="_blank">KML</a></li>
             <li><a href="{{download.csv}}" target="_blank">CSV</a></li>
           </ul>
-        </a>
+        </div>
       {{/if}}
     </li>
-    <li id="analysis-delete"><span class="tooltipmap">Remove analysis</span><svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg></li>
-    <li id="analysis-subscribe"><span class="tooltipmap">Subscribe</span><svg class="icon"><use xlink:href="#icon-analysis-alerts"></use></svg></li>
+    <li id="analysis-delete"><span class="tooltipmap bottom">Remove analysis</span><svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg></li>
+    <li id="analysis-subscribe"><span class="tooltipmap bottom">Subscribe</span><svg class="icon"><use xlink:href="#icon-analysis-alerts"></use></svg></li>
   </ul>
 </footer>
 

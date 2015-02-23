@@ -157,7 +157,6 @@ define([
         this.view.$tab.addClass('is-analysis');
         this._setSubscribeButton();
         mps.publish('Spinner/stop');
-        mps.publish('TabAnalysis/open', [type]);
       }
     },
 

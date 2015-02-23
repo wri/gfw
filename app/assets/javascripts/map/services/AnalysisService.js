@@ -60,7 +60,7 @@ define([
     execute: function(data, successCb, failureCb) {
       var id = this._getId(data);
       var success = _.bind(function(results) {
-        mps.publish('AnalysisService/results', [results, data.type]);
+        mps.publish('AnalysisService/results', [results]);
         if (successCb) {
           successCb(results);
         }
@@ -69,7 +69,7 @@ define([
       var failure = _.bind(function(t, a) {
         if (a === 'abort') {return;}
         var results = {failure: a};
-        mps.publish('AnalysisService/results', [results, data.type]);
+        mps.publish('AnalysisService/results', [results]);
         if (failureCb) {
           failureCb(results);
         }

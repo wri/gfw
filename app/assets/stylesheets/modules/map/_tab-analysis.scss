@@ -156,47 +156,6 @@
     .stats-notice {
       font-size: 12px;
     }
-
-    // .download-links{
-    //   text-align: right;
-    //   position: relative;
-
-    //   span {
-    //     color: #F69;
-    //     font-weight: 500;
-    //     cursor: pointer;
-    //     a{
-    //       color: #F69;
-    //     }
-    //   }
-
-    //   .download-dropdown {
-    //     text-align: left;
-    //     width: 90px;
-    //     top: 30px;
-    //     right: 0;
-    //     position: absolute;
-    //     z-index: 2000;
-    //     border: 0;
-    //     background-color: #fff;
-    //     border-radius: 3px;
-    //     border: 1px solid #ccc;
-    //     box-shadow: 0 0 3px rgba(0,0,0,0.2);
-    //     &.hidden{
-    //       display: none;
-    //     }
-    //     > li a {
-    //       padding: 8px 10px;
-    //       display: block;
-    //       border-bottom: 1px solid #f2f2f2;
-    //       color: $cGreen;
-    //       &:hover{
-    //         background-color: darken($white,2.5%);
-    //       }
-    //     }
-
-    //   }
-    // }
   }
 
 
@@ -204,9 +163,9 @@
   .analysis-footer{
     margin: 10px 0 0;
     border-top: 1px solid $border;
-    ul{
+    >ul{
       @include row();
-      li{
+      >li{
         width: 33.333333%;
         position: relative;
         padding: 10px 0;
@@ -240,6 +199,48 @@
           width: 18px;
           height: 18px;
           margin: 0 auto;
+        }
+        .download-dropdown {
+          text-align: left;
+          width: 90px;
+          bottom: 100%;
+          left: 50%;
+          @include transform(translate(-50%,0));
+          position: absolute;
+          z-index: 2000;
+          font-size: 13px;
+          border: 0;
+          background-color: $white;
+          border-radius: 3px;
+          box-shadow: $shadow;
+          &.hidden{
+            display: none;
+          }
+          &:after{
+            content: "";
+            display: block;
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: $white;
+            z-index: 2;
+            bottom: 0;
+            left: 50%;
+            @include transform(translate(-50%,50%) rotate(45deg));
+            border-width: 0 1px 1px 0;
+            border-color: transparent lighten($border,5%) lighten($border,5%) transparent;
+            border-style: solid;
+          }
+
+          > li a {
+            padding: 8px 10px;
+            display: block;
+            border-bottom: 1px solid #f2f2f2;
+            color: $cGreen;
+            &:hover{
+              background-color: darken($white,2.5%);
+            }
+          }
         }
       }
     }

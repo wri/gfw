@@ -37,19 +37,21 @@ define([
     events:{
       'click #analysis-delete': '_deleteAnalysis',
       'click #analysis-subscribe': '_subscribe',
-      'click .download-links span' :'_toggleDownloads',
+      'click .dropdown-button' :'_toggleDownloads',
     },
 
     initialize: function() {
       this.model = new AnalysisResultsModel();
       this.presenter = new Presenter(this);
-      this._cacheSelector();
     },
 
     _cacheSelector: function() {
       this.$tab = $('#analysis-tab');
       this.$resultsHide = $('.results-hide');
-      this.$downloadDropdown = this.$('.download-dropdown');
+      this.$downloadDropdown = $('.download-dropdown');
+
+
+
       this.$subscribeButton = this.$('#subscribeButton');
       this.$subscribeButton_title = this.$('#subscribeButton-title');
     },
@@ -61,10 +63,10 @@ define([
      */
     renderAnalysis: function(params) {
       this.params = params;
-      this.$resultsHide.addClass('hidden');
       this.$el.html(this.template(params)).removeClass('hidden');
+      this._cacheSelector();
+      this.$resultsHide.addClass('hidden');
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + this.params.layer.title);
-
     },
 
     /**
@@ -101,7 +103,8 @@ define([
       ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + this.params.layer.title);
     },
 
-    _toggleDownloads: function() {
+    _toggleDownloads: function(e) {
+      e && e.preventDefault();
       this.$downloadDropdown.toggleClass('hidden');
       ga('send', 'event', 'Map', 'Download', 'Downloads-' + 'Layer: ' + this.params.layer.title);
     }
