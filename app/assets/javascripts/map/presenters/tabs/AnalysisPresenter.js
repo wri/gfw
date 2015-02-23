@@ -429,15 +429,12 @@ define([
       }
 
       this.status.set('baselayer', baselayer);
-      // this._setAnalysisBtnVisibility();
+      console.log(baselayer);
+      this._setAnalysisBtnVisibility();
     },
 
     _setAnalysisBtnVisibility: function() {
-      if (!this.status.get('resource')) {
-        this.view.toggleBtn(!!!this.status.get('baselayer'));
-      } else {
-        this.view.toggleBtn(true);
-      }
+      this.view.toggleBtn(!!!this.status.get('baselayer'));
     },
 
     /**

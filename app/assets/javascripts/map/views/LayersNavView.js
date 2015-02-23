@@ -175,6 +175,13 @@ define([
 
     },
 
+    // For autoselect country and region when youn reload page
+    setSelect: function(iso){
+      this.$countrySelect.val(iso).trigger("liszt:updated");
+    },
+
+
+
     /**
      * Render Iso Layers.
      */
