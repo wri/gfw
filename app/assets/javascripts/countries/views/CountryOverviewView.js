@@ -796,7 +796,7 @@ define([
         svg.append('text')
           .attr('class', 'axis')
           .attr('id', 'axis_y')
-          .text('Mha')
+          .text('Tree cover loss (Mha)')
           .attr('x', -h/2)
           .attr('y', 30)
           .attr('transform', 'rotate(-90)');
