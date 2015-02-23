@@ -84,7 +84,10 @@ define([
      * Render failure analysis request message.
      */
     renderFailure: function() {
-      this._update(this.templates.failure());
+      // this._update(this.templates.failure());
+      this.$el.html(this.templates.failure()).removeClass('hidden');
+      this._cacheSelector();
+      this.$resultsHide.addClass('hidden');
     },
 
     _deleteAnalysis: function() {

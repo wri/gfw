@@ -147,16 +147,18 @@ define([
       if (results.loading) {
         this.view.renderLoading();
       } else if (results.unavailable) {
+        mps.publish('Spinner/stop');
         this.view.renderUnavailable();
       } else if (results.failure) {
+        mps.publish('Spinner/stop');
         this.view.renderFailure();
       } else {
+        mps.publish('Spinner/stop');
         this._renderAnalysis(results);
         // Subscribe button just should be activated
         // when a analysis is succesfully rendered.
         this.view.$tab.addClass('is-analysis');
         this._setSubscribeButton();
-        mps.publish('Spinner/stop');
       }
     },
 

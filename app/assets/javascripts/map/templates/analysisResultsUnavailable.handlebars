@@ -1,28 +1,27 @@
-<div class="widget-box">
-  <div class="widget-toggle widget-toggle-grey"></div>
-  <div class="widget-content">
-
-    <div class="widget-closed">
-      <span class="analysis-title">Unsupported</span>
-    </div>
-
-    <div class="widget-opened">
-      <div class="analysis-info">
-        <span class="analysis-title">Unsupported</span>
-      </div>
-
-      <div class="analysis-error">
-        This layer doesn't support analysis.
-      </div>
-
-      <div class="analysis-footer">
-        <ul class="analysis-control">
-          <li class="analysis-control-subscribe disabled"><svg><use xlink:href="#shape-alerts"></use></svg>{{!-- <span class="tooltip1">Subscribe</span> --}}</li>
-          <li class="analysis-control-delete">{{!-- <span class="tooltip1">Delete analysis</span> --}}</li>
-        </ul>
-        <ul class="analysis-control-names"><li><span class="disabled">subscribe</span></li><li><span>delete</span></li></ul>
-      </div>
-
-    </div>
-  </div>
-</div>
+<p>This layer doesn't support analysis.</p>
+<footer class="analysis-footer">
+  <ul>
+    <li class="disabled">
+      {{#if loss}}
+        <a href="http://www.earthenginepartners.appspot.com/science-2013-global-forest/download.html" target="_blank">
+          <span class="tooltipmap bottom">Download data</span>
+          <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
+        </a>
+      {{else}}
+        <div class="dropdown-button" href="#">
+          <span class="tooltipmap bottom">Download data</span>
+          <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
+          <ul class="download-dropdown hidden">
+            <li><a href="{{download.csv}}" target="_blank">SVG</a></li>
+            <li><a href="{{download.geojson}}" target="_blank">GeoJSON</a></li>
+            <li><a href="{{download.shp}}" target="_blank">SHP</a></li>
+            <li><a href="{{download.kml}}" target="_blank">KML</a></li>
+            <li><a href="{{download.csv}}" target="_blank">CSV</a></li>
+          </ul>
+        </div>
+      {{/if}}
+    </li>
+    <li id="analysis-delete"><span class="tooltipmap bottom">Remove analysis</span><svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg></li>
+    <li id="analysis-subscribe" class="disabled"><span class="tooltipmap bottom">Subscribe</span><svg class="icon"><use xlink:href="#icon-analysis-alerts"></use></svg></li>
+  </ul>
+</footer>
