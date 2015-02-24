@@ -227,7 +227,7 @@ define([
     changeIso: function(e){
       this.iso = $(e.currentTarget).val();
       this.area = null;
-      ($(e.currentTarget).val()) ? this.getSubCountries() : this.$regionSelect.attr('disabled', true).trigger("liszt:updated");
+      ($(e.currentTarget).val()) ? this.getSubCountries() : this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
     },
     changeArea: function(e){
       this.area = $(e.currentTarget).val();
