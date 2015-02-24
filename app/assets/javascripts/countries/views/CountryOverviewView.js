@@ -546,7 +546,7 @@ define([
           height  = 30;
 
       var graph = d3.select('.countries_list__minioverview_'+iso)
-        .append('º:svg')
+        .append('svg:svg')
         .attr('width', width)
         .attr('height', height);
 
