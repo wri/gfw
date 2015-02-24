@@ -18,9 +18,10 @@ define([
 
   var SourceWindowView = Backbone.View.extend({
 
-    el: '#source-window-modal',
+    el: 'body',
 
     events: {
+      'click .source' : 'show',
       'click .close': 'hide'
     },
 
@@ -29,6 +30,7 @@ define([
       this.model = new SourceWindowModel();
 
       // Cache
+      this.$sourceWindow = $('#window');
       this.$backdrop = $('#backdrop');
 
       // Init
@@ -57,11 +59,11 @@ define([
     _toggle: function() {
       if (this.model.get('hidden') === true) {
         this._stopBindings();
-        this.$el.removeClass('active');
+        this.$sourceWindow.removeClass('active');
         this.$backdrop.removeClass('active');
       } else if (this.model.get('hidden') === false) {
         this._initBindings();
-        this.$el.addClass('active');
+        this.$sourceWindow.addClass('active');
         this.$backdrop.addClass('active');
       }
     },
@@ -72,16 +74,25 @@ define([
       return this;
     },
 
-    show: function(data_slug, data_coverage) {
+    show: function(e) {
+      e && e.preventDefault();
+      this.model.set('hidden', false);
+      var data_slug = $(e.currentTarget).data('source');
+      this.$content.html($('#' + data_slug).clone());
+      return this;
+    },
+
+    showByParam: function(data_slug){
       this.model.set('hidden', false);
       this.$content.html($('#' + data_slug).clone());
       return this;
     },
 
     render: function() {
-      this.$content = this.$el.find('.content');
-      this.$close = this.$el.find('.close');
-      return this.$el;
+      this.$content = this.$sourceWindow.find('.content');
+      this.$close = this.$sourceWindow.find('.close');
+
+      return this.$sourceWindow;
     }
   });
   return SourceWindowView;

@@ -9,7 +9,7 @@ define([
   'views/SourceWindowView'
 ], function($,Backbone, _,mps,SourceWindowView) {
 
-  'use strict'; 
+  'use strict';
 
   var TermsView = Backbone.View.extend({
 
@@ -32,7 +32,7 @@ define([
 
       var source = $(e.target).closest('.continue').attr('data-source');
 
-      this.sourceWindow.show(source);
+      this.sourceWindow.showByParam(source);
       // this.sourceWindow.$el.find('.close').hide();
 
       this.sourceWindow.$el.find('.accept_btn').on('click', function() {
@@ -52,7 +52,7 @@ define([
     _onClickWhyTerms: function(e) {
       e.preventDefault();
       var source = $(e.target).closest('.why_terms').attr('data-source');
-      this.sourceWindow.show(source);
+      this.sourceWindow.showByParam(source);
       ga('send', 'event', 'Terms', 'Click', 'Why terms (Dialog)');
     }
   });

@@ -23,10 +23,10 @@ require([
   'map/views/TimelineView',
   'views/HeaderView',
   'views/FooterView',
-  'views/DialogView',
+  'views/SourceWindowView',
   '_string'
 ], function($, _, Class, Backbone, chosen, utils, mps, Router, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
-    MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, HeaderView, FooterView, DialogView) {
+    MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, HeaderView, FooterView, SourceWindowView) {
 
   'use strict';
 
@@ -77,11 +77,7 @@ require([
       new TimelineView();
       new FooterView();
       new HeaderView();
-      new DialogView();
-
-      // TODO => This is temporary!!! We will use the refactored
-      // and awesome DialogView later.
-      window.infowindow();
+      new SourceWindowView();
     },
 
     /**
