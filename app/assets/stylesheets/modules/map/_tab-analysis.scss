@@ -40,7 +40,10 @@
   .analysis-content{
     .analysis-tab-content{
       display: none;
-      padding: 20px;
+      padding: 15px;
+      @media (min-width: 1500px){
+        padding: 20px;
+      }
       &.active{
         display: block;
       }
@@ -55,7 +58,11 @@
     }
     .analysis-content{
       .analysis-tab-content{
-        padding: 20px 20px 0;
+        padding: 15px 15px 0;
+        @media (min-width: 1500px){
+          padding: 20px 20px 0;
+        }
+
       }
     }
   }
@@ -113,19 +120,26 @@
 //PA & CONCESSIONS TAB
 .analysis-tab-content.data-tab{
   img{
-    width: calc(100% + 40px);
+    width: calc(100% + 30px);
     display: block;
     position: relative;
-    top: 20px;
-    margin: 0 0 0 -20px;
-
+    top: 15px;
+    margin: 0 0 0 -15px;
+    @media (min-width: 1500px){
+      width: calc(100% + 40px);
+      top: 20px;
+      margin: 0 0 0 -20px;
+    }
   }
 }
 
 
 
 .analysis-result{
-  padding: 20px 20px 10px;
+  padding: 15px 15px 5px;
+  @media (min-width: 1500px){
+    padding: 20px 20px 10px;
+  }
 
 
   .analysis-stats {
@@ -178,8 +192,12 @@
 
   // FOOTER ANALYSIS
   .analysis-footer{
-    margin: 15px 0 0;
+    margin: 10px 0 0;
     border-top: 1px solid $border;
+    @media (min-width: 1500px){
+      margin: 15px 0 0;
+    }
+
     >ul{
       @include row();
       >li{

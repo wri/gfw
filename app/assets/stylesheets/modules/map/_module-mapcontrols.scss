@@ -1,7 +1,7 @@
 $w-control: 44px;
 .module-mapcontrols {
   bottom: 50px;
-  right: 35px;
+  left: 35px;
   ul{
     width: $w-control * 2;
     @include display-flex();
@@ -24,7 +24,7 @@ $w-control: 44px;
       &:nth-child(even){
         border-left: 1px solid $border;
       }
-      &:nth-child(n+2){
+      &:nth-child(n+3){
         border-top: 1px solid $border;
       }
       &:hover{

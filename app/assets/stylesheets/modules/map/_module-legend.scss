@@ -5,7 +5,7 @@
   color: $dark;
   font-size: 13px;
   padding: 20px;
-  max-height: calc(100% - 275px);
+  max-height: calc(100% - 330px);
   overflow: auto;
 
   // @ul
@@ -60,7 +60,7 @@
     // @li
     .layer {
       width: 100%;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
       @include clearfix();
       &:last-child {
         margin-bottom: 0;
@@ -101,7 +101,7 @@
     @extend .info-icon;
     display: inline-block;
     position: absolute;
-    top: 1px;
+    top: -2px;
     right: 0;
 
     &.hidden {
@@ -236,7 +236,7 @@
       height: 12px;
       width: 100%;
       border: 1px solid #ccc;
-      border-radius: 3px;
+      border-radius: 10px;
       background: #FFFFD4;
       background: -moz-linear-gradient(left, #FFFFD4 0%, #dd8653 100%);
       background: -webkit-gradient(linear, left top, right top, color-stop(0%,#FFFFD4), color-stop(100%,#dd8653));
@@ -302,6 +302,11 @@
       &:hover{
         color: lighten(#ED4602, 10%);
       }
+    }
+  }
+  .layer-details-grump{
+    .canopy{
+      margin: 5px 0 0;
     }
   }
 }
