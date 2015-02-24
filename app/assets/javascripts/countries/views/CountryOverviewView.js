@@ -1487,7 +1487,7 @@ define([
                 return '<span>'+d.year+'</span>'+this.helper.formatNumber(parseFloat(d.value/1000000).toFixed(1))+' Mha';
               }, this ))
               .style('fill', _.bind(function(d) { return this.helper.config.GRAPHCOLORS[domain]; }, this ))
-              .on('mouseover', _.bind(function() {
+              .on('mouseover', function(d) {
                 d3.select(d3.event.target)
                   .transition()
                   .attr('r', function(d) { return circle_attr.r(d) + 2; })
@@ -1505,15 +1505,8 @@ define([
                   .style('left', parseInt(l, 10)+parseInt(r, 10)-parseInt(tip, 10)-10+'px')
                   .attr('class', 'tooltip2')
                   .attr('data-slug', 'tooltip2')
-                  .style('color', _.bind(function() {
-                    if (slug === 'subtropical') {
-                      return '#FFC926'
-                    } else {
-                      return this.helper.config.GRAPHCOLORS[slug];
-                    }
-                  }, this ));
-              }, this ))
-              .on('mouseenter', _.bind(function() {
+              })
+              .on('mouseenter', function(d) {
                 d3.select(d3.event.target)
                   .transition()
                   .attr('r', function(d) { return circle_attr.r(d) + 2; })
@@ -1531,10 +1524,7 @@ define([
                   .style('left', parseInt(l, 10)+parseInt(r, 10)-parseInt(tip, 10)-10+'px')
                   .attr('class', 'tooltip2')
                   .attr('data-slug', 'tooltip2')
-                  .style('color', _.bind(function() {
-                    if (domain === 'subtropical') { return this.helper.config.GRAPHCOLORS[domain]; }
-                  }, this ));
-              }, this ))
+              })
               .on('mouseout', function() {
                 d3.select(d3.event.target)
                   .transition()
