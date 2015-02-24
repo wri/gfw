@@ -58,7 +58,7 @@ define([
 
       this.x_scale = d3.scale.linear()
         .range([m, w-m])
-        .domain([2001, 2012]);
+        .domain([2001, 2013]);
 
       this.grid_scale = d3.scale.linear()
         .range([vertical_m, h-vertical_m])
@@ -198,7 +198,7 @@ define([
 
       if (this.model.get('graph') === 'total_loss') {
         this.$settings.removeClass('disable');
-        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
+        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat_final umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
 
         if (e) {
           sql += 'OFFSET 10';
@@ -207,8 +207,6 @@ define([
           sql += 'LIMIT 10';
           $('.countries_list ul').html('');
           $('.show-more-countries').show();
-
-          $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('loss-vs-gain').html('Loss <span>vs</span> Gain');
         }
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
@@ -260,7 +258,7 @@ define([
                 } else {
                   g_mha = 'Ha';
                 }
-                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span><span class="gain line"><span>'+ gain+' </span>'+ g_mha +' of gain</span>');
+                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span>');
 
                 if (key == max_trigger){
                   that._reorderRanking();
@@ -546,12 +544,12 @@ define([
           height  = 30;
 
       var graph = d3.select('.countries_list__minioverview_'+iso)
-        .append('º:svg')
+        .append('svg:svg')
         .attr('width', width)
         .attr('height', height);
 
       if (this.model.get('graph') === ('total_loss')) {
-        var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain) gain FROM umd_nat WHERE iso = \''+ iso +'\' AND thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 GROUP BY iso, year ORDER BY year';
+        var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain) gain FROM umd_nat_final WHERE iso = \''+ iso +'\' AND thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 GROUP BY iso, year ORDER BY year';
 
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
           var data = json.rows;
@@ -564,7 +562,6 @@ define([
             .range([height, 0]);
 
           var barWidth = width / data_.length;
-
           var bar = graph.selectAll('g')
             .data(data_)
             .enter().append('g')
@@ -576,28 +573,28 @@ define([
             .attr('height', function(d) { return height - y_scale(d.loss); })
             .attr('width', barWidth - 1);
 
-          var data_gain_ = [
-            {
-              year: 2001,
-              value: gain
-            },
-            {
-              year: 2012,
-              value: gain
-            }
-          ];
+          // var data_gain_ = [
+          //   {
+          //     year: 2001,
+          //     value: gain
+          //   },
+          //   {
+          //     year: 2012,
+          //     value: gain
+          //   }
+          // ];
 
-          graph.selectAll('line.minioverview_line')
-            .data(data_gain_)
-            .enter()
-            .append('line')
-            .attr({
-              'class': 'minioverview_line',
-              'x1': 0,
-              'x2': width,
-              'y1': function(d) { return y_scale(gain); },
-              'y2': function(d) { return y_scale(gain); }
-            });
+          // graph.selectAll('line.minioverview_line')
+          //   .data(data_gain_)
+          //   .enter()
+          //   .append('line')
+          //   .attr({
+          //     'class': 'minioverview_line',
+          //     'x1': 0,
+          //     'x2': width,
+          //     'y1': function(d) { return y_scale(gain); },
+          //     'y2': function(d) { return y_scale(gain); }
+          //   });
         });
       } else if (this.model.get('graph') === ('percent_loss')) {
         var sql = 'SELECT year, \
@@ -709,10 +706,10 @@ define([
     _drawYears: function() {
       var markup_years = '';
 
-      for (var y = 2001; y<=2012; y += 1) {
+      for (var y = 2001; y<=2013; y += 1) {
         var y_ = this.x_scale(y);
 
-        if (y === 2001 || y === 2012) {
+        if (y === 2001 || y === 2013) {
           y_ -= 5;
         } else {
           y_ -= 0;
@@ -804,7 +801,7 @@ define([
         var sql = 'SELECT year, \
              Sum(loss) loss, \
              Sum(gain) gain \
-              FROM   umd_nat  \
+              FROM   umd_nat_final  \
               WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +'  \
                       AND year > 2000 \
               GROUP  BY year  \
@@ -878,7 +875,7 @@ define([
               value: gain
             },
             {
-              year: 2012,
+              year: 2013,
               value: gain
             }
           ];
