@@ -551,7 +551,7 @@ define([
         .attr('height', height);
 
       if (this.model.get('graph') === ('total_loss')) {
-        var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain) gain FROM umd_nat WHERE iso = \''+ iso +'\' AND thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 GROUP BY iso, year ORDER BY year';
+        var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain) gain FROM umd_nat_final WHERE iso = \''+ iso +'\' AND thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 GROUP BY iso, year ORDER BY year';
 
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
           var data = json.rows;
@@ -564,7 +564,6 @@ define([
             .range([height, 0]);
 
           var barWidth = width / data_.length;
-
           var bar = graph.selectAll('g')
             .data(data_)
             .enter().append('g')
@@ -576,28 +575,28 @@ define([
             .attr('height', function(d) { return height - y_scale(d.loss); })
             .attr('width', barWidth - 1);
 
-          var data_gain_ = [
-            {
-              year: 2001,
-              value: gain
-            },
-            {
-              year: 2012,
-              value: gain
-            }
-          ];
+          // var data_gain_ = [
+          //   {
+          //     year: 2001,
+          //     value: gain
+          //   },
+          //   {
+          //     year: 2012,
+          //     value: gain
+          //   }
+          // ];
 
-          graph.selectAll('line.minioverview_line')
-            .data(data_gain_)
-            .enter()
-            .append('line')
-            .attr({
-              'class': 'minioverview_line',
-              'x1': 0,
-              'x2': width,
-              'y1': function(d) { return y_scale(gain); },
-              'y2': function(d) { return y_scale(gain); }
-            });
+          // graph.selectAll('line.minioverview_line')
+          //   .data(data_gain_)
+          //   .enter()
+          //   .append('line')
+          //   .attr({
+          //     'class': 'minioverview_line',
+          //     'x1': 0,
+          //     'x2': width,
+          //     'y1': function(d) { return y_scale(gain); },
+          //     'y2': function(d) { return y_scale(gain); }
+          //   });
         });
       } else if (this.model.get('graph') === ('percent_loss')) {
         var sql = 'SELECT year, \
@@ -709,10 +708,10 @@ define([
     _drawYears: function() {
       var markup_years = '';
 
-      for (var y = 2001; y<=2012; y += 1) {
+      for (var y = 2001; y<=2013; y += 1) {
         var y_ = this.x_scale(y);
 
-        if (y === 2001 || y === 2012) {
+        if (y === 2001 || y === 2013) {
           y_ -= 5;
         } else {
           y_ -= 0;
