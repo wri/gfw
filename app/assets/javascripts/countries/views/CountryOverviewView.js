@@ -52,7 +52,7 @@ define([
       this.$years = $('.overview_graph__years');
       this.$settings = $('.settings');
       var m = this.m = 40,
-          w = this.w = this.$graph.width(),
+          w = this.w = this.$graph.width() - (m+5),
           h = this.h = this.$graph.height(),
           vertical_m = this.vertical_m = 20;
 
@@ -759,7 +759,7 @@ define([
         });
 
       svg.selectAll('line.grid_v')
-        .data(x_scale.ticks(12))
+        .data(x_scale.ticks(13))
         .enter()
         .append('line')
         .attr({
