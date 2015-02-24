@@ -52,13 +52,13 @@ define([
       this.$years = $('.overview_graph__years');
       this.$settings = $('.settings');
       var m = this.m = 40,
-          w = this.w = this.$graph.width() - (m+5),
+          w = this.w = this.$graph.width(),
           h = this.h = this.$graph.height(),
           vertical_m = this.vertical_m = 20;
 
       this.x_scale = d3.scale.linear()
         .range([m, w-m])
-        .domain([2001, 2012]);
+        .domain([2001, 2013]);
 
       this.grid_scale = d3.scale.linear()
         .range([vertical_m, h-vertical_m])
@@ -759,7 +759,7 @@ define([
         });
 
       svg.selectAll('line.grid_v')
-        .data(x_scale.ticks(13))
+        .data(x_scale.ticks(12))
         .enter()
         .append('line')
         .attr({
