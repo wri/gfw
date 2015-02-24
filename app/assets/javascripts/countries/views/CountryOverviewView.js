@@ -879,53 +879,6 @@ define([
               value: gain
             }
           ];
-
-          // line
-          // svg.selectAll('line.overview_line')
-          //   .data([data_gain_[0]])
-          //   .enter()
-          //   .append('line')
-          //   .attr({
-          //     'class': 'overview_line',
-          //     'x1': m,
-          //     'x2': w-m,
-          //     'y1': function(d) { return y_scale(gain); },
-          //     'y2': function(d) { return y_scale(gain); }
-          //   })
-          //  .attr('cx', function(d) {
-          //     return x_scale(d.year);
-          //   })
-          //   .attr('cy', function(d){
-          //     return y_scale(d.value);
-          //   })
-          //   .attr('r', 6)
-          //   .attr('name', _.bind(function(d) {
-          //     return '<span>2001-2012</span>'+this.helper.formatNumber(parseFloat(d.value/1000000).toFixed(1))+' Mha';
-          //   }, this ))
-          //   .on('mouseover', function(d) {
-          //     that.tooltip.html($(this).attr('name'))
-          //       .style('visibility', 'visible')
-          //       .style('top', $(this).offset().top-100+'px')
-          //       .style('left', ($(this).offset().left + 436) +'px')
-          //       .attr('class', 'tooltip2 gain_tooltip');
-
-          //     d3.select(this)
-          //       .transition()
-          //       .duration(100)
-          //       .attr('r', 7);
-
-          //     // TODO: highlighting the legend
-          //   })
-          //   .on('mouseout', function(d) {
-          //     that.tooltip.style('visibility', 'hidden');
-
-          //     d3.select(this)
-          //       .transition()
-          //       .duration(100)
-          //       .attr('r', 6);
-
-          //     // TODO: highlighting the legend
-          //   });
         }, this ));
       } else if (this.model.get('graph') === 'percent_loss') {
         this._showYears();
@@ -1534,7 +1487,7 @@ define([
                 return '<span>'+d.year+'</span>'+this.helper.formatNumber(parseFloat(d.value/1000000).toFixed(1))+' Mha';
               }, this ))
               .style('fill', _.bind(function(d) { return this.helper.config.GRAPHCOLORS[domain]; }, this ))
-              .on('mouseover', _.bind(function() {
+              .on('mouseover', function(d) {
                 d3.select(d3.event.target)
                   .transition()
                   .attr('r', function(d) { return circle_attr.r(d) + 2; })
@@ -1552,15 +1505,8 @@ define([
                   .style('left', parseInt(l, 10)+parseInt(r, 10)-parseInt(tip, 10)-10+'px')
                   .attr('class', 'tooltip2')
                   .attr('data-slug', 'tooltip2')
-                  .style('color', _.bind(function() {
-                    if (slug === 'subtropical') {
-                      return '#FFC926'
-                    } else {
-                      return this.helper.config.GRAPHCOLORS[slug];
-                    }
-                  }, this ));
-              }, this ))
-              .on('mouseenter', _.bind(function() {
+              })
+              .on('mouseenter', function(d) {
                 d3.select(d3.event.target)
                   .transition()
                   .attr('r', function(d) { return circle_attr.r(d) + 2; })
@@ -1578,10 +1524,7 @@ define([
                   .style('left', parseInt(l, 10)+parseInt(r, 10)-parseInt(tip, 10)-10+'px')
                   .attr('class', 'tooltip2')
                   .attr('data-slug', 'tooltip2')
-                  .style('color', _.bind(function() {
-                    if (domain === 'subtropical') { return this.helper.config.GRAPHCOLORS[domain]; }
-                  }, this ));
-              }, this ))
+              })
               .on('mouseout', function() {
                 d3.select(d3.event.target)
                   .transition()
