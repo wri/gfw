@@ -207,8 +207,6 @@ define([
           sql += 'LIMIT 10';
           $('.countries_list ul').html('');
           $('.show-more-countries').show();
-
-          $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('loss-vs-gain').html('Loss <span>vs</span> Gain');
         }
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
