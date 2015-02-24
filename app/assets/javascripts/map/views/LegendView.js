@@ -79,6 +79,19 @@ define([
       this.presenter = new Presenter(this);
       this.model = new LegendModel();
       this.$el.removeClass('hide');
+      this.setListeners();
+    },
+
+    setListeners: function(){
+      this.model.on('change:hidden', this.toogleModule, this);
+    },
+
+    toogleModule: function(){
+      if(this.model.get('hidden')){
+        this.$el.addClass('hide');
+      }else{
+        this.$el.removeClass('hide');
+      }
     },
 
     /**

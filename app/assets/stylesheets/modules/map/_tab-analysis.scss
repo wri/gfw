@@ -29,10 +29,14 @@
         }
         svg{
           display: block;
-          width: 40px;
-          height: 40px;
+          width: 25px;
+          height: 25px;
           margin: 0 auto 7px;
           fill: $dark;
+          @media (min-width: 1500px){
+            width: 40px;
+            height: 40px;
+          }
         }
       }
     }

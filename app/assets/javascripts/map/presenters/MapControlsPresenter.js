@@ -33,6 +33,18 @@ define([
       'AnalysisResults/delete-analysis': function() {
         this.view.saveBounds(null);
       }
+    },{
+      'AnalysisTool/stop-drawing': function() {
+        this.view.model.set({
+          hidden: false
+        });
+      }
+    },{
+      'AnalysisTool/start-drawing': function() {
+        this.view.model.set({
+          hidden: true
+        });
+      }
     }],
 
     // *

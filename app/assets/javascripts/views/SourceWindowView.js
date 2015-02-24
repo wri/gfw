@@ -8,7 +8,7 @@ define([
   'mps'
 ], function($,Backbone, _,mps) {
 
-  'use strict'; 
+  'use strict';
 
   var SourceWindowModel = Backbone.Model.extend({
     defaults: {
@@ -17,7 +17,7 @@ define([
   });
 
   var SourceWindowView = Backbone.View.extend({
-    
+
     el: '#source-window-modal',
 
     events: {
@@ -27,7 +27,7 @@ define([
     initialize: function() {
       // Model
       this.model = new SourceWindowModel();
-      
+
       // Cache
       this.$backdrop = $('#backdrop');
 
@@ -75,7 +75,6 @@ define([
     show: function(data_slug, data_coverage) {
       this.model.set('hidden', false);
       this.$content.html($('#' + data_slug).clone());
-
       return this;
     },
 

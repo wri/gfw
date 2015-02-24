@@ -16,6 +16,7 @@ define([
 
   var MapControlsModel = Backbone.Model.extend({
     defaults: {
+      hidden: false,
       bounds: null
     }
   });
@@ -46,11 +47,22 @@ define([
     },
 
     setListeners: function(){
+
+      this.model.on('change:hidden', this.toogleModule, this);
+
       google.maps.event.addListener(this.map, 'zoom_changed',
         _.bind(function() {
           this.onZoomChange();
         }, this)
       );
+    },
+
+    toogleModule: function(){
+      if(this.model.get('hidden')){
+        this.$el.addClass('hide');
+      }else{
+        this.$el.removeClass('hide');
+      }
     },
 
     render: function(){
