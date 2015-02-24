@@ -804,7 +804,7 @@ define([
         var sql = 'SELECT year, \
              Sum(loss) loss, \
              Sum(gain) gain \
-              FROM   umd_nat  \
+              FROM   umd_nat_final  \
               WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +'  \
                       AND year > 2000 \
               GROUP  BY year  \
@@ -878,7 +878,7 @@ define([
               value: gain
             },
             {
-              year: 2012,
+              year: 2013,
               value: gain
             }
           ];
