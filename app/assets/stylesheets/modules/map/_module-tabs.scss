@@ -2,8 +2,14 @@ $w-control: 44px;
 .module-tabs {
   color: $dark;
   width: 283px;
-  top: 110px;
+  top: 70px;
   right: 35px;
+  z-index: 21;
+  @media (min-height: 850px){
+    top: 110px;
+    right: 35px;
+  }
+
   // max-height: calc(100% - 275px);
   // overflow: auto;
   header{

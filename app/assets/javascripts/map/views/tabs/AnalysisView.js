@@ -243,11 +243,13 @@ define([
     },
 
     analysisCountry: function(){
-      var iso = {
-        country: this.iso,
-        region: this.area
+      if (this.iso) {
+        var iso = {
+          country: this.iso,
+          region: this.area
+        }
+        this.presenter._analyzeIso(iso);
       }
-      this.presenter._analyzeIso(iso);
     },
 
 

@@ -117,12 +117,23 @@
   .chzn-single {
     abbr {
       position: absolute;
-      top: 6px;
-      right: 26px;
+      top: 50%;
+      right: 30px;
       display: block;
       width: 12px;
       height: 12px;
-      font-size: 1px;
+      line-height: 12px;
+      font-size: 10px;
+      text-align: center;
+      @include transform(translate(0,-50%));
+      font-family: Arial;
+      color: #C83E3E;
+      &:after{
+        content: "X";
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
       &:hover {
 
       }
