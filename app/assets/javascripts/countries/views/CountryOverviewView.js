@@ -260,7 +260,7 @@ define([
                 } else {
                   g_mha = 'Ha';
                 }
-                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span><span class="gain line"><span>'+ gain+' </span>'+ g_mha +' of gain</span>');
+                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span>');
 
                 if (key == max_trigger){
                   that._reorderRanking();
