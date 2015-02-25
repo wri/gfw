@@ -75,7 +75,7 @@ define([
     },
 
     show: function(e) {
-      e && e.preventDefault() && e.stopPropagation();
+      e && e.stopPropagation() && e.preventDefault();
       this.model.set('hidden', false);
       var data_slug = $(e.currentTarget).data('source');
       this.$content.html($('#' + data_slug).clone());

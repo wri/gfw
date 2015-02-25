@@ -150,7 +150,7 @@ define([
       this.countries = amplify.store('countries');
 
       //Loop for print options
-      var options = "";
+      var options = "<option></option>";
       _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
         options += '<option value="'+ country.iso +'">'+ country.name + '</option>';
       }, this ));
