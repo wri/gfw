@@ -795,6 +795,21 @@ define([
           .attr('id', 'axis_y')
           .text('Tree cover loss (Mha)')
           .attr('x', -h/2)
+          .attr('y', 10)
+          .attr('transform', 'rotate(-90)');
+
+        svg.append('text')
+          .attr('class', 'axis notranslate')
+          .attr('id', 'axis_y')
+          .text('30M')
+          .attr('x', -10)
+          .attr('y', 30)
+          .attr('transform', 'rotate(-90)');
+        svg.append('text')
+          .attr('class', 'axis notranslate')
+          .attr('id', 'axis_y')
+          .text('0M')
+          .attr('x', -300)
           .attr('y', 30)
           .attr('transform', 'rotate(-90)');
 
