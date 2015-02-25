@@ -35,13 +35,15 @@ define([
       this.$maptypes = this.$el.find('.maptype');
     },
 
-    _setMaptype: function(event) {
-      event && event.preventDefault();
-      var $currentTarget = $(event.currentTarget);
-      var maptype = $currentTarget.data('maptype');
-      if (maptype) {
-        this.presenter.setMaptype(maptype);
-        ga('send', 'event', 'Map', 'Toggle', maptype);
+    _setMaptype: function(e) {
+      e && e.preventDefault();
+      if (!$(e.target).hasClass('source')) {
+        var $currentTarget = $(e.currentTarget);
+        var maptype = $currentTarget.data('maptype');
+        if (maptype) {
+          this.presenter.setMaptype(maptype);
+          ga('send', 'event', 'Map', 'Toggle', maptype);
+        }
       }
     },
 
