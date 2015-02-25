@@ -80,15 +80,19 @@ define([
      * @param  {event} event Click event
      */
     _toggleLayer: function(event) {
-      var layerSlug = $(event.currentTarget).data('layer'),
-          fil_type = 'ifl_2013_deg';
+      var layerSlug = $(event.currentTarget).data('layer');
 
       if ($(event.currentTarget).hasClass('ifl') || $(event.currentTarget).hasClass('c_f_peru')) {
+          var fil_type = 'ifl_2013_deg';
         if ($(event.currentTarget).hasClass('c_f_peru')) {
           fil_type = 'concesiones_forestalesNS';
         }
         event && event.stopPropagation();
         var $elem = $(event.currentTarget);
+          if (event.target.nodeName === 'LABEL') {
+            $elem.find('input').click();
+            return false;
+          }
         if ($elem.hasClass('selected')) {$elem.find('input').prop('checked',false);}
         else {$elem.find('[data-layer="' + fil_type + '"] input').prop('checked', true);}
         if ($elem.prop('tagName') !== 'LI'){
