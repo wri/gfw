@@ -75,10 +75,11 @@ define([
     },
 
     show: function(e) {
-      e && e.stopPropagation() && e.preventDefault();
+      e && e.preventDefault() && e.stopPropagation();
       this.model.set('hidden', false);
       this.$contentWrapper.animate({ scrollTop: 0 }, 0);
       var data_slug = $(e.currentTarget).data('source');
+      console.log(data_slug);
       this.$content.html($('#' + data_slug).clone());
       return this;
     },
