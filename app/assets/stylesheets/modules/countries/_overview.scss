@@ -310,10 +310,6 @@
   font-size: 17px;
   color: $dark;
 
-  &.loss-vs-gain{
-    width: auto;
-    right: 92px;
-  }
   &.per-loss{
     width: auto;
     right: 171px;
@@ -400,17 +396,17 @@
       font-size: 1.3rem;
       margin-top: 13px;
     }
-    &::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      @include transform-translate(0, -50%);
-      right: -11px;
-      width: 6px;
-      height: 6px;
-      background-color: #FF6699;
-      border-radius: 6px;
-    }
+    // &::after {
+    //   content: '';
+    //   position: absolute;
+    //   top: 50%;
+    //   @include transform-translate(0, -50%);
+    //   right: -11px;
+    //   width: 6px;
+    //   height: 6px;
+    //   background-color: #FF6699;
+    //   border-radius: 6px;
+    // }
     &.percent::after {
       display: none;
     }
