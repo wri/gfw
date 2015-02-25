@@ -292,5 +292,61 @@
   }
 }
 
+.analysis-subscribe{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  &.active{
+    opacity: 1;
+    visibility: visible;
+  }
 
+  .analysis-subscribe-content{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #FFF;
+    @include transform(translate(100%,0));
+    @include transition(all 0.25s $easeInOutSine);
+    &.active{
+      @include transform(translate(0%,0));
+    }
+
+    >.close-icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      fill: $dark;
+      z-index: 2;
+      padding: 5px;
+      cursor: pointer;
+    }
+
+
+    .steps{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 15px;
+      @media (min-width: 1500px){
+        padding: 20px;
+      }
+      @include transform(translate(100%,0));
+      @include transition(all 0.25s $easeInOutSine);
+      &.current{
+        @include transform(translate(0%,0));
+      }
+    }
+  }
+}
 

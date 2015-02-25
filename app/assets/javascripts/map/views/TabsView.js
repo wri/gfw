@@ -13,9 +13,10 @@ define([
   'map/views/tabs/ThresholdView',
   'map/views/tabs/ShareView',
   'map/views/tabs/SpinnerView',
+  'map/views/tabs/SubscribeView',
   'text!map/templates/tabs.handlebars'
 
-], function(_, Handlebars, d3, Presenter, AnalysisView, BasemapsView, ThresholdView, ShareView, SpinnerView, tpl) {
+], function(_, Handlebars, d3, Presenter, AnalysisView, BasemapsView, ThresholdView, ShareView, SpinnerView, SubscribeView, tpl) {
 
   'use strict';
 
@@ -55,6 +56,7 @@ define([
       new BasemapsView();
       new ThresholdView();
       new ShareView();
+      new SubscribeView();
     },
 
     toggleTabs: function(e){

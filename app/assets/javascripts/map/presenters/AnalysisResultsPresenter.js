@@ -201,10 +201,7 @@ define([
         layer: this.status.get('baselayer')
       };
 
-      mps.publish('Dialog/new', [{
-        type: 'analysis',
-        id: 'subscribe'
-      }, options]);
+      mps.publish('Subscribe/show', [options]);
     },
 
     /**
