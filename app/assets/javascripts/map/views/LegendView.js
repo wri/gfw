@@ -32,7 +32,7 @@ define([
   var LegendModel = Backbone.Model.extend({
     defaults:{
       hidden: true,
-      categories_status: []
+      categories_status: [],
     }
   });
 
@@ -100,42 +100,60 @@ define([
      * @param  {object} options    legend options
      */
     _renderLegend: function(categories, options) {
-      var categories_status = this.model.get('categories_status');
+      var iso = null;
+      var layersGlobal = [];
+      var layersIso = [];
+      var categoriesGlobal = [];
+      var categoriesIso = [];
       var layers = _.flatten(categories);
       var layersLength = layers.length;
 
       // Append details template to layer.
       _.each(layers, function(layer) {
+        layer.source = (layer.slug === 'nothing') ? null : layer.slug;
         if (this.detailsTemplates[layer.slug]) {
           layer.detailsTpl = this.detailsTemplates[layer.slug]({
             threshold: options.threshold || 30,
             layerTitle: layer.title
           });
         }
+        if(layer.iso) {
+          var countries = amplify.store('countries');
+          iso = layer.iso;
+          layersIso.push(layer);
+          layer.category_status = layer.category_slug+'-iso';
+        }else {
+          layersGlobal.push(layer);
+          layer.category_status = layer.category_slug+'-global'
+        };
       }, this);
 
+      categoriesGlobal = this.statusCategories(_.groupBy(layersGlobal, function(layer){ return layer.category_slug }));
+      categoriesIso = this.statusCategories(_.groupBy(layersIso, function(layer){ return layer.category_slug }));
+
+      var html = this.template({
+        categories: categoriesGlobal,
+        categoriesIso: categoriesIso,
+        layersLength: layersLength,
+        iso: iso
+      });
+
+      this.render(html);
+    },
+
+    statusCategories: function(array){
       // Search for layer 'nothing'
-      _.each(categories, function(category) {
+      var categories_status = this.model.get('categories_status');
+      _.each(array, function(category) {
         for (var i = 0; i< category.length; i++) {
-          if(category[i]['slug'] === 'nothing'){
-            category[i]['source'] = null;
-          } else {
-            category[i]['source'] = category[i]['slug'];
-          }
           // Mantain categories closed in rendering
-          (categories_status.indexOf(category[i]['category_slug']) != -1) ? category['closed'] = true : category['closed'] = false;
+          (categories_status.indexOf(category[i]['category_status']) != -1) ? category['closed'] = true : category['closed'] = false;
           // Get layer's length of each category
           category['layers_length'] = i + 1;
         }
       }, this);
 
-      var html = this.template({
-        categories: categories,
-        layersLength: layersLength
-      });
-
-      this.render(html);
-      this.presenter.initExperiment('source');
+      return array;
     },
 
     /**

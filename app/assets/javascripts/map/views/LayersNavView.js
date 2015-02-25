@@ -92,6 +92,7 @@ define([
      */
     _toggleLayer: function(e) {
       e && e.preventDefault();
+      // this prevents layer change when you click in source link
       if (!$(e.target).hasClass('source')) {
         var layerSlug = $(e.currentTarget).data('layer'),
             fil_type = 'ifl_2013_deg';

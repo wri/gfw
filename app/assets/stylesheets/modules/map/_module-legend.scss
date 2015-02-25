@@ -10,6 +10,20 @@
 
   // @ul
   .categories{
+    margin: 20px 0 0;
+    padding: 20px 0 0;
+    border-top: 1px solid $border;
+    &:first-child{
+      margin: 0;
+      padding: 0;
+      border-top: none;
+    }
+    h2{
+      margin: 0 0 15px;
+      font-weight: 500;
+      color: $dark;
+      text-transform: uppercase;
+    }
     // @li
     .category {
       padding: 0 0 25px;
