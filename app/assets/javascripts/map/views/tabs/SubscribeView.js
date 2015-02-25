@@ -35,16 +35,7 @@ define([
     events: {
       'click .close-icon' : 'hide',
       'click #subscribe': 'subscribeAlerts',
-      // 'click .next': 'nextStep',
-      // 'click .back': 'previousStep'
     },
-
-    /**
-     * Initialize the DialogView.
-     *
-     * @param  {Object} parent           DialogView public methods
-     * @param  {Object} analysisResource The analysis resource.
-     */
 
     initialize: function(){
       this.presenter = new Presenter(this);
@@ -74,12 +65,6 @@ define([
       this.nextStep(0);
     },
 
-
-    // initialize: function(options) {
-    //   this.analysisResource = options.analysisResource;
-    //   this.layer = options.layer;
-    //   this.$el.html(this.template());
-    // },
 
     subscribeAlerts: function() {
       var email = this.$el.find('#areaEmail').val();

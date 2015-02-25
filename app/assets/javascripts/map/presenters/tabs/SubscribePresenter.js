@@ -27,7 +27,6 @@ define([
       }
     }, {
       'Subscribe/hide': function() {
-
         this.view.hide();
       }
     }],

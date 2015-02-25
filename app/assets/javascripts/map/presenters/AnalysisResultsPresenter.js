@@ -193,7 +193,7 @@ define([
 
     /**
      * Render analysis subscribe dialog by publishing
-     * to DialogPresenter.
+     * to SubscribePresenter.
      */
     subscribeAnalysis: function() {
       var options = {
