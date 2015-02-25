@@ -39,14 +39,16 @@ define([
         ga('send', 'event', 'Terms', 'Click', 'I agree (Dialog)');
       });
 
-      this.sourceWindow.$el.find('.cancel_btn').on('click', function() {
+      this.sourceWindow.$el.find('.cancel_btn').on('click', function(e) {
         ga('send', 'event', 'Terms', 'Click', 'I do not agree (Dialog)');
+        window.location = $(e.currentTarget).data('href');
       });
     },
 
     _onClickCancel: function(e) {
       e.preventDefault();
       ga('send', 'event', 'Terms', 'Click', 'I do not agree');
+      console.log('hey!');
     },
 
     _onClickWhyTerms: function(e) {

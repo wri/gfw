@@ -12,7 +12,7 @@
       <%= render 'terms' %>
     </div>
     <div class="terms-footer notranslate">
-      <%= button_tag 'I agree', class: 'btn accept_btn green huge continue', :'data-source' => "accept_terms" %> <%= link_to 'I do not agree', root_path, class: 'btn cancel_btn gray huge cancel' %>
+      <%= button_tag 'I agree', class: 'btn green huge continue', :'data-source' => "accept_terms" %> <%= link_to 'I do not agree', root_path, class: 'btn gray huge cancel' %>
       <div class="terms-footer-more">
         <p><%= link_to 'Why do I have to agree to a Terms of Service?', root_path, class: 'why_terms', :'data-source' => "why_accept_terms" %></p>
         <p class='last'>For additional information about GFW, please send an email to <a href='mailto:gfw@wri.org'>gfw@wri.org</a></p>
@@ -23,18 +23,20 @@
 
 <!-- TERMS DIALOG -->
 <div id="sources" class="sources is-hidden">
-  <div id='accept_terms' class="center">
-    <h2 class='source_title notranslate'>Please confirm</h2>
-    <div class='source_body'>
-      <p class="notranslate">You acknowledge that you have read and agree to the Global Forest Watch Terms of Service.</p>
-      <%= form_tag("/accept", { :class => 'terms_footer notranslate' }) do %>
-        <div class="row">
-          <%= button_tag "I agree", class: 'btn accept_btn green huge' %> <%= link_to 'I do not agree', '/accept_terms', class: 'btn cancel_btn gray huge' %>
-        </div>
-      <% end %>
+  <article id="accept_terms">
+    <div class="terms-modal">
+      <h2>Please confirm</h2>
+      <div class='source_body'>
+        <p class="notranslate">You acknowledge that you have read and agree to the Global Forest Watch Terms of Service.</p>
+
+        <%= form_tag("/accept", { :class => 'terms-form notranslate' }) do %>
+          <%= submit_tag "I agree", class: 'btn accept_btn green huge uppercase' %>
+          <%= button_tag 'I do not agree', class: 'btn cancel_btn gray huge uppercase', type: 'button', :'data-href' => "/"  %>
+        <% end %>
+      </div>
     </div>
-  </div>
-  <div id='why_accept_terms'>
+  </article>
+  <article id='why_accept_terms'>
     <h2 class='source_title notranslate'>Why accept?</h2>
     <div class='source_body'>
       <p class="notranslate">Why are we, the Global Forest Watch team, asking you, our user, to agree to a Terms of Service?</p>
@@ -43,12 +45,5 @@
       <p class="notranslate">We seek to transform the way forests are managed and protected by governments, businesses, and communities around the world. We can’t do that if we’re sued and the website is taken down.</p>
       <p class="notranslate">So thank you, truly, for understanding why we’re asking you to agree to a Terms of Service. Please join us in making Global Forest Watch a powerful tool for people everywhere.</p>
     </div>
-  </div>
+  </article>
 </div>
-
-<script type="text/javascript">
-  // if (window.top!=window.self)
-  // {
-  //   document.getElementsByTagName('body')[0].className += " in-iframe";
-  // }
-</script>

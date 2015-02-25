@@ -75,7 +75,7 @@ define([
     },
 
     show: function(e) {
-      e && e.preventDefault();
+      e && e.preventDefault() && e.stopPropagation();
       this.model.set('hidden', false);
       var data_slug = $(e.currentTarget).data('source');
       this.$content.html($('#' + data_slug).clone());
@@ -91,7 +91,6 @@ define([
     render: function() {
       this.$content = this.$sourceWindow.find('.content');
       this.$close = this.$sourceWindow.find('.close');
-
       return this.$sourceWindow;
     }
   });
