@@ -77,6 +77,7 @@ define([
     show: function(e) {
       e && e.stopPropagation() && e.preventDefault();
       this.model.set('hidden', false);
+      this.$contentWrapper.animate({ scrollTop: 0 }, 0);
       var data_slug = $(e.currentTarget).data('source');
       this.$content.html($('#' + data_slug).clone());
       return this;
@@ -90,6 +91,7 @@ define([
 
     render: function() {
       this.$content = this.$sourceWindow.find('.content');
+      this.$contentWrapper = this.$sourceWindow.find('.content-wrapper');
       this.$close = this.$sourceWindow.find('.close');
       return this.$sourceWindow;
     }
