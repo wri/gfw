@@ -173,7 +173,9 @@ define([
         ($(el).hasClass('selected')) ? $(el).trigger('click') : null;
       }, this ));
       this.setIsoLayers();
-      this.presenter._analizeIso(this.iso);
+      if (this.iso) {
+        this.presenter._analizeIso(this.iso);
+      }
     },
 
     // For autoselect country and region when youn reload page

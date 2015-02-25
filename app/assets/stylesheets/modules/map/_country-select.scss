@@ -102,6 +102,9 @@
       .chzn-default {
         color: $dark;
       }
+      abbr{
+        display: block;
+      }
     }
   }
 }
@@ -119,7 +122,7 @@
       position: absolute;
       top: 50%;
       right: 30px;
-      display: block;
+      display: none;
       width: 16px;
       height: 16px;
       line-height: 16px;
