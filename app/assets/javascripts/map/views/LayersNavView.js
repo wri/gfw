@@ -90,18 +90,23 @@ define([
      *
      * @param  {event} event Click event
      */
-    _toggleLayer: function(e) {
-      e && e.preventDefault();
+    _toggleLayer: function(event) {
+      event && event.preventDefault();
       // this prevents layer change when you click in source link
-      if (!$(e.target).hasClass('source')) {
-        var layerSlug = $(e.currentTarget).data('layer'),
-            fil_type = 'ifl_2013_deg';
+      if (!$(event.target).hasClass('source')) {
+        var layerSlug = $(event.currentTarget).data('layer');
 
-        if ($(e.currentTarget).hasClass('ifl') || $(e.currentTarget).hasClass('c_f_peru')) {
-          if ($(e.currentTarget).hasClass('c_f_peru')) {
+        if ($(event.currentTarget).hasClass('ifl') || $(event.currentTarget).hasClass('c_f_peru')) {
+            var fil_type = 'ifl_2013_deg';
+          if ($(event.currentTarget).hasClass('c_f_peru')) {
             fil_type = 'concesiones_forestalesNS';
           }
-          var $elem = $(e.currentTarget);
+          event && event.stopPropagation();
+          var $elem = $(event.currentTarget);
+            if (event.target.nodeName === 'LABEL') {
+              $elem.find('input').click();
+              return false;
+            }
           if ($elem.hasClass('selected')) {$elem.find('input').prop('checked',false);}
           else {$elem.find('[data-layer="' + fil_type + '"] input').prop('checked', true);}
           if ($elem.prop('tagName') !== 'LI'){
@@ -109,8 +114,8 @@ define([
               if ($($elem.siblings()[i]).hasClass('selected')) {
                 this.presenter.toggleLayer($($elem.siblings()[i]).data('layer'));
               }
+              $elem.parents('li').data('layer' , $elem.data('layer')).addClass('selected');
             }
-            $elem.parents('li').data('layer' , $elem.data('layer')).addClass('selected');
           }
         }
         this.presenter.toggleLayer(layerSlug);
