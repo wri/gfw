@@ -30,7 +30,7 @@ end %>
 </section>
 <section class="content-stories">
   <div class="inner">
-    <div id="carrousel-stories" class="story-carrousel">
+    <div id="carrousel-stories" class="story-carrousel <% if (!@story.media[1].present? && !@story.media[0]['embed_url'].present?)  %>no-padding<%end%>">
       <div class="frame">
         <%= image_tag(static_map("#{@story.lat}, #{@story.lng}", '266x266', 4, true)) %>
         <span class="mobile_map" style="background-image: url('http://maps.google.com/maps/api/staticmap?zoom=4&size=600x300&markers=icon:/marker_exclamation.png%7C<%=@story.lat %>,<%=@story.lng %>&maptype=terrain&sensor=false&scale=2')"></span>
@@ -47,17 +47,18 @@ end %>
             <% end %>
 
             <% if media['url'].present? %>
-              <li class='slide'><div class="bg" style="background-image: url(<%= "#{ENV['AWS_HOST']}/#{media['url']}" %>);"></div></li>
+              <li class='slide'><div class="bg" style="background-image: url(<%= "http://gfw2stories.s3.amazonaws.com/uploads/#{media['url']}" %>);"></div></li>
             <% end %>
           <% end %>
         </ul>
       <% end %>
+      <div id="paginationView" class="main-slider-pagination"></div>
 
     </div>
     <div class='story-content'>
       <p><%= simple_format(raw("<span class='dropcap'>#{@story.details[0, 1]}</span>") + @story.details[1, @story.details.length - 1]).gsub("</p>\n\n<p>", "<br /><br />").html_safe %></p>
       <% if (@story.media[1].present?) %>
-          <p class="show_mobile" style="background-image: url('<%= "#{ENV['AWS_HOST']}/#{@story.media[1]['url']}" %>')"></p>
+          <p class="show_mobile" style="background-image: url('<%= "http://gfw2stories.s3.amazonaws.com/uploads/#{@story.media[1]['url']}" %>')"></p>
       <% end %>
     </div>
     <div class="story-share_buttons">
