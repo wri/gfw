@@ -31,9 +31,11 @@ define([
 
       // Cache
       this.$htmlbody = $('html, body');
+      this.$window = $(window);
       this.$document = $(document);
       this.$sourceWindow = $('#window');
       this.$backdrop = $('#backdrop');
+      this.mobile = (this.$window.width() > 850) ? false : true;
 
       // Init
       this.render();
@@ -41,9 +43,12 @@ define([
     },
 
     _initBindings: function() {
+      this.mobile = (this.$window.width() > 850) ? false : true;
       this.scrollTop = this.$document.scrollTop();
-      this.$htmlbody.addClass('active');
-      this.$htmlbody.animate({ scrollTop: this.scrollTop },0);
+      if(this.mobile) {
+        this.$htmlbody.addClass('active');
+        this.$htmlbody.animate({ scrollTop: this.scrollTop },0);
+      }
       // document keyup
       this.$document.on('keyup', _.bind(function(e) {
         if (e.keyCode === 27) {
@@ -57,8 +62,10 @@ define([
     },
 
     _stopBindings: function() {
-      this.$htmlbody.removeClass('active');
-      this.$htmlbody.animate({ scrollTop: this.scrollTop },0);
+      if(this.mobile) {
+        this.$htmlbody.removeClass('active');
+        this.$htmlbody.animate({ scrollTop: this.scrollTop },0);
+      }
       this.$document.off('keyup');
       this.$backdrop.off('click');
     },
