@@ -12,7 +12,7 @@ define([
 
   var SourceWindowModel = Backbone.Model.extend({
     defaults: {
-      hidden: true
+      hidden: true,
     }
   });
 
@@ -30,6 +30,8 @@ define([
       this.model = new SourceWindowModel();
 
       // Cache
+      this.$htmlbody = $('html, body');
+      this.$document = $(document);
       this.$sourceWindow = $('#window');
       this.$backdrop = $('#backdrop');
 
@@ -39,8 +41,11 @@ define([
     },
 
     _initBindings: function() {
+      this.scrollTop = this.$document.scrollTop();
+      this.$htmlbody.addClass('active');
+      this.$htmlbody.animate({ scrollTop: this.scrollTop },0);
       // document keyup
-      $(document).on('keyup', _.bind(function(e) {
+      this.$document.on('keyup', _.bind(function(e) {
         if (e.keyCode === 27) {
           this.hide();
         }
@@ -52,7 +57,9 @@ define([
     },
 
     _stopBindings: function() {
-      $(document).off('keyup');
+      this.$htmlbody.removeClass('active');
+      this.$htmlbody.animate({ scrollTop: this.scrollTop },0);
+      this.$document.off('keyup');
       this.$backdrop.off('click');
     },
 
