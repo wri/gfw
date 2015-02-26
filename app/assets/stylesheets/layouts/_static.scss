@@ -70,13 +70,20 @@
     max-width: 1024px;
   }
   h2 {
-    font-size: 47px;
+    font-size: 35px;
     padding: 0 0 15px;
+    @media (min-width: $br-mobile) {
+      font-size: 47px;
+    }
+
   }
   h3 {
-    font-size: 19px;
+    font-size: 17px;
     line-height: 1.25;
     padding: 0 0 10px;
+    @media (min-width: $br-mobile) {
+      font-size: 19px;
+    }
   }
   h4{
     text-align: center;
