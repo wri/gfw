@@ -58,6 +58,8 @@
   background: #333;
   color: $white;
   padding: 85px 0 50px;
+  z-index: 1;
+  position: relative;
   @media (min-width: $br-mobile) {
     padding: 70px 0 50px;
   }
