@@ -52,6 +52,7 @@ define([
     },
 
     _navigateTo: function(e){
+      e && e.preventDefault();
       var index = $(e.currentTarget).index();
       mps.publish('slider:change',[index]);
     }
