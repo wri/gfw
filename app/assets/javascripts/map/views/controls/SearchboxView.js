@@ -7,9 +7,10 @@ define([
   'underscore',
   'backbone',
   'handlebars',
+  'keymaster',
   'map/presenters/controls/SearchboxPresenter',
   'text!map/templates/controls/searchbox.handlebars'
-], function(_, Backbone, Handlebars, Presenter, tpl) {
+], function(_, Backbone, Handlebars, keymaster, Presenter, tpl) {
 
   'use strict';
 
@@ -35,17 +36,26 @@ define([
       _.bindAll(this, 'setAutocomplete', 'onPlaceSelected');
 
       this.render();
+      //cacheVars
+      this.$input = this.$el.find('input');
+
       this.setListeners();
       this.setAutocomplete();
+
     },
 
     setListeners: function(){
-      google.maps.event.addListener(this.map, 'click',
-        _.bind(function() {
+      this.$input.on('keyup', _.bind(function(e){
+        if (e.keyCode === 27) {
           this.model.set('hidden', false);
           this.toggleSearch();
-        }, this)
-      );
+        }
+      }, this ));
+
+      google.maps.event.addListener(this.map, 'click',_.bind(function() {
+        this.model.set('hidden', false);
+        this.toggleSearch();
+      }, this));
     },
 
     render: function(){
@@ -56,16 +66,20 @@ define([
       var hidden = this.model.get('hidden');
       if (hidden) {
         this.$el.show(0);
-        this.$el.find('input').focus();
+        this.$input.focus();
         this.model.set('hidden', false);
+        setTimeout(_.bind(function(){
+          this.$input.val('');
+        }, this),1);
       }else{
         this.$el.hide(0);
+        this.$input.blur();
         this.model.set('hidden', true);
       }
     },
 
     setAutocomplete: function() {
-      this.autocomplete = new google.maps.places.SearchBox(this.$el.find('input')[0]);
+      this.autocomplete = new google.maps.places.SearchBox(this.$input[0]);
       google.maps.event.addListener(this.autocomplete, 'places_changed', this.onPlaceSelected);
     },
 

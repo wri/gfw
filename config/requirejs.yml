@@ -31,11 +31,13 @@ paths:
   chosen: "chosen/chosen.jquery"
   slick: "slick.js/slick/slick.min"
   simplePagination: "jquery.simplePagination/jquery.simplePagination"
+  keymaster: "keymaster/keymaster"
+
   #countries
   scrollit: "ScrollIt.js/scrollIt"
   qtip: "qtip2/jquery.qtip.min"
-  # stories
 
+  # stories
   jquery_fileupload: "jquery-file-upload/js/jquery.fileupload"
   jquery_migrate: "jquery-migrate/jquery-migrate"
   geojson: "geojson-google-maps/GeoJSON"

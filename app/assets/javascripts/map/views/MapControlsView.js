@@ -6,11 +6,12 @@
 define([
   'underscore',
   'handlebars',
+  'keymaster',
   'map/presenters/MapControlsPresenter',
   'map/views/controls/SearchboxView',
   'map/views/controls/ToggleModulesView',
   'text!map/templates/mapcontrols.handlebars'
-], function(_, Handlebars, Presenter, Searchbox, ToggleModulesView, tpl) {
+], function(_, Handlebars, keymaster, Presenter, Searchbox, ToggleModulesView, tpl) {
 
   'use strict';
 
@@ -39,6 +40,7 @@ define([
     template: Handlebars.compile(tpl),
 
     initialize: function(map) {
+      _.bindAll(this,'zoomIn','zoomOut','resetMap','showSearch','fitBounds','toggleModules');
       this.model = new MapControlsModel();
       this.presenter = new Presenter(this);
       this.map = map;
@@ -47,6 +49,12 @@ define([
     },
 
     setListeners: function(){
+      key('s', this.showSearch);
+      key('m', this.zoomIn);
+      key('n', this.zoomOut);
+      key('r', this.resetMap);
+      key('f', this.fitBounds);
+      key('t', this.toggleModules);
 
       this.model.on('change:hidden', this.toogleModule, this);
 
@@ -119,7 +127,7 @@ define([
 
     //TOGGLE
     toggleModules: function(e){
-      $(e.currentTarget).toggleClass('active');
+      this.$el.find('.toggle-modules').toggleClass('active');
       mps.publish('MapControlsToggleModules/toggle');
     },
 
