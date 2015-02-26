@@ -24,8 +24,13 @@
         }
         &.disabled{
           opacity: 0.5;
-          pointer-events: none;
+          // pointer-events: none;
           cursor: default;
+          &:hover{
+            svg{
+              fill: $dark;
+            }
+          }
         }
         svg{
           display: block;
@@ -221,6 +226,16 @@
           opacity: 0.5;
           pointer-events: none;
           cursor: default;
+        }
+
+        &.pulse{
+          svg{
+            @include animation(pulse_animation,0.75s,4,$easeInOutSine);
+          }
+          .tooltipmap{
+            opacity: 1;
+            visibility: visible;
+          }
         }
 
         &:after{

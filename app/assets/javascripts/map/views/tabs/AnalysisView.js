@@ -62,6 +62,10 @@ define([
       //tabs
       this.$tabs = $('#analysis-nav li');
       this.$tabsContent = $('.analysis-tab-content');
+
+      //delete
+      this.timeout = null;
+
     },
 
     setListeners: function(){
@@ -81,6 +85,7 @@ define([
 
     // navigate between tabs
     toggleTabs: function(e){
+
       if (!$(e.currentTarget).hasClass('disabled')) {
         var tab = $(e.currentTarget).data('analysis');
 
@@ -97,6 +102,13 @@ define([
           this._stopDrawing();
           this.presenter.deleteAnalysis();
         }
+      }else{
+        this.$deletebtn = $('#analysis-delete');
+        clearTimeout(this.timeout);
+        this.$deletebtn.addClass('pulse');
+        this.timeout = setTimeout(_.bind(function(){
+          this.$deletebtn.removeClass('pulse');
+        }, this ),3000)
       }
     },
 
