@@ -40,6 +40,7 @@ define([
       this.presenter.initExperiment('source');
 
       //Init
+      this.$countrySelect = $('#country-select');
       this.$layersCountry = $('#layers-country-nav');
       this.$countrySublayer = $('.country-sublayer-box')
       this.getCountries();
@@ -154,7 +155,6 @@ define([
      */
     printCountries: function(){
       //Country select
-      this.$countrySelect = $('#country-select');
       this.countries = amplify.store('countries');
 
       //Loop for print options
