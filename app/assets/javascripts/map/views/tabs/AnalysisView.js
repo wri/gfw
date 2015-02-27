@@ -539,12 +539,13 @@ define([
 
     toggleUseBtn: function(to){
       this.$start.toggleClass('in_use', to);
-      (to) ? this.$start.text('Cancel') : this.$start.text('Analyze');
+      (to) ? this.$start.removeClass('green').addClass('gray').text('Cancel') : this.$start.removeClass('gray').addClass('green').text('Start drawing');
       $('.cartodb-popup').toggleClass('dont_analyze', to);
     },
 
     toggleDoneBtn: function(to){
-      this.$done.toggleClass('disabled', to);
+      $('#draw-analysis').toggleClass('one', to);
+      this.$done.parent().toggleClass('hidden', to);
     },
 
 
