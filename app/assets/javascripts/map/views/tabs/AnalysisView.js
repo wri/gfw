@@ -79,6 +79,7 @@ define([
     },
 
     inits: function(){
+      this.setStyle(0.45);
       this.getCountries();
     },
 
