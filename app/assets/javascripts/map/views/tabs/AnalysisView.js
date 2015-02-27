@@ -40,7 +40,7 @@ define([
     },
 
     initialize: function(map) {
-      _.bindAll(this, '_onOverlayComplete');
+      _.bindAll(this, '_onOverlayComplete', '_cartodbLayerDone');
       this.map = map;
       this.presenter = new Presenter(this);
       this.model = new AnalysisModel();
@@ -79,7 +79,6 @@ define([
     },
 
     inits: function(){
-      this.setStyle();
       this.getCountries();
     },
 
@@ -141,10 +140,10 @@ define([
     /**
      * Set geojson style.
      */
-    setStyle: function() {
+    setStyle: function(opacity) {
       this.style = {
         strokeWeight: 2,
-        fillOpacity: 0.45,
+        fillOpacity: opacity,
         fillColor: '#FFF',
         strokeColor: '#A2BC28',
         icon: new google.maps.MarkerImage(
@@ -308,6 +307,7 @@ define([
      * listener.
      */
     _startDrawingManager: function() {
+      this.setStyle(0.45);
       this.model.set('is_drawing', true);
       this.drawingManager = new google.maps.drawing.DrawingManager({
         drawingControl: false,
@@ -374,7 +374,9 @@ define([
 
       if (resource.multipolygon) {
         this.map.data.remove(resource.multipolygon);
+        this._removeCartodblayer();
       }
+
 
       this.$tabs.removeClass('disabled');
     },
@@ -410,7 +412,106 @@ define([
 
 
 
+    // COUNTRY MASK
+    drawMaskCountry: function(geojson, iso){
+      this.setStyle(0);
+      this._removeCartodblayer();
 
+      this.mask = cartodb.createLayer(this.map, {
+        user_name: 'wri-01',
+        type: 'cartodb',
+        cartodb_logo: false,
+        sublayers: [{
+          name: 'mask',
+          sql: "SELECT * FROM country_mask",
+          cartocss: "\
+            #country_mask {\
+              polygon-fill: #373737;\
+              polygon-opacity: 0.5;\
+              line-color: #333;\
+              line-width: 0;\
+              line-opacity: 0;\
+            }\
+            #country_mask[code='" + iso + "'] {\
+              polygon-opacity: 0;\
+              line-color: #97Bd3d;\
+              line-width: 1;\
+              line-opacity: 0;\
+            }"
+        }]
+      });
+      this.mask.addTo(this.map, 1000)
+      this.mask.done(this._cartodbLayerDone);
+
+      var multipolygon = this.map.data.addGeoJson(geojson)[0];
+      this.presenter.setMultipolygon(multipolygon, geojson);
+
+    },
+
+    // COUNTRY MASK
+    drawMaskArea: function(geojson, iso, region){
+      this.setStyle(0);
+      this._removeCartodblayer();
+
+      this.mask = cartodb.createLayer(this.map, {
+        user_name: 'wri-01',
+        type: 'cartodb',
+        cartodb_logo: false,
+        sublayers: [{
+          sql: "SELECT * FROM country_mask",
+          cartocss: "\
+            #country_mask {\
+              polygon-fill: #373737;\
+              polygon-opacity: 0.5;\
+              line-color: #333;\
+              line-width: 0;\
+              line-opacity: 0;\
+            }\
+            #country_mask[code='" + iso + "'] {\
+              polygon-opacity: 0;\
+              line-color: #333;\
+              line-width: 1;\
+              line-opacity: 1;\
+            }"
+        }, {
+          sql: "SELECT * FROM gadm_1_all WHERE iso LIKE '" + iso +"' ",
+          cartocss: "\
+            #gadm_1_all {\
+              polygon-fill: #373737;\
+              polygon-opacity: 0.5;\
+              line-color: #333;\
+              line-width: 0;\
+              line-opacity: 0;\
+              [id_1=" + region + "]{\
+                polygon-opacity: 0;\
+              }\
+              ::active[id_1=" + region + "] {\
+                polygon-opacity: 0;\
+                line-color: #73707D;\
+                line-width: 1;\
+                line-opacity: 1;\
+              }\
+            }"
+        }]
+      })
+      this.mask.addTo(this.map, 1000)
+      this.mask.done(this._cartodbLayerDone);
+
+      var multipolygon = this.map.data.addGeoJson(geojson)[0];
+      this.presenter.setMultipolygon(multipolygon, geojson);
+
+    },
+
+
+    _removeCartodblayer: function() {
+      if (this.cartodbLayer) {
+        this.cartodbLayer.remove();
+      }
+    },
+
+    _cartodbLayerDone: function(layer) {
+      this.cartodbLayer = layer;
+    },
 
 
 

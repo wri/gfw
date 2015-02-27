@@ -70,6 +70,7 @@ define([
       'LayerNav/change': function(layerSpec) {
         this._setBaselayer(layerSpec.getBaselayers());
         this._updateAnalysis();
+
       }
     }, {
       'AnalysisTool/update-analysis': function() {
@@ -208,15 +209,16 @@ define([
             objects);
 
           this._geojsonFitBounds(geojson);
-          this.view.drawMultipolygon(geojson);
+          this.view.drawMaskCountry(geojson,iso.country);
           this._publishAnalysis(resource);
+
         },this));
       } else {
         regionService.execute(resource, _.bind(function(results) {
           var geojson = results.features[0];
 
           this._geojsonFitBounds(geojson);
-          this.view.drawMultipolygon(geojson);
+          this.view.drawMaskArea(geojson,iso.country,iso.region);
           this._publishAnalysis(resource);
         },this));
       }
