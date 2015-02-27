@@ -30,7 +30,7 @@ end %>
 </section>
 <section class="content-stories">
   <div class="inner">
-    <div id="carrousel-stories" class="story-carrousel">
+    <div id="carrousel-stories" class="story-carrousel <% if (!@story.media[1].present? && !@story.media[0]['embed_url'].present?)  %>no-padding<%end%>">
       <div class="frame">
         <%= image_tag(static_map("#{@story.lat}, #{@story.lng}", '266x266', 4, true)) %>
         <span class="mobile_map" style="background-image: url('http://maps.google.com/maps/api/staticmap?zoom=4&size=600x300&markers=icon:/marker_exclamation.png%7C<%=@story.lat %>,<%=@story.lng %>&maptype=terrain&sensor=false&scale=2')"></span>
@@ -49,9 +49,11 @@ end %>
             <% if media['url'].present? %>
               <li class='slide'><div class="bg" style="background-image: url(<%= "#{ENV['AWS_HOST']}/#{media['url']}" %>);"></div></li>
             <% end %>
+            <!-- #{ENV['AWS_HOST']} => #{ENV['AWS_HOST']} -->
           <% end %>
         </ul>
       <% end %>
+      <div id="paginationView" class="main-slider-pagination"></div>
 
     </div>
     <div class='story-content'>

@@ -10,7 +10,7 @@ define([
   var CustomInfowindow = function(latlng, map, opts) {
     this.defauls = {
       template: tpl,
-      offset: [-10, 85],
+      offset: [-113, 85],
       width: 226,
       className: 'cartodb-infowindow'
     };

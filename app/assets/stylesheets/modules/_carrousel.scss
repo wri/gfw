@@ -27,22 +27,6 @@
     overflow-x: auto;
     padding: 0 0 15px;
     -webkit-overflow-scrolling: touch;
-    /* Let's get this party started */
-    &::-webkit-scrollbar {
-      height: 6px;
-    }
-
-    /* Track */
-    &::-webkit-scrollbar-track {
-      border-radius: 0px;
-      background: $dark;
-    }
-
-    /* Handle */
-    &::-webkit-scrollbar-thumb {
-      border-radius: 0px;
-      background: rgba($light,0.8);
-    }
     @media (min-width: $br-mobile) {
       position: absolute;
       height: 100%;
@@ -64,22 +48,6 @@
         height: calc(100% - 40px);
         padding: 0px 20px 0 0;
         overflow: auto;
-        /* Let's get this party started */
-        &::-webkit-scrollbar {
-          width: 6px;
-        }
-
-        /* Track */
-        &::-webkit-scrollbar-track {
-          border-radius: 0px;
-          background: $dark;
-        }
-
-        /* Handle */
-        &::-webkit-scrollbar-thumb {
-          border-radius: 0px;
-          background: rgba($light,0.8);
-        }
       }
       li{
         margin: 20px 0 0 20px;

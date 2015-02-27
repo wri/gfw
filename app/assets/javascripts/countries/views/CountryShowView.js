@@ -8,13 +8,13 @@ define([
   'd3',
   'mps',
   'scrollit',
+  'views/SourceWindowView',
   'countries/views/CountryHeaderView',
   'countries/views/CountryShareView',
-  'countries/views/CountryInfoWindow',
   'countries/models/CountryShowModel',
   'countries/helpers/CountryHelper',
 
-], function($, Backbone, _, d3, mps, scrollit, CountryHeaderView, CountryShareView, CountryInfoWindow, CountryShowModel, CountryHelper ) {
+], function($, Backbone, _, d3, mps, scrollit, SourceWindowView, CountryHeaderView, CountryShareView, CountryShowModel, CountryHelper ) {
 
   'use strict';
 
@@ -23,7 +23,6 @@ define([
     el: '#countryShowView',
 
     events: {
-      'click .info': '_openSource',
       'click .forma_dropdown-link': '_openDropdown',
     },
 
@@ -62,17 +61,7 @@ define([
     },
 
     _initSource: function() {
-      this.sourceWindow  = new CountryInfoWindow();
-      this.$el.append(this.sourceWindow.render());
-    },
-
-    _openSource: function(e) {
-      e && e.preventDefault();
-
-      var source = $(e.target).closest('.info').attr('data-source');
-
-      ga('send', 'event', 'Country show', 'Info', 'Open ' + source);
-      this.sourceWindow.show(source).addScroll();
+      this.sourceWindow  = new SourceWindowView();
     },
 
     _initFormaDropdown: function() {

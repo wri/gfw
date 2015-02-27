@@ -25,10 +25,19 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         this.view._toggleSelected(place.layerSpec.getLayers());
+        (place.params.iso) ? this.view.setSelect(place.params.iso.country) : null;
       }
     }, {
       'LayerNav/change': function(layerSpec) {
         this.view._toggleSelected(layerSpec.getLayers());
+      }
+    }, {
+      'Layers/isos': function(layers_iso) {
+        this.view._getIsoLayers(layers_iso);
+      }
+    }, {
+      'LocalMode/updateIso': function(iso) {
+        this.view.setSelect(iso);
       }
     }],
 
@@ -49,6 +58,15 @@ define([
           mps.publish('LayerNav/change', [layerSpec]);
           mps.publish('Place/update', [{go: false}]);
         }, this));
+    },
+
+
+    /**
+    * Ask for country analysis once clicked
+    */
+    _analizeIso: function(iso) {
+      iso = {country: iso}
+      mps.publish('LocalMode/changeIso',[iso])
     }
   });
 

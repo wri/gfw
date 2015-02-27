@@ -22,6 +22,7 @@ define([
       //CACHE
       this.$htmlbody = $('html,body');
       this.$window = $(window);
+      this.$document = $(document);
       this.$navMobile = $('#nav-mobile');
       this.$footer = $('#footerMenu');
       this.$siteMap = $('#siteMap');
@@ -35,11 +36,12 @@ define([
     toggleMenu: function(e){
       $(e.currentTarget).toggleClass('active');
       if ($(e.currentTarget).hasClass('active')) {
+        this.scrollTop = this.$document.scrollTop();
         this.$htmlbody.addClass('active');
         this.$el.addClass('active');
         this.$navMobile.addClass('active');
       }else{
-        this.$htmlbody.removeClass('active');
+        this.$htmlbody.removeClass('active').animate({ scrollTop: this.scrollTop }, 0);
         this.$el.removeClass('active');
         this.$navMobile.removeClass('active');
       }

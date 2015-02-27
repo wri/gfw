@@ -1,0 +1,49 @@
+$w-control: 44px;
+.module-mapcontrols {
+  bottom: 50px;
+  left: 35px;
+  ul{
+    width: $w-control * 2;
+    @include display-flex();
+    @include flex-wrap(wrap);
+    li{
+      @include display-flex();
+      @include justify-content(center);
+      @include align-items(center);
+      background: $white;
+      width: $w-control;
+      height: $w-control;
+      position: relative;
+      cursor: pointer;
+      svg{
+        fill: $dark;
+        &.hidden{
+          display: none;
+        }
+      }
+      &:nth-child(even){
+        border-left: 1px solid $border;
+      }
+      &:nth-child(n+3){
+        border-top: 1px solid $border;
+      }
+      &:hover{
+        .tooltipmap{
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+      &:active{
+        background: darken($white,5%);
+      }
+      &.toggle-modules{
+        .toggle-on { display: none;}
+        .toggle-off { display: block;}
+        &.active{
+          .toggle-on { display: block;}
+          .toggle-off { display: none;}
+        }
+      }
+    }
+  }
+}

@@ -83,19 +83,11 @@
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Tropical forest carbon stock<a href='#' data-source='pantropical' class='source'></a></span>
           </li>
-          <li class="layer" data-layer="idn_primary">
-            <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Indonesia primary forest<a href='#' data-source='idn_primary' class='source'></a></span>
-          </li>
           <li class="layer" data-layer="mangrove">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Global Mangroves<a href='#' data-source='mangrove' class='source'></a></span>
           </li>
-          <li class="layer" data-layer="colombia_forest_change">
-            <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Colombia Forest<a href='#' data-source='colombia_forest_change' class='source'></a></span>
-          </li>
-          </ul>
+        </ul>
       </div>
     </li>
 
@@ -123,22 +115,6 @@
           <li class="layer" data-layer="wood_fiber_plantations">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Wood fiber plantations<a href='#' data-source='wood_fiber_plantations' class='source'></a></span>
-          </li>
-          <li class="layer" data-layer="WMSLayer">
-            <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Honduras forest use<a href='#' data-source='WMSLayer' class='source'></a></span>
-          </li>
-          <li class="layer c_f_peru" data-layer="concesiones_forestalesNS">
-            <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Peru forest concessions<a href='#' data-source='concesiones_forestalesNS' class='source'></a></span>
-            <span class="layer-info">
-              <label data-layer="concesiones_forestales" class="layer c_f_peru">
-                <input type="radio" name="intactType" />supervision status
-              </label>
-              <label data-layer="concesiones_forestalesNS" class="layer c_f_peru">
-                <input type="radio" name="intactType" />type of concession
-              </label>
-            </span>
           </li>
         </ul>
       </div>
@@ -231,5 +207,16 @@
       </div>
     </li>
 
+    <li class="country-data">
+      <div class="country-select-box">
+        <select id="country-select" data-placeholder="Country data">
+          <option></option>
+        </select>
+      </div>
+      <div class="country-sublayer-box">
+        <button><svg class="icon shape-house"><use xlink:href="#shape-world"></use></svg></button>
+        <div id="layers-country-nav" class="layers-country-nav"></div>
+      </div>
+    </li>
   </ul>
 </div>

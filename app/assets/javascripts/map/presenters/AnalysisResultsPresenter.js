@@ -66,8 +66,8 @@ define([
         this._renderResults({loading: true});
       }
     }, {
-      'AnalysisService/results': function(results) {
-        this._renderResults(results);
+      'AnalysisService/results': function(results, type) {
+        this._renderResults(results, type);
       }
     }, {
       'AnalysisResults/unavailable': function() {
@@ -139,22 +139,25 @@ define([
      *
      * @param  {Object} results [description]
      */
-    _renderResults: function(results) {
+    _renderResults: function(results,type) {
       // Even if the result is a failure or unavailable message, we render
       // the widget results and keep the polygon.
       this.status.set('analysis', true);
-      this.view.model.set('boxHidden', false);
 
       if (results.loading) {
         this.view.renderLoading();
       } else if (results.unavailable) {
+        mps.publish('Spinner/stop');
         this.view.renderUnavailable();
       } else if (results.failure) {
+        mps.publish('Spinner/stop');
         this.view.renderFailure();
       } else {
+        mps.publish('Spinner/stop');
         this._renderAnalysis(results);
         // Subscribe button just should be activated
         // when a analysis is succesfully rendered.
+        this.view.$tab.addClass('is-analysis');
         this._setSubscribeButton();
       }
     },
@@ -190,7 +193,7 @@ define([
 
     /**
      * Render analysis subscribe dialog by publishing
-     * to DialogPresenter.
+     * to SubscribePresenter.
      */
     subscribeAnalysis: function() {
       var options = {
@@ -198,10 +201,7 @@ define([
         layer: this.status.get('baselayer')
       };
 
-      mps.publish('Dialog/new', [{
-        type: 'analysis',
-        id: 'subscribe'
-      }, options]);
+      mps.publish('Subscribe/show', [options]);
     },
 
     /**

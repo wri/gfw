@@ -1,0 +1,57 @@
+.tab-share{
+  padding: 20px;
+  .share-input{
+    padding: 15px 0 0;
+    input{
+      width: 100%;
+      border-radius: 0;
+      font-size: 13px;
+      text-align: center;
+      padding: 8px 10px;
+    }
+  }
+  .share-sozial{
+    padding: 50px 0 0;
+    ul{
+      @include display-flex();
+      @include justify-content(space-between);
+      li{
+        width: 44px;
+        height: 44px;
+        a{
+          display: block;
+          width: 100%;
+          height: 100%;
+          position: relative;
+          &.google_plus{ background: #DA4735; &:hover{ background: darken(#DA4735, 5%); } }
+          &.twitter{ background: #598DCA; &:hover{ background: darken(#598DCA, 5%); } }
+          &.facebook{ background: #3A589B; &:hover{ background: darken(#3A589B, 5%); } }
+        }
+        svg{
+          fill: $white;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 20px;
+          height: 20px;
+          @include transform(translate(-50%,-50%));
+        }
+      }
+    }
+  }
+}
+.preview-container{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  padding: 20px;
+  z-index: 5;
+  @include transform(translate(-50%,-50%));
+  opacity: 0;
+  visibility: hidden;
+  background: $dark;
+  &.active{
+    opacity: 1;
+    visibility: visible;
+  }
+}

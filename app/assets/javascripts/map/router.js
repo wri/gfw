@@ -18,7 +18,7 @@ define([
   var Router = Backbone.Router.extend({
 
     // temporary, we will do it with env variables
-    _cacheVersion: 24,
+    _cacheVersion: 25,
 
     routes: {
       'map(/:zoom)(/:lat)(/:lng)(/:iso)(/:maptype)(/:baselayers)(/:sublayers)(/)': 'map',
@@ -39,7 +39,6 @@ define([
 
     map: function() {
       this.name = 'map';
-      this.mainView.setMapMode();
       this.initMap.apply(this, arguments);
     },
 

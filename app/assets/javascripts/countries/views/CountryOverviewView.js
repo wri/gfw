@@ -7,12 +7,12 @@ define([
   'underscore',
   'd3',
   'mps',
-  'countries/views/CountryInfoWindow',
+  'views/SourceWindowView',
   'countries/views/CountryHeaderView',
   'countries/views/CountryShareView',
   'countries/helpers/CountryHelper'
 
-], function($, Backbone, _, d3, mps, CountryInfoWindow, CountryHeaderView, CountryShareView, CountryHelper) {
+], function($, Backbone, _, d3, mps, SourceWindowView, CountryHeaderView, CountryShareView, CountryHelper) {
 
   'use strict';
 
@@ -72,8 +72,7 @@ define([
     },
 
     _initViews: function() {
-      this.sourceWindow = new CountryInfoWindow();
-      this.$el.append(this.sourceWindow.render());
+      this.sourceWindow = new SourceWindowView();
 
       this.tooltip = d3.select('body')
         .append('div')
@@ -85,11 +84,6 @@ define([
 
       var Share = new CountryShareView({ template: 'templateShare' });
       this.$el.find('.overview_button_group .share').append(Share.render());
-    },
-
-    showInfo: function(e){
-      var source = $(e.currentTarget).attr('data-source');
-      this.sourceWindow.show(source);
     },
 
     _toggleYears: function() {
@@ -140,7 +134,7 @@ define([
       var $legend = $('.overview_graph__legend');
       $('.overview_graph__title').html(this.helper.config.GRAPHS[graph].title);
       $legend.find('p').html(this.helper.config.GRAPHS[graph].subtitle);
-      $legend.find('.info').attr('data-source', graph);
+      $legend.find('.info').data('source', graph);
 
       this.$graph.removeClass('is-hidden');
       this.$years.removeClass('is-hidden');
