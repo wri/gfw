@@ -39,6 +39,10 @@ define([
       'LocalMode/updateIso': function(iso) {
         this.view.setSelect(iso);
       }
+    }, {
+      'AnalysisResults/delete-analysis': function() {
+        this.view.setSelect({ country: null, region: null });
+      }
     }],
 
     initExperiment: function(id){
@@ -67,7 +71,7 @@ define([
     _analizeIso: function(iso) {
       iso = {country: iso}
       mps.publish('LocalMode/changeIso',[iso])
-    }
+    },
   });
 
   return LayersNavPresenter;

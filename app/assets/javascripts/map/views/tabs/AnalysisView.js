@@ -251,7 +251,9 @@ define([
       this.area = iso.region;
 
       this.$countrySelect.val(this.iso).trigger("liszt:updated");
-      this.getSubCountries();
+      if (this.iso) {
+        this.getSubCountries();
+      }
     },
 
     analysisCountry: function(){
