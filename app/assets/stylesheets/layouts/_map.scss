@@ -107,27 +107,6 @@
   }
 }
 
-.user-story-marker {
-  border: 3px solid #fff;
-  border-radius: 100%;
-  width: 50px;
-  height: 50px;
-  overflow: hidden;
-  @include box-shadow(0 0 1px 0 #000);
-
-  img {
-    width: auto;
-    height: 100%;
-  }
-}
-
-.thumb-marker {
-  .icon-custom-marker {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-  }
-}
 
 .map-viewfinder {
   // @include home-icons-sprite(viewfinder);

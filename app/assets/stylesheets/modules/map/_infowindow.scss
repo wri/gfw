@@ -1,6 +1,3 @@
-
-
-
 // GENERAL INFOWINDOW
 .cartodb-infowindow {
   background: $white;
@@ -188,5 +185,28 @@ $story-w: 215px;
       fill: $white;
       z-index: 3;
     }
+  }
+}
+
+// STORY MARKER
+.thumb-marker {
+  .icon-custom-marker {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+  }
+}
+
+.user-story-marker {
+  border: 3px solid #fff;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  box-shadow: $shadow1;
+
+  img {
+    width: auto;
+    height: 100%;
   }
 }
