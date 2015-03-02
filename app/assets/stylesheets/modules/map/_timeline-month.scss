@@ -2,18 +2,29 @@
   height: 100%;
 
   .tooltip {
-    margin-left: -8px;
+    margin-left: 0;
     text-transform: uppercase;
+    top: -16px;
   }
 
+  // Play button
   .play {
+    position: relative;
     float: left;
     width: 50px;
     height: 100%;
-    border-right: 1px solid #666;
     cursor: pointer;
-    @include box-sizing(border-box);
     padding: 20px;
+    &:after{
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      @include transform(translate(0,-50%));
+      width: 1px;
+      height: 60%;
+      background: $border;
+    }
 
     &:hover {
       .play-icon, .stop-icon {
@@ -22,18 +33,27 @@
     }
 
     .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include transform(translate(-50%,-50%));
+      margin: 0 0 0 1px;
       width: 0;
       height: 0;
       border-style: solid;
-      border-width: 6.5px 0 6.5px 10px;
-      border-color: transparent transparent transparent #444;
+      border-width: 7px 0 7px 10px;
+      border-color: transparent transparent transparent $dark;
     }
 
     .stop-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include transform(translate(-50%,-50%));
       display: none;
-      width: 9px;
-      height: 9px;
-      background: #444;
+      width: 10px;
+      height: 10px;
+      background: $dark;
     }
   }
 
@@ -48,21 +68,19 @@
   }
 
   .slider .handle {
-    // fill: $cGreen1;
-    // stroke: darken($cGreen1, 20);
     cursor: col-resize;
   }
 
   .domain {
     stroke: $cGreen1;
-    stroke-width: 6;
-    shape-rendering: crispEdges;
+    stroke-width: 4;
+    // shape-rendering: crispEdges;
   }
 
   .xaxis-years text {
     font-size: 11px;
-    fill: #999;
-
+    fill: $dark;
+    font-weight: 500;
     &.active {
       fill: $cGreen1;
     }
