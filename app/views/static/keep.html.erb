@@ -1,3 +1,7 @@
+<div id="loader-mobile" class="loader-mobile">
+  <div class="spinner start"><svg><use xlink:href="#shape-spinner"></use></svg></div>
+</div>
+
 <section class="header-static">
     <div class="inner">
       <header>
@@ -39,7 +43,7 @@
             </header>
             <div class="content">
               <div id="storiesKeepView" class="stories-box">
-                <ul>
+                <ul id="storiesKeepList">
                   <% @visible.each do |story| %>
                     <li>
                       <a href="<%= story_path(story['id']) %>">

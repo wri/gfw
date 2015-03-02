@@ -1,3 +1,11 @@
+#wwf_terr_ecos{
+  polygon-fill: transparent;
+  polygon-opacity: 0.9;
+  line-color: #FF2900;
+  line-width: 0.4;
+  line-opacity: 0.9;
+
+}
 #wwf_terr_ecos[realm="NT"] {
    polygon-fill: #A6CEE3;
 }
@@ -21,4 +29,7 @@
 }
 #wwf_terr_ecos[realm="IM"] {
    polygon-fill: #FFCC00;
+}
+#wwf_terr_ecos[zoom>5] {
+  line-width: 0.7;
 }

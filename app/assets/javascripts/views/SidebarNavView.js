@@ -53,6 +53,7 @@ define([
       this.$sourceBody = $('.source_body');
       this.$cut = $('#cut');
       this.$sourceSpinner = $('#sources-spinner');
+      this.$loaderMobile = $('#loader-mobile');
 
       //VARS
       this.padding = 40;
@@ -65,6 +66,7 @@ define([
     },
 
     setListeners: function(){
+
       this.calculateOffsets();
       this.scrollDocument();
       this.$document.on('scroll',_.bind(this.scrollDocument,this));
@@ -72,6 +74,11 @@ define([
 
       mps.subscribe('SourceStatic/change',_.bind(this.changeSource,this));
       mps.subscribe('SubItem/change',_.bind(this.calculateOffsets,this));
+
+      _.delay(_.bind(function(){
+        this.$loaderMobile.addClass('loaded');
+      }, this ), 250)
+
     },
 
 
@@ -195,6 +202,8 @@ define([
           this.$htmlbody.delay(time).animate({ scrollTop: this.$sideBarBox.offset().top - this.padding },time, _.bind(function(){
             this.calculateOffsets();
           }, this ));
+        }else{
+          this.calculateOffsets();
         }
       }
       this.section = true;

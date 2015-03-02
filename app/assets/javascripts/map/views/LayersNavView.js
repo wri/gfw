@@ -95,6 +95,10 @@ define([
           $elem.parents('li').data('layer' , $elem.data('layer')).addClass('selected');
         }
       }
+      if ($(event.currentTarget).hasClass('c_f_peru')) {
+        debugger
+        if ($('#c_f_ns_peru').is(':checked')) $('#map').toggleClass('peru_forest_type')
+      }
       this.presenter.toggleLayer(layerSlug);
       ga('send', 'event', 'Map', 'Toogle', 'Layer: ' + layerSlug);
     },

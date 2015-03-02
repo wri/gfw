@@ -6,6 +6,25 @@ Gfw::Application.routes.draw do
     # stories
     # get '/stories' => redirect("/stayinformed/crowdsourced-stories")
 
+    # 2004-2009 era
+    get '/english' => redirect('/')
+    get '/french' => redirect('/')
+    get '/bahasa' => redirect('/')
+    get '/english/index.htm' => redirect('/')
+    get '/french/index.htm' => redirect('/')
+    get '/bahasa/index.htm' => redirect('/')
+    get '/english/about(/:section)' => redirect('/about')
+    get '/french/about(/:section)' => redirect('/about')
+    get '/bahasa/about(/:section)' => redirect('/about')
+    get '/english/pdfs(/:section)' => redirect("sources")
+    get '/french/pdfs(/:section)' => redirect("sources")
+    get '/bahasa/pdfs(/:section)' => redirect("sources")
+    get '/english(/:id)(/:id2)(/:id3)' => redirect('/countries')
+    get '/french(/:id)(/:id2)(/:id3)' => redirect('/countries')
+    get '/bahasa(/:id)(/:id2)(/:id3)' => redirect('/countries')
+    get '/common(/:section)' => redirect("sources")
+    get '/assets(/:content)' => redirect('/')
+
     # howto
     get '/howto/video' => redirect("/howto")
     get '/howto/general_questions' => redirect("/howto/faqs")
@@ -34,6 +53,8 @@ Gfw::Application.routes.draw do
   # get '/stayinformed' => redirect('stayinformed/crowdsourced-stories')
   get '/stayinformed' => 'static#keep'
   get '/stayinformed(/:section)' => 'static#keep'
+  get '/stayinformed-stories' => 'static#keepstories'
+
   get '/getinvolved' => 'static#getinvolved'
   get '/getinvolved(/:section)' => 'static#getinvolved'
   get '/feedback' => 'static#feedback'
