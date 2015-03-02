@@ -404,6 +404,8 @@ define([
         multipolygon: this.status.get('multipolygon')
       });
 
+      this.view.setSelects({ country: null, region: null });
+
       // Reset status model
       this.status.set({
         resource: null,
