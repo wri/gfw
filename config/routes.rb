@@ -115,6 +115,11 @@ Gfw::Application.routes.draw do
 
   get '/landing' => 'landing#index'
 
+
+  # robots
+  get '/robots', to: redirect('/robots.txt'), format: false
+  get '/robots.:format' => 'robots#index'
+
   root 'landing#index'
 
 
