@@ -1,27 +1,9 @@
-<a href="#close" class="close"><svg><use xlink:href="#shape-close"></use></svg></a>
-
-<div class="outer_top">
-  <div class="top">
-    <div class="protected-header template_base"><a href="#" class="analyse"></div>
-    <div class="infowindow_content">
-
-      <strong>
-        {{#if loc}}
-          <a href="{{loc}}" target='_blank'>{{title}}</a>
-        {{else}}
-          <a href="/stories/{{id}}" target='_blank'>{{title}}</a>
-        {{/if}}
-      </strong>
-      {{#if autor}}<span>by {{autor}} &middot;</span>{{/if}}
-      {{#if loc}}
-        <a href="{{loc}}" target='_blank'>read more</a>
-      {{else}}
-        <a href="/stories/{{id}}" target='_blank'>read more</a>
-      {{/if}}
-    </div>
+<div class="story-popup">
+  <a href="#close" class="close"><svg><use xlink:href="#shape-close"></use></svg></a>
+  <div class="story-popup-content">
+    <a href="{{#if loc}}{{loc}}{{else}}/stories/{{id}}{{/if}}" target='_blank'>
+      <h3>{{title}} {{!-- {{#if autor}}<span>by {{autor}} &middot;</span>{{/if}} --}}</h3>
+      <p>read more</p>
+    </a>
   </div>
 </div>
-
-<div class="shadow"></div>
-
-<div class="bottom"></div>
