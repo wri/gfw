@@ -1,5 +1,9 @@
 .widget-timeline .timeline-month {
   height: 100%;
+  padding-left: 50px;
+  &.no-play{
+    padding-left: 0;
+  }
 
   .tooltip {
     margin-left: 0;
@@ -9,12 +13,14 @@
 
   // Play button
   .play {
-    position: relative;
+    position: absolute;
     float: left;
     width: 50px;
     height: 100%;
     cursor: pointer;
     padding: 20px;
+    top: 0;
+    left: 0;
     &:after{
       content: "";
       position: absolute;
@@ -58,10 +64,9 @@
   }
 
   .time {
-    float: left;
     height: 100%;
-    width: 945px;
     position: relative;
+    padding: 0 5px;
     svg{
       width: auto;
     }

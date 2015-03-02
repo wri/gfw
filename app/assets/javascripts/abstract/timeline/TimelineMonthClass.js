@@ -24,7 +24,7 @@ define([
 
     defaults: {
       dateRange: [moment([2001]), moment()],
-      width: 945,
+      width: 750,
       height: 50,
       player: true,
       playSpeed: 400,
@@ -68,7 +68,6 @@ define([
       var self = this;
       this.$timeline = $('.timeline-container');
       this.$el.html(this.template());
-      this.$timeline.parents('.widget-box').css('width', 1000);
       this.$timeline.append(this.el);
 
       // Cache
@@ -82,6 +81,7 @@ define([
         // 50 is the play div width.
         this.options.width += 50;
         this.$play.addClass('hidden');
+        this.$play.parent().addClass('no-play');
       }
 
       // SVG options

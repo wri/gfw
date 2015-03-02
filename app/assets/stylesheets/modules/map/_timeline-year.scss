@@ -1,10 +1,13 @@
 .widget-timeline .timeline-year {
   height: 100%;
+  padding-left: 50px;
+
 
   // Play button
   .play {
-    position: relative;
-    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 50px;
     height: 100%;
     cursor: pointer;
@@ -52,15 +55,18 @@
   }
 
   .time {
-    float: left;
     height: 100%;
-    width: 945px;
     position: relative;
+    padding: 0 5px;
+    svg{
+      width: auto;
+    }
   }
 
   .xaxis text {
     font-size: 11px;
-    fill: #999;
+    fill: $dark;
+    font-weight: 500;
 
     &.selected {
       fill: $cGreen1;
@@ -69,8 +75,8 @@
 
   .xaxis .domain {
     stroke: $cGreen1;
-    stroke-width: 8;
-    shape-rendering: crispEdges;
+    stroke-width: 4;
+    // shape-rendering: crispEdges;
   }
 
   .slider .handle {
