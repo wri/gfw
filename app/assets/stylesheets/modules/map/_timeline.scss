@@ -2,13 +2,13 @@
   .widget-box {
     bottom: 50px;
     right: 35px;
-    width: 1000px;
+    width: auto;
     height: 50px;
     @media (min-width: 1500px){
       bottom: 50px;
-      left: 0;
-      right: 0;
-      margin: auto;
+      left: 50%;
+      right: auto;
+      @include transform(translate(-50%,0));
     }
   }
 
