@@ -37,6 +37,9 @@ define([
       'change #analysis-country-select' : 'changeIso',
       'change #analysis-region-select' : 'changeArea',
       'click #analysis-country-button' : 'analysisCountry',
+
+      //other
+      'click #data-tab-play' : 'onGifPlay'
     },
 
     initialize: function(map) {
@@ -59,6 +62,10 @@ define([
       this.$countrySelect = $('#analysis-country-select');
       this.$regionSelect = $('#analysis-region-select');
 
+      //other
+      this.$img = $('#data-tab-img');
+      this.$play = $('#data-tab-play');
+
       //tabs
       this.$tabs = $('#analysis-nav li');
       this.$tabsContent = $('.analysis-tab-content');
@@ -79,8 +86,13 @@ define([
     },
 
     inits: function(){
+      // countries
       this.setStyle(0.45);
       this.getCountries();
+
+      //other
+      this.png = '/assets/infowindow-example.png';
+      this.gif = this.loadImg('/assets/infowindow-example.gif');
     },
 
     // navigate between tabs
@@ -550,6 +562,28 @@ define([
       $('#draw-analysis').toggleClass('one', to);
       this.$done.parent().toggleClass('hidden', to);
     },
+
+
+
+    // OTHER
+    onGifPlay: function(){
+      this.$play.addClass('hidden');
+      this.$img.attr('src',this.gif);
+      setTimeout(_.bind(function(){
+        this.$play.removeClass('hidden');
+        this.$img.attr('src',this.png);
+      }, this ), 10000 );
+    },
+
+    loadImg: function(url){
+      var img = new Image();
+      img.src = url;
+      return url;
+    },
+
+
+
+
 
 
   });

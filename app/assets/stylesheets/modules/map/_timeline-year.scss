@@ -1,14 +1,27 @@
 .widget-timeline .timeline-year {
   height: 100%;
+  padding-left: 50px;
 
+
+  // Play button
   .play {
-    float: left;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 50px;
     height: 100%;
-    border-right: 1px solid #666;
     cursor: pointer;
-    @include box-sizing(border-box);
     padding: 20px;
+    &:after{
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: 0;
+      @include transform(translate(0,-50%));
+      width: 1px;
+      height: 60%;
+      background: $border;
+    }
 
     &:hover {
       .play-icon, .stop-icon {
@@ -17,31 +30,43 @@
     }
 
     .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include transform(translate(-50%,-50%));
+      margin: 0 0 0 1px;
       width: 0;
       height: 0;
       border-style: solid;
-      border-width: 6.5px 0 6.5px 10px;
-      border-color: transparent transparent transparent #444;
+      border-width: 7px 0 7px 10px;
+      border-color: transparent transparent transparent $dark;
     }
 
     .stop-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      @include transform(translate(-50%,-50%));
       display: none;
-      width: 9px;
-      height: 9px;
-      background: #444;
+      width: 10px;
+      height: 10px;
+      background: $dark;
     }
   }
 
   .time {
-    float: left;
     height: 100%;
-    width: 945px;
     position: relative;
+    padding: 0 5px;
+    svg{
+      width: auto;
+    }
   }
 
   .xaxis text {
     font-size: 11px;
-    fill: #999;
+    fill: $dark;
+    font-weight: 500;
 
     &.selected {
       fill: $cGreen1;
@@ -50,8 +75,8 @@
 
   .xaxis .domain {
     stroke: $cGreen1;
-    stroke-width: 8;
-    shape-rendering: crispEdges;
+    stroke-width: 4;
+    // shape-rendering: crispEdges;
   }
 
   .slider .handle {

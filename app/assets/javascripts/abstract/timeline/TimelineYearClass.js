@@ -78,7 +78,6 @@ define([
       this.$timeline = $('.timeline-container');
       this.$el.html(this.template());
       this.$timeline.append(this.el);
-      this.$timeline.parents('.widget-box').css('width', 1000);
 
       // Cache
       this.$play = this.$el.find('.play');
@@ -376,10 +375,9 @@ define([
     formatXaxis: function() {
       var self = this;
       d3.select('.xaxis').selectAll('text').filter(function(d) {
-        var left = self.ext.left + 16;
-        var right = self.ext.right + 30;
-        if (d > Math.round(self.xscale.invert(left)) &&
-          d < Math.round(self.xscale.invert(right))) {
+        var left = self.ext.left;
+        var right = self.ext.right;
+        if (d >= Math.round(self.xscale.invert(left)) && d <= Math.round(self.xscale.invert(right))) {
           d3.select(this).classed('selected', true);
         } else {
           d3.select(this).classed('selected', false);

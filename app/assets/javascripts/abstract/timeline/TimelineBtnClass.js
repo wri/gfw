@@ -61,7 +61,6 @@ define([
     render: function(callback) {
       var self = this;
       this.$timeline = $('.timeline-container');
-      this.$timeline.parents('.widget-box').css('width', this.options.width);
       this.$timeline.append(this.el);
 
       // SVG options

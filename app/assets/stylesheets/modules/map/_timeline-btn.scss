@@ -1,5 +1,7 @@
 .widget-timeline .timeline-btn {
-
+  >svg{
+    width: auto;
+  }
   .tick {
     rect {
       cursor: pointer;
