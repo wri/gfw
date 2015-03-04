@@ -817,14 +817,14 @@ define([
           .attr('class', 'axis notranslate')
           .attr('id', 'axis_y')
           .text('10')
-          .attr('x', -212)
+          .attr('x', -224)
           .attr('y', 30)
           .attr('transform', 'rotate(-90)');
         svg.append('text')
           .attr('class', 'axis notranslate')
           .attr('id', 'axis_y')
           .text('5')
-          .attr('x', -282)
+          .attr('x', -306)
           .attr('y', 30)
           .attr('transform', 'rotate(-90)');
 
