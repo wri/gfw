@@ -788,7 +788,7 @@ define([
           .attr('class', 'axis notranslate')
           .attr('id', 'axis_y')
           .text('Tree cover loss (Mha)')
-          .attr('x', -h/2)
+          .attr('x', -h/1.6)
           .attr('y', 10)
           .attr('transform', 'rotate(-90)');
 
