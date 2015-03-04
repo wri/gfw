@@ -29,6 +29,10 @@ define([
 
     template: Handlebars.compile(tpl),
 
+    events: {
+      'click' : 'onClick'
+    },
+
     initialize: function(map) {
       this.map = map;
       this.model = new SearchboxModel();
@@ -60,6 +64,13 @@ define([
 
     render: function(){
       this.$el.html(this.template);
+    },
+
+    onClick: function(e){
+      if ($(e.target).hasClass('control-searchbox')) {
+        this.model.set('hidden', false);
+        this.toggleSearch();
+      }
     },
 
     toggleSearch: function(){

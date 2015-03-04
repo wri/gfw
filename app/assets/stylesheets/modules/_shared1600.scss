@@ -35,6 +35,8 @@
   }
 }
 
+
+// Tooltips
 .tooltip1{
   position: absolute;
   background: rgba($white,1);
@@ -69,6 +71,17 @@
     border-top: 1px solid lighten($border,5%);
     border-left: 1px solid lighten($border,5%);
   }
+
+  &.dark{
+    background: rgba($dark,1);
+    color: $white;
+    &:after{
+      background: $dark;
+      border-top: none;
+      border-left: none;
+    }
+  }
+
 }
 
 .tooltipmap{
