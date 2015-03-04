@@ -24,7 +24,7 @@ define([
     defaults: {
       dateRange: [moment([2001]), moment()],
       playSpeed: 400,
-      width: 945,
+      width: 750,
       height: 50
     },
 
