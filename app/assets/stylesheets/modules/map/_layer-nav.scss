@@ -49,6 +49,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     .category-name {
       font-weight: 500;
       font-size: 12px;
+      text-transform: uppercase;
     }
 
     &:not(.country-data):hover .layers-nav {
