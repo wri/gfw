@@ -123,7 +123,6 @@
             }
             .tooltip1{
               margin: 0;
-              color: $dark;
               line-height: normal;
               @media (max-width: $br-mobile - 1){
                 position: relative;
@@ -132,6 +131,7 @@
                 z-index: 1;
                 visibility: visible;
                 opacity: 1;
+                color: $dark;
                 top: auto;
                 left: auto;
                 text-align: left;
