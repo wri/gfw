@@ -36,8 +36,10 @@ define([
       'ifl_2013_deg',
       'idn_primary',
       'colombia_forest_change',
+      'mangrove',
       'pantropical',
       'forest2000',
+      'grump2000',
     ],
 
     categoryOrder: [
