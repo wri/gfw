@@ -102,14 +102,14 @@ $w-control: 44px;
           ol{
             text-align: left;
             list-style-type: decimal;
-            list-style-position: inside;
+            list-style-position: outside;
             position: relative;
             float: left;
+            max-width: 80%;
             left: 50%;
             @include transform(translate(-50%,0));
             li{
               padding: 5px 0 0;
-              white-space: nowrap;
               &:first-child{ margin: 0;}
               .source{
                 @extend .info-icon;
