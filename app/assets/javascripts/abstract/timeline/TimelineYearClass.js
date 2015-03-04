@@ -120,7 +120,7 @@ define([
       // Dots xaxis
       this.svg.append('g')
           .attr('class', 'xaxis')
-          .attr('transform', 'translate(0,{0})'.format(height/2 - 3))
+          .attr('transform', 'translate(0,{0})'.format(height/2 - 2))
           .call(d3.svg.axis()
             .scale(this.xscale)
             .orient('top')
@@ -182,8 +182,8 @@ define([
 
       this.handlers.left = this.slider.append('svg:image')
           .attr('class', 'handle')
-          .attr('width', 14)
-          .attr('height', 18)
+          .attr('width', 16)
+          .attr('height', 16)
           .attr('xlink:href', '/assets/svg/dragger2.svg')
           .attr('x', this.xscale(this.currentDate[0].year()))
           .attr('y', -3);
@@ -303,17 +303,17 @@ define([
 
         // Move domain right
         this.domain
-          .attr('x2', this.xscale(roundValue) - 16);
+          .attr('x2', this.xscale(roundValue));
 
         // Move trail
         this.trail
-          .attr('x1', this.xscale(roundValue) - 16)
-          .attr('x2', this.xscale(roundValue) - 16);
+          .attr('x1', this.xscale(roundValue))
+          .attr('x2', this.xscale(roundValue));
 
         // Move && update tooltip
         this.tooltip
-          .text(roundValue -1)
-          .style('left', this.xscale(roundValue) - 16 + 'px');
+          .text(roundValue)
+          .style('left', this.xscale(roundValue) + 'px');
 
         this.formatXaxis();
 

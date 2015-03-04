@@ -100,6 +100,6 @@
     fill: $cGreen1;
     stroke: darken($cGreen1, 20);
     cursor: col-resize;
-    @include transform(translate(-9px,12px));
+    @include transform(translate(-9px,14px));
   }
 }
