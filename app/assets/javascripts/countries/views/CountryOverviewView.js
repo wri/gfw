@@ -148,10 +148,9 @@ define([
       this._drawGraph();
       this._drawList();
 
-      if (graph === 'total_extent') {
+      if (graph === 'total_extent' || graph === 'percent_loss') {
         this.$graph.addClass('is-hidden');
         this.$years.addClass('is-hidden');
-        //$legend.addClass('is-hidden');
       }
     },
     _updateGraphOverview: function(e) {
@@ -911,6 +910,7 @@ define([
           ];
         }, this ));
       } else if (this.model.get('graph') === 'percent_loss') {
+        return;
         this._showYears();
 
         svg.append('text')
@@ -1048,6 +1048,7 @@ define([
             });
         });
       } else if (this.model.get('graph') === 'total_extent') {
+        return;
         this._showYears();
 
         svg.append('text')
