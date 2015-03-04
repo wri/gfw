@@ -24,11 +24,6 @@ define([
       'imazon_cover',
       'forma_cover',
       'terraicanvas_cover_cover',
-      'ifl_2000',
-      'ifl_2013_deg',
-      'pantropical',
-      'idn_primary',
-      'colombia_forest_change',
       'logging',
       'mining',
       'oil_palm',
@@ -37,7 +32,12 @@ define([
       'biodiversity_hotspots',
       'resource_rights',
       'land_rights',
-      'forest2000'
+      'ifl_2000',
+      'ifl_2013_deg', 
+      'idn_primary',
+      'colombia_forest_change',
+      'pantropical',
+      'forest2000',
     ],
 
     categoryOrder: [
