@@ -520,6 +520,8 @@ define([
 
     _removeCartodblayer: function() {
       if (this.cartodbLayer) {
+        // var overlaysLength = this.map.overlayMapTypes.getLength();
+        // this.map.overlayMapTypes.removeAt(overlaysLength);
         this.cartodbLayer.remove();
       }
     },
