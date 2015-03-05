@@ -607,15 +607,15 @@
 // BUZZ
 .buzz {
 	background: #F5F5F5;
-  overflow: auto;
-  @media (min-width: $br-mobile) {
+  @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+    padding: 50px 0 400px;
+  }
+  @media (min-width: $br-tablet) {
     padding: 50px 0;
   }
- .inner {
+  .inner {
     width: 95%;
-    @media (min-width: $br-mobile) {
-      min-width: 1200px;
-    }
+    max-width: 1200px;
   }
 	.row {
 		@include row();
@@ -628,7 +628,18 @@
 		@include col(100);
     @include display-flex();
     @media (min-width: $br-mobile) {
+      @include col(48);
+    }
+    @media (min-width: $br-tablet) {
       @include col(32);
+    }
+    &.tablet{
+      @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+        position: absolute;
+        top: 106%;
+        left: 0;
+        width: 100%;
+      }
     }
 	}
   h2 {
@@ -646,6 +657,7 @@
     width: 100%;
     border-top: 1px solid #CCC;
     padding: 20px;
+    padding-bottom: 50px;
     position: relative;
     @media (min-width: $br-mobile) {
      border-top: none;
@@ -664,11 +676,29 @@
     }
 
     .button-box {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px;
       @include display-flex();
       @include justify-content(center);
-      margin-top: 6px;
+      &.two{
+        @include justify-content(space-between);
+        .btn{
+          width: 49%;
+        }
+      }
       .btn {
         text-transform: uppercase;
+        @media (max-width: 1199px) {
+          &:first-child {
+            letter-spacing: 0px;
+          }
+          span {
+            display: none;
+          }
+        }
       }
     }
     .twitter{
@@ -680,53 +710,32 @@
       }
     }
 	}
-}
-
-
-.buzz .twitter-timeline,
-.buzz .timeline-involved,
-.buzz .stories {
-  max-width: 400px;
-  margin: 0 auto;
-  display: block;
-}
-
-// TWITTER
-.twitter-timeline {
-  height: 489px;
-  display: block;
-  margin: 0 auto;
+  .twitter,
+  .timeline-involved,
+  .stories {
+    max-width: 400px;
+    margin: 0 auto;
+    display: block;
+    @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+      margin: 0 auto !important;
+      display: block !important;
+      &.tablet {
+        max-width: none;
+      }
+    }
+  }
 }
 
 // GET INVOLVED
 .feed {
   width: 100%;
   .timeline-involved {
-    .button-box {
-      padding: 0 0 15px;
-      // @include row(space-between,center);
-      @include row(center,center);
-      .btn {
-        width: 49%;
-        text-transform: uppercase;
-        &:first-child {
-          letter-spacing: -0.6px;
-        }
-        @media (max-width: 1199px) {
-          &:first-child {
-            letter-spacing: 0px;
-          }
-          span {
-            display: none;
-          }
-        }
-      }
-    }
     ul {
       position: relative;
       padding: 20px 0;
       margin: 20px 0;
       height: 459px;
+
       &:after {
         content: "";
         width: 4px;
@@ -734,7 +743,6 @@
         position: absolute;
         top: 0;
         left: 50%;
-        background: #94CCDB;
         background: #C0C0C0;
         @include transform(translate(-50%,0));
       }
@@ -746,15 +754,38 @@
         bottom: 0;
         left: 50%;
         border-radius: 50%;
-        background: #94CCDB;
         background: #C0C0C0;
         @include transform(translate(-50%,0));
+      }
+      @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+        height: auto;
+        margin: 50px 0 90px;
+        &:after {
+          content: "";
+          width: 100%;
+          height: 4px;
+          top: 50%;
+          left: 0;
+          background: #C0C0C0;
+          @include transform(translate(0%,-50%));
+        }
+        &:before {
+          display: none;
+        }
       }
       li {
         width: 100%;
         height: 50px;
         position: relative;
         margin: 20px 0 0;
+        @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+          width: 19%;
+          height: auto;
+          margin: 0 0 0 1%;
+          float: left;
+          z-index: 2;
+          @include transform(translate(0,-50%));
+        }
         &:first-child { margin: 0;}
         figure {
           background: #999;
@@ -770,6 +801,12 @@
           left: 50%;
           z-index: 2;
           @include transform(translate(-40%,-50%));
+          @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+            position: relative;
+            left: 0;
+            @include transform(translate(0%,0%));
+          }
+
           &.google {
             >div{
               background-image: url('logos/google.svg');
@@ -826,6 +863,13 @@
           @include transform(translate(28px,-50%));
           font-size: 14px;
           font-weight: 300;
+          @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+            top: 120%;
+            left: 0%;
+            max-width: 100%;
+            @include transform(translate(0px,0));
+          }
+
           p {
             span {
               color: $cGreen;
@@ -836,12 +880,24 @@
         &:nth-child(even) {
           figure {
             @include transform(translate(-60%,-50%));
+            @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+              position: relative;
+              @include transform(translate(0%,0%));
+            }
           }
           .info {
             left: auto;
             right: 50%;
             @include transform(translate(-28px,-50%));
             p { text-align: right;}
+            @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+              left: 0;
+              top: auto;
+              bottom: 120%;
+              right: auto;
+              @include transform(translate(0,0));
+              p { text-align: left;}
+            }
           }
         }
       }
@@ -855,25 +911,6 @@
  width: 100%;
  .timeline-stories {
   position: relative;
-  .button-box {
-   padding: 0 0 15px;
-   @include row(space-between,center);
-   .btn {
-    width: 49%;
-    text-transform: uppercase;
-    &:last-child {
-     letter-spacing: -0.6px;;
-    }
-    @media (max-width: 1199px) {
-     &:first-child {
-      letter-spacing: 0px;
-     }
-     span {
-      display: none;
-     }
-    }
-   }
-  }
   ul {
    position: relative;
    li {
@@ -893,6 +930,7 @@
       border-radius: 50%;
       margin: 0 auto;
       border: 2px solid #999;
+      background-image: url(blog-categories/feature.png);
      }
      .Feature-posts {
       background-image: url(blog-categories/feature.png);
@@ -955,33 +993,3 @@
   }
  }
 }
-
-.analytics-graph {
-  border-top: 1px solid #e5e5df;
-  .graph-container {
-    @include display-flex();
-    @include flex-direction(column);
-    @include align-items(center);
-    h2 {
-      text-align: center;
-      font-size: 32px;
-      font-weight: 300;
-      padding: 40px 0px 30px;
-      color: $dark;
-      &:first-letter {
-        text-transform: uppercase;
-      }
-    }
-    .graph {
-      width: 834px;
-      height: 179px;
-      background-image: url('backgrounds/graph.png');
-      background-repeat: no-repeat;
-      margin: 0 0 40px;
-    }
-    .btn {
-      margin: 30px 0;
-    }
-  }
-}
-
