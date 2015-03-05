@@ -60,9 +60,9 @@ define([
     positionizer: function(layers) {
       var layerOrder = _.intersection(this.layerOrder, _.pluck(layers, 'slug'));
 
-      _.each(layerOrder, _.bind(function(slug, i) {
-        layers[slug].position = this.layerOrder.indexOf(slug);
-      }, this ));
+      _.each(layerOrder, function(slug, i) {
+        layers[slug].position = i;
+      });
 
       return layers;
     },
