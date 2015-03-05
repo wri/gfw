@@ -74,7 +74,7 @@ class StoriesController < ApplicationController
     end
     def load_more_stories
       @more_stories = Api::Story.visible
-      unless  @stories.blank? || @stories.count < 6
+      unless  @more_stories.blank? || @more_stories.count < 6
         @more_stories = @more_stories.sample(3)
       end
     end
