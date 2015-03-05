@@ -58,6 +58,8 @@
   background: #333;
   color: $white;
   padding: 85px 0 50px;
+  z-index: 1;
+  position: relative;
   @media (min-width: $br-mobile) {
     padding: 70px 0 50px;
   }
@@ -68,13 +70,20 @@
     max-width: 1024px;
   }
   h2 {
-    font-size: 47px;
+    font-size: 35px;
     padding: 0 0 15px;
+    @media (min-width: $br-mobile) {
+      font-size: 47px;
+    }
+
   }
   h3 {
-    font-size: 19px;
+    font-size: 17px;
     line-height: 1.25;
     padding: 0 0 10px;
+    @media (min-width: $br-mobile) {
+      font-size: 19px;
+    }
   }
   h4{
     text-align: center;
@@ -113,6 +122,13 @@
     a {
       width: 100%;
       margin: 0 auto;
+      @media (max-width: $br-mobile-portrait - 1) {
+        height: auto;
+        line-height: 1;
+        padding: 10px 12px 8px;
+        white-space: normal;
+      }
+
       @media (min-width: $br-mobile-portrait) {
         width: auto;
         text-align: left;
@@ -1025,6 +1041,7 @@
     background: #F2F2F3;
     ul{
       @include row();
+      border-bottom: 1px solid $border;
       li{
         @include col(33.33333);
         a{
