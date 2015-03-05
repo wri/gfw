@@ -52,6 +52,7 @@ define([
     },
 
     _navigateTo: function(e){
+      e && e.preventDefault();
       var index = $(e.currentTarget).index();
       mps.publish('slider:change',[index]);
     }
@@ -165,14 +166,17 @@ define([
         $target = $(e.target).parent();
       }
 
-      var dialog = JSON.stringify(
-      {
-        "display": true,
-        "type" : $target.data('dialog')
-      });
+      if ($target.data('dialog')) {
+        var dialog = JSON.stringify(
+        {
+          "display": true,
+          "type" : $target.data('dialog')
+        });
 
-      sessionStorage.setItem('DIALOG', dialog);
-      location.assign($target.data('href'));
+        sessionStorage.setItem('DIALOG', dialog);
+      }
+      ga('send', 'event', 'Get Started', 'Click', $target.data('ga'));
+      window.setTimeout(function(){location.assign($target.attr('href'));20});
     }
 
   });

@@ -1,135 +1,212 @@
-div.cartodb-infowindow{
+// GENERAL INFOWINDOW
+.cartodb-infowindow {
+  background: $white;
+  box-shadow: $shadow1;
+  @include transform(translate(-97px, -12px));
+
+
+  &:after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    background: $white;
+    box-shadow: 1px 1px 0 0 rgba($dark, 0.5);
+    @include transform(translate(-50%, 50%) rotate(45deg));
+  }
   &.hidden{
     visibility: hidden;
     opacity: 0;
   }
-}
-
-
-
-.mod-custom-infowindow,
-div.cartodb-popup {
-
-  div.cartodb-popup-content-wrapper{
-    width: 100%;
-    max-width: none;
-  }
-
 
   &.dont_analyze {
-    #analyzeBtn {
+    .cartodb-popup-fixed {
       display: none;
     }
   }
 
-  h2 {
-    font-size: 12px;
-    font-weight: 500;
-    text-transform: uppercase;
-    padding: 0 0 10px 0;
-  }
 
-  h4{
-    margin: 0 0 5px;
-  }
-
-  .cartodb-popup-header {
-    &.cartodb-popup-header-analysis{
-      margin-bottom: 10px;
-      margin-top: 30px;
-    }
-  }
-
-  .thumb-mask {
+  .cartodb-popup{
     position: relative;
-    // height: 122px;
-    overflow: hidden;
-    background-size: cover;
-    img {
-      // display: none;
+    width: 250px;
+    height: auto;
+    padding: 0;
+    padding-right: 0;
+    margin: 0;
+    background: $white;
+    a.cartodb-popup-close-button{
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: 36px;
+      height: 26px;
+      padding: 0;
+      background: image-url('svg-icons/close.svg') no-repeat center;
+      background-size: 16px 16px;
+      text-indent: -9999px;
+      font-size: 0;
+      line-height: 0;
+      text-transform: uppercase;
+      z-index: 3;
+    }
+
+    .cartodb-popup-content-wrapper{
       width: 100%;
-      height: 180px;
+      max-width: none;
+      padding: 0;
+      overflow-x: hidden;
+      background: $white;
+      padding: 0;
+      &.analysis-active{
+        padding: 0 0 67px;
+      }
+      .cartodb-popup-header{
+        h2{
+          font-size: 21px;
+          line-height: 1.25;
+          padding: 20px 20px 15px;
+        }
+      }
+      .cartodb-popup-fixed{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 0 20px;
+        z-index: 5;
+        background: $white;
+        border-top: 1px solid $border;
+        .btn{
+          width: 100%;
+          margin: 15px 0;
+        }
+      }
+      .cartodb-popup-content{
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        min-height: 5px;
+        height: auto;
+        max-height: 185px;
+        margin: 0;
+        padding: 0;
+        overflow-y: auto;
+        overflow-x: hidden!important;
+        outline: none;
+        text-align: left;
+        .cartodb-popup-content-inside{
+          padding: 20px 20px 10px;
+        }
+        h2,h3,h4,p{
+          font-family: "Fira Sans" , Helvetica;
+          width: 100%;
+        }
+        h2{
+          font-size: 21px;
+          line-height: 1.25;
+          padding: 0 0 10px;
+        }
+        h4{
+          color: $dark;
+          font-size: 13px;
+          font-weight: 500;
+        }
+        p{
+          color: $dark;
+          font-size: 13px;
+        }
+      }
+    }
+    .cartodb-popup-tip-container{
+      display: none;
+      background: none;
     }
   }
-
 }
 
-.story-infowindow {
-  $pR: 25px;
-  $pL: 10px;
-  $w: 215px;
 
-  // display: none;
+
+
+
+
+
+
+// STORY INFOWINDOW
+$story-w: 215px;
+.story-infowindow{
   position: absolute;
-  width: $w;
-  padding: 0 0 6px;
-  text-align: center;
-  z-index: 10000;
+  width: $story-w;
+  padding: 10px 25px 10px 10px;
+  background: rgba(#000, 1);
+  box-shadow: $shadow1;
 
-  .infowindow_content a { color: #97Bd3d; }
-
-  .close{
+  &:after{
+    content: "";
     position: absolute;
-    top: 2px;
-    right: 2px;
-    width: 16px;
-    height: 16px;
-    svg{
+    bottom: 0;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background: rgba(#000, 1);
+    @include transform(translate(-50%, 50%) rotate(45deg));
+  }
+
+  .story-popup{
+    .story-popup-content{
+      a{
+        color: $white;
+        h3{
+          font-size: 17px;
+          span{
+            display: block;
+            text-align: right;
+            font-size: 12px;
+          }
+        }
+        p{
+          margin: 5px 0 0;
+          color: $cGreen;
+          font-size: 12px;
+          &:hover{
+            color: lighten($cGreen, 5%);
+          }
+        }
+      }
+    }
+    .close{
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      width: 26px;
+      height: 26px;
+      padding: 5px;
       fill: $white;
+      z-index: 3;
     }
-  }
-
-  .outer_top {
-    width:100%;
-    padding: 10px $pR  5px $pL;
-    background: image-url('icons/bkg_infowindow_story.png') no-repeat;
-  }
-
-  .bottom {
-    position: absolute;
-    bottom: -8px;
-    width: $w;
-    height: 14px;
-    background: image-url('icons/bkg_infowindow_story.png') no-repeat right top;
-  }
-
-  .top {
-    width: 174px;
-    max-height: 190px;
-    margin: 0 auto;
-    text-align: left;
-
-    strong a {
-      display: block;
-      margin: 0 0 5px;
-      width: 180px;
-      color: #F3F2F0;
-      font-size: 17px;
-
-      text-decoration :none;
-
-      &:hover { text-decoration: underline; }
-    }
-
-    color: #999;
-    font-size: 12px;
-
-  }
-
-  .analyse {
-    display: none;
   }
 }
 
+// STORY MARKER
+.thumb-marker {
+  .icon-custom-marker {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+  }
+}
 
-.analyse {
-  @include position(3px, 12px, false, false);
-  @include size(41px, 42px);
-  @include mixins-sprite(graph);
-  z-index: 1000;
+.user-story-marker {
+  border: 3px solid #fff;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  box-shadow: $shadow1;
 
-  &.disabled {
-    @include opacity(.6);
-    @include pointer-events(none);
+  img {
+    width: auto;
+    height: 100%;
   }
 }

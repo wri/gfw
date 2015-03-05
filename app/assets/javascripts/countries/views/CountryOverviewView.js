@@ -7,12 +7,12 @@ define([
   'underscore',
   'd3',
   'mps',
-  'countries/views/CountryInfoWindow',
+  'views/SourceWindowView',
   'countries/views/CountryHeaderView',
   'countries/views/CountryShareView',
   'countries/helpers/CountryHelper'
 
-], function($, Backbone, _, d3, mps, CountryInfoWindow, CountryHeaderView, CountryShareView, CountryHelper) {
+], function($, Backbone, _, d3, mps, SourceWindowView, CountryHeaderView, CountryShareView, CountryHelper) {
 
   'use strict';
 
@@ -52,13 +52,13 @@ define([
       this.$years = $('.overview_graph__years');
       this.$settings = $('.settings');
       var m = this.m = 40,
-          w = this.w = this.$graph.width()+(m*2),
+          w = this.w = this.$graph.width(),
           h = this.h = this.$graph.height(),
           vertical_m = this.vertical_m = 20;
 
       this.x_scale = d3.scale.linear()
         .range([m, w-m])
-        .domain([2001, 2012]);
+        .domain([2001, 2013]);
 
       this.grid_scale = d3.scale.linear()
         .range([vertical_m, h-vertical_m])
@@ -72,8 +72,7 @@ define([
     },
 
     _initViews: function() {
-      this.sourceWindow = new CountryInfoWindow();
-      this.$el.append(this.sourceWindow.render());
+      this.sourceWindow = new SourceWindowView();
 
       this.tooltip = d3.select('body')
         .append('div')
@@ -85,11 +84,6 @@ define([
 
       var Share = new CountryShareView({ template: 'templateShare' });
       this.$el.find('.overview_button_group .share').append(Share.render());
-    },
-
-    showInfo: function(e){
-      var source = $(e.currentTarget).attr('data-source');
-      this.sourceWindow.show(source);
     },
 
     _toggleYears: function() {
@@ -140,7 +134,7 @@ define([
       var $legend = $('.overview_graph__legend');
       $('.overview_graph__title').html(this.helper.config.GRAPHS[graph].title);
       $legend.find('p').html(this.helper.config.GRAPHS[graph].subtitle);
-      $legend.find('.info').attr('data-source', graph);
+      $legend.find('.info').data('source', graph);
 
       this.$graph.removeClass('is-hidden');
       this.$years.removeClass('is-hidden');
@@ -154,10 +148,9 @@ define([
       this._drawGraph();
       this._drawList();
 
-      if (graph === 'total_extent') {
+      if (graph === 'total_extent' || graph === 'percent_loss') {
         this.$graph.addClass('is-hidden');
         this.$years.addClass('is-hidden');
-        //$legend.addClass('is-hidden');
       }
     },
     _updateGraphOverview: function(e) {
@@ -198,7 +191,7 @@ define([
 
       if (this.model.get('graph') === 'total_loss') {
         this.$settings.removeClass('disable');
-        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
+        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat_final umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
 
         if (e) {
           sql += 'OFFSET 10';
@@ -207,8 +200,6 @@ define([
           sql += 'LIMIT 10';
           $('.countries_list ul').html('');
           $('.show-more-countries').show();
-
-          $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('loss-vs-gain').html('Loss <span>vs</span> Gain');
         }
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
@@ -260,7 +251,7 @@ define([
                 } else {
                   g_mha = 'Ha';
                 }
-                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span><span class="gain line"><span>'+ gain+' </span>'+ g_mha +' of gain</span>');
+                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span>');
 
                 if (key == max_trigger){
                   that._reorderRanking();
@@ -551,7 +542,7 @@ define([
         .attr('height', height);
 
       if (this.model.get('graph') === ('total_loss')) {
-        var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain) gain FROM umd_nat WHERE iso = \''+ iso +'\' AND thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 GROUP BY iso, year ORDER BY year';
+        var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain) gain FROM umd_nat_final WHERE iso = \''+ iso +'\' AND thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 GROUP BY iso, year ORDER BY year';
 
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
           var data = json.rows;
@@ -564,7 +555,6 @@ define([
             .range([height, 0]);
 
           var barWidth = width / data_.length;
-
           var bar = graph.selectAll('g')
             .data(data_)
             .enter().append('g')
@@ -576,28 +566,28 @@ define([
             .attr('height', function(d) { return height - y_scale(d.loss); })
             .attr('width', barWidth - 1);
 
-          var data_gain_ = [
-            {
-              year: 2001,
-              value: gain
-            },
-            {
-              year: 2012,
-              value: gain
-            }
-          ];
+          // var data_gain_ = [
+          //   {
+          //     year: 2001,
+          //     value: gain
+          //   },
+          //   {
+          //     year: 2012,
+          //     value: gain
+          //   }
+          // ];
 
-          graph.selectAll('line.minioverview_line')
-            .data(data_gain_)
-            .enter()
-            .append('line')
-            .attr({
-              'class': 'minioverview_line',
-              'x1': 0,
-              'x2': width,
-              'y1': function(d) { return y_scale(gain); },
-              'y2': function(d) { return y_scale(gain); }
-            });
+          // graph.selectAll('line.minioverview_line')
+          //   .data(data_gain_)
+          //   .enter()
+          //   .append('line')
+          //   .attr({
+          //     'class': 'minioverview_line',
+          //     'x1': 0,
+          //     'x2': width,
+          //     'y1': function(d) { return y_scale(gain); },
+          //     'y2': function(d) { return y_scale(gain); }
+          //   });
         });
       } else if (this.model.get('graph') === ('percent_loss')) {
         var sql = 'SELECT year, \
@@ -709,15 +699,13 @@ define([
     _drawYears: function() {
       var markup_years = '';
 
-      for (var y = 2001; y<=2012; y += 1) {
+      for (var y = 2001; y<=2013; y += 1) {
         var y_ = this.x_scale(y);
 
-        if (y === 2001) {
-          y_ -= 25;
-        } else if (y === 2012) {
-          y_ -= 55;
+        if (y === 2001 || y === 2013) {
+          y_ -= 5;
         } else {
-          y_ -= 40;
+          y_ -= 0;
         }
 
         markup_years += '<span class="year" style="left:'+y_+'px">'+y+'</span>';
@@ -796,17 +784,53 @@ define([
         this._showYears();
 
         svg.append('text')
-          .attr('class', 'axis')
+          .attr('class', 'axis notranslate')
           .attr('id', 'axis_y')
-          .text('Mha')
-          .attr('x', -h/2)
+          .text('Tree cover loss (Mha)')
+          .attr('x', -h/1.6)
+          .attr('y', 10)
+          .attr('transform', 'rotate(-90)');
+
+        svg.append('text')
+          .attr('class', 'axis notranslate')
+          .attr('id', 'axis_y')
+          .text('25')
+          .attr('x', 28)
+          .attr('y', 30)
+          .attr('transform', 'rotate(-90)');
+        svg.append('text')
+          .attr('class', 'axis notranslate')
+          .attr('id', 'axis_y')
+          .text('20')
+          .attr('x', -60)
+          .attr('y', 30)
+          .attr('transform', 'rotate(-90)');
+        svg.append('text')
+          .attr('class', 'axis notranslate')
+          .attr('id', 'axis_y')
+          .text('15')
+          .attr('x', -142)
+          .attr('y', 30)
+          .attr('transform', 'rotate(-90)');
+        svg.append('text')
+          .attr('class', 'axis notranslate')
+          .attr('id', 'axis_y')
+          .text('10')
+          .attr('x', -224)
+          .attr('y', 30)
+          .attr('transform', 'rotate(-90)');
+        svg.append('text')
+          .attr('class', 'axis notranslate')
+          .attr('id', 'axis_y')
+          .text('5')
+          .attr('x', -306)
           .attr('y', 30)
           .attr('transform', 'rotate(-90)');
 
         var sql = 'SELECT year, \
              Sum(loss) loss, \
              Sum(gain) gain \
-              FROM   umd_nat  \
+              FROM   umd_nat_final  \
               WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +'  \
                       AND year > 2000 \
               GROUP  BY year  \
@@ -880,59 +904,13 @@ define([
               value: gain
             },
             {
-              year: 2012,
+              year: 2013,
               value: gain
             }
           ];
-
-          // line
-          svg.selectAll('line.overview_line')
-            .data([data_gain_[0]])
-            .enter()
-            .append('line')
-            .attr({
-              'class': 'overview_line',
-              'x1': m,
-              'x2': w-m,
-              'y1': function(d) { return y_scale(gain); },
-              'y2': function(d) { return y_scale(gain); }
-            })
-           .attr('cx', function(d) {
-              return x_scale(d.year);
-            })
-            .attr('cy', function(d){
-              return y_scale(d.value);
-            })
-            .attr('r', 6)
-            .attr('name', _.bind(function(d) {
-              return '<span>2001-2012</span>'+this.helper.formatNumber(parseFloat(d.value/1000000).toFixed(1))+' Mha';
-            }, this ))
-            .on('mouseover', function(d) {
-              that.tooltip.html($(this).attr('name'))
-                .style('visibility', 'visible')
-                .style('top', $(this).offset().top-100+'px')
-                .style('left', ($(this).offset().left + 436) +'px')
-                .attr('class', 'tooltip2 gain_tooltip');
-
-              d3.select(this)
-                .transition()
-                .duration(100)
-                .attr('r', 7);
-
-              // TODO: highlighting the legend
-            })
-            .on('mouseout', function(d) {
-              that.tooltip.style('visibility', 'hidden');
-
-              d3.select(this)
-                .transition()
-                .duration(100)
-                .attr('r', 6);
-
-              // TODO: highlighting the legend
-            });
         }, this ));
       } else if (this.model.get('graph') === 'percent_loss') {
+        return;
         this._showYears();
 
         svg.append('text')
@@ -1070,6 +1048,7 @@ define([
             });
         });
       } else if (this.model.get('graph') === 'total_extent') {
+        return;
         this._showYears();
 
         svg.append('text')
@@ -1539,7 +1518,7 @@ define([
                 return '<span>'+d.year+'</span>'+this.helper.formatNumber(parseFloat(d.value/1000000).toFixed(1))+' Mha';
               }, this ))
               .style('fill', _.bind(function(d) { return this.helper.config.GRAPHCOLORS[domain]; }, this ))
-              .on('mouseover', _.bind(function() {
+              .on('mouseover', function(d) {
                 d3.select(d3.event.target)
                   .transition()
                   .attr('r', function(d) { return circle_attr.r(d) + 2; })
@@ -1557,15 +1536,8 @@ define([
                   .style('left', parseInt(l, 10)+parseInt(r, 10)-parseInt(tip, 10)-10+'px')
                   .attr('class', 'tooltip2')
                   .attr('data-slug', 'tooltip2')
-                  .style('color', _.bind(function() {
-                    if (slug === 'subtropical') {
-                      return '#FFC926'
-                    } else {
-                      return this.helper.config.GRAPHCOLORS[slug];
-                    }
-                  }, this ));
-              }, this ))
-              .on('mouseenter', _.bind(function() {
+              })
+              .on('mouseenter', function(d) {
                 d3.select(d3.event.target)
                   .transition()
                   .attr('r', function(d) { return circle_attr.r(d) + 2; })
@@ -1583,10 +1555,7 @@ define([
                   .style('left', parseInt(l, 10)+parseInt(r, 10)-parseInt(tip, 10)-10+'px')
                   .attr('class', 'tooltip2')
                   .attr('data-slug', 'tooltip2')
-                  .style('color', _.bind(function() {
-                    if (domain === 'subtropical') { return this.helper.config.GRAPHCOLORS[domain]; }
-                  }, this ));
-              }, this ))
+              })
               .on('mouseout', function() {
                 d3.select(d3.event.target)
                   .transition()

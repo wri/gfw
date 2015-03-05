@@ -7,12 +7,11 @@ define([
   'underscore',
   'd3',
   'mps',
-  'countries/views/CountryInfoWindow',
   'countries/views/CountryUmdOptionsView',
   'countries/helpers/CountryHelper',
   'countries/models/CountryShowModel',
 
-], function($, Backbone, _, d3, mps, CountryInfoWindow, CountryUmdOptionsView, CountryHelper, CountryShowModel) {
+], function($, Backbone, _, d3, mps, CountryUmdOptionsView, CountryHelper, CountryShowModel) {
 
   'use strict';
 

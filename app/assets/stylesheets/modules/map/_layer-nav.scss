@@ -5,9 +5,16 @@ $conservation-color: rgb(49, 130, 189);
 $people-color: rgb(112, 125, 146);
 $stories-color: rgb(242, 178, 87);
 
+
+$categories: 'forest-change','forest-cover','forest-use','conservation','people','stories';
+$icons: 'icon_forest_clearing','icon_forest_cover','icon_forest_use','icon_conservation','icon_regrowth','marker_exclamation';
+$colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservation-color,$people-color,$stories-color;
+
+
 .layers-menu {
-  height: 77px;
+  // height: 77px;
   position: relative;
+  @include clearfix();
 
   .inner {
     height: 100%;
@@ -15,47 +22,60 @@ $stories-color: rgb(242, 178, 87);
   }
 
   .categories-list {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    position: relative;
+    display: inline-block;
+    float: right;
+    // bottom: 0;
+    // right: 0;
+    @media (min-width: 1500px){
+      float: left;
+      left: 50%;
+      @include transform(translate(-50%,0));
+    }
   }
 
   .categories-list > li {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
     position: relative;
-    height: 100%;
     float: left;
-    display: inline-block;
-    padding: 14px 12px;
+    padding: 15px 20px 10px;
     cursor: pointer;
-    border-bottom: 4px solid;
+    border-bottom: 5px solid;
     margin-left: 1px;
+    color: $dark;
+    // text-rendering: optimizeLegibility;
 
     .category-name {
-      // font-weight: 500;
+      font-weight: 500;
       font-size: 12px;
-      letter-spacing: 0.05rem;
+      text-transform: uppercase;
     }
 
-    &:hover .layers-nav {
+    &:not(.country-data):hover .layers-nav {
       opacity: 1;
       max-height: 1000px;
     }
-  }
 
-  .categories-list > li {
-    &.forest-change .category-icon  { @include home-icons-sprite(icon_forest_clearing); }
-    &.forest-cover  .category-icon  { @include home-icons-sprite(icon_forest_cover); }
-    &.forest-use    .category-icon  { @include home-icons-sprite(icon_forest_use); }
-    &.conservation  .category-icon  { @include home-icons-sprite(icon_conservation); }
-    &.people        .category-icon  { @include home-icons-sprite(icon_regrowth); }
-    &.stories       .category-icon  { @include home-icons-sprite(marker_exclamation); }
-
-    &.forest-change { color: $forest-change-color; border-color: $forest-change-color; }
-    &.forest-cover { color: $forest-cover-color; border-color: $forest-cover-color; }
-    &.forest-use { color: $forest-use-color; border-color: $forest-use-color; }
-    &.conservation { color: $conservation-color; border-color: $conservation-color; }
-    &.people { color: $people-color; border-color: $people-color; }
-    &.stories { color: $stories-color; border-color: $stories-color; }
+    @for $i from 1 through length($categories) {
+      &.#{nth($categories, $i)}{
+        border-color: nth($colors, $i);
+        .layers-nav-header{
+          border-color: nth($colors, $i);
+          .category-name{
+            color: nth($colors, $i);
+          }
+          .category-icon  {
+            @include home-icons-sprite(nth($icons, $i));
+          }
+        }
+        .layers-list > li{
+          &:hover {
+            background-color: rgba(nth($colors, $i), 0.1);
+          }
+        }
+      }
+    }
   }
 
   .layers-nav {
@@ -63,18 +83,17 @@ $stories-color: rgb(242, 178, 87);
     position: absolute;
     z-index: 2000;
     left: 50%;
-    top: -29px;
-    width: 170px;
-    margin-left: -85px;
+    top: 0px;
+    width: 190px;
+    margin-left: -95px;
     max-height: 0;
     background: white;
     overflow: hidden;
     opacity: 0;
-    @include box-shadow(0px 0px 5px 1px rgba(#000, .15));
+    @include box-shadow(0px 2px 3px 1px rgba(#000, .15));
     @include transition(all .2s ease);
 
     .layers-nav-header {
-      height: 82px;
       border-bottom: 4px solid;
       text-align: center;
 
@@ -88,15 +107,15 @@ $stories-color: rgb(242, 178, 87);
 
       .category-name {
         display: block;
-        padding: 10px 0;
+        padding: 5px 0 15px 0;
         margin-top: 1px;
       }
     }
 
     .layers-list > li {
       font-size: 13px;
-      color: #c3c3c3;
-      padding: 9px 10px 10px;
+      color: $dark;
+      padding: 14px 10px;
       border-bottom: 1px solid #e5e5e5;
       cursor: pointer;
       position: relative;
@@ -110,10 +129,6 @@ $stories-color: rgb(242, 178, 87);
         }
       }
 
-      &:hover {
-        background-color: #f9f9f9;
-      }
-
       .layer-title {
         width: 115px;
         display: inline-flex;
@@ -121,7 +136,7 @@ $stories-color: rgb(242, 178, 87);
           @extend .info-icon;
           display: block;
           position: absolute;
-          top: 9px;
+          top: 12px;
           right: 10px;
           &.hidden {
             display: none;
@@ -134,10 +149,11 @@ $stories-color: rgb(242, 178, 87);
         margin-top: 3px;
         padding: 0 8px 0 23px;
         display: block;
+        color: #AAA;
         label {
           float: none;
           font-weight: normal;
-          color: #CCC;
+          color: #AAA;
           font-size: 11px;
           margin: 5px 0px;
           display: inline-block;
@@ -160,13 +176,11 @@ $stories-color: rgb(242, 178, 87);
 
       .onoffradio {
         margin: 0 7px 0 2px;
-
         &.checked {
           border-color: $forest-change-color;
-        }
-
-        &.checked span {
-          background: $forest-change-color;
+          span {
+            background: $forest-change-color;
+          }
         }
       }
 
@@ -177,4 +191,49 @@ $stories-color: rgb(242, 178, 87);
     }
 
   } // layers-nav
+
+  .categories-list .country-data{
+    padding: 0;
+    border-bottom: none;
+    height: 46px;
+    .country-select-box{
+      width: 130px;
+      float: left;
+    }
+    .country-sublayer-box{
+      float: left;
+      margin-left: 1px;
+      &.active{
+        &:hover{
+          .layers-nav{
+            opacity: 1;
+            visibility: visible;
+            max-height: 1000px;
+          }
+        }
+        button{
+          svg {
+            opacity: 1;
+          }
+        }
+      }
+      > button{
+        width: 45px;
+        height: 46px;
+        border: none;
+        background: #B7B8B9;
+        svg{
+          opacity: 0.5;
+          margin: 0 auto;
+          fill: $white;
+        }
+      }
+      .layers-country-nav{
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 190px;
+      }
+    }
+  }
 }

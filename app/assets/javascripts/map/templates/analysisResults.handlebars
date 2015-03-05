@@ -1,107 +1,105 @@
-<div class="widget-box">
-  <div class="widget-toggle widget-toggle-grey"></div>
-  <div class="widget-content">
-
-    <div class="widget-closed">
-      <span class="analysis-title">
-        {{#if iso}}
-          {{iso}}
-        {{else}}
-          User defined area
-        {{/if}}
-      </span>
-    </div>
-
-    <div class="widget-opened">
-      {{#if layer}}
-        <div class="analysis-info">
-          <span class="analysis-title">
-            {{#if iso}}
-              {{iso}}
-            {{else}}
-              User defined area
-            {{/if}}
-          </span>
-          {{#unless loss}}
-            <span class="analysis-date-range">{{dateRange}}</span>
-          {{/unless}}
-        </div>
-        <ul class="analysis-stats">
-          {{#if totalArea}}
-            <li>
-              <span class="stats-title">Total selected area</span>
-              <span class="stats-count"><strong>{{totalArea}}</strong> ha</span>
-            </li>
-          {{/if}}
-          {{#if loss}}
-            <li>
-              <span class="stats-title">Loss {{lossDateRange}}<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{threshold}}% canopy density</span></span>
-              <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{lossAlerts}}</strong> ha</span>
-            </li>
-            {{#if both}}
-            <li>
-              <span class="stats-title">Gain 2001-2012</span>
-              <span class="stats-count" style="color: #6D6DE5;"><strong>{{gainAlerts}}</strong> ha</span>
-            </li>
-            {{/if}}
-            <li>
-              <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
-            </li>
-          {{else}}
-            {{#if forestgain}}
-              <li>
-                <span class="stats-title">Gain 2001-2012</span>
-                <span class="stats-count" style="color: #6D6DE5;"><strong>{{gainAlerts}}</strong> ha</span>
-              </li>
-              <li>
-                <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
-              </li>
-            {{else}}
-              {{#if imazon}}
-                <li>
-                  <span class="stats-title">Deforestation alerts</span>
-                  <span class="stats-count" style="color: {{layer.title_color}};"><strong>{{defor}}</strong> Ha</span>
-                </li>
-                <li>
-                  <span class="stats-title">Degradation alerts</span>
-                  <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{degrad}}</strong> Ha</span>
-                </li>
-              {{else}}
-                <li>
-                  <span class="stats-title">Total alerts</span>
-                  <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> {{alertsName}}</span>
-                </li>
-              {{/if}}
-            {{/if}}
-          {{/if}}
-          {{#if loss}}
-            <li class="download-links">
-              <span><a href="http://www.earthenginepartners.appspot.com/science-2013-global-forest/download.html" target="_blank">Download entire data set at project website</a></span>
-            </li>
-          {{else}}
-            <li class="download-links">
-              <span>download</span>
-              <ul class="download-dropdown hidden">
-                <li><a href="{{download.csv}}" target="_blank">SVG</a></li>
-                <li><a href="{{download.geojson}}" target="_blank">GeoJSON</a></li>
-                <li><a href="{{download.shp}}" target="_blank">SHP</a></li>
-                <li><a href="{{download.kml}}" target="_blank">KML</a></li>
-                <li><a href="{{download.csv}}" target="_blank">CSV</a></li>
-              </ul>
-            </li>
-          {{/if}}
-        </ul>
+{{#if layer}}
+  <div class="analysis-info">
+    {{!-- <span class="analysis-title">
+      {{#if iso}}
+        {{iso}}
+      {{else}}
+        User defined area
       {{/if}}
-
-      <div class="analysis-footer">
-        <ul class="analysis-control">
-          <li class="analysis-control-subscribe" id="subscribeButton"><svg><use xlink:href="#shape-alerts"></use></svg>{{!-- <span class="tooltip1">Subscribe</span> --}}</li>
-          <li class="analysis-control-delete">{{!-- <span class="tooltip1">Delete analysis</span> --}}</li>
-        </ul>
-        <ul class="analysis-control-names"><li><span id="subscribeButton-title">subscribe</span></li><li><span>delete</span></li></ul>
-      </div>
-
-    </div> {{!-- /widget-opened --}}
-
+    </span> --}}
   </div>
+  <ul class="analysis-stats">
+    {{#if totalArea}}
+      <li>
+        <span class="stats-title">Total selected area</span>
+        <span class="stats-count"><strong>{{totalArea}}</strong> ha</span>
+      </li>
+    {{/if}}
+    {{#if loss}}
+      <li>
+        <span class="stats-title">Loss {{lossDateRange}}<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{threshold}}% canopy density</span></span>
+        <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{lossAlerts}}</strong> ha</span>
+      </li>
+      {{#if both}}
+      <li>
+        <span class="stats-title">Gain 2001-2012</span>
+        <span class="stats-count" style="color: #6D6DE5;"><strong>{{gainAlerts}}</strong> ha</span>
+      </li>
+      {{/if}}
+      {{!-- <li>
+        <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
+      </li> --}}
+    {{else}}
+      {{#if forestgain}}
+        <li>
+          <span class="stats-title">Gain 2001-2012</span>
+          <span class="stats-count" style="color: #6D6DE5;"><strong>{{gainAlerts}}</strong> ha</span>
+        </li>
+        {{!-- <li>
+          <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
+        </li> --}}
+
+      {{else}}
+        {{#if imazon}}
+          <li>
+            <span class="stats-title">Deforestation alerts ({{dateRange}})</span>
+            <span class="stats-count" style="color: {{layer.title_color}};"><strong>{{defor}}</strong> Ha</span>
+          </li>
+          <li>
+            <span class="stats-title">Degradation alerts</span>
+            <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{degrad}}</strong> Ha</span>
+          </li>
+        {{else}}
+          <li>
+            <span class="stats-title">Total alerts ({{dateRange}})</span>
+            <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{totalAlerts}}</strong> {{alertsName}}</span>
+          </li>
+        {{/if}}
+      {{/if}}
+    {{/if}}
+  </ul>
+  {{#if iso}}
+  <ul class="button-container">
+    <li><a class="btn gray uppercase little" href="https://wri-01.cartodb.com/api/v2/sql?q=SELECT iso as country_code,id1 as region_code, country,region, year, thresh as min_percent_canopy_density, loss as loss_ha, loss_perc as loss_percent, extent as extent_ha, extent_perc as extent_percent, gain as gain_ha, gain_perc as gain_percent from umd_subnat where iso='{{iso}}'&format=csv&filename='{{iso}}'">Country data</a></li>
+    <li><a class="btn gray uppercase little" href="/country/{{iso}}">Country profile</a></li>
+  </ul>
+  {{/if}}
+
+{{/if}}
+
+<footer class="analysis-footer">
+  <ul>
+    <li>
+      {{#if loss}}
+        <a href="http://www.earthenginepartners.appspot.com/science-2013-global-forest/download.html" target="_blank">
+          <span class="tooltipmap bottom">Download data</span>
+          <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
+        </a>
+      {{else}}
+        <div href="#">
+          <span class="tooltipmap bottom">Download data</span>
+          <svg class="dropdown-button icon"><use xlink:href="#icon-analysis-download"></use></svg>
+          <ul class="download-dropdown hidden">
+            <li><a href="{{download.csv}}" target="_blank">SVG</a></li>
+            <li><a href="{{download.geojson}}" target="_blank">GeoJSON</a></li>
+            <li><a href="{{download.shp}}" target="_blank">SHP</a></li>
+            <li><a href="{{download.kml}}" target="_blank">KML</a></li>
+            <li><a href="{{download.csv}}" target="_blank">CSV</a></li>
+          </ul>
+        </div>
+      {{/if}}
+    </li>
+    <li id="analysis-delete"><span class="tooltipmap bottom">Remove analysis</span><svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg></li>
+    <li id="analysis-subscribe"><span class="tooltipmap bottom">Subscribe</span><svg class="icon"><use xlink:href="#icon-analysis-alerts"></use></svg></li>
+  </ul>
+</footer>
+
+
+{{!-- <div class="analysis-footer">
+  <ul class="analysis-control">
+    <li class="analysis-control-subscribe" id="subscribeButton"><svg><use xlink:href="#shape-alerts"></use></svg></li>
+    <li class="analysis-control-delete"></li>
+  </ul>
+  <ul class="analysis-control-names"><li><span id="subscribeButton-title">subscribe</span></li><li><span>delete</span></li></ul>
 </div>
+ --}}

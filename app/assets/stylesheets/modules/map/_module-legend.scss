@@ -1,0 +1,326 @@
+.module-legend {
+  width: 283px;
+  top: 110px;
+  left: 35px;
+  color: $dark;
+  font-size: 13px;
+  padding: 20px;
+  max-height: calc(100% - 310px);
+  overflow: auto;
+
+  // @ul
+  .categories{
+    margin: 20px 0 0;
+    padding: 20px 0 0;
+    border-top: 1px solid $border;
+    &:first-child{
+      margin: 0;
+      padding: 0;
+      border-top: none;
+    }
+    h2{
+      margin: 0 0 15px;
+      font-weight: 500;
+      color: $dark;
+      text-transform: uppercase;
+    }
+    // @li
+    .category {
+      padding: 0 0 25px;
+      &.closed{
+        padding: 0 0 10px;
+        .category-name {
+          &:after{ @include transform(translate(0,-100%) rotate(180deg));}
+          em{ display: inline-block;}
+        }
+      }
+      &:last-child{
+        padding: 0;
+      }
+      .category-name {
+        text-transform: uppercase;
+        font-weight: 500;
+        font-size: 14px;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid;
+        display: block;
+        position: relative;
+        cursor: pointer;
+        &:after{
+          content: "";
+          position: absolute;
+          top: 50%;
+          right: 5px;
+          width: 0;
+          height: 0;
+          @include transform(translate(0,-100%));
+          border-left: 3px solid transparent;
+          border-right: 3px solid transparent;
+          border-top: 5px solid;
+        }
+        em{
+          display: none;
+          font-size: 11px;
+        }
+      }
+    }
+  }
+  // @ul
+  .layers {
+    &.closed{
+      display: none;
+    }
+    // @li
+    .layer {
+      width: 100%;
+      margin-bottom: 10px;
+      @include clearfix();
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .layer-name {
+        display: block;
+        position: relative;
+        padding: 0 17px 0 13px;
+        font-size: 13px;
+        .circle{
+          position: absolute;
+          top: -2px;
+          left: 0;
+        }
+      }
+      .layer-sublayer {
+        cursor: pointer;
+        padding: 10px 5px 5px 14px;
+
+        .onoffswitch {
+          margin-top: 1px;
+        }
+
+        .sublayer-title {
+          font-size: 13px;
+          margin-left: 5px;
+          color: #ccc;
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+
+  // @div
+  .source {
+    @extend .info-icon;
+    display: inline-block;
+    position: absolute;
+    top: -2px;
+    right: 0;
+
+    &.hidden {
+      display: none;
+    }
+
+    &.text{
+      position: static;
+      width: auto;
+      height: auto;
+      background: none;
+      border: none;
+      border-radius: 0;
+    }
+  }
+
+
+  .circle:before {
+    content: ' \25CF';
+    font-size: 16px;
+    margin: 0 4px 0 -1px;
+  }
+
+  /*****************/
+  /* Layer details */
+  /*****************/
+  .layer-details {
+    margin: 8px 0 0 13px;
+
+    .details-title {
+      color: #999;
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .layer-colors li {
+      margin-bottom: 4px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .canopy {
+      width: 190px;
+      font-size: 11px;
+      line-height: 14px;
+      span {
+        font-weight: 500;
+      }
+    }
+
+    sup {
+      vertical-align: top;
+      font-size: 0.8em;
+    }
+  }
+
+
+  /*****************/
+  /* Layer details */
+  /*****************/
+  .layer-details-loss {
+    .canopy{
+      margin: 7px 0 0;
+      &:first-child{
+        margin: 0;
+      }
+      a{
+        color: #F69;
+        &:hover{
+          color: lighten(#F69, 10%);
+        }
+      }
+    }
+  }
+
+
+  /***************************/
+  /* Forest2000Layer details */
+  /***************************/
+  .layer-details-forest2000 {
+    .quartiles {
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      margin: 7px 0 5px 0;
+      width: 100%;
+      height: 23px;
+    }
+
+    .quartile {
+      background: #4EC54E;
+      float: left;
+      font-size: 10px;
+      color: #fff;
+      width: 33.3%;
+      @include box-sizing(border-box);
+      height: 100%;
+      text-align: center;
+      padding: 6px 0;
+      text-shadow: 0px 0px 2px black;
+      &:first-child {background: #9DD89D;}
+      &:last-child {background: #00B300;}
+    }
+  }
+
+  /****************************/
+  /* PantropicalLayer details */
+  /****************************/
+  .layer-details-pantropical {
+    .details-title .units {
+      font-weight: normal;
+      text-transform: normal;
+    }
+
+    .total-carbon-bar {
+      margin-top: 4px;
+    }
+
+    .labels {
+      display: block;
+      width: 100%;
+      height: 12px;
+      font-size: 10px;
+      li {display: inline-block;}
+      li:first-child {float: left;}
+      li:last-child {float: right;}
+    }
+
+    .quartile-bar {
+      clear: both;
+      height: 12px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #FFFFD4;
+      background: -moz-linear-gradient(left, #FFFFD4 0%, #dd8653 100%);
+      background: -webkit-gradient(linear, left top, right top, color-stop(0%,#FFFFD4), color-stop(100%,#dd8653));
+      background: -webkit-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
+      background: -o-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
+      background: -ms-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
+      background: linear-gradient(to right, #FFFFD4 0%,#dd8653 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FFFFD4', endColorstr='#dd8653', GradientType=1);
+      background-image: -ms-linear-gradient(left, #FFFFD4 0%,#dd8653 100%);
+    }
+  }
+
+  /****************************/
+  /* ImazonLayer details */
+  /****************************/
+  .layer-details-imazon {
+    .layer-colors {
+      .deforestation {color: #F13689;}
+      .degradation {color: #FA98B9;}
+    }
+  }
+
+  /****************************/
+  /* intactForestLayer2013 details */
+  /****************************/
+  .layer-details-intact-2013 {
+    .layer-colors {
+      .intact {color: rgb(22, 133, 0);}
+      .degraded {color: rgb(152, 155, 5);}
+    }
+  }
+
+  /*********************************/
+  /* IdnPrimaryLayer details */
+  /*********************************/
+  .layer-details-idn-primary {
+    .layer-colors {
+      .intact {color: #007A4D;}
+      .degraded {color: #97BD3D;}
+    }
+  }
+
+  /*********************************/
+  /* UserStoriesLayer details */
+  /*********************************/
+  .layer-details-stories {
+    .canopy{
+      a{
+        color: #f3830a;
+        &:hover{
+          color: lighten(#f3830a, 10%);
+        }
+      }
+    }
+  }
+
+  /****************************/
+  /* FiresLayer details */
+  /****************************/
+  .layer-details-fires {
+    a {
+      color: #ED4602;
+      &:hover{
+        color: lighten(#ED4602, 10%);
+      }
+    }
+  }
+  .layer-details-grump{
+    .canopy{
+      margin: 5px 0 0;
+    }
+  }
+}

@@ -115,8 +115,8 @@ define([], function() {
       subtitle: "Global tree cover loss per year with annualized tree cover gain<a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>"
     },
     percent_loss: {
-      title: "Countries with greatest percent tree cover loss <sup>(2001-2012)</sup><br />relative to 2000 tree cover extent",
-      subtitle: "Percent global tree cover loss per year with annualized percent tree cover gain<a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>"
+      title: "Countries with greatest tree cover gain",
+      subtitle: "Global tree cover gain, 2001-2012<a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>"
     },
     total_extent: {
       title: "Countries with greatest tree cover extent <sup>(2000)</sup>",

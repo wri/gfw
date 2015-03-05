@@ -1,7 +1,7 @@
 <div class="cartodb-popup">
   <a href="#close" class="cartodb-popup-close-button close"><svg><use xlink:href="#shape-close"></use></svg></a>
-  <div class="cartodb-popup-content-wrapper">
-    <div class="cartodb-popup-header {{#if content.data.analysis}}cartodb-popup-header-analysis{{/if}}">
+  <div class="cartodb-popup-content-wrapper {{#if content.data.analysis}}analysis-active{{/if}}">
+    <div class="cartodb-popup-header">
       {{#if content.data.image}}
         {{#if content.data.name}}
           <h2>{{content.data.name}}</h2>
@@ -9,155 +9,151 @@
         {{!-- <div class="thumb-mask" style="background-image: url({{content.data.image}})"> --}}
           <div class="thumb-mask"><img src="{{content.data.image}}" onerror="this.style.display='none';"></div>
       {{/if}}
+    </div>
+    <div class="cartodb-popup-fixed">
       {{#if content.data.analysis}}
-        <a style="cursor:pointer;" id="analyzeBtn" onclick="mps.publish('AnalysisTool/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]); ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area');" class="analyse" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid= "{{content.data.id}}"></a>
+        <a style="cursor:pointer;" id="analyzeBtn" onclick="mps.publish('AnalysisTool/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]); ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area');" class="analyse btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid= "{{content.data.id}}">analyze</a>
       {{/if}}
     </div>
     <div class="cartodb-popup-content">
-      {{#unless content.data.image}}
-        {{#if content.data.name}}
-          <h4>Name:</h4>
-          <p>{{content.data.name}}</p>
+      <div class="cartodb-popup-content-inside">
+        {{#unless content.data.image}}
+          {{#if content.data.name}}
+            <h2>{{content.data.name}}</h2>
+          {{/if}}
+        {{/unless}}
+
+        {{#if content.data.local_name}}
+          <h4>Local name:</h4>
+          <p>{{content.data.local_name}}</p>
         {{/if}}
-      {{/unless}}
-
-      {{#if content.data.local_name}}
-        <h4>Local name:</h4>
-        <p>{{content.data.local_name}}</p>
-      {{/if}}
-      {{#if content.data.desig_eng}}
-        <h4>Legal designation:</h4>
-        <p>{{content.data.desig_eng}}</p>
-      {{/if}}
-      {{#if content.data.id}}
-        <h4>ID:</h4>
-        <p>{{content.data.id}}</p>
-      {{/if}}
-
-      {{#if content.data.description}}
-        <h4>Description:</h4>
-        <p>{{content.data.description}}</p>
-      {{/if}}
-
-      {{#if content.data.type}}
-        <h4>Type:</h4>
-        <p>{{content.data.type}}</p>
-      {{/if}}
-
-      {{#if content.data.status}}
-        <h4>Status:</h4>
-        <p>{{content.data.status}}</p>
-      {{/if}}
-
-      {{#if content.data.company}}
-        <h4>Company:</h4>
-        <p>{{content.data.company}}</p>
-      {{/if}}
-      {{#if content.data.permit_num}}
-        <h4>Permit Num:</h4>
-        <p>{{content.data.permit_num}}</p>
-      {{/if}}
-      {{#if content.data.country}}
-        <h4>Country:</h4>
-        <p>{{content.data.country}}</p>
-      {{/if}}
-      {{#if content.data.nat_origin}}
-        <h4>Nat Origin:</h4>
-        <p>{{content.data.nat_origin}}</p>
-      {{/if}}
-      {{#if content.data.area_ha}}
-        <h4>Area HA:</h4>
-        <p>{{content.data.area_ha}}</p>
-      {{/if}}
-
-      {{#if content.data.area_hectares}}
-        <h4>Area hectares:</h4>
-        <p>{{content.data.area_hectares}}</p>
-      {{/if}}
-      {{#if content.data.national_legal_term}}
-        <h4>National Legal Term:</h4>
-        <p>{{content.data.national_legal_term}}</p>
-      {{/if}}
-      {{#if content.data.legal_recognition}}
-        <h4>Legal recognition:</h4>
-        <p>{{content.data.legal_recognition}}</p>
-      {{/if}}
-      {{#if content.data.category}}
-        <h4>Category:</h4>
-        <p>{{content.data.category}}</p>
-      {{/if}}
-
-      {{#if content.data.latitude}}
-        <h4>Latitude:</h4>
-        <p>{{content.data.latitude}}</p>
-      {{/if}}
-      {{#if content.data.longitude}}
-        <h4>Longitude:</h4>
-        <p>{{content.data.longitude}}</p>
-      {{/if}}
-      {{#if content.data.brightness}}
-        <h4>Brightness:</h4>
-        <p>{{content.data.brightness}}</p>
-      {{/if}}
-      {{#if content.data.confidence}}
-        <h4>Confidence:</h4>
-        <p>{{content.data.confidence}}</p>
-      {{/if}}
-      {{#if content.data.acq_date}}
-        <h4>Acquisition date:</h4>
-        <p>{{content.data.acq_date}}</p>
-      {{/if}}
-      {{#if content.data.acq_time}}
-        <h4>Acquisition time:</h4>
-        <p>{{content.data.acq_time}}</p>
-      {{/if}}
-      {{#if content.data.realm}}
-        <h4>Biogeographical Realm:</h4>
-        <p>{{content.data.realm}}</p>
-      {{/if}}
-      {{#if content.data.biome}}
-        <h4>Biome:</h4>
-        <p>{{content.data.biome}}</p>
-      {{/if}}
-      {{#if content.data.source}}
-        <h4>Source:</h4>
-        <p>{{content.data.source}}</p>
-      {{/if}}
-      {{#if content.data.mapid}}
-        <h4>Azepoly ID:</h4>
-        <p>{{content.data.mapid}}</p>
-      {{/if}}
-      {{#if content.data.ebaname}}
-        <h4>Name:</h4>
-        <p>{{content.data.ebaname}}</p>
-        <p><a href="http://www.birdlife.org/datazone/ebafactsheet.php?id={{content.data.id}}" target="_blank">Learn more</a></p>
-      {{/if}}
-      {{#if content.data.eco_num}}
-        <h4>ECO Number:</h4>
-        <p>{{content.data.eco_num}}</p>
-      {{/if}}
-      {{#if content.data.eco_id}}
-        <h4>ECO ID:</h4>
-        <p>{{content.data.eco_id}}</p>
-      {{/if}}
-      {{#if content.data.title_holder}}
-        <h4>Title Holder:</h4>
-        <p>{{content.data.title_holder}}</p>
-      {{/if}}
-      {{#if content.data.province}}
-        <h4>Province:</h4>
-        <p>{{content.data.province}}</p>
-      {{/if}}
-      {{#if content.data.department}}
-        <h4>Department:</h4>
-        <p>{{content.data.department}}</p>
-      {{/if}}
-      {{#if content.data.supervision}}
-        <h4>Supervision:</h4supervision>
-        <p>{{content.data.supervision}}</p>
-      {{/if}}
+        {{#if content.data.desig_eng}}
+          <h4>Legal designation:</h4>
+          <p>{{content.data.desig_eng}}</p>
+        {{/if}}
+        {{#if content.data.id}}
+          <h4>ID:</h4>
+          <p>{{content.data.id}}</p>
+        {{/if}}
+        {{#if content.data.description}}
+          <h4>Description:</h4>
+          <p>{{content.data.description}}</p>
+        {{/if}}
+        {{#if content.data.type}}
+          <h4>Type:</h4>
+          <p>{{content.data.type}}</p>
+        {{/if}}
+        {{#if content.data.status}}
+          <h4>Status:</h4>
+          <p>{{content.data.status}}</p>
+        {{/if}}
+        {{#if content.data.company}}
+          <h4>Company:</h4>
+          <p>{{content.data.company}}</p>
+        {{/if}}
+        {{#if content.data.permit_num}}
+          <h4>Permit Num:</h4>
+          <p>{{content.data.permit_num}}</p>
+        {{/if}}
+        {{#if content.data.country}}
+          <h4>Country:</h4>
+          <p>{{content.data.country}}</p>
+        {{/if}}
+        {{#if content.data.nat_origin}}
+          <h4>Nat Origin:</h4>
+          <p>{{content.data.nat_origin}}</p>
+        {{/if}}
+        {{#if content.data.area_ha}}
+          <h4>Area HA:</h4>
+          <p>{{content.data.area_ha}}</p>
+        {{/if}}
+        {{#if content.data.area_hectares}}
+          <h4>Area hectares:</h4>
+          <p>{{content.data.area_hectares}}</p>
+        {{/if}}
+        {{#if content.data.national_legal_term}}
+          <h4>National Legal Term:</h4>
+          <p>{{content.data.national_legal_term}}</p>
+        {{/if}}
+        {{#if content.data.legal_recognition}}
+          <h4>Legal recognition:</h4>
+          <p>{{content.data.legal_recognition}}</p>
+        {{/if}}
+        {{#if content.data.category}}
+          <h4>Category:</h4>
+          <p>{{content.data.category}}</p>
+        {{/if}}
+        {{#if content.data.latitude}}
+          <h4>Latitude:</h4>
+          <p>{{content.data.latitude}}</p>
+        {{/if}}
+        {{#if content.data.longitude}}
+          <h4>Longitude:</h4>
+          <p>{{content.data.longitude}}</p>
+        {{/if}}
+        {{#if content.data.brightness}}
+          <h4>Brightness:</h4>
+          <p>{{content.data.brightness}}</p>
+        {{/if}}
+        {{#if content.data.confidence}}
+          <h4>Confidence:</h4>
+          <p>{{content.data.confidence}}</p>
+        {{/if}}
+        {{#if content.data.acq_date}}
+          <h4>Acquisition date:</h4>
+          <p>{{content.data.acq_date}}</p>
+        {{/if}}
+        {{#if content.data.acq_time}}
+          <h4>Acquisition time:</h4>
+          <p>{{content.data.acq_time}}</p>
+        {{/if}}
+        {{#if content.data.realm}}
+          <h4>Biogeographical Realm:</h4>
+          <p>{{content.data.realm}}</p>
+        {{/if}}
+        {{#if content.data.biome}}
+          <h4>Biome:</h4>
+          <p>{{content.data.biome}}</p>
+        {{/if}}
+        {{#if content.data.source}}
+          <h4>Source:</h4>
+          <p>{{content.data.source}}</p>
+        {{/if}}
+        {{#if content.data.mapid}}
+          <h4>ID:</h4>
+          <p>{{content.data.mapid}}</p>
+        {{/if}}
+        {{#if content.data.ebaname}}
+          <h4>Name:</h4>
+          <p>{{content.data.ebaname}}</p>
+          <p style="text-align: center"><a href="http://www.birdlife.org/datazone/ebafactsheet.php?id={{content.data.id}}" target="_blank">Learn more</a></p>
+        {{/if}}
+        {{#if content.data.eco_num}}
+          <h4>ECO Number:</h4>
+          <p>{{content.data.eco_num}}</p>
+        {{/if}}
+        {{#if content.data.eco_id}}
+          <h4>ECO ID:</h4>
+          <p>{{content.data.eco_id}}</p>
+        {{/if}}
+        {{#if content.data.title_holder}}
+          <h4>Title Holder:</h4>
+          <p>{{content.data.title_holder}}</p>
+        {{/if}}
+        {{#if content.data.province}}
+          <h4>Province:</h4>
+          <p>{{content.data.province}}</p>
+        {{/if}}
+        {{#if content.data.department}}
+          <h4>Department:</h4>
+          <p>{{content.data.department}}</p>
+        {{/if}}
+        {{#if content.data.supervision}}
+          <h4>Supervision:</h4supervision>
+          <p>{{content.data.supervision}}</p>
+        {{/if}}
+      </div>
     </div>
   </div>
-  <div class="cartodb-popup-tip-container"></div>
 </div>
 

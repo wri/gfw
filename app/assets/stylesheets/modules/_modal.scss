@@ -1,42 +1,67 @@
-#sources {
-  display: none;
-}
+$width: 500px;
+$height: auto;
 
-.mod-modal-window, .source_window {
-  $width: 497px;
-  $height: auto;
-
-  display: none;
+.source_window {
   position: fixed;
   z-index: 1060;
-  padding: 20px 20px 0;
   background: $white;
   border: none;
-  border-bottom: 20px solid $white;
-  box-shadow: 0 0 0 1px #CCC;
-  overflow: auto;
+  box-shadow: $shadow1;
+  width: 100%;
   height: 100%;
-  @media (min-width: 750px){
+  opacity: 0;
+  visibility: hidden;
+  @include transition(all 0s $easeInOutSine);
+
+  @media (min-width: $br-mobile){
     left: 50%; top: 50%;
     width: $width;
     height: $height;
-    max-height: 55%;
     @include transform(translate(-50%,-50%));
   }
 
+  // GRADIENTS
+  &:before, &:after{
+    content: "";
+    position: absolute;
+    height: 20px;
+    width: calc(100% - 6px);
+    left: 0;
+  }
+
+  &:before{
+    top: 0;
+    @include gradient(top,rgba(255,255,255,1),rgba(255,255,255,0));
+  }
+
+  &:after{
+    bottom: 0;
+    @include gradient(top,rgba(255,255,255,0),rgba(255,255,255,1));
+  }
+
+
+  &.active{
+    opacity: 1;
+    visibility: visible;
+    @include transition(all 0.25s $easeInOutSine);
+  }
+
+  // CLOSE BUTTON
   .close {
     display: block;
     position: absolute;
-    top: 10px; right: 15px;
-    width: 16px;
-    height: 16px;
+    top: 0px; right: 0px;
+    width: 40px;
+    height: 40px;
+    z-index: 20;
     svg{
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 50%;
+      left: 50%;
+      width: 50%;
+      height: 50%;
       fill: $dark;
+      @include transform(translate(-50%,-50%));
     }
     &:hover{
       svg{
@@ -45,23 +70,39 @@
     }
   }
 
-  .content {
-    height: $height;
+  // WRAPPER
+  .content-wrapper{
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    max-height: 100%;
     width: 100%;
-    overflow: auto;
-    outline: none;
-    font-size: 15px;
-    z-index: 1061;
-
-    color: #666;
-    a{
-      color: $cGreen;
-      &:hover{
-        color: darken($cGreen,5%);
+    top: 0;
+    left: 0;
+    padding: 20px;
+    @media (min-width: $br-mobile){
+      max-height: 450px;
+    }
+    .content {
+      height: auto;
+      width: 100%;
+      outline: none;
+      font-size: 15px;
+      z-index: 1061;
+      color: $dark;
+      li{
+        list-style: none;
+      }
+      a{
+        color: $cGreen;
+        &:hover{
+          color: darken($cGreen,5%);
+        }
       }
     }
   }
 
+  // TABLE
   .sources_row {
     display: table;
     width: 100%;
@@ -88,7 +129,6 @@
       border-bottom: 1px solid #ccc;
       font-size: 13px;
 
-
       p {
         margin-bottom: 10px;
 
@@ -105,6 +145,7 @@
     }
   }
 
+  // CONTENT
   .single-source-item {
     font-size: 15px;
     line-height: 1.4;
@@ -150,6 +191,7 @@
       color: $dark;
       margin: 0 0 0 10px;
       > li{
+        list-style-type: disc;
         padding: 10px 0 0;
         font-size: 13px;
         margin-left: 20px;
@@ -168,6 +210,9 @@
 
     .hidden {
       display: none;
+      &.read_more {
+        display: block;
+      }
     }
   }
 
@@ -266,118 +311,35 @@
     display: block;
   }
 
-  .terms_inner .section {
-    padding: 20px 0 10px;
-  }
-
-  .section-footer {
-    padding: 30px 0 0;
-  }
-
-  .terms_footer {
-    margin-bottom: 30px;
-  }
-}
-// Modal
-#source-window-modal {
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  display: block;
-  visibility: hidden;
-  position: fixed;
-  z-index: 1002;
-  overflow: auto;
-  left: 0%;
-  top: 0%;
-  background: #fff;
-  border: 1px solid #E5E5DF;
-  box-shadow: 0px 0px 7px rgba(#555555,0.5);
-  @include transition(all,0.5s,cubic-bezier(0.645, 0.045, 0.355, 1.000));
-  @media (min-width: 750px){
-    left: 50%;
-    top: 50%;
-    width: 500px;
-    height: auto;
-  }
-
-  &.active{
-    opacity: 1;
-    visibility: visible;
-  }
-  // Btn close
-  .close {
-    display: block;
-    position: absolute;
-    top: 15px; right: 15px;
-    width: 16px;
-    height: 16px;
-    svg{
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      fill: $dark;
-    }
-    &:hover{
-      svg{
-        fill: darken($dark,10%);
-      }
-    }
-  }
-  // Content
-  .content {
-    height: 100%;
-    width: 100%;
-    outline: none;
-    font-size: 15px;
-    padding: 20px;
+  .terms-modal{
+    text-align: center;
     color: $dark;
-    .center{
-      text-align: center;
-    }
-
-    //Title
-    .source_title{
-      color: $cGreen;
+    h2{
+      display: block;
+      font-weight: 500;
+      font-size: 22px;
       text-transform: uppercase;
-      padding: 15px 0 20px;
-      font-size: 24px;
+      color: $cGreen;
+      text-align: center;
+      margin: 30px 0 0;
     }
-
-    //Body
-    .source_body{
-      >*{
-        padding: 15px 0 0;
-        &:first-child{
-          padding: 0;
-        }
-      }
-      p{
-        color: #555555;
-        font-size: 15px;
-        line-height: 1.5;
-      }
-      form{
-        .row{
-          text-align: center;
-          >*{
-            &.cancel_btn{
-              color: $dark;
-            }
-            @media (min-width: 750px){
-              width: 47.5%;
-            }
-
-          }
+    p{
+      font-size: 15px;
+      margin: 20px 0;
+    }
+    .terms-form{
+      margin: 15px 0 30px;
+      .row{
+        >*{
+          width: 47.5%;
         }
       }
     }
   }
+
 }
 
+// BACDROP
 .backdrop {
   display: none;
   position: fixed;
@@ -385,11 +347,12 @@
   top: 0; left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(255,255,255,.5);
+  background: rgba(0,0,0,.5);
   &.active{
     display: block;
   }
 }
+
 .analysis_subscribe {
   $width: 463px;
   $height: 170px;
@@ -473,27 +436,6 @@
     a {
       color: #A1BB27;
       text-decoration: underline;
-    }
-  }
-
-  .close {
-    display: block;
-    position: absolute;
-    top: 15px; right: 15px;
-    width: 16px;
-    height: 16px;
-    svg{
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      fill: $dark;
-    }
-    &:hover{
-      svg{
-        fill: darken($dark,10%);
-      }
     }
   }
 

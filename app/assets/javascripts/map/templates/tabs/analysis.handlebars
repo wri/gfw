@@ -1,0 +1,47 @@
+<div class="tab-analysis">
+  <nav id="analysis-nav" class="analysis-nav">
+    <ul>
+      <li id="draw-tab-button" data-analysis="draw-tab"><svg><use xlink:href="#icon-analysis-draw"></use></svg>Draw shape</li>
+      <li id="country-tab-button" data-analysis="country-tab"><svg><use xlink:href="#icon-analysis-country"></use></svg>Country or region</li>
+      <li id="data-tab-button" data-analysis="data-tab"><svg><use xlink:href="#icon-analysis-data"></use></svg>Other data layers</li>
+    </ul>
+  </nav>
+  <div id="analysis-content" class="analysis-content">
+    <div id="default" class="analysis-tab-content default results-hide active">
+      <div class="arrow"></div>
+      <header>
+        <h2>Choose the analysis you want to do</h2>
+      </header>
+    </div>
+    <div id="draw-tab" class="analysis-tab-content draw-tab results-hide">
+      <header>
+        <h2>Draw in the map the area you want to analyze</h2>
+        <p>Learn more <a href="#" data-source="regular_dialog" class="source btn gray uppercase little">Click here</a></p>
+      </header>
+      <div class="image"><div><svg><use xlink:href="#icon-analysis-draw"></use></svg></div></div>
+      <ul id="draw-analysis" class="button-container one">
+        <li><button id="start-analysis" class="btn green uppercase">Start drawing</button></li>
+        <li class="hidden"><button id="done-analysis" class="btn green uppercase">Analyze</button></li>
+      </ul>
+    </div>
+    <div id="country-tab" class="analysis-tab-content country-tab">
+      <select data-placeholder="Select country" class="chosen-select default notranslate" id="analysis-country-select"><option></option></select>
+      <select data-placeholder="Select jurisdiction" disabled="true" class="chosen-select default notranslate" id="analysis-region-select"><option></option></select>
+      <ul class="button-container one">
+        <li><button id="analysis-country-button" class="btn green uppercase">Analyze</button></li>
+      </ul>
+    </div>
+    <div id="data-tab" class="analysis-tab-content data-tab results-hide">
+      <header>
+        <h2>Concession & PA analysis</h2>
+        <p>Select a concession you’d like to analyze, and click the ‘analyze area’ button in the window that appears.</p>
+      </header>
+      <div class="img-box">
+        <div id="data-tab-play" class="play"></div>
+        <img id="data-tab-img" src="/assets/infowindow-example.png"/>
+      </div>
+    </div>
+  </div>
+  <div id="analysis-result" class="analysis-result hidden"></div>
+  <div id="analysis-subscribe" class="analysis-subscribe"></div>
+</div>

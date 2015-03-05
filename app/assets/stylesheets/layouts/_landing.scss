@@ -1,14 +1,14 @@
 // Main Slider
 .main-slider {
   width: 100%;
-  height: 320px;
+  height: 260px;
   background: #CCC;
   position: relative;
-  margin-top: -60px;
   z-index: 3;
   @media (min-width: $br-mobile) {
-    min-height: 500px;
-    padding-bottom: 35%;
+    margin-top: -60px;
+    min-height: 570px;
+    padding-bottom: 37.5%;
   }
 
 
@@ -53,7 +53,7 @@
           margin-left: 1px;
         }
         &.active {
-         .submenu-tooltip {
+         .tooltip-getstarted {
             opacity: 1;
             visibility: visible;
           }
@@ -61,6 +61,110 @@
       }
     }
   }
+
+  .tooltip-getstarted {
+    position: absolute;
+    min-width: 150px;
+    background: rgba($white,1);
+    box-shadow: 0 2px 5px rgba(#000,0.25);
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    text-transform: none;
+    -webkit-backface-visibility: hidden;
+    @include transform(translate(-50%,0%));
+    &.bottom{
+      bottom: 130%;
+      left: 50%;
+      min-width: 380px;
+      &:after{
+        bottom: 0;
+        left: 50%;
+        @include transform(translate(-50%,50%) rotate(45deg));
+        border-bottom: 1px solid $border;
+        border-right: 1px solid $border;
+      }
+      li{
+        white-space: normal;
+        a{
+          text-align: left;
+          padding-left: 60px;
+          .img{
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            width: 35px;
+            height: 35px;
+            background: $dark;
+            border-radius: 50%;
+            @include transform(translate(0,-50%));
+            &.map{ @include getting-started-sprite(map); }
+            &.alerts{ @include getting-started-sprite(alerts); }
+            &.country{ @include getting-started-sprite(country); }
+            &.report-story{ @include getting-started-sprite(report-story); }
+            &.concessions{ @include getting-started-sprite(concessions); }
+            &.active-fires{ @include getting-started-sprite(active-fires); }
+            &.tutorial-videos{ @include getting-started-sprite(tutorial-videos); }
+
+          }
+        }
+      }
+      li:last-child:hover{
+        &:after{
+          content: "";
+          display: block;
+          position: absolute;
+          width: 16px;
+          height: 16px;
+          background: darken($white,2%);
+          z-index: 2;
+          bottom: 0;
+          left: 50%;
+          @include transform(translate(-50%,50%) rotate(45deg));
+          border-bottom: 1px solid $border;
+          border-right: 1px solid $border;
+        }
+      }
+    }
+
+    @include transition(all 0.15s $easeInOutCubic);
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: $white;
+      z-index: 2;
+    }
+    li {
+      border-top: 1px solid #EAECEF;
+      font-size: 13px;
+      white-space: nowrap;
+      position: relative;
+      z-index: 3;
+      &:first-child { border-top: none;}
+      a,.link {
+        color: #444;
+        font-weight: 400;
+        padding: 14px 20px;
+        text-decoration: none;
+        text-align: center;
+        display: block;
+        // -webkit-font-smoothing: subpixel-antialiased;
+        text-rendering: optimizeLegibility;
+        text-transform: uppercase;
+        &:hover {
+          background: darken($white,2%);
+        }
+        strong {
+          color: $cGreen;
+        }
+      }
+    }
+  }
+
+
 
   .circle-marker {
     @extend .btn-arrow;
@@ -77,19 +181,21 @@
   .main-slider-pagination {
     width: 100%;
     position: absolute;
-    bottom: 20px;
-    right: 0;
+    top: 20px;
+    right: 20px;
     z-index: 2;
-    display: none;
     @media (min-width: $br-mobile) {
-      display: block;
+      top: auto;
+      bottom: 20px;
+      right: 0;
     }
     ul {
       float: right;
       li {
-        box-shadow:0px 1px 3px rgba(0,0,0,0.25);
-        width: 6px;
-        height: 6px;
+        position: relative;
+        box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
+        width: 10px;
+        height: 10px;
         opacity: 0.8;
         border-radius: 50%;
         cursor: pointer;
@@ -101,6 +207,20 @@
         &.current, &:hover {
           opacity: 1;
           @include transform(scale(2));
+        }
+        &:after{
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          @include transform(translate(-50%,-50%));
+          width: 250%;
+          height: 250%;
+          background: transparent;
+        }
+        @media (min-width: $br-mobile) {
+          width: 6px;
+          height: 6px;
         }
       }
     }
@@ -138,11 +258,27 @@
     opacity: 1;
     z-index: 1;
   }
+
+  //Credits
+  .credits{
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    color: white;
+    font-size: 10px;
+    display: none;
+    @media (min-width: $br-mobile) {
+      display: block;
+    }
+  }
+
+
   // SLIDES
-  &.slide1 { background-image:image-url('backgrounds/home-slider/bg_slide1.png');}
-  &.slide2 { background-image:image-url('backgrounds/home-slider/bg_slide2.jpg');}
-  &.slide3 { background-image:image-url('backgrounds/home-slider/bg_slide3.png');}
-  &.slide4 { background-image:image-url('backgrounds/home-slider/bg_slide4.jpg');}
+  &.slide0 { background-image:url('backgrounds/home-slider/bg_slide0.jpg');}
+  &.slide1 { background-image:url('backgrounds/home-slider/bg_slide1.png');}
+  &.slide2 { background-image:url('backgrounds/home-slider/bg_slide2.jpg');}
+  &.slide3 { background-image:url('backgrounds/home-slider/bg_slide3.png');}
+  &.slide4 { background-image:url('backgrounds/home-slider/bg_slide4.jpg');}
 
   aside {
     position: absolute;
@@ -471,15 +607,15 @@
 // BUZZ
 .buzz {
 	background: #F5F5F5;
-  overflow: auto;
-  @media (min-width: $br-mobile) {
+  @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+    padding: 50px 0 400px;
+  }
+  @media (min-width: $br-tablet) {
     padding: 50px 0;
   }
- .inner {
+  .inner {
     width: 95%;
-    @media (min-width: $br-mobile) {
-      min-width: 1200px;
-    }
+    max-width: 1200px;
   }
 	.row {
 		@include row();
@@ -492,7 +628,18 @@
 		@include col(100);
     @include display-flex();
     @media (min-width: $br-mobile) {
+      @include col(48);
+    }
+    @media (min-width: $br-tablet) {
       @include col(32);
+    }
+    &.tablet{
+      @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+        position: absolute;
+        top: 106%;
+        left: 0;
+        width: 100%;
+      }
     }
 	}
   h2 {
@@ -510,6 +657,7 @@
     width: 100%;
     border-top: 1px solid #CCC;
     padding: 20px;
+    padding-bottom: 50px;
     position: relative;
     @media (min-width: $br-mobile) {
      border-top: none;
@@ -528,11 +676,29 @@
     }
 
     .button-box {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px;
       @include display-flex();
       @include justify-content(center);
-      margin-top: 6px;
+      &.two{
+        @include justify-content(space-between);
+        .btn{
+          width: 49%;
+        }
+      }
       .btn {
         text-transform: uppercase;
+        @media (max-width: 1199px) {
+          &:first-child {
+            letter-spacing: 0px;
+          }
+          span {
+            display: none;
+          }
+        }
       }
     }
     .twitter{
@@ -544,53 +710,32 @@
       }
     }
 	}
-}
-
-
-.buzz .twitter-timeline,
-.buzz .timeline-involved,
-.buzz .stories {
-  max-width: 400px;
-  margin: 0 auto;
-  display: block;
-}
-
-// TWITTER
-.twitter-timeline {
-  height: 489px;
-  display: block;
-  margin: 0 auto;
+  .twitter,
+  .timeline-involved,
+  .stories {
+    max-width: 400px;
+    margin: 0 auto;
+    display: block;
+    @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+      margin: 0 auto !important;
+      display: block !important;
+      &.tablet {
+        max-width: none;
+      }
+    }
+  }
 }
 
 // GET INVOLVED
 .feed {
   width: 100%;
   .timeline-involved {
-    .button-box {
-      padding: 0 0 15px;
-      // @include row(space-between,center);
-      @include row(center,center);
-      .btn {
-        width: 49%;
-        text-transform: uppercase;
-        &:first-child {
-          letter-spacing: -0.6px;
-        }
-        @media (max-width: 1199px) {
-          &:first-child {
-            letter-spacing: 0px;
-          }
-          span {
-            display: none;
-          }
-        }
-      }
-    }
     ul {
       position: relative;
       padding: 20px 0;
       margin: 20px 0;
       height: 459px;
+
       &:after {
         content: "";
         width: 4px;
@@ -598,7 +743,6 @@
         position: absolute;
         top: 0;
         left: 50%;
-        background: #94CCDB;
         background: #C0C0C0;
         @include transform(translate(-50%,0));
       }
@@ -610,15 +754,38 @@
         bottom: 0;
         left: 50%;
         border-radius: 50%;
-        background: #94CCDB;
         background: #C0C0C0;
         @include transform(translate(-50%,0));
+      }
+      @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+        height: auto;
+        margin: 50px 0 90px;
+        &:after {
+          content: "";
+          width: 100%;
+          height: 4px;
+          top: 50%;
+          left: 0;
+          background: #C0C0C0;
+          @include transform(translate(0%,-50%));
+        }
+        &:before {
+          display: none;
+        }
       }
       li {
         width: 100%;
         height: 50px;
         position: relative;
         margin: 20px 0 0;
+        @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+          width: 19%;
+          height: auto;
+          margin: 0 0 0 1%;
+          float: left;
+          z-index: 2;
+          @include transform(translate(0,-50%));
+        }
         &:first-child { margin: 0;}
         figure {
           background: #999;
@@ -634,6 +801,12 @@
           left: 50%;
           z-index: 2;
           @include transform(translate(-40%,-50%));
+          @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+            position: relative;
+            left: 0;
+            @include transform(translate(0%,0%));
+          }
+
           &.google {
             >div{
               background-image: url('logos/google.svg');
@@ -690,6 +863,13 @@
           @include transform(translate(28px,-50%));
           font-size: 14px;
           font-weight: 300;
+          @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+            top: 120%;
+            left: 0%;
+            max-width: 100%;
+            @include transform(translate(0px,0));
+          }
+
           p {
             span {
               color: $cGreen;
@@ -700,12 +880,24 @@
         &:nth-child(even) {
           figure {
             @include transform(translate(-60%,-50%));
+            @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+              position: relative;
+              @include transform(translate(0%,0%));
+            }
           }
           .info {
             left: auto;
             right: 50%;
             @include transform(translate(-28px,-50%));
             p { text-align: right;}
+            @media (min-width: $br-mobile) and (max-width: $br-tablet - 1) {
+              left: 0;
+              top: auto;
+              bottom: 120%;
+              right: auto;
+              @include transform(translate(0,0));
+              p { text-align: left;}
+            }
           }
         }
       }
@@ -719,25 +911,6 @@
  width: 100%;
  .timeline-stories {
   position: relative;
-  .button-box {
-   padding: 0 0 15px;
-   @include row(space-between,center);
-   .btn {
-    width: 49%;
-    text-transform: uppercase;
-    &:last-child {
-     letter-spacing: -0.6px;;
-    }
-    @media (max-width: 1199px) {
-     &:first-child {
-      letter-spacing: 0px;
-     }
-     span {
-      display: none;
-     }
-    }
-   }
-  }
   ul {
    position: relative;
    li {
@@ -819,33 +992,3 @@
   }
  }
 }
-
-.analytics-graph {
-  border-top: 1px solid #e5e5df;
-  .graph-container {
-    @include display-flex();
-    @include flex-direction(column);
-    @include align-items(center);
-    h2 {
-      text-align: center;
-      font-size: 32px;
-      font-weight: 300;
-      padding: 40px 0px 30px;
-      color: $dark;
-      &:first-letter {
-        text-transform: uppercase;
-      }
-    }
-    .graph {
-      width: 834px;
-      height: 179px;
-      background-image: url('backgrounds/graph.png');
-      background-repeat: no-repeat;
-      margin: 0 0 40px;
-    }
-    .btn {
-      margin: 30px 0;
-    }
-  }
-}
-

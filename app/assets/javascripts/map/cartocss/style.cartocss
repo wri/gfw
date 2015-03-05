@@ -244,7 +244,7 @@
   }
 
 
-  
+
 
   [layer='gfw_land_rights_sync'] {
     polygon-fill: #4d658f;
@@ -295,21 +295,28 @@
   }
 
   [layer='azepoly_2010_16march2012'] {
-    polygon-fill: #FF9900;
-    polygon-opacity: 0.7;
-    line-color: #FFCC00;
-    line-width: 0.5;
-    line-opacity: 0.5;
+    polygon-fill: #b2d26e;
+    polygon-opacity: 0.9;
+    line-color: #b2d26e;
+    line-width: 1.5;
+    line-opacity: 1;
   }
   [layer='tcl'] {
     polygon-fill: #FFCC00;
-    polygon-opacity: 0.7;
+    polygon-opacity: 0.8;
     line-color: #FF5C00;
-    line-width: 0.7;
+    line-width: 0.5;
     line-opacity: 0.5;
   }
  [layer='tal_corridor'] {
     polygon-fill: #229A00;
     polygon-opacity: 0.7;
+  }
+ [layer='tx2_tcl'] {
+      polygon-fill: #FF5C00;
+      polygon-opacity: 0.8;
+      line-color: #081B47;
+      line-width: 0.5;
+      line-opacity: 0.5;
   }
 }

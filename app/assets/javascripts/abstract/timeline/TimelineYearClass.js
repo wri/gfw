@@ -24,7 +24,7 @@ define([
     defaults: {
       dateRange: [moment([2001]), moment()],
       playSpeed: 400,
-      width: 945,
+      width: 750,
       height: 50
     },
 
@@ -78,7 +78,6 @@ define([
       this.$timeline = $('.timeline-container');
       this.$el.html(this.template());
       this.$timeline.append(this.el);
-      this.$timeline.parents('.widget-box').css('width', 1000);
 
       // Cache
       this.$play = this.$el.find('.play');
@@ -87,7 +86,7 @@ define([
       this.$time = this.$el.find('.time');
 
       // SVG options
-      var margin = {top: 0, right: 30, bottom: 0, left: 30};
+      var margin = {top: 0, right: 20, bottom: 0, left: 20};
       var width = this.options.width - margin.left - margin.right;
       var height = this.options.height - margin.bottom - margin.top;
 
@@ -118,28 +117,63 @@ define([
         .append('g')
           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-      // xAxis
+      // Dots xaxis
       this.svg.append('g')
           .attr('class', 'xaxis')
-          .attr('transform', 'translate(0, ' + (height / 2) + ')')
+          .attr('transform', 'translate(0,{0})'.format(height/2 - 2))
           .call(d3.svg.axis()
             .scale(this.xscale)
             .orient('top')
             .ticks(this.options.dateRange[1].year() - this.options.dateRange[0].year())
-            .tickFormat(function(d) {return String(d); })
+            .tickFormat(function() {
+              return '▪';
+            })
             .tickSize(0)
-            .tickPadding(-4))
-        .select('.domain').remove();
+            .tickPadding(0))
+          .select('.domain').remove();
+
+
+
+
+      // // xAxis
+      // this.svg.append('g')
+      //     .attr('class', 'xaxis')
+      //     .attr('transform', 'translate(0, ' + (height / 2) + ')')
+      //     .call(d3.svg.axis()
+      //       .scale(this.xscale)
+      //       .orient('top')
+      //       .ticks(this.options.dateRange[1].year() - this.options.dateRange[0].year())
+      //       .tickFormat(function(d) {return String(d); })
+      //       .tickSize(0)
+      //       .tickPadding(-4))
+      //   .select('.domain').remove();
 
       this.svg.select('.xaxis').selectAll('g.line').remove();
 
-      this.svg.select('.xaxis').selectAll('g.tick')
-        .insert('rect', ':first-child')
-        .attr('width', 30)
-        .attr('height', 12)
-        .attr('x', -15)
-        .attr('y', -5)
-        .attr('fill', 'white');
+      // Years xaxis
+      var xAxis = d3.svg.axis()
+          .scale(this.xscale)
+          .orient('bottom')
+          .ticks(this.options.dateRange[1].year() - this.options.dateRange[0].year())
+          .tickSize(0)
+          .tickPadding(0)
+          .tickFormat(function(d) {return String(d); })
+
+      this.svg.append('g')
+          .attr('class', 'xaxis-years')
+          .attr('transform', 'translate({0},{1})'.format(0, height/2 + 6))
+          .call(xAxis)
+        .select('.domain').remove();
+
+
+
+      // this.svg.select('.xaxis').selectAll('g.tick')
+      //   .insert('rect', ':first-child')
+      //   .attr('width', 30)
+      //   .attr('height', 12)
+      //   .attr('x', -15)
+      //   .attr('y', -5)
+      //   .attr('fill', 'white');
 
       // Handlers
       this.slider = this.svg.append('g')
@@ -148,16 +182,15 @@ define([
 
       this.handlers.left = this.slider.append('svg:image')
           .attr('class', 'handle')
-          .attr('transform', 'translate(0,' + (height / 2 - 6) + ')')
-          .attr('width', 14)
-          .attr('height', 18)
-          .attr('xlink:href', '/assets/svg/dragger.svg')
-          .attr('x', this.xscale(this.currentDate[0].year()) + 16)
+          .attr('width', 16)
+          .attr('height', 16)
+          .attr('xlink:href', '/assets/svg/dragger2.svg')
+          .attr('x', this.xscale(this.currentDate[0].year()))
           .attr('y', -3);
 
       this.handlers.right = this.handlers.left
          .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })
-         .attr('x', this.xscale(this.currentDate[1].year()) - 30);
+         .attr('x', this.xscale(this.currentDate[1].year()));
 
       this.slider.select('.background')
           .style('cursor', 'pointer')
@@ -270,17 +303,17 @@ define([
 
         // Move domain right
         this.domain
-          .attr('x2', this.xscale(roundValue) - 16 - 8);
+          .attr('x2', this.xscale(roundValue));
 
         // Move trail
         this.trail
-          .attr('x1', this.xscale(roundValue) - 16 - 8)
-          .attr('x2', this.xscale(roundValue) - 16 - 8);
+          .attr('x1', this.xscale(roundValue))
+          .attr('x2', this.xscale(roundValue));
 
         // Move && update tooltip
         this.tooltip
-          .text(roundValue -1)
-          .style('left', this.xscale(roundValue) - 16 - 8 + 'px');
+          .text(roundValue)
+          .style('left', this.xscale(roundValue) + 'px');
 
         this.formatXaxis();
 
@@ -322,29 +355,29 @@ define([
         this.stopAnimation();
       }
 
-      if (Math.abs(this.xscale(value) - xr - 30) <
-        Math.abs(this.xscale(value) - xl + 16)) {
+      if (Math.abs(this.xscale(value) - xr) <
+        Math.abs(this.xscale(value) - xl)) {
         if (this.ext.left > this.xscale(roundValue)) {
           return;
         }
         this.ext.right = this.xscale(roundValue);
 
         this.domain
-          .attr('x1', this.ext.left + 16);
+          .attr('x1', this.ext.left);
 
         // Move right handler
         this.handlers.right
           .transition()
           .duration(100)
           .ease('line')
-          .attr('x', this.xscale(roundValue) - 30);
+          .attr('x', this.xscale(roundValue));
 
         // Move domain right
         this.domain
           .transition()
           .duration(100)
           .ease('line')
-          .attr('x2', this.xscale(roundValue) - 30);
+          .attr('x2', this.xscale(roundValue));
 
       } else {
         if (this.ext.right < this.xscale(roundValue)) {
@@ -353,21 +386,21 @@ define([
         this.ext.left = this.xscale(roundValue);
 
         this.domain
-          .attr('x2', this.ext.right - 30);
+          .attr('x2', this.ext.right);
 
         // Move left handler
         this.handlers.left
           .transition()
           .duration(100)
           .ease('line')
-          .attr('x', this.xscale(roundValue) + 16);
+          .attr('x', this.xscale(roundValue));
 
         // Move domain left
         this.domain
           .transition()
           .duration(100)
           .ease('line')
-          .attr('x1', this.xscale(roundValue) + 16);
+          .attr('x1', this.xscale(roundValue));
       }
 
       this.formatXaxis();
@@ -376,10 +409,18 @@ define([
     formatXaxis: function() {
       var self = this;
       d3.select('.xaxis').selectAll('text').filter(function(d) {
-        var left = self.ext.left + 16;
-        var right = self.ext.right + 30;
-        if (d > Math.round(self.xscale.invert(left)) &&
-          d < Math.round(self.xscale.invert(right))) {
+        var left = self.ext.left;
+        var right = self.ext.right;
+        if (d >= Math.round(self.xscale.invert(left)) && d <= Math.round(self.xscale.invert(right))) {
+          d3.select(this).classed('selected', true);
+        } else {
+          d3.select(this).classed('selected', false);
+        }
+      });
+      d3.select('.xaxis-years').selectAll('text').filter(function(d) {
+        var left = self.ext.left;
+        var right = self.ext.right;
+        if (d >= Math.round(self.xscale.invert(left)) && d <= Math.round(self.xscale.invert(right))) {
           d3.select(this).classed('selected', true);
         } else {
           d3.select(this).classed('selected', false);

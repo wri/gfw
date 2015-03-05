@@ -46,7 +46,7 @@ module StoriesHelper
       youtube_id = $5
     end
 
-    %Q(<iframe width="483" height="362" src="//www.youtube.com/embed/#{youtube_id}" frameborder="0" allowfullscreen></iframe>)
+    %Q(<iframe width="560" height="315" src="//www.youtube.com/embed/#{youtube_id}" frameborder="0" allowfullscreen></iframe>)
   end
 
 end
