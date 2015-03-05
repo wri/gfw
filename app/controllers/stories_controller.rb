@@ -67,14 +67,16 @@ class StoriesController < ApplicationController
   private
 
     def load_stories
-      @stories = if params['for_map'].present?
-                   Api::Story.visible
-                 else
-                   Api::Story.visible.sample(5)
-                 end
+      @stories = Api::Story.visible
+      unless params['for_map'].present? || @stories.blank? || @stories.count < 6
+        @stories = @stories.sample(5)
+      end
     end
     def load_more_stories
-      @more_stories = Api::Story.visible.sample(3)
+      @more_stories = Api::Story.visible
+      unless  @stories.blank? || @stories.count < 6
+        @more_stories = @more_stories.sample(3)
+      end
     end
 
     def access_through_token?(story)

@@ -1329,6 +1329,12 @@
           padding: 0;
           font-size: 27px;
           color: #FDFDFD;
+          a{
+            color: #FDFDFD;
+            &:hover{
+              color: darken(#FDFDFD, 5%);
+            }
+          }
         }
 
         .story-content {

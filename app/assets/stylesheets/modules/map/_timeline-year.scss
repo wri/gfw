@@ -63,25 +63,43 @@
     }
   }
 
-  .xaxis text {
-    font-size: 11px;
-    fill: $dark;
-    font-weight: 500;
+  .xaxis{
+    text {
+      font-size: 11px;
+      fill: $dark;
+      // font-weight: 500;
 
-    &.selected {
-      fill: $cGreen1;
+      &.selected {
+        fill: $cGreen1;
+      }
+    }
+    .tick{
+      // @include transform(translateY(3px));
+    }
+    .domain {
+      stroke: $cGreen1;
+      stroke-width: 4;
+      @include transform(translate(0,-4px));
+      // shape-rendering: crispEdges;
+    }
+  }
+  .xaxis-years{
+    text {
+      font-size: 11px;
+      fill: $dark;
+      font-weight: 500;
+
+      &.selected {
+        fill: $cGreen1;
+      }
     }
   }
 
-  .xaxis .domain {
-    stroke: $cGreen1;
-    stroke-width: 4;
-    // shape-rendering: crispEdges;
-  }
 
   .slider .handle {
     fill: $cGreen1;
     stroke: darken($cGreen1, 20);
     cursor: col-resize;
+    @include transform(translate(-9px,14px));
   }
 }
