@@ -437,7 +437,7 @@
             <li class='column three first'>
               <% unless @blog_story.nil? %>
                 <strong class='column-title'>Blog stories</strong>
-                <h3 class='story-title'><%= truncate(@blog_story['title'], :length => 35) %></h3>
+                <h3 class='story-title'><a href='<%= @blog_story['link'] %>'><%= truncate(@blog_story['title'], :length => 80) %></a></h3>
                 <p class='story-content'><%= truncate(@blog_story['description'].gsub('[&#8230;]', ''), :length => 300) %> <%= link_to('more', @blog_story['link'], :target => '_blank') %></p>
                 <p>Read more blog stories <a href='<%= "http://blog.globalforestwatch.org/?tag=#{@country['name'].downcase.gsub(' ', '_')}" %>'>here</a></p>
               <% end %>
@@ -469,7 +469,7 @@
             <li class='column three last'>
               <% if @mongabay_story.present? %>
                 <strong class='column-title'>Mongabay stories</strong>
-                <h3 class='story-title'><%= truncate(@mongabay_story['title'], :length => 35) %></h3>
+                <h3 class='story-title'><a href="<%= @mongabay_story['loc'] %>"><%= truncate(@mongabay_story['title'], :length => 80) %></a></h3>
                 <p class='story-content'><%= truncate(@mongabay_story['description'], :length => 300) %> <%= link_to('more', @mongabay_story['loc'], :target => '_blank') %></p>
                 <p>See more on the <%= link_to 'map', "#{map_path}/3/15.00/27.00/ALL/grayscale/loss,forestgain/586", :target => '_blank' %></p>
               <% end %>
