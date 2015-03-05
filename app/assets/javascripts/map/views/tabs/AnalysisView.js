@@ -455,7 +455,7 @@ define([
             }"
         }]
       });
-      this.mask.addTo(this.map, 1000)
+      // this.mask.addTo(this.map, 1000)
       this.mask.done(this._cartodbLayerDone);
 
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
@@ -509,7 +509,7 @@ define([
             }"
         }]
       })
-      this.mask.addTo(this.map, 1000)
+      // this.mask.addTo(this.map, 1000)
       this.mask.done(this._cartodbLayerDone);
 
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
@@ -526,7 +526,14 @@ define([
 
     _cartodbLayerDone: function(layer) {
       this.cartodbLayer = layer;
+      this.putMaskOnTop();
     },
+
+    putMaskOnTop: function(){
+      var overlaysLength = this.map.overlayMapTypes.getLength();
+      this.map.overlayMapTypes.insertAt(overlaysLength, this.cartodbLayer);
+    },
+
 
 
 

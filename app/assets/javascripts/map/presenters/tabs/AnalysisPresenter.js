@@ -70,7 +70,6 @@ define([
       'LayerNav/change': function(layerSpec) {
         this._setBaselayer(layerSpec.getBaselayers());
         this._updateAnalysis();
-
       }
     }, {
       'AnalysisTool/update-analysis': function() {
@@ -389,6 +388,7 @@ define([
 
       if (resource && !this.status.get('disableUpdating')) {
         resource = this._buildResource(resource);
+        (resource.iso) ? this.view.putMaskOnTop() : null;
         this._publishAnalysis(resource);
       }
     },
