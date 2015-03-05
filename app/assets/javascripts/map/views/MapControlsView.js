@@ -52,7 +52,7 @@ define([
       key('s', this.showSearch);
       key('m', this.zoomIn);
       key('n', this.zoomOut);
-      key('r', this.resetMap);
+      key('alt+r', this.resetMap);
       key('f', this.fitBounds);
       key('t', this.toggleModules);
 
