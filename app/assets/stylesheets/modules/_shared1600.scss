@@ -234,7 +234,7 @@
       text-align: center;
       display: block;
       // -webkit-font-smoothing: subpixel-antialiased;
-      text-rendering: optimizeLegibility;
+      // text-rendering: optimizeLegibility;
       text-transform: uppercase;
       &:hover {
         background: darken($white,2%);
