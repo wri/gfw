@@ -142,6 +142,7 @@ define([
         this.view.onClickAnalysis();
       } else if (params.iso.country && params.iso.country !== 'ALL') {
         this._analyzeIso(params.iso);
+        this.view.putMaskOnTop();
       } else if (params.geojson) {
         this._analyzeGeojson(params.geojson);
       } else if (params.wdpaid) {
@@ -388,7 +389,6 @@ define([
 
       if (resource && !this.status.get('disableUpdating')) {
         resource = this._buildResource(resource);
-        (resource.iso) ? this.view.putMaskOnTop() : null;
         this._publishAnalysis(resource);
       }
     },
