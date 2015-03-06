@@ -1250,7 +1250,7 @@
         background: $white;
         visibility: hidden;
         opacity: 0;
-        @include transition(all,0.5s,linear);
+        @include transition(all,0.25s,linear);
         .additional-info{
           color: $dark;
           width: 80%;
