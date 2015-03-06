@@ -36,6 +36,9 @@
     padding-right: 0;
     margin: 0;
     background: $white;
+    .jspPane {
+      padding: 0 !important;
+    }
     a.cartodb-popup-close-button{
       position: absolute;
       top: 0px;
@@ -89,7 +92,7 @@
         max-width: 100%;
         min-height: 5px;
         height: auto;
-        max-height: 185px;
+        max-height: 260px !important;
         margin: 0;
         padding: 0;
         overflow-y: auto;
@@ -98,6 +101,7 @@
         text-align: left;
         .cartodb-popup-content-inside{
           padding: 20px 20px 10px;
+          @include clearfix();
         }
         h2,h3,h4,p{
           font-family: "Fira Sans" , Helvetica;
@@ -110,12 +114,32 @@
         }
         h4{
           color: $dark;
-          font-size: 13px;
+          font-size: 12px;
           font-weight: 500;
+          width: 50%;
+          float: left;
+          line-height: 1.25;
+          min-height: 1px;
+          clear: both;
+          padding: 0 5px 0 0;
+          &.no-float{
+            width: 100%;
+            float: none;
+            padding: 0 0 5px;
+          }
         }
         p{
           color: $dark;
           font-size: 13px;
+          width: 50%;
+          float: left;
+          line-height: 1.25;
+          min-height: 1px;
+          &.no-float{
+            width: 100%;
+            float: none;
+            padding: 0;
+          }
         }
       }
     }
