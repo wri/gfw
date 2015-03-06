@@ -93,7 +93,7 @@ $height: auto;
       li{
         list-style: none;
       }
-      a{
+      a:not(.btn){
         color: $cGreen;
         &:hover{
           color: darken($cGreen,5%);
