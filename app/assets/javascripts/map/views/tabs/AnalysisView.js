@@ -43,7 +43,7 @@ define([
     },
 
     initialize: function(map) {
-      _.bindAll(this, '_onOverlayComplete', '_cartodbLayerDone');
+      _.bindAll(this, '_onOverlayComplete', '_cartodbLayerDone','_removeCartodblayer');
       this.map = map;
       this.presenter = new Presenter(this);
       this.model = new AnalysisModel();
@@ -263,6 +263,7 @@ define([
       this.area = iso.region;
 
       this.$countrySelect.val(this.iso).trigger("liszt:updated");
+      this.$regionSelect.val(this.area).trigger("liszt:updated");
       if (this.iso) {
         this.getSubCountries();
       }
@@ -389,10 +390,9 @@ define([
 
       if (resource.multipolygon) {
         this.map.data.remove(resource.multipolygon);
-        this._removeCartodblayer();
       }
 
-
+      this._removeCartodblayer();
       this.$tabs.removeClass('disabled');
     },
 
@@ -520,13 +520,12 @@ define([
 
     _removeCartodblayer: function() {
       if (this.cartodbLayer) {
-        // var overlaysLength = this.map.overlayMapTypes.getLength();
-        // this.map.overlayMapTypes.removeAt(overlaysLength);
         this.cartodbLayer.remove();
       }
     },
 
     _cartodbLayerDone: function(layer) {
+      this._removeCartodblayer();
       this.cartodbLayer = layer;
       this.putMaskOnTop();
     },

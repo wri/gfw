@@ -129,6 +129,7 @@ define([
       },
     },{
       'LocalMode/changeIso': function(iso) {
+
         this._analyzeIso(iso)
       }
     }],
