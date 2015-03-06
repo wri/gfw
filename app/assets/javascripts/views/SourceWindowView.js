@@ -5,8 +5,9 @@ define([
   'jquery',
   'backbone',
   'underscore',
-  'mps'
-], function($,Backbone, _,mps) {
+  'mps',
+  'presenters/SourceWindowPresenter',
+], function($,Backbone, _,mps, Presenter) {
 
   'use strict';
 
@@ -22,11 +23,13 @@ define([
 
     events: {
       'click .source' : 'show',
+      'click .mobile-friendly' : 'mobileFriendly',
       'click .close': 'hide'
     },
 
     initialize: function() {
       // Model
+      this.presenter = new Presenter(this);
       this.model = new SourceWindowModel();
 
       // Cache
@@ -97,9 +100,13 @@ define([
       return this;
     },
 
-    showByParam: function(data_slug){
+    showByParam: function(data_slug,link){
       this.model.set('hidden', false);
-      this.$content.html($('#' + data_slug).clone());
+      var $clone = $('#' + data_slug).clone();
+      this.$content.html($clone);
+      if (link) {
+        $clone.find('.set-link').attr('href',link);
+      }
       return this;
     },
 
@@ -108,6 +115,13 @@ define([
       this.$contentWrapper = this.$sourceWindow.find('.content-wrapper');
       this.$close = this.$sourceWindow.find('.close');
       return this.$sourceWindow;
+    },
+
+    mobileFriendly: function(e){
+      if (this.$window.width() <= 850){
+        e && e.preventDefault();
+        this.showByParam('mobile-friendly',$(e.currentTarget).attr('href'));
+      }
     }
   });
   return SourceWindowView;
