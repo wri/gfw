@@ -174,18 +174,8 @@
       }
 
       .country-indepth__bubble {
-
         display: inline-block;
-        margin: 2px 0 0 15px;
-        background: $cGreen;
-        text-align: center;
-        border-radius: 9px;
-        a {
-          display: inline-block;
-          width: 160px;
-          padding: 11px 0 12px 0;
-          color: #fff;
-        }
+        margin: 4px 0 0 15px;
       }
     } // country-title
 
