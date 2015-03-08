@@ -138,6 +138,7 @@ define([
      * @param  {Object} params Place params
      */
     _handlePlaceGo: function(params) {
+      this.deleteAnalysis();
       if (params.analyze && params.name === 'map') {
         this.view.onClickAnalysis();
       } else if (params.iso.country && params.iso.country !== 'ALL') {
