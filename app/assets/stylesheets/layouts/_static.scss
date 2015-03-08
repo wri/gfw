@@ -1472,7 +1472,7 @@
       display: none;
       p, .bullets {
         font-size: 13px;
-        a{
+        a:not(.btn){
           text-decoration: none;
           color: $cGreen;
         }
@@ -1541,7 +1541,7 @@
       &:last-child {
         margin-bottom: 0;
       }
-      a{
+      a:not(.btn){
         color: $cGreen;
         text-decoration: none;
         &:hover{
