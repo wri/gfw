@@ -43,7 +43,7 @@ define([
     },
 
     initialize: function(map) {
-      _.bindAll(this, '_onOverlayComplete', '_cartodbLayerDone','_removeCartodblayer');
+      _.bindAll(this, '_onOverlayComplete','_removeCartodblayer');
       this.map = map;
       this.presenter = new Presenter(this);
       this.model = new AnalysisModel();
@@ -427,17 +427,28 @@ define([
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     // COUNTRY MASK
     drawMaskCountry: function(geojson, iso){
       this.setStyle(0);
-      this._removeCartodblayer();
 
       this.mask = cartodb.createLayer(this.map, {
         user_name: 'wri-01',
         type: 'cartodb',
         cartodb_logo: false,
+        name: 'mask',
         sublayers: [{
-          name: 'mask',
           sql: "SELECT * FROM country_mask",
           cartocss: "\
             #country_mask {\
@@ -456,7 +467,7 @@ define([
         }]
       });
       // this.mask.addTo(this.map, 1000)
-      this.mask.done(this._cartodbLayerDone);
+      this.mask.done(_.bind(this._cartodbLayerDone, this ));
 
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
       this.presenter.setMultipolygon(multipolygon, geojson);
@@ -466,12 +477,12 @@ define([
     // COUNTRY MASK
     drawMaskArea: function(geojson, iso, region){
       this.setStyle(0);
-      this._removeCartodblayer();
 
       this.mask = cartodb.createLayer(this.map, {
         user_name: 'wri-01',
         type: 'cartodb',
         cartodb_logo: false,
+        name: 'mask',
         sublayers: [{
           sql: "SELECT * FROM country_mask",
           cartocss: "\
@@ -510,7 +521,7 @@ define([
         }]
       })
       // this.mask.addTo(this.map, 1000)
-      this.mask.done(this._cartodbLayerDone);
+      this.mask.done(_.bind(this._cartodbLayerDone, this ));
 
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
       this.presenter.setMultipolygon(multipolygon, geojson);
@@ -519,9 +530,7 @@ define([
 
 
     _removeCartodblayer: function() {
-      if (this.cartodbLayer) {
-        this.cartodbLayer.remove();
-      }
+      this.removeLayer();
     },
 
     _cartodbLayerDone: function(layer) {
@@ -530,14 +539,30 @@ define([
       this.putMaskOnTop();
     },
 
-    putMaskOnTop: function(){
+    putMaskOnTop: function(regionBool){
       var overlaysLength = this.map.overlayMapTypes.getLength();
       this.map.overlayMapTypes.insertAt(overlaysLength, this.cartodbLayer);
     },
 
+    _getOverlayIndex: function(who) {
+      var overlaysLength = this.map.overlayMapTypes.getLength();
+      if (overlaysLength > 0) {
+        for (var i = 0; i< overlaysLength; i++) {
+          var layer = this.map.overlayMapTypes.getAt(i);
+          if (layer.name === who) {
+            return i;
+          }
+        }
+      }
+      return -1;
+    },
 
-
-
+    removeLayer: function() {
+      var overlayIndex = this._getOverlayIndex('mask');
+      if(overlayIndex > -1) {
+        this.map.overlayMapTypes.removeAt(overlayIndex);
+      }
+    },
 
 
 

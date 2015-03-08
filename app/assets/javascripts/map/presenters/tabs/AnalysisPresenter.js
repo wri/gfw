@@ -129,7 +129,6 @@ define([
       },
     },{
       'LocalMode/changeIso': function(iso) {
-
         this._analyzeIso(iso)
       }
     }],
@@ -209,6 +208,7 @@ define([
             objects);
 
           this._geojsonFitBounds(geojson);
+          this.view._removeCartodblayer();
           this.view.drawMaskCountry(geojson,iso.country);
           this._publishAnalysis(resource);
 
@@ -218,6 +218,7 @@ define([
           var geojson = results.features[0];
 
           this._geojsonFitBounds(geojson);
+          this.view._removeCartodblayer();
           this.view.drawMaskArea(geojson,iso.country,iso.region);
           this._publishAnalysis(resource);
         },this));
@@ -398,6 +399,7 @@ define([
      * Deletes the current analysis.
      */
     deleteAnalysis: function() {
+      this.view._removeCartodblayer();
       this.view.$el.removeClass('is-analysis');
       // Delete overlay drawn or multipolygon.
       this.view.deleteGeom({
