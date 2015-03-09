@@ -171,6 +171,7 @@ define([
       'change #areaSelector': '_onSelectArea',
       'click .selector-remove': '_navigateCountry',
       'click .umd_options_control' : '_onClickUMDOptions',
+      'click .canopy-status em' : '_onClickUMDOptions',
       'click .item.settings' : '_onClickUMDOptions',
       'click .country-header .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
       'mouseup .country-header .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
@@ -395,7 +396,6 @@ define([
           }
           $target.find('.tree-cover .amount').html( amount.toLocaleString() );
           $target.find('.total-area .amount').html(Math.round(data.years[0].extent_perc));
-          console.log(data)
           $target.find('.total-loss .amount').html((~~total_loss).toLocaleString());
           that._drawLossAndGain(data.years);
           var $link_target = [];

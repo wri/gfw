@@ -276,6 +276,22 @@
               font-size: 29px;
             }
           }
+          .canopy-status {
+            width: 450px;
+            position: absolute;
+            text-align: center;
+            font-size: 13px;
+            background: #555;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 8px;
+            margin-top: 21px;
+
+            em {
+              color: #97bd3d;
+              border-bottom: 1px #97bd3d dashed;
+              cursor: pointer;
+            }
+          }
         }
 
         .loss-gain-graph {
