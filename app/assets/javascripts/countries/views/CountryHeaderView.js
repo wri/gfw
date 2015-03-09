@@ -171,6 +171,7 @@ define([
       'change #areaSelector': '_onSelectArea',
       'click .selector-remove': '_navigateCountry',
       'click .umd_options_control' : '_onClickUMDOptions',
+      'click .canopy-status em' : '_onClickUMDOptions',
       'click .item.settings' : '_onClickUMDOptions',
       'click .country-header .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
       'mouseup .country-header .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
@@ -376,6 +377,11 @@ define([
         url: url,
         dataType: 'json',
         success: function(data) {
+          var total_loss = 0;
+          for(var i=0;i<data.years.length;i++) {
+            total_loss += data.years[i].loss;
+          }
+
           var amount = data.years[0].extent;
 
           if (amount.toString().length >= 7) {
@@ -388,10 +394,9 @@ define([
           } else {
             $target.find('.tree-cover .unit').html( 'Ha' );
           }
-
           $target.find('.tree-cover .amount').html( amount.toLocaleString() );
           $target.find('.total-area .amount').html(Math.round(data.years[0].extent_perc));
-
+          $target.find('.total-loss .amount').html((~~total_loss).toLocaleString());
           that._drawLossAndGain(data.years);
           var $link_target = [];
               $link_target[0] = $('.analyze_from_country');
@@ -553,11 +558,14 @@ define([
           that = this;
 
       var $graph = this.$('.loss-gain-graph'),
-          $comingSoon = $graph.find('.coming-soon'),
-          $amount = $graph.find('.graph-amount'),
-          $date = $graph.find('.graph-date');
+          $comingSoon     = $graph.find('.coming-soon'),
+          $amount         = $graph.find('.graph-amount'),
+          $amount_g       = $graph.find('.graph-gain-amount'),
+          $date           = $graph.find('.graph-date'),
+          $gain           = $graph.find('.graph-gain-total'),
+          gain_value      = (~~years_data[1].gain).toLocaleString();
 
-      var width     = 200,
+      var width     = 120,
           height    = 90,
           h         = 90, // maxHeight
           radius    = width / 2;
@@ -582,8 +590,10 @@ define([
         }
       });
 
-      $amount.html('<span>' + that.helper.formatNumber(parseInt(data_[data_.length - 1].value, 10)) + '</span>');
-      $date.html('Hectares lost in ' + data_[data_.length - 1].year);
+      $amount.html('<span>' + (~~data_[data_.length - 1].value).toLocaleString() + '</span>');
+      $date.html('Hectares lost');
+      $amount_g.html('<span>' + gain_value + '</span>');
+      $gain.html('Hectares gained');
 
       var marginLeft = 5,
           marginTop = 0;
@@ -592,7 +602,7 @@ define([
         .domain([0, d3.max(data_, function(d) { return parseFloat(d.value); })])
         .range([height, marginTop * 2]);
 
-      var barWidth = 16;
+      var barWidth = 12;
 
       var bar = graph.selectAll('g')
         .data(data_)
@@ -600,6 +610,17 @@ define([
         .append('g')
         .attr('transform', function(d, i) { return 'translate(' + (marginLeft + i * barWidth) + ',' + -marginTop + ')'; });
 
+      bar.append('text')
+        .attr('class', 'axis notranslate')
+        .text(function(d) { return d.year })
+        .attr('transform', 'rotate(-90)')
+        .attr('x', -120)
+        .attr('y', 10)
+        .style('fill', function(d, i) {
+          if (i === 11) {
+            return '#9D9AA5';
+          }
+        })
       bar.append('svg:rect')
         .attr('class', 'bar')
         .attr('y', function(d) { return y_scale(d.value); })
@@ -613,54 +634,57 @@ define([
           }
         })
         .on('mouseover', function(d) {
-          d3.selectAll('.bar').style('fill', '#555');
-          d3.select(this).style('fill', '#9FBA2B');
-
-          $amount.html('<span>' + that.helper.formatNumber(parseInt(d.value, 10)) + '</span>');
-          $date.html('Hectares lost in ' + d.year);
+          d3.selectAll('.bar, .axis').style('fill', '#555')
+          d3.select(this).style('fill', '#9FBA2B')
+          var text = d3.select(this.parentNode)
+          text.select('.axis').style('fill', '#9D9AA5')
+          $amount.html('<span>' + (~~d.value).toLocaleString() + '</span>');
+          $date.html('Hectares lost');
+          $amount_g.html('<span>' + gain_value + '</span>');
+          $gain.html('Hectares gained');
         });
 
       // Draw gain line
-      var gainAverage = years_data[1].gain;
+      // var gainAverage = years_data[1].gain;
 
-      var tooltip = d3.select('.loss-gain-graph')
-        .append('div')
-        .attr('class', 'gain-tooltip')
-        .style('visibility', 'hidden')
-        .text(that.helper.formatNumber(parseInt(gainAverage), 10));
+      // var tooltip = d3.select('.loss-gain-graph')
+      //   .append('div')
+      //   .attr('class', 'gain-tooltip')
+      //   .style('visibility', 'hidden')
+      //   .text(that.helper.formatNumber(parseInt(gainAverage), 10));
 
-      tooltip
-        .append('span')
-        .text('Average Ha of gain/year');
+      // tooltip
+      //   .append('span')
+      //   .text('Average Ha of gain/year');
 
-      var gainLine = graph.append('svg:rect')
-        .attr('class', 'gain-line')
-        .attr('x', 0)
-        .attr('y', Math.abs(y_scale(gainAverage)))
-        .attr('height', 1)
-        .attr('width', width)
-        .style('stroke', 'transparent')
-        .style("stroke-width", "3")
-        .style('fill', '#ccc');
+      // var gainLine = graph.append('svg:rect')
+      //   .attr('class', 'gain-line')
+      //   .attr('x', 0)
+      //   .attr('y', Math.abs(y_scale(gainAverage)))
+      //   .attr('height', 1)
+      //   .attr('width', width)
+      //   .style('stroke', 'transparent')
+      //   .style("stroke-width", "3")
+      //   .style('fill', '#ccc');
 
-      gainLine
-        .on('mousemove', function() {
-          d3.select('.gain-line')
-            .style('height', 2)
-            .style('fill', 'white');
+      // gainLine
+      //   .on('mousemove', function() {
+      //     d3.select('.gain-line')
+      //       .style('height', 2)
+      //       .style('fill', 'white');
 
-          tooltip
-            .style('visibility', 'visible')
-            .style("top", Math.abs(y_scale(gainAverage)) + "px")
-            .style("left", (d3.mouse(this)[0] - 58) + "px");
-        })
-        .on('mouseout', function() {
-          d3.select('.gain-line')
-            .style('height', 1)
-            .style('fill', '#ccc');
+      //     tooltip
+      //       .style('visibility', 'visible')
+      //       .style("top", Math.abs(y_scale(gainAverage)) + "px")
+      //       .style("left", (d3.mouse(this)[0] - 58) + "px");
+      //   })
+      //   .on('mouseout', function() {
+      //     d3.select('.gain-line')
+      //       .style('height', 1)
+      //       .style('fill', '#ccc');
 
-          tooltip.style('visibility', 'hidden');
-        })
+      //     tooltip.style('visibility', 'hidden');
+      //   })
     }
 
   });
