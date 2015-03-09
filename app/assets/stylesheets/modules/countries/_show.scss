@@ -272,6 +272,7 @@
         .loss-gain-graph {
           width: 35%;
           position: relative;
+          top: -145px;
           .embed & {
             width: 33.33333%;
           }
@@ -310,13 +311,15 @@
           }
 
           .graph-amount,
+          .graph-gain-amount
           .graph-date {
             text-align: center;
             display: block;
             max-width: 205px;
           }
 
-          .graph-amount {
+          .graph-amount,
+          .graph-gain-amount {
             font-size: 30px;
             font-weight: 500;
             color: $cGreen;
@@ -762,7 +765,8 @@
     z-index: 10;
     pointer-events: none;
 
-    .graph-amount {
+    .graph-amount,
+    .graph-gain-amount {
       font-size: 26px;
       color: white;
       margin-bottom: 4px;
@@ -1983,6 +1987,7 @@
             }
 
             .graph-amount,
+            .graph-gain-amount,
             .graph-date {
               max-width: 100%;
             }
