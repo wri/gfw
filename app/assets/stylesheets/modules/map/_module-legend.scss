@@ -194,7 +194,7 @@
         border-radius: 50%;
         font-weight: 500;
         &:hover{
-          background: lighten(#AAA, 10%);
+          background: darken(#AAA, 10%);
         }
       }
     }
