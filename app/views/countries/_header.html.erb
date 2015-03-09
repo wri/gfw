@@ -23,14 +23,19 @@
           <div class="map" id="countryMap"></div>
           <div class="tree-numbers">
             <div class="tree-cover">
-              <h4>Tree cover (2000)</h4>
+              <h4>Tree cover</h4>
                 <span class="amount"><!--<%= extent_to_human(@country['extent'], format: '%n') %>--></span>
                 <span class="unit"><%= extent_to_human(@country['extent'], format: '%u', shortUnit: true) %></span>
             </div>
             <div class="total-area">
-              <h4>Percent Tree Cover (2000)</h4>
+              <h4>Percent Tree Cover</h4>
               <span class="amount"></span>
               <span class="unit">%</span>
+            </div>
+            <div class="total-loss">
+              <h4>Total loss</h4>
+              <span class="amount"></span>
+              <span class="unit">ha</span>
             </div>
           </div>
           <div class="loss-gain-graph ghost">
@@ -38,6 +43,7 @@
             <div class='graph' id="lossGainGraph"></div>
             <div class='graph-amount'></div>
             <div class='graph-date'></div>
+            <hr>
             <h4>GAIN (2001 - 2012)</h4>
             <div class='graph-amount graph-gain-amount'></div>
             <div class='graph-gain-total'></div>

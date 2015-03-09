@@ -376,6 +376,11 @@ define([
         url: url,
         dataType: 'json',
         success: function(data) {
+          var total_loss = 0;
+          for(var i=0;i<data.years.length;i++) {
+            total_loss += data.years[i].loss;
+          }
+
           var amount = data.years[0].extent;
 
           if (amount.toString().length >= 7) {
@@ -388,10 +393,10 @@ define([
           } else {
             $target.find('.tree-cover .unit').html( 'Ha' );
           }
-
           $target.find('.tree-cover .amount').html( amount.toLocaleString() );
           $target.find('.total-area .amount').html(Math.round(data.years[0].extent_perc));
-
+          console.log(data)
+          $target.find('.total-loss .amount').html((~~total_loss).toLocaleString());
           that._drawLossAndGain(data.years);
           var $link_target = [];
               $link_target[0] = $('.analyze_from_country');
@@ -557,7 +562,7 @@ define([
           $amount         = $graph.find('.graph-amount'),
           $amount_g       = $graph.find('.graph-gain-amount'),
           $date           = $graph.find('.graph-date'),
-          $gain           = $graph.find('.graph-dagain-total'),
+          $gain           = $graph.find('.graph-gain-total'),
           gain_value      = (~~years_data[1].gain).toLocaleString();
 
       var width     = 120,
