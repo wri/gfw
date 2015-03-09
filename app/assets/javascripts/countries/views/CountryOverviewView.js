@@ -288,7 +288,7 @@ define([
       } else if (this.model.get('graph') === 'percent_loss') {
 
         this.$settings.removeClass('disable');
-        var sql = 'WITH e AS (SELECT iso, extent FROM umd_nat WHERE year = 2000 AND thresh = '+(this.helper.config.canopy_choice || 30)+') SELECT c.iso, c.name, c.enabled, p.perc ratio_loss FROM (SELECT umd.iso, sum(umd.loss) / avg(e.extent) perc FROM umd_nat umd, e WHERE umd.thresh = '+(this.helper.config.canopy_choice || 30)+' AND umd.iso = e.iso AND e.extent != 0 GROUP BY umd.iso, e.iso ORDER BY perc DESC) p, gfw2_countries c WHERE p.iso = c.iso AND c.enabled IS true AND not perc = 0 ORDER BY p.perc DESC ';
+        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_final umd, gfw2_countries c WHERE thresh = '+(this.helper.config.canopy_choice || 30)+' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
 
         if (e) {
           sql += 'OFFSET 10';
@@ -309,9 +309,6 @@ define([
             markup_list += '<li>\
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
-                              <div class="countries_list__data">\
-                                <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss" data-orig="' + val.ratio_loss + '">'+ (val.ratio_loss*100).toFixed(2) +'%</span></div>\
-                              </div>\
                             </li>';
             if (key == max_trigger){
               that._reorderRanking();
@@ -409,7 +406,7 @@ define([
                                 <div class="countries_list__num">'+ord+'</div>\
                                 <div class="countries_list__title">'+enabled+'</div>\
                                 <div class="countries_list__data">\
-                                  <div id="ext_'+val.iso+'"><span class="line"><span data-orig="' + val.extent + '" class="loss">'+ ex.toLocaleString() +' </span>'+ e_mha +' of extent (2000)</span><span class="loss line"><span>'+ lo.toLocaleString() +' </span>'+ l_mha +'  of loss (2001-2012)</span></div>\
+                                  <div id="ext_'+val.iso+'"><span class="line"><span data-orig="' + val.extent + '" class="loss">'+ ex.toLocaleString() +' </span>'+ e_mha +'</span></div>\
                                 </div>\
                               </li>';
           });
