@@ -698,11 +698,15 @@
 }
 
 .axis {
+  font-size: 12px;
+  font-weight: 500;
+  fill: #9D9AA5;
+}
+.axis_country {
   font-size: 10px;
   font-weight: 500;
   fill: #555;
 }
-
 .source_window .conventions .credits {
   margin-bottom: 30px;
 }

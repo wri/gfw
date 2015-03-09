@@ -220,16 +220,8 @@ define([
               dataType: 'json',
               success: _.bind(function(data) {
                 var loss = (this.helper.config.canopy_choice == false || this.helper.config.canopy_choice == 30) ? Math.round(val.loss) : 0;
-                var gain = 0;
                 var g_mha, l_mha;
                 g_mha = l_mha = 'Mha';
-
-                for (var i = 0; i<data.years.length; i ++) {
-                  if (this.helper.config.canopy_choice != false && this.helper.config.canopy_choice != 30){
-                    loss += data.years[i].loss
-                  }
-                  gain += data.years[i].gain
-                }
                 var orig = loss;
 
                 if (loss.toString().length >= 7) {
@@ -242,15 +234,6 @@ define([
                   l_mha = 'Ha';
                 }
 
-                if (gain.toString().length >= 7) {
-                  gain = ((gain /1000)/1000).toFixed(2)
-                } else if (gain.toString().length >= 4) {
-                  g_mha = 'KHa';
-                  gain = (gain /1000);
-                if (gain % 1 != 0) gain = gain.toFixed(2)
-                } else {
-                  g_mha = 'Ha';
-                }
                 $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span>');
 
                 if (key == max_trigger){
@@ -288,7 +271,7 @@ define([
       } else if (this.model.get('graph') === 'percent_loss') {
 
         this.$settings.removeClass('disable');
-        var sql = 'WITH e AS (SELECT iso, extent FROM umd_nat WHERE year = 2000 AND thresh = '+(this.helper.config.canopy_choice || 30)+') SELECT c.iso, c.name, c.enabled, p.perc ratio_loss FROM (SELECT umd.iso, sum(umd.loss) / avg(e.extent) perc FROM umd_nat umd, e WHERE umd.thresh = '+(this.helper.config.canopy_choice || 30)+' AND umd.iso = e.iso AND e.extent != 0 GROUP BY umd.iso, e.iso ORDER BY perc DESC) p, gfw2_countries c WHERE p.iso = c.iso AND c.enabled IS true AND not perc = 0 ORDER BY p.perc DESC ';
+        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_final umd, gfw2_countries c WHERE thresh = '+(this.helper.config.canopy_choice || 30)+' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
 
         if (e) {
           sql += 'OFFSET 10';
@@ -305,12 +288,31 @@ define([
           _.each(data, function(val, key) {
             var ord = e ? (key+11) : (key+1),
                 enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
+            $.ajax({
+              url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=30',
+              dataType: 'json',
+              success: _.bind(function(data) {
+                var g_mha, l_mha;
+                g_mha = l_mha = 'Mha';
 
+                if (data.years[1].gain.toString().length >= 7) {
+                  data.years[1].gain = ((data.years[1].gain /1000)/1000).toFixed(2)
+                } else if (data.years[1].gain.toString().length >= 4) {
+                  l_mha = 'KHa';
+                  data.years[1].gain = (data.years[1].gain /1000);
+                if (data.years[1].gain % 1 != 0) data.years[1].gain = data.years[1].gain.toFixed(2)
+                } else {
+                  l_mha = 'Ha';
+                }
+                $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ (data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
+              }
+              , this),
+            });
             markup_list += '<li>\
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
                               <div class="countries_list__data">\
-                                <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss" data-orig="' + val.ratio_loss + '">'+ (val.ratio_loss*100).toFixed(2) +'%</span></div>\
+                                <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss"></span></div>\
                               </div>\
                             </li>';
             if (key == max_trigger){
@@ -409,7 +411,7 @@ define([
                                 <div class="countries_list__num">'+ord+'</div>\
                                 <div class="countries_list__title">'+enabled+'</div>\
                                 <div class="countries_list__data">\
-                                  <div id="ext_'+val.iso+'"><span class="line"><span data-orig="' + val.extent + '" class="loss">'+ ex.toLocaleString() +' </span>'+ e_mha +' of extent (2000)</span><span class="loss line"><span>'+ lo.toLocaleString() +' </span>'+ l_mha +'  of loss (2001-2012)</span></div>\
+                                  <div id="ext_'+val.iso+'"><span class="line"><span data-orig="' + val.extent + '" class="loss">'+ ex.toLocaleString() +' </span>'+ e_mha +'</span></div>\
                                 </div>\
                               </li>';
           });

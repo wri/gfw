@@ -611,7 +611,7 @@ define([
         .attr('transform', function(d, i) { return 'translate(' + (marginLeft + i * barWidth) + ',' + -marginTop + ')'; });
 
       bar.append('text')
-        .attr('class', 'axis notranslate')
+        .attr('class', 'axis_country notranslate')
         .text(function(d) { return d.year })
         .attr('transform', 'rotate(-90)')
         .attr('x', -120)
@@ -634,10 +634,10 @@ define([
           }
         })
         .on('mouseover', function(d) {
-          d3.selectAll('.bar, .axis').style('fill', '#555')
+          d3.selectAll('.bar, .axis_country').style('fill', '#555')
           d3.select(this).style('fill', '#9FBA2B')
           var text = d3.select(this.parentNode)
-          text.select('.axis').style('fill', '#9D9AA5')
+          text.select('.axis_country').style('fill', '#9D9AA5')
           $amount.html('<span>' + (~~d.value).toLocaleString() + '</span>');
           $date.html('Hectares lost');
           $amount_g.html('<span>' + gain_value + '</span>');
