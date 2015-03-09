@@ -46,6 +46,13 @@ $height: auto;
     @include transition(all 0.25s $easeInOutSine);
   }
 
+  &.iframe{
+    width: auto;
+    .content-wrapper{
+      max-height: none;
+    }
+  }
+
   // CLOSE BUTTON
   .close {
     display: block;

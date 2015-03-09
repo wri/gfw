@@ -44,6 +44,7 @@ define([
       this.layerInst = {};
       this.$maplngLng = $('.map-container .map-latlng');
       this.$viewFinder = $('#viewfinder');
+      this.embed = $('body').hasClass('is-embed-action');
       this.render();
     },
 
@@ -83,6 +84,9 @@ define([
 
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
         this.$el.addClass('is-loaded');
+        if (this.embed) {
+          this.offsetCenter(this.getCenter(),323/2,0);
+        }
       }, this));
 
       google.maps.event.addListener(this.map, 'click', _.bind(function(wdpa) {
@@ -205,8 +209,94 @@ define([
     },
 
     fitBounds: function(bounds) {
-      this.map.fitBounds(bounds);
+      if (this.embed) {
+        this.myFitBounds(this.map,bounds);
+      }else{
+        this.map.fitBounds(bounds);
+      }
     },
+
+
+    offsetCenter: function(latlng,offsetx,offsety) {
+      var map = this.map;
+      var scale = Math.pow(2, map.getZoom());
+      var latlng = new google.maps.LatLng(latlng.lat, latlng.lng);
+      var nw = new google.maps.LatLng(
+          map.getBounds().getNorthEast().lat(),
+          map.getBounds().getSouthWest().lng()
+      );
+
+      var worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latlng);
+      var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
+
+      var worldCoordinateNewCenter = new google.maps.Point(
+          worldCoordinateCenter.x - pixelOffset.x,
+          worldCoordinateCenter.y + pixelOffset.y
+      );
+
+      var newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+
+      map.setCenter(newCenter);
+
+    },
+
+
+
+
+    /**
+     * Used by Embed to fit bounds.
+     */
+    myFitBounds: function(myMap, bounds) {
+      myMap.fitBounds(bounds);
+      var self = this;
+      var overlayHelper = new google.maps.OverlayView();
+      overlayHelper.draw = function () {
+          if (!this.ready) {
+              var zoom = self.getExtraZoom(this.getProjection(), bounds, myMap.getBounds(),self);
+              if (zoom > 0) {
+                  myMap.setZoom(myMap.getZoom() + zoom);
+              }
+              this.ready = true;
+              google.maps.event.trigger(this, 'ready');
+          }
+      };
+      overlayHelper.setMap(myMap);
+    },
+
+    // LatLngBounds b1, b2 -> zoom increment
+    getExtraZoom: function(projection, expectedBounds, actualBounds,self) {
+      var expectedSize = self.getSizeInPixels(projection, expectedBounds),
+          actualSize = self.getSizeInPixels(projection, actualBounds);
+
+      if (Math.floor(expectedSize.x) == 0 || Math.floor(expectedSize.y) == 0) {
+          return 0;
+      }
+
+      var qx = actualSize.x / expectedSize.x;
+      var qy = actualSize.y / expectedSize.y;
+      var min = Math.min(qx, qy);
+
+      if (min < 1) {
+        return 0;
+      }
+
+      return Math.floor(Math.log(min) / Math.log(2) /* = log2(min) */);
+    },
+
+    // LatLngBounds bnds -> height and width as a Point
+    getSizeInPixels: function(projection, bounds) {
+      var sw = projection.fromLatLngToContainerPixel(bounds.getSouthWest());
+      var ne = projection.fromLatLngToContainerPixel(bounds.getNorthEast());
+      return new google.maps.Point( Math.round(10000 * Math.abs(sw.y - ne.y)) / 10000, Math.round(10000 * Math.abs(sw.x - ne.x)) / 10000 );
+    },
+
+
+
+
+
+
+
+
 
     /**
      * Used by MapPresenter to set the map type.

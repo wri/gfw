@@ -135,7 +135,7 @@ define([
       this.generateEmbedUrl(window.location.href, _.bind(function(url,src) {
         this.model.set('iframe', src);
         this.$input.val(url);
-        this.$shareinfo.html('<p>Click and paste HTML to embed in website.<button id="preview" class="btn gray little uppercase source" data-source="preview-iframe-container">Preview</button></p>');
+        this.$shareinfo.html('<p>Click and paste HTML to embed in website.<button id="preview" class="btn gray little uppercase source" data-iframe="true" data-source="preview-iframe-container">Preview</button></p>');
       }, this ));
       ga('send', 'event', 'Map', 'Share', 'Share Embed clicked');
     },
@@ -162,7 +162,7 @@ define([
     },
 
     generateEmbedUrl: function(url, callback){
-      var dim_x = 600, dim_y = 530;
+      var dim_x = 800, dim_y = 600;
       var src = window.location.origin + '/embed' + window.location.pathname + window.location.search;
       var url = '<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname + window.location.search+'"></iframe>';
       callback && callback(url,src);

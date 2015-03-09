@@ -76,7 +76,7 @@ define([
     _toggle: function() {
       if (this.model.get('hidden') === true) {
         this._stopBindings();
-        this.$sourceWindow.removeClass('active');
+        this.$sourceWindow.removeClass('active iframe');
         this.$backdrop.removeClass('active');
       } else if (this.model.get('hidden') === false) {
         this._initBindings();
@@ -96,6 +96,8 @@ define([
       this.model.set('hidden', false);
       this.$contentWrapper.animate({ scrollTop: 0 }, 0);
       var data_slug = $(e.currentTarget).data('source');
+      var data_iframe = $(e.currentTarget).data('iframe');
+      (data_iframe) ? this.$sourceWindow.addClass('iframe') : this.$sourceWindow.removeClass('iframe');
       this.$content.html($('#' + data_slug).clone());
       return this;
     },
