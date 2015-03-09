@@ -244,7 +244,7 @@
         }
 
         .tree-numbers {
-          width: 35%;
+          width: 32%;
           // padding-left: 20px;
           .embed & {
             width: 28.33333%;
@@ -300,6 +300,11 @@
           top: -145px;
           .embed & {
             width: 33.33333%;
+          }
+
+          #lossGainGraph {
+            position: relative;
+            left: 10px;
           }
 
           .coming-soon {
