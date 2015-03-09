@@ -1,0 +1,52 @@
+.is-embed-action{
+  width: 800px;
+  height: 600px;
+  min-height: 0 !important;
+  overflow: hidden;
+  .layout-content{
+    height: 100%;
+    top: 0;
+  }
+
+  //legend
+  .module-legend{
+    top: 20px;
+    left: 20px;
+    max-height: calc(100% - 70px);
+  }
+  .module-tabs{
+    bottom: 20px;
+    top: auto;
+    left: 20px;
+    .analysis-result {
+      padding: 20px;
+      .analysis-footer{
+        display: none;
+      }
+    }
+  }
+
+
+  //analysis
+  .module-tabs > header,
+  .tab-analysis nav,
+  .tab-analysis .analysis-content,
+  //footer
+  .footer-toggle,
+  .map-logos,
+  .map-container .gm-style:after,
+  //map controls
+  .module-mapcontrols,
+  //timeline
+  .widget-timeline,
+  //croshairs
+  .map-viewfinder,
+  //feedback
+  .feedback-link {
+    display: none !important;
+  }
+
+
+
+
+}
