@@ -275,6 +275,7 @@ define([
     },
 
     hide: function(e) {
+      $('.canopy-status').find('em').html((this.helper.config.canopy_choice || 30) + '%')
       e && e.preventDefault();
       this.$el.fadeOut(250);
     },

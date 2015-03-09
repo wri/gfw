@@ -197,10 +197,16 @@
 
         h4 {
           text-transform: uppercase;
-          font-size: 14px;
+          font-size: 16px;
           line-height: 18px;
           color: #FEFEFE;
           opacity: .5;
+          text-align: center;
+        }
+
+        hr {
+          margin: 15px auto;
+          opacity: .3;
         }
 
         .map,
@@ -238,14 +244,14 @@
         }
 
         .tree-numbers {
-          width: 25%;
+          width: 35%;
           // padding-left: 20px;
           .embed & {
             width: 28.33333%;
           }
 
           h4 {
-            width: 150px;
+            text-align: left;
           }
 
           .amount,
@@ -264,14 +270,34 @@
             margin-top: 18px;
           }
 
-          .total-area .amount {
-            font-size: 29px;
+          .total-area,
+          .total-loss {
+            .amount {
+              font-size: 29px;
+            }
+          }
+          .canopy-status {
+            width: 450px;
+            position: absolute;
+            text-align: center;
+            font-size: 13px;
+            background: #555;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 8px;
+            margin-top: 21px;
+
+            em {
+              color: #97bd3d;
+              border-bottom: 1px #97bd3d dashed;
+              cursor: pointer;
+            }
           }
         }
 
         .loss-gain-graph {
-          width: 35%;
+          width: 200px;
           position: relative;
+          top: -145px;
           .embed & {
             width: 33.33333%;
           }
@@ -310,19 +336,23 @@
           }
 
           .graph-amount,
+          .graph-gain-amount,
+          .graph-gain-total,
           .graph-date {
             text-align: center;
             display: block;
             max-width: 205px;
           }
 
-          .graph-amount {
+          .graph-amount,
+          .graph-gain-amount {
             font-size: 30px;
             font-weight: 500;
             color: $cGreen;
           }
 
-          .graph-date {
+          .graph-date,
+          .graph-gain-total {
             color: #FEFEFE;
             opacity: .5;
             margin-top: 2px;
@@ -762,14 +792,16 @@
     z-index: 10;
     pointer-events: none;
 
-    .graph-amount {
+    .graph-amount,
+    .graph-gain-amount {
       font-size: 26px;
       color: white;
       margin-bottom: 4px;
       display: block;
     }
 
-    .graph-date {
+    .graph-date,
+    .graph-gain-total {
       font-size: 12px;
       color: #60644D;
       .date {
@@ -1983,6 +2015,8 @@
             }
 
             .graph-amount,
+            .graph-gain-amount,
+            .graph-gain-total,
             .graph-date {
               max-width: 100%;
             }
