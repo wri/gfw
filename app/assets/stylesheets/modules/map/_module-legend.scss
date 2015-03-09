@@ -185,7 +185,7 @@
         margin: 0;
       }
       a{
-        background: #F69;
+        background: #AAA;
         width: 12px;
         height: 12px;
         display: inline-block;
@@ -194,7 +194,7 @@
         border-radius: 50%;
         font-weight: 500;
         &:hover{
-          background: lighten(#F69, 10%);
+          background: lighten(#AAA, 10%);
         }
       }
     }
