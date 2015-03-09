@@ -220,16 +220,8 @@ define([
               dataType: 'json',
               success: _.bind(function(data) {
                 var loss = (this.helper.config.canopy_choice == false || this.helper.config.canopy_choice == 30) ? Math.round(val.loss) : 0;
-                var gain = 0;
                 var g_mha, l_mha;
                 g_mha = l_mha = 'Mha';
-
-                for (var i = 0; i<data.years.length; i ++) {
-                  if (this.helper.config.canopy_choice != false && this.helper.config.canopy_choice != 30){
-                    loss += data.years[i].loss
-                  }
-                  gain += data.years[i].gain
-                }
                 var orig = loss;
 
                 if (loss.toString().length >= 7) {
@@ -242,15 +234,6 @@ define([
                   l_mha = 'Ha';
                 }
 
-                if (gain.toString().length >= 7) {
-                  gain = ((gain /1000)/1000).toFixed(2)
-                } else if (gain.toString().length >= 4) {
-                  g_mha = 'KHa';
-                  gain = (gain /1000);
-                if (gain % 1 != 0) gain = gain.toFixed(2)
-                } else {
-                  g_mha = 'Ha';
-                }
                 $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span>');
 
                 if (key == max_trigger){
@@ -309,7 +292,19 @@ define([
               url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=30',
               dataType: 'json',
               success: _.bind(function(data) {
-                $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ (data.years[1].gain).toLocaleString() +' ha </span></span>');
+                var g_mha, l_mha;
+                g_mha = l_mha = 'Mha';
+
+                if (data.years[1].gain.toString().length >= 7) {
+                  data.years[1].gain = ((data.years[1].gain /1000)/1000).toFixed(2)
+                } else if (data.years[1].gain.toString().length >= 4) {
+                  l_mha = 'KHa';
+                  data.years[1].gain = (data.years[1].gain /1000);
+                if (data.years[1].gain % 1 != 0) data.years[1].gain = data.years[1].gain.toFixed(2)
+                } else {
+                  l_mha = 'Ha';
+                }
+                $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ (data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
               }
               , this),
             });
