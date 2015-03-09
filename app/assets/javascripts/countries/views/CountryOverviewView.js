@@ -305,10 +305,20 @@ define([
           _.each(data, function(val, key) {
             var ord = e ? (key+11) : (key+1),
                 enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
-
+            $.ajax({
+              url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=30',
+              dataType: 'json',
+              success: _.bind(function(data) {
+                $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ (data.years[1].gain).toLocaleString() +' ha </span></span>');
+              }
+              , this),
+            });
             markup_list += '<li>\
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
+                              <div class="countries_list__data">\
+                                <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss"></span></div>\
+                              </div>\
                             </li>';
             if (key == max_trigger){
               that._reorderRanking();
