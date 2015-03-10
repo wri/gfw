@@ -120,7 +120,7 @@ define([], function() {
     },
     total_extent: {
       title: "Countries with greatest tree cover extent <sup>(2000)</sup>",
-      subtitle: "Global tree cover extent <a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>"
+      subtitle: "Global tree cover extent, 2000 <a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>"
     },
     ratio: {
       title: "Countries with highest ratio of tree cover loss<br />to gain <sup>(2001-2012)</sup>",
