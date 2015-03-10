@@ -584,9 +584,9 @@ define([
       });
 
       $amount.html('<span>' + (~~data_[data_.length - 1].value).toLocaleString() + '</span>');
-      $date.html('Hectares lost');
+      $date.html('Hectares');
       $amount_g.html('<span>' + gain_value + '</span>');
-      $gain.html('Hectares gained');
+      $gain.html('Hectares');
 
       var marginLeft = 5,
           marginTop = 0;
@@ -632,9 +632,9 @@ define([
           var text = d3.select(this.parentNode)
           text.select('.axis_country').style('fill', '#9D9AA5')
           $amount.html('<span>' + (~~d.value).toLocaleString() + '</span>');
-          $date.html('Hectares lost');
+          $date.html('Hectares');
           $amount_g.html('<span>' + gain_value + '</span>');
-          $gain.html('Hectares gained');
+          $gain.html('Hectares');
         });
 
       // Draw gain line
