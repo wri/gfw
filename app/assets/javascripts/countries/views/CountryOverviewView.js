@@ -340,35 +340,7 @@ define([
         });
       } else if (this.model.get('graph') === 'total_extent') {
         this.$settings.removeClass('disable');
-        var sql = 'WITH e AS \
-                  ( \
-                         SELECT iso, \
-                                extent \
-                         FROM   umd_nat \
-                         WHERE  thresh = ' + (this.helper.config.canopy_choice || 30) +' \
-                         AND    year = 2000), u AS \
-                  ( \
-                           SELECT   iso, \
-                                    Sum(loss) sum_loss, \
-                                    Sum(gain) sum_gain \
-                           FROM     umd_nat \
-                           WHERE    thresh = ' + (this.helper.config.canopy_choice || 30) +' \
-                           GROUP BY iso) \
-                  SELECT   c.iso, \
-                           c.NAME, \
-                           c.enabled, \
-                           u.sum_loss, \
-                           u.sum_gain, \
-                           u.sum_loss / u.sum_gain ratio, \
-                           e.extent \
-                  FROM     gfw2_countries c, \
-                           u, \
-                           e \
-                  WHERE    u.sum_gain IS NOT NULL \
-                  AND      NOT u.sum_gain = 0 \
-                  AND      c.iso = u.iso \
-                  AND      e.iso = u.iso \
-                  ORDER BY u.sum_loss DESC ';
+        var sql = 'SELECT iso, country as name, extent_2000 as extent FROM umd_nat_final_1 WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +' GROUP BY iso, extent_2000 , name ORDER BY extent_2000 desc ';
         if (e) {
           sql += 'OFFSET 10';
         } else {
@@ -386,7 +358,6 @@ define([
                 enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
                 var e_mha, l_mha,
                     ex = val.extent,
-                    lo = val.sum_loss;
                     e_mha = l_mha = 'Mha';
 
                 if (ex.toString().length >= 7) {
@@ -399,18 +370,6 @@ define([
                   e_mha = 'Ha';
                 }
 
-                if (lo.toString().length >= 7) {
-                  lo = ((lo /1000)/1000).toFixed(2)
-                } else if (lo.toString().length >= 4) {
-                  l_mha = 'KHa';
-                  lo = (lo /1000);
-                if (lo % 1 != 0) lo = lo.toFixed(2)
-                } else {
-                  l_mha = 'Ha';
-                }
-                // if (key == max_trigger){
-                //   that._reorderRanking();
-                // }
                 markup_list += '<li>\
                                 <div class="countries_list__num">'+ord+'</div>\
                                 <div class="countries_list__title">'+enabled+'</div>\
@@ -483,20 +442,10 @@ define([
         }, this ));
       } else if (this.model.get('graph') === 'domains') {
         $('.settings').addClass('disable');
-        var sql = 'SELECT name, total_loss, total_gain, GREATEST('
-
-        for(var y = 2001; y < 2012; y++) {
-          sql += 'y'+y+', '
-        }
-
-        sql += 'y2012) as max\
-                FROM countries_domains\
-                ORDER BY total_loss DESC ';
-
+        var sql = 'SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +' group by ecozone';
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
               markup_list = '';
-
           var data = json.rows;
 
           _.each(data, _.bind(function(val, key) {
@@ -1215,17 +1164,17 @@ define([
 
         var sql = 'SELECT name, ';
 
-        for(var y = 2001; y < 2012; y++) {
+        for(var y = 2001; y < 2013; y++) {
           sql += 'y'+y+', '
         }
 
-        sql += 'y2012, GREATEST('
+        sql += 'y2013, GREATEST('
 
-        for(var y = 2001; y < 2012; y++) {
+        for(var y = 2001; y < 2013; y++) {
           sql += 'y'+y+', '
         }
 
-        sql += 'y2012) as max\
+        sql += 'y2013) as max\
                 FROM countries_domains';
 
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, json) {
