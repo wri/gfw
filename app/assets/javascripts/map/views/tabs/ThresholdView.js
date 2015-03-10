@@ -40,7 +40,8 @@ define([
       this.presenter = new Presenter(this);
       this.render();
       this.setListeners();
-
+      //Experiment
+      this.presenter.initExperiment('source');
       this.presenter._setVisibility();
     },
 

@@ -24,11 +24,19 @@ define([
      * Google Experiments.
      */
     _source: function(){
-      var $source = $('.source');
       if (cxApi) {
-        var variation = cxApi.chooseVariation();
-        if (variation) {
-          $source.addClass('info2');
+        this.variation = cxApi.chooseVariation();
+        // this.variation = (this.variation !== undefined) ? this.variation : Math.floor(Math.random()*3);
+        switch(this.variation){
+          case 0:
+            $('.source').removeClass('default green yellow').addClass('default');
+          break;
+          case 1:
+            $('.source').removeClass('default green yellow').addClass('green');
+          break;
+          case 2:
+            $('.source').removeClass('default green yellow').addClass('yellow');
+          break;
         }
       }
     },
