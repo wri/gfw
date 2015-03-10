@@ -442,20 +442,10 @@ define([
         }, this ));
       } else if (this.model.get('graph') === 'domains') {
         $('.settings').addClass('disable');
-        var sql = 'SELECT name, total_loss, total_gain, GREATEST('
-
-        for(var y = 2001; y < 2012; y++) {
-          sql += 'y'+y+', '
-        }
-
-        sql += 'y2012) as max\
-                FROM countries_domains\
-                ORDER BY total_loss DESC ';
-
+        var sql = 'SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +' group by ecozone';
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
               markup_list = '';
-
           var data = json.rows;
 
           _.each(data, _.bind(function(val, key) {
@@ -1172,20 +1162,7 @@ define([
       } else if (this.model.get('graph') === 'domains') {
         this._showYears();
 
-        var sql = 'SELECT name, ';
-
-        for(var y = 2001; y < 2012; y++) {
-          sql += 'y'+y+', '
-        }
-
-        sql += 'y2012, GREATEST('
-
-        for(var y = 2001; y < 2012; y++) {
-          sql += 'y'+y+', '
-        }
-
-        sql += 'y2012) as max\
-                FROM countries_domains';
+        var sql = 'SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain, year FROM umd_eco where thresh = '+ (this.helper.config.canopy_choice || 30) +' GROUP BY ecozone, loss, year ORDER BY year';
 
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, json) {
           var data = json.rows;
@@ -1199,6 +1176,7 @@ define([
                 domain = '';
 
             _.each(data[j], function(val, key) {
+              debugger
               if (key !== 'max') {
                 if (key === 'name') {
                   domain = val.toLowerCase();
