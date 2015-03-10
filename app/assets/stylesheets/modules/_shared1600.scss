@@ -3,12 +3,49 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: image-url('svg-icons/info.svg') center no-repeat;
-  background-size: 60% 60%;
   background-color: #AAA;
+  svg{
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    fill: $white;
+  }
 
   &:hover{
     background-color: #777;
+  }
+  &.default{
+    background-color: #AAA;
+    svg{
+      fill: $white;
+    }
+    &:hover{
+      background-color: #777;
+    }
+  }
+  &.green{
+    background-color: $cGreen;
+    box-shadow: 0 0 0 2px $white, 0 0 0 3px $cGreen;
+    svg{
+      fill: $white;
+    }
+    &:hover{
+      background-color: darken($cGreen,5%);
+    }
+  }
+  &.yellow{
+    background-color: #F3EE51;
+    svg{
+      fill: $dark;
+    }
+    &:hover{
+      background-color: darken(#F3EE51,5%);
+    }
   }
 }
 

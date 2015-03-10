@@ -18,7 +18,7 @@
             <span class="layer-name">
               <i class="circle" style="color:{{this.title_color}};"></i>{{this.title}}
               {{#if this.source}}
-              <a href='#' data-source='{{this.source}}' class='source'></a>
+              <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
               {{/if}}
             </span>
             {{#if this.detailsTpl}}
@@ -56,7 +56,7 @@
               <span class="layer-name">
                 <i class="circle" style="color:{{this.title_color}};"></i>{{this.title}}
                 {{#if this.source}}
-                <a href='#' data-source='{{this.source}}' class='source'></a>
+                <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
                 {{/if}}
               </span>
               {{#if this.detailsTpl}}

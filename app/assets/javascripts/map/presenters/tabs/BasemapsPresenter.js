@@ -27,6 +27,10 @@ define([
       }
     }],
 
+    initExperiment: function(id){
+      mps.publish('Experiment/choose',[id]);
+    },
+
     setMaptype: function(maptype) {
       mps.publish('Maptype/change', [maptype]);
     }

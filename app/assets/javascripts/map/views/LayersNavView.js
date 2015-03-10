@@ -94,7 +94,7 @@ define([
     _toggleLayer: function(event) {
       event && event.preventDefault();
       // this prevents layer change when you click in source link
-      if (!$(event.target).hasClass('source')) {
+      if (!$(event.target).hasClass('source') && !$(event.target).parent().hasClass('source')) {
         var layerSlug = $(event.currentTarget).data('layer');
 
         if ($(event.currentTarget).hasClass('ifl') || $(event.currentTarget).hasClass('c_f_peru')) {

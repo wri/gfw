@@ -27,6 +27,8 @@ define([
       _.bindAll(this, 'selectMaptype');
       this.presenter = new Presenter(this);
       this.render();
+      //Experiment
+      this.presenter.initExperiment('source');
     },
 
     render: function(){
@@ -37,7 +39,7 @@ define([
 
     _setMaptype: function(e) {
       e && e.preventDefault();
-      if (!$(e.target).hasClass('source')) {
+      if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source')) {
         var $currentTarget = $(e.currentTarget);
         var maptype = $currentTarget.data('maptype');
         if (maptype) {
