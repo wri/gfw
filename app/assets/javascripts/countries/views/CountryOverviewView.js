@@ -340,7 +340,7 @@ define([
         });
       } else if (this.model.get('graph') === 'total_extent') {
         this.$settings.removeClass('disable');
-        var sql = 'SELECT iso, extent_2000 as extent FROM umd_nat_final_1 WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +' GROUP BY iso, extent_2000 ORDER BY extent_2000 desc ';
+        var sql = 'SELECT iso, country as name, extent_2000 as extent FROM umd_nat_final_1 WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +' GROUP BY iso, extent_2000 , name ORDER BY extent_2000 desc ';
         if (e) {
           sql += 'OFFSET 10';
         } else {
