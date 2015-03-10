@@ -23,7 +23,6 @@ define([
 
     events: {
       'click .source' : 'show',
-      'click .mobile-friendly' : 'mobileFriendly',
       'click .close': 'hide'
     },
 
@@ -119,12 +118,6 @@ define([
       return this.$sourceWindow;
     },
 
-    mobileFriendly: function(e){
-      if (this.$window.width() <= 850){
-        e && e.preventDefault();
-        this.showByParam('mobile-friendly',$(e.currentTarget).attr('href'));
-      }
-    }
   });
   return SourceWindowView;
 });
