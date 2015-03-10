@@ -936,13 +936,13 @@ define([
                   } else {
                     l_mha = 'Ha';
                   }
-                  $target.find('.figure').html((~~gain).toLocaleString());
+                  $target.find('.figure').removeClass('extent').html((~~gain).toLocaleString());
                   $target.find('.unit').html(l_mha);
                   this.absolute_gain = {'val':gain,'uni':l_mha};
                 }, this),
               });
         } else {
-          this.$big_figures.find('.figure').html((~~this.absolute_gain.val).toLocaleString());
+          this.$big_figures.find('.figure').removeClass('extent').html((~~this.absolute_gain.val).toLocaleString());
           this.$big_figures.find('.unit').html(this.absolute_gain.uni);
         }
       } else if (this.model.get('graph') === 'total_extent') {
@@ -966,13 +966,13 @@ define([
                   } else {
                     l_mha = 'Ha';
                   }
-                  $target.find('.figure').html((~~extent).toLocaleString());
+                  $target.find('.figure').addClass('extent').html((~~extent).toLocaleString());
                   $target.find('.unit').html(l_mha);
                   this.absolute_extent = {'val':extent,'uni':l_mha};
                 }, this),
               });
         } else {
-          this.$big_figures.find('.figure').html((~~this.absolute_extent.val).toLocaleString());
+          this.$big_figures.find('.figure').addClass('extent').html((~~this.absolute_extent.val).toLocaleString());
           this.$big_figures.find('.unit').html(this.absolute_extent.uni);
         }
       } else if (this.model.get('graph') === 'ratio') {
