@@ -1162,7 +1162,20 @@ define([
       } else if (this.model.get('graph') === 'domains') {
         this._showYears();
 
-        var sql = 'SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain, year FROM umd_eco where thresh = '+ (this.helper.config.canopy_choice || 30) +' GROUP BY ecozone, loss, year ORDER BY year';
+        var sql = 'SELECT name, ';
+
+        for(var y = 2001; y < 2013; y++) {
+          sql += 'y'+y+', '
+        }
+
+        sql += 'y2013, GREATEST('
+
+        for(var y = 2001; y < 2013; y++) {
+          sql += 'y'+y+', '
+        }
+
+        sql += 'y2013) as max\
+                FROM countries_domains';
 
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, json) {
           var data = json.rows;
@@ -1176,7 +1189,6 @@ define([
                 domain = '';
 
             _.each(data[j], function(val, key) {
-              debugger
               if (key !== 'max') {
                 if (key === 'name') {
                   domain = val.toLowerCase();
