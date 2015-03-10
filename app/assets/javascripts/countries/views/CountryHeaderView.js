@@ -573,6 +573,7 @@ define([
       $graph.removeClass('ghost');
       var data = years_data;
       var data_ = [];
+      var total_loss = 0;
 
       _.each(data, function(val, key) {
         if (val.year >= 2001) {
@@ -581,12 +582,14 @@ define([
             'value': val.loss//eval('val.' + options.dataset)
           });
         }
+        total_loss += val.loss;
       });
-
-      $amount.html('<span>' + (~~data_[data_.length - 1].value).toLocaleString() + '</span>');
-      $date.html('Hectares');
-      $amount_g.html('<span>' + gain_value + '</span>');
-      $gain.html('Hectares');
+      $date.html(' Ha');
+      $amount.html('<span>' + (~~data_[data_.length - 1].value).toLocaleString() + '</span>').append($date);
+      $gain.html(' Ha');
+      $amount_g.html('<span>' + gain_value + '</span>').append($gain);
+      $graph.find('.total-loss-ha').html(' Total loss Ha');
+      $graph.find('.total-loss').html((~~total_loss).toLocaleString()).append($graph.find('.total-loss-ha'));
 
       var marginLeft = 5,
           marginTop = 0;
@@ -631,53 +634,11 @@ define([
           d3.select(this).style('fill', '#9FBA2B')
           var text = d3.select(this.parentNode)
           text.select('.axis_country').style('fill', '#9D9AA5')
-          $amount.html('<span>' + (~~d.value).toLocaleString() + '</span>');
-          $date.html('Hectares');
-          $amount_g.html('<span>' + gain_value + '</span>');
-          $gain.html('Hectares');
+          $date.html(' Ha');
+          $amount.html('<span>' + (~~d.value).toLocaleString() + '</span>').append($date);
+          $gain.html(' Ha');
+          $amount_g.html('<span>' + gain_value + '</span>').append($gain);
         });
-
-      // Draw gain line
-      // var gainAverage = years_data[1].gain;
-
-      // var tooltip = d3.select('.loss-gain-graph')
-      //   .append('div')
-      //   .attr('class', 'gain-tooltip')
-      //   .style('visibility', 'hidden')
-      //   .text(that.helper.formatNumber(parseInt(gainAverage), 10));
-
-      // tooltip
-      //   .append('span')
-      //   .text('Average Ha of gain/year');
-
-      // var gainLine = graph.append('svg:rect')
-      //   .attr('class', 'gain-line')
-      //   .attr('x', 0)
-      //   .attr('y', Math.abs(y_scale(gainAverage)))
-      //   .attr('height', 1)
-      //   .attr('width', width)
-      //   .style('stroke', 'transparent')
-      //   .style("stroke-width", "3")
-      //   .style('fill', '#ccc');
-
-      // gainLine
-      //   .on('mousemove', function() {
-      //     d3.select('.gain-line')
-      //       .style('height', 2)
-      //       .style('fill', 'white');
-
-      //     tooltip
-      //       .style('visibility', 'visible')
-      //       .style("top", Math.abs(y_scale(gainAverage)) + "px")
-      //       .style("left", (d3.mouse(this)[0] - 58) + "px");
-      //   })
-      //   .on('mouseout', function() {
-      //     d3.select('.gain-line')
-      //       .style('height', 1)
-      //       .style('fill', '#ccc');
-
-      //     tooltip.style('visibility', 'hidden');
-      //   })
     }
 
   });
