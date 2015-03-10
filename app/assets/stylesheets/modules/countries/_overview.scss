@@ -202,6 +202,26 @@
   }
 }
 
+.overview_graph__figure_only {
+  display: none;
+  width: 100%;
+  text-align: center;
+  padding: 50px;
+  span {
+    margin: 25px 0;
+    color: #fff;
+    font-size: 120px;
+  }
+  .unit {
+    font-weight: 100;
+  }
+  .figure {
+    color: #6D6DE5;
+    &.extent {
+      color: $cGreen;
+    }
+  }
+}
 
 .overview_graph__years,
 .overview_graph__axis,

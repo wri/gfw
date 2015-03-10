@@ -51,6 +51,7 @@ define([
       this.$graph = $('.overview_graph__area');
       this.$years = $('.overview_graph__years');
       this.$settings = $('.settings');
+      this.$big_figures   = $('.overview_graph__figure_only')
       var m = this.m = 40,
           w = this.w = this.$graph.width(),
           h = this.h = this.$graph.height(),
@@ -149,8 +150,11 @@ define([
       this._drawList();
 
       if (graph === 'total_extent' || graph === 'percent_loss') {
+        this.$big_figures.show();
         this.$graph.addClass('is-hidden');
         this.$years.addClass('is-hidden');
+      } else {
+        this.$big_figures.hide();
       }
     },
     _updateGraphOverview: function(e) {
@@ -912,309 +916,65 @@ define([
           ];
         }, this ));
       } else if (this.model.get('graph') === 'percent_loss') {
-        return;
-        this._showYears();
+        if (!this.absolute_gain) {
+          var $target = this.$big_figures,
+               query  = 'SELECT sum(gain) from umd_nat_final_1';
+          $.ajax({
+                url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
+                dataType: 'json',
+                success: _.bind(function(data) {
+                  var gain = data.rows[0].sum;
+                  var g_mha, l_mha;
+                  g_mha = l_mha = 'Mha';
 
-        svg.append('text')
-          .attr('class', 'axis')
-          .attr('id', 'axis_y')
-          .text('%')
-          .attr('x', -h/2)
-          .attr('y', 30)
-          .attr('transform', 'rotate(-90)');
-
-        var sql = 'SELECT year, \
-                    Sum(gain) / Sum(extent_offset) ratio_gain,  \
-                    Sum(loss) / Sum(extent_offset)  ratio_loss  \
-                  FROM   umd_nat  \
-                  WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +' \
-                         AND year > 2000  \
-                  GROUP  BY year ORDER BY year ';
-
-        d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), function(json) {
-          var data = json.rows;
-          var data_ = data,
-              gain = data[0].ratio_gain;
-
-          var y_scale = grid_scale;
-
-          // area
-          var area = d3.svg.area()
-            .x(function(d) { return x_scale(d.year); })
-            .y0(h)
-            .y1(function(d) { return y_scale(d.ratio_loss*100); });
-
-          svg.append('path')
-            .datum(data_)
-            .attr('class', 'area')
-            .attr('d', area)
-            .style('fill', 'rgba(239,66,147,0.5)');
-
-          // circles
-          svg.selectAll('circle')
-            .data(data_)
-            .enter()
-            .append('svg:circle')
-            .attr('class', 'linedot')
-            .attr('cx', function(d) {
-              return x_scale(d.year);
-            })
-            .attr('cy', function(d){
-              return y_scale(d.ratio_loss*100);
-            })
-            .attr('r', 6)
-            .attr('name', function(d) {
-              return '<span>'+d.year+'</span>'+parseFloat(d.ratio_loss*100).toFixed(2)+' %';
-            })
-            .on('mouseover', function(d) {
-              that.tooltip.html($(this).attr('name'))
-                .style('visibility', 'visible')
-                .style('top', $(this).offset().top-100+'px')
-                .style('left', $(this).offset().left-$('.tooltip2').width()/2-4+'px')
-                .attr('class', 'tooltip2');
-
-              d3.select(this)
-                .transition()
-                .duration(100)
-                .attr('r', 7);
-
-              // TODO: highlighting the legend
-            })
-            .on('mouseout', function(d) {
-              that.tooltip.style('visibility', 'hidden');
-
-              d3.select(this)
-                .transition()
-                .duration(100)
-                .attr('r', 6);
-
-              // TODO: highlighting the legend
-            });
-
-          var data_gain_ = [
-            {
-              year: 2001,
-              value: gain
-            },
-            {
-              year: 2012,
-              value: gain
-            }
-          ];
-
-          // line
-          svg.selectAll('line.overview_line')
-            .data([data_gain_[0]])
-            .enter()
-            .append('line')
-            .attr({
-              'class': 'overview_line',
-              'x1': m,
-              'x2': w-m,
-              'y1': function(d) { return y_scale(gain*100); },
-              'y2': function(d) { return y_scale(gain*100); }
-            })
-            .attr('cx', function(d) {
-              return x_scale(d.year);
-            })
-            .attr('cy', function(d){
-              return y_scale(gain*100);
-            })
-            .attr('r', 6)
-            .attr('name', function(d) {
-              return '<span>2001-2012</span>'+parseFloat(gain*100).toFixed(2)+' %';
-            })
-            .on('mouseover', function(d) {
-              that.tooltip.html($(this).attr('name'))
-                .style('visibility', 'visible')
-                .style('top', $(this).offset().top-100+'px')
-                .style('left', ($(this).offset().left + 436) +'px')
-                .attr('class', 'tooltip2 gain_tooltip');
-
-              d3.select(this)
-                .transition()
-                .duration(100)
-                .attr('r', 7);
-
-              // TODO: highlighting the legend
-            })
-            .on('mouseout', function(d) {
-              that.tooltip.style('visibility', 'hidden');
-
-              d3.select(this)
-                .transition()
-                .duration(100)
-                .attr('r', 6);
-
-              // TODO: highlighting the legend
-            });
-        });
+                  if (gain.toString().length >= 7) {
+                    gain = ((gain /1000)/1000).toFixed(2)
+                  } else if (gain.toString().length >= 4) {
+                    l_mha = 'KHa';
+                    gain = (gain /1000);
+                  if (gain % 1 != 0) gain = gain.toFixed(2)
+                  } else {
+                    l_mha = 'Ha';
+                  }
+                  $target.find('.figure').removeClass('extent').html((~~gain).toLocaleString());
+                  $target.find('.unit').html(l_mha);
+                  this.absolute_gain = {'val':gain,'uni':l_mha};
+                }, this),
+              });
+        } else {
+          this.$big_figures.find('.figure').removeClass('extent').html((~~this.absolute_gain.val).toLocaleString());
+          this.$big_figures.find('.unit').html(this.absolute_gain.uni);
+        }
       } else if (this.model.get('graph') === 'total_extent') {
-        return;
-        this._showYears();
+        if (!this.absolute_extent) {
+          var $target = this.$big_figures,
+               query  = 'SELECT sum(extent_2000) from umd_nat_final_1';
+          $.ajax({
+                url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
+                dataType: 'json',
+                success: _.bind(function(data) {
+                  var extent = data.rows[0].sum;
+                  var g_mha, l_mha;
+                  g_mha = l_mha = 'Mha';
 
-        svg.append('text')
-          .attr('class', 'axis')
-          .attr('id', 'axis_y')
-          .text('Mha')
-          .attr('x', -h/2)
-          .attr('y', 30)
-          .attr('transform', 'rotate(-90)');
-
-        var gradient_extent = svg.append('svg:defs')
-          .append('svg:linearGradient')
-          .attr('id', 'gradient_extent')
-          .attr('x1', '0%')
-          .attr('y1', '0%')
-          .attr('x2', '0%')
-          .attr('y2', '100%')
-          .attr('spreadMethod', 'pad');
-
-        gradient_extent.append('svg:stop')
-          .attr('offset', '0%')
-          .attr('stop-color', '#98BD17')
-          .attr('stop-opacity', .5);
-
-        gradient_extent.append('svg:stop')
-          .attr('offset', '100%')
-          .attr('stop-color', '#98BD17')
-          .attr('stop-opacity', 1);
-
-        var sql = 'SELECT year, \
-                    Sum(loss)   loss,  \
-                    Sum(extent_offset) extent  \
-                    FROM   umd_nat  \
-                    WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +'  \
-                           AND year > 2000  \
-                    GROUP  BY year  \
-                    ORDER BY year';
-
-        d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), _.bind(function(json) {
-          var data = json.rows;
-
-          var data_ = data,
-              data_loss_ = [],
-              data_extent_ = [];
-
-          var domain = [d3.max(data_, function(d) { return d.extent; }), 0];
-
-          var y_scale = d3.scale.linear()
-            .range([vertical_m, h-vertical_m])
-            .domain(domain);
-
-          // area
-          var area_loss = d3.svg.area()
-            .x(function(d) { return x_scale(d.year); })
-            .y0(h)
-            .y1(function(d) { return y_scale(d.loss); });
-
-          var area_extent = d3.svg.area()
-            .x(function(d) { return x_scale(d.year); })
-            .y0(function(d) { return y_scale(d.extent); })
-            .y1(function(d) { return y_scale(d.loss); });
-
-          svg.append('path')
-            .datum(data_)
-            .attr('class', 'area')
-            .attr('d', area_loss)
-            .style('fill', 'rgba(239,66,147,0.5)');
-
-          svg.append('path')
-            .datum(data_)
-            .attr('class', 'area')
-            .attr('d', area_extent)
-            .style('fill', 'url(#gradient_extent)')
-            .style('opacity', '0.35');
-
-          // circles
-          svg.selectAll('circle')
-            .data(data_)
-            .enter()
-            .append('svg:circle')
-            .attr('class', 'linedot')
-            .attr('cx', function(d) {
-              return x_scale(d.year);
-            })
-            .attr('cy', function(d){
-              return y_scale(d.loss);
-            })
-            .attr('r', 6)
-            .attr('name', _.bind(function(d) {
-              return '<span>'+d.year+'</span>'+this.helper.formatNumber(parseFloat(d.loss/1000000).toFixed(1))+' Mha';
-            }, this ))
-            .on('mouseover', function(d) {
-              that.tooltip.html($(this).attr('name'))
-                .style('visibility', 'visible')
-                .style('top', $(this).offset().top-100+'px')
-                .style('left', $(this).offset().left-$('.tooltip2').width()/2-4+'px')
-                .attr('class', 'tooltip2');
-
-              d3.select(this)
-                .transition()
-                .duration(100)
-                .attr('r', 7);
-
-              // TODO: highlighting the legend
-            })
-            .on('mouseout', function(d) {
-              that.tooltip.style('visibility', 'hidden');
-
-              d3.select(this)
-                .transition()
-                .duration(100)
-                .attr('r', 6);
-
-              // TODO: highlighting the legend
-            });
-
-          svg.selectAll('circle.gain')
-            .data(data_)
-            .enter()
-            .append('svg:circle')
-            .attr('class', 'linedot gain')
-            if ( $('.graph_tab.selected').data('slug') === 'total_extent' ) {
-              svg.selectAll('circle.gain').attr('class', 'linedot gain extent')
-            }
-            svg.selectAll('circle.gain').attr('cx', function(d) {
-              return x_scale(d.year);
-            })
-            .attr('cy', function(d){
-              return y_scale(d.extent);
-            })
-            .attr('r', 6)
-            .attr('name', _.bind(function(d) {
-              return '<span>'+d.year+'</span>'+this.helper.formatNumber(parseFloat(d.extent/1000000).toFixed(1))+' Mha';
-            }, this))
-            .on('mouseover', function(d) {
-              that.tooltip.html($(this).attr('name'))
-                .style('visibility', 'visible')
-                .style('top', $(this).offset().top-100+'px')
-                .style('left', $(this).offset().left-$('.tooltip2').width()/2-4+'px')
-                if ( $('.graph_tab.selected').data('slug') === 'total_extent' ) {
-                  that.tooltip.html($(this).attr('name')).attr('class', 'tooltip2 gain_extent_tooltip');
-                } else {
-                  $('.linedot.gain').removeClass('extent');
-                  that.tooltip.html($(this).attr('name')).attr('class', 'tooltip2 gain_tooltip');
-                }
-
-              d3.select(this)
-                .transition()
-                .duration(100)
-                .attr('r', 7);
-
-              // TODO: highlighting the legend
-            })
-            .on('mouseout', function(d) {
-              that.tooltip.style('visibility', 'hidden');
-
-              d3.select(this)
-                .transition()
-                .duration(100)
-                .attr('r', 6);
-
-              // TODO: highlighting the legend
-            });
-        }, this ));
+                  if (extent.toString().length >= 7) {
+                    extent = ((extent /1000)/1000).toFixed(2)
+                  } else if (extent.toString().length >= 4) {
+                    l_mha = 'KHa';
+                    extent = (extent /1000);
+                  if (extent % 1 != 0) extent = extent.toFixed(2)
+                  } else {
+                    l_mha = 'Ha';
+                  }
+                  $target.find('.figure').addClass('extent').html((~~extent).toLocaleString());
+                  $target.find('.unit').html(l_mha);
+                  this.absolute_extent = {'val':extent,'uni':l_mha};
+                }, this),
+              });
+        } else {
+          this.$big_figures.find('.figure').addClass('extent').html((~~this.absolute_extent.val).toLocaleString());
+          this.$big_figures.find('.unit').html(this.absolute_extent.uni);
+        }
       } else if (this.model.get('graph') === 'ratio') {
         this._hideYears();
 
