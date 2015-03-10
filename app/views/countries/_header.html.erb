@@ -23,31 +23,28 @@
           <div class="map" id="countryMap"></div>
           <div class="tree-numbers">
             <div class="tree-cover">
-              <h4>Tree cover</h4>
+              <h4>Tree cover extent (2000)</h4>
                 <span class="amount"><!--<%= extent_to_human(@country['extent'], format: '%n') %>--></span>
                 <span class="unit"><%= extent_to_human(@country['extent'], format: '%u', shortUnit: true) %></span>
             </div>
             <div class="total-area">
-              <h4>Percent Tree Cover</h4>
+              <h4>Percent Tree Cover (2000)</h4>
               <span class="amount"></span>
               <span class="unit">%</span>
-            </div>
-            <div class="total-loss">
-              <h4>Total loss</h4>
-              <span class="amount"></span>
-              <span class="unit">ha</span>
             </div>
             <div class="canopy-status">
               <span>Displaying tree cover and loss <em>30%</em> tree cover canopy density</span>
             </div>
           </div>
           <div class="loss-gain-graph ghost">
-            <h4>LOSS (2001 - 2012)</h4>
+            <h4>TREE COVER LOSS (2001 - 2012)</h4>
+            <div class='total-loss'></div>
+            <div class='total-loss-ha'></div>
             <div class='graph' id="lossGainGraph"></div>
             <div class='graph-amount'></div>
             <div class='graph-date'></div>
             <hr>
-            <h4>GAIN (2001 - 2012)</h4>
+            <h4>TREE COVER GAIN (2001 - 2012)</h4>
             <div class='graph-amount graph-gain-amount'></div>
             <div class='graph-gain-total'></div>
             <div class='coming-soon'><span>Not yet available for this country</span></div>
