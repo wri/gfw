@@ -438,6 +438,42 @@
               @include logos-sprite(zslhover);
             }
           }
+          &.clua{
+            height: 26px; width: 110px; @include logos-sprite(clua);
+            &:hover{
+              @include logos-sprite(cluahover);
+            }
+          }
+          &.mongabay{
+            height: 40px; width: 110px; @include logos-sprite(mongabay);
+            &:hover{
+              @include logos-sprite(mongabayhover);
+            }
+          }
+          &.muyissi{
+            height: 80px; width: 80px; @include logos-sprite(muyissi);
+            &:hover{
+              @include logos-sprite(muyissihover);
+            }
+          }
+          &.rspo{
+            height: 33px; width: 110px; @include logos-sprite(rspo);
+            &:hover{
+              @include logos-sprite(rspohover);
+            }
+          }
+          &.unepwcmc{
+            height: 60px; width: 110px; @include logos-sprite(unepwcmc);
+            &:hover{
+              @include logos-sprite(unepwcmchover);
+            }
+          }
+          &.whrc{
+            height: 80px; width: 87px; @include logos-sprite(whrc);
+            &:hover{
+              @include logos-sprite(whrchover);
+            }
+          }
 
           &.bobolink {
             height: 53px; width: 105px; @include logos-sprite(bobolink);
