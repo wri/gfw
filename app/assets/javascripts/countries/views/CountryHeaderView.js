@@ -554,8 +554,7 @@ define([
     },
 
     _drawLossAndGain: function(years_data) {
-      var sql = "SELECT year, loss_gt_0 loss FROM umd WHERE iso='" + this.country.get('iso') + "' ORDER BY year ASC",
-          that = this;
+      var that = this;
 
       var $graph = this.$('.loss-gain-graph'),
           $comingSoon     = $graph.find('.coming-soon'),

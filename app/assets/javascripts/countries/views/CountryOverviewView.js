@@ -191,7 +191,7 @@ define([
 
       if (this.model.get('graph') === 'total_loss') {
         this.$settings.removeClass('disable');
-        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat_final umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
+        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
 
         if (e) {
           sql += 'OFFSET 10';
@@ -271,7 +271,7 @@ define([
       } else if (this.model.get('graph') === 'percent_loss') {
 
         this.$settings.removeClass('disable');
-        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_final umd, gfw2_countries c WHERE thresh = '+(this.helper.config.canopy_choice || 30)+' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
+        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+(this.helper.config.canopy_choice || 30)+' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
 
         if (e) {
           sql += 'OFFSET 10';
@@ -544,7 +544,7 @@ define([
         .attr('height', height);
 
       if (this.model.get('graph') === ('total_loss')) {
-        var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain) gain FROM umd_nat_final WHERE iso = \''+ iso +'\' AND thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 GROUP BY iso, year ORDER BY year';
+        var sql = 'SELECT iso, year, Sum(loss) loss, Sum(gain) gain FROM umd_nat_final_1 WHERE iso = \''+ iso +'\' AND thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 GROUP BY iso, year ORDER BY year';
 
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, function(json) {
           var data = json.rows;
@@ -832,7 +832,7 @@ define([
         var sql = 'SELECT year, \
              Sum(loss) loss, \
              Sum(gain) gain \
-              FROM   umd_nat_final  \
+              FROM   umd_nat_final_1  \
               WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +'  \
                       AND year > 2000 \
               GROUP  BY year  \
