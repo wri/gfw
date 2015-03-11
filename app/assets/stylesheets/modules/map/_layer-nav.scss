@@ -61,12 +61,14 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       &.#{nth($categories, $i)}{
         border-color: nth($colors, $i);
         .layers-nav-header{
+          background: lighten(nth($colors, $i),10%);
           border-color: nth($colors, $i);
           .category-name{
-            color: nth($colors, $i);
+            color: $white;
           }
           .category-icon  {
-            @include home-icons-sprite(nth($icons, $i));
+            background: nth($colors, $i);
+            // @include home-icons-sprite(nth($icons, $i));
           }
         }
         .layers-list > li{
@@ -98,11 +100,24 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       text-align: center;
 
       .category-icon {
+        position: relative;
         display: inline-block;
         margin: auto;
-        width: 16px;
-        height: 16px;
-        margin-top: 18px;
+        width: 28px;
+        height: 28px;
+        margin-top: 10px;
+        border-radius: 50%;
+        svg{
+          width: 100%;
+          height: 100%;
+          fill: $white;
+          position: absolute;
+          margin: auto;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+        }
       }
 
       .category-name {
