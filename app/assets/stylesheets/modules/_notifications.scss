@@ -1,0 +1,62 @@
+.notifications{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1060;
+  padding: 20px 0;
+  text-align: center;
+  @include transition(all 0.25s $easeInOutSine);
+  @include transform(translate(0,-100%));
+  // CLOSE BUTTON
+  .close {
+    display: block;
+    position: absolute;
+    top: 50%; right: 0px;
+    width: 40px;
+    height: 40px;
+    z-index: 20;
+    @include transform(translate(0,-50%));
+    svg{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50%;
+      height: 50%;
+      fill: $white;
+      @include transform(translate(-50%,-50%));
+    }
+    &:hover{
+      svg{
+        fill: darken($white,10%);
+      }
+    }
+  }
+
+  .content{
+    p{
+      color: $white;
+      font-size: 14px;
+    }
+  }
+
+  // STATES
+  &.active{
+    @include transform(translate(0,0%));
+  }
+
+
+  // COLORS
+  &.success{
+    background: rgba($cGreen, 0.85);
+  }
+  &.info{
+    background: rgba(blue, 0.85);
+  }
+  &.warning{
+    background: rgba(#ED4602, 0.85);
+  }
+  &.error{
+    background: rgba(red, 0.85);
+  }
+}
