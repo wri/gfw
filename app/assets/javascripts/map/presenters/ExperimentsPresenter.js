@@ -25,7 +25,7 @@ define([
      */
     _source: function(){
       if (cxApi) {
-        this.variation = cxApi.chooseVariation();
+        this.variation = (this.variation !== undefined) ? this.variation : cxApi.chooseVariation();
         // this.variation = (this.variation !== undefined) ? this.variation : Math.floor(Math.random()*3);
         switch(this.variation){
           case 0:
