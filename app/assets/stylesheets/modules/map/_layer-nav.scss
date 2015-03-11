@@ -67,7 +67,8 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
             color: $white;
           }
           .category-icon  {
-            @include home-icons-sprite(nth($icons, $i));
+            background: nth($colors, $i);
+            // @include home-icons-sprite(nth($icons, $i));
           }
         }
         .layers-list > li{
@@ -99,11 +100,24 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       text-align: center;
 
       .category-icon {
+        position: relative;
         display: inline-block;
         margin: auto;
-        width: 16px;
-        height: 16px;
-        margin-top: 18px;
+        width: 28px;
+        height: 28px;
+        margin-top: 10px;
+        border-radius: 50%;
+        svg{
+          width: 80%;
+          height: 80%;
+          fill: $white;
+          position: absolute;
+          margin: auto;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+        }
       }
 
       .category-name {
