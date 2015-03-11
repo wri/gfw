@@ -193,6 +193,7 @@ define([
       e && e.preventDefault();
 
       if (this.model.get('graph') === 'total_loss') {
+        $('.countries_list__header__minioverview').hide();
         var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
 
         if (e) {
@@ -271,7 +272,7 @@ define([
           });
         }, this ));
       } else if (this.model.get('graph') === 'percent_loss') {
-
+        $('.countries_list__header__minioverview').hide();
         var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+(this.helper.config.canopy_choice || 30)+' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
 
         if (e) {
@@ -336,6 +337,7 @@ define([
 
         });
       } else if (this.model.get('graph') === 'total_extent') {
+        $('.countries_list__header__minioverview').hide();
         var sql = 'SELECT iso, country as name, extent_2000 as extent FROM umd_nat_final_1 WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +' GROUP BY iso, extent_2000 , name ORDER BY extent_2000 desc ';
         if (e) {
           sql += 'OFFSET 10';
@@ -389,6 +391,7 @@ define([
           that.model.set('class', 'expanded');
         });
       } else if (this.model.get('graph') === 'ratio') {
+        $('.countries_list__header__minioverview').hide();
         var sql = 'WITH loss as (SELECT iso, sum(loss) sum_loss FROM umd_nat WHERE thresh = ' + (this.helper.config.canopy_choice || 30) + ' GROUP BY iso),gain as (SELECT iso, sum(gain) sum_gain FROM umd_nat WHERE thresh = ' + (this.helper.config.canopy_choice || 30) + ' GROUP BY iso), ratio as (SELECT c.iso, c.name, c.enabled, loss.sum_loss/gain.sum_gain as ratio FROM loss, gain, gfw2_countries c WHERE sum_gain IS NOT null AND NOT sum_gain = 0 AND c.iso = gain.iso  AND c.iso = loss.iso ORDER BY loss.sum_loss DESC LIMIT 50) SELECT * FROM ratio WHERE ratio IS NOT null ORDER BY ratio DESC ';
 
         if (e) {
@@ -436,7 +439,7 @@ define([
           });
         }, this ));
       } else if (this.model.get('graph') === 'domains') {
-
+        $('.countries_list__header__minioverview').show();
         var sql = 'SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +' group by ecozone';
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
