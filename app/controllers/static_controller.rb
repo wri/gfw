@@ -1,5 +1,5 @@
 class StaticController < ApplicationController
-  skip_before_action :check_browser
+  skip_before_action :check_browser, :only => :old
   #before_filter :load_stories
   skip_before_filter :check_terms, :except => [:data]
   respond_to :html
