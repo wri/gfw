@@ -127,8 +127,8 @@ define([], function() {
       subtitle: "Tree cover loss relative to tree cover gain by country <sup>(2001-2012)</sup><a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>"
     },
     domains: {
-      title: "Climate domains ranked in order of<br />greatest tree cover loss",
-      subtitle: "Tree cover loss per year by climate domain<a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>"
+      title: "Climate domains ranked in order of<br />greatest tree cover loss <sup>(2001-2013)</sup>",
+      subtitle: "Tree cover loss per year by climate domain, 2001-2013</sup><a href='#' class='info' data-source='total_loss'><i class='dark'></i></a>"
     }
   };
 

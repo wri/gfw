@@ -777,7 +777,7 @@ config.GRAPHS = {
   },
   domains: {
     title: "Climate domains ranked in order of<br />greatest tree cover loss",
-    subtitle: "Tree cover loss per year by climate domain"
+    subtitle: "Tree cover loss per year by climate domain <sup>(2001-2013)</sup>"
   }
 }
 
