@@ -61,9 +61,10 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       &.#{nth($categories, $i)}{
         border-color: nth($colors, $i);
         .layers-nav-header{
+          background: lighten(nth($colors, $i),10%);
           border-color: nth($colors, $i);
           .category-name{
-            color: nth($colors, $i);
+            color: $white;
           }
           .category-icon  {
             @include home-icons-sprite(nth($icons, $i));
