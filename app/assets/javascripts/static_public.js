@@ -760,11 +760,11 @@ _.templateSettings = {
 
 config.GRAPHS = {
   total_loss: {
-    title: "Countries with greatest tree cover loss <sup>(2001-2012)</sup>",
+    title: "Countries with greatest tree cover loss <sup>(2001-2013)</sup>",
     subtitle: "Global tree cover loss, 2001-2013"
   },
   percent_loss: {
-    title: "Countries with greatest tree cover gain",
+    title: "Countries with greatest tree cover gain <sup>(2001-2012)</sup>",
     subtitle: "Percent global tree cover loss per year, relative to 2000 tree cover extent"
   },
   total_extent: {
