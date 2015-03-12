@@ -1836,8 +1836,8 @@
 // --- MEDIA QUERIES --- //
 
 
-// maxsize <= 999
-@media only screen and (min-width: 751px) and (max-width: 999px) {
+// maxsize <= 1050
+@media only screen and (min-width: 751px) and (max-width: 1050px) {
   .country-show {
 
     .country-header {
@@ -1850,6 +1850,13 @@
         float: none;
         width: 100%;
         height: 300px;
+        .loss-gain-graph {
+          width: 185px;
+        }
+        .tree-numbers .canopy-status {
+          margin-top: 10px;
+          width: 180px;
+        }
       }
 
       .country-details .country-sidenav {
