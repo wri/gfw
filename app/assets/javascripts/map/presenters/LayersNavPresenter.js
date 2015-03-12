@@ -25,7 +25,7 @@ define([
     _subscriptions: [{
       'Place/go': function(place) {
         this.view._toggleSelected(place.layerSpec.getLayers());
-        (place.params.iso) ? this.view.setSelect(place.params.iso.country) : null;
+        (place.params.iso) ? this.view.setIso(place.params.iso) : null;
       }
     }, {
       'LayerNav/change': function(layerSpec) {
@@ -37,11 +37,12 @@ define([
       }
     }, {
       'LocalMode/updateIso': function(iso) {
-        this.view.setSelect(iso);
+        this.view.updateIso(iso);
       }
     }, {
       'AnalysisResults/delete-analysis': function() {
-        this.view.setSelect({ country: null, region: null });
+        var iso = { country: null, region: null}
+        this.view.updateIso(iso);
       }
     }],
 
