@@ -33,7 +33,7 @@
   .umdoptions_dialog {
     left: auto;
     right: 0px;
-    top: 11px;
+    top: 10px;
     display: block;
     position: absolute;
     width: 442px;
@@ -42,7 +42,7 @@
         left: 237px;
       }
       &::before {
-        top: -29px;
+        top: -28px;
         left: 237px;
       }
   }
@@ -312,11 +312,11 @@
       .countries_list__minioverview {
 
         .loss {
-          color: #6D6DE5;
+          color: #C443FF;
         }
 
         .gain {
-          color: #C443FF;
+          color: #6D6DE5;
         }
       }
     }
@@ -512,11 +512,11 @@
   }
 
   .loss {
-    color: rgba(#6D6DE5, .5);
+    color: rgba(#C443FF, .5);
   }
 
   .gain {
-    color: rgba(#C443FF, .5);
+    color: rgba(#6D6DE5, .5);
   }
 
   .bar {

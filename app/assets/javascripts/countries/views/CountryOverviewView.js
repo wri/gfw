@@ -148,10 +148,12 @@ define([
       this._drawGraph();
       this._drawList();
 
+      this.$el.find('.overview_button_group .settings').removeClass('disable')
       if (graph === 'total_extent' || graph === 'percent_loss') {
         this.$big_figures.show();
         this.$graph.addClass('is-hidden');
         this.$years.addClass('is-hidden');
+        if (graph == 'percent_loss') this.$el.find('.overview_button_group .settings').addClass('disable')
       } else {
         this.$big_figures.hide();
       }
@@ -212,17 +214,14 @@ define([
 
           _.each(data, _.bind(function(val, key) {
             var ord = e ? (key+11) : (key+1),
-                enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name,
-                umd = {
-                  loss : 34,
-                  gain : 43
-                }
+                enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
+
             var max_trigger = data.length -1;
             $.ajax({
               url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (this.helper.config.canopy_choice || 30),
               dataType: 'json',
               success: _.bind(function(data) {
-                var loss = (this.helper.config.canopy_choice == false || this.helper.config.canopy_choice == 30) ? Math.round(val.loss) : 0;
+                var loss = Math.round(val.loss);
                 var g_mha, l_mha;
                 g_mha = l_mha = 'Mha';
                 var orig = loss;
@@ -296,7 +295,7 @@ define([
               success: _.bind(function(data) {
                 var g_mha, l_mha;
                 g_mha = l_mha = 'Mha';
-
+                data.years[1].gain = Math.round(data.years[1].gain);
                 if (data.years[1].gain.toString().length >= 7) {
                   data.years[1].gain = ((data.years[1].gain /1000)/1000).toFixed(2)
                 } else if (data.years[1].gain.toString().length >= 4) {
@@ -357,7 +356,7 @@ define([
                 var e_mha, l_mha,
                     ex = val.extent,
                     e_mha = l_mha = 'Mha';
-
+                ex = Math.round(ex);
                 if (ex.toString().length >= 7) {
                   ex = ((ex /1000)/1000).toFixed(2)
                 } else if (ex.toString().length >= 4) {
@@ -449,8 +448,8 @@ define([
           _.each(data, _.bind(function(val, key) {
             markup_list += ['<li>',
                               '<div class="countries_list__minioverview_number countries_list__minioverview huge">',
-                                '<div class="gain half">'+this.helper.formatNumber(parseFloat(val.total_loss/1000000).toFixed(1))+' Mha</div>',
-                                '<div class="loss half last">'+this.helper.formatNumber(parseFloat(val.total_gain/1000000).toFixed(1))+' Mha</div>',
+                                '<div class="loss half" data-orig="' + val.total_loss/1000000 + '">'+this.helper.formatNumber(parseFloat(val.total_loss/1000000).toFixed(1))+' Mha</div>',
+                                '<div class="gain half last">'+this.helper.formatNumber(parseFloat(val.total_gain/1000000).toFixed(1))+' Mha</div>',
                               '</div>',
                               '<div class="countries_list__num">'+(key+1)+'</div>',
                               '<div class="countries_list__title">'+val.name+'</div>',
@@ -463,9 +462,7 @@ define([
 
           that.model.set('class', 'huge');
 
-          _.each(data, function(val, key) {
-            self._drawMiniOverview(val.iso);
-          });
+          that._reorderRanking();
         }, this ));
       }
     },
