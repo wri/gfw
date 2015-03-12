@@ -295,7 +295,7 @@ define([
               success: _.bind(function(data) {
                 var g_mha, l_mha;
                 g_mha = l_mha = 'Mha';
-
+                data.years[1].gain = Math.round(data.years[1].gain);
                 if (data.years[1].gain.toString().length >= 7) {
                   data.years[1].gain = ((data.years[1].gain /1000)/1000).toFixed(2)
                 } else if (data.years[1].gain.toString().length >= 4) {
@@ -356,7 +356,7 @@ define([
                 var e_mha, l_mha,
                     ex = val.extent,
                     e_mha = l_mha = 'Mha';
-
+                ex = Math.round(ex);
                 if (ex.toString().length >= 7) {
                   ex = ((ex /1000)/1000).toFixed(2)
                 } else if (ex.toString().length >= 4) {
