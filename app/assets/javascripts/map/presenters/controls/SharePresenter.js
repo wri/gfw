@@ -22,10 +22,9 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Tab/opened': function(id) {
-        if (id === 'share-tab') {
+      'ShareControls/toggle': function() {
+        if (this.view.model.get('hidden')) {
           this.view.model.set('hidden',false);
-          this.view.changeType();
         }else{
           this.view.model.set('hidden',true);
         }
@@ -37,15 +36,6 @@ define([
         }
       }
     }],
-
-    startSpinner: function(){
-      mps.publish('Spinner/start');
-    },
-
-    stopSpinner: function(){
-      mps.publish('Spinner/stop');
-    }
-
 
   });
 

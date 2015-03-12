@@ -17,6 +17,7 @@ $w-control: 44px;
       ul{
         @include display-flex();
         li{
+          width: 33.333333%;
           cursor: pointer;
           padding: 0.5em 1.5em;
           border-left: 1px solid $border;
@@ -46,6 +47,7 @@ $w-control: 44px;
             fill: $dark;
             width: 22px;
             height: 22px;
+            margin: 0 auto;
           }
         }
       }

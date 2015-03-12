@@ -10,8 +10,9 @@ define([
   'map/presenters/MapControlsPresenter',
   'map/views/controls/SearchboxView',
   'map/views/controls/ToggleModulesView',
+  'map/views/controls/ShareView',
   'text!map/templates/mapcontrols.handlebars'
-], function(_, Handlebars, keymaster, Presenter, Searchbox, ToggleModulesView, tpl) {
+], function(_, Handlebars, keymaster, Presenter, Searchbox, ToggleModulesView, ShareView, tpl) {
 
   'use strict';
 
@@ -33,14 +34,14 @@ define([
       'click .zoom-out' : 'zoomOut',
       'click .reset-map' : 'resetMap',
       'click .search' : 'showSearch',
-      'click .fit-bounds' : 'fitBounds',
+      'click .share-map' : 'shareMap',
       'click .toggle-modules' : 'toggleModules',
     },
 
     template: Handlebars.compile(tpl),
 
     initialize: function(map) {
-      _.bindAll(this,'zoomIn','zoomOut','resetMap','showSearch','fitBounds','toggleModules');
+      _.bindAll(this,'zoomIn','zoomOut','resetMap','showSearch','shareMap','toggleModules');
       this.model = new MapControlsModel();
       this.presenter = new Presenter(this);
       this.map = map;
@@ -53,7 +54,7 @@ define([
       key('m', this.zoomIn);
       key('n', this.zoomOut);
       key('alt+r', this.resetMap);
-      key('f', this.fitBounds);
+      key('f', this.shareMap);
       key('t', this.toggleModules);
 
       this.model.on('change:hidden', this.toogleModule, this);
@@ -81,6 +82,7 @@ define([
     initCustomViews: function(){
       new Searchbox(this.map);
       new ToggleModulesView();
+      new ShareView();
     },
     /**
      * Events.
@@ -111,6 +113,13 @@ define([
     showSearch: function(){
       mps.publish('MapControlsSearch/show');
     },
+
+    //SHARE
+    shareMap: function(){
+      mps.publish('ShareControls/toggle');
+    },
+
+
 
     //RESET ZOOM
     fitBounds: function(){
