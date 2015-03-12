@@ -301,22 +301,4 @@
     line-width: 1.5;
     line-opacity: 1;
   }
-  [layer='tcl'] {
-    polygon-fill: #FFCC00;
-    polygon-opacity: 0.8;
-    line-color: #FF5C00;
-    line-width: 0.5;
-    line-opacity: 0.5;
-  }
- [layer='tal_corridor'] {
-    polygon-fill: #229A00;
-    polygon-opacity: 0.7;
-  }
- [layer='tx2_tcl'] {
-      polygon-fill: #FF5C00;
-      polygon-opacity: 0.8;
-      line-color: #081B47;
-      line-width: 0.5;
-      line-opacity: 0.5;
-  }
 }
