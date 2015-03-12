@@ -1,9 +1,7 @@
 class StaticController < ApplicationController
-  before_filter :load_stories
-
-  # skip_before_filter :check_terms, :except => [:data]
-  skip_before_filter :check_browser
-
+  skip_before_action :check_browser, :only => :old
+  #before_filter :load_stories
+  skip_before_filter :check_terms, :except => [:data]
   respond_to :html
   respond_to :json, :only => :keepstories
 
@@ -69,6 +67,7 @@ class StaticController < ApplicationController
 
   def old
     @title = "Oops, your browser isn't supported."
+    render layout: 'old_browser'
   end
 
   private

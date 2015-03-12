@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class='no-js lt-ie9 lt-ie8 lt-ie7'> <![endif]-->
+<!--[if IE 7]>         <html class='no-js lt-ie9 lt-ie8'> <![endif]-->
+<!--[if IE 8]>         <html class='no-js lt-ie9'> <![endif]-->
+<!--[if gt IE 8]><!--> <html class='no-js'> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title><%= @title %> | Global Forest Watch</title>
+  <meta name="description" content="<%= @desc %>">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="keywords" content="Map,cartodb,Global,Forest,Watch,monitoring,real-time">
+  <meta name="author" content="Simbiótica">
+
+  <meta name="DC.title" content="<%= @title %> | Global Forest Watch">
+  <meta property="og:title" content="<%= @title %> | Global Forest Watch">
+  <meta property="og:description" content="<%= @desc %>">
+  <meta property="og:type" content="Visualization">
+  <meta property="og:url" content="http://www.globalforestwatch.org/">
+
+  <link href='http://fonts.googleapis.com/css?family=Fira+Sans:300,400,500,400italic' rel='stylesheet' type='text/css'>
+
+  <%= favicon_link_tag 'favicon.ico' %>
+  <%= controller_stylesheet_link_tag %>
+  <%= yield :js %>
+  <%= csrf_meta_tags %>
+</head>
+<body class='<%= "#{controller_name} #{action_name}" %>'>
+  <%= yield :title %>
+  <div class="not-supported">
+    <h1>Global Forest Watch</h1>
+    <h3>This website is optimized for these browsers. Please upgrade to a supported browser and try loading the website again.</h3>
+    <ul class="row row3">
+      <li><a href="https://www.google.com/intl/en/chrome/browser/">Chrome 19</a></li>
+      <li><a href="http://www.mozilla.org/en-US/firefox/all/">Firefox 12</a></li>
+      <li><a href="http://www.apple.com/safari">Safari 5</a></li>
+      <li><a href="http://www.opera.com/">Opera 11</a></li>
+      <li><a href="http://windows.microsoft.com/en-us/internet-explorer/ie-10-worldwide-languages">Internet Explorer 10</a></li>
+    </ul>
+  </div>
+
+
+</body>
+</html>

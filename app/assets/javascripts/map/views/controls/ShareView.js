@@ -6,14 +6,15 @@
 define([
   'underscore',
   'handlebars',
-  'map/presenters/tabs/SharePresenter',
-  'text!map/templates/tabs/share.handlebars'
+  'map/presenters/controls/SharePresenter',
+  'text!map/templates/controls/share.handlebars'
 ], function(_, Handlebars, Presenter, tpl) {
 
   'use strict';
 
   var ShareModel = Backbone.Model.extend({
     defaults: {
+      hidden: true,
       type: null,
       link: null,
       iframe: null
@@ -23,7 +24,7 @@ define([
 
   var ShareView = Backbone.View.extend({
 
-    el: '#share-tab',
+    el: '#control-share',
 
     template: Handlebars.compile(tpl),
 
@@ -31,7 +32,9 @@ define([
       'click #share_field' : 'focusInput',
       'click .change-type' : 'changeBtn',
       'click #preview' : 'showPreview',
-      'click .popup' : 'openPopUp'
+      'click .popup' : 'openPopUp',
+      'click .overlay' : 'hide',
+      'click .close' : 'hide'
     },
 
     initialize: function(parent) {
@@ -53,12 +56,28 @@ define([
     },
 
     setListeners: function(){
+      this.model.on('change:hidden', this.toggle, this);
       this.model.on('change:type', this.setUrls, this);
+      $(document).on('keyup', _.bind(function(e){
+        if (e.keyCode === 27) {
+          this.model.set('hidden', true);
+        }
+      }, this ));
     },
 
     render: function(){
       this.$el.html(this.template());
       this.cacheVars();
+    },
+
+    toggle: function(){
+      if (this.model.get('hidden')) {
+        this.$el.hide(0);
+      }else{
+        this.$el.show(0);
+        this.setUrls();
+        this.changeType();
+      }
     },
 
     // Click button
@@ -80,7 +99,6 @@ define([
     // click preview
     showPreview: function(){
       this.$iframe.attr('src' , this.model.get('iframe'));
-      // this.$iframeContainer.addClass('active');
     },
     // Open popup social share
     openPopUp: function(e){
@@ -97,6 +115,18 @@ define([
                    ',left='   + left;
       window.open(url, 'Share this map view', opts);
     },
+    hide: function(e){
+      e && e.preventDefault();
+      this.model.set('hidden', true);
+    },
+
+
+
+
+
+
+
+
 
     // Set Urls
     changeType: function(type){
@@ -117,7 +147,6 @@ define([
     },
 
     setLink: function(){
-      this.presenter.startSpinner();
       // Get link short
       this.generateLinkUrl(window.location.href, _.bind(function(url) {
         this.model.set('url', url);
@@ -126,7 +155,6 @@ define([
         this.$twitterLink.attr('href', 'https://twitter.com/share?url=' + url);
         this.$facebookLink.attr('href', 'https://www.facebook.com/sharer.php?u=' + url);
         this.$google_plusLink.attr('href', 'https://plus.google.com/share?url=' + url);
-        this.presenter.stopSpinner();
       }, this ));
       ga('send', 'event', 'Map', 'Share', 'Share Link clicked');
     },
@@ -135,7 +163,7 @@ define([
       this.generateEmbedUrl(window.location.href, _.bind(function(url,src) {
         this.model.set('iframe', src);
         this.$input.val(url);
-        this.$shareinfo.html('<p>Click and paste HTML to embed in website.<button id="preview" class="btn gray little uppercase source" data-source="preview-iframe-container">Preview</button></p>');
+        this.$shareinfo.html('<p>Click and paste HTML to embed in website.<button id="preview" class="btn gray little uppercase source" data-iframe="true" data-source="preview-iframe-container">Preview</button></p>');
       }, this ));
       ga('send', 'event', 'Map', 'Share', 'Share Embed clicked');
     },
@@ -162,7 +190,7 @@ define([
     },
 
     generateEmbedUrl: function(url, callback){
-      var dim_x = 600, dim_y = 530;
+      var dim_x = 800, dim_y = 600;
       var src = window.location.origin + '/embed' + window.location.pathname + window.location.search;
       var url = '<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname + window.location.search+'"></iframe>';
       callback && callback(url,src);

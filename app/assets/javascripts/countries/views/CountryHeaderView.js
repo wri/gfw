@@ -588,7 +588,7 @@ define([
       $amount.html('<span>' + (~~data_[data_.length - 1].value).toLocaleString() + '</span>').append($date);
       $gain.html(' Ha');
       $amount_g.html('<span>' + gain_value + '</span>').append($gain);
-      $graph.find('.total-loss-ha').html(' Total loss Ha');
+      $graph.find('.total-loss-ha').html(' Total loss (Ha)');
       $graph.find('.total-loss').html((~~total_loss).toLocaleString()).append($graph.find('.total-loss-ha'));
 
       var marginLeft = 5,

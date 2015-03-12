@@ -46,6 +46,13 @@ $height: auto;
     @include transition(all 0.25s $easeInOutSine);
   }
 
+  &.iframe{
+    width: auto;
+    .content-wrapper{
+      max-height: none;
+    }
+  }
+
   // CLOSE BUTTON
   .close {
     display: block;
@@ -336,8 +343,99 @@ $height: auto;
       }
     }
   }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+//SOURCE FOR MOBILE FRIENDLY
+.source_window_bottom{
+  position: fixed;
+  z-index: 1060;
+  background: $white;
+  border: none;
+  box-shadow: $shadow1;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  padding: 20px;
+  @include transform(translate(0,100%));
+  @include transition(all 0.25s $easeInOutSine);
+
+  &.active{
+    @include transform(translate(0,0%));
+  }
+
+
+  // CLOSE BUTTON
+  >.close {
+    display: block;
+    position: absolute;
+    top: 0px; right: 0px;
+    width: 40px;
+    height: 40px;
+    z-index: 20;
+    svg{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 50%;
+      height: 50%;
+      fill: $dark;
+      @include transform(translate(-50%,-50%));
+    }
+    &:hover{
+      svg{
+        fill: darken($dark,10%);
+      }
+    }
+  }
+
+  .terms-modal{
+    text-align: center;
+    color: $dark;
+    h2{
+      display: block;
+      font-weight: 500;
+      font-size: 22px;
+      text-transform: uppercase;
+      color: $cGreen;
+      text-align: center;
+      margin: 30px 0 0;
+    }
+    p{
+      font-size: 15px;
+      margin: 20px 0;
+    }
+    .terms-form{
+      margin: 15px 0 30px;
+      .row{
+        >*{
+          width: 47.5%;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 // BACDROP
 .backdrop {
@@ -352,6 +450,11 @@ $height: auto;
     display: block;
   }
 }
+
+
+
+
+
 
 .analysis_subscribe {
   $width: 463px;

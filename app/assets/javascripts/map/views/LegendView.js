@@ -186,12 +186,15 @@ define([
      * @param  {array} layers
      */
     update: function(categories, options) {
+
       if (categories.length === 0) {
         this.model.set('hidden', true);
       } else {
         this.model.set({'hidden': false, 'boxClosed': false});
         this._renderLegend(categories, options);
       }
+      //Experiment
+      this.presenter.initExperiment('source');
     },
 
     /**

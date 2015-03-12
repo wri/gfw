@@ -926,6 +926,42 @@
               @include logos-sprite(zslhover);
             }
           }
+          &.clua{
+            height: 26px; width: 110px; @include logos-sprite(clua);
+            &:hover{
+              @include logos-sprite(cluahover);
+            }
+          }
+          &.mongabay{
+            height: 40px; width: 110px; @include logos-sprite(mongabay);
+            &:hover{
+              @include logos-sprite(mongabayhover);
+            }
+          }
+          &.muyissi{
+            height: 80px; width: 80px; @include logos-sprite(muyissi);
+            &:hover{
+              @include logos-sprite(muyissihover);
+            }
+          }
+          &.rspo{
+            height: 33px; width: 110px; @include logos-sprite(rspo);
+            &:hover{
+              @include logos-sprite(rspohover);
+            }
+          }
+          &.unepwcmc{
+            height: 60px; width: 110px; @include logos-sprite(unepwcmc);
+            &:hover{
+              @include logos-sprite(unepwcmchover);
+            }
+          }
+          &.whrc{
+            height: 80px; width: 87px; @include logos-sprite(whrc);
+            &:hover{
+              @include logos-sprite(whrchover);
+            }
+          }
 
           &.bobolink {
             height: 53px; width: 105px; @include logos-sprite(bobolink);
@@ -1888,6 +1924,50 @@
     display: block;
     strong {
       font-weight: 500;
+    }
+  }
+}
+
+.not-supported{
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  h1{
+    position: relative;
+    width: 90px;
+    height: 90px;
+    text-indent: -9999px;
+    z-index: 11;
+    margin: 0 auto 20px;
+    @include retina-image('logo-new.png','logo-new@2x.png');
+    @include transition(all 0.25s linear);
+    &:after{
+      content: "";
+      display: block;
+      width: 30px;
+      height: 18px;
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      background: image-url('beta.png');
+    }
+    .beta-box{
+      display: none;
+    }
+  }
+  h3{
+    font-size: 21px;
+    text-align: center;
+  }
+  ul{
+    li{
+      margin-top: 10px;
     }
   }
 }

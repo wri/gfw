@@ -185,9 +185,16 @@
         margin: 0;
       }
       a{
-        color: #F69;
+        background: #AAA;
+        width: 12px;
+        height: 12px;
+        display: inline-block;
+        text-align: center;
+        color: $white;
+        border-radius: 50%;
+        font-weight: 500;
         &:hover{
-          color: lighten(#F69, 10%);
+          background: darken(#AAA, 10%);
         }
       }
     }

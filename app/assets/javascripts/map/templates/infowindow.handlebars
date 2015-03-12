@@ -148,8 +148,12 @@
           <h4>Department:</h4>
           <p>{{content.data.department}}</p>
         {{/if}}
+        {{#if content.data.contract}}
+          <h4>Contract:</h4>
+          <p>{{content.data.contract}}</p>
+        {{/if}}
         {{#if content.data.supervision}}
-          <h4>Supervision:</h4supervision>
+          <h4>Supervision:</h4>
           <p>{{content.data.supervision}}</p>
         {{/if}}
       </div>

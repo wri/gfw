@@ -32,6 +32,7 @@
 @import "modules/buttons1600";
 @import "modules/icons1600";
 @import "modules/slick1600";
+@import "modules/notifications";
 
 
 @import
@@ -39,6 +40,7 @@
   // Layouts
 
   "layouts/map",
+  "layouts/embed-map",
 
   // Modules
   "modules/notice",
@@ -59,12 +61,12 @@
   // controls
   "modules/map/module-mapcontrols",
   "modules/map/control-searchbox",
+  "modules/map/control-share",
   // tabs
   "modules/map/module-tabs",
   "modules/map/tab-analysis",
   "modules/map/tab-basemaps",
   "modules/map/tab-threshold",
-  "modules/map/tab-share",
 
 
 

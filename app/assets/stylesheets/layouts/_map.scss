@@ -155,21 +155,3 @@
     display: none;
   }
 }
-
-.is-embed-action {
-  border-top: 0;
-  .layout-content {
-    top: 0;
-    .map-container {
-      bottom: 0;
-    }
-  }
-  .widget-timeline,
-  .widget-share,
-  .widget-analysis-tool,
-  .widget-threshold,
-  .widget-analysis-results .analysis-footer {
-    display: none !important;
-  }
-}
-
