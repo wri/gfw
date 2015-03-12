@@ -301,10 +301,4 @@
     line-width: 1.5;
     line-opacity: 1;
   }
-
-  [layer='tal_corridor'] {
-    polygon-fill: #229A00;
-    polygon-opacity: 0.7;
-  }
-
 }
