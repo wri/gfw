@@ -212,17 +212,14 @@ define([
 
           _.each(data, _.bind(function(val, key) {
             var ord = e ? (key+11) : (key+1),
-                enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name,
-                umd = {
-                  loss : 34,
-                  gain : 43
-                }
+                enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
+
             var max_trigger = data.length -1;
             $.ajax({
               url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (this.helper.config.canopy_choice || 30),
               dataType: 'json',
               success: _.bind(function(data) {
-                var loss = (this.helper.config.canopy_choice == false || this.helper.config.canopy_choice == 30) ? Math.round(val.loss) : 0;
+                var loss = Math.round(val.loss);
                 var g_mha, l_mha;
                 g_mha = l_mha = 'Mha';
                 var orig = loss;
