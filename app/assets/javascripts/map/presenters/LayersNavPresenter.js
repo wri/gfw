@@ -64,15 +64,6 @@ define([
           mps.publish('Place/update', [{go: false}]);
         }, this));
     },
-
-
-    /**
-    * Ask for country analysis once clicked
-    */
-    _analizeIso: function(iso) {
-      iso = {country: iso}
-      mps.publish('LocalMode/changeIso',[iso])
-    },
   });
 
   return LayersNavPresenter;
