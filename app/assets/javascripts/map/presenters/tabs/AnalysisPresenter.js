@@ -391,7 +391,7 @@ define([
 
       if (resource && !this.status.get('disableUpdating')) {
         resource = this._buildResource(resource);
-        (resource.iso) ? this.view.putMaskOnTop() : null;
+        // (resource.iso) ? this.view.putMaskOnTop() : null;
         this._publishAnalysis(resource);
       }
     },

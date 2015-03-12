@@ -539,7 +539,8 @@ define([
       this.putMaskOnTop();
     },
 
-    putMaskOnTop: function(regionBool){
+    putMaskOnTop: function(){
+      console.log('putMaskOnTop');
       var overlaysLength = this.map.overlayMapTypes.getLength();
       this.map.overlayMapTypes.insertAt(overlaysLength, this.cartodbLayer);
     },
