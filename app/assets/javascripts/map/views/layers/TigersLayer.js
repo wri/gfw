@@ -4,7 +4,8 @@
  * @return TigersLayer class (extends CanvasLayerClass)
  */
 define([
-  'abstract/layer/CartoDBLayerClass'
+  'abstract/layer/CartoDBLayerClass',
+  'text!map/cartocss/tigerCartoCSS.cartocss'
 ], function(CartoDBLayerClass, TigerCartoCSS) {
 
   'use strict';
@@ -12,20 +13,17 @@ define([
   var TigersLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT the_geom_webmercator, cartodb_id, the_geom, tcl_name as name, area_ha, \'tcl\' as layer '+
+      sql: 'SELECT the_geom_webmercator, cartodb_id, the_geom, tcl_name as name, area_ha, tx2_tcl, \'tiger_conservation_landscapes\' as layer '+
 
-        'FROM tcl '+
+        'FROM tiger_conservation_landscapes '+
 
         'UNION '+
-        'SELECT the_geom_webmercator, cartodb_id, the_geom, name,  area_ha, \'tal_corridor\' as layer '+
-        'FROM tal_corridor '+
-
-        'UNION  '+
-        'SELECT the_geom_webmercator, cartodb_id, the_geom, tcl_name as name, area_ha, \'tx2_tcl\' as layer '+
-        'FROM tx2_tcl',
+        'SELECT the_geom_webmercator, cartodb_id, the_geom, name,  area_ha, area_ha as tx2_tcl, \'tal_corridor\' as layer '+
+        'FROM tal_corridor ',
       infowindow: true,
       interactivity: 'name, area_ha',
-      analysis: true
+      analysis: true,
+      cartocss: TigerCartoCSS
     }
   });
 
