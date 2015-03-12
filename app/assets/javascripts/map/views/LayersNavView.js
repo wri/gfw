@@ -25,7 +25,6 @@ define([
 
     events: {
       'click .layer': '_toggleLayer',
-      'change #country-select' : 'changeIso'
     },
 
     initialize: function() {
@@ -40,10 +39,8 @@ define([
       this.presenter.initExperiment('source');
 
       //Init
-      this.$countrySelect = $('#country-select');
       this.$layersCountry = $('#layers-country-nav');
-      this.$countrySublayer = $('.country-sublayer-box')
-      this.getCountries();
+      this.$countryLayers = $('#country-layers');
     },
 
 
@@ -54,6 +51,9 @@ define([
      * @param  {object} layerSpec
      */
     _toggleSelected: function(layers) {
+
+      this.layers = layers;
+
       // Toggle sublayers
       _.each(this.$el.find('.layer'), function(li) {
         var $li = $(li);
@@ -124,77 +124,31 @@ define([
       }
     },
 
+    setIso: function(iso){
+      this.iso = iso.country;
+      this.region = iso.region;
+      this.setIsoLayers();
+    },
+
+    updateIso: function(iso){
+      (iso.country !== this.iso) ? this.resetIsoLayers() : null;
+      this.iso = iso.country;
+      this.region = iso.region;
+      this.setIsoLayers();
+    },
+
+
     _getIsoLayers: function(layers) {
       this.layersIso = layers;
     },
 
-    /**
-     * Ajax for getting countries.
-     */
-    getCountries: function(){
-      if (!amplify.store('countries')) {
-        var sql = ['SELECT c.iso, c.name FROM gfw2_countries c WHERE c.enabled = true'];
-        $.ajax({
-          url: 'https://wri-01.cartodb.com/api/v2/sql?q='+sql,
-          dataType: 'json',
-          success: _.bind(function(data){
-            amplify.store('countries', data.rows);
-            this.printCountries();
-          }, this ),
-          error: function(error){
-            console.log(error);
-          }
-        });
-      }else{
-        this.printCountries()
-      }
+    resetIsoLayers: function(){
+      _.each(this.$countryLayers.find('.layer'),function(li){
+        if ($(li).hasClass('selected')) {
+          $(li).trigger('click');
+        }
+      })
     },
-
-    /**
-     * Print countries.
-     */
-    printCountries: function(){
-      //Country select
-      this.countries = amplify.store('countries');
-
-      //Loop for print options
-      var options = "<option></option>";
-      _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
-        options += '<option value="'+ country.iso +'">'+ country.name + '</option>';
-      }, this ));
-      this.$countrySelect.append(options);
-      this.$countrySelect.chosen({
-        width: '100%',
-        allow_single_deselect: true,
-        inherit_select_classes: true,
-        no_results_text: "Oops, nothing found!"
-      });
-
-    },
-
-    // Select change iso
-    changeIso: function(){
-      this.iso = this.$countrySelect.val();
-      _.each(this.$layersCountry.find('.layer'), _.bind(function(el){
-        ($(el).hasClass('selected')) ? $(el).trigger('click') : null;
-      }, this ));
-      this.setIsoLayers();
-      if (this.iso) {
-        this.presenter._analizeIso(this.iso);
-      }
-    },
-
-    // For autoselect country and region when youn reload page
-    setSelect: function(iso){
-      this.$countrySelect.val(iso.country).trigger("liszt:updated");
-      this.iso = this.$countrySelect.val();
-      _.each(this.$layersCountry.find('.layer'), _.bind(function(el){
-        ($(el).hasClass('selected')) ? $(el).trigger('click') : null;
-      }, this ));
-      this.setIsoLayers();
-    },
-
-
 
     /**
      * Render Iso Layers.
@@ -206,16 +160,19 @@ define([
           layersToRender.push(layer);
         }
       }, this ));
-      if (layersToRender.length > 0) {
-        this.$countrySublayer.addClass('active');
-      }else{
-        this.$countrySublayer.removeClass('active');
-      }
+      (layersToRender.length > 0) ? this.$countryLayers.addClass('active').removeClass('disabled') : this.$countryLayers.removeClass('active').addClass('disabled');
       this.renderIsoLayers(layersToRender);
     },
 
     renderIsoLayers: function(layers){
-      this.$layersCountry.html(this.templateCountry({layers: layers }));
+      var country = _.find(amplify.store('countries'), _.bind(function(country){
+        return country.iso === this.iso;
+      }, this ));
+      var name = (country) ? country.name : 'Country';
+
+      this.$countryLayers.html(this.templateCountry({ country: name ,  layers: layers }));
+      this.presenter.initExperiment('source');
+      this._toggleSelected(this.layers);
     }
 
   });
