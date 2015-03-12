@@ -148,10 +148,12 @@ define([
       this._drawGraph();
       this._drawList();
 
+      this.$el.find('.overview_button_group .settings').removeClass('disable')
       if (graph === 'total_extent' || graph === 'percent_loss') {
         this.$big_figures.show();
         this.$graph.addClass('is-hidden');
         this.$years.addClass('is-hidden');
+        if (graph == 'percent_loss') this.$el.find('.overview_button_group .settings').addClass('disable')
       } else {
         this.$big_figures.hide();
       }
