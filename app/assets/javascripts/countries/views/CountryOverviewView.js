@@ -448,8 +448,8 @@ define([
           _.each(data, _.bind(function(val, key) {
             markup_list += ['<li>',
                               '<div class="countries_list__minioverview_number countries_list__minioverview huge">',
-                                '<div class="gain half">'+this.helper.formatNumber(parseFloat(val.total_loss/1000000).toFixed(1))+' Mha</div>',
-                                '<div class="loss half last">'+this.helper.formatNumber(parseFloat(val.total_gain/1000000).toFixed(1))+' Mha</div>',
+                                '<div class="loss half" data-orig="' + val.total_loss/1000000 + '">'+this.helper.formatNumber(parseFloat(val.total_loss/1000000).toFixed(1))+' Mha</div>',
+                                '<div class="gain half last">'+this.helper.formatNumber(parseFloat(val.total_gain/1000000).toFixed(1))+' Mha</div>',
                               '</div>',
                               '<div class="countries_list__num">'+(key+1)+'</div>',
                               '<div class="countries_list__title">'+val.name+'</div>',
@@ -462,9 +462,7 @@ define([
 
           that.model.set('class', 'huge');
 
-          _.each(data, function(val, key) {
-            self._drawMiniOverview(val.iso);
-          });
+          that._reorderRanking();
         }, this ));
       }
     },
