@@ -13,13 +13,12 @@ require([
   'scrollit',
   'views/HeaderView',
   'views/FooterView',
-  'views/DialogView',
   'views/SourceMobileFriendlyView',
   'countries/views/CountryListView',
   'countries/views/CountryOverviewView',
   'countries/views/CountryShowView',
   '_string',
-], function($, _, Class, Backbone, Handlebars, mps, topojson, qtip, scrollit, HeaderView, FooterView, DialogView, SourceMobileFriendlyView, CountryListView, CountryOverviewView, CountryShowView) {
+], function($, _, Class, Backbone, Handlebars, mps, topojson, qtip, scrollit, HeaderView, FooterView, SourceMobileFriendlyView, CountryListView, CountryOverviewView, CountryShowView) {
   'use strict';
 
   var CountryPage = Class.extend({
@@ -37,7 +36,6 @@ require([
       //shared
       new HeaderView();
       new FooterView();
-      new DialogView();
       new SourceMobileFriendlyView();
 
       //countries
