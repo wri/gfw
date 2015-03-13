@@ -7,7 +7,7 @@ define([
   'moment',
   'uri',
   'abstract/layer/CartoDBLayerClass',
-  'map/presenters/ImazonLayerPresenter'
+  'map/presenters/layers/ImazonLayerPresenter'
 ], function(moment, UriTemplate, CartoDBLayerClass, Presenter) {
 
   'use strict';

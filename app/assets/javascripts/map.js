@@ -17,7 +17,7 @@ require([
   'map/views/MapView',
   'map/views/MapControlsView',
   'map/views/TabsView',
-  'map/views/AnalysisResultsView',
+  'map/views/analysis/AnalysisResultsView',
   'map/views/LayersNavView',
   'map/views/LegendView',
   'map/views/TimelineView',
