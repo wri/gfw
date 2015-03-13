@@ -1878,11 +1878,6 @@
           display: table-cell;
 
           a {
-            display: inline-block;
-            padding: 0 10px;
-            text-align: center;
-            line-height: 51px;
-
             .sidenav-icon {
               display: none;
             }
@@ -2008,6 +2003,19 @@
             width: 100%;
             padding-top: 0;
             text-align: center;
+            top: 0;
+            .graph-amount,
+            .total-loss {
+              width: auto;
+            }
+            .canopy-status {
+              width: 80%;
+              position: relative;
+              margin-top: 0;
+            }
+            #lossGainGraph {
+              left: 0;
+            }
           }
 
           .tree-numbers div {
@@ -2037,7 +2045,7 @@
             }
 
             .graph svg {
-              width: auto;
+              width: 165px;
             }
 
             .graph-amount,
