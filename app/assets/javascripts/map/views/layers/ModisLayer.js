@@ -8,7 +8,7 @@ define([
   'moment',
   'uri',
   'abstract/layer/CartoDBLayerClass',
-  'map/presenters/ModisLayerPresenter',
+  'map/presenters/layers/ModisLayerPresenter',
   'text!map/cartocss/modis.cartocss'
 ], function(_, moment, UriTemplate, CartoDBLayerClass, Presenter, modisCartoCSS) {
 

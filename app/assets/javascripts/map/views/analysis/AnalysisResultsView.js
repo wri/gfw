@@ -6,11 +6,11 @@
 define([
   'underscore',
   'handlebars',
-  'map/presenters/AnalysisResultsPresenter',
-  'text!map/templates/analysisResults.handlebars',
-  'text!map/templates/analysisResultsFailure.handlebars',
-  'text!map/templates/analysisResultsUnavailable.handlebars',
-  'text!map/templates/analysisResultsLoading.handlebars',
+  'map/presenters/analysis/AnalysisResultsPresenter',
+  'text!map/templates/analysis/analysisResults.handlebars',
+  'text!map/templates/analysis/analysisResultsFailure.handlebars',
+  'text!map/templates/analysis/analysisResultsUnavailable.handlebars',
+  'text!map/templates/analysis/analysisResultsLoading.handlebars',
 ], function(_, Handlebars, Presenter, tpl, failureTpl, unavailableTpl, loadingTpl) {
 
   'use strict';

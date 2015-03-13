@@ -43,7 +43,7 @@ define([
   'map/views/layers/TigersLayer',
   'map/views/layers/ColombiaForestChangeLayer',
   // Layer dialog templates
-  'text!templates/dialogs/loss_dialog.handlebars',
+  // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
   'map/views/timeline/LossTimeline',
   'map/views/timeline/FormaTimeline',
@@ -93,7 +93,7 @@ define([
   TigersLayer,
   ColombiaForestChangeLayer,
   // Layer dialog templates
-  loss_dialog,
+  // loss_dialog,
   // Layer timelines
   LossTimeline,
   FormaTimeline,
@@ -107,7 +107,6 @@ define([
   var layersHelper = {
     loss: {
       view: LossLayer,
-      dialogTpl: loss_dialog,
       timelineView: LossTimeline
     },
     forestgain: {
