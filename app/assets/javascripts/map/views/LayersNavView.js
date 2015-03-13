@@ -25,6 +25,7 @@ define([
 
     events: {
       'click .layer': '_toggleLayer',
+      'click #country-layers' : '_showNotification'
     },
 
     initialize: function() {
@@ -169,10 +170,17 @@ define([
         return country.iso === this.iso;
       }, this ));
       var name = (country) ? country.name : 'Country';
+      (country) ? this.$countryLayers.addClass('iso-detected') : this.$countryLayers.removeClass('iso-detected');
 
       this.$countryLayers.html(this.templateCountry({ country: name ,  layers: layers }));
       this.presenter.initExperiment('source');
       this._toggleSelected(this.layers);
+    },
+
+    _showNotification: function(e){
+      if ($(e.currentTarget).hasClass('disabled')) {
+        ($(e.currentTarget).hasClass('iso-detected')) ? this.presenter.notificate('country-not-layers') : this.presenter.notificate('country-choose');
+      }
     }
 
   });
