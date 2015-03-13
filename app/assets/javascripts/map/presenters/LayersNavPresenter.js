@@ -50,6 +50,11 @@ define([
       mps.publish('Experiment/choose',[id]);
     },
 
+    notificate: function(id){
+      mps.publish('Notification/open', [id]);
+    },
+
+
     /**
      * Publish a a Map/toggle-layer.
      *

@@ -54,12 +54,13 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     }
 
     &.country{
+      background: #A300D9;
+      color: $white;
       &.disabled{
-        opacity: 0.5;
+        opacity: 0.25;
       }
       &.active{
-        background: #A300D9;
-        color: $white;
+        opacity: 1;
       }
     }
 
