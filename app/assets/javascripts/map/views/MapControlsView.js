@@ -11,8 +11,9 @@ define([
   'map/views/controls/SearchboxView',
   'map/views/controls/ToggleModulesView',
   'map/views/controls/ShareView',
+  'map/views/controls/ThresholdView',
   'text!map/templates/mapcontrols.handlebars'
-], function(_, Handlebars, keymaster, Presenter, Searchbox, ToggleModulesView, ShareView, tpl) {
+], function(_, Handlebars, keymaster, Presenter, Searchbox, ToggleModulesView, ShareView, ThresholdView, tpl) {
 
   'use strict';
 
@@ -83,6 +84,7 @@ define([
       new Searchbox(this.map);
       new ToggleModulesView();
       new ShareView();
+      new ThresholdView();
     },
     /**
      * Events.

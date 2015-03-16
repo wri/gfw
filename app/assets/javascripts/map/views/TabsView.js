@@ -10,12 +10,11 @@ define([
   'map/presenters/TabsPresenter',
   'map/views/tabs/AnalysisView',
   'map/views/tabs/BasemapsView',
-  'map/views/tabs/ThresholdView',
   'map/views/tabs/SpinnerView',
   'map/views/tabs/SubscribeView',
   'text!map/templates/tabs.handlebars'
 
-], function(_, Handlebars, d3, Presenter, AnalysisView, BasemapsView, ThresholdView, SpinnerView, SubscribeView, tpl) {
+], function(_, Handlebars, d3, Presenter, AnalysisView, BasemapsView, SpinnerView, SubscribeView, tpl) {
 
   'use strict';
 
@@ -53,7 +52,6 @@ define([
       new SpinnerView();
       new AnalysisView(this.map);
       new BasemapsView();
-      new ThresholdView();
       new SubscribeView();
     },
 

@@ -60,8 +60,8 @@ define([
         this._setLayers(layerSpec.getLayers());
       }
     },{
-      'Tab/opened': function(id) {
-        if (id === 'threshold-tab') {
+      'ThresholdControls/toggle': function() {
+        if (this.view.model.get('hidden')) {
           this.view.model.set('hidden',false);
         }else{
           this.view.model.set('hidden',true);

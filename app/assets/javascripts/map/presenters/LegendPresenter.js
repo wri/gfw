@@ -98,6 +98,10 @@ define([
         }, this));
     },
 
+    showCanopy: function(){
+      mps.publish('ThresholdControls/toggle');
+    },
+
     initExperiment: function(id){
       mps.publish('Experiment/choose',[id]);
     },

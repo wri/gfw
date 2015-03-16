@@ -6,8 +6,8 @@
 define([
   'underscore',
   'handlebars',
-  'map/presenters/tabs/ThresholdPresenter',
-  'text!map/templates/tabs/threshold.handlebars'
+  'map/presenters/controls/ThresholdPresenter',
+  'text!map/templates/controls/threshold.handlebars'
 ], function(_, Handlebars, Presenter, tpl) {
 
   'use strict';
@@ -20,7 +20,7 @@ define([
 
   var ThresholdView = Backbone.View.extend({
 
-    el: '#threshold-tab',
+    el: '#control-threshold',
 
     template: Handlebars.compile(tpl),
 
@@ -29,7 +29,10 @@ define([
       'change #range-threshold': 'updateThreshold',
       'input #range-threshold': 'setVisibleRange',
       // labels
-      'click #labels-threshold li' : 'clickLabel'
+      'click #labels-threshold li' : 'clickLabel',
+      // hide buttons
+      'click .overlay' : 'hide',
+      'click .close' : 'hide'
     },
 
     valuesMap: [10,15,20,25,30,50,75],
@@ -53,12 +56,26 @@ define([
     },
 
     setListeners: function(){
+      this.model.on('change:hidden', this.toggle, this);
     },
 
     render: function(){
       this.$el.html(this.template({values: this.valuesMap }));
       this.cacheVars();
     },
+
+    toggle: function(){
+      if (this.model.get('hidden')) {
+        this.$el.show(0);
+      }else{
+        this.$el.hide(0);
+      }
+    },
+    hide: function(e){
+      e && e.preventDefault();
+      this.model.set('hidden', false);
+    },
+
 
     // input range change
     updateThreshold: function() {
