@@ -71,7 +71,8 @@ define([
 
     events: {
       'click .category-name' : '_toogleCategory',
-      'click .layer-sublayer': '_toggleLayer'
+      'click .layer-sublayer': '_toggleLayer',
+      'click .canopy-button' : '_showCanopy'
     },
 
     initialize: function() {
@@ -219,7 +220,14 @@ define([
       $(e.currentTarget).parent().toggleClass('closed');
       $(e.currentTarget).parent().children('.layers').toggleClass('closed');
 
+    },
+
+    _showCanopy: function(e){
+      e && e.preventDefault();
+      this.presenter.showCanopy();
     }
+
+
 
 
 
