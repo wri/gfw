@@ -164,6 +164,20 @@
       span {
         font-weight: 500;
       }
+      .canopy-button{
+        background: $cGreen;
+        color: $white;
+        display: inline-block;
+        padding: 1px 5px 0;
+        margin: 0 2px;
+        border-radius: 10px;
+        cursor: pointer;
+        box-shadow: 0 0 0 2px $cGreen;
+        &:hover{
+          background: darken($cGreen,5%);
+          box-shadow: 0 0 0 2px darken($cGreen,5%);
+        }
+      }
     }
 
     sup {
