@@ -50,7 +50,11 @@
   "modules/modal",
   "modules/dialog",
 
+  // layer nav
   "modules/map/layer-nav",
+  "modules/map/onoffswitch",
+  "modules/map/onoffradio",
+
   "modules/map/mode",
   "modules/map/country-select",
 
@@ -67,23 +71,17 @@
   "modules/map/tab-analysis",
   "modules/map/tab-basemaps",
   "modules/map/tab-threshold",
-
-
-
+  // timeline
   "modules/map/widget",
-  "modules/map/widget-legend",
-  "modules/map/widget-searchbox",
-  "modules/map/widget-threshold",
-  "modules/map/analysis-tool",
-  "modules/map/analysis-results",
   "modules/map/timeline",
   "modules/map/timeline-btn",
   "modules/map/timeline-year",
   "modules/map/timeline-month",
-  "modules/map/onoffswitch",
-  "modules/map/onoffradio",
-  "modules/map/infowindow",
-  "modules/map/widget-togglewidget",
-  "modules/map/widget-share";
+
+
+
+  "modules/map/analysis-tool",
+  "modules/map/analysis-results",
+  "modules/map/infowindow";
 
 @import "states";
