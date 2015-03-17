@@ -40,6 +40,7 @@ define([
       this.presenter.initExperiment('source');
 
       //Init
+      this.$categoriesList = $('.categories-list');
       this.$layersCountry = $('#layers-country-nav');
       this.$countryLayers = $('#country-layers');
     },
@@ -132,6 +133,8 @@ define([
     },
 
     updateIso: function(iso){
+      // This is for preventing blur on layers nav
+      this.$categoriesList.width('auto');
       (iso.country !== this.iso) ? this.resetIsoLayers() : null;
       this.iso = iso.country;
       this.region = iso.region;
@@ -173,8 +176,20 @@ define([
       (country) ? this.$countryLayers.addClass('iso-detected') : this.$countryLayers.removeClass('iso-detected');
 
       this.$countryLayers.html(this.templateCountry({ country: name ,  layers: layers }));
+
+      this.fixLegibility();
+
       this.presenter.initExperiment('source');
       this._toggleSelected(this.layers);
+    },
+
+    fixLegibility: function(){
+      var w = this.$categoriesList.width();
+      if (w%2 != 0) {
+        // This is for preventing blur on layers nav
+        this.$categoriesList.width(w+1);
+      }
+
     },
 
     _showNotification: function(e){
