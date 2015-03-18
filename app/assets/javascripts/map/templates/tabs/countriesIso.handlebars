@@ -1,0 +1,10 @@
+{{#if layers}}
+<header>
+  <h2>Available datasets for this country:</h2>
+</header>
+<ul class="layers">
+  {{#each layers}}
+  <li data-slug="{{this.slug}}"><span class="layer-name"><i class="circle" style="color:{{this.category_color}}"></i>{{this.title}}</span></li>
+  {{/each}}
+</ul>
+{{/if}}

@@ -58,7 +58,7 @@ define([
       this.$done = $('#done-analysis');
 
       //country
-      this.$selects = $('.chosen-select');
+      this.$selects = this.$el.find('.chosen-select');
       this.$countrySelect = $('#analysis-country-select');
       this.$regionSelect = $('#analysis-region-select');
 

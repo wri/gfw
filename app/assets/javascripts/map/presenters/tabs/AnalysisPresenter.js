@@ -26,7 +26,8 @@ define([
       iso: null,
       overlay: null, // google.maps.Polygon (user drawn polygon)
       multipolygon: null, // geojson (countries and regions multypolygon)
-      disableUpdating: false
+      disableUpdating: false,
+      dont_analyze: false
     }
   });
 
@@ -64,6 +65,7 @@ define([
         this._setBaselayer(place.layerSpec.getBaselayers());
         this.status.set('date', [place.params.begin, place.params.end]);
         this.status.set('threshold', place.params.threshold);
+        this.status.set('dont_analyze', place.params.dont_analyze);
         this._handlePlaceGo(place.params);
       }
     }, {
@@ -128,8 +130,15 @@ define([
         }
       },
     },{
-      'LocalMode/changeIso': function(iso) {
-        this._analyzeIso(iso)
+      'Countries/changeIso': function(iso,analyze) {
+        this.status.set('dont_analyze', analyze);
+        if (iso.country) {
+          this._analyzeIso(iso)
+        }else{
+          this.deleteAnalysis();
+          mps.publish('LocalMode/updateIso',[iso])
+        }
+
       }
     }],
     /**
@@ -211,7 +220,12 @@ define([
           this._geojsonFitBounds(geojson);
           this.view._removeCartodblayer();
           this.view.drawMaskCountry(geojson,iso.country);
-          this._publishAnalysis(resource);
+          if (!this.status.get('dont_analyze')) {
+            this._publishAnalysis(resource);
+          }else{
+            mps.publish('Spinner/stop');
+          }
+
 
         },this));
       } else {
@@ -221,7 +235,12 @@ define([
           this._geojsonFitBounds(geojson);
           this.view._removeCartodblayer();
           this.view.drawMaskArea(geojson,iso.country,iso.region);
-          this._publishAnalysis(resource);
+          if (!this.status.get('dont_analyze')) {
+            this._publishAnalysis(resource);
+          }else{
+            mps.publish('Spinner/stop');
+          }
+
         },this));
       }
     },
