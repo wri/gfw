@@ -17,19 +17,8 @@ class ApplicationController < ActionController::Base
 
   private
 
-    Browser = Struct.new(:browser, :version)
-
-    SupportedBrowsers = [
-      Browser.new('Safari', '5.0.5'),
-      Browser.new('Firefox', '12.0'),
-      Browser.new('Internet Explorer', '10.0'),
-      Browser.new('Chrome', '19.0.1036.7'),
-      Browser.new('Opera', '11.00')
-    ]
-
     def check_browser
-      user_agent = UserAgent.parse(request.user_agent)
-      redirect_to "/notsupportedbrowser" unless SupportedBrowsers.detect { |browser| user_agent >= browser } || user_agent.bot?
+      redirect_to "/notsupportedbrowser" unless UserAgentValidator.user_agent_supported? request.user_agent
     end
 
     def check_terms
