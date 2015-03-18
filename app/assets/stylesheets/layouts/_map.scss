@@ -6,11 +6,15 @@
 .layout-content {
   margin-bottom: 0;
   position: absolute;
-  height: calc(100% - 34px);
   overflow: hidden;
-  top: 34px;
+  height: calc(100% - 44px);
+  top: 44px;
   left: 0;
   width: 100%;
+  @media (min-width:$br-mobile){
+    height: calc(100% - 34px);
+    top: 34px;
+  }
 }
 
 .map-container {
@@ -19,8 +23,6 @@
   bottom: 0;
   left: 0;
   right: 0;
-  border-top: 1px solid #717D80;
-  border-bottom: 1px solid #717D80;
   box-sizing: border-box;
   background: #B3E2FF;
 
