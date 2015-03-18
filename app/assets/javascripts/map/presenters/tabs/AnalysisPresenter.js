@@ -426,7 +426,6 @@ define([
      */
     deleteAnalysis: function() {
       mps.publish('AnalysisResults/Delete');
-      mps.publish('LocalMode/updateIso', [{country:null, region:null}])
       this.view._removeCartodblayer();
       this.view.$el.removeClass('is-analysis');
       // Delete overlay drawn or multipolygon.
@@ -446,6 +445,10 @@ define([
       });
 
       this._setAnalysisBtnVisibility();
+    },
+
+    resetIsos: function(){
+      mps.publish('LocalMode/updateIso', [{country:null, region:null}])
     },
 
     /**
