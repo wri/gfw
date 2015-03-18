@@ -18,24 +18,42 @@ class ApplicationController < ActionController::Base
   private
 
     def check_browser
-      redirect_to "/notsupportedbrowser" unless UserAgentValidator.user_agent_supported? request.user_agent
+      unless UserAgentValidator.user_agent_supported? request.user_agent
+        redirect_to "/notsupportedbrowser"
+      end
     end
 
     def check_terms
       session[:return_to] = request.fullpath
+      redirect_to accept_terms_path if show_terms?
+    end
+
+    def show_terms?
+      !(is_ip_whitelisted_from_terms? ||
+        is_embed_request? ||
+        is_terms_cookie_set? ||
+        is_exempt_from_terms?)
+    end
+
+    def is_ip_whitelisted_from_terms?
       @whitelist = [
         '80.74.134.135',
         # '127.0.0.1'
       ]
-      if not @whitelist.include? request.remote_ip
-        redirect_to accept_terms_path unless watch_cookie?
-      end
+
+      @whitelist.include?(request.remote_ip)
     end
 
-
-    def watch_cookie?
-      is_embed = request.original_url.include?('embed') ? true : false
-      cookies.permanent[ENV['TERMS_COOKIE'].to_sym] || is_embed || UserAgent.parse(request.user_agent).bot?
+    def is_exempt_from_terms?
+      validator = UserAgentValidator.new(request.user_agent)
+      validator.bot? || validator.is_snippet_collector
     end
 
+    def is_embed_request?
+      request.original_url.include?('embed') ? true : false
+    end
+
+    def is_terms_cookie_set?
+      cookies.permanent[ENV['TERMS_COOKIE'].to_sym]
+    end
 end

@@ -27,11 +27,15 @@ class UserAgentValidator
     is_supported_browser || user_agent.bot? || is_snippet_collector
   end
 
-  private
-
   def is_snippet_collector
     @user_agent.match(Regexp.union(SupportedSnippetCollectors))
   end
+
+  def method_missing method
+     user_agent.send(method) rescue super(method)
+  end
+
+  private
 
   def is_supported_browser
     SupportedBrowsers.detect { |browser| user_agent >= browser }
