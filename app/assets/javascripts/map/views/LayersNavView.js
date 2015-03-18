@@ -164,7 +164,6 @@ define([
     },
 
     renderIsoLayers: function(layers){
-      console.log(layers)
       var country = _.find(amplify.store('countries'), _.bind(function(country){
         return country.iso === this.iso;
       }, this ));
