@@ -58,7 +58,7 @@ define([
       this.$done = $('#done-analysis');
 
       //country
-      this.$selects = $('.chosen-select');
+      this.$selects = this.$el.find('.chosen-select');
       this.$countrySelect = $('#analysis-country-select');
       this.$regionSelect = $('#analysis-region-select');
 
@@ -251,7 +251,12 @@ define([
     changeIso: function(e){
       this.iso = $(e.currentTarget).val();
       this.area = null;
-      ($(e.currentTarget).val()) ? this.getSubCountries() : this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
+      if(this.iso) {
+        this.getSubCountries()
+      }else{
+        this.presenter.deleteAnalysis();
+        this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
+      }
     },
     changeArea: function(e){
       this.area = $(e.currentTarget).val();
@@ -275,7 +280,7 @@ define([
           country: this.iso,
           region: this.area
         }
-        this.presenter._analyzeIso(iso);
+        this.presenter.setAnalyzeIso(iso);
       }
     },
 

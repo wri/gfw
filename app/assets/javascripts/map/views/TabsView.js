@@ -9,12 +9,13 @@ define([
   'd3',
   'map/presenters/TabsPresenter',
   'map/views/tabs/AnalysisView',
+  'map/views/tabs/CountriesView',
   'map/views/tabs/BasemapsView',
   'map/views/tabs/SpinnerView',
   'map/views/tabs/SubscribeView',
   'text!map/templates/tabs.handlebars'
 
-], function(_, Handlebars, d3, Presenter, AnalysisView, BasemapsView, SpinnerView, SubscribeView, tpl) {
+], function(_, Handlebars, d3, Presenter, AnalysisView, CountriesView, BasemapsView, SpinnerView, SubscribeView, tpl) {
 
   'use strict';
 
@@ -51,6 +52,7 @@ define([
     initCustomViews: function(){
       new SpinnerView();
       new AnalysisView(this.map);
+      new CountriesView(this.map);
       new BasemapsView();
       new SubscribeView();
     },

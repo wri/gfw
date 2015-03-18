@@ -1,0 +1,60 @@
+.tab-countries{
+  .countries-content{
+    padding: 15px;
+    @media (min-width: 1500px){
+      padding: 20px;
+    }
+
+    // Select box
+    .select-box{
+      .chzn-container-single{
+        margin: 0 0 5px;
+        &:last-child{
+          margin: 0;
+        }
+      }
+    }
+
+    // Toggle Countries content
+    .toggle-countries-content{
+      display: none;
+      &.active{
+        display: block;
+      }
+      .countries-layers{
+        header h2{
+          padding: 20px 0;
+        }
+      }
+      .layers{
+        margin: 0 0 20px;
+        li{
+          width: 100%;
+          margin-bottom: 10px;
+          @include clearfix();
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .layer-name {
+            display: block;
+            position: relative;
+            padding: 0 17px 0 13px;
+            font-size: 13px;
+            .circle{
+              position: absolute;
+              top: -2px;
+              left: 0;
+              &:before {
+                content: ' \25CF';
+                font-size: 16px;
+                margin: 0 4px 0 -1px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+  }
+}

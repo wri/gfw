@@ -141,7 +141,9 @@ define([
       this.setIsoLayers();
     },
 
-
+    /**
+     * Render Iso Layers.
+     */
     _getIsoLayers: function(layers) {
       this.layersIso = layers;
     },
@@ -154,9 +156,6 @@ define([
       })
     },
 
-    /**
-     * Render Iso Layers.
-     */
     setIsoLayers: function(e){
       var layersToRender = [];
       _.each(this.layersIso, _.bind(function(layer){
