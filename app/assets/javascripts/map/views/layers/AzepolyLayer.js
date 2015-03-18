@@ -10,7 +10,6 @@ define([
   'use strict';
 
   var AzepolyLayer = CartoDBLayerClass.extend({
-
     options: {
       sql: 'SELECT the_geom_webmercator, sitenamefi as name, country, source, mapid, \'{tableName}\' AS layer FROM {tableName}',
       infowindow: true,
