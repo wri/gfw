@@ -60,6 +60,11 @@ define([
     }],
 
     _handlePlaceGo: function(params){
+      if(params.dont_analyze) {
+        this.status.set('dont_analyze', true);
+      }else{
+        this.status.set('dont_analyze', null);
+      }
       if(params.iso.country && params.iso.country !== 'ALL'){
         this.status.set('iso', params.iso);
         this.view.setSelects(params.iso);
