@@ -93,6 +93,10 @@ define([
       'AnalysisService/get': function(resource) {
         this.status.set('resource', resource);
       }
+    }, {
+      'AnalysisResults/Delete': function() {
+        this.view._deleteAnalysisView();
+      }
     }],
 
     /**

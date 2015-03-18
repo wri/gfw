@@ -14,7 +14,7 @@ define([
   var StatusModel = Backbone.Model.extend({
     defaults: {
       iso: null,
-      dont_analyze: null
+      dont_analyze: true
     }
   });
 
@@ -39,11 +39,23 @@ define([
     },{
       'LocalMode/updateIso': function(iso) {
         this.status.set('iso', iso);
+        if (!iso.country) {
+          mps.publish('Place/update', [{go: false}]);
+        }
         this.view.setSelects(iso);
       }
     },{
       'Layers/isos': function(layers_iso) {
         this.view.getIsoLayers(layers_iso);
+      }
+    },{
+      'AnalysisResults/delete-analysis': function() {
+        this.changeIso({country: null, area:null});
+      }
+    },{
+      'Analysis/analyze-iso': function(iso,to) {
+        this.status.set('iso', iso);
+        this.setAnalyze(to);
       }
     }],
 
@@ -64,6 +76,7 @@ define([
 
     getPlaceParams: function() {
       var p = {};
+      p.iso = this.status.get('iso');
       p.dont_analyze = this.status.get('dont_analyze');
       return p;
     },
@@ -74,15 +87,18 @@ define([
       mps.publish('Countries/changeIso',[this.status.get('iso'),this.status.get('dont_analyze')]);
     },
 
-    initExperiment: function(id){
-      mps.publish('Experiment/choose',[id]);
-    },
 
     changeIso: function(iso){
       this.status.set('iso', iso);
       this.status.set('dont_analyze', true);
+      mps.publish('Place/update', [{go: false}]);
       mps.publish('Countries/changeIso',[iso,this.status.get('dont_analyze')]);
-    }
+    },
+
+
+    initExperiment: function(id){
+      mps.publish('Experiment/choose',[id]);
+    },
 
 
 

@@ -200,7 +200,7 @@ define([
 
     // Select change iso
     changeIso: function(e){
-      this.iso = $(e.currentTarget).val();
+      this.iso = $(e.currentTarget).val() || null;
       this.area = null;
       ($(e.currentTarget).val()) ? this.getSubCountries() : this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
       this.setIsoLayers();

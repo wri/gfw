@@ -43,11 +43,11 @@ define([
     initialize: function() {
       this.model = new AnalysisResultsModel();
       this.presenter = new Presenter(this);
+      this.$resultsHide = $('.results-hide');
     },
 
     _cacheSelector: function() {
       this.$tab = $('#analysis-tab');
-      this.$resultsHide = $('.results-hide');
       this.$downloadDropdown = $('.download-dropdown');
       this.$subscribeButton = $('#analysis-subscribe');
     },
@@ -96,6 +96,12 @@ define([
       this.presenter.deleteAnalysis();
       ga('send', 'event', 'Map', 'Delete-Analysis', 'Layer: ' + this.params.layer.title);
     },
+
+    _deleteAnalysisView: function(){
+      this.$resultsHide.removeClass('hidden');
+      this.$el.addClass('hidden');
+    },
+
     _subscribe: function() {
       this.presenter.subscribeAnalysis();
       ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + this.params.layer.title);
