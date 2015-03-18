@@ -31,6 +31,11 @@ define([
       }
     }],
 
+    notificate: function(id){
+      mps.publish('Notification/open', [id]);
+    },
+
+
   });
 
   return SubscribePresenter;

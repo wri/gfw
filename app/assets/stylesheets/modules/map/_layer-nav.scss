@@ -40,7 +40,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     backface-visibility: hidden;
     position: relative;
     float: left;
-    padding: 15px 20px 10px;
+    padding: 17px 20px 12px;
     cursor: pointer;
     border-bottom: 5px solid;
     margin-left: 1px;
@@ -51,6 +51,13 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       font-weight: 500;
       font-size: 12px;
       text-transform: uppercase;
+    }
+    > .category-name{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 150px;
+      display: block;
     }
 
     &.country{
