@@ -82,18 +82,26 @@ define([
       } else if (this.analysisResource.geojson) {
         data.geom = JSON.parse(this.analysisResource.geojson);
       }
+      if (this.validateEmail(email)) {
+        $.ajax({
+          type: 'POST',
+          url: 'http://gfw-apis.appspot.com/subscribe',
+          crossDomain: true,
+          data: JSON.stringify(data),
+          dataType: 'json',
+          success: _.bind(this._successSubscription, this),
+          error: _.bind(function(responseData, textStatus, errorThrown) {
+            this.remove();
+          }, this)
+        });
+      }else{
+        this.presenter.notificate('email-incorrect');
+      }
+    },
 
-      $.ajax({
-        type: 'POST',
-        url: 'http://gfw-apis.appspot.com/subscribe',
-        crossDomain: true,
-        data: JSON.stringify(data),
-        dataType: 'json',
-        success: _.bind(this._successSubscription, this),
-        error: _.bind(function(responseData, textStatus, errorThrown) {
-          this.remove();
-        }, this)
-      });
+    validateEmail: function(email){
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
     },
 
     _successSubscription: function(data, textStatus, jqXHR) {
