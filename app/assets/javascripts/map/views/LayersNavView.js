@@ -99,11 +99,7 @@ define([
       if (!$(event.target).hasClass('source') && !$(event.target).parent().hasClass('source')) {
         var layerSlug = $(event.currentTarget).data('layer');
 
-        if ($(event.currentTarget).hasClass('ifl') || $(event.currentTarget).hasClass('c_f_peru')) {
-            var fil_type = 'ifl_2013_deg';
-          if ($(event.currentTarget).hasClass('c_f_peru')) {
-            fil_type = 'concesiones_forestalesNS';
-          }
+        if ($(event.currentTarget).hasClass('ifl')) {
           event && event.stopPropagation();
           var $elem = $(event.currentTarget);
             if (event.target.nodeName === 'LABEL') {
@@ -111,7 +107,7 @@ define([
               return false;
             }
           if ($elem.hasClass('selected')) {$elem.find('input').prop('checked',false);}
-          else {$elem.find('[data-layer="' + fil_type + '"] input').prop('checked', true);}
+          else {$elem.find('[data-layer="ifl_2013_deg"] input').prop('checked', true);}
           if ($elem.prop('tagName') !== 'LI'){
             for (var i=0;i < $elem.siblings().length; i++) {
               if ($($elem.siblings()[i]).hasClass('selected')) {
@@ -168,6 +164,7 @@ define([
     },
 
     renderIsoLayers: function(layers){
+      console.log(layers)
       var country = _.find(amplify.store('countries'), _.bind(function(country){
         return country.iso === this.iso;
       }, this ));
