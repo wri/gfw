@@ -99,6 +99,7 @@ define([
                 ST_YMAX(the_geom) AS ymax, \
                 ST_YMIN(the_geom) AS ymin, \
                 tileurl, \
+                does_wrapper, \
                 true AS visible \
               FROM \
                 layerspec_nuclear_hazard \

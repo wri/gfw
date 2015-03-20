@@ -141,7 +141,7 @@ define([
         layers[i] && this._addLayers(layers, options, i);
       }, this);
 
-      if (!layersHelper[layer.slug].view || this.layerInst[layer.slug]) {
+      if (layer.slug.indexOf("_wrapper") > -1 && (!layersHelper[layer.slug].view || this.layerInst[layer.slug])) {
         _addNext();
         return;
       }
