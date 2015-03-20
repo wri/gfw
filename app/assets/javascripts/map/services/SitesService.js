@@ -13,7 +13,7 @@ define([
 
     requestId: 'SitesService',
 
-    _uriTemplate:'//gfw-apis.appspot.com/wdpa/sites',
+    _uriTemplate: window.gfw.config.GFW_API_HOST + '/wdpa/sites',
 
     /**
      * Constructs a new instance of SitesService.

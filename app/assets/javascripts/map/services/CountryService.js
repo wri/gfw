@@ -13,7 +13,7 @@ define([
 
     requestId: 'CountryService',
 
-    _uriTemplate:'http://beta.gfw-apis.appspot.com/countries/{iso}',
+    _uriTemplate: window.gfw.config.GFW_API_HOST + '/countries/{iso}',
 
     /**
      * Constructs a new instance of CountryService.
