@@ -180,7 +180,7 @@ define([
           var removeLayerFromCountry = function(layer) {
             self.$countryLayers.find('[data-layer="' +  layer.slug + '"]:not(.wrapped)').hide();
           }
-          _.each(wrapped_layers,removeLayerFromCountry );
+          _.each(wrapped_layers,removeLayerFromCountry);
         }
       }
 
