@@ -101,7 +101,7 @@ define([
       if (!$(event.target).hasClass('source') && !$(event.target).parent().hasClass('source')) {
         var layerSlug = $(event.currentTarget).data('layer');
 
-        if ($(event.currentTarget).hasClass('ifl')) {
+        if ($(event.currentTarget).hasClass('wrapped')) {
           event && event.stopPropagation();
           var $elem = $(event.currentTarget);
             if (event.target.nodeName === 'LABEL') {
