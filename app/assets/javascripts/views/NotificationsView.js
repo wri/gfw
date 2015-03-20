@@ -24,7 +24,8 @@ define([
     events: {
       'mouseover' : 'onEnter',
       'mouseout' : 'onLeave',
-      'click .close': 'hide'
+      'click .close': 'hide',
+      'click .action': 'triggerAction',
     },
 
     initialize: function() {
@@ -69,6 +70,14 @@ define([
       this.$notifContent.html($notif.clone().html());
       //Active notifications
       this.model.set('hidden', false);
+    },
+
+    triggerAction: function(e){
+      var act = $(e.currentTarget).data('action');
+      if (!$(act).hasClass('active')) {
+        $(act).trigger('click');
+      }
+      this.hide();
     },
 
     onEnter: function(){
