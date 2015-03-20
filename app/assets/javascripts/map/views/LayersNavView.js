@@ -104,10 +104,10 @@ define([
         if ($(event.currentTarget).hasClass('wrapped')) {
           event && event.stopPropagation();
           var $elem = $(event.currentTarget);
-          if (event.target.nodeName === 'LABEL') {
-            $elem.find('input').click();
-            return false;
-          }
+            if (event.target.nodeName === 'LABEL') {
+              $elem.find('input').click();
+              return false;
+            }
           if ($elem.hasClass('selected')) {$elem.find('input').prop('checked',false);}
           else {$elem.find('[data-layer="ifl_2013_deg"] input').prop('checked', true);}
           if ($elem.prop('tagName') !== 'LI'){
