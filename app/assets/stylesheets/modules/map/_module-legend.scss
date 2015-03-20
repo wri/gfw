@@ -6,7 +6,7 @@
   font-size: 13px;
   max-height: 75%;
   overflow: auto;
-  padding: 0 0 56px;
+  padding: 20px 0 56px;
   z-index: 25;
   @include transition(all 0.25s $easeInOutSine);
   @include transform(translate(0,100%));
