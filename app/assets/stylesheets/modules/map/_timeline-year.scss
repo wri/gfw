@@ -1,6 +1,9 @@
 .widget-timeline .timeline-year {
   height: 100%;
-  padding-left: 50px;
+  padding-left: 44px;
+  @media (min-width: $br-mobileMap){
+    padding-left: 50px;
+  }
 
 
   // Play button
@@ -8,10 +11,13 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 50px;
+    width: 44px;
     height: 100%;
     cursor: pointer;
     padding: 20px;
+    @media (min-width: $br-mobileMap){
+      width: 50px;
+    }
     &:after{
       content: "";
       position: absolute;
@@ -57,7 +63,9 @@
   .time {
     height: 100%;
     position: relative;
-    padding: 0 5px;
+    @media (min-width: $br-mobileMap){
+      padding: 0 5px;
+    }
     svg{
       width: auto;
     }
@@ -84,6 +92,9 @@
     }
   }
   .xaxis-years{
+    @media (max-width: $br-mobileMap - 1){
+      display: none;
+    }
     text {
       font-size: 11px;
       fill: $dark;

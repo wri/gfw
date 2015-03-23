@@ -50,12 +50,12 @@ define([
       this.model = new MapControlsModel();
       this.presenter = new Presenter(this);
       this.map = map;
-      enquire.register("screen and (min-width:1000px)", {
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.render(false);
         },this)
       });
-      enquire.register("screen and (max-width:1000px)", {
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.render(true);
         },this)

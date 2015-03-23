@@ -26,7 +26,10 @@
     <%= csrf_meta_tags %>
     <script>
         var gfw = window.gfw = {};
-        window.gfw.config = { GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>" };
+        window.gfw.config = {
+          GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>",
+          GFW_MOBILE: 1000
+        };
     </script>
 
   </head>
