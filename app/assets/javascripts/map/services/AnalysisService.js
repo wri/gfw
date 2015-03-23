@@ -26,7 +26,7 @@ define([
 
   'use strict';
 
-  var URL = 'http://beta.gfw-apis.appspot.com/forest-change';
+  var URL = window.gfw.config.GFW_API_HOST + '/forest-change';
   //var URL = 'http://localhost:8080/forest-change';
 
 
