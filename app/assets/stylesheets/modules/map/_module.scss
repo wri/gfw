@@ -1,10 +1,14 @@
 .module{
   position: absolute;
-  background: $white;
-  box-shadow: $shadow1;
+  background: none;
+  box-shadow: none;
   @include transition(all 0.5s $easeInOutSine);
   opacity: 1;
   visibility: visible;
+  @media (min-width: $br-mobileMap){
+    background: $white;
+    box-shadow: $shadow1;
+  }
 
   &.hide{
     opacity: 0;

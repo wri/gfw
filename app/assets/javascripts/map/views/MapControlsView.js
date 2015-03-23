@@ -12,8 +12,9 @@ define([
   'map/views/controls/ToggleModulesView',
   'map/views/controls/ShareView',
   'map/views/controls/ThresholdView',
-  'text!map/templates/mapcontrols.handlebars'
-], function(_, Handlebars, keymaster, Presenter, Searchbox, ToggleModulesView, ShareView, ThresholdView, tpl) {
+  'text!map/templates/mapcontrols.handlebars',
+  'text!map/templates/mapcontrols-mobile.handlebars'
+], function(_, Handlebars, keymaster, Presenter, Searchbox, ToggleModulesView, ShareView, ThresholdView, tpl, tplMobile) {
 
   'use strict';
 
@@ -37,9 +38,11 @@ define([
       'click .search' : 'showSearch',
       'click .share-map' : 'shareMap',
       'click .toggle-modules' : 'toggleModules',
+      'click .toggle-mapcontrols' : 'toggleControls'
     },
 
     template: Handlebars.compile(tpl),
+    templateMobile: Handlebars.compile(tplMobile),
 
     initialize: function(map) {
       _.bindAll(this,'zoomIn','zoomOut','resetMap','showSearch','shareMap','toggleModules');
@@ -47,7 +50,12 @@ define([
       this.presenter = new Presenter(this);
       this.map = map;
       this.render();
+      this.cacheVars();
       this.setListeners();
+    },
+
+    cacheVars: function(){
+      this.$toggleButtons = this.$el.find('.toggle-buttons');
     },
 
     setListeners: function(){
@@ -76,7 +84,12 @@ define([
     },
 
     render: function(){
-      this.$el.html(this.template());
+      if ($(window).width() >= 1000) {
+        this.$el.html(this.template());
+      }else{
+        this.$el.html(this.templateMobile());
+      }
+
       this.initCustomViews();
     },
 
@@ -141,6 +154,9 @@ define([
       this.$el.find('.toggle-modules').toggleClass('active');
       mps.publish('MapControlsToggleModules/toggle');
     },
+    toggleControls: function(e){
+      this.$toggleButtons.children('.toggle-button').toggleClass('hidden');
+    }
 
 
   });
