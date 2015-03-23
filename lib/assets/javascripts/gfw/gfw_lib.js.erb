@@ -247,7 +247,7 @@ GFW.modules.app = function(gfw) {
         lat = event.latLng.lat(),
         lng = event.latLng.lng(),
         params = { lat: lat, lon: lng },
-        url = window.gfw.config.GFW_API_HOST + "/wdpa/sites";
+        url = "//<%= ENV['GFW_API_HOST'] %>/wdpa/sites";
 
         executeAjax(url, params, {
           success: function(sites) {
@@ -403,7 +403,7 @@ GFW.modules.app = function(gfw) {
       } else {
         this.pantropicalLayer = new google.maps.ImageMapType({
           getTileUrl: function(tile, zoom) {
-            return window.gfw.config.GFW_API_HOST + "/gee/masked_forest_carbon/" + zoom + "/" + tile.x + "/" + tile.y + ".png";
+            return "//<%= ENV['GFW_API_HOST'] %>/gee/masked_forest_carbon/" + zoom + "/" + tile.x + "/" + tile.y + ".png";
           },
           tileSize: new google.maps.Size(256, 256),
           opacity: 1,

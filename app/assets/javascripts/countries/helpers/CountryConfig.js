@@ -82,7 +82,7 @@ define([], function() {
       style: new google.maps.ImageMapType({
         getTileUrl: function(ll, z) {
           var X = Math.abs(ll.x % (1 << z)); // wrap
-          return window.gfw.config.GFW_API_HOST + "/gee/simple_green_coverage/" + z + "/" + X + "/" + ll.y + ".png";
+          return "//<%= ENV['GFW_API_HOST'] %>/gee/simple_green_coverage/" + z + "/" + X + "/" + ll.y + ".png";
         },
         tileSize: new google.maps.Size(256, 256),
         isPng: true,
@@ -99,7 +99,7 @@ define([], function() {
       config.MAPSTYLES.landsat[i] = new google.maps.ImageMapType({
         getTileUrl: function(ll, z) {
           var X = Math.abs(ll.x % (1 << z));  // wrap
-          return window.gfw.config.GFW_API_HOST + "/gee/landsat_composites/" + z + "/" + X + "/" + ll.y + ".png?year="+year;
+          return "//<%= ENV['GFW_API_HOST'] %>/gee/landsat_composites/" + z + "/" + X + "/" + ll.y + ".png?year="+year;
         },
         tileSize: new google.maps.Size(256, 256),
         isPng: true,

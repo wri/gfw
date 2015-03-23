@@ -218,7 +218,7 @@ define([
 
             var max_trigger = data.length -1;
             $.ajax({
-              url: window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (this.helper.config.canopy_choice || 30),
+              url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (this.helper.config.canopy_choice || 30),
               dataType: 'json',
               success: _.bind(function(data) {
                 var loss = Math.round(val.loss);
@@ -290,7 +290,7 @@ define([
             var ord = e ? (key+11) : (key+1),
                 enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
             $.ajax({
-              url: window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=30',
+              url: 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=30',
               dataType: 'json',
               success: _.bind(function(data) {
                 var g_mha, l_mha;

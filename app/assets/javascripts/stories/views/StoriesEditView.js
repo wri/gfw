@@ -91,7 +91,7 @@ define([
     style: new google.maps.ImageMapType({
       getTileUrl: function(ll, z) {
         var X = Math.abs(ll.x % (1 << z)); // wrap
-        return window.gfw.config.GFW_API_HOST + "/gee/simple_green_coverage/" + z + "/" + X + "/" + ll.y + ".png";
+        return "//gfw-apis.appspot.com/gee/simple_green_coverage/" + z + "/" + X + "/" + ll.y + ".png";
       },
       tileSize: new google.maps.Size(256, 256),
       isPng: true,
@@ -108,7 +108,7 @@ define([
       config.MAPSTYLES.landsat[i] = new google.maps.ImageMapType({
         getTileUrl: function(ll, z) {
           var X = Math.abs(ll.x % (1 << z));  // wrap
-          return window.gfw.config.GFW_API_HOST + "/gee/landsat_composites/" + z + "/" + X + "/" + ll.y + ".png?year="+year;
+          return "//gfw-apis.appspot.com/gee/landsat_composites/" + z + "/" + X + "/" + ll.y + ".png?year="+year;
         },
         tileSize: new google.maps.Size(256, 256),
         isPng: true,
@@ -381,7 +381,7 @@ define([
     },
     prettifyFilename: function (filename) {
       return filename.toLowerCase().replace(/ /g,"_");
-    },
+    },    
 
     render: function() {
       this.$the_geom = this.$('#story_the_geom');
