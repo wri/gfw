@@ -37,6 +37,8 @@ define([
     initialize: function(layer, currentDate) {
       _.bindAll(this, 'onAnimationBrush', 'onBrush', 'onBrushEnd', 'updateCurrentDate');
       this.layer = layer;
+      this.dateRangeStart = this.defaults.dateRange[0];
+      this.dateRangeEnd = this.defaults.dateRange[1];
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
       if (currentDate && currentDate[0]) {
@@ -68,9 +70,23 @@ define([
         left: 0,
         right: 0
       };
-      this.render();
+
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.render();
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.renderMobile();
+        },this)
+      });
     },
 
+
+    /**
+     * Render select of years.
+     */
     renderMobile: function(){
       this.$timeline = $('.timeline-container');
       this.$el.html(this.templateMobile());
@@ -82,6 +98,25 @@ define([
       this.$stopIcon = this.$el.find('.stop-icon');
       this.$time = this.$el.find('.time');
 
+      // Timeline
+      this.$from = $('#from-timeline-year');
+      this.$to = $('#to-timeline-year');
+
+
+      this.fillSelects();
+    },
+
+
+    fillSelects: function(){
+      var start = this.dateRangeStart.year();
+      var end = this.dateRangeEnd.year();
+      var range = end - start;
+      var options = '';
+      for (var i = 0; i < range; i++) {
+        options += '<option>'+ (start + i) +'</option>';
+      }
+      this.$from.html(options);
+      this.$to.html(options);
     },
 
     /**
@@ -100,29 +135,13 @@ define([
       this.$stopIcon = this.$el.find('.stop-icon');
       this.$time = this.$el.find('.time');
 
-
-      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
-        match: _.bind(function(){
-          // SVG options
-          margin = {top: 0, right: 20, bottom: 0, left: 20};
-          width = this.options.width - margin.left - margin.right;
-          height = this.options.height - margin.bottom - margin.top;
-          center = height/2 - 2;
-          handleY = -3;
-          ticks = this.options.dateRange[1].year() - this.options.dateRange[0].year();
-        },this)
-      });
-      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
-        match: _.bind(function(){
-          margin = {top: 0, right: 20, bottom: 0, left: 20};
-          width = $(window).width() - 44 - margin.left - margin.right;
-          height = 44;
-          center = height/2 + 4;
-          handleY = -3 + 4;
-          ticks = this.options.dateRange[1].year() - this.options.dateRange[0].year();
-        },this)
-      });
-
+      // Set Vars
+      margin = {top: 0, right: 20, bottom: 0, left: 20};
+      width = this.options.width - margin.left - margin.right;
+      height = this.options.height - margin.bottom - margin.top;
+      center = height/2 - 2;
+      handleY = -3;
+      ticks = this.options.dateRange[1].year() - this.options.dateRange[0].year();
 
       // Set xscale
       this.xscale = d3.scale.linear()
