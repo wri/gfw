@@ -9,6 +9,9 @@
       <li class="layer" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">
         <span class="onoffswitch"><span></span></span>
         <span class="layer-title">{{this.title}}<a href="#" data-source="{{this.slug}}" class="source"><svg><use xlink:href="#shape-info"></use></svg></a></span>
+      {{#if this.does_wrapper}}
+        <span class="does_wrapper"></span>
+      {{/if}}
       </li>
     {{/each}}
   </ul>

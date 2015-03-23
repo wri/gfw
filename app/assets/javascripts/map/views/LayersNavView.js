@@ -11,8 +11,9 @@ define([
   'map/presenters/LayersNavPresenter',
   'handlebars',
   'text!map/templates/layersNav.handlebars',
-  'text!map/templates/layersNavByCountry.handlebars'
-], function(Backbone, _, amplify, chosen, Presenter, Handlebars, tpl, tplCountry) {
+  'text!map/templates/layersNavByCountry.handlebars',
+  'text!map/templates/layersNavByCountryWrapper.handlebars'
+], function(Backbone, _, amplify, chosen, Presenter, Handlebars, tpl, tplCountry, tplCountryWrapper) {
 
   'use strict';
 
@@ -22,6 +23,7 @@ define([
 
     template: Handlebars.compile(tpl),
     templateCountry: Handlebars.compile(tplCountry),
+    templateCountryWrapper: Handlebars.compile(tplCountryWrapper),
 
     events: {
       'click .layer': '_toggleLayer',
@@ -99,11 +101,7 @@ define([
       if (!$(event.target).hasClass('source') && !$(event.target).parent().hasClass('source')) {
         var layerSlug = $(event.currentTarget).data('layer');
 
-        if ($(event.currentTarget).hasClass('ifl') || $(event.currentTarget).hasClass('c_f_peru')) {
-            var fil_type = 'ifl_2013_deg';
-          if ($(event.currentTarget).hasClass('c_f_peru')) {
-            fil_type = 'concesiones_forestalesNS';
-          }
+        if ($(event.currentTarget).hasClass('wrapped')) {
           event && event.stopPropagation();
           var $elem = $(event.currentTarget);
             if (event.target.nodeName === 'LABEL') {
@@ -111,7 +109,7 @@ define([
               return false;
             }
           if ($elem.hasClass('selected')) {$elem.find('input').prop('checked',false);}
-          else {$elem.find('[data-layer="' + fil_type + '"] input').prop('checked', true);}
+          else {$elem.find('[data-layer="ifl_2013_deg"] input').prop('checked', true);}
           if ($elem.prop('tagName') !== 'LI'){
             for (var i=0;i < $elem.siblings().length; i++) {
               if ($($elem.siblings()[i]).hasClass('selected')) {
@@ -173,8 +171,18 @@ define([
       }, this ));
       var name = (country) ? country.name : 'Country';
       (country) ? this.$countryLayers.addClass('iso-detected') : this.$countryLayers.removeClass('iso-detected');
-
       this.$countryLayers.html(this.templateCountry({ country: name ,  layers: layers }));
+      for (var i = 0; i< layers.length; i++) {
+        if (!!layers[i].does_wrapper) {
+          var self = this;
+          var wrapped_layers = JSON.parse(layers[i].does_wrapper);
+          self.$countryLayers.find('.does_wrapper').html(self.templateCountryWrapper({layers: wrapped_layers}));
+          var removeLayerFromCountry = function(layer) {
+            self.$countryLayers.find('[data-layer="' +  layer.slug + '"]:not(.wrapped)').hide();
+          }
+          _.each(wrapped_layers,removeLayerFromCountry);
+        }
+      }
 
       this.fixLegibility();
 
