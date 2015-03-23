@@ -12,7 +12,7 @@ define([
   var PantropicalLayer = ImageMaptypeLayerClass.extend({
 
     options: {
-      urlTemplate: '//gfw-apis.appspot.com/gee/masked_forest_carbon{/z}{/x}{/y}.png'
+      urlTemplate: window.gfw.config.GFW_API_HOST + '/gee/masked_forest_carbon{/z}{/x}{/y}.png'
     }
 
   });
