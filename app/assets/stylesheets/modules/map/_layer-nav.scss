@@ -193,6 +193,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           display: inline-block;
           &.selected {
             color: $dark;
+            text-shadow: 0px 0px 0px #999;
           }
           input {
             cursor: pointer;
