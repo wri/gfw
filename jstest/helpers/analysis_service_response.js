@@ -1,11 +1,11 @@
 var AnalysisServiceResponse = {
   fires: {
     "apis": {
-      "national": "http://beta.gfw-apis.appspot.com/nasa-active-fires/admin{/iso}{?period,download,bust,dev}",
-      "subnational": "http://beta.gfw-apis.appspot.com/nasa-active-fires/admin{/iso}{/id1}{?period,download,bust,dev}",
-      "use": "http://beta.gfw-apis.appspot.com/nasa-active-fires/use/{/name}{/id}{?period,download,bust,dev}",
-      "wdpa": "http://beta.gfw-apis.appspot.com/nasa-active-fires/wdpa/{/id}{?period,download,bust,dev}",
-      "world": "http://beta.gfw-apis.appspot.com/nasa-active-fires{?period,geojson,download,bust,dev}"
+      "national": window.gfw.config.GFW_API_HOST + "/nasa-active-fires/admin{/iso}{?period,download,bust,dev}",
+      "subnational": window.gfw.config.GFW_API_HOST + "/nasa-active-fires/admin{/iso}{/id1}{?period,download,bust,dev}",
+      "use": window.gfw.config.GFW_API_HOST + "/nasa-active-fires/use/{/name}{/id}{?period,download,bust,dev}",
+      "wdpa": window.gfw.config.GFW_API_HOST + "/nasa-active-fires/wdpa/{/id}{?period,download,bust,dev}",
+      "world": window.gfw.config.GFW_API_HOST + "/nasa-active-fires{?period,geojson,download,bust,dev}"
     },
     "download_urls": {
       "csv": "http://wri-01.cartodb.com/api/v2/sql?q=TODO&format=csv",

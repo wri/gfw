@@ -358,7 +358,7 @@ define([
     },
 
     _updateData: function(area_id) {
-      var url     = 'http://beta.gfw-apis.appspot.com/forest-change/umd-loss-gain/admin/' + this.country.get('iso'),
+      var url     = window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + this.country.get('iso'),
           canopy  = this.helper.config.canopy_choice || 30,
           $cnp_op = $('.umd_options_control').find('.sidenav-icon'),
           $target = $('.tree-numbers'),
