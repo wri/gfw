@@ -8,6 +8,7 @@ require([
   'backbone',
   'chosen',
   'map/utils',
+  'enquire',
   'mps',
   'map/router',
   'map/presenters/ExperimentsPresenter',
@@ -27,7 +28,7 @@ require([
   'views/SourceMobileFriendlyView',
   'views/NotificationsView',
   '_string'
-], function($, _, Class, Backbone, chosen, utils, mps, Router, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
+], function($, _, Class, Backbone, chosen, utils, enquire, mps, Router, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
     MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, HeaderView, FooterView, SourceWindowView, SourceMobileFriendlyView, NotificationsView) {
 
   'use strict';

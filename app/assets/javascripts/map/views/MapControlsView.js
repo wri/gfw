@@ -6,6 +6,7 @@
 define([
   'underscore',
   'handlebars',
+  'enquire',
   'keymaster',
   'map/presenters/MapControlsPresenter',
   'map/views/controls/SearchboxView',
@@ -14,7 +15,7 @@ define([
   'map/views/controls/ThresholdView',
   'text!map/templates/mapcontrols.handlebars',
   'text!map/templates/mapcontrols-mobile.handlebars'
-], function(_, Handlebars, keymaster, Presenter, Searchbox, ToggleModulesView, ShareView, ThresholdView, tpl, tplMobile) {
+], function(_, Handlebars, enquire, keymaster, Presenter, Searchbox, ToggleModulesView, ShareView, ThresholdView, tpl, tplMobile) {
 
   'use strict';
 
@@ -49,7 +50,17 @@ define([
       this.model = new MapControlsModel();
       this.presenter = new Presenter(this);
       this.map = map;
-      this.render();
+      enquire.register("screen and (min-width:1000px)", {
+        match: _.bind(function(){
+          this.render(false);
+        },this)
+      });
+      enquire.register("screen and (max-width:1000px)", {
+        match: _.bind(function(){
+          this.render(true);
+        },this)
+      });
+
       this.cacheVars();
       this.setListeners();
     },
@@ -59,11 +70,11 @@ define([
     },
 
     setListeners: function(){
-      key('s', this.showSearch);
+      key('f', this.showSearch);
       key('m', this.zoomIn);
       key('n', this.zoomOut);
       key('alt+r', this.resetMap);
-      key('f', this.shareMap);
+      key('s', this.shareMap);
       key('t', this.toggleModules);
 
       this.model.on('change:hidden', this.toogleModule, this);
@@ -83,13 +94,8 @@ define([
       }
     },
 
-    render: function(){
-      if ($(window).width() >= 1000) {
-        this.$el.html(this.template());
-      }else{
-        this.$el.html(this.templateMobile());
-      }
-
+    render: function(mobile){
+      (mobile) ? this.$el.html(this.templateMobile()) : this.$el.html(this.template());
       this.initCustomViews();
     },
 
