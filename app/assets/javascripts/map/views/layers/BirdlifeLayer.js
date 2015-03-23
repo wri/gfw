@@ -12,9 +12,9 @@ define([
   var BirdlifeLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT the_geom_webmercator, ebaaltmin::text, ebaaltmax, ebabookcod as id, ebaname, \'{tableName}\' AS layer FROM {tableName}',
+      sql: 'SELECT the_geom_webmercator, ebaaltmin::text, ebaaltmax, ebabookcod as id, ebaname, factsheet, \'{tableName}\' AS layer FROM {tableName}',
       infowindow: true,
-      interactivity: 'ebaname, id, ebaaltmin, ebaaltmax'
+      interactivity: 'ebaname, id, ebaaltmin, ebaaltmax, factsheet'
     }
 
   });

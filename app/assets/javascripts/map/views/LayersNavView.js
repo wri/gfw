@@ -103,8 +103,10 @@ define([
 
         if ($(event.currentTarget).hasClass('wrapped')) {
           event && event.stopPropagation();
+
           var $elem = $(event.currentTarget);
           if ($elem.prop('tagName') !== 'LI'){
+            //as the toggle are switches, we should turn off the others (siblings) before turning on our layer
             for (var i=0;i < $elem.siblings().length; i++) {
               if ($($elem.siblings()[i]).hasClass('selected')) {
                 this.presenter.toggleLayer($($elem.siblings()[i]).data('layer'));
