@@ -26,11 +26,6 @@
     <%= controller_stylesheet_link_tag %>
     <%= yield :js %>
     <%= csrf_meta_tags %>
-    <script>
-        var gfw = window.gfw = {};
-        window.gfw.config = { GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>" };
-    </script>
-
   </head>
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
     <%= render 'layouts/svg_icons' %>

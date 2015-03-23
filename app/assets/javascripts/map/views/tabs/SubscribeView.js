@@ -85,7 +85,7 @@ define([
       if (this.validateEmail(email)) {
         $.ajax({
           type: 'POST',
-          url: 'http://' + window.gfw.config.GFW_API_HOST + '/subscribe',
+          url: 'http://gfw-apis.appspot.com/subscribe',
           crossDomain: true,
           data: JSON.stringify(data),
           dataType: 'json',
