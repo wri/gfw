@@ -12,7 +12,7 @@ describe CountriesConcern do
     }
 
     subject {
-      CountriesConcernDouble.download_link iso
+      CountriesConcernDouble.new.download_link iso
     }
 
     it "returns a download link for that country" do

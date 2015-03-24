@@ -6,18 +6,18 @@ describe CountriesController do
   end
 
   describe "GET download" do
-    let(:params) { {} }
+    let(:url_params) { {} }
     let(:iso) { "AWM" }
     let(:download_link) { "http://download.com/country" }
 
     subject {
-      get :download, {id: iso}.merge(params)
+      get :download, {id: iso}.merge(url_params)
     }
 
     before(:each) do
       @request.user_agent = "bot" # get past browser checks
 
-      expect(CountriesConcern).to(
+      expect_any_instance_of(CountriesController).to(
         receive(:download_link).
         with(iso).
         and_return(download_link)
@@ -26,9 +26,26 @@ describe CountriesController do
 
     context "given an email address" do
       let(:email) { "my@email.com" }
-      let(:params) { {email: email} }
+      let(:url_params) { {email: email} }
 
-      it "sends an email with the download link"
+      let(:mailer_double) { double("mailer") }
+
+      it "sends an email with the download link" do
+        expect(MobileDownload).to(
+          receive(:download_email).
+          with(email, download_link).
+          and_return(mailer_double)
+        )
+
+        expect(mailer_double).to receive(:deliver).and_return(true)
+
+        subject
+      end
+
+      it "returns a success response code" do
+        expect(response.code).to eq("200")
+        subject
+      end
     end
 
     context "given no email address" do

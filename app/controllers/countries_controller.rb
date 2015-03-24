@@ -3,6 +3,7 @@ class CountriesController < ApplicationController
   before_action :check_country_iso, only: :show
 
   include ActionView::Helpers::NumberHelper
+  include CountriesConcern
 
   layout 'countries'
 
@@ -42,7 +43,16 @@ class CountriesController < ApplicationController
   end
 
   def download
-    redirect_to CountriesConcern.download_link(params[:id])
+    if params[:email].present?
+      MobileDownload.download_email(
+        params[:email],
+        download_link(params[:id])
+      ).deliver
+
+      head :success
+    else
+      redirect_to download_link(params[:id])
+    end
   end
 
   private
