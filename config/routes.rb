@@ -93,7 +93,7 @@ Gfw::Application.routes.draw do
   # countries
   get '/countries' => 'countries#index'
   get '/country/:id' => 'countries#show', :as => 'country'
-  get '/country/:id/download' => 'countries#download'
+  get '/country/:id/download' => 'countries#download', :as => 'country_download'
   get '/country_info/:id/:box',to: redirect('/country/%{id}#%{box}')
   # todo => validate id
   get '/country/:id/:area_id' => 'countries#show', :as => 'country_area'

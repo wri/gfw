@@ -9,12 +9,13 @@ define([
   'mps',
   'scrollit',
   'views/SourceWindowView',
+  'views/DownloadView',
   'countries/views/CountryHeaderView',
   'countries/views/CountryShareView',
   'countries/models/CountryShowModel',
   'countries/helpers/CountryHelper',
 
-], function($, Backbone, _, d3, mps, scrollit, SourceWindowView, CountryHeaderView, CountryShareView, CountryShowModel, CountryHelper ) {
+], function($, Backbone, _, d3, mps, scrollit, SourceWindowView, DownloadView, CountryHeaderView, CountryShareView, CountryShowModel, CountryHelper ) {
 
   'use strict';
 
@@ -46,6 +47,7 @@ define([
       this.headerView = new CountryHeaderView({country: this.country});
       this._stickynav();
       this._initSource();
+      this._initDownload();
       this._drawTenure();
       this._drawForestsType();
       this._drawFormaAlerts();
@@ -62,6 +64,10 @@ define([
 
     _initSource: function() {
       this.sourceWindow  = new SourceWindowView();
+    },
+
+    _initDownload: function() {
+      new DownloadView({country: this.country});
     },
 
     _initFormaDropdown: function() {
