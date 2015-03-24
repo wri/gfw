@@ -1,7 +1,9 @@
 class CountriesController < ApplicationController
   before_filter :check_terms
   before_action :check_country_iso, only: :show
+
   include ActionView::Helpers::NumberHelper
+
   layout 'countries'
 
   def index
@@ -37,6 +39,10 @@ class CountriesController < ApplicationController
 
   def overview
     @title =  I18n.translate 'countries.overview.title'
+  end
+
+  def download
+    redirect_to CountriesConcern.download_link(params[:id])
   end
 
   private
