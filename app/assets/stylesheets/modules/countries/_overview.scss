@@ -733,12 +733,16 @@
 
 
 .share_dialog {
+  display: none;
+  z-index: 2000;
+}
+
+.download_dialog,
+.share_dialog {
   $width: 500px;
   $height: 170px;
 
-  display: none;
   position: fixed;
-  z-index: 2000;
   top: 50%; left: 50%;
   margin-top: -$height/2;
   margin-left: -$width/2;
@@ -909,6 +913,8 @@
     }
   }
 }
+
+.download_dialog,
 .share_dialog {
   height: 270px;
 
@@ -938,6 +944,26 @@
     }
   }
 }
+
+.source_window .content-wrapper
+.content .download_dialog .input-field a {
+  color: #FFFFFF;
+}
+
+.download_dialog {
+  .mode_menu {
+    width: 55px;
+  }
+
+  p {
+    margin: 15px 10px;
+  }
+
+  .error {
+    font-weight: bold;
+  }
+}
+
 .overview_button_group {
   position: relative;
   background: #EEEEEE;
@@ -1210,6 +1236,7 @@
     }
   }
 
+  .download_dialog,
   .share_dialog {
     top: 0;
     margin: 0;

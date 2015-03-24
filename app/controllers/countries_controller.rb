@@ -1,7 +1,12 @@
 class CountriesController < ApplicationController
   before_filter :check_terms
   before_action :check_country_iso, only: :show
+
+  skip_before_filter :verify_authenticity_token, only: [:create_download]
+
   include ActionView::Helpers::NumberHelper
+  include CountriesConcern
+
   layout 'countries'
 
   def index
@@ -37,6 +42,23 @@ class CountriesController < ApplicationController
 
   def overview
     @title =  I18n.translate 'countries.overview.title'
+  end
+
+  def create_download
+    if (params[:email].present?)
+      MobileDownload.download_email(
+        params[:email],
+        download_link(params[:id])
+      ).deliver
+
+      return render json: true
+    end
+
+    return render json: false, status: :unprocessable_entity
+  end
+
+  def download
+    redirect_to download_link(params[:id])
   end
 
   private
