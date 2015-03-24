@@ -38,6 +38,7 @@ define([
       'click .reset-map' : 'resetMap',
       'click .search' : 'showSearch',
       'click .share-map' : 'shareMap',
+      'click .locate' : 'locateMeOnMap',
       'click .toggle-modules' : 'toggleModules',
       'click .toggle-mapcontrols' : 'toggleControls'
     },
@@ -154,6 +155,23 @@ define([
     saveBounds: function(bounds){
       this.model.set('bounds', bounds);
     },
+
+
+    // LOCATE ON MAP
+    locateMeOnMap: function(){
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          _.bind(function(position) {
+            var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+            this.map.setCenter(pos);
+          }, this ),
+          _.bind(function() {
+            this.presenter.notificate('info-example');
+          }, this )
+        );
+      }
+    },
+
 
     //TOGGLE
     toggleModules: function(e){
