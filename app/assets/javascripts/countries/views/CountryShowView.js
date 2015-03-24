@@ -67,7 +67,7 @@ define([
     },
 
     _initDownload: function() {
-      new DownloadView({country: this.country});
+      new DownloadView();
     },
 
     _initFormaDropdown: function() {

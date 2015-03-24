@@ -30,10 +30,8 @@ define([
       'submit #download_email_form': '_requestDownload'
     },
 
-    initialize: function(options) {
-      this.options = options;
-
-      this.model = this._createModel();
+    initialize: function() {
+      this.model = new DownloadModel();
 
       this.$wrapper = $('#window');
       this.$content = $('#window .content');
@@ -64,13 +62,6 @@ define([
       if (this.mobile) {
         this.$content.html(this.template());
       }
-    },
-
-    _createModel: function() {
-      var iso = this.options.country.get('iso');
-      return new DownloadModel({
-        url: '/country/' + iso + '/download'
-      });
     },
 
     _requestDownload: function(event) {
