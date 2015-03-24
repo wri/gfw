@@ -31,7 +31,8 @@ define([
     },
 
     events: {
-      'click .play': 'togglePlay'
+      'click .play': 'togglePlay',
+      'change .select-date' : 'setSelects'
     },
 
     initialize: function(layer, currentDate) {
@@ -90,7 +91,7 @@ define([
     renderMobile: function(){
       this.$timeline = $('.timeline-container');
       this.$el.html(this.templateMobile());
-      this.$timeline.append(this.el);
+      this.$timeline.html('').append(this.el);
 
       // Cache
       this.$play = this.$el.find('.play');
@@ -99,6 +100,7 @@ define([
       this.$time = this.$el.find('.time');
 
       // Timeline
+      this.$selects = $('.select-date');
       this.$from = $('#from-timeline-year');
       this.$to = $('#to-timeline-year');
 
@@ -113,11 +115,45 @@ define([
       var range = end - start;
       var options = '';
       for (var i = 0; i < range; i++) {
-        options += '<option>'+ (start + i) +'</option>';
+        options += '<option value="'+(start + i)+'">'+ (start + i) +'</option>';
       }
-      this.$from.html(options);
-      this.$to.html(options);
+      this.$from.html(options).val(start);
+      this.$to.html(options).val(end - 1);
+      this.setSelects();
     },
+
+    setSelects: function(){
+
+      _.each(this.$selects,function(el){
+        var date = $(el).val();
+        var $dateButton = $('#'+$(el).attr('id')+'-button');
+        $dateButton.text(date);
+      });
+      this.toggleDisabled();
+
+    },
+
+    toggleDisabled: function(){
+      _.each(this.$selects,function(el){
+        var $options = document.getElementById($(el).attr('id')).options;
+        var compare = $($(el).data('compare'))[0].selectedIndex;
+        var direction = Boolean(parseInt($(el).data('direction')));
+        console.log('direction:' + direction);
+        console.log('compare:' + compare);
+
+        _.each($options, function(opt,i){
+          if (direction) {
+            (compare <= i) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
+          }else{
+            (compare >= i) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
+          }
+        });
+      });
+
+      this.updateCurrentDate([moment([this.$from.val()]), moment([this.$to.val()])]);
+    },
+
+
 
     /**
      * Render d3 timeline slider.
@@ -127,7 +163,7 @@ define([
 
       this.$timeline = $('.timeline-container');
       this.$el.html(this.template());
-      this.$timeline.append(this.el);
+      this.$timeline.html('').append(this.el);
 
       // Cache
       this.$play = this.$el.find('.play');

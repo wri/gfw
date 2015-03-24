@@ -1,6 +1,5 @@
 .widget-timeline .timeline-year {
   height: 100%;
-  padding-left: 44px;
   @media (min-width: $br-mobileMap){
     padding-left: 50px;
   }
@@ -68,6 +67,33 @@
     }
     svg{
       width: auto;
+    }
+    .select-timeline-container{
+      @include display-flex();
+      @include justify-content(center);
+      @include align-items(center);
+      line-height: 46px;
+      .select-timeline-box{
+        margin: 0 0 0 10px;
+        &:first-child{
+          margin: 0;
+        }
+        position: relative;
+        button{
+          top: -1px;
+          padding: 0 20px;
+          margin: 0 0 0 5px;
+        }
+        select{
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 10;
+        }
+      }
     }
   }
 
