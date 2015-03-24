@@ -31,6 +31,10 @@
           <h4>Legal designation:</h4>
           <p>{{content.data.desig_eng}}</p>
         {{/if}}
+        {{#if content.data.ebaname}}
+          <h4>Name:</h4>
+          <p><a href="http://{{content.data.factsheet}}" target="_blank">{{content.data.ebaname}}</a></p>
+        {{/if}}
         {{#if content.data.id}}
           <h4>ID:</h4>
           <p>{{content.data.id}}</p>
@@ -158,11 +162,6 @@
         {{#if content.data.ebaaltmax}}
           <h4>Max elevation:</h4>
           <p>{{content.data.ebaaltmax}}</p>
-        {{/if}}
-        {{#if content.data.ebaname}}
-          <h4>Name:</h4>
-          <p>{{content.data.ebaname}}</p>
-          <a class="btn green uppercase" href="http://{{content.data.factsheet}}" target="_blank">Learn more</a>
         {{/if}}
       </div>
     </div>
