@@ -51,10 +51,10 @@ class CountriesController < ApplicationController
         download_link(params[:id])
       ).deliver
 
-      head :success
+      return render json: true
     end
 
-    head :unprocessable_entity
+    return render json: false, status: :unprocessable_entity
   end
 
   def download

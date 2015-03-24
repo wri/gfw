@@ -1,14 +1,21 @@
-<h1 class="title">Email yourself a download link</h1>
+<div class="download_dialog">
+  <h1 class="title">Send yourself a download link</h1>
 
-<form id="download_email_form">
-  <p>
-    <span>
-      Enter your email to get a download link sent to your inbox
-    </span>
-  </p>
+  <form id="download_email_form">
+    <p>
+      <span>
+        Enter your email to get a download link sent to your inbox
+      </span>
+    </p>
 
-  <div class="input-field huge">
-    <input class="field" type="text" name="email_address">
-    <input type="submit">
-  </div>
+    <div class="input-field huge">
+      <input class="field" type="text" name="email_address" placeholder="your@email.com">
+      <ul class="mode_menu">
+        <li class="selected first last"><a class="submit">submit</a></li>
+      </ul>
+    </div>
+
+    <p class="error">
+    </p>
+  </form>
 </div>

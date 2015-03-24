@@ -5,13 +5,13 @@ define([
   'mps',
   'handlebars',
   'text!templates/download.handlebars',
-], function($,Backbone, _,mps,Handlebars,raw_template) {
+  'text!templates/download_error.handlebars',
+], function($,Backbone, _,mps,Handlebars,raw_template,raw_error_template) {
 
   'use strict';
 
   var DownloadModel = Backbone.Model.extend({
     sync: function(method, model, options) {
-      debugger
       options || (options = {});
       options.url = model.get('url');
 
@@ -21,13 +21,14 @@ define([
 
   var DownloadView = Backbone.View.extend({
     template: Handlebars.compile(raw_template),
+    errorTemplate: Handlebars.compile(raw_error_template),
 
     el: 'body',
 
     events: {
       'click .download' : 'download',
       'click .close': 'hide',
-      'submit #download_email_form': '_requestDownload'
+      'click #download_email_form .submit': '_requestDownload'
     },
 
     initialize: function() {
@@ -64,12 +65,27 @@ define([
       }
     },
 
+    _downloadRequestSuccess: function() {
+      this.hide();
+    },
+
+    _downloadRequestFailure: function() {
+      var errorTemplate = this.errorTemplate({
+        downloadLink: this.model.get('url')
+      });
+      this.$content.find('.error').html(errorTemplate);
+    },
+
     _requestDownload: function(event) {
       event && event.preventDefault() && event.stopPropagation();
 
       var email = $('#download_email_form [name="email_address"]').val()
       this.model.set('email', email);
-      this.model.save({}, {sucess: function(){}, error: function(){ debugger; }});
+
+      this.model.save({}, {
+        success: _.bind(this._downloadRequestSuccess, this),
+        error: _.bind(this._downloadRequestFailure, this)
+      });
     }
   });
 
