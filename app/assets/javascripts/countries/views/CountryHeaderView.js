@@ -613,7 +613,7 @@ define([
         .attr('x', -120)
         .attr('y', 10)
         .style('fill', function(d, i) {
-          if (i === 11) {
+          if (i === data_.length -1) {
             return '#9D9AA5';
           }
         })
@@ -623,7 +623,7 @@ define([
         .attr('height', function(d) { return height - y_scale(d.value); })
         .attr('width', barWidth - 2)
         .style('fill', function(d, i) {
-          if (i === 11) {
+          if (i === data_.length -1) {
             return '#9FBA2B';
           } else {
             return '#555';
