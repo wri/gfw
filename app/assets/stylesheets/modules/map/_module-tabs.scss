@@ -21,10 +21,17 @@ $w-control: 44px;
           cursor: pointer;
           padding: 0.5em 1.5em;
           border-left: 1px solid $border;
+          position: relative;
           &:first-child{
             border-left: none;
           }
-          &:hover{ background: $light;}
+          &:hover{
+            background: $light;
+            .tooltipmap{
+              opacity: 1;
+              visibility: visible;
+            }
+          }
           &:active{ background: darken($light,5%);}
           &.active{ background: $white;}
           &.inactive{
