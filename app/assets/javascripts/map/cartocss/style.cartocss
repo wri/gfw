@@ -294,7 +294,7 @@
     line-opacity: 0.3;
   }
 
-  [layer='azepoly_2010_16march2012'] {
+  [layer='azepoly_species'] {
     polygon-fill: #b2d26e;
     polygon-opacity: 0.9;
     line-color: #b2d26e;
