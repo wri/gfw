@@ -218,7 +218,8 @@ $w-control: 44px;
         display: inline-block;
         position: relative;
         z-index: 2;
-        padding: 0 0 5px 15px;
+        padding: 0 0 0px 15px;
+        margin: 0 0 5px;
         &:before{
           content: "";
           width: 0;
