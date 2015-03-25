@@ -36,21 +36,30 @@ define([
 
       this.$wrapper = $('#window');
       this.$content = $('#window .content');
+      this.$backdrop = $('#backdrop');
+    },
 
-      this.mobile = ($(window).width() > 850) ? false : true;
+    _isMobile: function() {
+      return ($(window).width() > 850) ? false : true;
     },
 
     show: function() {
       this.render();
-      this.$wrapper.addClass('active');
+      this.$wrapper.addClass('active download_dialog_wrapper');
+      this.$backdrop.show();
+      this.$backdrop.on('click', _.bind(function() {
+        this.hide();
+      },this));
     },
 
     hide: function() {
-      this.$wrapper.removeClass('active');
+      this.$wrapper.removeClass('active download_dialog_wrapper');
+      this.$backdrop.hide();
+      this.$backdrop.off('click');
     },
 
     download: function(event) {
-      if (this.mobile) {
+      if (this._isMobile()) {
         event && event.preventDefault() && event.stopPropagation();
         this.show();
 
@@ -60,7 +69,7 @@ define([
     },
 
     render: function() {
-      if (this.mobile) {
+      if (this._isMobile()) {
         this.$content.html(this.template());
       }
     },
