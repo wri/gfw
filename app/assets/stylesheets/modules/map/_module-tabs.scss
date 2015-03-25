@@ -33,6 +33,7 @@ $w-control: 44px;
           cursor: pointer;
           padding: 0.5em 1em;
           border-left: 1px solid $border;
+          position: relative;
           @media (min-width: $br-mobileMap){
             float: none;
             width: 33.333333%;
@@ -41,8 +42,13 @@ $w-control: 44px;
               border-left: none;
             }
           }
-
-          &:hover{ background: $light;}
+          &:hover{
+            background: $light;
+            .tooltipmap{
+              opacity: 1;
+              visibility: visible;
+            }
+          }
           &:active{ background: darken($light,5%);}
           &.active{ background: $white;}
           &.inactive{
