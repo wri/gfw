@@ -190,6 +190,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           color: #AAA;
           font-size: 11px;
           margin: 5px 0px;
+          text-transform: none;
           display: inline-block;
           &.selected {
             color: $dark;
