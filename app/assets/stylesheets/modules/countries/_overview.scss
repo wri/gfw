@@ -733,12 +733,16 @@
 
 
 .share_dialog {
+  display: none;
+  z-index: 2000;
+}
+
+.download_dialog,
+.share_dialog {
   $width: 500px;
   $height: 170px;
 
-  display: none;
   position: fixed;
-  z-index: 2000;
   top: 50%; left: 50%;
   margin-top: -$height/2;
   margin-left: -$width/2;
@@ -909,6 +913,8 @@
     }
   }
 }
+
+.download_dialog,
 .share_dialog {
   height: 270px;
 
@@ -938,6 +944,26 @@
     }
   }
 }
+
+.source_window .content-wrapper
+.content .download_dialog .input-field a {
+  color: #FFFFFF;
+}
+
+.download_dialog {
+  .mode_menu {
+    width: 55px;
+  }
+
+  p {
+    margin: 15px 10px;
+  }
+
+  .error {
+    font-weight: bold;
+  }
+}
+
 .overview_button_group {
   position: relative;
   background: #EEEEEE;
@@ -1210,28 +1236,57 @@
     }
   }
 
+  .download_dialog,
   .share_dialog {
-    top: 0;
     margin: 0;
     left: 0;
-    height: 100%;
     width: 100%;
-    padding-top: 150px;
+    position: relative;
+    top: 50%;
+    transform: translateY(50%);
+    padding: 20px;
+
+    h1 {
+      font-size: 16px;
+      margin: 0 5px;
+    }
+
+    p {
+      font-size: 13px;
+    }
 
     .form {
       border-top: 0;
       padding-left: 0;
-      width: 100%;
-      top: 230px;
+      width: 90%;
+      left: auto;
+      bottom: auto;
     }
 
     .input-field {
       width: 90%;
+      margin-left: 10px;
+    }
+
+    .btn-rdn-primary {
+      padding-top: 5px;
+      padding-bottom: 5px;
+      width: 95%;
+      font-size: 13px;
+      margin-top: 20px;
     }
 
     .share_buttons {
+      margin: auto;
       left: 85px;
     }
+  }
+
+  .share_dialog {
+    top: 0;
+    position: fixed;
+    margin: 0 5%;
+    width: 90%;
   }
 
   .overview_graph .umdoptions_dialog {
@@ -1252,6 +1307,20 @@
     p .slider #canopy_slider {
       width: 100%;
       margin-left: 0;
+    }
+  }
+
+  .download_dialog_wrapper {
+    background: transparent;
+
+    .close {
+      top: 26%;
+      right: 13px;
+    }
+
+    &:before,
+    &:after {
+      background: none;
     }
   }
 
