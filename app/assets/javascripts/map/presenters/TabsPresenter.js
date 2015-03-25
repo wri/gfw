@@ -29,7 +29,12 @@ define([
 
     onTabOpen: function(id){
       mps.publish('Tab/opened', [id]);
+    },
+
+    toggleShare: function(){
+      mps.publish('ShareControls/toggle');
     }
+
 
   });
 
