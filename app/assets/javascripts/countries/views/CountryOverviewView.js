@@ -9,10 +9,9 @@ define([
   'mps',
   'views/SourceWindowView',
   'countries/views/CountryHeaderView',
-  'countries/views/CountryShareView',
   'countries/helpers/CountryHelper'
 
-], function($, Backbone, _, d3, mps, SourceWindowView, CountryHeaderView, CountryShareView, CountryHelper) {
+], function($, Backbone, _, d3, mps, SourceWindowView, CountryHeaderView, CountryHelper) {
 
   'use strict';
 
@@ -81,9 +80,6 @@ define([
       this._drawYears();
       this._drawGraph();
       this._drawList();
-
-      var Share = new CountryShareView({ template: 'templateShare' });
-      this.$el.find('.overview_button_group .share').append(Share.render());
     },
 
     _toggleYears: function() {
