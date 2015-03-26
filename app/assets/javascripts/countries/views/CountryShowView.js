@@ -25,6 +25,7 @@ define([
 
     events: {
       'click .forma_dropdown-link': '_openDropdown',
+      'click .country-download-link': '_openDownloadModal'
     },
 
     initialize: function() {
@@ -47,7 +48,6 @@ define([
       this.headerView = new CountryHeaderView({country: this.country});
       this._stickynav();
       this._initSource();
-      this._initDownload();
       this._drawTenure();
       this._drawForestsType();
       this._drawFormaAlerts();
@@ -66,8 +66,8 @@ define([
       this.sourceWindow  = new SourceWindowView();
     },
 
-    _initDownload: function() {
-      new DownloadView();
+    _openDownloadModal: function(event) {
+      new DownloadView().download(event);
     },
 
     _initFormaDropdown: function() {

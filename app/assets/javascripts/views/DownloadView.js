@@ -23,20 +23,15 @@ define([
     template: Handlebars.compile(raw_template),
     errorTemplate: Handlebars.compile(raw_error_template),
 
-    el: 'body',
+    el: '.country-download-modal',
 
     events: {
-      'click .download' : 'download',
       'click .close': 'hide',
-      'click #download_email_form .submit': '_requestDownload'
+      'click button': '_requestDownload'
     },
 
     initialize: function() {
       this.model = new DownloadModel();
-
-      this.$wrapper = $('#window');
-      this.$content = $('#window .content');
-      this.$backdrop = $('#backdrop');
     },
 
     _isMobile: function() {
@@ -45,17 +40,11 @@ define([
 
     show: function() {
       this.render();
-      this.$wrapper.addClass('active download_dialog_wrapper');
-      this.$backdrop.show();
-      this.$backdrop.on('click', _.bind(function() {
-        this.hide();
-      },this));
+      this.$el.addClass('active');
     },
 
     hide: function() {
-      this.$wrapper.removeClass('active download_dialog_wrapper');
-      this.$backdrop.hide();
-      this.$backdrop.off('click');
+      this.$el.removeClass('active');
     },
 
     download: function(event) {
@@ -70,7 +59,7 @@ define([
 
     render: function() {
       if (this._isMobile()) {
-        this.$content.html(this.template());
+        this.$el.html(this.template());
       }
     },
 
@@ -82,7 +71,7 @@ define([
       var errorTemplate = this.errorTemplate({
         downloadLink: this.model.get('url')
       });
-      this.$content.find('.error').html(errorTemplate);
+      this.$el.find('.error').html(errorTemplate);
     },
 
     _requestDownload: function(event) {

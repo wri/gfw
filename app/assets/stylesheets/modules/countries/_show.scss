@@ -2235,7 +2235,16 @@
   }
 }
 
-
 .source_category_title{
   display: none !important;
+}
+
+.country-download-modal {
+  position: fixed;
+
+  p.error {
+    margin-top: 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+  }
 }

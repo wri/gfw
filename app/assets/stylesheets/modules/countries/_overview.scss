@@ -737,7 +737,6 @@
   z-index: 2000;
 }
 
-.download_dialog,
 .share_dialog {
   $width: 500px;
   $height: 170px;
@@ -914,7 +913,6 @@
   }
 }
 
-.download_dialog,
 .share_dialog {
   height: 270px;
 
@@ -942,25 +940,6 @@
 
       span { display: none; }
     }
-  }
-}
-
-.source_window .content-wrapper
-.content .download_dialog .input-field a {
-  color: #FFFFFF;
-}
-
-.download_dialog {
-  .mode_menu {
-    width: 55px;
-  }
-
-  p {
-    margin: 15px 10px;
-  }
-
-  .error {
-    font-weight: bold;
   }
 }
 
@@ -1236,7 +1215,6 @@
     }
   }
 
-  .download_dialog,
   .share_dialog {
     margin: 0;
     left: 0;
@@ -1307,20 +1285,6 @@
     p .slider #canopy_slider {
       width: 100%;
       margin-left: 0;
-    }
-  }
-
-  .download_dialog_wrapper {
-    background: transparent;
-
-    .close {
-      top: 26%;
-      right: 13px;
-    }
-
-    &:before,
-    &:after {
-      background: none;
     }
   }
 
