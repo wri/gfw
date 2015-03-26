@@ -358,7 +358,7 @@ define([
     },
 
     _updateData: function(area_id) {
-      var url     = window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + this.country.get('iso'),
+      var url     = window.gfw.config.GFW_API_HOST + 'countries/' + this.country.get('iso'),
           canopy  = this.helper.config.canopy_choice || 30,
           $cnp_op = $('.umd_options_control').find('.sidenav-icon'),
           $target = $('.tree-numbers'),
@@ -377,7 +377,7 @@ define([
         url: url,
         dataType: 'json',
         success: function(data) {
-          var amount = data.years[0].extent;
+          var amount = data.umd[0].extent;
 
           if (amount.toString().length >= 7) {
             amount = Math.round((amount /1000)/1000)
@@ -390,8 +390,8 @@ define([
             $target.find('.tree-cover .unit').html( 'Ha' );
           }
           $target.find('.tree-cover .amount').html( amount.toLocaleString() );
-          $target.find('.total-area .amount').html(Math.round(data.years[0].extent_perc));
-          that._drawLossAndGain(data.years);
+          $target.find('.total-area .amount').html(Math.round(data.umd[0].extent_perc));
+          that._drawLossAndGain(data.umd);
           var $link_target = [];
               $link_target[0] = $('.analyze_from_country');
               $link_target[1] = $link_target[0] .attr('href');
