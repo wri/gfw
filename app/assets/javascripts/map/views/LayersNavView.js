@@ -202,7 +202,7 @@ define([
 
     _showNotification: function(e){
       if ($(e.currentTarget).hasClass('disabled')) {
-        ($(e.currentTarget).hasClass('iso-detected')) ? this.presenter.notificate('country-not-layers') : this.presenter.notificate('country-choose');
+        ($(e.currentTarget).hasClass('iso-detected')) ? this.presenter.notificate('not-country-not-has-layers') : this.presenter.notificate('not-country-choose');
       }
     }
 
