@@ -28,7 +28,7 @@ define([
   });
 
   var ShareDialogView = Backbone.View.extend({
-    className: 'share_dialog',
+    className: 'mini-modal share_dialog',
 
     events: {
       'click .close': 'hide',
@@ -46,9 +46,6 @@ define([
 
       this.model.on('change:hidden', this.toggle);
       this.model.on('change:mode', this._toggleMode);
-
-      this.$backdrop = $('.backdrop');
-
     },
 
     show: function() {
@@ -61,7 +58,6 @@ define([
         .removeClass('selected')
 
       this.$el.fadeIn(250);
-      this.$backdrop.show();
 
       this._initBindings();
     },
@@ -75,8 +71,6 @@ define([
         that._setMode('link');
       });
 
-      this.$backdrop.fadeOut(250);
-
       this._disableBindings();
     },
 
@@ -85,10 +79,6 @@ define([
 
       $(document).on('keydown', this._onKeyDown);
 
-      this.$backdrop.on('click', function() {
-        that.hide();
-      });
-
       this.$input.on('click',function(){
         this.select()
       });
@@ -96,8 +86,6 @@ define([
 
     _disableBindings: function() {
       $(document).off('keydown');
-
-      this.$backdrop.off('click');
     },
 
     _setLink: function() {

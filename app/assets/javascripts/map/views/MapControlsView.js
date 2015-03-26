@@ -10,7 +10,7 @@ define([
   'map/presenters/MapControlsPresenter',
   'map/views/controls/SearchboxView',
   'map/views/controls/ToggleModulesView',
-  'map/views/controls/ShareView',
+  'views/ShareView',
   'map/views/controls/ThresholdView',
   'text!map/templates/mapcontrols.handlebars'
 ], function(_, Handlebars, keymaster, Presenter, Searchbox, ToggleModulesView, ShareView, ThresholdView, tpl) {
@@ -83,7 +83,6 @@ define([
     initCustomViews: function(){
       new Searchbox(this.map);
       new ToggleModulesView();
-      new ShareView();
       new ThresholdView();
     },
     /**
@@ -117,8 +116,8 @@ define([
     },
 
     //SHARE
-    shareMap: function(){
-      mps.publish('ShareControls/toggle');
+    shareMap: function(event) {
+      new ShareView().share(event);
     },
 
 

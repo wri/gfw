@@ -21,7 +21,6 @@ define([
     }
   });
 
-
   var ShareView = Backbone.View.extend({
 
     el: '#control-share',

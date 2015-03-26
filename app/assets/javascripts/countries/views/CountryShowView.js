@@ -11,11 +11,11 @@ define([
   'views/SourceWindowView',
   'views/DownloadView',
   'countries/views/CountryHeaderView',
-  'countries/views/CountryShareView',
+  'views/ShareView',
   'countries/models/CountryShowModel',
   'countries/helpers/CountryHelper',
 
-], function($, Backbone, _, d3, mps, scrollit, SourceWindowView, DownloadView, CountryHeaderView, CountryShareView, CountryShowModel, CountryHelper ) {
+], function($, Backbone, _, d3, mps, scrollit, SourceWindowView, DownloadView, CountryHeaderView, ShareView, CountryShowModel, CountryHelper ) {
 
   'use strict';
 
@@ -25,7 +25,8 @@ define([
 
     events: {
       'click .forma_dropdown-link': '_openDropdown',
-      'click .country-download-link': '_openDownloadModal'
+      'click .country-download-link': '_openDownloadModal',
+      'click .share-link': '_openShareModal'
     },
 
     initialize: function() {
@@ -52,14 +53,6 @@ define([
       this._drawForestsType();
       this._drawFormaAlerts();
       this._initFormaDropdown();
-      this._initShare();
-    },
-
-    _initShare: function() {
-      var Share = new CountryShareView({ template: 'templateShare' });
-      var Share_entry = new CountryShareView({ template: 'templateShareLittle' });
-      this.$el.find('.country-sidenav .share-container').append(Share.render());
-      this.$el.find('.section-share').find('.section-btn').prepend(Share_entry.render());
     },
 
     _initSource: function() {
@@ -68,6 +61,10 @@ define([
 
     _openDownloadModal: function(event) {
       new DownloadView().download(event);
+    },
+
+    _openShareModal: function(event) {
+      new ShareView().share(event)
     },
 
     _initFormaDropdown: function() {
