@@ -27,7 +27,8 @@ define([
 
     events: {
       'click .close': 'hide',
-      'click button': '_requestDownload'
+      'click button': '_requestDownload',
+      'click .overlay' : 'hide'
     },
 
     initialize: function() {
