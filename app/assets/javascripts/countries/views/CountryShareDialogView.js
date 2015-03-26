@@ -125,16 +125,16 @@ define([
           dim_y = 530;
 
       if (!$body.hasClass('home')) {
-        dim_x = 1000;
-        dim_y = ($body.hasClass('show')) ? 480 : 600;
-        dim_y = ($body.hasClass('is-overview-action')) ? 700 : dim_y;
+        dim_x = 600;
+        dim_y = ($body.hasClass('show')) ? 360 : 960;
+        dim_x = ($body.hasClass('is-overview-action')) ? 960 : dim_x;
+        dim_y = ($body.hasClass('is-overview-action')) ? 610 : dim_y;
       }
 
       if ($('section').hasClass('current_share')) {
         var $targ    = $('section.current_share'),
             targ_val = '/alerts', //default value
             path     = window.location.pathname;
-        dim_y = 360;
         path = path.replace('country','country_info');
         if (path.slice(-1) === "/") path = path.slice(0, -1);
 
