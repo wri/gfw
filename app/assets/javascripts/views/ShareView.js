@@ -71,7 +71,7 @@ define([
 
     _cacheVars: function(){
       this.$changeType = $('.change-type');
-      this.$shareinfo = $('#share-info');
+      this.$shareinfo = $('#share-info p');
       this.$input = $('#share_field');
       this.$iframe = $('#preview-iframe');
       this.$twitterLink = this.$el.find('.twitter');
@@ -94,7 +94,7 @@ define([
       this._generateLinkUrl(this.model.get('url'), _.bind(function(url) {
         this.model.set('url', url);
         this.$input.val(url);
-        this.$shareinfo.html('<p>Click and paste link in email or IM</p>');
+        this.$shareinfo.html('Click and paste link in email or IM');
         this.$twitterLink.attr('href', 'https://twitter.com/share?url=' + url);
         this.$facebookLink.attr('href', 'https://www.facebook.com/sharer.php?u=' + url);
         this.$google_plusLink.attr('href', 'https://plus.google.com/share?url=' + url);
@@ -127,7 +127,13 @@ define([
       this._generateEmbedUrl(window.location.href, _.bind(function(url,src) {
         this.model.set('iframe', src);
         this.$input.val(url);
-        this.$shareinfo.html('<p>Click and paste HTML to embed in website.<button id="preview" class="btn gray little uppercase source" data-iframe="true" data-source="preview-iframe-container">Preview</button></p>');
+
+        this.$shareinfo.html('Click and paste HTML to embed in website.');
+        // Only show preview on desktop, mobile preview is quite fiddly
+        // for the user
+        if (!this._isMobile()) {
+          this.$shareinfo.append('<button id="preview" class="btn gray little uppercase source" data-iframe="true" data-source="preview-iframe-container">Preview</button></p>');
+        }
       }, this ));
       ga('send', 'event', 'Map', 'Share', 'Share Embed clicked');
     },
@@ -180,6 +186,10 @@ define([
                    ',left='   + left;
 
       window.open(url, 'Share this map view', opts);
+    },
+
+    _isMobile: function() {
+      return ($(window).width() > 850) ? false : true;
     }
   });
 
