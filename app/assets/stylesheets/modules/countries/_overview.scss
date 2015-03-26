@@ -951,7 +951,7 @@
       width: 790px;
     }
   }
-  .share_control, .item {
+  .share_control, .item, .download-spatial {
     position: relative;
     box-sizing: content-box;
     float: right;
@@ -963,6 +963,9 @@
     text-transform: uppercase;
     color: $dark;
     cursor: pointer;
+    a {
+      color: $dark;
+    }
 
     svg{
       display: inline-block;
