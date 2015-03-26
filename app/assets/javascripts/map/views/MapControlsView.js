@@ -76,7 +76,7 @@ define([
     },
 
     render: function(){
-      this.$el.html(this.template());
+      this.$el.html(this.template({embedUrl: this._generateEmbedUrl()}));
       this.initCustomViews();
     },
 
@@ -141,7 +141,9 @@ define([
       mps.publish('MapControlsToggleModules/toggle');
     },
 
-
+    _generateEmbedUrl: function() {
+      return window.location.origin + '/embed' + window.location.pathname + window.location.search;
+    }
   });
 
   return MapControlsView;

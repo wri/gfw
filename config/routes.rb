@@ -113,7 +113,7 @@ Gfw::Application.routes.draw do
 
   # embed
   get '/embed/country/:id' => 'embed#countries_show'
-  get '/embed/country_info/:id/:box' => 'embed#countries_show_info'
+  get '/embed/country_info/:id/:box' => 'embed#countries_show_info', :as => 'embed_country_box'
   get '/embed/country/:id/:area_id' => 'embed#countries_show'
   get '/embed/countries/overview' => 'embed#countries_overview'
 

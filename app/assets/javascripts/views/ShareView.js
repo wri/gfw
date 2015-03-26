@@ -16,7 +16,8 @@ define([
       hidden: true,
       type: 'link',
       iframe: null,
-      url: window.location.href
+      url: window.location.href,
+      embedUrl: window.location.href,
     }
   });
 
@@ -43,7 +44,7 @@ define([
     share: function(event) {
       event && event.preventDefault() && event.stopPropagation();
 
-      this._setUrlFromEvent(event);
+      this._setUrlsFromEvent(event);
       this.$el.show(0);
     },
 
@@ -124,31 +125,33 @@ define([
     },
 
     _renderEmbed: function(){
-      this._generateEmbedUrl(window.location.href, _.bind(function(url,src) {
-        this.model.set('iframe', src);
-        this.$input.val(url);
+      this.model.set('iframe', this.model.get('embedUrl'));
+      this.$input.val(this._generateEmbedSrc());
 
-        this.$shareinfo.html('Click and paste HTML to embed in website.');
-        // Only show preview on desktop, mobile preview is quite fiddly
-        // for the user
-        if (!this._isMobile()) {
-          this.$shareinfo.append('<button id="preview" class="btn gray little uppercase source" data-iframe="true" data-source="preview-iframe-container">Preview</button></p>');
-        }
-      }, this ));
+      this.$shareinfo.html('Click and paste HTML to embed in website.');
+      // Only show preview on desktop, mobile preview is quite fiddly
+      // for the user
+      if (!this._isMobile()) {
+        this.$shareinfo.append('<button id="preview" class="btn gray little uppercase source" data-iframe="true" data-source="preview-iframe-container">Preview</button></p>');
+      }
+
       ga('send', 'event', 'Map', 'Share', 'Share Embed clicked');
     },
 
-    _generateEmbedUrl: function(url, callback){
+    _generateEmbedSrc: function() {
       var dim_x = 800, dim_y = 600;
-      var src = window.location.origin + '/embed' + window.location.pathname + window.location.search;
-      var url = '<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="'+window.location.origin + '/embed' + window.location.pathname + window.location.search+'"></iframe>';
-      callback && callback(url,src);
+      return '<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="' + this.model.get('embedUrl') + '"></iframe>';
     },
 
-    _setUrlFromEvent: function(event) {
-      var url = $(event.currentTarget).data('share');
+    _setUrlsFromEvent: function(event) {
+      var url = $(event.currentTarget).data('share-url');
       if (url !== undefined) {
         this.model.set('url', url)
+      }
+
+      var embedUrl = $(event.currentTarget).data('share-embed-url');
+      if (embedUrl !== undefined) {
+        this.model.set('embedUrl', embedUrl)
       }
     },
 
