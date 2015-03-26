@@ -15,8 +15,8 @@
         </div>
 
         <div class='source_table'>
-          <p>Drag the handle to adjust the minimum tree cover canopy (TCC) density for UMD/Google tree cover loss and extent displayed in the figures and infographics. TCC density represents the estimated percent of a UMD/Google pixel that was covered by tree canopy in the year 2000, as determined from the analysis of satellite imagery. For the tree cover loss data, TCC density therefore corresponds to the density of tree cover <u>before</u> loss occurred.</p>
-          <p>Adjustments to the minimum TCC density will only affect UMD/Google tree cover loss and extent. This feature does not pertain to UMD/Google tree cover gain or to other GFW data layers or country profile statistics. UMD/Google tree cover gain is displayed with a set minimum TCC density greater than 50%.</p>
+          <p>Drag the handle to adjust the minimum tree cover canopy (TCC) density for UMD/Google tree cover and tree cover loss displayed in the figures and infographics. TCC density represents the estimated percent of a UMD/Google pixel that was covered by tree canopy in the year 2000, as determined from the analysis of satellite imagery. For the tree cover loss data, TCC density therefore corresponds to the density of tree cover <u>before</u> loss occurred.</p>
+          <p>Adjustments to the minimum TCC density will only affect UMD/Google tree cover and tree cover loss. This feature does not pertain to UMD/Google tree cover gain or to other GFW data layers or country profile statistics. UMD/Google tree cover gain is displayed with a set minimum TCC density greater than 50%.</p>
           <p>This feature is also available for the global rankings and for the map visualization and analysis. The TCC density minimum selected in the country profiles will be applied to the country or subnational country analysis and related map visualization if accessed through the country profiles. However, an adjustment to the TCC density minimum through the map settings will not affect the statistics within the country profiles. The global rankings will not reflect adjustments made in individual country profiles.</p>
         </div>
       </div>
@@ -126,6 +126,10 @@
           <p>These infographics were created using tree cover, loss, and gain data from the University of Maryland (UMD)/Google. For more information on this data set, please visit the <a href="/sources/forest_change?t=umd_tree_loss_gain" target="_blank">data page</a>. </p>
 
           <p>The UMD/Google infographics can be viewed by country or by subnational boundary. Click "Select Jurisdiction" to view data for a different region.</p>
+          
+          <p>Due to variation in research methodology and/or date of content, tree cover and tree cover loss and gain statistics cannot be compared against each other. Accordingly, “net” loss cannot be calculated by subtracting tree cover gain from tree cover loss, and current (or post-2000) tree cover cannot be determined by subtracting annual tree cover loss from year 2000 tree cover. </p>
+          
+          <p>Please also be aware that “tree cover” does not equate to “forest cover.” “Tree cover” refers to the biophysical presence of trees, which may be a part of natural forests or tree plantations. Thus, loss of tree cover may occur for many reasons, including deforestation, fire, and logging within the course of sustainable forestry operations. Similarly, tree cover gain may indicate the growth of tree canopy within natural or managed forests.</p>
 
           <p><strong>Note</strong>: "Select Jurisdiction" and "Tree Cover Canopy Settings" only affect infographics within the UMD/Google data portion of the country profiles and do not apply to FORMA, Forest Type, People & Economy" or to other parts of this page. </p>
 
@@ -587,7 +591,7 @@
   <ul class='sources'>
     <li id='forest2000' class='source-item first'>
       <div class='source_header'>
-        <strong class='source_title'>Tree cover extent</strong>
+        <strong class='source_title'>Tree cover</strong>
         <i class='expand_arrow'></i>
       </div>
 
@@ -2739,16 +2743,16 @@
     <p><strong>Figures:</strong> type of forest, economic value of the forestry sector, employment, carbon stocks, emissions</p>
 
     <h3 class='overview_title'>University of Maryland (UMD)/Google</h3>
-    <p>Figures for tree cover extent, loss, and gain presented on the country and global overview pages were calculated using tabular data from a 2013 publication, “<a href='http://www.sciencemag.org/content/342/6160/850' target='_blank'>High-Resolution Global Maps of 21st-Century Forest Cover Change</a>" by Hansen <em>et al</em>.</p>
+    <p>Figures for tree cover and tree cover loss and gain presented on the country and global overview pages were calculated using tabular data from a 2013 publication, “<a href='http://www.sciencemag.org/content/342/6160/850' target='_blank'>High-Resolution Global Maps of 21st-Century Forest Cover Change</a>" by Hansen <em>et al</em>.</p>
 
     <p>To learn more, visit the <%= link_to 'Forest Change tab', "#{sources_path}#forest_change" %> on the Data page.</p>
 
-    <p><strong>Figures:</strong> UMD/Google circle graphs, 2012 tree cover extent, all global overview graphs and rankings</p>
+    <p><strong>Figures:</strong> UMD/Google circle graphs, 2000 tree cover, all global overview graphs and rankings</p>
 
     <h3 class='overview_title'>European Space Agency (GlobCover)</h3>
-    <p>Data from the European Space Agency’s GlobCover was used to visualize tree cover extent on the country profiles. As stated on the <a href='http://due.esrin.esa.int/globcover/' target='_blank'>ESA website</a>, GlobCover is an initiative which began in 2005 in partnership with a number of organizations. The aim of the project was to develop a service capable of delivering global composites and land cover maps using input observations from the 300m MERIS sensor on board the ENVISAT satellite mission. ESA makes available the land cover maps, which cover 2 periods: December 2004 - June 2006 and January - December 2009. To learn more, visit the <a href='http://due.esrin.esa.int/globcover/' target='_blank'>GlobCover website</a> or <a href='http://due.esrin.esa.int/globcover/LandCover2009/Globcover2009_V2.3_Global_.zip' target='_blank'>download the 2009 GlobCover map</a>.</p>
+    <p>Data from the European Space Agency’s GlobCover was used to visualize tree cover on the country profiles. As stated on the <a href='http://due.esrin.esa.int/globcover/' target='_blank'>ESA website</a>, GlobCover is an initiative which began in 2005 in partnership with a number of organizations. The aim of the project was to develop a service capable of delivering global composites and land cover maps using input observations from the 300m MERIS sensor on board the ENVISAT satellite mission. ESA makes available the land cover maps, which cover 2 periods: December 2004 - June 2006 and January - December 2009. To learn more, visit the <a href='http://due.esrin.esa.int/globcover/' target='_blank'>GlobCover website</a> or <a href='http://due.esrin.esa.int/globcover/LandCover2009/Globcover2009_V2.3_Global_.zip' target='_blank'>download the 2009 GlobCover map</a>.</p>
 
-    <p><strong>Figures:</strong> Map of tree cover extent</p>
+    <p><strong>Figures:</strong> Map of tree cover</p>
 
     <h3 class='overview_title'>The Rights and Resources Initiative (RRI)</h3>
     <p>Figures on forest tenure come from the Rights and Resource Initiative and are based on data adapted from the <a href='http://www.rightsandresources.org/documents/index.php?pubID=1075' target='_blank'>Tropical Forest Tenure Assessment</a>. The goal of the report is to present and analyze the state of forest tenure in much of the world’s tropical forests. As stated on <a href='http://www.rightsandresources.org/programs.php?id=237' target='_blank'>RRI's website</a>, the tenure systems represented by this data is sourced from governments, and therefore only reflects those systems of natural resource management that are legally recognized by those governments. Such officially outlined tenure systems fall under the category of statutory tenure regimes within these studies. The official data often presents an incomplete picture of the institutions that actually manage natural resources, particularly at a local level. To learn more, visit the <a href='http://www.rightsandresources.org/programs.php?id=237' target='_blank'>RRI forest tenure page</a>.</p>
@@ -2767,7 +2771,7 @@
 <article id='earth_engine' class="source-article">
   <h2 class='source_category_title'>GFW on Google Earth Engine</h2>
   <div class='single-source-item'>
-    <p>The following data sets on Global Forest Watch were created using <a href="http://earthengine.google.org" target="_blank">Google Earth Engine</a>, Google's geospatial analysis tool: the University of Maryland/Google's annual tree cover loss, tree cover gain, and tree cover extent data, and the Landsat base maps.</p>
+    <p>The following data sets on Global Forest Watch were created using <a href="http://earthengine.google.org" target="_blank">Google Earth Engine</a>, Google's geospatial analysis tool: the University of Maryland/Google's annual tree cover loss, tree cover gain, and tree cover data, and the Landsat base maps.</p>
 
     <p>Additionally, the tropical forest carbon stocks layer is being stored and served from <a href="http://mapsengine.google.com/" target="_blank">Google Maps Engine</a> and styled by Earth Engine, the Imazon SAD data are created using Imazon's algorithms on Earth Engine, and analyses of the University of Maryland/Google data, as well as computations of area, are being performed by Earth Engine.</p>
 
