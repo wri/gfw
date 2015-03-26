@@ -74,6 +74,9 @@ define([
       // countries
       this.setStyle(0.45);
       this.getCountries();
+      setTimeout(_.bind(function(){
+        this.presenter.openTab('#countries-tab-button');
+      },this), 0);
     },
 
     /**
@@ -201,28 +204,27 @@ define([
     // Select change iso
     changeIso: function(e){
       this.iso = $(e.currentTarget).val() || null;
-      this.area = null;
-      ($(e.currentTarget).val()) ? this.getSubCountries() : this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
+      // ($(e.currentTarget).val()) ? this.getSubCountries() : this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
       this.setIsoLayers();
       this.setButtons(!!this.iso);
-      this.presenter.changeIso({country: this.iso, region: this.area});
+      this.presenter.changeIso({country: this.iso, region: null});
     },
-    changeArea: function(e){
-      this.area = $(e.currentTarget).val();
-      this.presenter.changeIso({country: this.iso, region: this.area});
-    },
+    // changeArea: function(e){
+    //   this.area = $(e.currentTarget).val();
+    //   this.presenter.changeIso({country: this.iso, region: this.area});
+    // },
 
     // For autoselect country and region when youn reload page
     setSelects: function(iso){
       this.iso = iso.country;
-      this.area = iso.region;
+      // this.area = iso.region;
       this.setIsoLayers();
       this.setButtons(!!this.iso);
       this.$countrySelect.val(this.iso).trigger("liszt:updated");
-      this.$regionSelect.val(this.area).trigger("liszt:updated");
-      if (this.iso) {
-        this.getSubCountries();
-      }
+      // this.$regionSelect.val(this.area).trigger("liszt:updated");
+      // if (this.iso) {
+      //   this.getSubCountries();
+      // }
     },
 
   });

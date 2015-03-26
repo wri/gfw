@@ -100,6 +100,9 @@ define([
       mps.publish('Countries/changeIso',[iso,this.status.get('dont_analyze')]);
     },
 
+    openTab: function(id){
+      mps.publish('Tab/open',[id]);
+    },
 
     initExperiment: function(id){
       mps.publish('Experiment/choose',[id]);
