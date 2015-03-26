@@ -493,6 +493,10 @@ define([
     },
 
     // COUNTRY MASK
+    // If we want to be more accurate:
+    // - Change the query table -> gadm2_countries
+    // - Cartocss #country_mask -> #gadm2_countries; code = -> iso= ;
+
     drawMaskArea: function(geojson, iso, region){
       this.mask = cartodb.createLayer(this.map, {
         user_name: 'wri-01',
