@@ -190,10 +190,22 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
           color: #AAA;
           font-size: 11px;
           margin: 5px 0px;
+          text-transform: none;
           display: inline-block;
           &.selected {
             color: $dark;
             text-shadow: 0px 0px 0px #999;
+            &:before {
+              content: ' ';
+              width: 4px;
+              height: 4px;
+              background-color: #DDDDDD;
+              position: absolute;
+              border-radius: 50%;
+              margin-top: 5px;
+              box-shadow: 0px 0px 1px #000;
+              margin-left: 7px;
+            }
           }
           input {
             cursor: pointer;

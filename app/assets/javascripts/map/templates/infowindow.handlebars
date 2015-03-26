@@ -35,6 +35,11 @@
           <h4>Name:</h4>
           <p><a href="http://{{content.data.factsheet}}" target="_blank">{{content.data.ebaname}}</a></p>
         {{/if}}
+        {{#if content.data.project_id}}
+          <h4>Project ID:</h4>
+          <p>{{content.data.project_id}}</p>
+        {{/if}}
+				
         {{#if content.data.id}}
           <h4>ID:</h4>
           <p>{{content.data.id}}</p>
@@ -59,6 +64,14 @@
           <h4>Permit Num:</h4>
           <p>{{content.data.permit_num}}</p>
         {{/if}}
+				{{#if content.data.project_na}}
+          <h4>Project Name</h4>
+          <p><a href="http://{{content.data.project_ur}}" target="_blank">{{content.data.project_na}}</a></p>
+        {{/if}}
+				{{#if content.data.project_pr}}
+          <h4>Project Proponent :</h4>
+          <p><a href="http://{{content.data.proponent_}}" target="_blank">{{content.data.project_pr}}</a></p>
+        {{/if}}
         {{#if content.data.country}}
           <h4>Country:</h4>
           <p>{{content.data.country}}</p>
@@ -66,6 +79,14 @@
         {{#if content.data.nat_origin}}
           <h4>Nat Origin:</h4>
           <p>{{content.data.nat_origin}}</p>
+        {{/if}}
+        {{#if content.data.estimated_}}
+          <h4>Estimated Annual Carbon Emissions:</h4>
+          <p>{{content.data.estimated_}}</p>
+        {{/if}}
+        {{#if content.data.additional}}
+          <h4>Additional certifications:</h4>
+          <p>{{content.data.additional}}</p>
         {{/if}}
         {{#if content.data.area_ha}}
           <h4>Area HA:</h4>
@@ -162,6 +183,10 @@
         {{#if content.data.ebaaltmax}}
           <h4>Max elevation:</h4>
           <p>{{content.data.ebaaltmax}}</p>
+        {{/if}}
+        {{#if content.data.species}}
+          <h4>Species:</h4>
+          <p>{{content.data.species}}</p>
         {{/if}}
       </div>
     </div>

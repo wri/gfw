@@ -51,12 +51,12 @@
     background: rgba($cGreen, 0.85);
   }
   &.info{
-    background: rgba(blue, 0.85);
+    background: rgba(#3182bd, 0.85);
   }
   &.warning{
     background: rgba(#ED4602, 0.85);
   }
   &.error{
-    background: rgba(red, 0.85);
+    background: rgba(#FF4848, 0.85);
   }
 }

@@ -26,18 +26,18 @@
         <span class="stats-count" style="color: #6D6DE5;"><strong>{{gainAlerts}}</strong> ha</span>
       </li>
       {{/if}}
-      {{!-- <li>
+      <li>
         <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
-      </li> --}}
+      </li>
     {{else}}
       {{#if forestgain}}
         <li>
           <span class="stats-title">Gain 2001-2012</span>
           <span class="stats-count" style="color: #6D6DE5;"><strong>{{gainAlerts}}</strong> ha</span>
         </li>
-        {{!-- <li>
+        <li>
           <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
-        </li> --}}
+        </li>
 
       {{else}}
         {{#if imazon}}
@@ -93,13 +93,3 @@
     <li id="analysis-subscribe"><span class="tooltipmap bottom">Subscribe</span><svg class="icon"><use xlink:href="#icon-analysis-alerts"></use></svg></li>
   </ul>
 </footer>
-
-
-{{!-- <div class="analysis-footer">
-  <ul class="analysis-control">
-    <li class="analysis-control-subscribe" id="subscribeButton"><svg><use xlink:href="#shape-alerts"></use></svg></li>
-    <li class="analysis-control-delete"></li>
-  </ul>
-  <ul class="analysis-control-names"><li><span id="subscribeButton-title">subscribe</span></li><li><span>delete</span></li></ul>
-</div>
- --}}

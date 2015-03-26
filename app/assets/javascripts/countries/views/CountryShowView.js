@@ -9,13 +9,12 @@ define([
   'mps',
   'scrollit',
   'views/SourceWindowView',
-  'views/DownloadView',
   'countries/views/CountryHeaderView',
   'views/ShareView',
   'countries/models/CountryShowModel',
   'countries/helpers/CountryHelper',
 
-], function($, Backbone, _, d3, mps, scrollit, SourceWindowView, DownloadView, CountryHeaderView, ShareView, CountryShowModel, CountryHelper ) {
+], function($, Backbone, _, d3, mps, scrollit, SourceWindowView, CountryHeaderView, CountryShareView, CountryShowModel, CountryHelper ) {
 
   'use strict';
 
@@ -57,14 +56,6 @@ define([
 
     _initSource: function() {
       this.sourceWindow  = new SourceWindowView();
-    },
-
-    _openDownloadModal: function(event) {
-      new DownloadView().download(event);
-    },
-
-    _openShareModal: function(event) {
-      new ShareView().share(event)
     },
 
     _initFormaDropdown: function() {

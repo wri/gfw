@@ -192,6 +192,9 @@
         @include box-sizing(border-box);
         .embed & {
           width: 100%;
+          display: flex;
+          float: left;
+          height: initial;
         }
 
 
@@ -222,6 +225,7 @@
           padding: 30px 10px;
           .embed & {
             padding: 10px 0;
+            top: 0;
           }
         }
 
@@ -1826,7 +1830,8 @@
   font-weight: 400;
   color: $dark;
   margin: 0;
-  padding: 20px;
+  padding: 10px;
+  display: flex;
   .embed-country-title{
     text-align: center;
     font-size: 2em;
@@ -1857,6 +1862,10 @@
         .tree-numbers .canopy-status {
           margin-top: 10px;
           width: 180px;
+        }
+        .embed &{
+          float: left;
+          padding: 0;
         }
       }
 
@@ -1997,6 +2006,9 @@
             height: 260px;
             width: 100%;
             z-index: 200;
+            .embed & {
+              display: none;
+            }
           }
 
           .tree-numbers,
