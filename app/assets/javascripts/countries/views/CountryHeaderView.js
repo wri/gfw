@@ -173,9 +173,6 @@ define([
       'click .umd_options_control' : '_onClickUMDOptions',
       'click .canopy-status em' : '_onClickUMDOptions',
       'click .item.settings' : '_onClickUMDOptions',
-      'click .country-header .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
-      'mouseup .country-header .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
-      'click .country-header .umdoptions_dialog ul li':  '_updateMapThreshold'
     },
 
     initialize: function(options) {
@@ -189,7 +186,7 @@ define([
       this.$areaSelector = this.$('#areaSelector');
       this.$selectorRemove =  this.$('.selector-remove');
       this.$map = this.$('.map');
-      this.UmdOptions;
+      this.UmdOptions = new CountryUmdOptionsView();
       this.setListeners();
 
       var Router = Backbone.Router.extend({
@@ -290,7 +287,7 @@ define([
       }
       var $target = $('.umdoptions_dialog'),
           tar_param  = tar_param || '.country-sidenav';
-      if ($target.length === 0) this.UmdOptions = new CountryUmdOptionsView({ target: tar_param});
+
       if ($target.is(':visible') ) {
         this.UmdOptions.hide();
       } else {
