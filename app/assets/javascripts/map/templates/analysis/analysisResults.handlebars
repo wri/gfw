@@ -1,23 +1,14 @@
 {{#if layer}}
-  <div class="analysis-info">
-    {{!-- <span class="analysis-title">
-      {{#if iso}}
-        {{iso}}
-      {{else}}
-        User defined area
-      {{/if}}
-    </span> --}}
-  </div>
   <ul class="analysis-stats">
     {{#if totalArea}}
       <li>
-        <span class="stats-title">{{#if iso}}Country ({{iso}}){{else}}Total selected area{{/if}}</span>
+        <span class="stats-title">Total selected area</span>
         <span class="stats-count"><strong>{{totalArea}}</strong> ha</span>
       </li>
     {{/if}}
     {{#if loss}}
       <li>
-        <span class="stats-title">Loss {{lossDateRange}}<span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{threshold}}% canopy density</span></span>
+        <span class="stats-title">Loss <a href="#" class="source" data-source="how_to_adjust_date">{{lossDateRange}}</a><span class="stats-threshold" title="Click the gear icon located on the map to change the tree cover canopy density">with >{{threshold}}% canopy density</span></span>
         <span class="stats-count" style="color: {{layer.category_color}};"><strong>{{lossAlerts}}</strong> ha</span>
       </li>
       {{#if both}}
@@ -89,7 +80,7 @@
         </div>
       {{/if}}
     </li>
-    <li id="analysis-delete"><span class="tooltipmap bottom">Remove analysis</span><svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg></li>
+    <li id="analysis-delete"><span class="tooltipmap bottom">Discard analysis</span><svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg></li>
     <li id="analysis-subscribe"><span class="tooltipmap bottom">Subscribe</span><svg class="icon"><use xlink:href="#icon-analysis-alerts"></use></svg></li>
   </ul>
 </footer>
