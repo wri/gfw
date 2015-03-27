@@ -283,7 +283,7 @@ define([
        *   - gainAlerts
        */
       if (layer.slug === 'loss' || layer.slug === 'forestgain') {
-        p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year());
+        p.lossDateRange = '{0}-{1}'.format(dateRange[0].year(), dateRange[1].year()-1);
         p.lossAlerts = 0;
         p.gainAlerts = 0;
         p.threshold  = results.params.thresh || 30;
