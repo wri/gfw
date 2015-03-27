@@ -1,6 +1,8 @@
 {{#if layers}}
 <header>
-  <h2>Available data sets for this country:</h2>
+  <div class="alone">
+    <p>Available data sets for this country:</p>
+  </div>
 </header>
 <ul class="layers">
   {{#each layers}}
@@ -9,6 +11,9 @@
 </ul>
 {{else}}
 <header>
-  <h2>No country data is available</h2>
+  <div class="alone">
+    <p>No country data sets available yet. </p>
+    <p><a href="#" class="source" data-source="view_existing_global_data">View existing global data</a> sets or <a href="/getinvolved/share-data" target="_blank">suggest your own.</a></p>
+  </div>
 </header>
 {{/if}}
