@@ -22,14 +22,6 @@ define([
      * Application subscriptions.
      */
     _subscriptions: [{
-      'ShareControls/toggle': function() {
-        if (this.view.model.get('hidden')) {
-          this.view.model.set('hidden',false);
-        }else{
-          this.view.model.set('hidden',true);
-        }
-      },
-    },{
       'Place/update': function(place) {
         if (!this.view.model.get('hidden')) {
           this.view.setUrls();

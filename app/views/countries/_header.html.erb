@@ -63,7 +63,15 @@
                 </span>
               </a>
             </li>
-            <li class="share-container">
+            <li>
+              <a href="#" id="share_control" title="Share this graphic " class="share_control share-link" data-tip="Share">
+                Share
+                <span class="sidenav-icon">
+                  <svg class="share">
+                    <use xlink:href="#shape-share"></use>
+                  </svg>
+                </span>
+              </a>
             </li>
             <li>
               <a href="#" data-source="umd_tree_loss_gain_infographics" class="info source">
@@ -88,7 +96,7 @@
               </a>
             </li>
             <li>
-              <a href="http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/umd_country_stats.xlsx">
+              <a href="<%= country_download_path(id: @country['iso']) %>" class="download country-download-link">
                 Download country stats
                 <!-- <span class="sidenav-icon country-icons-download_grey"></span> -->
                 <span class="sidenav-icon">
