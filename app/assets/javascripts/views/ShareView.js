@@ -6,8 +6,9 @@
 define([
   'underscore',
   'handlebars',
-  'text!templates/share.handlebars'
-], function(_, Handlebars, tpl) {
+  'text!templates/share.handlebars',
+  'views/SharePreviewView'
+], function(_, Handlebars, tpl, SharePreviewView) {
 
   'use strict';
 
@@ -15,7 +16,6 @@ define([
     defaults: {
       hidden: true,
       type: 'link',
-      iframe: null,
       url: window.location.href,
       embedUrl: window.location.href,
     }
@@ -74,7 +74,6 @@ define([
       this.$changeType = $('.change-type');
       this.$shareinfo = $('#share-info p');
       this.$input = $('#share_field');
-      this.$iframe = $('#preview-iframe');
       this.$twitterLink = this.$el.find('.twitter');
       this.$facebookLink = this.$el.find('.facebook');
       this.$google_plusLink = this.$el.find('.google_plus');
@@ -125,14 +124,13 @@ define([
     },
 
     _renderEmbed: function(){
-      this.model.set('iframe', this.model.get('embedUrl'));
       this.$input.val(this._generateEmbedSrc());
 
       this.$shareinfo.html('Click and paste HTML to embed in website.');
       // Only show preview on desktop, mobile preview is quite fiddly
       // for the user
       if (!this._isMobile()) {
-        this.$shareinfo.append('<button id="preview" class="btn gray little uppercase source" data-iframe="true" data-source="preview-iframe-container">Preview</button></p>');
+        this.$shareinfo.append('<button id="preview" class="btn gray little uppercase">Preview</button></p>');
       }
 
       ga('send', 'event', 'Map', 'Share', 'Share Embed clicked');
@@ -171,7 +169,11 @@ define([
     },
 
     _showPreview: function(){
-      this.$iframe.attr('src', this.model.get('iframe'));
+      var iframeView = new SharePreviewView({
+        src: this.model.get('embedUrl')
+      });
+
+      $('body').append(iframeView.render().$el);
     },
 
     _shareToSocial: function(e){
