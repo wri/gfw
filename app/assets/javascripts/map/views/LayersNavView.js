@@ -159,7 +159,6 @@ define([
       }, this ));
       if(layersToRender.length > 0) {
         this.$countryLayers.addClass('active').removeClass('disabled');
-        this.presenter.notificate('not-country-has-layers')
       }else{
         this.$countryLayers.removeClass('active').addClass('disabled');
       }
