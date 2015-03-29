@@ -55,6 +55,11 @@ $w-control: 44px;
             background: #EEEEEE;
             &:hover{ background: lighten(#EEEEEE, 5%);}
           }
+          &.pulse{
+            svg{
+              @include animation(pulse_animation,0.75s,4,$easeInOutSine);
+            }
+          }
           &.disabled{
             pointer-events: none;
             cursor: default;
@@ -125,7 +130,7 @@ $w-control: 44px;
           @include clearfix();
           h2{
             font-size: 21px;
-            padding: 0 0 10px;
+            padding: 0 0 15px;
             text-align: center;
           }
           p{

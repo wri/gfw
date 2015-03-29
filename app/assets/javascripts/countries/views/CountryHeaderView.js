@@ -173,9 +173,6 @@ define([
       'click .umd_options_control' : '_onClickUMDOptions',
       'click .canopy-status em' : '_onClickUMDOptions',
       'click .item.settings' : '_onClickUMDOptions',
-      'click .country-header .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
-      'mouseup .country-header .umdoptions_dialog #canopy_slider':  '_updateMapThreshold',
-      'click .country-header .umdoptions_dialog ul li':  '_updateMapThreshold'
     },
 
     initialize: function(options) {
@@ -189,7 +186,7 @@ define([
       this.$areaSelector = this.$('#areaSelector');
       this.$selectorRemove =  this.$('.selector-remove');
       this.$map = this.$('.map');
-      this.UmdOptions;
+      this.UmdOptions = new CountryUmdOptionsView();
       this.setListeners();
 
       var Router = Backbone.Router.extend({
@@ -290,7 +287,7 @@ define([
       }
       var $target = $('.umdoptions_dialog'),
           tar_param  = tar_param || '.country-sidenav';
-      if ($target.length === 0) this.UmdOptions = new CountryUmdOptionsView({ target: tar_param});
+
       if ($target.is(':visible') ) {
         this.UmdOptions.hide();
       } else {
@@ -358,7 +355,7 @@ define([
     },
 
     _updateData: function(area_id) {
-      var url     = window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + this.country.get('iso'),
+      var url     = window.gfw.config.GFW_API_HOST + 'countries/' + this.country.get('iso'),
           canopy  = this.helper.config.canopy_choice || 30,
           $cnp_op = $('.umd_options_control').find('.sidenav-icon'),
           $target = $('.tree-numbers'),
@@ -377,7 +374,7 @@ define([
         url: url,
         dataType: 'json',
         success: function(data) {
-          var amount = data.years[0].extent;
+          var amount = data.umd[0].extent;
 
           if (amount.toString().length >= 7) {
             amount = Math.round((amount /1000)/1000)
@@ -390,8 +387,8 @@ define([
             $target.find('.tree-cover .unit').html( 'Ha' );
           }
           $target.find('.tree-cover .amount').html( amount.toLocaleString() );
-          $target.find('.total-area .amount').html(Math.round(data.years[0].extent_perc));
-          that._drawLossAndGain(data.years);
+          $target.find('.total-area .amount').html(Math.round(data.umd[0].extent_perc));
+          that._drawLossAndGain(data.umd);
           var $link_target = [];
               $link_target[0] = $('.analyze_from_country');
               $link_target[1] = $link_target[0] .attr('href');

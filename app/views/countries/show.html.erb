@@ -1,3 +1,4 @@
+<%= render 'layouts/svg_icons' %>
 <%= render 'shared/svg_icons_countries' %>
 <% content_for :header do %>
   <h1><a href="/">Global Forest Watch</a></h1>
@@ -30,6 +31,8 @@
 <% content_for :css do %>
   <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
 <% end %>
+
+<div id="control-threshold" class="control-threshold fixed"></div>
 
 <section id="countryShowView" data-iso="<%= @country['iso'] %>">
   <div class="country-show">
@@ -70,6 +73,7 @@
           <a href="#" id="alerts" class="anchor-country-info"></a>
           <h6>FORMA alerts</h6>
           <div class="section-btn no-cols">
+            <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'alerts'} %>
             <a href="#" class="info icon circle source" data-source="forma">
               <svg>
                 <use xlink:href="#shape-info"></use>
@@ -126,6 +130,7 @@
                 <div class="section-info section-share">
                   <h6>Type of forests in <%= @country['name'] %></h6>
                   <div class="section-btn">
+                    <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'forests-type'} %>
                     <a href="#" class="info icon circle source" data-source="forest_type">
                       <svg>
                         <use xlink:href="#shape-info"></use>
@@ -164,6 +169,7 @@
                 <div class="section-info section-share">
                   <h6>Economic value of <%= @country['name'] %>'s forestry sector</h6>
                   <div class="section-btn">
+                    <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'production'} %>
                     <a href="#" class="info icon circle source" data-source="gross_value">
                       <svg>
                         <use xlink:href="#shape-info"></use>
@@ -198,6 +204,7 @@
               <div class="section-info section-share">
                 <h6>Employment</h6>
                 <div class="section-btn">
+                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'employment'} %>
                   <a href="#" class="info icon circle source" data-source="employment_info">
                     <svg>
                       <use xlink:href="#shape-info"></use>
@@ -241,6 +248,7 @@
               <div class="section-info section-share">
                 <h6>Forest tenure</h6>
                 <div class="section-btn">
+                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'tenure'} %>
                   <a href="#" class="info icon circle source" data-source="forest_tenure">
                     <svg>
                       <use xlink:href="#shape-info"></use>
@@ -273,6 +281,7 @@
               <div class="section-info section-share">
                 <h6>Carbon stocks</h6>
                 <div class="section-btn">
+                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'carbon_stocks'} %>
                   <a href="#" class="info icon circle source" data-source="carbon_stocks">
                     <svg>
                       <use xlink:href="#shape-info"></use>
@@ -297,6 +306,7 @@
               <div class="section-info section-share">
                 <h6>CO2 emissions</h6>
                 <div class="section-btn">
+                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'emissions'} %>
                   <a href="#" class="info icon circle source" data-source="emissions">
                     <svg>
                       <use xlink:href="#shape-info"></use>
@@ -508,3 +518,5 @@
 
 </section>
 
+<div class="mini-modal country-download-modal"></div>
+<div class="mini-modal share-modal"></div>

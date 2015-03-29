@@ -24,7 +24,7 @@ define([
 
   var UmdoptionsDialogModel = Backbone.Model.extend({
     defaults: {
-      tooltip: "Settings"
+      hidden: false
     }
   });
 
@@ -55,12 +55,12 @@ define([
     },
 
     _initViews: function() {
-      this.umdoptions_dialog = new UmdoptionsDialogView({});
-      if (this.options && this.options.target) {
-        $(this.options.target).append(this.umdoptions_dialog.render());
-      } else {
-        $('#map').append(this.umdoptions_dialog.render());
-      }
+      this.umdoptions_dialog = new UmdoptionsDialogView();
+      // if (this.options && this.options.target) {
+      //   $(this.options.target).append(this.umdoptions_dialog.render());
+      // } else {
+      //   $('#map').append(this.umdoptions_dialog.render());
+      // }
     },
 
     _openUMDoptions: function(e) {
@@ -102,162 +102,74 @@ define([
 
 
   var UmdoptionsDialogView = Backbone.View.extend({
-    className: 'umdoptions_dialog',
 
-    events: {
-      'click .close':           'hide',
-      'click .cancel':          'hide',
-      'click .apply':           '_onClickApply',
-      'change #canopy_slider':  '_onChangeSlider',
-      'input #canopy_slider':   '_onDragSlider',
-      'mouseup #canopy_slider': '_onDragEndSlider',
-      'click .slider_option':   '_onClickOption',
-      'click .compression_option': '_onClickCompression'
-    },
+    el: '#control-threshold',
 
     template: Handlebars.compile(TPLDialog),
 
 
+    events: {
+      // slider
+      'change #range-threshold': 'updateThreshold',
+      'input #range-threshold': 'setVisibleRange',
+      // labels
+      'click #labels-threshold li' : 'clickLabel',
+      // hide buttons
+      'click .overlay' : 'hide',
+      'click .close' : 'hide'
+    },
+
+    valuesMap: [10,15,20,25,30,50,75],
+
     initialize: function() {
-
-      this.options = _.extend(this.options, this.defaults);
-
       this.model = new UmdoptionsDialogModel();
-
       this.helper = CountryHelper;
-
-      this.model.on('change:hidden', this.toggle);
-      this.model.on('change:mode', this._toggleMode);
-      this.canopy = 75;
+      this.render();
+      this.setListeners();
     },
 
-    _onDragSlider: function() {
-      this._paintRange(document.getElementById('canopy_slider').value)
+    cacheVars: function(){
+      this.$button = $('#'+this.$el.attr('id')+'-button');
+      this.$range = $('#range-threshold');
+      this.$labels = $('#labels-threshold').find('li');
+      this.$progress = $('#progress-threshold');
     },
 
-    _onChangeSlider: function() {
-      this._paintRange(document.getElementById('canopy_slider').value)
+    setListeners: function(){
+      this.model.on('change:hidden', this.toggle, this);
     },
 
-    _onDragEndSlider: function() {
-      if (this.helper.config.BASELAYER.slice(-2) == this.canopy) return;
-      this._onClickApply();
-    },
-    _onClickOption: function(e) {
-      if (this.helper.config.BASELAYER && this.helper.config.BASELAYER.slice(-2) == $(e.target).data('option')) return;
-      switch($(e.target).data('option')) {
-        case 0:
-        case 100:
-          return true;
-        break;
-        case 10:
-          this._paintRange(15)
-        break;
-        case 15:
-          this._paintRange(25)
-        break;
-        case 20:
-          this._paintRange(35)
-        break;
-        case 25:
-          this._paintRange(45)
-        break;
-        case 30:
-          this._paintRange(55)
-        break;
-        case 50:
-          this._paintRange(65)
-        break;
-        case 75:
-          this._paintRange(75)
-        break;
-      }
-      this._onClickApply();
+    render: function(){
+      this.$el.html(this.template({values: this.valuesMap }));
+      this.cacheVars();
     },
 
-    _onClickCompression: function(){
-      this.helper.config.compression = parseFloat( $('input[name=compression]:checked', '.form').val() );
-      this._onClickApply();
-    },
-
-    loadCanopyUrl: function() {
-      switch((this.helper.config.BASELAYER === 'loss' || this.helper.config.BASELAYER === null) ? 30 : parseInt(this.helper.config.BASELAYER.slice(-2)) ) {
-        case 0:
-        case 100:
-          return true;
-        break;
-        case 10:
-          this._paintRange(15)
-        break;
-        case 15:
-          this._paintRange(25)
-        break;
-        case 20:
-          this._paintRange(35)
-        break;
-        case 25:
-          this._paintRange(45)
-        break;
-        case 30:
-          this._paintRange(55)
-        break;
-        case 50:
-          this._paintRange(65)
-        break;
-        case 75:
-          this._paintRange(75)
-        break;
+    toggle: function(){
+      if (this.model.get('hidden')) {
+        this.$el.show(0);
+      }else{
+        this.$el.hide(0);
       }
     },
-
-    _paintRange: function(slider_val) {
-      var $slider = $('#canopy_slider');
-      switch(true) {
-        case slider_val >= 10 && slider_val < 18:
-          slider_val = 10;
-          this.canopy = 10;
-          $('.visible_range').css('width', 60 + 281);
-        break;
-        case slider_val >= 18 && slider_val < 28:
-          slider_val = 21; //15
-          this.canopy = 15;
-          $('.visible_range').css('width', 60 + 233);
-        break;
-        case slider_val >= 28  && slider_val < 38:
-          slider_val = 31; //20
-          this.canopy = 20;
-          $('.visible_range').css('width', 60 + 192);
-        break;
-        case slider_val >= 38  && slider_val < 48:
-          slider_val = 42; //25
-          this.canopy = 25;
-          $('.visible_range').css('width', 60 + 143);
-        break;
-        case slider_val >= 48  && slider_val < 58:
-          slider_val = 53; //30
-          this.canopy = 30;
-          $('.visible_range').css('width', 60 + 97);
-        break;
-        case slider_val >= 58  && slider_val < 69:
-          slider_val = 64; //50
-          this.canopy = 50;
-          $('.visible_range').css('width', 60 + 54);
-        break;
-        case slider_val >= 69  && slider_val < 100:
-        default:
-          slider_val = 75;
-          this.canopy = 75;
-          $('.visible_range').css('width', 60);
-        break;
-      }
-      document.getElementById('canopy_slider').value = slider_val;
+    show: function(){
+      this.model.set('hidden', true);
     },
-
-    _onClickApply: function(e) {
+    hide: function(e){
       e && e.preventDefault();
+      this.model.set('hidden', false);
+    },
+
+
+    // input range change
+    updateThreshold: function() {
+      var value = this.$range.val();
+      this.setVisibleRange(value);
+      this.canopy = this.valuesMap[value];
+
       if (this.helper.config.BASELAYER) {
         this.helper.config.BASELAYER = 'loss' + this.canopy;
       }
+
       this.helper.config.canopy_choice = this.canopy;
       ga('send', 'event', 'Country show', 'Settings', 'Threshold: ' + this.canopy);
 
@@ -269,24 +181,34 @@ define([
       }
     },
 
-    show: function() {
-      this.$el.fadeIn(250);
-      this.loadCanopyUrl();
+    setVisibleRange: function(){
+      var width = (100/(this.valuesMap.length - 1)) * this.$range.val();
+      this.$progress.width(width + '%')
     },
 
-    hide: function(e) {
-      $('.canopy-status').find('em').html((this.helper.config.canopy_choice || 30) + '%')
-      e && e.preventDefault();
-      this.$el.fadeOut(250);
+    // click on label
+    clickLabel: function(e){
+      this.$range.val($(e.currentTarget).data('slider-value'));
+      this.updateThreshold();
     },
 
-    render: function() {
+    // update Presenter
+    updatePresenter: function(value){
+      this.$range.val(this.valuesMap.indexOf(value));
+      this.updateThreshold();
+    },
 
-      this.$el.append(this.template( this.model.toJSON() ));
-
-      return this.$el;
+    // disable on-off
+    toggleVisibility: function(bool){
+      var value = this.$range.val();
+      if (bool) {
+        (this.$button.hasClass('active')) ? this.$button.trigger('click') : null;
+        this.$button.removeClass('changed').addClass('disabled');
+      }else{
+        this.$button.removeClass('disabled');
+        (this.valuesMap[value] !== 30) ? this.$button.addClass('changed') : this.$button.removeClass('changed');
+      }
     }
-
 
   });
 

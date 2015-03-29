@@ -9,10 +9,9 @@ define([
   'mps',
   'views/SourceWindowView',
   'countries/views/CountryHeaderView',
-  'countries/views/CountryShareView',
   'countries/helpers/CountryHelper'
 
-], function($, Backbone, _, d3, mps, SourceWindowView, CountryHeaderView, CountryShareView, CountryHelper) {
+], function($, Backbone, _, d3, mps, SourceWindowView, CountryHeaderView, CountryHelper) {
 
   'use strict';
 
@@ -34,9 +33,6 @@ define([
       'click .info' : 'showInfo',
       'click .graph_tab': '_updateGraph',
       'click .show-more-countries': '_drawList',
-      'click .country-overview-wrapper-coolio .umdoptions_dialog #canopy_slider':  '_updateGraphOverview',
-      'mouseup .country-overview-wrapper-coolio .umdoptions_dialog #canopy_slider':  '_updateGraphOverview',
-      'click .country-overview-wrapper-coolio .umdoptions_dialog ul li':  '_updateGraphOverview'
     },
 
     initialize: function() {
@@ -47,6 +43,7 @@ define([
       this.model = new CountryOverviewModel();
       this.headerView = new CountryHeaderView();
 
+      this.setListeners();
 
       this.$graph = $('.overview_graph__area');
       this.$years = $('.overview_graph__years');
@@ -81,9 +78,14 @@ define([
       this._drawYears();
       this._drawGraph();
       this._drawList();
+    },
 
-      var Share = new CountryShareView({ template: 'templateShare' });
-      this.$el.find('.overview_button_group .share').append(Share.render());
+    setListeners: function(){
+      mps.subscribe('Threshold:change', _.bind(function(threshold){
+        this.helper.config.canopy_choice = threshold;
+        this._updateGraphOverview();
+      }, this ));
+
     },
 
     _toggleYears: function() {

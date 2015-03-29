@@ -121,6 +121,10 @@
   width: 19px;
   margin: -10px 0 0 -8px;
   pointer-events:none;
+  &.hide{
+    opacity: 0;
+    visibility: hidden;
+  }
 
 }
 

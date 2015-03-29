@@ -42,6 +42,7 @@
           <li><%= link_to 'Videos', "#{about_path}/videos", :"data-slug" => 'videos', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item videos' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Awards & Testimonials', "#{about_path}/awards_and_testimonials", :"data-slug" => 'awards_and_testimonials', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item awards_and_testimonials' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Contact us', "#{about_path}/contact-us", :"data-slug" => 'contact-us', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item contact-us' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Data Policy', "#{about_path}/data-policy", :"data-slug" => 'data_policy', :"data-interesting" => 'about_fires, about_commodities, faqs', :class => 'nav-item data_policy' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
@@ -81,7 +82,7 @@
               <ul class="faq-list double-margin">
                 <li>
                   <h3>Partners & collaborators</h3>
-                  <ul class='logo-list'>
+                  <ul class='logo-list logo-ul'>
                     <li><a target='_blank' title="Badan Nasional Penanggulangan Bencana" href='http://bnpb.go.id/' class="bnpb"></a></li>
                     <li><a target='_blank' title="Blue Raster" href='http://www.blueraster.com' class='blueraster'></a></li>
                     <li><a target='_blank' title="CartoDB" href='http://www.cartodb.com' class='cartodb'></a></li>
@@ -92,6 +93,7 @@
                     <li><a target='_blank' title="Digital Globe" href='https://www.digitalglobe.com/' class="digitalglobe"></a></li>
                     <li><a target='_blank' title="ESRI" href='http://www.esri.com/gfw' class='esri'></a></li>
                     <li><a target='_blank' title="Earth Journalism" href='http://earthjournalism.net/' class='ejn'></a></li>
+                    <li><a target="_blank" href='http://www.ewmi.org' class='ewmi'></a></li>
                     <li><a target='_blank' title="Global Forest Watch Canada" href='http://globalforestwatch.ca/' class='gfwca'></a></li>
                     <li><a target='_blank' title="Google Earth Engine" href='http://earthengine.google.org/' class='google'></a></li>
                     <li><a target='_blank' title="Imazon" href='http://www.imazon.org.br/pagina-inicial-en?set_language=en&cl=en' class='imazon'></a></li>
@@ -99,8 +101,9 @@
                     <li><a target='_blank' title="The Jane Goodall Institute" href='http://www.janegoodall.org/' class='goodall'></a></li>
                     <li><a target='_blank' title="Mongabay" href='http://www.mongabay.com/' class='mongabay'></a></li>
                     <li><a target='_blank' title="ONG Muyissi" href='http://www.ongmuyissi.org/' class='muyissi'></a></li>
+                    <li><a target="_blank" href='http://www.ewmi.org/ODI' class='opendevmekong'></a></li>
                     <li><a target='_blank' title="OSFAC" href='http://osfac.net/index.php?lang=en' class='osfac'></a></li>
-                    <li><a target='_blank' title="OSINFOR" href='http://www.osinfor.gob.pe/portal/index.php' class='osinfor'></a></li>
+                    <!-- <li><a target='_blank' title="OSINFOR" href='http://www.osinfor.gob.pe/portal/index.php' class='osinfor'></a></li> -->
                     <li><a target='_blank' title="Rain Forest Foundation" href='http://www.rainforestfoundationuk.org/' class="rfuk"></a></li>
                     <li><a target='_blank' title="REDD Indonesia" href='http://www.redd-indonesia.org/' class="redd"></a></li>
                     <li><a target='_blank' title="Reforestamos Mexico" href='http://www.reforestamosmexico.org/' class="rm"></a></li>
@@ -119,7 +122,6 @@
                   </ul>
                   <ul class='bullets center'>
                     <li>Baker & McKenzie</li>
-                    <li>Conservation International</li>
                     <li>Food and Agriculture Organization of the United Nations</li>
                     <li>IUCN</li>
                     <li>Planet Labs</li>
@@ -130,7 +132,7 @@
                 <li>
                   <h3>Funders</h3>
                   <p><strong>Current Funders</strong></p>
-                  <ul class='logo-list'>
+                  <ul class='logo-list logo-ul'>
                     <li><a target='_blank' href='http://um.dk/en/danida-en/' class='danida'></a></li>
                     <li><a target='_blank' href='http://www.thegef.org/gef/' class='gef'></a></li>
                     <li><a target='_blank' href='http://www.moore.org/' class='moore'></a></li>
@@ -184,7 +186,7 @@
                 </li>
                 <li>
                   <h3>Website designed by</h3>
-                  <ul class='logo-list'>
+                  <ul class='logo-list logo-ul'>
                     <li><a target='_blank' href='http://www.vizzuality.com/' class='vizzuality-big'></a></li>
                   </ul>
                   <p>We welcome others to join the growing GFW partnership.</p>
@@ -193,7 +195,6 @@
               </ul>
             </div>
           </article>
-
 
           <article id='videos' class="source-article">
             <header>
@@ -229,8 +230,6 @@
 
             </div>
           </article>
-
-
 
           <article id='awards_and_testimonials' class="source-article">
             <header>
@@ -313,6 +312,72 @@
             </div>
           </article>
 
+          <article id='data_policy' class="source-article">
+            <header>
+              <h2>Data policy & standards</h2>
+              <h3>Learn more about Global Forest Watch’s commitment to high quality, open data:</h3>
+            </header>
+            <div class="content">
+              <ul class='faq-list'>
+                <li id='data_standards' class='source-item first'>
+                  <h3>Data standards</h3>
+
+                  <div class='source_body'>
+                    <div class='source_summary'>
+                      <p>Global Forest Watch is committed to providing the highest-quality data on the world’s forests that is currently available. All of the data provided on GFW have been assessed with respect to several indicators of quality, including timeliness, accuracy, completeness, geographic coverage, innovation, and objectivity.</p>
+
+                      <p>In some cases, the best available data still have known shortcomings with respect to one or more of these indicators. In those cases, we provide a “caution” explaining known issues or inaccuracies.</p>
+
+                      <p>Global Forest Watch has an open data policy and commits to make our data, and that of our partners, open, discoverable, downloadable, and usable. We believe that open data enables the innovation, information sharing, analysis, and transparency required to support policies that better manage and sustain the world’s forests.</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li id='open_data' class='source-item'>
+                  <h3>Open data policy</h3>
+
+                  <div class='source_body'>
+                    <div class='source_summary'>
+                      <p>Global Forest Watch has an open data policy, intended to provide information free of constraints and restrictions on use. All of the data we produce is shared using <a href='http://opendefinition.org/licenses/' target='_blank'>licensing which conforms to open data standards</a> and made available for download whenever possible.</p>
+
+                      <p>For data sets not produced by GFW, we provide links to download data from the original source when they are available.</p>
+                    </div>
+                  </div>
+                </li>
+
+                <li id='data_sharing' class='source-item'>
+                  <h3>Data sharing</h3>
+
+                  <div class='source_body'>
+                    <div class='source_summary'>
+                      <h4 class='overview_title'>Terms of use</h4>
+                      <ul class='bullets'>
+                        <li>For data sets produced by GFW, you are free to use, distribute, copy, modify, and display the data for commercial and noncommercial purposes.</li>
+                        <li>You are free to use maps, graphics, charts, and other representations of data on the GFW website, with <a href='http://opensource.org/licenses/MIT' target='_blank'>The MIT License (MIT)</a>.</li>
+                        <li>Licensing is determined for each individual data set—please refer to the licensing text for detailed information.</li>
+                        <li>You must attribute the data as indicated in the metadata or licensing for each individual data set.</li>
+                        <li>You must not imply that Global Forest Watch endorses your use of the data, or use the Global Forest Watch logo in conjunction with such use.</li>
+                        <li>Through accessing the GFW site you have acknowledged and agreed to our <%= link_to "Terms of Service", terms_path, :target => '_blank' %>.</li>
+                        <li>The GFW site includes data sets produced by many organizations, some of which may have more restrictive data licensing. Please refer to the licensing of the original data source for more information.</li>
+                      </ul>
+
+                      <h4 class='overview_title'>Permissions & licensing</h4>
+                      <p>Except as noted below, all material on this site carries <a href='http://opensource.org/licenses/MIT' target='_blank'>The MIT License (MIT)</a>, which permits unrestricted reuse of GFW content when proper attribution is provided. This means you are free to copy, display, and distribute GFW’s work, or include our content in derivative works, under the following conditions:</p>
+
+                      <ul class='bullets'>
+                        <li><strong>Attribution.</strong> You must clearly attribute the work and provide a link back to the work on www.globalforestwatch.org. Doing so ensures that people access the latest available information, in the event that the publication is revised or more research is published. Click <a href='http://opensource.org/licenses/MIT' target='_blank'>here</a> for the full legal code of The MIT License (MIT). Some content on this site may carry additional copyright restrictions. GFW has made every effort to clearly label such content.</li>
+
+                        <li><strong>Photographs.</strong> Most of the photographs featured on this site have either been licensed under nontransferable terms, or have been acquired from photo-sharing sites such as Flickr that have their own policies for public use. Unless indicated otherwise, The MIT License (MIT) described above does not apply to photographs and images used on this site.</li>
+
+                        <li><strong>Charts, Graphs, & Maps.</strong> Charts, graphs, and maps produced by GFW may be used according to The MIT License (MIT). Where graphs employ data from third parties, we may not be able to grant permissions to the original data used in these charts, although such permissions may be granted by the owners of the data. In these cases, please contact the third-party organizations directly to ask about permissions. If you have any questions about citing or reusing GFW content, please visit the <%= link_to 'How to page', "#{howto_path}/data" %> or <a href='mailto:gfw@wri.org'>contact us</a>.</li>
+                      </ul>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+          </article>
 <!--
           <article id='users' class="source-article">
             <header>

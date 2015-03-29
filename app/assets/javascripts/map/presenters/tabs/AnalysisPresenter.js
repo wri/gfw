@@ -32,10 +32,10 @@ define([
   });
 
   var concessionsSql = {
-    'logging': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from logging_gcs_wgs84 where cartodb_id ={0}',
-    'mining':'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from mining_permits_merge where cartodb_id ={0}',
-    'oilpalm': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from oil_palm_permits_merge where cartodb_id ={0}',
-    'fiber': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from fiber_all_merged where cartodb_id ={0}'
+    'logging': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_logging where cartodb_id ={0}',
+    'mining':'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_mining where cartodb_id ={0}',
+    'oilpalm': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_oil_palm where cartodb_id ={0}',
+    'fiber': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_wood_fiber where cartodb_id ={0}'
   };
 
   var AnalysisToolPresenter = PresenterClass.extend({
@@ -225,7 +225,7 @@ define([
             objects);
 
           this._geojsonFitBounds(geojson);
-          this.view.drawMaskCountry(geojson,iso.country);
+          // this.view.drawMaskCountry(geojson,iso.country);
 
           if (!this.status.get('dont_analyze')) {
             // this.view.drawMaskCountry(geojson,iso.country);
@@ -244,7 +244,7 @@ define([
           var geojson = results.features[0];
 
           this._geojsonFitBounds(geojson);
-          this.view.drawMaskArea(geojson,iso.country,iso.region);
+          // this.view.drawMaskArea(geojson,iso.country,iso.region);
 
           if (!this.status.get('dont_analyze')) {
             // this.view.drawMaskArea(geojson,iso.country,iso.region);
