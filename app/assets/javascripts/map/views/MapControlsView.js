@@ -103,7 +103,7 @@ define([
         this.$el.html(this.template({embedUrl: this._generateEmbedUrl()}));
       }
       this.initCustomViews();
-    }
+    },
 
     initCustomViews: function(){
       new Searchbox(this.map);
@@ -185,9 +185,10 @@ define([
       ($button.hasClass('active')) ? $tooltip.text('Show windows (t)') : $tooltip.text('Hide windows (t)') ;
       mps.publish('MapControlsToggleModules/toggle');
     },
+    
     toggleControls: function(e){
       this.$toggleButtons.children('.toggle-button').toggleClass('hidden');
-    }
+    },
 
     _generateEmbedUrl: function() {
       return window.location.origin + '/embed' + window.location.pathname + window.location.search;
