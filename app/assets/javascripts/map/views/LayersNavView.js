@@ -201,7 +201,15 @@ define([
 
     _showNotification: function(e){
       if ($(e.currentTarget).hasClass('disabled')) {
-        ($(e.currentTarget).hasClass('iso-detected')) ? this.presenter.notificate('not-country-not-has-layers') : this.presenter.notificate('not-country-choose');
+        if($(e.currentTarget).hasClass('iso-detected')){
+          this.presenter.notificate('not-country-not-has-layers');
+        }else{
+          this.presenter.notificate('not-country-choose');
+          $('#countries-tab-button').addClass('pulse');
+          setTimeout(function(){
+            $('#countries-tab-button').removeClass('pulse');
+          },3000);
+        }
       }
     }
 
