@@ -19,13 +19,12 @@ define([
 
   var LayersNavView = Backbone.View.extend({
 
-    el: '.layers-menu',
-
     template: Handlebars.compile(tpl),
     templateCountry: Handlebars.compile(tplCountry),
     templateCountryWrapper: Handlebars.compile(tplCountryWrapper),
 
     events: {
+      'click .category-name' : '_toggleLayersNav',
       'click .layer': '_toggleLayer',
       'click #country-layers' : '_showNotification'
     },
@@ -33,7 +32,18 @@ define([
     initialize: function() {
       _.bindAll(this, '_toggleSelected');
       this.presenter = new Presenter(this);
-      this.render();
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.setElement('#layers-menu');
+          this.render();
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.setElement('#layers-tab');
+          this.render();
+        },this)
+      });
     },
 
     render: function() {
@@ -43,6 +53,7 @@ define([
 
       //Init
       this.$categoriesList = $('.categories-list');
+      this.$categoriesNum = $('.category-num');
       this.$layersCountry = $('#layers-country-nav');
       this.$countryLayers = $('#country-layers');
     },
@@ -87,6 +98,16 @@ define([
           $layerTitle.css('color', '');
         }
       });
+
+      this.setNumbersOfLayers();
+    },
+
+    setNumbersOfLayers: function(){
+      var layersByCategory = _.groupBy(this.layers, function(layer){ return layer.category_slug; });
+      this.$categoriesNum.text('');
+      _.each(layersByCategory, _.bind(function(v,k){
+        $('#'+k+'-category-num').text(v.length);
+      },this));
     },
 
     /**
@@ -120,6 +141,16 @@ define([
       }
     },
 
+    _toggleLayersNav: function(e){
+      $(e.currentTarget).toggleClass('show');
+      $(e.currentTarget).parent().children('.layers-nav').toggleClass('show');
+    },
+
+
+
+    /**
+     * Set and update iso
+     */
     setIso: function(iso){
       this.iso = iso.country;
       this.region = iso.region;

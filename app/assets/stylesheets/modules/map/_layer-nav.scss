@@ -23,10 +23,11 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
 
   .categories-list {
     position: relative;
-    display: inline-block;
-    float: right;
-    // bottom: 0;
-    // right: 0;
+    display: block;
+    @media (min-width: $br-mobileMap){
+      display: inline-block;
+      float: right;
+    }
     @media (min-width: 1500px){
       float: left;
       left: 50%;
@@ -39,12 +40,21 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     position: relative;
-    float: left;
-    padding: 17px 20px 12px;
+    width: 100%;
     cursor: pointer;
-    border-bottom: 5px solid;
     margin-left: 1px;
     color: $dark;
+    @media (min-width: $br-mobileMap){
+      float: left;
+      width: auto;
+      padding: 17px 20px 12px;
+      border-bottom: 5px solid;
+      &:not(.disabled):hover .layers-nav {
+        opacity: 1;
+        max-height: 1000px;
+      }
+    }
+
     // text-rendering: optimizeLegibility;
 
     .category-name {
@@ -56,8 +66,50 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      max-width: 150px;
       display: block;
+      position: relative;
+      padding: 15px 20px;
+      border-bottom: 1px solid #e5e5e5;
+      &.show{
+        &:after{
+          @include transform(translate(0,-50%) rotate(0deg));
+        }
+      }
+      .category-num{
+        display: block;
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        top: 50%;
+        right: 30px;
+        margin: -8px 0 0;
+        font-size: 14px;
+        text-align: center;
+        line-height: 18px;
+        @media (min-width: $br-mobileMap){
+          display: none;
+        }
+      }
+      &:after{
+        content: "";
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        @include transform(translate(0,-50%) rotate(90deg));
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 8px solid;
+      }
+      @media (min-width: $br-mobileMap){
+        max-width: 150px;
+        padding: 0;
+        border-bottom: none;
+        &:after{
+          display: none;
+        }
+      }
     }
 
     &.country{
@@ -71,13 +123,21 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       }
     }
 
-    &:not(.disabled):hover .layers-nav {
-      opacity: 1;
-      max-height: 1000px;
-    }
 
     @for $i from 1 through length($categories) {
       &.#{nth($categories, $i)}{
+        .category-name{
+          color: nth($colors, $i);
+          .category-num{
+            color: nth($colors, $i);
+          }
+          &:after{
+            border-top-color: nth($colors, $i);
+          }
+          @media (min-width: $br-mobileMap){
+            color: inherit;
+          }
+        }
         border-color: nth($colors, $i);
         .layers-nav-header{
           // background: lighten(nth($colors, $i),10%);
@@ -100,23 +160,35 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
   }
 
   .layers-nav {
-    display: inline-block;
-    position: absolute;
+    display: none;
+    position: relative;
     z-index: 2000;
-    left: 50%;
-    top: 0px;
-    width: 190px;
-    margin-left: -95px;
+    width: 100%;
     max-height: 0;
     background: white;
-    overflow: hidden;
-    opacity: 0;
-    @include box-shadow(0px 2px 3px 1px rgba(#000, .15));
     @include transition(all .2s ease);
+    &.show{
+      display: inline-block;
+    }
+    @media (min-width: $br-mobileMap){
+      display: inline-block;
+      position: absolute;
+      width: 190px;
+      left: 50%;
+      top: 0px;
+      margin-left: -95px;
+      opacity: 0;
+      overflow: hidden;
+      @include box-shadow(0px 2px 3px 1px rgba(#000, .15));
+    }
 
     .layers-nav-header {
       border-bottom: 4px solid;
       text-align: center;
+      display: none;
+      @media (min-width: $br-mobileMap){
+        display: block;
+      }
 
       .category-icon {
         position: relative;
@@ -146,113 +218,124 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       }
     }
 
-    .layers-list > li {
-      font-size: 13px;
-      color: $dark;
-      padding: 14px 10px;
-      border-bottom: 1px solid #e5e5e5;
-      cursor: pointer;
-      position: relative;
-      @include transition(all .2s ease);
+    .layers-list {
+      overflow: hidden;
+      > li {
+        font-size: 13px;
+        color: $dark;
+        padding: 14px 20px;
+        border-bottom: 1px solid #e5e5e5;
+        cursor: pointer;
+        position: relative;
+        @include transition(all .2s ease);
+        @media (min-width: $br-mobileMap){
+          padding: 14px 10px;
+        }
 
-      &.is-disabled {
-        pointer-events: none;
-        background: #f9f9f9;
+        &.is-disabled {
+          pointer-events: none;
+          background: #f9f9f9;
+          .layer-title {
+            padding-left: 23px;
+          }
+        }
+
         .layer-title {
-          padding-left: 23px;
-        }
-      }
-
-      .layer-title {
-        width: 115px;
-        display: inline-flex;
-        .source {
-          @extend .info-icon;
-          display: block;
-          position: absolute;
-          top: 12px;
-          right: 10px;
-          &.hidden {
-            display: none;
-          }
-        }
-      }
-
-      .layer-info {
-        font-size: 11px;
-        margin-top: 3px;
-        padding: 0 8px 0 23px;
-        display: block;
-        color: #AAA;
-        label {
-          position: relative;
-          float: none;
-          font-weight: normal;
-          color: #AAA;
-          font-size: 11px;
-          margin: 5px 5px 5px 0px;
-          padding-left: 13px;
-          text-transform: none;
-          display: inline-block;
-          &.selected {
-            color: $dark;
-            text-shadow: 0px 0px 0px #999;
-            span:before{
-              display: block;
-            }
-          }
-          span{
+          width: 115px;
+          display: inline-flex;
+          .source {
+            @extend .info-icon;
             display: block;
             position: absolute;
-            width: 10px;
-            height: 10px;
-            top: -1px;
-            left: 0;
-            border: 1px solid lighten($dark,10%);
-            border-radius: 50%;
-            &:before {
-              content: ' ';
+            top: 50%;
+            right: 20px;
+            margin: -7px 0 0;
+            @media (min-width: $br-mobileMap){
+              top: 12px;
+              right: 10px;
+              margin: 0;
+            }
+            &.hidden {
               display: none;
-              width: 4px;
-              height: 4px;
-              background-color: lighten($dark,10%);
+            }
+          }
+        }
+
+        .layer-info {
+          font-size: 11px;
+          margin-top: 3px;
+          padding: 0 8px 0 23px;
+          display: block;
+          color: #AAA;
+          label {
+            position: relative;
+            float: none;
+            font-weight: normal;
+            color: #AAA;
+            font-size: 11px;
+            margin: 5px 5px 5px 0px;
+            padding-left: 13px;
+            text-transform: none;
+            display: inline-block;
+            &.selected {
+              color: $dark;
+              text-shadow: 0px 0px 0px #999;
+              span:before{
+                display: block;
+              }
+            }
+            span{
+              display: block;
               position: absolute;
-              top: 50%;
-              left: 50%;
-              margin: -2px 0 0 -2px;
+              width: 10px;
+              height: 10px;
+              top: -1px;
+              left: 0;
+              border: 1px solid lighten($dark,10%);
               border-radius: 50%;
+              &:before {
+                content: ' ';
+                display: none;
+                width: 4px;
+                height: 4px;
+                background-color: lighten($dark,10%);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                margin: -2px 0 0 -2px;
+                border-radius: 50%;
+              }
+            }
+            input {
+              display: none;
+              cursor: pointer;
+              background-image: url('/assets/svg/dragger.svg');
+              @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+                background-image: none;
+              }
+            }
+            &.c_f_peru {
+              width: 130px;
             }
           }
-          input {
-            display: none;
-            cursor: pointer;
-            background-image: url('/assets/svg/dragger.svg');
-            @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-              background-image: none;
+        }
+
+        .onoffradio {
+          margin: 0 7px 0 2px;
+          &.checked {
+            border-color: $forest-change-color;
+            span {
+              background: $forest-change-color;
             }
           }
-          &.c_f_peru {
-            width: 130px;
-          }
         }
-      }
 
-      .onoffradio {
-        margin: 0 7px 0 2px;
-        &.checked {
-          border-color: $forest-change-color;
-          span {
-            background: $forest-change-color;
-          }
+        .onoffswitch {
+          margin: 2px 6px 0 0;
         }
-      }
 
-      .onoffswitch {
-        margin: 2px 6px 0 0;
       }
-
     }
-
   } // layers-nav
 
 }

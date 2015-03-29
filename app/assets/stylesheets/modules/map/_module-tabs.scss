@@ -72,14 +72,16 @@ $w-control: 44px;
               fill: $cGreen;
             }
           }
-          span{
-            display: inline-block;
-            float: left;
-            position: relative;
-            margin-right: 5px;
-            text-transform: uppercase;
-            top: 5px;
-            font-size: 13px;
+          @media (max-width: $br-mobileMap - 1){
+            span{
+              display: inline-block;
+              float: left;
+              position: relative;
+              margin-right: 5px;
+              text-transform: uppercase;
+              top: 5px;
+              font-size: 13px;
+            }
           }
           svg{
             fill: $dark;
