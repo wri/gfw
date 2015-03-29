@@ -49,6 +49,10 @@
 
   <%= javascript_include_tag 'modernizr-2.6.2.min' %>
   <%= csrf_meta_tags %>
+  <script>
+    var gfw = window.gfw = {};
+    window.gfw.config = { GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>" };
+  </script>
 </head>
 <body class='<%= "#{controller_name} #{action_name}" %>'>
   <%= yield :title %>

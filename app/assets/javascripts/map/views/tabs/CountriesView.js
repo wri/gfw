@@ -10,9 +10,10 @@ define([
   'chosen',
   'map/presenters/tabs/CountriesPresenter',
   'text!map/templates/tabs/countries.handlebars',
+  'text!map/templates/tabs/countries-mobile.handlebars',
   'text!map/templates/tabs/countriesIso.handlebars',
   'text!map/templates/tabs/countriesButtons.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplIso, tplButtons) {
+], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplMobile, tplIso, tplButtons) {
 
   'use strict';
 
@@ -31,6 +32,7 @@ define([
     template: Handlebars.compile(tpl),
     templateIso: Handlebars.compile(tplIso),
     templateButtons: Handlebars.compile(tplButtons),
+    templateMobile: Handlebars.compile(tplMobile),
 
     events: {
       //countries
@@ -44,7 +46,19 @@ define([
       this.map = map;
       this.model = new CountriesModel();
       this.presenter = new Presenter(this);
-      this.render();
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = false;
+          this.render();
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = true;
+          this.renderMobile();
+        },this)
+      });
+
       this.cacheVars();
       //Experiment
       this.presenter.initExperiment('source');
@@ -52,6 +66,9 @@ define([
 
     render: function(){
       this.$el.html(this.template());
+    },
+    renderMobile: function(){
+      this.$el.html(this.templateMobile());
     },
 
     cacheVars: function(){
