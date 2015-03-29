@@ -137,7 +137,10 @@ define([
 
     //TOGGLE
     toggleModules: function(e){
-      this.$el.find('.toggle-modules').toggleClass('active');
+      var $button = this.$el.find('.toggle-modules');
+      var $tooltip = $button.find('.tooltipmap');
+      $button.toggleClass('active');
+      ($button.hasClass('active')) ? $tooltip.text('Show windows (t)') : $tooltip.text('Hide windows (t)') ;
       mps.publish('MapControlsToggleModules/toggle');
     },
 
