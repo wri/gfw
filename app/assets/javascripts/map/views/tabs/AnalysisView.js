@@ -87,7 +87,7 @@ define([
 
     inits: function(){
       // countries
-      this.setStyle(0.45);
+      this.setStyle();
       this.getCountries();
 
       //other
@@ -118,6 +118,7 @@ define([
         this.$deletebtn = $('#analysis-delete');
         clearTimeout(this.timeout);
         this.$deletebtn.addClass('pulse');
+        this.presenter.notificate('not-delete-analysis');
         this.timeout = setTimeout(_.bind(function(){
           this.$deletebtn.removeClass('pulse');
         }, this ),3000)
@@ -153,10 +154,10 @@ define([
     /**
      * Set geojson style.
      */
-    setStyle: function(opacity) {
+    setStyle: function() {
       this.style = {
         strokeWeight: 2,
-        fillOpacity: opacity,
+        fillOpacity: 0,
         fillColor: '#FFF',
         strokeColor: '#A2BC28',
         icon: new google.maps.MarkerImage(
@@ -167,9 +168,21 @@ define([
         )
       };
 
-      this.map.data.setStyle(this.style);
+      this.map.data.setStyle(_.bind(function(feature){
+        var strokeColor = (feature.getProperty('color')) ? feature.getProperty('color') : '#A2BC28';
+        return ({
+          strokeWeight: 2,
+          fillOpacity: 0,
+          fillColor: '#FFF',
+          strokeColor: strokeColor
+        });
+      }, this ));
     },
 
+    setGeojson: function(geojson, color) {
+      geojson.properties.color = color;
+      return geojson;
+    },
 
 
 
@@ -329,7 +342,6 @@ define([
      * listener.
      */
     _startDrawingManager: function() {
-      this.setStyle(0.45);
       this.model.set('is_drawing', true);
       this.drawingManager = new google.maps.drawing.DrawingManager({
         drawingControl: false,
@@ -428,6 +440,12 @@ define([
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
       this.presenter.setMultipolygon(multipolygon, geojson);
     },
+    drawCountrypolygon: function(geojson,color) {
+      var geojson = this.setGeojson(geojson,color);
+      this.setStyle();
+      var multipolygon = this.map.data.addGeoJson(geojson)[0];
+      this.presenter.setMultipolygon(multipolygon, geojson);
+    },
 
 
 
@@ -447,8 +465,6 @@ define([
 
     // COUNTRY MASK
     drawMaskCountry: function(geojson, iso){
-      this.setStyle(0);
-
       this.mask = cartodb.createLayer(this.map, {
         user_name: 'wri-01',
         type: 'cartodb',
@@ -459,7 +475,7 @@ define([
           cartocss: "\
             #country_mask {\
               polygon-fill: #373737;\
-              polygon-opacity: 0.5;\
+              polygon-opacity: 0.15;\
               line-color: #333;\
               line-width: 0;\
               line-opacity: 0;\
@@ -474,16 +490,14 @@ define([
       });
       // this.mask.addTo(this.map, 1000)
       this.mask.done(_.bind(this._cartodbLayerDone, this ));
-
-      var multipolygon = this.map.data.addGeoJson(geojson)[0];
-      this.presenter.setMultipolygon(multipolygon, geojson);
-
     },
 
     // COUNTRY MASK
-    drawMaskArea: function(geojson, iso, region){
-      this.setStyle(0);
+    // If we want to be more accurate:
+    // - Change the query table -> gadm2_countries
+    // - Cartocss #country_mask -> #gadm2_countries; code = -> iso= ;
 
+    drawMaskArea: function(geojson, iso, region){
       this.mask = cartodb.createLayer(this.map, {
         user_name: 'wri-01',
         type: 'cartodb',
@@ -494,7 +508,7 @@ define([
           cartocss: "\
             #country_mask {\
               polygon-fill: #373737;\
-              polygon-opacity: 0.5;\
+              polygon-opacity: 0.15;\
               line-color: #333;\
               line-width: 0;\
               line-opacity: 0;\
@@ -510,7 +524,7 @@ define([
           cartocss: "\
             #gadm_1_all {\
               polygon-fill: #373737;\
-              polygon-opacity: 0.5;\
+              polygon-opacity: 0.15;\
               line-color: #333;\
               line-width: 0;\
               line-opacity: 0;\
@@ -528,10 +542,6 @@ define([
       })
       // this.mask.addTo(this.map, 1000)
       this.mask.done(_.bind(this._cartodbLayerDone, this ));
-
-      var multipolygon = this.map.data.addGeoJson(geojson)[0];
-      this.presenter.setMultipolygon(multipolygon, geojson);
-
     },
 
 

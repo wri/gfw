@@ -8,15 +8,14 @@
   </nav>
   <div id="analysis-content" class="analysis-content">
     <div id="default" class="analysis-tab-content default results-hide active">
-      <div class="arrow"></div>
       <header>
-        <h2>Choose the analysis you want to do</h2>
+        <h2>Choose analysis type to calculate forest change statistics</h2>
       </header>
     </div>
     <div id="draw-tab" class="analysis-tab-content draw-tab results-hide">
       <header>
         <h2>Draw in the map the area you want to analyze</h2>
-        <p>Learn more <a href="#" data-source="regular_dialog" class="source btn gray uppercase little">Click here</a></p>
+        {{!-- <p>Learn more <a href="#" data-source="regular_dialog" class="source btn gray uppercase little">Click here</a></p> --}}
       </header>
       <div class="image"><div><svg><use xlink:href="#icon-analysis-draw"></use></svg></div></div>
       <ul id="draw-analysis" class="button-container one">
@@ -26,15 +25,19 @@
     </div>
     <div id="country-tab" class="analysis-tab-content country-tab">
       <select data-placeholder="Select country" class="chosen-select default notranslate" id="analysis-country-select"><option></option></select>
-      <select data-placeholder="Select jurisdiction" disabled="true" class="chosen-select default notranslate" id="analysis-region-select"><option></option></select>
+      <select data-placeholder="Select jurisdiction (optional)" disabled="true" class="chosen-select default notranslate" id="analysis-region-select"><option></option></select>
       <ul class="button-container one">
         <li><button id="analysis-country-button" class="btn green uppercase">Analyze</button></li>
       </ul>
     </div>
     <div id="data-tab" class="analysis-tab-content data-tab results-hide">
       <header>
-        <h2>Concession & PA analysis</h2>
-        <p>Select a concession you’d like to analyze, and click the ‘analyze area’ button in the window that appears.</p>
+        <h2>Analyze a shape on the map</h2>
+        <ol>
+          <li>Use the tabs above the map to turn on a data layer <a href="#" class="source" data-source="regular_dialog"><svg><use xlink:href="#shape-info"></use></svg></a></li>
+          <li>Select a shape in the map</li>
+          <li>Click “Analyze”</li>
+        </ol>
       </header>
       <div class="img-box">
         <div id="data-tab-play" class="play"></div>

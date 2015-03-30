@@ -10,7 +10,7 @@ define([
   'map/presenters/MapControlsPresenter',
   'map/views/controls/SearchboxView',
   'map/views/controls/ToggleModulesView',
-  'map/views/controls/ShareView',
+  'views/ShareView',
   'map/views/controls/ThresholdView',
   'text!map/templates/mapcontrols.handlebars'
 ], function(_, Handlebars, keymaster, Presenter, Searchbox, ToggleModulesView, ShareView, ThresholdView, tpl) {
@@ -76,14 +76,13 @@ define([
     },
 
     render: function(){
-      this.$el.html(this.template());
+      this.$el.html(this.template({embedUrl: this._generateEmbedUrl()}));
       this.initCustomViews();
     },
 
     initCustomViews: function(){
       new Searchbox(this.map);
       new ToggleModulesView();
-      new ShareView();
       new ThresholdView();
     },
     /**
@@ -117,8 +116,8 @@ define([
     },
 
     //SHARE
-    shareMap: function(){
-      mps.publish('ShareControls/toggle');
+    shareMap: function(event) {
+      new ShareView().share(event);
     },
 
 
@@ -138,11 +137,16 @@ define([
 
     //TOGGLE
     toggleModules: function(e){
-      this.$el.find('.toggle-modules').toggleClass('active');
+      var $button = this.$el.find('.toggle-modules');
+      var $tooltip = $button.find('.tooltipmap');
+      $button.toggleClass('active');
+      ($button.hasClass('active')) ? $tooltip.text('Show windows (t)') : $tooltip.text('Hide windows (t)') ;
       mps.publish('MapControlsToggleModules/toggle');
     },
 
-
+    _generateEmbedUrl: function() {
+      return window.location.origin + '/embed' + window.location.pathname + window.location.search;
+    }
   });
 
   return MapControlsView;

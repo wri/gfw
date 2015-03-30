@@ -32,10 +32,10 @@ define([
   });
 
   var concessionsSql = {
-    'logging': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from logging_gcs_wgs84 where cartodb_id ={0}',
-    'mining':'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from mining_permits_merge where cartodb_id ={0}',
-    'oilpalm': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from oil_palm_permits_merge where cartodb_id ={0}',
-    'fiber': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from fiber_all_merged where cartodb_id ={0}'
+    'logging': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_logging where cartodb_id ={0}',
+    'mining':'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_mining where cartodb_id ={0}',
+    'oilpalm': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_oil_palm where cartodb_id ={0}',
+    'fiber': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_wood_fiber where cartodb_id ={0}'
   };
 
   var AnalysisToolPresenter = PresenterClass.extend({
@@ -152,7 +152,13 @@ define([
       if (params.analyze && params.name === 'map') {
         this.view.onClickAnalysis();
       } else if (params.iso.country && params.iso.country !== 'ALL') {
-        this._analyzeIso(params.iso);
+        if (params.geojson) {
+          this._analyzeIso(params.iso);
+          this._analyzeGeojson(params.geojson);
+        }else{
+          this._analyzeIso(params.iso);
+        }
+
       } else if (params.geojson) {
         this._analyzeGeojson(params.geojson);
       } else if (params.wdpaid) {
@@ -219,11 +225,15 @@ define([
             objects);
 
           this._geojsonFitBounds(geojson);
-          this.view._removeCartodblayer();
-          this.view.drawMaskCountry(geojson,iso.country);
+          // this.view.drawMaskCountry(geojson,iso.country);
+
           if (!this.status.get('dont_analyze')) {
+            // this.view.drawMaskCountry(geojson,iso.country);
+            this.view.drawCountrypolygon(geojson,'#A2BC28');
+            this.view._removeCartodblayer();
             this._publishAnalysis(resource);
           }else{
+            // this.view.drawCountrypolygon(geojson,'#3182bd');
             mps.publish('Spinner/stop');
           }
 
@@ -234,11 +244,15 @@ define([
           var geojson = results.features[0];
 
           this._geojsonFitBounds(geojson);
-          this.view._removeCartodblayer();
-          this.view.drawMaskArea(geojson,iso.country,iso.region);
+          // this.view.drawMaskArea(geojson,iso.country,iso.region);
+
           if (!this.status.get('dont_analyze')) {
+            // this.view.drawMaskArea(geojson,iso.country,iso.region);
+            this.view.drawCountrypolygon(geojson,'#A2BC28');
+            this.view._removeCartodblayer();
             this._publishAnalysis(resource);
           }else{
+            // this.view.drawCountrypolygon(geojson,'#3182bd');
             mps.publish('Spinner/stop');
           }
 
@@ -543,7 +557,12 @@ define([
       }
 
       return p;
-    }
+    },
+
+    notificate: function(id){
+      mps.publish('Notification/open', [id]);
+    },
+
 
   });
 

@@ -157,7 +157,11 @@ define([
           layersToRender.push(layer);
         }
       }, this ));
-      (layersToRender.length > 0) ? this.$countryLayers.addClass('active').removeClass('disabled') : this.$countryLayers.removeClass('active').addClass('disabled');
+      if(layersToRender.length > 0) {
+        this.$countryLayers.addClass('active').removeClass('disabled');
+      }else{
+        this.$countryLayers.removeClass('active').addClass('disabled');
+      }
       this.renderIsoLayers(layersToRender);
     },
 
@@ -197,7 +201,15 @@ define([
 
     _showNotification: function(e){
       if ($(e.currentTarget).hasClass('disabled')) {
-        ($(e.currentTarget).hasClass('iso-detected')) ? this.presenter.notificate('country-not-layers') : this.presenter.notificate('country-choose');
+        if($(e.currentTarget).hasClass('iso-detected')){
+          this.presenter.notificate('not-country-not-has-layers');
+        }else{
+          this.presenter.notificate('not-country-choose');
+          $('#countries-tab-button').addClass('pulse');
+          setTimeout(function(){
+            $('#countries-tab-button').removeClass('pulse');
+          },3000);
+        }
       }
     }
 

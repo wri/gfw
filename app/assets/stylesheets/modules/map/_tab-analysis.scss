@@ -109,7 +109,7 @@
     }
 
     svg{
-      width: 100%;
+      width: 105%;
       height: 100%;
       position: absolute;
       top: 0;
@@ -235,7 +235,12 @@
     }
 
     .stats-notice {
-      font-size: 12px;
+      font-size: 11px;
+      background: $border;
+      border: 1px solid #CCC;
+      padding: 10px;
+      text-align: center;
+      line-height: 1.25;
     }
   }
 

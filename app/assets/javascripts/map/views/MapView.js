@@ -141,15 +141,17 @@ define([
         layers[i] && this._addLayers(layers, options, i);
       }, this);
 
-      if (!layersHelper[layer.slug].view || this.layerInst[layer.slug]) {
-        _addNext();
-        return;
+      if (!!layersHelper[layer.slug]) {
+        if ((!layersHelper[layer.slug].view || this.layerInst[layer.slug])) {
+          _addNext();
+          return;
+        }
+        var layerView = this.layerInst[layer.slug] =
+          new layersHelper[layer.slug].view(layer, options, this.map);
+
+        layerView.addLayer(this._getOverlayPosition(layer), _addNext);
       }
 
-      var layerView = this.layerInst[layer.slug] =
-        new layersHelper[layer.slug].view(layer, options, this.map);
-
-      layerView.addLayer(this._getOverlayPosition(layer), _addNext);
     },
 
     /**

@@ -93,6 +93,10 @@ Gfw::Application.routes.draw do
   # countries
   get '/countries' => 'countries#index'
   get '/country/:id' => 'countries#show', :as => 'country'
+
+  post '/country/:id/download' => 'countries#create_download'
+  get '/country/:id/download' => 'countries#download', :as => 'country_download'
+
   get '/country_info/:id/:box',to: redirect('/country/%{id}#%{box}')
   # todo => validate id
   get '/country/:id/:area_id' => 'countries#show', :as => 'country_area'
@@ -109,7 +113,7 @@ Gfw::Application.routes.draw do
 
   # embed
   get '/embed/country/:id' => 'embed#countries_show'
-  get '/embed/country_info/:id/:box' => 'embed#countries_show_info'
+  get '/embed/country_info/:id/:box' => 'embed#countries_show_info', :as => 'embed_country_box'
   get '/embed/country/:id/:area_id' => 'embed#countries_show'
   get '/embed/countries/overview' => 'embed#countries_overview'
 

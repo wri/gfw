@@ -21,15 +21,27 @@ $w-control: 44px;
           cursor: pointer;
           padding: 0.5em 1.5em;
           border-left: 1px solid $border;
+          position: relative;
           &:first-child{
             border-left: none;
           }
-          &:hover{ background: $light;}
+          &:hover{
+            background: $light;
+            .tooltipmap{
+              opacity: 1;
+              visibility: visible;
+            }
+          }
           &:active{ background: darken($light,5%);}
           &.active{ background: $white;}
           &.inactive{
             background: #EEEEEE;
             &:hover{ background: lighten(#EEEEEE, 5%);}
+          }
+          &.pulse{
+            svg{
+              @include animation(pulse_animation,0.75s,4,$easeInOutSine);
+            }
           }
           &.disabled{
             pointer-events: none;
@@ -92,7 +104,7 @@ $w-control: 44px;
           @include clearfix();
           h2{
             font-size: 21px;
-            padding: 0 0 10px;
+            padding: 0 0 15px;
             text-align: center;
           }
           p{
