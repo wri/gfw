@@ -105,8 +105,8 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     z-index: 2000;
     left: 50%;
     top: 0px;
-    width: 190px;
-    margin-left: -95px;
+    width: 200px;
+    margin-left: -100px;
     max-height: 0;
     background: white;
     overflow: hidden;
@@ -148,16 +148,26 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
 
     .layers-list {
       .layer-group{
+        border-top: 1px solid #e5e5e5;
+        &:first-child{ border: none; }
         .group-name{
           font-size: 13px;
           padding: 10px;
           display: block;
+          text-transform: uppercase;
+          font-weight: 500;
           em{
             display: block;
             font-size: 11px;
             margin-top: 3px;
             color: #AAA;
+            text-transform: none;
+            font-weight: 400;
           }
+        }
+        >li{
+          border: none;
+          padding: 10px;
         }
       }
       li {
