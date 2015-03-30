@@ -333,7 +333,12 @@ define([
 
     roundNumber: function(value){
       return (value < 10) ? value.toFixed(2).toLocaleString() : Math.round(value).toLocaleString();
-    }
+    },
+
+
+    showCanopy: function(){
+      mps.publish('ThresholdControls/toggle');
+    },
 
 
 
