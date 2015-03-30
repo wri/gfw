@@ -1,3 +1,15 @@
+{{!-- Tree cover change (Hansen/UMD/Google/USGS/NASA)
+Loss (annual, 30m, global) - will have its own info window
+Gain (12 years, 30m, global) - will have its own info window
+Tree cover loss alerts (near real-time)
+FORMA (monthly, 500m, humid tropics, WRI/CGD)
+Terra-i (monthly, 250m, Latin America, CIAT)
+SAD (monthly, 150m, Brazilian Amazon, Imazon)
+QUICC (quarterly, 5m, <37 degrees north, NASA)
+Active fires (past 7 days, 1km, global, NASA)
+None --}}
+
+
 <div class="disable-selection">
   <ul class="categories-list">
 
@@ -10,46 +22,55 @@
           <span class="category-name">FOREST CHANGE</span>
         </div>
         <ul class="layers-list">
-          <li class="layer" data-layer="loss">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">UMD/Google tree cover loss<a href='#' data-source='loss' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">(annual, 30m, Global)</span>
-          </li>
-          <li class="layer" data-layer="forestgain">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">UMD/Google tree cover gain<a href='#' data-source='forestgain' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">(12 years, 30m, Global)</span>
-          </li>
-          <li class="layer" data-layer="forma">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">FORMA alerts<a href='#' data-source='forma' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">(monthly, 500m, humid tropics)</span>
-          </li>
-          <li class="layer" data-layer="imazon">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">Imazon SAD alerts<a href='#' data-source='imazon' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">(monthly, 250m, Brazilian Amazon)</span>
-          </li>
-          <li class="layer" data-layer="modis">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">QUICC alerts<a href='#' data-source='modis' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">(quarterly, 5km, &lt;37 degrees north)</span>
-          </li>
-          </li>
-          <li class="layer" data-layer="fires">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">NASA active fires<a href='#' data-source='fires' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">(past 7 days, 1km, global)</span>
-          </li>
-          <li class="layer" data-layer="terrailoss">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">Terra-i alerts<a href='#' data-source='terrailoss' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">(monthly, 250m, Latin America)</span>
-          </li>
-          <li class="layer" data-layer="nothing">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">None</span>
-          </li>
+          <div class="layer-group">
+            <span class="group-name">Tree cover change <em>(Hansen/UMD/Google/USGS/NASA)</em></span>
+            <li class="layer" data-layer="loss">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">Loss<a href='#' data-source='loss' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(annual, 30m, Global)</span>
+            </li>
+            <li class="layer" data-layer="forestgain">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">Gain<a href='#' data-source='forestgain' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(12 years, 30m, Global)</span>
+            </li>
+          </div>
+          <div class="layer-group">
+            <span class="group-name">Tree cover loss alerts <em>(near real-time)</em></span>
+            <li class="layer" data-layer="forma">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">FORMA<a href='#' data-source='forma' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(monthly, 500m, humid tropics, WRI/CGD)</span>
+            </li>
+            <li class="layer" data-layer="terrailoss">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">Terra-i<a href='#' data-source='terrailoss' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(monthly, 250m, Latin America, CIAT)</span>
+            </li>
+            <li class="layer" data-layer="imazon">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">SAD<a href='#' data-source='imazon' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(monthly, 250m, Brazilian Amazon, Imazon)</span>
+            </li>
+            <li class="layer" data-layer="modis">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">QUICC<a href='#' data-source='modis' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(quarterly, 5m, &lt;37 degrees north, NASA)</span>
+            </li>
+          </div>
+          <div class="layer-group">
+            <li class="layer" data-layer="fires">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">Active fires<a href='#' data-source='fires' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(past 7 days, 1km, global, NASA)</span>
+            </li>
+          </div>
+          <div class="layer-group">
+            <li class="layer" data-layer="nothing">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">None</span>
+            </li>
+          </div>
         </ul>
       </div>
     </li>
