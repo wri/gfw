@@ -56,7 +56,7 @@ define([
       key('n', this.zoomOut);
       key('alt+r', this.resetMap);
       key('f', this.shareMap);
-      key('t', this.toggleModules);
+      key('h', this.toggleModules);
 
       this.model.on('change:hidden', this.toogleModule, this);
 

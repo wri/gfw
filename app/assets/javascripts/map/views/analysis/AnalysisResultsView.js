@@ -38,6 +38,7 @@ define([
       'click #analysis-delete': '_deleteAnalysis',
       'click #analysis-subscribe': '_subscribe',
       'click .dropdown-button' :'_toggleDownloads',
+      'click .canopy-button' : '_showCanopy',
     },
 
     initialize: function() {
@@ -111,7 +112,14 @@ define([
       e && e.preventDefault();
       this.$downloadDropdown.toggleClass('hidden');
       ga('send', 'event', 'Map', 'Download', 'Downloads-' + 'Layer: ' + this.params.layer.title);
+    },
+
+    _showCanopy: function(e){
+      e && e.preventDefault();
+      this.presenter.showCanopy();
     }
+
+
   });
 
   return AnalysisResultsView;
