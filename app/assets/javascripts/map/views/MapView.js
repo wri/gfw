@@ -44,6 +44,7 @@ define([
       this.layerInst = {};
       this.$maplngLng = $('.map-container .map-latlng');
       this.$viewFinder = $('#viewfinder');
+      this.embed = $('body').hasClass('is-embed-action');
       this.render();
     },
 
@@ -58,13 +59,10 @@ define([
       };
 
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
+
       this.resize();
       this._setMaptypes();
-      this._setZoomControl();
       this._addListeners();
-      google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
-        this.$el.addClass('is-loaded');
-      }, this));
 
       this._checkDialogs();
     },
@@ -76,7 +74,6 @@ define([
     _addListeners: function() {
       google.maps.event.addListener(this.map, 'zoom_changed',
         _.bind(function() {
-          this.onZoomChange();
           this.onCenterChange();
         }, this)
       );
@@ -87,6 +84,9 @@ define([
 
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
         this.$el.addClass('is-loaded');
+        if (this.embed) {
+          this.offsetCenter(this.getCenter(),323/2,0);
+        }
       }, this));
 
       google.maps.event.addListener(this.map, 'click', _.bind(function(wdpa) {
@@ -141,15 +141,17 @@ define([
         layers[i] && this._addLayers(layers, options, i);
       }, this);
 
-      if (!layersHelper[layer.slug].view || this.layerInst[layer.slug]) {
-        _addNext();
-        return;
+      if (!!layersHelper[layer.slug]) {
+        if ((!layersHelper[layer.slug].view || this.layerInst[layer.slug])) {
+          _addNext();
+          return;
+        }
+        var layerView = this.layerInst[layer.slug] =
+          new layersHelper[layer.slug].view(layer, options, this.map);
+
+        layerView.addLayer(this._getOverlayPosition(layer), _addNext);
       }
 
-      var layerView = this.layerInst[layer.slug] =
-        new layersHelper[layer.slug].view(layer, options, this.map);
-
-      layerView.addLayer(this._getOverlayPosition(layer), _addNext);
     },
 
     /**
@@ -190,18 +192,7 @@ define([
       this._addLayers([layer.layer], options);
     },
 
-    /**
-     * Used by MapPresenter to set the map zoom.
-     *
-     * @param {integer} zoom The map zoom to set
-     */
-    setZoom: function(zoom) {
-      this.map.setZoom(zoom);
-    },
 
-    getZoom: function() {
-      return this.map.getZoom();
-    },
 
     /**
      * Used by MapPresenter to set the map center.
@@ -220,8 +211,94 @@ define([
     },
 
     fitBounds: function(bounds) {
-      this.map.fitBounds(bounds);
+      if (this.embed) {
+        this.myFitBounds(this.map,bounds);
+      }else{
+        this.map.fitBounds(bounds);
+      }
     },
+
+
+    offsetCenter: function(latlng,offsetx,offsety) {
+      var map = this.map;
+      var scale = Math.pow(2, map.getZoom());
+      var latlng = new google.maps.LatLng(latlng.lat, latlng.lng);
+      var nw = new google.maps.LatLng(
+          map.getBounds().getNorthEast().lat(),
+          map.getBounds().getSouthWest().lng()
+      );
+
+      var worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latlng);
+      var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
+
+      var worldCoordinateNewCenter = new google.maps.Point(
+          worldCoordinateCenter.x - pixelOffset.x,
+          worldCoordinateCenter.y + pixelOffset.y
+      );
+
+      var newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+
+      map.setCenter(newCenter);
+
+    },
+
+
+
+
+    /**
+     * Used by Embed to fit bounds.
+     */
+    myFitBounds: function(myMap, bounds) {
+      myMap.fitBounds(bounds);
+      var self = this;
+      var overlayHelper = new google.maps.OverlayView();
+      overlayHelper.draw = function () {
+          if (!this.ready) {
+              var zoom = self.getExtraZoom(this.getProjection(), bounds, myMap.getBounds(),self);
+              if (zoom > 0) {
+                  myMap.setZoom(myMap.getZoom() + zoom);
+              }
+              this.ready = true;
+              google.maps.event.trigger(this, 'ready');
+          }
+      };
+      overlayHelper.setMap(myMap);
+    },
+
+    // LatLngBounds b1, b2 -> zoom increment
+    getExtraZoom: function(projection, expectedBounds, actualBounds,self) {
+      var expectedSize = self.getSizeInPixels(projection, expectedBounds),
+          actualSize = self.getSizeInPixels(projection, actualBounds);
+
+      if (Math.floor(expectedSize.x) == 0 || Math.floor(expectedSize.y) == 0) {
+          return 0;
+      }
+
+      var qx = actualSize.x / expectedSize.x;
+      var qy = actualSize.y / expectedSize.y;
+      var min = Math.min(qx, qy);
+
+      if (min < 1) {
+        return 0;
+      }
+
+      return Math.floor(Math.log(min) / Math.log(2) /* = log2(min) */);
+    },
+
+    // LatLngBounds bnds -> height and width as a Point
+    getSizeInPixels: function(projection, bounds) {
+      var sw = projection.fromLatLngToContainerPixel(bounds.getSouthWest());
+      var ne = projection.fromLatLngToContainerPixel(bounds.getNorthEast());
+      return new google.maps.Point( Math.round(10000 * Math.abs(sw.y - ne.y)) / 10000, Math.round(10000 * Math.abs(sw.x - ne.x)) / 10000 );
+    },
+
+
+
+
+
+
+
+
 
     /**
      * Used by MapPresenter to set the map type.
@@ -230,6 +307,17 @@ define([
      */
     setMapTypeId: function(maptype) {
       this.map.setMapTypeId(maptype);
+      if (maptype === 'terrain') {
+        var styles = [
+          {
+            featureType: 'water',
+            stylers: [{
+              hue: '#B3E2FF'
+            }]
+          }
+        ];
+        this.map.setOptions({styles: styles});
+      }
       this.presenter.onMaptypeChange(maptype);
     },
 
@@ -237,12 +325,6 @@ define([
       return this.map.getMapTypeId();
     },
 
-    /**
-     * Handles a map zoom change UI event by dispatching to MapPresenter.
-     */
-    onZoomChange: function() {
-      this.presenter.onZoomChange(this.map.zoom);
-    },
 
     /**
      * Handles a map center change UI event by dispatching to MapPresenter.
@@ -275,14 +357,6 @@ define([
       }
     },
 
-    _setZoomControl: function() {
-      $('.zoom-in').on('click', _.bind(function() {
-        this.setZoom(this.getZoom() + 1);
-      }, this));
-      $('.zoom-out').on('click', _.bind(function() {
-        this.setZoom(this.getZoom() - 1);
-      }, this));
-    },
 
     /**
      * Crosshairs when analysis is activated

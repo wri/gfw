@@ -24,108 +24,111 @@
   <%= render "countries_templates" %>
   <%= render "shared/js_templates" %>
 <% end %>
-<div class="inner">
-  <h2 class="title-section">country rankings</h2>
-</div>
-<div class='inner'>
-  <div class="country-overview-wrapper-coolio">
-    <div class="overview_button_group">
-      <div class="inner">
-        <div class="share"></div>
-        <div class="settings item " data-target=".overview_graph">
-          <svg><use xlink:href="#shape-settings"></use></svg>tree cover canopy settings
+<section id="countryOverviewView">
+  <div class="inner">
+    <h2 class="title-section">country rankings</h2>
+  </div>
+  <div class='inner'>
+    <div class="country-overview-wrapper-coolio">
+      <div class="overview_button_group">
+        <div class="inner">
+          <div class="share"></div>
+          <div class="settings item " data-target=".overview_graph">
+            <svg><use xlink:href="#shape-settings"></use></svg>tree cover canopy settings
+          </div>
+          <div class="download-spatial">
+            <a href='http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/umd_country_stats.xlsx' target='_blank'>
+                Download country stats
+                <svg>
+                  <use xlink:href="#shape-download-18"></use>
+                </svg>
+              </a>
+          </div>
+        </div>
+      </div>
+      <div class='overview_graph'>
+        <div class='overview_graph__tabs'>
+          <ul>
+            <li class='graph_tab selected' data-slug='total_loss'>
+              <a href='#' class='overview_graph__link'>Tree cover loss</a>
+            </li>
+
+            <li class='graph_tab' data-slug='percent_loss'>
+              <a href='#' class='overview_graph__link'>Tree cover gain</a>
+            </li>
+
+            <li class='graph_tab' data-slug='total_extent'>
+              <a href='#' class='overview_graph__link'>Tree Cover</a>
+            </li>
+
+            <!-- <li class='graph_tab' data-slug='ratio'>
+              <a href='#' class='overview_graph__link'>Loss<span>relative to</span>Gain</a>
+            </li> -->
+
+            <li class='graph_tab' data-slug='domains'>
+              <a href='#' class='overview_graph__link'>Loss<span>by</span>Climate domain</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class='overview_graph__legend'>
+          <p>
+            Global tree cover loss, 2001-2013</sup>
+          </p>
+          <a href='#' class='info source' data-source='total_loss'><svg><use xlink:href="#shape-info"></use></svg></a>
+        </div>
+        <div class='overview_graph__figure_only'>
+          <span class='figure'></span>
+          <span class='unit'></span>
+        </div>
+        <div class='overview_graph__area'>
+          <div class='chart total_loss'>
+          </div>
+
+          <div class='chart percent_loss'>
+            <ul class='legend'>
+              <li><i></i> % Tree cover loss</li>
+              <li><i></i> % Tree cover gain*</li>
+            </ul>
+
+            <p class='disclaimer'>* Represents an annualized average percentage of tree cover gain 2001-2012</p>
+          </div>
+
+          <div class='chart total_extent'>
+            <ul class='legend'>
+              <li><i></i> Tree cover loss</li>
+              <li><i></i> Tree cover</li>
+            </ul>
+          </div>
+
+          <div class='chart domains'>
+            <p class='disclaimer'>* Bubble size represents magnitude of tree cover loss</p>
+          </div>
         </div>
       </div>
     </div>
-    <div class='overview_graph'>
-      <div class='overview_graph__tabs'>
-        <ul>
-          <li class='graph_tab selected' data-slug='total_loss'>
-            <a href='#' class='overview_graph__link'>Loss<span>vs</span>Gain</a>
-          </li>
+    <div class='overview_graph__years'></div>
+    <div class='overview_graph__axis'>Tree cover 2000</div>
 
-          <li class='graph_tab' data-slug='percent_loss'>
-            <a href='#' class='overview_graph__link'>% Loss<span>vs</span>% Gain</a>
-          </li>
+    <h1 class='overview_graph__title'>Countries with greatest tree cover loss <sup>(2001 - 2013)</sup></h1>
 
-          <li class='graph_tab' data-slug='total_extent'>
-            <a href='#' class='overview_graph__link'>Extent</a>
-          </li>
-
-          <li class='graph_tab' data-slug='ratio'>
-            <a href='#' class='overview_graph__link'>Loss<span>relative to</span>Gain</a>
-          </li>
-
-          <li class='graph_tab' data-slug='domains'>
-            <a href='#' class='overview_graph__link'>Loss<span>by</span>Climate domain</a>
-          </li>
-
-          <li class='all_countries'>
-            <%= link_to 'All countries', countries_path, :class => 'overview_graph__link', :target => controller_name == 'embed' ? '_blank' : '' %>
-          </li>
-        </ul>
+    <div class='countries_list'>
+      <div class='countries_list__header'>
+        <div class="countries_list__header__minioverview total-loss"></div>
       </div>
 
-      <div class='overview_graph__legend'>
-        <p>
-          Global tree cover loss per year with annualized tree cover gain
-        </p>
-        <a href='#' class='info' data-source='total_loss'><svg><use xlink:href="#shape-info"></use></svg></a>
-      </div>
+      <ul></ul>
 
-      <div class='overview_graph__area'>
-        <div class='chart total_loss'>
-          <ul class='legend'>
-            <li><i></i> Tree cover loss</li>
-            <li><i></i> Tree cover gain*</li>
-          </ul>
-
-          <p class='disclaimer'>* Represents an annualized average of tree cover gain 2001-2012</p>
-        </div>
-
-        <div class='chart percent_loss'>
-          <ul class='legend'>
-            <li><i></i> % Tree cover loss</li>
-            <li><i></i> % Tree cover gain*</li>
-          </ul>
-
-          <p class='disclaimer'>* Represents an annualized average percentage of tree cover gain 2001-2012</p>
-        </div>
-
-        <div class='chart total_extent'>
-          <ul class='legend'>
-            <li><i></i> Tree cover loss</li>
-            <li><i></i> Tree cover extent</li>
-          </ul>
-        </div>
-
-        <div class='chart domains'>
-          <p class='disclaimer'>* Bubble size represents magnitude of tree cover loss</p>
-        </div>
-      </div>
     </div>
   </div>
-  <div class='overview_graph__years'></div>
-  <div class='overview_graph__axis'>Tree cover extent 2000</div>
-
-  <h1 class='overview_graph__title'>Countries with greatest tree cover loss <sup>(2001-2012)</sup></h1>
-
-  <div class='countries_list'>
-    <div class='countries_list__header'>
-      <div class='countries_list__header__minioverview'>Gain <span>vs</span> Loss</div>
-
-      <!-- <div class='countries_list__header__num'>Rank</div>
-
-      <div class='countries_list__header__title'>Country</div> -->
-    </div>
-
-    <ul></ul>
-
+  <div class="inner show-more-countries">
+    <%= link_to 'View all countries'.html_safe, countries_path, :class =>"btn green" %>
   </div>
-</div>
-<div class="inner show-more-countries">
-  <%= link_to 'View all countries'.html_safe, countries_path, :class =>"btn green" %>
-</div>
+</section>
+
+<div id="control-threshold" class="control-threshold fixed"></div>
+
+
 
 <div id='sources' class="sources is-hidden">
   <h2 class='source_category_title'>Countries overview</h2>
@@ -142,42 +145,56 @@
         </div>
 
         <div class='source_table'>
-          <p>Drag the handle to adjust the minimum tree cover canopy (TCC) density for UMD/Google tree cover loss and extent displayed in the graphs and rankings. TCC density represents the estimated percent of a UMD/Google pixel that was covered by tree canopy in the year 2000, as determined from the analysis of satellite imagery. For the tree cover loss data, TCC density therefore corresponds to the density of tree cover <u>before</u> loss occurred.</p>
-          <p>Adjustments to the minimum TCC density will only affect UMD/Google tree cover loss and extent. This feature does not pertain to UMD/Google tree cover gain or to other GFW data layers or statistics. UMD/Google tree cover gain is displayed with a set minimum TCC density greater than 50%.</p>
+          <p>Drag the handle to adjust the minimum tree cover canopy (TCC) density for UMD/Google tree cover and tree cover loss displayed in the graphs and rankings. TCC density represents the estimated percent of a UMD/Google pixel that was covered by tree canopy in the year 2000, as determined from the analysis of satellite imagery. For the tree cover loss data, TCC density therefore corresponds to the density of tree cover <u>before</u> loss occurred.</p>
+          <p>Adjustments to the minimum TCC density will only affect UMD/Google tree cover and tree cover loss. This feature does not pertain to UMD/Google tree cover gain or to other GFW data layers or statistics. UMD/Google tree cover gain is displayed with a set minimum TCC density greater than 50%.</p>
           <p>This feature is also available for the map visualization, analysis, and for individual country profiles. The TCC density minimum selected for the overview graphs and rankings will not be applied automatically to other areas of the website.</p>
         </div>
       </div>
     </li>
     <li id='total_loss'>
       <div class='source_body'>
-        <p><strong class='source_title'>Loss vs. Gain</strong></p>
-        <p>The graph and rankings below were created using tree cover, loss, and gain data from the University of Maryland/Google. For more information on this dataset, please visit the <a href="/sources/forest_change?t=umd_tree_loss_gain" target="_blank"> data page</a>.</p>
+        <p><strong class='source_title'>TREE COVER LOSS</strong></p>
 
-        <p>This graph shows global tree cover loss per year in hectares, from 2001 through 2012, with annualized tree cover gain. Tree cover gain is represented as a single horizontal line, indicating the average annual tree cover gain for the period of 2001-2012.</p>
 
-        <p>The rankings below list all countries from greatest to least tree cover loss for the period of 2001-2012. The infographs within the rankings show tree cover loss per year and the dotted line represents annualized tree cover gain 2001-2012.</p>
+        <p>The graph displays global tree cover loss per year from 2001 through 2013 in hectares.</p>
+
+        <p>The rankings list countries from greatest to least tree cover loss from 2001 through 2013. The infographics located within the rankings highlight the trend of tree cover loss.</p>
+
+        <p>The graph and rankings visualize tree cover loss data from the University of Maryland (UMD)/Google. Due to variation in research methodology and/or date of content, this data cannot be compared accurately against tree cover and tree cover gain. Accordingly, “net” loss cannot be calculated by subtracting tree cover gain from tree cover loss, and current (or post-2000) tree cover cannot be determined by subtracting annual tree cover loss from year 2000 tree cover.  For more information on this data set, please visit the <a href="/sources/forest_change?t=umd_tree_loss_gain" target="_blank">data page</a>.</p>
+
+        <p>Please also note that “tree cover” does not equate to “forest cover.” “Tree cover” refers to the biophysical presence of trees, which may be a part of natural forests or tree plantations. Thus, loss of tree cover may occur for many reasons, including deforestation, fire, and logging within the course of sustainable forestry operations.</p>
       </div>
     </li>
 
     <li id='percent_loss'>
       <div class='source_body'>
-        <p><strong class='source_title'>% Loss vs. % Gain</strong></p>
+        <p><strong class='source_title'>TREE COVER GAIN</strong></p>
 
-        <p>The graph and rankings below were created using tree cover, loss, and gain data from the University of Maryland/Google. For more information on this dataset, please visit the <a href="/sources/forest_change?t=umd_tree_loss_gain" target="_blank"> data page</a>.</p>
 
-        <p>This graph shows the percent of tree cover loss per year, relative to 2000 tree cover extent, with annualized percent of tree cover gain for the period of 2001-2012. This graph does not display the rate of tree cover loss, but the percentage of tree cover—as calculated in year 2000—that was lost. Tree cover gain is represented as a single horizontal line, indicating the average percent of tree cover gain for the period of 2001-2012.</p>
+        <p>The figure represents global tree cover gain from 2001 through 2012 in hectares.</p>
 
-        <p>The rankings below list all countries from greatest to least percent tree cover loss, for the period of 2001-2012, relative to 2000 tree cover extent.</p>
+        <p>The rankings list countries from greatest to least tree cover gain from 2001 through 2012.</p>
+
+        <p>The graph and rankings visualize tree cover gain data from the University of Maryland (UMD)/Google. Due to variation in research methodology and/or date of content, this data cannot be compared accurately against tree cover and tree cover loss. Accordingly, “net” loss cannot be calculated by subtracting tree cover gain from tree cover loss.  For more information on this data set, please visit the <a href="/sources/forest_change?t=forestgain" target="_blank">data page</a>.</p>
+
+        <p>Please also note that “tree cover” does not equate to “forest cover.” “Tree cover” refers to the biophysical presence of trees, which may be a part of natural forests or tree plantations. Thus, tree cover gain may indicate the growth of tree canopy within natural or managed forests.</p>
       </div>
     </li>
 
     <li id='total_extent'>
       <div class='source_body'>
-        <p><strong class='source_title'>Tree Cover Extent</strong></p>
+        <p><strong class='source_title'>TREE COVER</strong></p>
 
-        <p>The rankings below were created using tree cover data from the University of Maryland/Google. For more information on this dataset, please visit the <a href="/sources/forest_cover?t=forest2000" target="_blank">Data page</a>.</p>
+        <p>The figure displays global tree cover in 2000 in hectares.</p>
 
-        <p>The countries below are ranked by hectares of tree cover extent in year 2000, from greatest to least. Within the rankings, you can also view figures of tree cover loss, for the period of 2001-2012, for comparison.</p>
+        <p>The figure and rankings below were created using tree cover data from the University of Maryland(UMD)/Google. For more information on this data set, please visit the <a href="/sources/forest_cover?t=forest2000" target="_blank">data page</a>.</p>
+
+        <p>The rankings list countries from greatest to least tree cover loss from 2001 through 2013. The infographics located within the rankings highlight the trend of tree cover loss.</p>
+
+        <p>The graph and rankings visualize tree cover data from the University of Maryland(UMD)/Google. Due to variation in research methodology and/or date of content, this data cannot be compared accurately against tree cover loss and gain. Accordingly, current (or post-2000) tree cover cannot be determined by subtracting annual tree cover loss from year 2000 tree cover.  For more information on this data set, please visit the <a href="/sources/forest_cover?t=forest2000" target="_blank">data page</a>.</p>
+
+        <p>Please also note that “tree cover” does not equate to “forest cover.” “Tree cover” refers to the biophysical presence of trees, which may be a part of natural forests or tree plantations.</p>
+
       </div>
     </li>
 
@@ -187,11 +204,11 @@
 
         <p>The graph and rankings below were created using tree cover, loss, and gain data from the University of Maryland/Google. For more information on this dataset, please visit the <a href="/sources/forest_change?t=umd_tree_loss_gain" target="_blank"> data page</a>.</p>
 
-        <p>This graph plots the ratio of tree cover loss to gain (loss/gain) for the period of 2001-2012 against tree cover extent in 2000. Points that fall above the dotted line (ratio = 1) represent countries that have more loss than gain between 2001 and 2012, whereas points that fall below the line represent the opposite -- countries that have more gain than loss within the same time period. The higher the point, the greater the ratio of tree cover loss to gain.</p>
+        <p>This graph plots the ratio of tree cover loss (2001-2013) to gain (2001-2012) against tree cover in 2000. Points that fall above the dotted line (ratio = 1) represent countries that have more loss than gain between 2001 and 2012, whereas points that fall below the line represent the opposite -- countries that have more gain than loss within the same time period. The higher the point, the greater the ratio of tree cover loss to gain.</p>
 
-        <p>The horizontal position of the points correlates to the 2000 tree cover extent of the corresponding country. Points that fall far to the right represent countries with greater tree cover extent in 2000, whereas points that fall far to the left represent countries with less tree cover extent.</p>
+        <p>The horizontal position of the points correlates to the 2000 tree cover of the corresponding country. Points that fall far to the right represent countries with greater tree cover in 2000, whereas points that fall far to the left represent countries with less tree cover.</p>
 
-        <p>The rankings below list all countries from greatest to least ratio of tree cover gain to loss (loss/gain), for the period of 2001-2012. Large numbers (and all numbers >1) indicate a greater degree of tree cover loss, relative to gain, whereas small numbers (all numbers <1) indicate a greater degree of tree cover gain, relative to loss.</p>
+        <p>The rankings below list all countries from greatest to least ratio of tree cover loss to gain (loss/gain), for the period of 2001-2012. Large numbers (and all numbers >1) indicate a greater degree of tree cover loss, relative to gain, whereas small numbers (all numbers <1) indicate a greater degree of tree cover gain, relative to loss.</p>
 
         <p><b>Note:</b>Although the graph and rankings compare tree cover loss and gain, the sum of tree cover loss and gain does not equal “net loss.”</p>
       </div>
@@ -199,22 +216,24 @@
 
     <li id='domains'>
       <div class='source_body'>
-        <p><strong class='source_title'>Cover Loss by Climate Domain</strong></p>
+        <p><strong class='source_title'>CLIMATE DOMAIN</strong></p>
 
-        <p>The graph and rankings below were created using tree cover, loss, and gain data from the University of Maryland/Google. For more information on this dataset, please visit the <a href="/sources/forest_change?t=umd_tree_loss_gain" target="_blank"> data page</a>.</p>
 
-        <p>This infograph shows total tree cover loss per year by climate domain from 2001-2012, with loss represented by bubble size (e.g., domains with greater tree cover loss are represented by larger bubbles).</p>
+        <p>The infographic displays total tree cover loss per year by climate domain from 2001-2013, with loss represented by bubble size (e.g., domains with greater tree cover loss are represented by larger bubbles).</p>
 
         <ul class='bullets'>
-          <li><strong>Boreal Domain</strong> consists of boreal coniferous forest, boreal mountain system, boreal tundra woodland</li>
-          <li><strong>Subtropical Domain</strong> consists of subtropical dry forest, subtropical humid forest, subtropical mountain system, subtropical steppe, subtropical desert,</li>
-          <li><strong>Temperate Domain</strong> consists of temperate mountain system, temperate oceanic forest, temperate continental forest, temperate desert, temperate steppe,</li>
-          <li><strong>Tropical Domain</strong> consists of tropical shrubland, tropical dry forest, tropical desert, tropical moist deciduous forest, tropical mountain system</li>
+          <li>Boreal Domain consists of boreal coniferous forest, boreal mountain system, boreal tundra woodland</li>
+          <li>Subtropical Domain consists of subtropical dry forest, subtropical humid forest, subtropical mountain system, subtropical steppe, subtropical desert</li>
+          <li>Temperate Domain consists of temperate mountain system, temperate oceanic forest, temperate continental forest, temperate desert, temperate steppe</li>
+          <li>Tropical Domain consists of tropical shrubland, tropical dry forest, tropical desert, tropical moist deciduous forest, tropical mountain system</li>
         </ul>
 
-        <p>The rankings below list climate domains from greatest to least tree cover loss for the period of 2001-2012.</p>
+        <p>The rankings below list climate domains from greatest to least tree cover loss for the period of 2001-2013.</p>
 
-        <p><b>Note:</b> The settings feature does not apply to the graph or rankings of tree cover loss by climate domain. There is no minimum canopy density for these figures; all canopy densities are shown, 0-100%.</p>
+        <p>The graph and rankings visualize tree cover loss data from the University of Maryland(UMD)/Google. Due to variation in research methodology and/or date of content, this data cannot be compared accurately against tree cover and tree cover gain. Accordingly, “net” loss cannot be calculated by subtracting tree cover gain from tree cover loss.  For more information on this data set, please visit the <a href="/sources/forest_change?t=umd_tree_loss_gain" target="_blank"> data page</a>.</p>
+
+        <p>Please also note that “tree cover” does not equate to “forest cover.” “Tree cover” refers to the biophysical presence of trees, which may be a part of natural forests or tree plantations. Thus, loss of tree cover may occur for many reasons, including deforestation, fire, and logging within the course of sustainable forestry operations. Similarly, tree cover gain may indicate the growth of tree canopy within natural or managed forests.</p>
+
       </div>
     </li>
   </ul>

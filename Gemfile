@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.1.0'
+ruby '2.1.5'
 
 gem 'rails', '4.0.4'
 gem 'jquery-rails'
@@ -26,7 +26,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'shoulda-matchers'
   gem 'database_cleaner'
-  gem 'debugger'
+  gem 'byebug'
 end
 
 group :development do

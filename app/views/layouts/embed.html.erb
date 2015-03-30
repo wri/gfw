@@ -49,6 +49,10 @@
 
   <%= javascript_include_tag 'modernizr-2.6.2.min' %>
   <%= csrf_meta_tags %>
+  <script>
+    var gfw = window.gfw = {};
+    window.gfw.config = { GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>" };
+  </script>
 </head>
 <body class='<%= "#{controller_name} #{action_name}" %>'>
   <%= yield :title %>
@@ -82,8 +86,7 @@
 
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=drawing,geometry&sensor=false"></script>
   <script src="http://libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
-  <%= javascript_include_tag "countries" %>
-  <%= yield :js %>
+  <%= requirejs_include_tag "countries" %>
   <%= render 'shared/js_footer' %>
 </body>
 </html>

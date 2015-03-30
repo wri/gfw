@@ -17,7 +17,6 @@
 }
 
 .overview_graph {
-  overflow: hidden;
   width: 960px;
   margin: 0 auto;
   position: relative;
@@ -34,7 +33,7 @@
   .umdoptions_dialog {
     left: auto;
     right: 0px;
-    top: 11px;
+    top: 10px;
     display: block;
     position: absolute;
     width: 442px;
@@ -43,7 +42,7 @@
         left: 237px;
       }
       &::before {
-        top: -29px;
+        top: -28px;
         left: 237px;
       }
   }
@@ -52,11 +51,9 @@
 .overview_graph__area {
   height: 371px;
   svg {
-    border-top: 1px solid #615D6C;
+    border-top: 1px solid $dark;
     position: relative;
     z-index: 300;
-    margin-left: -40px;
-    width: 1000px;
   }
 }
 
@@ -110,6 +107,7 @@
   li {
     display: table;
     float: left;
+    background: lighten(#333, 2.5%);
 
     &.selected,
     &:hover {
@@ -136,7 +134,7 @@
 
       &:hover {
         background: darken(#95BC3B, 5%);
-        border-bottom: 1px solid #615D6C;
+        border-bottom: 1px solid $dark;
       }
     }
   }
@@ -145,9 +143,9 @@
 .overview_graph__link {
   display: table-cell;
   height: 99px;
-  width: 160px;
-  border-left: 1px solid #615D6C;
-  border-bottom: 2px solid #615D6C;
+  width: 240px;
+  border-left: 1px solid $dark;
+  border-bottom: 2px solid $dark;
   font-size: 14px;
   font-weight: 500;
   vertical-align: middle;
@@ -179,7 +177,8 @@
   position: relative;
 
   p {
-    width: 95%;
+    // border-left: 1px solid $dark;
+    // border-left: 1px solid $dark;
   }
 
   .info {
@@ -203,6 +202,26 @@
   }
 }
 
+.overview_graph__figure_only {
+  display: none;
+  width: 100%;
+  text-align: center;
+  padding: 50px;
+  span {
+    margin: 25px 0;
+    color: #fff;
+    font-size: 120px;
+  }
+  .unit {
+    font-weight: 100;
+  }
+  .figure {
+    color: #6D6DE5;
+    &.extent {
+      color: $cGreen;
+    }
+  }
+}
 
 .overview_graph__years,
 .overview_graph__axis,
@@ -293,11 +312,11 @@
       .countries_list__minioverview {
 
         .loss {
-          color: #6D6DE5;
+          color: #C443FF;
         }
 
         .gain {
-          color: #C443FF;
+          color: #6D6DE5;
         }
       }
     }
@@ -311,10 +330,6 @@
   font-size: 17px;
   color: $dark;
 
-  &.loss-vs-gain{
-    width: auto;
-    right: 92px;
-  }
   &.per-loss{
     width: auto;
     right: 171px;
@@ -401,17 +416,17 @@
       font-size: 1.3rem;
       margin-top: 13px;
     }
-    &::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      @include transform-translate(0, -50%);
-      right: -11px;
-      width: 6px;
-      height: 6px;
-      background-color: #FF6699;
-      border-radius: 6px;
-    }
+    // &::after {
+    //   content: '';
+    //   position: absolute;
+    //   top: 50%;
+    //   @include transform-translate(0, -50%);
+    //   right: -11px;
+    //   width: 6px;
+    //   height: 6px;
+    //   background-color: #FF6699;
+    //   border-radius: 6px;
+    // }
     &.percent::after {
       display: none;
     }
@@ -497,11 +512,11 @@
   }
 
   .loss {
-    color: rgba(#6D6DE5, .5);
+    color: rgba(#C443FF, .5);
   }
 
   .gain {
-    color: rgba(#C443FF, .5);
+    color: rgba(#6D6DE5, .5);
   }
 
   .bar {
@@ -707,218 +722,16 @@
   font-weight: 500;
   fill: #9D9AA5;
 }
-
+.axis_country {
+  font-size: 10px;
+  font-weight: 500;
+  fill: #555;
+}
 .source_window .conventions .credits {
   margin-bottom: 30px;
 }
 
 
-.share_dialog {
-  $width: 500px;
-  $height: 170px;
-
-  display: none;
-  position: fixed;
-  z-index: 2000;
-  top: 50%; left: 50%;
-  margin-top: -$height/2;
-  margin-left: -$width/2;
-  height: $height;
-  width: $width;
-  padding: 30px;
-  background: #fff;
-  border: 1px solid #eee;
-  text-align: center;
-
-  .form {
-    position: absolute;
-    bottom: 0; left: 0;
-    border-top: 1px solid #f1f1f1;
-    padding: 28px 10px 30px;
-    width: 498px;
-  }
-
-  .error_input_label {
-    display: none;
-    position: absolute;
-    right: -92px; bottom: 37px;
-    width: 190px;
-    height: 39px - 9px;
-    padding: 9px 0 0;
-    color: #fff;
-    font-size: 15px;
-
-    text-align: center;
-    @include country-icons-sprite(error_input_label);
-  }
-
-  .btn {
-    width: 120px;
-    padding: 14px 0;
-  }
-
-  .input-field {
-    position: relative;
-    width: 300px;
-    margin: 0 30px 0 0;
-
-    &.error input { color: red;}
-
-    .icon.error {
-      display: none;
-      width: 21px;
-      height: 22px;
-      position:absolute;
-      right: -7px;
-      top: 10px;
-      @include country-icons-sprite(input_error);
-    }
-  }
-
-  .holder {
-    position: absolute;
-    top: 14px; left: 12px;
-    font-size: 15px;
-
-    color: #ddd;
-  }
-
-  .subtitle {
-    margin: 0 0 20px 0;
-
-    a {
-      color: #A1BB27;
-      text-decoration: underline;
-    }
-  }
-
-  .close {
-    display: block;
-    position: absolute;
-    top: 15px; right: 15px;
-    width: 16px;
-    height: 16px;
-    svg{
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      fill: $dark;
-    }
-    &:hover{
-      svg{
-        fill: darken($dark,10%);
-      }
-    }
-  }
-
-  h1 {
-    font-size: 35px;
-    margin: 10px 0 5px;
-    font-weight: 400;
-  }
-
-  p {
-    font-size: 15px;
-
-    color: #999;
-
-    &.help { margin: 0 0 20px; }
-  }
-  .mode_menu {
-    position: absolute;
-    top: 4px;
-    right: -3px;
-    width: 120px;
-    background: #fff;
-
-    li.first a {
-      @include border-right-radius(3px);
-    }
-
-    li.last a {
-      @include border-left-radius(3px);
-    }
-
-    li.selected a {
-      background: $cGreen;
-      color: #fff;
-    }
-
-    a {
-      color: $cGreen;
-      display: block;
-      float: right;
-      width: 55px;
-      margin-left: 2px;
-      font-weight: 500;
-      font-size: 11px;
-      line-height: 34px;
-      text-transform: uppercase;
-      background: #eee;
-      text-decoration: none;
-    }
-  }
-  .input-field {
-    @include inline-block();
-    height:36px;
-    width: 416px;
-
-    background: url(backgrounds/bkg_form_input.png) no-repeat left 0;
-
-    input[type="text"], input[type="password"], input[type="email"],input[type="date"] {
-      width:100%;
-      height:37px;
-      margin: 0 0 0 7px;
-      padding: 0 7px 0 5px;
-
-      font-size: 14px;
-
-      background:url(backgrounds/bkg_form_input.png) repeat-x right -36px;
-      border:none;
-      outline:none;
-    }
-    &.huge {
-      height: 42px;
-      background:url(backgrounds/bkg_form_input_big.png) no-repeat left 0;
-
-      input[type="password"], input[type="text"], input[type="email"] {
-        height:43px;
-        background:url(backgrounds/bkg_form_input_big.png) repeat-x right -42px;
-      }
-    }
-  }
-}
-.share_dialog {
-  height: 270px;
-
-  .input-field {
-    width: 444px;
-    margin: 0 30px 0 20px;
-  }
-
-  .share_buttons {
-    position: relative;
-    bottom: -15px;
-    left: 180px;
-    margin: 10px 0 0 20px;
-
-    a {
-      display: block;
-      float: left;
-      width: 32px;
-      height: 32px;
-      margin-right: 5px;
-      background: image-url('home-icons/ess-icons-2.png') no-repeat;
-
-      &.twitter { background-position: -102px 0; }
-      &.facebook { background-position: -68px 0; }
-
-      span { display: none; }
-    }
-  }
-}
 .overview_button_group {
   position: relative;
   background: #EEEEEE;
@@ -932,7 +745,7 @@
       width: 790px;
     }
   }
-  .share_control, .item {
+  .share_control, .item, .download-spatial {
     position: relative;
     box-sizing: content-box;
     float: right;
@@ -944,6 +757,9 @@
     text-transform: uppercase;
     color: $dark;
     cursor: pointer;
+    a {
+      color: $dark;
+    }
 
     svg{
       display: inline-block;
@@ -1188,30 +1004,6 @@
     .year:last-child {
       display: inherit;
       right: 0;
-    }
-  }
-
-  .share_dialog {
-    top: 0;
-    margin: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    padding-top: 150px;
-
-    .form {
-      border-top: 0;
-      padding-left: 0;
-      width: 100%;
-      top: 230px;
-    }
-
-    .input-field {
-      width: 90%;
-    }
-
-    .share_buttons {
-      left: 85px;
     }
   }
 

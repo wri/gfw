@@ -41,8 +41,10 @@ define([
   'map/views/layers/BirdlifeLayer',
   'map/views/layers/AzepolyLayer',
   'map/views/layers/TigersLayer',
+  'map/views/layers/CarbonLayer',
+  'map/views/layers/ColombiaForestChangeLayer',
   // Layer dialog templates
-  'text!templates/dialogs/loss_dialog.handlebars',
+  // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
   'map/views/timeline/LossTimeline',
   'map/views/timeline/FormaTimeline',
@@ -90,8 +92,10 @@ define([
   BirdlifeLayer,
   AzepolyLayer,
   TigersLayer,
+  CarbonLayer,
+  ColombiaForestChangeLayer,
   // Layer dialog templates
-  loss_dialog,
+  // loss_dialog,
   // Layer timelines
   LossTimeline,
   FormaTimeline,
@@ -105,7 +109,6 @@ define([
   var layersHelper = {
     loss: {
       view: LossLayer,
-      dialogTpl: loss_dialog,
       timelineView: LossTimeline
     },
     forestgain: {
@@ -223,6 +226,12 @@ define([
     },
     tigers: {
       view: TigersLayer
+    },
+    verified_carbon: {
+      view: CarbonLayer
+    },
+    colombia_forest_change: {
+      view: ColombiaForestChangeLayer
     },
     nothing: {
     }

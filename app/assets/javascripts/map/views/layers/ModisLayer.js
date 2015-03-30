@@ -8,7 +8,7 @@ define([
   'moment',
   'uri',
   'abstract/layer/CartoDBLayerClass',
-  'map/presenters/ModisLayerPresenter',
+  'map/presenters/layers/ModisLayerPresenter',
   'text!map/cartocss/modis.cartocss'
 ], function(_, moment, UriTemplate, CartoDBLayerClass, Presenter, modisCartoCSS) {
 
@@ -18,7 +18,7 @@ define([
 
     options: {
       sql: 'SELECT cartodb_id, the_geom_webmercator, \'{tableName}\' AS layer FROM {tableName} ' +
-        'WHERE EXTRACT(YEAR FROM DATE) = {endYear} ' +
+        'WHERE ST_Y(the_geom) <37 AND EXTRACT(YEAR FROM DATE) = {endYear} ' +
         'AND EXTRACT(MONTH FROM DATE) = {endMonth}',
       cartocss: modisCartoCSS,
       interactivity: 'cartodb_id'

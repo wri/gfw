@@ -22,7 +22,7 @@
     <meta name="google-translate-customization" content="95a31ce28e08eaf2-a31ff49177f3ed6f-g9553d70b9ef10300-15"></meta>
 
     <meta name="google-site-verification" content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak" />
-    <%= favicon_link_tag 'favicon.ico' %>
+    <%= render 'shared/icons' %>
 
     <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
     <%= controller_stylesheet_link_tag %>
@@ -31,6 +31,7 @@
   </head>
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
     <%= render 'layouts/svg_icons' %>
+    <%= render 'shared/modal' %>
     <div class="wrap">
         <%= render "shared/header_landing" %>
         <div class="layout-content">

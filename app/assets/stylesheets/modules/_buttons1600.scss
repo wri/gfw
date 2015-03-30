@@ -52,6 +52,12 @@
       font-size: 21px;
     }
   }
+  &.little{
+    font-size: 10px;
+    text-transform: uppercase;
+    height: 25px;
+    line-height: 24px;
+  }
 
   // Colors
   &.dark {

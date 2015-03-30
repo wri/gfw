@@ -1,11 +1,15 @@
 .widget-timeline {
   .widget-box {
     bottom: 50px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 1000px;
+    right: 35px;
+    width: auto;
     height: 50px;
+    @media (min-width: 1300px){
+      bottom: 50px;
+      left: 50%;
+      right: auto;
+      @include transform(translate(-50%,0));
+    }
   }
 
   .timeline-legend {
@@ -44,14 +48,16 @@
     top: -15px;
     left: 0;
     z-index: 2000;
-    background: #333;
-    color: white;
+    background: $white;
+    color: $dark;
     text-align: center;
     font-size: 10px;
     padding: 6px 8px;
     border-radius: 2px;
+    box-shadow: $shadow1;
     min-width: 40px;
-    margin-left: 2px; // trail and triangle aligned
+    margin-left: 6px;
+    // margin-left: 2px; // trail and triangle aligned
 
     &:before {
       content:'';
@@ -59,15 +65,17 @@
       width:0;
       height:0;
       position:absolute;
+      background-color: $white;
+      width: 8px;
+      height: 8px;
+      @include transform(rotate(45deg));
 
-      border-left: 5px solid transparent;
-      border-right: 5px solid transparent;
-      border-top: 5px solid #333;
+      box-shadow: 1px 1px 1px 0 rgba($dark,0.5);
 
       right: 0;
       left: 0;
       margin: auto;
-      bottom: -5px;
+      bottom: -4px;
     }
   }
 

@@ -19,49 +19,49 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  &.is-embed-action,
-  &.embed {
-    max-width: 640px;
-    background: none;
-    #tpglt-nav-wrapper,
-    .skiptranslate {
-      display: none
-    }
-    .header-inner {
-      height: 0;
-    }
-    h1 {
-      font-size: 32px;
-      display: inline-block;
-      width: 100%;
-      max-width: 100%;
-      margin: 0;
-    }
-    min-width: 0;
-    #analysis_control {
-      display: none;
-    }
-    .analysis_info {
-      display: block;
-      .info_controls {
-        display: none;
-      }
-      .spinner {
-        display: none;
-      }
-    }
-    .share  {
-      display: none;
-    }
-    .widget-searchbox,
-    .widget-maptype,
-    .widget-togglewidgets,
-    .gm-style:after,
-    .footer-toggle {
-      display: none;
-      visibility: hidden;
-    }
-  }
+  // &.is-embed-action,
+  // &.embed {
+  //   max-width: 640px;
+  //   background: none;
+  //   #tpglt-nav-wrapper,
+  //   .skiptranslate {
+  //     display: none
+  //   }
+  //   .header-inner {
+  //     height: 0;
+  //   }
+  //   h1 {
+  //     font-size: 32px;
+  //     display: inline-block;
+  //     width: 100%;
+  //     max-width: 100%;
+  //     margin: 0;
+  //   }
+  //   min-width: 0;
+  //   #analysis_control {
+  //     display: none;
+  //   }
+  //   .analysis_info {
+  //     display: block;
+  //     .info_controls {
+  //       display: none;
+  //     }
+  //     .spinner {
+  //       display: none;
+  //     }
+  //   }
+  //   .share  {
+  //     display: none;
+  //   }
+  //   .widget-searchbox,
+  //   .widget-maptype,
+  //   .widget-togglewidgets,
+  //   .gm-style:after,
+  //   .footer-toggle {
+  //     display: none;
+  //     visibility: hidden;
+  //   }
+  // }
 }
 
 svg {

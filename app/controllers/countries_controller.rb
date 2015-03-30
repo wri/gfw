@@ -1,7 +1,12 @@
 class CountriesController < ApplicationController
   before_filter :check_terms
   before_action :check_country_iso, only: :show
+
+  skip_before_filter :verify_authenticity_token, only: [:create_download]
+
   include ActionView::Helpers::NumberHelper
+  include CountriesConcern
+
   layout 'countries'
 
   def index
@@ -39,6 +44,23 @@ class CountriesController < ApplicationController
     @title =  I18n.translate 'countries.overview.title'
   end
 
+  def create_download
+    if (params[:email].present?)
+      MobileDownload.download_email(
+        params[:email],
+        download_link(params[:id])
+      ).deliver
+
+      return render json: true
+    end
+
+    return render json: false, status: :unprocessable_entity
+  end
+
+  def download
+    redirect_to download_link(params[:id])
+  end
+
   private
     def find_countries
       response = Typhoeus.get("#{ENV['GFW_API_HOST']}/countries", headers: {"Accept" => "application/json"})
@@ -52,17 +74,18 @@ class CountriesController < ApplicationController
     end
 
     def find_by_iso(iso)
-      response = Typhoeus.get(
-          "#{ENV['GFW_API_HOST']}/countries",
-          headers: {"Accept" => "application/json"},
-          params: {iso: iso}
-      )
-      if response.success?
+      unless iso.blank?
         Rails.cache.fetch 'country_' + iso, expires_in: 1.day do
-          JSON.parse(response.body)['countries'][0]
+          response = Typhoeus.get(
+              "#{ENV['GFW_API_HOST']}/countries/#{iso}",
+              headers: {"Accept" => "application/json"}
+          )
+          if response.success?
+            JSON.parse(response.body)
+          else
+            nil
+          end
         end
-      else
-        nil
       end
     end
     def find_by_name(country_name)

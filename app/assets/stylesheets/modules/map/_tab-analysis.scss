@@ -1,0 +1,419 @@
+.tab-analysis{
+  nav{
+    display: block;
+    ul{
+      @include display-flex();
+      li{
+        width: 33.333333%;
+        padding: 8px 6px;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 12px;
+        color: $dark;
+        cursor: pointer;
+        &:hover{
+          svg{
+            fill: $cGreen;
+          }
+        }
+        &.active{
+          background: $light;
+          svg{
+            fill: $cGreen;
+          }
+        }
+        &.disabled{
+          opacity: 0.5;
+          // pointer-events: none;
+          cursor: default;
+          &:hover{
+            svg{
+              fill: $dark;
+            }
+          }
+        }
+        svg{
+          display: block;
+          width: 25px;
+          height: 25px;
+          margin: 0 auto 7px;
+          fill: $dark;
+          @media (min-width: 1500px){
+            width: 40px;
+            height: 40px;
+          }
+        }
+      }
+    }
+  }
+  .analysis-content{
+    .analysis-tab-content{
+      display: none;
+      padding: 15px;
+      @media (min-width: 1500px){
+        padding: 20px;
+      }
+      &.active{
+        display: block;
+      }
+      &.hidden{
+        display: none;
+      }
+    }
+  }
+  .is-analysis &{
+    nav{
+      // display: none;
+    }
+    .analysis-content{
+      .analysis-tab-content{
+        padding: 15px 15px 0;
+        @media (min-width: 1500px){
+          padding: 20px 20px 0;
+        }
+
+      }
+    }
+  }
+}
+
+//DEFAULT
+.analysis-tab-content.default{
+  .arrow{
+    position: relative;
+    width: 100%;
+    padding-bottom: 75.454545454545%;
+    &:before{
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: image-url('backgrounds/explanation-arrow.png');
+      background-size: contain;
+    }
+  }
+}
+
+//DRAW TAB
+.analysis-tab-content.draw-tab{
+  .image{
+    position: relative;
+    max-width: 50%;
+    margin: 20px auto;
+
+    div{
+      position: relative;
+      padding-bottom: 82.417582417582%;
+    }
+
+    svg{
+      width: 105%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      fill: $cGreen;
+    }
+  }
+}
+
+//COUNTRY TAB
+.analysis-tab-content.country-tab{
+  .chzn-container-single{
+    margin: 0 0 5px;
+  }
+}
+
+//PA & CONCESSIONS TAB
+.analysis-tab-content.data-tab{
+  .img-box{
+    margin: 15px 0 0;
+    position: relative;
+    @media (min-width: 1500px){
+      margin: 20px 0 0;
+    }
+
+    .play{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: calc(100% + 40px);
+      height: calc(100% + 20px);
+      margin: 0 0 0 -20px;
+      z-index: 2;
+      background: rgba(#000, 0.75);
+      cursor: pointer;
+
+      &:hover{
+        &:before{
+          background: darken($white,5%);
+        }
+      }
+
+      &:after, &:before{
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        @include transform(translate(-50%,-50%));
+      }
+      &:before{
+        width: 50px;
+        height: 50px;
+        background: $white;
+        border-radius: 50%;
+      }
+      &:after{
+        width: 0;
+        height: 0;
+        border-width: 10px 0 10px 20px;
+        border-color: transparent transparent transparent $dark;
+        border-style: solid;
+        margin: 0 0 0 2px;
+      }
+    }
+
+    img{
+      width: 100%;
+      display: block;
+      position: relative;
+    }
+  }
+}
+
+
+
+.analysis-result{
+  padding: 15px 15px 5px;
+  @media (min-width: 1500px){
+    padding: 20px 20px 10px;
+  }
+
+
+  .analysis-stats {
+    background: white;
+    font-size: 12px;
+
+    > li {
+      padding: 6px 0;
+      // border-bottom: 1px solid #ddd;
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        border: none;
+        padding-bottom: 0;
+      }
+    }
+
+    .stats-title {
+      color: #999;
+      font-weight: 500;
+      font-size: 11px;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      display: block;
+      .stats-threshold {
+        text-transform: lowercase;
+        font-weight: normal;
+        font-size: 9px;
+        margin-left: 4px;
+        a{
+          color: $dark;
+          &:hover{
+            color: darken($dark,10%);
+          }
+        }
+      }
+    }
+    .stats-count {
+      font-weight: 500;
+      font-size: 15px;
+      color: #666;
+      strong {
+        font-size: 18px;
+        display: inline-block;
+      }
+    }
+
+    .stats-notice {
+      font-size: 11px;
+      background: $border;
+      border: 1px solid #CCC;
+      padding: 10px;
+      text-align: center;
+      line-height: 1.25;
+    }
+  }
+
+
+  // FOOTER ANALYSIS
+  .analysis-footer{
+    margin: 10px 0 0;
+    border-top: 1px solid $border;
+    @media (min-width: 1500px){
+      margin: 15px 0 0;
+    }
+
+    >ul{
+      @include row();
+      >li{
+        width: 33.333333%;
+        position: relative;
+        padding: 10px 0;
+        cursor: pointer;
+
+        &:hover{
+          .tooltipmap{
+            opacity: 1;
+            visibility: visible;
+          }
+        }
+
+        &.disabled{
+          opacity: 0.5;
+          pointer-events: none;
+          cursor: default;
+        }
+
+        &.pulse{
+          svg{
+            @include animation(pulse_animation,0.75s,4,$easeInOutSine);
+          }
+          .tooltipmap{
+            opacity: 1;
+            visibility: visible;
+          }
+        }
+
+        &:after{
+          content: "";
+          height: 50%;
+          width: 1px;
+          background: $border;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          @include transform(translate(0,-50%));
+        }
+
+        &:first-child{
+          &:after{
+            display: none;
+          }
+        }
+        svg{
+          fill: $dark;
+          width: 18px;
+          height: 18px;
+          margin: 0 auto;
+        }
+        .download-dropdown {
+          text-align: left;
+          width: 90px;
+          bottom: 100%;
+          left: 50%;
+          @include transform(translate(-50%,0));
+          position: absolute;
+          z-index: 2000;
+          font-size: 13px;
+          border: 0;
+          background-color: $white;
+          border-radius: 3px;
+          box-shadow: $shadow1;
+          &.hidden{
+            display: none;
+          }
+          &:after{
+            content: "";
+            display: block;
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: $white;
+            z-index: 2;
+            bottom: 0;
+            left: 50%;
+            @include transform(translate(-50%,50%) rotate(45deg));
+            border-width: 0 1px 1px 0;
+            border-color: transparent lighten($border,5%) lighten($border,5%) transparent;
+            border-style: solid;
+          }
+
+          > li a {
+            padding: 8px 10px;
+            display: block;
+            border-bottom: 1px solid #f2f2f2;
+            color: $cGreen;
+            &:hover{
+              background-color: darken($white,2.5%);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.analysis-subscribe{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  &.active{
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .analysis-subscribe-content{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #FFF;
+    @include transform(translate(100%,0));
+    @include transition(all 0.25s $easeInOutSine);
+    &.active{
+      @include transform(translate(0%,0));
+    }
+
+    >.close-icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      fill: $dark;
+      z-index: 2;
+      padding: 5px;
+      cursor: pointer;
+    }
+
+
+    .steps{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 15px;
+      @media (min-width: 1500px){
+        padding: 20px;
+      }
+      @include transform(translate(100%,0));
+      @include transition(all 0.25s $easeInOutSine);
+      &.current{
+        @include transform(translate(0%,0));
+      }
+    }
+  }
+}
+
