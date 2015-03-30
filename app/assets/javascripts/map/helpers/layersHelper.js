@@ -19,6 +19,7 @@ define([
   'map/views/layers/PantropicalLayer',
   'map/views/layers/IdnPrimaryLayer',
   'map/views/layers/LoggingLayer',
+  'map/views/layers/CanLoggingLayer',
   'map/views/layers/MiningLayer',
   'map/views/layers/OilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
@@ -70,6 +71,7 @@ define([
   PantropicalLayer,
   IdnPrimaryLayer,
   LoggingLayer,
+  CanLoggingLayer,
   MiningLayer,
   OilPalmLayer,
   WoodFiberPlantationsLayer,
@@ -159,6 +161,9 @@ define([
     },
     logging: {
       view: LoggingLayer
+    },
+    can_logging: {
+      view: CanLoggingLayer
     },
     mining: {
       view: MiningLayer
