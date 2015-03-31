@@ -149,10 +149,26 @@ define([
         var $navEl = $('#country-layers [data-layer="'+layerSlug+'"]:first')
         $navEl.click();
 
+        this._updateSubLayers($li, this.$el.find('.wrapped.selected'));
         $li.toggleClass('selected');
         $toggle.toggleClass('checked');
 
         ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
+      }
+    },
+
+    _updateSubLayers: function(layer, sublayers) {
+      if (layer.hasClass('wrapped')) {
+        var sublayersSelected = sublayers.length > 0;
+        if (!sublayersSelected) {
+          var parent = layer.parents('.layer');
+          parent.addClass('selected');
+          parent.find('.onoffswitch').addClass('checked');
+        }
+      } else {
+        if (layer.hasClass('selected')) {
+          sublayers.removeClass('selected');
+        }
       }
     },
 
