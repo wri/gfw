@@ -578,6 +578,12 @@
         @include logos-sprite(opendevmekonghover);
       }
     }
+    &.inab{
+      height: 80px; width: 106px; @include logos-sprite(inab);
+      &:hover{
+        @include logos-sprite(inabhover);
+      }
+    }
 
     &.bobolink {
       height: 53px; width: 105px; @include logos-sprite(bobolink);
