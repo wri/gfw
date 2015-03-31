@@ -19,11 +19,14 @@ define([
   'map/views/layers/PantropicalLayer',
   'map/views/layers/IdnPrimaryLayer',
   'map/views/layers/LoggingLayer',
+  'map/views/layers/CafLoggingLayer',
   'map/views/layers/CanLoggingLayer',
   'map/views/layers/CmrLoggingLayer',
   'map/views/layers/CodLoggingLayer',
   'map/views/layers/GabLoggingLayer',
   'map/views/layers/GnqLoggingLayer',
+  'map/views/layers/IdnLoggingLayer',
+  'map/views/layers/LbrLoggingLayer',
   'map/views/layers/MiningLayer',
   'map/views/layers/OilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
@@ -75,11 +78,14 @@ define([
   PantropicalLayer,
   IdnPrimaryLayer,
   LoggingLayer,
+  CafLoggingLayer,
   CanLoggingLayer,
   CmrLoggingLayer,
   CodLoggingLayer,
   GabLoggingLayer,
   GnqLoggingLayer,
+  IdnLoggingLayer,
+  LbrLoggingLayer,
   MiningLayer,
   OilPalmLayer,
   WoodFiberPlantationsLayer,
@@ -170,6 +176,9 @@ define([
     logging: {
       view: LoggingLayer
     },
+    caf_logging: {
+      view: CafLoggingLayer
+    },
     can_logging: {
       view: CanLoggingLayer
     },
@@ -184,6 +193,12 @@ define([
     },
     gnq_logging: {
       view: GnqLoggingLayer
+    },
+    idn_logging: {
+      view: IdnLoggingLayer
+    },
+    lbr_logging: {
+      view: LbrLoggingLayer
     },
     mining: {
       view: MiningLayer
