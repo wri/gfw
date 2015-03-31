@@ -18,6 +18,7 @@
         }
         &.active{
           background: $light;
+          // border-bottom: 2px solid $dark;
           svg{
             fill: $cGreen;
           }
@@ -222,12 +223,6 @@
         font-weight: normal;
         font-size: 9px;
         margin-left: 4px;
-        a{
-          color: $dark;
-          &:hover{
-            color: darken($dark,10%);
-          }
-        }
       }
     }
     .stats-count {
