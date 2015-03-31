@@ -150,7 +150,6 @@ define([
         $navEl.click();
 
         this._updateSubLayers($li, this.$el.find('.wrapped.selected'));
-        $li.toggleClass('selected');
         $toggle.toggleClass('checked');
 
         ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
@@ -159,6 +158,9 @@ define([
 
     _updateSubLayers: function(layer, sublayers) {
       if (layer.hasClass('wrapped')) {
+        sublayers.removeClass('selected');
+        layer.toggleClass('selected');
+
         var sublayersSelected = sublayers.length > 0;
         if (!sublayersSelected) {
           var parent = layer.parents('.layer');
@@ -166,6 +168,7 @@ define([
           parent.find('.onoffswitch').addClass('checked');
         }
       } else {
+        layer.toggleClass('selected');
         if (layer.hasClass('selected')) {
           sublayers.removeClass('selected');
         }
