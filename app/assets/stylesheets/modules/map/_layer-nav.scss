@@ -62,6 +62,9 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     &.country-close{
       padding: 0;
       border-bottom: none;
+      width: 40px;
+      min-height: 1px;
+
       &.disabled{
         opacity: 0.25;
       }
