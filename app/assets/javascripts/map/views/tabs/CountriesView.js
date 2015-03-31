@@ -11,8 +11,9 @@ define([
   'map/presenters/tabs/CountriesPresenter',
   'text!map/templates/tabs/countries.handlebars',
   'text!map/templates/tabs/countriesIso.handlebars',
-  'text!map/templates/tabs/countriesButtons.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplIso, tplButtons) {
+  'text!map/templates/tabs/countriesButtons.handlebars',
+  'text!map/templates/layersNavByCountryWrapper.handlebars'
+], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplIso, tplButtons, tplCountryWrapper) {
 
   'use strict';
 
@@ -31,12 +32,14 @@ define([
     template: Handlebars.compile(tpl),
     templateIso: Handlebars.compile(tplIso),
     templateButtons: Handlebars.compile(tplButtons),
+    templateCountryWrapper: Handlebars.compile(tplCountryWrapper),
 
     events: {
       //countries
       'click #countries-analyze-button' : 'analyzeIso',
       'change #countries-country-select' : 'changeIso',
       'change #countries-region-select' : 'changeArea',
+      'click .layer': 'toggleLayer'
     },
 
 
@@ -116,8 +119,61 @@ define([
 
     renderIsoLayer: function(layersToRender){
       this.$layers.html(this.templateIso({ layers: layersToRender }));
+
+      for (var i = 0; i< layersToRender.length; i++) {
+        if (!!layersToRender[i].does_wrapper) {
+          var wrapped_layers = JSON.parse(layersToRender[i].does_wrapper);
+          this.$layers.find('.does_wrapper').html(this.templateCountryWrapper({layers: wrapped_layers}));
+
+          var removeLayerFromCountry = _.bind(function(layer) {
+            this.$layers.find('[data-layer="' +  layer.slug + '"]:not(.wrapped)').hide();
+          }, this);
+          _.each(wrapped_layers,removeLayerFromCountry);
+        }
+      }
     },
 
+    toggleLayer: function(event) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      var $li = $(event.currentTarget);
+      var $toggle = $li.find('.onoffradio, .onoffswitch');
+      var $toggleIcon = $toggle.find('span');
+      var $layerTitle = $li.find('.layer-title');
+
+      var layerSlug = $li.data('layer');
+      var layer = _.where(this.isoLayers, {slug: layerSlug})[0];
+
+      if (layer) {
+        var $navEl = $('#country-layers [data-layer="'+layerSlug+'"]:first')
+        $navEl.click();
+
+        this._updateSubLayers($li, this.$el.find('.wrapped.selected'));
+        $toggle.toggleClass('checked');
+
+        ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
+      }
+    },
+
+    _updateSubLayers: function(layer, sublayers) {
+      if (layer.hasClass('wrapped')) {
+        sublayers.removeClass('selected');
+        layer.toggleClass('selected');
+
+        var sublayersSelected = sublayers.length > 0;
+        if (!sublayersSelected) {
+          var parent = layer.parents('.layer');
+          parent.addClass('selected');
+          parent.find('.onoffswitch').addClass('checked');
+        }
+      } else {
+        layer.toggleClass('selected');
+        if (layer.hasClass('selected')) {
+          sublayers.removeClass('selected');
+        }
+      }
+    },
 
     setButtons: function(to){
       this.$toggle.toggleClass('active', to);

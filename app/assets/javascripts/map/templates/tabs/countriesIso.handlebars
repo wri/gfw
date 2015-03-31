@@ -4,9 +4,17 @@
     <p>Available data sets for this country:</p>
   </div>
 </header>
-<ul class="layers">
+<ul class="layers-list">
   {{#each layers}}
-  <li data-slug="{{this.slug}}"><span class="layer-name"><i class="circle" style="color:{{this.category_color}}"></i>{{this.title}}</span></li>
+    <li class="layer" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">
+      <span class="onoffswitch"><span></span></span>
+      <span class="layer-title">
+        {{this.title}}
+      </span>
+    {{#if this.does_wrapper}}
+      <span class="does_wrapper"></span>
+    {{/if}}
+    </li>
   {{/each}}
 </ul>
 {{else}}
