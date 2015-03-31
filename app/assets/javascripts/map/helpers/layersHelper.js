@@ -19,6 +19,7 @@ define([
   'map/views/layers/PantropicalLayer',
   'map/views/layers/IdnPrimaryLayer',
   'map/views/layers/LoggingLayer',
+  'map/views/layers/CafLoggingLayer',
   'map/views/layers/CanLoggingLayer',
   'map/views/layers/CmrLoggingLayer',
   'map/views/layers/CodLoggingLayer',
@@ -77,6 +78,7 @@ define([
   PantropicalLayer,
   IdnPrimaryLayer,
   LoggingLayer,
+  CafLoggingLayer,
   CanLoggingLayer,
   CmrLoggingLayer,
   CodLoggingLayer,
@@ -173,6 +175,9 @@ define([
     },
     logging: {
       view: LoggingLayer
+    },
+    caf_logging: {
+      view: CafLoggingLayer
     },
     can_logging: {
       view: CanLoggingLayer

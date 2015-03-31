@@ -55,6 +55,12 @@
     line-clip: false;
     polygon-clip: false;
   }
+  [layer='caf_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
   [layer='can_logging'] {
     polygon-fill: #fecc5c;
     line-color: #B38E3B;
