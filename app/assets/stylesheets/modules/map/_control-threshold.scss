@@ -9,7 +9,7 @@
   z-index: 100;
   &.fixed{
     position: fixed;
-    z-index: 99999;
+    z-index: 1000;
   }
   .overlay{
     position: absolute;
@@ -44,6 +44,12 @@
       button{
         margin: 7px auto 0;
         display: block;
+      }
+      .source{
+        @extend .info-icon;
+        display: inline-block;
+        top: 2px;
+        position: relative;
       }
     }
     ol{
