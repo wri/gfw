@@ -137,6 +137,12 @@
     line-clip: false;
     polygon-clip: false;
   }
+  [layer='can_claims'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
 
 //deprecated
   [layer='oilpalm'] {

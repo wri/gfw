@@ -28,6 +28,7 @@ define([
   'map/views/layers/IdnLoggingLayer',
   'map/views/layers/LbrLoggingLayer',
   'map/views/layers/MiningLayer',
+  'map/views/layers/CanClaimsMiningLayer',
   'map/views/layers/OilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
   'map/views/layers/ProtectedAreasLayer',
@@ -87,6 +88,7 @@ define([
   IdnLoggingLayer,
   LbrLoggingLayer,
   MiningLayer,
+  CanClaimsMiningLayer,
   OilPalmLayer,
   WoodFiberPlantationsLayer,
   ProtectedAreasLayer,
@@ -202,6 +204,9 @@ define([
     },
     mining: {
       view: MiningLayer
+    },
+    can_claims: {
+      view: CanClaimsMiningLayer
     },
     oil_palm: {
       view: OilPalmLayer
