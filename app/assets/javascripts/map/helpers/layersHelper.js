@@ -21,6 +21,8 @@ define([
   'map/views/layers/LoggingLayer',
   'map/views/layers/CanLoggingLayer',
   'map/views/layers/CmrLoggingLayer',
+  'map/views/layers/CodLoggingLayer',
+  'map/views/layers/GabLoggingLayer',
   'map/views/layers/MiningLayer',
   'map/views/layers/OilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
@@ -74,6 +76,8 @@ define([
   LoggingLayer,
   CanLoggingLayer,
   CmrLoggingLayer,
+  CodLoggingLayer,
+  GabLoggingLayer,
   MiningLayer,
   OilPalmLayer,
   WoodFiberPlantationsLayer,
@@ -169,6 +173,12 @@ define([
     },
     cmr_logging: {
       view: CmrLoggingLayer
+    },
+    cod_logging: {
+      view: CodLoggingLayer
+    },
+    gab_logging: {
+      view: GabLoggingLayer
     },
     mining: {
       view: MiningLayer
