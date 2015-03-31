@@ -23,6 +23,7 @@ define([
   'map/views/layers/CmrLoggingLayer',
   'map/views/layers/CodLoggingLayer',
   'map/views/layers/GabLoggingLayer',
+  'map/views/layers/GnqLoggingLayer',
   'map/views/layers/MiningLayer',
   'map/views/layers/OilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
@@ -78,6 +79,7 @@ define([
   CmrLoggingLayer,
   CodLoggingLayer,
   GabLoggingLayer,
+  GnqLoggingLayer,
   MiningLayer,
   OilPalmLayer,
   WoodFiberPlantationsLayer,
@@ -179,6 +181,9 @@ define([
     },
     gab_logging: {
       view: GabLoggingLayer
+    },
+    gnq_logging: {
+      view: GnqLoggingLayer
     },
     mining: {
       view: MiningLayer
