@@ -300,7 +300,7 @@ define([
       var id = path[path.length -1];
       var self = this;
       if(this.map){
-        this.map.remove()
+        this.map.remove();
         if (isNaN(id)) {
           this._initMap(function() {
             self._displayCountry();
@@ -369,6 +369,8 @@ define([
 
       if (canopy != 30) $cnp_op.addClass('no_def');
       else $cnp_op.removeClass('no_def');
+
+      $('#canopy-status-number').text(canopy+'%');
 
       $.ajax({
         url: url,
