@@ -20,6 +20,7 @@ define([
   'map/views/layers/IdnPrimaryLayer',
   'map/views/layers/LoggingLayer',
   'map/views/layers/CanLoggingLayer',
+  'map/views/layers/CmrLoggingLayer',
   'map/views/layers/MiningLayer',
   'map/views/layers/OilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
@@ -72,6 +73,7 @@ define([
   IdnPrimaryLayer,
   LoggingLayer,
   CanLoggingLayer,
+  CmrLoggingLayer,
   MiningLayer,
   OilPalmLayer,
   WoodFiberPlantationsLayer,
@@ -164,6 +166,9 @@ define([
     },
     can_logging: {
       view: CanLoggingLayer
+    },
+    cmr_logging: {
+      view: CmrLoggingLayer
     },
     mining: {
       view: MiningLayer
