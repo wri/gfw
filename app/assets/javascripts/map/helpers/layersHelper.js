@@ -24,6 +24,7 @@ define([
   'map/views/layers/CodLoggingLayer',
   'map/views/layers/GabLoggingLayer',
   'map/views/layers/GnqLoggingLayer',
+  'map/views/layers/IdnLoggingLayer',
   'map/views/layers/MiningLayer',
   'map/views/layers/OilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
@@ -80,6 +81,7 @@ define([
   CodLoggingLayer,
   GabLoggingLayer,
   GnqLoggingLayer,
+  IdnLoggingLayer,
   MiningLayer,
   OilPalmLayer,
   WoodFiberPlantationsLayer,
@@ -184,6 +186,9 @@ define([
     },
     gnq_logging: {
       view: GnqLoggingLayer
+    },
+    idn_logging: {
+      view: IdnLoggingLayer
     },
     mining: {
       view: MiningLayer
