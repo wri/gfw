@@ -32,6 +32,7 @@ define([
   'map/views/layers/CanCoalMiningLayer',
   'map/views/layers/CanLeasesMiningLayer',
   'map/views/layers/CanPermitsMiningLayer',
+  'map/views/layers/CmrMiningLayer',
   'map/views/layers/OilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
   'map/views/layers/ProtectedAreasLayer',
@@ -95,6 +96,7 @@ define([
   CanCoalMiningLayer,
   CanLeasesMiningLayer,
   CanPermitsMiningLayer,
+  CmrMiningLayer,
   OilPalmLayer,
   WoodFiberPlantationsLayer,
   ProtectedAreasLayer,
@@ -222,6 +224,9 @@ define([
     },
     can_permits: {
       view: CanPermitsMiningLayer
+    },
+    cmr_mining: {
+      view: CmrMiningLayer
     },
     oil_palm: {
       view: OilPalmLayer
