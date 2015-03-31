@@ -165,7 +165,7 @@ define([
         }
       }, this ));
 
-      if (this.iso) {
+      if (!!this.iso && this.iso !== 'ALL') {
         this.$countryLayersReset.removeClass('hidden');
       }else{
         this.$countryLayersReset.addClass('hidden');
