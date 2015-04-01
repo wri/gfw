@@ -153,14 +153,16 @@ define([
     _setUrlsFromEvent: function(event) {
       var url = $(event.currentTarget).data('share-url');
       if (url !== undefined) {
-        this.model.set('url', url)
+        this.model.set('url', url);
       }else{
-        this.model.set('url', window.location.href)
+        this.model.set('url', window.location.href);
       }
 
       var embedUrl = $(event.currentTarget).data('share-embed-url');
       if (embedUrl !== undefined) {
-        this.model.set('embedUrl', embedUrl)
+        this.model.set('embedUrl', embedUrl);
+      }else{
+        this.model.set('embedUrl', window.location.href);
       }
     },
 
