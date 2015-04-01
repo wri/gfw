@@ -173,6 +173,18 @@
     line-clip: false;
     polygon-clip: false;
   }
+  [layer='cog_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='gab_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
 //deprecated
   [layer='oilpalm'] {
     polygon-fill: #ee9587;

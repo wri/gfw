@@ -44,6 +44,7 @@ define([
 
 
     initialize: function(map) {
+      this.embed = $('body').hasClass('is-embed-action');
       this.map = map;
       this.model = new CountriesModel();
       this.presenter = new Presenter(this);
@@ -77,9 +78,11 @@ define([
       // countries
       this.setStyle(0.45);
       this.getCountries();
-      setTimeout(_.bind(function(){
-        this.presenter.openTab('#countries-tab-button');
-      },this), 0);
+      if (!this.embed) {
+        setTimeout(_.bind(function(){
+          this.presenter.openTab('#countries-tab-button');
+        },this), 0);
+      }
     },
 
     /**
