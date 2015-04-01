@@ -760,11 +760,11 @@ _.templateSettings = {
 
 config.GRAPHS = {
   total_loss: {
-    title: "Countries with greatest tree cover loss <sup>(2001-2012)</sup>",
-    subtitle: "Global tree cover loss per year with annualized tree cover gain"
+    title: "Countries with greatest tree cover loss <sup>(2001-2013)</sup>",
+    subtitle: "Global tree cover loss, 2001-2013"
   },
   percent_loss: {
-    title: "Countries with greatest percent tree cover loss <sup>(2001-2012)</sup><br />relative to 2000 tree cover extent",
+    title: "Countries with greatest tree cover gain <sup>(2001-2012)</sup>",
     subtitle: "Percent global tree cover loss per year, relative to 2000 tree cover extent"
   },
   total_extent: {
@@ -777,7 +777,7 @@ config.GRAPHS = {
   },
   domains: {
     title: "Climate domains ranked in order of<br />greatest tree cover loss",
-    subtitle: "Tree cover loss per year by climate domain"
+    subtitle: "Tree cover loss per year by climate domain <sup>(2001-2013)</sup>"
   }
 }
 

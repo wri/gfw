@@ -1,45 +1,78 @@
-<div class="widget-box mod-legend">
-  <div class="widget-toggle"></div>
-  <div class="widget-content">
-
-    <div class="widget-closed">
-      <span class="layers-count">{{layersLength}}</span> layers
-    </div>
-
-    <div class="widget-opened">
-      <ul class="categories">
-        {{#each categories}}
-          <li class="category">
-            {{#each this}}
-              {{#if @first}}
-                <span class="category-name" style="color: {{this.category_color}};">{{this.category_name}}</span>
-              {{/if}}
-            {{/each}}
-            <ul class="layers">
-              {{#each this}}
-                <li class="layer">
-                  <span class="layer-name">
-                    <i class="circle" style="color:{{this.title_color}};"></i>{{this.title}}
-                    {{#if this.source}}
-                    <a href='#' data-source='{{this.source}}' class='source'></a>
-                    {{/if}}
-                  </span>
-                  {{#if this.detailsTpl}}
-                    {{{this.detailsTpl}}}
-                  {{/if}}
-                  {{#if this.sublayer}}
-                    <div class="layer-sublayer" data-sublayer="{{this.sublayer}}">
-                      <span class="onoffswitch"><span></span></span>
-                      <div class="sublayer-title">Geographic coverage</div>
-                    </div>
-                  {{/if}}
-                </li> {{!-- /layer --}}
-              {{/each}}
-            </ul>  {{!-- /layers --}}
-          </li> {{!-- /category --}}
+{{#if iso}}
+  <ul class="categories {{#if iso}}divided{{/if}}">
+    <h2>{{name}} data</h2>
+    {{#each categoriesIso}}
+      <li class="category {{#if this.closed}}closed{{/if}}">
+        {{#each this}}
+          {{#if @first}}
+            <span data-category_slug="{{this.category_status}}" class="category-name" style="color: {{this.category_color}}; border-color: {{this.category_color}};">
+              {{this.category_name}}
+              <em>({{../../layers_length}})</em>
+            </span>
+          {{/if}}
         {{/each}}
-      </ul> {{!-- /categories --}}
-    </div>
-    <a class="countries-link" href="/countries">View country profiles</a>
-  </div>
-</div>
+        <ul class="layers {{#if this.closed}}closed{{/if}}">
+          {{#each this}}
+            <li class="layer">
+              <span class="layer-name">
+                <i class="circle" style="color:{{this.title_color}};"></i>{{this.title}}
+                {{#if this.source}}
+                <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+                {{/if}}
+              </span>
+              {{#if this.detailsTpl}}
+                {{{this.detailsTpl}}}
+              {{/if}}
+              {{#if this.sublayer}}
+                <div class="layer-sublayer" data-sublayer="{{this.sublayer}}">
+                  <span class="onoffswitch"><span></span></span>
+                  <div class="sublayer-title">Geographic coverage</div>
+                </div>
+              {{/if}}
+            </li> {{!-- /layer --}}
+          {{/each}}
+        </ul>  {{!-- /layers --}}
+      </li> {{!-- /category --}}
+    {{/each}}
+  </ul> {{!-- /categories --}}
+{{/if}}
+
+<ul class="categories {{#if iso}}divided{{/if}}">
+  {{#if iso}}
+    <h2>Global data</h2>
+  {{/if}}
+  {{#each categories}}
+    <li class="category {{#if this.closed}}closed{{/if}}">
+      {{#each this}}
+        {{#if @first}}
+          <span data-category_slug="{{this.category_status}}" class="category-name" style="color: {{this.category_color}}; border-color: {{this.category_color}};">
+            {{this.category_name}}
+            <em>({{../../layers_length}})</em>
+          </span>
+        {{/if}}
+      {{/each}}
+      <ul class="layers {{#if this.closed}}closed{{/if}}">
+        {{#each this}}
+          <li class="layer">
+            <span class="layer-name">
+              <i class="circle" style="color:{{this.title_color}};"></i>{{this.title}}
+              {{#if this.source}}
+              <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
+              {{/if}}
+            </span>
+            {{#if this.detailsTpl}}
+              {{{this.detailsTpl}}}
+            {{/if}}
+            {{#if this.sublayer}}
+              <div class="layer-sublayer" data-sublayer="{{this.sublayer}}">
+                <span class="onoffswitch"><span></span></span>
+                <div class="sublayer-title">Geographic coverage</div>
+              </div>
+            {{/if}}
+          </li> {{!-- /layer --}}
+        {{/each}}
+      </ul>  {{!-- /layers --}}
+    </li> {{!-- /category --}}
+  {{/each}}
+</ul> {{!-- /categories --}}
+

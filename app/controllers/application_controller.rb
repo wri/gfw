@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
 
-  helper_method :watch_cookie?
+  helper_method :terms_cookie
 
   protect_from_forgery with: :exception
 
@@ -17,36 +17,43 @@ class ApplicationController < ActionController::Base
 
   private
 
-    Browser = Struct.new(:browser, :version)
-
-    SupportedBrowsers = [
-      Browser.new('Safari', '5.0.5'),
-      Browser.new('Firefox', '12.0'),
-      Browser.new('Internet Explorer', '10.0'),
-      Browser.new('Chrome', '19.0.1036.7'),
-      Browser.new('Opera', '11.00')
-    ]
-
     def check_browser
-      user_agent = UserAgent.parse(request.user_agent)
-      redirect_to "/notsupportedbrowser" unless SupportedBrowsers.detect { |browser| user_agent >= browser } || user_agent.bot?
+      unless UserAgentValidator.user_agent_supported? request.user_agent
+        redirect_to "/notsupportedbrowser"
+      end
     end
 
     def check_terms
       session[:return_to] = request.fullpath
+      redirect_to accept_terms_path if show_terms?
+    end
+
+    def show_terms?
+      !(is_ip_whitelisted_from_terms? ||
+        is_embed_request? ||
+        terms_cookie ||
+        is_exempt_from_terms?)
+    end
+
+    def is_ip_whitelisted_from_terms?
       @whitelist = [
         '80.74.134.135',
         # '127.0.0.1'
       ]
-      if not @whitelist.include? request.remote_ip
-        redirect_to accept_terms_path unless watch_cookie?
-      end
+
+      @whitelist.include?(request.remote_ip)
     end
 
-
-    def watch_cookie?
-      is_embed = request.original_url.include?('embed') ? true : false
-      cookies.permanent[ENV['TERMS_COOKIE'].to_sym] || is_embed || UserAgent.parse(request.user_agent).bot?
+    def is_exempt_from_terms?
+      validator = UserAgentValidator.new(request.user_agent)
+      validator.bot? || validator.is_snippet_collector
     end
 
+    def is_embed_request?
+      request.original_url.include?('embed') ? true : false
+    end
+
+    def terms_cookie
+      cookies.permanent[ENV['TERMS_COOKIE'].to_sym]
+    end
 end

@@ -19,7 +19,23 @@ define([
   'map/views/layers/PantropicalLayer',
   'map/views/layers/IdnPrimaryLayer',
   'map/views/layers/LoggingLayer',
+  'map/views/layers/CafLoggingLayer',
+  'map/views/layers/CanLoggingLayer',
+  'map/views/layers/CmrLoggingLayer',
+  'map/views/layers/CodLoggingLayer',
+  'map/views/layers/GabLoggingLayer',
+  'map/views/layers/GnqLoggingLayer',
+  'map/views/layers/IdnLoggingLayer',
+  'map/views/layers/LbrLoggingLayer',
   'map/views/layers/MiningLayer',
+  'map/views/layers/CanClaimsMiningLayer',
+  'map/views/layers/CanCoalMiningLayer',
+  'map/views/layers/CanLeasesMiningLayer',
+  'map/views/layers/CanPermitsMiningLayer',
+  'map/views/layers/CmrMiningLayer',
+  'map/views/layers/CodMiningLayer',
+  'map/views/layers/CogMiningLayer',
+  'map/views/layers/GabMiningLayer',
   'map/views/layers/OilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
   'map/views/layers/ProtectedAreasLayer',
@@ -41,8 +57,10 @@ define([
   'map/views/layers/BirdlifeLayer',
   'map/views/layers/AzepolyLayer',
   'map/views/layers/TigersLayer',
+  'map/views/layers/CarbonLayer',
+  'map/views/layers/ColombiaForestChangeLayer',
   // Layer dialog templates
-  'text!templates/dialogs/loss_dialog.handlebars',
+  // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
   'map/views/timeline/LossTimeline',
   'map/views/timeline/FormaTimeline',
@@ -68,7 +86,23 @@ define([
   PantropicalLayer,
   IdnPrimaryLayer,
   LoggingLayer,
+  CafLoggingLayer,
+  CanLoggingLayer,
+  CmrLoggingLayer,
+  CodLoggingLayer,
+  GabLoggingLayer,
+  GnqLoggingLayer,
+  IdnLoggingLayer,
+  LbrLoggingLayer,
   MiningLayer,
+  CanClaimsMiningLayer,
+  CanCoalMiningLayer,
+  CanLeasesMiningLayer,
+  CanPermitsMiningLayer,
+  CmrMiningLayer,
+  CodMiningLayer,
+  CogMiningLayer,
+  GabMiningLayer,
   OilPalmLayer,
   WoodFiberPlantationsLayer,
   ProtectedAreasLayer,
@@ -90,8 +124,10 @@ define([
   BirdlifeLayer,
   AzepolyLayer,
   TigersLayer,
+  CarbonLayer,
+  ColombiaForestChangeLayer,
   // Layer dialog templates
-  loss_dialog,
+  // loss_dialog,
   // Layer timelines
   LossTimeline,
   FormaTimeline,
@@ -105,7 +141,6 @@ define([
   var layersHelper = {
     loss: {
       view: LossLayer,
-      dialogTpl: loss_dialog,
       timelineView: LossTimeline
     },
     forestgain: {
@@ -157,8 +192,56 @@ define([
     logging: {
       view: LoggingLayer
     },
+    caf_logging: {
+      view: CafLoggingLayer
+    },
+    can_logging: {
+      view: CanLoggingLayer
+    },
+    cmr_logging: {
+      view: CmrLoggingLayer
+    },
+    cod_logging: {
+      view: CodLoggingLayer
+    },
+    gab_logging: {
+      view: GabLoggingLayer
+    },
+    gnq_logging: {
+      view: GnqLoggingLayer
+    },
+    idn_logging: {
+      view: IdnLoggingLayer
+    },
+    lbr_logging: {
+      view: LbrLoggingLayer
+    },
     mining: {
       view: MiningLayer
+    },
+    can_claims: {
+      view: CanClaimsMiningLayer
+    },
+    can_coal: {
+      view: CanCoalMiningLayer
+    },
+    can_leases: {
+      view: CanLeasesMiningLayer
+    },
+    can_permits: {
+      view: CanPermitsMiningLayer
+    },
+    cmr_mining: {
+      view: CmrMiningLayer
+    },
+    cod_mining: {
+      view: CodMiningLayer
+    },
+    cog_mining: {
+      view: CogMiningLayer
+    },
+    gab_mining: {
+      view: GabMiningLayer
     },
     oil_palm: {
       view: OilPalmLayer
@@ -223,6 +306,12 @@ define([
     },
     tigers: {
       view: TigersLayer
+    },
+    verified_carbon: {
+      view: CarbonLayer
+    },
+    colombia_forest_change: {
+      view: ColombiaForestChangeLayer
     },
     nothing: {
     }

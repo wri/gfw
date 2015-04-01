@@ -3,6 +3,7 @@ modules:
   - name: 'static'
   - name: 'landing'
   - name: 'stories'
+  - name: 'countries'
 
 waitSeconds: 200
 
@@ -21,6 +22,7 @@ paths:
   text: "requirejs-text/text"
   mps: "minpubsub/minpubsub.src"
   _string: "underscore.string/dist/underscore.string.min"
+  chosen: "chosen/chosen.jquery"
   jqueryui: "jquery-ui-1.10.4.custom.min"
   jqueryujs: "jquery-ujs/src/rails"
   markerclusterer: "gmaps-markerclusterer-plus/src/markerclusterer"
@@ -29,8 +31,13 @@ paths:
   handlebars: "handlebars/handlebars"
   slick: "slick.js/slick/slick.min"
   simplePagination: "jquery.simplePagination/jquery.simplePagination"
-  # stories
+  keymaster: "keymaster/keymaster"
 
+  #countries
+  scrollit: "ScrollIt.js/scrollIt"
+  qtip: "qtip2/jquery.qtip.min"
+
+  # stories
   jquery_fileupload: "jquery-file-upload/js/jquery.fileupload"
   jquery_migrate: "jquery-migrate/jquery-migrate"
   geojson: "geojson-google-maps/GeoJSON"
@@ -76,6 +83,10 @@ shim:
     deps:
       - "jquery"
     exports: "$"
+  chosen:
+    deps:
+      - "jquery"
+    exports: 'chosen'
   pagination:
     deps:
       - "jquery"
@@ -96,12 +107,17 @@ shim:
       - "jquery"
     exports: "jqueryujs"
 
-  jquery_migrate: 
+  scrollit:
+    deps:
+      - "jquery"
+    exports: "scrollit"
+
+  jquery_migrate:
     deps:
       - "jquery"
     exports: "jquery_migrate"
 
-  jquery_fileupload: 
+  jquery_fileupload:
     deps:
       - "jquery"
     exports: "jquery_fileupload"

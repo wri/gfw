@@ -24,7 +24,7 @@ define([
 
     defaults: {
       dateRange: [moment([2001]), moment()],
-      width: 945,
+      width: 750,
       height: 50,
       player: true,
       playSpeed: 400,
@@ -68,7 +68,6 @@ define([
       var self = this;
       this.$timeline = $('.timeline-container');
       this.$el.html(this.template());
-      this.$timeline.parents('.widget-box').css('width', 1000);
       this.$timeline.append(this.el);
 
       // Cache
@@ -82,6 +81,7 @@ define([
         // 50 is the play div width.
         this.options.width += 50;
         this.$play.addClass('hidden');
+        this.$play.parent().addClass('no-play');
       }
 
       // SVG options
@@ -142,11 +142,11 @@ define([
 
       this.svg.append('g')
           .attr('class', 'xaxis-years')
-          .attr('transform', 'translate({0},{1})'.format(8, height/2 + 6))
+          .attr('transform', 'translate({0},{1})'.format(0, height/2 + 6))
           .call(xAxis)
         .select('.domain').remove();
 
-      this.svg.selectAll('.xaxis-years .tick:last-child text').attr('x', -15);
+      // this.svg.selectAll('.xaxis-years .tick:last-child text').attr('x', -15);
 
       // Set brush and listeners.
       this.brush = d3.svg.brush()
@@ -169,10 +169,10 @@ define([
 
       this.handlers.left = this.slider.append('svg:image')
           .attr('class', 'handle')
-          .attr('transform', 'translate(-7,{0})'.format(height/2 - 12))
-          .attr('width', 14)
-          .attr('height', 18)
-          .attr('xlink:href', '/assets/svg/dragger.svg')
+          .attr('transform', 'translate(-8,{0})'.format(height/2 - 11))
+          .attr('width', 16)
+          .attr('height', 16)
+          .attr('xlink:href', '/assets/svg/dragger2.svg')
           .attr('x', this.xscale(this._dateToDomain(this.currentDate[0])))
           .attr('y', -3);
 

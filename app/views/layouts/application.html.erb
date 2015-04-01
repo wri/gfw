@@ -20,8 +20,7 @@
 
     <meta name="google-translate-customization" content="af2414ea962843fc-f48b15cdb6a3ab9b-gd8c738d3a7ff42de-1a">
     <meta name="google-site-verification" content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak" />
-    <%= favicon_link_tag 'favicon.ico' %>
-
+    <%= render 'shared/icons' %>
     <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
     <%# stylesheet_link_tag "application", :media => "all" %>
     <%= controller_stylesheet_link_tag %>
@@ -43,8 +42,6 @@
     <script src="//maps.googleapis.com/maps/api/js?libraries=drawing,places&sensor=false"></script>
     <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
     <%= requirejs_include_tag 'static' %>
-    <%# render 'shared/js_templates' %>
-    <%# javascript_include_tag 'application' %>
     <%= render 'shared/js_footer' %>
   </body>
 </html>

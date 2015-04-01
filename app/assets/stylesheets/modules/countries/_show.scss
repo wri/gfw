@@ -21,7 +21,7 @@
   .circle {
     svg{
       fill: #bebcc2;
-      width: auto;
+      width: 100%;
       height: 65%;
       position: absolute;
       top: 50%;
@@ -98,6 +98,13 @@
         width: 100%;
         margin-top: 0.1em;
         margin-bottom: 0.2em;
+
+        max-width: 515px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+
         .embed & {
           max-width: 100%;
           font-size: 32px;
@@ -174,17 +181,15 @@
       }
 
       .country-indepth__bubble {
-
         display: inline-block;
-        margin: 2px 0 0 15px;
-        background: $cGreen;
-        text-align: center;
-        border-radius: 9px;
+        margin: 4px 0 0 15px;
+
         a {
-          display: inline-block;
-          width: 160px;
-          padding: 11px 0 12px 0;
-          color: #fff;
+          max-width: 190px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: block;
         }
       }
     } // country-title
@@ -202,15 +207,24 @@
         @include box-sizing(border-box);
         .embed & {
           width: 100%;
+          display: flex;
+          float: left;
+          height: initial;
         }
 
 
         h4 {
           text-transform: uppercase;
-          font-size: 14px;
+          font-size: 16px;
           line-height: 18px;
           color: #FEFEFE;
           opacity: .5;
+          text-align: center;
+        }
+
+        hr {
+          margin: 15px auto;
+          opacity: .3;
         }
 
         .map,
@@ -226,6 +240,7 @@
           padding: 30px 10px;
           .embed & {
             padding: 10px 0;
+            top: 0;
           }
         }
 
@@ -236,6 +251,7 @@
           cursor: default;
           .embed & {
             width: 33.33333%;
+            height: 260px;
           }
 
           &.loaded {
@@ -248,14 +264,14 @@
         }
 
         .tree-numbers {
-          width: 25%;
+          width: 28%;
           // padding-left: 20px;
           .embed & {
             width: 28.33333%;
           }
 
           h4 {
-            width: 150px;
+            text-align: left;
           }
 
           .amount,
@@ -274,16 +290,43 @@
             margin-top: 18px;
           }
 
-          .total-area .amount {
-            font-size: 29px;
+          .total-area,
+          .total-loss {
+            .amount {
+              font-size: 24px;
+            }
+          }
+          .canopy-status {
+            width: 450px;
+            position: absolute;
+            text-align: center;
+            font-size: 13px;
+            background: #555;
+            color: rgba(255, 255, 255, 0.5);
+            padding: 8px;
+            margin-top: 80px;
+
+            em {
+              color: #97bd3d;
+              border-bottom: 1px #97bd3d dashed;
+              cursor: pointer;
+            }
           }
         }
 
         .loss-gain-graph {
-          width: 35%;
+          width: 245px;
           position: relative;
+          top: -145px;
           .embed & {
             width: 33.33333%;
+          }
+
+          #lossGainGraph {
+              position: relative;
+              left: 20px;
+              height: 150px;
+              padding-top: 15px;
           }
 
           .coming-soon {
@@ -315,28 +358,42 @@
             margin-bottom: 20px;
           }
 
-          .bar {
-            shape-rendering: "crispEdges";
-          }
-
           .graph-amount,
+          .graph-gain-amount,
+          .total-loss,
+          .graph-gain-total,
+          .total-loss-ha,
           .graph-date {
             text-align: center;
             display: block;
-            max-width: 205px;
+            width: 225px;
+            span {
+              display: inline;
+            }
           }
 
-          .graph-amount {
+          .graph-amount,
+          .graph-gain-amount,
+          .total-loss {
             font-size: 30px;
             font-weight: 500;
             color: $cGreen;
           }
+          .graph-amount {
+            font-size: 23px;
+          }
+          .graph-gain-amount {
+            font-size: 30px;
+          }
 
-          .graph-date {
+          .graph-date,
+          .graph-gain-total,
+          .total-loss-ha {
             color: #FEFEFE;
             opacity: .5;
             margin-top: 2px;
-            font-size: 13px;
+            font-size: 11px;
+            display: inline;
           }
 
           .gain-tooltip {
@@ -617,6 +674,14 @@
       float: right;
     }
   }
+  .country-forests-type {
+    @media (min-width: 750px) {
+      .right-col {
+        position: relative;
+        left: -60px;
+      }
+    }
+  }
 
 
   .country-section {
@@ -670,6 +735,7 @@
       .info {
         position: absolute;
         right: 20px;
+        top: 4px;
       }
     }
 
@@ -699,7 +765,7 @@
 
       .right-col {
         margin: 10% 0 0 0;
-        @media (min-width: $br-mobile){
+        @media (min-width: $br-mobile) {
           margin: 0 0 0 10%;
         }
 
@@ -764,14 +830,18 @@
     z-index: 10;
     pointer-events: none;
 
-    .graph-amount {
+    .graph-amount,
+    .graph-gain-amount,
+    .total-loss {
       font-size: 26px;
       color: white;
       margin-bottom: 4px;
       display: block;
     }
 
-    .graph-date {
+    .graph-date,
+    .graph-gain-total,
+    .total-loss-ha {
       font-size: 12px;
       color: #60644D;
       .date {
@@ -1321,6 +1391,12 @@
           padding: 0;
           font-size: 27px;
           color: #FDFDFD;
+          a{
+            color: #FDFDFD;
+            &:hover{
+              color: darken(#FDFDFD, 5%);
+            }
+          }
         }
 
         .story-content {
@@ -1770,7 +1846,8 @@
   font-weight: 400;
   color: $dark;
   margin: 0;
-  padding: 20px;
+  padding: 10px;
+  display: flex;
   .embed-country-title{
     text-align: center;
     font-size: 2em;
@@ -1781,8 +1858,8 @@
 // --- MEDIA QUERIES --- //
 
 
-// maxsize <= 999
-@media only screen and (min-width: 751px) and (max-width: 999px) {
+// maxsize <= 1050
+@media only screen and (min-width: 751px) and (max-width: 1050px) {
   .country-show {
 
     .country-header {
@@ -1795,6 +1872,17 @@
         float: none;
         width: 100%;
         height: 300px;
+        .loss-gain-graph {
+          width: 185px;
+        }
+        .tree-numbers .canopy-status {
+          margin-top: 10px;
+          width: 180px;
+        }
+        .embed &{
+          float: left;
+          padding: 0;
+        }
       }
 
       .country-details .country-sidenav {
@@ -1816,11 +1904,6 @@
           display: table-cell;
 
           a {
-            display: inline-block;
-            padding: 0 10px;
-            text-align: center;
-            line-height: 51px;
-
             .sidenav-icon {
               display: none;
             }
@@ -1907,9 +1990,17 @@
       .country-title {
         padding: 20px 11px;
 
+        h1 {
+          white-space: normal;
+        }
+
         .country-indepth__bubble {
           width: 100%;
           margin: 15px 0 0;
+
+          a {
+            max-width: 100%;
+          }
         }
 
         .country-selector {
@@ -1939,6 +2030,9 @@
             height: 260px;
             width: 100%;
             z-index: 200;
+            .embed & {
+              display: none;
+            }
           }
 
           .tree-numbers,
@@ -1946,6 +2040,19 @@
             width: 100%;
             padding-top: 0;
             text-align: center;
+            top: 0;
+            .graph-amount,
+            .total-loss {
+              width: auto;
+            }
+            .canopy-status {
+              width: 80%;
+              position: relative;
+              margin-top: 0;
+            }
+            #lossGainGraph {
+              left: 0;
+            }
           }
 
           .tree-numbers div {
@@ -1975,10 +2082,14 @@
             }
 
             .graph svg {
-              width: auto;
+              width: 165px;
             }
 
             .graph-amount,
+            .graph-gain-amount,
+            .total-loss,
+            .graph-gain-total,
+            .total-loss-ha,
             .graph-date {
               max-width: 100%;
             }
@@ -2070,12 +2181,6 @@
     } // country-graph-section
 
     .country-employment {
-      .section-info {
-        svg {
-          height: 100%;
-        }
-      }
-
       .section-content {
         .left-col {
           .employment {
@@ -2167,7 +2272,19 @@
   }
 }
 
-
 .source_category_title{
   display: none !important;
+}
+
+.share_dialog,
+.country-download-modal {
+  position: fixed;
+}
+
+.country-download-modal {
+  p.error {
+    margin-top: 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+  }
 }

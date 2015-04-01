@@ -20,12 +20,17 @@
 
     <meta name="google-translate-customization" content="af2414ea962843fc-f48b15cdb6a3ab9b-gd8c738d3a7ff42de-1a">
     <meta name="google-site-verification" content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak" />
-    <%= favicon_link_tag 'favicon.ico' %>
+    <%= render 'shared/icons' %>
 
     <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
     <%= controller_stylesheet_link_tag %>
     <%= yield :js %>
     <%= csrf_meta_tags %>
+    <script>
+        var gfw = window.gfw = {};
+        window.gfw.config = { GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>" };
+    </script>
+
   </head>
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
     <%= render 'layouts/svg_icons' %>
@@ -41,20 +46,9 @@
     <!-- Javascript -->
     <script src="//maps.googleapis.com/maps/api/js?libraries=drawing,places&sensor=false"></script>
     <script src="//libs.cartocdn.com/cartodb.js/v3/cartodb.js"></script>
-    <%= javascript_include_tag 'countries' %>
+    <%= requirejs_include_tag "countries" %>
+    <%#= javascript_include_tag 'countries' %>
     <%= render 'shared/js_footer' %>
-    <!-- Fixing! -->
-    <script src="/assets/slick.js/slick/slick.min.js"></script>
-    <script type="text/javascript">
-        $('#footer-logos').slick({
-            infinite: true,
-            slidesToShow: 5,
-            slidesToScroll: 5,
-            speed: 500,
-            autoplay: true,
-            autoplaySpeed: 3000
-      });
-    </script>
     <div id='sources' class='sources notranslate is-hidden'>
       <%= render 'countries' %>
       <%= render 'shared/sources' %>

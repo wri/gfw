@@ -1,0 +1,13 @@
+.module{
+  position: absolute;
+  background: $white;
+  box-shadow: $shadow1;
+  @include transition(all 0.5s $easeInOutSine);
+  opacity: 1;
+  visibility: visible;
+
+  &.hide{
+    opacity: 0;
+    visibility: hidden;
+  }
+}

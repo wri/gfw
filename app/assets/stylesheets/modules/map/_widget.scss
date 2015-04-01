@@ -62,14 +62,9 @@
   @include transition-duration(140ms);
   @include transition-timing-function(ease-in-out);
 
-  // font-size: 11px;
-  border: 1px solid #666;
-  color: #999;
-  background: #fff;
-
-  @include border-radius(3px);
-  @include box-shadow(0px 0px 3px #666);
-  @include box-sizing(border-box);
+  color: $dark;
+  background: $white;
+  box-shadow: $shadow1;
 
   .widget-content {
     width: 100%;

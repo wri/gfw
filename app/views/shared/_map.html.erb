@@ -2,21 +2,25 @@
   <div id='map' class='map'></div>
 
   <!-- <div id="spinner_tiles"></div> -->
-  <div id="viewfinder" class="map-viewfinder"></div>
-  <div id="zoom_controls">
-    <div class="zoom-in"></div>
-    <div class="zoom-out"></div>
-  </div>
-
-  <!-- <div class="mode-button-box">
-    <div class="mode-button">
-      <a class="active" href="#">Global Mode</a>
-      <a href="#">Country Mode</a>
-    </div>
-  </div> -->
+  <div id="viewfinder" class="map-viewfinder module-toggle"></div>
 
   <div class="map-latlng"></div>
 
+
+
+
+  <!-- MODULES -->
+  <div id="module-legend" class="module scroll-dark module-legend module-toggle hide"></div>
+  <div id="module-tabs" class="module module-tabs module-toggle hide"></div>
+  <div id="module-map-controls" class="module module-mapcontrols"></div>
+
+  <!-- CONTROLS -->
+  <div id="control-searchbox" class="control-searchbox"></div>
+  <div id="control-share" class="mini-modal share-modal"></div>
+  <div id="control-threshold" class="control-threshold"></div>
+
+
+  <!-- FOOTER -->
   <div class="map-logos">
     <a href="http://www.cartodb.com" class="map-logo cartodb-logo" target="_blank">
       <img src="http://cartodb.s3.amazonaws.com/static/new_logo.png" alt="CartoDB" title="CartoDB"/>
@@ -24,8 +28,7 @@
     <a href="https://earthengine.google.org'" class="map-logo gee-logo" target="_blank">
       <img style="position:relative; top:5px;" src="/assets/backgrounds/gee-transparent.png" alt="Powered by Google Earth Engine" title="Powered by Google Earth Engine"/>
     </a>
-
   </div>
-  <button class="btn green medium footer-toggle" id="footerToggle">Show footer</button>
+  <button class="btn dark medium footer-toggle" id="footerToggle">Show footer</button>
 </section>
 <section id="analysis-subscribe"></section>

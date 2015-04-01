@@ -1,15 +1,17 @@
+$w: 10px;
 .onoffradio {
   display: inline-block;
-  width: 8px;
-  height: 8px;
-  border: 1px solid #ddd;
+  width: $w;
+  height: $w;
+  border: 1px solid #ccc;
   position: relative;
 
   &.checked span {
-    background: #ddd;
+    background: #ccc;
+    @include transform(translate(-50%,-50%) scale(1))
   }
 
-  @include border-radius(25px);
+  @include border-radius(50%);
 }
 
 .onoffradio span {
@@ -18,12 +20,11 @@
   height: 4px;
   width: 4px;
   position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  margin: auto;
-  background: white;
+  top: 50%;
+  left: 50%;
+  @include transform(translate(-50%,-50%) scale(0));
+  @include border-radius(50%);
+  @include transition(all 0.2s $easeInOutSine);
 
-  @include border-radius(25px);
+  background: white;
 }

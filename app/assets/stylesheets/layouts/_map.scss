@@ -6,10 +6,9 @@
 .layout-content {
   margin-bottom: 0;
   position: absolute;
-  top: 112px;
-  height: calc(100% -123px);
+  height: calc(100% - 34px);
   overflow: hidden;
-  bottom: 0;
+  top: 34px;
   left: 0;
   width: 100%;
 }
@@ -23,7 +22,9 @@
   border-top: 1px solid #717D80;
   border-bottom: 1px solid #717D80;
   box-sizing: border-box;
-  background: #B3D1FF;
+  background: #B3E2FF;
+
+  // Footer
   .gm-style{
     &:after{
       content: "";
@@ -106,27 +107,6 @@
   }
 }
 
-.user-story-marker {
-  border: 3px solid #fff;
-  border-radius: 100%;
-  width: 50px;
-  height: 50px;
-  overflow: hidden;
-  @include box-shadow(0 0 1px 0 #000);
-
-  img {
-    width: auto;
-    height: 100%;
-  }
-}
-
-.thumb-marker {
-  .icon-custom-marker {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-  }
-}
 
 .map-viewfinder {
   // @include home-icons-sprite(viewfinder);
@@ -139,6 +119,10 @@
   width: 19px;
   margin: -10px 0 0 -8px;
   pointer-events:none;
+  &.hide{
+    opacity: 0;
+    visibility: hidden;
+  }
 
 }
 
@@ -175,21 +159,3 @@
     display: none;
   }
 }
-
-.is-embed-action {
-  border-top: 0;
-  .layout-content {
-    top: 0;
-    .map-container {
-      bottom: 0;
-    }
-  }
-  .widget-timeline,
-  .widget-share,
-  .widget-analysis-tool,
-  .widget-threshold,
-  .widget-analysis-results .analysis-footer {
-    display: none !important;
-  }
-}
-

@@ -7,7 +7,7 @@ define([
   'd3',
   'uri',
   'abstract/layer/CanvasLayerClass',
-  'map/presenters/Forest2000LayerPresenter'
+  'map/presenters/layers/Forest2000LayerPresenter'
 ], function(d3,UriTemplate, CanvasLayerClass, Presenter) {
 
   'use strict';

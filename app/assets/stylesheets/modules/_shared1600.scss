@@ -1,3 +1,55 @@
+// Information icon
+.info-icon{
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #AAA;
+  svg{
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    fill: $white;
+  }
+
+  &:hover{
+    background-color: #777;
+  }
+  &.default{
+    background-color: #AAA;
+    svg{
+      fill: $white;
+    }
+    &:hover{
+      background-color: #777;
+    }
+  }
+  &.green{
+    background-color: $cGreen;
+    // box-shadow: 0 0 0 2px $white, 0 0 0 3px $cGreen;
+    svg{
+      fill: $white;
+    }
+    &:hover{
+      background-color: darken($cGreen,5%);
+    }
+  }
+  &.yellow{
+    background-color: #F3EE51;
+    svg{
+      fill: $dark;
+    }
+    &:hover{
+      background-color: darken(#F3EE51,5%);
+    }
+  }
+}
+
+
 // Spinner
 .spinner {
   position: absolute;
@@ -20,6 +72,8 @@
   }
 }
 
+
+// Tooltips
 .tooltip1{
   position: absolute;
   background: rgba($white,1);
@@ -53,6 +107,67 @@
     @include transform(translate(-50%,-50%) rotate(45deg));
     border-top: 1px solid lighten($border,5%);
     border-left: 1px solid lighten($border,5%);
+  }
+
+  &.dark{
+    background: rgba($dark,1);
+    color: $white;
+    &:after{
+      background: $dark;
+      border-top: none;
+      border-left: none;
+    }
+  }
+
+}
+
+.tooltipmap{
+  position: absolute;
+  background: #FFFEE2;
+  box-shadow: 0 1px 3px rgba($dark,0.25);
+  z-index: 1000;
+  margin: 0;
+  visibility: hidden;
+  opacity: 0;
+  text-transform: uppercase;
+  color: $dark;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: normal;
+  bottom: 100%;
+  left: 50%;
+  text-align: center;
+  padding: 4px 8px;
+  white-space: nowrap;
+  @include transform(translate(-50%,5px));
+  &:after{
+    content: "";
+    display: block;
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: #FFFEE2;
+    z-index: 2;
+    bottom: 0;
+    left: 50%;
+    @include transform(translate(-50%,50%) rotate(45deg));
+    border-width: 0 1px 1px 0;
+    border-color: transparent lighten($border,5%) lighten($border,5%) transparent;
+    border-style: solid;
+  }
+  &.bottom{
+    bottom: auto;
+    top: 100%;
+    @include transform(translate(-50%,0));
+    &:after{
+      top: 0;
+      bottom: auto;
+      left: 50%;
+      @include transform(translate(-50%,-50%) rotate(45deg));
+      border-width: 1px 0 0 1px;
+      border-color: lighten($border,5%) transparent transparent lighten($border,5%);
+      border-style: solid;
+    }
   }
 }
 
@@ -156,7 +271,7 @@
       text-align: center;
       display: block;
       // -webkit-font-smoothing: subpixel-antialiased;
-      text-rendering: optimizeLegibility;
+      // text-rendering: optimizeLegibility;
       text-transform: uppercase;
       &:hover {
         background: darken($white,2%);
@@ -287,4 +402,47 @@
     display: block;
   }
 
+}
+
+
+.scroll-light{
+  -webkit-overflow-scrolling: touch;
+  /* Let's get this party started */
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background: $dark;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0px;
+    background: rgba($light,0.8);
+  }
+}
+
+.scroll-dark{
+  -webkit-overflow-scrolling: touch;
+  /* Let's get this party started */
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background: $light;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    border-radius: 0px;
+    background: rgba($dark,0.8);
+  }
 }
