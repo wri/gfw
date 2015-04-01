@@ -154,6 +154,8 @@ define([
       var url = $(event.currentTarget).data('share-url');
       if (url !== undefined) {
         this.model.set('url', url)
+      }else{
+        this.model.set('url', window.location.href)
       }
 
       var embedUrl = $(event.currentTarget).data('share-embed-url');
