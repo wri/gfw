@@ -9,7 +9,7 @@
         text-transform: uppercase;
         text-align: center;
         font-size: 12px;
-        color: $dark;
+        color: #7F7F7F;
         cursor: pointer;
         &:hover{
           svg{
@@ -29,7 +29,7 @@
           cursor: default;
           &:hover{
             svg{
-              fill: $dark;
+              fill: #7F7F7F;
             }
           }
         }
@@ -38,10 +38,10 @@
           width: 25px;
           height: 25px;
           margin: 0 auto 7px;
-          fill: $dark;
+          fill: #7F7F7F;
           @media (min-width: 1500px){
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
           }
         }
       }
