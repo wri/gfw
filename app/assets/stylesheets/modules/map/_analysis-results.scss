@@ -71,6 +71,12 @@
         font-weight: normal;
         font-size: 9px;
         margin-left: 4px;
+        a{
+          color: $dark;
+          &:hover{
+            color: darken($dark,10%);
+          }
+        }
       }
     }
     .stats-count {
@@ -85,6 +91,10 @@
 
     .stats-notice {
       font-size: 12px;
+      background: $border;
+      border: 1px solid $dark;
+      padding: 8px;
+      text-align: center;
     }
 
     .download-links{

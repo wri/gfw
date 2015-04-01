@@ -6,6 +6,7 @@ require([
   'underscore',
   'Class',
   'backbone',
+  'chosen',
   'map/utils',
   'mps',
   'map/router',
@@ -13,24 +14,21 @@ require([
   'map/services/AnalysisService',
   'map/services/CountryService',
   'map/services/DataService',
-  'map/views/LayersNavView',
   'map/views/MapView',
+  'map/views/MapControlsView',
+  'map/views/TabsView',
+  'map/views/analysis/AnalysisResultsView',
+  'map/views/LayersNavView',
   'map/views/LegendView',
-  'map/views/ThresholdView',
-  'map/views/SearchboxView',
-  'map/views/MaptypeView',
   'map/views/TimelineView',
-  'map/views/AnalysisToolView',
-  'map/views/AnalysisResultsView',
-  'map/views/ShareView',
-  'map/views/ToggleWidgetsView',
   'views/HeaderView',
   'views/FooterView',
-  'views/DialogView',
+  'views/SourceWindowView',
+  'views/SourceMobileFriendlyView',
+  'views/NotificationsView',
   '_string'
-], function($, _, Class, Backbone, utils, mps, Router,ExperimentsPresenter, AnalysisService, CountryService, DataService,
-    LayersNavView, MapView, LegendView, ThresholdView, SearchboxView, MaptypeView, TimelineView,
-    AnalysisToolView, AnalysisResultsView, ShareView, ToggleWidgetsView,HeaderView, FooterView, DialogView) {
+], function($, _, Class, Backbone, chosen, utils, mps, Router, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
+    MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, HeaderView, FooterView, SourceWindowView, SourceMobileFriendlyView, NotificationsView) {
 
   'use strict';
 
@@ -39,8 +37,6 @@ require([
     $el: $('body'),
 
     init: function() {
-      _.bindAll(this, '_scrollBottom', '_setLogoPosition');
-
       var router = new Router(this);
       this._cartodbHack();
       this._initViews();
@@ -75,23 +71,17 @@ require([
 
       var mapView = new MapView();
 
+      new MapControlsView(mapView.map);
+      new TabsView(mapView.map);
+      new AnalysisResultsView();
       new LayersNavView();
       new LegendView();
-      new MaptypeView();
-      new SearchboxView();
-      new ThresholdView();
-      new AnalysisToolView(mapView.map);
       new TimelineView();
-      new AnalysisResultsView();
-      new ShareView();
       new FooterView();
       new HeaderView();
-      new DialogView();
-      new ToggleWidgetsView();
-
-      // TODO => This is temporary!!! We will use the refactored
-      // and awesome DialogView later.
-      window.infowindow();
+      new SourceWindowView();
+      new SourceMobileFriendlyView();
+      new NotificationsView();
     },
 
     /**
@@ -102,39 +92,6 @@ require([
         handlebars: typeof(Handlebars) === 'undefined' ? null : Handlebars.compile
       });
     },
-
-    setMapMode: function() {
-      this.$window = $(window);
-      this.$logo = this.$el.find('.brand');
-
-      this.$window.on('scroll', this._setLogoPosition);
-      this.$window.on('resize', this._scrollBottom);
-
-      _.debounce(this._scrollBottom, 100)();
-      _.debounce(this._scrollBottom, 1200)(); // for safety
-      this._setLogoPosition();
-    },
-
-    /**
-     * Scroll to bottom.
-     */
-    _scrollBottom: function() {
-      // this.$window.scrollTop(116);
-    },
-
-    /**
-     * Toggle layer class is-fixed.
-     *
-     * @param {object} e Window event
-     */
-    _setLogoPosition: function(e) {
-      var element = (e) ? e.currentTarget : window;
-      if (element.pageYOffset > 48) {
-        this.$logo.addClass('is-fixed');
-      } else {
-        this.$logo.removeClass('is-fixed');
-      }
-    }
 
   });
 

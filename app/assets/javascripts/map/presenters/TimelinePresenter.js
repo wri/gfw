@@ -15,7 +15,10 @@ define([
 
   var StatusModel = Backbone.Model.extend({
     defaults: {
-      timeline: null // the current timeline view instance
+      timeline: null, // the current timeline view instance
+      begin: null,
+      end: null,
+      baselayer: null
     }
   });
 
@@ -67,27 +70,34 @@ define([
      * @param {object} layerSpec
      */
     _handleNewLayers: function(baselayers, date) {
+      var date;
       var currentTimeline = this.status.get('timeline');
       var baselayer = _.values(_.omit(
         baselayers, ['forestgain','nothing']))[0];
 
-      if (currentTimeline) {
-        if (currentTimeline.getName() === baselayer) {
-          // Return if the timeline is already active.
-          return;
-        }
-        // Remove current timeline.
-        this._removeTimeline();
-      }
-
       if (!baselayer) {
+        date = undefined;
         this._timelineDisabled();
         return;
       }
 
+      if (currentTimeline) {
+        if (currentTimeline.getName() === baselayer.slug) {
+
+          date = [this.status.get('begin') , this.status.get('end')];
+          // Return if the timeline is already active.
+          return;
+        }
+        // Remove current timeline.
+        date = date;
+        this._removeTimeline();
+      }
+
+
       if (!currentTimeline && baselayer) {
         this._timelineEnabled(baselayer.slug);
       }
+      // var date = this.setDate(date);
 
       this._addTimeline(baselayer, date);
     },
@@ -127,6 +137,9 @@ define([
 
       timeline.remove();
       this.status.set('timeline', null);
+      // this.status.set('begin', null);
+      // this.status.set('end', null);
+
       this.view.model.set('hidden', true);
     },
 
@@ -155,6 +168,9 @@ define([
 
       p.begin = date[0];
       p.end = date[1];
+
+      this.status.set('begin', p.begin);
+      this.status.set('end', p.end);
 
       return p;
     }

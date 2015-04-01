@@ -1,17 +1,19 @@
 .widget-timeline .timeline-btn {
-
+  >svg{
+    width: auto;
+  }
   .tick {
     rect {
       cursor: pointer;
-      fill: white;
-      stroke: #999;
-      shape-rendering: crispEdges;
+      fill: #EEEEEE;
+      stroke: #DDDDDD;
+      // shape-rendering: crispEdges;
     }
 
     text {
       pointer-events: none;
       font-size: 11px;
-      fill: #666;
+      fill: $dark;
       text-transform: uppercase;
     }
 

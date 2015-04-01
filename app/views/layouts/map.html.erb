@@ -20,12 +20,14 @@
 
     <meta name="google-translate-customization" content="af2414ea962843fc-f48b15cdb6a3ab9b-gd8c738d3a7ff42de-1a">
     <meta name="google-site-verification" content="xx82D6cZ40Hvf-TT9jkhfsVi11yIeShPcK0zcc7m7ak" />
-    <%= favicon_link_tag 'favicon.ico' %>
-
+    <%= render 'shared/icons' %>
     <%= stylesheet_link_tag "http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css", :media => 'all' %>
     <%= stylesheet_link_tag "map", :media => "all" %>
     <%= csrf_meta_tags %>
-
+    <script>
+        var gfw = window.gfw = {};
+        window.gfw.config = { GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>" };
+    </script>
 
   </head>
 
@@ -33,11 +35,15 @@
 
     <%= yield %>
     <a class="feedback-link" href="/getinvolved/provide-feedback"><span>Feedback</span></a>
+
     <div class="backdrop"></div>
+
+    <%= render 'shared/modal' %>
+    <%= render 'shared/notifications' %>
 
     <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA" %>
     <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js" %>
-    <script src="//www.google-analytics.com/cx/api.js?experiment=qanpNJy9SkSuwnvARDnfSg"></script>
+    <script src="//www.google-analytics.com/cx/api.js?experiment=CvfCbC66T1qOqNoS0bt4JA"></script>
     <%= requirejs_include_tag "map" %>
     <%= render "shared/js_footer" %>
   </body>

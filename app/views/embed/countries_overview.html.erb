@@ -1,3 +1,4 @@
+<%= render 'shared/svg_icons_countries' %>
 <% content_for :css do %>
   <%= stylesheet_link_tag "countries" %>
 
@@ -11,8 +12,7 @@
   </style>
 <% end %>
 
-<% content_for :js do %>
-  <%= javascript_include_tag "countries" %>
-<% end %>
+<div id="countryOverviewView">
+  <%= render 'shared/overview' %>
+</div>
 
-<%= render 'shared/overview' %>

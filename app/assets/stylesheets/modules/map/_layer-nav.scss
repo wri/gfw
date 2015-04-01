@@ -4,10 +4,17 @@ $forest-use-color: rgb(201, 142, 108);
 $conservation-color: rgb(49, 130, 189);
 $people-color: rgb(112, 125, 146);
 $stories-color: rgb(242, 178, 87);
+$country-color: rgb(207, 127, 236);
+
+
+$categories: 'forest-change','forest-cover','forest-use','conservation','people','stories','country';
+$colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservation-color,$people-color,$stories-color,$country-color;
+
 
 .layers-menu {
-  height: 77px;
+  // height: 77px;
   position: relative;
+  @include clearfix();
 
   .inner {
     height: 100%;
@@ -15,47 +22,142 @@ $stories-color: rgb(242, 178, 87);
   }
 
   .categories-list {
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    position: relative;
+    display: inline-block;
+    float: right;
+    // bottom: 0;
+    // right: 0;
+    @media (min-width: 1500px){
+      float: left;
+      left: 50%;
+      @include transform(translate(-50%,0));
+      text-rendering: optimizeLegibility;
+    }
   }
 
   .categories-list > li {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
     position: relative;
-    height: 100%;
     float: left;
-    display: inline-block;
-    padding: 14px 12px;
+    padding: 17px 20px 12px;
     cursor: pointer;
-    border-bottom: 4px solid;
+    border-bottom: 5px solid;
     margin-left: 1px;
+    color: $dark;
+    // text-rendering: optimizeLegibility;
 
     .category-name {
-      // font-weight: 500;
+      font-weight: 500;
       font-size: 12px;
-      letter-spacing: 0.05rem;
+      text-transform: uppercase;
+    }
+    > .category-name{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 150px;
+      display: block;
+    }
+    &.country-close{
+      padding: 0;
+      border-bottom: none;
+      width: 40px;
+      min-height: 1px;
+
+      &.disabled{
+        opacity: 0.25;
+      }
+      &.active{
+        opacity: 1;
+      }
+      .close{
+        position: absolute;
+        top: 0%;
+        left: -1px;
+        height: 46px;
+        width: 40px;
+        border-radius: 0;
+        padding: 0;
+        background: #A300D9;
+        @include transition(all,0,linear);
+        border-bottom: 5px solid $country-color;
+        &:hover {
+          background: $white;
+          border-bottom: 5px solid $country-color;
+          span{
+            box-shadow: 0 0 0 2px #FF4848;
+            svg{
+              fill: #FF4848;
+            }
+          }
+        }
+        span{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 14px;
+          height: 14px;
+          text-align: center;
+          font-family: Arial;
+          font-weight: 700;
+          color: $white;
+          box-shadow: 0 0 0 2px $white;
+          border-radius: 50%;
+          @include transform(translate(-50%, -50%));
+          svg{
+            fill: $white;
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            @include transform(translate(-50%,-50%));
+            @include transition(all,0,linear);
+          }
+        }
+      }
     }
 
-    &:hover .layers-nav {
+    &.country{
+      background: #A300D9;
+      color: $white;
+      &.disabled{
+        opacity: 0.25;
+      }
+      &.active{
+        opacity: 1;
+      }
+    }
+
+    &:not(.disabled):hover .layers-nav {
       opacity: 1;
       max-height: 1000px;
     }
-  }
 
-  .categories-list > li {
-    &.forest-change .category-icon  { @include home-icons-sprite(icon_forest_clearing); }
-    &.forest-cover  .category-icon  { @include home-icons-sprite(icon_forest_cover); }
-    &.forest-use    .category-icon  { @include home-icons-sprite(icon_forest_use); }
-    &.conservation  .category-icon  { @include home-icons-sprite(icon_conservation); }
-    &.people        .category-icon  { @include home-icons-sprite(icon_regrowth); }
-    &.stories       .category-icon  { @include home-icons-sprite(marker_exclamation); }
 
-    &.forest-change { color: $forest-change-color; border-color: $forest-change-color; }
-    &.forest-cover { color: $forest-cover-color; border-color: $forest-cover-color; }
-    &.forest-use { color: $forest-use-color; border-color: $forest-use-color; }
-    &.conservation { color: $conservation-color; border-color: $conservation-color; }
-    &.people { color: $people-color; border-color: $people-color; }
-    &.stories { color: $stories-color; border-color: $stories-color; }
+    @for $i from 1 through length($categories) {
+      &.#{nth($categories, $i)}{
+        border-color: nth($colors, $i);
+        .layers-nav-header{
+          // background: lighten(nth($colors, $i),10%);
+          border-color: nth($colors, $i);
+          .category-name{
+            color: nth($colors, $i);
+          }
+          .category-icon  {
+            background: nth($colors, $i);
+            // @include home-icons-sprite(nth($icons, $i));
+          }
+        }
+        .layers-list li{
+          &:hover {
+            background-color: rgba(nth($colors, $i), 0.1);
+          }
+        }
+      }
+    }
   }
 
   .layers-nav {
@@ -63,122 +165,180 @@ $stories-color: rgb(242, 178, 87);
     position: absolute;
     z-index: 2000;
     left: 50%;
-    top: -29px;
-    width: 170px;
-    margin-left: -85px;
+    top: 0px;
+    width: 200px;
+    margin-left: -100px;
     max-height: 0;
     background: white;
     overflow: hidden;
     opacity: 0;
-    @include box-shadow(0px 0px 5px 1px rgba(#000, .15));
+    @include box-shadow(0px 2px 3px 1px rgba(#000, .15));
     @include transition(all .2s ease);
 
     .layers-nav-header {
-      height: 82px;
       border-bottom: 4px solid;
       text-align: center;
 
       .category-icon {
+        position: relative;
         display: inline-block;
         margin: auto;
-        width: 16px;
-        height: 16px;
-        margin-top: 18px;
+        width: 28px;
+        height: 28px;
+        margin-top: 10px;
+        border-radius: 50%;
+        svg{
+          width: 100%;
+          height: 100%;
+          fill: $white;
+          position: absolute;
+          margin: auto;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+        }
       }
 
       .category-name {
         display: block;
-        padding: 10px 0;
+        padding: 5px 0 15px 0;
         margin-top: 1px;
       }
     }
 
-    .layers-list > li {
+  } // layers-nav
+
+}
+
+.layers-list {
+  .layer-group{
+    border-top: 1px solid #e5e5e5;
+    &:first-child{ border: none; }
+    .group-name{
       font-size: 13px;
-      color: #c3c3c3;
-      padding: 9px 10px 10px;
-      border-bottom: 1px solid #e5e5e5;
-      cursor: pointer;
-      position: relative;
-      @include transition(all .2s ease);
-
-      &.is-disabled {
-        pointer-events: none;
-        background: #f9f9f9;
-        .layer-title {
-          padding-left: 23px;
-        }
-      }
-
-      &:hover {
-        background-color: #f9f9f9;
-      }
-
-      .layer-title {
-        width: 115px;
-        display: inline-flex;
-        .source {
-          display: block;
-          position: absolute;
-          top: 13px;
-          right: 10px;
-          width: 10px;
-          height: 10px;
-          @include home-icons-sprite(information);
-          background: image-url('home-icons/information.png');
-          &.info2{
-            background: image-url('home-icons/information2.png');
-            // background: #F00;
-          }
-          &.hidden {
-            display: none;
-          }
-        }
-      }
-
-      .layer-info {
+      padding: 10px;
+      display: block;
+      text-transform: uppercase;
+      font-weight: 500;
+      em{
+        display: block;
         font-size: 11px;
         margin-top: 3px;
-        padding: 0 8px 0 23px;
+        color: #AAA;
+        text-transform: none;
+        font-weight: 400;
+      }
+    }
+    >li{
+      border: none;
+      padding: 10px;
+    }
+  }
+  li {
+    font-size: 13px;
+    color: $dark;
+    padding: 10px;
+    border-bottom: 1px solid #e5e5e5;
+    cursor: pointer;
+    position: relative;
+    @include transition(all .2s ease);
+
+    &.is-disabled {
+      pointer-events: none;
+      background: #f9f9f9;
+      .layer-title {
+        padding-left: 23px;
+      }
+    }
+
+    .layer-title {
+      width: 115px;
+      display: inline-flex;
+      .source {
+        @extend .info-icon;
         display: block;
-        label {
-          float: none;
-          font-weight: normal;
-          color: #CCC;
-          font-size: 11px;
-          margin: 5px 0px;
-          display: inline-block;
-          width: 45px;
-          &.selected {
-            color: $dark;
-          }
-          input {
-            cursor: pointer;
-            background-image: url('/assets/svg/dragger.svg');
-            @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-              background-image: none;
-            }
-          }
+        position: absolute;
+        top: 8px;
+        right: 10px;
+        &.hidden {
+          display: none;
         }
       }
+    }
 
-      .onoffradio {
-        margin: 0 7px 0 2px;
-
-        &.checked {
-          border-color: $forest-change-color;
+    .layer-info {
+      font-size: 11px;
+      margin-top: 3px;
+      padding: 0 8px 0 23px;
+      display: block;
+      color: #AAA;
+      label {
+        position: relative;
+        float: none;
+        font-weight: normal;
+        color: #AAA;
+        font-size: 11px;
+        margin: 5px 5px 5px 0px;
+        padding-left: 13px;
+        text-transform: none;
+        display: inline-block;
+        &.selected {
+          color: $dark;
+          text-shadow: 0px 0px 0px #999;
+          span:before{
+            display: block;
+          }
         }
+        span{
+          display: block;
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          top: -1px;
+          left: 0;
+          border: 1px solid lighten($dark,10%);
+          border-radius: 50%;
+          &:before {
+            content: ' ';
+            display: none;
+            width: 4px;
+            height: 4px;
+            background-color: lighten($dark,10%);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -2px 0 0 -2px;
+            border-radius: 50%;
+          }
+        }
+        input {
+          display: none;
+          cursor: pointer;
+          background-image: url('/assets/svg/dragger.svg');
+          @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+            background-image: none;
+          }
+        }
+        &.c_f_peru {
+          width: 130px;
+        }
+      }
+    }
 
-        &.checked span {
+    .onoffradio {
+      margin: 0 7px 0 2px;
+      &.checked {
+        border-color: $forest-change-color;
+        span {
           background: $forest-change-color;
         }
       }
-
-      .onoffswitch {
-        margin: 2px 6px 0 0;
-      }
-
     }
 
-  } // layers-nav
+    .onoffswitch {
+      margin: 2px 6px 0 0;
+    }
+
+  }
 }

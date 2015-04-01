@@ -352,6 +352,9 @@
   &.selected {
     display: block;
   }
+  &.center{
+    text-align: center;
+  }
   &.start{
     &:before{
       opacity: 1;
@@ -600,6 +603,12 @@
         .bullets {
           list-style-type: disc;
           color: $dark;
+          &.center{
+            list-style-type: none;
+            >li{
+              margin-left: 0;
+            }
+          }
           >li {
             padding: 10px 0 0;
             font-size: 14px;
@@ -658,223 +667,18 @@
       }
     }
     .logo-list {
-      margin: 0 0 20px;
-      @include clearfix();
-      @media (min-width: $br-mobile) {
-        margin: 0;
-      }
-
+      margin: 0 auto 40px;
+      max-width: 750px;
+      @include display-flex();
+      @include flex-wrap(wrap);
+      @include justify-content(center);
       >li {
         display: inline-block;
         width: 50%;
-        float: left;
         height: 60px;
         margin: 25px 0 0;
         @media (min-width: $br-mobile) {
           width: 33%;
-        }
-
-        a {
-          display: block;
-          margin: 0 auto;
-          width: 88px;
-          position: relative;
-          top: 50%;
-          color: $dark;
-          text-transform: uppercase;
-          @include transform(translate(0,-50%));
-          &.app{
-            width: auto;
-            white-space: nowrap;
-            text-align: center;
-
-            .icon{
-              width: 60px;
-              height: 60px;
-              margin: 0 auto 10px;
-              fill: $dark;
-            }
-          }
-
-          &.wri {
-            height: 32px; width: 95px; @include logos-sprite(wri);
-            &:hover{
-              @include logos-sprite(wrihover);
-            }
-          }
-          &.google {
-            height: 29px; width: 85px; @include logos-sprite(google);
-            &:hover{
-              @include logos-sprite(googlehover);
-            }
-          }
-          &.esri {
-            height: 33px; width: 87px; @include logos-sprite(esri);
-            &:hover{
-              @include logos-sprite(esrihover);
-            }
-          }
-          &.universitymaryland {
-            height: 51px; width: 56px; @include logos-sprite(universityofmaryland);
-            &:hover{
-              @include logos-sprite(universityofmarylandhover);
-            }
-          }
-          &.unep {
-            height: 57px; width: 49px; @include logos-sprite(unep);
-            &:hover{
-              @include logos-sprite(unephover);
-            }
-          }
-          &.imazon {
-            height: 24px; width: 79px; @include logos-sprite(imazon);
-            &:hover{
-              @include logos-sprite(imazonhover);
-            }
-          }
-          &.cfgd {
-            height: 40px; width: 84px; @include logos-sprite(centerforglobaldevelopment);
-            &:hover{
-              @include logos-sprite(centerforglobaldevelopmenthover);
-            }
-          }
-          &.osfac {
-            height: 56px; width: 44px; @include logos-sprite(osfac);
-            &:hover{
-              @include logos-sprite(osfachover);
-            }
-          }
-          &.gfwca {
-            height: 44px; width: 42px; @include logos-sprite(globalforestwatchcanada);
-            &:hover{
-              @include logos-sprite(globalforestwatchcanadahover);
-            }
-          }
-          &.scanex {
-            height: 20px; width: 110px; @include logos-sprite(scannex);
-            &:hover{
-              @include logos-sprite(scannexhover);
-            }
-          }
-          &.twrus {
-            height: 28px; width: 110px; @include logos-sprite(tipos);
-            &:hover{
-              @include logos-sprite(tiposhover);
-            }
-          }
-          &.norwegian {
-            height: 46px; width: 110px; @include logos-sprite(norwegianministri);
-            &:hover{
-              @include logos-sprite(norwegianministrihover);
-            }
-          }
-          &.usaid {
-            height: 64px; width: 80px; @include logos-sprite(usaid);
-            &:hover{
-              @include logos-sprite(usaidhover);
-            }
-          }
-          &.gef {
-            height: 59px; width: 51px; @include logos-sprite(gef);
-            &:hover{
-              @include logos-sprite(gefhover);
-            }
-          }
-          &.ukaid {
-            height: 47px; width: 43px; @include logos-sprite(ukaid);
-            &:hover{
-              @include logos-sprite(ukaidhover);
-            }
-          }
-          &.tilia {
-            height: 25px; width: 67px; @include logos-sprite(thetiliafund);
-            &:hover{
-              @include logos-sprite(thetiliafundhover);
-            }
-          }
-          &.goodall {
-            height: 26px; width: 110px; @include logos-sprite(thejanegoodallinstitute);
-            &:hover{
-              @include logos-sprite(thejanegoodallinstitutehover);
-            }
-          }
-          &.cartodb {
-            height: 39px; width: 110px; @include logos-sprite(cartodb);
-            &:hover{
-              @include logos-sprite(cartodbhover);
-            }
-          }
-          &.vizzuality {
-            height: 58px; width: 109px; @include logos-sprite(vizzuality);
-            &:hover{
-              @include logos-sprite(vizzualityhover);
-            }
-          }
-          &.blueraster {
-            height: 48px; width: 110px; @include logos-sprite(blueraster);
-            &:hover{
-              @include logos-sprite(bluerasterhover);
-            }
-          }
-          &.sida {
-            height: 55px; width: 110px; @include logos-sprite(sida);
-            &:hover{
-              @include logos-sprite(sidahover);
-            }
-          }
-          &.danida {
-            height: 15px; width: 82px; @include logos-sprite(danida);
-            &:hover{
-              @include logos-sprite(danidahover);
-            }
-          }
-          &.cgiar {
-            height: 43px; width: 124px; @include logos-sprite(cgiar);
-            &:hover{
-              @include logos-sprite(cgiarhover);
-            }
-          }
-          &.dutchforeign {
-            height: 80px; width: 106px; @include logos-sprite(ministryofforeignaffairs);
-            &:hover{
-              @include logos-sprite(ministryofforeignaffairshover);
-            }
-          }
-          &.moore {
-            height: 37px; width: 96px; @include logos-sprite(moore);
-            &:hover{
-              @include logos-sprite(moorehover);
-            }
-          }
-
-          &.bnpb {
-            height: 64px; width: 50px; @include logos-sprite(bnpb);
-            &:hover{
-              @include logos-sprite(bnpbhover);
-            }
-          }
-          &.redd {
-            height: 62px; width: 95px; @include logos-sprite(redd);
-            &:hover{
-              @include logos-sprite(reddhover);
-            }
-          }
-          &.digitalglobe{
-            height: 38px; width: 120px; @include logos-sprite(digitalglobe);
-            &:hover{
-              @include logos-sprite(digitalglobehover);
-            }
-          }
-
-          &.bobolink {
-            height: 53px; width: 105px; @include logos-sprite(bobolink);
-          }
-          &.vizzuality-big {
-            height: 58px; width: 109px; @include logos-sprite(vizzuality);
-            &:hover{
-              @include logos-sprite(vizzualityhover);
-            }
-          }
         }
       }
     }
@@ -1189,7 +993,7 @@
         background: $white;
         visibility: hidden;
         opacity: 0;
-        @include transition(all,0.5s,linear);
+        @include transition(all,0.25s,linear);
         .additional-info{
           color: $dark;
           width: 80%;
@@ -1411,7 +1215,7 @@
       display: none;
       p, .bullets {
         font-size: 13px;
-        a{
+        a:not(.btn){
           text-decoration: none;
           color: $cGreen;
         }
@@ -1480,7 +1284,7 @@
       &:last-child {
         margin-bottom: 0;
       }
-      a{
+      a:not(.btn){
         color: $cGreen;
         text-decoration: none;
         &:hover{

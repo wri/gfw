@@ -24,19 +24,22 @@ define([
       'imazon_cover',
       'forma_cover',
       'terraicanvas_cover_cover',
-      'ifl_2000',
-      'ifl_2013_deg',
-      'pantropical',
-      'idn_primary',
       'logging',
       'mining',
       'oil_palm',
       'wood_fiber_plantations',
-      'protected_areas',
+      'protected_areasCDB',
       'biodiversity_hotspots',
       'resource_rights',
       'land_rights',
-      'forest2000'
+      'ifl_2000',
+      'ifl_2013_deg',
+      'idn_primary',
+      'colombia_forest_change',
+      'mangrove',
+      'pantropical',
+      'forest2000',
+      'grump2000',
     ],
 
     categoryOrder: [
@@ -57,9 +60,9 @@ define([
     positionizer: function(layers) {
       var layerOrder = _.intersection(this.layerOrder, _.pluck(layers, 'slug'));
 
-      _.each(layerOrder, function(slug, i) {
-        layers[slug].position = i;
-      });
+      _.each(layerOrder, _.bind(function(slug, i) {
+        layers[slug].position = this.layerOrder.indexOf(slug);
+      }, this ));
 
       return layers;
     },

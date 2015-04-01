@@ -16,6 +16,8 @@ define([], function() {
     ejn_stories: {
       title: 'EJN STORIES',
       description: 'View geo-tagged journalism from InfoAmazonia and other EJN platforms on the GFW Interactive Map.',
+      link: '/map/3/15.00/27.00/ALL/grayscale/loss,forestgain/606',
+      button_text: 'View map',
     },
     explore_the_map: {
       title: 'GFW Interactive Map',

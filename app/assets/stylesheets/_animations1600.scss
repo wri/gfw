@@ -17,7 +17,7 @@
 }
 
 
-// LOADER
+// UPDOWN
 @-webkit-keyframes updown {
   0%{ @include transform(translate(0%,0%));}
   25%{ @include transform(translate(0%,-50%));}
@@ -45,4 +45,28 @@
   50%{ @include transform(translate(0%,0%));}
   75%{ @include transform(translate(0%,50%));}
   100%{ @include transform(translate(0%,0%));}
+}
+
+
+
+// PULSE
+@-webkit-keyframes pulse_animation {
+  0% { @include transform(scale(1)); }
+  50% { @include transform(scale(1.5)); }
+  100% { @include transform(scale(1)); }
+}
+@-moz-keyframes pulse_animation {
+  0% { @include transform(scale(1)); }
+  50% { @include transform(scale(1.5)); }
+  100% { @include transform(scale(1)); }
+}
+@-ms-keyframes pulse_animation {
+  0% { @include transform(scale(1)); }
+  50% { @include transform(scale(1.5)); }
+  100% { @include transform(scale(1)); }
+}
+@keyframes pulse_animation {
+  0% { @include transform(scale(1)); }
+  50% { @include transform(scale(1.5)); }
+  100% { @include transform(scale(1)); }
 }

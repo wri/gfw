@@ -47,15 +47,13 @@ define([
     }, {
       'AnalysisTool/stop-drawing': function() {
         this.view.model.set({
-          hidden: false,
-          forceHidden: false
+          hidden: false
         });
       }
     }, {
       'AnalysisTool/start-drawing': function() {
         this.view.model.set({
-          hidden: true,
-          forceHidden: true
+          hidden: true
         });
       }
     }, {
@@ -98,6 +96,10 @@ define([
           mps.publish('LayerNav/change', [layerSpec]);
           mps.publish('Place/update', [{go: false}]);
         }, this));
+    },
+
+    showCanopy: function(){
+      mps.publish('ThresholdControls/toggle');
     },
 
     initExperiment: function(id){

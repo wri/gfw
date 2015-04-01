@@ -5,31 +5,39 @@ define([
   'jquery',
   'backbone',
   'underscore',
-  'mps'
-], function($,Backbone, _,mps) {
+  'mps',
+  'presenters/SourceWindowPresenter',
+], function($,Backbone, _,mps, Presenter) {
 
-  'use strict'; 
+  'use strict';
 
   var SourceWindowModel = Backbone.Model.extend({
     defaults: {
-      hidden: true
+      hidden: true,
     }
   });
 
   var SourceWindowView = Backbone.View.extend({
-    
-    el: '#source-window-modal',
+
+    el: 'body',
 
     events: {
+      'click .source' : 'show',
       'click .close': 'hide'
     },
 
     initialize: function() {
       // Model
+      this.presenter = new Presenter(this);
       this.model = new SourceWindowModel();
-      
+
       // Cache
+      this.$htmlbody = $('html, body');
+      this.$window = $(window);
+      this.$document = $(document);
+      this.$sourceWindow = $('#window');
       this.$backdrop = $('#backdrop');
+      this.mobile = (this.$window.width() > 850) ? false : true;
 
       // Init
       this.render();
@@ -37,8 +45,14 @@ define([
     },
 
     _initBindings: function() {
+      this.mobile = (this.$window.width() > 850) ? false : true;
+      this.scrollTop = this.$document.scrollTop();
+      if(this.mobile) {
+        this.$htmlbody.addClass('active');
+        this.$htmlbody.animate({ scrollTop: this.scrollTop },0);
+      }
       // document keyup
-      $(document).on('keyup', _.bind(function(e) {
+      this.$document.on('keyup', _.bind(function(e) {
         if (e.keyCode === 27) {
           this.hide();
         }
@@ -50,18 +64,22 @@ define([
     },
 
     _stopBindings: function() {
-      $(document).off('keyup');
+      if(this.mobile) {
+        this.$htmlbody.removeClass('active');
+        this.$htmlbody.animate({ scrollTop: this.scrollTop },0);
+      }
+      this.$document.off('keyup');
       this.$backdrop.off('click');
     },
 
     _toggle: function() {
       if (this.model.get('hidden') === true) {
         this._stopBindings();
-        this.$el.removeClass('active');
+        this.$sourceWindow.removeClass('active iframe');
         this.$backdrop.removeClass('active');
       } else if (this.model.get('hidden') === false) {
         this._initBindings();
-        this.$el.addClass('active');
+        this.$sourceWindow.addClass('active');
         this.$backdrop.addClass('active');
       }
     },
@@ -72,18 +90,34 @@ define([
       return this;
     },
 
-    show: function(data_slug, data_coverage) {
+    show: function(e) {
+      e && e.preventDefault() && e.stopPropagation();
       this.model.set('hidden', false);
+      this.$contentWrapper.animate({ scrollTop: 0 }, 0);
+      var data_slug = $(e.currentTarget).data('source');
+      var data_iframe = $(e.currentTarget).data('iframe');
+      (data_iframe) ? this.$sourceWindow.addClass('iframe') : this.$sourceWindow.removeClass('iframe');
       this.$content.html($('#' + data_slug).clone());
+      return this;
+    },
 
+    showByParam: function(data_slug,link){
+      this.model.set('hidden', false);
+      var $clone = $('#' + data_slug).clone();
+      this.$content.html($clone);
+      if (link) {
+        $clone.find('.set-link').attr('href',link);
+      }
       return this;
     },
 
     render: function() {
-      this.$content = this.$el.find('.content');
-      this.$close = this.$el.find('.close');
-      return this.$el;
-    }
+      this.$content = this.$sourceWindow.find('.content');
+      this.$contentWrapper = this.$sourceWindow.find('.content-wrapper');
+      this.$close = this.$sourceWindow.find('.close');
+      return this.$sourceWindow;
+    },
+
   });
   return SourceWindowView;
 });

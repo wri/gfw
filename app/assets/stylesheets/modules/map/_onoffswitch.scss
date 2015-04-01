@@ -1,5 +1,5 @@
 .onoffswitch {
-  z-index: 999;
+  z-index: 10;
   display: inline-block;
   position: relative;
   float: left;
@@ -9,7 +9,7 @@
   @include border-radius(5px);
 
   &.checked span {
-    left: 9px;
+    @include transform(translate(7px,0%));
   }
 }
 
@@ -20,5 +20,7 @@
   width: 6px;
   height: 6px;
   background: #fff;
+  @include transform(translate(0px,0%));
   @include border-radius(4px);
+  @include transition(all 0.2s $easeInOutSine);
 }
