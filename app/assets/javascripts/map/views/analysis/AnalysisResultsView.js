@@ -60,7 +60,8 @@ define([
      */
     renderAnalysis: function(params) {
       this.params = params;
-      this.$el.html(this.template(params)).removeClass('hidden');
+      this.params.url = this.setDownloadLink(params.layer.slug);
+      this.$el.html(this.template(this.params)).removeClass('hidden');
       this._cacheSelector();
       this.$resultsHide.addClass('hidden');
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + this.params.layer.title);
@@ -117,6 +118,20 @@ define([
     _showCanopy: function(e){
       e && e.preventDefault();
       this.presenter.showCanopy();
+    },
+
+    setDownloadLink: function(layer){
+      var links = {
+        'loss' : 'http://data.globalforestwatch.org/datasets/93ecbfa0542c42fdaa8454fa42a6cc27',
+        'forestgain' : 'http://data.globalforestwatch.org/datasets/6c9f379a362e4926ad24b58444f4ba67',
+        'forma' : 'http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64',
+        'terrailoss' : 'http://www.terra-i.org/terra-i/data.html',
+        'imazon' : 'http://www.imazongeo.org.br/doc/downloads.php',
+        'fires' : 'https://earthdata.nasa.gov/data/near-real-time-data/firms',
+        'modis' : 'http://geo.arc.nasa.gov/sge/casa/latest.html'
+
+      }
+      return links[layer];
     }
 
 
