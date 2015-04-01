@@ -144,12 +144,17 @@
       position: absolute;
       top: 0;
       left: 0;
-      width: calc(100% + 40px);
-      height: calc(100% + 20px);
-      margin: 0 0 0 -20px;
+      width: calc(100% + 30px);
+      height: calc(100% + 15px);
+      margin: 0 0 0 -15px;
       z-index: 2;
       background: rgba(#000, 0.75);
       cursor: pointer;
+      @media (min-width: 1500px){
+        width: calc(100% + 40px);
+        height: calc(100% + 20px);
+        margin: 0 0 0 -20px;
+      }
 
       &:hover{
         &:before{
