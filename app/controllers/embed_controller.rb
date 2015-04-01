@@ -22,7 +22,6 @@ class EmbedController < ApplicationController
   private
     def find_by_iso(iso)
       iso = iso.downcase
-
       response = Typhoeus.get("#{ENV['GFW_API_HOST']}/countries", params: { iso: iso }, headers: {"Accept" => "application/json"})
 
       if response.success?

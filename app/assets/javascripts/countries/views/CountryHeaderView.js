@@ -396,13 +396,12 @@ define([
               $link_target[1] = $link_target[0] .attr('href');
 
           if (!!$link_target[1]) {
-
-          if (isNaN($link_target[1].slice(-2))) {
-            $link_target[1] = $link_target[1] + canopy;
-          } else {
-            $link_target[1] = $link_target[1].substring(0, $link_target[1].length - 2) + canopy;
-          }
-          $link_target[0].attr('href', $link_target[1]);
+            if (isNaN($link_target[1].slice(-2))) {
+              $link_target[1] = $link_target[1] + canopy;
+            } else {
+              $link_target[1] = $link_target[1].substring(0, $link_target[1].length - 2) + canopy;
+            }
+            $link_target[0].attr('href', $link_target[1]);
           }
         },
         error: function(status, error) {
