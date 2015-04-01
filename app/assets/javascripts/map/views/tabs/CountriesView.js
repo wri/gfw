@@ -120,6 +120,15 @@ define([
     renderIsoLayer: function(layersToRender){
       this.$layers.html(this.templateIso({ layers: layersToRender }));
       this.$layers.find('.layers-list').html($('#country-layers .layers-list').html())
+      this._selectSubIsoLayer();
+    },
+
+    _selectSubIsoLayer: function() {
+      var parentSelected = this.$layers.find('.layer:first').hasClass('selected');
+      var subLayersSelected = this.$layers.find('.wrapped.selected').length > 0;
+      if (!subLayersSelected && parentSelected) {
+        this.$layers.find('.wrapped:first').click();
+      }
     },
 
     toggleLayer: function(event) {
