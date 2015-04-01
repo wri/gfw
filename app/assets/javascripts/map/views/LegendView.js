@@ -132,11 +132,20 @@ define([
       categoriesGlobal = this.statusCategories(_.groupBy(layersGlobal, function(layer){ return layer.category_slug }));
       categoriesIso = this.statusCategories(_.groupBy(layersIso, function(layer){ return layer.category_slug }));
 
+      if (iso) {
+        var country = _.find(amplify.store('countries'), _.bind(function(country){
+          return country.iso === iso;
+        }, this ));
+      }
+      var name = (country) ? country.name : iso;
+
+
       var html = this.template({
         categories: categoriesGlobal,
         categoriesIso: categoriesIso,
         layersLength: layersLength,
-        iso: iso
+        iso: iso,
+        name: name
       });
 
       this.render(html);
