@@ -98,6 +98,13 @@
         width: 100%;
         margin-top: 0.1em;
         margin-bottom: 0.2em;
+
+        max-width: 515px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+
         .embed & {
           max-width: 100%;
           font-size: 32px;
@@ -176,6 +183,14 @@
       .country-indepth__bubble {
         display: inline-block;
         margin: 4px 0 0 15px;
+
+        a {
+          max-width: 190px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: block;
+        }
       }
     } // country-title
 
@@ -1975,9 +1990,17 @@
       .country-title {
         padding: 20px 11px;
 
+        h1 {
+          white-space: normal;
+        }
+
         .country-indepth__bubble {
           width: 100%;
           margin: 15px 0 0;
+
+          a {
+            max-width: 100%;
+          }
         }
 
         .country-selector {
