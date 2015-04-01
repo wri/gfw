@@ -18,7 +18,16 @@ define([
       type: 'link',
       url: window.location.href,
       embedUrl: window.location.href,
+    },
+    setEmbedUrl: function(){
+      if($('body').hasClass('is-countries-page')){
+        this.embedUrl = window.location.origin + '/embed' + window.location.pathname + window.location.search;
+      }else{
+        this.embedUrl = window.location.href;
+      }
+      return this.embedUrl;
     }
+
   });
 
   var ShareView = Backbone.View.extend({

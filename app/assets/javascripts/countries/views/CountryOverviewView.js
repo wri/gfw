@@ -8,10 +8,11 @@ define([
   'd3',
   'mps',
   'views/SourceWindowView',
+  'views/ShareView',
   'countries/views/CountryHeaderView',
   'countries/helpers/CountryHelper'
 
-], function($, Backbone, _, d3, mps, SourceWindowView, CountryHeaderView, CountryHelper) {
+], function($, Backbone, _, d3, mps, SourceWindowView, ShareView, CountryHeaderView, CountryHelper) {
 
   'use strict';
 
@@ -33,6 +34,7 @@ define([
       'click .info' : 'showInfo',
       'click .graph_tab': '_updateGraph',
       'click .show-more-countries': '_drawList',
+      'click .share-link': '_openShareModal'
     },
 
     initialize: function() {
@@ -86,6 +88,10 @@ define([
         this._updateGraphOverview();
       }, this ));
 
+    },
+
+    _openShareModal: function(event) {
+      new ShareView().share(event)
     },
 
     _toggleYears: function() {
