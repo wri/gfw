@@ -259,7 +259,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         @extend .info-icon;
         display: block;
         position: absolute;
-        top: 12px;
+        top: 8px;
         right: 10px;
         &.hidden {
           display: none;
