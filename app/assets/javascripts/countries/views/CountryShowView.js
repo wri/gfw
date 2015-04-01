@@ -30,6 +30,7 @@ define([
     },
 
     initialize: function() {
+      this.embed = $('body').hasClass('embed');
       if (!this.$el.length) {
         return
       }
@@ -47,12 +48,15 @@ define([
 
       // Initialize modules
       this.headerView = new CountryHeaderView({country: this.country});
-      this._stickynav();
-      this._initSource();
-      this._drawTenure();
-      this._drawForestsType();
-      this._drawFormaAlerts();
-      this._initFormaDropdown();
+
+      if (!this.embed) {
+        this._stickynav();
+        this._initSource();
+        this._drawTenure();
+        this._drawForestsType();
+        this._drawFormaAlerts();
+        this._initFormaDropdown();
+      }
     },
 
     _initSource: function() {
