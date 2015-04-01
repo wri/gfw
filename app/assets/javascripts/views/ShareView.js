@@ -146,7 +146,7 @@ define([
     },
 
     _generateEmbedSrc: function() {
-      var dim_x = 800, dim_y = 600;
+      var dim_x = 600, dim_y = 600;
       return '<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="' + this.model.get('embedUrl') + '"></iframe>';
     },
 
