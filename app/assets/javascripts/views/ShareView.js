@@ -162,7 +162,8 @@ define([
       if (embedUrl !== undefined) {
         this.model.set('embedUrl', embedUrl);
       }else{
-        this.model.set('embedUrl', window.location.href);
+        var urlWithEmbed = window.location.origin + '/embed' + window.location.pathname + window.location.search;
+        this.model.set('embedUrl', urlWithEmbed);
       }
     },
 
