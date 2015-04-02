@@ -76,7 +76,7 @@ define([
     },
 
     render: function(){
-      this.$el.html(this.template({embedUrl: this._generateEmbedUrl()}));
+      this.$el.html(this.template());
       this.initCustomViews();
     },
 
@@ -142,10 +142,6 @@ define([
       $button.toggleClass('active');
       ($button.hasClass('active')) ? $tooltip.text('Show windows (t)') : $tooltip.text('Hide windows (t)') ;
       mps.publish('MapControlsToggleModules/toggle');
-    },
-
-    _generateEmbedUrl: function() {
-      return window.location.origin + '/embed' + window.location.pathname + window.location.search;
     }
   });
 
