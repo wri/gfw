@@ -129,6 +129,13 @@
 
 //PA & CONCESSIONS TAB
 .analysis-tab-content.data-tab{
+  .see-gif {
+    padding: 5px 0;
+    display: inline-block;
+    @media (min-height: 770px){
+      display: none;
+    }
+  }
   .img-box{
     margin: 15px 0 0;
     position: relative;
