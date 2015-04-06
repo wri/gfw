@@ -56,6 +56,7 @@ define([
     cacheVars: function(){
       this.$tabs = this.$el.find('.tab');
       this.$tabMobileButtons = $('.tab-mobile');
+      this.$settingsTabButton = $('#settings-tab-button');
       this.$tabsMobileContent = this.$el.find('.tab-mobile-content');
       this.$tabsContent = this.$el.find('.tab-content');
       this.$container = this.$el.find('.content');
@@ -123,12 +124,12 @@ define([
 
     toggleTabsMobile: function(e){
       var $tab = $('#'+$(e.currentTarget).data('tab'));
-      if ($tab.hasClass('active')) {
+      if ($tab.hasClass('active') || $(e.currentTarget).hasClass('active')) {
         this.$tabMobileButtons.removeClass('active');
         this.$tabsMobileContent.removeClass('active');
       }else{
         this.$tabMobileButtons.removeClass('active');
-        $(e.currentTarget).addClass('active');
+        this.$settingsTabButton.addClass('active');
         this.$tabsMobileContent.removeClass('active');
         $tab.addClass('active');
       }
