@@ -55,8 +55,54 @@
     line-clip: false;
     polygon-clip: false;
   }
-
-
+  [layer='caf_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='can_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='cmr_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='cod_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='gab_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='gnq_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='idn_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='lbr_logging'] {
+    polygon-fill: #fecc5c;
+    line-color: #B38E3B;
+    line-clip: false;
+    polygon-clip: false;
+  }
   [layer='gfw2_drc_conc'] {
     polygon-fill: #EC7014;
     line-color: #EC7014;
@@ -91,7 +137,54 @@
     line-clip: false;
     polygon-clip: false;
   }
-
+  [layer='can_claims'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='can_coal'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='can_leases'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='can_permits'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='cmr_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='cod_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='cog_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='gab_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
 //deprecated
   [layer='oilpalm'] {
     polygon-fill: #ee9587;

@@ -3,7 +3,7 @@
     <!--  colored header -->
     <div class="country-header-inner">
       <div class="country-title">
-        <h1><%= @country['name'] %></h1>
+        <h1 title="<%= @country['name'] %>"><%= @country['name'] %></h1>
         <div class="country-selector">
           <select class="white" id="areaSelector">
             <option class="dark" value="default">Select jurisdiction</option>
@@ -33,7 +33,7 @@
               <span class="unit">%</span>
             </div>
             <div class="canopy-status">
-              <span>Displaying tree cover and loss with ><em>30%</em> canopy density</span>
+              <span>Displaying tree cover and loss with ><em id="canopy-status-number">30%</em> canopy density</span>
             </div>
           </div>
           <div class="loss-gain-graph ghost">
@@ -64,7 +64,7 @@
               </a>
             </li>
             <li>
-              <a href="#" id="share_control" title="Share this graphic " class="share_control share-link" data-tip="Share">
+              <a href="#" id="share_control" title="Share this graphic" class="share_control share-link" data-tip="Share">
                 Share
                 <span class="sidenav-icon">
                   <svg class="share">

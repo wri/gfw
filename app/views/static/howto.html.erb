@@ -42,8 +42,8 @@
           <li><%= link_to 'View data', "#{howto_path}/view-data", :"data-slug" => 'view-data', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item view-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Conduct analysis & subscribe to alerts', "#{howto_path}/conduct-analysis-and-subscribe-to-alerts", :"data-slug" => 'conduct-analysis-and-subscribe-to-alerts', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item conduct-analysis-and-subscribe-to-alerts' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Submit a story', "#{howto_path}/submit-a-story", :"data-slug" => 'submit-a-story', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item submit-a-story' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li class="no-transform"><%= link_to 'OPEN DATA PORTAL', "#{howto_path}/odp", :"data-slug" => 'odp', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item odp' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li class="no-transform"><%= link_to 'FAQs', "#{howto_path}/faqs", :"data-slug" => 'faqs', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item faqs' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li class="no-transform"><%= link_to 'Open Data Portal', "#{howto_path}/odp", :"data-slug" => 'odp', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item odp' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
         </ul>
       </aside>
       <div id="sources-box" class="sources-box">
@@ -136,7 +136,7 @@
             <header>
               <h2>Conduct analysis & subscribe to alerts</h2>
               <p>Choose a category below to learn how to conduct analysis or subscribe to alerts for an area of interest.</p>
-              <p>You can define an area of interest on the map by using the drawing tool or selecting an existing polygon (such as a protected area).  Once you have defined an area of interest, you can calculate statistics about the area or subscribe to alerts. If you subscribe to alerts, you will be notified via email when a new tree cover loss alert has been detected, as often as every 30 days. Tree cover loss alerts come from the <a href="/sources/forest_change?t=forma" target="_blank">Forest Monitoring for Action (FORMA)</a> system, which monitors and detects possible tree cover disturbance within 500 × 500 meter pixels in the humid tropical forest biome.</p>
+              <p>You can define an area of interest on the map by using the drawing tool or selecting an existing polygon (such as a protected area).  Once you have defined an area of interest, you can calculate statistics about the area or subscribe to alerts. If you subscribe to alerts, you will be notified via email when a new tree cover loss alert has been detected, as often as every 30 days. Tree cover loss alerts come from the <a href="http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64" target="_blank">Forest Monitoring for Action (FORMA)</a> system, which monitors and detects possible tree cover disturbance within 500 × 500 meter pixels in the humid tropical forest biome.</p>
               <p>This information pertains only to the GFW Interactive Map and country profiles. Visit <a href='http://www.commodities.globalforestwatch.org' target='_blank'>GFW Commodities</a> or <a href='http://www.fires.globalforestwatch.org' target='_blank'>GFW Fires</a> for more advanced analysis of areas affected by fires or commodity production.</p>
             </header>
             <ul class='sources'>
@@ -346,16 +346,16 @@
                 <div class='source_body'>
                   <div class='source_summary'>
                     <p><strong>Forest</strong></p>
-                    <p>Various definitions exist for the term “forest,” and GFW does not aim to provide a consensus definition. Data sets hosted on GFW may define “forest” differently or pertain to different types of forest (primary, secondary, tree plantations, etc.). Through information found on the <%= link_to 'Data page', sources_path %>, we aim to be transparent about the assumptions and definitions feeding into each data set.</p>
+                    <p>Various definitions exist for the term “forest,” and GFW does not aim to provide a consensus definition. Data sets hosted on GFW may define “forest” differently or pertain to different types of forest (primary, secondary, tree plantations, etc.). Through information found on the <a href="http://data.globalforestwatch.org/">Open Data Portal</a>, we aim to be transparent about the assumptions and definitions feeding into each data set.</p>
                     <p>In our general writing, including the GFW blog, “forest” refers to a landscape with a high density of trees and value for biodiversity, carbon storage, and human use..</p>
 
                     <p><strong>Deforestation</strong></p>
                     <p>How one defines “deforestation” depends on how one defines “forest.” As noted above, various definitions of forest exist and GFW does not aim to provide a consensus view. Correspondingly, GFW does not provide a single definition for “deforestation.”</p>
                     <p>In general writing, GFW uses “deforestation” to refer to the removal of a significant number of trees from a landscape, typically in the context of human actions rather than natural events such as fires or disease. We generally refer to “gross deforestation” (the total amount of forest loss), rather than “net deforestation” (the total amount of forest loss minus the amount of forest gain), or clearly specify otherwise.</p>
-                    <p>For more information on each data set, please visit our <%= link_to 'Data page', sources_path %>.</p>
+                    <p>For more information on each data set, please visit our <a href="http://data.globalforestwatch.org/">Open Data Portal</a>.</p>
 
                     <p><strong>Tree cover</strong></p>
-                    <p>Where found on the GFW website, “tree cover” refers to the biophysical presence of trees, which may be part of natural forests or tree plantations. The inclusion of all types of tree plantations in the “tree cover” definition notably distinguishes the term from some definitions of “forest.” Accordingly, “tree cover” and “forest” should not be used interchangeably. Different data sets further define “tree cover” with added parameters (see the <%= link_to 'Data page', sources_path %> for details and distinctions).</p>
+                    <p>Where found on the GFW website, “tree cover” refers to the biophysical presence of trees, which may be part of natural forests or tree plantations. The inclusion of all types of tree plantations in the “tree cover” definition notably distinguishes the term from some definitions of “forest.” Accordingly, “tree cover” and “forest” should not be used interchangeably. Different data sets further define “tree cover” with added parameters (see the <a href="http://data.globalforestwatch.org/">Open Data Portal</a> for details and distinctions).</p>
 
                     <p><strong>Tree cover loss</strong></p>
                     <p>“Tree cover loss” refers to the removal of trees, which may be within natural forests or tree plantations. Accordingly, “tree cover loss” does not necessarily equate to “deforestation” and can result from a variety of factors, including mechanical harvesting, fire, disease, or storm damage. Different data sets have additional parameters that must be met for the indication or alert of loss to appear on the GFW map (see examples below).</p>
@@ -388,7 +388,7 @@
                 </div>
                 <div class='source_body'>
                   <div class='source_summary'>
-                    <p>Infographics on the <a href="/countries" target="_blank">Country Profiles and Rankings</a> and analysis on the <a href="/map" target="_blank">interactive map</a> allow you to view statistics for tree cover, loss, and gain, calculated using data sets from the University of Maryland/Google. Due to variation in research methodology and date of content, tree cover, loss, and gain data sets cannot be compared accurately against each other. Accordingly, “net” loss cannot be calculated by subtracting figures for tree cover gain from tree cover loss, and current (or post-2000) tree cover extent cannot be determined by subtracting figures for annual tree cover loss from year 2000 tree cover extent. For more information on these data sets, please visit the <a href="/sources" target="_blank">data page</a>.</p>
+                    <p>Infographics on the <a href="/countries" target="_blank">Country Profiles and Rankings</a> and analysis on the <a href="/map" target="_blank">interactive map</a> allow you to view statistics for tree cover, loss, and gain, calculated using data sets from the University of Maryland/Google. Due to variation in research methodology and date of content, tree cover, loss, and gain data sets cannot be compared accurately against each other. Accordingly, “net” loss cannot be calculated by subtracting figures for tree cover gain from tree cover loss, and current (or post-2000) tree cover extent cannot be determined by subtracting figures for annual tree cover loss from year 2000 tree cover extent. For more information on these data sets, please visit the <a href="http://data.globalforestwatch.org/" target="_blank">Open Data Portal</a>.</p>
                   </div>
                 </div>
               </li>
@@ -426,7 +426,7 @@
 
                     <p>By monitoring changes tracked by these data sets over time, users can better understand drivers and patterns of forest loss worldwide.</p>
 
-                    <p>See our <%= link_to 'Data page', sources_path %> for more detail. To contribute or suggest data, please <a href='mailto:gfw@wri.com'>email</a> us.</p>
+                    <p>See our <a href="http://data.globalforestwatch.org/">Open Data Portal</a> for more detail. To contribute or suggest data, please <a href='mailto:gfw@wri.com'>email</a> us.</p>
                   </div>
                 </div>
               </li>
@@ -437,9 +437,9 @@
                 </div>
                 <div class='source_body'>
                   <div class='source_summary'>
-                    <p>The data on GFW come from various sources. Most of the data are in the public domain and have been developed by governments, NGOs, research institutions, or companies. Note that the data come in different formats and vary in their accuracy, timeliness, and geographical extent. See GFW’s <%= link_to 'Data policy', "#{sources_path}#data_policy" %> for more details.</p>
+                    <p>The data on GFW come from various sources. Most of the data are in the public domain and have been developed by governments, NGOs, research institutions, or companies. Note that the data come in different formats and vary in their accuracy, timeliness, and geographical extent. See GFW’s <a href="http://gfw-nav.herokuapp.com/about/data_policy">Data policy</a> for more details.</p>
 
-                    <p>Some data are produced directly by WRI and our partners, such as FORMA alerts, Intact Forest Landscapes, and some forest use data. For more details, see the <%= link_to 'Data page', sources_path %>.</p>
+                    <p>Some data are produced directly by WRI and our partners, such as FORMA alerts, Intact Forest Landscapes, and some forest use data. For more details, see the <a href="http://data.globalforestwatch.org/">Open Data Portal</a>.</p>
                   </div>
                 </div>
               </li>
@@ -450,7 +450,7 @@
                 </div>
                 <div class='source_body'>
                   <div class='source_summary'>
-                    <p>GFW aims to provide data with global coverage, but this isn’t always possible. The geographic coverage of each data set is described on the <%= link_to 'Data page', sources_path %>.</p>
+                    <p>GFW aims to provide data with global coverage, but this isn’t always possible. The geographic coverage of each data set is described on the <a href="http://data.globalforestwatch.org/">Open Data Portal</a>.</p>
 
                     <p>Data may have limited coverage for various reasons. GFW works to incorporate new data as quickly as possible as they are made available. If you know of a publicly available data set that we do not have, please <a href='mailto:gfw@wri.com'>contact us</a> to let us know.</p>
                   </div>
@@ -463,9 +463,9 @@
                 </div>
                 <div class='source_body'>
                   <div class='source_summary'>
-                    <p>The accuracy of the data displayed on GFW is variable. Methodologies and cautions for specific data sets are available on the <%= link_to 'Data page', sources_path %>.</p>
+                    <p>The accuracy of the data displayed on GFW is variable. Methodologies and cautions for specific data sets are available on the <a href="http://data.globalforestwatch.org/">Open Data Portal</a>.</p>
 
-                    <p>GFW strives to include only the most accurate data whenever possible and to make the user aware of the risk of inaccuracies in the data. GFW is not responsible for data from other sources. See more about GFW’s approach to data in our <%= link_to 'Data policy', "#{sources_path}#data_policy" %>.</p>
+                    <p>GFW strives to include only the most accurate data whenever possible and to make the user aware of the risk of inaccuracies in the data. GFW is not responsible for data from other sources. See more about GFW’s approach to data in our <a href="http://gfw-nav.herokuapp.com/about/data_policy">Data policy</a>.</p>
                   </div>
                 </div>
               </li>
@@ -479,7 +479,7 @@
                     <p>Different data sets measure different things and are derived using different methodologies. Such differences can lead to results that may manifest as contradictory layers on the GFW platform. In some cases, a lack of available high-quality data may cause a greater margin of error for certain data sets.</p>
 
                     <ul class='bullets'>
-                      <li><p><strong>Intact Forest Landscapes vs. tree cover extent:</strong> These data sets measure different things. “Tree cover extent” shows all 30 × 30 meter areas that meet a minimum threshold of tree cover (25% canopy cover), whereas “Intact Forest Landscapes” only shows forests that show no significant signs of human activity (see the <a href="/sources/forest_cover" target="_blank">data page</a> for specifics).</p>
+                      <li><p><strong>Intact Forest Landscapes vs. tree cover extent:</strong> These data sets measure different things. “Tree cover extent” shows all 30 × 30 meter areas that meet a minimum threshold of tree cover (25% canopy cover), whereas “Intact Forest Landscapes” only shows forests that show no significant signs of human activity (see the <a href="http://data.globalforestwatch.org/" target="_blank">Open data Portal</a> for specifics).</p>
 
                       <p>Users may find instances where tree cover extent does not fall within the boundaries of intact forest landscapes. This is because the Intact Forest Landscapes layer is based on MODIS (250 meter resolution satellite imagery), which is known to overestimate low tree cover densities, whereas the tree cover extent layer is based on Landsat (30 meter resolution satellite imagery). As a result, the tree cover extent layer may not show tree cover in an area that is covered by an intact forest landscape polygon.</p></li>
                     </ul>
@@ -522,7 +522,7 @@
                 </div>
                 <div class='source_body'>
                   <div class='source_summary'>
-                    <p>Each data set has an individual citation, which can be found on the <%= link_to 'Data page', sources_path %>. If you are referencing the source website or publication for a data set, please use the “Citation.”  If you are referencing the source website or publication for a data set, please use the “Citation.” If you are referencing a figure or number generated by GFW or data downloaded from the GFW website, please use the “Suggested citation for data as displayed on GFW.” For data that are displayed in their original form or when users are directed to the original source to download data, a suggested citation is not listed.</p>
+                    <p>Each data set has an individual citation, which can be found on the <a href="http://data.globalforestwatch.org/">Open Data Portal</a>. If you are referencing the source website or publication for a data set, please use the “Citation.”  If you are referencing the source website or publication for a data set, please use the “Citation.” If you are referencing a figure or number generated by GFW or data downloaded from the GFW website, please use the “Suggested citation for data as displayed on GFW.” For data that are displayed in their original form or when users are directed to the original source to download data, a suggested citation is not listed.</p>
 
                     <p>To cite the website or initiative overall, please use:</p>
                     <p>Global Forest Watch. 2014. World Resources Institute. Accessed on (date). <a href='http://www.globalforestwatch.org'>www.globalforestwatch.org</a>.</p>
@@ -589,7 +589,72 @@
           </article>
 
           <article id="odp" class="source-article">
-            [add content here]
+            <header>
+              <h2 class='source_category_title'>Open Data Portal</h2>
+            </header>
+            <ul class='sources'>
+              <li id="find-data-odp" class='source-item first'>
+                <div class='source_header'>
+                  <strong class='source_title'>Find data in the Open Data Portal</strong>
+                  <i class='expand_arrow'></i>
+                </div>
+                <div class='source_body'>
+                  <div class='source_summary'>
+                    <h3 class="overview_title">There are four ways to find data in the ODP:</h3>
+                    <p><strong>1. Search by keywords</strong>   Click “Search for open data” on the right-hand side of the homepage (below the map) and type in your <a href="http://doc.arcgis.com/en/open-data/consumer/find-data.htm#GUID-C151A7B7-F6C2-4DAB-B071-A59569D50E18">keywords</a>, then click “Enter” to see a list of results in the lower portion of the page.</p>
+                    <p><%= image_tag('howto-screenshots/odp/image1.jpg') %></p>
+
+                    <p><strong>2. Search by category</strong>  From the homepage, select a category of GFW data to view a list of related data sets.</p>
+                    <p><%= image_tag('howto-screenshots/odp/image2.jpg') %></p>
+                    <p><strong>3. Search by location</strong> Click “<a href="http://doc.arcgis.com/en/open-data/consumer/find-data.htm#ESRI_SECTION1_B9E443DF131F4820BD7848694A3CE74E">Search Within Map</a>” on the right-hand side of the homepage and zoom to your area of interest on the map. Then click “Search for open data” and click “Enter” to view all data sets that are available in the defined area, or enter keywords to filter the results even further.</p>
+                    <p><%= image_tag('howto-screenshots/odp/image3.jpg') %></p>
+                    <p>Additionally, you can select a country of interest from the “VIEW COUNTRY DATA” dropdown on the home-page to examine all data available for a particular country.</p>
+                    <p><%= image_tag('howto-screenshots/odp/image4.png') %></p>
+                    <p><strong>4. Find Related Content</strong>  Once you select a dataset, you can find thematically related content from the suggested “related <a href="http://doc.arcgis.com/en/open-data/consumer/find-data.htm#ESRI_SECTION1_4AD46F57135A4153B9BD6AF92E2186E9">datasets</a>” section at the bottom of a data set’s profile page.</p>
+                    <p><%= image_tag('howto-screenshots/odp/image5_II.jpg') %></p>
+                    <p>Similar content can also be found by clicking on a tag from each dataset’s profile page to prompt a new search based on that tag.</p>
+                    <p><%= image_tag('howto-screenshots/odp/image5.png') %></p>
+                  </div>
+                </div>
+              </li>
+              <li id="download-odp-data" class='source-item'>
+                <div class='source_header'>
+                  <strong class='source_title'>Download Data</strong>
+                  <i class='expand_arrow'></i>
+                </div>
+                <div class='source_body'>
+                  <div class='source_summary'>
+                    <p>In the ODP you can <a href="http://doc.arcgis.com/en/open-data/consumer/access-data.htm">download data</a> with one-click and choose from multiple download formats such as .csv, .shp, KML, JPEG, PNG, TIFF, and API. The ODP makes it easy to quickly access GFW data and add them to your favorite tools including, but not limited to, ArcMap, ArcGIS Online, Google Earth, ERDAS Imagine, and Excel.</p>
+                    <p>Once a search is executed, you can download a data set from the results page by selecting the “download” icon on the right-hand side of the results page. Larger and more detailed data sets will take longer to download.</p>
+                    <p><%= image_tag('howto-screenshots/odp/image6.jpg') %></p>
+                    <p>You can also select a data set from the results page to view its profile page. From a profile page you can select “DOWNLOAD DATASET” and choose your download format. The download drop-down will also provide an option to “Download Filtered Dataset,” determined by a map or attribute filter.</p>
+                    <p><%= image_tag('howto-screenshots/odp/image7.jpg') %></p>
+                  </div>
+                </div>
+              </li>
+              <li id="explore-odp-data" class='source-item last'>
+                <div class='source_header'>
+                  <strong class='source_title'>Explore Data</strong>
+                  <i class='expand_arrow'></i>
+                </div>
+                <div class='source_body'>
+                  <div class='source_summary'>
+                    <p><strong>1. Explore data on the map</strong> Once you have selected a data set, a map will load at the top of its profile page where you can view the data features (e.g., logging concession polygons). Hover over each feature to learn more about it, or click on a feature to view a complete list of attributes.</p>
+                    <p><%= image_tag('howto-screenshots/odp/image8.jpg') %></p>
+                    <p>Using the menu on the bottom of the map, you can toggle between base map views, adjust the map size, zoom and search for geographic features.</p>
+                    <p><%= image_tag('howto-screenshots/odp/image9.jpg') %></p>
+                    <p><strong>2. Explore data details</strong> Key metadata for each data set is listed in the “Details” page in the ODP. Select “more” to view a summary of the data set, or learn about the data category under “About” by selecting the category name (e.g. “logging”).</p>
+                    <p><%= image_tag('howto-screenshots/odp/image10.jpg') %></p>
+                    <p><strong>3. Explore data tables</strong> Click the “Table” tab to preview a complete list of each data set’s attributes. You can <a href="http://doc.arcgis.com/en/open-data/consumer/explore-data.htm#ESRI_SECTION1_9A139DC2EF4A40DAA0363DF34EB81C66">filter or sort</a> the table by attribute field or location using the options on the right-hand side of the table. For example, if you want to view data only for specific logging companies, you could sort the table by the “company” field.</p>
+                    <p><%= image_tag('howto-screenshots/odp/image11.jpg') %></p>
+                    <p>To filter the data by location, select “Filter by Map View” from the right-hand side of the table. Using the map view, zoom in on an area of interest, and the data will dynamically filter in the map. In the example below, notice how the table is only displaying 12 of the 30,000 features.</p>
+                    <p><%= image_tag('howto-screenshots/odp/image12.jpg') %></p>
+                    <p><strong>4. Explore data charts</strong>  The <a href="http://doc.arcgis.com/en/open-data/consumer/chart-data.htm">charts</a> view provides a visually engaging way to understand GFW data. Select the attribute you want to display from the “Chart Table” drop-down menu, and stylize your chart with distinctive colors. Like the chart you made? You can embed the chart in a website by copying the iframe html code.</p>
+                    <p><%= image_tag('howto-screenshots/odp/image13.jpg') %></p>
+                  </div>
+                </div>
+              </li>
+            </ul>
           </article>
         </div>
       </div>

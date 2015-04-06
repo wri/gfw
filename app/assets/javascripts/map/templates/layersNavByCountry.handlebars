@@ -1,5 +1,5 @@
 <span class="category-name">{{#if country}}{{country}} LAYERS{{/if}}</span>
-<div class="layers-nav">
+<div id="country-layers-nav" class="layers-nav">
   <div class="layers-nav-header">
     <div class="category-icon"><svg><use xlink:href="#icon-layer-country"></use></svg></div>
     <span class="category-name">{{country}} LAYERS</span>
@@ -8,7 +8,7 @@
     {{#each layers}}
       <li class="layer" data-layer="{{this.slug}}" data-layeriso="{{this.iso}}">
         <span class="onoffswitch"><span></span></span>
-        <span class="layer-title">{{this.title}}<a href="#" data-source="{{this.slug}}" class="source"><svg><use xlink:href="#shape-info"></use></svg></a></span>
+        <span class="layer-title">{{this.title}}</span>
       {{#if this.does_wrapper}}
         <span class="does_wrapper"></span>
       {{/if}}

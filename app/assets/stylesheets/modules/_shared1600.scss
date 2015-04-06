@@ -139,7 +139,7 @@
   text-align: center;
   padding: 4px 8px;
   white-space: nowrap;
-  @include transform(translate(-50%,10px));
+  @include transform(translate(-50%,5px));
   &:after{
     content: "";
     display: block;

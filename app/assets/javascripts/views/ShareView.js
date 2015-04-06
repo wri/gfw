@@ -18,7 +18,16 @@ define([
       type: 'link',
       url: window.location.href,
       embedUrl: window.location.href,
+    },
+    setEmbedUrl: function(){
+      if($('body').hasClass('is-countries-page')){
+        this.embedUrl = window.location.origin + '/embed' + window.location.pathname + window.location.search;
+      }else{
+        this.embedUrl = window.location.href;
+      }
+      return this.embedUrl;
     }
+
   });
 
   var ShareView = Backbone.View.extend({
@@ -137,19 +146,24 @@ define([
     },
 
     _generateEmbedSrc: function() {
-      var dim_x = 800, dim_y = 600;
+      var dim_x = 600, dim_y = 600;
       return '<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="' + this.model.get('embedUrl') + '"></iframe>';
     },
 
     _setUrlsFromEvent: function(event) {
       var url = $(event.currentTarget).data('share-url');
       if (url !== undefined) {
-        this.model.set('url', url)
+        this.model.set('url', url);
+      }else{
+        this.model.set('url', window.location.href);
       }
 
       var embedUrl = $(event.currentTarget).data('share-embed-url');
       if (embedUrl !== undefined) {
-        this.model.set('embedUrl', embedUrl)
+        this.model.set('embedUrl', embedUrl);
+      }else{
+        var urlWithEmbed = window.location.origin + '/embed' + window.location.pathname + window.location.search;
+        this.model.set('embedUrl', urlWithEmbed);
       }
     },
 

@@ -26,7 +26,8 @@ define([
     events: {
       'click .category-name' : '_toggleLayersNav',
       'click .layer': '_toggleLayer',
-      'click #country-layers' : '_showNotification'
+      'click #country-layers' : '_showNotification',
+      'click #country-layers-reset' : '_resetIso'
     },
 
     initialize: function() {
@@ -56,6 +57,8 @@ define([
       this.$categoriesNum = $('.category-num');
       this.$layersCountry = $('#layers-country-nav');
       this.$countryLayers = $('#country-layers');
+      this.$countryLayersReset = $('#country-layers-reset');
+
     },
 
 
@@ -166,6 +169,10 @@ define([
       this.setIsoLayers();
     },
 
+    _resetIso: function(){
+      this.presenter.resetIso();
+    },
+
     /**
      * Render Iso Layers.
      */
@@ -188,10 +195,20 @@ define([
           layersToRender.push(layer);
         }
       }, this ));
+
+      if (!!this.iso && this.iso !== 'ALL') {
+        this.$countryLayersReset.removeClass('hidden');
+      }else{
+        this.$countryLayersReset.addClass('hidden');
+      }
+
+
       if(layersToRender.length > 0) {
         this.$countryLayers.addClass('active').removeClass('disabled');
+        this.$countryLayersReset.addClass('active').removeClass('disabled');
       }else{
         this.$countryLayers.removeClass('active').addClass('disabled');
+        this.$countryLayersReset.removeClass('active').addClass('disabled');
       }
       this.renderIsoLayers(layersToRender);
     },

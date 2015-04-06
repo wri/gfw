@@ -76,7 +76,7 @@ define([
       key('n', this.zoomOut);
       key('alt+r', this.resetMap);
       key('s', this.shareMap);
-      key('t', this.toggleModules);
+      key('h', this.toggleModules);
 
       this.model.on('change:hidden', this.toogleModule, this);
 
@@ -94,7 +94,6 @@ define([
         this.$el.removeClass('hide');
       }
     },
-
 
     render: function (mobile) {
       if (mobile) {
@@ -185,7 +184,7 @@ define([
       ($button.hasClass('active')) ? $tooltip.text('Show windows (t)') : $tooltip.text('Hide windows (t)') ;
       mps.publish('MapControlsToggleModules/toggle');
     },
-    
+
     toggleControls: function(e){
       this.$toggleButtons.children('.toggle-button').toggleClass('hidden');
     },

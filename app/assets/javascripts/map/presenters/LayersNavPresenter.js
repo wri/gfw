@@ -54,6 +54,10 @@ define([
       mps.publish('Notification/open', [id]);
     },
 
+    resetIso: function(){
+      mps.publish('Countries/changeIso',[{country: null, region: null},false]);
+    },
+
 
     /**
      * Publish a a Map/toggle-layer.

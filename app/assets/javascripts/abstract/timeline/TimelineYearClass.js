@@ -200,9 +200,11 @@ define([
           });
 
       // Set SVG
+      var timelineWidth = width + margin.left + margin.right;
       this.svg = d3.select(this.$time[0]).append('svg')
-          .attr('width', width + margin.left + margin.right)
+          .attr('width', timelineWidth)
           .attr('height', height + margin.top + margin.bottom)
+          .style('width', timelineWidth + 'px')
         .append('g')
           .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 

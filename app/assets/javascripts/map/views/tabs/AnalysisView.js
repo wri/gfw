@@ -621,7 +621,7 @@ define([
       setTimeout(_.bind(function(){
         this.$play.removeClass('hidden');
         this.$img.attr('src',this.png);
-      }, this ), 10000 );
+      }, this ), 7500 );
     },
 
     loadImg: function(url){

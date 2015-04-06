@@ -45,6 +45,10 @@ define([
         this.view.setSelects(iso);
       }
     },{
+      'LayerNav/change': function(layerSpec) {
+        this.view.renderIsoLayer(layerSpec);
+      }
+    },{
       'Layers/isos': function(layers_iso) {
         this.view.getIsoLayers(layers_iso);
       }

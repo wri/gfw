@@ -46,7 +46,7 @@ define([], function() {
     download_the_data: {
       title: 'Download data',
       description: 'Learn about and download GFW data.',
-      link: '/sources',
+      link: 'http://data.globalforestwatch.org',
       button_text: 'Browse data',
     },
     get_involved: {

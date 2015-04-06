@@ -10,10 +10,11 @@ define([
   'chosen',
   'map/presenters/tabs/CountriesPresenter',
   'text!map/templates/tabs/countries.handlebars',
-  'text!map/templates/tabs/countries-mobile.handlebars',
   'text!map/templates/tabs/countriesIso.handlebars',
-  'text!map/templates/tabs/countriesButtons.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplMobile, tplIso, tplButtons) {
+  'text!map/templates/tabs/countriesButtons.handlebars',
+  'text!map/templates/layersNavByCountryWrapper.handlebars',
+  'text!map/templates/tabs/countries-mobile.handlebars'
+], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplIso, tplButtons, tplCountryWrapper, tplMobile) {
 
   'use strict';
 
@@ -32,6 +33,7 @@ define([
     template: Handlebars.compile(tpl),
     templateIso: Handlebars.compile(tplIso),
     templateButtons: Handlebars.compile(tplButtons),
+    templateCountryWrapper: Handlebars.compile(tplCountryWrapper),
     templateMobile: Handlebars.compile(tplMobile),
 
     events: {
@@ -39,10 +41,12 @@ define([
       'click #countries-analyze-button' : 'analyzeIso',
       'change #countries-country-select' : 'changeIso',
       'change #countries-region-select' : 'changeArea',
+      'click .layer': 'toggleLayer'
     },
 
 
     initialize: function(map) {
+      this.embed = $('body').hasClass('is-embed-action');
       this.map = map;
       this.model = new CountriesModel();
       this.presenter = new Presenter(this);
@@ -91,9 +95,11 @@ define([
       // countries
       this.setStyle(0.45);
       this.getCountries();
-      setTimeout(_.bind(function(){
-        this.presenter.openTab('#countries-tab-button');
-      },this), 0);
+      if (!this.embed) {
+        setTimeout(_.bind(function(){
+          this.presenter.openTab('#countries-tab-button');
+        },this), 0);
+      }
     },
 
     /**
@@ -133,8 +139,31 @@ define([
 
     renderIsoLayer: function(layersToRender){
       this.$layers.html(this.templateIso({ layers: layersToRender }));
+      this.$layers.find('.layers-list').html($('#country-layers .layers-list').html())
+      this._selectSubIsoLayer();
     },
 
+    _selectSubIsoLayer: function() {
+      var parentSelected = this.$layers.find('.layer:first').hasClass('selected');
+      var subLayersSelected = this.$layers.find('.wrapped.selected').length > 0;
+      if (!subLayersSelected && parentSelected) {
+        this.$layers.find('.wrapped:first').click();
+      }
+    },
+
+    toggleLayer: function(event) {
+      event.stopPropagation();
+      event.preventDefault();
+
+      var $li = $(event.currentTarget);
+      var layerSlug = $li.data('layer');
+      var layer = _.where(this.isoLayers, {slug: layerSlug})[0];
+
+      if (layer) {
+        $('#country-layers [data-layer="'+layerSlug+'"]:first').click()
+        ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
+      }
+    },
 
     setButtons: function(to){
       this.$toggle.toggleClass('active', to);

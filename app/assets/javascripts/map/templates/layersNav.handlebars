@@ -10,46 +10,55 @@
           <span class="category-name">FOREST CHANGE</span>
         </div>
         <ul class="layers-list">
-          <li class="layer" data-layer="loss">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">UMD/Google tree cover loss<a href='#' data-source='loss' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">(annual, 30m, Global)</span>
-          </li>
-          <li class="layer" data-layer="forestgain">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">UMD/Google tree cover gain<a href='#' data-source='forestgain' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">(12 years, 30m, Global)</span>
-          </li>
-          <li class="layer" data-layer="forma">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">FORMA alerts<a href='#' data-source='forma' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">(monthly, 500m, humid tropics)</span>
-          </li>
-          <li class="layer" data-layer="imazon">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">Imazon SAD alerts<a href='#' data-source='imazon' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">(monthly, 250m, Brazilian Amazon)</span>
-          </li>
-          <li class="layer" data-layer="modis">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">QUICC alerts<a href='#' data-source='modis' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">(quarterly, 5km, &lt;37 degrees north)</span>
-          </li>
-          </li>
-          <li class="layer" data-layer="fires">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">NASA active fires<a href='#' data-source='fires' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">(past 7 days, 1km, global)</span>
-          </li>
-          <li class="layer" data-layer="terrailoss">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">Terra-i alerts<a href='#' data-source='terrailoss' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">(monthly, 250m, Latin America)</span>
-          </li>
-          <li class="layer" data-layer="nothing">
-            <span class="onoffradio"><span></span></span>
-            <span class="layer-title">None</span>
-          </li>
+          <div class="layer-group">
+            <span class="group-name">Tree cover change <em>(Hansen/UMD/Google/USGS/NASA)</em></span>
+            <li class="layer" data-layer="loss">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">Loss<a href='#' data-source='loss' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(annual, 30m, Global)</span>
+            </li>
+            <li class="layer" data-layer="forestgain">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">Gain<a href='#' data-source='forestgain' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(12 years, 30m, Global)</span>
+            </li>
+          </div>
+          <div class="layer-group">
+            <span class="group-name">Tree cover loss alerts <em>(near real-time)</em></span>
+            <li class="layer" data-layer="forma">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">FORMA<a href='#' data-source='forma' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(monthly, 500m, humid tropics, WRI/CGD)</span>
+            </li>
+            <li class="layer" data-layer="terrailoss">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">Terra-i<a href='#' data-source='terrailoss' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(monthly, 250m, Latin America, CIAT)</span>
+            </li>
+            <li class="layer" data-layer="imazon">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">SAD<a href='#' data-source='imazon' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(monthly, 250m, Brazilian Amazon, Imazon)</span>
+            </li>
+            <li class="layer" data-layer="modis">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">QUICC<a href='#' data-source='modis' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(quarterly, 5m, &lt;37 degrees north, NASA)</span>
+            </li>
+          </div>
+          <div class="layer-group">
+            <li class="layer" data-layer="fires">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">Active fires<a href='#' data-source='fires' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-info">(past 7 days, 1km, global, NASA)</span>
+            </li>
+          </div>
+          <div class="layer-group">
+            <li class="layer" data-layer="nothing">
+              <span class="onoffradio"><span></span></span>
+              <span class="layer-title">None</span>
+            </li>
+          </div>
         </ul>
       </div>
     </li>
@@ -69,7 +78,7 @@
           </li>
           <li class="layer" data-layer="ifl_2013_deg">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Intact forest landscapes<a href='#' data-source='ifl_2013_deg' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Intact Forest Landscapes<a href='#' data-source='ifl_2013_deg' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
             <span class="layer-info">
               <label data-layer="ifl_2000" class="layer wrapped">
                 <span></span>
@@ -87,7 +96,7 @@
           </li>
           <li class="layer" data-layer="mangrove">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Global Mangroves<a href='#' data-source='mangrove' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Global mangroves<a href='#' data-source='mangrove' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
         </ul>
       </div>
@@ -139,10 +148,10 @@
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Biodiversity hotspots<a href='#' data-source='biodiversity_hotspots' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
-          <li class="layer" data-layer="wwf">
+          {{!--<li class="layer" data-layer="wwf">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">WWF Terrestrial Ecoregions of the World<a href='#' data-source='wwf' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li>
+          </li> --}}
           <li class="layer" data-layer="birdlife">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">BirdLife Endemic Bird Areas<a href='#' data-source='birdlife' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
@@ -155,10 +164,10 @@
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Tiger Conservation Landscapes<a href='#' data-source='tigers' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
-          <li class="layer" data-layer="verified_carbon">
+{{!--           <li class="layer" data-layer="verified_carbon">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Verified Carbon Standard project boundaries<a href='#' data-source='verified_carbon' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li>
+          </li> --}}
         </ul>
       </div>
     </li>
@@ -174,15 +183,15 @@
         <ul class="layers-list">
           <li class="layer" data-layer="resource_rights">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Resource Rights<a href='#' data-source='resource_rights' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Resource rights<a href='#' data-source='resource_rights' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
           <li class="layer" data-layer="land_rights">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Land Rights<a href='#' data-source='land_rights' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Land rights<a href='#' data-source='land_rights' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
           <li class="layer" data-layer="grump2000">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Population Density<a href='#' data-source='grump2000' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Population density<a href='#' data-source='grump2000' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
         </ul>
       </div>
@@ -215,6 +224,9 @@
 
     <li id="country-layers" class="country disabled">
       <span class="category-name">COUNTRY LAYERS <i id="forest_clearing-category-num" class="category-num"></i></span>
+    </li>
+    <li id="country-layers-reset" class="country-close disabled hidden">
+      <button class="btn close"><span><svg><use xlink:href="#shape-close"></use></svg></span></button>
     </li>
   </ul>
 </div>
