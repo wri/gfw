@@ -87,6 +87,7 @@ define([
       //country
       this.$selects = this.$el.find('.chosen-select');
       this.$countrySelect = $('#countries-country-select');
+      this.$countryUl = $('#countries-country-ul');
       this.$regionSelect = $('#countries-region-select');
       this.inits();
     },
@@ -223,18 +224,27 @@ define([
       //Country select
       this.countries = amplify.store('countries');
 
-      //Loop for print options
-      var options = "<option></option>";
-      _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
-        options += '<option value="'+ country.iso +'">'+ country.name + '</option>';
-      }, this ));
-      this.$countrySelect.append(options);
-      this.$selects.chosen({
-        width: '100%',
-        allow_single_deselect: true,
-        inherit_select_classes: true,
-        no_results_text: "Oops, nothing found!"
-      });
+      if(this.mobile){
+        var options = "";
+        _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
+          options += '<li data-value="'+ country.iso +'">'+ country.name + '</li>';
+        }, this ));
+        this.$countryUl.html(options);
+
+      }else{
+        //Loop for print options
+        var options = "<option></option>";
+        _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
+          options += '<option value="'+ country.iso +'">'+ country.name + '</option>';
+        }, this ));
+        this.$countrySelect.append(options);
+        this.$selects.chosen({
+          width: '100%',
+          allow_single_deselect: true,
+          inherit_select_classes: true,
+          no_results_text: "Oops, nothing found!"
+        });
+      }
     },
 
     printSubareas: function(subareas){

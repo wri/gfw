@@ -116,16 +116,16 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       border-bottom: none;
       width: 40px;
       min-height: 1px;
-      display: none;
-      @media (min-width: $br-mobileMap){
-        display: block;
-      }
 
       &.disabled{
         opacity: 0.25;
       }
       &.active{
         opacity: 1;
+        display: none;
+        @media (min-width: $br-mobileMap){
+          display: block;
+        }
       }
       .close{
         position: absolute;
