@@ -23,6 +23,8 @@ Gfw::Application.routes.draw do
     get '/french(/:id)(/:id2)(/:id3)' => redirect('/countries')
     get '/bahasa(/:id)(/:id2)(/:id3)' => redirect('/countries')
     get '/common(/:section)' => redirect("sources")
+    get '/common(/:section)(/:section)' => redirect("sources")
+    get '/common(/:section)(/:section)(/:section)' => redirect("sources")
     get '/assets(/:content)' => redirect('/')
 
     # howto
@@ -32,6 +34,7 @@ Gfw::Application.routes.draw do
     get '/howto/data' => redirect("/howto/faqs")
     get '/howto/web_platform' => redirect("/howto/faqs")
     get '/howto/for_business' => redirect("/howto/faqs")
+
     # about
     get '/about/video' => redirect("/about")
     get '/about/gfw' => redirect("/about/about-gfw")
