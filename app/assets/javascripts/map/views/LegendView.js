@@ -166,6 +166,10 @@ define([
       return array;
     },
 
+    toogleLegend: function(){
+      this.$el.toggleClass('active');
+    },
+
     /**
      * Toggle selected sublayers on the legend widget.
      *

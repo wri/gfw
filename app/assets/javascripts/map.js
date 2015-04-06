@@ -17,6 +17,7 @@ require([
   'map/services/DataService',
   'map/views/MapView',
   'map/views/MapControlsView',
+  'map/views/MapControlsMobileView',
   'map/views/TabsView',
   'map/views/analysis/AnalysisResultsView',
   'map/views/LayersNavView',
@@ -29,7 +30,7 @@ require([
   'views/NotificationsView',
   '_string'
 ], function($, _, Class, Backbone, chosen, utils, enquire, mps, Router, ExperimentsPresenter, AnalysisService, CountryService, DataService, MapView,
-    MapControlsView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, HeaderView, FooterView, SourceWindowView, SourceMobileFriendlyView, NotificationsView) {
+    MapControlsView, MapControlsMobileView, TabsView, AnalysisResultsView, LayersNavView, LegendView, TimelineView, HeaderView, FooterView, SourceWindowView, SourceMobileFriendlyView, NotificationsView) {
 
   'use strict';
 
@@ -73,6 +74,7 @@ require([
       var mapView = new MapView();
 
       new MapControlsView(mapView.map);
+      new MapControlsMobileView();
       new TabsView(mapView.map);
       new AnalysisResultsView();
       new LayersNavView();

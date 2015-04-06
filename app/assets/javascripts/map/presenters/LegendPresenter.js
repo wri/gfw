@@ -61,6 +61,10 @@ define([
         this.status.set('threshold', threshold);
         this.status.get('layerSpec') && this._updateLegend();
       }
+    }, {
+      'Legend/open': function() {
+        this.view.toogleLegend();
+      }
     }],
 
     /**
