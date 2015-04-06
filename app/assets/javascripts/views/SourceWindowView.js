@@ -98,6 +98,7 @@ define([
       var data_iframe = $(e.currentTarget).data('iframe');
       (data_iframe) ? this.$sourceWindow.addClass('iframe') : this.$sourceWindow.removeClass('iframe');
       this.$content.html($('#' + data_slug).clone());
+      ga('send', 'event', document.title.replace('| Global Forest Watch',''), 'Info', data_slug);
       return this;
     },
 
@@ -108,6 +109,7 @@ define([
       if (link) {
         $clone.find('.set-link').attr('href',link);
       }
+      ga('send', 'event', document.title.replace('| Global Forest Watch',''), 'Info', data_slug);
       return this;
     },
 
