@@ -138,8 +138,6 @@ define([
         var $options = document.getElementById($(el).attr('id')).options;
         var compare = $($(el).data('compare'))[0].selectedIndex;
         var direction = Boolean(parseInt($(el).data('direction')));
-        console.log('direction:' + direction);
-        console.log('compare:' + compare);
 
         _.each($options, function(opt,i){
           if (direction) {
