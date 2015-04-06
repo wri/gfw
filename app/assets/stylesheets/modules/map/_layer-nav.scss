@@ -119,12 +119,14 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
 
       &.disabled{
         opacity: 0.25;
+        @media (max-width: $br-mobileMap - 1){
+          display: none;
+        }
       }
       &.active{
         opacity: 1;
-        display: none;
-        @media (min-width: $br-mobileMap){
-          display: block;
+        @media (max-width: $br-mobileMap - 1){
+          display: none;
         }
       }
       .close{
