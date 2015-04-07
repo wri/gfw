@@ -142,7 +142,6 @@ define([
           count ++;
         }
       }, this));
-      console.log(count);
       (count == 2) ? this.$toggleUMD.find('.onoffradio').addClass('checked') : this.$toggleUMD.find('.onoffradio').removeClass('checked');
     },
 
