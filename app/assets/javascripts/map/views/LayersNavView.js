@@ -27,6 +27,7 @@ define([
 
     events: {
       'click .layer': '_toggleLayer',
+      'click #toggleUmd' : 'toggleUmd',
       'click #country-layers' : '_showNotification',
       'click #country-layers-reset' : '_resetIso'
     },
@@ -43,6 +44,8 @@ define([
       this.presenter.initExperiment('source');
 
       //Init
+      this.$UMDlayers = $('#umd-group .layer');
+      this.$toggleUMD = $('#toggleUmd');
       this.$categoriesList = $('.categories-list');
       this.$layersCountry = $('#layers-country-nav');
       this.$countryLayers = $('#country-layers');
@@ -70,18 +73,13 @@ define([
         var layer = layers[$li.data('layer')];
 
         if (layer) {
-          var isBaselayer = (layer.category_slug === 'forest_clearing');
+          // var isBaselayer = (layer.category_slug === 'forest_clearing');
 
           $li.addClass('selected');
           $toggle.addClass('checked');
           $layerTitle.css('color', layer.title_color);
+          $toggle.css('background', layer.title_color);
 
-          if (!isBaselayer) {
-            $toggle.css('background', layer.title_color);
-          } else {
-            $toggle.css('border-color', layer.title_color);
-            $toggleIcon.css('background-color', layer.title_color);
-          }
           ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layer.slug);
         } else {
           $li.removeClass('selected');
@@ -90,6 +88,7 @@ define([
           $layerTitle.css('color', '');
         }
       });
+      this.checkUMD();
     },
 
     /**
@@ -122,6 +121,32 @@ define([
         ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
       }
     },
+
+    toggleUmd: function(e){
+
+      _.each(this.$UMDlayers, _.bind(function(layer){
+        if (this.$toggleUMD.find('.onoffswitch').hasClass('checked')) {
+          if ($(layer).hasClass('selected')) {
+            $(layer).trigger('click');
+          }
+        }else{
+          if (!$(layer).hasClass('selected')) {
+            $(layer).trigger('click');
+          }
+        }
+      }, this));
+    },
+
+    checkUMD: function(){
+      var count = 0;
+      _.each(this.$UMDlayers, _.bind(function(layer){
+        if ($(layer).hasClass('selected')) {
+          count ++;
+        }
+      }, this));
+      (count == 2) ? this.$toggleUMD.find('.onoffswitch').addClass('checked') : this.$toggleUMD.find('.onoffswitch').removeClass('checked');
+    },
+
 
     setIso: function(iso){
       this.iso = iso.country;

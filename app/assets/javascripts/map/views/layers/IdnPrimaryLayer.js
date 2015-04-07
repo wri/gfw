@@ -12,7 +12,7 @@ define([
   var IdnPrimaryLayer = ImageLayerClass.extend({
 
     options: {
-      urlTemplate: 'https://s3.amazonaws.com/wri-tiles/idnfc/{z}/{x}/{y}.png',
+      urlTemplate: 'https://s3.amazonaws.com/wri-idn/idnpf_static_soft/{z}/{x}/{y}.png',
       dataMaxZoom: 11
     }
 

@@ -565,6 +565,10 @@
           color: $dark;
           font-weight: 500;
         }
+        h4.overview_title{
+          margin: 10px 0 0;
+          color: $dark;
+        }
         p {
           color: $dark;
           padding: 10px 0 0;
@@ -1318,7 +1322,6 @@
   .source_body,
   .source_coverage {
     @extend .single-source-item;
-
 
     .bullets  {
       list-style-type: disc;

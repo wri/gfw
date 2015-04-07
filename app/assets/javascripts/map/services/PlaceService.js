@@ -193,8 +193,9 @@ define([
      */
     _destandardizeParams: function(params) {
       var p = _.extendNonNull({}, urlDefaultsParams, params);
+      var baselayers = _.pluck(p.baselayers, 'slug');
       p.name = this._name;
-      p.baselayers = _.pluck(p.baselayers, 'slug');
+      p.baselayers = (baselayers.length > 0) ? baselayers : 'none';
       p.sublayers = p.sublayers ? p.sublayers.join(',') : null;
       p.zoom = String(p.zoom);
       p.lat = p.lat.toFixed(2);
