@@ -183,7 +183,7 @@ define([
 
     setVisibleRange: function(){
       var width = (100/(this.valuesMap.length - 1)) * this.$range.val();
-      this.$progress.width(width + '%')
+      this.$progress.width(100 - width + '%')
     },
 
     // click on label
