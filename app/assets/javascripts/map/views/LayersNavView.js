@@ -27,6 +27,7 @@ define([
 
     events: {
       'click .layer': '_toggleLayer',
+      'click #toggleUmd' : 'toggleUmd',
       'click #country-layers' : '_showNotification',
       'click #country-layers-reset' : '_resetIso'
     },
@@ -43,6 +44,8 @@ define([
       this.presenter.initExperiment('source');
 
       //Init
+      this.$UMDlayers = $('#umd-group .layer');
+      this.$toggleUMD = $('#toggleUmd');
       this.$categoriesList = $('.categories-list');
       this.$layersCountry = $('#layers-country-nav');
       this.$countryLayers = $('#country-layers');
@@ -90,6 +93,7 @@ define([
           $layerTitle.css('color', '');
         }
       });
+      this.checkUMD();
     },
 
     /**
@@ -122,6 +126,26 @@ define([
         ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
       }
     },
+
+    toggleUmd: function(e){
+      _.each(this.$UMDlayers, _.bind(function(layer){
+        if (!$(layer).hasClass('selected')) {
+          $(layer).trigger('click');
+        }
+      }, this));
+    },
+
+    checkUMD: function(){
+      var count = 0;
+      _.each(this.$UMDlayers, _.bind(function(layer){
+        if ($(layer).hasClass('selected')) {
+          count ++;
+        }
+      }, this));
+      console.log(count);
+      (count == 2) ? this.$toggleUMD.find('.onoffradio').addClass('checked') : this.$toggleUMD.find('.onoffradio').removeClass('checked');
+    },
+
 
     setIso: function(iso){
       this.iso = iso.country;
