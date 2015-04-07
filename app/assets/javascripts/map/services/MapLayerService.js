@@ -102,7 +102,7 @@ define([
                 does_wrapper, \
                 true AS visible \
               FROM \
-                layerspec_nuclear_hazard \
+                layerspec \
               WHERE \
                 display = \'true\' \
               ORDER BY \
