@@ -68,7 +68,8 @@ define([
     },
 
     _openShareModal: function(event) {
-      new ShareView().share(event)
+      var shareView = new ShareView().share(event);
+      this.$el.append(shareView.el);
     },
 
     _initFormaDropdown: function() {
