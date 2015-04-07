@@ -73,18 +73,13 @@ define([
         var layer = layers[$li.data('layer')];
 
         if (layer) {
-          var isBaselayer = (layer.category_slug === 'forest_clearing');
+          // var isBaselayer = (layer.category_slug === 'forest_clearing');
 
           $li.addClass('selected');
           $toggle.addClass('checked');
           $layerTitle.css('color', layer.title_color);
+          $toggle.css('background', layer.title_color);
 
-          if (!isBaselayer) {
-            $toggle.css('background', layer.title_color);
-          } else {
-            $toggle.css('border-color', layer.title_color);
-            $toggleIcon.css('background-color', layer.title_color);
-          }
           ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layer.slug);
         } else {
           $li.removeClass('selected');
@@ -128,9 +123,16 @@ define([
     },
 
     toggleUmd: function(e){
+
       _.each(this.$UMDlayers, _.bind(function(layer){
-        if (!$(layer).hasClass('selected')) {
-          $(layer).trigger('click');
+        if (this.$toggleUMD.find('.onoffswitch').hasClass('checked')) {
+          if ($(layer).hasClass('selected')) {
+            $(layer).trigger('click');
+          }
+        }else{
+          if (!$(layer).hasClass('selected')) {
+            $(layer).trigger('click');
+          }
         }
       }, this));
     },
@@ -142,7 +144,7 @@ define([
           count ++;
         }
       }, this));
-      (count == 2) ? this.$toggleUMD.find('.onoffradio').addClass('checked') : this.$toggleUMD.find('.onoffradio').removeClass('checked');
+      (count == 2) ? this.$toggleUMD.find('.onoffswitch').addClass('checked') : this.$toggleUMD.find('.onoffswitch').removeClass('checked');
     },
 
 
