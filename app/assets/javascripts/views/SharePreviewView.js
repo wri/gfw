@@ -26,7 +26,7 @@ define([
 
     hide: function(e) {
       e && e.preventDefault();
-      this.$el.remove();
+      this.remove();
     },
 
     render: function(){
