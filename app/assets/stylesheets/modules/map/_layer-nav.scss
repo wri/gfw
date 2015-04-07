@@ -221,6 +221,15 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       display: block;
       text-transform: uppercase;
       font-weight: 500;
+      .onoffradio{
+        margin: 0 6px 0 0;
+        &.checked{
+          border-color: #F69;
+          span{
+            background: #F69;
+          }
+        }
+      }
       em{
         display: block;
         font-size: 11px;
@@ -233,6 +242,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     >li{
       border: none;
       padding: 10px;
+      padding-left: 15px;
     }
   }
   li {
