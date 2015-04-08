@@ -124,10 +124,27 @@
   .slider-container{
     width: 100%;
     ul{
-      width: calc(100% - 12px);
+      width: calc(75% - 12px);
       height: 11px;
       position: relative;
       margin: 0 auto 3px;
+      &:before,
+      &:after{
+        position: absolute;
+        top: 0;
+        text-align: center;
+        color: $cGreen;
+        font-weight: 500;
+        font-size: 10px;
+      }
+      &:before{
+        content: "0%";
+        right: 112.5%;
+      }
+      &:after{
+        content: "100%";
+        left: 112.5%;
+      }
       li{
         position: absolute;
         text-align: center;
@@ -149,14 +166,29 @@
     .range-box{
       position: relative;
       height: 10px;
+      width: 75%;
+      margin: 0 auto;
       .dots{
         position: absolute;
-        width: 100%;
+        width: 125%;
         height: 100%;
         top: 0;
-        left: 0;
+        left: 50%;
+        @include transform(translate(-50%,0));
         margin: 1px 0 0;
         background: image-url('/assets/icons/point.png') repeat-x 1px center;
+        &:after{
+          content: "";
+          position: absolute;
+          top: 50%;
+          right: 0;
+          width: 12.5%;
+          height: 4px;
+          margin: -2px 0 0;
+          cursor: pointer;
+          background: $cGreen;
+          border-radius: 2px;
+        }
       }
       .progress{
         position: absolute;
