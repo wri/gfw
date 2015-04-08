@@ -42,6 +42,7 @@ define([
   'map/views/layers/CmrOilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
   'map/views/layers/CogWoodFiberPlantationsLayer',
+  'map/views/layers/IdnWoodFiberPlantationsLayer',
   'map/views/layers/ProtectedAreasLayer',
   'map/views/layers/ProtectedAreasCDBLayer',
   'map/views/layers/BiodiversityHotspotsLayer',
@@ -114,6 +115,7 @@ define([
   WoodFiberPlantationsLayer,
   CogWoodFiberPlantationsLayer,
   GabWoodFiberPlantationsLayer,
+  IdnWoodFiberPlantationsLayer,
   ProtectedAreasLayer,
   ProtectedAreasCDBLayer,
   BiodiversityHotspotsLayer,
@@ -272,6 +274,9 @@ define([
     },
     gab_wood_fiber: {
       view: GabWoodFiberPlantationsLayer
+    },
+    idn_wood_fiber: {
+      view: IdnWoodFiberPlantationsLayer
     },
     protected_areas: {
       view: ProtectedAreasLayer

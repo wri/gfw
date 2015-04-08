@@ -268,6 +268,13 @@
     polygon-clip: false;
   }
 
+  [layer='idn_wood_fiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
   [layer='gab_wood_fiber'] {
     polygon-fill: #e6adb9;
     line-color: #e6adb9;
