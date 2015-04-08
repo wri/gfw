@@ -111,6 +111,7 @@ define([
   LbrOilPalmLayer,
   WoodFiberPlantationsLayer,
   CogWoodFiberPlantationsLayer,
+  GabWoodFiberPlantationsLayer,
   ProtectedAreasLayer,
   ProtectedAreasCDBLayer,
   BiodiversityHotspotsLayer,
@@ -263,6 +264,9 @@ define([
     },
     cog_wood_fiber: {
       view: CogWoodFiberPlantationsLayer
+    },
+    gab_wood_fiber: {
+      view: GabWoodFiberPlantationsLayer
     },
     protected_areas: {
       view: ProtectedAreasLayer
