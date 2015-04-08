@@ -39,6 +39,7 @@ define([
   'map/views/layers/OilPalmLayer',
   'map/views/layers/CogOilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
+  'map/views/layers/CogWoodFiberPlantationsLayer',
   'map/views/layers/ProtectedAreasLayer',
   'map/views/layers/ProtectedAreasCDBLayer',
   'map/views/layers/BiodiversityHotspotsLayer',
@@ -107,6 +108,7 @@ define([
   OilPalmLayer,
   CogOilPalmLayer,
   WoodFiberPlantationsLayer,
+  CogWoodFiberPlantationsLayer,
   ProtectedAreasLayer,
   ProtectedAreasCDBLayer,
   BiodiversityHotspotsLayer,
@@ -253,6 +255,9 @@ define([
     },
     wood_fiber_plantations: {
       view: WoodFiberPlantationsLayer
+    },
+    cog_wood_fiber: {
+      view: CogWoodFiberPlantationsLayer
     },
     protected_areas: {
       view: ProtectedAreasLayer
