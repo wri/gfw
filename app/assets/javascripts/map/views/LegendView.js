@@ -72,7 +72,8 @@ define([
     events: {
       'click .category-name' : '_toogleCategory',
       'click .layer-sublayer': '_toggleLayer',
-      'click .canopy-button' : '_showCanopy'
+      'click .canopy-button' : '_showCanopy',
+      'click .close' : 'toogleLegend'
     },
 
     initialize: function() {

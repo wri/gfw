@@ -26,6 +26,23 @@
     @include transform(translate(0,0));
   }
 
+  .close{
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    padding: 8px;
+    top: 0;
+    right: 0;
+    display: block;
+    z-index: 5;
+    svg{
+      stroke: $dark;
+    }
+    @media (min-width: $br-mobileMap){
+      display: none;
+    }
+  }
+
 
   // @ul
   .categories{
