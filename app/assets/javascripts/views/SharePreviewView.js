@@ -32,8 +32,18 @@ define([
     render: function(){
       var renderedTemplate = this.template({src: this.src});
       this.$el.html(renderedTemplate);
+      this.$('iframe').load(_.bind(this.fitToContent, this));
 
       return this;
+    },
+
+    fitToContent: function() {
+      var $iframe = this.$('iframe');
+      var iframe = $iframe[0];
+      var iframeContent = iframe.contentWindow.document.body;
+
+      $iframe.width(iframeContent.clientWidth);
+      $iframe.height(iframeContent.scrollHeight);
     }
   });
 
