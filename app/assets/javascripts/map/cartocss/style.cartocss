@@ -212,6 +212,13 @@
     polygon-clip: false;
   }
 
+  [layer='idn_oil_palm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
   [layer='lbr_oil_palm'] {
     polygon-fill: #ee9587;
     line-color: #ee9587;
