@@ -10,15 +10,15 @@
           <span class="category-name">FOREST CHANGE</span>
         </div>
         <ul class="layers-list">
-          <div class="layer-group">
-            <span class="group-name">Tree cover change <em>(Hansen/UMD/Google/USGS/NASA)</em></span>
+          <div id="umd-group" class="layer-group">
+            <span id="toggleUmd" class="group-name"><span class="onoffradio"><span></span></span>Tree cover change <em>(Hansen/UMD/Google/USGS/NASA)</em></span>
             <li class="layer" data-layer="loss">
-              <span class="onoffradio"><span></span></span>
+              <span class="onoffswitch"><span></span></span>
               <span class="layer-title">Loss<a href='#' data-source='loss' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
               <span class="layer-info">(annual, 30m, Global)</span>
             </li>
             <li class="layer" data-layer="forestgain">
-              <span class="onoffradio"><span></span></span>
+              <span class="onoffswitch"><span></span></span>
               <span class="layer-title">Gain<a href='#' data-source='forestgain' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
               <span class="layer-info">(12 years, 30m, Global)</span>
             </li>
@@ -43,7 +43,7 @@
             <li class="layer" data-layer="modis">
               <span class="onoffradio"><span></span></span>
               <span class="layer-title">QUICC<a href='#' data-source='modis' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-              <span class="layer-info">(quarterly, 5m, &lt;37 degrees north, NASA)</span>
+              <span class="layer-info">(quarterly, 5km, &lt;37 degrees north, NASA)</span>
             </li>
           </div>
           <div class="layer-group">
@@ -53,12 +53,12 @@
               <span class="layer-info">(past 7 days, 1km, global, NASA)</span>
             </li>
           </div>
-          <div class="layer-group">
+          {{!-- <div class="layer-group">
             <li class="layer" data-layer="nothing">
-              <span class="onoffradio"><span></span></span>
+              <span class="onoffswitch"><span></span></span>
               <span class="layer-title">None</span>
             </li>
-          </div>
+          </div> --}}
         </ul>
       </div>
     </li>
@@ -74,7 +74,7 @@
         <ul class="layers-list">
           <li class="layer" data-layer="forest2000">
             <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Tree cover extent<a href='#' data-source='forest2000' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            <span class="layer-title">Tree cover<a href='#' data-source='forest2000' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
           <li class="layer" data-layer="ifl_2013_deg">
             <span class="onoffswitch"><span></span></span>

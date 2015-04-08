@@ -155,16 +155,18 @@ define([
     },
 
     toggleLayer: function(event) {
-      event.stopPropagation();
+      // event.stopPropagation();
       event.preventDefault();
 
-      var $li = $(event.currentTarget);
-      var layerSlug = $li.data('layer');
-      var layer = _.where(this.isoLayers, {slug: layerSlug})[0];
+      if (!$(event.target).hasClass('source') && !$(event.target).parent().hasClass('source')) {
+        var $li = $(event.currentTarget);
+        var layerSlug = $li.data('layer');
+        var layer = _.where(this.isoLayers, {slug: layerSlug})[0];
 
-      if (layer) {
-        $('#country-layers [data-layer="'+layerSlug+'"]:first').click()
-        ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
+        if (layer) {
+          $('#country-layers [data-layer="'+layerSlug+'"]:first').click()
+          ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
+        }
       }
     },
 

@@ -60,10 +60,10 @@ define([
       var baselayers = this.model.getBaselayers();
 
       // At least one baselayer active.
-      if (current && current.category_slug === 'forest_clearing' &&
-        _.keys(baselayers).length === 1) {
-        return false;
-      }
+      // if (current && current.category_slug === 'forest_clearing' &&
+      //   _.keys(baselayers).length === 1) {
+      //   return false;
+      // }
 
       if (current) {
         this._removeLayer(current);

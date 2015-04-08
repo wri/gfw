@@ -282,9 +282,10 @@ define([
       this.area = iso.region;
 
       this.$countrySelect.val(this.iso).trigger("liszt:updated");
-      this.$regionSelect.val(this.area).trigger("liszt:updated");
       if (this.iso) {
         this.getSubCountries();
+      }else{
+        this.$regionSelect.val(this.area).attr('disabled', true).trigger("liszt:updated")
       }
     },
 

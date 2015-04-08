@@ -31,7 +31,7 @@ define([
   });
 
   var ShareView = Backbone.View.extend({
-    el: '.share-modal',
+    className: 'share-modal mini-modal',
 
     template: Handlebars.compile(tpl),
 
@@ -55,11 +55,18 @@ define([
 
       this._setUrlsFromEvent(event);
       this.$el.show(0);
+
+      return this;
     },
 
     hide: function(e){
       e && e.preventDefault();
-      this.$el.hide();
+
+      if (this.iframeView !== undefined) {
+        this.iframeView.hide();
+      }
+
+      this.remove();
     },
 
     _setListeners: function(){
@@ -80,12 +87,12 @@ define([
     },
 
     _cacheVars: function(){
-      this.$changeType = $('.change-type');
-      this.$shareinfo = $('#share-info p');
-      this.$input = $('#share_field');
-      this.$twitterLink = this.$el.find('.twitter');
-      this.$facebookLink = this.$el.find('.facebook');
-      this.$google_plusLink = this.$el.find('.google_plus');
+      this.$changeType = this.$('.change-type');
+      this.$shareinfo = this.$('#share-info p');
+      this.$input = this.$('#share_field');
+      this.$twitterLink = this.$('.twitter');
+      this.$facebookLink = this.$('.facebook');
+      this.$google_plusLink = this.$('.google_plus');
     },
 
     _renderInput: function() {
@@ -183,11 +190,11 @@ define([
     },
 
     _showPreview: function(){
-      var iframeView = new SharePreviewView({
+      this.iframeView = new SharePreviewView({
         src: this.model.get('embedUrl')
       });
 
-      $('body').append(iframeView.render().$el);
+      $('body').append(this.iframeView.render().$el);
     },
 
     _shareToSocial: function(e){

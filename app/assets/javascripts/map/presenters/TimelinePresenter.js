@@ -78,6 +78,7 @@ define([
       if (!baselayer) {
         date = undefined;
         this._timelineDisabled();
+        this._removeTimeline();
         return;
       }
 

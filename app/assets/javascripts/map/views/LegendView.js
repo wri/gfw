@@ -139,9 +139,8 @@ define([
       }
       var name = (country) ? country.name : iso;
 
-
       var html = this.template({
-        categories: categoriesGlobal,
+        categories: (jQuery.isEmptyObject(categoriesGlobal)) ? false : categoriesGlobal,
         categoriesIso: categoriesIso,
         layersLength: layersLength,
         iso: iso,

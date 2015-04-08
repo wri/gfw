@@ -299,7 +299,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
 
       .category-name {
         display: block;
-        padding: 5px 0 15px 0;
+        padding: 5px 10px 15px;
         margin-top: 1px;
       }
     }
@@ -321,6 +321,16 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       @media (min-width: $br-mobileMap){
         padding: 10px;
       }
+      .onoffradio{
+        margin: 0 6px 0 0;
+        &.checked{
+          background: #F69;
+          border-color: #F69;
+          span{
+            background: #F69;
+          }
+        }
+      }
       em{
         display: block;
         font-size: 11px;
@@ -335,6 +345,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       padding: 15px 20px;
       @media (min-width: $br-mobileMap){
         padding: 10px;
+        padding-left: 15px;
       }
     }
   }

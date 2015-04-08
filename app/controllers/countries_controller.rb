@@ -1,5 +1,4 @@
 class CountriesController < ApplicationController
-  before_filter :check_terms
   before_action :check_country_iso, only: :show
 
   skip_before_filter :verify_authenticity_token, only: [:create_download]

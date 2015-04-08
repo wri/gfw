@@ -141,7 +141,8 @@ define([
 
     //SHARE
     shareMap: function(event) {
-      new ShareView().share(event);
+      var shareView = new ShareView().share(event);
+      $('body').append(shareView.el);
     },
 
 

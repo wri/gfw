@@ -23,7 +23,7 @@
           <div class="map" id="countryMap"></div>
           <div class="tree-numbers">
             <div class="tree-cover">
-              <h4>Tree cover extent (2000)</h4>
+              <h4>Tree cover (2000)</h4>
                 <span class="amount"><!--<%= extent_to_human(@country['extent'], format: '%n') %>--></span>
                 <span class="unit"><%= extent_to_human(@country['extent'], format: '%u', shortUnit: true) %></span>
             </div>
@@ -85,7 +85,7 @@
               </a>
             </li>
             <li>
-              <a href='http://www.earthenginepartners.appspot.com/science-2013-global-forest/download.html' target='_blank'>
+              <a href='http://data.gfw.opendata.arcgis.com/datasets?q=<%= @country['iso'] %>' target='_blank'>
                 Download spatial data
                 <!-- <span class="sidenav-icon country-icons-download_grey"></span> -->
                 <span class="sidenav-icon">
