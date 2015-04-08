@@ -125,7 +125,7 @@ define([
     toggleUmd: function(e){
 
       _.each(this.$UMDlayers, _.bind(function(layer){
-        if (this.$toggleUMD.find('.onoffswitch').hasClass('checked')) {
+        if (this.$toggleUMD.find('.onoffradio').hasClass('checked')) {
           if ($(layer).hasClass('selected')) {
             $(layer).trigger('click');
           }
@@ -144,7 +144,7 @@ define([
           count ++;
         }
       }, this));
-      (count == 2) ? this.$toggleUMD.find('.onoffswitch').addClass('checked') : this.$toggleUMD.find('.onoffswitch').removeClass('checked');
+      (count == 2) ? this.$toggleUMD.find('.onoffradio').addClass('checked') : this.$toggleUMD.find('.onoffradio').removeClass('checked');
     },
 
 

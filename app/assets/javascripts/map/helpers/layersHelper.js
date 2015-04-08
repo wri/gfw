@@ -37,6 +37,7 @@ define([
   'map/views/layers/CogMiningLayer',
   'map/views/layers/GabMiningLayer',
   'map/views/layers/OilPalmLayer',
+  'map/views/layers/CogOilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
   'map/views/layers/ProtectedAreasLayer',
   'map/views/layers/ProtectedAreasCDBLayer',
@@ -104,6 +105,7 @@ define([
   CogMiningLayer,
   GabMiningLayer,
   OilPalmLayer,
+  CogOilPalmLayer,
   WoodFiberPlantationsLayer,
   ProtectedAreasLayer,
   ProtectedAreasCDBLayer,
@@ -245,6 +247,9 @@ define([
     },
     oil_palm: {
       view: OilPalmLayer
+    },
+    cog_oil_palm: {
+      view: CogOilPalmLayer
     },
     wood_fiber_plantations: {
       view: WoodFiberPlantationsLayer
