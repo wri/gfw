@@ -198,6 +198,12 @@
     line-clip: false;
     polygon-clip: false;
   }
+  [layer='cog_oil_palm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
 
   [layer='caf_lc_1'] {
     polygon-fill: #fe9929;
