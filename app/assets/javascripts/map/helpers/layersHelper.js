@@ -37,7 +37,16 @@ define([
   'map/views/layers/CogMiningLayer',
   'map/views/layers/GabMiningLayer',
   'map/views/layers/OilPalmLayer',
+  'map/views/layers/CogOilPalmLayer',
+<<<<<<< HEAD
+  'map/views/layers/LbrOilPalmLayer',
+  'map/views/layers/CmrOilPalmLayer',
+=======
+  'map/views/layers/IdnOilPalmLayer',
+>>>>>>> 6bc5d5a83008829b9f1e04f52b19ba6809c6076e
   'map/views/layers/WoodFiberPlantationsLayer',
+  'map/views/layers/CogWoodFiberPlantationsLayer',
+  'map/views/layers/IdnWoodFiberPlantationsLayer',
   'map/views/layers/ProtectedAreasLayer',
   'map/views/layers/ProtectedAreasCDBLayer',
   'map/views/layers/BiodiversityHotspotsLayer',
@@ -104,7 +113,17 @@ define([
   CogMiningLayer,
   GabMiningLayer,
   OilPalmLayer,
+  CogOilPalmLayer,
+<<<<<<< HEAD
+  LbrOilPalmLayer,
+  CmrOilPalmLayer,
+=======
+  IdnOilPalmLayer,
+>>>>>>> 6bc5d5a83008829b9f1e04f52b19ba6809c6076e
   WoodFiberPlantationsLayer,
+  CogWoodFiberPlantationsLayer,
+  GabWoodFiberPlantationsLayer,
+  IdnWoodFiberPlantationsLayer,
   ProtectedAreasLayer,
   ProtectedAreasCDBLayer,
   BiodiversityHotspotsLayer,
@@ -246,8 +265,29 @@ define([
     oil_palm: {
       view: OilPalmLayer
     },
+    cog_oil_palm: {
+      view: CogOilPalmLayer
+    },
+    lbr_oil_palm: {
+      view: LbrOilPalmLayer
+    },
+    cmr_oil_palm: {
+      view: CmrOilPalmLayer
+    },
+    idn_oil_palm: {
+      view: IdnOilPalmLayer
+    },
     wood_fiber_plantations: {
       view: WoodFiberPlantationsLayer
+    },
+    cog_wood_fiber: {
+      view: CogWoodFiberPlantationsLayer
+    },
+    gab_wood_fiber: {
+      view: GabWoodFiberPlantationsLayer
+    },
+    idn_wood_fiber: {
+      view: IdnWoodFiberPlantationsLayer
     },
     protected_areas: {
       view: ProtectedAreasLayer

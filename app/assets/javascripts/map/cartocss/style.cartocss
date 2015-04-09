@@ -198,6 +198,33 @@
     line-clip: false;
     polygon-clip: false;
   }
+  [layer='cog_oil_palm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='cmr_oil_palm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='idn_oil_palm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='lbr_oil_palm'] {
+    polygon-fill: #ee9587;
+    line-color: #ee9587;
+    line-clip: false;
+    polygon-clip: false;
+  }
 
   [layer='caf_lc_1'] {
     polygon-fill: #fe9929;
@@ -235,6 +262,27 @@
   }
 
   [layer='gfw_wood_fiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='cog_wood_fiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='idn_wood_fiber'] {
+    polygon-fill: #e6adb9;
+    line-color: #e6adb9;
+    line-clip: false;
+    polygon-clip: false;
+  }
+
+  [layer='gab_wood_fiber'] {
     polygon-fill: #e6adb9;
     line-color: #e6adb9;
     line-clip: false;
