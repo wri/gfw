@@ -42,6 +42,7 @@ define([
   'map/views/layers/CmrOilPalmLayer',
   'map/views/layers/IdnOilPalmLayer',
   'map/views/layers/WoodFiberPlantationsLayer',
+  'map/views/layers/GabWoodFiberPlantationsLayer',
   'map/views/layers/CogWoodFiberPlantationsLayer',
   'map/views/layers/IdnWoodFiberPlantationsLayer',
   'map/views/layers/ProtectedAreasLayer',
