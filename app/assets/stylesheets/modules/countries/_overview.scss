@@ -12,7 +12,8 @@
   margin-top: 36px;
   top: -20px;
   .embed & {
-    width: 960px;
+    margin-top: 0;
+    top: 0px;
   }
 }
 
@@ -26,7 +27,7 @@
   }
   .graph_tab, .all_countries {
     @media only screen and (min-width: 481px) and (max-width: 1010px) {
-      width: 16.6666%;
+      width: 25%;
     }
   }
 
