@@ -406,7 +406,7 @@ define([
 
 
     /**
-    *
+    * Display a dialog from the Landing Index First Steps options
     */
     _checkDialogs: function() {
       $(document).ready(function(type){
