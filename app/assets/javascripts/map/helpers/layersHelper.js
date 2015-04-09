@@ -38,12 +38,9 @@ define([
   'map/views/layers/GabMiningLayer',
   'map/views/layers/OilPalmLayer',
   'map/views/layers/CogOilPalmLayer',
-<<<<<<< HEAD
   'map/views/layers/LbrOilPalmLayer',
   'map/views/layers/CmrOilPalmLayer',
-=======
   'map/views/layers/IdnOilPalmLayer',
->>>>>>> 6bc5d5a83008829b9f1e04f52b19ba6809c6076e
   'map/views/layers/WoodFiberPlantationsLayer',
   'map/views/layers/CogWoodFiberPlantationsLayer',
   'map/views/layers/IdnWoodFiberPlantationsLayer',
@@ -114,12 +111,9 @@ define([
   GabMiningLayer,
   OilPalmLayer,
   CogOilPalmLayer,
-<<<<<<< HEAD
   LbrOilPalmLayer,
   CmrOilPalmLayer,
-=======
   IdnOilPalmLayer,
->>>>>>> 6bc5d5a83008829b9f1e04f52b19ba6809c6076e
   WoodFiberPlantationsLayer,
   CogWoodFiberPlantationsLayer,
   GabWoodFiberPlantationsLayer,
