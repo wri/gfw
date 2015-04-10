@@ -73,6 +73,7 @@ define([
   'map/views/layers/AzepolyLayer',
   'map/views/layers/TigersLayer',
   'map/views/layers/CarbonLayer',
+  'map/views/layers/DamHotspotsLayer',
   'map/views/layers/ColombiaForestChangeLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
@@ -155,6 +156,7 @@ define([
   AzepolyLayer,
   TigersLayer,
   CarbonLayer,
+  DamHotspotsLayer,
   ColombiaForestChangeLayer,
   // Layer dialog templates
   // loss_dialog,
@@ -387,6 +389,9 @@ define([
     },
     colombia_forest_change: {
       view: ColombiaForestChangeLayer
+    },
+    dam_hotspots: {
+      view: DamHotspotsLayer
     },
     nothing: {
     }
