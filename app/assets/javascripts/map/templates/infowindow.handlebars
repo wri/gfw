@@ -128,6 +128,10 @@
           <h4>Acquisition date:</h4>
           <p>{{content.data.acq_date}}</p>
         {{/if}}
+        {{#if content.data.date_create}}
+          <h4>Status date:</h4>
+          <p>{{content.data.date_create}}</p>
+        {{/if}}
         {{#if content.data.acq_time}}
           <h4>Acquisition time:</h4>
           <p>{{content.data.acq_time}}</p>

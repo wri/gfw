@@ -50,6 +50,7 @@ define([
   'map/views/layers/BiodiversityHotspotsLayer',
   'map/views/layers/ResourceRightsLayer',
   'map/views/layers/LandRightsLayer',
+  'map/views/layers/AusLandRightsLayer',
   'map/views/layers/UserStoriesLayer',
   'map/views/layers/MongabayStoriesLayer',
   'map/views/layers/InfoamazoniaStoriesLayer',
@@ -124,6 +125,7 @@ define([
   BiodiversityHotspotsLayer,
   ResourceRightsLayer,
   LandRightsLayer,
+  AusLandRightsLayer,
   UserStoriesLayer,
   MongabayStoriesLayer,
   InfoamazoniaStoriesLayer,
@@ -298,6 +300,9 @@ define([
     },
     land_rights: {
       view: LandRightsLayer
+    },
+    aus_land_rights: {
+      view: AusLandRightsLayer
     },
     user_stories: {
       view: UserStoriesLayer
