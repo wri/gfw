@@ -356,7 +356,13 @@
     line-color: #FFF;
     line-opacity: 1;
   }
-
+  [layer='lbr_resource_rights'] {
+    polygon-fill: #707d92;
+    polygon-opacity: 0.9;
+    line-width: 0;
+    line-color: #FFF;
+    line-opacity: 1;
+  }
   [layer='defor'] {
     polygon-fill:#F69;
     polygon-opacity: 1;

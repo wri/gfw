@@ -50,6 +50,7 @@ define([
   'map/views/layers/BiodiversityHotspotsLayer',
   'map/views/layers/ResourceRightsLayer',
   'map/views/layers/CmrResourceRightsLayer',
+  'map/views/layers/LbrResourceRightsLayer',
   'map/views/layers/LandRightsLayer',
   'map/views/layers/AusLandRightsLayer',
   'map/views/layers/PanLandRightsLayer',
@@ -128,6 +129,7 @@ define([
   BiodiversityHotspotsLayer,
   ResourceRightsLayer,
   CmrResourceRightsLayer,
+  LbrResourceRightsLayer,
   LandRightsLayer,
   AusLandRightsLayer,
   PanLandRightsLayer,
@@ -306,6 +308,9 @@ define([
     },
     cmr_resource_rights: {
       view: CmrResourceRightsLayer
+    },
+    lbr_resource_rights: {
+      view: LbrResourceRightsLayer
     },
     land_rights: {
       view: LandRightsLayer
