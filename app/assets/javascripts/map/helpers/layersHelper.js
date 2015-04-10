@@ -53,6 +53,7 @@ define([
   'map/views/layers/LandRightsLayer',
   'map/views/layers/AusLandRightsLayer',
   'map/views/layers/PanLandRightsLayer',
+  'map/views/layers/BraLandRightsLayer',
   'map/views/layers/UserStoriesLayer',
   'map/views/layers/MongabayStoriesLayer',
   'map/views/layers/InfoamazoniaStoriesLayer',
@@ -130,6 +131,7 @@ define([
   LandRightsLayer,
   AusLandRightsLayer,
   PanLandRightsLayer,
+  BraLandRightsLayer,
   UserStoriesLayer,
   MongabayStoriesLayer,
   InfoamazoniaStoriesLayer,
@@ -313,6 +315,9 @@ define([
     },
     pan_land_rights: {
       view: PanLandRightsLayer
+    },
+    bra_land_rights: {
+      view: BraLandRightsLayer
     },
     user_stories: {
       view: UserStoriesLayer
