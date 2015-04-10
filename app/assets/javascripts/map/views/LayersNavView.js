@@ -49,7 +49,7 @@ define([
       this.$toggleUMD = $('#toggleUmd');
       this.$categoriesList = $('.categories-list');
       this.$layersCountry = $('#layers-country-nav');
-      this.$countryLayers = this.$el.find('.country-layers-nav');
+      this.$countryLayers = $('#country-layers');
       this.$countryLayersReset = $('#country-layers-reset');
 
     },
@@ -227,8 +227,6 @@ define([
 
     resetIsoLayers: function(){
       _.each(this.$countryLayers.find('.layer'),function(li){
-        console.log($(li).data('layer'));
-        console.log($(li).hasClass('selected'));
         if ($(li).hasClass('selected') && !$(li).hasClass('wrapped')) {
           $(li).click();
         }
