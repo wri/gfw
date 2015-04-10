@@ -41,6 +41,7 @@
           </li>
           <li><%= link_to 'Visualize data', "#{howto_path}/view-data", :"data-slug" => 'view-data', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item view-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'View statistics', "#{howto_path}/view-statistics", :"data-slug" => 'view-statistics', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item view-statistics' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Analyze forest change statistics', "#{howto_path}/analyze-forest-change", :"data-slug" => 'analyze-forest-change', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item view-statistics' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Conduct analysis & subscribe to alerts', "#{howto_path}/conduct-analysis-and-subscribe-to-alerts", :"data-slug" => 'conduct-analysis-and-subscribe-to-alerts', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item conduct-analysis-and-subscribe-to-alerts' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Submit a story', "#{howto_path}/submit-a-story", :"data-slug" => 'submit-a-story', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item submit-a-story' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li class="no-transform"><%= link_to 'OPEN DATA PORTAL', "#{howto_path}/odp", :"data-slug" => 'odp', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item odp' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
@@ -187,48 +188,77 @@
             <header>
               <h2>Analyze Forest Change</h2>
               <p>Choose a category below to learn how to analyze forest change in your area of interest.</p>
-              <p>Looking for more advanced commodity or forest and land fire analysis?  Visit GFW Commodities or GFW Fires.</p>
+              <p>Looking for more advanced commodity or forest and land fire analysis? Visit GFW Commodities or GFW Fires.</p>
             </header>
             <ul class='sources'>
-              <li id="view-country-ranking" class='source-item first'>
+              <li id="analyze-user-defined-area" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>Analyze a user-defined area</strong>
                   <i class='expand_arrow'></i>
                 </div>
                 <div class='source_body'>
                   <div class='source_summary'>
-                    <p>View country rankings for tree cover, loss, and gain</p>
-                    <p><strong>1.</strong> Navigate to <a href="/countries/overview" target='_blank'>Country Rankings</a>.
-                    <p><strong>2.</strong> Use the tabs to navigate through different ranking categories. Click the information icon to learn more about the graph and rankings.</p>
-                    <p><%= image_tag('howto-screenshots/new_content/image16.png') %></p>
-                    <p><strong>3.</strong> Click on a country name in the ranking list to access the country profile.</p>
-                    <p><%= image_tag('howto-screenshots/new_content/image17.png') %></p>
-                    <p><strong>4.</strong> Download a table of country statistics, adjust the tree cover canopy density of the data you are viewing, and share the graph using the options above the graph.</p>
-                    <p><%= image_tag('howto-screenshots/new_content/image18.png') %></p>
-                    <a class="btn green medium" href='/countries/overview' target='_blank'>Country Rankings</a>
+                    <p><strong>1.</strong> Enter the <a href="/map" target='_blank'>GFW Interactive Map</a>.
+                    <p><strong>2.</strong> Turn on the Forest Change data layer you wish to analyze (e.g., tree cover loss).</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image24.png') %></p>
+                    <p><strong>3.</strong> Define the time period of your analysis by dragging the handles of the timeline or by selecting a time interval.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image25.png') %></p>
+                    <p><strong>4.</strong> Select the analysis icon on the right-hand side of the map, and choose “Draw shape.”</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image26.png') %></p>
+                    <p><strong>5.</strong> Select “Start drawing” and click with your mouse to draw a shape in the map.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image27.png') %></p>
+                    <p><strong>6.</strong> Click “Analyze” in the right-hand window and the results will appear.</p>
+                    <p><strong>7.</strong> If you want to adjust the time period or type of data you are analyzing simply drag the handles on the timeline or select a different time interval, or choose a different data layer under the Forest Use tab. Your results will update immediately based on your selection.</p>
+                    <p><strong>8.</strong> You can then download the raw data on the Open Data Portal, discard your analysis or, if you are analyzing FORMA alerts, subscribe to alerts.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image28.png') %></p>
+
+                    <a class="btn green medium" href='/map' target='_blank'>GFW Interactive Map</a><a href='http://commodities.globalforestwatch.org/' class="btn green medium uppercase">GFW Commodities</a>
                   </div>
                 </div>
               </li>
-              <li id="view-country-statistics" class='source-item first'>
+              <li id="analyze-a-country-or-subnational-jurisdiction" class='source-item first'>
                 <div class='source_header'>
-                  <strong class='source_title'>View country statistics</strong>
+                  <strong class='source_title'> Analyze a country or subnational jurisdiction</strong>
                   <i class='expand_arrow'></i>
                 </div>
                 <div class='source_body'>
                   <div class='source_summary'>
-                    <p>View and download national and subnational statistics</p>
-                    <p><strong>1.</strong> Navigate to <a href="/countries" target='_blank'>Country Profiles</a>.
-                    <p><strong>2.</strong> Select a country or search for a country to view statistics and graphs related to tree cover loss and gain, forest type, economy, land tenure, and more.</p>
-                    <p><%= image_tag('howto-screenshots/new_content/image19.png') %></p>
-                    <p><strong>3.</strong> Once you are on a country profile, view statistics and graphs for a subnational jurisdiction using the “Select Jurisdiction” button located under the country name. Note: Only the statistics and graphs presented on the top portion of the country profile can be refined to subnational jurisdictions.</p>
-                    <p><%= image_tag('howto-screenshots/new_content/image20.png') %></p>
-                    <p><strong>4.</strong> For statistics and graphs presented in the top portion of the country profile, use the options menu on the right to download the original data, download a table with country statistics, or adjust the minimum <a href="/howto/faqs?t=what-is-tree-cover-canopy-density-and-what-layers-allow-me-to-adjust-it">tree cover canopy density</a>.</p>
-                    <p><%= image_tag('howto-screenshots/new_content/image21.png') %></p>
-                    <p><strong>5.</strong> Learn more about or share each statistic and graph by selecting the information or share icons, when available.</p>
-                    <p><%= image_tag('howto-screenshots/new_content/image23.png') %></p>
-                    <p><strong>6.</strong> Scroll down to the bottom of the page to subscribe to tree clearing alerts for the country (where applicable), read relevant stories, and join the discussion.</p>
-                    <p><%= image_tag('howto-screenshots/new_content/image22.png') %></p>
-                    <a class="btn green medium" href='/countries' target='_blank'>Country Rankings</a>
+                    <p><strong>1.</strong> Enter the <a href="/map" target='_blank'>GFW Interactive Map</a>.
+                    <p><strong>2.</strong> Turn on the Forest Change data layer you wish to analyze (e.g., tree cover loss).</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image24.png') %></p>
+                    <p><strong>3.</strong> Define the time period you wish to analyze by dragging the handles of the timeline or by selecting a time interval.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image25.png') %></p>
+                    <p><strong>4.</strong> Select the analysis icon on the right-hand side of the map, and choose “Country or region.”</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image29.png') %></p>
+                    <p><strong>5.</strong> Choose the country and/or region you would like to analze, and click “Analyze.” The results will then appear.</p>
+                    <p><strong>6.</strong> If you want to adjust the time period or type of data you are analyzing simply drag the handles on the timeline or select a different time interval, or choose a different data layer under the Forest Use tab. Your results will update immediately based on your selection.</p>
+                    <p><strong>7.</strong> You can then download the raw data on the Open Data Portal, discard your analysis or, if you are analyzing FORMA alerts, subscribe to alerts.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image28.png') %></p>
+                    <p>NOTE: You can also analyze forest change within a country from the <a href="/countries">Country Profiles</a>. Once you arrive at the Country Profiles, select a country and, if desired, select a subnational jurisdiction (e.g., state, county, province) using the dropdown menu under the country name. Click “analyze on map” You will then be directed to the map and results will appear for an analysis of tree cover loss and gain.</p>
+
+                    <a class="btn green medium" href='/map' target='_blank'>GFW Interactive Map</a><a href='http://commodities.globalforestwatch.org/' class="btn green medium uppercase">GFW Commodities</a>
+                  </div>
+                </div>
+              </li>
+              <li id="analyze-a-shape-on-the-map" class='source-item first'>
+                <div class='source_header'>
+                  <strong class='source_title'> Analyze a shape on the map</strong>
+                  <i class='expand_arrow'></i>
+                </div>
+                <div class='source_body'>
+                  <div class='source_summary'>
+                    <p><strong>1.</strong> Enter the <a href="/map" target='_blank'>GFW Interactive Map</a>.
+                    <p><strong>2.</strong> Turn on the protected area layer or a forest use concession layer you want to analyze. The protected area layer is located under the Conservation tab, and the forest use concessions are located under the Forest Use tab.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image30.png') %></p>
+                    <p><strong>3.</strong> Turn on the Forest Change data layer you wish to analyze (e.g., tree cover loss).</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image24.png') %></p>
+                    <p><strong>4.</strong> Define the time period of your analysis by dragging the handles of the timeline or by selecting a time interval.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image25.png') %></p>
+                    <p><strong>5.</strong> Select the individual protected area or concession you want to analyze, and select “Analyze.”</p>
+                    <p><iframe width="560" height="315" src="https://www.youtube.com/embed/gr6Wl_kOMOU" frameborder="0" allowfullscreen></iframe></p>
+                    <p><strong>6.</strong> If you want to adjust the time period or type of data you are analyzing simply drag the handles on the timeline or select a different time interval, or choose a different data layer under the Forest Use tab. Your results will update immediately based on your selection.</p>
+                    <p><strong>7.</strong> You can then download the raw data on the Open Data Portal, discard your analysis or, if you are analyzing FORMA alerts, subscribe to alerts.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image28.png') %></p>
                   </div>
                 </div>
               </li>
