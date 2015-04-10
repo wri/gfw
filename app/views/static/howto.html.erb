@@ -42,7 +42,7 @@
           <li><%= link_to 'Visualize data', "#{howto_path}/view-data", :"data-slug" => 'view-data', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item view-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'View statistics', "#{howto_path}/view-statistics", :"data-slug" => 'view-statistics', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item view-statistics' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Analyze forest change statistics', "#{howto_path}/analyze-forest-change", :"data-slug" => 'analyze-forest-change', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item view-statistics' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Conduct analysis & subscribe to alerts', "#{howto_path}/conduct-analysis-and-subscribe-to-alerts", :"data-slug" => 'conduct-analysis-and-subscribe-to-alerts', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item conduct-analysis-and-subscribe-to-alerts' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Subscribe to tree clearing', "#{howto_path}/subscribe-to-tree-clearing", :"data-slug" => 'subscribe-to-tree-clearing', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item view-statistics' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Submit a story', "#{howto_path}/submit-a-story", :"data-slug" => 'submit-a-story', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item submit-a-story' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li class="no-transform"><%= link_to 'OPEN DATA PORTAL', "#{howto_path}/odp", :"data-slug" => 'odp', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item odp' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li class="no-transform"><%= link_to 'FAQs', "#{howto_path}/faqs", :"data-slug" => 'faqs', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item faqs' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
@@ -264,9 +264,35 @@
               </li>
             </ul>
           </article>
+          <article id="subscribe-to-tree-clearing" class="source-article">
+            <header>
+              <h2>Subscribe to tree clearing alerts</h2>
+              <p>Read below to learn how to subscribe to tree clearing alerts for you area of interest. If you subscribe to alerts, you will be notified via email when a new tree cover loss alert has been detected, as often as every 30 days. Tree cover loss alerts come from the <a href="http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64"> Forest Monitoring for Action (FORMA)</a> system, which monitors and detects possible tree cover disturbance within 500 × 500 meter pixels in the humid tropical forest biome.</p>
+            </header>
+            <ul class='sources'>
+              <li id="subscribe-to-tree-clearing-alerts" class='source-item first'>
+                <div class='source_header'>
+                  <strong class='source_title'>Subscribe to tree clearing alerts</strong>
+                  <i class='expand_arrow'></i>
+                </div>
+                <div class='source_body'>
+                  <div class='source_summary'>
+                    <p><strong>1.</strong> Enter the <a href="/map" target='_blank'>GFW Interactive Map</a>.
+                    <p><strong>2.</strong> Turn on the FORMA data set under the Forest Change tab.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image31.png') %></p>
+                    <p><strong>3.</strong> Select the analysis icon (<%= image_tag('howto-screenshots/new_content/image32.png') %>) on the right-hand side of the map and choose your area of interest. You can draw a shape on the map, choose a country or subnational jurisdiction, or select individual protected areas and forest use concessions.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image33.png') %></p>
+                    <p><strong>4.</strong> Follow the steps to conduct an analysis for your area of interest (this is a necessary step to subscribe to alerts).</p>
+                    <p><strong>5.</strong> Once your analysis results appear, click on the alert icon and enter your email address.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image28.png') %></p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </article>
           <article id="conduct-analysis-and-subscribe-to-alerts" class="source-article">
             <header>
-              <h2>Conduct analysis & subscribe to alerts</h2>
+              <h2>Subscribe to alerts</h2>
               <p>Choose a category below to learn how to conduct analysis or subscribe to alerts for an area of interest.</p>
               <p>You can define an area of interest on the map by using the drawing tool or selecting an existing polygon (such as a protected area).  Once you have defined an area of interest, you can calculate statistics about the area or subscribe to alerts. If you subscribe to alerts, you will be notified via email when a new tree cover loss alert has been detected, as often as every 30 days. Tree cover loss alerts come from the <a href="http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64" target="_blank">Forest Monitoring for Action (FORMA)</a> system, which monitors and detects possible tree cover disturbance within 500 × 500 meter pixels in the humid tropical forest biome.</p>
               <p>This information pertains only to the GFW Interactive Map and country profiles. Visit <a href='http://www.commodities.globalforestwatch.org' target='_blank'>GFW Commodities</a> or <a href='http://www.fires.globalforestwatch.org' target='_blank'>GFW Fires</a> for more advanced analysis of areas affected by fires or commodity production.</p>
@@ -274,7 +300,7 @@
             <ul class='sources'>
               <li id="analyze-or-subscribe-to-alerts-for-a-user-defined-area" class='source-item first'>
                 <div class='source_header'>
-                  <strong class='source_title'>ANALYZE OR SUBSCRIBE TO ALERTS FOR A USER-DEFINED AREA</strong>
+                  <strong class='source_title'>SUBSCRIBE TO ALERTS FOR A USER-DEFINED AREA</strong>
                   <i class='expand_arrow'></i>
                 </div>
                 <div class='source_body'>
@@ -301,7 +327,7 @@
               </li>
               <li id="analyze-or-subscribe-to-alerts-for-a-land-use-concession-or-protected-area" class='source-item'>
                 <div class='source_header'>
-                  <strong class='source_title'>Analyze or Subscribe to alerts for a land use concession or protected area</strong>
+                  <strong class='source_title'>Subscribe to alerts for a land use concession or protected area</strong>
                   <i class='expand_arrow'></i>
                 </div>
                 <div class='source_body'>
@@ -328,7 +354,7 @@
               </li>
               <li id="analyze-or-subscribe-to-alerts-for-a-country-or-subnational-jurisdiction" class='source-item'>
                 <div class='source_header'>
-                  <strong class='source_title'>ANALYZE OR SUBSCRIBE TO ALERTS FOR A COUNTRY OR SUBNATIONAL JURISDICTION</strong>
+                  <strong class='source_title'>SUBSCRIBE TO ALERTS FOR A COUNTRY OR SUBNATIONAL JURISDICTION</strong>
                   <i class='expand_arrow'></i>
                 </div>
                 <div class='source_body'>
