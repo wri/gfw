@@ -361,7 +361,7 @@ define([
           var max_trigger = data.length -1;
           _.each(data, function(val, key) {
             var ord = e ? (key+11) : (key+1),
-                enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
+                enabled = '<a href="/country/'+val.iso+'">'+val.name+'</a>';
                 var e_mha, l_mha,
                     ex = val.extent,
                     e_mha = l_mha = 'Mha';
