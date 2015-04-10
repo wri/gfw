@@ -51,6 +51,7 @@ define([
   'map/views/layers/ResourceRightsLayer',
   'map/views/layers/CmrResourceRightsLayer',
   'map/views/layers/LbrResourceRightsLayer',
+  'map/views/layers/GnqResourceRightsLayer',
   'map/views/layers/LandRightsLayer',
   'map/views/layers/AusLandRightsLayer',
   'map/views/layers/PanLandRightsLayer',
@@ -130,6 +131,7 @@ define([
   ResourceRightsLayer,
   CmrResourceRightsLayer,
   LbrResourceRightsLayer,
+  GnqResourceRightsLayer,
   LandRightsLayer,
   AusLandRightsLayer,
   PanLandRightsLayer,
@@ -311,6 +313,9 @@ define([
     },
     lbr_resource_rights: {
       view: LbrResourceRightsLayer
+    },
+    gnq_resource_rights: {
+      view: GnqResourceRightsLayer
     },
     land_rights: {
       view: LandRightsLayer
