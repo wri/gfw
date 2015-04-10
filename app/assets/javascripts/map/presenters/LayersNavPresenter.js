@@ -37,6 +37,7 @@ define([
       }
     }, {
       'LocalMode/updateIso': function(iso) {
+        console.log('hey');
         this.view.updateIso(iso);
       }
     }, {
