@@ -51,10 +51,12 @@ define([
   'map/views/layers/ResourceRightsLayer',
   'map/views/layers/CmrResourceRightsLayer',
   'map/views/layers/LbrResourceRightsLayer',
+  'map/views/layers/GnqResourceRightsLayer',
   'map/views/layers/LandRightsLayer',
   'map/views/layers/AusLandRightsLayer',
   'map/views/layers/PanLandRightsLayer',
   'map/views/layers/BraLandRightsLayer',
+  'map/views/layers/CanLandRightsLayer',
   'map/views/layers/UserStoriesLayer',
   'map/views/layers/MongabayStoriesLayer',
   'map/views/layers/InfoamazoniaStoriesLayer',
@@ -130,10 +132,12 @@ define([
   ResourceRightsLayer,
   CmrResourceRightsLayer,
   LbrResourceRightsLayer,
+  GnqResourceRightsLayer,
   LandRightsLayer,
   AusLandRightsLayer,
   PanLandRightsLayer,
   BraLandRightsLayer,
+  CanLandRightsLayer,
   UserStoriesLayer,
   MongabayStoriesLayer,
   InfoamazoniaStoriesLayer,
@@ -312,6 +316,9 @@ define([
     lbr_resource_rights: {
       view: LbrResourceRightsLayer
     },
+    gnq_resource_rights: {
+      view: GnqResourceRightsLayer
+    },
     land_rights: {
       view: LandRightsLayer
     },
@@ -323,6 +330,9 @@ define([
     },
     bra_land_rights: {
       view: BraLandRightsLayer
+    },
+    can_land_rights: {
+      view: CanLandRightsLayer
     },
     user_stories: {
       view: UserStoriesLayer
