@@ -360,7 +360,6 @@ define([
           var data = _.sortBy(json.rows, function(item){ return -item.sum_loss });
           var max_trigger = data.length -1;
           _.each(data, function(val, key) {
-            console.log(val);
             var ord = e ? (key+11) : (key+1),
                 enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
                 var e_mha, l_mha,
