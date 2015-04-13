@@ -128,7 +128,7 @@ define([
         'terrailoss' : 'http://www.terra-i.org/terra-i/data.html',
         'imazon' : 'http://www.imazongeo.org.br/doc/downloads.php',
         'fires' : 'https://earthdata.nasa.gov/data/near-real-time-data/firms',
-        'modis' : 'http://geo.arc.nasa.gov/sge/casa/latest.html'
+        'modis' : 'http://data.globalforestwatch.org/datasets/e7bfe60d90ea4e5aa808eba4723ad3f8_0'
 
       }
       return links[layer];

@@ -346,7 +346,7 @@ define([
         });
       } else if (this.model.get('graph') === 'total_extent') {
         $('.countries_list__header__minioverview').hide();
-        var sql = 'SELECT iso, country as name, extent_2000 as extent FROM umd_nat_final_1 WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +' GROUP BY iso, extent_2000 , name ORDER BY extent_2000 desc ';
+        var sql = 'SELECT umd.iso, country as name, extent_2000 as extent, c.enabled FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso GROUP BY umd.iso, umd.country, extent_2000 , name, c.enabled ORDER BY extent_2000 desc ';
         if (e) {
           sql += 'OFFSET 10';
         } else {
@@ -360,6 +360,7 @@ define([
           var data = _.sortBy(json.rows, function(item){ return -item.sum_loss });
           var max_trigger = data.length -1;
           _.each(data, function(val, key) {
+            console.log(val);
             var ord = e ? (key+11) : (key+1),
                 enabled = '<a href="/country/'+val.iso+'">'+val.name+'</a>';
                 var e_mha, l_mha,
