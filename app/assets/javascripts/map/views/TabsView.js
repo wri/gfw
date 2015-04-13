@@ -13,10 +13,11 @@ define([
   'map/views/tabs/BasemapsView',
   'map/views/tabs/SpinnerView',
   'map/views/tabs/SubscribeView',
+  'views/ShareView',
   'text!map/templates/tabs.handlebars',
   'text!map/templates/tabs-mobile.handlebars'
 
-], function(_, Handlebars, d3, Presenter, AnalysisView, CountriesView, BasemapsView, SpinnerView, SubscribeView, tpl, tplMobile) {
+], function(_, Handlebars, d3, Presenter, AnalysisView, CountriesView, BasemapsView, SpinnerView, SubscribeView, ShareView, tpl, tplMobile) {
 
   'use strict';
 
@@ -118,8 +119,9 @@ define([
       }
     },
 
-    toggleShareMobile: function(){
-      this.presenter.toggleShare();
+    toggleShareMobile: function(event){
+      var shareView = new ShareView().share(event);
+      $('body').append(shareView.el);
     },
 
     toggleTabsMobile: function(e){

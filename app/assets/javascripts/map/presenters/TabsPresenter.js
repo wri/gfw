@@ -31,11 +31,6 @@ define([
       mps.publish('Tab/opened', [id]);
     },
 
-    toggleShare: function(){
-      mps.publish('ShareControls/toggle');
-    }
-
-
   });
 
   return MapControlsPresenter;
