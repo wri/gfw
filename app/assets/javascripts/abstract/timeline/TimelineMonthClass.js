@@ -112,20 +112,18 @@ define([
     fillSelects: function(){
       var start = this.dateRangeStart.year(),
           end = this.dateRangeEnd.year(),
-          startMonth = this.dateRangeStart.month(),
-          endMonth = this.dateRangeEnd.month(),
           range = end - start,
           options = '';
       for (var i = 0; i < range; i++) {
         options += '<option value="'+(start + i)+'">'+ (start + i) +'</option>';
       }
       // Year Selects
-      this.$from.html(options).val(start);
-      this.$to.html(options).val(end - 1);
+      this.$from.html(options).val(this.currentDate[0].year());
+      this.$to.html(options).val(this.currentDate[1].year());
 
       // Month Selects
-      this.$fromMonth.val(this.months[startMonth]);
-      this.$toMonth.val(this.months[endMonth]);
+      this.$fromMonth.val(this.months[this.currentDate[0].month()]);
+      this.$toMonth.val(this.months[this.currentDate[0].month()]);
 
       this.setSelects();
     },

@@ -117,8 +117,8 @@ define([
       for (var i = 0; i < range; i++) {
         options += '<option value="'+(start + i)+'">'+ (start + i) +'</option>';
       }
-      this.$from.html(options).val(start);
-      this.$to.html(options).val(end - 1);
+      this.$from.html(options).val(this.currentDate[0].year());
+      this.$to.html(options).val(this.currentDate[1].year());
       this.setSelects();
     },
 
