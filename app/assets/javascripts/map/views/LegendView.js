@@ -22,10 +22,11 @@ define([
   'text!map/templates/legend/concesiones_forestalesType.handlebars',
   'text!map/templates/legend/hondurasForest.handlebars',
   'text!map/templates/legend/colombiaForestChange.handlebars',
-  'text!map/templates/legend/tigers.handlebars'
+  'text!map/templates/legend/tigers.handlebars',
+  'text!map/templates/legend/dam_hotspots.handlebars'
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL) {
 
   'use strict';
 
@@ -62,7 +63,8 @@ define([
       concesiones_forestalesNS: Handlebars.compile(concesionesTypeTpl),
       WMSLayer: Handlebars.compile(hondurasForestTPL),
       colombia_forest_change: Handlebars.compile(colombiaForestChangeTPL),
-      tigers: Handlebars.compile(tigersTPL)
+      tigers: Handlebars.compile(tigersTPL),
+      dam_hotspots: Handlebars.compile(dam_hotspotsTPL)
     },
 
     options: {

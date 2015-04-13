@@ -25,10 +25,12 @@
     <%= stylesheet_link_tag "map", :media => "all" %>
     <%= csrf_meta_tags %>
     <script>
-        var gfw = window.gfw = {};
-        window.gfw.config = {
-          GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>",
-          GFW_MOBILE: 1000
+        var gfw = window.gfw = {
+          config: {
+            GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>",
+            GFW_MOBILE: 1000
+          },
+          layer_spec: "<%= ENV['LAYER_SPEC'] %>"
         };
     </script>
 
@@ -46,7 +48,7 @@
 
     <%= javascript_include_tag "http://maps.googleapis.com/maps/api/js?libraries=places,visualization,drawing&sensor=false&key=AIzaSyDJdVhfQhecwp0ngAGzN9zwqak8FaEkSTA" %>
     <%= javascript_include_tag "http://libs.cartocdn.com/cartodb.js/v3/cartodb.js" %>
-    <script src="//www.google-analytics.com/cx/api.js?experiment=YjvD0sRXQKO2Tde4W-sEcA"></script>
+    <script src="//www.google-analytics.com/cx/api.js?experiment=KxNY8weXTXuu3IjDWT8CfA"></script>
     <%= requirejs_include_tag "map" %>
     <%= render "shared/js_footer" %>
   </body>

@@ -88,6 +88,11 @@
     &:hover {
       background: darken($cGreen,10%);
     }
+    &.disabled{
+      &:hover {
+        background: $cGreen;
+      }
+    }
   }
   &.light {
     color: $white;
@@ -113,6 +118,7 @@
   }
   &.disabled{
     opacity: 0.25;
+    cursor: default;
   }
   &.with-icon{
     min-width: 0;

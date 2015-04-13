@@ -12,9 +12,8 @@ define([
   'text!map/templates/tabs/countries.handlebars',
   'text!map/templates/tabs/countriesIso.handlebars',
   'text!map/templates/tabs/countriesButtons.handlebars',
-  'text!map/templates/layersNavByCountryWrapper.handlebars',
   'text!map/templates/tabs/countries-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplIso, tplButtons, tplCountryWrapper, tplMobile) {
+], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplIso, tplButtons, tplMobile) {
 
   'use strict';
 
@@ -33,16 +32,20 @@ define([
     template: Handlebars.compile(tpl),
     templateIso: Handlebars.compile(tplIso),
     templateButtons: Handlebars.compile(tplButtons),
-    templateCountryWrapper: Handlebars.compile(tplCountryWrapper),
     templateMobile: Handlebars.compile(tplMobile),
 
     events: {
       //countries
+      'click .layer': 'toggleLayer',
+      'click .wrapped-layer': 'toggleLayerWrap',
+
       'click #countries-analyze-button' : 'analyzeIso',
       'change #countries-country-select' : 'changeIso',
+      'change #countries-region-select' : 'changeArea',
+
       'click #countries-country-ul li' : 'changeIsoMobile',
-      'click #countries-country-reset' : 'changeIsoMobile',
-      'click .layer': 'toggleLayer'
+      'click #countries-country-reset' : 'changeIsoMobile'
+
     },
 
 
@@ -167,6 +170,14 @@ define([
           $('#country-layers [data-layer="'+layerSlug+'"]:first').click()
           ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
         }
+      }
+    },
+
+    toggleLayerWrap: function(e){
+      if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source') && !$(e.target).hasClass('layer')) {
+        var $li = $(e.currentTarget);
+        var layerSlug = $li.data('layer');
+        $('#country-layers [data-layer="'+layerSlug+'"]:first').click();
       }
     },
 

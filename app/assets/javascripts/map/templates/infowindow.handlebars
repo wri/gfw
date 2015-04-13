@@ -31,6 +31,7 @@
           <h4>Legal designation:</h4>
           <p>{{content.data.desig_eng}}</p>
         {{/if}}
+        
         {{#if content.data.ebaname}}
           <h4>Name:</h4>
           <p><a href="http://{{content.data.factsheet}}" target="_blank">{{content.data.ebaname}}</a></p>
@@ -52,6 +53,22 @@
           <h4>Type:</h4>
           <p>{{content.data.type}}</p>
         {{/if}}
+        {{#if content.data.basin_name}}
+          <h4>Basin:</h4>
+          <p>{{content.data.basin_name}}</p>
+        {{/if}}
+        {{#if content.data.rivers}}
+          <h4>River:</h4>
+          <p>{{content.data.rivers}}</p>
+        {{/if}}
+        {{#if content.data.project_na}}
+          <h4>Project Name</h4>
+          <p><a href="{{content.data.project_ur}}" target="_blank">{{content.data.project_na}}</a></p>
+        {{/if}}
+        {{#if content.data.capacity}}
+          <h4>Capacity:</h4>
+          <p>{{content.data.capacity}}</p>
+        {{/if}}
         {{#if content.data.status}}
           <h4>Status:</h4>
           <p>{{content.data.status}}</p>
@@ -64,10 +81,7 @@
           <h4>Permit Num:</h4>
           <p>{{content.data.permit_num}}</p>
         {{/if}}
-				{{#if content.data.project_na}}
-          <h4>Project Name</h4>
-          <p><a href="{{content.data.project_ur}}" target="_blank">{{content.data.project_na}}</a></p>
-        {{/if}}
+				
 				{{#if content.data.project_pr}}
           <h4>Project Proponent :</h4>
           <p><a href="{{content.data.proponent_}}" target="_blank">{{content.data.project_pr}}</a></p>
@@ -127,6 +141,10 @@
         {{#if content.data.acq_date}}
           <h4>Acquisition date:</h4>
           <p>{{content.data.acq_date}}</p>
+        {{/if}}
+        {{#if content.data.date_create}}
+          <h4>Status date:</h4>
+          <p>{{content.data.date_create}}</p>
         {{/if}}
         {{#if content.data.acq_time}}
           <h4>Acquisition time:</h4>

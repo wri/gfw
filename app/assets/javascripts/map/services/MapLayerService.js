@@ -102,7 +102,7 @@ define([
                 does_wrapper, \
                 true AS visible \
               FROM \
-                layerspec_nuclear_hazard \
+                '+window.gfw.layer_spec+' \
               WHERE \
                 display = \'true\' \
               ORDER BY \
