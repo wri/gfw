@@ -26,6 +26,8 @@ define([
     template: Handlebars.compile(tpl),
     templateMobile: Handlebars.compile(tplMobile),
 
+    months: ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC",],
+
     defaults: {
       dateRange: [moment([2001]), moment()],
       width: 750,
@@ -44,8 +46,8 @@ define([
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
-      this.dateRangeStart = this.defaults.dateRange[0];
-      this.dateRangeEnd = this.defaults.dateRange[1];
+      this.dateRangeStart = this.options.dateRange[0];
+      this.dateRangeEnd = this.options.dateRange[1];
 
       if (currentDate && currentDate[0]) {
         this.currentDate = currentDate;
@@ -97,6 +99,7 @@ define([
       // Timeline
       this.$selects = $('.select-date');
       this.$selectsYear = $('.select-date-year');
+      this.$selectsMonth = $('.select-date-month');
       this.$fromMonth = $('#from-timeline-month');
       this.$from = $('#from-timeline-year');
       this.$toMonth = $('#to-timeline-month');
@@ -107,15 +110,23 @@ define([
     },
 
     fillSelects: function(){
-      var start = this.dateRangeStart.year();
-      var end = this.dateRangeEnd.year();
-      var range = end - start;
-      var options = '';
+      var start = this.dateRangeStart.year(),
+          end = this.dateRangeEnd.year(),
+          startMonth = this.dateRangeStart.month(),
+          endMonth = this.dateRangeEnd.month(),
+          range = end - start,
+          options = '';
       for (var i = 0; i < range; i++) {
         options += '<option value="'+(start + i)+'">'+ (start + i) +'</option>';
       }
+      // Year Selects
       this.$from.html(options).val(start);
       this.$to.html(options).val(end - 1);
+
+      // Month Selects
+      this.$fromMonth.val(this.months[startMonth]);
+      this.$toMonth.val(this.months[endMonth]);
+
       this.setSelects();
     },
 

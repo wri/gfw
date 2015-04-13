@@ -38,10 +38,10 @@ define([
     initialize: function(layer, currentDate) {
       _.bindAll(this, 'onAnimationBrush', 'onBrush', 'onBrushEnd', 'updateCurrentDate');
       this.layer = layer;
-      this.dateRangeStart = this.defaults.dateRange[0];
-      this.dateRangeEnd = this.defaults.dateRange[1];
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
+      this.dateRangeStart = this.options.dateRange[0];
+      this.dateRangeEnd = this.options.dateRange[1];
       if (currentDate && currentDate[0]) {
         this.currentDate = currentDate;
       } else {
