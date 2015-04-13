@@ -17,8 +17,9 @@ require([
   'countries/views/CountryListView',
   'countries/views/CountryOverviewView',
   'countries/views/CountryShowView',
+  'views/SourceWindowView',
   '_string',
-], function($, _, Class, Backbone, Handlebars, mps, topojson, qtip, scrollit, HeaderView, FooterView, SourceMobileFriendlyView, CountryListView, CountryOverviewView, CountryShowView) {
+], function($, _, Class, Backbone, Handlebars, mps, topojson, qtip, scrollit, HeaderView, FooterView, SourceMobileFriendlyView, CountryListView, CountryOverviewView, CountryShowView, SourceWindowView) {
   'use strict';
 
   var CountryPage = Class.extend({
@@ -37,55 +38,35 @@ require([
       new HeaderView();
       new FooterView();
       new SourceMobileFriendlyView();
+      new SourceWindowView();
 
       //countries
       new CountryListView();
       new CountryOverviewView();
       new CountryShowView();
+
+      this._checkDialogs();
+    },
+
+    /**
+    * Display a dialog from the Landing Index First Steps options
+    */
+    _checkDialogs: function() {
+      $(document).ready(function(type){
+        if (!sessionStorage.getItem('DIALOG')) return;
+        var dialog = JSON.parse(sessionStorage.getItem('DIALOG'));
+
+        if (!dialog.display) return;
+
+        var $container = $('.countries_list_index')[0],
+            $trigger   = $( "<a data-source='" + dialog.type +"' class='source hidden hide' style='display: none'></a>" )
+        $trigger.appendTo($container).trigger('click');
+        sessionStorage.removeItem('DIALOG');
+        window.setTimeout(function(){$('.backdrop').css('opacity', '0.3');},500);
+      });
     }
   });
 
   new CountryPage();
 
 });
-
-
-
-// = require jquery/dist/jquery
-// = require geojson
-// = require d3/d3
-// = require topojson/topojson
-// = require scrollIt.min
-// = require jquery.qtip.min
-// = require simple_statistics
-
-// = require gfw
-// = require gfw/helpers
-// = require gfw/ui/widget
-// = require gfw/ui/sourcewindow
-// = require gfw/ui/share
-// = require gfw/ui/umd_options
-
-// = require_tree ./countries
-
-// $(document).ready(function() {
-//   window.ga = window.ga || function() {};
-
-//   cdb.init(function() {
-
-//     // mobile-menu
-//     window.countries_header = new gfw.ui.view.CountriesHeader();
-
-//     if ($('.is-index-action').length > 0) {
-//       window.countries_index = new gfw.ui.view.CountriesIndex();
-//     }
-//     if ($('.is-overview-action').length > 0 || $('.countries_overview').length > 0) {
-//       window.countries_overview = new gfw.ui.view.CountriesOverview();
-//     }
-//     if ($('.is-show-action').length > 0) {
-//       window.countries_show = new gfw.ui.view.CountriesShow({
-//         iso: ISO
-//       });
-//     }
-//   });
-// });

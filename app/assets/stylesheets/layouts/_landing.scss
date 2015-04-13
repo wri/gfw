@@ -7,7 +7,7 @@
   z-index: 3;
   @media (min-width: $br-mobile) {
     margin-top: -60px;
-    min-height: 570px;
+    min-height: 620px;
     padding-bottom: 37.5%;
   }
 
@@ -102,6 +102,7 @@
             &.alerts{ @include getting-started-sprite(alerts); }
             &.country{ @include getting-started-sprite(country); }
             &.report-story{ @include getting-started-sprite(report-story); }
+            &.countries-data{ @include getting-started-sprite(countries-data); }
             &.concessions{ @include getting-started-sprite(concessions); }
             &.active-fires{ @include getting-started-sprite(active-fires); }
             &.tutorial-videos{ @include getting-started-sprite(tutorial-videos); }

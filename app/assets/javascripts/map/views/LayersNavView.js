@@ -27,6 +27,7 @@ define([
 
     events: {
       'click .layer': '_toggleLayer',
+      'click .wrapped-layer': '_toggleLayerWrap',
       'click #toggleUmd' : 'toggleUmd',
       'click #country-layers' : '_showNotification',
       'click #country-layers-reset' : '_resetIso'
@@ -88,6 +89,7 @@ define([
           $layerTitle.css('color', '');
         }
       });
+      this.toogleSelectedWrapper();
       this.checkUMD();
     },
 
@@ -122,10 +124,59 @@ define([
       }
     },
 
+    _toggleLayerWrap: function(e){
+      if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source') && !$(e.target).hasClass('layer')) {
+        var $layers = $(e.currentTarget).find('.layer');
+
+        if ($(e.currentTarget).hasClass('selected')) {
+          _.each($layers, _.bind(function(layer){
+            if ($(layer).hasClass('selected')) {
+              $(layer).click();
+            }
+          }, this ))
+        }else{
+          $($layers[0]).click();
+        }
+      }
+    },
+
+    toogleSelectedWrapper: function(layers){
+      // Toggle sublayers
+      _.each(this.$el.find('.wrapped-layer'), function(li) {
+        var $li = $(li);
+        var $toggle = $li.find('.onoffradio, .onoffswitch');
+        var $toggleIcon = $toggle.find('span');
+        var $layerTitle = $li.find('.layer-title');
+        var selected = 0;
+        var layer = $li.hasClass('active');
+        var $layers = $li.find('.layer');
+
+        _.each($layers, _.bind(function(layer){
+          if ($(layer).hasClass('selected')) {
+            selected ++;
+          }
+        }, this ))
+
+        if (selected > 0) {
+          $li.addClass('selected');
+          $toggle.addClass('checked');
+          $layerTitle.css('color', '#cf7fec');
+          $toggle.css('background', '#cf7fec');
+        } else {
+          $li.removeClass('selected');
+          $toggle.removeClass('checked').css('background', '').css('border-color', '');
+          $toggleIcon.css('background-color', '');
+          $layerTitle.css('color', '');
+        }
+      });
+
+    },
+
+
     toggleUmd: function(e){
 
       _.each(this.$UMDlayers, _.bind(function(layer){
-        if (this.$toggleUMD.find('.onoffswitch').hasClass('checked')) {
+        if (this.$toggleUMD.find('.onoffradio').hasClass('checked')) {
           if ($(layer).hasClass('selected')) {
             $(layer).trigger('click');
           }
@@ -144,7 +195,7 @@ define([
           count ++;
         }
       }, this));
-      (count == 2) ? this.$toggleUMD.find('.onoffswitch').addClass('checked') : this.$toggleUMD.find('.onoffswitch').removeClass('checked');
+      (count == 2) ? this.$toggleUMD.find('.onoffradio').addClass('checked') : this.$toggleUMD.find('.onoffradio').removeClass('checked');
     },
 
 
@@ -176,8 +227,8 @@ define([
 
     resetIsoLayers: function(){
       _.each(this.$countryLayers.find('.layer'),function(li){
-        if ($(li).hasClass('selected')) {
-          $(li).trigger('click');
+        if ($(li).hasClass('selected') && !$(li).hasClass('wrapped')) {
+          $(li).click();
         }
       })
     },
