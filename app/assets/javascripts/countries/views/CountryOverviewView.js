@@ -205,7 +205,7 @@ define([
 
       if (this.model.get('graph') === 'total_loss') {
         $('.countries_list__header__minioverview').hide();
-        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
+        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss, loss_perc FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled, umd.loss_perc ORDER BY loss DESC ';
 
         if (e) {
           sql += 'OFFSET 10';
@@ -245,7 +245,7 @@ define([
                   l_mha = 'Ha';
                 }
 
-                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span>');
+                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' ('+(val.percent_loss*100) +'%) of loss</span>');
 
                 if (key == max_trigger){
                   that._reorderRanking();
