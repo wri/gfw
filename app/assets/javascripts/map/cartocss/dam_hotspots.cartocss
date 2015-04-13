@@ -1,0 +1,45 @@
+#dam_hotspots {
+   marker-fill-opacity: 0.9;
+   marker-line-color: #FFF;
+   marker-line-width: 1;
+   marker-line-opacity: 1;
+   marker-placement: point;
+   marker-type: ellipse;
+   marker-width: 10;
+   marker-allow-overlap: true;
+}
+
+#dam_hotspots[status="Operational"] {
+   marker-fill: #A6CEE3;
+}
+#dam_hotspots[status="Under Construction"] {
+   marker-fill: #FB9A99;
+}
+#dam_hotspots[status="Planned"] {
+   marker-fill: #1F78B4;
+}
+#dam_hotspots[status="Inventoried"] {
+   marker-fill: #B2DF8A;
+}
+#dam_hotspots[status="Suspended"] {
+   marker-fill: #E31A1C;
+}
+#dam_hotspots[status="Deactivated"] {
+   marker-fill: #E31A1C;
+}
+#dam_hotspots[status="Reoptimization"] {
+   marker-fill: #E31A1C;
+}
+#dam_hotspots[status="Revoked"] {
+   marker-fill: #E31A1C;
+}
+#dam_hotspots[status="Unknown"] {
+   marker-fill: #DDDDDD;
+}
+#dam_hotspots[status="NoData"] {
+   marker-fill: #DDDDDD;
+}
+
+#dam_hotspots {
+   marker-fill: #DDDDDD;
+}
