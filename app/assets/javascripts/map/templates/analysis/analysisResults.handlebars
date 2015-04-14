@@ -17,18 +17,22 @@
         <span class="stats-count" style="color: #6D6DE5;"><strong>{{gainAlerts}}</strong> ha</span>
       </li>
       {{/if}}
-      {{!-- <li>
+      {{#if warning_text}}
+      <li>
         <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
-      </li> --}}
+      </li>
+      {{/if}}
     {{else}}
       {{#if forestgain}}
         <li>
           <span class="stats-title">Gain 2001-2012</span>
           <span class="stats-count" style="color: #6D6DE5;"><strong>{{gainAlerts}}</strong> ha</span>
         </li>
-        {{!-- <li>
+        {{#if warning_text}}
+        <li>
           <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
-        </li> --}}
+        </li>
+        {{/if}}
       {{else}}
         {{#if imazon}}
           <li>
