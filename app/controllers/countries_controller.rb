@@ -80,6 +80,10 @@ class CountriesController < ApplicationController
               "#{ENV['GFW_API_HOST']}/countries/#{iso}",
               headers: {"Accept" => "application/json"}
           )
+
+          puts "#{ENV['GFW_API_HOST']}/countries/#{iso}"
+          puts JSON.parse(response.body)
+
           if response.success?
             JSON.parse(response.body)
           else
