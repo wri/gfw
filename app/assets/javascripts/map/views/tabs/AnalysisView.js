@@ -264,7 +264,6 @@ define([
     // Select change iso
     changeIso: function(e){
       this.iso = $(e.currentTarget).val();
-      this.$countryButton.removeClass('disabled');
       this.area = null;
       if(this.iso) {
         this.getSubCountries()
@@ -276,7 +275,6 @@ define([
     },
     changeArea: function(e){
       this.area = $(e.currentTarget).val();
-      this.$countryButton.removeClass('disabled');
     },
 
     // For autoselect country and region when youn reload page
@@ -287,9 +285,7 @@ define([
       this.$countrySelect.val(this.iso).trigger("liszt:updated");
       if (this.iso) {
         this.getSubCountries();
-        this.$countryButton.addClass('disabled');
       }else{
-        this.$countryButton.removeClass('disabled');
         this.$regionSelect.val(this.area).attr('disabled', true).trigger("liszt:updated")
       }
     },
@@ -300,8 +296,15 @@ define([
           country: this.iso,
           region: this.area
         }
-        this.$countryButton.addClass('disabled');
         this.presenter.setAnalyzeIso(iso);
+      }
+    },
+
+    setButtonVisibility: function(bool){
+      if (bool) {
+        this.$countryButton.removeClass('disabled');
+      }else{
+        this.$countryButton.addClass('disabled');
       }
     },
 

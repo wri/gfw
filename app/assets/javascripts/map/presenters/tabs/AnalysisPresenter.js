@@ -141,6 +141,10 @@ define([
         }
 
       }
+    },{
+      'Place/update': function() {
+        this.view.setButtonVisibility(this.status.get('dont_analyze'));
+      }
     }],
     /**
      * Handles a Place/go.
