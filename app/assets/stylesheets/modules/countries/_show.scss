@@ -87,7 +87,7 @@
     .country-title {
       padding: 20px;
       .embed & {
-        padding: 20px 20px 5px;
+        padding: 0;
       }
 
       h1 {
@@ -692,7 +692,7 @@
 
     .embed & {
       border: 0;
-      padding: 12px 5px;
+      padding: 12px 2px;
     }
 
     .section-info {
@@ -771,6 +771,9 @@
         @media (min-width: $br-mobile) {
           margin: 0 0 0 10%;
         }
+        .embed &{
+          margin: 0;
+        }
 
         .section-btn {
           right: 20px;
@@ -813,6 +816,11 @@
   .forma-graph {
     position: relative;
     height: 160px;
+    .embed &{
+      display: block;
+      width: 500px;
+      margin: 0 auto;
+    }
   }
 
   .forma-marker {
@@ -1851,14 +1859,19 @@
   margin: 0;
   padding: 10px;
   overflow: hidden;
-  background: #333;
   // display: flex;
   .embed-country-title{
     text-align: left;
     font-size: 2em;
     margin: 0;
   }
+  .forma_dropdown-link{
+    display: none;
+  }
 } // embed
+.embed.countries_show .country-show {
+  background: #333;
+}
 
 // --- MEDIA QUERIES --- //
 

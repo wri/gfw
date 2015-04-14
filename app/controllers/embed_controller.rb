@@ -1,5 +1,5 @@
 class EmbedController < ApplicationController
-  before_action :check_country_iso, only: :countries_show
+  before_action :check_country_iso
   layout 'embed'
 
   # GET /embed/country/:id
