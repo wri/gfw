@@ -49,7 +49,15 @@ define([
   'map/views/layers/ProtectedAreasCDBLayer',
   'map/views/layers/BiodiversityHotspotsLayer',
   'map/views/layers/ResourceRightsLayer',
+  'map/views/layers/CmrResourceRightsLayer',
+  'map/views/layers/LbrResourceRightsLayer',
+  'map/views/layers/GnqResourceRightsLayer',
+  'map/views/layers/NamResourceRightsLayer',
   'map/views/layers/LandRightsLayer',
+  'map/views/layers/AusLandRightsLayer',
+  'map/views/layers/PanLandRightsLayer',
+  'map/views/layers/BraLandRightsLayer',
+  'map/views/layers/CanLandRightsLayer',
   'map/views/layers/UserStoriesLayer',
   'map/views/layers/MongabayStoriesLayer',
   'map/views/layers/InfoamazoniaStoriesLayer',
@@ -65,6 +73,7 @@ define([
   'map/views/layers/AzepolyLayer',
   'map/views/layers/TigersLayer',
   'map/views/layers/CarbonLayer',
+  'map/views/layers/DamHotspotsLayer',
   'map/views/layers/ColombiaForestChangeLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
@@ -116,14 +125,22 @@ define([
   CmrOilPalmLayer,
   IdnOilPalmLayer,
   WoodFiberPlantationsLayer,
-  CogWoodFiberPlantationsLayer,
   GabWoodFiberPlantationsLayer,
+  CogWoodFiberPlantationsLayer,
   IdnWoodFiberPlantationsLayer,
   ProtectedAreasLayer,
   ProtectedAreasCDBLayer,
   BiodiversityHotspotsLayer,
   ResourceRightsLayer,
+  CmrResourceRightsLayer,
+  LbrResourceRightsLayer,
+  GnqResourceRightsLayer,
+  NamResourceRightsLayer,
   LandRightsLayer,
+  AusLandRightsLayer,
+  PanLandRightsLayer,
+  BraLandRightsLayer,
+  CanLandRightsLayer,
   UserStoriesLayer,
   MongabayStoriesLayer,
   InfoamazoniaStoriesLayer,
@@ -139,6 +156,7 @@ define([
   AzepolyLayer,
   TigersLayer,
   CarbonLayer,
+  DamHotspotsLayer,
   ColombiaForestChangeLayer,
   // Layer dialog templates
   // loss_dialog,
@@ -296,8 +314,32 @@ define([
     resource_rights: {
       view: ResourceRightsLayer
     },
+    cmr_resource_rights: {
+      view: CmrResourceRightsLayer
+    },
+    lbr_resource_rights: {
+      view: LbrResourceRightsLayer
+    },
+    gnq_resource_rights: {
+      view: GnqResourceRightsLayer
+    },
+    nam_resource_rights: {
+      view: NamResourceRightsLayer
+    },
     land_rights: {
       view: LandRightsLayer
+    },
+    aus_land_rights: {
+      view: AusLandRightsLayer
+    },
+    pan_land_rights: {
+      view: PanLandRightsLayer
+    },
+    bra_land_rights: {
+      view: BraLandRightsLayer
+    },
+    can_land_rights: {
+      view: CanLandRightsLayer
     },
     user_stories: {
       view: UserStoriesLayer
@@ -347,6 +389,9 @@ define([
     },
     colombia_forest_change: {
       view: ColombiaForestChangeLayer
+    },
+    dam_hotspots: {
+      view: DamHotspotsLayer
     },
     nothing: {
     }

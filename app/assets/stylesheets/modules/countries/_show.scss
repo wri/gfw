@@ -100,9 +100,6 @@
         margin-bottom: 0.2em;
 
         max-width: 515px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
         display: block;
 
         .embed & {
@@ -434,14 +431,18 @@
       } // country-preview
 
       .country-sidenav {
-        float: right;
         width: 215px;
-        height: calc(100% + 142px);
+        height: 100%;
         background: transparent;
+        @media (min-width: 1051px){
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
 
         > ul {
           position: relative;
-          top: -143px;
+          top: 0;
           width: 100%;
           height: 100%;
           padding: 1px 0;
@@ -462,7 +463,7 @@
             a {
               color: #BEBCC2;
               display: block;
-              height: 51px;
+              height: 87px;
               width: 100%;
               @include box-sizing(border-box);
               font-weight: 400;
@@ -1887,6 +1888,8 @@
 
       .country-details .country-sidenav {
         float: none;
+        right: auto;
+        top: auto;
         height: auto;
         width: 100%;
         display: table;
