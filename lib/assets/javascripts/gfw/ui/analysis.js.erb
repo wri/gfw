@@ -597,7 +597,7 @@ gfw.ui.view.Analysis = cdb.core.View.extend({
   loadProtectedAreaByWpaid: function(id,the_geom,table) {
     var that = this;
 
-    if (table === 'wdpa_all') {
+    if (table === 'protected_areas') {
       var id_type = 'wdpaid',
           query   = "https://wri-01.cartodb.com/api/v2/sql?q=SELECT shape_area FROM " + table + " WHERE " + id_type + " =" + id;
     } else {
