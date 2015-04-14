@@ -692,7 +692,7 @@
 
     .embed & {
       border: 0;
-      padding: 20px 0;
+      padding: 12px 5px;
     }
 
     .section-info {
@@ -703,7 +703,9 @@
       font-weight: 500;
       text-transform: uppercase;
       letter-spacing: -0.2px;
-
+      .embed & {
+        padding-bottom: 0px;
+      }
       .section-btn {
         position: absolute;
         right: 0px;
@@ -1848,9 +1850,11 @@
   color: $dark;
   margin: 0;
   padding: 10px;
-  display: flex;
+  overflow: hidden;
+  background: #333;
+  // display: flex;
   .embed-country-title{
-    text-align: center;
+    text-align: left;
     font-size: 2em;
     margin: 0;
   }
