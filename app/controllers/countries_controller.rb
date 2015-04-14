@@ -75,22 +75,20 @@ class CountriesController < ApplicationController
     def find_by_iso(iso)
       unless iso.blank?
         iso = iso.downcase
-        Rails.cache.fetch 'country_' + iso, expires_in: 1.day do
-          response = Typhoeus.get(
-              "#{ENV['GFW_API_HOST']}/countries/#{iso}",
-              headers: {"Accept" => "application/json"}
-          )
-          if response.success?
-            JSON.parse(response.body)
-          else
-            nil
-          end
+        response = Typhoeus.get(
+            "#{ENV['GFW_API_HOST']}/countries/#{iso}",
+            headers: {"Accept" => "application/json"}
+        )
+        if response.success? and (response.body.length > 0)
+          JSON.parse(response.body)
+        else
+          nil
         end
       end
     end
     def find_by_name(country_name)
       country_name, *rest = country_name.split(/_/)
-      country_name = country_name.capitalize!
+      country_name = country_name.capitalize
       response = Typhoeus.get("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20gfw2_countries%20where%20name%20like%20'#{country_name}%25'",
         headers: {"Accept" => "application/json"}
         )
