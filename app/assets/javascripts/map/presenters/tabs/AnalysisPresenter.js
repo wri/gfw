@@ -141,10 +141,6 @@ define([
         }
 
       }
-    },{
-      'Place/update': function() {
-        this.view.setButtonVisibility(this.status.get('dont_analyze'));
-      }
     }],
     /**
      * Handles a Place/go.
@@ -204,7 +200,7 @@ define([
      */
     _analyzeIso: function(iso) {
       this.deleteAnalysis();
-      this.view.setSelects(iso);
+      this.view.setSelects(iso, this.status.get('dont_analyze'));
       mps.publish('LocalMode/updateIso', [iso, this.status.get('dont_analyze')]);
 
       // Build resource
