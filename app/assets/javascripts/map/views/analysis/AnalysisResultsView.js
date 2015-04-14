@@ -45,10 +45,11 @@ define([
       this.model = new AnalysisResultsModel();
       this.presenter = new Presenter(this);
       this.$resultsHide = $('.results-hide');
+      this.$tab = $('#analysis-tab');
+      this.$analysisTab = $('#analysis-nav');
     },
 
     _cacheSelector: function() {
-      this.$tab = $('#analysis-tab');
       this.$downloadDropdown = $('.download-dropdown');
       this.$subscribeButton = $('#analysis-subscribe');
     },
@@ -60,6 +61,7 @@ define([
      */
     renderAnalysis: function(params) {
       this.params = params;
+      this.params.warning_text = (this.$analysisTab.find('li.active').data('analysis') === 'draw-tab');
       this.params.url = this.setDownloadLink(params.layer.slug);
       this.$el.html(this.template(this.params)).removeClass('hidden');
       this._cacheSelector();
