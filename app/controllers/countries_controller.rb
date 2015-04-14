@@ -75,20 +75,18 @@ class CountriesController < ApplicationController
     def find_by_iso(iso)
       unless iso.blank?
         iso = iso.downcase
-        Rails.cache.fetch 'country_' + iso, expires_in: 1.day do
-          response = Typhoeus.get(
-              "#{ENV['GFW_API_HOST']}/countries/#{iso}",
-              headers: {"Accept" => "application/json"}
-          )
+        response = Typhoeus.get(
+            "#{ENV['GFW_API_HOST']}/countries/#{iso}",
+            headers: {"Accept" => "application/json"}
+        )
 
-          puts "#{ENV['GFW_API_HOST']}/countries/#{iso}"
-          puts JSON.parse(response.body)
+        puts "#{ENV['GFW_API_HOST']}/countries/#{iso}"
+        puts JSON.parse(response.body)
 
-          if response.success?
-            JSON.parse(response.body)
-          else
-            nil
-          end
+        if response.success?
+          JSON.parse(response.body)
+        else
+          nil
         end
       end
     end
