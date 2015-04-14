@@ -281,7 +281,6 @@ define([
 
     // For autoselect country and region when youn reload page
     setSelects: function(iso, dont_analyze){
-      console.log(dont_analyze);
       this.iso = iso.country;
       this.area = iso.region;
 
