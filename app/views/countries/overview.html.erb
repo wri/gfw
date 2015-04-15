@@ -24,6 +24,8 @@
   <%= render "countries_templates" %>
   <%= render "shared/js_templates" %>
 <% end %>
+
+
 <section id="countryOverviewView">
   <div class="inner">
     <h2 class="title-section">country rankings</h2>
@@ -32,7 +34,7 @@
     <div class="country-overview-wrapper-coolio">
       <div class="overview_button_group">
         <div class="inner">
-          <div class="share share-link item" data-share-embed-url="<%= request.protocol + request.host_with_port %>/embed/countries/overview"><svg><use xlink:href="#shape-share"></use></svg>Share</div>
+          <div class="share share-link item" data-share-embed-url="<%= request.protocol + request.host_with_port %>/embed/countries/overview" data-share-embed-width="600" data-share-embed-height="578"><svg><use xlink:href="#shape-share"></use></svg>Share</div>
           <div class="settings item " data-target=".overview_graph">
             <svg><use xlink:href="#shape-settings"></use></svg>tree cover canopy settings
           </div>

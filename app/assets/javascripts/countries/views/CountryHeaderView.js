@@ -252,11 +252,6 @@ define([
           }
         });
         self.router = new Router();
-        if ($('body').hasClass('embed')) {
-          $('.umd_options_control').on('click', function(){
-            self._onClickUMDOptions(null, '.country-preview');
-          })
-        }
       }
     },
     setListeners: function(){
