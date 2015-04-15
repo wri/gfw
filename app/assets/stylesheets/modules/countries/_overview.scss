@@ -497,10 +497,7 @@
 
 .countries_list__minioverview {
   position: absolute;
-  top: 50%;
   right: 0;
-  @include transform-translate(200px, -50%);
-  height: 50px;
   font-size: 29px;
   line-height: 50px;
   font-weight: 500;
@@ -529,6 +526,7 @@
   svg {
     float: right;
     margin: 10px;
+    width: auto;
   }
 
   .sibling {
