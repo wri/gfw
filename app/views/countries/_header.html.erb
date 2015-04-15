@@ -11,10 +11,6 @@
           <div class="selector-remove">✕</div>
           <div class="selector-arrow"></div>
         </div>
-        <!--  indepth message -->
-        <% if @country['indepth'].present? %>
-            <p class="country-indepth__bubble"><a href="<%= @country['indepth'] %>" target="_blank" class="btn white uppercase">GFW in <%= @country['name'] %></a></p>
-        <% end %>
       </div>
 
       <div class="country-details">
@@ -106,6 +102,18 @@
                 </span>
               </a>
             </li>
+            <!--  indepth message -->
+            <% if @country['indepth'].present? %>
+                <li>
+                  <a href="<%= @country['indepth'] %>" target="_blank" class="download country-indepth-link">GFW in <%= @country['name'] %>
+                    <span class="sidenav-icon">
+                      <svg>
+                        <use xlink:href="#shape-map"></use>
+                      </svg>
+                    </span>
+                  </a>
+                </li>
+            <% end %>
           </ul>
         </div>
       </div>
