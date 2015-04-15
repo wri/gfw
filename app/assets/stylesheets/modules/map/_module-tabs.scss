@@ -41,12 +41,12 @@ $w-control: 44px;
             &:first-child{
               border-left: none;
             }
-          }
-          &:hover{
-            background: $light;
-            .tooltipmap{
-              opacity: 1;
-              visibility: visible;
+            &:hover{
+              background: $light;
+              .tooltipmap{
+                opacity: 1;
+                visibility: visible;
+              }
             }
           }
           &:active{ background: darken($light,5%);}
