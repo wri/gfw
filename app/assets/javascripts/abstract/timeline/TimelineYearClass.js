@@ -110,10 +110,10 @@ define([
 
 
     fillSelects: function(){
-      var start = this.dateRangeStart.year();
-      var end = this.dateRangeEnd.year();
-      var range = end - start;
-      var options = '';
+      var start = this.dateRangeStart.year(),
+          end = this.dateRangeEnd.year(),
+          range = end - start + 1,
+          options = '';
       for (var i = 0; i < range; i++) {
         options += '<option value="'+(start + i)+'">'+ (start + i) +'</option>';
       }
@@ -123,7 +123,6 @@ define([
     },
 
     setSelects: function(){
-
       _.each(this.$selects,function(el){
         var date = $(el).val();
         var $dateButton = $('#'+$(el).attr('id')+'-button');

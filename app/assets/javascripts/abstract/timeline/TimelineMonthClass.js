@@ -112,7 +112,7 @@ define([
     fillSelects: function(){
       var start = this.dateRangeStart.year(),
           end = this.dateRangeEnd.year(),
-          range = end - start,
+          range = end - start + 1,
           options = '';
       for (var i = 0; i < range; i++) {
         options += '<option value="'+(start + i)+'">'+ (start + i) +'</option>';
@@ -123,7 +123,7 @@ define([
 
       // Month Selects
       this.$fromMonth.val(this.months[this.currentDate[0].month()]);
-      this.$toMonth.val(this.months[this.currentDate[0].month()]);
+      this.$toMonth.val(this.months[this.currentDate[1].month()]);
 
       this.setSelects();
     },
@@ -152,6 +152,31 @@ define([
           }
         });
       });
+
+      _.each(this.$selectsMonth,_.bind(function(el){
+        var $options = document.getElementById($(el).attr('id')).options;
+        var yearSelect = $('#'+$(el).attr('id').replace('month','year')).val();
+        var monthSelect = $(el)[0].selectedIndex;
+        var start = this.dateRangeStart.year();
+        var end = this.dateRangeEnd.year();
+        var endMonth = this.dateRangeEnd.month();
+        if (yearSelect == end) {
+          // if you select the last year of the timeslider we have to check if all months are avaible
+          _.each($options, function(opt,i){
+            (i > endMonth) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
+          });
+          // if previously we have selected a month that is not avaible we must select manually the last month
+          if (monthSelect > endMonth) {
+            $(el).val(this.months[endMonth]);
+            this.setSelects();
+          }
+        }else{
+          _.each($options, function(opt,i){
+            $(opt).prop('disabled',false);
+          });
+        }
+      }, this ));
+
 
       var start = this.prepareDate(this.$fromMonth[0].selectedIndex ,this.$from.val());
       var end = this.prepareDate(this.$toMonth[0].selectedIndex ,this.$to.val());
