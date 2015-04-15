@@ -41,7 +41,6 @@ define([
 
       'click #countries-analyze-button' : 'analyzeIso',
       'change #countries-country-select' : 'changeIso',
-      'change #countries-region-select' : 'changeArea',
 
       'click #countries-country-ul li' : 'changeIsoMobile',
       'click #countries-country-reset' : 'changeIsoMobile'

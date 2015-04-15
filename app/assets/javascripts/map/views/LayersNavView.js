@@ -106,7 +106,8 @@ define([
     },
 
     setNumbersOfLayers: function(){
-      var layersByCategory = _.groupBy(this.layers, function(layer){ return layer.category_slug; });
+      // Filter layers without iso and then group them by category
+      var layersByCategory = _.groupBy(_.filter(this.layers, function(layer){ return !layer.iso }), function(layer){ return layer.category_slug; });
       this.$categoriesNum.text('');
       _.each(layersByCategory, _.bind(function(v,k){
         $('#'+k+'-category-num').text(v.length);
@@ -145,8 +146,10 @@ define([
     },
 
     _toggleLayersNav: function(e){
-      $(e.currentTarget).toggleClass('show');
-      $(e.currentTarget).parent().children('.layers-nav').toggleClass('show');
+      if (!$(e.currentTarget).parent().hasClass('disabled')) {
+        $(e.currentTarget).toggleClass('show');
+        $(e.currentTarget).parent().children('.layers-nav').toggleClass('show');
+      }
     },
 
     _toggleLayerWrap: function(e){
