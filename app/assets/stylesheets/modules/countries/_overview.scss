@@ -235,11 +235,20 @@
   font-size: 12px;
   font-weight: 500;
   color: #9D9AA5;
-  text-transform: uppercase;
-  text-align: center;
+  text-align: right;
 
   span {
     text-transform: lowercase;
+  }
+  .loss-vs-gain {
+    strong {
+      color: #666;
+      text-decoration: underline;
+    }
+    span {
+      cursor: pointer;
+      text-transform: none;
+    }
   }
 }
 .overview_graph__years{
@@ -325,10 +334,6 @@
 
 .countries_list__header__minioverview,
 .countries_list__minioverview {
-  float: right;
-  width: 110px;
-  font-size: 17px;
-  color: $dark;
 
   &.per-loss{
     width: auto;
@@ -357,12 +362,6 @@
   &.medium {
     width: 150px;
   }
-}
-
-.countries_list__header__minioverview {
-  float: none;
-  position: absolute;
-  right: 120px;
 }
 
 .countries_list__header__num,
@@ -500,7 +499,7 @@
   position: absolute;
   top: 50%;
   right: 0;
-  @include transform-translate(0, -50%);
+  @include transform-translate(200px, -50%);
   height: 50px;
   font-size: 29px;
   line-height: 50px;
