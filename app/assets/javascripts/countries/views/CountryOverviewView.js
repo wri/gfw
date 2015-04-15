@@ -300,10 +300,13 @@ define([
           $('.countries_list ul').append(markup_list);
 
           that.model.set('class', null);
-
-          _.each(data, function(val, key) {
-            self._drawMiniOverview(val.iso);
-          });
+          if (!!mode && mode.mode != 'percent') {
+            _.each(data, function(val, key) {
+              self._drawMiniOverview(val.iso);
+            });
+          } else {
+            $('.countries_list__data').addClass('no-graph');
+          }
         }, this ));
       } else if (this.model.get('graph') === 'percent_loss') {
         $('.countries_list__header__minioverview').hide();
