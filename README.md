@@ -72,6 +72,7 @@ TERMS_COOKIE=true
 S3_BUCKET_NAME=
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
+LAYER_SPEC=layerspec_nuclear_hazard
 ```
 
 Last step. For real. Start the app server and access it at [http://0.0.0.0:5000](http://0.0.0.0:5000):
