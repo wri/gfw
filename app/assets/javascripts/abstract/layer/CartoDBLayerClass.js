@@ -55,7 +55,9 @@ define([
     },
 
     updateTiles: function() {
-      this.cdbLayer.setQuery(this.getQuery());
+      if (this.cdbLayer) {
+        this.cdbLayer.setQuery(this.getQuery());
+      }
     },
 
     /**
