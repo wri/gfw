@@ -34,6 +34,7 @@ define([
       'click .info' : 'showInfo',
       'click .graph_tab': '_updateGraph',
       'click .show-more-countries': '_drawList',
+      'click .trigger-mode span': '_toggle_total_percent',
       'click .share-link': '_openShareModal'
     },
 
@@ -198,15 +199,34 @@ define([
       $ul_li.find('.countries_list__num').each(function(i, ele){ $(ele).empty().text(i+1) })
     },
 
+    _toggle_total_percent: function(e) {
+      if (!sessionStorage.getItem('OVERVIEWMODE')) {
+        var mode = JSON.stringify(
+        {
+          'mode': 'total'
+        });
+        sessionStorage.setItem('OVERVIEWMODE', mode);
+      } else {
+        var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
+        mode = (mode.mode == 'total') ? 'percent' : 'total';
+        sessionStorage.setItem('OVERVIEWMODE', JSON.stringify({'mode':mode}))
+      }
+      this._drawList();
+    },
+
     _drawList: function(e) {
       var that = this;
 
       e && e.preventDefault();
 
       if (this.model.get('graph') === 'total_loss') {
-        $('.countries_list__header__minioverview').hide();
-        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
         var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss_perc) loss_perc FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss_perc = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss_perc DESC '
+
+        var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
+        if (mode.mode != 'percent') {
+          var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
+        }
+
         if (e) {
           sql += 'OFFSET 10';
           $('.show-more-countries').fadeOut();
@@ -270,7 +290,10 @@ define([
             $('.countries_list ul').html('');
             $('.show-more-countries').show();
 
-            $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('loss-vs-gain').html('Loss <span>vs</span> Gain');
+            if (mode.mode != 'percent')
+              $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('loss-vs-gain').html('Order: <strong>Total loss</strong> / <span>Relative loss</span>');
+            else
+              $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('loss-vs-gain').html('Order: <span>Total loss</span> / <strong>Relative loss</strong>');
           }
 
           $('.countries_list ul').append(markup_list);
