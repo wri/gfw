@@ -206,7 +206,7 @@ define([
       if (this.model.get('graph') === 'total_loss') {
         $('.countries_list__header__minioverview').hide();
         var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss, loss_perc FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled, umd.loss_perc ORDER BY loss DESC ';
-
+        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss_perc) loss_perc FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss_perc = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss_perc DESC '
         if (e) {
           sql += 'OFFSET 10';
           $('.show-more-countries').fadeOut();
@@ -230,22 +230,24 @@ define([
               url: window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (this.helper.config.canopy_choice || 30),
               dataType: 'json',
               success: _.bind(function(data) {
-                var loss = Math.round(val.loss);
-                var g_mha, l_mha;
-                g_mha = l_mha = 'Mha';
+                var loss = Math.round(val.loss) || val.loss_perc.toFixed(3);
                 var orig = loss;
+                var g_mha, l_mha = '%';
 
-                if (loss.toString().length >= 7) {
-                  loss = ((loss /1000)/1000).toFixed(2)
-                } else if (loss.toString().length >= 4) {
-                  l_mha = 'KHa';
-                  loss = (loss /1000);
-                if (loss % 1 != 0) loss = loss.toFixed(2)
-                } else {
-                  l_mha = 'Ha';
+                if (! !!val.loss_perc){
+                  g_mha = l_mha = 'Mha';
+                  if (loss.toString().length >= 7) {
+                    loss = ((loss /1000)/1000).toFixed(2)
+                  } else if (loss.toString().length >= 4) {
+                    l_mha = 'KHa';
+                    loss = (loss /1000);
+                  if (loss % 1 != 0) loss = loss.toFixed(2)
+                  } else {
+                    l_mha = 'Ha';
+                  }
                 }
 
-                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' ('+(val.percent_loss*100) +'%) of loss</span>');
+                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span>');
 
                 if (key == max_trigger){
                   that._reorderRanking();
