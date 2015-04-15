@@ -212,6 +212,7 @@ define([
         sessionStorage.setItem('OVERVIEWMODE', JSON.stringify({'mode':mode}))
       }
       this._drawList();
+      this._drawGraph();
     },
 
     _drawList: function(e) {
@@ -812,6 +813,16 @@ define([
           .attr('transform', 'rotate(-90)');
 
         var sql = 'SELECT year, \
+             Sum(loss_perc) loss_perc, \
+             Sum(gain) gain \
+              FROM   umd_nat_final_1  \
+              WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +'  \
+                      AND year > 2000 \
+              GROUP  BY year  \
+              ORDER  BY year ';
+        var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
+        if (mode.mode != 'percent') {
+          sql = 'SELECT year, \
              Sum(loss) loss, \
              Sum(gain) gain \
               FROM   umd_nat_final_1  \
@@ -819,6 +830,7 @@ define([
                       AND year > 2000 \
               GROUP  BY year  \
               ORDER  BY year ';
+        }
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, json) {
           var data = json.rows;
 
@@ -827,13 +839,13 @@ define([
 
           var y_scale = d3.scale.linear()
             .range([vertical_m, h-vertical_m])
-            .domain([d3.max(data_, function(d) { return d.loss; }), 0]);
+            .domain([d3.max(data_, function(d) { return d.loss || d.loss_perc; }), 0]);
 
           // area
           var area = d3.svg.area()
             .x(function(d) { return x_scale(d.year); })
             .y0(h)
-            .y1(function(d) { return y_scale(d.loss); });
+            .y1(function(d) { return y_scale(d.loss || d.loss_perc); });
 
           svg.append('path')
             .datum(data_)
@@ -851,11 +863,11 @@ define([
               return x_scale(d.year);
             })
             .attr('cy', function(d){
-              return y_scale(d.loss);
+              return y_scale(d.loss || d.loss_perc);
             })
             .attr('r', 6)
             .attr('name', _.bind(function(d) {
-              return '<span>'+d.year+'</span>'+this.helper.formatNumber(parseFloat(d.loss/1000000).toFixed(1))+' Mha';
+              return '<span>'+d.year+'</span>'+this.helper.formatNumber(parseFloat((d.loss || d.loss_perc)/1000000).toFixed(1))+' Mha';
             }, this ))
             .on('mouseover', function(d) {
               that.tooltip.html($(this).attr('name'))
