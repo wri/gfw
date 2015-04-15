@@ -200,7 +200,7 @@ define([
      */
     _analyzeIso: function(iso) {
       this.deleteAnalysis();
-      this.view.setSelects(iso);
+      this.view.setSelects(iso, this.status.get('dont_analyze'));
       mps.publish('LocalMode/updateIso', [iso, this.status.get('dont_analyze')]);
 
       // Build resource
@@ -274,7 +274,7 @@ define([
 
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Wdpaid: ' + resource.wdpaid);
       // Get geojson/fit bounds/draw geojson/publish analysis
-      var url = 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from wdpa_all where wdpaid =' + wdpaid;
+      var url = 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from protected_areas where wdpaid =' + wdpaid;
       $.getJSON(url, _.bind(function(data) {
         if (data.rows.length > 0) {
           var geojson = {

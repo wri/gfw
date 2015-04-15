@@ -280,14 +280,16 @@ define([
     },
 
     // For autoselect country and region when youn reload page
-    setSelects: function(iso){
+    setSelects: function(iso, dont_analyze){
       this.iso = iso.country;
       this.area = iso.region;
 
       this.$countrySelect.val(this.iso).trigger("liszt:updated");
       if (this.iso) {
         this.getSubCountries();
-        this.$countryButton.addClass('disabled');
+        if (!dont_analyze) {
+          this.$countryButton.addClass('disabled');
+        }
       }else{
         this.$countryButton.removeClass('disabled');
         this.$regionSelect.val(this.area).attr('disabled', true).trigger("liszt:updated")

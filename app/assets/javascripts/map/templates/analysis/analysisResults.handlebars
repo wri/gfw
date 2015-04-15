@@ -17,19 +17,22 @@
         <span class="stats-count" style="color: #6D6DE5;"><strong>{{gainAlerts}}</strong> ha</span>
       </li>
       {{/if}}
+      {{#if warning_text}}
       <li>
         <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
       </li>
+      {{/if}}
     {{else}}
       {{#if forestgain}}
         <li>
           <span class="stats-title">Gain 2001-2012</span>
           <span class="stats-count" style="color: #6D6DE5;"><strong>{{gainAlerts}}</strong> ha</span>
         </li>
+        {{#if warning_text}}
         <li>
           <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
         </li>
-
+        {{/if}}
       {{else}}
         {{#if imazon}}
           <li>
@@ -58,27 +61,6 @@
         <span class="tooltipmap bottom">Download data</span>
         <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
       </a>
-      {{!-- {{#if loss}}
-      {{else}}
-        {{#if forestgain}}
-          <a href="http://data.globalforestwatch.org/datasets/6c9f379a362e4926ad24b58444f4ba67" target="_blank">
-            <span class="tooltipmap bottom">Download data</span>
-            <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
-          </a>
-        {{else}}
-        <div href="#">
-          <span class="tooltipmap bottom">Download data</span>
-          <svg class="dropdown-button icon"><use xlink:href="#icon-analysis-download"></use></svg>
-          <ul class="download-dropdown hidden">
-            <li><a href="{{download.csv}}" target="_blank">SVG</a></li>
-            <li><a href="{{download.geojson}}" target="_blank">GeoJSON</a></li>
-            <li><a href="{{download.shp}}" target="_blank">SHP</a></li>
-            <li><a href="{{download.kml}}" target="_blank">KML</a></li>
-            <li><a href="{{download.csv}}" target="_blank">CSV</a></li>
-          </ul>
-        </div>
-        {{/if}}
-      {{/if}} --}}
     </li>
     <li id="analysis-delete"><span class="tooltipmap bottom">Discard analysis</span><svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg></li>
     <li id="analysis-subscribe"><span class="tooltipmap bottom">Subscribe</span><svg class="icon"><use xlink:href="#icon-analysis-alerts"></use></svg></li>
