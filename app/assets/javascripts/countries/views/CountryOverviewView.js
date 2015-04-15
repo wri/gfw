@@ -767,51 +767,61 @@ define([
 
       if (this.model.get('graph') === 'total_loss') {
         this._showYears();
+        var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
 
-        svg.append('text')
-          .attr('class', 'axis notranslate')
-          .attr('id', 'axis_y')
-          .text('Tree cover loss (Mha)')
-          .attr('x', -h/1.6)
-          .attr('y', 10)
-          .attr('transform', 'rotate(-90)');
+        if (mode.mode != 'percent') {
+          svg.append('text')
+            .attr('class', 'axis notranslate')
+            .attr('id', 'axis_y')
+            .text('Tree cover loss (Mha)')
+            .attr('x', -h/1.6)
+            .attr('y', 10)
+            .attr('transform', 'rotate(-90)');
 
-        svg.append('text')
-          .attr('class', 'axis notranslate')
-          .attr('id', 'axis_y')
-          .text('25')
-          .attr('x', 28)
-          .attr('y', 30)
-          .attr('transform', 'rotate(-90)');
-        svg.append('text')
-          .attr('class', 'axis notranslate')
-          .attr('id', 'axis_y')
-          .text('20')
-          .attr('x', -60)
-          .attr('y', 30)
-          .attr('transform', 'rotate(-90)');
-        svg.append('text')
-          .attr('class', 'axis notranslate')
-          .attr('id', 'axis_y')
-          .text('15')
-          .attr('x', -142)
-          .attr('y', 30)
-          .attr('transform', 'rotate(-90)');
-        svg.append('text')
-          .attr('class', 'axis notranslate')
-          .attr('id', 'axis_y')
-          .text('10')
-          .attr('x', -224)
-          .attr('y', 30)
-          .attr('transform', 'rotate(-90)');
-        svg.append('text')
-          .attr('class', 'axis notranslate')
-          .attr('id', 'axis_y')
-          .text('5')
-          .attr('x', -306)
-          .attr('y', 30)
-          .attr('transform', 'rotate(-90)');
-
+          svg.append('text')
+            .attr('class', 'axis notranslate')
+            .attr('id', 'axis_y')
+            .text('25')
+            .attr('x', 28)
+            .attr('y', 30)
+            .attr('transform', 'rotate(-90)');
+          svg.append('text')
+            .attr('class', 'axis notranslate')
+            .attr('id', 'axis_y')
+            .text('20')
+            .attr('x', -60)
+            .attr('y', 30)
+            .attr('transform', 'rotate(-90)');
+          svg.append('text')
+            .attr('class', 'axis notranslate')
+            .attr('id', 'axis_y')
+            .text('15')
+            .attr('x', -142)
+            .attr('y', 30)
+            .attr('transform', 'rotate(-90)');
+          svg.append('text')
+            .attr('class', 'axis notranslate')
+            .attr('id', 'axis_y')
+            .text('10')
+            .attr('x', -224)
+            .attr('y', 30)
+            .attr('transform', 'rotate(-90)');
+          svg.append('text')
+            .attr('class', 'axis notranslate')
+            .attr('id', 'axis_y')
+            .text('5')
+            .attr('x', -306)
+            .attr('y', 30)
+            .attr('transform', 'rotate(-90)');
+        } else {
+          svg.append('text')
+            .attr('class', 'axis notranslate')
+            .attr('id', 'axis_y')
+            .text('Tree cover loss (percent)')
+            .attr('x', -h/1.6)
+            .attr('y', 10)
+            .attr('transform', 'rotate(-90)');
+        }
         var sql = 'SELECT year, \
              Sum(loss_perc) loss_perc, \
              Sum(gain) gain \
@@ -820,7 +830,6 @@ define([
                       AND year > 2000 \
               GROUP  BY year  \
               ORDER  BY year ';
-        var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
         if (mode.mode != 'percent') {
           sql = 'SELECT year, \
              Sum(loss) loss, \
@@ -867,7 +876,11 @@ define([
             })
             .attr('r', 6)
             .attr('name', _.bind(function(d) {
-              return '<span>'+d.year+'</span>'+this.helper.formatNumber(parseFloat((d.loss || d.loss_perc)/1000000).toFixed(1))+' Mha';
+              if (mode.mode != 'percent')
+                return '<span>'+d.year+'</span>'+this.helper.formatNumber(parseFloat(d.loss/1000000).toFixed(1))+' Mha';
+              else
+                return '<span>'+d.year+'</span>'+d.loss_perc.toFixed(3)+' %';
+
             }, this ))
             .on('mouseover', function(d) {
               that.tooltip.html($(this).attr('name'))
