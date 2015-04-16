@@ -371,7 +371,7 @@ define([
         url: url,
         dataType: 'json',
         success: function(data) {
-          var amount = data.umd[0].extent;
+          var amount = ~~(data.umd[0].extent);
 
           if (amount.toString().length >= 7) {
             amount = Math.round((amount /1000)/1000)
