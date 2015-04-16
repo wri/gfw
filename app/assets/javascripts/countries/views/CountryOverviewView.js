@@ -292,9 +292,9 @@ define([
             $('.show-more-countries').show();
 
             if (!!mode && mode.mode == 'percent')
-              $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('loss-vs-gain').html('Order: <span>Total loss</span> / <strong>Relative loss</strong>').show();
+              $('.overview_graph__legend').find('.trigger-mode').html('<span>TOTAL LOSS</span> <strong>RELATIVE LOSS</strong>').show();
             else
-              $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('loss-vs-gain').html('Order: <strong>Total loss</strong> / <span>Relative loss</span>').show();
+              $('.overview_graph__legend').find('.trigger-mode').html('<strong>TOTAL LOSS</strong> <span>RELATIVE LOSS</span>').show();
           }
 
           $('.countries_list ul').append(markup_list);
