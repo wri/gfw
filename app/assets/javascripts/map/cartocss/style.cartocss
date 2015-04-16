@@ -488,7 +488,7 @@
     line-opacity: 0.3;
   }
 
-  [layer='azepoly_species'] {
+  [layer='alliance_for_zero_extinction_sites_species_joi'] {
     polygon-fill: #b2d26e;
     polygon-opacity: 0.9;
     line-color: #b2d26e;
