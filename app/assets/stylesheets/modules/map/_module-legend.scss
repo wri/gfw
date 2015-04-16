@@ -7,7 +7,7 @@
   max-height: 75%;
   overflow: auto;
   padding: 0px 0 56px;
-  z-index: 21;
+  z-index: 22;
   background: $white;
   @include transition(all 0.25s $easeInOutSine);
   @include transform(translate(0,100%));

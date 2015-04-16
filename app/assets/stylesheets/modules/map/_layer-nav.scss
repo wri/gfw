@@ -218,9 +218,9 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
             border-left: 3px solid nth($colors, $i);
             @media (min-width: $br-mobileMap){
               border: none;
-            }
-            &:hover {
-              background-color: rgba(nth($colors, $i), 0.1);
+              &:hover {
+                background-color: rgba(nth($colors, $i), 0.1);
+              }
             }
           }
         }

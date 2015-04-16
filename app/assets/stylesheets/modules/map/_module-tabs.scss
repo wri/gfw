@@ -5,7 +5,7 @@ $w-control: 44px;
   top: 0px;
   left: 0;
   width: 100%;
-  z-index: 21;
+  z-index: 22;
   @media (min-width: $br-mobileMap){
     background: $white;
     top: 110px;
@@ -214,6 +214,7 @@ $w-control: 44px;
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   &.active{
     display: block;
   }
