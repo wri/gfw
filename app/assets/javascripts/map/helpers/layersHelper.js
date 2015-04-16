@@ -36,6 +36,7 @@ define([
   'map/views/layers/CodMiningLayer',
   'map/views/layers/CogMiningLayer',
   'map/views/layers/GabMiningLayer',
+  'map/views/layers/ColMiningLayer',
   'map/views/layers/OilPalmLayer',
   'map/views/layers/CogOilPalmLayer',
   'map/views/layers/LbrOilPalmLayer',
@@ -119,6 +120,7 @@ define([
   CodMiningLayer,
   CogMiningLayer,
   GabMiningLayer,
+  ColMiningLayer,
   OilPalmLayer,
   CogOilPalmLayer,
   LbrOilPalmLayer,
@@ -274,6 +276,9 @@ define([
     },
     gab_mining: {
       view: GabMiningLayer
+    },
+    col_mining: {
+      view: ColMiningLayer
     },
     oil_palm: {
       view: OilPalmLayer
