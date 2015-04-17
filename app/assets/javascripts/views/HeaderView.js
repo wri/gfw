@@ -17,7 +17,8 @@ define([
 
     events: {
       'click #btn-menu' : 'toggleMenu',
-      'click .share-link' : 'shareOpen'
+      'click .share-link' : 'shareOpen',
+      'click .menu-section-link' : 'menuOpen'
     },
 
     initialize: function() {
@@ -62,7 +63,12 @@ define([
     shareOpen: function(event){
       var shareView = new ShareView().share(event);
       this.$el.append(shareView.el);
-    }
+    },
+
+    menuOpen: function(e){
+      $(e.currentTarget).toggleClass('active');
+      $('#menu-section-dropdown').toggleClass('active');
+    },
 
 
   });
