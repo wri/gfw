@@ -314,7 +314,7 @@ define([
 
         var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_final_1 umd, gfw2_countries c WHERE umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
         if (!!mode && mode.mode == 'percent')
-            sql = 'SELECT sum(gain)/sum(extent_2000) as ratio, country as name, iso from umd_nat_final_1 where extent_2000 > 0  group by country, iso order by ratio desc ';
+            sql = 'SELECT sum(gain)/sum(extent_2000) as ratio, country as name, c.iso as iso1, c.enabled, u.iso as iso2 from umd_nat_final_1 u, gfw2_countries c where c.iso = u.iso AND extent_2000 >0  group by country, u.iso, c.iso, c.enabled order by ratio desc ';
         if (e) {
           sql += 'OFFSET 10';
         } else {
