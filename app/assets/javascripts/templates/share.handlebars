@@ -6,11 +6,15 @@
     <div id="share-info"><p>Click and paste link in email or IM</p></div>
   </header>
   <div class="mini-modal-input">
-    <input class='field' type='text' id='share_field' value="" readonly />
-    <ul class="button-container">
-      <li><button class="change-type btn gray uppercase" data-type="embed">Embed</button></li>
-      <li><button class="change-type btn green uppercase" data-type="link">Link</button></li>
-    </ul>
+    {{#if hideEmbed}}
+      <input class='field' type='text' id='share_field' value="" readonly />
+    {{else}}
+      <input class='field' type='text' id='share_field' value="" readonly />
+      <ul class="button-container">
+        <li><button class="change-type btn gray uppercase" data-type="embed">Embed</button></li>
+        <li><button class="change-type btn green uppercase" data-type="link">Link</button></li>
+      </ul>
+    {{/if}}
   </div>
   <div class="share-sozial">
     <ul>
