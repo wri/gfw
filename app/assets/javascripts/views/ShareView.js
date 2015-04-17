@@ -18,6 +18,7 @@ define([
       type: 'link',
       url: window.location.href,
       embedUrl: window.location.href,
+      hideEmbed: true
     },
     setEmbedUrl: function(){
       if($('body').hasClass('is-countries-page')){
@@ -82,7 +83,7 @@ define([
 
     render: function(){
       this._renderInput();
-      this.$el.html(this.template());
+      this.$el.html(this.template({ hideEmbed: this.model.get('hideEmbed') }));
       this._cacheVars();
     },
 
@@ -158,6 +159,11 @@ define([
     },
 
     _setUrlsFromEvent: function(event) {
+
+      var hideEmbed = $(event.currentTarget).data('hide-embed');
+      this.model.set('hideEmbed', !!hideEmbed);
+
+
       var url = $(event.currentTarget).data('share-url');
       if (url !== undefined) {
         this.model.set('url', url);

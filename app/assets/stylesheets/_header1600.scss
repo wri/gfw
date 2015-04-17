@@ -656,3 +656,29 @@
     }
   }
 }
+
+
+.layout-share-mobile{
+  display: block;
+  .share-link{
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background: $white;
+    svg{
+      fill: $dark;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      @include transform(translate(-50%,-50%));
+    }
+  }
+  @media (min-width: $br-mobile){
+    display: none;
+  }
+}
