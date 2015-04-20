@@ -84,9 +84,9 @@ define([
 
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
         this.$el.addClass('is-loaded');
-        if (this.embed) {
-          this.offsetCenter(this.getCenter(),323/2,0);
-        }
+        // if (this.embed) {
+        //   this.offsetCenter(this.getCenter(),323/2,0);
+        // }
       }, this));
 
       google.maps.event.addListener(this.map, 'click', _.bind(function(wdpa) {
@@ -211,11 +211,7 @@ define([
     },
 
     fitBounds: function(bounds) {
-      if (this.embed) {
-        this.myFitBounds(this.map,bounds);
-      }else{
-        this.map.fitBounds(bounds);
-      }
+      this.map.fitBounds(bounds);
     },
 
 

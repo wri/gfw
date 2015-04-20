@@ -185,6 +185,12 @@
     line-clip: false;
     polygon-clip: false;
   }
+  [layer='col_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
 //deprecated
   [layer='oilpalm'] {
     polygon-fill: #ee9587;
@@ -488,7 +494,7 @@
     line-opacity: 0.3;
   }
 
-  [layer='azepoly_species'] {
+  [layer='alliance_for_zero_extinction_sites_species_joi'] {
     polygon-fill: #b2d26e;
     polygon-opacity: 0.9;
     line-color: #b2d26e;

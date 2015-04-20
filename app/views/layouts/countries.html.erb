@@ -32,6 +32,18 @@
     </script>
 
   </head>
+  <% content_for :headerMobile do %>
+    <a href="#" class="menu-section-link" data-hide-embed="1">Countries <svg><use xlink:href="#shape-country"></use></svg></a>
+    <ul id="menu-section-dropdown" class="menu-section-dropdown">
+      <li>
+        <a class="btn gray uppercase <% if (controller?("countries") && action?("index")) || (controller?("countries") && action?("show")) %> current<% end %>" href="/countries">Country Profiles</a>
+      </li>
+      <li>
+        <a class="btn gray uppercase <% if controller?("countries") && action?("overview") %>current<% end %>" href="/countries/overview">Country Rankings</a>
+      </li>
+    </ul>
+  <% end %>
+
   <body class="<%= "is-#{controller_name}-page is-#{action_name}-action" %>">
     <%= render 'layouts/svg_icons' %>
     <%= render 'shared/modal' %>

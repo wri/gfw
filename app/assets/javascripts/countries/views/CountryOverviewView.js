@@ -31,7 +31,6 @@ define([
     el: '#countryOverviewView',
 
     events: {
-      'click .info' : 'showInfo',
       'click .graph_tab': '_updateGraph',
       'click .show-more-countries': '_drawList',
       'click .trigger-mode span': '_toggle_total_percent',
@@ -203,7 +202,7 @@ define([
       if (!sessionStorage.getItem('OVERVIEWMODE')) {
         var mode = JSON.stringify(
         {
-          'mode': 'total'
+          'mode': 'percent'
         });
         sessionStorage.setItem('OVERVIEWMODE', mode);
       } else {
@@ -221,11 +220,11 @@ define([
       e && e.preventDefault();
 
       if (this.model.get('graph') === 'total_loss') {
-        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss_perc) loss_perc FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss_perc = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss_perc DESC '
 
+        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
         var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
-        if (!!mode && mode.mode != 'percent') {
-          var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
+        if (!!mode && mode.mode == 'percent') {
+          sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss_perc) loss_perc FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss_perc = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss_perc DESC '
         }
 
         if (e) {
@@ -291,24 +290,30 @@ define([
             $('.countries_list ul').html('');
             $('.show-more-countries').show();
 
-            if (!!mode && mode.mode != 'percent')
-              $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('loss-vs-gain').html('Order: <strong>Total loss</strong> / <span>Relative loss</span>');
+            if (!!mode && mode.mode == 'percent')
+              $('.overview_graph__legend').find('.trigger-mode').html('<span>TOTAL LOSS</span> <strong>RELATIVE LOSS</strong>').show();
             else
-              $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('loss-vs-gain').html('Order: <span>Total loss</span> / <strong>Relative loss</strong>');
+              $('.overview_graph__legend').find('.trigger-mode').html('<strong>TOTAL LOSS</strong> <span>RELATIVE LOSS</span>').show();
           }
 
           $('.countries_list ul').append(markup_list);
 
           that.model.set('class', null);
-
-          _.each(data, function(val, key) {
-            self._drawMiniOverview(val.iso);
-          });
+          if (!!mode && mode.mode == 'percent') {
+            $('.countries_list__data').addClass('no-graph');
+          } else {
+            _.each(data, function(val, key) {
+              self._drawMiniOverview(val.iso);
+            });
+          }
         }, this ));
       } else if (this.model.get('graph') === 'percent_loss') {
         $('.countries_list__header__minioverview').hide();
-        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+(this.helper.config.canopy_choice || 30)+' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
+        var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
 
+        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_final_1 umd, gfw2_countries c WHERE umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
+        if (!!mode && mode.mode == 'percent')
+            sql = 'SELECT sum(gain)/sum(extent_2000) as ratio, country as name, c.iso as iso1, c.enabled, u.iso as iso2 from umd_nat_final_1 u, gfw2_countries c where c.iso = u.iso AND extent_2000 >0  group by country, u.iso, c.iso, c.enabled order by ratio desc ';
         if (e) {
           sql += 'OFFSET 10';
         } else {
@@ -324,33 +329,48 @@ define([
           _.each(data, function(val, key) {
             var ord = e ? (key+11) : (key+1),
                 enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
-            $.ajax({
-              url: window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=30',
-              dataType: 'json',
-              success: _.bind(function(data) {
-                var g_mha, l_mha;
-                g_mha = l_mha = 'Mha';
-                data.years[1].gain = Math.round(data.years[1].gain);
-                if (data.years[1].gain.toString().length >= 7) {
-                  data.years[1].gain = ((data.years[1].gain /1000)/1000).toFixed(2)
-                } else if (data.years[1].gain.toString().length >= 4) {
-                  l_mha = 'KHa';
-                  data.years[1].gain = (data.years[1].gain /1000);
-                if (data.years[1].gain % 1 != 0) data.years[1].gain = data.years[1].gain.toFixed(2)
-                } else {
-                  l_mha = 'Ha';
+
+            if (!!mode && mode.mode != 'percent') {
+              $.ajax({
+                url: window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=30',
+                dataType: 'json',
+                success: _.bind(function(data) {
+                  if (!!mode && mode.mode == 'total') {
+                    var g_mha, l_mha;
+                    g_mha = l_mha = 'Mha';
+                    data.years[1].gain = Math.round(data.years[1].gain);
+                    if (data.years[1].gain.toString().length >= 7) {
+                      data.years[1].gain = ((data.years[1].gain /1000)/1000).toFixed(2)
+                    } else if (data.years[1].gain.toString().length >= 4) {
+                      l_mha = 'KHa';
+                      data.years[1].gain = (data.years[1].gain /1000);
+                    if (data.years[1].gain % 1 != 0) data.years[1].gain = data.years[1].gain.toFixed(2)
+                    } else {
+                      l_mha = 'Ha';
+                    }
+                    $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ (data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
+                  }
                 }
-                $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ (data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
-              }
-              , this),
-            });
-            markup_list += '<li>\
+                , this),
+              });
+            }
+            if (!!mode && mode.mode == 'percent') {
+              markup_list += '<li>\
+                              <div class="countries_list__num">'+ord+'</div>\
+                              <div class="countries_list__title">'+enabled+'</div>\
+                              <div class="countries_list__data">\
+                                <div id="perc_'+val.iso+'" class="perct"><span class="loss line"><span>'+ (val.ratio*1000).toFixed(2) + '%</span></span></div>\
+                              </div>\
+                            </li>';
+            } else {
+              markup_list += '<li>\
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
                               <div class="countries_list__data">\
                                 <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss"></span></div>\
                               </div>\
                             </li>';
+            }
             if (key == max_trigger){
               that._reorderRanking();
             }
@@ -363,6 +383,11 @@ define([
             $('.show-more-countries').show();
 
             $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('per-loss').html('% Loss');
+
+            if (!!mode && mode.mode == 'percent')
+              $('.overview_graph__legend').find('.trigger-mode').html('<span>TOTAL LOSS</span> <strong>RELATIVE LOSS</strong>').show();
+            else
+              $('.overview_graph__legend').find('.trigger-mode').html('<strong>TOTAL LOSS</strong> <span>RELATIVE LOSS</span>').show();
           }
 
           $('.countries_list ul').append(markup_list);
@@ -769,7 +794,15 @@ define([
         this._showYears();
         var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
 
-        if (!!mode && mode.mode != 'percent') {
+        if (!!mode && mode.mode == 'percent') {
+          svg.append('text')
+            .attr('class', 'axis notranslate')
+            .attr('id', 'axis_y')
+            .text('Tree cover loss (percent)')
+            .attr('x', -h/1.6)
+            .attr('y', 10)
+            .attr('transform', 'rotate(-90)');
+        } else {
           svg.append('text')
             .attr('class', 'axis notranslate')
             .attr('id', 'axis_y')
@@ -813,41 +846,31 @@ define([
             .attr('x', -306)
             .attr('y', 30)
             .attr('transform', 'rotate(-90)');
-        } else {
-          svg.append('text')
-            .attr('class', 'axis notranslate')
-            .attr('id', 'axis_y')
-            .text('Tree cover loss (percent)')
-            .attr('x', -h/1.6)
-            .attr('y', 10)
-            .attr('transform', 'rotate(-90)');
         }
-        var sql = 'SELECT year, Sum(loss) / (Sum(extent_2000) + Sum(loss))  ratio_loss  FROM   umd_nat_final_1                WHERE  thresh = 30 AND year > 2000   GROUP  BY year ORDER BY year ';
-        if (!!mode && mode.mode != 'percent') {
-          sql = 'SELECT year, \
-             Sum(loss) loss, \
-             Sum(gain) gain \
+        var sql = 'SELECT year, \
+             Sum(loss) loss \
               FROM   umd_nat_final_1  \
               WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +'  \
                       AND year > 2000 \
               GROUP  BY year  \
               ORDER  BY year ';
+        if (!!mode && mode.mode == 'percent') {
+          sql = 'SELECT year, Sum(loss) / (Sum(extent_2000) + Sum(loss))  loss  FROM   umd_nat_final_1                WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000   GROUP  BY year ORDER BY year ';
         }
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), _.bind(function(error, json) {
           var data = json.rows;
 
-          var data_ = data,
-              gain = data[0].gain;
+          var data_ = data;
 
           var y_scale = d3.scale.linear()
             .range([vertical_m, h-vertical_m])
-            .domain([d3.max(data_, function(d) { return d.loss || d.ratio_loss; }), 0]);
+            .domain([d3.max(data_, function(d) { return d.loss; }), 0]);
 
           // area
           var area = d3.svg.area()
             .x(function(d) { return x_scale(d.year); })
             .y0(h)
-            .y1(function(d) { return y_scale(d.loss || d.ratio_loss); });
+            .y1(function(d) { return y_scale(d.loss); });
 
           svg.append('path')
             .datum(data_)
@@ -865,14 +888,14 @@ define([
               return x_scale(d.year);
             })
             .attr('cy', function(d){
-              return y_scale(d.loss || d.ratio_loss);
+              return y_scale(d.loss);
             })
             .attr('r', 6)
             .attr('name', _.bind(function(d) {
-              if (!!mode && mode.mode != 'percent')
-                return '<span>'+d.year+'</span>'+this.helper.formatNumber(parseFloat(d.loss/1000000).toFixed(1))+' Mha';
+              if (!!mode && mode.mode == 'percent')
+                return '<span>'+d.year+'</span>'+(d.loss*100).toFixed(3)+' %';
               else
-                return '<span>'+d.year+'</span>'+(d.ratio_loss*100).toFixed(3)+' %';
+                return '<span>'+d.year+'</span>'+this.helper.formatNumber(parseFloat(d.loss/1000000).toFixed(1))+' Mha';
 
             }, this ))
             .on('mouseover', function(d) {
@@ -899,22 +922,12 @@ define([
 
               // TODO: highlighting the legend
             });
-
-          var data_gain_ = [
-            {
-              year: 2001,
-              value: gain
-            },
-            {
-              year: 2013,
-              value: gain
-            }
-          ];
         }, this ));
       } else if (this.model.get('graph') === 'percent_loss') {
         if (!this.absolute_gain) {
           var $target = this.$big_figures,
                query  = 'SELECT sum(gain) from umd_nat_final_1';
+
           $.ajax({
                 url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
                 dataType: 'json',

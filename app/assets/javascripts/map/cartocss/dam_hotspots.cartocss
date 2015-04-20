@@ -1,16 +1,24 @@
 #dam_hotspots {
    marker-fill-opacity: 0.9;
    marker-line-color: #FFF;
-   marker-line-width: 1;
+   marker-line-width: 0.5;
    marker-line-opacity: 1;
    marker-placement: point;
    marker-type: ellipse;
-   marker-width: 10;
+   marker-width: 4;
    marker-allow-overlap: true;
+  
+  [zoom > 5 ][zoom < 9]{
+   marker-width: 10;
+  }
+  [zoom > 8 ]{
+   marker-width: 20;
+  }
+  
 }
 
 #dam_hotspots[status="Operational"] {
-   marker-fill: #A6CEE3;
+   marker-fill: #A53ED5;
 }
 #dam_hotspots[status="Under Construction"] {
    marker-fill: #FB9A99;
