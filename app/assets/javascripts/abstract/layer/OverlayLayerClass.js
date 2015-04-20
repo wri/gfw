@@ -29,11 +29,12 @@ define([
     },
 
     addLayer: function(position, success) {
+      var self = this;
       if (this._getOverlayIndex() < 0) {
         this._getLayer().then(_.bind(function(layer) {
-          this.map.overlayMapTypes.insertAt(position, layer);
-          if (this.options.infowindow) {
-            this.setInfowindow();
+          this.map.overlayMapTypes.setAt(position, layer);
+          if (this.options.infowindow && this.options.interactivity) {
+            this.setInfowindow(layer);
           }
           success();
         }, this));
@@ -71,6 +72,7 @@ define([
           this.removeInfowindow();
 
           this.options.infowindowAPI.execute(params, _.bind(function(data) {
+            console.log(data);
             data[0].analysis = this.options.analysis;
             this.infowindow = new CustomInfowindow(ev.latLng, this.map, {
               infowindowData: data[0]

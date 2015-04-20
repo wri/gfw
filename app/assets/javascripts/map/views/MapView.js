@@ -141,6 +141,10 @@ define([
         layers[i] && this._addLayers(layers, options, i);
       }, this);
 
+      var layersPositions = _.map(layers, function(layer){
+        return layer.position
+      });
+
       if (layer && !!layersHelper[layer.slug]) {
         if ((!layersHelper[layer.slug].view || this.layerInst[layer.slug])) {
           _addNext();
@@ -149,7 +153,7 @@ define([
         var layerView = this.layerInst[layer.slug] =
           new layersHelper[layer.slug].view(layer, options, this.map);
 
-        layerView.addLayer(this._getOverlayPosition(layer), _addNext);
+        layerView.addLayer(layer.position, _addNext);
       }
 
     },

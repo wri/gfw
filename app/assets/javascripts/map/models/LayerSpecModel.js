@@ -13,33 +13,33 @@ define([
   var LayerSpecModel = Backbone.Model.extend({
 
     layerOrder: [
-      'forestgain',
-      'loss',
-      'forma',
-      'imazon',
-      'modis',
-      'fires',
-      'terrailoss',
-      'modis_cover',
-      'imazon_cover',
-      'forma_cover',
-      'terraicanvas_cover_cover',
-      'logging',
-      'mining',
-      'oil_palm',
-      'wood_fiber_plantations',
-      'protected_areasCDB',
-      'biodiversity_hotspots',
-      'resource_rights',
-      'land_rights',
-      'ifl_2000',
-      'ifl_2013_deg',
-      'idn_primary',
-      'colombia_forest_change',
-      'mangrove',
-      'pantropical',
-      'forest2000',
-      'grump2000',
+      "grump2000",
+      "forest2000",
+      "pantropical",
+      "mangrove",
+      "colombia_forest_change",
+      "idn_primary",
+      "ifl_2013_deg",
+      "ifl_2000",
+      "land_rights",
+      "resource_rights",
+      "biodiversity_hotspots",
+      "protected_areasCDB",
+      "wood_fiber_plantations",
+      "oil_palm",
+      "mining",
+      "logging",
+      "terraicanvas_cover_cover",
+      "forma_cover",
+      "imazon_cover",
+      "modis_cover",
+      "terrailoss",
+      "fires",
+      "modis",
+      "imazon",
+      "forma",
+      "loss",
+      "forestgain"
     ],
 
     categoryOrder: [
@@ -59,9 +59,8 @@ define([
      */
     positionizer: function(layers) {
       var layerOrder = _.intersection(this.layerOrder, _.pluck(layers, 'slug'));
-
       _.each(layerOrder, _.bind(function(slug, i) {
-        layers[slug].position = this.layerOrder.indexOf(slug);
+        layers[slug].position = this.layerOrder.indexOf(slug) + 1;
       }, this ));
 
       return layers;

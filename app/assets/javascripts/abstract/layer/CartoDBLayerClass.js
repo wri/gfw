@@ -65,15 +65,17 @@ define([
      * @return {object}
      */
     setInfowindow: function() {
-      this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.cdbLayer.getSubLayer(0), this.options.interactivity, {
-        infowindowTemplate: TPL,
-        templateType: 'handlebars',
-      });
-      this.infowindow.model.on('change:visibility', function(model) {
-        if (model.get('visibility')) {
-          $('.cartodb-popup').toggleClass('dont_analyze', $('#analysis').hasClass('disabled'));
-        }
-      });
+      if (!!this.options.infowindow) {
+        this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.cdbLayer.getSubLayer(0), this.options.interactivity, {
+          infowindowTemplate: TPL,
+          templateType: 'handlebars',
+        });
+        this.infowindow.model.on('change:visibility', function(model) {
+          if (model.get('visibility')) {
+            $('.cartodb-popup').toggleClass('dont_analyze', $('#analysis').hasClass('disabled'));
+          }
+        });
+      }
     },
 
     removeInfowindow: function() {
