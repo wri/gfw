@@ -5,8 +5,9 @@ define([
   'jquery',
   'backbone',
   'underscore',
-  'mps'
-], function($,Backbone, _,mps) {
+  'mps',
+  'views/ShareView'
+], function($,Backbone, _,mps, ShareView) {
 
   'use strict';
 
@@ -15,7 +16,9 @@ define([
     el: '#headerView',
 
     events: {
-      'click #btn-menu' : 'toggleMenu'
+      'click #btn-menu' : 'toggleMenu',
+      'click .share-link' : 'shareOpen',
+      'click .menu-section-link' : 'menuOpen'
     },
 
     initialize: function() {
@@ -55,7 +58,19 @@ define([
         this.$footer.appendTo(this.$mobileMenu);
         this.$translate.appendTo($('#google_translate_element_box2'));
       }
-    }
+    },
+
+    shareOpen: function(event){
+      var shareView = new ShareView().share(event);
+      this.$el.append(shareView.el);
+    },
+
+    menuOpen: function(e){
+      $(e.currentTarget).toggleClass('active');
+      $('#menu-section-dropdown').toggleClass('active');
+    },
+
+
   });
 
   return HeaderView;

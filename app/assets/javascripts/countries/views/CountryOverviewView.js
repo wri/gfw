@@ -309,8 +309,11 @@ define([
         }, this ));
       } else if (this.model.get('graph') === 'percent_loss') {
         $('.countries_list__header__minioverview').hide();
-        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+(this.helper.config.canopy_choice || 30)+' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
+        var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
 
+        var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_final_1 umd, gfw2_countries c WHERE umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
+        if (!!mode && mode.mode == 'percent')
+            sql = 'SELECT sum(gain)/sum(extent_2000) as ratio, country as name, c.iso as iso1, c.enabled, u.iso as iso2 from umd_nat_final_1 u, gfw2_countries c where c.iso = u.iso AND extent_2000 >0  group by country, u.iso, c.iso, c.enabled order by ratio desc ';
         if (e) {
           sql += 'OFFSET 10';
         } else {
@@ -326,33 +329,48 @@ define([
           _.each(data, function(val, key) {
             var ord = e ? (key+11) : (key+1),
                 enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
-            $.ajax({
-              url: window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=30',
-              dataType: 'json',
-              success: _.bind(function(data) {
-                var g_mha, l_mha;
-                g_mha = l_mha = 'Mha';
-                data.years[1].gain = Math.round(data.years[1].gain);
-                if (data.years[1].gain.toString().length >= 7) {
-                  data.years[1].gain = ((data.years[1].gain /1000)/1000).toFixed(2)
-                } else if (data.years[1].gain.toString().length >= 4) {
-                  l_mha = 'KHa';
-                  data.years[1].gain = (data.years[1].gain /1000);
-                if (data.years[1].gain % 1 != 0) data.years[1].gain = data.years[1].gain.toFixed(2)
-                } else {
-                  l_mha = 'Ha';
+
+            if (!!mode && mode.mode != 'percent') {
+              $.ajax({
+                url: window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=30',
+                dataType: 'json',
+                success: _.bind(function(data) {
+                  if (!!mode && mode.mode == 'total') {
+                    var g_mha, l_mha;
+                    g_mha = l_mha = 'Mha';
+                    data.years[1].gain = Math.round(data.years[1].gain);
+                    if (data.years[1].gain.toString().length >= 7) {
+                      data.years[1].gain = ((data.years[1].gain /1000)/1000).toFixed(2)
+                    } else if (data.years[1].gain.toString().length >= 4) {
+                      l_mha = 'KHa';
+                      data.years[1].gain = (data.years[1].gain /1000);
+                    if (data.years[1].gain % 1 != 0) data.years[1].gain = data.years[1].gain.toFixed(2)
+                    } else {
+                      l_mha = 'Ha';
+                    }
+                    $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ (data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
+                  }
                 }
-                $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ (data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
-              }
-              , this),
-            });
-            markup_list += '<li>\
+                , this),
+              });
+            }
+            if (!!mode && mode.mode == 'percent') {
+              markup_list += '<li>\
+                              <div class="countries_list__num">'+ord+'</div>\
+                              <div class="countries_list__title">'+enabled+'</div>\
+                              <div class="countries_list__data">\
+                                <div id="perc_'+val.iso+'" class="perct"><span class="loss line"><span>'+ (val.ratio*1000).toFixed(2) + '%</span></span></div>\
+                              </div>\
+                            </li>';
+            } else {
+              markup_list += '<li>\
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
                               <div class="countries_list__data">\
                                 <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss"></span></div>\
                               </div>\
                             </li>';
+            }
             if (key == max_trigger){
               that._reorderRanking();
             }
@@ -365,6 +383,11 @@ define([
             $('.show-more-countries').show();
 
             $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('per-loss').html('% Loss');
+
+            if (!!mode && mode.mode == 'percent')
+              $('.overview_graph__legend').find('.trigger-mode').html('<span>TOTAL LOSS</span> <strong>RELATIVE LOSS</strong>').show();
+            else
+              $('.overview_graph__legend').find('.trigger-mode').html('<strong>TOTAL LOSS</strong> <span>RELATIVE LOSS</span>').show();
           }
 
           $('.countries_list ul').append(markup_list);
@@ -904,6 +927,7 @@ define([
         if (!this.absolute_gain) {
           var $target = this.$big_figures,
                query  = 'SELECT sum(gain) from umd_nat_final_1';
+
           $.ajax({
                 url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
                 dataType: 'json',
