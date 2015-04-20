@@ -73,7 +73,7 @@
           <a href="#" id="alerts" class="anchor-country-info"></a>
           <h6>FORMA alerts</h6>
           <div class="section-btn no-cols">
-            <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'alerts'} %>
+            <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'alerts', width: '600', height: '392' } %>
             <a href="#" class="info icon circle source" data-source="forma">
               <svg>
                 <use xlink:href="#shape-info"></use>
@@ -130,7 +130,7 @@
                 <div class="section-info section-share">
                   <h6>Type of forests in <%= @country['name'] %></h6>
                   <div class="section-btn">
-                    <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'forests-type'} %>
+                    <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'forests-type', width: '250', height: '476'} %>
                     <a href="#" class="info icon circle source" data-source="forest_type">
                       <svg>
                         <use xlink:href="#shape-info"></use>
@@ -169,7 +169,7 @@
                 <div class="section-info section-share">
                   <h6>Economic value of <%= @country['name'] %>'s forestry sector</h6>
                   <div class="section-btn">
-                    <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'production'} %>
+                    <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'production', width: '600', height: '250'} %>
                     <a href="#" class="info icon circle source" data-source="gross_value">
                       <svg>
                         <use xlink:href="#shape-info"></use>
@@ -204,7 +204,7 @@
               <div class="section-info section-share">
                 <h6>Employment</h6>
                 <div class="section-btn">
-                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'employment'} %>
+                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'employment', width: '600', height: '290'} %>
                   <a href="#" class="info icon circle source" data-source="employment_info">
                     <svg>
                       <use xlink:href="#shape-info"></use>
@@ -248,7 +248,7 @@
               <div class="section-info section-share">
                 <h6>Forest tenure</h6>
                 <div class="section-btn">
-                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'tenure'} %>
+                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'tenure', width: '600', height: '336'} %>
                   <a href="#" class="info icon circle source" data-source="forest_tenure">
                     <svg>
                       <use xlink:href="#shape-info"></use>
@@ -281,7 +281,7 @@
               <div class="section-info section-share">
                 <h6>Carbon stocks</h6>
                 <div class="section-btn">
-                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'carbon_stocks'} %>
+                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'carbon_stocks', width: '600', height: '250'} %>
                   <a href="#" class="info icon circle source" data-source="carbon_stocks">
                     <svg>
                       <use xlink:href="#shape-info"></use>
@@ -306,7 +306,7 @@
               <div class="section-info section-share">
                 <h6>CO2 emissions</h6>
                 <div class="section-btn">
-                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'emissions'} %>
+                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'emissions', width: '600', height: '250'} %>
                   <a href="#" class="info icon circle source" data-source="emissions">
                     <svg>
                       <use xlink:href="#shape-info"></use>

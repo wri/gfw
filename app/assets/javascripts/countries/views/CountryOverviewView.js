@@ -31,7 +31,6 @@ define([
     el: '#countryOverviewView',
 
     events: {
-      'click .info' : 'showInfo',
       'click .graph_tab': '_updateGraph',
       'click .show-more-countries': '_drawList',
       'click .trigger-mode span': '_toggle_total_percent',

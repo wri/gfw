@@ -1,6 +1,10 @@
 <%= render 'layouts/svg_icons' %>
 <%= render 'shared/svg_icons_map' %>
 
+<header class="embed-header">
+  <h1><a href="http://www.globalforestwatch.org/" target="_blank">Global Forest Watch</a></h1>
+</header>
+
 <div class="layout-content">
   <%= render 'shared/map' %>
 </div>
@@ -8,3 +12,6 @@
 <div id="sources" class='sources notranslate is-hidden'>
   <%= render 'shared/sources_map' %>
 </div>
+
+<%= render "shared/js_footer" %>
+
