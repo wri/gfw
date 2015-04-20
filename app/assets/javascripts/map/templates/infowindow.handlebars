@@ -6,6 +6,7 @@
         {{#if content.data.name}}
           <h2>{{content.data.name}}</h2>
         {{/if}}
+        
         {{!-- <div class="thumb-mask" style="background-image: url({{content.data.image}})"> --}}
           <div class="thumb-mask"><img src="{{content.data.image}}" onerror="this.style.display='none';"></div>
       {{/if}}
@@ -22,7 +23,6 @@
             <h2>{{content.data.name}}</h2>
           {{/if}}
         {{/unless}}
-
         {{#if content.data.local_name}}
           <h4>Local name:</h4>
           <p>{{content.data.local_name}}</p>
@@ -53,6 +53,14 @@
           <h4>Type:</h4>
           <p>{{content.data.type}}</p>
         {{/if}}
+        {{#if content.data.status}}
+          <h4>Status:</h4>
+          <p>{{content.data.status}}</p>
+        {{/if}}
+        {{#if content.data.capacity}}
+          <h4>Capacity:</h4>
+          <p>{{content.data.capacity}}</p>
+        {{/if}}
         {{#if content.data.basin_name}}
           <h4>Basin:</h4>
           <p>{{content.data.basin_name}}</p>
@@ -60,18 +68,6 @@
         {{#if content.data.rivers}}
           <h4>River:</h4>
           <p>{{content.data.rivers}}</p>
-        {{/if}}
-        {{#if content.data.project_na}}
-          <h4>Project Name</h4>
-          <p><a href="{{content.data.project_ur}}" target="_blank">{{content.data.project_na}}</a></p>
-        {{/if}}
-        {{#if content.data.capacity}}
-          <h4>Capacity:</h4>
-          <p>{{content.data.capacity}}</p>
-        {{/if}}
-        {{#if content.data.status}}
-          <h4>Status:</h4>
-          <p>{{content.data.status}}</p>
         {{/if}}
         {{#if content.data.company}}
           <h4>Company:</h4>
