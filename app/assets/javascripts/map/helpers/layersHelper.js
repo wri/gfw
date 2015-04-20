@@ -77,6 +77,7 @@ define([
   'map/views/layers/CarbonLayer',
   'map/views/layers/DamHotspotsLayer',
   'map/views/layers/ColombiaForestChangeLayer',
+  'map/views/layers/UsaConservationEasementsLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -162,6 +163,7 @@ define([
   CarbonLayer,
   DamHotspotsLayer,
   ColombiaForestChangeLayer,
+  UsaConservationEasementsLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -402,6 +404,9 @@ define([
     },
     dam_hotspots: {
       view: DamHotspotsLayer
+    },
+    usa_conservation_easements: {
+      view: UsaConservationEasementsLayer
     },
     nothing: {
     }
