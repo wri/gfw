@@ -6,9 +6,15 @@
         {{#if content.data.name}}
           <h2>{{content.data.name}}</h2>
         {{/if}}
-        
+      
         {{!-- <div class="thumb-mask" style="background-image: url({{content.data.image}})"> --}}
           <div class="thumb-mask"><img src="{{content.data.image}}" onerror="this.style.display='none';"></div>
+
+      {{/if}}
+      {{#if content.data.project_ur}}
+        <h2><a href="{{content.data.project_ur}}" target="_blank">{{content.data.project_name}}</a></h2>
+      {{else}}
+        <h2>{{content.data.project_name}}</h2>
       {{/if}}
     </div>
     <div class="cartodb-popup-fixed">
