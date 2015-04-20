@@ -19,7 +19,7 @@ define([
       url: window.location.href,
       embedUrl: window.location.href,
       embedHeight: 600,
-      embedWidth: 600
+      embedWidth: 600,
       hideEmbed: true
     },
     setEmbedUrl: function(){
