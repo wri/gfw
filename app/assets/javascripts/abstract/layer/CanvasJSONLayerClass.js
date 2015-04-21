@@ -144,17 +144,14 @@ define([
       // render cells
       var len = cells.length;
       var pixel_size = cells.size;
-      var index, index0, mul, top;
-      top = MAX_MONTHS * (len - 1);
+      var index, index0, mul;
+
       for (var i = 0; i < len; ++i) {
         mul = MAX_MONTHS * i;
         index = mul + month;
         index0 = mul + month_start;
         // set pixel by hand faster than doing fill rect (below)
         if (cells.deforestation[index] - cells.deforestation[index0] > 0) {
-          // if (i > len -5){console.log(index, mul)}
-
-          if (mul/index > 0.9995) ctx.fillStyle = '#0000ff';
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
       }
