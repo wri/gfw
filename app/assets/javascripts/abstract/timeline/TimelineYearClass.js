@@ -438,7 +438,7 @@ define([
 
       // give time to finish animations.
       setTimeout(function() {
-        var startYear = Math.floor(this.xscale.invert(this.handlers.left.attr('x')));
+        var startYear = Math.round(this.xscale.invert(this.handlers.left.attr('x')));
         var endYear = Math.ceil(this.xscale.invert(this.handlers.right.attr('x')));
 
         this.updateCurrentDate([moment([startYear]), moment([endYear])]);
@@ -452,7 +452,6 @@ define([
      * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
     updateCurrentDate: function(date) {
-      console.log(date);
       this.currentDate = date;
       this.presenter.updateTimelineDate(date);
     },
