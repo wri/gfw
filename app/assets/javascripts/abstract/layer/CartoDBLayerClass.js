@@ -71,9 +71,8 @@ define([
       });
       this.infowindow.model.on('change:visibility', function(model) {
         if (model.get('visibility')) {
-          var baselayer = $('#analysis-tab-button').hasClass('disabled');
-          $('#cartodb-popup-fixed').toggleClass('hidden', baselayer);
-          $('.cartodb-popup-content-wrapper').toggleClass('analysis-active', !baselayer);
+          var analysis = $('#analysis-tab-button').hasClass('disabled');
+          $('.cartodb-popup').toggleClass('dont-analyze', analysis);
         }
       });
     },

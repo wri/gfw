@@ -22,11 +22,6 @@
     opacity: 0;
   }
 
-  &.dont_analyze {
-    .cartodb-popup-fixed {
-      display: none;
-    }
-  }
 
 
   .cartodb-popup{
@@ -37,6 +32,16 @@
     padding-right: 0;
     margin: 0;
     background: $white;
+    &.dont-analyze {
+      .cartodb-popup-fixed {
+        display: none;
+      }
+      .cartodb-popup-content-wrapper{
+        &.analysis-active{
+          padding: 0px;
+        }
+      }
+    }
     .jspPane {
       padding: 0 !important;
     }

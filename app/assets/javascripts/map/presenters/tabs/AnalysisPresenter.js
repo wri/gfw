@@ -500,6 +500,7 @@ define([
           _.pluck(baselayers, 'slug'),
           _.keys(this.datasets)))];
       }
+      $('.cartodb-popup').toggleClass('dont-analyze', !!!baselayer);
       this.status.set('baselayer', baselayer);
       this._setAnalysisBtnVisibility();
     },
