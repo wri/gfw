@@ -500,7 +500,8 @@ define([
           _.pluck(baselayers, 'slug'),
           _.keys(this.datasets)))];
       }
-
+      $('#cartodb-popup-fixed').toggleClass('hidden', !!!baselayer);
+      $('.cartodb-popup-content-wrapper').toggleClass('analysis-active', !!baselayer);
       this.status.set('baselayer', baselayer);
       this._setAnalysisBtnVisibility();
     },
