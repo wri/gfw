@@ -131,7 +131,6 @@ define([
       var w = tile.canvas.width;
       var ctx = tile.ctx;
       var cells = tile.cells;
-
       if (!cells || cells.length === 0) {
         return;
       }
@@ -139,20 +138,23 @@ define([
       // clear canvas
       tile.canvas.width = w;
       ctx.fillStyle = '#F69';
-
       var xc = cells.xcoords;
       var yc = cells.ycoords;
 
       // render cells
       var len = cells.length;
       var pixel_size = cells.size;
-      var index, index0, mul;
+      var index, index0, mul, top;
+      top = MAX_MONTHS * (len - 1);
       for (var i = 0; i < len; ++i) {
         mul = MAX_MONTHS * i;
         index = mul + month;
         index0 = mul + month_start;
         // set pixel by hand faster than doing fill rect (below)
         if (cells.deforestation[index] - cells.deforestation[index0] > 0) {
+          // if (i > len -5){console.log(index, mul)}
+
+          if (mul/index > 0.9995) ctx.fillStyle = '#0000ff';
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
       }
