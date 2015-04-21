@@ -497,7 +497,6 @@ define([
      */
     _setBaselayer: function(baselayers) {
       var baselayer;
-      console.log(baselayers);
       if (baselayers['loss']) {
         baselayer = baselayers['loss'];
         this.status.set('both', (baselayers['forestgain']) ? true : false);
