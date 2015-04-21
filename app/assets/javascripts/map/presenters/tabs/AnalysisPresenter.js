@@ -71,7 +71,10 @@ define([
     }, {
       'LayerNav/change': function(layerSpec) {
         this._setBaselayer(layerSpec.getBaselayers());
-        this._updateAnalysis();
+        if (this.status.get('baselayer') != baselayer) {
+          this._updateAnalysis();
+          this.openAnalysisTab();
+        }
       }
     }, {
       'AnalysisTool/update-analysis': function() {
@@ -101,6 +104,7 @@ define([
     }, {
       'Timeline/date-change': function(layerSlug, date) {
         this.status.set('date', date);
+        this.openAnalysisTab();
         this._updateAnalysis();
       }
     }, {
@@ -115,6 +119,7 @@ define([
     }, {
       'Threshold/changed': function(threshold) {
         this.status.set('threshold', threshold);
+        this.openAnalysisTab();
         this._updateAnalysis();
       }
     },{
@@ -142,6 +147,14 @@ define([
 
       }
     }],
+
+    openAnalysisTab: function(){
+      if (this.view.$el.hasClass('is-analysis')) {
+        mps.publish('Tab/open', ['#analysis-tab-button'])
+      }
+    },
+
+
     /**
      * Handles a Place/go.
      *
@@ -149,6 +162,13 @@ define([
      */
     _handlePlaceGo: function(params) {
       this.deleteAnalysis();
+
+      //Open analysis tab
+      if (params.analyze || (params.iso.country && params.iso.country !== 'ALL') || params.geojson || params.wdpaid) {
+        this.openAnalysisTab();
+      }
+
+      //Select analysis type by params given
       if (params.analyze && params.name === 'map') {
         this.view.onClickAnalysis();
       } else if (params.iso.country && params.iso.country !== 'ALL') {
