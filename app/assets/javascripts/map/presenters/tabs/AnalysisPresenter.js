@@ -74,7 +74,7 @@ define([
         this._setBaselayer(layerSpec.getBaselayers());
         if (this.status.get('baselayer') != baselayer) {
           this._updateAnalysis();
-          mps.publish('Tab/open', ['#analysis-tab-button']);
+          this.openAnalysisTab();
         }
       }
     }, {
@@ -105,6 +105,7 @@ define([
     }, {
       'Timeline/date-change': function(layerSlug, date) {
         this.status.set('date', date);
+        this.openAnalysisTab();
         this._updateAnalysis();
       }
     }, {
@@ -119,6 +120,7 @@ define([
     }, {
       'Threshold/changed': function(threshold) {
         this.status.set('threshold', threshold);
+        this.openAnalysisTab();
         this._updateAnalysis();
       }
     },{
@@ -146,6 +148,14 @@ define([
 
       }
     }],
+
+    openAnalysisTab: function(){
+      if (this.view.$el.hasClass('is-analysis')) {
+        mps.publish('Tab/open', ['#analysis-tab-button'])
+      }
+    },
+
+
     /**
      * Handles a Place/go.
      *
@@ -156,7 +166,7 @@ define([
 
       //Open analysis tab
       if (params.analyze || (params.iso.country && params.iso.country !== 'ALL') || params.geojson || params.wdpaid) {
-        mps.publish('Tab/open', ['#analysis-tab-button']);
+        this.openAnalysisTab();
       }
 
       //Select analysis type by params given
