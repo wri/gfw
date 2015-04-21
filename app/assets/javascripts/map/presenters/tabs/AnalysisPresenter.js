@@ -71,10 +71,16 @@ define([
     }, {
       'LayerNav/change': function(layerSpec) {
         var baselayer = this.status.get('baselayer');
+        var both = this.status.get('both');
         this._setBaselayer(layerSpec.getBaselayers());
         if (this.status.get('baselayer') != baselayer) {
           this._updateAnalysis();
           this.openAnalysisTab();
+        }else{
+          if (this.status.get('both') != both) {
+            this._updateAnalysis();
+            this.openAnalysisTab();
+          }
         }
       }
     }, {
@@ -151,7 +157,7 @@ define([
 
     openAnalysisTab: function(){
       if (this.view.$el.hasClass('is-analysis')) {
-        mps.publish('Tab/open', ['#analysis-tab-button'])
+        mps.publish('Tab/open', ['#analysis-tab-button']);
       }
     },
 
@@ -166,7 +172,7 @@ define([
 
       //Open analysis tab
       if (params.analyze || (params.iso.country && params.iso.country !== 'ALL') || params.geojson || params.wdpaid) {
-        this.openAnalysisTab();
+        mps.publish('Tab/open', ['#analysis-tab-button']);
       }
 
       //Select analysis type by params given
@@ -491,7 +497,7 @@ define([
      */
     _setBaselayer: function(baselayers) {
       var baselayer;
-
+      console.log(baselayers);
       if (baselayers['loss']) {
         baselayer = baselayers['loss'];
         this.status.set('both', (baselayers['forestgain']) ? true : false);
