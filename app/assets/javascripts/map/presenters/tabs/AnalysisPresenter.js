@@ -70,6 +70,7 @@ define([
       }
     }, {
       'LayerNav/change': function(layerSpec) {
+        var baselayer = this.status.get('baselayer');
         this._setBaselayer(layerSpec.getBaselayers());
         if (this.status.get('baselayer') != baselayer) {
           this._updateAnalysis();
@@ -178,7 +179,6 @@ define([
         }else{
           this._analyzeIso(params.iso);
         }
-
       } else if (params.geojson) {
         this._analyzeGeojson(params.geojson);
       } else if (params.wdpaid) {
@@ -431,7 +431,6 @@ define([
       // this._setAnalysisBtnVisibility();
       mps.publish('Place/update', [{go: false}]);
       //Open tab of analysis
-      mps.publish('Tab/open', ['#analysis-tab-button']);
       this.view.openTab(resource.type);
 
 
