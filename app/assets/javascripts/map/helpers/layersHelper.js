@@ -59,6 +59,7 @@ define([
   'map/views/layers/PanLandRightsLayer',
   'map/views/layers/BraLandRightsLayer',
   'map/views/layers/CanLandRightsLayer',
+  'map/views/layers/CriLandRightsLayer',
   'map/views/layers/UserStoriesLayer',
   'map/views/layers/MongabayStoriesLayer',
   'map/views/layers/InfoamazoniaStoriesLayer',
@@ -76,6 +77,7 @@ define([
   'map/views/layers/CarbonLayer',
   'map/views/layers/DamHotspotsLayer',
   'map/views/layers/ColombiaForestChangeLayer',
+  'map/views/layers/UsaConservationEasementsLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -143,6 +145,7 @@ define([
   PanLandRightsLayer,
   BraLandRightsLayer,
   CanLandRightsLayer,
+  CriLandRightsLayer,
   UserStoriesLayer,
   MongabayStoriesLayer,
   InfoamazoniaStoriesLayer,
@@ -160,6 +163,7 @@ define([
   CarbonLayer,
   DamHotspotsLayer,
   ColombiaForestChangeLayer,
+  UsaConservationEasementsLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -346,6 +350,9 @@ define([
     can_land_rights: {
       view: CanLandRightsLayer
     },
+    cri_land_rights: {
+      view: CriLandRightsLayer
+    },
     user_stories: {
       view: UserStoriesLayer
     },
@@ -397,6 +404,9 @@ define([
     },
     dam_hotspots: {
       view: DamHotspotsLayer
+    },
+    usa_conservation_easements: {
+      view: UsaConservationEasementsLayer
     },
     nothing: {
     }

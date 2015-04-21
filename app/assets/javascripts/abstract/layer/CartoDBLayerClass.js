@@ -73,7 +73,8 @@ define([
       });
       this.infowindow.model.on('change:visibility', function(model) {
         if (model.get('visibility')) {
-          $('.cartodb-popup').toggleClass('dont_analyze', $('#analysis').hasClass('disabled'));
+          var analysis = $('#analysis-tab-button').hasClass('disabled');
+          $('.cartodb-popup').toggleClass('dont-analyze', analysis);
         }
       });
     },

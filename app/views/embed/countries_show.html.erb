@@ -14,6 +14,9 @@
   <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/themes/css/cartodb.css" />
 <% end %>
 
+<header class="embed-header">
+  <h1><a href="http://www.globalforestwatch.org/" target="_blank">Global Forest Watch</a></h1>
+</header>
 
 <section id="countryShowView" data-iso="<%= @country['iso'] %>">
   <% content_for :title do %>
@@ -27,4 +30,4 @@
   <%= render 'country' %>
 </section>
 
-
+<%= render "shared/js_footer" %>

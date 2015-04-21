@@ -70,8 +70,18 @@ define([
       }
     }, {
       'LayerNav/change': function(layerSpec) {
+        var baselayer = this.status.get('baselayer');
+        var both = this.status.get('both');
         this._setBaselayer(layerSpec.getBaselayers());
-        this._updateAnalysis();
+        if (this.status.get('baselayer') != baselayer) {
+          this._updateAnalysis();
+          this.openAnalysisTab();
+        }else{
+          if (this.status.get('both') != both) {
+            this._updateAnalysis();
+            this.openAnalysisTab();
+          }
+        }
       }
     }, {
       'AnalysisTool/update-analysis': function() {
@@ -101,6 +111,7 @@ define([
     }, {
       'Timeline/date-change': function(layerSlug, date) {
         this.status.set('date', date);
+        this.openAnalysisTab();
         this._updateAnalysis();
       }
     }, {
@@ -115,6 +126,7 @@ define([
     }, {
       'Threshold/changed': function(threshold) {
         this.status.set('threshold', threshold);
+        this.openAnalysisTab();
         this._updateAnalysis();
       }
     },{
@@ -142,6 +154,14 @@ define([
 
       }
     }],
+
+    openAnalysisTab: function(){
+      if (this.view.$el.hasClass('is-analysis')) {
+        mps.publish('Tab/open', ['#analysis-tab-button']);
+      }
+    },
+
+
     /**
      * Handles a Place/go.
      *
@@ -149,6 +169,13 @@ define([
      */
     _handlePlaceGo: function(params) {
       this.deleteAnalysis();
+
+      //Open analysis tab
+      if (params.analyze || (params.iso.country && params.iso.country !== 'ALL') || params.geojson || params.wdpaid) {
+        mps.publish('Tab/open', ['#analysis-tab-button']);
+      }
+
+      //Select analysis type by params given
       if (params.analyze && params.name === 'map') {
         this.view.onClickAnalysis();
       } else if (params.iso.country && params.iso.country !== 'ALL') {
@@ -158,7 +185,6 @@ define([
         }else{
           this._analyzeIso(params.iso);
         }
-
       } else if (params.geojson) {
         this._analyzeGeojson(params.geojson);
       } else if (params.wdpaid) {
@@ -411,7 +437,6 @@ define([
       // this._setAnalysisBtnVisibility();
       mps.publish('Place/update', [{go: false}]);
       //Open tab of analysis
-      mps.publish('Tab/open', ['#analysis-tab-button']);
       this.view.openTab(resource.type);
 
 
@@ -472,7 +497,6 @@ define([
      */
     _setBaselayer: function(baselayers) {
       var baselayer;
-
       if (baselayers['loss']) {
         baselayer = baselayers['loss'];
         this.status.set('both', (baselayers['forestgain']) ? true : false);
@@ -481,7 +505,7 @@ define([
           _.pluck(baselayers, 'slug'),
           _.keys(this.datasets)))];
       }
-
+      $('.cartodb-popup').toggleClass('dont-analyze', !!!baselayer);
       this.status.set('baselayer', baselayer);
       this._setAnalysisBtnVisibility();
     },
