@@ -70,8 +70,12 @@ define([
       }
     }, {
       'LayerNav/change': function(layerSpec) {
+        var baselayer = this.status.get('baselayer');
         this._setBaselayer(layerSpec.getBaselayers());
-        this._updateAnalysis();
+        if (this.status.get('baselayer') != baselayer) {
+          this._updateAnalysis();
+          mps.publish('Tab/open', ['#analysis-tab-button']);
+        }
       }
     }, {
       'AnalysisTool/update-analysis': function() {
@@ -149,6 +153,13 @@ define([
      */
     _handlePlaceGo: function(params) {
       this.deleteAnalysis();
+
+      //Open analysis tab
+      if (params.analyze || (params.iso.country && params.iso.country !== 'ALL') || params.geojson || params.wdpaid) {
+        mps.publish('Tab/open', ['#analysis-tab-button']);
+      }
+
+      //Select analysis type by params given
       if (params.analyze && params.name === 'map') {
         this.view.onClickAnalysis();
       } else if (params.iso.country && params.iso.country !== 'ALL') {
@@ -158,7 +169,6 @@ define([
         }else{
           this._analyzeIso(params.iso);
         }
-
       } else if (params.geojson) {
         this._analyzeGeojson(params.geojson);
       } else if (params.wdpaid) {
@@ -411,7 +421,6 @@ define([
       // this._setAnalysisBtnVisibility();
       mps.publish('Place/update', [{go: false}]);
       //Open tab of analysis
-      mps.publish('Tab/open', ['#analysis-tab-button']);
       this.view.openTab(resource.type);
 
 
