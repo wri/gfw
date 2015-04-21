@@ -452,6 +452,7 @@ define([
      * @param {Array} timelineDate 2D array of moment dates [begin, end]
      */
     updateCurrentDate: function(date) {
+      console.log(date);
       this.currentDate = date;
       this.presenter.updateTimelineDate(date);
     },
