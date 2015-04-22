@@ -6,13 +6,13 @@
         {{#if content.data.name}}
           <h2>{{content.data.name}}</h2>
         {{/if}}
-      
+
         {{!-- <div class="thumb-mask" style="background-image: url({{content.data.image}})"> --}}
           <div class="thumb-mask"><img src="{{content.data.image}}" onerror="this.style.display='none';"></div>
 
       {{/if}}
     </div>
-    <div class="cartodb-popup-fixed">
+    <div id="cartodb-popup-fixed" class="cartodb-popup-fixed">
       {{#if content.data.analysis}}
         <a style="cursor:pointer;" id="analyzeBtn" onclick="mps.publish('AnalysisTool/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]); ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area');" class="analyse btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid= "{{content.data.id}}">analyze</a>
       {{/if}}
@@ -37,7 +37,7 @@
           <h4>Legal designation:</h4>
           <p>{{content.data.desig_eng}}</p>
         {{/if}}
-        
+
         {{#if content.data.ebaname}}
           <h4>Name:</h4>
           <p><a href="http://{{content.data.factsheet}}" target="_blank">{{content.data.ebaname}}</a></p>
@@ -83,7 +83,7 @@
           <h4>Permit Num:</h4>
           <p>{{content.data.permit_num}}</p>
         {{/if}}
-				
+
 				{{#if content.data.project_pr}}
           <h4>Project Proponent :</h4>
           <p><a href="{{content.data.proponent_}}" target="_blank">{{content.data.project_pr}}</a></p>
@@ -207,6 +207,50 @@
         {{#if content.data.species}}
           <h4>Species:</h4>
           <p>{{content.data.species}}</p>
+        {{/if}}
+        {{#if content.data.esmthldr}}
+          <h4>Easement Holder:</h4>
+          <p>{{content.data.esmthldr}}</p>
+        {{/if}}
+        {{#if content.data.eholdtyp}}
+          <h4>Easement Holder Type:</h4>
+          <p>{{content.data.eholdtyp}}</p>
+        {{/if}}
+        {{#if content.data.owntype}}
+          <h4>Landowner Type:</h4>
+          <p>{{content.data.owntype}}</p>
+        {{/if}}
+        {{#if content.data.purpose}}
+          <h4>Conservation Purpose:</h4>
+          <p>{{content.data.purpose}}</p>
+        {{/if}}
+        {{#if content.data.pubaccess}}
+          <h4>Public Access:</h4>
+          <p>{{content.data.pubaccess}}</p>
+        {{/if}}
+        {{#if content.data.duration}}
+          <h4>Duration:</h4>
+          <p>{{content.data.duration}}</p>
+        {{/if}}
+        {{#if content.data.state}}
+          <h4>State:</h4>
+          <p>{{content.data.state}}</p>
+        {{/if}}
+        {{#if content.data.rep_acres}}
+          <h4>Reported Area:</h4>
+          <p>{{content.data.rep_acres}} acres</p>
+        {{/if}}
+        {{#if content.data.gis_acres}}
+          <h4>GIS Area:</h4>
+          <p>{{content.data.gis_acres}} acres</p>
+        {{/if}}
+        {{#if content.data.datapvdr}}
+          <h4>Data Provider:</h4>
+          <p>{{content.data.datapvdr}}</p>
+        {{/if}}
+        {{#if content.data.dataagg}}
+          <h4>Data Aggregator:</h4>
+          <p>{{content.data.dataagg}}</p>
         {{/if}}
       </div>
     </div>

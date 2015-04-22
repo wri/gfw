@@ -65,17 +65,16 @@ define([
      * @return {object}
      */
     setInfowindow: function() {
-      if (!!this.options.infowindow) {
-        this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.cdbLayer.getSubLayer(0), this.options.interactivity, {
-          infowindowTemplate: TPL,
-          templateType: 'handlebars',
-        });
-        this.infowindow.model.on('change:visibility', function(model) {
-          if (model.get('visibility')) {
-            $('.cartodb-popup').toggleClass('dont_analyze', $('#analysis').hasClass('disabled'));
-          }
-        });
-      }
+      this.infowindow = cdb.vis.Vis.addInfowindow(this.map, this.cdbLayer.getSubLayer(0), this.options.interactivity, {
+        infowindowTemplate: TPL,
+        templateType: 'handlebars',
+      });
+      this.infowindow.model.on('change:visibility', function(model) {
+        if (model.get('visibility')) {
+          var analysis = $('#analysis-tab-button').hasClass('disabled');
+          $('.cartodb-popup').toggleClass('dont-analyze', analysis);
+        }
+      });
     },
 
     removeInfowindow: function() {

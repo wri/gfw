@@ -42,12 +42,12 @@
    marker-fill: #E31A1C;
 }
 #dam_hotspots[status="Unknown"] {
-   marker-fill: #DDDDDD;
+   marker-fill: #ada5a5;
 }
 #dam_hotspots[status="NoData"] {
-   marker-fill: #DDDDDD;
+   marker-fill: #ada5a5;
 }
 
 #dam_hotspots {
-   marker-fill: #DDDDDD;
+   marker-fill: #ada5a5;
 }
