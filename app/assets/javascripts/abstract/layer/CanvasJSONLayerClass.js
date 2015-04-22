@@ -123,11 +123,9 @@ define([
     },
 
     _render: function(tile) {
-      var startMonth = this.startMonth || 0;
-      var endMonth = this.endMonth || -BASE_MONTH + MAX_MONTHS;
+      var month = this.endMonth || -BASE_MONTH + MAX_MONTHS;
+      var month_start = this.startMonth || 0;
 
-      var month = endMonth >> 0;
-      var month_start = startMonth >> 0;
       var w = tile.canvas.width;
       var ctx = tile.ctx;
       var cells = tile.cells;
@@ -137,7 +135,6 @@ define([
 
       // clear canvas
       tile.canvas.width = w;
-      ctx.fillStyle = '#F69';
       var xc = cells.xcoords;
       var yc = cells.ycoords;
 
@@ -152,31 +149,38 @@ define([
         index0 = mul + month_start;
         // set pixel by hand faster than doing fill rect (below)
         if (cells.deforestation[index] - cells.deforestation[index0] > 0) {
+          ctx.fillStyle = (cells.fucking_color[index] === 1) ? '#00ff00' : '#F69';
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
       }
     },
 
     preCacheMonths: function(rows, coord, zoom, zoom_diff) {
-      var row;
-      var xcoords;
-      var ycoords;
-      var deforestation;
+      var row,
+          xcoords,
+          ycoords,
+          deforestation,
+          fucking_color;
+
+      //=======
+      // In case you don't understand something here
+      // ask Javi Santana. If it's color-related, ask Adrián Pérez
+      //=======
 
       if (typeof(ArrayBuffer) !== 'undefined') {
         xcoords = new Uint8Array(new ArrayBuffer(rows.length));
         ycoords = new Uint8Array(new ArrayBuffer(rows.length));
-        deforestation = new Uint8Array(new ArrayBuffer(rows.length *
+        fucking_color = deforestation = new Uint8Array(new ArrayBuffer(rows.length *
           MAX_MONTHS)); // 256 months
       } else {
         // fallback
         xcoords = [];
         ycoords = [];
-        deforestation = [];
+        fucking_color = deforestation = [];
         // array buffer set by default to 0
         // fucking javascript arrays not
         for (var r = 0; r < rows.length * MAX_MONTHS; ++r) {
-          deforestation[r] = 0;
+          fucking_color[r] = deforestation[r] = 0;
         }
       }
 
@@ -190,11 +194,12 @@ define([
         var base_idx = i * MAX_MONTHS;
 
         if (row.sd !== null) {
-          for (var b = 0; b < row.sd.length; ++b) {
-            deforestation[base_idx + row.sd[b] - BASE_MONTH] = row.se[b];
+          for (var j = 0; j < row.sd.length; ++j) {
+            // 1 OR 0 because the 8bit limitation
+            fucking_color[base_idx + row.sd[j] - BASE_MONTH] = (row.sd[j] > 150) ? 1 : 0;
+            deforestation[base_idx + row.sd[j] - BASE_MONTH] = row.se[j];
           }
         }
-
         for (var j = 1; j < MAX_MONTHS; ++j) {
           deforestation[base_idx + j] += deforestation[base_idx + j - 1];
         }
@@ -205,6 +210,7 @@ define([
         xcoords: xcoords,
         ycoords: ycoords,
         deforestation: deforestation,
+        fucking_color: fucking_color,
         size: 1 << zoom_diff
       };
     },
