@@ -12,7 +12,11 @@ define([
 
   var LayerSpecModel = Backbone.Model.extend({
 
+    // You should put more importants layers at the bottom of the layerOrder
+    // As you see forestchange layers are the more importants so they will be added to top
+
     layerOrder: [
+      // FOREST USE
       "grump2000",
       "forest2000",
       "pantropical",
@@ -21,18 +25,23 @@ define([
       "idn_primary",
       "ifl_2013_deg",
       "ifl_2000",
+      // PEOPLE
       "land_rights",
       "resource_rights",
+      // CONSERVATION
       "biodiversity_hotspots",
       "protected_areasCDB",
+      // FOREST USE
       "wood_fiber_plantations",
       "oil_palm",
       "mining",
       "logging",
+      // FOREST CHANGE
       "terraicanvas_cover_cover",
       "forma_cover",
       "imazon_cover",
       "modis_cover",
+      // FOREST CHANGE
       "terrailoss",
       "fires",
       "modis",
