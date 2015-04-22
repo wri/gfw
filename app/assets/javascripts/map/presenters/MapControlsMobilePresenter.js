@@ -27,9 +27,13 @@ define([
      * Used by mobile version to open legend and analysis
      *
      */
-    openLegend: function(bounds) {
-      mps.publish('Legend/open');
+    openLegend: function() {
+      mps.publish('LegendMobile/open');
     },
+
+    openAnalysis: function(){
+      mps.publish('AnalysisMobile/open')
+    }
 
   });
 

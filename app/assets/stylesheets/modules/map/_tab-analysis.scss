@@ -1,16 +1,52 @@
+.tab-analysis-mobile{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0px;
+  color: $dark;
+  font-size: 13px;
+  max-height: 75%;
+  overflow: auto;
+  padding: 0px 0 56px;
+  z-index: 19;
+  background: $white;
+  @include transition(all 0.25s $easeInOutSine);
+  @include transform(translate(0,100%));
+
+  &.active{
+    @include transform(translate(0,0));
+  }
+
+  .tab-analysis{
+    nav{
+      display: none;
+    }
+  }
+
+  .analysis-tab-content.country-tab{
+    select{
+      width: 100%;
+      height: 36px;
+      display: block;
+    }
+  }
+}
 .tab-analysis{
   nav{
     display: block;
     ul{
       @include display-flex();
       li{
-        width: 33.333333%;
+        width: 100%;
         padding: 8px 6px;
         text-transform: uppercase;
         text-align: center;
         font-size: 12px;
         color: #7F7F7F;
         cursor: pointer;
+        @media (min-width: $br-mobileMap){
+          width: 33.333333%;
+        }
         &:hover{
           svg{
             fill: $cGreen;
@@ -203,7 +239,27 @@
 
 
 .analysis-result{
-  padding: 15px 15px 5px;
+  position: fixed;
+  width: 100%;
+  background: $white;
+  bottom: 0;
+  left: 0;
+  z-index: 19;
+  padding: 20px 20px 56px;
+  @include transform(translate(0,100%));
+  @include transition(all 0.25s $easeInOutSine);
+  &.active{
+    @include transform(translate(0,0));
+  }
+
+  @media (min-width: $br-mobileMap){
+    position: relative;
+    bottom: auto;
+    left: auto;
+    padding: 15px 15px 5px;
+    @include transform(translate(0,0%));
+  }
+
   @media (min-width: 1500px){
     padding: 20px 20px 10px;
   }

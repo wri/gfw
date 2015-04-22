@@ -153,6 +153,10 @@ define([
         }
 
       }
+    },{
+      'AnalysisMobile/open': function() {
+        this.view.toogleAnalysis(this.view.$el.hasClass('is-analysis'));
+      }
     }],
 
     openAnalysisTab: function(){

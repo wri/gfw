@@ -62,7 +62,7 @@ define([
         this.status.get('layerSpec') && this._updateLegend();
       }
     }, {
-      'Legend/open': function() {
+      'LegendMobile/open': function() {
         this.view.toogleLegend();
       }
     }],

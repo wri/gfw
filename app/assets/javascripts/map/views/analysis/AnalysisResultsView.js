@@ -134,7 +134,10 @@ define([
 
       }
       return links[layer];
-    }
+    },
+    toogleAnalysis: function(to){
+      this.$el.toggleClass('active', to);
+    },
 
 
   });

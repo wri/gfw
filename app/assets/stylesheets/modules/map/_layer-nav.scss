@@ -309,6 +309,10 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
 }
 
 .layers-list {
+  border-bottom: 1px solid #e5e5e5;
+  @media (min-width: $br-mobileMap){
+    border-bottom: none;
+  }
   .layer-group{
     border-top: 1px solid #e5e5e5;
     &:first-child{ border: none; }
@@ -353,12 +357,12 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     font-size: 13px;
     color: $dark;
     padding: 15px 20px;
-    border-bottom: 1px solid #e5e5e5;
     cursor: pointer;
     position: relative;
     @include transition(all .2s ease);
     @media (min-width: $br-mobileMap){
       padding: 10px;
+      border-bottom: 1px solid #e5e5e5;
     }
     &.is-disabled {
       pointer-events: none;

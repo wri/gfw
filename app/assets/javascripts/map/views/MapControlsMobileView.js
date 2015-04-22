@@ -26,7 +26,8 @@ define([
     el: '#module-map-controls-mobile',
 
     events: {
-      'click .toggle-legend': 'toggleLegend'
+      'click .toggle-legend': 'toggleLegend',
+      'click .toggle-analysis': 'toggleAnalysis'
     },
 
     template: Handlebars.compile(tpl),
@@ -43,6 +44,10 @@ define([
 
     toggleLegend: function(){
       this.presenter.openLegend();
+    },
+
+    toggleAnalysis: function(){
+      this.presenter.openAnalysis();
     },
 
     initCustomViews: function(){
