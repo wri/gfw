@@ -1,4 +1,4 @@
-#modis_forest_change_copy {
+#quicc_alerts {
   marker-fill: #F768A1;
   marker-width: 3;
   marker-line-color: #FFF;
