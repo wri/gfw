@@ -141,10 +141,6 @@ define([
         layers[i] && this._addLayers(layers, options, i);
       }, this);
 
-      var layersPositions = _.map(layers, function(layer){
-        return layer.position
-      });
-
       if (layer && !!layersHelper[layer.slug]) {
         if ((!layersHelper[layer.slug].view || this.layerInst[layer.slug])) {
           _addNext();

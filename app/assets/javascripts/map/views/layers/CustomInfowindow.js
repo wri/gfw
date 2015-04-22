@@ -44,29 +44,28 @@ define([
       closeButton = $(div).find('.close')[0];
       analyseButton = $(div).find('.analyse')[0];
 
-      // // Events
-      // google.maps.event.addDomListener(div, 'click', _.bind(function(ev) {
-      //   if (! $(ev.currentTarget).hasClass('story-infowindow')) {
-      //     ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      //   }
-      // }, this));
+      // Events
+      google.maps.event.addDomListener(div, 'click', _.bind(function(ev) {
+        if (! $(ev.currentTarget).hasClass('story-infowindow')) {
+          ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+        }
+      }, this));
 
-      // if (closeButton) {
-      //   google.maps.event.addDomListener(closeButton, 'click', _.bind(function(ev) {
-      //     ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      //     this.remove();
-      //   }, this));
-      // }
+      if (closeButton) {
+        google.maps.event.addDomListener(closeButton, 'click', _.bind(function(ev) {
+          ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+          this.remove();
+        }, this));
+      }
 
-      // if (analyseButton) {
-      //   console.log(analyseButton);
-      //   google.maps.event.addDomListener(analyseButton, 'click', _.bind(function(ev) {
-      //     ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
-      //     var wdpaid = {wdpaid : $(analyseButton).data('layer')};
-      //     google.maps.event.trigger(this.map, 'click', wdpaid);
-      //     this.remove();
-      //   }, this));
-      // }
+      if (analyseButton) {
+        google.maps.event.addDomListener(analyseButton, 'click', _.bind(function(ev) {
+          ev.preventDefault ? ev.preventDefault() : ev.returnValue = false;
+          var wdpaid = {wdpaid : $(analyseButton).data('layer')};
+          google.maps.event.trigger(this.map, 'click', wdpaid);
+          this.remove();
+        }, this));
+      }
 
       // Then add the overlay to the DOM
       this.getPanes().floatPane.appendChild(div);

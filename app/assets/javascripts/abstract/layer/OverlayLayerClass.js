@@ -29,7 +29,6 @@ define([
     },
 
     addLayer: function(position, success) {
-      var self = this;
       this._getLayer().then(_.bind(function(layer) {
         this.map.overlayMapTypes.setAt(position, layer);
         if (this.options.infowindow && this.options.interactivity) {
