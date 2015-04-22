@@ -222,27 +222,28 @@ $w-control: 44px;
     > header{
       padding: 15px;
       border-bottom: 1px solid $border;
-      a{
-        display: inline-block;
-        position: relative;
-        z-index: 2;
-        padding: 0 0 0px 15px;
-        margin: 0 0 5px;
-        &:before{
-          content: "";
-          width: 0;
-          height: 0;
-          border-top: 5px solid transparent;
-          border-right: 10px solid $cGreen;
-          border-bottom: 5px solid transparent;
-          position: absolute;
-          top: 50%;
-          left: 0;
-          @include transform(translate(0,-6px));
-        }
-      }
+      // a{
+      //   display: inline-block;
+      //   position: relative;
+      //   z-index: 2;
+      //   padding: 0 0 0px 15px;
+      //   margin: 0 0 5px;
+      //   &:before{
+      //     content: "";
+      //     width: 0;
+      //     height: 0;
+      //     border-top: 5px solid transparent;
+      //     border-right: 10px solid $cGreen;
+      //     border-bottom: 5px solid transparent;
+      //     position: absolute;
+      //     top: 50%;
+      //     left: 0;
+      //     @include transform(translate(0,-6px));
+      //   }
+      // }
       h2{
         font-size: 36px;
+        margin: 15px 0 0;
       }
       h3{
         font-size: 17px;
