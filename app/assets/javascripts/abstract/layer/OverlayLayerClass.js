@@ -30,15 +30,13 @@ define([
 
     addLayer: function(position, success) {
       var self = this;
-      if (this._getOverlayIndex() < 0) {
-        this._getLayer().then(_.bind(function(layer) {
-          this.map.overlayMapTypes.setAt(position, layer);
-          if (this.options.infowindow && this.options.interactivity) {
-            this.setInfowindow(layer);
-          }
-          success();
-        }, this));
-      }
+      this._getLayer().then(_.bind(function(layer) {
+        this.map.overlayMapTypes.setAt(position, layer);
+        if (this.options.infowindow && this.options.interactivity) {
+          this.setInfowindow(layer);
+        }
+        success();
+      }, this));
 
     },
 
@@ -47,7 +45,8 @@ define([
       this.removeInfowindow();
       if (overlayIndex > -1) {
         google.maps.event.clearListeners(this.map, 'click');
-        this.map.overlayMapTypes.removeAt(overlayIndex);
+        this.map.overlayMapTypes.setAt(overlayIndex, null);
+        // this.map.overlayMapTypes.removeAt(overlayIndex);
       }
     },
 
@@ -72,7 +71,6 @@ define([
           this.removeInfowindow();
 
           this.options.infowindowAPI.execute(params, _.bind(function(data) {
-            console.log(data);
             data[0].analysis = this.options.analysis;
             this.infowindow = new CustomInfowindow(ev.latLng, this.map, {
               infowindowData: data[0]
@@ -90,16 +88,13 @@ define([
     },
 
     _getOverlayIndex: function() {
-      var overlaysLength = this.map.overlayMapTypes.getLength();
-      if (overlaysLength > 0) {
-        for (var i = 0; i< overlaysLength; i++) {
-          var layer = this.map.overlayMapTypes.getAt(i);
-          if (layer && layer.name === this.getName()) {
-            return i;
-          }
+      var index = -1;
+      _.each(this.map.overlayMapTypes.getArray(), _.bind(function(layer, i){
+        if (layer && layer.name === this.getName()) {
+          index = i;
         }
-      }
-      return -1;
+      }, this ));
+      return index;
     },
 
     getName: function() {

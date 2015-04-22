@@ -39,7 +39,7 @@ define([
       "lbr_resource_rights",
       "gnq_resource_rights",
       "nam_resource_rights",
-      
+
       // CONSERVATION
       "biodiversity_hotspots",
       "verified_carbon",
@@ -120,7 +120,7 @@ define([
     positionizer: function(layers) {
       var layerOrder = _.intersection(this.layerOrder, _.pluck(layers, 'slug'));
       _.each(layerOrder, _.bind(function(slug, i) {
-        layers[slug].position = this.layerOrder.indexOf(slug) + 1;
+        layers[slug].position = this.layerOrder.indexOf(slug);
       }, this ));
 
       return layers;
