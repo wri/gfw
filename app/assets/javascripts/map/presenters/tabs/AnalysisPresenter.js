@@ -442,7 +442,6 @@ define([
       //Open tab of analysis
       this.view.openTab(resource.type);
 
-
       if (!this.status.get('baselayer') || failed) {
         mps.publish('AnalysisService/results', [{unavailable: true}]);
       } else {
@@ -559,6 +558,7 @@ define([
     },
 
     setMultipolygon: function(multipolygon, geojson) {
+      this.deleteAnalysis();
       this.status.set('multipolygon', multipolygon);
       mps.publish('AnalysisTool/iso-drawn', [geojson.geometry]);
     },
