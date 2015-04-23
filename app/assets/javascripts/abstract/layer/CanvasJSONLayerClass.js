@@ -149,7 +149,7 @@ define([
         index0 = mul + month_start;
         // set pixel by hand faster than doing fill rect (below)
         if (cells.deforestation[index] - cells.deforestation[index0] > 0) {
-          ctx.fillStyle = (cells.fucking_color[index] === 1) ? '#00ff00' : '#F69';
+          ctx.fillStyle = (cells.color_array[i] < 150) ? '#F69' : '#00ff00';
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
       }
@@ -160,27 +160,21 @@ define([
           xcoords,
           ycoords,
           deforestation,
-          fucking_color;
-
-      //=======
-      // In case you don't understand something here
-      // ask Javi Santana. If it's color-related, ask Adrián Pérez
-      //=======
-
+          colors = [];
       if (typeof(ArrayBuffer) !== 'undefined') {
         xcoords = new Uint8Array(new ArrayBuffer(rows.length));
         ycoords = new Uint8Array(new ArrayBuffer(rows.length));
-        fucking_color = deforestation = new Uint8Array(new ArrayBuffer(rows.length *
+        deforestation = new Uint8Array(new ArrayBuffer(rows.length *
           MAX_MONTHS)); // 256 months
       } else {
         // fallback
         xcoords = [];
         ycoords = [];
-        fucking_color = deforestation = [];
+        deforestation = [];
         // array buffer set by default to 0
         // fucking javascript arrays not
         for (var r = 0; r < rows.length * MAX_MONTHS; ++r) {
-          fucking_color[r] = deforestation[r] = 0;
+          deforestation[r] = 0;
         }
       }
 
@@ -195,11 +189,11 @@ define([
 
         if (row.sd !== null) {
           for (var j = 0; j < row.sd.length; ++j) {
-            // 1 OR 0 because the 8bit limitation
-            fucking_color[base_idx + row.sd[j] - BASE_MONTH] = (row.sd[j] > 150) ? 1 : 0;
+            colors.push(row.sd[j])
             deforestation[base_idx + row.sd[j] - BASE_MONTH] = row.se[j];
           }
         }
+
         for (var j = 1; j < MAX_MONTHS; ++j) {
           deforestation[base_idx + j] += deforestation[base_idx + j - 1];
         }
@@ -210,7 +204,7 @@ define([
         xcoords: xcoords,
         ycoords: ycoords,
         deforestation: deforestation,
-        fucking_color: fucking_color,
+        color_array: colors,
         size: 1 << zoom_diff
       };
     },
