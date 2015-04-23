@@ -12,7 +12,7 @@ define([
   var UsaLandCoverLayer = ImageLayerClass.extend({
 
     options: {
-      urlTemplate: '',
+      urlTemplate: 'https://s3.amazonaws.com/wri-tiles/usa_landcover{/z}{/x}{/y}.png',
       dataMaxZoom: 12
     }
 
