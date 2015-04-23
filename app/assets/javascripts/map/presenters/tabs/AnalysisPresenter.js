@@ -93,6 +93,7 @@ define([
       }
     }, {
       'AnalysisTool/analyze-wdpaid': function(wdpaid) {
+        this.openAnalysisTab(true);
         this.view._stopDrawing();
         this.deleteAnalysis();
         this._analyzeWdpai(wdpaid.wdpaid);
@@ -104,6 +105,7 @@ define([
           mps.publish('AnalysisTool/analyze-wdpaid', [wdpaid]);
           return;
         }
+        this.openAnalysisTab(true);
         this.view._stopDrawing();
         this.deleteAnalysis();
         this._analyzeConcession(useid, layerSlug);
@@ -155,8 +157,9 @@ define([
       }
     }],
 
-    openAnalysisTab: function(){
-      if (this.view.$el.hasClass('is-analysis')) {
+    openAnalysisTab: function(open){
+      var open = open || this.view.$el.hasClass('is-analysis');
+      if (open) {
         mps.publish('Tab/open', ['#analysis-tab-button']);
       }
     },
@@ -171,7 +174,7 @@ define([
       this.deleteAnalysis();
 
       //Open analysis tab
-      if (!this.status.get('dont_analyze') && (params.analyze || (params.iso.country && params.iso.country !== 'ALL') || params.geojson || params.wdpaid)) {
+      if ((!this.status.get('dont_analyze') && (params.iso.country && params.iso.country !== 'ALL')) || (params.analyze || params.geojson || params.wdpaid)) {
         mps.publish('Tab/open', ['#analysis-tab-button']);
       }
 

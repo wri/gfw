@@ -26,6 +26,7 @@ define([
       this.name = layer.slug;
       this.tileSize = new google.maps.Size(256, 256);
       this.options = _.extend({}, this.defaults, this.options || {});
+      this.infowindowsButtons();
     },
 
     addLayer: function(position, success) {
@@ -84,6 +85,17 @@ define([
       if (this.infowindow) {
         this.infowindow.remove();
       }
+    },
+
+    infowindowsButtons: function(){
+      $('.cartodb-infowindow').on('click', '#analyzeBtn', function () {
+        mps.publish('AnalysisTool/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]);
+
+        ($(this).data('wdpaid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area' + $(this).data('wdpaid')) : null;
+
+        ($(this).data('useid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze ' + $(this).data('use').toUpperCase() + ' ' + $(this).data('useid')) : null;
+
+      });
     },
 
     _getOverlayIndex: function() {
