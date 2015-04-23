@@ -18,16 +18,16 @@
 }
 
 #dam_hotspots[status="Operational"] {
-   marker-fill: #A53ED5;
+   marker-fill: #F78300;
 }
 #dam_hotspots[status="Under Construction"] {
-   marker-fill: #FB9A99;
+   marker-fill: #D5CB12;
 }
 #dam_hotspots[status="Planned"] {
    marker-fill: #1F78B4;
 }
 #dam_hotspots[status="Inventoried"] {
-   marker-fill: #B2DF8A;
+   marker-fill: #85AB63;
 }
 #dam_hotspots[status="Suspended"] {
    marker-fill: #E31A1C;
@@ -42,12 +42,12 @@
    marker-fill: #E31A1C;
 }
 #dam_hotspots[status="Unknown"] {
-   marker-fill: #ada5a5;
+   marker-fill: #746969;
 }
 #dam_hotspots[status="NoData"] {
-   marker-fill: #ada5a5;
+   marker-fill: #746969;
 }
 
 #dam_hotspots {
-   marker-fill: #ada5a5;
+   marker-fill: #746969;
 }

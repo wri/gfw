@@ -610,10 +610,10 @@ define([
     },
 
     removeLayer: function() {
-      var overlayIndex = this._getOverlayIndex('mask');
-      if(overlayIndex > -1) {
-        this.map.overlayMapTypes.removeAt(overlayIndex);
-      }
+      // var overlayIndex = this._getOverlayIndex('mask');
+      // if(overlayIndex > -1) {
+      //   this.map.overlayMapTypes.removeAt(overlayIndex);
+      // }
     },
 
 

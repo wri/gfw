@@ -162,7 +162,7 @@ define([
         var layerView = this.layerInst[layer.slug] =
           new layersHelper[layer.slug].view(layer, options, this.map);
 
-        layerView.addLayer(this._getOverlayPosition(layer), _addNext);
+        layerView.addLayer(layer.position, _addNext);
       }
 
     },

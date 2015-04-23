@@ -312,6 +312,15 @@
     marker-width: 3;
   }
 
+  [layer='quicc_alerts'] {
+    marker-fill: black;
+    marker-opacity: 0.9;
+    marker-allow-overlap: true;
+    marker-placement: point;
+    marker-type: ellipse;
+    marker-width: 3;
+  }
+
   [layer='biodiversity_hotspots'] {
     polygon-fill: #49A39A;
     line-color: #49A39A;
