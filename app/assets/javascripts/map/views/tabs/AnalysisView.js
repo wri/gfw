@@ -41,7 +41,8 @@ define([
       'click #analysis-country-button' : 'analysisCountry',
 
       //other
-      'click #data-tab-play' : 'onGifPlay'
+      'click #data-tab-play' : 'onGifPlay',
+      'click .close' : 'toogleAnalysis'
     },
 
     initialize: function(map) {
