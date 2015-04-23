@@ -20,6 +20,7 @@ define([
       //FOREST COVER
       "forest2000",
       "WMSLayer",
+      "us_land_cover",
       "intact_forest",
       "pantropical",
       "mangrove",
