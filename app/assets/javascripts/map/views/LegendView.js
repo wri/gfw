@@ -23,10 +23,11 @@ define([
   'text!map/templates/legend/hondurasForest.handlebars',
   'text!map/templates/legend/colombiaForestChange.handlebars',
   'text!map/templates/legend/tigers.handlebars',
-  'text!map/templates/legend/dam_hotspots.handlebars'
+  'text!map/templates/legend/dam_hotspots.handlebars',
+  'text!map/templates/legend/us_land_cover.handlebars'
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL) {
 
   'use strict';
 
@@ -64,7 +65,9 @@ define([
       WMSLayer: Handlebars.compile(hondurasForestTPL),
       colombia_forest_change: Handlebars.compile(colombiaForestChangeTPL),
       tigers: Handlebars.compile(tigersTPL),
-      dam_hotspots: Handlebars.compile(dam_hotspotsTPL)
+      dam_hotspots: Handlebars.compile(dam_hotspotsTPL),
+      us_land_cover: Handlebars.compile(us_land_coverTPL)
+
     },
 
     options: {

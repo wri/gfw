@@ -78,6 +78,7 @@ define([
   'map/views/layers/DamHotspotsLayer',
   'map/views/layers/ColombiaForestChangeLayer',
   'map/views/layers/UsaConservationEasementsLayer',
+  'map/views/layers/UsaLandCoverLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -164,6 +165,7 @@ define([
   DamHotspotsLayer,
   ColombiaForestChangeLayer,
   UsaConservationEasementsLayer,
+  UsaLandCoverLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -407,6 +409,9 @@ define([
     },
     usa_conservation_easements: {
       view: UsaConservationEasementsLayer
+    },
+    us_land_cover: {
+      view: UsaLandCoverLayer
     },
     nothing: {
     }
