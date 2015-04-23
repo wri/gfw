@@ -172,7 +172,7 @@ define([
      * @param  {Object} params Place params
      */
     _handlePlaceGo: function(params) {
-      this.deleteAnalysis();
+      // this.deleteAnalysis();
 
       //Open analysis tab
       if (!this.status.get('dont_analyze') && (params.analyze || (params.iso.country && params.iso.country !== 'ALL') || params.geojson || params.wdpaid)) {
@@ -471,6 +471,7 @@ define([
       mps.publish('AnalysisResults/Delete');
       this.view._removeCartodblayer();
       this.view.$el.removeClass('is-analysis');
+      mps.publish('AnalysisMobile/open')
       // Delete overlay drawn or multipolygon.
       this.view.deleteGeom({
         overlay: this.status.get('overlay'),

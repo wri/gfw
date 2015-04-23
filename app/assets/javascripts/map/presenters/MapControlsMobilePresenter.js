@@ -21,7 +21,11 @@ define([
     // /**
     //  * Application subscriptions.
     //  */
-    _subscriptions: [],
+    _subscriptions: [{
+      'AnalysisMobile/open': function() {
+        this.view.toogleAnalysisBtn($('#analysis-tab').hasClass('is-analysis'));
+      }
+    }],
 
     /**
      * Used by mobile version to open legend and analysis
@@ -32,7 +36,7 @@ define([
     },
 
     openAnalysis: function(){
-      mps.publish('AnalysisMobile/open')
+      mps.publish('AnalysisMobile/open');
     }
 
   });

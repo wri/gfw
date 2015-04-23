@@ -36,9 +36,13 @@ define([
       this.model = new MapControlsMobileModel();
       this.presenter = new Presenter(this);
       this.render();
+
+
+      //cache
+      this.$btnAnalysis = this.$el.find('.toggle-analysis');
     },
 
-    render: function (mobile) {
+    render: function () {
       this.$el.html(this.template());
     },
 
@@ -48,6 +52,10 @@ define([
 
     toggleAnalysis: function(){
       this.presenter.openAnalysis();
+    },
+
+    toogleAnalysisBtn: function(to){
+      this.$btnAnalysis.toggleClass('active',to);
     },
 
     initCustomViews: function(){
