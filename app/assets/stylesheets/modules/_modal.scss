@@ -169,6 +169,10 @@ $height: auto;
         }
       }
     }
+    em {
+      font-style: italic;
+      font-size: 90%;
+    }
   }
 
   // CONTENT
@@ -232,6 +236,9 @@ $height: auto;
         }
       }
     }
+    strong {
+      font-weight: bold;
+    }
 
     .read_more {
       padding: 10px 0;
@@ -244,6 +251,10 @@ $height: auto;
       &.read_more {
         display: block;
       }
+    }
+    .em {
+      font-style: italic;
+      font-size: 90%;
     }
   }
 
