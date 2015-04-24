@@ -84,9 +84,6 @@ define([
 
       google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function() {
         this.$el.addClass('is-loaded');
-        // if (this.embed) {
-        //   this.offsetCenter(this.getCenter(),323/2,0);
-        // }
       }, this));
 
       google.maps.event.addListener(this.map, 'click', _.bind(function(wdpa) {
@@ -97,6 +94,7 @@ define([
         mps.publish('AnalysisTool/analyze-wdpaid', [wdpa]);
       }, this));
     },
+
 
     /**
      * Set map options from the suplied options object.

@@ -158,9 +158,9 @@ define([
       }
     },
 
-    setButtons: function(to){
+    setButtons: function(to, country){
       this.$toggle.toggleClass('active', to);
-      this.$buttons.html(this.templateButtons( {iso: this.iso} ));
+      this.$buttons.html(this.templateButtons( {iso: this.iso, country: country} ));
     },
 
     analyzeIso: function(e){
@@ -243,15 +243,10 @@ define([
     // Select change iso
     changeIso: function(e){
       this.iso = $(e.currentTarget).val() || null;
-      // ($(e.currentTarget).val()) ? this.getSubCountries() : this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
       this.setIsoLayers();
       this.setButtons(!!this.iso);
       this.presenter.changeIso({country: this.iso, region: null});
     },
-    // changeArea: function(e){
-    //   this.area = $(e.currentTarget).val();
-    //   this.presenter.changeIso({country: this.iso, region: this.area});
-    // },
 
     // For autoselect country and region when youn reload page
     setSelects: function(iso){
@@ -261,9 +256,33 @@ define([
       this.setButtons(!!this.iso);
       this.$countrySelect.val(this.iso).trigger("liszt:updated");
       // this.$regionSelect.val(this.area).trigger("liszt:updated");
-      // if (this.iso) {
-      //   this.getSubCountries();
-      // }
+      if (this.iso) {
+        this.getAdditionalInfoCountry();
+      }
+    },
+
+    getAdditionalInfoCountry: function(){
+      if (!amplify.store('country-'+this.iso)) {
+        $.ajax({
+          url: window.gfw.config.GFW_API_HOST + '/countries/'+this.iso,
+          dataType: 'json',
+          success: _.bind(function(data){
+            amplify.store('country-'+this.iso, data);
+            this.setAdditionalInfoCountry();
+          }, this ),
+          error: function(error){
+            console.log(error);
+          }
+        });
+      }else{
+        this.setAdditionalInfoCountry()
+      }
+      // #{ENV['GFW_API_HOST']}/countries/#{iso}
+    },
+
+    setAdditionalInfoCountry: function(){
+      var country = amplify.store('country-'+this.iso);
+      this.setButtons(!!this.iso, country);
     },
 
   });
