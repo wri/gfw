@@ -25,7 +25,7 @@ $height: auto;
     content: "";
     position: absolute;
     height: 20px;
-    width: calc(100% - 6px);
+    width: calc(100% - 8px);
     left: 0;
   }
 
@@ -111,6 +111,22 @@ $height: auto;
       }
     }
   }
+
+  .layer-colors{
+    li{
+      margin-bottom: 4px;
+      font-size: 13px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+      .circle:before {
+        content: ' \25CF';
+        font-size: 16px;
+        margin: 0 4px 0 -1px;
+      }
+    }
+  }
+
 
   // TABLE
   .sources_row {
@@ -567,7 +583,7 @@ $height: auto;
 
 .mini-modal {
   display: none;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;

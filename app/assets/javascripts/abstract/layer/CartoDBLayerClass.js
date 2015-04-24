@@ -69,12 +69,17 @@ define([
         infowindowTemplate: TPL,
         templateType: 'handlebars',
       });
-      this.infowindow.model.on('change:visibility', function(model) {
+      this.infowindowsButtons();
+      this.infowindow.model.on('change:visibility', _.bind(function(model) {
         if (model.get('visibility')) {
           var analysis = $('#analysis-tab-button').hasClass('disabled');
           $('.cartodb-popup').toggleClass('dont-analyze', analysis);
         }
-      });
+      }, this));
+      this.infowindow.model.on('change', _.bind(function(model) {
+        this.infowindowsButtons();
+      }, this));
+
     },
 
     removeInfowindow: function() {
@@ -82,6 +87,18 @@ define([
         this.infowindow.remove();
       }
     },
+
+    infowindowsButtons: function(){
+      $('.cartodb-popup').on('click', '.analyze-concession', function () {
+        mps.publish('AnalysisTool/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]);
+
+        ($(this).data('wdpaid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area' + $(this).data('wdpaid')) : null;
+
+        ($(this).data('useid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze ' + $(this).data('use').toUpperCase() + ' ' + $(this).data('useid')) : null;
+
+      });
+    },
+
 
     /**
      * Get the CartoDB query. If it isn't set on this.options,

@@ -22,6 +22,8 @@ define([
 
     initialize: function(options) {
       this.src = options.src;
+      this.width = options.width || 600;
+      this.height = options.height || 600;
     },
 
     hide: function(e) {
@@ -30,7 +32,11 @@ define([
     },
 
     render: function(){
-      var renderedTemplate = this.template({src: this.src});
+      var renderedTemplate = this.template({
+        src: this.src,
+        width: this.width,
+        height: this.height,
+      });
       this.$el.html(renderedTemplate);
 
       return this;

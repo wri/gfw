@@ -1,4 +1,4 @@
-<div class="disable-selection">
+<div class="noselect">
   <ul class="categories-list">
 
     <li class="forest-change">
@@ -111,26 +111,32 @@
           <span class="category-name">FOREST USE</span>
         </div>
         <ul class="layers-list">
-          <li class="layer" data-layer="logging">
-            <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Logging<a href='#' data-source='logging' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li>
-          <li class="layer" data-layer="mining">
-            <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Mining<a href='#' data-source='mining' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li>
-          <li class="layer" data-layer="oil_palm">
-            <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Oil palm<a href='#' data-source='oil_palm' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li>
-          <li class="layer" data-layer="wood_fiber_plantations">
-            <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Wood fiber plantations<a href='#' data-source='wood_fiber_plantations' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li>
-          {{!-- <li class="layer" data-layer="dam_hotspots">
-            <span class="onoffswitch"><span></span></span>
-            <span class="layer-title">Dam Hotspots<a href='#' data-source='dam_hotspots' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-          </li> --}}
+          <div class="layer-group">
+            <span class="group-name">Concessions</span>
+            <li class="layer" data-layer="logging">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Logging<a href='#' data-source='logging' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            </li>
+            <li class="layer" data-layer="mining">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Mining<a href='#' data-source='mining' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            </li>
+            <li class="layer" data-layer="oil_palm">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Oil palm<a href='#' data-source='oil_palm' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            </li>
+            <li class="layer" data-layer="wood_fiber_plantations">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Wood fiber plantations<a href='#' data-source='wood_fiber_plantations' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            </li>
+          </div>
+          {{!-- <div class="layer-group">
+            <span class="group-name">Infrastructure</span>
+            <li class="layer" data-layer="dam_hotspots">
+              <span class="onoffswitch"><span></span></span>
+              <span class="layer-title">Dam Hotspots<a href='#' data-source='dam_hotspots' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+            </li>
+          </div> --}}
         </ul>
       </div>
     </li>
@@ -152,7 +158,7 @@
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Biodiversity hotspots<a href='#' data-source='biodiversity_hotspots' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
-          {{!--<li class="layer" data-layer="wwf">
+          {{!-- <li class="layer" data-layer="wwf">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">WWF Terrestrial Ecoregions of the World<a href='#' data-source='wwf' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li> --}}

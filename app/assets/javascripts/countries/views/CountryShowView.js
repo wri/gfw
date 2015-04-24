@@ -49,14 +49,14 @@ define([
       // Initialize modules
       this.headerView = new CountryHeaderView({country: this.country});
 
-      if (!this.embed) {
+      // if (!this.embed) {
         this._stickynav();
         this._initSource();
         this._drawTenure();
         this._drawForestsType();
         this._drawFormaAlerts();
         this._initFormaDropdown();
-      }
+      // }
     },
 
     _initSource: function() {

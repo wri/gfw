@@ -12,7 +12,8 @@
   margin-top: 36px;
   top: -20px;
   .embed & {
-    width: 960px;
+    margin-top: 0;
+    top: 0px;
   }
 }
 
@@ -26,7 +27,7 @@
   }
   .graph_tab, .all_countries {
     @media only screen and (min-width: 481px) and (max-width: 1010px) {
-      width: 16.6666%;
+      width: 25%;
     }
   }
 
@@ -191,13 +192,43 @@
     width: 16px;
     height: 16px;
     svg{
-      width: auto;
+      width: 16px;
       height: 65%;
       fill: $dark;
       position: absolute;
       top: 50%;
       left: 50%;
       @include transform(translate(-50%,-50%));
+    }
+  }
+  .trigger-mode {
+    background-color: #7b7b7b;
+    color: #eee;
+    width: 222px;
+    height: 25px;
+    font-size: 13px;
+    text-transform: uppercase;
+    position: absolute;
+    @include display-flex();
+    @include justify-content(space-between);
+    right: 60px;
+    top: 8px;
+    border-radius: 50px;
+    display: none !important;
+    strong {
+      background-color: #eee;
+      color: #7b7b7b;
+      border-radius: inherit;
+    }
+    span {
+      cursor: pointer;
+    }
+    span,
+    strong {
+      width: 50%;
+      @include display-flex();
+      @include justify-content(center);
+      @include align-items(center);
     }
   }
 }
@@ -241,6 +272,7 @@
     text-transform: lowercase;
   }
   .loss-vs-gain {
+    display: none !important;
     strong {
       color: #666;
       text-decoration: underline;
@@ -251,7 +283,7 @@
     }
   }
   .trigger-mode {
-    display: none;
+    display: none !important;
   }
 }
 .overview_graph__years{
@@ -390,6 +422,11 @@
   margin-top: 4px;
   line-height: 20px;
 
+  &.no-graph {
+    width: auto;
+    right: 0;
+  }
+
   @media only screen and (min-width: 481px) and (max-width: 650px) {
     width: 190px;
     right: 0;
@@ -500,10 +537,7 @@
 
 .countries_list__minioverview {
   position: absolute;
-  top: 50%;
   right: 0;
-  @include transform-translate(200px, -50%);
-  height: 50px;
   font-size: 29px;
   line-height: 50px;
   font-weight: 500;
@@ -532,6 +566,7 @@
   svg {
     float: right;
     margin: 10px;
+    width: auto;
   }
 
   .sibling {
