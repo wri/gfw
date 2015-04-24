@@ -18,6 +18,9 @@ define([
       type: 'link',
       url: window.location.href,
       embedUrl: window.location.href,
+      embedHeight: 600,
+      embedWidth: 600,
+      hideEmbed: true
     },
     setEmbedUrl: function(){
       if($('body').hasClass('is-countries-page')){
@@ -82,7 +85,7 @@ define([
 
     render: function(){
       this._renderInput();
-      this.$el.html(this.template());
+      this.$el.html(this.template({ hideEmbed: this.model.get('hideEmbed') }));
       this._cacheVars();
     },
 
@@ -153,25 +156,21 @@ define([
     },
 
     _generateEmbedSrc: function() {
-      var dim_x = 600, dim_y = 600;
+      var dim_x = this.model.get('embedWidth') || 600, dim_y = this.model.get('embedHeight') || 600;
       return '<iframe width="' +dim_x+ '" height="' +dim_y+ '" frameborder="0" src="' + this.model.get('embedUrl') + '"></iframe>';
     },
 
     _setUrlsFromEvent: function(event) {
-      var url = $(event.currentTarget).data('share-url');
-      if (url !== undefined) {
-        this.model.set('url', url);
-      }else{
-        this.model.set('url', window.location.href);
-      }
+      var url = $(event.currentTarget).data('share-url') || window.location.href;
+      this.model.set('url', url);
 
-      var embedUrl = $(event.currentTarget).data('share-embed-url');
-      if (embedUrl !== undefined) {
-        this.model.set('embedUrl', embedUrl);
-      }else{
-        var urlWithEmbed = window.location.origin + '/embed' + window.location.pathname + window.location.search;
-        this.model.set('embedUrl', urlWithEmbed);
-      }
+      var embedUrl = $(event.currentTarget).data('share-embed-url') || window.location.origin + '/embed' + window.location.pathname + window.location.search;
+      this.model.set('embedUrl', embedUrl);
+      this.model.set('embedWidth', $(event.currentTarget).data('share-embed-width'));
+      this.model.set('embedHeight', $(event.currentTarget).data('share-embed-height'));
+
+      var hideEmbed = $(event.currentTarget).data('hide-embed');
+      this.model.set('hideEmbed', !!hideEmbed);
     },
 
     _setTypeFromEvent: function(event) {
@@ -191,7 +190,9 @@ define([
 
     _showPreview: function(){
       this.iframeView = new SharePreviewView({
-        src: this.model.get('embedUrl')
+        src: this.model.get('embedUrl'),
+        width: this.model.get('embedWidth'),
+        height: this.model.get('embedHeight'),
       });
 
       $('body').append(this.iframeView.render().$el);

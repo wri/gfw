@@ -58,6 +58,14 @@
     height: 25px;
     line-height: 24px;
   }
+  &.lines{
+    line-height: 1;
+    white-space: normal;
+    height: auto;
+    line-height: 1;
+    padding: 10px;
+  }
+
 
   // Colors
   &.dark {
@@ -133,6 +141,22 @@
       right: 5px;
       fill: $dark;
       @include transform(translate(0,-50%));
+    }
+  }
+  &.with-center-icon{
+    min-width: 0;
+    span{
+      position: relative;
+      padding-right: 25px;
+    }
+    svg{
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      fill: $white;
+      @include transform(translate(0px,-50%));
     }
   }
 }

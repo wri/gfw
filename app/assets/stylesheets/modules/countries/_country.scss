@@ -4,6 +4,35 @@
   }
 }
 
+.embed-header{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  h1{
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 0;
+    right: 20px;
+    text-indent: -9999px;
+    z-index: 11;
+    margin: 0 0 0 15px;
+    @include retina-image('logo-new.png','logo-new@2x.png');
+    @include transition(all 0.25s linear);
+    &.active{
+      opacity: 0;
+      visibility: hidden;
+    }
+    a{
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+  }
+}
+
+
 .country {
   float: left;
   margin: 0 0 -1px -1px;

@@ -36,6 +36,7 @@ define([
   'map/views/layers/CodMiningLayer',
   'map/views/layers/CogMiningLayer',
   'map/views/layers/GabMiningLayer',
+  'map/views/layers/ColMiningLayer',
   'map/views/layers/OilPalmLayer',
   'map/views/layers/CogOilPalmLayer',
   'map/views/layers/LbrOilPalmLayer',
@@ -58,6 +59,7 @@ define([
   'map/views/layers/PanLandRightsLayer',
   'map/views/layers/BraLandRightsLayer',
   'map/views/layers/CanLandRightsLayer',
+  'map/views/layers/CriLandRightsLayer',
   'map/views/layers/UserStoriesLayer',
   'map/views/layers/MongabayStoriesLayer',
   'map/views/layers/InfoamazoniaStoriesLayer',
@@ -75,6 +77,8 @@ define([
   'map/views/layers/CarbonLayer',
   'map/views/layers/DamHotspotsLayer',
   'map/views/layers/ColombiaForestChangeLayer',
+  'map/views/layers/UsaConservationEasementsLayer',
+  'map/views/layers/UsaLandCoverLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -119,6 +123,7 @@ define([
   CodMiningLayer,
   CogMiningLayer,
   GabMiningLayer,
+  ColMiningLayer,
   OilPalmLayer,
   CogOilPalmLayer,
   LbrOilPalmLayer,
@@ -141,6 +146,7 @@ define([
   PanLandRightsLayer,
   BraLandRightsLayer,
   CanLandRightsLayer,
+  CriLandRightsLayer,
   UserStoriesLayer,
   MongabayStoriesLayer,
   InfoamazoniaStoriesLayer,
@@ -158,6 +164,8 @@ define([
   CarbonLayer,
   DamHotspotsLayer,
   ColombiaForestChangeLayer,
+  UsaConservationEasementsLayer,
+  UsaLandCoverLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -275,6 +283,9 @@ define([
     gab_mining: {
       view: GabMiningLayer
     },
+    col_mining: {
+      view: ColMiningLayer
+    },
     oil_palm: {
       view: OilPalmLayer
     },
@@ -341,6 +352,9 @@ define([
     can_land_rights: {
       view: CanLandRightsLayer
     },
+    cri_land_rights: {
+      view: CriLandRightsLayer
+    },
     user_stories: {
       view: UserStoriesLayer
     },
@@ -392,6 +406,12 @@ define([
     },
     dam_hotspots: {
       view: DamHotspotsLayer
+    },
+    usa_conservation_easements: {
+      view: UsaConservationEasementsLayer
+    },
+    us_land_cover: {
+      view: UsaLandCoverLayer
     },
     nothing: {
     }

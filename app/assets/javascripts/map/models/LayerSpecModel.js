@@ -12,34 +12,96 @@ define([
 
   var LayerSpecModel = Backbone.Model.extend({
 
+    // You should put more importants layers at the bottom of the layerOrder
+    // As you see forestchange layers are the more importants so they will be added to top
+    //the order will be Grump, forest cover,Conservation, Forest Use, and People layers and finally  Forest Change layers
     layerOrder: [
-      'forestgain',
-      'loss',
-      'forma',
-      'imazon',
-      'modis',
-      'fires',
-      'terrailoss',
-      'modis_cover',
-      'imazon_cover',
-      'forma_cover',
-      'terraicanvas_cover_cover',
-      'logging',
-      'mining',
-      'oil_palm',
-      'wood_fiber_plantations',
-      'protected_areasCDB',
-      'biodiversity_hotspots',
-      'resource_rights',
-      'land_rights',
-      'ifl_2000',
-      'ifl_2013_deg',
-      'idn_primary',
-      'colombia_forest_change',
-      'mangrove',
-      'pantropical',
-      'forest2000',
-      'grump2000',
+      "grump2000",
+      //FOREST COVER
+      "forest2000",
+      "WMSLayer",
+      "us_land_cover",
+      "colombia_forest_change",
+      "intact_forest",
+      "pantropical",
+      "idn_primary",
+      "ifl_2013_deg",
+      "ifl_2000",
+      "mangrove",
+      // PEOPLE
+      "resource_rights",
+      "cmr_resource_rights",
+      "lbr_resource_rights",
+      "gnq_resource_rights",
+      "nam_resource_rights",
+      "land_rights",
+      "aus_land_rights",
+      "pan_land_rights",
+      "bra_land_rights",
+      "can_land_rights",
+      "cri_land_rights",
+      // CONSERVATION
+      "biodiversity_hotspots",
+      "verified_carbon",
+      "azepoly",
+      "wwf",
+      "usa_conservation_easements",
+      "birdlife",
+      "tigers",
+      "biodiversity_hotspots",
+      "protected_areasCDB",
+      // FOREST USE
+      "dam_hotspots",
+      "concesiones_wrapper",
+      "concesiones_forestalesNS",
+      "concesiones_forestales",
+      "idn_wood_fiber",
+      "cog_wood_fiber",
+      "gab_wood_fiber",
+      "wood_fiber_plantations",
+      "cog_oil_palm",
+      "lbr_oil_palm",
+      "cmr_oil_palm",
+      "idn_oil_palm",
+      "oil_palm",
+      "can_claims",
+      "can_leases",
+      "can_coal",
+      "can_permits",
+      "col_mining",
+      "gab_mining",
+      "cog_mining",
+      "cod_mining",
+      "cmr_mining",
+      "mining",
+      "gab_logging",
+      "cod_logging",
+      "caf_logging",
+      "cmr_logging",
+      "idn_logging",
+      "gnq_logging",
+      "gnq_logging",
+      "idn_logging",
+      "cmr_logging",
+      "cod_logging",
+      "logging",
+      //STORIES
+      "infoamazonia",
+      "mongabay",
+      "user_stories",
+      // FOREST CHANGE
+      "terraicanvas_cover_cover",
+      "forma_cover",
+      "imazon_cover",
+      "modis_cover",
+      // FOREST CHANGE
+      "terrailoss",
+      "fires",
+      "modis",
+      "imazon",
+      "forma",
+      "loss",
+      "forestgain"
     ],
 
     categoryOrder: [
@@ -59,7 +121,6 @@ define([
      */
     positionizer: function(layers) {
       var layerOrder = _.intersection(this.layerOrder, _.pluck(layers, 'slug'));
-
       _.each(layerOrder, _.bind(function(slug, i) {
         layers[slug].position = this.layerOrder.indexOf(slug);
       }, this ));
@@ -139,7 +200,7 @@ define([
           categories.push(_.sortBy(this.positionizer(category),
             function(layer) {
               return layer.position;
-            }));
+            }).reverse());
         }
       }, this));
 

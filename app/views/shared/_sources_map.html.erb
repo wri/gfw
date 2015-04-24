@@ -508,7 +508,7 @@
 
       <div class='source_body'>
         <div class='source_download'>
-          <a href='http://wri-01.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20modis_forest_change_copy%20&format=shp' target='_blank' title='Download on CartoDB'>Download<i class='arrow_down'></i></a>
+          <a href='http://wri-01.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20quicc_alerts%20&format=shp' target='_blank' title='Download on CartoDB'>Download<i class='arrow_down'></i></a>
         </div>
 
         <div class='source_table'>
@@ -909,8 +909,8 @@
 
         <div class='source_summary'>
           <h3 class='overview_title'>Overview</h3>
-          <p>The <a href='http://intactforests.org/' target='_blank'>Intact Forest Landscapes</a> (IFL) data set identifies unbroken expanses of natural ecosystems within the zone of forest extent that show no signs of significant human activity and are large enough that all native biodiversity, including viable populations of wide-ranging species, could be maintained. To map IFL areas, a set of criteria was developed and designed to be globally applicable and easily replicable, the latter to allow for repeated assessments over time as well for verification. IFL areas were defined as unfragmented landscapes, at least 50,000 hectares in size, and with a minimum width of 10 kilometers. These were then mapped and identified from Landsat satellite imagery for the year 2013.</p> 
-          
+          <p>The <a href='http://intactforests.org/' target='_blank'>Intact Forest Landscapes</a> (IFL) data set identifies unbroken expanses of natural ecosystems within the zone of forest extent that show no signs of significant human activity and are large enough that all native biodiversity, including viable populations of wide-ranging species, could be maintained. To map IFL areas, a set of criteria was developed and designed to be globally applicable and easily replicable, the latter to allow for repeated assessments over time as well for verification. IFL areas were defined as unfragmented landscapes, at least 50,000 hectares in size, and with a minimum width of 10 kilometers. These were then mapped and identified from Landsat satellite imagery for the year 2013.</p>
+
           <p>Changes in the extent of IFLs were identified by contrasting the map for 2013 with the analogous map for 2000, adjusted for consistency. Areas identified as “reduction in extent” met the IFL criteria in 2000, but no longer met the criteria in 2013. The main causes of change were industrial activity such as logging and mining, and fragmentation due to infrastructure and new roads, and fires assumed to be caused by humans.</p>
 
           <p>This data can be used to assess forest intactness, alteration, and degradation at global and regional scales. More information about the dataset and methodology is available on <a href="http://www.intactforests.org">www.intactforests.org</a></p>
@@ -972,6 +972,57 @@
           <!--<p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> Hansen, M. C., P. V. Potapov, R. Moore, M. Hancher, S. A. Turubanova, A. Tyukavina, D. Thau, S. V. Stehman, S. J. Goetz, T. R. Loveland, A. Kommareddy, A. Egorov, L. Chini, C. O. Justice, and J. R. G. Townshend. 2013. “Tree Cover.” University of Maryland, Google, USGS, and NASA. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org' target='_blank'>www.globalforestwatch.org</a>.</p>-->
 
           <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "http://data.globalforestwatch.org/datasets/b3ac8839275446b5983c0271fddf1e33" %></em></p>
+        </div>
+      </div>
+    </li>
+    <li id='us_land_cover' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>USA land cover</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd> Identifies land cover for the United States, utilizing the National Land Cover Database (NLCD) for 2011</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>30 × 30 meters</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Contiguous United States (excluding Alaska and Hawaii)</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd><a href='http://landsat.usgs.gov/' target='_blank'>Landsat</a></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Every 5 years</dt>
+            <dd>2011</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd>2011</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd><p>NLCD land cover products have been published for 2001, 2006, and 2011. A formal accuracy assessment has not been conducted for NLCD 2011 Land Cover.</p>
+            <p>An assessment of accuracy for the NLCD land cover product found  overall accuracies for the 2001 and 2006 products were 79% and 78%, respectively, with accuracies exceeding 80% for water, high density urban, all upland forest classes, shrubland, and cropland for both dates.</p></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>The National Land Cover Database 2011 (NLCD 2011) is the most recent national data product created by the United States Multi-Resolution Land Characteristics (MRLC) Consortium. The MRLC is a <a href="http://www.mrlc.gov/about.php">group of federal agencies</a> who coordinate and generate consistent and relevant land cover information at the national scale for a wide variety of environmental, land management, and modeling applications. NLCD 2011 provides - for the first time - the capability to assess wall-to-wall, spatially explicit, national land cover changes and trends across the United States from 2001 to 2011. As with two previous NLCD land cover products NLCD 2011 keeps the same 16-class land cover classification scheme that has been applied consistently across the United States at a spatial resolution of 30 meters. NLCD 2011 is based primarily on a decision-tree classification of circa 2011 Landsat satellite data.</p>
+          <p>The 2011 land cover layer is one of five primary data products produced as part of the NLCD 2011: 1) NLCD 2011 Land Cover 2) NLCD 2006/2011 Land Cover Change Pixels labeled with the 2011 land cover class 3) NLCD 2011 Percent Developed Imperviousness 4) NLCD 2006/2011 Percent Developed Imperviousness Change Pixels 5) NLCD 2011 Tree Canopy Cover.</p>
+          <p>Land cover class categories include forest, planted/cultivated lands, wetland, grassland, water, developed areas and barren land. Land cover information is critical for local, state, and federal managers and officials to assist them with issues such as assessing ecosystem status and health, modeling nutrient and pesticide runoff, understanding spatial patterns of biodiversity, land use planning, deriving landscape pattern metrics, and developing land management policies.</p>
+
+          <p class='credits'><strong>Citation:</strong> Jin, S., Yang, L., Danielson, P., Homer, C., Fry, J., and Xian, G. 2013. “A comprehensive change detection method for updating the National Land Cover Database to circa 2011.” Remote Sensing of Environment, 132: 159 – 175.</p>
+
+          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "http://doc.arcgis.com/en/living-atlas/item/?itemId=7c9e622642b14df2aed072f77ae1273c" %></em></p>
         </div>
       </div>
     </li>
@@ -1997,16 +2048,16 @@
           <p>The Dam Hotspots data contains over 5,000 dam locations determined by latitude and longitude coordinates. These locations were confined to the world’s 50 major river basins. The data set comes from multiple sources, and was corrected for location errors by International Rivers. The “project status”—a moving target—was determined by acquiring official government data, as well as through primary research from Berkeley and five International Rivers’ regional offices.</p>
           <div class="layer-details layer-details-dam_hotspots">
             <ul class="layer-colors">
-              <li><i class="circle" style='color:#A6CEE3;'></i>Operational: Already existing dams.</li>
-              <li><i class="circle" style='color:#FB9A99;'></i>Under construcction: Dams which are currently being constructed. </li>
+              <li><i class="circle" style='color:#F78300;'></i>Operational: Already existing dams.</li>
+              <li><i class="circle" style='color:#D5CB12;'></i>Under construcction: Dams which are currently being constructed.</li>
               <li><i class="circle" style='color:#1F78B4;'></i>Planned: Dams whose studies or licensing have been completed, but construction has yet to begin.</li>
-              <li><i class="circle" style='color:#B2DF8A;'></i>Inventoried: Dams whose potential site has been selected, but neither studies nor licensing have occurred.</li>
-              <li><i class="circle" style='color:#E31A1C;'></i>Suspended Dams which have been temporarily or permanently suspended, deactivated, cancelled, or revoked</li>
-              <li><i class="circle" style='color:#DDDDDD;'></i>Unknown: No data are currently available</li>
+              <li><i class="circle" style='color:#85AB63;'></i>Inventoried: Dams whose potential site has been selected, but neither studies nor licensing have occurred.</li>
+              <li><i class="circle" style='color:#E31A1C;'></i>Suspended: Dams which have been temporarily or permanently suspended, deactivated, cancelled, or revoked.</li>
+              <li><i class="circle" style='color:#746969;'></i>Unknown: No data are currently available.</li>
             </ul>
           </div>
-           <p class='credits'><strong>Citation:</strong>International Rivers, The State of the World’s Rivers, August 2014 available at <a href="http://tryse.net/googleearth/irivers-dev3/">http://tryse.net/googleearth/irivers-dev3/</a>.</p>
-          <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org/' target='_blank'>Learn more or request data.</a></em></p>
+          <p class='credits'><strong>Citation:</strong>International Rivers, The State of the World’s Rivers, August 2014 available at <a href="http://tryse.net/googleearth/irivers-dev3/">http://tryse.net/googleearth/irivers-dev3/</a>.</p>
+          <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org/datasets/537361e2df59486e898cd4e024af57ea_0' target='_blank'>Learn more or request data.</a></em></p>
         </div>
       </div>
     </li>
@@ -2523,9 +2574,6 @@
       </div>
 
       <div class='source_body'>
-        <div class='source_download'>
-          <a href='http://www.vcsprojectdatabase.org/' target='_blank' title='Learn more or request data at Alliance for Zero Extinction'>Learn more or request data at VCS Project Database<i class='arrow_down'></i></a>
-        </div>
 
         <div class='source_table'>
           <dl class='sources_row'>
@@ -2558,6 +2606,60 @@
 
            <p class='credits'><strong>Citation:</strong>The VCS Project Database. 2015. <a href="http://www.vcsprojectdatabase.org">www.vcsprojectdatabase.org</a>.</p>
           <p class='read_more hidden'><em><a href='http://www.vcsprojectdatabase.org/' target='_blank'>Learn more or request data at VCS Project Database</a></em></p>
+        </div>
+      </div>
+    </li>
+    <li id='usa_conservation_easements' class='source-item last'>
+      <div class='source_header'>
+        <strong class='source_title'>US Conservation Easements</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Maps the boundaries of conservation easements on private lands and provides information on their status and management</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>Variable</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>United States</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd>Various – Government, Land Trusts, NGOs, other</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Frequency of updates</dt>
+            <dd>As needed</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Date of content</dt>
+            <dd>2014</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd><p>The <a href="http://conservationeasement.us/about/completeness">NCED completeness maps</a> measure the number of easements that are in the NCED database compared to the estimated total number of easements the NCED team is aware of from the Land Trust Alliance Census data and the NCED data collection efforts. Easements are knownyet not in NCED because, 1) they have not been digitized, 2) they were withheld from NCED, or 3) the NCED team is still working with the easement holders to collect the information.</p>
+            <p>Approximately 70% of known land trusts are included in the Census; however, the Census gives us a good base number for comparison with NCED. There is no census for publicly-held easements so the total number of publicly-held easements is based on the data collection efforts of NCED.</p></dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+
+          <p>A conservation easement, according to the Land Trust Alliance, is “a legal agreement between a landowner and a land trust or government agency that permanently limits uses of the land in order to protect its conservation values.” The National Conservation Easement Database (NCED) is the first national database of conservation agencies throughout the United States. Voluntary and secure, the NCED respects landowner privacy and will not collect landowner names or sensitive information. This public-private partnership brings together national conservation groups, local and regional land trusts, and state and federal agencies around a common objective. The NCED provides a comprehensive picture of the estimated 40 million acres of privately owned conservation easement lands, recognizing their contribution to America’s natural heritage, a vibrant economy, and healthy communities.</p>
+
+          <p>Before the NCED was created no single, nationwide system existed for sharing and managing information about conservation easements. By building the first national database and web site to access this information, the NCED helps agencies, land trusts, and other organizations plan more strategically, identify opportunities for collaboration, advance public accountability, and raise the profile of what's happening on-the-ground in the name of conservation.</p>
+
+          <p>With the initial support of the <a href="http://www.usendowment.org/">U.S. Endowment for Forestry and Communities</a>, NCED is the result of a collaboration between five environmental non-profits: <a href="http://www.landscope.org/connect/find/partners/tpl/">The Trust for Public Land</a>, <a href="http://www.ducks.org/">Ducks Unlimited</a>, <a href="http://www.landscope.org/connect/find/partners/defenders/">Defenders of Wildlife</a>, <a href="http://www.landscope.org/connect/find/partners/cbi/"> Conservation Biology Institute</a>, and <a href="http://www.natureserve.org/">NatureServe.</a></p>
+
+           <p class='credits'><strong>Citation:</strong>TNational Conservation Easement Database, July 2012.</p>
+          <p class='read_more hidden'><em><a href='http://nced.conservationregistry.org/easements/download_data' target='_blank'>Learn more or request data</a></em></p>
         </div>
       </div>
     </li>
@@ -2773,6 +2875,22 @@
 
            <p class='credits'><strong>Credit:</strong>Government of Canada, Natural Resources Canada, Earth Sciences Sector, Geomatics Canada, Surveyor General Branch. Available through the Open Government License - Canada</p>
           <p class='read_more hidden'><em><a href='http://data.globalforestwatch.org/datasets/c235bcd5563645219fef6ba086babe5c_3' target='_blank'>Learn more and download data</a></em></p>
+        </div>
+      </div>
+    </li>
+    <li id='cri_land_rights' class='source-item last'>
+      <div class='source_header'>
+        <strong class='source_title'>Canada Aboriginal Lands</strong>
+        <i class='expand_arrow'></i>
+      </div>
+
+      <div class='source_body'>
+        <div class='source_summary'>
+        <h3 class='overview_title'>Overview</h3>
+          <p>This data set displays the boundaries of the 24 legally-recognized and titled indigenous territories in Costa Rica as of 2008.  It was created by the Observatorio del Desarrollo within the Universidad de Costa Rica, and is made available through the online Digital Atlas of Indigenous Peoples. Data sources include the Universidad de Costa Rica, la Universidad Nacional, and el Instituto Tecnológico. To view the interactive Atlas, please visit <a href="http://pueblosindigenas.odd.ucr.ac.cr/" target='_blank'>pueblosindigenas.odd.ucr.ac.cr/</a></p>
+
+           <p class='credits'><strong>Credit:</strong>El Observatorio del Desarrollo, Universidad de Costa Rica</p>
+          <p class='read_more hidden'><em><a href='http://www.pueblosindigenas.odd.ucr.ac.cr' target='_blank'>Learn more and download data</a></em></p>
         </div>
       </div>
     </li>

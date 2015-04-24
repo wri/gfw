@@ -788,7 +788,7 @@ GFW.modules.app = function(gfw) {
       if (layerName === 'forma') {
         return 'gfw2_forma';
       } else if (layerName === 'modis') {
-        return 'modis_forest_change_copy';
+        return 'quicc_alerts';
       } else if (layerName === 'imazon') {
         return 'imazon_clean2';
       } else if (layerName === 'loss') {
@@ -1079,7 +1079,7 @@ GFW.modules.app = function(gfw) {
 
       this.time_layer_modis = new StaticGridLayer({
         map: map,
-        table: 'modis_forest_change_copy',
+        table: 'quicc_alerts',
         global_version: that.global_version,
         cloudfront_url: that.cloudfront_url
       });
