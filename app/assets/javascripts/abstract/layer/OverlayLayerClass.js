@@ -98,7 +98,7 @@ define([
 
     getName: function() {
       return this.name;
-    }
+    },
 
   });
 

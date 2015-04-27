@@ -255,7 +255,7 @@ define([
 
     resetIsoLayers: function(){
       _.each(this.$countryLayers.find('.layer'),function(li){
-        if ($(li).hasClass('selected') && !$(li).hasClass('wrapped')) {
+        if ($(li).hasClass('selected')) {
           $(li).click();
         }
       })
@@ -299,7 +299,7 @@ define([
           var wrapped_layers = JSON.parse(layers[i].does_wrapper);
           self.$countryLayers.find('.does_wrapper').html(self.templateCountryWrapper({layers: wrapped_layers}));
           var removeLayerFromCountry = function(layer) {
-            self.$countryLayers.find('[data-layer="' +  layer.slug + '"]:not(.wrapped)').hide();
+            self.$countryLayers.find('[data-layer="' +  layer.slug + '"]:not(.wrapped)').remove();
           }
           _.each(wrapped_layers,removeLayerFromCountry);
         }

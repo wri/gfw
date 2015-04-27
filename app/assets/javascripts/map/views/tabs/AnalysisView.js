@@ -670,7 +670,6 @@ define([
 
 
 
-
   });
   return AnalysisView;
 

@@ -180,9 +180,9 @@ define([
       }
     },
 
-    setButtons: function(to){
+    setButtons: function(to, country){
       this.$toggle.toggleClass('active', to);
-      this.$buttons.html(this.templateButtons( {iso: this.iso} ));
+      this.$buttons.html(this.templateButtons( {iso: this.iso, country: country} ));
     },
 
     analyzeIso: function(e){
@@ -265,8 +265,6 @@ define([
     commonIsoChanges: function(){
       this.setIsoLayers();
       this.setButtons(!!this.iso);
-
-
       if (this.mobile) {
         var country = _.find(amplify.store('countries'), _.bind(function(country){
           return country.iso === this.iso;
@@ -281,6 +279,34 @@ define([
           this.$countryUl.removeClass('hidden');
         }
       };
+      this.$countrySelect.val(this.iso).trigger("liszt:updated");
+      // this.$regionSelect.val(this.area).trigger("liszt:updated");
+      if (this.iso) {
+        this.getAdditionalInfoCountry();
+      }
+    },
+
+    getAdditionalInfoCountry: function(){
+      if (!amplify.store('country-'+this.iso)) {
+        $.ajax({
+          url: window.gfw.config.GFW_API_HOST + '/countries/'+this.iso,
+          dataType: 'json',
+          success: _.bind(function(data){
+            amplify.store('country-'+this.iso, data);
+            this.setAdditionalInfoCountry();
+          }, this ),
+          error: function(error){
+            console.log(error);
+          }
+        });
+      }else{
+        this.setAdditionalInfoCountry()
+      }
+    },
+
+    setAdditionalInfoCountry: function(){
+      var country = amplify.store('country-'+this.iso);
+      this.setButtons(!!this.iso, country);
     },
 
   });
