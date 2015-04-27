@@ -1,0 +1,50 @@
+<div class="tab-subscription">
+  <nav id="subscription-nav" class="subscription-nav noselect">
+    <ul>
+      <li id="draw-tab-button" data-subscription="draw-tab-s"><svg><use xlink:href="#icon-analysis-draw"></use></svg>Draw shape</li>
+      <li id="country-tab-button" data-subscription="country-tab-s"><svg><use xlink:href="#icon-analysis-country"></use></svg>Country or region</li>
+      <li id="data-tab-button" data-subscription="data-tab-s"><svg><use xlink:href="#icon-analysis-data"></use></svg>Other data layers</li>
+    </ul>
+  </nav>
+  <div id="subscription-content" class="subscription-content">
+    <div id="default" class="subscription-tab-content default results-hide active">
+      <header>
+        <h2>Subscribe to our near real-time data layers to receive alerts when new activity is detected</h2>
+        <p>Define your area of interest</p>
+      </header>
+    </div>
+    <div id="draw-tab-s" class="subscription-tab-content draw-tab results-hide">
+      <header>
+        <h2>Draw in the map the area you want to analyze</h2>
+        {{!-- <p>Learn more <a href="#" data-source="regular_dialog" class="source btn gray uppercase little">Click here</a></p> --}}
+      </header>
+      <div class="image"><div><svg><use xlink:href="#icon-analysis-draw"></use></svg></div></div>
+      <ul id="draw-subscription" class="button-container one">
+        <li><button id="start-subscription" class="btn green uppercase">Start drawing</button></li>
+        <li class="hidden"><button id="done-subscription" class="btn green uppercase">Subscribe</button></li>
+      </ul>
+    </div>
+    <div id="country-tab-s" class="subscription-tab-content country-tab">
+      <select data-placeholder="Select country" class="chosen-select default notranslate" id="subscription-country-select"><option></option></select>
+      <select data-placeholder="Select jurisdiction (optional)" disabled="true" class="chosen-select default notranslate" id="subscription-region-select"><option></option></select>
+      <ul class="button-container one">
+        <li><button id="subscription-country-button" class="btn green uppercase">Subscribe</button></li>
+      </ul>
+    </div>
+    <div id="data-tab-s" class="subscription-tab-content data-tab results-hide">
+      <header>
+        <h2>Analyze a shape on the map</h2>
+        <ol>
+          <li>Use the tabs above the map to turn on a data layer <a href="#" class="source" data-source="analyze_a_shape_on_the_map"><svg><use xlink:href="#shape-info"></use></svg></a></li>
+          <li>Select a shape in the map</li>
+          <li>Click “Analyze”</li>
+        </ol>
+        <p class="see-gif source" data-source="see_how_to_analyze_a_shape_on_the_map"><a href="#">See example.</a></p>
+      </header>
+      <div class="img-box">
+        <div id="data-tab-play" class="play"></div>
+        <img id="data-tab-img" src="/assets/infowindow-example.png"/>
+      </div>
+    </div>
+  </div>
+</div>

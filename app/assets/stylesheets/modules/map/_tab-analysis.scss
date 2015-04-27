@@ -1,4 +1,4 @@
-.tab-analysis{
+.tab-analysis, .tab-subscription{
   nav{
     display: block;
     ul{
@@ -47,8 +47,10 @@
       }
     }
   }
-  .analysis-content{
-    .analysis-tab-content{
+  .analysis-content,
+  .subscription-content{
+    .analysis-tab-content,
+    .subscription-tab-content{
       display: none;
       padding: 15px;
       @media (min-width: 1500px){
@@ -79,7 +81,8 @@
 }
 
 //DEFAULT
-.analysis-tab-content.default{
+.analysis-tab-content.default,
+.subscription-tab-content.default{
   .arrow{
     position: relative;
     width: 100%;
@@ -98,7 +101,8 @@
 }
 
 //DRAW TAB
-.analysis-tab-content.draw-tab{
+.analysis-tab-content.draw-tab,
+.subscription-tab-content.draw-tab{
   .image{
     position: relative;
     max-width: 50%;
@@ -121,14 +125,16 @@
 }
 
 //COUNTRY TAB
-.analysis-tab-content.country-tab{
+.analysis-tab-content.country-tab,
+.subscription-tab-content.country-tab{
   .chzn-container-single{
     margin: 0 0 5px;
   }
 }
 
 //PA & CONCESSIONS TAB
-.analysis-tab-content.data-tab{
+.analysis-tab-content.data-tab,
+.subscription-tab-content.country-tab{
   .see-gif {
     padding: 5px 0;
     display: inline-block;
