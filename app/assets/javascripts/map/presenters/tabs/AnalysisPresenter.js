@@ -558,9 +558,16 @@ define([
     },
 
     setMultipolygon: function(multipolygon, geojson) {
-      this.deleteAnalysis();
+      this.deleteMultiPoligon();
       this.status.set('multipolygon', multipolygon);
       mps.publish('AnalysisTool/iso-drawn', [geojson.geometry]);
+    },
+
+    deleteMultiPoligon: function(){
+      this.view.deleteGeom({
+        overlay: this.status.get('overlay'),
+        multipolygon: this.status.get('multipolygon')
+      });
     },
 
     /**
