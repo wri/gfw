@@ -60,94 +60,7 @@ define([
     /**
      * Application subscriptions.
      */
-    _subscriptions: [{
-      'LayerNav/change': function(layerSpec) {
-        var baselayer = this.status.get('baselayer');
-        var both = this.status.get('both');
-        this._setBaselayer(layerSpec.getBaselayers());
-        if (this.status.get('baselayer') != baselayer) {
-          this._updateAnalysis();
-          this.openAnalysisTab();
-        }else{
-          if (this.status.get('both') != both) {
-            this._updateAnalysis();
-            this.openAnalysisTab();
-          }
-        }
-      }
-    }, {
-      'AnalysisTool/update-analysis': function() {
-        this._updateAnalysis();
-      }
-    }, {
-      'AnalysisResults/delete-analysis': function() {
-        this.deleteAnalysis();
-      }
-    }, {
-      'AnalysisTool/analyze-wdpaid': function(wdpaid) {
-        this.openAnalysisTab(true);
-        this.view._stopDrawing();
-        this.deleteAnalysis();
-        this._analyzeWdpai(wdpaid.wdpaid);
-      }
-    }, {
-      'AnalysisTool/analyze-concession': function(useid, layerSlug, wdpaid) {
-        if (wdpaid && wdpaid != "") {
-          wdpaid = {wdpaid : wdpaid}
-          mps.publish('AnalysisTool/analyze-wdpaid', [wdpaid]);
-          return;
-        }
-        this.openAnalysisTab(true);
-        this.view._stopDrawing();
-        this.deleteAnalysis();
-        this._analyzeConcession(useid, layerSlug);
-      }
-    }, {
-      'Timeline/date-change': function(layerSlug, date) {
-        this.status.set('date', date);
-        this.openAnalysisTab();
-        this._updateAnalysis();
-      }
-    }, {
-      'Timeline/start-playing': function() {
-        this.status.set('disableUpdating', true);
-      }
-    }, {
-      'Timeline/stop-playing': function() {
-        this.status.set('disableUpdating', false);
-        this._updateAnalysis();
-      }
-    }, {
-      'Threshold/changed': function(threshold) {
-        this.status.set('threshold', threshold);
-        this.openAnalysisTab();
-        this._updateAnalysis();
-      }
-    },{
-      'Tab/opened': function(id) {
-        if (id === 'analysis-tab') {
-          this.view.model.set('hidden',false);
-        }else{
-          if (this.view.model.get('is_drawing')) {
-            this.view._stopDrawing();
-            this.deleteAnalysis();
-            this.view.model.set('hidden',true);
-          }
-        }
-      },
-    },{
-      'Countries/changeIso': function(iso,analyze) {
-        this.status.set('dont_analyze', analyze);
-        if (!!iso.country) {
-          this.deleteAnalysis();
-          this._analyzeIso(iso)
-        }else{
-          mps.publish('LocalMode/updateIso',[iso, this.status.get('dont_analyze')]);
-          this.deleteAnalysis();
-        }
-
-      }
-    }],
+    _subscriptions: [],
 
     openAnalysisTab: function(open){
       var open = open || this.view.$el.hasClass('is-analysis');
@@ -156,36 +69,6 @@ define([
       }
     },
 
-
-    /**
-     * Handles a Place/go.
-     *
-     * @param  {Object} params Place params
-     */
-    _handlePlaceGo: function(params) {
-      this.deleteAnalysis();
-
-      //Open analysis tab
-      if ((!this.status.get('dont_analyze') && (params.iso.country && params.iso.country !== 'ALL')) || (params.analyze || params.geojson || params.wdpaid)) {
-        mps.publish('Tab/open', ['#analysis-tab-button']);
-      }
-
-      //Select analysis type by params given
-      if (params.analyze && params.name === 'map') {
-        this.view.onClickAnalysis();
-      } else if (params.iso.country && params.iso.country !== 'ALL') {
-        if (params.geojson) {
-          this._analyzeIso(params.iso);
-          this._analyzeGeojson(params.geojson);
-        }else{
-          this._analyzeIso(params.iso);
-        }
-      } else if (params.geojson) {
-        this._analyzeGeojson(params.geojson);
-      } else if (params.wdpaid) {
-        this._analyzeWdpai(params.wdpaid);
-      }
-    },
 
     /**
      * Analyzes a geojson object.
@@ -429,38 +312,18 @@ define([
      */
     _publishAnalysis: function(resource, failed) {
       this.status.set('resource', resource);
-      // this._setAnalysisBtnVisibility();
-      mps.publish('Place/update', [{go: false}]);
-      //Open tab of analysis
-      this.view.openTab(resource.type);
-
-      if (!this.status.get('baselayer') || failed) {
-        mps.publish('AnalysisService/results', [{unavailable: true}]);
-      } else {
-        mps.publish('AnalysisService/get', [resource]);
-      }
-    },
-
-    /**
-     * Updates current analysis if it's permitted.
-     */
-    _updateAnalysis: function() {
-      var resource = this.status.get('resource');
-
-      if (resource && !this.status.get('disableUpdating')) {
-        resource = this._buildResource(resource);
-        // (resource.iso) ? this.view.putMaskOnTop() : null;
-        this._publishAnalysis(resource);
-      }
+      console.log(resource);
+      // if (!this.status.get('baselayer') || failed) {
+      //   mps.publish('AnalysisService/results', [{unavailable: true}]);
+      // } else {
+      //   mps.publish('AnalysisService/get', [resource]);
+      // }
     },
 
     /**
      * Deletes the current analysis.
      */
     deleteAnalysis: function() {
-      mps.publish('AnalysisResults/Delete');
-      this.view._removeCartodblayer();
-      this.view.$el.removeClass('is-analysis');
       // Delete overlay drawn or multipolygon.
       this.view.deleteGeom({
         overlay: this.status.get('overlay'),
@@ -476,8 +339,6 @@ define([
         polygon: null,
         multipolygon: null
       });
-
-      this._setAnalysisBtnVisibility();
     },
 
     resetIsos: function(){

@@ -160,7 +160,7 @@ define([
         strokeWeight: 2,
         fillOpacity: 0,
         fillColor: '#FFF',
-        strokeColor: '#A2BC28',
+        strokeColor: '#F00',
         icon: new google.maps.MarkerImage(
           '/assets/icons/marker_exclamation.png',
           new google.maps.Size(36, 36), // size
@@ -170,7 +170,7 @@ define([
       };
 
       this.map.data.setStyle(_.bind(function(feature){
-        var strokeColor = (feature.getProperty('color')) ? feature.getProperty('color') : '#A2BC28';
+        var strokeColor = '#F00';
         return ({
           strokeWeight: 2,
           fillOpacity: 0,
