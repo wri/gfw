@@ -227,7 +227,7 @@ define([
 
     resetIsoLayers: function(){
       _.each(this.$countryLayers.find('.layer'),function(li){
-        if ($(li).hasClass('selected') && !$(li).hasClass('wrapped')) {
+        if ($(li).hasClass('selected')) {
           $(li).click();
         }
       })
