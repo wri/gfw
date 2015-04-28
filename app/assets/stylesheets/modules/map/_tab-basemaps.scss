@@ -15,6 +15,7 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, landsat;
         background: $light;
         .landsat-years{
           @include display-flex();
+          min-width: 200px;
         }
       }
       &.selected{ background: $light;}
