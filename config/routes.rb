@@ -39,6 +39,7 @@ Gfw::Application.routes.draw do
     get '/about/video' => redirect("/about")
     get '/about/gfw' => redirect("/about/about-gfw")
     get '/about/partners' => redirect("/about/the-gfw-partnership")
+    get '/partners' => redirect("/about/the-gfw-partnership")
     get '/about/users' => redirect("/about")
     get '/about/small_grants_fund' => redirect("/getinvolved/apply-to-the-small-grants-fund")
     get '/about/testers' => redirect("/about")
