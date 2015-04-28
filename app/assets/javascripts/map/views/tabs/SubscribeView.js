@@ -80,8 +80,6 @@ define([
         data.geom = this.analysisResource.geom.geometry;
       }
 
-      console.log(data);
-
       if (this.validateEmail(email)) {
         $.ajax({
           type: 'POST',
