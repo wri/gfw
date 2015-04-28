@@ -1,7 +1,7 @@
 /**
- * The AnalysisToolPresenter class for the AnalysisToolView.
+ * The SubscriptionPresenter class for the AnalysisToolView.
  *
- * @return AnalysisToolPresenter class.
+ * @return SubscriptionPresenter class.
  */
 define([
   'map/presenters/PresenterClass',
@@ -38,7 +38,7 @@ define([
     'fiber': 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from gfw_wood_fiber where cartodb_id ={0}'
   };
 
-  var AnalysisToolPresenter = PresenterClass.extend({
+  var SubscriptionPresenter = PresenterClass.extend({
 
     datasets: {
       'loss': 'umd-loss-gain',
@@ -54,159 +54,65 @@ define([
       this.view = view;
       this.status = new StatusModel();
       this._super();
-      mps.publish('Place/register', [this]);
     },
 
     /**
      * Application subscriptions.
      */
     _subscriptions: [{
-      'Place/go': function(place) {
-        this._setBaselayer(place.layerSpec.getBaselayers());
-        this.status.set('date', [place.params.begin, place.params.end]);
-        this.status.set('threshold', place.params.threshold);
-        this.status.set('dont_analyze', place.params.dont_analyze);
-        this._handlePlaceGo(place.params);
+      'Subscribe/end': function(options) {
+        this.deleteSubscription();
       }
-    }, {
-      'LayerNav/change': function(layerSpec) {
-        var baselayer = this.status.get('baselayer');
-        var both = this.status.get('both');
-        this._setBaselayer(layerSpec.getBaselayers());
-        if (this.status.get('baselayer') != baselayer) {
-          this._updateAnalysis();
-          this.openAnalysisTab();
-        }else{
-          if (this.status.get('both') != both) {
-            this._updateAnalysis();
-            this.openAnalysisTab();
-          }
-        }
-      }
-    }, {
-      'AnalysisTool/update-analysis': function() {
-        this._updateAnalysis();
-      }
-    }, {
-      'AnalysisResults/delete-analysis': function() {
-        this.deleteAnalysis();
-      }
-    }, {
-      'AnalysisTool/analyze-wdpaid': function(wdpaid) {
-        this.openAnalysisTab(true);
+    },{
+      'Subscription/analyze-wdpaid': function(wdpaid) {
+        this.openSubscriptionTab(true);
         this.view._stopDrawing();
-        this.deleteAnalysis();
-        this._analyzeWdpai(wdpaid.wdpaid);
+        this.deleteSubscription();
+        this.view.setStyle();
+        this._subscribeWdpai(wdpaid.wdpaid);
       }
     }, {
-      'AnalysisTool/analyze-concession': function(useid, layerSlug, wdpaid) {
+      'Subscription/analyze-concession': function(useid, layerSlug, wdpaid) {
         if (wdpaid && wdpaid != "") {
           wdpaid = {wdpaid : wdpaid}
-          mps.publish('AnalysisTool/analyze-wdpaid', [wdpaid]);
+          mps.publish('Subscription/analyze-wdpaid', [wdpaid]);
           return;
         }
-        this.openAnalysisTab(true);
+        this.openSubscriptionTab(true);
         this.view._stopDrawing();
-        this.deleteAnalysis();
-        this._analyzeConcession(useid, layerSlug);
-      }
-    }, {
-      'Timeline/date-change': function(layerSlug, date) {
-        this.status.set('date', date);
-        this.openAnalysisTab();
-        this._updateAnalysis();
-      }
-    }, {
-      'Timeline/start-playing': function() {
-        this.status.set('disableUpdating', true);
-      }
-    }, {
-      'Timeline/stop-playing': function() {
-        this.status.set('disableUpdating', false);
-        this._updateAnalysis();
-      }
-    }, {
-      'Threshold/changed': function(threshold) {
-        this.status.set('threshold', threshold);
-        this.openAnalysisTab();
-        this._updateAnalysis();
+        this.deleteSubscription();
+        this.view.setStyle();
+        this._subscribeConcession(useid, layerSlug);
       }
     },{
       'Tab/opened': function(id) {
-        if (id === 'analysis-tab') {
+        if (id === 'subscription-tab') {
           this.view.model.set('hidden',false);
         }else{
+          this.view.model.set('hidden',true);
           if (this.view.model.get('is_drawing')) {
             this.view._stopDrawing();
-            this.deleteAnalysis();
-            this.view.model.set('hidden',true);
+            mps.publish('Subscribe/hide');
+          }else{
+            mps.publish('Subscribe/hide');
           }
         }
       },
-    },{
-      'Countries/changeIso': function(iso,analyze) {
-        this.status.set('dont_analyze', analyze);
-        if (!!iso.country) {
-          this.deleteAnalysis();
-          this._analyzeIso(iso)
-        }else{
-          mps.publish('LocalMode/updateIso',[iso, this.status.get('dont_analyze')]);
-          this.deleteAnalysis();
-        }
-
-      }
-    },{
-      'Subscribe/end' : function(){
-        this.view.setStyle();
-      }
     }],
 
-    openAnalysisTab: function(open){
-      var open = open || this.view.$el.hasClass('is-analysis');
-      if (open) {
-        mps.publish('Tab/open', ['#analysis-tab-button']);
-      }
+    openSubscriptionTab: function(open){
+      mps.publish('Tab/open', ['#subscription-tab-button']);
     },
 
-
-    /**
-     * Handles a Place/go.
-     *
-     * @param  {Object} params Place params
-     */
-    _handlePlaceGo: function(params) {
-      this.deleteAnalysis();
-
-      //Open analysis tab
-      if ((!this.status.get('dont_analyze') && (params.iso.country && params.iso.country !== 'ALL')) || (params.analyze || params.geojson || params.wdpaid)) {
-        mps.publish('Tab/open', ['#analysis-tab-button']);
-      }
-
-      //Select analysis type by params given
-      if (params.analyze && params.name === 'map') {
-        this.view.onClickAnalysis();
-      } else if (params.iso.country && params.iso.country !== 'ALL') {
-        if (params.geojson) {
-          this._analyzeIso(params.iso);
-          this._analyzeGeojson(params.geojson);
-        }else{
-          this._analyzeIso(params.iso);
-        }
-      } else if (params.geojson) {
-        this._analyzeGeojson(params.geojson);
-      } else if (params.wdpaid) {
-        this._analyzeWdpai(params.wdpaid);
-      }
-    },
 
     /**
      * Analyzes a geojson object.
      *
      * @param  {[type]} geojson [description]
      */
-    _analyzeGeojson: function(geojson, options) {
+    _subscribeGeojson: function(geojson, options) {
       options = options || {draw: true};
-
+      this.view.setStyle();
       // Build resource
       var resource = {
         geojson: JSON.stringify(geojson),
@@ -222,8 +128,8 @@ define([
       }
 
       // Publish analysis
-      ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Polygon: true');
-      this._publishAnalysis(resource);
+      ga('send', 'event', 'Map', 'Subscription', 'Layer: ' + resource.dataset + ', Polygon: true');
+      this._publishSubscribe(resource);
     },
 
     /**
@@ -231,10 +137,10 @@ define([
      *
      * @param  {Object} iso {country: {string}, id: {integer}}
      */
-    _analyzeIso: function(iso) {
-      this.deleteAnalysis();
+    _subscribeIso: function(iso) {
+      this.deleteSubscription();
+      this.view.setStyle();
       this.view.setSelects(iso, this.status.get('dont_analyze'));
-      mps.publish('LocalMode/updateIso', [iso, this.status.get('dont_analyze')]);
 
       // Build resource
       var resource = {
@@ -245,7 +151,7 @@ define([
         resource.id1 = iso.region;
       }
       resource = this._buildResource(resource);
-      ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Iso: ' + resource.iso.country);
+      ga('send', 'event', 'Map', 'Subscription', 'Layer: ' + resource.dataset + ', Iso: ' + resource.iso.country);
 
       if (!iso.region) {
         // Get geojson/fit bounds/draw geojson/publish analysis.
@@ -258,56 +164,40 @@ define([
             objects);
 
           this._geojsonFitBounds(geojson);
-          // this.view.drawMaskCountry(geojson,iso.country);
+          this.view.drawCountrypolygon(geojson,'#F00');
 
-          if (!this.status.get('dont_analyze')) {
-            // this.view.drawMaskCountry(geojson,iso.country);
-            this.view.drawCountrypolygon(geojson,'#A2BC28');
-            resource.geom = geojson;
-            this.view._removeCartodblayer();
-            this._publishAnalysis(resource);
-          }else{
-            // this.view.drawCountrypolygon(geojson,'#3182bd');
-            mps.publish('Spinner/stop');
-          }
+          // Show subscription dialog
+          resource.geom = geojson;
+          this._publishSubscribe(resource);
 
 
         },this));
       } else {
         regionService.execute(resource, _.bind(function(results) {
           var geojson = results.features[0];
-
           this._geojsonFitBounds(geojson);
-          // this.view.drawMaskArea(geojson,iso.country,iso.region);
+          this.view.drawCountrypolygon(geojson,'#F00');
 
-          if (!this.status.get('dont_analyze')) {
-            // this.view.drawMaskArea(geojson,iso.country,iso.region);
-            this.view.drawCountrypolygon(geojson,'#A2BC28');
-            resource.geom = geojson;
-            this.view._removeCartodblayer();
-            this._publishAnalysis(resource);
-          }else{
-            // this.view.drawCountrypolygon(geojson,'#3182bd');
-            mps.publish('Spinner/stop');
-          }
+          // Show subscription dialog
+          resource.geom = geojson;
+          this._publishSubscribe(resource);
 
         },this));
       }
     },
 
-    setAnalyzeIso: function(iso){
-      this.status.set('dont_analyze', null);
-      mps.publish('Analysis/analyze-iso', [iso, this.status.get('dont_analyze')]);
+    setSubscriptionIso: function(iso){
+      this._subscribeIso(iso);
     },
 
-    _analyzeWdpai: function(wdpaid) {
+    _subscribeWdpai: function(wdpaid) {
       // Build resource
       var resource = this._buildResource({
         wdpaid: wdpaid,
         type: 'other'
       });
 
-      ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Wdpaid: ' + resource.wdpaid);
+      ga('send', 'event', 'Map', 'Subscription', 'Layer: ' + resource.dataset + ', Wdpaid: ' + resource.wdpaid);
       // Get geojson/fit bounds/draw geojson/publish analysis
       var url = 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from protected_areas where wdpaid =' + wdpaid;
       $.getJSON(url, _.bind(function(data) {
@@ -318,15 +208,13 @@ define([
             type: 'Feature'
           };
 
-          mps.publish('AnalysisResults/totalArea', [{hectares: geojsonUtilsHelper.getHectares(geojson.geometry)}]);
-
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
           resource.geom = geojson;
-          this._publishAnalysis(resource);
+          this._publishSubscribe(resource);
 
         } else {
-          this._publishAnalysis(resource, true);
+          this._publishSubscribe(resource, true);
         }
       }, this));
     },
@@ -336,14 +224,14 @@ define([
      *
      * @param  {integer} useid Carto db id
      */
-    _analyzeConcession: function(useid, layerSlug) {
+    _subscribeConcession: function(useid, layerSlug) {
       var resource = this._buildResource({
         useid: useid,
         use: layerSlug,
         type: 'other'
       });
 
-      ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', ConcessionLayer: ' + resource.use + ', ConcessionId: ' + resource.useid);
+      ga('send', 'event', 'Map', 'Subscription', 'Layer: ' + resource.dataset + ', ConcessionLayer: ' + resource.use + ', ConcessionId: ' + resource.useid);
 
       var url = concessionsSql[layerSlug].format(useid);
 
@@ -355,15 +243,13 @@ define([
             type: 'Feature'
           };
 
-          mps.publish('AnalysisResults/totalArea', [{hectares: geojsonUtilsHelper.getHectares(geojson.geometry)}]);
-
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
           resource.geom = geojson;
-          this._publishAnalysis(resource);
+          this._publishSubscribe(resource);
 
         } else {
-          this._publishAnalysis(resource, true);
+          this._publishSubscribe(resource, true);
         }
       }, this));
     },
@@ -378,7 +264,7 @@ define([
       var geojson = geojsonUtilsHelper.pathToGeojson(paths);
 
       this.view.setEditable(overlay, false);
-      this._analyzeGeojson(geojson, {draw: false});
+      this._subscribeGeojson(geojson, {draw: false});
     },
 
     /**
@@ -443,40 +329,20 @@ define([
      *
      * @param  {Object} resource The analysis resource
      */
-    _publishAnalysis: function(resource, failed) {
+    _publishSubscribe: function(resource, failed) {
       this.status.set('resource', resource);
-      // this._setAnalysisBtnVisibility();
-      mps.publish('Place/update', [{go: false}]);
-      //Open tab of analysis
-      this.view.openTab(resource.type);
+      var options = {
+        analysisResource: this.status.get('resource')
+      };
 
-      if (!this.status.get('baselayer') || failed) {
-        mps.publish('AnalysisService/results', [{unavailable: true}]);
-      } else {
-        mps.publish('AnalysisService/get', [resource]);
-      }
-    },
-
-    /**
-     * Updates current analysis if it's permitted.
-     */
-    _updateAnalysis: function() {
-      var resource = this.status.get('resource');
-
-      if (resource && !this.status.get('disableUpdating')) {
-        resource = this._buildResource(resource);
-        // (resource.iso) ? this.view.putMaskOnTop() : null;
-        this._publishAnalysis(resource);
-      }
+      mps.publish('Spinner/stop');
+      mps.publish('Subscribe/show', [options]);
     },
 
     /**
      * Deletes the current analysis.
      */
-    deleteAnalysis: function() {
-      mps.publish('AnalysisResults/Delete');
-      this.view._removeCartodblayer();
-      this.view.$el.removeClass('is-analysis');
+    deleteSubscription: function() {
       // Delete overlay drawn or multipolygon.
       this.view.deleteGeom({
         overlay: this.status.get('overlay'),
@@ -492,36 +358,10 @@ define([
         polygon: null,
         multipolygon: null
       });
-
-      this._setAnalysisBtnVisibility();
     },
 
     resetIsos: function(){
       mps.publish('LocalMode/updateIso', [{country:null, region:null}])
-    },
-
-    /**
-     * Set the status.baselayer from layerSpec.
-     *
-     * @param {Object} baselayers Current active baselayers
-     */
-    _setBaselayer: function(baselayers) {
-      var baselayer;
-      if (baselayers['loss']) {
-        baselayer = baselayers['loss'];
-        this.status.set('both', (baselayers['forestgain']) ? true : false);
-      }else{
-        baselayer = baselayers[_.first(_.intersection(
-          _.pluck(baselayers, 'slug'),
-          _.keys(this.datasets)))];
-      }
-      $('.cartodb-popup').toggleClass('dont-analyze', !!!baselayer);
-      this.status.set('baselayer', baselayer);
-      this._setAnalysisBtnVisibility();
-    },
-
-    _setAnalysisBtnVisibility: function() {
-      this.view.toggleBtn(!!!this.status.get('baselayer'));
     },
 
     /**
@@ -608,6 +448,6 @@ define([
 
   });
 
-  return AnalysisToolPresenter;
+  return SubscriptionPresenter;
 
 });
