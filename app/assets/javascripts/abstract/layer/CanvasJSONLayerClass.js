@@ -150,7 +150,7 @@ define([
         if (cells.deforestation[index] - cells.deforestation[index0] > 0) {
           ctx.fillStyle = '#F69';
           if (month > 85 && cells.month[i] > 180) {
-            ctx.fillStyle = '#0000FF';
+            ctx.fillStyle = '#F10022';
           }
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
