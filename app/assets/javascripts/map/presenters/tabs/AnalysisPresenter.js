@@ -155,6 +155,10 @@ define([
         }
 
       }
+    },{
+      'Subscribe/end' : function(){
+        this.view.setStyle();
+      }
     }],
 
     openAnalysisTab: function(open){
@@ -259,6 +263,7 @@ define([
           if (!this.status.get('dont_analyze')) {
             // this.view.drawMaskCountry(geojson,iso.country);
             this.view.drawCountrypolygon(geojson,'#A2BC28');
+            resource.geom = geojson;
             this.view._removeCartodblayer();
             this._publishAnalysis(resource);
           }else{
@@ -278,6 +283,7 @@ define([
           if (!this.status.get('dont_analyze')) {
             // this.view.drawMaskArea(geojson,iso.country,iso.region);
             this.view.drawCountrypolygon(geojson,'#A2BC28');
+            resource.geom = geojson;
             this.view._removeCartodblayer();
             this._publishAnalysis(resource);
           }else{
@@ -316,6 +322,7 @@ define([
 
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
+          resource.geom = geojson;
           this._publishAnalysis(resource);
 
         } else {
@@ -352,6 +359,7 @@ define([
 
           this._geojsonFitBounds(geojson);
           this.view.drawMultipolygon(geojson);
+          resource.geom = geojson;
           this._publishAnalysis(resource);
 
         } else {

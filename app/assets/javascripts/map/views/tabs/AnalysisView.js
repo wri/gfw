@@ -351,6 +351,7 @@ define([
      * listener.
      */
     _startDrawingManager: function() {
+      this.presenter.deleteMultiPoligon();
       this.model.set('is_drawing', true);
       this.drawingManager = new google.maps.drawing.DrawingManager({
         drawingControl: false,
