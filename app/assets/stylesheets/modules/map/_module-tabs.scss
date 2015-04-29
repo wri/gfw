@@ -100,6 +100,10 @@ $w-control: 44px;
         font-size: 21px;
         padding: 0 0 15px;
         text-align: center;
+        span{
+          color: $cGreen;
+          &.source{ cursor: pointer;}
+        }
       }
       p{
         button{
