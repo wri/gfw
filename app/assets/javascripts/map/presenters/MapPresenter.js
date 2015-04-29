@@ -189,7 +189,6 @@ define([
      */
      _publishReferral: function (referral) {
       ga('send', 'event', 'Map', 'Referral', referral);
-      debugger
      }
 
   });
