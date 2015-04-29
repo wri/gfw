@@ -39,7 +39,7 @@ define([
       'click #subscription-country-button' : 'subscriptionCountry',
 
       //other
-      'click #data-tab-play' : 'onGifPlay'
+      'click #data-tab-play-s' : 'onGifPlay'
     },
 
     initialize: function(map) {
@@ -64,8 +64,8 @@ define([
       this.$countryButton = $('#subscription-country-button');
 
       //other
-      this.$img = $('#data-tab-img');
-      this.$play = $('#data-tab-play');
+      this.$img = $('#data-tab-img-s');
+      this.$play = $('#data-tab-play-s');
 
       //tabs
       this.$tabs = $('#subscription-nav li');
@@ -93,7 +93,7 @@ define([
 
       //other
       this.png = '/assets/infowindow-example.png';
-      this.gif = this.loadImg('/assets/infowindow-example.gif');
+      this.gif = this.loadImg('/assets/infowindow-example2.gif');
     },
 
     // navigate between tabs
