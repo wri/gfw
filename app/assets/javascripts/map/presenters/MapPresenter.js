@@ -90,7 +90,7 @@ define([
       if (place.params.begin && place.params.end) {
         layerOptions.currentDate = [place.params.begin, place.params.end];
       }
-      if (!!place.params.referal) this._publishReferal(place.params.referal);
+      if (!!place.params.referral) this._publishReferral(place.params.referral);
       this._updateStatusModel(place.params);
       this._setLayers(place.layerSpec.getLayers(), layerOptions);
     },
@@ -183,12 +183,12 @@ define([
     },
 
     /**
-     * Throw a Google Analytics event with the referal who points to the map
+     * Throw a Google Analytics event with the referral who points to the map
      *
-     * @param {string} name of the referal
+     * @param {string} name of the referral
      */
-     _publishReferal: function (referal) {
-      ga('send', 'event', 'Map', 'Referal', referal);
+     _publishReferral: function (referral) {
+      ga('send', 'event', 'Map', 'Referral', referral);
       debugger
      }
 
