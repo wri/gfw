@@ -28,9 +28,6 @@ define([
     /**
      * Map layer slugs with subscription url topics.
      */
-    topics: {
-      'forma': 'updates/forma'
-    },
 
     events: {
       'click .close-icon' : 'hide',
@@ -54,7 +51,6 @@ define([
 
     show: function(options){
       this.analysisResource = options.analysisResource;
-      this.layer = options.layer;
       this.$el.addClass('active');
       this.$content.addClass('active');
     },
@@ -63,12 +59,13 @@ define([
       this.$el.removeClass('active');
       this.$content.removeClass('active');
       this.nextStep(0);
+      this.presenter.hide();
     },
 
 
     subscribeAlerts: function() {
       var email = this.$el.find('#areaEmail').val();
-      var topic = this.topics[this.layer.slug];
+      var topic = 'Subscribe to alerts';
 
       var data = {
         topic: topic,
@@ -77,11 +74,12 @@ define([
 
       ga('send', 'event', 'Map', 'Subscribe', 'Layer: ' + data.topic + ', Email: ' + data.email);
 
-      if (this.analysisResource.iso) {
-        data.iso = this.analysisResource.iso;
-      } else if (this.analysisResource.geojson) {
+      if (this.analysisResource.type === 'geojson') {
         data.geom = JSON.parse(this.analysisResource.geojson);
+      }else{
+        data.geom = this.analysisResource.geom.geometry;
       }
+
       if (this.validateEmail(email)) {
         $.ajax({
           type: 'POST',
@@ -105,6 +103,7 @@ define([
     },
 
     _successSubscription: function(data, textStatus, jqXHR) {
+      this.presenter.subscribeEnd();
       this.nextStep(1);
     },
 

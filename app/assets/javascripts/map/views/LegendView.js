@@ -66,7 +66,8 @@ define([
       colombia_forest_change: Handlebars.compile(colombiaForestChangeTPL),
       tigers: Handlebars.compile(tigersTPL),
       dam_hotspots: Handlebars.compile(dam_hotspotsTPL),
-      us_land_cover: Handlebars.compile(us_land_coverTPL)
+      us_land_cover: Handlebars.compile(us_land_coverTPL),
+      us_land_cover_change : Handlebars.compile(us_land_coverTPL)
 
     },
 

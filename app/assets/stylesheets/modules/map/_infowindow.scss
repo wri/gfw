@@ -87,8 +87,10 @@
         z-index: 5;
         background: $white;
         border-top: 1px solid $border;
+        @include display-flex();
+        @include justify-content(space-between);
         .btn{
-          width: 100%;
+          width: 47.5%;
           margin: 15px 0;
         }
       }
