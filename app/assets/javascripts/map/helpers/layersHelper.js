@@ -79,6 +79,7 @@ define([
   'map/views/layers/ColombiaForestChangeLayer',
   'map/views/layers/UsaConservationEasementsLayer',
   'map/views/layers/UsaLandCoverLayer',
+  'map/views/layers/UsaLandCoverChangeLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -166,6 +167,7 @@ define([
   ColombiaForestChangeLayer,
   UsaConservationEasementsLayer,
   UsaLandCoverLayer,
+  UsaLandCoverChangeLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -413,6 +415,10 @@ define([
     us_land_cover: {
       view: UsaLandCoverLayer
     },
+    us_land_cover_change: {
+      view: UsaLandCoverChangeLayer
+    },
+    
     nothing: {
     }
   };
