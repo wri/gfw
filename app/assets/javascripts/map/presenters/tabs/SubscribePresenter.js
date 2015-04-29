@@ -31,6 +31,14 @@ define([
       }
     }],
 
+    subscribeEnd: function(){
+      mps.publish('Subscribe/end');
+    },
+
+    hide: function(){
+      mps.publish('Subscribe/end');
+    },
+
     notificate: function(id){
       mps.publish('Notification/open', [id]);
     },

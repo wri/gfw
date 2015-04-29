@@ -1,52 +1,52 @@
 /**
- * The AnalysisView selector view.
+ * The SubscriptionView selector view.
  *
- * @return AnalysisView instance (extends Backbone.View).
+ * @return SubscriptionView instance (extends Backbone.View).
  */
 define([
   'underscore',
   'handlebars',
   'amplify',
   'chosen',
-  'map/presenters/tabs/AnalysisPresenter',
-  'text!map/templates/tabs/analysis.handlebars'
+  'map/presenters/tabs/SubscriptionPresenter',
+  'text!map/templates/tabs/subscription.handlebars'
 ], function(_, Handlebars, amplify, chosen, Presenter, tpl) {
 
   'use strict';
 
-  var AnalysisModel = Backbone.Model.extend({
+  var SubscriptionModel = Backbone.Model.extend({
     hidden: true
   });
 
 
-  var AnalysisView = Backbone.View.extend({
+  var SubscriptionView = Backbone.View.extend({
 
-    el: '#analysis-tab',
+    el: '#subscription-tab',
 
     template: Handlebars.compile(tpl),
 
     events: {
       //tabs
-      'click #analysis-nav li' : 'toggleTabs',
+      'click #subscription-nav li' : 'toggleTabs',
 
       //draw
-      'click #start-analysis' : '_onClickAnalysis',
-      'click #done-analysis' : '_onClickDone',
+      'click #start-subscription' : '_onClickAnalysis',
+      'click #done-subscription' : '_onClickDone',
 
       //countries
-      'change #analysis-country-select' : 'changeIso',
-      'change #analysis-region-select' : 'changeArea',
-      'click #analysis-country-button' : 'analysisCountry',
+      'change #subscription-country-select' : 'changeIso',
+      'change #subscription-region-select' : 'changeArea',
+      'click #subscription-country-button' : 'subscriptionCountry',
 
       //other
       'click #data-tab-play' : 'onGifPlay'
     },
 
     initialize: function(map) {
-      _.bindAll(this, '_onOverlayComplete','_removeCartodblayer');
+      _.bindAll(this, '_onOverlayComplete');
       this.map = map;
       this.presenter = new Presenter(this);
-      this.model = new AnalysisModel();
+      this.model = new SubscriptionModel();
       this.render();
       this.setListeners();
     },
@@ -54,22 +54,22 @@ define([
     cacheVars: function(){
       this.$button = $('#'+this.$el.attr('id')+'-button');
       //draw
-      this.$start = $('#start-analysis');
-      this.$done = $('#done-analysis');
+      this.$start = $('#start-subscription');
+      this.$done = $('#done-subscription');
 
       //country
       this.$selects = this.$el.find('.chosen-select');
-      this.$countrySelect = $('#analysis-country-select');
-      this.$regionSelect = $('#analysis-region-select');
-      this.$countryButton = $('#analysis-country-button');
+      this.$countrySelect = $('#subscription-country-select');
+      this.$regionSelect = $('#subscription-region-select');
+      this.$countryButton = $('#subscription-country-button');
 
       //other
       this.$img = $('#data-tab-img');
       this.$play = $('#data-tab-play');
 
       //tabs
-      this.$tabs = $('#analysis-nav li');
-      this.$tabsContent = $('.analysis-tab-content');
+      this.$tabs = $('#subscription-nav li');
+      this.$tabsContent = $('.subscription-tab-content');
 
       //delete
       this.timeout = null;
@@ -100,7 +100,7 @@ define([
     toggleTabs: function(e){
 
       if (!$(e.currentTarget).hasClass('disabled')) {
-        var tab = $(e.currentTarget).data('analysis');
+        var tab = $(e.currentTarget).data('subscription');
 
         // Current tab
         this.$tabs.removeClass('active');
@@ -113,7 +113,7 @@ define([
         // prevent changes between tabs without reset drawing
         if (this.model.get('is_drawing')) {
           this._stopDrawing();
-          this.presenter.deleteAnalysis();
+          this.presenter.deleteSubscription();
         }
       }else{
         this.$deletebtn = $('#analysis-delete');
@@ -160,7 +160,7 @@ define([
         strokeWeight: 2,
         fillOpacity: 0,
         fillColor: '#FFF',
-        strokeColor: '#A2BC28',
+        strokeColor: '#F00',
         icon: new google.maps.MarkerImage(
           '/assets/icons/marker_exclamation.png',
           new google.maps.Size(36, 36), // size
@@ -170,7 +170,7 @@ define([
       };
 
       this.map.data.setStyle(_.bind(function(feature){
-        var strokeColor = (feature.getProperty('color')) ? feature.getProperty('color') : '#A2BC28';
+        var strokeColor = (feature.getProperty('color')) ? feature.getProperty('color') : '#F00';
         return ({
           strokeWeight: 2,
           fillOpacity: 0,
@@ -269,7 +269,7 @@ define([
       if(this.iso) {
         this.getSubCountries()
       }else{
-        this.presenter.deleteAnalysis();
+        this.presenter.deleteSubscription();
         this.presenter.resetIsos();
         this.$regionSelect.val(null).attr('disabled', true).trigger("liszt:updated");
       }
@@ -296,14 +296,14 @@ define([
       }
     },
 
-    analysisCountry: function(){
+    subscriptionCountry: function(){
       if (this.iso && !this.$countryButton.hasClass('disabled')) {
         var iso = {
           country: this.iso,
           region: this.area
         }
         this.$countryButton.addClass('disabled');
-        this.presenter.setAnalyzeIso(iso);
+        this.presenter.setSubscriptionIso(iso);
       }
     },
 
@@ -330,7 +330,7 @@ define([
       }else{
         ga('send', 'event', 'Map', 'Analysis', 'Click: cancel');
         this._stopDrawing();
-        this.presenter.deleteAnalysis();
+        this.presenter.deleteSubscription();
       }
     },
 
@@ -352,6 +352,7 @@ define([
      */
     _startDrawingManager: function() {
       this.presenter.deleteMultiPoligon();
+      this.setSelects({country: null, region: null});
       this.model.set('is_drawing', true);
       this.drawingManager = new google.maps.drawing.DrawingManager({
         drawingControl: false,
@@ -420,7 +421,6 @@ define([
         this.map.data.remove(resource.multipolygon);
       }
 
-      this._removeCartodblayer();
       this.$tabs.removeClass('disabled');
     },
 
@@ -456,145 +456,6 @@ define([
       var multipolygon = this.map.data.addGeoJson(geojson)[0];
       this.presenter.setMultipolygon(multipolygon, geojson);
     },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // COUNTRY MASK
-    drawMaskCountry: function(geojson, iso){
-      this.mask = cartodb.createLayer(this.map, {
-        user_name: 'wri-01',
-        type: 'cartodb',
-        cartodb_logo: false,
-        name: 'mask',
-        sublayers: [{
-          sql: "SELECT * FROM country_mask",
-          cartocss: "\
-            #country_mask {\
-              polygon-fill: #373737;\
-              polygon-opacity: 0.15;\
-              line-color: #333;\
-              line-width: 0;\
-              line-opacity: 0;\
-            }\
-            #country_mask[code='" + iso + "'] {\
-              polygon-opacity: 0;\
-              line-color: #97Bd3d;\
-              line-width: 1;\
-              line-opacity: 0;\
-            }"
-        }]
-      });
-      // this.mask.addTo(this.map, 1000)
-      this.mask.done(_.bind(this._cartodbLayerDone, this ));
-    },
-
-    // COUNTRY MASK
-    // If we want to be more accurate:
-    // - Change the query table -> gadm2_countries
-    // - Cartocss #country_mask -> #gadm2_countries; code = -> iso= ;
-
-    drawMaskArea: function(geojson, iso, region){
-      this.mask = cartodb.createLayer(this.map, {
-        user_name: 'wri-01',
-        type: 'cartodb',
-        cartodb_logo: false,
-        name: 'mask',
-        sublayers: [{
-          sql: "SELECT * FROM country_mask",
-          cartocss: "\
-            #country_mask {\
-              polygon-fill: #373737;\
-              polygon-opacity: 0.15;\
-              line-color: #333;\
-              line-width: 0;\
-              line-opacity: 0;\
-            }\
-            #country_mask[code='" + iso + "'] {\
-              polygon-opacity: 0;\
-              line-color: #333;\
-              line-width: 1;\
-              line-opacity: 1;\
-            }"
-        }, {
-          sql: "SELECT * FROM gadm_1_all WHERE iso LIKE '" + iso +"' ",
-          cartocss: "\
-            #gadm_1_all {\
-              polygon-fill: #373737;\
-              polygon-opacity: 0.15;\
-              line-color: #333;\
-              line-width: 0;\
-              line-opacity: 0;\
-              [id_1=" + region + "]{\
-                polygon-opacity: 0;\
-              }\
-              ::active[id_1=" + region + "] {\
-                polygon-opacity: 0;\
-                line-color: #73707D;\
-                line-width: 1;\
-                line-opacity: 1;\
-              }\
-            }"
-        }]
-      })
-      // this.mask.addTo(this.map, 1000)
-      this.mask.done(_.bind(this._cartodbLayerDone, this ));
-    },
-
-
-    _removeCartodblayer: function() {
-      this.removeLayer();
-    },
-
-    _cartodbLayerDone: function(layer) {
-      this._removeCartodblayer();
-      this.cartodbLayer = layer;
-      this.putMaskOnTop();
-    },
-
-    putMaskOnTop: function(){
-      var overlaysLength = this.map.overlayMapTypes.getLength();
-      this.map.overlayMapTypes.insertAt(overlaysLength, this.cartodbLayer);
-    },
-
-    _getOverlayIndex: function(who) {
-      var overlaysLength = this.map.overlayMapTypes.getLength();
-      if (overlaysLength > 0) {
-        for (var i = 0; i< overlaysLength; i++) {
-          var layer = this.map.overlayMapTypes.getAt(i);
-          if (layer.name === who) {
-            return i;
-          }
-        }
-      }
-      return -1;
-    },
-
-    removeLayer: function() {
-      // var overlayIndex = this._getOverlayIndex('mask');
-      // if(overlayIndex > -1) {
-      //   this.map.overlayMapTypes.removeAt(overlayIndex);
-      // }
-    },
-
-
-
-
-
-
 
 
 
@@ -645,6 +506,6 @@ define([
 
 
   });
-  return AnalysisView;
+  return SubscriptionView;
 
 });

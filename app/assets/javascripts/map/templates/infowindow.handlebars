@@ -15,14 +15,17 @@
     <div id="cartodb-popup-fixed" class="cartodb-popup-fixed">
       {{#if content.data.analysis}}
         <a style="cursor:pointer;" id="analyzeBtn" class="analyze-concession btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid= "{{content.data.id}}">analyze</a>
+        {{!-- <a style="cursor:pointer;" id="subscriptionBtn" class="subscription-concession btn green uppercase" data-layer="{{content.data.id}}" data-useid="{{content.data.cartodb_id}}" data-use="{{content.data.tablename}}" data-wdpaid= "{{content.data.id}}">subscribe</a> --}}
       {{/if}}
     </div>
     <div class="cartodb-popup-content">
       <div class="cartodb-popup-content-inside">
         {{#if content.data.project_ur}}
         <h2><a href="{{content.data.project_ur}}" target="_blank">{{content.data.project_name}}</a></h2>
+        <h2><a href="{{content.data.project_ur}}" target="_blank">{{content.data.project_na}}</a></h2>
         {{else}}
         <h2>{{content.data.project_name}}</h2>
+        <h2>{{content.data.project_na}}</h2>
         {{/if}}
         {{#unless content.data.image}}
           {{#if content.data.name}}
@@ -97,7 +100,7 @@
           <p>{{content.data.nat_origin}}</p>
         {{/if}}
         {{#if content.data.estimated_}}
-          <h4>Estimated Annual Carbon Emissions Reductions:</h4>
+          <h4>Estimated Annual Carbon Emission Reducction (tons of CO2 equivalent):</h4>
           <p>{{content.data.estimated_}}</p>
         {{/if}}
         {{#if content.data.additional}}

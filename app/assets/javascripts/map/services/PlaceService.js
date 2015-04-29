@@ -179,8 +179,8 @@ define([
       p.geojson = p.geojson ? JSON.parse(decodeURIComponent(p.geojson)) : null;
       p.wdpaid = p.wdpaid ? _.toNumber(p.wdpaid) : null;
       p.threshold = p.threshold ? _.toNumber(p.threshold) : null;
-      p.subscribe_alerts = (p.subscribe_alerts == 'subscribe') ? true : null;
-
+      p.subscribe_alerts = (p.subscribe_alerts === 'subscribe') ? true : null;
+      p.referral = p.referral;
       return p;
     },
 

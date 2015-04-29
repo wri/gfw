@@ -110,7 +110,7 @@ define([
       // se contains the deforestation for each entry in sd
       // take se and sd as a matrix [se|sd]
       var sql = _.str.sprintf(
-        'SELECT x, y, sd, se FROM %(tableName)s WHERE z = %(z)s  AND x >= %(cx)s AND x < %(cx1)s AND y >= %(cy)s AND y < %(cy1)s', {
+        'SELECT cartodb_id, x, y, sd, se FROM %(tableName)s WHERE z = %(z)s  AND x >= %(cx)s AND x < %(cx1)s AND y >= %(cy)s AND y < %(cy1)s', {
           tableName: this.layer.table_name,
           cx: (x * 256) >> zoom_diff,
           cx1: ((x + 1) * 256) >> zoom_diff,
@@ -123,23 +123,17 @@ define([
     },
 
     _render: function(tile) {
-      var startMonth = this.startMonth || 0;
-      var endMonth = this.endMonth || -BASE_MONTH + MAX_MONTHS;
-
-      var month = endMonth >> 0;
-      var month_start = startMonth >> 0;
+      var month = this.endMonth || -BASE_MONTH + MAX_MONTHS;
+      var month_start = this.startMonth || 0;
       var w = tile.canvas.width;
       var ctx = tile.ctx;
       var cells = tile.cells;
-
       if (!cells || cells.length === 0) {
         return;
       }
 
       // clear canvas
       tile.canvas.width = w;
-      ctx.fillStyle = '#F69';
-
       var xc = cells.xcoords;
       var yc = cells.ycoords;
 
@@ -147,35 +141,42 @@ define([
       var len = cells.length;
       var pixel_size = cells.size;
       var index, index0, mul;
+      var previous = [];
       for (var i = 0; i < len; ++i) {
         mul = MAX_MONTHS * i;
-        index = mul + month;
+        index  = mul + month;
         index0 = mul + month_start;
         // set pixel by hand faster than doing fill rect (below)
         if (cells.deforestation[index] - cells.deforestation[index0] > 0) {
+          ctx.fillStyle = '#F69';
+          // if (month > 85 && cells.month[i] > 180) {
+          //   ctx.fillStyle = '#F10022';
+          // }
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
       }
     },
 
     preCacheMonths: function(rows, coord, zoom, zoom_diff) {
-      var row;
-      var xcoords;
-      var ycoords;
-      var deforestation;
+      var row,
+          xcoords,
+          ycoords,
+          deforestation,
+          month;
 
       if (typeof(ArrayBuffer) !== 'undefined') {
-        xcoords = new Uint8Array(new ArrayBuffer(rows.length));
-        ycoords = new Uint8Array(new ArrayBuffer(rows.length));
-        deforestation = new Uint8Array(new ArrayBuffer(rows.length *
-          MAX_MONTHS)); // 256 months
+        xcoords       = new Uint8Array(new ArrayBuffer(rows.length));
+        ycoords       = new Uint8Array(new ArrayBuffer(rows.length));
+        // month         = new Uint8Array(new ArrayBuffer(rows.length));
+        deforestation = new Uint8Array(new ArrayBuffer(rows.length * MAX_MONTHS)); // 256 months
       } else {
         // fallback
         xcoords = [];
         ycoords = [];
         deforestation = [];
+        // month = [];
         // array buffer set by default to 0
-        // fucking javascript arrays not
+        // fucking javascript arrays are not
         for (var r = 0; r < rows.length * MAX_MONTHS; ++r) {
           deforestation[r] = 0;
         }
@@ -191,11 +192,14 @@ define([
         var base_idx = i * MAX_MONTHS;
 
         if (row.sd !== null) {
-          for (var b = 0; b < row.sd.length; ++b) {
-            deforestation[base_idx + row.sd[b] - BASE_MONTH] = row.se[b];
+          for (var j = 0; j < row.sd.length; ++j) {
+            var base = base_idx + row.sd[j] - BASE_MONTH;
+            deforestation[base] = row.se[j];
+            // month[i] = row.sd[j];
           }
         }
 
+        // add to the deforestation array each previous value, thus we have the whole picture at the end
         for (var j = 1; j < MAX_MONTHS; ++j) {
           deforestation[base_idx + j] += deforestation[base_idx + j - 1];
         }
@@ -206,6 +210,7 @@ define([
         xcoords: xcoords,
         ycoords: ycoords,
         deforestation: deforestation,
+        // month : month,
         size: 1 << zoom_diff
       };
     },
