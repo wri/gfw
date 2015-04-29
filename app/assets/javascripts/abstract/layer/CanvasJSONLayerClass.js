@@ -149,9 +149,9 @@ define([
         // set pixel by hand faster than doing fill rect (below)
         if (cells.deforestation[index] - cells.deforestation[index0] > 0) {
           ctx.fillStyle = '#F69';
-          if (month > 85 && cells.month[i] > 180) {
-            ctx.fillStyle = '#F10022';
-          }
+          // if (month > 85 && cells.month[i] > 180) {
+          //   ctx.fillStyle = '#F10022';
+          // }
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
       }
@@ -167,14 +167,14 @@ define([
       if (typeof(ArrayBuffer) !== 'undefined') {
         xcoords       = new Uint8Array(new ArrayBuffer(rows.length));
         ycoords       = new Uint8Array(new ArrayBuffer(rows.length));
-        month         = new Uint8Array(new ArrayBuffer(rows.length));
+        // month         = new Uint8Array(new ArrayBuffer(rows.length));
         deforestation = new Uint8Array(new ArrayBuffer(rows.length * MAX_MONTHS)); // 256 months
       } else {
         // fallback
         xcoords = [];
         ycoords = [];
         deforestation = [];
-        month = [];
+        // month = [];
         // array buffer set by default to 0
         // fucking javascript arrays are not
         for (var r = 0; r < rows.length * MAX_MONTHS; ++r) {
@@ -195,7 +195,7 @@ define([
           for (var j = 0; j < row.sd.length; ++j) {
             var base = base_idx + row.sd[j] - BASE_MONTH;
             deforestation[base] = row.se[j];
-            month[i] = row.sd[j];
+            // month[i] = row.sd[j];
           }
         }
 
@@ -210,7 +210,7 @@ define([
         xcoords: xcoords,
         ycoords: ycoords,
         deforestation: deforestation,
-        month : month,
+        // month : month,
         size: 1 << zoom_diff
       };
     },
