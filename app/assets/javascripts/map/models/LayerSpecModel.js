@@ -21,6 +21,7 @@ define([
       "forest2000",
       "WMSLayer",
       "us_land_cover",
+      "us_land_cover_change",
       "colombia_forest_change",
       "intact_forest",
       "pantropical",
