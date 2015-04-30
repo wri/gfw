@@ -156,6 +156,7 @@ define([
           .attr('class', 'xaxis-years')
           .attr('transform', 'translate({0},{1})'.format(yearWidth/2, height/2 + 6))
           .call(xAxis)
+          .style('cursor', 'pointer')
         .select('.domain').remove();
 
       // Handlers
@@ -177,7 +178,7 @@ define([
 
       this.slider.select('.background')
           .style('cursor', 'pointer')
-          .attr('height', height);
+          .attr('height', height - 22);
 
       // Tipsy
       this.tipsy = this.svg.append('g')
@@ -216,6 +217,15 @@ define([
         .attr('class', 'domain')
         .attr('x1', this.handlers.left.attr('x'))
         .attr('x2', this.handlers.right.attr('x'));
+
+      d3.select('.xaxis-years')
+          .selectAll('.tick')
+          .on('click',_.bind(function(value){
+            this.selectYear(value);
+          }, this ))
+
+
+
 
       this.formatXaxis();
     },
@@ -326,7 +336,6 @@ define([
      * Updates just handlers positions.
      */
     onBrush: function(event) {
-      console.log(event);
       var value = this.xscale.invert(d3.mouse(event)[0]);
       var roundValue = Math.round(value);
 
@@ -410,6 +419,54 @@ define([
           d3.select(this).classed('selected', false);
         }
       });
+    },
+
+    selectYear: function(val){
+      // LEFT
+      this.ext.left = this.xscale(val);
+
+      this.domain
+        .attr('x2', this.ext.right);
+
+      // Move left handler
+      this.handlers.left
+        .transition()
+        .duration(100)
+        .ease('line')
+        .attr('x', this.xscale(val));
+
+      // Move domain left
+      this.domain
+        .transition()
+        .duration(100)
+        .ease('line')
+        .attr('x1', this.xscale(val));
+
+      //RIGHT
+      this.ext.right = this.xscale(val + 1);
+
+      this.domain
+        .attr('x1', this.ext.left);
+
+      // Move right handler
+      this.handlers.right
+        .transition()
+        .duration(100)
+        .ease('line')
+        .attr('x', this.xscale(val + 1));
+
+      // Move domain right
+      this.domain
+        .transition()
+        .duration(100)
+        .ease('line')
+        .attr('x2', this.xscale(val + 1));
+
+      this.formatXaxis();
+      setTimeout(function() {
+        this.onBrushEnd();
+      }.bind(this), 100);
+
     },
 
     /**
