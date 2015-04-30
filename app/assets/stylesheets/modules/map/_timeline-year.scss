@@ -88,7 +88,9 @@
       font-size: 11px;
       fill: $dark;
       font-weight: 500;
-
+      &:hover{
+        fill: $cGreen1;
+      }
       &.selected {
         fill: $cGreen1;
       }

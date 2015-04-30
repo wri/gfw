@@ -89,12 +89,19 @@ define([
       var margin = {top: 0, right: 20, bottom: 0, left: 20};
       var width = this.options.width - margin.left - margin.right;
       var height = this.options.height - margin.bottom - margin.top;
+      var yearWidth = width/(this.options.dateRange[1].year() - this.options.dateRange[0].year());
 
       // Set xscale
       this.xscale = d3.scale.linear()
           .domain([this.options.dateRange[0].year(), this.options.dateRange[1].year()])
           .range([0, width])
           .clamp(true);
+
+      this.xscaleYears = d3.scale.linear()
+          .domain([this.options.dateRange[0].year(), this.options.dateRange[1].year() - 1])
+          .range([0, width - yearWidth])
+          .clamp(true);
+
 
       this.ext.left = this.xscale(this.currentDate[0].year());
       this.ext.right = this.xscale(this.currentDate[1].year());
@@ -134,27 +141,11 @@ define([
             .tickPadding(0))
           .select('.domain').remove();
 
-
-
-
-      // // xAxis
-      // this.svg.append('g')
-      //     .attr('class', 'xaxis')
-      //     .attr('transform', 'translate(0, ' + (height / 2) + ')')
-      //     .call(d3.svg.axis()
-      //       .scale(this.xscale)
-      //       .orient('top')
-      //       .ticks(this.options.dateRange[1].year() - this.options.dateRange[0].year())
-      //       .tickFormat(function(d) {return String(d); })
-      //       .tickSize(0)
-      //       .tickPadding(-4))
-      //   .select('.domain').remove();
-
       this.svg.select('.xaxis').selectAll('g.line').remove();
 
       // Years xaxis
       var xAxis = d3.svg.axis()
-          .scale(this.xscale)
+          .scale(this.xscaleYears)
           .orient('bottom')
           .ticks(this.options.dateRange[1].year() - this.options.dateRange[0].year())
           .tickSize(0)
@@ -163,19 +154,10 @@ define([
 
       this.svg.append('g')
           .attr('class', 'xaxis-years')
-          .attr('transform', 'translate({0},{1})'.format(0, height/2 + 6))
+          .attr('transform', 'translate({0},{1})'.format(yearWidth/2, height/2 + 6))
           .call(xAxis)
+          .style('cursor', 'pointer')
         .select('.domain').remove();
-
-
-
-      // this.svg.select('.xaxis').selectAll('g.tick')
-      //   .insert('rect', ':first-child')
-      //   .attr('width', 30)
-      //   .attr('height', 12)
-      //   .attr('x', -15)
-      //   .attr('y', -5)
-      //   .attr('fill', 'white');
 
       // Handlers
       this.slider = this.svg.append('g')
@@ -196,7 +178,7 @@ define([
 
       this.slider.select('.background')
           .style('cursor', 'pointer')
-          .attr('height', height);
+          .attr('height', height - 22);
 
       // Tipsy
       this.tipsy = this.svg.append('g')
@@ -235,6 +217,15 @@ define([
         .attr('class', 'domain')
         .attr('x1', this.handlers.left.attr('x'))
         .attr('x2', this.handlers.right.attr('x'));
+
+      d3.select('.xaxis-years')
+          .selectAll('.tick')
+          .on('click',_.bind(function(value){
+            this.selectYear(value);
+          }, this ))
+
+
+
 
       this.formatXaxis();
     },
@@ -422,12 +413,60 @@ define([
       d3.select('.xaxis-years').selectAll('text').filter(function(d) {
         var left = self.ext.left;
         var right = self.ext.right;
-        if (d >= Math.round(self.xscale.invert(left)) && d <= Math.round(self.xscale.invert(right))) {
+        if (d >= Math.round(self.xscale.invert(left)) && d < Math.round(self.xscale.invert(right))) {
           d3.select(this).classed('selected', true);
         } else {
           d3.select(this).classed('selected', false);
         }
       });
+    },
+
+    selectYear: function(val){
+      // LEFT
+      this.ext.left = this.xscale(val);
+
+      this.domain
+        .attr('x2', this.ext.right);
+
+      // Move left handler
+      this.handlers.left
+        .transition()
+        .duration(100)
+        .ease('line')
+        .attr('x', this.xscale(val));
+
+      // Move domain left
+      this.domain
+        .transition()
+        .duration(100)
+        .ease('line')
+        .attr('x1', this.xscale(val));
+
+      //RIGHT
+      this.ext.right = this.xscale(val + 1);
+
+      this.domain
+        .attr('x1', this.ext.left);
+
+      // Move right handler
+      this.handlers.right
+        .transition()
+        .duration(100)
+        .ease('line')
+        .attr('x', this.xscale(val + 1));
+
+      // Move domain right
+      this.domain
+        .transition()
+        .duration(100)
+        .ease('line')
+        .attr('x2', this.xscale(val + 1));
+
+      this.formatXaxis();
+      setTimeout(function() {
+        this.onBrushEnd();
+      }.bind(this), 100);
+
     },
 
     /**
