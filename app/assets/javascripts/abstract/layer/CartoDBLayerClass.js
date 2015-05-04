@@ -90,6 +90,7 @@ define([
 
     infowindowsButtons: function(){
       $('.cartodb-popup').on('click', '.analyze-concession', function () {
+        debugger
         mps.publish('AnalysisTool/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]);
 
         ($(this).data('wdpaid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area' + $(this).data('wdpaid')) : null;
