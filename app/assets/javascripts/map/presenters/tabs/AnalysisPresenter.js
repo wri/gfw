@@ -337,7 +337,6 @@ define([
      * @param  {integer} useid Carto db id
      */
     _analyzeConcession: function(useid, layerSlug) {
-      debugger
       var resource = this._buildResource({
         useid: useid,
         use: layerSlug,
