@@ -345,7 +345,12 @@ define([
 
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', ConcessionLayer: ' + resource.use + ', ConcessionId: ' + resource.useid);
 
-      var url = concessionsSql[layerSlug].format(useid);
+      var url = function() {
+        if (!!concessionsSql[layerSlug])
+          return concessionsSql[layerSlug].format(useid);
+        else
+          return 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from '+ layerSlug +' where cartodb_id =' + useid;
+      }();
 
       $.getJSON(url, _.bind(function(data) {
         if (data.rows.length > 0) {
