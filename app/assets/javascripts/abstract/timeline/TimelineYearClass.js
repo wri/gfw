@@ -156,7 +156,7 @@ define([
      * Render d3 timeline slider.
      */
     render: function() {
-      var self = this, margin, width, height, ticks, center, handleY;
+      var self = this, margin, width, height, ticks, center, handleY, yearWidth;
 
       this.$timeline = $('.timeline-container');
       this.$el.html(this.template());
@@ -172,6 +172,7 @@ define([
       margin = {top: 0, right: 20, bottom: 0, left: 20};
       width = this.options.width - margin.left - margin.right;
       height = this.options.height - margin.bottom - margin.top;
+      yearWidth = width/(this.options.dateRange[1].year() - this.options.dateRange[0].year());
       center = height/2 - 2;
       handleY = -3;
       ticks = this.options.dateRange[1].year() - this.options.dateRange[0].year();
@@ -181,6 +182,12 @@ define([
           .domain([this.options.dateRange[0].year(), this.options.dateRange[1].year()])
           .range([0, width])
           .clamp(true);
+
+      this.xscaleYears = d3.scale.linear()
+          .domain([this.options.dateRange[0].year(), this.options.dateRange[1].year() - 1])
+          .range([0, width - yearWidth])
+          .clamp(true);
+
 
       this.ext.left = this.xscale(this.currentDate[0].year());
       this.ext.right = this.xscale(this.currentDate[1].year());
@@ -224,7 +231,7 @@ define([
 
       // Years xaxis
       var xAxis = d3.svg.axis()
-          .scale(this.xscale)
+          .scale(this.xscaleYears)
           .orient('bottom')
           .ticks(ticks)
           .tickSize(0)
@@ -233,8 +240,9 @@ define([
 
       this.svg.append('g')
           .attr('class', 'xaxis-years')
-          .attr('transform', 'translate({0},{1})'.format(0, height/2 + 6))
+          .attr('transform', 'translate({0},{1})'.format(yearWidth/2, height/2 + 6))
           .call(xAxis)
+          .style('cursor', 'pointer')
         .select('.domain').remove();
 
       // Handlers
@@ -256,7 +264,7 @@ define([
 
       this.slider.select('.background')
           .style('cursor', 'pointer')
-          .attr('height', height);
+          .attr('height', height - 22);
 
       // Tipsy
       this.tipsy = this.svg.append('g')
@@ -295,6 +303,15 @@ define([
         .attr('class', 'domain')
         .attr('x1', this.handlers.left.attr('x'))
         .attr('x2', this.handlers.right.attr('x'));
+
+      d3.select('.xaxis-years')
+          .selectAll('.tick')
+          .on('click',_.bind(function(value){
+            this.selectYear(value);
+          }, this ))
+
+
+
 
       this.formatXaxis();
     },
@@ -482,7 +499,7 @@ define([
       d3.select('.xaxis-years').selectAll('text').filter(function(d) {
         var left = self.ext.left;
         var right = self.ext.right;
-        if (d >= Math.round(self.xscale.invert(left)) && d <= Math.round(self.xscale.invert(right))) {
+        if (d >= Math.round(self.xscale.invert(left)) && d < Math.round(self.xscale.invert(right))) {
           d3.select(this).classed('selected', true);
         } else {
           d3.select(this).classed('selected', false);
@@ -490,6 +507,53 @@ define([
       });
     },
 
+    selectYear: function(val){
+      // LEFT
+      this.ext.left = this.xscale(val);
+
+      this.domain
+        .attr('x2', this.ext.right);
+
+      // Move left handler
+      this.handlers.left
+        .transition()
+        .duration(100)
+        .ease('line')
+        .attr('x', this.xscale(val));
+
+      // Move domain left
+      this.domain
+        .transition()
+        .duration(100)
+        .ease('line')
+        .attr('x1', this.xscale(val));
+
+      //RIGHT
+      this.ext.right = this.xscale(val + 1);
+
+      this.domain
+        .attr('x1', this.ext.left);
+
+      // Move right handler
+      this.handlers.right
+        .transition()
+        .duration(100)
+        .ease('line')
+        .attr('x', this.xscale(val + 1));
+
+      // Move domain right
+      this.domain
+        .transition()
+        .duration(100)
+        .ease('line')
+        .attr('x2', this.xscale(val + 1));
+
+      this.formatXaxis();
+      setTimeout(function() {
+        this.onBrushEnd();
+      }.bind(this), 100);
+
+    },
 
     /**
      * Event fired when user ends the click.
