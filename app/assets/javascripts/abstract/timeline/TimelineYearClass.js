@@ -112,13 +112,13 @@ define([
     fillSelects: function(){
       var start = this.dateRangeStart.year(),
           end = this.dateRangeEnd.year(),
-          range = end - start + 1,
+          range = end - start,
           options = '';
       for (var i = 0; i < range; i++) {
         options += '<option value="'+(start + i)+'">'+ (start + i) +'</option>';
       }
       this.$from.html(options).val(this.currentDate[0].year());
-      this.$to.html(options).val(this.currentDate[1].year());
+      this.$to.html(options).val(this.currentDate[1].year() - 1);
       this.setSelects();
     },
 
@@ -140,14 +140,14 @@ define([
 
         _.each($options, function(opt,i){
           if (direction) {
-            (compare <= i) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
+            (compare < i) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
           }else{
-            (compare >= i) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
+            (compare > i) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
           }
         });
       });
 
-      this.updateCurrentDate([moment([this.$from.val()]), moment([this.$to.val()])]);
+      this.updateCurrentDate([moment([this.$from.val()]), moment([parseInt(this.$to.val()) + 1])]);
     },
 
 
