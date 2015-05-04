@@ -13,6 +13,7 @@ define([
 
     options: {
       sql: 'SELECT the_geom_webmercator, title_holder, area_ha, type, contract, department, supervision, \'{tableName}\' AS layer, {analysis} AS analysis, \'{tableName}\' AS name FROM {tableName}',
+      analysis: true,
       infowindow: true,
       interactivity: 'title_holder, area_ha, type, contract, department, supervision, analysis',
       cartocss: concesiones_forestalesCartoCSS
