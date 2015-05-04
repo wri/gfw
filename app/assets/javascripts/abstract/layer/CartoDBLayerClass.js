@@ -97,6 +97,14 @@ define([
         ($(this).data('useid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze ' + $(this).data('use').toUpperCase() + ' ' + $(this).data('useid')) : null;
 
       });
+      $('.cartodb-popup').on('click', '.subscription-concession', function () {
+        mps.publish('Subscription/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]);
+
+        ($(this).data('wdpaid')) ? ga('send', 'event', 'Map', 'Subscribe', 'Analyze Protected Area' + $(this).data('wdpaid')) : null;
+
+        ($(this).data('useid')) ? ga('send', 'event', 'Map', 'Subscribe', 'Analyze ' + $(this).data('use').toUpperCase() + ' ' + $(this).data('useid')) : null;
+
+      });
     },
 
 

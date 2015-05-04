@@ -500,7 +500,7 @@
     line-opacity: 1;
   }
 
-  [layer='ebamapglobal'] {
+  [layer='endemic_bird_areas'] {
     polygon-fill: #055D00;
     polygon-opacity: 1;
     polygon-comp-op: lighten;
