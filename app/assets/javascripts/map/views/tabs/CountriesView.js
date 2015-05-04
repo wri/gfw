@@ -151,6 +151,7 @@ define([
     },
 
     toggleLayerWrap: function(e){
+      if ($(e.target).parent().siblings().hasClass('selected')) return;
       if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source') && !$(e.target).hasClass('layer')) {
         var $li = $(e.currentTarget);
         var layerSlug = $li.data('layer');
