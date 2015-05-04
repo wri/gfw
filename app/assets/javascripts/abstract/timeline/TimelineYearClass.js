@@ -336,7 +336,6 @@ define([
      * Updates just handlers positions.
      */
     onBrush: function(event) {
-      console.log(event);
       var value = this.xscale.invert(d3.mouse(event)[0]);
       var roundValue = Math.round(value);
 
