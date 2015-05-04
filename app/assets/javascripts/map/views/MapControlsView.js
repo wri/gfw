@@ -170,7 +170,7 @@ define([
             this.map.setCenter(pos);
           }, this ),
           _.bind(function() {
-            this.presenter.notificate('info-example');
+            this.presenter.notificate('notif-enable-location');
           }, this )
         );
       }
