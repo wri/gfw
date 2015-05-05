@@ -165,20 +165,17 @@ define([
       var row,
           xcoords,
           ycoords,
-          deforestation,
-          month;
+          deforestation;
 
       if (typeof(ArrayBuffer) !== 'undefined') {
         xcoords       = new Uint8Array(new ArrayBuffer(rows.length));
         ycoords       = new Uint8Array(new ArrayBuffer(rows.length));
-        month         = new Uint8Array(new ArrayBuffer(rows.length));
         deforestation = new Uint8Array(new ArrayBuffer(rows.length * MAX_MONTHS)); // 256 months
       } else {
         // fallback
         xcoords = [];
         ycoords = [];
         deforestation = [];
-        month = [];
         // array buffer set by default to 0
         // fucking javascript arrays are not
         for (var r = 0; r < rows.length * MAX_MONTHS; ++r) {
@@ -199,7 +196,6 @@ define([
           for (var j = 0; j < row.sd.length; ++j) {
             var base = base_idx + row.sd[j] - BASE_MONTH;
             deforestation[base] = row.se[j];
-            month[i] = row.sd[j];
           }
         }
 
@@ -214,7 +210,6 @@ define([
         xcoords: xcoords,
         ycoords: ycoords,
         deforestation: deforestation,
-        month : month,
         size: 1 << zoom_diff
       };
     },
