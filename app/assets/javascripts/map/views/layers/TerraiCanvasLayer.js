@@ -28,7 +28,6 @@ define([
       this.currentDate = options.currentDate || [moment(layer.mindate), moment(layer.maxdate)];
       this._super(layer, options, map);
       this.top_date = (layer.maxdate.year()-2004)*23+Math.floor(layer.maxdate.dayOfYear()/16);
-      console.log(this.top_date)
     },
 
     /**
