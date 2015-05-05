@@ -53,9 +53,9 @@ define([
             imgdata[pixelPos + 2] = 153;
             imgdata[pixelPos + 3] = 256;
             if (timeLoss > (this.top_date - Math.ceil(3 * 1.9)) ) { // 3months * 1.9 spaces per month
-              imgdata[pixelPos]     = 0;
-              imgdata[pixelPos + 1] = 0;
-              imgdata[pixelPos + 2] = 255;
+              imgdata[pixelPos]     = 255;
+              imgdata[pixelPos + 1] = 215;
+              imgdata[pixelPos + 2] = 0;
             }
           } else {
             imgdata[pixelPos + 3] = 0;
