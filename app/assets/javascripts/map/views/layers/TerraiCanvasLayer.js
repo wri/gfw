@@ -27,6 +27,8 @@ define([
       this.presenter = new Presenter(this);
       this.currentDate = options.currentDate || [moment(layer.mindate), moment(layer.maxdate)];
       this._super(layer, options, map);
+      this.top_date = (layer.maxdate.year()-2004)*23+Math.floor(layer.maxdate.dayOfYear()/16);
+      console.log(this.top_date)
     },
 
     /**
@@ -35,36 +37,32 @@ define([
      */
     filterCanvasImgdata: function(imgdata, w, h) {
       var components = 4;
-      var zoom = this.map.getZoom();
-
-      var start= (moment(this.currentDate[0]).year()-2004)*23+Math.floor(moment(this.currentDate[0]).dayOfYear()/16);
-      var end= (moment(this.currentDate[1]).year()-2004)*23+Math.floor(moment(this.currentDate[1]).dayOfYear()/16);
-
+      var start = (moment(this.currentDate[0]).year()-2004)*23+Math.floor(moment(this.currentDate[0]).dayOfYear()/16);
+      var end   = (moment(this.currentDate[1]).year()-2004)*23+Math.floor(moment(this.currentDate[1]).dayOfYear()/16);
 
       for(var i=0; i < w; ++i) {
         for(var j=0; j < h; ++j) {
           var pixelPos = (j*w + i) * components;
-          var r = imgdata[pixelPos];
+       // var r = imgdata[pixelPos]; //left here for coherence
           var g = imgdata[pixelPos+1];
           var b = imgdata[pixelPos+2];
-          //var yearLoss = 2003 + imgdata[pixelPos]%16;
-
-          var timeLoss=b+(256*g)
-         // yearagg[yearLoss]+=1;
-
+          var timeLoss = b+(256*g);
 
           if (timeLoss > start && timeLoss < end) {
-            imgdata[pixelPos] = 220;
-            imgdata[pixelPos + 1] = 102 ;
-            imgdata[pixelPos + 2] = 153 ;
+            imgdata[pixelPos]     = 220;
+            imgdata[pixelPos + 1] = 102;
+            imgdata[pixelPos + 2] = 153;
             imgdata[pixelPos + 3] = 256;
+            if (timeLoss > (this.top_date - Math.ceil(3 * 1.9)) ) { // 3months * 1.9 spaces per month
+              imgdata[pixelPos]     = 0;
+              imgdata[pixelPos + 1] = 0;
+              imgdata[pixelPos + 2] = 255;
+            }
           } else {
             imgdata[pixelPos + 3] = 0;
           }
-
         }
-
-      }
+      } //end first for loop
     },
 
     /**
