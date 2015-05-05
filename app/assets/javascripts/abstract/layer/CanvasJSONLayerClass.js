@@ -24,6 +24,7 @@ define([
     init: function(layer, options, map) {
       this.tiles = {};
       this.layer = layer;
+      this.top_date = (((this.layer.maxdate.year() - this.layer.mindate.year()) * 12) + this.layer.maxdate.month()) - 3;
       this._super(layer, options, map);
       this.getDates();
       this.cartoSQL = new cartodb.SQL({
@@ -80,7 +81,8 @@ define([
           zoom: zoom,
           height: this.tileSize.height,
           cells: this.preCacheMonths(data.rows, coord, zoom,
-            zoomDiff)
+            zoomDiff),
+          top_date : data.top_date
         };
 
         //set unique id
@@ -118,13 +120,13 @@ define([
           cy1: ((y + 1) * 256) >> zoom_diff,
           z: pixel_zoom
         });
-
       return sql;
     },
 
     _render: function(tile) {
       var month = this.endMonth || -BASE_MONTH + MAX_MONTHS;
       var month_start = this.startMonth || 0;
+      var month_change = this.top_date;
       var w = tile.canvas.width;
       var ctx = tile.ctx;
       var cells = tile.cells;
@@ -140,18 +142,20 @@ define([
       // render cells
       var len = cells.length;
       var pixel_size = cells.size;
-      var index, index0, mul;
+      var index, index0, index1,mul;
       var previous = [];
       for (var i = 0; i < len; ++i) {
         mul = MAX_MONTHS * i;
         index  = mul + month;
         index0 = mul + month_start;
+        index1 = mul + month_change;
         // set pixel by hand faster than doing fill rect (below)
         if (cells.deforestation[index] - cells.deforestation[index0] > 0) {
           ctx.fillStyle = '#F69';
-          if (month > 85 && cells.month[i] > 180) {
-            ctx.fillStyle = '#F10022';
-          }
+          ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
+        }
+        if (cells.deforestation[index] - cells.deforestation[index1] > 0) {
+          ctx.fillStyle = '#FFD700';
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
       }
