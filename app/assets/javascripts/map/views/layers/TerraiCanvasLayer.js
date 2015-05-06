@@ -28,6 +28,7 @@ define([
       this.currentDate = options.currentDate || [moment(layer.mindate), moment(layer.maxdate)];
       this._super(layer, options, map);
       this.top_date = (layer.maxdate.year()-2004)*23+Math.floor(layer.maxdate.dayOfYear()/16);
+      this.top_date -= 16;
     },
 
     /**
@@ -45,14 +46,15 @@ define([
        // var r = imgdata[pixelPos]; //left here for coherence
           var g = imgdata[pixelPos+1];
           var b = imgdata[pixelPos+2];
-          var timeLoss = b+(256*g);
+          // var timeLoss = b+(256*g); //old method, just in case
+          var timeLoss = b+g;
 
           if (timeLoss > start && timeLoss < end) {
             imgdata[pixelPos]     = 220;
             imgdata[pixelPos + 1] = 102;
             imgdata[pixelPos + 2] = 153;
             imgdata[pixelPos + 3] = 256;
-            if (timeLoss > (this.top_date - Math.ceil(3 * 1.9)) ) { // 3months * 1.9 spaces per month
+            if (timeLoss > this.top_date) {
               imgdata[pixelPos]     = 255;
               imgdata[pixelPos + 1] = 215;
               imgdata[pixelPos + 2] = 0;
