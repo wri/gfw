@@ -3,15 +3,13 @@ module Api
     include HTTParty
 
     def self.find_by_country(country)
-      response = HTTParty.get("#{ENV['BLOG_HOST']}/", query: { tag: country['name'].downcase.gsub(" ", "_"), feed: "rss2" })
+      response = HTTParty.get("http://marca.com/", query: { tag: country['name'].downcase.gsub(" ", "_"), feed: "rss2" })
 
       blog_stories = []
 
       if response['rss']['channel']['item'].present?
         response['rss']['channel']['item'].is_a?(Array) ? response['rss']['channel']['item'][0] : response['rss']['channel']['item']
-      else
-        nil
-      end
+      end rescue nil
     end
   end
 end
