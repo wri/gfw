@@ -492,7 +492,7 @@
       line-opacity: 1;
   }
 
-  [layer='protected_areas'] {
+  [layer='wdpa_protected_areas'] {
     polygon-fill: #2167AB;
     polygon-opacity: 0.5;
     line-color: #2167AB;
