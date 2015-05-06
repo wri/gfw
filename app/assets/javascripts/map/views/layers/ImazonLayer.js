@@ -7,8 +7,9 @@ define([
   'moment',
   'uri',
   'abstract/layer/CartoDBLayerClass',
+  'text!map/cartocss/forma.cartocss',
   'map/presenters/layers/ImazonLayerPresenter'
-], function(moment, UriTemplate, CartoDBLayerClass, Presenter) {
+], function(moment, UriTemplate, CartoDBLayerClass, FormaCartoCSS, Presenter) {
 
   'use strict';
 
@@ -16,7 +17,8 @@ define([
 
     options: {
       sql: 'SELECT cartodb_id, the_geom_webmercator, data_type AS layer, data_type AS name FROM {tableName} ' +
-        'WHERE date BETWEEN to_date(\'{startYear}-{startMonth}\',\'YYYY-MM\') AND to_date(\'{endYear}-{endMonth}\',\'YYYY-MM\')'
+        'WHERE date BETWEEN to_date(\'{startYear}-{startMonth}\',\'YYYY-MM\') AND to_date(\'{endYear}-{endMonth}\',\'YYYY-MM\')',
+      cartocss: FormaCartoCSS
     },
 
     init: function(layer, options, map) {

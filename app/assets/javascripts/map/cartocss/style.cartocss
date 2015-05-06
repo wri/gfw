@@ -401,10 +401,10 @@
   }
 
   [layer='degrad'] {
-    polygon-fill: #ffbfd5;
+    polygon-fill: #00ff00;
     polygon-opacity: 1;
     line-opacity: 1;
-    line-color: #ffbfd5;
+    line-color: #00ff00;
     line-width: 2;
   }
 
