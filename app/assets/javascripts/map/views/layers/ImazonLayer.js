@@ -36,8 +36,7 @@ define([
     },
 
     /**
-     * Get the CartoDB query. If it isn't set on this.options,
-     * it gets the default query from this._queryTemplate.
+     * Get the CartoDB query.
      *
      * @return {string} CartoDB query
      * @override
