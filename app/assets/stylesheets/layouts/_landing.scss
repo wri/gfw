@@ -442,8 +442,10 @@
 
 .row-apps {
 	border-bottom: 1px solid $border;
+  display: none;
   @media (min-width: $br-mobile) {
     border-top: 1px solid $border;
+    display: block;
   }
 
 	.row {
