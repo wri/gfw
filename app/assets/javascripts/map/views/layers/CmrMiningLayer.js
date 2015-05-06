@@ -15,7 +15,7 @@ define([
       sql: 'SELECT \'cmr_mining\' as tablename, cartodb_id, the_geom_webmercator, nom_permis as name, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}' ,
       infowindow: true,
       interactivity: 'cartodb_id, tablename, name, analysis',
-      analysis: false
+      analysis: true
     }
     
 
