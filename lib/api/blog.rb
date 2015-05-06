@@ -3,7 +3,7 @@ module Api
     include HTTParty
 
     def self.find_by_country(country)
-      response = HTTParty.get("http://marca.com/", query: { tag: country['name'].downcase.gsub(" ", "_"), feed: "rss2" })
+      response = HTTParty.get("#{ENV['BLOG_HOST']}", query: { tag: country['name'].downcase.gsub(" ", "_"), feed: "rss2" })
 
       blog_stories = []
 
