@@ -621,6 +621,9 @@
 	.row {
 		@include row();
     @include flex-wrap(wrap);
+    @media (max-width: $br-mobile - 1) {
+      @include flex-direction(column-reverse);
+    }
 	}
 	.col {
 		background: $white;
