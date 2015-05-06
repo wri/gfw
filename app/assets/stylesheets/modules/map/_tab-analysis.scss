@@ -1,4 +1,7 @@
 .tab-analysis, .tab-subscription{
+  &.tab-subscription {
+    min-height: 250px;
+  }
   nav{
     display: block;
     ul{
@@ -145,6 +148,7 @@
 .analysis-tab-content.data-tab,
 .subscription-tab-content.data-tab{
   .see-gif {
+    margin: 15px 0 0;
     padding: 5px 0;
     display: inline-block;
     @media (min-height: 770px){

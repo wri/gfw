@@ -67,6 +67,7 @@ define([
       'Subscription/analyze-wdpaid': function(wdpaid) {
         this.openSubscriptionTab(true);
         this.view._stopDrawing();
+        this.view._onClickStart();
         this.deleteSubscription();
         this.view.setStyle();
         this._subscribeWdpai(wdpaid.wdpaid);
@@ -79,6 +80,7 @@ define([
           return;
         }
         this.openSubscriptionTab(true);
+        this._onClickStart();
         this.view._stopDrawing();
         this.deleteSubscription();
         this.view.setStyle();

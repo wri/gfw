@@ -104,7 +104,6 @@ define([
 
     // navigate between tabs
     toggleTabs: function(e){
-      this._onClickStart();
       if (!$(e.currentTarget).hasClass('disabled')) {
         var tab = $(e.currentTarget).data('subscription');
 
