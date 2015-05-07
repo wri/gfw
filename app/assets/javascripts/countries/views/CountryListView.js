@@ -25,6 +25,7 @@ define([
       if (!this.$el.length) {
         return
       }
+      mps.publish('Source/open',['help_improve_GFW']);
 
       this.helper = CountryHelper;
       this.$searchBox = $('#searchCountry');

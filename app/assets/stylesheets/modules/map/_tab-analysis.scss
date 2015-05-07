@@ -60,6 +60,9 @@
   }
 }
 .tab-analysis, .tab-subscription{
+  &.tab-subscription {
+    min-height: 250px;
+  }
   nav{
     display: block;
     ul{
@@ -167,6 +170,15 @@
   }
 }
 
+.subscription-tab-content.default-subscription{
+  position: absolute;
+  background: $white;
+  top: 0;
+  left: 0;
+  padding: 30px !important;
+  z-index: 5;
+}
+
 //DRAW TAB
 .analysis-tab-content.draw-tab,
 .subscription-tab-content.draw-tab{
@@ -203,6 +215,7 @@
 .analysis-tab-content.data-tab,
 .subscription-tab-content.data-tab{
   .see-gif {
+    margin: 15px 0 0;
     padding: 5px 0;
     display: inline-block;
     @media (min-height: 770px){
