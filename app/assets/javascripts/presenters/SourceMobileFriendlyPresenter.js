@@ -21,11 +21,7 @@ define([
     // /**
     //  * Application subscriptions.
     //  */
-    _subscriptions: [{
-      'Source/open': function(source) {
-        this.view.showByParam(source);
-      }
-    }]
+    _subscriptions: []
   });
 
   return SourceMobileFriendlyPresenter;
