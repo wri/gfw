@@ -59,7 +59,7 @@ define([
       ifl_2013_deg: Handlebars.compile(intact2013Tpl),
       grump2000: Handlebars.compile(grumpTpl),
       user_stories:  Handlebars.compile(storiesTpl),
-      terraicanvas: Handlebars.compile(terra_iTpl),
+      terrailoss: Handlebars.compile(terra_iTpl),
       concesiones_forestales: Handlebars.compile(concesionesTpl),
       concesiones_forestalesNS: Handlebars.compile(concesionesTypeTpl),
       WMSLayer: Handlebars.compile(hondurasForestTPL),
