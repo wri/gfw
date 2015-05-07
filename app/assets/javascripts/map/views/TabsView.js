@@ -90,6 +90,7 @@ define([
     },
 
     initCustomMobileViews: function(){
+      new SpinnerView();
       new AnalysisView(this.map);
       new CountriesView(this.map);
       new BasemapsView();

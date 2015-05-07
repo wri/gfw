@@ -25,6 +25,10 @@ define([
       'AnalysisMobile/open': function() {
         this.view.toogleAnalysisBtn($('#analysis-tab').hasClass('is-analysis'));
       }
+    },{
+      'AnalysisResults/Delete': function() {
+        this.view.toogleAnalysisBtn(false);
+      }
     }],
 
     /**

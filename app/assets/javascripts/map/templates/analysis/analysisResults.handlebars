@@ -60,21 +60,21 @@
     <li>
       {{#if loss}}
         <a href="http://data.globalforestwatch.org/datasets/93ecbfa0542c42fdaa8454fa42a6cc27" target="_blank">
-          <span class="tooltipmap bottom">Download data</span>
           <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
+          <span class="tooltipmap bottom">Download data</span>
         </a>
       {{else}}
         {{#if forestgain}}
           <a href="http://data.globalforestwatch.org/datasets/6c9f379a362e4926ad24b58444f4ba67" target="_blank">
-            <span class="tooltipmap bottom">Download data</span>
             <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
+            <span class="tooltipmap bottom">Download data</span>
           </a>
         {{else}}
           <div>
-            <span class="tooltipmap bottom">Download data</span>
             <div class="dropdown-button">
               <svg class="icon"><use xlink:href="#icon-analysis-download"></use></svg>
             </div>
+            <span class="tooltipmap bottom">Download data</span>
             <ul class="download-dropdown hidden">
               <li><a href="{{download.csv}}" target="_blank">SVG</a></li>
               <li><a href="{{download.geojson}}" target="_blank">GeoJSON</a></li>
@@ -86,8 +86,14 @@
         {{/if}}
       {{/if}}
     </li>
-    <li id="analysis-delete"><span class="tooltipmap bottom">Discard analysis</span><svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg></li>
-    <li id="analysis-subscribe"><span class="tooltipmap bottom">Subscribe</span><svg class="icon"><use xlink:href="#icon-analysis-alerts"></use></svg></li>
+    <li id="analysis-delete">
+      <svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg>
+      <span class="tooltipmap bottom">Discard analysis</span>
+    </li>
+    <li id="analysis-subscribe">
+      <svg class="icon"><use xlink:href="#icon-analysis-alerts"></use></svg>
+      <span class="tooltipmap bottom">Subscribe</span>
+    </li>
   </ul>
 </footer>
 
