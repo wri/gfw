@@ -12,10 +12,10 @@ define([
   var BraLandRightsLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT \'bra_land_rights\' as tablename, cartodb_id, the_geom_webmercator, name, nat_leg_te as national_legal_term, leg_rec as legal_recognition,  \'{tableName}\' as layer, {analysis} AS analysis FROM {tableName}',
+      sql: 'SELECT \'{tableName}\' as tablename, cartodb_id, the_geom_webmercator, name, nat_leg_te as national_legal_term, leg_rec as legal_recognition,  \'{tableName}\' as layer, {analysis} AS analysis FROM {tableName}',
       infowindow: true,
-      interactivity: 'cartodb_id, name, national_legal_term, legal_recognition, analysis',
-      analysis: false
+      interactivity: 'cartodb_id, tablename, name, national_legal_term, legal_recognition, analysis',
+      analysis: true
     }
 
   });

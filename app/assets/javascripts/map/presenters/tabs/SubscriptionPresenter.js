@@ -66,6 +66,7 @@ define([
     },{
       'Subscription/analyze-wdpaid': function(wdpaid) {
         this.openSubscriptionTab(true);
+        this.view._onClickStart();
         this.view._stopDrawing();
         this.deleteSubscription();
         this.view.setStyle();
@@ -79,6 +80,7 @@ define([
           return;
         }
         this.openSubscriptionTab(true);
+        this.view._onClickStart();
         this.view._stopDrawing();
         this.deleteSubscription();
         this.view.setStyle();
@@ -233,7 +235,12 @@ define([
 
       ga('send', 'event', 'Map', 'Subscription', 'Layer: ' + resource.dataset + ', ConcessionLayer: ' + resource.use + ', ConcessionId: ' + resource.useid);
 
-      var url = concessionsSql[layerSlug].format(useid);
+      var url = function() {
+        if (!!concessionsSql[layerSlug])
+          return concessionsSql[layerSlug].format(useid);
+        else
+          return 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from '+ layerSlug +' where cartodb_id =' + useid;
+      }();
 
       $.getJSON(url, _.bind(function(data) {
         if (data.rows.length > 0) {

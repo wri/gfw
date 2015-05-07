@@ -29,8 +29,11 @@ define([
       //tabs
       'click #subscription-nav li' : 'toggleTabs',
 
+      //default
+      'click #get-started-subscription' : '_onClickStart',
+
       //draw
-      'click #start-subscription' : '_onClickAnalysis',
+      'click #start-subscription' : '_onClickSubscription',
       'click #done-subscription' : '_onClickDone',
 
       //countries
@@ -53,6 +56,9 @@ define([
 
     cacheVars: function(){
       this.$button = $('#'+this.$el.attr('id')+'-button');
+      //deafult
+      this.$defaultSubscription = $('#default-subscription');
+
       //draw
       this.$start = $('#start-subscription');
       this.$done = $('#done-subscription');
@@ -98,7 +104,6 @@ define([
 
     // navigate between tabs
     toggleTabs: function(e){
-
       if (!$(e.currentTarget).hasClass('disabled')) {
         var tab = $(e.currentTarget).data('subscription');
 
@@ -309,7 +314,9 @@ define([
 
 
 
-
+    _onClickStart: function(){
+      this.$defaultSubscription.hide(0);
+    },
 
 
 
@@ -321,7 +328,7 @@ define([
     /**
      * Triggered when the user clicks on the analysis draw button.
      */
-    _onClickAnalysis: function() {
+    _onClickSubscription: function() {
       if (!this.$start.hasClass('in_use')) {
         ga('send', 'event', 'Map', 'Analysis', 'Click: start');
         this.toggleUseBtn(true);
