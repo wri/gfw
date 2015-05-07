@@ -13,14 +13,14 @@
   line-color: #ffbfd5;
   line-width: 2;
 }
-[layer='defor'][date>date_to_change] {
+[layer='defor'][date>#date_to_change] {
   polygon-fill: gold;
   polygon-opacity: 1;
   line-opacity: 1;
   line-color: gold;
   line-width: 2;
 }
-[layer='degrad'][date>date_to_change] {
+[layer='degrad'][date>#date_to_change] {
   polygon-fill: gold;
   polygon-opacity: 1;
   line-opacity: 1;
