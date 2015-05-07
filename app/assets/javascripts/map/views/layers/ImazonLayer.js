@@ -14,14 +14,14 @@ define([
   'use strict';
 
   var ImazonLayer = CartoDBLayerClass.extend({
-
     options: {
-      sql: 'SELECT cartodb_id, the_geom_webmercator, data_type AS layer, data_type AS name FROM {tableName} ' +
+      sql: 'SELECT cartodb_id, the_geom_webmercator, to_char(date,\'YYYYMMDD\')::int as date, data_type AS layer, data_type AS name FROM {tableName} ' +
         'WHERE date BETWEEN to_date(\'{startYear}-{startMonth}\',\'YYYY-MM\') AND to_date(\'{endYear}-{endMonth}\',\'YYYY-MM\')',
       cartocss: FormaCartoCSS
     },
 
     init: function(layer, options, map) {
+      this.options.cartocss = FormaCartoCSS.replace(/date_to_change/g,layer.maxdate.subtract(3, 'months').format('YYYYMMDD'));
       this.presenter = new Presenter(this);
       this.currentDate = options.currentDate || [moment(layer.mindate), moment(layer.maxdate)];
       this._super(layer, options, map);
