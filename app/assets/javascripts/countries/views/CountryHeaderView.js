@@ -545,14 +545,13 @@ define([
     },
 
     _drawLossAndGain: function(years_data) {
-      var that = this;
-
       var $graph = this.$('.loss-gain-graph'),
           $comingSoon     = $graph.find('.coming-soon'),
           $amount         = $graph.find('.graph-amount'),
           $amount_g       = $graph.find('.graph-gain-amount'),
           $date           = $graph.find('.graph-date'),
           $gain           = $graph.find('.graph-gain-total'),
+          $tnumbers       = $('.tree-numbers'),
           gain_value      = (~~years_data[1].gain).toLocaleString();
 
       var width     = 120,
@@ -585,8 +584,8 @@ define([
       $amount.html('<span>' + (~~data_[data_.length - 1].value).toLocaleString() + '</span>').append($date);
       $gain.html(' Ha');
       $amount_g.html('<span>' + gain_value + '</span>').append($gain);
-      $graph.find('.total-loss-ha').html(' Total loss (Ha)');
-      $graph.find('.total-loss').html((~~total_loss).toLocaleString()).append($graph.find('.total-loss-ha'));
+      $tnumbers.find('.total-loss-ha').html(' Ha');
+      $tnumbers.find('.total-loss').html((~~total_loss).toLocaleString()).append($tnumbers.find('.total-loss-ha'));
 
       var marginLeft = 5,
           marginTop = 0;
