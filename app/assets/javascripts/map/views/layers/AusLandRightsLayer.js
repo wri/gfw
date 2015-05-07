@@ -12,10 +12,10 @@ define([
   var AusLandRightsLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT \'aus_land_rights\' as tablename, cartodb_id, the_geom_webmercator, name, legal_term as national_legal_term, reco as legal_recognition, status_dat as date_create,  \'{tableName}\' as layer, {analysis} AS analysis FROM {tableName}',
+      sql: 'SELECT the_geom_webmercator, cartodb_id, \'{tableName}\' AS tablename, \'{tableName}\' AS layer, name, legal_term as national_legal_term, reco as legal_recognition, status_dat as date_create, {analysis} AS analysis FROM {tableName}',
       infowindow: true,
-      interactivity: 'cartodb_id, name, national_legal_term, legal_recognition, date_create, analysis',
-      analysis: false
+      interactivity: 'cartodb_id, tablename, name, layer, national_legal_term, legal_recognition, date_create, analysis',
+      analysis: true
     }
 
   });
