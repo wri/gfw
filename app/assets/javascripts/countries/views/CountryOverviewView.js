@@ -320,27 +320,24 @@ define([
           _.each(data, function(val, key) {
             var ord = e ? (key+11) : (key+1),
                 enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
-
-            if (!!mode && mode.mode != 'percent') {
+            if (! !!mode || (mode.mode != 'percent')) {
               $.ajax({
                 url: window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=30',
                 dataType: 'json',
                 success: _.bind(function(data) {
-                  if (!!mode && mode.mode == 'total') {
-                    var g_mha, l_mha;
-                    g_mha = l_mha = 'Mha';
-                    data.years[1].gain = Math.round(data.years[1].gain);
-                    if (data.years[1].gain.toString().length >= 7) {
-                      data.years[1].gain = ((data.years[1].gain /1000)/1000).toFixed(2)
-                    } else if (data.years[1].gain.toString().length >= 4) {
-                      l_mha = 'KHa';
-                      data.years[1].gain = (data.years[1].gain /1000);
-                    if (data.years[1].gain % 1 != 0) data.years[1].gain = data.years[1].gain.toFixed(2)
-                    } else {
-                      l_mha = 'Ha';
-                    }
-                    $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ (data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
+                  var g_mha, l_mha;
+                  g_mha = l_mha = 'Mha';
+                  data.years[1].gain = Math.round(data.years[1].gain);
+                  if (data.years[1].gain.toString().length >= 7) {
+                    data.years[1].gain = ((data.years[1].gain /1000)/1000).toFixed(2)
+                  } else if (data.years[1].gain.toString().length >= 4) {
+                    l_mha = 'KHa';
+                    data.years[1].gain = (data.years[1].gain /1000);
+                  if (data.years[1].gain % 1 != 0) data.years[1].gain = data.years[1].gain.toFixed(2)
+                  } else {
+                    l_mha = 'Ha';
                   }
+                  $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ (data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
                 }
                 , this),
               });
@@ -373,12 +370,12 @@ define([
             $('.countries_list ul').html('');
             $('.show-more-countries').show();
 
-            $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('per-loss').html('% Loss');
+            $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('per-loss').html('% Gain');
 
             if (!!mode && mode.mode == 'percent')
-              $('.overview_graph__legend').find('.trigger-mode').html('<span>TOTAL LOSS</span> <strong>RELATIVE LOSS</strong>').show();
+              $('.overview_graph__legend').find('.trigger-mode').html('<span>TOTAL GAIN</span> <strong>RELATIVE GAIN</strong>').show();
             else
-              $('.overview_graph__legend').find('.trigger-mode').html('<strong>TOTAL LOSS</strong> <span>RELATIVE LOSS</span>').show();
+              $('.overview_graph__legend').find('.trigger-mode').html('<strong>TOTAL GAIN</strong> <span>RELATIVE GAIN</span>').show();
           }
 
           $('.countries_list ul').append(markup_list);
