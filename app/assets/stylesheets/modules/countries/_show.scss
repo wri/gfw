@@ -265,6 +265,10 @@
           .embed & {
             width: 28.33333%;
           }
+          div,
+          h4 {
+            max-width: 230px;
+          }
 
           h4 {
             text-align: left;
@@ -317,7 +321,7 @@
           }
 
           .canopy-status {
-            width: 450px;
+            width: 46%;
             position: absolute;
             text-align: center;
             font-size: 13px;
@@ -325,6 +329,7 @@
             color: rgba(255, 255, 255, 0.5);
             padding: 8px;
             margin-top: 15px;
+            max-width: 100%;
             em {
               color: #97bd3d;
               border-bottom: 1px #97bd3d dashed;
