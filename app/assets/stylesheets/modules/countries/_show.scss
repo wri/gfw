@@ -216,7 +216,6 @@
           line-height: 18px;
           color: #FEFEFE;
           opacity: .5;
-          text-align: center;
         }
 
         hr {
@@ -234,7 +233,7 @@
 
         .tree-numbers,
         .loss-gain-graph {
-          padding: 30px 10px;
+          padding: 10px 1px;
           .embed & {
             padding: 10px 0;
             top: 0;
@@ -269,6 +268,11 @@
 
           h4 {
             text-align: left;
+            &.t {
+              box-sizing: border-box;
+              border-top: 1px solid rgba(255, 255, 255, 0.7);
+              padding-top: 16px;
+            }
           }
 
           .amount,
@@ -284,7 +288,25 @@
           }
 
           .total-area {
-            margin-top: 18px;
+            box-sizing: border-box;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 17px 0 17px;
+          }
+
+          .total-loss {
+            font-size: 24px;
+            font-weight: 500;
+            margin-top: 6px;
+            color: #97bd3d;
+            display: inline-block;
+            .total-loss-ha {
+              display: inline-block;
+              color: #FEFEFE;
+              opacity: .5;
+              margin-top: 2px;
+              font-size: 11px;
+              display: inline;
+            }
           }
 
           .total-area,
@@ -293,6 +315,7 @@
               font-size: 24px;
             }
           }
+
           .canopy-status {
             width: 450px;
             position: absolute;
@@ -301,8 +324,7 @@
             background: #555;
             color: rgba(255, 255, 255, 0.5);
             padding: 8px;
-            margin-top: 80px;
-
+            margin-top: 15px;
             em {
               color: #97bd3d;
               border-bottom: 1px #97bd3d dashed;
@@ -314,16 +336,18 @@
         .loss-gain-graph {
           width: 245px;
           position: relative;
-          top: -145px;
+          top: -113px;
+          padding-top: 50px;
+          right: -10px;
           .embed & {
             width: 33.33333%;
           }
 
           #lossGainGraph {
-              position: relative;
-              left: 20px;
-              height: 150px;
-              padding-top: 15px;
+            position: relative;
+            left: 20px;
+            height: 150px;
+            padding-top: 15px;
           }
 
           .coming-soon {
@@ -380,7 +404,9 @@
             font-size: 23px;
           }
           .graph-gain-amount {
-            font-size: 30px;
+            text-align: left;
+            position: relative;
+            top: -12px;
           }
 
           .graph-date,

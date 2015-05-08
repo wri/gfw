@@ -391,7 +391,7 @@ define([
 
         // Move && update tooltip
         this.tooltip
-          .text(roundValue)
+          .text(roundValue - 1)
           .style('left', this.xscale(roundValue) + 'px');
 
         this.formatXaxis();
