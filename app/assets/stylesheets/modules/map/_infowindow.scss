@@ -34,7 +34,7 @@
     background: $white;
     &.dont-analyze {
       .cartodb-popup-fixed {
-        display: none;
+        display: none !important;
       }
       .cartodb-popup-content-wrapper{
         &.analysis-active{
