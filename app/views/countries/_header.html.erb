@@ -54,7 +54,6 @@
             <li>
               <a href='<%= map_coords %>/grayscale/loss,forestgain?begin=2001-01-01&end=2014-12-30&threshold=' class='action analyze_from_country' target="_blank" id="url_analysis">
                 <strong>Analyze forest change</strong>
-                <!-- <span class="sidenav-icon country-icons-chart_grey"></span> -->
                 <span class="sidenav-icon">
                   <svg>
                     <use xlink:href="#shape-graph"></use>
@@ -63,6 +62,26 @@
               </a>
             </li>
             <li>
+              <a href='<%= map_coords %>/grayscale/loss,forestgain' class='action subscribe_from_country' target="_blank">
+                <strong>Subscribe to alerts</strong>
+                <span class="sidenav-icon">
+                  <svg>
+                    <use xlink:href="#shape-alerts"></use>
+                  </svg>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href='<%= map_coords %>/grayscale/loss,forestgain?dont_analyze=true' class='action layers_from_country' target="_blank">
+                <strong>View country data layers</strong>
+                <span class="sidenav-icon">
+                  <svg>
+                    <use xlink:href="#shape-tab-countries"></use>
+                  </svg>
+                </span>
+              </a>
+            </li>
+<!--             <li>
               <a href="#" id="share_control" data-share-embed-width="600" data-share-embed-height="352" title="Share this graphic" class="share_control share-link" data-tip="Share">
                 Share
                 <span class="sidenav-icon">
@@ -71,11 +90,10 @@
                   </svg>
                 </span>
               </a>
-            </li>
+            </li> -->
             <li>
               <a href="#" data-source="umd_tree_loss_gain_infographics" class="info source">
                 Info
-                <!-- <span class="sidenav-icon country-icons-info_grey"></span> -->
                 <span class="sidenav-icon circle">
                   <svg>
                     <use xlink:href="#shape-info"></use>
@@ -86,7 +104,6 @@
             <li>
               <a href='http://data.gfw.opendata.arcgis.com/datasets?q=<%= @country['iso'] %>' target='_blank'>
                 Download spatial data
-                <!-- <span class="sidenav-icon country-icons-download_grey"></span> -->
                 <span class="sidenav-icon">
                   <svg>
                     <use xlink:href="#shape-download-18"></use>
@@ -97,7 +114,6 @@
             <li>
               <a href="<%= country_download_path(id: @country['iso']) %>" class="download country-download-link">
                 Download country stats
-                <!-- <span class="sidenav-icon country-icons-download_grey"></span> -->
                 <span class="sidenav-icon">
                   <svg>
                     <use xlink:href="#shape-download-18"></use>
