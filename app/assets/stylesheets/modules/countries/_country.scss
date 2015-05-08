@@ -126,8 +126,8 @@
   }
 }
 .title-section {
-  font-size: 47px;
-  padding: 75px 20px 15px;
+  font-size: 35px;
+  padding: 85px 20px 15px;
   text-transform: lowercase;
   color: #555;
   &:first-letter {
@@ -137,11 +137,19 @@
     padding: 40px 0 15px;
     text-align: center;
   }
+  @media (min-width: $br-mobile){
+    font-size: 47px;
+    display: block;
+  }
 
 }
 .countries-list-title{
+  display: none;
   text-align: center;
   padding: 0 20px;
+  @media (min-width: $br-mobile){
+    display: block;
+  }
 }
 h3 {
   font-size: 25px;
