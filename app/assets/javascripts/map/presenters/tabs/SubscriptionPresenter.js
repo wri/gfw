@@ -344,6 +344,7 @@ define([
 
       mps.publish('Spinner/stop');
       mps.publish('Subscribe/show', [options]);
+      this.view.$el.addClass('is-subscribing')
     },
 
     /**
@@ -365,6 +366,8 @@ define([
         polygon: null,
         multipolygon: null
       });
+
+      this.view.$el.removeClass('is-subscribing')
     },
 
     resetIsos: function(){

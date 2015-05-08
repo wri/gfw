@@ -78,7 +78,7 @@
   }
 }
 .tab-analysis, .tab-subscription{
-  &.tab-subscription {
+  .is-subscribing &{
     min-height: 250px;
   }
   nav{
