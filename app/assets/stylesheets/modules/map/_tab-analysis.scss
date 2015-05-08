@@ -418,6 +418,10 @@
         padding: 10px 0;
         cursor: pointer;
         @media (max-width: $br-mobileMap - 1){
+          width: 50%;
+          &#analysis-subscribe{
+            display: none;
+          }
           .tooltipmap{
             opacity: 1;
             visibility: visible;
