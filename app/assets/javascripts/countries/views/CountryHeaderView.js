@@ -552,7 +552,7 @@ define([
           $date           = $graph.find('.graph-date'),
           $gain           = $graph.find('.graph-gain-total'),
           $tnumbers       = $('.tree-numbers'),
-          gain_value      = (~~years_data[1].gain).toLocaleString();
+          gain_value      = (~~years_data[1].total_gain).toLocaleString();
 
       var width     = 120,
           height    = 90,
