@@ -92,6 +92,12 @@
         .btn{
           width: 47.5%;
           margin: 15px 0;
+          @media (max-width: $br-mobileMap - 1){
+            width: 100%;
+            &.subscription-concession{
+              display: none;
+            }
+          }
         }
       }
       .cartodb-popup-content{
