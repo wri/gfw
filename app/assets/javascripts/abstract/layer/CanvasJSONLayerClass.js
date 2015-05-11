@@ -24,7 +24,7 @@ define([
     init: function(layer, options, map) {
       this.tiles = {};
       this.layer = layer;
-      this.top_date = (((this.layer.maxdate.year() - this.layer.mindate.year()) * 12) + this.layer.maxdate.month()) - 3;
+      this.top_date = (((this.layer.maxdate.year() - this.layer.mindate.year()) * 12) + this.layer.maxdate.month()) - 1;
       this._super(layer, options, map);
       this.getDates();
       this.cartoSQL = new cartodb.SQL({
