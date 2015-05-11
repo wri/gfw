@@ -1,14 +1,20 @@
 <div class="country-header">
   <div class="overview_button_group">
     <div class="inner">
-      <div class="share share-link item" data-share-embed-url="<%= request.protocol + request.host_with_port %>/embed/countries/overview" data-share-embed-width="600" data-share-embed-height="578"><svg><use xlink:href="#shape-share"></use></svg>Share</div>
+      <div class="share share-link item" data-share-embed-url="<%= request.protocol + request.host_with_port %>/embed/countries/overview" data-share-embed-width="600" data-share-embed-height="578">
+        <svg>
+          <use xlink:href="#shape-share"></use>
+        </svg>Share
+      </div>
       <div class="download-spatial">
-        <a href='http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/umd_country_stats.xlsx' target='_blank'>
-            Download country stats
+        <a href="#" data-source="umd_tree_loss_gain_infographics" class="info source">
+          Info
+          <span class="sidenav-icon circle">
             <svg>
-              <use xlink:href="#shape-download-18"></use>
+              <use xlink:href="#shape-info"></use>
             </svg>
-          </a>
+          </span>
+        </a>
       </div>
     </div>
   </div>
@@ -90,26 +96,6 @@
                 <span class="sidenav-icon">
                   <svg>
                     <use xlink:href="#shape-tab-countries"></use>
-                  </svg>
-                </span>
-              </a>
-            </li>
-<!--             <li>
-              <a href="#" id="share_control" data-share-embed-width="600" data-share-embed-height="352" title="Share this graphic" class="share_control share-link" data-tip="Share">
-                Share
-                <span class="sidenav-icon">
-                  <svg class="share">
-                    <use xlink:href="#shape-share"></use>
-                  </svg>
-                </span>
-              </a>
-            </li> -->
-            <li>
-              <a href="#" data-source="umd_tree_loss_gain_infographics" class="info source">
-                Info
-                <span class="sidenav-icon circle">
-                  <svg>
-                    <use xlink:href="#shape-info"></use>
                   </svg>
                 </span>
               </a>
