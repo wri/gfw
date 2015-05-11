@@ -102,7 +102,7 @@
             </li>
             <li>
               <a href='http://data.gfw.opendata.arcgis.com/datasets?q=country<%= @country['iso'] %>' target='_blank'>
-                Browse and download all data for this country
+                Browse and download country data
                 <span class="sidenav-icon">
                   <svg>
                     <use xlink:href="#shape-download-18"></use>
@@ -112,7 +112,7 @@
             </li>
             <li>
               <a href="<%= country_download_path(id: @country['iso']) %>" class="download country-download-link">
-                Download country stats
+                Tree cover stats
                 <span class="sidenav-icon">
                   <svg>
                     <use xlink:href="#shape-download-18"></use>
