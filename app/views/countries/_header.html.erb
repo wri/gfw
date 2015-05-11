@@ -103,7 +103,7 @@
             </li>
             <li>
               <a href='http://data.gfw.opendata.arcgis.com/datasets?q=country<%= @country['iso'] %>' target='_blank'>
-                Download spatial data
+                Browse and download all data for this country
                 <span class="sidenav-icon">
                   <svg>
                     <use xlink:href="#shape-download-18"></use>
@@ -124,7 +124,7 @@
             <!--  indepth message -->
             <% if @country['indepth'].present? %>
                 <li>
-                  <a href="<%= @country['indepth'] %>" target="_blank" class="download country-indepth-link">GFW in <%= @country['name'] %>
+                  <a href="<%= @country['indepth'] %>" target="_blank" class="download country-indepth-link">WRI IN <%= @country['name']%>
                     <span class="sidenav-icon">
                       <svg>
                         <use xlink:href="#shape-map"></use>
