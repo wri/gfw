@@ -8,6 +8,7 @@
     height: 18px;
     fill: #bfbcc3;
 
+
     .icon-share {
       position: absolute;
       top: 50%;
@@ -31,10 +32,28 @@
     position: relative;
     border-radius: 50%;
     border: 1px solid #bebcc2;
+
+    &.sidenav-icon {
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      right: 0px;
+      transform: translate(0, -50%);
+      -webkit-transform: translate(0, -50%);
+      width: 18px;
+      height: 18px;
+      border-color: #555;
+      svg {
+        position: absolute;
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        fill: #555;
+      }
+    }
   }
 
   .share {
-    width: 100%;
     .embed & {
       display: none;
     }
@@ -220,7 +239,8 @@
 
         hr {
           margin: 15px auto;
-          opacity: .3;
+          border: none;
+          border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .map,
@@ -267,11 +287,16 @@
           }
           div,
           h4 {
-            max-width: 230px;
+            @media (min-width: $br-mobile) {
+              max-width: 230px;
+            }
           }
 
           h4 {
-            text-align: left;
+            text-align: center;
+            @media (min-width: $br-mobile) {
+              text-align: left;
+            }
             &.t {
               box-sizing: border-box;
               border-top: 1px solid rgba(255, 255, 255, 0.7);
@@ -293,8 +318,10 @@
 
           .total-area {
             box-sizing: border-box;
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
             padding: 17px 0 17px;
+            @media (min-width: $br-mobile) {
+              border-top: 1px solid rgba(255, 255, 255, 0.3);
+            }
           }
 
           .total-loss {
@@ -343,7 +370,10 @@
           position: relative;
           top: -113px;
           padding-top: 50px;
-          right: -10px;
+          right: 0px;
+          @media (min-width: $br-mobile) {
+            right: -10px;
+          }
           .embed & {
             width: 33.33333%;
           }
@@ -409,9 +439,12 @@
             font-size: 23px;
           }
           .graph-gain-amount {
-            text-align: left;
+            text-align: center;
             position: relative;
             top: -12px;
+            @media (min-width: $br-mobile) {
+              text-align: left;
+            }
           }
 
           .graph-date,
@@ -495,7 +528,7 @@
               color: #BEBCC2;
               display: block;
               height: 87px;
-              width: 100%;
+              width: 95%;
               @include box-sizing(border-box);
               font-weight: 400;
               text-transform: uppercase;
@@ -504,7 +537,7 @@
               text-decoration: none;
               @include display-flex();
               @include align-items(center);
-              padding: 0 30px 0 20px;
+              padding: 0 30px 0 25px;
 
               .sidenav-icon {
                 display: inline-block;
@@ -2099,7 +2132,6 @@
             .canopy-status {
               width: 80%;
               position: relative;
-              margin-top: 0;
             }
             #lossGainGraph {
               left: 0;

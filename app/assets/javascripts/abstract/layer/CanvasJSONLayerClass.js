@@ -24,7 +24,7 @@ define([
     init: function(layer, options, map) {
       this.tiles = {};
       this.layer = layer;
-      this.top_date = (((this.layer.maxdate.year() - this.layer.mindate.year()) * 12) + this.layer.maxdate.month()) - 3;
+      this.top_date = (((this.layer.maxdate.year() - this.layer.mindate.year()) * 12) + this.layer.maxdate.month()) - 1;
       this._super(layer, options, map);
       this.getDates();
       this.cartoSQL = new cartodb.SQL({
@@ -155,7 +155,7 @@ define([
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
         if (cells.deforestation[index] - cells.deforestation[index1] > 0) {
-          ctx.fillStyle = '#FFD700';
+          ctx.fillStyle = 'rgb(255, 182, 229)';
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
       }

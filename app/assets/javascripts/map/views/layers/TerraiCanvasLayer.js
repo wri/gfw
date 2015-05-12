@@ -28,7 +28,7 @@ define([
       this.currentDate = options.currentDate || [moment(layer.mindate), moment(layer.maxdate)];
       this._super(layer, options, map);
       this.top_date = (layer.maxdate.year()-2004)*23+Math.floor(layer.maxdate.dayOfYear()/16);
-      this.top_date -= 16;
+      this.top_date -= 8;
     },
 
     /**
@@ -56,8 +56,8 @@ define([
             imgdata[pixelPos + 3] = 256;
             if (timeLoss > this.top_date) {
               imgdata[pixelPos]     = 255;
-              imgdata[pixelPos + 1] = 215;
-              imgdata[pixelPos + 2] = 0;
+              imgdata[pixelPos + 1] = 182;
+              imgdata[pixelPos + 2] = 229;
             }
           } else {
             imgdata[pixelPos + 3] = 0;
