@@ -572,16 +572,22 @@
         @include logos-sprite(ewmihover);
       }
     }
-    &.opendevmekong{
-      height: 80px; width: 80px; @include logos-sprite(opendevmekong);
+    &.opendevcam{
+      height: 71px; width: 70px; @include logos-sprite(opendevcam);
       &:hover{
-        @include logos-sprite(opendevmekonghover);
+        @include logos-sprite(opendevcamhover);
       }
     }
     &.inab{
       height: 80px; width: 106px; @include logos-sprite(inab);
       &:hover{
         @include logos-sprite(inabhover);
+      }
+    }
+    &.orbital{
+      height: 70px; width: 101px; @include logos-sprite(orbital);
+      &:hover{
+        @include logos-sprite(orbitalhover);
       }
     }
 
