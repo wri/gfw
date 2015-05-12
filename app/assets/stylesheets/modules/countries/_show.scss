@@ -286,11 +286,16 @@
           }
           div,
           h4 {
-            max-width: 230px;
+            @media (min-width: $br-mobile) {
+              max-width: 230px;
+            }
           }
 
           h4 {
-            text-align: left;
+            text-align: center;
+            @media (min-width: $br-mobile) {
+              text-align: left;
+            }
             &.t {
               box-sizing: border-box;
               border-top: 1px solid rgba(255, 255, 255, 0.7);
@@ -312,8 +317,10 @@
 
           .total-area {
             box-sizing: border-box;
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
             padding: 17px 0 17px;
+            @media (min-width: $br-mobile) {
+              border-top: 1px solid rgba(255, 255, 255, 0.3);
+            }
           }
 
           .total-loss {
@@ -362,7 +369,10 @@
           position: relative;
           top: -113px;
           padding-top: 50px;
-          right: -10px;
+          right: 0px;
+          @media (min-width: $br-mobile) {
+            right: -10px;
+          }
           .embed & {
             width: 33.33333%;
           }
@@ -428,9 +438,12 @@
             font-size: 23px;
           }
           .graph-gain-amount {
-            text-align: left;
+            text-align: center;
             position: relative;
             top: -12px;
+            @media (min-width: $br-mobile) {
+              text-align: left;
+            }
           }
 
           .graph-date,
@@ -2118,7 +2131,6 @@
             .canopy-status {
               width: 80%;
               position: relative;
-              margin-top: 0;
             }
             #lossGainGraph {
               left: 0;

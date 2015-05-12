@@ -1,7 +1,7 @@
 <div class="country-header">
   <div class="overview_button_group">
     <div class="inner">
-      <div class="share share-link item" data-share-embed-url="<%= request.protocol + request.host_with_port %>/embed/country/<%= @country['iso'] %>" data-share-embed-width="600" data-share-embed-height="578">
+      <div class="share share-link item" data-share-embed-url="<%= request.protocol + request.host_with_port %>/embed/country/<%= @country['iso'] %>" data-share-embed-width="600" data-share-embed-height="353">
         <svg>
           <use xlink:href="#shape-share"></use>
         </svg>Share
@@ -55,7 +55,7 @@
             </div>
           </div>
           <div class="loss-gain-graph ghost">
-            <h4>TREE COVER LOSS (2001 - 2013)</h4>
+            <h4 class="mobile-hide">TREE COVER LOSS (2001 - 2013)</h4>
             <div class='total-loss'></div>
             <div class='total-loss-ha'></div>
             <div class='graph' id="lossGainGraph"></div>
