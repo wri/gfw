@@ -56,8 +56,8 @@ define([
             imgdata[pixelPos + 3] = 256;
             if (timeLoss > this.top_date) {
               imgdata[pixelPos]     = 255;
-              imgdata[pixelPos + 1] = 215;
-              imgdata[pixelPos + 2] = 0;
+              imgdata[pixelPos + 1] = 182;
+              imgdata[pixelPos + 2] = 229;
             }
           } else {
             imgdata[pixelPos + 3] = 0;
