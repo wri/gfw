@@ -8,6 +8,7 @@
     height: 18px;
     fill: #bfbcc3;
 
+
     .icon-share {
       position: absolute;
       top: 50%;
@@ -31,10 +32,28 @@
     position: relative;
     border-radius: 50%;
     border: 1px solid #bebcc2;
+
+    &.sidenav-icon {
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      right: 0px;
+      transform: translate(0, -50%);
+      -webkit-transform: translate(0, -50%);
+      width: 18px;
+      height: 18px;
+      border-color: #555;
+      svg {
+        position: absolute;
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        fill: #555;
+      }
+    }
   }
 
   .share {
-    width: 100%;
     .embed & {
       display: none;
     }
@@ -495,7 +514,7 @@
               color: #BEBCC2;
               display: block;
               height: 87px;
-              width: 100%;
+              width: 95%;
               @include box-sizing(border-box);
               font-weight: 400;
               text-transform: uppercase;
@@ -504,7 +523,7 @@
               text-decoration: none;
               @include display-flex();
               @include align-items(center);
-              padding: 0 30px 0 20px;
+              padding: 0 30px 0 25px;
 
               .sidenav-icon {
                 display: inline-block;
