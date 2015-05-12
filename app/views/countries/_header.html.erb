@@ -101,7 +101,7 @@
               </a>
             </li>
             <li>
-              <a href='http://data.gfw.opendata.arcgis.com/datasets?q=country<%= @country['iso'] %>' target='_blank'>
+              <a href='http://data.globalforestwatch.org/datasets?q=country<%= @country['iso'] %>' target='_blank'>
                 Browse and download country data
                 <span class="sidenav-icon">
                   <svg>
@@ -112,7 +112,7 @@
             </li>
             <li>
               <a href="<%= country_download_path(id: @country['iso']) %>" class="download country-download-link">
-                Tree cover stats
+                Download tree cover stats
                 <span class="sidenav-icon">
                   <svg>
                     <use xlink:href="#shape-download-18"></use>
@@ -123,10 +123,10 @@
             <!--  indepth message -->
             <% if @country['indepth'].present? %>
                 <li>
-                  <a href="<%= @country['indepth'] %>" target="_blank" class="download country-indepth-link">WRI IN <%= @country['name']%>
+                  <a href="<%= @country['indepth'] %>" target="_blank" class="download country-indepth-link">Visit the <%= @country['name']%>
                     <span class="sidenav-icon">
                       <svg>
-                        <use xlink:href="#shape-map"></use>
+                        <use xlink:href="#shape-<%= @country['iso']%>"></use>
                       </svg>
                     </span>
                   </a>
