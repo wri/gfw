@@ -98,8 +98,8 @@ Gfw::Application.routes.draw do
   get '/countries' => 'countries#index'
   get '/country/:id' => 'countries#show', :as => 'country'
 
-  post '/country/:id/download' => 'countries#create_download'
-  get '/country/:id/download' => 'countries#download', :as => 'country_download'
+  # post '/country/:id/download' => 'countries#create_download'
+  # get '/country/:id/download' => 'countries#download', :as => 'country_download'
 
   get '/country_info/:id/:box',to: redirect('/country/%{id}#%{box}')
   # todo => validate id
@@ -110,6 +110,8 @@ Gfw::Application.routes.draw do
   # search
   get '/search(/:query)(/:page)' => 'search#index'
 
+  # download links
+  post '/download' => 'download#create_download'
 
   # media
   post 'media/upload' => 'media#upload'

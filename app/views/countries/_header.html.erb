@@ -81,16 +81,6 @@
                 </span>
               </a>
             </li>
-<!--             <li>
-              <a href='<%= map_coords %>/grayscale/loss,forestgain' class='action subscribe_from_country' target="_blank">
-                <strong>Subscribe to alerts</strong>
-                <span class="sidenav-icon">
-                  <svg>
-                    <use xlink:href="#shape-alerts"></use>
-                  </svg>
-                </span>
-              </a>
-            </li> -->
             <li>
               <a href='<%= map_coords %>/grayscale/loss,forestgain?dont_analyze=true' class='action layers_from_country' target="_blank">
                 <strong>View country data layers</strong>
@@ -102,7 +92,7 @@
               </a>
             </li>
             <li>
-              <a href='http://data.globalforestwatch.org/datasets?q=country<%= @country['iso'] %>' target='_blank'>
+              <a href='http://data.globalforestwatch.org/datasets?q=country<%= @country['iso'] %>' class="country-download-link" target='_blank'>
                 Browse and download country data
                 <span class="sidenav-icon">
                   <svg>
@@ -112,7 +102,7 @@
               </a>
             </li>
             <li>
-              <a href="<%= country_download_path(id: @country['iso']) %>" class="download country-download-link">
+              <a href="http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/umd_country_stats.xlsx" class="download country-download-link">
                 Download tree cover stats
                 <span class="sidenav-icon">
                   <svg>
