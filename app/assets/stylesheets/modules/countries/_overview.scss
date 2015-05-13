@@ -923,6 +923,7 @@
     }
   }
 
+
   .overview_graph {
     width: 100%;
   }
@@ -941,15 +942,16 @@
     font-size: 16px;
     line-height: 25px;
 
-    p {
-      width: 77%;
-      display: inline-block;
-      margin-left: -30px;
+    .trigger-mode{
+      display: none !important;
     }
 
-    .info {
+    p {
+      width: 100%;
       display: inline-block;
-      top: 27px;
+      text-align: left;
+      font-size: 14px;
+      padding-right: 40px;
     }
   }
 
@@ -969,14 +971,15 @@
   }
 
   .overview_graph__area {
-    height: 200px;
+    height: 275px;
 
     .chart {
       width: 100%;
+      height: 275px;
     }
 
     .chart.domains {
-      height: 200px;
+      height: 275px;
     }
 
     .legend {
@@ -996,7 +999,7 @@
     }
 
     svg {
-      top: 40px;
+      // top: 40px;
     }
   }
 
@@ -1014,6 +1017,7 @@
 
   .country-overview-wrapper-coolio {
     top: 0;
+    margin-top: 5px;
   }
 
   .overview_graph__years {
@@ -1052,4 +1056,18 @@
     top: 0;
     bottom: 0;
   }
+
+  .overview_graph__figure_only {
+    display: none;
+    width: 100%;
+    text-align: left;
+    padding: 10px 10px 20px;
+    span {
+      color: #fff;
+      font-size: 50px;
+    }
+  }
+
+
+
 }
