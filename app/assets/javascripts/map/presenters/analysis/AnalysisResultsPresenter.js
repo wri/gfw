@@ -101,6 +101,10 @@ define([
       'AnalysisMobile/open': function() {
         this.view.toogleAnalysis($('#analysis-tab').hasClass('is-analysis'));
       }
+    },{
+      'DownloadView/create': function(downloadView) {
+        this.view.downloadView = downloadView;
+      }
     }],
 
     /**

@@ -662,6 +662,11 @@ $height: auto;
     }
   }
 
+  p.error {
+    margin-top: 10px;
+    font-size: 0.8em;
+  }
+
   .button-container {
     margin: 10px 0 0;
     @include display-flex();

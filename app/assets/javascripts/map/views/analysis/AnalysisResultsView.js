@@ -7,11 +7,12 @@ define([
   'underscore',
   'handlebars',
   'map/presenters/analysis/AnalysisResultsPresenter',
+  'views/DownloadView',
   'text!map/templates/analysis/analysisResults.handlebars',
   'text!map/templates/analysis/analysisResultsFailure.handlebars',
   'text!map/templates/analysis/analysisResultsUnavailable.handlebars',
   'text!map/templates/analysis/analysisResultsLoading.handlebars',
-], function(_, Handlebars, Presenter, tpl, failureTpl, unavailableTpl, loadingTpl) {
+], function(_, Handlebars, Presenter, DownloadView, tpl, failureTpl, unavailableTpl, loadingTpl) {
 
   'use strict';
 
@@ -39,7 +40,8 @@ define([
       'click #analysis-subscribe': '_subscribe',
       'click .dropdown-button' :'_toggleDownloads',
       'click .canopy-button' : '_showCanopy',
-      'click .close' : 'toogleAnalysis'
+      'click .close' : 'toogleAnalysis',
+      'click .download-link-mobile': '_openDownloadModal',
     },
 
     initialize: function() {
@@ -138,6 +140,16 @@ define([
     },
     toogleAnalysis: function(to){
       this.$el.toggleClass('active', to);
+    },
+    _openDownloadModal: function(event) {
+
+      if (this.downloadView) {
+        this.downloadView.download(event);
+      }else{
+        this.downloadView = new DownloadView();
+        this.downloadView.download(event);
+      }
+
     },
 
 

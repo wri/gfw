@@ -23,7 +23,7 @@ define([
     template: Handlebars.compile(raw_template),
     errorTemplate: Handlebars.compile(raw_error_template),
 
-    el: '.country-download-modal',
+    el: '.download-modal',
 
     events: {
       'click .close': 'hide',
@@ -34,6 +34,7 @@ define([
     initialize: function() {
       this.render();
       this.model = new DownloadModel();
+      mps.publish('DownloadView/create',[this]);
     },
 
     _isMobile: function() {
