@@ -142,14 +142,7 @@ define([
       this.$el.toggleClass('active', to);
     },
     _openDownloadModal: function(event) {
-
-      if (this.downloadView) {
-        this.downloadView.download(event);
-      }else{
-        this.downloadView = new DownloadView();
-        this.downloadView.download(event);
-      }
-
+      this.downloadView.download(event);
     },
 
 

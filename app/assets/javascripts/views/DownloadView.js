@@ -35,7 +35,14 @@ define([
       this.render();
       this.model = new DownloadModel();
       this.$loader = $('#mini-modal-loader');
+      this.setListeners();
       mps.publish('DownloadView/create',[this]);
+    },
+
+    setListeners: function(){
+      $('body').on('click', '.download-mobile-link', _.bind(function(event){
+        this.download(event);
+      }, this ));
     },
 
     _isMobile: function() {
@@ -105,5 +112,5 @@ define([
 
   });
 
-  return DownloadView;
+  return new DownloadView();
 });

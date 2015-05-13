@@ -314,14 +314,7 @@ define([
     },
 
     _openDownloadModal: function(event) {
-
-      if (this.downloadView) {
-        this.downloadView.download(event);
-      }else{
-        this.downloadView = new DownloadView();
-        this.downloadView.download(event);
-      }
-
+      this.downloadView.download(event);
     },
 
 
