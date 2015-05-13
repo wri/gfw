@@ -511,16 +511,26 @@ define([
       } else if (this.model.get('graph') === 'domains') {
         $('.countries_list__header__minioverview').show();
         var sql = 'SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +' group by ecozone';
+        var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
+        if (!!mode && mode.mode == 'percent') {
+          sql = 'SELECT ecozone as name, sum(loss_perc) as total_loss, sum(gain_perc) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +' group by ecozone'
+        }
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
               markup_list = '';
           var data = json.rows;
-
+          var unit = '%';
           _.each(data, _.bind(function(val, key) {
+            if (! !!mode || mode.mode == 'total') {
+              val.total_loss = val.total_loss/1000000;
+              val.total_gain = val.total_gain/1000000;
+              unit = 'Mha';
+            }
+
             markup_list += ['<li>',
                               '<div class="countries_list__minioverview_number countries_list__minioverview huge">',
-                                '<div class="loss half" data-orig="' + val.total_loss/1000000 + '">'+this.helper.formatNumber(parseFloat(val.total_loss/1000000).toFixed(1))+' Mha</div>',
-                                '<div class="gain half last">'+this.helper.formatNumber(parseFloat(val.total_gain/1000000).toFixed(1))+' Mha</div>',
+                                '<div class="loss half" data-orig="' + val.total_loss + '">'+this.helper.formatNumber(parseFloat(val.total_loss).toFixed(1))+' '+unit+'</div>',
+                                '<div class="gain half last">'+this.helper.formatNumber(parseFloat(val.total_gain).toFixed(1))+' '+unit+'</div>',
                               '</div>',
                               '<div class="countries_list__num">'+(key+1)+'</div>',
                               '<div class="countries_list__title">'+val.name+'</div>',
@@ -532,6 +542,10 @@ define([
           $('.countries_list ul').html(markup_list);
 
           that.model.set('class', 'huge');
+          if (!!mode && mode.mode == 'percent')
+            $('.overview_graph__legend').find('.trigger-mode').html('<span>TOTAL DOMAIN</span> <strong>RELATIVE DOMAIN</strong>').show();
+          else
+            $('.overview_graph__legend').find('.trigger-mode').html('<strong>TOTAL DOMAIN</strong> <span>RELATIVE DOMAIN</span>').show();
 
           that._reorderRanking();
         }, this ));
@@ -1247,7 +1261,7 @@ define([
 
         sql += 'y2013) as max\
                 FROM countries_domains';
-
+console.log(sql)
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, json) {
           var data = json.rows;
 
