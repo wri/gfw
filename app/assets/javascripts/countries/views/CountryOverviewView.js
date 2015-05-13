@@ -1261,7 +1261,7 @@ define([
 
         sql += 'y2013) as max\
                 FROM countries_domains';
-console.log(sql)
+
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+sql, _.bind(function(error, json) {
           var data = json.rows;
 
