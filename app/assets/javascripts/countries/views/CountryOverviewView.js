@@ -395,6 +395,10 @@ define([
       } else if (this.model.get('graph') === 'total_extent') {
         $('.countries_list__header__minioverview').hide();
         var sql = 'SELECT umd.iso, country as name, extent_2000 as extent, c.enabled FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso GROUP BY umd.iso, umd.country, extent_2000 , name, c.enabled ORDER BY extent_2000 desc ';
+        var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
+        if (!!mode && mode.mode == 'percent') {
+          sql = 'SELECT umd.iso, country as name, extent_perc as extent, c.enabled FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND extent_perc > 0 GROUP BY umd.iso, umd.country, extent_perc , name, c.enabled ORDER BY extent_perc desc '
+        }
         if (e) {
           sql += 'OFFSET 10';
         } else {
@@ -410,18 +414,23 @@ define([
           _.each(data, function(val, key) {
             var ord = e ? (key+11) : (key+1),
                 enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
-                var e_mha, l_mha,
+                if (! !!mode || mode.mode == 'total'){
+                  var e_mha, l_mha,
                     ex = val.extent,
                     e_mha = l_mha = 'Mha';
-                ex = Math.round(ex);
-                if (ex.toString().length >= 7) {
-                  ex = ((ex /1000)/1000).toFixed(2)
-                } else if (ex.toString().length >= 4) {
-                  e_mha = 'KHa';
-                  ex = (ex /1000);
-                if (ex % 1 != 0) ex = ex.toFixed(2)
+                  ex = Math.round(ex);
+                  if (ex.toString().length >= 7) {
+                    ex = ((ex /1000)/1000).toFixed(2)
+                  } else if (ex.toString().length >= 4) {
+                    e_mha = 'KHa';
+                    ex = (ex /1000);
+                  if (ex % 1 != 0) ex = ex.toFixed(2)
+                  } else {
+                    e_mha = 'Ha';
+                  }
                 } else {
-                  e_mha = 'Ha';
+                  var e_mha = '%';
+                  var ex = val.extent;
                 }
 
                 markup_list += '<li>\
@@ -440,11 +449,16 @@ define([
             $('.show-more-countries').show();
 
             $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('cover-extent').html('Cover extent <span>vs</span> Cover loss');
+            if (!!mode && mode.mode == 'percent')
+              $('.overview_graph__legend').find('.trigger-mode').html('<span>TOTAL EXTENT</span> <strong>RELATIVE EXTENT</strong>').show();
+            else
+              $('.overview_graph__legend').find('.trigger-mode').html('<strong>TOTAL EXTENT</strong> <span>RELATIVE EXTENT</span>').show();
           }
 
           $('.countries_list ul').append(markup_list);
 
           that.model.set('class', 'expanded');
+
         });
       } else if (this.model.get('graph') === 'ratio') {
         $('.countries_list__header__minioverview').hide();
@@ -497,16 +511,26 @@ define([
       } else if (this.model.get('graph') === 'domains') {
         $('.countries_list__header__minioverview').show();
         var sql = 'SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +' group by ecozone';
+        var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
+        if (!!mode && mode.mode == 'percent') {
+          sql = 'SELECT ecozone as name, sum(loss_perc) as total_loss, sum(gain_perc) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +' group by ecozone'
+        }
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
               markup_list = '';
           var data = json.rows;
-
+          var unit = '%';
           _.each(data, _.bind(function(val, key) {
+            if (! !!mode || mode.mode == 'total') {
+              val.total_loss = val.total_loss/1000000;
+              val.total_gain = val.total_gain/1000000;
+              unit = 'Mha';
+            }
+
             markup_list += ['<li>',
                               '<div class="countries_list__minioverview_number countries_list__minioverview huge">',
-                                '<div class="loss half" data-orig="' + val.total_loss/1000000 + '">'+this.helper.formatNumber(parseFloat(val.total_loss/1000000).toFixed(1))+' Mha</div>',
-                                '<div class="gain half last">'+this.helper.formatNumber(parseFloat(val.total_gain/1000000).toFixed(1))+' Mha</div>',
+                                '<div class="loss half" data-orig="' + val.total_loss + '">'+this.helper.formatNumber(parseFloat(val.total_loss).toFixed(1))+' '+unit+'</div>',
+                                '<div class="gain half last">'+this.helper.formatNumber(parseFloat(val.total_gain).toFixed(1))+' '+unit+'</div>',
                               '</div>',
                               '<div class="countries_list__num">'+(key+1)+'</div>',
                               '<div class="countries_list__title">'+val.name+'</div>',
@@ -518,6 +542,10 @@ define([
           $('.countries_list ul').html(markup_list);
 
           that.model.set('class', 'huge');
+          if (!!mode && mode.mode == 'percent')
+            $('.overview_graph__legend').find('.trigger-mode').html('<span>TOTAL DOMAIN</span> <strong>RELATIVE DOMAIN</strong>').show();
+          else
+            $('.overview_graph__legend').find('.trigger-mode').html('<strong>TOTAL DOMAIN</strong> <span>RELATIVE DOMAIN</span>').show();
 
           that._reorderRanking();
         }, this ));

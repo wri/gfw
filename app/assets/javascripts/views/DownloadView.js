@@ -13,7 +13,7 @@ define([
   var DownloadModel = Backbone.Model.extend({
     sync: function(method, model, options) {
       options || (options = {});
-      options.url = model.get('url');
+      options.url = '/download';
 
       Backbone.sync(method, model, options);
     }
@@ -32,6 +32,7 @@ define([
     },
 
     initialize: function() {
+      this.render();
       this.model = new DownloadModel();
     },
 
@@ -40,21 +41,20 @@ define([
     },
 
     show: function() {
-      this.render();
       this.$el.addClass('active');
     },
 
     hide: function() {
+      this.$el.find('.error').html('');
       this.$el.removeClass('active');
     },
 
     download: function(event) {
       if (this._isMobile()) {
         event && event.preventDefault() && event.stopPropagation();
-        this.show();
-
         var href = $(event.target).attr('href');
-        this.model.set('url', href);
+        this.model.set('link', href);
+        this.show();
       }
     },
 
@@ -62,17 +62,6 @@ define([
       if (this._isMobile()) {
         this.$el.html(this.template());
       }
-    },
-
-    _downloadRequestSuccess: function() {
-      this.hide();
-    },
-
-    _downloadRequestFailure: function() {
-      var errorTemplate = this.errorTemplate({
-        downloadLink: this.model.get('url')
-      });
-      this.$el.find('.error').html(errorTemplate);
     },
 
     _requestDownload: function(event) {
@@ -85,6 +74,17 @@ define([
         success: _.bind(this._downloadRequestSuccess, this),
         error: _.bind(this._downloadRequestFailure, this)
       });
+    },
+
+    _downloadRequestSuccess: function() {
+      this.hide();
+    },
+
+    _downloadRequestFailure: function() {
+      var errorTemplate = this.errorTemplate({
+        downloadLink: this.model.get('link')
+      });
+      this.$el.find('.error').html(errorTemplate);
     }
   });
 

@@ -173,6 +173,7 @@ define([
       'click .umd_options_control' : '_onClickUMDOptions',
       'click .canopy-status em' : '_onClickUMDOptions',
       'click .item.settings' : '_onClickUMDOptions',
+      'click #country-sidebar-button' : 'toggleMobileOptions'
     },
 
     initialize: function(options) {
@@ -185,6 +186,7 @@ define([
       // Cache
       this.$areaSelector = this.$('#areaSelector');
       this.$selectorRemove =  this.$('.selector-remove');
+      this.$sidebarUl = $('#country-sidebar-ul');
       this.$map = this.$('.map');
       this.UmdOptions = new CountryUmdOptionsView();
       this.setListeners();
@@ -259,6 +261,11 @@ define([
         this.helper.config.canopy_choice = threshold;
         this._updateMapThreshold();
       }, this ));
+    },
+
+    toggleMobileOptions: function(e){
+      $(e.currentTarget).toggleClass('active');
+      this.$sidebarUl.toggleClass('active');
     },
 
     _setAreaSelector: function() {

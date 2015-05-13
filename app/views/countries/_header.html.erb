@@ -69,7 +69,8 @@
           </div>
         </div>
         <div class="country-sidenav">
-          <ul>
+          <button id="country-sidebar-button">More Options <span class="icon"><svg><use xlink:href="#shape-arrow-down"></use></svg></span></button>
+          <ul id="country-sidebar-ul">
             <li>
               <a href='<%= map_coords %>/grayscale/loss,forestgain?begin=2001-01-01&end=2014-12-30&threshold=' class='action analyze_from_country' target="_blank" id="url_analysis">
                 <strong>Analyze forest change</strong>
@@ -80,16 +81,6 @@
                 </span>
               </a>
             </li>
-<!--             <li>
-              <a href='<%= map_coords %>/grayscale/loss,forestgain' class='action subscribe_from_country' target="_blank">
-                <strong>Subscribe to alerts</strong>
-                <span class="sidenav-icon">
-                  <svg>
-                    <use xlink:href="#shape-alerts"></use>
-                  </svg>
-                </span>
-              </a>
-            </li> -->
             <li>
               <a href='<%= map_coords %>/grayscale/loss,forestgain?dont_analyze=true' class='action layers_from_country' target="_blank">
                 <strong>View country data layers</strong>
@@ -101,7 +92,7 @@
               </a>
             </li>
             <li>
-              <a href='http://data.globalforestwatch.org/datasets?q=country<%= @country['iso'] %>' target='_blank'>
+              <a href='http://data.globalforestwatch.org/datasets?q=country<%= @country['iso'] %>' class="download-link-mobile" target='_blank'>
                 Browse and download country data
                 <span class="sidenav-icon">
                   <svg>
@@ -111,7 +102,7 @@
               </a>
             </li>
             <li>
-              <a href="<%= country_download_path(id: @country['iso']) %>" class="download country-download-link">
+              <a href="http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/umd_country_stats.xlsx" class="download download-link-mobile">
                 Download tree cover stats
                 <span class="sidenav-icon">
                   <svg>

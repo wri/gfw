@@ -132,7 +132,7 @@
         vertical-align: top;
         margin-top: 2px;
         border: 1px solid #6B6B6B;
-        border-radius: 9px;
+        border-radius: 39px;
         height: 39px;
         width: 310px;
         position: relative;
@@ -503,17 +503,55 @@
           right: 0;
           top: 0;
         }
+        button{
+          display: none;
+          height: 87px;
+          width: 100%;
+          position: relative;
+          text-transform: uppercase;
+          font-family: inherit;
+          font-size: 14px;
+          color: #BEBCC2;
+          background: none;
+          box-shadow: none;
+          border: none;
+          outline: none;
+          border-top: 1px solid #555;
+          background: $dark;
+          text-align: left;
+          padding: 0 0 0 25px;
+          .icon{
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            @include transform(translate(0,-50%));
+            width: 18px;
+            height: 18px;
+            svg{
+              stroke: #bebcc2;
+            }
+          }
+          &.active{
+            .icon{
+              @include transform(translate(0,-50%) rotate(180deg));
+            }
+          }
+          @media (max-width: 750px){
+            display: block;
+          }
 
+        }
         > ul {
           position: relative;
           top: 0;
           width: 100%;
           height: 100%;
           padding: 1px 0;
+          box-sizing: border-box;
           @include display-flex();
           @include flex-direction(column);
           @include justify-content(space-between);
-          box-sizing: border-box;
 
           > li {
             width: 100%;
@@ -2184,17 +2222,21 @@
           width: 100%;
 
           ul {
-            display: flex !important;
+            display: none;
             top: 0;
             padding: 0;
+            background: $dark;
+            &.active{
+              @include display-flex();
+            }
 
             li {
               height: auto;
               border: 0;
-              border-top: 1px solid $dark;
+              border-top: 1px solid #333;
 
               &:last-child {
-                border-bottom: 1px solid $dark;
+                border-bottom: 1px solid #333;
               }
 
               a {
@@ -2368,6 +2410,5 @@
   p.error {
     margin-top: 10px;
     font-size: 0.8em;
-    font-weight: bold;
   }
 }
