@@ -276,6 +276,7 @@ define([
         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         that.map.panTo(center);
         that.map.setZoom(15);
+        that._loadMarker(position);
       }
 
       if (navigator.geolocation) {
@@ -337,6 +338,7 @@ define([
     _loadMarker: function(the_geom) {
       var that = this;
 
+      the_geom = {'type':'Point','coordinates':[the_geom.coords.longitude,the_geom.coords.latitude]}
       var marker = this.selectedMarker = new GeoJSON(the_geom, config.OVERLAYSTYLES);
 
       if (marker.type && marker.type === 'Error') return;
@@ -346,10 +348,6 @@ define([
       marker.setMap(this.map);
       bounds.extend(marker.position);
       this.map.fitBounds(bounds);
-
-      setTimeout(function() {
-        that.map.setZoom(2);
-      }, 250);
     },
 
     _onOverlayComplete: function(marker) {
