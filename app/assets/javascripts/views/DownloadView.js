@@ -34,6 +34,7 @@ define([
     initialize: function() {
       this.render();
       this.model = new DownloadModel();
+      this.$loader = $('#mini-modal-loader');
       mps.publish('DownloadView/create',[this]);
     },
 
@@ -69,15 +70,22 @@ define([
       event && event.preventDefault() && event.stopPropagation();
 
       var email = $('#download_email_form [name="email_address"]').val()
-      this.model.set('email', email);
+      if(this.validateEmail(email)){
+        this.$loader.addClass('active');
+        this.model.set('email', email);
 
-      this.model.save({}, {
-        success: _.bind(this._downloadRequestSuccess, this),
-        error: _.bind(this._downloadRequestFailure, this)
-      });
+        this.model.save({}, {
+          success: _.bind(this._downloadRequestSuccess, this),
+          error: _.bind(this._downloadRequestFailure, this)
+        });
+      }else{
+        mps.publish('Notification/open',['email-incorrect']);
+      }
     },
 
     _downloadRequestSuccess: function() {
+      mps.publish('Notification/open',['not-email-send']);
+      this.$loader.removeClass('active');
       this.hide();
     },
 
@@ -85,8 +93,16 @@ define([
       var errorTemplate = this.errorTemplate({
         downloadLink: this.model.get('link')
       });
+      this.$loader.removeClass('active');
       this.$el.find('.error').html(errorTemplate);
-    }
+    },
+
+    validateEmail: function(email){
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
+
+
   });
 
   return DownloadView;

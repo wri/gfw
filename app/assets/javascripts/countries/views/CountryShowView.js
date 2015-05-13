@@ -14,8 +14,10 @@ define([
   'views/ShareView',
   'countries/models/CountryShowModel',
   'countries/helpers/CountryHelper',
+  'views/NotificationsView',
 
-], function($, Backbone, _, d3, mps, scrollit, SourceWindowView, DownloadView, CountryHeaderView, ShareView, CountryShowModel, CountryHelper ) {
+
+], function($, Backbone, _, d3, mps, scrollit, SourceWindowView, DownloadView, CountryHeaderView, ShareView, CountryShowModel, CountryHelper, NotificationsView) {
 
   'use strict';
 
@@ -48,6 +50,7 @@ define([
 
       // Initialize modules
       this.headerView = new CountryHeaderView({country: this.country});
+      new NotificationsView();
 
       // if (!this.embed) {
         this._stickynav();
