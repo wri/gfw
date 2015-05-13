@@ -25,7 +25,7 @@ define([
 
     events: {
       'click .forma_dropdown-link': '_openDropdown',
-      'click .country-download-link': '_openDownloadModal',
+      'click .download-link-mobile': '_openDownloadModal',
       'click .share-link': '_openShareModal'
     },
 
@@ -64,7 +64,14 @@ define([
     },
 
     _openDownloadModal: function(event) {
-      new DownloadView().download(event);
+
+      if (this.downloadView) {
+        this.downloadView.download(event);
+      }else{
+        this.downloadView = new DownloadView();
+        this.downloadView.download(event);
+      }
+
     },
 
     _openShareModal: function(event) {

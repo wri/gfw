@@ -32,6 +32,7 @@ define([
     },
 
     initialize: function() {
+      this.render();
       this.model = new DownloadModel();
     },
 
@@ -40,11 +41,11 @@ define([
     },
 
     show: function() {
-      this.render();
       this.$el.addClass('active');
     },
 
     hide: function() {
+      this.$el.find('.error').html('');
       this.$el.removeClass('active');
     },
 
@@ -53,7 +54,6 @@ define([
         event && event.preventDefault() && event.stopPropagation();
         var href = $(event.target).attr('href');
         this.model.set('link', href);
-
         this.show();
       }
     },
@@ -82,7 +82,7 @@ define([
 
     _downloadRequestFailure: function() {
       var errorTemplate = this.errorTemplate({
-        downloadLink: this.model.get('url')
+        downloadLink: this.model.get('link')
       });
       this.$el.find('.error').html(errorTemplate);
     }
