@@ -825,7 +825,7 @@ define([
             .attr('id', 'axis_y')
             .text('Tree cover loss (percent)')
             .attr('x', -h/1.6)
-            .attr('y', 15)
+            .attr('y', 10)
             .attr('transform', 'rotate(-90)');
         } else {
           svg.append('text')
