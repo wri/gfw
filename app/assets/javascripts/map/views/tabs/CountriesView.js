@@ -8,13 +8,12 @@ define([
   'handlebars',
   'amplify',
   'chosen',
-  'views/DownloadView',
   'map/presenters/tabs/CountriesPresenter',
   'text!map/templates/tabs/countries.handlebars',
   'text!map/templates/tabs/countriesIso.handlebars',
   'text!map/templates/tabs/countriesButtons.handlebars',
   'text!map/templates/tabs/countries-mobile.handlebars'
-], function(_, Handlebars, amplify, chosen, DownloadView, Presenter, tpl, tplIso, tplButtons, tplMobile) {
+], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplIso, tplButtons, tplMobile) {
 
   'use strict';
 
@@ -45,8 +44,6 @@ define([
 
       'click #countries-country-ul li' : 'changeIsoMobile',
       'click #countries-country-reset' : 'changeIsoMobile',
-
-      'click .download-link-mobile': '_openDownloadModal',
 
     },
 
@@ -312,11 +309,6 @@ define([
       var country = amplify.store('country-'+this.iso);
       this.setButtons(!!this.iso, country);
     },
-
-    _openDownloadModal: function(event) {
-      this.downloadView.download(event);
-    },
-
 
 
   });
