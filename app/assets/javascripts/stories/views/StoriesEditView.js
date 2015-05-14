@@ -33,18 +33,6 @@ define([
     mapTypeId: google.maps.MapTypeId.HYBRID,
     backgroundColor: '#99b3cc',
     disableDefaultUI: true,
-    panControl: false,
-    zoomControl: false,
-    mapTypeControl: false,
-    scaleControl: true,
-    scaleControlOptions: {
-        position: google.maps.ControlPosition.TOP_LEFT,
-    },
-    streetViewControl: false,
-    overviewMapControl: false,
-    scrollwheel: false,
-    layers: [596],
-    analysis: ''
   };
 
   config.OVERLAYSTYLES = {
@@ -128,15 +116,15 @@ define([
     el: '#storiesEditView',
 
     events: {
-      'click .remove_story-link': '_clickRemove'
+      'click #zoomIn': '_zoomIn',
+      'click #zoomOut': '_zoomOut',
+      'click #togglePin': '_startDrawing'
     },
 
     initialize: function() {
       if (!this.$el.length) {
         return
       }
-
-      _.bindAll(this, '_clickRemove');
 
       this.model = new cdb.core.Model();
 
@@ -276,6 +264,7 @@ define([
         var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         that.map.panTo(center);
         that.map.setZoom(15);
+        that.togglePinButton(true);
         that._loadMarker(position);
       }
 
@@ -286,32 +275,11 @@ define([
       }
 
       // Load map
-      this.map = new google.maps.Map(document.getElementById('stories_map'),
-        _.extend({}, config.MAPOPTIONS, { zoomControl: true }));
+      this.map = new google.maps.Map(document.getElementById('stories_map'),config.MAPOPTIONS);
 
       // Listen to map loaded
       google.maps.event.addListenerOnce(this.map, 'idle', function(){
         $searchInput.show();
-      });
-
-      // Set drawingManager
-      this.drawingManager = new google.maps.drawing.DrawingManager({
-        drawingControl: true,
-        drawingControlOptions: {
-          position: google.maps.ControlPosition.TOP_RIGHT,
-          drawingModes: [
-            google.maps.drawing.OverlayType.MARKER
-          ]
-        },
-        markerOptions: {
-          icon: config.OVERLAYSTYLES.icon
-        }
-      });
-
-      this.drawingManager.setMap(this.map);
-      // Listen to drawing changes
-      google.maps.event.addListener(this.drawingManager, 'markercomplete', function(marker) {
-        that._onOverlayComplete(marker);
       });
 
       // Set autocomplete search input
@@ -320,13 +288,22 @@ define([
 
       // Listen to selected areas (search)
       google.maps.event.addListener(
-        this.autocomplete, 'place_changed', function() {
-          var place = this.autocomplete.getPlace();
+        this.autocomplete, 'place_changed', _.bind(function() {
 
-          if (place && place.geometry) {
+
+          var place = this.autocomplete.getPlace();
+          if (place && place.geometry && place.geometry.viewport) {
             this.map.fitBounds(place.geometry.viewport)
           }
-        }.bind(this));
+          if (place && place.geometry && place.geometry.location && !place.geometry.viewport) {
+            var index = [];
+            for (var x in place.geometry.location) {
+               index.push(x);
+            }
+            this.map.setCenter(new google.maps.LatLng(place.geometry.location[index[0]], place.geometry.location[index[1]]));
+            this._resetDrawing();
+          }
+        }, this ));
 
         google.maps.event.addDomListener($searchInput[0], 'keydown', function(e) {
           if (e.keyCode == 13) {
@@ -362,28 +339,77 @@ define([
       this.model.set('the_geom', the_geom);
     },
 
-    _clickRemove: function(e) {
-      e.preventDefault();
+    //DRAW
+    _startDrawing: function(e){
+
+      if ($(e.currentTarget).hasClass('active')) {
+        this._resetDrawing();
+      }else{
+        // Set drawingManager
+        this.drawingManager = new google.maps.drawing.DrawingManager({
+          drawingControl: false,
+          drawingMode: google.maps.drawing.OverlayType.MARKER,
+          markerOptions: {
+            icon: config.OVERLAYSTYLES.icon
+          }
+        });
+
+        this.drawingManager.setMap(this.map);
+        // Listen to drawing changes
+        google.maps.event.addListener(this.drawingManager, 'markercomplete', _.bind(function(marker) {
+          this._onOverlayComplete(marker);
+        }, this ));
+        this.togglePinButton(true);
+      }
+
+    },
+
+    _resetDrawing: function(){
       this.selectedMarker.setMap(null);
       this.model.set('the_geom', '');
+      if (this.drawingManager) {
+        this.drawingManager.setDrawingMode(null);
+        this.drawingManager.setMap(null);
+      }
+      this.togglePinButton(false);
+    },
+
+
+
+
+    //ZOOM
+    _zoomIn: function() {
+      this.setZoom(this.getZoom() + 1);
+    },
+    _zoomOut: function(){
+      this.setZoom(this.getZoom() - 1);
+    },
+    getZoom: function(){
+      return this.map.getZoom();
+    },
+    setZoom: function(zoom){
+      this.map.setZoom(zoom);
     },
 
     _toggleButton: function() {
       if (this.model.get('the_geom') !== '') {
         this.$the_geom.val(this.model.get('the_geom'));
-        this.$remove.fadeIn(250);
       } else {
         this.$the_geom.val('');
-        this.$remove.fadeOut(250);
       }
     },
+
+    togglePinButton: function(bool){
+      this.$togglePin.toggleClass('active', bool);
+    },
+
     prettifyFilename: function (filename) {
       return filename.toLowerCase().replace(/ /g,"_");
     },
 
     render: function() {
       this.$the_geom = this.$('#story_the_geom');
-      this.$remove = this.$('.remove_story-link');
+      this.$togglePin = this.$('#togglePin');
 
       var the_geom = this.$the_geom.val()
       this.model.set('the_geom', the_geom);
