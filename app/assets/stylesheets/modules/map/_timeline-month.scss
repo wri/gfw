@@ -91,6 +91,7 @@
         position: relative;
         > span{
           margin: 0 5px 0 0;
+          font-size: 12px;
         }
         .select-box{
           @include display-flex();

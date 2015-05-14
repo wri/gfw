@@ -51,6 +51,10 @@
           margin: 0;
         }
         position: relative;
+        span{
+          font-size: 12px;
+          // text-transform: uppercase;
+        }
         button{
           top: -1px;
           padding: 0 20px;

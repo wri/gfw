@@ -87,7 +87,7 @@ define([
      */
     renderMobile: function(){
       this.$timeline = $('.timeline-container');
-      this.$el.html(this.templateMobile());
+      this.$el.html(this.templateMobile({name: this.layer.title}));
       this.$timeline.html('').append(this.el);
 
       // Cache
