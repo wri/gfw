@@ -6,7 +6,6 @@ class MobileDownload < ActionMailer::Base
     @download_link = download_link
     @type = type
     subject = (type == 'default') ? 'Link to browse and download country data' : 'Link to download tree cover statistics'
-    puts subject
     mail :subject => subject,
          :to      => email_address,
          :from    => 'gfw@wri.org'
