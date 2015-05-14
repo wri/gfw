@@ -6,7 +6,8 @@ class DownloadController < ApplicationController
     if (params[:email].present?)
       MobileDownload.download_email(
         params[:email],
-        params[:link]
+        params[:link],
+        params[:type],
       ).deliver
 
       return render json: true

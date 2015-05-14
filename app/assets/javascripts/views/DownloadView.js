@@ -11,6 +11,10 @@ define([
   'use strict';
 
   var DownloadModel = Backbone.Model.extend({
+    defaults: {
+      type: 'default'
+    },
+
     sync: function(method, model, options) {
       options || (options = {});
       options.url = '/download';
@@ -25,6 +29,17 @@ define([
 
     el: '.download-modal',
 
+    text:{
+      default : {
+        title : 'Request a link',
+        description : 'Enter your email to receive a link to browse and download data for this country'
+      },
+      'tree-cover' : {
+        title : 'Request a download link',
+        description : 'Enter your email to receive a link to download tree cover statistics for this country'
+      }
+    },
+
     events: {
       'click .close': 'hide',
       'click button': '_requestDownload',
@@ -32,10 +47,10 @@ define([
     },
 
     initialize: function() {
-      this.render();
       this.model = new DownloadModel();
       this.$loader = $('#mini-modal-loader');
       this.setListeners();
+      this.render();
       mps.publish('DownloadView/create',[this]);
     },
 
@@ -50,6 +65,7 @@ define([
     },
 
     show: function() {
+      this.render();
       this.$el.addClass('active');
     },
 
@@ -62,14 +78,16 @@ define([
       if (this._isMobile()) {
         event && event.preventDefault() && event.stopPropagation();
         var href = $(event.target).attr('href');
+        var type = $(event.target).data('type') || 'default';
         this.model.set('link', href);
+        this.model.set('type', type);
         this.show();
       }
     },
 
     render: function() {
       if (this._isMobile()) {
-        this.$el.html(this.template());
+        this.$el.html(this.template({ text: this.text[this.model.get('type')]}));
       }
     },
 
