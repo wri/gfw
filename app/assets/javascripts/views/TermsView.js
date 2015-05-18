@@ -46,9 +46,7 @@ define([
     },
 
     _onClickCancel: function(e) {
-      e.preventDefault();
       ga('send', 'event', 'Terms', 'Click', 'I do not agree');
-      console.log('hey!');
     },
 
     _onClickWhyTerms: function(e) {
