@@ -233,16 +233,17 @@ define([
     },
 
     _toogleCategory: function(e){
-      // Save category status in an array
-      var categories_status = this.model.get('categories_status');
-      var slug = $(e.currentTarget).data('category_slug');
-      var index = categories_status.indexOf(slug);
-      (index != -1) ? categories_status.splice(index, 1) : categories_status.push(slug);
-      this.model.set('categories_status',categories_status);
+      if ($(window).width() > window.gfw.config.GFW_MOBILE) {
+        // Save category status in an array
+        var categories_status = this.model.get('categories_status');
+        var slug = $(e.currentTarget).data('category_slug');
+        var index = categories_status.indexOf(slug);
+        (index != -1) ? categories_status.splice(index, 1) : categories_status.push(slug);
+        this.model.set('categories_status',categories_status);
 
-      $(e.currentTarget).parent().toggleClass('closed');
-      $(e.currentTarget).parent().children('.layers').toggleClass('closed');
-
+        $(e.currentTarget).parent().toggleClass('closed');
+        $(e.currentTarget).parent().children('.layers').toggleClass('closed');
+      }
     },
 
     _showCanopy: function(e){

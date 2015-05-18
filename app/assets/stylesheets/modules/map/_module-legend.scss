@@ -83,6 +83,7 @@
         position: relative;
         cursor: pointer;
         &:after{
+          display: none;
           content: "";
           position: absolute;
           top: 50%;
@@ -93,6 +94,9 @@
           border-left: 3px solid transparent;
           border-right: 3px solid transparent;
           border-top: 5px solid;
+          @media (min-width: $br-mobileMap){
+            display: block;
+          }
         }
         em{
           display: none;
