@@ -538,7 +538,7 @@ define([
           }, this ));
 
           $('.show-more-countries').hide();
-          $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('total-loss').html('Total loss <span>vs</span> Total gain');
+          $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('total-loss').html('');
           $('.countries_list ul').html(markup_list);
 
           that.model.set('class', 'huge');
