@@ -427,7 +427,7 @@
     <section class='country-section country-download-links-section'>
       <div class='inner'>
         <div class="section-content">
-          <%= link_to 'Subscribe to alerts for this country', "#{map_coords}/grayscale/forma?subscribe", class: 'btn-rdn btn-rdn-dark', :target => '_blank' %>
+          <%#= link_to 'Subscribe to alerts for this country', "#{map_coords}/grayscale/forma?subscribe", class: 'btn-rdn btn-rdn-dark', :target => '_blank' %>
           <% if @country['dataset_link'].present? %>
           <% link_to 'Download relevant data sets', @country['dataset_link'], class: 'btn-rdn' %>
           <%# else %>
