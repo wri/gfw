@@ -65,6 +65,10 @@ define([
       'LegendMobile/open': function() {
         this.view.toogleLegend();
       }
+    }, {
+      'Dialogs/close': function() {
+        this.view.toogleLegend(false);
+      }
     }],
 
     /**
@@ -104,6 +108,10 @@ define([
 
     showCanopy: function(){
       mps.publish('ThresholdControls/toggle');
+    },
+
+    toggleOverlay: function(to){
+      mps.publish('Overlay/toggle', [to])
     },
 
     initExperiment: function(id){

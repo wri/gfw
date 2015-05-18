@@ -157,11 +157,15 @@ define([
       }
     },{
       'AnalysisMobile/open': function() {
-        this.view.toogleAnalysis(this.view.$el.hasClass('is-analysis'));
+        this.view.toggleAnalysis(this.view.$el.hasClass('is-analysis'));
       }
     },{
       'Subscribe/end' : function(){
         this.view.setStyle();
+      }
+    }, {
+      'Dialogs/close': function() {
+        this.view.toggleAnalysis(true);
       }
     }],
 
@@ -611,6 +615,10 @@ define([
       }
 
       return p;
+    },
+
+    toggleOverlay: function(to){
+      mps.publish('Overlay/toggle', [to])
     },
 
     notificate: function(id){

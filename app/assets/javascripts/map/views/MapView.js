@@ -44,6 +44,7 @@ define([
       this.layerInst = {};
       this.$maplngLng = $('.map-container .map-latlng');
       this.$viewFinder = $('#viewfinder');
+      this.$overlayMobile = $('#overlay-mobile');
       this.embed = $('body').hasClass('is-embed-action');
 
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
@@ -106,6 +107,11 @@ define([
         // TODO => No mps here!
         mps.publish('AnalysisTool/analyze-wdpaid', [wdpa]);
       }, this));
+
+      this.$overlayMobile.on('click', _.bind(function(){
+        this.presenter.closeDialogsMobile();
+      }, this ));
+
     },
 
 
@@ -428,7 +434,12 @@ define([
         sessionStorage.removeItem('DIALOG');
         window.setTimeout(function(){$('.backdrop').css('opacity', '0.3');},500);
       });
+    },
+
+    overlayToggle: function(bool){
+      this.$overlayMobile.toggleClass('active', bool);
     }
+
 
   });
 

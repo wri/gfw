@@ -42,7 +42,7 @@ define([
 
       //other
       'click #data-tab-play' : 'onGifPlay',
-      'click .close' : 'toogleAnalysis'
+      'click .close' : 'toggleAnalysis'
     },
 
     initialize: function(map) {
@@ -106,8 +106,11 @@ define([
       this.inits();
     },
 
-    toogleAnalysis: function(to){
+    toggleAnalysis: function(bool){
+      var to = (bool && bool.currentTarget) ? true : bool;
       this.$el.toggleClass('active', !to);
+      this.presenter.toggleOverlay(!to);
+
     },
 
     inits: function(){
@@ -369,7 +372,7 @@ define([
         ga('send', 'event', 'Map', 'Analysis', 'Click: done');
         this._stopDrawing();
         this.presenter.doneDrawing();
-        this.toogleAnalysis(true);
+        this.toggleAnalysis(true);
       }
     },
 

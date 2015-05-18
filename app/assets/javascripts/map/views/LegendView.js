@@ -174,8 +174,10 @@ define([
       return array;
     },
 
-    toogleLegend: function(){
-      this.$el.toggleClass('active');
+    toogleLegend: function(bool){
+      var to = (bool && bool.currentTarget) ? false : bool;
+      this.$el.toggleClass('active', to);
+      this.presenter.toggleOverlay(to);
     },
 
     /**
