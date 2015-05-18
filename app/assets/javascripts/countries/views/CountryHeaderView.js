@@ -266,6 +266,7 @@ define([
     toggleMobileOptions: function(e){
       $(e.currentTarget).toggleClass('active');
       this.$sidebarUl.toggleClass('active');
+      ($(e.currentTarget).hasClass('active')) ? $(e.currentTarget).find('em').text('less options') : $(e.currentTarget).find('em').text('more options');
     },
 
     _setAreaSelector: function() {
