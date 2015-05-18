@@ -5,21 +5,36 @@ define([
   'jquery',
   'backbone',
   'underscore',
+  'handlebars',
   'mps',
   'presenters/SourceMobileFriendlyPresenter',
-], function($,Backbone, _,mps, Presenter) {
+  'text!templates/sourcemobilefriendly.handlebars'
+], function($,Backbone, _, Handlebars, mps, Presenter, tpl) {
 
   'use strict';
 
   var SourceMobileFriendlyModel = Backbone.Model.extend({
     defaults: {
       hidden: true,
+      link: '',
+      text: 'default'
     }
   });
 
   var SourceMobileFriendlyView = Backbone.View.extend({
 
     el: 'body',
+
+    template: Handlebars.compile(tpl),
+
+    texts: {
+      default: {
+        title: "The page you're trying to access is not optimized for a mobile device"
+      },
+      other: {
+        title: "The page you're trying to access may not be optimized for a mobile device"
+      }
+    },
 
     events: {
       'click .mobile-friendly' : 'show',
@@ -76,10 +91,18 @@ define([
     show: function(e) {
       if (this.$window.width() < 850) {
         e && e.preventDefault() && e.stopPropagation();
+        var text = $(e.currentTarget).data('text') || 'default';
+        this.model.set('text', text);
+        this.model.set('link', $(e.currentTarget).attr('href'));
+        this.model.set('target', $(e.currentTarget).attr('target'));
+        this.render();
         this.model.set('hidden', false);
-        var href = $(e.currentTarget).attr('href');
-        this.$setLink.attr('href', href);
+
       }
+    },
+
+    render: function(){
+      this.$sourceWindow.find('.content-wrapper').html(this.template({ url: this.model.get('link'), target: this.model.get('target'), texts : this.texts[this.model.get('text')]}))
     }
 
   });
