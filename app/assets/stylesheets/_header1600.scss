@@ -103,7 +103,7 @@
             @include transition(all 0.15s $easeInOutCubic);
             @media (min-width: $br-mobile){
               padding: 0;
-              min-width: none;
+              min-width: 0;
               width: 100%;
               height: 100%;
               line-height: normal;

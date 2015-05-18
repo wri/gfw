@@ -14,4 +14,12 @@
     opacity: 0;
     visibility: hidden;
   }
+  .title-dialog{
+    font-size: 21px;
+    padding: 20px 20px 0px;
+    font-weight: 300;
+    @media (min-width: $br-mobileMap){
+      display: none;
+    }
+  }
 }
