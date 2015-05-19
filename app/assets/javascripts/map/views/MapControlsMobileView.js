@@ -27,7 +27,8 @@ define([
 
     events: {
       'click .toggle-legend': 'toggleLegend',
-      'click .toggle-analysis': 'toggleAnalysis'
+      'click .toggle-analysis': 'toggleAnalysis',
+      'click .toggle-countries': 'toggleCountries',
     },
 
     template: Handlebars.compile(tpl),
@@ -40,6 +41,7 @@ define([
 
       //cache
       this.$btnAnalysis = this.$el.find('.toggle-analysis');
+      this.$btnCountries = this.$el.find('.toggle-countries');
     },
 
     render: function () {
@@ -56,6 +58,15 @@ define([
 
     toogleAnalysisBtn: function(to){
       this.$btnAnalysis.toggleClass('active',to);
+    },
+
+    toggleCountries: function(){
+      this.presenter.openCountriesTab();
+    },
+
+    toogleCountryBtn: function(iso,analyze){
+      var to = !!iso.country;
+      this.$btnCountries.toggleClass('active',to);
     },
 
     initCustomViews: function(){

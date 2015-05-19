@@ -29,18 +29,22 @@ define([
       'AnalysisResults/Delete': function() {
         this.view.toogleAnalysisBtn(false);
       }
+    },{
+      'LocalMode/updateIso' : function(iso,analyze){
+        this.view.toogleCountryBtn(iso);
+      }
     }],
 
-    /**
-     * Used by mobile version to open legend and analysis
-     *
-     */
     openLegend: function() {
       mps.publish('LegendMobile/open');
     },
 
     openAnalysis: function(){
       mps.publish('AnalysisMobile/open');
+    },
+
+    openCountriesTab: function(){
+      mps.publish('Tab/open', ['#country-tab-mobile-btn']);
     }
 
   });
