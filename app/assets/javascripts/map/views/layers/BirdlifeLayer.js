@@ -14,7 +14,7 @@ define([
     options: {
       sql: 'SELECT the_geom_webmercator,cartodb_id, ebaaltmin::text, ebaaltmax, ebabookcod as id, ebaname, factsheet, \'{tableName}\' AS tablename, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}',
       infowindow: true,
-      interactivity: 'cartodb_id, tablename, layer, ebaname, id, ebaaltmin, ebaaltmax, factsheet, analysis'
+      interactivity: 'cartodb_id, tablename, layer, ebaname, id, ebaaltmin, ebaaltmax, factsheet, analysis',
       analysis: true
     }
 

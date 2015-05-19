@@ -13,7 +13,7 @@ define([
     options: {
       sql: 'SELECT the_geom_webmercator,cartodb_id,\'{tableName}\' AS tablename,{analysis} AS analysis, sitenamefi as name, country, source, mapid, array_to_string(species::text[], \', \') as species, \'{tableName}\' AS layer FROM {tableName}',
       infowindow: true,
-      interactivity: 'cartodb_id, tablename, layer, species, name, country, source, mapid, analysis'
+      interactivity: 'cartodb_id, tablename, layer, species, name, country, source, mapid, analysis',
       analysis: true
     }
 
