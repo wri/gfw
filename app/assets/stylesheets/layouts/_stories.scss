@@ -451,7 +451,7 @@
         height: 295px;
       }
 
-      .control-zoom, .control-draw{
+      .control-zoom, .control-locate{
         display: block;
         position: absolute;
         top: 5px;
@@ -467,6 +467,10 @@
           border:none;
           border-top: 1px solid $border;
           outline: none;
+          cursor: pointer;
+          &:hover{
+            background: darken($white,5%);
+          }
           &:first-child{
             border-top: none;
           }
@@ -476,16 +480,32 @@
         }
 
       }
-      .control-draw{
+
+      .control-pin{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        background: image-url('icons/marker_exclamation.png');
+        background-size: contain;
+        margin: -20px 0 0 -20px;
+      }
+
+      .control-locate{
         left: auto;
         right: 5px;
-        button{
-          &.hide{ display: none;}
+        svg{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 90%;
+          height: 90%;
+          @include transform(translate(-50%,-50%));
         }
         &.active{
-          button{
-            display: none;
-            &.hide{ display: block;}
+          svg{
+            @include animation(loader,1s,infinite,$easeInOutCubic);
           }
         }
       }
@@ -493,13 +513,16 @@
         position: absolute;
         top: 5px;
         right: 40px;
+        width: 60%;
+        min-width: 175px;
+        max-width: 300px;
         padding: 0;
         font-size: 12px;
         background: $white;
         box-shadow: $shadow1;
         input{
           display: block;
-          width: 175px;
+          width: 100%;
           height: 30px;
           margin: 0;
           font-family: inherit;
@@ -555,84 +578,99 @@
 }
 
 
-// /* =Edit
-// ----------------------------------------------- */
-
-// .story_form {
-//   position: relative;
-//   margin: 40px auto;
-
-//   aside {
-//     position: absolute;
-//     top: 0; right: 0;
-//     width: 282px;
-//     font-size: 13px;
-
-//     h3 {
-//       padding: 0 0 5px;
-//       margin-bottom: 15px;
-//       border-bottom: 1px solid #ccc;
-//       font-weight: 500;
-//       font-size: 12px;
-//       text-transform: uppercase;
-//       color: #333;
-//     }
-
-//     p,
-//     ul {
-//       margin-bottom: 15px;
-//       font-size: 15px;
-//       line-height: 1.2em;
-//       color: #666;
-//     }
-
-//     ul {
-//       list-style: disc;
-//       margin-left: 15px;
-//     }
-
-//     li { margin-bottom: 10px; }
-//   }
-// }
-
-
-
-
-
-
-.upload_picture {
-  @include inline-block();
-  float: left;
-  width: 132px;
-  height: 78px;
-  margin: 5px 10px 10px 0;
-  background: transparent url('buttons/bkg_button_add_media.png') no-repeat center;
-
-  &:hover { background: transparent url('buttons/bkg_button_add_media_hover.png') no-repeat center; }
-}
-
+// UPLOAD SECTION
 .thumbnails {
-  float: left;
-  width: 585px;
-
+  width: 100%;
+  @media (min-width: $br-mobile) {
+    float: left;
+    width: 585px;
+  }
   .destroy {
     position: absolute;
     top: -9px; right: -9px;
     width: 18px;
     height: 18px;
-    @include stories-icons-sprite(btn_remove);
+    background: $dark;
+    border-radius: 50%;
+    &:hover{
+      background: darken($dark,5%);
+    }
+    svg{
+      width: 65%;
+      fill: $white;
+      display: block;
+      margin: 0 auto;
+    }
   }
 }
-.show_mobile {display: none;}
+
+// btn upload stories
+.upload_picture {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 76px;
+  margin: 5px 0 0;
+  border: 2px dashed $cGreen;
+
+  &:hover{
+    border-color: darken($cGreen,5%);
+    &:before,&:after{
+      background: darken($cGreen,5%);
+    }
+
+  }
+
+  &:before,&:after{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: $cGreen;
+    @include transform(translate(-50%,-50%));
+  }
+
+  &:before{
+    height: 30px;
+    width: 4px;
+  }
+  &:after{
+    height: 4px;
+    width: 30px;
+  }
+
+  @media (min-width: $br-mobile) {
+    @include inline-block();
+    float: left;
+    width: 132px;
+    margin: 5px 10px 0px 0;
+  }
+}
+
 .thumbnail {
   position: relative;
   @include inline-block();
-  width: 132px;
+  width: 48%;
   height: 76px;
-  margin: 5px 10px 0 0;
+  margin: 4% 0px 0 0;
   border: 2px solid #fff;
   background: #fff;
   cursor: move;
+
+  &:nth-child(2n+3) {
+    margin: 4% 0 0 4%;
+  }
+
+
+  @media (min-width: $br-mobile) {
+    width: 132px;
+    height: 76px;
+    margin: 5px 10px 0 0;
+    &:nth-child(2n+3) {
+      margin: 5px 10px 0 0;
+    }
+  }
 
   .inner_box {
     width: 132px;
@@ -641,13 +679,12 @@
     overflow: hidden;
   }
 
-  &:hover { border: 2px solid #9EB741; }
+  &:hover { border: 2px solid $cGreen; }
 
   &.preview {
     cursor: default;
-    border: 1px solid #9EB741;
-
-    &:hover { border: 1px solid #9EB741; }
+    border: 1px solid $cGreen;
+    &:hover { border: 1px solid $cGreen; }
   }
 
   img {
@@ -666,8 +703,19 @@
 
   .spinner {
     position: absolute;
-    top: 30px;
-    left: 65px;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin: -10px 0 0;
+    @include transform(translate(-50%,-50%));
+    @include animation(loader,1s,infinite,$easeInOutCubic);
+    visibility: visible;
+    opacity: 1;
+    z-index: 11;
+    svg{
+      fill: $cGreen;
+    }
   }
 }
 
