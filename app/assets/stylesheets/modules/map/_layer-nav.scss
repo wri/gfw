@@ -229,6 +229,9 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     &.country{
       background: #A300D9;
       color: $white;
+      @media (max-width: $br-mobileMap - 1){
+        display: none;
+      }
       &.disabled{
         opacity: 0.25;
         .layers-nav{
