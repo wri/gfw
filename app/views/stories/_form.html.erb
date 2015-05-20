@@ -20,9 +20,9 @@
 
   <div class="field required">
     <div class="<%= 'field_with_errors' if @story.errors[:the_geom].present? %>">
-      <%= label_tag 'Affected areas' %>
+      <%= label_tag 'Choose a location' %>
     </div>
-    <span class='drop_pin'>Drop a pin on the map near the affected area</span>
+    <span class='drop_pin'>Select a location for your story by entering an address in the search box, by dragging the map, or by clicking the target icon to find your current location. The flag in the center indicates where your story will be placed. </span>
 
     <div class="<%= 'field_with_errors' if @story.errors[:the_geom].present? %> stories_map-container" >
       <div>
@@ -50,9 +50,9 @@
   </div>
 
   <div class="field">
-    <%= f.label :location %>
+    <%= f.label :location (to appear beneath the title of your story) %>
 
-    <%= f.text_field :location, :placeholder => '“Katingan Peatland area, Indonesia,” “Near Ambanja, Mozambique”' %>
+    <%= f.text_field :location (to appear beneath the title of your story), :placeholder => '“Katingan Peatland area, Indonesia,” “Near Ambanja, Mozambique”' %>
   </div>
 
   <div class="field short">
