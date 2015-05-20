@@ -267,7 +267,7 @@ define([
                   }
                 }
 
-                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span>');
+                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +'</span>');
 
                 if (key == max_trigger){
                   that._reorderRanking();
@@ -290,10 +290,14 @@ define([
             $('.countries_list ul').html('');
             $('.show-more-countries').show();
 
-            if (!!mode && mode.mode == 'percent')
+            if (!!mode && mode.mode == 'percent') {
               $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS LOSS</span> <strong>RELATIVE LOSS</strong>').show();
-            else
+              $('.overview_graph__title').html('Countries with greatest percent loss <sup>(2001-2013)</sup> relative to tree cover in 2000');
+
+            } else {
               $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS LOSS</strong> <span>RELATIVE LOSS</span>').show();
+              $('.overview_graph__title').html('Countries with greatest tree cover loss <sup>(2001-2013)</sup>');
+            }
           }
 
           $('.countries_list ul').append(markup_list);
@@ -381,10 +385,13 @@ define([
 
             $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('per-loss').html('% Gain');
 
-            if (!!mode && mode.mode == 'percent')
+            if (!!mode && mode.mode == 'percent') {
               $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS GAIN</span> <strong>RELATIVE GAIN</strong>').show();
-            else
+              $('.overview_graph__title').html('Countries with greatest percent tree cover gain <sup>(2001-2012)</sup> relative to tree cover in 2000');
+            } else {
               $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS GAIN</strong> <span>RELATIVE GAIN</span>').show();
+              $('.overview_graph__title').html('Countries with greatest tree cover gain <sup>(2001-2012)</sup>');
+            }
           }
 
           $('.countries_list ul').append(markup_list);
@@ -449,10 +456,13 @@ define([
             $('.show-more-countries').show();
 
             $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('cover-extent').html('Cover extent <span>vs</span> Cover loss');
-            if (!!mode && mode.mode == 'percent')
+            if (!!mode && mode.mode == 'percent'){
               $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS EXTENT</span> <strong>RELATIVE EXTENT</strong>').show();
-            else
+              $('.overview_graph__title').html('Countries with greatest percent tree cover <sup>(2000)</sup>');
+            } else {
               $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS EXTENT</strong> <span>RELATIVE EXTENT</span>').show();
+              $('.overview_graph__title').html('Countries with greatest tree cover <sup>(2000)</sup>');
+            }
           }
 
           $('.countries_list ul').append(markup_list);
@@ -542,11 +552,13 @@ define([
           $('.countries_list ul').html(markup_list);
 
           that.model.set('class', 'huge');
-          if (!!mode && mode.mode == 'percent')
+          if (!!mode && mode.mode == 'percent') {
             $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS DOMAIN</span> <strong>RELATIVE DOMAIN</strong>').show();
-          else
+              $('.overview_graph__title').html('Climate domains ranked in order of greatest percent tree cover loss <sup>(2001-2013)</sup> relative to tree cover in 2000');
+          } else {
             $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS DOMAIN</strong> <span>RELATIVE DOMAIN</span>').show();
-
+              $('.overview_graph__title').html('Climate domains ranked in order of greatest tree cover loss <sup>(2001-2013)</sup>');
+          }
           that._reorderRanking();
         }, this ));
       }
@@ -949,18 +961,25 @@ define([
             });
         }, this ));
       } else if (this.model.get('graph') === 'percent_loss') {
-        if (!this.absolute_gain) {
-          var $target = this.$big_figures,
-               query  = 'SELECT sum(gain) from umd_nat_final_1';
+        var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE')),
+            $target = this.$big_figures,
+            query  = 'SELECT sum(gain) from umd_nat_final_1';
 
-          $.ajax({
-                url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
-                dataType: 'json',
-                success: _.bind(function(data) {
-                  var gain = data.rows[0].sum;
-                  var g_mha, l_mha;
-                  g_mha = l_mha = 'Mha';
+        if (!!mode && mode.mode == 'percent') {
+          query = 'SELECT sum(gain_perc)/count(gain_perc) as sum from umd_nat_final_1';
+        }
+        $.ajax({
+              url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
+              dataType: 'json',
+              success: _.bind(function(data) {
+                var gain = data.rows[0].sum;
+                var g_mha, l_mha;
+                g_mha = l_mha = 'Mha';
 
+                if (!!mode && mode.mode == 'percent') {
+                  $target.find('.figure').removeClass('extent').html(gain.toFixed(3));
+                  $target.find('.unit').html('%');
+                } else {
                   if (gain.toString().length >= 7) {
                     gain = ((gain /1000)/1000).toFixed(2)
                   } else if (gain.toString().length >= 4) {
@@ -972,25 +991,28 @@ define([
                   }
                   $target.find('.figure').removeClass('extent').html((~~gain).toLocaleString());
                   $target.find('.unit').html(l_mha);
-                  this.absolute_gain = {'val':gain,'uni':l_mha};
-                }, this),
-              });
-        } else {
-          this.$big_figures.find('.figure').removeClass('extent').html((~~this.absolute_gain.val).toLocaleString());
-          this.$big_figures.find('.unit').html(this.absolute_gain.uni);
-        }
+                }
+              }, this),
+            });
       } else if (this.model.get('graph') === 'total_extent') {
-        if (!this.absolute_extent) {
-          var $target = this.$big_figures,
-               query  = 'SELECT sum(extent_2000) from umd_nat_final_1';
-          $.ajax({
-                url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
-                dataType: 'json',
-                success: _.bind(function(data) {
-                  var extent = data.rows[0].sum;
-                  var g_mha, l_mha;
-                  g_mha = l_mha = 'Mha';
+        var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE')),
+          $target = this.$big_figures,
+             query  = 'SELECT sum(extent_2000) from umd_nat_final_1';
+          if (!!mode && mode.mode == 'percent') {
+            query = 'SELECT sum(extent_perc)/count(extent_perc) as sum from umd_nat_final_1';
+          }
+        $.ajax({
+              url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
+              dataType: 'json',
+              success: _.bind(function(data) {
+                var extent = data.rows[0].sum;
+                var g_mha, l_mha;
+                g_mha = l_mha = 'Mha';
 
+                if (!!mode && mode.mode == 'percent') {
+                  $target.find('.figure').addClass('extent').html(extent.toFixed(3));
+                  $target.find('.unit').html('%');
+                } else {
                   if (extent.toString().length >= 7) {
                     extent = ((extent /1000)/1000).toFixed(2)
                   } else if (extent.toString().length >= 4) {
@@ -1002,13 +1024,9 @@ define([
                   }
                   $target.find('.figure').addClass('extent').html((~~extent).toLocaleString());
                   $target.find('.unit').html(l_mha);
-                  this.absolute_extent = {'val':extent,'uni':l_mha};
-                }, this),
-              });
-        } else {
-          this.$big_figures.find('.figure').addClass('extent').html((~~this.absolute_extent.val).toLocaleString());
-          this.$big_figures.find('.unit').html(this.absolute_extent.uni);
-        }
+                }
+              }, this),
+            });
       } else if (this.model.get('graph') === 'ratio') {
         this._hideYears();
 
