@@ -88,10 +88,6 @@ define([
       this._renderInput();
       this.$el.html(this.template({ hideEmbed: this.model.get('hideEmbed') }));
       this._cacheVars();
-      if (!document.queryCommandSupported('copy')) {
-        this.$('.copy_url').hide();
-        this.$input.css('width','100%');
-      }
     },
 
     _cacheVars: function() {
