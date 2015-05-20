@@ -161,7 +161,8 @@ define([
 
     setButtons: function(to, country){
       this.$toggle.toggleClass('active', to);
-      this.$buttons.html(this.templateButtons( {iso: this.iso, country: country} ));
+      var isSpecialAtlas = (!!country && !!country.iso && country.iso == 'IDN') || false;
+      this.$buttons.html(this.templateButtons( {iso: this.iso, country: country, isSpecialAtlas: isSpecialAtlas} ));
     },
 
     analyzeIso: function(e){
