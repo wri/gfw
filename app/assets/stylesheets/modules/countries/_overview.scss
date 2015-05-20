@@ -372,7 +372,7 @@
     right: 57px;
   }
   &.huge {
-    width: 150px;
+    width: 270px;
   }
 
   &.expanded {
@@ -566,11 +566,10 @@
 
   .half {
     float: left;
-    width: 150px;
+    width: 130px;
     text-align: right;
 
     &.last {
-      display: none;
       padding-left: 9px;
       border-left: 1px solid #ccc;
       margin-left: 10px;
