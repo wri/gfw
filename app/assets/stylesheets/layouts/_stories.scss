@@ -333,10 +333,10 @@
             }
             &:hover{
               &:before{
-                @include transform(translate(-50%,-50%) rotate(90deg) scale(0.75));
+                @include transform(translate(-50%,-50%) rotate(0deg) scale(0.75));
               }
               &:after{
-                @include transform(translate(-50%,-50%) rotate(180deg) scale(0.75));
+                @include transform(translate(-50%,-50%) rotate(90deg) scale(0.75));
               }
             }
           }
@@ -673,10 +673,12 @@
   }
 
   .inner_box {
-    width: 132px;
-    height: 76px;
+    width: 100%;
+    height: 100%;
     clear: both;
     overflow: hidden;
+    background-size: cover;
+    background-position: center;
   }
 
   &:hover { border: 2px solid $cGreen; }
@@ -685,10 +687,6 @@
     cursor: default;
     border: 1px solid $cGreen;
     &:hover { border: 1px solid $cGreen; }
-  }
-
-  img {
-    width: 100%;
   }
 
   .filename {
