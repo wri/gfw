@@ -114,7 +114,11 @@
             <!--  indepth message -->
             <% if @country['indepth'].present? %>
                 <li>
-                  <a href="<%= @country['indepth'] %>" target="_blank" class="download country-indepth-link">Visit the <%= @country['name']%>
+                  <% if @country['iso'] == 'IDN' %>
+                    <a href="<%= @country['indepth'] %>" target="_blank" class="download country-indepth-link">WRI in <%= @country['name'] %>
+                  <% else %>
+                    <a href="<%= @country['indepth'] %>" target="_blank" class="download country-indepth-link">Visit the forest atlas
+                  <% end %>
                     <span class="sidenav-icon">
                       <svg>
                         <use xlink:href="#shape-<%= @country['iso']%>"></use>
