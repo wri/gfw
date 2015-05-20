@@ -724,7 +724,10 @@ $height: auto;
   .mini-modal-input{
     padding: 15px 0 0;
     input{
-      width: 70%;
+      &.copy-input{
+        width: 70%;
+      }
+      width: 100%;
       border-radius: 0;
       font-size: 13px;
       text-align: center;
