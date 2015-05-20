@@ -171,7 +171,6 @@ define([
 
         _.each(data.files, function(file) {
           var filename = that.prettifyFilename(file.name);
-          console.log(filename);
           var $thumbnail = $("<li class='thumbnail preview' data-name='"+filename+"' ><div class='filename'>"+ file.name +"</div><div class='spinner'><svg><use xlink:href='#shape-spinner'></use></svg></div></li>");
           $('.thumbnails').append($thumbnail);
           $thumbnail.fadeIn(250);
@@ -192,7 +191,6 @@ define([
           var $thumb = $("<li class='sortable thumbnail'><div class='inner_box' style=' background-image: url("+url+");'></div><a href='#' class='destroy'><svg><use xlink:href='#shape-close'></use></svg></a></li>");
 
           var filename = file.basename.substring(45);
-          console.log(filename);
 
           $(".thumbnail[data-name='"+filename+"']").fadeOut(250, function() {
             $(this).remove();
