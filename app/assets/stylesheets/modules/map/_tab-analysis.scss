@@ -426,7 +426,7 @@
             opacity: 1;
             visibility: visible;
             position: relative;
-            transform: none;
+            @include transform(none);
             left: 0;
             top: 0;
             box-shadow: none;
