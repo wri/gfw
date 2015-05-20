@@ -134,7 +134,7 @@
 	    		width: 200px;
 	    		height: 70px;
           margin: 0 auto;
-	    		@include logos-sprite(wri-logo);
+	    		@include retina-image('logo-wri.png','logo-wri@2x.png');
           @media (min-width: $br-mobile){
               margin: 0;
           }
