@@ -430,10 +430,39 @@
 .story_form{
   header{
     h2{
-      font-size: 47px;
-      padding: 0 0 15px;
+      position: relative;
+      font-size: 35px;
+      padding: 0px 30px 0px 0;
+      margin: 10px 0 15px;
       color: $dark;
       font-weight: 300;
+      @media (min-width: $br-mobile) {
+        font-size: 47px;
+        margin: 0px 0 15px;
+        padding: 0;
+      }
+      a{
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 5px;
+        border: 1px solid $dark;
+        border-radius: 50%;
+        @include transform(translate(0,-50%));
+        svg{
+          fill: $dark;
+          position: absolute;
+          width: 60%;
+          height: 60%;
+          margin: 0 0 0 -1px;
+          top: 50%;
+          left: 50%;
+          @include transform(translate(-50%,-50%));
+        }
+        @media (min-width: $br-mobile) {
+          display: none;
+        }
+      }
     }
   }
   .form-box{
