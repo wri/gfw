@@ -258,16 +258,12 @@ define([
             objects);
 
           this._geojsonFitBounds(geojson);
-          // this.view.drawMaskCountry(geojson,iso.country);
 
           if (!this.status.get('dont_analyze')) {
-            // this.view.drawMaskCountry(geojson,iso.country);
             this.view.drawCountrypolygon(geojson,'#A2BC28');
-            resource.geom = geojson;
             this.view._removeCartodblayer();
             this._publishAnalysis(resource);
           }else{
-            // this.view.drawCountrypolygon(geojson,'#3182bd');
             mps.publish('Spinner/stop');
           }
 
@@ -278,16 +274,12 @@ define([
           var geojson = results.features[0];
 
           this._geojsonFitBounds(geojson);
-          // this.view.drawMaskArea(geojson,iso.country,iso.region);
 
           if (!this.status.get('dont_analyze')) {
-            // this.view.drawMaskArea(geojson,iso.country,iso.region);
             this.view.drawCountrypolygon(geojson,'#A2BC28');
-            resource.geom = geojson;
             this.view._removeCartodblayer();
             this._publishAnalysis(resource);
           }else{
-            // this.view.drawCountrypolygon(geojson,'#3182bd');
             mps.publish('Spinner/stop');
           }
 
