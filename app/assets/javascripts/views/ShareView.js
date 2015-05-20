@@ -97,6 +97,7 @@ define([
       this.$twitterLink = this.$('.twitter');
       this.$facebookLink = this.$('.facebook');
       this.$google_plusLink = this.$('.google_plus');
+      this.$copy = this.$('.copy_url');
     },
 
     _renderInput: function() {
@@ -175,6 +176,7 @@ define([
     },
 
     _setTypeFromEvent: function(event) {
+      this.$copy.html('copy')
       var target_type = $(event.currentTarget).data('type');
       var type = target_type || this.model.get('type') || 'link';
       this.model.set('type', type);

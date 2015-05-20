@@ -291,9 +291,9 @@ define([
             $('.show-more-countries').show();
 
             if (!!mode && mode.mode == 'percent')
-              $('.overview_graph__legend').find('.trigger-mode').html('<span>TOTAL LOSS</span> <strong>RELATIVE LOSS</strong>').show();
+              $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS LOSS</span> <strong>RELATIVE LOSS</strong>').show();
             else
-              $('.overview_graph__legend').find('.trigger-mode').html('<strong>TOTAL LOSS</strong> <span>RELATIVE LOSS</span>').show();
+              $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS LOSS</strong> <span>RELATIVE LOSS</span>').show();
           }
 
           $('.countries_list ul').append(markup_list);
@@ -382,9 +382,9 @@ define([
             $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('per-loss').html('% Gain');
 
             if (!!mode && mode.mode == 'percent')
-              $('.overview_graph__legend').find('.trigger-mode').html('<span>TOTAL GAIN</span> <strong>RELATIVE GAIN</strong>').show();
+              $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS GAIN</span> <strong>RELATIVE GAIN</strong>').show();
             else
-              $('.overview_graph__legend').find('.trigger-mode').html('<strong>TOTAL GAIN</strong> <span>RELATIVE GAIN</span>').show();
+              $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS GAIN</strong> <span>RELATIVE GAIN</span>').show();
           }
 
           $('.countries_list ul').append(markup_list);
@@ -450,9 +450,9 @@ define([
 
             $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('cover-extent').html('Cover extent <span>vs</span> Cover loss');
             if (!!mode && mode.mode == 'percent')
-              $('.overview_graph__legend').find('.trigger-mode').html('<span>TOTAL EXTENT</span> <strong>RELATIVE EXTENT</strong>').show();
+              $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS EXTENT</span> <strong>RELATIVE EXTENT</strong>').show();
             else
-              $('.overview_graph__legend').find('.trigger-mode').html('<strong>TOTAL EXTENT</strong> <span>RELATIVE EXTENT</span>').show();
+              $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS EXTENT</strong> <span>RELATIVE EXTENT</span>').show();
           }
 
           $('.countries_list ul').append(markup_list);
@@ -543,9 +543,9 @@ define([
 
           that.model.set('class', 'huge');
           if (!!mode && mode.mode == 'percent')
-            $('.overview_graph__legend').find('.trigger-mode').html('<span>TOTAL DOMAIN</span> <strong>RELATIVE DOMAIN</strong>').show();
+            $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS DOMAIN</span> <strong>RELATIVE DOMAIN</strong>').show();
           else
-            $('.overview_graph__legend').find('.trigger-mode').html('<strong>TOTAL DOMAIN</strong> <span>RELATIVE DOMAIN</span>').show();
+            $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS DOMAIN</strong> <span>RELATIVE DOMAIN</span>').show();
 
           that._reorderRanking();
         }, this ));
