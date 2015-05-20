@@ -190,7 +190,7 @@ define([
           var url = file.url.replace('https', 'http');
           var $thumb = $("<li class='sortable thumbnail'><div class='inner_box' style=' background-image: url("+url+");'></div><a href='#' class='destroy'><svg><use xlink:href='#shape-close'></use></svg></a></li>");
 
-          var filename = file.basename.substring(45);
+          var filename = that.prettifyFilename(file.basename).substring(45);
 
           $(".thumbnail[data-name='"+filename+"']").fadeOut(250, function() {
             $(this).remove();
@@ -324,7 +324,8 @@ define([
     },
 
     prettifyFilename: function (filename) {
-      return filename.toLowerCase().replace(/ /g,"_");
+      var file = filename.substring(0,filename.length - 4);
+      return file.toLowerCase().replace(/ /g,"_");
     },
 
     render: function() {
