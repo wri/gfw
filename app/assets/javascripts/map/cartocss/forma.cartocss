@@ -14,16 +14,16 @@
   line-width: 2;
 }
 [layer='defor'][date>#date_to_change] {
-  polygon-fill: rgb(255, 182, 229);
+  polygon-fill: rgb(255, 70, 70);
   polygon-opacity: 1;
   line-opacity: 1;
-  line-color: rgb(255, 182, 229);
+  line-color: rgb(255, 70, 70);
   line-width: 2;
 }
 [layer='degrad'][date>#date_to_change] {
-  polygon-fill: rgb(255, 182, 229);
+  polygon-fill: rgb(255, 70, 70);
   polygon-opacity: 1;
   line-opacity: 1;
-  line-color: rgb(255, 182, 229);
+  line-color: rgb(255, 70, 70);
   line-width: 2;
 }
