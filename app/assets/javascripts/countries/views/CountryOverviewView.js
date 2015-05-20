@@ -961,18 +961,25 @@ define([
             });
         }, this ));
       } else if (this.model.get('graph') === 'percent_loss') {
-        if (!this.absolute_gain) {
-          var $target = this.$big_figures,
-               query  = 'SELECT sum(gain) from umd_nat_final_1';
+        var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE')),
+            $target = this.$big_figures,
+            query  = 'SELECT sum(gain) from umd_nat_final_1';
 
-          $.ajax({
-                url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
-                dataType: 'json',
-                success: _.bind(function(data) {
-                  var gain = data.rows[0].sum;
-                  var g_mha, l_mha;
-                  g_mha = l_mha = 'Mha';
+        if (!!mode && mode.mode == 'percent') {
+          query = 'SELECT sum(gain_perc)/count(gain_perc) as sum from umd_nat_final_1';
+        }
+        $.ajax({
+              url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
+              dataType: 'json',
+              success: _.bind(function(data) {
+                var gain = data.rows[0].sum;
+                var g_mha, l_mha;
+                g_mha = l_mha = 'Mha';
 
+                if (!!mode && mode.mode == 'percent') {
+                  $target.find('.figure').removeClass('extent').html(gain.toFixed(3));
+                  $target.find('.unit').html('%');
+                } else {
                   if (gain.toString().length >= 7) {
                     gain = ((gain /1000)/1000).toFixed(2)
                   } else if (gain.toString().length >= 4) {
@@ -984,25 +991,28 @@ define([
                   }
                   $target.find('.figure').removeClass('extent').html((~~gain).toLocaleString());
                   $target.find('.unit').html(l_mha);
-                  this.absolute_gain = {'val':gain,'uni':l_mha};
-                }, this),
-              });
-        } else {
-          this.$big_figures.find('.figure').removeClass('extent').html((~~this.absolute_gain.val).toLocaleString());
-          this.$big_figures.find('.unit').html(this.absolute_gain.uni);
-        }
+                }
+              }, this),
+            });
       } else if (this.model.get('graph') === 'total_extent') {
-        if (!this.absolute_extent) {
-          var $target = this.$big_figures,
-               query  = 'SELECT sum(extent_2000) from umd_nat_final_1';
-          $.ajax({
-                url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
-                dataType: 'json',
-                success: _.bind(function(data) {
-                  var extent = data.rows[0].sum;
-                  var g_mha, l_mha;
-                  g_mha = l_mha = 'Mha';
+        var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE')),
+          $target = this.$big_figures,
+             query  = 'SELECT sum(extent_2000) from umd_nat_final_1';
+          if (!!mode && mode.mode == 'percent') {
+            query = 'SELECT sum(extent_perc)/count(extent_perc) as sum from umd_nat_final_1';
+          }
+        $.ajax({
+              url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
+              dataType: 'json',
+              success: _.bind(function(data) {
+                var extent = data.rows[0].sum;
+                var g_mha, l_mha;
+                g_mha = l_mha = 'Mha';
 
+                if (!!mode && mode.mode == 'percent') {
+                  $target.find('.figure').addClass('extent').html(extent.toFixed(3));
+                  $target.find('.unit').html('%');
+                } else {
                   if (extent.toString().length >= 7) {
                     extent = ((extent /1000)/1000).toFixed(2)
                   } else if (extent.toString().length >= 4) {
@@ -1014,13 +1024,9 @@ define([
                   }
                   $target.find('.figure').addClass('extent').html((~~extent).toLocaleString());
                   $target.find('.unit').html(l_mha);
-                  this.absolute_extent = {'val':extent,'uni':l_mha};
-                }, this),
-              });
-        } else {
-          this.$big_figures.find('.figure').addClass('extent').html((~~this.absolute_extent.val).toLocaleString());
-          this.$big_figures.find('.unit').html(this.absolute_extent.uni);
-        }
+                }
+              }, this),
+            });
       } else if (this.model.get('graph') === 'ratio') {
         this._hideYears();
 
