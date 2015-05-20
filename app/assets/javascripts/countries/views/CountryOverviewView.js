@@ -267,7 +267,7 @@ define([
                   }
                 }
 
-                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +' of loss</span>');
+                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +'</span>');
 
                 if (key == max_trigger){
                   that._reorderRanking();
