@@ -5,7 +5,25 @@ class MobileDownload < ActionMailer::Base
   def download_email email_address, download_link, type
     @download_link = download_link
     @type = type
-    subject = (type == 'default') ? 'Link to browse and download country data' : 'Link to download tree cover statistics'
+
+    case @type
+      when "default"
+        subject = 'Link to browse and download country data'
+        @body = 'Click the link below to browse and download data for your country of interest on the Open Data Portal.'
+      when "country-stats"
+        subject = 'Link to download tree cover statistics'
+        @body = 'Click the link below to download tree cover statistics for your country of interest.'
+      when "forest-change"
+        subject = 'Link to download data'
+        @body = 'Click the link below to download data from your recent analysis on GFW.'
+      else
+        subject = 'Link to browse and download country data'
+        @body = 'Click the link below to browse and download data for your country of interest on the Open Data Portal.'
+    end
+
+    puts subject
+    puts @body
+
     mail :subject => subject,
          :to      => email_address,
          :from    => 'gfw@wri.org'

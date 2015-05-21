@@ -34,10 +34,15 @@ define([
         title : 'Request a link',
         description : 'Enter your email to receive a link to browse and download data for this country'
       },
-      'tree-cover' : {
+      'country-stats' : {
         title : 'Request a download link',
         description : 'Enter your email to receive a link to download tree cover statistics for this country'
+      },
+      'forest-change' : {
+        title : 'Request a download link',
+        description : 'Enter your email to receive a link to download this data for your area of interest'
       }
+
     },
 
     events: {
@@ -77,8 +82,8 @@ define([
     download: function(event) {
       if (this._isMobile()) {
         event && event.preventDefault() && event.stopPropagation();
-        var href = $(event.target).attr('href');
-        var type = $(event.target).data('type') || 'default';
+        var href = $(event.currentTarget).attr('href');
+        var type = $(event.currentTarget).data('type') || 'default';
         this.model.set('link', href);
         this.model.set('type', type);
         this.show();
@@ -94,7 +99,7 @@ define([
     _requestDownload: function(event) {
       event && event.preventDefault() && event.stopPropagation();
 
-      var email = $('#download_email_form [name="email_address"]').val()
+      var email = $('#download_email_form [name="email"]').val()
       if(this.validateEmail(email)){
         this.$loader.addClass('active');
         this.model.set('email', email);
