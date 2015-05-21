@@ -346,9 +346,9 @@ define([
           return;
         else {
             if(latNorth>85)
-              newLat =  66;   /* too north, centering */
+              newLat =  this.map.getCenter().lat() - (latNorth-85);   /* too north, centering */
             if(latSouth<-85)
-              newLat =  -66;   /* too south, centering */
+              newLat =  this.map.getCenter().lat() - (latSouth+85);   /* too south, centering */
         }
       }
       if(newLat) {
