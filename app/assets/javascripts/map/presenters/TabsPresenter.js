@@ -22,8 +22,8 @@ define([
     //  * Application subscriptions.
     //  */
     _subscriptions: [{
-      'Tab/open': function(id) {
-        this.view.openTab(id);
+      'Tab/open': function(id, backbutton) {
+        this.view.openTab(id, backbutton);
       }
     }],
 

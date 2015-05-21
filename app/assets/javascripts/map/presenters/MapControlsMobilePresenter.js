@@ -44,7 +44,7 @@ define([
     },
 
     openCountriesTab: function(){
-      mps.publish('Tab/open', ['#country-tab-mobile-btn']);
+      mps.publish('Tab/open', ['#country-tab-mobile-btn', true]);
     }
 
   });

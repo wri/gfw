@@ -58,6 +58,7 @@ define([
     cacheVars: function(){
       this.$tabs = this.$el.find('.tab');
       this.$tabMobileButtons = $('.tab-mobile');
+      this.$tabMobileBackButtons = $('.tab-mobile-back');
       this.$settingsTabButton = $('#settings-tab-button');
       this.$tabsMobileContent = this.$el.find('.tab-mobile-content');
       this.$tabsContent = this.$el.find('.tab-content');
@@ -128,26 +129,36 @@ define([
     },
 
     toggleTabsMobile: function(e){
-      var $tab = $('#'+$(e.currentTarget).data('tab'));
-      if ($tab.hasClass('active') || $(e.currentTarget).hasClass('active')) {
-        this.$tabMobileButtons.removeClass('active');
-        this.$tabsMobileContent.removeClass('active');
+      var tab = $(e.currentTarget).data('tab');
+      var $tab = $('#'+tab);
+      if (tab) {
+        this.$tabMobileBackButtons.data('tab', 'settings-tab-mobile');
+        if ($tab.hasClass('active') || $(e.currentTarget).hasClass('active')) {
+          this.$tabMobileButtons.removeClass('active');
+          this.$tabsMobileContent.removeClass('active');
+        }else{
+          this.$tabMobileButtons.removeClass('active');
+          this.$settingsTabButton.addClass('active');
+          this.$tabsMobileContent.removeClass('active');
+          $tab.addClass('active');
+        }
       }else{
-        this.$tabMobileButtons.removeClass('active');
-        this.$settingsTabButton.addClass('active');
-        this.$tabsMobileContent.removeClass('active');
-        $tab.addClass('active');
+        this.hideTabsMobile();
       }
     },
 
     hideTabsMobile: function(){
+      this.$settingsTabButton.removeClass('active');
       this.$tabMobileButtons.removeClass('active');
       this.$tabsMobileContent.removeClass('active');
     },
 
-    openTab: function(id){
+    openTab: function(id, backbutton){
       if (!$(id).hasClass('active')) {
         $(id).trigger('click');
+
+        // To control back buttons
+        if (backbutton) { $(id+'-back').data('tab', null);}
       }
     }
   });
