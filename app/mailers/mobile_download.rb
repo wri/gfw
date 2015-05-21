@@ -21,9 +21,6 @@ class MobileDownload < ActionMailer::Base
         @body = 'Click the link below to browse and download data for your country of interest on the Open Data Portal.'
     end
 
-    puts subject
-    puts @body
-
     mail :subject => subject,
          :to      => email_address,
          :from    => 'gfw@wri.org'
