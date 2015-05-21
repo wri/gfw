@@ -723,9 +723,18 @@ $height: auto;
 
   .mini-modal-input{
     padding: 15px 0 0;
+    .copy_url{
+      border-radius: 0;
+      height: 39px;
+      line-height: 39px;
+      width: 30%;
+      display: block;
+    }
     input{
       &.copy-input{
         width: 70%;
+        border-right: none;
+        float: left;
       }
       width: 100%;
       border-radius: 0;
@@ -733,6 +742,8 @@ $height: auto;
       text-align: center;
       padding: 8px 10px;
       font-family: inherit;
+      margin: 0;
+      display: block;
     }
   }
 
