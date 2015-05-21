@@ -348,6 +348,32 @@ define([
       var lng = center.lng();
       this.presenter.onCenterChange(lat, lng);
       this.updateLatlngInfo(lat,lng);
+      this.checkBounds()
+    },
+
+    checkBounds: function () {
+      if (! !!this.map.getBounds()) return;
+
+      var latNorth = this.map.getBounds().getNorthEast().lat();
+      var latSouth = this.map.getBounds().getSouthWest().lat();
+      var newLat;
+
+      if(latNorth<85 && latSouth>-85)     /* in both side -> it's ok */
+        return;
+      else {
+        if(latNorth>85 && latSouth<-85)   /* out both side -> it's ok */
+          return;
+        else {
+            if(latNorth>85)
+              newLat =  66;   /* too north, centering */
+            if(latSouth<-85)
+              newLat =  -66;   /* too south, centering */
+        }
+      }
+      if(newLat) {
+        var newCenter= new google.maps.LatLng( newLat ,this.map.getCenter().lng() );
+        this.map.setCenter(newCenter);
+      }
     },
 
     /**

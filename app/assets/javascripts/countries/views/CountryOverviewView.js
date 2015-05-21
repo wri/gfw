@@ -291,12 +291,12 @@ define([
             $('.show-more-countries').show();
 
             if (!!mode && mode.mode == 'percent') {
-              $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS LOSS</span> <strong>RELATIVE LOSS</strong>').show();
-              $('.overview_graph__title').html('Countries with greatest percent loss <sup>(2001-2013)</sup> relative to tree cover in 2000');
+              $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS LOSS</span> <strong>PERCENT LOSS</strong>').show();
+              $('.overview_graph__title').html('Countries with greatest percent loss (2001-2013) relative to tree cover in 2000');
 
             } else {
-              $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS LOSS</strong> <span>RELATIVE LOSS</span>').show();
-              $('.overview_graph__title').html('Countries with greatest tree cover loss <sup>(2001-2013)</sup>');
+              $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS LOSS</strong> <span>PERCENT LOSS</span>').show();
+              $('.overview_graph__title').html('Countries with greatest tree cover loss (2001-2013)');
             }
           }
 
@@ -386,11 +386,11 @@ define([
             $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('per-loss').html('% Gain');
 
             if (!!mode && mode.mode == 'percent') {
-              $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS GAIN</span> <strong>RELATIVE GAIN</strong>').show();
-              $('.overview_graph__title').html('Countries with greatest percent tree cover gain <sup>(2001-2012)</sup> relative to tree cover in 2000');
+              $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS GAIN</span> <strong>PERCENT GAIN</strong>').show();
+              $('.overview_graph__title').html('Countries with greatest percent tree cover gain (2001-2012) relative to tree cover in 2000');
             } else {
-              $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS GAIN</strong> <span>RELATIVE GAIN</span>').show();
-              $('.overview_graph__title').html('Countries with greatest tree cover gain <sup>(2001-2012)</sup>');
+              $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS GAIN</strong> <span>PERCENT GAIN</span>').show();
+              $('.overview_graph__title').html('Countries with greatest tree cover gain (2001-2012)');
             }
           }
 
@@ -457,11 +457,11 @@ define([
 
             $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('cover-extent').html('Cover extent <span>vs</span> Cover loss');
             if (!!mode && mode.mode == 'percent'){
-              $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS EXTENT</span> <strong>RELATIVE EXTENT</strong>').show();
-              $('.overview_graph__title').html('Countries with greatest percent tree cover <sup>(2000)</sup>');
+              $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS COVER</span> <strong>PERCENT COVER</strong>').show();
+              $('.overview_graph__title').html('Countries with greatest percent tree cover (2000)');
             } else {
-              $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS EXTENT</strong> <span>RELATIVE EXTENT</span>').show();
-              $('.overview_graph__title').html('Countries with greatest tree cover <sup>(2000)</sup>');
+              $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS COVER</strong> <span>PERCENT COVER</span>').show();
+              $('.overview_graph__title').html('Countries with greatest tree cover (2000)');
             }
           }
 
@@ -521,21 +521,21 @@ define([
       } else if (this.model.get('graph') === 'domains') {
         $('.countries_list__header__minioverview').show();
         var sql = 'SELECT ecozone as name, sum(loss) as total_loss, sum(gain) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +' group by ecozone';
-        var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
-        if (!!mode && mode.mode == 'percent') {
-          sql = 'SELECT ecozone as name, sum(loss_perc) as total_loss, sum(gain_perc) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +' group by ecozone'
-        }
+        // var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
+        // if (!!mode && mode.mode == 'percent') {
+        //   sql = 'SELECT ecozone as name, sum(loss_perc) as total_loss, sum(gain_perc) as total_gain FROM umd_eco where thresh = ' + (this.helper.config.canopy_choice || 30) +' group by ecozone'
+        // }
         d3.json('http://wri-01.cartodb.com/api/v2/sql/?q='+encodeURIComponent(sql), _.bind(function(json) {
           var self = that,
               markup_list = '';
           var data = json.rows;
           var unit = '%';
           _.each(data, _.bind(function(val, key) {
-            if (! !!mode || mode.mode == 'total') {
+            // if (! !!mode || mode.mode == 'total') {
               val.total_loss = val.total_loss/1000000;
               val.total_gain = val.total_gain/1000000;
               unit = 'Mha';
-            }
+            // }
 
             markup_list += ['<li>',
                               '<div class="countries_list__minioverview_number countries_list__minioverview huge">',
@@ -552,13 +552,14 @@ define([
           $('.countries_list ul').html(markup_list);
 
           that.model.set('class', 'huge');
-          if (!!mode && mode.mode == 'percent') {
-            $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS DOMAIN</span> <strong>RELATIVE DOMAIN</strong>').show();
-              $('.overview_graph__title').html('Climate domains ranked in order of greatest percent tree cover loss <sup>(2001-2013)</sup> relative to tree cover in 2000');
-          } else {
-            $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS DOMAIN</strong> <span>RELATIVE DOMAIN</span>').show();
-              $('.overview_graph__title').html('Climate domains ranked in order of greatest tree cover loss <sup>(2001-2013)</sup>');
-          }
+          // if (!!mode && mode.mode == 'percent') {
+          //   $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS DOMAIN</span> <strong>PERCENT DOMAIN</strong>').show();
+          //     $('.overview_graph__title').html('Climate domains ranked in order of greatest percent tree cover loss (2001-2013) relative to tree cover in 2000');
+          // } else {
+            // $('.overview_graph__legend').find('.trigger-mode').html('<strong>GROSS DOMAIN</strong> <span>PERCENT DOMAIN</span>').show();
+            //   $('.overview_graph__title').html('Climate domains ranked in order of greatest tree cover loss (2001-2013)');
+          // }
+          $('.trigger-mode').hide();
           that._reorderRanking();
         }, this ));
       }
