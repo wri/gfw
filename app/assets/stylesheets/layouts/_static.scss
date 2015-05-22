@@ -564,6 +564,10 @@
           line-height: 1.25;
           color: $dark;
           font-weight: 500;
+          &.closed {
+            font-style: italic;
+            text-align: center;
+          }
         }
         h4.overview_title{
           margin: 10px 0 0;
@@ -1620,6 +1624,9 @@
     }
     .text-cont {
       max-width: 600px;
+      .sgf {
+        font-size: 20px;
+      }
     }
   }
 }
