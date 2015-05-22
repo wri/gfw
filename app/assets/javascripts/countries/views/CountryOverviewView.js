@@ -41,8 +41,10 @@ define([
       if (!this.$el.length) {
         return
       }
-
-      mps.publish('Source/open',['help_improve_GFW']);
+      if (! !!amplify.store('survey_improve')) {
+        amplify.store('survey_improve', true, { expires: 2628000000 });
+        mps.publish('Source/open',['help_improve_GFW']);
+      }
 
       this.helper = CountryHelper;
       this.model = new CountryOverviewModel();
