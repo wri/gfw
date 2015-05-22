@@ -3,7 +3,7 @@ $height: auto;
 
 .source_window {
   position: fixed;
-  z-index: 1060;
+  z-index: 1101;
   background: $white;
   border: none;
   box-shadow: $shadow1;
@@ -744,6 +744,7 @@ $height: auto;
       font-family: inherit;
       margin: 0;
       display: block;
+      border: 1px solid $border;
     }
   }
 
