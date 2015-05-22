@@ -5,11 +5,12 @@ define([
   'jquery',
   'backbone',
   'underscore',
+  'amplify',
   'd3',
   'mps',
   'countries/helpers/CountryHelper'
 
-], function($, Backbone, _, d3, mps, CountryHelper) {
+], function($, Backbone, _,amplify, d3, mps, CountryHelper) {
 
   'use strict';
 
@@ -25,7 +26,10 @@ define([
       if (!this.$el.length) {
         return
       }
-      mps.publish('Source/open',['help_improve_GFW']);
+      if (! !!amplify.store('survey_improve')) {
+        amplify.store('survey_improve', true, { expires: 2628000000 });
+        mps.publish('Source/open',['help_improve_GFW']);
+      }
 
       this.helper = CountryHelper;
       this.$searchBox = $('#searchCountry');
