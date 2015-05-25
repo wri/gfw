@@ -293,10 +293,13 @@
       .alerts {
         color: rgb(255, 70, 70);
         &:before {
-          content: ' ―';
+          content: ' -';
+          line-height: 7px;
+          font-size: 30px;
           position: relative;
-          margin-left: -4px;
-          margin-right: 3px;
+          margin-left: -3px;
+          margin-right: 4px;
+          top: 5px;
         }
       }
     }
