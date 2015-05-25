@@ -42,7 +42,7 @@
           <li><%= link_to 'Visualize data', "#{howto_path}/view-data", :"data-slug" => 'view-data', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item view-data' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'View statistics', "#{howto_path}/view-statistics", :"data-slug" => 'view-statistics', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item view-statistics' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Analyze forest change', "#{howto_path}/analyze-forest-change", :"data-slug" => 'analyze-forest-change', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item analyze-forest-change' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
-          <li><%= link_to 'Subscribe to tree clearing alerts', "#{howto_path}/subscribe-to-tree-clearing", :"data-slug" => 'subscribe-to-tree-clearing', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item subscribe-to-tree-clearing' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
+          <li><%= link_to 'Subscribe to alerts and users stories', "#{howto_path}/subscribe-to-alerts-and-users-stories", :"data-slug" => 'subscribe-to-alerts-and-users-stories', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item subscribe-to-alerts-and-users-stories' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li><%= link_to 'Submit a story', "#{howto_path}/submit-a-story", :"data-slug" => 'submit-a-story', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item submit-a-story' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li class="no-transform"><%= link_to 'OPEN DATA PORTAL', "#{howto_path}/odp", :"data-slug" => 'odp', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item odp' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
           <li class="no-transform"><%= link_to 'FAQs', "#{howto_path}/faqs", :"data-slug" => 'faqs', :"data-interesting" => 'contact_us, get_involved, provide_feedback', :class => 'nav-item faqs' %><svg class="ico"><use xlink:href="#shape-arrow-right"></use></svg></li>
@@ -264,13 +264,74 @@
               </li>
             </ul>
           </article>
-          <article id="subscribe-to-tree-clearing" class="source-article">
+          <article id="subscribe-to-alerts-and-users-stories" class="source-article">
             <header>
-              <h2>Subscribe to tree clearing alerts</h2>
-              <p>Read below to learn how to subscribe to tree clearing alerts for your area of interest. If you subscribe to alerts, you will be notified via email when a new tree cover loss alert has been detected, as often as every 30 days. Tree cover loss alerts come from the <a href="http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64"> Forest Monitoring for Action (FORMA)</a> system, which monitors and detects possible tree cover disturbance within 500 × 500 meter pixels in the humid tropical forest biome.</p>
+              <h2>Subscribe to forest change alerts and user stories</h2>
+              <p>Read below to learn how to subscribe to forest change alerts and user stories for your area of interest. When you subscribe to alerts you will be notified of new forest change and user stories in the area you selected via monthly emails. Each email contains new activity detected by GFW’s <a href="http://data.globalforestwatch.org/datasets/39a527e300ff4146962a3c74ec476f64">FORMA</a> , <a href="http://www.terra-i.org/terra-i/data.html" target="_blank">Terra-i</a>, <a href="http://www.imazongeo.org.br/doc/downloads.php">SAD</a>, and <a href="http://data.globalforestwatch.org/datasets/e7bfe60d90ea4e5aa808eba4723ad3f8_0">QUICC</a> alert systems, in addition to any new <a href="/stayinformed/crowdsourced-stories">stories</a> submitted by users. Please be aware that not all alert systems may cover the area you selected.  To learn more about each system, click on the information icons that appear in the dropdown menu under Forest Change on the <a href="/map">interactive map</a>.</p>
             </header>
             <ul class='sources'>
-              <li id="subscribe-to-tree-clearing-alerts" class='source-item first'>
+              <li id="subscribe-to-a-user-defined-area" class='source-item first'>
+                <div class='source_header'>
+                  <strong class='source_title'>Subscribe to a user-defined area</strong>
+                  <i class='expand_arrow'></i>
+                </div>
+                <div class='source_body'>
+                  <div class='source_summary'>
+                    <p><strong>1.</strong> Enter the <a href="/map" target='_blank'>GFW Interactive Map</a>.
+                    <p><strong>2.</strong> Select the subscription icon located on the right-hand side of the map.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image34.png') %></p>
+                    <p><strong>3.</strong> Click “Get started” to define your area of interest.</p>
+                    <p><strong>4.</strong> Select “Draw shape”.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image35.png') %></p>
+                    <p><strong>5.</strong> Select “Start drawing” and click with your mouse to draw a shape in the map.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image37.png') %></p>
+                    <p><strong>6.</strong> When you’ve completed your shape, click “Subscribe” and you will then be prompted to enter your email address.</p>
+                    <p><strong>7.</strong> Enter your email address, and select “Subscribe.” </p>
+                    <p><strong>8.</strong> Click on the link within the email you receive to confirm your subscription.</p>
+                  </div>
+                </div>
+              </li>
+              <li id="subscribe-to-a-country-or-subnational-jurisdiction" class="source-item">
+                <div class='source_header'>
+                  <strong class='source_title'>Subscribe to a country or subnational jurisdiction</strong>
+                  <i class='expand_arrow'></i>
+                </div>
+                <div class='source_body'>
+                  <div class='source_summary'>
+                    <p><strong>1.</strong> Enter the <a href="/map" target='_blank'>GFW Interactive Map</a>.
+                    <p><strong>2.</strong> Select the subscription icon located on the right-hand side of the map.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image34.png') %></p>
+                    <p><strong>3.</strong> Click “Get started” to define your area of interest.</p>
+                    <p><strong>4.</strong> Select “Country or region”.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image36.png') %></p>
+                    <p><strong>5.</strong> Choose a country and/or region would like to subscribe to and click “Subscribe.” You will then be prompted to enter your email address.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image38.png') %></p>
+                    <p><strong>6.</strong> Enter your email address, and select “Subscribe.” </p>
+                    <p><strong>7.</strong> Click on the link within the email you receive to confirm your subscription.</p>
+
+                    <p>NOTE: You can also subscribe to forest change alerts and user stories within a country from the <a href="/countries">Country Profiles</a>. Once you arrive at the Country Profiles, select a country and, if desired, select a subnational jurisdiction (e.g., state, county, province) using the dropdown menu under the country name. Using the right-hand menu, click “Subscribe to alerts.” You will then be prompted to enter your email address. Enter your email to receive monthly updates of forest change activity and user stories for the area you selected. </p>
+                  </div>
+                </div>
+              </li>
+              <li id="subscribe-to-a-data-shape-on-the-map" class="source-item">
+                <div class='source_header'>
+                  <strong class='source_title'>Subscribe to a data shape on the map</strong>
+                  <i class='expand_arrow'></i>
+                </div>
+                <div class='source_body'>
+                  <div class='source_summary'>
+                    <p><strong>1.</strong> Enter the <a href="/map" target='_blank'>GFW Interactive Map</a>.
+                    <p><strong>2.</strong> Turn on a data layer you wish to subscribe to on the map. You can subscribe to data shapes within most layers under the “Land Use,” “Conservation” and “People” tabs, in addition to those within all country specific data layers (see <a href="/howto/view-data?t=view-country-data">Visualizing country data</a>).</p>
+                    <p><strong>3.</strong> Once the data layer is turned on, click on the individual shape you would like to subscribe to.</p>
+                    <p><%= image_tag('howto-screenshots/new_content/image39.png') %></p>
+                    <p><strong>4.</strong> Click “Subscribe” and you will then be prompted to enter your email address.</p>
+                    <p><strong>5.</strong> Enter your email address, and select “Subscribe.” </p>
+                    <p><strong>6.</strong> Click on the link within the email you receive to confirm your subscription.</p>
+                  </div>
+                </div>
+              </li>
+
+              <!-- <li id="subscribe-to-tree-clearing-alerts" class='source-item first'>
                 <div class='source_header'>
                   <strong class='source_title'>Subscribe to tree clearing alerts</strong>
                   <i class='expand_arrow'></i>
@@ -279,15 +340,15 @@
                   <div class='source_summary'>
                     <p><strong>1.</strong> Enter the <a href="/map" target='_blank'>GFW Interactive Map</a>.
                     <p><strong>2.</strong> Turn on the FORMA data set under the Forest Change tab.</p>
-                    <p><%= image_tag('howto-screenshots/new_content/image31.png') %></p>
-                    <p><strong>3.</strong> Select the analysis icon (<%= image_tag('howto-screenshots/new_content/image32.png') %>) on the right-hand side of the map and choose your area of interest. You can draw a shape on the map, choose a country or subnational jurisdiction, or select individual protected areas and forest use concessions.</p>
-                    <p><%= image_tag('howto-screenshots/new_content/image33.png') %></p>
+                    <p><%#= image_tag('howto-screenshots/new_content/image31.png') %></p>
+                    <p><strong>3.</strong> Select the analysis icon (<%#= image_tag('howto-screenshots/new_content/image32.png') %>) on the right-hand side of the map and choose your area of interest. You can draw a shape on the map, choose a country or subnational jurisdiction, or select individual protected areas and forest use concessions.</p>
+                    <p><%#= image_tag('howto-screenshots/new_content/image33.png') %></p>
                     <p><strong>4.</strong> Follow the steps to conduct an analysis for your area of interest (this is a necessary step to subscribe to alerts).</p>
                     <p><strong>5.</strong> Once your analysis results appear, click on the alert icon and enter your email address.</p>
-                    <p><%= image_tag('howto-screenshots/new_content/image28.png') %></p>
+                    <p><%#= image_tag('howto-screenshots/new_content/image28.png') %></p>
                   </div>
                 </div>
-              </li>
+              </li> -->
             </ul>
           </article>
           <article id="conduct-analysis-and-subscribe-to-alerts" class="source-article">
