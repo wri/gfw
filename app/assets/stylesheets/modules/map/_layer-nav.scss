@@ -399,8 +399,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
 
     .layer-info {
       font-size: 11px;
-      margin-top: 3px;
-      padding: 0 8px 0 23px;
+      padding: 5px 8px 0 23px;
       display: block;
       color: #AAA;
       label {
@@ -409,10 +408,10 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         font-weight: normal;
         color: #AAA;
         font-size: 11px;
-        margin: 5px 5px 5px 0px;
+        margin: 8px 5px 5px 0px;
         padding-left: 13px;
         text-transform: none;
-        display: inline-block;
+        display: block;
         &.selected {
           color: $dark;
           text-shadow: 0px 0px 0px #999;
@@ -467,7 +466,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     }
 
     .onoffswitch {
-      margin: 2px 6px 0 0;
+      margin: 1px 6px 0 0;
     }
   }
 }

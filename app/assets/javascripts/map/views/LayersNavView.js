@@ -186,10 +186,12 @@ define([
         }, this ))
 
         if (selected > 0) {
+          var color = $li.data('color') || '#cf7fec';
+          console.log(color);
           $li.addClass('selected');
           $toggle.addClass('checked');
-          $layerTitle.css('color', '#cf7fec');
-          $toggle.css('background', '#cf7fec');
+          $layerTitle.css('color', color);
+          $toggle.css('background', color);
         } else {
           $li.removeClass('selected');
           $toggle.removeClass('checked').css('background', '').css('border-color', '');
