@@ -59,7 +59,7 @@ class CountriesController < ApplicationController
             "#{ENV['GFW_API_HOST']}/countries/#{iso}",
             headers: {"Accept" => "application/json"}
         )
-        if response.success?
+        if response.success? and (response.body.length > 0)
           JSON.parse(response.body)
         else
           nil
@@ -68,7 +68,7 @@ class CountriesController < ApplicationController
     end
     def find_by_name(country_name)
       country_name, *rest = country_name.split(/_/)
-      country_name = country_name.capitalize!
+      country_name = country_name.capitalize
       response = Typhoeus.get("https://wri-01.cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20gfw2_countries%20where%20name%20like%20'#{country_name}%25'",
         headers: {"Accept" => "application/json"}
         )
