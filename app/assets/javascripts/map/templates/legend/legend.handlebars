@@ -68,7 +68,8 @@
             {{#if this.sublayer}}
               <div class="layer-sublayer" data-sublayer="{{this.sublayer}}">
                 <span class="onoffswitch"><span></span></span>
-                <div class="sublayer-title">Geographic coverage</div>
+                <div class="sublayer-title">Geographic coverage<a href='#' data-source='{{this.source}}_source' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></div>
+
               </div>
             {{/if}}
           </li> {{!-- /layer --}}
