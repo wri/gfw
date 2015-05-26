@@ -270,6 +270,17 @@
   span {
     text-transform: lowercase;
   }
+  .loss-vs-gain {
+    display: none !important;
+    strong {
+      color: #666;
+      text-decoration: underline;
+    }
+    span {
+      cursor: pointer;
+      text-transform: none;
+    }
+  }
 }
 .overview_graph__years{
   width: 960px;

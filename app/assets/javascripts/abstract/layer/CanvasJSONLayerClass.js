@@ -176,6 +176,7 @@ define([
         xcoords = [];
         ycoords = [];
         deforestation = [];
+
         // array buffer set by default to 0
         // fucking javascript arrays are not
         for (var r = 0; r < rows.length * MAX_MONTHS; ++r) {

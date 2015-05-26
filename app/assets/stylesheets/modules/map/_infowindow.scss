@@ -90,7 +90,7 @@
         @include display-flex();
         @include justify-content(space-between);
         .btn{
-          width: 47.5%;
+          width: 100%;
           margin: 15px 0;
         }
       }
