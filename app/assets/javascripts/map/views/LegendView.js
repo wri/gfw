@@ -81,13 +81,15 @@ define([
       'click .category-name' : '_toogleCategory',
       'click .layer-sublayer': '_toggleLayer',
       'click .canopy-button' : '_showCanopy',
-      'click .close' : 'toogleLegend'
+      'click .close' : 'toogleLegend',
+      'click #title-dialog-legend' : 'toogleEmbedLegend'
     },
 
     initialize: function() {
       _.bindAll(this, 'update');
       this.presenter = new Presenter(this);
       this.model = new LegendModel();
+      this.embed = $('body').hasClass('is-embed-action');
       this.$el.removeClass('hide');
       this.setListeners();
     },
@@ -97,10 +99,22 @@ define([
     },
 
     toogleModule: function(){
-      if(this.model.get('hidden')){
-        this.$el.addClass('hide');
-      }else{
-        this.$el.removeClass('hide');
+      this.$el.toggleClass('hide', this.model.get('hidden'));
+    },
+
+    toogleEmbedLegend: function(e){
+      e && e.preventDefault();
+      var active = this.$titleDialog.hasClass('active');
+      this.$titleDialog.toggleClass('active', !active);
+      this.$categories.toggleClass('active', !active);
+      this.$buttonLegendBox.toggleClass('active', !active);
+
+    },
+
+    openGFW: function(){
+      if (this.embed && !!this.$linkLegendBox) {
+        var href = window.location.href.replace('/embed','');
+        this.$linkLegendBox.attr('href', href);
       }
     },
 
@@ -202,6 +216,10 @@ define([
 
     render: function(html){
       this.$el.html(html);
+      this.$titleDialog = $('#title-dialog-legend');
+      this.$categories = this.$el.find('.categories');
+      this.$buttonLegendBox =  $('#button-box-embed-legend');
+      this.$linkLegendBox =  $('#link-embed-legend');
     },
 
     /**
@@ -210,7 +228,6 @@ define([
      * @param  {array} layers
      */
     update: function(categories, options) {
-
       if (categories.length === 0) {
         this.model.set('hidden', true);
       } else {

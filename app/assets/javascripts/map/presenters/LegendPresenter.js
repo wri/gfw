@@ -37,6 +37,11 @@ define([
         this.status.set('threshold', place.params.threshold);
         this._updateLegend();
         this._toggleSelected();
+        this.view.openGFW();
+      }
+    },{
+      'Place/update': function(place) {
+        this.view.openGFW();
       }
     }, {
       'LayerNav/change': function(layerSpec) {
