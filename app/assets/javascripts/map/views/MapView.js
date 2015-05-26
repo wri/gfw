@@ -59,12 +59,12 @@ define([
       };
 
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
+      this._checkDialogs();
 
       this.resize();
       this._setMaptypes();
       this._addListeners();
 
-      this._checkDialogs();
     },
 
     /**
