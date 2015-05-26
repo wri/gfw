@@ -309,10 +309,6 @@ define([
           .on('click',_.bind(function(value){
             this.selectYear(value);
           }, this ))
-
-
-
-
       this.formatXaxis();
     },
 

@@ -1,4 +1,12 @@
-<div class="widget-box">
+{{#if modis}}
+  <div class="widget-box transform">
+{{else}}
+  {{#if fires}}
+    <div class="widget-box transform">
+  {{else}}
+    <div class="widget-box">
+  {{/if}}
+{{/if}}
   <div class="timeline-legend">
     <div class="timeline-name">
       {{layerTitle}}
