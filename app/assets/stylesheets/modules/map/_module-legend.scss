@@ -92,7 +92,7 @@
       .layer-sublayer {
         cursor: pointer;
         padding: 10px 5px 5px 14px;
-
+        position: relative;
         .onoffswitch {
           margin-top: 1px;
         }
@@ -102,6 +102,9 @@
           margin-left: 5px;
           color: #ccc;
           display: inline-block;
+          .source {
+            top: 9px;
+          }
         }
       }
     }
