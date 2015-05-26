@@ -58,6 +58,8 @@ define([
 
     toogleAnalysisBtn: function(to){
       this.$btnAnalysis.toggleClass('active',to);
+      this.$el.toggleClass('analysis',to);
+      $('.widget-timeline').toggleClass('analysis',to);
     },
 
     toggleCountries: function(){

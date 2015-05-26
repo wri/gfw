@@ -48,11 +48,11 @@
       .title-dialog{
         position: relative;
         cursor: pointer;
-        text-align: center;
         text-transform: uppercase;
         padding: 0px 0px 5px;
         margin: 20px 20px 15px;
         border-bottom: 1px solid #F69;
+        text-align: left;
         &.active{
           span{
             display: none;
@@ -147,21 +147,23 @@
       .analysis-stats{
         background: $white;
         font-size: 12px;
+        max-width: 600px;
+        margin: 0 auto;
         @include display-flex();
         @include justify-content(center);
         li{
           padding: 0 25px;
-          margin: 10px 0;
+          margin: 15px 0;
           text-align: center;
           width: 33.33333333%;
-          border-left: 1px solid #CCB;
+          border-left: 1px solid $border;
           &:first-child{
             padding: 0 25px;
             border: none;
           }
           &:last-child{
             padding: 0 25px;
-            border-left: 1px solid #CCB;
+            border-left: 1px solid $border;
           }
         }
       }
@@ -173,20 +175,22 @@
     // Timeline
     .widget-timeline{
       .widget-box{
-        bottom: 65px;
+        bottom: 0px;
         left: 50%;
-        width: 320px;
-        height: 38px;
+        width: 100%;
+        height: 50px;
         @include transform(translate(-50%,0%));
-        .timeline-year .time .select-timeline-container{
-          line-height: 38px;
+        .timeline-year .time .select-timeline-container,
+        .timeline-month .time .select-timeline-container,
+        .timeline-btn .time .select-timeline-container{
+          line-height: 50px;
         }
       }
-      // &.analysis{
-      //   .widget-box{
-      //     margin: 0 0 0 40px;
-      //   }
-      // }
+      &.analysis{
+        .widget-box{
+          bottom: 73px;
+        }
+      }
     }
 
 
