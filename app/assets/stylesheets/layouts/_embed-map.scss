@@ -41,164 +41,193 @@
   }
 
 
-
-  // MODULES
-  .module{
-    box-shadow: $shadow1;
-    .title-dialog{
-      position: relative;
-      cursor: pointer;
-      text-align: center;
-      text-transform: uppercase;
-      padding: 0px 0px 5px;
-      margin: 20px 20px 15px;
-      border-bottom: 1px solid #F69;
-      &.active{
-        span{
-          display: none;
+  @media (max-width: $br-mobileMap - 1){
+    // MODULES
+    .module{
+      box-shadow: $shadow1;
+      .title-dialog{
+        position: relative;
+        cursor: pointer;
+        text-align: center;
+        text-transform: uppercase;
+        padding: 0px 0px 5px;
+        margin: 20px 20px 15px;
+        border-bottom: 1px solid #F69;
+        &.active{
+          span{
+            display: none;
+          }
+          &:after{ @include transform(translate(0,-100%) rotate(180deg));}
         }
-        &:after{ @include transform(translate(0,-100%) rotate(180deg));}
+        &:after{
+          display: block;
+          content: "";
+          position: absolute;
+          top: 50%;
+          right: 5px;
+          width: 0;
+          height: 0;
+          @include transform(translate(0,-100%));
+          border-left: 3px solid transparent;
+          border-right: 3px solid transparent;
+          border-top: 5px solid #F69;
+        }
+        span{
+          display: inline-block;
+          font-size: 12px;
+          text-transform: lowercase;
+        }
       }
-      &:after{
-        display: block;
-        content: "";
-        position: absolute;
-        top: 50%;
-        right: 5px;
-        width: 0;
-        height: 0;
-        @include transform(translate(0,-100%));
-        border-left: 3px solid transparent;
-        border-right: 3px solid transparent;
-        border-top: 5px solid #F69;
-      }
-      span{
-        display: inline-block;
-        font-size: 12px;
-        text-transform: lowercase;
+      .button-box-embed-legend{
+        padding: 0 20px 20px;
+        &.active{
+          display: block;
+        }
       }
     }
-    .button-box-embed-legend{
-      padding: 0 20px 20px;
-      &.active{
-        display: block;
-      }
-    }
-  }
 
-  // Legend
-  .module-legend{
-    top: 20px;
-    left: 20px;
-    bottom: auto;
-    max-height: calc(100% - 260px);
-    max-width: 300px;
-    padding: 0;
-    @include transform(translate(0,0));
-    .close{
-      display: none;
-    }
-    .categories {
-      display: none;
-      &.active{
-        display: block;
+    // Legend
+    .module-legend{
+      top: 20px;
+      left: 20px;
+      bottom: auto;
+      max-height: calc(100% - 260px);
+      max-width: 300px;
+      padding: 0;
+      @include transform(translate(0,0));
+      .close{
+        display: none;
+      }
+      .categories {
+        display: none;
+        &.active{
+          display: block;
+        }
       }
     }
-  }
 
-  // Analysis
-  .analysis-result {
-    padding: 20px;
-    width: 300px;
-    height: auto;
-    bottom: auto;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    @include transform(translate(-50%,-50%));
-    opacity: 0;
-    visibility: hidden;
-
-    &.active{
-      opacity: 1;
-      visibility: visible;
-      @include transform(translate(-50%,-50%));
-    }
-    .close{
-      // display: none;
-    }
-    // .analysis-stats{
-    //   background: $white;
-    //   font-size: 12px;
-    //   @include display-flex();
-    //   @include justify-content(center);
-    //   li{
-    //     padding: 15px 25px;
-    //     text-align: center;
-    //     width: 33.33333333%;
-    //     border-left: 1px solid #CCB;
-    //     &:first-child{
-    //       padding: 15px 25px;
-    //       border: none;
-    //     }
-    //     &:last-child{
-    //       padding: 15px 25px;
-    //       border-left: 1px solid #CCB;
-    //     }
-    //   }
-    // }
-    .analysis-footer{
-      display: none;
-    }
-  }
-
-  // Timeline
-  .widget-timeline{
-    .widget-box{
+    // Analysis
+    .module.module-mapcontrols-mobile{
+      // &.analysis{
+      //   display: block !important;
+      // }
       bottom: 50px;
       left: 50%;
-      width: 320px;
-      height: 44px;
-      @include transform(translate(-50%,0%));
+      @include transform(translate(-160px,0));
+      ul{
+        display: none;
+        margin: 0;
+        &.embed-show{
+          display: block;
+        }
+      }
+    }
+
+    .analysis-result {
+      padding: 0;
+      // padding: 20px;
+      // width: 300px;
+      // height: auto;
+      // bottom: auto;
+      // position: fixed;
+      // top: 50%;
+      // left: 50%;
+      // @include transform(translate(-50%,-50%));
+      // opacity: 0;
+      // visibility: hidden;
+
+      // &.active{
+      //   opacity: 1;
+      //   visibility: visible;
+      //   @include transform(translate(-50%,-50%));
+      // }
+      .close{
+        display: none;
+      }
+      .analysis-stats{
+        background: $white;
+        font-size: 12px;
+        @include display-flex();
+        @include justify-content(center);
+        li{
+          padding: 0 25px;
+          margin: 10px 0;
+          text-align: center;
+          width: 33.33333333%;
+          border-left: 1px solid #CCB;
+          &:first-child{
+            padding: 0 25px;
+            border: none;
+          }
+          &:last-child{
+            padding: 0 25px;
+            border-left: 1px solid #CCB;
+          }
+        }
+      }
+      .analysis-footer{
+        display: none;
+      }
+    }
+
+    // Timeline
+    .widget-timeline{
+      .widget-box{
+        bottom: 65px;
+        left: 50%;
+        width: 320px;
+        height: 38px;
+        @include transform(translate(-50%,0%));
+        .timeline-year .time .select-timeline-container{
+          line-height: 38px;
+        }
+      }
+      // &.analysis{
+      //   .widget-box{
+      //     margin: 0 0 0 40px;
+      //   }
+      // }
+    }
+
+
+
+
+
+    .module-tabs{
+      bottom: 20px;
+      top: auto;
+      left: 20px;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //analysis
+    .module-tabs > header,
+    .tab-analysis nav,
+    .tab-analysis .analysis-content,
+    //footer
+    .footer-toggle,
+    .map-logos,
+    .map-container .gm-style:after,
+    //map controls
+    .module-mapcontrols,
+    .tab-analysis-mobile,
+    //croshairs
+    .map-viewfinder,
+    //feedback
+    .feedback-link {
+      display: none !important;
     }
   }
 
-
-
-
-
-  .module-tabs{
-    bottom: 20px;
-    top: auto;
-    left: 20px;
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-  //analysis
-  .module-tabs > header,
-  .tab-analysis nav,
-  .tab-analysis .analysis-content,
-  //footer
-  .footer-toggle,
-  .map-logos,
-  .map-container .gm-style:after,
-  //map controls
-  .module-mapcontrols,
-  //croshairs
-  .map-viewfinder,
-  //feedback
-  .feedback-link {
-    display: none !important;
-  }
 }
