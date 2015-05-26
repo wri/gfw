@@ -41,6 +41,8 @@
     "qtip2": "~2.2.1",
     "ScrollIt.js": "*",
     "chosen": "./public/chosen_v0.13.0.zip",
+    "keymaster": "~1.6.3",
+    "enquire": "~2.1.2",
     "keymaster": "~1.6.3"
   },
   "resolutions": {

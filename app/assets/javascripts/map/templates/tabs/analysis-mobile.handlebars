@@ -1,0 +1,28 @@
+<h3 class="title-dialog">Analyze forest change</h3>
+<span class="close"><svg><use xlink:href="#shape-close"></use></svg></span>
+<div class="tab-analysis">
+  <nav id="analysis-nav" class="analysis-nav">
+    <ul>
+      {{!-- <li id="draw-tab-button" data-analysis="draw-tab"><svg><use xlink:href="#icon-analysis-draw"></use></svg>Draw shape</li> --}}
+      <li id="country-tab-button" data-analysis="country-tab"><svg><use xlink:href="#icon-analysis-country"></use></svg>Country or region</li>
+    </ul>
+  </nav>
+  <div id="analysis-content" class="analysis-content">
+    <div id="draw-tab" class="analysis-tab-content draw-tab results-hide">
+      <header>
+        <h2>Draw in the map the area you want to analyze</h2>
+      </header>
+      <ul id="draw-analysis" class="button-container one">
+        <li><button id="start-analysis" class="btn green uppercase">Start drawing</button></li>
+        <li class="hidden"><button id="done-analysis" class="btn green uppercase">Analyze</button></li>
+      </ul>
+    </div>
+    <div id="country-tab" class="analysis-tab-content country-tab active">
+      <div class="select-box-mobile"><select data-placeholder="Select country" class="notranslate" id="analysis-country-select"><option value="" disabled selected>Select country</option></select></div>
+      <div class="select-box-mobile"><select data-placeholder="Select jurisdiction (optional)" disabled="true" class="notranslate" id="analysis-region-select"><option value="" disabled selected>Select jurisdiction (optional)</option></select></div>
+      <ul class="button-container one">
+        <li><button id="analysis-country-button" class="btn green uppercase">Analyze</button></li>
+      </ul>
+    </div>
+  </div>
+</div>

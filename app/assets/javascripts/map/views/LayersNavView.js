@@ -19,13 +19,12 @@ define([
 
   var LayersNavView = Backbone.View.extend({
 
-    el: '.layers-menu',
-
     template: Handlebars.compile(tpl),
     templateCountry: Handlebars.compile(tplCountry),
     templateCountryWrapper: Handlebars.compile(tplCountryWrapper),
 
     events: {
+      'click .category-name' : '_toggleLayersNav',
       'click .layer': '_toggleLayer',
       'click .wrapped-layer': '_toggleLayerWrap',
       'click #toggleUmd' : 'toggleUmd',
@@ -36,11 +35,22 @@ define([
     initialize: function() {
       _.bindAll(this, '_toggleSelected');
       this.presenter = new Presenter(this);
-      this.render();
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.setElement('#layers-menu');
+          this.render();
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.setElement('#layers-tab');
+          this.render();
+        },this)
+      });
     },
 
     render: function() {
-      this.$el.append(this.template());
+      this.$el.html('').append(this.template());
       //Experiment
       this.presenter.initExperiment('source');
 
@@ -48,6 +58,7 @@ define([
       this.$UMDlayers = $('#umd-group .layer');
       this.$toggleUMD = $('#toggleUmd');
       this.$categoriesList = $('.categories-list');
+      this.$categoriesNum = $('.category-num');
       this.$layersCountry = $('#layers-country-nav');
       this.$countryLayers = $('#country-layers');
       this.$countryLayersReset = $('#country-layers-reset');
@@ -91,6 +102,16 @@ define([
       });
       this.toogleSelectedWrapper();
       this.checkUMD();
+      this.setNumbersOfLayers();
+    },
+
+    setNumbersOfLayers: function(){
+      // Filter layers without iso and then group them by category
+      var layersByCategory = _.groupBy(_.filter(this.layers, function(layer){ return !layer.iso }), function(layer){ return layer.category_slug; });
+      this.$categoriesNum.text('');
+      _.each(layersByCategory, _.bind(function(v,k){
+        $('#'+k+'-category-num').text(v.length);
+      },this));
     },
 
     /**
@@ -121,6 +142,13 @@ define([
         }
         this.presenter.toggleLayer(layerSlug);
         ga('send', 'event', 'Map', 'Toggle', 'Layer: ' + layerSlug);
+      }
+    },
+
+    _toggleLayersNav: function(e){
+      if (!$(e.currentTarget).parent().hasClass('disabled')) {
+        $(e.currentTarget).toggleClass('show');
+        $(e.currentTarget).parent().children('.layers-nav').toggleClass('show');
       }
     },
 
@@ -173,7 +201,6 @@ define([
 
     },
 
-
     toggleUmd: function(e){
       _.each(this.$UMDlayers, _.bind(function(layer){
         if (this.$toggleUMD.find('.onoffradio').hasClass('checked')) {
@@ -198,7 +225,9 @@ define([
       (count == 2) ? this.$toggleUMD.find('.onoffradio').addClass('checked') : this.$toggleUMD.find('.onoffradio').removeClass('checked');
     },
 
-
+    /**
+     * Set and update iso
+     */
     setIso: function(iso){
       this.iso = iso.country;
       this.region = iso.region;

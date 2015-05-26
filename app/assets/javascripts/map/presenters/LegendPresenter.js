@@ -37,6 +37,11 @@ define([
         this.status.set('threshold', place.params.threshold);
         this._updateLegend();
         this._toggleSelected();
+        this.view.openGFW();
+      }
+    },{
+      'Place/update': function(place) {
+        this.view.openGFW();
       }
     }, {
       'LayerNav/change': function(layerSpec) {
@@ -60,6 +65,14 @@ define([
       'Threshold/changed': function(threshold) {
         this.status.set('threshold', threshold);
         this.status.get('layerSpec') && this._updateLegend();
+      }
+    }, {
+      'LegendMobile/open': function() {
+        this.view.toogleLegend();
+      }
+    }, {
+      'Dialogs/close': function() {
+        this.view.toogleLegend(false);
       }
     }],
 
@@ -100,6 +113,10 @@ define([
 
     showCanopy: function(){
       mps.publish('ThresholdControls/toggle');
+    },
+
+    toggleOverlay: function(to){
+      mps.publish('Overlay/toggle', [to])
     },
 
     initExperiment: function(id){

@@ -562,43 +562,46 @@
 // BLOG
 .blog {
 	background: $dark;
- padding: 20px;
- @include display-flex();
- a {
-  @include display-flex();
-  @include align-self(center);
-  width: 270px;
-  background: $white;
-  margin: 0 auto;
-  padding: 0px 42px;
-  height: 60px;
-  line-height: 68px;
-  font-size: 20px;
-  color: $dark;
-  text-decoration: none;
-  position: relative;
-  border-radius: 50px;
-  font-weight: 300;
-  &:hover {
-   background: darken($white,5%);
-  }
+  padding: 20px;
+  display: none;
   @media (min-width: $br-mobile) {
-   width: auto;
-   padding: 0px 100px;
-   height: 60px;
-   line-height: 68px;
+    @include display-flex();
   }
+  a {
+    @include display-flex();
+    @include align-self(center);
+    width: 270px;
+    background: $white;
+    margin: 0 auto;
+    padding: 0px 42px;
+    height: 60px;
+    line-height: 68px;
+    font-size: 20px;
+    color: $dark;
+    text-decoration: none;
+    position: relative;
+    border-radius: 50px;
+    font-weight: 300;
+    &:hover {
+      background: darken($white,5%);
+    }
+    @media (min-width: $br-mobile) {
+      width: auto;
+      padding: 0px 100px;
+      height: 60px;
+      line-height: 68px;
+    }
 
-  svg {
-   display: inline-block;
-   fill: $dark;
-   @include display-flex();
-   @include align-self(center);
-   width: 50px;
-   height: 50px;
-   margin: 0 5px 0 0;
+    svg {
+      display: inline-block;
+      fill: $dark;
+      @include display-flex();
+      @include align-self(center);
+      width: 50px;
+      height: 50px;
+      margin: 0 5px 0 0;
+    }
   }
- }
 
 }
 
@@ -615,6 +618,7 @@
   }
   @media (min-width: $br-tablet) {
     padding: 50px 0;
+    display: block;
   }
   .inner {
     width: 95%;
@@ -623,6 +627,9 @@
 	.row {
 		@include row();
     @include flex-wrap(wrap);
+    @media (max-width: $br-mobile - 1) {
+      @include flex-direction(column-reverse);
+    }
 	}
 	.col {
 		background: $white;

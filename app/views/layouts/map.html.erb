@@ -6,7 +6,7 @@
 
     <title><%= @title %> | Global Forest Watch</title>
     <meta name="description" content="<%= @desc %>">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords" content="Map,cartodb,Global,Forest,Watch,monitoring,real-time">
     <meta name="author" content="Simbiótica">
 
@@ -25,9 +25,13 @@
     <%= stylesheet_link_tag "map", :media => "all" %>
     <%= csrf_meta_tags %>
     <script>
-        var gfw = window.gfw = {};
-        window.gfw.config = { GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>" };
-        window.gfw.layer_spec = "<%= ENV['LAYER_SPEC'] %>";
+        var gfw = window.gfw = {
+          config: {
+            GFW_API_HOST: "<%= ENV['GFW_API_HOST'] %>",
+            GFW_MOBILE: 1000
+          },
+          layer_spec: "<%= ENV['LAYER_SPEC'] %>"
+        };
     </script>
 
   </head>

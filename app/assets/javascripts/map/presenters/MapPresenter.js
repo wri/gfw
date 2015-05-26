@@ -74,6 +74,10 @@ define([
       'AnalysisTool/stop-drawing': function() {
         this.view.centerPositionCrosshairs();
       }
+    }, {
+      'Overlay/toggle': function(bool) {
+        this.view.overlayToggle(bool);
+      }
     }],
 
     /**
@@ -180,6 +184,10 @@ define([
       p.maptype = this.view.getMapTypeId();
 
       return p;
+    },
+
+    closeDialogsMobile: function(){
+      mps.publish('Dialogs/close');
     },
 
     /**

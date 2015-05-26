@@ -6,9 +6,10 @@
 define([
   'underscore',
   'handlebars',
+  'mps',
   'text!templates/share.handlebars',
   'views/SharePreviewView'
-], function(_, Handlebars, tpl, SharePreviewView) {
+], function(_, Handlebars, mps, tpl, SharePreviewView) {
 
   'use strict';
 
@@ -199,7 +200,7 @@ define([
         var successful = document.execCommand('copy');
         $(e.currentTarget).html('copied')
       } catch(err) {
-        console.log('This browser does not support clipboard access, please update');
+        mps.publish('Notification/open', ['not-clipboard-support']);
       }
     },
 

@@ -79,6 +79,9 @@ define([
       mps.publish('Map/fit-bounds', [bounds]);
     },
 
+    notificate: function(id){
+      mps.publish('Notification/open', [id]);
+    },
 
 
   });

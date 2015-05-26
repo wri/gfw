@@ -1,6 +1,5 @@
 class MediaController < ApplicationController
   def upload
-    puts params    
     uploader = MediaUploader.new
     uploader.store!(params[:media][:image])
 

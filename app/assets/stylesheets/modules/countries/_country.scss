@@ -144,25 +144,26 @@
 
 }
 .countries-list-title{
-  display: none;
-  text-align: center;
   padding: 0 20px;
   @media (min-width: $br-mobile){
+    text-align: center;
     display: block;
   }
-}
-h3 {
-  font-size: 25px;
-  padding: 40px 0 0 0;
-  text-transform: lowercase;
-  color: #555;
-  &:first-letter {
-    text-transform: uppercase;
-  }
-  a{
-    color: $cGreen;
-    &:hover{
-      color: darken($cGreen, 5%);
+  h3 {
+    font-size: 20px;
+    text-transform: lowercase;
+    color: #555;
+    @media (min-width: $br-mobile){
+      font-size: 25px;
+    }
+    &:first-letter {
+      text-transform: uppercase;
+    }
+    a{
+      color: $cGreen;
+      &:hover{
+        color: darken($cGreen, 5%);
+      }
     }
   }
 }

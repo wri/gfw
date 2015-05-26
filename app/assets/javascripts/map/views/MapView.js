@@ -44,16 +44,30 @@ define([
       this.layerInst = {};
       this.$maplngLng = $('.map-container .map-latlng');
       this.$viewFinder = $('#viewfinder');
+      this.$overlayMobile = $('#overlay-mobile');
       this.embed = $('body').hasClass('is-embed-action');
-      this.render();
+
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.render(3);
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.render(2);
+        },this)
+      });
+
+
     },
 
     /**
      * Creates the Google Maps and attaches it to the DOM.
      */
-    render: function() {
+    render: function(zoom) {
       var params = {
-        zoom: 3,
+        zoom: zoom,
+        minZoom: zoom,
         mapTypeId: 'grayscale',
         center: new google.maps.LatLng(15, 27),
       };
@@ -93,6 +107,11 @@ define([
         // TODO => No mps here!
         mps.publish('AnalysisTool/analyze-wdpaid', [wdpa]);
       }, this));
+
+      this.$overlayMobile.on('click', _.bind(function(){
+        this.presenter.closeDialogsMobile();
+      }, this ));
+
     },
 
 
@@ -441,7 +460,12 @@ define([
         sessionStorage.removeItem('DIALOG');
         window.setTimeout(function(){$('.backdrop').css('opacity', '0.3');},500);
       });
+    },
+
+    overlayToggle: function(bool){
+      this.$overlayMobile.toggleClass('active', bool);
     }
+
 
   });
 

@@ -34,12 +34,12 @@
     <div class="country-overview-wrapper-coolio">
       <div class="overview_button_group">
         <div class="inner">
-          <div class="share share-link item" data-share-embed-url="<%= request.protocol + request.host_with_port %>/embed/countries/overview" data-share-embed-width="600" data-share-embed-height="578"><svg><use xlink:href="#shape-share"></use></svg>Share</div>
+          <div class="share share-link mobile-hide item" data-share-embed-url="<%= request.protocol + request.host_with_port %>/embed/countries/overview" data-share-embed-width="600" data-share-embed-height="578"><svg><use xlink:href="#shape-share"></use></svg>Share</div>
           <div class="settings item " data-target=".overview_graph">
             <svg><use xlink:href="#shape-settings"></use></svg>tree cover canopy settings
           </div>
           <div class="download-spatial">
-            <a href='http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/umd_country_stats.xlsx' target='_blank'>
+            <a class="download-mobile-link" data-type="country-stats" href='http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/umd_country_stats.xlsx' target='_blank'>
                 Download tree cover stats
                 <svg>
                   <use xlink:href="#shape-download-18"></use>
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class='overview_graph'>
-        <div class='overview_graph__tabs'>
+        <div class='overview_graph__tabs scroll-light'>
           <ul>
             <li class='graph_tab selected' data-slug='total_loss'>
               <a href='#' class='overview_graph__link'>Tree cover loss</a>
@@ -248,3 +248,4 @@
   </ul>
 </div>
 <div class="mini-modal share-modal"></div>
+<div class="mini-modal download-modal"></div>

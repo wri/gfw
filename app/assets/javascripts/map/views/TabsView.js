@@ -14,9 +14,11 @@ define([
   'map/views/tabs/BasemapsView',
   'map/views/tabs/SpinnerView',
   'map/views/tabs/SubscribeView',
-  'text!map/templates/tabs.handlebars'
+  'views/ShareView',
+  'text!map/templates/tabs.handlebars',
+  'text!map/templates/tabs-mobile.handlebars'
 
-], function(_, Handlebars, d3, Presenter, AnalysisView, CountriesView, SubscriptionView, BasemapsView, SpinnerView, SubscribeView, tpl) {
+], function(_, Handlebars, d3, Presenter, AnalysisView, CountriesView, SubscriptionView, BasemapsView, SpinnerView, SubscribeView, ShareView, tpl, tplMobile) {
 
   'use strict';
 
@@ -25,29 +27,58 @@ define([
     el: '#module-tabs',
 
     events: {
-      'click .tab' : 'toggleTabs'
+      'click .tab' : 'toggleTabs',
+      'click .share-mobile' : 'toggleShareMobile',
+      'click .tab-mobile' : 'toggleTabsMobile',
+      'click .close-tab-mobile' : 'hideTabsMobile'
     },
 
     template: Handlebars.compile(tpl),
+    templateMobile: Handlebars.compile(tplMobile),
 
     initialize: function(map) {
       this.map = map;
       this.presenter = new Presenter(this);
-      this.render();
-      this.$el.removeClass('hide');
+      // Render
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.render();
+          this.cacheVars();
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.renderMobile();
+          this.cacheVars();
+        },this)
+      });
+      // this.setListeners();
+    },
+
+    cacheVars: function(){
       this.$tabs = this.$el.find('.tab');
+      this.$tabMobileButtons = $('.tab-mobile');
+      this.$tabMobileBackButtons = $('.tab-mobile-back');
+      this.$settingsTabButton = $('#settings-tab-button');
+      this.$tabsMobileContent = this.$el.find('.tab-mobile-content');
       this.$tabsContent = this.$el.find('.tab-content');
-      this.$container = this.$el.find('.content')
-      this.setListeners();
+      this.$container = this.$el.find('.content');
     },
 
-    setListeners: function(){
+    // setListeners: function(){
 
-    },
+    // },
 
     render: function(){
       this.$el.html(this.template());
+      this.$el.removeClass('hide');
       this.initCustomViews();
+    },
+
+    renderMobile: function(){
+      this.$el.html(this.templateMobile());
+      this.$el.removeClass('hide');
+      this.initCustomMobileViews();
     },
 
     initCustomViews: function(){
@@ -57,6 +88,13 @@ define([
       new SubscriptionView(this.map);
       new BasemapsView();
       new SubscribeView();
+    },
+
+    initCustomMobileViews: function(){
+      new SpinnerView();
+      new AnalysisView(this.map);
+      new CountriesView(this.map);
+      new BasemapsView();
     },
 
     toggleTabs: function(e){
@@ -84,9 +122,43 @@ define([
         }
       }
     },
-    openTab: function(id){
+
+    toggleShareMobile: function(event){
+      var shareView = new ShareView().share(event);
+      $('body').append(shareView.el);
+    },
+
+    toggleTabsMobile: function(e){
+      var tab = $(e.currentTarget).data('tab');
+      var $tab = $('#'+tab);
+      if (tab) {
+        this.$tabMobileBackButtons.data('tab', 'settings-tab-mobile');
+        if ($tab.hasClass('active') || $(e.currentTarget).hasClass('active')) {
+          this.$tabMobileButtons.removeClass('active');
+          this.$tabsMobileContent.removeClass('active');
+        }else{
+          this.$tabMobileButtons.removeClass('active');
+          this.$settingsTabButton.addClass('active');
+          this.$tabsMobileContent.removeClass('active');
+          $tab.addClass('active');
+        }
+      }else{
+        this.hideTabsMobile();
+      }
+    },
+
+    hideTabsMobile: function(){
+      this.$settingsTabButton.removeClass('active');
+      this.$tabMobileButtons.removeClass('active');
+      this.$tabsMobileContent.removeClass('active');
+    },
+
+    openTab: function(id, backbutton){
       if (!$(id).hasClass('active')) {
         $(id).trigger('click');
+
+        // To control back buttons
+        if (backbutton) { $(id+'-back').data('tab', null);}
       }
     }
   });

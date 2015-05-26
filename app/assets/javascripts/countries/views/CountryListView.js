@@ -19,7 +19,8 @@ define([
     el: '#countryListView',
 
     events : {
-      'keyup #searchCountry' : '_searchCountries'
+      'keyup #searchCountry' : '_searchCountries',
+      'focus #searchCountry' : 'scrollTo'
     },
 
     initialize: function() {
@@ -39,7 +40,6 @@ define([
     },
 
     _getCountries : function(){
-      this.$searchBox.focus();
       this.$countries = $('.country');
       this.countries_list = _.map($('.country-name'),function(el){
         return $(el).text();
@@ -66,6 +66,12 @@ define([
         }
       }
     },
+
+
+    scrollTo: function(){
+      $('html,body').animate({ scrollTop : this.$searchBox.offset().top - 20 });
+    },
+
 
     _drawCountries: function() {
       var that = this;

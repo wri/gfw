@@ -156,8 +156,16 @@ define([
 
       }
     },{
+      'AnalysisMobile/open': function() {
+        this.view.toggleAnalysis(this.view.$el.hasClass('is-analysis'));
+      }
+    },{
       'Subscribe/end' : function(){
         this.view.setStyle();
+      }
+    }, {
+      'Dialogs/close': function() {
+        this.view.toggleAnalysis(true);
       }
     }],
 
@@ -175,7 +183,7 @@ define([
      * @param  {Object} params Place params
      */
     _handlePlaceGo: function(params) {
-      this.deleteAnalysis();
+      // this.deleteAnalysis();
 
       //Open analysis tab
       if ((!this.status.get('dont_analyze') && (params.iso.country && params.iso.country !== 'ALL')) || (params.analyze || params.geojson || params.wdpaid)) {
@@ -474,6 +482,9 @@ define([
       mps.publish('AnalysisResults/Delete');
       this.view._removeCartodblayer();
       this.view.$el.removeClass('is-analysis');
+      if(!this.status.get('dont_analyze')){
+        mps.publish('AnalysisMobile/open')
+      }
       // Delete overlay drawn or multipolygon.
       this.view.deleteGeom({
         overlay: this.status.get('overlay'),
@@ -596,6 +607,10 @@ define([
       }
 
       return p;
+    },
+
+    toggleOverlay: function(to){
+      mps.publish('Overlay/toggle', [to])
     },
 
     notificate: function(id){

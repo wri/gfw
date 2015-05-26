@@ -32,6 +32,7 @@ paths:
   slick: "slick.js/slick/slick.min"
   simplePagination: "jquery.simplePagination/jquery.simplePagination"
   keymaster: "keymaster/keymaster"
+  enquire: "enquire/dist/enquire"
 
   #countries
   scrollit: "ScrollIt.js/scrollIt"

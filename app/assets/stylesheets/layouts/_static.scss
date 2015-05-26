@@ -1070,6 +1070,20 @@
  }
 }
 
+.terms_file{
+  @extend .terms_inner;
+  margin: 70px 15px 0;
+  max-width: 960px;
+  height: auto;
+  padding: 20px;
+  background: #fff;
+  outline: none;
+  border-radius: 0;
+  @media (min-width: $br-mobile) {
+    margin: 70px auto 0;
+  }
+}
+
 .terms_field {
   @extend .terms_inner;
   margin: 0 15px 200px;

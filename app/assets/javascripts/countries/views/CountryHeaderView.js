@@ -266,6 +266,7 @@ define([
     toggleMobileOptions: function(e){
       $(e.currentTarget).toggleClass('active');
       this.$sidebarUl.toggleClass('active');
+      ($(e.currentTarget).hasClass('active')) ? $(e.currentTarget).find('em').text('less options') : $(e.currentTarget).find('em').text('more options');
     },
 
     _setAreaSelector: function() {
@@ -299,7 +300,7 @@ define([
 
     _updateMapThreshold: function(e) {
       var path = location.pathname.split('/');
-      var id = path[path.length -1];
+      var id = path[path.length -1] || path[path.length -2];
       var self = this;
       if(this.map){
         this.map.remove();
@@ -310,6 +311,7 @@ define([
           id = false;
         } else {
           var area = this.country.get('areas').where({ id_1: Number(id) })[0];
+
           this._initMap(function() {
             self._displayArea(area);
           });

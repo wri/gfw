@@ -61,6 +61,10 @@ define([
         this.status.set('iso', iso);
         this.setAnalyze(to);
       }
+    },{
+      'DownloadView/create': function(downloadView) {
+        this.view.downloadView = downloadView;
+      }
     }],
 
     _handlePlaceGo: function(params){
