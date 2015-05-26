@@ -225,7 +225,6 @@ define([
       e && e.preventDefault();
 
       if (this.model.get('graph') === 'total_loss') {
-
         var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
         var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
         if (!!mode && mode.mode == 'percent') {
@@ -389,7 +388,6 @@ define([
             $('.show-more-countries').show();
 
             $('.countries_list__header__minioverview').removeClass('loss-vs-gain per-loss total-loss cover-extent ratio-loss-gain').addClass('per-loss').html('% Gain');
-
             if (!!mode && mode.mode == 'percent') {
               $('.overview_graph__legend').find('.trigger-mode').html('<span>GROSS GAIN</span> <strong>PERCENT GAIN</strong>').show();
               $('.overview_graph__title').html('Countries with greatest percent tree cover gain (2001-2012) relative to tree cover in 2000');
@@ -837,15 +835,7 @@ define([
         this._showYears();
         var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
 
-        if (!!mode && mode.mode == 'percent') {
-          svg.append('text')
-            .attr('class', 'axis notranslate')
-            .attr('id', 'axis_y')
-            .text('Tree cover loss (percent)')
-            .attr('x', -h/1.6)
-            .attr('y', 10)
-            .attr('transform', 'rotate(-90)');
-        } else {
+        if (! !!mode) {
           svg.append('text')
             .attr('class', 'axis notranslate')
             .attr('id', 'axis_y')
