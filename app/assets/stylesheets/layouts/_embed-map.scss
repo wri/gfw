@@ -152,17 +152,17 @@
         @include display-flex();
         @include justify-content(center);
         li{
-          padding: 0 25px;
+          padding: 0 15px;
           margin: 15px 0;
           text-align: center;
           width: 33.33333333%;
           border-left: 1px solid $border;
           &:first-child{
-            padding: 0 25px;
+            padding: 0 15px;
             border: none;
           }
           &:last-child{
-            padding: 0 25px;
+            padding: 0 15px;
             border-left: 1px solid $border;
           }
         }
