@@ -126,7 +126,7 @@ define([
 
     _generateLinkUrl: function(url, callback) {
       $.ajax({
-        url: 'https://api-ssl.bitly.com/v3/shorten?longUrl=' + encodeURIComponent(url) + '&login=vizzuality&apiKey=R_de188fd61320cb55d359b2fecd3dad4b',
+        url: 'https://api-ssl.bitly.com/v3/shorten?longUrl=' + encodeURIComponent(url) + '&login=simbiotica&apiKey=R_33ced8db36b545829eefeb644f4c3d19',
         type: 'GET',
         async: false,
         dataType: 'jsonp',
