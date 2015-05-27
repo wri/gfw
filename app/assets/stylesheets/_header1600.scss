@@ -371,6 +371,20 @@
     border-bottom: 1px solid $border;
   }
 
+  .is-map-page &{
+    h1{
+      @media (min-width: $br-mobile){
+        width: 60px;
+        height: 60px;
+      }
+      @media (min-width: $br-mobileMap){
+        width: 90px;
+        height: 90px;
+      }
+
+    }
+  }
+
 	// Logo
 	h1 {
     width: 60px;
@@ -458,6 +472,20 @@
       clear: none;
       background: none;
       border-bottom: none;
+      &.layers-menu{
+        display: none !important;
+        @media (min-width: $br-mobileMap){
+          padding: 0;
+          display: block !important;
+          min-height: 0;
+          clear: none;
+          background: none;
+          border-bottom: none;
+          &.layers-menu{
+
+          }
+        }
+      }
     }
 
 		@include clearfix();
