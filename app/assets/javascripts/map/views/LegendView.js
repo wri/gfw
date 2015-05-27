@@ -123,7 +123,7 @@ define([
      * @param  {array}  categories layers ordered by category
      * @param  {object} options    legend options
      */
-    _renderLegend: function(categories, options) {
+    _renderLegend: function(categories, options, geographic) {
       var iso = null;
       var layersGlobal = [];
       var layersIso = [];
@@ -150,6 +150,7 @@ define([
           layersGlobal.push(layer);
           layer.category_status = layer.category_slug+'-global'
         }
+        layer.geographic = geographic ? 'checked' : '';
       }, this);
 
       categoriesGlobal = this.statusCategories(_.groupBy(layersGlobal, function(layer){ return layer.category_slug }));
@@ -227,12 +228,12 @@ define([
      *
      * @param  {array} layers
      */
-    update: function(categories, options) {
+    update: function(categories, options, geographic) {
       if (categories.length === 0) {
         this.model.set('hidden', true);
       } else {
         this.model.set({'hidden': false, 'boxClosed': false});
-        this._renderLegend(categories, options);
+        this._renderLegend(categories, options, geographic);
       }
       //Experiment
       this.presenter.initExperiment('source');

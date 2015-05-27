@@ -27,7 +27,7 @@
               {{/if}}
               {{#if this.sublayer}}
                 <div class="layer-sublayer" data-sublayer="{{this.sublayer}}">
-                  <span class="onoffswitch {{this.geographic}}"><span></span></span>
+                  <span class="onoffswitch {{this.geographic}} {{#if this.geographic}}style="background-color:#f69;"{{/if}}"><span></span></span>
                   <div class="sublayer-title">Geographic coverage</div>
                 </div>
               {{/if}}
@@ -67,7 +67,7 @@
             {{/if}}
             {{#if this.sublayer}}
               <div class="layer-sublayer" data-sublayer="{{this.sublayer}}">
-                <span class="onoffswitch"><span></span></span>
+                <span class="onoffswitch {{this.geographic}}" {{#if this.geographic}}style="background-color:#f69;"{{/if}}><span></span></span>
                 <div class="sublayer-title">Geographic coverage<a href='#' data-source='{{this.source}}_source' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></div>
 
               </div>

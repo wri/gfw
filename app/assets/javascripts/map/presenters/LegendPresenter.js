@@ -80,13 +80,13 @@ define([
      * Update legend by calling view.update.
      */
     _updateLegend: function() {
-      var categories = this.status.get('layerSpec').getLayersByCategory();
+      var categories = this.status.get('layerSpec').getLayersByCategory(),
+          options = {
+            threshold: this.status.get('threshold')
+          },
+          geographic = !! this.status.get('layerSpec').attributes.geographic_coverage;
 
-      var options = {
-        threshold: this.status.get('threshold')
-      };
-
-      this.view.update(categories, options);
+      this.view.update(categories, options, geographic);
     },
 
     /**
