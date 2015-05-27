@@ -141,15 +141,15 @@ define([
             layerTitle: layer.title
           });
         }
-        if(layer.iso) {
+        if (layer.iso) {
           var countries = amplify.store('countries');
           iso = layer.iso;
           layersIso.push(layer);
           layer.category_status = layer.category_slug+'-iso';
-        }else {
+        } else {
           layersGlobal.push(layer);
           layer.category_status = layer.category_slug+'-global'
-        };
+        }
       }, this);
 
       categoriesGlobal = this.statusCategories(_.groupBy(layersGlobal, function(layer){ return layer.category_slug }));
@@ -214,7 +214,7 @@ define([
       }, this);
     },
 
-    render: function(html){
+    render: function(html) {
       this.$el.html(html);
       this.$titleDialog = $('#title-dialog-legend');
       this.$categories = this.$el.find('.categories');
