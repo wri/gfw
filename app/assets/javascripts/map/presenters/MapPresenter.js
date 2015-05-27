@@ -15,7 +15,8 @@ define([
 
   var StatusModel = Backbone.Model.extend({
     defaults: {
-      threshold: null
+      threshold: null,
+      layers: null
     }
   });
 
@@ -110,6 +111,15 @@ define([
       }
     },
 
+    _resizeSetLayers: function(){
+      var layers = this.status.get('layers');
+      if (layers) {
+        _.each(layers, _.bind(function(layer){
+          this.view.updateLayer(layer.slug);
+        }, this ));
+      }
+    },
+
     /**
      * Set the map layers to match the suplied layers
      * and the current layer options status.
@@ -122,7 +132,7 @@ define([
       // there is no date so it will be set to the default layer date.
       var options = _.extend(_.pick(this.status.toJSON(),
         'threshold'), layerOptions);
-
+      this.status.set('layers',layers);
       this.view.setLayers(layers, options);
     },
 
