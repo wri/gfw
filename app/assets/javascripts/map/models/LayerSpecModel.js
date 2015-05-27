@@ -91,7 +91,7 @@ define([
       "mongabay",
       "user_stories",
       // FOREST CHANGE
-      "terraicanvas_cover_cover",
+      "terraicanvas_cover",
       "forma_cover",
       "imazon_cover",
       "modis_cover",
