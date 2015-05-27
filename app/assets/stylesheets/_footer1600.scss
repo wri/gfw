@@ -590,6 +590,18 @@
         @include logos-sprite(orbitalhover);
       }
     }
+    &.bei{
+      height: 63px; width: 130px; @include logos-sprite(bei);
+      &:hover{
+        @include logos-sprite(beihover);
+      }
+    }
+    &.cambridge{
+      height: 52px; width: 130px; @include logos-sprite(cambridge);
+      &:hover{
+        @include logos-sprite(cambridgehover);
+      }
+    }
 
     &.bobolink {
       height: 53px; width: 105px; @include logos-sprite(bobolink);
