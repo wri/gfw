@@ -11,7 +11,7 @@
         </div>
         <ul class="layers-list">
           <div id="umd-group" class="layer-group">
-            <span id="toggleUmd" class="group-name"><span class="onoffradio"><span></span></span>Tree cover change <em>(Hansen/UMD/Google/USGS/NASA)</em></span>
+            <span class="group-name grouped-layers-trigger" data-color="#f69"><span class="onoffradio"><span></span></span>Tree cover change <em>(Hansen/UMD/Google/USGS/NASA)</em></span>
             <li class="layer" data-layer="loss">
               <span class="onoffswitch"><span></span></span>
               <span class="layer-title">Loss<a href='#' data-source='loss' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
@@ -114,22 +114,17 @@
               <span class="onoffswitch"><span></span></span>
               <span class="layer-title">Mining<a href='#' data-source='mining' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
             </li>
-            <li class="wrapped-layer" data-color="#c98e6c">
-              <span class="onoffswitch"><span></span></span>
-              <span class="layer-title">Plantations<a href='#' data-source='oil_palm_wood_fiber' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-              <span class="does_wrapper">
-                <span class="layer-info">
-                  <label data-layer="oil_palm" class="layer wrapped">
-                    <span></span>
-                    <input type="radio" />Oil palm
-                  </label>
-                  <label data-layer="wood_fiber_plantations" class="layer wrapped">
-                    <span></span>
-                    <input type="radio" />Wood fiber
-                  </label>
-                </span>
-              </span>
-            </li>
+            <div class="grouped-layer">
+              <span class="layer-title grouped-layers-trigger" data-color="#c98e6c"><span class="onoffswitch"><span></span></span>Plantations</em></span>
+              <li class="layer" data-layer="oil_palm">
+                <span class="onoffswitch"><span></span></span>
+                <span class="layer-title">Oil Palm<a href='#' data-source='oil_palm' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              </li>
+              <li class="layer" data-layer="wood_fiber_plantations">
+                <span class="onoffswitch"><span></span></span>
+                <span class="layer-title">Wood fiber<a href='#' data-source='wood_fiber_plantations' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              </li>
+            </div>
             {{!-- <li class="layer" data-layer="oil_palm">
               <span class="onoffswitch"><span></span></span>
               <span class="layer-title">Oil palm<a href='#' data-source='oil_palm' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>

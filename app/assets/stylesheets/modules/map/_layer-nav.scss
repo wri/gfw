@@ -328,16 +328,6 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       @media (min-width: $br-mobileMap){
         padding: 10px;
       }
-      .onoffradio{
-        margin: 0 6px 0 0;
-        &.checked{
-          background: #F69;
-          border-color: #F69;
-          span{
-            background: #F69;
-          }
-        }
-      }
       em{
         display: block;
         font-size: 11px;
@@ -347,6 +337,19 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         font-weight: 400;
       }
     }
+    .grouped-layers-trigger{
+      .onoffradio{
+        margin: 1px 6px 0 0;
+        &.checked{
+          span{
+            background: inherit;
+          }
+        }
+      }
+      .onoffswitch{
+        margin: 1px 6px 0 0;
+      }
+    }
     >li{
       border: none;
       padding: 15px 20px;
@@ -354,6 +357,17 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
         padding: 10px;
         padding-left: 15px;
       }
+    }
+  }
+  .grouped-layer{
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 0;
+    .grouped-layers-trigger{
+      display: block;
+      font-size: 13px;
+      padding: 0px 0px 6px;
+      display: block;
     }
   }
   li {

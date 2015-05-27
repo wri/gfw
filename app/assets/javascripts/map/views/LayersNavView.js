@@ -27,7 +27,7 @@ define([
       'click .category-name' : '_toggleLayersNav',
       'click .layer': '_toggleLayer',
       'click .wrapped-layer': '_toggleLayerWrap',
-      'click #toggleUmd' : 'toggleUmd',
+      'click .grouped-layers-trigger' : 'toggleLayersGroup',
       'click #country-layers' : '_showNotification',
       'click #country-layers-reset' : '_resetIso'
     },
@@ -55,7 +55,7 @@ define([
       this.presenter.initExperiment('source');
 
       //Init
-      this.$UMDlayers = $('#umd-group .layer');
+      this.$groupedLayers = $('.grouped-layers-trigger');
       this.$toggleUMD = $('#toggleUmd');
       this.$categoriesList = $('.categories-list');
       this.$categoriesNum = $('.category-num');
@@ -101,7 +101,7 @@ define([
         }
       });
       this.toogleSelectedWrapper();
-      this.checkUMD();
+      this.checkLayersGroup();
       this.setNumbersOfLayers();
     },
 
@@ -201,28 +201,38 @@ define([
 
     },
 
-    toggleUmd: function(e){
-      _.each(this.$UMDlayers, _.bind(function(layer){
-        if (this.$toggleUMD.find('.onoffradio').hasClass('checked')) {
-          if ($(layer).hasClass('selected')) {
-            $(layer).trigger('click');
-          }
+
+    // GROUPED LAYERS
+    // This 2 functions are used to control grouped layers clicks. To enable or disable layers inside
+    toggleLayersGroup: function(e){
+      var groupedLayers = $(e.currentTarget).parent().find('.layer');
+      var checked = $(e.currentTarget).find('.onoffradio').hasClass('checked') || $(e.currentTarget).find('.onoffswitch').hasClass('checked');
+      _.each(groupedLayers, _.bind(function(layer){
+        var selected = $(layer).hasClass('selected');
+        if (checked) {
+          (selected) ? $(layer).trigger('click') : null;
         }else{
-          if (!$(layer).hasClass('selected')) {
-            $(layer).trigger('click');
-          }
+          (!selected) ? $(layer).trigger('click') : null;
         }
       }, this));
     },
 
-    checkUMD: function(){
-      var count = 0;
-      _.each(this.$UMDlayers, _.bind(function(layer){
-        if ($(layer).hasClass('selected')) {
-          count ++;
-        }
-      }, this));
-      (count == 2) ? this.$toggleUMD.find('.onoffradio').addClass('checked') : this.$toggleUMD.find('.onoffradio').removeClass('checked');
+    checkLayersGroup: function(){
+      _.each(this.$groupedLayers, _.bind(function(group){
+        var count = 0;
+        var layers = $(group).parent().find('.layer');
+        _.each(layers, _.bind(function(layer){
+          if ($(layer).hasClass('selected')) {
+            count ++;
+          }
+        }, this));
+        var color = (count == layers.length) ? $(group).data('color') : '';
+        $(group).find('.onoffradio, .onoffswitch').toggleClass('checked', (count == layers.length));
+        $(group).find('.onoffswitch').css('background-color', color);
+        $(group).find('.onoffradio').css({'background-color': color, 'border-color' : color });
+
+
+      }, this ))
     },
 
     /**
