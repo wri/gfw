@@ -888,7 +888,7 @@ define([
               GROUP  BY year  \
               ORDER  BY year ';
         if (!!mode && mode.mode == 'percent') {
-          sql = 'SELECT year, Sum(loss) / (Sum(extent_2000) + Sum(loss))  loss  FROM   umd_nat_final_1                WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000   GROUP  BY year ORDER BY year ';
+          sql = 'SELECT year, Sum(loss) / Sum(extent_2000) loss FROM umd_nat_final_1 WHERE  thresh = '+ (this.helper.config.canopy_choice || 30) +' AND year > 2000 GROUP BY year ORDER BY year ';
         }
         d3.json('https://wri-01.cartodb.com/api/v2/sql?q='+encodeURIComponent(sql), _.bind(function(error, json) {
           var data = json.rows;
