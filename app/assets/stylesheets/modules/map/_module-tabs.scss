@@ -276,7 +276,7 @@ $w-control: 44px;
   display: none;
   @media (min-width: $br-mobileMap){
     position: absolute;
-    z-index: 5;
+    z-index: 25;
   }
   &.active{
     display: block;
