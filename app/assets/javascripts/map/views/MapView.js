@@ -50,11 +50,13 @@ define([
       enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.render(3);
+          this.presenter._resizeSetLayers();
         },this)
       });
       enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
         match: _.bind(function(){
           this.render(2);
+          this.presenter._resizeSetLayers();
         },this)
       });
 
