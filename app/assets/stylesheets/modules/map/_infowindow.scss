@@ -97,7 +97,7 @@
         @include justify-content(space-between);
         .btn{
           width: 100%;
-          margin: 15px 0;
+          margin: 15px 1px;
           @media (max-width: $br-mobileMap - 1){
             width: 100%;
             &.subscription-concession{
