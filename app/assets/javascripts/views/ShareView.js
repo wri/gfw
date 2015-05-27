@@ -21,7 +21,7 @@ define([
       embedUrl: window.location.href,
       embedHeight: 600,
       embedWidth: 600,
-      hideEmbed: true
+      hideEmbed: false
     },
     setEmbedUrl: function(){
       if($('body').hasClass('is-countries-page')){
@@ -51,7 +51,6 @@ define([
 
     initialize: function(parent) {
       this.model = new ShareModel();
-      this.render();
       this._setListeners()
     },
 
@@ -86,6 +85,7 @@ define([
     },
 
     render: function() {
+      console.log(this.model.get('hideEmbed'));
       this._renderInput();
       this.$el.html(this.template({ hideEmbed: this.model.get('hideEmbed') }));
       this._cacheVars();
@@ -164,6 +164,10 @@ define([
     },
 
     _setUrlsFromEvent: function(event) {
+      var hideEmbed = $(event.currentTarget).data('hideembed');
+      this.model.set('hideEmbed', !!hideEmbed);
+      this.render();
+
       var url = $(event.currentTarget).data('share-url') || window.location.href;
       this.model.set('url', url);
 
@@ -172,8 +176,8 @@ define([
       this.model.set('embedWidth', $(event.currentTarget).data('share-embed-width'));
       this.model.set('embedHeight', $(event.currentTarget).data('share-embed-height'));
 
-      var hideEmbed = $(event.currentTarget).data('hide-embed');
-      this.model.set('hideEmbed', !!hideEmbed);
+
+
     },
 
     _setTypeFromEvent: function(event) {
