@@ -77,7 +77,7 @@ define([
       if (this.analysisResource.type === 'geojson') {
         data.geom = JSON.parse(this.analysisResource.geojson);
       }else{
-        data.geom = this.analysisResource.geom.geometry;
+        data.geom = (this.analysisResource.geom) ? this.analysisResource.geom.geometry : this.presenter.geom_for_subscription;
       }
 
       if (this.validateEmail(email)) {

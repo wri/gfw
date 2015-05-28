@@ -29,6 +29,10 @@ define([
       'Subscribe/hide': function() {
         this.view.hide();
       }
+    },{
+      'Subscribe/geom': function(geom) {
+        this.geom_for_subscription = geom;
+      }
     }],
 
     subscribeEnd: function(){

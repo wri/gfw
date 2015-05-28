@@ -264,8 +264,8 @@ define([
 
           var geojson = topojson.feature(results.topojson,
             objects);
-
           this._geojsonFitBounds(geojson);
+          mps.publish('Subscribe/geom',[geojson]);
 
           if (!this.status.get('dont_analyze')) {
             this.view.drawCountrypolygon(geojson,'#A2BC28');
@@ -280,8 +280,8 @@ define([
       } else {
         regionService.execute(resource, _.bind(function(results) {
           var geojson = results.features[0];
-
           this._geojsonFitBounds(geojson);
+          mps.publish('Subscribe/geom',[geojson]);
 
           if (!this.status.get('dont_analyze')) {
             this.view.drawCountrypolygon(geojson,'#A2BC28');
