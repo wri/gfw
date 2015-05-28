@@ -360,14 +360,16 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
     }
   }
   .grouped-layer{
-    padding: 10px;
-    padding-left: 15px;
     padding-right: 0;
     .grouped-layers-trigger{
       display: block;
       font-size: 13px;
-      padding: 0px 0px 6px;
+      padding: 10px 0px 6px 15px;
       display: block;
+    }
+    >li{
+      padding: 10px;
+      padding-left: 38px;
     }
   }
   li {
