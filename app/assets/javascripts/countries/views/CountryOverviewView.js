@@ -993,9 +993,9 @@ define([
       } else if (this.model.get('graph') === 'total_extent') {
         var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE')),
           $target = this.$big_figures,
-             query  = 'SELECT sum(extent_2000) from umd_nat_final_1';
+             query  = 'SELECT sum(extent_2000) from umd_nat_final_1 WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +'';
           if (!!mode && mode.mode == 'percent') {
-            query = 'SELECT sum(extent_perc)/count(extent_perc) as sum from umd_nat_final_1';
+            query = 'SELECT sum(extent_perc)/count(extent_perc) as sum from umd_nat_final_1 WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +'';
           }
         $.ajax({
               url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
