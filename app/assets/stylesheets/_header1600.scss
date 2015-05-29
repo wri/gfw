@@ -439,7 +439,7 @@
 
   // Search Widget mobile
   form{
-    padding: 17px 60px 17px 90px;
+    padding: 20px 20px 30px 90px;
     // border-top: 1px solid #CCC;
     >input {
       border: none;
@@ -658,6 +658,7 @@
 // Google Translate
 #google_translate_element_box2{
   padding: 15px 15px 10px;
+  display: none;
   @media (min-width: $br-mobile){
     display: none;
   }
