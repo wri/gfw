@@ -48,7 +48,10 @@
   .categories{
     margin: 20px 0;
     &.divided{
-      margin: 0 0 20px;
+      margin: 15px 0;
+      @media (min-width: $br-mobileMap){
+        margin: 0 0 20px;
+      }
     }
     h2{
       padding: 10px 20px;
