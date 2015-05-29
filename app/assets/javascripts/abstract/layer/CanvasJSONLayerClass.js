@@ -155,7 +155,7 @@ define([
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
         if (cells.deforestation[index] - cells.deforestation[index1] > 0) {
-          ctx.fillStyle = 'rgb(255, 70, 70)';
+          ctx.fillStyle = 'rgb(233, 189, 21)';
           ctx.fillRect(xc[i], yc[i], pixel_size, pixel_size);
         }
       }
