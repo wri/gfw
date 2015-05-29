@@ -85,7 +85,6 @@ define([
     },
 
     render: function() {
-      console.log(this.model.get('hideEmbed'));
       this._renderInput();
       this.$el.html(this.template({ hideEmbed: this.model.get('hideEmbed') }));
       this._cacheVars();
