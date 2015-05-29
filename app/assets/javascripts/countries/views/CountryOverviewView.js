@@ -228,7 +228,7 @@ define([
         var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
         var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
         if (!!mode && mode.mode == 'percent') {
-          sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss_perc) / Sum(umd.extent_2000) loss_perc FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss_perc = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss_perc DESC '
+          sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) / umd.extent_2000 loss_perc FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss_perc = 0 AND umd.year > 2000 GROUP BY umd.extent_2000, umd.iso, c.name, c.enabled ORDER BY loss_perc DESC '
         }
 
         if (e) {
@@ -254,7 +254,7 @@ define([
               url: window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=' + (this.helper.config.canopy_choice || 30),
               dataType: 'json',
               success: _.bind(function(data) {
-                var loss = Math.round(val.loss) || val.loss_perc.toFixed(3);
+                var loss = Math.round(val.loss) || (val.loss_perc*100).toFixed(3);
                 var orig = loss;
                 var g_mha, l_mha = '%';
 
@@ -321,7 +321,7 @@ define([
 
         var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_final_1 umd, gfw2_countries c WHERE umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
         if (!!mode && mode.mode == 'percent')
-            sql = 'SELECT sum(gain)/sum(extent_2000) as ratio, country as name, c.iso as iso1, c.enabled, u.iso as iso2 from umd_nat_final_1 u, gfw2_countries c where c.iso = u.iso AND extent_2000 >0  group by country, u.iso, c.iso, c.enabled order by ratio desc ';
+            sql = 'SELECT sum(gain)/extent_2000 as ratio, country as name, c.iso as iso1, c.enabled, u.iso as iso2 from umd_nat_final_1 u, gfw2_countries c  WHERE thresh = 50 AND c.iso = u.iso AND extent_2000 >0  group by extent_2000, country, u.iso, c.iso, c.enabled order by ratio desc ';
         if (e) {
           sql += 'OFFSET 10';
         } else {
@@ -364,7 +364,7 @@ define([
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
                               <div class="countries_list__data">\
-                                <div id="perc_'+val.iso+'" class="perct"><span class="loss line"><span>'+ (val.ratio*1000).toFixed(2) + '%</span></span></div>\
+                                <div id="perc_'+val.iso+'" class="perct"><span class="loss line"><span>'+ (val.ratio*100).toFixed(2) + '%</span></span></div>\
                               </div>\
                             </li>';
             } else {
@@ -993,9 +993,9 @@ define([
       } else if (this.model.get('graph') === 'total_extent') {
         var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE')),
           $target = this.$big_figures,
-             query  = 'SELECT sum(extent_2000) from umd_nat_final_1';
+             query  = 'SELECT sum(extent_2000) from umd_nat_final_1 WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +'';
           if (!!mode && mode.mode == 'percent') {
-            query = 'SELECT sum(extent_perc)/count(extent_perc) as sum from umd_nat_final_1';
+            query = 'SELECT sum(extent_perc)/count(extent_perc) as sum from umd_nat_final_1 WHERE thresh = ' + (this.helper.config.canopy_choice || 30) +'';
           }
         $.ajax({
               url: 'https://wri-01.cartodb.com/api/v2/sql?q=' + query,
