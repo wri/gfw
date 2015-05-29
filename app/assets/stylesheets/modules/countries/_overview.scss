@@ -584,6 +584,7 @@
     width: 150px;
 
     &.last {
+      display: none;
       padding-left: 9px;
       border-left: 1px solid #ccc;
       margin-left: 10px;
