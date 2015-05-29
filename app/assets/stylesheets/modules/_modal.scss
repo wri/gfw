@@ -404,10 +404,12 @@ $height: auto;
   bottom: 0;
   left: 0;
   padding: 20px;
+  visibility: hidden;
   @include transform(translate(0,100%));
   @include transition(all 0.25s $easeInOutSine);
 
   &.active{
+    visibility: visible;
     @include transform(translate(0,0%));
   }
 

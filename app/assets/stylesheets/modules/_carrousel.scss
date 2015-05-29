@@ -2,6 +2,11 @@
   position: relative;
   padding: 20px;
   background: #222;
+  display: none;
+  @media (min-width: $br-mobile) {
+    display: block;
+  }
+
   .player-box{
     width: 100%;
     @media (min-width: $br-mobile) {

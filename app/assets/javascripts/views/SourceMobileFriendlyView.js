@@ -68,6 +68,7 @@ define([
 
     _stopBindings: function() {
       this.$backdrop.off('click');
+      this.$htmlbody.removeClass('active');
     },
 
     _toggle: function() {
