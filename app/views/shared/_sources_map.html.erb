@@ -1109,6 +1109,60 @@
         </div>
       </div>
     </li>
+    <li id='global_land_cover' class='source-item'>
+      <div class='source_header'>
+        <strong class='source_title'>GlobCover – Global landcover (2009)</strong>
+        <i class='expand_arrow'></i>
+      </div>
+      
+      <div class='source_body'>
+        <div class='source_table'>
+          <dl class='sources_row'>
+            <dt>Function</dt>
+            <dd>Maps land cover distribution globally.</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>RESOLUTION / SCALE</dt>
+            <dd>300 × 300 meters</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Geographic coverage</dt>
+            <dd>Global</dd>
+          </dl>
+          <dl class='sources_row even'>
+            <dt>Source data</dt>
+            <dd><a href="http://earth.esa.int/instruments/meris/" target="_blank">MERIS</a></dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Frecuency of updates</dt>
+            <dd>None planned</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Date of content</dt>
+            <dd>2009</dd>
+          </dl>
+          <dl class='sources_row'>
+            <dt>Cautions</dt>
+            <dd>
+              <p>RData gaps in the MERIS 2009 satellite acquisitions (about 5% of the total data area) were filled using the GlobCover 2005 land cover map.</p>
+   
+              <p>The lack of a short-wave infrared (SWIR) band in the MERIS sensor may result in underestimation of flooded forests. These classes were therefore imported from the 2005 GlobCover land cover map.</p>
+               
+              <p>Delineation between land and water is not absolutely correct: it is not exhaustive, especially regarding inland water bodies, and it presents some geo-location inaccuracies.</p> 
+            </dd>
+          </dl>
+        </div>
+
+        <div class='source_summary'>
+          <h3 class='overview_title'>Overview</h3>
+          <p>GlobCover is a European Space Agency (ESA) initiative which began in 2005 in partnership with the Joint Research Center, European Environmental Agency, UN Food and Agricultural Organization,  UN Environment Programme, Global Observation of Forest Cover and Land Cover Dynamics, and International Geosphere-Biosphere Programme. The aim of the project was to develop a service capable of delivering global composites and land cover maps using observations from the 300 meter MERIS sensor on board the ENVISAT satellite mission. ESA makes land cover maps available covering 2 periods: December 2004 - June 2006 and January - December 2009. GlobCover products come with a thematic legend compatible with the UN Land Cover Classification System (LCCS).</p>
+          <p>Data in this layer was generated using MERIS images which were classified using both a supervised (human-verified) and unsupervised  (automated)classification algorithm applied at two different seasonal time steps to create land cover classes based on both spectral and temporal properties of land cover. The labelling procedure is automated and based on the GlobCover 2005 (V2.2) land cover map. Several decision rules have been defined with the help of international land cover experts to create unique labels for each class. For more information, see <a href="http://due.esrin.esa.int/globcover/">due.esrin.esa.int/globcover/.</a></p>
+          <p class='credits'><strong>Citation:</strong> © ESA 2010 and UCLouvain</p>
+
+          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "http://due.esrin.esa.int/page_globcover.php" %></em></p>
+        </div>
+      </div>
+    </li>
   </ul>
 </article>
 
