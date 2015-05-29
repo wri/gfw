@@ -80,6 +80,7 @@ define([
   'map/views/layers/UsaConservationEasementsLayer',
   'map/views/layers/UsaLandCoverLayer',
   'map/views/layers/UsaLandCoverChangeLayer',
+  'map/views/layers/GlobalLandCoverLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -168,6 +169,7 @@ define([
   UsaConservationEasementsLayer,
   UsaLandCoverLayer,
   UsaLandCoverChangeLayer,
+  GlobalLandCoverLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -418,7 +420,9 @@ define([
     us_land_cover_change: {
       view: UsaLandCoverChangeLayer
     },
-    
+    global_land_cover: {
+      view: GlobalLandCoverLayer
+    },
     nothing: {
     }
   };

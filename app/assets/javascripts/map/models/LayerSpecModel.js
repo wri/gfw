@@ -20,6 +20,7 @@ define([
       //FOREST COVER
       "forest2000",
       "WMSLayer",
+      "global_land_cover",
       "us_land_cover",
       "us_land_cover_change",
       "colombia_forest_change",
