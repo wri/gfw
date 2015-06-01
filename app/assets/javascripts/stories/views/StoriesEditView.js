@@ -155,7 +155,7 @@ define([
           dataType: 'json',
           autoUpload: true,
           acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-          maxFileSize: 5000000, // 5 MB
+          maxFileSize: 8000000, // 8 MB
           // Enable image resizing, except for Android and Opera,
           // which actually support image resizing, but fail to
           // send Blob objects via XHR requests:
@@ -170,18 +170,22 @@ define([
         that.filesAdded += _.size(data.files);
 
         _.each(data.files, function(file) {
-          var filename = that.prettifyFilename(file.name);
-          var $thumbnail = $("<li class='thumbnail preview' data-name='"+filename+"' ><div class='filename'>"+ file.name +"</div><div class='spinner'><svg><use xlink:href='#shape-spinner'></use></svg></div></li>");
-          $('.thumbnails').append($thumbnail);
-          $thumbnail.fadeIn(250);
+          if (file && file.size > 8000000) {
+            data.abort();
+          }else{
+            var filename = that.prettifyFilename(file.name);
+            var $thumbnail = $("<li class='thumbnail preview' data-name='"+filename+"' ><div class='filename'>"+ file.name +"</div><div class='spinner'><svg><use xlink:href='#shape-spinner'></use></svg></div></li>");
+            $('.thumbnails').append($thumbnail);
+            $thumbnail.fadeIn(250);
+            $("form input[type='submit']").addClass('disabled');
+            $("form input[type='submit']").attr('disabled', 'disabled');
+            $("form input[type='submit']").val('Please wait...');
+          }
         });
 
-        $("form input[type='submit']").addClass('disabled');
-        $("form input[type='submit']").attr('disabled', 'disabled');
-        $("form input[type='submit']").val('Please wait...');
         // data.submit();
       }).on('fileuploaddone', function (e, data) {
-        var files = [data.result]
+        var files = [data.result];
 
         $.each(files, function (index, file) {
           that.filesAdded--;
@@ -223,6 +227,8 @@ define([
 
         $('#story_uploads_ids').val(that.uploadsIds.join(','));
         ga('send', 'event', 'Stories', 'New story', 'submit');
+      }).on('fileuploadfail', function (e, data){
+        mps.publish('Notification/open', ['notif-limit-exceed']);
       });
     },
 
