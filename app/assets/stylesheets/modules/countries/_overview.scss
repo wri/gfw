@@ -170,12 +170,17 @@
   width: 100%;
   margin-top: -1px;
   line-height: 40px;
+  padding-left: 15px;
   font-size: 13px;
   font-weight: 500;
   text-align: center;
   background: #333;
   color: #fff;
   position: relative;
+
+  @media only screen and (max-width: 1010px) {
+    text-align: left;
+  }
 
   p {
     // border-left: 1px solid $dark;
@@ -306,6 +311,8 @@
   text-align: center;
   color: #463F52;
   vertical-align: top;
+  margin: 0 auto;
+  max-width: 700px;
 
   sup {
     position: relative;
