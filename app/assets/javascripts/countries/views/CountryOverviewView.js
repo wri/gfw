@@ -336,7 +336,7 @@ define([
           var max_trigger = data.length -1;
           _.each(data, function(val, key) {
             var ord = e ? (key+11) : (key+1),
-                enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
+                enabled = val.enabled ? '<a href="/country/'+val.iso1+'">'+val.name+'</a>' : val.name;
             if (! !!mode || (mode.mode != 'percent')) {
               $.ajax({
                 url: window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=30',
@@ -354,7 +354,7 @@ define([
                   } else {
                     l_mha = 'Ha';
                   }
-                  $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ (data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
+                  $('#perc_'+val.iso1+'').empty().append('<span class="loss line"><span>'+ (data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
                 }
                 , this),
               });
@@ -364,7 +364,7 @@ define([
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
                               <div class="countries_list__data">\
-                                <div id="perc_'+val.iso+'" class="perct"><span class="loss line"><span>'+ (val.ratio*100).toFixed(2) + '%</span></span></div>\
+                                <div id="perc_'+val.iso1+'" class="perct"><span class="loss line"><span>'+ (val.ratio*100).toFixed(2) + '%</span></span></div>\
                               </div>\
                             </li>';
             } else {
@@ -372,7 +372,7 @@ define([
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
                               <div class="countries_list__data">\
-                                <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss"></span></div>\
+                                <div id="perc_'+val.iso1+'" class="perct"><span class="line percent loss"></span></div>\
                               </div>\
                             </li>';
             }
