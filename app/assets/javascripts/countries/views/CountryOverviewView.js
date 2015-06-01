@@ -321,7 +321,7 @@ define([
 
         var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_final_1 umd, gfw2_countries c WHERE umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
         if (!!mode && mode.mode == 'percent')
-            sql = 'SELECT sum(gain)/extent_2000 as ratio, country as name, c.iso as iso1, c.enabled, u.iso as iso2 from umd_nat_final_1 u, gfw2_countries c  WHERE thresh = 50 AND c.iso = u.iso AND extent_2000 >0  group by extent_2000, country, u.iso, c.iso, c.enabled order by ratio desc ';
+            sql = 'SELECT sum(gain)/extent_2000 as ratio, country as name, c.iso as iso, c.enabled, u.iso as iso2 from umd_nat_final_1 u, gfw2_countries c  WHERE thresh = 50 AND c.iso = u.iso AND extent_2000 >0  group by extent_2000, country, u.iso, c.iso, c.enabled order by ratio desc ';
         if (e) {
           sql += 'OFFSET 10';
         } else {
@@ -336,7 +336,7 @@ define([
           var max_trigger = data.length -1;
           _.each(data, function(val, key) {
             var ord = e ? (key+11) : (key+1),
-                enabled = val.enabled ? '<a href="/country/'+val.iso1+'">'+val.name+'</a>' : val.name;
+                enabled = val.enabled ? '<a href="/country/'+val.iso+'">'+val.name+'</a>' : val.name;
             if (! !!mode || (mode.mode != 'percent')) {
               $.ajax({
                 url: window.gfw.config.GFW_API_HOST + '/forest-change/umd-loss-gain/admin/' + val.iso+'?thresh=30',
@@ -354,7 +354,7 @@ define([
                   } else {
                     l_mha = 'Ha';
                   }
-                  $('#perc_'+val.iso1+'').empty().append('<span class="loss line"><span>'+ (data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
+                  $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ (data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
                 }
                 , this),
               });
@@ -364,7 +364,7 @@ define([
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
                               <div class="countries_list__data">\
-                                <div id="perc_'+val.iso1+'" class="perct"><span class="loss line"><span>'+ (val.ratio*100).toFixed(2) + '%</span></span></div>\
+                                <div id="perc_'+val.iso+'" class="perct"><span class="loss line"><span>'+ (val.ratio*100).toFixed(2) + '%</span></span></div>\
                               </div>\
                             </li>';
             } else {
@@ -372,7 +372,7 @@ define([
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
                               <div class="countries_list__data">\
-                                <div id="perc_'+val.iso1+'" class="perct"><span class="line percent loss"></span></div>\
+                                <div id="perc_'+val.iso+'" class="perct"><span class="line percent loss"></span></div>\
                               </div>\
                             </li>';
             }
