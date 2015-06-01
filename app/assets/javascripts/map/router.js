@@ -31,7 +31,6 @@ define([
      * @param  {[type]} boot [description]
      */
     initialize: function(mainView) {
-      console.log(this.isLocalStorageNameSupported());
       this.bind('all', this._checkForCacheBust());
       this.name = null;
       this.mainView = mainView;

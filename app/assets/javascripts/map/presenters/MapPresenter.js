@@ -16,7 +16,8 @@ define([
   var StatusModel = Backbone.Model.extend({
     defaults: {
       threshold: null,
-      layers: null
+      layers: null,
+      dont_scroll: null
     }
   });
 
@@ -90,7 +91,7 @@ define([
       var layerOptions = {};
       this._setMapOptions(
         _.pick(place.params,
-          'zoom', 'maptype', 'lat', 'lng', 'fitbounds', 'geojson'));
+          'zoom', 'maptype', 'lat', 'lng', 'fitbounds', 'geojson', 'dont_scroll'));
 
       if (place.params.begin && place.params.end) {
         layerOptions.currentDate = [place.params.begin, place.params.end];
@@ -143,14 +144,14 @@ define([
      * @param {Object} params Map params from the place object.
      */
     _setMapOptions: function(params) {
-
       if (params.fitbounds) {
         this.view.fitBounds(geojsonUtilsHelper.getBoundsFromGeojson(params.geojson))
       }
       var options = {
         zoom: params.zoom,
         mapTypeId: params.maptype,
-        center: new google.maps.LatLng(params.lat, params.lng)
+        center: new google.maps.LatLng(params.lat, params.lng),
+        scrollwheel: ! !!params.dont_scroll
       };
 
       this.view.setOptions(options);
