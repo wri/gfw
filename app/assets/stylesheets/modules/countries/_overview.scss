@@ -219,7 +219,6 @@
     right: 60px;
     top: 8px;
     border-radius: 50px;
-    display: none !important;
     strong {
       background-color: #eee;
       color: #7b7b7b;
@@ -286,9 +285,6 @@
       cursor: pointer;
       text-transform: none;
     }
-  }
-  .trigger-mode {
-    display: none !important;
   }
 }
 .overview_graph__years{
