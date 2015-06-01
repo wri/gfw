@@ -147,6 +147,9 @@ define([
       if (params.fitbounds) {
         this.view.fitBounds(geojsonUtilsHelper.getBoundsFromGeojson(params.geojson))
       }
+      if (!!params.dont_scroll) {
+        $('#module-map-controls').addClass('active');
+      }
       var options = {
         zoom: params.zoom,
         mapTypeId: params.maptype,

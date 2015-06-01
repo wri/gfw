@@ -106,6 +106,21 @@
       }
     }
 
+    .module-mapcontrols{
+      display: none;
+      bottom: 73px;
+      left: 21px;
+      top: auto;
+      right: auto;
+      &.active{
+        display: block;
+      }
+      .toggle-buttons{
+        display: none;
+      }
+    }
+
+
     // Analysis
     .module.module-mapcontrols-mobile{
       // &.analysis{
@@ -180,6 +195,7 @@
         width: 100%;
         height: 50px;
         @include transform(translate(-50%,0%));
+        box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
         .timeline-year .time .select-timeline-container,
         .timeline-month .time .select-timeline-container,
         .timeline-btn .time .select-timeline-container{
@@ -192,8 +208,6 @@
         }
       }
     }
-
-
 
 
 
@@ -224,7 +238,6 @@
     .map-logos,
     .map-container .gm-style:after,
     //map controls
-    .module-mapcontrols,
     .tab-analysis-mobile,
     //croshairs
     .map-viewfinder,
