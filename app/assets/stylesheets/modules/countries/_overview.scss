@@ -214,6 +214,7 @@
     right: 60px;
     top: 8px;
     border-radius: 50px;
+    display: none !important;
     strong {
       background-color: #eee;
       color: #7b7b7b;
@@ -280,6 +281,9 @@
       cursor: pointer;
       text-transform: none;
     }
+  }
+  .trigger-mode {
+    display: none !important;
   }
 }
 .overview_graph__years{
@@ -383,7 +387,7 @@
     right: 57px;
   }
   &.huge {
-    width: 270px;
+    width: 330px;
   }
 
   &.expanded {
@@ -413,7 +417,7 @@
   right: 60px;
   @include transform-translate(0, -50%);
   float: right;
-  width: 190px;
+  width: 240px;
   text-align: right;
   margin-top: 4px;
   line-height: 20px;
@@ -576,9 +580,8 @@
   }
 
   .half {
-    float: left;
-    width: 130px;
-    text-align: right;
+    float: right;
+    width: 150px;
 
     &.last {
       display: none;
@@ -588,6 +591,7 @@
     }
   }
 }
+
 .countries_list__footer {
   background: rgba(#6D6DE5, .15);
   text-align: center;
@@ -772,6 +776,7 @@
   width: 100%;
   .inner {
     width: 100%;
+    max-width: 960px;
     overflow: hidden;
     padding: 8px;
     .countries_show & {
@@ -782,6 +787,7 @@
     position: relative;
     box-sizing: content-box;
     float: right;
+    display: inline-block;
     padding: 0 24px 0 0;
     margin: 0 0 0 20px;
     font-size: 14px;
@@ -833,7 +839,7 @@
       }
     }
     @media only screen and (max-width: 480px) {
-      margin: 0 0px 0 20px;
+      margin: 0 20px 0 20px;
     }
   }
 
@@ -935,7 +941,6 @@
     }
   }
 
-
   .overview_graph {
     width: 100%;
   }
@@ -954,16 +959,15 @@
     font-size: 16px;
     line-height: 25px;
 
-    .trigger-mode{
-      display: none !important;
+    p {
+      width: 77%;
+      display: inline-block;
+      margin-left: -30px;
     }
 
-    p {
-      width: 100%;
+    .info {
       display: inline-block;
-      text-align: left;
-      font-size: 14px;
-      padding-right: 40px;
+      top: 27px;
     }
   }
 
@@ -983,15 +987,14 @@
   }
 
   .overview_graph__area {
-    height: 275px;
+    height: 200px;
 
     .chart {
       width: 100%;
-      height: 275px;
     }
 
     .chart.domains {
-      height: 275px;
+      height: 200px;
     }
 
     .legend {
@@ -1011,7 +1014,7 @@
     }
 
     svg {
-      // top: 40px;
+      top: 40px;
     }
   }
 
@@ -1029,7 +1032,6 @@
 
   .country-overview-wrapper-coolio {
     top: 0;
-    margin-top: 5px;
   }
 
   .overview_graph__years {
@@ -1068,18 +1070,4 @@
     top: 0;
     bottom: 0;
   }
-
-  .overview_graph__figure_only {
-    display: none;
-    width: 100%;
-    text-align: left;
-    padding: 10px 10px 20px;
-    span {
-      color: #fff;
-      font-size: 50px;
-    }
-  }
-
-
-
 }
