@@ -11,5 +11,5 @@ use Rack::ReverseProxy do
   reverse_proxy_options preserve_host: true
 
   # Forward the path /test* to http://example.com/test*
-  reverse_proxy /^\/gfw-assets\/?(.*)$/, 'https://cdn.rawgit.com/simbiotica/gfw_assets/831ef6558cf2693357fb23829ef7e6acf7ebc840/src/header-loader.js$1'
+  reverse_proxy /^\/gfw-assets\/?(.*)$/, "#{ENV['GFW_ASSETS_URL']}$1"
 end
