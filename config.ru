@@ -11,5 +11,6 @@ use Rack::ReverseProxy do
   reverse_proxy_options preserve_host: true
 
   # Forward the path /test* to http://example.com/test*
-  reverse_proxy '/latin-america/', 'http://www.terra-i.org/latin-america/'
+  reverse_proxy /^\/gfw-assets\/?(.*)$/, "#{ENV['GFW_ASSETS_URL']}$1"
+
 end
