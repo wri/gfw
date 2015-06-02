@@ -11,6 +11,10 @@
   background: #333;
   margin-top: 36px;
   top: -20px;
+  @media only screen and (max-width: 480px) {
+    top: 0;
+    margin-top: 0px;
+  }
   .embed & {
     margin-top: 0;
     top: 0px;
@@ -234,6 +238,12 @@
       @include justify-content(center);
       @include align-items(center);
     }
+    @media only screen and (max-width: 480px) {
+      position: relative;
+      margin: 10px auto;
+      right: auto;
+      top: auto;
+    }
   }
 }
 
@@ -256,6 +266,13 @@
       color: $cGreen;
     }
   }
+  @media only screen and (max-width: 480px) {
+    padding: 0 0 20px;
+    span{
+      font-size: 50px;
+    }
+  }
+
 }
 
 .overview_graph__years,
@@ -842,7 +859,7 @@
       }
     }
     @media only screen and (max-width: 480px) {
-      margin: 0 20px 0 20px;
+      margin: 0 0px 0 20px;
     }
   }
 
@@ -963,14 +980,13 @@
     line-height: 25px;
 
     p {
-      width: 77%;
-      display: inline-block;
-      margin-left: -30px;
+      font-size: 10px;
+      padding: 0 37px 0 0;
     }
 
     .info {
       display: inline-block;
-      top: 27px;
+      top: 20px;
     }
   }
 
@@ -990,7 +1006,7 @@
   }
 
   .overview_graph__area {
-    height: 200px;
+    height: 260px;
 
     .chart {
       width: 100%;
@@ -1017,7 +1033,7 @@
     }
 
     svg {
-      top: 40px;
+      // top: 40px;
     }
   }
 

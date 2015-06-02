@@ -256,9 +256,15 @@
         }
 
         p {
-            strong {
-                font-weight: 500;
+          strong {
+            font-weight: 500;
+            display: block;
+            margin: 5px 0 0;
+            @media (min-width: $br-mobile){
+              display: inline;
+              margin: 0;
             }
+          }
         }
         svg {
             height: 22px;
