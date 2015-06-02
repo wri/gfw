@@ -31,10 +31,12 @@ define([
      * @param  {[type]} boot [description]
      */
     initialize: function(mainView) {
+      this.isLocalStorageNameSupported();
       this.bind('all', this._checkForCacheBust());
       this.name = null;
       this.mainView = mainView;
       this.placeService = new PlaceService(this);
+
     },
 
     map: function() {
