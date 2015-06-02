@@ -224,7 +224,7 @@ define([
         var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) loss FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY loss DESC ';
         var mode = JSON.parse(sessionStorage.getItem('OVERVIEWMODE'));
         if (!!mode && mode.mode == 'percent') {
-          sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) / umd.extent_2000 loss_perc FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss_perc = 0 AND umd.year > 2000 GROUP BY umd.extent_2000, umd.iso, c.name, c.enabled ORDER BY loss_perc DESC '
+          sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.loss) / umd.extent_2000 loss_perc FROM umd_nat_final_1 umd, gfw2_countries c WHERE thresh = '+ (this.helper.config.canopy_choice || 30) +' AND umd.iso = c.iso AND NOT loss_perc = 0 AND umd.year > 2000 AND extent_2000 > 10 GROUP BY umd.extent_2000, umd.iso, c.name, c.enabled ORDER BY loss_perc DESC '
         }
 
         if (e) {
@@ -317,7 +317,7 @@ define([
 
         var sql = 'SELECT umd.iso, c.name, c.enabled, Sum(umd.gain) gain FROM umd_nat_final_1 umd, gfw2_countries c WHERE umd.iso = c.iso AND NOT loss = 0 AND umd.year > 2000 GROUP BY umd.iso, c.name, c.enabled ORDER BY gain DESC ';
         if (!!mode && mode.mode == 'percent')
-            sql = 'SELECT sum(gain)/extent_2000 as ratio, country as name, c.iso as iso, c.enabled, u.iso as iso2 from umd_nat_final_1 u, gfw2_countries c  WHERE thresh = 50 AND c.iso = u.iso AND extent_2000 >0  group by extent_2000, country, u.iso, c.iso, c.enabled order by ratio desc ';
+            sql = 'SELECT (gain*12/extent_2000)*100 as ratio, country as name, c.iso as iso, c.enabled, u.iso as iso2 from umd_nat_final_1 u, gfw2_countries c  WHERE thresh = 50 AND c.iso = u.iso AND extent_2000 > 10  group by ratio, country, u.iso, c.iso, c.enabled order by ratio desc ';
         if (e) {
           sql += 'OFFSET 10';
         } else {
@@ -360,7 +360,7 @@ define([
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
                               <div class="countries_list__data">\
-                                <div id="perc_'+val.iso+'" class="perct"><span class="loss line"><span>'+ (val.ratio*100).toFixed(2) + '%</span></span></div>\
+                                <div id="perc_'+val.iso+'" class="perct"><span class="loss line"><span>'+ (val.ratio).toFixed(2) + '%</span></span></div>\
                               </div>\
                             </li>';
             } else {
