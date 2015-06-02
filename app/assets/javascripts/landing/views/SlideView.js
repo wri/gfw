@@ -48,6 +48,7 @@ define([
         responsive: [
           {
             breakpoint: 850,
+            speed: 250,
             settings: {
               fade: false,
               cssEase: 'ease-out'

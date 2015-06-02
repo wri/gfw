@@ -183,8 +183,8 @@
     z-index: 2;
     @media (min-width: $br-mobile) {
       top: auto;
-      bottom: 20px;
-      right: 20px;
+      bottom: 10px;
+      right: 30px;
     }
     li{
       margin: 0 0 0 15px;
@@ -205,6 +205,7 @@
         border: none;
         text-indent: -9999px;
         outline: none;
+        @include transition(all,.5s,$easeInOutSine);
         @media (min-width: $br-mobile) {
           width: 8px;
           height: 8px;
@@ -221,7 +222,6 @@
         }
 
       }
-      @include transition(all,.5s,$easeInOutSine);
       &.slick-active, &:hover {
         button{
           opacity: 1;
