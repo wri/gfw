@@ -258,6 +258,7 @@ define([
       p[layer.slug] = true;
       p.layer = layer;
       p.download = results.download_urls;
+      p.download.cdb = encodeURIComponent(p.download.kml);
       p.alertsName = results.meta.name;
 
       if (results.params.iso) {
