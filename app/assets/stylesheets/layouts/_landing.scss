@@ -711,22 +711,23 @@
     width: 100%;
     border-top: 1px solid #CCC;
     padding: 20px;
-    padding-bottom: 50px;
+    padding-bottom: 75px;
     position: relative;
     @media (min-width: $br-mobile) {
-     border-top: none;
-     box-shadow: 0 0px 1px rgba(0,0,0,0.25);
-     @include transition(all,0.5s,$easeInOutSine);
-     &:hover {
-      box-shadow: 0 0px 1px rgba(0,0,0,0.25), 0px 0px 15px 6px rgba(238,238,238,0.65);
-     }
+      padding-bottom: 50px;
+      border-top: none;
+      box-shadow: 0 0px 1px rgba(0,0,0,0.25);
+      @include transition(all,0.5s,$easeInOutSine);
+      &:hover {
+        box-shadow: 0 0px 1px rgba(0,0,0,0.25), 0px 0px 15px 6px rgba(238,238,238,0.65);
+      }
     }
     h3 {
-     text-transform: uppercase;
-     text-align: center;
-     font-size: 21px;
-     padding: 20px 0;
-     color: $dark;
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 21px;
+      padding: 20px 0;
+      color: $dark;
     }
 
     .button-box {
@@ -787,8 +788,8 @@
     ul {
       position: relative;
       padding: 20px 0;
-      margin: 20px 0;
-      height: 459px;
+      margin: 20px 0 40px;
+      height: auto;
 
       &:after {
         content: "";
@@ -826,6 +827,10 @@
         &:before {
           display: none;
         }
+      }
+      @media (min-width: $br-tablet) {
+        height: 459px;
+        margin: 20px 0;
       }
       li {
         width: 100%;
