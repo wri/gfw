@@ -13,13 +13,13 @@
 
 
   .main-slider-viewport {
-  	position: absolute;
-  	top: 0;
-  	left: 0;
-  	width: 100%;
-  	height: 100%;
-  	overflow: hidden;
-    z-index: 1;
+    position: relative;
+    width: 100%;
+    max-height: 260px;
+    overflow: hidden;
+    @media (min-width: $br-mobile) {
+      max-height: 620px;
+    }
   }
 
   nav {
@@ -28,9 +28,6 @@
     left: 50%;
     z-index: 2;
     @include transform(translate(-50%,0));
-    // @media (min-width: 1350px) {
-    //   bottom: 69px;
-    // }
     h2 {
       background: $white;
       font-weight: 300;
@@ -179,8 +176,7 @@
     }
   }
 
-  .main-slider-pagination {
-    width: 100%;
+  .slick-dots {
     position: absolute;
     top: 20px;
     right: 65px;
@@ -188,26 +184,30 @@
     @media (min-width: $br-mobile) {
       top: auto;
       bottom: 20px;
-      right: 0;
+      right: 20px;
     }
-    ul {
-      float: right;
-      li {
+    li{
+      margin: 0 0 0 15px;
+      float: left;
+      &:first-child { margin: 0;}
+      @media (min-width: $br-mobile) {
+        margin: 0 0 0 20px;
+      }
+      button{
         position: relative;
-        box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
-        width: 10px;
-        height: 10px;
+        box-shadow: $shadow1;
+        width: 6px;
+        height: 6px;
         opacity: 0.8;
         border-radius: 50%;
         cursor: pointer;
         background: $white;
-        float: left;
-        margin: 0 0 0 15px;
-        @include transition(all,.5s,$easeInOutSine);
-        &:first-child { margin: 0;}
-        &.current, &:hover {
-          opacity: 1;
-          @include transform(scale(2));
+        border: none;
+        text-indent: -9999px;
+        outline: none;
+        @media (min-width: $br-mobile) {
+          width: 8px;
+          height: 8px;
         }
         &:after{
           content: "";
@@ -215,31 +215,84 @@
           top: 50%;
           left: 50%;
           @include transform(translate(-50%,-50%));
-          width: 250%;
-          height: 250%;
+          width: 150%;
+          height: 150%;
           background: transparent;
         }
-        @media (min-width: $br-mobile) {
-          width: 6px;
-          height: 6px;
+
+      }
+      @include transition(all,.5s,$easeInOutSine);
+      &.slick-active, &:hover {
+        button{
+          opacity: 1;
+          @include transform(scale(2));
         }
       }
     }
   }
+
+
+
+  // .main-slider-pagination {
+  //   width: 100%;
+  //   position: absolute;
+  //   top: 20px;
+  //   right: 65px;
+  //   z-index: 2;
+  //   @media (min-width: $br-mobile) {
+  //     top: auto;
+  //     bottom: 20px;
+  //     right: 0;
+  //   }
+  //   ul {
+  //     float: right;
+  //     li {
+  //       position: relative;
+  //       box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
+  //       width: 10px;
+  //       height: 10px;
+  //       opacity: 0.8;
+  //       border-radius: 50%;
+  //       cursor: pointer;
+  //       background: $white;
+  //       float: left;
+  //       margin: 0 0 0 15px;
+  //       @include transition(all,.5s,$easeInOutSine);
+  //       &:first-child { margin: 0;}
+  //       &.current, &:hover {
+  //         opacity: 1;
+  //         @include transform(scale(2));
+  //       }
+  //       &:after{
+  //         content: "";
+  //         position: absolute;
+  //         top: 50%;
+  //         left: 50%;
+  //         @include transform(translate(-50%,-50%));
+  //         width: 250%;
+  //         height: 250%;
+  //         background: transparent;
+  //       }
+  //       @media (min-width: $br-mobile) {
+  //         width: 6px;
+  //         height: 6px;
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 .slide {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  z-index: 0;
-  opacity: 0;
+  height: 260px;
   background-size: cover;
   background-position: center;
-  z-index: 0;
-  @include transition(all,1s,$easeInOutSine);
+  @media (min-width: $br-mobile) {
+    height: 620px;
+  }
   >a{
     position: absolute;
     top: 0;
@@ -249,15 +302,6 @@
   }
   .inner {
     height: 100%;
-  }
-  // Current
-  &.current {
-    opacity: 1;
-    z-index: 2;
-  }
-  &.leave {
-    opacity: 1;
-    z-index: 1;
   }
 
   //Credits
