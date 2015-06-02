@@ -365,7 +365,7 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       display: block;
       font-size: 13px;
       padding: 10px 0px 6px 15px;
-      display: block;
+      position: relative;
     }
     >li{
       padding: 10px;
@@ -396,20 +396,6 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
       max-width: 200px;
       @media (min-width: $br-mobileMap){
         width: 115px;
-      }
-      .source {
-        @extend .info-icon;
-        display: block;
-        position: absolute;
-        top: 14px;
-        right: 20px;
-        @media (min-width: $br-mobileMap){
-          top: 8px;
-          right: 10px;
-        }
-        &.hidden {
-          display: none;
-        }
       }
     }
 
@@ -483,6 +469,20 @@ $colors: $forest-change-color,$forest-cover-color,$forest-use-color,$conservatio
 
     .onoffswitch {
       margin: 1px 6px 0 0;
+    }
+  }
+  .source {
+    @extend .info-icon;
+    display: block;
+    position: absolute;
+    top: 14px;
+    right: 20px;
+    @media (min-width: $br-mobileMap){
+      top: 8px;
+      right: 10px;
+    }
+    &.hidden {
+      display: none;
     }
   }
 }

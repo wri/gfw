@@ -1114,7 +1114,7 @@
         <strong class='source_title'>GlobCover – Global landcover (2009)</strong>
         <i class='expand_arrow'></i>
       </div>
-      
+
       <div class='source_body'>
         <div class='source_table'>
           <dl class='sources_row'>
@@ -1145,10 +1145,10 @@
             <dt>Cautions</dt>
             <dd>
               <p>RData gaps in the MERIS 2009 satellite acquisitions (about 5% of the total data area) were filled using the GlobCover 2005 land cover map.</p>
-   
+
               <p>The lack of a short-wave infrared (SWIR) band in the MERIS sensor may result in underestimation of flooded forests. These classes were therefore imported from the 2005 GlobCover land cover map.</p>
-               
-              <p>Delineation between land and water is not absolutely correct: it is not exhaustive, especially regarding inland water bodies, and it presents some geo-location inaccuracies.</p> 
+
+              <p>Delineation between land and water is not absolutely correct: it is not exhaustive, especially regarding inland water bodies, and it presents some geo-location inaccuracies.</p>
             </dd>
           </dl>
         </div>
@@ -1723,7 +1723,7 @@
     </li>
     <li id="oil_palm_wood_fiber" class="source-item">
       <div class='source_header'>
-        <strong class='source_title'>Oil palm</strong>
+        <strong class='source_title'>Plantations</strong>
         <i class='expand_arrow'></i>
       </div>
 
@@ -1820,95 +1820,6 @@
               <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/gfw2_cgo_op.zip' target='_blank'>Download</a></p>
 
               <p>This data set provides the boundaries for oil palm plantations according to the Republic of the Congo Ministry of Agriculture. </p>
-
-              <p class='credits'><strong>Credit:</strong> World Resources Institute; Republic of the Congo Ministry of Agriculture.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class='source_header'>
-        <strong class='source_title'>Wood Fiber Plantations</strong>
-        <i class='expand_arrow'></i>
-      </div>
-
-      <div class='source_body'>
-        <div class='source_download'>
-          <a href='http://wri-public-data.s3.amazonaws.com/gfw2/GFW_woodfiber_20130402.zip' target='_blank' title='Download'>Download<i class='arrow_down'></i></a>
-        </div>
-
-        <div class='source_table'>
-          <dl class='sources_row'>
-            <dt>Function</dt>
-            <dd>Displays boundaries of areas allocated by governments to private companies for tree plantations for production of timber and wood pulp for paper and paper products</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>RESOLUTION / SCALE</dt>
-            <dd>Varies by country</dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>Geographic coverage</dt>
-            <dd>Currently available for Republic of the Congo, Gabon, and Indonesia</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>Source data</dt>
-            <dd>Generally based on a combination of government documents, satellite imagery, and GPS data. <span class='hidden'> For information on country-specific concessions data please refer to the <%= link_to 'Data page', "#{sources_path}#forest_use" %>.</span></dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>Frequency of updates</dt>
-            <dd>Variable, depending on government agencies in each country and other data providers</dd>
-          </dl>
-          <dl class='sources_row even'>
-            <dt>Date of content</dt>
-            <dd>Varies by country</dd>
-          </dl>
-          <dl class='sources_row'>
-            <dt>Cautions</dt>
-            <dd>This layer is a compilation of concession data from various countries and sources. The quality of these data can vary depending on the source. This layer may not include all existing concessions in a country, and the location of certain concessions can be inaccurate.</dd>
-          </dl>
-        </div>
-
-        <div class='source_summary'>
-          <h3 class='overview_title'>Overview</h3>
-          <p>“Wood fiber concession” refers to an area allocated by a government or other body for establishment of fast-growing tree plantations for the production of timber and wood pulp for paper and paper products.</p>
-
-          <p>The wood fiber concession data on GFW, while displayed as a single layer, is assembled on a country-by-country basis from multiple sources.</p>
-
-          <p>Wood fiber concession data displayed on the GFW website vary from country to country by date and data sources. Data may come from government agencies, NGOs, or other organizations. <span class='hidden'>See the <%= link_to 'Data page', "#{sources_path}#forest_use" %> for details on specific data sets.</span></p>
-
-          <p>If you are aware of concession data for additional countries, please email us <a href='mailto:gfw@wri.org'>here</a>.</p>
-
-          <p class='credits'><strong>Suggested citation for data as displayed on GFW:</strong> “Wood Fiber.” World Resources Institute. Accessed through Global Forest Watch on [date]. <a href='http://www.globalforestwatch.org/' target='_blank'>www.globalforestwatch.org</a>.</p>
-
-          <p class='read_more hidden'><em><%= link_to 'Learn more or download data', "http://data.globalforestwatch.org/datasets/eca9f0db800a4d5c83bbf7f231c67949_0" %></em></p>
-        </div>
-
-        <div class='source_extended'>
-          <p class='first'>GFW currently hosts wood fiber concession data for the following countries:</p>
-
-          <div class="source_dropdown">
-            <a href="#" class="source_dropdown_header source_dropdown_header_wood_fiber_plantations">
-              <h3 class='overview_title' title="Select a country"><span>Select a country</span> <i class='dropdown_arrow'></i></h3>
-            </a>
-
-            <div class='source_dropdown_menu source_dropdown_menu_wood_fiber_plantations'>
-              <ul>
-                <li><a href='#' data-slug="indonesia_wood_fiber_plantations">Indonesia wood fiber plantations</a></li>
-                <li><a href='#' data-slug="republic_of_the_congo_eucalyptus_plantations">Republic of the Congo eucalyptus plantations</a></li>
-              </ul>
-            </div>
-
-            <div id="indonesia_wood_fiber_plantations" class="source_dropdown_body">
-              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/Original/Indonesia_timber_2010_wgs84.zip' target='_blank'>Download</a></p>
-
-              <p>This data set, produced by the Indonesia Ministry of Forestry, provides the boundaries of current or planned wood fiber plantations in Indonesia. This data set is known to be incomplete, but it is compiled from the best information currently available.</p>
-
-              <p class='credits'><strong>Credit:</strong> Indonesia Ministry of Forestry.</p>
-            </div>
-
-            <div id="republic_of_the_congo_eucalyptus_plantations" class="source_dropdown_body">
-              <p class='download'><a href='http://wri-public-data.s3.amazonaws.com/gfw2/gfw2_cgo_wf.zip' target='_blank'>Download</a></p>
-
-              <p>This data set provides the boundaries for eucalyptus and other plantations in the Republic of the Congo. The World Resources Institute compiled information from the Republic of the Congo Ministry of Agriculture to produce this data layer.</p>
 
               <p class='credits'><strong>Credit:</strong> World Resources Institute; Republic of the Congo Ministry of Agriculture.</p>
             </div>

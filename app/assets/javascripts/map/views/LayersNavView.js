@@ -205,16 +205,18 @@ define([
     // GROUPED LAYERS
     // This 2 functions are used to control grouped layers clicks. To enable or disable layers inside
     toggleLayersGroup: function(e){
-      var groupedLayers = $(e.currentTarget).parent().find('.layer');
-      var checked = $(e.currentTarget).find('.onoffradio').hasClass('checked') || $(e.currentTarget).find('.onoffswitch').hasClass('checked');
-      _.each(groupedLayers, _.bind(function(layer){
-        var selected = $(layer).hasClass('selected');
-        if (checked) {
-          (selected) ? $(layer).trigger('click') : null;
-        }else{
-          (!selected) ? $(layer).trigger('click') : null;
-        }
-      }, this));
+      if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source') && !$(e.target).hasClass('layer')) {
+        var groupedLayers = $(e.currentTarget).parent().find('.layer');
+        var checked = $(e.currentTarget).find('.onoffradio').hasClass('checked') || $(e.currentTarget).find('.onoffswitch').hasClass('checked');
+        _.each(groupedLayers, _.bind(function(layer){
+          var selected = $(layer).hasClass('selected');
+          if (checked) {
+            (selected) ? $(layer).trigger('click') : null;
+          }else{
+            (!selected) ? $(layer).trigger('click') : null;
+          }
+        }, this));
+      }
     },
 
     checkLayersGroup: function(){
