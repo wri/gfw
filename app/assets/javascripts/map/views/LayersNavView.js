@@ -159,11 +159,13 @@ define([
         if ($(e.currentTarget).hasClass('selected')) {
           _.each($layers, _.bind(function(layer){
             if ($(layer).hasClass('selected')) {
-              $(layer).click();
+              var layerSlug = $(layer).data('layer');
+              this.presenter.toggleLayer(layerSlug);
             }
           }, this ))
         }else{
-          $($layers[0]).click();
+          var layerSlug = $($layers[0]).data('layer');
+          this.presenter.toggleLayer(layerSlug)
         }
       }
     },
@@ -210,10 +212,11 @@ define([
         var checked = $(e.currentTarget).find('.onoffradio').hasClass('checked') || $(e.currentTarget).find('.onoffswitch').hasClass('checked');
         _.each(groupedLayers, _.bind(function(layer){
           var selected = $(layer).hasClass('selected');
+          var layerSlug = $(layer).data('layer');
           if (checked) {
-            (selected) ? $(layer).trigger('click') : null;
+            (selected) ? this.presenter.toggleLayer(layerSlug) : null;
           }else{
-            (!selected) ? $(layer).trigger('click') : null;
+            (!selected) ? this.presenter.toggleLayer(layerSlug) : null;
           }
         }, this));
       }
@@ -232,7 +235,6 @@ define([
         $(group).find('.onoffradio, .onoffswitch').toggleClass('checked', (count == layers.length));
         $(group).find('.onoffswitch').css('background-color', color);
         $(group).find('.onoffradio').css({'background-color': color, 'border-color' : color });
-
 
       }, this ))
     },
@@ -267,11 +269,12 @@ define([
     },
 
     resetIsoLayers: function(){
-      _.each(this.$countryLayers.find('.layer'),function(li){
+      _.each(this.$countryLayers.find('.layer'),_.bind(function(li){
         if ($(li).hasClass('selected')) {
-          $(li).click();
+          var layerSlug = $(li).data('layer');
+          this.presenter.toggleLayer(layerSlug)
         }
-      })
+      }, this ))
     },
 
     setIsoLayers: function(e){
