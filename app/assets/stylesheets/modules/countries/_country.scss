@@ -133,6 +133,10 @@
   &:first-letter {
     text-transform: uppercase;
   }
+  .embed & {
+    padding: 15px 20px 15px;
+    text-align: left;
+  }
   @media (min-width: 480px){
     padding: 40px 0 15px;
     text-align: center;

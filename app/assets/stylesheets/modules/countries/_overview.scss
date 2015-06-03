@@ -256,6 +256,9 @@
     margin: 25px 0;
     color: #fff;
     font-size: 120px;
+    .embed &{
+      font-size: 80px;
+    }
   }
   .unit {
     font-weight: 100;
