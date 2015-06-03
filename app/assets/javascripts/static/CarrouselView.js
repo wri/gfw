@@ -4,8 +4,9 @@
 define([
   'jquery',
   'backbone',
-  'mps'
-], function($,Backbone,mps) {
+  'mps',
+  'enquire',
+], function($,Backbone,mps,enquire) {
 
   'use strict';
 
@@ -30,7 +31,13 @@ define([
 
     loadYoutubeAPI: function(){
       mps.subscribe('YoutubeAPI/ready', _.bind(function(){
-        this.loadPlayer(this.$player.data('default'));
+        enquire.register("screen and (min-width:850px)", {
+          match: _.bind(function(){
+            this.loadPlayer(this.$player.data('default'));
+          },this)
+        });
+
+
       },this));
     },
 

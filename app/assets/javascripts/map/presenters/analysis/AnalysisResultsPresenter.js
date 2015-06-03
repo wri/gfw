@@ -97,6 +97,14 @@ define([
       'AnalysisResults/Delete': function() {
         this.view._deleteAnalysisView();
       }
+    },{
+      'AnalysisMobile/open': function() {
+        this.view.toogleAnalysis($('#analysis-tab').hasClass('is-analysis'));
+      }
+    },{
+      'DownloadView/create': function(downloadView) {
+        this.view.downloadView = downloadView;
+      }
     }],
 
     /**
@@ -147,7 +155,6 @@ define([
       // Even if the result is a failure or unavailable message, we render
       // the widget results and keep the polygon.
       this.status.set('analysis', true);
-
       if (results.loading) {
         this.view.renderLoading();
       } else if (results.unavailable) {
@@ -162,6 +169,7 @@ define([
         // Subscribe button just should be activated
         // when a analysis is succesfully rendered.
         this.view.$tab.addClass('is-analysis');
+        mps.publish('AnalysisMobile/open');
         this._setSubscribeButton();
       }
     },
@@ -250,6 +258,10 @@ define([
       p[layer.slug] = true;
       p.layer = layer;
       p.download = results.download_urls;
+      if (p.download) {
+        (p.download.kml) ? encodeURIComponent(p.download.kml + '&filename=GFW_Analysis_Results') : null;
+      }
+
       p.alertsName = results.meta.name;
 
       if (results.params.iso) {

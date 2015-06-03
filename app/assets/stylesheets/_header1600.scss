@@ -66,18 +66,21 @@
     >div{
       width: 100%;
       overflow-y: hidden;
-      overflow-x: scroll;
+      overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       @media (min-width: $br-mobile){
         width: auto;
         overflow: visible;
       }
       >ul {
-        width: 580px;
+        min-width: 410px;
+        width: 100%;
         padding: 0 5px;
         height: 55px;
+
         @media (min-width: $br-mobile){
           width: auto;
+          min-width: 0;
           margin: 0;
           height: auto;
         }
@@ -96,12 +99,17 @@
             cursor: pointer;
             display: inline-block;
             line-height: 55px;
-            padding: 0px 10px 0 35px;
+            min-width: 50px;
+            padding: 10px;
             position: relative;
             text-transform: uppercase;
             @include transition(all 0.15s $easeInOutCubic);
+            @media (min-width: 550px){
+              min-width: 70px;
+            }
             @media (min-width: $br-mobile){
               padding: 0;
+              min-width: 0;
               width: 100%;
               height: 100%;
               line-height: normal;
@@ -125,6 +133,7 @@
               margin: 0;
               line-height: normal;
               @media (max-width: $br-mobile - 1){
+                display: block;
                 position: relative;
                 background: none;
                 box-shadow: none;
@@ -134,9 +143,10 @@
                 color: $dark;
                 top: auto;
                 left: auto;
-                text-align: left;
+                text-align: center;
                 padding: 0;
-                @include transform(translate(0,0));
+                font-size: 10px;
+                @include transform(translate(0,20px));
                 &:after{
                   display: none;
                 }
@@ -163,9 +173,9 @@
             svg {
               fill: #B6B6BA;
               position: absolute;
-              top: 48%;
-              left: 5px;
-              @include transform(translate(0,-50%));
+              top: 6px;
+              left: 50%;
+              @include transform(translate(-50%,0));
               @media (min-width: $br-mobile){
                 position: relative;
                 top: auto;
@@ -176,7 +186,7 @@
 
             &.shape-world{
               svg{
-                @include transform(translate(0,-50%) scale(0.9));
+                @include transform(translate(-50%,0) scale(0.9));
                 @media (min-width: $br-mobile){
                   position: relative;
                   top: auto;
@@ -216,16 +226,24 @@
       border: none;
       outline: none;
       @include transform(translate(0,-50%));
+      font-family: inherit;
+      span{
+        display: block;
+        font-size: 10px;
+        text-transform: uppercase;
+        position: relative;
+        top: -2px;
+      }
       &:after{
         content: "";
-        display: none;
+        display: block;
         width: 20px;
         height: 100%;
         right: 100%;
         position: absolute;
         top: 0;
         z-index: 2;
-        // @include gradient(left,rgba(247,247,247,0),rgba(247,247,247,1));
+        @include gradient(left,rgba(247,247,247,0),rgba(247,247,247,1));
       }
       @media (min-width: $br-mobile){
         display: none;
@@ -359,6 +377,20 @@
     border-bottom: 1px solid $border;
   }
 
+  .is-map-page &{
+    h1{
+      @media (min-width: $br-mobile){
+        width: 60px;
+        height: 60px;
+      }
+      @media (min-width: $br-mobileMap){
+        width: 90px;
+        height: 90px;
+      }
+
+    }
+  }
+
 	// Logo
 	h1 {
     width: 60px;
@@ -407,7 +439,7 @@
 
   // Search Widget mobile
   form{
-    padding: 17px 60px 17px 90px;
+    padding: 20px 20px 30px 90px;
     // border-top: 1px solid #CCC;
     >input {
       border: none;
@@ -446,6 +478,20 @@
       clear: none;
       background: none;
       border-bottom: none;
+      &.layers-menu{
+        display: none !important;
+        @media (min-width: $br-mobileMap){
+          padding: 0;
+          display: block !important;
+          min-height: 0;
+          clear: none;
+          background: none;
+          border-bottom: none;
+          &.layers-menu{
+
+          }
+        }
+      }
     }
 
 		@include clearfix();
@@ -612,6 +658,7 @@
 // Google Translate
 #google_translate_element_box2{
   padding: 15px 15px 10px;
+  display: none;
   @media (min-width: $br-mobile){
     display: none;
   }
@@ -660,6 +707,9 @@
 
 .layout-share-mobile{
   display: block;
+  .is-map-page &{
+    display: none;
+  }
   .share-link{
     display: block;
     position: absolute;

@@ -2,7 +2,7 @@
   <ul class="categories-list">
 
     <li class="forest-change">
-      <span class="category-name">FOREST CHANGE</span>
+      <span class="category-name">FOREST CHANGE <i id="forest_clearing-category-num" class="category-num"></i></span>
 
       <div class="layers-nav">
         <div class="layers-nav-header">
@@ -11,7 +11,7 @@
         </div>
         <ul class="layers-list">
           <div id="umd-group" class="layer-group">
-            <span id="toggleUmd" class="group-name"><span class="onoffradio"><span></span></span>Tree cover change <em>(Hansen/UMD/Google/USGS/NASA)</em></span>
+            <span class="group-name grouped-layers-trigger" data-color="#f69"><span class="onoffradio"><span></span></span>Tree cover change <em>(Hansen/UMD/Google/USGS/NASA)</em></span>
             <li class="layer" data-layer="loss">
               <span class="onoffswitch"><span></span></span>
               <span class="layer-title">Loss<a href='#' data-source='loss' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
@@ -53,18 +53,12 @@
               <span class="layer-info">(past 7 days, 1km, global, NASA)</span>
             </li>
           </div>
-          {{!-- <div class="layer-group">
-            <li class="layer" data-layer="nothing">
-              <span class="onoffswitch"><span></span></span>
-              <span class="layer-title">None</span>
-            </li>
-          </div> --}}
         </ul>
       </div>
     </li>
 
     <li class="forest-cover">
-      <span class="category-name">FOREST COVER</span>
+      <span class="category-name">FOREST COVER <i id="forest_cover-category-num" class="category-num"></i></span>
 
       <div class="layers-nav">
         <div class="layers-nav-header">
@@ -79,7 +73,7 @@
           <li class="layer" data-layer="ifl_2013_deg">
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Intact Forest Landscapes<a href='#' data-source='ifl_2013_deg' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            <span class="layer-info">
+            {{!-- <span class="layer-info">
               <label data-layer="ifl_2000" class="layer wrapped">
                 <span></span>
                 <input type="radio" />2000
@@ -88,7 +82,7 @@
                 <span></span>
                 <input type="radio" />2013
               </label>
-            </span>
+            </span> --}}
           </li>
           <li class="layer" data-layer="pantropical">
             <span class="onoffswitch"><span></span></span>
@@ -98,37 +92,43 @@
             <span class="onoffswitch"><span></span></span>
             <span class="layer-title">Global mangroves<a href='#' data-source='mangrove' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
           </li>
+          <li class="layer" data-layer="global_land_cover">
+            <span class="onoffswitch"><span></span></span>
+            <span class="layer-title">GlobCover – Global landcover (2009)<a href='#' data-source='global_land_cover' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+          </li>
         </ul>
       </div>
     </li>
 
     <li class="forest-use">
-      <span class="category-name">FOREST USE</span>
-
+      <span class="category-name">LAND USE <i id="forest_use-category-num" class="category-num"></i></span>
       <div class="layers-nav">
         <div class="layers-nav-header">
           <div class="category-icon"><svg><use xlink:href="#icon-layer-forestuse"></use></svg></div>
-          <span class="category-name">FOREST USE</span>
+          <span class="category-name">LAND USE</span>
         </div>
         <ul class="layers-list">
           <div class="layer-group">
             <span class="group-name">Concessions</span>
             <li class="layer" data-layer="logging">
               <span class="onoffswitch"><span></span></span>
-              <span class="layer-title">Logging<a href='#' data-source='logging' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <span class="layer-title">Managed forests<a href='#' data-source='logging' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
             </li>
             <li class="layer" data-layer="mining">
               <span class="onoffswitch"><span></span></span>
               <span class="layer-title">Mining<a href='#' data-source='mining' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
             </li>
-            <li class="layer" data-layer="oil_palm">
-              <span class="onoffswitch"><span></span></span>
-              <span class="layer-title">Oil palm<a href='#' data-source='oil_palm' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            </li>
-            <li class="layer" data-layer="wood_fiber_plantations">
-              <span class="onoffswitch"><span></span></span>
-              <span class="layer-title">Wood fiber plantations<a href='#' data-source='wood_fiber_plantations' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
-            </li>
+            <div class="grouped-layer">
+              <span class="layer-title grouped-layers-trigger" data-color="#c98e6c"><span class="onoffswitch"><span></span></span>Plantations <a href='#' data-source='oil_palm_wood_fiber' class='source'><svg><use xlink:href="#shape-info"></use></svg></a></span>
+              <li class="layer" data-layer="oil_palm">
+                <span class="onoffswitch"><span></span></span>
+                <span class="layer-title">Oil Palm</span>
+              </li>
+              <li class="layer" data-layer="wood_fiber_plantations">
+                <span class="onoffswitch"><span></span></span>
+                <span class="layer-title">Wood fiber</span>
+              </li>
+            </div>
           </div>
           <div class="layer-group">
             <span class="group-name">Infrastructure</span>
@@ -142,7 +142,7 @@
     </li>
 
     <li class="conservation">
-      <span class="category-name">CONSERVATION</span>
+      <span class="category-name">CONSERVATION <i id="conservation-category-num" class="category-num"></i></span>
 
       <div class="layers-nav">
         <div class="layers-nav-header">
@@ -183,7 +183,7 @@
     </li>
 
     <li class="people">
-      <span class="category-name">PEOPLE</span>
+      <span class="category-name">PEOPLE <i id="people-category-num" class="category-num"></i></span>
 
       <div class="layers-nav">
         <div class="layers-nav-header">
@@ -208,7 +208,7 @@
     </li>
 
     <li class="stories">
-      <span class="category-name">STORIES</span>
+      <span class="category-name">STORIES <i id="stories-category-num" class="category-num"></i></span>
 
       <div class="layers-nav">
         <div class="layers-nav-header">
@@ -233,7 +233,7 @@
     </li>
 
     <li id="country-layers" class="country-layers-nav country disabled">
-      <span class="category-name">COUNTRY LAYERS</span>
+      <span class="category-name">COUNTRY LAYERS <i id="forest_clearing-category-num" class="category-num"></i></span>
     </li>
     <li id="country-layers-reset" class="country-close disabled hidden">
       <button class="btn close"><span><svg><use xlink:href="#shape-close"></use></svg></span></button>

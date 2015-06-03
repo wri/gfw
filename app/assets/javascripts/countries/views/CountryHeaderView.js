@@ -173,6 +173,7 @@ define([
       'click .umd_options_control' : '_onClickUMDOptions',
       'click .canopy-status em' : '_onClickUMDOptions',
       'click .item.settings' : '_onClickUMDOptions',
+      'click #country-sidebar-button' : 'toggleMobileOptions'
     },
 
     initialize: function(options) {
@@ -185,6 +186,7 @@ define([
       // Cache
       this.$areaSelector = this.$('#areaSelector');
       this.$selectorRemove =  this.$('.selector-remove');
+      this.$sidebarUl = $('#country-sidebar-ul');
       this.$map = this.$('.map');
       this.UmdOptions = new CountryUmdOptionsView();
       this.setListeners();
@@ -261,6 +263,12 @@ define([
       }, this ));
     },
 
+    toggleMobileOptions: function(e){
+      $(e.currentTarget).toggleClass('active');
+      this.$sidebarUl.toggleClass('active');
+      ($(e.currentTarget).hasClass('active')) ? $(e.currentTarget).find('em').text('less options') : $(e.currentTarget).find('em').text('more options');
+    },
+
     _setAreaSelector: function() {
       var self = this;
       _.each(this.country.get('areas').models, function(area, i) {
@@ -292,7 +300,7 @@ define([
 
     _updateMapThreshold: function(e) {
       var path = location.pathname.split('/');
-      var id = path[path.length -1];
+      var id = path[path.length -1] || path[path.length -2];
       var self = this;
       if(this.map){
         this.map.remove();
@@ -303,6 +311,7 @@ define([
           id = false;
         } else {
           var area = this.country.get('areas').where({ id_1: Number(id) })[0];
+
           this._initMap(function() {
             self._displayArea(area);
           });
@@ -545,8 +554,6 @@ define([
     },
 
     _drawLossAndGain: function(years_data) {
-      var that = this;
-
       var $graph = this.$('.loss-gain-graph'),
           $comingSoon     = $graph.find('.coming-soon'),
           $amount         = $graph.find('.graph-amount'),
@@ -586,8 +593,8 @@ define([
       $amount.html('<span>' + (~~data_[data_.length - 1].value).toLocaleString() + '</span>').append($date);
       $gain.html(' Ha');
       $amount_g.html('<span>' + gain_value + '</span>').append($gain);
-      $graph.find('.total-loss-ha').html(' Total loss (Ha)');
-      $graph.find('.total-loss').html((~~total_loss).toLocaleString()).append($graph.find('.total-loss-ha'));
+      $tnumbers.find('.total-loss-ha').html(' Ha');
+      $tnumbers.find('.total-loss').html((~~total_loss).toLocaleString()).append($tnumbers.find('.total-loss-ha'));
 
       var marginLeft = 5,
           marginTop = 0;

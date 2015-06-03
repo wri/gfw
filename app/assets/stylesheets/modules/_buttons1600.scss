@@ -58,6 +58,10 @@
     height: 25px;
     line-height: 24px;
   }
+  &.full-width{
+    display: block;
+    width: 100%;
+  }
   &.lines{
     line-height: 1;
     white-space: normal;

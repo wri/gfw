@@ -333,10 +333,10 @@
             }
             &:hover{
               &:before{
-                @include transform(translate(-50%,-50%) rotate(90deg) scale(0.75));
+                @include transform(translate(-50%,-50%) rotate(0deg) scale(0.75));
               }
               &:after{
-                @include transform(translate(-50%,-50%) rotate(180deg) scale(0.75));
+                @include transform(translate(-50%,-50%) rotate(90deg) scale(0.75));
               }
             }
           }
@@ -430,10 +430,39 @@
 .story_form{
   header{
     h2{
-      font-size: 47px;
-      padding: 0 0 15px;
+      position: relative;
+      font-size: 35px;
+      padding: 0px 30px 0px 0;
+      margin: 10px 0 15px;
       color: $dark;
       font-weight: 300;
+      @media (min-width: $br-mobile) {
+        font-size: 47px;
+        margin: 0px 0 15px;
+        padding: 0;
+      }
+      a{
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 5px;
+        border: 1px solid $dark;
+        border-radius: 50%;
+        @include transform(translate(0,-50%));
+        svg{
+          fill: $dark;
+          position: absolute;
+          width: 60%;
+          height: 60%;
+          margin: 0 0 0 -1px;
+          top: 50%;
+          left: 50%;
+          @include transform(translate(-50%,-50%));
+        }
+        @media (min-width: $br-mobile) {
+          display: none;
+        }
+      }
     }
   }
   .form-box{
@@ -443,42 +472,93 @@
       position: relative;
       overflow: hidden;
       width: 100%;
-      padding-top: 5px;
+      margin-top: 5px;
       @media (min-width: $br-mobile) {
         width: 582px;
-      }
-
-      .map-search-input {
-        position: absolute;
-        top: 10px;
-        right: 60px;
-        width: 150px;
-        padding: 5px 8px;
-        font-size: 12px;
-        display: none;
-        margin: 0;
       }
       .stories_map {
         height: 295px;
       }
-      .remove_story-link {
-        display: none;
-        position: absolute;
-        z-index: 10;
-        top: 5px; right: 0px;
-        margin: 5px;
-        padding: 4px;
-        background-color: #fff;
-        @include border-right-radius(2px);
-        border: 1px solid rgba(#000, .15);
-        @include box-shadow(0px 1px 4px -1px rgba(#000, .3));
-        font: 400 11px Roboto, Arial, sans-serif;
-        color: rgb(86, 86, 86);
-        text-decoration: none;
 
-        &:hover {
-          background-color: rgb(235, 235, 235);
-          color: #000;
+      .control-zoom, .control-locate{
+        display: block;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        background: $white;
+        box-shadow: $shadow1;
+        button{
+          display: block;
+          width: 30px;
+          height: 30px;
+          background: $white;
+          box-shadow: none;
+          border:none;
+          border-top: 1px solid $border;
+          outline: none;
+          cursor: pointer;
+          &:hover{
+            background: darken($white,5%);
+          }
+          &:first-child{
+            border-top: none;
+          }
+          svg{
+            fill: $dark;
+          }
+        }
+
+      }
+
+      .control-pin{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 40px;
+        height: 40px;
+        background: image-url('icons/marker_exclamation.png');
+        background-size: contain;
+        margin: -20px 0 0 -20px;
+      }
+
+      .control-locate{
+        left: auto;
+        right: 5px;
+        svg{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 90%;
+          height: 90%;
+          @include transform(translate(-50%,-50%));
+        }
+        &.active{
+          svg{
+            @include animation(loader,1s,infinite,$easeInOutCubic);
+          }
+        }
+      }
+      .control-search{
+        position: absolute;
+        top: 5px;
+        right: 40px;
+        width: 60%;
+        min-width: 175px;
+        max-width: 300px;
+        padding: 0;
+        font-size: 12px;
+        background: $white;
+        box-shadow: $shadow1;
+        input{
+          display: block;
+          width: 100%;
+          height: 30px;
+          margin: 0;
+          font-family: inherit;
+          border-radius: 0;
+          box-shadow: none;
+          border:none;
+
         }
       }
     }
@@ -527,103 +607,115 @@
 }
 
 
-// /* =Edit
-// ----------------------------------------------- */
-
-// .story_form {
-//   position: relative;
-//   margin: 40px auto;
-
-//   aside {
-//     position: absolute;
-//     top: 0; right: 0;
-//     width: 282px;
-//     font-size: 13px;
-
-//     h3 {
-//       padding: 0 0 5px;
-//       margin-bottom: 15px;
-//       border-bottom: 1px solid #ccc;
-//       font-weight: 500;
-//       font-size: 12px;
-//       text-transform: uppercase;
-//       color: #333;
-//     }
-
-//     p,
-//     ul {
-//       margin-bottom: 15px;
-//       font-size: 15px;
-//       line-height: 1.2em;
-//       color: #666;
-//     }
-
-//     ul {
-//       list-style: disc;
-//       margin-left: 15px;
-//     }
-
-//     li { margin-bottom: 10px; }
-//   }
-// }
-
-
-
-
-
-
-.upload_picture {
-  @include inline-block();
-  float: left;
-  width: 132px;
-  height: 78px;
-  margin: 5px 10px 10px 0;
-  background: transparent url('buttons/bkg_button_add_media.png') no-repeat center;
-
-  &:hover { background: transparent url('buttons/bkg_button_add_media_hover.png') no-repeat center; }
-}
-
+// UPLOAD SECTION
 .thumbnails {
-  float: left;
-  width: 585px;
-
+  width: 100%;
+  @media (min-width: $br-mobile) {
+    float: left;
+    width: 585px;
+  }
   .destroy {
     position: absolute;
     top: -9px; right: -9px;
     width: 18px;
     height: 18px;
-    @include stories-icons-sprite(btn_remove);
+    background: $dark;
+    border-radius: 50%;
+    &:hover{
+      background: darken($dark,5%);
+    }
+    svg{
+      width: 65%;
+      fill: $white;
+      display: block;
+      margin: 0 auto;
+    }
   }
 }
-.show_mobile {display: none;}
+
+// btn upload stories
+.upload_picture {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 76px;
+  margin: 5px 0 0;
+  border: 2px dashed $cGreen;
+
+  &:hover{
+    border-color: darken($cGreen,5%);
+    &:before,&:after{
+      background: darken($cGreen,5%);
+    }
+
+  }
+
+  &:before,&:after{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: $cGreen;
+    @include transform(translate(-50%,-50%));
+  }
+
+  &:before{
+    height: 30px;
+    width: 4px;
+  }
+  &:after{
+    height: 4px;
+    width: 30px;
+  }
+
+  @media (min-width: $br-mobile) {
+    @include inline-block();
+    float: left;
+    width: 132px;
+    margin: 5px 10px 0px 0;
+  }
+}
+
 .thumbnail {
   position: relative;
   @include inline-block();
-  width: 132px;
+  width: 48%;
   height: 76px;
-  margin: 5px 10px 0 0;
+  margin: 4% 0px 0 0;
   border: 2px solid #fff;
   background: #fff;
   cursor: move;
 
-  .inner_box {
-    width: 132px;
-    height: 76px;
-    clear: both;
-    overflow: hidden;
+  &:nth-child(2n+3) {
+    margin: 4% 0 0 4%;
   }
 
-  &:hover { border: 2px solid #9EB741; }
+
+  @media (min-width: $br-mobile) {
+    width: 132px;
+    height: 76px;
+    margin: 5px 10px 0 0;
+    &:nth-child(2n+3) {
+      margin: 5px 10px 0 0;
+    }
+  }
+
+  .inner_box {
+    width: 100%;
+    height: 100%;
+    clear: both;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
+  }
+
+  &:hover { border: 2px solid $cGreen; }
 
   &.preview {
     cursor: default;
-    border: 1px solid #9EB741;
-
-    &:hover { border: 1px solid #9EB741; }
-  }
-
-  img {
-    width: 100%;
+    border: 1px solid $cGreen;
+    &:hover { border: 1px solid $cGreen; }
   }
 
   .filename {
@@ -638,8 +730,19 @@
 
   .spinner {
     position: absolute;
-    top: 30px;
-    left: 65px;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    margin: -10px 0 0;
+    @include transform(translate(-50%,-50%));
+    @include animation(loader,1s,infinite,$easeInOutCubic);
+    visibility: visible;
+    opacity: 1;
+    z-index: 11;
+    svg{
+      fill: $cGreen;
+    }
   }
 }
 

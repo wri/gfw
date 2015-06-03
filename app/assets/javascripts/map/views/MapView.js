@@ -44,27 +44,43 @@ define([
       this.layerInst = {};
       this.$maplngLng = $('.map-container .map-latlng');
       this.$viewFinder = $('#viewfinder');
+      this.$overlayMobile = $('#overlay-mobile');
       this.embed = $('body').hasClass('is-embed-action');
-      this.render();
+
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.render(3);
+          this.presenter._resizeSetLayers();
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.render(2);
+          this.presenter._resizeSetLayers();
+        },this)
+      });
+
+
     },
 
     /**
      * Creates the Google Maps and attaches it to the DOM.
      */
-    render: function() {
+    render: function(zoom) {
       var params = {
-        zoom: 3,
+        zoom: zoom,
+        minZoom: zoom,
         mapTypeId: 'grayscale',
         center: new google.maps.LatLng(15, 27),
       };
 
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
+      this._checkDialogs();
 
       this.resize();
       this._setMaptypes();
       this._addListeners();
 
-      this._checkDialogs();
     },
 
     /**
@@ -93,6 +109,11 @@ define([
         // TODO => No mps here!
         mps.publish('AnalysisTool/analyze-wdpaid', [wdpa]);
       }, this));
+
+      this.$overlayMobile.on('click', _.bind(function(){
+        this.presenter.closeDialogsMobile();
+      }, this ));
+
     },
 
 
@@ -329,6 +350,32 @@ define([
       var lng = center.lng();
       this.presenter.onCenterChange(lat, lng);
       this.updateLatlngInfo(lat,lng);
+      this.checkBounds()
+    },
+
+    checkBounds: function () {
+      if (! !!this.map.getBounds()) return;
+
+      var latNorth = this.map.getBounds().getNorthEast().lat();
+      var latSouth = this.map.getBounds().getSouthWest().lat();
+      var newLat;
+
+      if(latNorth<85 && latSouth>-85)     /* in both side -> it's ok */
+        return;
+      else {
+        if(latNorth>85 && latSouth<-85)   /* out both side -> it's ok */
+          return;
+        else {
+            if(latNorth>85)
+              newLat =  this.map.getCenter().lat() - (latNorth-85);   /* too north, centering */
+            if(latSouth<-85)
+              newLat =  this.map.getCenter().lat() - (latSouth+85);   /* too south, centering */
+        }
+      }
+      if(newLat) {
+        var newCenter= new google.maps.LatLng( newLat ,this.map.getCenter().lng() );
+        this.map.setCenter(newCenter);
+      }
     },
 
     /**
@@ -415,7 +462,12 @@ define([
         sessionStorage.removeItem('DIALOG');
         window.setTimeout(function(){$('.backdrop').css('opacity', '0.3');},500);
       });
+    },
+
+    overlayToggle: function(bool){
+      this.$overlayMobile.toggleClass('active', bool);
     }
+
 
   });
 

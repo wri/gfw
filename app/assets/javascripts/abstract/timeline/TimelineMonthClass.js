@@ -10,9 +10,12 @@ define([
   'backbone',
   'moment',
   'd3',
+  'mps',
   'handlebars',
-  'text!templates/timelineYear.handlebars'
-], function(_, Backbone, moment, d3, Handlebars, tpl) {
+  'text!templates/timelineYear.handlebars',
+  'text!templates/timelineMonth-mobile.handlebars'
+
+], function(_, Backbone, moment, d3, mps, Handlebars, tpl, tplMobile) {
 
   'use strict';
 
@@ -21,6 +24,9 @@ define([
     className: 'timeline-month',
 
     template: Handlebars.compile(tpl),
+    templateMobile: Handlebars.compile(tplMobile),
+
+    months: ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC",],
 
     defaults: {
       dateRange: [moment([2001]), moment()],
@@ -32,13 +38,16 @@ define([
     },
 
     events: {
-      'click .play': '_togglePlay'
+      'click .play': '_togglePlay',
+      'change .select-date' : 'setSelects'
     },
 
     initialize: function(layer, currentDate) {
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
+      this.dateRangeStart = this.options.dateRange[0];
+      this.dateRangeEnd = this.options.dateRange[1];
 
       if (currentDate && currentDate[0]) {
         this.currentDate = currentDate;
@@ -60,8 +69,126 @@ define([
       this.monthsCount = Math.floor(this.dr[1].diff(this.dr[0],
         'months', true));
 
-      this.render();
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.render();
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.renderMobile();
+        },this)
+      });
     },
+
+
+    /**
+     * Render select of years.
+     */
+    renderMobile: function(){
+      this.$timeline = $('.timeline-container');
+      this.$el.html(this.templateMobile({name: this.layer.title}));
+      this.$timeline.html('').append(this.el);
+
+      // Cache
+      this.$play = this.$el.find('.play');
+      this.$playIcon = this.$el.find('.play-icon');
+      this.$stopIcon = this.$el.find('.stop-icon');
+      this.$time = this.$el.find('.time');
+
+      // Timeline
+      this.$selects = $('.select-date');
+      this.$selectsYear = $('.select-date-year');
+      this.$selectsMonth = $('.select-date-month');
+      this.$fromMonth = $('#from-timeline-month');
+      this.$from = $('#from-timeline-year');
+      this.$toMonth = $('#to-timeline-month');
+      this.$to = $('#to-timeline-year');
+
+
+      this.fillSelects();
+    },
+
+    fillSelects: function(){
+      var start = this.dateRangeStart.year(),
+          end = this.dateRangeEnd.year(),
+          range = end - start + 1,
+          options = '';
+      for (var i = 0; i < range; i++) {
+        options += '<option value="'+(start + i)+'">'+ (start + i) +'</option>';
+      }
+      // Year Selects
+      this.$from.html(options).val(this.currentDate[0].year());
+      this.$to.html(options).val(this.currentDate[1].year());
+
+      // Month Selects
+      this.$fromMonth.val(this.months[this.currentDate[0].month()]);
+      this.$toMonth.val(this.months[this.currentDate[1].month()]);
+
+      this.setSelects();
+    },
+
+    setSelects: function(){
+      _.each(this.$selects,function(el){
+        var date = $(el).val();
+        var $dateButton = $('#'+$(el).attr('id')+'-button');
+        $dateButton.text(date);
+      });
+      this.toggleDisabled();
+
+    },
+
+    toggleDisabled: function(){
+      _.each(this.$selectsYear,function(el){
+        var $options = document.getElementById($(el).attr('id')).options;
+        var compare = $($(el).data('compare'))[0].selectedIndex;
+        var direction = Boolean(parseInt($(el).data('direction')));
+
+        _.each($options, function(opt,i){
+          if (direction) {
+            (compare <= i) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
+          }else{
+            (compare >= i) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
+          }
+        });
+      });
+
+      _.each(this.$selectsMonth,_.bind(function(el){
+        var $options = document.getElementById($(el).attr('id')).options;
+        var yearSelect = $('#'+$(el).attr('id').replace('month','year')).val();
+        var monthSelect = $(el)[0].selectedIndex;
+        var start = this.dateRangeStart.year();
+        var end = this.dateRangeEnd.year();
+        var endMonth = this.dateRangeEnd.month();
+        if (yearSelect == end) {
+          // if you select the last year of the timeslider we have to check if all months are avaible
+          _.each($options, function(opt,i){
+            (i > endMonth) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
+          });
+          // if previously we have selected a month that is not avaible we must select manually the last month
+          if (monthSelect > endMonth) {
+            $(el).val(this.months[endMonth]);
+            this.setSelects();
+          }
+        }else{
+          _.each($options, function(opt,i){
+            $(opt).prop('disabled',false);
+          });
+        }
+      }, this ));
+
+
+      var start = this.prepareDate(this.$fromMonth[0].selectedIndex ,this.$from.val());
+      var end = this.prepareDate(this.$toMonth[0].selectedIndex ,this.$to.val());
+
+      this._updateCurrentDate([start, end]);
+    },
+
+
+    prepareDate: function(month, year){
+      return moment([year, month]);
+    },
+
 
     render: function() {
       _.bindAll(this, '_moveHandler');

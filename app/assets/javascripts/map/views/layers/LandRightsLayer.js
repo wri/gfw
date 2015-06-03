@@ -12,9 +12,10 @@ define([
   var LandRightsLayer = CartoDBLayerClass.extend({
 
     options: {
-      sql: 'SELECT the_geom_webmercator, name, country, legal_term, legal_reco as legal_recognition, ROUND(area_ha::text::float) AS area_ha,  \'{tableName}\' as layer FROM {tableName}',
+      sql: 'SELECT the_geom_webmercator, cartodb_id, name, country, legal_term, legal_reco as legal_recognition, ROUND(area_ha::text::float) AS area_ha, \'{tableName}\' AS tablename,  \'{tableName}\' as layer, {analysis} AS analysis FROM {tableName}',
       infowindow: true,
-      interactivity: 'name, country, legal_term, legal_recognition, area_ha'
+      interactivity: 'cartodb_id, tablename, layer, name, country, legal_term, legal_recognition, area_ha, analysis',
+      analysis: true
     }
 
   });

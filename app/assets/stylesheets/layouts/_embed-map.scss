@@ -4,6 +4,8 @@
   min-height: 0 !important;
   overflow: hidden;
 
+
+  // HEADER
   .embed-header{
     position: absolute;
     top: 0;
@@ -32,47 +34,217 @@
     }
   }
 
-
+  // LAYOUT
   .layout-content{
     height: 100%;
     top: 0;
   }
 
-  //legend
-  .module-legend{
-    top: 20px;
-    left: 20px;
-    max-height: calc(100% - 260px);
-  }
-  .module-tabs{
-    bottom: 20px;
-    top: auto;
-    left: 20px;
+
+  @media (max-width: $br-mobileMap - 1){
+    // MODULES
+    .module{
+      box-shadow: $shadow1;
+      .title-dialog{
+        position: relative;
+        cursor: pointer;
+        text-transform: uppercase;
+        padding: 0px 0px 5px;
+        margin: 20px 20px 15px;
+        border-bottom: 1px solid #F69;
+        text-align: left;
+        &.active{
+          span{
+            display: none;
+          }
+          &:after{ @include transform(translate(0,-100%) rotate(180deg));}
+        }
+        &:after{
+          display: block;
+          content: "";
+          position: absolute;
+          top: 50%;
+          right: 5px;
+          width: 0;
+          height: 0;
+          @include transform(translate(0,-100%));
+          border-left: 3px solid transparent;
+          border-right: 3px solid transparent;
+          border-top: 5px solid #F69;
+        }
+        span{
+          display: inline-block;
+          font-size: 12px;
+          text-transform: lowercase;
+        }
+      }
+      .button-box-embed-legend{
+        padding: 0 20px 20px;
+        &.active{
+          display: block;
+        }
+      }
+    }
+
+    // Legend
+    .module-legend{
+      top: 20px;
+      left: 20px;
+      bottom: auto;
+      max-height: calc(100% - 260px);
+      max-width: 300px;
+      padding: 0;
+      @include transform(translate(0,0));
+      .close{
+        display: none;
+      }
+      .categories {
+        display: none;
+        &.active{
+          display: block;
+        }
+      }
+    }
+
+    .module-mapcontrols{
+      display: none;
+      bottom: 73px;
+      left: 21px;
+      top: auto;
+      right: auto;
+      &.active{
+        display: block;
+      }
+      .toggle-buttons{
+        display: none;
+      }
+    }
+
+
+    // Analysis
+    .module.module-mapcontrols-mobile{
+      // &.analysis{
+      //   display: block !important;
+      // }
+      bottom: 50px;
+      left: 50%;
+      @include transform(translate(-160px,0));
+      ul{
+        display: none;
+        margin: 0;
+        &.embed-show{
+          display: block;
+        }
+      }
+    }
+
     .analysis-result {
-      padding: 20px;
+      padding: 0;
+      // padding: 20px;
+      // width: 300px;
+      // height: auto;
+      // bottom: auto;
+      // position: fixed;
+      // top: 50%;
+      // left: 50%;
+      // @include transform(translate(-50%,-50%));
+      // opacity: 0;
+      // visibility: hidden;
+
+      // &.active{
+      //   opacity: 1;
+      //   visibility: visible;
+      //   @include transform(translate(-50%,-50%));
+      // }
+      .close{
+        display: none;
+      }
+      .analysis-stats{
+        background: $white;
+        font-size: 12px;
+        max-width: 600px;
+        margin: 0 auto;
+        @include display-flex();
+        @include justify-content(center);
+        li{
+          padding: 0 15px;
+          margin: 15px 0;
+          text-align: center;
+          width: 33.33333333%;
+          border-left: 1px solid $border;
+          &:first-child{
+            padding: 0 15px;
+            border: none;
+          }
+          &:last-child{
+            padding: 0 15px;
+            border-left: 1px solid $border;
+          }
+        }
+      }
       .analysis-footer{
         display: none;
       }
     }
-  }
+
+    // Timeline
+    .widget-timeline{
+      .widget-box{
+        bottom: 0px;
+        left: 50%;
+        width: 100%;
+        height: 50px;
+        @include transform(translate(-50%,0%));
+        box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+        .timeline-year .time .select-timeline-container,
+        .timeline-month .time .select-timeline-container,
+        .timeline-btn .time .select-timeline-container{
+          line-height: 50px;
+        }
+      }
+      &.analysis{
+        .widget-box{
+          bottom: 73px;
+        }
+      }
+    }
 
 
-  //analysis
-  .module-tabs > header,
-  .tab-analysis nav,
-  .tab-analysis .analysis-content,
-  //footer
-  .footer-toggle,
-  .map-logos,
-  .map-container .gm-style:after,
-  //map controls
-  .module-mapcontrols,
-  //timeline
-  .widget-timeline,
-  //croshairs
-  .map-viewfinder,
-  //feedback
-  .feedback-link {
-    display: none !important;
+
+    .module-tabs{
+      bottom: 20px;
+      top: auto;
+      left: 20px;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //analysis
+    .module-tabs > header,
+    .tab-analysis nav,
+    .tab-analysis .analysis-content,
+    //footer
+    .footer-toggle,
+    .map-logos,
+    .map-container .gm-style:after,
+    //map controls
+    .tab-analysis-mobile,
+    //croshairs
+    .map-viewfinder,
+    //feedback
+    .feedback-link {
+      display: none !important;
+    }
   }
+
 }

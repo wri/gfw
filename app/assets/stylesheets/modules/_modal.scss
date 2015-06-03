@@ -3,7 +3,7 @@ $height: auto;
 
 .source_window {
   position: fixed;
-  z-index: 1060;
+  z-index: 1101;
   background: $white;
   border: none;
   box-shadow: $shadow1;
@@ -404,10 +404,12 @@ $height: auto;
   bottom: 0;
   left: 0;
   padding: 20px;
+  visibility: hidden;
   @include transform(translate(0,100%));
   @include transition(all 0.25s $easeInOutSine);
 
   &.active{
+    visibility: visible;
     @include transform(translate(0,0%));
   }
 
@@ -603,7 +605,7 @@ $height: auto;
   width: 100%;
   height: 100%;
   background: rgba($dark,0.5);
-  z-index: 1000;
+  z-index: 1100;
 
   &.active {
     display: block;
@@ -639,6 +641,35 @@ $height: auto;
     }
   }
 
+  .mini-modal-loader{
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba($white,0.75);
+    visibility: hidden;
+    opacity: 0;
+    z-index: 5;
+    &:after{
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 30px;
+      height: 30px;
+      @include transform(translate(-50%,-50%));
+      @include animation(loader,1s,infinite,$easeInOutCubic);
+      z-index: 11;
+      border: 3px dashed $cGreen;
+    }
+    &.active{
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
   .close {
     display: block;
     position: absolute;
@@ -660,6 +691,11 @@ $height: auto;
         fill: darken($dark,10%);
       }
     }
+  }
+
+  p.error {
+    margin-top: 10px;
+    font-size: 0.8em;
   }
 
   .button-container {
@@ -689,12 +725,28 @@ $height: auto;
 
   .mini-modal-input{
     padding: 15px 0 0;
+    .copy_url{
+      border-radius: 0;
+      height: 39px;
+      line-height: 39px;
+      width: 30%;
+      display: block;
+    }
     input{
+      &.copy-input{
+        width: 70%;
+        border-right: none;
+        float: left;
+      }
       width: 100%;
       border-radius: 0;
       font-size: 13px;
       text-align: center;
       padding: 8px 10px;
+      font-family: inherit;
+      margin: 0;
+      display: block;
+      border: 1px solid $border;
     }
   }
 

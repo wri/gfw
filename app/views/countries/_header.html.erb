@@ -1,4 +1,23 @@
 <div class="country-header">
+  <div class="overview_button_group">
+    <div class="inner">
+      <div class="share mobile-hide share-link item" data-share-embed-url="<%= request.protocol + request.host_with_port %>/embed/country/<%= @country['iso'] %>" data-share-embed-width="600" data-share-embed-height="420">
+        <svg>
+          <use xlink:href="#shape-share"></use>
+        </svg>Share
+      </div>
+      <div class="download-spatial">
+        <a href="#" data-source="umd_tree_loss_gain_infographics" class="info source">
+          Info
+          <span class="sidenav-icon circle">
+            <svg>
+              <use xlink:href="#shape-info"></use>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
   <div class="inner">
     <!--  colored header -->
     <div class="country-header-inner">
@@ -28,12 +47,12 @@
               <span class="amount"></span>
               <span class="unit">%</span>
             </div>
-            <div class="canopy-status">
-              <span>Displaying tree cover and loss with ><em id="canopy-status-number">30%</em> canopy density</span>
-            </div>
+            <h4 class="t">TREE COVER LOSS (2001 - 2013)</h4>
+            <div class='total-loss'></div>
+            <div class='total-loss-ha'></div>
           </div>
           <div class="loss-gain-graph ghost">
-            <h4>TREE COVER LOSS (2001 - 2013)</h4>
+            <h4 class="mobile-hide">TREE COVER LOSS (2001 - 2013)</h4>
             <div class='total-loss'></div>
             <div class='total-loss-ha'></div>
             <div class='graph' id="lossGainGraph"></div>
@@ -45,13 +64,16 @@
             <div class='graph-gain-total'></div>
             <div class='coming-soon'><span>Not yet available for this country</span></div>
           </div>
+          <div class="canopy-status">
+            <span>Displaying tree cover and loss with ><em id="canopy-status-number">30%</em> canopy density</span>
+          </div>
         </div>
         <div class="country-sidenav">
-          <ul>
+          <button id="country-sidebar-button"><em>More Options</em> <span class="icon"><svg><use xlink:href="#shape-arrow-down"></use></svg></span></button>
+          <ul id="country-sidebar-ul">
             <li>
               <a href='<%= map_coords %>/grayscale/loss,forestgain?begin=2001-01-01&end=2014-12-30&threshold=' class='action analyze_from_country' target="_blank" id="url_analysis">
-                <strong>Analyze on map</strong>
-                <!-- <span class="sidenav-icon country-icons-chart_grey"></span> -->
+                <strong>Analyze forest change</strong>
                 <span class="sidenav-icon">
                   <svg>
                     <use xlink:href="#shape-graph"></use>
@@ -60,30 +82,18 @@
               </a>
             </li>
             <li>
-              <a href="#" id="share_control" data-share-embed-width="600" data-share-embed-height="352" title="Share this graphic" class="share_control share-link" data-tip="Share">
-                Share
+              <a href='<%= map_coords %>/grayscale/loss,forestgain?dont_analyze=true' class='action layers_from_country' target="_blank">
+                <strong>View country data layers</strong>
                 <span class="sidenav-icon">
-                  <svg class="share">
-                    <use xlink:href="#shape-share"></use>
-                  </svg>
-                </span>
-              </a>
-            </li>
-            <li>
-              <a href="#" data-source="umd_tree_loss_gain_infographics" class="info source">
-                Info
-                <!-- <span class="sidenav-icon country-icons-info_grey"></span> -->
-                <span class="sidenav-icon circle">
                   <svg>
-                    <use xlink:href="#shape-info"></use>
+                    <use xlink:href="#shape-tab-countries"></use>
                   </svg>
                 </span>
               </a>
             </li>
             <li>
-              <a href='http://data.globalforestwatch.org/datasets?q=country<%= @country['iso'] %>' target='_blank'>
-                Download spatial data
-                <!-- <span class="sidenav-icon country-icons-download_grey"></span> -->
+              <a href='http://data.globalforestwatch.org/datasets?q=country<%= @country['iso'] %>' class="download-mobile-link" target='_blank'>
+                Browse and download country data
                 <span class="sidenav-icon">
                   <svg>
                     <use xlink:href="#shape-download-18"></use>
@@ -92,9 +102,8 @@
               </a>
             </li>
             <li>
-              <a href="<%= country_download_path(id: @country['iso']) %>" class="download country-download-link">
-                Download country stats
-                <!-- <span class="sidenav-icon country-icons-download_grey"></span> -->
+              <a href="http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/umd_country_stats.xlsx" class="download download-mobile-link" data-type="country-stats">
+                Download tree cover stats
                 <span class="sidenav-icon">
                   <svg>
                     <use xlink:href="#shape-download-18"></use>
@@ -105,10 +114,14 @@
             <!--  indepth message -->
             <% if @country['indepth'].present? %>
                 <li>
-                  <a href="<%= @country['indepth'] %>" target="_blank" class="download country-indepth-link">GFW in <%= @country['name'] %>
+                  <% if @country['iso'] == 'IDN' %>
+                    <a href="<%= @country['indepth'] %>" target="_blank" class="download country-indepth-link">WRI in <%= @country['name'] %>
+                  <% else %>
+                    <a href="<%= @country['indepth'] %>" target="_blank" class="download country-indepth-link">Visit the forest atlas
+                  <% end %>
                     <span class="sidenav-icon">
                       <svg>
-                        <use xlink:href="#shape-map"></use>
+                        <use xlink:href="#shape-<%= @country['iso']%>"></use>
                       </svg>
                     </span>
                   </a>
