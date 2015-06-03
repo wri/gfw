@@ -267,7 +267,7 @@ define([
                   }
                 }
 
-                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ loss +' </span>'+ l_mha +'</span>');
+                $('#umd_'+val.iso+'').empty().append('<span class="loss line" data-orig="' + orig + '"><span>'+ parseFloat(loss).toLocaleString() +' </span>'+ l_mha +'</span>');
 
                 if (key == max_trigger){
                   that._reorderRanking();
@@ -350,7 +350,7 @@ define([
                   } else {
                     l_mha = 'Ha';
                   }
-                  $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ (data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
+                  $('#perc_'+val.iso+'').empty().append('<span class="loss line"><span>'+ parseFloat(data.years[1].gain).toLocaleString() +' '+ l_mha +' </span></span>');
                 }
                 , this),
               });
@@ -360,7 +360,7 @@ define([
                               <div class="countries_list__num">'+ord+'</div>\
                               <div class="countries_list__title">'+enabled+'</div>\
                               <div class="countries_list__data">\
-                                <div id="perc_'+val.iso+'" class="perct"><span class="loss line"><span>'+ (val.ratio).toFixed(2) + '%</span></span></div>\
+                                <div id="perc_'+val.iso+'" class="perct"><span class="loss line"><span>'+ val.ratio.toLocaleString() + '%</span></span></div>\
                               </div>\
                             </li>';
             } else {
@@ -426,14 +426,14 @@ define([
                     e_mha = l_mha = 'Mha';
                   ex = Math.round(ex);
                   if (ex.toString().length >= 7) {
-                    ex = ((ex /1000)/1000).toFixed(2)
+                    ex = ((ex /1000)/1000)
                   } else if (ex.toString().length >= 4) {
                     e_mha = 'KHa';
                     ex = (ex /1000);
-                  if (ex % 1 != 0) ex = ex.toFixed(2)
                   } else {
                     e_mha = 'Ha';
                   }
+                  ex = parseFloat(ex);
                 } else {
                   var e_mha = '%';
                   var ex = val.extent;
@@ -969,15 +969,14 @@ define([
                 g_mha = l_mha = 'Mha';
 
                 if (!!mode && mode.mode == 'percent') {
-                  $target.find('.figure').removeClass('extent').html((gain*100).toFixed(3));
+                  $target.find('.figure').removeClass('extent').html((gain*100).toLocaleString());
                   $target.find('.unit').html('%');
                 } else {
                   if (gain.toString().length >= 7) {
-                    gain = ((gain /1000)/1000).toFixed(2)
+                    gain = ((gain /1000)/1000)
                   } else if (gain.toString().length >= 4) {
                     l_mha = 'KHa';
                     gain = (gain /1000);
-                  if (gain % 1 != 0) gain = gain.toFixed(2)
                   } else {
                     l_mha = 'Ha';
                   }
@@ -1002,19 +1001,18 @@ define([
                 g_mha = l_mha = 'Mha';
 
                 if (!!mode && mode.mode == 'percent') {
-                  $target.find('.figure').addClass('extent').html(extent.toFixed(3));
+                  $target.find('.figure').addClass('extent').html(extent.toLocaleString());
                   $target.find('.unit').html('%');
                 } else {
                   if (extent.toString().length >= 7) {
-                    extent = ((extent /1000)/1000).toFixed(2)
+                    extent = ((extent /1000)/1000);
                   } else if (extent.toString().length >= 4) {
                     l_mha = 'KHa';
                     extent = (extent /1000);
-                  if (extent % 1 != 0) extent = extent.toFixed(2)
                   } else {
                     l_mha = 'Ha';
                   }
-                  $target.find('.figure').addClass('extent').html((~~extent).toLocaleString());
+                  $target.find('.figure').addClass('extent').html(extent.toLocaleString());
                   $target.find('.unit').html(l_mha);
                 }
               }, this),
