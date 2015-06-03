@@ -33,6 +33,10 @@ define([
       'Subscribe/geom': function(geom) {
         this.geom_for_subscription = geom;
       }
+    },{
+      'Tab/opened': function(id) {
+        this.view.hide();
+      }
     }],
 
     subscribeEnd: function(){
