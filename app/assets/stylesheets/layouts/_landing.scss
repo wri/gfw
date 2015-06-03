@@ -9,6 +9,9 @@
     margin-top: -60px;
     min-height: 620px;
     padding-bottom: 37.5%;
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+      margin-top: 0px;
+    }
   }
 
 
