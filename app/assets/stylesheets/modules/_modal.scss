@@ -11,12 +11,14 @@ $height: auto;
   height: 100%;
   opacity: 0;
   visibility: hidden;
+  display: none;
   @include transition(all 0s $easeInOutSine);
 
   @media (min-width: $br-mobile){
     left: 50%; top: 50%;
     width: $width;
     height: $height;
+    display: block;
     @include transform(translate(-50%,-50%));
   }
 
@@ -41,6 +43,7 @@ $height: auto;
 
 
   &.active{
+    display: block;
     opacity: 1;
     visibility: visible;
     @include transition(all 0.25s $easeInOutSine);
