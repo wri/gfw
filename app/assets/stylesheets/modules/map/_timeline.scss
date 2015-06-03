@@ -22,10 +22,16 @@
       left: 50%;
       right: auto;
       margin-left: -405px; // => calc(itemwith/2); Firefox issue
+      @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        width: 57%;
+      }
 
       &.transform {
         @include transform(translate(-50%,0));
         margin-left: 0;
+        @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+          width: 70%;
+        }
       }
     }
   }
