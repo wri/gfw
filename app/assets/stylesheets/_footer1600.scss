@@ -579,7 +579,7 @@
       }
     }
     &.opendevcam{
-      height: 71px; width: 70px; @include logos-sprite(opendevcam);
+      height: 70px; width: 70px; @include logos-sprite(opendevcam);
       &:hover{
         @include logos-sprite(opendevcamhover);
       }
