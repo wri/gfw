@@ -18,7 +18,7 @@
       top: 0;
       right: 20px;
       text-indent: -9999px;
-      z-index: 11;
+      z-index: 31;
       margin: 0 0 0 15px;
       @include retina-image('logo-new.png','logo-new@2x.png');
       @include transition(all 0.25s linear);
@@ -41,7 +41,7 @@
   }
 
 
-  @media (max-width: $br-mobileMap - 1){
+  @media (max-width: $br-mobileMap - 1) and (min-width: 480px){
     // MODULES
     .module{
       box-shadow: $shadow1;
@@ -123,9 +123,6 @@
 
     // Analysis
     .module.module-mapcontrols-mobile{
-      // &.analysis{
-      //   display: block !important;
-      // }
       bottom: 50px;
       left: 50%;
       @include transform(translate(-160px,0));
@@ -140,22 +137,6 @@
 
     .analysis-result {
       padding: 0;
-      // padding: 20px;
-      // width: 300px;
-      // height: auto;
-      // bottom: auto;
-      // position: fixed;
-      // top: 50%;
-      // left: 50%;
-      // @include transform(translate(-50%,-50%));
-      // opacity: 0;
-      // visibility: hidden;
-
-      // &.active{
-      //   opacity: 1;
-      //   visibility: visible;
-      //   @include transform(translate(-50%,-50%));
-      // }
       .close{
         display: none;
       }
@@ -209,25 +190,11 @@
       }
     }
 
-
-
     .module-tabs{
       bottom: 20px;
       top: auto;
       left: 20px;
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
     //analysis
     .module-tabs > header,
@@ -246,5 +213,34 @@
       display: none !important;
     }
   }
+  @media (max-width: 479px){
+    .embed-header{
+      h1{
+        right: auto;
+        left: 10px;
+        margin: 0;
+      }
+    }
+    .widget-timeline{
+      .widget-box{
+        bottom: 0px;
+      }
+    }
+  }
 
+}
+
+
+
+
+
+//footer
+.footer-toggle,
+.map-logos,
+.map-container .gm-style:after,
+//croshairs
+.map-viewfinder,
+//feedback
+.feedback-link {
+  display: none !important;
 }

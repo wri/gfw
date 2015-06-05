@@ -140,6 +140,10 @@ body,html{
   left: 70px;
   height: 38px;
   z-index: 100;
+  display: none;
+  @media (min-width:$br-mobile){
+    display: block;
+  }
 
   .map-logo {
     display: inline-block;
