@@ -227,6 +227,16 @@
       }
     }
   }
+  //footer
+  .footer-toggle,
+  .map-logos,
+  .map-container .gm-style:after,
+  //croshairs
+  .map-viewfinder,
+  //feedback
+  .feedback-link {
+    display: none !important;
+  }
 
 }
 
@@ -234,13 +244,3 @@
 
 
 
-//footer
-.footer-toggle,
-.map-logos,
-.map-container .gm-style:after,
-//croshairs
-.map-viewfinder,
-//feedback
-.feedback-link {
-  display: none !important;
-}
