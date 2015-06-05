@@ -71,6 +71,7 @@ define([
       "can_coal",
       "can_permits",
       "col_mining",
+      "khm_mining",
       "gab_mining",
       "cog_mining",
       "cod_mining",
