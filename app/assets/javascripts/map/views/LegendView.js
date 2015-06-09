@@ -83,8 +83,9 @@ define([
       'click .category-name' : '_toogleCategory',
       'click .layer-sublayer': '_toggleLayer',
       'click .canopy-button' : '_showCanopy',
+      'click .layer-close'   : '_removeLayer',
       'click .close' : 'toogleLegend',
-      'click #title-dialog-legend' : 'toogleEmbedLegend'
+      'click #title-dialog-legend' : 'toogleEmbedLegend',
     },
 
     initialize: function() {
@@ -264,6 +265,12 @@ define([
         $(e.currentTarget).parent().toggleClass('closed');
         $(e.currentTarget).parent().children('.layers').toggleClass('closed');
       }
+    },
+
+    _removeLayer: function(e){
+      e && e.preventDefault();
+      var layerSlug = $(e.currentTarget).data('slug');
+      this.presenter.toggleLayer(layerSlug);
     },
 
     _showCanopy: function(e){
