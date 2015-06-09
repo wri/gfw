@@ -18,6 +18,7 @@
             <li class="layer">
               <span class="layer-name">
                 <i class="circle" style="color:{{this.title_color}};"></i>{{this.title}}
+                <a href='#' class='layer-close'><svg><use xlink:href="#shape-close"></use></svg></a>
                 {{#if this.source}}
                 <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
                 {{/if}}
@@ -58,6 +59,7 @@
           <li class="layer">
             <span class="layer-name">
               <i class="circle" style="color:{{this.title_color}};"></i>{{this.title}}
+              <a href='#' class='layer-close'><svg><use xlink:href="#shape-close"></use></svg></a>
               {{#if this.source}}
               <a href='#' data-source='{{this.source}}' class='source'><svg><use xlink:href="#shape-info"></use></svg></a>
               {{/if}}

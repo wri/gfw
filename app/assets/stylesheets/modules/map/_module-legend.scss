@@ -125,7 +125,7 @@
       .layer-name {
         display: block;
         position: relative;
-        padding: 0 17px 0 13px;
+        padding: 0 32px 0 13px;
         font-size: 13px;
         .circle{
           position: absolute;
@@ -156,7 +156,7 @@
 
 
   // @div
-  .source {
+  .source, .layer-close {
     @extend .info-icon;
     display: inline-block;
     position: absolute;
@@ -175,6 +175,14 @@
       background: none;
       border: none;
       border-radius: 0;
+    }
+
+    &.layer-close{
+      right: 17px;
+      svg{
+        width: 10px;
+        height: 10px;
+      }
     }
   }
 
