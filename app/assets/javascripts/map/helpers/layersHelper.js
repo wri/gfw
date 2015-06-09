@@ -28,10 +28,7 @@ define([
   'map/views/layers/IdnLoggingLayer',
   'map/views/layers/LbrLoggingLayer',
   'map/views/layers/MiningLayer',
-  'map/views/layers/CanClaimsMiningLayer',
-  'map/views/layers/CanCoalMiningLayer',
-  'map/views/layers/CanLeasesMiningLayer',
-  'map/views/layers/CanPermitsMiningLayer',
+  'map/views/layers/CanMiningLayer',
   'map/views/layers/CmrMiningLayer',
   'map/views/layers/CodMiningLayer',
   'map/views/layers/CogMiningLayer',
@@ -118,10 +115,7 @@ define([
   IdnLoggingLayer,
   LbrLoggingLayer,
   MiningLayer,
-  CanClaimsMiningLayer,
-  CanCoalMiningLayer,
-  CanLeasesMiningLayer,
-  CanPermitsMiningLayer,
+  CanMiningLayer,
   CmrMiningLayer,
   CodMiningLayer,
   CogMiningLayer,
@@ -265,17 +259,8 @@ define([
     mining: {
       view: MiningLayer
     },
-    can_claims: {
-      view: CanClaimsMiningLayer
-    },
-    can_coal: {
-      view: CanCoalMiningLayer
-    },
-    can_leases: {
-      view: CanLeasesMiningLayer
-    },
-    can_permits: {
-      view: CanPermitsMiningLayer
+    can_mining: {
+      view: CanMiningLayer
     },
     cmr_mining: {
       view: CmrMiningLayer

@@ -137,25 +137,8 @@
     line-clip: false;
     polygon-clip: false;
   }
-  [layer='can_claims'] {
-    polygon-fill: #fd8d3c;
-    line-color: #fd8d3c;
-    line-clip: false;
-    polygon-clip: false;
-  }
-  [layer='can_coal'] {
-    polygon-fill: #fd8d3c;
-    line-color: #fd8d3c;
-    line-clip: false;
-    polygon-clip: false;
-  }
-  [layer='can_leases'] {
-    polygon-fill: #fd8d3c;
-    line-color: #fd8d3c;
-    line-clip: false;
-    polygon-clip: false;
-  }
-  [layer='can_permits'] {
+  
+  [layer='can_mining'] {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
     line-clip: false;
