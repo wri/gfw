@@ -289,7 +289,7 @@ define([
           _.bind(function(position) {
             this.$autoLocate.removeClass('active');
             var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
-            this.map.setCenter(pos);
+            this.map.panTo(pos);
             this.setCenter();
             this.setZoom(18);
           }, this ),
