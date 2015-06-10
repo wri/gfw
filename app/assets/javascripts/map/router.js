@@ -36,6 +36,7 @@ define([
       this.name = null;
       this.mainView = mainView;
       this.placeService = new PlaceService(this);
+
     },
 
     map: function() {
