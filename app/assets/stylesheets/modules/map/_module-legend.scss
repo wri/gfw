@@ -179,7 +179,17 @@
 
     &.layer-close{
       right: 17px;
+      background: $white;
+      border: 1px solid #AAA;
+      &:hover{
+        border: 1px solid red;
+        svg{
+          fill: red;
+        }
+      }
       svg{
+        @include transition(all,0s);
+        fill: #AAA;
         width: 10px;
         height: 10px;
       }
