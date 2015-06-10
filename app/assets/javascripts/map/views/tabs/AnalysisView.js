@@ -9,8 +9,9 @@ define([
   'amplify',
   'chosen',
   'map/presenters/tabs/AnalysisPresenter',
-  'text!map/templates/tabs/analysis.handlebars'
-], function(_, Handlebars, amplify, chosen, Presenter, tpl) {
+  'text!map/templates/tabs/analysis.handlebars',
+  'text!map/templates/tabs/analysis-mobile.handlebars'
+], function(_, Handlebars, amplify, chosen, Presenter, tpl, tplMobile) {
 
   'use strict';
 
@@ -24,6 +25,7 @@ define([
     el: '#analysis-tab',
 
     template: Handlebars.compile(tpl),
+    templateMobile: Handlebars.compile(tplMobile),
 
     events: {
       //tabs
@@ -39,7 +41,8 @@ define([
       'click #analysis-country-button' : 'analysisCountry',
 
       //other
-      'click #data-tab-play' : 'onGifPlay'
+      'click #data-tab-play' : 'onGifPlay',
+      'click .close' : 'toggleAnalysis'
     },
 
     initialize: function(map) {
@@ -47,8 +50,19 @@ define([
       this.map = map;
       this.presenter = new Presenter(this);
       this.model = new AnalysisModel();
-      this.render();
-      this.setListeners();
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = false;
+          this.render();
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = true;
+          this.renderMobile();
+        },this)
+      });
+
     },
 
     cacheVars: function(){
@@ -84,6 +98,19 @@ define([
       this.$el.html(this.template());
       this.cacheVars();
       this.inits();
+    },
+
+    renderMobile: function(){
+      this.$el.html(this.templateMobile());
+      this.cacheVars();
+      this.inits();
+    },
+
+    toggleAnalysis: function(bool){
+      var to = (bool && bool.currentTarget) ? true : bool;
+      this.$el.toggleClass('active', !to);
+      this.presenter.toggleOverlay(!to);
+
     },
 
     inits: function(){
@@ -238,22 +265,24 @@ define([
       this.countries = amplify.store('countries');
 
       //Loop for print options
-      var options = "<option></option>";
+      var options = (this.mobile) ? '' : '<option></option>';
       _.each(_.sortBy(this.countries, function(country){ return country.name }), _.bind(function(country, i){
         options += '<option value="'+ country.iso +'">'+ country.name + '</option>';
       }, this ));
       this.$countrySelect.append(options);
-      this.$selects.chosen({
-        width: '100%',
-        allow_single_deselect: true,
-        inherit_select_classes: true,
-        no_results_text: "Oops, nothing found!"
-      });
+      if (!this.mobile) {
+        this.$selects.chosen({
+          width: '100%',
+          allow_single_deselect: true,
+          inherit_select_classes: true,
+          no_results_text: "Oops, nothing found!"
+        });
+      }
     },
 
     printSubareas: function(subareas){
       var subareas = subareas;
-      var options = "<option></option>";
+      var options = (this.mobile) ? '<option value="" disabled selected>Select jurisdiction (optional)</option>' : '<option></option>';
       _.each(_.sortBy(subareas, function(area){ return area.name_1 }), _.bind(function(area, i){
         options += '<option value="'+ area.id_1 +'">'+ area.name_1 + '</option>';
       }, this ));
@@ -343,6 +372,7 @@ define([
         ga('send', 'event', 'Map', 'Analysis', 'Click: done');
         this._stopDrawing();
         this.presenter.doneDrawing();
+        this.toggleAnalysis(true);
       }
     },
 

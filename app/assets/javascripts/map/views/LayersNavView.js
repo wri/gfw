@@ -19,16 +19,15 @@ define([
 
   var LayersNavView = Backbone.View.extend({
 
-    el: '.layers-menu',
-
     template: Handlebars.compile(tpl),
     templateCountry: Handlebars.compile(tplCountry),
     templateCountryWrapper: Handlebars.compile(tplCountryWrapper),
 
     events: {
+      'click .category-name' : '_toggleLayersNav',
       'click .layer': '_toggleLayer',
       'click .wrapped-layer': '_toggleLayerWrap',
-      'click #toggleUmd' : 'toggleUmd',
+      'click .grouped-layers-trigger' : 'toggleLayersGroup',
       'click #country-layers' : '_showNotification',
       'click #country-layers-reset' : '_resetIso'
     },
@@ -36,18 +35,30 @@ define([
     initialize: function() {
       _.bindAll(this, '_toggleSelected');
       this.presenter = new Presenter(this);
-      this.render();
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.setElement('#layers-menu');
+          this.render();
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.setElement('#layers-tab');
+          this.render();
+        },this)
+      });
     },
 
     render: function() {
-      this.$el.append(this.template());
+      this.$el.html('').append(this.template());
       //Experiment
       this.presenter.initExperiment('source');
 
       //Init
-      this.$UMDlayers = $('#umd-group .layer');
+      this.$groupedLayers = $('.grouped-layers-trigger');
       this.$toggleUMD = $('#toggleUmd');
       this.$categoriesList = $('.categories-list');
+      this.$categoriesNum = $('.category-num');
       this.$layersCountry = $('#layers-country-nav');
       this.$countryLayers = $('#country-layers');
       this.$countryLayersReset = $('#country-layers-reset');
@@ -90,7 +101,17 @@ define([
         }
       });
       this.toogleSelectedWrapper();
-      this.checkUMD();
+      this.checkLayersGroup();
+      this.setNumbersOfLayers();
+    },
+
+    setNumbersOfLayers: function(){
+      // Filter layers without iso and then group them by category
+      var layersByCategory = _.groupBy(_.filter(this.layers, function(layer){ return !layer.iso }), function(layer){ return layer.category_slug; });
+      this.$categoriesNum.text('');
+      _.each(layersByCategory, _.bind(function(v,k){
+        $('#'+k+'-category-num').text(v.length);
+      },this));
     },
 
     /**
@@ -124,6 +145,13 @@ define([
       }
     },
 
+    _toggleLayersNav: function(e){
+      if (!$(e.currentTarget).parent().hasClass('disabled')) {
+        $(e.currentTarget).toggleClass('show');
+        $(e.currentTarget).parent().children('.layers-nav').toggleClass('show');
+      }
+    },
+
     _toggleLayerWrap: function(e){
       if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source') && !$(e.target).hasClass('layer')) {
         var $layers = $(e.currentTarget).find('.layer');
@@ -131,11 +159,13 @@ define([
         if ($(e.currentTarget).hasClass('selected')) {
           _.each($layers, _.bind(function(layer){
             if ($(layer).hasClass('selected')) {
-              $(layer).click();
+              var layerSlug = $(layer).data('layer');
+              this.presenter.toggleLayer(layerSlug);
             }
           }, this ))
         }else{
-          $($layers[0]).click();
+          var layerSlug = $($layers[0]).data('layer');
+          this.presenter.toggleLayer(layerSlug)
         }
       }
     },
@@ -158,10 +188,11 @@ define([
         }, this ))
 
         if (selected > 0) {
+          var color = $li.data('color') || '#cf7fec';
           $li.addClass('selected');
           $toggle.addClass('checked');
-          $layerTitle.css('color', '#cf7fec');
-          $toggle.css('background', '#cf7fec');
+          $layerTitle.css('color', color);
+          $toggle.css('background', color);
         } else {
           $li.removeClass('selected');
           $toggle.removeClass('checked').css('background', '').css('border-color', '');
@@ -173,32 +204,44 @@ define([
     },
 
 
-    toggleUmd: function(e){
+    // GROUPED LAYERS
+    // This 2 functions are used to control grouped layers clicks. To enable or disable layers inside
+    toggleLayersGroup: function(e){
+      if (!$(e.target).hasClass('source') && !$(e.target).parent().hasClass('source') && !$(e.target).hasClass('layer')) {
+        var groupedLayers = $(e.currentTarget).parent().find('.layer');
+        var checked = $(e.currentTarget).find('.onoffradio').hasClass('checked') || $(e.currentTarget).find('.onoffswitch').hasClass('checked');
+        _.each(groupedLayers, _.bind(function(layer){
+          var selected = $(layer).hasClass('selected');
+          var layerSlug = $(layer).data('layer');
+          if (checked) {
+            (selected) ? this.presenter.toggleLayer(layerSlug) : null;
+          }else{
+            (!selected) ? this.presenter.toggleLayer(layerSlug) : null;
+          }
+        }, this));
+      }
+    },
 
-      _.each(this.$UMDlayers, _.bind(function(layer){
-        if (this.$toggleUMD.find('.onoffradio').hasClass('checked')) {
+    checkLayersGroup: function(){
+      _.each(this.$groupedLayers, _.bind(function(group){
+        var count = 0;
+        var layers = $(group).parent().find('.layer');
+        _.each(layers, _.bind(function(layer){
           if ($(layer).hasClass('selected')) {
-            $(layer).trigger('click');
+            count ++;
           }
-        }else{
-          if (!$(layer).hasClass('selected')) {
-            $(layer).trigger('click');
-          }
-        }
-      }, this));
+        }, this));
+        var color = (count == layers.length) ? $(group).data('color') : '';
+        $(group).find('.onoffradio, .onoffswitch').toggleClass('checked', (count == layers.length));
+        $(group).find('.onoffswitch').css('background-color', color);
+        $(group).find('.onoffradio').css({'background-color': color, 'border-color' : color });
+
+      }, this ))
     },
 
-    checkUMD: function(){
-      var count = 0;
-      _.each(this.$UMDlayers, _.bind(function(layer){
-        if ($(layer).hasClass('selected')) {
-          count ++;
-        }
-      }, this));
-      (count == 2) ? this.$toggleUMD.find('.onoffradio').addClass('checked') : this.$toggleUMD.find('.onoffradio').removeClass('checked');
-    },
-
-
+    /**
+     * Set and update iso
+     */
     setIso: function(iso){
       this.iso = iso.country;
       this.region = iso.region;
@@ -226,11 +269,12 @@ define([
     },
 
     resetIsoLayers: function(){
-      _.each(this.$countryLayers.find('.layer'),function(li){
+      _.each(this.$countryLayers.find('.layer'),_.bind(function(li){
         if ($(li).hasClass('selected')) {
-          $(li).click();
+          var layerSlug = $(li).data('layer');
+          this.presenter.toggleLayer(layerSlug)
         }
-      })
+      }, this ))
     },
 
     setIsoLayers: function(e){

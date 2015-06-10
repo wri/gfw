@@ -73,7 +73,7 @@
           <a href="#" id="alerts" class="anchor-country-info"></a>
           <h6>FORMA alerts</h6>
           <div class="section-btn no-cols">
-            <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'alerts', width: '600', height: '392' } %>
+            <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'alerts', width: '600', height: '440' } %>
             <a href="#" class="info icon circle source" data-source="forma">
               <svg>
                 <use xlink:href="#shape-info"></use>
@@ -169,7 +169,7 @@
                 <div class="section-info section-share">
                   <h6>Economic value of <%= @country['name'] %>'s forestry sector</h6>
                   <div class="section-btn">
-                    <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'production', width: '600', height: '250'} %>
+                    <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'production', width: '600', height: '332'} %>
                     <a href="#" class="info icon circle source" data-source="gross_value">
                       <svg>
                         <use xlink:href="#shape-info"></use>
@@ -204,7 +204,7 @@
               <div class="section-info section-share">
                 <h6>Employment</h6>
                 <div class="section-btn">
-                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'employment', width: '600', height: '290'} %>
+                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'employment', width: '600', height: '338'} %>
                   <a href="#" class="info icon circle source" data-source="employment_info">
                     <svg>
                       <use xlink:href="#shape-info"></use>
@@ -248,7 +248,7 @@
               <div class="section-info section-share">
                 <h6>Forest tenure</h6>
                 <div class="section-btn">
-                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'tenure', width: '600', height: '336'} %>
+                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'tenure', width: '600', height: '383'} %>
                   <a href="#" class="info icon circle source" data-source="forest_tenure">
                     <svg>
                       <use xlink:href="#shape-info"></use>
@@ -281,7 +281,7 @@
               <div class="section-info section-share">
                 <h6>Carbon stocks</h6>
                 <div class="section-btn">
-                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'carbon_stocks', width: '600', height: '250'} %>
+                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'carbon_stocks', width: '600', height: '297'} %>
                   <a href="#" class="info icon circle source" data-source="carbon_stocks">
                     <svg>
                       <use xlink:href="#shape-info"></use>
@@ -306,7 +306,7 @@
               <div class="section-info section-share">
                 <h6>CO2 emissions</h6>
                 <div class="section-btn">
-                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'emissions', width: '600', height: '250'} %>
+                  <%= render partial: "share_button", locals: {iso: @country['iso'], box: 'emissions', width: '600', height: '297'} %>
                   <a href="#" class="info icon circle source" data-source="emissions">
                     <svg>
                       <use xlink:href="#shape-info"></use>
@@ -424,7 +424,7 @@
     </section>
 
     <!-- download links -->
-    <section class='country-section country-download-links-section'>
+    <section class='country-section country-download-links-section mobile-hide'>
       <div class='inner'>
         <div class="section-content">
           <%= link_to 'Subscribe to alerts for this country', "#{map_coords}/grayscale/forma?subscribe", class: 'btn-rdn btn-rdn-dark', :target => '_blank' %>
@@ -518,4 +518,4 @@
 
 </section>
 
-<div class="mini-modal country-download-modal"></div>
+<div class="mini-modal download-modal"></div>

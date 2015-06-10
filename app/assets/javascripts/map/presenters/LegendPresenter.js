@@ -37,6 +37,11 @@ define([
         this.status.set('threshold', place.params.threshold);
         this._updateLegend();
         this._toggleSelected();
+        this.view.openGFW();
+      }
+    },{
+      'Place/update': function(place) {
+        this.view.openGFW();
       }
     }, {
       'LayerNav/change': function(layerSpec) {
@@ -61,19 +66,27 @@ define([
         this.status.set('threshold', threshold);
         this.status.get('layerSpec') && this._updateLegend();
       }
+    }, {
+      'LegendMobile/open': function() {
+        this.view.toogleLegend();
+      }
+    }, {
+      'Dialogs/close': function() {
+        this.view.toogleLegend(false);
+      }
     }],
 
     /**
      * Update legend by calling view.update.
      */
     _updateLegend: function() {
-      var categories = this.status.get('layerSpec').getLayersByCategory();
+      var categories = this.status.get('layerSpec').getLayersByCategory(),
+          options = {
+            threshold: this.status.get('threshold')
+          },
+          geographic = !! this.status.get('layerSpec').attributes.geographic_coverage;
 
-      var options = {
-        threshold: this.status.get('threshold')
-      };
-
-      this.view.update(categories, options);
+      this.view.update(categories, options, geographic);
     },
 
     /**
@@ -100,6 +113,10 @@ define([
 
     showCanopy: function(){
       mps.publish('ThresholdControls/toggle');
+    },
+
+    toggleOverlay: function(to){
+      mps.publish('Overlay/toggle', [to])
     },
 
     initExperiment: function(id){

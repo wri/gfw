@@ -11,9 +11,13 @@ define([
   'use strict';
 
   var DownloadModel = Backbone.Model.extend({
+    defaults: {
+      type: 'default'
+    },
+
     sync: function(method, model, options) {
       options || (options = {});
-      options.url = model.get('url');
+      options.url = '/download';
 
       Backbone.sync(method, model, options);
     }
@@ -23,7 +27,23 @@ define([
     template: Handlebars.compile(raw_template),
     errorTemplate: Handlebars.compile(raw_error_template),
 
-    el: '.country-download-modal',
+    el: '.download-modal',
+
+    text:{
+      default : {
+        title : 'Request a link',
+        description : 'Enter your email to receive a link to browse and download data for this country'
+      },
+      'country-stats' : {
+        title : 'Request a download link',
+        description : 'Enter your email to receive a link to download tree cover statistics for this country'
+      },
+      'forest-change' : {
+        title : 'Request a download link',
+        description : 'Enter your email to receive a link to download this data for your area of interest'
+      }
+
+    },
 
     events: {
       'click .close': 'hide',
@@ -33,6 +53,16 @@ define([
 
     initialize: function() {
       this.model = new DownloadModel();
+      this.$loader = $('#mini-modal-loader');
+      this.setListeners();
+      this.render();
+      mps.publish('DownloadView/create',[this]);
+    },
+
+    setListeners: function(){
+      $('body').on('click', '.download-mobile-link', _.bind(function(event){
+        this.download(event);
+      }, this ));
     },
 
     _isMobile: function() {
@@ -45,48 +75,65 @@ define([
     },
 
     hide: function() {
+      this.$el.find('.error').html('');
       this.$el.removeClass('active');
     },
 
     download: function(event) {
       if (this._isMobile()) {
         event && event.preventDefault() && event.stopPropagation();
+        var href = $(event.currentTarget).attr('href');
+        var type = $(event.currentTarget).data('type') || 'default';
+        this.model.set('link', href);
+        this.model.set('type', type);
         this.show();
-
-        var href = $(event.target).attr('href');
-        this.model.set('url', href);
       }
     },
 
     render: function() {
       if (this._isMobile()) {
-        this.$el.html(this.template());
+        this.$el.html(this.template({ text: this.text[this.model.get('type')]}));
       }
-    },
-
-    _downloadRequestSuccess: function() {
-      this.hide();
-    },
-
-    _downloadRequestFailure: function() {
-      var errorTemplate = this.errorTemplate({
-        downloadLink: this.model.get('url')
-      });
-      this.$el.find('.error').html(errorTemplate);
     },
 
     _requestDownload: function(event) {
       event && event.preventDefault() && event.stopPropagation();
 
-      var email = $('#download_email_form [name="email_address"]').val()
-      this.model.set('email', email);
+      var email = $('#download_email_form [name="email"]').val()
+      if(this.validateEmail(email)){
+        this.$loader.addClass('active');
+        this.model.set('email', email);
 
-      this.model.save({}, {
-        success: _.bind(this._downloadRequestSuccess, this),
-        error: _.bind(this._downloadRequestFailure, this)
+        this.model.save({}, {
+          success: _.bind(this._downloadRequestSuccess, this),
+          error: _.bind(this._downloadRequestFailure, this)
+        });
+      }else{
+        mps.publish('Notification/open',['email-incorrect']);
+      }
+    },
+
+    _downloadRequestSuccess: function() {
+      mps.publish('Notification/open',['not-email-send']);
+      this.$loader.removeClass('active');
+      this.hide();
+    },
+
+    _downloadRequestFailure: function() {
+      var errorTemplate = this.errorTemplate({
+        downloadLink: this.model.get('link')
       });
-    }
+      this.$loader.removeClass('active');
+      this.$el.find('.error').html(errorTemplate);
+    },
+
+    validateEmail: function(email){
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
+
+
   });
 
-  return DownloadView;
+  return new DownloadView();
 });

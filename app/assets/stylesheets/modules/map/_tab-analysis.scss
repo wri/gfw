@@ -1,16 +1,101 @@
+.tab-analysis-mobile{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0px;
+  color: $dark;
+  font-size: 13px;
+  max-height: 75%;
+  overflow: auto;
+  padding: 0px 0 56px;
+  z-index: 19;
+  background: $white;
+  @include transition(all 0.25s $easeInOutSine);
+  @include transform(translate(0,100%));
+
+  &.active{
+    @include transform(translate(0,0));
+  }
+
+  .close{
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    padding: 8px;
+    top: 0;
+    right: 0;
+    display: block;
+    z-index: 5;
+    svg{
+      stroke: $dark;
+    }
+    @media (min-width: $br-mobileMap){
+      display: none;
+    }
+  }
+
+
+  .tab-analysis{
+    nav{
+      display: none;
+    }
+  }
+
+  .analysis-tab-content.country-tab{
+    .select-box-mobile{
+      margin: 10px 0 0;
+      position: relative;
+      &:after{
+        content: "";
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        width: 16px;
+        height: 16px;
+        @include transform(translate(0,-50%));
+        background: image-url('svg-icons/arrow-down.svg') center no-repeat;
+        background-size: contain;
+      }
+      &:first-child{
+        margin: 0;
+      }
+    }
+    select{
+      -webkit-appearance: none;
+      width: 100%;
+      height: 36px;
+      padding: 0 10px;
+      font-size: 13px;
+      display: block;
+      font-family: inherit;
+      border: 1px solid #e5e5df;
+      border-radius: 0;
+      background: $white;
+      font-family: inherit;
+      text-transform: uppercase;
+    }
+  }
+}
 .tab-analysis, .tab-subscription{
+  .is-subscribing &{
+    min-height: 250px;
+  }
   nav{
     display: block;
     ul{
       @include display-flex();
       li{
-        width: 33.333333%;
+        width: 100%;
         padding: 8px 6px;
         text-transform: uppercase;
         text-align: center;
         font-size: 12px;
         color: #7F7F7F;
         cursor: pointer;
+        @media (min-width: $br-mobileMap){
+          width: 33.333333%;
+        }
         &:hover{
           svg{
             fill: $cGreen;
@@ -53,6 +138,9 @@
     .subscription-tab-content{
       display: none;
       padding: 15px;
+      @media (min-width: $br-mobileMap){
+        padding: 15px;
+      }
       @media (min-width: 1500px){
         padding: 20px;
       }
@@ -100,6 +188,15 @@
   }
 }
 
+.subscription-tab-content.default-subscription{
+  position: absolute;
+  background: $white;
+  top: 0;
+  left: 0;
+  padding: 30px !important;
+  z-index: 5;
+}
+
 //DRAW TAB
 .analysis-tab-content.draw-tab,
 .subscription-tab-content.draw-tab{
@@ -136,6 +233,7 @@
 .analysis-tab-content.data-tab,
 .subscription-tab-content.data-tab{
   .see-gif {
+    margin: 15px 0 0;
     padding: 5px 0;
     display: inline-block;
     @media (min-height: 770px){
@@ -209,11 +307,47 @@
 
 
 .analysis-result{
-  padding: 15px 15px 5px;
+  position: fixed;
+  width: 100%;
+  background: $white;
+  bottom: 0;
+  left: 0;
+  z-index: 19;
+  padding: 20px 20px 56px;
+  @include transform(translate(0,100%));
+  @include transition(all 0.25s $easeInOutSine);
+  &.active{
+    @include transform(translate(0,0));
+  }
+
+  @media (min-width: $br-mobileMap){
+    position: relative;
+    bottom: auto;
+    left: auto;
+    padding: 15px 15px 5px;
+    @include transform(translate(0,0%));
+  }
+
   @media (min-width: 1500px){
     padding: 20px 20px 10px;
   }
 
+  .close{
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    padding: 8px;
+    top: 0;
+    right: 0;
+    display: block;
+    z-index: 5;
+    svg{
+      stroke: $dark;
+    }
+    @media (min-width: $br-mobileMap){
+      display: none;
+    }
+  }
 
   .analysis-stats {
     background: white;
@@ -283,6 +417,30 @@
         position: relative;
         padding: 10px 0;
         cursor: pointer;
+        @media (max-width: $br-mobileMap - 1){
+          width: 50%;
+          &#analysis-subscribe{
+            display: none;
+          }
+          .tooltipmap{
+            opacity: 1;
+            visibility: visible;
+            position: relative;
+            @include transform(none);
+            left: 0;
+            top: 0;
+            box-shadow: none;
+            background: none;
+            font-size: 11px;
+            text-align: center;
+            display: block;
+            white-space: normal;
+            line-height: 1;
+            &:after{
+              display: none;
+            }
+          }
+        }
 
         &:hover{
           .tooltipmap{
@@ -329,6 +487,7 @@
           height: 18px;
           margin: 0 auto;
         }
+
         .dropdown-button{
           &:after{
             content: "";
@@ -394,7 +553,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 3;
+  z-index: 21;
   overflow: hidden;
   opacity: 0;
   visibility: hidden;

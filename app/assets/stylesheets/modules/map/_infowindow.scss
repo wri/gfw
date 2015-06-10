@@ -27,6 +27,9 @@
   .cartodb-popup{
     position: relative;
     width: 250px;
+    @media (max-width: $br-mobile) {
+      width: 200px;
+    }
     height: auto;
     padding: 0;
     padding-right: 0;
@@ -74,6 +77,9 @@
       .cartodb-popup-header{
         h2{
           font-size: 21px;
+          @media (max-width: $br-mobile) {
+            font-size: 18px;
+          }
           line-height: 1.25;
           padding: 20px 20px 15px;
         }
@@ -91,7 +97,13 @@
         @include justify-content(space-between);
         .btn{
           width: 100%;
-          margin: 15px 0;
+          margin: 15px 1px;
+          @media (max-width: $br-mobileMap - 1){
+            width: 100%;
+            &.subscription-concession{
+              display: none;
+            }
+          }
         }
       }
       .cartodb-popup-content{
@@ -110,6 +122,9 @@
         .cartodb-popup-content-inside{
           padding: 20px 20px 10px;
           @include clearfix();
+          @media (max-width: $br-mobile) {
+            padding: 0px 20px;
+          }
         }
         h2,h3,h4,p{
           font-family: "Fira Sans" , Helvetica;
@@ -117,12 +132,18 @@
         }
         h2{
           font-size: 21px;
+          @media (max-width: $br-mobile) {
+            font-size: 18px;
+          }
           line-height: 1.25;
           padding: 0 0 10px;
         }
         h4{
           color: $dark;
           font-size: 12px;
+          @media (max-width: $br-mobile) {
+            font-size: 10px;
+          }
           font-weight: 500;
           width: 50%;
           float: left;
@@ -139,6 +160,9 @@
         p{
           color: $dark;
           font-size: 13px;
+          @media (max-width: $br-mobile) {
+            font-size: 11px;
+          }
           width: 50%;
           float: left;
           line-height: 1.25;

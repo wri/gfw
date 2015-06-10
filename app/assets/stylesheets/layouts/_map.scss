@@ -1,3 +1,9 @@
+body,html{
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
 .layout-header-bottom {
   padding: 0;
   border: 0;
@@ -6,11 +12,15 @@
 .layout-content {
   margin-bottom: 0;
   position: absolute;
-  height: calc(100% - 34px);
   overflow: hidden;
-  top: 34px;
+  height: 100%;
+  top: 0;
   left: 0;
   width: 100%;
+  @media (min-width:$br-mobile){
+    height: calc(100% - 34px);
+    top: 34px;
+  }
 }
 
 .map-container {
@@ -19,8 +29,6 @@
   bottom: 0;
   left: 0;
   right: 0;
-  border-top: 1px solid #717D80;
-  border-bottom: 1px solid #717D80;
   box-sizing: border-box;
   background: #B3E2FF;
 
@@ -132,6 +140,10 @@
   left: 70px;
   height: 38px;
   z-index: 100;
+  display: none;
+  @media (min-width:$br-mobile){
+    display: block;
+  }
 
   .map-logo {
     display: inline-block;
@@ -157,5 +169,26 @@
   text-shadow: 0px 0px 3px #000;
   &.hidden{
     display: none;
+  }
+}
+
+.overlay-mobile{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 22;
+  background: rgba($dark,0.5);
+  opacity: 0;
+  visibility: hidden;
+  @include transition(all 0.25s $easeInOutSine);
+  @media (min-width:$br-mobile){
+    display: none !important;
+  }
+
+  &.active{
+    visibility: visible;
+    opacity: 1;
   }
 }

@@ -24,10 +24,12 @@ define([
   'text!map/templates/legend/colombiaForestChange.handlebars',
   'text!map/templates/legend/tigers.handlebars',
   'text!map/templates/legend/dam_hotspots.handlebars',
-  'text!map/templates/legend/us_land_cover.handlebars'
+  'text!map/templates/legend/us_land_cover.handlebars',
+  'text!map/templates/legend/global_land_cover.handlebars',
+  'text!map/templates/legend/forma.handlebars'
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL) {
 
   'use strict';
 
@@ -59,7 +61,7 @@ define([
       ifl_2013_deg: Handlebars.compile(intact2013Tpl),
       grump2000: Handlebars.compile(grumpTpl),
       user_stories:  Handlebars.compile(storiesTpl),
-      terraicanvas: Handlebars.compile(terra_iTpl),
+      terrailoss: Handlebars.compile(terra_iTpl),
       concesiones_forestales: Handlebars.compile(concesionesTpl),
       concesiones_forestalesNS: Handlebars.compile(concesionesTypeTpl),
       WMSLayer: Handlebars.compile(hondurasForestTPL),
@@ -67,7 +69,9 @@ define([
       tigers: Handlebars.compile(tigersTPL),
       dam_hotspots: Handlebars.compile(dam_hotspotsTPL),
       us_land_cover: Handlebars.compile(us_land_coverTPL),
-      us_land_cover_change : Handlebars.compile(us_land_coverTPL)
+      global_land_cover : Handlebars.compile(global_land_coverTPL),
+      us_land_cover_change : Handlebars.compile(us_land_coverTPL),
+      forma : Handlebars.compile(formaTPL)
 
     },
 
@@ -78,13 +82,17 @@ define([
     events: {
       'click .category-name' : '_toogleCategory',
       'click .layer-sublayer': '_toggleLayer',
-      'click .canopy-button' : '_showCanopy'
+      'click .canopy-button' : '_showCanopy',
+      'click .layer-close'   : '_removeLayer',
+      'click .close' : 'toogleLegend',
+      'click #title-dialog-legend' : 'toogleEmbedLegend',
     },
 
     initialize: function() {
       _.bindAll(this, 'update');
       this.presenter = new Presenter(this);
       this.model = new LegendModel();
+      this.embed = $('body').hasClass('is-embed-action');
       this.$el.removeClass('hide');
       this.setListeners();
     },
@@ -94,10 +102,22 @@ define([
     },
 
     toogleModule: function(){
-      if(this.model.get('hidden')){
-        this.$el.addClass('hide');
-      }else{
-        this.$el.removeClass('hide');
+      this.$el.toggleClass('hide', this.model.get('hidden'));
+    },
+
+    toogleEmbedLegend: function(e){
+      e && e.preventDefault();
+      var active = this.$titleDialog.hasClass('active');
+      this.$titleDialog.toggleClass('active', !active);
+      this.$categories.toggleClass('active', !active);
+      this.$buttonLegendBox.toggleClass('active', !active);
+
+    },
+
+    openGFW: function(){
+      if (this.embed && !!this.$linkLegendBox) {
+        var href = window.location.href.replace('/embed','');
+        this.$linkLegendBox.attr('href', href);
       }
     },
 
@@ -106,7 +126,7 @@ define([
      * @param  {array}  categories layers ordered by category
      * @param  {object} options    legend options
      */
-    _renderLegend: function(categories, options) {
+    _renderLegend: function(categories, options, geographic) {
       var iso = null;
       var layersGlobal = [];
       var layersIso = [];
@@ -124,15 +144,16 @@ define([
             layerTitle: layer.title
           });
         }
-        if(layer.iso) {
+        if (layer.iso) {
           var countries = amplify.store('countries');
           iso = layer.iso;
           layersIso.push(layer);
           layer.category_status = layer.category_slug+'-iso';
-        }else {
+        } else {
           layersGlobal.push(layer);
           layer.category_status = layer.category_slug+'-global'
-        };
+        }
+        layer.geographic = geographic ? 'checked' : '';
       }, this);
 
       categoriesGlobal = this.statusCategories(_.groupBy(layersGlobal, function(layer){ return layer.category_slug }));
@@ -171,6 +192,12 @@ define([
       return array;
     },
 
+    toogleLegend: function(bool){
+      var to = (bool && bool.currentTarget) ? false : bool;
+      this.$el.toggleClass('active', to);
+      this.presenter.toggleOverlay(to);
+    },
+
     /**
      * Toggle selected sublayers on the legend widget.
      *
@@ -191,8 +218,12 @@ define([
       }, this);
     },
 
-    render: function(html){
+    render: function(html) {
       this.$el.html(html);
+      this.$titleDialog = $('#title-dialog-legend');
+      this.$categories = this.$el.find('.categories');
+      this.$buttonLegendBox =  $('#button-box-embed-legend');
+      this.$linkLegendBox =  $('#link-embed-legend');
     },
 
     /**
@@ -200,13 +231,12 @@ define([
      *
      * @param  {array} layers
      */
-    update: function(categories, options) {
-
+    update: function(categories, options, geographic) {
       if (categories.length === 0) {
         this.model.set('hidden', true);
       } else {
         this.model.set({'hidden': false, 'boxClosed': false});
-        this._renderLegend(categories, options);
+        this._renderLegend(categories, options, geographic);
       }
       //Experiment
       this.presenter.initExperiment('source');
@@ -224,16 +254,23 @@ define([
     },
 
     _toogleCategory: function(e){
-      // Save category status in an array
-      var categories_status = this.model.get('categories_status');
-      var slug = $(e.currentTarget).data('category_slug');
-      var index = categories_status.indexOf(slug);
-      (index != -1) ? categories_status.splice(index, 1) : categories_status.push(slug);
-      this.model.set('categories_status',categories_status);
+      if ($(window).width() > window.gfw.config.GFW_MOBILE) {
+        // Save category status in an array
+        var categories_status = this.model.get('categories_status');
+        var slug = $(e.currentTarget).data('category_slug');
+        var index = categories_status.indexOf(slug);
+        (index != -1) ? categories_status.splice(index, 1) : categories_status.push(slug);
+        this.model.set('categories_status',categories_status);
 
-      $(e.currentTarget).parent().toggleClass('closed');
-      $(e.currentTarget).parent().children('.layers').toggleClass('closed');
+        $(e.currentTarget).parent().toggleClass('closed');
+        $(e.currentTarget).parent().children('.layers').toggleClass('closed');
+      }
+    },
 
+    _removeLayer: function(e){
+      e && e.preventDefault();
+      var layerSlug = $(e.currentTarget).data('slug');
+      this.presenter.toggleLayer(layerSlug);
     },
 
     _showCanopy: function(e){

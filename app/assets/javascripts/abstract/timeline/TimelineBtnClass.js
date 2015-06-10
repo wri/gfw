@@ -10,7 +10,9 @@ define([
   'backbone',
   'moment',
   'd3',
-], function(_, Backbone, moment, d3) {
+  'text!templates/timelineBtn-mobile.handlebars'
+
+], function(_, Backbone, moment, d3, tplMobile) {
 
   'use strict';
 
@@ -18,12 +20,18 @@ define([
 
     className: 'timeline-btn',
 
+    templateMobile: Handlebars.compile(tplMobile),
+
     defaults: {
       dateRange: [moment([2001]), moment()],
       width: 1000,
       height: 50,
       tickWidth: 120,
       tipsy: true
+    },
+
+    events: {
+      'change .select-date' : 'setSelects'
     },
 
     initialize: function(layer, currentDate) {
@@ -46,13 +54,58 @@ define([
       this.svg = {};
       this.xscale = {};
 
-      this.render(_.bind(function() {
-        this._selectDate({
-          start: this.currentDate[0],
-          end: this.currentDate[1]
-        });
-      }, this));
 
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.render(_.bind(function() {
+            this._selectDate({
+              start: this.currentDate[0],
+              end: this.currentDate[1]
+            });
+          }, this));
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.renderMobile();
+        },this)
+      });
+
+
+    },
+
+    renderMobile: function(){
+      this.$timeline = $('.timeline-container');
+      this.$el.html(this.templateMobile({name:this.layer.title}));
+      this.$timeline.html('').append(this.el);
+
+      this.$selects = $('.select-date');
+      this.$from = $('#from-timeline');
+
+      this.fillSelects();
+    },
+
+    fillSelects: function(){
+      var options = '';
+      var currentIndex = this.data.length - 1;
+      var currentDate = this.currentDate;
+      var dformat = 'DD-MM-YYYY';
+      _.each(this.data, function(label, i){
+        options += '<option value="'+i+'">'+label.label+'</option>';
+        if (label.start.format(dformat) == currentDate[0].format(dformat) && label.end.format(dformat) == currentDate[1].format(dformat)) {
+          currentIndex = i;
+        }
+      });
+      this.$from.html(options).val(currentIndex);
+      this.setSelects();
+
+    },
+
+    setSelects: function(){
+      var index = this.$from[0].selectedIndex;
+      var $dateButton = $('#'+this.$from.attr('id')+'-button');
+      $dateButton.text(this.data[index].label);
+      this._updateCurrentDate([this.data[index].start,this.data[index].end]);
     },
 
     /**
@@ -61,7 +114,7 @@ define([
     render: function(callback) {
       var self = this;
       this.$timeline = $('.timeline-container');
-      this.$timeline.append(this.el);
+      this.$timeline.html('').append(this.el);
 
       // SVG options
       var margin = {top: 0, right: 15, bottom: 0, left: 15};

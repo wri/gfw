@@ -28,15 +28,13 @@ define([
   'map/views/layers/IdnLoggingLayer',
   'map/views/layers/LbrLoggingLayer',
   'map/views/layers/MiningLayer',
-  'map/views/layers/CanClaimsMiningLayer',
-  'map/views/layers/CanCoalMiningLayer',
-  'map/views/layers/CanLeasesMiningLayer',
-  'map/views/layers/CanPermitsMiningLayer',
+  'map/views/layers/CanMiningLayer',
   'map/views/layers/CmrMiningLayer',
   'map/views/layers/CodMiningLayer',
   'map/views/layers/CogMiningLayer',
   'map/views/layers/GabMiningLayer',
   'map/views/layers/ColMiningLayer',
+  'map/views/layers/KhmMiningLayer',
   'map/views/layers/OilPalmLayer',
   'map/views/layers/CogOilPalmLayer',
   'map/views/layers/LbrOilPalmLayer',
@@ -80,6 +78,7 @@ define([
   'map/views/layers/UsaConservationEasementsLayer',
   'map/views/layers/UsaLandCoverLayer',
   'map/views/layers/UsaLandCoverChangeLayer',
+  'map/views/layers/GlobalLandCoverLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -116,15 +115,13 @@ define([
   IdnLoggingLayer,
   LbrLoggingLayer,
   MiningLayer,
-  CanClaimsMiningLayer,
-  CanCoalMiningLayer,
-  CanLeasesMiningLayer,
-  CanPermitsMiningLayer,
+  CanMiningLayer,
   CmrMiningLayer,
   CodMiningLayer,
   CogMiningLayer,
   GabMiningLayer,
   ColMiningLayer,
+  KhmMiningLayer,
   OilPalmLayer,
   CogOilPalmLayer,
   LbrOilPalmLayer,
@@ -168,6 +165,7 @@ define([
   UsaConservationEasementsLayer,
   UsaLandCoverLayer,
   UsaLandCoverChangeLayer,
+  GlobalLandCoverLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -261,17 +259,8 @@ define([
     mining: {
       view: MiningLayer
     },
-    can_claims: {
-      view: CanClaimsMiningLayer
-    },
-    can_coal: {
-      view: CanCoalMiningLayer
-    },
-    can_leases: {
-      view: CanLeasesMiningLayer
-    },
-    can_permits: {
-      view: CanPermitsMiningLayer
+    can_mining: {
+      view: CanMiningLayer
     },
     cmr_mining: {
       view: CmrMiningLayer
@@ -287,6 +276,9 @@ define([
     },
     col_mining: {
       view: ColMiningLayer
+    },
+    khm_mining: {
+      view: KhmMiningLayer
     },
     oil_palm: {
       view: OilPalmLayer
@@ -418,7 +410,9 @@ define([
     us_land_cover_change: {
       view: UsaLandCoverChangeLayer
     },
-    
+    global_land_cover: {
+      view: GlobalLandCoverLayer
+    },
     nothing: {
     }
   };

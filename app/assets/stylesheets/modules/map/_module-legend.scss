@@ -1,17 +1,57 @@
 .module-legend {
-  width: 283px;
-  top: 110px;
-  left: 35px;
+  width: 100%;
+  bottom: 0;
+  left: 0px;
   color: $dark;
   font-size: 13px;
-  max-height: calc(100% - 310px);
+  max-height: 75%;
   overflow: auto;
+  padding: 0px 0 56px;
+  z-index: 22;
+  background: $white;
+  @include transition(all 0.25s $easeInOutSine);
+  @include transform(translate(0,100%));
+
+  &.active{
+    @include transform(translate(0,0));
+  }
+
+  @media (min-width: $br-mobileMap){
+    width: 283px;
+    top: 110px;
+    bottom: auto;
+    left: 35px;
+    padding: 0;
+    max-height: calc(100% - 310px);
+    @include transform(translate(0,0));
+  }
+
+  .close{
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    padding: 8px;
+    top: 0;
+    right: 0;
+    display: block;
+    z-index: 5;
+    svg{
+      stroke: $dark;
+    }
+    @media (min-width: $br-mobileMap){
+      display: none;
+    }
+  }
+
 
   // @ul
   .categories{
     margin: 20px 0;
     &.divided{
-      margin: 0 0 20px;
+      margin: 15px 0;
+      @media (min-width: $br-mobileMap){
+        margin: 0 0 20px;
+      }
     }
     h2{
       padding: 10px 20px;
@@ -46,6 +86,7 @@
         position: relative;
         cursor: pointer;
         &:after{
+          display: none;
           content: "";
           position: absolute;
           top: 50%;
@@ -56,6 +97,9 @@
           border-left: 3px solid transparent;
           border-right: 3px solid transparent;
           border-top: 5px solid;
+          @media (min-width: $br-mobileMap){
+            display: block;
+          }
         }
         em{
           display: none;
@@ -81,7 +125,7 @@
       .layer-name {
         display: block;
         position: relative;
-        padding: 0 17px 0 13px;
+        padding: 0 32px 0 13px;
         font-size: 13px;
         .circle{
           position: absolute;
@@ -92,7 +136,7 @@
       .layer-sublayer {
         cursor: pointer;
         padding: 10px 5px 5px 14px;
-
+        position: relative;
         .onoffswitch {
           margin-top: 1px;
         }
@@ -102,6 +146,9 @@
           margin-left: 5px;
           color: #ccc;
           display: inline-block;
+          .source {
+            top: 9px;
+          }
         }
       }
     }
@@ -109,7 +156,7 @@
 
 
   // @div
-  .source {
+  .source, .layer-close {
     @extend .info-icon;
     display: inline-block;
     position: absolute;
@@ -128,6 +175,14 @@
       background: none;
       border: none;
       border-radius: 0;
+    }
+
+    &.layer-close{
+      right: 17px;
+      svg{
+        width: 10px;
+        height: 10px;
+      }
     }
   }
 
@@ -290,6 +345,18 @@
     .layer-colors {
       .deforestation {color: #F13689;}
       .degradation {color: #FA98B9;}
+      .alerts {
+        color: rgb(255, 189, 21);
+        &:before {
+          content: ' -';
+          line-height: 7px;
+          font-size: 30px;
+          position: relative;
+          margin-left: -3px;
+          margin-right: 4px;
+          top: 5px;
+        }
+      }
     }
   }
 

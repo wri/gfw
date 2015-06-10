@@ -3,11 +3,15 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 1060;
-  padding: 20px 0;
-  text-align: center;
+  z-index: 1101;
+  padding: 20px 40px 20px 20px;
   @include transition(all 0.25s $easeInOutSine);
   @include transform(translate(0,-100%));
+  @media (min-width: $br-mobileMap){
+    padding: 20px;
+    text-align: center;
+  }
+
   // CLOSE BUTTON
   .close {
     display: block;

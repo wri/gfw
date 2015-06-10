@@ -40,7 +40,9 @@
     "jquery-ujs": "~1.0.2",
     "qtip2": "~2.2.1",
     "ScrollIt.js": "*",
-    "chosen": "https://github.com/harvesthq/chosen/releases/download/0.13.0/chosen_v0.13.0.zip",
+    "chosen": "./public/chosen_v0.13.0.zip",
+    "keymaster": "~1.6.3",
+    "enquire": "~2.1.2",
     "keymaster": "~1.6.3"
   },
   "resolutions": {

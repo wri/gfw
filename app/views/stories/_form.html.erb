@@ -20,15 +20,28 @@
 
   <div class="field required">
     <div class="<%= 'field_with_errors' if @story.errors[:the_geom].present? %>">
-      <%= label_tag 'Affected areas' %>
+      <%= label_tag 'Choose a location' %>
     </div>
-    <span class='drop_pin'>Drop a pin on the map near the affected area</span>
+    <p class='hint'>Select a location for your story by entering an address in the search box, by dragging the map, or by clicking the target icon to find your current location. The flag in the center indicates where your story will be placed. </p>
 
     <div class="<%= 'field_with_errors' if @story.errors[:the_geom].present? %> stories_map-container" >
       <div>
-        <a href="/#remove" class="remove_story-link">Remove</a>
+
         <div id="stories_map" class="map stories_map"></div>
-        <input class="map-search-input" type="text" placeholder="SEARCH..."/>
+        <div class="map-controls">
+          <div class="control-zoom">
+            <button type="button" id="zoomIn"><svg><use xlink:href="#icon-control-plus"></use></svg></button>
+            <button type="button" id="zoomOut"><svg><use xlink:href="#icon-control-minus"></use></svg></button>
+          </div>
+          <div class="control-pin"></div>
+          <div class="control-locate" id="autoLocate">
+            <button type="button"><svg><use xlink:href="#icon-control-locate"></use></svg></button>
+          </div>
+          <div class="control-search">
+            <input class="map-search-input" type="text" placeholder="Search..."/>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -62,7 +75,8 @@
 
   <div class="field">
     <%= f.label :media %>
-    <p class="hint">Drag & drop images and videos to reorder them within the carousel. The first one will be considered as the preferred one.</p>
+    <p class="hint mobile-hide">Drag & drop images and videos to reorder them within the carousel. The first one will be considered as the preferred one. The maximum file size for uploads is 8 MB</p>
+    <p class="hint mobile-show">Click below to upload photos or videos to your story. The first photo will be considered the preferred one. The maximum file size for uploads is 8 MB. If you are on an iOS device you must upload pictures one by one</p>
 
     <ul class="thumbnails">
       <li><a href='#' class='upload_picture'></a></li>
