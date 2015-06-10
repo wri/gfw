@@ -11,6 +11,10 @@
   background: #333;
   margin-top: 36px;
   top: -20px;
+  @media only screen and (max-width: 480px) {
+    top: 0;
+    margin-top: 0px;
+  }
   .embed & {
     margin-top: 0;
     top: 0px;
@@ -170,12 +174,17 @@
   width: 100%;
   margin-top: -1px;
   line-height: 40px;
+  padding-left: 15px;
   font-size: 13px;
   font-weight: 500;
   text-align: center;
   background: #333;
   color: #fff;
   position: relative;
+
+  @media only screen and (max-width: 1010px) {
+    text-align: left;
+  }
 
   p {
     // border-left: 1px solid $dark;
@@ -214,7 +223,6 @@
     right: 60px;
     top: 8px;
     border-radius: 50px;
-    display: none !important;
     strong {
       background-color: #eee;
       color: #7b7b7b;
@@ -230,6 +238,12 @@
       @include justify-content(center);
       @include align-items(center);
     }
+    @media only screen and (max-width: 480px) {
+      position: relative;
+      margin: 10px auto;
+      right: auto;
+      top: auto;
+    }
   }
 }
 
@@ -242,6 +256,9 @@
     margin: 25px 0;
     color: #fff;
     font-size: 120px;
+    .embed &{
+      font-size: 80px;
+    }
   }
   .unit {
     font-weight: 100;
@@ -252,6 +269,13 @@
       color: $cGreen;
     }
   }
+  @media only screen and (max-width: 480px) {
+    padding: 0 0 20px;
+    span{
+      font-size: 50px;
+    }
+  }
+
 }
 
 .overview_graph__years,
@@ -282,9 +306,6 @@
       text-transform: none;
     }
   }
-  .trigger-mode {
-    display: none !important;
-  }
 }
 .overview_graph__years{
   width: 960px;
@@ -310,6 +331,8 @@
   text-align: center;
   color: #463F52;
   vertical-align: top;
+  margin: 0 auto;
+  max-width: 700px;
 
   sup {
     position: relative;
@@ -839,7 +862,7 @@
       }
     }
     @media only screen and (max-width: 480px) {
-      margin: 0 20px 0 20px;
+      margin: 0 0px 0 20px;
     }
   }
 
@@ -960,14 +983,13 @@
     line-height: 25px;
 
     p {
-      width: 77%;
-      display: inline-block;
-      margin-left: -30px;
+      font-size: 10px;
+      padding: 0 37px 0 0;
     }
 
     .info {
       display: inline-block;
-      top: 27px;
+      top: 20px;
     }
   }
 
@@ -987,7 +1009,7 @@
   }
 
   .overview_graph__area {
-    height: 200px;
+    height: 260px;
 
     .chart {
       width: 100%;
@@ -1014,7 +1036,7 @@
     }
 
     svg {
-      top: 40px;
+      // top: 40px;
     }
   }
 

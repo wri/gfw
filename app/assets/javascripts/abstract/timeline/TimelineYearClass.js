@@ -11,8 +11,9 @@ define([
   'moment',
   'd3',
   'handlebars',
-  'text!templates/timelineYear.handlebars'
-], function(_, Backbone, moment, d3, Handlebars, tpl) {
+  'text!templates/timelineYear.handlebars',
+  'text!templates/timelineYear-mobile.handlebars'
+], function(_, Backbone, moment, d3, Handlebars, tpl, tplMobile) {
 
   'use strict';
 
@@ -20,6 +21,7 @@ define([
 
     className: 'timeline-year',
     template: Handlebars.compile(tpl),
+    templateMobile: Handlebars.compile(tplMobile),
 
     defaults: {
       dateRange: [moment([2001]), moment()],
@@ -29,7 +31,8 @@ define([
     },
 
     events: {
-      'click .play': 'togglePlay'
+      'click .play': 'togglePlay',
+      'change .select-date' : 'setSelects'
     },
 
     initialize: function(layer, currentDate) {
@@ -37,6 +40,8 @@ define([
       this.layer = layer;
       this.name = layer.slug;
       this.options = _.extend({}, this.defaults, this.options || {});
+      this.dateRangeStart = this.options.dateRange[0];
+      this.dateRangeEnd = this.options.dateRange[1];
       if (currentDate && currentDate[0]) {
         this.currentDate = currentDate;
       } else {
@@ -67,17 +72,26 @@ define([
         right: 0
       };
 
-      this.render();
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.render();
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.renderMobile();
+        },this)
+      });
     },
 
+
     /**
-     * Render d3 timeline slider.
+     * Render select of years.
      */
-    render: function() {
-      var self = this;
+    renderMobile: function(){
       this.$timeline = $('.timeline-container');
-      this.$el.html(this.template());
-      this.$timeline.append(this.el);
+      this.$el.html(this.templateMobile({name: this.layer.title}));
+      this.$timeline.html('').append(this.el);
 
       // Cache
       this.$play = this.$el.find('.play');
@@ -85,11 +99,83 @@ define([
       this.$stopIcon = this.$el.find('.stop-icon');
       this.$time = this.$el.find('.time');
 
-      // SVG options
-      var margin = {top: 0, right: 20, bottom: 0, left: 20};
-      var width = this.options.width - margin.left - margin.right;
-      var height = this.options.height - margin.bottom - margin.top;
-      var yearWidth = width/(this.options.dateRange[1].year() - this.options.dateRange[0].year());
+      // Timeline
+      this.$selects = $('.select-date');
+      this.$from = $('#from-timeline-year');
+      this.$to = $('#to-timeline-year');
+
+
+      this.fillSelects();
+    },
+
+
+    fillSelects: function(){
+      var start = this.dateRangeStart.year(),
+          end = this.dateRangeEnd.year(),
+          range = end - start,
+          options = '';
+      for (var i = 0; i < range; i++) {
+        options += '<option value="'+(start + i)+'">'+ (start + i) +'</option>';
+      }
+      this.$from.html(options).val(this.currentDate[0].year());
+      this.$to.html(options).val(this.currentDate[1].year() - 1);
+      this.setSelects();
+    },
+
+    setSelects: function(){
+      _.each(this.$selects,function(el){
+        var date = $(el).val();
+        var $dateButton = $('#'+$(el).attr('id')+'-button');
+        $dateButton.text(date);
+      });
+      this.toggleDisabled();
+
+    },
+
+    toggleDisabled: function(){
+      _.each(this.$selects,function(el){
+        var $options = document.getElementById($(el).attr('id')).options;
+        var compare = $($(el).data('compare'))[0].selectedIndex;
+        var direction = Boolean(parseInt($(el).data('direction')));
+
+        _.each($options, function(opt,i){
+          if (direction) {
+            (compare < i) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
+          }else{
+            (compare > i) ? $(opt).prop('disabled',true) : $(opt).prop('disabled',false);
+          }
+        });
+      });
+
+      this.updateCurrentDate([moment([this.$from.val()]), moment([parseInt(this.$to.val()) + 1])]);
+    },
+
+
+
+    /**
+     * Render d3 timeline slider.
+     */
+    render: function() {
+      var self = this, margin, width, height, ticks, center, handleY, yearWidth;
+
+      this.$timeline = $('.timeline-container');
+      this.$el.html(this.template());
+      this.$timeline.html('').append(this.el);
+
+      // Cache
+      this.$play = this.$el.find('.play');
+      this.$playIcon = this.$el.find('.play-icon');
+      this.$stopIcon = this.$el.find('.stop-icon');
+      this.$time = this.$el.find('.time');
+
+      // Set Vars
+      margin = {top: 0, right: 20, bottom: 0, left: 20};
+      width = this.options.width - margin.left - margin.right;
+      height = this.options.height - margin.bottom - margin.top;
+      yearWidth = width/(this.options.dateRange[1].year() - this.options.dateRange[0].year());
+      center = height/2 - 2;
+      handleY = -3;
+      ticks = this.options.dateRange[1].year() - this.options.dateRange[0].year();
 
       // Set xscale
       this.xscale = d3.scale.linear()
@@ -129,7 +215,7 @@ define([
       // Dots xaxis
       this.svg.append('g')
           .attr('class', 'xaxis')
-          .attr('transform', 'translate(0,{0})'.format(height/2 - 2))
+          .attr('transform', 'translate(0,{0})'.format(center))
           .call(d3.svg.axis()
             .scale(this.xscale)
             .orient('top')
@@ -147,7 +233,7 @@ define([
       var xAxis = d3.svg.axis()
           .scale(this.xscaleYears)
           .orient('bottom')
-          .ticks(this.options.dateRange[1].year() - this.options.dateRange[0].year())
+          .ticks(ticks)
           .tickSize(0)
           .tickPadding(0)
           .tickFormat(function(d) {return String(d); })
@@ -170,7 +256,7 @@ define([
           .attr('height', 16)
           .attr('xlink:href', '/assets/svg/dragger2.svg')
           .attr('x', this.xscale(this.currentDate[0].year()))
-          .attr('y', -3);
+          .attr('y', handleY);
 
       this.handlers.right = this.handlers.left
          .select(function() { return this.parentNode.appendChild(this.cloneNode(true)); })

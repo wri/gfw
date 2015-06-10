@@ -29,8 +29,11 @@ define([
       //tabs
       'click #subscription-nav li' : 'toggleTabs',
 
+      //default
+      'click #get-started-subscription' : '_onClickStart',
+
       //draw
-      'click #start-subscription' : '_onClickAnalysis',
+      'click #start-subscription' : '_onClickSubscription',
       'click #done-subscription' : '_onClickDone',
 
       //countries
@@ -39,7 +42,7 @@ define([
       'click #subscription-country-button' : 'subscriptionCountry',
 
       //other
-      'click #data-tab-play' : 'onGifPlay'
+      'click #data-tab-play-s' : 'onGifPlay'
     },
 
     initialize: function(map) {
@@ -53,6 +56,9 @@ define([
 
     cacheVars: function(){
       this.$button = $('#'+this.$el.attr('id')+'-button');
+      //deafult
+      this.$defaultSubscription = $('#default-subscription');
+
       //draw
       this.$start = $('#start-subscription');
       this.$done = $('#done-subscription');
@@ -64,8 +70,8 @@ define([
       this.$countryButton = $('#subscription-country-button');
 
       //other
-      this.$img = $('#data-tab-img');
-      this.$play = $('#data-tab-play');
+      this.$img = $('#data-tab-img-s');
+      this.$play = $('#data-tab-play-s');
 
       //tabs
       this.$tabs = $('#subscription-nav li');
@@ -93,12 +99,11 @@ define([
 
       //other
       this.png = '/assets/infowindow-example.png';
-      this.gif = this.loadImg('/assets/infowindow-example.gif');
+      this.gif = this.loadImg('/assets/infowindow-example2.gif');
     },
 
     // navigate between tabs
     toggleTabs: function(e){
-
       if (!$(e.currentTarget).hasClass('disabled')) {
         var tab = $(e.currentTarget).data('subscription');
 
@@ -309,7 +314,9 @@ define([
 
 
 
-
+    _onClickStart: function(){
+      this.$defaultSubscription.hide(0);
+    },
 
 
 
@@ -321,7 +328,7 @@ define([
     /**
      * Triggered when the user clicks on the analysis draw button.
      */
-    _onClickAnalysis: function() {
+    _onClickSubscription: function() {
       if (!this.$start.hasClass('in_use')) {
         ga('send', 'event', 'Map', 'Analysis', 'Click: start');
         this.toggleUseBtn(true);

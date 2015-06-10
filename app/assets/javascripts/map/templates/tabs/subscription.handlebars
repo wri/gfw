@@ -7,16 +7,20 @@
     </ul>
   </nav>
   <div id="subscription-content" class="subscription-content">
+    <div id="default-subscription" class="subscription-tab-content default-subscription active">
+      <header>
+        <h2>Subscribe to <span class="source" data-source="near_real_time">forest change alerts</span> and user stories for your area of interest</h2>
+        <button id="get-started-subscription" class="btn green uppercase medium">Get started</button>
+      </header>
+    </div>
     <div id="default" class="subscription-tab-content default active">
       <header>
-        <h2>Subscribe to our <span class="source" data-source="near_real_time">near real-time</span> data to receive monthly email alerts when new activity is detected</h2>
-        {{!-- <p>Define your area of interest</p> --}}
+        <h2>Define your area of interest</h2>
       </header>
     </div>
     <div id="draw-tab-s" class="subscription-tab-content draw-tab">
       <header>
         <h2>Draw in the map the area you want to subscribe</h2>
-        {{!-- <p>Learn more <a href="#" data-source="regular_dialog" class="source btn gray uppercase little">Click here</a></p> --}}
       </header>
       <div class="image"><div><svg><use xlink:href="#icon-analysis-draw"></use></svg></div></div>
       <ul id="draw-subscription" class="button-container one">
@@ -35,14 +39,14 @@
       <header>
         <h2>Subscribe to a shape on the map</h2>
         <ol>
-          <li>Use the tabs above the map to turn on a data layer <a href="#" class="source" data-source="analyze_a_shape_on_the_map"><svg><use xlink:href="#shape-info"></use></svg></a></li>
+          <li>Use the tabs above the map to turn on a data layer <a href="#" class="source" data-source="subscribe_to_a_shape_on_the_map"><svg><use xlink:href="#shape-info"></use></svg></a></li>
           <li>Select a shape in the map</li>
           <li>Click “Subscribe”</li>
         </ol>
       </header>
       <div class="img-box">
-        <div id="data-tab-play" class="play"></div>
-        <img id="data-tab-img" src="/assets/infowindow-example.png"/>
+        <div id="data-tab-play-s" class="play"></div>
+        <img id="data-tab-img-s" src="/assets/infowindow-example.png"/>
       </div>
     </div>
   </div>

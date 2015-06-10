@@ -134,7 +134,7 @@
 	    		width: 200px;
 	    		height: 70px;
           margin: 0 auto;
-	    		@include logos-sprite(wri-logo);
+	    		@include retina-image('logo-wri.png','logo-wri@2x.png');
           @media (min-width: $br-mobile){
               margin: 0;
           }
@@ -256,9 +256,15 @@
         }
 
         p {
-            strong {
-                font-weight: 500;
+          strong {
+            font-weight: 500;
+            display: block;
+            margin: 5px 0 0;
+            @media (min-width: $br-mobile){
+              display: inline;
+              margin: 0;
             }
+          }
         }
         svg {
             height: 22px;
@@ -573,7 +579,7 @@
       }
     }
     &.opendevcam{
-      height: 71px; width: 70px; @include logos-sprite(opendevcam);
+      height: 70px; width: 70px; @include logos-sprite(opendevcam);
       &:hover{
         @include logos-sprite(opendevcamhover);
       }

@@ -137,25 +137,8 @@
     line-clip: false;
     polygon-clip: false;
   }
-  [layer='can_claims'] {
-    polygon-fill: #fd8d3c;
-    line-color: #fd8d3c;
-    line-clip: false;
-    polygon-clip: false;
-  }
-  [layer='can_coal'] {
-    polygon-fill: #fd8d3c;
-    line-color: #fd8d3c;
-    line-clip: false;
-    polygon-clip: false;
-  }
-  [layer='can_leases'] {
-    polygon-fill: #fd8d3c;
-    line-color: #fd8d3c;
-    line-clip: false;
-    polygon-clip: false;
-  }
-  [layer='can_permits'] {
+  
+  [layer='can_mining'] {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
     line-clip: false;
@@ -186,6 +169,12 @@
     polygon-clip: false;
   }
   [layer='col_mining'] {
+    polygon-fill: #fd8d3c;
+    line-color: #fd8d3c;
+    line-clip: false;
+    polygon-clip: false;
+  }
+  [layer='geoserver_getfeature'] {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
     line-clip: false;
@@ -392,21 +381,6 @@
     line-color: #FFF;
     line-opacity: 1;
   }
-  [layer='defor'] {
-    polygon-fill:#F69;
-    polygon-opacity: 1;
-    line-opacity: 1;
-    line-color: #F69;
-    line-width: 2;
-  }
-
-  [layer='degrad'] {
-    polygon-fill: #ffbfd5;
-    polygon-opacity: 1;
-    line-opacity: 1;
-    line-color: #ffbfd5;
-    line-width: 2;
-  }
 
   //deprecated
   [layer='land_rights'] {
@@ -490,6 +464,13 @@
       line-color: #05ffaa;
       line-width: 1;
       line-opacity: 1;
+  }
+  [layer='wdpa_protected_areas'] {
+    polygon-fill: #2167AB;
+    polygon-opacity: 0.5;
+    line-color: #2167AB;
+    line-width: 1;
+    line-opacity: 1;
   }
 
   [layer='protected_areas'] {

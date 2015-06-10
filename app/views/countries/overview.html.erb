@@ -34,13 +34,13 @@
     <div class="country-overview-wrapper-coolio">
       <div class="overview_button_group">
         <div class="inner">
-          <div class="share share-link item" data-share-embed-url="<%= request.protocol + request.host_with_port %>/embed/countries/overview" data-share-embed-width="600" data-share-embed-height="578"><svg><use xlink:href="#shape-share"></use></svg>Share</div>
+          <div class="share share-link mobile-hide item" data-share-embed-url="<%= request.protocol + request.host_with_port %>/embed/countries/overview" data-share-embed-width="600" data-share-embed-height="690"><svg><use xlink:href="#shape-share"></use></svg>Share</div>
           <div class="settings item " data-target=".overview_graph">
             <svg><use xlink:href="#shape-settings"></use></svg>tree cover canopy settings
           </div>
           <div class="download-spatial">
-            <a href='http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/umd_country_stats.xlsx' target='_blank'>
-                Download country stats
+            <a class="download-mobile-link" data-type="country-stats" href='http://gfw2-data.s3.amazonaws.com/country/umd_country_stats/umd_country_stats.xlsx' target='_blank'>
+                Download tree cover stats
                 <svg>
                   <use xlink:href="#shape-download-18"></use>
                 </svg>
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class='overview_graph'>
-        <div class='overview_graph__tabs'>
+        <div class='overview_graph__tabs scroll-light'>
           <ul>
             <li class='graph_tab selected' data-slug='total_loss'>
               <a href='#' class='overview_graph__link'>Tree cover loss</a>
@@ -113,7 +113,7 @@
     <div class='overview_graph__years'></div>
     <div class='overview_graph__axis'>Tree cover 2000</div>
 
-    <h1 class='overview_graph__title'>Countries with greatest tree cover loss <sup>(2001 - 2013)</sup></h1>
+    <h1 class='overview_graph__title'>Countries with greatest tree cover loss (2001-2013)</h1>
 
     <div class='countries_list'>
       <div class='countries_list__header'>
@@ -158,11 +158,11 @@
         <p><strong class='source_title'>TREE COVER LOSS</strong></p>
 
 
-        <p>The graph displays global tree cover loss per year from 2001 through 2013 in millions of hectares (Mha).</p>
+        <p>The graph displays global tree cover loss per year from 2001 through 2013. The rankings list countries from greatest to least tree cover loss from 2001 through 2013.</p>
 
-        <p>The rankings list countries from greatest to least tree cover loss from 2001 through 2013. The infographics located within the rankings highlight the trend of tree cover loss.</p>
+        <p>Use the toggle button above the graph to switch the graph and rankings between gross tree cover loss (hectares) and percent tree cover loss. Percent loss is always relative to tree cover (either global or by country) in 2000.</p>
 
-        <p>The graph and rankings visualize tree cover loss data from the University of Maryland (UMD)/Google. Due to variation in research methodology and/or date of content, this data cannot be compared accurately against tree cover and tree cover gain. Accordingly, “net” loss cannot be calculated by subtracting tree cover gain from tree cover loss, and current (or post-2000) tree cover cannot be determined by subtracting annual tree cover loss from year 2000 tree cover.  For more information on this data set, please visit the <a href="http://data.globalforestwatch.org/datasets/93ecbfa0542c42fdaa8454fa42a6cc27" target="_blank">data page</a>.</p>
+        <p>The graph and rankings visualize tree cover loss data from the University of Maryland (UMD)/Google. Due to variation in research methodology and/or date of content, this data cannot be compared accurately against tree cover and tree cover gain. Accordingly, “net” loss cannot be calculated by subtracting tree cover gain from tree cover loss, and current (or post-2000) tree cover cannot be determined by subtracting annual tree cover loss from year 2000 tree cover.  For more information on this data set, please visit the <a href="http://data.globalforestwatch.org/datasets/93ecbfa0542c42fdaa8454fa42a6cc27" target="_blank"> data page</a>.</p>
 
         <p>Please also note that “tree cover” does not equate to “forest cover.” “Tree cover” refers to the biophysical presence of trees, which may be a part of natural forests or tree plantations. Thus, loss of tree cover may occur for many reasons, including deforestation, fire, and logging within the course of sustainable forestry operations.</p>
       </div>
@@ -173,9 +173,9 @@
         <p><strong class='source_title'>TREE COVER GAIN</strong></p>
 
 
-        <p>The figure represents global tree cover gain from 2001 through 2012 in millions of hectares (Mha).</p>
+        <p>The figure represents global tree cover gain from 2001 through 2012. The rankings list countries from greatest to least tree cover gain from 2001 through 2012.</p>
 
-        <p>The rankings list countries from greatest to least tree cover gain from 2001 through 2012.</p>
+        <p>Use the toggle button above the figure to switch the figure and rankings between gross tree cover gain (hectares) and percent tree cover gain. Percent gain is always relative to tree cover (either global or by country) in 2000.</p>
 
         <p>The graph and rankings visualize tree cover gain data from the University of Maryland (UMD)/Google. Due to variation in research methodology and/or date of content, this data cannot be compared accurately against tree cover and tree cover loss. Accordingly, “net” loss cannot be calculated by subtracting tree cover gain from tree cover loss.  For more information on this data set, please visit the <a href="http://data.globalforestwatch.org/datasets/6c9f379a362e4926ad24b58444f4ba67" target="_blank">data page</a>.</p>
 
@@ -187,9 +187,9 @@
       <div class='source_body'>
         <p><strong class='source_title'>TREE COVER</strong></p>
 
-        <p>The figure displays global tree cover in 2000 in millions of hectares (Mha).</p>
+        <p>The figure displays global tree cover in 2000. The rankings list countries from greatest to least tree cover in 2000.</p>
 
-        <p>The rankings list countries from greatest to least tree cover in 2000.</p>
+        <p>Use the toggle button above the figure to switch the figure and rankings between gross tree cover (hectares) and percent tree cover. Percent tree cover is relative to total global or country land area.</p>
 
         <p>The graph and rankings visualize tree cover data from the University of Maryland(UMD)/Google. Due to variation in research methodology and/or date of content, this data cannot be compared accurately against tree cover loss and gain. Accordingly, current (or post-2000) tree cover cannot be determined by subtracting annual tree cover loss from year 2000 tree cover.  For more information on this data set, please visit the <a href="http://data.globalforestwatch.org/datasets/7876b225f8034a0ebba79fad4afb80ad" target="_blank">data page</a>.</p>
 
@@ -239,3 +239,4 @@
   </ul>
 </div>
 <div class="mini-modal share-modal"></div>
+<div class="mini-modal download-modal"></div>

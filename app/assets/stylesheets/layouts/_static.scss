@@ -404,8 +404,7 @@
         padding: 6px;
         box-sizing: border-box;
         border-radius: 3px;
-        box-shadow: 0px 0px 1px #999;
-        border-color: transparent;
+        border: 1px solid #CCC;
         font-size: 0.875rem;
         font-family: inherit;
       }
@@ -564,6 +563,10 @@
           line-height: 1.25;
           color: $dark;
           font-weight: 500;
+          &.closed {
+            font-style: italic;
+            text-align: center;
+          }
         }
         h4.overview_title{
           margin: 10px 0 0;
@@ -1064,6 +1067,20 @@
   font-weight: 500;
   margin-bottom: 10px;
  }
+}
+
+.terms_file{
+  @extend .terms_inner;
+  margin: 70px 15px 0;
+  max-width: 960px;
+  height: auto;
+  padding: 20px;
+  background: #fff;
+  outline: none;
+  border-radius: 0;
+  @media (min-width: $br-mobile) {
+    margin: 70px auto 0;
+  }
 }
 
 .terms_field {
@@ -1620,6 +1637,9 @@
     }
     .text-cont {
       max-width: 600px;
+      .sgf {
+        font-size: 20px;
+      }
     }
   }
 }

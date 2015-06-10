@@ -6,14 +6,16 @@
 define([
   'underscore',
   'handlebars',
+  'enquire',
   'keymaster',
   'map/presenters/MapControlsPresenter',
   'map/views/controls/SearchboxView',
   'map/views/controls/ToggleModulesView',
   'views/ShareView',
   'map/views/controls/ThresholdView',
-  'text!map/templates/mapcontrols.handlebars'
-], function(_, Handlebars, keymaster, Presenter, Searchbox, ToggleModulesView, ShareView, ThresholdView, tpl) {
+  'text!map/templates/mapcontrols.handlebars',
+  'text!map/templates/mapcontrols-mobile.handlebars'
+], function(_, Handlebars, enquire, keymaster, Presenter, Searchbox, ToggleModulesView, ShareView, ThresholdView, tpl, tplMobile) {
 
   'use strict';
 
@@ -36,26 +38,44 @@ define([
       'click .reset-map' : 'resetMap',
       'click .search' : 'showSearch',
       'click .share-map' : 'shareMap',
+      'click .locate' : 'locateMeOnMap',
       'click .toggle-modules' : 'toggleModules',
+      'click .toggle-mapcontrols' : 'toggleControls'
     },
 
     template: Handlebars.compile(tpl),
+    templateMobile: Handlebars.compile(tplMobile),
 
     initialize: function(map) {
       _.bindAll(this,'zoomIn','zoomOut','resetMap','showSearch','shareMap','toggleModules');
       this.model = new MapControlsModel();
       this.presenter = new Presenter(this);
       this.map = map;
-      this.render();
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.render(false);
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.render(true);
+        },this)
+      });
+
+      this.cacheVars();
       this.setListeners();
     },
 
+    cacheVars: function(){
+      this.$toggleButtons = this.$el.find('.toggle-buttons');
+    },
+
     setListeners: function(){
-      key('s', this.showSearch);
+      key('f', this.showSearch);
       key('m', this.zoomIn);
       key('n', this.zoomOut);
       key('alt+r', this.resetMap);
-      key('f', this.shareMap);
+      key('s', this.shareMap);
       key('h', this.toggleModules);
 
       this.model.on('change:hidden', this.toogleModule, this);
@@ -75,8 +95,12 @@ define([
       }
     },
 
-    render: function(){
-      this.$el.html(this.template());
+    render: function (mobile) {
+      if (mobile) {
+        this.$el.html(this.templateMobile({embedUrl: this._generateEmbedUrl()}));
+      }else{
+        this.$el.html(this.template({embedUrl: this._generateEmbedUrl()}));
+      }
       this.initCustomViews();
     },
 
@@ -136,6 +160,23 @@ define([
       this.model.set('bounds', bounds);
     },
 
+
+    // LOCATE ON MAP
+    locateMeOnMap: function(){
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          _.bind(function(position) {
+            var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+            this.map.setCenter(pos);
+          }, this ),
+          _.bind(function() {
+            this.presenter.notificate('notif-enable-location');
+          }, this )
+        );
+      }
+    },
+
+
     //TOGGLE
     toggleModules: function(e){
       var $button = this.$el.find('.toggle-modules');
@@ -143,6 +184,14 @@ define([
       $button.toggleClass('active');
       ($button.hasClass('active')) ? $tooltip.text('Show windows (h)') : $tooltip.text('Hide windows (h)') ;
       mps.publish('MapControlsToggleModules/toggle');
+    },
+
+    toggleControls: function(e){
+      this.$toggleButtons.children('.toggle-button').toggleClass('hidden');
+    },
+
+    _generateEmbedUrl: function() {
+      return window.location.origin + '/embed' + window.location.pathname + window.location.search;
     }
   });
 

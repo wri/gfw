@@ -13,7 +13,7 @@ define([
   var config = {
     ZOOM: 3,
     MINZOOM: 3,
-    MAXZOOM: 17,
+    MAXZOOM: 20,
     LAT: 15,
     LNG: 27,
     ISO: 'ALL',
@@ -33,18 +33,6 @@ define([
     mapTypeId: google.maps.MapTypeId.HYBRID,
     backgroundColor: '#99b3cc',
     disableDefaultUI: true,
-    panControl: false,
-    zoomControl: false,
-    mapTypeControl: false,
-    scaleControl: true,
-    scaleControlOptions: {
-        position: google.maps.ControlPosition.TOP_LEFT,
-    },
-    streetViewControl: false,
-    overviewMapControl: false,
-    scrollwheel: false,
-    layers: [596],
-    analysis: ''
   };
 
   config.OVERLAYSTYLES = {
@@ -119,7 +107,11 @@ define([
   }
 
 
-
+  var StoriesEditModel = Backbone.Model.extend({
+    defaults: {
+      the_geom: null
+    }
+  })
 
 
 
@@ -128,7 +120,9 @@ define([
     el: '#storiesEditView',
 
     events: {
-      'click .remove_story-link': '_clickRemove'
+      'click #zoomIn': '_zoomIn',
+      'click #zoomOut': '_zoomOut',
+      'click #autoLocate': '_autoLocate'
     },
 
     initialize: function() {
@@ -136,13 +130,7 @@ define([
         return
       }
 
-      _.bindAll(this, '_clickRemove');
-
-      this.model = new cdb.core.Model();
-
-      this.model.bind('change:the_geom', this._toggleButton, this);
-
-      this.selectedMarker = {};
+      this.model = new StoriesEditModel();
 
       this.uploadsIds = [];
       this.filesAdded = 0;
@@ -167,7 +155,7 @@ define([
           dataType: 'json',
           autoUpload: true,
           acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-          maxFileSize: 5000000, // 5 MB
+          maxFileSize: 8000000, // 8 MB
           // Enable image resizing, except for Android and Opera,
           // which actually support image resizing, but fail to
           // send Blob objects via XHR requests:
@@ -182,57 +170,31 @@ define([
         that.filesAdded += _.size(data.files);
 
         _.each(data.files, function(file) {
-          var filename = that.prettifyFilename(file.name);
-          var $thumbnail = $("<li class='thumbnail preview' data-name='"+that.prettifyFilename(filename)+"' />");
-
-          $('.thumbnails').append($thumbnail);
-          $thumbnail.fadeIn(250);
-
-          var opts = {
-            lines: 11, // The number of lines to draw
-            length: 0, // The length of each line
-            width: 4, // The line thickness
-            radius: 9, // The radius of the inner circle
-            corners: 1, // Corner roundness (0..1)
-            rotate: 0, // The rotation offset
-            color: '#9EB741', // #rgb or #rrggbb
-            speed: 1, // Rounds per second
-            trail: 60, // Afterglow percentage
-            shadow: false, // Whether to render a shadow
-            hwaccel: false, // Whether to use hardware acceleration
-            className: 'spinner', // The CSS class to assign to the spinner
-            zIndex: 2e9, // The z-index (defaults to 2000000000)
-            top: 'auto', // Top position relative to parent in px
-            left: 'auto' // Left position relative to parent in px
-          };
-
-          var spinner = new Spinner(opts).spin();
-          $thumbnail.append($(spinner.el));
-          $thumbnail.append("<div class='filename'>"+ file.name +"</div>");
+          if (file && file.size > 8000000) {
+            data.abort();
+          }else{
+            var filename = that.prettifyFilename(file.name);
+            var $thumbnail = $("<li class='thumbnail preview' data-name='"+filename+"' ><div class='filename'>"+ file.name +"</div><div class='spinner'><svg><use xlink:href='#shape-spinner'></use></svg></div></li>");
+            $('.thumbnails').append($thumbnail);
+            $thumbnail.fadeIn(250);
+            $("form input[type='submit']").addClass('disabled');
+            $("form input[type='submit']").attr('disabled', 'disabled');
+            $("form input[type='submit']").val('Please wait...');
+          }
         });
 
-        $("form input[type='submit']").addClass('disabled');
-        $("form input[type='submit']").attr('disabled', 'disabled');
-        $("form input[type='submit']").val('Please wait...');
         // data.submit();
-      }).on('fileuploadprocessalways', function (e, data) {
-        var index = data.index,
-            file = data.files[index],
-            node = $(data.context.children()[index]);
-
-        var $thumb = $("<li class='thumbnail'><div class='inner_box'><img src='"+file.preview.toDataURL()+"' /></div><a href='#' class='destroy'></a></li>");
       }).on('fileuploaddone', function (e, data) {
-        var files = [data.result]
+        var files = [data.result];
 
         $.each(files, function (index, file) {
           that.filesAdded--;
-
           that.uploadsIds.push(file.basename);
 
           var url = file.url.replace('https', 'http');
-          var $thumb = $("<li class='sortable thumbnail'><div class='inner_box'><img src='"+url+"' /></div><a href='#' class='destroy'></a></li>");
+          var $thumb = $("<li class='sortable thumbnail'><div class='inner_box' style=' background-image: url("+url+");'></div><a href='#' class='destroy'><svg><use xlink:href='#shape-close'></use></svg></a></li>");
 
-          var filename = that.prettifyFilename(file.basename);
+          var filename = that.prettifyFilename(file.basename).substring(45);
 
           $(".thumbnail[data-name='"+filename+"']").fadeOut(250, function() {
             $(this).remove();
@@ -265,6 +227,8 @@ define([
 
         $('#story_uploads_ids').val(that.uploadsIds.join(','));
         ga('send', 'event', 'Stories', 'New story', 'submit');
+      }).on('fileuploadfail', function (e, data){
+        mps.publish('Notification/open', ['notif-limit-exceed']);
       });
     },
 
@@ -272,127 +236,110 @@ define([
       var that = this;
       var $searchInput = $('.map-search-input');
 
-      var success = function(position) {
-        var center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        that.map.panTo(center);
-        that.map.setZoom(15);
-      }
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success);
-      } else {
-        error('not supported');
-      }
-
       // Load map
-      this.map = new google.maps.Map(document.getElementById('stories_map'),
-        _.extend({}, config.MAPOPTIONS, { zoomControl: true }));
+      this.map = new google.maps.Map(document.getElementById('stories_map'),config.MAPOPTIONS);
 
       // Listen to map loaded
-      google.maps.event.addListenerOnce(this.map, 'idle', function(){
-        $searchInput.show();
-      });
+      google.maps.event.addListenerOnce(this.map, 'idle', _.bind(function(){
+        this._autoLocate();
+      }, this ));
 
-      // Set drawingManager
-      this.drawingManager = new google.maps.drawing.DrawingManager({
-        drawingControl: true,
-        drawingControlOptions: {
-          position: google.maps.ControlPosition.TOP_RIGHT,
-          drawingModes: [
-            google.maps.drawing.OverlayType.MARKER
-          ]
-        },
-        markerOptions: {
-          icon: config.OVERLAYSTYLES.icon
+      // Set autocomplete search input
+      this.autocomplete = new google.maps.places.Autocomplete($searchInput[0], {types: ['geocode']});
+
+      // Listen to selected areas (search)
+      google.maps.event.addListener(this.autocomplete, 'place_changed', _.bind(function() {
+        var place = this.autocomplete.getPlace();
+        if (place && place.geometry && place.geometry.viewport) {
+          this.map.fitBounds(place.geometry.viewport)
+        }
+        if (place && place.geometry && place.geometry.location && !place.geometry.viewport) {
+          var index = [];
+          for (var x in place.geometry.location) {
+             index.push(x);
+          }
+          this.map.setCenter(new google.maps.LatLng(place.geometry.location[index[0]], place.geometry.location[index[1]]));
+        }
+      }, this ));
+
+      google.maps.event.addDomListener($searchInput[0], 'keydown', function(e) {
+        if (e.keyCode == 13) {
+          e.preventDefault();
         }
       });
 
-      this.drawingManager.setMap(this.map);
-      // Listen to drawing changes
-      google.maps.event.addListener(this.drawingManager, 'markercomplete', function(marker) {
-        that._onOverlayComplete(marker);
-      });
 
-      // Set autocomplete search input
-      this.autocomplete = new google.maps.places.Autocomplete(
-        $searchInput[0], {types: ['geocode']});
+      // Listen to any change on center position
+      google.maps.event.addListener(this.map, 'zoom_changed',
+        _.bind(function() {
+          this.setCenter();
+        }, this)
+      );
+      google.maps.event.addListener(this.map, 'dragend',
+        _.bind(function() {
+          this.setCenter();
+      }, this));
 
-      // Listen to selected areas (search)
-      google.maps.event.addListener(
-        this.autocomplete, 'place_changed', function() {
-          var place = this.autocomplete.getPlace();
-
-          if (place && place.geometry) {
-            this.map.fitBounds(place.geometry.viewport)
-          }
-        }.bind(this));
-
-        google.maps.event.addDomListener($searchInput[0], 'keydown', function(e) {
-          if (e.keyCode == 13) {
-            e.preventDefault();
-          }
-        });
-      },
-
-    _loadMarker: function(the_geom) {
-      var that = this;
-
-      var marker = this.selectedMarker = new GeoJSON(the_geom, config.OVERLAYSTYLES);
-
-      if (marker.type && marker.type === 'Error') return;
-
-      var bounds = new google.maps.LatLngBounds();
-
-      marker.setMap(this.map);
-      bounds.extend(marker.position);
-      this.map.fitBounds(bounds);
-
-      setTimeout(function() {
-        that.map.setZoom(2);
-      }, 250);
     },
 
-    _onOverlayComplete: function(marker) {
-      if (this.selectedMarker.visible) this.selectedMarker.setMap(null);
-      var marker = this.selectedMarker = marker;
-
-      var the_geom = JSON.stringify({
-        'type': 'Point',
-        'coordinates': [ marker.position.lng(), marker.position.lat() ]
-      });
-
-      this.model.set('the_geom', the_geom);
-    },
-
-    _clickRemove: function(e) {
-      e.preventDefault();
-      this.selectedMarker.setMap(null);
-      this.model.set('the_geom', '');
-    },
-
-    _toggleButton: function() {
-      if (this.model.get('the_geom') !== '') {
-        this.$the_geom.val(this.model.get('the_geom'));
-        this.$remove.fadeIn(250);
-      } else {
-        this.$the_geom.val('');
-        this.$remove.fadeOut(250);
+    _autoLocate: function(e){
+      this.$autoLocate.addClass('active');
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          _.bind(function(position) {
+            this.$autoLocate.removeClass('active');
+            var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+            this.map.panTo(pos);
+            this.setCenter();
+            this.setZoom(18);
+          }, this ),
+          _.bind(function() {
+            this.$autoLocate.removeClass('active');
+            mps.publish('Notification/open', ['notif-enable-location']);
+          }, this )
+        );
+      }else{
+        this.$autoLocate.removeClass('active');
       }
     },
+
+
+
+    //ZOOM
+    _zoomIn: function() {
+      this.setZoom(this.getZoom() + 1);
+    },
+    _zoomOut: function(){
+      this.setZoom(this.getZoom() - 1);
+    },
+    getZoom: function(){
+      return this.map.getZoom();
+    },
+    setZoom: function(zoom){
+      this.map.setZoom(zoom);
+    },
+
+    setCenter: function() {
+      var center = this.map.getCenter();
+      var the_geom = JSON.stringify({
+        'type': 'Point',
+        'coordinates': [ center.lng(), center.lat() ]
+      });
+      this.model.set('the_geom',the_geom);
+      this.$the_geom.val(this.model.get('the_geom'));
+    },
+
     prettifyFilename: function (filename) {
-      return filename.toLowerCase().replace(/ /g,"_");
+      var file = filename.substring(0,filename.length - 4);
+      return file.toLowerCase().replace(/ /g,"_");
     },
 
     render: function() {
       this.$the_geom = this.$('#story_the_geom');
-      this.$remove = this.$('.remove_story-link');
+      this.$autoLocate = this.$('#autoLocate');
 
       var the_geom = this.$the_geom.val()
       this.model.set('the_geom', the_geom);
-
-      if(the_geom) {
-        this._loadMarker(JSON.parse(the_geom));
-      }
 
       return this;
     }

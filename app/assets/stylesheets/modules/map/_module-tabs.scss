@@ -1,35 +1,52 @@
 $w-control: 44px;
 .module-tabs {
   color: $dark;
-  width: 283px;
-  top: 70px;
-  right: 35px;
-  z-index: 21;
-  @media (min-height: 850px){
+  background: #EEE;
+  top: 0px;
+  left: 0;
+  width: 100%;
+  z-index: 22;
+  @media (min-width: $br-mobileMap){
+    background: $white;
     top: 110px;
+    left: auto;
     right: 35px;
+    width: 283px;
   }
+  // @media (min-height: 850px){
+  //   top: 110px;
+  //   left: auto;
+  //   right: 35px;
+  // }
 
   // max-height: calc(100% - 275px);
   // overflow: auto;
   header{
     nav{
       ul{
-        @include display-flex();
+        @media (min-width: $br-mobileMap){
+          @include display-flex();
+        }
         li{
-          width: 33.333333%;
+          width: auto;
+          float: right;
           cursor: pointer;
-          padding: 0.5em 1.5em;
+          padding: 0.5em 1em;
           border-left: 1px solid $border;
           position: relative;
-          &:first-child{
-            border-left: none;
-          }
-          &:hover{
-            background: $light;
-            .tooltipmap{
-              opacity: 1;
-              visibility: visible;
+          @media (min-width: $br-mobileMap){
+            float: none;
+            width: 33.333333%;
+            padding: 0.5em 1.5em;
+            &:first-child{
+              border-left: none;
+            }
+            &:hover{
+              background: $light;
+              .tooltipmap{
+                opacity: 1;
+                visibility: visible;
+              }
             }
           }
           &:active{ background: darken($light,5%);}
@@ -55,6 +72,17 @@ $w-control: 44px;
               fill: $cGreen;
             }
           }
+          @media (max-width: $br-mobileMap - 1){
+            span{
+              display: inline-block;
+              float: left;
+              position: relative;
+              margin-right: 5px;
+              text-transform: uppercase;
+              top: 6px;
+              font-size: 13px;
+            }
+          }
           svg{
             fill: $dark;
             width: 24px;
@@ -70,27 +98,6 @@ $w-control: 44px;
     position: relative;
     &.active{
       display: block;
-    }
-    .spinner2-box{
-      position: absolute;
-      z-index: 5;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba($white,0.5);
-      display: none;
-      &.active{
-        display: block;
-      }
-      .spinner2{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 50px;
-        height: 50px;
-        @include transform(translate(-50%,-50%));
-      }
     }
     header{
       text-align: center;
@@ -140,27 +147,147 @@ $w-control: 44px;
         }
       }
     }
-    .button-container{
-      margin: 10px 0 0;
-      @include display-flex();
-      @include justify-content(space-between);
+  }
+  .button-container{
+    margin: 10px 0 0;
+    @include display-flex();
+    @include justify-content(space-between);
+    li{
+      width: 48%;
+      .btn{
+        width: 100%;
+      }
+      input{
+        width: 100%;
+        font-family: inherit;
+        font-size: 13px;
+        padding: 5px 10px;
+        border-radius: 0;
+        margin: 5px 0 18px;
+      }
+    }
+    &.one{
+      li{ width: 100%;}
+    }
+  }
+}
+
+
+
+// MOBILE TABS
+.tab-mobile-header{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #EEE;
+  z-index: 21;
+}
+
+
+.tab-mobile-content{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #FFF;
+  z-index: 20;
+  display: none;
+  padding: 65px 0px 76px;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  &.active{
+    display: block;
+  }
+  > article{
+    > header{
+      padding: 15px;
+      border-bottom: 1px solid $border;
+      // a{
+      //   display: inline-block;
+      //   position: relative;
+      //   z-index: 2;
+      //   padding: 0 0 0px 15px;
+      //   margin: 0 0 5px;
+      //   &:before{
+      //     content: "";
+      //     width: 0;
+      //     height: 0;
+      //     border-top: 5px solid transparent;
+      //     border-right: 10px solid $cGreen;
+      //     border-bottom: 5px solid transparent;
+      //     position: absolute;
+      //     top: 50%;
+      //     left: 0;
+      //     @include transform(translate(0,-6px));
+      //   }
+      // }
+      h2{
+        font-size: 36px;
+        margin: 15px 0 0;
+      }
+      h3{
+        font-size: 17px;
+      }
+    }
+    > .tabs-mobile-ul{
       li{
-        width: 48%;
-        .btn{
-          width: 100%;
-        }
-        input{
-          width: 100%;
-          font-family: inherit;
-          font-size: 13px;
-          padding: 5px 10px;
-          border-radius: 0;
-          margin: 5px 0 18px;
+        font-size: 14px;
+        text-transform: uppercase;
+        padding: 14px 15px 12px;
+        border-bottom: 1px solid $border;
+        span{
+          position: relative;
+          display: inline-block;
+          padding-right: 20px;
+          &:after{
+            content: "";
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-left: 10px solid $cGreen;
+            border-bottom: 5px solid transparent;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            @include transform(translate(0,-6px));
+          }
         }
       }
-      &.one{
-        li{ width: 100%;}
+    }
+    >footer{
+      .button-container{
+        margin: 10px 15px 0;
       }
     }
   }
 }
+
+.spinner2-box{
+  position: fixed;
+  z-index: 999999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba($white,0.5);
+  display: none;
+  @media (min-width: $br-mobileMap){
+    position: absolute;
+    z-index: 25;
+  }
+  &.active{
+    display: block;
+  }
+  .spinner2{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    @include transform(translate(-50%,-50%));
+  }
+}
+

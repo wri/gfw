@@ -15,7 +15,9 @@ define([
 
   var StatusModel = Backbone.Model.extend({
     defaults: {
-      threshold: null
+      threshold: null,
+      layers: null,
+      dont_scroll: null
     }
   });
 
@@ -74,6 +76,10 @@ define([
       'AnalysisTool/stop-drawing': function() {
         this.view.centerPositionCrosshairs();
       }
+    }, {
+      'Overlay/toggle': function(bool) {
+        this.view.overlayToggle(bool);
+      }
     }],
 
     /**
@@ -85,7 +91,7 @@ define([
       var layerOptions = {};
       this._setMapOptions(
         _.pick(place.params,
-          'zoom', 'maptype', 'lat', 'lng', 'fitbounds', 'geojson'));
+          'zoom', 'maptype', 'lat', 'lng', 'fitbounds', 'geojson', 'dont_scroll'));
 
       if (place.params.begin && place.params.end) {
         layerOptions.currentDate = [place.params.begin, place.params.end];
@@ -106,6 +112,15 @@ define([
       }
     },
 
+    _resizeSetLayers: function(){
+      var layers = this.status.get('layers');
+      if (layers) {
+        _.each(layers, _.bind(function(layer){
+          this.view.updateLayer(layer.slug);
+        }, this ));
+      }
+    },
+
     /**
      * Set the map layers to match the suplied layers
      * and the current layer options status.
@@ -118,7 +133,7 @@ define([
       // there is no date so it will be set to the default layer date.
       var options = _.extend(_.pick(this.status.toJSON(),
         'threshold'), layerOptions);
-
+      this.status.set('layers',layers);
       this.view.setLayers(layers, options);
     },
 
@@ -129,14 +144,17 @@ define([
      * @param {Object} params Map params from the place object.
      */
     _setMapOptions: function(params) {
-
       if (params.fitbounds) {
         this.view.fitBounds(geojsonUtilsHelper.getBoundsFromGeojson(params.geojson))
+      }
+      if (!!params.dont_scroll) {
+        $('#module-map-controls').addClass('active');
       }
       var options = {
         zoom: params.zoom,
         mapTypeId: params.maptype,
-        center: new google.maps.LatLng(params.lat, params.lng)
+        center: new google.maps.LatLng(params.lat, params.lng),
+        scrollwheel: ! !!params.dont_scroll
       };
 
       this.view.setOptions(options);
@@ -180,6 +198,10 @@ define([
       p.maptype = this.view.getMapTypeId();
 
       return p;
+    },
+
+    closeDialogsMobile: function(){
+      mps.publish('Dialogs/close');
     },
 
     /**

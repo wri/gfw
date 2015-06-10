@@ -15,7 +15,7 @@ define([
       sql: 'SELECT \'cog_oil_palm\' as tablename, cartodb_id, the_geom_webmercator, type, id as name, \'{tableName}\' AS layer, {analysis} AS analysis FROM {tableName}',
       infowindow: true,
       interactivity: 'cartodb_id, tablename, name, type, analysis',
-      analysis: false
+      analysis: true
     }
 
   });

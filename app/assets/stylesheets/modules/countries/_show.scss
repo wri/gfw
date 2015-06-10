@@ -8,6 +8,7 @@
     height: 18px;
     fill: #bfbcc3;
 
+
     .icon-share {
       position: absolute;
       top: 50%;
@@ -31,10 +32,28 @@
     position: relative;
     border-radius: 50%;
     border: 1px solid #bebcc2;
+
+    &.sidenav-icon {
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      right: 0px;
+      transform: translate(0, -50%);
+      -webkit-transform: translate(0, -50%);
+      width: 18px;
+      height: 18px;
+      border-color: #555;
+      svg {
+        position: absolute;
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        fill: #555;
+      }
+    }
   }
 
   .share {
-    width: 100%;
     .embed & {
       display: none;
     }
@@ -105,6 +124,7 @@
         .embed & {
           max-width: 100%;
           font-size: 32px;
+          padding: 10px;
         }
       }
 
@@ -113,7 +133,7 @@
         vertical-align: top;
         margin-top: 2px;
         border: 1px solid #6B6B6B;
-        border-radius: 9px;
+        border-radius: 39px;
         height: 39px;
         width: 310px;
         position: relative;
@@ -201,6 +221,7 @@
         width: calc(100% - 215px);
         height: 100%;
         float: left;
+        position: relative;
         @include box-sizing(border-box);
         .embed & {
           width: 100%;
@@ -216,12 +237,14 @@
           line-height: 18px;
           color: #FEFEFE;
           opacity: .5;
-          text-align: center;
         }
 
         hr {
           margin: 15px auto;
-          opacity: .3;
+          border: none;
+          border-top: 1px solid rgba(255, 255, 255, 0.4);
+          width: 95%;
+          float: left;
         }
 
         .map,
@@ -234,7 +257,7 @@
 
         .tree-numbers,
         .loss-gain-graph {
-          padding: 30px 10px;
+          padding: 10px 1px;
           .embed & {
             padding: 10px 0;
             top: 0;
@@ -261,14 +284,28 @@
         }
 
         .tree-numbers {
-          width: 28%;
+          width: 30%;
           // padding-left: 20px;
           .embed & {
             width: 28.33333%;
           }
+          div,
+          h4 {
+            @media (min-width: $br-mobile) {
+              max-width: 230px;
+            }
+          }
 
           h4 {
-            text-align: left;
+            text-align: center;
+            @media (min-width: $br-mobile) {
+              text-align: left;
+            }
+            &.t {
+              box-sizing: border-box;
+              border-top: 1px solid rgba(255, 255, 255, 0.7);
+              padding-top: 16px;
+            }
           }
 
           .amount,
@@ -284,7 +321,27 @@
           }
 
           .total-area {
-            margin-top: 18px;
+            box-sizing: border-box;
+            padding: 17px 0 17px;
+            @media (min-width: $br-mobile) {
+              border-top: 1px solid rgba(255, 255, 255, 0.3);
+            }
+          }
+
+          .total-loss {
+            font-size: 24px;
+            font-weight: 500;
+            margin-top: 6px;
+            color: #97bd3d;
+            display: inline-block;
+            .total-loss-ha {
+              display: inline-block;
+              color: #FEFEFE;
+              opacity: .5;
+              margin-top: 2px;
+              font-size: 11px;
+              display: inline;
+            }
           }
 
           .total-area,
@@ -293,37 +350,54 @@
               font-size: 24px;
             }
           }
-          .canopy-status {
-            width: 450px;
-            position: absolute;
-            text-align: center;
-            font-size: 13px;
-            background: #555;
-            color: rgba(255, 255, 255, 0.5);
-            padding: 8px;
-            margin-top: 80px;
 
-            em {
-              color: #97bd3d;
-              border-bottom: 1px #97bd3d dashed;
-              cursor: pointer;
-            }
+        }
+        .canopy-status {
+          width: 80%;
+          text-align: center;
+          font-size: 13px;
+          background: #555;
+          color: rgba(255, 255, 255, 0.5);
+          padding: 8px;
+          margin: 0 auto 15px;
+          max-width: 100%;
+
+          @media (min-width: $br-mobile) {
+            position: absolute;
+            left: 40%;
+            bottom: 12px;
+            width: 54%;
+            margin: 15px auto 0;
+          }
+          @media (min-width: 1050px) {
+            bottom: 20px;
+          }
+
+          em {
+            color: #97bd3d;
+            border-bottom: 1px #97bd3d dashed;
+            cursor: pointer;
           }
         }
 
         .loss-gain-graph {
-          width: 245px;
+          width: 235px;
           position: relative;
-          top: -145px;
+          top: -113px;
+          padding-top: 50px;
+          right: 0px;
+          @media (min-width: $br-mobile) {
+            right: -10px;
+          }
           .embed & {
             width: 33.33333%;
           }
 
           #lossGainGraph {
-              position: relative;
-              left: 20px;
-              height: 150px;
-              padding-top: 15px;
+            position: relative;
+            left: 20px;
+            height: 150px;
+            padding-top: 15px;
           }
 
           .coming-soon {
@@ -380,7 +454,12 @@
             font-size: 23px;
           }
           .graph-gain-amount {
-            font-size: 30px;
+            text-align: center;
+            position: relative;
+            top: -12px;
+            @media (min-width: $br-mobile) {
+              text-align: left;
+            }
           }
 
           .graph-date,
@@ -439,17 +518,55 @@
           right: 0;
           top: 0;
         }
+        button{
+          display: none;
+          height: 87px;
+          width: 100%;
+          position: relative;
+          text-transform: uppercase;
+          font-family: inherit;
+          font-size: 14px;
+          color: #BEBCC2;
+          background: none;
+          box-shadow: none;
+          border: none;
+          outline: none;
+          border-top: 1px solid #555;
+          background: $dark;
+          text-align: left;
+          padding: 0 0 0 25px;
+          .icon{
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            @include transform(translate(0,-50%));
+            width: 18px;
+            height: 18px;
+            svg{
+              stroke: #bebcc2;
+            }
+          }
+          &.active{
+            .icon{
+              @include transform(translate(0,-50%) rotate(180deg));
+            }
+          }
+          @media (max-width: $br-mobile - 1){
+            display: block;
+          }
 
+        }
         > ul {
           position: relative;
           top: 0;
           width: 100%;
           height: 100%;
           padding: 1px 0;
+          box-sizing: border-box;
           @include display-flex();
           @include flex-direction(column);
           @include justify-content(space-between);
-          box-sizing: border-box;
 
           > li {
             width: 100%;
@@ -464,7 +581,7 @@
               color: #BEBCC2;
               display: block;
               height: 87px;
-              width: 100%;
+              width: 95%;
               @include box-sizing(border-box);
               font-weight: 400;
               text-transform: uppercase;
@@ -473,7 +590,7 @@
               text-decoration: none;
               @include display-flex();
               @include align-items(center);
-              padding: 0 30px 0 20px;
+              padding: 0 30px 0 25px;
 
               .sidenav-icon {
                 display: inline-block;
@@ -676,7 +793,7 @@
     }
   }
   .country-forests-type {
-    @media (min-width: 750px) {
+    @media (min-width: $br-mobile) {
       .right-col {
         position: relative;
         left: -60px;
@@ -1877,7 +1994,7 @@
 
 
 // maxsize <= 1050
-@media only screen and (min-width: 751px) and (max-width: 1050px) {
+@media only screen and (min-width: $br-mobile) and (max-width: 1050px) {
   .country-show {
 
     .country-header {
@@ -1891,7 +2008,7 @@
         width: 100%;
         height: 300px;
         .loss-gain-graph {
-          width: 185px;
+          width: 30%;
         }
         .tree-numbers .canopy-status {
           margin-top: 10px;
@@ -2003,8 +2120,8 @@
   }
 }
 
-// maxsize <= 750
-@media only screen and (max-width: 750px) {
+// maxsize <= $br-mobile
+@media only screen and (max-width: $br-mobile - 1) {
   .country-show {
     .country-header {
       .country-title {
@@ -2068,7 +2185,6 @@
             .canopy-status {
               width: 80%;
               position: relative;
-              margin-top: 0;
             }
             #lossGainGraph {
               left: 0;
@@ -2121,17 +2237,21 @@
           width: 100%;
 
           ul {
-            display: flex !important;
+            display: none;
             top: 0;
             padding: 0;
+            background: $dark;
+            &.active{
+              @include display-flex();
+            }
 
             li {
               height: auto;
               border: 0;
-              border-top: 1px solid $dark;
+              border-top: 1px solid #333;
 
               &:last-child {
-                border-bottom: 1px solid $dark;
+                border-bottom: 1px solid #333;
               }
 
               a {
@@ -2299,12 +2419,4 @@
 .share_dialog,
 .country-download-modal {
   position: fixed;
-}
-
-.country-download-modal {
-  p.error {
-    margin-top: 10px;
-    font-size: 0.8em;
-    font-weight: bold;
-  }
 }

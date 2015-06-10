@@ -18,7 +18,7 @@ define([
   var Router = Backbone.Router.extend({
 
     // temporary, we will do it with env variables
-    _cacheVersion: 49,
+    _cacheVersion: 54,
 
     routes: {
       'map(/:zoom)(/:lat)(/:lng)(/:iso)(/:maptype)(/:baselayers)(/:sublayers)(/)': 'map',
@@ -31,10 +31,12 @@ define([
      * @param  {[type]} boot [description]
      */
     initialize: function(mainView) {
+      this.isLocalStorageNameSupported();
       this.bind('all', this._checkForCacheBust());
       this.name = null;
       this.mainView = mainView;
       this.placeService = new PlaceService(this);
+
     },
 
     map: function() {
@@ -78,6 +80,22 @@ define([
         });
 
         localStorage.setItem('CACHE_VERSION', this._cacheVersion);
+      }
+    },
+
+    isLocalStorageNameSupported: function() {
+      // Safari, in Private Browsing Mode, looks like it supports localStorage but all calls to setItem
+      // throw QuotaExceededError. We're going to detect this and just silently drop any calls to setItem
+      // to avoid the entire page breaking, without having to do a check at each usage of Storage.
+      if (typeof localStorage === 'object') {
+        try {
+          localStorage.setItem('localStorage', 1);
+          localStorage.removeItem('localStorage');
+        } catch (e) {
+          Storage.prototype._setItem = Storage.prototype.setItem;
+          Storage.prototype.setItem = function() {};
+          alert('You may not be able to experience full functionality of the map while in private mode because your web browser does not support storing settings locally. In Safari, the most common cause of this is using "Private Browsing Mode".');
+        }
       }
     },
 

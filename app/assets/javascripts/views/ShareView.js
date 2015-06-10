@@ -6,9 +6,10 @@
 define([
   'underscore',
   'handlebars',
+  'mps',
   'text!templates/share.handlebars',
   'views/SharePreviewView'
-], function(_, Handlebars, tpl, SharePreviewView) {
+], function(_, Handlebars, mps, tpl, SharePreviewView) {
 
   'use strict';
 
@@ -20,7 +21,7 @@ define([
       embedUrl: window.location.href,
       embedHeight: 600,
       embedWidth: 600,
-      hideEmbed: true
+      hideEmbed: false
     },
     setEmbedUrl: function(){
       if($('body').hasClass('is-countries-page')){
@@ -44,12 +45,12 @@ define([
       'click #preview' : '_showPreview',
       'click .share-sozial a' : '_shareToSocial',
       'click .overlay' : 'hide',
-      'click .close' : 'hide'
+      'click .close' : 'hide',
+      'click .copy_url' : '_copyToClipboard'
     },
 
     initialize: function(parent) {
       this.model = new ShareModel();
-      this.render();
       this._setListeners()
     },
 
@@ -62,7 +63,7 @@ define([
       return this;
     },
 
-    hide: function(e){
+    hide: function(e) {
       e && e.preventDefault();
 
       if (this.iframeView !== undefined) {
@@ -72,7 +73,7 @@ define([
       this.remove();
     },
 
-    _setListeners: function(){
+    _setListeners: function() {
       this.model.on('change:type', this._toggleTypeButtons, this);
       this.model.on('change:url', this.render, this);
 
@@ -83,19 +84,20 @@ define([
       }, this ));
     },
 
-    render: function(){
+    render: function() {
       this._renderInput();
       this.$el.html(this.template({ hideEmbed: this.model.get('hideEmbed') }));
       this._cacheVars();
     },
 
-    _cacheVars: function(){
+    _cacheVars: function() {
       this.$changeType = this.$('.change-type');
       this.$shareinfo = this.$('#share-info p');
       this.$input = this.$('#share_field');
       this.$twitterLink = this.$('.twitter');
       this.$facebookLink = this.$('.facebook');
       this.$google_plusLink = this.$('.google_plus');
+      this.$copy = this.$('.copy_url');
     },
 
     _renderInput: function() {
@@ -109,7 +111,7 @@ define([
       }
     },
 
-    _renderLink: function(){
+    _renderLink: function() {
       this._generateLinkUrl(this.model.get('url'), _.bind(function(url) {
         this.model.set('url', url);
         this.$input.val(url);
@@ -142,7 +144,7 @@ define([
       });
     },
 
-    _renderEmbed: function(){
+    _renderEmbed: function() {
       this.$input.val(this._generateEmbedSrc());
 
       this.$shareinfo.html('Click and paste HTML to embed in website.');
@@ -161,6 +163,10 @@ define([
     },
 
     _setUrlsFromEvent: function(event) {
+      var hideEmbed = $(event.currentTarget).data('hideembed');
+      this.model.set('hideEmbed', !!hideEmbed);
+      this.render();
+
       var url = $(event.currentTarget).data('share-url') || window.location.href;
       this.model.set('url', url);
 
@@ -169,11 +175,12 @@ define([
       this.model.set('embedWidth', $(event.currentTarget).data('share-embed-width'));
       this.model.set('embedHeight', $(event.currentTarget).data('share-embed-height'));
 
-      var hideEmbed = $(event.currentTarget).data('hide-embed');
-      this.model.set('hideEmbed', !!hideEmbed);
+
+
     },
 
     _setTypeFromEvent: function(event) {
+      this.$copy.html('copy')
       var target_type = $(event.currentTarget).data('type');
       var type = target_type || this.model.get('type') || 'link';
       this.model.set('type', type);
@@ -184,11 +191,23 @@ define([
       this._renderInput();
     },
 
-    _selectTarget: function(e){
+    _selectTarget: function(e) {
       $(e.currentTarget).select();
     },
 
-    _showPreview: function(){
+    _copyToClipboard: function(e) {
+      var url = document.querySelector('#share_field');
+      url.select();
+
+      try {
+        var successful = document.execCommand('copy');
+        $(e.currentTarget).html('copied')
+      } catch(err) {
+        mps.publish('Notification/open', ['not-clipboard-support']);
+      }
+    },
+
+    _showPreview: function() {
       this.iframeView = new SharePreviewView({
         src: this.model.get('embedUrl'),
         width: this.model.get('embedWidth'),
@@ -198,7 +217,7 @@ define([
       $('body').append(this.iframeView.render().$el);
     },
 
-    _shareToSocial: function(e){
+    _shareToSocial: function(e) {
       e && e.preventDefault();
 
       var width  = 575,

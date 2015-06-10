@@ -26,21 +26,17 @@
     }
 
     .footer {
-      right: 0; bottom: 0; left: 0;
       margin: 0;
-      padding: 0 7px;
+      padding: 20px;
       background: #FFF;
-      font: normal 11px "Helvetica", Arial;
       color: #999;
       border-top: 1px solid #CCC;
-      line-height: 29px;
       z-index: 100;
     }
     .footer a{
-      color: #9FBA2B;
-    }
-    .footer a:hover{
-      color: #BAE458;
+      margin: 0 auto;
+      display: block;
+      max-width: 300px;
     }
 
     .left { float: left; }
@@ -60,26 +56,11 @@
   <%= yield %>
 
   <footer class="footer">
-    <%= link_to 'www.globalforestwatch.org', root_path, :target => '_blank', :class=> 'left' %>
-    <p class="right">
-      <% if (!request.original_url.include?("&begin") && !request.original_url.include?("&date")) %>
-        Time range:
-        <% if (request.original_url.include?("/loss")) %>
-          Jan 2000, Jan 2013 (loss layer).
-        <% elsif (request.original_url.include?("/forma")) %>
-          Jan 2006, Dec 2014.
-        <% elsif (request.original_url.include?("/imazon")) %>
-          2007, 2014.
-        <% elsif (request.original_url.include?("/modis")) %>
-          Oct-Dec 2013.
-        <% elsif (request.original_url.include?("/fires")) %>
-          Last 8 days.
-        <% end %>
-      <% end %>
-    </p>
-    <p class="right">
-      <%= link_to 'Explore this map', (request.original_url.sub! 'embed/', ''), :target => '_blank' %>. Find out what is happening in forests right now.
-    </p>
+  <% if @country %>
+    <a class="btn green uppercase full-width" href="http://globalforestwatch.org/country/<%= @country['iso']%>" target="_blank">View on GFW</a>
+  <% else %>
+    <a class="btn green uppercase full-width" href="http://globalforestwatch.org/countries/overview%>" target="_blank">View on GFW</a>
+  <% end %>
   </footer>
   <div class="backdrop"></div>
   <%= render 'shared/js_templates' %>

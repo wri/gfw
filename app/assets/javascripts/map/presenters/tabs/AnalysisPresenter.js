@@ -156,8 +156,16 @@ define([
 
       }
     },{
+      'AnalysisMobile/open': function() {
+        this.view.toggleAnalysis(this.view.$el.hasClass('is-analysis'));
+      }
+    },{
       'Subscribe/end' : function(){
         this.view.setStyle();
+      }
+    }, {
+      'Dialogs/close': function() {
+        this.view.toggleAnalysis(true);
       }
     }],
 
@@ -175,7 +183,7 @@ define([
      * @param  {Object} params Place params
      */
     _handlePlaceGo: function(params) {
-      this.deleteAnalysis();
+      // this.deleteAnalysis();
 
       //Open analysis tab
       if ((!this.status.get('dont_analyze') && (params.iso.country && params.iso.country !== 'ALL')) || (params.analyze || params.geojson || params.wdpaid)) {
@@ -256,8 +264,8 @@ define([
 
           var geojson = topojson.feature(results.topojson,
             objects);
-
           this._geojsonFitBounds(geojson);
+          mps.publish('Subscribe/geom',[geojson]);
 
           if (!this.status.get('dont_analyze')) {
             this.view.drawCountrypolygon(geojson,'#A2BC28');
@@ -272,8 +280,8 @@ define([
       } else {
         regionService.execute(resource, _.bind(function(results) {
           var geojson = results.features[0];
-
           this._geojsonFitBounds(geojson);
+          mps.publish('Subscribe/geom',[geojson]);
 
           if (!this.status.get('dont_analyze')) {
             this.view.drawCountrypolygon(geojson,'#A2BC28');
@@ -301,7 +309,7 @@ define([
 
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', Wdpaid: ' + resource.wdpaid);
       // Get geojson/fit bounds/draw geojson/publish analysis
-      var url = 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from protected_areas where wdpaid =' + wdpaid;
+      var url = 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from wdpa_protected_areas where wdpaid =' + wdpaid;
       $.getJSON(url, _.bind(function(data) {
         if (data.rows.length > 0) {
           var geojson = {
@@ -337,7 +345,12 @@ define([
 
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + resource.dataset + ', ConcessionLayer: ' + resource.use + ', ConcessionId: ' + resource.useid);
 
-      var url = concessionsSql[layerSlug].format(useid);
+      var url = function() {
+        if (!!concessionsSql[layerSlug])
+          return concessionsSql[layerSlug].format(useid);
+        else
+          return 'http://wri-01.cartodb.com/api/v2/sql/?q=SELECT ST_AsGeoJSON(the_geom) from '+ layerSlug +' where cartodb_id =' + useid;
+      }();
 
       $.getJSON(url, _.bind(function(data) {
         if (data.rows.length > 0) {
@@ -469,6 +482,9 @@ define([
       mps.publish('AnalysisResults/Delete');
       this.view._removeCartodblayer();
       this.view.$el.removeClass('is-analysis');
+      if(!this.status.get('dont_analyze')){
+        mps.publish('AnalysisMobile/open')
+      }
       // Delete overlay drawn or multipolygon.
       this.view.deleteGeom({
         overlay: this.status.get('overlay'),
@@ -591,6 +607,10 @@ define([
       }
 
       return p;
+    },
+
+    toggleOverlay: function(to){
+      mps.publish('Overlay/toggle', [to])
     },
 
     notificate: function(id){

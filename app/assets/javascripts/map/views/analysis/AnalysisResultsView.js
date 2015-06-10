@@ -39,6 +39,7 @@ define([
       'click #analysis-subscribe': '_subscribe',
       'click .dropdown-button' :'_toggleDownloads',
       'click .canopy-button' : '_showCanopy',
+      'click .close' : 'toogleAnalysis',
     },
 
     initialize: function() {
@@ -134,7 +135,10 @@ define([
 
       }
       return links[layer];
-    }
+    },
+    toogleAnalysis: function(to){
+      this.$el.toggleClass('active', to);
+    },
 
 
   });
