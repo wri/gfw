@@ -79,6 +79,8 @@ define([
       console.info('%c http://www.globalforestwatch.org/explore/applications', "background: rgba(151, 189, 61, 0.1); font-weight: bold; padding: 3px 6px;");
       console.info('%c or go and fork this project on GitHub:', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;");
       console.info('%c https://github.com/Vizzuality/gfw', "background: rgba(151, 189, 61, 0.1); font-weight: bold; padding: 3px 6px;");
+      console.info('%c and the API:', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;");
+      console.info('%c https://github.com/wri/gfw-api', "background: rgba(151, 189, 61, 0.1); font-weight: bold; padding: 3px 6px;");
       console.info('%c Thank you!', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;");
     }
   });
