@@ -23,6 +23,10 @@
         <div class="stats-notice">This algorithm approximates the results by sampling the selected area. Results are more accurate at closer zoom levels.</div>
       </li>
       {{/if}}
+      <div class="ifl-switch">
+        <span class="label">Total</span><span id="toggleIFL" class="onoffswitch"><span></span></span><span class="label">IFL</span>
+      </div>
+
     {{else}}
       {{#if forestgain}}
         <li>
@@ -54,6 +58,7 @@
     {{/if}}
   </ul>
 {{/if}}
+
 
 <footer class="analysis-footer">
   <ul>

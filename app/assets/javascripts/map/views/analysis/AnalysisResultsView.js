@@ -9,9 +9,7 @@ define([
   'map/presenters/analysis/AnalysisResultsPresenter',
   'text!map/templates/analysis/analysisResults.handlebars',
   'text!map/templates/analysis/analysisResultsFailure.handlebars',
-  'text!map/templates/analysis/analysisResultsUnavailable.handlebars',
-  'text!map/templates/analysis/analysisResultsLoading.handlebars',
-], function(_, Handlebars, Presenter, tpl, failureTpl, unavailableTpl, loadingTpl) {
+], function(_, Handlebars, Presenter, tpl, failureTpl) {
 
   'use strict';
 
@@ -30,8 +28,6 @@ define([
 
     templates: {
       failure: Handlebars.compile(failureTpl),
-      unavailable: Handlebars.compile(unavailableTpl),
-      loading: Handlebars.compile(loadingTpl)
     },
 
     events:{
@@ -40,6 +36,7 @@ define([
       'click .dropdown-button' :'_toggleDownloads',
       'click .canopy-button' : '_showCanopy',
       'click .close' : 'toogleAnalysis',
+      'click #toggleIFL' : 'toogleIFL'
     },
 
     initialize: function() {
@@ -61,29 +58,13 @@ define([
      * @param  {Object} params Analysis html params
      */
     renderAnalysis: function(params) {
-      this.params = params;
-      this.params.warning_text = (this.$analysisTab.find('li.active').data('analysis') === 'draw-tab');
-      this.params.url = this.setDownloadLink(params.layer.slug);
+      this.setParams(params);
       this.$el.html(this.template(this.params)).removeClass('hidden');
       this._cacheSelector();
       this.$resultsHide.addClass('hidden');
       ga('send', 'event', 'Map', 'Analysis', 'Layer: ' + this.params.layer.title);
     },
 
-    /**
-     * Render loading analysis message.
-     */
-    renderLoading: function() {
-      //this._update(this.templates.loading());
-    },
-
-    renderUnavailable: function() {
-      //this._update(this.templates.unavailable());
-    },
-
-    toggleSubscribeButton: function(toggle) {
-      this.$subscribeButton.toggleClass('disabled', toggle);
-    },
 
     /**
      * Render failure analysis request message.
@@ -93,6 +74,13 @@ define([
       this.$el.html(this.templates.failure()).removeClass('hidden');
       this._cacheSelector();
       this.$resultsHide.addClass('hidden');
+    },
+
+    setParams: function(params){
+      console.log(params);
+      this.params = params;
+      this.params.warning_text = (this.$analysisTab.find('li.active').data('analysis') === 'draw-tab');
+      this.params.url = this.setDownloadLink(params.layer.slug);
     },
 
     _deleteAnalysis: function() {
@@ -136,9 +124,18 @@ define([
       }
       return links[layer];
     },
+
+    toggleSubscribeButton: function(toggle) {
+      this.$subscribeButton.toggleClass('disabled', toggle);
+    },
+
     toogleAnalysis: function(to){
       this.$el.toggleClass('active', to);
     },
+
+    toogleIFL: function(e){
+      $(e.currentTarget).toggleClass('checked');
+    }
 
 
   });
