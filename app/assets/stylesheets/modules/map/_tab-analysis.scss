@@ -404,14 +404,15 @@
 
   .ifl-switch{
     position: relative;
-    margin: 10px 0 0;
+    width: 80%;
+    margin: 10px auto 0;
     cursor: pointer;
     @include display-flex();
     @include align-items(center);
     .label{
       display: inline-block;
       width: 50%;
-      font-size: 12px;
+      font-size: 10px;
       text-transform: uppercase;
       padding: 2px 0 0 20px;
       color: #AAA;
