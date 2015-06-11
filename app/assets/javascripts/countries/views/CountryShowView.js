@@ -53,16 +53,11 @@ define([
 
       // if (!this.embed) {
         this._stickynav();
-        this._initSource();
         this._drawTenure();
         this._drawForestsType();
         this._drawFormaAlerts();
         this._initFormaDropdown();
       // }
-    },
-
-    _initSource: function() {
-      this.sourceWindow  = new SourceWindowView();
     },
 
     _openShareModal: function(event) {

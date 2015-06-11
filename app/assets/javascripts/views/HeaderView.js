@@ -73,15 +73,15 @@ define([
 
     welcome: function() {
       console.info('%c .', "background-image: url('http://localhost:5000/assets/logo-new.png'); width: 85px; height: 90px; float:left;font-size:82px; color: transparent;");
-      console.info('%c Welcome to GFW', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;font-size: 15px;");
-      console.info('%c In case you\'re interested in the code of this website', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;");
-      console.info('%c please, feel free to check our apps:', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;");
-      console.info('%c http://www.globalforestwatch.org/explore/applications', "background: rgba(151, 189, 61, 0.1); font-weight: bold; padding: 3px 6px;");
-      console.info('%c or go and fork this project on GitHub:', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;");
-      console.info('%c https://github.com/Vizzuality/gfw', "background: rgba(151, 189, 61, 0.1); font-weight: bold; padding: 3px 6px;");
-      console.info('%c and the API:', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;");
-      console.info('%c https://github.com/wri/gfw-api', "background: rgba(151, 189, 61, 0.1); font-weight: bold; padding: 3px 6px;");
-      console.info('%c Thank you!', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;");
+      console.info('%c Welcome to GFW ', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;font-size: 15px;");
+      console.info('%c In case you\'re interested in the code of this website ', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;");
+      console.info('%c please, feel free to check our apps: ', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;");
+      console.info('%c http://www.globalforestwatch.org/explore/applications ', "background: rgba(151, 189, 61, 0.1); font-weight: bold; padding: 3px 6px;");
+      console.info('%c or go and fork this project on GitHub: ', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;");
+      console.info('%c https://github.com/Vizzuality/gfw ', "background: rgba(151, 189, 61, 0.1); font-weight: bold; padding: 3px 6px;");
+      console.info('%c and the API: ', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;");
+      console.info('%c https://github.com/wri/gfw-api ', "background: rgba(151, 189, 61, 0.1); font-weight: bold; padding: 3px 6px;");
+      console.info('%c Thank you! ', "background: rgba(151, 189, 61, 0.1); color: #666; padding: 3px 6px;");
     }
   });
 
