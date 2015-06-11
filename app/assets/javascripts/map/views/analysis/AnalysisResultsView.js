@@ -50,6 +50,7 @@ define([
     _cacheSelector: function() {
       this.$downloadDropdown = $('.download-dropdown');
       this.$subscribeButton = $('#analysis-subscribe');
+      this.$switchIFLabels = $('.ifl-switch .label');
     },
 
     /**
@@ -134,7 +135,8 @@ define([
     },
 
     toogleIFL: function(e){
-      $(e.currentTarget).toggleClass('checked');
+      $(e.currentTarget).find('.onoffswitch').toggleClass('checked');
+      this.$switchIFLabels.toggleClass('checked')
     }
 
 

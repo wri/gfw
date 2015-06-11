@@ -405,19 +405,23 @@
   .ifl-switch{
     position: relative;
     margin: 10px 0 0;
-    // @include display-flex();
-    // @include justify-content(center);
+    cursor: pointer;
+    @include display-flex();
+    @include align-items(center);
     .label{
       display: inline-block;
       width: 50%;
-      font-size: 16px;
+      font-size: 12px;
       text-transform: uppercase;
-      padding: 2px 0 0 15px;
+      padding: 2px 0 0 20px;
+      color: #AAA;
       &:first-child{
-        padding: 2px 15px 0 0;
+        padding: 2px 20px 0 0;
         text-align: right;
       }
-
+      &.checked{
+        color: $dark;
+      }
     }
     .onoffswitch{
       position: absolute;
@@ -425,6 +429,7 @@
       left: 50%;
       float: none;
       margin: 0;
+      background: $dark;
       @include transform(translate(-50%,-50%));
       &.checked{
         background: rgb(22, 133, 0);
