@@ -50,6 +50,7 @@ define([
       "usa_conservation_easements",
       "birdlife",
       "tigers",
+      "bra_biomes",
       "biodiversity_hotspots",
       "protected_areasCDB",
       // FOREST USE

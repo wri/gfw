@@ -79,6 +79,7 @@ define([
   'map/views/layers/UsaLandCoverLayer',
   'map/views/layers/UsaLandCoverChangeLayer',
   'map/views/layers/GlobalLandCoverLayer',
+  'map/views/layers/BraBiomesLayer',
   // Layer dialog templates
   // 'text!templates/dialogs/loss_dialog.handlebars',
   // Layers timelines
@@ -166,6 +167,7 @@ define([
   UsaLandCoverLayer,
   UsaLandCoverChangeLayer,
   GlobalLandCoverLayer,
+  BraBiomesLayer,
   // Layer dialog templates
   // loss_dialog,
   // Layer timelines
@@ -412,6 +414,9 @@ define([
     },
     global_land_cover: {
       view: GlobalLandCoverLayer
+    },
+    bra_biomes: {
+      view: BraBiomesLayer
     },
     nothing: {
     }
