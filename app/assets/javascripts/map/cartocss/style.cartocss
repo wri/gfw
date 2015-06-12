@@ -174,9 +174,11 @@
     line-clip: false;
     polygon-clip: false;
   }
-  [layer='geoserver_getfeature'] {
+  [layer='khm_mining'] {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
+    marker-fill: #fd8d3c;
+    marker-line-color: #fff;
     line-clip: false;
     polygon-clip: false;
   }
