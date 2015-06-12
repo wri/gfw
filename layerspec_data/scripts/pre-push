@@ -5,7 +5,7 @@
 
 # START HERE
 
-# Step 0: copy/move/add this script to .git/hooks/pre-push (create if this file does not exist)
+# Step 0: copy/move/add this script to .git/hooks/pre-push (create if this file does not exist) and give proper permissions, run chmod +x .git/hooks/pre-push
 
 # 1st: check we're working on the master branch, if we're not then the script finish (exit 1)
 # 2nd: dowload each layerspec file and add date at the beggining
