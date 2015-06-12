@@ -18,7 +18,7 @@ define([
   var Router = Backbone.Router.extend({
 
     // temporary, we will do it with env variables
-    _cacheVersion: 55,
+    _cacheVersion: window.gfw.cacheVersion,
 
     routes: {
       'map(/:zoom)(/:lat)(/:lng)(/:iso)(/:maptype)(/:baselayers)(/:sublayers)(/)': 'map',
@@ -71,10 +71,9 @@ define([
      */
     _checkForCacheBust: function() {
       var params = _.parseUrl();
-      var localCacheVersion = _.toNumber(
-        localStorage.getItem('CACHE_VERSION'));
+      var localCacheVersion = _.toNumber(localStorage.getItem('CACHE_VERSION'));
 
-      if (_.has(params, 'cache') || localCacheVersion !== this._cacheVersion) {
+      if (_.has(params, 'cache') || localCacheVersion !== _.toNumber(this._cacheVersion)) {
         _.each(amplify.store(), function(value, key) {
           amplify.store(key, null);
         });
