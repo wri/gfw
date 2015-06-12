@@ -23,6 +23,12 @@ define([
 
     init: function(layer, options, map) {
       this.presenter = new Presenter(this);
+      if (!! options.currentDate && (options.currentDate[0] > options.currentDate[1])) {
+        var kllm = options.currentDate[1];
+        options.currentDate[1] = options.currentDate[0];
+        options.currentDate[0] = kllm;
+        kllm = null;
+      }
       this.currentDate = options.currentDate || [moment(layer.mindate), moment(layer.maxdate)];
       this.threshold = options.threshold || this.options.threshold;
       this._super(layer, options, map);
