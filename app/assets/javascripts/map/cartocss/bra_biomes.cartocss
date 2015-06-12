@@ -1,0 +1,25 @@
+#bra_biomes {
+   polygon-opacity: 0.5;
+   line-color: #FFF;
+   line-width: 0.5;
+   line-opacity: 1;
+}
+
+#bra_biomes[name="Amazônia"] {
+   polygon-fill: #136400;
+}
+#bra_biomes[name="Caatinga"] {
+   polygon-fill: #49CC4C;
+}
+#bra_biomes[name="Cerrado"] {
+   polygon-fill: #9ECC49;
+}
+#bra_biomes[name="Mata Atlântica"] {
+   polygon-fill: #5CA2D1;
+}
+#bra_biomes[name="Pampa"] {
+   polygon-fill: #63802E;
+}
+#bra_biomes[name="Pantanal"] {
+   polygon-fill: #0F3B82;
+}
