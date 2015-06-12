@@ -13,7 +13,7 @@
 # 3rd: git add and commit
 # 4th: inform and download (git pull) new possible changes
 # 5th: the script ends with exit 0
-echo 'entra0 '
+
 protected_branch='master'
 current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
 
