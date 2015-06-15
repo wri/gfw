@@ -125,8 +125,11 @@
       .layer-name {
         display: block;
         position: relative;
-        padding: 0 32px 0 13px;
+        padding: 0 75px 0 13px;
         font-size: 13px;
+        @media (min-width: $br-mobileMap){
+          padding: 0 38px 0 13px;
+        }
         .circle{
           position: absolute;
           top: -2px;
@@ -179,19 +182,45 @@
 
     &.layer-close{
       right: 17px;
+      width: auto;
       background: $white;
       border: 1px solid #AAA;
+      padding: 0 5px 0 14px;
+      font-size: 9px;
+      line-height: 14px;
+      border-radius: 14px;
+      @media (min-width: $br-mobileMap){
+        padding: 0;
+        width: 14px;
+        border-radius: 50%;
+      }
+      span{
+        display: block;
+        color: #AAA;
+        @media (min-width: $br-mobileMap){
+          display: none;
+        }
+      }
       &:hover{
         border: 1px solid red;
+        span{
+          color: red;
+        }
         svg{
           fill: red;
         }
       }
       svg{
-        @include transition(all,0s);
+        left: 2px;
+        right: auto;
         fill: #AAA;
         width: 10px;
         height: 10px;
+        @include transition(all,0s);
+        @media (min-width: $br-mobileMap){
+          left: 0;
+          right: 0;
+        }
       }
     }
   }
