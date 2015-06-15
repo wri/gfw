@@ -402,6 +402,43 @@
   }
 
 
+  .ifl-switch{
+    position: relative;
+    width: 80%;
+    margin: 10px auto 0;
+    cursor: pointer;
+    @include display-flex();
+    @include align-items(center);
+    .label{
+      display: inline-block;
+      width: 50%;
+      font-size: 10px;
+      text-transform: uppercase;
+      padding: 2px 0 0 20px;
+      color: #AAA;
+      &:first-child{
+        padding: 2px 20px 0 0;
+        text-align: right;
+      }
+      &.checked{
+        color: $dark;
+      }
+    }
+    .onoffswitch{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      float: none;
+      margin: 0;
+      background: $dark;
+      @include transform(translate(-50%,-50%));
+      &.checked{
+        background: rgb(22, 133, 0);
+      }
+    }
+  }
+
+
   // FOOTER ANALYSIS
   .analysis-footer{
     margin: 10px 0 0;
@@ -413,12 +450,11 @@
     >ul{
       @include row();
       >li{
-        width: 33.333333%;
+        width: 100%;
         position: relative;
         padding: 10px 0;
         cursor: pointer;
         @media (max-width: $br-mobileMap - 1){
-          width: 50%;
           &#analysis-subscribe{
             display: none;
           }
