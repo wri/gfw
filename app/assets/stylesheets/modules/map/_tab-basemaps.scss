@@ -1,5 +1,5 @@
-$basemaps-class: grayscale, terrain, satellite, hybrid, treeheight, dark, landsat;
-$basemaps-img: default, terrain, satellite, roads, tree_height, dark, landsat;
+$basemaps-class: grayscale, terrain, satellite, hybrid, treeheight, dark, osm, landsat;
+$basemaps-img: default, terrain, satellite, roads, tree_height, dark, osm, landsat;
 .tab-basemaps{
   >ul{
     >li{
