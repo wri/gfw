@@ -409,6 +409,7 @@
     cursor: pointer;
     @include display-flex();
     @include align-items(center);
+    display: none !important;
     .label{
       display: inline-block;
       width: 50%;

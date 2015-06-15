@@ -45,6 +45,16 @@ define([
       this.$resultsHide = $('.results-hide');
       this.$tab = $('#analysis-tab');
       this.$analysisTab = $('#analysis-nav');
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = false;
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = true;
+        },this)
+      });
     },
 
     _cacheSelector: function() {
@@ -78,10 +88,11 @@ define([
     },
 
     setParams: function(params){
-      console.log(params);
       this.params = params;
       this.params.warning_text = (this.$analysisTab.find('li.active').data('analysis') === 'draw-tab');
+      this.params.downloadVisible = ((this.params.loss || this.params.forestgain) && this.mobile) ? false : true;
       this.params.url = this.setDownloadLink(params.layer.slug);
+
     },
 
     _deleteAnalysis: function() {

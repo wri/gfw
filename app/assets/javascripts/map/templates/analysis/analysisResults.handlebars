@@ -62,6 +62,7 @@
 
 <footer class="analysis-footer">
   <ul>
+  {{#if downloadVisible}}
     <li>
       {{#if loss}}
         <a class="download-mobile-link" data-type="forest-change" href="http://data.globalforestwatch.org/datasets/93ecbfa0542c42fdaa8454fa42a6cc27" target="_blank">
@@ -92,6 +93,7 @@
         {{/if}}
       {{/if}}
     </li>
+  {{/if}}
     <li id="analysis-delete">
       <svg class="icon"><use xlink:href="#icon-analysis-remove"></use></svg>
       <span class="tooltipmap bottom">Discard analysis</span>
