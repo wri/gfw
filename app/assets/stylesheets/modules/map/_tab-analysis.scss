@@ -450,12 +450,11 @@
     >ul{
       @include row();
       >li{
-        width: 33.333333%;
+        width: 100%;
         position: relative;
         padding: 10px 0;
         cursor: pointer;
         @media (max-width: $br-mobileMap - 1){
-          width: 50%;
           &#analysis-subscribe{
             display: none;
           }
