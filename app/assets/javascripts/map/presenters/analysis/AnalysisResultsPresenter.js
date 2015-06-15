@@ -243,7 +243,6 @@ define([
      */
 
     _getAnalysisResource: function(results, layer) {
-      console.log(results);
       var p = {};
 
       p[layer.slug] = true;
