@@ -30,7 +30,8 @@ define([
     template: Handlebars.compile(tpl),
 
     events: {
-      'click' : 'onClick'
+      'click' : 'onClick',
+      'click .searching-kinds' : '_setType'
     },
 
     initialize: function(map) {
@@ -77,6 +78,16 @@ define([
       }
     },
 
+    _setType: function(e) {
+      var $target = $(e.target);
+      if ($target.hasClass('selected')) return;
+
+      $(e.target).parent().find('.selected').removeClass('selected');
+      $target.addClass('selected');
+      var type = $target.data('kind');
+      this.$searchbox.find('.search.selected').removeClass('selected');
+      this.$searchbox.find('.search.'+type).addClass('selected');
+    },
     setListeners: function(){
       this.$input.on('keyup', _.bind(function(e){
         if (e.keyCode === 27) {
@@ -96,6 +107,7 @@ define([
 
     render: function(){
       this.$el.html(this.template);
+      this.$searchbox = $('.search-box');
     },
 
     onClick: function(e){
