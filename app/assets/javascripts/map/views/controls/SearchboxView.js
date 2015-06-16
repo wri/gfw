@@ -48,29 +48,43 @@ define([
 
     },
 
+    checkSearchType: function(address) {
+      var isLatLong = function(address) {
+        return (address.includes("º") || address.includes("°")) && address.includes("'") && address.includes("\"") && (address.includes("W") || address.includes("E")) && (address.includes("N") || address.includes("S"));
+      }
+      var isDegrees = function(address) {
+        address = address.split(',');
+        if (!!address && address.length != 2) return false;
+        if (~~((address[0] + address[1]) * -1) === 0) return false; //avoid mistakes with coordinates, degrees have no letters, so everything must be numbers ~~NaN will be 0
+
+        var degrees = new Uint8Array(new ArrayBuffer(2));
+        degrees[0] = ~~address[0].split('.');
+        degrees[1] = ~~address[1].split('.');
+        if (degrees[0] <= 90 && degrees[1] <= 180) {
+          return true;
+        }
+        return false;
+      }
+      if (isLatLong(address)) {
+        //user typed a latitude and longitude coordinates
+
+      } else if (isDegrees(address)) {
+        //user typed a degrees coordinates
+
+      } else {
+        //user typed a regular address
+
+      }
+    },
+
     setListeners: function(){
       this.$input.on('keyup', _.bind(function(e){
         if (e.keyCode === 27) {
           this.model.set('hidden', false);
           this.toggleSearch();
         } else {
-          var address = e.target.value;
-          var isLatLong = function(address) {
-            return address.includes("º") && address.includes("'") && address.includes("\"") && (address.includes("W") || address.includes("E")) && (address.includes("N") || address.includes("S"));
-          }
-          var isDegrees = function(address) {
-            address = address.split[','];
-            if (address.length > 1) return false;
-            var degress = new Uint8Array(new ArrayBuffer(2));
-            degrees[0] = ~~address[0].split['.'];
-            degrees[1] = ~~address[1].split['.'];
-
-            if (degrees[0] <= 90 && degrees[1] <= 180) {
-              return true;
-            }
-            return false;
-          }
-          console.log('latlong', isLatLong(address));
+          if (! !! e.target.value) return;
+          this.checkSearchType(e.target.value);
         }
       }, this ));
 
