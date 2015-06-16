@@ -34,8 +34,9 @@
         padding: 3px 10px;
         cursor: pointer;
         margin: -2px;
-        &:last-child {
-          border-left: 1px solid white;
+        &:nth-child(even) {
+          border-left:  1px solid white;
+          border-right: 1px solid white;
         }
       }
       .selected {

@@ -68,25 +68,30 @@ define([
       }
       if (isLatLong(address)) {
         //user typed a latitude and longitude coordinates
-
+        this._setType(null,"coordinates");
       } else if (isDegrees(address)) {
         //user typed a degrees coordinates
+        this._setType(null,"degrees");
 
       } else {
         //user typed a regular address
-
+        this._setType(null,"regular");
       }
     },
 
-    _setType: function(e) {
-      var $target = $(e.target);
-      if ($target.hasClass('selected')) return;
+    _setType: function(e, kind) {
+      if (!!e && ! !!kind) {
+        var $target = $(e.target);
+        if ($target.hasClass('selected')) return;
 
-      $(e.target).parent().find('.selected').removeClass('selected');
-      $target.addClass('selected');
-      var type = $target.data('kind');
-      this.$searchbox.find('.search.selected').removeClass('selected');
-      this.$searchbox.find('.search.'+type).addClass('selected');
+        $(e.target).parent().find('.selected').removeClass('selected');
+        $target.addClass('selected');
+        var type = $target.data('kind');
+        this.$searchbox.find('.search.selected').removeClass('selected');
+        this.$searchbox.find('.search.'+type).addClass('selected');
+      } else if (typeof(kind) === "string") {
+
+      }
     },
     setListeners: function(){
       this.$input.on('keyup', _.bind(function(e){
