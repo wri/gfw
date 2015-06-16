@@ -72,11 +72,9 @@ define([
         templateType: 'handlebars',
       });
       this.infowindowsButtons();
-      this.infowindow.model.on('change:visibility', _.bind(function(model) {
-        if (model.get('visibility')) {
-          var analysis = $('#analysis-tab-button').hasClass('disabled');
-          $('.cartodb-popup').toggleClass('dont-analyze', analysis);
-        }
+      this.infowindow.model.on('change', _.bind(function(model) {
+        var analysis = $('#analysis-tab-button').hasClass('disabled');
+        $('#analyzeBtn').toggleClass('dont-analyze', analysis);
       }, this));
       this.infowindow.model.on('change', _.bind(function(model) {
         this.infowindowsButtons();

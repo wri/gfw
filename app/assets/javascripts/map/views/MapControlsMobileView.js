@@ -53,7 +53,9 @@ define([
     },
 
     toggleAnalysis: function(){
-      this.presenter.openAnalysis();
+      if (!this.$el.find('.toggle-analysis').hasClass('disabled')) {
+        this.presenter.openAnalysis();
+      }
     },
 
     toogleAnalysisBtn: function(to){
