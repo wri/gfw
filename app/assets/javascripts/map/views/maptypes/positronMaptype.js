@@ -7,8 +7,8 @@ define([], function () {
 
   var osmMaptype = function() {
     var config = {
-      name: 'Open Street Map',
-      alt: 'Global forest OSM',
+      name: 'Positron CartoDB',
+      alt: 'Global forest Positron',
       maxZoom: 16,
       isPng: true,
       tileSize: new google.maps.Size(256, 256),
