@@ -58,7 +58,18 @@ define([
           var isLatLong = function(address) {
             return address.includes("º") && address.includes("'") && address.includes("\"") && (address.includes("W") || address.includes("E")) && (address.includes("N") || address.includes("S"));
           }
+          var isDegrees = function(address) {
+            address = address.split[','];
+            if (address.length > 1) return false;
+            var degress = new Uint8Array(new ArrayBuffer(2));
+            degrees[0] = ~~address[0].split['.'];
+            degrees[1] = ~~address[1].split['.'];
 
+            if (degrees[0] <= 90 && degrees[1] <= 180) {
+              return true;
+            }
+            return false;
+          }
           console.log('latlong', isLatLong(address));
         }
       }, this ));
