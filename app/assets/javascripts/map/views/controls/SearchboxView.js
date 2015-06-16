@@ -51,12 +51,12 @@ define([
 
     checkSearchType: function(address) {
       var isLatLong = function(address) {
-        return (address.includes("º") || address.includes("°")) && address.includes("'") && address.includes("\"") && (address.includes("W") || address.includes("E")) && (address.includes("N") || address.includes("S"));
+        return (address.includes("º") || address.includes("°")) && (address.includes("'") || address.contains("′")) && (address.includes("W") || address.includes("E")) && (address.includes("N") || address.includes("S"));
       }
       var isDegrees = function(address) {
         address = address.split(',');
         if (!!address && address.length != 2) return false;
-        if (~~((address[0] + address[1]) * -1) === 0) return false; //avoid mistakes with coordinates, degrees have no letters, so everything must be numbers ~~NaN will be 0
+        if (!(~~address[0] != 0 && ~~address[1] != 0)) return false; //avoid mistakes with coordinates, degrees have no letters, so everything must be numbers ~~NaN will be 0
 
         var degrees = new Uint8Array(new ArrayBuffer(2));
         degrees[0] = ~~address[0].split('.');
@@ -72,7 +72,6 @@ define([
       } else if (isDegrees(address)) {
         //user typed a degrees coordinates
         this._setType(null,"degrees");
-
       } else {
         //user typed a regular address
         this._setType(null,"regular");
@@ -80,17 +79,27 @@ define([
     },
 
     _setType: function(e, kind) {
+
       if (!!e && ! !!kind) {
         var $target = $(e.target);
         if ($target.hasClass('selected')) return;
+        this.$searchbox.find('.search.selected').removeClass('selected');
 
         $(e.target).parent().find('.selected').removeClass('selected');
         $target.addClass('selected');
-        var type = $target.data('kind');
-        this.$searchbox.find('.search.selected').removeClass('selected');
-        this.$searchbox.find('.search.'+type).addClass('selected');
+        this.$searchbox.find('.search.'+$target.data('kind')).addClass('selected');
+        $target = null;
       } else if (typeof(kind) === "string") {
+        if (this.$searchbox.find('.search.'+kind).hasClass('selected')) return;
+        var $prevInput = this.$searchbox.find('.search.selected input');
+        this.$searchbox.find('.search.'+kind+' input').val($prevInput.val());
+        $prevInput.val('');
+        $prevInput = null;
 
+        this.$searchbox.find('.search.selected').removeClass('selected');
+        this.$searchbox.find('.search.'+kind).addClass('selected');
+        this.$searchbox.find('.kind').removeClass('selected');
+        this.$searchbox.find('*[data-kind="' + kind + '"]').addClass('selected');
       }
     },
     setListeners: function(){
