@@ -53,6 +53,13 @@ define([
         if (e.keyCode === 27) {
           this.model.set('hidden', false);
           this.toggleSearch();
+        } else {
+          var address = e.target.value;
+          var isLatLong = function(address) {
+            return address.includes("º") && address.includes("'") && address.includes("\"") && (address.includes("W") || address.includes("E")) && (address.includes("N") || address.includes("S"));
+          }
+
+          console.log('latlong', isLatLong(address));
         }
       }, this ));
 
