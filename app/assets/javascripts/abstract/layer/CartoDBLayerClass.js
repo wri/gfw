@@ -89,12 +89,16 @@ define([
     },
 
     infowindowsButtons: function(){
-      $('.cartodb-popup').on('click', '.analyze-concession', function () {
-        mps.publish('AnalysisTool/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]);
+      $('.cartodb-popup').on('click', '.analyze-concession', function (e) {
+        if (!$(e.currentTarget).hasClass('dont-analyze')) {
+          mps.publish('AnalysisTool/analyze-concession', [$(this).data('useid'), $(this).data('use'), $(this).data('wdpaid')]);
 
-        ($(this).data('wdpaid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area' + $(this).data('wdpaid')) : null;
+          ($(this).data('wdpaid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze Protected Area' + $(this).data('wdpaid')) : null;
 
-        ($(this).data('useid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze ' + $(this).data('use').toUpperCase() + ' ' + $(this).data('useid')) : null;
+          ($(this).data('useid')) ? ga('send', 'event', 'Map', 'Analysis', 'Analyze ' + $(this).data('use').toUpperCase() + ' ' + $(this).data('useid')) : null;
+        }else{
+          mps.publish('Notification/open', ['not-select-forest']);
+        }
 
       });
       $('.cartodb-popup').on('click', '.subscription-concession', function () {

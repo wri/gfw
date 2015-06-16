@@ -99,7 +99,8 @@
             }
           }
           &.dont-analyze{
-            display: none !important;
+            // display: none !important;
+            opacity: 0.5;
           }
         }
       }
