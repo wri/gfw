@@ -137,7 +137,7 @@
     line-clip: false;
     polygon-clip: false;
   }
-  
+
   [layer='can_mining'] {
     polygon-fill: #fd8d3c;
     line-color: #fd8d3c;
@@ -294,14 +294,6 @@
     line-opacity: 0;
   }
 
-  [layer='modis_forest_change_copy'] {
-    marker-fill: black;
-    marker-opacity: 0.9;
-    marker-allow-overlap: true;
-    marker-placement: point;
-    marker-type: ellipse;
-    marker-width: 3;
-  }
 
   [layer='quicc_alerts'] {
     marker-fill: black;
