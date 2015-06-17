@@ -53,7 +53,7 @@ define([
             imgdata[pixelPos]     = 220;
             imgdata[pixelPos + 1] = 102;
             imgdata[pixelPos + 2] = 153;
-            imgdata[pixelPos + 3] = 256;
+            // imgdata[pixelPos + 3] = 256;
             if (timeLoss > this.top_date) {
               imgdata[pixelPos]     = 233;
               imgdata[pixelPos + 1] = 189;
