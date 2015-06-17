@@ -20,7 +20,9 @@ define([
 
     events: {
       'click .maptype': '_setMaptype',
-      'click .landsat-years li': '_setMaptype'
+      'click .landsat-years li': '_setMaptype',
+      'mouseover .landsat' : 'showLandsat',
+      'mouseout .landsat' : 'hideLandsat'
     },
 
     initialize: function() {
@@ -33,8 +35,9 @@ define([
 
     render: function(){
       this.$el.html(this.template());
-      this.$maptypeslist = this.$el.find('.maptype-list');
+      this.$maptypeslist = this.$el;
       this.$maptypes = this.$el.find('.maptype');
+      this.$landsatYears = $('.landsat-years');
     },
 
     _setMaptype: function(e) {
@@ -58,7 +61,18 @@ define([
     selectMaptype: function(maptype) {
       this.$maptypes.removeClass('selected');
       this.$maptypeslist.find('.' + maptype).addClass('selected');
-    }
+    },
+
+    showLandsat: function(){
+      this.$landsatYears.addClass('active');
+    },
+
+    hideLandsat: function(){
+      this.$landsatYears.removeClass('active');
+    },
+
+
+
   });
 
   return BasemapsView;
