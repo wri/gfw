@@ -86,6 +86,8 @@ define([
         } else {
           degrees = degrees.split('E')
         }
+        if (isNaN(degrees[0]) || isNaN(degrees[1])) return false;
+
         return this._parseDMS(degrees[0]) + ', ' + this._parseDMS(degrees[1]);
     },
 
@@ -147,20 +149,26 @@ define([
       return Number(deg);
     },
 
-    setListeners: function(){
+    setListeners: function() {
       this.$input.on('keyup', _.bind(function(e){
         if (e.keyCode === 27) {
           this.model.set('hidden', false);
           this.toggleSearch();
         } else if (e.keyCode === 13) {
-          if (! this.$searchbox.find('.search.selected').hasClass('coordinates')) {
+          if (this.$searchbox.find('.search.selected').hasClass('degrees')) {
             var geom = this.$searchbox.find('.search.selected input').val();
             geom = geom.split(",");
             this.presenter.setCenter(geom[0],geom[1]);
             geom = null;
             this.toggleSearch();
-          } else {
+          } else if (this.$searchbox.find('.search.selected').hasClass('coordinates')) {
             var dec = this._latLongToDecimal(this.$searchbox.find('.coordinates input').val());
+            if (! !!dec) {
+              this.$input[0] = this.$searchbox.find('.search input').val();
+              mps.publish('Notification/open', ['coordinates-not-standard']);
+              this._setType(null,"regular");
+              return;
+            }
             dec = dec.split(",");
             this.presenter.setCenter(dec[1],dec[0]);
             dec = null;
@@ -178,7 +186,7 @@ define([
       }, this));
     },
 
-    render: function(){
+    render: function() {
       this.$el.html(this.template);
       this.$searchbox = $('.search-box');
     },
