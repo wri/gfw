@@ -402,6 +402,44 @@
   }
 
 
+  .ifl-switch{
+    position: relative;
+    width: 80%;
+    margin: 10px auto 0;
+    cursor: pointer;
+    @include display-flex();
+    @include align-items(center);
+    display: none !important;
+    .label{
+      display: inline-block;
+      width: 50%;
+      font-size: 10px;
+      text-transform: uppercase;
+      padding: 2px 0 0 20px;
+      color: #AAA;
+      &:first-child{
+        padding: 2px 20px 0 0;
+        text-align: right;
+      }
+      &.checked{
+        color: $dark;
+      }
+    }
+    .onoffswitch{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      float: none;
+      margin: 0;
+      background: $dark;
+      @include transform(translate(-50%,-50%));
+      &.checked{
+        background: rgb(22, 133, 0);
+      }
+    }
+  }
+
+
   // FOOTER ANALYSIS
   .analysis-footer{
     margin: 10px 0 0;
@@ -413,14 +451,13 @@
     >ul{
       @include row();
       >li{
-        width: 33.333333%;
+        width: 100%;
         position: relative;
         padding: 10px 0;
         cursor: pointer;
         @media (max-width: $br-mobileMap - 1){
-          width: 50%;
           &#analysis-subscribe{
-            display: none;
+            // display: none;
           }
           .tooltipmap{
             opacity: 1;
@@ -548,19 +585,40 @@
 }
 
 .analysis-subscribe{
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: fixed;
   width: 100%;
-  height: 100%;
-  z-index: 21;
-  overflow: hidden;
-  opacity: 0;
-  visibility: hidden;
+  height: 275px;
+  background: $white;
+  bottom: 0;
+  left: 0;
+  z-index: 19;
+  padding: 20px 20px 56px;
+  @include transform(translate(0,100%));
+  @include transition(all 0.25s $easeInOutSine);
   &.active{
+    @include transform(translate(0,0));
     opacity: 1;
     visibility: visible;
   }
+
+  @media (min-width: $br-mobileMap){
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: auto;
+    height: 100%;
+    z-index: 21;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    @include transform(translate(0,0));
+    &.active{
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+
 
   .analysis-subscribe-content{
     position: absolute;
@@ -569,8 +627,11 @@
     width: 100%;
     height: 100%;
     background: #FFF;
-    @include transform(translate(100%,0));
+    @include transform(translate(0%,0));
     @include transition(all 0.25s $easeInOutSine);
+    @media (min-width: $br-mobileMap){
+      @include transform(translate(100%,0));
+    }
     &.active{
       @include transform(translate(0%,0));
     }
@@ -584,7 +645,50 @@
       padding: 5px;
       cursor: pointer;
     }
+    header{
+      text-align: center;
+      font-size: 13px;
+      @include clearfix();
+      h2{
+        font-size: 21px;
+        padding: 0 0 15px;
+        text-align: center;
+        span{
+          color: $cGreen;
+          &.source{ cursor: pointer;}
+        }
+      }
+      p{
+        button{
+          margin: 7px auto 0;
+          display: block;
+        }
+      }
+      ol{
+        text-align: left;
+        list-style-type: decimal;
+        list-style-position: outside;
+        position: relative;
+        float: left;
+        max-width: 80%;
+        left: 50%;
+        @include transform(translate(-50%,0));
+        li{
+          padding: 5px 0 0;
+          &:first-child{ margin: 0;}
+          .source{
+            @extend .info-icon;
+            display: inline-block;
+            top: 2px;
+            position: relative;
+          }
+        }
+      }
+    }
 
+    .content{
+      display: block;
+    }
 
     .steps{
       position: absolute;
@@ -596,8 +700,11 @@
       @media (min-width: 1500px){
         padding: 20px;
       }
-      @include transform(translate(100%,0));
+      @include transform(translate(0%,100%));
       @include transition(all 0.25s $easeInOutSine);
+      @media (min-width: $br-mobileMap){
+        @include transform(translate(100%,0));
+      }
       &.current{
         @include transform(translate(0%,0));
       }

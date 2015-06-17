@@ -41,5 +41,6 @@ then
 
     exit 0 # push will execute
 else
-    exit 1 # push will not execute
+    echo 'Pushing, no file attached'
+    exit 0 # push will execute with no file on it
 fi

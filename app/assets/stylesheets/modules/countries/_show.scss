@@ -212,7 +212,7 @@
     } // country-title
 
     .country-details {
-      height: 300px;
+      height: 320px;
       .embed & {
         height: 230px;
       }
@@ -365,12 +365,12 @@
           @media (min-width: $br-mobile) {
             position: absolute;
             left: 40%;
-            bottom: 12px;
-            width: 54%;
+            bottom: 35px;
+            width: calc(60% - 20px);
             margin: 15px auto 0;
           }
           @media (min-width: 1050px) {
-            bottom: 20px;
+            bottom: 40px;
           }
 
           em {
@@ -379,6 +379,31 @@
             cursor: pointer;
           }
         }
+        .note-status {
+          width: 80%;
+          text-align: center;
+          font-size: 13px;
+          color: rgba(255, 255, 255, 0.5);
+          padding: 8px 20px 8px 8px;
+          margin: 0 auto 15px;
+          max-width: 100%;
+
+          @media (min-width: $br-mobile) {
+            text-align: right;
+            position: absolute;
+            right: 0;
+            bottom: 3px;
+            margin: 15px auto 0;
+          }
+          @media (min-width: 1050px) {
+            bottom: 5px;
+          }
+
+          em {
+            color: red;
+          }
+        }
+
 
         .loss-gain-graph {
           width: 235px;
@@ -2006,7 +2031,7 @@
         padding: 20px;
         float: none;
         width: 100%;
-        height: 300px;
+        height: 330px;
         .loss-gain-graph {
           width: 30%;
         }

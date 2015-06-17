@@ -26,10 +26,11 @@ define([
   'text!map/templates/legend/dam_hotspots.handlebars',
   'text!map/templates/legend/us_land_cover.handlebars',
   'text!map/templates/legend/global_land_cover.handlebars',
-  'text!map/templates/legend/forma.handlebars'
+  'text!map/templates/legend/forma.handlebars',
+  'text!map/templates/legend/bra_biomes.handlebars'
 
 ], function(_, Handlebars, Presenter, tpl, lossTpl, imazonTpl, firesTpl,
-    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL) {
+    forest2000Tpl, pantropicalTpl, idnPrimaryTpl, intact2013Tpl, grumpTpl, storiesTpl, terra_iTpl, concesionesTpl, concesionesTypeTpl, hondurasForestTPL,colombiaForestChangeTPL, tigersTPL, dam_hotspotsTPL, us_land_coverTPL, global_land_coverTPL, formaTPL,bra_biomesTPL) {
 
   'use strict';
 
@@ -71,7 +72,8 @@ define([
       us_land_cover: Handlebars.compile(us_land_coverTPL),
       global_land_cover : Handlebars.compile(global_land_coverTPL),
       us_land_cover_change : Handlebars.compile(us_land_coverTPL),
-      forma : Handlebars.compile(formaTPL)
+      forma : Handlebars.compile(formaTPL),
+      bra_biomes : Handlebars.compile(bra_biomesTPL)
 
     },
 
