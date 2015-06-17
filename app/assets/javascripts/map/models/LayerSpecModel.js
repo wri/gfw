@@ -85,6 +85,7 @@ define([
       "idn_logging",
       "cmr_logging",
       "cod_logging",
+      "cog_logging",
       "logging",
       //STORIES
       "infoamazonia",

@@ -27,6 +27,7 @@ define([
   'map/views/layers/GnqLoggingLayer',
   'map/views/layers/IdnLoggingLayer',
   'map/views/layers/LbrLoggingLayer',
+  'map/views/layers/CogLoggingLayer',
   'map/views/layers/MiningLayer',
   'map/views/layers/CanMiningLayer',
   'map/views/layers/CmrMiningLayer',
@@ -115,6 +116,7 @@ define([
   GnqLoggingLayer,
   IdnLoggingLayer,
   LbrLoggingLayer,
+  CogLoggingLayer,
   MiningLayer,
   CanMiningLayer,
   CmrMiningLayer,
@@ -257,6 +259,9 @@ define([
     },
     lbr_logging: {
       view: LbrLoggingLayer
+    },
+    cog_logging: {
+      view: CogLoggingLayer
     },
     mining: {
       view: MiningLayer
