@@ -19,7 +19,7 @@ define([
       dataMaxZoom: 11,
       //ATTENTION: check config.ru file to get the whole route, reverse proxying here
       //urlTemplate: '/latin-america/Z{z}/{y}/{x}.png'
-      urlTemplate: 'https://s3.amazonaws.com/wri-tiles/latin-decrease-current/{z}/{x}/{y}.png'
+      urlTemplate: 'https://s3.amazonaws.com/wri-tiles/latin_decrease_current_15_jun_2015/{z}/{x}/{y}.png'
 
     },
 
@@ -53,7 +53,7 @@ define([
             imgdata[pixelPos]     = 220;
             imgdata[pixelPos + 1] = 102;
             imgdata[pixelPos + 2] = 153;
-            imgdata[pixelPos + 3] = 256;
+            //imgdata[pixelPos + 3] = 256;
             if (timeLoss > this.top_date) {
               imgdata[pixelPos]     = 233;
               imgdata[pixelPos + 1] = 189;
