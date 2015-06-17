@@ -192,3 +192,18 @@ body,html{
     opacity: 1;
   }
 }
+
+#credit-control{
+  display: none;
+  font-size: 9px;
+  font-family: Arial, 'sans-serif';
+  margin: 0;
+  padding: 1px 6px;
+  background-color: #D2DADE;
+  color: $dark;
+  white-space: nowrap;
+  z-index: 9999999 !important;
+  a{
+    color: $dark;
+  }
+}

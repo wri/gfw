@@ -77,11 +77,14 @@ define([
       };
 
       this.map = new google.maps.Map(this.el, _.extend({}, this.options, params));
+
       this._checkDialogs();
 
       this.resize();
       this._setMaptypes();
       this._addListeners();
+      // Node
+      this.createMaptypeNode();
 
     },
 
@@ -111,6 +114,11 @@ define([
         // TODO => No mps here!
         mps.publish('AnalysisTool/analyze-wdpaid', [wdpa]);
       }, this));
+
+      google.maps.event.addListener(this.map, 'maptypeid_changed', _.bind(function() {
+        this.setCredit('Map tiles by <a href="http://cartodb.com/attributions#basemaps">CartoDB</a>, under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Data by <a href="http://www.openstreetmap.org/">OpenStreetMap</a>, under ODbL.');
+      }, this ));
+
 
       this.$overlayMobile.on('click', _.bind(function(){
         this.presenter.closeDialogsMobile();
@@ -341,6 +349,27 @@ define([
     getMapTypeId: function() {
       return this.map.getMapTypeId();
     },
+
+    createMaptypeNode: function(){
+      this.creditNode = document.createElement('div');
+      this.creditNode.id = 'credit-control';
+      this.creditNode.index = 0;
+      this.map.controls[google.maps.ControlPosition.BOTTOM_RIGHT].push(this.creditNode);
+    },
+
+    setCredit: function(credit){
+      var maptype = this.getMapTypeId();
+      if (maptype == 'dark' || maptype == 'positron') {
+        this.creditNode.style.display = 'block';
+        this.creditNode.innerHTML = credit + ' -';
+      }else{
+        this.creditNode.style.display = 'none';
+        this.creditNode.innerHTML = '';
+      }
+    },
+
+
+
 
 
     /**
