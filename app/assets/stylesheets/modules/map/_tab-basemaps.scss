@@ -53,12 +53,18 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, 
   }
   .landsat-years{
     display: none;
-    position: absolute;
-    bottom: 0%;
-    right: 100%;
     background: $white;
+    width: 100%;
+    text-align: center;
     box-shadow: 0 2px 3px 1px rgba($dark, 0.25);
     padding: 10px;
+    @media (min-width: $br-mobileMap){
+      text-align: left;
+      width: auto;
+      position: absolute;
+      bottom: 0%;
+      right: 100%;
+    }
     &.active{
       @include display-flex();
       min-width: 200px;
@@ -68,11 +74,15 @@ $basemaps-img: default, terrain, satellite, roads, tree_height, dark, positron, 
       position: absolute;
       bottom: calc(70px/2 - 12px);
       right: 0;
+      display: none;
       @include transform(translate(50%,-50%) rotate(45deg));
       background: $white;
       width: 12px;
       height: 12px;
       box-shadow: 1px -1px 1px 0px rgba($dark, 0.25);
+      @media (min-width: $br-mobileMap){
+        display: block;
+      }
     }
     > div{
       width: 50%;

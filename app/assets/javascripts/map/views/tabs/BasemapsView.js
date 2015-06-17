@@ -6,9 +6,10 @@
 define([
   'underscore',
   'handlebars',
+  'enquire',
   'map/presenters/tabs/BasemapsPresenter',
   'text!map/templates/tabs/basemaps.handlebars'
-], function(_, Handlebars, Presenter, tpl) {
+], function(_, Handlebars, enquire, Presenter, tpl) {
 
   'use strict';
 
@@ -21,6 +22,7 @@ define([
     events: {
       'click .maptype': '_setMaptype',
       'click .landsat-years li': '_setMaptype',
+      'click .landsatSelector' : 'toggleLandsat',
       'mouseover .landsat' : 'showLandsat',
       'mouseout .landsat' : 'hideLandsat'
     },
@@ -38,6 +40,17 @@ define([
       this.$maptypeslist = this.$el;
       this.$maptypes = this.$el.find('.maptype');
       this.$landsatYears = $('.landsat-years');
+      enquire.register("screen and (min-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = false;
+        },this)
+      });
+      enquire.register("screen and (max-width:"+window.gfw.config.GFW_MOBILE+"px)", {
+        match: _.bind(function(){
+          this.mobile = true;
+        },this)
+      });
+
     },
 
     _setMaptype: function(e) {
@@ -64,12 +77,22 @@ define([
     },
 
     showLandsat: function(){
-      this.$landsatYears.addClass('active');
+      if (!this.mobile) {
+        this.$landsatYears.addClass('active');
+      }
     },
 
     hideLandsat: function(){
-      this.$landsatYears.removeClass('active');
+      if (!this.mobile) {
+        this.$landsatYears.removeClass('active');
+      }
     },
+
+    toggleLandsat: function(){
+      if (this.mobile) {
+        this.$landsatYears.toggleClass('active');
+      }
+    }
 
 
 
