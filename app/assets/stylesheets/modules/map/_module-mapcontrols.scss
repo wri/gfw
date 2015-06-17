@@ -71,6 +71,11 @@ $w-control: 38px;
       &:active{
         background: darken($white,5%);
       }
+      &.active{
+        svg{
+          fill: $cGreen;
+        }
+      }
       &.disabled{
         opacity: 0.5;
         cursor: default;
