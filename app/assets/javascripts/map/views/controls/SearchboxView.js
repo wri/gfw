@@ -81,14 +81,8 @@ define([
 
     _latLongToDecimal: function(address) {
       var degrees = address || this.$searchbox.find('.degrees input').val();
-        if (degrees.contains("W")) {
-          degrees = degrees.split('W')
-        } else {
-          degrees = degrees.split('E')
-        }
-        if (isNaN(degrees[0]) || isNaN(degrees[1])) return false;
-
-        return this._parseDMS(degrees[0]) + ', ' + this._parseDMS(degrees[1]);
+        degrees = degrees.split(",");
+      return this._parseDMS(degrees[1]) + ', ' + this._parseDMS(degrees[0]);
     },
 
     _setType: function(e, kind) {
@@ -155,25 +149,26 @@ define([
           this.model.set('hidden', false);
           this.toggleSearch();
         } else if (e.keyCode === 13) {
+          var geom = [0,0];
           if (this.$searchbox.find('.search.selected').hasClass('degrees')) {
-            var geom = this.$searchbox.find('.search.selected input').val();
+            geom = this.$searchbox.find('.search.selected input').val();
             geom = geom.split(",");
             this.presenter.setCenter(geom[0],geom[1]);
             geom = null;
             this.toggleSearch();
           } else if (this.$searchbox.find('.search.selected').hasClass('coordinates')) {
-            var dec = this._latLongToDecimal(this.$searchbox.find('.coordinates input').val());
-            if (! !!dec) {
+            geom = this._latLongToDecimal(this.$searchbox.find('.coordinates input').val());
+            if (! !!geom) {
               this.$input[0] = this.$searchbox.find('.search input').val();
               mps.publish('Notification/open', ['coordinates-not-standard']);
               this._setType(null,"regular");
               return;
             }
-            dec = dec.split(",");
-            this.presenter.setCenter(dec[1],dec[0]);
-            dec = null;
-            this.toggleSearch();
+            geom = geom.split(",");
+            this.presenter.setCenter(geom[1],geom[0]);
           }
+          geom = null;
+          this.toggleSearch();
         } else {
           if (! !! e.target.value) return;
           this.checkSearchType(e.target.value);
@@ -191,14 +186,14 @@ define([
       this.$searchbox = $('.search-box');
     },
 
-    onClick: function(e){
+    onClick: function(e) {
       if ($(e.target).hasClass('control-searchbox')) {
         this.model.set('hidden', false);
         this.toggleSearch();
       }
     },
 
-    toggleSearch: function(){
+    toggleSearch: function() {
       var hidden = this.model.get('hidden');
       if (hidden) {
         this.$el.show(0);
